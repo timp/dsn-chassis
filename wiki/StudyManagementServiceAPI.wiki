@@ -4,7 +4,8 @@
 
 This section defines an API for the StudyManagementService based on the [http://www.atomenabled.org/developers/protocol/atom-protocol-spec.php Atom Publishing Protocol].
 
-The sub-sections below assume that a StudyManagementService is deployed at http://example.org/chassis/studymanagementservice/edit.
+The sub-sections below assume that a StudyManagementService is deployed at
+   * http://example.org/chassis/studymanagementservice/edit
 
 == Creating a New Collection of Study Records ==
 
