@@ -11,7 +11,7 @@ The sub-sections below assume that a StudyManagementService is deployed at
 
 To create a new collection of study records, POST a new Atom feed document to the URL at which you would like the collection to reside.
 
-<pre>
+{{{
 POST /chassis/studymanagementservice/allstudies HTTP/1.1
 Host: example.org
 Content-Type: application/atom+xml
@@ -20,10 +20,10 @@ Content-Length: nnn
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>All Studies</title>
 </feed>
-</pre>
+}}}
 
 If successful, the response will be:
 
-<pre>
+{{{
 204 No Content
-</pre>
+}}}
