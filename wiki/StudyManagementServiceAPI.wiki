@@ -1,6 +1,6 @@
 #summary protocol/API specification for the StudyManagementService
 
-= AtomPub API =
+= !AtomPub API =
 
 This section defines an API for the StudyManagementService based on the [http://www.atomenabled.org/developers/protocol/atom-protocol-spec.php Atom Publishing Protocol].
 
