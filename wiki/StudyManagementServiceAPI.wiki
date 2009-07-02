@@ -1,10 +1,10 @@
-#summary protocol/API specification for the StudyManagementService
+#summary protocol/API specification for the StudyService
 
 = !AtomPub API =
 
-This section defines an API for the StudyManagementService based on the [http://www.atomenabled.org/developers/protocol/atom-protocol-spec.php Atom Publishing Protocol].
+This section defines an API for the StudyService based on the [http://www.atomenabled.org/developers/protocol/atom-protocol-spec.php Atom Publishing Protocol].
 
-The sub-sections below assume that a StudyManagementService is deployed at
+The sub-sections below assume that a StudyService is deployed at
    * http://example.org/chassis/studymanagementservice
 
 == Creating a New Collection of Study Records ==

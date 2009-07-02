@@ -4,6 +4,6 @@ This service is one of the [ArchitectureOverview Chassis core services].
 
 This service supports the storage, update, retrieval, deletion and query of arbitrary metadata for fine-grained research activities, i.e., minor divisions of research activity within a data sharing network, typically known as studies.
 
-Protocol/API specification: [StudyManagementServiceAPI]
+Protocol/API specification: [StudyServiceAPI]
 
-Implementation: StudyManagementServiceImpl
+Implementation: StudyServiceImpl
