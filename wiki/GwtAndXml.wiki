@@ -1,13 +1,16 @@
+<wiki:toc/>
+
 = Introduction =
 
 This page contains notes on using XML within the Google Web Toolkit (GWT).
 
-Links:
+References:
 
    * [http://google-web-toolkit.googlecode.com/svn/javadoc/1.6/com/google/gwt/xml/client/package-summary.html com.google.gwt.xml.client package javadoc]
-   * [http://code.google.com/p/bunsenandbeaker/wiki/DevGuideXML bunsenandbeaker DevGuideXML]
+   * [http://code.google.com/p/bunsenandbeaker/wiki/DevGuideXML bunsenandbeaker GWT DevGuideXML]
+   * [http://www.w3.org/TR/REC-xml-names/ Namespaces in XML 1.0 (Second Edition)]
 
-All Java snippets require:
+All Java snippets below require:
 
 {{{
 import com.google.gwt.xml.client.*;
@@ -74,7 +77,7 @@ public static List<Node> getElementsByTagNameNS(Document doc, String ns, String 
 }
 }}}
 	
-== Creating XML Documents That Use XML Namespaces ==
+= Creating XML Documents That Use XML Namespaces =
 
 To create a new, empty, XML document:
 
