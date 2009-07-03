@@ -1,7 +1,7 @@
 /**
  * $Id$
  */
-package org.cggh.chassis.gwt.lib.client.study;
+package org.cggh.chassis.gwt.lib.study.client;
 
 import com.google.gwt.xml.client.Document;
 
