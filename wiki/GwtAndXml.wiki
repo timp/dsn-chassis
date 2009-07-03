@@ -116,4 +116,29 @@ String xml =
     "  xmlns:x=\"http://www.cggh.org/chassis/xmlns\">\n" +
     "</feed>" ;
 
+Element feedElement = (Element) doc.getElementsByTagName("feed").item(0);
+
+Element titleElement = doc.createElement("title");
+titleElement.appendChild(doc.createTextNode("All Studies"));
+feedElement.appendChild(titleElement);
+String ns = titleElement.getNamespaceURI(); // always null
+		
+Element fooElement = doc.createElement("x:foo");
+fooElement.appendChild(doc.createTextNode("bar"));
+feedElement.appendChild(fooElement);
+ns = fooElement.getNamespaceURI(); // always null
+String prefix = fooElement.getPrefix(); // "x"
 }}}
+
+Although the `getNamespaceURI()` method on the elements you create always returns null, the resulting XML document is as you intend, i.e. has namespaces set correctly.
+
+You need to be careful here, as you can create and append elements with prefixes that do not correspond to any defined XML namespace prefix on the document. E.g.:
+
+{{{
+Element badElement = doc.createElement("bad:element");
+feedElement.appendChild(badElement);
+}}}
+
+will work even if the namespace prefix `bad` is not defined anywhere on the document. The resulting document will not conform with http://www.w3.org/TR/REC-xml-names/#ns-qualnames.
+
+
