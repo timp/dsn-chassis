@@ -1,0 +1,32 @@
+<wiki:toc/>
+
+= Introduction =
+
+This page contains notes on using the Google Web Toolkit (GWT) with Eclipse.
+
+= Inheriting Modules From Another Eclipse Project =
+
+Say you have one Google Web Application project in your workspace, named my-gwt-utils, in which you define a module with root packace `foo.utils` and logical module name `foo.utils.Utils`. The purpose of this module is to provide some utility methods, which you want to re-use across several GWT projects. This module has no entry point classes. There are no HTML pages in this project.
+
+Say you have another Google Web Application project in your workspace, named my-gwt-app, in which you define a module with root package `foo.myapp` and logical module name `foo.myapp.MyGWTApplication`. This module has an entry point class and an HTML page. You want to re-use the `foo.utils.Utils` module within this project. What do you need to do?
+
+There are two things you need to do:
+
+   * *configure the build path for the my-gwt-app project to include the my-gwt-utils project*
+   * *add an `inherits` directive in the module definition for the `foo.myapp.MyGWTApplication` module*, e.g.:
+   
+{{{
+<inherits name="foo.utils.Utils" />
+}}}
+
+Note that *you will also have to restart any hosted-mode servers and browsers* you have running.
+
+Rather than configure the build path to include the my-gwt-utils project, you could export a jar from my-gwt-utils and copy it to the war/WEB-INF/lib folder in the my-gwt-app project. *Note that the exported jar will need to include the source files as well as the compiled class files - the GWT compiler needs the Java source.* Of course, you have to repeat this process any time you make any changes to my-gwt-utils.
+   
+= GWT Compiler Crashes in Native Code =
+
+With Eclipse 3.4 and Java 6 as the only installed JRE, the GWT compiler crashes in native code. The hosted mode server and browsers also crash without explanation.
+
+This can be fixed by installing a Java 5 JRE and setting as the Eclipse default JRE.
+
+
