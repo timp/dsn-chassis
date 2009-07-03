@@ -1,12 +1,12 @@
 /**
  * $Id$
  */
-package org.cggh.chassis.gwt.lib.client.study;
+package org.cggh.chassis.gwt.lib.study.client;
 
 import java.util.List;
 
-import org.cggh.chassis.gwt.lib.client.atom.Atom;
-import org.cggh.chassis.gwt.lib.client.xml.XML;
+import org.cggh.chassis.gwt.lib.atom.client.Atom;
+import org.cggh.chassis.gwt.lib.xml.client.XML;
 
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;
@@ -63,7 +63,8 @@ public class StudyFeed {
 		return title;
 	}
 	
-	public String toXMLString() {
+	@Override
+	public String toString() {
 		return this.doc.toString();
 	}
 	

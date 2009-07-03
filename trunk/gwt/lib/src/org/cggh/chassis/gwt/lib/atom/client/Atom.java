@@ -1,7 +1,7 @@
 /**
  * $Id$
  */
-package org.cggh.chassis.gwt.lib.client.atom;
+package org.cggh.chassis.gwt.lib.atom.client;
 
 /**
  * TODO document me

@@ -1,7 +1,7 @@
 /**
  * $Id$
  */
-package org.cggh.chassis.gwt.lib.client.xml;
+package org.cggh.chassis.gwt.lib.xml.client;
 
 import java.util.ArrayList;
 import java.util.List;
