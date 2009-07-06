@@ -2,7 +2,7 @@
 
 This page defines draft APIs for the StudyMetadataServices based on the [http://www.atomenabled.org/developers/protocol/atom-protocol-spec.php Atom Publishing Protocol (AtomPub)].
 
-For a basic introduction to use of !AtomPub, see the [http://code.google.com/apis/gdata/docs/2.0/basics.html Google Data APIs Protocol Basics]. See also WhyAtom for some discussion of the pros and cons of using !AtomPub.
+The [http://code.google.com/apis/gdata/docs/2.0/basics.html Google Data APIs Protocol Basics] gives an introduction to how Google uses !AtomPub, and is a good introduction to the protocol. See also WhyAtom for some discussion of the pros and cons of using !AtomPub.
 
 *Table of Contents*
 
