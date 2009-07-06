@@ -2,7 +2,7 @@
 
 = !AtomPub APIs =
 
-This section defines APIs for the StudyMetadataServices based on the [http://www.atomenabled.org/developers/protocol/atom-protocol-spec.php Atom Publishing Protocol (!AtomPub)].
+This section defines draft APIs for the StudyMetadataServices based on the [http://www.atomenabled.org/developers/protocol/atom-protocol-spec.php Atom Publishing Protocol (AtomPub)].
 
 For a basic introduction to use of !AtomPub, see the [http://code.google.com/apis/gdata/docs/2.0/basics.html Google Data APIs Protocol Basics].
 
@@ -11,7 +11,7 @@ For a basic introduction to use of !AtomPub, see the [http://code.google.com/api
 
 This section defines an API for a service that provides basic persistence capabilities (create, retrieve, update, delete) for metadata records that capture information about studies, such as their title, summary, year of start and end, location, etc.
 
-This API is a '''content-only extension of !AtomPub'''. I.e., no new protocol operations are introduced. The API uses the extensibility of the [http://www.atomenabled.org/developers/syndication/atom-format-spec.php Atom Syndication Format] to include custom metadata elements into entry documents.
+This API is a *content-only extension of !AtomPub*. I.e., no new protocol operations are introduced. The API uses the [http://www.atomenabled.org/developers/syndication/atom-format-spec.php#extending_atom extensibility] of the [http://www.atomenabled.org/developers/syndication/atom-format-spec.php Atom Syndication Format] to include custom metadata elements into entry documents. The AtomPub spec mandates that a conforming processor must store any foreign markup, thus it is reasonable to expect that all of the operations below would be supported by an !AtomPub implementation.
 
 The sub-sections below assume that a Study Metadata Persistence Service endpoint is deployed at
 
@@ -21,34 +21,156 @@ The sub-sections below assume that a Study Metadata Persistence Service endpoint
 
 To create a new study metadata record, send an HTTP POST request with an Atom entry document to the service endpoint URL.
 
-For example, the request below creates a new study metadata record, @@TODO information.
+For example, the request below creates a new study metadata record, describing a drug resistance study in Kampala, Uganda.
 
 {{{
 POST /chassis/atom/edit/studies HTTP/1.1
 Host: example.org
-Content-Type: application/atom+xml
+Content-Type: application/atom+xml;type=entry;charset="utf-8"
 Content-Length: nnn
 
-@@TODO
+<entry xmlns="http://www.w3.org/2005/Atom">
+  <title>Uganda-Kampala-2006</title>
+  <summary>A study of malaria drug resistance near Kampala, Uganda, from 2006 to 2007.</summary>
+  <author>
+    <name>Freda Bloggs</name>
+    <email>freda@example.org</email>
+  </author>
+  <category scheme="http://www.cggh.org/chassis/atom/categories" term="study"/>
+  <content type="application/xml">
+    <study xmlns="http://www.cggh.org/chassis/atom/xmlns">
+      <country>UG</country>
+      <location>
+        <lat>0.31311</lat>
+        <lon>32.58545</lon>
+      </location>
+      <startyear>2006</startyear>
+      <endyear>2007</endyear>
+      <samplesize>687</samplesize>
+    </study>
+  </content>
+</entry>
 }}}
 
-@@TODO example response
+If successful, the response will be `201 Created`, and should look something like:
 
-@@TODO how to extract entry URL from response
+{{{
+HTTP/1.1 201 Created
+Transfer-Encoding: chunked
+Date: Mon, 06 Jul 2009 11:04:29 GMT
+Content-type: application/atom+xml;charset=UTF-8
+Location: http://example.org/chassis/atom/edit/studies?id=urn:uuid:f4070192-c65d-48d7-915f-81d38f61d359
+Server: Apache-Coyote/1.1
 
-@@TODO defined elements in chassis namespace for study metadata
+<entry xmlns="http://www.w3.org/2005/Atom">
+  <id>urn:uuid:f4070192-c65d-48d7-915f-81d38f61d359</id>
+  <updated>2009-07-06T12:04:29+01:00</updated>
+  <published>2009-07-06T12:04:29+01:00</published>
+  <link href="?id=urn:uuid:f4070192-c65d-48d7-915f-81d38f61d359" rel="edit" type="application/atom+xml"/>
+  <title>Uganda-Kampala-2006</title>
+  <summary>A study of malaria drug resistance near Kampala, Uganda, from 2006 to 2007.</summary>
+  <author>
+    <name>Freda Bloggs</name>
+    <email>freda@example.org</email>
+  </author>
+  <category scheme="http://www.cggh.org/chassis/atom/categories" term="study"/>
+  <content type="application/xml">
+    <study xmlns="http://www.cggh.org/chassis/atom/xmlns">
+      <country>UG</country>
+      <location>
+        <lat>0.31311</lat>
+        <lon>32.58545</lon>
+      </location>
+      <startyear>2006</startyear>
+      <endyear>2007</endyear>
+      <samplesize>687</samplesize>
+    </study>
+  </content>
+</entry>
+}}}
+
+The absolute URL of the new study metadata record is given by the value of the `Location` header in the HTTP response. The same URL is also given as a relative URL in the value of the `link` element `href` attribute, where the `rel` is `edit`.
+
+Note that the service will generate an `id` and populate the `published` and `updated` elements.
+
+The `title`, `summary` and `author` elements are used from the `atom` namespace. The `author` is the author of the metadata record. The rest of the study metadata is given within the `content` element, using the Chassis XML namespace.
+
+The content of the `study` element should conform to the following [http://www.relaxng.org/compact-tutorial-20030326.html RelaxNG schema]:
+
+{{{
+namespace local = "http://www.cggh.org/chassis/atom/xmlns"
+
+chassisStudy = 
+  element study {
+  ( chassisCountry*
+  & chassisLocation*
+  & chassisStartYear?
+  & chassisEndYear?
+  & chassisSampleSize? 
+  & anyElement* )
+} 
+
+# should be valid ISO 3166 country code
+chassisCountry = element country { text }
+
+chassisLocation = element location {
+  ( element lat { xsd:decimal }
+  & element lon { xsd:decimal } )
+}
+
+chassisStartYear = element startyear { xsd:gYear }
+
+chassisEndYear = element endyear { xsd:gYear }
+
+chassisSampleSize = element samplesize { xsd:int }
+}}}
 
 === Retrieving a Study Metadata Record ===
 
-To retrieve a previously-created study metadata record, send an HTTP GET request to the entry URL.
+To retrieve a previously-created study metadata record, send an HTTP GET request to the metadata record URL.
 
-For example, the request below retrieve the metadata record for the @@TODO study created above.
+For example, the request below retrieve the metadata record for the Kampala study created above.
 
 {{{
-@@TODO
+GET /chassis/atom/edit/studies?id=urn:uuid:f4070192-c65d-48d7-915f-81d38f61d359 HTTP/1.1
+Host: example.org
 }}}
 
-@@TODO example response
+If successful, the response will be `200 OK`, and should look something like:
+
+{{{
+HTTP/1.1 200 OK
+Transfer-Encoding: chunked
+Date: Mon, 06 Jul 2009 11:45:53 GMT
+Content-Type: application/atom+xml;charset=UTF-8
+Server: Apache-Coyote/1.1
+
+<entry xmlns="http://www.w3.org/2005/Atom">
+  <id>urn:uuid:f4070192-c65d-48d7-915f-81d38f61d359</id>
+  <updated>2009-07-06T12:04:29+01:00</updated>
+  <published>2009-07-06T12:04:29+01:00</published>
+  <link href="?id=urn:uuid:f4070192-c65d-48d7-915f-81d38f61d359" rel="edit" type="application/atom+xml"/>
+  <title>Uganda-Kampala-2006</title>
+  <summary>A study of malaria drug resistance near Kampala, Uganda, from 2006 to 2007.</summary>
+  <author>
+    <name>Freda Bloggs</name>
+    <email>freda@example.org</email>
+  </author>
+  <category scheme="http://www.cggh.org/chassis/atom/categories" term="study"/>
+  <content type="application/xml">
+    <study xmlns="http://www.cggh.org/chassis/atom/xmlns">
+      <country>UG</country>
+      <location>
+        <lat>0.31311</lat>
+        <lon>32.58545</lon>
+      </location>
+      <startyear>2006</startyear>
+      <endyear>2007</endyear>
+      <samplesize>687</samplesize>
+    </study>
+  </content>
+</entry>
+}}}
 
 === Updating a Study Metadata Record ===
 
