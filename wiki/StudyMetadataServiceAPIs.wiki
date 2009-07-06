@@ -1,0 +1,131 @@
+#summary protocol/API specifications for the StudyMetadataServices
+
+= !AtomPub APIs =
+
+This section defines APIs for the StudyMetadataServices based on the [http://www.atomenabled.org/developers/protocol/atom-protocol-spec.php Atom Publishing Protocol (!AtomPub)].
+
+For a basic introduction to use of !AtomPub, see the [http://code.google.com/apis/gdata/docs/2.0/basics.html Google Data APIs Protocol Basics].
+
+----
+== Study Metadata Persistence Service API ==
+
+This section defines an API for a service that provides basic persistence capabilities (create, retrieve, update, delete) for metadata records that capture information about studies, such as their title, summary, year of start and end, location, etc.
+
+This API is a '''content-only extension of !AtomPub'''. I.e., no new protocol operations are introduced. The API uses the extensibility of the [http://www.atomenabled.org/developers/syndication/atom-format-spec.php Atom Syndication Format] to include custom metadata elements into entry documents.
+
+The sub-sections below assume that a Study Metadata Persistence Service endpoint is deployed at
+
+   * http://example.org/chassis/atom/edit/studies
+   
+=== Creating a New Study Metadata Record ===
+
+To create a new study metadata record, send an HTTP POST request with an Atom entry document to the service endpoint URL.
+
+For example, the request below creates a new study metadata record, @@TODO information.
+
+{{{
+POST /chassis/atom/edit/studies HTTP/1.1
+Host: example.org
+Content-Type: application/atom+xml
+Content-Length: nnn
+
+@@TODO
+}}}
+
+@@TODO example response
+
+@@TODO how to extract entry URL from response
+
+@@TODO defined elements in chassis namespace for study metadata
+
+=== Retrieving a Study Metadata Record ===
+
+To retrieve a previously-created study metadata record, send an HTTP GET request to the entry URL.
+
+For example, the request below retrieve the metadata record for the @@TODO study created above.
+
+{{{
+@@TODO
+}}}
+
+@@TODO example response
+
+=== Updating a Study Metadata Record ===
+
+@@TODO
+
+=== Deleting a Study Metadata Record ===
+
+@@TODO
+
+=== Retrieving a Feed of All Study Metadata Records ===
+
+To retrieve a feed of all study metadata records held by a study metadata persistence service... @@TODO
+
+{{{
+GET /chassis/atom/edit/studies
+Host: example.org
+}}}
+
+If successful, the response will be `200 OK`, e.g.:
+
+{{{
+@@TODO
+}}}
+
+
+----
+== Study Metadata Query Service API ==
+
+@@TODO
+
+
+----
+== Study Metadata Bootstrap Service API ==
+
+@@TODO intro
+
+
+=== Creating a New Study Metadata Persistence Service ===
+
+To create a new study metadata persistence service, POST a new Atom feed document to the URL at which you would like the collection to reside.
+
+{{{
+POST /chassis/atom/edit/studies HTTP/1.1
+Host: example.org
+Content-Type: application/atom+xml
+Content-Length: nnn
+
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>All Studies</title>
+</feed>
+}}}
+
+If successful, the response will be `204 No Content`, e.g.:
+
+{{{
+HTTP/1.x 204 No Content
+Date: Fri, 03 Jul 2009 13:15:21 GMT
+Server: Apache/2.2.8 (Ubuntu) mod_jk/1.2.25
+Location: /edit/studiesfromgwt
+Content-Length: 0
+Keep-Alive: timeout=15, max=97
+Connection: Keep-Alive
+Content-Type: text/plain
+}}}
+
+If a collection has already been created at the given location, the response will be `401 Not Authorized`, e.g.:
+
+{{{
+HTTP/1.x 401 Unauthorized
+Date: Fri, 03 Jul 2009 13:38:01 GMT
+Server: Apache/2.2.8 (Ubuntu) mod_jk/1.2.25
+Content-Length: 1083
+Keep-Alive: timeout=15, max=96
+Connection: Keep-Alive
+Content-Type: text/html;charset=utf-8
+
+[...error message...]
+}}} 
+
+
