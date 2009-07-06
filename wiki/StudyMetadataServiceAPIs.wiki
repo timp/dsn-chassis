@@ -1,10 +1,12 @@
 #summary protocol/API specifications for the StudyMetadataServices
 
-<wiki:toc/>
-
 This page defines draft APIs for the StudyMetadataServices based on the [http://www.atomenabled.org/developers/protocol/atom-protocol-spec.php Atom Publishing Protocol (AtomPub)].
 
 For a basic introduction to use of !AtomPub, see the [http://code.google.com/apis/gdata/docs/2.0/basics.html Google Data APIs Protocol Basics].
+
+*Table of Contents*
+
+<wiki:toc/>
 
 ----
 = Study Metadata Persistence Service API =
