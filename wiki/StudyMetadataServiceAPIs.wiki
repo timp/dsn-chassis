@@ -1,13 +1,13 @@
 #summary protocol/API specifications for the StudyMetadataServices
 
-= !AtomPub APIs =
+<wiki:toc/>
 
-This section defines draft APIs for the StudyMetadataServices based on the [http://www.atomenabled.org/developers/protocol/atom-protocol-spec.php Atom Publishing Protocol (AtomPub)].
+This page defines draft APIs for the StudyMetadataServices based on the [http://www.atomenabled.org/developers/protocol/atom-protocol-spec.php Atom Publishing Protocol (AtomPub)].
 
 For a basic introduction to use of !AtomPub, see the [http://code.google.com/apis/gdata/docs/2.0/basics.html Google Data APIs Protocol Basics].
 
 ----
-== Study Metadata Persistence Service API ==
+= Study Metadata Persistence Service API =
 
 This section defines an API for a service that provides basic persistence capabilities (create, retrieve, update, delete) for metadata records that capture information about research studies, such as their title, summary, year of start and end, location, etc.
 
@@ -19,7 +19,7 @@ The sub-sections below assume that a Study Metadata Persistence Service endpoint
    
 In the [http://www.atomenabled.org/developers/protocol/atom-protocol-spec.php#terminology AtomPub terminology], this URL is the URL of a Collection. Each study metadata record becomes an Entry Resource which is a Member of this Collection.
    
-=== Creating a New Study Metadata Record ===
+== Creating a New Study Metadata Record ==
 
 To create a new study metadata record, send an HTTP POST request with an Atom entry document to the service endpoint URL.
 
@@ -127,7 +127,7 @@ chassisEndYear = element endyear { xsd:gYear }
 chassisSampleSize = element samplesize { xsd:int }
 }}}
 
-=== Retrieving a Study Metadata Record ===
+== Retrieving a Study Metadata Record ==
 
 To retrieve a previously-created study metadata record, send an HTTP GET request to the metadata record URL.
 
@@ -174,7 +174,7 @@ Server: Apache-Coyote/1.1
 </entry>
 }}}
 
-=== Updating a Study Metadata Record ===
+== Updating a Study Metadata Record ==
 
 To update a previously created metadata record, send an HTTP PUT request to the metadata record URL, containing the updated record.
 
@@ -253,7 +253,7 @@ If your firewall blocks PUT requests, or your client can only perform GET and PO
 X-HTTP-Method-Override: PUT
 }}} 
 
-=== Deleting a Study Metadata Record ===
+== Deleting a Study Metadata Record ==
 
 To delete a previously created metadata record, send an HTTP DELETE request to the record URL.
 
@@ -272,7 +272,7 @@ If your firewall blocks DELETE requests, or your client can only perform GET and
 X-HTTP-Method-Override: DELETE
 }}} 
 
-=== Retrieving a Feed of All Study Metadata Records ===
+== Retrieving a Feed of All Study Metadata Records ==
 
 To retrieve a feed of all study metadata records held by a study metadata persistence service, send an HTTP GET request to the service endpoint URL.
 
@@ -330,7 +330,7 @@ Date: Mon, 06 Jul 2009 12:56:40 GMT
 In this case, only a single record has been created so far, hence the feed only contains a single entry.
 
 ----
-== Study Metadata Query Service API ==
+= Study Metadata Query Service API =
 
 Retrieving the entire feed of study metadata records in a collection is inefficient, where only a subset of the records are required, e.g., records for studies in a given country, or records for studies starting in a given year.
 
@@ -413,7 +413,7 @@ Server: Apache-Coyote/1.1
 Note that, how the namespace prefixes get constructed in the response will depend on how the query is constructed. This should not matter for any client that processes the response in a namespace-aware manner, but may be an issue for a client that is not aware of XML namespaces, as in some legacy browsers.
 
 ----
-== Study Metadata Bootstrap Service API ==
+= Study Metadata Bootstrap Service API =
 
 One of the main advantages in using a protocol based on !AtomPub is that there are a number of open-source implementations of the protocol already available. How you configure these implementations to provide a new Collection to use as the Study Metadata Persistence Service will depend between implementations. However, at least one [http://exist.sourceforge.net/atompub.html implementation] allows you to create a new Collection by posting an atom feed document to the URL at which you would like the Collection to reside. This provides a convenient way to bootstrap a Study Metadata Persistence Service. Hence this API may be useful if we adopt that [http://exist.sourceforge.net/atompub.html implementation], but may change or disappear if we need to adopt a different implementation.
 
