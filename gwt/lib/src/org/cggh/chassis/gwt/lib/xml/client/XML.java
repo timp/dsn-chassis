@@ -38,6 +38,35 @@ public class XML {
 		}
 		return filtered;
 	}
+	
+	/**
+	 * Get first element in document order by tag name and namespace URI.
+	 *
+	 * @param doc
+	 * @param ns
+	 * @param name
+	 * @return an element, or null if none found matching query
+	 */
+	public static Element getFirstElementByTagNameNS(Document doc, String ns, String name) {
+		List<Element> elements = XML.getElementsByTagNameNS(doc, ns, name);
+		if (elements.size() > 0) {
+			return elements.get(0);
+		}
+		else {
+			return null;
+		}
+	}
+	
+	public static String getFirstElementSimpleContentByTagNameNS(Document doc, String ns, String name) {
+		Element element = XML.getFirstElementByTagNameNS(doc, ns, name);
+		if (element != null) {
+//			return element.getFirstChild().getNodeValue();
+			return element.toString();
+		}
+		else {
+			return null;
+		}
+	}
 
 	/**
 	 * Remove all child nodes from the given parent.
