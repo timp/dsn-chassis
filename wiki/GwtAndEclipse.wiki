@@ -29,4 +29,20 @@ With Eclipse 3.4 and Java 6 as the only installed JRE, the GWT compiler crashes 
 
 This can be fixed by installing a Java 5 JRE and setting as the Eclipse default JRE.
 
+= Setting Up and Running GWT Unit Tests =
 
+Reading the [http://code.google.com/webtoolkit/tutorials/1.6/JUnit.html GWT JUnit Tutorial] and the [http://code.google.com/webtoolkit/doc/1.6/DevGuideTesting.html Testing section of the GWT Developer's Guide], it sounds like hard work to get GWT JUnit tests running.
+
+Using the Eclipse GWT Plugin for Ganymede, it was easier than the docs suggest. I did:
+
+   * assume module under test is `foo.bar.MyModule`
+   * assume class under test is `foo.bar.client.MyClass`
+   * create new source folder named `test` under project root folder
+   * create a new package `foo.bar.client` in `test` source folder
+   * create a new test class `foo.bar.client.TestMyClass` extends `com.google.gwt.junit.client.GWTTestCase`
+   * configure project build path, add junit 3 library 
+   * create a test method, e.g., `public void testSomething() { assertTrue(true); }` in new test class 
+   * right click the new test class, do `run as`, either `GWT Unit Test` or `GWT Unit Test (web mode)`
+   * if project is not built automatically, build project (plain Java build, not GWT compile)
+   
+That should be all you need. I had Java version compatibility problem when I first ran it, which went away when I chose Java 1.5 both as default JRE and as compile level.
