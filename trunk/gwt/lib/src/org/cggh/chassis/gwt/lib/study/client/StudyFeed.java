@@ -40,9 +40,8 @@ public class StudyFeed {
 	}
 	
 	public void setTitle(String title) {
-		List<Element> elements = XML.getElementsByTagNameNS(this.doc, Atom.NS, Atom.TITLE);
-		if (elements.size() > 0) {
-			Element titleElement = elements.get(0);
+		Element titleElement = XML.getFirstElementByTagNameNS(doc, Atom.NS, Atom.TITLE);
+		if (titleElement != null) {
 			XML.clear(titleElement);
 			titleElement.appendChild(doc.createTextNode(title));
 		}
@@ -51,16 +50,16 @@ public class StudyFeed {
 		}
 	}
 	
+	public String getId() {
+		return XML.getFirstElementSimpleContentByTagNameNS(this.doc, Atom.NS, Atom.ID);
+	}
+	
+	public String getUpdated() {
+		return XML.getFirstElementSimpleContentByTagNameNS(this.doc, Atom.NS, Atom.UPDATED);		
+	}
+	
 	public String getTitle() {
-		List<Element> elements = XML.getElementsByTagNameNS(this.doc, Atom.NS, Atom.TITLE);
-		String title = null;
-		if (elements.size() > 0) {
-			title = elements.get(0).toString();
-		}
-		else {
-			// TODO anything?
-		}
-		return title;
+		return XML.getFirstElementSimpleContentByTagNameNS(this.doc, Atom.NS, Atom.TITLE);
 	}
 	
 	@Override
