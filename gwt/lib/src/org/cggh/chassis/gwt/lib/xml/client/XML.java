@@ -39,6 +39,28 @@ public class XML {
 		return filtered;
 	}
 	
+
+	
+	/**
+	 * 
+	 * TODO document me
+	 * 
+	 * @param doc
+	 * @param ns
+	 * @param name
+	 * @return
+	 */
+	public static List<String> getSimpleContentsByTagNameNS(Document doc, String ns, String name) {
+		List<Element> elements = XML.getElementsByTagNameNS(doc, ns, name);
+		List<String> contents = new ArrayList<String>();
+		for (Element e : elements) {
+			contents.add(e.getFirstChild().getNodeValue());
+		}
+		return contents;
+	}
+
+	
+	
 	/**
 	 * Get first element in document order by tag name and namespace URI.
 	 *
@@ -47,7 +69,7 @@ public class XML {
 	 * @param name
 	 * @return an element, or null if none found matching query
 	 */
-	public static Element getFirstElementByTagNameNS(Document doc, String ns, String name) {
+	public static Element getElementByTagNameNS(Document doc, String ns, String name) {
 		List<Element> elements = XML.getElementsByTagNameNS(doc, ns, name);
 		if (elements.size() > 0) {
 			return elements.get(0);
@@ -57,11 +79,22 @@ public class XML {
 		}
 	}
 	
-	public static String getFirstElementSimpleContentByTagNameNS(Document doc, String ns, String name) {
-		Element element = XML.getFirstElementByTagNameNS(doc, ns, name);
+	public static String getSimpleContentByTagNameNS(Document doc, String ns, String name) {
+		Element element = XML.getElementByTagNameNS(doc, ns, name);
 		if (element != null) {
-//			return element.getFirstChild().getNodeValue();
-			return element.toString();
+			return element.getFirstChild().getNodeValue();
+//			return element.toString();
+		}
+		else {
+			return null;
+		}
+	}
+
+	public static String getSimpleContentByTagNameNS(Element ancestor, String ns, String name) {
+		Element element = XML.getElementByTagNameNS(ancestor, ns, name);
+		if (element != null) {
+			return element.getFirstChild().getNodeValue();
+//			return element.toString();
 		}
 		else {
 			return null;
@@ -69,16 +102,90 @@ public class XML {
 	}
 
 	/**
+	 * TODO document me
+	 * 
+	 * @param ancestor
+	 * @param ns
+	 * @param name
+	 * @return
+	 */
+	public static Element getElementByTagNameNS(Element ancestor, String ns, String name) {
+		List<Element> elements = XML.getElementsByTagNameNS(ancestor, ns, name);
+		if (elements.size() > 0) {
+			return elements.get(0);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * TODO document me
+	 * 
+	 * @param ancestor
+	 * @param ns
+	 * @param name
+	 * @return
+	 */
+	public static List<Element> getElementsByTagNameNS(Element ancestor, String ns, String name) {
+		ArrayList<Element> filtered = new ArrayList<Element>();
+		NodeList initial = ancestor.getElementsByTagName(name);
+		for (int i=0; i<initial.getLength(); i++) {
+			Node n = initial.item(i);
+			if (n.getNamespaceURI().equals(ns)) {
+				filtered.add((Element)n);
+			}
+		}
+		return filtered;
+	}
+
+	/**
 	 * Remove all child nodes from the given parent.
 	 * 
 	 * @param parent
 	 */
-	public static void clear(Element parent) {
+	public static void removeAllChildren(Element parent) {
 		NodeList children = parent.getChildNodes();
 		for (int i=0; i<children.getLength(); i++) {
 			Node child = children.item(i);
 			parent.removeChild(child);
 		}
+	}
+
+
+
+	/**
+	 * TODO document me
+	 * 
+	 * @param ancestor
+	 * @param ns
+	 * @param name
+	 * @return
+	 */
+	public static List<String> getSimpleContentsByTagNameNS(Element ancestor, String ns, String name) {
+		List<Element> elements = XML.getElementsByTagNameNS(ancestor, ns, name);
+		List<String> contents = new ArrayList<String>();
+		for (Element e : elements) {
+			contents.add(e.getFirstChild().getNodeValue());
+		}
+		return contents;
+	}
+	
+	
+	
+	public static void removeElementsByTagNameNS(Element ancestor, String ns, String name) {
+		List<Element> elements = XML.getElementsByTagNameNS(ancestor, ns, name);
+		for (Element e : elements) {
+			Element parent = (Element) e.getParentNode();
+			parent.removeChild(e);
+		}
+	}
+	
+	
+	
+	public static void setSimpleContent(Document doc, Element element, String content) {
+		XML.removeAllChildren(element);
+		element.appendChild(doc.createTextNode(content));
 	}
 
 }

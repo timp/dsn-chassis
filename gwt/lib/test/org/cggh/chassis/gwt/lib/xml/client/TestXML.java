@@ -88,7 +88,7 @@ public class TestXML extends GWTTestCase {
 		
 		Document doc = XMLParser.parse(xml);
 		
-		String content = XML.getFirstElementSimpleContentByTagNameNS(doc, ns2, "bar");
+		String content = XML.getSimpleContentByTagNameNS(doc, ns2, "bar");
 		
 		assertEquals("quux", content);
 
