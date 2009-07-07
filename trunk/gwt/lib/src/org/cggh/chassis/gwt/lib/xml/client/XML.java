@@ -92,9 +92,8 @@ public class XML {
 
 	public static String getSimpleContentByTagNameNS(Element ancestor, String ns, String name) {
 		Element element = XML.getElementByTagNameNS(ancestor, ns, name);
-		if (element != null) {
+		if (element != null && element.hasChildNodes()) {
 			return element.getFirstChild().getNodeValue();
-//			return element.toString();
 		}
 		else {
 			return null;
