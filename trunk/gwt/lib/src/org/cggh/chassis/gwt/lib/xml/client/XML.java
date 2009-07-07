@@ -183,9 +183,17 @@ public class XML {
 	
 	
 	
-	public static void setSimpleContent(Document doc, Element element, String content) {
+	public static void setSimpleContent(Element element, String content) {
 		XML.removeAllChildren(element);
-		element.appendChild(doc.createTextNode(content));
+		element.appendChild(element.getOwnerDocument().createTextNode(content));
+	}
+	
+	
+	
+	public static Element createElement(Element parent, String tagName) {
+		Element child = parent.getOwnerDocument().createElement(tagName);
+		parent.appendChild(child);
+		return child;
 	}
 
 }

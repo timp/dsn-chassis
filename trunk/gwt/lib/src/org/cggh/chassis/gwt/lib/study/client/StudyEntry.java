@@ -72,9 +72,8 @@ public class StudyEntry extends AtomEntry {
 
 		// add new country elements
 		for (String country : countries) {
-			Element countryElement = doc.createElement(ChassisNS.COUNTRY);
-			studyElement.appendChild(countryElement);
-			countryElement.appendChild(doc.createTextNode(country));
+			Element countryElement = createStudyElement(ChassisNS.COUNTRY);
+			XML.setSimpleContent(countryElement, country);
 		}
 		
 	}
@@ -82,7 +81,7 @@ public class StudyEntry extends AtomEntry {
 	
 	
 	public List<StudyLocation> getLocations() {
-		List<Element> locationElements = XML.getElementsByTagNameNS(studyElement, ChassisNS.NS, ChassisNS.LOCATION);
+		List<Element> locationElements = getStudyElements(ChassisNS.LOCATION);
 		List<StudyLocation> locations = new ArrayList<StudyLocation>();
 		for (Element locationElement : locationElements) {
 			locations.add(new StudyLocation(locationElement));
@@ -99,9 +98,8 @@ public class StudyEntry extends AtomEntry {
 
 		// add new location elements
 		for (StudyLocation location : locations) {
-			Element locationElement = doc.createElement(ChassisNS.LOCATION);
-			studyElement.appendChild(locationElement);
-			location.populate(doc, locationElement);
+			Element locationElement = createStudyElement(ChassisNS.LOCATION);
+			location.populate(locationElement);
 		}
 		
 	}
@@ -161,7 +159,7 @@ public class StudyEntry extends AtomEntry {
 		}
 		
 		// set string content of treatment element
-		XML.setSimpleContent(doc, element, content);
+		XML.setSimpleContent(element, content);
 
 	}
 	
@@ -182,7 +180,7 @@ public class StudyEntry extends AtomEntry {
 		for (String content : contents) {
 			Element element = doc.createElement(tagName);
 			studyElement.appendChild(element);
-			XML.setSimpleContent(doc, element, content);
+			XML.setSimpleContent(element, content);
 		}
 
 	}
