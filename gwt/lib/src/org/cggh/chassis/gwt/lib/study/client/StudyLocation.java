@@ -65,15 +65,16 @@ public class StudyLocation {
 	 * TODO document me
 	 * 
 	 * @param doc
-	 * @param locationElement
+	 * @param studyLocationElement
 	 */
-	void populate(Document doc, Element locationElement) {
-		Element latElement = doc.createElement(ChassisNS.LAT);
-		latElement.appendChild(doc.createTextNode(this.lat));
-		locationElement.appendChild(latElement);
-		Element lonElement = doc.createElement(ChassisNS.LON);
-		lonElement.appendChild(doc.createTextNode(this.lon));
-		locationElement.appendChild(lonElement);
+	void populate(Element studyLocationElement) {
+		
+		Element latElement = XML.createElement(studyLocationElement, ChassisNS.LAT);
+		XML.setSimpleContent(latElement, this.lat);
+
+		Element lonElement = XML.createElement(studyLocationElement, ChassisNS.LON);
+		XML.setSimpleContent(lonElement, this.lon);
+
 	}
 	
 }
