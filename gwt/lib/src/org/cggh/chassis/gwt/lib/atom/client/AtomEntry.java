@@ -47,6 +47,16 @@ public class AtomEntry {
 	
 	
 	/**
+	 * @param entryElement
+	 */
+	public AtomEntry(Element entryElement) {
+		this.doc = entryElement.getOwnerDocument();
+		this.entryElement = entryElement;
+	}
+
+
+
+	/**
 	 * TODO document me
 	 * 
 	 * @param doc
@@ -58,7 +68,8 @@ public class AtomEntry {
 
 
 
-	public String toXMLString() {
+	@Override
+	public String toString() {
 		return this.doc.toString();
 	}
 
@@ -78,8 +89,7 @@ public class AtomEntry {
 	 */
 	public void setTitle(String title) {
 		Element titleElement = XML.getElementByTagNameNS(entryElement, AtomNS.NS, AtomNS.TITLE);
-		XML.removeAllChildren(titleElement);
-		titleElement.appendChild(doc.createTextNode(title));
+		XML.setSimpleContent(titleElement, title);
 	}
 
 	

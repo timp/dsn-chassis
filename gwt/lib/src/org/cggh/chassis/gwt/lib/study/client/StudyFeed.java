@@ -3,6 +3,11 @@
  */
 package org.cggh.chassis.gwt.lib.study.client;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.cggh.chassis.gwt.lib.atom.client.AtomEntry;
+import org.cggh.chassis.gwt.lib.atom.client.AtomFeed;
 import org.cggh.chassis.gwt.lib.atom.client.AtomNS;
 import org.cggh.chassis.gwt.lib.xml.client.XML;
 import com.google.gwt.xml.client.Document;
@@ -15,53 +20,30 @@ import com.google.gwt.xml.client.XMLParser;
  * @author aliman
  *
  */
-public class StudyFeed {
+public class StudyFeed extends AtomFeed {
 
-	private Document doc = null;
-	private String template = 
-		"<feed xmlns=\"http://www.w3.org/2005/AtomNS\"><title></title></feed>";
+
 	
 	public StudyFeed() {
-		this.doc = XMLParser.parse(template);
+		super();
 	}
 	
-	protected StudyFeed(Document doc) {
-		// TODO check doc form here?
-		this.doc = doc;
+	
+	
+	public StudyFeed(String feedDocXML) {
+		super(feedDocXML);
 	}
 	
-	public static StudyFeed parse(String xml) {
-		Document parsed = XMLParser.parse(xml);
-		// TODO check document form?
-		return new StudyFeed(parsed);
-	}
 	
-	public void setTitle(String title) {
-		Element titleElement = XML.getElementByTagNameNS(doc, AtomNS.NS, AtomNS.TITLE);
-		if (titleElement != null) {
-			XML.removeAllChildren(titleElement);
-			titleElement.appendChild(doc.createTextNode(title));
+	
+	public List<StudyEntry> getStudyEntries() {
+		List<Element> entryElements = XML.getElementsByTagNameNS(feedElement, AtomNS.NS, AtomNS.ENTRY);
+		List<StudyEntry> entries = new ArrayList<StudyEntry>();
+		for (Element entryElement : entryElements) {
+			StudyEntry entry = new StudyEntry(entryElement);
+			entries.add(entry);
 		}
-		else {
-			// TODO anything?
-		}
+		return entries;
 	}
-	
-	public String getId() {
-		return XML.getSimpleContentByTagNameNS(this.doc, AtomNS.NS, AtomNS.ID);
-	}
-	
-	public String getUpdated() {
-		return XML.getSimpleContentByTagNameNS(this.doc, AtomNS.NS, AtomNS.UPDATED);		
-	}
-	
-	public String getTitle() {
-		return XML.getSimpleContentByTagNameNS(this.doc, AtomNS.NS, AtomNS.TITLE);
-	}
-	
-	@Override
-	public String toString() {
-		return this.doc.toString();
-	}
-	
+		
 }

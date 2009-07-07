@@ -49,6 +49,16 @@ public class StudyEntry extends AtomEntry {
 
 	
 
+	/**
+	 * @param entryElement
+	 */
+	public StudyEntry(Element entryElement) {
+		super(entryElement);
+		studyElement = XML.getElementByTagNameNS(entryElement, ChassisNS.NS, ChassisNS.STUDY);
+	}
+
+
+
 	@Override
 	protected void init(Document doc) {
 		super.init(doc);
