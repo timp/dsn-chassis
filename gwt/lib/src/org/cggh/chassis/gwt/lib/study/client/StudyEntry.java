@@ -9,10 +9,8 @@ import java.util.List;
 import org.cggh.chassis.gwt.lib.atom.client.AtomEntry;
 import org.cggh.chassis.gwt.lib.common.client.ChassisNS;
 import org.cggh.chassis.gwt.lib.xml.client.XML;
-
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;
-import com.google.gwt.xml.client.XMLParser;
 
 /**
  * TODO document me
