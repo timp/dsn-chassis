@@ -77,15 +77,43 @@ public class AtomCategory {
 		this.label = label;
 	}
 
-	/**
-	 * TODO document me
-	 * 
-	 * @param doc
-	 * @param categoryElement
-	 */
-	void populate(Document doc, Element categoryElement) {
-		// TODO Auto-generated method stub
+//	/**
+//	 * TODO document me
+//	 * 
+//	 * @param doc
+//	 * @param categoryElement
+//	 */
+//	void populate(Document doc, Element categoryElement) {
+//		// TODO Auto-generated method stub
+//		
+//	}
+
+	public String toXML() {
+		String xml = 
+			"<category>";
 		
+		// output term
+		if (this.term != null) {
+			xml += 
+				"<term>"+this.term+"</term>";
+		}
+
+		// output scheme
+		if (this.scheme != null) {
+			xml += 
+				"<scheme>"+this.scheme+"</scheme>";
+		}
+
+		// output label
+		if (this.label != null) {
+			xml += 
+				"<label>"+this.label+"</label>";
+		}
+
+		xml +=
+			"</category>";
+		
+		return xml;
 	}
 	
 }

@@ -77,32 +77,61 @@ public class AtomPersonConstruct {
 		this.uri = XML.getSimpleContentByTagNameNS(authorElement, AtomNS.NS, AtomNS.URI);
 	}
 
-	/**
-	 * TODO document me
-	 * 
-	 * @param authorElement
-	 */
-	void populate(Document doc, Element authorElement) {
-
-		// name element (mandatory)
-		Element nameElement = doc.createElement(AtomNS.NAME);
-		authorElement.appendChild(nameElement);
-		nameElement.appendChild(doc.createTextNode(this.name));
+//	/**
+//	 * TODO document me
+//	 * 
+//	 * @param authorElement
+//	 */
+//	void populate(Document doc, Element authorElement) {
+//
+//		// name element (mandatory)
+//		Element nameElement = doc.createElement(AtomNS.NAME);
+//		authorElement.appendChild(nameElement);
+//		nameElement.appendChild(doc.createTextNode(this.name));
+//		
+//		// email element (optional)
+//		if (this.email != null) {
+//			Element emailElement = doc.createElement(AtomNS.EMAIL);
+//			authorElement.appendChild(emailElement);
+//			emailElement.appendChild(doc.createTextNode(this.email));
+//		}
+//
+//		// uri element (optional)
+//		if (this.uri != null) {
+//			Element uriElement = doc.createElement(AtomNS.URI);
+//			authorElement.appendChild(uriElement);
+//			uriElement.appendChild(doc.createTextNode(this.uri));
+//		}
+//	}
+	
+	public String toXML() {
 		
-		// email element (optional)
+		String xml = 
+			"<author>";
+		
+		// output name
+		if (this.name != null) {
+			xml += 
+				"<name>"+this.name+"</name>";
+		}
+		
+		// output email
 		if (this.email != null) {
-			Element emailElement = doc.createElement(AtomNS.EMAIL);
-			authorElement.appendChild(emailElement);
-			emailElement.appendChild(doc.createTextNode(this.email));
+			xml += 
+				"<email>"+this.email+"</email>";
 		}
-
-		// uri element (optional)
+		
+		// output uri
 		if (this.uri != null) {
-			Element uriElement = doc.createElement(AtomNS.URI);
-			authorElement.appendChild(uriElement);
-			uriElement.appendChild(doc.createTextNode(this.uri));
+			xml += 
+				"<uri>"+this.uri+"</uri>";
 		}
-}
+		
+		xml +=
+			"</author>";
+		
+		return xml;
+	}
 	
 	
 }
