@@ -3,11 +3,8 @@
  */
 package org.cggh.chassis.gwt.lib.study.client;
 
-import org.cggh.chassis.gwt.lib.atom.client.AtomNS;
 import org.cggh.chassis.gwt.lib.common.client.ChassisNS;
 import org.cggh.chassis.gwt.lib.xml.client.XML;
-
-import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;
 
 /**
