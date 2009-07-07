@@ -5,7 +5,7 @@ package org.cggh.chassis.gwt.lib.study.client;
 
 import java.util.List;
 
-import org.cggh.chassis.gwt.lib.atom.client.Atom;
+import org.cggh.chassis.gwt.lib.atom.client.AtomNS;
 import org.cggh.chassis.gwt.lib.xml.client.XML;
 
 import com.google.gwt.xml.client.Document;
@@ -22,7 +22,7 @@ public class StudyFeed {
 
 	private Document doc = null;
 	private String template = 
-		"<feed xmlns=\"http://www.w3.org/2005/Atom\"><title></title></feed>";
+		"<feed xmlns=\"http://www.w3.org/2005/AtomNS\"><title></title></feed>";
 	
 	public StudyFeed() {
 		this.doc = XMLParser.parse(template);
@@ -40,9 +40,9 @@ public class StudyFeed {
 	}
 	
 	public void setTitle(String title) {
-		Element titleElement = XML.getFirstElementByTagNameNS(doc, Atom.NS, Atom.TITLE);
+		Element titleElement = XML.getElementByTagNameNS(doc, AtomNS.NS, AtomNS.TITLE);
 		if (titleElement != null) {
-			XML.clear(titleElement);
+			XML.removeAllChildren(titleElement);
 			titleElement.appendChild(doc.createTextNode(title));
 		}
 		else {
@@ -51,15 +51,15 @@ public class StudyFeed {
 	}
 	
 	public String getId() {
-		return XML.getFirstElementSimpleContentByTagNameNS(this.doc, Atom.NS, Atom.ID);
+		return XML.getSimpleContentByTagNameNS(this.doc, AtomNS.NS, AtomNS.ID);
 	}
 	
 	public String getUpdated() {
-		return XML.getFirstElementSimpleContentByTagNameNS(this.doc, Atom.NS, Atom.UPDATED);		
+		return XML.getSimpleContentByTagNameNS(this.doc, AtomNS.NS, AtomNS.UPDATED);		
 	}
 	
 	public String getTitle() {
-		return XML.getFirstElementSimpleContentByTagNameNS(this.doc, Atom.NS, Atom.TITLE);
+		return XML.getSimpleContentByTagNameNS(this.doc, AtomNS.NS, AtomNS.TITLE);
 	}
 	
 	@Override
