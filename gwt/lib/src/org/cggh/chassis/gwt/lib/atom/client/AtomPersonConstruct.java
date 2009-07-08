@@ -3,9 +3,9 @@
  */
 package org.cggh.chassis.gwt.lib.atom.client;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.cggh.chassis.gwt.lib.xml.client.XML;
-
-import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;
 
 /**
@@ -77,61 +77,59 @@ public class AtomPersonConstruct {
 		this.uri = XML.getSimpleContentByTagNameNS(authorElement, AtomNS.NS, AtomNS.URI);
 	}
 
-//	/**
-//	 * TODO document me
-//	 * 
-//	 * @param authorElement
-//	 */
-//	void populate(Document doc, Element authorElement) {
-//
-//		// name element (mandatory)
-//		Element nameElement = doc.createElement(AtomNS.NAME);
-//		authorElement.appendChild(nameElement);
-//		nameElement.appendChild(doc.createTextNode(this.name));
-//		
-//		// email element (optional)
-//		if (this.email != null) {
-//			Element emailElement = doc.createElement(AtomNS.EMAIL);
-//			authorElement.appendChild(emailElement);
-//			emailElement.appendChild(doc.createTextNode(this.email));
-//		}
-//
-//		// uri element (optional)
-//		if (this.uri != null) {
-//			Element uriElement = doc.createElement(AtomNS.URI);
-//			authorElement.appendChild(uriElement);
-//			uriElement.appendChild(doc.createTextNode(this.uri));
-//		}
-//	}
 	
-	public String toXML() {
+	
+	/**
+	 * TODO document me
+	 * 
+	 * @param authorElement
+	 */
+	void populate(Element authorElement) {
+
+		// name element (mandatory)
+		XML.setElementSimpleContentByTagName(authorElement, AtomNS.NAME, this.name);
 		
-		String xml = 
-			"<author>";
-		
-		// output name
-		if (this.name != null) {
-			xml += 
-				"<name>"+this.name+"</name>";
-		}
-		
-		// output email
+		// email element (optional)
 		if (this.email != null) {
-			xml += 
-				"<email>"+this.email+"</email>";
+			XML.setElementSimpleContentByTagName(authorElement, AtomNS.EMAIL, this.email);
 		}
-		
-		// output uri
+
+		// uri element (optional)
 		if (this.uri != null) {
-			xml += 
-				"<uri>"+this.uri+"</uri>";
+			XML.setElementSimpleContentByTagName(authorElement, AtomNS.URI, this.uri);
 		}
-		
-		xml +=
-			"</author>";
-		
-		return xml;
+	}
+
+	
+	
+	/**
+	 * TODO document me
+	 * 
+	 * @param authorElements
+	 * @return
+	 */
+	public static List<AtomPersonConstruct> getAuthors(Element parent) {
+		List<Element> personElements = XML.getElementsByTagName(parent, AtomNS.AUTHOR);
+		List<AtomPersonConstruct> persons = new ArrayList<AtomPersonConstruct>();
+		for (Element element : personElements) {
+			persons.add(new AtomPersonConstruct(element));
+		}
+		return persons;
 	}
 	
+	
+	
+	public static void setAuthors(Element parent, List<AtomPersonConstruct> authors) {
+
+		// remove existing category elements
+		XML.removeElementsByTagName(parent, AtomNS.AUTHOR);
+		
+		// create new category elements and append to entry element
+		for (AtomPersonConstruct author : authors) {
+			Element authorElement = XML.createElement(parent, AtomNS.AUTHOR);
+			author.populate(authorElement);
+		}
+		
+	}
 	
 }

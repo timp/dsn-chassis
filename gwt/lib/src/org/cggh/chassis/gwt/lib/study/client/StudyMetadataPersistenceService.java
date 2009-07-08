@@ -3,6 +3,8 @@
  */
 package org.cggh.chassis.gwt.lib.study.client;
 
+import org.cggh.chassis.gwt.lib.atom.client.AtomFormatException;
+
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
@@ -58,11 +60,19 @@ public class StudyMetadataPersistenceService {
 					
 					if (contentType.startsWith("application/atom+xml") || contentType.startsWith("application/xml")) {
 						
-						// wrap response 
-						StudyFeed feed = new StudyFeed(response.getText());
+						try {
+							
+							// wrap response 
+							StudyFeed feed = new StudyFeed(response.getText());
 
-						// pass through to next callback
-						callback.onSuccess(request, response, feed);
+							// pass through to next callback
+							callback.onSuccess(request, response, feed);
+
+						} catch (AtomFormatException ex) {
+							
+							callback.onError(request, response, ex);
+
+						}
 
 					}
 					else {
@@ -120,11 +130,20 @@ public class StudyMetadataPersistenceService {
 					
 					if (contentType.startsWith("application/atom+xml") || contentType.startsWith("application/xml")) {
 						
-						// wrap response 
-						StudyEntry entry = new StudyEntry(response.getText());
+						try {
+							
+							// wrap response 
+							StudyEntry entry = new StudyEntry(response.getText());
 
-						// pass through to next callback
-						callback.onSuccess(request, response, entry);
+							// pass through to next callback
+							callback.onSuccess(request, response, entry);
+
+						} catch (AtomFormatException ex) {
+							
+							callback.onError(request, response, ex);
+
+						}
+
 
 					}
 					else {
@@ -175,11 +194,20 @@ public class StudyMetadataPersistenceService {
 					
 					if (contentType.startsWith("application/atom+xml") || contentType.startsWith("application/xml")) {
 						
-						// wrap response 
-						StudyEntry entry = new StudyEntry(response.getText());
+						try {
+							
+							// wrap response 
+							StudyEntry entry = new StudyEntry(response.getText());
 
-						// pass through to next callback
-						callback.onSuccess(request, response, entry);
+							// pass through to next callback
+							callback.onSuccess(request, response, entry);
+
+						} catch (AtomFormatException ex) {
+							
+							callback.onError(request, response, ex);
+
+						}
+
 
 					}
 					else {
@@ -239,11 +267,19 @@ public class StudyMetadataPersistenceService {
 					
 					if (contentType.startsWith("application/atom+xml") || contentType.startsWith("application/xml")) {
 						
-						// wrap response 
-						StudyEntry entry = new StudyEntry(response.getText());
+						try {
+							
+							// wrap response 
+							StudyEntry entry = new StudyEntry(response.getText());
 
-						// pass through to next callback
-						callback.onSuccess(request, response, entry);
+							// pass through to next callback
+							callback.onSuccess(request, response, entry);
+
+						} catch (AtomFormatException ex) {
+							
+							callback.onError(request, response, ex);
+
+						}
 
 					}
 					else {
@@ -334,6 +370,7 @@ public class StudyMetadataPersistenceService {
 		public void onSuccess(Request request, Response response, StudyFeed feed);
 		public void onFailure(Request request, Response response);
 		public void onError(Request request, Throwable exception);
+		public void onError(Request request, Response response, Throwable exception);
 		
 	}
 	
@@ -348,6 +385,7 @@ public class StudyMetadataPersistenceService {
 		public void onSuccess(Request request, Response response, StudyEntry entry);
 		public void onFailure(Request request, Response response);
 		public void onError(Request request, Throwable exception);
+		public void onError(Request request, Response response, Throwable exception);
 
 	}
 
@@ -362,6 +400,7 @@ public class StudyMetadataPersistenceService {
 		public void onSuccess(Request request, Response response);
 		public void onFailure(Request request, Response response);
 		public void onError(Request request, Throwable exception);
+		public void onError(Request request, Response response, Throwable exception);
 
 	}
 
