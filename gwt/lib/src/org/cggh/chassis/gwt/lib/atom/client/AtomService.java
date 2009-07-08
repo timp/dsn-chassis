@@ -3,11 +3,6 @@
  */
 package org.cggh.chassis.gwt.lib.atom.client;
 
-import org.cggh.chassis.gwt.lib.http.client.RequestWrapper;
-import org.cggh.chassis.gwt.lib.http.client.ResponseWrapper;
-import org.cggh.chassis.gwt.lib.http.client.impl.RequestWrapperImpl;
-import org.cggh.chassis.gwt.lib.http.client.impl.ResponseWrapperImpl;
-import org.cggh.chassis.gwt.lib.study.client.StudyFeed;
 
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
@@ -175,17 +170,13 @@ public class AtomService<E extends AtomEntry, F extends AtomFeed> {
 			next.onError(request, exception);
 		}
 
-		public void onResponseReceived(Request request, Response response) {
-			this.onWrappedResponseReceived(new RequestWrapperImpl(request), new ResponseWrapperImpl(response));
-		}
-		
 		@SuppressWarnings("unchecked")
-		public void onWrappedResponseReceived(RequestWrapper request, ResponseWrapper response) {
+		public void onResponseReceived(Request request, Response response) {
 
 			// precondition: check status code
 			if (response.getStatusCode() != 200) {
 				// pass through to next callback
-				next.onFailure(request.getWrappee(), response.getWrappee());
+				next.onFailure(request, response);
 				return;
 			}
 			
@@ -193,7 +184,7 @@ public class AtomService<E extends AtomEntry, F extends AtomFeed> {
 			String contentType = response.getHeader("Content-Type");
 			if (!contentType.startsWith("application/atom+xml") && !contentType.startsWith("application/xml")) {
 				// pass through as error
-				next.onError(request.getWrappee(), response.getWrappee(), new Exception("expected content type starts with \"application/atom+xml\" or \"application/xml\", found \""+contentType+"\""));
+				next.onError(request, response, new Exception("expected content type starts with \"application/atom+xml\" or \"application/xml\", found \""+contentType+"\""));
 				return;
 			}
 				
@@ -208,12 +199,14 @@ public class AtomService<E extends AtomEntry, F extends AtomFeed> {
 				
 			} catch (AtomFormatException ex) {
 				// pass through as error
-				next.onError(request.getWrappee(), response.getWrappee(), ex);
+				next.onError(request, response, ex);
 				return;
 			}
 
 			// pass through to next callback
-			next.onSuccess(request.getWrappee(), response.getWrappee(), feed);		}
+			next.onSuccess(request, response, feed);		
+			
+		}		
 
 	}
 
@@ -360,6 +353,7 @@ public class AtomService<E extends AtomEntry, F extends AtomFeed> {
 			next.onError(request, exception);
 		}
 
+		@SuppressWarnings("unchecked")
 		public void onResponseReceived(Request request, Response response) {
 			
 			// precondition: check status code
