@@ -16,5 +16,9 @@ public class AtomService<K extends AtomEntry, V extends AtomFeed> {
 	public AtomService(String collectionURL) {
 		this.collectionURL = collectionURL;
 	}
+	
+	public void getFeed(CallbackWithFeed<V> callback) {
+		// TODO
+	}
 
 }
