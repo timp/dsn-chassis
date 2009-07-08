@@ -34,7 +34,7 @@ public class TestXML extends GWTTestCase {
 		return "org.cggh.chassis.gwt.lib.xml.XML";
 	}
 	
-	public void testGetElementsByTagNameNS() {
+	public void test_getElementsByTagNameNS() {
 		
 		String ns1 = "http://example.org/ns1";
 		String ns2 = "http://example.org/ns2";
@@ -74,7 +74,7 @@ public class TestXML extends GWTTestCase {
 		
 	}
 	
-	public void testGetFirstElementSimpleContentByTagNameNS() {
+	public void test_getSimpleContentByTagNameNS() {
 
 		String ns1 = "http://example.org/ns1";
 		String ns2 = "http://example.org/ns2";
@@ -88,7 +88,7 @@ public class TestXML extends GWTTestCase {
 		
 		Document doc = XMLParser.parse(xml);
 		
-		String content = XML.getSimpleContentByTagNameNS(doc, ns2, "bar");
+		String content = XML.getElementSimpleContentByTagNameNS(doc, ns2, "bar");
 		
 		assertEquals("quux", content);
 
