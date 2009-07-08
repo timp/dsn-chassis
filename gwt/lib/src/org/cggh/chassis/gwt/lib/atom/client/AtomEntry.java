@@ -54,6 +54,19 @@ public class AtomEntry {
 	
 	
 	/**
+	 * TODO document me
+	 * 
+	 * @param entryDocXML
+	 * @return
+	 * @throws AtomFormatException
+	 */
+	public static AtomEntry newInstance(String entryDocXML) throws AtomFormatException {
+		return new AtomEntry(entryDocXML);
+	}
+	
+	
+	
+	/**
 	 * Create a new Atom entry, wrapping the entry element supplied.
 	 * N.B. The entry element may be part of a feed document.
 	 * 

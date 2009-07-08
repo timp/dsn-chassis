@@ -45,6 +45,12 @@ public class AtomFeed {
 	
 	
 	
+	public static AtomFeed newInstance(String feedDocXML) throws AtomFormatException {
+		return new AtomFeed(feedDocXML);
+	}
+	
+	
+	
 	protected void init() throws AtomFormatException {
 		if (this.feedElement == null) {
 			throw new AtomFormatException("feed element is null");
