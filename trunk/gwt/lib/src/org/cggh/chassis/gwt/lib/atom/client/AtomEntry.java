@@ -19,7 +19,7 @@ public class AtomEntry {
 	
 	
 	
-	protected static final String template = "<entry xmlns=\"http://www.w3.org/2005/AtomNS\"></entry>";
+	protected static final String template = "<entry xmlns=\"http://www.w3.org/2005/Atom\"></entry>";
 
 	
 	
@@ -166,6 +166,16 @@ public class AtomEntry {
 	}
 	
 	
+	/**
+	 * TODO document me
+	 * 
+	 * @return
+	 */
+	public String getPublished() {
+		return this.getElementContent(AtomNS.PUBLISHED);
+	}
+	
+
 		
 	/**
 	 * @return the authors
@@ -200,7 +210,9 @@ public class AtomEntry {
 	public void setCategories(List<AtomCategory> categories) {
 		AtomCategory.setCategories(this.entryElement, categories);
 	}
-	
+
+
+
 	
 	
 }

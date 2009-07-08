@@ -17,7 +17,7 @@ import com.google.gwt.xml.client.Element;
  */
 public class AtomCategory {
 
-	String term, scheme, label;
+	private String term, scheme, label;
 
 	/**
 	 * @param term
@@ -34,10 +34,10 @@ public class AtomCategory {
 	/**
 	 * @param categoryElement
 	 */
-	AtomCategory(Element categoryElement) {
-		this.term = XML.getElementSimpleContentByTagName(categoryElement, AtomNS.TERM);
-		this.scheme = XML.getElementSimpleContentByTagName(categoryElement, AtomNS.SCHEME);
-		this.label = XML.getElementSimpleContentByTagName(categoryElement, AtomNS.LABEL);
+	protected AtomCategory(Element categoryElement) {
+		this.term = categoryElement.getAttribute(AtomNS.TERM);
+		this.scheme = categoryElement.getAttribute(AtomNS.SCHEME);
+		this.label = categoryElement.getAttribute(AtomNS.LABEL);
 	}
 
 	/**
@@ -91,16 +91,16 @@ public class AtomCategory {
 	void populate(Element categoryElement) {
 
 		// term element (mandatory)
-		XML.setElementSimpleContentByTagName(categoryElement, AtomNS.TERM, this.term);
+		categoryElement.setAttribute(AtomNS.TERM, this.term);
 		
 		// scheme element (optional)
 		if (this.scheme != null) {
-			XML.setElementSimpleContentByTagName(categoryElement, AtomNS.SCHEME, this.scheme);
+			categoryElement.setAttribute(AtomNS.SCHEME, this.scheme);
 		}
 
 		// label element (optional)
 		if (this.label != null) {
-			XML.setElementSimpleContentByTagName(categoryElement, AtomNS.LABEL, this.label);
+			categoryElement.setAttribute(AtomNS.LABEL, this.label);
 		}
 		
 	}

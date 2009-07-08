@@ -11,7 +11,7 @@ package org.cggh.chassis.gwt.lib.atom.client;
  */
 public class AtomNS {
 
-	public static final String NS = "http://www.w3.org/2005/AtomNS";
+	public static final String NS = "http://www.w3.org/2005/Atom";
 	public static final String FEED = "feed";
 	public static final String ENTRY = "entry";
 	public static final String TITLE = "title";
@@ -28,5 +28,6 @@ public class AtomNS {
 	public static final String TERM = "term";
 	public static final String SCHEME = "scheme";
 	public static final String LABEL = "label";
+	public static final String PUBLISHED = "published";
 	
 }

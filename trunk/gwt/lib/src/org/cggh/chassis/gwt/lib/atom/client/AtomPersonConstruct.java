@@ -16,9 +16,9 @@ import com.google.gwt.xml.client.Element;
  */
 public class AtomPersonConstruct {
 
-	String uri;
-	String email;
-	String name;
+	private String uri;
+	private String email;
+	private String name;
 
 	/**
 	 * @return the uri
@@ -71,10 +71,10 @@ public class AtomPersonConstruct {
 	/**
 	 * @param authorElement
 	 */
-	AtomPersonConstruct(Element authorElement) {
-		this.name = XML.getSimpleContentByTagNameNS(authorElement, AtomNS.NS, AtomNS.NAME);
-		this.email = XML.getSimpleContentByTagNameNS(authorElement, AtomNS.NS, AtomNS.EMAIL);
-		this.uri = XML.getSimpleContentByTagNameNS(authorElement, AtomNS.NS, AtomNS.URI);
+	protected AtomPersonConstruct(Element authorElement) {
+		this.name = XML.getElementSimpleContentByTagName(authorElement, AtomNS.NAME);
+		this.email = XML.getElementSimpleContentByTagName(authorElement, AtomNS.EMAIL);
+		this.uri = XML.getElementSimpleContentByTagName(authorElement, AtomNS.URI);
 	}
 
 	
