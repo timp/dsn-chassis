@@ -3,6 +3,8 @@
  */
 package org.cggh.chassis.gwt.lib.study.client;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.cggh.chassis.gwt.lib.common.client.ChassisNS;
 import org.cggh.chassis.gwt.lib.xml.client.XML;
 import com.google.gwt.xml.client.Element;
@@ -72,6 +74,49 @@ public class StudyLocation {
 		Element lonElement = XML.createElement(studyLocationElement, ChassisNS.LON);
 		XML.setSimpleContent(lonElement, this.lon);
 
+	}
+
+	
+	
+	/**
+	 * TODO document me
+	 * 
+	 * @param parent
+	 * @return
+	 */
+	public static List<StudyLocation> getLocations(Element parent) {
+		
+		// get location elements
+		List<Element> locationElements = XML.getElementsByTagName(parent, ChassisNS.LOCATION);
+		
+		// instantiate list of locations
+		List<StudyLocation> locations = new ArrayList<StudyLocation>();
+		for (Element locationElement : locationElements) {
+			locations.add(new StudyLocation(locationElement));
+		}
+		
+		return locations;
+	}
+
+	
+	
+	/**
+	 * TODO document me
+	 * 
+	 * @param parent
+	 * @param locations
+	 */
+	public static void setLocations(Element parent, List<StudyLocation> locations) {
+
+		// remove all existing location elements
+		XML.removeElementsByTagName(parent, ChassisNS.LOCATION);
+
+		// create new category elements and append to entry element
+		for (StudyLocation location : locations) {
+			Element locationElement = XML.createElement(parent, ChassisNS.LOCATION);
+			location.populate(locationElement);
+		}
+		
 	}
 	
 }

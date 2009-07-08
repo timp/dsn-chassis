@@ -3,7 +3,10 @@
  */
 package org.cggh.chassis.gwt.lib.atom.client;
 
-import com.google.gwt.xml.client.Document;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.cggh.chassis.gwt.lib.xml.client.XML;
 import com.google.gwt.xml.client.Element;
 
 /**
@@ -32,7 +35,9 @@ public class AtomCategory {
 	 * @param categoryElement
 	 */
 	AtomCategory(Element categoryElement) {
-		// TODO Auto-generated constructor stub
+		this.term = XML.getElementSimpleContentByTagName(categoryElement, AtomNS.TERM);
+		this.scheme = XML.getElementSimpleContentByTagName(categoryElement, AtomNS.SCHEME);
+		this.label = XML.getElementSimpleContentByTagName(categoryElement, AtomNS.LABEL);
 	}
 
 	/**
@@ -77,43 +82,60 @@ public class AtomCategory {
 		this.label = label;
 	}
 
-//	/**
-//	 * TODO document me
-//	 * 
-//	 * @param doc
-//	 * @param categoryElement
-//	 */
-//	void populate(Document doc, Element categoryElement) {
-//		// TODO Auto-generated method stub
-//		
-//	}
+	/**
+	 * TODO document me
+	 * 
+	 * @param doc
+	 * @param categoryElement
+	 */
+	void populate(Element categoryElement) {
 
-	public String toXML() {
-		String xml = 
-			"<category>";
+		// term element (mandatory)
+		XML.setElementSimpleContentByTagName(categoryElement, AtomNS.TERM, this.term);
 		
-		// output term
-		if (this.term != null) {
-			xml += 
-				"<term>"+this.term+"</term>";
-		}
-
-		// output scheme
+		// scheme element (optional)
 		if (this.scheme != null) {
-			xml += 
-				"<scheme>"+this.scheme+"</scheme>";
+			XML.setElementSimpleContentByTagName(categoryElement, AtomNS.SCHEME, this.scheme);
 		}
 
-		// output label
+		// label element (optional)
 		if (this.label != null) {
-			xml += 
-				"<label>"+this.label+"</label>";
+			XML.setElementSimpleContentByTagName(categoryElement, AtomNS.LABEL, this.label);
 		}
-
-		xml +=
-			"</category>";
 		
-		return xml;
+	}
+
+	/**
+	 * TODO document me
+	 * 
+	 * @param categoryElements
+	 * @return
+	 */
+	public static List<AtomCategory> getCategories(Element parent) {
+		List<Element> categoryElements = XML.getElementsByTagName(parent, AtomNS.CATEGORY);
+		List<AtomCategory> categories = new ArrayList<AtomCategory>();
+		for (Element categoryElement : categoryElements) {
+			categories.add(new AtomCategory(categoryElement));
+		}
+		return categories;
+	}
+
+	/**
+	 * TODO document me
+	 * 
+	 * @param entryElement
+	 */
+	public static void setCategories(Element parent, List<AtomCategory> categories) {
+
+		// remove existing category elements
+		XML.removeElementsByTagName(parent, AtomNS.CATEGORY);
+		
+		// create new category elements and append to entry element
+		for (AtomCategory category : categories) {
+			Element categoryElement = XML.createElement(parent, AtomNS.CATEGORY);
+			category.populate(categoryElement);
+		}
+		
 	}
 	
 }

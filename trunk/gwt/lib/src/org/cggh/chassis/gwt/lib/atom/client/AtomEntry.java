@@ -3,11 +3,8 @@
  */
 package org.cggh.chassis.gwt.lib.atom.client;
 
-import java.util.ArrayList;
 import java.util.List;
-
 import org.cggh.chassis.gwt.lib.xml.client.XML;
-
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;
 import com.google.gwt.xml.client.XMLParser;
@@ -22,37 +19,50 @@ public class AtomEntry {
 	
 	
 	
-	protected static final String template = "<entry xmlns=\"http://www.w3.org/2005/AtomNS\"><title></title></entry>";
-
-	protected String id = null;
-	protected String title = null;
-	protected String summary = null;
-	protected List<AtomPersonConstruct> authors = new ArrayList<AtomPersonConstruct>();
-	protected List<AtomCategory> categories = new ArrayList<AtomCategory>();
-	protected String updated = null;
-	protected AtomContent content = null;
-	protected List<AtomExtension> extensions = new ArrayList<AtomExtension>();
+	protected static final String template = "<entry xmlns=\"http://www.w3.org/2005/AtomNS\"></entry>";
 
 	
 	
+	protected Element entryElement = null;
+
 	
-	public AtomEntry() {}
-	
-	
-	
-	public AtomEntry(String entryDocXML) {
-		Document entryDoc = XMLParser.parse(entryDocXML);
-		Element entryElement = XML.getElementByTagNameNS(entryDoc, AtomNS.NS, AtomNS.ENTRY);
-		init(entryElement);
+
+	/**
+	 * Create a new Atom entry.
+	 * @throws AtomFormatException 
+	 */
+	public AtomEntry() throws AtomFormatException {
+		Document entryDoc = XMLParser.parse(template);
+		this.entryElement = XML.getElementByTagNameNS(entryDoc, AtomNS.NS, AtomNS.ENTRY);
+	    init();
 	}
 	
 	
 	
 	/**
-	 * @param entryElement
+	 * Create a new Atom entry, initialised from the entry XML document supplied.
+	 *  
+	 * @param entryDocXML
+	 * @throws AtomFormatException 
 	 */
-	public AtomEntry(Element entryElement) {
-		init(entryElement);
+	public AtomEntry(String entryDocXML) throws AtomFormatException {
+		Document entryDoc = XMLParser.parse(entryDocXML);
+		this.entryElement = XML.getElementByTagNameNS(entryDoc, AtomNS.NS, AtomNS.ENTRY);
+		init();
+	}
+	
+	
+	
+	/**
+	 * Create a new Atom entry, wrapping the entry element supplied.
+	 * N.B. The entry element may be part of a feed document.
+	 * 
+	 * @param entryElement
+	 * @throws AtomFormatException 
+	 */
+	public AtomEntry(Element entryElement) throws AtomFormatException {
+		this.entryElement = entryElement;
+		init();
 	}
 
 
@@ -61,94 +71,59 @@ public class AtomEntry {
 	 * TODO document me
 	 * 
 	 * @param doc
+	 * @throws AtomFormatException 
 	 */
-	protected void init(Element entryElement) {
-		
-		// init id
-		this.id = XML.getSimpleContentByTagNameNS(entryElement, AtomNS.NS, AtomNS.ID);
-
-		// init updated
-		this.updated = XML.getSimpleContentByTagNameNS(entryElement, AtomNS.NS, AtomNS.UPDATED);		
-
-		// init title
-		this.title  = XML.getSimpleContentByTagNameNS(entryElement, AtomNS.NS, AtomNS.TITLE);
-		
-		// init summary
-		this.summary  = XML.getSimpleContentByTagNameNS(entryElement, AtomNS.NS, AtomNS.SUMMARY);
-
-		// init authors
-		List<Element> authorElements = XML.getElementsByTagNameNS(entryElement, AtomNS.NS, AtomNS.AUTHOR);
-		for (Element authorElement : authorElements) {
-			this.authors.add(new AtomPersonConstruct(authorElement));
+	protected void init() throws AtomFormatException {
+		if (this.entryElement == null) {
+			throw new AtomFormatException("entry element is null");
 		}
-
-		// init categories
-		List<Element> categoryElements = XML.getElementsByTagNameNS(entryElement, AtomNS.NS, AtomNS.CATEGORY);
-		for (Element categoryElement : categoryElements) {
-			this.categories.add(new AtomCategory(categoryElement));
+		if (!this.entryElement.getTagName().equals(AtomNS.ENTRY)) {
+			throw new AtomFormatException("entry element has unexpected tag name: "+this.entryElement.getTagName());
 		}
-		
-		// TODO init links
-		
-		// init content
-		Element contentElement = XML.getElementByTagNameNS(entryElement, AtomNS.NS, AtomNS.CONTENT);
-		if (contentElement != null) {
-			this.content = new AtomContent(contentElement);
+		if (this.entryElement.getNamespaceURI() == null) {
+			throw new AtomFormatException("entry element namespace URI is null");
 		}
-		
-	}
-	
-	
-	
-	public String toXML() {
-
-		String xml = 
-			"<entry xmlns=\"http://www.w3.org/2005/AtomNS\">";
-		
-		// output title
-		if (this.title != null) {
-			xml += "<title>"+this.title+"</title>";
+		if (!this.entryElement.getNamespaceURI().equals(AtomNS.NS)) {
+			throw new AtomFormatException("entry element has unexpected namespace URI: "+this.entryElement.getNamespaceURI());
 		}
-		
-		// output summary
-		if (this.summary != null) {
-			xml += "<summary>"+this.summary+"</summary>";
-		}
-		
-		// output authors
-		for (AtomPersonConstruct author : authors) {
-			xml += author.toXML();
-		}
-		
-		// output categories
-		for (AtomCategory category : categories) {
-			xml += category.toXML();
-		}
-		
-		// output content
-		if (this.content != null) {
-			xml += content.toXML();
-		}
-		
-		// output extensions
-		for (AtomExtension extension : extensions) {
-			xml += extension.toXML();
-		}
-		
-		xml +=
-			"</entry>";
-		
-		return xml;
-
 	}
 
 
 
 	/**
+	 * Render this entry as XML.
+	 */
+	@Override
+	public String toString() {
+		
+		// clone the entry element, because it might be part of a feed
+		Element entryClone = (Element) this.entryElement.cloneNode(true);
+
+		// append to new, empty document
+		Document entryDoc = XMLParser.createDocument();
+		entryDoc.appendChild(entryClone);
+		
+		// emit XML
+		return entryDoc.toString();
+	}
+
+	
+	
+	protected String getElementContent(String tagName) {
+		return XML.getElementSimpleContentByTagName(this.entryElement, tagName);		
+	}
+	
+	
+	protected void setElementContent(String tagName, String content) {
+		XML.setElementSimpleContentByTagName(this.entryElement, tagName, content);
+	}
+	
+	
+	/**
 	 * @return the title
 	 */
 	public String getTitle() {
-		return this.title;
+		return this.getElementContent(AtomNS.TITLE);
 	}
 
 	
@@ -157,7 +132,7 @@ public class AtomEntry {
 	 * @param title the title to set
 	 */
 	public void setTitle(String title) {
-		this.title = title;
+		this.setElementContent(AtomNS.TITLE, title);
 	}
 
 	
@@ -166,7 +141,7 @@ public class AtomEntry {
 	 * @return the summary
 	 */
 	public String getSummary() {
-		return this.summary;
+		return this.getElementContent(AtomNS.SUMMARY);
 	}
 
 	
@@ -175,16 +150,28 @@ public class AtomEntry {
 	 * @param summary the summary to set
 	 */
 	public void setSummary(String summary) {
-		this.summary = summary;
+		this.setElementContent(AtomNS.SUMMARY, summary);
 	}
 
 	
 	
+	public String getId() {
+		return this.getElementContent(AtomNS.ID);
+	}
+
+	
+	
+	public String getUpdated() {
+		return this.getElementContent(AtomNS.UPDATED);
+	}
+	
+	
+		
 	/**
 	 * @return the authors
 	 */
 	public List<AtomPersonConstruct> getAuthors() {
-		return this.authors ;
+		return AtomPersonConstruct.getAuthors(this.entryElement);
 	}
 
 	
@@ -193,7 +180,7 @@ public class AtomEntry {
 	 * @param authors the authors to set
 	 */
 	public void setAuthors(List<AtomPersonConstruct> authors) {
-		this.authors = authors;
+		AtomPersonConstruct.setAuthors(this.entryElement, authors);
 	}
 	
 	
@@ -202,7 +189,7 @@ public class AtomEntry {
 	 * @return the categories
 	 */
 	public List<AtomCategory> getCategories() {
-		return this.categories ;
+		return AtomCategory.getCategories(this.entryElement);
 	}
 
 	
@@ -211,55 +198,7 @@ public class AtomEntry {
 	 * @param categories the categories to set
 	 */
 	public void setCategories(List<AtomCategory> categories) {
-		this.categories = categories;
-	}
-	
-	
-	
-	public String getId() {
-		return this.id;
-	}
-
-	
-	
-	public String getUpdated() {
-		return this.updated ;
-	}
-
-
-
-	/**
-	 * @return the content
-	 */
-	public AtomContent getContent() {
-		return this.content;
-	}
-
-
-
-	/**
-	 * @param content the content to set
-	 */
-	public void setContent(AtomContent content) {
-		this.content = content;
-	}
-
-
-
-	/**
-	 * @return the extensions
-	 */
-	public List<AtomExtension> getExtensions() {
-		return this.extensions;
-	}
-
-
-
-	/**
-	 * @param extensions the extensions to set
-	 */
-	public void setExtensions(List<AtomExtension> extensions) {
-		this.extensions = extensions;
+		AtomCategory.setCategories(this.entryElement, categories);
 	}
 	
 	

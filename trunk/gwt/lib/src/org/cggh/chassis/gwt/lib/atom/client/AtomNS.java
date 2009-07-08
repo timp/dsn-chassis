@@ -25,6 +25,8 @@ public class AtomNS {
 	public static final String CATEGORY = "category";
 	public static final String CONTENT = "content";
 	public static final String TYPE = "type";
-	public static final String SRC = "SRC";
+	public static final String TERM = "term";
+	public static final String SCHEME = "scheme";
+	public static final String LABEL = "label";
 	
 }
