@@ -5,6 +5,7 @@
 
 <web-app>
 
+<!-- 
   <servlet>
     <servlet-name>LocalhostProxy</servlet-name>
     <servlet-class>org.cggh.chassis.server.proxy.ProxyServlet</servlet-class>
@@ -12,7 +13,8 @@
   
   <servlet-mapping>
     <servlet-name>LocalhostProxy</servlet-name>
-    <url-pattern>/prox</url-pattern>
+    <url-pattern>/proxy</url-pattern>
   </servlet-mapping>
-  
+-->
+   
 </web-app>
