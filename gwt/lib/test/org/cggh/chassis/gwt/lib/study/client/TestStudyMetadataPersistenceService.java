@@ -59,6 +59,11 @@ public class TestStudyMetadataPersistenceService extends GWTTestCase {
 						public void onSuccess(Request request, Response response, StudyEntry entry) {
 							assertTrue(entry.getTitle().equals(""));
 						}
+
+						public void onError(Request request, Response response, Throwable exception) {
+							exception.printStackTrace();
+							fail("onErrorWithResponse "+exception.getLocalizedMessage());
+						}
 						
 					});
 					
