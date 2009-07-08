@@ -28,8 +28,8 @@ public class StudyLocation {
 	 * @param locationElement
 	 */
 	StudyLocation(Element locationElement) {
-		this.lat= XML.getSimpleContentByTagNameNS(locationElement, ChassisNS.NS, ChassisNS.LAT);
-		this.lon = XML.getSimpleContentByTagNameNS(locationElement, ChassisNS.NS, ChassisNS.LON);
+		this.lat= XML.getElementSimpleContentByTagNameNS(locationElement, ChassisNS.NS, ChassisNS.LAT);
+		this.lon = XML.getElementSimpleContentByTagNameNS(locationElement, ChassisNS.NS, ChassisNS.LON);
 	}
 
 	/**

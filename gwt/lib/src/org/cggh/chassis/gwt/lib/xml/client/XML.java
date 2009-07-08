@@ -148,7 +148,7 @@ public class XML {
 	 * @param title
 	 * @return
 	 */
-	public static String getSimpleContentByTagName(Document doc, String name) {
+	public static String getElementSimpleContentByTagName(Document doc, String name) {
 		Element element = XML.getElementByTagName(doc, name);
 		return XML.firstChildNodeValueOrNullIfNoChildren(element);		
 	}
@@ -169,14 +169,14 @@ public class XML {
 
 
 
-	public static String getSimpleContentByTagNameNS(Document doc, String ns, String name) {
+	public static String getElementSimpleContentByTagNameNS(Document doc, String ns, String name) {
 		Element element = XML.getElementByTagNameNS(doc, ns, name);
 		return XML.firstChildNodeValueOrNullIfNoChildren(element);		
 	}
 
 	
 	
-	public static String getSimpleContentByTagNameNS(Element ancestor, String ns, String name) {
+	public static String getElementSimpleContentByTagNameNS(Element ancestor, String ns, String name) {
 		Element element = XML.getElementByTagNameNS(ancestor, ns, name);
 		return XML.firstChildNodeValueOrNullIfNoChildren(element);		
 	}
@@ -191,7 +191,7 @@ public class XML {
 	 * @param name
 	 * @return
 	 */
-	public static List<String> getSimpleContentsByTagName(Document doc, String name) {
+	public static List<String> getElementsSimpleContentsByTagName(Document doc, String name) {
 		List<Element> elements = XML.getElementsByTagName(doc, name);
 		return XML.simpleContents(elements);
 	}
@@ -222,7 +222,7 @@ public class XML {
 	 * @param name
 	 * @return
 	 */
-	public static List<String> getSimpleContentsByTagNameNS(Document doc, String ns, String name) {
+	public static List<String> getElementsSimpleContentsByTagNameNS(Document doc, String ns, String name) {
 		List<Element> elements = XML.getElementsByTagNameNS(doc, ns, name);
 		return XML.simpleContents(elements);
 	}
@@ -237,7 +237,7 @@ public class XML {
 	 * @param name
 	 * @return
 	 */
-	public static List<String> getSimpleContentsByTagNameNS(Element ancestor, String ns, String name) {
+	public static List<String> getElementsSimpleContentsByTagNameNS(Element ancestor, String ns, String name) {
 		List<Element> elements = XML.getElementsByTagNameNS(ancestor, ns, name);
 		return XML.simpleContents(elements);
 	}
