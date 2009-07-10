@@ -68,12 +68,30 @@ public class TestAtomEntry extends GWTTestCase {
 			
 			AtomEntry entry = new AtomEntry(xml);
 			
+			// test simple elements
 			assertEquals("urn:uuid:f4070192-c65d-48d7-915f-81d38f61d359", entry.getId());
 			assertEquals("2009-07-06T13:51:34+01:00", entry.getUpdated());
 			assertEquals("2009-07-06T12:04:29+01:00", entry.getPublished());
 			assertEquals("Uganda-Kampala-2006", entry.getTitle());
 			assertEquals("A study of malaria drug resistance near Kampala, Uganda, from 2006 to 2007.", entry.getSummary());
 			
+			// test links
+			List<AtomLink> links = entry.getLinks();
+			assertEquals(1, links.size());
+			AtomLink link = links.get(0);
+			assertEquals("?id=urn:uuid:f4070192-c65d-48d7-915f-81d38f61d359", link.getHref());
+			assertEquals(AtomNS.REL_EDIT, link.getRel());
+			assertEquals(AtomNS.TYPE_ATOMMEDIATYPE, link.getType());
+			assertNull(link.getHreflang());
+			assertNull(link.getLength());
+			assertNull(link.getTitle());
+			assertNull(link.getHreflang());
+			
+			// test edit link shortcuts
+			assertEquals("?id=urn:uuid:f4070192-c65d-48d7-915f-81d38f61d359", entry.getEditLink().getHref());
+			assertNull(entry.getEditMediaLink());
+			
+			// test authors
 			List<AtomPersonConstruct> authors = entry.getAuthors();
 			assertEquals(1, authors.size());
 			AtomPersonConstruct author = authors.get(0);
@@ -81,6 +99,7 @@ public class TestAtomEntry extends GWTTestCase {
 			assertEquals("freda@example.org", author.getEmail());
 			assertNull(author.getUri());
 			
+			// test categories
 			List<AtomCategory> categories = entry.getCategories();
 			assertEquals(1, categories.size());
 			AtomCategory category = categories.get(0);

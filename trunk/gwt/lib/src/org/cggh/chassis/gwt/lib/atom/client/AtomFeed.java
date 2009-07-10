@@ -3,11 +3,8 @@
  */
 package org.cggh.chassis.gwt.lib.atom.client;
 
-import java.util.ArrayList;
 import java.util.List;
-
 import org.cggh.chassis.gwt.lib.xml.client.XML;
-
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;
 import com.google.gwt.xml.client.XMLParser;
@@ -30,17 +27,13 @@ public class AtomFeed {
 	
 	
 	public AtomFeed() throws AtomFormatException {
-		Document doc = XMLParser.parse(template);
-		this.feedElement = XML.getElementByTagNameNS(doc, AtomNS.NS, AtomNS.FEED); // ns-aware here only
-		init();
+		init(template);
 	}
 	
 	
 	
 	public AtomFeed(String feedDocXML) throws AtomFormatException {
-		Document doc = XMLParser.parse(feedDocXML);
-		this.feedElement = XML.getElementByTagNameNS(doc, AtomNS.NS, AtomNS.FEED); // ns-aware here only
-		init();
+		init(feedDocXML);
 	}
 	
 	
@@ -51,7 +44,18 @@ public class AtomFeed {
 	
 	
 	
-	protected void init() throws AtomFormatException {
+	protected void init(String feedDocXML) throws AtomFormatException {
+
+		Document doc = null;
+		
+		try {
+			doc = XMLParser.parse(feedDocXML);
+		} catch (Throwable ex) {
+			throw new AtomFormatException("could not parse XML: "+ex.getLocalizedMessage(), ex);
+		}
+
+		this.feedElement = XML.getElementByTagNameNS(doc, AtomNS.NS, AtomNS.FEED); // ns-aware here only
+		
 		if (this.feedElement == null) {
 			throw new AtomFormatException("feed element is null");
 		}
@@ -93,12 +97,6 @@ public class AtomFeed {
 	
 	
 	public List<AtomEntry> getEntries() throws AtomFormatException {
-		List<Element> entryElements = XML.getElementsByTagNameNS(this.feedElement, AtomNS.NS, AtomNS.ENTRY); // do ns-aware search here
-		List<AtomEntry> entries = new ArrayList<AtomEntry>();
-		for (Element entryElement : entryElements) {
-			AtomEntry entry = new AtomEntry(entryElement);
-			entries.add(entry);
-		}
-		return entries;
+		return AtomEntry.getEntries(this.feedElement);
 	}
 }
