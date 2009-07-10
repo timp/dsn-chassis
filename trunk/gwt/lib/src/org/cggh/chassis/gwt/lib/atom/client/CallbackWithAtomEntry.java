@@ -12,9 +12,9 @@ import com.google.gwt.http.client.Response;
  * @author aliman
  *
  */
-public interface CallbackWithAtomEntry<E extends AtomEntry> {
+public interface CallbackWithAtomEntry {
 
-	public void onSuccess(Request request, Response response, E entry);
+	public void onSuccess(Request request, Response response, AtomEntry entry);
 	public void onFailure(Request request, Response response);
 	public void onError(Request request, Throwable exception);
 	public void onError(Request request, Response response, Throwable exception);
