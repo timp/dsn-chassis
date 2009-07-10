@@ -1,8 +1,11 @@
 /**
  * $Id$
  */
-package org.cggh.chassis.gwt.lib.atom.client;
+package org.cggh.chassis.gwt.lib.study.client;
 
+
+import org.cggh.chassis.gwt.lib.atom.client.AtomFormatException;
+import org.cggh.chassis.gwt.lib.atom.client.CallbackWithNoContent;
 
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
@@ -18,11 +21,11 @@ import com.google.gwt.http.client.URL;
  * @author aliman
  *
  */
-public class AtomService {
+public class StudyMetadataPersistenceService {
 	
 	private String collectionURL;
 
-	public AtomService(String collectionURL) {
+	public StudyMetadataPersistenceService(String collectionURL) {
 		this.collectionURL = collectionURL;
 	}
 	
@@ -34,7 +37,7 @@ public class AtomService {
 	 * @param callback
 	 * @throws RequestException
 	 */
-	public void getFeed(CallbackWithAtomFeed callback) throws RequestException {
+	public void getFeed(CallbackWithStudyFeed callback) throws RequestException {
 		
 		RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, URL.encode(collectionURL));		
 		RequestCallback glue = new GetFeedRequestCallback(callback);
@@ -54,7 +57,7 @@ public class AtomService {
 	 * @param callback
 	 * @throws RequestException
 	 */
-	public void getEntry(String entryURL, CallbackWithAtomEntry callback) throws RequestException {
+	public void getEntry(String entryURL, CallbackWithStudyEntry callback) throws RequestException {
 
 		if (!entryURL.startsWith(collectionURL)) {
 			// assume entryURL is relative to collection URL
@@ -78,7 +81,7 @@ public class AtomService {
 	 * @param callback
 	 * @throws RequestException 
 	 */
-	public void postEntry(AtomEntry entry, CallbackWithAtomEntry callback) throws RequestException {
+	public void postEntry(StudyEntry entry, CallbackWithStudyEntry callback) throws RequestException {
 
 		RequestBuilder builder = new RequestBuilder(RequestBuilder.POST, URL.encode(collectionURL));		
 		RequestCallback glue = new PostEntryRequestCallback(callback);
@@ -103,7 +106,7 @@ public class AtomService {
 	 * @param callback
 	 * @throws RequestException 
 	 */
-	public void putEntry(String entryURL, AtomEntry entry, CallbackWithAtomEntry callback) throws RequestException {
+	public void putEntry(String entryURL, StudyEntry entry, CallbackWithStudyEntry callback) throws RequestException {
 
 		if (!entryURL.startsWith(collectionURL)) {
 			// assume entryURL is relative to collection URL
@@ -159,9 +162,9 @@ public class AtomService {
 	 */
 	public class GetFeedRequestCallback implements RequestCallback {
 
-		private CallbackWithAtomFeed next;
+		private CallbackWithStudyFeed next;
 
-		public GetFeedRequestCallback(CallbackWithAtomFeed next) {
+		public GetFeedRequestCallback(CallbackWithStudyFeed next) {
 			this.next = next;
 		}
 
@@ -187,12 +190,12 @@ public class AtomService {
 				return;
 			}
 				
-			AtomFeed feed = null;
+			StudyFeed feed = null;
 			
 			// parse the response
 			try {
 
-				feed = AtomFeed.newInstance(response.getText()); 
+				feed = new StudyFeed(response.getText()); 
 				
 			} catch (AtomFormatException ex) {
 				// pass through as error
@@ -217,9 +220,9 @@ public class AtomService {
 	 */
 	public class GetEntryRequestCallback implements RequestCallback {
 
-		private CallbackWithAtomEntry next;
+		private CallbackWithStudyEntry next;
 
-		public GetEntryRequestCallback(CallbackWithAtomEntry next) {
+		public GetEntryRequestCallback(CallbackWithStudyEntry next) {
 			this.next = next;
 		}
 
@@ -245,12 +248,12 @@ public class AtomService {
 				return;
 			}
 				
-			AtomEntry entry = null;
+			StudyEntry entry = null;
 			
 			// parse the response
 			try {
 
-				entry = AtomEntry.newInstance(response.getText()); 
+				entry = new StudyEntry(response.getText()); 
 				
 			} catch (AtomFormatException ex) {
 				// pass through as error
@@ -275,9 +278,9 @@ public class AtomService {
 	 */
 	public class PostEntryRequestCallback implements RequestCallback {
 
-		private CallbackWithAtomEntry next;
+		private CallbackWithStudyEntry next;
 
-		public PostEntryRequestCallback(CallbackWithAtomEntry next) {
+		public PostEntryRequestCallback(CallbackWithStudyEntry next) {
 			this.next = next;
 		}
 
@@ -303,12 +306,12 @@ public class AtomService {
 				return;
 			}
 				
-			AtomEntry entry = null;
+			StudyEntry entry = null;
 
 			// parse the response
 			try {
 
-				entry = AtomEntry.newInstance(response.getText()); 
+				entry = new StudyEntry(response.getText()); 
 				
 			} catch (AtomFormatException ex) {
 				// pass through as error
@@ -333,9 +336,9 @@ public class AtomService {
 	 */
 	public class PutEntryRequestCallback implements RequestCallback {
 
-		private CallbackWithAtomEntry next;
+		private CallbackWithStudyEntry next;
 
-		public PutEntryRequestCallback(CallbackWithAtomEntry next) {
+		public PutEntryRequestCallback(CallbackWithStudyEntry next) {
 			this.next = next;
 		}
 
@@ -361,12 +364,12 @@ public class AtomService {
 				return;
 			}
 				
-			AtomEntry entry = null;
+			StudyEntry entry = null;
 			
 			// parse the response
 			try {
 
-				entry = AtomEntry.newInstance(response.getText()); 
+				entry = new StudyEntry(response.getText()); 
 				
 			} catch (AtomFormatException ex) {
 				// pass through as error
