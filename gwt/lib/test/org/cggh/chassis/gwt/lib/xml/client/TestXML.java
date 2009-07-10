@@ -93,5 +93,6 @@ public class TestXML extends GWTTestCase {
 		assertEquals("quux", content);
 
 	}
+	
 
 }

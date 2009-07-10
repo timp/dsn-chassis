@@ -3,9 +3,11 @@
  */
 package org.cggh.chassis.gwt.lib.study.client;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.cggh.chassis.gwt.lib.atom.client.AtomEntry;
 import org.cggh.chassis.gwt.lib.atom.client.AtomFormatException;
+import org.cggh.chassis.gwt.lib.atom.client.AtomNS;
 import org.cggh.chassis.gwt.lib.common.client.ChassisNS;
 import org.cggh.chassis.gwt.lib.xml.client.XML;
 import com.google.gwt.xml.client.Element;
@@ -124,8 +126,16 @@ public class StudyEntry extends AtomEntry {
 	
 	
 
-	public int getSampleSize() {
-		return Integer.parseInt(getStudyElementContent(ChassisNS.SAMPLESIZE));
+	public Integer getSampleSize() throws StudyFormatException {
+		String sampleSizeString = getStudyElementContent(ChassisNS.SAMPLESIZE);
+		if (sampleSizeString != null) {
+			try {
+				return Integer.parseInt(sampleSizeString);
+			} catch (Throwable ex) {
+				throw new StudyFormatException("error parsing sample size as integer", ex);
+			}
+		}
+		return null;
 	}
 	
 	
@@ -173,6 +183,25 @@ public class StudyEntry extends AtomEntry {
 	
 	protected Element createStudyElement(String tagName) {
 		return XML.createElement(this.studyElement, tagName);
+	}
+
+
+
+	/**
+	 * TODO document me
+	 * 
+	 * @param feedElement
+	 * @return
+	 * @throws AtomFormatException 
+	 */
+	public static List<StudyEntry> getStudyEntries(Element feedElement) throws AtomFormatException {
+		List<Element> entryElements = XML.getElementsByTagNameNS(feedElement, AtomNS.NS, AtomNS.ENTRY);
+		List<StudyEntry> entries = new ArrayList<StudyEntry>();
+		for (Element entryElement : entryElements) {
+			StudyEntry entry = new StudyEntry(entryElement);
+			entries.add(entry);
+		}
+		return entries;
 	}
 	
 	

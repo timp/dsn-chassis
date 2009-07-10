@@ -29,5 +29,13 @@ public class AtomNS {
 	public static final String SCHEME = "scheme";
 	public static final String LABEL = "label";
 	public static final String PUBLISHED = "published";
+	public static final String LINK = "link";
+	public static final String LENGTH = "length";
+	public static final String HREFLANG = "hreflang";
+	public static final String REL = "rel";
+	public static final String HREF = "href";
+	public static final Object REL_EDIT = "edit";
+	public static final Object TYPE_ATOMMEDIATYPE = "application/atom+xml";
+	public static final Object REL_EDITMEDIA = "edit-media";
 	
 }
