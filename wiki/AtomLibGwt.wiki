@@ -1,4 +1,4 @@
-# summary documentation and examples for using the chassis GWT AtomPub client library
+#summary documentation and examples for using the chassis GWT AtomPub client library
 
 <wiki:toc/>
 
