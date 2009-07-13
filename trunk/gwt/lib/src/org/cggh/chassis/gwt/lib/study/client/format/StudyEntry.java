@@ -1,13 +1,12 @@
 /**
  * $Id$
  */
-package org.cggh.chassis.gwt.lib.study.client;
+package org.cggh.chassis.gwt.lib.study.client.format;
 
-import java.util.ArrayList;
 import java.util.List;
-import org.cggh.chassis.gwt.lib.atom.client.AtomEntry;
-import org.cggh.chassis.gwt.lib.atom.client.AtomFormatException;
-import org.cggh.chassis.gwt.lib.atom.client.AtomNS;
+
+import org.cggh.chassis.gwt.lib.atom.client.format.AtomEntry;
+import org.cggh.chassis.gwt.lib.atom.client.format.AtomFormatException;
 import org.cggh.chassis.gwt.lib.common.client.ChassisNS;
 import org.cggh.chassis.gwt.lib.xml.client.XML;
 import com.google.gwt.xml.client.Element;
@@ -190,21 +189,19 @@ public class StudyEntry extends AtomEntry {
 	/**
 	 * TODO document me
 	 * 
-	 * @param feedElement
+	 * @param entry
 	 * @return
-	 * @throws AtomFormatException 
 	 */
-	public static List<StudyEntry> getStudyEntries(Element feedElement) throws AtomFormatException {
-		List<Element> entryElements = XML.getElementsByTagNameNS(feedElement, AtomNS.NS, AtomNS.ENTRY);
-		List<StudyEntry> entries = new ArrayList<StudyEntry>();
-		for (Element entryElement : entryElements) {
-			StudyEntry entry = new StudyEntry(entryElement);
-			entries.add(entry);
+	public static StudyEntry as(AtomEntry entry) {
+		if (entry instanceof StudyEntry) {
+			return (StudyEntry) entry;
 		}
-		return entries;
+		else {
+			return null;
+		}
 	}
-	
-	
+
+
 
 }
 

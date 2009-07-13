@@ -4,6 +4,10 @@
 package org.cggh.chassis.gwt.lib.atom.client;
 
 
+import org.cggh.chassis.gwt.lib.atom.client.format.AtomEntry;
+import org.cggh.chassis.gwt.lib.atom.client.format.AtomFeed;
+import org.cggh.chassis.gwt.lib.atom.client.format.AtomFormatException;
+
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;

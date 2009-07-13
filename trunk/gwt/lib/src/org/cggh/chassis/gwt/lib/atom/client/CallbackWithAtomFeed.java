@@ -1,5 +1,7 @@
 package org.cggh.chassis.gwt.lib.atom.client;
 
+import org.cggh.chassis.gwt.lib.atom.client.format.AtomFeed;
+
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.Response;
 

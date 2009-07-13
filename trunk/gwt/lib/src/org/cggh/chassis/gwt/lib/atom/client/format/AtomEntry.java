@@ -1,10 +1,11 @@
 /**
  * $Id$
  */
-package org.cggh.chassis.gwt.lib.atom.client;
+package org.cggh.chassis.gwt.lib.atom.client.format;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.cggh.chassis.gwt.lib.xml.client.XML;
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;
