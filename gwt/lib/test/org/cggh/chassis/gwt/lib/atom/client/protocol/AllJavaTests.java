@@ -18,7 +18,8 @@ import org.junit.runners.Suite;
 	TestGetFeedResponseHandler.class , 
 	TestGetEntryResponseHandler.class ,
 	TestPostEntryResponseHandler.class ,
-	TestPutEntryResponseHandler.class
+	TestPutEntryResponseHandler.class ,
+	TestDeleteEntryResponseHandler.class
  	})
 
 public class AllJavaTests {}

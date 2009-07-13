@@ -204,6 +204,10 @@ public class TestPutEntryResponseHandler {
 
 		// call method under test
 		testee.onResponseReceived(request, response);
+
+		// verify all
+		verify(request); verify(response); verify(factory); verify(callback);
+
 	}
 
 
