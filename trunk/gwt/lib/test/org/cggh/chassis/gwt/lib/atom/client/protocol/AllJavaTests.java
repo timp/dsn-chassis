@@ -16,7 +16,9 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses( { 
 	TestGetFeedResponseHandler.class , 
-	TestGetEntryResponseHandler.class 
-	})
+	TestGetEntryResponseHandler.class ,
+	TestPostEntryResponseHandler.class ,
+	TestPutEntryResponseHandler.class
+ 	})
 
 public class AllJavaTests {}

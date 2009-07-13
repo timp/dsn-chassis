@@ -21,7 +21,7 @@ public class AtomEntry {
 	
 	
 	
-	protected static final String template = "<entry xmlns=\"http://www.w3.org/2005/Atom\"></entry>";
+	public static final String template = "<entry xmlns=\"http://www.w3.org/2005/Atom\"></entry>";
 
 	
 	
@@ -34,7 +34,8 @@ public class AtomEntry {
 	 * @throws AtomFormatException 
 	 */
 	public AtomEntry() throws AtomFormatException {
-		init(template);
+		this.parse(template);
+		this.initEntryElement();
 	}
 	
 	
@@ -46,38 +47,11 @@ public class AtomEntry {
 	 * @throws AtomFormatException 
 	 */
 	public AtomEntry(String entryDocXML) throws AtomFormatException {
-		init(entryDocXML);
+		this.parse(entryDocXML);
+		this.initEntryElement();
 	}
 	
-	
-	
-	/**
-	 * TODO document me
-	 * 
-	 * @param entryDocXML
-	 * @return
-	 * @throws AtomFormatException
-	 */
-	public static AtomEntry newInstance(String entryDocXML) throws AtomFormatException {
-		return new AtomEntry(entryDocXML);
-	}
-	
-	
-	
-	/**
-	 * 
-	 * TODO document me
-	 * 
-	 * @param entryElement
-	 * @return
-	 * @throws AtomFormatException
-	 */
-	public static AtomEntry newInstance(Element entryElement) throws AtomFormatException {
-		return new AtomEntry(entryElement);
-	}
-	
-	
-	
+
 	/**
 	 * Create a new Atom entry, wrapping the entry element supplied.
 	 * N.B. The entry element may be part of a feed document.
@@ -87,11 +61,11 @@ public class AtomEntry {
 	 */
 	public AtomEntry(Element entryElement) throws AtomFormatException {
 		this.entryElement = entryElement;
-		init();
+		this.initEntryElement();
 	}
 
 	
-	protected void init(String entryDocXML) throws AtomFormatException {
+	protected void parse(String entryDocXML) throws AtomFormatException {
 		Document entryDoc = null;
 		try {
 			entryDoc = XMLParser.parse(entryDocXML);			
@@ -99,7 +73,6 @@ public class AtomEntry {
 			throw new AtomFormatException("could not parse xml: "+ex.getLocalizedMessage(), ex);
 		}
 		this.entryElement = XML.getElementByTagNameNS(entryDoc, AtomNS.NS, AtomNS.ENTRY);
-		init();
 	}
 
 
@@ -109,7 +82,7 @@ public class AtomEntry {
 	 * @param doc
 	 * @throws AtomFormatException 
 	 */
-	protected void init() throws AtomFormatException {
+	protected void initEntryElement() throws AtomFormatException {
 		if (this.entryElement == null) {
 			throw new AtomFormatException("entry element is null");
 		}

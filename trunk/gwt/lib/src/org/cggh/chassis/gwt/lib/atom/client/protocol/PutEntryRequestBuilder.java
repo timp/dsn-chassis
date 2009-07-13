@@ -17,34 +17,31 @@ import com.google.gwt.http.client.RequestException;
  * @author aliman
  *
  */
-public class PostEntryRequestBuilder {
+public class PutEntryRequestBuilder {
 
-	private String encodedCollectionUrl = null;
+	private String encodedEntryUrl = null;
 	private AtomEntry entry = null;
-	private PostEntryCallback callback = null;
-	private AtomFactory factory;
+	private PutEntryCallback callback = null;
+	private AtomFactory factory = null;
 
-	
 	
 	/**
 	 * @param encode
 	 */
-	public PostEntryRequestBuilder(String encodedCollectionUrl) {
-		this.encodedCollectionUrl = encodedCollectionUrl;
+	public PutEntryRequestBuilder(String encodedEntryUrl) {
+		this.encodedEntryUrl = encodedEntryUrl;
 		this.factory = new AtomFactory();
 	}
 
 	
-	
 	/**
 	 * @param encode
 	 */
-	public PostEntryRequestBuilder(String encodedCollectionUrl, AtomFactory factory) {
-		this.encodedCollectionUrl = encodedCollectionUrl;
+	public PutEntryRequestBuilder(String encodedEntryUrl, AtomFactory factory) {
+		this.encodedEntryUrl = encodedEntryUrl;
 		this.factory = factory;
 	}
 
-	
 	
 	/**
 	 * TODO document me
@@ -62,19 +59,20 @@ public class PostEntryRequestBuilder {
 	 */
 	public RequestBuilder buildHTTPRequest() {
 
-		RequestBuilder builder = new RequestBuilder(RequestBuilder.POST, this.encodedCollectionUrl);		
-		RequestCallback glue = new PostEntryResponseHandler(this.callback, this.factory);
+		RequestBuilder builder = new RequestBuilder(RequestBuilder.POST, this.encodedEntryUrl);		
+		RequestCallback glue = new PutEntryResponseHandler(this.callback, this.factory);
 		builder.setCallback(glue);
 		builder.setHeader("Accept", "application/atom+xml,application/xml");
 		builder.setHeader("Content-Type", "application/atom+xml;type=entry;charset=\"utf-8\"");
 		String content = this.entry.toString();
 		builder.setHeader("Content-Length", Integer.toString(content.length()));
+		builder.setHeader("X-HTTP-Method-Override", "PUT");
 		// TODO other headers?
 		
 		builder.setRequestData(content);
 
 		return builder;
-		
+
 	}
 
 	/**
@@ -105,9 +103,9 @@ public class PostEntryRequestBuilder {
 	/**
 	 * TODO document me
 	 * 
-	 * @param postEntryCallback
+	 * @param putEntryCallback
 	 */
-	public void setCallback(PostEntryCallback callback) {
+	public void setCallback(PutEntryCallback callback) {
 		this.callback  = callback;
 	}
 
