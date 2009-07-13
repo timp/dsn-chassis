@@ -1,0 +1,112 @@
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>urn:uuid:bbdc13e4-278d-464b-86fb-7e9161383171</id>
+    <updated>2009-07-08T22:49:09+01:00</updated>
+  <title>All Studies</title>
+<link href="#" rel="edit" type="application/atom+xml"/>
+    <link href="#" rel="self" type="application/atom+xml"/>
+    <entry>
+        <id>urn:uuid:4c513a89-94c9-4698-9155-d263f6653188</id>
+<updated>2009-07-06T12:00:12+01:00</updated>
+<published>2009-07-06T12:00:12+01:00</published>
+        <link href="?id=urn:uuid:4c513a89-94c9-4698-9155-d263f6653188" rel="edit" type="application/atom+xml"/>
+
+  <title>Uganda-Kampala-2006</title>
+  <content type="application/xml">
+    <study xmlns="http://www.cggh.org/chassis/x-atompub">
+      <period>
+        <start>2006</start>
+        <end>2007</end>
+      </period>
+    </study>
+  </content>
+
+</entry>
+    <entry>
+        <id>urn:uuid:3dd58d08-7870-48e7-8dc5-2a026fac9822</id>
+<updated>2009-07-06T12:01:00+01:00</updated>
+<published>2009-07-06T12:01:00+01:00</published>
+        <link href="?id=urn:uuid:3dd58d08-7870-48e7-8dc5-2a026fac9822" rel="edit" type="application/atom+xml"/>
+
+  <title>Uganda-Kampala-2006-B</title>
+  <summary>A study of malaria drug resistance near Kampala, Uganda, from 2006 to 2007.</summary>
+  <author>
+    <name>Freda Bloggs</name>
+    <email>freda@example.org</email>
+  </author>
+  <category scheme="http://www.cggh.org/chassis/atom/categories" term="study"/>
+  <content type="application/xml">
+    <study xmlns="http://www.cggh.org/chassis/atom/xmlns">
+      <country>UG</country>
+      <location>
+        <lat>0.31311</lat>
+        <lon>32.58545</lon>
+      </location>
+      <startyear>2006</startyear>
+      <endyear>2007</endyear>
+      <samplesize>687</samplesize>
+    </study>
+  </content>
+
+</entry>
+    <entry>
+        <id>urn:uuid:f4070192-c65d-48d7-915f-81d38f61d359</id>
+        <updated>2009-07-06T13:51:34+01:00</updated>
+        <published>2009-07-06T12:04:29+01:00</published>
+        <link href="?id=urn:uuid:f4070192-c65d-48d7-915f-81d38f61d359" rel="edit" type="application/atom+xml"/>
+        <title>Uganda-Kampala-2006</title>
+        <summary>A study of malaria drug resistance near Kampala, Uganda, from 2006 to 2007. 
+  The study showed an unadjusted risk of failure of 26.5% for AQ+SP treatment at 28 days.</summary>
+        <author>
+    <name>Freda Bloggs</name>
+    <email>freda@example.org</email>
+  </author>
+        <category scheme="http://www.cggh.org/chassis/atom/categories" term="study"/>
+        <content type="application/xml">
+    <study xmlns="http://www.cggh.org/chassis/atom/xmlns">
+      <country>UG</country>
+      <location>
+        <lat>0.31311</lat>
+        <lon>32.58545</lon>
+      </location>
+      <startyear>2006</startyear>
+      <endyear>2007</endyear>
+      <samplesize>687</samplesize>
+    </study>
+  </content>
+    </entry>
+    <entry>
+        <id>urn:uuid:b1e3b13e-7ea3-408b-8e5d-a367dc86715e</id>
+
+<updated>2009-07-08T22:43:14+01:00</updated>
+<published>2009-07-08T22:43:14+01:00</published>
+        <link href="?id=urn:uuid:b1e3b13e-7ea3-408b-8e5d-a367dc86715e" rel="edit" type="application/atom+xml"/>
+<title>foo entry</title>
+        <summary>this is a new entry</summary>
+    </entry>
+    <entry>
+        <id>urn:uuid:4b289972-3db5-438e-94c2-3619d1a18466</id>
+<updated>2009-07-08T22:45:59+01:00</updated>
+<published>2009-07-08T22:45:59+01:00</published>
+        <link href="?id=urn:uuid:4b289972-3db5-438e-94c2-3619d1a18466" rel="edit" type="application/atom+xml"/>
+
+<title>another new entry</title>
+        <summary>foo bar spong</summary>
+    </entry>
+    <entry>
+        <id>urn:uuid:7d6a51dd-b8f9-41f1-bc0f-a5b8dd9add81</id>
+<updated>2009-07-08T22:46:19+01:00</updated>
+<published>2009-07-08T22:46:19+01:00</published>
+        <link href="?id=urn:uuid:7d6a51dd-b8f9-41f1-bc0f-a5b8dd9add81" rel="edit" type="application/atom+xml"/>
+<title>yet another new entry</title>
+        <summary>asdjkl adslkj dsalkj dads</summary>
+    </entry>
+    <entry>
+        <id>urn:uuid:26f67f0f-74e2-4a5d-a2b2-b4ab2c50dd6f</id>
+
+<updated>2009-07-08T22:49:09+01:00</updated>
+<published>2009-07-08T22:49:09+01:00</published>
+        <link href="?id=urn:uuid:26f67f0f-74e2-4a5d-a2b2-b4ab2c50dd6f" rel="edit" type="application/atom+xml"/>
+<title>study foo in bar</title>
+        <summary>we found someting interesting</summary>
+    </entry>
+</feed>
