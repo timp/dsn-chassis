@@ -285,7 +285,8 @@ public class XML {
 	public static List<Element> filterByNamespaceURI(List<Element> elements, String ns) {
 		List<Element> filtered = new ArrayList<Element>();
 		for (Element element : elements) {
-			if (element.getNamespaceURI().equals(ns)) {
+			String nsuri = element.getNamespaceURI();
+			if (nsuri != null && ns != null && ns.equals(nsuri)) {
 				filtered.add(element);
 			}
 		}

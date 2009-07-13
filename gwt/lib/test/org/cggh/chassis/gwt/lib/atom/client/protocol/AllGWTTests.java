@@ -21,6 +21,8 @@ public class AllGWTTests extends GWTTestSuite {
 		suite.addTestSuite(TestGetFeedRequestBuilder.class);
 		suite.addTestSuite(TestGetEntryRequestBuilder.class);
 		suite.addTestSuite(TestPostEntryRequestBuilder.class);
+		suite.addTestSuite(TestPutEntryRequestBuilder.class);
+		suite.addTestSuite(TestDeleteEntryRequestBuilder.class);
 		return suite;
 	}
 

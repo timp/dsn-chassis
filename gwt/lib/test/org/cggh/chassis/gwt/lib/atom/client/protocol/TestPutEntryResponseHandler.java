@@ -6,8 +6,6 @@ package org.cggh.chassis.gwt.lib.atom.client.protocol;
 
 import org.cggh.chassis.gwt.lib.atom.client.format.AtomFactory;
 import org.cggh.chassis.gwt.lib.atom.client.format.AtomFormatException;
-import org.cggh.chassis.gwt.lib.atom.client.protocol.GetEntryCallback;
-import org.cggh.chassis.gwt.lib.atom.client.protocol.GetEntryResponseHandler;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,7 +21,7 @@ import static org.easymock.classextension.EasyMock.*;
  * @author aliman
  *
  */
-public class TestGetEntryResponseHandler {
+public class TestPutEntryResponseHandler {
 
 	/**
 	 * TODO document me
@@ -67,13 +65,13 @@ public class TestGetEntryResponseHandler {
 		replay(factory);
 		
 		// mock callback 
-		GetEntryCallback callback = createMock(GetEntryCallback.class);
+		PutEntryCallback callback = createMock(PutEntryCallback.class);
 		// expectations
 		callback.onError(request, exception); // expect call simply passed through
 		replay(callback);
 		
 		// create testee
-		GetEntryResponseHandler testee = new GetEntryResponseHandler(callback, factory);
+		PutEntryResponseHandler testee = new PutEntryResponseHandler(callback, factory);
 		
 		// call method under test
 		testee.onError(request, exception);
@@ -112,13 +110,13 @@ public class TestGetEntryResponseHandler {
 		replay(factory);
 		
 		// mock callback
-		GetEntryCallback callback = createMock(GetEntryCallback.class);
+		PutEntryCallback callback = createMock(PutEntryCallback.class);
 		// expectations
 		callback.onSuccess(request, response, null);
 		replay(callback);
 		
 		// create testee
-		GetEntryResponseHandler testee = new GetEntryResponseHandler(callback, factory);
+		PutEntryResponseHandler testee = new PutEntryResponseHandler(callback, factory);
 		
 		// call method under test
 		testee.onResponseReceived(request, response);
@@ -157,13 +155,13 @@ public class TestGetEntryResponseHandler {
 		replay(factory);
 		
 		// mock callback
-		GetEntryCallback callback = createMock(GetEntryCallback.class);
+		PutEntryCallback callback = createMock(PutEntryCallback.class);
 		// expectations
 		callback.onError(request, response, exception);
 		replay(callback);
 		
 		// create testee
-		GetEntryResponseHandler testee = new GetEntryResponseHandler(callback, factory);
+		PutEntryResponseHandler testee = new PutEntryResponseHandler(callback, factory);
 		
 		// call method under test
 		testee.onResponseReceived(request, response);
@@ -196,13 +194,13 @@ public class TestGetEntryResponseHandler {
 		replay(factory);
 		
 		// mock callback
-		GetEntryCallback callback = createMock(GetEntryCallback.class);
+		PutEntryCallback callback = createMock(PutEntryCallback.class);
 		// expectations
 		callback.onFailure(request, response);
 		replay(callback);
 
 		// create testee
-		GetEntryResponseHandler testee = new GetEntryResponseHandler(callback, factory);
+		PutEntryResponseHandler testee = new PutEntryResponseHandler(callback, factory);
 
 		// call method under test
 		testee.onResponseReceived(request, response);

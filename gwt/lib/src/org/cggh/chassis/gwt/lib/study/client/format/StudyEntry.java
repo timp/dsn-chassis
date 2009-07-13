@@ -24,9 +24,8 @@ public class StudyEntry extends AtomEntry {
 	protected Element studyElement = null;
 	
 	
-	
-	protected static final String template = 
-		"<entry xmlns=\"http://www.w3.org/2005/AtomNS\">\n" +
+	public static final String template = 
+		"<entry xmlns=\"http://www.w3.org/2005/Atom\">\n" +
 		"  <content type=\"application/xml\">\n" +
 		"    <study xmlns=\"http://www.cggh.org/chassis/atom/xmlns\"></study>\n" +
 		"  </content>\n" +
@@ -34,15 +33,16 @@ public class StudyEntry extends AtomEntry {
 
 	
 	
-	
 	public StudyEntry() throws AtomFormatException {
-		super();
+		super(template);
+		this.initStudyElement();
 	}
 
 	
 	
 	public StudyEntry(String entryDocXML) throws AtomFormatException {
 		super(entryDocXML);
+		this.initStudyElement();
 	}
 
 	
@@ -53,14 +53,13 @@ public class StudyEntry extends AtomEntry {
 	 */
 	public StudyEntry(Element entryElement) throws AtomFormatException {
 		super(entryElement);
+		this.initStudyElement();
 	}
 
 
 
-	@Override
-	protected void init() throws AtomFormatException {
-		super.init();
-		this.studyElement = XML.getElementByTagNameNS(entryElement, ChassisNS.NS, ChassisNS.STUDY);
+	protected void initStudyElement() throws AtomFormatException {
+		this.studyElement = XML.getElementByTagNameNS(this.entryElement, ChassisNS.NS, ChassisNS.STUDY);
 		if (this.studyElement == null) {
 			throw new StudyFormatException("study element is null");
 		}
