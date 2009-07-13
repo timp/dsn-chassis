@@ -3,7 +3,6 @@
  */
 package org.wwarn.chassis.gwt.lib.study.client;
 
-import org.cggh.chassis.gwt.lib.common.client.ChassisNS;
 import org.cggh.chassis.gwt.lib.xml.client.XML;
 import com.google.gwt.xml.client.Element;
 
@@ -13,7 +12,7 @@ import com.google.gwt.xml.client.Element;
  * @author aliman
  *
  */
-public class TreatmentResult {
+public class WwarnTreatmentResult {
 
 	
 	
@@ -31,11 +30,11 @@ public class TreatmentResult {
 	/**
 	 * @param treatmentResultElement
 	 */
-	TreatmentResult(Element treatmentResultElement) {
-		this.treatment = XML.getElementSimpleContentByTagNameNS(treatmentResultElement, ChassisNS.NS, TREATMENT);
-		this.day = XML.getElementSimpleContentByTagNameNS(treatmentResultElement, ChassisNS.NS, DAY);
-		this.riskAdjusted = XML.getElementSimpleContentByTagNameNS(treatmentResultElement, ChassisNS.NS, RISKADJUSTED);
-		this.riskUnadjusted = XML.getElementSimpleContentByTagNameNS(treatmentResultElement, ChassisNS.NS, RISKUNADJUSTED);
+	WwarnTreatmentResult(Element treatmentResultElement) {
+		this.treatment = XML.getElementSimpleContentByTagName(treatmentResultElement, TREATMENT);
+		this.day = XML.getElementSimpleContentByTagName(treatmentResultElement, DAY);
+		this.riskAdjusted = XML.getElementSimpleContentByTagName(treatmentResultElement, RISKADJUSTED);
+		this.riskUnadjusted = XML.getElementSimpleContentByTagName(treatmentResultElement, RISKUNADJUSTED);
 	}
 
 	

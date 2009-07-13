@@ -15,6 +15,9 @@ import org.cggh.chassis.gwt.lib.study.client.format.StudyEntry;
 import org.cggh.chassis.gwt.lib.study.client.format.StudyFactory;
 import org.cggh.chassis.gwt.lib.study.client.format.StudyFeed;
 import org.cggh.chassis.gwt.lib.study.client.format.StudyFormatException;
+import org.wwarn.chassis.gwt.lib.study.client.WwarnStudyEntry;
+import org.wwarn.chassis.gwt.lib.study.client.WwarnStudyFactory;
+import org.wwarn.chassis.gwt.lib.study.client.WwarnStudyFeed;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.dom.client.ButtonElement;
@@ -41,8 +44,10 @@ public class StudyClient implements EntryPoint {
 
 	private Controller controller;
 	private Renderer renderer;
-	private StudyFeed feed;
-	private StudyEntry entry;
+//	private StudyFeed feed;
+//	private StudyEntry entry;
+	private WwarnStudyFeed feed;
+	private WwarnStudyEntry entry;
 	private InputElement inputElementCollectionURL;
 	private ButtonElement buttonElementGetFeed;
 	private DivElement divElementFeedContainer;
@@ -102,7 +107,9 @@ public class StudyClient implements EntryPoint {
 		
 		public void getFeed(String collectionURL) {
 
-			StudyFactory factory = new StudyFactory();
+//			StudyFactory factory = new StudyFactory();
+			WwarnStudyFactory factory = new WwarnStudyFactory();
+
 			GetFeedRequestBuilder builder = new GetFeedRequestBuilder(URL.encode(collectionURL), factory);
 
 			GetFeedCallback callback = new GetFeedCallback() {
@@ -120,7 +127,8 @@ public class StudyClient implements EntryPoint {
 				}
 	
 				public void onSuccess(Request request, Response response, AtomFeed newFeed) {
-					feed = StudyFeed.as(newFeed);
+//					feed = StudyFeed.as(newFeed);
+					feed = WwarnStudyFeed.as(newFeed);
 					renderer.onFeedChanged();
 				}
 				
@@ -144,12 +152,15 @@ public class StudyClient implements EntryPoint {
 		 */
 		public void postEntry(String collectionURL, String title, String summary, int sampleSize) {
 			
-			StudyFactory factory = new StudyFactory();
+//			StudyFactory factory = new StudyFactory();
+			WwarnStudyFactory factory = new WwarnStudyFactory();
+			
 			PostEntryRequestBuilder builder = new PostEntryRequestBuilder(URL.encode(collectionURL), factory);
 			
 			try {
 
-				StudyEntry newEntry = new StudyEntry();
+//				StudyEntry newEntry = new StudyEntry();
+				WwarnStudyEntry newEntry = new WwarnStudyEntry();
 				newEntry.setTitle(title);
 				newEntry.setSummary(summary);
 				newEntry.setSampleSize(42);
@@ -172,7 +183,8 @@ public class StudyClient implements EntryPoint {
 
 					public void onSuccess(Request request, Response response, AtomEntry returnedEntry) {
 //						Window.alert("onSuccess");
-						entry = StudyEntry.as(returnedEntry);
+//						entry = StudyEntry.as(returnedEntry);
+						entry = WwarnStudyEntry.as(returnedEntry);
 						renderer.onEntryChanged();
 					}
 
