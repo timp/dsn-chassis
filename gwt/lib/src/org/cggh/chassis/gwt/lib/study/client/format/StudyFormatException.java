@@ -1,9 +1,9 @@
 /**
  * $Id$
  */
-package org.cggh.chassis.gwt.lib.study.client;
+package org.cggh.chassis.gwt.lib.study.client.format;
 
-import org.cggh.chassis.gwt.lib.atom.client.AtomFormatException;
+import org.cggh.chassis.gwt.lib.atom.client.format.AtomFormatException;
 
 /**
  * TODO document me

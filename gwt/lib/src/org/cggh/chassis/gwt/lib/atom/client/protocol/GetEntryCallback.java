@@ -1,4 +1,9 @@
-package org.cggh.chassis.gwt.lib.study.client;
+/**
+ * $Id$
+ */
+package org.cggh.chassis.gwt.lib.atom.client.protocol;
+
+import org.cggh.chassis.gwt.lib.atom.client.format.AtomEntry;
 
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.Response;
@@ -9,9 +14,9 @@ import com.google.gwt.http.client.Response;
  * @author aliman
  *
  */
-public interface CallbackWithStudyFeed {
-	
-	public void onSuccess(Request request, Response response, StudyFeed feed);
+public interface GetEntryCallback {
+
+	public void onSuccess(Request request, Response response, AtomEntry entry);
 	public void onFailure(Request request, Response response);
 	public void onError(Request request, Throwable exception);
 	public void onError(Request request, Response response, Throwable exception);

@@ -1,11 +1,17 @@
 /**
  * $Id$
  */
-package org.cggh.chassis.gwt.lib.atom.client;
+package org.cggh.chassis.gwt.lib.atom.client.format;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.cggh.chassis.gwt.lib.atom.client.format.AtomCategory;
+import org.cggh.chassis.gwt.lib.atom.client.format.AtomEntry;
+import org.cggh.chassis.gwt.lib.atom.client.format.AtomFormatException;
+import org.cggh.chassis.gwt.lib.atom.client.format.AtomLink;
+import org.cggh.chassis.gwt.lib.atom.client.format.AtomNS;
+import org.cggh.chassis.gwt.lib.atom.client.format.AtomPersonConstruct;
 import org.cggh.chassis.gwt.lib.xml.client.XML;
 
 import com.google.gwt.junit.client.GWTTestCase;

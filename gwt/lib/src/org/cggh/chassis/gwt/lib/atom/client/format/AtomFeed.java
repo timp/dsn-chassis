@@ -1,7 +1,7 @@
 /**
  * $Id$
  */
-package org.cggh.chassis.gwt.lib.atom.client;
+package org.cggh.chassis.gwt.lib.atom.client.format;
 
 import java.util.List;
 import org.cggh.chassis.gwt.lib.xml.client.XML;
@@ -20,6 +20,7 @@ public class AtomFeed {
 	
 	
 	protected Element feedElement = null;
+	protected AtomFactory factory = null;
 
 	
 	protected static final String template = "<feed xmlns=\"http://www.w3.org/2005/AtomNS\"></feed>";
@@ -38,6 +39,18 @@ public class AtomFeed {
 	
 	
 	
+	/**
+	 * @param feedDocXML
+	 * @param atomFactory
+	 * @throws AtomFormatException 
+	 */
+	public AtomFeed(String feedDocXML, AtomFactory atomFactory) throws AtomFormatException {
+		this.factory = atomFactory;
+		init(feedDocXML);
+	}
+
+
+
 	public static AtomFeed newInstance(String feedDocXML) throws AtomFormatException {
 		return new AtomFeed(feedDocXML);
 	}
@@ -46,6 +59,10 @@ public class AtomFeed {
 	
 	protected void init(String feedDocXML) throws AtomFormatException {
 
+		if (this.factory == null) {
+			this.factory = new AtomFactory();
+		}
+		
 		Document doc = null;
 		
 		try {
@@ -97,6 +114,6 @@ public class AtomFeed {
 	
 	
 	public List<AtomEntry> getEntries() throws AtomFormatException {
-		return AtomEntry.getEntries(this.feedElement);
+		return this.factory.createEntries(this.feedElement);
 	}
 }
