@@ -18,12 +18,13 @@ N.B. the same person might be both curator and standardiser.
   * letters _A_, _B_, _C_, etc., denote some data, not in a standard form
   * letters _A'_, _B'_, _C'_, etc., denote some data in a standard form
   * _A_ -> _B_ denotes that _B_ was derived from _A_
+  * ignore any colouring in the derivation graph ascii art, it's accidental
 
 == Use Case 1 (Regular, Linear) ==
 
 A submitter submits _A_. A curator works on _A_ (e.g., removes some rows, or changes some columns) and derives _B_. A standardiser transforms _B_ into _C'_.
 
-This is the regular, linear case, where submission leads to curation, which leads to standardisation.
+This is a *regular*, *linear* case, where submission leads to curation, which leads to standardisation.
 
 === Sequence of Events ===
 
@@ -33,13 +34,15 @@ This is the regular, linear case, where submission leads to curation, which lead
   
 === Derivation Graph ===
 
+{{{
 _A_ -> _B_ -> _C'_
+}}}
 
 == Use Case 2 (Goofy, Linear) ==
 
 A submitter submits _A_. A standardiser transforms _A_ into _B'_. A curator then works on _B'_ (e.g., removes some rows, but does not change the structure of the data) and derives _C'_.
 
-This is the "goofy", linear case, where some curation occurs after standardisation.
+This is a "*goofy*", *linear* case, where some curation occurs after standardisation.
 
 === Sequence of Events ===
 
@@ -49,13 +52,15 @@ This is the "goofy", linear case, where some curation occurs after standardisati
   
 === Derivation Graph ===
 
+{{{
 _A_ -> _B'_-> _C'_
+}}}
 
 == Use Case 3 (Goofy, Linear, Pre-Standardised) ==
 
 A submitter submits _A'_ which is already in a standard form (e.g., the WHO spreadsheet format). A curator works on _A'_ and derives _B'_.
 
-This is the "goofy" case, where some curation occurs after standardisation, and where the data comes "pre-standardised".
+This is a "*goofy*", *linear* case, where some curation occurs after standardisation, and where the data comes "pre-standardised".
 
 === Sequence of Events ===
 
@@ -69,7 +74,7 @@ _A'_-> _B'_
 
 A submitter submits _A_. A curator works on _A_ and derives _B_. A standardiser transforms _B_ into _C'_. A curator then does further work on _B_ and derives _D_. A standardiser transforms _D_ into _E'_.
 
-This is the regular case, where standardisation always follows curation, with standardisation of two subsequent curation products creating a simple branch in the derivation graph.
+This is a *regular* case, where curation always precedes standardisation, with a *branch* in the derivation graph caused by two standardisation events.
 
 === Sequence of Events ===
 
@@ -86,5 +91,29 @@ A -> B -> C'
      |
      v
      D -> E'
+}}}
+
+== Use Case 5 (Regular, Submitter Revision) ==
+
+A submitter submits _A_. A curator works on _A_ and derives _B_. A standardiser transforms _B_ into _C'_. The submitter submits a revision of _A_, _D_ (e.g., with some new rows included). A curator works on _D_ and derives _E_. A standardiser transforms _E_ into _F'_.
+
+This is a *regular* case, where curation always precedes standardisation, with a *branch* in the derivation graph caused by the submitter's revised submission.
+
+=== Sequence of Events ===
+
+  # -> _A_ (submission)
+  # _A_ -> _B_ (curation)
+  # _B_ -> _C'_ (standardisation)
+  # _A_ -> _D_ (revised submission)
+  # _D_ -> _E_ (curation)
+  # _E_ -> _F'_ (standardisation)
+  
+=== Derivation Graph ===
+
+{{{
+A -> B -> C'
+|
+v
+D -> E -> F'
 }}}
 
