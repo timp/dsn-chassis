@@ -2,51 +2,58 @@
 
 Roles:
 
-  * submitter - person who provides the data
-  * curator - person who works on the data to meet quality control criteria
-  * standardiser - 
+  * submitter - creates the data
+  * curator - works on the data to meet quality control criteria
+  * standardiser - transforms data into a standard form
+  
+N.B. the same person might be both curator and standardiser.
 
 Notational conventions:
 
   * letters _A_, _B_, _C_, etc., denote some data, not in a standard form
-  * letters A', B', C', etc., denote some data in a standard form
-  * A -> B denotes that B was derived from A
+  * letters _A'_, _B'_, _C'_, etc., denote some data in a standard form
+  * _A_ -> _B_ denotes that _B_ was derived from _A_
 
 === Use Case 1 (Regular, Linear) ===
 
-A submitter submits A. A curator works on A, e.g. removes some rows, or changes some columns, and creates B. A standardiser transforms B into C'.
+A submitter creates _A_. A curator works on _A_ (e.g., removes some rows, or changes some columns) and creates _B_. A standardiser transforms _B_ into _C'_.
 
 This is the regular, linear case, where submission leads to curation, which leads to standardisation.
 
 ==== Sequence of Events ====
 
-  # submitter:       -> A
-  # curator:       A -> B
-  # standardiser:  B -> C'
+  # _A_ -> _B_ (curation)
+  # _B_ -> _C'_ (standardisation)
   
 ==== Derivation Graph ====
 
-A -> B -> C'
+_A_ -> _B_ -> _C'_
 
 === Use Case 2 (Goofy, Linear) ===
 
+A submitter creates _A_. A standardiser transforms _A_ into _B'_. A curator then works on _B'_ (e.g., removes some rows, but does not change the structure of the data) and creates _C'_.
+
+This is the "goofy", linear case, where some curation occurs after standardisation.
+
 ==== Sequence of Events ====
 
-  # submitter:      -> A
-  # standardiser: A -> B'
-  # curator:      B'-> C'
+  # _A_ -> _B'_ (standardisation)
+  # _B'_-> _C'_ (curation)
   
 ==== Derivation Graph ====
 
-A -> B'-> C'
+_A_ -> _B'_-> _C'_
 
 === Use Case 3 (Goofy, Linear, Pre-Standardised) ===
 
+A submitter creates _A'_ which is already in a standard form (e.g., the WHO spreadsheet format). A curator works on _A'_ and creates _B'_.
+
+This is the "goofy" case, where some curation occurs after standardisation, and where the data comes "pre-standardised".
+
 ==== Sequence of Events ====
 
-  # submitter:   -> A'
-  # curator:   A'-> B'
+  # _A'_-> _B'_ (curation)
   
 ==== Derivation Graph ====
 
-A'-> B'
+_A'_-> _B'_
