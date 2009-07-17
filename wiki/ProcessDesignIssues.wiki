@@ -1,0 +1,52 @@
+== Use Cases ==
+
+Roles:
+
+  * submitter - person who provides the data
+  * curator - person who works on the data to meet quality control criteria
+  * standardiser - 
+
+Notational conventions:
+
+  * letters _A_, _B_, _C_, etc., denote some data, not in a standard form
+  * letters A', B', C', etc., denote some data in a standard form
+  * A -> B denotes that B was derived from A
+
+=== Use Case 1 (Regular, Linear) ===
+
+A submitter submits A. A curator works on A, e.g. removes some rows, or changes some columns, and creates B. A standardiser transforms B into C'.
+
+This is the regular, linear case, where submission leads to curation, which leads to standardisation.
+
+==== Sequence of Events ====
+
+  # submitter:       -> A
+  # curator:       A -> B
+  # standardiser:  B -> C'
+  
+==== Derivation Graph ====
+
+A -> B -> C'
+
+=== Use Case 2 (Goofy, Linear) ===
+
+==== Sequence of Events ====
+
+  # submitter:      -> A
+  # standardiser: A -> B'
+  # curator:      B'-> C'
+  
+==== Derivation Graph ====
+
+A -> B'-> C'
+
+=== Use Case 3 (Goofy, Linear, Pre-Standardised) ===
+
+==== Sequence of Events ====
+
+  # submitter:   -> A'
+  # curator:   A'-> B'
+  
+==== Derivation Graph ====
+
+A'-> B'
