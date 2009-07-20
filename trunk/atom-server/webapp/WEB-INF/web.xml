@@ -69,6 +69,18 @@
     </servlet>
 
 
+    <!-- HTTP Method Override Filter -->
+    <filter>
+       <filter-name>HTTPMethodOverrideFilter</filter-name>
+       <filter-class>org.cggh.chassis.server.atom.HttpMethodOverrideFilter</filter-class>
+    </filter>
+
+    <!-- HTTP Method Override Filter -->
+    <filter-mapping>
+        <filter-name>HTTPMethodOverrideFilter</filter-name>
+        <servlet-name>AtomServlet</servlet-name>
+    </filter-mapping>
+    
     <!-- Atom Atom Publishing Protocol -->
     <servlet>
         <servlet-name>AtomServlet</servlet-name>
@@ -81,7 +93,8 @@
         <url-pattern>/atom/*</url-pattern>
     </servlet-mapping>
     
-    
+
+         
     <!-- ==================== various MIME type mappings ================== -->
 
     <mime-mapping>
