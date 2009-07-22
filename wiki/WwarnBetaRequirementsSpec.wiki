@@ -1,4 +1,4 @@
-#summary This document is a specification of user requirements for the Chassis/WWARN (beta) system for managing the submission, curation and standardisation of data for the World Wide Anti-malarial Resistance Network (WWARN).
+#summary This document is a specification of user requirements for a first milestone release (M1) of the Chassis/WWARN system for managing the submission, curation and standardisation of data for the World Wide Anti-malarial Resistance Network (WWARN).
 
 ----
 <wiki:toc/>
@@ -6,23 +6,23 @@
 
 = Introduction =
 
-This document is a specification of user requirements for the _Chassis/WWARN_ (beta) system for managing the submission, curation and standardisation of data for the World Wide Anti-malarial Resistance Network (WWARN).
+This document is a specification of user requirements for the _Chassis/WWARN_ (M1) system for managing the submission, curation and standardisation of data for the World Wide Anti-malarial Resistance Network (WWARN).
 
 == WWARN Data Management ==
 
-The _Chassis/WWARN_ (beta) system is intended to support the data management activities of the WWARN data-sharing network. These data management activities include the submission of data, curation of submitted data to meet defined quality control and other (e.g., ethical) criteria, and mapping of data onto WWARN standards for data structure and semantics. The end goal of these activities is to produce data that is suitable for ingest into the WWARN database.
+The _Chassis/WWARN_ (M1) system is intended to support the data management activities of the WWARN data-sharing network. These data management activities include the submission of data, curation of submitted data to meet defined quality control and other (e.g., ethical) criteria, and mapping of data onto WWARN standards for data structure and semantics. The end goal of these activities is to produce data that is suitable for ingest into the WWARN database.
 
 == Chassis/WWARN and the WWARN Database ==
 
-Note that the _Chassis/WWARN_ (beta) system is distinct from the _WWARN database_. The _WWARN database_ is a repository of standardised, quality controlled data, with tools for the analysis and visualisation of those data. Data will be periodically exported from the _Chassis/WWARN_ (beta) system and ingested into the _WWARN database_. Management of this export and ingest process, and any support for visualisation or analysis tools, is out of scope for the _Chassis/WWARN_ (beta) system.
+Note that the _Chassis/WWARN_ (M1) system is distinct from the _WWARN database_. The _WWARN database_ is a repository of standardised, quality controlled data, with tools for the analysis and visualisation of those data. Data will be periodically exported from the _Chassis/WWARN_ (M1) system and ingested into the _WWARN database_. Management of this export and ingest process, and any support for visualisation or analysis tools, is out of scope for the _Chassis/WWARN_ (M1) system.
 
-== First Production Release ==
+== First Milestone Release (M1) ==
 
-The _Chassis/WWARN_ (beta) system is intended to be a first production release of the _Chassis/WWARN_ system for use by WWARN. This document specifies the functionality that must be included in the first production release. Some other functionality that might be developed for future releases of _Chassis/WWARN_ is also discussed.
+The _Chassis/WWARN_ (M1) system is intended to be a first milestone release of the _Chassis/WWARN_ system for production use by WWARN. This document specifies the functionality that must be included in the first milestone release. Some other functionality that might be developed for future releases of _Chassis/WWARN_ is also discussed.
 
 == Chassis/`*` ==
 
-This user requirements specification is tailored towards the requirements of the WWARN data-sharing network. However, the _Chassis/WWARN_ (beta) system is intended to be the first instance of a generic platform (_Chassis/`*`_) to support the data management activities of similar data-sharing networks.
+This user requirements specification is tailored towards the requirements of the WWARN data-sharing network. However, the _Chassis/WWARN_ system is intended to be the first instance of a generic platform (_Chassis/`*`_) to support the data management activities of similar data-sharing networks.
 
 == Structure of this Document ==
 
