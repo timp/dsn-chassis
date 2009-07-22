@@ -1,12 +1,6 @@
 #summary This document is a specification of user requirements for a first milestone release (M1) of the Chassis/WWARN system for managing the submission, curation and standardisation of data for the World Wide Anti-malarial Resistance Network (WWARN).
 
-{{{
-$Revision$
-$LastChangedDate$ 
-$LastChangedRevision$ 
-$LastChangedBy$
-}}}
-
+*_First Draft_* (2009-07-22)
 ----
 *Table of Contents*
 
