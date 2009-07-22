@@ -43,7 +43,7 @@ The following roles are defined here for users of the _Chassis/WWARN_ (M1) syste
 
 ----
 = Part 1 - Data Submission =
-
+----
 == Data Submission Workflow - Key Points ==
 
 The _Chassis/WWARN_ (M1) system is designed to support a data submission workflow with the following key characteristics.
@@ -67,6 +67,93 @@ The _Chassis/WWARN_ (M1) system is designed to support a data submission workflo
   * Chassis/WWARN (M1) does not place any restriction on the nature or format of the data file uploaded as submitted data. The Chassis/WWARN (M1) system will not attempt to parse the submitted data file, and will not provide any previews of the submitted data. Later versions of Chassis/WWARN may provide support for parsing and previewing of data files containing a single table of data.
 
   * Chassis/WWARN (M1) does not place any restrictions on the nature or format of the data dictionary file uploaded when a new data dictionary is created or revised. The system will not attempt to parse the data dictionary file, nor provide any preview of its contents. Later versions of Chassis/WWARN may constrain data dictionary files to a single format, and parse files to store and provide views of data dictionaries. Later versions of the system may also provide online support for creating and editing the contents of data dictionaries, without needing to upload files.
+
+----
+== Data Submission Use Cases ==
+
+The use cases below provide a more detailed illustration of how a user will interact with the Chassis/WWARN system in the most commonly anticipated scenarios. The use cases *are not* intended to cover every possible scenario.
+
+=== Use Case: Submitter Creates a New Study ===
+
+Every submission must be linked to at least one study. Before creating the first submission for a study, a submitter creates a new study, providing at a title and textual summary for the study, and linking the new study to at least one module.
+
+N.B. a submitter can then proceed to enter all required metadata for the new study (i.e., fill out the study site questionnaire). However, it is not necessary that any further metadata be entered before a submitter can create new submissions or request gatekeeper approval for a submission.
+
+=== Use Case: Submitter Creates a New Submission With a New Data Dictionary ===
+
+A submitter creates a new submission, provides a title for the submission, links the submission to at least one study and at least one module, and uploads a data file containing the initial version of the submitted data.
+
+In this case, no data dictionary is already present in the system that corresponds to the submitted data. The submitter creates a new data dictionary, provides a title for the dictionary, and uploads a file containing the initial version of the data dictionary. The submitter then links the initial version of the submitted data to the initial version of the new data dictionary. 
+
+The submitter then sends a request for gatekeeper approval of the submission.
+
+=== Use Case: Submitter Creates a New Submission With an Existing Data Dictionary ===
+
+A submitter creates a new submission, provides a title for the submission, links the submission to at least one study and at least one module, and uploads a data file containing the initial version of the submitted data.
+
+In this case, a data dictionary was previously created for a different submission that also applies to the new submission. The submitter links the initial version of the submitted data to the appropriate version of the existing data dictionary.
+
+The submitter then sends a request for gatekeeper approval of the submission.
+
+=== Use Case: Submitter Revises a Submission Before Requesting Approval ===
+
+A submitter creates a new submission, with a new data dictionary.
+
+Before the submitter sends a request for gatekeeper approval, she realises that some data are missing in the initial version of the submitted data. She downloads the initial version of the submitted data, adds the missing data, and uploads a revised version of the submitted data. She then links the revised version of the submitted data to the initial version of the data dictionary, because neither the structure nor the semantics of the data have changed.
+
+The submitter then sends a request for gatekeeper approval of the submission.
+
+=== Use Case: Submitter Revises a Submission and Dictionary Before Requesting Approval ===
+
+A submitter creates a new submission, with a new data dictionary.
+
+Before the submitter sends a request for gatekeeper approval, she realises that some fields are missing in the initial version of the submitted data. She downloads the initial version of the submitted data, adds the missing fields, and uploads a new version of the submitted data.
+
+Because the fields used in the data have changed, the submitter also uploads a new version of the data dictionary she previously created. The new version includes a definition of each of the new fields. She then links the revised version of the submitted data with the revised version of the data dictionary.
+
+The submitter then sends a request for gatekeeper approval of the submission. 
+
+=== Use Case: Gatekeeper Reviews and Approves Submission Request ===
+
+A submitter sends a request for gatekeeper approval of their new submission. The request contains a link to a specific version of the submitted data, and a specific version of the associated data dictionary, as specified in the request by the submitter.
+
+A gatekeeper is allocated to review the request. She downloads the specified version of the submitted data and the specified version of the data dictionary, reviews them, and decides to approve the request. The gatekeeper approves the request. The gatekeeper then assigns a curator to the submission, and curation begins.
+
+=== Use Case: Gatekeeper Approves Submission Request After Revision ===
+
+A submitter sends a request for gatekeeper approval of their new submission. 
+
+A gatekeeper is allocated to review the request. She downloads the specified version of the submitted data and the specified version of the data dictionary, and reviews them. 
+
+In this case, the data dictionary is not complete, and the gatekeeper cannot understand the data. The gatekeeper denies the request, explaining that the data dictionary is incomplete, and encouraging the submitter to revise the data dictionary and make a new request for approval.
+
+The submitter is notified of the gatekeeper's decision. She then uploads a new version of the data dictionary containing the missing information, removes the link from the initial version of the submitted data to the initial, incomplete, version of the data dictionary, and links the initial version of the submitted data to the revised version of the data dictionary.
+
+The submitter then sends a new request for gatekeeper approval of the revised submission.
+
+A gatekeeper is notified of the request for approval, downloads the initial version of the submitted data and the revised version of the data dictionary, reviews them, and decides to approve the submission. The gatekeeper assigns a curator, and curation begins.
+
+=== Use Case: Submitted Data is Not Relevant to WWARN ===
+
+A submitter sends a request for gatekeeper approval of their new submission. 
+
+A gatekeeper is allocated to review the request. She downloads the specified version of the submitted data and the specified version of the data dictionary, and reviews them. 
+
+In this case, it is clear that none of the data are relevant to any of WWARN's scientific modules. The gatekeeper denies the request for approval, providing an explanation of the reasons why the request was denied. The submitter is notified of the gatekeeper's decision and explanation. The submitter deletes her submission.
+
+=== Use Case: Coordinator Reviews Submission Activity ===
+
+A coordinator reviews a list of all submissions that are pending gatekeeper approval. She notices that one submission has been pending gatekeeper approval for more than 2 weeks. She contacts the gatekeeper assigned to the submission and asks that the submission be reviewed with high priority.
+
+=== Use Case: Gatekeeper Reviews Submission Activity ===
+
+A gatekeeper reviews a list of all submission requests that have been allocated to her and that have not yet been reviewed. She selects a request from the list and reviews it.
+
+=== Use Case: Submitter Reviews Their Submission Activity ===
+
+A submitter reviews a list of all her submissions that have received gatekeeper approval, a list of all her submissions that are pending gatekeeper approval, and all her "draft" submissions for which she has not yet requested gatekeeper approval.
+
+From the list of her submissions for which she has not yet requested gatekeeper approval, she selects those that are ready for gatekeeper review, and requests gatekeeper approval for them.
 
 ----
 = Glossary =
