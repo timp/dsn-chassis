@@ -342,7 +342,7 @@ A submitter requests approval for a new submission, where the submitted data is 
 
 The assigned curator reviews the initial version of the submitted data (A^s^), and finds that no changes need to be made. She reviews the submitted data with respect to the latest version of the appropriate data release criteria, and asserts that the release criteria have been met.
 
-The submitter sees that her submission (A^s^) has been approved for release to the WWARN database, and that no other actions were taken.
+The submitter sees that her initial version of the submitted data (A^s^) has been approved for release to the WWARN database, and that no other actions were taken.
 
 === Use Case: Curation of Standard Submission ===
 
@@ -439,8 +439,84 @@ A curator views a list of all submissions for which she is the assigned curator,
 ----
 == Data Curation & Standardisation Functional Requirements ==
 
+=== (Curator) Creating a Standard Data Dictionary ===
 
-@@TODO
+  * A curator will be able to create a new standard data dictionary. This involves providing a title for the new standard data dictionary, linking the dictionary to at least one module, and uploading a file containing the initial version of the data dictionary.
+
+@@TODO: can curators just create standard data dictionaries as they wish? or do new standard data dictionaries need to be ratified as standard by one or more other curators, or anyone else?
+
+=== (Curator) Revising a Standard Data Dictionary ===
+
+  * A curator will be able to upload a file containing a revised version of a standard data dictionary.
+
+  * A curator will be able to view a version history for any standard data dictionary.
+
+@@TODO: can curators just revise standard data dictionaries as they wish? or do revisions to standard data dictionaries need to be ratified by one or more other curators, or anyone else?
+
+=== (Curator) Downloading a Standard Data Dictionary ===
+
+  * A curator will be able to download any revision of a standard data dictionary.
+
+=== (Curator) Creating a Specification of Release Criteria ===
+
+  * A curator will be able to create a new specification of release criteria. This involves providing a title for the new specification, linking the specification to exactly one module, and uploading a file containing the initial version of the specification.
+
+N.B. there can be only one specification of release criteria per module.
+
+=== (Curator) Revising a Specification of Release Criteria ===
+
+  * A curator will be able to upload a file containing a revised version of a specification of release criteria.
+
+  * A curator will be able to view a version history of any specification of release criteria.
+
+@@TODO: can curators just revise release criteria as they wish? or do revisions need to be ratified by other curators, or anyone else?
+
+=== (Curator) Downloading a Specification of Release Criteria ===
+
+  * A curator will be able to download any revision of a specification of release criteria.
+
+=== (Curator) Downloading Submitted Data ===
+
+  * A curator will be able to download any version of the submitted data for any submission they are assigned to or have been delegated to work on.
+
+=== (Curator) Revising Submitted Data ===
+
+  * A curator will be able to upload a data file containing a new version of the submitted data, for any submission to which they have been assigned or delegated to work on. The curator must explicitly select which previous version of the submitted data they started work on, i.e., which previous version their new revision is most directly derived from. The curator will also be able to enter a log message describing the changes made.
+
+=== (Curator) Linking Submitted Data With a Data Dictionary ===
+
+  * A curator will be able to link a specific version of the submitted data to a specific version of a data dictionary (either standard or non-standard), for any submission to which they have been assigned or delegated to work. 
+
+  * A curator will be able to change the data dictionary link for any submission they are assigned to or delegated to work on.
+
+  * A curator will be able to view a history of changes made to the data dictionary link, for any submission they are assigned to or delegated to work on.
+
+=== (Curator) Viewing Submitted Data Version History ===
+
+  * A curator will be able to view a complete version tree of the submitted data, for any submission to which they have been assigned or delegated to work on. It will be clear which versions are linked to a standard data dictionary, and which are not.
+
+=== (Curator) Reviewing Data for Release ===
+
+  * A curator will be able to review submitted data w.r.t. some version of a specification of release criteria, and assert that the data either do or do not meet the specified criteria, for any submission to which they have been assigned.
+
+=== (Curator) Delegation ===
+
+  * An assigned curator will be able to delegate curation tasks to other curators, for any submission to which they have been assigned.
+
+  * A curator will be able to indicate completion of a delegated tasks.
+
+=== (Curator) Overview of Curation Activity ===
+
+  * A curator will be able to view a list of all submissions that have been given gatekeeper approval but not yet given release approval, and a list of those that have been given release approval, for any version of release criteria, for any submission to which they are assigned. Those for which a revision is available conforming to a standard data dictionary will be clearly marked.
+
+  * These lists can be grouped by module, study or submitter.
+
+=== (Coordinator) Overview of Curation Activity ===
+
+  * A coordinator will be able to view a list of all submissions that have been given gatekeeper approval but not yet given release approval, and a list of those that have been given release approval, for any version of release criteria. Those for which a revision is available conforming to a standard data dictionary will be clearly marked.
+
+  * These lists can be grouped by module, study or submitter.
+
 ----
 = Glossary =
 
