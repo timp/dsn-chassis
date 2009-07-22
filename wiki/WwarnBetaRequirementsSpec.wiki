@@ -22,9 +22,9 @@ Note that the _Chassis/WWARN_ (beta) system is distinct from the _WWARN database
 
 The _Chassis/WWARN_ (beta) system is intended to be a first production release of the _Chassis/WWARN_ system for use by WWARN. This document specifies the functionality that must be included in the first production release. Some other functionality that might be developed for future releases of _Chassis/WWARN_ is also discussed.
 
-== Chassis/* ==
+== Chassis/`*` ==
 
-This user requirements specification is tailored towards the requirements of the WWARN data-sharing network. However, the _Chassis/WWARN_ (beta) system is intended to be the first instance of a generic platform (_Chassis/*_) to support the data management activities of similar data-sharing networks.
+This user requirements specification is tailored towards the requirements of the WWARN data-sharing network. However, the _Chassis/WWARN_ (beta) system is intended to be the first instance of a generic platform (_Chassis/`*`_) to support the data management activities of similar data-sharing networks.
 
 == Structure of this Document ==
 
