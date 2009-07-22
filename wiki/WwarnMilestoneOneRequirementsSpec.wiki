@@ -72,9 +72,9 @@ The _Chassis/WWARN_ (M1) system is designed to support a data submission workflo
 
   * There may be more than one gatekeeper. For Chassis/WWARN (M1), it is anticipated that the gatekeepers will be the module heads. If this is the case, then the Chassis/WWARN system will assign a gatekeeper to each new submission based on the module to which the submission is linked by its submitter.
 
-=== Constraints on Data & Data Dictionaries ===
+=== Constraints on Submitted Data & Data Dictionaries ===
 
-  * Chassis/WWARN (M1) does not place any restriction on the nature or format of the data file uploaded as submitted data. The Chassis/WWARN (M1) system *will not* attempt to parse the submitted data file, and *will not* provide any previews of the submitted data. Later versions of Chassis/WWARN may provide support for parsing and previewing of data files containing a single table of data.
+  * Chassis/WWARN (M1) does not place any constraints on the nature or format of the data file uploaded as submitted data. The Chassis/WWARN (M1) system *will not* attempt to parse the submitted data file, and *will not* provide any previews of the submitted data. Later versions of Chassis/WWARN may provide support for parsing and previewing of data files containing a single table of data.
 
   * Chassis/WWARN (M1) does not place any restrictions on the nature or format of the data dictionary file uploaded when a new data dictionary is created or revised. The system *will not* attempt to parse the data dictionary file, nor provide any preview of its contents. Later versions of Chassis/WWARN may constrain data dictionary files to a single format, and parse files to store and provide views of data dictionaries. Later versions of the system may also provide online support for creating and editing the contents of data dictionaries, without needing to upload files.
 
