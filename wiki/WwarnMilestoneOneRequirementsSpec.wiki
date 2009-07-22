@@ -1,6 +1,8 @@
 #summary This document is a specification of user requirements for a first milestone release (M1) of the Chassis/WWARN system for managing the submission, curation and standardisation of data for the World Wide Anti-malarial Resistance Network (WWARN).
 
 ----
+*Table of Contents*
+
 <wiki:toc/>
 ----
 
@@ -155,6 +157,123 @@ A submitter reviews a list of all her submissions that have received gatekeeper 
 
 From the list of her submissions for which she has not yet requested gatekeeper approval, she selects those that are ready for gatekeeper review, and requests gatekeeper approval for them.
 
+----
+== Data Submission Functional Requirements ==
+
+=== (Submitter) Managing Studies ===
+
+  * A submitter will be able to create a new study. This involves providing a title and textual summary for the study, and linking the study to at least one module.
+
+  * A submitter will be able to view a list of all studies they have previously created.
+
+  * A submitter will be able to view a list of all studies created by anyone.
+
+  * Lists of studies can be filtered by module.
+
+=== (Submitter) Entering and Revising Study Metadata ===
+
+  * A submitter will be able to enter metadata about any study they have previously created.
+
+  * A submitter will be able to revise (i.e., update, modify) metadata about any study they have previously created.
+
+N.B. study metadata includes the study site questionnaire (SSQ).
+
+@@TODO: what are metadata fields common across modules? what are fields of SSQ for each module? what fields are mandatory, what are optional?
+
+=== (Submitter) Creating a New Submission & Uploading Data ===
+
+  * A submitter will be able to create a new submission. This involves providing a title and textual summary for the submission, associating the submission with at least one previously created study, associating the submission with at least one WWARN module, and uploading a single data file containing the initial version of the submitted data.
+
+By default, the submitter becomes the owner of any submission they create.
+
+Note that a new submission will be created in a "draft" state, i.e., will not automatically be forwarded to a gatekeeper for review. The submitter must explicitly request gatekeeper approval for a new submission, see below.
+
+=== (Submitter) Revising Submitted Data ===
+
+  * A submitter will be able to upload a data file containing a new version of the submitted data, for any submission they own.
+
+  * A submitter will be able to view a version history of the submitted data for any submission they own.
+
+=== (Submitter) Downloading Submitted Data ===
+
+  * A submitter will be able to download the latest version of the submitted data, for any submission they own.
+
+  * A submitter will also be able to download any previous version of the submitted data, for any submission they own.
+
+=== (Submitter) Creating a Data Dictionary ===
+
+  * A submitter will be able to create a new data dictionary. This involves providing a title for the new data dictionary, and uploading a file containing the initial version of the data dictionary.
+
+By default, a submitter is the owner of any data dictionary they create.
+
+=== (Submitter) Revising a Data Dictionary ===
+
+  * A submitter will be able to upload a file containing a new version of a previously created data dictionary they own.
+
+  * A submitter will be able to view a version history for any data dictionary they own.
+
+=== (Submitter) Downloading a Data Dictionary ===
+
+  * A submitter will be able to download the latest version and any previous version of any data dictionary they own.
+
+=== (Submitter) Linking Submitted Data With a Data Dictionary ===
+
+  * For any submission they own, a submitter will be able to link a specific version of the submitted data with a specific version of a data dictionary. They do not have to also own the data dictionary to which the link is made.
+
+  * For any submission they own, a submitter will be able to remove the current link between the latest version of the submitted data and the version of the data dictionary to which it is linked, and replace it with a new link to a different version of the same data dictionary, or some version of a different data dictionary.
+
+  * For any submission they own, a submitter will be able to view a history of any changes that have been made to links between the submitted data and data dictionaries. 
+
+=== (Submitter) Requesting Gatekeeper Submission Approval ===
+
+  * A submitter will be able to request gatekeeper approval for any submission they own.
+
+=== (Submitter) Overview of Submission Activity ===
+
+  * A submitter will be able to view a list of all submissions they own. The status of each submission, i.e., either "draft" (not yet submitted to gatekeeper), pending gatekeeper approval, gatekeeper approved, or gatekeeper denied, will be clearly shown.
+
+  * A submitter will also be able to view a list of only draft submissions, a list of submissions that are pending gatekeeper approval, and a list of submissions that have been approved by a gatekeeper.
+
+  * Any of these submission lists can be grouped by study or module.
+
+=== (Gatekeeper) Overview of Submission Activity ===
+
+  * A gatekeeper will be able to view a list of all submissions from any submitter, not including those for which the submitter has not yet requested gatekeeper approval. The status of each submission (i.e., either pending gatekeeper approval, gatekeeper approved or gatekeeper denied) will be clearly shown.
+
+  * A gatekeeper will also be able to view a list of only those submissions that have been approved by a gatekeeper (not necessarily themselves), a list of submissions that have been denied, and a list of submissions that are pending gatekeeper approval.
+
+  * Any of these submissions lists can be grouped by submitter, study or module.
+
+=== (Gatekeeper) Downloading Submitted Data and Data Dictionaries ===
+
+  * A gatekeeper will be able to download any version of submitted data for which a request for gatekeeper approval has been made. A gatekeeper will also be able to download any version of a data dictionary to which the submitted data is linked.
+
+=== (Gatekeeper) Approving Requests and Assigning a Curator ===
+
+  * A gatekeeper will be able to approve any submission for which a request for gatekeeper approval has been made. 
+
+  * A gatekeeper will be able to assign a curator to an approved submission.
+
+Note that, once a gatekeeper has approved a submission, that approval is assumed to apply, even if the submitter uploads a new revision of the submitted data.
+
+@@TODO: can a gatekeeper revoke an approval?
+
+=== (Gatekeeper) Denying Requests ===
+
+  * A gatekeeper will be able to deny any submission for which a request for gatekeeper approval has been made. This involves providing an explanation of the reasons why the request has been denied, and any further information for the submitter.
+
+=== (Coordinator) Overview of Submission Activity ===
+
+  * A coordinator will be able to view a list of all submissions from any submitter, not including those for which the submitter has not yet requested gatekeeper approval. The status of each submission (i.e., either pending gatekeeper approval, gatekeeper approved or gatekeeper denied) will be clearly shown.
+
+  * A coordinator will also be able to view a list of only those submissions that have been approved by a gatekeeper, a list of submissions denied by a gatekeeper, and a list of submissions that are pending gatekeeper approval.
+
+  * Any of these submissions lists can be grouped by submitter, study or module.
+
+----
+= Part 2 - Data Curation & Standardisation =
+----
+@@TODO
 ----
 = Glossary =
 
