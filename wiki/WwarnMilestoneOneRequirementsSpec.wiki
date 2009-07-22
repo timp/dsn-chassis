@@ -14,7 +14,7 @@ The _Chassis/WWARN_ (M1) system is intended to support the data management activ
 
 == Chassis/WWARN and the WWARN Database ==
 
-Note that the _Chassis/WWARN_ (M1) system is distinct from the _WWARN database_. The _WWARN database_ is a repository of standardised, quality controlled data, with tools for the analysis and visualisation of those data. Data will be periodically exported from the _Chassis/WWARN_ (M1) system and ingested into the _WWARN database_. Management of this export and ingest process, and any support for visualisation or analysis tools, is out of scope for the _Chassis/WWARN_ (M1) system.
+Note that the _Chassis/WWARN_ (M1) system is distinct from the _WWARN database_. The _WWARN database_ is a repository of standardised, quality controlled data, with tools for the analysis and visualisation of those data. Data will be periodically exported from the _Chassis/WWARN_ (M1) system and ingested into the _WWARN database_. Management of this export and ingest process, and any support for visualisation or analysis tools, is out of scope for the _Chassis/WWARN_ system.
 
 == First Milestone Release (M1) ==
 
@@ -26,6 +26,49 @@ This user requirements specification is tailored towards the requirements of the
 
 == Structure of this Document ==
 
-This document is divided into two parts. The first part describes use cases and functional requirements relating to the submission of new data to WWARN, and the initial review of those submissions by a gatekeeper. The second part describes use cases and functional requirements for the curation and standardisation of submitted data, i.e., all activities necessary to make submitted data suitable for release to the WWARN database. 
+This document is divided into two main parts. The first part describes use cases and functional requirements relating to the submission of new data to WWARN, and the initial review of those submissions by a gatekeeper. The second part describes use cases and functional requirements for the curation and standardisation of submitted data, i.e., all activities necessary to make submitted data suitable for release to the WWARN database. 
 
+----
+= Roles =
 
+The following roles are defined here for users of the _Chassis/WWARN_ (M1) system.
+
+  * A *submitter* is someone who can create a data submission. A submitter represents and is assumed to act for the people and/or organisations who have intellectual property rights and copyright over any data they submit. 
+
+  * A *gatekeeper* is someone with the authority to approve a data submission. By approving a submission, the gatekeeper is asserting that the submission is relevant to WWARN, and authorising the expenditure of resources (i.e., time and effort) on curating and standardising the submission. 
+
+  * A *curator* is someone who will perform curation activities, which might include (but is not limited to) reviewing submitted data, revising submitted data, ensure data meet quality control criteria and community standards.
+
+  * A *coordinator* is someone who has overall responsibility for the operations of a data-sharing network.
+
+----
+= Part 1 - Data Submission =
+
+== Data Submission Workflow - Key Points ==
+
+The _Chassis/WWARN_ (M1) system is designed to support a data submission workflow with the following key characteristics.
+
+  * Data submission is the process whereby new data enters the Chassis/WWARN system.
+
+  * A submitter initiates the process by creating a new submission. The submitter then provides some information about the submission, and uploads a data file containing the initial version of the submitted data.
+
+  * Submitted data must be linked to a data dictionary, before a request can be made for gatekeeper approval of a new submission. In the simplest case, a data dictionary is a human-readable document, stating that the submitted data are structured as a single table, listing the field or column names used in the table, and providing a textual definition for each field name. However, the Chassis/WWARN (M1) system does not place any constraints on the structure or content of submitted data or data dictionaries. 
+  
+  * A submitter can create a new data dictionary for each new submission, or re-use an existing data dictionary.
+
+  * The submitter can then request gatekeeper approval of their new submission. The gatekeeper is responsible for performing an initial evaluation of the submitted data and accompanying data dictionary, to determine whether or not resources (i.e., time and effort) should be spent curating the data and mapping it onto a WWARN standard data dictionary. The gatekeeper *is not* responsible for making any modifications to the data or approving the data for ingest into the WWARN database.
+
+  * If the gatekeeper approves the request, then the submission proceeds to curation. If the gatekeeper denies the request, the submission does not proceed to curation. Once a gatekeeper has approved a submission request, they can assign a curator to the submission. Responsibility for the submission then passes from the gatekeeper to the assigned curator.
+
+  * Before a submitter has requested gatekeeper approval for a submission, they can make revisions to the submitted data. A submitter can also revise a submission after gatekeeper approval has been denied, and make a new request for gatekeeper approval of the revised submission. 
+
+  * There may be more than one gatekeeper. For Chassis/WWARN (M1), it is anticipated that the gatekeepers will be the module heads. If this is the case, then the Chassis/WWARN system will assign a gatekeeper to each new submission based on the module to which the submission is linked by its submitter.
+
+  * Chassis/WWARN (M1) does not place any restriction on the nature or format of the data file uploaded as submitted data. The Chassis/WWARN (M1) system will not attempt to parse the submitted data file, and will not provide any previews of the submitted data. Later versions of Chassis/WWARN may provide support for parsing and previewing of data files containing a single table of data.
+
+  * Chassis/WWARN (M1) does not place any restrictions on the nature or format of the data dictionary file uploaded when a new data dictionary is created or revised. The system will not attempt to parse the data dictionary file, nor provide any preview of its contents. Later versions of Chassis/WWARN may constrain data dictionary files to a single format, and parse files to store and provide views of data dictionaries. Later versions of the system may also provide online support for creating and editing the contents of data dictionaries, without needing to upload files.
+
+----
+= Glossary =
+
+@@TODO
