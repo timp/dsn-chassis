@@ -1,6 +1,4 @@
-#summary user requirements specification for the Chassis/WWARN (beta) system
-
-_This document is a specification of user requirements for the Chassis/WWARN (beta) system for managing the submission, curation and standardisation of data for the World Wide Anti-malarial Resistance Network (WWARN)._
+#summary This document is a specification of user requirements for the Chassis/WWARN (beta) system for managing the submission, curation and standardisation of data for the World Wide Anti-malarial Resistance Network (WWARN).
 
 ----
 <wiki:toc/>
