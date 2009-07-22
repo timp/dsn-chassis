@@ -1,0 +1,33 @@
+#summary user requirements specification for the Chassis/WWARN (beta) system
+
+_This document is a specification of user requirements for the Chassis/WWARN (beta) system for managing the submission, curation and standardisation of data for the World Wide Anti-malarial Resistance Network (WWARN)._
+
+----
+<wiki:toc/>
+----
+
+= Introduction =
+
+This document is a specification of user requirements for the _Chassis/WWARN_ (beta) system for managing the submission, curation and standardisation of data for the World Wide Anti-malarial Resistance Network (WWARN).
+
+== WWARN Data Management ==
+
+The _Chassis/WWARN_ (beta) system is intended to support the data management activities of the WWARN data-sharing network. These data management activities include the submission of data, curation of submitted data to meet defined quality control and other (e.g., ethical) criteria, and mapping of data onto WWARN standards for data structure and semantics. The end goal of these activities is to produce data that is suitable for ingest into the WWARN database.
+
+== Chassis/WWARN and the WWARN Database ==
+
+Note that the _Chassis/WWARN_ (beta) system is distinct from the _WWARN database_. The _WWARN database_ is a repository of standardised, quality controlled data, with tools for the analysis and visualisation of those data. Data will be periodically exported from the _Chassis/WWARN_ (beta) system and ingested into the _WWARN database_. Management of this export and ingest process, and any support for visualisation or analysis tools, is out of scope for the _Chassis/WWARN_ (beta) system.
+
+== First Production Release ==
+
+The _Chassis/WWARN_ (beta) system is intended to be a first production release of the _Chassis/WWARN_ system for use by WWARN. This document specifies the functionality that must be included in the first production release. Some other functionality that might be developed for future releases of _Chassis/WWARN_ is also discussed.
+
+== Chassis/* ==
+
+This user requirements specification is tailored towards the requirements of the WWARN data-sharing network. However, the _Chassis/WWARN_ (beta) system is intended to be the first instance of a generic platform (_Chassis/*_) to support the data management activities of similar data-sharing networks.
+
+== Structure of this Document ==
+
+This document is divided into two parts. The first part describes use cases and functional requirements relating to the submission of new data to WWARN, and the initial review of those submissions by a gatekeeper. The second part describes use cases and functional requirements for the curation and standardisation of submitted data, i.e., all activities necessary to make submitted data suitable for release to the WWARN database. 
+
+
