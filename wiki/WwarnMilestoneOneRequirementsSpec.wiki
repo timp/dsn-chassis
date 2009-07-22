@@ -273,6 +273,173 @@ Note that, once a gatekeeper has approved a submission, that approval is assumed
 ----
 = Part 2 - Data Curation & Standardisation =
 ----
+== Data Curation & Standardisation Workflow - Key Points ==
+
+=== General Points ===
+
+  * The curation process take submitted data as input and result in data that is suitable for release to the WWARN database. 
+
+  * Data that is suitable for release to the WWARN database must conform to one of the standard data dictionaries defined by the curators, and must meet all other release criteria defined by the curators, e.g., ethical or quality control criteria. Therefore, the curation process involves doing whatever is necessary to get the data to the point where it meets all release criteria. 
+
+  * The curation process comprises a wide and open-ended range of possible activities. In general, curation activities either make some revision to the submitted data (e.g., adding, removing, or restructuring data), or review the submitted data with respect to some criteria (e.g., ethical criteria, quality control criteria) and assert that the data either do or do not meet those criteria. 
+
+=== Transformation and Mapping to Standard Data Dictionaries ===
+
+  * A special type of revision activity involves transforming data that is submitted in a non-standard form into something that conforms with one of the standard data dictionaries. Such a transformation is also referred to here as mapping or standardisation. However, just because data conforms to the structural and semantic conditions of a standard data dictionary, does not necessarily mean that the data are reliable or make any sense. I.e., quality control is a separate concern from mapping data to standard data dictionaries. 
+
+  * The Chassis/WWARN (beta) system does not prescribe the order in which data are mapped to a standard data dictionary, and revised to meet quality control standards and other release criteria. I.e., data may be submitted in a non-standard form, revised to meet quality control standards, and then mapped to a standard data dictionary; or data may be first mapped to a standard data dictionary, and then revised to meet quality control criteria; or revisions may be applied both before and after mapping to a standard data dictionary.
+
+  * In the Chassis/WWARN (beta) system, no support will be provided for transforming data. I.e., it is assumed that all data will be transformed using other systems, e.g., off-line desktop tools. Later versions of Chassis/WWARN may provide online support for defining and executing mappings between data dictionaries. 
+
+  * Standard data dictionaries are like any other data dictionaries, except that they are maintained by the curators. In the simplest case, a standard data dictionary is a human readable document, stating that the data should be structured as a single table, and providing a list of field names with a textual definition for each field. However, it is expected that a standard data dictionary also provide details of the expected datatype for each field (e.g., string, integer, decimal, datetime, etc.), the expected units for each field (e.g., g/dl), any constraints on the expected value (e.g., numerical range constraints).
+
+  * A special type of review activity involves checking that submitted data conform with respect to a data dictionary, also referred to as validation. The Chassis/WWARN (beta) system will not provide any support for validation. I.e., it is assumed that validation will be performed using other systems, e.g., by manual review, or using off-line desktop tools. Later versions of Chassis/WWARN may provide some online support for validation.
+
+=== Specification of Release Criteria ===
+
+  * A second special type of review activity involves reviewing submitted data with respect to a specification of release criteria. Such a specification states all of the criteria that must be met before data may be released to the WWARN database. 
+
+  * Specifications of release criteria are versioned, to enable the criteria to be modified without confusing the status of previously released data. This is also intended to enable the WWARN database to migrate incrementally towards scricter release criteria as these emerge.
+
+=== Provenance & Derivation of Data ===
+
+  * A key design goal is that the complete and true derivation of any data released to the WWARN database must be recorded. By derivation, we mean the complete sequence of actions and revisions that led from the data as submitted to the data in its released form, i.e., its provenance. 
+
+  * A curator can upload revisions of submitted data. To ensure that the true derivation of any data revision is captured, the curator must explicitly assert the derivation of any new revision they make, i.e., they must select the version of the data (either submitter version or another curator version) that was taken as input to the curator's new revision. This also ensures that curators can go back and do work on versions of the submitted data other than the latest version, and an accurate audit trail of their activities will still be maintained. (The curators' revisions are assumed to form an arbitrarily branching tree, where the root of each tree is one of the submitter's revisions.)
+
+  * A submitter can upload a revision of submitted data at any time. To keep things simple for a submitter, they do not have to assert the derivation of each new revision. (I.e., a submitter's revisions to a submission are assumed to form a single linear version series.)
+  
+----
+== Data Curation Use Cases ==
+
+=== Notation Conventions ===
+
+In the use cases below, letters A, B, C, etc., are used to help identify different revisions of submitted data, e.g., "the initial revision of the submitted data (A) was revised by the curator to create a new revision (B)". If the letter has the superscript "s" (e.g., A^s^), then the revision is linked to a standard data dictionary. If no superscript is present, the data is linked to a non-standard data dictionary.
+
+=== Use Case: Curator Manages a Standard Data Dictionary ===
+
+In addition to the non-standard data dictionaries that submitters can create, the Chassis/WWARN system has one or more data dictionaries managed by the curators that are agreed WWARN standard data dictionaries. Submitted data must be mapped onto one of these standard data dictionaries before it can be made available for ingest to the WWARN database.
+
+A curator creates a new standard data dictionary, provides a title for the dictionary, links the dictionary to one or more modules, and uploads a file containing the initial version of the dictionary.
+
+At a later time, the WWARN curators agree to make an update to the data dictionary, to incorporate some new fields (variables) as standard. The curator uploads a new file containing the revised version of the data dictionary, and enters a log message describing the changes.
+
+=== Use Case: Curator Manages a Specification of Release Criteria ===
+
+Release criteria are the sum of all criteria that must be met by submitted data before it can be released to the WWARN database. These criteria might include, but are not limited to, ethical criteria (e.g., data must be anonymous), quality control criteria (e.g., protocols must be approved), and structural criteria (e.g., data must conform with a standard data dictionary).
+
+Note that a specification of release criteria might delegate to other specifications and approval mechanisms. For example, a specification of release criteria might state that a submission must be approved with respect to ethical criteria as stated in some version of an ethical criteria specification. A curator will then grant release approval if the submission has already been granted ethical approval, but will not check the details of the ethical criteria.
+
+A curator creates a new specification of release criteria, provides a title for the specification, links the specification to the module to which it applies, and uploads a file containing the initial version of the specification.
+
+At a later time, the WWARN curators agree to make the release criteria more stringent, including new quality control criteria. The curator uploads a new file containing the revised version of the specificiation of release criteria, and enters a log message describing the changes.
+
+The curators review all prior data submissions that were approved with respect to the old version of the release criteria, to determine if they also can be approved with respect to the updated version of the release criteria.
+
+=== Use Case: Standard Submission, Requires No Curation ===
+
+A submitter requests approval for a new submission, where the submitted data is already linked to a WWARN standard data dictionary. A gatekeeper approves the request and assigns a curator.
+
+The assigned curator reviews the initial version of the submitted data (A^s^), and finds that no changes need to be made. She reviews the submitted data with respect to the latest version of the appropriate data release criteria, and asserts that the release criteria have been met.
+
+The submitter sees that her submission (A^s^) has been approved for release to the WWARN database, and that no other actions were taken.
+
+=== Use Case: Curation of Standard Submission ===
+
+A submitter requests approval for a new submission, where the submitted data is already linked to a WWARN standard data dictionary. A gatekeeper approves the request and assigns a curator.
+
+The assigned curator downloads the initial version of the submitted data (A^s^), reviews it, and finds that some rows have missing data values. She removes the rows with missing data, uploads a new data file containing the revised data (B^s^), links it to the version of the submitted data from which it was derived (A^s^), and links it to the standard data dictionary. She also enters a log message explaining what changes were made and why.
+
+The assigned curator then reviews the submitted data (B^s^) with respect to the latest version of the appropriate data release criteria, and asserts that the release criteria have been met.
+
+The submitter sees that her submission has been approved for release to the WWARN database, after the assigned curator made a revision (B^s^) to her initial version (A^s^). She downloads the curator's revision (B^s^) to inspect the changes.
+
+=== Use Case: Standard Submission Requires Submitter Revision ===
+
+A submitter requests approval for a new submission, where the submitted data is already linked to a WWARN standard data dictionary. A gatekeeper approves the request and assigns a curator.
+
+The assigned curator downloads the initial version of the submitted data (A^s^), reviews it, and finds that some rows have data values that appear to be out of range. She decides to contact the submitter, and notify her of the problem.
+
+The submitter realises that some errors were made in the initial version of the submitted data (A^s^). The submitter downloads her initial version of the submitted data (A^s^), fixes the errors, and uploads a new version of the submitted data (B^s^).
+
+The assigned curator then reviews the submitted data (B^s^) with respect to the latest version of the appropriate data release criteria, and asserts that the release criteria have been met.
+
+The submitter sees that her submission has been approved for release to the WWARN database, after she made a revision (B^s^) to her initial version (A^s^).
+
+=== Use Case: Curation of Non-Standard Submission ===
+
+A submitter requests approval for a new submission with a new data dictionary. The data dictionary is not one of the WWARN standard data dictionaries. A gatekeeper approves the request and assigns a curator.
+
+The assigned curator downloads the initial version of the submitted data (A) and the initial version of the data dictionary. She finds that several rows appear to be missing some data values. She removes the rows with missing data, uploads her revised version of the submitted data (B), links it to the version of the submitted data from which it was derived (A), links it to the non-standard data dictionary, and enters a log message describing the changes she has made and the reasons for making the changes.
+
+The assigned curator then decides to map the submitted data onto the appropriate standard data dictionary. She downloads her curated revision of the submitted data (B), and downloads the latest version of the appropriate standard data dictionary. Using her favourite desktop data transformation tool, she creates a new data file conforming to the standard data dictionary. She then uploads this new data file (C^s^), links it to the version of the submitted data from which it was derived (B), links it to the latest version of the standard data dictionary, and enters a log message describing the transformation she performed.
+
+The assigned curator now believes the data is ready for release to the WWARN database. She reviews her standardised version of the submitted data (C^s^) with respect to the latest version of the WWARN data release criteria, and asserts that the release criteria have been met. The data are then made available for export to the WWARN database.
+
+The submitter sees that her initial version of the submitted data (A) has undergone one curation revision (B, derived from A), one standardisation revision (C^s^, derived from B), and has been approved for release to the WWARN database.
+
+=== Use Case: Non-Standard Submission, Curation and Repeated Standardisation ===
+
+A submitter requests approval for a new submission with a new data dictionary. The data dictionary is not one of the WWARN standard data dictionaries. A gatekeeper approves the request and assigns a curator.
+
+The assigned curator downloads the initial version of the submitted data (A) and makes a revision (B).
+
+The assigned curator then decides to map the submitted data onto the appropriate standard data dictionary. She downloads her curated revision of the submitted data (B), and creates a new data file conforming to the appropriate standard data dictionary. She then uploads this new data file (C^s^), links it to the version of the submitted data from which it was derived (B), links it to the latest version of the standard data dictionary, and enters a log message describing the transformation she performed.
+
+The assigned curator now believes the data is ready for release to the WWARN database. She reviews her standardised version of the submitted data (C^s^) with respect to the latest version of the WWARN data release criteria, but finds some problems in the standardised data. She realises that the problems are due to the standardisation transformation she applied. She goes back to the curated, non-standard revision of the submitted data (B), and repeats her transformation, correcting the previous errors. She uploads this new standardised revision of the submitted data (D^s^), links it to the version of the submitted data from which it was derived (B), links it to the latest version of the standard data dictionary, and enters a log message describing the transformation she performed.
+
+The assigned curator reviews her corrected standardised revision of the submitted data (D^s^) with respect to the latest version of the appropriate data release criteria, and asserts that the release criteria have been met.
+
+The submitter sees that her initial version of the submitted data (A) has undergone one curation revision (B, derived from A), one standardisation revision (C^s^, derived from B), a second standardisation revision (D^s^, derived from B), and has been approved for release to the WWARN database.
+
+=== Use Case: Non-Standard Submission, Curation After Standardisation (1) ===
+
+A submitter requests approval for a new submission with a new data dictionary. The data dictionary is not one of the WWARN standard data dictionaries. A gatekeeper approves the request and assigns a curator.
+
+The assigned curator downloads the initial version of the submitted data (A), reviews it, and decides that there are some problems, but that they will be easier to deal with after the submission has been standardised. She creates a new data file (B^s^) conforming to the appropriate standard data dictionary, uploads it, links it to the version of the submitted data from which it was derived (A), links it to the latest version of the standard data dictionary, and enters a log message describing the transformation she performed.
+
+The assigned curator then creates a new revision (C^s^), derived from her standardised revision (B^s^), fixing the problems she identified earlier. She approves this new version (C^s^) for release.
+
+The submitter sees that her initial version of the submitted data (A) has undergone one standardisation revision (B^s^, derived from A), one curation revision (C^s^, derived from B^s^), and has been approved for release to the WWARN database.
+
+=== Use Case: Non-Standard Submission, Curation After Standardisation (2) ===
+
+A submitter requests approval for a new submission with a new data dictionary. The data dictionary is not one of the WWARN standard data dictionaries. A gatekeeper approves the request and assigns a curator.
+
+The assigned curator downloads the initial version of the submitted data (A), reviews it, and decides to map the file onto the appropriate standard data dictionary. She creates a new data file (B^s^), uploads it, links it to the version of the submitted data from which it was derived (A), links it to the latest version of the standard data dictionary, and enters a log message describing the transformation she performed.
+
+The assigned curator then reviews her standardised revision (B^s^) and finds some problems. She decides that the problems are best fixed by going back to the initial, non-standard version of the submitted data (A). She creates a new, non-standard revision of the submitted data (C), uploads it, links it to the version of the data from which it was derived (A), links it to the appropriate version of the non-standard data dictionary, and enters a log message.
+
+The assigned curator then maps the new non-standard revision of the submitted data (C) onto the appropriate standard data dictionary. She creates a new data file (D^s^), uploads it, links it to the version of the submitted data from which it was derived (C), links it to the latest version of the standard data dictionary, and enters a log message describing the transformation she performed.
+
+The assigned curator then approves her latest version of the standardised data (D^s^) for release.
+
+The submitter sees that her initial version of the submitted data (A) has undergone one standardisation revision (B^s^, derived from A), one curation revision (C, derived from A), a second standardisation revision (D^s^, derived from C), and has been approved for release to the WWARN database.
+
+=== Use Case: Curator Delegation ===
+
+A submitter requests approval for a new submission with a new data dictionary. The data dictionary is not one of the WWARN standard data dictionaries. A gatekeeper approves the request and assigns a curator.
+
+The assigned curator delegates the initial review of the submitted data to another curator who specialises in quality aspects of that type of data. The delegate curator downloads the initial version of the submitted data (A), reviews it, decides that some rows do not meet quality control criteria, removes them, and uploads a revised version of the submitted data (B), notifying the assigned curator that their task is complete.
+
+The assigned curator then delegates the mapping of the data onto a standard data dictionary to a different curator, who specialises in transforming data and data standards. The delegate curator downloads the revised version of the submitted data (B), transforms them to conform to the latest version of the appropriate standard data dictionary, and uploads the transformed data (C^s^), notifying the assigned curator that their task is complete.
+
+The assigned curator then delegates the final review of the submission with respect to the appropriate release criteria to third delegate curator. The delegate approves the standardised version of the submitted data (C^s^) for release.
+
+=== Use Case: Coordinator Oversight of Curation and Standardisation Activities ===
+
+A coordinator reviews a list of all submissions for a given module that have been approved by a gatekeeper, but have not yet been approved for release. She selects one from the list to investigate in more detail.
+
+For the selected submission, the coordinator reviews a log of all curation and standardisation activities for that submission. She sees that several curation revisions have been made to the submitted data, but that no standardised revisions have yet been made. She contacts the assigned curator to ask for more information.
+
+=== Use Case: Curator Oversight of Curation & Standardisation Activities ===
+
+A curator views a list of all submissions for which she is the assigned curator, and that have not yet been approved for release. From these, she then views those that have not yet been mapped onto a standard data dictionary. She selects a submission from this list, and begins working on it.
+
+----
+== Data Curation & Standardisation Functional Requirements ==
+
+
 @@TODO
 ----
 = Glossary =
