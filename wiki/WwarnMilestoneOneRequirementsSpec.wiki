@@ -1,5 +1,7 @@
 #summary This document is a specification of user requirements for a first milestone release (M1) of the Chassis/WWARN system for managing the submission, curation and standardisation of data for the World Wide Anti-malarial Resistance Network (WWARN).
 
+= Chassis/WWARN (M1) Data Management Platform - User Requirements Specification =
+
 *_First Draft_* (2009-07-22)
 ----
 *Table of Contents*
@@ -7,32 +9,32 @@
 <wiki:toc/>
 ----
 
-= Introduction =
+==Introduction==
 
 This document is a specification of user requirements for the _Chassis/WWARN_ (M1) system for managing the submission, curation and standardisation of data for the World Wide Anti-malarial Resistance Network (WWARN).
 
-== WWARN Data Management ==
+=== WWARN Data Management ===
 
 The _Chassis/WWARN_ (M1) system is intended to support the data management activities of the WWARN data-sharing network. These data management activities include the submission of data, curation of submitted data to meet defined quality control and other (e.g., ethical) criteria, and mapping of data onto WWARN standards for data structure and semantics. The end goal of these activities is to produce data that is suitable for ingest into the WWARN database.
 
-== Chassis/WWARN and the WWARN Database ==
+=== Chassis/WWARN and the WWARN Database ===
 
 Note that the _Chassis/WWARN_ (M1) system is distinct from the _WWARN database_. The _WWARN database_ is a repository of standardised, quality controlled data, with tools for the analysis and visualisation of those data. Data will be periodically exported from the _Chassis/WWARN_ (M1) system and ingested into the _WWARN database_. Management of this export and ingest process, and any support for data visualisation or analysis tools, is out of scope for the _Chassis/WWARN_ system.
 
-== First Milestone Release (M1) ==
+=== First Milestone Release (M1) ===
 
 The _Chassis/WWARN_ (M1) system is intended to be a first milestone release of the _Chassis/WWARN_ system for production use by WWARN. This document specifies the functionality that must be included in the first milestone release. Some other functionality that might be developed for future releases of _Chassis/WWARN_ is also discussed.
 
-== Chassis/`*` ==
+=== Chassis/`*` ===
 
 This user requirements specification is tailored towards the requirements of the WWARN data-sharing network. However, the _Chassis/WWARN_ system is intended to be the first instance of a generic platform (_Chassis/`*`_) to support the data management activities of similar data-sharing networks.
 
-== Structure of this Document ==
+=== Structure of this Document ===
 
 This document is divided into two main parts. The first part describes use cases and functional requirements relating to the submission of new data to WWARN, and the initial review of those submissions by a gatekeeper. The second part describes use cases and functional requirements for the curation and standardisation of submitted data, i.e., all activities necessary to make submitted data suitable for release to the WWARN database. 
 
 ----
-= Roles =
+==Roles==
 
 The following roles are defined here for users of the _Chassis/WWARN_ (M1) system.
 
@@ -45,25 +47,25 @@ The following roles are defined here for users of the _Chassis/WWARN_ (M1) syste
   * A *coordinator* is someone who has overall responsibility for the operations of a data-sharing network.
 
 ----
-= Part 1 - Data Submission =
+==Part 1 - Data Submission==
 ----
-== Data Submission Workflow - Key Points ==
+=== Data Submission Workflow - Key Points ===
 
 The _Chassis/WWARN_ (M1) system is designed to support a data submission workflow with the following key characteristics.
 
-=== General Points ===
+==== General Points ====
 
   * Data submission is the process whereby new data enters the Chassis/WWARN system.
 
   * A submitter initiates the process by creating a new submission. The submitter then provides some information about the submission, and uploads a data file containing the initial version of the submitted data.
 
-=== Data Dictionaries ===
+==== Data Dictionaries ====
 
   * Submitted data must be linked to a data dictionary, before a request can be made for gatekeeper approval of a new submission. A data dictionary defines expectations for the structure and semantics of submitted data. In the simplest case, a data dictionary is a human-readable document, stating that the submitted data are structured as a single table, listing the field (i.e., column) names used in the table, and providing a textual definition for each field name. However, the Chassis/WWARN (M1) system does not place any constraints on the structure or content of data dictionaries (see also below). 
   
   * A submitter can create a new data dictionary for each new submission, or re-use an existing data dictionary.
 
-=== Gatekeeper Review ===
+==== Gatekeeper Review ====
 
   * The submitter can then request gatekeeper approval of their new submission. The gatekeeper is responsible for performing an initial evaluation of the submitted data and accompanying data dictionary, to determine whether or not resources (i.e., time and effort) should be spent curating the data and mapping it onto a WWARN standard data dictionary. The gatekeeper *is not* responsible for making any modifications to the data or approving the data for ingest into the WWARN database.
 
@@ -73,24 +75,24 @@ The _Chassis/WWARN_ (M1) system is designed to support a data submission workflo
 
   * There may be more than one gatekeeper. For Chassis/WWARN (M1), it is anticipated that the gatekeepers will be the module heads. If this is the case, then the Chassis/WWARN system will assign a gatekeeper to each new submission based on the module to which the submission is linked by its submitter.
 
-=== Constraints on Submitted Data & Data Dictionaries ===
+==== Constraints on Submitted Data & Data Dictionaries ====
 
   * Chassis/WWARN (M1) does not place any constraints on the nature or format of the data file uploaded as submitted data. The Chassis/WWARN (M1) system *will not* attempt to parse the submitted data file, and *will not* provide any previews of the submitted data. Later versions of Chassis/WWARN may provide support for parsing and previewing of data files containing a single table of data.
 
   * Chassis/WWARN (M1) does not place any restrictions on the nature or format of the data dictionary file uploaded when a new data dictionary is created or revised. The system *will not* attempt to parse the data dictionary file, nor provide any preview of its contents. Later versions of Chassis/WWARN may constrain data dictionary files to a single format, and parse files to store and provide views of data dictionaries. Later versions of the system may also provide online support for creating and editing the contents of data dictionaries, without needing to upload files.
 
 ----
-== Data Submission Use Cases ==
+=== Data Submission Use Cases ===
 
 The use cases below provide a more detailed illustration of how a user will interact with the Chassis/WWARN system in the most commonly anticipated scenarios. The use cases *are not* intended to cover every possible scenario.
 
-=== Use Case: Submitter Creates a New Study ===
+==== Use Case: Submitter Creates a New Study ====
 
 Every submission must be linked to at least one study. Before creating the first submission for a study, a submitter creates a new study, providing at a title and textual summary for the study, and linking the new study to at least one module.
 
 N.B. a submitter can then proceed to enter all required metadata for the new study (i.e., fill out the study site questionnaire). However, it is not necessary that any further metadata be entered before a submitter can create new submissions or request gatekeeper approval for a submission.
 
-=== Use Case: Submitter Creates a New Submission With a New Data Dictionary ===
+==== Use Case: Submitter Creates a New Submission With a New Data Dictionary ====
 
 A submitter creates a new submission, provides a title for the submission, links the submission to at least one study and at least one module, and uploads a file containing the initial version of the submitted data.
 
@@ -98,7 +100,7 @@ In this case, no data dictionary is already present in the system that correspon
 
 The submitter then sends a request for gatekeeper approval of the submission.
 
-=== Use Case: Submitter Creates a New Submission With an Existing Data Dictionary ===
+==== Use Case: Submitter Creates a New Submission With an Existing Data Dictionary ====
 
 A submitter creates a new submission, provides a title for the submission, links the submission to at least one study and at least one module, and uploads a data file containing the initial version of the submitted data.
 
@@ -106,7 +108,7 @@ In this case, a data dictionary was previously created for a different submissio
 
 The submitter then sends a request for gatekeeper approval of the submission.
 
-=== Use Case: Submitter Revises a Submission Before Requesting Approval ===
+==== Use Case: Submitter Revises a Submission Before Requesting Approval ====
 
 A submitter creates a new submission, with a new data dictionary.
 
@@ -114,7 +116,7 @@ Before the submitter sends a request for gatekeeper approval, she realises that 
 
 The submitter then sends a request for gatekeeper approval of the submission.
 
-=== Use Case: Submitter Revises a Submission and Dictionary Before Requesting Approval ===
+==== Use Case: Submitter Revises a Submission and Dictionary Before Requesting Approval ====
 
 A submitter creates a new submission, with a new data dictionary.
 
@@ -124,13 +126,13 @@ Because the structure of the data has changed, the submitter also uploads a new 
 
 The submitter then sends a request for gatekeeper approval of the submission. 
 
-=== Use Case: Gatekeeper Reviews and Approves Submission Request ===
+==== Use Case: Gatekeeper Reviews and Approves Submission Request ====
 
 A submitter sends a request for gatekeeper approval of their new submission. The request contains a link to a specific version of the submitted data, and a specific version of the associated data dictionary, as specified in the request by the submitter.
 
 A gatekeeper is allocated to review the request. She downloads the specified version of the submitted data and the specified version of the data dictionary, reviews them, and decides to approve the request. The gatekeeper approves the request. The gatekeeper then assigns a curator to the submission, and curation begins.
 
-=== Use Case: Gatekeeper Approves Submission Request After Revision ===
+==== Use Case: Gatekeeper Approves Submission Request After Revision ====
 
 A submitter sends a request for gatekeeper approval of their new submission. 
 
@@ -144,7 +146,7 @@ The submitter then sends a new request for gatekeeper approval of the revised su
 
 A gatekeeper is notified of the request for approval, downloads the initial version of the submitted data and the revised version of the data dictionary, reviews them, and decides to approve the submission. The gatekeeper assigns a curator, and curation begins.
 
-=== Use Case: Submitted Data is Not Relevant to WWARN ===
+==== Use Case: Submitted Data is Not Relevant to WWARN ====
 
 A submitter sends a request for gatekeeper approval of their new submission. 
 
@@ -152,24 +154,24 @@ A gatekeeper is allocated to review the request. She downloads the specified ver
 
 In this case, it is clear that none of the data are relevant to any of WWARN's scientific modules. The gatekeeper denies the request for approval, providing an explanation of the reasons why the request was denied. The submitter is notified of the gatekeeper's decision and explanation. The submitter deletes her submission.
 
-=== Use Case: Coordinator Reviews Submission Activity ===
+==== Use Case: Coordinator Reviews Submission Activity ====
 
 A coordinator reviews a list of all submissions that are pending gatekeeper approval. She notices that one submission has been pending gatekeeper approval for more than 2 weeks. She contacts the gatekeeper assigned to the submission and asks that the submission be reviewed with high priority.
 
-=== Use Case: Gatekeeper Reviews Submission Activity ===
+==== Use Case: Gatekeeper Reviews Submission Activity ====
 
 A gatekeeper reviews a list of all submission requests that have been allocated to her and that have not yet been reviewed. She selects a request from the list and reviews it.
 
-=== Use Case: Submitter Reviews Their Submission Activity ===
+==== Use Case: Submitter Reviews Their Submission Activity ====
 
 A submitter reviews a list of all her submissions that have received gatekeeper approval, a list of all her submissions that are pending gatekeeper approval, and all her "draft" submissions for which she has not yet requested gatekeeper approval.
 
 From the list of her draft submissions, she selects those that are ready for gatekeeper review, and requests gatekeeper approval for them.
 
 ----
-== Data Submission Functional Requirements ==
+=== Data Submission Functional Requirements ===
 
-=== (Submitter) Managing Studies ===
+==== (Submitter) Managing Studies ====
 
   * A submitter will be able to create a new study. This involves providing a title and textual summary for the study, and linking the study to at least one module.
 
@@ -179,7 +181,7 @@ From the list of her draft submissions, she selects those that are ready for gat
 
   * Lists of studies can be filtered by module.
 
-=== (Submitter) Entering and Revising Study Metadata ===
+==== (Submitter) Entering and Revising Study Metadata ====
 
   * A submitter will be able to enter metadata about any study they have previously created.
 
@@ -189,7 +191,7 @@ N.B. study metadata includes the study site questionnaire (SSQ).
 
 @@TODO: what are metadata fields common across modules? what are fields of SSQ for each module? what fields are mandatory, what are optional?
 
-=== (Submitter) Creating a New Submission & Uploading Data ===
+==== (Submitter) Creating a New Submission & Uploading Data ====
 
   * A submitter will be able to create a new submission. This involves providing a title and textual summary for the submission, associating the submission with at least one previously created study, associating the submission with at least one WWARN module, and uploading a single file containing the initial version of the submitted data.
 
@@ -197,37 +199,37 @@ By default, the submitter becomes the owner of any submission they create.
 
 Note that a new submission will be created in a "draft" state, i.e., will not automatically be forwarded to a gatekeeper for review. The submitter must explicitly request gatekeeper approval for a new submission, see below.
 
-=== (Submitter) Revising Submitted Data ===
+==== (Submitter) Revising Submitted Data ====
 
   * A submitter will be able to upload a data file containing a new version of the submitted data, for any submission they own.
 
   * A submitter will be able to view a version history of the submitted data for any submission they own.
 
-=== (Submitter) Downloading Submitted Data ===
+==== (Submitter) Downloading Submitted Data ====
 
   * A submitter will be able to download the latest version of the submitted data, for any submission they own.
 
   * A submitter will also be able to download any previous version of the submitted data, for any submission they own.
 
-=== (Submitter) Creating a Data Dictionary ===
+==== (Submitter) Creating a Data Dictionary ====
 
   * A submitter will be able to create a new data dictionary. This involves providing a title and textual summary for the new data dictionary, and uploading a file containing the initial version of the data dictionary.
 
 By default, a submitter is the owner of any data dictionary they create.
 
-=== (Submitter) Revising a Data Dictionary ===
+==== (Submitter) Revising a Data Dictionary ====
 
   * A submitter will be able to upload a file containing a new version of a previously created data dictionary they own.
 
   * A submitter will be able to view a version history for any data dictionary they own.
 
-=== (Submitter) Downloading a Data Dictionary ===
+==== (Submitter) Downloading a Data Dictionary ====
 
   * A submitter will be able to download any version of any data dictionary.
 
 @@TODO: do some data dictionaries need to be kept private?
 
-=== (Submitter) Linking Submitted Data With a Data Dictionary ===
+==== (Submitter) Linking Submitted Data With a Data Dictionary ====
 
   * For any submission they own, a submitter will be able to link a specific version of the submitted data with a specific version of a data dictionary. They do not have to also own the data dictionary to which the link is made.
 
@@ -235,11 +237,11 @@ By default, a submitter is the owner of any data dictionary they create.
 
   * For any submission they own, a submitter will be able to view a history of any changes that have been made to links between the submitted data and data dictionaries. 
 
-=== (Submitter) Requesting Gatekeeper Submission Approval ===
+==== (Submitter) Requesting Gatekeeper Submission Approval ====
 
   * A submitter will be able to request gatekeeper approval for any submission they own.
 
-=== (Submitter) Overview of Submission Activity ===
+==== (Submitter) Overview of Submission Activity ====
 
   * A submitter will be able to view a list of all submissions they own. The status of each submission, i.e., either draft (not yet submitted to gatekeeper), pending gatekeeper review, gatekeeper approved, or gatekeeper denied, will be clearly shown.
 
@@ -247,7 +249,7 @@ By default, a submitter is the owner of any data dictionary they create.
 
   * Any of these submission lists can be grouped by study or module.
 
-=== (Gatekeeper) Overview of Submission Activity ===
+==== (Gatekeeper) Overview of Submission Activity ====
 
   * A gatekeeper will be able to view a list of all submissions from any submitter, not including draft submissions. The status of each submission (i.e., either pending gatekeeper approval, gatekeeper approved or gatekeeper denied) will be clearly shown.
 
@@ -255,11 +257,11 @@ By default, a submitter is the owner of any data dictionary they create.
 
   * Any of these submissions lists can be grouped by submitter, study or module.
 
-=== (Gatekeeper) Downloading Submitted Data and Data Dictionaries ===
+==== (Gatekeeper) Downloading Submitted Data and Data Dictionaries ====
 
   * A gatekeeper will be able to download any version of submitted data for which a request for gatekeeper approval has been made. A gatekeeper will also be able to download any version of a data dictionary to which the submitted data is linked.
 
-=== (Gatekeeper) Approving Requests and Assigning a Curator ===
+==== (Gatekeeper) Approving Requests and Assigning a Curator ====
 
   * A gatekeeper will be able to approve any submission for which a request for gatekeeper approval has been made. 
 
@@ -269,11 +271,11 @@ Note that, once a gatekeeper has approved a submission, that approval is assumed
 
 @@TODO: can a gatekeeper revoke an approval?
 
-=== (Gatekeeper) Denying Requests ===
+==== (Gatekeeper) Denying Requests ====
 
   * A gatekeeper will be able to deny any submission for which a request for gatekeeper approval has been made. This involves providing an explanation of the reasons why the request has been denied, and any further information for the submitter.
 
-=== (Coordinator) Overview of Submission Activity ===
+==== (Coordinator) Overview of Submission Activity ====
 
   * A coordinator will be able to view a list of all submissions from any submitter, not including draft submissions. The status of each submission (i.e., either pending gatekeeper approval, gatekeeper approved or gatekeeper denied) will be clearly shown.
 
@@ -282,11 +284,11 @@ Note that, once a gatekeeper has approved a submission, that approval is assumed
   * Any of these submissions lists can be grouped by submitter, study or module.
 
 ----
-= Part 2 - Data Curation & Standardisation =
+==Part 2 - Data Curation & Standardisation==
 ----
-== Data Curation & Standardisation Workflow - Key Points ==
+=== Data Curation & Standardisation Workflow - Key Points ===
 
-=== General Points ===
+==== General Points ====
 
   * The curation process takes submitted data as input and produces data that is suitable for release to the WWARN database. 
 
@@ -294,7 +296,7 @@ Note that, once a gatekeeper has approved a submission, that approval is assumed
 
   * The curation process comprises a wide and open-ended range of possible activities. In general, curation activities either make some revision to the submitted data (e.g., adding, removing, or restructuring data), or review the submitted data with respect to some criteria (e.g., ethical criteria, quality control criteria) and assert that the data either do or do not meet those criteria. 
 
-=== Transformation and Mapping to Standard Data Dictionaries ===
+==== Transformation and Mapping to Standard Data Dictionaries ====
 
   * In addition to the non-standard data dictionaries that submitters can create, the Chassis/WWARN system has one or more data dictionaries managed by the curators that are agreed WWARN standard data dictionaries. Submitted data must be transformed into data that conforms with one of these standard data dictionaries before it can be made available for ingest to the WWARN database.
 
@@ -308,7 +310,7 @@ Note that, once a gatekeeper has approved a submission, that approval is assumed
 
   * A special type of review activity involves checking that submitted data conform with respect to a data dictionary, also referred to as validation. The Chassis/WWARN (beta) system will not provide any support for validation. I.e., it is assumed that validation will be performed using other systems, e.g., by manual review, or using off-line desktop tools. Later versions of Chassis/WWARN may provide some online support for validation, where possible.
 
-=== Specification of Release Criteria ===
+==== Specification of Release Criteria ====
 
   * A second special type of review activity involves reviewing submitted data with respect to a specification of *release criteria*. Such a specification states *all* of the criteria that must be met before data may be released to the WWARN database. These criteria might include, but are not limited to, ethical criteria (e.g., data must be anonymous), quality control criteria (e.g., protocols must be approved), and structural criteria (e.g., data must conform with a given standard data dictionary).
 
@@ -318,7 +320,7 @@ Note that, once a gatekeeper has approved a submission, that approval is assumed
   
   * Each WWARN module is expected to define its own release criteria.
 
-=== Provenance & Derivation of Data ===
+==== Provenance & Derivation of Data ====
 
   * A key design goal is that the complete and true *derivation* of any data released to the WWARN database must be recorded. By derivation, we mean the complete sequence of actions and revisions that led from the data as submitted to the data in its released form, i.e., its provenance. 
 
@@ -327,23 +329,23 @@ Note that, once a gatekeeper has approved a submission, that approval is assumed
   * A submitter can upload a revision of submitted data at any time. To keep things simple for a submitter, they do not have to assert the derivation of each new revision. (I.e., for any one submission, the submitter's revisions of the submitted data are assumed to form a single linear version series.)
   
 ----
-== Data Curation Use Cases ==
+=== Data Curation Use Cases ===
 
 The use cases below provide a more detailed illustration of how a user will interact with the Chassis/WWARN system in the most commonly anticipated scenarios. The use cases *are not* intended to cover every possible scenario.
 
 Note that some details of the use cases below are simplified, to avoid distracting from the key features of the use case that are relevant to Chassis/WWARN. For example, the reasons why a curator might need to make revisions to submitted data, and the nature of the revisions they might need to make, will be far more varied and subtle than are suggested below.
 
-=== Notation Conventions ===
+==== Notation Conventions ====
 
 In the use cases below, letters A, B, C, etc., are used to help identify different revisions of submitted data, e.g., "the initial revision of the submitted data (A) was revised by the curator to create a new revision (B)". If the letter has the superscript "s" (e.g., A^s^), then the revision is linked to a standard data dictionary. If no superscript is present, the data is linked to a non-standard data dictionary.
 
-=== Use Case: Curator Manages a Standard Data Dictionary ===
+==== Use Case: Curator Manages a Standard Data Dictionary ====
 
 A curator creates a new standard data dictionary, provides a title and textual summary for the dictionary, links the dictionary to one or more modules, and uploads a file containing the initial version of the dictionary.
 
 At a later time, the WWARN curators agree to make an update to this standard data dictionary, to incorporate some new fields as standard. The curator uploads a new file containing the revised version of the data dictionary, and enters a log message describing the changes.
 
-=== Use Case: Curator Manages a Specification of Release Criteria ===
+==== Use Case: Curator Manages a Specification of Release Criteria ====
 
 A curator creates a new specification of release criteria, provides a title and textual summary for the specification, links the specification to the module to which it applies, and uploads a file containing the initial version of the specification.
 
@@ -351,7 +353,7 @@ At a later time, the WWARN curators agree to make the release criteria more stri
 
 The curators review all prior data submissions that were approved with respect to the old version of the release criteria, to determine if they also can be approved with respect to the updated version of the release criteria.
 
-=== Use Case: Standard Submission, Requires No Curation ===
+==== Use Case: Standard Submission, Requires No Curation ====
 
 A submitter requests approval for a new submission, where the submitted data is already linked by the submitter to a WWARN standard data dictionary. A gatekeeper approves the request and assigns a curator.
 
@@ -359,7 +361,7 @@ The assigned curator reviews the initial version of the submitted data (A^s^), a
 
 The submitter sees that her initial version of the submitted data (A^s^) has been approved for release to the WWARN database, and that no other actions were taken.
 
-=== Use Case: Curation of Standard Submission ===
+==== Use Case: Curation of Standard Submission ====
 
 A submitter requests approval for a new submission, where the submitted data is already linked to a WWARN standard data dictionary. A gatekeeper approves the request and assigns a curator.
 
@@ -369,7 +371,7 @@ The assigned curator then reviews the submitted data (B^s^) with respect to the 
 
 The submitter sees that her submission has been approved for release to the WWARN database, after the assigned curator made a revision (B^s^) to her initial version (A^s^). She downloads the curator's revision (B^s^) to inspect the changes.
 
-=== Use Case: Standard Submission Requires Submitter Revision ===
+==== Use Case: Standard Submission Requires Submitter Revision ====
 
 A submitter requests approval for a new submission, where the submitted data is already linked to a WWARN standard data dictionary. A gatekeeper approves the request and assigns a curator.
 
@@ -381,7 +383,7 @@ The assigned curator then reviews the submitted data (B^s^) with respect to the 
 
 The submitter sees that her submission has been approved for release to the WWARN database, after she made a revision (B^s^) to her initial version (A^s^).
 
-=== Use Case: Curation of Non-Standard Submission ===
+==== Use Case: Curation of Non-Standard Submission ====
 
 A submitter requests approval for a new submission with a new data dictionary. The data dictionary is not one of the WWARN standard data dictionaries. A gatekeeper approves the request and assigns a curator.
 
@@ -393,7 +395,7 @@ The assigned curator now believes the data is ready for release to the WWARN dat
 
 The submitter sees that her initial version of the submitted data (A) has undergone one curation revision (B, derived from A), one standardisation revision (C^s^, derived from B), and has been approved for release to the WWARN database.
 
-=== Use Case: Non-Standard Submission, Curation and Repeated Standardisation ===
+==== Use Case: Non-Standard Submission, Curation and Repeated Standardisation ====
 
 A submitter requests approval for a new submission with a new data dictionary. The data dictionary is not one of the WWARN standard data dictionaries. A gatekeeper approves the request and assigns a curator.
 
@@ -407,7 +409,7 @@ The assigned curator reviews her corrected standardised revision of the submitte
 
 The submitter sees that her initial version of the submitted data (A) has undergone one curation revision (B, derived from A), one standardisation revision (C^s^, derived from B), a second standardisation revision (D^s^, derived from B), and has been approved for release to the WWARN database.
 
-=== Use Case: Non-Standard Submission, Curation After Standardisation (1) ===
+==== Use Case: Non-Standard Submission, Curation After Standardisation (1) ====
 
 A submitter requests approval for a new submission with a new data dictionary. The data dictionary is not one of the WWARN standard data dictionaries. A gatekeeper approves the request and assigns a curator.
 
@@ -417,7 +419,7 @@ The assigned curator then creates a new revision (C^s^), derived from her standa
 
 The submitter sees that her initial version of the submitted data (A) has undergone one standardisation revision (B^s^, derived from A), one curation revision (C^s^, derived from B^s^), and has been approved for release to the WWARN database.
 
-=== Use Case: Non-Standard Submission, Curation After Standardisation (2) ===
+==== Use Case: Non-Standard Submission, Curation After Standardisation (2) ====
 
 A submitter requests approval for a new submission with a new data dictionary. The data dictionary is not one of the WWARN standard data dictionaries. A gatekeeper approves the request and assigns a curator.
 
@@ -431,7 +433,7 @@ The assigned curator then approves her latest version of the standardised data (
 
 The submitter sees that her initial version of the submitted data (A) has undergone one standardisation revision (B^s^, derived from A), one curation revision (C, derived from A), a second standardisation revision (D^s^, derived from C), and has been approved for release to the WWARN database.
 
-=== Use Case: Curator Delegation ===
+==== Use Case: Curator Delegation ====
 
 A submitter requests approval for a new submission with a new data dictionary. The data dictionary is not one of the WWARN standard data dictionaries. A gatekeeper approves the request and assigns a curator.
 
@@ -441,26 +443,26 @@ The assigned curator then delegates the mapping of the data onto a standard data
 
 The assigned curator then delegates the final review of the submission with respect to the appropriate release criteria to third delegate curator. The delegate approves the standardised version of the submitted data (C^s^) for release.
 
-=== Use Case: Coordinator Oversight of Curation and Standardisation Activities ===
+==== Use Case: Coordinator Oversight of Curation and Standardisation Activities ====
 
 A coordinator reviews a list of all submissions for a given module that have been approved by a gatekeeper, but have not yet been approved for release. She sees which of these have data linked to a standard data dictionary, and which do not. From those that do not, she selects one from the list to investigate in more detail.
 
 For the selected submission, the coordinator reviews a log of all curation and standardisation activities for that submission. She sees that several curation revisions have been made to the submitted data, but that no standardised revisions have yet been made. She contacts the assigned curator to ask for more information.
 
-=== Use Case: Curator Oversight of Curation & Standardisation Activities ===
+==== Use Case: Curator Oversight of Curation & Standardisation Activities ====
 
 A curator views a list of all submissions for which she is the assigned curator, and that have not yet been approved for release. From these, she then views those that have not yet been mapped onto a standard data dictionary. She selects a submission from this list, and begins working on it.
 
 ----
-== Data Curation & Standardisation Functional Requirements ==
+=== Data Curation & Standardisation Functional Requirements ===
 
-=== (Curator) Creating a Standard Data Dictionary ===
+==== (Curator) Creating a Standard Data Dictionary ====
 
   * A curator will be able to create a new standard data dictionary. This involves providing a title and textual summary for the new standard data dictionary, linking the dictionary to at least one module, and uploading a file containing the initial version of the data dictionary.
 
 @@TODO: can curators just create standard data dictionaries as they wish? or do new standard data dictionaries need to be ratified as standard by one or more other curators, or anyone else?
 
-=== (Curator) Revising a Standard Data Dictionary ===
+==== (Curator) Revising a Standard Data Dictionary ====
 
   * A curator will be able to upload a file containing a revised version of a standard data dictionary.
 
@@ -468,17 +470,17 @@ A curator views a list of all submissions for which she is the assigned curator,
 
 @@TODO: can curators just revise standard data dictionaries as they wish? or do revisions to standard data dictionaries need to be ratified by one or more other curators, or anyone else?
 
-=== (Curator) Downloading a Standard Data Dictionary ===
+==== (Curator) Downloading a Standard Data Dictionary ====
 
   * A curator will be able to download any revision of a standard data dictionary.
 
-=== (Curator) Creating a Specification of Release Criteria ===
+==== (Curator) Creating a Specification of Release Criteria ====
 
   * A curator will be able to create a new specification of release criteria. This involves providing a title and textual summary for the new specification, linking the specification to exactly one module, and uploading a file containing the initial version of the specification.
 
 N.B. there can be only one specification of release criteria per module.
 
-=== (Curator) Revising a Specification of Release Criteria ===
+==== (Curator) Revising a Specification of Release Criteria ====
 
   * A curator will be able to upload a file containing a revised version of a specification of release criteria.
 
@@ -486,19 +488,19 @@ N.B. there can be only one specification of release criteria per module.
 
 @@TODO: can curators just revise release criteria as they wish? or do revisions need to be ratified by other curators, or anyone else?
 
-=== (Curator) Downloading a Specification of Release Criteria ===
+==== (Curator) Downloading a Specification of Release Criteria ====
 
   * A curator will be able to download any revision of a specification of release criteria.
 
-=== (Curator) Downloading Submitted Data ===
+==== (Curator) Downloading Submitted Data ====
 
   * A curator will be able to download any version of the submitted data for any submission they are assigned to or have been delegated to work on.
 
-=== (Curator) Revising Submitted Data ===
+==== (Curator) Revising Submitted Data ====
 
   * A curator will be able to upload a data file containing a new version of the submitted data, for any submission to which they have been assigned or delegated to work on. The curator must explicitly select which previous version of the submitted data they started work on, i.e., which previous version their new revision is most directly derived from. The curator will also be able to enter a log message describing the changes made.
 
-=== (Curator) Linking Submitted Data With a Data Dictionary ===
+==== (Curator) Linking Submitted Data With a Data Dictionary ====
 
   * A curator will be able to link a specific version of the submitted data to a specific version of a data dictionary (either standard or non-standard), for any submission to which they have been assigned or delegated to work. 
 
@@ -506,27 +508,27 @@ N.B. there can be only one specification of release criteria per module.
 
   * A curator will be able to view a history of changes made to the data dictionary link, for any submission they are assigned to or delegated to work on.
 
-=== (Curator) Viewing Submitted Data Version History ===
+==== (Curator) Viewing Submitted Data Version History ====
 
   * A curator will be able to view a complete derivation tree of the submitted data, for any submission to which they have been assigned or delegated to work on. It will be clear which versions are linked to a standard data dictionary, and which are not.
 
-=== (Curator) Reviewing Data for Release ===
+==== (Curator) Reviewing Data for Release ====
 
   * A curator will be able to review submitted data w.r.t. some version of a specification of release criteria, and assert that the data either do or do not meet the specified criteria, for any submission to which they have been assigned.
 
-=== (Curator) Delegation ===
+==== (Curator) Delegation ====
 
   * An assigned curator will be able to delegate tasks to other curators, for any submission to which they have been assigned.
 
   * A curator will be able to indicate completion of a delegated tasks.
 
-=== (Curator) Overview of Curation Activity ===
+==== (Curator) Overview of Curation Activity ====
 
   * A curator will be able to view a list of all submissions that have been given gatekeeper approval but not yet given release approval, and a list of those that have been given release approval, for any version of release criteria, for any submission to which they are assigned. Those for which a revision is available conforming to a standard data dictionary will be clearly marked.
 
   * These lists can be grouped by module, study or submitter.
 
-=== (Coordinator) Overview of Curation Activity ===
+==== (Coordinator) Overview of Curation Activity ====
 
   * A coordinator will be able to view a list of all submissions that have been given gatekeeper approval but not yet given release approval, and a list of those that have been given release approval, for any version of release criteria. Those submissions for which a revision of the submitted data is available conforming to a standard data dictionary will be clearly marked.
 
