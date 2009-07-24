@@ -42,8 +42,9 @@ class Controller {
 				log("set current perspective: "+p.getName(),_);
 				this.setCurrentPerspective(p.getName());
 
-				log("pass state change on to perspective",_);
-				p.setStateToken(stateToken);
+				// let perspectives listen to history changes for themselves
+//				log("pass state change on to perspective",_);
+//				p.setStateToken(stateToken);
 			}
 
 		}
