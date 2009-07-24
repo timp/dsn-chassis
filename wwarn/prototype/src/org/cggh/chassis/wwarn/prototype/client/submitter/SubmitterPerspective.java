@@ -19,21 +19,53 @@ public class SubmitterPerspective implements Perspective {
 		GWT.log(output, null);
 	}
 
-
-	private static final String TOKEN_HOME = "home";
-	private static final String TOKEN_SEPARATOR = "/";
-	private static final String TOKEN_BASE = "submitter";
-	private static final String NAME = "submitter";
-
-	public String getHomeToken() {
-		return TOKEN_BASE + TOKEN_SEPARATOR + TOKEN_HOME;
+	public SubmitterPerspective() {
+		this.init();
 	}
 
-	public String getName() {
+	private void init() {
+		String _ = "init";
+		log("begin", _);
+
+		log("init model", _);
+		Model model = new Model();
+
+		log("init controller", _);
+		Controller controller = new Controller(model, this); 
+
+		log("init renderer", _);
+		Renderer renderer = new Renderer(controller);
+		model.addListener(renderer);
+		
+		log("complete initialisation", _);
+		controller.init();
+		
+		log("end", _);
+
+	}
+
+	public static final String NAME = "submitter";
+	public static final String TOKEN_SEPARATOR = "/";
+	public static final String TOKEN_BASE = "submitter";
+	public static final String TOKEN_HOME = TOKEN_BASE + TOKEN_SEPARATOR + "home";
+	public static final String TOKEN_NEWSTUDY = TOKEN_BASE + TOKEN_SEPARATOR + "newstudy";
+	public static final String TOKEN_MYSTUDIES = TOKEN_BASE + TOKEN_SEPARATOR + "mystudies";
+	public static final String TOKEN_ALLSTUDIES = TOKEN_BASE + TOKEN_SEPARATOR + "allstudies";
+	public static final String TOKEN_NEWSUBMISSION = TOKEN_BASE + TOKEN_SEPARATOR + "newsubmission";
+	public static final String TOKEN_MYSUBMISSIONS = TOKEN_BASE + TOKEN_SEPARATOR + "mysubmissions";
+	public static final String TOKEN_NEWDATADICTIONARY = TOKEN_BASE + TOKEN_SEPARATOR + "newdatadictionary";
+	public static final String TOKEN_MYDATADICTIONARIES = TOKEN_BASE + TOKEN_SEPARATOR + "mydatadictionaries";
+	public static final String TOKEN_ALLDATADICTIONARIES = TOKEN_BASE + TOKEN_SEPARATOR + "alldatadictionaries";
+
+	public final String getHomeToken() {
+		return TOKEN_HOME;
+	}
+
+	public final String getName() {
 		return NAME;
 	}
 
-	public String getTokenBase() {
+	public final String getTokenBase() {
 		return TOKEN_BASE;
 	}
 

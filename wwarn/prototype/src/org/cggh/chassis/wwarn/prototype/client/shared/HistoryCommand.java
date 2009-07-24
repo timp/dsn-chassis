@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.cggh.chassis.wwarn.prototype.client;
+package org.cggh.chassis.wwarn.prototype.client.shared;
 
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.History;
