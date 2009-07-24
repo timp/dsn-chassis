@@ -5,28 +5,42 @@
     <title>prototype</title>
     <script type="text/javascript" language="javascript" src="org.cggh.chassis.wwarn.prototype.ChassisWwarnPrototype/org.cggh.chassis.wwarn.prototype.ChassisWwarnPrototype.nocache.js"></script>
 	<style type="text/css">
-body {
-	margin: 10px;
+p {
+	margin-top: 0px;
+}
+
+#holdall {
+	padding: 10px;
 }
 
 #userdetails {
-	float:right; 
+	float: right;
 }
+
+#usernamelabel {
+	font-weight: bold;
+}
+
+#currentperspective {
+	font-weight: bold;
+}
+
 	</style>
   </head>
 
   <body>
     <iframe src="javascript:''" id="__gwt_historyFrame" tabIndex='-1' style="position:absolute;width:0;height:0;border:0"></iframe>
 
-	<div id="userdetails">
-	<p>logged in as <span id="username"></span> | current perspective: <span id="currentperspective"></span></p>
-	</div>
+	<div id="holdall">
+
+		<div id="userdetails"></div>
+		
+		<h1>Chassis/WWWARN</h1>
+		
+		<div id="mainmenu"></div>
+		
+		<div id="appcontent"></div>
 	
-	<h1>Chassis/WWWARN</h1>
-	
-	<div id="mainmenu"></div>
-	
-	<div id="appcontent"></div>
-	
+	</div>	
   </body>
 </html>
