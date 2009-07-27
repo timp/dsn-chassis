@@ -4,6 +4,7 @@
 package org.cggh.chassis.wwarn.prototype.client.curator;
 
 import org.cggh.chassis.wwarn.prototype.client.shared.Perspective;
+import org.cggh.chassis.wwarn.prototype.client.shared.HMVCComponent;
 
 import com.google.gwt.core.client.GWT;
 
@@ -11,7 +12,7 @@ import com.google.gwt.core.client.GWT;
  * @author aliman
  *
  */
-public class CuratorPerspective implements Perspective {
+public class CuratorPerspective extends HMVCComponent implements Perspective {
 
 	public CuratorPerspective() {
 		this.init();
@@ -42,29 +43,25 @@ public class CuratorPerspective implements Perspective {
 		GWT.log(output, null);
 	}
 
-	public static final String TOKEN_SEPARATOR = "/";
-	public static final String TOKEN_BASE = "curator";
+	public static final String TOKEN_BASE = "curator/";
 	public static final String NAME = "curator";
-	public static final String TOKEN_HOME = TOKEN_BASE + TOKEN_SEPARATOR + "home";
-	public static final String TOKEN_MYSUBMISSION = TOKEN_BASE + TOKEN_SEPARATOR + "mysubmissions";
-	public static final String TOKEN_ALLSUBMISSIONS = TOKEN_BASE + TOKEN_SEPARATOR + "allsubmissions";
-	public static final String TOKEN_NEWSTANDARDDATADICTIONARY = TOKEN_BASE + TOKEN_SEPARATOR + "newstandarddatadictionary";
-	public static final String TOKEN_ALLSTANDARDDATADICTIONARIES = TOKEN_BASE + TOKEN_SEPARATOR + "allstandarddatadictionaries";
-	public static final String TOKEN_NEWRELEASECRITERIA = TOKEN_BASE + TOKEN_SEPARATOR + "newreleasecriteria";
-	public static final String TOKEN_ALLRELEASECRITERIA = TOKEN_BASE + TOKEN_SEPARATOR + "allreleasecriteria";
-	public static final String TOKEN_DELEGATENEWTASKS = TOKEN_BASE + TOKEN_SEPARATOR + "delegatenewtask";
-	public static final String TOKEN_MYDELEGATEDTASKS = TOKEN_BASE + TOKEN_SEPARATOR + "mydelegatedtasks";
+	public static final String TOKEN_HOME = "home";
+	public static final String TOKEN_MYSUBMISSION = "mysubmissions";
+	public static final String TOKEN_ALLSUBMISSIONS = "allsubmissions";
+	public static final String TOKEN_NEWSTANDARDDATADICTIONARY = "newstandarddatadictionary";
+	public static final String TOKEN_ALLSTANDARDDATADICTIONARIES = "allstandarddatadictionaries";
+	public static final String TOKEN_NEWRELEASECRITERIA = "newreleasecriteria";
+	public static final String TOKEN_ALLRELEASECRITERIA = "allreleasecriteria";
+	public static final String TOKEN_DELEGATENEWTASKS = "delegatenewtask";
+	public static final String TOKEN_MYDELEGATEDTASKS = "mydelegatedtasks";
+	public static final String ROLENAME = "curator";
 
 	public String getHomeToken() {
-		return TOKEN_HOME;
+		return this.getAbsoluteHistoryTokenBase() + TOKEN_HOME;
 	}
 
 	public String getName() {
 		return NAME;
-	}
-
-	public String getTokenBase() {
-		return TOKEN_BASE;
 	}
 
 	public void setStateToken(String stateToken) {
@@ -74,6 +71,11 @@ public class CuratorPerspective implements Perspective {
 		// TODO Auto-generated method stub
 		
 		log("end",_);
+	}
+
+	@Override
+	public String getRelativeHistoryTokenBase() {
+		return TOKEN_BASE;
 	}
 
 

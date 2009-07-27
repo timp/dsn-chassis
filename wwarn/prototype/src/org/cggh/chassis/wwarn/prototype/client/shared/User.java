@@ -21,6 +21,6 @@ public class User {
 	}
 	
 	public String getName() { return name; }
-	public List<String> getRoles() { return roles; }
+	public List<String> getRoleNames() { return roles; }
 
 }

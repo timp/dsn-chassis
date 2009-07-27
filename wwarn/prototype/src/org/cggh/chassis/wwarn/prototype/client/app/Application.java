@@ -3,47 +3,78 @@
  */
 package org.cggh.chassis.wwarn.prototype.client.app;
 
-import com.google.gwt.core.client.EntryPoint;
+
+
+import org.cggh.chassis.wwarn.prototype.client.shared.HMVCComponent;
+
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.History;
+
+
 
 /**
  * @author aliman
  *
  */
-public class Application implements EntryPoint {
+public class Application extends HMVCComponent {
 
-	static final String TOKEN_UNAUTHORISED = "unauthorised";
-	static final String TOKEN_NOTFOUND = "notfound";
+	
+	
+	public static final String ELEMENTID_USERDETAILS = "userdetails";
+	public static final String ELEMENTID_USERNAMELABEL = "usernamelabel";
+	public static final String ELEMENTID_CURRENTPERSPECTIVELABEL = "currentperspective";
+	public static final String TOKEN_UNAUTHORISED = "unauthorised";
+	
+	
+	
+	public Application() {
+		this.init();
+	}
+	
+	
+	
+	void init() {
+		String _ = "init"; log("begin",_);
 
+		log("create model",_);
+		Model model = new Model();
+
+		log("create controller",_);
+		Controller controller = new Controller(this, model); 
+
+		log("create renderer",_);
+		Renderer renderer = new Renderer(this, controller);
+		model.addListener(renderer);
+		
+		log("create history manager",_);
+		HistoryManager<String> historyManager = new HistoryManager<String>(this);
+		model.addListener(historyManager); // listen for model changes & update history
+		History.addValueChangeHandler(historyManager); // listen to history & map to controller actions
+		
+		log("complete initialisation: refresh user details",_);
+		controller.refreshUserDetails();
+		
+		log("end",_);		
+	}
+	
+	
+	
+	/**
+	 * @@TODO
+	 * @param message
+	 * @param context
+	 */
 	private void log(String message, String context) {
 		String output = Application.class.getName() + " :: " + context + " :: " + message;
 		GWT.log(output, null);
 	}
-	
-	
-	/* (non-Javadoc)
-	 * @see com.google.gwt.core.client.EntryPoint#onModuleLoad()
-	 */
-	public void onModuleLoad() {
 
-		String context = "onModuleLoad";
-		
-		log("begin", context);
 
-		log("init model", context);
-		Model model = new Model();
 
-		log("init controller", context);
-		Controller controller = new Controller(model); 
-
-		log("init renderer", context);
-		Renderer renderer = new Renderer(controller);
-		model.addListener(renderer);
-		
-		log("complete initialisation", context);
-		controller.init();
-		
-		log("end", context);
+	@Override
+	public String getRelativeHistoryTokenBase() {
+		return null;
 	}
+
 
 }

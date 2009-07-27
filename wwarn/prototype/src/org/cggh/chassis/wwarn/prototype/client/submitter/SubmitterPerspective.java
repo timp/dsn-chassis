@@ -4,6 +4,7 @@
 package org.cggh.chassis.wwarn.prototype.client.submitter;
 
 import org.cggh.chassis.wwarn.prototype.client.shared.Perspective;
+import org.cggh.chassis.wwarn.prototype.client.shared.HMVCComponent;
 
 import com.google.gwt.core.client.GWT;
 
@@ -12,7 +13,7 @@ import com.google.gwt.core.client.GWT;
  * @author aliman
  *
  */
-public class SubmitterPerspective implements Perspective {
+public class SubmitterPerspective extends HMVCComponent implements Perspective {
 
 	private void log(String message, String context) {
 		String output = SubmitterPerspective.class.getName() + " :: " + context + " :: " + message;
@@ -45,28 +46,24 @@ public class SubmitterPerspective implements Perspective {
 	}
 
 	public static final String NAME = "submitter";
-	public static final String TOKEN_SEPARATOR = "/";
-	public static final String TOKEN_BASE = "submitter";
-	public static final String TOKEN_HOME = TOKEN_BASE + TOKEN_SEPARATOR + "home";
-	public static final String TOKEN_NEWSTUDY = TOKEN_BASE + TOKEN_SEPARATOR + "newstudy";
-	public static final String TOKEN_MYSTUDIES = TOKEN_BASE + TOKEN_SEPARATOR + "mystudies";
-	public static final String TOKEN_ALLSTUDIES = TOKEN_BASE + TOKEN_SEPARATOR + "allstudies";
-	public static final String TOKEN_NEWSUBMISSION = TOKEN_BASE + TOKEN_SEPARATOR + "newsubmission";
-	public static final String TOKEN_MYSUBMISSIONS = TOKEN_BASE + TOKEN_SEPARATOR + "mysubmissions";
-	public static final String TOKEN_NEWDATADICTIONARY = TOKEN_BASE + TOKEN_SEPARATOR + "newdatadictionary";
-	public static final String TOKEN_MYDATADICTIONARIES = TOKEN_BASE + TOKEN_SEPARATOR + "mydatadictionaries";
-	public static final String TOKEN_ALLDATADICTIONARIES = TOKEN_BASE + TOKEN_SEPARATOR + "alldatadictionaries";
+	public static final String TOKEN_BASE = "submitter/";
+	public static final String TOKEN_HOME = "home";
+	public static final String TOKEN_NEWSTUDY = "newstudy";
+	public static final String TOKEN_MYSTUDIES = "mystudies";
+	public static final String TOKEN_ALLSTUDIES = "allstudies";
+	public static final String TOKEN_NEWSUBMISSION = "newsubmission";
+	public static final String TOKEN_MYSUBMISSIONS = "mysubmissions";
+	public static final String TOKEN_NEWDATADICTIONARY = "newdatadictionary";
+	public static final String TOKEN_MYDATADICTIONARIES = "mydatadictionaries";
+	public static final String TOKEN_ALLDATADICTIONARIES = "alldatadictionaries";
+	public static final String ROLENAME = "submitter";
 
-	public final String getHomeToken() {
-		return TOKEN_HOME;
+	public String getHomeToken() {
+		return this.getAbsoluteHistoryTokenBase() + TOKEN_HOME;
 	}
 
 	public final String getName() {
 		return NAME;
-	}
-
-	public final String getTokenBase() {
-		return TOKEN_BASE;
 	}
 
 	public void setStateToken(String stateToken) {
@@ -76,6 +73,11 @@ public class SubmitterPerspective implements Perspective {
 		// TODO Auto-generated method stub
 		
 		log("end",_);
+	}
+
+	@Override
+	public String getRelativeHistoryTokenBase() {
+		return TOKEN_BASE;
 	}
 
 }

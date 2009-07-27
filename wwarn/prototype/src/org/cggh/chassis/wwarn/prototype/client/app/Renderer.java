@@ -3,19 +3,20 @@
  */
 package org.cggh.chassis.wwarn.prototype.client.app;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import org.cggh.chassis.wwarn.prototype.client.curator.CuratorPerspective;
 import org.cggh.chassis.wwarn.prototype.client.shared.Perspective;
+import org.cggh.chassis.wwarn.prototype.client.shared.HMVCComponent;
 import org.cggh.chassis.wwarn.prototype.client.shared.User;
+import org.cggh.chassis.wwarn.prototype.client.submitter.SubmitterPerspective;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
-import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
-import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.RootPanel;
 
 /**
@@ -24,110 +25,197 @@ import com.google.gwt.user.client.ui.RootPanel;
  */
 class Renderer implements ModelListener {
 
+	
+	
+	private Application owner;
 	private Controller controller;
-	private List<Perspective> perspectives = new ArrayList<Perspective>();
+
 	private RootPanel userDetailsRootPanel;
 	private Label userNameLabel;
-	private Label currentPerspectiveLabel;
-	private MenuBar switchPerspectivesMenu;
-	private ListBox switchPerspectivesList;
-
-	Renderer(Controller controller) {
+	private Label currentRoleLabel;
+	private ListBox switchRolesListBox;
+	
+	
+	
+	/**
+	 * @@TODO doc me
+	 * 
+	 * @param owner
+	 * @param controller
+	 */
+	Renderer(Application owner, Controller controller) {
+		this.owner = owner;
 		this.controller = controller;
 		this.init();
 	}
 
-	void init() {
+	
+	
+	/**
+	 * @@TODO doc me
+	 */
+	private void init() {
+		this.initView();
+		this.initEventHandlers();
+	}
 
-		// init canvas
-		this.userDetailsRootPanel = RootPanel.get("userdetails");
+	
+	
+	/**
+	 * @@TODO doc me
+	 */
+	private void initView() {
+		this.initUserDetailsPanel();
+	}
+	
+	
+	
+	/**
+	 * @@TODO doc me
+	 */
+	private void initUserDetailsPanel() {
+		
+		this.userDetailsRootPanel = RootPanel.get(Application.ELEMENTID_USERDETAILS);
+
 		HorizontalPanel p = new HorizontalPanel();
 		this.userDetailsRootPanel.add(p);
 		
 		p.add(new Label("logged in as:"));
 
 		this.userNameLabel = new Label();
-		this.userNameLabel.getElement().setId("usernamelabel");
+		this.userNameLabel.getElement().setId(Application.ELEMENTID_USERNAMELABEL);
 		p.add(this.userNameLabel);
 		
-		p.add(new Label("| current perspective:"));
+		p.add(new Label("| current role:"));
 
-		this.currentPerspectiveLabel = new Label();
-		this.currentPerspectiveLabel.getElement().setId("currentperspective");
-		p.add(this.currentPerspectiveLabel);
+		this.currentRoleLabel = new Label();
+		this.currentRoleLabel.getElement().setId(Application.ELEMENTID_CURRENTPERSPECTIVELABEL);
+		p.add(this.currentRoleLabel);
 		
-		p.add(new Label("| switch perspective:"));
-//		this.switchPerspectivesMenu = new MenuBar();
-//		p.add(this.switchPerspectivesMenu);
+		p.add(new Label("| switch role:"));
 
-		this.switchPerspectivesList = new ListBox();
-		this.switchPerspectivesList.setVisibleItemCount(1);
-		p.add(this.switchPerspectivesList);
-		p.setSpacing(5);
+		this.switchRolesListBox = new ListBox();
+		this.switchRolesListBox.setVisibleItemCount(1);
+		p.add(this.switchRolesListBox);
+		p.setSpacing(5);	
 		
-		// init event handlers
+	}
+
+	
+	
+	/**
+	 * @@TODO doc me
+	 */
+	private void initEventHandlers() {
 		
-		HistoryListener<String> historyListener = new HistoryListener<String>(this.controller);
-		History.addValueChangeHandler(historyListener);
-		
-		this.switchPerspectivesList.addChangeHandler(new ChangeHandler() {
+		this.switchRolesListBox.addChangeHandler(new ChangeHandler() {
+			
 			public void onChange(ChangeEvent event) {
-				// TODO Auto-generated method stub
-//				Window.alert("list box changed: "+switchPerspectivesList.getValue(switchPerspectivesList.getSelectedIndex()));
-				String token = switchPerspectivesList.getValue(switchPerspectivesList.getSelectedIndex());
-				History.newItem(token);
-			}});
+				String roleName = switchRolesListBox.getValue(switchRolesListBox.getSelectedIndex());
+				controller.setCurrentRole(roleName);
+			}
+			
+		});
 
 	}
 
-	public void onApplicationStateChanged(String oldState, String newState) {
-		// TODO Auto-generated method stub
+
+
+	/**
+	 * @@TODO doc me
+	 */
+	public void onCurrentUserChanged(User oldUser, User newUser) {
 		
-	}
-
-	public void onUserChanged(User oldUser, User newUser) {
-//		DOM.getElementById("username").setInnerHTML(newUser.getName());
+		// set user name label
 		this.userNameLabel.setText(newUser.getName());
-	}
+		
+		// render roles switcher
+		this.renderRolesSwitcher(newUser);
 
-	
-	
-
-
-	public void onCurrentPerspectiveChanged(Perspective oldPerspective, Perspective newPerspective) {
-//		DOM.getElementById("currentperspective").setInnerHTML(newPerspective.getName());
-		this.currentPerspectiveLabel.setText(newPerspective.getName());
-	}
-
-	
-	
-	public void onPerspectivesChanged(List<Perspective> oldPerspectives, List<Perspective> newPerspectives) {
-
-		if (newPerspectives.size() > 1) {
-			this.renderPerspectiveSwitcher(newPerspectives);
-		}
+		// create perspectives
+		this.updatePerspectives(newUser);
 
 	}
 
 	
-	
-	void renderPerspectiveSwitcher(List<Perspective> perspectives) {
 
-//		// clear out old menu
-//		this.switchPerspectivesMenu.clearItems();
-//
-//		// add new items
-//		MenuBar m = new MenuBar(true);
-//		for (Perspective p : perspectives) {
-//			m.addItem(p.getName(), new HistoryCommand(p.getHomeToken()));
-//		}
-//		this.switchPerspectivesMenu.addItem("switch perspective", m);
-
-		this.switchPerspectivesList.clear();
-		for (Perspective p : perspectives) {
-			this.switchPerspectivesList.addItem(p.getName(), p.getHomeToken());
-		}
+	/**
+	 * @@TODO doc me
+	 */
+	public void onCurrentRoleChanged(String old, String currentRole) {
+		
+		// set current role label
+		this.currentRoleLabel.setText(currentRole);
+		
+		// TODO let perspectives switch themselves??
 		
 	}
+
+	
+
+	/**
+	 * @@TODO doc me
+	 * @param newUser
+	 */
+	private void renderRolesSwitcher(User newUser) {
+
+		this.switchRolesListBox.clear();
+		for (String roleName : newUser.getRoleNames()) {
+			this.switchRolesListBox.addItem(roleName, roleName);
+		}
+
+	}
+
+
+	
+	/**
+	 * @@TODO doc me
+	 * @param user
+	 */
+	private void updatePerspectives(User user) {
+		String _ = "updatePerspectives"; log("begin",_);
+		
+		log("clear current perspectives",_);
+		for (HMVCComponent c : this.owner.getChildren()) {
+			if (c instanceof Perspective) {
+				this.owner.removeChild(c);
+			}
+		}
+		
+		log("create new perspectives for user's roles",_);
+		
+		List<String> roles = user.getRoleNames();
+		
+		if (roles.contains(SubmitterPerspective.ROLENAME)) {
+			log("add submitter perspective",_);
+			this.owner.addChild(new SubmitterPerspective());
+		}
+		
+		if (roles.contains(CuratorPerspective.ROLENAME)) {
+			log("add curator perspective",_);
+			this.owner.addChild(new CuratorPerspective());
+		}
+		
+		// TODO other perspectives
+		
+		log("end",_);	
+	}
+	
+	
+	
+	
+	/**
+	 * @@TODO doc me
+	 * @param message
+	 * @param context
+	 */
+	private void log(String message, String context) {
+		String output = Renderer.class.getName() + " :: " + context + " :: " + message;
+		GWT.log(output, null);
+	}
+	
+	
+
+
 
 }
