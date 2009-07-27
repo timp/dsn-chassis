@@ -1,0 +1,14 @@
+1. application instantiates model
+2. application instantiates controller, passing model
+3. application instantiates renderer, passing controller
+3.1. renderer initialises view
+3.2. renderer instantiates initial event handlers & attaches to view
+4. application calls controller initialisation
+4.1. controller fetches current user details
+4.2. renderer is notified of change to current user details
+4.3. renderer instantiates perspectives based on user roles
+4.3.1. perspectives register to listen for history changes
+5. application examines history token
+7. if no history token, application constructs history token based on default perspective
+8. application fires first history event
+9.  

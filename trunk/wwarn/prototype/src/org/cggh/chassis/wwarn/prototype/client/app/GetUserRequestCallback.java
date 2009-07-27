@@ -35,12 +35,6 @@ public class GetUserRequestCallback {
 		log("set current user on model",_);
 		this.model.setCurrentUser(user);
 		
-		log("call init perspectives on controller",_);
-		this.controller.initPerspectives();
-		
-		log("call init state on controller",_);
-		this.controller.initState();
-
 		log("end",_);
 	}
 	

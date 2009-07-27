@@ -17,16 +17,26 @@ class Model {
 
 	private List<ModelListener> listeners = new ArrayList<ModelListener>();
 
-	private String StateToken = null;
 	private User currentUser = null;
-	private List<Perspective> perspectives = new ArrayList<Perspective>();
-	private Perspective currentPerspective = null;
+	private String currentRole = null;
 
-	void setStateToken(String newStateToken) {
-		String oldStateToken = this.StateToken;
-		this.StateToken = newStateToken;
-		for (ModelListener l : this.listeners) {
-			l.onApplicationStateChanged(oldStateToken, newStateToken);
+	/**
+	 * @return the currentRole
+	 */
+	String getCurrentRole() {
+		return currentRole;
+	}
+
+	/**
+	 * @param currentRole the currentRole to set
+	 */
+	void setCurrentRole(String currentRole) {
+		if (!this.currentRole.equals(currentRole)) {
+			String old = this.currentRole;
+			this.currentRole = currentRole;
+			for (ModelListener l : this.listeners) {
+				l.onCurrentRoleChanged(old, currentRole);
+			}
 		}
 	}
 
@@ -38,36 +48,12 @@ class Model {
 		User oldUser = this.currentUser ;
 		this.currentUser = newUser;
 		for (ModelListener l : this.listeners) {
-			l.onUserChanged(oldUser, newUser);
-		}
-	}
-
-	List<Perspective> getPerspectives() {
-		return this.perspectives ;
-	}
-
-	void setCurrentPerspective(Perspective p) {
-		Perspective oldPerspective = this.currentPerspective ;
-		this.currentPerspective = p;
-		for (ModelListener l : this.listeners) {
-			l.onCurrentPerspectiveChanged(oldPerspective, p);
+			l.onCurrentUserChanged(oldUser, newUser);
 		}
 	}
 
 	User getCurrentUser() {
 		return this.currentUser;
-	}
-
-	Perspective getCurrentPerspective() {
-		return this.currentPerspective;
-	}
-
-	void setPerspectives(List<Perspective> newPerspectives) {
-		List<Perspective> oldPerspectives = this.perspectives;
-		this.perspectives = newPerspectives;
-		for (ModelListener l : this.listeners) {
-			l.onPerspectivesChanged(oldPerspectives, newPerspectives);
-		}
 	}
 
 }

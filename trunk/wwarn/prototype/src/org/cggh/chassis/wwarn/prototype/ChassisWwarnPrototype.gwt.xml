@@ -6,8 +6,10 @@
 	<inherits name='com.google.gwt.user.theme.standard.Standard' />
 	<!-- <inherits name="com.google.gwt.user.theme.chrome.Chrome"/> -->
 	<!-- <inherits name="com.google.gwt.user.theme.dark.Dark"/> -->
-<!-- <entry-point
+	<!-- <entry-point
 		class="org.cggh.chassis.wwarn.prototype.client.ApplicationSandbox" /> -->
 	<entry-point
 		class="org.cggh.chassis.wwarn.prototype.client.app.Application" />
+	<entry-point
+		class="org.cggh.chassis.wwarn.prototype.client.EntryPoint" />
 </module>
