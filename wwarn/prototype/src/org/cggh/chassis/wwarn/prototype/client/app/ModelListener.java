@@ -11,8 +11,12 @@ import org.cggh.chassis.wwarn.prototype.client.shared.User;
  */
 interface ModelListener {
 
-	void onCurrentUserChanged(User oldUser, User newUser);
+	void onCurrentUserChanged(User from, User to);
 
-	void onCurrentRoleChanged(String old, String currentRole);
+	void onCurrentRoleChanged(String from, String to);
+
+	void onInitialisationCompleteChanged(Boolean from, Boolean to);
+
+	void onInitialisationSuccessChanged(Boolean from, Boolean to);
 	
 }

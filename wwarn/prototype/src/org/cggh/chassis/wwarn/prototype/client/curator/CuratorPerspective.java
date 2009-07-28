@@ -3,10 +3,14 @@
  */
 package org.cggh.chassis.wwarn.prototype.client.curator;
 
+import org.cggh.chassis.wwarn.prototype.client.shared.GWTLogger;
+import org.cggh.chassis.wwarn.prototype.client.shared.Logger;
 import org.cggh.chassis.wwarn.prototype.client.shared.Perspective;
 import org.cggh.chassis.wwarn.prototype.client.shared.HMVCComponent;
+import org.cggh.chassis.wwarn.prototype.client.shared.RoleNames;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.json.client.JSONValue;
 
 /**
  * @author aliman
@@ -14,68 +18,61 @@ import com.google.gwt.core.client.GWT;
  */
 public class CuratorPerspective extends HMVCComponent implements Perspective {
 
+	private Logger log;
+
 	public CuratorPerspective() {
+		this.log = new GWTLogger();
+		this.log.setCurrentClass(CuratorPerspective.class.getName());
 		this.init();
 	}
 	
 	private void init() {
-		String _ = "init";
-		log("begin", _);
+		log.setCurrentMethod("init");
+		log.info("begin");
 
-		log("init model", _);
+		log.info("init model");
 		Model model = new Model();
 
-		log("init controller", _);
+		log.info("init controller");
 		Controller controller = new Controller(model, this); 
 
-		log("init renderer", _);
+		log.info("init renderer");
 		Renderer renderer = new Renderer(controller);
 		model.addListener(renderer);
 		
-		log("complete initialisation", _);
+		log.info("complete initialisation");
 		controller.init();
 		
-		log("end", _);
+		log.info("return");
 	}
 
-	private void log(String message, String context) {
-		String output = CuratorPerspective.class.getName() + " :: " + context + " :: " + message;
-		GWT.log(output, null);
+
+	public String getRoleName() {
+		return RoleNames.CURATOR;
 	}
 
-	public static final String TOKEN_BASE = "curator/";
-	public static final String NAME = "curator";
-	public static final String TOKEN_HOME = "home";
-	public static final String TOKEN_MYSUBMISSION = "mysubmissions";
-	public static final String TOKEN_ALLSUBMISSIONS = "allsubmissions";
-	public static final String TOKEN_NEWSTANDARDDATADICTIONARY = "newstandarddatadictionary";
-	public static final String TOKEN_ALLSTANDARDDATADICTIONARIES = "allstandarddatadictionaries";
-	public static final String TOKEN_NEWRELEASECRITERIA = "newreleasecriteria";
-	public static final String TOKEN_ALLRELEASECRITERIA = "allreleasecriteria";
-	public static final String TOKEN_DELEGATENEWTASKS = "delegatenewtask";
-	public static final String TOKEN_MYDELEGATEDTASKS = "mydelegatedtasks";
-	public static final String ROLENAME = "curator";
 
-	public String getHomeToken() {
-		return this.getAbsoluteHistoryTokenBase() + TOKEN_HOME;
-	}
-
-	public String getName() {
-		return NAME;
-	}
-
-	public void setStateToken(String stateToken) {
-		String _ = "setStateToken("+stateToken+")";
-		log("begin",_);
-		
+	@Override
+	public void captureHistoryEvent(JSONValue stateToken) {
 		// TODO Auto-generated method stub
 		
-		log("end",_);
 	}
 
 	@Override
-	public String getRelativeHistoryTokenBase() {
-		return TOKEN_BASE;
+	protected void syncStateKey() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void setIsCurrent(boolean b) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void syncState() {
+		// TODO Auto-generated method stub
+		
 	}
 
 

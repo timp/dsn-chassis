@@ -3,91 +3,75 @@
  */
 package org.cggh.chassis.wwarn.prototype.client.shared;
 
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
+import com.google.gwt.json.client.JSONParser;
+import com.google.gwt.json.client.JSONValue;
+import com.google.gwt.user.client.History;
+
+
+
 
 /**
  * @author aliman
  *
  */
-public abstract class HMVCHistoryManager {
+public class HMVCHistoryManager<I> implements ValueChangeHandler<I> {
 
 
-	protected HMVCComponent owner;
+	protected HMVCComponent top;
 	protected Logger log;
 
 
 
 
-	public HMVCHistoryManager(HMVCComponent owner) {
-		this.owner = owner;
+	public HMVCHistoryManager(HMVCComponent top) {
+		this.top = top;
 		this.log = new GWTLogger();
+		this.initLog();
 	}
 
 
 	
 	
-	public HMVCHistoryManager(HMVCComponent owner, Logger log) {
-		this.owner = owner;
+	public HMVCHistoryManager(HMVCComponent top, Logger log) {
+		this.top = top;
 		this.log = log;
+		this.initLog();
 	}
 
-	
-	
-	
 
-	/*
-	 * -------------------------------------------------------------------------
-	 * UTILITY METHODS
-	 * -------------------------------------------------------------------------
-	 */
 
-	
-	
-	
-	public String getLocalStateTokenFromHistoryToken(String historyToken) {
-		log.setCurrentMethod("getLocalStateTokenFromHistoryToken");
-		log.info("begin: historyToken = "+historyToken);
-		
-		int depth = this.owner.getDepth();
-		String[] tokens = historyToken.split(HMVCComponent.TOKENSEPARATOR);
-		
-		String ret = "";
 
-		if (tokens.length > depth) {
-			ret = tokens[depth];
-		}
-		
-		log.info("return: "+ret);
-		return ret;
+	private void initLog() {
+		this.log.setCurrentClass(HMVCHistoryManager.class.getName());
 	}
 
-	
-	
-	public String getHistoryTokenForNewLocalStateToken(String historyToken, String localStateToken) {
-		log.setCurrentMethod("getHistoryTokenForNewLocalStateToken");
-		log.info("begin: historyToken = "+historyToken+"; localStateToken = "+localStateToken);
 
-		int depth = this.owner.getDepth();
-		String[] tokens = historyToken.split(HMVCComponent.TOKENSEPARATOR);
+
+
+	public void onValueChange(ValueChangeEvent<I> event) {
+		log.setCurrentMethod("onValueChange");
+		log.info("begin");
 		
-		String newHistoryToken = "";
-		for (int i=0; i<depth; i++) {
-			if (tokens.length > i) {
-				newHistoryToken += tokens[i];
-			}
-			newHistoryToken += HMVCComponent.TOKENSEPARATOR;
+		String historyToken = event.getValue().toString();
+		log.info("historyToken: "+historyToken);
+		
+		JSONValue stateToken = null;
+		
+		try {
+			log.info("try to parse history token");
+			stateToken = JSONParser.parse(historyToken);
+		} catch (Throwable ex) {
+			log.info("exception parsing history token");
 		}
-		newHistoryToken += localStateToken;
 		
-		for (int i=depth+1; i<tokens.length; i++) {
-			newHistoryToken += HMVCComponent.TOKENSEPARATOR + tokens[i];
-		}
+		log.info("capture history event");
+		this.top.captureHistoryEvent(stateToken);
 		
-		log.info("return: "+newHistoryToken);
-		return newHistoryToken;
+		log.info("return");
 	}
 	
 	
 	
-	
-
 }

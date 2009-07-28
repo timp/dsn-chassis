@@ -9,8 +9,6 @@ package org.cggh.chassis.wwarn.prototype.client.submitter;
  */
 interface ModelListener {
 
-	void onStateTokenChanged(String oldState, String stateToken);
-
 	void onIsCurrentPerspectiveChanged(boolean wasCurrent, boolean current);
 
 }
