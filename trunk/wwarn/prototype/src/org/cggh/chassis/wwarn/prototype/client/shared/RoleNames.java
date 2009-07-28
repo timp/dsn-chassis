@@ -9,7 +9,8 @@ package org.cggh.chassis.wwarn.prototype.client.shared;
  */
 public class RoleNames {
 
-	public static final String SUBMITTER = "chassis.wwarn.submitter";
-	public static final String CURATOR = "chassis.wwarn.curator";
+	public static final String SUBMITTER = "submitter";
+	public static final String CURATOR = "curator";
+	public static final String UNAUTHORISED = "unauthorised";
 
 }

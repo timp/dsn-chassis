@@ -6,12 +6,14 @@ package org.cggh.chassis.wwarn.prototype.client.app;
 import java.util.List;
 
 import org.cggh.chassis.wwarn.prototype.client.curator.CuratorPerspective;
+import org.cggh.chassis.wwarn.prototype.client.shared.GWTLogger;
+import org.cggh.chassis.wwarn.prototype.client.shared.Logger;
 import org.cggh.chassis.wwarn.prototype.client.shared.Perspective;
 import org.cggh.chassis.wwarn.prototype.client.shared.HMVCComponent;
+import org.cggh.chassis.wwarn.prototype.client.shared.RoleNames;
 import org.cggh.chassis.wwarn.prototype.client.shared.User;
 import org.cggh.chassis.wwarn.prototype.client.submitter.SubmitterPerspective;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -29,6 +31,7 @@ class Renderer implements ModelListener {
 	
 	private Application owner;
 	private Controller controller;
+	private Logger log;
 
 	private RootPanel userDetailsRootPanel;
 	private Label userNameLabel;
@@ -46,6 +49,16 @@ class Renderer implements ModelListener {
 	Renderer(Application owner, Controller controller) {
 		this.owner = owner;
 		this.controller = controller;
+		this.log = new GWTLogger();
+		this.init();
+	}
+
+	
+	
+	Renderer(Application owner, Controller controller, Logger log) {
+		this.owner = owner;
+		this.controller = controller;
+		this.log = log;
 		this.init();
 	}
 
@@ -55,6 +68,7 @@ class Renderer implements ModelListener {
 	 * @@TODO doc me
 	 */
 	private void init() {
+		this.log.setCurrentClass(Renderer.class.getName());
 		this.initView();
 		this.initEventHandlers();
 	}
@@ -147,7 +161,18 @@ class Renderer implements ModelListener {
 		// set current role label
 		this.currentRoleLabel.setText(currentRole);
 		
-		// TODO let perspectives switch themselves??
+		// switch current perspective
+		for (HMVCComponent c : this.owner.getChildren()) {
+			if (c instanceof Perspective) {
+				Perspective p = (Perspective) c;
+				if (currentRole.equals(p.getRoleName())) {
+					p.setIsCurrent(true);
+				}
+				else {
+					p.setIsCurrent(false);
+				}
+			}
+		}
 		
 	}
 
@@ -173,49 +198,50 @@ class Renderer implements ModelListener {
 	 * @param user
 	 */
 	private void updatePerspectives(User user) {
-		String _ = "updatePerspectives"; log("begin",_);
+		log.setCurrentMethod("updatePerspectives");
+		log.info("begin");
 		
-		log("clear current perspectives",_);
+		log.info("clear current perspectives");
 		for (HMVCComponent c : this.owner.getChildren()) {
 			if (c instanceof Perspective) {
 				this.owner.removeChild(c);
 			}
 		}
 		
-		log("create new perspectives for user's roles",_);
+		log.info("create new perspectives for user's roles");
 		
 		List<String> roles = user.getRoleNames();
 		
-		if (roles.contains(SubmitterPerspective.ROLENAME)) {
-			log("add submitter perspective",_);
+		if (roles.contains(RoleNames.SUBMITTER)) {
+			log.info("add submitter perspective");
 			this.owner.addChild(new SubmitterPerspective());
 		}
 		
-		if (roles.contains(CuratorPerspective.ROLENAME)) {
-			log("add curator perspective",_);
+		if (roles.contains(RoleNames.CURATOR)) {
+			log.info("add curator perspective");
 			this.owner.addChild(new CuratorPerspective());
 		}
 		
 		// TODO other perspectives
 		
-		log("end",_);	
+		log.info("return");	
 	}
-	
-	
-	
-	
-	/**
-	 * @@TODO doc me
-	 * @param message
-	 * @param context
-	 */
-	private void log(String message, String context) {
-		String output = Renderer.class.getName() + " :: " + context + " :: " + message;
-		GWT.log(output, null);
-	}
-	
-	
 
+
+
+	public void onInitialisationCompleteChanged(Boolean from, Boolean to) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	public void onInitialisationSuccessChanged(Boolean from, Boolean to) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
 
 
 }

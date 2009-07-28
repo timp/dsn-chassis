@@ -20,16 +20,11 @@ class Renderer implements ModelListener {
 
 	Renderer(Controller controller) {
 		this.controller = controller;
-		this.init();
 	}
 
-	private void init() {
-		HistoryListener<String> historyListener = new HistoryListener<String>(this.controller);
-		History.addValueChangeHandler(historyListener);
-	}
 
-	public void onIsCurrentPerspectiveChanged(boolean wasCurrent, boolean current) {
-		if (current) {
+	public void onIsCurrentPerspectiveChanged(boolean from, boolean to) {
+		if (to) {
 			this.renderMainMenu();
 		}
 	}
@@ -38,7 +33,7 @@ class Renderer implements ModelListener {
 		RootPanel root = RootPanel.get("mainmenu");
 		root.clear();
 		
-		MenuBar mainMenu = new MenuBar();
+/*		MenuBar mainMenu = new MenuBar();
 		root.add(mainMenu);
 		mainMenu.addItem("home", new HistoryCommand(CuratorPerspective.TOKEN_HOME));
 		
@@ -61,12 +56,10 @@ class Renderer implements ModelListener {
 		MenuBar tMenu = new MenuBar(true);
 		tMenu.addItem("delegate new task", new HistoryCommand(CuratorPerspective.TOKEN_DELEGATENEWTASKS));
 		tMenu.addItem("my delegated tasks", new HistoryCommand(CuratorPerspective.TOKEN_MYDELEGATEDTASKS));
-		mainMenu.addItem("tasks", tMenu);
-}
-
-	public void onStateTokenChanged(String oldState, String stateToken) {
-		// TODO Auto-generated method stub
-		
+		mainMenu.addItem("tasks", tMenu);*/
 	}
+
+
+
 
 }

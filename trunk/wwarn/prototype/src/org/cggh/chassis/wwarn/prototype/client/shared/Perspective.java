@@ -9,7 +9,7 @@ package org.cggh.chassis.wwarn.prototype.client.shared;
  */
 public interface Perspective {
 
-	String getName();
-	void setStateToken(String stateToken);
+	String getRoleName();
+	void setIsCurrent(boolean b);
 
 }

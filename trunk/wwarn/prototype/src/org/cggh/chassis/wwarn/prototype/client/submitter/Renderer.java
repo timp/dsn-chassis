@@ -19,12 +19,6 @@ class Renderer implements ModelListener {
 
 	Renderer(Controller controller) {
 		this.controller = controller;
-		this.init();
-	}
-
-	private void init() {
-		HistoryListener<String> historyListener = new HistoryListener<String>(this.controller);
-		History.addValueChangeHandler(historyListener);
 	}
 
 	public void onIsCurrentPerspectiveChanged(boolean wasCurrent, boolean current) {
@@ -36,7 +30,7 @@ class Renderer implements ModelListener {
 	private void renderMainMenu() {
 		RootPanel root = RootPanel.get("mainmenu");
 		root.clear();
-		
+		/*
 		MenuBar mainMenu = new MenuBar();
 		root.add(mainMenu);
 		mainMenu.addItem("home", new HistoryCommand(SubmitterPerspective.TOKEN_HOME));
@@ -56,12 +50,7 @@ class Renderer implements ModelListener {
 		ddMenu.addItem("new data dictionary", new HistoryCommand(SubmitterPerspective.TOKEN_NEWDATADICTIONARY));
 		ddMenu.addItem("my data dictionaries", new HistoryCommand(SubmitterPerspective.TOKEN_MYDATADICTIONARIES));
 		ddMenu.addItem("all data dictionaries", new HistoryCommand(SubmitterPerspective.TOKEN_ALLDATADICTIONARIES));
-		mainMenu.addItem("data dictionaries", ddMenu);
-	}
-
-	public void onStateTokenChanged(String oldState, String stateToken) {
-		// TODO Auto-generated method stub
-		
+		mainMenu.addItem("data dictionaries", ddMenu);*/
 	}
 
 }

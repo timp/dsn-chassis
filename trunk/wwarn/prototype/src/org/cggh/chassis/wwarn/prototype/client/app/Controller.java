@@ -2,6 +2,11 @@ package org.cggh.chassis.wwarn.prototype.client.app;
 
 
 
+import org.cggh.chassis.wwarn.prototype.client.shared.GWTLogger;
+import org.cggh.chassis.wwarn.prototype.client.shared.Logger;
+import org.cggh.chassis.wwarn.prototype.client.shared.RoleNames;
+import org.cggh.chassis.wwarn.prototype.client.shared.User;
+
 import com.google.gwt.core.client.GWT;
 
 
@@ -12,44 +17,99 @@ class Controller {
 	
 	private Model model = null;
 	private Application owner = null;
+	private Logger log;
 
 	
-	
-	private void log(String message, String context) {
-		String output = Controller.class.getName() + " :: " + context + " :: " + message;
-		GWT.log(output, null);
-	}
-
 	
 	
 	Controller(Application owner, Model model) {
 		this.owner = owner;
 		this.model = model;
+		this.log = new GWTLogger();
+		this.initLog();
 	}
 	
 	
 	
-	void refreshUserDetails() { String _ = "refreshUserDetails"; 
-		log("begin",_);
+	
+	Controller(Application owner, Model model, Logger log) {
+		this.owner = owner;
+		this.model = model;
+		this.log = log;
+		this.initLog();
+	}
+	
+	
+	
+	private void initLog() {
+		this.log.setCurrentClass(Controller.class.getName());
+	}
+
+
+
+	void refreshUserDetails() { 
+		log.setCurrentMethod("refreshUserDetails"); 
+		log.info("begin");
 		
-		log("create callback",_);
+		log.info("create callback");
 		GetUserRequest r = new GetUserRequest("/user");
-		r.setCallback(new GetUserRequestCallback(this, this.model));
+		r.setCallback(new GetUserRequestCallback(this.owner, this, this.model));
 		
-		log("send get user request",_);
+		log.info("send get user request");
 		r.send();
 		
-		log("end",_);
+		log.info("return");
 	}
 
 	
-
+	
 	void setCurrentRole(String roleName) {
-		String _ = "setCurrentRole"; log("begin",_);
+		this.setCurrentRole(roleName, true);
+	}
+	
 
-		this.model.setCurrentRole(roleName);
+	void setCurrentRole(String roleName, boolean waypoint) {
+		log.setCurrentMethod("setCurrentRole"); 
+		log.info("begin; roleName: "+roleName+"; waypoint: "+waypoint);
 
-		log("end",_);
+		log.info("check new role is applicable to current user");
+		
+		if (this.model.getCurrentUser().getRoleNames().contains(roleName)) {
+
+			log.info("user has role, set current role on model");
+			this.model.setCurrentRole(roleName);
+
+			if (waypoint) {
+				log.info("set waypoint");
+				this.owner.waypoint();
+			}
+			
+		}
+		else {
+			log.info("user does not have that role");
+			// TODO anything?
+		}
+
+		log.info("return");
+	}
+
+
+
+
+	void setDefault() {
+		
+		String role = null;
+		
+		User user = this.model.getCurrentUser();
+		if (user.getRoleNames().size() > 0) {
+			role = user.getRoleNames().get(0); // use first as default
+		}
+		else {
+			role = RoleNames.UNAUTHORISED;
+		}
+
+		this.setCurrentRole(role, true);
+		
 	}
 
 }

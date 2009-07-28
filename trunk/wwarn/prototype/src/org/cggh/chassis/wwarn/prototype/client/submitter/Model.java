@@ -14,18 +14,9 @@ class Model {
 
 	private boolean isCurrentPerspective;
 	private List<ModelListener> listeners = new ArrayList<ModelListener>();
-	private String stateToken;
 
 	void addListener(ModelListener l) {
 		this.listeners.add(l);
-	}
-
-	void setStateToken(String stateToken) {
-		String oldState = this.stateToken;
-		this.stateToken = stateToken;
-		for (ModelListener l : listeners) {
-			l.onStateTokenChanged(oldState, this.stateToken);
-		}
 	}
 
 	boolean getIsCurrentPerspective() {
