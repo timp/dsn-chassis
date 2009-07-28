@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.cggh.chassis.wwarn.prototype.client.perspective.curator;
+package org.cggh.chassis.wwarn.prototype.client.curator.perspective;
 
 import java.util.ArrayList;
 import java.util.List;

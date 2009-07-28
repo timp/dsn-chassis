@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.cggh.chassis.wwarn.prototype.client.perspective.submitter;
+package org.cggh.chassis.wwarn.prototype.client.submitter.perspective;
 
 import org.cggh.chassis.wwarn.prototype.client.shared.GWTLogger;
 import org.cggh.chassis.wwarn.prototype.client.shared.Logger;
@@ -25,11 +25,22 @@ class Controller {
 	}
 
 
+	
 	void setMainWidget(String widgetName) {
+		setMainWidget(widgetName, true);
+	}
+	
+	
+	
+	void setMainWidget(String widgetName, boolean waypoint) {
 		log.enter("setMainWidget");
 		log.info("widgetName: "+widgetName);
 		
-		// TODO
+		this.model.setMainWidgetName(widgetName);
+		
+		if (waypoint) {
+			this.owner.waypoint();
+		}
 		
 		log.leave();
 	}
@@ -40,6 +51,13 @@ class Controller {
 		this.model.setIsCurrentPerspective(b);
 		
 		log.leave();
+	}
+
+
+
+	void setDefault() {
+		// TODO Auto-generated method stub
+		
 	}
 
 

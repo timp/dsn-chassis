@@ -21,7 +21,7 @@ public abstract class HMVCComponent {
 	
 	
 	public static final String KEY = "state";
-	public static final String CHILDREN = "children";
+	public static final String NESTED = "nested";
 
 	protected Logger log;
 	
@@ -145,7 +145,7 @@ public abstract class HMVCComponent {
 				JSONObject childToken = this.children.get(i).getStateToken();
 				childTokens.set(i, childToken);
 			}
-			token.put(CHILDREN, childTokens);
+			token.put(NESTED, childTokens);
 		}
 		
 		return token;
@@ -179,9 +179,9 @@ public abstract class HMVCComponent {
 		
 		if (stateToken != null && stateToken instanceof JSONObject) {
 			JSONObject o = (JSONObject) stateToken;
-			if (o.containsKey(CHILDREN)) {
+			if (o.containsKey(NESTED)) {
 				log.info("propagate capture to children");
-				JSONArray childTokens = (JSONArray) o.get(CHILDREN);
+				JSONArray childTokens = (JSONArray) o.get(NESTED);
 				for (int i=0; i<childTokens.size() && i<children.size(); i++) {
 					children.get(i).captureHistoryEvent(childTokens.get(i));
 				}

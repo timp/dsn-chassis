@@ -115,6 +115,8 @@ public class Application extends HMVCComponent {
 
 
 	private void syncCurrentRole() {
+		log.enter("syncCurrentRole");
+		
 		if (stateKey.containsKey(CURRENTROLE)) {
 			
 			JSONString roleName = (JSONString) stateKey.get(CURRENTROLE);
@@ -122,6 +124,8 @@ public class Application extends HMVCComponent {
 			this.controller.setCurrentRole(roleName.stringValue(), false);
 
 		}
+		
+		log.leave();
 	}
 
 

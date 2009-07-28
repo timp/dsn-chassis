@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.cggh.chassis.wwarn.prototype.client.perspective.submitter;
+package org.cggh.chassis.wwarn.prototype.client.submitter.perspective;
 
 /**
  * @author aliman
@@ -10,5 +10,7 @@ package org.cggh.chassis.wwarn.prototype.client.perspective.submitter;
 interface ModelListener {
 
 	void onIsCurrentPerspectiveChanged(boolean wasCurrent, boolean current);
+
+	void onMainWidgetChanged(String from, String to);
 
 }

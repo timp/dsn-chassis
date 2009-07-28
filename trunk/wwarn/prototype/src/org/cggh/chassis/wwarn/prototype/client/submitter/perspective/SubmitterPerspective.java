@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.cggh.chassis.wwarn.prototype.client.perspective.submitter;
+package org.cggh.chassis.wwarn.prototype.client.submitter.perspective;
 
 import org.cggh.chassis.wwarn.prototype.client.shared.GWTLogger;
 import org.cggh.chassis.wwarn.prototype.client.shared.Logger;
@@ -9,6 +9,8 @@ import org.cggh.chassis.wwarn.prototype.client.shared.Perspective;
 import org.cggh.chassis.wwarn.prototype.client.shared.HMVCComponent;
 import org.cggh.chassis.wwarn.prototype.client.shared.RoleNames;
 
+import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.json.client.JSONString;
 import com.google.gwt.json.client.JSONValue;
 
 
@@ -27,6 +29,8 @@ public class SubmitterPerspective extends HMVCComponent implements Perspective {
 	public static final String WIDGET_NEWDATADICTIONARY = "newdatadictionary";
 	public static final String WIDGET_MYDATADICTIONARIES = "mydatadictionaries";
 	public static final String WIDGET_ALLDATADICTIONARIES = "alldatadictionaries";
+	public static final String ELEMENTID_APPCONTENT = "appcontent";
+	private static final String PROP_MAINWIDGETNAME = "mainWidgetName";
 
 	private Logger log;
 	private Model model;
@@ -49,7 +53,7 @@ public class SubmitterPerspective extends HMVCComponent implements Perspective {
 		this.controller = new Controller(model, this); 
 
 		log.info("init renderer");
-		this.renderer = new Renderer(controller);
+		this.renderer = new Renderer(this, controller);
 		model.addListener(renderer);
 		
 		log.leave();
@@ -61,26 +65,56 @@ public class SubmitterPerspective extends HMVCComponent implements Perspective {
 	}
 
 
-	@Override
-	public void captureHistoryEvent(JSONValue stateToken) {
-		// TODO Auto-generated method stub
-		
+	public void setIsCurrentPerspective(boolean b) {
+		this.controller.setIsCurrentPerspective(b);
 	}
+	
+
 
 	@Override
 	protected void syncStateKey() {
-		// TODO Auto-generated method stub
+		log.enter("syncStateKey");
 		
-	}
-
-	public void setIsCurrentPerspective(boolean b) {
-		this.controller.setIsCurrentPerspective(b);
+		log.info("sync main widget: "+this.model.getMainWidgetName());
+		this.stateKey = new JSONObject();
+		JSONString value = new JSONString(this.model.getMainWidgetName());
+		this.stateKey.put(PROP_MAINWIDGETNAME, value);
+		
+		log.leave();
 	}
 
 	@Override
 	protected void syncState() {
-		// TODO Auto-generated method stub
+		log.enter("syncState");
+
+		if (this.stateKey == null) {
+
+			log.info("state key is null, override to defaults");
+			this.controller.setDefault();
+
+		}
+		else {
+			
+			log.info("set state as per key");
+			this.syncMainWidget();
+
+		}
 		
+		log.leave();
+	}
+
+	private void syncMainWidget() {
+		log.enter("syncMainWidget");
+		
+		if (stateKey.containsKey(PROP_MAINWIDGETNAME)) {
+			
+			JSONString widgetName = (JSONString) stateKey.get(PROP_MAINWIDGETNAME);
+			log.info("found main widget name: "+widgetName.stringValue());
+			this.controller.setMainWidget(widgetName.stringValue(), false);
+
+		}
+		
+		log.leave();
 	}
 
 }
