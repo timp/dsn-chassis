@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.cggh.chassis.wwarn.prototype.client.submitter;
+package org.cggh.chassis.wwarn.prototype.client.perspective.submitter;
 
 import com.google.gwt.user.client.Command;
 

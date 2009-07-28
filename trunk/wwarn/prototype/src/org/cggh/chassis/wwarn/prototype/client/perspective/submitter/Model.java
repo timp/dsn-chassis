@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.cggh.chassis.wwarn.prototype.client.curator;
+package org.cggh.chassis.wwarn.prototype.client.perspective.submitter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,11 +23,11 @@ class Model {
 		return this.isCurrentPerspective;
 	}
 
-	void setIsCurrentPerspective(boolean to) {
-		boolean from = this.isCurrentPerspective;
-		this.isCurrentPerspective = to;
+	void setIsCurrentPerspective(boolean current) {
+		boolean wasCurrent = this.isCurrentPerspective;
+		this.isCurrentPerspective = current;
 		for (ModelListener l : listeners) {
-			l.onIsCurrentPerspectiveChanged(from, to);
+			l.onIsCurrentPerspectiveChanged(wasCurrent, current);
 		}
 	}
 
