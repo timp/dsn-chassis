@@ -1,10 +1,11 @@
 /**
  * 
  */
-package org.cggh.chassis.wwarn.prototype.client.perspective.submitter;
+package org.cggh.chassis.wwarn.prototype.client.submitter.perspective;
 
 import org.cggh.chassis.wwarn.prototype.client.shared.GWTLogger;
 import org.cggh.chassis.wwarn.prototype.client.shared.Logger;
+import org.cggh.chassis.wwarn.prototype.client.submitter.widget.home.SubmitterHomeWidget;
 
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.MenuBar;
@@ -19,8 +20,10 @@ class Renderer implements ModelListener {
 	private Controller controller;
 	private Logger log;
 	private MenuBar mainMenu = null;
+	private SubmitterPerspective owner;
 
-	Renderer(Controller controller) {
+	Renderer(SubmitterPerspective owner, Controller controller) {
+		this.owner = owner;
 		this.controller = controller;
 		this.log = new GWTLogger();
 		this.log.setCurrentClass(Renderer.class.getName());
@@ -77,6 +80,24 @@ class Renderer implements ModelListener {
 		mainMenu.addItem("data dictionaries", ddMenu);
 	
 		log.leave();
+	}
+
+	public void onMainWidgetChanged(String from, String to) {
+
+		RootPanel appcontent = RootPanel.get(SubmitterPerspective.ELEMENTID_APPCONTENT);
+
+		if (to.equals(SubmitterPerspective.WIDGET_HOME)) {
+			SubmitterHomeWidget widget = new SubmitterHomeWidget();
+			widget.setRootPanel(appcontent);
+			widget.initialise();
+			this.owner.clearChildren();
+			this.owner.addChild(widget);
+		}
+		else {
+			// TODO other widgets
+			appcontent.clear();
+		}
+		
 	}
 
 }
