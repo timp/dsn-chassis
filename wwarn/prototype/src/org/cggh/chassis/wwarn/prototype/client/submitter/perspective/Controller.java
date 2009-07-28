@@ -56,8 +56,12 @@ class Controller {
 
 
 	void setDefault() {
-		// TODO Auto-generated method stub
+		log.enter("setDefault");
 		
+		log.info("set main widget as home");
+		this.setMainWidget(SubmitterPerspective.WIDGET_HOME, false);
+
+		log.leave();
 	}
 
 

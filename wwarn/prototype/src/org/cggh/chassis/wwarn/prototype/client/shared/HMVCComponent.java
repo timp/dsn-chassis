@@ -177,17 +177,25 @@ public abstract class HMVCComponent {
 		log.enter("propagateHistoryEventToChildren");
 		log.info("stateToken: "+stateToken);
 		
+		JSONArray childTokens = null;
+		
 		if (stateToken != null && stateToken instanceof JSONObject) {
 			JSONObject o = (JSONObject) stateToken;
 			if (o.containsKey(NESTED)) {
-				log.info("propagate capture to children");
-				JSONArray childTokens = (JSONArray) o.get(NESTED);
-				for (int i=0; i<childTokens.size() && i<children.size(); i++) {
-					children.get(i).captureHistoryEvent(childTokens.get(i));
-				}
+				log.info("found nested state");
+				childTokens = (JSONArray) o.get(NESTED);
 			}
 		}
-		
+
+		for (int i=0; i<children.size(); i++) {
+			JSONValue childToken = null;
+			if (childTokens != null && i < childTokens.size()) {
+				childToken = childTokens.get(i);
+			}
+			log.info("child["+i+"]: propagating token: "+childToken);
+			children.get(i).captureHistoryEvent(childToken);
+		}
+
 		log.leave();
 	}
 	

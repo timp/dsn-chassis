@@ -9,7 +9,7 @@ import com.google.gwt.user.client.Command;
  * @author aliman
  *
  */
-public class SetMainWidgetCommand implements Command {
+class SetMainWidgetCommand implements Command {
 
 	private Controller controller;
 	private String viewName;
