@@ -5,14 +5,14 @@ package org.cggh.chassis.wwarn.prototype.client.app;
 
 import java.util.List;
 
-import org.cggh.chassis.wwarn.prototype.client.curator.CuratorPerspective;
+import org.cggh.chassis.wwarn.prototype.client.perspective.curator.CuratorPerspective;
+import org.cggh.chassis.wwarn.prototype.client.perspective.submitter.SubmitterPerspective;
 import org.cggh.chassis.wwarn.prototype.client.shared.GWTLogger;
 import org.cggh.chassis.wwarn.prototype.client.shared.Logger;
 import org.cggh.chassis.wwarn.prototype.client.shared.Perspective;
 import org.cggh.chassis.wwarn.prototype.client.shared.HMVCComponent;
 import org.cggh.chassis.wwarn.prototype.client.shared.RoleNames;
 import org.cggh.chassis.wwarn.prototype.client.shared.User;
-import org.cggh.chassis.wwarn.prototype.client.submitter.SubmitterPerspective;
 
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;

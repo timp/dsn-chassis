@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.cggh.chassis.wwarn.prototype.client.curator;
+package org.cggh.chassis.wwarn.prototype.client.perspective.curator;
 
 /**
  * @author aliman
