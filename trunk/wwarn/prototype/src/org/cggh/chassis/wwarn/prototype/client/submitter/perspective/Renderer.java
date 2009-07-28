@@ -4,8 +4,10 @@
 package org.cggh.chassis.wwarn.prototype.client.submitter.perspective;
 
 import org.cggh.chassis.wwarn.prototype.client.shared.GWTLogger;
+import org.cggh.chassis.wwarn.prototype.client.shared.HMVCComponent;
 import org.cggh.chassis.wwarn.prototype.client.shared.Logger;
-import org.cggh.chassis.wwarn.prototype.client.submitter.widget.home.SubmitterHomeWidget;
+import org.cggh.chassis.wwarn.prototype.client.submitter.widget.home.SubmitterWidgetHome;
+import org.cggh.chassis.wwarn.prototype.client.submitter.widget.newstudy.SubmitterWidgetNewStudy;
 
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.MenuBar;
@@ -85,19 +87,29 @@ class Renderer implements ModelListener {
 	public void onMainWidgetChanged(String from, String to) {
 
 		RootPanel appcontent = RootPanel.get(SubmitterPerspective.ELEMENTID_APPCONTENT);
-
+		HMVCComponent child = null;
+		
 		if (to.equals(SubmitterPerspective.WIDGET_HOME)) {
-			SubmitterHomeWidget widget = new SubmitterHomeWidget();
+			SubmitterWidgetHome widget = new SubmitterWidgetHome();
 			widget.setRootPanel(appcontent);
 			widget.initialise();
-			this.owner.clearChildren();
-			this.owner.addChild(widget);
+			child = widget;
+		}
+		else if (to.equals(SubmitterPerspective.WIDGET_NEWSTUDY)) {
+			SubmitterWidgetNewStudy widget = new SubmitterWidgetNewStudy();
+			widget.setRootPanel(appcontent);
+			widget.initialise();
+			child = widget;
 		}
 		else {
 			// TODO other widgets
 			appcontent.clear();
 		}
-		
+
+		// hook up to owner to plug into history 
+		this.owner.clearChildren();
+		this.owner.addChild(child);
+
 	}
 
 }

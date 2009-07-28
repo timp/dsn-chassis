@@ -105,7 +105,7 @@ class Controller {
 			role = RoleNames.UNAUTHORISED;
 		}
 
-		this.setCurrentRole(role, true);
+		this.setCurrentRole(role, false);
 		
 	}
 

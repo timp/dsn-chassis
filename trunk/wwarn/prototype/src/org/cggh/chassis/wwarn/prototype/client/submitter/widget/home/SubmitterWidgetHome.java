@@ -4,7 +4,7 @@ import org.cggh.chassis.wwarn.prototype.client.shared.HMVCComponent;
 
 import com.google.gwt.user.client.ui.RootPanel;
 
-public class SubmitterHomeWidget extends HMVCComponent {
+public class SubmitterWidgetHome extends HMVCComponent {
 
 	
 	
@@ -13,9 +13,9 @@ public class SubmitterHomeWidget extends HMVCComponent {
 	private Renderer renderer;
 	private RootPanel rootPanel;
 
-	public SubmitterHomeWidget() {
+	public SubmitterWidgetHome() {
 		super();
-		this.log.setCurrentClass(SubmitterHomeWidget.class.getName());
+		this.log.setCurrentClass(SubmitterWidgetHome.class.getName());
 	}
 	
 	

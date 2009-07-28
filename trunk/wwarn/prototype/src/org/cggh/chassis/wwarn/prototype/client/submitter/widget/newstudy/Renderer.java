@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.cggh.chassis.wwarn.prototype.client.submitter.widget.home;
+package org.cggh.chassis.wwarn.prototype.client.submitter.widget.newstudy;
 
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -10,10 +10,10 @@ import com.google.gwt.user.client.ui.RootPanel;
  * @author aliman
  *
  */
-class Renderer implements ModelListener {
+public class Renderer implements ModelListener {
 
-	private RootPanel rootPanel;
 	private Controller controller;
+	private RootPanel rootPanel;
 
 	Renderer(Controller controller, RootPanel rootPanel) {
 		this.controller = controller;
@@ -23,10 +23,8 @@ class Renderer implements ModelListener {
 
 	private void initView() {
 		rootPanel.clear();
-		rootPanel.add(new HTML("<h2>Submitter Home</h2>"));
+		rootPanel.add(new HTML("<h2>New Study</h2>"));
 		// TODO more
 	}
-	
-	
 
 }

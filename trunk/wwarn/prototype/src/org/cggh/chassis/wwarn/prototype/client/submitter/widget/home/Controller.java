@@ -7,9 +7,9 @@ package org.cggh.chassis.wwarn.prototype.client.submitter.widget.home;
  * @author aliman
  *
  */
-public class Controller {
+class Controller {
 
-	Controller(Model model, SubmitterHomeWidget submitterHomeWidget) {
+	Controller(Model model, SubmitterWidgetHome submitterHomeWidget) {
 		// TODO Auto-generated constructor stub
 	}
 
