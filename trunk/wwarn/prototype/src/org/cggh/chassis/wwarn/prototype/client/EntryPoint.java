@@ -25,7 +25,7 @@ public class EntryPoint implements com.google.gwt.core.client.EntryPoint, Applic
 	public void onModuleLoad() {
 		log = new GWTLogger();
 		log.setCurrentClass(EntryPoint.class.getName());
-		log.setCurrentMethod("onModuleLoad");
+		log.enter("onModuleLoad");
 
 		log.info("create application");
 		Application app = new Application();
@@ -38,6 +38,7 @@ public class EntryPoint implements com.google.gwt.core.client.EntryPoint, Applic
 		log.info("initialise application");
 		app.initialise();
 
+		log.leave();
 	}
 
 	public void onInitialisationFailure(String message) {
@@ -45,10 +46,12 @@ public class EntryPoint implements com.google.gwt.core.client.EntryPoint, Applic
 	}
 
 	public void onInitialisationSuccess() {
-		log.setCurrentMethod("onInitialisationSuccess");
+		log.enter("onInitialisationSuccess");
 		
 		log.info("fire current history state");
 		History.fireCurrentHistoryState();
+		
+		log.leave();
 	}
 
 }

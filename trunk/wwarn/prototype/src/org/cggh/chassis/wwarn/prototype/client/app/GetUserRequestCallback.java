@@ -7,7 +7,6 @@ import org.cggh.chassis.wwarn.prototype.client.shared.GWTLogger;
 import org.cggh.chassis.wwarn.prototype.client.shared.Logger;
 import org.cggh.chassis.wwarn.prototype.client.shared.User;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.Response;
 
@@ -20,20 +19,17 @@ public class GetUserRequestCallback {
 
 	private Logger log;
 	private Model model;
-	private Controller controller;
 	private Application owner;
 
-	GetUserRequestCallback(Application owner, Controller controller, Model model) {
+	GetUserRequestCallback(Application owner, Model model) {
 		this.owner = owner;
-		this.controller = controller;
 		this.model = model;
 		this.log = new GWTLogger();
 		this.initLog();
 	}
 
-	GetUserRequestCallback(Application owner, Controller controller, Model model, Logger log) {
+	GetUserRequestCallback(Application owner, Model model, Logger log) {
 		this.owner = owner;
-		this.controller = controller;
 		this.model = model;
 		this.log = log;
 		this.initLog();
@@ -44,8 +40,7 @@ public class GetUserRequestCallback {
 	}
 
 	public void onSuccess(User user) {
-		log.setCurrentMethod("onSuccess");
-		log.info("begin");
+		log.enter("onSuccess");
 		
 		log.info("set current user on model");
 		this.model.setCurrentUser(user);
@@ -58,7 +53,7 @@ public class GetUserRequestCallback {
 			this.owner.fireInitialisationSuccess();
 		}
 
-		log.info("return");
+		log.leave();
 	}
 	
 	public void onFailure(Request req, Response res) {

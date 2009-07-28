@@ -7,8 +7,6 @@ import org.cggh.chassis.wwarn.prototype.client.shared.Logger;
 import org.cggh.chassis.wwarn.prototype.client.shared.RoleNames;
 import org.cggh.chassis.wwarn.prototype.client.shared.User;
 
-import com.google.gwt.core.client.GWT;
-
 
 
 class Controller {
@@ -48,17 +46,16 @@ class Controller {
 
 
 	void refreshUserDetails() { 
-		log.setCurrentMethod("refreshUserDetails"); 
-		log.info("begin");
+		log.enter("refreshUserDetails"); 
 		
 		log.info("create callback");
 		GetUserRequest r = new GetUserRequest("/user");
-		r.setCallback(new GetUserRequestCallback(this.owner, this, this.model));
+		r.setCallback(new GetUserRequestCallback(this.owner, this.model));
 		
 		log.info("send get user request");
 		r.send();
 		
-		log.info("return");
+		log.leave();
 	}
 
 	
@@ -69,8 +66,8 @@ class Controller {
 	
 
 	void setCurrentRole(String roleName, boolean waypoint) {
-		log.setCurrentMethod("setCurrentRole"); 
-		log.info("begin; roleName: "+roleName+"; waypoint: "+waypoint);
+		log.enter("setCurrentRole"); 
+		log.info("roleName: "+roleName+"; waypoint: "+waypoint);
 
 		log.info("check new role is applicable to current user");
 		
@@ -90,7 +87,7 @@ class Controller {
 			// TODO anything?
 		}
 
-		log.info("return");
+		log.leave();
 	}
 
 
