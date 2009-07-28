@@ -8,8 +8,6 @@ import org.cggh.chassis.wwarn.prototype.client.shared.Logger;
 import org.cggh.chassis.wwarn.prototype.client.shared.Perspective;
 import org.cggh.chassis.wwarn.prototype.client.shared.HMVCComponent;
 import org.cggh.chassis.wwarn.prototype.client.shared.RoleNames;
-
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.json.client.JSONValue;
 
 /**
@@ -18,7 +16,21 @@ import com.google.gwt.json.client.JSONValue;
  */
 public class CuratorPerspective extends HMVCComponent implements Perspective {
 
+	public static final String WIDGET_HOME = "home";
+	public static final String WIDGET_MYSUBMISSIONS = "mysubmissions";
+	public static final String WIDGET_ALLSUBMISSIONS = "allsubmissions";
+	public static final String WIDGET_NEWSTANDARDDATADICTIONARY = "newstandarddatadictionary";
+	public static final String WIDGET_ALLSTANDARDDATADICTIONARIES = "allstandarddatadictionaries";
+	public static final String WIDGET_NEWRELEASECRITERIA = "newreleasecriteria";
+	public static final String WIDGET_ALLRELEASECRITERIA = "allreleasecriteria";
+	public static final String WIDGET_DELEGATENEWTASK = "delegatenewtask";
+	public static final String WIDGET_MYDELEGATEDTASKS = "mydelegatedtasks";
+	
+	
 	private Logger log;
+	private Model model;
+	private Controller controller;
+	private Renderer renderer;
 
 	public CuratorPerspective() {
 		this.log = new GWTLogger();
@@ -27,23 +39,19 @@ public class CuratorPerspective extends HMVCComponent implements Perspective {
 	}
 	
 	private void init() {
-		log.setCurrentMethod("init");
-		log.info("begin");
+		log.enter("init");
 
 		log.info("init model");
-		Model model = new Model();
+		model = new Model();
 
 		log.info("init controller");
-		Controller controller = new Controller(model, this); 
+		controller = new Controller(model, this); 
 
 		log.info("init renderer");
-		Renderer renderer = new Renderer(controller);
+		renderer = new Renderer(controller);
 		model.addListener(renderer);
 		
-		log.info("complete initialisation");
-		controller.init();
-		
-		log.info("return");
+		log.leave();
 	}
 
 
@@ -64,9 +72,8 @@ public class CuratorPerspective extends HMVCComponent implements Perspective {
 		
 	}
 
-	public void setIsCurrent(boolean b) {
-		// TODO Auto-generated method stub
-		
+	public void setIsCurrentPerspective(boolean b) {
+		this.controller.setIsCurrentPerspective(b);
 	}
 
 	@Override

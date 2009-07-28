@@ -4,11 +4,11 @@
 package org.cggh.chassis.wwarn.prototype.client.submitter;
 
 import org.cggh.chassis.wwarn.prototype.client.shared.GWTLogger;
+import org.cggh.chassis.wwarn.prototype.client.shared.Logger;
 import org.cggh.chassis.wwarn.prototype.client.shared.Perspective;
 import org.cggh.chassis.wwarn.prototype.client.shared.HMVCComponent;
 import org.cggh.chassis.wwarn.prototype.client.shared.RoleNames;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.json.client.JSONValue;
 
 
@@ -18,7 +18,20 @@ import com.google.gwt.json.client.JSONValue;
  */
 public class SubmitterPerspective extends HMVCComponent implements Perspective {
 
-	private GWTLogger log;
+	public static final String WIDGET_HOME = "home";
+	public static final String WIDGET_NEWSTUDY = "newstudy";
+	public static final String WIDGET_MYSTUDIES = "mystudies";
+	public static final String WIDGET_ALLSTUDIES = "allstudies";
+	public static final String WIDGET_NEWSUBMISSION = "newsubmission";
+	public static final String WIDGET_MYSUBMISSIONS = "mysubmissions";
+	public static final String WIDGET_NEWDATADICTIONARY = "newdatadictionary";
+	public static final String WIDGET_MYDATADICTIONARIES = "mydatadictionaries";
+	public static final String WIDGET_ALLDATADICTIONARIES = "alldatadictionaries";
+
+	private Logger log;
+	private Model model;
+	private Controller controller;
+	private Renderer renderer;
 
 	public SubmitterPerspective() {
 		this.log = new GWTLogger();
@@ -27,24 +40,19 @@ public class SubmitterPerspective extends HMVCComponent implements Perspective {
 	}
 
 	private void init() {
-		log.setCurrentMethod("init");
-		log.info("begin");
+		log.enter("init");
 
 		log.info("init model");
-		Model model = new Model();
+		this.model = new Model();
 
 		log.info("init controller");
-		Controller controller = new Controller(model, this); 
+		this.controller = new Controller(model, this); 
 
 		log.info("init renderer");
-		Renderer renderer = new Renderer(controller);
+		this.renderer = new Renderer(controller);
 		model.addListener(renderer);
 		
-		log.info("complete initialisation");
-		controller.init();
-		
-		log.info("return");
-
+		log.leave();
 	}
 
 
@@ -65,9 +73,8 @@ public class SubmitterPerspective extends HMVCComponent implements Perspective {
 		
 	}
 
-	public void setIsCurrent(boolean b) {
-		// TODO Auto-generated method stub
-		
+	public void setIsCurrentPerspective(boolean b) {
+		this.controller.setIsCurrentPerspective(b);
 	}
 
 	@Override

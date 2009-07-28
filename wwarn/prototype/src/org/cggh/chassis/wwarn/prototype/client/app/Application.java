@@ -8,18 +8,11 @@ package org.cggh.chassis.wwarn.prototype.client.app;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.cggh.chassis.wwarn.prototype.client.shared.GWTLogger;
 import org.cggh.chassis.wwarn.prototype.client.shared.HMVCComponent;
-import org.cggh.chassis.wwarn.prototype.client.shared.HMVCHistoryManager;
 import org.cggh.chassis.wwarn.prototype.client.shared.Logger;
-import org.cggh.chassis.wwarn.prototype.client.shared.User;
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
-import com.google.gwt.json.client.JSONValue;
-import com.google.gwt.user.client.History;
 
 
 
@@ -69,14 +62,13 @@ public class Application extends HMVCComponent {
 	
 	
 	public void addListener(ApplicationEventListener listener) {
-		this.listeners .add(listener);
+		this.listeners.add(listener);
 	}
 
 
 
 	public void initialise() {
-		log.setCurrentMethod("initialise");
-		log.info("begin");
+		log.enter("initialise");
 
 		log.info("create model");
 		this.model = new Model();
@@ -91,7 +83,7 @@ public class Application extends HMVCComponent {
 		log.info("complete initialisation: refresh user details");
 		controller.refreshUserDetails();
 		
-		log.info("return");		
+		log.leave();		
 	}
 
 
@@ -102,8 +94,7 @@ public class Application extends HMVCComponent {
 
 
 	protected void syncState() {
-		log.setCurrentMethod("syncState");
-		log.info("begin");
+		log.enter("syncState");
 
 		if (this.stateKey == null) {
 
@@ -118,7 +109,7 @@ public class Application extends HMVCComponent {
 
 		}
 		
-		log.info("return");
+		log.leave();
 	}
 
 
@@ -137,15 +128,14 @@ public class Application extends HMVCComponent {
 
 	@Override
 	protected void syncStateKey() {
-		log.setCurrentMethod("syncStateKey");
-		log.info("begin");
+		log.enter("syncStateKey");
 		
 		log.info("sync current role: "+this.model.getCurrentRole());
 		this.stateKey = new JSONObject();
 		JSONString value = new JSONString(this.model.getCurrentRole());
 		this.stateKey.put(CURRENTROLE, value);
 		
-		log.info("return");
+		log.leave();
 	}
 
 

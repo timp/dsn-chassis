@@ -101,35 +101,33 @@ public abstract class HMVCComponent {
 
 
 	public void waypoint() {
-		log.setCurrentMethod("waypoint");
-		log.info("begin");
+		log.enter("waypoint");
 
 		this.syncStateKey();
 		this.putHistoryItem();
 		
-		log.info("return");
+		log.leave();
 	}
 	
 	
 	
 	
 	protected void putHistoryItem() {
-		log.setCurrentMethod("putHistoryItem");
-		log.info("begin");
+		log.enter("putHistoryItem");
 
 		if (this.parent == null) {
-			log.info("assume we are top, put history item");
+			log.info("at top of HMVC hierarchy, put history item");
 			JSONObject stateToken = this.getStateToken();
 			String historyToken = stateToken.toString();
 			log.info("historyToken: "+historyToken);
 			History.newItem(historyToken, false); // N.B. do not fire event!!!
 		}
 		else {
-			log.info("we are not top, bubble call to parent");
+			log.info("not top of hierarchy, bubble call to parent");
 			this.parent.putHistoryItem();
 		}
 		
-		log.info("return");
+		log.leave();
 	}
 
 	
@@ -156,8 +154,8 @@ public abstract class HMVCComponent {
 	
 	
 	public void captureHistoryEvent(JSONValue stateToken) {
-		log.setCurrentMethod("captureHistoryEvent");
-		log.info("begin; stateToken: "+stateToken);
+		log.enter("captureHistoryEvent");
+		log.info("stateToken: "+stateToken);
 		
 		this.stateKey = null;
 		
@@ -171,13 +169,13 @@ public abstract class HMVCComponent {
 		this.syncState();
 		this.propagateHistoryEventToChildren(stateToken);
 
-		log.info("return");
+		log.leave();
 	}	
 	
 	
 	protected void propagateHistoryEventToChildren(JSONValue stateToken) {
-		log.setCurrentMethod("propagateHistoryEventToChildren");
-		log.info("begin; stateToken: "+stateToken);
+		log.enter("propagateHistoryEventToChildren");
+		log.info("stateToken: "+stateToken);
 		
 		if (stateToken != null && stateToken instanceof JSONObject) {
 			JSONObject o = (JSONObject) stateToken;
@@ -190,7 +188,7 @@ public abstract class HMVCComponent {
 			}
 		}
 		
-		log.info("return");
+		log.leave();
 	}
 	
 	

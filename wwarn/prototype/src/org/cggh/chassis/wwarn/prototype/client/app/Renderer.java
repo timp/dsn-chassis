@@ -157,6 +157,7 @@ class Renderer implements ModelListener {
 	 * @@TODO doc me
 	 */
 	public void onCurrentRoleChanged(String old, String currentRole) {
+		log.enter("onCurrentRoleChanged");
 		
 		// set current role label
 		this.currentRoleLabel.setText(currentRole);
@@ -166,14 +167,17 @@ class Renderer implements ModelListener {
 			if (c instanceof Perspective) {
 				Perspective p = (Perspective) c;
 				if (currentRole.equals(p.getRoleName())) {
-					p.setIsCurrent(true);
+					log.info("set as current perspective: "+p.getRoleName());
+					p.setIsCurrentPerspective(true);
 				}
 				else {
-					p.setIsCurrent(false);
+					log.info("set as not current perspective: "+p.getRoleName());
+					p.setIsCurrentPerspective(false);
 				}
 			}
 		}
 		
+		log.leave();
 	}
 
 	
@@ -198,8 +202,7 @@ class Renderer implements ModelListener {
 	 * @param user
 	 */
 	private void updatePerspectives(User user) {
-		log.setCurrentMethod("updatePerspectives");
-		log.info("begin");
+		log.enter("updatePerspectives");
 		
 		log.info("clear current perspectives");
 		for (HMVCComponent c : this.owner.getChildren()) {
@@ -224,7 +227,7 @@ class Renderer implements ModelListener {
 		
 		// TODO other perspectives
 		
-		log.info("return");	
+		log.leave();	
 	}
 
 

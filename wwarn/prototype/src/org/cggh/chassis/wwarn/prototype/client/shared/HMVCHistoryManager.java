@@ -51,8 +51,7 @@ public class HMVCHistoryManager<I> implements ValueChangeHandler<I> {
 
 
 	public void onValueChange(ValueChangeEvent<I> event) {
-		log.setCurrentMethod("onValueChange");
-		log.info("begin");
+		log.enter("onValueChange");
 		
 		String historyToken = event.getValue().toString();
 		log.info("historyToken: "+historyToken);
@@ -69,7 +68,7 @@ public class HMVCHistoryManager<I> implements ValueChangeHandler<I> {
 		log.info("capture history event");
 		this.top.captureHistoryEvent(stateToken);
 		
-		log.info("return");
+		log.leave();
 	}
 	
 	

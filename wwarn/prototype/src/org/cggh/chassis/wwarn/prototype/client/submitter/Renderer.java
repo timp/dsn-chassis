@@ -3,9 +3,10 @@
  */
 package org.cggh.chassis.wwarn.prototype.client.submitter;
 
-import org.cggh.chassis.wwarn.prototype.client.shared.HistoryCommand;
+import org.cggh.chassis.wwarn.prototype.client.shared.GWTLogger;
+import org.cggh.chassis.wwarn.prototype.client.shared.Logger;
 
-import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.RootPanel;
 
@@ -16,9 +17,13 @@ import com.google.gwt.user.client.ui.RootPanel;
 class Renderer implements ModelListener {
 
 	private Controller controller;
+	private Logger log;
+	private MenuBar mainMenu = null;
 
 	Renderer(Controller controller) {
 		this.controller = controller;
+		this.log = new GWTLogger();
+		this.log.setCurrentClass(Renderer.class.getName());
 	}
 
 	public void onIsCurrentPerspectiveChanged(boolean wasCurrent, boolean current) {
@@ -28,29 +33,50 @@ class Renderer implements ModelListener {
 	}
 
 	private void renderMainMenu() {
+		log.enter("renderMainMenu");
+		
+		log.info("clear main menu panel");
 		RootPanel root = RootPanel.get("mainmenu");
 		root.clear();
-		/*
-		MenuBar mainMenu = new MenuBar();
-		root.add(mainMenu);
-		mainMenu.addItem("home", new HistoryCommand(SubmitterPerspective.TOKEN_HOME));
+		
+		if (this.mainMenu == null) {
+			this.createMainMenu();
+		}
+		
+		log.info("add main menu to panel");
+		root.add(this.mainMenu);
+		
+		log.leave();
+	}
+
+	private void createMainMenu() {
+		log.enter("createMainMenu");
+
+		log.info("instantiate main menu bar");
+		this.mainMenu = new MenuBar();
+		
+		mainMenu.addItem("home", new Command() {
+			public void execute() {	controller.setMainWidget(SubmitterPerspective.WIDGET_HOME); }
+		});
 		
 		MenuBar studyMenu = new MenuBar(true);
-		studyMenu.addItem("new study", new HistoryCommand(SubmitterPerspective.TOKEN_NEWSTUDY));
-		studyMenu.addItem("my studies", new HistoryCommand(SubmitterPerspective.TOKEN_MYSTUDIES));
-		studyMenu.addItem("all studies", new HistoryCommand(SubmitterPerspective.TOKEN_ALLSTUDIES));
+		studyMenu.addItem("new study", new SetMainWidgetCommand(controller, SubmitterPerspective.WIDGET_NEWSTUDY));
+		studyMenu.addItem("my studies", new SetMainWidgetCommand(controller, SubmitterPerspective.WIDGET_MYSTUDIES));	
+		studyMenu.addItem("all studies", new SetMainWidgetCommand(controller, SubmitterPerspective.WIDGET_ALLSTUDIES));
 		mainMenu.addItem("studies", studyMenu);
 		
 		MenuBar submissionMenu = new MenuBar(true);
-		submissionMenu.addItem("new submission", new HistoryCommand(SubmitterPerspective.TOKEN_NEWSUBMISSION));
-		submissionMenu.addItem("my submissions", new HistoryCommand(SubmitterPerspective.TOKEN_MYSUBMISSIONS));
+		submissionMenu.addItem("new submission", new SetMainWidgetCommand(controller, SubmitterPerspective.WIDGET_NEWSUBMISSION));
+		submissionMenu.addItem("my submissions", new SetMainWidgetCommand(controller, SubmitterPerspective.WIDGET_MYSUBMISSIONS));
 		mainMenu.addItem("submissions", submissionMenu);
 		
 		MenuBar ddMenu = new MenuBar(true);
-		ddMenu.addItem("new data dictionary", new HistoryCommand(SubmitterPerspective.TOKEN_NEWDATADICTIONARY));
-		ddMenu.addItem("my data dictionaries", new HistoryCommand(SubmitterPerspective.TOKEN_MYDATADICTIONARIES));
-		ddMenu.addItem("all data dictionaries", new HistoryCommand(SubmitterPerspective.TOKEN_ALLDATADICTIONARIES));
-		mainMenu.addItem("data dictionaries", ddMenu);*/
+		ddMenu.addItem("new data dictionary", new SetMainWidgetCommand(controller, SubmitterPerspective.WIDGET_NEWDATADICTIONARY));
+		ddMenu.addItem("my data dictionaries", new SetMainWidgetCommand(controller, SubmitterPerspective.WIDGET_MYDATADICTIONARIES));
+		ddMenu.addItem("all data dictionaries", new SetMainWidgetCommand(controller, SubmitterPerspective.WIDGET_ALLDATADICTIONARIES));
+		mainMenu.addItem("data dictionaries", ddMenu);
+	
+		log.leave();
 	}
 
 }
