@@ -53,7 +53,7 @@ public class SubmitterPerspective extends HMVCComponent implements Perspective {
 		this.controller = new Controller(model, this); 
 
 		log.info("init renderer");
-		this.renderer = new Renderer(this, controller);
+		this.renderer = new Renderer(this, controller, model);
 		model.addListener(renderer);
 		
 		log.leave();

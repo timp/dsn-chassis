@@ -50,6 +50,11 @@ class Controller {
 
 		this.model.setIsCurrentPerspective(b);
 		
+		// TODO hack for now to fire widget name event
+		if (b) {
+	 		this.model.setMainWidgetName(this.model.getMainWidgetName());
+		}
+		
 		log.leave();
 	}
 
@@ -61,6 +66,9 @@ class Controller {
 		log.info("set main widget as home");
 		this.setMainWidget(SubmitterPerspective.WIDGET_HOME, false);
 
+		log.info("sync state key, in case any parents change state");
+		this.owner.syncStateKey();
+		
 		log.leave();
 	}
 
