@@ -88,5 +88,11 @@ public class CuratorPerspective extends FractalUIComponent implements Perspectiv
 		return def;
 	}
 
+	@Override
+	public void render() {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 }

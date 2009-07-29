@@ -17,17 +17,13 @@ public class SubmitterWidgetHome extends FractalUIComponent {
 	public SubmitterWidgetHome() {
 		super();
 		this.log.setCurrentClass(SubmitterWidgetHome.class.getName());
+		this.initialise();
 	}
 	
 	
 	
-	public void setRootPanel(RootPanel root) {
-		this.rootPanel = root;
-	}
 	
-	
-	
-	public void initialise() {
+	void initialise() {
 		log.enter("initialise");
 
 		log.trace("init model");
@@ -37,12 +33,19 @@ public class SubmitterWidgetHome extends FractalUIComponent {
 		controller = new Controller(model, this); 
 
 		log.trace("init renderer");
-		renderer = new Renderer(controller, rootPanel);
+		renderer = new Renderer(controller);
 		model.addListener(renderer);
 		
 		log.leave();
 	}
 
+	
+	
+	@Override
+	public void setRootPanel(RootPanel root) {
+		super.setRootPanel(root);
+		renderer.setRootPanel(root);
+	}
 
 
 
@@ -55,10 +58,33 @@ public class SubmitterWidgetHome extends FractalUIComponent {
 		return def;
 	}
 
+	
+	
 	@Override
 	protected void syncStateKey() {
 		// TODO Auto-generated method stub
 
+	}
+
+
+
+
+	@Override
+	public void render() {
+		log.enter("render");
+		
+		if (renderer == null) {
+			log.trace("renderer is null");
+		}
+		else {
+			
+			log.trace("calling renderer.render");
+			renderer.render();
+
+		}
+		
+		
+		log.leave();
 	}
 
 }
