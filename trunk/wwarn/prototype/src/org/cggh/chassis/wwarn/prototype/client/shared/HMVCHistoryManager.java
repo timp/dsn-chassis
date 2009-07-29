@@ -3,6 +3,9 @@
  */
 package org.cggh.chassis.wwarn.prototype.client.shared;
 
+import org.cggh.chassis.gwt.lib.log.client.GWTLogger;
+import org.cggh.chassis.gwt.lib.log.client.Logger;
+
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.json.client.JSONParser;
