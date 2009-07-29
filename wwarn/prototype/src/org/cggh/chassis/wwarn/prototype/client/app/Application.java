@@ -68,7 +68,7 @@ public class Application extends HMVCComponent {
 
 
 
-	public void initialise() {
+	public Deferred initialise() {
 		log.enter("initialise");
 
 		log.trace("create model");
@@ -82,9 +82,10 @@ public class Application extends HMVCComponent {
 		model.addListener(renderer);
 		
 		log.trace("complete initialisation: refresh user details");
-		controller.refreshUserDetails();
+		Deferred def = controller.refreshUserDetails();
 		
-		log.leave();		
+		log.leave();
+		return def;
 	}
 
 
