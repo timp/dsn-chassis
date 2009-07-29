@@ -174,11 +174,11 @@ class Renderer implements ModelListener {
 			if (c instanceof Perspective) {
 				Perspective p = (Perspective) c;
 				if (currentRole.equals(p.getRoleName())) {
-					log.info("set as current perspective: "+p.getRoleName());
+					log.trace("set as current perspective: "+p.getRoleName());
 					p.setIsCurrentPerspective(true);
 				}
 				else {
-					log.info("set as not current perspective: "+p.getRoleName());
+					log.trace("set as not current perspective: "+p.getRoleName());
 					p.setIsCurrentPerspective(false);
 				}
 			}
@@ -211,24 +211,24 @@ class Renderer implements ModelListener {
 	private void updatePerspectives(User user) {
 		log.enter("updatePerspectives");
 		
-		log.info("clear current perspectives");
+		log.trace("clear current perspectives");
 		for (HMVCComponent c : this.owner.getChildren()) {
 			if (c instanceof Perspective) {
 				this.owner.removeChild(c);
 			}
 		}
 		
-		log.info("create new perspectives for user's roles");
+		log.trace("create new perspectives for user's roles");
 		
 		List<String> roles = user.getRoleNames();
 		
 		if (roles.contains(RoleNames.SUBMITTER)) {
-			log.info("add submitter perspective");
+			log.trace("add submitter perspective");
 			this.owner.addChild(new SubmitterPerspective());
 		}
 		
 		if (roles.contains(RoleNames.CURATOR)) {
-			log.info("add curator perspective");
+			log.trace("add curator perspective");
 			this.owner.addChild(new CuratorPerspective());
 		}
 		

@@ -16,7 +16,7 @@ public class GWTLogger extends LoggerBase {
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.wwarn.prototype.client.shared.Logger#log(java.lang.String)
 	 */
-	public void info(String message) {
+	public void trace(String message) {
 		GWT.log(contextualise(message), null);
 	}
 	
@@ -25,7 +25,7 @@ public class GWTLogger extends LoggerBase {
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.wwarn.prototype.client.shared.Logger#log(java.lang.String, java.lang.Throwable)
 	 */
-	public void info(String message, Throwable exception) {
+	public void trace(String message, Throwable exception) {
 		GWT.log(contextualise(message), exception);
 	}
 

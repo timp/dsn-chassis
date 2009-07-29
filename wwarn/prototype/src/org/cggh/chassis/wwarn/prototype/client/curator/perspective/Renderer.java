@@ -32,10 +32,10 @@ class Renderer implements ModelListener {
 		
 		if (to) {
 			
-			log.info("render main menu");
+			log.trace("render main menu");
 			this.renderMainMenu();
 			
-			log.info("update main panel content");
+			log.trace("update main panel content");
 			// hack for now
 			RootPanel.get("appcontent").clear();
 		}

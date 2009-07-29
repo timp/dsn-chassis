@@ -9,8 +9,8 @@ package org.cggh.chassis.wwarn.prototype.client.shared;
  */
 public interface Logger {
 
-	public void info(String message);
-	public void info(String message, Throwable exception);
+	public void trace(String message);
+	public void trace(String message, Throwable exception);
 	public void setCurrentClass(String className);
 	public void enter(String methodName);
 	public void leave();

@@ -8,6 +8,7 @@ import org.cggh.chassis.wwarn.prototype.client.shared.Logger;
 import org.cggh.chassis.wwarn.prototype.client.shared.Perspective;
 import org.cggh.chassis.wwarn.prototype.client.shared.HMVCComponent;
 import org.cggh.chassis.wwarn.prototype.client.shared.RoleNames;
+import org.cggh.chassis.wwarn.prototype.client.twisted.Deferred;
 
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
@@ -46,13 +47,13 @@ public class SubmitterPerspective extends HMVCComponent implements Perspective {
 	private void init() {
 		log.enter("init");
 
-		log.info("init model");
+		log.trace("init model");
 		this.model = new Model();
 
-		log.info("init controller");
+		log.trace("init controller");
 		this.controller = new Controller(model, this); 
 
-		log.info("init renderer");
+		log.trace("init renderer");
 		this.renderer = new Renderer(this, controller, model);
 		model.addListener(renderer);
 		
@@ -75,7 +76,7 @@ public class SubmitterPerspective extends HMVCComponent implements Perspective {
 	protected void syncStateKey() {
 		log.enter("syncStateKey");
 		
-		log.info("sync main widget: "+this.model.getMainWidgetName());
+		log.trace("sync main widget: "+this.model.getMainWidgetName());
 		this.stateKey = new JSONObject();
 		JSONString value = new JSONString(this.model.getMainWidgetName());
 		this.stateKey.put(PROP_MAINWIDGETNAME, value);
@@ -84,23 +85,27 @@ public class SubmitterPerspective extends HMVCComponent implements Perspective {
 	}
 
 	@Override
-	protected void syncState() {
+	protected Deferred syncState() {
 		log.enter("syncState");
 
 		if (this.stateKey == null) {
 
-			log.info("state key is null, override to defaults");
+			log.trace("state key is null, override to defaults");
 			this.controller.setDefault();
 
 		}
 		else {
 			
-			log.info("set state as per key");
+			log.trace("set state as per key");
 			this.syncMainWidget();
 
 		}
 		
+		Deferred def = new Deferred();
+		def.callback(null); // callback immediately
+		
 		log.leave();
+		return def;
 	}
 
 	private void syncMainWidget() {
@@ -109,7 +114,7 @@ public class SubmitterPerspective extends HMVCComponent implements Perspective {
 		if (stateKey.containsKey(PROP_MAINWIDGETNAME)) {
 			
 			JSONString widgetName = (JSONString) stateKey.get(PROP_MAINWIDGETNAME);
-			log.info("found main widget name: "+widgetName.stringValue());
+			log.trace("found main widget name: "+widgetName.stringValue());
 			this.controller.setMainWidget(widgetName.stringValue(), false);
 
 		}

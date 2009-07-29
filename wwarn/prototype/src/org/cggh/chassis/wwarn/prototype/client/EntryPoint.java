@@ -27,15 +27,15 @@ public class EntryPoint implements com.google.gwt.core.client.EntryPoint, Applic
 		log.setCurrentClass(EntryPoint.class.getName());
 		log.enter("onModuleLoad");
 
-		log.info("create application");
+		log.trace("create application");
 		Application app = new Application();
 		app.addListener(this);
 		
-		log.info("create history manager");
+		log.trace("create history manager");
 		HMVCHistoryManager<String> historyManager = new HMVCHistoryManager<String>(app);
 		History.addValueChangeHandler(historyManager);
 
-		log.info("initialise application");
+		log.trace("initialise application");
 		app.initialise();
 
 		log.leave();
@@ -48,7 +48,7 @@ public class EntryPoint implements com.google.gwt.core.client.EntryPoint, Applic
 	public void onInitialisationSuccess() {
 		log.enter("onInitialisationSuccess");
 		
-		log.info("fire current history state");
+		log.trace("fire current history state");
 		History.fireCurrentHistoryState();
 		
 		log.leave();

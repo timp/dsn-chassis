@@ -42,12 +42,12 @@ public class GetUserRequestCallback {
 	public void onSuccess(User user) {
 		log.enter("onSuccess");
 		
-		log.info("set current user on model");
+		log.trace("set current user on model");
 		this.model.setCurrentUser(user);
 		
-		log.info("check if this is being done as part of initialisation");
+		log.trace("check if this is being done as part of initialisation");
 		if (!this.model.getInitialisationComplete()) {
-			log.info("setting initialisation complete with success");
+			log.trace("setting initialisation complete with success");
 			this.model.setInitialisationComplete(true);
 			this.model.setInitialisationSuccess(true);
 			this.owner.fireInitialisationSuccess();

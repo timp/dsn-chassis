@@ -28,7 +28,7 @@ class Controller {
 	void setIsCurrentPerspective(boolean b) {
 		log.enter("setIsCurrentPerspective");
 		
-		log.info("set current perspective on model");
+		log.trace("set current perspective on model");
 		this.model.setIsCurrentPerspective(b);
 
 		log.leave();
@@ -36,7 +36,7 @@ class Controller {
 
 	void setMainWidget(String widgetName) {
 		log.enter("setMainWidget");
-		log.info("widgetName: "+widgetName);
+		log.trace("widgetName: "+widgetName);
 
 		// TODO 
 		

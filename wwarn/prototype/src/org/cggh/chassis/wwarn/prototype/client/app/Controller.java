@@ -48,11 +48,11 @@ class Controller {
 	void refreshUserDetails() { 
 		log.enter("refreshUserDetails"); 
 		
-		log.info("create callback");
+		log.trace("create callback");
 		GetUserRequest r = new GetUserRequest("/user");
 		r.setCallback(new GetUserRequestCallback(this.owner, this.model));
 		
-		log.info("send get user request");
+		log.trace("send get user request");
 		r.send();
 		
 		log.leave();
@@ -67,23 +67,23 @@ class Controller {
 
 	void setCurrentRole(String roleName, boolean waypoint) {
 		log.enter("setCurrentRole"); 
-		log.info("roleName: "+roleName+"; waypoint: "+waypoint);
+		log.trace("roleName: "+roleName+"; waypoint: "+waypoint);
 
-		log.info("check new role is applicable to current user");
+		log.trace("check new role is applicable to current user");
 		
 		if (this.model.getCurrentUser().getRoleNames().contains(roleName)) {
 
-			log.info("user has role, set current role on model");
+			log.trace("user has role, set current role on model");
 			this.model.setCurrentRole(roleName);
 
 			if (waypoint) {
-				log.info("set waypoint");
+				log.trace("set waypoint");
 				this.owner.waypoint();
 			}
 			
 		}
 		else {
-			log.info("user does not have that role");
+			log.trace("user does not have that role");
 			// TODO anything?
 		}
 

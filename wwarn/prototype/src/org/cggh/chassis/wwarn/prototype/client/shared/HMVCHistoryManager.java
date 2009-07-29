@@ -54,18 +54,18 @@ public class HMVCHistoryManager<I> implements ValueChangeHandler<I> {
 		log.enter("onValueChange");
 		
 		String historyToken = event.getValue().toString();
-		log.info("historyToken: "+historyToken);
+		log.trace("historyToken: "+historyToken);
 		
 		JSONValue stateToken = null;
 		
 		try {
-			log.info("try to parse history token");
+			log.trace("try to parse history token");
 			stateToken = JSONParser.parse(historyToken);
 		} catch (Throwable ex) {
-			log.info("exception parsing history token");
+			log.trace("exception parsing history token");
 		}
 		
-		log.info("capture history event");
+		log.trace("capture history event");
 		this.top.captureHistoryEvent(stateToken);
 		
 		log.leave();

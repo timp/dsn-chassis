@@ -8,6 +8,8 @@ import org.cggh.chassis.wwarn.prototype.client.shared.Logger;
 import org.cggh.chassis.wwarn.prototype.client.shared.Perspective;
 import org.cggh.chassis.wwarn.prototype.client.shared.HMVCComponent;
 import org.cggh.chassis.wwarn.prototype.client.shared.RoleNames;
+import org.cggh.chassis.wwarn.prototype.client.twisted.Deferred;
+
 import com.google.gwt.json.client.JSONValue;
 
 /**
@@ -41,13 +43,13 @@ public class CuratorPerspective extends HMVCComponent implements Perspective {
 	private void init() {
 		log.enter("init");
 
-		log.info("init model");
+		log.trace("init model");
 		model = new Model();
 
-		log.info("init controller");
+		log.trace("init controller");
 		controller = new Controller(model, this); 
 
-		log.info("init renderer");
+		log.trace("init renderer");
 		renderer = new Renderer(controller);
 		model.addListener(renderer);
 		
@@ -77,9 +79,13 @@ public class CuratorPerspective extends HMVCComponent implements Perspective {
 	}
 
 	@Override
-	protected void syncState() {
+	protected Deferred syncState() {
 		// TODO Auto-generated method stub
+
+		Deferred def = new Deferred();
+		def.callback(null); // callback immediately
 		
+		return def;
 	}
 
 
