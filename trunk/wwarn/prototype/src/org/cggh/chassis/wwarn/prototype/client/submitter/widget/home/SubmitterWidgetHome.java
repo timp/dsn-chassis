@@ -1,11 +1,11 @@
 package org.cggh.chassis.wwarn.prototype.client.submitter.widget.home;
 
 import org.cggh.chassis.gwt.lib.twisted.client.Deferred;
-import org.cggh.chassis.wwarn.prototype.client.shared.HMVCComponent;
+import org.cggh.chassis.gwt.lib.ui.fractal.client.FractalUIComponent;
 
 import com.google.gwt.user.client.ui.RootPanel;
 
-public class SubmitterWidgetHome extends HMVCComponent {
+public class SubmitterWidgetHome extends FractalUIComponent {
 
 	
 	

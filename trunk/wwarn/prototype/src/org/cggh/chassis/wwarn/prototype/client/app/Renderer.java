@@ -7,9 +7,9 @@ import java.util.List;
 
 import org.cggh.chassis.gwt.lib.log.client.GWTLogger;
 import org.cggh.chassis.gwt.lib.log.client.Logger;
+import org.cggh.chassis.gwt.lib.ui.fractal.client.FractalUIComponent;
 import org.cggh.chassis.wwarn.prototype.client.curator.perspective.CuratorPerspective;
 import org.cggh.chassis.wwarn.prototype.client.shared.Perspective;
-import org.cggh.chassis.wwarn.prototype.client.shared.HMVCComponent;
 import org.cggh.chassis.wwarn.prototype.client.shared.RoleNames;
 import org.cggh.chassis.wwarn.prototype.client.shared.User;
 import org.cggh.chassis.wwarn.prototype.client.submitter.perspective.SubmitterPerspective;
@@ -170,7 +170,7 @@ class Renderer implements ModelListener {
 		}
 		
 		// switch current perspective
-		for (HMVCComponent c : this.owner.getChildren()) {
+		for (FractalUIComponent c : this.owner.getChildren()) {
 			if (c instanceof Perspective) {
 				Perspective p = (Perspective) c;
 				if (currentRole.equals(p.getRoleName())) {
@@ -212,7 +212,7 @@ class Renderer implements ModelListener {
 		log.enter("updatePerspectives");
 		
 		log.trace("clear current perspectives");
-		for (HMVCComponent c : this.owner.getChildren()) {
+		for (FractalUIComponent c : this.owner.getChildren()) {
 			if (c instanceof Perspective) {
 				this.owner.removeChild(c);
 			}

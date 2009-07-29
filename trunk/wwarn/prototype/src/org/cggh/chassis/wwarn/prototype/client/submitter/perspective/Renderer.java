@@ -5,7 +5,7 @@ package org.cggh.chassis.wwarn.prototype.client.submitter.perspective;
 
 import org.cggh.chassis.gwt.lib.log.client.GWTLogger;
 import org.cggh.chassis.gwt.lib.log.client.Logger;
-import org.cggh.chassis.wwarn.prototype.client.shared.HMVCComponent;
+import org.cggh.chassis.gwt.lib.ui.fractal.client.FractalUIComponent;
 import org.cggh.chassis.wwarn.prototype.client.submitter.widget.home.SubmitterWidgetHome;
 import org.cggh.chassis.wwarn.prototype.client.submitter.widget.newstudy.SubmitterWidgetNewStudy;
 
@@ -92,7 +92,7 @@ class Renderer implements ModelListener {
 		if (this.model.getIsCurrentPerspective()) {
 
 			RootPanel appcontent = RootPanel.get(SubmitterPerspective.ELEMENTID_APPCONTENT);
-			HMVCComponent child = null;
+			FractalUIComponent child = null;
 			
 			if (to == null) {
 				// TODO remove this?

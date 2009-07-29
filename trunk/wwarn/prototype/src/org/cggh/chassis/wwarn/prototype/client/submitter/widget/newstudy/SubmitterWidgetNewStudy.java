@@ -4,7 +4,7 @@
 package org.cggh.chassis.wwarn.prototype.client.submitter.widget.newstudy;
 
 import org.cggh.chassis.gwt.lib.twisted.client.Deferred;
-import org.cggh.chassis.wwarn.prototype.client.shared.HMVCComponent;
+import org.cggh.chassis.gwt.lib.ui.fractal.client.FractalUIComponent;
 
 import com.google.gwt.user.client.ui.RootPanel;
 
@@ -12,7 +12,7 @@ import com.google.gwt.user.client.ui.RootPanel;
  * @author aliman
  *
  */
-public class SubmitterWidgetNewStudy extends HMVCComponent {
+public class SubmitterWidgetNewStudy extends FractalUIComponent {
 
 	private Model model;
 	private Controller controller;
