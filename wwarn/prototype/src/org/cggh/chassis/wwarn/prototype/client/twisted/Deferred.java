@@ -6,8 +6,8 @@ package org.cggh.chassis.wwarn.prototype.client.twisted;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import org.cggh.chassis.wwarn.prototype.client.shared.GWTLogger;
-import org.cggh.chassis.wwarn.prototype.client.shared.Logger;
+import org.cggh.chassis.gwt.lib.log.client.GWTLogger;
+import org.cggh.chassis.gwt.lib.log.client.Logger;
 
 /**
  * @author aliman

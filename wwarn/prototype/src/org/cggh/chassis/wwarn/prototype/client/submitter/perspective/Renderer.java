@@ -3,9 +3,9 @@
  */
 package org.cggh.chassis.wwarn.prototype.client.submitter.perspective;
 
-import org.cggh.chassis.wwarn.prototype.client.shared.GWTLogger;
+import org.cggh.chassis.gwt.lib.log.client.GWTLogger;
+import org.cggh.chassis.gwt.lib.log.client.Logger;
 import org.cggh.chassis.wwarn.prototype.client.shared.HMVCComponent;
-import org.cggh.chassis.wwarn.prototype.client.shared.Logger;
 import org.cggh.chassis.wwarn.prototype.client.submitter.widget.home.SubmitterWidgetHome;
 import org.cggh.chassis.wwarn.prototype.client.submitter.widget.newstudy.SubmitterWidgetNewStudy;
 
