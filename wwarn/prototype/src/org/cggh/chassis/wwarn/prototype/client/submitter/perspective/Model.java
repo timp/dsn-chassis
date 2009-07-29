@@ -10,7 +10,7 @@ import java.util.List;
  * @author aliman
  *
  */
-class Model {
+class Model implements ModelReadOnly {
 
 	private boolean isCurrentPerspective;
 	private List<ModelListener> listeners = new ArrayList<ModelListener>();
@@ -20,7 +20,7 @@ class Model {
 		this.listeners.add(l);
 	}
 
-	boolean getIsCurrentPerspective() {
+	public boolean getIsCurrentPerspective() {
 		return this.isCurrentPerspective;
 	}
 
@@ -34,11 +34,9 @@ class Model {
 
 	void setMainWidgetName(String to) {
 		String from = this.mainWidgetName;
-		if (!to.equals(from)) {
-			this.mainWidgetName = to;
-			for (ModelListener l : listeners) {
-				l.onMainWidgetChanged(from, to);
-			}
+		this.mainWidgetName = to;
+		for (ModelListener l : listeners) {
+			l.onMainWidgetChanged(from, to);
 		}
 	}
 

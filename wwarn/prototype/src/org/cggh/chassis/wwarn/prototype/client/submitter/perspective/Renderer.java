@@ -23,10 +23,12 @@ class Renderer implements ModelListener {
 	private Logger log;
 	private MenuBar mainMenu = null;
 	private SubmitterPerspective owner;
+	private ModelReadOnly model;
 
-	Renderer(SubmitterPerspective owner, Controller controller) {
+	Renderer(SubmitterPerspective owner, Controller controller, ModelReadOnly model) {
 		this.owner = owner;
 		this.controller = controller;
+		this.model = model;
 		this.log = new GWTLogger();
 		this.log.setCurrentClass(Renderer.class.getName());
 	}
@@ -86,30 +88,40 @@ class Renderer implements ModelListener {
 
 	public void onMainWidgetChanged(String from, String to) {
 
-		RootPanel appcontent = RootPanel.get(SubmitterPerspective.ELEMENTID_APPCONTENT);
-		HMVCComponent child = null;
-		
-		if (to.equals(SubmitterPerspective.WIDGET_HOME)) {
-			SubmitterWidgetHome widget = new SubmitterWidgetHome();
-			widget.setRootPanel(appcontent);
-			widget.initialise();
-			child = widget;
-		}
-		else if (to.equals(SubmitterPerspective.WIDGET_NEWSTUDY)) {
-			SubmitterWidgetNewStudy widget = new SubmitterWidgetNewStudy();
-			widget.setRootPanel(appcontent);
-			widget.initialise();
-			child = widget;
-		}
-		else {
-			// TODO other widgets
-			appcontent.clear();
-		}
+		// TODO review this!!!
+		if (this.model.getIsCurrentPerspective()) {
 
-		// hook up to owner to plug into history 
-		this.owner.clearChildren();
-		this.owner.addChild(child);
+			RootPanel appcontent = RootPanel.get(SubmitterPerspective.ELEMENTID_APPCONTENT);
+			HMVCComponent child = null;
+			
+			if (to == null) {
+				// TODO remove this?
+				appcontent.clear();
+			}
+			else if (to.equals(SubmitterPerspective.WIDGET_HOME)) {
+				SubmitterWidgetHome widget = new SubmitterWidgetHome();
+				widget.setRootPanel(appcontent);
+				widget.initialise();
+				child = widget;
+			}
+			else if (to.equals(SubmitterPerspective.WIDGET_NEWSTUDY)) {
+				SubmitterWidgetNewStudy widget = new SubmitterWidgetNewStudy();
+				widget.setRootPanel(appcontent);
+				widget.initialise();
+				child = widget;
+			}
+			else {
+				// TODO other widgets
+				appcontent.clear();
+			}
 
+			// hook up to owner to plug into history 
+			if (child != null) { // TODO review this
+				this.owner.clearChildren();
+				this.owner.addChild(child);
+			}
+
+		}
 	}
 
 }

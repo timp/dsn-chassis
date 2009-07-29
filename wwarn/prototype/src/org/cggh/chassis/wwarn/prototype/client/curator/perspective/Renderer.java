@@ -4,6 +4,9 @@
 package org.cggh.chassis.wwarn.prototype.client.curator.perspective;
 
 
+import org.cggh.chassis.wwarn.prototype.client.shared.GWTLogger;
+import org.cggh.chassis.wwarn.prototype.client.shared.Logger;
+
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.RootPanel;
 
@@ -15,16 +18,29 @@ class Renderer implements ModelListener {
 
 	private Controller controller;
 	private MenuBar mainMenu;
+	private Logger log;
 
 	Renderer(Controller controller) {
 		this.controller = controller;
+		this.log = new GWTLogger();
+		this.log.setCurrentClass(Renderer.class.getName());
 	}
 
 
 	public void onIsCurrentPerspectiveChanged(boolean from, boolean to) {
+		log.enter("onIsCurrentPerspectiveChanged");
+		
 		if (to) {
+			
+			log.info("render main menu");
 			this.renderMainMenu();
+			
+			log.info("update main panel content");
+			// hack for now
+			RootPanel.get("appcontent").clear();
 		}
+		
+		log.leave();
 	}
 
 	private void renderMainMenu() {
