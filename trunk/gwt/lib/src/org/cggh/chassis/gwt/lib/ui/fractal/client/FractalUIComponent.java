@@ -15,6 +15,7 @@ import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.ui.RootPanel;
 
 /**
  * @author aliman
@@ -35,6 +36,7 @@ public abstract class FractalUIComponent {
 	protected List<FractalUIComponent> children = new ArrayList<FractalUIComponent>();
 	protected FractalUIComponent parent = null;
 	protected JSONObject stateKey;
+	protected RootPanel rootPanel;
 
 	
 	
@@ -224,7 +226,11 @@ public abstract class FractalUIComponent {
 	protected abstract Deferred syncState();
 	protected abstract void syncStateKey();
 
+	public void setRootPanel(RootPanel root) {
+		this.rootPanel = root;
+	}
 
+	public abstract void render();
 	
 
 
