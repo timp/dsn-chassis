@@ -7,6 +7,7 @@ import org.cggh.chassis.gwt.lib.log.client.GWTLogger;
 import org.cggh.chassis.gwt.lib.log.client.Logger;
 import org.cggh.chassis.gwt.lib.ui.fractal.client.FractalUIComponent;
 import org.cggh.chassis.wwarn.prototype.client.submitter.widget.home.SubmitterWidgetHome;
+import org.cggh.chassis.wwarn.prototype.client.submitter.widget.mystudies.SubmitterWidgetMyStudies;
 import org.cggh.chassis.wwarn.prototype.client.submitter.widget.newstudy.SubmitterWidgetNewStudy;
 
 import com.google.gwt.user.client.Command;
@@ -24,6 +25,7 @@ class Renderer implements ModelListener {
 	private MenuBar mainMenu = null;
 	private SubmitterPerspective owner;
 	private ModelReadOnly model;
+	private FractalUIComponent mainWidget = null;
 
 	Renderer(SubmitterPerspective owner, Controller controller, ModelReadOnly model) {
 		this.owner = owner;
@@ -36,6 +38,7 @@ class Renderer implements ModelListener {
 	public void onIsCurrentPerspectiveChanged(boolean wasCurrent, boolean current) {
 		if (current) {
 			this.renderMainMenu();
+			this.renderMainWidget();
 		}
 	}
 
@@ -52,6 +55,20 @@ class Renderer implements ModelListener {
 		
 		log.trace("add main menu to panel");
 		root.add(this.mainMenu);
+		
+		log.leave();
+	}
+
+	private void renderMainWidget() {
+		log.enter("renderMainWidget");
+		
+		RootPanel root = RootPanel.get("appcontent");
+		
+		if (mainWidget != null) {
+			log.trace("mainWidget set root panel and render");
+			mainWidget.setRootPanel(root);
+			mainWidget.render();
+		}
 		
 		log.leave();
 	}
@@ -85,43 +102,65 @@ class Renderer implements ModelListener {
 	
 		log.leave();
 	}
-
+	
+	
+	
 	public void onMainWidgetChanged(String from, String to) {
+		log.enter("onMainWidgetChanged");
+		
+		if (mainWidget != null) {
+			this.owner.removeChild(mainWidget);
+			mainWidget  = null;
+		}
+		
+		this.createMainWidget(to);
 
-		// TODO review this!!!
-		if (this.model.getIsCurrentPerspective()) {
-
-			RootPanel appcontent = RootPanel.get(SubmitterPerspective.ELEMENTID_APPCONTENT);
-			FractalUIComponent child = null;
-			
-			if (to == null) {
-				// TODO remove this?
-				appcontent.clear();
-			}
-			else if (to.equals(SubmitterPerspective.WIDGET_HOME)) {
-				SubmitterWidgetHome widget = new SubmitterWidgetHome();
-				widget.setRootPanel(appcontent);
-				widget.initialise();
-				child = widget;
-			}
-			else if (to.equals(SubmitterPerspective.WIDGET_NEWSTUDY)) {
-				SubmitterWidgetNewStudy widget = new SubmitterWidgetNewStudy();
-				widget.setRootPanel(appcontent);
-				widget.initialise();
-				child = widget;
-			}
-			else {
-				// TODO other widgets
-				appcontent.clear();
-			}
+		if (mainWidget != null) { // TODO review this
 
 			// hook up to owner to plug into history 
-			if (child != null) { // TODO review this
-				this.owner.clearChildren();
-				this.owner.addChild(child);
-			}
+			this.owner.addChild(mainWidget);
 
+			if (this.model.getIsCurrentPerspective()) {
+				log.trace("render main widget");
+				renderMainWidget();
+			}
+		
 		}
+		
+		log.leave();
+	}
+
+	
+	
+	
+	private void createMainWidget(String widgetName) {
+		log.enter("createMainWidget");
+
+		if (widgetName == null) {
+			// do nothing
+			log.trace("widgetName is null");
+		}
+		else if (widgetName.equals(SubmitterPerspective.WIDGET_HOME)) {
+			SubmitterWidgetHome widget = new SubmitterWidgetHome();
+			mainWidget = widget;
+			log.trace("created submitter widget home");
+		}
+		else if (widgetName.equals(SubmitterPerspective.WIDGET_NEWSTUDY)) {
+			SubmitterWidgetNewStudy widget = new SubmitterWidgetNewStudy();
+			mainWidget = widget;
+			log.trace("created submitter widget new study");
+		}
+		else if (widgetName.equals(SubmitterPerspective.WIDGET_MYSTUDIES)) {
+			SubmitterWidgetMyStudies widget = new SubmitterWidgetMyStudies();
+			mainWidget = widget;
+			log.trace("created submitter widget my studies");
+		}
+		else {
+			// TODO
+			log.trace("TODO create widget: "+widgetName);
+		}
+
+		log.leave();
 	}
 
 }

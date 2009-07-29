@@ -158,6 +158,14 @@ public class Application extends FractalUIComponent {
 			l.onInitialisationSuccess();
 		}
 	}
+
+
+
+	@Override
+	public void render() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 	

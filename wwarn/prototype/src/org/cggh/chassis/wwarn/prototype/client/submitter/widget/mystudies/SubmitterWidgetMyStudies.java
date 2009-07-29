@@ -1,31 +1,35 @@
 /**
  * 
  */
-package org.cggh.chassis.wwarn.prototype.client.submitter.widget.newstudy;
+package org.cggh.chassis.wwarn.prototype.client.submitter.widget.mystudies;
 
 import org.cggh.chassis.gwt.lib.twisted.client.Deferred;
 import org.cggh.chassis.gwt.lib.ui.fractal.client.FractalUIComponent;
+
 import com.google.gwt.user.client.ui.RootPanel;
 
 /**
  * @author aliman
  *
  */
-public class SubmitterWidgetNewStudy extends FractalUIComponent {
+public class SubmitterWidgetMyStudies extends FractalUIComponent {
 
+	
 	
 	
 	private Model model;
 	private Controller controller;
 	private Renderer renderer;
-
 	
 	
-	public SubmitterWidgetNewStudy() {
+	
+	
+	public SubmitterWidgetMyStudies() {
 		super();
-		this.log.setCurrentClass(SubmitterWidgetNewStudy.class.getName());
+		this.log.setCurrentClass(SubmitterWidgetMyStudies.class.getName());
 		this.initialise();
 	}
+
 	
 	
 	
@@ -34,6 +38,7 @@ public class SubmitterWidgetNewStudy extends FractalUIComponent {
 		super.setRootPanel(root);
 		renderer.setRootPanel(root);
 	}
+	
 	
 	
 	
@@ -55,8 +60,23 @@ public class SubmitterWidgetNewStudy extends FractalUIComponent {
 
 	
 	
+
+
+
 	/* (non-Javadoc)
-	 * @see org.cggh.chassis.wwarn.prototype.client.shared.HMVCComponent#syncState()
+	 * @see org.cggh.chassis.gwt.lib.ui.fractal.client.FractalUIComponent#render()
+	 */
+	@Override
+	public void render() {
+		renderer.render();
+	}
+
+	
+	
+	
+	
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.gwt.lib.ui.fractal.client.FractalUIComponent#syncState()
 	 */
 	@Override
 	protected Deferred syncState() {
@@ -69,8 +89,10 @@ public class SubmitterWidgetNewStudy extends FractalUIComponent {
 
 	
 	
+	
+	
 	/* (non-Javadoc)
-	 * @see org.cggh.chassis.wwarn.prototype.client.shared.HMVCComponent#syncStateKey()
+	 * @see org.cggh.chassis.gwt.lib.ui.fractal.client.FractalUIComponent#syncStateKey()
 	 */
 	@Override
 	protected void syncStateKey() {
@@ -78,13 +100,8 @@ public class SubmitterWidgetNewStudy extends FractalUIComponent {
 
 	}
 
-
-
-	@Override
-	public void render() {
-		renderer.render();
-	}
-
+	
+	
 	
 	
 }

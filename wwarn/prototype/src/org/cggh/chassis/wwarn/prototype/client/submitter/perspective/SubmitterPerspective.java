@@ -122,4 +122,10 @@ public class SubmitterPerspective extends FractalUIComponent implements Perspect
 		log.leave();
 	}
 
+	@Override
+	public void render() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
