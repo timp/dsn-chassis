@@ -1,7 +1,7 @@
 /**
  * $Id$
  */
-package org.cggh.chassis.examples.atom.client;
+package examples.atom.client;
 
 import com.google.gwt.dom.client.InputElement;
 import com.google.gwt.dom.client.TextAreaElement;

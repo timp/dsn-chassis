@@ -1,7 +1,7 @@
 /**
  * $Id$
  */
-package org.cggh.chassis.examples.atom.client;
+package examples.atom.client;
 
 import org.cggh.chassis.gwt.lib.atom.client.format.AtomEntry;
 import org.cggh.chassis.gwt.lib.atom.client.protocol.PostEntryCallback;
