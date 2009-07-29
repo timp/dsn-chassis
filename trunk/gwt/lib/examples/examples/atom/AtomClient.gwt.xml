@@ -4,5 +4,5 @@
     <inherits name="com.google.gwt.user.User" />
     <inherits name="org.cggh.chassis.gwt.lib.atom.Atom" />
     <entry-point
-        class="org.cggh.chassis.examples.atom.client.Application" />
+        class="examples.atom.client.Application" />
 </module>
