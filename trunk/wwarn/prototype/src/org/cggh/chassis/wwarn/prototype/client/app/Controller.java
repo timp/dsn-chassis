@@ -4,9 +4,9 @@ package org.cggh.chassis.wwarn.prototype.client.app;
 
 import org.cggh.chassis.gwt.lib.log.client.GWTLogger;
 import org.cggh.chassis.gwt.lib.log.client.Logger;
+import org.cggh.chassis.gwt.lib.twisted.client.Deferred;
 import org.cggh.chassis.wwarn.prototype.client.shared.RoleNames;
 import org.cggh.chassis.wwarn.prototype.client.shared.User;
-import org.cggh.chassis.wwarn.prototype.client.twisted.Deferred;
 
 
 

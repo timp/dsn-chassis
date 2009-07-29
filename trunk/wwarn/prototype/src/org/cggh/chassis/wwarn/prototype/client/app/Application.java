@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.cggh.chassis.gwt.lib.log.client.Logger;
+import org.cggh.chassis.gwt.lib.twisted.client.Deferred;
 import org.cggh.chassis.wwarn.prototype.client.shared.HMVCComponent;
-import org.cggh.chassis.wwarn.prototype.client.twisted.Deferred;
 
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;

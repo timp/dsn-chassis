@@ -3,8 +3,8 @@
  */
 package org.cggh.chassis.wwarn.prototype.client.submitter.widget.newstudy;
 
+import org.cggh.chassis.gwt.lib.twisted.client.Deferred;
 import org.cggh.chassis.wwarn.prototype.client.shared.HMVCComponent;
-import org.cggh.chassis.wwarn.prototype.client.twisted.Deferred;
 
 import com.google.gwt.user.client.ui.RootPanel;
 
