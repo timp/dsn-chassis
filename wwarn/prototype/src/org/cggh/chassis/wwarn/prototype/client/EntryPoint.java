@@ -7,9 +7,9 @@ import org.cggh.chassis.gwt.lib.log.client.GWTLogger;
 import org.cggh.chassis.gwt.lib.log.client.Logger;
 import org.cggh.chassis.gwt.lib.twisted.client.Deferred;
 import org.cggh.chassis.gwt.lib.twisted.client.Function;
+import org.cggh.chassis.gwt.lib.ui.fractal.client.FractalUIHistoryManager;
 import org.cggh.chassis.wwarn.prototype.client.app.Application;
 import org.cggh.chassis.wwarn.prototype.client.app.ApplicationEventListener;
-import org.cggh.chassis.wwarn.prototype.client.shared.HMVCHistoryManager;
 
 import com.google.gwt.user.client.History;
 
@@ -34,7 +34,7 @@ public class EntryPoint implements com.google.gwt.core.client.EntryPoint, Applic
 //		app.addListener(this);
 		
 		log.trace("create history manager");
-		HMVCHistoryManager<String> historyManager = new HMVCHistoryManager<String>(app);
+		FractalUIHistoryManager<String> historyManager = new FractalUIHistoryManager<String>(app);
 		History.addValueChangeHandler(historyManager);
 
 		log.trace("initialise application");

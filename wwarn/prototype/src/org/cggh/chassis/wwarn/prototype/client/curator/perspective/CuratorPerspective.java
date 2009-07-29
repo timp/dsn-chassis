@@ -6,8 +6,8 @@ package org.cggh.chassis.wwarn.prototype.client.curator.perspective;
 import org.cggh.chassis.gwt.lib.log.client.GWTLogger;
 import org.cggh.chassis.gwt.lib.log.client.Logger;
 import org.cggh.chassis.gwt.lib.twisted.client.Deferred;
+import org.cggh.chassis.gwt.lib.ui.fractal.client.FractalUIComponent;
 import org.cggh.chassis.wwarn.prototype.client.shared.Perspective;
-import org.cggh.chassis.wwarn.prototype.client.shared.HMVCComponent;
 import org.cggh.chassis.wwarn.prototype.client.shared.RoleNames;
 
 import com.google.gwt.json.client.JSONValue;
@@ -16,7 +16,7 @@ import com.google.gwt.json.client.JSONValue;
  * @author aliman
  *
  */
-public class CuratorPerspective extends HMVCComponent implements Perspective {
+public class CuratorPerspective extends FractalUIComponent implements Perspective {
 
 	public static final String WIDGET_HOME = "home";
 	public static final String WIDGET_MYSUBMISSIONS = "mysubmissions";
