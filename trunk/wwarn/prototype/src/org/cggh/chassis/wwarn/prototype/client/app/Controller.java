@@ -6,6 +6,7 @@ import org.cggh.chassis.wwarn.prototype.client.shared.GWTLogger;
 import org.cggh.chassis.wwarn.prototype.client.shared.Logger;
 import org.cggh.chassis.wwarn.prototype.client.shared.RoleNames;
 import org.cggh.chassis.wwarn.prototype.client.shared.User;
+import org.cggh.chassis.wwarn.prototype.client.twisted.Deferred;
 
 
 
@@ -45,17 +46,21 @@ class Controller {
 
 
 
-	void refreshUserDetails() { 
+	Deferred refreshUserDetails() { 
 		log.enter("refreshUserDetails"); 
+		
+		log.trace("create deferred value");
+		Deferred def = new Deferred();
 		
 		log.trace("create callback");
 		GetUserRequest r = new GetUserRequest("/user");
-		r.setCallback(new GetUserRequestCallback(this.owner, this.model));
+		r.setCallback(new GetUserRequestCallback(this.owner, this.model, def));
 		
 		log.trace("send get user request");
 		r.send();
 		
 		log.leave();
+		return def;
 	}
 
 	

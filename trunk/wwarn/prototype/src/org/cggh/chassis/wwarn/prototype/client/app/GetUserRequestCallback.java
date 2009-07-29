@@ -6,6 +6,7 @@ package org.cggh.chassis.wwarn.prototype.client.app;
 import org.cggh.chassis.wwarn.prototype.client.shared.GWTLogger;
 import org.cggh.chassis.wwarn.prototype.client.shared.Logger;
 import org.cggh.chassis.wwarn.prototype.client.shared.User;
+import org.cggh.chassis.wwarn.prototype.client.twisted.Deferred;
 
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.Response;
@@ -20,17 +21,20 @@ public class GetUserRequestCallback {
 	private Logger log;
 	private Model model;
 	private Application owner;
+	private Deferred deferred;
 
-	GetUserRequestCallback(Application owner, Model model) {
+	GetUserRequestCallback(Application owner, Model model, Deferred def) {
 		this.owner = owner;
 		this.model = model;
+		this.deferred = def;
 		this.log = new GWTLogger();
 		this.initLog();
 	}
 
-	GetUserRequestCallback(Application owner, Model model, Logger log) {
+	GetUserRequestCallback(Application owner, Model model, Deferred def, Logger log) {
 		this.owner = owner;
 		this.model = model;
+		this.deferred = def;
 		this.log = log;
 		this.initLog();
 	}
@@ -53,6 +57,11 @@ public class GetUserRequestCallback {
 			this.owner.fireInitialisationSuccess();
 		}
 
+		if (deferred != null) {
+			log.trace("deferred callback with user");
+			deferred.callback(user);
+		}
+		
 		log.leave();
 	}
 	
