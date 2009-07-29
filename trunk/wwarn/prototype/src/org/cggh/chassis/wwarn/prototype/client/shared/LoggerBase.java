@@ -35,11 +35,11 @@ public abstract class LoggerBase implements Logger {
 	public void enter(String methodName) {
 		methodStack.push(methodName);
 		this.methodName = methodName;
-		this.info("enter");
+		this.trace("enter");
 	}
 	
 	public void leave() {
-		this.info("leave");
+		this.trace("leave");
 		methodStack.pop();
 		if (methodStack.size() > 0) {
 			methodName = methodStack.peek();

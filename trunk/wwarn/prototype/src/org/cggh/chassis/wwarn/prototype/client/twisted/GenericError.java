@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.cggh.chassis.wwarn.prototype.client.async;
+package org.cggh.chassis.wwarn.prototype.client.twisted;
 
 /**
  * @author aliman

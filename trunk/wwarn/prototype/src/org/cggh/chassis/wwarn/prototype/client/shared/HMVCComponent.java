@@ -6,6 +6,9 @@ package org.cggh.chassis.wwarn.prototype.client.shared;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.cggh.chassis.wwarn.prototype.client.twisted.Deferred;
+import org.cggh.chassis.wwarn.prototype.client.twisted.Function;
+
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONValue;
@@ -116,14 +119,14 @@ public abstract class HMVCComponent {
 		log.enter("putHistoryItem");
 
 		if (this.parent == null) {
-			log.info("at top of HMVC hierarchy, put history item");
+			log.trace("at top of HMVC hierarchy, put history item");
 			JSONObject stateToken = this.getStateToken();
 			String historyToken = stateToken.toString();
-			log.info("historyToken: "+historyToken);
+			log.trace("historyToken: "+historyToken);
 			History.newItem(historyToken, false); // N.B. do not fire event!!!
 		}
 		else {
-			log.info("not top of hierarchy, bubble call to parent");
+			log.trace("not top of hierarchy, bubble call to parent");
 			this.parent.putHistoryItem();
 		}
 		
@@ -153,9 +156,9 @@ public abstract class HMVCComponent {
 
 	
 	
-	public void captureHistoryEvent(JSONValue stateToken) {
+	public void captureHistoryEvent(final JSONValue stateToken) {
 		log.enter("captureHistoryEvent");
-		log.info("stateToken: "+stateToken);
+		log.trace("stateToken: "+stateToken);
 		
 		this.stateKey = null;
 		
@@ -166,8 +169,23 @@ public abstract class HMVCComponent {
 			}
 		}
 		
-		this.syncState();
-		this.propagateHistoryEventToChildren(stateToken);
+		// propagate state to children, which may be deferred
+		log.trace("call sync state");
+		Deferred def = this.syncState();
+		
+		log.trace("add callback to handle sync state completion");
+		final HMVCComponent self = this;
+		def.addCallback(new Function() {
+
+			public Object apply(Object in) {
+				log.trace("propagate history to children");
+				self.propagateHistoryEventToChildren(stateToken);
+				return null;
+			}
+			
+		});
+		
+		// TODO errback???
 
 		log.leave();
 	}	
@@ -175,14 +193,14 @@ public abstract class HMVCComponent {
 	
 	protected void propagateHistoryEventToChildren(JSONValue stateToken) {
 		log.enter("propagateHistoryEventToChildren");
-		log.info("stateToken: "+stateToken);
+		log.trace("stateToken: "+stateToken);
 		
 		JSONArray childTokens = null;
 		
 		if (stateToken != null && stateToken instanceof JSONObject) {
 			JSONObject o = (JSONObject) stateToken;
 			if (o.containsKey(NESTED)) {
-				log.info("found nested state");
+				log.trace("found nested state");
 				childTokens = (JSONArray) o.get(NESTED);
 			}
 		}
@@ -192,7 +210,7 @@ public abstract class HMVCComponent {
 			if (childTokens != null && i < childTokens.size()) {
 				childToken = childTokens.get(i);
 			}
-			log.info("child["+i+"]: propagating token: "+childToken);
+			log.trace("child["+i+"]: propagating token: "+childToken);
 			children.get(i).captureHistoryEvent(childToken);
 		}
 
@@ -201,7 +219,7 @@ public abstract class HMVCComponent {
 	
 	
 	
-	protected abstract void syncState();
+	protected abstract Deferred syncState();
 	protected abstract void syncStateKey();
 
 

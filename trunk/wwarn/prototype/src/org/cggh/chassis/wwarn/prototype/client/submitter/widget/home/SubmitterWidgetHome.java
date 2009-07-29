@@ -1,6 +1,7 @@
 package org.cggh.chassis.wwarn.prototype.client.submitter.widget.home;
 
 import org.cggh.chassis.wwarn.prototype.client.shared.HMVCComponent;
+import org.cggh.chassis.wwarn.prototype.client.twisted.Deferred;
 
 import com.google.gwt.user.client.ui.RootPanel;
 
@@ -29,13 +30,13 @@ public class SubmitterWidgetHome extends HMVCComponent {
 	public void initialise() {
 		log.enter("initialise");
 
-		log.info("init model");
+		log.trace("init model");
 		model = new Model();
 
-		log.info("init controller");
+		log.trace("init controller");
 		controller = new Controller(model, this); 
 
-		log.info("init renderer");
+		log.trace("init renderer");
 		renderer = new Renderer(controller, rootPanel);
 		model.addListener(renderer);
 		
@@ -46,9 +47,12 @@ public class SubmitterWidgetHome extends HMVCComponent {
 
 
 	@Override
-	protected void syncState() {
-		// TODO Auto-generated method stub
+	protected Deferred syncState() {
 
+		// TODO Auto-generated method stub
+		Deferred def = new Deferred();
+		def.callback(null); // callback immediately
+		return def;
 	}
 
 	@Override

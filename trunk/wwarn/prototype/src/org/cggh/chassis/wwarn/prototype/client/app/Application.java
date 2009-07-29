@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.cggh.chassis.wwarn.prototype.client.shared.HMVCComponent;
 import org.cggh.chassis.wwarn.prototype.client.shared.Logger;
+import org.cggh.chassis.wwarn.prototype.client.twisted.Deferred;
 
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
@@ -70,17 +71,17 @@ public class Application extends HMVCComponent {
 	public void initialise() {
 		log.enter("initialise");
 
-		log.info("create model");
+		log.trace("create model");
 		this.model = new Model();
 
-		log.info("create controller");
+		log.trace("create controller");
 		this.controller = new Controller(this, model); 
 
-		log.info("create renderer");
+		log.trace("create renderer");
 		this.renderer = new Renderer(this, controller);
 		model.addListener(renderer);
 		
-		log.info("complete initialisation: refresh user details");
+		log.trace("complete initialisation: refresh user details");
 		controller.refreshUserDetails();
 		
 		log.leave();		
@@ -93,23 +94,30 @@ public class Application extends HMVCComponent {
 
 
 
-	protected void syncState() {
+	protected Deferred syncState() {
 		log.enter("syncState");
 
 		if (this.stateKey == null) {
 
-			log.info("state key is null, override to defaults");
+			log.trace("state key is null, override to defaults");
 			this.controller.setDefault();
 
 		}
 		else {
 			
-			log.info("set state as per key");
+			log.trace("set state as per key");
 			this.syncCurrentRole();
 
 		}
 		
+		log.trace("create deferred value");
+		Deferred def = new Deferred();
+		
+		log.trace("callback deferred value immediately");
+		def.callback(null);
+		
 		log.leave();
+		return def;
 	}
 
 
@@ -120,7 +128,7 @@ public class Application extends HMVCComponent {
 		if (stateKey.containsKey(CURRENTROLE)) {
 			
 			JSONString roleName = (JSONString) stateKey.get(CURRENTROLE);
-			log.info("found current role: "+roleName.stringValue());
+			log.trace("found current role: "+roleName.stringValue());
 			this.controller.setCurrentRole(roleName.stringValue(), false);
 
 		}
@@ -134,7 +142,7 @@ public class Application extends HMVCComponent {
 	protected void syncStateKey() {
 		log.enter("syncStateKey");
 		
-		log.info("sync current role: "+this.model.getCurrentRole());
+		log.trace("sync current role: "+this.model.getCurrentRole());
 		this.stateKey = new JSONObject();
 		JSONString value = new JSONString(this.model.getCurrentRole());
 		this.stateKey.put(CURRENTROLE, value);

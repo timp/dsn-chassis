@@ -34,7 +34,7 @@ class Controller {
 	
 	void setMainWidget(String widgetName, boolean waypoint) {
 		log.enter("setMainWidget");
-		log.info("widgetName: "+widgetName);
+		log.trace("widgetName: "+widgetName);
 		
 		this.model.setMainWidgetName(widgetName);
 		
@@ -63,10 +63,10 @@ class Controller {
 	void setDefault() {
 		log.enter("setDefault");
 		
-		log.info("set main widget as home");
+		log.trace("set main widget as home");
 		this.setMainWidget(SubmitterPerspective.WIDGET_HOME, false);
 
-		log.info("sync state key, in case any parents change state");
+		log.trace("sync state key, in case any parents change state");
 		this.owner.syncStateKey();
 		
 		log.leave();

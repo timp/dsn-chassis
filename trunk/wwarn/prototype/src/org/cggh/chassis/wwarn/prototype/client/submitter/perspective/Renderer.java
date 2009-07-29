@@ -42,7 +42,7 @@ class Renderer implements ModelListener {
 	private void renderMainMenu() {
 		log.enter("renderMainMenu");
 		
-		log.info("clear main menu panel");
+		log.trace("clear main menu panel");
 		RootPanel root = RootPanel.get("mainmenu");
 		root.clear();
 		
@@ -50,7 +50,7 @@ class Renderer implements ModelListener {
 			this.createMainMenu();
 		}
 		
-		log.info("add main menu to panel");
+		log.trace("add main menu to panel");
 		root.add(this.mainMenu);
 		
 		log.leave();
@@ -59,7 +59,7 @@ class Renderer implements ModelListener {
 	private void createMainMenu() {
 		log.enter("createMainMenu");
 
-		log.info("instantiate main menu bar");
+		log.trace("instantiate main menu bar");
 		this.mainMenu = new MenuBar();
 		
 		mainMenu.addItem("home", new Command() {
