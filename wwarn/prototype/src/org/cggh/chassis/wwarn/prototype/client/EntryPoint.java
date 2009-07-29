@@ -5,11 +5,11 @@ package org.cggh.chassis.wwarn.prototype.client;
 
 import org.cggh.chassis.gwt.lib.log.client.GWTLogger;
 import org.cggh.chassis.gwt.lib.log.client.Logger;
+import org.cggh.chassis.gwt.lib.twisted.client.Deferred;
+import org.cggh.chassis.gwt.lib.twisted.client.Function;
 import org.cggh.chassis.wwarn.prototype.client.app.Application;
 import org.cggh.chassis.wwarn.prototype.client.app.ApplicationEventListener;
 import org.cggh.chassis.wwarn.prototype.client.shared.HMVCHistoryManager;
-import org.cggh.chassis.wwarn.prototype.client.twisted.Deferred;
-import org.cggh.chassis.wwarn.prototype.client.twisted.Function;
 
 import com.google.gwt.user.client.History;
 
