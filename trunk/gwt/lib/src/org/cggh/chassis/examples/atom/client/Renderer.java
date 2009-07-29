@@ -7,7 +7,6 @@ import org.cggh.chassis.gwt.lib.atom.client.format.AtomEntry;
 import org.cggh.chassis.gwt.lib.atom.client.format.AtomFeed;
 import org.cggh.chassis.gwt.lib.atom.client.format.AtomFormatException;
 import org.cggh.chassis.gwt.lib.atom.client.format.AtomLink;
-import org.cggh.chassis.gwt.play.atom.client.AtomClient.Controller;
 
 import com.google.gwt.dom.client.ButtonElement;
 import com.google.gwt.dom.client.DivElement;
@@ -72,32 +71,30 @@ public class Renderer {
 	 * @param entry
 	 * @return
 	 */
-	private String renderEntry(AtomEntry entry) {
-		public HTML renderEntry(final AtomEntry entry) {
-			String html = "<div>";
-			html += "<h2>"+entry.getTitle()+"</h2>";
-			html += "<p><strong>summary:</strong> "+entry.getSummary()+"</p>";
-			html += "<p><small><strong>id:</strong> "+entry.getId()+"<br/><strong>published:</strong> "+entry.getPublished()+"<br/><strong>updated:</strong> "+entry.getUpdated()+"</small></p>";
-			html += "<ul>";
-			for (AtomLink link : entry.getLinks()) {
-				html += "<li><small><strong>link:</strong>";
-				html += "<br/>[href] "+link.getHref();
-				html += "<br/>[rel] "+link.getRel();
-				html += "<br/>[type] "+link.getType();
-				html += "</small></li>";
-			}
-			html += "</ul></div>";
-			HTML thing = new HTML(html);
-			final Controller control = this.controller;
-			thing.addClickHandler(new ClickHandler() {
-
-				public void onClick(ClickEvent event) {
-					Window.alert("click on entry: "+entry.getId());
-					control.setEdit(entry);
-				}});
-			
-			return thing; 
+	public HTML renderEntry(final AtomEntry entry) {
+		String html = "<div>";
+		html += "<h2>"+entry.getTitle()+"</h2>";
+		html += "<p><strong>summary:</strong> "+entry.getSummary()+"</p>";
+		html += "<p><small><strong>id:</strong> "+entry.getId()+"<br/><strong>published:</strong> "+entry.getPublished()+"<br/><strong>updated:</strong> "+entry.getUpdated()+"</small></p>";
+		html += "<ul>";
+		for (AtomLink link : entry.getLinks()) {
+			html += "<li><small><strong>link:</strong>";
+			html += "<br/>[href] "+link.getHref();
+			html += "<br/>[rel] "+link.getRel();
+			html += "<br/>[type] "+link.getType();
+			html += "</small></li>";
 		}
+		html += "</ul></div>";
+		HTML thing = new HTML(html);
+		final Controller control = this.controller;
+		thing.addClickHandler(new ClickHandler() {
+
+			public void onClick(ClickEvent event) {
+				Window.alert("click on entry: "+entry.getId());
+				control.setEdit(entry);
+			}});
+		
+		return thing; 
 	}
 
 	/**

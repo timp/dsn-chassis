@@ -65,4 +65,9 @@ public class Controller {
 		// TODO
 	}
 
+	public void setEdit(AtomEntry entry) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
