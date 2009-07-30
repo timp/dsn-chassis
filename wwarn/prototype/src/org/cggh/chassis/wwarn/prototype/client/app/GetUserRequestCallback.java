@@ -20,19 +20,16 @@ public class GetUserRequestCallback {
 
 	private Logger log;
 	private Model model;
-	private Application owner;
-	private Deferred deferred;
+	private Deferred<User> deferred;
 
-	GetUserRequestCallback(Application owner, Model model, Deferred def) {
-		this.owner = owner;
+	GetUserRequestCallback(Model model, Deferred<User> def) {
 		this.model = model;
 		this.deferred = def;
 		this.log = new GWTLogger();
 		this.initLog();
 	}
 
-	GetUserRequestCallback(Application owner, Model model, Deferred def, Logger log) {
-		this.owner = owner;
+	GetUserRequestCallback(Model model, Deferred<User> def, Logger log) {
 		this.model = model;
 		this.deferred = def;
 		this.log = log;
@@ -49,14 +46,6 @@ public class GetUserRequestCallback {
 		log.trace("set current user on model");
 		this.model.setCurrentUser(user);
 		
-		log.trace("check if this is being done as part of initialisation");
-		if (!this.model.getInitialisationComplete()) {
-			log.trace("setting initialisation complete with success");
-			this.model.setInitialisationComplete(true);
-			this.model.setInitialisationSuccess(true);
-			this.owner.fireInitialisationSuccess();
-		}
-
 		if (deferred != null) {
 			log.trace("deferred callback with user");
 			deferred.callback(user);

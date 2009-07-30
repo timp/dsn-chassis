@@ -12,6 +12,7 @@ import com.google.gwt.user.client.ui.RootPanel;
  */
 class Renderer implements ModelListener {
 
+	@SuppressWarnings("unused")
 	private Controller controller;
 	private RootPanel rootPanel;
 

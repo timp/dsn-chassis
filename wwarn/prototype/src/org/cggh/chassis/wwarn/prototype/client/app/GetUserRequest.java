@@ -16,6 +16,7 @@ import org.cggh.chassis.wwarn.prototype.client.shared.User;
 class GetUserRequest {
 
 	private GetUserRequestCallback callback;
+	@SuppressWarnings("unused")
 	private String url;
 
 	GetUserRequest(String url) {

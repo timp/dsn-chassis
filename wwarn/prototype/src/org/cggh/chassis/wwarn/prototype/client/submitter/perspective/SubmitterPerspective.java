@@ -12,7 +12,6 @@ import org.cggh.chassis.wwarn.prototype.client.shared.RoleNames;
 
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
-import com.google.gwt.json.client.JSONValue;
 
 
 /**
@@ -85,7 +84,7 @@ public class SubmitterPerspective extends FractalUIComponent implements Perspect
 	}
 
 	@Override
-	protected Deferred syncState() {
+	protected Deferred<FractalUIComponent> syncState() {
 		log.enter("syncState");
 
 		if (this.stateKey == null) {
@@ -101,8 +100,8 @@ public class SubmitterPerspective extends FractalUIComponent implements Perspect
 
 		}
 		
-		Deferred def = new Deferred();
-		def.callback(null); // callback immediately
+		Deferred<FractalUIComponent> def = new Deferred<FractalUIComponent>();
+		def.callback(this); // callback immediately
 		
 		log.leave();
 		return def;

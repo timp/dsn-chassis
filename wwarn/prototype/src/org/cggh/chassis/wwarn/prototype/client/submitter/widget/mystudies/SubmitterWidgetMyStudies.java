@@ -79,11 +79,11 @@ public class SubmitterWidgetMyStudies extends FractalUIComponent {
 	 * @see org.cggh.chassis.gwt.lib.ui.fractal.client.FractalUIComponent#syncState()
 	 */
 	@Override
-	protected Deferred syncState() {
+	protected Deferred<FractalUIComponent> syncState() {
 		// TODO Auto-generated method stub
 
-		Deferred def = new Deferred();
-		def.callback(null); // callback immediately
+		Deferred<FractalUIComponent> def = new Deferred<FractalUIComponent>();
+		def.callback(this); // callback immediately
 		return def;
 	}
 
