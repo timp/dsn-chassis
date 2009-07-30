@@ -66,6 +66,7 @@ class Controller {
 		log.trace("set main widget as home");
 		this.setMainWidget(SubmitterPerspective.WIDGET_HOME, false);
 
+		// TODO review this
 		log.trace("sync state key, in case any parents change state");
 		this.owner.syncStateKey();
 		

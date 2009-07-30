@@ -4,13 +4,11 @@
 package org.cggh.chassis.wwarn.prototype.client.app;
 
 
-
-import java.util.ArrayList;
-import java.util.List;
-
 import org.cggh.chassis.gwt.lib.log.client.Logger;
 import org.cggh.chassis.gwt.lib.twisted.client.Deferred;
+import org.cggh.chassis.gwt.lib.twisted.client.Function;
 import org.cggh.chassis.gwt.lib.ui.fractal.client.FractalUIComponent;
+import org.cggh.chassis.wwarn.prototype.client.shared.User;
 
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
@@ -37,7 +35,6 @@ public class Application extends FractalUIComponent {
 	private Model model;
 	private Controller controller;
 	private Renderer renderer;
-	private List<ApplicationEventListener> listeners = new ArrayList<ApplicationEventListener>();;
 	
 	
 	
@@ -62,13 +59,8 @@ public class Application extends FractalUIComponent {
 	
 	
 	
-	public void addListener(ApplicationEventListener listener) {
-		this.listeners.add(listener);
-	}
 
-
-
-	public Deferred initialise() {
+	public Deferred<Application> initialise() {
 		log.enter("initialise");
 
 		log.trace("create model");
@@ -82,10 +74,22 @@ public class Application extends FractalUIComponent {
 		model.addListener(renderer);
 		
 		log.trace("complete initialisation: refresh user details");
-		Deferred def = controller.refreshUserDetails();
+		Deferred<User> deferredUser = controller.refreshUserDetails();
+		
+		final Deferred<Application> deferredApplication = new Deferred<Application>();
+		final Application self = this;
+		
+		log.trace("create callback chain");
+		deferredUser.addCallback(new Function<User,Object>() {
+			public Object apply(User user) {
+				log.trace("user callback, callback deferred application");
+				deferredApplication.callback(self);
+				return null;
+			}
+		});
 		
 		log.leave();
-		return def;
+		return deferredApplication;
 	}
 
 
@@ -95,7 +99,7 @@ public class Application extends FractalUIComponent {
 
 
 
-	protected Deferred syncState() {
+	protected Deferred<FractalUIComponent> syncState() {
 		log.enter("syncState");
 
 		if (this.stateKey == null) {
@@ -112,10 +116,10 @@ public class Application extends FractalUIComponent {
 		}
 		
 		log.trace("create deferred value");
-		Deferred def = new Deferred();
+		Deferred<FractalUIComponent> def = new Deferred<FractalUIComponent>();
 		
 		log.trace("callback deferred value immediately");
-		def.callback(null);
+		def.callback(this);
 		
 		log.leave();
 		return def;
@@ -151,13 +155,6 @@ public class Application extends FractalUIComponent {
 		log.leave();
 	}
 
-
-
-	void fireInitialisationSuccess() {
-		for (ApplicationEventListener l : this.listeners) {
-			l.onInitialisationSuccess();
-		}
-	}
 
 
 

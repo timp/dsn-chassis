@@ -12,7 +12,7 @@ public class SubmitterWidgetHome extends FractalUIComponent {
 	private Model model;
 	private Controller controller;
 	private Renderer renderer;
-	private RootPanel rootPanel;
+
 
 	public SubmitterWidgetHome() {
 		super();
@@ -50,11 +50,11 @@ public class SubmitterWidgetHome extends FractalUIComponent {
 
 
 	@Override
-	protected Deferred syncState() {
+	protected Deferred<FractalUIComponent> syncState() {
 
 		// TODO Auto-generated method stub
-		Deferred def = new Deferred();
-		def.callback(null); // callback immediately
+		Deferred<FractalUIComponent> def = new Deferred<FractalUIComponent>();
+		def.callback(this); // callback immediately
 		return def;
 	}
 

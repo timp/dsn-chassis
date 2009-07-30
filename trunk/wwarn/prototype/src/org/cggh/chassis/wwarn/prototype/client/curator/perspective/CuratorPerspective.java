@@ -10,7 +10,6 @@ import org.cggh.chassis.gwt.lib.ui.fractal.client.FractalUIComponent;
 import org.cggh.chassis.wwarn.prototype.client.shared.Perspective;
 import org.cggh.chassis.wwarn.prototype.client.shared.RoleNames;
 
-import com.google.gwt.json.client.JSONValue;
 
 /**
  * @author aliman
@@ -62,11 +61,6 @@ public class CuratorPerspective extends FractalUIComponent implements Perspectiv
 	}
 
 
-	@Override
-	public void captureHistoryEvent(JSONValue stateToken) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	protected void syncStateKey() {
@@ -79,11 +73,11 @@ public class CuratorPerspective extends FractalUIComponent implements Perspectiv
 	}
 
 	@Override
-	protected Deferred syncState() {
+	protected Deferred<FractalUIComponent> syncState() {
 		// TODO Auto-generated method stub
 
-		Deferred def = new Deferred();
-		def.callback(null); // callback immediately
+		Deferred<FractalUIComponent> def = new Deferred<FractalUIComponent>();
+		def.callback(this); // callback immediately
 		
 		return def;
 	}

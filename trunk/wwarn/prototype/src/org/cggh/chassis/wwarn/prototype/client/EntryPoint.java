@@ -9,7 +9,6 @@ import org.cggh.chassis.gwt.lib.twisted.client.Deferred;
 import org.cggh.chassis.gwt.lib.twisted.client.Function;
 import org.cggh.chassis.gwt.lib.ui.fractal.client.FractalUIHistoryManager;
 import org.cggh.chassis.wwarn.prototype.client.app.Application;
-import org.cggh.chassis.wwarn.prototype.client.app.ApplicationEventListener;
 
 import com.google.gwt.user.client.History;
 
@@ -17,7 +16,7 @@ import com.google.gwt.user.client.History;
  * @author aliman
  *
  */
-public class EntryPoint implements com.google.gwt.core.client.EntryPoint, ApplicationEventListener {
+public class EntryPoint implements com.google.gwt.core.client.EntryPoint {
 
 	Logger log;
 	
@@ -31,22 +30,21 @@ public class EntryPoint implements com.google.gwt.core.client.EntryPoint, Applic
 
 		log.trace("create application");
 		Application app = new Application();
-//		app.addListener(this);
 		
 		log.trace("create history manager");
 		FractalUIHistoryManager<String> historyManager = new FractalUIHistoryManager<String>(app);
 		History.addValueChangeHandler(historyManager);
 
 		log.trace("initialise application");
-		Deferred def = app.initialise();
+		Deferred<Application> def = app.initialise();
 		
 		log.trace("add callback to complete post-initialisation");
-		def.addCallback(new Function() {
+		def.addCallback(new Function<Application,Application>() {
 
-			public Object apply(Object in) {
+			public Application apply(Application in) {
 				log.trace("callback: fire current history state");
 				History.fireCurrentHistoryState();
-				return null;
+				return in;
 			}
 		
 		});
@@ -54,17 +52,5 @@ public class EntryPoint implements com.google.gwt.core.client.EntryPoint, Applic
 		log.leave();
 	}
 
-	public void onInitialisationFailure(String message) {
-		// TODO anything?
-	}
-
-	public void onInitialisationSuccess() {
-		log.enter("onInitialisationSuccess");
-		
-		log.trace("fire current history state");
-		History.fireCurrentHistoryState();
-		
-		log.leave();
-	}
 
 }

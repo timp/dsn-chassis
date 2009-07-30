@@ -46,15 +46,15 @@ class Controller {
 
 
 
-	Deferred refreshUserDetails() { 
+	Deferred<User> refreshUserDetails() { 
 		log.enter("refreshUserDetails"); 
 		
 		log.trace("create deferred value");
-		Deferred def = new Deferred();
+		Deferred<User> def = new Deferred<User>();
 		
 		log.trace("create callback");
 		GetUserRequest r = new GetUserRequest("/user");
-		r.setCallback(new GetUserRequestCallback(this.owner, this.model, def));
+		r.setCallback(new GetUserRequestCallback(this.model, def));
 		
 		log.trace("send get user request");
 		r.send();
