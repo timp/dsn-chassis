@@ -175,16 +175,16 @@ public abstract class FractalUIComponent {
 		
 		// propagate state to children, which may be deferred
 		log.trace("call sync state");
-		Deferred def = this.syncState();
+		Deferred<FractalUIComponent> def = this.syncState();
 		
 		log.trace("add callback to handle sync state completion");
-		final FractalUIComponent self = this;
-		def.addCallback(new Function() {
 
-			public Object apply(Object in) {
+		def.addCallback(new Function<FractalUIComponent,FractalUIComponent>() {
+
+			public FractalUIComponent apply(FractalUIComponent self) {
 				log.trace("propagate history to children");
 				self.propagateHistoryEventToChildren(stateToken);
-				return null;
+				return self;
 			}
 			
 		});
@@ -223,7 +223,7 @@ public abstract class FractalUIComponent {
 	
 	
 	
-	protected abstract Deferred syncState();
+	protected abstract Deferred<FractalUIComponent> syncState();
 	protected abstract void syncStateKey();
 
 	public void setRootPanel(RootPanel root) {

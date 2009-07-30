@@ -14,6 +14,10 @@ import javax.servlet.http.HttpServlet;
  */
 public class SimpleProxyServlet extends HttpServlet {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String hostname;
 	private int port;
 

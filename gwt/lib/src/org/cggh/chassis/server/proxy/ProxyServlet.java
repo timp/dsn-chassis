@@ -29,6 +29,7 @@ import org.mortbay.util.IO;
 * @author gregw
 *
 */
+@SuppressWarnings("unchecked")
 public class ProxyServlet implements Servlet
 {
      
@@ -68,7 +69,8 @@ public class ProxyServlet implements Servlet
     /* (non-Javadoc)
      * @see javax.servlet.Servlet#service(javax.servlet.ServletRequest, javax.servlet.ServletResponse)
      */
-    public void service(ServletRequest req, ServletResponse res) throws ServletException,
+    @SuppressWarnings("deprecation")
+	public void service(ServletRequest req, ServletResponse res) throws ServletException,
             IOException
     {
         HttpServletRequest request = (HttpServletRequest)req;

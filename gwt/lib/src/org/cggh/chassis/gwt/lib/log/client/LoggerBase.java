@@ -3,8 +3,6 @@
  */
 package org.cggh.chassis.gwt.lib.log.client;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Stack;
 
 /**
