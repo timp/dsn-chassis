@@ -4,6 +4,7 @@
 
 <wiki:toc/>
 
+----
 == Introduction ==
 
 Fractal UI is a architectural pattern for developing pure client-side (i.e., in-browser) applications, with supporting libraries for GWT. The design goals for Fractal UI are:
@@ -20,6 +21,7 @@ The Fractal UI pattern defines a strict internal MVC architecture for each compo
 
 In addition to it's own internal MVC architecture, each user-interface component can also have nested user-interface components (children). Those nested components have the same internal MVC architecture, and can themselves have nested components. Messages can propagate both up and down the hierarchy of nested components, providing a framework for coordination of behaviour between several components. 
 
+----
 == Fractal UI Components - Internal MVC Architecture ==
 
 The Fractal MVC pattern defines an internal architecture for each user-interface component in the application. Each component has a *controller*, a *model*, a *renderer* and a set of *event handlers*, in addition to some portion of the browser's DOM, which constitutes the component's *view*. 
@@ -388,3 +390,29 @@ If you follow the example above, it shouldn't be possible to violate these rules
 Any of these will mean you lose the ability to use the testing strategies described above.
 
 Note, however, that the renderer is responsible for instantiating event handlers, which require a reference to the controller, and hence the renderer must also keep a reference to the controller.
+
+----
+== Nesting Fractal UI Components ==
+
+TODO add examples to this section
+
+Typically, a user-interface application will involve a number of different user-interface components. The Fractal UI pattern allows each component to be designed, developed and tested in isolation. The pattern also allows a component to delegate some portion of its functionality to one or more nested components (a.k.a. children). Each component has an internal MVC architecture as described above, but that internal architecture is hidden from other components. I.e., each user-interface component is a black box w.r.t. other components.
+
+In order to enable components to communicate with their children, each component exposes a regular API, that enables a parent component to instruct its children to perform specific actions. A component's regular API will typically be some subset of its controller's API, i.e., those controller methods that it is willing to expose to other components.
+
+Each component may also expose a publish-subscribe API, that enables its parent to subscribe to and be notified of important events in its life cycle, such as a successful response to an asynchronous request.
+
+The class [http://code.google.com/p/dsn-chassis/source/browse/trunk/gwt/lib/src/org/cggh/chassis/gwt/lib/ui/fractal/client/FractalUIComponent.java FractalUIComponent] in the GWT module `org.cggh.chassis.gwt.lib.ui.fractal.Fractal` provides some simple support for nesting of GWT user-interface components. Any user-interface component can extend the `FractalUIComponent` class, which provides methods for adding, removing and clearing child (nested) components.
+
+=== Nesting and History Management in GWT ===
+
+The `FractalUIComponent` class also provides some support for managing the browser history, in the case where an application has an arbitrarily nested hierarchy of user-interface components. If each component extends the `FractalUIComponent` class, then any component at any point in the hierarchy can mark a `waypoint()` in the application's state, which will cause a new item to be added to the GWT History, encapsulating the complete state of the application at that time.
+
+Each component of your application that extends the `FractalUIComponent` class is required to maintain a *state key*, which is a piece of data that is just sufficient to enable the component to reconstruct its current state from scratch, if required to do so (e.g., when a user clicks back or forward in the browser, or bookmarks the application). A component could of course store a representation of its complete internal state in the state key, however this is typically unecessary, and may be impractical considering that the state key must be serialised into a history token, which is appended to the current URL. Often one piece of information, such as a user's current search term in the case of a search results widget, is enough to enable the component to reconstruct its state. 
+
+To enable state keys from an arbitrary hierarchy of nested components to be serialised into a single string that can act as a history token for the GWT History class, the `FractalUIComponent` class uses a JSON object to act as the component's state key. The component extending `FractalUIComponent` must implement the `syncStateKey()` method to synchronise the component's state key with whatever the component's current state is. When any component calls its own `waypoint()` method, that automatically triggers a call to the component's `syncStateKey()` method. An instruction to add a new item to the GWT History is then propagated up to the top of the component hierarchy, where all the state keys from all of the components in the hierarchy can be composed into a single history token.
+
+To respond to history events, each component extending `FractalUIComponent` must also implement the `syncState()` method. This method should attempt to reconstruct the state of the application be accessing the state key, which will have been automatically populated from the updated history token. The method should also return a deferred value, and callback the deferred when it is ready for the history event to be propagated to its children. This gives each component a chance to rearrange it's children before a history event is propagated down the hierarchy.
+
+The class [http://code.google.com/p/dsn-chassis/source/browse/trunk/gwt/lib/src/org/cggh/chassis/gwt/lib/ui/fractal/client/FractalUIHistoryManager.java FractalUIHistoryManager] is used to listen to history events. An instance of this class must be given a reference to the component that sits at the top of the nested component hierarchy. Any history events will be passed to this top component, which will automatically extract its state key and synchronise its state (via the `syncState()` method) before the event will be automatically propagated down the hierarchy to any nested components.
+
