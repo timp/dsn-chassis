@@ -7,8 +7,8 @@ package org.cggh.chassis.gwt.lib.twisted.client;
  * @author aliman
  *
  */
-public interface Function {
+public interface Function<I,O> {
 
-	public Object apply(Object in);
+	public O apply(I in);
 	
 }

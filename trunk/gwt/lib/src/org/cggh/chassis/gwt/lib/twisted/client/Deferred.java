@@ -13,7 +13,8 @@ import org.cggh.chassis.gwt.lib.log.client.Logger;
  * @author aliman
  *
  */
-public class Deferred {
+@SuppressWarnings("unchecked")
+public class Deferred<T> {
 	
 	public final int INITIAL = -1;
 	public final int SUCCESS = 0;
@@ -98,7 +99,7 @@ public class Deferred {
 
 
 	
-	public void callback(Object res) {
+	public void callback(T res) {
 		log.enter("callback");
 		
 		this._check();
@@ -129,24 +130,24 @@ public class Deferred {
 	
 
 	
-	public Deferred addBoth(Function both) {
+	public Deferred<T> addBoth(Function both) {
 		return this.addCallbacks(both, both);
 	}
 	
 	
-	
-	public Deferred addCallback(Function callback) {
+
+	public Deferred<T> addCallback(Function callback) {
 		return this.addCallbacks(callback, null);
 	}
 	
 	
-	public Deferred addErrback(Function errback) {
+	public Deferred<T> addErrback(Function errback) {
 		return this.addCallbacks(null, errback);
 	}
 	
 	
 	
-	public Deferred addCallbacks(Function callback, Function errback) {
+	public Deferred<T> addCallbacks(Function callback, Function errback) {
         if (this.chained) {
         	throw new Error("Chained Deferreds can not be re-used");
         }
@@ -163,7 +164,7 @@ public class Deferred {
 	
 	
 	
-	public Deferred setFinalizer(Function finalizer) {
+	public Deferred<T> setFinalizer(Function finalizer) {
         if (this.chained) {
         	throw new Error("Chained Deferreds can not be re-used");
         }
@@ -249,7 +250,6 @@ public class Deferred {
         log.trace("leaving; fired: "+fired);
         log.leave();
 	}
-
 
 	private class Pair {
 		
