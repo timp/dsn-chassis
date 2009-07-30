@@ -396,7 +396,7 @@ Note, however, that the renderer is responsible for instantiating event handlers
 
 TODO add examples to this section
 
-Typically, a user-interface application will involve a number of different user-interface components. The Fractal UI pattern allows each component to be designed, developed and tested in isolation. The pattern also allows a component to delegate some portion of its functionality to one or more nested components (a.k.a. children). 
+Typically, a user-interface application will involve a number of different user-interface components. The internal MVC pattern described above allows each component to be designed, developed and tested in isolation. The Fractal UI pattern also allows a component to delegate some portion of its functionality to one or more nested components (a.k.a. children). 
 
 Each user-interface component has an internal MVC architecture as described above, but that internal architecture is hidden from other components, both above (parents) and below (children) in the nested hierarchy. I.e., each user-interface component is a black box w.r.t. all other components.
 
