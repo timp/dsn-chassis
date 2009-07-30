@@ -182,7 +182,7 @@ public class TestController {
 
 It should always be possible to test all behaviour of a `Controller` class with plain JUnit test cases, with some careful design and bit of mockery. Plain JUnit test cases are preferable to GWT test cases for unit testing, because they execute much faster.
 
-==== Renderer, ModelListener ====
+==== Renderer, !ModelListener ====
 
 The next step in developing the application was to define the [http://code.google.com/p/dsn-chassis/source/browse/trunk/gwt/lib/examples/examples/calculator/client/widget/ModelListener.java ModelListener] interface and [http://code.google.com/p/dsn-chassis/source/browse/trunk/gwt/lib/examples/examples/calculator/client/widget/Renderer.java Renderer] class APIs. 
 
@@ -345,7 +345,7 @@ public class CalculatorWidget {
 }
 }}}
 
-==== EntryPoint ====
+==== !EntryPoint ====
 
 Finally, to complete the example, an [http://code.google.com/p/dsn-chassis/source/browse/trunk/gwt/lib/examples/examples/calculator/client/EntryPoint.java EntryPoint] is needed to instantiate the widget on module load.
 
