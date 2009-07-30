@@ -396,13 +396,17 @@ Note, however, that the renderer is responsible for instantiating event handlers
 
 TODO add examples to this section
 
-Typically, a user-interface application will involve a number of different user-interface components. The Fractal UI pattern allows each component to be designed, developed and tested in isolation. The pattern also allows a component to delegate some portion of its functionality to one or more nested components (a.k.a. children). Each component has an internal MVC architecture as described above, but that internal architecture is hidden from other components. I.e., each user-interface component is a black box w.r.t. other components.
+Typically, a user-interface application will involve a number of different user-interface components. The Fractal UI pattern allows each component to be designed, developed and tested in isolation. The pattern also allows a component to delegate some portion of its functionality to one or more nested components (a.k.a. children). 
 
-In order to enable components to communicate with their children, each component exposes a regular API, that enables a parent component to instruct its children to perform specific actions. A component's regular API will typically be some subset of its controller's API, i.e., those controller methods that it is willing to expose to other components.
+Each user-interface component has an internal MVC architecture as described above, but that internal architecture is hidden from other components, both above (parents) and below (children) in the nested hierarchy. I.e., each user-interface component is a black box w.r.t. all other components.
+
+In order to enable communication between parents and their children, each component exposes a regular API, that enables a parent component to instruct its children to perform specific actions. A component's regular API will typically be some subset of its controller's API, i.e., those controller methods that it is willing to expose to other components.
 
 Each component may also expose a publish-subscribe API, that enables its parent to subscribe to and be notified of important events in its life cycle, such as a successful response to an asynchronous request.
 
 The class [http://code.google.com/p/dsn-chassis/source/browse/trunk/gwt/lib/src/org/cggh/chassis/gwt/lib/ui/fractal/client/FractalUIComponent.java FractalUIComponent] in the GWT module `org.cggh.chassis.gwt.lib.ui.fractal.Fractal` provides some simple support for nesting of GWT user-interface components. Any user-interface component can extend the `FractalUIComponent` class, which provides methods for adding, removing and clearing child (nested) components.
+
+It is recommended that all communication between components be handled between parent and their children only. I.e., it is not recommended that components be allowed to communicate with their siblings, or with other components not immediately above or below them in the nested hierarchy. It is also recommended that children only communicate passively with their parents, via the publish-subscribe API. I.e., children can notify their parents of important events, but do not invoke any methods of their parents regular API. This ensures that each component has clear and sole responsibility for coordinating the behaviour of its children. I.e., it is always clear where responsibility for coordinating behaviour between multiple components lies.
 
 === Nesting and History Management in GWT ===
 
