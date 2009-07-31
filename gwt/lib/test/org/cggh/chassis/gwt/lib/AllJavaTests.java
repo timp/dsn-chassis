@@ -17,7 +17,8 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses( { 
-	org.cggh.chassis.gwt.lib.atom.client.protocol.AllJavaTests.class
+	org.cggh.chassis.gwt.lib.atom.client.protocol.AllJavaTests.class,
+	org.cggh.chassis.gwt.lib.twisted.client.TestDeferred.class
  	})
 
 public class AllJavaTests {
