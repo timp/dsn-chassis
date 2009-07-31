@@ -6,9 +6,15 @@ package org.cggh.chassis.wwarn.prototype.client.submitter.perspective;
 import org.cggh.chassis.gwt.lib.log.client.GWTLogger;
 import org.cggh.chassis.gwt.lib.log.client.Logger;
 import org.cggh.chassis.gwt.lib.ui.fractal.client.FractalUIComponent;
+import org.cggh.chassis.wwarn.prototype.client.submitter.widget.alldatadicts.SubmitterWidgetAllDataDictionaries;
+import org.cggh.chassis.wwarn.prototype.client.submitter.widget.allstudies.SubmitterWidgetAllStudies;
 import org.cggh.chassis.wwarn.prototype.client.submitter.widget.home.SubmitterWidgetHome;
+import org.cggh.chassis.wwarn.prototype.client.submitter.widget.mydatadicts.SubmitterWidgetMyDataDictionaries;
 import org.cggh.chassis.wwarn.prototype.client.submitter.widget.mystudies.SubmitterWidgetMyStudies;
+import org.cggh.chassis.wwarn.prototype.client.submitter.widget.mysubmissions.SubmitterWidgetMySubmissions;
+import org.cggh.chassis.wwarn.prototype.client.submitter.widget.newdatadict.SubmitterWidgetNewDataDictionary;
 import org.cggh.chassis.wwarn.prototype.client.submitter.widget.newstudy.SubmitterWidgetNewStudy;
+import org.cggh.chassis.wwarn.prototype.client.submitter.widget.newsubmission.SubmitterWidgetNewSubmission;
 
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.MenuBar;
@@ -155,9 +161,38 @@ class Renderer implements ModelListener {
 			mainWidget = widget;
 			log.trace("created submitter widget my studies");
 		}
+		else if (widgetName.equals(SubmitterPerspective.WIDGET_ALLSTUDIES)) {
+			SubmitterWidgetAllStudies widget = new SubmitterWidgetAllStudies();
+			mainWidget = widget;
+			log.trace("created submitter widget all studies");
+		}
+		else if (widgetName.equals(SubmitterPerspective.WIDGET_NEWSUBMISSION)) {
+			SubmitterWidgetNewSubmission widget = new SubmitterWidgetNewSubmission();
+			mainWidget = widget;
+			log.trace("created submitter widget new submission");
+		}
+		else if (widgetName.equals(SubmitterPerspective.WIDGET_MYSUBMISSIONS)) {
+			SubmitterWidgetMySubmissions widget = new SubmitterWidgetMySubmissions();
+			mainWidget = widget;
+			log.trace("created submitter widget my submissions");
+		}
+		else if (widgetName.equals(SubmitterPerspective.WIDGET_NEWDATADICTIONARY)) {
+			SubmitterWidgetNewDataDictionary widget = new SubmitterWidgetNewDataDictionary();
+			mainWidget = widget;
+			log.trace("created submitter widget new data dictionary");
+		}
+		else if (widgetName.equals(SubmitterPerspective.WIDGET_MYDATADICTIONARIES)) {
+			SubmitterWidgetMyDataDictionaries widget = new SubmitterWidgetMyDataDictionaries();
+			mainWidget = widget;
+			log.trace("created submitter widget my data dictionaries");
+		}
+		else if (widgetName.equals(SubmitterPerspective.WIDGET_ALLDATADICTIONARIES)) {
+			SubmitterWidgetAllDataDictionaries widget = new SubmitterWidgetAllDataDictionaries();
+			mainWidget = widget;
+			log.trace("created submitter widget all data dictionaries");
+		}
 		else {
-			// TODO
-			log.trace("TODO create widget: "+widgetName);
+			log.trace("unexpected widget name: "+widgetName);
 		}
 
 		log.leave();
