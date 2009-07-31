@@ -16,9 +16,9 @@ import org.cggh.chassis.gwt.lib.log.client.Logger;
 @SuppressWarnings("unchecked")
 public class Deferred<T> {
 	
-	public final int INITIAL = -1;
-	public final int SUCCESS = 0;
-	public final int ERROR = 1;
+	public static final int INITIAL = -1;
+	public static final int SUCCESS = 0;
+	public static final int ERROR = 1;
 	
 	private int fired = INITIAL;
 	private Object[] results = new Object[2];
@@ -51,6 +51,22 @@ public class Deferred<T> {
 	
 	
 	
+	public Deferred(Logger log) {
+		this.log = log;
+		this.log.setCurrentClass(Deferred.class.getName());
+	}
+
+
+	
+	public int getStatus() {
+		return this.fired;
+	}
+	
+	public int getPaused() {
+		return this.paused;
+	}
+	
+
 	public void cancel() {
         if (this.fired == INITIAL) {
         	if (this.canceller != null) {
@@ -75,8 +91,11 @@ public class Deferred<T> {
 		log.enter("_resback");
 		
 		this.fired = (res instanceof Throwable) ? ERROR : SUCCESS;
+		log.trace("set fired to: "+this.fired);
+		
 		this.results[this.fired] = res;
 		if (this.paused == 0) {
+			log.trace("firing callback chain");
 			this._fire();
 		}
 		
@@ -101,6 +120,7 @@ public class Deferred<T> {
 	
 	public void callback(T res) {
 		log.enter("callback");
+		log.trace("result: "+res);
 		
 		this._check();
 		
@@ -141,7 +161,7 @@ public class Deferred<T> {
 	}
 	
 	
-	public Deferred<T> addErrback(Function errback) {
+	public Deferred<T> addErrback(Function<? extends Throwable,? extends Throwable> errback) {
 		return this.addCallbacks(null, errback);
 	}
 	
@@ -197,45 +217,72 @@ public class Deferred<T> {
 		Function cb = null;
 		final Deferred self = this;
 		Deferred defres = null;
-		if (res instanceof Deferred) {
-			defres = (Deferred) res;
-		}
 
 		log.trace("iterate through queue");
-		while (chain.size() > 0 && this.paused == 0 ) {
+		for (int i=0; chain.size() > 0 && this.paused == 0; i++) {
 			
+			log.trace("iteration: "+i);
+			log.trace("result: "+res+"; fired: "+fired);
+
 			log.trace("pick pair of head of queue");
 			Pair pair = chain.poll();
-			Function f = (this.fired == SUCCESS)? pair.getCallback() : pair.getErrback();
+			
+			Function f = (fired == SUCCESS)? pair.getCallback() : pair.getErrback();
+
 			if (f == null) {
 				log.trace("function to apply is null, continuing");
 				continue;
 			}
 			
             try {
+            	
+            	log.trace("apply function");
             	res = f.apply(res);
-            	fired = ((res instanceof Throwable) ? 1 : 0);
-            	if (defres != null) {
+            	
+            	//
+            	// N.B. this line means that, if we are in ERROR state, and an 
+            	// errback returns something other than a Throwable, then the 
+            	// fired status will go back to SUCCESS.
+            	// I.e. all errback functions should have schema <Throwable,Throwable>. 
+            	//
+            	// The alternative would be to switch from SUCCESS to ERROR if
+            	// the result is a Throwable, but not to allow switching back.
+            	//
+            	fired = ((res instanceof Throwable) ? ERROR : SUCCESS); 
+
+            	// handle a deferred result
+    			if (res instanceof Deferred) {
+            		log.trace("handle a deferred result");
+    				defres = (Deferred) res;
             		cb = new Function() {
             			public Object apply(Object in) {
+            				log.enter("anonymous chain Function :: apply");
+            				log.trace("decrement paused");
                 			self.paused--;
+                			log.trace("chain result");
                 			self._resback(in);
+                			log.leave();
                 			return null;
             			}
             		};
             		this.paused++;
-            	}
+    			}
+
             } catch (Throwable err) {
-            	fired = 1;
+            	log.trace("caught throwable from function: "+err.getLocalizedMessage());
+            	fired = ERROR;
             	res = err;
             }	
             
 		}
 		
+		log.trace("left iteration loop");
+		
         this.fired = fired;
         this.results[fired] = res;
         
         if (this.chain.size() == 0 && this.paused == 0 && this.finalizer != null) {
+        	log.trace("finalizing");
         	this.finalized = true;
         	this.finalizer.apply(res);
         }
@@ -243,11 +290,12 @@ public class Deferred<T> {
         if (cb != null && this.paused == 1) {
         	// this is for "tail recursion" in case the dependent deferred
         	// is already fired
+        	log.trace("add callback to deferred result to chain together");
         	defres.addBoth(cb);
         	defres.chained = true;
         }
         
-        log.trace("leaving; fired: "+fired);
+        log.trace("leaving; fired: "+fired+"; paused: "+paused);
         log.leave();
 	}
 
