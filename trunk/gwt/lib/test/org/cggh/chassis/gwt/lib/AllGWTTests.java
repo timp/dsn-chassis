@@ -22,6 +22,7 @@ public class AllGWTTests extends GWTTestSuite {
 		suite.addTest(org.cggh.chassis.gwt.lib.atom.client.format.AllGWTTests.suite()); 
 		suite.addTest(org.cggh.chassis.gwt.lib.atom.client.protocol.AllGWTTests.suite()); 
 		suite.addTest(org.cggh.chassis.gwt.lib.study.client.format.AllGWTTests.suite()); 
+		suite.addTestSuite(org.cggh.chassis.gwt.lib.twisted.client.GWTTestDeferred.class);
 		return suite;
 	}
 
