@@ -6,7 +6,6 @@ package org.cggh.chassis.wwarn.prototype.client.submitter.perspective;
 import org.cggh.chassis.gwt.lib.log.client.GWTLogger;
 import org.cggh.chassis.gwt.lib.log.client.Logger;
 import org.cggh.chassis.gwt.lib.ui.fractal.client.FractalUIComponent;
-import org.cggh.chassis.wwarn.prototype.client.base.perspective.BasePerspective;
 import org.cggh.chassis.wwarn.prototype.client.base.perspective.BasePerspectiveController;
 import org.cggh.chassis.wwarn.prototype.client.base.perspective.BasePerspectiveModel;
 import org.cggh.chassis.wwarn.prototype.client.base.perspective.BasePerspectiveModelListener;
@@ -21,6 +20,7 @@ import org.cggh.chassis.wwarn.prototype.client.submitter.widget.mysubmissions.Su
 import org.cggh.chassis.wwarn.prototype.client.submitter.widget.newdatadict.SubmitterWidgetNewDataDictionary;
 import org.cggh.chassis.wwarn.prototype.client.submitter.widget.newstudy.SubmitterWidgetNewStudy;
 import org.cggh.chassis.wwarn.prototype.client.submitter.widget.newsubmission.SubmitterWidgetNewSubmission;
+import org.cggh.chassis.wwarn.prototype.client.widget.WidgetFactory;
 
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.MenuBar;
@@ -92,24 +92,24 @@ class Renderer implements BasePerspectiveModelListener {
 		this.mainMenu = new MenuBar();
 		
 		mainMenu.addItem("home", new Command() {
-			public void execute() {	controller.setMainWidget(BasePerspective.WIDGET_HOME); }
+			public void execute() {	controller.setMainWidget(SubmitterWidgetHome.class.getName()); }
 		});
 		
 		MenuBar studyMenu = new MenuBar(true);
-		studyMenu.addItem("new study", new SetMainWidgetCommand(controller, SubmitterPerspective.WIDGET_NEWSTUDY));
-		studyMenu.addItem("my studies", new SetMainWidgetCommand(controller, SubmitterPerspective.WIDGET_MYSTUDIES));	
-		studyMenu.addItem("all studies", new SetMainWidgetCommand(controller, SubmitterPerspective.WIDGET_ALLSTUDIES));
+		studyMenu.addItem("new study", new SetMainWidgetCommand(controller, SubmitterWidgetNewStudy.class.getName()));
+		studyMenu.addItem("my studies", new SetMainWidgetCommand(controller, SubmitterWidgetMyStudies.class.getName()));	
+		studyMenu.addItem("all studies", new SetMainWidgetCommand(controller, SubmitterWidgetAllStudies.class.getName()));
 		mainMenu.addItem("studies", studyMenu);
 		
 		MenuBar submissionMenu = new MenuBar(true);
-		submissionMenu.addItem("new submission", new SetMainWidgetCommand(controller, SubmitterPerspective.WIDGET_NEWSUBMISSION));
-		submissionMenu.addItem("my submissions", new SetMainWidgetCommand(controller, SubmitterPerspective.WIDGET_MYSUBMISSIONS));
+		submissionMenu.addItem("new submission", new SetMainWidgetCommand(controller, SubmitterWidgetNewSubmission.class.getName()));
+		submissionMenu.addItem("my submissions", new SetMainWidgetCommand(controller, SubmitterWidgetMySubmissions.class.getName()));
 		mainMenu.addItem("submissions", submissionMenu);
 		
 		MenuBar ddMenu = new MenuBar(true);
-		ddMenu.addItem("new data dictionary", new SetMainWidgetCommand(controller, SubmitterPerspective.WIDGET_NEWDATADICTIONARY));
-		ddMenu.addItem("my data dictionaries", new SetMainWidgetCommand(controller, SubmitterPerspective.WIDGET_MYDATADICTIONARIES));
-		ddMenu.addItem("all data dictionaries", new SetMainWidgetCommand(controller, SubmitterPerspective.WIDGET_ALLDATADICTIONARIES));
+		ddMenu.addItem("new data dictionary", new SetMainWidgetCommand(controller, SubmitterWidgetNewDataDictionary.class.getName()));
+		ddMenu.addItem("my data dictionaries", new SetMainWidgetCommand(controller, SubmitterWidgetMyDataDictionaries.class.getName()));
+		ddMenu.addItem("all data dictionaries", new SetMainWidgetCommand(controller, SubmitterWidgetAllDataDictionaries.class.getName()));
 		mainMenu.addItem("data dictionaries", ddMenu);
 	
 		log.leave();
@@ -125,7 +125,7 @@ class Renderer implements BasePerspectiveModelListener {
 			mainWidget  = null;
 		}
 		
-		this.createMainWidget(to);
+		mainWidget = WidgetFactory.create(to, null);
 
 		if (mainWidget != null) { // TODO review this
 
@@ -143,65 +143,5 @@ class Renderer implements BasePerspectiveModelListener {
 	}
 
 	
-	
-	
-	private void createMainWidget(String widgetName) {
-		log.enter("createMainWidget");
-
-		if (widgetName == null) {
-			// do nothing
-			log.trace("widgetName is null");
-		}
-		else if (widgetName.equals(SubmitterPerspective.WIDGET_HOME)) {
-			SubmitterWidgetHome widget = new SubmitterWidgetHome();
-			mainWidget = widget;
-			log.trace("created submitter widget home");
-		}
-		else if (widgetName.equals(SubmitterPerspective.WIDGET_NEWSTUDY)) {
-			SubmitterWidgetNewStudy widget = new SubmitterWidgetNewStudy();
-			mainWidget = widget;
-			log.trace("created submitter widget new study");
-		}
-		else if (widgetName.equals(SubmitterPerspective.WIDGET_MYSTUDIES)) {
-			SubmitterWidgetMyStudies widget = new SubmitterWidgetMyStudies();
-			mainWidget = widget;
-			log.trace("created submitter widget my studies");
-		}
-		else if (widgetName.equals(SubmitterPerspective.WIDGET_ALLSTUDIES)) {
-			SubmitterWidgetAllStudies widget = new SubmitterWidgetAllStudies();
-			mainWidget = widget;
-			log.trace("created submitter widget all studies");
-		}
-		else if (widgetName.equals(SubmitterPerspective.WIDGET_NEWSUBMISSION)) {
-			SubmitterWidgetNewSubmission widget = new SubmitterWidgetNewSubmission();
-			mainWidget = widget;
-			log.trace("created submitter widget new submission");
-		}
-		else if (widgetName.equals(SubmitterPerspective.WIDGET_MYSUBMISSIONS)) {
-			SubmitterWidgetMySubmissions widget = new SubmitterWidgetMySubmissions();
-			mainWidget = widget;
-			log.trace("created submitter widget my submissions");
-		}
-		else if (widgetName.equals(SubmitterPerspective.WIDGET_NEWDATADICTIONARY)) {
-			SubmitterWidgetNewDataDictionary widget = new SubmitterWidgetNewDataDictionary();
-			mainWidget = widget;
-			log.trace("created submitter widget new data dictionary");
-		}
-		else if (widgetName.equals(SubmitterPerspective.WIDGET_MYDATADICTIONARIES)) {
-			SubmitterWidgetMyDataDictionaries widget = new SubmitterWidgetMyDataDictionaries();
-			mainWidget = widget;
-			log.trace("created submitter widget my data dictionaries");
-		}
-		else if (widgetName.equals(SubmitterPerspective.WIDGET_ALLDATADICTIONARIES)) {
-			SubmitterWidgetAllDataDictionaries widget = new SubmitterWidgetAllDataDictionaries();
-			mainWidget = widget;
-			log.trace("created submitter widget all data dictionaries");
-		}
-		else {
-			log.trace("unexpected widget name: "+widgetName);
-		}
-
-		log.leave();
-	}
 
 }

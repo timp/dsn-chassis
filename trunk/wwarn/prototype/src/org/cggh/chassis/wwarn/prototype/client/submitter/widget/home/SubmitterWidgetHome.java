@@ -1,12 +1,24 @@
 package org.cggh.chassis.wwarn.prototype.client.submitter.widget.home;
 
 import org.cggh.chassis.gwt.lib.twisted.client.Deferred;
+import org.cggh.chassis.gwt.lib.twisted.client.Function;
 import org.cggh.chassis.gwt.lib.ui.fractal.client.FractalUIComponent;
+import org.cggh.chassis.wwarn.prototype.client.curator.widget.allreleasecriteria.CuratorWidgetAllReleaseCriteria;
 
 import com.google.gwt.user.client.ui.RootPanel;
 
 public class SubmitterWidgetHome extends FractalUIComponent {
 
+	
+	
+	public static final Function<Object[],FractalUIComponent> creator = new Function<Object[],FractalUIComponent>() {
+		
+		public FractalUIComponent apply(Object[] args) {
+			return new SubmitterWidgetHome();
+		}
+		
+	};
+	
 	
 	
 	private Model model;
