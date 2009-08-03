@@ -18,13 +18,13 @@ public class CoordinatorPerspective extends BasePerspective {
 
 
 	
-	public static final String WIDGET_PENDINGSUBMISSIONREQUESTS = "pendingrequests";
-	public static final String WIDGET_APPROVEDSUBMISSIONREQUESTS = "approvedrequests";
-	public static final String WIDGET_DENIEDSUBMISSIONREQUESTS = "deniedrequests";
-	public static final String WIDGET_ALLSUBMISSIONREQUESTS = "allrequests";
-	public static final String WIDGET_SUBMISSIONSUNDERCURATION = "submissionsundercuration";
-	public static final String WIDGET_SUBMISSIONSAPPROVEDFORRELEASE = "submissionsapprovedforrelease";
-	public static final String WIDGET_ALLSUBMISSIONS = "allsubmissions";
+	public static final String WIDGET_PENDINGSUBMISSIONREQUESTS = "coordinator-pendingrequests";
+	public static final String WIDGET_APPROVEDSUBMISSIONREQUESTS = "coordinator-approvedrequests";
+	public static final String WIDGET_DENIEDSUBMISSIONREQUESTS = "coordinator-deniedrequests";
+	public static final String WIDGET_ALLSUBMISSIONREQUESTS = "coordinator-allrequests";
+	public static final String WIDGET_SUBMISSIONSUNDERCURATION = "coordinator-submissionsundercuration";
+	public static final String WIDGET_SUBMISSIONSAPPROVEDFORRELEASE = "coordinator-submissionsapprovedforrelease";
+	public static final String WIDGET_ALLSUBMISSIONS = "coordinator-allsubmissions";
 
 	
 	

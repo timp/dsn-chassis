@@ -18,14 +18,14 @@ import org.cggh.chassis.wwarn.prototype.client.user.RoleNames;
  */
 public class SubmitterPerspective extends BasePerspective {
 
-	public static final String WIDGET_NEWSTUDY = "newstudy";
-	public static final String WIDGET_MYSTUDIES = "mystudies";
-	public static final String WIDGET_ALLSTUDIES = "allstudies";
-	public static final String WIDGET_NEWSUBMISSION = "newsubmission";
-	public static final String WIDGET_MYSUBMISSIONS = "mysubmissions";
-	public static final String WIDGET_NEWDATADICTIONARY = "newdatadictionary";
-	public static final String WIDGET_MYDATADICTIONARIES = "mydatadictionaries";
-	public static final String WIDGET_ALLDATADICTIONARIES = "alldatadictionaries";
+	public static final String WIDGET_NEWSTUDY = "submitter-newstudy";
+	public static final String WIDGET_MYSTUDIES = "submitter-mystudies";
+	public static final String WIDGET_ALLSTUDIES = "submitter-allstudies";
+	public static final String WIDGET_NEWSUBMISSION = "submitter-newsubmission";
+	public static final String WIDGET_MYSUBMISSIONS = "submitter-mysubmissions";
+	public static final String WIDGET_NEWDATADICTIONARY = "submitter-newdatadictionary";
+	public static final String WIDGET_MYDATADICTIONARIES = "submitter-mydatadictionaries";
+	public static final String WIDGET_ALLDATADICTIONARIES = "submitter-alldatadictionaries";
 	public static final String ELEMENTID_APPCONTENT = "appcontent";
 
 
