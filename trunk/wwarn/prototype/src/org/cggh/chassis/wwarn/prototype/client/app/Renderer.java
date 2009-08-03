@@ -8,11 +8,12 @@ import java.util.List;
 import org.cggh.chassis.gwt.lib.log.client.GWTLogger;
 import org.cggh.chassis.gwt.lib.log.client.Logger;
 import org.cggh.chassis.gwt.lib.ui.fractal.client.FractalUIComponent;
+import org.cggh.chassis.wwarn.prototype.client.base.perspective.Perspective;
 import org.cggh.chassis.wwarn.prototype.client.curator.perspective.CuratorPerspective;
-import org.cggh.chassis.wwarn.prototype.client.shared.Perspective;
-import org.cggh.chassis.wwarn.prototype.client.shared.RoleNames;
-import org.cggh.chassis.wwarn.prototype.client.shared.User;
+import org.cggh.chassis.wwarn.prototype.client.gatekeeper.perspective.GatekeeperPerspective;
 import org.cggh.chassis.wwarn.prototype.client.submitter.perspective.SubmitterPerspective;
+import org.cggh.chassis.wwarn.prototype.client.user.RoleNames;
+import org.cggh.chassis.wwarn.prototype.client.user.User;
 
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
@@ -230,6 +231,11 @@ class Renderer implements ModelListener {
 		if (roles.contains(RoleNames.CURATOR)) {
 			log.trace("add curator perspective");
 			this.owner.addChild(new CuratorPerspective());
+		}
+		
+		if (roles.contains(RoleNames.GATEKEEPER)) {
+			log.trace("add gatekeeper perspective");
+			this.owner.addChild(new GatekeeperPerspective());
 		}
 		
 		// TODO other perspectives

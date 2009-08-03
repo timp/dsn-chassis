@@ -7,7 +7,6 @@ import org.cggh.chassis.gwt.lib.log.client.GWTLogger;
 import org.cggh.chassis.gwt.lib.log.client.Logger;
 import org.cggh.chassis.gwt.lib.twisted.client.Deferred;
 import org.cggh.chassis.gwt.lib.ui.fractal.client.FractalUIComponent;
-import org.cggh.chassis.wwarn.prototype.client.shared.Perspective;
 
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;

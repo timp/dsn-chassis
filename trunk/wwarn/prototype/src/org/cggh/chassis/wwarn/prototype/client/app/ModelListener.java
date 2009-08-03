@@ -3,7 +3,7 @@
  */
 package org.cggh.chassis.wwarn.prototype.client.app;
 
-import org.cggh.chassis.wwarn.prototype.client.shared.User;
+import org.cggh.chassis.wwarn.prototype.client.user.User;
 
 /**
  * @author aliman

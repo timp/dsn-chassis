@@ -5,8 +5,10 @@ package org.cggh.chassis.wwarn.prototype.client.app;
 import org.cggh.chassis.gwt.lib.log.client.GWTLogger;
 import org.cggh.chassis.gwt.lib.log.client.Logger;
 import org.cggh.chassis.gwt.lib.twisted.client.Deferred;
-import org.cggh.chassis.wwarn.prototype.client.shared.RoleNames;
-import org.cggh.chassis.wwarn.prototype.client.shared.User;
+import org.cggh.chassis.gwt.lib.twisted.client.Function;
+import org.cggh.chassis.wwarn.prototype.client.user.RoleNames;
+import org.cggh.chassis.wwarn.prototype.client.user.User;
+import org.cggh.chassis.wwarn.prototype.client.user.UserService;
 
 
 
@@ -49,15 +51,22 @@ class Controller {
 	Deferred<User> refreshUserDetails() { 
 		log.enter("refreshUserDetails"); 
 		
-		log.trace("create deferred value");
-		Deferred<User> def = new Deferred<User>();
+		log.trace("create user service");
+		UserService service = new UserService("/user"); // TODO configurable endpoint URL
 		
-		log.trace("create callback");
-		GetUserRequest r = new GetUserRequest("/user");
-		r.setCallback(new GetUserRequestCallback(this.model, def));
+		log.trace("request user details");
+		Deferred<User> def = service.getAuthenticatedUser();
 		
-		log.trace("send get user request");
-		r.send();
+		log.trace("add callback for user details");
+		def.addCallback(new Function<User,User>() {
+			public User apply(User user) {
+				log.enter("[anonymous Function<User,User>] :: apply");
+				log.trace("set current user on model");
+				model.setCurrentUser(user);
+				log.leave();
+				return user;
+			}
+		});
 		
 		log.leave();
 		return def;
@@ -84,6 +93,10 @@ class Controller {
 			if (waypoint) {
 				log.trace("set waypoint");
 				this.owner.waypoint();
+			}
+			else {
+				log.trace("silently sync state key");
+				this.owner.syncStateKey();
 			}
 			
 		}
