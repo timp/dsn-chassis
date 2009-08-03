@@ -1,13 +1,13 @@
 /**
  * 
  */
-package org.cggh.chassis.wwarn.prototype.client.curator.perspective;
+package org.cggh.chassis.wwarn.prototype.client.base.perspective;
 
 /**
  * @author aliman
  *
  */
-interface ModelListener {
+public interface BasePerspectiveModelListener {
 
 	void onIsCurrentPerspectiveChanged(boolean from, boolean to);
 

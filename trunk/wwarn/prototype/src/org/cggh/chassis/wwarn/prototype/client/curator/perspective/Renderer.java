@@ -7,6 +7,12 @@ package org.cggh.chassis.wwarn.prototype.client.curator.perspective;
 import org.cggh.chassis.gwt.lib.log.client.GWTLogger;
 import org.cggh.chassis.gwt.lib.log.client.Logger;
 import org.cggh.chassis.gwt.lib.ui.fractal.client.FractalUIComponent;
+import org.cggh.chassis.wwarn.prototype.client.base.perspective.BasePerspective;
+import org.cggh.chassis.wwarn.prototype.client.base.perspective.BasePerspectiveController;
+import org.cggh.chassis.wwarn.prototype.client.base.perspective.BasePerspectiveModel;
+import org.cggh.chassis.wwarn.prototype.client.base.perspective.BasePerspectiveModelListener;
+import org.cggh.chassis.wwarn.prototype.client.base.perspective.BasePerspectiveModelReadOnly;
+import org.cggh.chassis.wwarn.prototype.client.base.perspective.SetMainWidgetCommand;
 import org.cggh.chassis.wwarn.prototype.client.curator.widget.allreleasecriteria.CuratorWidgetAllReleaseCriteria;
 import org.cggh.chassis.wwarn.prototype.client.curator.widget.allstdatadicts.CuratorWidgetAllStandardDataDictionaries;
 import org.cggh.chassis.wwarn.prototype.client.curator.widget.allsubmissions.CuratorWidgetAllSubmissions;
@@ -34,16 +40,16 @@ import com.google.gwt.user.client.ui.RootPanel;
  * @author aliman
  *
  */
-class Renderer implements ModelListener {
+class Renderer implements BasePerspectiveModelListener {
 
-	private Controller controller;
+	private BasePerspectiveController controller;
 	private MenuBar mainMenu;
 	private Logger log;
 	private FractalUIComponent mainWidget = null;
 	private CuratorPerspective owner;
-	private ModelReadOnly model;
+	private BasePerspectiveModelReadOnly model;
 
-	Renderer(CuratorPerspective owner, Controller controller, ModelReadOnly model) {
+	Renderer(CuratorPerspective owner, BasePerspectiveController controller, BasePerspectiveModel model) {
 		this.owner = owner;
 		this.controller = controller;
 		this.model = model;
@@ -166,7 +172,7 @@ class Renderer implements ModelListener {
 			// do nothing
 			log.trace("widgetName is null");
 		}
-		else if (widgetName.equals(CuratorPerspective.WIDGET_HOME)) {
+		else if (widgetName.equals(BasePerspective.WIDGET_HOME)) {
 			CuratorWidgetHome widget = new CuratorWidgetHome();
 			mainWidget = widget;
 			log.trace("created curator main widget: home");

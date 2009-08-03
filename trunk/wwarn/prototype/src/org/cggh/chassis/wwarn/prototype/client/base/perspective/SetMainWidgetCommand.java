@@ -1,22 +1,25 @@
 /**
  * 
  */
-package org.cggh.chassis.wwarn.prototype.client.curator.perspective;
+package org.cggh.chassis.wwarn.prototype.client.base.perspective;
 
 import com.google.gwt.user.client.Command;
+
 
 /**
  * @author aliman
  *
  */
-class SetMainWidgetCommand implements Command {
+public class SetMainWidgetCommand implements Command {
 
-	private Controller controller;
+	
+	
+	private BasePerspectiveController controller;
 	private String viewName;
 
 
 
-	SetMainWidgetCommand(Controller controller, String viewName) {
+	public SetMainWidgetCommand(BasePerspectiveController controller, String viewName) {
 		this.controller = controller;
 		this.viewName = viewName;
 	}

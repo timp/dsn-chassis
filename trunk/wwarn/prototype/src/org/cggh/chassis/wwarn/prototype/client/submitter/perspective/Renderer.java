@@ -6,6 +6,12 @@ package org.cggh.chassis.wwarn.prototype.client.submitter.perspective;
 import org.cggh.chassis.gwt.lib.log.client.GWTLogger;
 import org.cggh.chassis.gwt.lib.log.client.Logger;
 import org.cggh.chassis.gwt.lib.ui.fractal.client.FractalUIComponent;
+import org.cggh.chassis.wwarn.prototype.client.base.perspective.BasePerspective;
+import org.cggh.chassis.wwarn.prototype.client.base.perspective.BasePerspectiveController;
+import org.cggh.chassis.wwarn.prototype.client.base.perspective.BasePerspectiveModel;
+import org.cggh.chassis.wwarn.prototype.client.base.perspective.BasePerspectiveModelListener;
+import org.cggh.chassis.wwarn.prototype.client.base.perspective.BasePerspectiveModelReadOnly;
+import org.cggh.chassis.wwarn.prototype.client.base.perspective.SetMainWidgetCommand;
 import org.cggh.chassis.wwarn.prototype.client.submitter.widget.alldatadicts.SubmitterWidgetAllDataDictionaries;
 import org.cggh.chassis.wwarn.prototype.client.submitter.widget.allstudies.SubmitterWidgetAllStudies;
 import org.cggh.chassis.wwarn.prototype.client.submitter.widget.home.SubmitterWidgetHome;
@@ -24,16 +30,16 @@ import com.google.gwt.user.client.ui.RootPanel;
  * @author aliman
  *
  */
-class Renderer implements ModelListener {
+class Renderer implements BasePerspectiveModelListener {
 
-	private Controller controller;
+	private BasePerspectiveController controller;
 	private Logger log;
 	private MenuBar mainMenu = null;
 	private SubmitterPerspective owner;
-	private ModelReadOnly model;
+	private BasePerspectiveModelReadOnly model;
 	private FractalUIComponent mainWidget = null;
 
-	Renderer(SubmitterPerspective owner, Controller controller, ModelReadOnly model) {
+	Renderer(SubmitterPerspective owner, BasePerspectiveController controller, BasePerspectiveModel model) {
 		this.owner = owner;
 		this.controller = controller;
 		this.model = model;
@@ -86,7 +92,7 @@ class Renderer implements ModelListener {
 		this.mainMenu = new MenuBar();
 		
 		mainMenu.addItem("home", new Command() {
-			public void execute() {	controller.setMainWidget(SubmitterPerspective.WIDGET_HOME); }
+			public void execute() {	controller.setMainWidget(BasePerspective.WIDGET_HOME); }
 		});
 		
 		MenuBar studyMenu = new MenuBar(true);
