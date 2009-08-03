@@ -9,6 +9,7 @@ import org.cggh.chassis.gwt.lib.log.client.GWTLogger;
 import org.cggh.chassis.gwt.lib.log.client.Logger;
 import org.cggh.chassis.gwt.lib.ui.fractal.client.FractalUIComponent;
 import org.cggh.chassis.wwarn.prototype.client.base.perspective.Perspective;
+import org.cggh.chassis.wwarn.prototype.client.coordinator.perspective.CoordinatorPerspective;
 import org.cggh.chassis.wwarn.prototype.client.curator.perspective.CuratorPerspective;
 import org.cggh.chassis.wwarn.prototype.client.gatekeeper.perspective.GatekeeperPerspective;
 import org.cggh.chassis.wwarn.prototype.client.submitter.perspective.SubmitterPerspective;
@@ -238,7 +239,10 @@ class Renderer implements ModelListener {
 			this.owner.addChild(new GatekeeperPerspective());
 		}
 		
-		// TODO other perspectives
+		if (roles.contains(RoleNames.COORDINATOR)) {
+			log.trace("add coordinator perspective");
+			this.owner.addChild(new CoordinatorPerspective());
+		}
 		
 		log.leave();	
 	}
