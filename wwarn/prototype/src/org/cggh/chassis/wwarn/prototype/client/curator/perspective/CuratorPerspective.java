@@ -6,8 +6,17 @@ package org.cggh.chassis.wwarn.prototype.client.curator.perspective;
 import org.cggh.chassis.wwarn.prototype.client.base.perspective.BasePerspective;
 import org.cggh.chassis.wwarn.prototype.client.base.perspective.BasePerspectiveController;
 import org.cggh.chassis.wwarn.prototype.client.base.perspective.BasePerspectiveModel;
+import org.cggh.chassis.wwarn.prototype.client.curator.widget.allreleasecriteria.CuratorWidgetAllReleaseCriteria;
+import org.cggh.chassis.wwarn.prototype.client.curator.widget.allstdatadicts.CuratorWidgetAllStandardDataDictionaries;
+import org.cggh.chassis.wwarn.prototype.client.curator.widget.allsubmissions.CuratorWidgetAllSubmissions;
 import org.cggh.chassis.wwarn.prototype.client.curator.widget.home.CuratorWidgetHome;
+import org.cggh.chassis.wwarn.prototype.client.curator.widget.mysubmissions.CuratorWidgetMySubmissions;
+import org.cggh.chassis.wwarn.prototype.client.curator.widget.mytasks.CuratorWidgetMyDelegatedTasks;
+import org.cggh.chassis.wwarn.prototype.client.curator.widget.newreleasecriteria.CuratorWidgetNewReleaseCriteria;
+import org.cggh.chassis.wwarn.prototype.client.curator.widget.newstdatadict.CuratorWidgetNewStandardDataDictionary;
+import org.cggh.chassis.wwarn.prototype.client.curator.widget.newtask.CuratorWidgetDelegateNewTask;
 import org.cggh.chassis.wwarn.prototype.client.user.RoleNames;
+import org.cggh.chassis.wwarn.prototype.client.widget.WidgetFactory;
 
 
 
@@ -18,17 +27,6 @@ import org.cggh.chassis.wwarn.prototype.client.user.RoleNames;
 public class CuratorPerspective extends BasePerspective {
 
 
-	
-	public static final String WIDGET_MYSUBMISSIONS = "curator-mysubmissions";
-	public static final String WIDGET_ALLSUBMISSIONS = "curator-allsubmissions";
-	public static final String WIDGET_NEWSTANDARDDATADICTIONARY = "curator-newstandarddatadictionary";
-	public static final String WIDGET_ALLSTANDARDDATADICTIONARIES = "curator-allstandarddatadictionaries";
-	public static final String WIDGET_NEWRELEASECRITERIA = "curator-newreleasecriteria";
-	public static final String WIDGET_ALLRELEASECRITERIA = "curator-allreleasecriteria";
-	public static final String WIDGET_DELEGATENEWTASK = "curator-delegatenewtask";
-	public static final String WIDGET_MYDELEGATEDTASKS = "curator-mydelegatedtasks";
-
-	
 	
 	private Renderer renderer;
 
@@ -44,6 +42,17 @@ public class CuratorPerspective extends BasePerspective {
 	
 	private void init() {
 		log.enter("init");
+
+		log.trace("register main components");
+		WidgetFactory.register(CuratorWidgetHome.class.getName(), CuratorWidgetHome.creator);
+		WidgetFactory.register(CuratorWidgetMySubmissions.class.getName(), CuratorWidgetMySubmissions.creator);
+		WidgetFactory.register(CuratorWidgetAllSubmissions.class.getName(), CuratorWidgetAllSubmissions.creator);
+		WidgetFactory.register(CuratorWidgetNewStandardDataDictionary.class.getName(), CuratorWidgetNewStandardDataDictionary.creator);
+		WidgetFactory.register(CuratorWidgetAllStandardDataDictionaries.class.getName(), CuratorWidgetAllStandardDataDictionaries.creator);
+		WidgetFactory.register(CuratorWidgetNewReleaseCriteria.class.getName(), CuratorWidgetNewReleaseCriteria.creator);
+		WidgetFactory.register(CuratorWidgetAllReleaseCriteria.class.getName(), CuratorWidgetAllReleaseCriteria.creator);
+		WidgetFactory.register(CuratorWidgetDelegateNewTask.class.getName(), CuratorWidgetDelegateNewTask.creator);
+		WidgetFactory.register(CuratorWidgetMyDelegatedTasks.class.getName(), CuratorWidgetMyDelegatedTasks.creator);
 
 		log.trace("init model");
 		model = new BasePerspectiveModel();

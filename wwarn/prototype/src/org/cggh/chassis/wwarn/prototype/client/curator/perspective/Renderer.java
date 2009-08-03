@@ -32,6 +32,7 @@ import org.cggh.chassis.wwarn.prototype.client.submitter.widget.mysubmissions.Su
 import org.cggh.chassis.wwarn.prototype.client.submitter.widget.newdatadict.SubmitterWidgetNewDataDictionary;
 import org.cggh.chassis.wwarn.prototype.client.submitter.widget.newstudy.SubmitterWidgetNewStudy;
 import org.cggh.chassis.wwarn.prototype.client.submitter.widget.newsubmission.SubmitterWidgetNewSubmission;
+import org.cggh.chassis.wwarn.prototype.client.widget.WidgetFactory;
 
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -68,9 +69,6 @@ class Renderer implements BasePerspectiveModelListener {
 			
 			log.trace("update main panel content");
 			this.renderMainWidget();
-
-//			// hack for now
-//			RootPanel.get("appcontent").clear();
 
 		}
 		
@@ -112,26 +110,26 @@ class Renderer implements BasePerspectiveModelListener {
 	private void createMainMenu() {
 		
 		mainMenu = new MenuBar();
-		mainMenu.addItem("home", new SetMainWidgetCommand(controller, CuratorPerspective.WIDGET_HOME));
+		mainMenu.addItem("home", new SetMainWidgetCommand(controller, CuratorWidgetHome.class.getName()));
 		
 		MenuBar submissionMenu = new MenuBar(true);
-		submissionMenu.addItem("my assigned submissions", new SetMainWidgetCommand(controller, CuratorPerspective.WIDGET_MYSUBMISSIONS));
-		submissionMenu.addItem("all submissions", new SetMainWidgetCommand(controller, CuratorPerspective.WIDGET_ALLSUBMISSIONS));
+		submissionMenu.addItem("my assigned submissions", new SetMainWidgetCommand(controller, CuratorWidgetMySubmissions.class.getName()));
+		submissionMenu.addItem("all submissions", new SetMainWidgetCommand(controller, CuratorWidgetAllSubmissions.class.getName()));
 		mainMenu.addItem("submissions", submissionMenu);
 		
 		MenuBar ddMenu = new MenuBar(true);
-		ddMenu.addItem("new standard data dictionary", new SetMainWidgetCommand(controller, CuratorPerspective.WIDGET_NEWSTANDARDDATADICTIONARY));
-		ddMenu.addItem("all standard data dictionaries", new SetMainWidgetCommand(controller, CuratorPerspective.WIDGET_ALLSTANDARDDATADICTIONARIES));
+		ddMenu.addItem("new standard data dictionary", new SetMainWidgetCommand(controller, CuratorWidgetNewStandardDataDictionary.class.getName()));
+		ddMenu.addItem("all standard data dictionaries", new SetMainWidgetCommand(controller, CuratorWidgetAllStandardDataDictionaries.class.getName()));
 		mainMenu.addItem("data dictionaries", ddMenu);
 
 		MenuBar rcMenu = new MenuBar(true);
-		rcMenu.addItem("new release criteria specification", new SetMainWidgetCommand(controller, CuratorPerspective.WIDGET_NEWRELEASECRITERIA));
-		rcMenu.addItem("all release criteria specifications", new SetMainWidgetCommand(controller, CuratorPerspective.WIDGET_ALLRELEASECRITERIA));
+		rcMenu.addItem("new release criteria specification", new SetMainWidgetCommand(controller, CuratorWidgetNewReleaseCriteria.class.getName()));
+		rcMenu.addItem("all release criteria specifications", new SetMainWidgetCommand(controller, CuratorWidgetAllReleaseCriteria.class.getName()));
 		mainMenu.addItem("release criteria", rcMenu);
 
 		MenuBar tMenu = new MenuBar(true);
-		tMenu.addItem("delegate new task", new SetMainWidgetCommand(controller, CuratorPerspective.WIDGET_DELEGATENEWTASK));
-		tMenu.addItem("my delegated tasks", new SetMainWidgetCommand(controller, CuratorPerspective.WIDGET_MYDELEGATEDTASKS));
+		tMenu.addItem("delegate new task", new SetMainWidgetCommand(controller, CuratorWidgetDelegateNewTask.class.getName()));
+		tMenu.addItem("my delegated tasks", new SetMainWidgetCommand(controller, CuratorWidgetMyDelegatedTasks.class.getName()));
 		mainMenu.addItem("tasks", tMenu);	
 		
 	}
@@ -145,7 +143,7 @@ class Renderer implements BasePerspectiveModelListener {
 			mainWidget  = null;
 		}
 		
-		this.createMainWidget(to);
+		mainWidget = WidgetFactory.create(to, null);
 
 		if (mainWidget != null) { // TODO review this
 
@@ -159,68 +157,6 @@ class Renderer implements BasePerspectiveModelListener {
 		
 		}
 		
-		log.leave();
-	}
-
-	
-	
-	
-	private void createMainWidget(String widgetName) {
-		log.enter("createMainWidget");
-
-		if (widgetName == null) {
-			// do nothing
-			log.trace("widgetName is null");
-		}
-		else if (widgetName.equals(BasePerspective.WIDGET_HOME)) {
-			CuratorWidgetHome widget = new CuratorWidgetHome();
-			mainWidget = widget;
-			log.trace("created curator main widget: home");
-		}
-		else if (widgetName.equals(CuratorPerspective.WIDGET_MYSUBMISSIONS)) {
-			CuratorWidgetMySubmissions widget = new CuratorWidgetMySubmissions();
-			mainWidget = widget;
-			log.trace("created curator main widget: my submissions");
-		}
-		else if (widgetName.equals(CuratorPerspective.WIDGET_ALLSUBMISSIONS)) {
-			CuratorWidgetAllSubmissions widget = new CuratorWidgetAllSubmissions();
-			mainWidget = widget;
-			log.trace("created curator main widget: all submissions");
-		}
-		else if (widgetName.equals(CuratorPerspective.WIDGET_NEWSTANDARDDATADICTIONARY)) {
-			CuratorWidgetNewStandardDataDictionary widget = new CuratorWidgetNewStandardDataDictionary();
-			mainWidget = widget;
-			log.trace("created curator main widget: new standard data dictionary");
-		}
-		else if (widgetName.equals(CuratorPerspective.WIDGET_ALLSTANDARDDATADICTIONARIES)) {
-			CuratorWidgetAllStandardDataDictionaries widget = new CuratorWidgetAllStandardDataDictionaries();
-			mainWidget = widget;
-			log.trace("created curator main widget: all standard data dictionaries");
-		}
-		else if (widgetName.equals(CuratorPerspective.WIDGET_NEWRELEASECRITERIA)) {
-			CuratorWidgetNewReleaseCriteria widget = new CuratorWidgetNewReleaseCriteria();
-			mainWidget = widget;
-			log.trace("created curator main widget: new release criteria");
-		}
-		else if (widgetName.equals(CuratorPerspective.WIDGET_ALLRELEASECRITERIA)) {
-			CuratorWidgetAllReleaseCriteria widget = new CuratorWidgetAllReleaseCriteria();
-			mainWidget = widget;
-			log.trace("created curator main widget: all release criteria");
-		}
-		else if (widgetName.equals(CuratorPerspective.WIDGET_DELEGATENEWTASK)) {
-			CuratorWidgetDelegateNewTask widget = new CuratorWidgetDelegateNewTask();
-			mainWidget = widget;
-			log.trace("created curator main widget: delegate new task");
-		}
-		else if (widgetName.equals(CuratorPerspective.WIDGET_MYDELEGATEDTASKS)) {
-			CuratorWidgetMyDelegatedTasks widget = new CuratorWidgetMyDelegatedTasks();
-			mainWidget = widget;
-			log.trace("created curator main widget: my delegated tasks");
-		}
-		else {
-			log.trace("TODO widget name: "+widgetName);
-		}
-
 		log.leave();
 	}
 
