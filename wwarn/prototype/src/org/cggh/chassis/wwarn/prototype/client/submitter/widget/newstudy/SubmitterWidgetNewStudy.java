@@ -3,6 +3,10 @@
  */
 package org.cggh.chassis.wwarn.prototype.client.submitter.widget.newstudy;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.cggh.chassis.gwt.lib.study.client.format.StudyEntry;
 import org.cggh.chassis.gwt.lib.twisted.client.Deferred;
 import org.cggh.chassis.gwt.lib.twisted.client.Function;
 import org.cggh.chassis.gwt.lib.ui.fractal.client.FractalUIComponent;
@@ -27,6 +31,8 @@ public class SubmitterWidgetNewStudy extends FractalUIComponent {
 	};
 	
 	
+	
+	private List<SubmitterWidgetNewStudyListener> listeners = new ArrayList<SubmitterWidgetNewStudyListener>();
 	
 	private Model model;
 	private Controller controller;
@@ -96,6 +102,19 @@ public class SubmitterWidgetNewStudy extends FractalUIComponent {
 	@Override
 	public void render() {
 		renderer.render();
+	}
+
+	
+	
+	public void addListener(SubmitterWidgetNewStudyListener listener) {
+		listeners.add(listener);
+	}
+
+
+	void fireStudyCreationSuccess(StudyEntry study) {
+		for (SubmitterWidgetNewStudyListener l : listeners) {
+			l.onStudyCreationSuccess(study);
+		}
 	}
 
 	
