@@ -46,6 +46,7 @@ import org.cggh.chassis.wwarn.prototype.client.submitter.widget.mysubmissions.Su
 import org.cggh.chassis.wwarn.prototype.client.submitter.widget.newdatadict.SubmitterWidgetNewDataDictionary;
 import org.cggh.chassis.wwarn.prototype.client.submitter.widget.newstudy.SubmitterWidgetNewStudy;
 import org.cggh.chassis.wwarn.prototype.client.submitter.widget.newsubmission.SubmitterWidgetNewSubmission;
+import org.cggh.chassis.wwarn.prototype.client.widget.WidgetFactory;
 
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -127,16 +128,16 @@ class Renderer implements BasePerspectiveModelListener {
 		mainMenu.addItem("home", new SetMainWidgetCommand(controller, CoordinatorPerspective.WIDGET_HOME));
 		
 		MenuBar submissionRequestMenu = new MenuBar(true);
-		submissionRequestMenu.addItem("requests pending gatekeeper review", new SetMainWidgetCommand(controller, CoordinatorPerspective.WIDGET_PENDINGSUBMISSIONREQUESTS));
-		submissionRequestMenu.addItem("gatekeeper approved", new SetMainWidgetCommand(controller, CoordinatorPerspective.WIDGET_APPROVEDSUBMISSIONREQUESTS));
-		submissionRequestMenu.addItem("gatekeeper denied", new SetMainWidgetCommand(controller, CoordinatorPerspective.WIDGET_DENIEDSUBMISSIONREQUESTS));
-		submissionRequestMenu.addItem("all requests", new SetMainWidgetCommand(controller, CoordinatorPerspective.WIDGET_ALLSUBMISSIONREQUESTS));
+		submissionRequestMenu.addItem("requests pending gatekeeper review", new SetMainWidgetCommand(controller, CoordinatorWidgetPendingSubmissionRequests.class.getName()));
+		submissionRequestMenu.addItem("gatekeeper approved", new SetMainWidgetCommand(controller, CoordinatorWidgetApprovedSubmissionRequests.class.getName()));
+		submissionRequestMenu.addItem("gatekeeper denied", new SetMainWidgetCommand(controller, CoordinatorWidgetDeniedSubmissionRequests.class.getName()));
+		submissionRequestMenu.addItem("all requests", new SetMainWidgetCommand(controller, CoordinatorWidgetAllSubmissionRequests.class.getName()));
 		mainMenu.addItem("submission requests", submissionRequestMenu);
 		
 		MenuBar submissionMenu = new MenuBar(true);
-		submissionMenu.addItem("submissions under curation", new SetMainWidgetCommand(controller, CoordinatorPerspective.WIDGET_SUBMISSIONSUNDERCURATION));
-		submissionMenu.addItem("submissions approved for release", new SetMainWidgetCommand(controller, CoordinatorPerspective.WIDGET_SUBMISSIONSAPPROVEDFORRELEASE));
-		submissionMenu.addItem("all submissions", new SetMainWidgetCommand(controller, CoordinatorPerspective.WIDGET_ALLSUBMISSIONS));
+		submissionMenu.addItem("submissions under curation", new SetMainWidgetCommand(controller, CoordinatorWidgetSubmissionsUnderCuration.class.getName()));
+		submissionMenu.addItem("submissions approved for release", new SetMainWidgetCommand(controller, CoordinatorWidgetSubmissionsApprovedForRelease.class.getName()));
+		submissionMenu.addItem("all submissions", new SetMainWidgetCommand(controller, CoordinatorWidgetAllSubmissions.class.getName()));
 		mainMenu.addItem("submissions", submissionMenu);
 
 	}
@@ -150,7 +151,7 @@ class Renderer implements BasePerspectiveModelListener {
 			mainWidget  = null;
 		}
 		
-		this.createMainWidget(to);
+		mainWidget = WidgetFactory.create(to, null);
 
 		if (mainWidget != null) { // TODO review this
 
@@ -164,63 +165,6 @@ class Renderer implements BasePerspectiveModelListener {
 		
 		}
 		
-		log.leave();
-	}
-
-	
-	
-	
-	private void createMainWidget(String widgetName) {
-		log.enter("createMainWidget");
-
-		if (widgetName == null) {
-			// do nothing
-			log.trace("widgetName is null");
-		}
-		else if (widgetName.equals(BasePerspective.WIDGET_HOME)) {
-			CoordinatorWidgetHome widget = new CoordinatorWidgetHome();
-			mainWidget = widget;
-			log.trace("created coordinator main widget: home");
-		}
-		else if (widgetName.equals(CoordinatorPerspective.WIDGET_PENDINGSUBMISSIONREQUESTS)) {
-			CoordinatorWidgetPendingSubmissionRequests widget = new CoordinatorWidgetPendingSubmissionRequests();
-			mainWidget = widget;
-			log.trace("created coordinator main widget: pending submission requests");
-		}
-		else if (widgetName.equals(CoordinatorPerspective.WIDGET_APPROVEDSUBMISSIONREQUESTS)) {
-			CoordinatorWidgetApprovedSubmissionRequests widget = new CoordinatorWidgetApprovedSubmissionRequests();
-			mainWidget = widget;
-			log.trace("created coordinator main widget: approved submission requests");
-		}
-		else if (widgetName.equals(CoordinatorPerspective.WIDGET_DENIEDSUBMISSIONREQUESTS)) {
-			CoordinatorWidgetDeniedSubmissionRequests widget = new CoordinatorWidgetDeniedSubmissionRequests();
-			mainWidget = widget;
-			log.trace("created coordinator main widget: denied submission requests");
-		}
-		else if (widgetName.equals(CoordinatorPerspective.WIDGET_ALLSUBMISSIONREQUESTS)) {
-			CoordinatorWidgetAllSubmissionRequests widget = new CoordinatorWidgetAllSubmissionRequests();
-			mainWidget = widget;
-			log.trace("created coordinator main widget: all submission requests");
-		}
-		else if (widgetName.equals(CoordinatorPerspective.WIDGET_SUBMISSIONSUNDERCURATION)) {
-			CoordinatorWidgetSubmissionsUnderCuration widget = new CoordinatorWidgetSubmissionsUnderCuration();
-			mainWidget = widget;
-			log.trace("created coordinator main widget: submissions under curation");
-		}
-		else if (widgetName.equals(CoordinatorPerspective.WIDGET_SUBMISSIONSAPPROVEDFORRELEASE)) {
-			CoordinatorWidgetSubmissionsApprovedForRelease widget = new CoordinatorWidgetSubmissionsApprovedForRelease();
-			mainWidget = widget;
-			log.trace("created coordinator main widget: submissions approved for release");
-		}
-		else if (widgetName.equals(CoordinatorPerspective.WIDGET_ALLSUBMISSIONS)) {
-			CoordinatorWidgetAllSubmissions widget = new CoordinatorWidgetAllSubmissions();
-			mainWidget = widget;
-			log.trace("created coordinator main widget: all submissions");
-		}
-		else {
-			log.trace("TODO widget name: "+widgetName);
-		}
-
 		log.leave();
 	}
 

@@ -99,6 +99,9 @@ public abstract class BasePerspective extends FractalUIComponent implements Pers
 		this.controller.setIsCurrentPerspective(b);
 	}
 
+
+	public abstract String getDefaultMainWidgetName();
+
 	
 	
 

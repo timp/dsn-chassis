@@ -6,6 +6,7 @@ package org.cggh.chassis.wwarn.prototype.client.curator.perspective;
 import org.cggh.chassis.wwarn.prototype.client.base.perspective.BasePerspective;
 import org.cggh.chassis.wwarn.prototype.client.base.perspective.BasePerspectiveController;
 import org.cggh.chassis.wwarn.prototype.client.base.perspective.BasePerspectiveModel;
+import org.cggh.chassis.wwarn.prototype.client.curator.widget.home.CuratorWidgetHome;
 import org.cggh.chassis.wwarn.prototype.client.user.RoleNames;
 
 
@@ -69,6 +70,13 @@ public class CuratorPerspective extends BasePerspective {
 	public void render() {
 		// TODO Auto-generated method stub
 		
+	}
+
+
+
+	@Override
+	public String getDefaultMainWidgetName() {
+		return CuratorWidgetHome.class.getName();
 	}
 
 
