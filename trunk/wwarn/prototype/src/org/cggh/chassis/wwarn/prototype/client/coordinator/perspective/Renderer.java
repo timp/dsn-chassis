@@ -125,7 +125,7 @@ class Renderer implements BasePerspectiveModelListener {
 	private void createMainMenu() {
 		
 		mainMenu = new MenuBar();
-		mainMenu.addItem("home", new SetMainWidgetCommand(controller, CoordinatorPerspective.WIDGET_HOME));
+		mainMenu.addItem("home", new SetMainWidgetCommand(controller, CoordinatorWidgetHome.class.getName()));
 		
 		MenuBar submissionRequestMenu = new MenuBar(true);
 		submissionRequestMenu.addItem("requests pending gatekeeper review", new SetMainWidgetCommand(controller, CoordinatorWidgetPendingSubmissionRequests.class.getName()));
