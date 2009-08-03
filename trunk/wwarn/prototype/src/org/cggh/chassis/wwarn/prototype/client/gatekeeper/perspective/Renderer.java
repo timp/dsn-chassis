@@ -22,6 +22,11 @@ import org.cggh.chassis.wwarn.prototype.client.curator.widget.mytasks.CuratorWid
 import org.cggh.chassis.wwarn.prototype.client.curator.widget.newreleasecriteria.CuratorWidgetNewReleaseCriteria;
 import org.cggh.chassis.wwarn.prototype.client.curator.widget.newstdatadict.CuratorWidgetNewStandardDataDictionary;
 import org.cggh.chassis.wwarn.prototype.client.curator.widget.newtask.CuratorWidgetDelegateNewTask;
+import org.cggh.chassis.wwarn.prototype.client.gatekeeper.widget.allreqs.GatekeeperWidgetAllRequests;
+import org.cggh.chassis.wwarn.prototype.client.gatekeeper.widget.approvedreqs.GatekeeperWidgetApprovedRequests;
+import org.cggh.chassis.wwarn.prototype.client.gatekeeper.widget.deniedreqs.GatekeeperWidgetDeniedRequests;
+import org.cggh.chassis.wwarn.prototype.client.gatekeeper.widget.home.GatekeeperWidgetHome;
+import org.cggh.chassis.wwarn.prototype.client.gatekeeper.widget.pendingreqs.GatekeeperWidgetPendingRequests;
 import org.cggh.chassis.wwarn.prototype.client.submitter.perspective.SubmitterPerspective;
 import org.cggh.chassis.wwarn.prototype.client.submitter.widget.alldatadicts.SubmitterWidgetAllDataDictionaries;
 import org.cggh.chassis.wwarn.prototype.client.submitter.widget.allstudies.SubmitterWidgetAllStudies;
@@ -157,11 +162,31 @@ class Renderer implements BasePerspectiveModelListener {
 			// do nothing
 			log.trace("widgetName is null");
 		}
-//		else if (widgetName.equals(BasePerspective.WIDGET_HOME)) {
-//			GatekeeperWidgetHome widget = new GatekeeperWidgetHome();
-//			mainWidget = widget;
-//			log.trace("created gatekeeper main widget: home");
-//		}
+		else if (widgetName.equals(BasePerspective.WIDGET_HOME)) {
+			GatekeeperWidgetHome widget = new GatekeeperWidgetHome();
+			mainWidget = widget;
+			log.trace("created gatekeeper main widget: home");
+		}
+		else if (widgetName.equals(GatekeeperPerspective.WIDGET_PENDINGSUBMISSIONREQUESTS)) {
+			GatekeeperWidgetPendingRequests widget = new GatekeeperWidgetPendingRequests();
+			mainWidget = widget;
+			log.trace("created gatekeeper main widget: pending requests");
+		}
+		else if (widgetName.equals(GatekeeperPerspective.WIDGET_APPROVEDSUBMISSIONREQUESTS)) {
+			GatekeeperWidgetApprovedRequests widget = new GatekeeperWidgetApprovedRequests();
+			mainWidget = widget;
+			log.trace("created gatekeeper main widget: approved requests");
+		}
+		else if (widgetName.equals(GatekeeperPerspective.WIDGET_DENIEDSUBMISSIONREQUESTS)) {
+			GatekeeperWidgetDeniedRequests widget = new GatekeeperWidgetDeniedRequests();
+			mainWidget = widget;
+			log.trace("created gatekeeper main widget: denied requests");
+		}
+		else if (widgetName.equals(GatekeeperPerspective.WIDGET_ALLSUBMISSIONREQUESTS)) {
+			GatekeeperWidgetAllRequests widget = new GatekeeperWidgetAllRequests();
+			mainWidget = widget;
+			log.trace("created gatekeeper main widget: all requests");
+		}
 		else {
 			log.trace("TODO widget name: "+widgetName);
 		}
