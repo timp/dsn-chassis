@@ -26,6 +26,7 @@ public class BasePerspectiveController {
 		this.model = model;
 		this.owner = owner;
 		this.log = new GWTLogger();
+		this.log.setCurrentClass(BasePerspectiveController.class.getName());
 	}
 
 	

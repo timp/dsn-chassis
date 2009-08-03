@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.cggh.chassis.wwarn.prototype.client.shared;
+package org.cggh.chassis.wwarn.prototype.client.user;
 
 import java.util.ArrayList;
 import java.util.List;

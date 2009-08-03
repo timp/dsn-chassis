@@ -8,7 +8,7 @@ package org.cggh.chassis.wwarn.prototype.client.submitter.perspective;
 import org.cggh.chassis.wwarn.prototype.client.base.perspective.BasePerspective;
 import org.cggh.chassis.wwarn.prototype.client.base.perspective.BasePerspectiveController;
 import org.cggh.chassis.wwarn.prototype.client.base.perspective.BasePerspectiveModel;
-import org.cggh.chassis.wwarn.prototype.client.shared.RoleNames;
+import org.cggh.chassis.wwarn.prototype.client.user.RoleNames;
 
 
 

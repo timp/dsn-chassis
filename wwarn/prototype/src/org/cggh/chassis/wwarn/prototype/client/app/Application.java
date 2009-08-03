@@ -8,7 +8,7 @@ import org.cggh.chassis.gwt.lib.log.client.Logger;
 import org.cggh.chassis.gwt.lib.twisted.client.Deferred;
 import org.cggh.chassis.gwt.lib.twisted.client.Function;
 import org.cggh.chassis.gwt.lib.ui.fractal.client.FractalUIComponent;
-import org.cggh.chassis.wwarn.prototype.client.shared.User;
+import org.cggh.chassis.wwarn.prototype.client.user.User;
 
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
@@ -28,8 +28,6 @@ public class Application extends FractalUIComponent {
 	public static final String ELEMENTID_CURRENTPERSPECTIVELABEL = "currentperspective";
 	private static final String CURRENTROLE = "currentRole";
 
-	
-	
 	
 	
 	private Model model;

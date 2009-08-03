@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.cggh.chassis.wwarn.prototype.client.curator.perspective;
+package org.cggh.chassis.wwarn.prototype.client.gatekeeper.perspective;
 
 import org.cggh.chassis.wwarn.prototype.client.base.perspective.BasePerspective;
 import org.cggh.chassis.wwarn.prototype.client.base.perspective.BasePerspectiveController;
@@ -14,18 +14,14 @@ import org.cggh.chassis.wwarn.prototype.client.user.RoleNames;
  * @author aliman
  *
  */
-public class CuratorPerspective extends BasePerspective {
+public class GatekeeperPerspective extends BasePerspective {
 
 
 	
-	public static final String WIDGET_MYSUBMISSIONS = "mysubmissions";
-	public static final String WIDGET_ALLSUBMISSIONS = "allsubmissions";
-	public static final String WIDGET_NEWSTANDARDDATADICTIONARY = "newstandarddatadictionary";
-	public static final String WIDGET_ALLSTANDARDDATADICTIONARIES = "allstandarddatadictionaries";
-	public static final String WIDGET_NEWRELEASECRITERIA = "newreleasecriteria";
-	public static final String WIDGET_ALLRELEASECRITERIA = "allreleasecriteria";
-	public static final String WIDGET_DELEGATENEWTASK = "delegatenewtask";
-	public static final String WIDGET_MYDELEGATEDTASKS = "mydelegatedtasks";
+	public static final String WIDGET_PENDINGSUBMISSIONREQUESTS = "pendingrequests";
+	public static final String WIDGET_APPROVEDSUBMISSIONREQUESTS = "approvedrequests";
+	public static final String WIDGET_DENIEDSUBMISSIONREQUESTS = "deniedrequests";
+	public static final String WIDGET_ALLSUBMISSIONREQUESTS = "allrequests";
 
 	
 	
@@ -33,9 +29,9 @@ public class CuratorPerspective extends BasePerspective {
 
 	
 	
-	public CuratorPerspective() {
+	public GatekeeperPerspective() {
 		super();
-		this.log.setCurrentClass(CuratorPerspective.class.getName());
+		this.log.setCurrentClass(GatekeeperPerspective.class.getName());
 		this.init();
 	}
 	
@@ -60,7 +56,7 @@ public class CuratorPerspective extends BasePerspective {
 
 	
 	public String getRoleName() {
-		return RoleNames.CURATOR;
+		return RoleNames.GATEKEEPER;
 	}
 
 
