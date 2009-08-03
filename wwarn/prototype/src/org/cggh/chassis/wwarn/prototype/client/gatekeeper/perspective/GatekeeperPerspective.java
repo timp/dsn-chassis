@@ -24,13 +24,6 @@ public class GatekeeperPerspective extends BasePerspective {
 
 
 	
-	public static final String WIDGET_PENDINGSUBMISSIONREQUESTS = "gatekeeper-pendingrequests";
-	public static final String WIDGET_APPROVEDSUBMISSIONREQUESTS = "gatekeeper-approvedrequests";
-	public static final String WIDGET_DENIEDSUBMISSIONREQUESTS = "gatekeeper-deniedrequests";
-	public static final String WIDGET_ALLSUBMISSIONREQUESTS = "gatekeeper-allrequests";
-
-	
-	
 	private Renderer renderer;
 
 	
@@ -46,7 +39,7 @@ public class GatekeeperPerspective extends BasePerspective {
 	private void init() {
 		log.enter("init");
 		
-		log.trace("register components");
+		log.trace("register main components");
 		WidgetFactory.register(GatekeeperWidgetAllRequests.class.getName(), GatekeeperWidgetAllRequests.creator);
 		WidgetFactory.register(GatekeeperWidgetApprovedRequests.class.getName(), GatekeeperWidgetApprovedRequests.creator);
 		WidgetFactory.register(GatekeeperWidgetDeniedRequests.class.getName(), GatekeeperWidgetDeniedRequests.creator);
@@ -78,6 +71,13 @@ public class GatekeeperPerspective extends BasePerspective {
 	public void render() {
 		// TODO Auto-generated method stub
 		
+	}
+
+
+
+	@Override
+	public String getDefaultMainWidgetName() {
+		return GatekeeperWidgetHome.class.getName();
 	}
 
 

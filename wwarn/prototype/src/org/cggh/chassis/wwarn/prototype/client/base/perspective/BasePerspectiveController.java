@@ -80,7 +80,7 @@ public class BasePerspectiveController {
 		log.enter("setDefault");
 		
 		log.trace("set main widget as home");
-		this.setMainWidget(BasePerspective.WIDGET_HOME, false);
+		this.setMainWidget(this.owner.getDefaultMainWidgetName(), false);
 
 //		// TODO review this
 //		log.trace("sync state key, in case any parents or children change state");
