@@ -3,6 +3,7 @@
  */
 package org.cggh.chassis.wwarn.prototype.client.gatekeeper.perspective;
 
+import org.cggh.chassis.gwt.lib.ui.fractal.client.FractalUIComponentFactory;
 import org.cggh.chassis.wwarn.prototype.client.base.perspective.BasePerspective;
 import org.cggh.chassis.wwarn.prototype.client.base.perspective.BasePerspectiveController;
 import org.cggh.chassis.wwarn.prototype.client.base.perspective.BasePerspectiveModel;
@@ -12,7 +13,6 @@ import org.cggh.chassis.wwarn.prototype.client.gatekeeper.widget.deniedreqs.Gate
 import org.cggh.chassis.wwarn.prototype.client.gatekeeper.widget.home.GatekeeperWidgetHome;
 import org.cggh.chassis.wwarn.prototype.client.gatekeeper.widget.pendingreqs.GatekeeperWidgetPendingRequests;
 import org.cggh.chassis.wwarn.prototype.client.user.RoleNames;
-import org.cggh.chassis.wwarn.prototype.client.widget.WidgetFactory;
 
 
 
@@ -40,11 +40,11 @@ public class GatekeeperPerspective extends BasePerspective {
 		log.enter("init");
 		
 		log.trace("register main components");
-		WidgetFactory.register(GatekeeperWidgetAllRequests.class.getName(), GatekeeperWidgetAllRequests.creator);
-		WidgetFactory.register(GatekeeperWidgetApprovedRequests.class.getName(), GatekeeperWidgetApprovedRequests.creator);
-		WidgetFactory.register(GatekeeperWidgetDeniedRequests.class.getName(), GatekeeperWidgetDeniedRequests.creator);
-		WidgetFactory.register(GatekeeperWidgetPendingRequests.class.getName(), GatekeeperWidgetPendingRequests.creator);
-		WidgetFactory.register(GatekeeperWidgetHome.class.getName(), GatekeeperWidgetHome.creator);
+		FractalUIComponentFactory.register(GatekeeperWidgetAllRequests.class.getName(), GatekeeperWidgetAllRequests.creator);
+		FractalUIComponentFactory.register(GatekeeperWidgetApprovedRequests.class.getName(), GatekeeperWidgetApprovedRequests.creator);
+		FractalUIComponentFactory.register(GatekeeperWidgetDeniedRequests.class.getName(), GatekeeperWidgetDeniedRequests.creator);
+		FractalUIComponentFactory.register(GatekeeperWidgetPendingRequests.class.getName(), GatekeeperWidgetPendingRequests.creator);
+		FractalUIComponentFactory.register(GatekeeperWidgetHome.class.getName(), GatekeeperWidgetHome.creator);
 
 		log.trace("init model");
 		model = new BasePerspectiveModel();

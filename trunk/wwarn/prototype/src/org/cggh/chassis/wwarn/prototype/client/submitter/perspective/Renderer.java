@@ -6,6 +6,7 @@ package org.cggh.chassis.wwarn.prototype.client.submitter.perspective;
 import org.cggh.chassis.gwt.lib.log.client.GWTLogger;
 import org.cggh.chassis.gwt.lib.log.client.Logger;
 import org.cggh.chassis.gwt.lib.ui.fractal.client.FractalUIComponent;
+import org.cggh.chassis.gwt.lib.ui.fractal.client.FractalUIComponentFactory;
 import org.cggh.chassis.wwarn.prototype.client.base.perspective.BasePerspectiveController;
 import org.cggh.chassis.wwarn.prototype.client.base.perspective.BasePerspectiveModel;
 import org.cggh.chassis.wwarn.prototype.client.base.perspective.BasePerspectiveModelListener;
@@ -20,7 +21,6 @@ import org.cggh.chassis.wwarn.prototype.client.submitter.widget.mysubmissions.Su
 import org.cggh.chassis.wwarn.prototype.client.submitter.widget.newdatadict.SubmitterWidgetNewDataDictionary;
 import org.cggh.chassis.wwarn.prototype.client.submitter.widget.newstudy.SubmitterWidgetNewStudy;
 import org.cggh.chassis.wwarn.prototype.client.submitter.widget.newsubmission.SubmitterWidgetNewSubmission;
-import org.cggh.chassis.wwarn.prototype.client.widget.WidgetFactory;
 
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.MenuBar;
@@ -125,7 +125,7 @@ class Renderer implements BasePerspectiveModelListener {
 			mainWidget  = null;
 		}
 		
-		mainWidget = WidgetFactory.create(to, null);
+		mainWidget = FractalUIComponentFactory.create(to, null);
 
 		if (mainWidget != null) { // TODO review this
 
