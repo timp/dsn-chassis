@@ -18,14 +18,14 @@ public class CuratorPerspective extends BasePerspective {
 
 
 	
-	public static final String WIDGET_MYSUBMISSIONS = "mysubmissions";
-	public static final String WIDGET_ALLSUBMISSIONS = "allsubmissions";
-	public static final String WIDGET_NEWSTANDARDDATADICTIONARY = "newstandarddatadictionary";
-	public static final String WIDGET_ALLSTANDARDDATADICTIONARIES = "allstandarddatadictionaries";
-	public static final String WIDGET_NEWRELEASECRITERIA = "newreleasecriteria";
-	public static final String WIDGET_ALLRELEASECRITERIA = "allreleasecriteria";
-	public static final String WIDGET_DELEGATENEWTASK = "delegatenewtask";
-	public static final String WIDGET_MYDELEGATEDTASKS = "mydelegatedtasks";
+	public static final String WIDGET_MYSUBMISSIONS = "curator-mysubmissions";
+	public static final String WIDGET_ALLSUBMISSIONS = "curator-allsubmissions";
+	public static final String WIDGET_NEWSTANDARDDATADICTIONARY = "curator-newstandarddatadictionary";
+	public static final String WIDGET_ALLSTANDARDDATADICTIONARIES = "curator-allstandarddatadictionaries";
+	public static final String WIDGET_NEWRELEASECRITERIA = "curator-newreleasecriteria";
+	public static final String WIDGET_ALLRELEASECRITERIA = "curator-allreleasecriteria";
+	public static final String WIDGET_DELEGATENEWTASK = "curator-delegatenewtask";
+	public static final String WIDGET_MYDELEGATEDTASKS = "curator-mydelegatedtasks";
 
 	
 	

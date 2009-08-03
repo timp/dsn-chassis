@@ -6,7 +6,13 @@ package org.cggh.chassis.wwarn.prototype.client.gatekeeper.perspective;
 import org.cggh.chassis.wwarn.prototype.client.base.perspective.BasePerspective;
 import org.cggh.chassis.wwarn.prototype.client.base.perspective.BasePerspectiveController;
 import org.cggh.chassis.wwarn.prototype.client.base.perspective.BasePerspectiveModel;
+import org.cggh.chassis.wwarn.prototype.client.gatekeeper.widget.allreqs.GatekeeperWidgetAllRequests;
+import org.cggh.chassis.wwarn.prototype.client.gatekeeper.widget.approvedreqs.GatekeeperWidgetApprovedRequests;
+import org.cggh.chassis.wwarn.prototype.client.gatekeeper.widget.deniedreqs.GatekeeperWidgetDeniedRequests;
+import org.cggh.chassis.wwarn.prototype.client.gatekeeper.widget.home.GatekeeperWidgetHome;
+import org.cggh.chassis.wwarn.prototype.client.gatekeeper.widget.pendingreqs.GatekeeperWidgetPendingRequests;
 import org.cggh.chassis.wwarn.prototype.client.user.RoleNames;
+import org.cggh.chassis.wwarn.prototype.client.widget.WidgetFactory;
 
 
 
@@ -18,10 +24,10 @@ public class GatekeeperPerspective extends BasePerspective {
 
 
 	
-	public static final String WIDGET_PENDINGSUBMISSIONREQUESTS = "pendingrequests";
-	public static final String WIDGET_APPROVEDSUBMISSIONREQUESTS = "approvedrequests";
-	public static final String WIDGET_DENIEDSUBMISSIONREQUESTS = "deniedrequests";
-	public static final String WIDGET_ALLSUBMISSIONREQUESTS = "allrequests";
+	public static final String WIDGET_PENDINGSUBMISSIONREQUESTS = "gatekeeper-pendingrequests";
+	public static final String WIDGET_APPROVEDSUBMISSIONREQUESTS = "gatekeeper-approvedrequests";
+	public static final String WIDGET_DENIEDSUBMISSIONREQUESTS = "gatekeeper-deniedrequests";
+	public static final String WIDGET_ALLSUBMISSIONREQUESTS = "gatekeeper-allrequests";
 
 	
 	
@@ -39,6 +45,13 @@ public class GatekeeperPerspective extends BasePerspective {
 	
 	private void init() {
 		log.enter("init");
+		
+		log.trace("register components");
+		WidgetFactory.register(GatekeeperWidgetAllRequests.class.getName(), GatekeeperWidgetAllRequests.creator);
+		WidgetFactory.register(GatekeeperWidgetApprovedRequests.class.getName(), GatekeeperWidgetApprovedRequests.creator);
+		WidgetFactory.register(GatekeeperWidgetDeniedRequests.class.getName(), GatekeeperWidgetDeniedRequests.creator);
+		WidgetFactory.register(GatekeeperWidgetPendingRequests.class.getName(), GatekeeperWidgetPendingRequests.creator);
+		WidgetFactory.register(GatekeeperWidgetHome.class.getName(), GatekeeperWidgetHome.creator);
 
 		log.trace("init model");
 		model = new BasePerspectiveModel();
