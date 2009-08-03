@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.cggh.chassis.wwarn.prototype.client.gatekeeper.perspective;
+package org.cggh.chassis.wwarn.prototype.client.coordinator.perspective;
 
 
 import org.cggh.chassis.gwt.lib.log.client.GWTLogger;
@@ -51,10 +51,10 @@ class Renderer implements BasePerspectiveModelListener {
 	private MenuBar mainMenu;
 	private Logger log;
 	private FractalUIComponent mainWidget = null;
-	private GatekeeperPerspective owner;
+	private CoordinatorPerspective owner;
 	private BasePerspectiveModelReadOnly model;
 
-	Renderer(GatekeeperPerspective owner, BasePerspectiveController controller, BasePerspectiveModel model) {
+	Renderer(CoordinatorPerspective owner, BasePerspectiveController controller, BasePerspectiveModel model) {
 		this.owner = owner;
 		this.controller = controller;
 		this.model = model;
@@ -115,15 +115,21 @@ class Renderer implements BasePerspectiveModelListener {
 	private void createMainMenu() {
 		
 		mainMenu = new MenuBar();
-		mainMenu.addItem("home", new SetMainWidgetCommand(controller, GatekeeperPerspective.WIDGET_HOME));
+		mainMenu.addItem("home", new SetMainWidgetCommand(controller, CoordinatorPerspective.WIDGET_HOME));
 		
 		MenuBar submissionRequestMenu = new MenuBar(true);
-		submissionRequestMenu.addItem("pending requests", new SetMainWidgetCommand(controller, GatekeeperPerspective.WIDGET_PENDINGSUBMISSIONREQUESTS));
-		submissionRequestMenu.addItem("approved requests", new SetMainWidgetCommand(controller, GatekeeperPerspective.WIDGET_APPROVEDSUBMISSIONREQUESTS));
-		submissionRequestMenu.addItem("denied requests", new SetMainWidgetCommand(controller, GatekeeperPerspective.WIDGET_DENIEDSUBMISSIONREQUESTS));
-		submissionRequestMenu.addItem("all requests", new SetMainWidgetCommand(controller, GatekeeperPerspective.WIDGET_ALLSUBMISSIONREQUESTS));
+		submissionRequestMenu.addItem("requests pending gatekeeper review", new SetMainWidgetCommand(controller, CoordinatorPerspective.WIDGET_PENDINGSUBMISSIONREQUESTS));
+		submissionRequestMenu.addItem("gatekeeper approved", new SetMainWidgetCommand(controller, CoordinatorPerspective.WIDGET_APPROVEDSUBMISSIONREQUESTS));
+		submissionRequestMenu.addItem("gatekeeper denied", new SetMainWidgetCommand(controller, CoordinatorPerspective.WIDGET_DENIEDSUBMISSIONREQUESTS));
+		submissionRequestMenu.addItem("all requests", new SetMainWidgetCommand(controller, CoordinatorPerspective.WIDGET_ALLSUBMISSIONREQUESTS));
 		mainMenu.addItem("submission requests", submissionRequestMenu);
 		
+		MenuBar submissionMenu = new MenuBar(true);
+		submissionMenu.addItem("submissions under curation", new SetMainWidgetCommand(controller, CoordinatorPerspective.WIDGET_SUBMISSIONSUNDERCURATION));
+		submissionMenu.addItem("submissions approved for release", new SetMainWidgetCommand(controller, CoordinatorPerspective.WIDGET_SUBMISSIONSAPPROVEDFORRELEASE));
+		submissionMenu.addItem("all submissions", new SetMainWidgetCommand(controller, CoordinatorPerspective.WIDGET_ALLSUBMISSIONS));
+		mainMenu.addItem("submissions", submissionMenu);
+
 	}
 
 
@@ -162,31 +168,7 @@ class Renderer implements BasePerspectiveModelListener {
 			// do nothing
 			log.trace("widgetName is null");
 		}
-		else if (widgetName.equals(BasePerspective.WIDGET_HOME)) {
-			GatekeeperWidgetHome widget = new GatekeeperWidgetHome();
-			mainWidget = widget;
-			log.trace("created gatekeeper main widget: home");
-		}
-		else if (widgetName.equals(GatekeeperPerspective.WIDGET_PENDINGSUBMISSIONREQUESTS)) {
-			GatekeeperWidgetPendingRequests widget = new GatekeeperWidgetPendingRequests();
-			mainWidget = widget;
-			log.trace("created gatekeeper main widget: pending requests");
-		}
-		else if (widgetName.equals(GatekeeperPerspective.WIDGET_APPROVEDSUBMISSIONREQUESTS)) {
-			GatekeeperWidgetApprovedRequests widget = new GatekeeperWidgetApprovedRequests();
-			mainWidget = widget;
-			log.trace("created gatekeeper main widget: approved requests");
-		}
-		else if (widgetName.equals(GatekeeperPerspective.WIDGET_DENIEDSUBMISSIONREQUESTS)) {
-			GatekeeperWidgetDeniedRequests widget = new GatekeeperWidgetDeniedRequests();
-			mainWidget = widget;
-			log.trace("created gatekeeper main widget: denied requests");
-		}
-		else if (widgetName.equals(GatekeeperPerspective.WIDGET_ALLSUBMISSIONREQUESTS)) {
-			GatekeeperWidgetAllRequests widget = new GatekeeperWidgetAllRequests();
-			mainWidget = widget;
-			log.trace("created gatekeeper main widget: all requests");
-		}
+
 		else {
 			log.trace("TODO widget name: "+widgetName);
 		}
