@@ -3,6 +3,7 @@
  */
 package org.cggh.chassis.wwarn.prototype.client.coordinator.perspective;
 
+import org.cggh.chassis.gwt.lib.ui.fractal.client.FractalUIComponentFactory;
 import org.cggh.chassis.wwarn.prototype.client.base.perspective.BasePerspective;
 import org.cggh.chassis.wwarn.prototype.client.base.perspective.BasePerspectiveController;
 import org.cggh.chassis.wwarn.prototype.client.base.perspective.BasePerspectiveModel;
@@ -15,7 +16,6 @@ import org.cggh.chassis.wwarn.prototype.client.coordinator.widget.deniedreqs.Coo
 import org.cggh.chassis.wwarn.prototype.client.coordinator.widget.home.CoordinatorWidgetHome;
 import org.cggh.chassis.wwarn.prototype.client.coordinator.widget.pendingreqs.CoordinatorWidgetPendingSubmissionRequests;
 import org.cggh.chassis.wwarn.prototype.client.user.RoleNames;
-import org.cggh.chassis.wwarn.prototype.client.widget.WidgetFactory;
 
 
 
@@ -43,14 +43,14 @@ public class CoordinatorPerspective extends BasePerspective {
 		log.enter("init");
 		
 		log.trace("register main components");
-		WidgetFactory.register(CoordinatorWidgetHome.class.getName(), CoordinatorWidgetHome.creator);
-		WidgetFactory.register(CoordinatorWidgetPendingSubmissionRequests.class.getName(), CoordinatorWidgetPendingSubmissionRequests.creator);
-		WidgetFactory.register(CoordinatorWidgetApprovedSubmissionRequests.class.getName(), CoordinatorWidgetApprovedSubmissionRequests.creator);
-		WidgetFactory.register(CoordinatorWidgetDeniedSubmissionRequests.class.getName(), CoordinatorWidgetDeniedSubmissionRequests.creator);
-		WidgetFactory.register(CoordinatorWidgetAllSubmissionRequests.class.getName(), CoordinatorWidgetAllSubmissionRequests.creator);
-		WidgetFactory.register(CoordinatorWidgetSubmissionsUnderCuration.class.getName(), CoordinatorWidgetSubmissionsUnderCuration.creator);
-		WidgetFactory.register(CoordinatorWidgetSubmissionsApprovedForRelease.class.getName(), CoordinatorWidgetSubmissionsApprovedForRelease.creator);
-		WidgetFactory.register(CoordinatorWidgetAllSubmissions.class.getName(), CoordinatorWidgetAllSubmissions.creator);
+		FractalUIComponentFactory.register(CoordinatorWidgetHome.class.getName(), CoordinatorWidgetHome.creator);
+		FractalUIComponentFactory.register(CoordinatorWidgetPendingSubmissionRequests.class.getName(), CoordinatorWidgetPendingSubmissionRequests.creator);
+		FractalUIComponentFactory.register(CoordinatorWidgetApprovedSubmissionRequests.class.getName(), CoordinatorWidgetApprovedSubmissionRequests.creator);
+		FractalUIComponentFactory.register(CoordinatorWidgetDeniedSubmissionRequests.class.getName(), CoordinatorWidgetDeniedSubmissionRequests.creator);
+		FractalUIComponentFactory.register(CoordinatorWidgetAllSubmissionRequests.class.getName(), CoordinatorWidgetAllSubmissionRequests.creator);
+		FractalUIComponentFactory.register(CoordinatorWidgetSubmissionsUnderCuration.class.getName(), CoordinatorWidgetSubmissionsUnderCuration.creator);
+		FractalUIComponentFactory.register(CoordinatorWidgetSubmissionsApprovedForRelease.class.getName(), CoordinatorWidgetSubmissionsApprovedForRelease.creator);
+		FractalUIComponentFactory.register(CoordinatorWidgetAllSubmissions.class.getName(), CoordinatorWidgetAllSubmissions.creator);
 
 		log.trace("init model");
 		model = new BasePerspectiveModel();

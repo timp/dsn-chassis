@@ -5,6 +5,7 @@ package org.cggh.chassis.wwarn.prototype.client.submitter.perspective;
 
 
 
+import org.cggh.chassis.gwt.lib.ui.fractal.client.FractalUIComponentFactory;
 import org.cggh.chassis.wwarn.prototype.client.base.perspective.BasePerspective;
 import org.cggh.chassis.wwarn.prototype.client.base.perspective.BasePerspectiveController;
 import org.cggh.chassis.wwarn.prototype.client.base.perspective.BasePerspectiveModel;
@@ -18,7 +19,6 @@ import org.cggh.chassis.wwarn.prototype.client.submitter.widget.newdatadict.Subm
 import org.cggh.chassis.wwarn.prototype.client.submitter.widget.newstudy.SubmitterWidgetNewStudy;
 import org.cggh.chassis.wwarn.prototype.client.submitter.widget.newsubmission.SubmitterWidgetNewSubmission;
 import org.cggh.chassis.wwarn.prototype.client.user.RoleNames;
-import org.cggh.chassis.wwarn.prototype.client.widget.WidgetFactory;
 
 
 
@@ -46,15 +46,15 @@ public class SubmitterPerspective extends BasePerspective {
 		log.enter("init");
 
 		log.trace("register main components");
-		WidgetFactory.register(SubmitterWidgetHome.class.getName(), SubmitterWidgetHome.creator);
-		WidgetFactory.register(SubmitterWidgetNewStudy.class.getName(), SubmitterWidgetNewStudy.creator);
-		WidgetFactory.register(SubmitterWidgetAllStudies.class.getName(), SubmitterWidgetAllStudies.creator);
-		WidgetFactory.register(SubmitterWidgetMyStudies.class.getName(), SubmitterWidgetMyStudies.creator);
-		WidgetFactory.register(SubmitterWidgetNewSubmission.class.getName(), SubmitterWidgetNewSubmission.creator);
-		WidgetFactory.register(SubmitterWidgetMySubmissions.class.getName(), SubmitterWidgetMySubmissions.creator);
-		WidgetFactory.register(SubmitterWidgetNewDataDictionary.class.getName(), SubmitterWidgetNewDataDictionary.creator);
-		WidgetFactory.register(SubmitterWidgetMyDataDictionaries.class.getName(), SubmitterWidgetMyDataDictionaries.creator);
-		WidgetFactory.register(SubmitterWidgetAllDataDictionaries.class.getName(), SubmitterWidgetAllDataDictionaries.creator);
+		FractalUIComponentFactory.register(SubmitterWidgetHome.class.getName(), SubmitterWidgetHome.creator);
+		FractalUIComponentFactory.register(SubmitterWidgetNewStudy.class.getName(), SubmitterWidgetNewStudy.creator);
+		FractalUIComponentFactory.register(SubmitterWidgetAllStudies.class.getName(), SubmitterWidgetAllStudies.creator);
+		FractalUIComponentFactory.register(SubmitterWidgetMyStudies.class.getName(), SubmitterWidgetMyStudies.creator);
+		FractalUIComponentFactory.register(SubmitterWidgetNewSubmission.class.getName(), SubmitterWidgetNewSubmission.creator);
+		FractalUIComponentFactory.register(SubmitterWidgetMySubmissions.class.getName(), SubmitterWidgetMySubmissions.creator);
+		FractalUIComponentFactory.register(SubmitterWidgetNewDataDictionary.class.getName(), SubmitterWidgetNewDataDictionary.creator);
+		FractalUIComponentFactory.register(SubmitterWidgetMyDataDictionaries.class.getName(), SubmitterWidgetMyDataDictionaries.creator);
+		FractalUIComponentFactory.register(SubmitterWidgetAllDataDictionaries.class.getName(), SubmitterWidgetAllDataDictionaries.creator);
 		
 		log.trace("init model");
 		this.model = new BasePerspectiveModel();

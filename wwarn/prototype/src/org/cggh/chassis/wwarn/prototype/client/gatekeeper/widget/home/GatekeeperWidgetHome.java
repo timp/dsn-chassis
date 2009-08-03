@@ -6,7 +6,7 @@ package org.cggh.chassis.wwarn.prototype.client.gatekeeper.widget.home;
 import org.cggh.chassis.gwt.lib.twisted.client.Deferred;
 import org.cggh.chassis.gwt.lib.twisted.client.Function;
 import org.cggh.chassis.gwt.lib.ui.fractal.client.FractalUIComponent;
-import org.cggh.chassis.wwarn.prototype.client.widget.WidgetFactory;
+import org.cggh.chassis.gwt.lib.ui.fractal.client.FractalUIComponentFactory;
 
 import com.google.gwt.user.client.ui.RootPanel;
 

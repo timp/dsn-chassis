@@ -3,6 +3,7 @@
  */
 package org.cggh.chassis.wwarn.prototype.client.curator.perspective;
 
+import org.cggh.chassis.gwt.lib.ui.fractal.client.FractalUIComponentFactory;
 import org.cggh.chassis.wwarn.prototype.client.base.perspective.BasePerspective;
 import org.cggh.chassis.wwarn.prototype.client.base.perspective.BasePerspectiveController;
 import org.cggh.chassis.wwarn.prototype.client.base.perspective.BasePerspectiveModel;
@@ -16,7 +17,6 @@ import org.cggh.chassis.wwarn.prototype.client.curator.widget.newreleasecriteria
 import org.cggh.chassis.wwarn.prototype.client.curator.widget.newstdatadict.CuratorWidgetNewStandardDataDictionary;
 import org.cggh.chassis.wwarn.prototype.client.curator.widget.newtask.CuratorWidgetDelegateNewTask;
 import org.cggh.chassis.wwarn.prototype.client.user.RoleNames;
-import org.cggh.chassis.wwarn.prototype.client.widget.WidgetFactory;
 
 
 
@@ -44,15 +44,15 @@ public class CuratorPerspective extends BasePerspective {
 		log.enter("init");
 
 		log.trace("register main components");
-		WidgetFactory.register(CuratorWidgetHome.class.getName(), CuratorWidgetHome.creator);
-		WidgetFactory.register(CuratorWidgetMySubmissions.class.getName(), CuratorWidgetMySubmissions.creator);
-		WidgetFactory.register(CuratorWidgetAllSubmissions.class.getName(), CuratorWidgetAllSubmissions.creator);
-		WidgetFactory.register(CuratorWidgetNewStandardDataDictionary.class.getName(), CuratorWidgetNewStandardDataDictionary.creator);
-		WidgetFactory.register(CuratorWidgetAllStandardDataDictionaries.class.getName(), CuratorWidgetAllStandardDataDictionaries.creator);
-		WidgetFactory.register(CuratorWidgetNewReleaseCriteria.class.getName(), CuratorWidgetNewReleaseCriteria.creator);
-		WidgetFactory.register(CuratorWidgetAllReleaseCriteria.class.getName(), CuratorWidgetAllReleaseCriteria.creator);
-		WidgetFactory.register(CuratorWidgetDelegateNewTask.class.getName(), CuratorWidgetDelegateNewTask.creator);
-		WidgetFactory.register(CuratorWidgetMyDelegatedTasks.class.getName(), CuratorWidgetMyDelegatedTasks.creator);
+		FractalUIComponentFactory.register(CuratorWidgetHome.class.getName(), CuratorWidgetHome.creator);
+		FractalUIComponentFactory.register(CuratorWidgetMySubmissions.class.getName(), CuratorWidgetMySubmissions.creator);
+		FractalUIComponentFactory.register(CuratorWidgetAllSubmissions.class.getName(), CuratorWidgetAllSubmissions.creator);
+		FractalUIComponentFactory.register(CuratorWidgetNewStandardDataDictionary.class.getName(), CuratorWidgetNewStandardDataDictionary.creator);
+		FractalUIComponentFactory.register(CuratorWidgetAllStandardDataDictionaries.class.getName(), CuratorWidgetAllStandardDataDictionaries.creator);
+		FractalUIComponentFactory.register(CuratorWidgetNewReleaseCriteria.class.getName(), CuratorWidgetNewReleaseCriteria.creator);
+		FractalUIComponentFactory.register(CuratorWidgetAllReleaseCriteria.class.getName(), CuratorWidgetAllReleaseCriteria.creator);
+		FractalUIComponentFactory.register(CuratorWidgetDelegateNewTask.class.getName(), CuratorWidgetDelegateNewTask.creator);
+		FractalUIComponentFactory.register(CuratorWidgetMyDelegatedTasks.class.getName(), CuratorWidgetMyDelegatedTasks.creator);
 
 		log.trace("init model");
 		model = new BasePerspectiveModel();
