@@ -13,6 +13,14 @@ import org.cggh.chassis.wwarn.prototype.client.base.perspective.BasePerspectiveM
 import org.cggh.chassis.wwarn.prototype.client.base.perspective.BasePerspectiveModelListener;
 import org.cggh.chassis.wwarn.prototype.client.base.perspective.BasePerspectiveModelReadOnly;
 import org.cggh.chassis.wwarn.prototype.client.base.perspective.SetMainWidgetCommand;
+import org.cggh.chassis.wwarn.prototype.client.coordinator.widget.allreqs.CoordinatorWidgetAllSubmissionRequests;
+import org.cggh.chassis.wwarn.prototype.client.coordinator.widget.allsubmissions.CoordinatorWidgetAllSubmissions;
+import org.cggh.chassis.wwarn.prototype.client.coordinator.widget.approvedreqs.CoordinatorWidgetApprovedSubmissionRequests;
+import org.cggh.chassis.wwarn.prototype.client.coordinator.widget.apprsubmissions.CoordinatorWidgetSubmissionsApprovedForRelease;
+import org.cggh.chassis.wwarn.prototype.client.coordinator.widget.cursubmissions.CoordinatorWidgetSubmissionsUnderCuration;
+import org.cggh.chassis.wwarn.prototype.client.coordinator.widget.deniedreqs.CoordinatorWidgetDeniedSubmissionRequests;
+import org.cggh.chassis.wwarn.prototype.client.coordinator.widget.home.CoordinatorWidgetHome;
+import org.cggh.chassis.wwarn.prototype.client.coordinator.widget.pendingreqs.CoordinatorWidgetPendingSubmissionRequests;
 import org.cggh.chassis.wwarn.prototype.client.curator.widget.allreleasecriteria.CuratorWidgetAllReleaseCriteria;
 import org.cggh.chassis.wwarn.prototype.client.curator.widget.allstdatadicts.CuratorWidgetAllStandardDataDictionaries;
 import org.cggh.chassis.wwarn.prototype.client.curator.widget.allsubmissions.CuratorWidgetAllSubmissions;
@@ -22,6 +30,7 @@ import org.cggh.chassis.wwarn.prototype.client.curator.widget.mytasks.CuratorWid
 import org.cggh.chassis.wwarn.prototype.client.curator.widget.newreleasecriteria.CuratorWidgetNewReleaseCriteria;
 import org.cggh.chassis.wwarn.prototype.client.curator.widget.newstdatadict.CuratorWidgetNewStandardDataDictionary;
 import org.cggh.chassis.wwarn.prototype.client.curator.widget.newtask.CuratorWidgetDelegateNewTask;
+import org.cggh.chassis.wwarn.prototype.client.gatekeeper.perspective.GatekeeperPerspective;
 import org.cggh.chassis.wwarn.prototype.client.gatekeeper.widget.allreqs.GatekeeperWidgetAllRequests;
 import org.cggh.chassis.wwarn.prototype.client.gatekeeper.widget.approvedreqs.GatekeeperWidgetApprovedRequests;
 import org.cggh.chassis.wwarn.prototype.client.gatekeeper.widget.deniedreqs.GatekeeperWidgetDeniedRequests;
@@ -168,7 +177,46 @@ class Renderer implements BasePerspectiveModelListener {
 			// do nothing
 			log.trace("widgetName is null");
 		}
-
+		else if (widgetName.equals(BasePerspective.WIDGET_HOME)) {
+			CoordinatorWidgetHome widget = new CoordinatorWidgetHome();
+			mainWidget = widget;
+			log.trace("created coordinator main widget: home");
+		}
+		else if (widgetName.equals(CoordinatorPerspective.WIDGET_PENDINGSUBMISSIONREQUESTS)) {
+			CoordinatorWidgetPendingSubmissionRequests widget = new CoordinatorWidgetPendingSubmissionRequests();
+			mainWidget = widget;
+			log.trace("created coordinator main widget: pending submission requests");
+		}
+		else if (widgetName.equals(CoordinatorPerspective.WIDGET_APPROVEDSUBMISSIONREQUESTS)) {
+			CoordinatorWidgetApprovedSubmissionRequests widget = new CoordinatorWidgetApprovedSubmissionRequests();
+			mainWidget = widget;
+			log.trace("created coordinator main widget: approved submission requests");
+		}
+		else if (widgetName.equals(CoordinatorPerspective.WIDGET_DENIEDSUBMISSIONREQUESTS)) {
+			CoordinatorWidgetDeniedSubmissionRequests widget = new CoordinatorWidgetDeniedSubmissionRequests();
+			mainWidget = widget;
+			log.trace("created coordinator main widget: denied submission requests");
+		}
+		else if (widgetName.equals(CoordinatorPerspective.WIDGET_ALLSUBMISSIONREQUESTS)) {
+			CoordinatorWidgetAllSubmissionRequests widget = new CoordinatorWidgetAllSubmissionRequests();
+			mainWidget = widget;
+			log.trace("created coordinator main widget: all submission requests");
+		}
+		else if (widgetName.equals(CoordinatorPerspective.WIDGET_SUBMISSIONSUNDERCURATION)) {
+			CoordinatorWidgetSubmissionsUnderCuration widget = new CoordinatorWidgetSubmissionsUnderCuration();
+			mainWidget = widget;
+			log.trace("created coordinator main widget: submissions under curation");
+		}
+		else if (widgetName.equals(CoordinatorPerspective.WIDGET_SUBMISSIONSAPPROVEDFORRELEASE)) {
+			CoordinatorWidgetSubmissionsApprovedForRelease widget = new CoordinatorWidgetSubmissionsApprovedForRelease();
+			mainWidget = widget;
+			log.trace("created coordinator main widget: submissions approved for release");
+		}
+		else if (widgetName.equals(CoordinatorPerspective.WIDGET_ALLSUBMISSIONS)) {
+			CoordinatorWidgetAllSubmissions widget = new CoordinatorWidgetAllSubmissions();
+			mainWidget = widget;
+			log.trace("created coordinator main widget: all submissions");
+		}
 		else {
 			log.trace("TODO widget name: "+widgetName);
 		}
