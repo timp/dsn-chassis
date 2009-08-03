@@ -26,7 +26,6 @@ public abstract class BasePerspective extends FractalUIComponent implements Pers
 	
 	
 	protected static final String PROP_MAINWIDGETNAME = "mainWidgetName";
-	public static final String WIDGET_HOME = "home";
 
 	
 	

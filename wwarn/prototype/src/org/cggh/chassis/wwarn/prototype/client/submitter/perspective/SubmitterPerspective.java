@@ -8,8 +8,17 @@ package org.cggh.chassis.wwarn.prototype.client.submitter.perspective;
 import org.cggh.chassis.wwarn.prototype.client.base.perspective.BasePerspective;
 import org.cggh.chassis.wwarn.prototype.client.base.perspective.BasePerspectiveController;
 import org.cggh.chassis.wwarn.prototype.client.base.perspective.BasePerspectiveModel;
+import org.cggh.chassis.wwarn.prototype.client.submitter.widget.alldatadicts.SubmitterWidgetAllDataDictionaries;
+import org.cggh.chassis.wwarn.prototype.client.submitter.widget.allstudies.SubmitterWidgetAllStudies;
 import org.cggh.chassis.wwarn.prototype.client.submitter.widget.home.SubmitterWidgetHome;
+import org.cggh.chassis.wwarn.prototype.client.submitter.widget.mydatadicts.SubmitterWidgetMyDataDictionaries;
+import org.cggh.chassis.wwarn.prototype.client.submitter.widget.mystudies.SubmitterWidgetMyStudies;
+import org.cggh.chassis.wwarn.prototype.client.submitter.widget.mysubmissions.SubmitterWidgetMySubmissions;
+import org.cggh.chassis.wwarn.prototype.client.submitter.widget.newdatadict.SubmitterWidgetNewDataDictionary;
+import org.cggh.chassis.wwarn.prototype.client.submitter.widget.newstudy.SubmitterWidgetNewStudy;
+import org.cggh.chassis.wwarn.prototype.client.submitter.widget.newsubmission.SubmitterWidgetNewSubmission;
 import org.cggh.chassis.wwarn.prototype.client.user.RoleNames;
+import org.cggh.chassis.wwarn.prototype.client.widget.WidgetFactory;
 
 
 
@@ -18,16 +27,6 @@ import org.cggh.chassis.wwarn.prototype.client.user.RoleNames;
  *
  */
 public class SubmitterPerspective extends BasePerspective {
-
-	public static final String WIDGET_NEWSTUDY = "submitter-newstudy";
-	public static final String WIDGET_MYSTUDIES = "submitter-mystudies";
-	public static final String WIDGET_ALLSTUDIES = "submitter-allstudies";
-	public static final String WIDGET_NEWSUBMISSION = "submitter-newsubmission";
-	public static final String WIDGET_MYSUBMISSIONS = "submitter-mysubmissions";
-	public static final String WIDGET_NEWDATADICTIONARY = "submitter-newdatadictionary";
-	public static final String WIDGET_MYDATADICTIONARIES = "submitter-mydatadictionaries";
-	public static final String WIDGET_ALLDATADICTIONARIES = "submitter-alldatadictionaries";
-	public static final String ELEMENTID_APPCONTENT = "appcontent";
 
 
 	
@@ -46,6 +45,17 @@ public class SubmitterPerspective extends BasePerspective {
 	private void init() {
 		log.enter("init");
 
+		log.trace("register main components");
+		WidgetFactory.register(SubmitterWidgetHome.class.getName(), SubmitterWidgetHome.creator);
+		WidgetFactory.register(SubmitterWidgetNewStudy.class.getName(), SubmitterWidgetNewStudy.creator);
+		WidgetFactory.register(SubmitterWidgetAllStudies.class.getName(), SubmitterWidgetAllStudies.creator);
+		WidgetFactory.register(SubmitterWidgetMyStudies.class.getName(), SubmitterWidgetMyStudies.creator);
+		WidgetFactory.register(SubmitterWidgetNewSubmission.class.getName(), SubmitterWidgetNewSubmission.creator);
+		WidgetFactory.register(SubmitterWidgetMySubmissions.class.getName(), SubmitterWidgetMySubmissions.creator);
+		WidgetFactory.register(SubmitterWidgetNewDataDictionary.class.getName(), SubmitterWidgetNewDataDictionary.creator);
+		WidgetFactory.register(SubmitterWidgetMyDataDictionaries.class.getName(), SubmitterWidgetMyDataDictionaries.creator);
+		WidgetFactory.register(SubmitterWidgetAllDataDictionaries.class.getName(), SubmitterWidgetAllDataDictionaries.creator);
+		
 		log.trace("init model");
 		this.model = new BasePerspectiveModel();
 
@@ -69,8 +79,7 @@ public class SubmitterPerspective extends BasePerspective {
 
 	@Override
 	public void render() {
-		// TODO Auto-generated method stub
-		
+		// TODO
 	}
 
 
