@@ -13,10 +13,14 @@ import org.cggh.chassis.gwt.lib.log.client.Logger;
  */
 class Controller {
 
+	
+	
 	private Model model;
 	private SubmitterPerspective owner;
 	private Logger log;
 
+	
+	
 	Controller(Model model, SubmitterPerspective owner) {
 		this.model = model;
 		this.owner = owner;
@@ -36,24 +40,34 @@ class Controller {
 		log.enter("setMainWidget");
 		log.trace("widgetName: "+widgetName);
 		
-		this.model.setMainWidgetName(widgetName);
+		this.doSetMainWidget(widgetName);
 		
 		if (waypoint) {
-			this.owner.waypoint();
+			this.owner.waypoint(); // new history item
+		} 
+		else {
+			this.owner.syncStateKey(); // sync state key passively, no new history item
 		}
 		
 		log.leave();
 	}
+	
+	
+	
+	private void doSetMainWidget(String widgetName) {
+		log.enter("doSetMainWidget");
+		
+		this.model.setMainWidgetName(widgetName);		
+		
+		log.leave();
+	}
 
+	
+	
 	void setIsCurrentPerspective(boolean b) {
 		log.enter("setIsCurrent");
 
 		this.model.setIsCurrentPerspective(b);
-		
-		// TODO hack for now to fire widget name event
-		if (b) {
-	 		this.model.setMainWidgetName(this.model.getMainWidgetName());
-		}
 		
 		log.leave();
 	}
@@ -67,7 +81,7 @@ class Controller {
 		this.setMainWidget(SubmitterPerspective.WIDGET_HOME, false);
 
 		// TODO review this
-		log.trace("sync state key, in case any parents change state");
+		log.trace("sync state key, in case any parents or children change state");
 		this.owner.syncStateKey();
 		
 		log.leave();

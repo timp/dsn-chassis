@@ -100,7 +100,7 @@ class Renderer implements ModelListener {
 		this.userNameLabel.getElement().setId(Application.ELEMENTID_USERNAMELABEL);
 		p.add(this.userNameLabel);
 		
-		p.add(new Label("| current role:"));
+		p.add(new Label("| role:"));
 
 		this.currentRoleLabel = new Label();
 		this.currentRoleLabel.getElement().setId(Application.ELEMENTID_CURRENTPERSPECTIVELABEL);

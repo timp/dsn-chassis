@@ -10,6 +10,9 @@ import org.cggh.chassis.gwt.lib.ui.fractal.client.FractalUIComponent;
 import org.cggh.chassis.wwarn.prototype.client.shared.Perspective;
 import org.cggh.chassis.wwarn.prototype.client.shared.RoleNames;
 
+import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.json.client.JSONString;
+
 
 /**
  * @author aliman
@@ -26,6 +29,7 @@ public class CuratorPerspective extends FractalUIComponent implements Perspectiv
 	public static final String WIDGET_ALLRELEASECRITERIA = "allreleasecriteria";
 	public static final String WIDGET_DELEGATENEWTASK = "delegatenewtask";
 	public static final String WIDGET_MYDELEGATEDTASKS = "mydelegatedtasks";
+	private static final String PROP_MAINWIDGETNAME = "mainWidgetName";
 	
 	
 	private Logger log;
@@ -39,6 +43,8 @@ public class CuratorPerspective extends FractalUIComponent implements Perspectiv
 		this.init();
 	}
 	
+
+	
 	private void init() {
 		log.enter("init");
 
@@ -49,13 +55,14 @@ public class CuratorPerspective extends FractalUIComponent implements Perspectiv
 		controller = new Controller(model, this); 
 
 		log.trace("init renderer");
-		renderer = new Renderer(controller);
+		renderer = new Renderer(this, controller, model);
 		model.addListener(renderer);
 		
 		log.leave();
 	}
 
 
+	
 	public String getRoleName() {
 		return RoleNames.CURATOR;
 	}
@@ -64,24 +71,66 @@ public class CuratorPerspective extends FractalUIComponent implements Perspectiv
 
 	@Override
 	protected void syncStateKey() {
-		// TODO Auto-generated method stub
+		log.enter("syncStateKey");
 		
+		log.trace("sync main widget: "+this.model.getMainWidgetName());
+		this.stateKey = new JSONObject();
+		JSONString value = new JSONString(this.model.getMainWidgetName());
+		this.stateKey.put(PROP_MAINWIDGETNAME, value);
+		
+		log.leave();
 	}
 
+	
+	
 	public void setIsCurrentPerspective(boolean b) {
 		this.controller.setIsCurrentPerspective(b);
 	}
 
+	
+	
 	@Override
 	protected Deferred<FractalUIComponent> syncState() {
-		// TODO Auto-generated method stub
+		log.enter("syncState");
 
+		if (this.stateKey == null) {
+
+			log.trace("state key is null, override to defaults");
+			this.controller.setDefault();
+
+		}
+		else {
+			
+			log.trace("set state as per key");
+			this.syncMainWidget();
+
+		}
+		
 		Deferred<FractalUIComponent> def = new Deferred<FractalUIComponent>();
 		def.callback(this); // callback immediately
 		
+		log.leave();
 		return def;
 	}
 
+	
+	
+	private void syncMainWidget() {
+		log.enter("syncMainWidget");
+		
+		if (stateKey.containsKey(PROP_MAINWIDGETNAME)) {
+			
+			JSONString widgetName = (JSONString) stateKey.get(PROP_MAINWIDGETNAME);
+			log.trace("found main widget name: "+widgetName.stringValue());
+			this.controller.setMainWidget(widgetName.stringValue(), false);
+
+		}
+		
+		log.leave();
+	}
+
+	
+	
 	@Override
 	public void render() {
 		// TODO Auto-generated method stub
