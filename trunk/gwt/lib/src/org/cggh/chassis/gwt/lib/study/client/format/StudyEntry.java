@@ -202,6 +202,38 @@ public class StudyEntry extends AtomEntry {
 
 
 
+	public void setModules(boolean cli, boolean inv, boolean pha, boolean mol) {
+		XML.removeElementsByTagName(studyElement, ChassisNS.MODULES);
+		Element modulesElement = XML.createElement(studyElement, ChassisNS.MODULES);
+		modulesElement.setAttribute(ChassisNS.CLINICAL, Boolean.toString(cli));
+		modulesElement.setAttribute(ChassisNS.INVITRO, Boolean.toString(inv));
+		modulesElement.setAttribute(ChassisNS.PHARMACOLOGY, Boolean.toString(pha));
+		modulesElement.setAttribute(ChassisNS.MOLECULAR, Boolean.toString(mol));
+	}
+
+
+
+	public boolean getModule(String moduleName) {
+		Element moduleElement = XML.getElementByTagName(studyElement, ChassisNS.MODULES);
+		String value = moduleElement.getAttribute(moduleName);
+
+		// if no attribute, assume false
+		if (value == null) {
+			return false;
+		}
+
+		// try to parse value as boolean
+		try {
+			return Boolean.parseBoolean(value);
+		}
+		catch (Throwable ex) {
+			// if cannot parse, assume false
+			return false;
+		}
+	}
+
+
+
 }
 
 
