@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.cggh.chassis.wwarn.prototype.client.submitter.widget.study;
+package org.cggh.chassis.wwarn.prototype.client.submitter.widget.viewstudy;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.cggh.chassis.wwarn.prototype.client.submitter.widget.study;
+package org.cggh.chassis.wwarn.prototype.client.submitter.widget.viewssq;
 
 import org.cggh.chassis.gwt.lib.study.client.format.StudyEntry;
 
@@ -10,8 +10,6 @@ import org.cggh.chassis.gwt.lib.study.client.format.StudyEntry;
  *
  */
 interface ModelListener {
-
-	void onMessageChanged(String from, String to);
 
 	void onStudyEntryChanged(StudyEntry from, StudyEntry to);
 

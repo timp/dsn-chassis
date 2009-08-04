@@ -15,5 +15,6 @@ public class Styles {
 	public static final String ACTIONSPANELCONTAINER = "actionspanelcontainer";
 	public static final String CONTENTPANELCONTAINER = "contentpanelcontainer";
 	public static final String STUDYPANEL = "studypanel";
+	public static final String ACTION = "action";
 
 }
