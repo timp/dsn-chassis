@@ -1,0 +1,31 @@
+#summary home page for the Chassis/WWARN product.
+
+= Milestones =
+
+== Public Release Milestones ==
+
+=== M1 (first public release) ===
+
+Due: Jan 2010
+
+Status: pending
+
+Scope: see WwarnMilestoneOneRequirementsSpec
+
+== Internal Milestones ==
+
+=== IM0 (envisioning) ===
+
+Due: 11 Aug 2009
+
+Status: pending
+
+Scope: see ChassisWwarnEnvisioning
+
+=== IM1 (first development iteration) ===
+
+Due: 25 Aug 2009
+
+Status: pending
+
+Scope: see ChassisWwarnIterationOne
