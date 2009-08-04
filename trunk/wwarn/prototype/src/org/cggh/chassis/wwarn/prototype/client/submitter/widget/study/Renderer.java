@@ -7,10 +7,14 @@ import org.cggh.chassis.gwt.lib.common.client.ChassisNS;
 import org.cggh.chassis.gwt.lib.study.client.format.StudyEntry;
 import org.cggh.chassis.wwarn.prototype.client.style.Styles;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
@@ -30,9 +34,11 @@ public class Renderer implements ModelListener {
 	private DockPanel mainPanel;
 	private FlowPanel actionsPanel;
 	private FlowPanel contentPanelContainer;
+	private SubmitterWidgetStudy owner;
 
-	Renderer(Controller controller) {
+	Renderer(Controller controller, SubmitterWidgetStudy owner) {
 		this.controller = controller;
+		this.owner = owner;
 	}
 
 	void setRootPanel(RootPanel root) {
@@ -90,14 +96,14 @@ public class Renderer implements ModelListener {
 		messagePanel.setHTML("<p>"+to+"</p>");
 	}
 
-	public void onStudyEntryChanged(StudyEntry from, StudyEntry to) {
+	public void onStudyEntryChanged(StudyEntry from, final StudyEntry to) {
 		
 		// render study panel
 		
 		studyPanel.clear();
 		
 		// title
-		studyPanel.add(new HTML("<p><strong>Title: </strong>"+to.getTitle()+"</p>"));
+		studyPanel.add(new HTML("<p><strong>Study title: </strong>"+to.getTitle()+"</p>"));
 		
 		// Summary
 		studyPanel.add(new HTML("<p><strong>Summary: </strong><em>"+to.getSummary()+"</em></p>"));
@@ -130,10 +136,47 @@ public class Renderer implements ModelListener {
 		
 		actionsPanel.add(new HTML("<h3>Actions</h3>"));
 		
-		actionsPanel.add(new HTML("<p>Edit study title, summary or modules.</p>"));
-		actionsPanel.add(new HTML("<p>View study site questionnaire (SSQ).</p>"));
-		actionsPanel.add(new HTML("<p>Edit study site questionnaire (SSQ).</p>"));		
+		VerticalPanel linksPanel = new VerticalPanel();
+		actionsPanel.add(linksPanel);
 		
+		// edit study action
+		
+		Anchor editStudyLink = new Anchor("edit study title, summary or modules");
+		editStudyLink.addClickHandler(new ClickHandler() {
+
+			public void onClick(ClickEvent event) {
+				owner.fireOnActionEditStudy(to);
+			}
+			
+		});
+		linksPanel.add(editStudyLink);
+
+		// TODO fix these
+		
+		// view study site questionnaire action
+		
+		Anchor viewSsqLink = new Anchor("view study site questionnaire (SSQ)");
+		viewSsqLink.addClickHandler(new ClickHandler() {
+
+			public void onClick(ClickEvent event) {
+				owner.fireOnActionViewSsq(to);
+			}
+		
+		});
+		linksPanel.add(viewSsqLink);
+		
+		// edit SSQ action
+		
+		Anchor editSsqLink = new Anchor("edit study site questionnaire (SSQ)");
+		editSsqLink.addClickHandler(new ClickHandler(){
+
+			public void onClick(ClickEvent event) {
+				owner.fireOnActionEditSsq(to);
+			}
+		
+		});
+		linksPanel.add(editSsqLink);
+
 	}
 
 }

@@ -12,21 +12,21 @@ import org.cggh.chassis.gwt.lib.log.client.Logger;
  * @author aliman
  *
  */
-public class BasePerspectiveController {
+public class PerspectiveController {
 
 	
 	
-	protected BasePerspectiveModel model;
+	protected PerspectiveModel model;
 	protected BasePerspective owner;
 	protected Logger log;
 	
 	
 	
-	public BasePerspectiveController(BasePerspectiveModel model, BasePerspective owner) {
+	public PerspectiveController(PerspectiveModel model, BasePerspective owner) {
 		this.model = model;
 		this.owner = owner;
 		this.log = new GWTLogger();
-		this.log.setCurrentClass(BasePerspectiveController.class.getName());
+		this.log.setCurrentClass(PerspectiveController.class.getName());
 	}
 
 	

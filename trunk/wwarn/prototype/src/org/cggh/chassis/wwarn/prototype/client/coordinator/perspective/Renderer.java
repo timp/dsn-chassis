@@ -9,10 +9,10 @@ import org.cggh.chassis.gwt.lib.log.client.Logger;
 import org.cggh.chassis.gwt.lib.ui.fractal.client.FractalUIComponent;
 import org.cggh.chassis.gwt.lib.ui.fractal.client.FractalUIComponentFactory;
 import org.cggh.chassis.wwarn.prototype.client.base.perspective.BasePerspective;
-import org.cggh.chassis.wwarn.prototype.client.base.perspective.BasePerspectiveController;
-import org.cggh.chassis.wwarn.prototype.client.base.perspective.BasePerspectiveModel;
-import org.cggh.chassis.wwarn.prototype.client.base.perspective.BasePerspectiveModelListener;
-import org.cggh.chassis.wwarn.prototype.client.base.perspective.BasePerspectiveModelReadOnly;
+import org.cggh.chassis.wwarn.prototype.client.base.perspective.PerspectiveController;
+import org.cggh.chassis.wwarn.prototype.client.base.perspective.PerspectiveModel;
+import org.cggh.chassis.wwarn.prototype.client.base.perspective.PerspectiveModelListener;
+import org.cggh.chassis.wwarn.prototype.client.base.perspective.PerspectiveModelReadOnly;
 import org.cggh.chassis.wwarn.prototype.client.base.perspective.SetMainWidgetCommand;
 import org.cggh.chassis.wwarn.prototype.client.coordinator.widget.allreqs.CoordinatorWidgetAllSubmissionRequests;
 import org.cggh.chassis.wwarn.prototype.client.coordinator.widget.allsubmissions.CoordinatorWidgetAllSubmissions;
@@ -55,16 +55,16 @@ import com.google.gwt.user.client.ui.RootPanel;
  * @author aliman
  *
  */
-class Renderer implements BasePerspectiveModelListener {
+class Renderer implements PerspectiveModelListener {
 
-	private BasePerspectiveController controller;
+	private PerspectiveController controller;
 	private MenuBar mainMenu;
 	private Logger log;
 	private FractalUIComponent mainWidget = null;
 	private CoordinatorPerspective owner;
-	private BasePerspectiveModelReadOnly model;
+	private PerspectiveModelReadOnly model;
 
-	Renderer(CoordinatorPerspective owner, BasePerspectiveController controller, BasePerspectiveModel model) {
+	Renderer(CoordinatorPerspective owner, PerspectiveController controller, PerspectiveModel model) {
 		this.owner = owner;
 		this.controller = controller;
 		this.model = model;

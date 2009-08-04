@@ -10,13 +10,13 @@ import java.util.List;
  * @author aliman
  *
  */
-public class BasePerspectiveModel implements BasePerspectiveModelReadOnly {
+public class PerspectiveModel implements PerspectiveModelReadOnly {
 
 	protected boolean isCurrentPerspective;
-	protected List<BasePerspectiveModelListener> listeners = new ArrayList<BasePerspectiveModelListener>();
+	protected List<PerspectiveModelListener> listeners = new ArrayList<PerspectiveModelListener>();
 	protected String mainWidgetName;
 
-	public void addListener(BasePerspectiveModelListener l) {
+	public void addListener(PerspectiveModelListener l) {
 		this.listeners.add(l);
 	}
 
@@ -27,7 +27,7 @@ public class BasePerspectiveModel implements BasePerspectiveModelReadOnly {
 	public void setIsCurrentPerspective(boolean current) {
 		boolean wasCurrent = this.isCurrentPerspective;
 		this.isCurrentPerspective = current;
-		for (BasePerspectiveModelListener l : listeners) {
+		for (PerspectiveModelListener l : listeners) {
 			l.onIsCurrentPerspectiveChanged(wasCurrent, current);
 		}
 	}
@@ -35,7 +35,7 @@ public class BasePerspectiveModel implements BasePerspectiveModelReadOnly {
 	public void setMainWidgetName(String to) {
 		String from = this.mainWidgetName;
 		this.mainWidgetName = to;
-		for (BasePerspectiveModelListener l : listeners) {
+		for (PerspectiveModelListener l : listeners) {
 			l.onMainWidgetChanged(from, to);
 		}
 	}

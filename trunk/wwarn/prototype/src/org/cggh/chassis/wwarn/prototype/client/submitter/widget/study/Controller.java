@@ -20,16 +20,32 @@ class Controller {
 		this.owner = owner;
 	}
 
-	void setMessage(String message) {
+	void setMessage(String message, boolean waypoint) {
 		model.setMessage(message);
 
-		// TODO history management
+		if (waypoint) {
+			owner.waypoint();
+		}
+		else {
+			owner.syncStateKey();
+		}
+
 	}
 
 	void setStudyEntry(StudyEntry study) {
+		this.setStudyEntry(study, true);
+	}
+	
+	void setStudyEntry(StudyEntry study, boolean waypoint) {
 		model.setStudyEntry(study);
 		
-		// TODO history management
+		if (waypoint) {
+			owner.waypoint();
+		}
+		else {
+			owner.syncStateKey();
+		}
+
 	}
 
 }

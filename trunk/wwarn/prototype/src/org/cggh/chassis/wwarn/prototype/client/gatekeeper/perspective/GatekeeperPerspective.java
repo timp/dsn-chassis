@@ -5,8 +5,8 @@ package org.cggh.chassis.wwarn.prototype.client.gatekeeper.perspective;
 
 import org.cggh.chassis.gwt.lib.ui.fractal.client.FractalUIComponentFactory;
 import org.cggh.chassis.wwarn.prototype.client.base.perspective.BasePerspective;
-import org.cggh.chassis.wwarn.prototype.client.base.perspective.BasePerspectiveController;
-import org.cggh.chassis.wwarn.prototype.client.base.perspective.BasePerspectiveModel;
+import org.cggh.chassis.wwarn.prototype.client.base.perspective.PerspectiveController;
+import org.cggh.chassis.wwarn.prototype.client.base.perspective.PerspectiveModel;
 import org.cggh.chassis.wwarn.prototype.client.gatekeeper.widget.allreqs.GatekeeperWidgetAllRequests;
 import org.cggh.chassis.wwarn.prototype.client.gatekeeper.widget.approvedreqs.GatekeeperWidgetApprovedRequests;
 import org.cggh.chassis.wwarn.prototype.client.gatekeeper.widget.deniedreqs.GatekeeperWidgetDeniedRequests;
@@ -47,10 +47,10 @@ public class GatekeeperPerspective extends BasePerspective {
 		FractalUIComponentFactory.register(GatekeeperWidgetHome.class.getName(), GatekeeperWidgetHome.creator);
 
 		log.trace("init model");
-		model = new BasePerspectiveModel();
+		model = new PerspectiveModel();
 
 		log.trace("init controller");
-		controller = new BasePerspectiveController(model, this); 
+		controller = new PerspectiveController(model, this); 
 
 		log.trace("init renderer");
 		renderer = new Renderer(this, controller, model);

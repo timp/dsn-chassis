@@ -5,8 +5,8 @@ package org.cggh.chassis.wwarn.prototype.client.coordinator.perspective;
 
 import org.cggh.chassis.gwt.lib.ui.fractal.client.FractalUIComponentFactory;
 import org.cggh.chassis.wwarn.prototype.client.base.perspective.BasePerspective;
-import org.cggh.chassis.wwarn.prototype.client.base.perspective.BasePerspectiveController;
-import org.cggh.chassis.wwarn.prototype.client.base.perspective.BasePerspectiveModel;
+import org.cggh.chassis.wwarn.prototype.client.base.perspective.PerspectiveController;
+import org.cggh.chassis.wwarn.prototype.client.base.perspective.PerspectiveModel;
 import org.cggh.chassis.wwarn.prototype.client.coordinator.widget.allreqs.CoordinatorWidgetAllSubmissionRequests;
 import org.cggh.chassis.wwarn.prototype.client.coordinator.widget.allsubmissions.CoordinatorWidgetAllSubmissions;
 import org.cggh.chassis.wwarn.prototype.client.coordinator.widget.approvedreqs.CoordinatorWidgetApprovedSubmissionRequests;
@@ -53,10 +53,10 @@ public class CoordinatorPerspective extends BasePerspective {
 		FractalUIComponentFactory.register(CoordinatorWidgetAllSubmissions.class.getName(), CoordinatorWidgetAllSubmissions.creator);
 
 		log.trace("init model");
-		model = new BasePerspectiveModel();
+		model = new PerspectiveModel();
 
 		log.trace("init controller");
-		controller = new BasePerspectiveController(model, this); 
+		controller = new PerspectiveController(model, this); 
 
 		log.trace("init renderer");
 		renderer = new Renderer(this, controller, model);
