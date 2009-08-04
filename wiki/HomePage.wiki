@@ -31,4 +31,4 @@ Things are at a relatively early stage, but you might be interested in the follo
   * GwtAndXml
   * GwtAndTesting
   * WhyAtom
-  * StudyMetadataServiceAPIs
+  * [StudyMetadataServiceAPIs]
