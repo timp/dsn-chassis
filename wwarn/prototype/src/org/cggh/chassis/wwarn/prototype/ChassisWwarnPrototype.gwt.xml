@@ -8,6 +8,8 @@
 	<inherits name="org.cggh.chassis.gwt.lib.log.Log"/>
 	<inherits name="org.cggh.chassis.gwt.lib.twisted.Twisted"/>
 	<inherits name="org.cggh.chassis.gwt.lib.ui.fractal.Fractal"/>
+	<inherits name="org.cggh.chassis.gwt.lib.atom.Atom"/>
+	<inherits name="org.cggh.chassis.gwt.lib.study.Study"/>
 	<!-- <inherits name="com.google.gwt.user.theme.chrome.Chrome"/> -->
 	<!-- <inherits name="com.google.gwt.user.theme.dark.Dark"/> -->
 	<entry-point

@@ -8,10 +8,12 @@ import org.cggh.chassis.gwt.lib.study.client.format.StudyEntry;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
@@ -27,10 +29,10 @@ class Renderer implements ModelListener {
 	private RootPanel rootPanel;
 	private TextBox titleInput;
 	private TextArea summaryInput;
-	private TextBox piNameInput;
-	private TextBox piEmailInput;
-	private TextBox startYearInput;
-	private TextBox endYearInput;
+	private RadioButton clinicalButton;
+	private RadioButton invitroButton;
+	private RadioButton pharmacologyButton;
+	private RadioButton molecularButton;
 
 	Renderer(Controller controller) {
 		this.controller = controller;
@@ -47,52 +49,42 @@ class Renderer implements ModelListener {
 		vp1.add(new HTML("<h2>New Study</h2>"));
 		vp1.add(new HTML("<p>Please enter some details about the study...</p>"));
 		
-		vp1.add(new HTML("<hr/><h3>1. Study Title</h3>"));
+		vp1.add(new HTML("<h3>1. Title</h3>"));
 		vp1.add(new HTML("<p>Provide a title for the study..."));
 		
 		titleInput = new TextBox();
 		titleInput.setWidth("40em");
 		vp1.add(titleInput);
 		
-		vp1.add(new HTML("<p><em>E.g., @@TODO</em></p>"));
-		
-		vp1.add(new HTML("<hr/><h3>2. Summary</h3>"));
+		vp1.add(new HTML("<h3>2. Summary</h3>"));
 		vp1.add(new HTML("<p>Provide a short textual summary of the study..."));
 		
 		summaryInput = new TextArea();
 		summaryInput.setSize("40em", "10em");
 		vp1.add(summaryInput);
 
-		vp1.add(new HTML("<p><em>E.g., @@TODO</em></p>"));
+		vp1.add(new HTML("<h3>3. Modules</h3>"));
+		vp1.add(new HTML("<p>Select the WWARN modules to which the study is relevant...</p>"));
+		
+		HorizontalPanel hp1 = new HorizontalPanel();
+		
+		hp1.add(new Label("clinical: "));
+		clinicalButton = new RadioButton("clinical");
+		hp1.add(clinicalButton);
 
-		vp1.add(new HTML("<hr/><h3>3. Principal Investigator</h3>"));
-		vp1.add(new HTML("<p>Who was the PI?</p>"));
+		hp1.add(new Label("in vitro: "));
+		invitroButton = new RadioButton("invitro");
+		hp1.add(invitroButton);
+
+		hp1.add(new Label("pharmacology: "));
+		pharmacologyButton = new RadioButton("pharmacology");
+		hp1.add(pharmacologyButton);
+
+		hp1.add(new Label("molecular: "));
+		molecularButton = new RadioButton("molecular");
+		hp1.add(molecularButton);
 		
-		vp1.add(new HTML("<h4>3.1. PI Full Name</h4>"));
-		piNameInput = new TextBox();
-		piNameInput.setWidth("40em");
-		vp1.add(piNameInput);
-		
-		vp1.add(new HTML("<h4>3.2. PI Email Address</h4>"));
-		piEmailInput = new TextBox();
-		piEmailInput.setWidth("40em");
-		vp1.add(piEmailInput);
-		
-		
-		vp1.add(new HTML("<hr/><h3>4. Start and End</h3>"));
-		vp1.add(new HTML("<p>In what years did the study start and end?</p>"));
-		
-		vp1.add(new HTML("<h4>4.1. Start Year</h4>"));
-		
-		startYearInput = new TextBox();
-		startYearInput.setWidth("4em");
-		vp1.add(startYearInput);
-		
-		vp1.add(new HTML("<h4>4.2. End Year</h4>"));
-		
-		endYearInput = new TextBox();
-		endYearInput.setWidth("4em");
-		vp1.add(endYearInput);
+		vp1.add(hp1);
 		
 		vp1.add(new HTML("<hr/>"));
 		
@@ -105,18 +97,30 @@ class Renderer implements ModelListener {
 
 				String title = titleInput.getValue();
 				String summary = summaryInput.getValue();
-				String piName = piNameInput.getValue();
-				String piEmail = piEmailInput.getValue();
-				String startYear = startYearInput.getValue();
-				String endYear = endYearInput.getValue();
+				
+				boolean cli = clinicalButton.getValue();
+				boolean inv = invitroButton.getValue();
+				boolean pha = pharmacologyButton.getValue();
+				boolean mol = molecularButton.getValue();
+				
+				if (title.trim().equals("")) {
+					Window.alert("Please provide a title.");
+					return;
+				}
+				
+				if (!cli && !inv && !pha && !mol) {
+					Window.alert("At least one module must be selected.");
+					return;
+				}
+				
 				try {
 
 					StudyEntry study = new StudyEntry();
 					study.setTitle(title);
 					study.setSummary(summary);
-					study.setStartYear(startYear);
-					study.setEndYear(endYear);
-					// TODO PI name and email
+					study.setModules(cli, inv, pha, mol);
+					
+					// TODO modules
 					
 					controller.createStudy(study);
 					

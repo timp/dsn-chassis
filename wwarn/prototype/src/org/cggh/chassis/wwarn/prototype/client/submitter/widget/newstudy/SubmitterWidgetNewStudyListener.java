@@ -9,11 +9,8 @@ import org.cggh.chassis.gwt.lib.study.client.format.StudyEntry;
  * @author aliman
  *
  */
-public class SubmitterWidgetNewStudyListener {
+public interface SubmitterWidgetNewStudyListener {
 
-	public void onStudyCreationSuccess(StudyEntry study) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void onStudyCreationSuccess(StudyEntry study);
 
 }

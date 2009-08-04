@@ -102,7 +102,6 @@ public abstract class BasePerspective extends FractalUIComponent implements Pers
 	public abstract String getDefaultMainWidgetName();
 
 	
-	
 
 
 }
