@@ -21,5 +21,13 @@ public class ChassisNS {
 	public static final String STARTYEAR = "startyear";
 	public static final String ENDYEAR = "endyear";
 	public static final String SAMPLESIZE = "samplesize";
+	
+	// TODO factor these out into WWARN extension
+	public static final String MODULES = "modules";
+	public static final String CLINICAL = "clinical";
+	public static final String INVITRO = "invitro";
+	public static final String PHARMACOLOGY = "pharmacology";
+	public static final String MOLECULAR = "molecular";
+	
 
 }
