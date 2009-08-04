@@ -26,4 +26,6 @@ http://farm4.static.flickr.com/3531/3749137675_d038f7cdf9_b_d.jpg
 
 = Initial Architecture Model =
 
-TODO
+TODO architecture model
+
+See also [StudyMetadataServiceAPIs] as an example of extending AtomPub for persistence and query of study metadata.
