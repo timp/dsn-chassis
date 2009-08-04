@@ -49,6 +49,7 @@ public class Renderer implements ModelListener {
 		mainPanel = new DockPanel();
 		rootPanel.add(mainPanel);
 		mainPanel.addStyleName(Styles.MAINPANEL);
+		mainPanel.setWidth("100%");
 
 		// actions panel container
 		
