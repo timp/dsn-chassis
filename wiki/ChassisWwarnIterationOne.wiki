@@ -6,4 +6,4 @@ To develop and deploy a complete end-to-end system for just a few user-stories, 
 
 = Scope =
 
-TBD
+1, 
