@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.cggh.chassis.wwarn.prototype.client.submitter.widget.study;
+package org.cggh.chassis.wwarn.prototype.client.submitter.widget.viewstudy;
 
 import org.cggh.chassis.gwt.lib.study.client.format.StudyEntry;
 
@@ -13,9 +13,9 @@ class Controller {
 
 	private Model model;
 	@SuppressWarnings("unused")
-	private SubmitterWidgetStudy owner;
+	private SubmitterWidgetViewStudy owner;
 
-	Controller(Model model,	SubmitterWidgetStudy owner) {
+	Controller(Model model,	SubmitterWidgetViewStudy owner) {
 		this.model = model;
 		this.owner = owner;
 	}

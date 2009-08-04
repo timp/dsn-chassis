@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.cggh.chassis.wwarn.prototype.client.submitter.widget.study;
+package org.cggh.chassis.wwarn.prototype.client.submitter.widget.viewstudy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +17,7 @@ import com.google.gwt.user.client.ui.RootPanel;
  * @author aliman
  *
  */
-public class SubmitterWidgetStudy extends FractalUIComponent {
+public class SubmitterWidgetViewStudy extends FractalUIComponent {
 
 	
 	
@@ -25,7 +25,7 @@ public class SubmitterWidgetStudy extends FractalUIComponent {
 	public static final Function<Object[],FractalUIComponent> creator = new Function<Object[],FractalUIComponent>() {
 		
 		public FractalUIComponent apply(Object[] args) {
-			return new SubmitterWidgetStudy();
+			return new SubmitterWidgetViewStudy();
 		}
 		
 	};
@@ -43,9 +43,9 @@ public class SubmitterWidgetStudy extends FractalUIComponent {
 	
 	
 	
-	public SubmitterWidgetStudy() {
+	public SubmitterWidgetViewStudy() {
 		super();
-		this.log.setCurrentClass(SubmitterWidgetStudy.class.getName());
+		this.log.setCurrentClass(SubmitterWidgetViewStudy.class.getName());
 		this.initialise();
 	}
 

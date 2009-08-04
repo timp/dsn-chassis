@@ -24,8 +24,10 @@ import org.cggh.chassis.wwarn.prototype.client.submitter.widget.newdatadict.Subm
 import org.cggh.chassis.wwarn.prototype.client.submitter.widget.newstudy.SubmitterWidgetNewStudy;
 import org.cggh.chassis.wwarn.prototype.client.submitter.widget.newstudy.SubmitterWidgetNewStudyListener;
 import org.cggh.chassis.wwarn.prototype.client.submitter.widget.newsubmission.SubmitterWidgetNewSubmission;
-import org.cggh.chassis.wwarn.prototype.client.submitter.widget.study.SubmitterWidgetStudy;
-import org.cggh.chassis.wwarn.prototype.client.submitter.widget.study.SubmitterWidgetStudyListener;
+import org.cggh.chassis.wwarn.prototype.client.submitter.widget.viewssq.SubmitterWidgetViewSsq;
+import org.cggh.chassis.wwarn.prototype.client.submitter.widget.viewssq.SubmitterWidgetViewSsqListener;
+import org.cggh.chassis.wwarn.prototype.client.submitter.widget.viewstudy.SubmitterWidgetStudyListener;
+import org.cggh.chassis.wwarn.prototype.client.submitter.widget.viewstudy.SubmitterWidgetViewStudy;
 import org.cggh.chassis.wwarn.prototype.client.user.RoleNames;
 
 
@@ -34,7 +36,7 @@ import org.cggh.chassis.wwarn.prototype.client.user.RoleNames;
  * @author aliman
  *
  */
-public class SubmitterPerspective extends BasePerspective implements SubmitterWidgetNewStudyListener, SubmitterWidgetStudyListener, SubmitterWidgetEditStudyListener {
+public class SubmitterPerspective extends BasePerspective implements SubmitterWidgetNewStudyListener, SubmitterWidgetStudyListener, SubmitterWidgetEditStudyListener, SubmitterWidgetViewSsqListener {
 
 
 	
@@ -63,8 +65,9 @@ public class SubmitterPerspective extends BasePerspective implements SubmitterWi
 		FractalUIComponentFactory.register(SubmitterWidgetNewDataDictionary.class.getName(), SubmitterWidgetNewDataDictionary.creator);
 		FractalUIComponentFactory.register(SubmitterWidgetMyDataDictionaries.class.getName(), SubmitterWidgetMyDataDictionaries.creator);
 		FractalUIComponentFactory.register(SubmitterWidgetAllDataDictionaries.class.getName(), SubmitterWidgetAllDataDictionaries.creator);
-		FractalUIComponentFactory.register(SubmitterWidgetStudy.class.getName(), SubmitterWidgetStudy.creator);
+		FractalUIComponentFactory.register(SubmitterWidgetViewStudy.class.getName(), SubmitterWidgetViewStudy.creator);
 		FractalUIComponentFactory.register(SubmitterWidgetEditStudy.class.getName(), SubmitterWidgetEditStudy.creator);
+		FractalUIComponentFactory.register(SubmitterWidgetViewSsq.class.getName(), SubmitterWidgetViewSsq.creator);
 		FractalUIComponentFactory.register(SubmitterWidgetEditSsq.class.getName(), SubmitterWidgetEditSsq.creator);
 		
 		log.trace("init model");
@@ -113,13 +116,18 @@ public class SubmitterPerspective extends BasePerspective implements SubmitterWi
 			widget.addListener(this);
 		}
 		
-		if (child instanceof SubmitterWidgetStudy) {
-			SubmitterWidgetStudy widget = (SubmitterWidgetStudy) child;
+		if (child instanceof SubmitterWidgetViewStudy) {
+			SubmitterWidgetViewStudy widget = (SubmitterWidgetViewStudy) child;
 			widget.addListener(this);
 		}
 		
 		if (child instanceof SubmitterWidgetEditStudy) {
 			SubmitterWidgetEditStudy widget = (SubmitterWidgetEditStudy) child;
+			widget.addListener(this);
+		}
+		
+		if (child instanceof SubmitterWidgetViewSsq) {
+			SubmitterWidgetViewSsq widget = (SubmitterWidgetViewSsq) child;
 			widget.addListener(this);
 		}
 
@@ -131,11 +139,11 @@ public class SubmitterPerspective extends BasePerspective implements SubmitterWi
 		log.enter("onStudyCreationSuccess");
 		log.trace("study title: "+study.getTitle());
 		
-		controller.setMainWidget(SubmitterWidgetStudy.class.getName(), false); // do not set waypoint here
+		controller.setMainWidget(SubmitterWidgetViewStudy.class.getName(), false); // do not set waypoint here
 		
 		for (FractalUIComponent child : children) {
-			if (child instanceof SubmitterWidgetStudy) {
-				SubmitterWidgetStudy widget = (SubmitterWidgetStudy) child;
+			if (child instanceof SubmitterWidgetViewStudy) {
+				SubmitterWidgetViewStudy widget = (SubmitterWidgetViewStudy) child;
 				widget.setMessage("Study created OK.", false); // no waypoint here
 				widget.setStudyEntry(study); // waypoint here
 			}
@@ -146,7 +154,7 @@ public class SubmitterPerspective extends BasePerspective implements SubmitterWi
 	
 	
 	
-	public void onActionEditStudy(StudyEntry study, SubmitterWidgetStudy source) {
+	public void onActionEditStudy(StudyEntry study, SubmitterWidgetViewStudy source) {
 		log.enter("onActionEditStudy");
 		
 		controller.setMainWidget(SubmitterWidgetEditStudy.class.getName(), false); // do not set waypoint here
@@ -169,11 +177,11 @@ public class SubmitterPerspective extends BasePerspective implements SubmitterWi
 		
 		// TODO refactor with onStudyCreatedSuccess
 		
-		controller.setMainWidget(SubmitterWidgetStudy.class.getName(), false); // do not set waypoint here, wait until set study on child
+		controller.setMainWidget(SubmitterWidgetViewStudy.class.getName(), false); // do not set waypoint here, wait until set study on child
 		
 		for (FractalUIComponent child : children) {
-			if (child instanceof SubmitterWidgetStudy) {
-				SubmitterWidgetStudy widget = (SubmitterWidgetStudy) child;
+			if (child instanceof SubmitterWidgetViewStudy) {
+				SubmitterWidgetViewStudy widget = (SubmitterWidgetViewStudy) child;
 				widget.setMessage("Study updated OK.", false); // no waypoint here
 				widget.setStudyEntry(study); // waypoint here
 			}
@@ -184,7 +192,7 @@ public class SubmitterPerspective extends BasePerspective implements SubmitterWi
 
 
 
-	public void onActionEditSsq(StudyEntry study, SubmitterWidgetStudy source) {
+	public void onActionEditSsq(StudyEntry study, SubmitterWidgetViewStudy source) {
 		log.enter("onActionEditSsq");
 		
 		controller.setMainWidget(SubmitterWidgetEditSsq.class.getName(), false); // do not set waypoint here
@@ -192,7 +200,7 @@ public class SubmitterPerspective extends BasePerspective implements SubmitterWi
 		for (FractalUIComponent child : children) {
 			if (child instanceof SubmitterWidgetEditSsq) {
 				SubmitterWidgetEditSsq widget = (SubmitterWidgetEditSsq) child;
-				widget.setStudyEntry(study);
+				widget.setStudyEntry(study); // waypoint here
 			}
 		}
 
@@ -201,9 +209,71 @@ public class SubmitterPerspective extends BasePerspective implements SubmitterWi
 
 
 
-	public void onActionViewSsq(StudyEntry study, SubmitterWidgetStudy source) {
-		// TODO Auto-generated method stub
+	public void onActionViewSsq(StudyEntry study, SubmitterWidgetViewStudy source) {
+		log.enter("onActionViewSsq");
 		
+		controller.setMainWidget(SubmitterWidgetViewSsq.class.getName(), false); // do not set waypoint here
+		
+		for (FractalUIComponent child : children) {
+			if (child instanceof SubmitterWidgetViewSsq) {
+				SubmitterWidgetViewSsq widget = (SubmitterWidgetViewSsq) child;
+				widget.setStudyEntry(study); // waypoint here
+			}
+		}
+
+		log.leave();
+	}
+
+
+
+	// TODO refactor this with similar named method
+	public void onActionEditSsq(StudyEntry study, SubmitterWidgetViewSsq source) {
+		log.enter("onActionEditSsq");
+		
+		controller.setMainWidget(SubmitterWidgetEditSsq.class.getName(), false); // do not set waypoint here
+		
+		for (FractalUIComponent child : children) {
+			if (child instanceof SubmitterWidgetEditSsq) {
+				SubmitterWidgetEditSsq widget = (SubmitterWidgetEditSsq) child;
+				widget.setStudyEntry(study); // waypoint here
+			}
+		}
+
+		log.leave();
+	}
+
+
+
+	// TODO refactor this with similar named method
+	public void onActionEditStudy(StudyEntry study, SubmitterWidgetViewSsq source) {
+		log.enter("onActionEditStudy");
+		
+		controller.setMainWidget(SubmitterWidgetEditStudy.class.getName(), false); // do not set waypoint here
+		
+		for (FractalUIComponent child : children) {
+			if (child instanceof SubmitterWidgetEditStudy) {
+				SubmitterWidgetEditStudy widget = (SubmitterWidgetEditStudy) child;
+				widget.setStudyEntry(study); // waypoint here
+			}
+		}
+
+		log.leave();
+	}
+
+
+
+	public void onActionViewStudy(StudyEntry study, SubmitterWidgetViewSsq source) {
+		// TODO refactor with onStudyCreatedSuccess and onStudyUpdatedSuccess
+		
+		controller.setMainWidget(SubmitterWidgetViewStudy.class.getName(), false); // do not set waypoint here, wait until set study on child
+		
+		for (FractalUIComponent child : children) {
+			if (child instanceof SubmitterWidgetViewStudy) {
+				SubmitterWidgetViewStudy widget = (SubmitterWidgetViewStudy) child;
+				widget.setStudyEntry(study); // waypoint here
+			}
+		}
+
 	}
 
 }

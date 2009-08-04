@@ -3,21 +3,18 @@
  */
 package org.cggh.chassis.wwarn.prototype.client.submitter.widget.newstudy;
 
-import org.cggh.chassis.gwt.lib.atom.client.format.AtomFormatException;
+import org.cggh.chassis.gwt.lib.log.client.GWTLogger;
+import org.cggh.chassis.gwt.lib.log.client.Logger;
 import org.cggh.chassis.gwt.lib.study.client.format.StudyEntry;
+import org.cggh.chassis.wwarn.prototype.client.forms.FormValidationException;
+import org.cggh.chassis.wwarn.prototype.client.forms.StudyForm;
 
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.TextArea;
-import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.FormPanel.SubmitEvent;
+import com.google.gwt.user.client.ui.FormPanel.SubmitHandler;
 
 /**
  * @author aliman
@@ -27,18 +24,17 @@ class Renderer implements ModelListener {
 
 	private Controller controller;
 	private RootPanel rootPanel;
-	private TextBox titleInput;
-	private TextArea summaryInput;
-	private RadioButton clinicalButton;
-	private RadioButton invitroButton;
-	private RadioButton pharmacologyButton;
-	private RadioButton molecularButton;
+	private Logger log;
 
 	Renderer(Controller controller) {
 		this.controller = controller;
+		this.log = new GWTLogger();
+		this.log.setCurrentClass(Renderer.class.getName());
 	}
 
 	void render() {
+		log.enter("render");
+		
 		rootPanel.clear();
 
 		VerticalPanel vp1 = new VerticalPanel();
@@ -49,91 +45,27 @@ class Renderer implements ModelListener {
 		vp1.add(new HTML("<h2>New Study</h2>"));
 		vp1.add(new HTML("<p>Please enter some details about the study...</p>"));
 		
-		vp1.add(new HTML("<h3>1. Title</h3>"));
-		vp1.add(new HTML("<p>Provide a title for the study..."));
+		log.trace("create study form");
+		final StudyForm form = new StudyForm();
+		form.getSubmitButton().setText("create new study");
+		vp1.add(form.getFormPanel());
 		
-		titleInput = new TextBox();
-		titleInput.setWidth("40em");
-		vp1.add(titleInput);
-		
-		vp1.add(new HTML("<h3>2. Summary</h3>"));
-		vp1.add(new HTML("<p>Provide a short textual summary of the study..."));
-		
-		summaryInput = new TextArea();
-		summaryInput.setSize("40em", "10em");
-		vp1.add(summaryInput);
+		form.getFormPanel().addSubmitHandler(new SubmitHandler() {
 
-		vp1.add(new HTML("<h3>3. Modules</h3>"));
-		vp1.add(new HTML("<p>Select the WWARN modules to which the study is relevant...</p>"));
-		
-		HorizontalPanel hp1 = new HorizontalPanel();
-		
-		hp1.add(new Label("clinical: "));
-		clinicalButton = new RadioButton("clinical");
-		hp1.add(clinicalButton);
-
-		hp1.add(new Label("in vitro: "));
-		invitroButton = new RadioButton("invitro");
-		hp1.add(invitroButton);
-
-		hp1.add(new Label("pharmacology: "));
-		pharmacologyButton = new RadioButton("pharmacology");
-		hp1.add(pharmacologyButton);
-
-		hp1.add(new Label("molecular: "));
-		molecularButton = new RadioButton("molecular");
-		hp1.add(molecularButton);
-		
-		vp1.add(hp1);
-		
-		vp1.add(new HTML("<hr/>"));
-		
-		Button submitButton = new Button("create new study");
-		vp1.add(submitButton);
-		
-		submitButton.addClickHandler(new ClickHandler() {
-
-			public void onClick(ClickEvent event) {
-
-				String title = titleInput.getValue();
-				String summary = summaryInput.getValue();
-				
-				boolean cli = clinicalButton.getValue();
-				boolean inv = invitroButton.getValue();
-				boolean pha = pharmacologyButton.getValue();
-				boolean mol = molecularButton.getValue();
-				
-				if (title.trim().equals("")) {
-					Window.alert("Please provide a title.");
-					return;
-				}
-				
-				if (!cli && !inv && !pha && !mol) {
-					Window.alert("At least one module must be selected.");
-					return;
-				}
-				
+			public void onSubmit(SubmitEvent event) {
 				try {
-
-					StudyEntry study = new StudyEntry();
-					study.setTitle(title);
-					study.setSummary(summary);
-					study.setModules(cli, inv, pha, mol);
-					
-					// TODO modules
-					
+					StudyEntry study = form.createStudyEntry();
 					controller.createStudy(study);
-					
+					event.cancel();
 				}
-				catch (AtomFormatException ex) {
-					// TODO should never be thrown
+				catch (FormValidationException e) {
+					Window.alert(e.getLocalizedMessage());
 				}
-				
 			}
-		
+			
 		});
 		
-		// TODO more
+		log.leave();
 	}
 
 	void setRootPanel(RootPanel root) {

@@ -1,0 +1,44 @@
+p {
+	margin-top: 0px;
+}
+
+#holdall {
+	padding: 10px;
+}
+
+#userdetails {
+	float: right;
+}
+
+#usernamelabel {
+	font-weight: bold;
+}
+
+#currentperspective {
+	font-weight: bold;
+}
+
+.mainpanel {
+	width: 100%;
+}
+
+.contentpanelcontainer {
+}
+
+.contentpanel {
+}
+
+.actionspanelcontainer {
+}
+
+.actionspanel {
+	border: 2px solid #ddd;
+	background-color: #eee;
+	margin: 1em 0 1em 1em;
+	padding: 0 1em 1em 1em;
+}
+
+a.action {
+	display: block;
+	margin-top: 0.5em;
+}

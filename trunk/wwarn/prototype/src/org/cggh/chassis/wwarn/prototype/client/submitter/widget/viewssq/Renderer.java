@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.cggh.chassis.wwarn.prototype.client.submitter.widget.study;
+package org.cggh.chassis.wwarn.prototype.client.submitter.widget.viewssq;
 
 import org.cggh.chassis.gwt.lib.common.client.ChassisNS;
 import org.cggh.chassis.gwt.lib.study.client.format.StudyEntry;
@@ -13,8 +13,6 @@ import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
@@ -22,30 +20,26 @@ import com.google.gwt.user.client.ui.VerticalPanel;
  * @author aliman
  *
  */
-public class Renderer implements ModelListener {
+class Renderer implements ModelListener {
 
-	private RootPanel rootPanel;
-	@SuppressWarnings("unused")
 	private Controller controller;
-	private HTML messagePanel;
+	private RootPanel rootPanel;
 	private FlowPanel studyPanel;
+	private HTML messagePanel;
 	private FlowPanel contentPanel;
 	private FlowPanel actionsPanelContainer;
 	private DockPanel mainPanel;
 	private FlowPanel actionsPanel;
 	private FlowPanel contentPanelContainer;
-	private SubmitterWidgetStudy owner;
+	private SubmitterWidgetViewSsq owner;
 
-	Renderer(Controller controller, SubmitterWidgetStudy owner) {
+	Renderer(Controller controller, SubmitterWidgetViewSsq owner) {
 		this.controller = controller;
 		this.owner = owner;
 	}
 
-	void setRootPanel(RootPanel root) {
-		this.rootPanel = root;
-	}
-
 	void render() {
+
 		rootPanel.clear();
 		
 		mainPanel = new DockPanel();
@@ -81,19 +75,19 @@ public class Renderer implements ModelListener {
 		contentPanelContainer.add(contentPanel);
 		contentPanel.addStyleName(Styles.CONTENTPANEL);
 		
-		contentPanel.add(new HTML("<h2>Study</h2>"));
+		contentPanel.add(new HTML("<h2>View Study Site Questionnaire (SSQ)</h2>"));
 
 		messagePanel = new HTML();
 		contentPanel.add(messagePanel);
 
 		studyPanel = new FlowPanel();
 		contentPanel.add(studyPanel);
-		studyPanel.addStyleName(Styles.STUDYPANEL);
+		studyPanel.addStyleName(Styles.STUDYPANEL);	
 		
 	}
 
-	public void onMessageChanged(String from, String to) {
-		messagePanel.setHTML("<p>"+to+"</p>");
+	void setRootPanel(RootPanel root) {
+		this.rootPanel = root;
 	}
 
 	public void onStudyEntryChanged(StudyEntry from, final StudyEntry to) {
@@ -128,8 +122,11 @@ public class Renderer implements ModelListener {
 		}
 		
 		modulesHtml += "</p>";
-		studyPanel.add(new HTML(modulesHtml));
+		studyPanel.add(new HTML(modulesHtml));	
+	
+		studyPanel.add(new HTML("<h3>1. @@TODO SSQ</h3>"));
 		
+
 		// render actions panel
 
 		actionsPanel.clear();
@@ -139,9 +136,23 @@ public class Renderer implements ModelListener {
 		VerticalPanel linksPanel = new VerticalPanel();
 		actionsPanel.add(linksPanel);
 		
+		// edit SSQ action
+		
+		Anchor editSsqLink = new Anchor("edit study site questionnaire (SSQ)");
+		editSsqLink.addStyleName(Styles.ACTION);
+		editSsqLink.addClickHandler(new ClickHandler(){
+
+			public void onClick(ClickEvent event) {
+				owner.fireOnActionEditSsq(to);
+			}
+		
+		});
+		linksPanel.add(editSsqLink);
+		
 		// edit study action
 		
 		Anchor editStudyLink = new Anchor("edit study title, summary or modules");
+		editStudyLink.addStyleName(Styles.ACTION);
 		editStudyLink.addClickHandler(new ClickHandler() {
 
 			public void onClick(ClickEvent event) {
@@ -151,32 +162,21 @@ public class Renderer implements ModelListener {
 		});
 		linksPanel.add(editStudyLink);
 
-		// TODO fix these
+		// view study action
 		
-		// view study site questionnaire action
-		
-		Anchor viewSsqLink = new Anchor("view study site questionnaire (SSQ)");
-		viewSsqLink.addClickHandler(new ClickHandler() {
+		Anchor viewStudyLink = new Anchor("view study");
+		viewStudyLink.addStyleName(Styles.ACTION);
+		viewStudyLink.addClickHandler(new ClickHandler() {
 
 			public void onClick(ClickEvent event) {
-				owner.fireOnActionViewSsq(to);
+				owner.fireOnActionViewStudy(to);
 			}
 		
 		});
-		linksPanel.add(viewSsqLink);
-		
-		// edit SSQ action
-		
-		Anchor editSsqLink = new Anchor("edit study site questionnaire (SSQ)");
-		editSsqLink.addClickHandler(new ClickHandler(){
+		linksPanel.add(viewStudyLink);
 
-			public void onClick(ClickEvent event) {
-				owner.fireOnActionEditSsq(to);
-			}
-		
-		});
-		linksPanel.add(editSsqLink);
 
+		
 	}
 
 }
