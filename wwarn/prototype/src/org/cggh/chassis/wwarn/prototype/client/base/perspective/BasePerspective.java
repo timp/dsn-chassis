@@ -20,8 +20,8 @@ public abstract class BasePerspective extends FractalUIComponent implements Pers
 	
 	
 	protected Logger log;
-	protected BasePerspectiveModel model;
-	protected BasePerspectiveController controller;
+	protected PerspectiveModel model;
+	protected PerspectiveController controller;
 
 	
 	

@@ -3,6 +3,9 @@
  */
 package org.cggh.chassis.wwarn.prototype.client.submitter.widget.study;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.cggh.chassis.gwt.lib.study.client.format.StudyEntry;
 import org.cggh.chassis.gwt.lib.twisted.client.Deferred;
 import org.cggh.chassis.gwt.lib.twisted.client.Function;
@@ -32,6 +35,10 @@ public class SubmitterWidgetStudy extends FractalUIComponent {
 	private Model model;
 	private Controller controller;
 	private Renderer renderer;
+
+
+
+	private List<SubmitterWidgetStudyListener> listeners = new ArrayList<SubmitterWidgetStudyListener>();
 	
 	
 	
@@ -64,7 +71,7 @@ public class SubmitterWidgetStudy extends FractalUIComponent {
 		controller = new Controller(model, this); 
 
 		log.trace("init renderer");
-		renderer = new Renderer(controller);
+		renderer = new Renderer(controller, this);
 		model.addListener(renderer);
 		
 		log.leave();
@@ -115,16 +122,54 @@ public class SubmitterWidgetStudy extends FractalUIComponent {
 
 
 
-	public void setMessage(String message) {
-		controller.setMessage(message);
-		
+	public void setStudyEntry(StudyEntry study) {
+		controller.setStudyEntry(study);
+	}
+
+
+
+	public void addListener(SubmitterWidgetStudyListener l) {
+		this.listeners.add(l);
+	}
+
+	
+	
+	void fireOnActionEditStudy(StudyEntry to) {
+		for (SubmitterWidgetStudyListener l : listeners) {
+			l.onActionEditStudy(to, this);
+		}
 	}
 
 
 
 
-	public void setStudyEntry(StudyEntry study) {
-		controller.setStudyEntry(study);
+	void fireOnActionViewSsq(StudyEntry to) {
+		for (SubmitterWidgetStudyListener l : listeners) {
+			l.onActionViewSsq(to, this);
+		}
+	}
+
+
+
+
+	void fireOnActionEditSsq(StudyEntry to) {
+		for (SubmitterWidgetStudyListener l : listeners) {
+			l.onActionEditSsq(to, this);
+		}
+	}
+
+
+
+
+	public void setMessage(String message) {
+		this.setMessage(message, true);
+	}
+
+
+
+
+	public void setMessage(String message, boolean waypoint) {
+		controller.setMessage(message, waypoint);
 	}
 
 	

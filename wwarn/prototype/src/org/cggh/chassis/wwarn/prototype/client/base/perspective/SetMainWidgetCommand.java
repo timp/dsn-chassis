@@ -14,12 +14,12 @@ public class SetMainWidgetCommand implements Command {
 
 	
 	
-	private BasePerspectiveController controller;
+	private PerspectiveController controller;
 	private String viewName;
 
 
 
-	public SetMainWidgetCommand(BasePerspectiveController controller, String viewName) {
+	public SetMainWidgetCommand(PerspectiveController controller, String viewName) {
 		this.controller = controller;
 		this.viewName = viewName;
 	}

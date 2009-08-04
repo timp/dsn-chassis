@@ -7,7 +7,7 @@ package org.cggh.chassis.wwarn.prototype.client.base.perspective;
  * @author aliman
  *
  */
-public interface BasePerspectiveModelListener {
+public interface PerspectiveModelListener {
 
 	void onIsCurrentPerspectiveChanged(boolean from, boolean to);
 
