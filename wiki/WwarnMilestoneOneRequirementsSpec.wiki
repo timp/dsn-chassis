@@ -2,14 +2,21 @@
 
 = Chassis/WWARN (M1) Data Management Platform - User Requirements Specification =
 
-*_First Draft_* (2009-07-22)
+This Document: *Second Draft* (2009-08-10)
+
+*Changes Since First Draft* (2009-07-22):
+
+  * No substantive change to document content.
+  * Added Candidate Requirements & Open Issues section with requirements, issues & questions raised during initial conversation with Dominic, and during initial design meeting the Oxford IT team.
+  * Moved all @@TODO items from main sections to Candidate Requirements and Open Issues section.
+  
 ----
 *Table of Contents*
 
 <wiki:toc/>
 ----
 
-==Introduction==
+== Introduction ==
 
 This document is a specification of user requirements for the _Chassis/WWARN_ (M1) system for managing the submission, curation and standardisation of data for the World Wide Anti-malarial Resistance Network (WWARN).
 
@@ -189,8 +196,6 @@ From the list of her draft submissions, she selects those that are ready for gat
 
 N.B. study metadata includes the study site questionnaire (SSQ).
 
-@@TODO: what are metadata fields common across modules? what are fields of SSQ for each module? what fields are mandatory, what are optional?
-
 ==== (Submitter) Creating a New Submission & Uploading Data ====
 
   * A submitter will be able to create a new submission. This involves providing a title and textual summary for the submission, associating the submission with at least one previously created study, associating the submission with at least one WWARN module, and uploading a single file containing the initial version of the submitted data.
@@ -226,8 +231,6 @@ By default, a submitter is the owner of any data dictionary they create.
 ==== (Submitter) Downloading a Data Dictionary ====
 
   * A submitter will be able to download any version of any data dictionary.
-
-@@TODO: do some data dictionaries need to be kept private?
 
 ==== (Submitter) Linking Submitted Data With a Data Dictionary ====
 
@@ -268,8 +271,6 @@ By default, a submitter is the owner of any data dictionary they create.
   * A gatekeeper will be able to assign a curator to an approved submission.
 
 Note that, once a gatekeeper has approved a submission, that approval is assumed to apply, even if the submitter uploads a new revision of the submitted data.
-
-@@TODO: can a gatekeeper revoke an approval?
 
 ==== (Gatekeeper) Denying Requests ====
 
@@ -460,15 +461,11 @@ A curator views a list of all submissions for which she is the assigned curator,
 
   * A curator will be able to create a new standard data dictionary. This involves providing a title and textual summary for the new standard data dictionary, linking the dictionary to at least one module, and uploading a file containing the initial version of the data dictionary.
 
-@@TODO: can curators just create standard data dictionaries as they wish? or do new standard data dictionaries need to be ratified as standard by one or more other curators, or anyone else?
-
 ==== (Curator) Revising a Standard Data Dictionary ====
 
   * A curator will be able to upload a file containing a revised version of a standard data dictionary.
 
   * A curator will be able to view a version history for any standard data dictionary.
-
-@@TODO: can curators just revise standard data dictionaries as they wish? or do revisions to standard data dictionaries need to be ratified by one or more other curators, or anyone else?
 
 ==== (Curator) Downloading a Standard Data Dictionary ====
 
@@ -485,8 +482,6 @@ N.B. there can be only one specification of release criteria per module.
   * A curator will be able to upload a file containing a revised version of a specification of release criteria.
 
   * A curator will be able to view a version history of any specification of release criteria.
-
-@@TODO: can curators just revise release criteria as they wish? or do revisions need to be ratified by other curators, or anyone else?
 
 ==== (Curator) Downloading a Specification of Release Criteria ====
 
@@ -535,3 +530,60 @@ N.B. there can be only one specification of release criteria per module.
   * These lists can be grouped by module, study or submitter.
 
 ----
+== Candidate Requirements & Open Issues ==
+
+  * Do curators need to be able to create non-standard data dictionaries, in addition to standard data dictionaries?
+  
+  * Do we need an additional role, e.g. "analyst", which has read-only permissions for submissions under curation, so e.g., can download data, review it, carry out analyses on it, but cannot make revisions?
+  
+  * Does a coordinator need the ability to re-assign the curator for a given submission?
+  
+  * Does a gatekeeper need the ability to re-assign the curator for a given submission?
+  
+  * Do we need some formal way for a curator to "pass the ball" back to a submitter for a given submission, so it is clear that the submission is awaiting some action by the submitter? (N.B. this is similar in principle to curators delegating tasks.)
+  
+  * Should we talk about "approved" data dictionaries, rather than "standard" data dictionaries? Would this be any clearer?
+  
+  * Do we need to provide any support for the social process by which a data dictionary becomes approved/standard, e.g., voting or ratification? Or is it OK to give all curators the ability to create approved/standard data dictionaries, and manage the process socially (outsite the system)?
+  
+  * Do submitters need the ability to nominate collaborators on a submission, i.e., other users who have same permissions w.r.t. the submission as its initial creator? Or perhaps, collaborators with limited permissions?
+  
+  * Do submitters need ability to make some data dictionaries private, i.e., not visible to anyone but themselves?
+  
+  * Do submitters need ability to make some studies private, i.e., not visible to anyone but themselves?
+  
+  * N.B. by the model above, approval of a submission by gatekeeper is "sticky", in the sense that once a submission has been approved by a gatekeeper, it doesn't matter if the submitter uploads revisions of the submitted data, the approval still applies, even if the data has changed completely. On the other hand, denial of a submission request is *not* sticky, but applies only to a specific request. Any number of submission requests can be made for any given submission. Is this model appropriate?
+  
+  * Should the system force a submitter to fill out some or all of the SSQ prior to making a submission request to a gatekeeper? Or is it OK to manage gatekeeper requirements for study metadata socially?
+  
+  * Do we need some sort of scoping mechanism to determine who can edit a data dictionary, e.g., by module or study?
+  
+  * Do gatekeepers need the ability to revoke a prior approval of a given submission?
+  
+  * Who is responsible for managing and operating the export/ingest of data between chassis/wwarn and the wwarn database? What system will implement that functionality?
+  
+  * Will export/ingest of data between chassis/wwarn and the wwarn database be push or pull?
+  
+  * Do submitters need the ability to pre-populate some fields of a study site questionnaire when creating a new study, based on values entered previously for a different study?
+  
+  * Do submitters need the ability to create a batch of new studies, rather than one at a time?
+  
+  * What happens if a submitter makes a request to a gatekeeper for a given submission, then uploads a revision of the submitted data, then makes a new request to a gatekeeper, before the first request has been fulfilled? This could be confusing/irritating for a gatekeeper if they find two requests pertaining to the same submission. Do submitters need the ability to cancel a pending request? Should there be some rule whereby a submission may have at most one pending request? 
+  
+  * Who makes sure that there are no duplicate study entries created? What happens if there are? Do we need some function for merging study entries?
+  
+  * Having WWARN module heads as gatekeepers may be inappropriate if some are in the field for long periods of time. Gatekeepers need to be fairly responsive.
+  
+  * The spec should mention entering log messages any time a revision is made to submitted data, or to a data dictionary.
+  
+  * Should we provide online support (e.g., forms) for creating and editing data dictionaries, in a predefined format, and disallow the upload of arbitrary files for data dictionaries? This is the ultimate goal anyway, so if we did this we would avoid having to manage legacy dictionaries when the new feature is rolled out. On the other hand, will it be possible to fit all possible data dictionaries into a single structure?
+  
+  * Logging in, and administration of user accounts and user roles is not mentioned.
+  
+  * What are the required & optional study metadata, common across modules? What are the required & optional study metadata, for each module?
+  
+  * Is it appropriate for any curators to create and revise specifications of release criteria? Or do we need a new role? What about the social process by which a revision to release criteria is accepted, does the system need to provide any support for that social process, e.g., voting or ratification?
+  
+  * Is it appropriate for any curators to review and approve submissions for release? Or do we need a specific role?
+  
+  * 
