@@ -2,7 +2,12 @@
 
 = Chassis/WWARN (M1) Data Management Platform - User Requirements Specification =
 
-This Document: *Second Draft* (2009-08-10)
+This Document: *Draft 3* (2009-08-12)
+
+*Changes Since Second Draft* (2009-08-10):
+
+  * No substantive changes to document content.
+  * Added more issues and candidate requirements raised during Chassis design meeting 2008-10-11.
 
 *Changes Since First Draft* (2009-07-22):
 
@@ -588,4 +593,35 @@ N.B. there can be only one specification of release criteria per module.
   
   * Is it appropriate for any curators to review and approve submissions for release? Or do we need a specific role?
   
-  * 
+  * Can curators download revisions of submitted data that were uploaded by the submitter prior to the revision for which gatekeeper approval was given? Or should these earlier revisions be private to the submitter?
+  
+  * To what extent does the distinction between a submission, and a request for gatekeeper review of a submission, need to be made visible to a submitter? Can this distinction be hidden in some cases?
+  
+  * The asymmetry between gatekeeper approval of a request (which then applies to the submission as a whole), and gatekeeper denial of a request (which only applies to the version of the submitted data that was reviewed), is possibly counter-intuitive.
+
+  * Should some submitters gain automatic gatekeeper acceptance? E.g., if they have many previously accepted submissions?
+  
+  * Should it be possible for more than one person to have the ball at any one time for a given submission, e.g., where the submitted data needs to be broken into parts and each part processed in parallel? I.e., do we need to allow an assigned curator to delegate more than one task at a time for any given submission?
+  
+  * Related to the above point, what about situations where data is split apart, revised, then merged back together? I.e., what about versions of the submitted data that are derived from more than one source? N.B., this implies a derivation graph, rather than a derivation tree.
+  
+  * What mechanism should we use to capture the derivation of new revisions to submitted data as they are uploaded? Version keys? Explicitly choosing the derivation source? Explicitly creating branches? Formal checkout mechanism?
+  
+  * Encourate not creating multiple subs if revising data (???).
+  
+  
+=== Architectural Questions & Issues ===
+
+These don't really live in this document, but are included as a temporary placeholder...
+
+  * Is it possible using !AtomPub to decouple a media entry from its associated metadata entry?
+  
+  * If we are versioning almost everything, this can be demanding in terms of storage space requirements.
+  
+  * How do we support versioning in protocols and underlying implementations?
+  
+  * How do we maintain integrity of data links if services are loosely coupled? What about transactions that consist of multiple HTTP requests, how do we cope if one request fails? I.e., what about things like roll-back?
+  
+  * How do we implement security constraints for underlying services?
+  
+   
