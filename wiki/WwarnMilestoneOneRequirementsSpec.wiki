@@ -9,6 +9,8 @@ This Document: *Draft 3* (2009-08-12)
   * No substantive changes to document content.
   * Added more issues and candidate requirements raised during Chassis design meeting 2008-10-11.
 
+([http://code.google.com/p/dsn-chassis/source/diff?spec=svn192&r=192&format=side&path=/wiki/WwarnMilestoneOneRequirementsSpec.wiki&old_path=/wiki/WwarnMilestoneOneRequirementsSpec.wiki&old=191 view diff])
+
 *Changes Since First Draft* (2009-07-22):
 
   * No substantive change to document content.
