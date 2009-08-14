@@ -3,6 +3,14 @@
 ----
 = Public Release Milestones =
 
+== M0 (limited public release, WHO upload only) ==
+
+Due: Nov 2009
+
+Status: pending
+
+Scope: TBD
+
 == M1 (first public release) ==
 
 Due: Jan 2010
@@ -24,7 +32,7 @@ Scope: see ChassisWwarnEnvisioning
 
 == IM1 (first development iteration) ==
 
-Due: 25 Aug 2009
+Due: 28 Aug 2009
 
 Status: pending
 
