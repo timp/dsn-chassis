@@ -1,13 +1,9 @@
 #summary how code projects are organised
 
-----
-= Cross-Project Standards =
-
-  * All HTML files as XHTML 1.0 transitional, UTF-8 encoding
-  * All !JavaScript files as UTF-8 encoding
+<wiki:toc/>
 
 ----
-= Projects =
+= Service Projects =
 
 == Chassis/`*` Atom Service ==
 
@@ -19,6 +15,10 @@ This project manages an implementation of the Atom Publishing Protocol, initiall
 || Default Context Root || `chassis-generic-service-atom` ||
 || SVN Location || [http://code.google.com/p/dsn-chassis/source/browse/trunk/generic/service/atom/ /trunk/generic/service/atom/] ||
 
+Standards:
+
+  * All HTML files as XHTML 1.0 transitional, UTF-8 encoding
+
 == Chassis/`*` User Service ==
 
 This project manages default implementations of the user service, providing remote access to an authenticated user's details and roles.
@@ -28,3 +28,12 @@ This project manages default implementations of the user service, providing remo
 || JDK Compliance Level || 1.5 ||
 || Default Context Root || `chassis-generic-service-user` ||
 || SVN Location || [http://code.google.com/p/dsn-chassis/source/browse/trunk/generic/service/user/ /trunk/generic/service/user/] ||
+
+Standards:
+
+  * All HTML files as XHTML 1.0 transitional, UTF-8 encoding
+
+----
+= GWT Client Projects =
+
+@@TODO
