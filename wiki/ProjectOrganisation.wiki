@@ -10,8 +10,9 @@
 This project manages an implementation of the Atom Publishing Protocol, initially based on eXist, with extensions for querying data within and across collections.
 
 || Project Type || Eclipse Dynamic Web Project ||
-|| Target Runtimes || Apache Tomcat v6.0 ||
 || JDK Compliance Level || 1.5 ||
+|| Target Runtimes || Apache Tomcat v6.0 ||
+|| Dynamic Web Module Version || 2.5 ||
 || Default Context Root || `chassis-generic-service-atom` ||
 || SVN Location || [http://code.google.com/p/dsn-chassis/source/browse/trunk/generic/service/atom/ /trunk/generic/service/atom/] ||
 
@@ -24,10 +25,26 @@ Standards:
 This project manages default implementations of the user service, providing remote access to an authenticated user's details and roles.
 
 || Project Type || Eclipse Dynamic Web Project ||
-|| Target Runtimes || Apache Tomcat v6.0 ||
 || JDK Compliance Level || 1.5 ||
+|| Target Runtimes || Apache Tomcat v6.0 ||
+|| Dynamic Web Module Version || 2.5 ||
 || Default Context Root || `chassis-generic-service-user` ||
 || SVN Location || [http://code.google.com/p/dsn-chassis/source/browse/trunk/generic/service/user/ /trunk/generic/service/user/] ||
+
+Standards:
+
+  * All HTML files as XHTML 1.0 transitional, UTF-8 encoding
+
+== Chassis/`*` File Upload Service ==
+
+This project manages an implementation of a service handling file upload posts from HTML forms.
+
+|| Project Type || Eclipse Dynamic Web Project ||
+|| JDK Compliance Level || 1.5 ||
+|| Target Runtimes || Apache Tomcat v6.0 ||
+|| Dynamic Web Module Version || 2.5 ||
+|| Default Context Root || `chassis-generic-service-upload` ||
+|| SVN Location || [http://code.google.com/p/dsn-chassis/source/browse/trunk/generic/service/upload/ /trunk/generic/service/upload/] ||
 
 Standards:
 
