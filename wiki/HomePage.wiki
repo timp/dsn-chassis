@@ -24,7 +24,7 @@ Coming (fairly) soon.
 ----
 = Developers =
 
-* ProjectOrganisation
+  * ProjectOrganisation
 
 ----
 = Documentation =
