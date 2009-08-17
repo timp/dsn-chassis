@@ -4,7 +4,7 @@
 = Cross-Project Standards =
 
   * All HTML files as XHTML 1.0 transitional, UTF-8 encoding
-  * All JavaScript files as UTF-8 encoding
+  * All !JavaScript files as UTF-8 encoding
 
 ----
 = Projects =
