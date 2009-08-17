@@ -84,3 +84,34 @@ This project manages WWARN-specific extensions to the supporting libraries for a
 Project dependencies:
 
   * Chassis/`*` GWT Libraries
+
+== Chassis/WWARN GWT Client ==
+
+A WWARN-specific Chassis client implemented in GWT.
+
+|| Project Type || Google Web Application Project ||
+|| JDK Compliance Level || 1.5 ||
+|| SVN Location || [http://code.google.com/p/dsn-chassis/source/browse/trunk/wwarn/client/gwt/ /trunk/wwarn/client/gwt/] ||
+
+Project dependencies:
+
+  * Chassis/`*` GWT Libraries
+  * Chassis/`*` GWT Client
+  * Chassis/WWARN GWT Libraries
+
+----
+= Documentation Projects =
+
+== Chassis/`*` Documentation ==
+
+Documentation of service APIs, etc., for the generic Chassis/`*` platform.
+
+|| Project Type || Static Web Project ||
+|| SVN Location || [http://code.google.com/p/dsn-chassis/source/browse/trunk/generic/docs/ /trunk/generic/docs/] ||
+
+== Chassis/WWARN Documentation ==
+
+Documentation of extensions to generic Chassis/`*` service APIs, etc., for the Chassis/WWARN platform.
+
+|| Project Type || Static Web Project ||
+|| SVN Location || [http://code.google.com/p/dsn-chassis/source/browse/trunk/wwarn/docs/ /trunk/wwarn/docs/] ||
