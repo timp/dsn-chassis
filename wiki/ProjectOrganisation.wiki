@@ -60,3 +60,15 @@ This project manages supporting libraries for a GWT Chassis client.
 || Project Type || Google Web Application Project ||
 || JDK Compliance Level || 1.5 ||
 || SVN Location || [http://code.google.com/p/dsn-chassis/source/browse/trunk/generic/lib/gwt/ /trunk/generic/lib/gwt/] ||
+
+== Chassis/`*` GWT Client ==
+
+A generic Chassis client implemented in GWT.
+
+|| Project Type || Google Web Application Project ||
+|| JDK Compliance Level || 1.5 ||
+|| SVN Location || [http://code.google.com/p/dsn-chassis/source/browse/trunk/generic/client/gwt/ /trunk/generic/client/gwt/] ||
+
+Project dependencies:
+
+  * Chassis/* GWT Libraries
