@@ -9,7 +9,7 @@
 ----
 = Projects =
 
-== Chassis/* Atom Service ==
+== Chassis/`*` Atom Service ==
 
 This project manages an implementation of the Atom Publishing Protocol, initially based on eXist, with extensions for querying data within and across collections.
 
