@@ -19,7 +19,9 @@ Target Runtimes: Apache Tomcat v6.0
 
 JDK Compliance Level: 1.5
 
-SVN Location: `/trunk/generic/service/atom`
+Default Context Root: `chassis-generic-service-atom`
+
+SVN Location: [http://code.google.com/p/dsn-chassis/source/browse/trunk/generic/service/atom/ /trunk/generic/service/atom]
 
 == Chassis/`*` User Service ==
 
