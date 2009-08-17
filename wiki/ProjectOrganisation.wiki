@@ -17,16 +17,13 @@ This project manages an implementation of the Atom Publishing Protocol, initiall
 || Target Runtimes || Apache Tomcat v6.0 ||
 || JDK Compliance Level || 1.5 ||
 || Default Context Root || `chassis-generic-service-atom` ||
-|| SVN Location || [http://code.google.com/p/dsn-chassis/source/browse/trunk/generic/service/atom/ /trunk/generic/service/atom] ||
+|| SVN Location || [http://code.google.com/p/dsn-chassis/source/browse/trunk/generic/service/atom/ /trunk/generic/service/atom/] ||
 
 == Chassis/`*` User Service ==
 
-This project manages a default implementation of the user service, providing remote access to an authenticated user's details and roles.
+This project manages default implementations of the user service, providing remote access to an authenticated user's details and roles.
 
-Nature: Eclipse Dynamic Web Project 
-
-Target Runtimes: Apache Tomcat v6.0
-
-JDK Compliance Level: 1.5
-
-SVN Location: `/trunk/generic/service/user`
+|| Project Type || Eclipse Dynamic Web Project ||
+|| Target Runtimes || Apache Tomcat v6.0 ||
+|| JDK Compliance Level || 1.5 ||
+|| SVN Location || [http://code.google.com/p/dsn-chassis/source/browse/trunk/generic/service/user/ /trunk/generic/service/user/] ||
