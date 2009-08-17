@@ -1,0 +1,22 @@
+#summary how code projects are organised
+
+----
+= Cross-Project Standards =
+
+  * All HTML files as XHTML 1.0 transitional, UTF-8 encoding
+  * All JavaScript files as UTF-8 encoding
+
+----
+= Projects =
+
+== Chassis/* Atom Service ==
+
+This project manages an implementation of the Atom Publishing Protocol, initially based on eXist, with extensions for querying data within and across collections.
+
+Nature: Eclipse Dynamic Web Project
+
+Target Runtimes: Apache Tomcat v6.0
+
+JDK Compliance Level: 1.5
+
+SVN Location: `/trunk/generic/service/atom`
