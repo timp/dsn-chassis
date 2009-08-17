@@ -20,3 +20,15 @@ Target Runtimes: Apache Tomcat v6.0
 JDK Compliance Level: 1.5
 
 SVN Location: `/trunk/generic/service/atom`
+
+== Chassis/`*` User Service ==
+
+This project manages a default implementation of the user service, providing remote access to an authenticated user's details and roles.
+
+Nature: Eclipse Dynamic Web Project 
+
+Target Runtimes: Apache Tomcat v6.0
+
+JDK Compliance Level: 1.5
+
+SVN Location: `/trunk/generic/service/user`
