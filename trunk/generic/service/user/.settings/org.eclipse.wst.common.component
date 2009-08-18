@@ -3,6 +3,8 @@
 <wb-module deploy-name="googlecode_dsn-chassis_generic_service_user">
 <wb-resource deploy-path="/" source-path="/war"/>
 <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+<wb-resource deploy-path="/WEB-INF/classes" source-path="/test"/>
+<wb-resource deploy-path="/WEB-INF/classes" source-path="/src-test"/>
 <property name="context-root" value="chassis-generic-service-user"/>
 <property name="java-output-path"/>
 </wb-module>
