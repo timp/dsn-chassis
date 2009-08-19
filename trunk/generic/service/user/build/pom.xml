@@ -9,17 +9,17 @@
     <inceptionYear>2009</inceptionYear>
     <repositories>
         <repository>
-         <id>gilead</id>
-         <url>
-            https://gilead.svn.sourceforge.net/svnroot/gilead/gilead/maven-repo/
-          </url>
-       </repository>
-        <repository>
             <id>MVNRepository</id>
             <name>MVNRepository</name>
             <layout>default</layout>
             <url>http://repository.jboss.com/maven2/</url>
         </repository>
+        <repository>
+         <id>gwt-maven</id>
+         <url>
+            http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/
+          </url>
+       	</repository>
     </repositories>
     <build>
         <resources>
@@ -53,29 +53,15 @@
     </build>
     <dependencies>
         <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-servlet</artifactId>
+            <version>1.7.0</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
             <groupId>dom4j</groupId>
             <artifactId>dom4j</artifactId>
             <version>1.6.1</version>
-        </dependency>
-        <dependency>
-            <groupId>net.sf.gilead</groupId>
-            <artifactId>adapter-core</artifactId>
-            <version>1.2.1</version>
-        </dependency>
-        <dependency>
-            <groupId>net.sf.gilead</groupId>
-            <artifactId>adapter4gwt</artifactId>
-            <version>1.2.1</version>
-        </dependency>
-        <dependency>
-            <groupId>net.sf.gilead</groupId>
-            <artifactId>adapter-actionscript</artifactId>
-            <version>1.2.1</version>
-        </dependency>
-        <dependency>
-            <groupId>net.sf.gilead</groupId>
-            <artifactId>hibernate-util</artifactId>
-            <version>1.2.3</version>
         </dependency>
         <dependency>
             <groupId>commons-collections</groupId>
@@ -86,32 +72,6 @@
             <groupId>commons-logging</groupId>
             <artifactId>commons-logging</artifactId>
             <version>1.1.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate</artifactId>
-            <version>3.2.6.ga</version>
-            <exclusions>
-                <exclusion>
-                <groupId>javax.transaction</groupId>
-                <artifactId>jta</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-cglib-repack</artifactId>
-            <version>2.1_3</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-annotations</artifactId>
-            <version>3.4.0.GA</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-entitymanager</artifactId>
-            <version>3.4.0.GA</version>
         </dependency>
     </dependencies>
 </project>
