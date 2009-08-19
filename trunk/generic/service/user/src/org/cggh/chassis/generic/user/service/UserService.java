@@ -14,9 +14,5 @@ import org.cggh.chassis.generic.user.data.User;
 public interface UserService {
 
 	public User getAuthenticatedUser();
-
-	public void setAuthenticationProvider(AuthenticationProvider authenticationProvider);
-
-	public void setUserDAO(UserDAO userDAO);
 	
 }

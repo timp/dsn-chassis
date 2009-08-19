@@ -4,7 +4,9 @@
 package org.cggh.chassis.generic.user.service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.cggh.chassis.generic.user.authentication.AuthenticationProvider;
 import org.cggh.chassis.generic.user.dao.UserDAO;
@@ -30,7 +32,7 @@ public class TestUserServiceImpl {
 		User testUser = new User();
 		testUser.setId(testUserId);
 		testUser.setName("Foo Bar");
-		List<String> roles = new ArrayList<String>();
+		Set<String> roles = new HashSet<String>();
 		roles.add("curator");
 		roles.add("submitter");
 		testUser.setRoles(roles);
@@ -46,7 +48,7 @@ public class TestUserServiceImpl {
 		replay(mockUserDAO);
 		
 		// create object under test
-		UserService userService = new UserServiceImpl();
+		UserServiceImpl userService = new UserServiceImpl();
 		
 		// inject mock dependencies
 		userService.setAuthenticationProvider(mockAuthenticationProvider);
@@ -86,7 +88,7 @@ public class TestUserServiceImpl {
 		replay(mockUserDAO);
 		
 		// create object under test
-		UserService userService = new UserServiceImpl();
+		UserServiceImpl userService = new UserServiceImpl();
 		
 		// inject mock dependencies
 		userService.setAuthenticationProvider(mockAuthenticationProvider);
@@ -120,7 +122,7 @@ public class TestUserServiceImpl {
 		replay(mockUserDAO);
 		
 		// create object under test
-		UserService userService = new UserServiceImpl();
+		UserServiceImpl userService = new UserServiceImpl();
 		
 		// inject mock dependencies
 		userService.setAuthenticationProvider(mockAuthenticationProvider);

@@ -3,7 +3,7 @@
  */
 package org.cggh.chassis.generic.user.data;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * @author aliman
@@ -11,38 +11,40 @@ import java.util.List;
  */
 public class User {
 
-	public void setId(String string) {
-		// TODO Auto-generated method stub
-		
+	private String id = null;
+	private String name = null;
+	private Set<String> roles = null;
+
+	public void setId(String id) {
+		this.id  = id;
 	}
 
-	public void setName(String string) {
-		// TODO Auto-generated method stub
-		
+	public void setName(String name) {
+		this.name  = name;
 	}
 
-	public void setRoles(List<String> roles) {
-		// TODO Auto-generated method stub
-		
+	public void setRoles(Set<String> roles) {
+		this.roles  = roles;
 	}
 
 	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.name;
 	}
 
 	public String getId() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.id;
+	}
+
+	public Set<String> getRoles() {
+		return this.roles;
 	}
 
 	public boolean equals(Object another) {
-		// TODO implement this method
+		if (another instanceof User) {
+			User anotherUser = (User) another;
+			return (this.id.equals(anotherUser.getId()));
+		}
 		return false;
 	}
 
-	public List<String> getRoles() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }
