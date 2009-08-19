@@ -53,10 +53,14 @@
     </build>
     <dependencies>
         <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>2.5</version>
+        </dependency>
+        <dependency>
             <groupId>com.google.gwt</groupId>
             <artifactId>gwt-servlet</artifactId>
             <version>1.7.0</version>
-            <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>dom4j</groupId>
@@ -73,5 +77,20 @@
             <artifactId>commons-logging</artifactId>
             <version>1.1.1</version>
         </dependency>
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib-nodep</artifactId>
+            <version>2.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.easymock</groupId>
+            <artifactId>easymock</artifactId>
+            <version>2.5.1</version>
+        </dependency>
+        <dependency>
+		    <groupId>org.easymock</groupId>
+		    <artifactId>easymockclassextension</artifactId>
+		    <version>2.4</version>
+		</dependency>
     </dependencies>
 </project>
