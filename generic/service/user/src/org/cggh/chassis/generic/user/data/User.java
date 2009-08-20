@@ -39,12 +39,16 @@ public class User {
 		return this.roles;
 	}
 
-	public boolean equals(Object another) {
+	final public boolean equals(Object another) {
 		if (another instanceof User) {
 			User anotherUser = (User) another;
 			return (this.id.equals(anotherUser.getId()));
 		}
 		return false;
+	}
+	
+	final public int hashCode() {
+		return id.hashCode();
 	}
 
 }

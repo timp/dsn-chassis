@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+    xmlns:beans="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+                        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-2.0.4.xsd">
+
+<!--	<beans:bean id="gwtUserService" class="org.cggh.chassis.generic.user.gwtrpc.server.RPCUserServiceImpl"/>-->
+<!--	-->
+    <global-method-security secured-annotations="enabled" access-decision-manager-ref="accessDecisionManager"/>
+	
+	<!--Allow any kind of authority to be defined-->
+    <beans:bean id="accessDecisionManager" class="org.springframework.security.vote.UnanimousBased">
+        <beans:property name="decisionVoters">
+            <beans:list>
+                <beans:ref bean="roleVoter"/>
+				<beans:ref bean="authenticatedVoter" />
+            </beans:list>
+        </beans:property>
+    </beans:bean>
+
+    <beans:bean id="roleVoter" class="org.springframework.security.vote.RoleVoter">
+        <beans:property name="rolePrefix" value=""/>
+    </beans:bean>
+    
+    <beans:bean id="authenticatedVoter" class="org.springframework.security.vote.AuthenticatedVoter"/>
+
+	
+    <http auto-config='true'>
+		<intercept-url pattern="/**" access="ROLE_SOMETHIN" />
+    	<http-basic />
+	</http>
+
+    <authentication-provider>
+      <user-service>
+        <user name="raok" password="pass01word" authorities="ROLE_SUPERVISOR,ROLE_USER,ROLE_TELLER,ROLE_SOMETHIN" />
+      </user-service>
+    </authentication-provider>
+    	
+</beans:beans>
