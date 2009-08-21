@@ -32,7 +32,7 @@
   
   <servlet>
     <servlet-name>GWTRPCAuthenticatedUserServlet</servlet-name>
-    <servlet-class>org.cggh.chassis.generic.user.gwtrpc.server.spring.GWTAuthenticatedUserServiceSpringImpl</servlet-class>
+    <servlet-class>org.cggh.chassis.generic.user.gwtrpc.server.spring.GWTUserDetailsServiceSpringImpl</servlet-class>
   </servlet>
   
   <servlet-mapping>
