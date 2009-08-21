@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.user.data;
+package org.cggh.chassis.generic.user.to;
 
 import java.util.Set;
 
@@ -9,26 +9,17 @@ import java.util.Set;
  * @author aliman
  *
  */
-public class User {
+public class UserTO {
 
 	private String id = null;
-	private String name = null;
 	private Set<String> roles = null;
 
 	public void setId(String id) {
 		this.id  = id;
 	}
 
-	public void setName(String name) {
-		this.name  = name;
-	}
-
 	public void setRoles(Set<String> roles) {
 		this.roles  = roles;
-	}
-
-	public String getName() {
-		return this.name;
 	}
 
 	public String getId() {
@@ -40,8 +31,8 @@ public class User {
 	}
 
 	final public boolean equals(Object another) {
-		if (another instanceof User) {
-			User anotherUser = (User) another;
+		if (another instanceof UserTO) {
+			UserTO anotherUser = (UserTO) another;
 			return (this.id.equals(anotherUser.getId()));
 		}
 		return false;
