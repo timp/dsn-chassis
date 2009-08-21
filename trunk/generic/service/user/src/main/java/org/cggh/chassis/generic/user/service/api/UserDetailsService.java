@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.user.service;
+package org.cggh.chassis.generic.user.service.api;
 
 import org.cggh.chassis.generic.user.transfer.UserDetailsTO;
 

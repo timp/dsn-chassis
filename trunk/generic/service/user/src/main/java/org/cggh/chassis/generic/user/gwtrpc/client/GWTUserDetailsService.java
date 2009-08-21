@@ -3,7 +3,8 @@
  */
 package org.cggh.chassis.generic.user.gwtrpc.client;
 
-import org.cggh.chassis.generic.user.service.UserDetailsService;
+import org.cggh.chassis.generic.user.service.api.UserDetailsService;
+
 import com.google.gwt.user.client.rpc.RemoteService;
 
 /**
