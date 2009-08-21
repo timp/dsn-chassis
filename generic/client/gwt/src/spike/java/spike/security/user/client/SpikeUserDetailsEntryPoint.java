@@ -18,7 +18,7 @@ import com.google.gwt.user.client.ui.RootPanel;
  * @author aliman
  *
  */
-public class UserDetailsEntryPoint implements EntryPoint {
+public class SpikeUserDetailsEntryPoint implements EntryPoint {
 
 	/* (non-Javadoc)
 	 * @see com.google.gwt.core.client.EntryPoint#onModuleLoad()
@@ -30,10 +30,10 @@ public class UserDetailsEntryPoint implements EntryPoint {
 		
 		// set service URL
 		ServiceDefTarget target = (ServiceDefTarget) userService;
-		target.setServiceEntryPoint("/chassis-generic-user-service/gwtrpc/userdetails");
+		target.setServiceEntryPoint("/chassis-generic-service-user/gwtrpc/userdetails");
 		
 		// make service call
-		userService.getAuthenticatedUser(new AsyncCallback<UserDetailsTO>() {
+		userService.getAuthenticatedUserDetails(new AsyncCallback<UserDetailsTO>() {
 
 			public void onFailure(Throwable ex) {
 				RootPanel.get().clear();
@@ -43,6 +43,9 @@ public class UserDetailsEntryPoint implements EntryPoint {
 			public void onSuccess(UserDetailsTO user) {
 				RootPanel.get().clear();
 				RootPanel.get().add(new Label("Authenticated user: "+user.getId()));
+				for (String role : user.getRoles()) {
+					RootPanel.get().add(new Label(" ["+role+"] "));
+				}
 			}
 			
 		});

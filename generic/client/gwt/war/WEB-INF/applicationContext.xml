@@ -12,7 +12,7 @@
   
   <security:authentication-provider>
     <security:user-service>
-      <security:user name="foo" password="bar" authorities="ROLE_USER" />
+      <security:user name="foo" password="bar" authorities="ROLE_USER, ROLE_SUBMITTER" />
     </security:user-service>
   </security:authentication-provider>
   
