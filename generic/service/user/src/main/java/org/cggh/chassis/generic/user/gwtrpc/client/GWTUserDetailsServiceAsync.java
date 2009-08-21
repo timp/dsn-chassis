@@ -17,6 +17,6 @@ public interface GWTUserDetailsServiceAsync {
 	 * 
 	 * @see org.cggh.chassis.generic.user.gwtrpc.client.GWTUserDetailsService#getAuthenticatedUserDetails()
 	 */
-	void getAuthenticatedUser(AsyncCallback<UserDetailsTO> callback);
+	void getAuthenticatedUserDetails(AsyncCallback<UserDetailsTO> callback);
 
 }

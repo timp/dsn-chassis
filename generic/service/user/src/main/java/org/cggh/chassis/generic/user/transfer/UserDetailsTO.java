@@ -5,14 +5,25 @@ package org.cggh.chassis.generic.user.transfer;
 
 import java.util.Set;
 
+import com.google.gwt.user.client.rpc.IsSerializable;
+
 /**
  * @author aliman
  *
  */
-public class UserDetailsTO {
+public class UserDetailsTO implements IsSerializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	
+	
 	private String id = null;
 	private Set<String> roles = null;
+	
+	public UserDetailsTO() {}
 
 	public void setId(String id) {
 		this.id  = id;

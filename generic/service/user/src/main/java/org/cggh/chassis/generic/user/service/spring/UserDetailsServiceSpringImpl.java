@@ -6,7 +6,7 @@ package org.cggh.chassis.generic.user.service.spring;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.cggh.chassis.generic.user.service.UserDetailsService;
+import org.cggh.chassis.generic.user.service.api.UserDetailsService;
 import org.cggh.chassis.generic.user.transfer.UserDetailsTO;
 import org.springframework.security.GrantedAuthority;
 import org.springframework.security.context.SecurityContextHolder;

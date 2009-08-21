@@ -4,7 +4,7 @@
 package org.cggh.chassis.generic.user.gwtrpc.server.spring;
 
 import org.cggh.chassis.generic.user.gwtrpc.client.GWTUserDetailsService;
-import org.cggh.chassis.generic.user.service.UserDetailsService;
+import org.cggh.chassis.generic.user.service.api.UserDetailsService;
 import org.cggh.chassis.generic.user.service.spring.UserDetailsServiceSpringImpl;
 import org.cggh.chassis.generic.user.transfer.UserDetailsTO;
 
