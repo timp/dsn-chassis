@@ -25,7 +25,7 @@
     <description>Spike User Servlet</description>
     <display-name>UserServlet</display-name>
     <servlet-name>UserServlet</servlet-name>
-    <servlet-class>spike.security.UserServlet</servlet-class>
+    <servlet-class>spike.security.servlet.UserServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>UserServlet</servlet-name>
