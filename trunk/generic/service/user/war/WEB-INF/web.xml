@@ -37,7 +37,7 @@
   
   <servlet-mapping>
     <servlet-name>GWTRPCAuthenticatedUserServlet</servlet-name>
-    <url-pattern>/gwtrpc/user</url-pattern>
+    <url-pattern>/gwtrpc/userdetails</url-pattern>
   </servlet-mapping>  
 
 </web-app>
