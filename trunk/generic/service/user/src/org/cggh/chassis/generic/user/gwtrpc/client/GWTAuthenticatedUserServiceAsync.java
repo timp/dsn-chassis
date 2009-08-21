@@ -3,7 +3,7 @@
  */
 package org.cggh.chassis.generic.user.gwtrpc.client;
 
-import org.cggh.chassis.generic.user.to.UserTO;
+import org.cggh.chassis.generic.user.transfer.UserTO;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 

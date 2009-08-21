@@ -6,7 +6,7 @@ package org.cggh.chassis.generic.user.gwtrpc.server.spring;
 import org.cggh.chassis.generic.user.gwtrpc.client.GWTAuthenticatedUserService;
 import org.cggh.chassis.generic.user.service.AuthenticatedUserService;
 import org.cggh.chassis.generic.user.service.spring.AuthenticatedUserServiceSpringImpl;
-import org.cggh.chassis.generic.user.to.UserTO;
+import org.cggh.chassis.generic.user.transfer.UserTO;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 

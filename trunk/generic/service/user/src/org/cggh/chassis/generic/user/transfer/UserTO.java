@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.user.to;
+package org.cggh.chassis.generic.user.transfer;
 
 import java.util.Set;
 
