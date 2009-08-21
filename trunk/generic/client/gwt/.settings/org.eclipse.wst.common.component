@@ -4,6 +4,7 @@
 <wb-resource deploy-path="/" source-path="/war"/>
 <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
 <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/test/java"/>
+<wb-resource deploy-path="/WEB-INF/classes" source-path="/src/spike/java"/>
 <property name="java-output-path"/>
 <property name="context-root" value="chassis-generic-client-gwt"/>
 </wb-module>

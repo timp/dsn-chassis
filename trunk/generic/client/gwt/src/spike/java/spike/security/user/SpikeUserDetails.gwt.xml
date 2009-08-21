@@ -3,5 +3,5 @@
 <module>
   <inherits name="com.google.gwt.user.User" />
   <inherits name="org.cggh.chassis.generic.user.UserDetailsService" />
-  <entry-point class="spike.security.user.client.UserDetailsEntryPoint" />
+  <entry-point class="spike.security.user.client.SpikeUserDetailsEntryPoint" />
 </module>
