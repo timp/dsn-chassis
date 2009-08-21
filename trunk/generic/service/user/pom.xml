@@ -64,10 +64,14 @@
 						<classPathContainer>org.eclipse.jst.j2ee.internal.web.container</classPathContainer>
 						<classPathContainer>org.eclipse.jst.j2ee.internal.module.container</classPathContainer>
 						<classPathContainer>org.eclipse.jdt.junit.JUNIT_CONTAINER/4</classPathContainer>
+						<classPathContainer>org.eclipse.jdt.launching.JRE_CONTAINER</classPathContainer>
 					</classpathContainers>
 					<workspace>../</workspace>
 			      	<downloadSources>true</downloadSources>
 			    	<downloadJavadocs>true</downloadJavadocs>
+            		<wtpversion>2.0</wtpversion> 
+            		<wtpmanifest>true</wtpmanifest> 
+            		<wtpapplicationxml>true</wtpapplicationxml> 
 			      </configuration>
 	        </plugin>
         </plugins>
