@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.cggh.chassis.generic.user.service.AuthenticatedUserService;
-import org.cggh.chassis.generic.user.to.UserTO;
+import org.cggh.chassis.generic.user.transfer.UserTO;
 import org.springframework.security.GrantedAuthority;
 import org.springframework.security.context.SecurityContextHolder;
 import org.springframework.security.userdetails.UserDetails;
