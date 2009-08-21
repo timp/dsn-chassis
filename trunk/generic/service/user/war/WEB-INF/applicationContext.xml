@@ -1,45 +1,19 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<beans:beans xmlns="http://www.springframework.org/schema/security"
-    xmlns:beans="http://www.springframework.org/schema/beans"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
-                        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-2.0.4.xsd">
+<beans 
+  xmlns="http://www.springframework.org/schema/beans"
+  xmlns:security="http://www.springframework.org/schema/security"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+              http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-2.0.4.xsd">  
 
-<!--	<beans:bean id="gwtUserService" class="org.cggh.chassis.generic.user.gwtrpc.server.RPCUserServiceImpl"/>-->
-<!--	-->
-    <global-method-security secured-annotations="enabled" access-decision-manager-ref="accessDecisionManager"/>
-	
-	<!--Allow any kind of authority to be defined-->
-    <beans:bean id="accessDecisionManager" class="org.springframework.security.vote.UnanimousBased">
-        <beans:property name="decisionVoters">
-            <beans:list>
-                <beans:ref bean="roleVoter"/>
-				<beans:ref bean="authenticatedVoter" />
-            </beans:list>
-        </beans:property>
-    </beans:bean>
-
-    <beans:bean id="roleVoter" class="org.springframework.security.vote.RoleVoter">
-        <beans:property name="rolePrefix" value=""/>
-    </beans:bean>
-    
-    <beans:bean id="authenticatedVoter" class="org.springframework.security.vote.AuthenticatedVoter"/>
-
-	
-    <http auto-config='true'>
-		<intercept-url pattern="/**" access="ROLE_USER" />
-    	<http-basic />
-	</http>
-
-    <authentication-provider>
-      <user-service>
-        <user name="raok" password="pass01word" authorities="ROLE_USER,permission.wwarn.submitter,permission.wwarn.gatekeeper,permission.wwarn.curator,permission.wwarn.coordinator" />
-        <user name="super" password="super" authorities="ROLE_USER,permission.wwarn.submitter,permission.wwarn.gatekeeper,permission.wwarn.curator,permission.wwarn.coordinator" />
-        <user name="submitter" password="submitter" authorities="ROLE_USER,permission.wwarn.submitter" />
-        <user name="gatekeeper" password="gatekeeper" authorities="ROLE_USER,permission.wwarn.gatekeeper" />
-        <user name="curator" password="curator" authorities="ROLE_USER,permission.wwarn.curator" />
-        <user name="coordinator" password="coordinator" authorities="ROLE_USER,permission.wwarn.coordinator" />
-      </user-service>
-    </authentication-provider>
-    	
-</beans:beans>
+  <security:http auto-config='true'>
+    <security:intercept-url pattern="/**" access="ROLE_USER" />
+    <security:http-basic/>
+  </security:http>
+  
+  <security:authentication-provider>
+    <security:user-service>
+      <security:user name="foo" password="bar" authorities="ROLE_USER" />
+    </security:user-service>
+  </security:authentication-provider>
+  
+</beans>
