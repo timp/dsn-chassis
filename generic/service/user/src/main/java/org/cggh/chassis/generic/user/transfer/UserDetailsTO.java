@@ -9,7 +9,7 @@ import java.util.Set;
  * @author aliman
  *
  */
-public class UserTO {
+public class UserDetailsTO {
 
 	private String id = null;
 	private Set<String> roles = null;
@@ -31,8 +31,8 @@ public class UserTO {
 	}
 
 	final public boolean equals(Object another) {
-		if (another instanceof UserTO) {
-			UserTO anotherUser = (UserTO) another;
+		if (another instanceof UserDetailsTO) {
+			UserDetailsTO anotherUser = (UserDetailsTO) another;
 			return (this.id.equals(anotherUser.getId()));
 		}
 		return false;

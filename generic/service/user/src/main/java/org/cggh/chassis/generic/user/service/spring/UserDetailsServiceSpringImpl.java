@@ -6,8 +6,8 @@ package org.cggh.chassis.generic.user.service.spring;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.cggh.chassis.generic.user.service.AuthenticatedUserService;
-import org.cggh.chassis.generic.user.transfer.UserTO;
+import org.cggh.chassis.generic.user.service.UserDetailsService;
+import org.cggh.chassis.generic.user.transfer.UserDetailsTO;
 import org.springframework.security.GrantedAuthority;
 import org.springframework.security.context.SecurityContextHolder;
 import org.springframework.security.userdetails.UserDetails;
@@ -16,14 +16,14 @@ import org.springframework.security.userdetails.UserDetails;
  * @author aliman
  *
  */
-public class AuthenticatedUserServiceSpringImpl implements AuthenticatedUserService {
+public class UserDetailsServiceSpringImpl implements UserDetailsService {
 
 	
 	
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.user.service.UserService#getAuthenticatedUser()
 	 */
-	public UserTO getAuthenticatedUser() {
+	public UserDetailsTO getAuthenticatedUserDetails() {
 
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		
@@ -33,13 +33,13 @@ public class AuthenticatedUserServiceSpringImpl implements AuthenticatedUserServ
 	
 	
 	
-	public static UserTO getUserTOFromPrincipal(Object principal) {
+	public static UserDetailsTO getUserTOFromPrincipal(Object principal) {
 
-		UserTO user = null;
+		UserDetailsTO user = null;
 		
 		if (principal instanceof UserDetails) {
 
-			user = new UserTO();
+			user = new UserDetailsTO();
 			
 			UserDetails userDetails = (UserDetails) principal;
 			
