@@ -4,6 +4,6 @@
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER"/>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/googlecode_dsn-chassis_generic_lib_java"/>
+	<classpathentry combineaccessrules="false" exported="false" kind="src" path="/googlecode_dsn-chassis_generic_lib_java"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>
