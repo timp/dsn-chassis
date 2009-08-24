@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.client.gwt;
+package org.cggh.chassis.generic.client.gwt.client;
 
 /**
  * @author aliman
@@ -9,9 +9,8 @@ package org.cggh.chassis.generic.client.gwt;
  */
 public class Configuration {
 
-	
 	public static native String getUserDetailsServiceEndpointURL() /*-{
-	  $wnd.alert(msg);
+		return $wnd.CHASSIS.userDetailsServiceEndpointURL;
 	}-*/;
 	
 }
