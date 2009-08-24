@@ -50,7 +50,7 @@ public class SpikeUserDetailsEntryPoint implements EntryPoint {
 				root.add(new HTML("<p>Roles:</p>"));
 				String content = "<ul>";
 				for (String role : user.getRoles()) {
-					content += "<li>["+role+"]</li>";
+					content += "<li>"+role+"</li>";
 				}
 				content += "</ul>";
 				root.add(new HTML(content));
