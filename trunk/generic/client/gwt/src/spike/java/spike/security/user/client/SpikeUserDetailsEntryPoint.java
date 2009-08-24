@@ -11,6 +11,7 @@ import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 
@@ -45,10 +46,14 @@ public class SpikeUserDetailsEntryPoint implements EntryPoint {
 
 			public void onSuccess(UserDetailsTO user) {
 				root.clear();
-				root.add(new Label("Authenticated user: "+user.getId()));
+				root.add(new HTML("<p>Authenticated user: <strong>"+user.getId()+"</strong></p>"));
+				root.add(new HTML("<p>Roles:</p>"));
+				String content = "<ul>";
 				for (String role : user.getRoles()) {
-					root.add(new Label(" ["+role+"] "));
+					content += "<li>["+role+"]</li>";
 				}
+				content += "</ul>";
+				root.add(new HTML(content));
 			}
 			
 		});
