@@ -2,10 +2,16 @@
 
 <wiki:toc/>
 
+#
+#
+#
 ----
 = Service Projects =
 
-== Chassis/`*` Atom Service ==
+#
+#
+#
+== Chassis/`*` Atom Service (generic/service/atom) ==
 
 This project manages an implementation of the Atom Publishing Protocol, initially based on eXist, with extensions for querying data within and across collections.
 
@@ -16,11 +22,10 @@ This project manages an implementation of the Atom Publishing Protocol, initiall
 || Default Context Root || `chassis-generic-service-atom` ||
 || SVN Location || [http://code.google.com/p/dsn-chassis/source/browse/trunk/generic/service/atom/ /trunk/generic/service/atom/] ||
 
-Standards:
-
-  * All HTML files as XHTML 1.0 transitional, UTF-8 encoding
-
-== Chassis/`*` User Service ==
+#
+#
+#
+== Chassis/`*` User Service (generic/service/user) ==
 
 This project manages default implementations of the user service, providing remote access to an authenticated user's details and roles.
 
@@ -31,11 +36,20 @@ This project manages default implementations of the user service, providing remo
 || Default Context Root || `chassis-generic-service-user` ||
 || SVN Location || [http://code.google.com/p/dsn-chassis/source/browse/trunk/generic/service/user/ /trunk/generic/service/user/] ||
 
-Standards:
+=== Dependencies ===
 
-  * All HTML files as XHTML 1.0 transitional, UTF-8 encoding
+Other projects on build path:
 
-== Chassis/`*` File Upload Service ==
+  * Chassis/`*` Java Library (generic/lib/java)
+  
+Other projects as Java EE module dependencies:
+
+  * Chassis/`*` Java Library (generic/lib/java)
+
+#
+#
+#
+== Chassis/`*` File Upload Service (generic/service/upload) ==
 
 This project manages an implementation of a service handling file upload posts from HTML forms.
 
@@ -46,33 +60,38 @@ This project manages an implementation of a service handling file upload posts f
 || Default Context Root || `chassis-generic-service-upload` ||
 || SVN Location || [http://code.google.com/p/dsn-chassis/source/browse/trunk/generic/service/upload/ /trunk/generic/service/upload/] ||
 
-Standards:
-
-  * All HTML files as XHTML 1.0 transitional, UTF-8 encoding
-
+#
+#
+#
 ----
 = GWT Client Projects =
 
-== Chassis/`*` GWT Libraries ==
-
-This project manages supporting libraries for a GWT Chassis client.
-
-|| Project Type || Google Web Application Project ||
-|| JDK Compliance Level || 1.5 ||
-|| SVN Location || [http://code.google.com/p/dsn-chassis/source/browse/trunk/generic/lib/gwt/ /trunk/generic/lib/gwt/] ||
-
-== Chassis/`*` GWT Client ==
+#
+#
+#
+== Chassis/`*` GWT Client (generic/client/gwt) ==
 
 A generic Chassis client implemented in GWT.
 
-|| Project Type || Google Web Application Project ||
+|| Project Type || Eclipse Dynamic Web Project + Google Web Toolkit ||
 || JDK Compliance Level || 1.5 ||
+|| Target Runtimes || Apache Tomcat v6.0 ||
+|| Dynamic Web Module Version || 2.5 ||
 || SVN Location || [http://code.google.com/p/dsn-chassis/source/browse/trunk/generic/client/gwt/ /trunk/generic/client/gwt/] ||
 
-Project dependencies:
+=== Dependencies ===
 
-  * Chassis/`*` GWT Libraries
+Other projects on build path:
 
+  * Chassis/`*` GWT Library (generic/lib/gwt)
+  
+Other projects as Java EE module dependencies:
+
+  * Chassis/`*` Java Library (generic/lib/java) (needed for shared spring security config for dev environment)
+
+#
+#
+#
 == Chassis/WWARN GWT Libraries ==
 
 This project manages WWARN-specific extensions to the supporting libraries for a GWT Chassis client.
@@ -100,8 +119,50 @@ Project dependencies:
   * Chassis/WWARN GWT Libraries
 
 ----
+#
+#
+#
+= Supporting Library Projects =
+
+#
+#
+#
+== Chassis/`*` GWT Library (generic/lib/gwt) ==
+
+This project manages a supporting library for a generic GWT Chassis client.
+
+|| Project Type || Eclipse Dynamic Web Project + Google Web Toolkit ||
+|| JDK Compliance Level || 1.5 ||
+|| Target Runtimes || Apache Tomcat v6.0 ||
+|| Dynamic Web Module Version || 2.5 ||
+|| SVN Location || [http://code.google.com/p/dsn-chassis/source/browse/trunk/generic/lib/gwt/ /trunk/generic/lib/gwt/] ||
+
+=== Dependencies ===
+
+Other projects on build path:
+
+  * Chassis/`*` Java Library (generic/lib/java) (exported)
+
+#
+#
+#
+== Chassis/`*` Java Library (generic/lib/java) ==
+
+This project manages a supporting Java library for client and service projects.
+
+|| Project Type || Eclipse Java Project ||
+|| JDK Compliance Level || 1.5 ||
+|| SVN Location || [http://code.google.com/p/dsn-chassis/source/browse/trunk/generic/lib/java/ /trunk/generic/lib/java/] ||
+
+----
+#
+#
+#
 = Documentation Projects =
 
+#
+#
+#
 == Chassis/`*` Documentation ==
 
 Documentation of service APIs, etc., for the generic Chassis/`*` platform.
@@ -109,6 +170,9 @@ Documentation of service APIs, etc., for the generic Chassis/`*` platform.
 || Project Type || Static Web Project ||
 || SVN Location || [http://code.google.com/p/dsn-chassis/source/browse/trunk/generic/docs/ /trunk/generic/docs/] ||
 
+#
+#
+#
 == Chassis/WWARN Documentation ==
 
 Documentation of extensions to generic Chassis/`*` service APIs, etc., for the Chassis/WWARN platform.
@@ -116,43 +180,4 @@ Documentation of extensions to generic Chassis/`*` service APIs, etc., for the C
 || Project Type || Static Web Project ||
 || SVN Location || [http://code.google.com/p/dsn-chassis/source/browse/trunk/wwarn/docs/ /trunk/wwarn/docs/] ||
 
-----
-= Developer Deployment Projects =
 
-These projects provide the ability to run a GWT client and all supporting services within a single web application, in GWT hosted mode -- hence "monolith".
-
-N.B. these projects *should not contain any code*, only configuration.
-
-== Chassis/`*` Developer Monolith ==
-
-An all-in-one project for the generic Chassis/`*` GWT client and services.
-
-|| Project Type || Google Web Application Project ||
-|| JDK Compliance Level || 1.5 ||
-|| SVN Location || [http://code.google.com/p/dsn-chassis/source/browse/trunk/generic/dev/monolith/ /trunk/generic/dev/monolith/] ||
-
-Project dependencies:
-
-  * Chassis/`*` GWT Libraries
-  * Chassis/`*` GWT Client
-  * Chassis/`*` Atom Service
-  * Chassis/`*` User Service
-  * Chassis/`*` File Upload Service
-
-== Chassis/WWARN Developer Monolith ==
-
-An all-in-one project for the Chassis/WWARN GWT client and services.
-
-|| Project Type || Google Web Application Project ||
-|| JDK Compliance Level || 1.5 ||
-|| SVN Location || [http://code.google.com/p/dsn-chassis/source/browse/trunk/wwarn/dev/monolith/ /trunk/wwarn/dev/monolith/] ||
-
-Project dependencies:
-
-  * Chassis/`*` GWT Libraries
-  * Chassis/`*` GWT Client
-  * Chassis/WWARN GWT Libraries
-  * Chassis/WWARN GWT Client
-  * Chassis/`*` Atom Service
-  * Chassis/`*` User Service
-  * Chassis/`*` File Upload Service
