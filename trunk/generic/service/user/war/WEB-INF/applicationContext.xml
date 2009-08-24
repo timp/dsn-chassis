@@ -5,15 +5,7 @@
   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
               http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-2.0.4.xsd">  
 
-  <security:http auto-config='true' realm="chassis-development-realm">
-    <security:intercept-url pattern="/**" access="ROLE_USER" />
-    <security:http-basic/>
-  </security:http>
-  
-  <security:authentication-provider>
-    <security:user-service>
-      <security:user name="foo" password="bar" authorities="ROLE_USER, ROLE_SUBMITTER, ROLE_CURATOR" />
-    </security:user-service>
-  </security:authentication-provider>
+  <import resource="security-development.xml"/>
+<!--  <import resource="security-production.xml"/>-->
   
 </beans>
