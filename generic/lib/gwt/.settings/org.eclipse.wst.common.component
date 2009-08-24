@@ -2,9 +2,8 @@
 <project-modules id="moduleCoreId" project-version="1.5.0">
 <wb-module deploy-name="googlecode_dsn-chassis_generic_lib_gwt">
 <wb-resource deploy-path="/" source-path="/war"/>
-<wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
-<wb-resource deploy-path="/WEB-INF/classes" source-path="/src/spike/java"/>
 <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
+<wb-resource deploy-path="/WEB-INF/classes" source-path="/src/spike/java"/>
 <property name="context-root" value="googlecode_dsn-chassis_generic_lib_gwt"/>
 <property name="java-output-path"/>
 </wb-module>
