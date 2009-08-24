@@ -7,7 +7,7 @@
               http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-2.0.4.xsd">  
 
   <http auto-config='true' realm="chassis-development-realm">
-    <intercept-url pattern="/**" access="ROLE_USER" />
+    <intercept-url pattern="/**" access="ROLE_CHASSIS_USER" />
     <http-basic/>
   </http>
   
@@ -17,7 +17,7 @@
   -->
   <authentication-provider>
     <user-service>
-      <user name="foo" password="bar" authorities="ROLE_USER, ROLE_SUBMITTER, ROLE_CURATOR" />
+      <user name="foo" password="bar" authorities="ROLE_CHASSIS_USER, ROLE_CHASSIS_SUBMITTER, ROLE_CHASSIS_CURATOR, ROLE_CHASSIS_GATEKEEPER, ROLE_CHASSIS_COORDINATOR" />
     </user-service>
   </authentication-provider>
   
