@@ -32,19 +32,22 @@ public class SpikeUserDetailsEntryPoint implements EntryPoint {
 		ServiceDefTarget target = (ServiceDefTarget) userService;
 		target.setServiceEntryPoint("/chassis-generic-service-user/gwtrpc/userdetails");
 		
+		// get root panel
+		final RootPanel root = RootPanel.get("gwtcontent");
+		
 		// make service call
 		userService.getAuthenticatedUserDetails(new AsyncCallback<UserDetailsTO>() {
 
 			public void onFailure(Throwable ex) {
-				RootPanel.get().clear();
-				RootPanel.get().add(new Label("Error: "+ex.getLocalizedMessage()));
+				root.clear();
+				root.add(new Label("Error: "+ex.getLocalizedMessage()));
 			}
 
 			public void onSuccess(UserDetailsTO user) {
-				RootPanel.get().clear();
-				RootPanel.get().add(new Label("Authenticated user: "+user.getId()));
+				root.clear();
+				root.add(new Label("Authenticated user: "+user.getId()));
 				for (String role : user.getRoles()) {
-					RootPanel.get().add(new Label(" ["+role+"] "));
+					root.add(new Label(" ["+role+"] "));
 				}
 			}
 			
