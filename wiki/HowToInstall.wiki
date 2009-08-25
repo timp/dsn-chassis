@@ -1,0 +1,44 @@
+#summary how to install Chassis
+
+Assuming your web server is deployed at www.example.com, and your servlet container is deployed at servlet.example.com:8080.
+
+[http://code.google.com/p/dsn-chassis/downloads/list Download] the latest release of the Chassis Generic GWT Client, and the Chassis Generic User Service, to the machine hosting your servlet container. E.g. ...
+
+{{{
+$ wget http://dsn-chassis.googlecode.com/files/chassis-generic-client-gwt-0.1-alpha-1.war
+$ wget http://dsn-chassis.googlecode.com/files/chassis-generic-service-user-0.1-alpha-1.war
+}}}
+
+Copy these war files to the Tomcat webapps folder. E.g. ...
+
+{{{
+$ sudo cp chassis-generic-client-gwt-0.1-alpha-1.war /var/lib/tomcat6/webapps/
+$ sudo cp chassis-generic-service-user-0.1-alpha-1.war /var/lib/tomcat6/webapps/
+}}}
+
+Add proxy directives to the Apache configuration on your web server. E.g. ...
+
+{{{
+ProxyPass         /chassis/client  http://servlet.example.com:8080/chassis-generic-client-gwt-0.1-alpha-1
+ProxyPassReverse  /chassis/client  http://servlet.example.com:8080/chassis-generic-client-gwt-0.1-alpha-1
+
+ProxyPass         /chassis/service/user  http://servlet.example.com:8080/chassis-generic-service-user-0.1-alpha-1
+ProxyPassReverse  /chassis/service/user  http://servlet.example.com:8080/chassis-generic-service-user-0.1-alpha-1
+}}}
+
+Restart Apache on your web server.
+
+Finally, edit the Chassis Generic Client configuration file to point to the correct User Service location. E.g. do ...
+
+{{{
+$ sudo emacs /var/lib/tomcat6/webapps/chassis-generic-client-gwt-0.1-alpha-1/spike/configuration.js 
+}}}
+
+... and edit to ...
+
+{{{
+CHASSIS = new Object();
+CHASSIS.userDetailsServiceEndpointURL = "/chassis/service/user/gwtrpc/userdetails";
+}}}
+
+Now, visit http://www.example.com/chassis/client/spike/ to check it is working.
