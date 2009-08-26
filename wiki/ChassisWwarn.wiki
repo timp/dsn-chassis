@@ -30,7 +30,7 @@ Status: complete
 
 Scope: see ChassisWwarnEnvisioning
 
-== First development iteration ==
+== First development iteration (0.1-alpha-1) ==
 
 Due: 28 Aug 2009
 
