@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.client.gwt.client.widget.userdetails;
+package org.cggh.chassis.generic.client.gwt.widget.userdetails.client;
 
 import static org.easymock.EasyMock.*;
 import static org.junit.Assert.*;
@@ -9,6 +9,10 @@ import static org.junit.Assert.*;
 import java.util.HashSet;
 import java.util.Set;
 
+import junit.framework.JUnit4TestAdapter;
+
+import org.cggh.chassis.generic.client.gwt.widget.userdetails.client.UserDetailsWidgetModel;
+import org.cggh.chassis.generic.client.gwt.widget.userdetails.client.UserDetailsWidgetModelListener;
 import org.junit.Test;
 
 /**
@@ -17,6 +21,12 @@ import org.junit.Test;
  */
 public class TestUserDetailsWidgetModel {
 
+	
+	
+	public static junit.framework.Test suite() {
+	   return new JUnit4TestAdapter(TestUserDetailsWidgetModel.class);
+	} 
+	
 	
 	
 	@Test
