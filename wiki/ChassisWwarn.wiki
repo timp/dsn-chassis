@@ -1,9 +1,9 @@
 #summary home page for the Chassis/WWARN product.
 
 ----
-= Public Release Milestones =
+= Public Releases =
 
-== M0 (limited public release, WHO upload only) ==
+== 0.1 (limited public release, WHO upload only) ==
 
 Due: Nov 2009
 
@@ -11,7 +11,7 @@ Status: pending
 
 Scope: TBD
 
-== M1 (first public release) ==
+== 1.0 (first public release) ==
 
 Due: Jan 2010
 
