@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.client.gwt.client.widget.userdetails;
+package org.cggh.chassis.generic.client.gwt.widget.userdetails.client;
 
 import java.util.HashSet;
 import java.util.Set;
