@@ -32,9 +32,9 @@ public class WebAuthPreAuthenticatedProcessingFilter extends AbstractPreAuthenti
 	protected Object getPreAuthenticatedPrincipal(HttpServletRequest arg0) {
 		//TODO throw more appropriate errors.
 		
-		//Get the WEBAUTH_USER WebAuth environment variable.
+		//Get the WEBAUTH_USER WebAuth Header which should be added by a WebAuth proxy server.
 		//This is of the form: 'user<webAuthUserId>/gmap@GMAP.NET'
-		String webAuthUserString = (String) arg0.getAttribute("WEBAUTH_USER");
+		String webAuthUserString = (String) arg0.getHeader("WEBAUTH_USER");
 		
 		//Extract the webAuthUserId.
 		String webAuthUserIdString;
@@ -46,7 +46,7 @@ public class WebAuthPreAuthenticatedProcessingFilter extends AbstractPreAuthenti
 			//throw exception if webAuth attribute is invalid or not found
 			if (!matcher.find())
 			{
-				throw new Error ("WebAuth attribute invalid.");
+				throw new Error ("WebAuth attribute invalid: " + webAuthUserString);
 			}
 			
 			//Store webAuthUserId
