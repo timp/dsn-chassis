@@ -3,7 +3,7 @@
 ----
 = Public Releases =
 
-== Release 0.1 (limited functionality public release, WHO upload only) ==
+== Chassis/WWARN 0.1 Release (limited functionality public release, WHO upload only) ==
 
 Due: Nov 2009
 
@@ -11,7 +11,7 @@ Status: pending
 
 Scope: TBD
 
-== Release 1.0 (first public release) ==
+== Chassis/WWARN 1.0 Release (first public release) ==
 
 Due: Jan 2010
 
