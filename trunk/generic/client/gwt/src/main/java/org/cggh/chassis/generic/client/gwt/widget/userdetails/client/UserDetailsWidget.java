@@ -3,6 +3,8 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.userdetails.client;
 
+import org.cggh.chassis.generic.user.gwtrpc.client.GWTUserDetailsServiceAsync;
+
 import com.google.gwt.user.client.ui.Panel;
 
 /**
@@ -11,17 +13,17 @@ import com.google.gwt.user.client.ui.Panel;
  */
 public class UserDetailsWidget {
 
-	private UserDetailsWidgetModel model;
-	private UserDetailsWidgetController controller;
-	private UserDetailsWidgetDefaultRenderer renderer;
+	final private UserDetailsWidgetModel model;
+	final private UserDetailsWidgetController controller;
+	final private UserDetailsWidgetDefaultRenderer renderer;
 
-	public UserDetailsWidget(Panel canvas) {
+	public UserDetailsWidget(Panel canvas, GWTUserDetailsServiceAsync userService) {
 
 		// instantiate a model
 		model = new UserDetailsWidgetModel();
 		
 		// instantiate a controller
-		controller = new UserDetailsWidgetController(model, null);
+		controller = new UserDetailsWidgetController(model, userService);
 		
 		// instantiate a renderer
 		renderer = new UserDetailsWidgetDefaultRenderer(canvas, controller);
@@ -31,13 +33,16 @@ public class UserDetailsWidget {
 
 	}
 	
-	public UserDetailsWidget(UserDetailsWidgetDefaultRenderer customRenderer) {
+	public UserDetailsWidget(UserDetailsWidgetDefaultRenderer customRenderer, GWTUserDetailsServiceAsync userService) {
 
 		// instantiate a model
 		model = new UserDetailsWidgetModel();
 		
 		// instantiate a controller
-		controller = new UserDetailsWidgetController(model, null);
+		controller = new UserDetailsWidgetController(model, userService);
+		
+		// set renderer
+		renderer = customRenderer;
 		
 		// inject controller into renderer
 		renderer.setController(controller);
