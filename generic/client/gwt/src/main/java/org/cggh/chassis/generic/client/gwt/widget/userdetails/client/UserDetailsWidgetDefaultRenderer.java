@@ -5,6 +5,10 @@ package org.cggh.chassis.generic.client.gwt.widget.userdetails.client;
 
 import java.util.Set;
 
+import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ChangeHandler;
+import com.google.gwt.event.shared.EventHandler;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.Panel;
@@ -22,11 +26,12 @@ class UserDetailsWidgetDefaultRenderer implements UserDetailsWidgetModelListener
 	private Panel canvas;
 	
 	//Expose view elements for testing purposes.
-	Label userNameLabel = new Label();
-	ListBox userRolesListBox = new ListBox();
-	Label currentRoleLabel = new Label();
-	Widget loadingUIObject = new SimplePanel();
-	Widget userDetailsUIObject = new SimplePanel();
+	final Panel loadingPanel = new SimplePanel();
+	final Panel userDetailsPanel = new HorizontalPanel();
+	final Label userNameLabel = new Label();
+	final Label currentRoleLabel = new Label();
+	final Panel changeUserRolePanel = new HorizontalPanel();
+	final ListBox userRolesListBox = new ListBox();
 
 	UserDetailsWidgetDefaultRenderer(Panel canvas, UserDetailsWidgetController controller) {
 		this.canvas = canvas;
@@ -37,10 +42,31 @@ class UserDetailsWidgetDefaultRenderer implements UserDetailsWidgetModelListener
 
 	
 	private void initCanvas() {
-	
-		// TODO implement this method
-		canvas.add(loadingUIObject);
+		
+		// Prepare loading panel
+		Label loadingLabel = new Label("Loading...");
+		loadingPanel.add(loadingLabel);
+		
+		// Prepare userDetailsPanel
+		Label loggedInAsLabel = new Label("Logged in as: ");
+		userDetailsPanel.add(loggedInAsLabel);
+		userDetailsPanel.add(userNameLabel);
+		Label roleLabel = new Label("| role: ");
+		userDetailsPanel.add(roleLabel);
+		userDetailsPanel.add(currentRoleLabel);
+		
+		//Add event handler to userRolesListBox
+		userRolesListBox.addChangeHandler(new RoleChangeHandler());
+		
+		// Prepare changeUserRolePanel
+		Label changeRoleLabel = new Label("| switch role: ");		
+		changeUserRolePanel.add(changeRoleLabel);
+		changeUserRolePanel.add(userRolesListBox);
+		userDetailsPanel.add(changeUserRolePanel);		
+		
+		canvas.add(loadingPanel);
 	}
+	
 	
 	
 	
@@ -57,6 +83,10 @@ class UserDetailsWidgetDefaultRenderer implements UserDetailsWidgetModelListener
 			// TODO create friendly translator for roles?
 			userRolesListBox.addItem(role, role);
 		}
+		
+		//show/hide changeUserRolePanel
+		boolean visible = (after.size() > 1);
+		changeUserRolePanel.setVisible(visible);
 	}
 
 	public void onStatusChanged(Integer before, Integer after) {
@@ -65,12 +95,12 @@ class UserDetailsWidgetDefaultRenderer implements UserDetailsWidgetModelListener
 			  || (after == UserDetailsWidgetModel.STATUS_LOADING) )	
 		{
 			canvas.clear();
-			canvas.add(loadingUIObject);
+			canvas.add(loadingPanel);
 		}
 		else if (after == UserDetailsWidgetModel.STATUS_FOUND) 
 		{
 			canvas.clear();
-			canvas.add(userDetailsUIObject);
+			canvas.add(userDetailsPanel);
 		}
 		else
 		{
@@ -86,5 +116,12 @@ class UserDetailsWidgetDefaultRenderer implements UserDetailsWidgetModelListener
 	public void setController(UserDetailsWidgetController controller) {
 		this.controller = controller;
 	}
+	
+	class RoleChangeHandler implements ChangeHandler {
+		public void onChange(ChangeEvent arg0) {
+			controller.updateCurrentRole(userRolesListBox.getValue(userRolesListBox.getSelectedIndex()));
+		}
+	}
+	
 
 }

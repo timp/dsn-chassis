@@ -113,7 +113,35 @@ public class TestUserDetailsWidgetController {
 
 	}
 	
-	
+	@Test
+	public void testUpdateCurrentRole() {
+
+		// mock model in found state
+		UserDetailsWidgetModel model = new UserDetailsWidgetModel();
+		model.setStatus(UserDetailsWidgetModel.STATUS_FOUND);
+		model.setUserName("user");
+		
+		Set<String> roles = new HashSet<String>();
+		String foo = "foo";
+		roles.add(foo);
+		String bar = "bar";
+		roles.add(bar);
+		String newCurrentRole = "newCurrentRole";
+		roles.add(newCurrentRole);
+		
+		model.setRoles(roles);
+		model.setCurrentRole(foo);
+
+		// instantiate class under test
+		UserDetailsWidgetController controller = new UserDetailsWidgetController(model, null);
+
+		// call method under test
+		controller.updateCurrentRole(newCurrentRole);
+		
+		// test outcome at model
+		assertEquals(newCurrentRole, model.getCurrentRole());
+				
+	}
 	
 	
 }
