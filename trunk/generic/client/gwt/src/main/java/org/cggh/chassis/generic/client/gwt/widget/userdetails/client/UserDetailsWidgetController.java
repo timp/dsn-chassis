@@ -73,6 +73,8 @@ public class UserDetailsWidgetController {
 			// populate roles
 			model.setRoles(new TreeSet<String>(user.getRoles()));
 			
+			// TODO prevent currentRole changing if it is already set.
+			
 			// populate current role
 			if (model.getRoles().size() > 0) {
 				model.setCurrentRole(model.getRoles().iterator().next());
@@ -87,6 +89,11 @@ public class UserDetailsWidgetController {
 			
 		}
 		
+	}
+
+
+	public void updateCurrentRole(String currentRole) {
+		model.setCurrentRole(currentRole);
 	}
 
 	
