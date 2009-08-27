@@ -96,7 +96,7 @@ public class MockAtomFeed implements AtomFeed {
 	/**
 	 * @param mockEntry
 	 */
-	public void addEntry(MockAtomEntry mockEntry) {
+	public void add(MockAtomEntry mockEntry) {
 		// TODO Auto-generated method stub
 		
 	}
