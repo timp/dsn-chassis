@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.atom.client.format;
+package org.cggh.chassis.generic.atom.vanilla.client.format;
 
 /**
  * @author aliman
