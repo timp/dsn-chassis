@@ -375,7 +375,7 @@ public class TestDeferred {
 		TestFunction<Integer,Boolean> second = new TestFunction<Integer,Boolean>() {
 			public Boolean apply(Integer in) {
 				called++;
-				assertEquals(42, in);
+				assertEquals(new Integer(42), in);
 				return true;
 			}
 		};
