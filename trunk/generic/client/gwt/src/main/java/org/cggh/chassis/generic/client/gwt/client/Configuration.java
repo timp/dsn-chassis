@@ -13,4 +13,8 @@ public class Configuration {
 		return $wnd.CHASSIS.userDetailsServiceEndpointURL;
 	}-*/;
 	
+	public static native String getStudyFeedURL() /*-{
+		return $wnd.CHASSIS.studyFeedURL;
+	}-*/;
+	
 }
