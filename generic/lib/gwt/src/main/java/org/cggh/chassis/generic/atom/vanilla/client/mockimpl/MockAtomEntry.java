@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import org.cggh.chassis.generic.atom.vanilla.client.format.Atom;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomCategory;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomLink;
@@ -21,18 +22,23 @@ public class MockAtomEntry implements AtomEntry {
 	private String id;
 	private String published;
 	private String updated;
+	private List<AtomLink> links;
+	private String summary;
+	private String title;
+	private List<AtomPersonConstruct> authors;
+	private List<AtomCategory> categories;
 
 	/**
-	 * @param collectionURL
+	 * @param feedURL
 	 */
-	public MockAtomEntry(String collectionURL) {
+	public MockAtomEntry(String feedURL) {
 
 		// generate new ID
 		UUID id = UUID.randomUUID();
 		this.id = id.toString();
 		
 		// construct entry URL and edit link
-		String entryURL = collectionURL + "?id=" + id;
+		String entryURL = feedURL + "?id=" + id;
 		// TODO set edit link
 		
 		// set published and updated
@@ -43,82 +49,87 @@ public class MockAtomEntry implements AtomEntry {
 	}
 
 	/**
+	 * 
+	 */
+	public MockAtomEntry() {}
+
+	/**
 	 * @param string
 	 */
-	public void setId(String string) {
-		// TODO Auto-generated method stub
-		
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	/**
 	 * @param entryURL
 	 */
 	public void setEditLink(String entryURL) {
-		// TODO Auto-generated method stub
-		
+		AtomLink editLink = this.getEditLink();
+		if (editLink == null) {
+//			editLink = new AtomLink();
+			// TODO instantiate
+		}
+		editLink.setHref(entryURL);
 	}
 
 	/**
 	 * @param string
 	 */
-	public void setPublished(String string) {
-		// TODO Auto-generated method stub
-		
+	public void setPublished(String published) {
+		this.published = published;
 	}
 
 	/**
 	 * @param string
 	 */
-	public void setUpdated(String string) {
-		// TODO Auto-generated method stub
-		
+	public void setUpdated(String updated) {
+		this.updated = updated;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry#addAuthor(org.cggh.chassis.generic.atom.vanilla.client.format.AtomPersonConstruct)
 	 */
 	public void addAuthor(AtomPersonConstruct author) {
-		// TODO Auto-generated method stub
-		
+		this.authors.add(author);
 	}
 
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry#addCategory(org.cggh.chassis.generic.atom.vanilla.client.format.AtomCategory)
 	 */
 	public void addCategory(AtomCategory category) {
-		// TODO Auto-generated method stub
-		
+		this.categories.add(category);
 	}
 
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry#addLink(org.cggh.chassis.generic.atom.vanilla.client.format.AtomLink)
 	 */
 	public void addLink(AtomLink link) {
-		// TODO Auto-generated method stub
-		
+		this.links.add(link);
 	}
 
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry#getAuthors()
 	 */
 	public List<AtomPersonConstruct> getAuthors() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.authors;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry#getCategories()
 	 */
 	public List<AtomCategory> getCategories() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.categories;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry#getEditLink()
 	 */
 	public AtomLink getEditLink() {
-		// TODO Auto-generated method stub
+		for (AtomLink link : this.links) {
+			if (link.getRel().equals(Atom.REL_EDIT)) {
+				return link;
+			}
+		}
 		return null;
 	}
 
@@ -126,7 +137,11 @@ public class MockAtomEntry implements AtomEntry {
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry#getEditMediaLink()
 	 */
 	public AtomLink getEditMediaLink() {
-		// TODO Auto-generated method stub
+		for (AtomLink link : this.links) {
+			if (link.getRel().equals(Atom.REL_EDIT_MEDIA)) {
+				return link;
+			}
+		}
 		return null;
 	}
 
@@ -134,118 +149,105 @@ public class MockAtomEntry implements AtomEntry {
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry#getId()
 	 */
 	public String getId() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.id;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry#getLinks()
 	 */
 	public List<AtomLink> getLinks() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.links;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry#getPublished()
 	 */
 	public String getPublished() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.published;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry#getSummary()
 	 */
 	public String getSummary() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.summary;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry#getTitle()
 	 */
 	public String getTitle() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.title;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry#getUpdated()
 	 */
 	public String getUpdated() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.updated;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry#removeAuthor(org.cggh.chassis.generic.atom.vanilla.client.format.AtomPersonConstruct)
 	 */
 	public void removeAuthor(AtomPersonConstruct author) {
-		// TODO Auto-generated method stub
-		
+		this.authors.remove(author);
 	}
 
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry#removeCategory(org.cggh.chassis.generic.atom.vanilla.client.format.AtomCategory)
 	 */
 	public void removeCategory(AtomCategory category) {
-		// TODO Auto-generated method stub
-		
+		this.categories.remove(category);
 	}
 
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry#removeLink(org.cggh.chassis.generic.atom.vanilla.client.format.AtomLink)
 	 */
 	public void removeLink(AtomLink link) {
-		// TODO Auto-generated method stub
-		
+		this.links.remove(link);
 	}
 
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry#setAuthors(java.util.List)
 	 */
 	public void setAuthors(List<AtomPersonConstruct> authors) {
-		// TODO Auto-generated method stub
-		
+		this.authors = authors;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry#setCategories(java.util.List)
 	 */
 	public void setCategories(List<AtomCategory> categories) {
-		// TODO Auto-generated method stub
-		
+		this.categories = categories;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry#setLinks(java.util.List)
 	 */
 	public void setLinks(List<AtomLink> links) {
-		// TODO Auto-generated method stub
-		
+		this.links = links;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry#setSummary(java.lang.String)
 	 */
 	public void setSummary(String summary) {
-		// TODO Auto-generated method stub
-		
+		this.summary = summary;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry#setTitle(java.lang.String)
 	 */
 	public void setTitle(String title) {
-		// TODO Auto-generated method stub
-		
+		this.title = title;
 	}
 
 	/**
 	 * @param entry
 	 */
 	public void put(AtomEntry entry) {
+		this.title = entry.getTitle();
 		// TODO Auto-generated method stub
 		
 	}

@@ -3,6 +3,7 @@
  */
 package org.cggh.chassis.generic.atom.vanilla.client.mockimpl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -19,6 +20,7 @@ public class MockAtomFeed implements AtomFeed {
 	private String title;
 	private String id;
 	private String updated;
+	private List<AtomEntry> entries = new ArrayList<AtomEntry>();
 
 	/**
 	 * @param title
@@ -41,64 +43,42 @@ public class MockAtomFeed implements AtomFeed {
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed#getEntries()
 	 */
 	public List<AtomEntry> getEntries() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.entries ;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed#getId()
 	 */
 	public String getId() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.id;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed#getTitle()
 	 */
 	public String getTitle() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.title;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed#getUpdated()
 	 */
 	public String getUpdated() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.updated;
 	}
 
 	/**
 	 * @param title
 	 */
 	public void setTitle(String title) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	/**
-	 * @param string
-	 */
-	public void setId(String string) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	/**
-	 * @param string
-	 */
-	public void setUpdated(String string) {
-		// TODO Auto-generated method stub
-		
+		this.title = title;
 	}
 
 	/**
 	 * @param mockEntry
 	 */
 	public void add(MockAtomEntry mockEntry) {
-		// TODO Auto-generated method stub
-		
+		this.entries.add(mockEntry);
 	}
 
 	/**
@@ -106,16 +86,14 @@ public class MockAtomFeed implements AtomFeed {
 	 * @return
 	 */
 	public boolean contains(MockAtomEntry entry) {
-		// TODO Auto-generated method stub
-		return false;
+		return this.entries.contains(entry);
 	}
 
 	/**
 	 * @param entry
 	 */
 	public void remove(MockAtomEntry entry) {
-		// TODO Auto-generated method stub
-		
+		this.entries.remove(entry);
 	}
 
 }
