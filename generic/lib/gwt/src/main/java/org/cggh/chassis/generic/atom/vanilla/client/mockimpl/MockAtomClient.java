@@ -3,10 +3,8 @@
  */
 package org.cggh.chassis.generic.atom.vanilla.client.mockimpl;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
@@ -20,8 +18,23 @@ import org.cggh.chassis.generic.twisted.client.Deferred;
  */
 public class MockAtomClient implements AtomClient {
 	
+	
+	
+	
 	private static Map<String,MockAtomEntry> entries = new HashMap<String,MockAtomEntry>();
 	private static Map<String,MockAtomFeed> feeds = new HashMap<String,MockAtomFeed>();
+	private MockAtomFactory factory = new MockAtomFactory();
+	
+	
+	
+	public MockAtomClient() {}
+	
+	
+	
+	
+	public MockAtomClient(MockAtomFactory factory) {
+		this.factory  = factory;
+	}
 	
 	
 	
@@ -108,6 +121,7 @@ public class MockAtomClient implements AtomClient {
 
 	
 	
+	
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomClient#postEntry(java.lang.String, org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry)
 	 */
@@ -118,11 +132,12 @@ public class MockAtomClient implements AtomClient {
 		if (feeds.containsKey(feedURL)) {
 			
 			// copy entry into mock to store in memory
-			MockAtomEntry mockEntry = new MockAtomEntry(feedURL);
+			MockAtomEntry mockEntry = factory.createMockEntry(feedURL);
+			mockEntry.put(entry);
 
 			// add entry to collection
 			MockAtomFeed mockFeed = feeds.get(feedURL);
-			mockFeed.addEntry(mockEntry);
+			mockFeed.add(mockEntry);
 			
 			// callback deferred
 			deferred.callback(mockEntry);
@@ -164,11 +179,11 @@ public class MockAtomClient implements AtomClient {
 
 	
 	
-	public void createCollection(String feedURL, String title) {
+	public void createFeed(String feedURL, String title) {
 		if (!feeds.containsKey(feedURL)) {
 			
 			// create mock feed to store in memory
-			MockAtomFeed feed = new MockAtomFeed(title);
+			MockAtomFeed feed = factory.createMockFeed(title);
 			
 			// put feed in memory store
 			feeds.put(feedURL, feed);
