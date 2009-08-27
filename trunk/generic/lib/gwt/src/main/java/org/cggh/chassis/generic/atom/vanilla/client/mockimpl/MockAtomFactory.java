@@ -30,4 +30,10 @@ public class MockAtomFactory {
 	
 	
 	
+	
+	public MockAtomEntry createMockEntry() {
+		return new MockAtomEntry();
+	}
+	
+	
 }

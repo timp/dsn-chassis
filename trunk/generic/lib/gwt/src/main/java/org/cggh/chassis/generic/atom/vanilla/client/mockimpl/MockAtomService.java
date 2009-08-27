@@ -8,7 +8,7 @@ import java.util.Map;
 
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
-import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomClient;
+import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.NotFoundException;
 import org.cggh.chassis.generic.twisted.client.Deferred;
 
@@ -16,7 +16,7 @@ import org.cggh.chassis.generic.twisted.client.Deferred;
  * @author aliman
  *
  */
-public class MockAtomClient implements AtomClient {
+public class MockAtomService implements AtomService {
 	
 	
 	
@@ -27,12 +27,12 @@ public class MockAtomClient implements AtomClient {
 	
 	
 	
-	public MockAtomClient() {}
+	public MockAtomService() {}
 	
 	
 	
 	
-	public MockAtomClient(MockAtomFactory factory) {
+	public MockAtomService(MockAtomFactory factory) {
 		this.factory  = factory;
 	}
 	
