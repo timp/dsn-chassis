@@ -18,8 +18,8 @@ public class MockStudyEntry extends MockAtomEntry implements StudyEntry {
 	/**
 	 * @param collectionURL
 	 */
-	public MockStudyEntry(String collectionURL) {
-		super(collectionURL);
+	protected MockStudyEntry(MockStudyFactory factory) {
+		super(factory);
 	}
 
 	/* (non-Javadoc)
