@@ -3,13 +3,9 @@
  */
 package org.cggh.chassis.generic.atom.vanilla.client.mockimpl;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
-import org.cggh.chassis.generic.atom.vanilla.client.protocol.NotFoundException;
 import org.cggh.chassis.generic.twisted.client.Deferred;
 
 /**
@@ -21,10 +17,7 @@ public class MockAtomService implements AtomService {
 	
 	
 	
-	private static Map<String,MockAtomEntry> entries = new HashMap<String,MockAtomEntry>();
-	private static Map<String,MockAtomFeed> feeds = new HashMap<String,MockAtomFeed>();
-	private MockAtomFactory factory = new MockAtomFactory();
-	private MockAtomStore store = new MockAtomStore(factory);
+	private static MockAtomStore store = new MockAtomStore();
 	
 	
 	
@@ -34,8 +27,7 @@ public class MockAtomService implements AtomService {
 	
 	
 	public MockAtomService(MockAtomFactory factory) {
-		this.factory  = factory;
-		this.store = new MockAtomStore(factory);
+		store = new MockAtomStore(factory);
 	}
 	
 	
@@ -48,28 +40,20 @@ public class MockAtomService implements AtomService {
 		
 		Deferred<Void> deferred = new Deferred<Void>();
 
-		if (entries.containsKey(entryURL)) {
-
-			MockAtomEntry entry = entries.get(entryURL);
+		try {
 			
-			for (MockAtomFeed feed : feeds.values()) {
-				if (feed.contains(entry)) {
-					feed.remove(entry);
-				}
-			}
-
-			entries.remove(entryURL);
-			
+			store.delete(entryURL);
 			deferred.callback(null);
-
+			
 		}
-		else {
-
-			deferred.errback(new NotFoundException(entryURL));
-
+		catch (Throwable t) {
+			
+			deferred.errback(t);
+			
 		}
 
 		return deferred;
+
 	}
 
 	
@@ -82,18 +66,20 @@ public class MockAtomService implements AtomService {
 		
 		Deferred<AtomEntry> deferred = new Deferred<AtomEntry>();
 		
-		if (entries.containsKey(entryURL)) {
+		try {
 			
-			deferred.callback(entries.get(entryURL));
+			AtomEntry entry = store.retrieve(entryURL);
+			deferred.callback(entry);
 			
 		}
-		else {
+		catch (Throwable t) {
 			
-			deferred.errback(new NotFoundException(entryURL));
+			deferred.errback(t);
 			
 		}
 		
 		return deferred;
+
 	}
 
 	
@@ -106,17 +92,18 @@ public class MockAtomService implements AtomService {
 		
 		Deferred<AtomFeed> deferred = new Deferred<AtomFeed>();
 
-		if (feeds.containsKey(feedURL)) {
-
-			deferred.callback(feeds.get(feedURL));
-
+		try {
+			
+			AtomFeed feed = store.retrieveAll(feedURL);
+			deferred.callback(feed);
+			
 		}
-		else {
-
-			deferred.errback(new NotFoundException(feedURL));
-
+		catch (Throwable t) {
+			
+			deferred.errback(t);
+			
 		}
-
+		
 		return deferred;
 	
 	}
@@ -136,13 +123,14 @@ public class MockAtomService implements AtomService {
 			entry = store.create(feedURL, entry);
 			deferred.callback(entry);
 
-		} catch (NotFoundException e) {
+		} catch (Throwable e) {
 			
 			deferred.errback(e);
 			
 		}
 		
 		return deferred;
+
 	}
 
 	
@@ -154,34 +142,27 @@ public class MockAtomService implements AtomService {
 		
 		Deferred<AtomEntry> deferred = new Deferred<AtomEntry>();
 		
-		if (entries.containsKey(entryURL)) {
+		try {
+			
+			entry = store.update(entryURL, entry);
+			deferred.callback(entry);
 
-			MockAtomEntry mockEntry = entries.get(entryURL);
-			mockEntry.put(entry);
-			deferred.callback(mockEntry);
+		} catch (Throwable e) {
+			
+			deferred.errback(e);
 			
 		}
-		else {
-			
-			deferred.errback(new NotFoundException(entryURL));
-
-		}
-
+		
 		return deferred;
+
 	}
 
 	
 	
 	public void createFeed(String feedURL, String title) {
-		if (!feeds.containsKey(feedURL)) {
-			
-			// create mock feed to store in memory
-			MockAtomFeed feed = factory.createMockFeed(title);
-			
-			// put feed in memory store
-			feeds.put(feedURL, feed);
-			
-		}
+		
+		store.createFeed(feedURL, title);
+		
 	}
 	
 	
