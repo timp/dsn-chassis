@@ -17,17 +17,20 @@ import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
  */
 public class MockAtomFeed implements AtomFeed {
 
-	private String title;
-	private String id;
-	private String updated;
-	private List<AtomEntry> entries = new ArrayList<AtomEntry>();
+	protected String title;
+	protected String id;
+	protected String updated;
+	protected List<AtomEntry> entries = new ArrayList<AtomEntry>();
+	protected MockAtomFactory factory;
 
 	/**
 	 * @param title
+	 * @param factory 
 	 */
-	public MockAtomFeed(String title) {
+	protected MockAtomFeed(String title, MockAtomFactory factory) {
 
 		this.title = title;
+		this.factory = factory;
 
 		// generate new ID
 		UUID id = UUID.randomUUID();
@@ -94,6 +97,16 @@ public class MockAtomFeed implements AtomFeed {
 	 */
 	public void remove(MockAtomEntry entry) {
 		this.entries.remove(entry);
+	}
+
+	/**
+	 * @param feed
+	 */
+	protected void put(MockAtomFeed feed) {
+		this.entries = new ArrayList<AtomEntry>();
+		for (AtomEntry entry : feed.getEntries()) {
+			this.entries.add(factory.copy(entry));
+		}
 	}
 
 }

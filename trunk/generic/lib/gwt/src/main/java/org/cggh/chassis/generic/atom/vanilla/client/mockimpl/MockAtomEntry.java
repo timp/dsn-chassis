@@ -238,9 +238,9 @@ public class MockAtomEntry implements AtomEntry {
 		this.updated = entry.getUpdated();
 		this.title = entry.getTitle();
 		this.summary = entry.getSummary();
-		this.authors = factory.mockPersons(entry.getAuthors());
-		this.categories = factory.mockCategories(entry.getCategories());
-		this.links = factory.mockLinks(entry.getLinks());
+		this.authors = factory.copyPersons(entry.getAuthors());
+		this.categories = factory.copyCategories(entry.getCategories());
+		this.links = factory.copyLinks(entry.getLinks());
 	}
 
 }

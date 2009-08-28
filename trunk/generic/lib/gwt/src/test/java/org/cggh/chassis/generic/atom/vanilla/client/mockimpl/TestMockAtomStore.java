@@ -6,6 +6,7 @@ package org.cggh.chassis.generic.atom.vanilla.client.mockimpl;
 import static org.junit.Assert.*;
 
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.NotFoundException;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -13,6 +14,25 @@ import org.junit.Test;
  *
  */
 public class TestMockAtomStore {
+	
+	
+	
+	private String feedURL;
+	private MockAtomFactory factory;
+	private MockAtomStore store;
+	
+	
+	
+
+	@Before
+	public void setUp() {
+
+		feedURL = "http://example.com/atom/myfeed";
+		factory = new MockAtomFactory();
+		store = new MockAtomStore(factory);
+		store.createFeed(feedURL, "my foo feed");
+
+	}
 
 	/**
 	 * Test method for {@link org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomStore#create(java.lang.String, org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry)}.
@@ -20,17 +40,9 @@ public class TestMockAtomStore {
 	@Test
 	public void testCreate() {
 		
-		// setup fixture
-		String feedURL = "http://example.com/atom/myfeed";
-		MockAtomFactory factory = new MockAtomFactory();
-		MockAtomStore store = new MockAtomStore(factory);
-		store.createFeed(feedURL, "my foo feed");
-		
 		// test data
 		String title = "foo entry";
 		String summary = "foo summary";
-		
-		// define new entry
 		MockAtomEntry entry = factory.createMockEntry();
 		entry.setTitle(title);
 		entry.setSummary(summary);
@@ -74,37 +86,14 @@ public class TestMockAtomStore {
 	 */
 	@Test
 	public void testRetrieve() {
-		
-		// setup fixture
-		
-		String feedURL = "http://example.com/atom/myfeed";
-		MockAtomFactory factory = new MockAtomFactory();
-		MockAtomStore store = new MockAtomStore(factory);
-		store.createFeed(feedURL, "my foo feed");
-		String title = "foo entry";
-		String summary = "foo summary";
-		MockAtomEntry entry = factory.createMockEntry();
-		entry.setTitle(title);
-		entry.setSummary(summary);
-		String entryURL = null;
-		
-		try {
-			
-			entry = store.create(feedURL, entry);
-			entryURL = entry.getEditLink().getHref();
-			assertNotNull(entryURL);
-			
-		} catch (NotFoundException e) {
 
-			fail(e.getLocalizedMessage());
-
-		}
-		
+		// test data
+		MockAtomEntry entry = createTestEntry();
 
 		try {
 			
 			// method under test
-			MockAtomEntry retrievedEntry = store.retrieve(entryURL);
+			MockAtomEntry retrievedEntry = store.retrieve(entry.getEditLink().getHref());
 			
 			// test outcome
 			assertEquals(entry.getId(), retrievedEntry.getId());
@@ -131,31 +120,8 @@ public class TestMockAtomStore {
 	@Test
 	public void testUpdate() {
 
-		// setup fixture
-		
-		String feedURL = "http://example.com/atom/myfeed";
-		MockAtomFactory factory = new MockAtomFactory();
-		MockAtomStore store = new MockAtomStore(factory);
-		store.createFeed(feedURL, "my foo feed");
-		String title = "foo entry";
-		String summary = "foo summary";
-		MockAtomEntry entry = factory.createMockEntry();
-		entry.setTitle(title);
-		entry.setSummary(summary);
-		String entryURL = null;
-		
-		try {
-			
-			entry = store.create(feedURL, entry);
-			entryURL = entry.getEditLink().getHref();
-			assertNotNull(entryURL);
-			System.out.println(entry.getUpdated());
-			
-		} catch (NotFoundException e) {
-
-			fail(e.getLocalizedMessage());
-
-		}
+		// test data
+		MockAtomEntry entry = createTestEntry();
 		
 		// change some stuff
 		entry.setTitle("some other title");
@@ -163,20 +129,19 @@ public class TestMockAtomStore {
 		
 		// wait so time can pass and date updated will change
 		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e1) {
-			fail(e1.getLocalizedMessage());
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			fail(e.getLocalizedMessage());
 		}
 
 		try {
 			
 			// method under test
-			MockAtomEntry updatedEntry = store.update(entryURL, entry);
+			MockAtomEntry updatedEntry = store.update(entry.getEditLink().getHref(), entry);
 			
 			// test outcome
 			assertEquals(entry.getId(), updatedEntry.getId());
 			assertEquals(entry.getPublished(), updatedEntry.getPublished());
-			System.out.println(updatedEntry.getUpdated());
 			assertFalse(entry.getUpdated().equals(updatedEntry.getUpdated())); // should have changed
 			assertEquals(entry.getEditLink().getHref(), updatedEntry.getEditLink().getHref());
 			assertEquals("some other title", updatedEntry.getTitle()); // should have changed
@@ -198,7 +163,31 @@ public class TestMockAtomStore {
 	 */
 	@Test
 	public void testDelete() {
-		fail("Not yet implemented");
+
+		// test data
+		MockAtomEntry entry = createTestEntry();
+		
+		try {
+			
+			// method under test
+			store.delete(entry.getEditLink().getHref());
+
+		} catch (NotFoundException e) {
+			
+			e.printStackTrace();
+			fail(e.getLocalizedMessage());
+
+		}
+		
+		try {
+			
+			store.retrieve(entry.getEditLink().getHref());
+			fail("expected not found exception");
+			
+		} catch (NotFoundException ex) {
+			// expected
+		}
+
 	}
 
 	/**
@@ -206,7 +195,67 @@ public class TestMockAtomStore {
 	 */
 	@Test
 	public void testRetrieveAll() {
-		fail("Not yet implemented");
+		
+		// initial feed
+		MockAtomFeed feed = null;
+		try {
+
+			feed = store.retrieveAll(feedURL);
+
+		} catch (NotFoundException e) {
+
+			e.printStackTrace();
+			fail(e.getLocalizedMessage());
+
+		}
+		
+		assertNotNull(feed);
+		assertEquals("my foo feed", feed.getTitle());
+		assertNotNull(feed.getUpdated());
+		assertTrue(feed.getEntries().isEmpty());
+		
+		// create an entry
+		MockAtomEntry entry = createTestEntry();
+		
+		try {
+
+			feed = store.retrieveAll(feedURL);
+			assertEquals(1, feed.getEntries().size());
+			assertEquals(entry.getId(), feed.getEntries().get(0).getId());
+
+		} catch (NotFoundException e) {
+
+			e.printStackTrace();
+			fail(e.getLocalizedMessage());
+
+		}
+		
+	}
+	
+	
+	
+	
+	private MockAtomEntry createTestEntry() {
+
+		try {
+			
+			String title = "foo entry";
+			String summary = "foo summary";
+			MockAtomEntry entry = factory.createMockEntry();
+			entry.setTitle(title);
+			entry.setSummary(summary);
+
+			entry = store.create(feedURL, entry);
+			return entry;
+			
+		} catch (NotFoundException e) {
+
+			fail(e.getLocalizedMessage());
+			return null;
+		}
+		
 	}
 
+	
+	
 }
