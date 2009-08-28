@@ -27,8 +27,7 @@ ProxyPassReverse  /chassis/service/user  http://servlet.example.com:8080/chassis
 }}}
 
 Restart Apache on your web server.
-
-Finally, edit the Chassis Generic Client configuration file to point to the correct User Service location. E.g. do ...
+Edit the Chassis Generic Client configuration file to point to the correct User Service location. E.g. do ...
 
 {{{
 $ sudo emacs /var/lib/tomcat6/webapps/chassis-generic-client-gwt-0.1-alpha-1/spike/configuration.js 
@@ -39,6 +38,12 @@ $ sudo emacs /var/lib/tomcat6/webapps/chassis-generic-client-gwt-0.1-alpha-1/spi
 {{{
 CHASSIS = new Object();
 CHASSIS.userDetailsServiceEndpointURL = "/chassis/service/user/gwtrpc/userdetails";
+}}}
+
+In each unpacked war file, place a customised spring config file in the /WEB-INF/. E.g. do...
+
+{{{
+$ sudo cp /custom/config/security.xml /var/lib/tomcat6/webapps/chassis-generic-client-gwt-0.1-alpha-1/WEB-INF/security.xml 
 }}}
 
 Now, visit http://www.example.com/chassis/client/spike/ to check it is working.
