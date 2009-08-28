@@ -5,10 +5,15 @@ package spike.atom;
 
 import java.util.List;
 
+import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
+import org.cggh.chassis.generic.atom.study.client.format.StudyFactory;
+import org.cggh.chassis.generic.atom.study.client.format.StudyFeed;
+import org.cggh.chassis.generic.atom.study.client.mockimpl.MockStudyFactory;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
 import org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomService;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
+import org.cggh.chassis.generic.client.gwt.client.Configuration;
 import org.cggh.chassis.generic.twisted.client.Deferred;
 import org.cggh.chassis.generic.twisted.client.Function;
 
@@ -18,32 +23,67 @@ import org.cggh.chassis.generic.twisted.client.Function;
  */
 public class AtomExample {
 
-	public void doSomething() {
+	
+	
+	
+	public void createNewStudyEntry() {
 		
-		final AtomService service = new MockAtomService();
+		MockStudyFactory factory = new MockStudyFactory();
 		
-		Deferred<AtomFeed> deferredFeed = service.getFeed("http://example.com/atom/edit/myfeed");
+		StudyEntry study = factory.createStudyEntry();
+		study.setTitle("my first study");
+		study.setSummary("my first study done in the gambia");
+		study.addModule("clinical");
+		study.addModule("in vitro");
 		
-		deferredFeed.addCallback(new Function<AtomFeed,Deferred<AtomEntry>>() {
+		AtomService service = new MockAtomService(factory);
+		String feedURL = Configuration.getStudyFeedURL();
+		
+		Deferred<AtomEntry> deferred = service.postEntry(feedURL, study);
+		
+		deferred.addCallback(new Function<AtomEntry,AtomEntry>() {
 
-			public Deferred<AtomEntry> apply(AtomFeed feed) {
+			public AtomEntry apply(AtomEntry in) {
 				
-				// do something with the feed
-				List<AtomEntry> entries = feed.getEntries();
+				StudyEntry newlyCreatedStudy = (StudyEntry) in;
 				
-				AtomEntry entry = entries.get(0);
-				String title = entry.getTitle();
-				
-				// modify
-				entry.setTitle(title + "something new");
-				
-				Deferred<AtomEntry> deferredUpdatedEntry = service.putEntry(entry.getEditLink().getHref(), entry);
+				// do something with newly created study here
 
-				return deferredUpdatedEntry;
+				return in;
 
 			}
 			
 		});
-			
+		
 	}
+	
+	
+	
+	
+	public void getAllStudies() {
+		
+		MockStudyFactory factory = new MockStudyFactory();
+		AtomService service = new MockAtomService(factory);
+		String feedURL = Configuration.getStudyFeedURL();
+		
+		Deferred<AtomFeed> deferred = service.getFeed(feedURL);
+		
+		deferred.addCallback(new Function<AtomFeed,AtomFeed>() {
+
+			public AtomFeed apply(AtomFeed in) {
+				
+				StudyFeed retrievedStudyFeed = (StudyFeed) in;
+				List<StudyEntry> studies = retrievedStudyFeed.getStudyEntries();
+				
+				// do something with studies here
+
+				return in;
+			}
+			
+		});
+
+	}
+	
+	
+	
 }
