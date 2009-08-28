@@ -8,8 +8,13 @@ import java.util.List;
 
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomCategory;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
+import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactory;
+import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
+import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFormatException;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomLink;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomPersonConstruct;
+
+import com.google.gwt.xml.client.Element;
 
 
 
@@ -18,7 +23,7 @@ import org.cggh.chassis.generic.atom.vanilla.client.format.AtomPersonConstruct;
  * @author aliman
  *
  */
-public class MockAtomFactory {
+public class MockAtomFactory implements AtomFactory {
 
 
 	
@@ -118,6 +123,49 @@ public class MockAtomFactory {
 		MockAtomFeed copy = new MockAtomFeed(feed.getTitle(), this);
 		copy.put(feed);
 		return copy;
+	}
+
+
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactory#createEntry()
+	 */
+	public AtomEntry createEntry() {
+		return createMockEntry();
+	}
+
+
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactory#createEntry(java.lang.String)
+	 */
+	public AtomEntry createEntry(String entryDocument) throws AtomFormatException {
+		// not needed
+		return null;
+	}
+
+
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactory#createEntry(com.google.gwt.xml.client.Element)
+	 */
+	public AtomEntry createEntry(Element entryElement) throws AtomFormatException {
+		// not needed
+		return null;
+	}
+
+
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactory#createFeed(java.lang.String)
+	 */
+	public AtomFeed createFeed(String feedDocument) throws AtomFormatException {
+		// not needed
+		return null;
 	}
 
 
