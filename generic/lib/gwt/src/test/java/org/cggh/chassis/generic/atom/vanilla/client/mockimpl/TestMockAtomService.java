@@ -6,6 +6,7 @@ package org.cggh.chassis.generic.atom.vanilla.client.mockimpl;
 import static org.junit.Assert.*;
 
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
+import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactory;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
 import org.cggh.chassis.generic.twisted.client.Deferred;
 import org.cggh.chassis.generic.twisted.client.Function;
@@ -65,11 +66,23 @@ public class TestMockAtomService {
 
 			public AtomFeed apply(AtomFeed in) {
 				called = true;
-				assertEquals(feedTitle, in.getTitle());
-				assertNotNull(in.getId());
-				assertNotNull(in.getUpdated());
-				assertNotNull(in.getEntries());
-				assertEquals(0, in.getEntries().size());
+				
+				try {
+					
+					assertEquals(feedTitle, in.getTitle());
+					assertNotNull(in.getId());
+					assertNotNull(in.getUpdated());
+					assertNotNull(in.getEntries());
+					assertEquals(0, in.getEntries().size());
+
+				}
+				catch (Error e) {
+					
+					e.printStackTrace();
+					throw e;
+					
+				}
+				
 				return null;
 			}
 		
@@ -91,8 +104,12 @@ public class TestMockAtomService {
 	@Test
 	public void testPostEntry() {
 		
+		MockAtomFactory factory = new MockAtomFactory();
+		
 		// create new atom entry
-		AtomEntry entry = new MockAtomEntry();
+		MockAtomEntry entry = factory.createMockEntry();
+		
+		// set some properties
 		final String entryTitle = "my foo entry";
 		entry.setTitle(entryTitle);
 		final String entrySummary = "foo bar baz quux";

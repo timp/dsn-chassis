@@ -3,6 +3,7 @@
  */
 package org.cggh.chassis.generic.atom.vanilla.client.mockimpl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -19,55 +20,40 @@ import org.cggh.chassis.generic.atom.vanilla.client.format.AtomPersonConstruct;
  */
 public class MockAtomEntry implements AtomEntry {
 
-	private String id;
-	private String published;
-	private String updated;
-	private List<AtomLink> links;
-	private String summary;
-	private String title;
-	private List<AtomPersonConstruct> authors;
-	private List<AtomCategory> categories;
+	protected String id;
+	protected String published;
+	protected String updated;
+	protected List<AtomLink> links = new ArrayList<AtomLink>();
+	protected String summary;
+	protected String title;
+	protected List<AtomPersonConstruct> authors = new ArrayList<AtomPersonConstruct>();
+	protected List<AtomCategory> categories = new ArrayList<AtomCategory>();
+	protected MockAtomFactory factory;
 
 	/**
 	 * @param feedURL
+	 * @param mockAtomFactory 
 	 */
-	public MockAtomEntry(String feedURL) {
-
-		// generate new ID
-		UUID id = UUID.randomUUID();
-		this.id = id.toString();
-		
-		// construct entry URL and edit link
-		String entryURL = feedURL + "?id=" + id;
-		// TODO set edit link
-		
-		// set published and updated
-		Date date = new Date();
-		this.published = date.toString();
-		this.updated = date.toString(); // TODO check these
-		
+	protected MockAtomEntry(MockAtomFactory mockAtomFactory) {
+		this.factory = mockAtomFactory;
 	}
-
-	/**
-	 * 
-	 */
-	public MockAtomEntry() {}
 
 	/**
 	 * @param string
 	 */
-	public void setId(String id) {
+	protected void setId(String id) {
 		this.id = id;
 	}
 
 	/**
 	 * @param entryURL
 	 */
-	public void setEditLink(String entryURL) {
+	protected void setEditLink(String entryURL) {
 		AtomLink editLink = this.getEditLink();
 		if (editLink == null) {
-//			editLink = new AtomLink();
-			// TODO instantiate
+			editLink = factory.createMockAtomLink();
+			editLink.setRel(Atom.REL_EDIT);
+			addLink(editLink);
 		}
 		editLink.setHref(entryURL);
 	}
@@ -75,14 +61,14 @@ public class MockAtomEntry implements AtomEntry {
 	/**
 	 * @param string
 	 */
-	public void setPublished(String published) {
+	protected void setPublished(String published) {
 		this.published = published;
 	}
 
 	/**
 	 * @param string
 	 */
-	public void setUpdated(String updated) {
+	protected void setUpdated(String updated) {
 		this.updated = updated;
 	}
 
@@ -246,10 +232,15 @@ public class MockAtomEntry implements AtomEntry {
 	/**
 	 * @param entry
 	 */
-	public void put(AtomEntry entry) {
+	protected void put(AtomEntry entry) {
+		this.id = entry.getId();
+		this.published = entry.getPublished();
+		this.updated = entry.getUpdated();
 		this.title = entry.getTitle();
-		// TODO Auto-generated method stub
-		
+		this.summary = entry.getSummary();
+		this.authors = factory.mockPersons(entry.getAuthors());
+		this.categories = factory.mockCategories(entry.getCategories());
+		this.links = factory.mockLinks(entry.getLinks());
 	}
 
 }

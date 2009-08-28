@@ -15,7 +15,7 @@ public interface AtomLink {
 	public void setRel(String rel);
 	public String getType();
 	public void setType(String type);
-	public String getHreflang();
+	public String getHrefLang();
 	public void setHrefLang(String hrefLang);
 	public String getTitle();
 	public void setTitle(String title);

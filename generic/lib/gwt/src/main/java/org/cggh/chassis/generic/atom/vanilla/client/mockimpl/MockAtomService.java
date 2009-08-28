@@ -24,6 +24,7 @@ public class MockAtomService implements AtomService {
 	private static Map<String,MockAtomEntry> entries = new HashMap<String,MockAtomEntry>();
 	private static Map<String,MockAtomFeed> feeds = new HashMap<String,MockAtomFeed>();
 	private MockAtomFactory factory = new MockAtomFactory();
+	private MockAtomStore store = new MockAtomStore(factory);
 	
 	
 	
@@ -34,6 +35,7 @@ public class MockAtomService implements AtomService {
 	
 	public MockAtomService(MockAtomFactory factory) {
 		this.factory  = factory;
+		this.store = new MockAtomStore(factory);
 	}
 	
 	
@@ -129,26 +131,17 @@ public class MockAtomService implements AtomService {
 
 		Deferred<AtomEntry> deferred = new Deferred<AtomEntry>();
 		
-		if (feeds.containsKey(feedURL)) {
+		try {
 			
-			// copy entry into mock to store in memory
-			MockAtomEntry mockEntry = factory.createMockEntry(feedURL);
-			mockEntry.put(entry);
+			entry = store.create(feedURL, entry);
+			deferred.callback(entry);
 
-			// add entry to collection
-			MockAtomFeed mockFeed = feeds.get(feedURL);
-			mockFeed.add(mockEntry);
+		} catch (NotFoundException e) {
 			
-			// callback deferred
-			deferred.callback(mockEntry);
+			deferred.errback(e);
 			
 		}
-		else {
-			
-			deferred.errback(new NotFoundException(feedURL));
-
-		}
-
+		
 		return deferred;
 	}
 

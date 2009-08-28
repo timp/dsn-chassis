@@ -3,6 +3,7 @@
  */
 package org.cggh.chassis.generic.atom.study.client.mockimpl;
 
+import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomFactory;
 import org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomFeed;
@@ -23,9 +24,10 @@ public class MockStudyFactory extends MockAtomFactory {
 
 
 
-	@Override
-	public MockAtomEntry createMockEntry(String feedURL) {
-		return new MockStudyEntry(feedURL);
+	public MockStudyEntry mockEntry(StudyEntry entry) {
+		MockStudyEntry mockEntry = new MockStudyEntry(this);
+		mockEntry.put(entry);
+		return mockEntry;
 	}
 	
 	
