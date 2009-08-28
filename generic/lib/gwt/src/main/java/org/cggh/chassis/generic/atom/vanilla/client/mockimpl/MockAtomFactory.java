@@ -24,7 +24,7 @@ public class MockAtomFactory {
 	
 	
 	public MockAtomFeed createMockFeed(String title) {
-		return new MockAtomFeed(title);
+		return new MockAtomFeed(title, this);
 	}
 
 
@@ -41,10 +41,10 @@ public class MockAtomFactory {
 	 * @param authors
 	 * @return
 	 */
-	List<AtomPersonConstruct> mockPersons(List<AtomPersonConstruct> persons) {
+	List<AtomPersonConstruct> copyPersons(List<AtomPersonConstruct> persons) {
 		List<AtomPersonConstruct> mockPersons = new ArrayList<AtomPersonConstruct>();
 		for (AtomPersonConstruct person : persons) {
-			MockAtomPersonConstruct mockPerson = this.mockPerson(person);
+			MockAtomPersonConstruct mockPerson = this.copy(person);
 			mockPersons.add(mockPerson);
 		}
 		return mockPersons;
@@ -53,7 +53,7 @@ public class MockAtomFactory {
 	
 
 	
-	MockAtomPersonConstruct mockPerson(AtomPersonConstruct person) {
+	MockAtomPersonConstruct copy(AtomPersonConstruct person) {
 		MockAtomPersonConstruct mockPerson = new MockAtomPersonConstruct(this);
 		mockPerson.put(person);
 		return mockPerson;
@@ -62,7 +62,7 @@ public class MockAtomFactory {
 	
 	
 	
-	MockAtomEntry mockEntry(AtomEntry entry) {
+	MockAtomEntry copy(AtomEntry entry) {
 		MockAtomEntry mockEntry = new MockAtomEntry(this);
 		mockEntry.put(entry);
 		return mockEntry;
@@ -75,7 +75,7 @@ public class MockAtomFactory {
 	 * @param categories
 	 * @return
 	 */
-	List<AtomCategory> mockCategories(List<AtomCategory> categories) {
+	List<AtomCategory> copyCategories(List<AtomCategory> categories) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -87,7 +87,7 @@ public class MockAtomFactory {
 	 * @param links
 	 * @return
 	 */
-	List<AtomLink> mockLinks(List<AtomLink> links) {
+	List<AtomLink> copyLinks(List<AtomLink> links) {
 		List<AtomLink> mockLinks = new ArrayList<AtomLink>();
 		for (AtomLink link : links) {
 			MockAtomLink mockLink = new MockAtomLink(this);
@@ -105,6 +105,19 @@ public class MockAtomFactory {
 	 */
 	public MockAtomLink createMockAtomLink() {
 		return new MockAtomLink(this);
+	}
+
+
+
+
+	/**
+	 * @param mockAtomFeed
+	 * @return
+	 */
+	MockAtomFeed copy(MockAtomFeed feed) {
+		MockAtomFeed copy = new MockAtomFeed(feed.getTitle(), this);
+		copy.put(feed);
+		return copy;
 	}
 
 

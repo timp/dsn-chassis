@@ -18,8 +18,8 @@ import org.cggh.chassis.generic.atom.vanilla.client.protocol.NotFoundException;
 public class MockAtomStore {
 	
 	
-	private static Map<String,MockAtomEntry> entries = new HashMap<String,MockAtomEntry>();
-	private static Map<String,MockAtomFeed> feeds = new HashMap<String,MockAtomFeed>();
+	private Map<String,MockAtomEntry> entries = new HashMap<String,MockAtomEntry>();
+	private Map<String,MockAtomFeed> feeds = new HashMap<String,MockAtomFeed>();
 	private MockAtomFactory factory = new MockAtomFactory();
 	
 
@@ -62,7 +62,7 @@ public class MockAtomStore {
 		if (feeds.containsKey(feedURL)) {
 			
 			// copy into mock entry
-			MockAtomEntry mockEntry = factory.mockEntry(entry);
+			MockAtomEntry mockEntry = factory.copy(entry);
 			
 			// generate new id
 			UUID id = UUID.randomUUID();
@@ -87,7 +87,7 @@ public class MockAtomStore {
 			entries.put(entryURL, mockEntry);
 
 			// return a copy
-			return factory.mockEntry(mockEntry);
+			return factory.copy(mockEntry);
 
 		}
 		else {
@@ -104,7 +104,7 @@ public class MockAtomStore {
 		if (entries.containsKey(entryURL)) {
 			
 			// return a copy
-			return factory.mockEntry(entries.get(entryURL));
+			return factory.copy(entries.get(entryURL));
 			
 		}
 		else {
@@ -126,7 +126,7 @@ public class MockAtomStore {
 			mockEntry.setUpdated(updated.toString());
 
 			// return a copy
-			return factory.mockEntry(mockEntry);
+			return factory.copy(mockEntry);
 			
 		}
 		else {
@@ -138,14 +138,43 @@ public class MockAtomStore {
 	}
 	
 	
-	public void delete(String entryURL) {
-		// TODO
+	public void delete(String entryURL) throws NotFoundException {
+
+		if (entries.containsKey(entryURL)) {
+
+			MockAtomEntry entry = entries.get(entryURL);
+			
+			for (MockAtomFeed feed : feeds.values()) {
+				if (feed.contains(entry)) {
+					feed.remove(entry);
+				}
+			}
+
+			entries.remove(entryURL);
+
+		}
+		else {
+
+			throw new NotFoundException(entryURL);
+
+		}
+
 	}
 	
 	
-	public MockAtomFeed retrieveAll(String feedURL) {
-		// TODO
-		return null;
+	public MockAtomFeed retrieveAll(String feedURL) throws NotFoundException {
+		
+		if (feeds.containsKey(feedURL)) {
+			
+			return factory.copy(feeds.get(feedURL));
+			
+		}
+		else {
+			
+			throw new NotFoundException(feedURL);
+			
+		}
+
 	}
 	
 	

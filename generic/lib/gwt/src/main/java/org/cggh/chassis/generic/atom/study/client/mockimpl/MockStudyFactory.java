@@ -18,7 +18,7 @@ public class MockStudyFactory extends MockAtomFactory {
 
 	@Override
 	public MockAtomFeed createMockFeed(String title) {
-		return new MockStudyFeed(title);
+		return new MockStudyFeed(title, this);
 	}
 
 

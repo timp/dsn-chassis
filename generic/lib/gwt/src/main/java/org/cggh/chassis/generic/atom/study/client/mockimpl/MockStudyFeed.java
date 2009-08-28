@@ -20,8 +20,8 @@ public class MockStudyFeed extends MockAtomFeed implements StudyFeed {
 	/**
 	 * @param title
 	 */
-	public MockStudyFeed(String title) {
-		super(title);
+	protected MockStudyFeed(String title, MockStudyFactory factory) {
+		super(title, factory);
 	}
 
 	/* (non-Javadoc)
