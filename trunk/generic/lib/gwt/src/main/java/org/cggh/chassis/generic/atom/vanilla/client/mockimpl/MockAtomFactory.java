@@ -28,14 +28,14 @@ public class MockAtomFactory implements AtomFactory {
 
 	
 	
-	public MockAtomFeed createMockFeed(String title) {
+	protected MockAtomFeed createMockFeed(String title) {
 		return new MockAtomFeed(title, this);
 	}
 
 
 
 
-	public MockAtomEntry createMockEntry() {
+	protected MockAtomEntry createMockEntry() {
 		return new MockAtomEntry(this);
 	}
 
@@ -46,7 +46,7 @@ public class MockAtomFactory implements AtomFactory {
 	 * @param authors
 	 * @return
 	 */
-	List<AtomPersonConstruct> copyPersons(List<AtomPersonConstruct> persons) {
+	protected List<AtomPersonConstruct> copyPersons(List<AtomPersonConstruct> persons) {
 		List<AtomPersonConstruct> mockPersons = new ArrayList<AtomPersonConstruct>();
 		for (AtomPersonConstruct person : persons) {
 			MockAtomPersonConstruct mockPerson = this.copy(person);
@@ -58,7 +58,7 @@ public class MockAtomFactory implements AtomFactory {
 	
 
 	
-	MockAtomPersonConstruct copy(AtomPersonConstruct person) {
+	protected MockAtomPersonConstruct copy(AtomPersonConstruct person) {
 		MockAtomPersonConstruct mockPerson = new MockAtomPersonConstruct(this);
 		mockPerson.put(person);
 		return mockPerson;
@@ -67,7 +67,7 @@ public class MockAtomFactory implements AtomFactory {
 	
 	
 	
-	MockAtomEntry copy(AtomEntry entry) {
+	protected MockAtomEntry copy(AtomEntry entry) {
 		MockAtomEntry mockEntry = new MockAtomEntry(this);
 		mockEntry.put(entry);
 		return mockEntry;
@@ -80,7 +80,7 @@ public class MockAtomFactory implements AtomFactory {
 	 * @param categories
 	 * @return
 	 */
-	List<AtomCategory> copyCategories(List<AtomCategory> categories) {
+	protected List<AtomCategory> copyCategories(List<AtomCategory> categories) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -92,7 +92,7 @@ public class MockAtomFactory implements AtomFactory {
 	 * @param links
 	 * @return
 	 */
-	List<AtomLink> copyLinks(List<AtomLink> links) {
+	protected List<AtomLink> copyLinks(List<AtomLink> links) {
 		List<AtomLink> mockLinks = new ArrayList<AtomLink>();
 		for (AtomLink link : links) {
 			MockAtomLink mockLink = new MockAtomLink(this);
@@ -108,9 +108,14 @@ public class MockAtomFactory implements AtomFactory {
 	/**
 	 * @return
 	 */
-	public MockAtomLink createMockAtomLink() {
+	protected MockAtomLink createMockAtomLink() {
 		return new MockAtomLink(this);
 	}
+	
+	
+	
+	
+	
 
 
 
@@ -119,7 +124,7 @@ public class MockAtomFactory implements AtomFactory {
 	 * @param mockAtomFeed
 	 * @return
 	 */
-	MockAtomFeed copy(MockAtomFeed feed) {
+	protected MockAtomFeed copy(AtomFeed feed) {
 		MockAtomFeed copy = new MockAtomFeed(feed.getTitle(), this);
 		copy.put(feed);
 		return copy;
@@ -164,6 +169,27 @@ public class MockAtomFactory implements AtomFactory {
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactory#createFeed(java.lang.String)
 	 */
 	public AtomFeed createFeed(String feedDocument) throws AtomFormatException {
+		// not needed
+		return null;
+	}
+
+
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactory#createPersonConstruct()
+	 */
+	public AtomPersonConstruct createPersonConstruct() {
+		return new MockAtomPersonConstruct(this);
+	}
+
+
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactory#createPersonConstruct(com.google.gwt.xml.client.Element)
+	 */
+	public AtomPersonConstruct createPersonConstruct(Element personElement)	throws AtomFormatException {
 		// not needed
 		return null;
 	}

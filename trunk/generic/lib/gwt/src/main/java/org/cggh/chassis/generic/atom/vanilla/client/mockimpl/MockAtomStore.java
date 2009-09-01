@@ -6,7 +6,6 @@ package org.cggh.chassis.generic.atom.vanilla.client.mockimpl;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.NotFoundException;
@@ -65,10 +64,10 @@ public class MockAtomStore {
 			MockAtomEntry mockEntry = factory.copy(entry);
 			
 			// generate new id
-			UUID id = UUID.randomUUID();
+			String id = Double.toString(Math.random());
 
 			// set entry id
-			mockEntry.setId(id.toString());
+			mockEntry.setId(id);
 			
 			// construct entry URL and edit link
 			String entryURL = feedURL + "?id=" + id;

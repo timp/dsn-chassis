@@ -15,5 +15,7 @@ public interface AtomFactory {
 	public AtomEntry createEntry();
 	public AtomEntry createEntry(String entryDocument) throws AtomFormatException;
 	public AtomEntry createEntry(Element entryElement) throws AtomFormatException;
+	public AtomPersonConstruct createPersonConstruct();
+	public AtomPersonConstruct createPersonConstruct(Element personElement) throws AtomFormatException;
 	
 }
