@@ -14,6 +14,8 @@ This version: *Draft 4* (2009-09-01)
   * Added points and issues raised in discussion with Philippe and Patrice, 2009-08.
   * Added points and issues raised in design discussions with informatics team, 2009-08.
 
+([http://code.google.com/p/dsn-chassis/source/diff?path=/wiki/WwarnMilestoneOneRequirementsSpec.wiki&format=side&r=402&old_path=/wiki/WwarnMilestoneOneRequirementsSpec.wiki&old=193 view diff])
+
 *Changes Since Second Draft* (2009-08-10):
 
   * No substantive changes to document content.
