@@ -3,10 +3,15 @@
  */
 package org.cggh.chassis.generic.user.service.webauth;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.sql.DataSource;
 
 import org.springframework.security.ui.preauth.AbstractPreAuthenticatedProcessingFilter;
 
@@ -15,6 +20,20 @@ import org.springframework.security.ui.preauth.AbstractPreAuthenticatedProcessin
  *
  */
 public class WebAuthPreAuthenticatedProcessingFilter extends AbstractPreAuthenticatedProcessingFilter {
+	
+	/* SQL query to obtain email address by userId */
+	private static final String USER_EMAIL_BY_USERID = "SELECT email AS email "
+												   + " FROM master_user "
+												   + " WHERE user_id=? ";
+	
+	private DataSource dataSource;
+	
+	/**
+	 * @param dataSource the dataSource to set
+	 */
+	public void setDataSource(DataSource dataSource) {
+		this.dataSource = dataSource;
+	}
 
 	/* (non-Javadoc)
 	 * @see org.springframework.security.ui.preauth.AbstractPreAuthenticatedProcessingFilter#getPreAuthenticatedCredentials(javax.servlet.http.HttpServletRequest)
@@ -57,7 +76,28 @@ public class WebAuthPreAuthenticatedProcessingFilter extends AbstractPreAuthenti
 			throw new Error ("WebAuth attribute not found.");
 		}
 		
-		return webAuthUserIdString;
+		// Obtain email address of user and return as the userId
+		String userEmail = "";
+		try {
+			Connection connection = dataSource.getConnection();
+			
+			PreparedStatement sql = connection.prepareStatement(USER_EMAIL_BY_USERID);
+			sql.setString(1, webAuthUserIdString);
+			
+			ResultSet rs = sql.executeQuery();
+			
+			if (rs.next()) {
+				userEmail = rs.getString("email");
+			} else {
+				throw new Error ("Error obtaining email address of user.");
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return userEmail;
 	}
 
 	/* (non-Javadoc)
