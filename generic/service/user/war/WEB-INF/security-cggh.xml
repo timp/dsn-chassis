@@ -6,7 +6,10 @@
   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
               http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-2.0.4.xsd">  
 
-  <http auto-config='false' realm="chassis-development-realm" entry-point-ref="authenticationEntryPoint"/>
+  <http auto-config='false' 
+  		realm="chassis-development-realm"
+  		entry-point-ref="authenticationEntryPoint"
+  		access-decision-manager-ref="accessDecisionManager"/>
   
   <beans:bean id="authenticationEntryPoint" class="org.springframework.security.ui.preauth.PreAuthenticatedProcessingFilterEntryPoint"/>
   
@@ -14,6 +17,7 @@
   <beans:bean id="WebAuthPreAuthenticatedProcessingFilter" class="org.cggh.chassis.generic.user.service.webauth.WebAuthPreAuthenticatedProcessingFilter">
       <custom-filter position="PRE_AUTH_FILTER" />
       <beans:property name="authenticationManager" ref="authenticationManager" />
+    <beans:property name="dataSource" ref="dataSource"/>
   </beans:bean>
 
   <authentication-manager alias="authenticationManager" />
@@ -34,26 +38,28 @@
     <beans:property name="dataSource" ref="dataSource"/>
     <beans:property name="enableGroups" value="false"/>
     <beans:property name="enableAuthorities" value="true"/>
-    <beans:property name="usersByUsernameQuery" value="SELECT user_id AS user_name,
-                                                              user_id AS password,
+    <beans:property name="usersByUsernameQuery" value="SELECT email AS user_name,
+                                                              'password' AS password,
                                                               1 AS enabled
-                                                         FROM user
-                                                         WHERE user_id=?"/>
-    <beans:property name="authoritiesByUsernameQuery" value="SELECT up.user_id AS user_name,
+                                                         FROM master_user
+                                                         WHERE email=?"/>
+    <beans:property name="authoritiesByUsernameQuery" value="SELECT mu.email AS user_name,
                                                                     p.permission AS authority
                                                              FROM user_permission up
+                                                              INNER JOIN master_user mu
+                                                              	  ON up.user_id = mu.user_id
                                                               INNER JOIN permission p
                                                                   ON up.permission_id = p.permission_id
-                                                             WHERE up.user_id=?"/>
+                                                             WHERE mu.email=?"/>
   </beans:bean>
 
   <beans:bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
     <beans:property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-    <beans:property name="url" value="jdbc:mysql://jupiter:3306/network"/>
-    <beans:property name="username" value="******"/>
-    <beans:property name="password" value="******"/>
+    <beans:property name="url" value="jdbc:mysql://charlie:3306/network"/>
+    <beans:property name="username" value="user"/>
+    <beans:property name="password" value="pass"/>
   </beans:bean>
-  
+    
   <!--Allow any kind of authority to be defined-->
   <beans:bean id="accessDecisionManager" class="org.springframework.security.vote.UnanimousBased">
       <beans:property name="decisionVoters">
