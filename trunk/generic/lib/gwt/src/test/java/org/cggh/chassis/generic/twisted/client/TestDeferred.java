@@ -3,8 +3,9 @@
  */
 package org.cggh.chassis.generic.twisted.client;
 
-import org.cggh.chassis.generic.log.client.Logger;
-import org.cggh.chassis.generic.log.client.SystemOutLogger;
+import org.cggh.chassis.generic.log.client.Log;
+import org.cggh.chassis.generic.log.client.LogFactory;
+import org.cggh.chassis.generic.log.client.SystemOutLog;
 import org.cggh.chassis.generic.twisted.client.Deferred;
 import org.cggh.chassis.generic.twisted.client.Function;
 import org.junit.Before;
@@ -20,23 +21,30 @@ import static org.junit.Assert.*;
  */
 public class TestDeferred {
 	
+	
+	
+	static {
+		// need to change because default is gwt log, which won't output in plain junit tests
+		LogFactory.create = SystemOutLog.create;
+	}
+	
+	
+	
 	private abstract class TestFunction<I,O> implements Function<I,O> {
 		protected int called = 0;
 	}
 
-	private Logger log;
+	private Log log = LogFactory.getLog(this.getClass());
 	
 	@Before
 	public void setUp() {
-		log = new SystemOutLogger();
-		log.setCurrentClass("TestDeferred");
 	}
 
 	@Test
 	public void testCallback() {
 		log.enter("testCallback");
 		
-		Deferred<String> deferred = new Deferred<String>(new SystemOutLogger());
+		Deferred<String> deferred = new Deferred<String>();
 		
 		// test variables
 		final String testString = "hello world!";
@@ -71,7 +79,7 @@ public class TestDeferred {
 	public void testAddCallbackTestFunctionAfterCallback() {
 		log.enter("testAddCallbackFunctionAfterCallback");
 		
-		Deferred<String> deferred = new Deferred<String>(new SystemOutLogger());
+		Deferred<String> deferred = new Deferred<String>();
 		
 		// test variables
 		final String testString = "hello world!";
@@ -110,7 +118,7 @@ public class TestDeferred {
 	public void testErrback() {
 		log.enter("testErrback");
 		
-		Deferred<String> deferred = new Deferred<String>(new SystemOutLogger());
+		Deferred<String> deferred = new Deferred<String>();
 		
 		// test variables
 		final Throwable testException = new Exception("test exception");
@@ -145,7 +153,7 @@ public class TestDeferred {
 	public void testAddErrbackFunctionAfterErrback() {
 		log.enter("testAddErrbackFunctionAfterErrback");
 		
-		Deferred<String> deferred = new Deferred<String>(new SystemOutLogger());
+		Deferred<String> deferred = new Deferred<String>();
 		
 		// test variables
 		final Throwable testException = new Exception("test exception");
@@ -185,7 +193,7 @@ public class TestDeferred {
 		log.enter("testTwoCallbacks");
 		
 		// deferred under test
-		Deferred<String> deferred = new Deferred<String>(new SystemOutLogger());
+		Deferred<String> deferred = new Deferred<String>();
 		
 		// test variables
 		final String s = "21";
@@ -256,7 +264,7 @@ public class TestDeferred {
 		log.enter("testCallbackThrows");
 		
 		// deferred under test
-		Deferred<String> deferred = new Deferred<String>(new SystemOutLogger());
+		Deferred<String> deferred = new Deferred<String>();
 		
 		// test variables
 		final String foo = "foo";
@@ -307,7 +315,7 @@ public class TestDeferred {
 		log.enter("testCallbackReturnsThrowable");
 		
 		// deferred under test
-		Deferred<String> deferred = new Deferred<String>(new SystemOutLogger());
+		Deferred<String> deferred = new Deferred<String>();
 		
 		// test variables
 		final String foo = "foo";
@@ -358,8 +366,8 @@ public class TestDeferred {
 		log.enter("testCallbackReturnsDeferred");
 
 		log.trace("create deferred under test");
-		Deferred<String> def1 = new Deferred<String>(new SystemOutLogger());
-		final Deferred<Integer> def2 = new Deferred<Integer>(new SystemOutLogger());
+		Deferred<String> def1 = new Deferred<String>();
+		final Deferred<Integer> def2 = new Deferred<Integer>();
 
 		log.trace("create test variables");
 		final String s = "42";
