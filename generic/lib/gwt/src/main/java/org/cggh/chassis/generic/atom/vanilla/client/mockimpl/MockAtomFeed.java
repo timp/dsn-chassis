@@ -6,7 +6,6 @@ package org.cggh.chassis.generic.atom.vanilla.client.mockimpl;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
@@ -33,8 +32,8 @@ public class MockAtomFeed implements AtomFeed {
 		this.factory = factory;
 
 		// generate new ID
-		UUID id = UUID.randomUUID();
-		this.id = id.toString();
+//		UUID id = UUID.randomUUID();
+		this.id = Double.toString(Math.random());
 
 		// set feed updated
 		Date date = new Date();
@@ -46,7 +45,7 @@ public class MockAtomFeed implements AtomFeed {
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed#getEntries()
 	 */
 	public List<AtomEntry> getEntries() {
-		return this.entries ;
+		return new ArrayList<AtomEntry>(this.entries);
 	}
 
 	/* (non-Javadoc)
@@ -80,7 +79,7 @@ public class MockAtomFeed implements AtomFeed {
 	/**
 	 * @param mockEntry
 	 */
-	public void add(MockAtomEntry mockEntry) {
+	protected void add(MockAtomEntry mockEntry) {
 		this.entries.add(mockEntry);
 	}
 
@@ -88,21 +87,21 @@ public class MockAtomFeed implements AtomFeed {
 	 * @param entry
 	 * @return
 	 */
-	public boolean contains(MockAtomEntry entry) {
+	protected boolean contains(MockAtomEntry entry) {
 		return this.entries.contains(entry);
 	}
 
 	/**
 	 * @param entry
 	 */
-	public void remove(MockAtomEntry entry) {
+	protected void remove(MockAtomEntry entry) {
 		this.entries.remove(entry);
 	}
 
 	/**
 	 * @param feed
 	 */
-	protected void put(MockAtomFeed feed) {
+	protected void put(AtomFeed feed) {
 		this.entries = new ArrayList<AtomEntry>();
 		for (AtomEntry entry : feed.getEntries()) {
 			this.entries.add(factory.copy(entry));

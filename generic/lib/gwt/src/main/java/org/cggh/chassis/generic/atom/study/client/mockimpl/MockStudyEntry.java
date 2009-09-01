@@ -3,6 +3,7 @@
  */
 package org.cggh.chassis.generic.atom.study.client.mockimpl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
@@ -15,6 +16,8 @@ import org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomEntry;
  */
 public class MockStudyEntry extends MockAtomEntry implements StudyEntry {
 
+	private List<String> modules = new ArrayList<String>();
+
 	/**
 	 * @param collectionURL
 	 */
@@ -26,39 +29,36 @@ public class MockStudyEntry extends MockAtomEntry implements StudyEntry {
 	 * @see org.cggh.chassis.generic.atom.study.client.format.StudyEntry#addModule(java.lang.String)
 	 */
 	public void addModule(String module) {
-		// TODO Auto-generated method stub
-
+		this.modules.add(module);
 	}
 
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.atom.study.client.format.StudyEntry#getModules()
 	 */
 	public List<String> getModules() {
-		// TODO Auto-generated method stub
-		return null;
+		return new ArrayList<String>(this.modules);
 	}
 
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.atom.study.client.format.StudyEntry#removeModule(java.lang.String)
 	 */
 	public void removeModule(String module) {
-		// TODO Auto-generated method stub
-
+		this.modules.remove(module);
 	}
 
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.atom.study.client.format.StudyEntry#setModules(java.util.List)
 	 */
 	public void setModules(List<String> modules) {
-		// TODO Auto-generated method stub
-
+		this.modules = modules;
 	}
 	
 	@Override
 	public void put(AtomEntry entry) {
 		super.put(entry);
 		if (entry instanceof StudyEntry) {
-			// TODO sync modules if instance of StudyEntry
+			StudyEntry study = (StudyEntry) entry;
+			this.modules = new ArrayList<String>(study.getModules());
 		}
 	}
 

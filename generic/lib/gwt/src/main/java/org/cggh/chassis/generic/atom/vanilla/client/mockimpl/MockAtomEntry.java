@@ -4,9 +4,7 @@
 package org.cggh.chassis.generic.atom.vanilla.client.mockimpl;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 import org.cggh.chassis.generic.atom.vanilla.client.format.Atom;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomCategory;

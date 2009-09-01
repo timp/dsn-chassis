@@ -3,12 +3,13 @@
  */
 package org.cggh.chassis.generic.atom.study.client.mockimpl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
 import org.cggh.chassis.generic.atom.study.client.format.StudyFeed;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
-import org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomEntry;
+import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
 import org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomFeed;
 
 /**
@@ -28,47 +29,18 @@ public class MockStudyFeed extends MockAtomFeed implements StudyFeed {
 	 * @see org.cggh.chassis.generic.atom.study.client.format.StudyFeed#getStudyEntries()
 	 */
 	public List<StudyEntry> getStudyEntries() {
-		// TODO Auto-generated method stub
-		return null;
+		List<StudyEntry> studies = new ArrayList<StudyEntry>();
+		for (AtomEntry entry : this.entries) {
+			if (entry instanceof StudyEntry) {
+				studies.add((StudyEntry)entry);
+			}
+		}
+		return studies;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed#getEntries()
-	 */
-	public List<AtomEntry> getEntries() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed#getId()
-	 */
-	public String getId() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed#getTitle()
-	 */
-	public String getTitle() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed#getUpdated()
-	 */
-	public String getUpdated() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	
 	@Override
-	public void add(MockAtomEntry mockEntry) {
-		// TODO restrict by type
+	protected void put(AtomFeed feed) {
+		super.put(feed);
 	}
-
 
 }
