@@ -6,7 +6,7 @@ This version: *Draft 4* (2009-09-01)
 
 *Changes Since Draft 3* (2009-08-12):
 
-  * Changed "first milestone release 1.0" to "first major release 1.0" to adopt CGGH best practice for release numbering, and allow definition of milestones within releases. Changed all mention of "milestone 1.0" to "release 1.0".
+  * Changed "first milestone release M1" to "first major release 1.0" to adopt CGGH best practice for release numbering, and allow definition of milestones within releases. Changed all mention of "milestone M1" to "release 1.0".
   * Reworked introduction to clarify scope of Chassis/WWARN and intentions of 1.0 release to provide a bare minimum system as soon as possible.
   * Changed to use "The WWARN Application" instead of "the WWARN database", because of potential confusion over what "the WWARN database" refers to.
   * Added user and administrator roles.
