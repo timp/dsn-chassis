@@ -3,8 +3,8 @@
  */
 package org.cggh.chassis.generic.twisted.client;
 
-import org.cggh.chassis.generic.log.client.GWTLogger;
-import org.cggh.chassis.generic.log.client.Logger;
+import org.cggh.chassis.generic.log.client.Log;
+import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.twisted.client.Deferred;
 import org.cggh.chassis.generic.twisted.client.Function;
 
@@ -29,12 +29,10 @@ public class GWTTestDeferred extends GWTTestCase {
 		protected int called = 0;
 	}
 
-	private Logger log;
+	private Log log = LogFactory.getLog(this.getClass());
 	
 	
 	public GWTTestDeferred() {
-		log = new GWTLogger();
-		log.setCurrentClass("GWTTestDeferred");
 	}
 
 	public void testCallback() {

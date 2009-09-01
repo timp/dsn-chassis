@@ -6,8 +6,8 @@ package org.cggh.chassis.generic.twisted.client;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import org.cggh.chassis.generic.log.client.GWTLogger;
-import org.cggh.chassis.generic.log.client.Logger;
+import org.cggh.chassis.generic.log.client.Log;
+import org.cggh.chassis.generic.log.client.LogFactory;
 
 /**
  * @author aliman
@@ -30,33 +30,21 @@ public class Deferred<T> {
 	private boolean finalized = false;
 	private Function finalizer;
 	
-	private Logger log;
+	private Log log = LogFactory.getLog(this.getClass());
 
 	
 	
 	
 	public Deferred() {
-		this.log = new GWTLogger();
-		this.log.setCurrentClass(Deferred.class.getName());
 	}
 	
 	
 	
 	public Deferred(Function canceller) {
 		this.canceller  = canceller;
-		this.log = new GWTLogger();
-		this.log.setCurrentClass(Deferred.class.getName());
 	}
 	
 	
-	
-	
-	public Deferred(Logger log) {
-		this.log = log;
-		this.log.setCurrentClass(Deferred.class.getName());
-	}
-
-
 	
 	public int getStatus() {
 		return this.fired;

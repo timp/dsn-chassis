@@ -9,23 +9,30 @@ import java.util.Stack;
  * @author aliman
  *
  */
-public abstract class LoggerBase implements Logger {
+public abstract class LogBase implements Log {
 
 
-	protected String className = null;
+	protected String name = null;
 	protected String methodName = null;
 	protected Stack<String> methodStack = new Stack<String>();
 	
-	public void setCurrentClass(String className) {
-		this.className = className;
+	/**
+	 * @param name
+	 */
+	public LogBase(String name) {
+		this.name = name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 	public String contextualise(String message) {
 		if (methodName != null) {
 			message = methodName + " :: " + message;
 		}
-		if (className != null) {
-			message = className + " :: " + message;
+		if (name != null) {
+			message = name + " :: " + message;
 		}
 		return message;
 	}
