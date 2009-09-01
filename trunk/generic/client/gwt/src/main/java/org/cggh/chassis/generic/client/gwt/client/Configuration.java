@@ -13,6 +13,10 @@ public class Configuration {
 		return $wnd.CHASSIS.userDetailsServiceEndpointURL;
 	}-*/;
 	
+	public static native String getUserChassisRolesPrefix() /*-{
+	return $wnd.CHASSIS.userChassisRolesPrefix;
+	}-*/;
+	
 	public static native String getStudyFeedURL() /*-{
 		return $wnd.CHASSIS.studyFeedURL;
 	}-*/;

@@ -10,12 +10,16 @@ import java.util.Set;
 
 import junit.framework.JUnit4TestAdapter;
 
+import org.cggh.chassis.generic.client.gwt.client.Configuration;
 import org.cggh.chassis.generic.client.gwt.widget.userdetails.client.UserDetailsWidgetController;
 import org.cggh.chassis.generic.client.gwt.widget.userdetails.client.UserDetailsWidgetModel;
 import org.cggh.chassis.generic.client.gwt.widget.userdetails.client.UserDetailsWidgetController.RefreshUserDetailsCallback;
 import org.cggh.chassis.generic.user.gwtrpc.client.GWTUserDetailsServiceAsync;
 import org.cggh.chassis.generic.user.transfer.UserDetailsTO;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -26,6 +30,8 @@ import static org.easymock.EasyMock.*;
  * @author raok
  *
  */
+@RunWith(PowerMockRunner.class)
+@PrepareForTest({Configuration.class})
 public class TestUserDetailsWidgetController {
 
 	
@@ -81,22 +87,29 @@ public class TestUserDetailsWidgetController {
 	}
 	
 	
-	
 	@Test
 	public void testRefreshUserDetailsCallback_onSuccess() {
 
 		UserDetailsWidgetModel model = new UserDetailsWidgetModel();
-
+						
 		// mock loading state
 		model.setStatus(UserDetailsWidgetModel.STATUS_LOADING);
 		
 		// test data
+		String prefixToRemove = "Prefix_";
 		UserDetailsTO user = new UserDetailsTO();
 		user.setId("fooid");
 		Set<String> roles = new HashSet<String>();
-		roles.add("foo");
-		roles.add("bar");
+		String foo = "foo";
+		roles.add(prefixToRemove + foo);
+		String bar = "bar";
+		roles.add(prefixToRemove + bar);
 		user.setRoles(roles);
+		
+		// Mock Configuration class
+		org.powermock.api.easymock.PowerMock.mockStatic(Configuration.class);
+		expect(Configuration.getUserChassisRolesPrefix()).andReturn(prefixToRemove);
+		org.powermock.api.easymock.PowerMock.replay(Configuration.class);
 		
 		// instantiate class under test
 		UserDetailsWidgetController controller = new UserDetailsWidgetController(model, null);
@@ -105,12 +118,22 @@ public class TestUserDetailsWidgetController {
 		// call method under test
 		callback.onSuccess(user);
 		
-		// test outcome at model
+		/* test outcome at model */
+		
 		assertEquals(UserDetailsWidgetModel.STATUS_FOUND, model.getStatus());
 		assertEquals(user.getId(), model.getUserName());
-		assertEquals(user.getRoles(), model.getRoles());
-		assertEquals("bar", model.getCurrentRole());
-
+		assertEquals(user.getRoles().size(), user.getRoles().size());
+		// Check prefix has been removed
+		for (String role : user.getRoles()) {
+			assertTrue(model.getRoles().contains(role.replace(prefixToRemove, "")));
+		}
+		
+		assertEquals(bar, model.getCurrentRole());
+		
+		
+		// verify mock classes
+		org.powermock.api.easymock.PowerMock.verify(Configuration.class);
+		
 	}
 	
 	@Test

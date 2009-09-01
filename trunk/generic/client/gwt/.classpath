@@ -10,5 +10,11 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="lib/test/easymock-2.5.1.jar"/>
+	<classpathentry kind="lib" path="lib/test/easymockclassextension-2.4.jar"/>
+	<classpathentry kind="lib" path="lib/test/powermock-api-easymock-1.2.5.jar"/>
+	<classpathentry kind="lib" path="lib/test/powermock-core-1.2.5.jar"/>
+	<classpathentry kind="lib" path="lib/test/powermock-module-junit4-1.2.5.jar"/>
+	<classpathentry kind="lib" path="lib/test/powermock-module-junit4-common-1.2.5.jar"/>
+	<classpathentry kind="lib" path="lib/test/cglib-nodep-2.1_3.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>
