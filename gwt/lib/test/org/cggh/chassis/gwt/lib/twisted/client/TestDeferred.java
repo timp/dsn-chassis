@@ -43,7 +43,7 @@ public class TestDeferred {
 		TestFunction<String,String> callback = new TestFunction<String,String>() {
 			public String apply(String s) {
 				called++;
-				assertEquals(testString, s);
+				assertEquals(testString, s); // N.B. throw from here is not caught by JUnit
 				return null;
 			}
 		};
