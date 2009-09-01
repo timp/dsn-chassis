@@ -9,7 +9,7 @@ The [http://code.google.com/apis/gdata/docs/2.0/basics.html Google Data APIs Pro
 <wiki:toc/>
 
 ----
-= Chassis/* Study Metadata Persistence Service API =
+= Chassis/`*` Study Metadata Persistence Service API =
 
 *0.1-alpha-2*
 
