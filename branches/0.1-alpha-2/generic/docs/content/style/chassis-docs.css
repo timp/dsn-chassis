@@ -12,6 +12,10 @@ h3 {
     padding-top: .3em;
 }
 
+h4 {
+	padding-bottom: .3em;
+}
+
 #ft {
     border-top: 4px solid black;
     font-size: 80%;
