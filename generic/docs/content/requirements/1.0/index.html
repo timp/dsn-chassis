@@ -76,34 +76,39 @@ draft 6 under development, and is subject to change without notice.</p>
       </li>
     </ul>
   </li>
-  <li><a href="#L870">2. Roles &amp; Responsibilities</a></li>
-  <li><a href="#L840">3. Workflow - Summary of Key Points</a>
+  <li><a href="#L840">2. Workflow - Summary of Key Points</a>
     <ul>
-      <li><a href="#L1386">3.1. Data Submission</a>
+      <li><a href="#L870">2.1. Roles &amp; Responsibilities</a></li>
+      <li><a href="#L1386">2.2. Data Submission</a>
         <ul>
-          <li><a href="#L310">3.1.1. General Points</a></li>
-          <li><a href="#L1452">3.1.2. Data Dictionaries</a></li>
-          <li><a href="#L1494">3.1.3. Gatekeeper Review</a></li>
-          <li><a href="#L1677">3.1.4. Revising Submissions</a></li>
+          <li><a href="#L310">2.2.1. General Points</a></li>
+          <li><a href="#L353">2.2.2. Studies</a></li>
+          <li><a href="#L1452">2.2.3. Data Dictionaries</a></li>
+          <li><a href="#L1494">2.2.4. Gatekeeper Review</a></li>
+          <li><a href="#L1677">2.2.5. Revising Submissions</a></li>
+          <li><a href="#L925">2.2.6. Constraints on Data and Data
+            Dictionaries</a></li>
         </ul>
       </li>
-      <li><a href="#L363">3.2. Data Curation &amp; Standardisation</a>
+      <li><a href="#L363">2.3. Data Curation &amp; Standardisation</a>
         <ul>
-          <li><a href="#L365">3.2.1. General Points</a></li>
-          <li><a href="#L508">3.2.2. Transformation and Mapping to WWARN
+          <li><a href="#L365">2.3.1. General Points</a></li>
+          <li><a href="#L508">2.3.2. Transformation and Mapping to WWARN
             Standard Data Dictionaries</a></li>
-          <li><a href="#L791">3.2.3. Validation</a></li>
-          <li><a href="#L427">3.2.4. Release Criteria</a></li>
-          <li><a href="#L768">3.2.5. Ordering of Curation Activities</a></li>
-          <li><a href="#L938">3.2.6. Provenance and Derivation of Data</a></li>
+          <li><a href="#L791">2.3.3. Validation</a></li>
+          <li><a href="#L427">2.3.4. Release Criteria</a></li>
+          <li><a href="#L451">2.3.5. Sharing and Publication</a></li>
+          <li><a href="#Curation">2.3.6. Curation and Collaboration</a></li>
+          <li><a href="#L455">2.3.7. Ordering of Curation Activities</a></li>
+          <li><a href="#L938">2.3.8. Provenance and Derivation of Data</a></li>
         </ul>
       </li>
     </ul>
   </li>
-  <li><a href="#L1824">4. Discussion &amp; Open Questions</a>
+  <li><a href="#L1824">3. Discussion &amp; Open Questions</a>
     <ul>
-      <li><a href="#L1833">4.1. Constraints on Data Dictionaries</a></li>
-      <li><a href="#L1003">4.2. Other Issues</a></li>
+      <li><a href="#L1833">3.1. Constraints on Data Dictionaries</a></li>
+      <li><a href="#L1003">3.2. Other Issues</a></li>
     </ul>
   </li>
 </ul>
@@ -218,7 +223,18 @@ transferable to other data-sharing networks. </p>
 
 <p>@@TODO</p>
 
-<h2 id="L870">2. Roles &amp; Responsibilities</h2>
+<p></p>
+
+<h2 id="L840">2. Workflow - Summary of Key Points</h2>
+
+<p>This section summarises the key points of the data management workflow that
+Chassis/WWARN will be designed to support. </p>
+
+<p>This section does not cover all requirements in detail. See the section
+below on use cases and functional requirements for detailed coverage of these
+points.</p>
+
+<h3 id="L870">2.1. Roles &amp; Responsibilities</h3>
 
 <p>The following roles are defined here for users of the Chassis/WWARN
 system.</p>
@@ -246,20 +262,9 @@ system.</p>
 
 <p>Note that the same user may hold more than one of the above roles.</p>
 
-<p></p>
+<h3 id="L1386">2.2. Data Submission</h3>
 
-<h2 id="L840">3. Workflow - Summary of Key Points</h2>
-
-<p>This section summarises the key points of the data management workflow that
-Chassis/WWARN will be designed to support. </p>
-
-<p>This section does not cover all requirements in detail. See the section
-below on use cases and functional requirements for detailed coverage of these
-points.</p>
-
-<h3 id="L1386">3.1. Data Submission</h3>
-
-<h4 id="L310">3.1.1. General Points</h4>
+<h4 id="L310">2.2.1. General Points</h4>
 
 <p>Data submission is the process whereby new data enters the Chassis/WWARN
 system.</p>
@@ -269,11 +274,11 @@ submission</strong>. The submitter then provides some information about the
 submission (see below), and uploads a data file containing the initial version
 of the submitted data. </p>
 
-<h4>Studies</h4>
+<h4 id="L353">2.2.2. Studies</h4>
 
 <p>@@TODO rules for defining studies; privacy and sharing</p>
 
-<h4 id="L1452">3.1.2. Data Dictionaries</h4>
+<h4 id="L1452">2.2.3. Data Dictionaries</h4>
 
 <p>Submitted data must be linked to a data dictionary, before a submission can
 be reviewed by a gatekeeper and accepted for curation (see also below). A data
@@ -285,7 +290,7 @@ re-use an existing data dictionary created by themselves or someone else. </p>
 
 <p>@@TODO privacy and sharing of dictionaries</p>
 
-<h4 id="L1494">3.1.3. Gatekeeper Review</h4>
+<h4 id="L1494">2.2.4. Gatekeeper Review</h4>
 
 <p>When a new submission is created, it is initially in a
 <strong>draft</strong> state. </p>
@@ -327,7 +332,7 @@ acceptance criteria, i.e., may accept all submissions by default. </p>
 
 <p>A gatekeeper may also assign a priority to an accepted submission.</p>
 
-<h4 id="L1677">3.1.4. Revising Submissions</h4>
+<h4 id="L1677">2.2.5. Revising Submissions</h4>
 
 <p>Before a submitter has requested gatekeeper review of a submission, they can
 make revisions to the submitted data. A submitter can also make revisions after
@@ -337,9 +342,34 @@ a submission is accepted. </p>
 the gatekeeper's review, and make a new request for gatekeeper review of the
 revised submission. </p>
 
-<h3 id="L363">3.2. Data Curation &amp; Standardisation</h3>
+<h4 id="L925">2.2.6. Constraints on Data and Data Dictionaries</h4>
 
-<h4 id="L365">3.2.1. General Points</h4>
+<p>Chassis/WWARN (1.0) does not place any constraints on the nature or format
+of the data file uploaded as submitted data. The Chassis/WWARN (1.0) system
+will not attempt to parse the submitted data file, and will not provide any
+previews of the submitted data. </p>
+
+<p>Later versions of Chassis/WWARN may provide support for parsing and
+previewing of some data files, e.g., where data files conform to a standard
+data dictionary, or where data files contain a single table of data in a
+spreadsheet format.</p>
+
+<p>Similarly, Chassis/WWARN (1.0) does not place any restrictions on the nature
+or format of the data dictionary file uploaded when a new data dictionary is
+created or revised. The system will not attempt to parse the data dictionary
+file, nor provide any preview of its contents. </p>
+
+<p>Later versions of Chassis/WWARN may constrain the content and layout of data
+dictionary files, and parse files to store and provide views of data
+dictionaries. Later versions of the system may also provide online support for
+creating and editing the contents of data dictionaries, without needing to
+upload files. </p>
+
+<p>See also the <a href="@@TODO">discussion of data dictionaries</a> below.</p>
+
+<h3 id="L363">2.3. Data Curation &amp; Standardisation</h3>
+
+<h4 id="L365">2.3.1. General Points</h4>
 
 <p>The curation process takes submitted data as input and produces data that is
 suitable for <strong>release</strong> to The WWARN Application, and hence made
@@ -353,7 +383,7 @@ activities</strong>, where the submitted data are reviewed with respect to some
 criteria (e.g., ethical criteria, quality control criteria) and an assertion is
 made that the data either do or do not meet those criteria.</p>
 
-<h4 id="L508">3.2.2. Transformation and Mapping to WWARN Standard Data
+<h4 id="L508">2.3.2. Transformation and Mapping to WWARN Standard Data
 Dictionaries</h4>
 
 <p>In addition to the non-standard data dictionaries that submitters can
@@ -378,7 +408,7 @@ other systems, e.g., off-line desktop tools. Later versions of Chassis/WWARN
 may provide online support for defining and executing mappings between data
 conforming to different data dictionaries.</p>
 
-<h4 id="L791">3.2.3. Validation</h4>
+<h4 id="L791">2.3.3. Validation</h4>
 
 <p>A special type of review activity involves checking that submitted data
 conform with respect to a given data dictionary, also referred to here as
@@ -388,7 +418,7 @@ systems, e.g., by manual review, or using off-line desktop tools. Later
 versions of Chassis/WWARN may provide some online support for validation, where
 possible. </p>
 
-<h4 id="L427">3.2.4. Release Criteria</h4>
+<h4 id="L427">2.3.4. Release Criteria</h4>
 
 <p>A submission cannot be released to The WWARN Application unless the
 submitted data conforms to one of the WWARN standard data dictionaries.
@@ -414,11 +444,16 @@ release criteria.</p>
 <p>Each WWARN module may also define and maintain its own sets of release
 criteria.</p>
 
-<h4>Sharing and Publication</h4>
+<h4 id="L451">2.3.5. Sharing and Publication</h4>
 
-<p>@@TODO sharing and publication mechanisms</p>
+<p>@@TODO sharing and publication mechanisms for submissions</p>
 
-<h4>3.2.5. Ordering of Curation Activities</h4>
+<h4 id="Curation">2.3.6. Curation and Collaboration</h4>
+
+<p>@@TODO something about control over which curator(s) can submit revisions to
+a submission.</p>
+
+<h4 id="L455">2.3.7. Ordering of Curation Activities</h4>
 
 <p>The Chassis/WWARN system does not prescribe the order in which data are
 mapped to a standard data dictionary and revised to meet quality control
@@ -429,7 +464,7 @@ dictionary, and then revised to meet quality control criteria; or revisions to
 address quality issues may be applied both before and after mapping to a
 standard data dictionary.</p>
 
-<h4 id="L938">3.2.6. Provenance and Derivation of Data</h4>
+<h4 id="L938">2.3.8. Provenance and Derivation of Data</h4>
 
 <p>A key design goal for Chassis/WWARN is that the complete and true derivation
 of any data released to The WWARN Application must be recorded. By derivation,
@@ -459,11 +494,11 @@ the submitted data are assumed to form a single linear version series.) </p>
 
 <p></p>
 
-<p> </p>
+<p></p>
 
-<h2 id="L1824">4. Discussion &amp; Open Questions</h2>
+<h2 id="L1824">3. Discussion &amp; Open Questions</h2>
 
-<h3 id="L1833">4.1. Constraints on Data Dictionaries</h3>
+<h3 id="L1833">3.1. Constraints on Data Dictionaries</h3>
 
 <p>This document tentatively takes the position that, for the first major
 release of Chassis/WWARN, there will be no constraints on the structure or
@@ -515,7 +550,7 @@ approach to data dictionaries, or is more flexible and places no constraints on
 files uploaded as data dictionaries, is therefore an important open question in
 this specification. </p>
 
-<h3 id="L1003">4.2. Other Issues</h3>
+<h3 id="L1003">3.2. Other Issues</h3>
 <ul>
   <li>What happens if, for a given submission, the submitter uploads several
     files that are not revisions of each other, but are separate parts of a
