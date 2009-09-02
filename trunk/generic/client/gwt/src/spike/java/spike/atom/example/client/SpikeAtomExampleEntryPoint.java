@@ -9,8 +9,7 @@ import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomPersonConstruct;
 import org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomFactory;
 import org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomService;
-import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
-import org.cggh.chassis.generic.client.gwt.client.Configuration;
+import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.twisted.client.Deferred;
@@ -155,35 +154,25 @@ public class SpikeAtomExampleEntryPoint implements EntryPoint {
 		Deferred<AtomEntry> deferredEntry = service.postEntry(feedURL, study);
 		
 		log.trace("add callback to handle successful service response");
-		deferredEntry.addCallback(new Function<AtomEntry,AtomEntry>() { 
+		deferredEntry.addCallback(new Function<StudyEntry,StudyEntry>() { 
 
-			public AtomEntry apply(AtomEntry persistedEntry) {
+			public StudyEntry apply(StudyEntry persistedStudy) {
 				log.enter("apply (inner callback function)");
 				
-				try {
-
-					StudyEntry persistedStudy = (StudyEntry) persistedEntry;
-
-					String studyId = persistedStudy.getId();
-					String published = persistedStudy.getPublished();
-					String updated = persistedStudy.getUpdated();
-					String studyURL = persistedStudy.getEditLink().getHref();
-					String firstModule = persistedStudy.getModules().get(0);
-					
-					Window.alert("persisted study success; id: "+studyId+"; published: "+published+"; updated: "+updated+"; edit link (entryURL): "+studyURL+"; first modules: "+firstModule);
-
-				}
-				catch (ClassCastException e) {
-					Window.alert("class cast exception");
-				}
-
+				String studyId = persistedStudy.getId();
+				String published = persistedStudy.getPublished();
+				String updated = persistedStudy.getUpdated();
+				String studyURL = persistedStudy.getEditLink().getHref();
+				String firstModule = persistedStudy.getModules().get(0);
+				
+				Window.alert("persisted study success; id: "+studyId+"; published: "+published+"; updated: "+updated+"; edit link (entryURL): "+studyURL+"; first modules: "+firstModule);
 
 				// any other handling of successful response goes here
 				
 				log.leave();
 				
 				// pass on to any further callbacks
-				return persistedEntry;
+				return persistedStudy;
 			}
 			
 		});

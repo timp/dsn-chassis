@@ -9,7 +9,7 @@ import java.util.TreeSet;
 
 import org.cggh.chassis.generic.user.gwtrpc.client.GWTUserDetailsServiceAsync;
 import org.cggh.chassis.generic.user.transfer.UserDetailsTO;
-import org.cggh.chassis.generic.client.gwt.client.Configuration;
+import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 

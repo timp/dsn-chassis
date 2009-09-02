@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.client.gwt.client;
+package org.cggh.chassis.generic.client.gwt.configuration.client;
 
 /**
  * @author aliman

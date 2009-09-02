@@ -8,17 +8,11 @@ import java.util.Set;
 
 import org.cggh.chassis.generic.client.gwt.widget.userdetails.client.UserDetailsWidgetDefaultRenderer.RoleChangeHandler;
 
-import com.google.gwt.event.dom.client.ChangeEvent;
-import com.google.gwt.event.dom.client.ChangeHandler;
-import com.google.gwt.event.dom.client.DomEvent;
-import com.google.gwt.event.logical.shared.SelectionEvent;
-import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.junit.client.GWTTestCase;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.SimplePanel;
-import com.google.gwt.user.client.ui.Widget;
 
 /**
  * @author raok
@@ -43,7 +37,7 @@ public class GWTTestUserDetailsWidgetDefaultRenderer extends GWTTestCase {
 	/**
 	 * Work around GWTTestCase making setUp final.
 	 */
-	public void before() {
+	protected void gwtSetUp() {
 
 		// instantiate a model
 		model = new UserDetailsWidgetModel();
@@ -62,8 +56,6 @@ public class GWTTestUserDetailsWidgetDefaultRenderer extends GWTTestCase {
 	
 	
 	public void testConstructor() {
-
-		this.before();
 		
 		assertNotNull(renderer);
 		
@@ -73,8 +65,6 @@ public class GWTTestUserDetailsWidgetDefaultRenderer extends GWTTestCase {
 	
 	public void testOnUserNameChanged() {
 		
-		this.before();
-
 		//Objects under test
 		Label userNameLabel = renderer.userNameLabel;
 		
@@ -94,8 +84,6 @@ public class GWTTestUserDetailsWidgetDefaultRenderer extends GWTTestCase {
 	
 	public void testOnRolesChanged() {
 		
-		this.before();
-
 		//Objects under test
 		ListBox userRolesListBox = renderer.userRolesListBox;
 
@@ -128,7 +116,6 @@ public class GWTTestUserDetailsWidgetDefaultRenderer extends GWTTestCase {
 	}
 	
 	public void testOnRolesChanged_singleRoleVsMultipleRoles() {
-		this.before();
 		
 		//Objects under test
 		Panel changeUserRolePanel = renderer.changeUserRolePanel;
@@ -157,7 +144,6 @@ public class GWTTestUserDetailsWidgetDefaultRenderer extends GWTTestCase {
 	
 	public void testOnCurrentRoleChanged() {
 		
-		this.before();
 
 		//Objects under test
 		Label currentRoleLabel = renderer.currentRoleLabel;
@@ -178,7 +164,6 @@ public class GWTTestUserDetailsWidgetDefaultRenderer extends GWTTestCase {
 	
 	public void testOnCurrentRoleChanged_UI() {
 		
-		this.before();
 		
 		//Objects under test
 		Label currentRoleLabel = renderer.currentRoleLabel;
@@ -218,7 +203,6 @@ public class GWTTestUserDetailsWidgetDefaultRenderer extends GWTTestCase {
 	
 	public void testOnStatusChanged() {
 		
-		this.before();
 
 		//Objects under test
 		Panel loadingUIObject = renderer.loadingPanel;
