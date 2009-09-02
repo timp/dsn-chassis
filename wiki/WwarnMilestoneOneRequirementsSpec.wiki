@@ -2,7 +2,14 @@
 
 = Chassis/WWARN (1.0) Data Management Platform - User Requirements Specification =
 
-This version: *Draft 4* (2009-09-01)
+This version: *Draft 5* (2009-09-02)
+
+*Changes Since Draft 4* (2009-09-01):
+
+  * Added discussion of options w.r.t. data dictionaries in a single format, or any format.
+  * Added note about intended audience to introduction.
+
+([http://code.google.com/p/dsn-chassis/source/diff?path=/wiki/WwarnMilestoneOneRequirementsSpec.wiki&format=side&r=402&old_path=/wiki/WwarnMilestoneOneRequirementsSpec.wiki&old=402 view diff])
 
 *Changes Since Draft 3* (2009-08-12):
 
@@ -65,9 +72,15 @@ Note that a limited functionality release (0.1) of _Chassis/WWARN_, enabling sub
 
 === About This Document ===
 
+==== Intended Audience ====
+
+This document is an internal draft, intended for discussion within the WWARN consortium. It is meant to provide a concise description of the functionality provided by Chassis/WWARN 1.0. It is not intended for end-users of the Chassis/WWARN system. 
+
 ==== Working Draft ====
 
 This document is a working draft, and is intended to act as a focus for discussion within the WWARN consortium. Feedback is very welcome, and may be sent via email to informatics@wwarn.org.
+
+Where there may be several possible choices relating to a particular requirement, some discussion is included in the document below, in sub-sections headed "*Discussion*".
 
 ==== Chassis/`*` ====
 
@@ -131,9 +144,17 @@ The _Chassis/WWARN_ (1.0) system is designed to support a data submission workfl
 
   * Chassis/WWARN (1.0) does not place any constraints on the nature or format of the data file uploaded as submitted data. The Chassis/WWARN (1.0) system *will not* attempt to parse the submitted data file, and *will not* provide any previews of the submitted data. Later versions of Chassis/WWARN may provide support for parsing and previewing of *some* data files, e.g., where data files conform to a standard data dictionary, or where data files contain a single table of data in a spreadsheet format.
 
-  * @@TODO simple case of data dictionary -- Chassis/WWARN (1.0) does not place any restrictions on the nature or format of the data dictionary file uploaded when a new data dictionary is created or revised. The system *will not* attempt to parse the data dictionary file, nor provide any preview of its contents. Later versions of Chassis/WWARN may constrain data dictionary files to a single format, and parse files to store and provide views of data dictionaries. Later versions of the system may also provide online support for creating and editing the contents of data dictionaries, without needing to upload files.
+  * A data dictionary defines expectations for the structure and semantics of submitted data. In the simplest case, a data dictionary is a human-readable document, stating that the submitted data are structured as a single table, listing the field (i.e., column) names used in the table, and providing a textual definition for each field name. However, Chassis/WWARN (1.0) does not place any restrictions on the nature or format of the data dictionary file uploaded when a new data dictionary is created or revised. The system *will not* attempt to parse the data dictionary file, nor provide any preview of its contents. Later versions of Chassis/WWARN may constrain the content and layout of data dictionary files, and parse files to store and provide views of data dictionaries. Later versions of the system may also provide online support for creating and editing the contents of data dictionaries, without needing to upload files.
 
-@@TODO discussion of data dictionaries constrained format vs. any format
+===== Discussion ===== 
+
+This document tentatively takes the position that, for the first major release of Chassis/WWARN, there will be *no constraints* on the structure or content of data dictionaries. Data dictionaries are simply uploaded as files of any type, with any content. This position was taken because the complete range of possible submitted data structures is not currently known, and therefore it may be useful in the early stages of WWARN to enable some flexibility as the consortium encounters new data and works towards a common approach to data dictionaries. 
+
+However, the goal for later releases of Chassis/WWARN is to support a *single type* of data dictionary, with the content of the data dictionary managed through a web interface, rather than through the upload of files. Based on previous experience in CGGH, the likely approach would be that each such data dictionary would define a set of variables (also known as fields or attributes), where each variable has a unique identifier, a human-readable label, a human-readable definition of the variable's meaning, a datatype for the variable, the units of the variable, and any range constraints (e.g., numeric constraints or controlled vocabulary) on the values the variable may take. This would enable further functionality, such as an analysis of the diversity of variable names used across all data submitted, which can support the process of convergence on a common set of data standards across the consortium. It would also be possible in some cases to use the data dictionary to drive automated functionality such as simple validation of datatypes and data ranges. It would also provide a basis for developing functionality to define and execute mappings (i.e., transformations) between data conforming to different data dictionaries, which is planned for future releases of Chassis/WWARN.
+
+Placing no constraints on the content or structure of data dictionaries, in the first major release of Chassis/WWARN, may however have a number of undesirable consequences. Firstly, many submitters may not have prior experience of constructing data dictionaries, and may not know what information to provide or how to provide it. Without clear guidance and examples, both the quality (usefulness), the structure and the content of data dictionaries created by submitters may be highly variable. Whilst prominent guidance and examples may ameliorate some of these issues, there is no guarantee on consistency or convergence towards a common approach to constructing data dictionaries. Secondly, without any constraints on data dictionaries, it will not be possible to reliably parse or analyse all data dictionaries, or to use the data dictionary to support any automated functionality such as simple validation of datatypes and data ranges. Thirdly, once a common approach to data dictionaries is agreed and supported in Chassis/WWARN, there would be a legacy of previously created dictionaries in a variety of formats to migrate, which would require some effort.
+
+Whether or not the first major release of Chassis/WWARN enforces a single approach to data dictionaries, or is more flexible and places no constraints on files uploaded as data dictionaries, is therefore an important open question in this specification.
 
 ----
 === Data Submission Use Cases ===
