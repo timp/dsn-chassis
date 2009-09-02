@@ -3,7 +3,7 @@
  */
 package spike.configuration.jsni.client;
 
-import org.cggh.chassis.generic.client.gwt.client.Configuration;
+import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.ui.HTML;

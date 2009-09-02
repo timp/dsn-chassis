@@ -10,7 +10,7 @@ import java.util.Set;
 
 import junit.framework.JUnit4TestAdapter;
 
-import org.cggh.chassis.generic.client.gwt.client.Configuration;
+import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
 import org.cggh.chassis.generic.client.gwt.widget.userdetails.client.UserDetailsWidgetController;
 import org.cggh.chassis.generic.client.gwt.widget.userdetails.client.UserDetailsWidgetModel;
 import org.cggh.chassis.generic.client.gwt.widget.userdetails.client.UserDetailsWidgetController.RefreshUserDetailsCallback;

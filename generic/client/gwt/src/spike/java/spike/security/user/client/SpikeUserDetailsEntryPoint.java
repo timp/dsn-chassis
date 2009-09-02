@@ -3,7 +3,7 @@
  */
 package spike.security.user.client;
 
-import org.cggh.chassis.generic.client.gwt.client.Configuration;
+import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
 import org.cggh.chassis.generic.user.gwtrpc.client.GWTUserDetailsService;
 import org.cggh.chassis.generic.user.gwtrpc.client.GWTUserDetailsServiceAsync;
 import org.cggh.chassis.generic.user.transfer.UserDetailsTO;
