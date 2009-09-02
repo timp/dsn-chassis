@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <title>Chassis/WWARN (1.0) Data Management Platform - User Requirements
+  Specification - Draft 6-SNAPSHOT</title>
+  <link rel="stylesheet" type="text/css"
+  href="../../style/reset-fonts-grids.css" />
+  <link rel="stylesheet" type="text/css" href="../../style/base-min.css" />
+  <link rel="stylesheet" type="text/css" href="../../style/chassis-docs.css" />
+</head>
+
+<body>
+
+<div id="doc">
+
+<div id="hd">
+<h1>Chassis/WWARN (1.0) Data Management Platform<br />
+User Requirements Specification - Draft 6-SNAPSHOT</h1>
+
+<p><strong>Summary</strong></p>
+
+<p>This document is a draft specification of user requirements for a first
+major release (1.0) of the Chassis/WWARN system for managing the submission,
+curation and standardisation of data for the World Wide Anti-malarial
+Resistance Network (WWARN).</p>
+
+<p><strong>This version: <a
+href="http://dsn-chassis.googlecode.com/svn/tags/generic/docs/content/requirements/1.0/draft-6/index.html">Draft
+6-SNAPSHOT</a></strong></p>
+
+<p><strong>Previous versions:</strong></p>
+<ul>
+  <li>See also <a
+    href="http://code.google.com/p/dsn-chassis/wiki/WwarnMilestoneOneRequirementsSpec">WwarnMilestoneOneRequirementsSpec</a></li>
+</ul>
+
+<p><strong>Status of This Document</strong></p>
+
+<p>This document is a draft for discussion. Please send comments and feedback
+to <a
+href="mailto:informatics@wwarn.org?subject=Chassis/WWARN requirements draft 6">informatics@wwarn.org</a>.</p>
+
+<p>This document supersedes the wiki page <a
+href="http://code.google.com/p/dsn-chassis/wiki/WwarnMilestoneOneRequirementsSpec">WwarnMilestoneOneRequirementsSpec</a>.</p>
+
+<p>@@TODO fix. This is not a stable document. This document is a snapshot of
+draft 6 under development, and is subject to change without notice.</p>
+
+<p><strong>Table of Contents</strong></p>
+
+<div class="toc">
+<ul>
+  <li><a href="#L55">1. Introduction</a>
+    <ul>
+      <li><a href="#Scope">1.1. Scope of Chassis/WWARN</a>
+        <ul>
+          <li><a href="#WWARN">1.1.1. WWARN Data Management</a></li>
+          <li><a href="#Chassis">1.1.2. Chassis/WWARN and The WWARN
+            Application</a></li>
+          <li><a href="#First">1.1.3. First Major Release (1.0)</a></li>
+          <li><a href="#L614">1.1.4. Limited Release for WHO Data Submission
+            (0.1)</a></li>
+          <li><a href="#L1241">1.1.5. Managing User Accounts</a></li>
+        </ul>
+      </li>
+      <li><a href="#L632">1.2. About This Document</a>
+        <ul>
+          <li><a href="#L641">1.2.1. Intended Audience</a></li>
+          <li><a href="#L655">1.2.2. Working Draft</a></li>
+          <li><a href="#L1887">1.2.3. Chassis/*</a></li>
+          <li><a href="#L719">1.2.4. Structure of This Document</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#L870">2. Roles &amp; Responsibilities</a></li>
+  <li><a href="#L840">3. Data Management Workflow - Summary of Key Points</a>
+    <ul>
+      <li><a href="#L1386">3.1. Data Submission</a>
+        <ul>
+          <li><a href="#L1441">3.1.1. General Points</a></li>
+          <li><a href="#L1452">3.1.2. Data Dictionaries</a></li>
+          <li><a href="#L1494">3.1.3. Gatekeeper Review</a></li>
+          <li><a href="#L1677">3.1.4. Revising Submissions</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#L1824">4. Discussion &amp; Open Questions</a>
+    <ul>
+      <li><a href="#L1833">4.1. Constraints on Data Dictionaries</a></li>
+    </ul>
+  </li>
+</ul>
+</div>
+</div>
+
+<div id="bd">
+<h2 id="L55">1. Introduction</h2>
+
+<h3 id="Scope">1.1. Scope of Chassis/WWARN</h3>
+
+<h4 id="WWARN">1.1.1. WWARN Data Management</h4>
+
+<p>The <em>Chassis/WWARN</em> system is intended to support the <strong>data
+management activities</strong> of the WWARN data-sharing network. These data
+management activities include the <strong>submission</strong> of data,
+<strong>curation</strong> of submitted data to meet quality control and other
+(e.g., ethical) criteria as defined by WWARN, and <strong>mapping</strong> of
+submitted data onto WWARN standard data dictionaries. </p>
+
+<p>The end goal of these data management activities is to produce data that is
+suitable for ingest into and publication by The WWARN Application.</p>
+
+<h4 id="Chassis">1.1.2. Chassis/WWARN and The WWARN Application</h4>
+
+<p>Note that the <em>Chassis/WWARN</em> system is distinct from <em>The WWARN
+Application</em>. The WWARN Application is a separate system, intended to
+support the visualisation, analysis, sharing and publication of standardised
+data. </p>
+
+<p>This specification assumes that data will be periodically exported from the
+Chassis/WWARN system and ingested into The WWARN Application. Management of
+this export and ingest process is out of scope for the Chassis/WWARN system,
+and will be specified elsewhere. Requirements for The WWARN Application,
+including all requirements for data visualisation and analysis tools, are not
+in scope for this document, and are specified elsewhere.</p>
+
+<h4 id="First">1.1.3. First Major Release (1.0)</h4>
+
+<p>This document specifies mandatory requirements ("must-haves") for the first
+major release (1.0) of the Chassis/WWARN system for production use by WWARN.
+</p>
+
+<p>The goal of the 1.0 release of Chassis/WWARN is to provide a system that
+supports the <strong>bare minimum</strong> needed to enable WWARN to begin
+accepting and curating data submissions. I.e., a system that is just sufficient
+to enable WWARN to establish key operating procedures and begin basic data
+management activities, and that can therefore be delivered as soon as possible.
+The functionality of the 1.0 release (as specified here) should therefore be
+limited to those features that are deemed <strong>absolutely necessary</strong>
+to enable the basic data management operations of WWARN to commence.</p>
+
+<p>Subsequent releases of Chassis/WWARN will then provide additional
+functionality as needed. Specifying this additional functionality is not in
+scope for this document, however, some features that might be developed for
+future releases of Chassis/WWARN are briefly discussed.</p>
+
+<p>The aim for the Chassis/WWARN 1.0 release is to coincide with the first
+WWARN milestone, which is scheduled for Q1 (Jan) 2010. However, because this
+document is in flux, and requirements may be added or removed, it is not
+possible to provide a precise release date at this stage. The informatics team
+will, however, provide access to working prototypes as often as possible on the
+way towards the 1.0 release, so the rest of the consortium can evaluate
+functionality and progress.</p>
+
+<h4 id="L614">1.1.4. Limited Release for WHO Data Submission (0.1)</h4>
+
+<p>Note that a limited functionality release (0.1) of Chassis/WWARN, enabling
+submission of data using the WHO spreadsheet format only, is also planned. The
+requirements for Chassis/WWARN (0.1) will be specified in a separate document,
+however, they are expected to form a subset of the requirements specified here.
+</p>
+
+<h4 id="L1241">1.1.5. Managing User Accounts</h4>
+
+<p>This document assumes that management of user accounts, user roles, and
+authentication for the Chassis/WWARN system will be handled via the CGGH user
+account database and single sign-on system. This document therefore does not
+include any functionality for managing user accounts, assigning roles to users,
+or authenticating users (i.e., logging in and out of the system).</p>
+
+<h3 id="L632">1.2. About This Document</h3>
+
+<h4 id="L641">1.2.1. Intended Audience</h4>
+
+<p>This document is an internal draft, intended for discussion within the WWARN
+consortium. It is meant to provide a concise description of the functionality
+provided by Chassis/WWARN 1.0. It is not intended for end-users of the
+Chassis/WWARN system.</p>
+
+<h4 id="L655">1.2.2. Working Draft</h4>
+
+<p>This document is a working draft, and is intended to act as a focus for
+discussion within the WWARN consortium. Feedback is very welcome, and may be
+sent via email to informatics@wwarn.org.</p>
+
+<p>Where there may be several possible choices relating to a particular
+requirement, some discussion is included in the document below, in the <a
+href="@@TODO LINK">Discussion &amp; Open Questions</a> section.</p>
+
+<h4 id="L1887">1.2.3. Chassis/*</h4>
+
+<p>This user requirements specification is scoped to the requirements of the
+WWARN data-sharing network. However, note that the Chassis/WWARN system is
+intended to be the first instance of a generic platform (Chassis/*), which can
+be customised to support the data management activities of other, similar,
+data-sharing networks. Therefore, this specification aims to describe
+requirements in a generic way, wherever possible, using terminology that is
+transferable to other data-sharing networks. </p>
+
+<h4 id="L719">1.2.4. Structure of This Document</h4>
+
+<p>@@TODO</p>
+
+<h2 id="L870">2. Roles &amp; Responsibilities</h2>
+
+<p>The following roles are defined here for users of the Chassis/WWARN
+system.</p>
+<ul>
+  <li>A <strong>user</strong> is anyone who is authorized to access the
+    Chassis/WWARN system.</li>
+  <li>A <strong>submitter</strong> is a user who can create a data submission.
+    A submitter represents and is assumed to act for the people and/or
+    organisations who have intellectual property rights and copyright over any
+    data they submit.</li>
+  <li>A <strong>gatekeeper</strong> is a user with the authority to accept a
+    data submission. By accepting a submission, the gatekeeper is asserting
+    that the submission is relevant to WWARN, and authorising the expenditure
+    of resources (i.e., time and effort) on curating and standardising the
+    submission.</li>
+  <li>A <strong>curator</strong> is a user who will perform curation
+    activities, which might include (but are not limited to) reviewing
+    submitted data, revising submitted data, ensuring that data meet quality
+    control criteria and conform to standard data dictionaries.</li>
+  <li>A <strong>coordinator</strong> is a user who has overall responsibility
+    for the operations of a data-sharing network.</li>
+  <li>An <strong>administrator</strong> is a user with the authority to
+    configure the Chassis/WWARN system.</li>
+</ul>
+
+<p>Note that the same user may hold more than one of the above roles.</p>
+
+<p></p>
+
+<h2 id="L840">3. Data Management Workflow - Summary of Key Points</h2>
+
+<p>This section summarises the key points of the data management workflow that
+Chassis/WWARN will be designed to support. </p>
+
+<p>This section does not cover all requirements in detail. See the section
+below on use cases and functional requirements for detailed coverage of these
+points.</p>
+
+<h3 id="L1386">3.1. Data Submission</h3>
+
+<h4>3.1.1. General Points</h4>
+
+<p>Data submission is the process whereby new data enters the Chassis/WWARN
+system.</p>
+
+<p>A submitter initiates the process by <strong>creating a new
+submission</strong>. The submitter then provides some information about the
+submission (see below), and uploads a data file containing the initial version
+of the submitted data. </p>
+
+<h4 id="L1452">3.1.2. Data Dictionaries</h4>
+
+<p>Submitted data must be linked to a data dictionary, before a submission can
+be reviewed by a gatekeeper and accepted for curation (see also below). A data
+dictionary defines the structure (i.e., layout, format) and semantics (i.e.,
+meaning) of submitted data.</p>
+
+<p>A submitter can create a new data dictionary for each new submission, or
+re-use an existing data dictionary created by themselves or someone else. </p>
+
+<h4 id="L1494">3.1.3. Gatekeeper Review</h4>
+
+<p>When a new submission is created, it is initially in a
+<strong>draft</strong> state. </p>
+
+<p>Before a submission can progress beyond the draft state and be
+<strong>accepted for curation</strong>, it must first be reviewed by a
+gatekeeper. </p>
+
+<p>When a submitter has finished preparing their submission, they can request a
+gatekeeper review of the submission. Until that point, the submission is in a
+draft state, and is private to the submitter. Once the request has been made
+for gatekeeper review, a gatekeeper will be assigned to review the submission.
+The assigned gatekeeper may then view the details of the submission and the
+submitted data.</p>
+
+<p>The gatekeeper is responsible for performing an initial evaluation of the
+submitted data and accompanying data dictionary, to determine whether or not
+resources (i.e., time and effort) should be spent curating the data, and with
+what priority. </p>
+
+<p>The gatekeeper is <strong>not</strong> responsible for making any
+modifications to the data or approving the data for release to The WWARN
+Application. </p>
+
+<p>The outcome of a gatekeeper review is either to accept the submission for
+curation, or not to accept the submission for curation. Once a gatekeeper has
+accepted a submission, they can assign a curator to the submission.
+Responsibility for the submission then passes from the gatekeeper to the
+assigned curator.</p>
+
+<p>There may be more than one gatekeeper. For Chassis/WWARN, it is anticipated
+that submissions will be assigned to a gatekeeper based on the WWARN module(s)
+to which the submission is linked by its submitter.</p>
+
+<p>The criteria that the gatekeeper use to decide whether or not to accept a
+submission are referred to here as <strong>acceptance criteria</strong>. Each
+module may have different acceptance criteria. A module may also have no
+acceptance criteria, i.e., may accept all submissions by default. </p>
+
+<p>A gatekeeper may also assign a priority to an accepted submission.</p>
+
+<h4 id="L1677">3.1.4. Revising Submissions</h4>
+
+<p>Before a submitter has requested gatekeeper review of a submission, they can
+make revisions to the submitted data. A submitter can also make revisions after
+a submission is accepted. </p>
+
+<p>If a submission is not accepted, a submitter can revise a submission after
+the gatekeeper's review, and make a new request for gatekeeper review of the
+revised submission. </p>
+
+<h3>Data Curation &amp; Standardisation</h3>
+
+<h4>General Points</h4>
+
+<p>The curation process takes a submissions as input and produces data that is
+suitable for release to The WWARN Application.</p>
+
+<p>A submission cannot be released to The WWARN Application, and hence made
+available for visualisation, analysis, sharing and publication, unless the
+submitted data conforms to one of the <strong>WWARN standard data
+dictionaries</strong> defined by the curators. Therefore, the minimum curation
+activity for a submission is to check that the submitted data conforms to a
+WWARN standard data dictionary, and if not, to transform the data into
+something that does.</p>
+
+<p>The curators may also define additional <strong>release criteria</strong>
+for submissions, which might include, e.g., ethical and/or quality control
+criteria. The curators may then review a submission with respect to some
+release criteria, and assert whether or not the data are approved with respect
+to those release criteria.</p>
+
+<p>The curators may define more than one set of release criteria, e.g., to
+represent different degrees of confidence in the submitted data. The
+Chassis/WWARN system will expose information about which submissions have been
+approved by the curators with respect to which set of release criteria to The
+WWARN Application, which will enable users of The WWARN Application to filter
+data in visualisations and analyses by different sets of release criteria.</p>
+
+<p> </p>
+
+<p></p>
+
+<p>* The curation process comprises a wide and open-ended range of possible
+activities. In general, curation activities either make some revision to the
+submitted data (e.g., adding, removing, or restructuring data), or review the
+submitted data with respect to some criteria (e.g., ethical criteria, quality
+control criteria) and assert that the data either do or do not meet those
+criteria. </p>
+
+<h2 id="L1824">4. Discussion &amp; Open Questions</h2>
+
+<h3 id="L1833">4.1. Constraints on Data Dictionaries</h3>
+
+<p>This document tentatively takes the position that, for the first major
+release of Chassis/WWARN, there will be no constraints on the structure or
+content of data dictionaries. Data dictionaries are simply uploaded as files of
+any type, with any content. This position was taken because the complete range
+of possible submitted data structures is not currently known, and therefore it
+may be useful in the early stages of WWARN to enable some flexibility as the
+consortium encounters new data and works towards a common approach to data
+dictionaries.</p>
+
+<p>However, the goal for later releases of Chassis/WWARN is to support a single
+type of data dictionary, with the content of the data dictionary managed
+through a web interface, rather than through the upload of files. Based on
+previous experience in CGGH, the likely approach would be that each such data
+dictionary would define a set of variables (also known as fields or
+attributes), where each variable has a unique identifier, a human-readable
+label, a human-readable definition of the variable's meaning, a datatype for
+the variable, the units of the variable, and any range constraints (e.g.,
+numeric constraints or controlled vocabulary) on the values the variable may
+take. This would enable further functionality, such as an analysis of the
+diversity of variable names used across all data submitted, which can support
+the process of convergence on a common set of data standards across the
+consortium. It would also be possible in some cases to use the data dictionary
+to drive automated functionality such as simple validation of datatypes and
+data ranges. It would also provide a basis for developing functionality to
+define and execute mappings (i.e., transformations) between data conforming to
+different data dictionaries, which is planned for future releases of
+Chassis/WWARN.</p>
+
+<p>Placing no constraints on the content or structure of data dictionaries, in
+the first major release of Chassis/WWARN, may however have a number of
+undesirable consequences. Firstly, many submitters may not have prior
+experience of constructing data dictionaries, and may not know what information
+to provide or how to provide it. Without clear guidance and examples, both the
+quality (usefulness), the structure and the content of data dictionaries
+created by submitters may be highly variable. Whilst prominent guidance and
+examples may ameliorate some of these issues, there is no guarantee on
+consistency or convergence towards a common approach to constructing data
+dictionaries. Secondly, without any constraints on data dictionaries, it will
+not be possible to reliably parse or analyse all data dictionaries, or to use
+the data dictionary to support any automated functionality such as simple
+validation of datatypes and data ranges. Thirdly, once a common approach to
+data dictionaries is agreed and supported in Chassis/WWARN, there would be a
+legacy of previously created dictionaries in a variety of formats to migrate,
+which would require some effort.</p>
+
+<p>Whether or not the first major release of Chassis/WWARN enforces a single
+approach to data dictionaries, or is more flexible and places no constraints on
+files uploaded as data dictionaries, is therefore an important open question in
+this specification. </p>
+</div>
+
+<div id="ft">
+</div>
+</div>
+</body>
+</html>
