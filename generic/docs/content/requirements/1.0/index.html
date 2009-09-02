@@ -77,14 +77,25 @@ draft 6 under development, and is subject to change without notice.</p>
     </ul>
   </li>
   <li><a href="#L870">2. Roles &amp; Responsibilities</a></li>
-  <li><a href="#L840">3. Data Management Workflow - Summary of Key Points</a>
+  <li><a href="#L840">3. Workflow - Summary of Key Points</a>
     <ul>
       <li><a href="#L1386">3.1. Data Submission</a>
         <ul>
-          <li><a href="#L1441">3.1.1. General Points</a></li>
+          <li><a href="#L310">3.1.1. General Points</a></li>
           <li><a href="#L1452">3.1.2. Data Dictionaries</a></li>
           <li><a href="#L1494">3.1.3. Gatekeeper Review</a></li>
           <li><a href="#L1677">3.1.4. Revising Submissions</a></li>
+        </ul>
+      </li>
+      <li><a href="#L363">3.2. Data Curation &amp; Standardisation</a>
+        <ul>
+          <li><a href="#L365">3.2.1. General Points</a></li>
+          <li><a href="#L508">3.2.2. Transformation and Mapping to WWARN
+            Standard Data Dictionaries</a></li>
+          <li><a href="#L791">3.2.3. Validation</a></li>
+          <li><a href="#L427">3.2.4. Release Criteria</a></li>
+          <li><a href="#L768">3.2.5. Ordering of Curation Activities</a></li>
+          <li><a href="#L938">3.2.6. Provenance and Derivation of Data</a></li>
         </ul>
       </li>
     </ul>
@@ -92,6 +103,7 @@ draft 6 under development, and is subject to change without notice.</p>
   <li><a href="#L1824">4. Discussion &amp; Open Questions</a>
     <ul>
       <li><a href="#L1833">4.1. Constraints on Data Dictionaries</a></li>
+      <li><a href="#L1003">4.2. Other Issues</a></li>
     </ul>
   </li>
 </ul>
@@ -236,7 +248,7 @@ system.</p>
 
 <p></p>
 
-<h2 id="L840">3. Data Management Workflow - Summary of Key Points</h2>
+<h2 id="L840">3. Workflow - Summary of Key Points</h2>
 
 <p>This section summarises the key points of the data management workflow that
 Chassis/WWARN will be designed to support. </p>
@@ -247,7 +259,7 @@ points.</p>
 
 <h3 id="L1386">3.1. Data Submission</h3>
 
-<h4>3.1.1. General Points</h4>
+<h4 id="L310">3.1.1. General Points</h4>
 
 <p>Data submission is the process whereby new data enters the Chassis/WWARN
 system.</p>
@@ -256,6 +268,10 @@ system.</p>
 submission</strong>. The submitter then provides some information about the
 submission (see below), and uploads a data file containing the initial version
 of the submitted data. </p>
+
+<h4>Studies</h4>
+
+<p>@@TODO rules for defining studies; privacy and sharing</p>
 
 <h4 id="L1452">3.1.2. Data Dictionaries</h4>
 
@@ -266,6 +282,8 @@ meaning) of submitted data.</p>
 
 <p>A submitter can create a new data dictionary for each new submission, or
 re-use an existing data dictionary created by themselves or someone else. </p>
+
+<p>@@TODO privacy and sharing of dictionaries</p>
 
 <h4 id="L1494">3.1.3. Gatekeeper Review</h4>
 
@@ -319,44 +337,129 @@ a submission is accepted. </p>
 the gatekeeper's review, and make a new request for gatekeeper review of the
 revised submission. </p>
 
-<h3>Data Curation &amp; Standardisation</h3>
+<h3 id="L363">3.2. Data Curation &amp; Standardisation</h3>
 
-<h4>General Points</h4>
+<h4 id="L365">3.2.1. General Points</h4>
 
-<p>The curation process takes a submissions as input and produces data that is
-suitable for release to The WWARN Application.</p>
+<p>The curation process takes submitted data as input and produces data that is
+suitable for <strong>release</strong> to The WWARN Application, and hence made
+available for visualisation, analysis, sharing and publication.</p>
 
-<p>A submission cannot be released to The WWARN Application, and hence made
-available for visualisation, analysis, sharing and publication, unless the
-submitted data conforms to one of the <strong>WWARN standard data
-dictionaries</strong> defined by the curators. Therefore, the minimum curation
-activity for a submission is to check that the submitted data conforms to a
-WWARN standard data dictionary, and if not, to transform the data into
-something that does.</p>
+<p>The curation process comprises a wide and open-ended range of possible
+activities. However, in general, curation activities are either
+<strong>revision activities</strong>, which involve revising the submitted data
+in some way (e.g., adding, removing, or restructuring data), or <strong>review
+activities</strong>, where the submitted data are reviewed with respect to some
+criteria (e.g., ethical criteria, quality control criteria) and an assertion is
+made that the data either do or do not meet those criteria.</p>
 
-<p>The curators may also define additional <strong>release criteria</strong>
-for submissions, which might include, e.g., ethical and/or quality control
-criteria. The curators may then review a submission with respect to some
-release criteria, and assert whether or not the data are approved with respect
-to those release criteria.</p>
+<h4 id="L508">3.2.2. Transformation and Mapping to WWARN Standard Data
+Dictionaries</h4>
 
-<p>The curators may define more than one set of release criteria, e.g., to
-represent different degrees of confidence in the submitted data. The
-Chassis/WWARN system will expose information about which submissions have been
-approved by the curators with respect to which set of release criteria to The
-WWARN Application, which will enable users of The WWARN Application to filter
-data in visualisations and analyses by different sets of release criteria.</p>
+<p>In addition to the non-standard data dictionaries that submitters can
+create, the Chassis/WWARN system has one or more data dictionaries managed by
+the curators that are agreed <strong>WWARN standard data dictionaries</strong>.
+WWARN standard data dictionaries are like any other data dictionaries, in that
+they define expectations for the structure and semantics of submitted data,
+except that they are maintained by the curators.</p>
 
-<p> </p>
+<p>A special type of revision activity involves transforming data that is
+submitted in a non-standard form into something that conforms with one of the
+standard data dictionaries. Defining such a transformation is also referred to
+here as "mapping". However, note that just because data conforms to the
+structural and semantic conditions of a standard data dictionary, does not
+necessarily mean that the data are reliable or make any sense. I.e., quality
+control is a separate concern from mapping submitted data to standard data
+dictionaries (see also below). </p>
+
+<p>In the Chassis/WWARN 1.0 release, no support will be provided for
+transforming data. I.e., it is assumed that all data will be transformed using
+other systems, e.g., off-line desktop tools. Later versions of Chassis/WWARN
+may provide online support for defining and executing mappings between data
+conforming to different data dictionaries.</p>
+
+<h4 id="L791">3.2.3. Validation</h4>
+
+<p>A special type of review activity involves checking that submitted data
+conform with respect to a given data dictionary, also referred to here as
+"validation". The Chassis/WWARN 1.0 release will not provide any support for
+validation. I.e., it is assumed that validation will be performed using other
+systems, e.g., by manual review, or using off-line desktop tools. Later
+versions of Chassis/WWARN may provide some online support for validation, where
+possible. </p>
+
+<h4 id="L427">3.2.4. Release Criteria</h4>
+
+<p>A submission cannot be released to The WWARN Application unless the
+submitted data conforms to one of the WWARN standard data dictionaries.
+Therefore, the minimum curation activity for a submission is to check that the
+submitted data conforms to a WWARN standard data dictionary, and if not, to
+transform the data into something that does.</p>
+
+<p>In addition to checking that submitted data conform to one of the WWARN
+standard data dictionaries, the curators may also define additional
+<strong>release criteria</strong> for submissions, which might include, e.g.,
+ethical and/or quality control criteria. The curators may then review any
+submission with respect to some release criteria, and assert whether or not the
+submitted data are approved with respect to those release criteria.</p>
+
+<p>The curators may define <strong>more than one</strong> set of release
+criteria, e.g., to represent different degrees of confidence in the submitted
+data. The Chassis/WWARN system will expose information about which submissions
+have been approved by the curators with respect to which set of release
+criteria to The WWARN Application, which will enable users of The WWARN
+Application to filter data in visualisations and analyses by different sets of
+release criteria.</p>
+
+<p>Each WWARN module may also define and maintain its own sets of release
+criteria.</p>
+
+<h4>Sharing and Publication</h4>
+
+<p>@@TODO sharing and publication mechanisms</p>
+
+<h4>3.2.5. Ordering of Curation Activities</h4>
+
+<p>The Chassis/WWARN system does not prescribe the order in which data are
+mapped to a standard data dictionary and revised to meet quality control
+standards and other release criteria. I.e., data may be submitted in a
+non-standard form, revised to meet quality control standards, and then mapped
+to a standard data dictionary; or data may be first mapped to a standard data
+dictionary, and then revised to meet quality control criteria; or revisions to
+address quality issues may be applied both before and after mapping to a
+standard data dictionary.</p>
+
+<h4 id="L938">3.2.6. Provenance and Derivation of Data</h4>
+
+<p>A key design goal for Chassis/WWARN is that the complete and true derivation
+of any data released to The WWARN Application must be recorded. By derivation,
+we mean the complete sequence of actions and revisions that led from the data
+as initially submitted to the data in its released form, i.e., its
+provenance.</p>
+
+<p>A curator can upload revisions of submitted data. To ensure that the true
+derivation of any data revision is captured, the curator must explicitly assert
+the derivation of any new revision they make, i.e., they must select the
+version of the data (either submitter version or another curator version) that
+was taken as input to the curator's new revision. This also ensures that
+curators can go back and do work on versions of the submitted data other than
+the latest version, and an accurate audit trail of their activities will still
+be maintained. (I.e., for any one submission, the curators' revisions to the
+submitted data are assumed to form an arbitrarily branching tree, where the
+root of each tree is one of the submitter's revisions.)</p>
+
+<p>A submitter can upload a revision of submitted data at any time. To keep
+things simple for a submitter, they do not have to assert the derivation of
+each new revision. (I.e., for any one submission, the submitter's revisions of
+the submitted data are assumed to form a single linear version series.) </p>
 
 <p></p>
 
-<p>* The curation process comprises a wide and open-ended range of possible
-activities. In general, curation activities either make some revision to the
-submitted data (e.g., adding, removing, or restructuring data), or review the
-submitted data with respect to some criteria (e.g., ethical criteria, quality
-control criteria) and assert that the data either do or do not meet those
-criteria. </p>
+<p></p>
+
+<p></p>
+
+<p> </p>
 
 <h2 id="L1824">4. Discussion &amp; Open Questions</h2>
 
@@ -411,6 +514,13 @@ which would require some effort.</p>
 approach to data dictionaries, or is more flexible and places no constraints on
 files uploaded as data dictionaries, is therefore an important open question in
 this specification. </p>
+
+<h3 id="L1003">4.2. Other Issues</h3>
+<ul>
+  <li>What happens if, for a given submission, the submitter uploads several
+    files that are not revisions of each other, but are separate parts of a
+    data set that is meant to be combined? </li>
+</ul>
 </div>
 
 <div id="ft">
