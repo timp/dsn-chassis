@@ -53,9 +53,9 @@ draft 6 under development, and is subject to change without notice.</p>
 
 <div class="toc">
 <ul>
-  <li><a href="#L55">1. Introduction</a> 
+  <li><a href="#L55">1. Introduction</a>
     <ul>
-      <li><a href="#Scope">1.1. Scope of Chassis/WWARN</a> 
+      <li><a href="#Scope">1.1. Scope of Chassis/WWARN</a>
         <ul>
           <li><a href="#WWARN">1.1.1. WWARN Data Management</a></li>
           <li><a href="#Chassis">1.1.2. Chassis/WWARN and The WWARN
@@ -66,7 +66,7 @@ draft 6 under development, and is subject to change without notice.</p>
           <li><a href="#L1241">1.1.5. Managing User Accounts</a></li>
         </ul>
       </li>
-      <li><a href="#L632">1.2. About This Document</a> 
+      <li><a href="#L632">1.2. About This Document</a>
         <ul>
           <li><a href="#L641">1.2.1. Intended Audience</a></li>
           <li><a href="#L655">1.2.2. Working Draft</a></li>
@@ -76,10 +76,10 @@ draft 6 under development, and is subject to change without notice.</p>
       </li>
     </ul>
   </li>
-  <li><a href="#L840">2. Workflow - Summary of Key Points</a> 
+  <li><a href="#L840">2. Workflow - Summary of Key Points</a>
     <ul>
       <li><a href="#L870">2.1. Roles &amp; Responsibilities</a></li>
-      <li><a href="#L1386">2.2. Data Submission Workflow</a> 
+      <li><a href="#L1386">2.2. Data Submission Workflow</a>
         <ul>
           <li><a href="#L310">2.2.1. Creating Submissions</a></li>
           <li><a href="#L369">2.2.2. Submission Ownership, Permissions and
@@ -95,24 +95,25 @@ draft 6 under development, and is subject to change without notice.</p>
           <li><a href="#L1677">2.2.9. Revising Submissions</a></li>
         </ul>
       </li>
-      <li><a href="#L363">2.3. Data Curation Workflow</a> 
+      <li><a href="#L363">2.3. Data Curation Workflow</a>
         <ul>
-          <li><a href="#L365">2.3.1. General Points</a></li>
+          <li><a href="#L365">2.3.1. Curation Overview</a></li>
           <li><a href="#L508">2.3.2. Transformation and Mapping to WWARN
             Standard Data Dictionaries</a></li>
           <li><a href="#L791">2.3.3. Validation</a></li>
           <li><a href="#L427">2.3.4. Release Criteria</a></li>
-          <li><a href="#L451">2.3.5. Sharing and Publication</a></li>
-          <li><a href="#Curation">2.3.6. Curation and Collaboration</a></li>
+          <li><a href="#L451">2.3.5. Making Studies and Submissions
+          Public</a></li>
+          <li><a href="#L744">2.3.6. Curation and Collaboration</a></li>
           <li><a href="#L455">2.3.7. Ordering of Curation Activities</a></li>
           <li><a href="#L938">2.3.8. Provenance and Derivation of Data</a></li>
         </ul>
       </li>
     </ul>
   </li>
-  <li><a href="#L584">3. Use Cases</a> 
+  <li><a href="#L584">3. Use Cases</a>
     <ul>
-      <li><a href="#L591">3.1. Data Submission Use Cases</a> 
+      <li><a href="#L591">3.1. Data Submission Use Cases</a>
         <ul>
           <li><a href="#L593">3.1.1. Use Case: Submitter Creates a New
           Study</a></li>
@@ -138,12 +139,39 @@ draft 6 under development, and is subject to change without notice.</p>
             Submission Activity</a></li>
         </ul>
       </li>
-      <li><a href="#L675">3.2. Data Curation Use Cases</a></li>
+      <li><a href="#L675">3.2. Data Curation Use Cases</a>
+        <ul>
+          <li><a href="#L855">3.2.1. Notation Conventions</a></li>
+          <li><a href="#L865">3.2.2. Use Case: Curator Manages a Standard Data
+            Dictionary</a></li>
+          <li><a href="#L874">3.2.3. Use Case: Curator Manages a Specification
+            of Release Criteria</a></li>
+          <li><a href="#L885">3.2.4. Use Case: Standard Submission, Requires No
+            Curation</a></li>
+          <li><a href="#L905">3.2.5. Use Case: Curation of Standard
+            Submission</a></li>
+          <li><a href="#L942">3.2.6. Use Case: Standard Submission Requires
+            Submitter Revision</a></li>
+          <li><a href="#L981">3.2.7. Use Case: Curation of Non-Standard
+            Submission</a></li>
+          <li><a href="#L1014">3.2.8. Use Case: Non-Standard Submission,
+            Curation and Repeated Standardisation</a></li>
+          <li><a href="#L1055">3.2.9. Use Case: Non-Standard Submission,
+            Curation After Standardisation (1)</a></li>
+          <li><a href="#L1092">3.2.10. Use Case: Non-Standard Submission,
+            Curation After Standardisation (2)</a></li>
+          <li><a href="#L1130">3.2.11. Use Case: Curator Delegation</a></li>
+          <li><a href="#L1149">3.2.12. Use Case: Coordinator Oversight of
+            Curation and Standardisation Activities</a></li>
+          <li><a href="#L1158">3.2.13. Use Case: Curator Oversight of Curation
+            &amp; Standardisation Activities</a></li>
+        </ul>
+      </li>
     </ul>
   </li>
-  <li><a href="#L679">4. Functional Requirements</a> 
+  <li><a href="#L679">4. Functional Requirements</a>
     <ul>
-      <li><a href="#L681">4.1. Data Submission Functional Requirements</a> 
+      <li><a href="#L681">4.1. Data Submission Functional Requirements</a>
         <ul>
           <li><a href="#L2674">4.1.1. (Submitter) Managing Studies</a></li>
           <li><a href="#L2696">4.1.2. (Submitter) Entering and Revising Study
@@ -175,13 +203,43 @@ draft 6 under development, and is subject to change without notice.</p>
             Activity</a></li>
         </ul>
       </li>
-      <li><a href="#L685">4.2. Data Curation Functional Requirements</a></li>
+      <li><a href="#L685">4.2. Data Curation Functional Requirements</a>
+        <ul>
+          <li><a href="#L1341">4.2.1. (Curator) Creating a Standard Data
+            Dictionary</a></li>
+          <li><a href="#L1350">4.2.2. (Curator) Revising a Standard Data
+            Dictionary</a></li>
+          <li><a href="#L1363">4.2.3. (Curator) Downloading a Standard Data
+            Dictionary</a></li>
+          <li><a href="#L1372">4.2.4. (Curator) Creating a Specification of
+            Release Criteria</a></li>
+          <li><a href="#L1383">4.2.5. (Curator) Revising a Specification of
+            Release Criteria</a></li>
+          <li><a href="#L1396">4.2.6. (Curator) Downloading a Specification of
+            Release Criteria</a></li>
+          <li><a href="#L1405">4.2.7. (Curator) Downloading Submitted
+          Data</a></li>
+          <li><a href="#L1414">4.2.8. (Curator) Revising Submitted Data</a></li>
+          <li><a href="#L1423">4.2.9. (Curator) Linking Submitted Data With a
+            Data Dictionary</a></li>
+          <li><a href="#L1440">4.2.10. (Curator) Viewing Submitted Data Version
+            History</a></li>
+          <li><a href="#L1449">4.2.11. (Curator) Reviewing Data for
+          Release</a></li>
+          <li><a href="#L1458">4.2.12. (Curator) Delegation</a></li>
+          <li><a href="#L1471">4.2.13. (Curator) Overview of Curation
+            Activity</a></li>
+          <li><a href="#L1484">4.2.14. (Coordinator) Overview of Curation
+            Activity</a></li>
+        </ul>
+      </li>
     </ul>
   </li>
-  <li><a href="#L1824">5. Discussion &amp; Open Questions</a> 
+  <li><a href="#L1824">5. Discussion &amp; Open Questions</a>
     <ul>
       <li><a href="#L1833">5.1. Constraints on Data Dictionaries</a></li>
-      <li><a href="#L1003">5.2. Other Issues</a></li>
+      <li><a href="#Curation">5.2. Curation and Collaboration</a></li>
+      <li><a href="#L1003">5.3. Other Discussion Points</a></li>
     </ul>
   </li>
 </ul>
@@ -648,7 +706,7 @@ the submission is linked has also been made public. If a study has been made
 public, then it is assumed that some details of the study will appear in the
 public areas of The WWARN Application.</p>
 
-<h4>2.3.6. Curation and Collaboration</h4>
+<h4 id="L744">2.3.6. Curation and Collaboration</h4>
 
 <p>See the @@TODO discussion link.</p>
 
@@ -856,7 +914,8 @@ Chassis/WWARN. For example, the reasons why a curator might need to make
 revisions to submitted data, and the nature of the revisions they might need to
 make, will be far more varied and subtle than are suggested below. </p>
 
-<h4>3.2.1. <a name="Notation_Conventions"></a>Notation Conventions</h4>
+<h4 id="L855">3.2.1. <a name="Notation_Conventions"></a>Notation
+Conventions</h4>
 
 <p>In the use cases below, letters A, B, C, etc., are used to help identify
 different revisions of submitted data, e.g., "the initial revision of the
@@ -865,7 +924,7 @@ the letter has the superscript "s" (e.g., A<sup>s</sup>), then the revision is
 linked to a standard data dictionary. If no superscript is present, the data is
 linked to a non-standard data dictionary. </p>
 
-<h4>3.2.2. <a
+<h4 id="L865">3.2.2. <a
 name="Use_Case:_Curator_Manages_a_Standard_Data_Dictionary"></a>Use Case:
 Curator Manages a Standard Data Dictionary</h4>
 
@@ -879,7 +938,7 @@ data dictionary, to incorporate some new fields as standard. The curator
 uploads a new file containing the revised version of the data dictionary, and
 enters a log message describing the changes. </p>
 
-<h4>3.2.3. <a
+<h4 id="L874">3.2.3. <a
 name="Use_Case:_Curator_Manages_a_Specification_of_Release_Criteria"></a>Use
 Case: Curator Manages a Specification of Release Criteria</h4>
 
@@ -898,7 +957,7 @@ respect to the old version of the release criteria, to determine if they also
 can be approved with respect to the updated version of the release criteria.
 </p>
 
-<h4>3.2.4. <a
+<h4 id="L885">3.2.4. <a
 name="Use_Case:_Standard_Submission,_Requires_No_Curation"></a>Use Case:
 Standard Submission, Requires No Curation</h4>
 
@@ -915,8 +974,9 @@ release criteria, and asserts that the release criteria have been met. </p>
 (A<sup>s</sup>) has been approved for release to <i>The WWARN Application</i>,
 and that no other actions were taken. </p>
 
-<h4>3.2.5. <a name="Use_Case:_Curation_of_Standard_Submission"></a>Use Case:
-Curation of Standard Submission</h4>
+<h4 id="L905">3.2.5. <a
+name="Use_Case:_Curation_of_Standard_Submission"></a>Use Case: Curation of
+Standard Submission</h4>
 
 <p>A submitter requests gatekeeper review for a new submission, where the
 submitted data is already linked to a WWARN standard data dictionary. A
@@ -939,7 +999,7 @@ asserts that the release criteria have been met. </p>
 (B<sup>s</sup>) to her initial version (A<sup>s</sup>). She downloads the
 curator's revision (B<sup>s</sup>) to inspect the changes. </p>
 
-<h4>3.2.6. <a
+<h4 id="L942">3.2.6. <a
 name="Use_Case:_Standard_Submission_Requires_Submitter_Revision"></a>Use Case:
 Standard Submission Requires Submitter Revision</h4>
 
@@ -965,8 +1025,9 @@ asserts that the release criteria have been met. </p>
 <i>The WWARN Application</i>, after she made a revision (B<sup>s</sup>) to her
 initial version (A<sup>s</sup>). </p>
 
-<h4>3.2.7. <a name="Use_Case:_Curation_of_Non-Standard_Submission"></a>Use
-Case: Curation of Non-Standard Submission</h4>
+<h4 id="L981">3.2.7. <a
+name="Use_Case:_Curation_of_Non-Standard_Submission"></a>Use Case: Curation of
+Non-Standard Submission</h4>
 
 <p>A submitter requests gatekeeper review for a new submission with a new data
 dictionary. The data dictionary is not one of the WWARN standard data
@@ -1001,7 +1062,7 @@ undergone one curation revision (B, derived from A), one standardisation
 revision (C<sup>s</sup>, derived from B), and has been approved for release to
 <i>The WWARN Application</i>. </p>
 
-<h4>3.2.8. <a
+<h4 id="L1014">3.2.8. <a
 name="Use_Case:_Non-Standard_Submission,_Curation_and_Repeated_Standar"></a>Use
 Case: Non-Standard Submission, Curation and Repeated Standardisation</h4>
 
@@ -1043,7 +1104,7 @@ revision (C<sup>s</sup>, derived from B), a second standardisation revision
 (D<sup>s</sup>, derived from B), and has been approved for release to <i>The
 WWARN Application</i>. </p>
 
-<h4>3.2.9. <a
+<h4 id="L1055">3.2.9. <a
 name="Use_Case:_Non-Standard_Submission,_Curation_After_Standardisatio"></a>Use
 Case: Non-Standard Submission, Curation After Standardisation (1)</h4>
 
@@ -1070,7 +1131,7 @@ undergone one standardisation revision (B<sup>s</sup>, derived from A), one
 curation revision (C<sup>s</sup>, derived from B<sup>s</sup>), and has been
 approved for release to <i>The WWARN Application</i>. </p>
 
-<h4>3.2.10. <a
+<h4 id="L1092">3.2.10. <a
 name="Use_Case:_Non-Standard_Submission,_Curation_After_Standardisatio"></a>Use
 Case: Non-Standard Submission, Curation After Standardisation (2)</h4>
 
@@ -1109,8 +1170,8 @@ curation revision (C, derived from A), a second standardisation revision
 (D<sup>s</sup>, derived from C), and has been approved for release to <i>The
 WWARN Application</i>. </p>
 
-<h4>3.2.11. <a name="Use_Case:_Curator_Delegation"></a>Use Case: Curator
-Delegation</h4>
+<h4 id="L1130">3.2.11. <a name="Use_Case:_Curator_Delegation"></a>Use Case:
+Curator Delegation</h4>
 
 <p>A submitter requests gatekeeper review for a new submission with a new data
 dictionary. The data dictionary is not one of the WWARN standard data
@@ -1136,7 +1197,7 @@ respect to the appropriate release criteria to third delegate curator. The
 delegate approves the standardised version of the submitted data
 (C<sup>s</sup>) for release. </p>
 
-<h4>3.2.12. <a
+<h4 id="L1149">3.2.12. <a
 name="Use_Case:_Coordinator_Oversight_of_Curation_and_Standardisation"></a>Use
 Case: Coordinator Oversight of Curation and Standardisation Activities</h4>
 
@@ -1152,7 +1213,7 @@ curation revisions have been made to the submitted data, but that no
 standardised revisions have yet been made. She contacts the assigned curator to
 ask for more information. </p>
 
-<h4>3.2.13. <a
+<h4 id="L1158">3.2.13. <a
 name="Use_Case:_Curator_Oversight_of_Curation_&amp;_Standardisation_Ac"></a>Use
 Case: Curator Oversight of Curation &amp; Standardisation Activities</h4>
 
@@ -1351,7 +1412,7 @@ Dictionaries</h4>
 
 <h3 id="L685">4.2. Data Curation Functional Requirements</h3>
 
-<h4>4.2.1. <a
+<h4 id="L1341">4.2.1. <a
 name="(Curator)_Creating_a_Standard_Data_Dictionary"></a>(Curator) Creating a
 Standard Data Dictionary</h4>
 <ul>
@@ -1361,7 +1422,7 @@ Standard Data Dictionary</h4>
     file containing the initial version of the data dictionary. </li>
 </ul>
 
-<h4>4.2.2. <a
+<h4 id="L1350">4.2.2. <a
 name="(Curator)_Revising_a_Standard_Data_Dictionary"></a>(Curator) Revising a
 Standard Data Dictionary</h4>
 <ul>
@@ -1373,7 +1434,7 @@ Standard Data Dictionary</h4>
     dictionary. </li>
 </ul>
 
-<h4>4.2.3. <a
+<h4 id="L1363">4.2.3. <a
 name="(Curator)_Downloading_a_Standard_Data_Dictionary"></a>(Curator)
 Downloading a Standard Data Dictionary</h4>
 <ul>
@@ -1381,7 +1442,7 @@ Downloading a Standard Data Dictionary</h4>
     dictionary. </li>
 </ul>
 
-<h4>4.2.4. <a
+<h4 id="L1372">4.2.4. <a
 name="(Curator)_Creating_a_Specification_of_Release_Criteria"></a>(Curator)
 Creating a Specification of Release Criteria</h4>
 <ul>
@@ -1393,7 +1454,7 @@ Creating a Specification of Release Criteria</h4>
 
 <p>N.B. there can be only one specification of release criteria per module. </p>
 
-<h4>4.2.5. <a
+<h4 id="L1383">4.2.5. <a
 name="(Curator)_Revising_a_Specification_of_Release_Criteria"></a>(Curator)
 Revising a Specification of Release Criteria</h4>
 <ul>
@@ -1405,7 +1466,7 @@ Revising a Specification of Release Criteria</h4>
     release criteria. </li>
 </ul>
 
-<h4>4.2.6. <a
+<h4 id="L1396">4.2.6. <a
 name="(Curator)_Downloading_a_Specification_of_Release_Criteria"></a>(Curator)
 Downloading a Specification of Release Criteria</h4>
 <ul>
@@ -1413,15 +1474,16 @@ Downloading a Specification of Release Criteria</h4>
     release criteria. </li>
 </ul>
 
-<h4>4.2.7. <a name="(Curator)_Downloading_Submitted_Data"></a>(Curator)
-Downloading Submitted Data</h4>
+<h4 id="L1405">4.2.7. <a
+name="(Curator)_Downloading_Submitted_Data"></a>(Curator) Downloading Submitted
+Data</h4>
 <ul>
   <li>A curator will be able to download any version of the submitted data for
     any submission they are assigned to or have been delegated to work on. </li>
 </ul>
 
-<h4>4.2.8. <a name="(Curator)_Revising_Submitted_Data"></a>(Curator) Revising
-Submitted Data</h4>
+<h4 id="L1414">4.2.8. <a name="(Curator)_Revising_Submitted_Data"></a>(Curator)
+Revising Submitted Data</h4>
 <ul>
   <li>A curator will be able to upload a data file containing a new version of
     the submitted data, for any submission to which they have been assigned or
@@ -1431,7 +1493,7 @@ Submitted Data</h4>
     also be able to enter a log message describing the changes made. </li>
 </ul>
 
-<h4>4.2.9. <a
+<h4 id="L1423">4.2.9. <a
 name="(Curator)_Linking_Submitted_Data_With_a_Data_Dictionary"></a>(Curator)
 Linking Submitted Data With a Data Dictionary</h4>
 <ul>
@@ -1450,7 +1512,7 @@ Linking Submitted Data With a Data Dictionary</h4>
     work on. </li>
 </ul>
 
-<h4>4.2.10. <a
+<h4 id="L1440">4.2.10. <a
 name="(Curator)_Viewing_Submitted_Data_Version_History"></a>(Curator) Viewing
 Submitted Data Version History</h4>
 <ul>
@@ -1460,8 +1522,9 @@ Submitted Data Version History</h4>
     standard data dictionary, and which are not. </li>
 </ul>
 
-<h4>4.2.11. <a name="(Curator)_Reviewing_Data_for_Release"></a>(Curator)
-Reviewing Data for Release</h4>
+<h4 id="L1449">4.2.11. <a
+name="(Curator)_Reviewing_Data_for_Release"></a>(Curator) Reviewing Data for
+Release</h4>
 <ul>
   <li>A curator will be able to review submitted data w.r.t. some version of a
     specification of release criteria, and assert that the data either do or do
@@ -1469,7 +1532,8 @@ Reviewing Data for Release</h4>
     assigned. </li>
 </ul>
 
-<h4>4.2.12. <a name="(Curator)_Delegation"></a>(Curator) Delegation</h4>
+<h4 id="L1458">4.2.12. <a name="(Curator)_Delegation"></a>(Curator)
+Delegation</h4>
 <ul>
   <li>An assigned curator will be able to delegate tasks to other curators, for
     any submission to which they have been assigned. </li>
@@ -1478,8 +1542,9 @@ Reviewing Data for Release</h4>
   <li>A curator will be able to indicate completion of a delegated tasks. </li>
 </ul>
 
-<h4>4.2.13. <a name="(Curator)_Overview_of_Curation_Activity"></a>(Curator)
-Overview of Curation Activity</h4>
+<h4 id="L1471">4.2.13. <a
+name="(Curator)_Overview_of_Curation_Activity"></a>(Curator) Overview of
+Curation Activity</h4>
 <ul>
   <li>A curator will be able to view a list of all submissions that have been
     accepted but not yet approved for release, and a list of those that have
@@ -1492,7 +1557,7 @@ Overview of Curation Activity</h4>
   <li>These lists can be grouped by module, study or submitter. </li>
 </ul>
 
-<h4>4.2.14. <a
+<h4 id="L1484">4.2.14. <a
 name="(Coordinator)_Overview_of_Curation_Activity"></a>(Coordinator) Overview
 of Curation Activity</h4>
 <ul>
