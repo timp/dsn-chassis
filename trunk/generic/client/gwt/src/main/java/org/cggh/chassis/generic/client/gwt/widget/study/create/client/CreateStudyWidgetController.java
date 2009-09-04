@@ -12,6 +12,7 @@ import org.cggh.chassis.generic.atom.study.client.mockimpl.MockStudyFactory;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
 import org.cggh.chassis.generic.twisted.client.Deferred;
+import org.cggh.chassis.generic.twisted.client.Function;
 
 /**
  * @author raok
@@ -45,14 +46,34 @@ public class CreateStudyWidgetController {
 		this.model.setAcceptPharmacologyData(newBoolean);
 		this.model.setStatus(CreateStudyWidgetModel.STATUS_READY);
 	}
+	
+	//Used for testing purposes
+	void setStudyFactory(StudyFactory testFactory) {
+		this.studyFactory = testFactory;
+	}
+	
+	//Used for testing purposes
+	StudyFactory getStudyFactory() {
+		return this.studyFactory;
+	}
 
-	public Deferred<AtomEntry> saveNewStudy() {
+	public void saveNewStudy() {
 		
-		// TODO convert to use real AtomPub Service
+		//attempt save
+		Deferred<AtomEntry> deferredEntry = postStudyEntry();
 		
+		//Add callbacks to handle success/fail
+		deferredEntry.addCallbacks(new SaveSuccessFunctionCallback(), new SaveFailFunctionErrback());
+		
+	}
+	
+	//Used for testing purposes
+	Deferred<AtomEntry> postStudyEntry() {
+				
 		// update model status
 		model.setStatus(CreateStudyWidgetModel.STATUS_SAVING);
-				
+		
+		//Create StudyEntry
 		StudyEntry newStudy = studyFactory.createStudyEntry();
 		newStudy.setTitle(model.getTitle());
 		newStudy.setSummary(model.getSummary());
@@ -72,15 +93,55 @@ public class CreateStudyWidgetController {
 		}
 		newStudy.setModules(modules);
 		
+		//Attempt save and return a Deffered for external to handle.
 		return service.postEntry(this.feedURL, newStudy);
 	}
 
-	void setStudyFactory(StudyFactory testFactory) {
-		this.studyFactory = testFactory;
+	private class SaveSuccessFunctionCallback implements Function<StudyEntry,StudyEntry> {
+
+		public StudyEntry apply(StudyEntry in) {
+			model.setStatus(CreateStudyWidgetModel.STATUS_SAVED);
+			return in;
+		}
+		
+	}
+	
+	private class SaveFailFunctionErrback implements Function<Throwable,Throwable> {
+
+		public Throwable apply(Throwable in) {
+			model.setStatus(CreateStudyWidgetModel.STATUS_ERROR);
+			return in;
+		}
+
+		
 	}
 
-	StudyFactory getStudyFactory() {
-		return this.studyFactory;
+	public void updateTitle(String title) {
+		model.setTitle(title);
+	}
+
+	public void updateSummary(String summary) {
+		model.setSummary(summary);
+	}
+
+	public void updateAcceptClinicalData(Boolean acceptClinicalData) {
+		model.setAcceptClinicalData(acceptClinicalData);
+	}
+
+	public void updateAcceptMolecularData(Boolean acceptMolecularData) {
+		model.setAcceptMolecularData(acceptMolecularData);
+	}
+
+	public void updateAcceptInVitroData(Boolean acceptInVitroData) {
+		model.setAcceptInVitroData(acceptInVitroData);
+	}
+
+	public void updateAcceptPharmacologyData(Boolean acceptPharmacologyData) {
+		model.setAcceptPharmacologyData(acceptPharmacologyData);
+	}
+
+	public void cancelCreateStudy() {
+		model.setStatus(CreateStudyWidgetModel.STATUS_CANCELLED);
 	}
 
 }

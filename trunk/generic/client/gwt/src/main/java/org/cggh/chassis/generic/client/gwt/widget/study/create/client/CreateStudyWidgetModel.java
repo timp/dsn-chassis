@@ -17,6 +17,7 @@ public class CreateStudyWidgetModel {
 	public static final Integer STATUS_SAVING = 2;
 	public static final Integer STATUS_SAVED = 3;
 	public static final Integer STATUS_ERROR = 4;
+	public static final Integer STATUS_CANCELLED = 5;
 	
 	public static final String MODULE_CLINICAL = "Clinical";
 	public static final String MODULE_MOLECULAR = "Molecular";
