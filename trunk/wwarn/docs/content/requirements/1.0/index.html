@@ -53,9 +53,9 @@ draft 6 under development, and is subject to change without notice.</p>
 
 <div class="toc">
 <ul>
-  <li><a href="#L55">1. Introduction</a>
+  <li><a href="#L55">1. Introduction</a> 
     <ul>
-      <li><a href="#Scope">1.1. Scope of Chassis/WWARN</a>
+      <li><a href="#Scope">1.1. Scope of Chassis/WWARN</a> 
         <ul>
           <li><a href="#WWARN">1.1.1. WWARN Data Management</a></li>
           <li><a href="#Chassis">1.1.2. Chassis/WWARN and The WWARN
@@ -66,7 +66,7 @@ draft 6 under development, and is subject to change without notice.</p>
           <li><a href="#L1241">1.1.5. Managing User Accounts</a></li>
         </ul>
       </li>
-      <li><a href="#L632">1.2. About This Document</a>
+      <li><a href="#L632">1.2. About This Document</a> 
         <ul>
           <li><a href="#L641">1.2.1. Intended Audience</a></li>
           <li><a href="#L655">1.2.2. Working Draft</a></li>
@@ -76,10 +76,10 @@ draft 6 under development, and is subject to change without notice.</p>
       </li>
     </ul>
   </li>
-  <li><a href="#L840">2. Workflow - Summary of Key Points</a>
+  <li><a href="#L840">2. Workflow - Summary of Key Points</a> 
     <ul>
       <li><a href="#L870">2.1. Roles &amp; Responsibilities</a></li>
-      <li><a href="#L1386">2.2. Data Submission Workflow</a>
+      <li><a href="#L1386">2.2. Data Submission Workflow</a> 
         <ul>
           <li><a href="#L310">2.2.1. General Points</a></li>
           <li><a href="#L353">2.2.2. Studies</a></li>
@@ -90,7 +90,7 @@ draft 6 under development, and is subject to change without notice.</p>
             Dictionaries</a></li>
         </ul>
       </li>
-      <li><a href="#L363">2.3. Data Curation &amp; Standardisation Workflow</a>
+      <li><a href="#L363">2.3. Data Curation &amp; Standardisation Workflow</a> 
         <ul>
           <li><a href="#L365">2.3.1. General Points</a></li>
           <li><a href="#L508">2.3.2. Transformation and Mapping to WWARN
@@ -105,7 +105,7 @@ draft 6 under development, and is subject to change without notice.</p>
       </li>
     </ul>
   </li>
-  <li><a href="#L1824">3. Discussion &amp; Open Questions</a>
+  <li><a href="#L1824">3. Discussion &amp; Open Questions</a> 
     <ul>
       <li><a href="#L1833">3.1. Constraints on Data Dictionaries</a></li>
       <li><a href="#L1003">3.2. Other Issues</a></li>
@@ -246,10 +246,10 @@ system.</p>
     organisations who have intellectual property rights and copyright over any
     data they submit.</li>
   <li>A <strong>gatekeeper</strong> is a user with the authority to accept a
-    data submission. By accepting a submission, the gatekeeper is asserting
-    that the submission is relevant to WWARN, and authorising the expenditure
-    of resources (i.e., time and effort) on curating and standardising the
-    submission.</li>
+    data submission for curation. By accepting a submission, the gatekeeper is
+    asserting that the submission is relevant to WWARN, and authorising the
+    expenditure of resources (i.e., time and effort) on curating the
+  submission.</li>
   <li>A <strong>curator</strong> is a user who will perform curation
     activities, which might include (but are not limited to) reviewing
     submitted data, revising submitted data, ensuring that data meet quality
@@ -264,19 +264,94 @@ system.</p>
 
 <h3 id="L1386">2.2. Data Submission Workflow</h3>
 
-<h4 id="L310">2.2.1. General Points</h4>
+<h4 id="L310">2.2.1. Creating Submissions</h4>
 
 <p>Data submission is the process whereby new data enters the Chassis/WWARN
 system.</p>
 
 <p>A submitter initiates the process by <strong>creating a new
-submission</strong>. The submitter then provides some information about the
-submission (see below), and uploads a data file containing the initial version
-of the submitted data. </p>
+submission</strong>. Creating a submission involves providing a title and
+textual summary for the submission, linking the submission to at least one
+study (see below), and linking the submission to at least one WWARN module. The
+submitter then uploads a data file containing the initial version of the
+submitted data. </p>
 
-<h4 id="L353">2.2.2. Studies</h4>
+<h4>Submission Ownership, Permissions and Privacy</h4>
 
-<p>@@TODO rules for defining studies; privacy and sharing</p>
+<p>When a new submission is created, the submitter who created it becomes the
+sole <strong>owner</strong> of that submission. The submission owner can the
+grant ownership to other submitters. All owners will have the same permissions
+with respect to the submission as the initial owner.</p>
+
+<p>When a new submission is created, it is initially in a
+<strong>draft</strong> state. It is also private to its owner(s), and is not
+visible to any other users of the system.</p>
+
+<h4 id="L353">2.2.2. Creating Studies</h4>
+
+<p>When a submitter is creating a new submission, they must link the new
+submission to at least one study.</p>
+
+<p>Before creating the first submission for a study, a submitter will have to
+create a record for the study. Creating a study involves providing at a title
+and textual summary for the study, and linking the new study to at least one
+WWARN module.</p>
+
+<p>Once a study has been created, the submitter can then proceed to enter
+further metadata about the study (i.e., to fill out the study site
+questionnaire). However, to provide the minimum obstacle to the submitter, it
+is <strong>not</strong> necessary that any further study metadata be entered
+before a submitter can begin creating new submissions linked to the study, or
+request gatekeeper review for those submissions. (A gatekeeper could, on the
+other hand, require that some or all of the study site questionnaire be
+completed before a submission can be accepted for curation, i.e., completing
+some or all of the SSQ could form part of the gatekeeper's acceptance criteria,
+see below.)</p>
+
+<h4>Study Ownership, Permissions and Privacy</h4>
+
+<p>When a new study is created, the submitter who created becomes the sole
+<strong>owner</strong> of that study. The study owner can the grant ownership
+to other submitters. All owners will have the same permissions with respect to
+the study as the initial owner.</p>
+
+<p>The owner(s) of a study can also authorise other submitters to create
+submissions linked to that study. </p>
+
+<p>To enable other submitters to find studies previously created by other
+submitters, and avoid creation of duplicate records for the same study, some
+limited information for <strong>all</strong> studies will be visible to
+<strong>all</strong> users of the system. This limited information consists of
+the study title, textual summary, and owner(s). All other details of the study,
+including the SSQ, will remain private and visible only to the study owner(s).
+</p>
+
+<p>In order to present the minimum obstacle to the submitter, the system will
+allow <strong>any</strong> submitter to create a submission and link it to
+<strong>any</strong> study, even if they are
+<strong></strong><strong>not</strong> an owner of that study, and even if they
+have <strong>not</strong> been authorised to link submissions to that study by
+the study owner(s). In this case, the owner(s) of the study will be notified
+that the new submission has been linked to the study by an as-yet unauthorised
+submitter, and will be given the opportunity to grant the necessary
+authorisation to the submitter. (Note also that a gatekeeper could require that
+the submitter has the appropriate authorisation beforing accepting a submission
+for curation, i.e., being an owner or authorized submitter for the study or
+studies to which a submission is linked could form part of the gatekeeper's
+acceptance criteria, see below.)</p>
+
+<h4>Submitted Data</h4>
+
+<p>The first step after creating a submission is to upload a single data file
+containing the initial version of the submitted data. </p>
+
+<p>Note that Chassis/WWARN (1.0) does <strong>not</strong> place any
+constraints on the nature or format of the data file uploaded as submitted
+data. The Chassis/WWARN (1.0) system will not attempt to parse the submitted
+data file, and will not provide any previews of the submitted data. Later
+versions of Chassis/WWARN may provide support for parsing and previewing of
+some data files, e.g., where data files conform to a standard data dictionary,
+or where data files contain a single table of data in a spreadsheet format.</p>
 
 <h4 id="L1452">2.2.3. Data Dictionaries</h4>
 
@@ -285,26 +360,65 @@ be reviewed by a gatekeeper and accepted for curation (see also below). A data
 dictionary defines the structure (i.e., layout, format) and semantics (i.e.,
 meaning) of submitted data.</p>
 
-<p>A submitter can create a new data dictionary for each new submission, or
-re-use an existing data dictionary created by themselves or someone else. </p>
+<p>Creating a data dictionary involves providing a title and textual summary
+for the dictionary, linking the dictionary to at least one WWARN module, and
+uploading a file containing the initial version of the dictionary.</p>
 
-<p>@@TODO privacy and sharing of dictionaries</p>
+<p>It is expected that a data dictionary will <strong>at least</strong> provide
+a list of the field or variable names used in the data, and a textual
+definition of each field. Ideally, the dictionary would also specify the
+datatype of each field (e.g., integer, decimal, text), the units of the field
+(e.g., g/dl), and any constraints on the range of values for that field (e.g.,
+numeric range constraints for a field with a numeric datatype, or controlled
+vocabulary constraints for a field with a text datatype). </p>
+
+<p>Note, however, that Chassis/WWARN (1.0) does <strong>not</strong> place any
+restrictions on the nature or format of the data dictionary file uploaded when
+a new data dictionary is created or revised. The system will not attempt to
+parse the data dictionary file, nor provide any preview of its contents. Later
+versions of Chassis/WWARN may constrain the content and layout of data
+dictionary files, and parse files to store and provide views of data
+dictionaries. Later versions of the system may also provide online support for
+creating and editing the contents of data dictionaries, without needing to
+upload files. See also the <a href="@@TODO">discussion of data dictionaries</a>
+below.</p>
+
+<h4>Data Dictionary Ownership, Privacy and Sharing</h4>
+
+<p>When a new dictionary is created, the submitter who created it becomes the
+sole <strong>owner</strong> of that dictionary. The dictionary owner can then
+grant ownership to other submitters. All owners will have the same permissions
+with respect to the dictionary as the initial owner, including the ability to
+revise the dictionary.</p>
+
+<p>By default, all dictionaries will be visible to all users. However, </p>
+
+<p>To enable other submitters to find studies previously created by other
+submitters, and avoid creation of duplicate records for the same study, some
+limited information for <strong>all</strong> studies will be visible to
+<strong>all</strong> users of the system. This limited information consists of
+the study title, textual summary, and owner(s). All other details of the study,
+including the SSQ, will remain private and visible only to the study owner(s).
+</p>
+
+<p>@@TODO privacy and sharing of dictionaries A submitter can create a new data
+dictionary for each new submission, or re-use an existing data dictionary
+created by themselves or someone else. </p>
+
+<p></p>
 
 <h4 id="L1494">2.2.4. Gatekeeper Review</h4>
-
-<p>When a new submission is created, it is initially in a
-<strong>draft</strong> state. </p>
 
 <p>Before a submission can progress beyond the draft state and be
 <strong>accepted for curation</strong>, it must first be reviewed by a
 gatekeeper. </p>
 
-<p>When a submitter has finished preparing their submission, they can request a
-gatekeeper review of the submission. Until that point, the submission is in a
-draft state, and is private to the submitter. Once the request has been made
-for gatekeeper review, a gatekeeper will be assigned to review the submission.
-The assigned gatekeeper may then view the details of the submission and the
-submitted data.</p>
+<p>When a submitter has finished preparing their submission, they can
+<strong>request a gatekeeper review</strong> of the submission. Until that
+point, the submission is in a draft state, and is private to the submission
+owner(s). Once the request has been made for gatekeeper review, a gatekeeper
+will be assigned to review the submission. The assigned gatekeeper may then
+view the details of the submission and the submitted data.</p>
 
 <p>The gatekeeper is responsible for performing an initial evaluation of the
 submitted data and accompanying data dictionary, to determine whether or not
@@ -343,29 +457,6 @@ the gatekeeper's review, and make a new request for gatekeeper review of the
 revised submission. </p>
 
 <h4 id="L925">2.2.6. Constraints on Data and Data Dictionaries</h4>
-
-<p>Chassis/WWARN (1.0) does not place any constraints on the nature or format
-of the data file uploaded as submitted data. The Chassis/WWARN (1.0) system
-will not attempt to parse the submitted data file, and will not provide any
-previews of the submitted data. </p>
-
-<p>Later versions of Chassis/WWARN may provide support for parsing and
-previewing of some data files, e.g., where data files conform to a standard
-data dictionary, or where data files contain a single table of data in a
-spreadsheet format.</p>
-
-<p>Similarly, Chassis/WWARN (1.0) does not place any restrictions on the nature
-or format of the data dictionary file uploaded when a new data dictionary is
-created or revised. The system will not attempt to parse the data dictionary
-file, nor provide any preview of its contents. </p>
-
-<p>Later versions of Chassis/WWARN may constrain the content and layout of data
-dictionary files, and parse files to store and provide views of data
-dictionaries. Later versions of the system may also provide online support for
-creating and editing the contents of data dictionaries, without needing to
-upload files. </p>
-
-<p>See also the <a href="@@TODO">discussion of data dictionaries</a> below.</p>
 
 <h3 id="L363">2.3. Data Curation &amp; Standardisation Workflow</h3>
 
