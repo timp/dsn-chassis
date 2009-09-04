@@ -3,34 +3,25 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.study.create.client;
 
-import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
+import static org.junit.Assert.*;
+import junit.framework.JUnit4TestAdapter;
+
 import org.cggh.chassis.generic.atom.study.client.mockimpl.MockStudyFactory;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomService;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
-import org.cggh.chassis.generic.twisted.client.*;
 import org.junit.Before;
 import org.junit.Test;
-
-import com.google.gwt.junit.client.GWTTestCase;
 
 /**
  * @author raok
  *
  */
-public class TestCreateStudyWidgetController extends GWTTestCase {
+public class TestCreateStudyWidgetController {
 
-	/* (non-Javadoc)
-	 * @see com.google.gwt.junit.client.GWTTestCase#getModuleName()
-	 */
-	@Override
-	public String getModuleName() {
-		return "org.cggh.chassis.generic.client.gwt.widget.study.create.CreateStudyWidget";
-	}
 	
-//	public static junit.framework.Test suite() {
-//	   return new JUnit4TestAdapter(TestCreateStudyWidgetController.class);
-//	}
+	public static junit.framework.Test suite() {
+	   return new JUnit4TestAdapter(TestCreateStudyWidgetController.class);
+	}
 
 	private CreateStudyWidgetController testController;
 	final private CreateStudyWidgetModel mockModel = new CreateStudyWidgetModel();;
@@ -39,7 +30,7 @@ public class TestCreateStudyWidgetController extends GWTTestCase {
 	private String feedURL = "http://www.foo.com/studies";
 		
 	@Before
-	public void gwtSetUp() {
+	public void setUp() {
 		
 		//Create testController, inject testModel and a mock Service
 		mockFactory = new MockStudyFactory();
@@ -87,56 +78,82 @@ public class TestCreateStudyWidgetController extends GWTTestCase {
 		assertEquals(newBoolean, mockModel.acceptPharmacologyData());
 		
 	}
-		
+			
 	@Test
-	public void testSaveNewStudy_callback() {
+	public void testUpdateTitle(){
 		
 		//test data
-		final String title = "study Foo";
-		final String summary = "summary blah";
-		final Boolean acceptClinicalData = true;
-		final Boolean acceptMolecularData = false;
-		final Boolean acceptInVitroData = true;
-		final Boolean acceptPharmacologyData = false;
-				
-		// Set model with test data, and mock status.
-		mockModel.setTitle(title);
-		mockModel.setSummary(summary);
-		mockModel.setAcceptClinicalData(acceptClinicalData);
-		mockModel.setAcceptMolecularData(acceptMolecularData);
-		mockModel.setAcceptInVitroData(acceptInVitroData);
-		mockModel.setAcceptPharmacologyData(acceptPharmacologyData);
-		mockModel.setStatus(CreateStudyWidgetModel.STATUS_READY);
+		String title = "Study foo";
 		
-		
-		// Test failed if timer expires. Check AtomService logs for details of failure.
-		delayTestFinish(5000);
-		
-		// call method under test
-		Deferred<AtomEntry> deferredEntry = testController.saveNewStudy();
+		//call method under test
+		testController.updateTitle(title);
 		
 		//test outcome
-		deferredEntry.addCallback(new Function<StudyEntry,StudyEntry>() {
+		assertEquals(title, mockModel.getTitle());
+	}
+	
+	@Test
+	public void testUpdateSummary(){
+		
+		//test data
+		String summary = "Summary foo";
+		
+		//call method under test
+		testController.updateSummary(summary);
+		
+		//test outcome
+		assertEquals(summary, mockModel.getSummary());
+	}
+	
+	@Test
+	public void testUpdateAcceptClinicalData(){
+				
+		//call method under test
+		testController.updateAcceptClinicalData(Boolean.TRUE);
+		
+		//test outcome
+		assertEquals(Boolean.TRUE, mockModel.acceptClinicalData());
+	}
+	
+	@Test
+	public void testUpdateAcceptMolecularData(){
+				
+		//call method under test
+		testController.updateAcceptMolecularData(Boolean.TRUE);
+		
+		//test outcome
+		assertEquals(Boolean.TRUE, mockModel.acceptMolecularData());
+	}
+	
+	@Test
+	public void testUpdateAcceptInVitroData(){
+				
+		//call method under test
+		testController.updateAcceptInVitroData(Boolean.TRUE);
+		
+		//test outcome
+		assertEquals(Boolean.TRUE, mockModel.acceptInVitroData());
+	}
+	
+	@Test
+	public void testUpdateAcceptPharmacologyData(){
+				
+		//call method under test
+		testController.updateAcceptPharmacologyData(Boolean.TRUE);
+		
+		//test outcome
+		assertEquals(Boolean.TRUE, mockModel.acceptPharmacologyData());
+	}
+	
+	@Test
+	public void testCancelCreateStudy() {
 
-			public StudyEntry apply(StudyEntry persistedStudy) {
-				
-				//Check study is equal
-				assertEquals(title, persistedStudy.getTitle());
-				assertEquals(summary, persistedStudy.getSummary());
-				assertTrue(acceptClinicalData == persistedStudy.getModules().contains(CreateStudyWidgetModel.MODULE_CLINICAL));
-				assertTrue(acceptMolecularData == persistedStudy.getModules().contains(CreateStudyWidgetModel.MODULE_MOLECULAR));
-				assertTrue(acceptInVitroData == persistedStudy.getModules().contains(CreateStudyWidgetModel.MODULE_IN_VITRO));
-				assertTrue(acceptPharmacologyData == persistedStudy.getModules().contains(CreateStudyWidgetModel.MODULE_PHARMACOLOGY));
-
-				assertEquals(CreateStudyWidgetModel.STATUS_SAVED, mockModel.getStatus());
-				
-				// tell the test system the test is now done
-			    finishTest();
-				
-				return null;
-			}
-			
-		});
+		//call method under test
+		testController.cancelCreateStudy();
+		
+		//test outcome
+		assertEquals(CreateStudyWidgetModel.STATUS_CANCELLED, mockModel.getStatus());
+		
 	}
 	
 }

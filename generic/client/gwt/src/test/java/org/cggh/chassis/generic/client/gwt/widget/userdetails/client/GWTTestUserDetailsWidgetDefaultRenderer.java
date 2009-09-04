@@ -37,6 +37,7 @@ public class GWTTestUserDetailsWidgetDefaultRenderer extends GWTTestCase {
 	/**
 	 * Work around GWTTestCase making setUp final.
 	 */
+	@Override
 	protected void gwtSetUp() {
 
 		// instantiate a model
@@ -194,6 +195,7 @@ public class GWTTestUserDetailsWidgetDefaultRenderer extends GWTTestCase {
 		}
 		
 		// Simulate change and fire role change event
+		// TODO test correct eventhandler has been added to correct UIObject  
 		userRolesListBox.setSelectedIndex(differentRoleIndex);
 		eventHandler.onChange(null);
 		

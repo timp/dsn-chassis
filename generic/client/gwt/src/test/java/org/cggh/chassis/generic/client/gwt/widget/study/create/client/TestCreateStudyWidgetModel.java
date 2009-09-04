@@ -215,6 +215,7 @@ public class TestCreateStudyWidgetModel {
 		assertEquals(new Integer(2), CreateStudyWidgetModel.STATUS_SAVING);
 		assertEquals(new Integer(3), CreateStudyWidgetModel.STATUS_SAVED);
 		assertEquals(new Integer(4), CreateStudyWidgetModel.STATUS_ERROR);
+		assertEquals(new Integer(5), CreateStudyWidgetModel.STATUS_CANCELLED);
 		
 	}
 	
