@@ -277,16 +277,18 @@ Application.</p>
 <h4 id="Chassis">1.1.2. Chassis/WWARN and The WWARN Application</h4>
 
 <p>Note that the <em>Chassis/WWARN</em> system is distinct from <em>The WWARN
-Application</em>. The WWARN Application is a separate system, intended to
-support the visualisation, analysis, sharing and publication of standardised
-data. </p>
+Application</em> (current prototype at <a
+href="https://www.wwarn.org/warnapp/datamap/datamap.html">https://www.wwarn.org/warnapp/datamap/datamap.html</a>).
+The WWARN Application is a <strong>separate system</strong>, intended to
+support the visualisation, analysis, aggregation, sharing and publication of
+standardised data. </p>
 
 <p>This specification assumes that data will be periodically exported from the
 Chassis/WWARN system and ingested into The WWARN Application. Management of
 this export and ingest process is out of scope for the Chassis/WWARN system,
 and will be specified elsewhere. Requirements for The WWARN Application,
-including all requirements for data visualisation and analysis tools, are not
-in scope for this document, and are specified elsewhere.</p>
+including all requirements for data visualisation, aggregation and analysis
+tools, are not in scope for this document, and are specified elsewhere.</p>
 
 <h4 id="First">1.1.3. First Major Release (1.0)</h4>
 
@@ -421,8 +423,9 @@ system.</p>
     activities, which might include (but are not limited to) reviewing
     submitted data, revising submitted data, ensuring that data meet quality
     control criteria and conform to standard data dictionaries.</li>
-  <li>A <strong>coordinator</strong> is a user who has overall responsibility
-    for the operations of a data-sharing network.</li>
+  <li>A <strong>coordinator</strong> is a user who has responsibility for
+    managing/coordinating some or all of the operations of a data-sharing
+    network.</li>
   <li>An <strong>administrator</strong> is a user with the authority to
     configure the Chassis/WWARN system.</li>
 </ul>
@@ -462,7 +465,8 @@ visible to any other users of the system.</p>
 <p>When a submitter is creating a new submission, they must link the new
 submission to at least one study.</p>
 
-<p>Before creating the first submission for a study, a submitter will have to
+<p>Before creating the first submission for a study, where there is no previous
+record of the study in the Chassis/WWARN system, a submitter will have to
 create a record for the study. Creating a study involves providing at a title
 and textual summary for the study, and linking the new study to at least one
 WWARN module.</p>
@@ -543,9 +547,9 @@ uploading a file containing the initial version of the dictionary.</p>
 (i.e., meaning) of submitted data. It is expected that a data dictionary will
 <strong>at least</strong> provide a list of the field or variable names used in
 the data, and a textual definition of each field. Ideally, the dictionary would
-also specify the datatype of each field (e.g., integer, decimal, text), the
-units of the field (e.g., g/dl), and any constraints on the range of values for
-that field (e.g., numeric range constraints for a field with a numeric
+also specify the datatype of each field (e.g., integer, decimal, text, etc.),
+the units of the field (e.g., g/dl), and any constraints on the range of values
+for that field (e.g., numeric range constraints for a field with a numeric
 datatype, or controlled vocabulary constraints for a field with a text
 datatype). </p>
 
@@ -638,15 +642,14 @@ revised submission. </p>
 
 <p>The curation process takes submitted data as input and produces data that is
 suitable for <strong>release</strong> to The WWARN Application, and hence made
-available for visualisation, analysis, sharing and publication.</p>
+available for visualisation, analysis, aggregation, sharing and publication.</p>
 
 <p>The curation process comprises a wide and open-ended range of possible
 activities. However, in general, curation activities are either
 <strong>revision activities</strong>, which involve revising the submitted data
 in some way (e.g., adding, removing, or restructuring data), or <strong>review
 activities</strong>, where the submitted data are reviewed with respect to some
-criteria (e.g., ethical criteria, quality control criteria) and an assertion is
-made that the data either do or do not meet those criteria.</p>
+criteria (e.g., ethical criteria, quality control criteria).</p>
 
 <h4 id="L815">2.3.2. Revision Activities</h4>
 
@@ -659,7 +662,7 @@ on-line support for revising submitted data. It is assumed that all revision
 activities will be achieved by downloading a chosen version of the submitted
 data to work on, making the necessary changes using other tools, e.g., off-line
 desktop tools, then uploading the revised version of the submitted data to the
-Chassis/WWARN system. See also the <a href="@@TODO">note on derivation and
+Chassis/WWARN system. See also the <a href="#L938">note on derivation and
 provenance</a> below.</p>
 
 <h4 id="L508">2.3.3. Transformation and Mapping to WWARN Standard Data
@@ -756,11 +759,12 @@ submissions, only the submission's owners will be able to view visualisations
 and analyses of data from their submission, and the data will
 <strong>not</strong> be included in any public aggregations.</p>
 
-<p>A submission's owner(s) may also choose to make their submission
+<p>A submission's owner(s) may choose to make their submission
 <strong>public</strong> at any time. Where a submission has been made public,
 and where the submitted data conforms to a standard data dictionary, it is
 assumed that the data will then be consumed and made publicly available by The
-WWARN Application, and included in public aggregated analyses.</p>
+WWARN Application, and included in public visualisations, aggregations and
+analyses.</p>
 
 <p>A submission can only be made public if at least one of the studies to which
 the submission is linked has also been made public. If a study has been made
@@ -785,10 +789,11 @@ standard data dictionary.</p>
 
 <h4 id="L938">2.3.10. Provenance and Derivation of Data</h4>
 
-<p>A key design goal for Chassis/WWARN is that the complete and true derivation
-of any data released to The WWARN Application must be recorded. By derivation,
-we mean the complete sequence of events and revisions that led from the data as
-initially submitted to the data in its released form, i.e., its provenance.</p>
+<p>A key design goal for Chassis/WWARN is that the complete and true
+<strong>derivation</strong> of any data released to The WWARN Application must
+be recorded. By derivation, we mean the complete sequence of events and
+revisions that led from the data as initially submitted to the data in its
+released form, i.e., its <strong>provenance</strong>.</p>
 
 <p>As mentioned above, a curator can upload revisions of submitted data for any
 curation they are working on. To ensure that the true derivation of any data
@@ -964,9 +969,9 @@ the submission and asks that the submission be reviewed urgently.</p>
 
 <h4 id="L665">3.1.11. Use Case: Gatekeeper Overview of Submission Activity</h4>
 
-<p>A gatekeeper looks through a list of all submission requests that have been
-allocated to her and that have not yet been reviewed. She selects a request
-from the list and reviews it.</p>
+<p>A gatekeeper looks through a list of all submissions pending gatekeeper
+review that have been allocated to her and that have not yet been reviewed. She
+selects a submission from the list and reviews it.</p>
 
 <h4 id="L669">3.1.12. Use Case: Submitter Overview of Submission Activity</h4>
 
@@ -993,7 +998,7 @@ Conventions</h4>
 <p>In the use cases below, letters A, B, C, etc., are used to help identify
 different revisions of submitted data, e.g., "the initial revision of the
 submitted data (A) was revised by the curator to create a new revision (B)". If
-the letter has the superscript "s" (e.g., A<sup>S</sup>), then the revision is
+the letter has the superscript "s" (e.g., A<sup>s</sup>), then the revision is
 linked to a standard data dictionary. If no superscript is present, the data is
 linked to a non-standard data dictionary. </p>
 
@@ -1040,8 +1045,9 @@ dictionary. A gatekeeper accepts the submission and assigns a curator. </p>
 
 <p>The assigned curator reviews the initial version of the submitted data
 (A<sup>s</sup>), and finds that no changes need to be made. She reviews the
-submitted data with respect to the latest version of the appropriate data
-release criteria, and asserts that the release criteria have been met. </p>
+submitted data with respect to the latest version of the appropriate release
+criteria specification, and asserts that the release criteria have been met.
+</p>
 
 <p>The submitter sees that her initial version of the submitted data
 (A<sup>s</sup>) has been approved for release to <i>The WWARN Application</i>,
@@ -1126,9 +1132,10 @@ transformation she performed. </p>
 
 <p>The assigned curator now believes the data is ready for release to <i>The
 WWARN Application</i>. She reviews her standardised version of the submitted
-data (C<sup>s</sup>) with respect to the latest version of the WWARN data
-release criteria, and asserts that the release criteria have been met. The data
-are then made available for export to <i>The WWARN Application</i>. </p>
+data (C<sup>s</sup>) with respect to the latest version of the appropriate
+release criteria specification, and asserts that the release criteria have been
+met. The data are then made available for export to <i>The WWARN
+Application</i>. </p>
 
 <p>The submitter sees that her initial version of the submitted data (A) has
 undergone one curation revision (B, derived from A), one standardisation
@@ -1156,20 +1163,21 @@ log message describing the transformation she performed. </p>
 
 <p>The assigned curator now believes the data is ready for release to <i>The
 WWARN Application</i>. She reviews her standardised version of the submitted
-data (C<sup>s</sup>) with respect to the latest version of the WWARN data
-release criteria, but finds some problems in the standardised data. She
-realises that the problems are due to the standardisation transformation she
-applied. She goes back to the curated, non-standard revision of the submitted
-data (B), and repeats her transformation, correcting the previous errors. She
-uploads this new standardised revision of the submitted data (D<sup>s</sup>),
-links it to the version of the submitted data from which it was derived (B),
-links it to the latest version of the standard data dictionary, and enters a
-log message describing the transformation she performed. </p>
+data (C<sup>s</sup>) with respect to the latest version of the appropriate
+release criteria specification, but finds some problems in the standardised
+data. She realises that the problems are due to the standardisation
+transformation she applied. She goes back to the curated, non-standard revision
+of the submitted data (B), and repeats her transformation, correcting the
+previous errors. She uploads this new standardised revision of the submitted
+data (D<sup>s</sup>), links it to the version of the submitted data from which
+it was derived (B), links it to the latest version of the standard data
+dictionary, and enters a log message describing the transformation she
+performed. </p>
 
 <p>The assigned curator reviews her corrected standardised revision of the
 submitted data (D<sup>s</sup>) with respect to the latest version of the
-appropriate data release criteria, and asserts that the release criteria have
-been met. </p>
+appropriate release criteria specification, and asserts that the release
+criteria have been met. </p>
 
 <p>The submitter sees that her initial version of the submitted data (A) has
 undergone one curation revision (B, derived from A), one standardisation
