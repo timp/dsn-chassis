@@ -18,7 +18,7 @@
 
 <div id="hd">
 <h1>Chassis/WWARN (1.0) Data Management Platform<br />
-User Requirements Specification - Draft 6-SNAPSHOT</h1>
+User Requirements Specification - Draft 6</h1>
 
 <p><strong>Summary</strong></p>
 
@@ -28,13 +28,19 @@ curation and standardisation of data for the World Wide Anti-malarial
 Resistance Network (WWARN).</p>
 
 <p><strong>This version: <a
-href="http://dsn-chassis.googlecode.com/svn/tags/wwarn/docs/content/requirements/1.0/draft-6/index.html">Draft
-6-SNAPSHOT</a></strong></p>
+href="http://dsn-chassis.googlecode.com/svn/tags/wwarn/docs/draft-6/content/requirements/1.0/index.html">Draft
+6</a></strong></p>
 
-<p><strong>Previous versions:</strong></p>
+<p><strong>Latest version: </strong>see the <a
+href="http://code.google.com/p/dsn-chassis/wiki/ChassisWwarn">ChassisWwarn</a>
+wiki page.</p>
+
+<p><strong><a
+href="http://dsn-chassis.googlecode.com/svn/tags/wwarn/docs/content/requirements/1.0/draft-6/index.html"></a></strong><strong>Previous
+versions:</strong></p>
 <ul>
-  <li>See also <a
-    href="http://code.google.com/p/dsn-chassis/wiki/WwarnMilestoneOneRequirementsSpec">WwarnMilestoneOneRequirementsSpec</a></li>
+  <li>This document supersedes the wiki page <a
+    href="http://code.google.com/p/dsn-chassis/wiki/WwarnMilestoneOneRequirementsSpec">WwarnMilestoneOneRequirementsSpec</a>.</li>
 </ul>
 
 <p><strong>Status of This Document</strong></p>
@@ -43,11 +49,8 @@ href="http://dsn-chassis.googlecode.com/svn/tags/wwarn/docs/content/requirements
 to <a
 href="mailto:informatics@wwarn.org?subject=Chassis/WWARN requirements draft 6">informatics@wwarn.org</a>.</p>
 
-<p>This document supersedes the wiki page <a
-href="http://code.google.com/p/dsn-chassis/wiki/WwarnMilestoneOneRequirementsSpec">WwarnMilestoneOneRequirementsSpec</a>.</p>
-
-<p>@@TODO fix. This is not a stable document. This document is a snapshot of
-draft 6 under development, and is subject to change without notice.</p>
+<p>This is a stable draft, and is not subject to change. However, this draft
+may be superseded by future drafts of this document.</p>
 
 <p><strong>Table of Contents</strong></p>
 
@@ -70,8 +73,10 @@ draft 6 under development, and is subject to change without notice.</p>
         <ul>
           <li><a href="#L641">1.2.1. Intended Audience</a></li>
           <li><a href="#L655">1.2.2. Working Draft</a></li>
-          <li><a href="#L1887">1.2.3. Chassis/*</a></li>
-          <li><a href="#L719">1.2.4. Structure of This Document</a></li>
+          <li><a href="#L3059">1.2.3. Study Metadata (Study Site
+            Questionnaire)</a></li>
+          <li><a href="#L1887">1.2.4. Chassis/*</a></li>
+          <li><a href="#L719">1.2.5. Structure of This Document</a></li>
         </ul>
       </li>
     </ul>
@@ -98,15 +103,17 @@ draft 6 under development, and is subject to change without notice.</p>
       <li><a href="#L363">2.3. Data Curation Workflow</a>
         <ul>
           <li><a href="#L365">2.3.1. Curation Overview</a></li>
-          <li><a href="#L508">2.3.2. Transformation and Mapping to WWARN
+          <li><a href="#L815">2.3.2. Revision Activities</a></li>
+          <li><a href="#L508">2.3.3. Transformation and Mapping to WWARN
             Standard Data Dictionaries</a></li>
-          <li><a href="#L791">2.3.3. Validation</a></li>
-          <li><a href="#L427">2.3.4. Release Criteria</a></li>
-          <li><a href="#L451">2.3.5. Making Studies and Submissions
+          <li><a href="#L838">2.3.4. Review Activities</a></li>
+          <li><a href="#L791">2.3.5. Validation</a></li>
+          <li><a href="#L427">2.3.6. Release Criteria</a></li>
+          <li><a href="#L451">2.3.7. Making Studies and Submissions
           Public</a></li>
-          <li><a href="#L744">2.3.6. Curation and Collaboration</a></li>
-          <li><a href="#L455">2.3.7. Ordering of Curation Activities</a></li>
-          <li><a href="#L938">2.3.8. Provenance and Derivation of Data</a></li>
+          <li><a href="#L744">2.3.8. Curation and Collaboration</a></li>
+          <li><a href="#L455">2.3.9. Ordering of Curation Activities</a></li>
+          <li><a href="#L938">2.3.10. Provenance and Derivation of Data</a></li>
         </ul>
       </li>
     </ul>
@@ -115,27 +122,29 @@ draft 6 under development, and is subject to change without notice.</p>
     <ul>
       <li><a href="#L591">3.1. Data Submission Use Cases</a>
         <ul>
-          <li><a href="#L593">3.1.1. Use Case: Submitter Creates a New
-          Study</a></li>
-          <li><a href="#L599">3.1.2. Use Case: Submitter Creates a New
+          <li><a href="#L593">3.1.1. Use Case: Submitter Creates a New Study
+            (1)</a></li>
+          <li><a href="#L930">3.1.2. Use Case: Submitter Creates a New Study
+            (2)</a></li>
+          <li><a href="#L599">3.1.3. Use Case: Submitter Creates a New
             Submission With a New Data Dictionary</a></li>
-          <li><a href="#L607">3.1.3. Use Case: Submitter Creates a New
+          <li><a href="#L607">3.1.4. Use Case: Submitter Creates a New
             Submission With an Existing Data Dictionary</a></li>
-          <li><a href="#L615">3.1.4. Use Case: Submitter Revises a Submission
+          <li><a href="#L615">3.1.5. Use Case: Submitter Revises a Submission
             Before Requesting Gatekeeper Review</a></li>
-          <li><a href="#L623">3.1.5. Use Case: Submitter Revises a Submission
+          <li><a href="#L623">3.1.6. Use Case: Submitter Revises a Submission
             and Dictionary Before Requesting Gatekeeper Review</a></li>
-          <li><a href="#L633">3.1.6. Use Case: Gatekeeper Reviews and Accepts a
+          <li><a href="#L633">3.1.7. Use Case: Gatekeeper Reviews and Accepts a
             Submission</a></li>
-          <li><a href="#L639">3.1.7. Use Case: Gatekeeper Accepts a Submission
+          <li><a href="#L639">3.1.8. Use Case: Gatekeeper Accepts a Submission
             After Revision</a></li>
-          <li><a href="#L653">3.1.8. Use Case: Submitted Data is Not Relevant
+          <li><a href="#L653">3.1.9. Use Case: Submitted Data is Not Relevant
             to WWARN</a></li>
-          <li><a href="#L661">3.1.9. Use Case: Coordinator Overview of
+          <li><a href="#L661">3.1.10. Use Case: Coordinator Overview of
             Submission Activity</a></li>
-          <li><a href="#L665">3.1.10. Use Case: Gatekeeper Overview of
+          <li><a href="#L665">3.1.11. Use Case: Gatekeeper Overview of
             Submission Activity</a></li>
-          <li><a href="#L669">3.1.11. Use Case: Submitter Overview of
+          <li><a href="#L669">3.1.12. Use Case: Submitter Overview of
             Submission Activity</a></li>
         </ul>
       </li>
@@ -144,8 +153,8 @@ draft 6 under development, and is subject to change without notice.</p>
           <li><a href="#L855">3.2.1. Notation Conventions</a></li>
           <li><a href="#L865">3.2.2. Use Case: Curator Manages a Standard Data
             Dictionary</a></li>
-          <li><a href="#L874">3.2.3. Use Case: Curator Manages a Specification
-            of Release Criteria</a></li>
+          <li><a href="#L874">3.2.3. Use Case: Curator Manages a Release
+            Criteria Specification</a></li>
           <li><a href="#L885">3.2.4. Use Case: Standard Submission, Requires No
             Curation</a></li>
           <li><a href="#L905">3.2.5. Use Case: Curation of Standard
@@ -211,12 +220,12 @@ draft 6 under development, and is subject to change without notice.</p>
             Dictionary</a></li>
           <li><a href="#L1363">4.2.3. (Curator) Downloading a Standard Data
             Dictionary</a></li>
-          <li><a href="#L1372">4.2.4. (Curator) Creating a Specification of
-            Release Criteria</a></li>
-          <li><a href="#L1383">4.2.5. (Curator) Revising a Specification of
-            Release Criteria</a></li>
-          <li><a href="#L1396">4.2.6. (Curator) Downloading a Specification of
-            Release Criteria</a></li>
+          <li><a href="#L1372">4.2.4. (Curator) Creating a Release Criteria
+            Specification</a></li>
+          <li><a href="#L1383">4.2.5. (Curator) Revising a Release Criteria
+            Specification</a></li>
+          <li><a href="#L1396">4.2.6. (Curator) Downloading a Release Criteria
+            Specification</a></li>
           <li><a href="#L1405">4.2.7. (Curator) Downloading Submitted
           Data</a></li>
           <li><a href="#L1414">4.2.8. (Curator) Revising Submitted Data</a></li>
@@ -239,7 +248,8 @@ draft 6 under development, and is subject to change without notice.</p>
     <ul>
       <li><a href="#L1833">5.1. Constraints on Data Dictionaries</a></li>
       <li><a href="#Curation">5.2. Curation and Collaboration</a></li>
-      <li><a href="#L1003">5.3. Other Discussion Points</a></li>
+      <li><a href="#L1960">5.3. Data Dictionaries and Privacy</a></li>
+      <li><a href="#L1003">5.4. Other Discussion Points</a></li>
     </ul>
   </li>
 </ul>
@@ -261,7 +271,8 @@ management activities include the <strong>submission</strong> of data,
 submitted data onto WWARN standard data dictionaries. </p>
 
 <p>The end goal of these data management activities is to produce data that is
-suitable for ingest into and publication by The WWARN Application.</p>
+suitable for visualisation, analysis and publication by The WWARN
+Application.</p>
 
 <h4 id="Chassis">1.1.2. Chassis/WWARN and The WWARN Application</h4>
 
@@ -340,13 +351,21 @@ Chassis/WWARN system.</p>
 
 <p>This document is a working draft, and is intended to act as a focus for
 discussion within the WWARN consortium. Feedback is very welcome, and may be
-sent via email to informatics@wwarn.org.</p>
+sent via email to <a
+href="mailto:informatics@wwarn.org?subject=Chassis/WWARN requirements draft 6">informatics@wwarn.org</a>.</p>
 
 <p>Where there may be several possible choices relating to a particular
 requirement, some discussion is included in the document below, in the <a
 href="@@TODO LINK">Discussion &amp; Open Questions</a> section.</p>
 
-<h4 id="L1887">1.2.3. Chassis/*</h4>
+<h4 id="L3059">1.2.3. Study Metadata (Study Site Questionnaire)</h4>
+
+<p>This document does <strong>not</strong> include a specification of the
+metadata fields that are to be included in the study site questionnaire for the
+Chassis/WWARN 1.0 release. It is suggested that a separate document be created
+to specify the SSQ for the Chassis/WWARN 1.0 release.</p>
+
+<h4 id="L1887">1.2.4. Chassis/*</h4>
 
 <p>This user requirements specification is scoped to the requirements of the
 WWARN data-sharing network. However, note that the Chassis/WWARN system is
@@ -356,20 +375,31 @@ data-sharing networks. Therefore, this specification aims to describe
 requirements in a generic way, wherever possible, using terminology that is
 transferable to other data-sharing networks. </p>
 
-<h4 id="L719">1.2.4. Structure of This Document</h4>
+<h4 id="L719">1.2.5. Structure of This Document</h4>
 
-<p>@@TODO</p>
+<p><a href="#L840">Section 2 (Workflow)</a> summarises the key points of the
+workflow that the Chassis/WWARN system will be designed to support. It provides
+a summary of the vision for the Chassis/WWARN system.</p>
 
-<p></p>
+<p><a href="#L584">Section 3 (Use Cases)</a> provides a more detailed
+illustration of some of the main features of the Chassis/WWARN system and
+underlying workflow.</p>
+
+<p><a href="#L679">Section 4 (Functional Requirements)</a> breaks the workflow
+and use cases down into a set of functional requirements, which will be used by
+the development team to plan &amp; prioritise.</p>
+
+<p><a href="#L1824">Section 5 (Discussion)</a> provides some information on
+discussion points and open issues.</p>
 
 <h2 id="L840">2. Workflow - Summary of Key Points</h2>
 
 <p>This section summarises the key points of the data management workflow that
 Chassis/WWARN will be designed to support. </p>
 
-<p>This section does not cover all requirements in detail. See the section
-below on use cases and functional requirements for detailed coverage of these
-points.</p>
+<p>This section does <strong>not</strong> cover all requirements in detail. See
+the section below on use cases and functional requirements for detailed
+coverage of these points.</p>
 
 <h3 id="L870">2.1. Roles &amp; Responsibilities</h3>
 
@@ -397,7 +427,7 @@ system.</p>
     configure the Chassis/WWARN system.</li>
 </ul>
 
-<p>Note that the same user may hold more than one of the above roles.</p>
+<p>Note that the same person may hold more than one of the above roles.</p>
 
 <h3 id="L1386">2.2. Data Submission Workflow</h3>
 
@@ -416,11 +446,12 @@ submitted data. </p>
 <h4 id="L369">2.2.2. Submission Ownership, Permissions and Privacy</h4>
 
 <p>When a new submission is created, the submitter who created it becomes the
-sole <strong>owner</strong> of that submission. The submission owner can the
-grant ownership to other submitters. All owners will have the same permissions
-with respect to the submission as the initial owner, for example, they will all
-be able to edit the submission title and summary, and upload revisions to the
-submitted data (see below).</p>
+sole <strong>owner</strong> of that submission. If the submission owner wishes
+to work with another submitter to prepare the submission, the submission owner
+can <strong>grant ownership</strong> to other submitters. All owners will have
+the same permissions with respect to the submission as the initial owner, for
+example, they will all be able to edit the submission title and summary, and
+upload revisions to the submitted data (see below).</p>
 
 <p>When a new submission is created, it is initially in a
 <strong>draft</strong> state. It is also private to its owner(s), and is not
@@ -438,14 +469,15 @@ WWARN module.</p>
 
 <p>Once a study has been created, the submitter can then proceed to enter
 further metadata about the study (i.e., to fill out the study site
-questionnaire). However, to present the minimum obstacle to the submitter, it
-is <strong>not</strong> necessary that any further study metadata be entered
+questionnaire). However, to present the minimum obstacle to users, it is
+<strong>not</strong> necessary that any further study metadata be entered
 before a submitter can begin creating new submissions linked to the study, or
-request gatekeeper review for those submissions. (A gatekeeper could, on the
-other hand, require that some or all of the study site questionnaire be
-completed before a submission can be accepted for curation, i.e., completing
-some or all of the SSQ could form part of the gatekeeper's acceptance criteria,
-see below.)</p>
+request gatekeeper review for those submissions. </p>
+
+<p>(Note that a gatekeeper could, on the other hand, require that some or all
+of the study site questionnaire be completed before a submission can be
+accepted for curation, i.e., completing some or all of the SSQ could form part
+of the gatekeeper's acceptance criteria, see below.)</p>
 
 <h4 id="L392">2.2.4. Study Ownership, Permissions and Privacy</h4>
 
@@ -459,24 +491,30 @@ study site questionnaire. </p>
 <strong>visible</strong>, in which case any user of the system will be able to
 find the study and view all details of the study site questionnaire, or
 <strong>discoverable</strong>, in which case any user of the system will be
-able to find the study and view its title and summary but will not be able to
-view any other information about the study, or <strong>private</strong>, in
-which case only the study owner(s) and authorised submitters will be able to
-find it and view its details.</p>
+able to find the study and view its title and summary but will
+<strong>not</strong> be able to view any other information about the study, or
+<strong>private</strong>, in which case only the study owner(s) and authorised
+submitters will be able to find it and view its details.</p>
 
-<p>In order to present the minimum obstacle to the submitter, the system will
+<p>If the study owners are aware that several submitters will be creating
+submissions linked to this study, then the owners can <strong>grant submission
+authority</strong> for that study to one or more other submitters.</p>
+
+<p>However, in order to present the minimum obstacle to users, the system will
 allow <strong>any</strong> submitter to link their submissions to
 <strong>any</strong> visible or discoverable study, even if they are
 <strong></strong><strong>not</strong> an owner of that study, and even if they
-have <strong>not</strong> been authorised by the study owner(s). In this case,
-the owner(s) of the study will be notified that the new submission has been
-linked to the study by an as-yet unauthorised submitter, and will be given the
-opportunity to grant the necessary authorisation to the submitter. (Note also
-that a gatekeeper could require that the submitter has the appropriate
-authorisation from the study owner(s) beforing accepting a submission for
-curation, i.e., being an owner or authorized submitter for the study or studies
-to which a submission is linked could form part of the gatekeeper's acceptance
-criteria, see also below.)</p>
+have <strong>not</strong> been granted submission authority by the study
+owner(s). In this case, the owner(s) of the study will be notified that the new
+submission has been linked to the study by an as-yet unauthorised submitter,
+and will be given the opportunity to grant submission authority to the
+submitter. </p>
+
+<p>(Note also that a gatekeeper could require that the submitter has the
+appropriate authorisation from the study owner(s) beforing accepting a
+submission for curation, i.e., being an owner or authorized submitter for the
+study or studies to which a submission is linked could form part of the
+gatekeeper's acceptance criteria, see also below.)</p>
 
 <h4 id="L426">2.2.5. Submitted Data</h4>
 
@@ -541,9 +579,9 @@ authorised submitters will be able to find it and view its content.</p>
 <p>A submitter can create a new data dictionary for each new submission, or
 re-use an existing data dictionary created by themselves, or re-use a
 dictionary created by someone else. In order to present the minimum obstacle to
-the submitter, the system will allow <strong>any</strong> submitter to link
-their submitted data to <strong>any</strong> visible or discoverable
-dictionary. See also @@TODO discussion link.</p>
+users, the system will allow <strong>any</strong> submitter to link their
+submitted data to <strong>any</strong> visible or discoverable dictionary. See
+also <a href="#L1960">discussion of dictionaries and privacy</a> below.</p>
 
 <h4 id="L1494">2.2.8. Gatekeeper Review</h4>
 
@@ -551,13 +589,13 @@ dictionary. See also @@TODO discussion link.</p>
 <strong>accepted for curation</strong>, it must first be reviewed by a
 gatekeeper. </p>
 
-<p>When a submitter has finished preparing their submission, they can
+<p>When a submission owner has finished preparing their submission, they can
 <strong>request a gatekeeper review</strong> of the submission. Until that
 point, the submission is in a draft state, and is private to the submission
 owner(s). Once the request has been made for gatekeeper review, a gatekeeper
 will be assigned to review the submission. The assigned gatekeeper may then
-view the details of the submission, the submitted data, and the associated data
-dictionary.</p>
+view the details of the submission, the submitted data, the associated data
+dictionary, and the study(ies) to which the submission is linked.</p>
 
 <p>The gatekeeper is responsible for performing an initial evaluation of the
 submitted data and accompanying data dictionary, to determine whether or not
@@ -610,7 +648,21 @@ activities</strong>, where the submitted data are reviewed with respect to some
 criteria (e.g., ethical criteria, quality control criteria) and an assertion is
 made that the data either do or do not meet those criteria.</p>
 
-<h4 id="L508">2.3.2. Transformation and Mapping to WWARN Standard Data
+<h4 id="L815">2.3.2. Revision Activities</h4>
+
+<p>Revision activities are curation activities which involve revising the
+submitted data in some way, e.g., adding, removing or restructuring the data,
+for any reason.</p>
+
+<p>Note that the Chassis/WWARN 1.0 system will <strong>not</strong> provide any
+on-line support for revising submitted data. It is assumed that all revision
+activities will be achieved by downloading a chosen version of the submitted
+data to work on, making the necessary changes using other tools, e.g., off-line
+desktop tools, then uploading the revised version of the submitted data to the
+Chassis/WWARN system. See also the <a href="@@TODO">note on derivation and
+provenance</a> below.</p>
+
+<h4 id="L508">2.3.3. Transformation and Mapping to WWARN Standard Data
 Dictionaries</h4>
 
 <p>In addition to the non-standard data dictionaries that submitters can
@@ -625,21 +677,29 @@ submitted in a non-standard form into something that conforms with one of the
 standard data dictionaries. Defining such a transformation is also referred to
 here as "mapping". </p>
 
-<p>In the Chassis/WWARN 1.0 release, no support will be provided for
-transforming data. I.e., it is assumed that all data will be transformed using
-other systems, e.g., off-line desktop tools. Later versions of Chassis/WWARN
-may provide online support for defining and executing mappings between data
-conforming to different data dictionaries.</p>
+<p>In the Chassis/WWARN 1.0 release, no support will be provided for mapping
+and transforming data. I.e., it is assumed that all data will be transformed
+using other systems, e.g., off-line desktop tools. Later versions of
+Chassis/WWARN may provide online support for defining and executing mappings
+between data conforming to different data dictionaries.</p>
 
-<h4 id="L791">2.3.3. Validation</h4>
+<h4 id="L838">2.3.4. Review Activities</h4>
+
+<p>Review activities are curation activities where submitted data are reviewed
+with respect to some criteria, e.g., ethical or quality control criteria, and
+an assertion is made that the data either do or do not meet those criteria.</p>
+
+<h4 id="L791">2.3.5. Validation</h4>
 
 <p>A special type of review activity involves checking that submitted data
 conform with respect to a given data dictionary, also referred to here as
-"validation". The Chassis/WWARN 1.0 release will not provide any support for
-validation. I.e., it is assumed that validation will be performed using other
-systems, e.g., by manual review, or using off-line desktop tools. Later
-versions of Chassis/WWARN may provide some online support for validation, where
-possible. </p>
+"validation". </p>
+
+<p>Note that the Chassis/WWARN 1.0 release will <strong>not</strong> provide
+any support for validation. I.e., it is assumed that validation will be
+performed using other systems, e.g., by manual review, or using off-line
+desktop tools. Later versions of Chassis/WWARN may provide some online support
+for validation, where possible. </p>
 
 <p>Note that, just because data conforms to the structural and semantic
 conditions of a standard data dictionary, does not necessarily mean that the
@@ -647,7 +707,7 @@ data are reliable or make any sense. I.e., quality control is a separate
 concern from mapping submitted data to standard data dictionaries (see also
 below). </p>
 
-<h4 id="L427">2.3.4. Release Criteria</h4>
+<h4 id="L427">2.3.6. Release Criteria</h4>
 
 <p>A submission cannot be released to The WWARN Application unless the
 submitted data conforms to one of the WWARN standard data dictionaries.
@@ -659,40 +719,41 @@ transform the data into something that does.</p>
 standard data dictionaries, the curators may also define additional
 <strong>release criteria</strong> for submissions, which might include, e.g.,
 ethical and/or quality control criteria. In order to make those criteria
-explicit, the curators may document them in a <strong>specification of release
-criteria</strong>. The Chassis/WWARN system will provide support for creating
-and revising specifications of release criteria.</p>
+explicit, the curators may document them in a <strong>release criteria
+specification</strong>. The Chassis/WWARN system will provide support for
+creating and revising release criteria specifications.</p>
 
-<p>The curators may then review any submission, with respect to a given
-specification of release criteria, and assert whether or not the submitted data
-are <strong>approved</strong> with respect to those release criteria.</p>
+<p>The curators may then review any submission, with respect to a given release
+criteria specification, and assert whether or not the submitted data are
+<strong>approved</strong> with respect to those release criteria.</p>
 
-<p>The curators may define <strong>more than one</strong> specification of
-release criteria, e.g., to represent different degrees of confidence in the
+<p>The curators may define <strong>more than one</strong> release criteria
+specification, e.g., to represent different degrees of confidence in the
 submitted data. The Chassis/WWARN system will expose information about which
-submissions have been approved by the curators with respect to which set of
-release criteria to The WWARN Application, which will enable users of The WWARN
-Application to filter data in visualisations and analyses by different sets of
+submissions have been approved by the curators with respect to which release
+criteria specification to The WWARN Application, which will enable users of The
+WWARN Application to filter data in visualisations and analyses by different
 release criteria.</p>
 
-<p>Specifications of release criteria will also be versioned, to enable
-criteria to be modified or updated without confusing the status of previously
-reviewed data.</p>
+<p>Release criteria specifications will also be versioned, to enable criteria
+to be modified or updated without confusing the status of previously reviewed
+data.</p>
 
-<p>Each WWARN module may also define and maintain its own specifications of
-release criteria.</p>
+<p>Each WWARN module may also define and maintain its own release criteria
+specifications.</p>
 
-<h4 id="L451">2.3.5. Making Studies and Submissions Public</h4>
+<h4 id="L451">2.3.7. Making Studies and Submissions Public</h4>
 
 <p>All submissions are, by default, <strong>private</strong>, which means they
 are visible only to their owner(s), and to the Chassis/WWARN gatekeepers and
 curators. It is anticipated that submissions which are private, but where the
 submitted data conforms to a standard data dictionary, <strong>will</strong> be
-consumed and made available for analysis and visualisation by The WWARN
-Application, but that The WWARN Application will respect the privacy
-constraints that are defined within the Chassis/WWARN system. I.e., in the case
-of private submissions, only the submission's owners will be able to view
-visualisations and analyses of data from their submission, and the data will
+made available for analysis and visualisation by The WWARN Application
+(although possibly not the initial release of The WWARN Application), but that
+The WWARN Application will at all times respect the privacy constraints that
+are defined within the Chassis/WWARN system. I.e., in the case of private
+submissions, only the submission's owners will be able to view visualisations
+and analyses of data from their submission, and the data will
 <strong>not</strong> be included in any public aggregations.</p>
 
 <p>A submission's owner(s) may also choose to make their submission
@@ -706,11 +767,12 @@ the submission is linked has also been made public. If a study has been made
 public, then it is assumed that some details of the study will appear in the
 public areas of The WWARN Application.</p>
 
-<h4 id="L744">2.3.6. Curation and Collaboration</h4>
+<h4 id="L744">2.3.8. Curation and Collaboration</h4>
 
-<p>See the @@TODO discussion link.</p>
+<p>See the <a href="#Curation">discussion of curation and collaboration</a>
+below.</p>
 
-<h4 id="L455">2.3.7. Ordering of Curation Activities</h4>
+<h4 id="L455">2.3.9. Ordering of Curation Activities</h4>
 
 <p>The Chassis/WWARN system does not prescribe the order in which data are
 mapped to a standard data dictionary and revised to meet quality control
@@ -721,29 +783,30 @@ dictionary, and then revised to meet quality control criteria; or revisions to
 address quality issues may be applied both before and after mapping to a
 standard data dictionary.</p>
 
-<h4 id="L938">2.3.8. Provenance and Derivation of Data</h4>
+<h4 id="L938">2.3.10. Provenance and Derivation of Data</h4>
 
 <p>A key design goal for Chassis/WWARN is that the complete and true derivation
 of any data released to The WWARN Application must be recorded. By derivation,
-we mean the complete sequence of actions and revisions that led from the data
-as initially submitted to the data in its released form, i.e., its
-provenance.</p>
+we mean the complete sequence of events and revisions that led from the data as
+initially submitted to the data in its released form, i.e., its provenance.</p>
 
-<p>A curator can upload revisions of submitted data. To ensure that the true
-derivation of any data revision is captured, the curator must explicitly assert
-the derivation of any new revision they make, i.e., they must select the
-version of the data (either submitter version or another curator version) that
-was taken as input to the curator's new revision. This also ensures that
-curators can go back and do work on versions of the submitted data other than
-the latest version, and an accurate audit trail of their activities will still
-be maintained. (I.e., for any one submission, the curators' revisions to the
-submitted data are assumed to form an arbitrarily branching tree, where the
-root of each tree is one of the submitter's revisions.)</p>
+<p>As mentioned above, a curator can upload revisions of submitted data for any
+curation they are working on. To ensure that the true derivation of any data
+revision is captured, the curator must explicitly assert the derivation of any
+new revision they make, i.e., they must select the version of the data (either
+submitter version or another curator version) that was taken as input to the
+curator's new revision. This also ensures that curators can go back and do work
+on versions of the submitted data other than the latest version, and an
+accurate audit trail of their activities will still be maintained. (I.e., for
+any one submission, the curators' revisions to the submitted data are assumed
+to form an arbitrarily branching tree, where the root of each tree is one of
+the submitter's revisions.)</p>
 
-<p>A submitter can upload a revision of submitted data at any time. To keep
-things simple for a submitter, they do not have to assert the derivation of
-each new revision. (I.e., for any one submission, the submitter's revisions of
-the submitted data are assumed to form a single linear version series.) </p>
+<p>A submission owner can also upload a revision of the submitted data at any
+time. To keep things simple for a submitter, they do not have to assert the
+derivation of each new revision. (I.e., for any one submission, the submitter's
+revisions of the submitted data are assumed to form a single linear version
+series.) </p>
 
 <h2 id="L584">3. Use Cases</h2>
 
@@ -754,14 +817,24 @@ intended to cover all aspects of the system functionality.</p>
 
 <h3 id="L591">3.1. Data Submission Use Cases</h3>
 
-<h4 id="L593">3.1.1. Use Case: Submitter Creates a New Study</h4>
+<h4 id="L593">3.1.1. Use Case: Submitter Creates a New Study (1)</h4>
 
-<p>A submitter creates a new study, providing at a title and textual summary
-for the study, and linking the new study to at least one module.</p>
+<p>A submitter creates a new study, providing a title and textual summary for
+the study, and linking the new study to at least one module.</p>
 
 <p>The submitter then proceeds to fill out the study site questionnaire.</p>
 
-<h4 id="L599">3.1.2. Use Case: Submitter Creates a New Submission With a New
+<h4 id="L930">3.1.2. Use Case: Submitter Creates a New Study (2)</h4>
+
+<p>A submitter creates a new study, providing a title and textual summary for
+the study, and linking the new study to at least one module.</p>
+
+<p>The submitter does not immediately proceed to fill out the study site
+questionnaire. Rather, she begins creating submissions and linking them to the
+new study. At a later time, she comes back to the study to complete the study
+site questionnaire.</p>
+
+<h4 id="L599">3.1.3. Use Case: Submitter Creates a New Submission With a New
 Data Dictionary</h4>
 
 <p>A submitter creates a new submission, provides a title for the submission,
@@ -777,7 +850,7 @@ the submitted data to the initial version of the new data dictionary.</p>
 <p>The submitter then makes a request for gatekeeper review of the
 submission.</p>
 
-<h4 id="L607">3.1.3. Use Case: Submitter Creates a New Submission With an
+<h4 id="L607">3.1.4. Use Case: Submitter Creates a New Submission With an
 Existing Data Dictionary</h4>
 
 <p>A submitter creates a new submission, provides a title for the submission,
@@ -792,7 +865,7 @@ existing data dictionary.</p>
 <p>The submitter then makes a request for gatekeeper review of the
 submission.</p>
 
-<h4 id="L615">3.1.4. Use Case: Submitter Revises a Submission Before Requesting
+<h4 id="L615">3.1.5. Use Case: Submitter Revises a Submission Before Requesting
 Gatekeeper Review</h4>
 
 <p>A submitter creates a new submission, with a new data dictionary.</p>
@@ -807,7 +880,7 @@ because neither the structure nor the semantics of the data have changed.</p>
 <p>The submitter then makes a request for gatekeeper review of the
 submission.</p>
 
-<h4 id="L623">3.1.5. Use Case: Submitter Revises a Submission and Dictionary
+<h4 id="L623">3.1.6. Use Case: Submitter Revises a Submission and Dictionary
 Before Requesting Gatekeeper Review</h4>
 
 <p>A submitter creates a new submission, with a new data dictionary.</p>
@@ -826,7 +899,7 @@ dictionary.</p>
 <p>The submitter then makes a request for gatekeeper review of the
 submission.</p>
 
-<h4 id="L633">3.1.6. Use Case: Gatekeeper Reviews and Accepts a Submission</h4>
+<h4 id="L633">3.1.7. Use Case: Gatekeeper Reviews and Accepts a Submission</h4>
 
 <p>A submitter makes a request for gatekeeper review of her new submission. The
 request contains a link to a specific version of the submitted data, and a
@@ -838,15 +911,15 @@ version of the submitted data and the specified version of the data dictionary,
 reviews them, and decides to accept the submission for curation. The gatekeeper
 then assigns a curator to the submission, and curation begins.</p>
 
-<h4 id="L639">3.1.7. Use Case: Gatekeeper Accepts a Submission After
+<h4 id="L639">3.1.8. Use Case: Gatekeeper Accepts a Submission After
 Revision</h4>
 
 <p>A submitter makes a request for gatekeeper review of their new
 submission.</p>
 
-<p>A gatekeeper is allocated to review the request. She downloads the specified
-version of the submitted data and the specified version of the data dictionary,
-and reviews them.</p>
+<p>A gatekeeper is allocated to review the submission. She downloads the
+specified version of the submitted data and the specified version of the data
+dictionary, and reviews them.</p>
 
 <p>In this case, the data dictionary is not complete, and the gatekeeper cannot
 understand the data. The gatekeeper decides not to accept the submission,
@@ -868,13 +941,13 @@ version of the submitted data and the revised version of the data dictionary,
 reviews them, and decides to accept the submission. The gatekeeper assigns a
 curator, and curation begins.</p>
 
-<h4 id="L653">3.1.8. Use Case: Submitted Data is Not Relevant to WWARN</h4>
+<h4 id="L653">3.1.9. Use Case: Submitted Data is Not Relevant to WWARN</h4>
 
 <p>A submitter makes a request for gatekeeper review of her new submission.</p>
 
-<p>A gatekeeper is allocated to review the request. She downloads the specified
-version of the submitted data and the specified version of the data dictionary,
-and reviews them.</p>
+<p>A gatekeeper is allocated to review the submission. She downloads the
+specified version of the submitted data and the specified version of the data
+dictionary, and reviews them.</p>
 
 <p>In this case, it is clear that none of the data are relevant to any of
 WWARN's scientific modules. The gatekeeper decides that the submission will not
@@ -882,20 +955,20 @@ be accepted, providing an explanation of the reasons why the submission was not
 accepted. The submitter is notified of the outcome of the gatekeeper's review
 and their explanation of the outcome. The submitter deletes her submission.</p>
 
-<h4 id="L661">3.1.9. Use Case: Coordinator Overview of Submission Activity</h4>
+<h4 id="L661">3.1.10. Use Case: Coordinator Overview of Submission Activity</h4>
 
 <p>A coordinator looks through a list of all submissions that are pending
 gatekeeper review. She notices that one submission has been pending gatekeeper
 review for more than 2 weeks. She contacts the gatekeeper assigned to review
 the submission and asks that the submission be reviewed urgently.</p>
 
-<h4 id="L665">3.1.10. Use Case: Gatekeeper Overview of Submission Activity</h4>
+<h4 id="L665">3.1.11. Use Case: Gatekeeper Overview of Submission Activity</h4>
 
 <p>A gatekeeper looks through a list of all submission requests that have been
 allocated to her and that have not yet been reviewed. She selects a request
 from the list and reviews it.</p>
 
-<h4 id="L669">3.1.11. Use Case: Submitter Overview of Submission Activity</h4>
+<h4 id="L669">3.1.12. Use Case: Submitter Overview of Submission Activity</h4>
 
 <p>A submitter looks through a list of all her submissions that have been
 reviewed by a gatekeeper and accepted for curation, a list of submissions that
@@ -909,10 +982,10 @@ gatekeeper review, and requests gatekeeper review for them. </p>
 <h3 id="L675">3.2. Data Curation Use Cases</h3>
 
 <p>Note that some details of the use cases below are simplified, to avoid
-distracting from the key features of the use case that are relevant to
-Chassis/WWARN. For example, the reasons why a curator might need to make
-revisions to submitted data, and the nature of the revisions they might need to
-make, will be far more varied and subtle than are suggested below. </p>
+distracting from the key features of the use case that are relevant to the
+design of Chassis/WWARN. For example, the reasons why a curator might need to
+make revisions to submitted data, and the nature of the revisions they might
+need to make, will be far more varied and subtle than are suggested below. </p>
 
 <h4 id="L855">3.2.1. <a name="Notation_Conventions"></a>Notation
 Conventions</h4>
@@ -920,7 +993,7 @@ Conventions</h4>
 <p>In the use cases below, letters A, B, C, etc., are used to help identify
 different revisions of submitted data, e.g., "the initial revision of the
 submitted data (A) was revised by the curator to create a new revision (B)". If
-the letter has the superscript "s" (e.g., A<sup>s</sup>), then the revision is
+the letter has the superscript "s" (e.g., A<sup>S</sup>), then the revision is
 linked to a standard data dictionary. If no superscript is present, the data is
 linked to a non-standard data dictionary. </p>
 
@@ -940,17 +1013,17 @@ enters a log message describing the changes. </p>
 
 <h4 id="L874">3.2.3. <a
 name="Use_Case:_Curator_Manages_a_Specification_of_Release_Criteria"></a>Use
-Case: Curator Manages a Specification of Release Criteria</h4>
+Case: Curator Manages a Release Criteria Specification</h4>
 
-<p>A curator creates a new specification of release criteria, provides a title
-and textual summary for the specification, links the specification to the
-module to which it applies, and uploads a file containing the initial version
-of the specification. </p>
+<p>A curator creates a new release criteria specification, provides a title and
+textual summary for the specification, links the specification to the module to
+which it applies, and uploads a file containing the initial version of the
+specification. </p>
 
-<p>At a later time, the WWARN curators agree to make the release criteria more
+<p>At a later time, the curators agree to make the release criteria more
 stringent, including new quality control criteria. The curator uploads a new
-file containing the revised version of the specificiation of release criteria,
-and enters a log message describing the changes. </p>
+file containing the revised version of the release criteria specification, and
+enters a log message describing the changes. </p>
 
 <p>The curators review all prior data submissions that were approved with
 respect to the old version of the release criteria, to determine if they also
@@ -1197,6 +1270,9 @@ respect to the appropriate release criteria to third delegate curator. The
 delegate approves the standardised version of the submitted data
 (C<sup>s</sup>) for release. </p>
 
+<p>(See also the <a href="#Curation">discussion of curation and
+collaboration</a> below.)</p>
+
 <h4 id="L1149">3.2.12. <a
 name="Use_Case:_Coordinator_Oversight_of_Curation_and_Standardisation"></a>Use
 Case: Coordinator Oversight of Curation and Standardisation Activities</h4>
@@ -1256,7 +1332,7 @@ system, based on the workflow and the use cases described above.</p>
     any study they own.</li>
 </ul>
 
-<p>See also @@TODO discussion link</p>
+<p>See also the <a href="#L3059">note on study metadata</a> above.</p>
 
 <h4 id="L2707">4.1.3. (Submitter) Managing Submissions</h4>
 <ul>
@@ -1428,8 +1504,6 @@ Standard Data Dictionary</h4>
 <ul>
   <li>A curator will be able to upload a file containing a revised version of a
     standard data dictionary. </li>
-</ul>
-<ul>
   <li>A curator will be able to view a version history for any standard data
     dictionary. </li>
 </ul>
@@ -1444,34 +1518,30 @@ Downloading a Standard Data Dictionary</h4>
 
 <h4 id="L1372">4.2.4. <a
 name="(Curator)_Creating_a_Specification_of_Release_Criteria"></a>(Curator)
-Creating a Specification of Release Criteria</h4>
+Creating a Release Criteria Specification</h4>
 <ul>
-  <li>A curator will be able to create a new specification of release criteria.
+  <li>A curator will be able to create a new release criteria specification.
     This involves providing a title and textual summary for the new
     specification, linking the specification to exactly one module, and
     uploading a file containing the initial version of the specification. </li>
 </ul>
 
-<p>N.B. there can be only one specification of release criteria per module. </p>
-
 <h4 id="L1383">4.2.5. <a
 name="(Curator)_Revising_a_Specification_of_Release_Criteria"></a>(Curator)
-Revising a Specification of Release Criteria</h4>
+Revising a Release Criteria Specification</h4>
 <ul>
   <li>A curator will be able to upload a file containing a revised version of a
-    specification of release criteria. </li>
-</ul>
-<ul>
-  <li>A curator will be able to view a version history of any specification of
-    release criteria. </li>
+    release criteria specification. </li>
+  <li>A curator will be able to view a version history of any release criteria
+    specification. </li>
 </ul>
 
 <h4 id="L1396">4.2.6. <a
 name="(Curator)_Downloading_a_Specification_of_Release_Criteria"></a>(Curator)
-Downloading a Specification of Release Criteria</h4>
+Downloading a Release Criteria Specification</h4>
 <ul>
-  <li>A curator will be able to download any revision of a specification of
-    release criteria. </li>
+  <li>A curator will be able to download any revision of a release criteria
+    specification. </li>
 </ul>
 
 <h4 id="L1405">4.2.7. <a
@@ -1479,18 +1549,18 @@ name="(Curator)_Downloading_Submitted_Data"></a>(Curator) Downloading Submitted
 Data</h4>
 <ul>
   <li>A curator will be able to download any version of the submitted data for
-    any submission they are assigned to or have been delegated to work on. </li>
+    any submission they are assigned to. </li>
 </ul>
 
 <h4 id="L1414">4.2.8. <a name="(Curator)_Revising_Submitted_Data"></a>(Curator)
 Revising Submitted Data</h4>
 <ul>
   <li>A curator will be able to upload a data file containing a new version of
-    the submitted data, for any submission to which they have been assigned or
-    delegated to work on. The curator must explicitly select which previous
-    version of the submitted data they started work on, i.e., which previous
-    version their new revision is most directly derived from. The curator will
-    also be able to enter a log message describing the changes made. </li>
+    the submitted data, for any submission to which they have been assigned to.
+    The curator must explicitly select which previous version of the submitted
+    data they started work on, i.e., which previous version their new revision
+    is most directly derived from. The curator will also be able to enter a log
+    message describing the changes made. </li>
 </ul>
 
 <h4 id="L1423">4.2.9. <a
@@ -1501,12 +1571,8 @@ Linking Submitted Data With a Data Dictionary</h4>
     to a specific version of a data dictionary (either standard or
     non-standard), for any submission to which they have been assigned or
     delegated to work. </li>
-</ul>
-<ul>
   <li>A curator will be able to change the data dictionary link for any
     submission they are assigned to or delegated to work on. </li>
-</ul>
-<ul>
   <li>A curator will be able to view a history of changes made to the data
     dictionary link, for any submission they are assigned to or delegated to
     work on. </li>
@@ -1527,7 +1593,7 @@ name="(Curator)_Reviewing_Data_for_Release"></a>(Curator) Reviewing Data for
 Release</h4>
 <ul>
   <li>A curator will be able to review submitted data w.r.t. some version of a
-    specification of release criteria, and assert that the data either do or do
+    release criteria specification, and assert that the data either do or do
     not meet the specified criteria, for any submission to which they have been
     assigned. </li>
 </ul>
@@ -1537,10 +1603,11 @@ Delegation</h4>
 <ul>
   <li>An assigned curator will be able to delegate tasks to other curators, for
     any submission to which they have been assigned. </li>
-</ul>
-<ul>
   <li>A curator will be able to indicate completion of a delegated tasks. </li>
 </ul>
+
+<p>See also the <a href="#Curation">discussion of curation and
+collaboration</a> below.</p>
 
 <h4 id="L1471">4.2.13. <a
 name="(Curator)_Overview_of_Curation_Activity"></a>(Curator) Overview of
@@ -1552,8 +1619,6 @@ Curation Activity</h4>
     submission to which they are assigned. Those for which a revision is
     available conforming to a standard data dictionary will be clearly marked.
   </li>
-</ul>
-<ul>
   <li>These lists can be grouped by module, study or submitter. </li>
 </ul>
 
@@ -1566,8 +1631,6 @@ of Curation Activity</h4>
     have been approved for release, for any version of release criteria. Those
     submissions for which a revision of the submitted data is available
     conforming to a standard data dictionary will be clearly marked. </li>
-</ul>
-<ul>
   <li>These lists can be grouped by module, study or submitter. </li>
 </ul>
 
@@ -1653,14 +1716,188 @@ submissions? Which curators can upload revisions to which submissions? How do
 we track who has responsibility for a submission at any given time, and how do
 they pass responsibility to others?</p>
 
-<h3 id="L1003">5.3. Other Discussion Points</h3>
+<h3 id="L1960">5.3. Data Dictionaries and Privacy</h3>
+
+<p>An assumption above is that some submitters will <strong>not</strong> want
+to share the content of their data dictionaries with other submitters.
+Therefore, submitters can make their dictionaries private. However, to balance
+the need for privacy with the need to present as few obstacles as possible to
+the user, the document above introduces the ability to make a dictionary
+<strong>discoverable</strong>, which means that other users can find it, but
+cannot see its content. Does it make sense for some dictionaries to be
+discoverable? Or should we just stick with dictionaries being either visible or
+private? If we stick with the notion of discoverable dictionaries, what happens
+if a submitter links their submitted data to a discoverable data dictionary?
+Does the dictionary owner receive a notification, or request to grant access to
+the dictionary?</p>
+
+<h3 id="L1003">5.4. Other Discussion Points</h3>
 <ul>
   <li>What happens if, for a given submission, the submitter uploads several
     files that are not revisions of each other, but are separate parts of a
     data set that is meant to be combined? </li>
-  <li>What happens if a submitter links their submitted data to a discoverable
-    data dictionary? Does the dictionary owner receive a notification, or
-    request to grant access to the dictionary?</li>
+  <li>Do curators need to be able to create non-standard data dictionaries, in
+    addition to standard data dictionaries? </li>
+  <li>Do we need an additional role, e.g. "analyst", which has read-only
+    permissions for submissions under curation, so e.g., can download data,
+    review it, carry out analyses on it, but cannot make revisions? </li>
+  <li>Does a coordinator need the ability to re-assign the curator for a given
+    submission? </li>
+  <li>Does a gatekeeper need the ability to re-assign the curator for a given
+    submission? </li>
+  <li>Do we need some formal way for a curator to "pass the ball" back to a
+    submitter for a given submission, so it is clear that the submission is
+    awaiting some action by the submitter? (N.B. this is similar in principle
+    to curators delegating tasks.) </li>
+  <li>Should we talk about "approved" data dictionaries, rather than "standard"
+    data dictionaries? Would this be any clearer? </li>
+  <li>Do we need to provide any support for the social process by which a data
+    dictionary becomes approved/standard, e.g., voting or ratification? Or is
+    it OK to give all curators the ability to create approved/standard data
+    dictionaries, and manage the process socially (outsite the system)? </li>
+  <li>Do submitters need the ability to nominate collaborators on a submission,
+    i.e., other users who have same permissions w.r.t. the submission as its
+    initial creator? Or perhaps, collaborators with limited permissions? </li>
+  <li>Do submitters need ability to make some data dictionaries private, i.e.,
+    not visible to anyone but themselves? </li>
+  <li>Do submitters need ability to make some studies private, i.e., not
+    visible to anyone but themselves? </li>
+  <li>N.B. by the model above, acceptance of a submission by gatekeeper is
+    "sticky", in the sense that once a submission has been accepted by a
+    gatekeeper, it doesn't matter if the submitter uploads revisions of the
+    submitted data, the acceptance still applies, even if the data has changed
+    completely. On the other hand, denial of a submission request is
+    <strong>not</strong> sticky, but applies only to a specific request. Any
+    number of submission requests can be made for any given submission. Is this
+    model appropriate? </li>
+  <li>Should the system force a submitter to fill out some or all of the SSQ
+    prior to making a submission request to a gatekeeper? Or is it OK to manage
+    gatekeeper requirements for study metadata socially? </li>
+  <li>Do we need some sort of scoping mechanism to determine who can edit a
+    data dictionary, e.g., by module or study? </li>
+  <li>Do gatekeepers need the ability to revoke a prior acceptance of a given
+    submission? </li>
+  <li>Who is responsible for managing and operating the export/ingest of data
+    between chassis/wwarn and <i>The WWARN Application</i>? What system will
+    implement that functionality? </li>
+  <li>Will export/ingest of data between chassis/wwarn and <i>The WWARN
+    Application</i> be push or pull? </li>
+  <li>Do submitters need the ability to pre-populate some fields of a study
+    site questionnaire when creating a new study, based on values entered
+    previously for a different study? </li>
+  <li>Do submitters need the ability to create a batch of new studies, rather
+    than one at a time? </li>
+  <li>What happens if a submitter makes a request to a gatekeeper for a given
+    submission, then uploads a revision of the submitted data, then makes a new
+    request to a gatekeeper, before the first request has been fulfilled? This
+    could be confusing/irritating for a gatekeeper if they find two requests
+    pertaining to the same submission. Do submitters need the ability to cancel
+    a pending request? Should there be some rule whereby a submission may have
+    at most one pending request? </li>
+  <li>Who makes sure that there are no duplicate study entries created? What
+    happens if there are? Do we need some function for merging study entries?
+  </li>
+  <li>Having WWARN module heads as gatekeepers may be inappropriate if some are
+    in the field for long periods of time. Gatekeepers need to be fairly
+    responsive. </li>
+  <li>The spec should mention entering log messages any time a revision is made
+    to submitted data, or to a data dictionary. </li>
+  <li>Logging in, and administration of user accounts and user roles is not
+    mentioned. </li>
+  <li>What are the required &amp; optional study metadata, common across
+    modules? What are the required &amp; optional study metadata, for each
+    module? </li>
+  <li>Is it appropriate for any curators to create and revise specifications of
+    release criteria? Or do we need a new role? What about the social process
+    by which a revision to release criteria is accepted, does the system need
+    to provide any support for that social process, e.g., voting or
+    ratification? </li>
+  <li>Is it appropriate for any curators to review and approve submissions for
+    release? Or do we need a specific role? </li>
+  <li>Can curators download revisions of submitted data that were uploaded by
+    the submitter prior to the revision for which gatekeeper acceptance was
+    given? Or should these earlier revisions be private to the submitter? </li>
+  <li>The asymmetry between gatekeeper acceptance of a submission (which then
+    applies to the submission as a whole), and gatekeeper denial of a request
+    (which only applies to the version of the submitted data that was
+    reviewed), is possibly counter-intuitive. </li>
+  <li>Should some submitters gain automatic gatekeeper acceptance? E.g., if
+    they have many previously accepted submissions? </li>
+  <li>Should it be possible for more than one person to have the ball at any
+    one time for a given submission, e.g., where the submitted data needs to be
+    broken into parts and each part processed in parallel? I.e., do we need to
+    allow an assigned curator to delegate more than one task at a time for any
+    given submission? </li>
+  <li>Related to the above point, what about situations where data is split
+    apart, revised, then merged back together? I.e., what about versions of the
+    submitted data that are derived from more than one source? N.B., this
+    implies a derivation graph, rather than a derivation tree. </li>
+  <li>What mechanism should we use to capture the derivation of new revisions
+    to submitted data as they are uploaded? Version keys? Explicitly choosing
+    the derivation source? Explicitly creating branches? Formal checkout
+    mechanism? </li>
+  <li>Encourate not creating multiple subs if revising data (???). </li>
+  <li>How will gatekeepers be assigned to review submissions? By module? What
+    if a submission applies to more than one module? Round-robin? Some modules
+    have precedence over others (rock, paper, scissors)? Random? </li>
+  <li>What about privacy for studies and dictionaries? Should it be possible to
+    grant permissions to see details of a study, or to see a dictionary, but
+    otherwise have them private? </li>
+  <li>Need to make clear, each module is expected to define acceptance
+    criteria, release criteria? </li>
+  <li>N.B. access to analysis tools, even if submission is not shared, is
+    necessary for WWARN, although possibly not for release 1.0. </li>
+  <li>Need to explain "module" - submitter won't understand. </li>
+  <li>When building a data dictionary, can we provide predefined units and
+    datatypes? </li>
+  <li>N.B. the concept of validation is wider than just dictionaries... ???
+  </li>
+  <li>What about tools for initial visualisation before release approval? </li>
+  <li>By requesting gatekeeper review, also agreeing to share data? </li>
+  <li>Should study titles be automatically constructed from other study
+    metadata fields? </li>
+  <li>Study title public, study SSQ private? Who can link submissions to
+    private study? E.g., you can link submission to private study, study owner
+    sees your request, grants you permission to link submission to their study?
+  </li>
+  <li>What if a submission cuts across modules? Need gatekeeper approval from
+    all? Any? </li>
+  <li>N.B. expect submissions for more than one module. </li>
+  <li>Do we need a mechanism for defining groups of users? I.e, can someone
+    define a group, and then say anyone in that group has permission to submit
+    to some study? Or view some data dictionary? </li>
+  <li>What about sites vs. studies? Use sites as primary organisational unit,
+    rather than studies? Cf. clinicaltrial.gov. </li>
+  <li>Should coordinator be able to assign review requests to a gatekeeper?
+  </li>
+  <li>Do we need a separate role for approving submissions for release? Release
+    manager? Quality Assurer? Quality Manager? </li>
+  <li>Lock stuff to capture who is working on what? </li>
+  <li>Which curators can work on which submissions? </li>
+  <li>Can a curator completely pass the buck? I.e., totally change the assigned
+    curator? </li>
+  <li>Only one node per submission can be approved for release w.r.t. one
+    version of release criteria? </li>
+  <li>Accept submission &amp; assign curator at same time? </li>
+  <li>Can curators tidy stuff up (dead branches)? </li>
+  <li>What about if submitter creates something derived from a curator's
+    revision? Lose derivation if simplified. </li>
+  <li>Can we drop use cases where submitter revises prior to requesting
+    gatekeeper review? </li>
+  <li>Should curator manage release criteria? Or define some other role? </li>
+  <li>Can you assign yourself as curator for a submission? </li>
+  <li>Does task imply permissions? I.e., is a submission locked to the assigned
+    curator? </li>
+  <li>Can you delete previous file revisions? Can you delete whole submissions?
+  </li>
+  <li>Can you overwrite/clear previous mappings to a standard? </li>
+  <li>What about reassigning a curator? Who can do that? Gatekeeper?
+    Coordinator? </li>
+  <li>What about dropping submissions as an entity, only have requests (for
+    gatekeeper review)? </li>
+  <li>Gatekeeper can see other gatekeeper's requests? </li>
+  <li>What about correlation report functionality? E.g. link clinical data to
+    sample labels? </li>
 </ul>
 </div>
 
