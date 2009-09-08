@@ -22,8 +22,9 @@ public class ViewStudyWidgetController {
 		this.model = model;
 		this.service = service;
 	}
-	
-	public void loadStudyEntry(String entryURL) {
+
+
+	public void loadStudyEntryByEntryURL(String entryURL) {
 		getStudyEntry(entryURL).addCallback(new GetStudyEntryCallback());
 	}
 	
@@ -36,18 +37,18 @@ public class ViewStudyWidgetController {
 
 		public StudyEntry apply(StudyEntry studyEntry) {
 			
-			model.setTitle(studyEntry.getTitle());
-			model.setSummary(studyEntry.getSummary());
-			model.setAcceptClinicalData(studyEntry.getModules().contains(ViewStudyWidgetModel.MODULE_CLINICAL));
-			model.setAcceptInVitroData(studyEntry.getModules().contains(ViewStudyWidgetModel.MODULE_IN_VITRO));
-			model.setAcceptMolecularData(studyEntry.getModules().contains(ViewStudyWidgetModel.MODULE_MOLECULAR));
-			model.setAcceptPharmacologyData(studyEntry.getModules().contains(ViewStudyWidgetModel.MODULE_PHARMACOLOGY));
+			model.setStudyEntry(studyEntry);
 			
 			model.setStatus(ViewStudyWidgetModel.STATUS_LOADED);
 			
 			return studyEntry;
 		}
 		
+	}
+
+	public void loadStudyEntry(StudyEntry newStudyEntry) {
+		model.setStudyEntry(newStudyEntry);
+		model.setStatus(ViewStudyWidgetModel.STATUS_LOADED);
 	}
 	
 

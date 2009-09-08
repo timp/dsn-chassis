@@ -18,7 +18,7 @@ import com.google.gwt.junit.client.GWTTestCase;
  *
  */
 public class GWTTestCreateStudyWidgetController_callbacks extends GWTTestCase {
-
+	
 	/* (non-Javadoc)
 	 * @see com.google.gwt.junit.client.GWTTestCase#getModuleName()
 	 */
@@ -45,7 +45,7 @@ public class GWTTestCreateStudyWidgetController_callbacks extends GWTTestCase {
 		// bootstrap mock service with study feed
 		((MockAtomService)mockService).createFeed(feedURL, "all studies");
 		
-		testController = new CreateStudyWidgetController(testModel, mockService, feedURL);
+		testController = new CreateStudyWidgetController(testModel, mockService, feedURL, null);
 
 		//Replace default factory with MockFactory for testing
 		testController.setStudyFactory(mockFactory);

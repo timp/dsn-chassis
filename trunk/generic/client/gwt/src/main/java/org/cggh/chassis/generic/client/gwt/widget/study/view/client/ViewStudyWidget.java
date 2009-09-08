@@ -3,6 +3,7 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.study.view.client;
 
+import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
 
 import com.google.gwt.user.client.ui.Panel;
@@ -30,8 +31,12 @@ public class ViewStudyWidget {
 		
 	}
 		
+	public void loadStudyEntry(StudyEntry studyEntry) {
+		controller.loadStudyEntry(studyEntry);
+	}
+	
 	public void loadStudyByEntryURL(String entryURL) {
-		controller.loadStudyEntry(entryURL);
+		controller.loadStudyEntryByEntryURL(entryURL);
 	}
 	
 	

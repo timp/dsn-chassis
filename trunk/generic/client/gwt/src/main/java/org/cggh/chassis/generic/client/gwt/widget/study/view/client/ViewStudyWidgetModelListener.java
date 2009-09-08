@@ -3,23 +3,15 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.study.view.client;
 
+import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
+
 /**
  * @author raok
  *
  */
 public interface ViewStudyWidgetModelListener {
 
-	void onTitleChanged(String before, String after);
-
-	void onSummaryChanged(String before, String after);
-
-	void onAcceptClinicalDataChanged(Boolean before, Boolean after);
-
-	void onAcceptMolecularDataChanged(Boolean before, Boolean after);
-
-	void onAcceptInVitroDataChanged(Boolean before, Boolean after);
-
-	void onAcceptPharmacologyDataChanged(Boolean before, Boolean after);
+	void onStudyEntryChanged(StudyEntry before, StudyEntry after);
 
 	void onStatusChanged(Integer before, Integer after);
 	

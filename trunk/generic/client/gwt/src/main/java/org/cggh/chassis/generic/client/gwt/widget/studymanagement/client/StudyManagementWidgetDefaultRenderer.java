@@ -3,10 +3,12 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.studymanagement.client;
 
+import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
 import org.cggh.chassis.generic.client.gwt.widget.study.create.client.CreateStudyWidget;
-import org.cggh.chassis.generic.client.gwt.widget.study.create.client.CreateStudyWidgetControllerListener;
+import org.cggh.chassis.generic.client.gwt.widget.study.create.client.CreateStudyWidgetPubSubAPI;
 import org.cggh.chassis.generic.client.gwt.widget.study.view.client.ViewStudyWidget;
+import org.cggh.chassis.generic.client.gwt.widget.study.viewall.client.ViewAllStudiesWidget;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -20,7 +22,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
  * @author raok
  *
  */
-public class StudyManagementWidgetDefaultRenderer implements StudyManagementWidgetModelListener, CreateStudyWidgetControllerListener {
+public class StudyManagementWidgetDefaultRenderer implements StudyManagementWidgetModelListener, CreateStudyWidgetPubSubAPI {
 
 	//Expose view elements for testing purposes.
 	final Label displayCreateStudyUI = new Label("Create Study");
@@ -28,15 +30,21 @@ public class StudyManagementWidgetDefaultRenderer implements StudyManagementWidg
 	final Panel displayCanvas;
 	final Panel menuCanvas;
 	final DecoratedPopupPanel menuPopUp = new DecoratedPopupPanel(true);
+
+	final private StudyManagementWidgetController controller;
 	
 	//child widgets
-	CreateStudyWidget createStudyWidget; 
+	private CreateStudyWidget createStudyWidget; 
 	final Panel createStudyWidgetCanvas = new SimplePanel();
-	ViewStudyWidget viewStudyWidget;
+	private ViewStudyWidget viewStudyWidget;
 	final Panel viewStudyWidgetCanvas = new SimplePanel();	
-	
-	final private StudyManagementWidgetController controller;
+	private ViewAllStudiesWidget viewAllStudiesWidget;
+	final Panel viewAllStudiesWidgetCanvas = new SimplePanel();
 
+
+	// TODO handle run time setting of feedURL
+	private String feedURL = "http://example.com/studies";
+	
 	public StudyManagementWidgetDefaultRenderer(Panel menuCanvas, Panel displayCanvas,
 												StudyManagementWidgetController controller, AtomService service) {
 		this.menuCanvas = menuCanvas;
@@ -45,12 +53,11 @@ public class StudyManagementWidgetDefaultRenderer implements StudyManagementWidg
 		
 		//create child widgets
 		viewStudyWidget = new ViewStudyWidget(viewStudyWidgetCanvas, service);
-
-		// TODO handle run time setting of feedURL
-		String feedURL = "http://example.com/studies";
 		createStudyWidget = new CreateStudyWidget(createStudyWidgetCanvas, service, feedURL);
+		viewAllStudiesWidget = new ViewAllStudiesWidget(viewAllStudiesWidgetCanvas, service);
+		
 		//register this Widget as a listener to the CreateStudyController
-		createStudyWidget.addCreateStudyWidgetControllerListener(this);
+		createStudyWidget.addCreateStudyWidgetListener(this);
 		
 		//initialise view
 		initMenu();
@@ -77,7 +84,7 @@ public class StudyManagementWidgetDefaultRenderer implements StudyManagementWidg
 
 			public void onClick(ClickEvent arg0) {
 				int popUpHOffset = studiesMenuLabel.getAbsoluteLeft();
-				int popUpVOffset = studiesMenuLabel.getAbsoluteTop()+studiesMenuLabel.getOffsetHeight();
+				int popUpVOffset = studiesMenuLabel.getAbsoluteTop() + studiesMenuLabel.getOffsetHeight();
 				menuPopUp.setPopupPosition(popUpHOffset, popUpVOffset);
 				menuPopUp.show();
 			}
@@ -110,21 +117,23 @@ public class StudyManagementWidgetDefaultRenderer implements StudyManagementWidg
 	public void onDisplayStatusChanged(Integer before, Integer after) {
 		if (after == StudyManagementWidgetModel.DISPLAYING_CREATE_STUDY) {
 			displayCanvas.clear();
-			displayCanvas.add(createStudyWidgetCanvas);			
 			createStudyWidget.setUpNewStudy();
+			displayCanvas.add(createStudyWidgetCanvas);
 		} else if (after == StudyManagementWidgetModel.DISPLAYING_VIEW_STUDY) {
 			displayCanvas.clear();
 			displayCanvas.add(viewStudyWidgetCanvas);
 		} else if (after == StudyManagementWidgetModel.DISPLAYING_VIEW_ALL_STUDIES) {
 			displayCanvas.clear();
+			viewAllStudiesWidget.loadStudiesByFeedURL(feedURL);
+			displayCanvas.add(viewAllStudiesWidgetCanvas);
 		} else if (after == StudyManagementWidgetModel.DISPLAYING_EDIT_STUDY) {
 			displayCanvas.clear();
 		}
 		
 	}
 
-	public void onNewStudySaved(String entryURL) {
-		viewStudyWidget.loadStudyByEntryURL(entryURL);
+	public void onNewStudyCreated(StudyEntry newStudyEntry) {
+		viewStudyWidget.loadStudyEntry(newStudyEntry);
 		controller.displayViewStudyWidget();
 	}
 	

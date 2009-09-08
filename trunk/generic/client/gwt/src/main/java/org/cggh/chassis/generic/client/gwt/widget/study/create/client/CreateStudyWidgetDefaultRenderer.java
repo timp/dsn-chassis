@@ -169,6 +169,7 @@ class CreateStudyWidgetDefaultRenderer implements CreateStudyWidgetModelListener
 		
 	}
 	
+	//TODO handle cancel button (with history?)
 	class CancelStudyClickHandler implements ClickHandler {
 		
 		public void onClick(ClickEvent arg0) {

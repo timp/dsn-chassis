@@ -7,16 +7,23 @@ import static org.easymock.EasyMock.*;
 import static org.junit.Assert.*;
 import junit.framework.JUnit4TestAdapter;
 
+import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
 import org.cggh.chassis.generic.atom.study.client.mockimpl.MockStudyFactory;
 import org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomService;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.powermock.api.easymock.PowerMock;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author raok
  *
  */
+@RunWith(PowerMockRunner.class)
+@PrepareForTest({CreateStudyWidget.class})
 public class TestCreateStudyWidgetController {
 
 	
@@ -25,10 +32,11 @@ public class TestCreateStudyWidgetController {
 	}
 
 	private CreateStudyWidgetController testController;
-	final private CreateStudyWidgetModel mockModel = new CreateStudyWidgetModel();;
+	final private CreateStudyWidgetModel mockModel = new CreateStudyWidgetModel();
 	private AtomService mockService;
 	private MockStudyFactory mockFactory;
 	private String feedURL = "http://www.foo.com/studies";
+	private CreateStudyWidget mockWidget;
 		
 	@Before
 	public void setUp() {
@@ -39,8 +47,11 @@ public class TestCreateStudyWidgetController {
 		
 		// bootstrap mock service with study feed
 		((MockAtomService)mockService).createFeed(feedURL, "all studies");
+
+		//create mock widget
+		mockWidget = PowerMock.createPartialMock(CreateStudyWidget.class, "newStudyCreated");
 		
-		testController = new CreateStudyWidgetController(mockModel, mockService, feedURL);
+		testController = new CreateStudyWidgetController(mockModel, mockService, feedURL, mockWidget);
 
 		//Replace default factory with MockFactory for testing
 		testController.setStudyFactory(mockFactory);
@@ -180,13 +191,9 @@ public class TestCreateStudyWidgetController {
 		mockModel.setAcceptPharmacologyData(acceptPharmacologyData);
 		mockModel.setStatus(CreateStudyWidgetModel.STATUS_READY);
 		
-		//create mock listener to test event firing
-		CreateStudyWidgetControllerListener listener = createMock(CreateStudyWidgetControllerListener.class);
-		testController.addListener(listener);		
-		
 		//set expectations
-		listener.onNewStudySaved(isA(String.class));
-		replay(listener);
+		mockWidget.newStudyCreated(isA(StudyEntry.class));
+		PowerMock.replay(mockWidget, CreateStudyWidget.class);
 		
 		//call method under test
 		testController.saveNewStudy();
@@ -195,7 +202,7 @@ public class TestCreateStudyWidgetController {
 		assertEquals(CreateStudyWidgetModel.STATUS_SAVED, mockModel.getStatus());
 		
 		//verify mock
-		verify(listener);
+		PowerMock.verify(mockWidget, CreateStudyWidget.class);
 		
 	}
 	
@@ -222,7 +229,8 @@ public class TestCreateStudyWidgetController {
 		//Initialise controller with MockFactory with a non-bootstrapped feedURL, to simulate failure
 		CreateStudyWidgetController brokenController = new CreateStudyWidgetController(mockModel,
 																					   new MockAtomService(),
-																					   "blah.com");
+																					   "blah.com",
+																					   mockWidget);
 
 		//call method under test
 		brokenController.saveNewStudy();

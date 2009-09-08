@@ -3,6 +3,8 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.study.view.client;
 
+import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
+
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
@@ -15,6 +17,13 @@ import com.google.gwt.user.client.ui.VerticalPanel;
  */
 public class ViewStudyWidgetDefaultRenderer implements ViewStudyWidgetModelListener {
 
+	//TODO remove when real atom service is used
+	public static final String MODULE_CLINICAL = "Clinical";
+	public static final String MODULE_MOLECULAR = "Molecular";
+	public static final String MODULE_IN_VITRO = "In Vitro";
+	public static final String MODULE_PHARMACOLOGY = "Pharmacology";
+	
+	
 	//Expose view elements for testing purposes.
 	final Label titleLabel = new Label();
 	final Label summaryLabel = new Label();
@@ -71,30 +80,6 @@ public class ViewStudyWidgetDefaultRenderer implements ViewStudyWidgetModelListe
 		
 	}
 
-	public void onTitleChanged(String before, String after) {
-		titleLabel.setText(after);
-	}
-
-	public void onSummaryChanged(String before, String after) {
-		summaryLabel.setText(after);
-	}
-
-	public void onAcceptClinicalDataChanged(Boolean before, Boolean after) {
-		acceptsClinicalDataIndicator.setVisible(after);
-	}
-
-	public void onAcceptInVitroDataChanged(Boolean before, Boolean after) {
-		acceptsInVitroDataIndicator.setVisible(after);
-	}
-
-	public void onAcceptMolecularDataChanged(Boolean before, Boolean after) {
-		acceptsMolecularDataIndicator.setVisible(after);
-	}
-
-	public void onAcceptPharmacologyDataChanged(Boolean before, Boolean after) {
-		acceptsPharmacologyDataIndicator.setVisible(after);
-	}
-
 	public void onStatusChanged(Integer before, Integer after) {
 		
 		if (after == ViewStudyWidgetModel.STATUS_LOADING) {
@@ -106,6 +91,16 @@ public class ViewStudyWidgetDefaultRenderer implements ViewStudyWidgetModelListe
 		} else if (after == ViewStudyWidgetModel.STATUS_ERROR) {
 			// TODO handle error case (could use extra panel or pass error to parent)
 		}
+	}
+
+	public void onStudyEntryChanged(StudyEntry before, StudyEntry after) {
+		
+		titleLabel.setText(after.getTitle());
+		summaryLabel.setText(after.getSummary());
+		acceptsClinicalDataIndicator.setVisible(after.getModules().contains(MODULE_CLINICAL));
+		acceptsInVitroDataIndicator.setVisible(after.getModules().contains(MODULE_IN_VITRO));
+		acceptsMolecularDataIndicator.setVisible(after.getModules().contains(MODULE_MOLECULAR));
+		acceptsPharmacologyDataIndicator.setVisible(after.getModules().contains(MODULE_PHARMACOLOGY));
 	}
 
 }

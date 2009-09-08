@@ -4,9 +4,7 @@
 package org.cggh.chassis.generic.client.gwt.widget.study.create.client;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
 import org.cggh.chassis.generic.atom.study.client.format.StudyFactory;
@@ -23,15 +21,17 @@ import org.cggh.chassis.generic.twisted.client.Function;
 public class CreateStudyWidgetController {
 
 	final private CreateStudyWidgetModel model;
-	private AtomService service;
+	final private CreateStudyWidget owner;
+	final private AtomService service;
 	private String feedURL;
 	private StudyFactory studyFactory;
-	private Set<CreateStudyWidgetControllerListener> listeners = new HashSet<CreateStudyWidgetControllerListener>();
 
-	public CreateStudyWidgetController(CreateStudyWidgetModel model, AtomService service, String feedURL) {
+	public CreateStudyWidgetController(CreateStudyWidgetModel model, AtomService service, 
+									   String feedURL, CreateStudyWidget owner) {
 		this.model = model;
 		this.service = service;
 		this.feedURL = feedURL;
+		this.owner = owner;
 		// TODO replace default with real study factory
 		this.studyFactory = new MockStudyFactory();
 	}
@@ -104,7 +104,7 @@ public class CreateStudyWidgetController {
 	private class SaveSuccessFunctionCallback implements Function<StudyEntry,StudyEntry> {
 
 		public StudyEntry apply(StudyEntry newStudyEntry) {
-			fireNewStudySaved(newStudyEntry.getEditLink().getHref());
+			owner.newStudyCreated(newStudyEntry);
 			model.setStatus(CreateStudyWidgetModel.STATUS_SAVED);
 			return newStudyEntry;
 		}
@@ -117,18 +117,11 @@ public class CreateStudyWidgetController {
 			model.setStatus(CreateStudyWidgetModel.STATUS_ERROR);
 			return in;
 		}
-
 		
 	}
 
 	public void updateTitle(String title) {
 		model.setTitle(title);
-	}
-
-	private void fireNewStudySaved(String entryURL) {
-		for(CreateStudyWidgetControllerListener listener : listeners ) {
-			listener.onNewStudySaved(entryURL);
-		}
 	}
 
 	public void updateSummary(String summary) {
@@ -153,10 +146,6 @@ public class CreateStudyWidgetController {
 
 	public void cancelCreateStudy() {
 		model.setStatus(CreateStudyWidgetModel.STATUS_CANCELLED);
-	}
-
-	public void addListener(CreateStudyWidgetControllerListener listener) {
-		listeners.add(listener);
 	}
 
 }
