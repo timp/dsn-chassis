@@ -3,6 +3,7 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.study.create.client;
 
+import static org.easymock.EasyMock.*;
 import static org.junit.Assert.*;
 import junit.framework.JUnit4TestAdapter;
 
@@ -43,6 +44,9 @@ public class TestCreateStudyWidgetController {
 
 		//Replace default factory with MockFactory for testing
 		testController.setStudyFactory(mockFactory);
+		
+		//prepare to create new study
+		testController.setUpNewStudy();
 	}
 	
 	@Test
@@ -153,6 +157,77 @@ public class TestCreateStudyWidgetController {
 		
 		//test outcome
 		assertEquals(CreateStudyWidgetModel.STATUS_CANCELLED, mockModel.getStatus());
+		
+	}
+
+	@Test
+	public void testHandleSaveSuccess() {
+		
+		//prepare model
+		final String title = "study Foo";
+		final String summary = "summary blah";
+		final Boolean acceptClinicalData = true;
+		final Boolean acceptMolecularData = false;
+		final Boolean acceptInVitroData = true;
+		final Boolean acceptPharmacologyData = false;
+				
+		// Set model with test data, and mock status.
+		mockModel.setTitle(title);
+		mockModel.setSummary(summary);
+		mockModel.setAcceptClinicalData(acceptClinicalData);
+		mockModel.setAcceptMolecularData(acceptMolecularData);
+		mockModel.setAcceptInVitroData(acceptInVitroData);
+		mockModel.setAcceptPharmacologyData(acceptPharmacologyData);
+		mockModel.setStatus(CreateStudyWidgetModel.STATUS_READY);
+		
+		//create mock listener to test event firing
+		CreateStudyWidgetControllerListener listener = createMock(CreateStudyWidgetControllerListener.class);
+		testController.addListener(listener);		
+		
+		//set expectations
+		listener.onNewStudySaved(isA(String.class));
+		replay(listener);
+		
+		//call method under test
+		testController.saveNewStudy();
+		
+		//test outcome
+		assertEquals(CreateStudyWidgetModel.STATUS_SAVED, mockModel.getStatus());
+		
+		//verify mock
+		verify(listener);
+		
+	}
+	
+	@Test
+	public void testHandleSaveFail() {
+		
+		//prepare model
+		final String title = "study Foo";
+		final String summary = "summary blah";
+		final Boolean acceptClinicalData = true;
+		final Boolean acceptMolecularData = false;
+		final Boolean acceptInVitroData = true;
+		final Boolean acceptPharmacologyData = false;
+				
+		// Set model with test data, and mock status.
+		mockModel.setTitle(title);
+		mockModel.setSummary(summary);
+		mockModel.setAcceptClinicalData(acceptClinicalData);
+		mockModel.setAcceptMolecularData(acceptMolecularData);
+		mockModel.setAcceptInVitroData(acceptInVitroData);
+		mockModel.setAcceptPharmacologyData(acceptPharmacologyData);
+		mockModel.setStatus(CreateStudyWidgetModel.STATUS_READY);
+		
+		//Initialise controller with MockFactory with a non-bootstrapped feedURL, to simulate failure
+		CreateStudyWidgetController brokenController = new CreateStudyWidgetController(mockModel,
+																					   new MockAtomService(),
+																					   "blah.com");
+
+		//call method under test
+		brokenController.saveNewStudy();
+		
+		assertEquals(CreateStudyWidgetModel.STATUS_ERROR, mockModel.getStatus());
 		
 	}
 	

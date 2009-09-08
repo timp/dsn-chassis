@@ -42,9 +42,6 @@ class CreateStudyWidgetDefaultRenderer implements CreateStudyWidgetModelListener
 		
 		//initialise view
 		initCanvas();
-		
-		//initialise for creating a new study
-		controller.setUpNewStudy();
 	}
 
 	private void initCanvas() {

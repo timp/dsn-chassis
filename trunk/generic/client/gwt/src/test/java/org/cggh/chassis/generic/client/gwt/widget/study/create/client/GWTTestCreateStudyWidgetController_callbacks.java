@@ -49,6 +49,9 @@ public class GWTTestCreateStudyWidgetController_callbacks extends GWTTestCase {
 
 		//Replace default factory with MockFactory for testing
 		testController.setStudyFactory(mockFactory);
+
+		//prepare to create new study
+		testController.setUpNewStudy();
 	}
 	
 	
@@ -103,64 +106,5 @@ public class GWTTestCreateStudyWidgetController_callbacks extends GWTTestCase {
 		});
 	}
 	
-	
-	public void testHandleSaveSuccess() {
-		
-		//prepare model
-		final String title = "study Foo";
-		final String summary = "summary blah";
-		final Boolean acceptClinicalData = true;
-		final Boolean acceptMolecularData = false;
-		final Boolean acceptInVitroData = true;
-		final Boolean acceptPharmacologyData = false;
-				
-		// Set model with test data, and mock status.
-		testModel.setTitle(title);
-		testModel.setSummary(summary);
-		testModel.setAcceptClinicalData(acceptClinicalData);
-		testModel.setAcceptMolecularData(acceptMolecularData);
-		testModel.setAcceptInVitroData(acceptInVitroData);
-		testModel.setAcceptPharmacologyData(acceptPharmacologyData);
-		testModel.setStatus(CreateStudyWidgetModel.STATUS_READY);
-		
-		
-		//call method under test
-		testController.saveNewStudy();
-		
-		assertEquals(CreateStudyWidgetModel.STATUS_SAVED, testModel.getStatus());
-		
-	}
-	
-	
-	public void testHandleSaveFail() {
-		
-		//prepare model
-		final String title = "study Foo";
-		final String summary = "summary blah";
-		final Boolean acceptClinicalData = true;
-		final Boolean acceptMolecularData = false;
-		final Boolean acceptInVitroData = true;
-		final Boolean acceptPharmacologyData = false;
-				
-		// Set model with test data, and mock status.
-		testModel.setTitle(title);
-		testModel.setSummary(summary);
-		testModel.setAcceptClinicalData(acceptClinicalData);
-		testModel.setAcceptMolecularData(acceptMolecularData);
-		testModel.setAcceptInVitroData(acceptInVitroData);
-		testModel.setAcceptPharmacologyData(acceptPharmacologyData);
-		testModel.setStatus(CreateStudyWidgetModel.STATUS_READY);
-		
-		//Initialise controller with MockFactory with a non-bootstrapped feedURL, to simulate failure
-		CreateStudyWidgetController brokenController = new CreateStudyWidgetController(testModel,
-																					   new MockAtomService(), 
-																					   "feedFoo");
-
-		//call method under test
-		brokenController.saveNewStudy();
-		
-		assertEquals(CreateStudyWidgetModel.STATUS_ERROR, testModel.getStatus());
-		
-	}
 	
 }
