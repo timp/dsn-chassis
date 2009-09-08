@@ -56,7 +56,7 @@ public class TestViewStudyWidgetController {
 	}
 		
 	@Test
-	public void testLoadStudy_callback() {
+	public void testLoadStudyByEntryURL_callback() {
 		
 		//test data
 		String entryURL = "http://example.com/studies/study_1";
@@ -74,7 +74,7 @@ public class TestViewStudyWidgetController {
 	}
 	
 	@Test
-	public void testLoadStudy_success() {
+	public void testLoadStudyByEntryURL_success() {
 		
 		//test data
 		String title = "study foo";
@@ -95,12 +95,32 @@ public class TestViewStudyWidgetController {
 		
 		//test outcome
 		assertEquals(ViewStudyWidgetModel.STATUS_LOADED, mockModel.getStatus());
-		assertEquals(title, mockModel.getTitle());
-		assertEquals(summary, mockModel.getSummary());
-		assertEquals(Boolean.TRUE, mockModel.acceptClinicalData());
-		assertEquals(Boolean.TRUE, mockModel.acceptInVitroData());
-		assertEquals(Boolean.FALSE, mockModel.acceptMolecularData());
-		assertEquals(Boolean.FALSE, mockModel.acceptPharmacologyData());
+		assertEquals(testStudy, mockModel.getStudyEntry());
+		
+		
+	}
+	
+	@Test
+	public void testLoadStudy() {
+		
+		//test data
+		String title = "study foo";
+		String summary = "summary foo";
+		
+		
+		//create test Study Entry to view
+		StudyEntry testStudy = mockFactory.createStudyEntry();
+		testStudy.setTitle(title);
+		testStudy.setSummary(summary);
+		testStudy.addModule(CreateStudyWidgetModel.MODULE_CLINICAL);
+		testStudy.addModule(CreateStudyWidgetModel.MODULE_IN_VITRO);
+		
+		//call method under test
+		testController.loadStudyEntry(testStudy);
+		
+		//test outcome
+		assertEquals(ViewStudyWidgetModel.STATUS_LOADED, mockModel.getStatus());
+		assertEquals(testStudy, mockModel.getStudyEntry());
 		
 		
 	}

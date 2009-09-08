@@ -3,6 +3,10 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.study.view.client;
 
+import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
+import org.cggh.chassis.generic.atom.study.client.format.StudyFactory;
+import org.cggh.chassis.generic.atom.study.client.mockimpl.MockStudyFactory;
+
 import com.google.gwt.junit.client.GWTTestCase;
 import com.google.gwt.user.client.ui.SimplePanel;
 
@@ -64,83 +68,29 @@ public class GWTTestViewStudyWidgetDefaultRenderer extends GWTTestCase {
 		
 	}
 		
-	public void testOnTitleChanged() {
+	public void testOnStudyEntryChanged() {
 		
 		//test data
-		String title = "study foo";
+		String title = "title foo";
+		String summary = "summary bar";
+		
+		//create test Study Entry to view
+		StudyFactory mockFactory = new MockStudyFactory();
+		StudyEntry testStudy = mockFactory.createStudyEntry();
+		testStudy.setTitle(title);
+		testStudy.setSummary(summary);
+		testStudy.addModule(ViewStudyWidgetDefaultRenderer.MODULE_CLINICAL);
+		testStudy.addModule(ViewStudyWidgetDefaultRenderer.MODULE_IN_VITRO);
 		
 		//call method under test
-		testRenderer.onTitleChanged(null, title);
+		testRenderer.onStudyEntryChanged(null, testStudy);
 		
 		//test outcome
 		assertEquals(title, testRenderer.titleLabel.getText());
-	}
-	
-	public void testOnSummaryChanged() {
-		
-		//test data
-		String summary = "summary foo";
-		
-		//call method under test
-		testRenderer.onSummaryChanged(null, summary);
-		
-		//test outcome
 		assertEquals(summary, testRenderer.summaryLabel.getText());
-		
-	}
-	
-	public void testOnAcceptClinicalDataChanged() {
-		
-		//call method under test
-		testRenderer.onAcceptClinicalDataChanged(null, true);
-		
 		assertTrue(testRenderer.acceptsClinicalDataIndicator.isVisible());
-		
-		//call method under test
-		testRenderer.onAcceptClinicalDataChanged(true, false);
-		
-		assertFalse(testRenderer.acceptsClinicalDataIndicator.isVisible());
-		
-	}
-	
-	public void testOnAcceptInVitroDataChanged() {
-		
-		//call method under test
-		testRenderer.onAcceptInVitroDataChanged(null, true);
-		
 		assertTrue(testRenderer.acceptsInVitroDataIndicator.isVisible());
-		
-		//call method under test
-		testRenderer.onAcceptInVitroDataChanged(true, false);
-		
-		assertFalse(testRenderer.acceptsInVitroDataIndicator.isVisible());
-		
-	}
-	
-	public void testOnAcceptMolecularDataChanged() {
-		
-		//call method under test
-		testRenderer.onAcceptMolecularDataChanged(null, true);
-		
-		assertTrue(testRenderer.acceptsMolecularDataIndicator.isVisible());
-		
-		//call method under test
-		testRenderer.onAcceptMolecularDataChanged(true, false);
-		
 		assertFalse(testRenderer.acceptsMolecularDataIndicator.isVisible());
-		
-	}
-	
-	public void testOnAcceptPharmacologyDataChanged() {
-		
-		//call method under test
-		testRenderer.onAcceptPharmacologyDataChanged(null, true);
-		
-		assertTrue(testRenderer.acceptsPharmacologyDataIndicator.isVisible());
-		
-		//call method under test
-		testRenderer.onAcceptPharmacologyDataChanged(true, false);
-		
 		assertFalse(testRenderer.acceptsPharmacologyDataIndicator.isVisible());
 		
 	}

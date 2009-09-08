@@ -140,9 +140,8 @@ public class GWTTestStudyManagementWidgetDefaultRenderer extends GWTTestCase {
 		deferredEntry.addCallback(new Function<StudyEntry,StudyEntry>() {
 
 			public StudyEntry apply(StudyEntry in) {
-				String entryURL = in.getEditLink().getHref();
 				
-				testRenderer.onNewStudySaved(entryURL);
+				testRenderer.onNewStudyCreated(in);
 				
 				assertEquals(StudyManagementWidgetModel.DISPLAYING_VIEW_STUDY, testModel.getDisplayStatus());
 				

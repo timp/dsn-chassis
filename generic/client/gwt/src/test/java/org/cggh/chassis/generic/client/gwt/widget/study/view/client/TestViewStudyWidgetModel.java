@@ -7,6 +7,8 @@ import static org.junit.Assert.*;
 import static org.easymock.EasyMock.*;
 import junit.framework.JUnit4TestAdapter;
 
+import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
+import org.cggh.chassis.generic.atom.study.client.mockimpl.MockStudyFactory;
 import org.cggh.chassis.generic.client.gwt.widget.study.create.client.CreateStudyWidgetModel;
 import org.cggh.chassis.generic.client.gwt.widget.study.view.client.ViewStudyWidgetModel;
 import org.cggh.chassis.generic.client.gwt.widget.study.view.client.ViewStudyWidgetModelListener;
@@ -40,12 +42,7 @@ public class TestViewStudyWidgetModel {
 		assertNotNull(testModel);
 		
 		// test initial state
-		assertNull(testModel.getTitle());
-		assertNull(testModel.getSummary());
-		assertNull(testModel.acceptClinicalData());
-		assertNull(testModel.acceptMolecularData());
-		assertNull(testModel.acceptInVitroData());
-		assertNull(testModel.acceptPharmacologyData());
+		assertNull(testModel.getStudyEntry());
 		assertEquals(CreateStudyWidgetModel.STATUS_INITIAL, testModel.getStatus());
 	}
 	
@@ -53,158 +50,26 @@ public class TestViewStudyWidgetModel {
 	public void testGettersSetters() {
 		
 		//test data
-		String title = "new title";
-		String summary = "summary";
-		Boolean acceptClinicalData = true;
-		Boolean acceptMolecularData = true;
-		Boolean acceptInVitroData = true;
-		Boolean acceptPharmacologyData = true;
+		Integer status = ViewStudyWidgetModel.STATUS_LOADED;
 		
-		// call methods under test
-		testModel.setTitle(title);
-		testModel.setSummary(summary);
-		testModel.setAcceptClinicalData(acceptClinicalData);
-		testModel.setAcceptMolecularData(acceptMolecularData);
-		testModel.setAcceptInVitroData(acceptInVitroData);
-		testModel.setAcceptPharmacologyData(acceptPharmacologyData);
+		// use mock factory to create test studies
+		MockStudyFactory mockStudyFactory = new MockStudyFactory();
+		StudyEntry study = mockStudyFactory.createStudyEntry();
+		study.setTitle("foo1");
+		study.setSummary("bar 1");
+		study.addModule("module foo1");
+		
+		//call methods under test
+		testModel.setStudyEntry(study);
+		testModel.setStatus(status);
 		
 		// test outcome
-		assertEquals(title, testModel.getTitle());
-		assertEquals(summary, testModel.getSummary());
-		assertEquals(acceptClinicalData, testModel.acceptClinicalData());
-		assertEquals(acceptMolecularData, testModel.acceptMolecularData());
-		assertEquals(acceptInVitroData, testModel.acceptInVitroData());
-		assertEquals(acceptPharmacologyData, testModel.acceptPharmacologyData());
+		assertEquals(study, testModel.getStudyEntry());
+		assertEquals(status, testModel.getStatus());
 		
 	}
 	
-	@Test
-	public void testTitleChanged() {
 		
-		// test data
-		String foo = "foo";
-		String bar = "bar";
-		
-		ViewStudyWidgetModelListener listener = createMock(ViewStudyWidgetModelListener.class);
-		
-		// set up expectations
-		listener.onTitleChanged(null, foo);
-		listener.onTitleChanged(foo, bar);
-		replay(listener);
-		
-		// register with model
-		testModel.addListener(listener);
-		
-		// call method under test
-		testModel.setTitle(foo);
-		testModel.setTitle(bar);
-		
-		verify(listener);
-	}
-	
-	@Test
-	public void testSummaryChanged() {
-		
-		// test data
-		String foo = "foo";
-		String bar = "bar";
-
-		ViewStudyWidgetModelListener listener = createMock(ViewStudyWidgetModelListener.class);
-		
-		// set up expectations
-		listener.onSummaryChanged(null, foo);
-		listener.onSummaryChanged(foo, bar);
-		replay(listener);
-		
-		// register with model
-		testModel.addListener(listener);
-		
-		testModel.setSummary(foo);
-		testModel.setSummary(bar);
-		
-		verify(listener);
-		
-	}
-	
-	@Test
-	public void testAcceptClinicalDataChanged() {
-
-		ViewStudyWidgetModelListener listener = createMock(ViewStudyWidgetModelListener.class);
-	
-		// set up expectations
-		listener.onAcceptClinicalDataChanged(null, true);
-		listener.onAcceptClinicalDataChanged(true, false);
-		replay(listener);
-		
-		// register with model
-		testModel.addListener(listener);
-		
-		testModel.setAcceptClinicalData(true);
-		testModel.setAcceptClinicalData(false);
-		
-		verify(listener);
-		
-	}
-	
-	@Test
-	public void testAcceptMolecularDataChanged() {
-
-		ViewStudyWidgetModelListener listener = createMock(ViewStudyWidgetModelListener.class);
-		
-		// set up expectations
-		listener.onAcceptMolecularDataChanged(null, true);
-		listener.onAcceptMolecularDataChanged(true, false);
-		replay(listener);
-		
-		// register with model
-		testModel.addListener(listener);
-		
-		testModel.setAcceptMolecularData(true);
-		testModel.setAcceptMolecularData(false);
-		
-		verify(listener);
-		
-	}
-	
-	@Test
-	public void testAcceptInVitroDataChanged() {
-
-		ViewStudyWidgetModelListener listener = createMock(ViewStudyWidgetModelListener.class);
-		// set up expectations
-		listener.onAcceptInVitroDataChanged(null, true);
-		listener.onAcceptInVitroDataChanged(true, false);
-		replay(listener);
-		
-		// register with model
-		testModel.addListener(listener);
-		
-		testModel.setAcceptInVitroData(true);
-		testModel.setAcceptInVitroData(false);
-		
-		verify(listener);
-		
-	}
-	
-	@Test
-	public void testAcceptPharmacologyDataChanged() {
-
-		ViewStudyWidgetModelListener listener = createMock(ViewStudyWidgetModelListener.class);
-		
-		// set up expectations
-		listener.onAcceptPharmacologyDataChanged(null, true);
-		listener.onAcceptPharmacologyDataChanged(true, false);
-		replay(listener);
-		
-		// register with model
-		testModel.addListener(listener);
-		
-		testModel.setAcceptPharmacologyData(true);
-		testModel.setAcceptPharmacologyData(false);
-		
-		verify(listener);
-		
-	}
-	
 	@Test
 	public void testStatusConstants() {
 		
@@ -212,6 +77,32 @@ public class TestViewStudyWidgetModel {
 		assertEquals(new Integer(1), ViewStudyWidgetModel.STATUS_LOADING);
 		assertEquals(new Integer(2), ViewStudyWidgetModel.STATUS_LOADED);
 		assertEquals(new Integer(3), ViewStudyWidgetModel.STATUS_ERROR);
+		
+	}
+	
+	@Test
+	public void testOnStudyEntryChanged() {
+		
+		// use mock factory to create test studies
+		MockStudyFactory mockStudyFactory = new MockStudyFactory();
+		StudyEntry study = mockStudyFactory.createStudyEntry();
+		study.setTitle("foo1");
+		study.setSummary("bar 1");
+		study.addModule("module foo1");
+		
+		ViewStudyWidgetModelListener listener = createMock(ViewStudyWidgetModelListener.class);
+		
+		//set up expectations
+		listener.onStudyEntryChanged(null, study);
+		replay(listener);
+		
+		//register with model
+		testModel.addListener(listener);
+		
+		//call methods under test
+		testModel.setStudyEntry(study);
+
+		verify(listener);
 		
 	}
 	

@@ -16,7 +16,7 @@ import com.google.gwt.user.client.ui.SimplePanel;
  *
  */
 public class GWTTestCreateStudyWidgetDefaultRenderer extends GWTTestCase {
-
+	
 	private CreateStudyWidgetModel testModel;
 	private MockStudyFactory mockFactory;
 	private MockAtomService mockService;
@@ -43,7 +43,7 @@ public class GWTTestCreateStudyWidgetDefaultRenderer extends GWTTestCase {
 		// bootstrap mock service with study feed
 		((MockAtomService)mockService).createFeed(feedURL, "all studies");
 		
-		testController = new CreateStudyWidgetController(testModel, mockService, feedURL);
+		testController = new CreateStudyWidgetController(testModel, mockService, feedURL, null);
 
 		//Replace default factory with MockFactory for testing
 		testController.setStudyFactory(mockFactory);
