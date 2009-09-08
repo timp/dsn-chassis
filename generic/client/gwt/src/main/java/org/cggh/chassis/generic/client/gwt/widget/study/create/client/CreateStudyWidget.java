@@ -3,6 +3,7 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.study.create.client;
 
+
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
 
 import com.google.gwt.user.client.ui.Panel;
@@ -47,6 +48,10 @@ public class CreateStudyWidget {
 	
 	public void setUpNewStudy() {
 		controller.setUpNewStudy();
+	}
+	
+	public void addCreateStudyWidgetControllerListener(CreateStudyWidgetControllerListener listener) {
+		controller.addListener(listener);
 	}
 	
 }

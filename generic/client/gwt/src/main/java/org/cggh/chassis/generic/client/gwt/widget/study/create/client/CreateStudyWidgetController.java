@@ -4,7 +4,9 @@
 package org.cggh.chassis.generic.client.gwt.widget.study.create.client;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
 import org.cggh.chassis.generic.atom.study.client.format.StudyFactory;
@@ -24,6 +26,7 @@ public class CreateStudyWidgetController {
 	private AtomService service;
 	private String feedURL;
 	private StudyFactory studyFactory;
+	private Set<CreateStudyWidgetControllerListener> listeners = new HashSet<CreateStudyWidgetControllerListener>();
 
 	public CreateStudyWidgetController(CreateStudyWidgetModel model, AtomService service, String feedURL) {
 		this.model = model;
@@ -34,6 +37,7 @@ public class CreateStudyWidgetController {
 	}
 
 	public void setUpNewStudy() {
+				
 		// What a new study should be setup as
 		String newString = "";
 		Boolean newBoolean = false;
@@ -99,9 +103,10 @@ public class CreateStudyWidgetController {
 
 	private class SaveSuccessFunctionCallback implements Function<StudyEntry,StudyEntry> {
 
-		public StudyEntry apply(StudyEntry in) {
+		public StudyEntry apply(StudyEntry newStudyEntry) {
+			fireNewStudySaved(newStudyEntry.getEditLink().getHref());
 			model.setStatus(CreateStudyWidgetModel.STATUS_SAVED);
-			return in;
+			return newStudyEntry;
 		}
 		
 	}
@@ -118,6 +123,12 @@ public class CreateStudyWidgetController {
 
 	public void updateTitle(String title) {
 		model.setTitle(title);
+	}
+
+	private void fireNewStudySaved(String entryURL) {
+		for(CreateStudyWidgetControllerListener listener : listeners ) {
+			listener.onNewStudySaved(entryURL);
+		}
 	}
 
 	public void updateSummary(String summary) {
@@ -142,6 +153,10 @@ public class CreateStudyWidgetController {
 
 	public void cancelCreateStudy() {
 		model.setStatus(CreateStudyWidgetModel.STATUS_CANCELLED);
+	}
+
+	public void addListener(CreateStudyWidgetControllerListener listener) {
+		listeners.add(listener);
 	}
 
 }

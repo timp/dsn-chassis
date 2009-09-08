@@ -5,4 +5,5 @@
 		name="org.cggh.chassis.generic.client.gwt.widget.study.create.CreateStudyWidget" />
 	<entry-point
 		class="spike.widget.study.create.client.SpikeCreateStudyEntryPoint" />
+		
 </module>

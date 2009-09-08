@@ -48,6 +48,9 @@ public class GWTTestCreateStudyWidgetDefaultRenderer extends GWTTestCase {
 		//Replace default factory with MockFactory for testing
 		testController.setStudyFactory(mockFactory);
 		
+		//prepare to create new study
+		testController.setUpNewStudy();
+		
 		// instantiate a renderer
 		testRenderer = new CreateStudyWidgetDefaultRenderer(new SimplePanel(), testController);
 		
