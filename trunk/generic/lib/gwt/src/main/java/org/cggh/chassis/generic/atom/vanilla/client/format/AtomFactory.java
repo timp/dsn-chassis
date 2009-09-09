@@ -17,5 +17,7 @@ public interface AtomFactory {
 	public AtomEntry createEntry(Element entryElement) throws AtomFormatException;
 	public AtomPersonConstruct createPersonConstruct();
 	public AtomPersonConstruct createPersonConstruct(Element personElement) throws AtomFormatException;
-	
+	public AtomLink createLink();
+	public AtomLink createLink(Element linkElement) throws AtomFormatException;
+
 }

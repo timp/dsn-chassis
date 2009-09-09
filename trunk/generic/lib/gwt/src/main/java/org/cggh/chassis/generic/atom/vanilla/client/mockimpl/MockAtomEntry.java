@@ -11,6 +11,8 @@ import org.cggh.chassis.generic.atom.vanilla.client.format.AtomCategory;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomLink;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomPersonConstruct;
+import org.cggh.chassis.generic.twisted.client.Function;
+import org.cggh.chassis.generic.twisted.client.Functional;
 
 /**
  * @author aliman
@@ -49,7 +51,7 @@ public class MockAtomEntry implements AtomEntry {
 	protected void setEditLink(String entryURL) {
 		AtomLink editLink = this.getEditLink();
 		if (editLink == null) {
-			editLink = factory.createMockAtomLink();
+			editLink = factory.createLink();
 			editLink.setRel(Atom.REL_EDIT);
 			addLink(editLink);
 		}
@@ -109,24 +111,14 @@ public class MockAtomEntry implements AtomEntry {
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry#getEditLink()
 	 */
 	public AtomLink getEditLink() {
-		for (AtomLink link : this.links) {
-			if (link.getRel().equals(Atom.REL_EDIT)) {
-				return link;
-			}
-		}
-		return null;
+		return this.getFirstLinkByRel(Atom.REL_EDIT);
 	}
 
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry#getEditMediaLink()
 	 */
 	public AtomLink getEditMediaLink() {
-		for (AtomLink link : this.links) {
-			if (link.getRel().equals(Atom.REL_EDIT_MEDIA)) {
-				return link;
-			}
-		}
-		return null;
+		return this.getFirstLinkByRel(Atom.REL_EDIT_MEDIA);
 	}
 
 	/* (non-Javadoc)
@@ -141,6 +133,32 @@ public class MockAtomEntry implements AtomEntry {
 	 */
 	public List<AtomLink> getLinks() {
 		return this.links;
+	}
+	
+	public AtomLink getFirstLinkByRel(String rel) {
+		List<AtomLink> links = this.getLinksByRel(rel);
+		if (links.size()>0) {
+			return links.get(0);
+		}
+		return null;
+	}
+	
+	public List<AtomLink> getLinksByRel(final String rel) {
+
+		Function<AtomLink,AtomLink> filterLinksByRel = new Function<AtomLink,AtomLink>() {
+
+			public AtomLink apply(AtomLink in) {
+				if (in.getRel().equals(rel)) {
+					return in;
+				}
+				return null;
+			}
+			
+		};
+
+		List<AtomLink> filteredLinks = new ArrayList<AtomLink>();
+		Functional.map(this.links, filteredLinks, filterLinksByRel);
+		return filteredLinks;
 	}
 
 	/* (non-Javadoc)
