@@ -20,5 +20,9 @@ public class Configuration {
 	public static native String getStudyFeedURL() /*-{
 		return $wnd.CHASSIS.studyFeedURL;
 	}-*/;
+
+	public static native String getSubmissionFeedURL() /*-{
+		return $wnd.CHASSIS.submissionFeedURL;
+	}-*/;
 	
 }
