@@ -197,6 +197,27 @@ public class MockAtomFactory implements AtomFactory {
 
 
 
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactory#createLink()
+	 */
+	public AtomLink createLink() {
+		return createMockAtomLink();
+	}
+
+
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactory#createLink(com.google.gwt.xml.client.Element)
+	 */
+	public AtomLink createLink(Element linkElement) throws AtomFormatException {
+		// not needed
+		return null;
+	}
+
+
+
+
 	
 	
 	
