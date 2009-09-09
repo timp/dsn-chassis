@@ -24,5 +24,12 @@ public class Configuration {
 	public static native String getSubmissionFeedURL() /*-{
 		return $wnd.CHASSIS.submissionFeedURL;
 	}-*/;
+
+	/**
+	 * @return
+	 */
+	public static native String getSubmissionQueryServiceURL()  /*-{
+		return $wnd.CHASSIS.submissionQueryServiceURL;
+	}-*/;
 	
 }
