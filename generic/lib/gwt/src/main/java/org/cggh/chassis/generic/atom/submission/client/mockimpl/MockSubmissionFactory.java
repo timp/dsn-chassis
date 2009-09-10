@@ -21,6 +21,12 @@ public class MockSubmissionFactory extends MockAtomFactory implements Submission
 
 	@Override
 	public MockAtomFeed createMockFeed(String title) {
+		return createMockSubmissionFeed(title);
+	}
+	
+	
+	
+	public MockSubmissionFeed createMockSubmissionFeed(String title) {
 		return new MockSubmissionFeed(title, this);
 	}
 

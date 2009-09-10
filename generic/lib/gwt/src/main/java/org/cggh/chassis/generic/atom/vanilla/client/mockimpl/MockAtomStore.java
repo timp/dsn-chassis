@@ -17,14 +17,20 @@ import org.cggh.chassis.generic.atom.vanilla.client.protocol.NotFoundException;
 public class MockAtomStore {
 	
 	
-	private Map<String,MockAtomEntry> entries = new HashMap<String,MockAtomEntry>();
-	private Map<String,MockAtomFeed> feeds = new HashMap<String,MockAtomFeed>();
+	private static Map<String,MockAtomEntry> entries = new HashMap<String,MockAtomEntry>();
+	private static Map<String,MockAtomFeed> feeds = new HashMap<String,MockAtomFeed>();
 	private MockAtomFactory factory = new MockAtomFactory();
 	
 
 
 	public MockAtomStore(MockAtomFactory factory) {
 		this.factory = factory;
+	}
+	
+	
+	public static void reset() {
+		entries = new HashMap<String,MockAtomEntry>();
+		feeds = new HashMap<String,MockAtomFeed>();
 	}
 	
 	

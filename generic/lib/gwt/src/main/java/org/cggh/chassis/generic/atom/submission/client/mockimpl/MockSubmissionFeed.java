@@ -40,7 +40,7 @@ public class MockSubmissionFeed extends MockAtomFeed implements SubmissionFeed {
 	}
 	
 	@Override
-	protected void put(AtomFeed feed) {
+	public void put(AtomFeed feed) {
 		super.put(feed);
 	}	
 
