@@ -17,7 +17,7 @@ public class MockAtomService implements AtomService {
 	
 	
 	
-	private static MockAtomStore store = new MockAtomStore();
+	public static MockAtomStore store = new MockAtomStore();
 	
 	
 	

@@ -27,6 +27,7 @@ public class TestMockAtomStore {
 	@Before
 	public void setUp() {
 
+		MockAtomStore.reset();
 		feedURL = "http://example.com/atom/myfeed";
 		factory = new MockAtomFactory();
 		store = new MockAtomStore(factory);

@@ -12,6 +12,6 @@ import org.cggh.chassis.generic.twisted.client.Deferred;
  */
 public interface SubmissionQueryService {
 
-	public Deferred<SubmissionFeed> query(SubmissionQuery query);
+	public Deferred<SubmissionFeed> getSubmissionsByAuthorEmail(String email);
 	
 }

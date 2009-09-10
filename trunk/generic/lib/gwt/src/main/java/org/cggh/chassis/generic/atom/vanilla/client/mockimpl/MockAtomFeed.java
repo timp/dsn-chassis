@@ -79,7 +79,7 @@ public class MockAtomFeed implements AtomFeed {
 	/**
 	 * @param mockEntry
 	 */
-	protected void add(MockAtomEntry mockEntry) {
+	public void add(MockAtomEntry mockEntry) {
 		this.entries.add(mockEntry);
 	}
 
@@ -87,21 +87,21 @@ public class MockAtomFeed implements AtomFeed {
 	 * @param entry
 	 * @return
 	 */
-	protected boolean contains(MockAtomEntry entry) {
+	public boolean contains(MockAtomEntry entry) {
 		return this.entries.contains(entry);
 	}
 
 	/**
 	 * @param entry
 	 */
-	protected void remove(MockAtomEntry entry) {
+	public void remove(MockAtomEntry entry) {
 		this.entries.remove(entry);
 	}
 
 	/**
 	 * @param feed
 	 */
-	protected void put(AtomFeed feed) {
+	public void put(AtomFeed feed) {
 		this.entries = new ArrayList<AtomEntry>();
 		for (AtomEntry entry : feed.getEntries()) {
 			this.entries.add(factory.copy(entry));

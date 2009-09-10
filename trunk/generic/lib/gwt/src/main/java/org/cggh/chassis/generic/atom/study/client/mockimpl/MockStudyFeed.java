@@ -39,7 +39,7 @@ public class MockStudyFeed extends MockAtomFeed implements StudyFeed {
 	}
 
 	@Override
-	protected void put(AtomFeed feed) {
+	public void put(AtomFeed feed) {
 		super.put(feed);
 	}
 
