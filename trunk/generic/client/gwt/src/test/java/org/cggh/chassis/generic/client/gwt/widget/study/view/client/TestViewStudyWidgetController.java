@@ -19,11 +19,17 @@ import org.cggh.chassis.generic.client.gwt.widget.study.view.client.ViewStudyWid
 import org.cggh.chassis.generic.twisted.client.Deferred;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.powermock.api.easymock.PowerMock;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author raok
  *
  */
+@RunWith(PowerMockRunner.class)
+@PrepareForTest({ViewStudyWidget.class})
 public class TestViewStudyWidgetController {
 
 	
@@ -35,6 +41,8 @@ public class TestViewStudyWidgetController {
 	private ViewStudyWidgetModel mockModel;
 	private AtomService mockService;
 	private StudyFactory mockFactory;
+	private ViewStudyWidget mockWidget;
+	private StudyEntry testStudy;
 		
 	@Before
 	public void setUp() {
@@ -43,9 +51,19 @@ public class TestViewStudyWidgetController {
 		mockModel = new ViewStudyWidgetModel();
 		mockFactory = new MockStudyFactory();
 		mockService = createMock(AtomService.class);
-				
-		testController = new ViewStudyWidgetController(mockModel, mockService);
 
+		//create mock widget
+		mockWidget = PowerMock.createPartialMock(ViewStudyWidget.class, "editStudyUIClicked");
+				
+		testController = new ViewStudyWidgetController(mockModel, mockService, mockWidget);
+		
+
+		//create test Study Entry to view
+		testStudy = mockFactory.createStudyEntry();
+		testStudy.setTitle("foo");
+		testStudy.setSummary("bar");
+		testStudy.addModule(CreateStudyWidgetModel.MODULE_CLINICAL);
+		testStudy.addModule(CreateStudyWidgetModel.MODULE_IN_VITRO);
 	}
 	
 	@Test
@@ -76,18 +94,7 @@ public class TestViewStudyWidgetController {
 	@Test
 	public void testLoadStudyByEntryURL_success() {
 		
-		//test data
-		String title = "study foo";
-		String summary = "summary foo";
 		
-		
-		//create test Study Entry to view
-		StudyEntry testStudy = mockFactory.createStudyEntry();
-		testStudy.setTitle(title);
-		testStudy.setSummary(summary);
-		testStudy.addModule(CreateStudyWidgetModel.MODULE_CLINICAL);
-		testStudy.addModule(CreateStudyWidgetModel.MODULE_IN_VITRO);
-
 		GetStudyEntryCallback callback = testController.new GetStudyEntryCallback();
 		
 		//call method under test
@@ -101,20 +108,9 @@ public class TestViewStudyWidgetController {
 	}
 	
 	@Test
-	public void testLoadStudy() {
+	public void testLoadStudyEntry() {
 		
-		//test data
-		String title = "study foo";
-		String summary = "summary foo";
-		
-		
-		//create test Study Entry to view
-		StudyEntry testStudy = mockFactory.createStudyEntry();
-		testStudy.setTitle(title);
-		testStudy.setSummary(summary);
-		testStudy.addModule(CreateStudyWidgetModel.MODULE_CLINICAL);
-		testStudy.addModule(CreateStudyWidgetModel.MODULE_IN_VITRO);
-		
+				
 		//call method under test
 		testController.loadStudyEntry(testStudy);
 		
@@ -122,6 +118,23 @@ public class TestViewStudyWidgetController {
 		assertEquals(ViewStudyWidgetModel.STATUS_LOADED, mockModel.getStatus());
 		assertEquals(testStudy, mockModel.getStudyEntry());
 		
+		
+	}
+	
+	@Test
+	public void testOnEditStudyUIClicked() {
+		
+
+		mockModel.setStudyEntry(testStudy);
+		
+		//set expectations on owner
+		mockWidget.editStudyUIClicked(isA(StudyEntry.class));
+		PowerMock.replay(mockWidget, ViewStudyWidget.class);
+		
+		//call method under test
+		testController.onEditStudyUIClicked();
+		
+		PowerMock.verify(mockWidget, ViewStudyWidget.class);
 		
 	}
 	

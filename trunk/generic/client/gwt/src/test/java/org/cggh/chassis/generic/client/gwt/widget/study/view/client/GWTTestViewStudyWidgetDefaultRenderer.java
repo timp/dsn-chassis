@@ -6,7 +6,11 @@ package org.cggh.chassis.generic.client.gwt.widget.study.view.client;
 import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
 import org.cggh.chassis.generic.atom.study.client.format.StudyFactory;
 import org.cggh.chassis.generic.atom.study.client.mockimpl.MockStudyFactory;
+import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
 
+import com.google.gwt.dom.client.Document;
+import com.google.gwt.event.dom.client.DomEvent;
+import com.google.gwt.event.shared.HasHandlers;
 import com.google.gwt.junit.client.GWTTestCase;
 import com.google.gwt.user.client.ui.SimplePanel;
 
@@ -18,6 +22,25 @@ public class GWTTestViewStudyWidgetDefaultRenderer extends GWTTestCase {
 
 	private ViewStudyWidgetModel testModel;
 	private ViewStudyWidgetDefaultRenderer testRenderer;
+	private MockViewStudyWidgetController mockController;
+	
+	//mock MockViewStudyWidget
+	private class MockViewStudyWidgetController extends ViewStudyWidgetController {
+
+		public MockViewStudyWidgetController(ViewStudyWidgetModel model,
+				AtomService service) {
+			super(model, service, null);
+		}
+		
+		//check to see if onEditStudyUIClicked called
+		public boolean editThisStudyFired = false;
+		
+		@Override
+		public void onEditStudyUIClicked() {
+			editThisStudyFired = true;
+		}
+		
+	}
 
 	/* (non-Javadoc)
 	 * @see com.google.gwt.junit.client.GWTTestCase#getModuleName()
@@ -32,9 +55,12 @@ public class GWTTestViewStudyWidgetDefaultRenderer extends GWTTestCase {
 		
 		//Create testController, inject testModel and a mock Service
 		testModel = new ViewStudyWidgetModel();
-						
+		
+		//Create mockController to test with
+		mockController = new MockViewStudyWidgetController(testModel, null);
+		
 		// instantiate a renderer
-		testRenderer = new ViewStudyWidgetDefaultRenderer(new SimplePanel());
+		testRenderer = new ViewStudyWidgetDefaultRenderer(new SimplePanel(), mockController);
 		
 		//register as listener
 		testModel.addListener(testRenderer);
@@ -118,5 +144,28 @@ public class GWTTestViewStudyWidgetDefaultRenderer extends GWTTestCase {
 		
 	}
 	
+	public void testOnEditStudyClicked() {
+		
+				
+		//simulate loaded state
+		//create test Study Entry to view
+		StudyFactory mockFactory = new MockStudyFactory();
+		StudyEntry testStudy = mockFactory.createStudyEntry();
+		testStudy.setTitle("foo");
+		testStudy.setSummary("bar");
+		testStudy.addModule(ViewStudyWidgetDefaultRenderer.MODULE_CLINICAL);
+		testStudy.addModule(ViewStudyWidgetDefaultRenderer.MODULE_IN_VITRO);
+		testModel.setStudyEntry(testStudy);
+		
+		//simulate click event
+		DomEvent.fireNativeEvent(Document.get().createClickEvent(0, 0, 0, 0, 0, false, false, false, false),
+								 (HasHandlers)testRenderer.editThisStudyUI);
+		
+		
+		assertTrue(mockController.editThisStudyFired);
+		
+		
+	}
+		
 	
 }

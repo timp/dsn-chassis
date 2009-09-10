@@ -47,11 +47,8 @@ public class TestStudyManagementWidgetController {
 	@Test
 	public void testDisplayEditStudyWidget() {
 		
-		//test data
-		String entryURL = "http://example.com/studies/study1";
-		
 		//call method under test
-		testController.displayEditStudyWidget(entryURL);
+		testController.displayEditStudyWidget();
 		
 		//test outcome
 		assertEquals(StudyManagementWidgetModel.DISPLAYING_EDIT_STUDY, testModel.getDisplayStatus());

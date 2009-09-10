@@ -26,12 +26,20 @@ public class TestViewStudyWidgetModel {
 	}
 
 	private ViewStudyWidgetModel testModel;
+	private StudyEntry testStudy;
 	
 	@Before
 	public void setUp() {
 		
 		//create test object
 		testModel = new ViewStudyWidgetModel();
+		
+		// use mock factory to create test study
+		MockStudyFactory mockStudyFactory = new MockStudyFactory();
+		testStudy = mockStudyFactory.createStudyEntry();
+		testStudy.setTitle("foo1");
+		testStudy.setSummary("bar 1");
+		testStudy.addModule("module foo1");
 		
 	}
 	
@@ -52,19 +60,13 @@ public class TestViewStudyWidgetModel {
 		//test data
 		Integer status = ViewStudyWidgetModel.STATUS_LOADED;
 		
-		// use mock factory to create test studies
-		MockStudyFactory mockStudyFactory = new MockStudyFactory();
-		StudyEntry study = mockStudyFactory.createStudyEntry();
-		study.setTitle("foo1");
-		study.setSummary("bar 1");
-		study.addModule("module foo1");
-		
+				
 		//call methods under test
-		testModel.setStudyEntry(study);
+		testModel.setStudyEntry(testStudy);
 		testModel.setStatus(status);
 		
 		// test outcome
-		assertEquals(study, testModel.getStudyEntry());
+		assertEquals(testStudy, testModel.getStudyEntry());
 		assertEquals(status, testModel.getStatus());
 		
 	}
@@ -83,24 +85,18 @@ public class TestViewStudyWidgetModel {
 	@Test
 	public void testOnStudyEntryChanged() {
 		
-		// use mock factory to create test studies
-		MockStudyFactory mockStudyFactory = new MockStudyFactory();
-		StudyEntry study = mockStudyFactory.createStudyEntry();
-		study.setTitle("foo1");
-		study.setSummary("bar 1");
-		study.addModule("module foo1");
-		
+				
 		ViewStudyWidgetModelListener listener = createMock(ViewStudyWidgetModelListener.class);
 		
 		//set up expectations
-		listener.onStudyEntryChanged(null, study);
+		listener.onStudyEntryChanged(null, testStudy);
 		replay(listener);
 		
 		//register with model
 		testModel.addListener(listener);
 		
 		//call methods under test
-		testModel.setStudyEntry(study);
+		testModel.setStudyEntry(testStudy);
 
 		verify(listener);
 		

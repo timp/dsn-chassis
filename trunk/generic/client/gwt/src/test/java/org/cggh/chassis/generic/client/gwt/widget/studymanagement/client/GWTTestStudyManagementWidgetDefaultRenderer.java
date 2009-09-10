@@ -113,10 +113,22 @@ public class GWTTestStudyManagementWidgetDefaultRenderer extends GWTTestCase {
 		assertTrue( (testRenderer.viewStudyWidgetCanvas.getParent() != null)
 					 && (testRenderer.viewStudyWidgetCanvas.isVisible()) );
 		
+		testModel.setDisplayStatus(StudyManagementWidgetModel.DISPLAYING_VIEW_ALL_STUDIES);		
+
+		// test outcome 
+		assertTrue( (testRenderer.viewAllStudiesWidgetCanvas.getParent() != null)
+					 && (testRenderer.viewAllStudiesWidgetCanvas.isVisible()) );
+		
+		testModel.setDisplayStatus(StudyManagementWidgetModel.DISPLAYING_EDIT_STUDY);		
+
+		// test outcome 
+		assertTrue( (testRenderer.editStudyWidgetCanvas.getParent() != null)
+					 && (testRenderer.editStudyWidgetCanvas.isVisible()) );
+		
 	}
 	
 	@Test
-	public void testOnNewStudySaved() {
+	public void testOnNewStudySaved_StudyUpdateSuccess_editStudyUIClicked_viewStudyUIClicked() {
 		
 		//test data
 		String title = "study foo";
@@ -142,8 +154,17 @@ public class GWTTestStudyManagementWidgetDefaultRenderer extends GWTTestCase {
 			public StudyEntry apply(StudyEntry in) {
 				
 				testRenderer.onNewStudyCreated(in);
-				
 				assertEquals(StudyManagementWidgetModel.DISPLAYING_VIEW_STUDY, testModel.getDisplayStatus());
+				
+				testRenderer.onEditStudyUIClicked(in);
+				assertEquals(StudyManagementWidgetModel.DISPLAYING_EDIT_STUDY, testModel.getDisplayStatus());
+								
+				testRenderer.onStudyUpdateSuccess(in);
+				assertEquals(StudyManagementWidgetModel.DISPLAYING_VIEW_STUDY, testModel.getDisplayStatus());
+				
+				testRenderer.viewStudyUIClicked(in);
+				assertEquals(StudyManagementWidgetModel.DISPLAYING_VIEW_STUDY, testModel.getDisplayStatus());
+							
 				
 				//complete test
 			    finishTest();				

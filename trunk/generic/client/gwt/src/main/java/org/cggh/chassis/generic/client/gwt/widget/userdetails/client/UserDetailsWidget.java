@@ -11,7 +11,7 @@ import com.google.gwt.user.client.ui.Panel;
  * @author raok
  *
  */
-public class UserDetailsWidget {
+public class UserDetailsWidget implements UserDetailsWidgetAPI {
 
 	final private UserDetailsWidgetModel model;
 	final private UserDetailsWidgetController controller;
@@ -54,6 +54,9 @@ public class UserDetailsWidget {
 	
 	
 	
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.client.gwt.widget.userdetails.client.UserDetailsWidgetAPI#refreshUserDetails()
+	 */
 	public void refreshUserDetails() {
 		controller.refreshUserDetails();
 	}

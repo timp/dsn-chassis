@@ -16,7 +16,7 @@ import com.google.gwt.user.client.ui.Panel;
  * @author raok
  *
  */
-public class CreateStudyWidget {
+public class CreateStudyWidget implements CreateStudyWidgetAPI {
 
 	final private CreateStudyWidgetModel model;
 	final private CreateStudyWidgetController controller;
@@ -51,15 +51,21 @@ public class CreateStudyWidget {
 		model.addListener(renderer);
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.client.gwt.widget.study.create.client.CreateStudyWidgetAPI#setUpNewStudy()
+	 */
 	public void setUpNewStudy() {
 		controller.setUpNewStudy();
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.client.gwt.widget.study.create.client.CreateStudyWidgetAPI#addCreateStudyWidgetListener(org.cggh.chassis.generic.client.gwt.widget.study.create.client.CreateStudyWidgetPubSubAPI)
+	 */
 	public void addCreateStudyWidgetListener(CreateStudyWidgetPubSubAPI listener) {
 		listeners.add(listener);
 	}
 
-	public void newStudyCreated(StudyEntry studyEntry) {
+	void newStudyCreated(StudyEntry studyEntry) {
 		for (CreateStudyWidgetPubSubAPI listener : listeners) {
 			listener.onNewStudyCreated(studyEntry);
 		}

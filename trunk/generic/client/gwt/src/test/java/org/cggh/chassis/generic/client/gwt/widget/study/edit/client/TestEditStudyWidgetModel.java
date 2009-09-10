@@ -1,13 +1,15 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.client.gwt.widget.study.create.client;
+package org.cggh.chassis.generic.client.gwt.widget.study.edit.client;
 
 import static org.easymock.EasyMock.*;
 import static org.junit.Assert.*;
 
 import junit.framework.JUnit4TestAdapter;
 
+import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
+import org.cggh.chassis.generic.atom.study.client.mockimpl.MockStudyFactory;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,19 +17,26 @@ import org.junit.Test;
  * @author raok
  *
  */
-public class TestCreateStudyWidgetModel {
+public class TestEditStudyWidgetModel {
 
 	public static junit.framework.Test suite() {
-		return new JUnit4TestAdapter(TestCreateStudyWidgetModel.class);
+		return new JUnit4TestAdapter(TestEditStudyWidgetModel.class);
 	}
 
-	private CreateStudyWidgetModel testModel;
+	private EditStudyWidgetModel testModel;
+	private StudyEntry studyEntry;
 	
 	@Before
 	public void setUp() {
 		
-		//Create object to use in all tests
-		testModel = new CreateStudyWidgetModel();
+		//Edit object to use in all tests
+		testModel = new EditStudyWidgetModel();
+		
+		//create mock studyEntry to load
+		MockStudyFactory mockFactory = new MockStudyFactory();
+		studyEntry = mockFactory.createStudyEntry();
+		studyEntry.setTitle("");
+		studyEntry.setSummary("");
 		
 	}
 	
@@ -38,13 +47,8 @@ public class TestCreateStudyWidgetModel {
 		assertNotNull(testModel);
 		
 		// test initial state
-		assertTrue(testModel.getTitle().isEmpty());
-		assertTrue(testModel.getSummary().isEmpty());
-		assertFalse(testModel.acceptClinicalData());
-		assertFalse(testModel.acceptMolecularData());
-		assertFalse(testModel.acceptInVitroData());
-		assertFalse(testModel.acceptPharmacologyData());
-		assertEquals(CreateStudyWidgetModel.STATUS_INITIAL, testModel.getStatus());
+		assertNull(testModel.getStudyEntry());
+		assertEquals(EditStudyWidgetModel.STATUS_INITIAL, testModel.getStatus());
 		
 		
 	}
@@ -59,6 +63,9 @@ public class TestCreateStudyWidgetModel {
 		Boolean acceptMolecularData = true;
 		Boolean acceptInVitroData = true;
 		Boolean acceptPharmacologyData = true;
+		
+		//mock loaded study entry
+		testModel.setStudyEntry(studyEntry);
 		
 		// call methods under test
 		testModel.setTitle(title);
@@ -79,6 +86,25 @@ public class TestCreateStudyWidgetModel {
 	}
 	
 	@Test
+	public void testStudyEntryChanged() {
+		
+		//create mock
+		EditStudyWidgetModelListener listener = createMock(EditStudyWidgetModelListener.class);
+		
+		//set up expectations
+		listener.onStudyEntryChanged(null, studyEntry);
+		replay(listener);
+		
+		testModel.addListener(listener);
+		
+		//call method under test
+		testModel.setStudyEntry(studyEntry);
+		
+		verify(listener);
+		
+	}
+	
+	@Test
 	public void testTitleChanged() {
 		
 		// test data
@@ -86,10 +112,12 @@ public class TestCreateStudyWidgetModel {
 		String invalid = "";
 		String valid = "bar";
 				
-		CreateStudyWidgetModelListener listener = createMock(CreateStudyWidgetModelListener.class);
+		EditStudyWidgetModelListener listener = createMock(EditStudyWidgetModelListener.class);
 		
 		// set up expectations
 		// allow calls on other methods
+		listener.onStudyEntryChanged(null, studyEntry);
+		expectLastCall().anyTimes();
 		listener.onSummaryChanged(isA(Boolean.class));
 		expectLastCall().anyTimes();
 		listener.onFormCompleted(isA(Boolean.class));
@@ -104,6 +132,9 @@ public class TestCreateStudyWidgetModel {
 		
 		// register with model
 		testModel.addListener(listener);
+		
+		//mock loaded study entry
+		testModel.setStudyEntry(studyEntry);
 		
 		// call method under test
 		testModel.setTitle(invalid);
@@ -121,10 +152,12 @@ public class TestCreateStudyWidgetModel {
 		String invalid = "";
 		String valid = "bar";
 		
-		CreateStudyWidgetModelListener listener = createMock(CreateStudyWidgetModelListener.class);
+		EditStudyWidgetModelListener listener = createMock(EditStudyWidgetModelListener.class);
 		
 		// set up expectations
 		// allow calls on other methods
+		listener.onStudyEntryChanged(null, studyEntry);
+		expectLastCall().anyTimes();
 		listener.onTitleChanged(isA(Boolean.class));
 		expectLastCall().anyTimes();
 		listener.onFormCompleted(isA(Boolean.class));
@@ -140,6 +173,9 @@ public class TestCreateStudyWidgetModel {
 		// register with model
 		testModel.addListener(listener);
 		
+		//mock loaded study entry
+		testModel.setStudyEntry(studyEntry);
+		
 		testModel.setSummary(invalid);
 		testModel.setSummary(valid);
 		
@@ -152,10 +188,12 @@ public class TestCreateStudyWidgetModel {
 	public void testModulesChanged() {
 			
 		
-		CreateStudyWidgetModelListener listener = createMock(CreateStudyWidgetModelListener.class);
+		EditStudyWidgetModelListener listener = createMock(EditStudyWidgetModelListener.class);
 		
 		// set up expectations
 		// allow calls on other methods
+		listener.onStudyEntryChanged(null, studyEntry);
+		expectLastCall().anyTimes();
 		listener.onTitleChanged(isA(Boolean.class));
 		expectLastCall().anyTimes();
 		listener.onFormCompleted(isA(Boolean.class));
@@ -171,6 +209,9 @@ public class TestCreateStudyWidgetModel {
 		// register with model
 		testModel.addListener(listener);
 		
+		//mock loaded study entry
+		testModel.setStudyEntry(studyEntry);
+		
 		testModel.setAcceptPharmacologyData(false);
 		testModel.setAcceptPharmacologyData(true);
 		
@@ -181,30 +222,32 @@ public class TestCreateStudyWidgetModel {
 	@Test
 	public void testStatusConstants() {
 		
-		assertEquals(new Integer(0), CreateStudyWidgetModel.STATUS_INITIAL);
-		assertEquals(new Integer(1), CreateStudyWidgetModel.STATUS_READY);
-		assertEquals(new Integer(2), CreateStudyWidgetModel.STATUS_SAVING);
-		assertEquals(new Integer(3), CreateStudyWidgetModel.STATUS_SAVED);
-		assertEquals(new Integer(4), CreateStudyWidgetModel.STATUS_SAVE_ERROR);
-		assertEquals(new Integer(5), CreateStudyWidgetModel.STATUS_CANCELLED);
+		assertEquals(new Integer(0), EditStudyWidgetModel.STATUS_INITIAL);
+		assertEquals(new Integer(1), EditStudyWidgetModel.STATUS_LOADING);
+		assertEquals(new Integer(2), EditStudyWidgetModel.STATUS_LOAD_ERROR);
+		assertEquals(new Integer(3), EditStudyWidgetModel.STATUS_LOADED);
+		assertEquals(new Integer(4), EditStudyWidgetModel.STATUS_SAVING);
+		assertEquals(new Integer(5), EditStudyWidgetModel.STATUS_SAVED);
+		assertEquals(new Integer(6), EditStudyWidgetModel.STATUS_SAVE_ERROR);
+		assertEquals(new Integer(7), EditStudyWidgetModel.STATUS_CANCELLED);
 		
 	}
 	
 	@Test
 	public void testStatusChanged() {
 				
-		CreateStudyWidgetModelListener listener = createMock(CreateStudyWidgetModelListener.class);
+		EditStudyWidgetModelListener listener = createMock(EditStudyWidgetModelListener.class);
 		
 		// set up expectations
-		listener.onStatusChanged(CreateStudyWidgetModel.STATUS_INITIAL, CreateStudyWidgetModel.STATUS_READY);
-		listener.onStatusChanged(CreateStudyWidgetModel.STATUS_READY, CreateStudyWidgetModel.STATUS_SAVE_ERROR);
+		listener.onStatusChanged(EditStudyWidgetModel.STATUS_INITIAL, EditStudyWidgetModel.STATUS_LOADED);
+		listener.onStatusChanged(EditStudyWidgetModel.STATUS_LOADED, EditStudyWidgetModel.STATUS_SAVE_ERROR);
 		replay(listener);
 		
 		// register with model
 		testModel.addListener(listener);
 		
-		testModel.setStatus(CreateStudyWidgetModel.STATUS_READY);
-		testModel.setStatus(CreateStudyWidgetModel.STATUS_SAVE_ERROR);
+		testModel.setStatus(EditStudyWidgetModel.STATUS_LOADED);
+		testModel.setStatus(EditStudyWidgetModel.STATUS_SAVE_ERROR);
 		
 		verify(listener);
 	}
@@ -212,9 +255,11 @@ public class TestCreateStudyWidgetModel {
 	@Test
 	public void testFormComplete() {
 		
-		CreateStudyWidgetModelListener listener = createMock(CreateStudyWidgetModelListener.class);
+		EditStudyWidgetModelListener listener = createMock(EditStudyWidgetModelListener.class);
 		
 		//set up expectations
+		listener.onStudyEntryChanged(null, studyEntry);
+		expectLastCall().anyTimes();
 		listener.onTitleChanged(isA(Boolean.class));
 		expectLastCall().anyTimes();
 		listener.onSummaryChanged(isA(Boolean.class));
@@ -229,6 +274,9 @@ public class TestCreateStudyWidgetModel {
 
 		// register with model
 		testModel.addListener(listener);
+		
+		//mock loaded study entry
+		testModel.setStudyEntry(studyEntry);
 		
 		//call method under test
 		//TODO test more rigorously

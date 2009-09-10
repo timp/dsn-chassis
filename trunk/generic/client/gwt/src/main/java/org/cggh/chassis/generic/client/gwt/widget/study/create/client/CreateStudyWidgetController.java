@@ -114,7 +114,7 @@ public class CreateStudyWidgetController {
 	private class SaveFailFunctionErrback implements Function<Throwable,Throwable> {
 
 		public Throwable apply(Throwable in) {
-			model.setStatus(CreateStudyWidgetModel.STATUS_ERROR);
+			model.setStatus(CreateStudyWidgetModel.STATUS_SAVE_ERROR);
 			return in;
 		}
 		

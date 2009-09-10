@@ -6,9 +6,17 @@ package org.cggh.chassis.generic.client.gwt.widget.studymanagement.client;
 import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
 import org.cggh.chassis.generic.client.gwt.widget.study.create.client.CreateStudyWidget;
+import org.cggh.chassis.generic.client.gwt.widget.study.create.client.CreateStudyWidgetAPI;
 import org.cggh.chassis.generic.client.gwt.widget.study.create.client.CreateStudyWidgetPubSubAPI;
+import org.cggh.chassis.generic.client.gwt.widget.study.edit.client.EditStudyWidget;
+import org.cggh.chassis.generic.client.gwt.widget.study.edit.client.EditStudyWidgetAPI;
+import org.cggh.chassis.generic.client.gwt.widget.study.edit.client.EditStudyWidgetPubSubAPI;
 import org.cggh.chassis.generic.client.gwt.widget.study.view.client.ViewStudyWidget;
+import org.cggh.chassis.generic.client.gwt.widget.study.view.client.ViewStudyWidgetAPI;
+import org.cggh.chassis.generic.client.gwt.widget.study.view.client.ViewStudyWidgetPubSubAPI;
 import org.cggh.chassis.generic.client.gwt.widget.study.viewall.client.ViewAllStudiesWidget;
+import org.cggh.chassis.generic.client.gwt.widget.study.viewall.client.ViewAllStudiesWidgetAPI;
+import org.cggh.chassis.generic.client.gwt.widget.study.viewall.client.ViewAllStudiesWidgetPubSubAPI;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -22,7 +30,11 @@ import com.google.gwt.user.client.ui.VerticalPanel;
  * @author raok
  *
  */
-public class StudyManagementWidgetDefaultRenderer implements StudyManagementWidgetModelListener, CreateStudyWidgetPubSubAPI {
+public class StudyManagementWidgetDefaultRenderer implements StudyManagementWidgetModelListener,
+															 CreateStudyWidgetPubSubAPI, 
+															 EditStudyWidgetPubSubAPI,
+															 ViewStudyWidgetPubSubAPI,
+															 ViewAllStudiesWidgetPubSubAPI {
 
 	//Expose view elements for testing purposes.
 	final Label displayCreateStudyUI = new Label("Create Study");
@@ -34,12 +46,14 @@ public class StudyManagementWidgetDefaultRenderer implements StudyManagementWidg
 	final private StudyManagementWidgetController controller;
 	
 	//child widgets
-	private CreateStudyWidget createStudyWidget; 
+	private CreateStudyWidgetAPI createStudyWidget; 
 	final Panel createStudyWidgetCanvas = new SimplePanel();
-	private ViewStudyWidget viewStudyWidget;
+	private ViewStudyWidgetAPI viewStudyWidget;
 	final Panel viewStudyWidgetCanvas = new SimplePanel();	
-	private ViewAllStudiesWidget viewAllStudiesWidget;
+	private ViewAllStudiesWidgetAPI viewAllStudiesWidget;
 	final Panel viewAllStudiesWidgetCanvas = new SimplePanel();
+	private EditStudyWidgetAPI editStudyWidget;
+	final Panel editStudyWidgetCanvas = new SimplePanel();
 
 
 	// TODO handle run time setting of feedURL
@@ -55,9 +69,13 @@ public class StudyManagementWidgetDefaultRenderer implements StudyManagementWidg
 		viewStudyWidget = new ViewStudyWidget(viewStudyWidgetCanvas, service);
 		createStudyWidget = new CreateStudyWidget(createStudyWidgetCanvas, service, feedURL);
 		viewAllStudiesWidget = new ViewAllStudiesWidget(viewAllStudiesWidgetCanvas, service);
+		editStudyWidget = new EditStudyWidget(editStudyWidgetCanvas, service);
 		
-		//register this Widget as a listener to the CreateStudyController
+		//register this Widget as a listener to child Widgets
 		createStudyWidget.addCreateStudyWidgetListener(this);
+		viewStudyWidget.addViewStudyWidgetListener(this);
+		editStudyWidget.addEditStudyWidgetListener(this);
+		viewAllStudiesWidget.addViewAllStudiesWidgetListener(this);
 		
 		//initialise view
 		initMenu();
@@ -128,12 +146,28 @@ public class StudyManagementWidgetDefaultRenderer implements StudyManagementWidg
 			displayCanvas.add(viewAllStudiesWidgetCanvas);
 		} else if (after == StudyManagementWidgetModel.DISPLAYING_EDIT_STUDY) {
 			displayCanvas.clear();
+			displayCanvas.add(editStudyWidgetCanvas);
 		}
 		
 	}
 
 	public void onNewStudyCreated(StudyEntry newStudyEntry) {
 		viewStudyWidget.loadStudyEntry(newStudyEntry);
+		controller.displayViewStudyWidget();
+	}
+
+	public void onStudyUpdateSuccess(StudyEntry updatedStudyEntry) {
+		viewStudyWidget.loadStudyEntry(updatedStudyEntry);
+		controller.displayViewStudyWidget();
+	}
+
+	public void onEditStudyUIClicked(StudyEntry studyEntryToEdit) {
+		editStudyWidget.editStudyEntry(studyEntryToEdit);
+		controller.displayEditStudyWidget();
+	}
+
+	public void viewStudyUIClicked(StudyEntry studyEntry) {
+		viewStudyWidget.loadStudyEntry(studyEntry);
 		controller.displayViewStudyWidget();
 	}
 	

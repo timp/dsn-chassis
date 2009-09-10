@@ -5,6 +5,8 @@ package org.cggh.chassis.generic.client.gwt.widget.study.view.client;
 
 import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
@@ -32,12 +34,15 @@ public class ViewStudyWidgetDefaultRenderer implements ViewStudyWidgetModelListe
 	final Panel acceptsInVitroDataIndicator = new SimplePanel();
 	final Panel acceptsPharmacologyDataIndicator = new SimplePanel();
 	final Panel loadingPanel = new SimplePanel();
-	final Panel studyDetailsPanel = new SimplePanel();
+	final Panel studyDetailsPanel = new HorizontalPanel();
+	final Label editThisStudyUI = new Label("Edit Study");
 	
 	final private Panel canvas;
+	final private ViewStudyWidgetController controller;
 
-	public ViewStudyWidgetDefaultRenderer(Panel canvas) {
+	public ViewStudyWidgetDefaultRenderer(Panel canvas, ViewStudyWidgetController controller) {
 		this.canvas = canvas;
+		this.controller = controller;
 		
 		initCanvas();
 	}
@@ -78,6 +83,18 @@ public class ViewStudyWidgetDefaultRenderer implements ViewStudyWidgetModelListe
 		
 		studyDetailsPanel.add(studyDetailsVPanel);
 		
+		//TODO add other actions
+		//Create actions panel
+		VerticalPanel actionsVPanel = new VerticalPanel();
+		
+		//add clickhandler to editStudyUI
+		editThisStudyUI.addClickHandler(new EditStudyClickHandler());
+		
+		actionsVPanel.add(editThisStudyUI);
+		
+		studyDetailsPanel.add(actionsVPanel);
+		
+		
 	}
 
 	public void onStatusChanged(Integer before, Integer after) {
@@ -103,4 +120,11 @@ public class ViewStudyWidgetDefaultRenderer implements ViewStudyWidgetModelListe
 		acceptsPharmacologyDataIndicator.setVisible(after.getModules().contains(MODULE_PHARMACOLOGY));
 	}
 
+	class EditStudyClickHandler implements ClickHandler {
+		
+		public void onClick(ClickEvent arg0) {
+			controller.onEditStudyUIClicked();
+		}
+	}
+	
 }

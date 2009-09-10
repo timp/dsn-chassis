@@ -6,6 +6,7 @@
   	<inherits name="org.cggh.chassis.generic.client.gwt.widget.study.create.CreateStudyWidget"/>
   	<inherits name="org.cggh.chassis.generic.client.gwt.widget.study.view.ViewStudyWidget"/>
   	<inherits name="org.cggh.chassis.generic.client.gwt.widget.study.viewall.ViewAllStudiesWidget"/>
+  	<inherits name="org.cggh.chassis.generic.client.gwt.widget.study.edit.EditStudyWidget"/>
   	
 	<!-- Inherit the default GWT style sheet.  You can change       -->
     <!-- the theme of your GWT application by uncommenting          -->

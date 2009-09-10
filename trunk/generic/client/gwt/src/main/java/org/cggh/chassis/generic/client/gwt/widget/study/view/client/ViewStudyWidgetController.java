@@ -17,10 +17,12 @@ public class ViewStudyWidgetController {
 
 	private ViewStudyWidgetModel model;
 	private AtomService service;
+	private ViewStudyWidget owner;
 
-	public ViewStudyWidgetController(ViewStudyWidgetModel model, AtomService service) {
+	public ViewStudyWidgetController(ViewStudyWidgetModel model, AtomService service, ViewStudyWidget owner) {
 		this.model = model;
 		this.service = service;
+		this.owner = owner;
 	}
 
 
@@ -49,6 +51,11 @@ public class ViewStudyWidgetController {
 	public void loadStudyEntry(StudyEntry newStudyEntry) {
 		model.setStudyEntry(newStudyEntry);
 		model.setStatus(ViewStudyWidgetModel.STATUS_LOADED);
+	}
+
+
+	public void onEditStudyUIClicked() {
+		owner.editStudyUIClicked(model.getStudyEntry());
 	}
 	
 
