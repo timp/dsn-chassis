@@ -7,7 +7,6 @@ import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionFeed;
 import org.cggh.chassis.generic.atom.submission.client.mockimpl.MockSubmissionFactory;
 import org.cggh.chassis.generic.atom.submission.client.mockimpl.MockSubmissionQueryService;
-import org.cggh.chassis.generic.atom.submission.client.protocol.SubmissionQuery;
 import org.cggh.chassis.generic.atom.submission.client.protocol.SubmissionQueryService;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomPersonConstruct;
@@ -29,21 +28,95 @@ public class SpikeSubmissionQueryEntryPoint implements EntryPoint {
 
 	private Log log = LogFactory.getLog(this.getClass());
 	
+	
+	
+	
+	/**
+	 * This method provides an example of how to use the submissions query service.
+	 */
+	private void querySubmissions() {
+		log.enter("querySubmissions");
+		
+		String serviceURL = Configuration.getSubmissionQueryServiceURL();
+		
+		log.trace("create a query service");
+		SubmissionQueryService service = new MockSubmissionQueryService(serviceURL); // use mock for now
+
+		log.trace("make query service call");
+		Deferred<SubmissionFeed> deferredResults = service.getSubmissionsByAuthorEmail("bob@example.com");
+		
+		log.trace("add callback");
+		deferredResults.addCallback(new Function<SubmissionFeed,SubmissionFeed>() {
+
+			public SubmissionFeed apply(SubmissionFeed results) {
+				log.enter("apply (inner callback function)");
+
+				Window.alert("results feed title: "+results.getTitle());
+				Window.alert("found "+results.getSubmissionEntries().size()+" matching submissions");
+
+				if (results.getSubmissionEntries().size() > 0) {
+					
+					SubmissionEntry firstResult = results.getSubmissionEntries().get(0);
+					String submissionId = firstResult.getId();
+					String published = firstResult.getPublished();
+					String updated = firstResult.getUpdated();
+					String submissionURL = firstResult.getEditLink().getHref();
+					String firstModule = firstResult.getModules().get(0);
+					String studyLink = firstResult.getStudyLinks().get(0).getHref();
+					
+					Window.alert("first matching result; id: "+submissionId+"; published: "+published+"; updated: "+updated+"; edit link (entryURL): "+submissionURL+"; first modules: "+firstModule+"; first study link: "+studyLink);
+
+				}
+
+				// do any other stuff with results here
+				
+
+				log.leave();
+				return results; // pass on to any further callbacks
+			}
+			
+		});
+		
+		log.trace("add errback");
+		deferredResults.addErrback(new Function<Throwable,Throwable>() {
+
+			public Throwable apply(Throwable t) {
+				log.enter("apply (inner errback function)");
+
+				Window.alert("service error: "+t.getClass().getName()+": "+t.getLocalizedMessage());
+				
+				// any other handling of error goes here
+				
+				log.leave();
+				
+				return t; // pass on to any further errbacks
+			}
+			
+		});
+		
+		log.leave();
+	}
+
+	
+	
+
 	/* (non-Javadoc)
 	 * @see com.google.gwt.core.client.EntryPoint#onModuleLoad()
 	 */
 	public void onModuleLoad() {
-		// TODO Auto-generated method stub
 		log.enter("onModuleLoad");
 
-		log.trace("set up by creating a submission");
-		Deferred<AtomEntry> deferredSubmission = createSubmission();
+		log.trace("first need to set up spike by creating a submission");
+		Deferred<Void> setup = setup();
 		
-		log.trace("when creation complete, then try query submissions by author");
-		deferredSubmission.addCallback(new Function<SubmissionEntry,SubmissionEntry>() {
+		log.trace("when setup complete, then try query submissions by author");
+		setup.addCallback(new Function<Void,Void>() {
 
-			public SubmissionEntry apply(SubmissionEntry in) {
+			public Void apply(Void in) {
+				
+				log.trace("setup is complete, now try query submissions");
 				querySubmissions();
+				
 				return null;
 			}
 			
@@ -54,28 +127,9 @@ public class SpikeSubmissionQueryEntryPoint implements EntryPoint {
 	
 	
 	
-	private void querySubmissions() {
-		log.enter("querySubmissions");
-		
-		String serviceURL = Configuration.getSubmissionQueryServiceURL();
-		
-		log.trace("create a query service");
-		SubmissionQueryService service = new MockSubmissionQueryService(); // use mock for now
 
-		SubmissionQuery query = new SubmissionQuery();
-		query.addClause(SubmissionQuery.Field.AUTHOR_EMAIL, "bob@example.com");
-		
-		Deferred<SubmissionFeed> results = service.query(query);
-		
-		// TODO
-		
-		log.leave();
-	}
-	
-
-
-	private Deferred<AtomEntry> createSubmission() {
-		log.enter("createSubmission");
+	private Deferred<Void> setup() {
+		log.enter("setup");
 
 		String feedURL = Configuration.getSubmissionFeedURL();
 		
