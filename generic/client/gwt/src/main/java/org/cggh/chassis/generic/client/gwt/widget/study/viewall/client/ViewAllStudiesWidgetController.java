@@ -3,6 +3,7 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.study.viewall.client;
 
+import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
 import org.cggh.chassis.generic.atom.study.client.format.StudyFeed;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
@@ -17,10 +18,12 @@ public class ViewAllStudiesWidgetController {
 
 	final private ViewAllStudiesWidgetModel model;
 	final private AtomService service;
+	final private ViewAllStudiesWidget owner;
 
-	public ViewAllStudiesWidgetController(ViewAllStudiesWidgetModel model, AtomService service) {
+	public ViewAllStudiesWidgetController(ViewAllStudiesWidgetModel model, AtomService service, ViewAllStudiesWidget owner) {
 		this.model = model;
 		this.service = service;
+		this.owner = owner;
 	}
 	
 	public void loadStudiesByFeedURL(String feedURL) {
@@ -41,6 +44,12 @@ public class ViewAllStudiesWidgetController {
 			return studyFeed;
 		}
 		
+	}
+
+	public void onViewStudyUIClicked(StudyEntry studyEntry) {
+
+		owner.onViewStudyUIClicked(studyEntry);
+	
 	}
 	
 }

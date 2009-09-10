@@ -235,7 +235,7 @@ public class TestCreateStudyWidgetController {
 		//call method under test
 		brokenController.saveNewStudy();
 		
-		assertEquals(CreateStudyWidgetModel.STATUS_ERROR, mockModel.getStatus());
+		assertEquals(CreateStudyWidgetModel.STATUS_SAVE_ERROR, mockModel.getStatus());
 		
 	}
 	

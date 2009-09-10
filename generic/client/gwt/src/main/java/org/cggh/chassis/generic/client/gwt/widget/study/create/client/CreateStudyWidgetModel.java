@@ -16,7 +16,7 @@ public class CreateStudyWidgetModel {
 	public static final Integer STATUS_READY = 1;
 	public static final Integer STATUS_SAVING = 2;
 	public static final Integer STATUS_SAVED = 3;
-	public static final Integer STATUS_ERROR = 4;
+	public static final Integer STATUS_SAVE_ERROR = 4;
 	public static final Integer STATUS_CANCELLED = 5;
 
 	//TODO remove when real atom service is used
@@ -25,19 +25,15 @@ public class CreateStudyWidgetModel {
 	public static final String MODULE_IN_VITRO = "In Vitro";
 	public static final String MODULE_PHARMACOLOGY = "Pharmacology";
 	
-	private String title;
-	private String summary;
-	private Boolean acceptClinicalData;
-	private Boolean acceptMolecularData;
-	private Boolean acceptInVitroData;
-	private Boolean acceptPharmacologyData;
+	private String title = "";
+	private String summary = "";
+	private Boolean acceptClinicalData = false;
+	private Boolean acceptMolecularData = false;
+	private Boolean acceptInVitroData = false;
+	private Boolean acceptPharmacologyData = false;
 	private Set<CreateStudyWidgetModelListener> listeners = new HashSet<CreateStudyWidgetModelListener>();
-	private Integer status;
-	
-	public CreateStudyWidgetModel() {
-		status = STATUS_INITIAL;
-	}
-	
+	private Integer status = STATUS_INITIAL;
+		
 	public String getTitle() {
 		return title;
 	}
@@ -67,39 +63,33 @@ public class CreateStudyWidgetModel {
 	}
 
 	public void setTitle(String title) {
-		String before = this.title;
 		this.title = title;
-		fireTitleChanged(before, title);
+		formDataChanged();
 	}
 
 	public void setSummary(String summary) {
-		String before = this.summary;
 		this.summary = summary;
-		fireSummaryChanged(before, summary);
+		formDataChanged();
 	}
 
 	public void setAcceptClinicalData(Boolean acceptClinicalData) {
-		Boolean before = this.acceptClinicalData;
 		this.acceptClinicalData = acceptClinicalData;
-		fireAcceptClinicalDataChanged(before, acceptClinicalData);
+		formDataChanged();
 	}
 
 	public void setAcceptMolecularData(Boolean acceptMolecularData) {
-		Boolean before = this.acceptMolecularData;
 		this.acceptMolecularData = acceptMolecularData;
-		fireAcceptMolecularDataChanged(before, acceptMolecularData);
+		formDataChanged();
 	}
 
 	public void setAcceptInVitroData(Boolean acceptInVitroData) {
-		Boolean before = this.acceptInVitroData;
 		this.acceptInVitroData = acceptInVitroData;
-		fireAcceptInVitroDataChanged(before, acceptInVitroData);
+		formDataChanged();
 	}
 
 	public void setAcceptPharmacologyData(Boolean acceptPharmacologyData) {
-		Boolean before = this.acceptPharmacologyData;
 		this.acceptPharmacologyData = acceptPharmacologyData;
-		fireAcceptPharmacologyDataChanged(before, acceptPharmacologyData);
+		formDataChanged();
 	}
 
 	public void addListener(CreateStudyWidgetModelListener listener) {
@@ -112,40 +102,53 @@ public class CreateStudyWidgetModel {
 		fireOnStatusChanged(before, status);		
 	}
 
-	private void fireTitleChanged(String before, String after) {
+	private void formDataChanged() {
+		
+		Boolean isTitleValid = fireTitleChanged(title);
+		Boolean isSummaryValid = fireSummaryChanged(summary);
+		Boolean isModulesValid = fireModulesChanged();
+		
+		Boolean isFormComplete = isTitleValid && isSummaryValid && isModulesValid;
+		
 		for (CreateStudyWidgetModelListener listener : listeners) {
-			listener.onTitleChanged(before, after);
+			listener.onFormCompleted(isFormComplete);
 		}
+		
+	}
+	
+	private Boolean fireTitleChanged(String title) {
+		
+		//TODO implement proper validation
+		Boolean isValid = !title.isEmpty();
+		
+		for (CreateStudyWidgetModelListener listener : listeners) {
+			listener.onTitleChanged(isValid);
+		}
+		
+		return isValid;
 	}
 
-	private void fireSummaryChanged(String before, String after) {
+	private Boolean fireSummaryChanged(String summary) {
+		
+		//TODO implement proper validation
+		Boolean isValid = !summary.isEmpty();
+		
 		for (CreateStudyWidgetModelListener listener : listeners) {
-			listener.onSummaryChanged(before, after);
+			listener.onSummaryChanged(isValid);
 		}
+		return isValid;
 	}
 
-	private void fireAcceptClinicalDataChanged(Boolean before, Boolean after) {
+	private Boolean fireModulesChanged() {
+		
+		//valid if at least one module chosen
+		Boolean isValid = acceptClinicalData || acceptInVitroData || acceptMolecularData || acceptPharmacologyData;
+		
 		for (CreateStudyWidgetModelListener listener : listeners) {
-			listener.onAcceptClinicalDataChanged(before, after);
+			listener.onModulesChanged(isValid);
 		}
-	}
-
-	private void fireAcceptMolecularDataChanged(Boolean before, Boolean after) {
-		for (CreateStudyWidgetModelListener listener : listeners) {
-			listener.onAcceptMolecularDataChanged(before, after);
-		}
-	}
-
-	private void fireAcceptInVitroDataChanged(Boolean before, Boolean after) {
-		for (CreateStudyWidgetModelListener listener : listeners) {
-			listener.onAcceptInVitroDataChanged(before, after);
-		}
-	}
-
-	private void fireAcceptPharmacologyDataChanged(Boolean before, Boolean after) {
-		for (CreateStudyWidgetModelListener listener : listeners) {
-			listener.onAcceptPharmacologyDataChanged(before, after);
-		}
+		
+		return isValid;
 	}
 
 	private void fireOnStatusChanged(Integer before, Integer after) {

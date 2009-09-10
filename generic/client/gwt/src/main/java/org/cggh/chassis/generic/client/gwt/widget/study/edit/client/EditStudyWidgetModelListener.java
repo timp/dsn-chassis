@@ -1,13 +1,15 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.client.gwt.widget.study.create.client;
+package org.cggh.chassis.generic.client.gwt.widget.study.edit.client;
+
+import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
 
 /**
  * @author raok
  *
  */
-public interface CreateStudyWidgetModelListener {
+public interface EditStudyWidgetModelListener {
 
 	void onStatusChanged(Integer before, Integer after);
 
@@ -18,6 +20,6 @@ public interface CreateStudyWidgetModelListener {
 	void onModulesChanged(Boolean isValid);
 
 	void onFormCompleted(Boolean isFormComplete);
-	
-	
+
+	void onStudyEntryChanged(StudyEntry before, StudyEntry after);
 }

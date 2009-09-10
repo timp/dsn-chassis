@@ -1,7 +1,11 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.client.gwt.widget.study.create.client;
+package org.cggh.chassis.generic.client.gwt.widget.study.edit.client;
+
+import java.util.List;
+
+import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -9,6 +13,7 @@ import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
+import com.google.gwt.user.client.ui.DecoratedPopupPanel;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
@@ -20,12 +25,9 @@ import com.google.gwt.user.client.ui.TextBoxBase;
  * @author raok
  *
  */
-class CreateStudyWidgetDefaultRenderer implements CreateStudyWidgetModelListener {
+public class EditStudyWidgetDefaultRenderer implements EditStudyWidgetModelListener {
 
-	final private Panel canvas;
-	private CreateStudyWidgetController controller;
-	private Boolean isFormComplete = false;
-	
+
 	//Expose view elements for testing purposes.
 	final TextBoxBase titleUI = new TextBox();
 	final TextBoxBase summaryUI = new TextArea();
@@ -33,50 +35,73 @@ class CreateStudyWidgetDefaultRenderer implements CreateStudyWidgetModelListener
 	final CheckBox acceptMolecularDataUI = new CheckBox("Molecular");
 	final CheckBox acceptInVitroDataUI = new CheckBox("In Vitro");
 	final CheckBox acceptPharmacologyDataUI = new CheckBox("Pharmacology");
-	final Button createStudyUI = new Button("Create Study", new CreateStudyClickHandler());
-	final Button cancelCreateStudyUI = new Button("Cancel", new CancelStudyClickHandler());
+	final Button cancelEditStudyUI = new Button("Cancel", new CancelStudyClickHandler());
+	final Button updateStudyUI = new Button("Update Study", new UpdateStudyClickHandler());
 	
+	final private Panel canvas;
+	private EditStudyWidgetController controller;
+	private Boolean isFormComplete = false;
 
-	public CreateStudyWidgetDefaultRenderer(Panel canvas, CreateStudyWidgetController controller) {
+	public EditStudyWidgetDefaultRenderer(Panel canvas, EditStudyWidgetController controller) {
 		this.canvas = canvas;
 		this.controller = controller;
 		
-		//initialise view
 		initCanvas();
 	}
 
 	private void initCanvas() {
 
 		//Prepare form
-		FlexTable createStudyForm = new FlexTable();
+		FlexTable editStudyForm = new FlexTable();
 		int rowNumber = -1;
 		
-		Label titleLabel = new Label("Enter title:");
-		createStudyForm.setWidget(++rowNumber, 0, titleLabel);
+		Label titleLabel = new Label("Edit title:");
+		editStudyForm.setWidget(++rowNumber, 0, titleLabel);
 		titleUI.addValueChangeHandler(new TitleChangeHandler());
-		createStudyForm.setWidget(++rowNumber, 0, titleUI);
+		editStudyForm.setWidget(++rowNumber, 0, titleUI);
 		
-		Label summaryLabel = new Label("Enter summary:");
-		createStudyForm.setWidget(++rowNumber, 0, summaryLabel);
+		Label summaryLabel = new Label("Edit summary:");
+		editStudyForm.setWidget(++rowNumber, 0, summaryLabel);
 		summaryUI.addValueChangeHandler(new SummaryChangeHandler());
-		createStudyForm.setWidget(++rowNumber, 0, summaryUI);
+		editStudyForm.setWidget(++rowNumber, 0, summaryUI);
 
-		Label modulesLabel = new Label("Select modules (at least one must be selected):");
-		createStudyForm.setWidget(++rowNumber, 0, modulesLabel);
+		Label modulesLabel = new Label("Edit modules (at least one must be selected):");
+		editStudyForm.setWidget(++rowNumber, 0, modulesLabel);
 		acceptClinicalDataUI.addValueChangeHandler(new AcceptClinicalDataChangeHandler());
-		createStudyForm.setWidget(++rowNumber, 0, acceptClinicalDataUI);
+		editStudyForm.setWidget(++rowNumber, 0, acceptClinicalDataUI);
 		acceptMolecularDataUI.addValueChangeHandler(new AcceptMolecularDataChangeHandler());
-		createStudyForm.setWidget(++rowNumber, 0, acceptMolecularDataUI);
+		editStudyForm.setWidget(++rowNumber, 0, acceptMolecularDataUI);
 		acceptInVitroDataUI.addValueChangeHandler(new AcceptInVitroDataChangeHandler());
-		createStudyForm.setWidget(++rowNumber, 0, acceptInVitroDataUI);
+		editStudyForm.setWidget(++rowNumber, 0, acceptInVitroDataUI);
 		acceptPharmacologyDataUI.addValueChangeHandler(new AcceptPharmacologyDataChangeHandler());
-		createStudyForm.setWidget(++rowNumber, 0, acceptPharmacologyDataUI);
+		editStudyForm.setWidget(++rowNumber, 0, acceptPharmacologyDataUI);
 		
-		createStudyForm.setWidget(++rowNumber, 0, createStudyUI);
-		createStudyForm.setWidget(rowNumber, 1, cancelCreateStudyUI);
+		editStudyForm.setWidget(++rowNumber, 0, updateStudyUI);
+		editStudyForm.setWidget(rowNumber, 1, cancelEditStudyUI);
 		
-		canvas.add(createStudyForm);	
+		canvas.add(editStudyForm);
+
 		
+	}
+
+	public void onFormCompleted(Boolean isFormComplete) {
+		this.isFormComplete = isFormComplete;
+	}
+
+	public void onModulesChanged(Boolean isValid) {
+		// TODO Can implement user validation here
+	}
+
+	public void onStatusChanged(Integer before, Integer after) {
+		// TODO Can implement user validation here
+	}
+
+	public void onSummaryChanged(Boolean isValid) {
+		// TODO Can implement user validation here
+	}
+
+	public void onTitleChanged(Boolean isValid) {
+		// TODO Can implement user validation here
 	}
 	
 	class TitleChangeHandler implements ValueChangeHandler<String> {
@@ -127,11 +152,17 @@ class CreateStudyWidgetDefaultRenderer implements CreateStudyWidgetModelListener
 		
 	}
 	
-	class CreateStudyClickHandler implements ClickHandler {
+	class UpdateStudyClickHandler implements ClickHandler {
 
 		public void onClick(ClickEvent arg0) {
 			if (isFormComplete) {
-				controller.saveNewStudy();
+				controller.putUpdatedStudy();
+			} else {
+				//TODO move to management widget?
+				DecoratedPopupPanel errorPopUp = new DecoratedPopupPanel(true);
+				errorPopUp.add(new Label("Form invalid."));
+				errorPopUp.center();
+				errorPopUp.show();
 			}
 		}
 		
@@ -141,47 +172,27 @@ class CreateStudyWidgetDefaultRenderer implements CreateStudyWidgetModelListener
 	class CancelStudyClickHandler implements ClickHandler {
 		
 		public void onClick(ClickEvent arg0) {
-			controller.cancelCreateStudy();
+			controller.cancelEditStudy();
 		}
 	}
 
-	public void setController(CreateStudyWidgetController controller) {
-		this.controller = controller;
+	public void setController(EditStudyWidgetController customController) {
+		this.controller = customController;
 	}
 
-	public void onModulesChanged(Boolean isValid) {
-		// TODO Can implement user validation here
+	public void onStudyEntryChanged(StudyEntry before, StudyEntry studyEntry) {
+		
+		//get studyEntry modules
+		List<String> modules = studyEntry.getModules();
+		
+		//set up form, fire events to perform validation
+		titleUI.setValue(studyEntry.getTitle(), true);
+		summaryUI.setValue(studyEntry.getSummary(), true);
+		acceptClinicalDataUI.setValue(modules.contains(EditStudyWidgetModel.MODULE_CLINICAL), true);
+		acceptMolecularDataUI.setValue(modules.contains(EditStudyWidgetModel.MODULE_MOLECULAR), true);
+		acceptInVitroDataUI.setValue(modules.contains(EditStudyWidgetModel.MODULE_IN_VITRO), true);
+		acceptPharmacologyDataUI.setValue(modules.contains(EditStudyWidgetModel.MODULE_PHARMACOLOGY), true);
 		
 	}
 
-	public void onStatusChanged(Integer before, Integer after) {
-
-		//reset form when set to ready
-		if (after == CreateStudyWidgetModel.STATUS_READY) {
-			resetForm();
-		}
-		
-	}
-
-	private void resetForm() {
-		titleUI.setValue("", true);
-		summaryUI.setValue("", true);
-		acceptClinicalDataUI.setValue(false, true);
-		acceptMolecularDataUI.setValue(false, true);
-		acceptInVitroDataUI.setValue(false, true);
-		acceptPharmacologyDataUI.setValue(false, true);
-	}
-
-	public void onSummaryChanged(Boolean isValid) {
-		// TODO Can implement user validation here
-	}
-
-	public void onTitleChanged(Boolean isValid) {
-		// TODO Can implement user validation here
-	}
-
-	public void onFormCompleted(Boolean isFormComplete) {
-		this.isFormComplete = isFormComplete;
-	}
-	
 }

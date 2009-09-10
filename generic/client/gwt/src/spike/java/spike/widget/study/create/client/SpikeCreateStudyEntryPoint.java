@@ -6,6 +6,7 @@ package spike.widget.study.create.client;
 import org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomFactory;
 import org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomService;
 import org.cggh.chassis.generic.client.gwt.widget.study.create.client.CreateStudyWidget;
+import org.cggh.chassis.generic.client.gwt.widget.study.create.client.CreateStudyWidgetAPI;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -29,7 +30,7 @@ public class SpikeCreateStudyEntryPoint implements EntryPoint {
 		MockAtomService service = new MockAtomService(factory); // use mock for now
 		service.createFeed(feedURL, "my first atom feed"); // bootstrap mock service with a feed, not needed for real service
 		
-		CreateStudyWidget widget = new CreateStudyWidget(RootPanel.get(), service, feedURL);
+		CreateStudyWidgetAPI widget = new CreateStudyWidget(RootPanel.get(), service, feedURL);
 		
 		widget.setUpNewStudy();
 		

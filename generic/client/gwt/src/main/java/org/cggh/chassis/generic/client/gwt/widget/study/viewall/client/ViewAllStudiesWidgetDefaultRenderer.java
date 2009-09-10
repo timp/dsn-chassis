@@ -7,12 +7,12 @@ import java.util.List;
 
 import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.FlexTable;
-import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.SimplePanel;
-import com.google.gwt.user.client.ui.VerticalPanel;
 
 /**
  * @author raok
@@ -25,9 +25,11 @@ public class ViewAllStudiesWidgetDefaultRenderer implements ViewAllStudiesWidget
 	Panel loadingPanel = new SimplePanel();
 	
 	private Panel canvas;
+	private ViewAllStudiesWidgetController controller;
 
-	public ViewAllStudiesWidgetDefaultRenderer(Panel canvas) {
+	public ViewAllStudiesWidgetDefaultRenderer(Panel canvas, ViewAllStudiesWidgetController controller) {
 		this.canvas = canvas;
+		this.controller = controller;
 		
 		initCanvas();
 	}
@@ -72,10 +74,31 @@ public class ViewAllStudiesWidgetDefaultRenderer implements ViewAllStudiesWidget
 		for (StudyEntry studyEntry : after) {
 			studiesTable.setWidget(++rowNo, 0, new Label(studyEntry.getTitle()));
 			studiesTable.setWidget(rowNo, 1, new Label(studyEntry.getSummary()));
+			
+			//add view study link
+			Label editStudy = new Label("view");
+			editStudy.addClickHandler(new ViewStudyClickHandler(studyEntry));
+			studiesTable.setWidget(rowNo, 2, editStudy);
+						
 		}
 		
 		studiesListPanel.add(studiesTable);
 		
 	}
+	
+	//package private to allow testing
+	class ViewStudyClickHandler implements ClickHandler {
+		
+		private final StudyEntry studyEntry;
+		
+		public ViewStudyClickHandler(StudyEntry studyEntry) {
+			this.studyEntry = studyEntry;
+		}
+		
+		public void onClick(ClickEvent arg0) {
+			controller.onViewStudyUIClicked(studyEntry);
+		}
+	}
+	
 
 }

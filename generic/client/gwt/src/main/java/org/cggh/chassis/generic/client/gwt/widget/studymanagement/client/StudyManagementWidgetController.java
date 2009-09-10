@@ -21,7 +21,7 @@ public class StudyManagementWidgetController {
 		
 	}
 
-	public void displayEditStudyWidget(String entryURL) {
+	public void displayEditStudyWidget() {
 
 		model.setDisplayStatus(StudyManagementWidgetModel.DISPLAYING_EDIT_STUDY);
 	}

@@ -27,7 +27,7 @@ public class TestViewAllStudiesWidgetModel {
 	}
 
 	private ViewAllStudiesWidgetModel testModel;
-	private List<StudyEntry> studies;
+	private List<StudyEntry> testStudies;
 	
 	@Before
 	public void setUp() {
@@ -36,7 +36,7 @@ public class TestViewAllStudiesWidgetModel {
 		testModel = new ViewAllStudiesWidgetModel();
 		
 		//create list of test studyEntries
-		studies = new ArrayList<StudyEntry>();
+		testStudies = new ArrayList<StudyEntry>();
 		
 		// use mock factory to create test studies
 		MockStudyFactory mockStudyFactory = new MockStudyFactory();
@@ -49,8 +49,8 @@ public class TestViewAllStudiesWidgetModel {
 		study2.setSummary("bar 2");
 		study2.addModule("module foo2");
 		
-		studies.add(study1);
-		studies.add(study2);
+		testStudies.add(study1);
+		testStudies.add(study2);
 		
 	}
 	
@@ -85,11 +85,11 @@ public class TestViewAllStudiesWidgetModel {
 		
 		//call methods under test
 		testModel.setStatus(status);
-		testModel.setStudyEntries(studies);
+		testModel.setStudyEntries(testStudies);
 		
 		//test outcome
 		assertEquals(status, testModel.getStatus());
-		assertEquals(studies, testModel.getStudyEntries());
+		assertEquals(testStudies, testModel.getStudyEntries());
 		
 	}
 	
@@ -125,11 +125,11 @@ public class TestViewAllStudiesWidgetModel {
 		testModel.addListener(listener);
 		
 		//set up expectations
-		listener.onStudyEntriesChanged(null, studies);
+		listener.onStudyEntriesChanged(null, testStudies);
 		replay(listener);
 		
 		//call methods under test
-		testModel.setStudyEntries(studies);
+		testModel.setStudyEntries(testStudies);
 		
 		verify(listener);
 		
