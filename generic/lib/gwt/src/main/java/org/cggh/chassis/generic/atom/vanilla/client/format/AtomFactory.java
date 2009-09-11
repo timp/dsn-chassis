@@ -11,13 +11,15 @@ import com.google.gwt.xml.client.Element;
  */
 public interface AtomFactory {
 
-	public AtomFeed createFeed(String feedDocument) throws AtomFormatException;
+	public AtomFeed createFeed(String feedDocument);
 	public AtomEntry createEntry();
-	public AtomEntry createEntry(String entryDocument) throws AtomFormatException;
-	public AtomEntry createEntry(Element entryElement) throws AtomFormatException;
-	public AtomPersonConstruct createPersonConstruct();
-	public AtomPersonConstruct createPersonConstruct(Element personElement) throws AtomFormatException;
+	public AtomEntry createEntry(String entryDocument);
+	public AtomEntry createEntry(Element entryElement);
+	public AtomAuthor createAuthor();
+	public AtomAuthor createAuthor(Element authorElement);
 	public AtomLink createLink();
-	public AtomLink createLink(Element linkElement) throws AtomFormatException;
+	public AtomLink createLink(Element linkElement);
+	public AtomCategory createCategory();
+	public AtomCategory createCategory(Element categoryElement);
 
 }

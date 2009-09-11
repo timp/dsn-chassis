@@ -9,7 +9,7 @@ import java.util.List;
  * @author aliman
  *
  */
-public interface AtomEntry {
+public interface AtomEntry extends ElementWrapper {
 
 	// read-only
 	
@@ -34,10 +34,10 @@ public interface AtomEntry {
 	public String getSummary();
 	public void setSummary(String summary);
 
-	public List<AtomPersonConstruct> getAuthors();
-	public void setAuthors(List<AtomPersonConstruct> authors);
-	public void addAuthor(AtomPersonConstruct author);
-	public void removeAuthor(AtomPersonConstruct author);
+	public List<AtomAuthor> getAuthors();
+	public void setAuthors(List<AtomAuthor> authors);
+	public void addAuthor(AtomAuthor author);
+	public void removeAuthor(AtomAuthor author);
 
 	public List<AtomCategory> getCategories();
 	public void setCategories(List<AtomCategory> categories);

@@ -1,18 +1,21 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.atom.vanilla.client.mockimpl;
+package org.cggh.chassis.generic.atom.vanilla.client.format.impl;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.cggh.chassis.generic.atom.vanilla.client.format.Atom;
+import org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomCategory;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
+import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactory;
+import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFormatException;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomLink;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
 import org.cggh.chassis.generic.twisted.client.Function;
 import org.cggh.chassis.generic.twisted.client.Functional;
+import org.cggh.chassis.generic.xml.client.XML;
 
 import com.google.gwt.xml.client.Element;
 
@@ -20,253 +23,220 @@ import com.google.gwt.xml.client.Element;
  * @author aliman
  *
  */
-public class MockAtomEntry implements AtomEntry {
+public class AtomEntryImpl extends ElementWrapperImpl implements AtomEntry {
 
-	protected String id;
-	protected String published;
-	protected String updated;
-	protected List<AtomLink> links = new ArrayList<AtomLink>();
-	protected String summary;
-	protected String title;
-	protected List<AtomAuthor> authors = new ArrayList<AtomAuthor>();
-	protected List<AtomCategory> categories = new ArrayList<AtomCategory>();
-	protected MockAtomFactory factory;
+	private AtomFactory factory;
 
 	/**
-	 * @param feedURL
-	 * @param mockAtomFactory 
+	 * @param e
 	 */
-	protected MockAtomEntry(MockAtomFactory mockAtomFactory) {
-		this.factory = mockAtomFactory;
-	}
-
-	/**
-	 * @param string
-	 */
-	protected void setId(String id) {
-		this.id = id;
-	}
-
-	/**
-	 * @param entryURL
-	 */
-	protected void setEditLink(String entryURL) {
-		AtomLink editLink = this.getEditLink();
-		if (editLink == null) {
-			editLink = factory.createLink();
-			editLink.setRel(Atom.REL_EDIT);
-			addLink(editLink);
-		}
-		editLink.setHref(entryURL);
-	}
-
-	/**
-	 * @param string
-	 */
-	protected void setPublished(String published) {
-		this.published = published;
-	}
-
-	/**
-	 * @param string
-	 */
-	protected void setUpdated(String updated) {
-		this.updated = updated;
+	protected AtomEntryImpl(Element e, AtomFactory factory) {
+		super(e);
+		this.factory = factory;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry#addAuthor(org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor)
 	 */
 	public void addAuthor(AtomAuthor author) {
-		this.authors.add(author);
+		element.appendChild(author.getElement());
 	}
 
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry#addCategory(org.cggh.chassis.generic.atom.vanilla.client.format.AtomCategory)
 	 */
 	public void addCategory(AtomCategory category) {
-		this.categories.add(category);
+		element.appendChild(category.getElement());
 	}
 
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry#addLink(org.cggh.chassis.generic.atom.vanilla.client.format.AtomLink)
 	 */
 	public void addLink(AtomLink link) {
-		this.links.add(link);
+		element.appendChild(link.getElement());
 	}
 
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry#getAuthors()
 	 */
 	public List<AtomAuthor> getAuthors() {
-		return this.authors;
+		
+		List<AtomAuthor> authors = new ArrayList<AtomAuthor>();
+		
+		Function<Element,AtomAuthor> wrapper = new Function<Element,AtomAuthor>() {
+
+			public AtomAuthor apply(Element in) {
+				return factory.createAuthor(in);
+			}
+			
+		};
+
+		Functional.map(XML.getElementsByTagName(element, Atom.ELEMENT_AUTHOR), authors, wrapper);
+		
+		return authors;
+		
 	}
 
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry#getCategories()
 	 */
 	public List<AtomCategory> getCategories() {
-		return this.categories;
+
+		List<AtomCategory> categories = new ArrayList<AtomCategory>();
+		
+		Function<Element,AtomCategory> wrapper = new Function<Element,AtomCategory>() {
+
+			public AtomCategory apply(Element in) {
+				return factory.createCategory(in);
+			}
+			
+		};
+
+		Functional.map(XML.getElementsByTagName(element, Atom.ELEMENT_CATEGORY), categories, wrapper);
+		
+		return categories;
+
 	}
 
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry#getEditLink()
 	 */
 	public AtomLink getEditLink() {
-		return this.getFirstLinkByRel(Atom.REL_EDIT);
+		for (AtomLink link : this.getLinks()) {
+			if (link.getRel().equals(Atom.REL_EDIT)) {
+				return link;
+			}
+		}
+		throw new AtomFormatException("no edit link found");
 	}
 
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry#getEditMediaLink()
 	 */
 	public AtomLink getEditMediaLink() {
-		return this.getFirstLinkByRel(Atom.REL_EDIT_MEDIA);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry#getId()
 	 */
 	public String getId() {
-		return this.id;
+		return XML.getElementSimpleContentByTagName(element, Atom.ELEMENT_ID);
 	}
 
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry#getLinks()
 	 */
 	public List<AtomLink> getLinks() {
-		return this.links;
-	}
-	
-	public AtomLink getFirstLinkByRel(String rel) {
-		List<AtomLink> links = this.getLinksByRel(rel);
-		if (links.size()>0) {
-			return links.get(0);
-		}
-		return null;
-	}
-	
-	public List<AtomLink> getLinksByRel(final String rel) {
 
-		Function<AtomLink,AtomLink> filterLinksByRel = new Function<AtomLink,AtomLink>() {
+		List<AtomLink> links = new ArrayList<AtomLink>();
+		
+		Function<Element,AtomLink> wrapper = new Function<Element,AtomLink>() {
 
-			public AtomLink apply(AtomLink in) {
-				if (in.getRel().equals(rel)) {
-					return in;
-				}
-				return null;
+			public AtomLink apply(Element in) {
+				return factory.createLink(in);
 			}
 			
 		};
 
-		List<AtomLink> filteredLinks = new ArrayList<AtomLink>();
-		Functional.map(this.links, filteredLinks, filterLinksByRel);
-		return filteredLinks;
+		Functional.map(XML.getElementsByTagName(element, Atom.ELEMENT_LINK), links, wrapper);
+		
+		return links;
+
 	}
 
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry#getPublished()
 	 */
 	public String getPublished() {
-		return this.published;
+		return XML.getElementSimpleContentByTagName(element, Atom.ELEMENT_PUBLISHED);
 	}
 
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry#getSummary()
 	 */
 	public String getSummary() {
-		return this.summary;
+		return XML.getElementSimpleContentByTagName(element, Atom.ELEMENT_SUMMARY);
 	}
 
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry#getTitle()
 	 */
 	public String getTitle() {
-		return this.title;
+		return XML.getElementSimpleContentByTagName(element, Atom.ELEMENT_TITLE);
 	}
 
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry#getUpdated()
 	 */
 	public String getUpdated() {
-		return this.updated;
+		return XML.getElementSimpleContentByTagName(element, Atom.ELEMENT_UPDATED);
 	}
 
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry#removeAuthor(org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor)
 	 */
 	public void removeAuthor(AtomAuthor author) {
-		this.authors.remove(author);
+		element.removeChild(author.getElement());
 	}
 
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry#removeCategory(org.cggh.chassis.generic.atom.vanilla.client.format.AtomCategory)
 	 */
 	public void removeCategory(AtomCategory category) {
-		this.categories.remove(category);
+		element.removeChild(category.getElement());
 	}
 
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry#removeLink(org.cggh.chassis.generic.atom.vanilla.client.format.AtomLink)
 	 */
 	public void removeLink(AtomLink link) {
-		this.links.remove(link);
+		element.removeChild(link.getElement());
 	}
 
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry#setAuthors(java.util.List)
 	 */
 	public void setAuthors(List<AtomAuthor> authors) {
-		this.authors = authors;
+		XML.removeElementsByTagName(element, Atom.ELEMENT_AUTHOR);
+		for (AtomAuthor author : authors) {
+			addAuthor(author);
+		}
 	}
 
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry#setCategories(java.util.List)
 	 */
 	public void setCategories(List<AtomCategory> categories) {
-		this.categories = categories;
+		XML.removeElementsByTagName(element, Atom.ELEMENT_CATEGORY);
+		for (AtomCategory category : categories) {
+			addCategory(category);
+		}
 	}
 
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry#setLinks(java.util.List)
 	 */
 	public void setLinks(List<AtomLink> links) {
-		this.links = links;
+		XML.removeElementsByTagName(element, Atom.ELEMENT_LINK);
+		for (AtomLink link : links) {
+			addLink(link);
+		}
 	}
 
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry#setSummary(java.lang.String)
 	 */
 	public void setSummary(String summary) {
-		this.summary = summary;
+		XML.setElementSimpleContentByTagName(element, Atom.ELEMENT_SUMMARY, summary);
 	}
 
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry#setTitle(java.lang.String)
 	 */
 	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	/**
-	 * @param entry
-	 */
-	protected void put(AtomEntry entry) {
-		this.id = entry.getId();
-		this.published = entry.getPublished();
-		this.updated = entry.getUpdated();
-		this.title = entry.getTitle();
-		this.summary = entry.getSummary();
-		this.authors = factory.copyPersons(entry.getAuthors());
-		this.categories = factory.copyCategories(entry.getCategories());
-		this.links = factory.copyLinks(entry.getLinks());
-	}
-
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.ElementWrapper#getElement()
-	 */
-	public Element getElement() {
-		// do nothing, because mock
-		return null;
+		XML.setElementSimpleContentByTagName(element, Atom.ELEMENT_TITLE, title);
 	}
 
 }
