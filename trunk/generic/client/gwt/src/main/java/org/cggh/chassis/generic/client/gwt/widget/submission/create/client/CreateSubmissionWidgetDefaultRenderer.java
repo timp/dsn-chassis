@@ -103,6 +103,7 @@ public class CreateSubmissionWidgetDefaultRenderer implements SubmissionModelLis
 		//TODO do not close unless cancel or valid study added.
 		final DecoratedPopupPanel studyLinkChooserPopup = new DecoratedPopupPanel(true);
 		VerticalPanel studyLinkChooserVP = new VerticalPanel();
+		studyLinkChooserPopup.add(studyLinkChooserVP);
 		studyLinkChooserVP.add(new Label("Choose a study for the drop down box and then click 'Add study'."));
 		//TODO Add studies widget in form of a drop down
 		studyLinkChooserVP.add(new Label("***Add studies widget in form of a drop down***"));
@@ -111,6 +112,7 @@ public class CreateSubmissionWidgetDefaultRenderer implements SubmissionModelLis
 		showAddStudyLinkUI.addClickHandler(new ClickHandler() {
 			
 			public void onClick(ClickEvent arg0) {
+				studyLinkChooserPopup.center();
 				studyLinkChooserPopup.show();
 			}
 		});
