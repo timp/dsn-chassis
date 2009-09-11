@@ -5,6 +5,8 @@ package org.cggh.chassis.generic.atom.vanilla.client.mockimpl;
 
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomLink;
 
+import com.google.gwt.xml.client.Element;
+
 /**
  * @author aliman
  *
@@ -108,6 +110,14 @@ public class MockAtomLink implements AtomLink {
 		this.rel = link.getRel();
 		this.title = link.getTitle();
 		this.type = link.getType();
+	}
+	
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.ElementWrapper#getElement()
+	 */
+	public Element getElement() {
+		// not needed because mock
+		return null;
 	}
 
 }

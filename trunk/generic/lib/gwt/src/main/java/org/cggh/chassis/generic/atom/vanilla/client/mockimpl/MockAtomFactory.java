@@ -12,7 +12,7 @@ import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactory;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFormatException;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomLink;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomPersonConstruct;
+import org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
 
 import com.google.gwt.xml.client.Element;
 
@@ -46,10 +46,10 @@ public class MockAtomFactory implements AtomFactory {
 	 * @param authors
 	 * @return
 	 */
-	protected List<AtomPersonConstruct> copyPersons(List<AtomPersonConstruct> persons) {
-		List<AtomPersonConstruct> mockPersons = new ArrayList<AtomPersonConstruct>();
-		for (AtomPersonConstruct person : persons) {
-			MockAtomPersonConstruct mockPerson = this.copy(person);
+	protected List<AtomAuthor> copyPersons(List<AtomAuthor> persons) {
+		List<AtomAuthor> mockPersons = new ArrayList<AtomAuthor>();
+		for (AtomAuthor person : persons) {
+			MockAtomAuthor mockPerson = this.copy(person);
 			mockPersons.add(mockPerson);
 		}
 		return mockPersons;
@@ -58,8 +58,8 @@ public class MockAtomFactory implements AtomFactory {
 	
 
 	
-	protected MockAtomPersonConstruct copy(AtomPersonConstruct person) {
-		MockAtomPersonConstruct mockPerson = new MockAtomPersonConstruct(this);
+	protected MockAtomAuthor copy(AtomAuthor person) {
+		MockAtomAuthor mockPerson = new MockAtomAuthor(this);
 		mockPerson.put(person);
 		return mockPerson;
 	}
@@ -177,19 +177,19 @@ public class MockAtomFactory implements AtomFactory {
 
 
 	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactory#createPersonConstruct()
+	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactory#createAuthor()
 	 */
-	public AtomPersonConstruct createPersonConstruct() {
-		return new MockAtomPersonConstruct(this);
+	public AtomAuthor createAuthor() {
+		return new MockAtomAuthor(this);
 	}
 
 
 
 
 	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactory#createPersonConstruct(com.google.gwt.xml.client.Element)
+	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactory#createAuthor(com.google.gwt.xml.client.Element)
 	 */
-	public AtomPersonConstruct createPersonConstruct(Element personElement)	throws AtomFormatException {
+	public AtomAuthor createAuthor(Element personElement)	throws AtomFormatException {
 		// not needed
 		return null;
 	}
@@ -212,6 +212,38 @@ public class MockAtomFactory implements AtomFactory {
 	 */
 	public AtomLink createLink(Element linkElement) throws AtomFormatException {
 		// not needed
+		return null;
+	}
+
+
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactory#createCategory()
+	 */
+	public AtomCategory createCategory() {
+		return createMockCategory();
+	}
+
+
+
+
+	/**
+	 * @return
+	 */
+	private MockAtomCategory createMockCategory() {
+		return new MockAtomCategory();
+	}
+
+
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactory#createCategory(com.google.gwt.xml.client.Element)
+	 */
+	public AtomCategory createCategory(Element categoryElement)
+			throws AtomFormatException {
+		// TODO Auto-generated method stub
 		return null;
 	}
 

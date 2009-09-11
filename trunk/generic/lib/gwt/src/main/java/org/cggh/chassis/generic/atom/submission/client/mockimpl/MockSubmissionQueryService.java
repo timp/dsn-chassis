@@ -8,7 +8,7 @@ import org.cggh.chassis.generic.atom.submission.client.format.SubmissionFeed;
 import org.cggh.chassis.generic.atom.submission.client.protocol.SubmissionQueryService;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomPersonConstruct;
+import org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
 import org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomStore;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.NotFoundException;
 import org.cggh.chassis.generic.log.client.Log;
@@ -57,7 +57,7 @@ public class MockSubmissionQueryService implements SubmissionQueryService {
 			for (AtomEntry entry : submissions.getEntries()) {
 				if (entry instanceof MockSubmissionEntry) {
 					MockSubmissionEntry submission = (MockSubmissionEntry) entry;
-					for (AtomPersonConstruct author : entry.getAuthors()) {
+					for (AtomAuthor author : entry.getAuthors()) {
 						if (author.getEmail().equals(email)) {
 							results.add(submission);
 						}

@@ -7,7 +7,7 @@ package org.cggh.chassis.generic.atom.vanilla.client.format;
  * @author aliman
  *
  */
-public interface AtomLink {
+public interface AtomLink extends ElementWrapper {
 
 	public String getHref();
 	public void setHref(String href);

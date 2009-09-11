@@ -7,7 +7,14 @@ package org.cggh.chassis.generic.atom.vanilla.client.format;
  * @author aliman
  *
  */
-public class AtomFormatException extends Exception {
+public class AtomFormatException extends RuntimeException {
+
+	/**
+	 * @param string
+	 */
+	public AtomFormatException(String message) {
+		super(message);
+	}
 
 	/**
 	 * 

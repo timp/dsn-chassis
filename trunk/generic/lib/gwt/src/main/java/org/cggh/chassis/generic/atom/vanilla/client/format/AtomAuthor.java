@@ -7,7 +7,7 @@ package org.cggh.chassis.generic.atom.vanilla.client.format;
  * @author aliman
  *
  */
-public interface AtomPersonConstruct {
+public interface AtomAuthor extends ElementWrapper {
 
 	public String getURI();
 	public void setURI(String uri);

@@ -3,13 +3,15 @@
  */
 package org.cggh.chassis.generic.atom.vanilla.client.mockimpl;
 
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomPersonConstruct;
+import org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
+
+import com.google.gwt.xml.client.Element;
 
 /**
  * @author aliman
  *
  */
-public class MockAtomPersonConstruct implements AtomPersonConstruct {
+public class MockAtomAuthor implements AtomAuthor {
 
 	private MockAtomFactory factory;
 	private String email;
@@ -73,7 +75,7 @@ public class MockAtomPersonConstruct implements AtomPersonConstruct {
 	/**
 	 * @param mockAtomFactory
 	 */
-	MockAtomPersonConstruct(MockAtomFactory factory) {
+	MockAtomAuthor(MockAtomFactory factory) {
 		this.factory = factory;
 	}
 
@@ -82,10 +84,20 @@ public class MockAtomPersonConstruct implements AtomPersonConstruct {
 	/**
 	 * @param person
 	 */
-	public void put(AtomPersonConstruct person) {
+	public void put(AtomAuthor person) {
 		this.name = person.getName();
 		this.email = person.getEmail();
 		this.uri = person.getURI();
+	}
+
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.ElementWrapper#getElement()
+	 */
+	public Element getElement() {
+		// not needed because mock
+		return null;
 	}
 
 }
