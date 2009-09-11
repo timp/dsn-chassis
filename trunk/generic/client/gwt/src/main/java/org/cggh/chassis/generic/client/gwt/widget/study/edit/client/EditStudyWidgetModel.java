@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
+import org.cggh.chassis.generic.client.gwt.widget.application.client.ApplicationConstants;
 import org.cggh.chassis.generic.client.gwt.widget.study.edit.client.EditStudyWidgetModelListener;
 
 /**
@@ -15,12 +16,6 @@ import org.cggh.chassis.generic.client.gwt.widget.study.edit.client.EditStudyWid
  */
 public class EditStudyWidgetModel {
 
-	//TODO remove when real atom service is used
-	public static final String MODULE_CLINICAL = "Clinical";
-	public static final String MODULE_MOLECULAR = "Molecular";
-	public static final String MODULE_IN_VITRO = "In Vitro";
-	public static final String MODULE_PHARMACOLOGY = "Pharmacology";
-	
 	public static final Integer STATUS_INITIAL = 0;
 	public static final Integer STATUS_LOADING = 1;
 	public static final Integer STATUS_LOAD_ERROR = 2;
@@ -43,19 +38,19 @@ public class EditStudyWidgetModel {
 	}
 
 	public Boolean acceptClinicalData() {
-		return studyEntry.getModules().contains(MODULE_CLINICAL);
+		return studyEntry.getModules().contains(ApplicationConstants.MODULE_CLINICAL);
 	}
 
 	public Boolean acceptMolecularData() {
-		return studyEntry.getModules().contains(MODULE_MOLECULAR);
+		return studyEntry.getModules().contains(ApplicationConstants.MODULE_MOLECULAR);
 	}
 
 	public Boolean acceptInVitroData() {
-		return studyEntry.getModules().contains(MODULE_IN_VITRO);
+		return studyEntry.getModules().contains(ApplicationConstants.MODULE_IN_VITRO);
 	}
 
 	public Boolean acceptPharmacologyData() {
-		return studyEntry.getModules().contains(MODULE_PHARMACOLOGY);
+		return studyEntry.getModules().contains(ApplicationConstants.MODULE_PHARMACOLOGY);
 	}
 
 	public Integer getStatus() {
@@ -75,12 +70,12 @@ public class EditStudyWidgetModel {
 	public void setAcceptClinicalData(Boolean acceptClinicalData) {
 		
 		if (acceptClinicalData) {
-			if (!studyEntry.getModules().contains(MODULE_CLINICAL)) {
-				studyEntry.addModule(MODULE_CLINICAL);
+			if (!studyEntry.getModules().contains(ApplicationConstants.MODULE_CLINICAL)) {
+				studyEntry.addModule(ApplicationConstants.MODULE_CLINICAL);
 			}
 		} else {
-			if (studyEntry.getModules().contains(MODULE_CLINICAL)) {
-				studyEntry.removeModule(MODULE_CLINICAL);
+			if (studyEntry.getModules().contains(ApplicationConstants.MODULE_CLINICAL)) {
+				studyEntry.removeModule(ApplicationConstants.MODULE_CLINICAL);
 			}
 		}
 		
@@ -89,12 +84,12 @@ public class EditStudyWidgetModel {
 
 	public void setAcceptMolecularData(Boolean acceptMolecularData) {
 		if (acceptMolecularData) {
-			if (!studyEntry.getModules().contains(MODULE_MOLECULAR)) {
-				studyEntry.addModule(MODULE_MOLECULAR);
+			if (!studyEntry.getModules().contains(ApplicationConstants.MODULE_MOLECULAR)) {
+				studyEntry.addModule(ApplicationConstants.MODULE_MOLECULAR);
 			}
 		} else {
-			if (studyEntry.getModules().contains(MODULE_MOLECULAR)) {
-				studyEntry.removeModule(MODULE_MOLECULAR);
+			if (studyEntry.getModules().contains(ApplicationConstants.MODULE_MOLECULAR)) {
+				studyEntry.removeModule(ApplicationConstants.MODULE_MOLECULAR);
 			}
 		}
 		
@@ -103,12 +98,12 @@ public class EditStudyWidgetModel {
 
 	public void setAcceptInVitroData(Boolean acceptInVitroData) {
 		if (acceptInVitroData) {
-			if (!studyEntry.getModules().contains(MODULE_IN_VITRO)) {
-				studyEntry.addModule(MODULE_IN_VITRO);
+			if (!studyEntry.getModules().contains(ApplicationConstants.MODULE_IN_VITRO)) {
+				studyEntry.addModule(ApplicationConstants.MODULE_IN_VITRO);
 			}
 		} else {
-			if (studyEntry.getModules().contains(MODULE_IN_VITRO)) {
-				studyEntry.removeModule(MODULE_IN_VITRO);
+			if (studyEntry.getModules().contains(ApplicationConstants.MODULE_IN_VITRO)) {
+				studyEntry.removeModule(ApplicationConstants.MODULE_IN_VITRO);
 			}
 		}
 		
@@ -117,12 +112,12 @@ public class EditStudyWidgetModel {
 
 	public void setAcceptPharmacologyData(Boolean acceptPharmacologyData) {
 		if (acceptPharmacologyData) {
-			if (!studyEntry.getModules().contains(MODULE_PHARMACOLOGY)) {
-				studyEntry.addModule(MODULE_PHARMACOLOGY);
+			if (!studyEntry.getModules().contains(ApplicationConstants.MODULE_PHARMACOLOGY)) {
+				studyEntry.addModule(ApplicationConstants.MODULE_PHARMACOLOGY);
 			}
 		} else {
-			if (studyEntry.getModules().contains(MODULE_PHARMACOLOGY)) {
-				studyEntry.removeModule(MODULE_PHARMACOLOGY);
+			if (studyEntry.getModules().contains(ApplicationConstants.MODULE_PHARMACOLOGY)) {
+				studyEntry.removeModule(ApplicationConstants.MODULE_PHARMACOLOGY);
 			}
 		}
 		formDataChanged();

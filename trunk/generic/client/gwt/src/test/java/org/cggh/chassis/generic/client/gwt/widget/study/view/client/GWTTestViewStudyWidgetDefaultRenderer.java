@@ -7,6 +7,7 @@ import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
 import org.cggh.chassis.generic.atom.study.client.format.StudyFactory;
 import org.cggh.chassis.generic.atom.study.client.mockimpl.MockStudyFactory;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
+import org.cggh.chassis.generic.client.gwt.widget.application.client.ApplicationConstants;
 
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.event.dom.client.DomEvent;
@@ -24,24 +25,6 @@ public class GWTTestViewStudyWidgetDefaultRenderer extends GWTTestCase {
 	private ViewStudyWidgetDefaultRenderer testRenderer;
 	private MockViewStudyWidgetController mockController;
 	
-	//mock MockViewStudyWidget
-	private class MockViewStudyWidgetController extends ViewStudyWidgetController {
-
-		public MockViewStudyWidgetController(ViewStudyWidgetModel model,
-				AtomService service) {
-			super(model, service, null);
-		}
-		
-		//check to see if onEditStudyUIClicked called
-		public boolean editThisStudyFired = false;
-		
-		@Override
-		public void onEditStudyUIClicked() {
-			editThisStudyFired = true;
-		}
-		
-	}
-
 	/* (non-Javadoc)
 	 * @see com.google.gwt.junit.client.GWTTestCase#getModuleName()
 	 */
@@ -105,8 +88,8 @@ public class GWTTestViewStudyWidgetDefaultRenderer extends GWTTestCase {
 		StudyEntry testStudy = mockFactory.createStudyEntry();
 		testStudy.setTitle(title);
 		testStudy.setSummary(summary);
-		testStudy.addModule(ViewStudyWidgetDefaultRenderer.MODULE_CLINICAL);
-		testStudy.addModule(ViewStudyWidgetDefaultRenderer.MODULE_IN_VITRO);
+		testStudy.addModule(ApplicationConstants.MODULE_CLINICAL);
+		testStudy.addModule(ApplicationConstants.MODULE_IN_VITRO);
 		
 		//call method under test
 		testRenderer.onStudyEntryChanged(null, testStudy);
@@ -153,8 +136,8 @@ public class GWTTestViewStudyWidgetDefaultRenderer extends GWTTestCase {
 		StudyEntry testStudy = mockFactory.createStudyEntry();
 		testStudy.setTitle("foo");
 		testStudy.setSummary("bar");
-		testStudy.addModule(ViewStudyWidgetDefaultRenderer.MODULE_CLINICAL);
-		testStudy.addModule(ViewStudyWidgetDefaultRenderer.MODULE_IN_VITRO);
+		testStudy.addModule(ApplicationConstants.MODULE_CLINICAL);
+		testStudy.addModule(ApplicationConstants.MODULE_IN_VITRO);
 		testModel.setStudyEntry(testStudy);
 		
 		//simulate click event
@@ -164,6 +147,24 @@ public class GWTTestViewStudyWidgetDefaultRenderer extends GWTTestCase {
 		
 		assertTrue(mockController.editThisStudyFired);
 		
+		
+	}
+
+	//mock MockViewStudyWidget
+	private class MockViewStudyWidgetController extends ViewStudyWidgetController {
+	
+		public MockViewStudyWidgetController(ViewStudyWidgetModel model,
+				AtomService service) {
+			super(model, service, null);
+		}
+		
+		//check to see if onEditStudyUIClicked called
+		public boolean editThisStudyFired = false;
+		
+		@Override
+		public void onEditStudyUIClicked() {
+			editThisStudyFired = true;
+		}
 		
 	}
 		

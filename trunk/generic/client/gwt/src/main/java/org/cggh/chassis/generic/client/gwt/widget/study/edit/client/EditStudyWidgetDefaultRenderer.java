@@ -6,6 +6,7 @@ package org.cggh.chassis.generic.client.gwt.widget.study.edit.client;
 import java.util.List;
 
 import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
+import org.cggh.chassis.generic.client.gwt.widget.application.client.ApplicationConstants;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -188,10 +189,10 @@ public class EditStudyWidgetDefaultRenderer implements EditStudyWidgetModelListe
 		//set up form, fire events to perform validation
 		titleUI.setValue(studyEntry.getTitle(), true);
 		summaryUI.setValue(studyEntry.getSummary(), true);
-		acceptClinicalDataUI.setValue(modules.contains(EditStudyWidgetModel.MODULE_CLINICAL), true);
-		acceptMolecularDataUI.setValue(modules.contains(EditStudyWidgetModel.MODULE_MOLECULAR), true);
-		acceptInVitroDataUI.setValue(modules.contains(EditStudyWidgetModel.MODULE_IN_VITRO), true);
-		acceptPharmacologyDataUI.setValue(modules.contains(EditStudyWidgetModel.MODULE_PHARMACOLOGY), true);
+		acceptClinicalDataUI.setValue(modules.contains(ApplicationConstants.MODULE_CLINICAL), true);
+		acceptMolecularDataUI.setValue(modules.contains(ApplicationConstants.MODULE_MOLECULAR), true);
+		acceptInVitroDataUI.setValue(modules.contains(ApplicationConstants.MODULE_IN_VITRO), true);
+		acceptPharmacologyDataUI.setValue(modules.contains(ApplicationConstants.MODULE_PHARMACOLOGY), true);
 		
 	}
 

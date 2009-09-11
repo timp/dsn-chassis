@@ -3,4 +3,5 @@
 <module>
 	<inherits name="com.google.gwt.user.User" />
   	<inherits name="org.cggh.chassis.generic.atom.study.Study" />
+  	<inherits name="org.cggh.chassis.generic.client.gwt.widget.application.ApplicationConstants" />
 </module>

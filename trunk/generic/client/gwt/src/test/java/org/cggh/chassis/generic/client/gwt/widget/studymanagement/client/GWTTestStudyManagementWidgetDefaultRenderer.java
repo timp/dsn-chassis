@@ -8,7 +8,7 @@ import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
 import org.cggh.chassis.generic.atom.study.client.mockimpl.MockStudyFactory;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomService;
-import org.cggh.chassis.generic.client.gwt.widget.study.create.client.CreateStudyWidgetModel;
+import org.cggh.chassis.generic.client.gwt.widget.application.client.ApplicationConstants;
 import org.cggh.chassis.generic.twisted.client.Deferred;
 import org.cggh.chassis.generic.twisted.client.Function;
 import org.junit.Test;
@@ -139,8 +139,8 @@ public class GWTTestStudyManagementWidgetDefaultRenderer extends GWTTestCase {
 		StudyEntry testStudy = mockFactory.createStudyEntry();
 		testStudy.setTitle(title);
 		testStudy.setSummary(summary);
-		testStudy.addModule(CreateStudyWidgetModel.MODULE_CLINICAL);
-		testStudy.addModule(CreateStudyWidgetModel.MODULE_IN_VITRO);
+		testStudy.addModule(ApplicationConstants.MODULE_CLINICAL);
+		testStudy.addModule(ApplicationConstants.MODULE_IN_VITRO);
 		
 		// make sure test study is saved, entryURL is received, and test completes
 		delayTestFinish(5000);
