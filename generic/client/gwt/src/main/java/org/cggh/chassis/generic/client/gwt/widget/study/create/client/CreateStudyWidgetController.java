@@ -11,6 +11,7 @@ import org.cggh.chassis.generic.atom.study.client.format.StudyFactory;
 import org.cggh.chassis.generic.atom.study.client.mockimpl.MockStudyFactory;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
+import org.cggh.chassis.generic.client.gwt.widget.application.client.ApplicationConstants;
 import org.cggh.chassis.generic.twisted.client.Deferred;
 import org.cggh.chassis.generic.twisted.client.Function;
 
@@ -84,16 +85,16 @@ public class CreateStudyWidgetController {
 		
 		List<String> modules = new ArrayList<String>();
 		if (model.acceptClinicalData()) {
-			modules.add(CreateStudyWidgetModel.MODULE_CLINICAL);
+			modules.add(ApplicationConstants.MODULE_CLINICAL);
 		}
 		if (model.acceptMolecularData()) {
-			modules.add(CreateStudyWidgetModel.MODULE_MOLECULAR);
+			modules.add(ApplicationConstants.MODULE_MOLECULAR);
 		}
 		if (model.acceptInVitroData()) {
-			modules.add(CreateStudyWidgetModel.MODULE_IN_VITRO);
+			modules.add(ApplicationConstants.MODULE_IN_VITRO);
 		}
 		if (model.acceptPharmacologyData()) {
-			modules.add(CreateStudyWidgetModel.MODULE_PHARMACOLOGY);
+			modules.add(ApplicationConstants.MODULE_PHARMACOLOGY);
 		}
 		newStudy.setModules(modules);
 		

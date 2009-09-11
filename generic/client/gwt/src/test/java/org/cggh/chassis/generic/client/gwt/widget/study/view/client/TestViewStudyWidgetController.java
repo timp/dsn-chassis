@@ -12,7 +12,7 @@ import org.cggh.chassis.generic.atom.study.client.format.StudyFactory;
 import org.cggh.chassis.generic.atom.study.client.mockimpl.MockStudyFactory;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
-import org.cggh.chassis.generic.client.gwt.widget.study.create.client.CreateStudyWidgetModel;
+import org.cggh.chassis.generic.client.gwt.widget.application.client.ApplicationConstants;
 import org.cggh.chassis.generic.client.gwt.widget.study.view.client.ViewStudyWidgetController;
 import org.cggh.chassis.generic.client.gwt.widget.study.view.client.ViewStudyWidgetModel;
 import org.cggh.chassis.generic.client.gwt.widget.study.view.client.ViewStudyWidgetController.GetStudyEntryCallback;
@@ -62,8 +62,8 @@ public class TestViewStudyWidgetController {
 		testStudy = mockFactory.createStudyEntry();
 		testStudy.setTitle("foo");
 		testStudy.setSummary("bar");
-		testStudy.addModule(CreateStudyWidgetModel.MODULE_CLINICAL);
-		testStudy.addModule(CreateStudyWidgetModel.MODULE_IN_VITRO);
+		testStudy.addModule(ApplicationConstants.MODULE_CLINICAL);
+		testStudy.addModule(ApplicationConstants.MODULE_IN_VITRO);
 	}
 	
 	@Test

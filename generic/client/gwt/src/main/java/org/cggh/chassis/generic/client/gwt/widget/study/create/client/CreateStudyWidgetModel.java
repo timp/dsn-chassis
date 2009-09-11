@@ -19,12 +19,6 @@ public class CreateStudyWidgetModel {
 	public static final Integer STATUS_SAVE_ERROR = 4;
 	public static final Integer STATUS_CANCELLED = 5;
 
-	//TODO remove when real atom service is used
-	public static final String MODULE_CLINICAL = "Clinical";
-	public static final String MODULE_MOLECULAR = "Molecular";
-	public static final String MODULE_IN_VITRO = "In Vitro";
-	public static final String MODULE_PHARMACOLOGY = "Pharmacology";
-	
 	private String title = "";
 	private String summary = "";
 	private Boolean acceptClinicalData = false;

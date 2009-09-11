@@ -9,6 +9,7 @@ import org.cggh.chassis.generic.atom.study.client.mockimpl.MockStudyFactory;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomService;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
+import org.cggh.chassis.generic.client.gwt.widget.application.client.ApplicationConstants;
 import org.cggh.chassis.generic.twisted.client.*;
 
 import com.google.gwt.junit.client.GWTTestCase;
@@ -92,10 +93,10 @@ public class GWTTestCreateStudyWidgetController_callbacks extends GWTTestCase {
 				//Check study is equal
 				assertEquals(title, persistedStudy.getTitle());
 				assertEquals(summary, persistedStudy.getSummary());
-				assertTrue(acceptClinicalData == persistedStudy.getModules().contains(CreateStudyWidgetModel.MODULE_CLINICAL));
-				assertTrue(acceptMolecularData == persistedStudy.getModules().contains(CreateStudyWidgetModel.MODULE_MOLECULAR));
-				assertTrue(acceptInVitroData == persistedStudy.getModules().contains(CreateStudyWidgetModel.MODULE_IN_VITRO));
-				assertTrue(acceptPharmacologyData == persistedStudy.getModules().contains(CreateStudyWidgetModel.MODULE_PHARMACOLOGY));
+				assertTrue(acceptClinicalData == persistedStudy.getModules().contains(ApplicationConstants.MODULE_CLINICAL));
+				assertTrue(acceptMolecularData == persistedStudy.getModules().contains(ApplicationConstants.MODULE_MOLECULAR));
+				assertTrue(acceptInVitroData == persistedStudy.getModules().contains(ApplicationConstants.MODULE_IN_VITRO));
+				assertTrue(acceptPharmacologyData == persistedStudy.getModules().contains(ApplicationConstants.MODULE_PHARMACOLOGY));
 				
 				// tell the test system the test is now done
 			    finishTest();

@@ -4,6 +4,7 @@
 package org.cggh.chassis.generic.client.gwt.widget.study.view.client;
 
 import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
+import org.cggh.chassis.generic.client.gwt.widget.application.client.ApplicationConstants;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -19,13 +20,6 @@ import com.google.gwt.user.client.ui.VerticalPanel;
  */
 public class ViewStudyWidgetDefaultRenderer implements ViewStudyWidgetModelListener {
 
-	//TODO remove when real atom service is used
-	public static final String MODULE_CLINICAL = "Clinical";
-	public static final String MODULE_MOLECULAR = "Molecular";
-	public static final String MODULE_IN_VITRO = "In Vitro";
-	public static final String MODULE_PHARMACOLOGY = "Pharmacology";
-	
-	
 	//Expose view elements for testing purposes.
 	final Label titleLabel = new Label();
 	final Label summaryLabel = new Label();
@@ -114,10 +108,10 @@ public class ViewStudyWidgetDefaultRenderer implements ViewStudyWidgetModelListe
 		
 		titleLabel.setText(after.getTitle());
 		summaryLabel.setText(after.getSummary());
-		acceptsClinicalDataIndicator.setVisible(after.getModules().contains(MODULE_CLINICAL));
-		acceptsInVitroDataIndicator.setVisible(after.getModules().contains(MODULE_IN_VITRO));
-		acceptsMolecularDataIndicator.setVisible(after.getModules().contains(MODULE_MOLECULAR));
-		acceptsPharmacologyDataIndicator.setVisible(after.getModules().contains(MODULE_PHARMACOLOGY));
+		acceptsClinicalDataIndicator.setVisible(after.getModules().contains(ApplicationConstants.MODULE_CLINICAL));
+		acceptsInVitroDataIndicator.setVisible(after.getModules().contains(ApplicationConstants.MODULE_IN_VITRO));
+		acceptsMolecularDataIndicator.setVisible(after.getModules().contains(ApplicationConstants.MODULE_MOLECULAR));
+		acceptsPharmacologyDataIndicator.setVisible(after.getModules().contains(ApplicationConstants.MODULE_PHARMACOLOGY));
 	}
 
 	class EditStudyClickHandler implements ClickHandler {

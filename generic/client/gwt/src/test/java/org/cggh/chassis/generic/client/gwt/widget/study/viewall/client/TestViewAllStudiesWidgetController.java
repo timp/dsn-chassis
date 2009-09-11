@@ -17,7 +17,7 @@ import org.cggh.chassis.generic.atom.study.client.format.StudyFeed;
 import org.cggh.chassis.generic.atom.study.client.mockimpl.MockStudyFactory;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
-import org.cggh.chassis.generic.client.gwt.widget.study.create.client.CreateStudyWidgetModel;
+import org.cggh.chassis.generic.client.gwt.widget.application.client.ApplicationConstants;
 import org.cggh.chassis.generic.client.gwt.widget.study.viewall.client.ViewAllStudiesWidgetController.GetStudyFeedEntryCallback;
 import org.cggh.chassis.generic.twisted.client.Deferred;
 import org.junit.Before;
@@ -65,14 +65,14 @@ public class TestViewAllStudiesWidgetController {
 		StudyEntry testStudy1 = mockFactory.createStudyEntry();
 		testStudy1.setTitle("study foo");
 		testStudy1.setSummary("summary foo");
-		testStudy1.addModule(CreateStudyWidgetModel.MODULE_CLINICAL);
-		testStudy1.addModule(CreateStudyWidgetModel.MODULE_IN_VITRO);
+		testStudy1.addModule(ApplicationConstants.MODULE_CLINICAL);
+		testStudy1.addModule(ApplicationConstants.MODULE_IN_VITRO);
 
 		StudyEntry testStudy2 = mockFactory.createStudyEntry();
 		testStudy2.setTitle("study foo2");
 		testStudy2.setSummary("summary foo2");
-		testStudy2.addModule(CreateStudyWidgetModel.MODULE_PHARMACOLOGY);
-		testStudy2.addModule(CreateStudyWidgetModel.MODULE_MOLECULAR);
+		testStudy2.addModule(ApplicationConstants.MODULE_PHARMACOLOGY);
+		testStudy2.addModule(ApplicationConstants.MODULE_MOLECULAR);
 		
 		//test studies for mockFeed to return
 		testStudies = new ArrayList<StudyEntry>();

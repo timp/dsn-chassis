@@ -7,6 +7,7 @@ import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
 import org.cggh.chassis.generic.atom.study.client.mockimpl.MockStudyFactory;
 import org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomService;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
+import org.cggh.chassis.generic.client.gwt.widget.application.client.ApplicationConstants;
 
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.event.dom.client.DomEvent;
@@ -53,7 +54,7 @@ public class GWTTestEditStudyWidgetDefaultRenderer extends GWTTestCase {
 		StudyEntry testStudyEntry = mockFactory.createStudyEntry();
 		testStudyEntry.setTitle("title");
 		testStudyEntry.setSummary("summary");	
-		testStudyEntry.addModule(EditStudyWidgetModel.MODULE_CLINICAL);
+		testStudyEntry.addModule(ApplicationConstants.MODULE_CLINICAL);
 		
 		//call method under test
 		testController.loadStudyEntry(testStudyEntry);
@@ -90,7 +91,7 @@ public class GWTTestEditStudyWidgetDefaultRenderer extends GWTTestCase {
 		StudyEntry testStudyEntry = mockFactory.createStudyEntry();
 		testStudyEntry.setTitle(title);
 		testStudyEntry.setSummary(summary);	
-		testStudyEntry.addModule(EditStudyWidgetModel.MODULE_CLINICAL);
+		testStudyEntry.addModule(ApplicationConstants.MODULE_CLINICAL);
 		
 				
 		//call method under test
