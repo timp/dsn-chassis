@@ -17,7 +17,7 @@ Due: Jan 2010
 
 Status: pending
 
-Scope: see WwarnMilestoneOneRequirementsSpec
+Scope: see [http://dsn-chassis.googlecode.com/svn/tags/wwarn/docs/draft-6/content/requirements/1.0/index.html Chassis/WWARN 1.0 User Requirements Specification Draft 6]
 
 ----
 = Milestones =
