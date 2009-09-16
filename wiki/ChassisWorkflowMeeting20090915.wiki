@@ -1,0 +1,13 @@
+#summary notes from meeting on Chassis workflow model, 2009-09-15
+
+Present: Alistair, Richard, Meera, Lesley, Val
+
+= Introduction =
+
+Alistair gave a [http://dsn-chassis.googlecode.com/svn/trunk/wwarn/docs/content/presentations/20090915-wwarn-chassis-workflow.pdf brief introduction to the meeting].
+
+= Illustration of Workflow =
+
+Alistair illustrated the main features of the proposed Chassis workflow (see image below), as specified in [http://dsn-chassis.googlecode.com/svn/tags/wwarn/docs/draft-6/content/requirements/1.0/index.html draft 6 of the Chassis/WWARN requirements spec].
+
+http://dsn-chassis.googlecode.com/svn/trunk/wwarn/docs/content/presentations/20090915-chassis-workflow.png
