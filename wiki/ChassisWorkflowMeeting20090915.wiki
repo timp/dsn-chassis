@@ -2,6 +2,8 @@
 
 Present: Alistair, Richard, Meera, Lesley, Val
 
+<wiki:toc/>
+
 = Introduction =
 
 Alistair gave a [http://dsn-chassis.googlecode.com/svn/trunk/wwarn/docs/content/presentations/20090915-wwarn-chassis-workflow.pdf brief introduction to the meeting].
@@ -11,9 +13,6 @@ Alistair gave a [http://dsn-chassis.googlecode.com/svn/trunk/wwarn/docs/content/
 Alistair illustrated the main features of the proposed Chassis workflow (see image below), as specified in [http://dsn-chassis.googlecode.com/svn/tags/wwarn/docs/draft-6/content/requirements/1.0/index.html draft 6 of the Chassis/WWARN requirements spec].
 
 http://dsn-chassis.googlecode.com/svn/trunk/wwarn/docs/content/presentations/20090915-chassis-workflow.png
-
-----
-<wiki:toc/>
 
 = Discussion =
 
@@ -103,7 +102,9 @@ Ok to manage dictionaries as arbitrary files, although wwarn should provide a te
 
 == Gatekeeper Review ==
 
-We had consensus that wwarn should have a single pool of gatekeepers with explicit acceptance criteria, not module-specific.
+We had consensus that wwarn should have a single pool of gatekeepers with explicit acceptance criteria, not module-specific. I.e., universal acceptance criteria, across modules.
+
+If triage model, what if a submission takes ages to curate? Need to set expectations.
 
 Important to have transparency, explain not ready for curation yet because ...
 
@@ -111,5 +112,34 @@ Val said, need to prioritise current data, because wwarn is about early warning.
 
 Meera said, yes but for now, prioritise building a database. So maybe different priorities, old data are important.
 
+Clinical gk has priority, because clinical data has the outcome.
 
-Clinical gk has priority.
+Wwarn modules should agree acceptance & prioritisation criteria for release 1.0.
+
+== Curation & Derivation ==
+
+Ok to do off-line curation, upload each revision.
+
+== Release Criteria ==
+
+Finer grained? OK to have coarse grained release criteria for 1.0.
+
+Maybe tack fine-grained quality data (evaluation) onto SQ?
+
+== Curator Collaboration ==
+
+What about splitting a submission, each curator works on their bit in parallel, then merge back together?
+
+Can gk assign more than one curator to a submission?
+
+Working in series versus working in parallel? Start with series, passing the ball. Consider parallel later.
+
+== Other Discussion ==
+
+What about registering prior to submission? Need to build up database of contacts. Expression of interest?
+
+Coordinator role is needed. Also, should capture information on how long things take, so can get management reporting, reporting on curation workload, etc.
+
+What is user journey up to point of submission?
+
+The gk begins the interaction with the submitter.
