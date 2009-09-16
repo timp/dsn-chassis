@@ -39,3 +39,6 @@ Status: pending
 Scope: see ChassisWwarnIterationOne
 
 ----
+= Meeting Notes =
+
+  * [ChassisWorkflowMeeting20090915]
