@@ -11,6 +11,8 @@ import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactory;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFormatException;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomLink;
+import org.cggh.chassis.generic.log.client.Log;
+import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.xml.client.XML;
 
 import com.google.gwt.junit.client.GWTTestCase;
@@ -27,6 +29,11 @@ public class GWTTestAtomFactoryImpl extends GWTTestCase {
 	
 	
 	private AtomFactory factory;
+	
+	
+	
+	
+	private Log log = LogFactory.getLog(this.getClass());
 
 	
 	
@@ -132,6 +139,7 @@ public class GWTTestAtomFactoryImpl extends GWTTestCase {
 	
 
 	
+	@SuppressWarnings("unused")
 	public void testCreateLink_Element_AtomFormatExceptions() {
 		
 		try {
@@ -229,7 +237,7 @@ public class GWTTestAtomFactoryImpl extends GWTTestCase {
 	}
 	
 
-	
+	@SuppressWarnings("unused")
 	public void testCreateAuthor_Element_AtomFormatExceptions() {
 		
 		try {
@@ -328,6 +336,7 @@ public class GWTTestAtomFactoryImpl extends GWTTestCase {
 	
 
 	
+	@SuppressWarnings("unused")
 	public void testCreateCategory_Element_AtomFormatExceptions() {
 		
 		try {
@@ -478,6 +487,7 @@ public class GWTTestAtomFactoryImpl extends GWTTestCase {
 	
 
 	
+	@SuppressWarnings("unused")
 	public void testCreateEntry_String_AtomFormatExceptions() {
 		
 		try {
@@ -525,6 +535,7 @@ public class GWTTestAtomFactoryImpl extends GWTTestCase {
 	
 	
 	public void testCreateFeed_String() {
+		log.enter("testCreateFeed_String");
 		
 		String feedDocument = 
 			"<?xml version=\"1.0\" encoding=\"utf-8\"?>" +
@@ -569,6 +580,14 @@ public class GWTTestAtomFactoryImpl extends GWTTestCase {
 				"</entry>" +
 			"</feed>";
 		
+		// spike
+//		Document d = XMLParser.parse(feedDocument);
+//		String prefix = d.getDocumentElement().getPrefix();
+//		log.trace("prefix: "+prefix);
+//		log.trace("tag name: "+d.getDocumentElement().getTagName());
+//		log.trace("node name: "+d.getDocumentElement().getNodeName());	
+//		log.trace("local name: "+XML.getLocalName(d.getDocumentElement()));
+		
 		try {
 		
 			AtomFeed feed = factory.createFeed(feedDocument);
@@ -591,11 +610,71 @@ public class GWTTestAtomFactoryImpl extends GWTTestCase {
 			fail(e.getLocalizedMessage());
 		}
 		
+		log.leave();
+	}
+	
+	
+	
+
+	
+	public void testCreateFeed_String_qNames() {
+		log.enter("testCreateFeed_String_qNames");
+		
+		// this example came from exist
+		
+		String feedDocument = 
+			"<atom:feed xmlns:atom=\"http://www.w3.org/2005/Atom\">" +
+				"<id xmlns=\"http://www.w3.org/2005/Atom\">urn:uuid:2343ad67-16ab-41ad-bd93-7b01db80a85c</id>" +
+				"<updated xmlns=\"http://www.w3.org/2005/Atom\">2009-09-17T15:23:10+01:00</updated>" +
+				"<title xmlns=\"http://www.w3.org/2005/Atom\">Example Collection</title>" +
+				"<link xmlns=\"http://www.w3.org/2005/Atom\" href=\"#\" rel=\"edit\" type=\"application/atom+xml\"/>" +
+				"<link xmlns=\"http://www.w3.org/2005/Atom\" href=\"#\" rel=\"self\" type=\"application/atom+xml\"/>" +
+				"<entry xmlns=\"http://www.w3.org/2005/Atom\">" +
+					"<id>urn:uuid:c5e4f0f0-8b0c-4162-8123-a74a3c729b3b</id>" +
+					"<updated>2009-09-17T15:23:10+01:00</updated>" +
+					"<published>2009-09-17T15:23:10+01:00</published>" +
+					"<link href=\"?id=urn:uuid:c5e4f0f0-8b0c-4162-8123-a74a3c729b3b\" rel=\"edit\" type=\"application/atom+xml\"/>" +
+					"<title>a vanilla atom entry</title>" +
+					"<summary>this is a vanilla atom entry, that's all</summary>" +
+					"<author><name>bob</name><email>bob@example.com</email></author>" +
+				"</entry>" +
+			"</atom:feed>";
+		
+		// spike
+//		Document d = XMLParser.parse(feedDocument);
+//		String prefix = d.getDocumentElement().getPrefix();
+//		log.trace("prefix: "+prefix);
+//		log.trace("tag name: "+d.getDocumentElement().getTagName());
+//		log.trace("node name: "+d.getDocumentElement().getNodeName());	
+//		log.trace("local name: "+XML.getLocalName(d.getDocumentElement()));
+		
+		try {
+		
+			AtomFeed feed = factory.createFeed(feedDocument);
+			
+			// check feed simple properties
+			assertEquals("Example Collection", feed.getTitle());
+			assertEquals("urn:uuid:2343ad67-16ab-41ad-bd93-7b01db80a85c", feed.getId());
+			assertEquals("2009-09-17T15:23:10+01:00", feed.getUpdated());
+			
+			// check entries
+			assertEquals(1, feed.getEntries().size());
+			assertEquals("a vanilla atom entry", feed.getEntries().get(0).getTitle());
+			assertEquals("bob@example.com", feed.getEntries().get(0).getAuthors().get(0).getEmail());
+			
+		}
+		catch (AtomFormatException e) {
+			e.printStackTrace();
+			fail(e.getLocalizedMessage());
+		}
+		
+		log.leave();
 	}
 	
 
 	
 
+	@SuppressWarnings("unused")
 	public void testCreateFeed_String_AtomFormatExceptions() {
 		
 		try {
