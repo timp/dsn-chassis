@@ -5,6 +5,8 @@ package org.cggh.chassis.generic.atom.study.client.format;
 
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactory;
 
+import com.google.gwt.xml.client.Element;
+
 /**
  * @author aliman
  *
@@ -12,5 +14,11 @@ import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactory;
 public interface StudyFactory extends AtomFactory {
 
 	public StudyEntry createStudyEntry();
+
+	/**
+	 * @param studyElement
+	 * @return
+	 */
+	public Study createStudy(Element studyElement);
 	
 }
