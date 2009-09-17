@@ -6,6 +6,7 @@ package org.cggh.chassis.generic.atom.study.client.mockimpl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.cggh.chassis.generic.atom.study.client.format.Study;
 import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomEntry;
@@ -60,6 +61,14 @@ public class MockStudyEntry extends MockAtomEntry implements StudyEntry {
 			StudyEntry study = (StudyEntry) entry;
 			this.modules = new ArrayList<String>(study.getModules());
 		}
+	}
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.atom.study.client.format.StudyEntry#getStudy()
+	 */
+	public Study getStudy() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

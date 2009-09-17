@@ -27,7 +27,7 @@ import com.google.gwt.xml.client.impl.DOMParseException;
  */
 public class AtomFeedImpl extends ElementWrapperImpl implements AtomFeed {
 
-	private AtomFactory factory;
+	protected AtomFactory factory;
 
 	/**
 	 * @param factory 
