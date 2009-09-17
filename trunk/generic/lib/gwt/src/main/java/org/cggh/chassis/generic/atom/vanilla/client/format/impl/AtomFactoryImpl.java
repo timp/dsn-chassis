@@ -11,6 +11,7 @@ import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactory;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFormatException;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomLink;
+import org.cggh.chassis.generic.xml.client.XML;
 
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;
@@ -112,8 +113,8 @@ public class AtomFactoryImpl implements AtomFactory {
 
 		feedElement = d.getDocumentElement();
 			
-		if (!feedElement.getTagName().equals(Atom.ELEMENT_FEED)) {
-			throw new AtomFormatException("bad tag name, expected: "+Atom.ELEMENT_FEED+"; found: "+feedElement.getTagName());
+		if (!XML.getLocalName(feedElement).equals(Atom.ELEMENT_FEED)) {
+			throw new AtomFormatException("bad local tag name, expected: "+Atom.ELEMENT_FEED+"; found: "+feedElement.getTagName());
 		}
 
 		if (feedElement.getNamespaceURI() == null || !feedElement.getNamespaceURI().equals(Atom.NSURI)) {

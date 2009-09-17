@@ -20,6 +20,19 @@ public class XML {
 
 
 	
+	public static String getLocalName(Element e) {
+		String prefix = e.getPrefix();
+		String tagName = e.getTagName();
+		if (tagName.startsWith(prefix+":")) {
+			return tagName.replaceFirst(prefix+":", "");
+		}
+		else {
+			return tagName;
+		}
+	}
+	
+	
+	
 	/**
 	 * Get elements by tag name.
 	 * 
