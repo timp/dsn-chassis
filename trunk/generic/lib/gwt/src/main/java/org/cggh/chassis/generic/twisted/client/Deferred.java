@@ -41,7 +41,13 @@ public class Deferred<T> {
 	
 	
 	public Deferred(Function canceller) {
-		this.canceller  = canceller;
+		this.canceller = canceller;
+	}
+	
+	
+	
+	public void setCanceller(Function canceller) {
+		this.canceller = canceller;
 	}
 	
 	
@@ -54,7 +60,14 @@ public class Deferred<T> {
 		return this.paused;
 	}
 	
-
+	public Object getSuccessResult() {
+		return this.results[SUCCESS];
+	}
+	
+	public Object getErrorResult() {
+		return this.results[ERROR];
+	}
+	
 	public void cancel() {
         if (this.fired == INITIAL) {
         	if (this.canceller != null) {

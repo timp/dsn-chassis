@@ -397,7 +397,7 @@ public class GWTTestAtomFactoryImpl extends GWTTestCase {
 
 	
 	
-	public void testCreateEntry_Element() {
+	public void testCreateEntry_String() {
 		 
 
 		String entryDocument = 
@@ -478,7 +478,7 @@ public class GWTTestAtomFactoryImpl extends GWTTestCase {
 	
 
 	
-	public void testCreateEntry_Element_AtomFormatExceptions() {
+	public void testCreateEntry_String_AtomFormatExceptions() {
 		
 		try {
 
@@ -524,7 +524,7 @@ public class GWTTestAtomFactoryImpl extends GWTTestCase {
 	
 	
 	
-	public void testCreateFeed_Element() {
+	public void testCreateFeed_String() {
 		
 		String feedDocument = 
 			"<?xml version=\"1.0\" encoding=\"utf-8\"?>" +
@@ -596,7 +596,7 @@ public class GWTTestAtomFactoryImpl extends GWTTestCase {
 
 	
 
-	public void testCreateFeed_Element_AtomFormatExceptions() {
+	public void testCreateFeed_String_AtomFormatExceptions() {
 		
 		try {
 

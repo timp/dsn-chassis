@@ -15,6 +15,9 @@ import org.cggh.chassis.generic.atom.vanilla.client.format.AtomLink;
 import org.cggh.chassis.generic.xml.client.XML;
 
 import com.google.gwt.junit.client.GWTTestCase;
+import com.google.gwt.xml.client.Document;
+import com.google.gwt.xml.client.Element;
+import com.google.gwt.xml.client.XMLParser;
 
 /**
  * @author aliman
@@ -236,7 +239,7 @@ public class GWTTestAtomEntryImpl extends GWTTestCase {
 		assertEquals(0, entry.getLinks().size());
 		assertEquals(0, XML.getElementsByTagName(entry.getElement(), Atom.ELEMENT_LINK).size());
 		
-		// create and add an author
+		// create and add a link
 		AtomLink link = factory.createLink();
 		link.setHref("http://example.org/foo");
 		List<AtomLink> links = new ArrayList<AtomLink>();
@@ -248,6 +251,63 @@ public class GWTTestAtomEntryImpl extends GWTTestCase {
 		assertEquals(1, XML.getElementsByTagName(entry.getElement(), Atom.ELEMENT_LINK).size());
 		assertEquals(link, entry.getLinks().get(0));
 
+	}
+	
+	
+	
+	public void testToString() {
+		
+		AtomEntry entry = factory.createEntry();
+
+		String title = "foo title";
+		entry.setTitle(title);
+		
+		String summary = "foo summary";
+		entry.setSummary(summary);
+		
+		// create and add an author
+		AtomAuthor author = factory.createAuthor();
+		author.setName("Bob");
+		entry.addAuthor(author);
+
+		// create and add a Link
+		AtomLink link = factory.createLink();
+		link.setHref("http://example.org/foo");
+		entry.addLink(link);
+
+		// create and add a category
+		AtomCategory category = factory.createCategory();
+		category.setTerm("foo");
+		entry.addCategory(category);
+
+		// call method under test
+		String xml = entry.toString();
+		
+		// output XML for eyeball
+		System.out.println(xml);
+
+		// parse XML
+		Document d = XMLParser.parse(xml);
+		Element element = d.getDocumentElement();
+
+
+		// test xml
+		
+		assertEquals(Atom.ELEMENT_ENTRY, element.getTagName());
+		assertEquals(Atom.NSURI, element.getNamespaceURI());
+
+		assertEquals(title, XML.getElementSimpleContentByTagName(element, Atom.ELEMENT_TITLE));
+		assertEquals(summary, XML.getElementSimpleContentByTagName(element, Atom.ELEMENT_SUMMARY));
+		assertNull(XML.getElementSimpleContentByTagName(element, Atom.ELEMENT_ID));
+		assertNull(XML.getElementSimpleContentByTagName(element, Atom.ELEMENT_PUBLISHED));
+		assertNull(XML.getElementSimpleContentByTagName(element, Atom.ELEMENT_UPDATED));
+
+		assertEquals(1, XML.getElementsByTagName(element, Atom.ELEMENT_AUTHOR).size());
+
+		assertEquals(1, XML.getElementsByTagName(element, Atom.ELEMENT_CATEGORY).size());
+
+		assertEquals(1, XML.getElementsByTagName(element, Atom.ELEMENT_LINK).size());
+		
 	}
 	
 	
