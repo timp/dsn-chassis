@@ -18,7 +18,7 @@ import org.cggh.chassis.generic.atom.study.client.mockimpl.MockStudyFactory;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
 import org.cggh.chassis.generic.client.gwt.widget.application.client.ApplicationConstants;
-import org.cggh.chassis.generic.client.gwt.widget.study.viewall.client.ViewAllStudiesWidgetController.GetStudyFeedEntryCallback;
+import org.cggh.chassis.generic.client.gwt.widget.study.viewall.client.ViewAllStudiesWidgetController.GetStudyFeedCallback;
 import org.cggh.chassis.generic.twisted.client.Deferred;
 import org.junit.Before;
 import org.junit.Test;
@@ -117,7 +117,7 @@ public class TestViewAllStudiesWidgetController {
 		expect(mockStudyFeed.getStudyEntries()).andReturn(testStudies);
 		replay(mockStudyFeed);
 
-		GetStudyFeedEntryCallback callback = testController.new GetStudyFeedEntryCallback();
+		GetStudyFeedCallback callback = testController.new GetStudyFeedCallback();
 		
 		//call method under test
 		callback.apply(mockStudyFeed);

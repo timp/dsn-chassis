@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
 import org.cggh.chassis.generic.atom.study.client.format.StudyFactory;
+import org.cggh.chassis.generic.atom.study.client.format.impl.StudyFactoryImpl;
 import org.cggh.chassis.generic.atom.study.client.mockimpl.MockStudyFactory;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
@@ -33,8 +34,8 @@ public class CreateStudyWidgetController {
 		this.service = service;
 		this.feedURL = feedURL;
 		this.owner = owner;
-		// TODO replace default with real study factory
-		this.studyFactory = new MockStudyFactory();
+//		this.studyFactory = new MockStudyFactory();
+		this.studyFactory = new StudyFactoryImpl();
 	}
 
 	public void setUpNewStudy() {

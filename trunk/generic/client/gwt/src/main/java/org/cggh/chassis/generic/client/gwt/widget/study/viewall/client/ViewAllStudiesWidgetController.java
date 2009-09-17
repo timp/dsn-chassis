@@ -27,14 +27,14 @@ public class ViewAllStudiesWidgetController {
 	}
 	
 	public void loadStudiesByFeedURL(String feedURL) {
-		getStudiesByFeedURL(feedURL).addCallback(new GetStudyFeedEntryCallback());
+		getStudiesByFeedURL(feedURL).addCallback(new GetStudyFeedCallback());
 	}
 	
 	Deferred<AtomFeed> getStudiesByFeedURL(String feedURL) {
 		return service.getFeed(feedURL);
 	}
 
-	class GetStudyFeedEntryCallback implements Function<StudyFeed,StudyFeed> {
+	class GetStudyFeedCallback implements Function<StudyFeed,StudyFeed> {
 
 		public StudyFeed apply(StudyFeed studyFeed) {
 			
