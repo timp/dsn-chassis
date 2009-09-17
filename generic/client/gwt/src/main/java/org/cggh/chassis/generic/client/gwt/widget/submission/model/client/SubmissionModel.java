@@ -108,7 +108,7 @@ public class SubmissionModel {
 
 	private Boolean isTitleValid() {
 		//TODO improve validation
-		return ((getTitle() != null) && !(getTitle().isEmpty()));
+		return ((getTitle() != null) && !(getTitle().length() == 0));
 	}
 
 
@@ -134,7 +134,7 @@ public class SubmissionModel {
 
 	private Boolean isSummaryValid() {
 		//TODO improve validation
-		return ((getSummary() != null) && !(getSummary().isEmpty()));
+		return ((getSummary() != null) && !(getSummary().length() == 0));
 	}
 
 

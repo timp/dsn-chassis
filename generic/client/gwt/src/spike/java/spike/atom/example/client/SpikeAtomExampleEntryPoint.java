@@ -6,7 +6,7 @@ package spike.atom.example.client;
 import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
 import org.cggh.chassis.generic.atom.study.client.mockimpl.MockStudyFactory;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomPersonConstruct;
+import org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
 import org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomFactory;
 import org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomService;
 import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
@@ -63,7 +63,7 @@ public class SpikeAtomExampleEntryPoint implements EntryPoint {
 		entry.setSummary("this is a vanilla atom entry, that's all");
 		
 		log.trace("create and set author");
-		AtomPersonConstruct bob = factory.createPersonConstruct(); 
+		AtomAuthor bob = factory.createAuthor(); 
 		bob.setName("bob");
 		bob.setEmail("bob@example.com");
 		entry.addAuthor(bob);
@@ -141,7 +141,7 @@ public class SpikeAtomExampleEntryPoint implements EntryPoint {
 		study.setSummary("this study was done from 2004-2005 in the Gambia");
 		
 		log.trace("create and set author");
-		AtomPersonConstruct bob = factory.createPersonConstruct(); 
+		AtomAuthor bob = factory.createAuthor(); 
 		bob.setName("bob");
 		bob.setEmail("bob@example.com");
 		study.addAuthor(bob);

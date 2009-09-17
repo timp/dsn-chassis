@@ -113,7 +113,7 @@ public class CreateStudyWidgetModel {
 	private Boolean fireTitleChanged(String title) {
 		
 		//TODO implement proper validation
-		Boolean isValid = !title.isEmpty();
+		Boolean isValid = !(title.length() == 0);
 		
 		for (CreateStudyWidgetModelListener listener : listeners) {
 			listener.onTitleChanged(isValid);
@@ -125,7 +125,7 @@ public class CreateStudyWidgetModel {
 	private Boolean fireSummaryChanged(String summary) {
 		
 		//TODO implement proper validation
-		Boolean isValid = !summary.isEmpty();
+		Boolean isValid = !(summary.length() == 0);
 		
 		for (CreateStudyWidgetModelListener listener : listeners) {
 			listener.onSummaryChanged(isValid);
