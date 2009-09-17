@@ -9,7 +9,7 @@ import org.cggh.chassis.generic.atom.submission.client.mockimpl.MockSubmissionFa
 import org.cggh.chassis.generic.atom.submission.client.mockimpl.MockSubmissionQueryService;
 import org.cggh.chassis.generic.atom.submission.client.protocol.SubmissionQueryService;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomPersonConstruct;
+import org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
 import org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomService;
 import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
 import org.cggh.chassis.generic.log.client.Log;
@@ -146,7 +146,7 @@ public class SpikeSubmissionQueryEntryPoint implements EntryPoint {
 		submission.setSummary("this submission contains all the clinical data for the 2004-05 Gambia study");
 		
 		log.trace("create and set author");
-		AtomPersonConstruct bob = factory.createPersonConstruct(); 
+		AtomAuthor bob = factory.createAuthor(); 
 		bob.setName("bob");
 		bob.setEmail("bob@example.com");
 		submission.addAuthor(bob);

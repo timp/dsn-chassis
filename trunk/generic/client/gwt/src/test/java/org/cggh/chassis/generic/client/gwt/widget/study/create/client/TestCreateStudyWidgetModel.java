@@ -38,8 +38,8 @@ public class TestCreateStudyWidgetModel {
 		assertNotNull(testModel);
 		
 		// test initial state
-		assertTrue(testModel.getTitle().isEmpty());
-		assertTrue(testModel.getSummary().isEmpty());
+		assertEquals(0, testModel.getTitle().length());
+		assertEquals(0, testModel.getSummary().length());
 		assertFalse(testModel.acceptClinicalData());
 		assertFalse(testModel.acceptMolecularData());
 		assertFalse(testModel.acceptInVitroData());

@@ -8,7 +8,7 @@ import org.cggh.chassis.generic.atom.study.client.mockimpl.MockStudyFactory;
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
 import org.cggh.chassis.generic.atom.submission.client.mockimpl.MockSubmissionFactory;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomPersonConstruct;
+import org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
 import org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomService;
 import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
 import org.cggh.chassis.generic.log.client.Log;
@@ -70,7 +70,7 @@ public class SpikeSubmissionExampleEntryPoint implements EntryPoint {
 		submission.setSummary("this submission contains all the clinical data for the 2004-05 Gambia study");
 		
 		log.trace("create and set author");
-		AtomPersonConstruct bob = factory.createPersonConstruct(); 
+		AtomAuthor bob = factory.createAuthor(); 
 		bob.setName("bob");
 		bob.setEmail("bob@example.com");
 		submission.addAuthor(bob);
@@ -151,7 +151,7 @@ public class SpikeSubmissionExampleEntryPoint implements EntryPoint {
 		study.setSummary("this study was done from 2004-2005 in the Gambia");
 		
 		log.trace("create and set author");
-		AtomPersonConstruct bob = factory.createPersonConstruct(); 
+		AtomAuthor bob = factory.createAuthor(); 
 		bob.setName("bob");
 		bob.setEmail("bob@example.com");
 		study.addAuthor(bob);
