@@ -5,9 +5,14 @@ package org.cggh.chassis.generic.client.gwt.widget.study.edit.client;
 
 import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
 import org.cggh.chassis.generic.atom.study.client.format.StudyFactory;
+import org.cggh.chassis.generic.atom.study.client.format.impl.StudyFactoryImpl;
 import org.cggh.chassis.generic.atom.study.client.mockimpl.MockStudyFactory;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
+import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomProtocolException;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
+import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
+import org.cggh.chassis.generic.log.client.Log;
+import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.twisted.client.Deferred;
 import org.cggh.chassis.generic.twisted.client.Function;
 
@@ -23,13 +28,15 @@ public class EditStudyWidgetController {
 	private EditStudyWidgetModel model;
 	private EditStudyWidget owner;
 	
+	private Log log = LogFactory.getLog(this.getClass());
+	
 	public EditStudyWidgetController(EditStudyWidgetModel model,
 			AtomService service, EditStudyWidget owner) {
 		this.model = model;
 		this.service = service;
 		this.owner = owner;
-		// TODO replace default with real study factory
-		this.studyFactory = new MockStudyFactory();
+//		this.studyFactory = new MockStudyFactory();
+		this.studyFactory = new StudyFactoryImpl();
 	}
 
 	//Used for testing purposes
@@ -91,7 +98,9 @@ public class EditStudyWidgetController {
 		//study entry to update
 		StudyEntry studyEntry = model.getStudyEntry();
 		
-		return service.putEntry(studyEntry.getEditLink().getHref(), studyEntry);
+		String entryURL = Configuration.getStudyFeedURL() + studyEntry.getEditLink().getHref(); // assume relative link
+		
+		return service.putEntry(entryURL, studyEntry);
 	}
 	
 	class SaveUpdateSuccessFunctionCallback implements Function<StudyEntry,StudyEntry> {
@@ -107,6 +116,14 @@ public class EditStudyWidgetController {
 	class SaveUpdateFailFunctionErrback implements Function<Throwable,Throwable> {
 
 		public Throwable apply(Throwable in) {
+			
+			if (in instanceof AtomProtocolException) {
+				AtomProtocolException ex = (AtomProtocolException) in;
+				log.trace("handling atom protocol exception: "+ex.getLocalizedMessage());
+				log.trace(ex.getResponse().getStatusCode() + " " +ex.getResponse().getStatusText());
+				log.trace(ex.getResponse().getText());
+			}
+			
 			model.setStatus(EditStudyWidgetModel.STATUS_SAVE_ERROR);
 			return in;
 		}

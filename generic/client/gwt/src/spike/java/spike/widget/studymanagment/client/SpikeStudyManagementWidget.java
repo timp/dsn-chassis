@@ -3,8 +3,13 @@
  */
 package spike.widget.studymanagment.client;
 
+import org.cggh.chassis.generic.atom.study.client.format.StudyFactory;
+import org.cggh.chassis.generic.atom.study.client.format.impl.StudyFactoryImpl;
 import org.cggh.chassis.generic.atom.study.client.mockimpl.MockStudyFactory;
 import org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomService;
+import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
+import org.cggh.chassis.generic.atom.vanilla.client.protocol.impl.AtomServiceImpl;
+import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
 import org.cggh.chassis.generic.client.gwt.widget.studymanagement.client.StudyManagementWidget;
 
 import com.google.gwt.core.client.EntryPoint;
@@ -32,14 +37,18 @@ public class SpikeStudyManagementWidget implements EntryPoint {
 		verticalPanel.add(displayCanvas);
 		
 		//Use mock service
-		MockStudyFactory mockFactory = new MockStudyFactory();
-		MockAtomService mockService = new MockAtomService(mockFactory);
+//		MockStudyFactory factory = new MockStudyFactory();
+//		MockAtomService service = new MockAtomService(factory);
 		
 		// bootstrap mock service with study feed
-		String feedURL = "http://example.com/studies";
-		((MockAtomService)mockService).createFeed(feedURL, "all studies");
+//		String feedURL = "http://example.com/studies";
+//		((MockAtomService)service).createFeed(feedURL, "all studies");
 		
-		StudyManagementWidget studyManagementWidget = new StudyManagementWidget(menuCanvas, displayCanvas, mockService);
+		// use real thing
+		StudyFactory factory = new StudyFactoryImpl();
+		AtomService service = new AtomServiceImpl(factory);
+		
+		StudyManagementWidget studyManagementWidget = new StudyManagementWidget(menuCanvas, displayCanvas, service);
 		
 		RootPanel.get().add(verticalPanel);
 		

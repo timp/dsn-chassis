@@ -5,6 +5,7 @@ package org.cggh.chassis.generic.client.gwt.widget.studymanagement.client;
 
 import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
+import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
 import org.cggh.chassis.generic.client.gwt.widget.study.create.client.CreateStudyWidget;
 import org.cggh.chassis.generic.client.gwt.widget.study.create.client.CreateStudyWidgetAPI;
 import org.cggh.chassis.generic.client.gwt.widget.study.create.client.CreateStudyWidgetPubSubAPI;
@@ -31,7 +32,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
  *
  */
 public class StudyManagementWidgetDefaultRenderer implements StudyManagementWidgetModelListener,
-															 CreateStudyWidgetPubSubAPI, 
+															 CreateStudyWidgetPubSubAPI, // TODO renderer should not implement child PubSub interfaces -- coordination logic goes in the widget class
 															 EditStudyWidgetPubSubAPI,
 															 ViewStudyWidgetPubSubAPI,
 															 ViewAllStudiesWidgetPubSubAPI {
@@ -56,8 +57,8 @@ public class StudyManagementWidgetDefaultRenderer implements StudyManagementWidg
 	final Panel editStudyWidgetCanvas = new SimplePanel();
 
 
-	// TODO handle run time setting of feedURL
-	private String feedURL = "http://example.com/studies";
+//	private String feedURL = "http://example.com/studies";
+	private String feedURL = Configuration.getStudyFeedURL();
 	
 	public StudyManagementWidgetDefaultRenderer(Panel menuCanvas, Panel displayCanvas,
 												StudyManagementWidgetController controller, AtomService service) {
@@ -151,21 +152,25 @@ public class StudyManagementWidgetDefaultRenderer implements StudyManagementWidg
 		
 	}
 
+	// TODO move this coordination logic to widget class
 	public void onNewStudyCreated(StudyEntry newStudyEntry) {
 		viewStudyWidget.loadStudyEntry(newStudyEntry);
 		controller.displayViewStudyWidget();
 	}
 
+	// TODO move this coordination logic to widget class
 	public void onStudyUpdateSuccess(StudyEntry updatedStudyEntry) {
 		viewStudyWidget.loadStudyEntry(updatedStudyEntry);
 		controller.displayViewStudyWidget();
 	}
 
+	// TODO move this coordination logic to widget class
 	public void onEditStudyUIClicked(StudyEntry studyEntryToEdit) {
 		editStudyWidget.editStudyEntry(studyEntryToEdit);
 		controller.displayEditStudyWidget();
 	}
 
+	// TODO move this coordination logic to widget class
 	public void viewStudyUIClicked(StudyEntry studyEntry) {
 		viewStudyWidget.loadStudyEntry(studyEntry);
 		controller.displayViewStudyWidget();
