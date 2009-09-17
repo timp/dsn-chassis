@@ -238,5 +238,10 @@ public class AtomEntryImpl extends ElementWrapperImpl implements AtomEntry {
 	public void setTitle(String title) {
 		XML.setElementSimpleContentByTagName(element, Atom.ELEMENT_TITLE, title);
 	}
+	
+	@Override
+	public String toString() {
+		return element.toString();
+	}
 
 }
