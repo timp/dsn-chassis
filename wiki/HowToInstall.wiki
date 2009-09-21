@@ -1,49 +1,114 @@
 #summary how to install Chassis
 
-Assuming your web server is deployed at www.example.com, and your servlet container is deployed at servlet.example.com:8080.
+Assuming your *web server* is deployed at www.example.com, and your *application server* is deployed at servlet.example.com:8080.
 
-[http://code.google.com/p/dsn-chassis/downloads/list Download] the latest release of the Chassis Generic GWT Client, and the Chassis Generic User Service, to the machine hosting your servlet container. E.g. ...
+== Deploying WARs on the Application Server ==
+
+[http://code.google.com/p/dsn-chassis/downloads/list Download] the latest release of the Chassis Generic GWT Client, the Chassis Generic User Service, and the Chassis Generic Exist Service, to your *application server*. E.g. ...
 
 {{{
-$ wget http://dsn-chassis.googlecode.com/files/chassis-generic-client-gwt-0.1-alpha-1.war
-$ wget http://dsn-chassis.googlecode.com/files/chassis-generic-service-user-0.1-alpha-1.war
+user@servlet.example.com$ wget http://dsn-chassis.googlecode.com/files/chassis-generic-client-gwt-0.1-alpha-2.war
+user@servlet.example.com$ wget http://dsn-chassis.googlecode.com/files/chassis-generic-service-user-0.1-alpha-2.war
+user@servlet.example.com$ wget http://dsn-chassis.googlecode.com/files/chassis-generic-service-exist-0.1-alpha-2.war
 }}}
 
 Copy these war files to the Tomcat webapps folder. E.g. ...
 
 {{{
-$ sudo cp chassis-generic-client-gwt-0.1-alpha-1.war /var/lib/tomcat6/webapps/
-$ sudo cp chassis-generic-service-user-0.1-alpha-1.war /var/lib/tomcat6/webapps/
+user@servlet.example.com$ sudo cp chassis-generic-client-gwt-0.1-alpha-2.war /var/lib/tomcat6/webapps/
+user@servlet.example.com$ sudo cp chassis-generic-service-user-0.1-alpha-2.war /var/lib/tomcat6/webapps/
+user@servlet.example.com$ sudo cp chassis-generic-service-exist-0.1-alpha-2.war /var/lib/tomcat6/webapps/
 }}}
 
-Add proxy directives to the Apache configuration on your web server. E.g. ...
+Tomcat will usually unpack and deploy these war files automatically. If it doesn't, try restarting Tomcat.
+
+== Web Server Proxy Configuration ==
+
+Add or update proxy directives to the Apache configuration on your *web server*. E.g. ...
 
 {{{
-ProxyPass         /chassis/client  http://servlet.example.com:8080/chassis-generic-client-gwt-0.1-alpha-1
-ProxyPassReverse  /chassis/client  http://servlet.example.com:8080/chassis-generic-client-gwt-0.1-alpha-1
+ProxyPass         /chassis/client  http://servlet.example.com:8080/chassis-generic-client-gwt-0.1-alpha-2
+ProxyPassReverse  /chassis/client  http://servlet.example.com:8080/chassis-generic-client-gwt-0.1-alpha-2
 
-ProxyPass         /chassis/service/user  http://servlet.example.com:8080/chassis-generic-service-user-0.1-alpha-1
-ProxyPassReverse  /chassis/service/user  http://servlet.example.com:8080/chassis-generic-service-user-0.1-alpha-1
+ProxyPass         /chassis/service/user  http://servlet.example.com:8080/chassis-generic-service-user-0.1-alpha-2
+ProxyPassReverse  /chassis/service/user  http://servlet.example.com:8080/chassis-generic-service-user-0.1-alpha-2
+
+ProxyPass         /chassis/service/exist  http://servlet.example.com:8080/chassis-generic-service-exist-0.1-alpha-2
+ProxyPassReverse  /chassis/service/exist  http://servlet.example.com:8080/chassis-generic-service-exist-0.1-alpha-2
 }}}
 
 Restart Apache on your web server.
-Edit the Chassis Generic Client configuration file to point to the correct User Service location. E.g. do ...
+
+== Client Configuration ==
+
+The Chassis client application needs to be configured to point to the correct locations for the services you have deployed.
+
+Edit the Chassis Generic Client configuration file deployed on your application server to point to the correct User Service location. E.g. do ...
 
 {{{
-$ sudo emacs /var/lib/tomcat6/webapps/chassis-generic-client-gwt-0.1-alpha-1/spike/configuration.js 
+user@servlet.example.com$ sudo emacs /var/lib/tomcat6/webapps/chassis-generic-client-gwt-0.1-alpha-1/spike/configuration.js 
 }}}
 
 ... and edit to ...
 
 {{{
-CHASSIS = new Object();
 CHASSIS.userDetailsServiceEndpointURL = "/chassis/service/user/gwtrpc/userdetails";
+CHASSIS.studyFeedURL = "/chassis/service/exist/atom/edit/studies";
 }}}
 
-In each unpacked war file, place a customised spring config file in the /WEB-INF/. E.g. do...
+== Security Configuration ==
+
+Chassis uses [http://static.springsource.org/spring-security/site/ Spring Security 2.0.x] to integrate with various authentication and authorisation mechanisms.
+
+To integrate Chassis with your authentication and authorisation environment, you will have to create a Spring Security configuration file. 
+
+For example, the Spring Security configuration file below is the one we use for our development environment.
 
 {{{
-$ sudo cp /custom/config/security.xml /var/lib/tomcat6/webapps/chassis-generic-client-gwt-0.1-alpha-1/WEB-INF/security.xml 
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans 
+  xmlns:beans="http://www.springframework.org/schema/beans"
+  xmlns="http://www.springframework.org/schema/security"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+              http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-2.0.4.xsd">  
+
+  <http auto-config='true' realm="chassis-development-realm">
+    <intercept-url pattern="/**" access="ROLE_CHASSIS_USER" />
+    <http-basic/>
+  </http>
+  
+  <authentication-provider>
+    <user-service>
+      <user name="foo" password="bar" authorities="ROLE_CHASSIS_USER, ROLE_CHASSIS_SUBMITTER, ROLE_CHASSIS_CURATOR, ROLE_CHASSIS_GATEKEEPER, ROLE_CHASSIS_COORDINATOR" />
+      <user name="simple" password="user" authorities="ROLE_CHASSIS_USER" />
+    </user-service>
+  </authentication-provider>
+  
+</beans:beans>
 }}}
 
-Now, visit http://www.example.com/chassis/client/spike/ to check it is working.
+The example below illustrates integration with an existing authentication system based on webauth, which we use for Chassis/WWARN.
+
+{{{
+TODO
+}}}
+
+You will need to create your own Spring Security configuration file, and place it in a secure location on your *application server*. Let's assume that you put this file at `/etc/chassis/security.xml`.
+
+You will then need to edit the `web.xml` files in *each* of the deployed WARs on your application server, and update the following parameter to point to the location where your Spring Security configuration file is located.
+
+{{{
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>
+      /etc/chassis/security.xml
+    </param-value>
+  </context-param>
+}}}
+
+== Finishing Up ==
+
+That's it.
+
+You should now be able to visit http://www.example.com/chassis/client/spike/ to check it is working.
