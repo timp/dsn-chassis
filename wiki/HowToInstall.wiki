@@ -101,7 +101,22 @@ Chassis uses [http://static.springsource.org/spring-security/site/ Spring Securi
 
 To integrate Chassis with your authentication and authorisation environment, you will have to create a Spring Security configuration file. 
 
-For example, the Spring Security configuration file below is the one we use for our development environment.
+You will need to create your own Spring Security configuration file, and place it in a secure location on your *application server*. Let's assume that you put this file at `/etc/chassis/security.xml`.
+
+You will then need to edit the `web.xml` files in *each* of the deployed WARs on your application server, and update the following parameter to point to the location where your Spring Security configuration file is located.
+
+{{{
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>
+      /etc/chassis/security.xml
+    </param-value>
+  </context-param>
+}}}
+
+== Example Spring Security Configuration - Simple ==
+
+The Spring Security configuration file below is the one we use for our development environment. N.B. this may not suitable for a production environment.
 
 {{{
 <?xml version="1.0" encoding="UTF-8"?>
@@ -127,29 +142,95 @@ For example, the Spring Security configuration file below is the one we use for 
 </beans:beans>
 }}}
 
+== Example Spring Security Configuration - Webauth ==
+
 The example below illustrates integration with an existing authentication system based on webauth, which we use for Chassis/WWARN.
 
 {{{
-TODO
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans 
+  xmlns:beans="http://www.springframework.org/schema/beans"
+  xmlns="http://www.springframework.org/schema/security"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+              http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-2.0.4.xsd">  
+
+  <http auto-config='false' 
+  		realm="chassis-development-realm"
+  		entry-point-ref="authenticationEntryPoint"
+  		access-decision-manager-ref="accessDecisionManager"/>
+  
+  <beans:bean id="authenticationEntryPoint" class="org.springframework.security.ui.preauth.PreAuthenticatedProcessingFilterEntryPoint"/>
+  
+  <!--Config to use external authentication-->
+  <beans:bean id="WebAuthPreAuthenticatedProcessingFilter" class="org.cggh.chassis.generic.user.service.webauth.WebAuthPreAuthenticatedProcessingFilter">
+      <custom-filter position="PRE_AUTH_FILTER" />
+      <beans:property name="authenticationManager" ref="authenticationManager" />
+    <beans:property name="dataSource" ref="dataSource"/>
+  </beans:bean>
+
+  <authentication-manager alias="authenticationManager" />
+
+  <beans:bean id="preauthAuthProvider" class="org.springframework.security.providers.preauth.PreAuthenticatedAuthenticationProvider">
+      <custom-authentication-provider />
+      <beans:property name="preAuthenticatedUserDetailsService">
+        <beans:bean id="userDetailsServiceWrapper"
+              class="org.springframework.security.userdetails.UserDetailsByNameServiceWrapper">
+          <beans:property name="userDetailsService" ref="userDetailsService"/>
+        </beans:bean>
+      </beans:property>
+  </beans:bean>
+  
+  <!--Config to get user details and permissions directly from CGGH database-->
+  <authentication-provider user-service-ref='userDetailsService'/>
+  <beans:bean id="userDetailsService" class="org.springframework.security.userdetails.jdbc.JdbcDaoImpl">
+    <beans:property name="dataSource" ref="dataSource"/>
+    <beans:property name="enableGroups" value="false"/>
+    <beans:property name="enableAuthorities" value="true"/>
+    <beans:property name="usersByUsernameQuery" value="SELECT email AS user_name,
+                                                              'password' AS password,
+                                                              1 AS enabled
+                                                         FROM master_user
+                                                         WHERE email=?"/>
+    <beans:property name="authoritiesByUsernameQuery" value="SELECT mu.email AS user_name,
+                                                                    p.permission AS authority
+                                                             FROM user_permission up
+                                                              INNER JOIN master_user mu
+                                                              	  ON up.user_id = mu.user_id
+                                                              INNER JOIN permission p
+                                                                  ON up.permission_id = p.permission_id
+                                                             WHERE mu.email=?"/>
+  </beans:bean>
+
+  <beans:bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+    <beans:property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+    <beans:property name="url" value="jdbc:mysql://charlie:3306/network"/>
+    <beans:property name="username" value="[DB username goes here]"/>
+    <beans:property name="password" value="[DB password goes here]"/>
+  </beans:bean>
+    
+  <!--Allow any kind of authority to be defined-->
+  <beans:bean id="accessDecisionManager" class="org.springframework.security.vote.UnanimousBased">
+      <beans:property name="decisionVoters">
+          <beans:list>
+              <beans:ref bean="roleVoter"/>
+          </beans:list>
+      </beans:property>
+  </beans:bean>
+
+  <beans:bean id="roleVoter" class="org.springframework.security.vote.RoleVoter">
+      <beans:property name="rolePrefix" value=""/>
+  </beans:bean>
+  
+</beans:beans>
 }}}
+
+Note that the db username and password need to be edited.
 
 Note that this second example also requires the following directives to be added to the Apache configuration:
 
 {{{
-TODO
-}}}
-
-You will need to create your own Spring Security configuration file, and place it in a secure location on your *application server*. Let's assume that you put this file at `/etc/chassis/security.xml`.
-
-You will then need to edit the `web.xml` files in *each* of the deployed WARs on your application server, and update the following parameter to point to the location where your Spring Security configuration file is located.
-
-{{{
-  <context-param>
-    <param-name>contextConfigLocation</param-name>
-    <param-value>
-      /etc/chassis/security.xml
-    </param-value>
-  </context-param>
+TODO get directives used on bravo
 }}}
 
 = It Works!? =
