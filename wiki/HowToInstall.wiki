@@ -30,9 +30,9 @@ Tomcat will usually unpack and deploy these war files automatically. If it doesn
 
 = Creating Atom Collections =
 
-Chassis uses an Atom server (based on Exist) to store data about studies, submissions, etc.
+Chassis uses an Atom service (based on Exist) to store data about studies, submissions, etc.
 
-You will need to create the appropriate collections in the Atom server. This can be done by running the following Python script from the *application server*.
+You will need to create the appropriate collections in the Atom service. This can be done by running the following Python script from the *application server*.
 
 {{{
 import httplib
@@ -82,7 +82,7 @@ Restart Apache on your web server.
 
 The Chassis client application needs to be configured to point to the correct locations for the services you have deployed.
 
-Edit the Chassis Generic Client configuration file deployed on your application server to point to the correct User Service location. E.g. do ...
+Edit the Chassis Generic Client configuration file deployed on your *application server* to point to the correct User Service location. E.g. do ...
 
 {{{
 user@servlet.example.com$ sudo emacs /var/lib/tomcat6/webapps/chassis-generic-client-gwt-0.1-alpha-2/spike/configuration.js 
@@ -128,6 +128,12 @@ For example, the Spring Security configuration file below is the one we use for 
 }}}
 
 The example below illustrates integration with an existing authentication system based on webauth, which we use for Chassis/WWARN.
+
+{{{
+TODO
+}}}
+
+Note that this second example also requires the following directives to be added to the Apache configuration:
 
 {{{
 TODO
