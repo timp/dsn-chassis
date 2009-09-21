@@ -60,19 +60,19 @@ Currently, the three projects that need to be packaged are:
 
 To package the `generic/service/user` dynamic web project using Eclipse, select "Export" from the context menu and export as a WAR.
 
-The exported WAR should be named `generic-service-user-(version id).war`, e.g., `generic-service-user-0.1-alpha-2.war`.
+The exported WAR should be named `chassis-generic-service-user-(version id).war`, e.g., `chassis-generic-service-user-0.1-alpha-2.war`.
 
 == Packaging the `generic/service/exist` Project ==
 
 To package the `generic/service/exist` dynamic web project using Eclipse, select "Export" from the context menu and export as a WAR.
 
-The exported WAR should be named `generic-service-exist-(version id).war`, e.g., `generic-service-exist-0.1-alpha-2.war`.
+The exported WAR should be named `chassis-generic-service-exist-(version id).war`, e.g., `chassis-generic-service-exist-0.1-alpha-2.war`.
 
 == Packaging the `generic/client/gwt` Project ==
 
 To package the `generic/client/gwt` dynamic web project using Eclipse, select "Export" from the context menu and export as a WAR.
 
-The exported WAR should be named `generic-client-gwt-(version id).war`, e.g., `generic-client-gwt-0.1-alpha-2.war`.
+The exported WAR should be named `chassis-generic-client-gwt-(version id).war`, e.g., `chassis-generic-client-gwt-0.1-alpha-2.war`.
 
 Note that, because this project has client-side GWT code, all GWT code will need to be compiled prior to packaging.
 
