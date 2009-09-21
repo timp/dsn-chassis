@@ -111,7 +111,7 @@ You will then need to edit the `web.xml` files in *each* of the deployed WARs on
   <context-param>
     <param-name>contextConfigLocation</param-name>
     <param-value>
-      /etc/chassis/security.xml
+      file:///etc/chassis/security.xml
     </param-value>
   </context-param>
 }}}
@@ -119,7 +119,7 @@ You will then need to edit the `web.xml` files in *each* of the deployed WARs on
 A sed command like the following could be used to make this less of a chore.
 
 {{{
-sudo sed -i -e "s|classpath:/dev/configuration/spring/security\.xml|/etc/chassis/security.xml|" /var/lib/tomcat6/webapps/chassis-generic-*-0.1-alpha-2/WEB-INF/web.xml
+sudo sed -i -e "s|classpath:/dev/configuration/spring/security\.xml|file:///etc/chassis/security.xml|" /var/lib/tomcat6/webapps/chassis-generic-*-0.1-alpha-2/WEB-INF/web.xml
 }}}
 
 == Example Spring Security Configuration - Simple ==
