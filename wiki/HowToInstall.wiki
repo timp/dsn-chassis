@@ -52,7 +52,7 @@ The Chassis client application needs to be configured to point to the correct lo
 Edit the Chassis Generic Client configuration file deployed on your application server to point to the correct User Service location. E.g. do ...
 
 {{{
-user@servlet.example.com$ sudo emacs /var/lib/tomcat6/webapps/chassis-generic-client-gwt-0.1-alpha-1/spike/configuration.js 
+user@servlet.example.com$ sudo emacs /var/lib/tomcat6/webapps/chassis-generic-client-gwt-0.1-alpha-2/spike/configuration.js 
 }}}
 
 ... and edit to ...
