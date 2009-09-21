@@ -1,0 +1,31 @@
+#summary instructions for finishing up a sprint by svn tagging, building and packaging the Chassis projects
+
+= SVN Tagging =
+
+Before carrying out an end-of-sprint build and package of the Chassis source code projects, the first step is to create SVN version tags to record the state of the source.
+
+The tag name convention is to create a version identifier, e.g. `0.1-alpha-2`, and use this as the base for a tag name for each source code project.
+
+E.g., for the `0.1-alpha-2` version, the projects at 
+
+{{{
+trunk/generic/client/gwt
+trunk/generic/lib/gwt
+trunk/generic/lib/java
+trunk/generic/service/user
+trunk/generic/service/exist
+}}}
+
+should get copied to
+
+{{{
+tags/0.1-alpha-2/generic/client/gwt
+tags/0.1-alpha-2/generic/lib/gwt
+tags/0.1-alpha-2/generic/lib/java
+tags/0.1-alpha-2/generic/service/user
+tags/0.1-alpha-2/generic/service/exist
+}}}
+
+respectively.
+
+Version identifiers, e.g., `0.1-alpha-2` or `0.1-beta-5` or `0.1-RC-3` or `0.1-final` are constructed using (release number)-(development stage)-(iteration number within development stage). 
