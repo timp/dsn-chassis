@@ -116,6 +116,12 @@ You will then need to edit the `web.xml` files in *each* of the deployed WARs on
   </context-param>
 }}}
 
+A sed command like the following could be used to make this less of a chore.
+
+{{{
+sudo sed -i -e "s|classpath:/dev/configuration/spring/security\.xml|/etc/chassis/security.xml|" /var/lib/tomcat6/webapps/chassis-generic-*-0.1-alpha-2/WEB-INF/web.xml
+}}}
+
 == Example Spring Security Configuration - Simple ==
 
 The Spring Security configuration file below is the one we use for our development environment. N.B. this may not suitable for a production environment.
