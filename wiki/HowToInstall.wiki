@@ -28,23 +28,6 @@ user@servlet.example.com$ sudo cp chassis-generic-service-exist-0.1-alpha-2.war 
 
 Tomcat will usually unpack and deploy these war files automatically. If it doesn't, try restarting Tomcat.
 
-= Web Server Proxy Configuration =
-
-Add or update proxy directives to the Apache configuration on your *web server*. E.g. ...
-
-{{{
-ProxyPass         /chassis/client  http://servlet.example.com:8080/chassis-generic-client-gwt-0.1-alpha-2
-ProxyPassReverse  /chassis/client  http://servlet.example.com:8080/chassis-generic-client-gwt-0.1-alpha-2
-
-ProxyPass         /chassis/service/user  http://servlet.example.com:8080/chassis-generic-service-user-0.1-alpha-2
-ProxyPassReverse  /chassis/service/user  http://servlet.example.com:8080/chassis-generic-service-user-0.1-alpha-2
-
-ProxyPass         /chassis/service/exist  http://servlet.example.com:8080/chassis-generic-service-exist-0.1-alpha-2
-ProxyPassReverse  /chassis/service/exist  http://servlet.example.com:8080/chassis-generic-service-exist-0.1-alpha-2
-}}}
-
-Restart Apache on your web server.
-
 = Creating Atom Collections =
 
 Chassis uses an Atom server (based on Exist) to store data about studies, submissions, etc.
@@ -77,6 +60,23 @@ data = response.read()
 print data
 conn.close()
 }}}
+
+= Web Server Proxy Configuration =
+
+Add or update proxy directives to the Apache configuration on your *web server*. E.g. ...
+
+{{{
+ProxyPass         /chassis/client  http://servlet.example.com:8080/chassis-generic-client-gwt-0.1-alpha-2
+ProxyPassReverse  /chassis/client  http://servlet.example.com:8080/chassis-generic-client-gwt-0.1-alpha-2
+
+ProxyPass         /chassis/service/user  http://servlet.example.com:8080/chassis-generic-service-user-0.1-alpha-2
+ProxyPassReverse  /chassis/service/user  http://servlet.example.com:8080/chassis-generic-service-user-0.1-alpha-2
+
+ProxyPass         /chassis/service/exist  http://servlet.example.com:8080/chassis-generic-service-exist-0.1-alpha-2
+ProxyPassReverse  /chassis/service/exist  http://servlet.example.com:8080/chassis-generic-service-exist-0.1-alpha-2
+}}}
+
+Restart Apache on your web server.
 
 = Client Configuration =
 
