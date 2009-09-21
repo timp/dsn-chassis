@@ -212,7 +212,7 @@ The example below illustrates integration with an existing authentication system
 
   <beans:bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
     <beans:property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-    <beans:property name="url" value="jdbc:mysql://charlie:3306/network"/>
+    <beans:property name="url" value="jdbc:mysql://my.database.server:3306/users"/>
     <beans:property name="username" value="[DB username goes here]"/>
     <beans:property name="password" value="[DB password goes here]"/>
   </beans:bean>
