@@ -1,8 +1,14 @@
 #summary how to install Chassis
 
-Assuming your *web server* is deployed at www.example.com, and your *application server* is deployed at servlet.example.com:8080.
+<wiki:toc/>
 
-== Deploying WARs on the Application Server ==
+= Introduction =
+
+The instructions below guide you through a typical deployment, using a web server running Apache proxying through to an application server running Tomcat. N.B. This is one of many possible deployment setups, for more information see also [http://code.google.com/webtoolkit/doc/1.6/DevGuideServerCommunication.html#DevGuideRPCDeployment DevGuideRPCDeployment] and [http://code.google.com/webtoolkit/doc/1.6/DevGuideDeploying.html DevGuideDeploying] in the GWT docs.
+
+The examples below assume your *web server* is deployed at `www.example.com`, and your *application server* is deployed at `servlet.example.com:8080`.
+
+= Deploying WARs on the Application Server =
 
 [http://code.google.com/p/dsn-chassis/downloads/list Download] the latest release of the Chassis Generic GWT Client, the Chassis Generic User Service, and the Chassis Generic Exist Service, to your *application server*. E.g. ...
 
@@ -22,7 +28,7 @@ user@servlet.example.com$ sudo cp chassis-generic-service-exist-0.1-alpha-2.war 
 
 Tomcat will usually unpack and deploy these war files automatically. If it doesn't, try restarting Tomcat.
 
-== Web Server Proxy Configuration ==
+= Web Server Proxy Configuration =
 
 Add or update proxy directives to the Apache configuration on your *web server*. E.g. ...
 
@@ -39,7 +45,7 @@ ProxyPassReverse  /chassis/service/exist  http://servlet.example.com:8080/chassi
 
 Restart Apache on your web server.
 
-== Client Configuration ==
+= Client Configuration =
 
 The Chassis client application needs to be configured to point to the correct locations for the services you have deployed.
 
@@ -56,7 +62,7 @@ CHASSIS.userDetailsServiceEndpointURL = "/chassis/service/user/gwtrpc/userdetail
 CHASSIS.studyFeedURL = "/chassis/service/exist/atom/edit/studies";
 }}}
 
-== Security Configuration ==
+= Security Configuration =
 
 Chassis uses [http://static.springsource.org/spring-security/site/ Spring Security 2.0.x] to integrate with various authentication and authorisation mechanisms.
 
@@ -107,7 +113,7 @@ You will then need to edit the `web.xml` files in *each* of the deployed WARs on
   </context-param>
 }}}
 
-== Finishing Up ==
+= It Works!? =
 
 That's it.
 
