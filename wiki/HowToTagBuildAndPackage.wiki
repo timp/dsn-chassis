@@ -1,5 +1,11 @@
 #summary instructions for finishing up a sprint by svn tagging, building and packaging the Chassis projects
 
+= Introduction =
+
+At the end of each sprint, the following procedure will be carried out.
+
+The aim is to have working code at the end of each sprint compiled, packaged and deployed at least to a test environment to demo internally.
+
 = SVN Tagging =
 
 Before carrying out an end-of-sprint build and package of the Chassis source code projects, the first step is to create SVN version tags to record the state of the source.
