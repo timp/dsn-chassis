@@ -61,6 +61,8 @@ print data
 conn.close()
 }}}
 
+If you get a 204 response, the script was successful.
+
 = Web Server Proxy Configuration =
 
 Add or update proxy directives to the Apache configuration on your *web server*. E.g. ...
