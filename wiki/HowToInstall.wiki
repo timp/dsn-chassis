@@ -45,6 +45,39 @@ ProxyPassReverse  /chassis/service/exist  http://servlet.example.com:8080/chassi
 
 Restart Apache on your web server.
 
+= Bootstrapping Atom Collections =
+
+Chassis uses an Atom server (based on Exist) to store data about studies, submissions, etc.
+
+You will need to create the appropriate collections in the Atom server. This can be done by running the following Python script from the *application server*.
+
+{{{
+import httplib
+
+host = "localhost:8080"
+contextpath = "/chassis-generic-service-exist-0.1-alpha-2/atom/edit"
+
+print "creating study collection ..."
+
+content = u"""
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Studies</title>
+</feed>
+"""
+
+path = contextpath + "/studies"
+
+headers = { "Content-Type": "application/atom+xml", "Content-Length": len(content) }
+conn = httplib.HTTPConnection(host)
+conn.request("POST", path, content, headers)
+response = conn.getresponse()
+
+print response.status, response.reason
+data = response.read()
+print data
+conn.close()
+}}}
+
 = Client Configuration =
 
 The Chassis client application needs to be configured to point to the correct locations for the services you have deployed.
