@@ -28,4 +28,5 @@ tags/0.1-alpha-2/generic/service/exist
 
 respectively.
 
-Version identifiers, e.g., `0.1-alpha-2` or `0.1-beta-5` or `0.1-RC-3` or `0.1-final` are constructed using (release number)-(development stage)-(iteration number within development stage). 
+Version identifiers, e.g., `0.1-alpha-2` or `0.1-beta-5` or `0.1-RC-3` or `0.1-final` are constructed using (release number)-(development stage)-(iteration number within development stage). For development stages, "alpha" means not feature complete, "beta" means feature complete but not thoroughly tested, "RC" means release candidate, "final" means the version actually released.
+
