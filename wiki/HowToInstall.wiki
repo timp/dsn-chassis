@@ -45,7 +45,7 @@ ProxyPassReverse  /chassis/service/exist  http://servlet.example.com:8080/chassi
 
 Restart Apache on your web server.
 
-= Bootstrapping Atom Collections =
+= Creating Atom Collections =
 
 Chassis uses an Atom server (based on Exist) to store data about studies, submissions, etc.
 
