@@ -235,7 +235,7 @@ The example below illustrates integration with an existing authentication system
 
 Note that the db username and password need to be edited.
 
-Note that the default permission prefix is 'ROLE_CHASSIS_'. This can be changed within the Chassis Generic Client configuration file deployed on your *application server*. E.G. do...
+Note that the default permission prefix is "ROLE_CHASSIS`_`". This can be changed within the Chassis Generic Client configuration file deployed on your *application server*. E.G. do...
 
 {{{
 user@servlet.example.com$ sudo emacs /var/lib/tomcat6/webapps/chassis-generic-client-gwt-0.1-alpha-2/spike/configuration.js 
@@ -251,7 +251,28 @@ CHASSIS.userChassisRolesPrefix = "permission.cggh.chassis.wwarn.";
 Note that this second example also requires the following directives to be added to the Apache configuration:
 
 {{{
-TODO get directives used on bravo
+    <Location /chassis/client>
+      AuthType WebAuth
+      require valid-user      
+      RequestHeader set "WEBAUTH_USER" "%{WEBAUTH_USER}e"
+      ProxyPass        http://servlet.example.com:8080/chassis-generic-client-gwt-0.1-alpha-2
+      ProxyPassReverse hhttp://servlet.example.com:8080/chassis-generic-client-gwt-0.1-alpha-2
+    </Location>
+    
+    <Location /chassis/service/user>
+      AuthType WebAuth
+      require valid-user
+      RequestHeader set "WEBAUTH_USER" "%{WEBAUTH_USER}e"
+      ProxyPass        http://servlet.example.com:8080/chassis-generic-service-user-0.1-alpha-2
+      ProxyPassReverse http://servlet.example.com:8080/chassis-generic-service-user-0.1-alpha-2
+    </Location>
+    
+    <Location /chassis/service/exist>
+      AuthType WebAuth
+      require valid-user
+      ProxyPass        http://servlet.example.com:8080/chassis-generic-service-exist-0.1-alpha-2
+      ProxyPassReverse http://servlet.example.com:8080//chassis-generic-service-exist-0.1-alpha-2
+    </Location>
 }}}
 
 = It Works!? =
