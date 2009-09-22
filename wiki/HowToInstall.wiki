@@ -235,6 +235,19 @@ The example below illustrates integration with an existing authentication system
 
 Note that the db username and password need to be edited.
 
+Note that the default permission prefix is 'ROLE_CHASSIS_'. This can be changed within the Chassis Generic Client configuration file deployed on your *application server*. E.G. do...
+
+{{{
+user@servlet.example.com$ sudo emacs /var/lib/tomcat6/webapps/chassis-generic-client-gwt-0.1-alpha-2/spike/configuration.js 
+}}}
+
+... and edit to ...
+
+{{{
+CHASSIS.userChassisRolesPrefix = "permission.cggh.chassis.wwarn.";
+}}}
+
+
 Note that this second example also requires the following directives to be added to the Apache configuration:
 
 {{{
