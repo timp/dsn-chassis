@@ -194,6 +194,12 @@ public class CreateSubmissionWidgetDefaultRenderer implements SubmissionModelLis
 			
 			if (isFormComplete){
 				controller.saveNewSubmissionEntry();
+			} else {
+				//TODO move to management widget?
+				DecoratedPopupPanel errorPopUp = new DecoratedPopupPanel(true);
+				errorPopUp.add(new Label("Form invalid."));
+				errorPopUp.center();
+				errorPopUp.show();
 			}
 			
 		}
