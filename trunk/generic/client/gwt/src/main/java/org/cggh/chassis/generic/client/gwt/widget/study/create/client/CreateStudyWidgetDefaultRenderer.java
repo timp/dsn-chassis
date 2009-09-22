@@ -9,6 +9,7 @@ import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
+import com.google.gwt.user.client.ui.DecoratedPopupPanel;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
@@ -132,6 +133,12 @@ class CreateStudyWidgetDefaultRenderer implements CreateStudyWidgetModelListener
 		public void onClick(ClickEvent arg0) {
 			if (isFormComplete) {
 				controller.saveNewStudy();
+			} else {
+				//TODO move to management widget?
+				DecoratedPopupPanel errorPopUp = new DecoratedPopupPanel(true);
+				errorPopUp.add(new Label("Form invalid."));
+				errorPopUp.center();
+				errorPopUp.show();
 			}
 		}
 		
