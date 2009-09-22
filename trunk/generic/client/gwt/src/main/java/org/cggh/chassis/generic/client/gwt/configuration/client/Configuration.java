@@ -3,6 +3,9 @@
  */
 package org.cggh.chassis.generic.client.gwt.configuration.client;
 
+
+import com.google.gwt.core.client.JsArray;
+
 /**
  * @author aliman
  *
@@ -30,6 +33,10 @@ public class Configuration {
 	 */
 	public static native String getSubmissionQueryServiceURL()  /*-{
 		return $wnd.CHASSIS.submissionQueryServiceURL;
+	}-*/;
+
+	public static native JsArray<Module> getModules() /*-{
+		return $wnd.CHASSIS.modules;
 	}-*/;
 	
 }
