@@ -9,7 +9,7 @@ import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
  * @author raok
  *
  */
-public interface SubmissionControllerPubSubCreateAPI extends AbstractSubmissionControllerPubSubAPI{
+public interface SubmissionControllerPubSubCreateAPI extends AbstractSubmissionControllerPubSubAPI {
 
 	public void newSubmissionSaved(SubmissionEntry submissionEntry);
 	

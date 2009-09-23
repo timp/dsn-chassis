@@ -1,6 +1,6 @@
-package org.cggh.chassis.generic.client.gwt.widget.submission.controller.client;
+package org.cggh.chassis.generic.client.gwt.widget.study.controller.client;
 
-public abstract interface AbstractSubmissionControllerCreateEditAPI {
+public abstract interface AbstractStudyControllerCreateEditAPI {
 
 	public void updateTitle(String title);
 
@@ -14,10 +14,6 @@ public abstract interface AbstractSubmissionControllerCreateEditAPI {
 
 	public void updateAcceptPharmacologyData(Boolean acceptPharmacologyData);
 
-	public void addStudyLink(String studyEntryURL);
-
-	public void removeStudyLink(String studyEntryURL);
-
-	public void cancelSaveOrUpdateSubmissionEntry();
+	public void cancelSaveOrUpdateStudyEntry();
 
 }
