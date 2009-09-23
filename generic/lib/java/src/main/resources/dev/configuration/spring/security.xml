@@ -11,10 +11,6 @@
     <http-basic/>
   </http>
   
-  <!-- 
-    N.B. you need to keep this in sync with the content of security-development.xml
-    in the generic user service project
-  -->
   <authentication-provider>
     <user-service>
       <user name="foo" password="bar" authorities="ROLE_CHASSIS_USER, ROLE_CHASSIS_SUBMITTER, ROLE_CHASSIS_CURATOR, ROLE_CHASSIS_GATEKEEPER, ROLE_CHASSIS_COORDINATOR" />
