@@ -6,7 +6,6 @@ package org.cggh.chassis.generic.client.gwt.widget.study.edit.client;
 import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
 import org.cggh.chassis.generic.atom.study.client.format.StudyFactory;
 import org.cggh.chassis.generic.atom.study.client.format.impl.StudyFactoryImpl;
-import org.cggh.chassis.generic.atom.study.client.mockimpl.MockStudyFactory;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomProtocolException;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
