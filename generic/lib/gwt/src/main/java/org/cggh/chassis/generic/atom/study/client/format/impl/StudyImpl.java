@@ -9,7 +9,7 @@ import org.cggh.chassis.generic.atom.chassis.base.client.format.Chassis;
 import org.cggh.chassis.generic.atom.study.client.format.Study;
 import org.cggh.chassis.generic.atom.study.client.format.StudyFactory;
 import org.cggh.chassis.generic.atom.vanilla.client.format.impl.ElementWrapperImpl;
-import org.cggh.chassis.generic.xml.client.XML;
+import org.cggh.chassis.generic.xml.client.XMLNS;
 
 import com.google.gwt.xml.client.Element;
 
@@ -43,7 +43,8 @@ public class StudyImpl extends ElementWrapperImpl implements Study {
 	 * @see org.cggh.chassis.generic.atom.study.client.format.Study#getModules()
 	 */
 	public List<String> getModules() {
-		return XML.getElementsSimpleContentsByTagName(element, Chassis.ELEMENT_MODULE);
+//		return XML.getElementsSimpleContentsByTagName(element, Chassis.ELEMENT_MODULE);
+		return XMLNS.getElementsSimpleContentsByTagNameNS(element, Chassis.ELEMENT_MODULE, Chassis.NSURI);
 	}
 
 	/* (non-Javadoc)
@@ -59,7 +60,8 @@ public class StudyImpl extends ElementWrapperImpl implements Study {
 	 * @see org.cggh.chassis.generic.atom.study.client.format.Study#setModules(java.util.List)
 	 */
 	public void setModules(List<String> modules) {
-		XML.setElementsSimpleContentsByTagName(element, Chassis.ELEMENT_MODULE, modules);
+//		XML.setElementsSimpleContentsByLocalName(element, Chassis.ELEMENT_MODULE, modules);
+		XMLNS.setElementsSimpleContentsByTagNameNS(element, Chassis.ELEMENT_MODULE, Chassis.PREFIX, Chassis.NSURI, modules);
 	}
 
 }

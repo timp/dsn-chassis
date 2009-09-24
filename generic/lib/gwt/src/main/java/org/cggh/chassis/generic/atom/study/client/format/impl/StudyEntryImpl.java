@@ -9,9 +9,8 @@ import org.cggh.chassis.generic.atom.chassis.base.client.format.Chassis;
 import org.cggh.chassis.generic.atom.study.client.format.Study;
 import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
 import org.cggh.chassis.generic.atom.study.client.format.StudyFactory;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactory;
 import org.cggh.chassis.generic.atom.vanilla.client.format.impl.AtomEntryImpl;
-import org.cggh.chassis.generic.xml.client.XML;
+import org.cggh.chassis.generic.xml.client.XMLNS;
 
 import com.google.gwt.xml.client.Element;
 
@@ -65,7 +64,8 @@ public class StudyEntryImpl extends AtomEntryImpl implements StudyEntry {
 	}
 	
 	public Element getStudyElement() {
-		return XML.getElementByTagNameNS(element, Chassis.NSURI, Chassis.ELEMENT_STUDY);
+//		return XML.getElementByTagNameNS(element, Chassis.NSURI, Chassis.ELEMENT_STUDY);
+		return XMLNS.getFirstElementByTagNameNS(element, Chassis.ELEMENT_STUDY, Chassis.NSURI);
 	}
 
 	/* (non-Javadoc)

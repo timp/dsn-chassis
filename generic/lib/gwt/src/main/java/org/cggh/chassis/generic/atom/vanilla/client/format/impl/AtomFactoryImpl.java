@@ -12,6 +12,7 @@ import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFormatException;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomLink;
 import org.cggh.chassis.generic.xml.client.XML;
+import org.cggh.chassis.generic.xml.client.XMLNS;
 
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;
@@ -24,17 +25,19 @@ import com.google.gwt.xml.client.impl.DOMParseException;
  */
 public class AtomFactoryImpl implements AtomFactory {
 
-	private static String TEMPLATE_LINK = "<link xmlns=\""+Atom.NSURI+"\"/>";
-	private static String TEMPLATE_AUTHOR = "<author xmlns=\""+Atom.NSURI+"\"/>";
-	private static String TEMPLATE_CATEGORY = "<category xmlns=\""+Atom.NSURI+"\"/>";
-	private static String TEMPLATE_ENTRY = "<entry xmlns=\""+Atom.NSURI+"\"/>";
+//	private static String TEMPLATE_LINK = "<atom:link xmlns:atom=\""+Atom.NSURI+"\"/>";
+//	private static String TEMPLATE_AUTHOR = "<atom:author xmlns:atom=\""+Atom.NSURI+"\"/>";
+//	private static String TEMPLATE_CATEGORY = "<atom:category xmlns:atom=\""+Atom.NSURI+"\"/>";
+//	private static String TEMPLATE_ENTRY = "<atom:entry xmlns:atom=\""+Atom.NSURI+"\"/>";
 
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactory#createAuthor()
 	 */
 	public AtomAuthor createAuthor() {
-		Document d = XMLParser.parse(TEMPLATE_AUTHOR);
-		return new AtomAuthorImpl(d.getDocumentElement());
+//		Document d = XMLParser.parse(TEMPLATE_AUTHOR);
+//		return new AtomAuthorImpl(d.getDocumentElement());
+		Element e = XMLNS.createElementNS(Atom.ELEMENT_AUTHOR, Atom.PREFIX, Atom.NSURI);
+		return new AtomAuthorImpl(e);
 	}
 
 	/* (non-Javadoc)
@@ -44,8 +47,8 @@ public class AtomFactoryImpl implements AtomFactory {
 
 		// guard conditions
 		
-		if (!authorElement.getTagName().equals(Atom.ELEMENT_AUTHOR)) {
-			throw new AtomFormatException("bad tag name, expected: "+Atom.ELEMENT_AUTHOR+"; found: "+authorElement.getTagName());
+		if (!XML.getLocalName(authorElement).equals(Atom.ELEMENT_AUTHOR)) {
+			throw new AtomFormatException("bad tag local name, expected: "+Atom.ELEMENT_AUTHOR+"; found: "+XML.getLocalName(authorElement));
 		}
 
 		if (authorElement.getNamespaceURI() == null || !authorElement.getNamespaceURI().equals(Atom.NSURI)) {
@@ -60,8 +63,10 @@ public class AtomFactoryImpl implements AtomFactory {
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactory#createEntry()
 	 */
 	public AtomEntry createEntry() {
-		Document d = XMLParser.parse(TEMPLATE_ENTRY);
-		return new AtomEntryImpl(d.getDocumentElement(), this);
+//		Document d = XMLParser.parse(TEMPLATE_ENTRY);
+//		return new AtomEntryImpl(d.getDocumentElement(), this);
+		Element e = XMLNS.createElementNS(Atom.ELEMENT_ENTRY, Atom.PREFIX, Atom.NSURI);
+		return new AtomEntryImpl(e, this);
 	}
 
 	/* (non-Javadoc)
@@ -83,8 +88,8 @@ public class AtomFactoryImpl implements AtomFactory {
 		
 		// guard conditions
 		
-		if (!entryElement.getTagName().equals(Atom.ELEMENT_ENTRY)) {
-			throw new AtomFormatException("bad tag name, expected: "+Atom.ELEMENT_ENTRY+"; found: "+entryElement.getTagName());
+		if (!XML.getLocalName(entryElement).equals(Atom.ELEMENT_ENTRY)) {
+			throw new AtomFormatException("bad tag local name, expected: "+Atom.ELEMENT_ENTRY+"; found: "+XML.getLocalName(entryElement));
 		}
 
 		if (entryElement.getNamespaceURI() == null || !entryElement.getNamespaceURI().equals(Atom.NSURI)) {
@@ -114,7 +119,7 @@ public class AtomFactoryImpl implements AtomFactory {
 		feedElement = d.getDocumentElement();
 			
 		if (!XML.getLocalName(feedElement).equals(Atom.ELEMENT_FEED)) {
-			throw new AtomFormatException("bad local tag name, expected: "+Atom.ELEMENT_FEED+"; found: "+feedElement.getTagName());
+			throw new AtomFormatException("bad tag local name, expected: "+Atom.ELEMENT_FEED+"; found: "+XML.getLocalName(feedElement));
 		}
 
 		if (feedElement.getNamespaceURI() == null || !feedElement.getNamespaceURI().equals(Atom.NSURI)) {
@@ -129,8 +134,10 @@ public class AtomFactoryImpl implements AtomFactory {
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactory#createLink()
 	 */
 	public AtomLink createLink() {
-		Document d = XMLParser.parse(TEMPLATE_LINK);
-		return new AtomLinkImpl(d.getDocumentElement());
+//		Document d = XMLParser.parse(TEMPLATE_LINK);
+//		return new AtomLinkImpl(d.getDocumentElement());
+		Element e = XMLNS.createElementNS(Atom.ELEMENT_LINK, Atom.PREFIX, Atom.NSURI);
+		return new AtomLinkImpl(e);
 	}
 
 	/* (non-Javadoc)
@@ -140,8 +147,8 @@ public class AtomFactoryImpl implements AtomFactory {
 		
 		// guard conditions
 		
-		if (!linkElement.getTagName().equals(Atom.ELEMENT_LINK)) {
-			throw new AtomFormatException("bad tag name, expected: "+Atom.ELEMENT_LINK+"; found: "+linkElement.getTagName());
+		if (!XML.getLocalName(linkElement).equals(Atom.ELEMENT_LINK)) {
+			throw new AtomFormatException("bad tag local name, expected: "+Atom.ELEMENT_LINK+"; found: "+XML.getLocalName(linkElement));
 		}
 
 		if (linkElement.getNamespaceURI() == null || !linkElement.getNamespaceURI().equals(Atom.NSURI)) {
@@ -156,8 +163,10 @@ public class AtomFactoryImpl implements AtomFactory {
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactory#createCategory()
 	 */
 	public AtomCategory createCategory() {
-		Document d = XMLParser.parse(TEMPLATE_CATEGORY);
-		return new AtomCategoryImpl(d.getDocumentElement());
+//		Document d = XMLParser.parse(TEMPLATE_CATEGORY);
+//		return new AtomCategoryImpl(d.getDocumentElement());
+		Element e = XMLNS.createElementNS(Atom.ELEMENT_CATEGORY, Atom.PREFIX, Atom.NSURI);
+		return new AtomCategoryImpl(e);
 	}
 
 	/* (non-Javadoc)
@@ -167,8 +176,8 @@ public class AtomFactoryImpl implements AtomFactory {
 
 		// guard conditions
 		
-		if (!categoryElement.getTagName().equals(Atom.ELEMENT_CATEGORY)) {
-			throw new AtomFormatException("bad tag name, expected: "+Atom.ELEMENT_CATEGORY+"; found: "+categoryElement.getTagName());
+		if (!XML.getLocalName(categoryElement).equals(Atom.ELEMENT_CATEGORY)) {
+			throw new AtomFormatException("bad tag local name, expected: "+Atom.ELEMENT_CATEGORY+"; found: "+XML.getLocalName(categoryElement));
 		}
 
 		if (categoryElement.getNamespaceURI() == null || !categoryElement.getNamespaceURI().equals(Atom.NSURI)) {

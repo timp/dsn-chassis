@@ -369,6 +369,11 @@ public class XML {
 	}
 
 	
+	public static void setElementSimpleContentByLocalName(Element ancestor, String localName, String content) {
+		XML.removeElementsByTagName(ancestor, localName);
+		Element element = XML.createElementWithParentPrefix(ancestor, localName);
+		XML.setSimpleContent(element, content);		
+	}
 	
 
 	/**
@@ -394,7 +399,33 @@ public class XML {
 
 	
 	
+	public static void setElementsSimpleContentsByLocalName(Element ancestor, String localName, List<String> contents) {
+
+		// remove any existing elements
+		XML.removeElementsByTagName(ancestor, localName);
+		
+		// create new elements and populate with content
+		for (String content : contents) {
+			Element element = XML.createElementWithParentPrefix(ancestor, localName);
+			XML.setSimpleContent(element, content);
+		}
+
+	}
+
+
+	
+	
 	public static Element createElement(Element parent, String tagName) {
+		Element child = parent.getOwnerDocument().createElement(tagName);
+		parent.appendChild(child);
+		return child;
+	}
+	
+	
+	
+	public static Element createElementWithParentPrefix(Element parent, String localName) {
+		String prefix = parent.getPrefix();
+		String tagName = (prefix != null) ? prefix + ":" +localName : localName;
 		Element child = parent.getOwnerDocument().createElement(tagName);
 		parent.appendChild(child);
 		return child;
