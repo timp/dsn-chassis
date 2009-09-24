@@ -30,7 +30,7 @@ public class GWTTestViewAllStudiesWidgetDefaultRenderer extends GWTTestCase {
 		public MockViewAllStudiesWidgetController(
 				ViewAllStudiesWidgetModel model, AtomService service,
 				ViewAllStudiesWidget owner) {
-			super(model, service, owner);
+			super(model, service, owner, null);
 		}
 		
 		public StudyEntry studyEntry;

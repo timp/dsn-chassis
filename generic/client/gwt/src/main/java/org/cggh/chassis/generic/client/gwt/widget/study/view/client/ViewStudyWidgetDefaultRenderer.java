@@ -5,6 +5,9 @@ package org.cggh.chassis.generic.client.gwt.widget.study.view.client;
 
 import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
 import org.cggh.chassis.generic.client.gwt.widget.application.client.ApplicationConstants;
+import org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerViewAPI;
+import org.cggh.chassis.generic.client.gwt.widget.study.model.client.StudyModel;
+import org.cggh.chassis.generic.client.gwt.widget.study.model.client.StudyModelListener;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -18,7 +21,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
  * @author raok
  *
  */
-public class ViewStudyWidgetDefaultRenderer implements ViewStudyWidgetModelListener {
+public class ViewStudyWidgetDefaultRenderer implements StudyModelListener {
 
 	//Expose view elements for testing purposes.
 	final Label titleLabel = new Label();
@@ -32,9 +35,9 @@ public class ViewStudyWidgetDefaultRenderer implements ViewStudyWidgetModelListe
 	final Label editThisStudyUI = new Label("Edit Study");
 	
 	final private Panel canvas;
-	final private ViewStudyWidgetController controller;
+	final private StudyControllerViewAPI controller;
 
-	public ViewStudyWidgetDefaultRenderer(Panel canvas, ViewStudyWidgetController controller) {
+	public ViewStudyWidgetDefaultRenderer(Panel canvas, StudyControllerViewAPI controller) {
 		this.canvas = canvas;
 		this.controller = controller;
 		
@@ -93,20 +96,19 @@ public class ViewStudyWidgetDefaultRenderer implements ViewStudyWidgetModelListe
 
 	public void onStatusChanged(Integer before, Integer after) {
 		
-		if (after == ViewStudyWidgetModel.STATUS_LOADING) {
+		if (after == StudyModel.STATUS_LOADING) {
 			canvas.clear();
 			canvas.add(loadingPanel);
-		} else if (after == ViewStudyWidgetModel.STATUS_LOADED) {
+		} else if (after == StudyModel.STATUS_LOADED) {
 			canvas.clear();
 			canvas.add(studyDetailsPanel);
-		} else if (after == ViewStudyWidgetModel.STATUS_ERROR) {
+		} else if (after == StudyModel.STATUS_ERROR) {
 			// TODO handle error case (could use extra panel or pass error to parent)
 		}
 	}
 
 	public void onStudyEntryChanged(StudyEntry before, StudyEntry after) {
 		
-		titleLabel.setText(after.getTitle());
 		summaryLabel.setText(after.getSummary());
 		acceptsClinicalDataIndicator.setVisible(after.getModules().contains(ApplicationConstants.MODULE_CLINICAL));
 		acceptsInVitroDataIndicator.setVisible(after.getModules().contains(ApplicationConstants.MODULE_IN_VITRO));
@@ -117,8 +119,36 @@ public class ViewStudyWidgetDefaultRenderer implements ViewStudyWidgetModelListe
 	class EditStudyClickHandler implements ClickHandler {
 		
 		public void onClick(ClickEvent arg0) {
-			controller.onEditStudyUIClicked();
+			controller.onUserActionEditThisStudy();
 		}
+	}
+
+	public void onAcceptClinicalDataChanged(Boolean before, Boolean after, Boolean isValid) {
+		acceptsClinicalDataIndicator.setVisible(after);
+	}
+
+	public void onAcceptInVitroDataChanged(Boolean before, Boolean after, Boolean isValid) {
+		acceptsInVitroDataIndicator.setVisible(after);
+	}
+
+	public void onAcceptMolecularDataChanged(Boolean before, Boolean after, Boolean isValid) {
+		acceptsMolecularDataIndicator.setVisible(after);
+	}
+
+	public void onAcceptPharmacologyDataChanged(Boolean before, Boolean after, Boolean isValid) {
+		acceptsPharmacologyDataIndicator.setVisible(after);
+	}
+
+	public void onStudyEntryChanged(Boolean isValid) {
+		// TODO Auto-generated method stub
+	}
+
+	public void onSummaryChanged(String before, String after, Boolean isValid) {
+		summaryLabel.setText(after);
+	}
+
+	public void onTitleChanged(String before, String after, Boolean isValid) {
+		titleLabel.setText(after);
 	}
 	
 }

@@ -11,6 +11,6 @@ import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
  */
 public interface StudyControllerPubSubViewAPI extends AbstractStudyControllerPubSubAPI {
 
-	public void onEditStudyUIClicked(StudyEntry studyEntryToEdit);
+	public void onUserActionEditStudy(StudyEntry studyEntryToEdit);
 
 }

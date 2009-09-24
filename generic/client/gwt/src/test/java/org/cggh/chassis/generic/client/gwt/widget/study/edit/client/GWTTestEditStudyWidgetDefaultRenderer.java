@@ -5,9 +5,8 @@ package org.cggh.chassis.generic.client.gwt.widget.study.edit.client;
 
 import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
 import org.cggh.chassis.generic.atom.study.client.mockimpl.MockStudyFactory;
-import org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomService;
-import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
 import org.cggh.chassis.generic.client.gwt.widget.application.client.ApplicationConstants;
+import org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerEditAPI;
 
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.event.dom.client.DomEvent;
@@ -22,11 +21,7 @@ import com.google.gwt.user.client.ui.SimplePanel;
 public class GWTTestEditStudyWidgetDefaultRenderer extends GWTTestCase {
 	
 	private EditStudyWidgetDefaultRenderer testRenderer;
-	private EditStudyWidgetModel testModel;
-	private MockStudyFactory mockFactory;
-	private MockAtomService mockService;
-	private String feedURL = "http://www.foo.com/studies";
-	private MockViewStudyWidgetController testController;
+	private MockStudyController mockController;
 
 	/* (non-Javadoc)
 	 * @see com.google.gwt.junit.client.GWTTestCase#getModuleName()
@@ -39,15 +34,10 @@ public class GWTTestEditStudyWidgetDefaultRenderer extends GWTTestCase {
 	@Override
 	protected void gwtSetUp() {
 
-		//Create testController, inject testModel and a mock Service
-		testModel = new EditStudyWidgetModel();
-		mockFactory = new MockStudyFactory();
-		mockService = new MockAtomService(mockFactory);
-
-		// bootstrap mock service with study feed
-		((MockAtomService)mockService).createFeed(feedURL, "all studies");
+		//create mockController and inject into testRenderer
+		mockController = new MockStudyController();
 		
-		testController = new MockViewStudyWidgetController(testModel, mockService, null);
+		testRenderer = new EditStudyWidgetDefaultRenderer(new SimplePanel(), mockController, null);
 			
 		//create testStudyEntry to load
 		MockStudyFactory mockFactory = new MockStudyFactory();
@@ -57,14 +47,7 @@ public class GWTTestEditStudyWidgetDefaultRenderer extends GWTTestCase {
 		testStudyEntry.addModule(ApplicationConstants.MODULE_CLINICAL);
 		
 		//call method under test
-		testController.loadStudyEntry(testStudyEntry);
-
-		// instantiate a renderer
-		testRenderer = new EditStudyWidgetDefaultRenderer(new SimplePanel(), testController);
-		
-		//register as listener
-		testModel.addListener(testRenderer);
-		
+		mockController.loadStudyEntry(testStudyEntry);		
 	}
 	
 	public void testInitialState() {
@@ -80,153 +63,260 @@ public class GWTTestEditStudyWidgetDefaultRenderer extends GWTTestCase {
 		
 	}
 	
-	public void testOnStudyEntryChanged() {
+	public void testOnTitleChanged() {
 		
 		//test data
-		String title = "foo";
-		String summary = "summary";
+		String title = "title foo";
 		
-		//create testStudyEntry to load
-		MockStudyFactory mockFactory = new MockStudyFactory();
-		StudyEntry testStudyEntry = mockFactory.createStudyEntry();
-		testStudyEntry.setTitle(title);
-		testStudyEntry.setSummary(summary);	
-		testStudyEntry.addModule(ApplicationConstants.MODULE_CLINICAL);
+		// call method under test
+		testRenderer.onTitleChanged(null, title, true);		
 		
-				
-		//call method under test
-		testController.loadStudyEntry(testStudyEntry);
 		
 		//test outcome
 		assertEquals(title, testRenderer.titleUI.getValue());
+		
+	}
+	
+	public void testTitleChanged_UI() {
+		
+		//test data
+		String title = "title foo";
+		
+		//call method under test
+		testRenderer.titleUI.setValue(title, true);
+		
+		//test outcome
+		assertEquals(title, mockController.updateTitle);
+		
+	}
+	
+	public void testOnSummaryChanged() {
+		
+		//test data
+		String summary = "summary foo";
+		
+		// call method under test
+		testRenderer.onSummaryChanged(null, summary, true);		
+		
+		
+		//test outcome
 		assertEquals(summary, testRenderer.summaryUI.getValue());
-		assertEquals(Boolean.TRUE, testRenderer.acceptClinicalDataUI.getValue());
-		assertEquals(Boolean.FALSE, testRenderer.acceptMolecularDataUI.getValue());
-		assertEquals(Boolean.FALSE, testRenderer.acceptInVitroDataUI.getValue());
-		assertEquals(Boolean.FALSE, testRenderer.acceptPharmacologyDataUI.getValue());
 		
 	}
 	
-	public void testOnTitleChanged_UI() {
+	public void testSummaryChanged_UI() {
 		
 		//test data
-		String study = "Study Foo";
+		String summary = "summary foo";
 		
-		//Simulate text entry and fire change event  
-		testRenderer.titleUI.setValue(study, true);
-		
-		// test outcome
-		assertEquals(study, testModel.getTitle());
-	}
-	
-	public void testOnSummaryChanged_UI() {
-		
-		//test data
-		String summary = "Summary Foo";
-		
-		//Simulate text entry and fire change event  
+		//call method under test
 		testRenderer.summaryUI.setValue(summary, true);
 		
-		// test outcome
-		assertEquals(summary, testModel.getSummary());
+		//test outcome
+		assertEquals(summary, mockController.updateSummary);
+		
 	}
 	
-	public void testOnAcceptClinicalDataChanged_UI() {
+	public void testOnAcceptClinicalDataChanged() {
 		
-		//Simulate click 
-		testRenderer.acceptClinicalDataUI.setValue(true, true);
+		//test data
+		Boolean acceptClinicalData = true;
+		
+		// call method under test
+		testRenderer.onAcceptClinicalDataChanged(null, acceptClinicalData, false);		
+		
 		
 		//test outcome
-		assertEquals(Boolean.TRUE, testModel.acceptClinicalData());
+		assertEquals(acceptClinicalData, testRenderer.acceptClinicalDataUI.getValue());
 		
 	}
 	
-	public void testOnAcceptMolecularDataChanged_UI() {
+	public void testAcceptClinicalDataChanged_UI() {
 		
-		//Simulate click 
-		testRenderer.acceptMolecularDataUI.setValue(true, true);
+		//test data
+		Boolean acceptClinicalData = true;
+		
+		//call method under test
+		testRenderer.acceptClinicalDataUI.setValue(acceptClinicalData, true);
 		
 		//test outcome
-		assertEquals(Boolean.TRUE, testModel.acceptMolecularData());
+		assertEquals(acceptClinicalData, mockController.updateAcceptClinicalData);
 		
 	}
 	
-	public void testOnAcceptInVitroDataChanged_UI() {
+	public void testOnAcceptInVitroDataChanged() {
 		
-		//Simulate click 
-		testRenderer.acceptInVitroDataUI.setValue(true, true);
+		//test data
+		Boolean acceptInVitroData = true;
+		
+		// call method under test
+		testRenderer.onAcceptInVitroDataChanged(null, acceptInVitroData, false);		
+		
 		
 		//test outcome
-		assertEquals(Boolean.TRUE, testModel.acceptInVitroData());
+		assertEquals(acceptInVitroData, testRenderer.acceptInVitroDataUI.getValue());
 		
 	}
 	
-	public void testOnAcceptPharmacologyDataChanged_UI() {
+	public void testAcceptInVitroDataChanged_UI() {
 		
-		//Simulate click 
-		testRenderer.acceptPharmacologyDataUI.setValue(true, true);
+		//test data
+		Boolean acceptInVitroData = true;
+		
+		//call method under test
+		testRenderer.acceptInVitroDataUI.setValue(acceptInVitroData, true);
 		
 		//test outcome
-		assertEquals(Boolean.TRUE, testModel.acceptPharmacologyData());
+		assertEquals(acceptInVitroData, mockController.updateAcceptInVitroData);
 		
 	}
 	
-	public void testCancelCreateStudyButton_UI() {
+	public void testOnAcceptMolecularDataChanged() {
+		
+		//test data
+		Boolean acceptMolecularData = true;
+		
+		// call method under test
+		testRenderer.onAcceptMolecularDataChanged(null, acceptMolecularData, false);		
+		
+		
+		//test outcome
+		assertEquals(acceptMolecularData, testRenderer.acceptMolecularDataUI.getValue());
+		
+	}
+	
+	public void testAcceptMolecularDataChanged_UI() {
+		
+		//test data
+		Boolean acceptMolecularData = true;
+		
+		//call method under test
+		testRenderer.acceptMolecularDataUI.setValue(acceptMolecularData, true);
+		
+		//test outcome
+		assertEquals(acceptMolecularData, mockController.updateAcceptMolecularData);
+		
+	}
+	
+	public void testOnAcceptPharmacologyDataChanged() {
+		
+		//test data
+		Boolean acceptPharmacologyData = true;
+		
+		// call method under test
+		testRenderer.onAcceptPharmacologyDataChanged(null, acceptPharmacologyData, false);		
+		
+		
+		//test outcome
+		assertEquals(acceptPharmacologyData, testRenderer.acceptPharmacologyDataUI.getValue());
+		
+	}
+	
+	public void testAcceptPharmacologyDataChanged_UI() {
+		
+		//test data
+		Boolean acceptPharmacologyData = true;
+		
+		//call method under test
+		testRenderer.acceptPharmacologyDataUI.setValue(acceptPharmacologyData, true);
+		
+		//test outcome
+		assertEquals(acceptPharmacologyData, mockController.updateAcceptPharmacologyData);
+		
+	}
+	
+	public void testCancelEditStudyButton_UI() {
 		//simulate click event
 		DomEvent.fireNativeEvent(Document.get().createClickEvent(0, 0, 0, 0, 0, false, false, false, false),
 								 (HasHandlers)testRenderer.cancelEditStudyUI );
 		
-		//test outcome
-		assertEquals(EditStudyWidgetModel.STATUS_CANCELLED, testModel.getStatus());
+		// test outcome
+		assertTrue(mockController.cancelSaveOrUpdateStudyEntry);
 	}
 	
 	
 	public void testUpdateStudyButton_UI_formIncomplete() {
 		
 		//call method under test
-		testRenderer.onFormCompleted(false);
+		testRenderer.onStudyEntryChanged(false);
+		
 		//simulate click event
 		DomEvent.fireNativeEvent(Document.get().createClickEvent(0, 0, 0, 0, 0, false, false, false, false),
 								 (HasHandlers)testRenderer.updateStudyUI );
 		
+
 		// test outcome
-		assertEquals(EditStudyWidgetModel.STATUS_LOADED, testModel.getStatus());
+		assertFalse(mockController.updateStudyEntryCalled);
 				
 	}
 	
 	public void testUpdateStudyButton_UI_formComplete() {
 		
 		//call method under test
-		testRenderer.onFormCompleted(true);
+		testRenderer.onStudyEntryChanged(true);
 		
 		//simulate click event
 		DomEvent.fireNativeEvent(Document.get().createClickEvent(0, 0, 0, 0, 0, false, false, false, false),
 								 (HasHandlers)testRenderer.updateStudyUI );
 		
 		// test outcome
-		assertTrue(testController.putUpdatedStudyFired);
+		assertTrue(mockController.updateStudyEntryCalled);
 				
 	}
 	
 	
-	//mock MockViewStudyWidget
-	private class MockViewStudyWidgetController extends EditStudyWidgetController {
+	//Define mock controller
+	private class MockStudyController implements StudyControllerEditAPI {
 
-				
-		public MockViewStudyWidgetController(EditStudyWidgetModel model,
-				AtomService service, EditStudyWidget owner) {
-			super(model, service, owner);
+		boolean cancelSaveOrUpdateStudyEntry;
+		Boolean updateAcceptClinicalData;
+		Boolean updateAcceptInVitroData;
+		Boolean updateAcceptMolecularData;
+		Boolean updateAcceptPharmacologyData;
+		String updateSummary;
+		String updateTitle;
+		boolean updateStudyEntryCalled;
+
+		public void cancelSaveOrUpdateStudyEntry() {
+			this.cancelSaveOrUpdateStudyEntry = true;
 		}
 
-		//check to see if onEditStudyUIClicked called
-		public boolean putUpdatedStudyFired = false;
-		
-		@Override
-		public void putUpdatedStudy() {
-			putUpdatedStudyFired = true;
+		public void updateAcceptClinicalData(Boolean acceptClinicalData) {
+			this.updateAcceptClinicalData = acceptClinicalData;
+		}
+
+		public void updateAcceptInVitroData(Boolean acceptInVitroData) {
+			this.updateAcceptInVitroData = acceptInVitroData;
+		}
+
+		public void updateAcceptMolecularData(Boolean acceptMolecularData) {
+			this.updateAcceptMolecularData = acceptMolecularData;
+		}
+
+		public void updateAcceptPharmacologyData(Boolean acceptPharmacologyData) {
+			this.updateAcceptPharmacologyData = acceptPharmacologyData;
+		}
+
+		public void updateSummary(String summary) {
+			this.updateSummary = summary;
+		}
+
+		public void updateTitle(String title) {
+			this.updateTitle = title;
+		}
+
+		public void updateStudyEntry(String feedURL) {
+			this.updateStudyEntryCalled = true;
+		}
+
+		public void loadStudyEntry(StudyEntry submissionEntryToLoad) {
+			// not tested here
+		}
+
+		public void loadStudyEntryByURL(String studyEntryURL) {
+			// not tested here
 		}
 		
 	}
-	
 	
 }

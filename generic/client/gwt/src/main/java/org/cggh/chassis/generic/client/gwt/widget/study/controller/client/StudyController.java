@@ -8,8 +8,11 @@ import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
 import org.cggh.chassis.generic.atom.study.client.format.StudyFactory;
 import org.cggh.chassis.generic.atom.study.client.format.impl.StudyFactoryImpl;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
+import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomProtocolException;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
 import org.cggh.chassis.generic.client.gwt.widget.study.model.client.StudyModel;
+import org.cggh.chassis.generic.log.client.Log;
+import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.twisted.client.Deferred;
 import org.cggh.chassis.generic.twisted.client.Function;
 
@@ -22,8 +25,8 @@ public class StudyController implements StudyControllerEditAPI, StudyControllerC
 	final private StudyModel model;
 	final private AtomService service;
 	private StudyFactory studyFactory;
-	private String feedURL;
 	final private AbstractStudyControllerPubSubAPI owner;
+	private Log log = LogFactory.getLog(this.getClass());
 
 	public StudyController(StudyModel model, AtomService service, AbstractStudyControllerPubSubAPI owner) {
 		this.model = model;
@@ -47,12 +50,13 @@ public class StudyController implements StudyControllerEditAPI, StudyControllerC
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerCreateAPI#setUpNewStudy(java.lang.String)
 	 */
-	public void setUpNewStudy(String feedURL) {
+	public void setUpNewStudy() {
+		log.enter("setUpNewStudy");
 		
-		this.feedURL = feedURL;
 		model.setStudyEntry(studyFactory.createStudyEntry());
 		model.setStatus(StudyModel.STATUS_LOADED);
 		
+		log.leave();
 	}
 
 	/* (non-Javadoc)
@@ -122,13 +126,18 @@ public class StudyController implements StudyControllerEditAPI, StudyControllerC
 	 * @see org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerCreateAPI#cancelCreateStudy()
 	 */
 	public void cancelSaveOrUpdateStudyEntry() {
+		log.enter("cancelSaveOrUpdateStudyEntry");
 		
 		model.setStatus(StudyModel.STATUS_CANCELLED);
 		
 		//alert owner
 		if (owner instanceof StudyControllerPubSubCreateAPI) {
-			((StudyControllerPubSubCreateAPI)owner).createStudyEntryCancelled();
-		} 
+			((StudyControllerPubSubCreateAPI)owner).onUserActionCreateStudyEntryCancelled();
+		} else if (owner instanceof StudyControllerPubSubEditAPI) {
+			((StudyControllerPubSubEditAPI)owner).onUserActionEditStudyEntryCancelled();
+		}
+		
+		log.leave();
 	}
 
 	/* (non-Javadoc)
@@ -138,8 +147,12 @@ public class StudyController implements StudyControllerEditAPI, StudyControllerC
 	 * @see org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerViewAPI#loadStudyEntry(org.cggh.chassis.generic.atom.study.client.format.StudyEntry)
 	 */
 	public void loadStudyEntry(StudyEntry studyEntryToLoad) {
+		log.enter("loadStudyEntry");
+		
 		model.setStudyEntry(studyEntryToLoad);
 		model.setStatus(StudyModel.STATUS_LOADED);
+		
+		log.leave();
 	}
 
 	/* (non-Javadoc)
@@ -149,22 +162,31 @@ public class StudyController implements StudyControllerEditAPI, StudyControllerC
 	 * @see org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerViewAPI#loadStudyEntryByURL(java.lang.String)
 	 */
 	public void loadStudyEntryByURL(String studyEntryURL) {
+		log.enter("loadStudyEntryByURL");
 		
 		model.setStatus(StudyModel.STATUS_LOADING);
 		
 		//request studyEntry
+		log.trace("loading study entry at: " + studyEntryURL);
 		Deferred<AtomEntry> deffered = service.getEntry(studyEntryURL);
 		
 		//add callbacks
 		deffered.addCallbacks(new LoadStudyEntryCallback(), new LoadStudyEntryErrback());
+		
+		log.leave();
 	}
 
 	//package private for testing purposes
 	class LoadStudyEntryCallback implements Function<StudyEntry,StudyEntry> {
 
 		public StudyEntry apply(StudyEntry studyEntry) {
+			log.enter("LoadStudyEntryCallback::apply");
+			
 			model.setStudyEntry(studyEntry);
 			model.setStatus(StudyModel.STATUS_LOADED);
+			
+			log.leave();
+			
 			return studyEntry;
 		}
 		
@@ -174,7 +196,11 @@ public class StudyController implements StudyControllerEditAPI, StudyControllerC
 	class LoadStudyEntryErrback implements Function<Throwable,Throwable> {
 
 		public Throwable apply(Throwable error) {
+			log.enter("LoadStudyEntryErrback::apply");
+			
 			model.setStatus(StudyModel.STATUS_ERROR);
+			
+			log.leave();
 			return error;
 		}
 
@@ -184,39 +210,60 @@ public class StudyController implements StudyControllerEditAPI, StudyControllerC
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerCreateAPI#saveNewStudyEntry()
 	 */
-	public void saveNewStudyEntry() {
+	public void saveNewStudyEntry(String feedURL) {
+		log.enter("saveNewStudyEntry");
 	
 		model.setStatus(StudyModel.STATUS_SAVING);
 		
 		//post new studyEntry
+		log.trace("SavingstudyEntry to feed: " + feedURL);
 		Deferred<AtomEntry> deffered = service.postEntry(feedURL, model.getStudyEntry());
 		
 		//add callbacks
 		deffered.addCallbacks(new SaveOrUpdateStudyEntryCallback(), new SaveOrUpdateStudyEntryErrback());
+		
+		log.leave();
 	}
 
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerEditAPI#updateStudyEntry()
 	 */
-	public void updateStudyEntry() {
+	public void updateStudyEntry(String feedURL) {
+		log.enter("updateStudyEntry");
 		
 		model.setStatus(StudyModel.STATUS_SAVING);
 		
 		//StudyEntry to update
 		StudyEntry studyEntry = model.getStudyEntry();
 		
+		// assume link is relative
+		String entryUrl = feedURL + studyEntry.getEditLink().getHref();
+		log.trace("Putting updated entry at: " + entryUrl);		
+		
 		//put studyEntry
-		Deferred<AtomEntry> deffered = service.putEntry(studyEntry.getEditLink().getHref(), studyEntry);
+		Deferred<AtomEntry> deffered = service.putEntry(entryUrl, studyEntry);
 		
 		//add callbacks
 		deffered.addCallbacks(new SaveOrUpdateStudyEntryCallback(), new SaveOrUpdateStudyEntryErrback());
+		
+		log.leave();
 	}
 
 	//package private for testing purposes
 	class SaveOrUpdateStudyEntryErrback implements Function<Throwable,Throwable> {
 
 		public Throwable apply(Throwable error) {
+			log.enter("SaveOrUpdateStudyEntryErrback :: apply");
+			
+			if (error instanceof AtomProtocolException) {
+				AtomProtocolException e = (AtomProtocolException) error;
+				log.trace(e.getLocalizedMessage());
+				log.trace(e.getResponse().getText());
+			}
+			
 			model.setStatus(StudyModel.STATUS_ERROR);
+			
+			log.leave();
 			return error;
 		}
 
@@ -227,24 +274,35 @@ public class StudyController implements StudyControllerEditAPI, StudyControllerC
 	class SaveOrUpdateStudyEntryCallback implements Function<StudyEntry,StudyEntry> {
 
 		public StudyEntry apply(StudyEntry studyEntry) {
+			log.enter("SaveOrUpdateStudyEntryCallback :: apply");
 			
 			model.setStatus(StudyModel.STATUS_SAVED);
 			model.setStudyEntry(studyEntry);
 			
 			//alert owner
 			if (owner instanceof StudyControllerPubSubCreateAPI) {
-				((StudyControllerPubSubCreateAPI)owner).newStudySaved(studyEntry);
-			} 
+				((StudyControllerPubSubCreateAPI)owner).onNewStudySaved(studyEntry);
+			} else if (owner instanceof StudyControllerPubSubEditAPI) {
+				((StudyControllerPubSubEditAPI)owner).onStudyUpdated(studyEntry);
+			}
 			
+			log.leave();
 			return studyEntry;
 		}
 
 		
 	}
 
-	public void updateSubmissionEntry() {
-		// TODO Auto-generated method stub
+	public void onUserActionEditThisStudy() {
+		log.enter("onUserActionEditThisStudy");
 		
+		if (owner instanceof StudyControllerPubSubViewAPI) {
+			StudyEntry studyEntryToEdit = model.getStudyEntry();
+			
+			((StudyControllerPubSubViewAPI)owner).onUserActionEditStudy(studyEntryToEdit);
+		}
+		
+		log.leave();
 	}
 	
 }

@@ -11,6 +11,6 @@ import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
  */
 public interface ViewAllStudiesWidgetPubSubAPI {
 
-	void viewStudyUIClicked(StudyEntry studyEntry);
+	void onUserActionViewStudy(StudyEntry studyEntry);
 
 }

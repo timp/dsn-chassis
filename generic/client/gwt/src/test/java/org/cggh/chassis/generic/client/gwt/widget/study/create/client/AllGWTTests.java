@@ -12,7 +12,6 @@ public class AllGWTTests extends GWTTestSuite {
 				"All GWTTests for org.cggh.chassis.generic.client.gwt.widget.study.create.client");
 		//$JUnit-BEGIN$
 		suite.addTest(new JUnit4TestAdapter(GWTTestCreateStudyWidgetDefaultRenderer.class));
-		suite.addTest(new JUnit4TestAdapter(GWTTestCreateStudyWidgetController_callbacks.class));
 		//$JUnit-END$
 		return suite;
 	}

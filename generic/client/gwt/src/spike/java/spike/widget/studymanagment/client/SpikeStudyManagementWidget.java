@@ -47,8 +47,9 @@ public class SpikeStudyManagementWidget implements EntryPoint {
 		// use real thing
 		StudyFactory factory = new StudyFactoryImpl();
 		AtomService service = new AtomServiceImpl(factory);
+		String feedURL = Configuration.getStudyFeedURL();
 		
-		StudyManagementWidget studyManagementWidget = new StudyManagementWidget(menuCanvas, displayCanvas, service);
+		StudyManagementWidget studyManagementWidget = new StudyManagementWidget(menuCanvas, displayCanvas, service, feedURL);
 		
 		RootPanel.get().add(verticalPanel);
 		

@@ -13,6 +13,6 @@ public interface CreateSubmissionWidgetPubSubAPI {
 
 	public void onNewSubmissionCreated(SubmissionEntry submissionEntry);
 	
-	public void onCreateSubmissionCancelled();
+	public void onUserActionCreateNewSubmissionCancelled();
 	
 }

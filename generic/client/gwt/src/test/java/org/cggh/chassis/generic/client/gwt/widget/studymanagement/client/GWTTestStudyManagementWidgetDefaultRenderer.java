@@ -4,13 +4,8 @@
 package org.cggh.chassis.generic.client.gwt.widget.studymanagement.client;
 
 
-import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
 import org.cggh.chassis.generic.atom.study.client.mockimpl.MockStudyFactory;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomService;
-import org.cggh.chassis.generic.client.gwt.widget.application.client.ApplicationConstants;
-import org.cggh.chassis.generic.twisted.client.Deferred;
-import org.cggh.chassis.generic.twisted.client.Function;
 import org.junit.Test;
 
 import com.google.gwt.dom.client.Document;
@@ -56,7 +51,7 @@ public class GWTTestStudyManagementWidgetDefaultRenderer extends GWTTestCase {
 		((MockAtomService)mockService).createFeed(feedURL, "all studies");
 		
 		//instantiate a test renderer
-		testRenderer = new StudyManagementWidgetDefaultRenderer(new SimplePanel(), new SimplePanel(), testController, mockService);
+		testRenderer = new StudyManagementWidgetDefaultRenderer(new SimplePanel(), new SimplePanel(), testController, feedURL, mockService);
 		
 		//add as listener
 		testModel.addListener(testRenderer);
@@ -126,55 +121,6 @@ public class GWTTestStudyManagementWidgetDefaultRenderer extends GWTTestCase {
 					 && (testRenderer.editStudyWidgetCanvas.isVisible()) );
 		
 	}
-	
-	@Test
-	public void testOnNewStudySaved_StudyUpdateSuccess_editStudyUIClicked_viewStudyUIClicked() {
 		
-		//test data
-		String title = "study foo";
-		String summary = "summary foo";
-		
-		//create test Study Entry to view
-		mockFactory = new MockStudyFactory();
-		StudyEntry testStudy = mockFactory.createStudyEntry();
-		testStudy.setTitle(title);
-		testStudy.setSummary(summary);
-		testStudy.addModule(ApplicationConstants.MODULE_CLINICAL);
-		testStudy.addModule(ApplicationConstants.MODULE_IN_VITRO);
-		
-		// make sure test study is saved, entryURL is received, and test completes
-		delayTestFinish(5000);
-		
-		//create test study
-		Deferred<AtomEntry> deferredEntry = mockService.postEntry(feedURL, testStudy);
-		
-		//get entryURL and then perform test
-		deferredEntry.addCallback(new Function<StudyEntry,StudyEntry>() {
-
-			public StudyEntry apply(StudyEntry in) {
-				
-				testRenderer.onNewStudyCreated(in);
-				assertEquals(StudyManagementWidgetModel.DISPLAYING_VIEW_STUDY, testModel.getDisplayStatus());
-				
-				testRenderer.onEditStudyUIClicked(in);
-				assertEquals(StudyManagementWidgetModel.DISPLAYING_EDIT_STUDY, testModel.getDisplayStatus());
-								
-				testRenderer.onStudyUpdateSuccess(in);
-				assertEquals(StudyManagementWidgetModel.DISPLAYING_VIEW_STUDY, testModel.getDisplayStatus());
-				
-				testRenderer.viewStudyUIClicked(in);
-				assertEquals(StudyManagementWidgetModel.DISPLAYING_VIEW_STUDY, testModel.getDisplayStatus());
-							
-				
-				//complete test
-			    finishTest();				
-				
-				return in;
-			}
-			
-		});
-		
-	}
-	
 	
 }

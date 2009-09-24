@@ -3,10 +3,8 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.study.edit.client;
 
-import java.util.List;
-
-import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
-import org.cggh.chassis.generic.client.gwt.widget.application.client.ApplicationConstants;
+import org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerEditAPI;
+import org.cggh.chassis.generic.client.gwt.widget.study.model.client.StudyModelListener;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -26,7 +24,7 @@ import com.google.gwt.user.client.ui.TextBoxBase;
  * @author raok
  *
  */
-public class EditStudyWidgetDefaultRenderer implements EditStudyWidgetModelListener {
+public class EditStudyWidgetDefaultRenderer implements StudyModelListener {
 
 
 	//Expose view elements for testing purposes.
@@ -40,12 +38,14 @@ public class EditStudyWidgetDefaultRenderer implements EditStudyWidgetModelListe
 	final Button updateStudyUI = new Button("Update Study", new UpdateStudyClickHandler());
 	
 	final private Panel canvas;
-	private EditStudyWidgetController controller;
+	private StudyControllerEditAPI controller;
 	private Boolean isFormComplete = false;
+	private String feedURL;
 
-	public EditStudyWidgetDefaultRenderer(Panel canvas, EditStudyWidgetController controller) {
+	public EditStudyWidgetDefaultRenderer(Panel canvas, StudyControllerEditAPI controller, String feedURL) {
 		this.canvas = canvas;
 		this.controller = controller;
+		this.feedURL = feedURL;
 		
 		initCanvas();
 	}
@@ -81,28 +81,11 @@ public class EditStudyWidgetDefaultRenderer implements EditStudyWidgetModelListe
 		editStudyForm.setWidget(rowNumber, 1, cancelEditStudyUI);
 		
 		canvas.add(editStudyForm);
-
 		
 	}
 
-	public void onFormCompleted(Boolean isFormComplete) {
-		this.isFormComplete = isFormComplete;
-	}
-
-	public void onModulesChanged(Boolean isValid) {
-		// TODO Can implement user validation here
-	}
-
 	public void onStatusChanged(Integer before, Integer after) {
-		// TODO Can implement user validation here
-	}
-
-	public void onSummaryChanged(Boolean isValid) {
-		// TODO Can implement user validation here
-	}
-
-	public void onTitleChanged(Boolean isValid) {
-		// TODO Can implement user validation here
+		// TODO Can handle error state here.
 	}
 	
 	class TitleChangeHandler implements ValueChangeHandler<String> {
@@ -157,7 +140,7 @@ public class EditStudyWidgetDefaultRenderer implements EditStudyWidgetModelListe
 
 		public void onClick(ClickEvent arg0) {
 			if (isFormComplete) {
-				controller.putUpdatedStudy();
+				controller.updateStudyEntry(feedURL);
 			} else {
 				//TODO move to management widget?
 				DecoratedPopupPanel errorPopUp = new DecoratedPopupPanel(true);
@@ -173,27 +156,44 @@ public class EditStudyWidgetDefaultRenderer implements EditStudyWidgetModelListe
 	class CancelStudyClickHandler implements ClickHandler {
 		
 		public void onClick(ClickEvent arg0) {
-			controller.cancelEditStudy();
+			controller.cancelSaveOrUpdateStudyEntry();
 		}
 	}
 
-	public void setController(EditStudyWidgetController customController) {
+	public void setController(StudyControllerEditAPI customController) {
 		this.controller = customController;
 	}
 
-	public void onStudyEntryChanged(StudyEntry before, StudyEntry studyEntry) {
+	
+	public void onStudyEntryChanged(Boolean isValid) {
+		this.isFormComplete = isValid;		
+	}
+
+	public void onTitleChanged(String before, String after, Boolean isValid) {
 		
-		//get studyEntry modules
-		List<String> modules = studyEntry.getModules();
-		
-		//set up form, fire events to perform validation
-		titleUI.setValue(studyEntry.getTitle(), true);
-		summaryUI.setValue(studyEntry.getSummary(), true);
-		acceptClinicalDataUI.setValue(modules.contains(ApplicationConstants.MODULE_CLINICAL), true);
-		acceptMolecularDataUI.setValue(modules.contains(ApplicationConstants.MODULE_MOLECULAR), true);
-		acceptInVitroDataUI.setValue(modules.contains(ApplicationConstants.MODULE_IN_VITRO), true);
-		acceptPharmacologyDataUI.setValue(modules.contains(ApplicationConstants.MODULE_PHARMACOLOGY), true);
-		
+		//do not fire events, otherwise a probably dangerous feedback loop will be created!
+		titleUI.setValue(after, false);
+	}
+
+	public void onSummaryChanged(String before, String after, Boolean isValid) {
+
+		summaryUI.setValue(after, false);
+	}
+
+	public void onAcceptClinicalDataChanged(Boolean before, Boolean after, Boolean isValid) {
+		acceptClinicalDataUI.setValue(after, false);
+	}
+
+	public void onAcceptInVitroDataChanged(Boolean before, Boolean after, Boolean isValid) {
+		acceptInVitroDataUI.setValue(after, false);
+	}
+
+	public void onAcceptMolecularDataChanged(Boolean before, Boolean after, Boolean isValid) {
+		acceptMolecularDataUI.setValue(after, false);
+	}
+
+	public void onAcceptPharmacologyDataChanged(Boolean before, Boolean after, Boolean isValid) {
+		acceptPharmacologyDataUI.setValue(after, false);
 	}
 
 }

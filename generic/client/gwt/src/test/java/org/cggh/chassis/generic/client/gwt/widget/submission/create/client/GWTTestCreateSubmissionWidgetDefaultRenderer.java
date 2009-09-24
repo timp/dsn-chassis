@@ -297,7 +297,7 @@ public class GWTTestCreateSubmissionWidgetDefaultRenderer extends GWTTestCase {
 			this.addStudyLink = studyEntryURL;
 		}
 
-		public void cancelSaveOrUpdateSubmissionEntry() {
+		public void cancelCreateOrUpdateSubmissionEntry() {
 			this.cancelSaveOrUpdateSubmissionEntry = true;
 		}
 

@@ -9,7 +9,7 @@ package org.cggh.chassis.generic.client.gwt.widget.study.controller.client;
  */
 public interface StudyControllerCreateAPI extends AbstractStudyControllerCreateEditAPI {
 
-	public void setUpNewStudy(String feedURL);
+	public void setUpNewStudy();
 	
-	public void saveNewStudyEntry();
+	public void saveNewStudyEntry(String feedURL);
 }

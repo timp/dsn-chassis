@@ -46,6 +46,7 @@ public class TestViewAllStudiesWidgetController {
 	private StudyFactory mockFactory;
 	private ViewAllStudiesWidget mockWidget;
 	private List<StudyEntry> testStudies;
+	String feedURL = "http://example.com/studies";
 		
 	@Before
 	public void setUp() {
@@ -56,9 +57,9 @@ public class TestViewAllStudiesWidgetController {
 		mockService = createMock(AtomService.class);
 		
 		//create mockWidget
-		mockWidget = PowerMock.createPartialMock(ViewAllStudiesWidget.class, "viewStudyUIClicked");
+		mockWidget = PowerMock.createPartialMock(ViewAllStudiesWidget.class, "onViewStudyUIClicked");
 		
-		testController = new ViewAllStudiesWidgetController(testModel, mockService, mockWidget);
+		testController = new ViewAllStudiesWidgetController(testModel, mockService, mockWidget, feedURL);
 
 		
 		//create test Study Entries to view
@@ -90,16 +91,13 @@ public class TestViewAllStudiesWidgetController {
 		
 	@Test
 	public void testLoadStudies_callback() {
-		
-		//test data
-		String feedURL = "http://example.com/studies";
-				
+						
 		//set up expectations
 		expect(mockService.getFeed(feedURL)).andReturn(new Deferred<AtomFeed>());
 		replay(mockService);
 
 				
-		Deferred<AtomFeed> deffered = testController.getStudiesByFeedURL(feedURL);
+		Deferred<AtomFeed> deffered = testController.getStudies();
 		
 		assertNotNull(deffered);
 		

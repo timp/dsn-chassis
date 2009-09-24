@@ -45,9 +45,9 @@ public class CreateSubmissionWidget implements CreateSubmissionWidgetAPI, Submis
 		controller.setUpNewSubmission(feedURL);
 	}
 
-	public void createSubmissionEntryCancelled() {
+	public void cancelCreateNewSubmissionEntry() {
 		for (CreateSubmissionWidgetPubSubAPI listener : listeners) {
-			listener.onCreateSubmissionCancelled();
+			listener.onUserActionCreateNewSubmissionCancelled();
 		}
 	}
 

@@ -3,6 +3,10 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.study.create.client;
 
+import org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerCreateAPI;
+import org.cggh.chassis.generic.client.gwt.widget.study.model.client.StudyModel;
+import org.cggh.chassis.generic.client.gwt.widget.study.model.client.StudyModelListener;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
@@ -21,11 +25,12 @@ import com.google.gwt.user.client.ui.TextBoxBase;
  * @author raok
  *
  */
-class CreateStudyWidgetDefaultRenderer implements CreateStudyWidgetModelListener {
+class CreateStudyWidgetDefaultRenderer implements StudyModelListener {
 
 	final private Panel canvas;
-	private CreateStudyWidgetController controller;
+	private StudyControllerCreateAPI controller;
 	private Boolean isFormComplete = false;
+	private String feedURL;
 	
 	//Expose view elements for testing purposes.
 	final TextBoxBase titleUI = new TextBox();
@@ -38,9 +43,10 @@ class CreateStudyWidgetDefaultRenderer implements CreateStudyWidgetModelListener
 	final Button cancelCreateStudyUI = new Button("Cancel", new CancelStudyClickHandler());
 	
 
-	public CreateStudyWidgetDefaultRenderer(Panel canvas, CreateStudyWidgetController controller) {
+	public CreateStudyWidgetDefaultRenderer(Panel canvas, StudyControllerCreateAPI controller, String feedURL) {
 		this.canvas = canvas;
 		this.controller = controller;
+		this.feedURL = feedURL;
 		
 		//initialise view
 		initCanvas();
@@ -132,7 +138,7 @@ class CreateStudyWidgetDefaultRenderer implements CreateStudyWidgetModelListener
 
 		public void onClick(ClickEvent arg0) {
 			if (isFormComplete) {
-				controller.saveNewStudy();
+				controller.saveNewStudyEntry(feedURL);
 			} else {
 				//TODO move to management widget?
 				DecoratedPopupPanel errorPopUp = new DecoratedPopupPanel(true);
@@ -148,23 +154,18 @@ class CreateStudyWidgetDefaultRenderer implements CreateStudyWidgetModelListener
 	class CancelStudyClickHandler implements ClickHandler {
 		
 		public void onClick(ClickEvent arg0) {
-			controller.cancelCreateStudy();
+			controller.cancelSaveOrUpdateStudyEntry();
 		}
 	}
 
-	public void setController(CreateStudyWidgetController controller) {
+	public void setController(StudyControllerCreateAPI controller) {
 		this.controller = controller;
-	}
-
-	public void onModulesChanged(Boolean isValid) {
-		// TODO Can implement user validation here
-		
 	}
 
 	public void onStatusChanged(Integer before, Integer after) {
 
 		//reset form when set to ready
-		if (after == CreateStudyWidgetModel.STATUS_READY) {
+		if (after == StudyModel.STATUS_LOADED) {
 			resetForm();
 		}
 		
@@ -178,17 +179,36 @@ class CreateStudyWidgetDefaultRenderer implements CreateStudyWidgetModelListener
 		acceptInVitroDataUI.setValue(false, true);
 		acceptPharmacologyDataUI.setValue(false, true);
 	}
-
-	public void onSummaryChanged(Boolean isValid) {
-		// TODO Can implement user validation here
+	
+	public void onStudyEntryChanged(Boolean isValid) {
+		this.isFormComplete = isValid;		
 	}
 
-	public void onTitleChanged(Boolean isValid) {
-		// TODO Can implement user validation here
+	public void onTitleChanged(String before, String after, Boolean isValid) {
+		
+		//do not fire events, otherwise a probably dangerous feedback loop will be created!
+		titleUI.setValue(after, false);
 	}
 
-	public void onFormCompleted(Boolean isFormComplete) {
-		this.isFormComplete = isFormComplete;
+	public void onSummaryChanged(String before, String after, Boolean isValid) {
+
+		summaryUI.setValue(after, false);
+	}
+
+	public void onAcceptClinicalDataChanged(Boolean before, Boolean after, Boolean isValid) {
+		acceptClinicalDataUI.setValue(after, false);
+	}
+
+	public void onAcceptInVitroDataChanged(Boolean before, Boolean after, Boolean isValid) {
+		acceptInVitroDataUI.setValue(after, false);
+	}
+
+	public void onAcceptMolecularDataChanged(Boolean before, Boolean after, Boolean isValid) {
+		acceptMolecularDataUI.setValue(after, false);
+	}
+
+	public void onAcceptPharmacologyDataChanged(Boolean before, Boolean after, Boolean isValid) {
+		acceptPharmacologyDataUI.setValue(after, false);
 	}
 	
 }
