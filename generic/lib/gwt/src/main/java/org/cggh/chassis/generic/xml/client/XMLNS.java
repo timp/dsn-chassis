@@ -6,6 +6,10 @@ package org.cggh.chassis.generic.xml.client;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.cggh.chassis.generic.twisted.client.Function;
+import org.cggh.chassis.generic.twisted.client.Functional;
+
+import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;
 import com.google.gwt.xml.client.NodeList;
 import com.google.gwt.xml.client.XMLParser;
@@ -19,6 +23,27 @@ public class XMLNS {
 	
 	
 	
+	static class FilterElementsByNamespaceUri implements Function<Element,Element> {
+
+		private String namespaceUri;
+
+		FilterElementsByNamespaceUri(String namespaceUri) {
+			this.namespaceUri = namespaceUri;
+		}
+		
+		/* (non-Javadoc)
+		 * @see org.cggh.chassis.generic.twisted.client.Function#apply(java.lang.Object)
+		 */
+		public Element apply(Element e) {
+			boolean match = (namespaceUri == null && e.getNamespaceURI() == null) || (namespaceUri != null && namespaceUri.equals(e.getNamespaceURI()));
+			if (match) return e;
+			return null;
+		}
+		
+	}
+	
+	
+	
 	/**
 	 * @param ancestor the element to search within
 	 * @param namespaceUri the namespace URI to match
@@ -26,19 +51,32 @@ public class XMLNS {
 	 * @return
 	 */
 	public static List<Element> getElementsByTagNameNS(Element ancestor, String localName, String namespaceUri) {
-		
-		NodeList nodes = ancestor.getElementsByTagName(localName);
-		
+		return XMLNS.filterElementsByNamespaceUri(ancestor.getElementsByTagName(localName), namespaceUri);
+	}
+
+	
+	
+	
+	/**
+	 * @param ancestor the element to search within
+	 * @param namespaceUri the namespace URI to match
+	 * @param localName the element local name to match
+	 * @return
+	 */
+	public static List<Element> getElementsByTagNameNS(Document doc, String localName, String namespaceUri) {
+		return XMLNS.filterElementsByNamespaceUri(doc.getElementsByTagName(localName), namespaceUri);
+	}
+	
+	
+	
+	public static List<Element> filterElementsByNamespaceUri(NodeList nodes, String namespaceUri) {
+
 		List<Element> elements = new ArrayList<Element>();
 		
-		for (Element e : XML.elements(nodes)) {
-			boolean match = (namespaceUri == null && e.getNamespaceURI() == null) || (namespaceUri != null && namespaceUri.equals(e.getNamespaceURI()));
-			if (match) {
-				elements.add(e);
-			}
-		}
+		Functional.map(XML.elements(nodes), elements, new FilterElementsByNamespaceUri(namespaceUri));
 		
 		return elements;
+		
 	}
 
 	
@@ -72,7 +110,12 @@ public class XMLNS {
 		
 		template += "/>";
 		
-		return XMLParser.parse(template).getDocumentElement();
+		Element e = XMLParser.parse(template).getDocumentElement();
+		
+		// return clone to work around chrome wrong document error
+		Element clone = (Element) e.cloneNode(true);
+		
+		return clone;
 	}
 
 
@@ -149,4 +192,38 @@ public class XMLNS {
 			ancestor.appendChild(e);
 		}
 	}
+
+
+
+
+	/**
+	 * @param doc
+	 * @param localName
+	 * @param namespaceUri
+	 * @return
+	 */
+	public static Element getFirstElementByTagNameNS(Document doc, String localName, String namespaceUri) {
+		List<Element> elements = XMLNS.getElementsByTagNameNS(doc, localName, namespaceUri);
+		if (elements.size() > 0) return elements.get(0);
+		else return null;
+	}
+
+
+
+
+	/**
+	 * @param doc
+	 * @param localName
+	 * @param ns2
+	 * @return
+	 */
+	public static String getFirstElementSimpleContentByTagNameNS(Document doc, String localName, String namespaceUri) {
+		Element e = XMLNS.getFirstElementByTagNameNS(doc, localName, namespaceUri);
+		if (e != null) return XML.firstChildNodeValueOrNullIfNoChildren(e);
+		else return null;
+	}
+
+
+
+
 }
