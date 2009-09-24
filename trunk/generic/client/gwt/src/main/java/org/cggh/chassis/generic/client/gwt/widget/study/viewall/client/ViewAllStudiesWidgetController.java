@@ -7,6 +7,8 @@ import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
 import org.cggh.chassis.generic.atom.study.client.format.StudyFeed;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
+import org.cggh.chassis.generic.log.client.Log;
+import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.twisted.client.Deferred;
 import org.cggh.chassis.generic.twisted.client.Function;
 
@@ -19,18 +21,26 @@ public class ViewAllStudiesWidgetController {
 	final private ViewAllStudiesWidgetModel model;
 	final private AtomService service;
 	final private ViewAllStudiesWidget owner;
+	private Log log = LogFactory.getLog(this.getClass());
+	private String feedURL;
 
-	public ViewAllStudiesWidgetController(ViewAllStudiesWidgetModel model, AtomService service, ViewAllStudiesWidget owner) {
+	public ViewAllStudiesWidgetController(ViewAllStudiesWidgetModel model, AtomService service, ViewAllStudiesWidget owner, String feedURL) {
 		this.model = model;
 		this.service = service;
 		this.owner = owner;
+		this.feedURL = feedURL;
 	}
 	
-	public void loadStudiesByFeedURL(String feedURL) {
-		getStudiesByFeedURL(feedURL).addCallback(new GetStudyFeedCallback());
+	public void loadStudies() {
+		log.enter("loadStudiesByFeedURL");
+		
+		log.trace("loading studies from feed: " + feedURL);
+		getStudies().addCallback(new GetStudyFeedCallback());
+		
+		log.leave();
 	}
 	
-	Deferred<AtomFeed> getStudiesByFeedURL(String feedURL) {
+	Deferred<AtomFeed> getStudies() {
 		return service.getFeed(feedURL);
 	}
 

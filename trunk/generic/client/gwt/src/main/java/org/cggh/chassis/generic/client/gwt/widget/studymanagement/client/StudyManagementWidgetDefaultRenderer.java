@@ -3,21 +3,15 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.studymanagement.client;
 
-import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
-import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
 import org.cggh.chassis.generic.client.gwt.widget.study.create.client.CreateStudyWidget;
 import org.cggh.chassis.generic.client.gwt.widget.study.create.client.CreateStudyWidgetAPI;
-import org.cggh.chassis.generic.client.gwt.widget.study.create.client.CreateStudyWidgetPubSubAPI;
 import org.cggh.chassis.generic.client.gwt.widget.study.edit.client.EditStudyWidget;
 import org.cggh.chassis.generic.client.gwt.widget.study.edit.client.EditStudyWidgetAPI;
-import org.cggh.chassis.generic.client.gwt.widget.study.edit.client.EditStudyWidgetPubSubAPI;
 import org.cggh.chassis.generic.client.gwt.widget.study.view.client.ViewStudyWidget;
 import org.cggh.chassis.generic.client.gwt.widget.study.view.client.ViewStudyWidgetAPI;
-import org.cggh.chassis.generic.client.gwt.widget.study.view.client.ViewStudyWidgetPubSubAPI;
 import org.cggh.chassis.generic.client.gwt.widget.study.viewall.client.ViewAllStudiesWidget;
 import org.cggh.chassis.generic.client.gwt.widget.study.viewall.client.ViewAllStudiesWidgetAPI;
-import org.cggh.chassis.generic.client.gwt.widget.study.viewall.client.ViewAllStudiesWidgetPubSubAPI;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -31,11 +25,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
  * @author raok
  *
  */
-public class StudyManagementWidgetDefaultRenderer implements StudyManagementWidgetModelListener,
-															 CreateStudyWidgetPubSubAPI, // TODO renderer should not implement child PubSub interfaces -- coordination logic goes in the widget class
-															 EditStudyWidgetPubSubAPI,
-															 ViewStudyWidgetPubSubAPI,
-															 ViewAllStudiesWidgetPubSubAPI {
+public class StudyManagementWidgetDefaultRenderer implements StudyManagementWidgetModelListener {
 
 	//Expose view elements for testing purposes.
 	final Label displayCreateStudyUI = new Label("Create Study");
@@ -46,22 +36,21 @@ public class StudyManagementWidgetDefaultRenderer implements StudyManagementWidg
 
 	final private StudyManagementWidgetController controller;
 	
-	//child widgets
-	private CreateStudyWidgetAPI createStudyWidget; 
+	//child widgets made package private to allow parent widget to access them
+	final CreateStudyWidgetAPI createStudyWidget; 
 	final Panel createStudyWidgetCanvas = new SimplePanel();
-	private ViewStudyWidgetAPI viewStudyWidget;
+	final ViewStudyWidgetAPI viewStudyWidget;
 	final Panel viewStudyWidgetCanvas = new SimplePanel();	
-	private ViewAllStudiesWidgetAPI viewAllStudiesWidget;
+	final ViewAllStudiesWidgetAPI viewAllStudiesWidget;
 	final Panel viewAllStudiesWidgetCanvas = new SimplePanel();
-	private EditStudyWidgetAPI editStudyWidget;
+	final EditStudyWidgetAPI editStudyWidget;
 	final Panel editStudyWidgetCanvas = new SimplePanel();
 
-
-//	private String feedURL = "http://example.com/studies";
-	private String feedURL = Configuration.getStudyFeedURL();
 	
 	public StudyManagementWidgetDefaultRenderer(Panel menuCanvas, Panel displayCanvas,
-												StudyManagementWidgetController controller, AtomService service) {
+												StudyManagementWidgetController controller,
+												String feedURL, 
+												AtomService service) {
 		this.menuCanvas = menuCanvas;
 		this.displayCanvas = displayCanvas;
 		this.controller = controller;
@@ -69,14 +58,8 @@ public class StudyManagementWidgetDefaultRenderer implements StudyManagementWidg
 		//create child widgets
 		viewStudyWidget = new ViewStudyWidget(viewStudyWidgetCanvas, service);
 		createStudyWidget = new CreateStudyWidget(createStudyWidgetCanvas, service, feedURL);
-		viewAllStudiesWidget = new ViewAllStudiesWidget(viewAllStudiesWidgetCanvas, service);
-		editStudyWidget = new EditStudyWidget(editStudyWidgetCanvas, service);
-		
-		//register this Widget as a listener to child Widgets
-		createStudyWidget.addCreateStudyWidgetListener(this);
-		viewStudyWidget.addViewStudyWidgetListener(this);
-		editStudyWidget.addEditStudyWidgetListener(this);
-		viewAllStudiesWidget.addViewAllStudiesWidgetListener(this);
+		viewAllStudiesWidget = new ViewAllStudiesWidget(viewAllStudiesWidgetCanvas, service, feedURL);
+		editStudyWidget = new EditStudyWidget(editStudyWidgetCanvas, service, feedURL);
 		
 		//initialise view
 		initMenu();
@@ -143,38 +126,13 @@ public class StudyManagementWidgetDefaultRenderer implements StudyManagementWidg
 			displayCanvas.add(viewStudyWidgetCanvas);
 		} else if (after == StudyManagementWidgetModel.DISPLAYING_VIEW_ALL_STUDIES) {
 			displayCanvas.clear();
-			viewAllStudiesWidget.loadStudiesByFeedURL(feedURL);
+			viewAllStudiesWidget.loadStudies();
 			displayCanvas.add(viewAllStudiesWidgetCanvas);
 		} else if (after == StudyManagementWidgetModel.DISPLAYING_EDIT_STUDY) {
 			displayCanvas.clear();
 			displayCanvas.add(editStudyWidgetCanvas);
 		}
 		
-	}
-
-	// TODO move this coordination logic to widget class
-	public void onNewStudyCreated(StudyEntry newStudyEntry) {
-		viewStudyWidget.loadStudyEntry(newStudyEntry);
-		controller.displayViewStudyWidget();
-	}
-
-	// TODO move this coordination logic to widget class
-	public void onStudyUpdateSuccess(StudyEntry updatedStudyEntry) {
-		viewStudyWidget.loadStudyEntry(updatedStudyEntry);
-		controller.displayViewStudyWidget();
-	}
-
-	// TODO move this coordination logic to widget class
-	public void onEditStudyUIClicked(StudyEntry studyEntryToEdit) {
-		editStudyWidget.editStudyEntry(studyEntryToEdit);
-		controller.displayEditStudyWidget();
-	}
-
-	// TODO move this coordination logic to widget class
-	public void viewStudyUIClicked(StudyEntry studyEntry) {
-		viewStudyWidget.loadStudyEntry(studyEntry);
-		controller.displayViewStudyWidget();
-	}
-	
+	}	
 
 }

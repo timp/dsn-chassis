@@ -9,6 +9,10 @@ import java.util.Set;
 
 import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
+import org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyController;
+import org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerCreateAPI;
+import org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerPubSubCreateAPI;
+import org.cggh.chassis.generic.client.gwt.widget.study.model.client.StudyModel;
 
 import com.google.gwt.user.client.ui.Panel;
 
@@ -16,31 +20,31 @@ import com.google.gwt.user.client.ui.Panel;
  * @author raok
  *
  */
-public class CreateStudyWidget implements CreateStudyWidgetAPI {
+public class CreateStudyWidget implements CreateStudyWidgetAPI, StudyControllerPubSubCreateAPI {
 
-	final private CreateStudyWidgetModel model;
-	final private CreateStudyWidgetController controller;
+	final private StudyModel model;
+	final private StudyControllerCreateAPI controller;
 	final private CreateStudyWidgetDefaultRenderer renderer;
 	private Set<CreateStudyWidgetPubSubAPI> listeners = new HashSet<CreateStudyWidgetPubSubAPI>();
 	
 	public CreateStudyWidget(Panel canvas, AtomService service, String feedURL) {
 		
-		model = new CreateStudyWidgetModel();
+		model = new StudyModel();
 		
-		controller = new CreateStudyWidgetController(model, service, feedURL, this);
-		
-		renderer = new CreateStudyWidgetDefaultRenderer(canvas, controller);
+		controller = new StudyController(model, service, this);
+				
+		renderer = new CreateStudyWidgetDefaultRenderer(canvas, controller, feedURL);
 		
 		// register renderer as listener to model
 		model.addListener(renderer);
 		
 	}
 	
-	public CreateStudyWidget(AtomService service, String feedURL, CreateStudyWidgetDefaultRenderer customRenderer) {
+	public CreateStudyWidget(AtomService service, CreateStudyWidgetDefaultRenderer customRenderer) {
 		
-		model = new CreateStudyWidgetModel();
+		model = new StudyModel();
 		
-		controller = new CreateStudyWidgetController(model, service, feedURL, this);
+		controller = new StudyController(model, service, this);
 		
 		renderer = customRenderer;
 		
@@ -52,23 +56,26 @@ public class CreateStudyWidget implements CreateStudyWidgetAPI {
 	}
 	
 	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.client.gwt.widget.study.create.client.CreateStudyWidgetAPI#setUpNewStudy()
-	 */
-	public void setUpNewStudy() {
-		controller.setUpNewStudy();
-	}
-	
-	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.client.gwt.widget.study.create.client.CreateStudyWidgetAPI#addCreateStudyWidgetListener(org.cggh.chassis.generic.client.gwt.widget.study.create.client.CreateStudyWidgetPubSubAPI)
 	 */
 	public void addCreateStudyWidgetListener(CreateStudyWidgetPubSubAPI listener) {
 		listeners.add(listener);
 	}
 
-	void newStudyCreated(StudyEntry studyEntry) {
+	public void onNewStudySaved(StudyEntry studyEntry) {
 		for (CreateStudyWidgetPubSubAPI listener : listeners) {
 			listener.onNewStudyCreated(studyEntry);
 		}
+	}
+
+	public void onUserActionCreateStudyEntryCancelled() {
+		for (CreateStudyWidgetPubSubAPI listener : listeners) {
+			listener.onUserActionCreateStudyCancelled();
+		}
+	}
+
+	public void setUpNewStudy() {
+		controller.setUpNewStudy();
 	}
 	
 }

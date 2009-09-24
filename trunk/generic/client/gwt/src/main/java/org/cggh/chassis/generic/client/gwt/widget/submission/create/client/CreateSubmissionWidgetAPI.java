@@ -13,5 +13,4 @@ public interface CreateSubmissionWidgetAPI {
 	
 	public void addCreateSubmissionWidgetListener(CreateSubmissionWidgetPubSubAPI listener);
 	
-	//TODO public void setUpNewSubmission(String feedURL, String studyEntryURL);
 }

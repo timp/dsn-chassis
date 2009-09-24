@@ -132,7 +132,9 @@ public class TestStudyModel {
 		
 		//set up expectations
 		listener.onTitleChanged(null, invalid, false);
+		listener.onStudyEntryChanged(isA(Boolean.class));
 		listener.onTitleChanged(invalid, valid, true);	
+		listener.onStudyEntryChanged(isA(Boolean.class));
 		replay(listener);
 		
 		// register with model
@@ -161,7 +163,9 @@ public class TestStudyModel {
 		
 		//set up expectations
 		listener.onSummaryChanged(null, invalid, false);
+		listener.onStudyEntryChanged(isA(Boolean.class));
 		listener.onSummaryChanged(invalid, valid, true);
+		listener.onStudyEntryChanged(isA(Boolean.class));
 		replay(listener);
 		
 		// register with model
@@ -185,9 +189,10 @@ public class TestStudyModel {
 		StudyModelListener listener = createMock(StudyModelListener.class);
 		
 		//set up expectations
-		//TODO do study validation check. I.E. check if linked studies accept data to modules ticked. Assume true for now
 		listener.onAcceptClinicalDataChanged(Boolean.FALSE, Boolean.TRUE, true);
+		listener.onStudyEntryChanged(isA(Boolean.class));
 		listener.onAcceptClinicalDataChanged(Boolean.TRUE, Boolean.FALSE, true);
+		listener.onStudyEntryChanged(isA(Boolean.class));
 		replay(listener);
 		
 		// register with model
@@ -210,9 +215,10 @@ public class TestStudyModel {
 		StudyModelListener listener = createMock(StudyModelListener.class);
 		
 		//set up expectations
-		//TODO do study validation check. I.E. check if linked studies accept data to modules ticked. Assume true for now
 		listener.onAcceptMolecularDataChanged(Boolean.FALSE, Boolean.TRUE, true);
+		listener.onStudyEntryChanged(isA(Boolean.class));
 		listener.onAcceptMolecularDataChanged(Boolean.TRUE, Boolean.FALSE, true);
+		listener.onStudyEntryChanged(isA(Boolean.class));
 		replay(listener);
 		
 		// register with model
@@ -235,9 +241,10 @@ public class TestStudyModel {
 		StudyModelListener listener = createMock(StudyModelListener.class);
 		
 		//set up expectations
-		//TODO do study validation check. I.E. check if linked studies accept data to modules ticked. Assume true for now
 		listener.onAcceptInVitroDataChanged(Boolean.FALSE, Boolean.TRUE, true);
+		listener.onStudyEntryChanged(isA(Boolean.class));
 		listener.onAcceptInVitroDataChanged(Boolean.TRUE, Boolean.FALSE, true);
+		listener.onStudyEntryChanged(isA(Boolean.class));
 		replay(listener);
 		
 		// register with model
@@ -260,9 +267,10 @@ public class TestStudyModel {
 		StudyModelListener listener = createMock(StudyModelListener.class);
 		
 		//set up expectations
-		//TODO do study validation check. I.E. check if linked studies accept data to modules ticked. Assume true for now
 		listener.onAcceptPharmacologyDataChanged(Boolean.FALSE, Boolean.TRUE, true);
+		listener.onStudyEntryChanged(isA(Boolean.class));
 		listener.onAcceptPharmacologyDataChanged(Boolean.TRUE, Boolean.FALSE, true);
+		listener.onStudyEntryChanged(isA(Boolean.class));
 		//allow other events, but do not check
 		listener.onTitleChanged(isA(String.class), isA(String.class), isA(Boolean.class));
 		expectLastCall().anyTimes();

@@ -28,7 +28,7 @@ public class SubmissionModel {
 	private SubmissionEntry submissionEntry;
 	private Integer status = STATUS_INITIAL;
 	
-	//TODO maybe have two groups of listeners: one for read only properties, and one for editable
+	//maybe have two groups of listeners: one for read only properties, and one for editable
 	private Set<SubmissionModelListener> listeners = new HashSet<SubmissionModelListener>();
 	
 	

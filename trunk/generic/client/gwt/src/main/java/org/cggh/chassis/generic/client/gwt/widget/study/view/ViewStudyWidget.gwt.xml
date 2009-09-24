@@ -3,6 +3,8 @@
 <module>
 	<inherits name="com.google.gwt.user.User" />
   	<inherits name="org.cggh.chassis.generic.atom.study.Study" />
+  	<inherits name="org.cggh.chassis.generic.client.gwt.widget.study.model.StudyModel" />
+  	<inherits name="org.cggh.chassis.generic.client.gwt.widget.study.controller.StudyController" />
     <inherits name="org.cggh.chassis.generic.client.gwt.configuration.Configuration" />
   	<inherits name="org.cggh.chassis.generic.client.gwt.widget.application.ApplicationConstants" />
 </module>

@@ -183,7 +183,7 @@ public class CreateSubmissionWidgetDefaultRenderer implements SubmissionModelLis
 	private class CancelCreateSubmissionUIClickHandler implements ClickHandler {
 
 		public void onClick(ClickEvent arg0) {
-			controller.cancelSaveOrUpdateSubmissionEntry();
+			controller.cancelCreateOrUpdateSubmissionEntry();
 		}
 		
 	}

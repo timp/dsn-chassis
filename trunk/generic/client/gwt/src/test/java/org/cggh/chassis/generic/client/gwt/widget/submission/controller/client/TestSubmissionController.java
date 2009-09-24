@@ -20,7 +20,6 @@ import org.cggh.chassis.generic.client.gwt.widget.submission.controller.client.S
 import org.cggh.chassis.generic.client.gwt.widget.submission.controller.client.SubmissionController.LoadSubmissionEntryErrback;
 import org.cggh.chassis.generic.client.gwt.widget.submission.controller.client.SubmissionController.SaveOrUpdateSubmissionEntryCallback;
 import org.cggh.chassis.generic.client.gwt.widget.submission.controller.client.SubmissionController.SaveOrUpdateSubmissionEntryErrback;
-import org.cggh.chassis.generic.client.gwt.widget.submission.create.client.CreateSubmissionWidget;
 import org.cggh.chassis.generic.client.gwt.widget.submission.model.client.SubmissionModel;
 import org.cggh.chassis.generic.twisted.client.Deferred;
 import org.junit.Before;
@@ -35,7 +34,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
  *
  */
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({CreateSubmissionWidget.class, Deferred.class})
+@PrepareForTest({Deferred.class})
 public class TestSubmissionController {
 
 	
@@ -284,7 +283,7 @@ public class TestSubmissionController {
 	public void testCancelCreateStudy() {
 	
 		//call method under test
-		testController.cancelSaveOrUpdateSubmissionEntry();
+		testController.cancelCreateOrUpdateSubmissionEntry();
 		
 		//test outcome
 		assertEquals(SubmissionModel.STATUS_CANCELLED, testModel.getStatus());
@@ -415,7 +414,7 @@ public class TestSubmissionController {
 						
 		//set up expectations
 		mockListener.newSubmissionSaved(testSubmissionEntry);
-		mockListener.createSubmissionEntryCancelled();
+		mockListener.cancelCreateNewSubmissionEntry();
 		replay(mockListener);
 		
 		//set up test
@@ -423,7 +422,7 @@ public class TestSubmissionController {
 				
 		//call methods under test
 		callback.apply(testSubmissionEntry);
-		testCreateController.cancelSaveOrUpdateSubmissionEntry();
+		testCreateController.cancelCreateOrUpdateSubmissionEntry();
 		
 		
 		verify(mockListener);		

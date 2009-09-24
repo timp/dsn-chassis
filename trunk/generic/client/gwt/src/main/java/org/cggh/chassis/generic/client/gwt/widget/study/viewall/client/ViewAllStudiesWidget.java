@@ -22,11 +22,11 @@ public class ViewAllStudiesWidget implements ViewAllStudiesWidgetAPI {
 	final private ViewAllStudiesWidgetDefaultRenderer renderer;
 	private Set<ViewAllStudiesWidgetPubSubAPI> listeners = new HashSet<ViewAllStudiesWidgetPubSubAPI>();
 	
-	public ViewAllStudiesWidget(Panel canvas, AtomService service) {
+	public ViewAllStudiesWidget(Panel canvas, AtomService service, String feedURL) {
 		
 		model = new ViewAllStudiesWidgetModel();
 		
-		controller = new ViewAllStudiesWidgetController(model, service, this);
+		controller = new ViewAllStudiesWidgetController(model, service, this, feedURL);
 		
 		renderer = new ViewAllStudiesWidgetDefaultRenderer(canvas, controller);
 		
@@ -38,13 +38,13 @@ public class ViewAllStudiesWidget implements ViewAllStudiesWidgetAPI {
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.client.gwt.widget.study.viewall.client.ViewAllStudiesWidgetAPI#loadStudiesByFeedURL(java.lang.String)
 	 */
-	public void loadStudiesByFeedURL(String feedURL) {
-		controller.loadStudiesByFeedURL(feedURL);
+	public void loadStudies() {
+		controller.loadStudies();
 	}
 
 	void onViewStudyUIClicked(StudyEntry studyEntry) {
 		for (ViewAllStudiesWidgetPubSubAPI listener : listeners) {
-			listener.viewStudyUIClicked(studyEntry);
+			listener.onUserActionViewStudy(studyEntry);
 		}
 	}
 	

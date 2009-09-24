@@ -13,6 +13,6 @@ public interface SubmissionControllerPubSubCreateAPI extends AbstractSubmissionC
 
 	public void newSubmissionSaved(SubmissionEntry submissionEntry);
 	
-	public void createSubmissionEntryCancelled();
+	public void cancelCreateNewSubmissionEntry();
 	
 }

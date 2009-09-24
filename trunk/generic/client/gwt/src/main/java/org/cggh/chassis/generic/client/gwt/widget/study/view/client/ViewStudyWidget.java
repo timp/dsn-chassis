@@ -8,6 +8,10 @@ import java.util.Set;
 
 import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
+import org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyController;
+import org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerPubSubViewAPI;
+import org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerViewAPI;
+import org.cggh.chassis.generic.client.gwt.widget.study.model.client.StudyModel;
 
 import com.google.gwt.user.client.ui.Panel;
 
@@ -15,18 +19,18 @@ import com.google.gwt.user.client.ui.Panel;
  * @author raok
  *
  */
-public class ViewStudyWidget implements ViewStudyWidgetAPI {
+public class ViewStudyWidget implements ViewStudyWidgetAPI, StudyControllerPubSubViewAPI {
 
-	final private ViewStudyWidgetModel model;
-	final private ViewStudyWidgetController controller;
+	final private StudyModel model;
+	final private StudyControllerViewAPI controller;
 	final private ViewStudyWidgetDefaultRenderer renderer;
 	private Set<ViewStudyWidgetPubSubAPI> listeners = new HashSet<ViewStudyWidgetPubSubAPI>();
 	
 	public ViewStudyWidget(Panel canvas, AtomService service) {
 		
-		model = new ViewStudyWidgetModel();
+		model = new StudyModel();
 		
-		controller = new ViewStudyWidgetController(model, service, this);
+		controller = new StudyController(model, service, this);
 		
 		renderer = new ViewStudyWidgetDefaultRenderer(canvas, controller);
 		
@@ -36,10 +40,10 @@ public class ViewStudyWidget implements ViewStudyWidgetAPI {
 	}
 	
 	public ViewStudyWidget(AtomService service, ViewStudyWidgetDefaultRenderer customRenderer) {
+
+		model = new StudyModel();
 		
-		model = new ViewStudyWidgetModel();
-		
-		controller = new ViewStudyWidgetController(model, service, this);
+		controller = new StudyController(model, service, this);
 		
 		renderer = customRenderer;
 		
@@ -60,13 +64,7 @@ public class ViewStudyWidget implements ViewStudyWidgetAPI {
 	 * @see org.cggh.chassis.generic.client.gwt.widget.study.view.client.ViewStudyWidgetAPI#loadStudyByEntryURL(java.lang.String)
 	 */
 	public void loadStudyByEntryURL(String entryURL) {
-		controller.loadStudyEntryByEntryURL(entryURL);
-	}
-
-	void editStudyUIClicked(StudyEntry studyEntryToEdit) {
-		for (ViewStudyWidgetPubSubAPI listener : listeners ) {
-			listener.onEditStudyUIClicked(studyEntryToEdit);
-		}
+		controller.loadStudyEntryByURL(entryURL);
 	}
 	
 	/* (non-Javadoc)
@@ -74,6 +72,12 @@ public class ViewStudyWidget implements ViewStudyWidgetAPI {
 	 */
 	public void addViewStudyWidgetListener(ViewStudyWidgetPubSubAPI listener) {
 		listeners.add(listener);
+	}
+
+	public void onUserActionEditStudy(StudyEntry studyEntryToEdit) {
+		for (ViewStudyWidgetPubSubAPI listener : listeners ) {
+			listener.onUserActionEditStudy(studyEntryToEdit);
+		}
 	}
 	
 }

@@ -20,7 +20,6 @@ import org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyC
 import org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyController.LoadStudyEntryErrback;
 import org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyController.SaveOrUpdateStudyEntryCallback;
 import org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyController.SaveOrUpdateStudyEntryErrback;
-import org.cggh.chassis.generic.client.gwt.widget.study.create.client.CreateStudyWidget;
 import org.cggh.chassis.generic.client.gwt.widget.study.model.client.StudyModel;
 import org.cggh.chassis.generic.twisted.client.Deferred;
 import org.junit.Before;
@@ -35,7 +34,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
  *
  */
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({CreateStudyWidget.class, Deferred.class})
+@PrepareForTest({Deferred.class})
 public class TestStudyController {
 
 	
@@ -87,7 +86,7 @@ public class TestStudyController {
 		replay(mockFactory);
 		
 		//call method under test
-		testController.setUpNewStudy(feedURL);
+		testController.setUpNewStudy();
 		
 		//test outcome
 		assertEquals(StudyModel.STATUS_LOADED, testModel.getStatus());
@@ -287,7 +286,7 @@ public class TestStudyController {
 		PowerMock.replay(mockDeffered);
 		
 		//call method under test
-		testController.saveNewStudyEntry();
+		testController.saveNewStudyEntry(feedURL);
 		
 		//test outcome
 		assertEquals(StudyModel.STATUS_SAVING, testModel.getStatus());
@@ -331,7 +330,8 @@ public class TestStudyController {
 		testModel.setStudyEntry(mockStudyEntry);
 		
 		//call method under test
-		testController.updateStudyEntry();
+		// note mockService uses full URL, so do not need to pass it the feedURL
+		testController.updateStudyEntry("");
 		
 		//test outcome
 		assertEquals(StudyModel.STATUS_SAVING, testModel.getStatus());
@@ -384,8 +384,8 @@ public class TestStudyController {
 		StudyControllerCreateAPI testCreateController = new StudyController(testModel, mockService, mockListener);
 						
 		//set up expectations
-		mockListener.newStudySaved(testStudyEntry);
-		mockListener.createStudyEntryCancelled();
+		mockListener.onNewStudySaved(testStudyEntry);
+		mockListener.onUserActionCreateStudyEntryCancelled();
 		replay(mockListener);
 		
 		//set up test
@@ -408,8 +408,8 @@ public class TestStudyController {
 		StudyControllerEditAPI testEditController = new StudyController(testModel, mockService, mockListener);
 						
 		//set up expectations
-		mockListener.studyUpdated(testStudyEntry);
-		mockListener.editStudyEntryCancelled();
+		mockListener.onStudyUpdated(testStudyEntry);
+		mockListener.onUserActionEditStudyEntryCancelled();
 		replay(mockListener);
 		
 		//set up test
@@ -432,14 +432,13 @@ public class TestStudyController {
 		StudyControllerViewAPI testViewController = new StudyController(testModel, mockService, mockListener);
 						
 		//set up expectations
-		mockListener.onEditStudyUIClicked(testStudyEntry);
+		mockListener.onUserActionEditStudy(testStudyEntry);
 		replay(mockListener);
 		
 		//set up test
-		LoadStudyEntryCallback callback = ((StudyController)testViewController).new LoadStudyEntryCallback();
-				
-		//call methods under test
-		callback.apply(testStudyEntry);		
+		testModel.setStudyEntry(testStudyEntry);
+		
+		testViewController.onUserActionEditThisStudy();
 		
 		verify(mockListener);		
 		

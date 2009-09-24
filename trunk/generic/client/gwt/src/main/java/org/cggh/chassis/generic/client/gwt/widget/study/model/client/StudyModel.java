@@ -27,7 +27,7 @@ public class StudyModel {
 	private StudyEntry submissionEntry;
 	private Integer status = STATUS_INITIAL;
 	
-	//TODO maybe have two groups of listeners: one for read only properties, and one for editable
+	//maybe have two groups of listeners: one for read only properties, and one for editable
 	private Set<StudyModelListener> listeners = new HashSet<StudyModelListener>();
 	
 	
@@ -60,12 +60,15 @@ public class StudyModel {
 
 	private Boolean isStudyEntryValid() {
 		
+		//require at least one module selected
+		Boolean isModuleSelected =  acceptClinicalData()
+									|| acceptMolecularData()
+									|| acceptInVitroData()
+									|| acceptPharmacologyData();
+		
 		Boolean isStudyEntryValid = isTitleValid()
-										 && isSummaryValid()
-										 && isAcceptClinicalDataValid()
-										 && isAcceptInVitroDataValid()
-										 && isAcceptMolecularDataValid()
-										 && isAcceptPharmacologyDataValid();
+									&& isSummaryValid()
+									&& isModuleSelected;
 		
 		return isStudyEntryValid;
 	}
@@ -91,6 +94,7 @@ public class StudyModel {
 		submissionEntry.setTitle(title);
 		
 		fireOnTitleChanged(before);
+		fireOnStudyEntryModelChanged();
 	}
 
 
@@ -116,6 +120,7 @@ public class StudyModel {
 		
 		submissionEntry.setSummary(summary);
 		fireOnSummaryChanged(before);
+		fireOnStudyEntryModelChanged();
 	}
 
 
@@ -146,6 +151,7 @@ public class StudyModel {
 		}
 		
 		fireOnAcceptClinicalDataChanged(before);
+		fireOnStudyEntryModelChanged();
 	}
 
 
@@ -153,17 +159,9 @@ public class StudyModel {
 	private void fireOnAcceptClinicalDataChanged(Boolean before) {
 				
 		for (StudyModelListener listener : listeners) {
-			listener.onAcceptClinicalDataChanged(before, acceptClinicalData(), isAcceptClinicalDataValid());
+			listener.onAcceptClinicalDataChanged(before, acceptClinicalData(), true);
 		}
 	}
-
-
-
-	private Boolean isAcceptClinicalDataValid() {
-		//TODO do study validation check. I.E. check if linked studies accept data to modules ticked. Assume true for now
-		return true;
-	}
-
 
 
 	public void setAcceptMolecularData(Boolean acceptMolecularData) {
@@ -177,6 +175,7 @@ public class StudyModel {
 		}
 		
 		fireOnAcceptMolecularDataChanged(before);
+		fireOnStudyEntryModelChanged();
 	}
 
 
@@ -184,17 +183,9 @@ public class StudyModel {
 	private void fireOnAcceptMolecularDataChanged(Boolean before) {
 				
 		for (StudyModelListener listener : listeners) {
-			listener.onAcceptMolecularDataChanged(before, acceptMolecularData(), isAcceptMolecularDataValid());
+			listener.onAcceptMolecularDataChanged(before, acceptMolecularData(), true);
 		}
 	}
-
-
-
-	private Boolean isAcceptMolecularDataValid() {
-		//TODO do study validation check. I.E. check if linked studies accept data to modules ticked. Assume true for now
-		return true;
-	}
-
 
 
 	public void setAcceptInVitroData(Boolean acceptInVitroData) {
@@ -208,6 +199,7 @@ public class StudyModel {
 		}
 		
 		fireOnAcceptInVitroDataChanged(before);		
+		fireOnStudyEntryModelChanged();
 	}
 
 
@@ -215,17 +207,9 @@ public class StudyModel {
 	private void fireOnAcceptInVitroDataChanged(Boolean before) {
 				
 		for (StudyModelListener listener : listeners) {
-			listener.onAcceptInVitroDataChanged(before, acceptInVitroData(), isAcceptInVitroDataValid());
+			listener.onAcceptInVitroDataChanged(before, acceptInVitroData(), true);
 		}
 	}
-
-
-
-	private Boolean isAcceptInVitroDataValid() {
-		//TODO do study validation check. I.E. check if linked studies accept data to modules ticked. Assume true for now
-		return true;
-	}
-
 
 
 	public void setAcceptPharmacologyData(Boolean acceptPharmacologyData) {
@@ -239,6 +223,7 @@ public class StudyModel {
 		}
 		
 		fireOnAcceptPharmacologyData(before);
+		fireOnStudyEntryModelChanged();
 	}
 
 
@@ -246,15 +231,8 @@ public class StudyModel {
 	private void fireOnAcceptPharmacologyData(Boolean before) {
 		
 		for (StudyModelListener listener : listeners) {
-			listener.onAcceptPharmacologyDataChanged(before, acceptPharmacologyData(), isAcceptPharmacologyDataValid());
+			listener.onAcceptPharmacologyDataChanged(before, acceptPharmacologyData(), true);
 		}
-	}
-
-
-
-	private Boolean isAcceptPharmacologyDataValid() {
-		//TODO do study validation check. I.E. check if linked studies accept data to modules ticked. Assume true for now
-		return true;
 	}
 
 

@@ -4,10 +4,8 @@
 package org.cggh.chassis.generic.client.gwt.widget.study.view.client;
 
 import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
-import org.cggh.chassis.generic.atom.study.client.format.StudyFactory;
-import org.cggh.chassis.generic.atom.study.client.mockimpl.MockStudyFactory;
-import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
-import org.cggh.chassis.generic.client.gwt.widget.application.client.ApplicationConstants;
+import org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerViewAPI;
+import org.cggh.chassis.generic.client.gwt.widget.study.model.client.StudyModel;
 
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.event.dom.client.DomEvent;
@@ -21,9 +19,8 @@ import com.google.gwt.user.client.ui.SimplePanel;
  */
 public class GWTTestViewStudyWidgetDefaultRenderer extends GWTTestCase {
 
-	private ViewStudyWidgetModel testModel;
 	private ViewStudyWidgetDefaultRenderer testRenderer;
-	private MockViewStudyWidgetController mockController;
+	private MockStudyController mockController;
 	
 	/* (non-Javadoc)
 	 * @see com.google.gwt.junit.client.GWTTestCase#getModuleName()
@@ -36,18 +33,12 @@ public class GWTTestViewStudyWidgetDefaultRenderer extends GWTTestCase {
 	@Override
 	protected void gwtSetUp() {
 		
-		//Create testController, inject testModel and a mock Service
-		testModel = new ViewStudyWidgetModel();
-		
-		//Create mockController to test with
-		mockController = new MockViewStudyWidgetController(testModel, null);
-		
-		// instantiate a renderer
+
+		//create mockController and inject into testRenderer
+		mockController = new MockStudyController();
+				
 		testRenderer = new ViewStudyWidgetDefaultRenderer(new SimplePanel(), mockController);
-		
-		//register as listener
-		testModel.addListener(testRenderer);
-		
+				
 	}
 	
 	public void testInitialState() {
@@ -76,38 +67,95 @@ public class GWTTestViewStudyWidgetDefaultRenderer extends GWTTestCase {
 			        || !(testRenderer.studyDetailsPanel.isVisible()) );
 		
 	}
-		
-	public void testOnStudyEntryChanged() {
+	
+	public void testOnTitleChanged() {
 		
 		//test data
 		String title = "title foo";
-		String summary = "summary bar";
 		
-		//create test Study Entry to view
-		StudyFactory mockFactory = new MockStudyFactory();
-		StudyEntry testStudy = mockFactory.createStudyEntry();
-		testStudy.setTitle(title);
-		testStudy.setSummary(summary);
-		testStudy.addModule(ApplicationConstants.MODULE_CLINICAL);
-		testStudy.addModule(ApplicationConstants.MODULE_IN_VITRO);
+		// call method under test
+		testRenderer.onTitleChanged(null, title, true);		
 		
-		//call method under test
-		testRenderer.onStudyEntryChanged(null, testStudy);
 		
 		//test outcome
 		assertEquals(title, testRenderer.titleLabel.getText());
-		assertEquals(summary, testRenderer.summaryLabel.getText());
-		assertTrue(testRenderer.acceptsClinicalDataIndicator.isVisible());
-		assertTrue(testRenderer.acceptsInVitroDataIndicator.isVisible());
-		assertFalse(testRenderer.acceptsMolecularDataIndicator.isVisible());
-		assertFalse(testRenderer.acceptsPharmacologyDataIndicator.isVisible());
 		
+	}
+	
+	public void testOnSummaryChanged() {
+		
+		//test data
+		String summary = "summary foo";
+		
+		// call method under test
+		testRenderer.onSummaryChanged(null, summary, true);		
+		
+		
+		//test outcome
+		assertEquals(summary, testRenderer.summaryLabel.getText());
+		
+	}
+	
+	public void testOnAcceptClinicalDataChanged() {
+		
+		//test data
+		Boolean acceptClinicalData = true;
+		
+		// call method under test
+		testRenderer.onAcceptClinicalDataChanged(null, acceptClinicalData, false);		
+		
+		
+		//test outcome
+		assertTrue( (testRenderer.acceptsClinicalDataIndicator.getParent() != null)
+					 && (testRenderer.acceptsClinicalDataIndicator.isVisible()) );
+	}
+	
+	public void testOnAcceptMolecularDataChanged() {
+		
+		//test data
+		Boolean acceptMolecularData = true;
+		
+		// call method under test
+		testRenderer.onAcceptMolecularDataChanged(null, acceptMolecularData, false);		
+		
+		
+		//test outcome
+		assertTrue( (testRenderer.acceptsMolecularDataIndicator.getParent() != null)
+				 && (testRenderer.acceptsMolecularDataIndicator.isVisible()) );
+	}
+	
+	public void testOnAcceptPharmacologyDataChanged() {
+		
+		//test data
+		Boolean acceptPharmacologyData = true;
+		
+		// call method under test
+		testRenderer.onAcceptPharmacologyDataChanged(null, acceptPharmacologyData, false);		
+		
+		
+		//test outcome
+		assertTrue( (testRenderer.acceptsPharmacologyDataIndicator.getParent()  != null)
+				 && (testRenderer.acceptsPharmacologyDataIndicator.isVisible()) );
+	}
+	
+	public void testOnAcceptInVitroDataChanged() {
+		
+		//test data
+		Boolean acceptInVitroData = true;
+		
+		// call method under test
+		testRenderer.onAcceptInVitroDataChanged(null, acceptInVitroData, false);		
+		
+		
+		//test outcome
+		assertTrue( (testRenderer.acceptsInVitroDataIndicator.getParent() != null)
+				 && (testRenderer.acceptsInVitroDataIndicator.isVisible()) );
 	}
 	
 	public void testOnStatusChanged() {
 				
 		//mock loading state
-		testRenderer.onStatusChanged(ViewStudyWidgetModel.STATUS_INITIAL, ViewStudyWidgetModel.STATUS_LOADING);
+		testRenderer.onStatusChanged(StudyModel.STATUS_INITIAL, StudyModel.STATUS_LOADING);
 		
 		//check loading state
 		assertTrue( (testRenderer.loadingPanel.getParent() != null)
@@ -116,7 +164,7 @@ public class GWTTestViewStudyWidgetDefaultRenderer extends GWTTestCase {
 		            || !(testRenderer.studyDetailsPanel.isVisible()) );
 		
 		//mock loaded state
-		testRenderer.onStatusChanged(ViewStudyWidgetModel.STATUS_LOADING, ViewStudyWidgetModel.STATUS_LOADED);
+		testRenderer.onStatusChanged(StudyModel.STATUS_LOADING, StudyModel.STATUS_LOADED);
 		
 		//check loaded state
 		assertTrue( (testRenderer.studyDetailsPanel.getParent() != null)
@@ -128,42 +176,32 @@ public class GWTTestViewStudyWidgetDefaultRenderer extends GWTTestCase {
 	}
 	
 	public void testOnEditStudyClicked() {
-		
 				
-		//simulate loaded state
-		//create test Study Entry to view
-		StudyFactory mockFactory = new MockStudyFactory();
-		StudyEntry testStudy = mockFactory.createStudyEntry();
-		testStudy.setTitle("foo");
-		testStudy.setSummary("bar");
-		testStudy.addModule(ApplicationConstants.MODULE_CLINICAL);
-		testStudy.addModule(ApplicationConstants.MODULE_IN_VITRO);
-		testModel.setStudyEntry(testStudy);
-		
 		//simulate click event
 		DomEvent.fireNativeEvent(Document.get().createClickEvent(0, 0, 0, 0, 0, false, false, false, false),
 								 (HasHandlers)testRenderer.editThisStudyUI);
 		
 		
-		assertTrue(mockController.editThisStudyFired);
+		assertTrue(mockController.studyEntryToEditFired);
 		
 		
 	}
 
-	//mock MockViewStudyWidget
-	private class MockViewStudyWidgetController extends ViewStudyWidgetController {
-	
-		public MockViewStudyWidgetController(ViewStudyWidgetModel model,
-				AtomService service) {
-			super(model, service, null);
+	//mock MockStudyController
+	private class MockStudyController implements StudyControllerViewAPI {
+		
+		private boolean studyEntryToEditFired = false;
+
+		public void onUserActionEditThisStudy() {
+			this.studyEntryToEditFired  = true;
 		}
-		
-		//check to see if onEditStudyUIClicked called
-		public boolean editThisStudyFired = false;
-		
-		@Override
-		public void onEditStudyUIClicked() {
-			editThisStudyFired = true;
+
+		public void loadStudyEntry(StudyEntry submissionEntryToLoad) {
+			// not tested here
+		}
+
+		public void loadStudyEntryByURL(String studyEntryURL) {
+			// not tested here
 		}
 		
 	}

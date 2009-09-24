@@ -157,13 +157,13 @@ public class SubmissionController implements SubmissionControllerEditAPI, Submis
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.client.gwt.widget.submission.controller.client.SubmissionControllerCreateAPI#cancelCreateStudy()
 	 */
-	public void cancelSaveOrUpdateSubmissionEntry() {
+	public void cancelCreateOrUpdateSubmissionEntry() {
 		
 		model.setStatus(SubmissionModel.STATUS_CANCELLED);
 		
 		//alert owner
 		if (owner instanceof SubmissionControllerPubSubCreateAPI) {
-			((SubmissionControllerPubSubCreateAPI)owner).createSubmissionEntryCancelled();
+			((SubmissionControllerPubSubCreateAPI)owner).cancelCreateNewSubmissionEntry();
 		} 
 	}
 

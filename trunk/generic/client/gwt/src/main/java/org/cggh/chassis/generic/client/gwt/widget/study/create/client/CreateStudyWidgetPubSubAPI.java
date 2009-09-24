@@ -11,6 +11,8 @@ import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
  */
 public interface CreateStudyWidgetPubSubAPI {
 
-	void onNewStudyCreated(StudyEntry studyEntry);
+	public void onNewStudyCreated(StudyEntry studyEntry);
+
+	public void onUserActionCreateStudyCancelled();
 
 }

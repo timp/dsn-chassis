@@ -8,13 +8,5 @@
   	<inherits name="org.cggh.chassis.generic.client.gwt.widget.study.view.ViewStudyWidget"/>
   	<inherits name="org.cggh.chassis.generic.client.gwt.widget.study.viewall.ViewAllStudiesWidget"/>
   	<inherits name="org.cggh.chassis.generic.client.gwt.widget.study.edit.EditStudyWidget"/>
-  	
-    <!-- Al comment: I don't think styling/themes should go here -->
-    
-	<!-- Inherit the default GWT style sheet.  You can change       -->
-    <!-- the theme of your GWT application by uncommenting          -->
-    <!-- any one of the following lines.                            -->
-    <inherits name='com.google.gwt.user.theme.standard.Standard'/>
-    <!-- Specify the application specific style sheet.              -->
     
 </module>

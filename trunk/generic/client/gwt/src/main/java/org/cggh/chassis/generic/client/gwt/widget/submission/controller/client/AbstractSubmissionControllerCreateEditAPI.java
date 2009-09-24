@@ -18,6 +18,6 @@ public abstract interface AbstractSubmissionControllerCreateEditAPI {
 
 	public void removeStudyLink(String studyEntryURL);
 
-	public void cancelSaveOrUpdateSubmissionEntry();
+	public void cancelCreateOrUpdateSubmissionEntry();
 
 }

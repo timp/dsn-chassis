@@ -9,7 +9,7 @@ public class AllStudyGWTTests extends GWTTestSuite {
 
 	public static Test suite() {
 		GWTTestSuite suite = new GWTTestSuite(
-				"All GWTTests for org.cggh.chassis.generic.client.gwt.widget.study.create.client");
+				"All GWTTests for org.cggh.chassis.generic.client.gwt.widget.study.*");
 		//$JUnit-BEGIN$
 		suite.addTest(org.cggh.chassis.generic.client.gwt.widget.study.create.client.AllGWTTests.suite());
 		suite.addTest(org.cggh.chassis.generic.client.gwt.widget.study.view.client.AllGWTTests.suite());

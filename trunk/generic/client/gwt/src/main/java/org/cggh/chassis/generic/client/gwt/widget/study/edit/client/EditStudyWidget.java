@@ -8,6 +8,10 @@ import java.util.Set;
 
 import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
+import org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyController;
+import org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerEditAPI;
+import org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerPubSubEditAPI;
+import org.cggh.chassis.generic.client.gwt.widget.study.model.client.StudyModel;
 
 import com.google.gwt.user.client.ui.Panel;
 
@@ -15,21 +19,21 @@ import com.google.gwt.user.client.ui.Panel;
  * @author raok
  *
  */
-public class EditStudyWidget implements EditStudyWidgetAPI {
+public class EditStudyWidget implements EditStudyWidgetAPI, StudyControllerPubSubEditAPI {
 
-	private EditStudyWidgetModel model;
-	private EditStudyWidgetController controller;
+	private StudyModel model;
+	private StudyControllerEditAPI controller;
 	private EditStudyWidgetDefaultRenderer renderer;
 	
 	private Set<EditStudyWidgetPubSubAPI> listeners = new HashSet<EditStudyWidgetPubSubAPI>();
 
-	public EditStudyWidget(Panel canvas, AtomService service) {
+	public EditStudyWidget(Panel canvas, AtomService service, String feedURL) {
 		
-		model = new EditStudyWidgetModel();
+		model = new StudyModel();
 		
-		controller = new EditStudyWidgetController(model, service, this);
+		controller = new StudyController(model, service, this);
 		
-		renderer = new EditStudyWidgetDefaultRenderer(canvas, controller);
+		renderer = new EditStudyWidgetDefaultRenderer(canvas, controller, feedURL);
 		
 		// register renderer as listener to model
 		model.addListener(renderer);			
@@ -37,9 +41,9 @@ public class EditStudyWidget implements EditStudyWidgetAPI {
 	
 	public EditStudyWidget(AtomService service, EditStudyWidgetDefaultRenderer customRenderer) {
 		
-		model = new EditStudyWidgetModel();
+		model = new StudyModel();
 		
-		controller = new EditStudyWidgetController(model, service, this);
+		controller = new StudyController(model, service, this);
 		
 		renderer = customRenderer;
 		
@@ -49,12 +53,6 @@ public class EditStudyWidget implements EditStudyWidgetAPI {
 		// register renderer as listener to model
 		model.addListener(renderer);
 		
-	}
-
-	void studyUpdateSuccess(StudyEntry updatedStudyEntry) {
-		for (EditStudyWidgetPubSubAPI listener : listeners) {
-			listener.onStudyUpdateSuccess(updatedStudyEntry);
-		}
 	}
 
 	/* (non-Javadoc)
@@ -69,6 +67,18 @@ public class EditStudyWidget implements EditStudyWidgetAPI {
 	 */
 	public void editStudyEntry(StudyEntry studyEntryToEdit) {
 		controller.loadStudyEntry(studyEntryToEdit);
+	}
+
+	public void onStudyUpdated(StudyEntry studyEntry) {
+		for (EditStudyWidgetPubSubAPI listener : listeners) {
+			listener.onStudyUpdateSuccess(studyEntry);
+		}
+	}
+
+	public void onUserActionEditStudyEntryCancelled() {
+		for (EditStudyWidgetPubSubAPI listener : listeners) {
+			listener.onUserActionCreateStudyCancelled();
+		}
 	}
 	
 }
