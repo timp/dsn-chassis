@@ -34,5 +34,6 @@ public class Atom {
 	public static final String ELEMENT_PUBLISHED = "published";
 	public static final String ELEMENT_UPDATED = "updated";
 	public static final String ELEMENT_FEED = "feed";
+	public static final String PREFIX = "atom";
 
 }

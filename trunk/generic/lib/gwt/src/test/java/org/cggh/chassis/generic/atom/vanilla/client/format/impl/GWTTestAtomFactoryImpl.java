@@ -13,6 +13,7 @@ import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFormatException;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomLink;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
+import org.cggh.chassis.generic.xml.client.XMLNS;
 import org.cggh.chassis.generic.xml.client.XML;
 
 import com.google.gwt.junit.client.GWTTestCase;
@@ -89,7 +90,7 @@ public class GWTTestAtomFactoryImpl extends GWTTestCase {
 	
 		Element element = link.getElement();
 		
-		assertEquals(Atom.ELEMENT_LINK, element.getTagName());
+		assertEquals(Atom.ELEMENT_LINK, XML.getLocalName(element));
 		assertEquals(Atom.NSURI, element.getNamespaceURI());
 		assertEquals(href, element.getAttribute(Atom.ATTR_HREF));
 		assertEquals(hreflang, element.getAttribute(Atom.ATTR_HREFLANG));
@@ -197,11 +198,11 @@ public class GWTTestAtomFactoryImpl extends GWTTestCase {
 		
 		Element element = author.getElement();
 		
-		assertEquals(Atom.ELEMENT_AUTHOR, element.getTagName());
+		assertEquals(Atom.ELEMENT_AUTHOR, XML.getLocalName(element));
 		assertEquals(Atom.NSURI, element.getNamespaceURI());
-		assertEquals(name, XML.getElementSimpleContentByTagName(element, Atom.ELEMENT_NAME));
-		assertEquals(email, XML.getElementSimpleContentByTagName(element, Atom.ELEMENT_EMAIL));
-		assertEquals(uri, XML.getElementSimpleContentByTagName(element, Atom.ELEMENT_URI));
+		assertEquals(name, XMLNS.getFirstElementSimpleContentByTagNameNS(element, Atom.ELEMENT_NAME, Atom.NSURI));
+		assertEquals(email, XMLNS.getFirstElementSimpleContentByTagNameNS(element, Atom.ELEMENT_EMAIL, Atom.NSURI));
+		assertEquals(uri, XMLNS.getFirstElementSimpleContentByTagNameNS(element, Atom.ELEMENT_URI, Atom.NSURI));
 		assertEquals(3, XML.elements(element.getChildNodes()).size());
 		
 	}
@@ -295,7 +296,7 @@ public class GWTTestAtomFactoryImpl extends GWTTestCase {
 		
 		Element element = category.getElement();
 		
-		assertEquals(Atom.ELEMENT_CATEGORY, element.getTagName());
+		assertEquals(Atom.ELEMENT_CATEGORY, XML.getLocalName(element));
 		assertEquals(Atom.NSURI, element.getNamespaceURI());
 		assertEquals(label, element.getAttribute(Atom.ATTR_LABEL));
 		assertEquals(term, element.getAttribute(Atom.ATTR_TERM));
@@ -393,13 +394,13 @@ public class GWTTestAtomFactoryImpl extends GWTTestCase {
 		
 		Element element = entry.getElement();
 		
-		assertEquals(Atom.ELEMENT_ENTRY, element.getTagName());
+		assertEquals(Atom.ELEMENT_ENTRY, XML.getLocalName(element));
 		assertEquals(Atom.NSURI, element.getNamespaceURI());
-		assertEquals(title, XML.getElementSimpleContentByTagName(element, Atom.ELEMENT_TITLE));
-		assertEquals(summary, XML.getElementSimpleContentByTagName(element, Atom.ELEMENT_SUMMARY));
-		assertNull(XML.getElementSimpleContentByTagName(element, Atom.ELEMENT_ID));
-		assertNull(XML.getElementSimpleContentByTagName(element, Atom.ELEMENT_PUBLISHED));
-		assertNull(XML.getElementSimpleContentByTagName(element, Atom.ELEMENT_UPDATED));
+		assertEquals(title, XMLNS.getFirstElementSimpleContentByTagNameNS(element, Atom.ELEMENT_TITLE, Atom.NSURI));
+		assertEquals(summary, XMLNS.getFirstElementSimpleContentByTagNameNS(element, Atom.ELEMENT_SUMMARY, Atom.NSURI));
+		assertNull(XMLNS.getFirstElementSimpleContentByTagNameNS(element, Atom.ELEMENT_ID, Atom.NSURI));
+		assertNull(XMLNS.getFirstElementSimpleContentByTagNameNS(element, Atom.ELEMENT_PUBLISHED, Atom.NSURI));
+		assertNull(XMLNS.getFirstElementSimpleContentByTagNameNS(element, Atom.ELEMENT_UPDATED, Atom.NSURI));
 		assertEquals(2, XML.elements(element.getChildNodes()).size());
 		
 	}
@@ -617,7 +618,7 @@ public class GWTTestAtomFactoryImpl extends GWTTestCase {
 	
 
 	
-	public void testCreateFeed_String_qNames() {
+	public void testCreateFeed_String_qNames_1() {
 		log.enter("testCreateFeed_String_qNames");
 		
 		// this example came from exist
@@ -659,6 +660,7 @@ public class GWTTestAtomFactoryImpl extends GWTTestCase {
 			
 			// check entries
 			assertEquals(1, feed.getEntries().size());
+			assertEquals("urn:uuid:c5e4f0f0-8b0c-4162-8123-a74a3c729b3b", feed.getEntries().get(0).getId());
 			assertEquals("a vanilla atom entry", feed.getEntries().get(0).getTitle());
 			assertEquals("bob@example.com", feed.getEntries().get(0).getAuthors().get(0).getEmail());
 			
@@ -673,7 +675,61 @@ public class GWTTestAtomFactoryImpl extends GWTTestCase {
 	
 
 	
-
+	public void testCreateFeed_String_qNames_2() {
+		log.enter("testCreateFeed_String_qNames_2");
+		
+		// this example came from exist
+		
+		String feedDocument = 
+			"<atom:feed xmlns:atom=\"http://www.w3.org/2005/Atom\">" +
+				"<id xmlns=\"http://www.w3.org/2005/Atom\">urn:uuid:2343ad67-16ab-41ad-bd93-7b01db80a85c</id>" +
+				"<updated xmlns=\"http://www.w3.org/2005/Atom\">2009-09-17T15:23:10+01:00</updated>" +
+				"<title xmlns=\"http://www.w3.org/2005/Atom\">Example Collection</title>" +
+				"<link xmlns=\"http://www.w3.org/2005/Atom\" href=\"#\" rel=\"edit\" type=\"application/atom+xml\"/>" +
+				"<link xmlns=\"http://www.w3.org/2005/Atom\" href=\"#\" rel=\"self\" type=\"application/atom+xml\"/>" +
+				"<atom:entry xmlns:atom=\"http://www.w3.org/2005/Atom\">" +
+					"<id xmlns=\"http://www.w3.org/2005/Atom\">urn:uuid:c5e4f0f0-8b0c-4162-8123-a74a3c729b3b</id>" +
+					"<updated xmlns=\"http://www.w3.org/2005/Atom\">2009-09-17T15:23:10+01:00</updated>" +
+					"<published xmlns=\"http://www.w3.org/2005/Atom\">2009-09-17T15:23:10+01:00</published>" +
+					"<link xmlns=\"http://www.w3.org/2005/Atom\" href=\"?id=urn:uuid:c5e4f0f0-8b0c-4162-8123-a74a3c729b3b\" rel=\"edit\" type=\"application/atom+xml\"/>" +
+					"<atom:title xmlns:atom=\"http://www.w3.org/2005/Atom\">a vanilla atom entry</atom:title>" +
+					"<atom:summary xmlns:atom=\"http://www.w3.org/2005/Atom\">this is a vanilla atom entry, that's all</atom:summary>" +
+					"<atom:author xmlns:atom=\"http://www.w3.org/2005/Atom\"><atom:name>bob</atom:name><atom:email>bob@example.com</atom:email></atom:author>" +
+				"</atom:entry>" +
+			"</atom:feed>";
+		
+		// spike
+//		Document d = XMLParser.parse(feedDocument);
+//		String prefix = d.getDocumentElement().getPrefix();
+//		log.trace("prefix: "+prefix);
+//		log.trace("tag name: "+d.getDocumentElement().getTagName());
+//		log.trace("node name: "+d.getDocumentElement().getNodeName());	
+//		log.trace("local name: "+XML.getLocalName(d.getDocumentElement()));
+		
+		try {
+		
+			AtomFeed feed = factory.createFeed(feedDocument);
+			
+			// check feed simple properties
+			assertEquals("Example Collection", feed.getTitle());
+			assertEquals("urn:uuid:2343ad67-16ab-41ad-bd93-7b01db80a85c", feed.getId());
+			assertEquals("2009-09-17T15:23:10+01:00", feed.getUpdated());
+			
+			// check entries
+			assertEquals(1, feed.getEntries().size());
+			assertEquals("urn:uuid:c5e4f0f0-8b0c-4162-8123-a74a3c729b3b", feed.getEntries().get(0).getId());
+			assertEquals("a vanilla atom entry", feed.getEntries().get(0).getTitle());
+			assertEquals("bob@example.com", feed.getEntries().get(0).getAuthors().get(0).getEmail());
+			
+		}
+		catch (AtomFormatException e) {
+			e.printStackTrace();
+			fail(e.getLocalizedMessage());
+		}
+		
+		log.leave();
+	}
+	
 	@SuppressWarnings("unused")
 	public void testCreateFeed_String_AtomFormatExceptions() {
 		

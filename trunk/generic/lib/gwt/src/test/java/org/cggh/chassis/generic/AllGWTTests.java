@@ -13,10 +13,18 @@ import junit.framework.TestSuite;
 public class AllGWTTests {
 
 	public static Test suite() {
-		TestSuite suite = new TestSuite("All GWT Java tests for Chassis generic GWT library");
+		TestSuite suite = new TestSuite("Chassis Generic Lib GWT - All GWT Tests");
 		//$JUnit-BEGIN$
-		suite.addTestSuite(org.cggh.chassis.generic.twisted.client.GWTTestDeferred.class);
-		suite.addTestSuite(org.cggh.chassis.generic.xml.client.GWTTestXML.class);
+
+		// module org.cggh.chassis.generic.atom.vanilla.Atom
+		suite.addTest(org.cggh.chassis.generic.atom.vanilla.AllGWTTests.suite());
+
+		// module org.cggh.chassis.generic.twisted.Twisted
+		suite.addTest(org.cggh.chassis.generic.twisted.AllGWTTests.suite());
+		
+		// module org.cggh.chassis.generic.xml.XML
+		suite.addTest(org.cggh.chassis.generic.xml.AllGWTTests.suite());
+		
 		//$JUnit-END$
 		return suite;
 	}

@@ -15,7 +15,7 @@ import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFormatException;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomLink;
 import org.cggh.chassis.generic.twisted.client.Function;
 import org.cggh.chassis.generic.twisted.client.Functional;
-import org.cggh.chassis.generic.xml.client.XML;
+import org.cggh.chassis.generic.xml.client.XMLNS;
 
 import com.google.gwt.xml.client.Element;
 
@@ -71,7 +71,7 @@ public class AtomEntryImpl extends ElementWrapperImpl implements AtomEntry {
 			
 		};
 
-		Functional.map(XML.getElementsByTagName(element, Atom.ELEMENT_AUTHOR), authors, wrapper);
+		Functional.map(XMLNS.getElementsByTagNameNS(element, Atom.ELEMENT_AUTHOR, Atom.NSURI), authors, wrapper);
 		
 		return authors;
 		
@@ -92,7 +92,7 @@ public class AtomEntryImpl extends ElementWrapperImpl implements AtomEntry {
 			
 		};
 
-		Functional.map(XML.getElementsByTagName(element, Atom.ELEMENT_CATEGORY), categories, wrapper);
+		Functional.map(XMLNS.getElementsByTagNameNS(element, Atom.ELEMENT_CATEGORY, Atom.NSURI), categories, wrapper);
 		
 		return categories;
 
@@ -122,7 +122,7 @@ public class AtomEntryImpl extends ElementWrapperImpl implements AtomEntry {
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry#getId()
 	 */
 	public String getId() {
-		return XML.getElementSimpleContentByTagName(element, Atom.ELEMENT_ID);
+		return XMLNS.getFirstElementSimpleContentByTagNameNS(element, Atom.ELEMENT_ID, Atom.NSURI);
 	}
 
 	/* (non-Javadoc)
@@ -140,7 +140,7 @@ public class AtomEntryImpl extends ElementWrapperImpl implements AtomEntry {
 			
 		};
 
-		Functional.map(XML.getElementsByTagName(element, Atom.ELEMENT_LINK), links, wrapper);
+		Functional.map(XMLNS.getElementsByTagNameNS(element, Atom.ELEMENT_LINK, Atom.NSURI), links, wrapper);
 		
 		return links;
 
@@ -150,28 +150,28 @@ public class AtomEntryImpl extends ElementWrapperImpl implements AtomEntry {
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry#getPublished()
 	 */
 	public String getPublished() {
-		return XML.getElementSimpleContentByTagName(element, Atom.ELEMENT_PUBLISHED);
+		return XMLNS.getFirstElementSimpleContentByTagNameNS(element, Atom.ELEMENT_PUBLISHED, Atom.NSURI);
 	}
 
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry#getSummary()
 	 */
 	public String getSummary() {
-		return XML.getElementSimpleContentByTagName(element, Atom.ELEMENT_SUMMARY);
+		return XMLNS.getFirstElementSimpleContentByTagNameNS(element, Atom.ELEMENT_SUMMARY, Atom.NSURI);
 	}
 
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry#getTitle()
 	 */
 	public String getTitle() {
-		return XML.getElementSimpleContentByTagName(element, Atom.ELEMENT_TITLE);
+		return XMLNS.getFirstElementSimpleContentByTagNameNS(element, Atom.ELEMENT_TITLE, Atom.NSURI);
 	}
 
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry#getUpdated()
 	 */
 	public String getUpdated() {
-		return XML.getElementSimpleContentByTagName(element, Atom.ELEMENT_UPDATED);
+		return XMLNS.getFirstElementSimpleContentByTagNameNS(element, Atom.ELEMENT_UPDATED, Atom.NSURI);
 	}
 
 	/* (non-Javadoc)
@@ -199,7 +199,7 @@ public class AtomEntryImpl extends ElementWrapperImpl implements AtomEntry {
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry#setAuthors(java.util.List)
 	 */
 	public void setAuthors(List<AtomAuthor> authors) {
-		XML.removeElementsByTagName(element, Atom.ELEMENT_AUTHOR);
+		XMLNS.removeElementsByTagNameNS(element, Atom.ELEMENT_AUTHOR, Atom.NSURI);
 		for (AtomAuthor author : authors) {
 			addAuthor(author);
 		}
@@ -209,7 +209,7 @@ public class AtomEntryImpl extends ElementWrapperImpl implements AtomEntry {
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry#setCategories(java.util.List)
 	 */
 	public void setCategories(List<AtomCategory> categories) {
-		XML.removeElementsByTagName(element, Atom.ELEMENT_CATEGORY);
+		XMLNS.removeElementsByTagNameNS(element, Atom.ELEMENT_CATEGORY, Atom.NSURI);
 		for (AtomCategory category : categories) {
 			addCategory(category);
 		}
@@ -219,7 +219,7 @@ public class AtomEntryImpl extends ElementWrapperImpl implements AtomEntry {
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry#setLinks(java.util.List)
 	 */
 	public void setLinks(List<AtomLink> links) {
-		XML.removeElementsByTagName(element, Atom.ELEMENT_LINK);
+		XMLNS.removeElementsByTagNameNS(element, Atom.ELEMENT_LINK, Atom.NSURI);
 		for (AtomLink link : links) {
 			addLink(link);
 		}
@@ -229,14 +229,16 @@ public class AtomEntryImpl extends ElementWrapperImpl implements AtomEntry {
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry#setSummary(java.lang.String)
 	 */
 	public void setSummary(String summary) {
-		XML.setElementSimpleContentByTagName(element, Atom.ELEMENT_SUMMARY, summary);
+//		XML.setElementSimpleContentByLocalName(element, Atom.ELEMENT_SUMMARY, summary);
+		XMLNS.setSingleElementSimpleContentByTagNameNS(element, Atom.ELEMENT_SUMMARY, Atom.PREFIX, Atom.NSURI, summary);
 	}
 
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry#setTitle(java.lang.String)
 	 */
 	public void setTitle(String title) {
-		XML.setElementSimpleContentByTagName(element, Atom.ELEMENT_TITLE, title);
+//		XML.setElementSimpleContentByLocalName(element, Atom.ELEMENT_TITLE, title);
+		XMLNS.setSingleElementSimpleContentByTagNameNS(element, Atom.ELEMENT_TITLE, Atom.PREFIX, Atom.NSURI, title);
 	}
 	
 	@Override
