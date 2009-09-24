@@ -66,33 +66,33 @@ public class XML {
 
 	
 	
-	/**
-	 * Get elements by tag name and namespace URI.
-	 * 
-	 * @param doc
-	 * @param ns
-	 * @param name
-	 * @return
-	 */
-	public static List<Element> getElementsByTagNameNS(Document doc, String ns, String name) {
-		List<Element> elements = XML.getElementsByTagName(doc, name);
-		return XML.filterByNamespaceURI(elements, ns);
-	}
+//	/**
+//	 * Get elements by tag name and namespace URI.
+//	 * 
+//	 * @param doc
+//	 * @param ns
+//	 * @param name
+//	 * @return
+//	 */
+//	public static List<Element> getElementsByTagNameNS(Document doc, String ns, String name) {
+//		List<Element> elements = XML.getElementsByTagName(doc, name);
+//		return XML.filterByNamespaceURI(elements, ns);
+//	}
 	
 	
 	
-	/**
-	 * Get elements by tag name and namespace URI.
-	 * 
-	 * @param ancestor
-	 * @param ns
-	 * @param name
-	 * @return
-	 */
-	public static List<Element> getElementsByTagNameNS(Element ancestor, String ns, String name) {
-		List<Element> elements = XML.getElementsByTagName(ancestor, name);
-		return XML.filterByNamespaceURI(elements, ns);
-	}
+//	/**
+//	 * Get elements by tag name and namespace URI.
+//	 * 
+//	 * @param ancestor
+//	 * @param ns
+//	 * @param name
+//	 * @return
+//	 */
+//	public static List<Element> getElementsByTagNameNS(Element ancestor, String ns, String name) {
+//		List<Element> elements = XML.getElementsByTagName(ancestor, name);
+//		return XML.filterByNamespaceURI(elements, ns);
+//	}
 
 
 
@@ -124,33 +124,33 @@ public class XML {
 
 
 
-	/**
-	 * Get first element in document order by tag name and namespace URI.
-	 *
-	 * @param doc document to search within
-	 * @param ns
-	 * @param name
-	 * @return an element, or null if none found matching query
-	 */
-	public static Element getElementByTagNameNS(Document doc, String ns, String name) {
-		List<Element> elements = XML.getElementsByTagNameNS(doc, ns, name);
-		return XML.firstOrNullIfEmpty(elements);
-	}
+//	/**
+//	 * Get first element in document order by tag name and namespace URI.
+//	 *
+//	 * @param doc document to search within
+//	 * @param ns
+//	 * @param name
+//	 * @return an element, or null if none found matching query
+//	 */
+//	public static Element getElementByTagNameNS(Document doc, String ns, String name) {
+//		List<Element> elements = XML.getElementsByTagNameNS(doc, ns, name);
+//		return XML.firstOrNullIfEmpty(elements);
+//	}
 
 	
 	
-	/**
-	 * Get first element in document order by tag name and namespace URI.
-	 * 
-	 * @param ancestor element to search within
-	 * @param ns
-	 * @param name
-	 * @return an element, or null if none found matching query
-	 */
-	public static Element getElementByTagNameNS(Element ancestor, String ns, String name) {
-		List<Element> elements = XML.getElementsByTagNameNS(ancestor, ns, name);
-		return XML.firstOrNullIfEmpty(elements);
-	}
+//	/**
+//	 * Get first element in document order by tag name and namespace URI.
+//	 * 
+//	 * @param ancestor element to search within
+//	 * @param ns
+//	 * @param name
+//	 * @return an element, or null if none found matching query
+//	 */
+//	public static Element getElementByTagNameNS(Element ancestor, String ns, String name) {
+//		List<Element> elements = XML.getElementsByTagNameNS(ancestor, ns, name);
+//		return XML.firstOrNullIfEmpty(elements);
+//	}
 
 
 	
@@ -182,17 +182,17 @@ public class XML {
 
 
 
-	public static String getElementSimpleContentByTagNameNS(Document doc, String ns, String name) {
-		Element element = XML.getElementByTagNameNS(doc, ns, name);
-		return XML.firstChildNodeValueOrNullIfNoChildren(element);		
-	}
+//	public static String getElementSimpleContentByTagNameNS(Document doc, String ns, String name) {
+//		Element element = XML.getElementByTagNameNS(doc, ns, name);
+//		return XML.firstChildNodeValueOrNullIfNoChildren(element);		
+//	}
 
 	
 	
-	public static String getElementSimpleContentByTagNameNS(Element ancestor, String ns, String name) {
-		Element element = XML.getElementByTagNameNS(ancestor, ns, name);
-		return XML.firstChildNodeValueOrNullIfNoChildren(element);		
-	}
+//	public static String getElementSimpleContentByTagNameNS(Element ancestor, String ns, String name) {
+//		Element element = XML.getElementByTagNameNS(ancestor, ns, name);
+//		return XML.firstChildNodeValueOrNullIfNoChildren(element);		
+//	}
 	
 
 	
@@ -226,34 +226,34 @@ public class XML {
 
 	
 	
-	/**
-	 * 
-	 * TODO document me
-	 * 
-	 * @param doc
-	 * @param ns
-	 * @param name
-	 * @return
-	 */
-	public static List<String> getElementsSimpleContentsByTagNameNS(Document doc, String ns, String name) {
-		List<Element> elements = XML.getElementsByTagNameNS(doc, ns, name);
-		return XML.simpleContents(elements);
-	}
+//	/**
+//	 * 
+//	 * TODO document me
+//	 * 
+//	 * @param doc
+//	 * @param ns
+//	 * @param name
+//	 * @return
+//	 */
+//	public static List<String> getElementsSimpleContentsByTagNameNS(Document doc, String ns, String name) {
+//		List<Element> elements = XML.getElementsByTagNameNS(doc, ns, name);
+//		return XML.simpleContents(elements);
+//	}
 
 	
 	
-	/**
-	 * TODO document me
-	 * 
-	 * @param ancestor
-	 * @param ns
-	 * @param name
-	 * @return
-	 */
-	public static List<String> getElementsSimpleContentsByTagNameNS(Element ancestor, String ns, String name) {
-		List<Element> elements = XML.getElementsByTagNameNS(ancestor, ns, name);
-		return XML.simpleContents(elements);
-	}
+//	/**
+//	 * TODO document me
+//	 * 
+//	 * @param ancestor
+//	 * @param ns
+//	 * @param name
+//	 * @return
+//	 */
+//	public static List<String> getElementsSimpleContentsByTagNameNS(Element ancestor, String ns, String name) {
+//		List<Element> elements = XML.getElementsByTagNameNS(ancestor, ns, name);
+//		return XML.simpleContents(elements);
+//	}
 	
 	
 	
@@ -336,10 +336,10 @@ public class XML {
 
 
 	
-	public static void removeElementsByTagNameNS(Element ancestor, String ns, String name) {
-		List<Element> elements = XML.getElementsByTagNameNS(ancestor, ns, name);
-		XML.removeFromParent(elements);
-	}
+//	public static void removeElementsByTagNameNS(Element ancestor, String ns, String name) {
+//		List<Element> elements = XML.getElementsByTagNameNS(ancestor, ns, name);
+//		XML.removeFromParent(elements);
+//	}
 	
 	
 	
@@ -369,11 +369,11 @@ public class XML {
 	}
 
 	
-	public static void setElementSimpleContentByLocalName(Element ancestor, String localName, String content) {
-		XML.removeElementsByTagName(ancestor, localName);
-		Element element = XML.createElementWithParentPrefix(ancestor, localName);
-		XML.setSimpleContent(element, content);		
-	}
+//	public static void setElementSimpleContentByLocalName(Element ancestor, String localName, String content) {
+//		XML.removeElementsByTagName(ancestor, localName);
+//		Element element = XML.createElementWithParentPrefix(ancestor, localName);
+//		XML.setSimpleContent(element, content);		
+//	}
 	
 
 	/**
@@ -399,18 +399,18 @@ public class XML {
 
 	
 	
-	public static void setElementsSimpleContentsByLocalName(Element ancestor, String localName, List<String> contents) {
-
-		// remove any existing elements
-		XML.removeElementsByTagName(ancestor, localName);
-		
-		// create new elements and populate with content
-		for (String content : contents) {
-			Element element = XML.createElementWithParentPrefix(ancestor, localName);
-			XML.setSimpleContent(element, content);
-		}
-
-	}
+//	public static void setElementsSimpleContentsByLocalName(Element ancestor, String localName, List<String> contents) {
+//
+//		// remove any existing elements
+//		XML.removeElementsByTagName(ancestor, localName);
+//		
+//		// create new elements and populate with content
+//		for (String content : contents) {
+//			Element element = XML.createElementWithParentPrefix(ancestor, localName);
+//			XML.setSimpleContent(element, content);
+//		}
+//
+//	}
 
 
 	
@@ -423,13 +423,13 @@ public class XML {
 	
 	
 	
-	public static Element createElementWithParentPrefix(Element parent, String localName) {
-		String prefix = parent.getPrefix();
-		String tagName = (prefix != null) ? prefix + ":" +localName : localName;
-		Element child = parent.getOwnerDocument().createElement(tagName);
-		parent.appendChild(child);
-		return child;
-	}
+//	public static Element createElementWithParentPrefix(Element parent, String localName) {
+//		String prefix = parent.getPrefix();
+//		String tagName = (prefix != null) ? prefix + ":" +localName : localName;
+//		Element child = parent.getOwnerDocument().createElement(tagName);
+//		parent.appendChild(child);
+//		return child;
+//	}
 
 
 	

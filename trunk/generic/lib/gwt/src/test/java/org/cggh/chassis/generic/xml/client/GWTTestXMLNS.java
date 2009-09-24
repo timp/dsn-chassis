@@ -6,7 +6,9 @@ package org.cggh.chassis.generic.xml.client;
 import java.util.List;
 
 import com.google.gwt.junit.client.GWTTestCase;
+import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;
+import com.google.gwt.xml.client.NodeList;
 import com.google.gwt.xml.client.XMLParser;
 
 /**
@@ -475,6 +477,109 @@ public class GWTTestXMLNS extends GWTTestCase {
 
 	}
 
+	
+	
+	
+	public void testGetElementsByTagNameNS() {
+		
+		String ns1 = "http://example.org/ns1";
+		String ns2 = "http://example.org/ns2";
+		String ns3 = "http://example.org/ns3";
+		
+		String xml = 
+			"<foo xmlns='"+ns1+"'>" +
+			"  <bar>baz</bar>" +
+			"  <bar xmlns='"+ns2+"'>quux</bar>" +
+			"  <x:bar xmlns:x='"+ns3+"'>spong</x:bar>" +
+			"  <padding><bar>acorns</bar></padding>" +
+			"  <padding><bar xmlns='"+ns2+"'>peppers</bar></padding>" +
+			"  <padding><x:bar xmlns:x='"+ns3+"'>corn</x:bar></padding>" +
+			"</foo>";
+		
+		Document doc = XMLParser.parse(xml);
+		
+		// test vanilla method
+
+		NodeList bars = doc.getElementsByTagName("bar");
+		
+		assertEquals(6, bars.getLength());
+		
+		// test ns-aware method
+		
+		List<Element> barList1 = XMLNS.getElementsByTagNameNS(doc, "bar", ns1);
+		
+		assertEquals(2, barList1.size());
+		assertEquals("baz", barList1.get(0).getFirstChild().getNodeValue());
+		assertEquals("acorns", barList1.get(1).getFirstChild().getNodeValue());
+		
+		List<Element> barList2 = XMLNS.getElementsByTagNameNS(doc, "bar", ns2);
+		
+		assertEquals(2, barList2.size());
+		assertEquals("quux", barList2.get(0).getFirstChild().getNodeValue());
+		assertEquals("peppers", barList2.get(1).getFirstChild().getNodeValue());
+		
+		List<Element> barList3 = XMLNS.getElementsByTagNameNS(doc, "bar", ns3);
+		
+		assertEquals(2, barList3.size());
+		assertEquals("spong", barList3.get(0).getFirstChild().getNodeValue());
+		assertEquals("corn", barList3.get(1).getFirstChild().getNodeValue());
+		
+	}
+	
+	
+	public void testGetFirstElementByTagNameNS_study() {
+		
+		String xml = 
+			"<entry xmlns=\"http://www.w3.org/2005/Atom\">\n" +
+			"  <content type=\"application/xml\">\n" +
+			"    <study xmlns=\"http://www.cggh.org/chassis/atom/xmlns\"></study>\n" +
+			"  </content>\n" +
+			"</entry>";
+		
+		Document doc = XMLParser.parse(xml);
+
+		Element entryElement = XMLNS.getFirstElementByTagNameNS(doc, "entry", "http://www.w3.org/2005/Atom");
+		assertNotNull(entryElement);
+		
+		Element studyElement = XMLNS.getFirstElementByTagNameNS(doc, "study", "http://www.cggh.org/chassis/atom/xmlns");
+		assertNotNull(studyElement);
+
+		studyElement = XMLNS.getFirstElementByTagNameNS(entryElement, "study", "http://www.cggh.org/chassis/atom/xmlns");
+		assertNotNull(studyElement);
+
+	}
+	
+	public void testGetFirstElementSimpleContentByTagNameNS() {
+
+		String ns1 = "http://example.org/ns1";
+		String ns2 = "http://example.org/ns2";
+		
+		String xml = 
+			"<foo xmlns='"+ns1+"'>" +
+			"  <bar>baz</bar>" +
+			"  <bar xmlns='"+ns2+"'>quux</bar>" +
+			"  <bar xmlns='"+ns2+"'>spong</bar>" +
+			"</foo>";
+		
+		Document doc = XMLParser.parse(xml);
+		
+		String content = XMLNS.getFirstElementSimpleContentByTagNameNS(doc, "bar", ns2);
+		
+		assertEquals("quux", content);
+
+	}
+	
+	
+	
+	public void testCreateElementNS() {
+		
+		Element foo = XMLNS.createElementNS("foo", null, null);
+		Element bar = XMLNS.createElementNS("bar", null, null);
+		foo.appendChild(bar);
+		
+		assertEquals(1, foo.getElementsByTagName("bar").getLength());
+		
+	}
 	
 
 	
