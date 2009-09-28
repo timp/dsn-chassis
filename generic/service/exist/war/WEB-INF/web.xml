@@ -84,8 +84,39 @@
     <!-- Atom Atom Publishing Protocol -->
     <servlet>
         <servlet-name>AtomServlet</servlet-name>
-        <servlet-class>org.exist.atom.http.AtomServlet</servlet-class>
+<!--         <servlet-class>org.exist.atom.http.AtomServlet</servlet-class> -->
+        <servlet-class>org.cggh.chassis.generic.http.AtomServlet</servlet-class>
     </servlet>
+    
+    
+    <!-- 
+        XQueryServlet generates HTML from an XQuery file. 
+    -->
+    <servlet>
+        <servlet-name>XQueryServlet</servlet-name>
+        <servlet-class>org.exist.http.servlets.XQueryServlet</servlet-class>
+
+        <init-param>
+            <param-name>uri</param-name>
+            <param-value>xmldb:exist:///db</param-value>
+        </init-param>
+
+        <init-param>
+            <param-name>form-encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+
+        <init-param>
+            <param-name>container-encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+    </servlet>
+    
     
     <!-- Atom Publishing Protocol -->
     <servlet-mapping>
@@ -93,6 +124,19 @@
         <url-pattern>/atom/*</url-pattern>
     </servlet-mapping>
     
+    <!-- XQuery (not for database stored queries) -->
+    <servlet-mapping>
+        <servlet-name>XQueryServlet</servlet-name>
+        <url-pattern>*.xql</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>XQueryServlet</servlet-name>
+        <url-pattern>*.xqy</url-pattern>
+    </servlet-mapping>
+
+    
+    <!-- HTTP Override filter for GWT clients -->
     <filter-mapping>
       <filter-name>HttpMethodOverrideFilter</filter-name>
       <servlet-name>AtomServlet</servlet-name>
