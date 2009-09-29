@@ -241,9 +241,4 @@ public class AtomEntryImpl extends ElementWrapperImpl implements AtomEntry {
 		XMLNS.setSingleElementSimpleContentByTagNameNS(element, Atom.ELEMENT_TITLE, Atom.PREFIX, Atom.NSURI, title);
 	}
 	
-	@Override
-	public String toString() {
-		return element.toString();
-	}
-
 }

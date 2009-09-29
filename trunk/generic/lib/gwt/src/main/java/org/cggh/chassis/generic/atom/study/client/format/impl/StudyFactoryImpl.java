@@ -7,6 +7,7 @@ import org.cggh.chassis.generic.atom.chassis.base.client.format.Chassis;
 import org.cggh.chassis.generic.atom.study.client.format.Study;
 import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
 import org.cggh.chassis.generic.atom.study.client.format.StudyFactory;
+import org.cggh.chassis.generic.atom.study.client.format.StudyFeed;
 import org.cggh.chassis.generic.atom.vanilla.client.format.Atom;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
@@ -104,30 +105,30 @@ public class StudyFactoryImpl extends AtomFactoryImpl implements StudyFactory {
 	 */
 	@Override
 	public AtomFeed createFeed(String feedDocument) {
-
-		Document d;
-		Element feedElement;
-		
-		// guard conditions
-		// TODO refactor
-		
-		try {
-			d = XMLParser.parse(feedDocument);
-		} catch (DOMParseException e) {
-			throw new AtomFormatException("parse exception: "+e.getLocalizedMessage());
-		}
-
-		feedElement = d.getDocumentElement();
-			
-		if (!XML.getLocalName(feedElement).equals(Atom.ELEMENT_FEED)) {
-			throw new AtomFormatException("bad tag local name, expected: "+Atom.ELEMENT_FEED+"; found: "+XML.getLocalName(feedElement));
-		}
-
-		if (feedElement.getNamespaceURI() == null || !feedElement.getNamespaceURI().equals(Atom.NSURI)) {
-			throw new AtomFormatException("bad namespace URI, expected: "+Atom.NSURI+"; found: "+feedElement.getNamespaceURI());
-		}
-		
-		return new StudyFeedImpl(d.getDocumentElement(), this);
+		return createStudyFeed(feedDocument);
+//		Document d;
+//		Element feedElement;
+//		
+//		// guard conditions
+//		// TODO refactor
+//		
+//		try {
+//			d = XMLParser.parse(feedDocument);
+//		} catch (DOMParseException e) {
+//			throw new AtomFormatException("parse exception: "+e.getLocalizedMessage());
+//		}
+//
+//		feedElement = d.getDocumentElement();
+//			
+//		if (!XML.getLocalName(feedElement).equals(Atom.ELEMENT_FEED)) {
+//			throw new AtomFormatException("bad tag local name, expected: "+Atom.ELEMENT_FEED+"; found: "+XML.getLocalName(feedElement));
+//		}
+//
+//		if (feedElement.getNamespaceURI() == null || !feedElement.getNamespaceURI().equals(Atom.NSURI)) {
+//			throw new AtomFormatException("bad namespace URI, expected: "+Atom.NSURI+"; found: "+feedElement.getNamespaceURI());
+//		}
+//		
+//		return new StudyFeedImpl(d.getDocumentElement(), this);
 
 	}
 
@@ -153,6 +154,40 @@ public class StudyFactoryImpl extends AtomFactoryImpl implements StudyFactory {
 		
 		return new StudyImpl(studyElement, this);
 
+	}
+
+
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.atom.study.client.format.StudyFactory#createStudyFeed(java.lang.String)
+	 */
+	public StudyFeed createStudyFeed(String feedDocument) {
+		
+		Document d;
+		Element feedElement;
+		
+		// guard conditions
+		// TODO refactor
+		
+		try {
+			d = XMLParser.parse(feedDocument);
+		} catch (DOMParseException e) {
+			throw new AtomFormatException("parse exception: "+e.getLocalizedMessage());
+		}
+
+		feedElement = d.getDocumentElement();
+			
+		if (!XML.getLocalName(feedElement).equals(Atom.ELEMENT_FEED)) {
+			throw new AtomFormatException("bad tag local name, expected: "+Atom.ELEMENT_FEED+"; found: "+XML.getLocalName(feedElement));
+		}
+
+		if (feedElement.getNamespaceURI() == null || !feedElement.getNamespaceURI().equals(Atom.NSURI)) {
+			throw new AtomFormatException("bad namespace URI, expected: "+Atom.NSURI+"; found: "+feedElement.getNamespaceURI());
+		}
+		
+		return new StudyFeedImpl(d.getDocumentElement(), this);
+		
 	}
 	
 	

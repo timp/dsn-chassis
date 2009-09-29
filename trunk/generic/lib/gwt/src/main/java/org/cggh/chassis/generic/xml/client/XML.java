@@ -461,6 +461,34 @@ public class XML {
 
 
 
+	/**
+	 * @param e
+	 * @return
+	 */
+	public static String getPrefix(Element e) {
+		String prefix = e.getPrefix();
+		if (prefix == null) {
+			prefix = ""; // normalise across browsers
+		}
+		return prefix;
+	}
+
+
+
+	/**
+	 * @param e
+	 * @return
+	 */
+	public static String getNamespaceUri(Element e) {
+		String namespaceUri = e.getNamespaceURI();
+		if (namespaceUri == null) {
+			namespaceUri = ""; // normalise across browsers
+		}
+		return namespaceUri;
+	}
+
+
+
 
 
 

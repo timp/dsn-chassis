@@ -20,5 +20,11 @@ public interface StudyFactory extends AtomFactory {
 	 * @return
 	 */
 	public Study createStudy(Element studyElement);
+
+	/**
+	 * @param studyFeedDoc
+	 * @return
+	 */
+	public StudyFeed createStudyFeed(String studyFeedDoc);
 	
 }
