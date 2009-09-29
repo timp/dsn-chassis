@@ -16,6 +16,51 @@
     <description>eXist Open Source Native XML Database</description>
     <display-name>eXist XML Database</display-name>
 
+
+    <!-- HTTP method override filter -->
+
+    <filter>
+      <filter-name>HttpMethodOverrideFilter</filter-name>
+      <filter-class>org.cggh.chassis.generic.http.HttpMethodOverrideFilter</filter-class>
+      <init-param>
+        <param-name>allowedOverrides</param-name>
+        <param-value>PUT DELETE</param-value>
+      </init-param>
+    </filter>
+    
+    <filter-mapping>
+      <filter-name>HttpMethodOverrideFilter</filter-name>
+      <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    
+    
+  <!-- 
+  SPRING SECURITY INTEGRATION
+   -->
+   
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>
+      classpath:/dev/configuration/spring/security.xml
+    </param-value>
+  </context-param>
+    
+  <listener>
+    <listener-class>
+      org.springframework.web.context.ContextLoaderListener
+    </listener-class>
+  </listener>
+    
+  <filter>
+    <filter-name>springSecurityFilterChain</filter-name>
+    <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>springSecurityFilterChain</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
     <!-- 
         Initialize Log4j using a servlet.
         Only needed when eXist is deployed as a .war file in e.g. Tomcat.
