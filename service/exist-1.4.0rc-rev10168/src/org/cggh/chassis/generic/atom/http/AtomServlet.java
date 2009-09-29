@@ -46,6 +46,8 @@ import org.apache.log4j.Logger;
 import org.exist.EXistException;
 import org.exist.atom.Atom;
 import org.exist.atom.AtomModule;
+import org.exist.atom.http.HttpRequestMessage;
+import org.exist.atom.http.HttpResponseMessage;
 import org.exist.atom.modules.AtomFeeds;
 import org.exist.atom.modules.AtomProtocol;
 import org.exist.atom.modules.Query;
