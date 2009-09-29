@@ -38,5 +38,12 @@ public class Configuration {
 	public static native JsArray<Module> getModules() /*-{
 		return $wnd.CHASSIS.modules;
 	}-*/;
+
+	/**
+	 * @return
+	 */
+	public static native String getStudyQueryServiceURL() /*-{
+		return $wnd.CHASSIS.studyQueryServiceURL;
+	}-*/;
 	
 }
