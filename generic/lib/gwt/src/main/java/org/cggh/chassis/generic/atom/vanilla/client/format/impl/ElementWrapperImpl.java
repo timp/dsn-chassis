@@ -34,4 +34,9 @@ public class ElementWrapperImpl implements ElementWrapper {
 		return false;
 	}
 	
+	@Override
+	public String toString() {
+		return element.toString();
+	}
+
 }

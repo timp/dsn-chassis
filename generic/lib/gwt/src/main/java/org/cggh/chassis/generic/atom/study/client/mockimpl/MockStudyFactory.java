@@ -6,6 +6,7 @@ package org.cggh.chassis.generic.atom.study.client.mockimpl;
 import org.cggh.chassis.generic.atom.study.client.format.Study;
 import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
 import org.cggh.chassis.generic.atom.study.client.format.StudyFactory;
+import org.cggh.chassis.generic.atom.study.client.format.StudyFeed;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
 import org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomEntry;
@@ -69,6 +70,16 @@ public class MockStudyFactory extends MockAtomFactory implements StudyFactory {
 	 * @see org.cggh.chassis.generic.atom.study.client.format.StudyFactory#createStudy(com.google.gwt.xml.client.Element)
 	 */
 	public Study createStudy(Element studyElement) {
+		// not needed
+		return null;
+	}
+
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.atom.study.client.format.StudyFactory#createStudyFeed(java.lang.String)
+	 */
+	public StudyFeed createStudyFeed(String studyFeedDoc) {
 		// not needed
 		return null;
 	}

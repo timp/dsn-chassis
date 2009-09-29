@@ -28,6 +28,7 @@ public class XMLNS {
 		private String namespaceUri;
 
 		FilterElementsByNamespaceUri(String namespaceUri) {
+			if (namespaceUri == null) namespaceUri = ""; // normalise for browsers
 			this.namespaceUri = namespaceUri;
 		}
 		
@@ -35,7 +36,7 @@ public class XMLNS {
 		 * @see org.cggh.chassis.generic.twisted.client.Function#apply(java.lang.Object)
 		 */
 		public Element apply(Element e) {
-			boolean match = (namespaceUri == null && e.getNamespaceURI() == null) || (namespaceUri != null && namespaceUri.equals(e.getNamespaceURI()));
+			boolean match = namespaceUri.equals(XML.getNamespaceUri(e));
 			if (match) return e;
 			return null;
 		}
@@ -90,29 +91,23 @@ public class XMLNS {
 	 */
 	public static Element createElementNS(String localName, String prefix, String namespaceUri) {
 		
-		String tagName = (prefix != null) ? prefix + ":" +localName : localName;
+		if (prefix == null) prefix = ""; // normalise
+		if (namespaceUri == null) namespaceUri = ""; // normalise
 		
-		String xmlnsAttribute = null;
+		boolean hasPrefix = !prefix.equals("");
 		
-		if (namespaceUri != null) {
-			xmlnsAttribute = "xmlns";
-			if (prefix != null) {
-				xmlnsAttribute += ":" +prefix;
-			}
-			xmlnsAttribute += "=\"" + namespaceUri + "\"";
-		}
+		String tagName = hasPrefix ? prefix + ":" +localName : localName;
+		
+		String xmlnsAttribute = "xmlns";
+		if (hasPrefix) xmlnsAttribute += ":" +prefix;
+		xmlnsAttribute += "=\"" + namespaceUri + "\"";
 
-		String template = "<" + tagName + " ";
-		
-		if (xmlnsAttribute != null) {
-			template += xmlnsAttribute + " ";
-		}
-		
-		template += "/>";
+		String template = "<" + tagName + " " + xmlnsAttribute + " />";
 		
 		Element e = XMLParser.parse(template).getDocumentElement();
 		
 		// return clone to work around chrome wrong document error
+		// see http://code.google.com/p/google-web-toolkit/issues/detail?id=4074
 		Element clone = (Element) e.cloneNode(true);
 		
 		return clone;

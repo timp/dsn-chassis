@@ -52,7 +52,7 @@ public class GWTTestXML extends GWTTestCase {
 	
 	
 	
-	public void testWrongDocumentError_Chrome_workaround() {
+	public void testBrowsersAllowCloningElementsFromOneDocToAnother() {
 		
 		String fooxml = "<foo/>";
 		String barxml = "<bar/>";
@@ -61,7 +61,7 @@ public class GWTTestXML extends GWTTestCase {
 		
 		Element foo = foodoc.getDocumentElement();
 		Element bar = bardoc.getDocumentElement();
-		Element barclone = (Element) bar.cloneNode(true); // workaround by cloning the node
+		Element barclone = (Element) bar.cloneNode(true); // workaround Chrome by cloning the node
 		
 		foo.appendChild(barclone);
 		
@@ -72,5 +72,26 @@ public class GWTTestXML extends GWTTestCase {
 
 	
 	
+	public void testBrowsersHandleNoNamespaceOrPrefix() {
+		
+		String xml = "<foo/>";
+		Document d = XMLParser.parse(xml);
+		Element e = d.getDocumentElement();
+		
+		String namespaceUri = e.getNamespaceURI(); // null in FF3, Chrome, "" in IE7
+		boolean hasNoNamespaceUri = (namespaceUri == null) || ("".equals(namespaceUri));
+		assertTrue("expected hasNoNamespaceUri is true", hasNoNamespaceUri);
 
+		String prefix = e.getPrefix(); // null in FF3, Chrome, "" in IE7
+		boolean hasNoPrefix = (prefix == null) || ("".equals(prefix));
+		assertTrue("expected hasNoPrefix is true", hasNoPrefix);
+		
+		assertEquals("expected XML.getPrefix is empty string", "", XML.getPrefix(e)); // should work across browsers
+		assertEquals("expected XML.getNamespaceUri is empty string", "", XML.getNamespaceUri(e)); // should work across browsers
+		
+	}
+	
+	
+	
+	
 }

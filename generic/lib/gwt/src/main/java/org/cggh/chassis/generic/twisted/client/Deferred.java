@@ -162,6 +162,37 @@ public class Deferred<T> {
 	}
 	
 	
+	
+	public <X> Deferred<X> adapt(final Function<T,X> adapter) {
+		
+		final Deferred<X> adapted = new Deferred<X>();
+		
+		Function<T,T> callback = new Function<T,T>() {
+
+			public T apply(T in) {
+				X out = adapter.apply(in);
+				adapted.callback(out);
+				return in;
+			}
+			
+		};
+		
+		Function<Throwable,Throwable> errback = new Function<Throwable,Throwable>() {
+
+			public Throwable apply(Throwable in) {
+				adapted.errback(in);
+				return in;
+			}
+			
+		};
+		
+		this.addCallbacks(callback, errback);
+		
+		return adapted;
+		
+	}
+	
+	
 	public Deferred<T> addErrback(Function<? extends Throwable,? extends Throwable> errback) {
 		return this.addCallbacks(null, errback);
 	}

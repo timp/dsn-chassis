@@ -27,19 +27,46 @@ public class GWTTestXMLNS extends GWTTestCase {
 	
 	
 	
-	
+
 	public void testCreateElementNS_1() {
 		
 		Element e;
 		
 		e = XMLNS.createElementNS("foo", null, null);
 		assertEquals("foo", e.getTagName());
-		assertNull(e.getPrefix());
-		assertNull(e.getNamespaceURI());
+//		assertNull(e.getPrefix());
+//		assertNull(e.getNamespaceURI());
+		assertEquals("[null,null] expected prefix is empty string", "", XML.getPrefix(e));
+		assertEquals("[null,null] expected namespace URI is empty string", "", XML.getNamespaceUri(e));
+
+		e = XMLNS.createElementNS("foo", "", "");
+		assertEquals("foo", e.getTagName());
+		assertEquals("[es,es] expected prefix is empty string", "", XML.getPrefix(e));
+		assertEquals("[es,es] expected namespace URI is empty string", "", XML.getNamespaceUri(e));
+
+		e = XMLNS.createElementNS("foo", "", null);
+		assertEquals("foo", e.getTagName());
+		assertEquals("[es,null] expected prefix is empty string", "", XML.getPrefix(e));
+		assertEquals("[es,null] expected namespace URI is empty string", "", XML.getNamespaceUri(e));
+
+		e = XMLNS.createElementNS("foo", null, "");
+		assertEquals("foo", e.getTagName());
+		assertEquals("[null,es] expected prefix is empty string", "", XML.getPrefix(e));
+		assertEquals("[null,es] expected namespace URI is empty string", "", XML.getNamespaceUri(e));
+
+	}
+	
+	
+	
+	
+	public void testCreateElementNS_2() {
+		
+		Element e;
 		
 		e = XMLNS.createElementNS("foo", null, "http://example.com/xmlns");
 		assertEquals("foo", e.getTagName());
-		assertNull(e.getPrefix());
+//		assertNull(e.getPrefix());
+		assertEquals("", XML.getPrefix(e));
 		assertEquals("http://example.com/xmlns", e.getNamespaceURI());
 		
 		e = XMLNS.createElementNS("foo", "x", "http://example.com/xmlns");
