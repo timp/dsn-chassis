@@ -400,6 +400,8 @@ public class AtomServlet extends HttpServlet {
    protected void service(HttpServletRequest request, HttpServletResponse response)
    throws ServletException {
       try {
+    	  LOG.info("begin service");
+    	  
          // Get the path
          String path = request.getPathInfo();
          
@@ -440,18 +442,22 @@ public class AtomServlet extends HttpServlet {
             }
          };
          
-         // Handle the resource
+    	 String username = (user == null) ? "[user is null]" : user.getName();
+    	 LOG.info("about to call module.process(); user: "+username);
+
+    	 // Handle the resource
          DBBroker broker = null;
          try {
-            broker = pool.get(user);
-            module.process(broker,new HttpRequestMessage(request,path,'/'+moduleName),new HttpResponseMessage(response));
+        	 
+        	 broker = pool.get(user);
+        	 module.process(broker,new HttpRequestMessage(request,path,'/'+moduleName),new HttpResponseMessage(response));
 
          } catch (NotFoundException ex) {
             LOG.info("Resource "+path+" not found by "+moduleName,ex);
             response.sendError(HttpServletResponse.SC_NOT_FOUND,ex.getMessage());
 
          } catch (PermissionDeniedException ex) {
-            LOG.info("Permission denied to "+path+" by "+moduleName+" for "+user.getName(),ex);
+            LOG.info("Permission denied to "+path+" by "+moduleName+" for "+username,ex);
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED,ex.getMessage());
 
          } catch (BadRequestException ex) {
@@ -459,8 +465,8 @@ public class AtomServlet extends HttpServlet {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST,ex.getMessage());
 
          } catch (EXistException ex) {
-            LOG.fatal("Exception getting broker from pool for user "+user.getName(),ex);
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,"Service is not available.");
+            LOG.fatal("Exception getting broker from pool for user "+username,ex);
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,"Service is not available."); // can end up in illegal state here!
 
          } catch (Throwable e){
             LOG.error(e.getMessage(), e);

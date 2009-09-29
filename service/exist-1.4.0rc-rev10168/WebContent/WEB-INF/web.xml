@@ -114,6 +114,11 @@
         <servlet-class>org.exist.atom.http.AtomServlet</servlet-class>
     </servlet>
 
+    <!-- Custom Atom Publishing Protocol -->
+    <servlet>
+        <servlet-name>CustomAtomServlet</servlet-name>
+        <servlet-class>org.cggh.chassis.generic.atom.http.AtomServlet</servlet-class>
+    </servlet>
 
 
     <!-- HTTP Method Override Filter for AtomPub -->  
@@ -131,6 +136,12 @@
       <filter-name>HttpMethodOverrideFilter</filter-name>
       <servlet-name>AtomServlet</servlet-name>
     </filter-mapping>
+
+    <filter-mapping>
+      <filter-name>HttpMethodOverrideFilter</filter-name>
+      <servlet-name>CustomAtomServlet</servlet-name>
+    </filter-mapping>
+
 
 
     <!-- ====================== URL space mappings ======================= -->
@@ -151,6 +162,12 @@
     <!-- Atom Publishing Protocol -->
     <servlet-mapping>
         <servlet-name>AtomServlet</servlet-name>
+        <url-pattern>/exist-atom/*</url-pattern>
+    </servlet-mapping>
+
+    <!-- Atom Publishing Protocol (Custom Implementation) -->
+    <servlet-mapping>
+        <servlet-name>CustomAtomServlet</servlet-name>
         <url-pattern>/atom/*</url-pattern>
     </servlet-mapping>
     
