@@ -11,7 +11,7 @@ import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
  */
 public interface AbstractStudyControllerViewEditAPI {
 
-	public void loadStudyEntry(StudyEntry submissionEntryToLoad);
+	public void loadStudyEntry(StudyEntry studyEntryToLoad);
 
 	public void loadStudyEntryByURL(String studyEntryURL);
 }

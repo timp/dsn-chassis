@@ -3,8 +3,12 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.study.create.client;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 import org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerCreateAPI;
-import org.cggh.chassis.generic.client.gwt.widget.study.model.client.StudyModel;
 import org.cggh.chassis.generic.client.gwt.widget.study.model.client.StudyModelListener;
 
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -31,22 +35,21 @@ class CreateStudyWidgetDefaultRenderer implements StudyModelListener {
 	private StudyControllerCreateAPI controller;
 	private Boolean isFormComplete = false;
 	private String feedURL;
+	private Map<String, String> modulesConfig;
 	
 	//Expose view elements for testing purposes.
 	final TextBoxBase titleUI = new TextBox();
 	final TextBoxBase summaryUI = new TextArea();
-	final CheckBox acceptClinicalDataUI = new CheckBox("Clinical");
-	final CheckBox acceptMolecularDataUI = new CheckBox("Molecular");
-	final CheckBox acceptInVitroDataUI = new CheckBox("In Vitro");
-	final CheckBox acceptPharmacologyDataUI = new CheckBox("Pharmacology");
 	final Button createStudyUI = new Button("Create Study", new CreateStudyClickHandler());
 	final Button cancelCreateStudyUI = new Button("Cancel", new CancelStudyClickHandler());
+	final Map<String, CheckBox> modulesUIHash = new HashMap<String, CheckBox>();
 	
 
-	public CreateStudyWidgetDefaultRenderer(Panel canvas, StudyControllerCreateAPI controller, String feedURL) {
+	public CreateStudyWidgetDefaultRenderer(Panel canvas, StudyControllerCreateAPI controller, String feedURL, Map<String, String> modulesMap) {
 		this.canvas = canvas;
 		this.controller = controller;
 		this.feedURL = feedURL;
+		this.modulesConfig = modulesMap;
 		
 		//initialise view
 		initCanvas();
@@ -70,14 +73,24 @@ class CreateStudyWidgetDefaultRenderer implements StudyModelListener {
 
 		Label modulesLabel = new Label("Select modules (at least one must be selected):");
 		createStudyForm.setWidget(++rowNumber, 0, modulesLabel);
-		acceptClinicalDataUI.addValueChangeHandler(new AcceptClinicalDataChangeHandler());
-		createStudyForm.setWidget(++rowNumber, 0, acceptClinicalDataUI);
-		acceptMolecularDataUI.addValueChangeHandler(new AcceptMolecularDataChangeHandler());
-		createStudyForm.setWidget(++rowNumber, 0, acceptMolecularDataUI);
-		acceptInVitroDataUI.addValueChangeHandler(new AcceptInVitroDataChangeHandler());
-		createStudyForm.setWidget(++rowNumber, 0, acceptInVitroDataUI);
-		acceptPharmacologyDataUI.addValueChangeHandler(new AcceptPharmacologyDataChangeHandler());
-		createStudyForm.setWidget(++rowNumber, 0, acceptPharmacologyDataUI);
+		
+		//Create as many modules checkboxes as required
+		for (String moduleId : modulesConfig.keySet()) {
+			
+			String UILabel = modulesConfig.get(moduleId);
+			CheckBox moduleUICheckBox = new CheckBox(UILabel);
+			
+			//add valueChangeHandler
+			moduleUICheckBox.addValueChangeHandler(new ModulesUIValueChangeHandler());
+			
+			//add checkbox reference to HashMap
+			modulesUIHash.put(moduleId, moduleUICheckBox);
+			
+			//add to GUI
+			createStudyForm.setWidget(++rowNumber, 0, moduleUICheckBox);
+			
+		}
+		
 		
 		createStudyForm.setWidget(++rowNumber, 0, createStudyUI);
 		createStudyForm.setWidget(rowNumber, 1, cancelCreateStudyUI);
@@ -101,38 +114,31 @@ class CreateStudyWidgetDefaultRenderer implements StudyModelListener {
 		}
 		
 	}
-	
-	class AcceptClinicalDataChangeHandler implements ValueChangeHandler<Boolean> {
+
+	class ModulesUIValueChangeHandler implements ValueChangeHandler<Boolean> {
 
 		public void onValueChange(ValueChangeEvent<Boolean> arg0) {
-			controller.updateAcceptClinicalData(acceptClinicalDataUI.getValue());			
+			
+			//get modules selected
+			Set<String> modulesSelected = new HashSet<String>();
+			
+			for (String moduleId : modulesUIHash.keySet()) {
+				
+				CheckBox moduleUICheckBox = modulesUIHash.get(moduleId);
+				
+				if (moduleUICheckBox.getValue()) {
+					modulesSelected.add(moduleId);
+				}
+				
+			}
+			
+			//update model
+			controller.updateModules(modulesSelected);
+			
 		}
 		
 	}
 	
-	class AcceptMolecularDataChangeHandler implements ValueChangeHandler<Boolean> {
-
-		public void onValueChange(ValueChangeEvent<Boolean> arg0) {
-			controller.updateAcceptMolecularData(acceptMolecularDataUI.getValue());			
-		}
-		
-	}
-	
-	class AcceptInVitroDataChangeHandler implements ValueChangeHandler<Boolean> {
-
-		public void onValueChange(ValueChangeEvent<Boolean> arg0) {
-			controller.updateAcceptInVitroData(acceptInVitroDataUI.getValue());			
-		}
-		
-	}
-	
-	class AcceptPharmacologyDataChangeHandler implements ValueChangeHandler<Boolean> {
-
-		public void onValueChange(ValueChangeEvent<Boolean> arg0) {
-			controller.updateAcceptPharmacologyData(acceptPharmacologyDataUI.getValue());			
-		}
-		
-	}
 	
 	class CreateStudyClickHandler implements ClickHandler {
 
@@ -163,21 +169,7 @@ class CreateStudyWidgetDefaultRenderer implements StudyModelListener {
 	}
 
 	public void onStatusChanged(Integer before, Integer after) {
-
-		//reset form when set to ready
-		if (after == StudyModel.STATUS_LOADED) {
-			resetForm();
-		}
-		
-	}
-
-	private void resetForm() {
-		titleUI.setValue("", true);
-		summaryUI.setValue("", true);
-		acceptClinicalDataUI.setValue(false, true);
-		acceptMolecularDataUI.setValue(false, true);
-		acceptInVitroDataUI.setValue(false, true);
-		acceptPharmacologyDataUI.setValue(false, true);
+		// TODO Auto-generated method stub
 	}
 	
 	public void onStudyEntryChanged(Boolean isValid) {
@@ -195,20 +187,14 @@ class CreateStudyWidgetDefaultRenderer implements StudyModelListener {
 		summaryUI.setValue(after, false);
 	}
 
-	public void onAcceptClinicalDataChanged(Boolean before, Boolean after, Boolean isValid) {
-		acceptClinicalDataUI.setValue(after, false);
-	}
-
-	public void onAcceptInVitroDataChanged(Boolean before, Boolean after, Boolean isValid) {
-		acceptInVitroDataUI.setValue(after, false);
-	}
-
-	public void onAcceptMolecularDataChanged(Boolean before, Boolean after, Boolean isValid) {
-		acceptMolecularDataUI.setValue(after, false);
-	}
-
-	public void onAcceptPharmacologyDataChanged(Boolean before, Boolean after, Boolean isValid) {
-		acceptPharmacologyDataUI.setValue(after, false);
+	public void onModulesChanged(Set<String> before, Set<String> after, Boolean isValid) {
+		
+		for (String moduleId : modulesConfig.keySet()) {
+			
+			modulesUIHash.get(moduleId).setValue(after.contains(moduleId), false);
+			
+		}
+		
 	}
 	
 }

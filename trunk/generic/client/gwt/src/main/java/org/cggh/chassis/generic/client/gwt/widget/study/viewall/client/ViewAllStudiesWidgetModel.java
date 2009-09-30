@@ -57,8 +57,7 @@ public class ViewAllStudiesWidgetModel {
 		fireOnStudyEntriesChanged(before, studyEntries);
 	}
 
-	private void fireOnStudyEntriesChanged(List<StudyEntry> before,
-			List<StudyEntry> after) {
+	private void fireOnStudyEntriesChanged(List<StudyEntry> before, List<StudyEntry> after) {
 		for (ViewAllStudiesWidgetModelListener listener : listeners) {
 			listener.onStudyEntriesChanged(before, after);
 		}

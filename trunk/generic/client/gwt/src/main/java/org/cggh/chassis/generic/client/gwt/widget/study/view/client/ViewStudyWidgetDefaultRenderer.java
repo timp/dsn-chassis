@@ -3,8 +3,9 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.study.view.client;
 
-import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
-import org.cggh.chassis.generic.client.gwt.widget.application.client.ApplicationConstants;
+import java.util.Map;
+import java.util.Set;
+
 import org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerViewAPI;
 import org.cggh.chassis.generic.client.gwt.widget.study.model.client.StudyModel;
 import org.cggh.chassis.generic.client.gwt.widget.study.model.client.StudyModelListener;
@@ -26,20 +27,19 @@ public class ViewStudyWidgetDefaultRenderer implements StudyModelListener {
 	//Expose view elements for testing purposes.
 	final Label titleLabel = new Label();
 	final Label summaryLabel = new Label();
-	final Panel acceptsClinicalDataIndicator = new SimplePanel();
-	final Panel acceptsMolecularDataIndicator = new SimplePanel();
-	final Panel acceptsInVitroDataIndicator = new SimplePanel();
-	final Panel acceptsPharmacologyDataIndicator = new SimplePanel();
 	final Panel loadingPanel = new SimplePanel();
 	final Panel studyDetailsPanel = new HorizontalPanel();
 	final Label editThisStudyUI = new Label("Edit Study");
+	final VerticalPanel modulesListPanel = new VerticalPanel();
 	
 	final private Panel canvas;
 	final private StudyControllerViewAPI controller;
+	private Map<String, String> modulesConfig;
 
-	public ViewStudyWidgetDefaultRenderer(Panel canvas, StudyControllerViewAPI controller) {
+	public ViewStudyWidgetDefaultRenderer(Panel canvas, StudyControllerViewAPI controller, Map<String, String> modulesMap) {
 		this.canvas = canvas;
 		this.controller = controller;
+		this.modulesConfig = modulesMap;
 		
 		initCanvas();
 	}
@@ -61,22 +61,8 @@ public class ViewStudyWidgetDefaultRenderer implements StudyModelListener {
 		summaryHPanel.add(new Label("Summary: "));
 		summaryHPanel.add(summaryLabel);
 		studyDetailsVPanel.add(summaryHPanel);
-		
-		acceptsClinicalDataIndicator.add(new Label("Accepts Clinical Data"));
-		studyDetailsVPanel.add(acceptsClinicalDataIndicator);
-		acceptsClinicalDataIndicator.setVisible(false);
-		
-		acceptsInVitroDataIndicator.add(new Label("Accepts In Vitro Data"));
-		studyDetailsVPanel.add(acceptsInVitroDataIndicator);
-		acceptsInVitroDataIndicator.setVisible(false);
-		
-		acceptsMolecularDataIndicator.add(new Label("Accepts Molecular Data"));
-		studyDetailsVPanel.add(acceptsMolecularDataIndicator);
-		acceptsMolecularDataIndicator.setVisible(false);
-		
-		acceptsPharmacologyDataIndicator.add(new Label("Accepts Pharmacology Data"));
-		studyDetailsVPanel.add(acceptsPharmacologyDataIndicator);
-		acceptsPharmacologyDataIndicator.setVisible(false);
+
+		studyDetailsVPanel.add(modulesListPanel);
 		
 		studyDetailsPanel.add(studyDetailsVPanel);
 		
@@ -107,36 +93,11 @@ public class ViewStudyWidgetDefaultRenderer implements StudyModelListener {
 		}
 	}
 
-	public void onStudyEntryChanged(StudyEntry before, StudyEntry after) {
-		
-		summaryLabel.setText(after.getSummary());
-		acceptsClinicalDataIndicator.setVisible(after.getModules().contains(ApplicationConstants.MODULE_CLINICAL));
-		acceptsInVitroDataIndicator.setVisible(after.getModules().contains(ApplicationConstants.MODULE_IN_VITRO));
-		acceptsMolecularDataIndicator.setVisible(after.getModules().contains(ApplicationConstants.MODULE_MOLECULAR));
-		acceptsPharmacologyDataIndicator.setVisible(after.getModules().contains(ApplicationConstants.MODULE_PHARMACOLOGY));
-	}
-
 	class EditStudyClickHandler implements ClickHandler {
 		
 		public void onClick(ClickEvent arg0) {
 			controller.onUserActionEditThisStudy();
 		}
-	}
-
-	public void onAcceptClinicalDataChanged(Boolean before, Boolean after, Boolean isValid) {
-		acceptsClinicalDataIndicator.setVisible(after);
-	}
-
-	public void onAcceptInVitroDataChanged(Boolean before, Boolean after, Boolean isValid) {
-		acceptsInVitroDataIndicator.setVisible(after);
-	}
-
-	public void onAcceptMolecularDataChanged(Boolean before, Boolean after, Boolean isValid) {
-		acceptsMolecularDataIndicator.setVisible(after);
-	}
-
-	public void onAcceptPharmacologyDataChanged(Boolean before, Boolean after, Boolean isValid) {
-		acceptsPharmacologyDataIndicator.setVisible(after);
 	}
 
 	public void onStudyEntryChanged(Boolean isValid) {
@@ -149,6 +110,15 @@ public class ViewStudyWidgetDefaultRenderer implements StudyModelListener {
 
 	public void onTitleChanged(String before, String after, Boolean isValid) {
 		titleLabel.setText(after);
+	}
+
+	public void onModulesChanged(Set<String> before, Set<String> after, Boolean isValid) {
+
+		modulesListPanel.clear();
+		
+		for (String module : after) {
+			modulesListPanel.add(new Label(modulesConfig.get(module)));
+		}
 	}
 	
 }

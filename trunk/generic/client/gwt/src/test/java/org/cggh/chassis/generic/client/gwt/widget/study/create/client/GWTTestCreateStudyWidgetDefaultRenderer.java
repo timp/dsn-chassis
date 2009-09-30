@@ -3,6 +3,11 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.study.create.client;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 import org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerCreateAPI;
 
 import com.google.gwt.dom.client.Document;
@@ -19,6 +24,12 @@ public class GWTTestCreateStudyWidgetDefaultRenderer extends GWTTestCase {
 	
 	private MockStudyController mockController;
 	private CreateStudyWidgetDefaultRenderer testRenderer;
+	
+	//test data
+	String module1Id = "module1Id";
+	String module2Id = "module2Id";
+	String module1Label = "module1Label";
+	String module2Label = "module2Label";
 
 
 
@@ -36,7 +47,13 @@ public class GWTTestCreateStudyWidgetDefaultRenderer extends GWTTestCase {
 		//create mockController and inject into testRenderer
 		mockController = new MockStudyController();
 		
-		testRenderer = new CreateStudyWidgetDefaultRenderer(new SimplePanel(), mockController, null);
+		//Create modules test data
+		Map<String, String> testModules = new HashMap<String, String>();
+		testModules.put(module1Id, module1Label);
+		testModules.put(module2Id, module2Label);
+		
+		
+		testRenderer = new CreateStudyWidgetDefaultRenderer(new SimplePanel(), mockController, null, testModules);
 		
 	}
 	
@@ -48,11 +65,13 @@ public class GWTTestCreateStudyWidgetDefaultRenderer extends GWTTestCase {
 		//check no values set
 		assertEquals("", testRenderer.titleUI.getValue());
 		assertEquals("", testRenderer.summaryUI.getValue());
-		assertEquals(Boolean.FALSE, testRenderer.acceptClinicalDataUI.getValue());
-		assertEquals(Boolean.FALSE, testRenderer.acceptMolecularDataUI.getValue());
-		assertEquals(Boolean.FALSE, testRenderer.acceptInVitroDataUI.getValue());
-		assertEquals(Boolean.FALSE, testRenderer.acceptPharmacologyDataUI.getValue());
-			
+		
+		//check modules checkboxes initialised, but unchecked
+		assertTrue(testRenderer.modulesUIHash.containsKey(module1Id));
+		assertFalse(testRenderer.modulesUIHash.get(module1Id).getValue());
+		assertTrue(testRenderer.modulesUIHash.containsKey(module2Id));
+		assertFalse(testRenderer.modulesUIHash.get(module2Id).getValue());
+				
 		
 	}
 	
@@ -110,113 +129,42 @@ public class GWTTestCreateStudyWidgetDefaultRenderer extends GWTTestCase {
 		
 	}
 	
-	public void testOnAcceptClinicalDataChanged() {
+	public void testOnModulesChanged() {
 		
 		//test data
-		Boolean acceptClinicalData = true;
-		
+		Set<String> modulesSet1 = new HashSet<String>();
+		modulesSet1.add(module1Id);		
+
 		// call method under test
-		testRenderer.onAcceptClinicalDataChanged(null, acceptClinicalData, false);		
+		testRenderer.onModulesChanged(null, modulesSet1, true);		
 		
-		
-		//test outcome
-		assertEquals(acceptClinicalData, testRenderer.acceptClinicalDataUI.getValue());
-		
-	}
-	
-	public void testAcceptClinicalDataChanged_UI() {
-		
-		//test data
-		Boolean acceptClinicalData = true;
+		// test outcome
+		assertTrue(testRenderer.modulesUIHash.get(module1Id).getValue());	
+		assertFalse(testRenderer.modulesUIHash.get(module2Id).getValue());	
 		
 		//call method under test
-		testRenderer.acceptClinicalDataUI.setValue(acceptClinicalData, true);
+		testRenderer.onModulesChanged(null, new HashSet<String>(), true);		
+
+		// test outcome
+		assertFalse(testRenderer.modulesUIHash.get(module1Id).getValue());	
+		assertFalse(testRenderer.modulesUIHash.get(module2Id).getValue());	
 		
-		//test outcome
-		assertEquals(acceptClinicalData, mockController.updateAcceptClinicalData);
 		
 	}
 	
-	public void testOnAcceptInVitroDataChanged() {
+	public void testOnModulesChanged_UI() {
 		
 		//test data
-		Boolean acceptInVitroData = true;
-		
-		// call method under test
-		testRenderer.onAcceptInVitroDataChanged(null, acceptInVitroData, false);		
-		
-		
-		//test outcome
-		assertEquals(acceptInVitroData, testRenderer.acceptInVitroDataUI.getValue());
-		
-	}
-	
-	public void testAcceptInVitroDataChanged_UI() {
-		
-		//test data
-		Boolean acceptInVitroData = true;
+		boolean isChecked = true;
 		
 		//call method under test
-		testRenderer.acceptInVitroDataUI.setValue(acceptInVitroData, true);
+		testRenderer.modulesUIHash.get(module1Id).setValue(isChecked, true);
 		
 		//test outcome
-		assertEquals(acceptInVitroData, mockController.updateAcceptInVitroData);
+		assertEquals(isChecked, mockController.modules.contains(module1Id));
 		
 	}
 	
-	public void testOnAcceptMolecularDataChanged() {
-		
-		//test data
-		Boolean acceptMolecularData = true;
-		
-		// call method under test
-		testRenderer.onAcceptMolecularDataChanged(null, acceptMolecularData, false);		
-		
-		
-		//test outcome
-		assertEquals(acceptMolecularData, testRenderer.acceptMolecularDataUI.getValue());
-		
-	}
-	
-	public void testAcceptMolecularDataChanged_UI() {
-		
-		//test data
-		Boolean acceptMolecularData = true;
-		
-		//call method under test
-		testRenderer.acceptMolecularDataUI.setValue(acceptMolecularData, true);
-		
-		//test outcome
-		assertEquals(acceptMolecularData, mockController.updateAcceptMolecularData);
-		
-	}
-	
-	public void testOnAcceptPharmacologyDataChanged() {
-		
-		//test data
-		Boolean acceptPharmacologyData = true;
-		
-		// call method under test
-		testRenderer.onAcceptPharmacologyDataChanged(null, acceptPharmacologyData, false);		
-		
-		
-		//test outcome
-		assertEquals(acceptPharmacologyData, testRenderer.acceptPharmacologyDataUI.getValue());
-		
-	}
-	
-	public void testAcceptPharmacologyDataChanged_UI() {
-		
-		//test data
-		Boolean acceptPharmacologyData = true;
-		
-		//call method under test
-		testRenderer.acceptPharmacologyDataUI.setValue(acceptPharmacologyData, true);
-		
-		//test outcome
-		assertEquals(acceptPharmacologyData, mockController.updateAcceptPharmacologyData);
-		
-	}
 		
 	public void testCancelCreateStudyButton_UI() {
 		
@@ -264,12 +212,9 @@ public class GWTTestCreateStudyWidgetDefaultRenderer extends GWTTestCase {
 
 		boolean cancelSaveOrUpdateStudyEntry;
 		boolean saveNewStudyEntryCalled;
-		Boolean updateAcceptClinicalData;
-		Boolean updateAcceptInVitroData;
-		Boolean updateAcceptMolecularData;
-		Boolean updateAcceptPharmacologyData;
 		String updateSummary;
 		String updateTitle;
+		Set<String> modules;
 
 		public void cancelSaveOrUpdateStudyEntry() {
 			this.cancelSaveOrUpdateStudyEntry = true;
@@ -283,28 +228,16 @@ public class GWTTestCreateStudyWidgetDefaultRenderer extends GWTTestCase {
 			// not tested here
 		}
 
-		public void updateAcceptClinicalData(Boolean acceptClinicalData) {
-			this.updateAcceptClinicalData = acceptClinicalData;
-		}
-
-		public void updateAcceptInVitroData(Boolean acceptInVitroData) {
-			this.updateAcceptInVitroData = acceptInVitroData;
-		}
-
-		public void updateAcceptMolecularData(Boolean acceptMolecularData) {
-			this.updateAcceptMolecularData = acceptMolecularData;
-		}
-
-		public void updateAcceptPharmacologyData(Boolean acceptPharmacologyData) {
-			this.updateAcceptPharmacologyData = acceptPharmacologyData;
-		}
-
 		public void updateSummary(String summary) {
 			this.updateSummary = summary;
 		}
 
 		public void updateTitle(String title) {
 			this.updateTitle = title;
+		}
+
+		public void updateModules(Set<String> modules) {
+			this.modules = modules;
 		}
 		
 	}

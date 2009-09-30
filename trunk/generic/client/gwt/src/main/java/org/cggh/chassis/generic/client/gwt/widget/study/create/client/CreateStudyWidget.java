@@ -5,6 +5,7 @@ package org.cggh.chassis.generic.client.gwt.widget.study.create.client;
 
 
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
@@ -27,13 +28,13 @@ public class CreateStudyWidget implements CreateStudyWidgetAPI, StudyControllerP
 	final private CreateStudyWidgetDefaultRenderer renderer;
 	private Set<CreateStudyWidgetPubSubAPI> listeners = new HashSet<CreateStudyWidgetPubSubAPI>();
 	
-	public CreateStudyWidget(Panel canvas, AtomService service, String feedURL) {
+	public CreateStudyWidget(Panel canvas, AtomService service, String feedURL, Map<String, String> modulesMap) {
 		
 		model = new StudyModel();
 		
 		controller = new StudyController(model, service, this);
 				
-		renderer = new CreateStudyWidgetDefaultRenderer(canvas, controller, feedURL);
+		renderer = new CreateStudyWidgetDefaultRenderer(canvas, controller, feedURL, modulesMap);
 		
 		// register renderer as listener to model
 		model.addListener(renderer);

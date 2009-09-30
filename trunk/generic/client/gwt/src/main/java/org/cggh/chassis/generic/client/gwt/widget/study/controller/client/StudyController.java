@@ -4,6 +4,8 @@
 package org.cggh.chassis.generic.client.gwt.widget.study.controller.client;
 
 
+import java.util.Set;
+
 import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
 import org.cggh.chassis.generic.atom.study.client.format.StudyFactory;
 import org.cggh.chassis.generic.atom.study.client.format.impl.StudyFactoryImpl;
@@ -79,44 +81,8 @@ public class StudyController implements StudyControllerEditAPI, StudyControllerC
 		model.setSummary(summary);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerEditAPI#updateAcceptClinicalData(java.lang.Boolean)
-	 */
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerCreateAPI#updateAcceptClinicalData(java.lang.Boolean)
-	 */
-	public void updateAcceptClinicalData(Boolean acceptClinicalData) {
-		model.setAcceptClinicalData(acceptClinicalData);
-	}
-
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerEditAPI#updateAcceptMolecularData(java.lang.Boolean)
-	 */
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerCreateAPI#updateAcceptMolecularData(java.lang.Boolean)
-	 */
-	public void updateAcceptMolecularData(Boolean acceptMolecularData) {
-		model.setAcceptMolecularData(acceptMolecularData);
-	}
-
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerEditAPI#updateAcceptInVitroData(java.lang.Boolean)
-	 */
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerCreateAPI#updateAcceptInVitroData(java.lang.Boolean)
-	 */
-	public void updateAcceptInVitroData(Boolean acceptInVitroData) {
-		model.setAcceptInVitroData(acceptInVitroData);
-	}
-
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerEditAPI#updateAcceptPharmacologyData(java.lang.Boolean)
-	 */
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerCreateAPI#updateAcceptPharmacologyData(java.lang.Boolean)
-	 */
-	public void updateAcceptPharmacologyData(Boolean acceptPharmacologyData) {
-		model.setAcceptPharmacologyData(acceptPharmacologyData);
+	public void updateModules(Set<String> modules) {
+		model.setModules(modules);
 	}
 
 	/* (non-Javadoc)
@@ -151,6 +117,8 @@ public class StudyController implements StudyControllerEditAPI, StudyControllerC
 		
 		model.setStudyEntry(studyEntryToLoad);
 		model.setStatus(StudyModel.STATUS_LOADED);
+		
+		log.trace("Loading study entry: " + studyEntryToLoad.toString());
 		
 		log.leave();
 	}

@@ -7,6 +7,8 @@ import static org.easymock.EasyMock.*;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import junit.framework.JUnit4TestAdapter;
 
@@ -198,59 +200,26 @@ public class TestStudyController {
 		//test outcome
 		assertEquals(summary, testModel.getSummary());
 	}
-
-	@Test
-	public void testUpdateAcceptClinicalData(){
 	
+	@Test
+	public void testUpdateModules() {
+
 		//mock loaded state
 		testModel.setStudyEntry(testStudyEntry);
 		
+		//test data
+		Set<String> modulesSet1 = new HashSet<String>();
+		modulesSet1.add("module1");		
+		
 		//call method under test
-		testController.updateAcceptClinicalData(Boolean.TRUE);
+		testController.updateModules(modulesSet1);
 		
 		//test outcome
-		assertEquals(Boolean.TRUE, testModel.acceptClinicalData());
+		assertEquals(modulesSet1, testModel.getModules());		
+		
 	}
-
-	@Test
-	public void testUpdateAcceptMolecularData(){
 	
-		//mock loaded state
-		testModel.setStudyEntry(testStudyEntry);
-		
-		//call method under test
-		testController.updateAcceptMolecularData(Boolean.TRUE);
-		
-		//test outcome
-		assertEquals(Boolean.TRUE, testModel.acceptMolecularData());
-	}
-
-	@Test
-	public void testUpdateAcceptInVitroData(){
 	
-		//mock loaded state
-		testModel.setStudyEntry(testStudyEntry);
-		
-		//call method under test
-		testController.updateAcceptInVitroData(Boolean.TRUE);
-		
-		//test outcome
-		assertEquals(Boolean.TRUE, testModel.acceptInVitroData());
-	}
-
-	@Test
-	public void testUpdateAcceptPharmacologyData(){
-	
-		//mock loaded state
-		testModel.setStudyEntry(testStudyEntry);
-		
-		//call method under test
-		testController.updateAcceptPharmacologyData(Boolean.TRUE);
-		
-		//test outcome
-		assertEquals(Boolean.TRUE, testModel.acceptPharmacologyData());
-	}
-
 	@Test
 	public void testCancelCreateStudy() {
 	

@@ -6,6 +6,9 @@ package org.cggh.chassis.generic.client.gwt.widget.study.model.client;
 import static org.easymock.EasyMock.*;
 import static org.junit.Assert.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import junit.framework.JUnit4TestAdapter;
 
 import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
@@ -86,31 +89,22 @@ public class TestStudyModel {
 		//test data
 		String title = "title foo";
 		String summary = "summary foo";
+		Set<String> modulesSet1 = new HashSet<String>();
+		modulesSet1.add("module1");		
 		Integer status = StudyModel.STATUS_ERROR;
-		
-		Boolean acceptClinicalData = true;
-		Boolean acceptMolecularData = true;
-		Boolean acceptInVitroData = true;
-		Boolean acceptPharmacologyData = true;
-		
+				
 				
 		//call methods under test
 		testModel.setTitle(title);
 		testModel.setSummary(summary);
-		testModel.setAcceptClinicalData(acceptClinicalData);
-		testModel.setAcceptMolecularData(acceptMolecularData);
-		testModel.setAcceptInVitroData(acceptInVitroData);
-		testModel.setAcceptPharmacologyData(acceptPharmacologyData);
+		testModel.setModules(modulesSet1);
 		testModel.setStatus(status);
 		
 		
 		// test outcome
 		assertEquals(title, testModel.getTitle());
 		assertEquals(summary, testModel.getSummary());
-		assertEquals(acceptClinicalData, testModel.acceptClinicalData());
-		assertEquals(acceptMolecularData, testModel.acceptMolecularData());
-		assertEquals(acceptInVitroData, testModel.acceptInVitroData());
-		assertEquals(acceptPharmacologyData, testModel.acceptPharmacologyData());
+		assertEquals(modulesSet1, testModel.getModules());
 		assertEquals(status, testModel.getStatus());
 		
 	}
@@ -179,122 +173,41 @@ public class TestStudyModel {
 		
 	}
 	
-		
 	@Test
-	public void testOnAcceptClinicalDataChanged() {
+	public void testOnModulesChanged() {
 		
-		//place in ready state
-		testModel.setStudyEntry(newStudyEntry);
-				
-		StudyModelListener listener = createMock(StudyModelListener.class);
-		
-		//set up expectations
-		listener.onAcceptClinicalDataChanged(Boolean.FALSE, Boolean.TRUE, true);
-		listener.onStudyEntryChanged(isA(Boolean.class));
-		listener.onAcceptClinicalDataChanged(Boolean.TRUE, Boolean.FALSE, true);
-		listener.onStudyEntryChanged(isA(Boolean.class));
-		replay(listener);
-		
-		// register with model
-		testModel.addListener(listener);
-		
-		// call method under test
-		testModel.setAcceptClinicalData(Boolean.TRUE);
-		testModel.setAcceptClinicalData(Boolean.FALSE);
-		
-		verify(listener);
-		
-	}
-	
-	@Test
-	public void testOnAcceptMolecularDataChanged() {
-		
-		//place in ready state
-		testModel.setStudyEntry(newStudyEntry);
-				
-		StudyModelListener listener = createMock(StudyModelListener.class);
-		
-		//set up expectations
-		listener.onAcceptMolecularDataChanged(Boolean.FALSE, Boolean.TRUE, true);
-		listener.onStudyEntryChanged(isA(Boolean.class));
-		listener.onAcceptMolecularDataChanged(Boolean.TRUE, Boolean.FALSE, true);
-		listener.onStudyEntryChanged(isA(Boolean.class));
-		replay(listener);
-		
-		// register with model
-		testModel.addListener(listener);
-		
-		// call method under test
-		testModel.setAcceptMolecularData(Boolean.TRUE);
-		testModel.setAcceptMolecularData(Boolean.FALSE);
-		
-		verify(listener);
-		
-	}
-	
-	@Test
-	public void testOnAcceptInVitroDataChanged() {
-		
-		//place in ready state
-		testModel.setStudyEntry(newStudyEntry);
+		//test data
+		Set<String> valid = new HashSet<String>();
+		valid.add("module1");
+		valid.add("module2");
 
-		StudyModelListener listener = createMock(StudyModelListener.class);
+		Set<String> invalid = new HashSet<String>();
 		
-		//set up expectations
-		listener.onAcceptInVitroDataChanged(Boolean.FALSE, Boolean.TRUE, true);
-		listener.onStudyEntryChanged(isA(Boolean.class));
-		listener.onAcceptInVitroDataChanged(Boolean.TRUE, Boolean.FALSE, true);
-		listener.onStudyEntryChanged(isA(Boolean.class));
-		replay(listener);
-		
-		// register with model
-		testModel.addListener(listener);
-		
-		// call method under test
-		testModel.setAcceptInVitroData(Boolean.TRUE);
-		testModel.setAcceptInVitroData(Boolean.FALSE);
-		
-		verify(listener);
-		
-	}
-	
-	@Test
-	public void testOnAcceptPharmacologyDataChanged() {
-		
+
 		//place in ready state
 		testModel.setStudyEntry(newStudyEntry);
 				
 		StudyModelListener listener = createMock(StudyModelListener.class);
 		
 		//set up expectations
-		listener.onAcceptPharmacologyDataChanged(Boolean.FALSE, Boolean.TRUE, true);
+		listener.onModulesChanged(new HashSet<String>(), valid, true);
 		listener.onStudyEntryChanged(isA(Boolean.class));
-		listener.onAcceptPharmacologyDataChanged(Boolean.TRUE, Boolean.FALSE, true);
+		listener.onModulesChanged(valid, invalid, false);
 		listener.onStudyEntryChanged(isA(Boolean.class));
-		//allow other events, but do not check
-		listener.onTitleChanged(isA(String.class), isA(String.class), isA(Boolean.class));
-		expectLastCall().anyTimes();
-		listener.onSummaryChanged(isA(String.class), isA(String.class), isA(Boolean.class));
-		expectLastCall().anyTimes();
-		listener.onAcceptClinicalDataChanged(isA(Boolean.class), isA(Boolean.class), isA(Boolean.class));
-		expectLastCall().anyTimes();
-		listener.onAcceptInVitroDataChanged(isA(Boolean.class), isA(Boolean.class), isA(Boolean.class));
-		expectLastCall().anyTimes();
-		listener.onAcceptMolecularDataChanged(isA(Boolean.class), isA(Boolean.class), isA(Boolean.class));
-		expectLastCall().anyTimes();
 		replay(listener);
 		
 		// register with model
 		testModel.addListener(listener);
 		
 		// call method under test
-		testModel.setAcceptPharmacologyData(Boolean.TRUE);
-		testModel.setAcceptPharmacologyData(Boolean.FALSE);
+		testModel.setModules(valid);
+		testModel.setModules(invalid);
 		
 		verify(listener);
-		
 	}
-	
+		
+		
+	@SuppressWarnings("unchecked")
 	@Test
 	public void testStudyEntryChanged() {
 		
@@ -310,19 +223,13 @@ public class TestStudyModel {
 		//assert other events called, but do not check validation again here
 		listener.onTitleChanged(invalid.getTitle(), invalid.getTitle(), false);
 		listener.onSummaryChanged(invalid.getSummary(), invalid.getSummary(), false);
-		listener.onAcceptClinicalDataChanged(isA(Boolean.class), isA(Boolean.class), isA(Boolean.class));
-		listener.onAcceptInVitroDataChanged(isA(Boolean.class), isA(Boolean.class), isA(Boolean.class));
-		listener.onAcceptMolecularDataChanged(isA(Boolean.class), isA(Boolean.class), isA(Boolean.class));
-		listener.onAcceptPharmacologyDataChanged(isA(Boolean.class), isA(Boolean.class), isA(Boolean.class));
+		listener.onModulesChanged(isA(Set.class), isA(Set.class), isA(Boolean.class));
 		
 		listener.onStudyEntryChanged(Boolean.TRUE);	
 		//assert other events called, but do not check validation again here
 		listener.onTitleChanged(valid.getTitle(), valid.getTitle(), true);
 		listener.onSummaryChanged(valid.getSummary(), valid.getSummary(), true);
-		listener.onAcceptClinicalDataChanged(isA(Boolean.class), isA(Boolean.class), isA(Boolean.class));
-		listener.onAcceptInVitroDataChanged(isA(Boolean.class), isA(Boolean.class), isA(Boolean.class));
-		listener.onAcceptMolecularDataChanged(isA(Boolean.class), isA(Boolean.class), isA(Boolean.class));
-		listener.onAcceptPharmacologyDataChanged(isA(Boolean.class), isA(Boolean.class), isA(Boolean.class));
+		listener.onModulesChanged(isA(Set.class), isA(Set.class), isA(Boolean.class));
 		replay(listener);
 		
 		// register with model

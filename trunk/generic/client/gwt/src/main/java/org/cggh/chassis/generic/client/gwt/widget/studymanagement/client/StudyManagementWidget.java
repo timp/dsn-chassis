@@ -3,6 +3,8 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.studymanagement.client;
 
+import java.util.Map;
+
 import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
 import org.cggh.chassis.generic.client.gwt.widget.study.create.client.CreateStudyWidgetPubSubAPI;
@@ -26,13 +28,13 @@ public class StudyManagementWidget implements CreateStudyWidgetPubSubAPI,
 	private StudyManagementWidgetController controller;
 	private StudyManagementWidgetDefaultRenderer renderer;
 
-	public StudyManagementWidget(Panel menuCanvas, Panel displayCanvas, AtomService service, String feedURL) {
+	public StudyManagementWidget(Panel menuCanvas, Panel displayCanvas, AtomService service, String feedURL, Map<String, String> modulesMap) {
 		
 		model = new StudyManagementWidgetModel();
 		
 		controller = new StudyManagementWidgetController(model);
 		
-		renderer = new StudyManagementWidgetDefaultRenderer(menuCanvas, displayCanvas, controller, feedURL, service);
+		renderer = new StudyManagementWidgetDefaultRenderer(menuCanvas, displayCanvas, controller, feedURL, service, modulesMap);
 		
 		// register renderer as listener to model
 		model.addListener(renderer);

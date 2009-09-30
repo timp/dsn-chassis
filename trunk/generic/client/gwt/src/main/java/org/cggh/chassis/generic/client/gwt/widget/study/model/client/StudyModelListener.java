@@ -3,6 +3,8 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.study.model.client;
 
+import java.util.Set;
+
 
 /**
  * @author raok
@@ -14,16 +16,10 @@ public interface StudyModelListener {
 
 	void onSummaryChanged(String before, String after, Boolean isValid);
 
-	void onAcceptClinicalDataChanged(Boolean before, Boolean after, Boolean isValid);
-
-	void onAcceptMolecularDataChanged(Boolean before, Boolean after, Boolean isValid);
-
-	void onAcceptInVitroDataChanged(Boolean before, Boolean after, Boolean isValid);
-
-	void onAcceptPharmacologyDataChanged(Boolean before, Boolean after, Boolean isValid);
-
 	void onStudyEntryChanged(Boolean isValid);
 
 	void onStatusChanged(Integer before, Integer after);
+
+	void onModulesChanged(Set<String> before, Set<String> after, Boolean isValid);
 
 }

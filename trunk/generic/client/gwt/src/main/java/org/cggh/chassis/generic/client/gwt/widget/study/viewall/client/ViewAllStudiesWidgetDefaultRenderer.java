@@ -72,7 +72,7 @@ public class ViewAllStudiesWidgetDefaultRenderer implements ViewAllStudiesWidget
 		studiesTable.setWidget(rowNo, 1, new Label("Summary"));
 		
 		for (StudyEntry studyEntry : after) {
-			studiesTable.setWidget(++rowNo, 0, new Label(studyEntry.getTitle()));
+			studiesTable.setWidget(++rowNo, 0, new Label(studyEntry.toString()));
 			studiesTable.setWidget(rowNo, 1, new Label(studyEntry.getSummary()));
 			
 			//add view study link

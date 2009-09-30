@@ -4,6 +4,9 @@
 package org.cggh.chassis.generic.client.gwt.widget.studymanagement.client;
 
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.cggh.chassis.generic.atom.study.client.mockimpl.MockStudyFactory;
 import org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomService;
 import org.junit.Test;
@@ -49,9 +52,14 @@ public class GWTTestStudyManagementWidgetDefaultRenderer extends GWTTestCase {
 
 		// bootstrap mock service with study feed
 		((MockAtomService)mockService).createFeed(feedURL, "all studies");
+
+		//Create modules test data
+		Map<String, String> testModules = new HashMap<String, String>();
+		testModules.put("module1Id", "module1Label");
+		testModules.put("module2Id", "module2Label");
 		
 		//instantiate a test renderer
-		testRenderer = new StudyManagementWidgetDefaultRenderer(new SimplePanel(), new SimplePanel(), testController, feedURL, mockService);
+		testRenderer = new StudyManagementWidgetDefaultRenderer(new SimplePanel(), new SimplePanel(), testController, feedURL, mockService, testModules);
 		
 		//add as listener
 		testModel.addListener(testRenderer);

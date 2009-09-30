@@ -3,11 +3,11 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.study.model.client;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
 import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
-import org.cggh.chassis.generic.client.gwt.widget.application.client.ApplicationConstants;
 
 /**
  * @author raok
@@ -32,6 +32,12 @@ public class StudyModel {
 	
 	
 	
+	public StudyEntry getStudyEntry() {
+		return submissionEntry;
+	}
+
+
+
 	public void setStudyEntry(StudyEntry submissionEntry) {
 				
 		this.submissionEntry = submissionEntry;
@@ -39,13 +45,21 @@ public class StudyModel {
 		//fire all property events
 		fireOnTitleChanged(getTitle());
 		fireOnSummaryChanged(getSummary());
-		fireOnAcceptClinicalDataChanged(acceptClinicalData());
-		fireOnAcceptInVitroDataChanged(acceptInVitroData());
-		fireOnAcceptMolecularDataChanged(acceptMolecularData());
-		fireOnAcceptPharmacologyData(acceptPharmacologyData());
+		fireOnModulesChanged(getModules());
 		
 		//fire form validation
 		fireOnStudyEntryModelChanged();
+	}
+
+
+
+	private Boolean isStudyEntryValid() {
+				
+		Boolean isStudyEntryValid = isTitleValid()
+									&& isSummaryValid()
+									&& isModulesValid();
+		
+		return isStudyEntryValid;
 	}
 
 
@@ -58,31 +72,8 @@ public class StudyModel {
 
 
 
-	private Boolean isStudyEntryValid() {
-		
-		//require at least one module selected
-		Boolean isModuleSelected =  acceptClinicalData()
-									|| acceptMolecularData()
-									|| acceptInVitroData()
-									|| acceptPharmacologyData();
-		
-		Boolean isStudyEntryValid = isTitleValid()
-									&& isSummaryValid()
-									&& isModuleSelected;
-		
-		return isStudyEntryValid;
-	}
-
-
-
-	public Integer getStatus() {
-		return status;
-	}
-
-
-
-	public StudyEntry getStudyEntry() {
-		return submissionEntry;
+	public String getTitle() {
+		return submissionEntry.getTitle();
 	}
 
 
@@ -99,6 +90,13 @@ public class StudyModel {
 
 
 
+	private Boolean isTitleValid() {
+		//TODO improve validation
+		return ((getTitle() != null) && !(getTitle().length() == 0));
+	}
+
+
+
 	private void fireOnTitleChanged(String before) {
 		for (StudyModelListener listener : listeners) {
 			listener.onTitleChanged(before, getTitle(), isTitleValid());
@@ -107,9 +105,8 @@ public class StudyModel {
 
 
 
-	private Boolean isTitleValid() {
-		//TODO improve validation
-		return ((getTitle() != null) && !(getTitle().length() == 0));
+	public String getSummary() {
+		return submissionEntry.getSummary();
 	}
 
 
@@ -125,6 +122,13 @@ public class StudyModel {
 
 
 
+	private Boolean isSummaryValid() {
+		//TODO improve validation
+		return ((getSummary() != null) && !(getSummary().length() == 0));
+	}
+
+
+
 	private void fireOnSummaryChanged(String before) {
 		
 		for (StudyModelListener listener : listeners) {
@@ -134,147 +138,42 @@ public class StudyModel {
 
 
 
-	private Boolean isSummaryValid() {
-		//TODO improve validation
-		return ((getSummary() != null) && !(getSummary().length() == 0));
+	public Set<String> getModules() {
+		return new HashSet<String>(submissionEntry.getModules());
 	}
-	
 
-	public void setAcceptClinicalData(Boolean acceptClinicalData) {
+
+
+	public void setModules(Set<String> modules) {
 		
-		Boolean before = submissionEntry.getModules().contains(ApplicationConstants.MODULE_CLINICAL);
+		Set<String> before = getModules();
 		
-		if (acceptClinicalData && !before) {
-			submissionEntry.addModule(ApplicationConstants.MODULE_CLINICAL);
-		} else if (!acceptClinicalData && before) {
-			submissionEntry.removeModule(ApplicationConstants.MODULE_CLINICAL);
-		}
+		submissionEntry.setModules(new ArrayList<String>(modules));
 		
-		fireOnAcceptClinicalDataChanged(before);
+		fireOnModulesChanged(before);
 		fireOnStudyEntryModelChanged();
 	}
 
 
 
-	private void fireOnAcceptClinicalDataChanged(Boolean before) {
-				
-		for (StudyModelListener listener : listeners) {
-			listener.onAcceptClinicalDataChanged(before, acceptClinicalData(), true);
-		}
-	}
-
-
-	public void setAcceptMolecularData(Boolean acceptMolecularData) {
-		
-		Boolean before = submissionEntry.getModules().contains(ApplicationConstants.MODULE_MOLECULAR);
-		
-		if (acceptMolecularData && !before) {
-			submissionEntry.addModule(ApplicationConstants.MODULE_MOLECULAR);
-		} else if (!acceptMolecularData && before) {
-			submissionEntry.removeModule(ApplicationConstants.MODULE_MOLECULAR);
-		}
-		
-		fireOnAcceptMolecularDataChanged(before);
-		fireOnStudyEntryModelChanged();
+	private Boolean isModulesValid() {
+		// require at least one module
+		return (getModules().size() > 0);
 	}
 
 
 
-	private void fireOnAcceptMolecularDataChanged(Boolean before) {
-				
-		for (StudyModelListener listener : listeners) {
-			listener.onAcceptMolecularDataChanged(before, acceptMolecularData(), true);
-		}
-	}
-
-
-	public void setAcceptInVitroData(Boolean acceptInVitroData) {
-		
-		Boolean before = submissionEntry.getModules().contains(ApplicationConstants.MODULE_IN_VITRO);
-		
-		if (acceptInVitroData && !before) {
-			submissionEntry.addModule(ApplicationConstants.MODULE_IN_VITRO);
-		} else if (!acceptInVitroData && before) {
-			submissionEntry.removeModule(ApplicationConstants.MODULE_IN_VITRO);
-		}
-		
-		fireOnAcceptInVitroDataChanged(before);		
-		fireOnStudyEntryModelChanged();
-	}
-
-
-
-	private void fireOnAcceptInVitroDataChanged(Boolean before) {
-				
-		for (StudyModelListener listener : listeners) {
-			listener.onAcceptInVitroDataChanged(before, acceptInVitroData(), true);
-		}
-	}
-
-
-	public void setAcceptPharmacologyData(Boolean acceptPharmacologyData) {
-		
-		Boolean before = submissionEntry.getModules().contains(ApplicationConstants.MODULE_PHARMACOLOGY);
-		
-		if (acceptPharmacologyData && !before) {
-			submissionEntry.addModule(ApplicationConstants.MODULE_PHARMACOLOGY);
-		} else if (!acceptPharmacologyData && before) {
-			submissionEntry.removeModule(ApplicationConstants.MODULE_PHARMACOLOGY);
-		}
-		
-		fireOnAcceptPharmacologyData(before);
-		fireOnStudyEntryModelChanged();
-	}
-
-
-
-	private void fireOnAcceptPharmacologyData(Boolean before) {
+	private void fireOnModulesChanged(Set<String> before) {
 		
 		for (StudyModelListener listener : listeners) {
-			listener.onAcceptPharmacologyDataChanged(before, acceptPharmacologyData(), true);
+			listener.onModulesChanged(before, getModules(), isModulesValid());
 		}
 	}
 
 
 
-	public String getTitle() {
-		return submissionEntry.getTitle();
-	}
-
-
-
-	public String getSummary() {
-		return submissionEntry.getSummary();
-	}
-
-
-
-	public Boolean acceptClinicalData() {
-		return submissionEntry.getModules().contains(ApplicationConstants.MODULE_CLINICAL);
-	}
-
-
-
-	public Boolean acceptMolecularData() {
-		return submissionEntry.getModules().contains(ApplicationConstants.MODULE_MOLECULAR);
-	}
-
-
-
-	public Boolean acceptInVitroData() {
-		return submissionEntry.getModules().contains(ApplicationConstants.MODULE_IN_VITRO);
-	}
-
-
-
-	public Boolean acceptPharmacologyData() {
-		return submissionEntry.getModules().contains(ApplicationConstants.MODULE_PHARMACOLOGY);
-	}
-
-
-
-	public void addListener(StudyModelListener listener) {
-		listeners.add(listener);
+	public Integer getStatus() {
+		return status;
 	}
 
 
@@ -291,6 +190,12 @@ public class StudyModel {
 		for (StudyModelListener listener : listeners) {
 			listener.onStatusChanged(before, after);
 		}
+	}
+
+
+
+	public void addListener(StudyModelListener listener) {
+		listeners.add(listener);
 	}
 	
 	
