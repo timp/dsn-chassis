@@ -3,7 +3,13 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.study.view.client;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
+import org.cggh.chassis.generic.atom.study.client.mockimpl.MockStudyFactory;
 import org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerViewAPI;
 import org.cggh.chassis.generic.client.gwt.widget.study.model.client.StudyModel;
 
@@ -21,6 +27,12 @@ public class GWTTestViewStudyWidgetDefaultRenderer extends GWTTestCase {
 
 	private ViewStudyWidgetDefaultRenderer testRenderer;
 	private MockStudyController mockController;
+	//test data
+	String module1Id = "module1Id";
+	String module2Id = "module2Id";
+	String module1Label = "module1Label";
+	String module2Label = "module2Label";
+	private StudyEntry testStudyEntry;
 	
 	/* (non-Javadoc)
 	 * @see com.google.gwt.junit.client.GWTTestCase#getModuleName()
@@ -35,10 +47,22 @@ public class GWTTestViewStudyWidgetDefaultRenderer extends GWTTestCase {
 		
 
 		//create mockController and inject into testRenderer
-		mockController = new MockStudyController();
+		mockController = new MockStudyController();				
+
+		//Create modules test data
+		Map<String, String> testModules = new HashMap<String, String>();
+		testModules.put(module1Id, module1Label);
+		testModules.put(module2Id, module2Label);
+		
+		testRenderer = new ViewStudyWidgetDefaultRenderer(new SimplePanel(), mockController, testModules);
 				
-		testRenderer = new ViewStudyWidgetDefaultRenderer(new SimplePanel(), mockController);
-				
+
+		//create testStudyEntry to load
+		MockStudyFactory mockFactory = new MockStudyFactory();
+		testStudyEntry = mockFactory.createStudyEntry();
+		testStudyEntry.setTitle("title");
+		testStudyEntry.setSummary("summary");	
+		testStudyEntry.addModule(module1Id);
 	}
 	
 	public void testInitialState() {
@@ -48,17 +72,7 @@ public class GWTTestViewStudyWidgetDefaultRenderer extends GWTTestCase {
 		assertEquals("", testRenderer.titleLabel.getText());
 		assertEquals("", testRenderer.summaryLabel.getText());
 		
-		assertTrue( (testRenderer.acceptsClinicalDataIndicator.getParent() == null)
-					 || !(testRenderer.acceptsClinicalDataIndicator.isVisible()) );
-		
-		assertTrue( (testRenderer.acceptsMolecularDataIndicator.getParent() == null)
-					 || !(testRenderer.acceptsMolecularDataIndicator.isVisible()) );
-		
-		assertTrue( (testRenderer.acceptsInVitroDataIndicator.getParent() == null)
-				    || !(testRenderer.acceptsInVitroDataIndicator.isVisible()) );
-		
-		assertTrue( (testRenderer.acceptsPharmacologyDataIndicator.getParent() == null)
-			    	|| !(testRenderer.acceptsPharmacologyDataIndicator.isVisible()) );
+		assertTrue(testRenderer.modulesListPanel.getWidgetCount() == 0);
 
 		assertTrue( (testRenderer.loadingPanel.getParent() == null)
 			        || !(testRenderer.loadingPanel.isVisible()) );
@@ -96,62 +110,21 @@ public class GWTTestViewStudyWidgetDefaultRenderer extends GWTTestCase {
 		
 	}
 	
-	public void testOnAcceptClinicalDataChanged() {
+	public void testOnModulesChanged() {
 		
 		//test data
-		Boolean acceptClinicalData = true;
-		
+		Set<String> modulesSet1 = new HashSet<String>();
+		modulesSet1.add("module1");		
+
 		// call method under test
-		testRenderer.onAcceptClinicalDataChanged(null, acceptClinicalData, false);		
+		testRenderer.onModulesChanged(null, modulesSet1, true);		
 		
+		// test outcome
+		assertEquals(modulesSet1.size(), testRenderer.modulesListPanel.getWidgetCount());
 		
-		//test outcome
-		assertTrue( (testRenderer.acceptsClinicalDataIndicator.getParent() != null)
-					 && (testRenderer.acceptsClinicalDataIndicator.isVisible()) );
 	}
 	
-	public void testOnAcceptMolecularDataChanged() {
 		
-		//test data
-		Boolean acceptMolecularData = true;
-		
-		// call method under test
-		testRenderer.onAcceptMolecularDataChanged(null, acceptMolecularData, false);		
-		
-		
-		//test outcome
-		assertTrue( (testRenderer.acceptsMolecularDataIndicator.getParent() != null)
-				 && (testRenderer.acceptsMolecularDataIndicator.isVisible()) );
-	}
-	
-	public void testOnAcceptPharmacologyDataChanged() {
-		
-		//test data
-		Boolean acceptPharmacologyData = true;
-		
-		// call method under test
-		testRenderer.onAcceptPharmacologyDataChanged(null, acceptPharmacologyData, false);		
-		
-		
-		//test outcome
-		assertTrue( (testRenderer.acceptsPharmacologyDataIndicator.getParent()  != null)
-				 && (testRenderer.acceptsPharmacologyDataIndicator.isVisible()) );
-	}
-	
-	public void testOnAcceptInVitroDataChanged() {
-		
-		//test data
-		Boolean acceptInVitroData = true;
-		
-		// call method under test
-		testRenderer.onAcceptInVitroDataChanged(null, acceptInVitroData, false);		
-		
-		
-		//test outcome
-		assertTrue( (testRenderer.acceptsInVitroDataIndicator.getParent() != null)
-				 && (testRenderer.acceptsInVitroDataIndicator.isVisible()) );
-	}
-	
 	public void testOnStatusChanged() {
 				
 		//mock loading state

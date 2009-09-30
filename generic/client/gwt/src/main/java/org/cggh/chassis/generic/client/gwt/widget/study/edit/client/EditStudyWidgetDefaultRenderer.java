@@ -3,6 +3,11 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.study.edit.client;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 import org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerEditAPI;
 import org.cggh.chassis.generic.client.gwt.widget.study.model.client.StudyModelListener;
 
@@ -36,16 +41,19 @@ public class EditStudyWidgetDefaultRenderer implements StudyModelListener {
 	final CheckBox acceptPharmacologyDataUI = new CheckBox("Pharmacology");
 	final Button cancelEditStudyUI = new Button("Cancel", new CancelStudyClickHandler());
 	final Button updateStudyUI = new Button("Update Study", new UpdateStudyClickHandler());
+	final Map<String, CheckBox> modulesUIHash = new HashMap<String, CheckBox>();
 	
 	final private Panel canvas;
 	private StudyControllerEditAPI controller;
 	private Boolean isFormComplete = false;
 	private String feedURL;
+	private Map<String, String> modulesConfig;
 
-	public EditStudyWidgetDefaultRenderer(Panel canvas, StudyControllerEditAPI controller, String feedURL) {
+	public EditStudyWidgetDefaultRenderer(Panel canvas, StudyControllerEditAPI controller, String feedURL, Map<String, String> modulesMap) {
 		this.canvas = canvas;
 		this.controller = controller;
 		this.feedURL = feedURL;
+		this.modulesConfig = modulesMap;
 		
 		initCanvas();
 	}
@@ -68,14 +76,23 @@ public class EditStudyWidgetDefaultRenderer implements StudyModelListener {
 
 		Label modulesLabel = new Label("Edit modules (at least one must be selected):");
 		editStudyForm.setWidget(++rowNumber, 0, modulesLabel);
-		acceptClinicalDataUI.addValueChangeHandler(new AcceptClinicalDataChangeHandler());
-		editStudyForm.setWidget(++rowNumber, 0, acceptClinicalDataUI);
-		acceptMolecularDataUI.addValueChangeHandler(new AcceptMolecularDataChangeHandler());
-		editStudyForm.setWidget(++rowNumber, 0, acceptMolecularDataUI);
-		acceptInVitroDataUI.addValueChangeHandler(new AcceptInVitroDataChangeHandler());
-		editStudyForm.setWidget(++rowNumber, 0, acceptInVitroDataUI);
-		acceptPharmacologyDataUI.addValueChangeHandler(new AcceptPharmacologyDataChangeHandler());
-		editStudyForm.setWidget(++rowNumber, 0, acceptPharmacologyDataUI);
+
+		//Create as many modules checkboxes as required
+		for (String moduleId : modulesConfig.keySet()) {
+			
+			String UILabel = modulesConfig.get(moduleId);
+			CheckBox moduleUICheckBox = new CheckBox(UILabel);
+			
+			//add valueChangeHandler
+			moduleUICheckBox.addValueChangeHandler(new ModulesUIValueChangeHandler());
+			
+			//add checkbox reference to HashMap
+			modulesUIHash.put(moduleId, moduleUICheckBox);
+			
+			//add to GUI
+			editStudyForm.setWidget(++rowNumber, 0, moduleUICheckBox);
+			
+		}
 		
 		editStudyForm.setWidget(++rowNumber, 0, updateStudyUI);
 		editStudyForm.setWidget(rowNumber, 1, cancelEditStudyUI);
@@ -104,34 +121,26 @@ public class EditStudyWidgetDefaultRenderer implements StudyModelListener {
 		
 	}
 	
-	class AcceptClinicalDataChangeHandler implements ValueChangeHandler<Boolean> {
+	class ModulesUIValueChangeHandler implements ValueChangeHandler<Boolean> {
 
 		public void onValueChange(ValueChangeEvent<Boolean> arg0) {
-			controller.updateAcceptClinicalData(acceptClinicalDataUI.getValue());			
-		}
-		
-	}
-	
-	class AcceptMolecularDataChangeHandler implements ValueChangeHandler<Boolean> {
-
-		public void onValueChange(ValueChangeEvent<Boolean> arg0) {
-			controller.updateAcceptMolecularData(acceptMolecularDataUI.getValue());			
-		}
-		
-	}
-	
-	class AcceptInVitroDataChangeHandler implements ValueChangeHandler<Boolean> {
-
-		public void onValueChange(ValueChangeEvent<Boolean> arg0) {
-			controller.updateAcceptInVitroData(acceptInVitroDataUI.getValue());			
-		}
-		
-	}
-	
-	class AcceptPharmacologyDataChangeHandler implements ValueChangeHandler<Boolean> {
-
-		public void onValueChange(ValueChangeEvent<Boolean> arg0) {
-			controller.updateAcceptPharmacologyData(acceptPharmacologyDataUI.getValue());			
+			
+			//get modules selected
+			Set<String> modulesSelected = new HashSet<String>();
+			
+			for (String moduleId : modulesUIHash.keySet()) {
+				
+				CheckBox moduleUICheckBox = modulesUIHash.get(moduleId);
+				
+				if (moduleUICheckBox.getValue()) {
+					modulesSelected.add(moduleId);
+				}
+				
+			}
+			
+			//update model
+			controller.updateModules(modulesSelected);
+			
 		}
 		
 	}
@@ -180,20 +189,14 @@ public class EditStudyWidgetDefaultRenderer implements StudyModelListener {
 		summaryUI.setValue(after, false);
 	}
 
-	public void onAcceptClinicalDataChanged(Boolean before, Boolean after, Boolean isValid) {
-		acceptClinicalDataUI.setValue(after, false);
-	}
+	public void onModulesChanged(Set<String> before, Set<String> after, Boolean isValid) {
 
-	public void onAcceptInVitroDataChanged(Boolean before, Boolean after, Boolean isValid) {
-		acceptInVitroDataUI.setValue(after, false);
-	}
-
-	public void onAcceptMolecularDataChanged(Boolean before, Boolean after, Boolean isValid) {
-		acceptMolecularDataUI.setValue(after, false);
-	}
-
-	public void onAcceptPharmacologyDataChanged(Boolean before, Boolean after, Boolean isValid) {
-		acceptPharmacologyDataUI.setValue(after, false);
+		for (String moduleId : modulesConfig.keySet()) {
+			
+			modulesUIHash.get(moduleId).setValue(after.contains(moduleId), false);
+			
+		}
+		
 	}
 
 }

@@ -113,6 +113,7 @@ public class TestViewAllStudiesWidgetController {
 		
 		//set up expectations
 		expect(mockStudyFeed.getStudyEntries()).andReturn(testStudies);
+		expectLastCall().atLeastOnce();
 		replay(mockStudyFeed);
 
 		GetStudyFeedCallback callback = testController.new GetStudyFeedCallback();

@@ -47,10 +47,13 @@ public class ViewAllStudiesWidgetController {
 	class GetStudyFeedCallback implements Function<StudyFeed,StudyFeed> {
 
 		public StudyFeed apply(StudyFeed studyFeed) {
+			log.enter("GetStudyFeedCallback::apply");
 			
 			model.setStudyEntries(studyFeed.getStudyEntries());
 			model.setStatus(ViewAllStudiesWidgetModel.STATUS_LOADED);
+			log.trace(studyFeed.getStudyEntries().size() + " studies loaded.");
 			
+			log.leave();
 			return studyFeed;
 		}
 		

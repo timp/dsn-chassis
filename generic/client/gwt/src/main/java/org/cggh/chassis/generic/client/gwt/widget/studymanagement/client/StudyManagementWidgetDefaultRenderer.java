@@ -3,6 +3,8 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.studymanagement.client;
 
+import java.util.Map;
+
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
 import org.cggh.chassis.generic.client.gwt.widget.study.create.client.CreateStudyWidget;
 import org.cggh.chassis.generic.client.gwt.widget.study.create.client.CreateStudyWidgetAPI;
@@ -50,16 +52,17 @@ public class StudyManagementWidgetDefaultRenderer implements StudyManagementWidg
 	public StudyManagementWidgetDefaultRenderer(Panel menuCanvas, Panel displayCanvas,
 												StudyManagementWidgetController controller,
 												String feedURL, 
-												AtomService service) {
+												AtomService service,
+												Map<String, String> modulesMap) {
 		this.menuCanvas = menuCanvas;
 		this.displayCanvas = displayCanvas;
 		this.controller = controller;
 		
 		//create child widgets
-		viewStudyWidget = new ViewStudyWidget(viewStudyWidgetCanvas, service);
-		createStudyWidget = new CreateStudyWidget(createStudyWidgetCanvas, service, feedURL);
+		viewStudyWidget = new ViewStudyWidget(viewStudyWidgetCanvas, service, modulesMap);
+		createStudyWidget = new CreateStudyWidget(createStudyWidgetCanvas, service, feedURL, modulesMap);
 		viewAllStudiesWidget = new ViewAllStudiesWidget(viewAllStudiesWidgetCanvas, service, feedURL);
-		editStudyWidget = new EditStudyWidget(editStudyWidgetCanvas, service, feedURL);
+		editStudyWidget = new EditStudyWidget(editStudyWidgetCanvas, service, feedURL, modulesMap);
 		
 		//initialise view
 		initMenu();
