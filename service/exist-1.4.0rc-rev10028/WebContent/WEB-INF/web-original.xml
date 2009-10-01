@@ -164,43 +164,6 @@
         <servlet-class>org.exist.atom.http.AtomServlet</servlet-class>
     </servlet>
     
-    <!-- HTTP Method Override Filter, for Atom Services -->
-
-    <filter>
-      <filter-name>HttpMethodOverrideFilter</filter-name>
-      <filter-class>org.cggh.chassis.generic.http.HttpMethodOverrideFilter</filter-class>
-      <init-param>
-        <param-name>allowedOverrides</param-name>
-        <param-value>PUT DELETE</param-value>
-      </init-param>
-    </filter>
-    
-    <filter-mapping>
-      <filter-name>HttpMethodOverrideFilter</filter-name>
-      <servlet-name>AtomServlet</servlet-name>
-    </filter-mapping>
-    
-    <!--+
-        | HTTP Content Type Override Filter, for Atom Services 
-        | needed to work around bug in GWT hosted mode browser
-        | see http://code.google.com/p/google-web-toolkit/issues/detail?id=4095
-        | N.B. this is needed for development only - remove this in production
-        +-->
-
-    <filter>
-      <filter-name>ContentTypeOverrideFilter</filter-name>
-      <filter-class>org.cggh.chassis.generic.http.ContentTypeOverrideFilter</filter-class>
-      <init-param>
-        <param-name>contentType</param-name>
-        <param-value>application/xml</param-value>
-      </init-param>
-    </filter>
-    
-    <filter-mapping>
-      <filter-name>ContentTypeOverrideFilter</filter-name>
-      <servlet-name>AtomServlet</servlet-name>
-    </filter-mapping>
-    
     <!-- 
         ================ Cocoon2 Configuration starts here ================ 
     -->
