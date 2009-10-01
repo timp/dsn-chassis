@@ -26,10 +26,11 @@ public class SubmissionController implements SubmissionControllerEditAPI, Submis
 	private String feedURL;
 	final private AbstractSubmissionControllerPubSubAPI owner;
 
-	public SubmissionController(SubmissionModel model, AtomService service, AbstractSubmissionControllerPubSubAPI owner) {
+	public SubmissionController(SubmissionModel model, AtomService service, AbstractSubmissionControllerPubSubAPI owner, String feedURL) {
 		this.model = model;
 		this.service = service;
 		this.owner = owner;
+		this.feedURL = feedURL;
 		
 		// TODO replace default with real factory
 		this.submissionFactory = new MockSubmissionFactory();		
@@ -48,9 +49,8 @@ public class SubmissionController implements SubmissionControllerEditAPI, Submis
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.client.gwt.widget.submission.controller.client.SubmissionControllerCreateAPI#setUpNewSubmission(java.lang.String)
 	 */
-	public void setUpNewSubmission(String feedURL) {
+	public void setUpNewSubmission() {
 		
-		this.feedURL = feedURL;
 		model.setSubmissionEntry(submissionFactory.createSubmissionEntry());
 		model.setStatus(SubmissionModel.STATUS_LOADED);
 		
@@ -74,46 +74,6 @@ public class SubmissionController implements SubmissionControllerEditAPI, Submis
 	 */
 	public void updateSummary(String summary) {
 		model.setSummary(summary);
-	}
-
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.client.gwt.widget.submission.controller.client.SubmissionControllerEditAPI#updateAcceptClinicalData(java.lang.Boolean)
-	 */
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.client.gwt.widget.submission.controller.client.SubmissionControllerCreateAPI#updateAcceptClinicalData(java.lang.Boolean)
-	 */
-	public void updateAcceptClinicalData(Boolean acceptClinicalData) {
-		model.setAcceptClinicalData(acceptClinicalData);
-	}
-
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.client.gwt.widget.submission.controller.client.SubmissionControllerEditAPI#updateAcceptMolecularData(java.lang.Boolean)
-	 */
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.client.gwt.widget.submission.controller.client.SubmissionControllerCreateAPI#updateAcceptMolecularData(java.lang.Boolean)
-	 */
-	public void updateAcceptMolecularData(Boolean acceptMolecularData) {
-		model.setAcceptMolecularData(acceptMolecularData);
-	}
-
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.client.gwt.widget.submission.controller.client.SubmissionControllerEditAPI#updateAcceptInVitroData(java.lang.Boolean)
-	 */
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.client.gwt.widget.submission.controller.client.SubmissionControllerCreateAPI#updateAcceptInVitroData(java.lang.Boolean)
-	 */
-	public void updateAcceptInVitroData(Boolean acceptInVitroData) {
-		model.setAcceptInVitroData(acceptInVitroData);
-	}
-
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.client.gwt.widget.submission.controller.client.SubmissionControllerEditAPI#updateAcceptPharmacologyData(java.lang.Boolean)
-	 */
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.client.gwt.widget.submission.controller.client.SubmissionControllerCreateAPI#updateAcceptPharmacologyData(java.lang.Boolean)
-	 */
-	public void updateAcceptPharmacologyData(Boolean acceptPharmacologyData) {
-		model.setAcceptPharmacologyData(acceptPharmacologyData);
 	}
 
 	/* (non-Javadoc)
@@ -276,6 +236,10 @@ public class SubmissionController implements SubmissionControllerEditAPI, Submis
 		}
 
 		
+	}
+
+	public void updateModules(Set<String> modules) {
+		model.setModules(modules);
 	}
 	
 }

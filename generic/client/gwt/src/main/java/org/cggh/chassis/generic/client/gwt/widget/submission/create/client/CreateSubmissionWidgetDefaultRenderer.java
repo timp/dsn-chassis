@@ -3,6 +3,9 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.submission.create.client;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.cggh.chassis.generic.client.gwt.widget.submission.controller.client.SubmissionControllerCreateAPI;
@@ -35,6 +38,7 @@ public class CreateSubmissionWidgetDefaultRenderer implements SubmissionModelLis
 	private Panel canvas;
 	private SubmissionControllerCreateAPI controller;
 	private Boolean isFormComplete = false;
+	private Map<String, String> modulesConfig;
 	
 	//Expose view elements for testing purposes.
 	final Panel createSubmissionFormPanel = new SimplePanel();
@@ -50,13 +54,15 @@ public class CreateSubmissionWidgetDefaultRenderer implements SubmissionModelLis
 	
 	final ListBox studyLinkToAddUI = new ListBox();
 	final Button addStudyLinkUI = new Button("Add study");
+	final Map<String, CheckBox> modulesUIHash = new HashMap<String, CheckBox>();
 	
 	final Button cancelCreateSubmissionUI = new Button("Cancel", new CancelCreateSubmissionUIClickHandler());
 	final Button saveNewSubmissionEntryUI = new Button("Create Submission", new SaveNewSubmissionUIClickHandler());
 
-	public CreateSubmissionWidgetDefaultRenderer(Panel canvas, SubmissionControllerCreateAPI controller) {
+	public CreateSubmissionWidgetDefaultRenderer(Panel canvas, SubmissionControllerCreateAPI controller, Map<String, String> modulesMap) {
 		this.canvas = canvas;
 		this.controller = controller;
+		this.modulesConfig = modulesMap;
 		
 		//initialise view
 		initCanvas();
@@ -80,14 +86,23 @@ public class CreateSubmissionWidgetDefaultRenderer implements SubmissionModelLis
 
 		Label modulesLabel = new Label("Select modules (at least one must be selected):");
 		createSubmissionForm.setWidget(++rowNumber, 0, modulesLabel);
-		acceptClinicalDataUI.addValueChangeHandler(new AcceptClinicalDataChangeHandler());
-		createSubmissionForm.setWidget(++rowNumber, 0, acceptClinicalDataUI);
-		acceptInVitroDataUI.addValueChangeHandler(new AcceptInVitroDataChangeHandler());
-		createSubmissionForm.setWidget(++rowNumber, 0, acceptInVitroDataUI);
-		acceptMolecularDataUI.addValueChangeHandler(new AcceptMolecularDataChangeHandler());
-		createSubmissionForm.setWidget(++rowNumber, 0, acceptMolecularDataUI);
-		acceptPharmacologyDataUI.addValueChangeHandler(new AcceptPharmacologyDataChangeHandler());
-		createSubmissionForm.setWidget(++rowNumber, 0, acceptPharmacologyDataUI);
+
+		//Create as many modules checkboxes as required
+		for (String moduleId : modulesConfig.keySet()) {
+			
+			String UILabel = modulesConfig.get(moduleId);
+			CheckBox moduleUICheckBox = new CheckBox(UILabel);
+			
+			//add valueChangeHandler
+			moduleUICheckBox.addValueChangeHandler(new ModulesUIValueChangeHandler());
+			
+			//add checkbox reference to HashMap
+			modulesUIHash.put(moduleId, moduleUICheckBox);
+			
+			//add to GUI
+			createSubmissionForm.setWidget(++rowNumber, 0, moduleUICheckBox);
+			
+		}
 		
 		
 		//prepare panel to show list of studies added
@@ -148,38 +163,31 @@ public class CreateSubmissionWidgetDefaultRenderer implements SubmissionModelLis
 		
 	}
 	
-	private class AcceptClinicalDataChangeHandler implements ValueChangeHandler<Boolean> {
+
+	class ModulesUIValueChangeHandler implements ValueChangeHandler<Boolean> {
 
 		public void onValueChange(ValueChangeEvent<Boolean> arg0) {
-			controller.updateAcceptClinicalData(acceptClinicalDataUI.getValue());			
+			
+			//get modules selected
+			Set<String> modulesSelected = new HashSet<String>();
+			
+			for (String moduleId : modulesUIHash.keySet()) {
+				
+				CheckBox moduleUICheckBox = modulesUIHash.get(moduleId);
+				
+				if (moduleUICheckBox.getValue()) {
+					modulesSelected.add(moduleId);
+				}
+				
+			}
+			
+			//update model
+			controller.updateModules(modulesSelected);
+			
 		}
 		
 	}
-	
-	private class AcceptMolecularDataChangeHandler implements ValueChangeHandler<Boolean> {
-
-		public void onValueChange(ValueChangeEvent<Boolean> arg0) {
-			controller.updateAcceptMolecularData(acceptMolecularDataUI.getValue());			
-		}
 		
-	}
-	
-	private class AcceptInVitroDataChangeHandler implements ValueChangeHandler<Boolean> {
-
-		public void onValueChange(ValueChangeEvent<Boolean> arg0) {
-			controller.updateAcceptInVitroData(acceptInVitroDataUI.getValue());			
-		}
-		
-	}
-	
-	private class AcceptPharmacologyDataChangeHandler implements ValueChangeHandler<Boolean> {
-
-		public void onValueChange(ValueChangeEvent<Boolean> arg0) {
-			controller.updateAcceptPharmacologyData(acceptPharmacologyDataUI.getValue());			
-		}
-		
-	}
-	
 	private class CancelCreateSubmissionUIClickHandler implements ClickHandler {
 
 		public void onClick(ClickEvent arg0) {
@@ -218,22 +226,7 @@ public class CreateSubmissionWidgetDefaultRenderer implements SubmissionModelLis
 		summaryUI.setValue(after, false);
 	}
 
-	public void onAcceptClinicalDataChanged(Boolean before, Boolean after, Boolean isValid) {
-		acceptClinicalDataUI.setValue(after, false);
-	}
-
-	public void onAcceptInVitroDataChanged(Boolean before, Boolean after, Boolean isValid) {
-		acceptInVitroDataUI.setValue(after, false);
-	}
-
-	public void onAcceptMolecularDataChanged(Boolean before, Boolean after, Boolean isValid) {
-		acceptMolecularDataUI.setValue(after, false);
-	}
-
-	public void onAcceptPharmacologyDataChanged(Boolean before, Boolean after, Boolean isValid) {
-		acceptPharmacologyDataUI.setValue(after, false);
-	}
-
+	
 	public void onStudyLinksChanged(Set<String> before, Set<String> after, Boolean isValid) {
 
 		//show hide panel depending on if studies added
@@ -252,6 +245,11 @@ public class CreateSubmissionWidgetDefaultRenderer implements SubmissionModelLis
 	public void onStatusChanged(Integer before, Integer after) {
 		
 
+	}
+
+	public void onModulesChanged(Set<String> before, Set<String> after, Boolean isValid) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

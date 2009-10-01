@@ -24,7 +24,7 @@ public class StudyModel {
 	public static final Integer STATUS_CANCELLED = 6;
 	
 
-	private StudyEntry submissionEntry;
+	private StudyEntry studyEntry;
 	private Integer status = STATUS_INITIAL;
 	
 	//maybe have two groups of listeners: one for read only properties, and one for editable
@@ -33,14 +33,14 @@ public class StudyModel {
 	
 	
 	public StudyEntry getStudyEntry() {
-		return submissionEntry;
+		return studyEntry;
 	}
 
 
 
-	public void setStudyEntry(StudyEntry submissionEntry) {
+	public void setStudyEntry(StudyEntry studyEntry) {
 				
-		this.submissionEntry = submissionEntry;
+		this.studyEntry = studyEntry;
 		
 		//fire all property events
 		fireOnTitleChanged(getTitle());
@@ -73,7 +73,7 @@ public class StudyModel {
 
 
 	public String getTitle() {
-		return submissionEntry.getTitle();
+		return studyEntry.getTitle();
 	}
 
 
@@ -82,7 +82,7 @@ public class StudyModel {
 		
 		String before = getTitle();		
 		
-		submissionEntry.setTitle(title);
+		studyEntry.setTitle(title);
 		
 		fireOnTitleChanged(before);
 		fireOnStudyEntryModelChanged();
@@ -106,7 +106,7 @@ public class StudyModel {
 
 
 	public String getSummary() {
-		return submissionEntry.getSummary();
+		return studyEntry.getSummary();
 	}
 
 
@@ -115,7 +115,7 @@ public class StudyModel {
 		
 		String before = getSummary();
 		
-		submissionEntry.setSummary(summary);
+		studyEntry.setSummary(summary);
 		fireOnSummaryChanged(before);
 		fireOnStudyEntryModelChanged();
 	}
@@ -139,7 +139,7 @@ public class StudyModel {
 
 
 	public Set<String> getModules() {
-		return new HashSet<String>(submissionEntry.getModules());
+		return new HashSet<String>(studyEntry.getModules());
 	}
 
 
@@ -148,7 +148,7 @@ public class StudyModel {
 		
 		Set<String> before = getModules();
 		
-		submissionEntry.setModules(new ArrayList<String>(modules));
+		studyEntry.setModules(new ArrayList<String>(modules));
 		
 		fireOnModulesChanged(before);
 		fireOnStudyEntryModelChanged();

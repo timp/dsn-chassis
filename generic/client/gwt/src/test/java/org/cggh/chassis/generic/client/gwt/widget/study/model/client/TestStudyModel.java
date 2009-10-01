@@ -13,7 +13,6 @@ import junit.framework.JUnit4TestAdapter;
 
 import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
 import org.cggh.chassis.generic.atom.study.client.mockimpl.MockStudyFactory;
-import org.cggh.chassis.generic.client.gwt.widget.application.client.ApplicationConstants;
 import org.cggh.chassis.generic.client.gwt.widget.study.model.client.StudyModel;
 import org.cggh.chassis.generic.client.gwt.widget.study.model.client.StudyModelListener;
 import org.junit.Before;
@@ -48,8 +47,8 @@ public class TestStudyModel {
 		validStudyEntry = mockStudyFactory.createStudyEntry();
 		validStudyEntry.setTitle("title foo");
 		validStudyEntry.setSummary("summary foo");
-		validStudyEntry.addModule(ApplicationConstants.MODULE_CLINICAL);
-		validStudyEntry.addModule(ApplicationConstants.MODULE_PHARMACOLOGY);
+		validStudyEntry.addModule("module1");
+		validStudyEntry.addModule("module2");
 			
 	}
 	

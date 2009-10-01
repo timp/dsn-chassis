@@ -13,7 +13,6 @@ import junit.framework.JUnit4TestAdapter;
 
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
 import org.cggh.chassis.generic.atom.submission.client.mockimpl.MockSubmissionFactory;
-import org.cggh.chassis.generic.client.gwt.widget.application.client.ApplicationConstants;
 import org.cggh.chassis.generic.client.gwt.widget.submission.model.client.SubmissionModel;
 import org.cggh.chassis.generic.client.gwt.widget.submission.model.client.SubmissionModelListener;
 import org.junit.Before;
@@ -50,8 +49,8 @@ public class TestSubmissionModel {
 		validSubmissionEntry.setSummary("summary foo");
 		validSubmissionEntry.addStudyLink("http://example.com/studies/study1");
 		validSubmissionEntry.addStudyLink("http://example.com/studies/study2");
-		validSubmissionEntry.addModule(ApplicationConstants.MODULE_CLINICAL);
-		validSubmissionEntry.addModule(ApplicationConstants.MODULE_PHARMACOLOGY);
+		validSubmissionEntry.addModule("module1");
+		validSubmissionEntry.addModule("module2");
 			
 	}
 	
@@ -96,22 +95,16 @@ public class TestSubmissionModel {
 		Set<String> studyLinks = new HashSet<String>();
 		studyLinks.add(studylink1);
 		studyLinks.add(studylink2);
+		Set<String> modulesSet1 = new HashSet<String>();
+		modulesSet1.add("module1");		
 		Integer status = SubmissionModel.STATUS_ERROR;
-		
-		Boolean acceptClinicalData = true;
-		Boolean acceptMolecularData = true;
-		Boolean acceptInVitroData = true;
-		Boolean acceptPharmacologyData = true;
 		
 				
 		//call methods under test
 		testModel.setTitle(title);
 		testModel.setSummary(summary);
 		testModel.setStudyLinks(studyLinks);
-		testModel.setAcceptClinicalData(acceptClinicalData);
-		testModel.setAcceptMolecularData(acceptMolecularData);
-		testModel.setAcceptInVitroData(acceptInVitroData);
-		testModel.setAcceptPharmacologyData(acceptPharmacologyData);
+		testModel.setModules(modulesSet1);
 		testModel.setStatus(status);
 		
 		
@@ -119,10 +112,7 @@ public class TestSubmissionModel {
 		assertEquals(title, testModel.getTitle());
 		assertEquals(summary, testModel.getSummary());
 		assertEquals(studyLinks, testModel.getStudyLinks());
-		assertEquals(acceptClinicalData, testModel.acceptClinicalData());
-		assertEquals(acceptMolecularData, testModel.acceptMolecularData());
-		assertEquals(acceptInVitroData, testModel.acceptInVitroData());
-		assertEquals(acceptPharmacologyData, testModel.acceptPharmacologyData());
+		assertEquals(modulesSet1, testModel.getModules());
 		assertEquals(status, testModel.getStatus());
 		
 	}
@@ -216,120 +206,41 @@ public class TestSubmissionModel {
 		verify(listener);
 		
 	}
-	
-	@Test
-	public void testOnAcceptClinicalDataChanged() {
-		
-		//place in ready state
-		testModel.setSubmissionEntry(newSubmissionEntry);
-				
-		SubmissionModelListener listener = createMock(SubmissionModelListener.class);
-		
-		//set up expectations
-		//TODO do study validation check. I.E. check if linked studies accept data to modules ticked. Assume true for now
-		listener.onAcceptClinicalDataChanged(Boolean.FALSE, Boolean.TRUE, true);
-		listener.onAcceptClinicalDataChanged(Boolean.TRUE, Boolean.FALSE, true);
-		replay(listener);
-		
-		// register with model
-		testModel.addListener(listener);
-		
-		// call method under test
-		testModel.setAcceptClinicalData(Boolean.TRUE);
-		testModel.setAcceptClinicalData(Boolean.FALSE);
-		
-		verify(listener);
-		
-	}
-	
-	@Test
-	public void testOnAcceptMolecularDataChanged() {
-		
-		//place in ready state
-		testModel.setSubmissionEntry(newSubmissionEntry);
-				
-		SubmissionModelListener listener = createMock(SubmissionModelListener.class);
-		
-		//set up expectations
-		//TODO do study validation check. I.E. check if linked studies accept data to modules ticked. Assume true for now
-		listener.onAcceptMolecularDataChanged(Boolean.FALSE, Boolean.TRUE, true);
-		listener.onAcceptMolecularDataChanged(Boolean.TRUE, Boolean.FALSE, true);
-		replay(listener);
-		
-		// register with model
-		testModel.addListener(listener);
-		
-		// call method under test
-		testModel.setAcceptMolecularData(Boolean.TRUE);
-		testModel.setAcceptMolecularData(Boolean.FALSE);
-		
-		verify(listener);
-		
-	}
-	
-	@Test
-	public void testOnAcceptInVitroDataChanged() {
-		
-		//place in ready state
-		testModel.setSubmissionEntry(newSubmissionEntry);
 
-		SubmissionModelListener listener = createMock(SubmissionModelListener.class);
-		
-		//set up expectations
-		//TODO do study validation check. I.E. check if linked studies accept data to modules ticked. Assume true for now
-		listener.onAcceptInVitroDataChanged(Boolean.FALSE, Boolean.TRUE, true);
-		listener.onAcceptInVitroDataChanged(Boolean.TRUE, Boolean.FALSE, true);
-		replay(listener);
-		
-		// register with model
-		testModel.addListener(listener);
-		
-		// call method under test
-		testModel.setAcceptInVitroData(Boolean.TRUE);
-		testModel.setAcceptInVitroData(Boolean.FALSE);
-		
-		verify(listener);
-		
-	}
-	
-	@SuppressWarnings("unchecked")
+
 	@Test
-	public void testOnAcceptPharmacologyDataChanged() {
+	public void testOnModulesChanged() {
 		
+		//test data
+		Set<String> valid = new HashSet<String>();
+		valid.add("module1");
+		valid.add("module2");
+
+		Set<String> invalid = new HashSet<String>();
+		
+
 		//place in ready state
 		testModel.setSubmissionEntry(newSubmissionEntry);
 				
 		SubmissionModelListener listener = createMock(SubmissionModelListener.class);
 		
 		//set up expectations
-		//TODO do study validation check. I.E. check if linked studies accept data to modules ticked. Assume true for now
-		listener.onAcceptPharmacologyDataChanged(Boolean.FALSE, Boolean.TRUE, true);
-		listener.onAcceptPharmacologyDataChanged(Boolean.TRUE, Boolean.FALSE, true);
-		//allow other events, but do not check
-		listener.onTitleChanged(isA(String.class), isA(String.class), isA(Boolean.class));
-		expectLastCall().anyTimes();
-		listener.onSummaryChanged(isA(String.class), isA(String.class), isA(Boolean.class));
-		expectLastCall().anyTimes();
-		listener.onStudyLinksChanged(isA(Set.class), isA(Set.class), isA(Boolean.class));
-		expectLastCall().anyTimes();
-		listener.onAcceptClinicalDataChanged(isA(Boolean.class), isA(Boolean.class), isA(Boolean.class));
-		expectLastCall().anyTimes();
-		listener.onAcceptInVitroDataChanged(isA(Boolean.class), isA(Boolean.class), isA(Boolean.class));
-		expectLastCall().anyTimes();
-		listener.onAcceptMolecularDataChanged(isA(Boolean.class), isA(Boolean.class), isA(Boolean.class));
-		expectLastCall().anyTimes();
+		listener.onModulesChanged(new HashSet<String>(), valid, true);
+		listener.onSubmissionEntryChanged(isA(Boolean.class));
+		listener.onModulesChanged(valid, invalid, false);
+		listener.onSubmissionEntryChanged(isA(Boolean.class));
 		replay(listener);
 		
 		// register with model
 		testModel.addListener(listener);
 		
 		// call method under test
-		testModel.setAcceptPharmacologyData(Boolean.TRUE);
-		testModel.setAcceptPharmacologyData(Boolean.FALSE);
+		testModel.setModules(valid);
+		testModel.setModules(invalid);
 		
 		verify(listener);
-		
 	}
+	
 	
 	@SuppressWarnings("unchecked")
 	@Test
@@ -348,20 +259,14 @@ public class TestSubmissionModel {
 		listener.onTitleChanged(invalid.getTitle(), invalid.getTitle(), false);
 		listener.onSummaryChanged(invalid.getSummary(), invalid.getSummary(), false);
 		listener.onStudyLinksChanged(isA(Set.class), isA(Set.class), isA(Boolean.class));
-		listener.onAcceptClinicalDataChanged(isA(Boolean.class), isA(Boolean.class), isA(Boolean.class));
-		listener.onAcceptInVitroDataChanged(isA(Boolean.class), isA(Boolean.class), isA(Boolean.class));
-		listener.onAcceptMolecularDataChanged(isA(Boolean.class), isA(Boolean.class), isA(Boolean.class));
-		listener.onAcceptPharmacologyDataChanged(isA(Boolean.class), isA(Boolean.class), isA(Boolean.class));
+		listener.onModulesChanged(isA(Set.class), isA(Set.class), isA(Boolean.class));
 		
 		listener.onSubmissionEntryChanged(Boolean.TRUE);	
 		//assert other events called, but do not check validation again here
 		listener.onTitleChanged(valid.getTitle(), valid.getTitle(), true);
 		listener.onSummaryChanged(valid.getSummary(), valid.getSummary(), true);
 		listener.onStudyLinksChanged(isA(Set.class), isA(Set.class), isA(Boolean.class));
-		listener.onAcceptClinicalDataChanged(isA(Boolean.class), isA(Boolean.class), isA(Boolean.class));
-		listener.onAcceptInVitroDataChanged(isA(Boolean.class), isA(Boolean.class), isA(Boolean.class));
-		listener.onAcceptMolecularDataChanged(isA(Boolean.class), isA(Boolean.class), isA(Boolean.class));
-		listener.onAcceptPharmacologyDataChanged(isA(Boolean.class), isA(Boolean.class), isA(Boolean.class));
+		listener.onModulesChanged(isA(Set.class), isA(Set.class), isA(Boolean.class));
 		replay(listener);
 		
 		// register with model

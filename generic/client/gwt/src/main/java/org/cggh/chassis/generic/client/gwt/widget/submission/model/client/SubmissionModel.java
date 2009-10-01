@@ -9,7 +9,6 @@ import java.util.Set;
 
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomLink;
-import org.cggh.chassis.generic.client.gwt.widget.application.client.ApplicationConstants;
 
 /**
  * @author raok
@@ -41,10 +40,7 @@ public class SubmissionModel {
 		fireOnTitleChanged(getTitle());
 		fireOnSummaryChanged(getSummary());
 		fireOnStudyLinksChanged(getStudyLinks());
-		fireOnAcceptClinicalDataChanged(acceptClinicalData());
-		fireOnAcceptInVitroDataChanged(acceptInVitroData());
-		fireOnAcceptMolecularDataChanged(acceptMolecularData());
-		fireOnAcceptPharmacologyData(acceptPharmacologyData());
+		fireOnModulesChanged(getModules());
 		
 		//fire form validation
 		fireOnSubmissionEntryModelChanged();
@@ -65,10 +61,7 @@ public class SubmissionModel {
 		Boolean isSubmissionEntryValid = isTitleValid()
 										 && isSummaryValid()
 										 && isStudyLinksValid()
-										 && isAcceptClinicalDataValid()
-										 && isAcceptInVitroDataValid()
-										 && isAcceptMolecularDataValid()
-										 && isAcceptPharmacologyDataValid();
+										 && isModulesValid();
 		
 		return isSubmissionEntryValid;
 	}
@@ -164,131 +157,6 @@ public class SubmissionModel {
 	}
 
 
-
-	public void setAcceptClinicalData(Boolean acceptClinicalData) {
-		
-		Boolean before = submissionEntry.getModules().contains(ApplicationConstants.MODULE_CLINICAL);
-		
-		if (acceptClinicalData && !before) {
-			submissionEntry.addModule(ApplicationConstants.MODULE_CLINICAL);
-		} else if (!acceptClinicalData && before) {
-			submissionEntry.removeModule(ApplicationConstants.MODULE_CLINICAL);
-		}
-		
-		fireOnAcceptClinicalDataChanged(before);
-	}
-
-
-
-	private void fireOnAcceptClinicalDataChanged(Boolean before) {
-				
-		for (SubmissionModelListener listener : listeners) {
-			listener.onAcceptClinicalDataChanged(before, acceptClinicalData(), isAcceptClinicalDataValid());
-		}
-	}
-
-
-
-	private Boolean isAcceptClinicalDataValid() {
-		//TODO do study validation check. I.E. check if linked studies accept data to modules ticked. Assume true for now
-		return true;
-	}
-
-
-
-	public void setAcceptMolecularData(Boolean acceptMolecularData) {
-		
-		Boolean before = submissionEntry.getModules().contains(ApplicationConstants.MODULE_MOLECULAR);
-		
-		if (acceptMolecularData && !before) {
-			submissionEntry.addModule(ApplicationConstants.MODULE_MOLECULAR);
-		} else if (!acceptMolecularData && before) {
-			submissionEntry.removeModule(ApplicationConstants.MODULE_MOLECULAR);
-		}
-		
-		fireOnAcceptMolecularDataChanged(before);
-	}
-
-
-
-	private void fireOnAcceptMolecularDataChanged(Boolean before) {
-				
-		for (SubmissionModelListener listener : listeners) {
-			listener.onAcceptMolecularDataChanged(before, acceptMolecularData(), isAcceptMolecularDataValid());
-		}
-	}
-
-
-
-	private Boolean isAcceptMolecularDataValid() {
-		//TODO do study validation check. I.E. check if linked studies accept data to modules ticked. Assume true for now
-		return true;
-	}
-
-
-
-	public void setAcceptInVitroData(Boolean acceptInVitroData) {
-		
-		Boolean before = submissionEntry.getModules().contains(ApplicationConstants.MODULE_IN_VITRO);
-		
-		if (acceptInVitroData && !before) {
-			submissionEntry.addModule(ApplicationConstants.MODULE_IN_VITRO);
-		} else if (!acceptInVitroData && before) {
-			submissionEntry.removeModule(ApplicationConstants.MODULE_IN_VITRO);
-		}
-		
-		fireOnAcceptInVitroDataChanged(before);		
-	}
-
-
-
-	private void fireOnAcceptInVitroDataChanged(Boolean before) {
-				
-		for (SubmissionModelListener listener : listeners) {
-			listener.onAcceptInVitroDataChanged(before, acceptInVitroData(), isAcceptInVitroDataValid());
-		}
-	}
-
-
-
-	private Boolean isAcceptInVitroDataValid() {
-		//TODO do study validation check. I.E. check if linked studies accept data to modules ticked. Assume true for now
-		return true;
-	}
-
-
-
-	public void setAcceptPharmacologyData(Boolean acceptPharmacologyData) {
-		
-		Boolean before = submissionEntry.getModules().contains(ApplicationConstants.MODULE_PHARMACOLOGY);
-		
-		if (acceptPharmacologyData && !before) {
-			submissionEntry.addModule(ApplicationConstants.MODULE_PHARMACOLOGY);
-		} else if (!acceptPharmacologyData && before) {
-			submissionEntry.removeModule(ApplicationConstants.MODULE_PHARMACOLOGY);
-		}
-		
-		fireOnAcceptPharmacologyData(before);
-	}
-
-
-
-	private void fireOnAcceptPharmacologyData(Boolean before) {
-		
-		for (SubmissionModelListener listener : listeners) {
-			listener.onAcceptPharmacologyDataChanged(before, acceptPharmacologyData(), isAcceptPharmacologyDataValid());
-		}
-	}
-
-
-
-	private Boolean isAcceptPharmacologyDataValid() {
-		//TODO do study validation check. I.E. check if linked studies accept data to modules ticked. Assume true for now
-		return true;
-	}
-
-
-
 	public String getTitle() {
 		return submissionEntry.getTitle();
 	}
@@ -312,31 +180,9 @@ public class SubmissionModel {
 		return studyLinks;
 	}
 
-
-
-	public Boolean acceptClinicalData() {
-		return submissionEntry.getModules().contains(ApplicationConstants.MODULE_CLINICAL);
+	public Set<String> getModules() {
+		return new HashSet<String>(submissionEntry.getModules());
 	}
-
-
-
-	public Boolean acceptMolecularData() {
-		return submissionEntry.getModules().contains(ApplicationConstants.MODULE_MOLECULAR);
-	}
-
-
-
-	public Boolean acceptInVitroData() {
-		return submissionEntry.getModules().contains(ApplicationConstants.MODULE_IN_VITRO);
-	}
-
-
-
-	public Boolean acceptPharmacologyData() {
-		return submissionEntry.getModules().contains(ApplicationConstants.MODULE_PHARMACOLOGY);
-	}
-
-
 
 	public void addListener(SubmissionModelListener listener) {
 		listeners .add(listener);
@@ -358,4 +204,33 @@ public class SubmissionModel {
 		}
 	}
 
+
+
+	public void setModules(Set<String> modules) {
+
+		Set<String> before = getModules();
+		
+		submissionEntry.setModules(new ArrayList<String>(modules));
+
+		fireOnModulesChanged(before);
+		fireOnSubmissionEntryModelChanged();
+	}
+
+
+	private void fireOnModulesChanged(Set<String> before) {
+
+		for (SubmissionModelListener listener : listeners) {
+			listener.onModulesChanged(before, getModules(), isModulesValid());
+		}
+			
+	}
+
+
+
+	private Boolean isModulesValid() {
+		//TODO check studyLinks accept data for these modules
+		// require at least one module
+		return (getModules().size() > 0);
+	}
+	
 }

@@ -1,18 +1,14 @@
 package org.cggh.chassis.generic.client.gwt.widget.submission.controller.client;
 
+import java.util.Set;
+
 public abstract interface AbstractSubmissionControllerCreateEditAPI {
 
 	public void updateTitle(String title);
 
 	public void updateSummary(String summary);
 
-	public void updateAcceptClinicalData(Boolean acceptClinicalData);
-
-	public void updateAcceptMolecularData(Boolean acceptMolecularData);
-
-	public void updateAcceptInVitroData(Boolean acceptInVitroData);
-
-	public void updateAcceptPharmacologyData(Boolean acceptPharmacologyData);
+	public void updateModules(Set<String> modules);
 
 	public void addStudyLink(String studyEntryURL);
 
