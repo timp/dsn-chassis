@@ -16,6 +16,35 @@
     <description>eXist Open Source Native XML Database</description>
     <display-name>eXist XML Database</display-name>
 
+  <!--+
+      | Spring security configuration
+      +-->
+
+   
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>
+      classpath:/dev/configuration/spring/security.xml
+    </param-value>
+  </context-param>
+    
+  <listener>
+    <listener-class>
+      org.springframework.web.context.ContextLoaderListener
+    </listener-class>
+  </listener>
+    
+  <filter>
+    <filter-name>springSecurityFilterChain</filter-name>
+    <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>springSecurityFilterChain</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  
+  
     <!-- 
         Initialize Log4j using a servlet.
         Only needed when eXist is deployed as a .war file in e.g. Tomcat.
@@ -162,6 +191,18 @@
     <servlet>
         <servlet-name>AtomServlet</servlet-name>
         <servlet-class>org.exist.atom.http.AtomServlet</servlet-class>
+        <init-param>
+          <param-name>use-default-user</param-name>
+          <param-value>true</param-value>
+        </init-param>
+        <init-param>
+          <param-name>user</param-name>
+          <param-value>admin</param-value>
+        </init-param>
+        <init-param>
+          <param-name>password</param-name>
+          <param-value></param-value>
+        </init-param>
     </servlet>
     
     <!-- HTTP Method Override Filter, for Atom Services -->
@@ -198,6 +239,27 @@
     
     <filter-mapping>
       <filter-name>ContentTypeOverrideFilter</filter-name>
+      <servlet-name>AtomServlet</servlet-name>
+    </filter-mapping>
+    
+    <!--+
+        | Authorization Override Filter
+        | used to strip Authorization header 
+        | so eXist AtomServlet doesn't get confused by Spring Security
+        | if configured to use HTTP basic or digest authentication
+        +-->
+
+    <filter>
+      <filter-name>AuthorizationOverrideFilter</filter-name>
+      <filter-class>org.cggh.chassis.generic.http.RequestHeaderOverrideFilter</filter-class>
+      <init-param>
+        <param-name>headerName</param-name>
+        <param-value>Authorization</param-value>
+      </init-param>
+    </filter>
+    
+    <filter-mapping>
+      <filter-name>AuthorizationOverrideFilter</filter-name>
       <servlet-name>AtomServlet</servlet-name>
     </filter-mapping>
     
