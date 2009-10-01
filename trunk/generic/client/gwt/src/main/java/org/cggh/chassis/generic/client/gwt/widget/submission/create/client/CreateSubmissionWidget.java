@@ -4,6 +4,7 @@
 package org.cggh.chassis.generic.client.gwt.widget.submission.create.client;
 
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
@@ -26,13 +27,13 @@ public class CreateSubmissionWidget implements CreateSubmissionWidgetAPI, Submis
 	final private CreateSubmissionWidgetDefaultRenderer renderer;
 	private Set<CreateSubmissionWidgetPubSubAPI> listeners = new HashSet<CreateSubmissionWidgetPubSubAPI>(); 
 
-	public CreateSubmissionWidget(Panel canvas, AtomService service) {
+	public CreateSubmissionWidget(Panel canvas, AtomService service, String feedURL, Map<String, String> modulesConfig) {
 		
 		model = new SubmissionModel();
 		
-		controller = new SubmissionController(model, service, this);
+		controller = new SubmissionController(model, service, this, feedURL);
 		
-		renderer = new CreateSubmissionWidgetDefaultRenderer(canvas, controller);
+		renderer = new CreateSubmissionWidgetDefaultRenderer(canvas, controller, modulesConfig);
 		
 		// register renderer as listener to model
 		model.addListener(renderer);		
@@ -42,7 +43,7 @@ public class CreateSubmissionWidget implements CreateSubmissionWidgetAPI, Submis
 	 * @see org.cggh.chassis.generic.client.gwt.widget.submission.create.client.CreateSubmissionWidgetAPI#setUpNewSubmission(java.lang.String)
 	 */
 	public void setUpNewSubmission(String feedURL) {
-		controller.setUpNewSubmission(feedURL);
+		controller.setUpNewSubmission();
 	}
 
 	public void cancelCreateNewSubmissionEntry() {

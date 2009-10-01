@@ -17,13 +17,7 @@ public interface SubmissionModelListener {
 
 	void onStudyLinksChanged(Set<String> before, Set<String> after, Boolean isValid);
 
-	void onAcceptClinicalDataChanged(Boolean before, Boolean after, Boolean isValid);
-
-	void onAcceptMolecularDataChanged(Boolean before, Boolean after, Boolean isValid);
-
-	void onAcceptInVitroDataChanged(Boolean before, Boolean after, Boolean isValid);
-
-	void onAcceptPharmacologyDataChanged(Boolean before, Boolean after, Boolean isValid);
+	void onModulesChanged(Set<String> before, Set<String> after, Boolean isValid);
 
 	void onSubmissionEntryChanged(Boolean isValid);
 

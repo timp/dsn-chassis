@@ -7,6 +7,8 @@ import static org.easymock.EasyMock.*;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import junit.framework.JUnit4TestAdapter;
 
@@ -47,7 +49,7 @@ public class TestSubmissionController {
 	private SubmissionModel testModel;
 	private AtomService mockService;
 	private SubmissionFactory mockFactory;
-	String feedURL = "http://foo.com/submissions";
+	private String feedURL = "http://foo.com/submissions";
 	private SubmissionEntry testSubmissionEntry;
 		
 	@Before
@@ -59,7 +61,7 @@ public class TestSubmissionController {
 		mockFactory = createMock(SubmissionFactory.class);
 		
 		//create test controller
-		testController = new SubmissionController(testModel, mockService, null);
+		testController = new SubmissionController(testModel, mockService, null, feedURL);
 		
 		//Replace default factory with MockFactory for testing
 		testController.setSubmissionFactory(mockFactory);
@@ -87,7 +89,7 @@ public class TestSubmissionController {
 		replay(mockFactory);
 		
 		//call method under test
-		testController.setUpNewSubmission(feedURL);
+		testController.setUpNewSubmission();
 		
 		//test outcome
 		assertEquals(SubmissionModel.STATUS_LOADED, testModel.getStatus());
@@ -175,7 +177,7 @@ public class TestSubmissionController {
 		testModel.setSubmissionEntry(testSubmissionEntry);
 		
 		//test data
-		String title = "Study foo";
+		String title = "Submission foo";
 		
 		//call method under test
 		testController.updateTitle(title);
@@ -200,58 +202,7 @@ public class TestSubmissionController {
 		assertEquals(summary, testModel.getSummary());
 	}
 
-	@Test
-	public void testUpdateAcceptClinicalData(){
 	
-		//mock loaded state
-		testModel.setSubmissionEntry(testSubmissionEntry);
-		
-		//call method under test
-		testController.updateAcceptClinicalData(Boolean.TRUE);
-		
-		//test outcome
-		assertEquals(Boolean.TRUE, testModel.acceptClinicalData());
-	}
-
-	@Test
-	public void testUpdateAcceptMolecularData(){
-	
-		//mock loaded state
-		testModel.setSubmissionEntry(testSubmissionEntry);
-		
-		//call method under test
-		testController.updateAcceptMolecularData(Boolean.TRUE);
-		
-		//test outcome
-		assertEquals(Boolean.TRUE, testModel.acceptMolecularData());
-	}
-
-	@Test
-	public void testUpdateAcceptInVitroData(){
-	
-		//mock loaded state
-		testModel.setSubmissionEntry(testSubmissionEntry);
-		
-		//call method under test
-		testController.updateAcceptInVitroData(Boolean.TRUE);
-		
-		//test outcome
-		assertEquals(Boolean.TRUE, testModel.acceptInVitroData());
-	}
-
-	@Test
-	public void testUpdateAcceptPharmacologyData(){
-	
-		//mock loaded state
-		testModel.setSubmissionEntry(testSubmissionEntry);
-		
-		//call method under test
-		testController.updateAcceptPharmacologyData(Boolean.TRUE);
-		
-		//test outcome
-		assertEquals(Boolean.TRUE, testModel.acceptPharmacologyData());
-	}
-
 	@Test
 	public void testAddStudyLink_and_testRemoveStudyLink() {
 	
@@ -278,6 +229,24 @@ public class TestSubmissionController {
 		assertFalse(testModel.getStudyLinks().contains(studyEntryURL2));
 		
 	}
+	
+	@Test
+	public void testUpdateModules() {
+
+		//mock loaded state
+		testModel.setSubmissionEntry(testSubmissionEntry);
+		
+		//test data
+		Set<String> modulesSet1 = new HashSet<String>();
+		modulesSet1.add("module1");		
+		
+		//call method under test
+		testController.updateModules(modulesSet1);
+		
+		//test outcome
+		assertEquals(modulesSet1, testModel.getModules());		
+		
+	}
 
 	@Test
 	public void testCancelCreateStudy() {
@@ -293,10 +262,7 @@ public class TestSubmissionController {
 	@SuppressWarnings("unchecked")
 	@Test
 	public void testSaveNewSubmissionEntry() {
-				
-		//test data
-		String feedURL = "http://foo.com/submissions";
-		
+						
 		//set up test
 		testSetUpNewSubmission();
 				
@@ -410,7 +376,7 @@ public class TestSubmissionController {
 
 		//create mock Widget and inject into new testController using Create API
 		SubmissionControllerPubSubCreateAPI mockListener = createMock(SubmissionControllerPubSubCreateAPI.class);
-		SubmissionControllerCreateAPI testCreateController = new SubmissionController(testModel, mockService, mockListener);
+		SubmissionControllerCreateAPI testCreateController = new SubmissionController(testModel, mockService, mockListener, feedURL);
 						
 		//set up expectations
 		mockListener.newSubmissionSaved(testSubmissionEntry);
