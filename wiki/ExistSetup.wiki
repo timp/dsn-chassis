@@ -215,6 +215,96 @@ createcollection("Studies", "studies")
 createcollection("Submissions", "submissions")
 }}}
 
+*5. Spring security integration.*
+
+Copy the following JARs to the *WEB-INF/lib* folder:
+
+  * mysql-connector-java-5.0.4-bin.jar
+  * spring-framework-2.5.6.SEC01.jar
+  * spring-security-core-2.0.5.RELEASE.jar
+  
+Add the following directives at the top of the *web.xml* configuration file.
+
+{{{
+  <!--+
+      | Spring security configuration
+      +-->
+
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>
+      classpath:/dev/configuration/spring/security.xml
+    </param-value>
+  </context-param>
+    
+  <listener>
+    <listener-class>
+      org.springframework.web.context.ContextLoaderListener
+    </listener-class>
+  </listener>
+    
+  <filter>
+    <filter-name>springSecurityFilterChain</filter-name>
+    <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>springSecurityFilterChain</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+}}}
+
+The Chassis development environment simulates the production user authentication and authorisation environment, using HTTP basic authentication, configured via Spring Security. The eXist atom servlet will also attempt to authenticate any previously authorised requests using its own user database, and hence a second challenge can get sent. Basically, Spring Security and the eXist Atom Servlet don't play nice, if you're using HTTP basic authentication (and probably digest too).
+
+To work around this, add the following directives to the web.xml configuration file.
+
+{{{
+    <!--+
+        | Authorization Override Filter
+        | used to strip Authorization header 
+        | so eXist AtomServlet doesn't get confused by Spring Security
+        | if configured to use HTTP basic or digest authentication
+        +-->
+
+    <filter>
+      <filter-name>AuthorizationOverrideFilter</filter-name>
+      <filter-class>org.cggh.chassis.generic.http.RequestHeaderOverrideFilter</filter-class>
+      <init-param>
+        <param-name>headerName</param-name>
+        <param-value>Authorization</param-value>
+      </init-param>
+    </filter>
+    
+    <filter-mapping>
+      <filter-name>AuthorizationOverrideFilter</filter-name>
+      <servlet-name>AtomServlet</servlet-name>
+    </filter-mapping>
+}}}
+ 
+I put this after the content type override filter.
+
+Also, modify the declaration for the !AtomServlet, adding some initialisation parameters.
+
+{{{
+    <!-- Atom Atom Publishing Protocol -->
+    <servlet>
+        <servlet-name>AtomServlet</servlet-name>
+        <servlet-class>org.exist.atom.http.AtomServlet</servlet-class>
+        <init-param>
+          <param-name>use-default-user</param-name>
+          <param-value>true</param-value>
+        </init-param>
+        <init-param>
+          <param-name>user</param-name>
+          <param-value>admin</param-value>
+        </init-param>
+        <init-param>
+          <param-name>password</param-name>
+          <param-value></param-value>
+        </init-param>
+    </servlet>
+}}}
+
 === Configuring the Running System ===
 
 The following steps are required to configure the running system for use by Chassis clients. You will have to repeat these steps if you ever subsequently *Clean* the project from within the *Servers* view.
@@ -231,5 +321,6 @@ To check this has worked, browse to the following URLs using Firefox - you shoul
 
   * http://localhost:8080/chassis-generic-service-exist/atom/edit/studies
   * http://localhost:8080/chassis-generic-service-exist/atom/edit/submissions
+
   
 
