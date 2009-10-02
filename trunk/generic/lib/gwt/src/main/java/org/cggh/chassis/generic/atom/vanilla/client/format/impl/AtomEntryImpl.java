@@ -25,7 +25,7 @@ import com.google.gwt.xml.client.Element;
  */
 public class AtomEntryImpl extends ElementWrapperImpl implements AtomEntry {
 
-	private AtomFactory factory;
+	protected AtomFactory factory;
 
 	/**
 	 * @param e
