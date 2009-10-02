@@ -11,7 +11,7 @@ import static org.easymock.classextension.EasyMock.verify;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactory;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFormatException;
-import org.cggh.chassis.generic.twisted.client.Deferred;
+import org.cggh.chassis.generic.twisted.client.HttpDeferred;
 import org.cggh.chassis.generic.twisted.client.Function;
 
 import com.google.gwt.http.client.Request;
@@ -49,7 +49,7 @@ public class TestPostEntryCallback extends TestCase {
 		replay(factory);
 		
 		// mock deferred
-		Deferred deferred = createMock(Deferred.class);
+		HttpDeferred deferred = createMock(HttpDeferred.class);
 		// expectations
 		deferred.errback(exception);
 		replay(deferred);
@@ -100,7 +100,7 @@ public class TestPostEntryCallback extends TestCase {
 		replay(factory);
 		
 		// mock deferred
-		Deferred deferred = createMock(Deferred.class);
+		HttpDeferred deferred = createMock(HttpDeferred.class);
 		// expectations
 		deferred.callback(entry);
 		replay(deferred);
@@ -146,7 +146,7 @@ public class TestPostEntryCallback extends TestCase {
 		replay(factory);
 		
 		// mock deferred
-		Deferred deferred = createMock(Deferred.class);
+		HttpDeferred deferred = createMock(HttpDeferred.class);
 		// expectations
 		deferred.errback(exception);
 		replay(deferred);
@@ -197,7 +197,7 @@ public class TestPostEntryCallback extends TestCase {
 		replay(factory);
 		
 		// deferred
-		Deferred deferred = new Deferred();
+		HttpDeferred deferred = new HttpDeferred();
 		
 		// test callback
 		TestFunction callback = new TestFunction();

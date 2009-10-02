@@ -8,6 +8,7 @@ import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactory;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
 import org.cggh.chassis.generic.twisted.client.Deferred;
+import org.cggh.chassis.generic.twisted.client.HttpDeferred;
 
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
@@ -21,7 +22,7 @@ public class AtomServiceImpl implements AtomService {
 
 	
 	
-	private AtomFactory factory;
+	protected AtomFactory factory;
 
 
 
@@ -38,11 +39,11 @@ public class AtomServiceImpl implements AtomService {
 	 */
 	public Deferred<Void> deleteEntry(String entryURL) {
 
-		Deferred<Void> deferredResult = new Deferred<Void>();
+		HttpDeferred<Void> deferredResult = new HttpDeferred<Void>();
 
 		RequestBuilder requestBuilder = buildDeleteEntryRequest(entryURL);
 		
-		requestBuilder.setCallback(new DeleteEntryCallback(deferredResult));
+		requestBuilder.setCallback(new CallbackWithNoContent(deferredResult));
 
 		sendRequest(requestBuilder, deferredResult);
 		
@@ -72,7 +73,7 @@ public class AtomServiceImpl implements AtomService {
 	 */
 	public Deferred<AtomEntry> getEntry(String entryURL) {
 		
-		Deferred<AtomEntry> deferredResult = new Deferred<AtomEntry>();
+		HttpDeferred<AtomEntry> deferredResult = new HttpDeferred<AtomEntry>();
 
 		RequestBuilder requestBuilder = buildGetEntryRequest(entryURL);
 		
@@ -92,7 +93,7 @@ public class AtomServiceImpl implements AtomService {
 	 * @param deferredResult
 	 */
 	@SuppressWarnings("unchecked")
-	private static void sendRequest(RequestBuilder requestBuilder, Deferred deferredResult) {
+	protected static void sendRequest(RequestBuilder requestBuilder, HttpDeferred deferredResult) {
 
 		try {
 
@@ -128,7 +129,7 @@ public class AtomServiceImpl implements AtomService {
 	 */
 	public Deferred<AtomFeed> getFeed(String feedURL) {
 
-		Deferred<AtomFeed> deferredResult = new Deferred<AtomFeed>();
+		HttpDeferred<AtomFeed> deferredResult = new HttpDeferred<AtomFeed>();
 
 		RequestBuilder requestBuilder = buildGetFeedRequest(feedURL);
 		
@@ -161,7 +162,7 @@ public class AtomServiceImpl implements AtomService {
 	 */
 	public Deferred<AtomEntry> postEntry(String feedURL, AtomEntry entry) {
 
-		Deferred<AtomEntry> deferredResult = new Deferred<AtomEntry>();
+		HttpDeferred<AtomEntry> deferredResult = new HttpDeferred<AtomEntry>();
 
 		RequestBuilder requestBuilder = buildPostEntryRequest(feedURL, entry);
 		
@@ -199,7 +200,7 @@ public class AtomServiceImpl implements AtomService {
 	 */
 	public Deferred<AtomEntry> putEntry(String entryURL, AtomEntry entry) {
 
-		Deferred<AtomEntry> deferredResult = new Deferred<AtomEntry>();
+		HttpDeferred<AtomEntry> deferredResult = new HttpDeferred<AtomEntry>();
 
 		RequestBuilder requestBuilder = buildPutEntryRequest(entryURL, entry);
 		

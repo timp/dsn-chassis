@@ -1,10 +1,12 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.atom.vanilla.client.protocol.impl;
+package org.cggh.chassis.generic.atom.exist.client.protocol.impl;
 
-import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomXQueryService;
+import org.cggh.chassis.generic.atom.exist.client.protocol.AtomXQueryService;
+import org.cggh.chassis.generic.atom.vanilla.client.protocol.impl.HttpCanceller;
 import org.cggh.chassis.generic.twisted.client.Deferred;
+import org.cggh.chassis.generic.twisted.client.HttpDeferred;
 
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
@@ -36,7 +38,7 @@ public class AtomXQueryServiceImpl implements AtomXQueryService {
 	 */
 	public Deferred<String> query(String xquery) {
 		
-		Deferred<String> deferredResult = new Deferred<String>();
+		HttpDeferred<String> deferredResult = new HttpDeferred<String>();
 		
 		RequestBuilder requestBuilder = buildXQueryRequest(serviceUrl, xquery);
 

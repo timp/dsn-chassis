@@ -20,17 +20,17 @@ public class Deferred<T> {
 	public static final int SUCCESS = 0;
 	public static final int ERROR = 1;
 	
-	private int fired = INITIAL;
-	private Object[] results = new Object[2];
-	private boolean silentlyCancelled = false;
-	private int paused = 0;
-	private Queue<Pair> chain = new LinkedList<Pair>();
-	private Function canceller = null;
-	private boolean chained = false;
-	private boolean finalized = false;
-	private Function finalizer;
+	protected int fired = INITIAL;
+	protected Object[] results = new Object[2];
+	protected boolean silentlyCancelled = false;
+	protected int paused = 0;
+	protected Queue<Pair> chain = new LinkedList<Pair>();
+	protected Function canceller = null;
+	protected boolean chained = false;
+	protected boolean finalized = false;
+	protected Function finalizer;
 	
-	private Log log = LogFactory.getLog(this.getClass());
+	protected Log log = LogFactory.getLog(this.getClass());
 
 	
 	
@@ -88,7 +88,7 @@ public class Deferred<T> {
 	
 	
 	
-	private void _resback(Object res) {
+	protected void _resback(Object res) {
 		log.enter("_resback");
 		
 		this.fired = (res instanceof Throwable) ? ERROR : SUCCESS;
@@ -106,7 +106,7 @@ public class Deferred<T> {
 	
 
 	
-	private void _check() {
+	protected void _check() {
 		if (this.fired != INITIAL) {
 			if (!this.silentlyCancelled) {
 				throw new AlreadyCalledError(this);
@@ -242,7 +242,7 @@ public class Deferred<T> {
 	 * Used internally to exhaust the callback sequence when a result is 
 	 * available.
 	 */
-	private void _fire() {
+	protected void _fire() {
 		log.enter("_fire");
 
 		Queue<Pair> chain = this.chain;
@@ -335,12 +335,12 @@ public class Deferred<T> {
         log.leave();
 	}
 
-	private class Pair {
+	protected class Pair {
 		
-		private Function callback;
-		private Function errback;
+		protected Function callback;
+		protected Function errback;
 
-		private Pair(Function callback, Function errback) {
+		protected Pair(Function callback, Function errback) {
 			this.callback = callback;
 			this.errback = errback;
 		}

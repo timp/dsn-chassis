@@ -10,16 +10,12 @@ import org.cggh.chassis.generic.atom.vanilla.client.format.Atom;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactory;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFormatException;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomLink;
 import org.cggh.chassis.generic.twisted.client.Function;
 import org.cggh.chassis.generic.twisted.client.Functional;
 import org.cggh.chassis.generic.xml.client.XML;
+import org.cggh.chassis.generic.xml.client.XMLNS;
 
-import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;
-import com.google.gwt.xml.client.XMLParser;
-import com.google.gwt.xml.client.impl.DOMParseException;
 
 /**
  * @author aliman
@@ -78,6 +74,13 @@ public class AtomFeedImpl extends ElementWrapperImpl implements AtomFeed {
 	 */
 	public String getUpdated() {
 		return XML.getElementSimpleContentByTagName(element, Atom.ELEMENT_UPDATED);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed#setTitle(java.lang.String)
+	 */
+	public void setTitle(String title) {
+		XMLNS.setSingleElementSimpleContentByTagNameNS(element, Atom.ELEMENT_TITLE, Atom.PREFIX, Atom.NSURI, title);
 	}
 
 }

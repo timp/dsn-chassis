@@ -1,9 +1,10 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.atom.vanilla.client.protocol.impl;
+package org.cggh.chassis.generic.atom.exist.client.protocol.impl;
 
-import org.cggh.chassis.generic.twisted.client.Deferred;
+import org.cggh.chassis.generic.atom.vanilla.client.protocol.impl.CallbackBase;
+import org.cggh.chassis.generic.twisted.client.HttpDeferred;
 
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestCallback;
@@ -13,32 +14,32 @@ import com.google.gwt.http.client.Response;
  * @author aliman
  *
  */
-public class DeleteEntryCallback extends CallbackBase implements RequestCallback {
+public class XQueryRequestCallback extends CallbackBase implements
+		RequestCallback {
 
-	private Deferred<Void> result;
+	private HttpDeferred<String> result;
 
 	/**
-	 * @param factory
-	 * @param deferredResult
+	 * @param genericResult
 	 */
-	public DeleteEntryCallback(Deferred<Void> result) {
+	protected XQueryRequestCallback(HttpDeferred<String> result) {
 		super(result);
 		this.result = result;
-		this.expectedStatusCodes.add(204);
+		this.expectedStatusCodes.add(200);
 	}
 
 	/* (non-Javadoc)
 	 * @see com.google.gwt.http.client.RequestCallback#onResponseReceived(com.google.gwt.http.client.Request, com.google.gwt.http.client.Response)
 	 */
 	public void onResponseReceived(Request request, Response response) {
-
+		
 		try {
 			
 			// check preconditions
 			checkStatusCode(request, response);
 
 			// pass through result
-			this.result.callback(null);
+			this.result.callback(response.getText());
 			
 		} catch (Throwable t) {
 
