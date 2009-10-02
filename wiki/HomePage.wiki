@@ -19,13 +19,15 @@ For more information on the project status, see ChassisWwarn.
 ----
 = Downloads =
 
-Coming (fairly) soon.
+See the [http://code.google.com/p/dsn-chassis/downloads/list downloads page] - all feature incomplete and alpha quality at this stage, use at your own risk.
 
 ----
 = Documentation =
 
 Things are at a relatively early stage, but you might be interested in the following:
 
+  * [StudyMetadataServiceAPIs]
+  * [SubmissionMetadataServiceAPIs]
   * HowToInstall
   * HowToTagBuildAndPackage
   * ProjectOrganisation
@@ -35,4 +37,3 @@ Things are at a relatively early stage, but you might be interested in the follo
   * GwtAndTesting
   * WhyAtom
   * ExistSetup
-  * [StudyMetadataServiceAPIs]
