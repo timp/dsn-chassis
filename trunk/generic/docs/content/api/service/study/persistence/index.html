@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-  <title>Chassis/* Study Metadata Persistence Service API Specification Version SNAPSHOT</title>
+  <title>Chassis/* Study Metadata Persistence Service API Specification Version 0.1-alpha-2-SNAPSHOT</title>
   <link rel="stylesheet" type="text/css"
   href="../../../../style/reset-fonts-grids.css" />
   <link rel="stylesheet" type="text/css" href="../../../../style/base-min.css"
@@ -19,15 +19,18 @@
 
 <div id="hd">
 <h1>Chassis/* Study Metadata Persistence Service<br />
-API Specification Version SNAPSHOT</h1>
+API Specification Version 0.1-alpha-2-SNAPSHOT</h1>
 
 <p>This document defines an API for a web service that provides basic
 persistence capabilities (create, retrieve, update, delete) for metadata
 records that capture information about research studies.</p>
 
-<p><strong>This version: <a href="@@TODO">@@TODO link</a></strong></p>
+<p><strong>This version: <a href="http://dsn-chassis.googlecode.com/svn/branches/0.1-alpha-2/generic/docs/content/api/service/study/persistence/index.html">0.1-alpha-2-SNAPSHOT</a></strong></p>
 
-<p><strong>Latest version: <a href="@@TODO">@@TODO link</a></strong></p>
+<p><strong>Status of This Document</strong></p>
+
+<p>This is not a stable document. This document is a snapshot of the 0.1-alpha-2 
+branch, and is subject to change without notice.</p>
 
 <p><strong>Table of Contents</strong></p>
 
@@ -168,9 +171,8 @@ the <code>content</code> element, using the Chassis/* XML namespace.</p>
 <h3 id="L160">2.1. Chassis/* XML Namespace - Studies</h3>
 
 <p>The Chassis/* XML namespace defines a small set of elements to include
-within the <code>study</code> element, including <code>country</code>,
-<code>location</code>, <code>startyear</code>, <code>endyear</code> and
-<code>samplesize</code>. Any other elements from any other namespace may also
+within the <code>study</code> element, including <code>module</code>. Any other 
+elements from any other namespace may also
 be included within the <code>study</code> element, providing extensibility for
 specific data-sharing networks. The content of the <code>study</code> element
 should conform to the following <a
