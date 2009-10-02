@@ -3,10 +3,14 @@
  */
 package org.cggh.chassis.generic.twisted.client;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
+
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.twisted.client.Deferred;
 import org.cggh.chassis.generic.twisted.client.Function;
+import org.junit.Test;
 
 import com.google.gwt.junit.client.GWTTestCase;
 
@@ -420,5 +424,42 @@ public class GWTTestDeferred extends GWTTestCase {
 
 		log.leave();
 	}
+	
+	
+	
+	/**
+	 * Test that an exception thrown from an adapter function is passed on
+	 * to an adapted deferred.
+	 */
+	@Test
+	public void testAdapt_errBack() {
+		log.enter("testAdapt_errBack");
+		
+		Deferred<String> deferred = new Deferred<String>();
+		
+		final RuntimeException dummy = new RuntimeException("dummy exception");
+		
+		Function<String,Integer> adapter = new Function<String,Integer>() {
+
+			public Integer apply(String in) {
+				throw dummy;
+			}
+			
+		};
+		
+		Deferred<Integer> adapted = deferred.adapt(adapter);
+
+		deferred.callback("42"); // doesn't matter what string we use here
+		
+		assertEquals(Deferred.ERROR, deferred.getStatus()); // original deferred should be in error
+		assertSame(dummy, deferred.getErrorResult());
+		
+		assertEquals(Deferred.ERROR, adapted.getStatus()); // adapted deferred should also be in error
+		assertSame(dummy, adapted.getErrorResult());
+		
+		log.leave();
+	}
+	
+
 	
 }

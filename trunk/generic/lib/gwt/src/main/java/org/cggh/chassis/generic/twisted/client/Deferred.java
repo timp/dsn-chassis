@@ -186,7 +186,11 @@ public class Deferred<T> {
 			
 		};
 		
-		this.addCallbacks(callback, errback);
+		this.addCallback(callback);
+
+		// add errback after callback so any errors thrown by adapter function
+		// will get passed on to adapted deferred
+		this.addErrback(errback); 
 		
 		return adapted;
 		
