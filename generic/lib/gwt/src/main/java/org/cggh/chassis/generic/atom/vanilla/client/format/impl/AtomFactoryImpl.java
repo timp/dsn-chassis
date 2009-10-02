@@ -100,6 +100,11 @@ public class AtomFactoryImpl implements AtomFactory {
 		
 	}
 
+	public AtomFeed createFeed() {
+		Element e = XMLNS.createElementNS(Atom.ELEMENT_FEED, Atom.PREFIX, Atom.NSURI);
+		return new AtomFeedImpl(e, this);
+	}
+	
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactory#createFeed(java.lang.String)
 	 */

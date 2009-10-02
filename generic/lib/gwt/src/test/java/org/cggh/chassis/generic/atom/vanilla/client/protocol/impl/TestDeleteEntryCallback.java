@@ -9,7 +9,7 @@ import static org.easymock.classextension.EasyMock.replay;
 import static org.easymock.classextension.EasyMock.verify;
 
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomProtocolException;
-import org.cggh.chassis.generic.twisted.client.Deferred;
+import org.cggh.chassis.generic.twisted.client.HttpDeferred;
 import org.cggh.chassis.generic.twisted.client.Function;
 
 import com.google.gwt.http.client.Request;
@@ -41,13 +41,13 @@ public class TestDeleteEntryCallback extends TestCase {
 		replay(exception);
 		
 		// mock deferred
-		Deferred deferred = createMock(Deferred.class);
+		HttpDeferred deferred = createMock(HttpDeferred.class);
 		// expectations
 		deferred.errback(exception);
 		replay(deferred);
 		
 		// create object under test
-		DeleteEntryCallback testee = new DeleteEntryCallback(deferred);
+		CallbackWithNoContent testee = new CallbackWithNoContent(deferred);
 		
 		// call method under test
 		testee.onError(request, exception);
@@ -75,13 +75,13 @@ public class TestDeleteEntryCallback extends TestCase {
 		replay(response);
 		
 		// mock deferred
-		Deferred deferred = createMock(Deferred.class);
+		HttpDeferred deferred = createMock(HttpDeferred.class);
 		// expectations
 		deferred.callback(null);
 		replay(deferred);
 		
 		// create object under test
-		DeleteEntryCallback testee = new DeleteEntryCallback(deferred);
+		CallbackWithNoContent testee = new CallbackWithNoContent(deferred);
 		
 		// call method under test
 		testee.onResponseReceived(request, response);
@@ -121,7 +121,7 @@ public class TestDeleteEntryCallback extends TestCase {
 		replay(response);
 		
 		// deferred
-		Deferred deferred = new Deferred();
+		HttpDeferred deferred = new HttpDeferred();
 		
 		// test callback
 		TestFunction callback = new TestFunction();
@@ -132,7 +132,7 @@ public class TestDeleteEntryCallback extends TestCase {
 		deferred.addCallbacks(callback, errback);
 		
 		// create object under test
-		DeleteEntryCallback testee = new DeleteEntryCallback(deferred);
+		CallbackWithNoContent testee = new CallbackWithNoContent(deferred);
 		
 		// call method under test
 		testee.onResponseReceived(request, response);

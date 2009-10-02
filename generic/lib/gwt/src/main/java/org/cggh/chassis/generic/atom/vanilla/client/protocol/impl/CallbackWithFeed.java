@@ -7,7 +7,7 @@ import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactory;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
-import org.cggh.chassis.generic.twisted.client.Deferred;
+import org.cggh.chassis.generic.twisted.client.HttpDeferred;
 
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestCallback;
@@ -20,14 +20,14 @@ import com.google.gwt.http.client.Response;
 public class CallbackWithFeed extends CallbackBase implements RequestCallback {
 
 	private AtomFactory factory;
-	private Deferred<AtomFeed> result;
+	private HttpDeferred<AtomFeed> result;
 	private Log log = LogFactory.getLog(this.getClass());
 
 	/**
 	 * @param factory
 	 * @param result
 	 */
-	public CallbackWithFeed(AtomFactory factory, Deferred<AtomFeed> result) {
+	public CallbackWithFeed(AtomFactory factory, HttpDeferred<AtomFeed> result) {
 		super(result);
 		this.factory = factory;
 		this.result = result;
@@ -38,12 +38,10 @@ public class CallbackWithFeed extends CallbackBase implements RequestCallback {
 	 */
 	public void onResponseReceived(Request request, Response response) {
 		log.enter("onResponseReceived");
-		try {
 
-			log.trace("response status: "+response.getStatusCode() + " " + response.getStatusText());
-			log.trace("response headers: "+response.getHeadersAsString());
-			log.trace("response body: "+response.getText());
-			log.trace("content length (actual): "+response.getText().length());
+		super.onResponseReceived(request, response);
+
+		try {
 
 			// check preconditions
 			checkResponsePreconditions(request, response);

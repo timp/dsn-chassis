@@ -11,6 +11,7 @@ import com.google.gwt.xml.client.Element;
  */
 public interface AtomFactory {
 
+	public AtomFeed createFeed();
 	public AtomFeed createFeed(String feedDocument);
 	public AtomEntry createEntry();
 	public AtomEntry createEntry(String entryDocument);

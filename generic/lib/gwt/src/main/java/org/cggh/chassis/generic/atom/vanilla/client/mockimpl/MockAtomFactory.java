@@ -172,6 +172,11 @@ public class MockAtomFactory implements AtomFactory {
 		// not needed
 		return null;
 	}
+	
+	public AtomFeed createFeed() {
+		// not needed
+		return null;
+	}
 
 
 

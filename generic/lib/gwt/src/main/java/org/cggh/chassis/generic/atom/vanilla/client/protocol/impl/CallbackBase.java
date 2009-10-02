@@ -8,7 +8,9 @@ import java.util.Iterator;
 import java.util.Set;
 
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomProtocolException;
-import org.cggh.chassis.generic.twisted.client.Deferred;
+import org.cggh.chassis.generic.log.client.Log;
+import org.cggh.chassis.generic.log.client.LogFactory;
+import org.cggh.chassis.generic.twisted.client.HttpDeferred;
 
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.Response;
@@ -20,14 +22,40 @@ import com.google.gwt.http.client.Response;
 public class CallbackBase {
 
 	protected Set<Integer> expectedStatusCodes = new HashSet<Integer>();
+	private Log log = LogFactory.getLog(this.getClass());
 	
 	@SuppressWarnings("unchecked")
-	private Deferred genericResult;
+	private HttpDeferred genericResult;
 	
 	@SuppressWarnings("unchecked")
-	protected CallbackBase(Deferred genericResult) {
+	protected CallbackBase(HttpDeferred genericResult) {
 		this.genericResult = genericResult;
 	}
+	
+	public void onResponseReceived(Request request, Response response) {
+		log.enter("onResponseReceived");
+		try {
+
+			// log response details
+			log.trace("response status: "+response.getStatusCode() + " " + response.getStatusText());
+			log.trace("response headers: "+response.getHeadersAsString());
+			log.trace("response body: "+response.getText());
+			log.trace("content length (actual): "+response.getText().length());
+			
+			// store request and response
+			genericResult.addRequest(request);
+			genericResult.addResponse(response);
+			
+		} catch (Throwable t) {
+
+			// pass through as error
+			genericResult.errback(t);
+
+		}
+
+		log.leave();
+	}
+
 	
 	/* (non-Javadoc)
 	 * @see com.google.gwt.http.client.RequestCallback#onError(com.google.gwt.http.client.Request, java.lang.Throwable)

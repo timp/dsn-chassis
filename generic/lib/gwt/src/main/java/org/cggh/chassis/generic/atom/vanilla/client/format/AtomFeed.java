@@ -15,5 +15,6 @@ public interface AtomFeed {
 	public String getUpdated();
 	public String getTitle();
 	public List<AtomEntry> getEntries();
+	public void setTitle(String title);
 
 }

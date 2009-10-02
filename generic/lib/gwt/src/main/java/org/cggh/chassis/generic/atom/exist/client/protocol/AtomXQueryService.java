@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.atom.vanilla.client.protocol;
+package org.cggh.chassis.generic.atom.exist.client.protocol;
 
 import org.cggh.chassis.generic.twisted.client.Deferred;
 
