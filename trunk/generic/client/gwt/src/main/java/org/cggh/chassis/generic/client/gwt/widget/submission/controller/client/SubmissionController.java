@@ -11,6 +11,8 @@ import org.cggh.chassis.generic.atom.submission.client.mockimpl.MockSubmissionFa
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
 import org.cggh.chassis.generic.client.gwt.widget.submission.model.client.SubmissionModel;
+import org.cggh.chassis.generic.log.client.Log;
+import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.twisted.client.Deferred;
 import org.cggh.chassis.generic.twisted.client.Function;
 
@@ -25,6 +27,7 @@ public class SubmissionController implements SubmissionControllerEditAPI, Submis
 	private SubmissionFactory submissionFactory;
 	private String feedURL;
 	final private AbstractSubmissionControllerPubSubAPI owner;
+	private Log log = LogFactory.getLog(this.getClass());
 
 	public SubmissionController(SubmissionModel model, AtomService service, AbstractSubmissionControllerPubSubAPI owner, String feedURL) {
 		this.model = model;
@@ -50,10 +53,12 @@ public class SubmissionController implements SubmissionControllerEditAPI, Submis
 	 * @see org.cggh.chassis.generic.client.gwt.widget.submission.controller.client.SubmissionControllerCreateAPI#setUpNewSubmission(java.lang.String)
 	 */
 	public void setUpNewSubmission() {
+		log.enter("setUpNewSubmission");
 		
 		model.setSubmissionEntry(submissionFactory.createSubmissionEntry());
 		model.setStatus(SubmissionModel.STATUS_LOADED);
 		
+		log.leave();
 	}
 
 	/* (non-Javadoc)
@@ -118,6 +123,7 @@ public class SubmissionController implements SubmissionControllerEditAPI, Submis
 	 * @see org.cggh.chassis.generic.client.gwt.widget.submission.controller.client.SubmissionControllerCreateAPI#cancelCreateStudy()
 	 */
 	public void cancelCreateOrUpdateSubmissionEntry() {
+		log.enter("cancelCreateOrUpdateSubmissionEntry");
 		
 		model.setStatus(SubmissionModel.STATUS_CANCELLED);
 		
@@ -125,6 +131,8 @@ public class SubmissionController implements SubmissionControllerEditAPI, Submis
 		if (owner instanceof SubmissionControllerPubSubCreateAPI) {
 			((SubmissionControllerPubSubCreateAPI)owner).cancelCreateNewSubmissionEntry();
 		} 
+		
+		log.leave();
 	}
 
 	/* (non-Javadoc)
@@ -134,8 +142,13 @@ public class SubmissionController implements SubmissionControllerEditAPI, Submis
 	 * @see org.cggh.chassis.generic.client.gwt.widget.submission.controller.client.SubmissionControllerViewAPI#loadSubmissionEntry(org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry)
 	 */
 	public void loadSubmissionEntry(SubmissionEntry submissionEntryToLoad) {
+		log.enter("loadSubmissionEntry");
+		
 		model.setSubmissionEntry(submissionEntryToLoad);
 		model.setStatus(SubmissionModel.STATUS_LOADED);
+		log.trace("submissionEntryToLoad: " + submissionEntryToLoad.toString());		
+		
+		log.leave();
 	}
 
 	/* (non-Javadoc)
@@ -145,6 +158,7 @@ public class SubmissionController implements SubmissionControllerEditAPI, Submis
 	 * @see org.cggh.chassis.generic.client.gwt.widget.submission.controller.client.SubmissionControllerViewAPI#loadSubmissionEntryByURL(java.lang.String)
 	 */
 	public void loadSubmissionEntryByURL(String submissionEntryURL) {
+		log.enter("loadSubmissionEntryByURL");
 		
 		model.setStatus(SubmissionModel.STATUS_LOADING);
 		
@@ -153,6 +167,9 @@ public class SubmissionController implements SubmissionControllerEditAPI, Submis
 		
 		//add callbacks
 		deffered.addCallbacks(new LoadSubmissionEntryCallback(), new LoadSubmissionEntryErrback());
+		log.trace("Loading entryURL: " + submissionEntryURL);
+		
+		log.leave();
 	}
 
 	//package private for testing purposes
@@ -181,6 +198,7 @@ public class SubmissionController implements SubmissionControllerEditAPI, Submis
 	 * @see org.cggh.chassis.generic.client.gwt.widget.submission.controller.client.SubmissionControllerCreateAPI#saveNewSubmissionEntry()
 	 */
 	public void saveNewSubmissionEntry() {
+		log.enter("saveNewSubmissionEntry");
 	
 		model.setStatus(SubmissionModel.STATUS_SAVING);
 		
@@ -189,12 +207,15 @@ public class SubmissionController implements SubmissionControllerEditAPI, Submis
 		
 		//add callbacks
 		deffered.addCallbacks(new SaveOrUpdateSubmissionEntryCallback(), new SaveOrUpdateSubmissionEntryErrback());
+		
+		log.leave();
 	}
 
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.client.gwt.widget.submission.controller.client.SubmissionControllerEditAPI#updateSubmissionEntry()
 	 */
 	public void updateSubmissionEntry() {
+		log.enter("updateSubmissionEntry");
 		
 		model.setStatus(SubmissionModel.STATUS_SAVING);
 		
@@ -206,6 +227,8 @@ public class SubmissionController implements SubmissionControllerEditAPI, Submis
 		
 		//add callbacks
 		deffered.addCallbacks(new SaveOrUpdateSubmissionEntryCallback(), new SaveOrUpdateSubmissionEntryErrback());
+		
+		log.leave();
 	}
 
 	//package private for testing purposes
@@ -240,6 +263,19 @@ public class SubmissionController implements SubmissionControllerEditAPI, Submis
 
 	public void updateModules(Set<String> modules) {
 		model.setModules(modules);
+	}
+
+	public void onUserActionEditThisSubmission() {
+		log.enter("onUserActionEditThisSubmission");
+		
+		if (owner instanceof SubmissionControllerPubSubViewAPI) {
+			SubmissionEntry submissionEntryToEdit = model.getSubmissionEntry();
+			
+			((SubmissionControllerPubSubViewAPI)owner).onUserActionEditSubmission(submissionEntryToEdit);
+		}
+		
+		log.leave();
+		
 	}
 	
 }

@@ -8,4 +8,6 @@ public interface SubmissionControllerViewAPI {
 
 	public void loadSubmissionEntryByURL(String submissionEntryURL);
 
+	public void onUserActionEditThisSubmission();
+
 }

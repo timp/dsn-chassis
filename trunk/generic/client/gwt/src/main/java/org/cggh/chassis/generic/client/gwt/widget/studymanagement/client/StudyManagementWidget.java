@@ -10,7 +10,7 @@ import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
 import org.cggh.chassis.generic.client.gwt.widget.study.create.client.CreateStudyWidgetPubSubAPI;
 import org.cggh.chassis.generic.client.gwt.widget.study.edit.client.EditStudyWidgetPubSubAPI;
 import org.cggh.chassis.generic.client.gwt.widget.study.view.client.ViewStudyWidgetPubSubAPI;
-import org.cggh.chassis.generic.client.gwt.widget.study.viewall.client.ViewAllStudiesWidgetPubSubAPI;
+import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewAllStudiesWidgetPubSubAPI;
 
 import com.google.gwt.user.client.ui.Panel;
 
@@ -61,7 +61,7 @@ public class StudyManagementWidget implements CreateStudyWidgetPubSubAPI,
 		controller.displayEditStudyWidget();
 	}
 
-	public void onUserActionViewStudy(StudyEntry studyEntry) {
+	public void onUserActionSelectStudy(StudyEntry studyEntry) {
 		renderer.viewStudyWidget.loadStudyEntry(studyEntry);
 		controller.displayViewStudyWidget();
 	}

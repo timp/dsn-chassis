@@ -9,7 +9,7 @@ public class AllStudyJavaTests {
 		TestSuite suite = new TestSuite(
 				"All plain Java tests for org.cggh.chassis.generic.client.gwt.widget.study.*");
 		//$JUnit-BEGIN$
-		suite.addTest(org.cggh.chassis.generic.client.gwt.widget.study.viewall.client.AllJavaTests.suite());
+		suite.addTest(org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.AllJavaTests.suite());
 		suite.addTest(org.cggh.chassis.generic.client.gwt.widget.studymanagement.client.AllJavaTests.suite());
 		suite.addTest(org.cggh.chassis.generic.client.gwt.widget.study.model.client.TestStudyModel.suite());
 		suite.addTest(org.cggh.chassis.generic.client.gwt.widget.study.controller.client.TestStudyController.suite());
