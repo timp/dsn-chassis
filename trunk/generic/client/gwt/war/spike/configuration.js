@@ -5,10 +5,10 @@ CHASSIS = new Object();
 CHASSIS.userDetailsServiceEndpointURL = "/chassis-generic-service-user/gwtrpc/userdetails";
 
 CHASSIS.studyFeedURL = "/chassis-generic-service-exist/atom/edit/studies";
-CHASSIS.studyQueryServiceURL = "/chassis-generic-service-exist/atom/query/studies";
+CHASSIS.studyQueryServiceURL = "/chassis-generic-service-exist/query/studies.xql";
 
 CHASSIS.submissionFeedURL = "/chassis-generic-service-exist/atom/edit/submissions";
-CHASSIS.submissionQueryServiceURL = "/chassis-generic-service-exist/atom/query/submissions";
+CHASSIS.submissionQueryServiceURL = "/chassis-generic-service-exist/query/submissions.xql";
 
 // configure role name prefix
 CHASSIS.userChassisRolesPrefix = "ROLE_CHASSIS_";
