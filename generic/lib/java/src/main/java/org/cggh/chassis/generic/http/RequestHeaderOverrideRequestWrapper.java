@@ -32,17 +32,34 @@ public class RequestHeaderOverrideRequestWrapper extends HttpServletRequestWrapp
 	}
 	
 	@Override
-	public String getHeader(String header) {
-		log.debug("getHeader("+header+") called");
-		String normalisedHeader = header.toLowerCase();
-		if (override.containsKey(normalisedHeader)) {
-			String value = override.get(normalisedHeader);
+	public String getHeader(String headerName) {
+		log.debug("getHeader("+headerName+") called");
+		String normalisedHeaderName = headerName.toLowerCase();
+		if (override.containsKey(normalisedHeaderName)) {
+			String value = override.get(normalisedHeaderName);
 			log.debug("overriding header with value: "+value);
 			return value;
 		}
 		else {
 			log.debug("not overriding header");
-			return ((HttpServletRequest)this.getRequest()).getHeader(header);
+			return ((HttpServletRequest)this.getRequest()).getHeader(headerName);
+		}
+	}
+	
+	@Override
+	public Enumeration getHeaders(String headerName) {
+		log.debug("getHeaders("+headerName+") called");
+		String normalisedHeaderName = headerName.toLowerCase();
+		if (override.containsKey(normalisedHeaderName)) {
+			String value = override.get(normalisedHeaderName);
+			log.debug("overriding header with value: "+value);
+			Vector<String> v = new Vector<String>();
+			v.add(value);
+			return v.elements();
+		}
+		else {
+			log.debug("not overriding header");
+			return ((HttpServletRequest)this.getRequest()).getHeaders(headerName);
 		}
 	}
 	
