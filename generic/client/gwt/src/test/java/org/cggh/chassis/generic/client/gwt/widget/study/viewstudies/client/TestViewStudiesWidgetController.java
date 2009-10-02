@@ -26,11 +26,11 @@ import org.cggh.chassis.generic.atom.study.client.mockimpl.MockStudyFactory;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
-import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewAllStudiesWidgetController;
-import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewAllStudiesWidgetModel;
-import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewAllStudiesWidgetController.GetStudyFeedCallback;
-import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewAllStudiesWidgetController.LoadStudiesByEntryURLsCallback;
-import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewAllStudiesWidgetController.LoadStudiesByEntryURLsErrback;
+import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetController;
+import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetModel;
+import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetController.GetStudyFeedCallback;
+import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetController.LoadStudiesByEntryURLsCallback;
+import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetController.LoadStudiesByEntryURLsErrback;
 import org.cggh.chassis.generic.twisted.client.Deferred;
 import org.junit.Before;
 import org.junit.Test;
@@ -44,19 +44,19 @@ import org.powermock.modules.junit4.PowerMockRunner;
  *
  */
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({ViewAllStudiesWidget.class, Deferred.class})
-public class TestViewAllStudiesWidgetController {
+@PrepareForTest({ViewStudiesWidget.class, Deferred.class})
+public class TestViewStudiesWidgetController {
 
 	
 	public static junit.framework.Test suite() {
-	   return new JUnit4TestAdapter(TestViewAllStudiesWidgetController.class);
+	   return new JUnit4TestAdapter(TestViewStudiesWidgetController.class);
 	}
 
-	private ViewAllStudiesWidgetController testController;
-	private ViewAllStudiesWidgetModel testModel;
+	private ViewStudiesWidgetController testController;
+	private ViewStudiesWidgetModel testModel;
 	private AtomService mockService;
 	private StudyFactory mockFactory;
-	private ViewAllStudiesWidget mockWidget;
+	private ViewStudiesWidget mockWidget;
 	private List<StudyEntry> testStudies;
 	
 	//empty URL because MockEntries already carry the feedURL within their editLink
@@ -66,14 +66,14 @@ public class TestViewAllStudiesWidgetController {
 	public void setUp() {
 		
 		//Create testController, inject mockModel and a mock Service
-		testModel = new ViewAllStudiesWidgetModel();
+		testModel = new ViewStudiesWidgetModel();
 		mockFactory = new MockStudyFactory();
 		mockService = createMock(AtomService.class);
 		
 		//create mockWidget
-		mockWidget = PowerMock.createPartialMock(ViewAllStudiesWidget.class, "onUserSelectStudy");
+		mockWidget = PowerMock.createPartialMock(ViewStudiesWidget.class, "onUserSelectStudy");
 		
-		testController = new ViewAllStudiesWidgetController(testModel, mockService, mockWidget, feedURL);
+		testController = new ViewStudiesWidgetController(testModel, mockService, mockWidget, feedURL);
 
 		
 		//create test Study Entries to view
@@ -137,7 +137,7 @@ public class TestViewAllStudiesWidgetController {
 		
 		//test outcome
 		assertEquals(testStudies, testModel.getStudyEntries());
-		assertEquals(ViewAllStudiesWidgetModel.STATUS_LOADED, testModel.getStatus());
+		assertEquals(ViewStudiesWidgetModel.STATUS_LOADED, testModel.getStatus());
 		
 		
 		verify(mockStudyFeed);
@@ -191,7 +191,7 @@ public class TestViewAllStudiesWidgetController {
 		
 		//test outcome
 		assertEquals(testStudies, testModel.getStudyEntries());
-		assertEquals(ViewAllStudiesWidgetModel.STATUS_LOADED, testModel.getStatus());
+		assertEquals(ViewStudiesWidgetModel.STATUS_LOADED, testModel.getStatus());
 					
 	}
 	
@@ -203,12 +203,12 @@ public class TestViewAllStudiesWidgetController {
 		
 		//set expectations on owner
 		mockWidget.onUserSelectStudy(testStudy);
-		PowerMock.replay(mockWidget, ViewAllStudiesWidget.class);
+		PowerMock.replay(mockWidget, ViewStudiesWidget.class);
 		
 		//call method under test
 		testController.onUserSelectStudy(testStudy);
 		
-		PowerMock.verify(mockWidget, ViewAllStudiesWidget.class);
+		PowerMock.verify(mockWidget, ViewStudiesWidget.class);
 		
 		
 	}

@@ -9,9 +9,9 @@ public class AllGWTTests extends GWTTestSuite {
 
 	public static Test suite() {
 		GWTTestSuite suite = new GWTTestSuite(
-				"All GWTTests for org.cggh.chassis.generic.client.gwt.widget.study.create.client");
+				"All GWTTests for org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client");
 		//$JUnit-BEGIN$
-		suite.addTest(new JUnit4TestAdapter(GWTTestViewAllStudiesWidgetDefaultRenderer.class));
+		suite.addTest(new JUnit4TestAdapter(GWTTestViewStudiesWidgetDefaultRenderer.class));
 		//$JUnit-END$
 		return suite;
 	}

@@ -13,8 +13,8 @@ import junit.framework.JUnit4TestAdapter;
 
 import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
 import org.cggh.chassis.generic.atom.study.client.mockimpl.MockStudyFactory;
-import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewAllStudiesWidgetModel;
-import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewAllStudiesWidgetModelListener;
+import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetModel;
+import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetModelListener;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -22,20 +22,20 @@ import org.junit.Test;
  * @author raok
  *
  */
-public class TestViewAllStudiesWidgetModel {
+public class TestViewStudiesWidgetModel {
 
 	public static junit.framework.Test suite() {
-		return new JUnit4TestAdapter(TestViewAllStudiesWidgetModel.class);
+		return new JUnit4TestAdapter(TestViewStudiesWidgetModel.class);
 	}
 
-	private ViewAllStudiesWidgetModel testModel;
+	private ViewStudiesWidgetModel testModel;
 	private List<StudyEntry> testStudies;
 	
 	@Before
 	public void setUp() {
 		
 		//create test object
-		testModel = new ViewAllStudiesWidgetModel();
+		testModel = new ViewStudiesWidgetModel();
 		
 		//create list of test studyEntries
 		testStudies = new ArrayList<StudyEntry>();
@@ -60,10 +60,10 @@ public class TestViewAllStudiesWidgetModel {
 	@Test
 	public void testStatusConstants() {
 		
-		assertEquals(new Integer(0), ViewAllStudiesWidgetModel.STATUS_INITIAL);
-		assertEquals(new Integer(1), ViewAllStudiesWidgetModel.STATUS_LOADING);
-		assertEquals(new Integer(2), ViewAllStudiesWidgetModel.STATUS_LOADED);
-		assertEquals(new Integer(3), ViewAllStudiesWidgetModel.STATUS_ERROR);
+		assertEquals(new Integer(0), ViewStudiesWidgetModel.STATUS_INITIAL);
+		assertEquals(new Integer(1), ViewStudiesWidgetModel.STATUS_LOADING);
+		assertEquals(new Integer(2), ViewStudiesWidgetModel.STATUS_LOADED);
+		assertEquals(new Integer(3), ViewStudiesWidgetModel.STATUS_ERROR);
 		
 	}
 	
@@ -75,14 +75,14 @@ public class TestViewAllStudiesWidgetModel {
 		
 		// test initial state
 		assertNull(testModel.getStudyEntries());
-		assertEquals(ViewAllStudiesWidgetModel.STATUS_INITIAL, testModel.getStatus());
+		assertEquals(ViewStudiesWidgetModel.STATUS_INITIAL, testModel.getStatus());
 	}
 	
 	@Test
 	public void testGettersSetters() {
 		
 		//test data
-		Integer status = ViewAllStudiesWidgetModel.STATUS_LOADED;	
+		Integer status = ViewStudiesWidgetModel.STATUS_LOADED;	
 		
 		
 		//call methods under test
@@ -101,17 +101,17 @@ public class TestViewAllStudiesWidgetModel {
 	public void testOnStatusChanged() {
 		
 		//create listener mock
-		ViewAllStudiesWidgetModelListener listener = createMock(ViewAllStudiesWidgetModelListener.class);
+		ViewStudiesWidgetModelListener listener = createMock(ViewStudiesWidgetModelListener.class);
 		testModel.addListener(listener);
 		
 		//set up expectations
-		listener.onStatusChanged(ViewAllStudiesWidgetModel.STATUS_INITIAL, ViewAllStudiesWidgetModel.STATUS_LOADING);
-		listener.onStatusChanged(ViewAllStudiesWidgetModel.STATUS_LOADING, ViewAllStudiesWidgetModel.STATUS_ERROR);
+		listener.onStatusChanged(ViewStudiesWidgetModel.STATUS_INITIAL, ViewStudiesWidgetModel.STATUS_LOADING);
+		listener.onStatusChanged(ViewStudiesWidgetModel.STATUS_LOADING, ViewStudiesWidgetModel.STATUS_ERROR);
 		replay(listener);
 		
 		//call methods under test
-		testModel.setStatus(ViewAllStudiesWidgetModel.STATUS_LOADING);
-		testModel.setStatus(ViewAllStudiesWidgetModel.STATUS_ERROR);
+		testModel.setStatus(ViewStudiesWidgetModel.STATUS_LOADING);
+		testModel.setStatus(ViewStudiesWidgetModel.STATUS_ERROR);
 		
 
 		//test outcome
@@ -123,7 +123,7 @@ public class TestViewAllStudiesWidgetModel {
 	public void testOnStudyEntriesChanged() {
 		
 		//create listener mock
-		ViewAllStudiesWidgetModelListener listener = createMock(ViewAllStudiesWidgetModelListener.class);
+		ViewStudiesWidgetModelListener listener = createMock(ViewStudiesWidgetModelListener.class);
 		testModel.addListener(listener);
 		
 		//set up expectations

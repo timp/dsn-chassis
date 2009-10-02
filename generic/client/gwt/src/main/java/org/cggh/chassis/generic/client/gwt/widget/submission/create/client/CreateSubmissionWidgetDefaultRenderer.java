@@ -10,9 +10,9 @@ import java.util.Set;
 
 import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
-import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewAllStudiesWidget;
-import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewAllStudiesWidgetModelListener;
-import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewAllStudiesWidgetPubSubAPI;
+import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidget;
+import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetModelListener;
+import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetPubSubAPI;
 import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetListBoxRenderer;
 import org.cggh.chassis.generic.client.gwt.widget.submission.controller.client.SubmissionControllerCreateAPI;
 import org.cggh.chassis.generic.client.gwt.widget.submission.model.client.SubmissionModelListener;
@@ -38,7 +38,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
  * @author raok
  *
  */
-public class CreateSubmissionWidgetDefaultRenderer implements SubmissionModelListener, ViewAllStudiesWidgetPubSubAPI {
+public class CreateSubmissionWidgetDefaultRenderer implements SubmissionModelListener, ViewStudiesWidgetPubSubAPI {
 
 	private Panel canvas;
 	private SubmissionControllerCreateAPI controller;
@@ -55,12 +55,12 @@ public class CreateSubmissionWidgetDefaultRenderer implements SubmissionModelLis
 	
 	//Add studyLink UI
 	final Panel studyLinkListBoxCanvas = new SimplePanel();
-	final private ViewAllStudiesWidget viewStudiesWidgetListBox;
+	final private ViewStudiesWidget viewStudiesWidgetListBox;
 	final Map<String, CheckBox> modulesUIHash = new HashMap<String, CheckBox>();
 	
 	//show linked Studies
 	final Panel studiesLinkedCanvas = new SimplePanel();
-	private ViewAllStudiesWidget studiesLinkedWidget;
+	private ViewStudiesWidget studiesLinkedWidget;
 	
 	
 	final Button cancelCreateSubmissionUI = new Button("Cancel", new CancelCreateSubmissionUIClickHandler());
@@ -72,11 +72,11 @@ public class CreateSubmissionWidgetDefaultRenderer implements SubmissionModelLis
 		this.modulesConfig = modulesMap;
 		
 		//Create ViewStudies widget to view linked studies
-		studiesLinkedWidget = new ViewAllStudiesWidget(studiesLinkedCanvas, studyService, studyFeedURL);
+		studiesLinkedWidget = new ViewStudiesWidget(studiesLinkedCanvas, studyService, studyFeedURL);
 
 		//Create ViewStudiesWidget with ListBox renderer
-		ViewAllStudiesWidgetModelListener customRenderer = new ViewStudiesWidgetListBoxRenderer(studyLinkListBoxCanvas, null);
-		viewStudiesWidgetListBox = new ViewAllStudiesWidget(studyService, studyFeedURL, customRenderer);
+		ViewStudiesWidgetModelListener customRenderer = new ViewStudiesWidgetListBoxRenderer(studyLinkListBoxCanvas, null);
+		viewStudiesWidgetListBox = new ViewStudiesWidget(studyService, studyFeedURL, customRenderer);
 		
 		//add this as listener
 		viewStudiesWidgetListBox.addViewAllStudiesWidgetListener(this);

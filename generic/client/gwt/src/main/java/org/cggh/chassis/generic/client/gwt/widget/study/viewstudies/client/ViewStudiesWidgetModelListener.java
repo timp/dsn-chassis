@@ -11,7 +11,7 @@ import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
  * @author raok
  *
  */
-public interface ViewAllStudiesWidgetModelListener {
+public interface ViewStudiesWidgetModelListener {
 
 	void onStatusChanged(Integer before, Integer after);
 
