@@ -4,7 +4,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-  <title>Chassis/* Study Metadata Persistence Service API Specification Version 0.1-alpha-2-SNAPSHOT</title>
+  <title>Chassis/* Study Metadata Persistence Service API Specification Version
+  0.1-alpha-2-SNAPSHOT</title>
   <link rel="stylesheet" type="text/css"
   href="../../../../style/reset-fonts-grids.css" />
   <link rel="stylesheet" type="text/css" href="../../../../style/base-min.css"
@@ -19,30 +20,31 @@
 
 <div id="hd">
 <h1>Chassis/* Study Metadata Persistence Service<br />
-API Specification Version 0.1-alpha-2-SNAPSHOT</h1>
+API Specification Version 0.1-alpha-3-SNAPSHOT</h1>
 
 <p>This document defines an API for a web service that provides basic
 persistence capabilities (create, retrieve, update, delete) for metadata
 records that capture information about research studies.</p>
 
-<p><strong>This version: <a href="http://dsn-chassis.googlecode.com/svn/branches/0.1-alpha-2/generic/docs/content/api/service/study/persistence/index.html">0.1-alpha-2-SNAPSHOT</a></strong></p>
+<p><strong>This version: <a
+href="http://dsn-chassis.googlecode.com/svn/trunk/generic/docs/content/api/service/study/persistence/index.html">0.1-alpha-3-SNAPSHOT</a></strong></p>
 
 <p><strong>Status of This Document</strong></p>
 
-<p>This is not a stable document. This document is a snapshot of the 0.1-alpha-2 
-branch, and is subject to change without notice.</p>
+<p>This is not a stable document. This document is a snapshot of the current
+development trunk, and is subject to change without notice.</p>
 
 <p><strong>Table of Contents</strong></p>
 
 <div class="toc">
 <ul>
-  <li><a href="#L55">1. Introduction</a>
+  <li><a href="#L55">1. Introduction</a> 
     <ul>
       <li><a href="#L59">1.1. Atom Publishing Protocol</a></li>
       <li><a href="#L86">1.2. About This Document</a></li>
     </ul>
   </li>
-  <li><a href="#L100">2. Creating a New Study Metadata Record</a>
+  <li><a href="#L100">2. Creating a New Study Metadata Record</a> 
     <ul>
       <li><a href="#L160">2.1. Chassis/* XML Namespace - Studies</a></li>
     </ul>
@@ -118,9 +120,9 @@ Content-Length: nnn
     &lt;name&gt;Freda Bloggs&lt;/name&gt;
     &lt;email&gt;freda@example.org&lt;/email&gt;
   &lt;/author&gt;
-  &lt;category scheme="http://www.cggh.org/chassis/atom/types" term="study"/&gt;
+  &lt;category scheme="http://www.cggh.org/2009/chassis/atom/types" term="study"/&gt;
   &lt;content type="application/xml"&gt;
-    &lt;study xmlns="http://www.cggh.org/chassis/generic/xmlns"&gt;
+    &lt;study xmlns="http://www.cggh.org/2009/chassis/atom/xmlns"&gt;
       &lt;module&gt;molecular&lt;/module&gt;  
       &lt;module&gt;in vitro&lt;/module&gt;  
     &lt;/study&gt;
@@ -145,9 +147,9 @@ Location: http://example.org/chassis/atom/edit/studies?id=urn:uuid:f4070192-c65d
     &lt;name&gt;Freda Bloggs&lt;/name&gt;
     &lt;email&gt;freda@example.org&lt;/email&gt;
   &lt;/author&gt;
-  &lt;category scheme="http://www.cggh.org/chassis/atom/types" term="study" /&gt;
+  &lt;category scheme="http://www.cggh.org/2009/chassis/atom/types" term="study"/&gt;
   &lt;content type="application/xml"&gt;
-    &lt;study xmlns="http://www.cggh.org/chassis/generic/xmlns"&gt;
+    &lt;study xmlns="http://www.cggh.org/2009/chassis/atom/xmlns"&gt;
       &lt;module&gt;molecular&lt;/module&gt;  
       &lt;module&gt;in vitro&lt;/module&gt;  
     &lt;/study&gt;
@@ -170,15 +172,14 @@ the <code>content</code> element, using the Chassis/* XML namespace.</p>
 
 <h3 id="L160">2.1. Chassis/* XML Namespace - Studies</h3>
 
-<p>The Chassis/* XML namespace defines a small set of elements to include
-within the <code>study</code> element, including <code>module</code>. Any other 
-elements from any other namespace may also
-be included within the <code>study</code> element, providing extensibility for
-specific data-sharing networks. The content of the <code>study</code> element
-should conform to the following <a
+<p>The Chassis/* XML namespace defines a set of elements to include within the
+<code>study</code> element, including <code>module</code>. Any other elements
+from any other namespace may also be included within the <code>study</code>
+element, providing extensibility for specific data-sharing networks. The
+content of the <code>study</code> element should conform to the following <a
 href="http://www.relaxng.org/compact-tutorial-20030326.html">RelaxNG
 schema</a>:</p>
-<pre>namespace local = "http://www.cggh.org/chassis/generic/xmlns"
+<pre>namespace local = "http://www.cggh.org/2009/chassis/atom/xmlns"
 
 chassisStudy = 
   element study {
@@ -215,9 +216,9 @@ Content-Type: application/atom+xml;charset=UTF-8
     &lt;name&gt;Freda Bloggs&lt;/name&gt;
     &lt;email&gt;freda@example.org&lt;/email&gt;
   &lt;/author&gt;
-  &lt;category scheme="http://www.cggh.org/chassis/atom/types" term="study" /&gt;
+  &lt;category scheme="http://www.cggh.org/2009/chassis/atom/types" term="study"/&gt;
   &lt;content type="application/xml"&gt;
-    &lt;study xmlns="http://www.cggh.org/chassis/generic/xmlns"&gt;
+    &lt;study xmlns="http://www.cggh.org/2009/chassis/atom/xmlns"&gt;
       &lt;module&gt;molecular&lt;/module&gt;  
       &lt;module&gt;in vitro&lt;/module&gt;  
     &lt;/study&gt;
@@ -247,9 +248,9 @@ Content-Length: nnn
     &lt;name&gt;Freda Bloggs&lt;/name&gt;
     &lt;email&gt;freda@example.org&lt;/email&gt;
   &lt;/author&gt;
-  &lt;category scheme="http://www.cggh.org/chassis/atom/types" term="study" /&gt;
+  &lt;category scheme="http://www.cggh.org/2009/chassis/atom/types" term="study"/&gt;
   &lt;content type="application/xml"&gt;
-    &lt;study xmlns="http://www.cggh.org/chassis/generic/xmlns"&gt;
+    &lt;study xmlns="http://www.cggh.org/2009/chassis/atom/xmlns"&gt;
       &lt;module&gt;molecular&lt;/module&gt;  
       &lt;module&gt;in vitro&lt;/module&gt;  
     &lt;/study&gt;
@@ -276,9 +277,9 @@ Server: Apache-Coyote/1.1
     &lt;name&gt;Freda Bloggs&lt;/name&gt;
     &lt;email&gt;freda@example.org&lt;/email&gt;
   &lt;/author&gt;
-  &lt;category scheme="http://www.cggh.org/chassis/atom/types" term="study" /&gt;
+  &lt;category scheme="http://www.cggh.org/2009/chassis/atom/types" term="study"/&gt;
   &lt;content type="application/xml"&gt;
-    &lt;study xmlns="http://www.cggh.org/chassis/generic/xmlns"&gt;
+    &lt;study xmlns="http://www.cggh.org/2009/chassis/atom/xmlns"&gt;
       &lt;module&gt;molecular&lt;/module&gt;  
       &lt;module&gt;in vitro&lt;/module&gt;  
     &lt;/study&gt;
@@ -342,9 +343,9 @@ Date: Mon, 06 Jul 2009 12:56:40 GMT
       &lt;name&gt;Freda Bloggs&lt;/name&gt;
       &lt;email&gt;freda@example.org&lt;/email&gt;
     &lt;/author&gt;
-    &lt;category scheme="http://www.cggh.org/chassis/atom/types" term="study" /&gt;
+    &lt;category scheme="http://www.cggh.org/2009/chassis/atom/types" term="study" /&gt;
     &lt;content type="application/xml"&gt;
-      &lt;study xmlns="http://www.cggh.org/chassis/generic/xmlns"&gt;
+      &lt;study xmlns="http://www.cggh.org/2009/chassis/atom/xmlns"&gt;
         &lt;module&gt;molecular&lt;/module&gt;  
         &lt;module&gt;in vitro&lt;/module&gt;  
       &lt;/study&gt;
