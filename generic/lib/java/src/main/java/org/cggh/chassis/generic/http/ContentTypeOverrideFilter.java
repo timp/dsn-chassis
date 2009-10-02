@@ -4,7 +4,6 @@
 package org.cggh.chassis.generic.http;
 
 import java.io.IOException;
-import java.util.HashSet;
 
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
