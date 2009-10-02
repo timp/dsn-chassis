@@ -9,6 +9,7 @@ import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionFactory;
 import org.cggh.chassis.generic.atom.submission.client.mockimpl.MockSubmissionFactory;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
+import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomProtocolException;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
 import org.cggh.chassis.generic.client.gwt.widget.submission.model.client.SubmissionModel;
 import org.cggh.chassis.generic.log.client.Log;
@@ -235,7 +236,17 @@ public class SubmissionController implements SubmissionControllerEditAPI, Submis
 	class SaveOrUpdateSubmissionEntryErrback implements Function<Throwable,Throwable> {
 
 		public Throwable apply(Throwable error) {
+			log.enter("SaveOrUpdateSubmissionEntryErrback::apply");
+
+			if (error instanceof AtomProtocolException) {
+				AtomProtocolException e = (AtomProtocolException) error;
+				log.trace(e.getLocalizedMessage());
+				log.trace(e.getResponse().getText());
+			}
+			
 			model.setStatus(SubmissionModel.STATUS_ERROR);
+						
+			log.leave();
 			return error;
 		}
 

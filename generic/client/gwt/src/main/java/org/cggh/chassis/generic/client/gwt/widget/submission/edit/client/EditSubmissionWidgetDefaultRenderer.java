@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.client.gwt.widget.submission.create.client;
+package org.cggh.chassis.generic.client.gwt.widget.submission.edit.client;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -11,13 +11,11 @@ import java.util.Set;
 import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
 import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidget;
+import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetListBoxRenderer;
 import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetModelListener;
 import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetPubSubAPI;
-import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetListBoxRenderer;
-import org.cggh.chassis.generic.client.gwt.widget.submission.controller.client.SubmissionControllerCreateAPI;
+import org.cggh.chassis.generic.client.gwt.widget.submission.controller.client.SubmissionControllerEditAPI;
 import org.cggh.chassis.generic.client.gwt.widget.submission.model.client.SubmissionModelListener;
-import org.cggh.chassis.generic.log.client.Log;
-import org.cggh.chassis.generic.log.client.LogFactory;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -40,16 +38,15 @@ import com.google.gwt.user.client.ui.VerticalPanel;
  * @author raok
  *
  */
-public class CreateSubmissionWidgetDefaultRenderer implements SubmissionModelListener, ViewStudiesWidgetPubSubAPI {
-	private Log log = LogFactory.getLog(this.getClass());
+public class EditSubmissionWidgetDefaultRenderer implements SubmissionModelListener, ViewStudiesWidgetPubSubAPI {
 
 	private Panel canvas;
-	private SubmissionControllerCreateAPI controller;
+	private SubmissionControllerEditAPI controller;
 	private Boolean isFormComplete = false;
 	private Map<String, String> modulesConfig;
 	
 	//Expose view elements for testing purposes.
-	final Panel createSubmissionFormPanel = new SimplePanel();
+	final Panel editSubmissionFormPanel = new SimplePanel();
 	final TextBoxBase titleUI = new TextBox();
 	final TextBoxBase summaryUI = new TextArea();
 	final SimplePanel noStudiesAddedPanel = new SimplePanel();
@@ -66,10 +63,10 @@ public class CreateSubmissionWidgetDefaultRenderer implements SubmissionModelLis
 	private ViewStudiesWidget studiesLinkedWidget;
 	
 	
-	final Button cancelCreateSubmissionUI = new Button("Cancel", new CancelCreateSubmissionUIClickHandler());
-	final Button saveNewSubmissionEntryUI = new Button("Create Submission", new SaveNewSubmissionUIClickHandler());
+	final Button cancelEditSubmissionUI = new Button("Cancel", new CancelCreateSubmissionUIClickHandler());
+	final Button updateSubmissionEntryUI = new Button("Create Submission", new SaveNewSubmissionUIClickHandler());
 
-	public CreateSubmissionWidgetDefaultRenderer(Panel canvas, SubmissionControllerCreateAPI controller, Map<String, String> modulesMap, AtomService studyService, String studyFeedURL) {
+	public EditSubmissionWidgetDefaultRenderer(Panel canvas, SubmissionControllerEditAPI controller, Map<String, String> modulesMap, AtomService studyService, String studyFeedURL) {
 		this.canvas = canvas;
 		this.controller = controller;
 		this.modulesConfig = modulesMap;
@@ -92,21 +89,21 @@ public class CreateSubmissionWidgetDefaultRenderer implements SubmissionModelLis
 	private void initCanvas() {
 				
 		//prepare form
-		FlexTable createSubmissionForm = new FlexTable();
+		FlexTable editSubmissionForm = new FlexTable();
 		int rowNumber = -1;
 		
 		Label titleLabel = new Label("Enter title:");
-		createSubmissionForm.setWidget(++rowNumber, 0, titleLabel);
+		editSubmissionForm.setWidget(++rowNumber, 0, titleLabel);
 		titleUI.addValueChangeHandler(new TitleChangeHandler());
-		createSubmissionForm.setWidget(++rowNumber, 0, titleUI);
+		editSubmissionForm.setWidget(++rowNumber, 0, titleUI);
 		
 		Label summaryLabel = new Label("Enter summary:"); 
-		createSubmissionForm.setWidget(++rowNumber, 0, summaryLabel);
+		editSubmissionForm.setWidget(++rowNumber, 0, summaryLabel);
 		summaryUI.addValueChangeHandler(new SummaryChangeHandler());
-		createSubmissionForm.setWidget(++rowNumber, 0, summaryUI);
+		editSubmissionForm.setWidget(++rowNumber, 0, summaryUI);
 
 		Label modulesLabel = new Label("Select modules (at least one must be selected):");
-		createSubmissionForm.setWidget(++rowNumber, 0, modulesLabel);
+		editSubmissionForm.setWidget(++rowNumber, 0, modulesLabel);
 
 		//Create as many modules checkboxes as required
 		for (String moduleId : modulesConfig.keySet()) {
@@ -121,7 +118,7 @@ public class CreateSubmissionWidgetDefaultRenderer implements SubmissionModelLis
 			modulesUIHash.put(moduleId, moduleUICheckBox);
 			
 			//add to GUI
-			createSubmissionForm.setWidget(++rowNumber, 0, moduleUICheckBox);
+			editSubmissionForm.setWidget(++rowNumber, 0, moduleUICheckBox);
 			
 		}
 		
@@ -175,12 +172,12 @@ public class CreateSubmissionWidgetDefaultRenderer implements SubmissionModelLis
 		
 		//buttons panel
 		HorizontalPanel buttonsPanel = new HorizontalPanel();
-		buttonsPanel.add(saveNewSubmissionEntryUI);
-		buttonsPanel.add(cancelCreateSubmissionUI);
+		buttonsPanel.add(updateSubmissionEntryUI);
+		buttonsPanel.add(cancelEditSubmissionUI);
 		
 		//Place above into a holder panel, then add to canvas
 		VerticalPanel mainVP = new VerticalPanel();
-		mainVP.add(createSubmissionForm);
+		mainVP.add(editSubmissionForm);
 		mainVP.add(studiesLinkedDisplayPanel);
 		mainVP.add(buttonsPanel);
 		
@@ -241,8 +238,8 @@ public class CreateSubmissionWidgetDefaultRenderer implements SubmissionModelLis
 		
 		public void onClick(ClickEvent arg0) {
 			
-			if (isFormComplete) {
-				controller.saveNewSubmissionEntry();
+			if (isFormComplete){
+				controller.updateSubmissionEntry();
 			} else {
 				//TODO move to management widget?
 				DecoratedPopupPanel errorPopUp = new DecoratedPopupPanel(true);
@@ -281,12 +278,7 @@ public class CreateSubmissionWidgetDefaultRenderer implements SubmissionModelLis
 	}
 
 	public void onSubmissionEntryChanged(Boolean isValid) {
-		log.enter("onSubmissionEntryChanged");
-		
 		this.isFormComplete = isValid;
-		log.trace("isFormComplete: " + isFormComplete);
-		
-		log.leave();
 	}
 
 	public void onStatusChanged(Integer before, Integer after) {
