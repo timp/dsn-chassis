@@ -1,4 +1,4 @@
-#summary protocol/API specifications for the StudyMetadataServices
+#summary protocol/API specifications for the Chassis/* study metadata services
 
 = Chassis/`*` Study Metadata Persistence Service API =
 
