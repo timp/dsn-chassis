@@ -31,6 +31,7 @@ public class StudyFactoryImpl extends AtomFactoryImpl implements StudyFactory {
 	
 	private static String TEMPLATE_STUDYENTRY = 
 		"<atom:entry xmlns:atom=\""+Atom.NSURI+"\">" +
+			"<atom:category scheme=\"http://www.cggh.org/2009/chassis/atom/types\" term=\"study\"/>" +
 			"<atom:content type=\"application/xml\">" +
 				"<chassis:study xmlns:chassis=\""+Chassis.NSURI+"\"></chassis:study>" +
 			"</atom:content>\n" +
