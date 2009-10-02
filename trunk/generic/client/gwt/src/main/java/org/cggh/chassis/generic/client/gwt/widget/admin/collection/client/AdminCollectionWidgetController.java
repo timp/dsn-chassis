@@ -1,0 +1,154 @@
+/**
+ * 
+ */
+package org.cggh.chassis.generic.client.gwt.widget.admin.collection.client;
+
+import org.cggh.chassis.generic.atom.exist.client.protocol.ExistAtomService;
+import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactory;
+import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
+import org.cggh.chassis.generic.log.client.Log;
+import org.cggh.chassis.generic.log.client.LogFactory;
+import org.cggh.chassis.generic.twisted.client.Deferred;
+import org.cggh.chassis.generic.twisted.client.Function;
+import org.cggh.chassis.generic.twisted.client.HttpDeferred;
+
+import com.google.gwt.http.client.Response;
+
+/**
+ * @author aliman
+ *
+ */
+public class AdminCollectionWidgetController {
+	
+	
+	
+	private AdminCollectionWidgetModel model;
+	private ExistAtomService service;
+	private AtomFactory factory;
+	private Log log = LogFactory.getLog(this.getClass());
+
+	
+	
+	public AdminCollectionWidgetController(
+			AdminCollectionWidgetModel model,
+			ExistAtomService service,
+			AtomFactory factory
+	) {
+
+		this.model = model;
+		this.service = service;
+		this.factory = factory;
+
+	}
+	
+	
+	
+	public Deferred<AtomFeed> refreshStatus() {
+		log.enter("refreshStatus");
+
+		model.setPending(true);
+		
+		HttpDeferred<AtomFeed> deferredResult = (HttpDeferred<AtomFeed>) service.getFeed(model.getUrl());
+		
+		deferredResult.addCallback(new Callback(deferredResult));
+		
+		deferredResult.addErrback(new Errback(deferredResult));
+
+		log.leave();
+		return deferredResult;
+	}
+	
+	
+	
+	public Deferred<Void> createCollection() {
+		log.enter("createCollection");
+
+		model.setPending(true);
+
+		// set up new feed document
+		AtomFeed feed = factory.createFeed();
+		feed.setTitle(model.getTitle());
+		
+		HttpDeferred<Void> deferredResult = (HttpDeferred<Void>) service.postFeed(model.getUrl(), feed);
+		
+		deferredResult.addCallback(new Callback(deferredResult));
+		
+		deferredResult.addErrback(new Errback(deferredResult));
+
+		log.leave();
+		return deferredResult;
+	}
+	
+	
+	
+	@SuppressWarnings("unchecked")
+	private class Callback implements Function<Void,Void> {
+		
+		private HttpDeferred result;
+
+		private Callback(HttpDeferred result) {
+			this.result = result;
+		}
+
+		/* (non-Javadoc)
+		 * @see org.cggh.chassis.generic.twisted.client.Function#apply(java.lang.Object)
+		 */
+		public Void apply(Void in) {
+			log.enter("[anonymous callback function]");
+
+			model.setPending(false);
+			model.setError(false);
+			Response response = this.result.getLastResponse();
+			model.setResponseHeaders(response.getHeadersAsString());
+			model.setResponseText(response.getText());
+			model.setStatusCode(response.getStatusCode());
+			model.setStatusText(response.getStatusText());
+
+			log.leave();
+			return null;
+		}
+		
+	}
+	
+	
+	
+	@SuppressWarnings("unchecked")
+	private class Errback implements Function<Throwable,Throwable> {
+
+		private HttpDeferred result;
+
+		private Errback(HttpDeferred result) {
+			this.result = result;
+		}
+
+		/* (non-Javadoc)
+		 * @see org.cggh.chassis.generic.twisted.client.Function#apply(java.lang.Object)
+		 */
+		public Throwable apply(Throwable in) {
+			log.enter("[anonymous errback function]");
+
+			model.setPending(false);
+			Response response = result.getLastResponse();
+
+			if (response != null) {
+				model.setError(false);
+				model.setResponseHeaders(response.getHeadersAsString());
+				model.setResponseText(response.getText());
+				model.setStatusCode(response.getStatusCode());
+				model.setStatusText(response.getStatusText());
+			}
+
+			else {
+				model.setError(true);
+				log.trace("unexpected error: ["+in.getClass()+"] "+in.getLocalizedMessage());
+			}
+
+			log.leave();
+			return in;
+		}
+		
+
+	}
+
+	
+}
