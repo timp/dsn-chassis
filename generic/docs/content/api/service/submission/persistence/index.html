@@ -19,12 +19,13 @@
 <div id="doc">
 
 <div id="hd">
-<h1>Chassis/* Study Metadata Persistence Service<br />
+<h1>Chassis/* Submission Metadata Persistence Service<br />
 API Specification Version 0.1-alpha-3-SNAPSHOT</h1>
 
 <p>This document defines an API for a web service that provides basic
 persistence capabilities (create, retrieve, update, delete) for metadata
-records that capture information about research studies.</p>
+records that capture information about data submissions to a data-sharing
+network.</p>
 
 <p><strong>This version: <a
 href="http://dsn-chassis.googlecode.com/svn/trunk/generic/docs/content/api/service/study/persistence/index.html">0.1-alpha-3-SNAPSHOT</a></strong></p>
@@ -38,23 +39,23 @@ development trunk, and is subject to change without notice.</p>
 
 <div class="toc">
 <ul>
-  <li><a href="#L55">1. Introduction</a> 
+  <li><a href="#L55">1. Introduction</a>
     <ul>
       <li><a href="#L59">1.1. Atom Publishing Protocol</a></li>
       <li><a href="#L86">1.2. About This Document</a></li>
       <li><a href="#L933">1.3. Content Types</a></li>
     </ul>
   </li>
-  <li><a href="#L100">2. Creating a New Study Metadata Record</a> 
+  <li><a href="#L100">2. Creating a New Submission Metadata Record</a>
     <ul>
-      <li><a href="#L160">2.1. Chassis/* XML Namespace - Studies</a></li>
+      <li><a href="#L160">2.1. Chassis/* XML Namespace - Submissions</a></li>
     </ul>
   </li>
-  <li><a href="#L193">3. Retrieving a Study Metadata Record</a></li>
-  <li><a href="#L208">4. Updating a Study Metadata Record</a></li>
-  <li><a href="#L236">5. Deleting a Study Metadata Record</a></li>
-  <li><a href="#L253">6. Retrieving a Feed of All Study Metadata
-  Records</a></li>
+  <li><a href="#L193">3. Retrieving a Submission Metadata Record</a></li>
+  <li><a href="#L208">4. Updating a Submission Metadata Record</a></li>
+  <li><a href="#L236">5. Deleting a Submission Metadata Record</a></li>
+  <li><a href="#L253">6. Retrieving a Feed of All Submission Metadata
+    Records</a></li>
 </ul>
 </div>
 </div>
@@ -64,11 +65,12 @@ development trunk, and is subject to change without notice.</p>
 
 <p>This document defines an API for a web service that provides basic
 persistence capabilities (create, retrieve, update, delete) for metadata
-records that capture information about research studies.</p>
+records that capture information about data submissions to a data-sharing
+network.</p>
 
 <h3 id="L59">1.1. Atom Publishing Protocol</h3>
 
-<p>The Chassis/* Study Metadata Persistence Service API is based on the <a
+<p>The Chassis/* Submission Metadata Persistence Service API is based on the <a
 href="http://www.atomenabled.org/developers/protocol/atom-protocol-spec.php">Atom
 Publishing Protocol (AtomPub)</a>. The <a
 href="http://code.google.com/apis/gdata/docs/2.0/basics.html">Google Data APIs
@@ -91,15 +93,15 @@ supported by any AtomPub implementation.</p>
 
 <h3 id="L86">1.2. About This Document</h3>
 
-<p>The sub-sections below assume that a Study Metadata Persistence Service is
-deployed at:</p>
+<p>The sub-sections below assume that a Submission Metadata Persistence Service
+is deployed at:</p>
 <ul>
-  <li><code>http://example.org/chassis/atom/edit/studies</code></li>
+  <li><code>http://example.org/chassis/atom/edit/submissions</code></li>
 </ul>
 
 <p>In the <a
 href="http://www.atomenabled.org/developers/protocol/atom-protocol-spec.php#terminology">AtomPub
-terminology</a>, this URL is the URL of a Collection. Each study metadata
+terminology</a>, this URL is the URL of a Collection. Each submission metadata
 record becomes an Entry Resource which is a Member of this Collection.</p>
 
 <h3 id="L933">1.3. Content Types</h3>
@@ -108,31 +110,32 @@ record becomes an Entry Resource which is a Member of this Collection.</p>
 type <code>application/atom+xml</code>. Please note that responses may also be
 served with content type <code>application/xml</code>.</p>
 
-<h2 id="L100">2. Creating a New Study Metadata Record</h2>
+<h2 id="L100">2. Creating a New Submission Metadata Record</h2>
 
-<p>To create a new study metadata record, send an HTTP POST request with an
-Atom entry document to the service URL.</p>
+<p>To create a new submission metadata record, send an HTTP POST request with
+an Atom entry document to the service URL.</p>
 
-<p>For example, the request below creates a new study metadata record,
-describing a drug resistance study in Kampala, Uganda.</p>
-<pre>POST /chassis/atom/edit/studies HTTP/1.1
+<p>For example, the request below creates a new submission metadata record.</p>
+<pre>POST /chassis/atom/edit/submissions HTTP/1.1
 Host: example.org
 Content-Type: application/atom+xml;type=entry;charset="utf-8"
 Content-Length: nnn
 
 &lt;entry xmlns="http://www.w3.org/2005/Atom"&gt;
-  &lt;title&gt;Uganda-Kampala-2006&lt;/title&gt;
-  &lt;summary&gt;A study of malaria drug resistance near Kampala, Uganda, from 2006 to 2007.&lt;/summary&gt;
+  &lt;title&gt;Clinical Data from Uganda-Kampala-2006&lt;/title&gt;
+  &lt;summary&gt;Clinical data for both cases and controls from the 2006 study in Kampala, Uganda.&lt;/summary&gt;
   &lt;author&gt;
     &lt;name&gt;Freda Bloggs&lt;/name&gt;
     &lt;email&gt;freda@example.org&lt;/email&gt;
   &lt;/author&gt;
-  &lt;category scheme="http://www.cggh.org/2009/chassis/atom/types" term="study"/&gt;
+  &lt;link 
+    rel="chassis.study" 
+    href="http://example.org/chassis/atom/edit/studies?id=urn:uuid:f4070192-c65d-48d7-915f-81d38f61d359"/&gt;
+  &lt;category scheme="http://www.cggh.org/2009/chassis/atom/types" term="submission"/&gt;
   &lt;content type="application/xml"&gt;
-    &lt;study xmlns="http://www.cggh.org/2009/chassis/atom/xmlns"&gt;
-      &lt;module&gt;molecular&lt;/module&gt;  
-      &lt;module&gt;in vitro&lt;/module&gt;  
-    &lt;/study&gt;
+    &lt;submission xmlns="http://www.cggh.org/2009/chassis/atom/xmlns"&gt;
+      &lt;module&gt;clinical&lt;/module&gt;  
+    &lt;/submission&gt;
   &lt;/content&gt;
 &lt;/entry&gt;</pre>
 
@@ -141,30 +144,32 @@ look something like:</p>
 <pre>HTTP/1.1 201 Created
 Date: Mon, 06 Jul 2009 11:04:29 GMT
 Content-type: application/atom+xml;charset=UTF-8
-Location: http://example.org/chassis/atom/edit/studies?id=urn:uuid:f4070192-c65d-48d7-915f-81d38f61d359
+Location: http://example.org/chassis/atom/edit/submissions?id=urn:uuid:f4070192-c65d-48d7-915f-81d38f61d359
 
 &lt;entry xmlns="http://www.w3.org/2005/Atom"&gt;
   &lt;id&gt;urn:uuid:f4070192-c65d-48d7-915f-81d38f61d359&lt;/id&gt;
   &lt;updated&gt;2009-07-06T12:04:29+01:00&lt;/updated&gt;
   &lt;published&gt;2009-07-06T12:04:29+01:00&lt;/published&gt;
   &lt;link href="?id=urn:uuid:f4070192-c65d-48d7-915f-81d38f61d359" rel="edit" type="application/atom+xml" /&gt;
-  &lt;title&gt;Uganda-Kampala-2006&lt;/title&gt;
-  &lt;summary&gt;A study of malaria drug resistance near Kampala, Uganda, from 2006 to 2007.&lt;/summary&gt;
+  &lt;title&gt;Clinical Data from Uganda-Kampala-2006&lt;/title&gt;
+  &lt;summary&gt;Clinical data for both cases and controls from the 2006 study in Kampala, Uganda.&lt;/summary&gt;
   &lt;author&gt;
     &lt;name&gt;Freda Bloggs&lt;/name&gt;
     &lt;email&gt;freda@example.org&lt;/email&gt;
   &lt;/author&gt;
-  &lt;category scheme="http://www.cggh.org/2009/chassis/atom/types" term="study"/&gt;
+  &lt;link 
+    rel="chassis.study" 
+    href="http://example.org/chassis/atom/edit/studies?id=urn:uuid:f4070192-c65d-48d7-915f-81d38f61d359"/&gt;
+  &lt;category scheme="http://www.cggh.org/2009/chassis/atom/types" term="submission"/&gt;
   &lt;content type="application/xml"&gt;
-    &lt;study xmlns="http://www.cggh.org/2009/chassis/atom/xmlns"&gt;
-      &lt;module&gt;molecular&lt;/module&gt;  
-      &lt;module&gt;in vitro&lt;/module&gt;  
-    &lt;/study&gt;
+    &lt;submission xmlns="http://www.cggh.org/2009/chassis/atom/xmlns"&gt;
+      &lt;module&gt;clinical&lt;/module&gt;  
+    &lt;/submission&gt;
   &lt;/content&gt;
 &lt;/entry&gt;</pre>
 
-<p>The absolute URL of the new study metadata record is given by the value of
-the <code>Location</code> header in the HTTP response. The same URL is also
+<p>The absolute URL of the new submission metadata record is given by the value
+of the <code>Location</code> header in the HTTP response. The same URL is also
 given as a relative URL in the value of the <code>link</code> element
 <code>href</code> attribute, where the <code>rel</code> is
 <code>edit</code>.</p>
@@ -174,37 +179,41 @@ populate the <code>published</code> and <code>updated</code> elements.</p>
 
 <p>The <code>title</code>, <code>summary</code> and <code>author</code>
 elements are used from the Atom XML namespace. The <code>author</code> is the
-author (i.e., owner) of the metadata record. The rest of the study metadata is
-given within the <code>content</code> element, using the Chassis/* XML
-namespace.</p>
+author (i.e., owner) of the metadata record. Any links to study metadata
+records are given using the Atom <code>link</code> element with the
+<code>rel</code> attribute set to <code>chassis.study</code> (see also the <a
+href="@@TODO">Chassis Study Metadata Persistence Service API</a>). The rest of
+the submission metadata is given within the <code>content</code> element, using
+the Chassis/* XML namespace. </p>
 
-<h3 id="L160">2.1. Chassis/* XML Namespace - Studies</h3>
+<h3 id="L160">2.1. Chassis/* XML Namespace - Submissions</h3>
 
 <p>The Chassis/* XML namespace defines a set of elements to include within the
-<code>study</code> element, including <code>module</code>. Any other elements
-from any other namespace may also be included within the <code>study</code>
-element, providing extensibility for specific data-sharing networks. The
-content of the <code>study</code> element should conform to the following <a
+<code>submission</code> element, including <code>module</code>. Any other
+elements from any other namespace may also be included within the
+<code>submission</code> element, providing extensibility for specific
+data-sharing networks. The content of the <code>submission</code> element
+should conform to the following <a
 href="http://www.relaxng.org/compact-tutorial-20030326.html">RelaxNG
 schema</a>:</p>
 <pre>namespace local = "http://www.cggh.org/2009/chassis/atom/xmlns"
 
-chassisStudy = 
-  element study {
+chassisSubmission = 
+  element submission {
   ( chassisModule*
   &amp; anyElement* )
 } 
 
 chassisModule = element module { xsd:string }</pre>
 
-<h2 id="L193">3. Retrieving a Study Metadata Record</h2>
+<h2 id="L193">3. Retrieving a Submission Metadata Record</h2>
 
-<p>To retrieve a previously-created study metadata record, send an HTTP GET
-request to the metadata record URL.</p>
+<p>To retrieve a previously-created submission metadata record, send an HTTP
+GET request to the metadata record URL.</p>
 
-<p>For example, the request below retrieve the metadata record for the Kampala
-study created above.</p>
-<pre>GET /chassis/atom/edit/studies?id=urn:uuid:f4070192-c65d-48d7-915f-81d38f61d359 HTTP/1.1
+<p>For example, the request below retrieve the metadata record for the
+submission created above.</p>
+<pre>GET /chassis/atom/edit/submissions?id=urn:uuid:f4070192-c65d-48d7-915f-81d38f61d359 HTTP/1.1
 Host: example.org</pre>
 
 <p>If successful, the response will be <code>200 OK</code>, and should look
@@ -218,22 +227,24 @@ Content-Type: application/atom+xml;charset=UTF-8
   &lt;updated&gt;2009-07-06T12:04:29+01:00&lt;/updated&gt;
   &lt;published&gt;2009-07-06T12:04:29+01:00&lt;/published&gt;
   &lt;link href="?id=urn:uuid:f4070192-c65d-48d7-915f-81d38f61d359" rel="edit" type="application/atom+xml" /&gt;
-  &lt;title&gt;Uganda-Kampala-2006&lt;/title&gt;
-  &lt;summary&gt;A study of malaria drug resistance near Kampala, Uganda, from 2006 to 2007.&lt;/summary&gt;
+  &lt;title&gt;Clinical Data from Uganda-Kampala-2006&lt;/title&gt;
+  &lt;summary&gt;Clinical data for both cases and controls from the 2006 study in Kampala, Uganda.&lt;/summary&gt;
   &lt;author&gt;
     &lt;name&gt;Freda Bloggs&lt;/name&gt;
     &lt;email&gt;freda@example.org&lt;/email&gt;
   &lt;/author&gt;
-  &lt;category scheme="http://www.cggh.org/2009/chassis/atom/types" term="study"/&gt;
+  &lt;link 
+    rel="chassis.study" 
+    href="http://example.org/chassis/atom/edit/studies?id=urn:uuid:f4070192-c65d-48d7-915f-81d38f61d359"/&gt;
+  &lt;category scheme="http://www.cggh.org/2009/chassis/atom/types" term="submission"/&gt;
   &lt;content type="application/xml"&gt;
-    &lt;study xmlns="http://www.cggh.org/2009/chassis/atom/xmlns"&gt;
-      &lt;module&gt;molecular&lt;/module&gt;  
-      &lt;module&gt;in vitro&lt;/module&gt;  
-    &lt;/study&gt;
+    &lt;submission xmlns="http://www.cggh.org/2009/chassis/atom/xmlns"&gt;
+      &lt;module&gt;clinical&lt;/module&gt;  
+    &lt;/submission&gt;
   &lt;/content&gt;
 &lt;/entry&gt;</pre>
 
-<h2 id="L208">4. Updating a Study Metadata Record</h2>
+<h2 id="L208">4. Updating a Submission Metadata Record</h2>
 
 <p>To update a previously created metadata record, send an HTTP PUT request to
 the metadata record URL, containing the updated record.</p>
@@ -242,26 +253,26 @@ the metadata record URL, containing the updated record.</p>
 summary. Note that the request does not need to include the <code>id</code>,
 <code>published</code> or <code>updated</code> elements, these will be
 automatically handled by the service.</p>
-<pre>PUT /chassis/atom/edit/studies?id=urn:uuid:f4070192-c65d-48d7-915f-81d38f61d359 HTTP/1.1
+<pre>PUT /chassis/atom/edit/submissions?id=urn:uuid:f4070192-c65d-48d7-915f-81d38f61d359 HTTP/1.1
 Host: example.org
 Content-Type: application/atom+xml;type=entry;charset="utf-8"
 Content-Length: nnn
 
 &lt;entry xmlns="http://www.w3.org/2005/Atom"&gt;
-  &lt;link href="?id=urn:uuid:f4070192-c65d-48d7-915f-81d38f61d359" rel="edit" type="application/atom+xml" /&gt;
-  &lt;title&gt;Uganda-Kampala-2006&lt;/title&gt;
-  &lt;summary&gt;A study of malaria drug resistance near Kampala, Uganda, from 2006 to 2007. 
-  The study showed an unadjusted risk of failure of 26.5% for AQ+SP treatment at 28 days.&lt;/summary&gt;
+  &lt;title&gt;Clinical Data from Uganda-Kampala-2006&lt;/title&gt;
+  &lt;summary&gt;Clinical data for cases only (no controls) from the 2006 study in Kampala, Uganda.&lt;/summary&gt;
   &lt;author&gt;
     &lt;name&gt;Freda Bloggs&lt;/name&gt;
     &lt;email&gt;freda@example.org&lt;/email&gt;
   &lt;/author&gt;
-  &lt;category scheme="http://www.cggh.org/2009/chassis/atom/types" term="study"/&gt;
+  &lt;link 
+    rel="chassis.study" 
+    href="http://example.org/chassis/atom/edit/studies?id=urn:uuid:f4070192-c65d-48d7-915f-81d38f61d359"/&gt;
+  &lt;category scheme="http://www.cggh.org/2009/chassis/atom/types" term="submission"/&gt;
   &lt;content type="application/xml"&gt;
-    &lt;study xmlns="http://www.cggh.org/2009/chassis/atom/xmlns"&gt;
-      &lt;module&gt;molecular&lt;/module&gt;  
-      &lt;module&gt;in vitro&lt;/module&gt;  
-    &lt;/study&gt;
+    &lt;submission xmlns="http://www.cggh.org/2009/chassis/atom/xmlns"&gt;
+      &lt;module&gt;clinical&lt;/module&gt;  
+    &lt;/submission&gt;
   &lt;/content&gt;
 &lt;/entry&gt;</pre>
 
@@ -278,19 +289,20 @@ Server: Apache-Coyote/1.1
   &lt;updated&gt;2009-07-06T13:51:34+01:00&lt;/updated&gt;
   &lt;published&gt;2009-07-06T12:04:29+01:00&lt;/published&gt;
   &lt;link href="?id=urn:uuid:f4070192-c65d-48d7-915f-81d38f61d359" rel="edit" type="application/atom+xml" /&gt;
-  &lt;title&gt;Uganda-Kampala-2006&lt;/title&gt;
-  &lt;summary&gt;A study of malaria drug resistance near Kampala, Uganda, from 2006 to 2007. 
-  The study showed an unadjusted risk of failure of 26.5% for AQ+SP treatment at 28 days.&lt;/summary&gt;
+  &lt;title&gt;Clinical Data from Uganda-Kampala-2006&lt;/title&gt;
+  &lt;summary&gt;Clinical data for cases only (no controls) from the 2006 study in Kampala, Uganda.&lt;/summary&gt;
   &lt;author&gt;
     &lt;name&gt;Freda Bloggs&lt;/name&gt;
     &lt;email&gt;freda@example.org&lt;/email&gt;
   &lt;/author&gt;
-  &lt;category scheme="http://www.cggh.org/2009/chassis/atom/types" term="study"/&gt;
+  &lt;link 
+    rel="chassis.study" 
+    href="http://example.org/chassis/atom/edit/studies?id=urn:uuid:f4070192-c65d-48d7-915f-81d38f61d359"/&gt;
+  &lt;category scheme="http://www.cggh.org/2009/chassis/atom/types" term="submission"/&gt;
   &lt;content type="application/xml"&gt;
-    &lt;study xmlns="http://www.cggh.org/2009/chassis/atom/xmlns"&gt;
-      &lt;module&gt;molecular&lt;/module&gt;  
-      &lt;module&gt;in vitro&lt;/module&gt;  
-    &lt;/study&gt;
+    &lt;submission xmlns="http://www.cggh.org/2009/chassis/atom/xmlns"&gt;
+      &lt;module&gt;clinical&lt;/module&gt;  
+    &lt;/submission&gt;
   &lt;/content&gt;
 &lt;/entry&gt;</pre>
 
@@ -299,13 +311,13 @@ and POST requests (e.g., GWT), send a POST request with the following header
 field:</p>
 <pre>X-HTTP-Method-Override: PUT</pre>
 
-<h2 id="L236">5. Deleting a Study Metadata Record</h2>
+<h2 id="L236">5. Deleting a Submission Metadata Record</h2>
 
 <p>To delete a previously created metadata record, send an HTTP DELETE request
 to the record URL.</p>
 
 <p>For example, the request below deletes the metadata record created above.</p>
-<pre>DELETE /chassis/atom/edit/studies?id=urn:uuid:f4070192-c65d-48d7-915f-81d38f61d359 HTTP/1.1
+<pre>DELETE /chassis/atom/edit/submissions?id=urn:uuid:f4070192-c65d-48d7-915f-81d38f61d359 HTTP/1.1
 Host: example.org</pre>
 
 <p>If successful, the response will be <code>204 No Content</code>.</p>
@@ -315,14 +327,15 @@ and POST requests (e.g., GWT), send a POST request with the following header
 field:</p>
 <pre>X-HTTP-Method-Override: DELETE</pre>
 
-<h2 id="L253">6. Retrieving a Feed of All Study Metadata Records</h2>
+<h2 id="L253">6. Retrieving a Feed of All Submission Metadata Records</h2>
 
-<p>To retrieve a feed of all study metadata records held by a study metadata
-persistence service, send an HTTP GET request to the service endpoint URL.</p>
+<p>To retrieve a feed of all submission metadata records held by a submission
+metadata persistence service, send an HTTP GET request to the service endpoint
+URL.</p>
 
-<p>For example, the request below retrieves a feed of all study metadata
+<p>For example, the request below retrieves a feed of all submission metadata
 records from the service.</p>
-<pre>GET /chassis/atom/edit/studies HTTP/1.1
+<pre>GET /chassis/atom/edit/submissions HTTP/1.1
 Host: example.org</pre>
 
 <p>If successful, the response will be <code>200 OK</code>, and should look
@@ -336,7 +349,7 @@ Date: Mon, 06 Jul 2009 12:56:40 GMT
 &lt;feed xmlns="http://www.w3.org/2005/Atom"&gt;
   &lt;id&gt;urn:uuid:bbdc13e4-278d-464b-86fb-7e9161383171&lt;/id&gt;
   &lt;updated&gt;2009-07-06T13:51:34+01:00&lt;/updated&gt;
-  &lt;title&gt;All Studies&lt;/title&gt;
+  &lt;title&gt;Submissions&lt;/title&gt;
   &lt;link href="#" rel="edit" type="application/atom+xml"/&gt;
   &lt;link href="#" rel="self" type="application/atom+xml"/&gt;
   &lt;entry xmlns="http://www.w3.org/2005/Atom"&gt;
@@ -344,19 +357,20 @@ Date: Mon, 06 Jul 2009 12:56:40 GMT
     &lt;updated&gt;2009-07-06T13:51:34+01:00&lt;/updated&gt;
     &lt;published&gt;2009-07-06T12:04:29+01:00&lt;/published&gt;
     &lt;link href="?id=urn:uuid:f4070192-c65d-48d7-915f-81d38f61d359" rel="edit" type="application/atom+xml" /&gt;
-    &lt;title&gt;Uganda-Kampala-2006&lt;/title&gt;
-    &lt;summary&gt;A study of malaria drug resistance near Kampala, Uganda, from 2006 to 2007. 
-    The study showed an unadjusted risk of failure of 26.5% for AQ+SP treatment at 28 days.&lt;/summary&gt;
+    &lt;title&gt;Clinical Data from Uganda-Kampala-2006&lt;/title&gt;
+    &lt;summary&gt;Clinical data for cases only (no controls) from the 2006 study in Kampala, Uganda.&lt;/summary&gt;
     &lt;author&gt;
       &lt;name&gt;Freda Bloggs&lt;/name&gt;
       &lt;email&gt;freda@example.org&lt;/email&gt;
     &lt;/author&gt;
-    &lt;category scheme="http://www.cggh.org/2009/chassis/atom/types" term="study" /&gt;
+    &lt;link 
+      rel="chassis.study" 
+      href="http://example.org/chassis/atom/edit/studies?id=urn:uuid:f4070192-c65d-48d7-915f-81d38f61d359"/&gt;
+    &lt;category scheme="http://www.cggh.org/2009/chassis/atom/types" term="submission"/&gt;
     &lt;content type="application/xml"&gt;
-      &lt;study xmlns="http://www.cggh.org/2009/chassis/atom/xmlns"&gt;
-        &lt;module&gt;molecular&lt;/module&gt;  
-        &lt;module&gt;in vitro&lt;/module&gt;  
-      &lt;/study&gt;
+      &lt;submission xmlns="http://www.cggh.org/2009/chassis/atom/xmlns"&gt;
+        &lt;module&gt;clinical&lt;/module&gt;  
+      &lt;/submission&gt;
     &lt;/content&gt;
   &lt;/entry&gt;
 &lt;/feed&gt;</pre>
