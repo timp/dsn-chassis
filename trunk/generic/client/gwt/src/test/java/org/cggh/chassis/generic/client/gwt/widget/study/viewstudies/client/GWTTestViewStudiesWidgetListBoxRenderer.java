@@ -11,8 +11,8 @@ import java.util.Map;
 import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
 import org.cggh.chassis.generic.atom.study.client.mockimpl.MockStudyFactory;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
-import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewAllStudiesWidgetController;
-import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewAllStudiesWidgetModel;
+import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetController;
+import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetModel;
 import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetListBoxRenderer;
 import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetListBoxRenderer.ViewStudyChangeHandler;
 
@@ -25,16 +25,16 @@ import com.google.gwt.user.client.ui.SimplePanel;
  */
 public class GWTTestViewStudiesWidgetListBoxRenderer extends GWTTestCase {
 
-	private ViewAllStudiesWidgetModel testModel;
+	private ViewStudiesWidgetModel testModel;
 	private ViewStudiesWidgetListBoxRenderer testRenderer;
 	private MockViewAllStudiesWidgetController mockController;
 	private List<StudyEntry> studies;
 	
-	private class MockViewAllStudiesWidgetController extends ViewAllStudiesWidgetController {
+	private class MockViewAllStudiesWidgetController extends ViewStudiesWidgetController {
 
 		public MockViewAllStudiesWidgetController(
-				ViewAllStudiesWidgetModel model, AtomService service,
-				ViewAllStudiesWidget owner) {
+				ViewStudiesWidgetModel model, AtomService service,
+				ViewStudiesWidget owner) {
 			super(model, service, owner, null);
 		}
 		
@@ -60,7 +60,7 @@ public class GWTTestViewStudiesWidgetListBoxRenderer extends GWTTestCase {
 	protected void gwtSetUp() {
 		
 		//Create testModel
-		testModel = new ViewAllStudiesWidgetModel();
+		testModel = new ViewStudiesWidgetModel();
 						
 		//create mockController
 		mockController = new MockViewAllStudiesWidgetController(null, null, null);
@@ -112,7 +112,7 @@ public class GWTTestViewStudiesWidgetListBoxRenderer extends GWTTestCase {
 	public void testOnStatusChanged() {
 				
 		//mock loading state
-		testRenderer.onStatusChanged(ViewAllStudiesWidgetModel.STATUS_INITIAL, ViewAllStudiesWidgetModel.STATUS_LOADING);
+		testRenderer.onStatusChanged(ViewStudiesWidgetModel.STATUS_INITIAL, ViewStudiesWidgetModel.STATUS_LOADING);
 		
 		//check loading state
 		assertTrue( (testRenderer.loadingPanel.getParent() != null)
@@ -121,7 +121,7 @@ public class GWTTestViewStudiesWidgetListBoxRenderer extends GWTTestCase {
 		            || !(testRenderer.studiesListBox.isVisible()) );
 		
 		//mock loaded state
-		testRenderer.onStatusChanged(ViewAllStudiesWidgetModel.STATUS_LOADING, ViewAllStudiesWidgetModel.STATUS_LOADED);
+		testRenderer.onStatusChanged(ViewStudiesWidgetModel.STATUS_LOADING, ViewStudiesWidgetModel.STATUS_LOADED);
 		
 		//check loaded state
 		assertTrue( (testRenderer.studiesListBox.getParent() != null)

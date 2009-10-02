@@ -12,8 +12,8 @@ import org.cggh.chassis.generic.client.gwt.widget.study.edit.client.EditStudyWid
 import org.cggh.chassis.generic.client.gwt.widget.study.edit.client.EditStudyWidgetAPI;
 import org.cggh.chassis.generic.client.gwt.widget.study.view.client.ViewStudyWidget;
 import org.cggh.chassis.generic.client.gwt.widget.study.view.client.ViewStudyWidgetAPI;
-import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewAllStudiesWidget;
-import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewAllStudiesWidgetAPI;
+import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidget;
+import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetAPI;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -43,7 +43,7 @@ public class StudyManagementWidgetDefaultRenderer implements StudyManagementWidg
 	final Panel createStudyWidgetCanvas = new SimplePanel();
 	final ViewStudyWidgetAPI viewStudyWidget;
 	final Panel viewStudyWidgetCanvas = new SimplePanel();	
-	final ViewAllStudiesWidgetAPI viewAllStudiesWidget;
+	final ViewStudiesWidgetAPI viewAllStudiesWidget;
 	final Panel viewAllStudiesWidgetCanvas = new SimplePanel();
 	final EditStudyWidgetAPI editStudyWidget;
 	final Panel editStudyWidgetCanvas = new SimplePanel();
@@ -61,7 +61,7 @@ public class StudyManagementWidgetDefaultRenderer implements StudyManagementWidg
 		//create child widgets
 		viewStudyWidget = new ViewStudyWidget(viewStudyWidgetCanvas, service, modulesMap);
 		createStudyWidget = new CreateStudyWidget(createStudyWidgetCanvas, service, feedURL, modulesMap);
-		viewAllStudiesWidget = new ViewAllStudiesWidget(viewAllStudiesWidgetCanvas, service, feedURL);
+		viewAllStudiesWidget = new ViewStudiesWidget(viewAllStudiesWidgetCanvas, service, feedURL);
 		editStudyWidget = new EditStudyWidget(editStudyWidgetCanvas, service, feedURL, modulesMap);
 		
 		//initialise view

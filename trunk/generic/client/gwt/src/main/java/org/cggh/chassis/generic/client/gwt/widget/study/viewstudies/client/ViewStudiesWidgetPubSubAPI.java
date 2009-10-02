@@ -9,7 +9,7 @@ import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
  * @author raok
  *
  */
-public interface ViewAllStudiesWidgetPubSubAPI {
+public interface ViewStudiesWidgetPubSubAPI {
 
 	void onUserActionSelectStudy(StudyEntry studyEntry);
 

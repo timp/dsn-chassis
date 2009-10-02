@@ -18,16 +18,16 @@ import com.google.gwt.user.client.ui.SimplePanel;
  * @author raok
  *
  */
-public class ViewAllStudiesWidgetDefaultRenderer implements ViewAllStudiesWidgetModelListener {
+public class ViewStudiesWidgetDefaultRenderer implements ViewStudiesWidgetModelListener {
 
 	//Expose view elements for testing purposes.
 	Panel studiesListPanel = new SimplePanel();
 	Panel loadingPanel = new SimplePanel();
 	
 	private Panel canvas;
-	private ViewAllStudiesWidgetController controller;
+	private ViewStudiesWidgetController controller;
 
-	public ViewAllStudiesWidgetDefaultRenderer(Panel canvas, ViewAllStudiesWidgetController controller) {
+	public ViewStudiesWidgetDefaultRenderer(Panel canvas, ViewStudiesWidgetController controller) {
 		this.canvas = canvas;
 		this.controller = controller;
 		
@@ -46,10 +46,10 @@ public class ViewAllStudiesWidgetDefaultRenderer implements ViewAllStudiesWidget
 	 */
 	public void onStatusChanged(Integer before, Integer after) {
 
-		if (after == ViewAllStudiesWidgetModel.STATUS_LOADING) {
+		if (after == ViewStudiesWidgetModel.STATUS_LOADING) {
 			canvas.clear();
 			canvas.add(loadingPanel);
-		} else if (after == ViewAllStudiesWidgetModel.STATUS_LOADED) {
+		} else if (after == ViewStudiesWidgetModel.STATUS_LOADED) {
 			canvas.clear();
 			canvas.add(studiesListPanel);			
 		}
@@ -100,7 +100,7 @@ public class ViewAllStudiesWidgetDefaultRenderer implements ViewAllStudiesWidget
 		}
 	}
 
-	public void setController(ViewAllStudiesWidgetController controller) {
+	public void setController(ViewStudiesWidgetController controller) {
 		this.controller = controller;
 	}
 	

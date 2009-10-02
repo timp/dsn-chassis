@@ -12,7 +12,7 @@ import org.cggh.chassis.generic.atom.study.client.format.StudyFeed;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
-import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewAllStudiesWidget;
+import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidget;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.twisted.client.Deferred;
@@ -22,15 +22,15 @@ import org.cggh.chassis.generic.twisted.client.Function;
  * @author raok
  *
  */
-public class ViewAllStudiesWidgetController {
+public class ViewStudiesWidgetController {
 
-	final private ViewAllStudiesWidgetModel model;
+	final private ViewStudiesWidgetModel model;
 	final private AtomService service;
-	final private ViewAllStudiesWidget owner;
+	final private ViewStudiesWidget owner;
 	private Log log = LogFactory.getLog(this.getClass());
 	private String feedURL;
 
-	public ViewAllStudiesWidgetController(ViewAllStudiesWidgetModel model, AtomService service, ViewAllStudiesWidget owner, String feedURL) {
+	public ViewStudiesWidgetController(ViewStudiesWidgetModel model, AtomService service, ViewStudiesWidget owner, String feedURL) {
 		this.model = model;
 		this.service = service;
 		this.owner = owner;
@@ -56,7 +56,7 @@ public class ViewAllStudiesWidgetController {
 			log.enter("GetStudyFeedCallback::apply");
 			
 			model.setStudyEntries(studyFeed.getStudyEntries());
-			model.setStatus(ViewAllStudiesWidgetModel.STATUS_LOADED);
+			model.setStatus(ViewStudiesWidgetModel.STATUS_LOADED);
 			log.trace(studyFeed.getStudyEntries().size() + " studies loaded.");
 			
 			log.leave();
@@ -108,7 +108,7 @@ public class ViewAllStudiesWidgetController {
 			//update model when all studies have been loaded
 			if (studyEntries.size() == noOfStudies) {
 				model.setStudyEntries(studyEntries);
-				model.setStatus(ViewAllStudiesWidgetModel.STATUS_LOADED);
+				model.setStatus(ViewStudiesWidgetModel.STATUS_LOADED);
 				
 				log.trace(noOfStudies + " loaded");
 			}

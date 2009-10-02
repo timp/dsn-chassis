@@ -20,16 +20,16 @@ import com.google.gwt.user.client.ui.SimplePanel;
  * @author raok
  *
  */
-public class ViewStudiesWidgetListBoxRenderer implements ViewAllStudiesWidgetModelListener {
+public class ViewStudiesWidgetListBoxRenderer implements ViewStudiesWidgetModelListener {
 
 	//Expose view elements for testing purposes.
 	ListBox studiesListBox = new ListBox();
 	Panel loadingPanel = new SimplePanel();
 	
 	private Panel canvas;
-	private ViewAllStudiesWidgetController controller;
+	private ViewStudiesWidgetController controller;
 
-	public ViewStudiesWidgetListBoxRenderer(Panel canvas, ViewAllStudiesWidgetController controller) {
+	public ViewStudiesWidgetListBoxRenderer(Panel canvas, ViewStudiesWidgetController controller) {
 		this.canvas = canvas;
 		this.controller = controller;
 		
@@ -45,10 +45,10 @@ public class ViewStudiesWidgetListBoxRenderer implements ViewAllStudiesWidgetMod
 	
 	public void onStatusChanged(Integer before, Integer after) {
 
-		if (after == ViewAllStudiesWidgetModel.STATUS_LOADING) {
+		if (after == ViewStudiesWidgetModel.STATUS_LOADING) {
 			canvas.clear();
 			canvas.add(loadingPanel);
-		} else if (after == ViewAllStudiesWidgetModel.STATUS_LOADED) {
+		} else if (after == ViewStudiesWidgetModel.STATUS_LOADED) {
 			canvas.clear();
 			canvas.add(studiesListBox);			
 		}
@@ -101,7 +101,7 @@ public class ViewStudiesWidgetListBoxRenderer implements ViewAllStudiesWidgetMod
 		
 	}
 
-	public void setController(ViewAllStudiesWidgetController controller) {
+	public void setController(ViewStudiesWidgetController controller) {
 		this.controller = controller;
 	}
 	
