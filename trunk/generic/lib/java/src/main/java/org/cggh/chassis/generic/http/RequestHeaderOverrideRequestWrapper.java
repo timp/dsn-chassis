@@ -46,6 +46,7 @@ public class RequestHeaderOverrideRequestWrapper extends HttpServletRequestWrapp
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public Enumeration getHeaders(String headerName) {
 		log.debug("getHeaders("+headerName+") called");

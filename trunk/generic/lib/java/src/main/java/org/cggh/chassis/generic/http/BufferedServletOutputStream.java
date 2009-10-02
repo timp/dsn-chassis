@@ -4,7 +4,6 @@
 package org.cggh.chassis.generic.http;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 
 import javax.servlet.ServletOutputStream;
 
