@@ -3,6 +3,7 @@
  */
 package org.cggh.chassis.generic.atom.submission.client.mockimpl;
 
+import org.cggh.chassis.generic.atom.submission.client.format.Submission;
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionFactory;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
@@ -10,6 +11,8 @@ import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
 import org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomFactory;
 import org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomFeed;
+
+import com.google.gwt.xml.client.Element;
 
 /**
  * @author aliman
@@ -64,6 +67,16 @@ public class MockSubmissionFactory extends MockAtomFactory implements Submission
 	
 	public SubmissionEntry createSubmissionEntry() {
 		return createMockEntry();
+	}
+
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.atom.submission.client.format.SubmissionFactory#createSubmission(com.google.gwt.xml.client.Element)
+	 */
+	public Submission createSubmission(Element submissionElement) {
+		// not needed
+		return null;
 	}
 
 }
