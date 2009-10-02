@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomService;
 import org.cggh.chassis.generic.client.gwt.widget.submission.controller.client.SubmissionControllerCreateAPI;
 
 import com.google.gwt.dom.client.Document;
@@ -51,7 +52,7 @@ public class GWTTestCreateSubmissionWidgetDefaultRenderer extends GWTTestCase {
 		testModules.put(module1Id, module1Label);
 		testModules.put(module2Id, module2Label);
 		
-		testRenderer = new CreateSubmissionWidgetDefaultRenderer(new SimplePanel(), mockController, testModules);
+		testRenderer = new CreateSubmissionWidgetDefaultRenderer(new SimplePanel(), mockController, testModules, new MockAtomService(), null);
 		
 	}
 	
@@ -63,10 +64,12 @@ public class GWTTestCreateSubmissionWidgetDefaultRenderer extends GWTTestCase {
 		//check no values set
 		assertEquals("", testRenderer.titleUI.getValue());
 		assertEquals("", testRenderer.summaryUI.getValue());
-		assertEquals(Boolean.FALSE, testRenderer.acceptClinicalDataUI.getValue());
-		assertEquals(Boolean.FALSE, testRenderer.acceptMolecularDataUI.getValue());
-		assertEquals(Boolean.FALSE, testRenderer.acceptInVitroDataUI.getValue());
-		assertEquals(Boolean.FALSE, testRenderer.acceptPharmacologyDataUI.getValue());
+		
+		//check modules checkboxes initialised, but unchecked
+		assertTrue(testRenderer.modulesUIHash.containsKey(module1Id));
+		assertFalse(testRenderer.modulesUIHash.get(module1Id).getValue());
+		assertTrue(testRenderer.modulesUIHash.containsKey(module2Id));
+		assertFalse(testRenderer.modulesUIHash.get(module2Id).getValue());
 			
 		
 	}
@@ -127,7 +130,30 @@ public class GWTTestCreateSubmissionWidgetDefaultRenderer extends GWTTestCase {
 	
 	public void testOnStudyLinksChanged() {
 		
-		//TODO difficult to test?
+		//test data
+		Set<String> noStudyLinks = new HashSet<String>();
+		Set<String> aStudyLinked = new HashSet<String>();
+		aStudyLinked.add("URL to a study");
+		
+		//call method under test
+		testRenderer.onStudyLinksChanged(null, aStudyLinked, true);
+		
+		//test outcome
+		assertTrue( (testRenderer.studiesLinkedCanvas.getParent() != null)
+		        && (testRenderer.studiesLinkedCanvas.isVisible()) );
+		assertTrue( (testRenderer.noStudiesAddedPanel.getParent() == null)
+		        || !(testRenderer.noStudiesAddedPanel.isVisible()) );
+		
+
+		//call method under test
+		testRenderer.onStudyLinksChanged(null, noStudyLinks, true);
+		
+		//test outcome
+		assertTrue( (testRenderer.noStudiesAddedPanel.getParent() != null)
+		        && (testRenderer.noStudiesAddedPanel.isVisible()) );
+		assertTrue( (testRenderer.studiesLinkedCanvas.getParent() == null)
+		        || !(testRenderer.studiesLinkedCanvas.isVisible()) );
+		
 		
 	}
 	

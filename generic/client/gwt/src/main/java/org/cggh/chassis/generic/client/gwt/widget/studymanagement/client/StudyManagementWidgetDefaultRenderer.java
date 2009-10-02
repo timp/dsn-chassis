@@ -12,8 +12,8 @@ import org.cggh.chassis.generic.client.gwt.widget.study.edit.client.EditStudyWid
 import org.cggh.chassis.generic.client.gwt.widget.study.edit.client.EditStudyWidgetAPI;
 import org.cggh.chassis.generic.client.gwt.widget.study.view.client.ViewStudyWidget;
 import org.cggh.chassis.generic.client.gwt.widget.study.view.client.ViewStudyWidgetAPI;
-import org.cggh.chassis.generic.client.gwt.widget.study.viewall.client.ViewAllStudiesWidget;
-import org.cggh.chassis.generic.client.gwt.widget.study.viewall.client.ViewAllStudiesWidgetAPI;
+import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewAllStudiesWidget;
+import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewAllStudiesWidgetAPI;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
