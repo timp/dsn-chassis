@@ -1,15 +1,16 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.client.gwt.widget.submission.create.client;
+package org.cggh.chassis.generic.client.gwt.widget.submission.edit.client;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomService;
-import org.cggh.chassis.generic.client.gwt.widget.submission.controller.client.SubmissionControllerCreateAPI;
+import org.cggh.chassis.generic.client.gwt.widget.submission.controller.client.SubmissionControllerEditAPI;
 
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.event.dom.client.DomEvent;
@@ -21,29 +22,27 @@ import com.google.gwt.user.client.ui.SimplePanel;
  * @author raok
  *
  */
-public class GWTTestCreateSubmissionWidgetDefaultRenderer extends GWTTestCase {
+public class GWTTestEditSubmissionWidgetDefaultRenderer extends GWTTestCase {
 	
+	private EditSubmissionWidgetDefaultRenderer testRenderer;
 	private MockSubmissionController mockController;
-	private CreateSubmissionWidgetDefaultRenderer testRenderer;
-
 	//test data
 	String module1Id = "module1Id";
 	String module2Id = "module2Id";
 	String module1Label = "module1Label";
 	String module2Label = "module2Label";
 
-
 	/* (non-Javadoc)
 	 * @see com.google.gwt.junit.client.GWTTestCase#getModuleName()
 	 */
 	@Override
 	public String getModuleName() {
-		return "org.cggh.chassis.generic.client.gwt.widget.submission.create.CreateSubmissionWidget";
+		return "org.cggh.chassis.generic.client.gwt.widget.submission.edit.EditSubmissionWidget";
 	}
 
 	@Override
 	protected void gwtSetUp() {
-		
+
 		//create mockController and inject into testRenderer
 		mockController = new MockSubmissionController();
 
@@ -52,16 +51,14 @@ public class GWTTestCreateSubmissionWidgetDefaultRenderer extends GWTTestCase {
 		testModules.put(module1Id, module1Label);
 		testModules.put(module2Id, module2Label);
 		
-		testRenderer = new CreateSubmissionWidgetDefaultRenderer(new SimplePanel(), mockController, testModules, new MockAtomService(), null);
-		
+		testRenderer = new EditSubmissionWidgetDefaultRenderer(new SimplePanel(), mockController, testModules, new MockAtomService(), null);
+					
 	}
-	
 	
 	public void testInitialState() {
 		
 		assertNotNull(testRenderer);
-				
-		//check no values set
+		
 		assertEquals("", testRenderer.titleUI.getValue());
 		assertEquals("", testRenderer.summaryUI.getValue());
 		
@@ -70,7 +67,6 @@ public class GWTTestCreateSubmissionWidgetDefaultRenderer extends GWTTestCase {
 		assertFalse(testRenderer.modulesUIHash.get(module1Id).getValue());
 		assertTrue(testRenderer.modulesUIHash.containsKey(module2Id));
 		assertFalse(testRenderer.modulesUIHash.get(module2Id).getValue());
-			
 		
 	}
 	
@@ -128,49 +124,8 @@ public class GWTTestCreateSubmissionWidgetDefaultRenderer extends GWTTestCase {
 		
 	}
 	
-	public void testOnStudyLinksChanged() {
-		
-		//test data
-		Set<String> noStudyLinks = new HashSet<String>();
-		Set<String> aStudyLinked = new HashSet<String>();
-		aStudyLinked.add("URL to a study");
-		
-		//call method under test
-		testRenderer.onStudyLinksChanged(null, aStudyLinked, true);
-		
-		//test outcome
-		assertTrue( (testRenderer.studiesLinkedCanvas.getParent() != null)
-		        && (testRenderer.studiesLinkedCanvas.isVisible()) );
-		assertTrue( (testRenderer.noStudiesAddedPanel.getParent() == null)
-		        || !(testRenderer.noStudiesAddedPanel.isVisible()) );
-		
-
-		//call method under test
-		testRenderer.onStudyLinksChanged(null, noStudyLinks, true);
-		
-		//test outcome
-		assertTrue( (testRenderer.noStudiesAddedPanel.getParent() != null)
-		        && (testRenderer.noStudiesAddedPanel.isVisible()) );
-		assertTrue( (testRenderer.studiesLinkedCanvas.getParent() == null)
-		        || !(testRenderer.studiesLinkedCanvas.isVisible()) );
-		
-		
-	}
-	
-	public void testOnAddStudyLink_UI_Clicked() {
-		
-		//TODO difficult to test? UI subject to change.
-		
-	}
-	
-	public void testOnRemoveStudyLink_UI_Clicked() {
-		
-		//TODO difficult to test? UI subject to change.
-		
-	}
-	
 	public void testOnModulesChanged() {
-		
+
 		//test data
 		Set<String> modulesSet1 = new HashSet<String>();
 		modulesSet1.add(module1Id);		
@@ -189,9 +144,8 @@ public class GWTTestCreateSubmissionWidgetDefaultRenderer extends GWTTestCase {
 		assertFalse(testRenderer.modulesUIHash.get(module1Id).getValue());	
 		assertFalse(testRenderer.modulesUIHash.get(module2Id).getValue());	
 		
-		
 	}
-	
+
 	public void testOnModulesChanged_UI() {
 		
 		//test data
@@ -205,56 +159,54 @@ public class GWTTestCreateSubmissionWidgetDefaultRenderer extends GWTTestCase {
 		
 	}
 	
-	public void testCancelCreateSubmissionButton_UI() {
-		
+	public void testCancelEditSubmissionButton_UI() {
 		//simulate click event
 		DomEvent.fireNativeEvent(Document.get().createClickEvent(0, 0, 0, 0, 0, false, false, false, false),
-								 (HasHandlers)testRenderer.cancelCreateSubmissionUI );
+								 (HasHandlers)testRenderer.cancelEditSubmissionUI );
 		
 		// test outcome
 		assertTrue(mockController.cancelSaveOrUpdateSubmissionEntry);
-		
 	}
 	
 	
-	public void testSaveNewSubmissionEntryButtonUI_onSubmissionEntryChanged_valid() {
-		
-		//call method under test
-		testRenderer.onSubmissionEntryChanged(true);
-		
-		//simulate click event
-		DomEvent.fireNativeEvent(Document.get().createClickEvent(0, 0, 0, 0, 0, false, false, false, false),
-								 (HasHandlers)testRenderer.saveNewSubmissionEntryUI );
-		
-		// test outcome
-		assertTrue(mockController.saveNewSubmissionEntryCalled);
-		
-	}
-	
-	public void testSaveNewSubmissionEntryButtonUI_onSubmissionEntryChanged_invalid() {
+	public void testUpdateSubmissionButton_UI_formIncomplete() {
 		
 		//call method under test
 		testRenderer.onSubmissionEntryChanged(false);
 		
 		//simulate click event
 		DomEvent.fireNativeEvent(Document.get().createClickEvent(0, 0, 0, 0, 0, false, false, false, false),
-								 (HasHandlers)testRenderer.saveNewSubmissionEntryUI );
+								 (HasHandlers)testRenderer.updateSubmissionEntryUI );
+		
+
+		// test outcome
+		assertFalse(mockController.updateSubmissionEntryCalled);
+				
+	}
+	
+	public void testUpdateSubmissionButton_UI_formComplete() {
+		
+		//call method under test
+		testRenderer.onSubmissionEntryChanged(true);
+		
+		//simulate click event
+		DomEvent.fireNativeEvent(Document.get().createClickEvent(0, 0, 0, 0, 0, false, false, false, false),
+								 (HasHandlers)testRenderer.updateSubmissionEntryUI );
 		
 		// test outcome
-		assertFalse(mockController.saveNewSubmissionEntryCalled);
-		
+		assertTrue(mockController.updateSubmissionEntryCalled);
+				
 	}
 	
 
 	@SuppressWarnings("unused")
 	//Define mock controller
-	private class MockSubmissionController implements SubmissionControllerCreateAPI {
+	private class MockSubmissionController implements SubmissionControllerEditAPI {
 
 		String addStudyLink;
 		boolean cancelSaveOrUpdateSubmissionEntry;
 		String removeStudyLink;
-		boolean saveNewSubmissionEntryCalled;
-		boolean setUpNewSubmission;
+		boolean updateSubmissionEntryCalled;
 		String updateSummary;
 		String updateTitle;
 		Set<String> updateModules;
@@ -271,12 +223,8 @@ public class GWTTestCreateSubmissionWidgetDefaultRenderer extends GWTTestCase {
 			this.removeStudyLink = studyEntryURL;
 		}
 
-		public void saveNewSubmissionEntry() {
-			this.saveNewSubmissionEntryCalled = true;
-		}
-
-		public void setUpNewSubmission() {
-			this.setUpNewSubmission = true;
+		public void updateSubmissionEntry() {
+			this.updateSubmissionEntryCalled = true;
 		}
 
 		public void updateSummary(String summary) {
@@ -289,6 +237,14 @@ public class GWTTestCreateSubmissionWidgetDefaultRenderer extends GWTTestCase {
 
 		public void updateModules(Set<String> modules) {
 			this.updateModules= modules;
+		}
+
+		public void loadSubmissionEntry(SubmissionEntry submissionEntryToLoad) {
+			// not tested here
+		}
+
+		public void loadSubmissionEntryByURL(String SubmissionEntryURL) {
+			// not tested here
 		}
 		
 	}

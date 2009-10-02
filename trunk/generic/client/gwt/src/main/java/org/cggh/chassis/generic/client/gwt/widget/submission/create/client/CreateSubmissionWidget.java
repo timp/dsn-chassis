@@ -52,7 +52,7 @@ public class CreateSubmissionWidget implements CreateSubmissionWidgetAPI, Submis
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.client.gwt.widget.submission.create.client.CreateSubmissionWidgetAPI#setUpNewSubmission(java.lang.String)
 	 */
-	public void setUpNewSubmission(String feedURL) {
+	public void setUpNewSubmission() {
 		controller.setUpNewSubmission();
 	}
 

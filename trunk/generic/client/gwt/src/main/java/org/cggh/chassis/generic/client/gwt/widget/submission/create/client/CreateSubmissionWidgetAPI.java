@@ -9,7 +9,7 @@ package org.cggh.chassis.generic.client.gwt.widget.submission.create.client;
  */
 public interface CreateSubmissionWidgetAPI {
 
-	public void setUpNewSubmission(String feedURL);
+	public void setUpNewSubmission();
 	
 	public void addCreateSubmissionWidgetListener(CreateSubmissionWidgetPubSubAPI listener);
 	

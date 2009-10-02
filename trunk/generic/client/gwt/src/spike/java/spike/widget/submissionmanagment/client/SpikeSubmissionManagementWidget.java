@@ -1,7 +1,7 @@
 /**
  * 
  */
-package spike.widget.submission.create.client;
+package spike.widget.submissionmanagment.client;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,23 +10,25 @@ import org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomFactory;
 import org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomService;
 import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
 import org.cggh.chassis.generic.client.gwt.configuration.client.Module;
-import org.cggh.chassis.generic.client.gwt.widget.submission.create.client.CreateSubmissionWidget;
-import org.cggh.chassis.generic.client.gwt.widget.submission.create.client.CreateSubmissionWidgetAPI;
+import org.cggh.chassis.generic.client.gwt.widget.submissionmanagement.client.SubmissionManagementWidget;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.JsArray;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.SimplePanel;
+import com.google.gwt.user.client.ui.VerticalPanel;
 
 /**
  * @author raok
  *
  */
-public class SpikeCreateSubmissionWidget implements EntryPoint {
+public class SpikeSubmissionManagementWidget implements EntryPoint {
 
 	/* (non-Javadoc)
 	 * @see com.google.gwt.core.client.EntryPoint#onModuleLoad()
 	 */
 	public void onModuleLoad() {
+
 		//Set here for now
 		String feedURL = "http://example.com/atom/feeds/example";
 		
@@ -47,10 +49,18 @@ public class SpikeCreateSubmissionWidget implements EntryPoint {
 			modulesMap.put(id, label);
 		}
 		
-		CreateSubmissionWidgetAPI widget = new CreateSubmissionWidget(RootPanel.get(), service, feedURL, modulesMap);
+		VerticalPanel vPanel = new VerticalPanel();
+		SimplePanel menuCanvas = new SimplePanel();
+		SimplePanel displayCanvas = new SimplePanel();
+		vPanel.add(menuCanvas);
+		vPanel.add(displayCanvas);
 		
-		widget.setUpNewSubmission();
+		RootPanel.get().add(vPanel);
 		
+		
+		
+		SubmissionManagementWidget widget = new SubmissionManagementWidget(menuCanvas, displayCanvas, service, feedURL, modulesMap);
+
 	}
 
 }

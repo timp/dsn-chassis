@@ -9,6 +9,8 @@ import java.util.Set;
 
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomLink;
+import org.cggh.chassis.generic.log.client.Log;
+import org.cggh.chassis.generic.log.client.LogFactory;
 
 /**
  * @author raok
@@ -23,6 +25,7 @@ public class SubmissionModel {
 	public static final Integer STATUS_SAVED = 4;
 	public static final Integer STATUS_ERROR = 5;
 	public static final Integer STATUS_CANCELLED = 6;
+	private Log log = LogFactory.getLog(this.getClass());
 	
 	private SubmissionEntry submissionEntry;
 	private Integer status = STATUS_INITIAL;
@@ -57,12 +60,16 @@ public class SubmissionModel {
 
 
 	private Boolean isSubmissionEntryValid() {
+		log.enter("isSubmissionEntryValid");
 		
 		Boolean isSubmissionEntryValid = isTitleValid()
 										 && isSummaryValid()
 										 && isStudyLinksValid()
 										 && isModulesValid();
 		
+		log.trace("isSubmissionEntryValid: " + isSubmissionEntryValid);
+		
+		log.leave();
 		return isSubmissionEntryValid;
 	}
 
@@ -100,8 +107,15 @@ public class SubmissionModel {
 
 
 	private Boolean isTitleValid() {
+		log.enter("isTitleValid");
+		
 		//TODO improve validation
-		return ((getTitle() != null) && !(getTitle().length() == 0));
+		boolean isValid = ((getTitle() != null) && !(getTitle().length() == 0));
+		
+		log.trace("isValid: " + isValid);
+		
+		log.leave();
+		return isValid;
 	}
 
 
@@ -126,8 +140,15 @@ public class SubmissionModel {
 
 
 	private Boolean isSummaryValid() {
+		log.enter("isSummaryValid");
+		
 		//TODO improve validation
-		return ((getSummary() != null) && !(getSummary().length() == 0));
+		boolean isValid = ((getSummary() != null) && !(getSummary().length() == 0));
+		
+		log.trace("isValid: " + isValid);
+		
+		log.leave();
+		return isValid;
 	}
 
 
@@ -152,8 +173,15 @@ public class SubmissionModel {
 
 
 	private Boolean isStudyLinksValid() {
+		log.enter("isStudyLinksValid");
+		
 		//Require at least one study link
-		return (getStudyLinks().size() > 0);
+		boolean isValid = (getStudyLinks().size() > 0);
+		
+		log.trace("isValid: " + isValid);
+		
+		log.leave();
+		return isValid;
 	}
 
 
@@ -185,7 +213,7 @@ public class SubmissionModel {
 	}
 
 	public void addListener(SubmissionModelListener listener) {
-		listeners .add(listener);
+		listeners.add(listener);
 	}
 
 
@@ -228,9 +256,16 @@ public class SubmissionModel {
 
 
 	private Boolean isModulesValid() {
+		log.enter("isModulesValid");
+
 		//TODO check studyLinks accept data for these modules
 		// require at least one module
-		return (getModules().size() > 0);
+		boolean isValid = (getModules().size() > 0);
+		
+		log.trace("isValid: " + isValid);
+		
+		log.leave();
+		return isValid;
 	}
 	
 }
