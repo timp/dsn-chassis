@@ -1,0 +1,21 @@
+#summary how to set up the standard development environment for working with the Chassis source code
+
+= Introduction =
+
+This page is a guide to setting up the standard development environment used by the Chassis team. Examples are given for Linux (Ubuntu Jaunty), but can be adapted for Windows.
+
+== Install Java 1.5 ==
+
+The standard compiler level for Chassis source code is Java 1.5. 
+
+Java 1.5 is also the standard used to run Chassis in the development environment. Java 6 may work, but some issues have been found with Java 6 and GWT on Linux.
+
+{{{
+sudo apt-get install sun-java5-jdk
+}}}
+
+== Install Eclipse IDE for Java EE Developers (Galileo - Eclipse 3.5) ==
+
+Visit [http://www.eclipse.org/downloads/ eclipse.org downloads] and download the the Eclipse IDE for Java EE Developers, based on Eclipse 3.5 (Galileo), for your platform. 
+
+TODO finish this
