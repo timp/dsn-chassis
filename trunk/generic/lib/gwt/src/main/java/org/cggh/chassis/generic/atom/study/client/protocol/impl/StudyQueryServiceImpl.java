@@ -3,13 +3,10 @@
  */
 package org.cggh.chassis.generic.atom.study.client.protocol.impl;
 
-import org.cggh.chassis.generic.atom.chassis.base.client.format.Chassis;
-import org.cggh.chassis.generic.atom.exist.client.protocol.impl.AtomXQueryServiceImpl;
 import org.cggh.chassis.generic.atom.study.client.format.StudyFactory;
 import org.cggh.chassis.generic.atom.study.client.format.StudyFeed;
 import org.cggh.chassis.generic.atom.study.client.format.impl.StudyFactoryImpl;
 import org.cggh.chassis.generic.atom.study.client.protocol.StudyQueryService;
-import org.cggh.chassis.generic.atom.vanilla.client.format.Atom;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.impl.AtomServiceImpl;
