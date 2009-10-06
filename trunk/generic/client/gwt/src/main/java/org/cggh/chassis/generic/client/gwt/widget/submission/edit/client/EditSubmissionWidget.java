@@ -25,13 +25,13 @@ public class EditSubmissionWidget implements EditSubmissionWidgetAPI, Submission
 	final private EditSubmissionWidgetDefaultRenderer renderer;
 	private Set<EditSubmissionWidgetPubSubAPI> listeners = new HashSet<EditSubmissionWidgetPubSubAPI>(); 
 
-	public EditSubmissionWidget(Panel canvas) {
+	public EditSubmissionWidget(Panel canvas, String authorEmail) {
 		
 		model = new SubmissionModel();
 		
 		controller = new SubmissionController(model, this);
 						
-		renderer = new EditSubmissionWidgetDefaultRenderer(canvas, controller);
+		renderer = new EditSubmissionWidgetDefaultRenderer(canvas, controller, authorEmail);
 		
 		// register renderer as listener to model
 		model.addListener(renderer);		

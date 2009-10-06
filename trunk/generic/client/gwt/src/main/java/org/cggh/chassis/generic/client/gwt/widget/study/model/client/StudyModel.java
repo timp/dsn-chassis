@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
+import org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
 
 /**
  * @author raok
@@ -46,6 +47,7 @@ public class StudyModel {
 		fireOnTitleChanged(getTitle());
 		fireOnSummaryChanged(getSummary());
 		fireOnModulesChanged(getModules());
+		fireOnAuthorsChanged(getAuthors());
 		
 		//fire form validation
 		fireOnStudyEntryModelChanged();
@@ -57,7 +59,8 @@ public class StudyModel {
 				
 		Boolean isStudyEntryValid = isTitleValid()
 									&& isSummaryValid()
-									&& isModulesValid();
+									&& isModulesValid()
+									&& isAuthorsValid();
 		
 		return isStudyEntryValid;
 	}
@@ -167,6 +170,39 @@ public class StudyModel {
 		
 		for (StudyModelListener listener : listeners) {
 			listener.onModulesChanged(before, getModules(), isModulesValid());
+		}
+	}
+
+
+	public Set<AtomAuthor> getAuthors() {
+		return new HashSet<AtomAuthor>(studyEntry.getAuthors());
+	}
+
+
+
+	public void setAuthors(Set<AtomAuthor> authors) {
+		
+		Set<AtomAuthor> before = getAuthors();
+		
+		studyEntry.setAuthors(new ArrayList<AtomAuthor>(authors));
+		
+		fireOnAuthorsChanged(before);
+		fireOnStudyEntryModelChanged();
+		
+	}
+
+
+	private Boolean isAuthorsValid() {
+		//require at least one author
+		return (getAuthors().size() > 0);
+	}
+
+
+
+	private void fireOnAuthorsChanged(Set<AtomAuthor> before) {
+
+		for (StudyModelListener listener : listeners) {
+			listener.onAuthorsChanged(before, getAuthors(), isAuthorsValid());
 		}
 	}
 

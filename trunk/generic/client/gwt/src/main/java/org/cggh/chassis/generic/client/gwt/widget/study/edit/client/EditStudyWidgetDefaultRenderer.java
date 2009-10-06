@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
 import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
 import org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerEditAPI;
 import org.cggh.chassis.generic.client.gwt.widget.study.model.client.StudyModelListener;
@@ -195,6 +196,12 @@ public class EditStudyWidgetDefaultRenderer implements StudyModelListener {
 			modulesUIHash.get(moduleId).setValue(after.contains(moduleId), false);
 			
 		}
+		
+	}
+
+	public void onAuthorsChanged(Set<AtomAuthor> before, Set<AtomAuthor> after,
+			Boolean isValid) {
+		// TODO Auto-generated method stub
 		
 	}
 

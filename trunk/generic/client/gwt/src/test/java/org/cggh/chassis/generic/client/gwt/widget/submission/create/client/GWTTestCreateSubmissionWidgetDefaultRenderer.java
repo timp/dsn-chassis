@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
 import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
 import org.cggh.chassis.generic.client.gwt.widget.submission.controller.client.SubmissionControllerCreateAPI;
 
@@ -254,7 +255,6 @@ public class GWTTestCreateSubmissionWidgetDefaultRenderer extends GWTTestCase {
 	}
 	
 
-	@SuppressWarnings("unused")
 	//Define mock controller
 	private class MockSubmissionController implements SubmissionControllerCreateAPI {
 
@@ -266,6 +266,7 @@ public class GWTTestCreateSubmissionWidgetDefaultRenderer extends GWTTestCase {
 		String updateSummary;
 		String updateTitle;
 		Set<String> updateModules;
+		Set<AtomAuthor> updateAuthors;
 
 		public void addStudyLink(String studyEntryURL) {
 			this.addStudyLink = studyEntryURL;
@@ -283,7 +284,7 @@ public class GWTTestCreateSubmissionWidgetDefaultRenderer extends GWTTestCase {
 			this.saveNewSubmissionEntryCalled = true;
 		}
 
-		public void setUpNewSubmission() {
+		public void setUpNewSubmission(String authorEmail) {
 			this.setUpNewSubmission = true;
 		}
 
@@ -297,6 +298,10 @@ public class GWTTestCreateSubmissionWidgetDefaultRenderer extends GWTTestCase {
 
 		public void updateModules(Set<String> modules) {
 			this.updateModules= modules;
+		}
+
+		public void updateAuthors(Set<AtomAuthor> authors) {
+			this.updateAuthors = authors;
 		}
 		
 	}

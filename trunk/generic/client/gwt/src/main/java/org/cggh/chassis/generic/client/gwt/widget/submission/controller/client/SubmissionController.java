@@ -8,6 +8,7 @@ import java.util.Set;
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionFactory;
 import org.cggh.chassis.generic.atom.submission.client.format.impl.SubmissionFactoryImpl;
+import org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomProtocolException;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
@@ -46,10 +47,16 @@ public class SubmissionController implements SubmissionControllerEditAPI, Submis
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.client.gwt.widget.submission.controller.client.SubmissionControllerCreateAPI#setUpNewSubmission(java.lang.String)
 	 */
-	public void setUpNewSubmission() {
+	public void setUpNewSubmission(String authorEmail) {
 		log.enter("setUpNewSubmission");
 		
-		model.setSubmissionEntry(submissionFactory.createSubmissionEntry());
+		//Create atom author holding author's email, then add to new submission.
+		AtomAuthor atomAuthor = submissionFactory.createAuthor();
+		atomAuthor.setEmail(authorEmail);		
+		SubmissionEntry newSubmissionEntry = submissionFactory.createSubmissionEntry(); 
+		newSubmissionEntry.addAuthor(atomAuthor);		
+		
+		model.setSubmissionEntry(newSubmissionEntry);
 		model.setStatus(SubmissionModel.STATUS_LOADED);
 		
 		log.leave();
@@ -290,6 +297,10 @@ public class SubmissionController implements SubmissionControllerEditAPI, Submis
 		
 		log.leave();
 		
+	}
+
+	public void updateAuthors(Set<AtomAuthor> authors) {
+		model.setAuthors(authors);
 	}
 	
 }

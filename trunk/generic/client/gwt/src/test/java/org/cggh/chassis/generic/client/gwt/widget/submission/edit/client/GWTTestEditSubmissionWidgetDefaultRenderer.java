@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
+import org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
 import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
 import org.cggh.chassis.generic.client.gwt.widget.submission.controller.client.SubmissionControllerEditAPI;
 
@@ -55,7 +56,7 @@ public class GWTTestEditSubmissionWidgetDefaultRenderer extends GWTTestCase {
 		ConfigurationBean.useUnitTestConfiguration = true;
 		ConfigurationBean.testModules = testModules;
 		
-		testRenderer = new EditSubmissionWidgetDefaultRenderer(new SimplePanel(), mockController);
+		testRenderer = new EditSubmissionWidgetDefaultRenderer(new SimplePanel(), mockController, module1Id);
 					
 	}
 	
@@ -203,7 +204,6 @@ public class GWTTestEditSubmissionWidgetDefaultRenderer extends GWTTestCase {
 	}
 	
 
-	@SuppressWarnings("unused")
 	//Define mock controller
 	private class MockSubmissionController implements SubmissionControllerEditAPI {
 
@@ -214,6 +214,7 @@ public class GWTTestEditSubmissionWidgetDefaultRenderer extends GWTTestCase {
 		String updateSummary;
 		String updateTitle;
 		Set<String> updateModules;
+		Set<AtomAuthor> updateAuthors;
 
 		public void addStudyLink(String studyEntryURL) {
 			this.addStudyLink = studyEntryURL;
@@ -249,6 +250,10 @@ public class GWTTestEditSubmissionWidgetDefaultRenderer extends GWTTestCase {
 
 		public void loadSubmissionEntryByURL(String SubmissionEntryURL) {
 			// not tested here
+		}
+
+		public void updateAuthors(Set<AtomAuthor> authors) {
+			this.updateAuthors = authors;
 		}
 		
 	}

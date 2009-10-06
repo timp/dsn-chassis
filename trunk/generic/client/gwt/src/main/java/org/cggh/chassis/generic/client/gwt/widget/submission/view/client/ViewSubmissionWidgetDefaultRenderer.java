@@ -6,6 +6,7 @@ package org.cggh.chassis.generic.client.gwt.widget.submission.view.client;
 import java.util.Map;
 import java.util.Set;
 
+import org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
 import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
 import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidget;
 import org.cggh.chassis.generic.client.gwt.widget.submission.controller.client.SubmissionControllerViewAPI;
@@ -33,6 +34,7 @@ public class ViewSubmissionWidgetDefaultRenderer implements SubmissionModelListe
 	final Panel submissionDetailsPanel = new HorizontalPanel();
 	final Label editThisSubmissionUI = new Label("Edit Submission");
 	final VerticalPanel modulesListPanel = new VerticalPanel();
+	final VerticalPanel authorsListPanel = new VerticalPanel();
 	final VerticalPanel studyLinksListPanel = new VerticalPanel();
 
 	final private Panel canvas;
@@ -74,9 +76,14 @@ public class ViewSubmissionWidgetDefaultRenderer implements SubmissionModelListe
 		summaryHPanel.add(summaryLabel);
 		submissionDetailsVPanel.add(summaryHPanel);
 
+		submissionDetailsVPanel.add(new Label("Modules to submit to:"));
 		submissionDetailsVPanel.add(modulesListPanel);
-		
+
+		submissionDetailsVPanel.add(new Label("Studies to submit to:"));
 		submissionDetailsVPanel.add(studiesLinkedCanvas);
+		
+		submissionDetailsVPanel.add(new Label("Submission owners:"));
+		submissionDetailsVPanel.add(authorsListPanel);
 		
 		submissionDetailsPanel.add(submissionDetailsVPanel);
 		
@@ -142,6 +149,15 @@ public class ViewSubmissionWidgetDefaultRenderer implements SubmissionModelListe
 	public void onTitleChanged(String before, String after, Boolean isValid) {
 		titleLabel.setText(after);
 		
+	}
+
+	public void onAuthorsChanged(Set<AtomAuthor> before, Set<AtomAuthor> after, Boolean isValid) {
+
+		authorsListPanel.clear();
+		
+		for (AtomAuthor atomAuthor : after) {
+			authorsListPanel.add(new Label(atomAuthor.getEmail()));
+		}
 	}
 
 }

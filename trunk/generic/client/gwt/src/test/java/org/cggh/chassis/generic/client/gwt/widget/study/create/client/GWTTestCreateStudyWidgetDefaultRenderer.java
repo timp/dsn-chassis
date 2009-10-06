@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
 import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
 import org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerCreateAPI;
 
@@ -165,7 +166,13 @@ public class GWTTestCreateStudyWidgetDefaultRenderer extends GWTTestCase {
 		testRenderer.modulesUIHash.get(module1Id).setValue(isChecked, true);
 		
 		//test outcome
-		assertEquals(isChecked, mockController.modules.contains(module1Id));
+		assertEquals(isChecked, mockController.updateModules.contains(module1Id));
+		
+	}
+	
+	public void testOnAuthorsChanged() {
+		
+		// Not currently used		
 		
 	}
 	
@@ -218,7 +225,8 @@ public class GWTTestCreateStudyWidgetDefaultRenderer extends GWTTestCase {
 		boolean saveNewStudyEntryCalled;
 		String updateSummary;
 		String updateTitle;
-		Set<String> modules;
+		Set<String> updateModules;
+		Set<AtomAuthor> updateAuthors;
 
 		public void cancelSaveOrUpdateStudyEntry() {
 			this.cancelSaveOrUpdateStudyEntry = true;
@@ -228,7 +236,7 @@ public class GWTTestCreateStudyWidgetDefaultRenderer extends GWTTestCase {
 			this.saveNewStudyEntryCalled = true;
 		}
 
-		public void setUpNewStudy() {
+		public void setUpNewStudy(String authorEmail) {
 			// not tested here
 		}
 
@@ -241,7 +249,11 @@ public class GWTTestCreateStudyWidgetDefaultRenderer extends GWTTestCase {
 		}
 
 		public void updateModules(Set<String> modules) {
-			this.modules = modules;
+			this.updateModules = modules;
+		}
+
+		public void updateAuthors(Set<AtomAuthor> authors) {
+			this.updateAuthors = authors;
 		}
 		
 	}

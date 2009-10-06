@@ -120,7 +120,7 @@ public class StudyManagementWidgetDefaultRenderer implements StudyManagementWidg
 	public void onDisplayStatusChanged(Integer before, Integer after) {
 		if (after == StudyManagementWidgetModel.DISPLAYING_CREATE_STUDY) {
 			displayCanvas.clear();
-			createStudyWidget.setUpNewStudy();
+			createStudyWidget.setUpNewStudy(authorEmail);
 			displayCanvas.add(createStudyWidgetCanvas);
 		} else if (after == StudyManagementWidgetModel.DISPLAYING_VIEW_STUDY) {
 			displayCanvas.clear();

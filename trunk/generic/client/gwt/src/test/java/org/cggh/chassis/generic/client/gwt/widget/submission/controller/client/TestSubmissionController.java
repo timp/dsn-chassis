@@ -24,6 +24,7 @@ import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionFactory;
 import org.cggh.chassis.generic.atom.submission.client.format.impl.SubmissionFactoryImpl;
 import org.cggh.chassis.generic.atom.submission.client.mockimpl.MockSubmissionFactory;
+import org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomLink;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
@@ -62,6 +63,7 @@ public class TestSubmissionController {
 	private SubmissionFactory mockFactory;
 	private String submissionFeedURL = "http://foo.com/submissions";
 	private SubmissionEntry testSubmissionEntry;
+	private String testAuthorEmail = "foo@bar.com";
 		
 	@Before
 	public void setUp() throws Exception {
@@ -93,17 +95,18 @@ public class TestSubmissionController {
 		
 	@Test
 	public void testSetUpNewSubmission() {
-				
+		
 		//set up expectations
-		expect(mockFactory.createSubmissionEntry()).andReturn(testSubmissionEntry);
+		expect(mockFactory.createSubmissionEntry()).andReturn(testFactory.createSubmissionEntry());
+		expect(mockFactory.createAuthor()).andReturn(testFactory.createAuthor());
 		PowerMock.replay(mockFactory);
 		
 		//call method under test
-		testController.setUpNewSubmission();
+		testController.setUpNewSubmission(testAuthorEmail);
 		
 		//test outcome
 		assertEquals(SubmissionModel.STATUS_LOADED, testModel.getStatus());
-		assertEquals(testSubmissionEntry, testModel.getSubmissionEntry());
+		assertEquals(testAuthorEmail, testModel.getSubmissionEntry().getAuthors().iterator().next().getEmail());
 		
 		PowerMock.verify(mockFactory);
 	}
@@ -177,6 +180,26 @@ public class TestSubmissionController {
 		//test outcome
 		assertEquals(SubmissionModel.STATUS_ERROR, testModel.getStatus());
 		assertEquals(returnedThrowable, throwable);		
+		
+	}
+	
+	@Test
+	public void testUpdateAuthors() {
+
+		//mock loaded state
+		testModel.setSubmissionEntry(testSubmissionEntry);
+		
+		//test data
+		Set<AtomAuthor> testAuthors = new HashSet<AtomAuthor>();
+		AtomAuthor testAtomAuthor = testFactory.createAuthor();
+		testAtomAuthor.setEmail("foo@bar.com");
+		testAuthors.add(testAtomAuthor);
+		
+		//call method under test
+		testController.updateAuthors(testAuthors);
+		
+		//test outcome
+		assertEquals(testAuthors, testModel.getAuthors());		
 		
 	}
 	

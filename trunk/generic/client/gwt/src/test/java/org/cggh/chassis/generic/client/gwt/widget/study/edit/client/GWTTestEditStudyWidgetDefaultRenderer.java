@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
+import org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
 import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
 import org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerEditAPI;
 
@@ -163,6 +164,12 @@ public class GWTTestEditStudyWidgetDefaultRenderer extends GWTTestCase {
 		
 	}
 	
+	public void testOnAuthorsChanged() {
+		
+		// Not currently used		
+		
+	}
+	
 	public void testCancelEditStudyButton_UI() {
 		//simulate click event
 		DomEvent.fireNativeEvent(Document.get().createClickEvent(0, 0, 0, 0, 0, false, false, false, false),
@@ -211,6 +218,7 @@ public class GWTTestEditStudyWidgetDefaultRenderer extends GWTTestCase {
 		String updateTitle;
 		Set<String> modules;
 		boolean updateStudyEntryCalled;
+		Set<AtomAuthor> updateAuthors;
 
 		public void cancelSaveOrUpdateStudyEntry() {
 			this.cancelSaveOrUpdateStudyEntry = true;
@@ -238,6 +246,10 @@ public class GWTTestEditStudyWidgetDefaultRenderer extends GWTTestCase {
 
 		public void loadStudyEntryByURL(String studyEntryURL) {
 			// not tested here
+		}
+
+		public void updateAuthors(Set<AtomAuthor> authors) {
+			this.updateAuthors = authors;
 		}
 		
 	}

@@ -9,7 +9,9 @@ import java.util.Map;
 import java.util.Set;
 
 import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
+import org.cggh.chassis.generic.atom.study.client.format.StudyFactory;
 import org.cggh.chassis.generic.atom.study.client.mockimpl.MockStudyFactory;
+import org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
 import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
 import org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerViewAPI;
 import org.cggh.chassis.generic.client.gwt.widget.study.model.client.StudyModel;
@@ -126,6 +128,23 @@ public class GWTTestViewStudyWidgetDefaultRenderer extends GWTTestCase {
 		
 		// test outcome
 		assertEquals(modulesSet1.size(), testRenderer.modulesListPanel.getWidgetCount());
+		
+	}
+	
+	public void testOnAuthorsChanged() {
+
+		//test data
+		StudyFactory testFactory = new MockStudyFactory();
+		Set<AtomAuthor> testAuthors = new HashSet<AtomAuthor>();
+		AtomAuthor testAtomAuthor = testFactory.createAuthor();
+		testAtomAuthor.setEmail("foo@bar.com");
+		testAuthors.add(testAtomAuthor);	
+
+		// call method under test
+		testRenderer.onAuthorsChanged(null, testAuthors, true);		
+		
+		// test outcome
+		assertEquals(testAuthors.size(), testRenderer.authorsListPanel.getWidgetCount());
 		
 	}
 	

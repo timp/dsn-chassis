@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
+import org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
 import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
 import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidget;
 import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetListBoxRenderer;
@@ -44,6 +45,7 @@ public class EditSubmissionWidgetDefaultRenderer implements SubmissionModelListe
 	private SubmissionControllerEditAPI controller;
 	private Boolean isFormComplete = false;
 	private Map<String, String> modulesConfig;
+	private String authorEmail;
 	
 	//Expose view elements for testing purposes.
 	final Panel editSubmissionFormPanel = new SimplePanel();
@@ -66,9 +68,10 @@ public class EditSubmissionWidgetDefaultRenderer implements SubmissionModelListe
 	final Button cancelEditSubmissionUI = new Button("Cancel", new CancelCreateSubmissionUIClickHandler());
 	final Button updateSubmissionEntryUI = new Button("Create Submission", new SaveNewSubmissionUIClickHandler());
 
-	public EditSubmissionWidgetDefaultRenderer(Panel canvas, SubmissionControllerEditAPI controller) {
+	public EditSubmissionWidgetDefaultRenderer(Panel canvas, SubmissionControllerEditAPI controller, String authorEmail) {
 		this.canvas = canvas;
 		this.controller = controller;
+		this.authorEmail = authorEmail;
 		
 		//get modules from config
 		this.modulesConfig = ConfigurationBean.getModules();
@@ -183,8 +186,7 @@ public class EditSubmissionWidgetDefaultRenderer implements SubmissionModelListe
 			
 			public void onClick(ClickEvent arg0) {
 
-				//FIXME only load owned studies
-				viewStudiesWidgetListBox.loadStudies();
+				viewStudiesWidgetListBox.loadStudiesByAuthorEmail(authorEmail);
 				
 				studyLinkChooserPopup.center();
 				studyLinkChooserPopup.show();
@@ -318,6 +320,11 @@ public class EditSubmissionWidgetDefaultRenderer implements SubmissionModelListe
 
 	public void onUserActionSelectStudy(StudyEntry studyEntry) {
 		studyLinkToAdd = studyEntry.getEditLink().getHref();
+	}
+
+	public void onAuthorsChanged(Set<AtomAuthor> before, Set<AtomAuthor> after, Boolean isValid) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
