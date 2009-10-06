@@ -12,15 +12,17 @@ import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 
 import com.google.gwt.user.client.ui.Panel;
+import com.google.gwt.user.client.ui.SimplePanel;
 
 /**
  * @author raok
  *
  */
-public class SubmissionManagementWidget implements CreateSubmissionWidgetPubSubAPI,
-											  EditSubmissionWidgetPubSubAPI,
-											  ViewSubmissionWidgetPubSubAPI,
-											  ViewSubmissionsWidgetPubSubAPI {
+public class SubmissionManagementWidget implements SubmissionManagementWidgetAPI,
+												   CreateSubmissionWidgetPubSubAPI,
+											  	   EditSubmissionWidgetPubSubAPI,
+											  	   ViewSubmissionWidgetPubSubAPI,
+											  	   ViewSubmissionsWidgetPubSubAPI {
 	
 	private Log log = LogFactory.getLog(this.getClass());
 
@@ -28,8 +30,9 @@ public class SubmissionManagementWidget implements CreateSubmissionWidgetPubSubA
 	private SubmissionManagementWidgetModel model;
 	private SubmissionManagementWidgetController controller;
 	private SubmissionManagementWidgetDefaultRenderer renderer;
+	private Panel menuCanvas = new SimplePanel();
 
-	public SubmissionManagementWidget(Panel menuCanvas, Panel displayCanvas, String authorEmail) {
+	public SubmissionManagementWidget(Panel displayCanvas, String authorEmail) {
 		
 		model = new SubmissionManagementWidgetModel();
 		
@@ -91,6 +94,13 @@ public class SubmissionManagementWidget implements CreateSubmissionWidgetPubSubA
 	public void onUserActionCreateNewSubmissionCancelled() {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.client.gwt.widget.submissionmanagement.client.SubmissionManagementWidgetAPI#getMenuCanvas()
+	 */
+	public Panel getMenuCanvas() {
+		return menuCanvas;
 	}
 	
 	
