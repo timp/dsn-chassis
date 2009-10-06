@@ -124,8 +124,8 @@ public class GWTTestStudyManagementWidgetDefaultRenderer extends GWTTestCase {
 		testModel.setDisplayStatus(StudyManagementWidgetModel.DISPLAYING_VIEW_ALL_STUDIES);		
 
 		// test outcome 
-		assertTrue( (testRenderer.viewAllStudiesWidgetCanvas.getParent() != null)
-					 && (testRenderer.viewAllStudiesWidgetCanvas.isVisible()) );
+		assertTrue( (testRenderer.viewStudiesWidgetCanvas.getParent() != null)
+					 && (testRenderer.viewStudiesWidgetCanvas.isVisible()) );
 		
 		testModel.setDisplayStatus(StudyManagementWidgetModel.DISPLAYING_EDIT_STUDY);		
 

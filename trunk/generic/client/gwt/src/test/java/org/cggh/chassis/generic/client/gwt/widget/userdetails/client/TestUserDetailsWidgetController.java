@@ -22,6 +22,8 @@ import org.cggh.chassis.generic.user.transfer.UserDetailsTO;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.powermock.api.easymock.PowerMock;
+import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -32,6 +34,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
  *
  */
 @RunWith(PowerMockRunner.class)
+@PrepareForTest({UserDetailsWidget.class})
 public class TestUserDetailsWidgetController {
 
 	
@@ -41,7 +44,10 @@ public class TestUserDetailsWidgetController {
 	}
 
 	private String testUserChassisRolesPrefix = "ROLE_";
-	private String testUserDetailsServiceEndpointURL = "http://foo.com/users"; 
+	private String testUserDetailsServiceEndpointURL = "http://foo.com/users";
+	private UserDetailsWidgetModel testModel;
+	private UserDetailsWidgetController testController;
+	private UserDetailsWidget mockOwner; 
 		
 	@Before
 	public void setUp() {
@@ -51,15 +57,19 @@ public class TestUserDetailsWidgetController {
 		ConfigurationBean.testUserChassisRolesPrefix = testUserChassisRolesPrefix;
 		ConfigurationBean.testUserDetailsServiceEndpointURL = testUserDetailsServiceEndpointURL;
 		
+		//Create mock owner
+		mockOwner = PowerMock.createMock(UserDetailsWidget.class);
+		
+		//instantiate test controller and model
+		testModel = new UserDetailsWidgetModel();
+		testController = new UserDetailsWidgetController(testModel, mockOwner, null);
+		
 	}
 	
 	@Test
 	public void testConstructor() {
-		
-		UserDetailsWidgetModel model = new UserDetailsWidgetModel();
-		UserDetailsWidgetController controller = new UserDetailsWidgetController(model, null);
-		
-		assertNotNull(controller);
+				
+		assertNotNull(testController);
 		
 	}
 
@@ -68,8 +78,6 @@ public class TestUserDetailsWidgetController {
 	@SuppressWarnings("unchecked")
 	@Test
 	public void testRefreshUserDetails_AsyncCallback() {
-
-		UserDetailsWidgetModel model = new UserDetailsWidgetModel();
 
 		// mock async callback
 		AsyncCallback<UserDetailsTO> callback = createMock(AsyncCallback.class);
@@ -81,16 +89,16 @@ public class TestUserDetailsWidgetController {
 		replay(service);
 
 		// instantiate class under test
-		UserDetailsWidgetController controller = new UserDetailsWidgetController(model, service);
+		UserDetailsWidgetController controller = new UserDetailsWidgetController(testModel, mockOwner, service);
 
 		// test initial state of model
-		assertEquals(UserDetailsWidgetModel.STATUS_INITIAL, model.getStatus());
+		assertEquals(UserDetailsWidgetModel.STATUS_INITIAL, testModel.getStatus());
 		
 		// call method under test
 		controller.refreshUserDetails(callback);
 		
 		// test outcome at the model
-		assertEquals(UserDetailsWidgetModel.STATUS_LOADING, model.getStatus());
+		assertEquals(UserDetailsWidgetModel.STATUS_LOADING, testModel.getStatus());
 		
 		// verify mocks
 		verify(callback);
@@ -100,11 +108,9 @@ public class TestUserDetailsWidgetController {
 	
 	@Test
 	public void testRefreshUserDetailsCallback_onSuccess() {
-
-		UserDetailsWidgetModel model = new UserDetailsWidgetModel();
 						
 		// mock loading state
-		model.setStatus(UserDetailsWidgetModel.STATUS_LOADING);
+		testModel.setStatus(UserDetailsWidgetModel.STATUS_LOADING);
 		
 		// test data
 		String prefixToRemove = testUserChassisRolesPrefix;
@@ -116,25 +122,29 @@ public class TestUserDetailsWidgetController {
 		String bar = "bar";
 		roles.add(prefixToRemove + bar);
 		user.setRoles(roles);
-				
+						
 		// instantiate class under test
-		UserDetailsWidgetController controller = new UserDetailsWidgetController(model, null);
+		UserDetailsWidgetController controller = new UserDetailsWidgetController(testModel, mockOwner, null);
 		RefreshUserDetailsCallback callback = controller.new RefreshUserDetailsCallback();
+		
+		//set up expectations on owner
+		mockOwner.onUserDetailsRefreshed(user.getId());
+		PowerMock.replay(mockOwner);
+		
 		
 		// call method under test
 		callback.onSuccess(user);
 		
 		/* test outcome at model */
-		
-		assertEquals(UserDetailsWidgetModel.STATUS_FOUND, model.getStatus());
-		assertEquals(user.getId(), model.getUserName());
+		assertEquals(UserDetailsWidgetModel.STATUS_FOUND, testModel.getStatus());
+		assertEquals(user.getId(), testModel.getUserName());
 		assertEquals(user.getRoles().size(), user.getRoles().size());
 		// Check prefix has been removed
 		for (String role : user.getRoles()) {
-			assertTrue(model.getRoles().contains(role.replace(prefixToRemove, "")));
+			assertTrue(testModel.getRoles().contains(role.replace(prefixToRemove, "")));
 		}
 		
-		assertEquals(bar, model.getCurrentRole());
+		assertEquals(bar, testModel.getCurrentRole());
 				
 	}
 	
@@ -142,9 +152,8 @@ public class TestUserDetailsWidgetController {
 	public void testUpdateCurrentRole() {
 
 		// mock model in found state
-		UserDetailsWidgetModel model = new UserDetailsWidgetModel();
-		model.setStatus(UserDetailsWidgetModel.STATUS_FOUND);
-		model.setUserName("user");
+		testModel.setStatus(UserDetailsWidgetModel.STATUS_FOUND);
+		testModel.setUserName("user");
 		
 		Set<String> roles = new HashSet<String>();
 		String foo = "foo";
@@ -154,17 +163,17 @@ public class TestUserDetailsWidgetController {
 		String newCurrentRole = "newCurrentRole";
 		roles.add(newCurrentRole);
 		
-		model.setRoles(roles);
-		model.setCurrentRole(foo);
+		testModel.setRoles(roles);
+		testModel.setCurrentRole(foo);
 
 		// instantiate class under test
-		UserDetailsWidgetController controller = new UserDetailsWidgetController(model, null);
+		UserDetailsWidgetController controller = new UserDetailsWidgetController(testModel, mockOwner, null);
 
 		// call method under test
 		controller.updateCurrentRole(newCurrentRole);
 		
 		// test outcome at model
-		assertEquals(newCurrentRole, model.getCurrentRole());
+		assertEquals(newCurrentRole, testModel.getCurrentRole());
 				
 	}
 	

@@ -36,7 +36,12 @@ public class TestUserDetailsWidgetModel {
 		
 		assertNotNull(model);
 		
-		// TODO move tests of initial state here
+		//check initial state
+		assertNull(model.getUserName());
+		assertNull(model.getCurrentRole());
+		assertNull(model.getRoles());
+		assertEquals(UserDetailsWidgetModel.STATUS_INITIAL, model.getStatus());		
+		
 	}
 	
 	
@@ -45,8 +50,6 @@ public class TestUserDetailsWidgetModel {
 	public void testSetUserName() {
 
 		UserDetailsWidgetModel model = new UserDetailsWidgetModel();
-
-		// TODO check initial state
 
 		// test data
 		String userName = "foo";
@@ -98,8 +101,6 @@ public class TestUserDetailsWidgetModel {
 
 		UserDetailsWidgetModel model = new UserDetailsWidgetModel();
 		
-		// TODO check initial state
-
 		// test data
 		String currentRole = "foo";
 		

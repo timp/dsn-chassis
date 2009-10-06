@@ -41,8 +41,8 @@ public class StudyManagementWidgetDefaultRenderer implements StudyManagementWidg
 	final Panel createStudyWidgetCanvas = new SimplePanel();
 	final ViewStudyWidgetAPI viewStudyWidget;
 	final Panel viewStudyWidgetCanvas = new SimplePanel();	
-	final ViewStudiesWidgetAPI viewAllStudiesWidget;
-	final Panel viewAllStudiesWidgetCanvas = new SimplePanel();
+	final ViewStudiesWidgetAPI viewStudiesWidget;
+	final Panel viewStudiesWidgetCanvas = new SimplePanel();
 	final EditStudyWidgetAPI editStudyWidget;
 	final Panel editStudyWidgetCanvas = new SimplePanel();
 
@@ -59,7 +59,7 @@ public class StudyManagementWidgetDefaultRenderer implements StudyManagementWidg
 		//create child widgets
 		viewStudyWidget = new ViewStudyWidget(viewStudyWidgetCanvas);
 		createStudyWidget = new CreateStudyWidget(createStudyWidgetCanvas);
-		viewAllStudiesWidget = new ViewStudiesWidget(viewAllStudiesWidgetCanvas);
+		viewStudiesWidget = new ViewStudiesWidget(viewStudiesWidgetCanvas);
 		editStudyWidget = new EditStudyWidget(editStudyWidgetCanvas);
 		
 		//initialise view
@@ -127,8 +127,8 @@ public class StudyManagementWidgetDefaultRenderer implements StudyManagementWidg
 			displayCanvas.add(viewStudyWidgetCanvas);
 		} else if (after == StudyManagementWidgetModel.DISPLAYING_VIEW_ALL_STUDIES) {
 			displayCanvas.clear();
-			viewAllStudiesWidget.loadStudiesByAuthorEmail(authorEmail);
-			displayCanvas.add(viewAllStudiesWidgetCanvas);
+			viewStudiesWidget.loadStudiesByAuthorEmail(authorEmail);
+			displayCanvas.add(viewStudiesWidgetCanvas);
 		} else if (after == StudyManagementWidgetModel.DISPLAYING_EDIT_STUDY) {
 			displayCanvas.clear();
 			displayCanvas.add(editStudyWidgetCanvas);
