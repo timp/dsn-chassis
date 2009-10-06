@@ -28,6 +28,10 @@ public class Configuration {
 		return $wnd.CHASSIS.submissionFeedURL;
 	}-*/;
 
+	public static native String getDataFileFeedURL() /*-{
+		return $wnd.CHASSIS.dataFileFeedURL;
+	}-*/;
+
 	/**
 	 * @return
 	 */
