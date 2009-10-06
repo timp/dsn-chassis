@@ -44,7 +44,14 @@ public class ContentTypeOverrideFilter extends HttpFilter {
         chain.doFilter(req, responseWrapper);
         
         byte[] data = responseWrapper.getBuffer();
-        res.setContentType(contentType); 
+
+        if (res.getContentType() != null && res.getContentType().startsWith("application/atom+xml")) {
+        	// only override application/atom+xml ... so we don't confuse media resource downloads
+        	res.setContentType(contentType); 
+
+            // TODO make this more generic, i.e., configurable
+        }
+
         res.setContentLength(data.length);
         res.getOutputStream().write(data);
         res.flushBuffer();

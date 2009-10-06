@@ -27,6 +27,11 @@ public class HttpMethodOverrideFilter extends HttpFilter {
 	 */
 	@Override
 	public void doHttpFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
+//		context.log("request method: "+request.getMethod());
+//		context.log("method override header: "+request.getHeader(HttpMethodOverrideRequestWrapper.HEADER_METHODOVERRIDE));
+//		context.log("requestURI: "+request.getRequestURI());
+//		context.log("query string: "+request.getQueryString());
+//		context.log("content type: "+request.getContentType());
 		chain.doFilter(new HttpMethodOverrideRequestWrapper(request, allowedOverrides), response);
 	}
 	
@@ -35,6 +40,8 @@ public class HttpMethodOverrideFilter extends HttpFilter {
 	 */
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
+		super.init(filterConfig);
+		
 		allowedOverrides = new HashSet<String>();
 		
 		String allowedOverridesValue = filterConfig.getInitParameter(INITPARAM_ALLOWEDOVERRIDES);
