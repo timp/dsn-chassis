@@ -91,3 +91,15 @@ Finally, in the Servers view in Eclipse, right click the empty space, and do...
   * Finish
 
 You should now be able to start the server from within the Servers view, and browse to http://localhost:8080/chassis-generic-service-exist/ ... you should see the eXist home page.
+
+== Compiling the Chassis Generic Client GWT Modules ==
+
+To try out any of the Chassis GWT Client Spike applications, you need to first compile them.
+
+Click on the chassis_generic_client_gwt project. Then click the GWT Compile button (a red toolbox with a white "G" on it). Add only those entry point modules that start with "Spike..." in the name (I usually remove them all first, then add back the ones you want). Click "Compile". 
+
+(If you have a decent amount of RAM, you might want to up the default -Xmx in the VM arguments, under the Advanced section.)
+
+N.B., whenever you compile a new module for the first time, *remember to add the compiled output to svn:ignore*. Otherwise, if the compiled output gets accidentally committed, repeated compilation causes various SVN problems.
+
+Once compiled, with the Tomcat server started, you should be able to browse to http://localhost:8080/chassis-generic-client-gwt/spike/ and try out the spike apps.
