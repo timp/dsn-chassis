@@ -103,3 +103,32 @@ Click on the chassis_generic_client_gwt project. Then click the GWT Compile butt
 N.B., whenever you compile a new module for the first time, *remember to add the compiled output to svn:ignore*. Otherwise, if the compiled output gets accidentally committed, repeated compilation causes various SVN problems.
 
 Once compiled, with the Tomcat server started, you should be able to browse to http://localhost:8080/chassis-generic-client-gwt/spike/ and try out the spike apps.
+
+== Running Apps in GWT Hosted Mode ==
+
+The Chassis GWT Client application and spike apps can all be run in GWT hosted mode, but need to be launched without the GWT embedded server, so that the Tomcat server with Chassis services can be used.
+
+To set this up, right click on any entry point module, and select "Run As" -> "Web Application".
+
+On 64-bit machine, the first thing you'll see is the message:
+
+{{{
+You must use a 32-bit Java runtime to run GWT Hosted Mode.
+}}}
+
+To work around, install a 32-bit JRE, and modify the launch configuration, see http://code.google.com/p/google-web-toolkit/issues/detail?id=134#c39 
+
+On Ubuntu, I installed a 32 bit JVM by doing...
+
+{{{
+$ sudo apt-get install ia32-sun-java6-bin 
+}}}
+
+Once you have a run configuration, you'll need to edit it to launch without the embedded server. Go to "Run" -> "Run Configurations", find the run configuration you previously created, which is under "Web Application", then uncheck the "Run built-in server" box.
+
+You might also want to enter a sensible URL in the GWT tab, something like http://localhost:8080/chassis-generic-client-gwt/spike/
+
+Note also that, when not using the embedded server, you will need to compile each application you want to run in hosted mode *at least once* prior to running it in hosted mode - this is so that the relevant bits of GWT magic get copied to the right directories, especially the hosted.html file.
+
+
+ 
