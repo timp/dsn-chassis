@@ -21,14 +21,16 @@ public class UserDetailsWidgetController {
 
 	
 	
-	private UserDetailsWidgetModel model;
-	private GWTUserDetailsServiceAsync service;
+	final private UserDetailsWidgetModel model;
+	final private GWTUserDetailsServiceAsync service;
+	final private UserDetailsWidget owner;
 	
 	
 	
-	UserDetailsWidgetController(UserDetailsWidgetModel model, GWTUserDetailsServiceAsync service) {
+	UserDetailsWidgetController(UserDetailsWidgetModel model, UserDetailsWidget owner, GWTUserDetailsServiceAsync service) {
 		this.model = model;
 		this.service = service;
+		this.owner = owner;
 	}
 
 	
@@ -72,8 +74,8 @@ public class UserDetailsWidgetController {
 			
 			// populate username
 			model.setUserName(user.getId());
-			
-			// TODO move to wwarn specific package?
+
+
 			// Filter out roles relevant to chassis
 			String userChassisRolesPrefix = ConfigurationBean.getUserChassisRolesPrefix();
 			Set<String> roles = new HashSet<String>();
@@ -99,6 +101,9 @@ public class UserDetailsWidgetController {
 			model.setStatus(UserDetailsWidgetModel.STATUS_FOUND);
 			
 			// N.B. if we get wierd GWT errors later, maybe due to problems with GWT handling inner classes?
+			
+			//alert owner
+			owner.onUserDetailsRefreshed(user.getId());
 			
 		}
 		

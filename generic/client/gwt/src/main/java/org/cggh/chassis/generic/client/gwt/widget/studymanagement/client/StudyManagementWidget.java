@@ -40,7 +40,7 @@ public class StudyManagementWidget implements CreateStudyWidgetPubSubAPI,
 		renderer.viewStudyWidget.addViewStudyWidgetListener(this);
 		renderer.createStudyWidget.addCreateStudyWidgetListener(this);
 		renderer.editStudyWidget.addEditStudyWidgetListener(this);
-		renderer.viewAllStudiesWidget.addViewAllStudiesWidgetListener(this);
+		renderer.viewStudiesWidget.addViewAllStudiesWidgetListener(this);
 	}
 
 	public void onNewStudyCreated(StudyEntry newStudyEntry) {

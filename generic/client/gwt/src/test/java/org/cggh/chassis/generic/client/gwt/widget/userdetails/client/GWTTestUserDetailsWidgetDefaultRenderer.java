@@ -44,7 +44,7 @@ public class GWTTestUserDetailsWidgetDefaultRenderer extends GWTTestCase {
 		model = new UserDetailsWidgetModel();
 		
 		// instantiate a controller
-		controller = new UserDetailsWidgetController(model, null);
+		controller = new UserDetailsWidgetController(model, null, null);
 		
 		// instantiate a renderer
 		renderer = new UserDetailsWidgetDefaultRenderer(new SimplePanel(), controller);
