@@ -4,6 +4,7 @@
 package spike.widget.studymanagment.client;
 
 import org.cggh.chassis.generic.client.gwt.widget.studymanagement.client.StudyManagementWidget;
+import org.cggh.chassis.generic.client.gwt.widget.studymanagement.client.StudyManagementWidgetAPI;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -29,8 +30,8 @@ public class SpikeStudyManagementWidget implements EntryPoint {
 		verticalPanel.add(menuCanvas);
 		verticalPanel.add(displayCanvas);
 				
-		@SuppressWarnings("unused")
-		StudyManagementWidget studyManagementWidget = new StudyManagementWidget(menuCanvas, displayCanvas, "alice@example.com");
+		StudyManagementWidgetAPI studyManagementWidget = new StudyManagementWidget(displayCanvas, "alice@example.com");
+		menuCanvas.add(studyManagementWidget.getMenuCanvas());
 		
 		RootPanel.get().add(verticalPanel);
 		

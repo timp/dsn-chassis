@@ -10,12 +10,14 @@ import org.cggh.chassis.generic.client.gwt.widget.study.view.client.ViewStudyWid
 import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetPubSubAPI;
 
 import com.google.gwt.user.client.ui.Panel;
+import com.google.gwt.user.client.ui.SimplePanel;
 
 /**
  * @author raok
  *
  */
-public class StudyManagementWidget implements CreateStudyWidgetPubSubAPI,
+public class StudyManagementWidget implements StudyManagementWidgetAPI,
+											  CreateStudyWidgetPubSubAPI,
 											  EditStudyWidgetPubSubAPI,
 											  ViewStudyWidgetPubSubAPI,
 											  ViewStudiesWidgetPubSubAPI {
@@ -24,8 +26,9 @@ public class StudyManagementWidget implements CreateStudyWidgetPubSubAPI,
 	private StudyManagementWidgetModel model;
 	private StudyManagementWidgetController controller;
 	private StudyManagementWidgetDefaultRenderer renderer;
+	private Panel menuCanvas = new SimplePanel();
 
-	public StudyManagementWidget(Panel menuCanvas, Panel displayCanvas, String authorEmail) {
+	public StudyManagementWidget(Panel displayCanvas, String authorEmail) {
 		
 		model = new StudyManagementWidgetModel();
 		
@@ -68,6 +71,11 @@ public class StudyManagementWidget implements CreateStudyWidgetPubSubAPI,
 		
 	}
 	
-	
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.client.gwt.widget.studymanagement.client.StudyManagementWidgetAPI#getMenuCanvas()
+	 */
+	public Panel getMenuCanvas() {
+		return menuCanvas;
+	}
 	
 }

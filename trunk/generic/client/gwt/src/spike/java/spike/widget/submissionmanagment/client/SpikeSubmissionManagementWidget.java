@@ -4,6 +4,7 @@
 package spike.widget.submissionmanagment.client;
 
 import org.cggh.chassis.generic.client.gwt.widget.submissionmanagement.client.SubmissionManagementWidget;
+import org.cggh.chassis.generic.client.gwt.widget.submissionmanagement.client.SubmissionManagementWidgetAPI;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -29,8 +30,8 @@ public class SpikeSubmissionManagementWidget implements EntryPoint {
 		
 		RootPanel.get().add(vPanel);
 		
-		@SuppressWarnings("unused")
-		SubmissionManagementWidget widget = new SubmissionManagementWidget(menuCanvas, displayCanvas, "bob@example.com");
+		SubmissionManagementWidgetAPI widget = new SubmissionManagementWidget(displayCanvas, "bob@example.com");
+		menuCanvas.add(widget.getMenuCanvas());
 
 	}
 
