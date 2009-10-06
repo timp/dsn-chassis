@@ -22,6 +22,7 @@ public class SpikeAdminCollectionWidgetEntryPoint implements EntryPoint {
 
 	private AdminCollectionWidget studies;
 	private AdminCollectionWidget submissions;
+	private AdminCollectionWidget datafiles;
 
 	/* (non-Javadoc)
 	 * @see com.google.gwt.core.client.EntryPoint#onModuleLoad()
@@ -39,6 +40,7 @@ public class SpikeAdminCollectionWidgetEntryPoint implements EntryPoint {
 			public void onClick(ClickEvent arg0) {
 				studies.refreshStatus();
 				submissions.refreshStatus();
+				datafiles.refreshStatus();
 			}
 			
 		});
@@ -50,6 +52,7 @@ public class SpikeAdminCollectionWidgetEntryPoint implements EntryPoint {
 			public void onClick(ClickEvent arg0) {
 				studies.createCollection();
 				submissions.createCollection();
+				datafiles.createCollection();
 			}
 			
 		});
@@ -69,9 +72,15 @@ public class SpikeAdminCollectionWidgetEntryPoint implements EntryPoint {
 		
 		submissions = new AdminCollectionWidget("Submissions", Configuration.getSubmissionFeedURL());
 		root.add(submissions);
+
+		root.add(new HTML("<h2>Data Files</h2>"));
 		
+		datafiles = new AdminCollectionWidget("Data Files", Configuration.getDataFileFeedURL());
+		root.add(datafiles);
+
 		studies.refreshStatus();
 		submissions.refreshStatus();
+		datafiles.refreshStatus();
 		
 	}
 
