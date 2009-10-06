@@ -30,7 +30,7 @@ You'll need the plugin and the web toolkit SDK.
 
 Install the Subversive SVN Team Provider for Eclipse 3.5. This takes two steps.
 
-First, from "Help -> Install New Software", choose the Galileo site (already added), expand the "Collaboration" section, and select "Subversive SVN Team Provider (Incubation". Continue through to install.
+First, from "Help -> Install New Software", choose the Galileo site (already added), expand the "Collaboration" section, and select "Subversive SVN Team Provider (Incubation)". Continue through to install.
 
 Second, from "Help -> Install New Software", add a new update site with the following URL:
 
@@ -62,4 +62,32 @@ Check out projects from the following SVN locations:
 
 == Install Apache Tomcat 6.0 ==
 
-TODO
+Install the latest release of Apache Tomcat 6.0.x.
+
+On Ubuntu, you can install Tomcat via the software repositories. However, because the Tomcat directories get split across multiple locations in the file system, Eclipse WTP gets confused and cannot recognise the installation. There are workarounds, but it may be easier just to install manually at a location of your choice. E.g. ...
+
+{{{
+$ wget http://mirror.fubra.com/ftp.apache.org/tomcat/tomcat-6/v6.0.20/bin/apache-tomcat-6.0.20.tar.gz
+$ gunzip apache-tomcat-6.0.20.tar.gz
+$ tar -xvf apache-tomcat-6.0.20.tar
+$ sudo mv apache-tomcat-6.0.20 /opt
+}}}
+
+Next, add Tomcat v6.0 as a Runtime Environment in Eclipse. In Eclipse, do...
+
+  * Window -> Preferences
+  * Server -> Runtime Environments
+  * Add
+  * Select Apache Tomcat v6.0, click Next
+  * Browse to Tomcat installation directory, click Finish
+
+Finally, in the Servers view in Eclipse, right click the empty space, and do...
+
+  * New -> Server
+  * Select the server type: Tomcat v6.0 Server
+  * Server runtime environment: Apache Tomcat v6.0
+  * Click Next
+  * Add all Chassis projects, except for the generic_lib_gwt project
+  * Finish
+
+You should now be able to start the server from within the Servers view, and browse to http://localhost:8080/chassis-generic-service-exist/ ... you should see the eXist home page.
