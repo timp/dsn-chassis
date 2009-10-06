@@ -116,7 +116,7 @@ On 64-bit machine, the first thing you'll see is the message:
 You must use a 32-bit Java runtime to run GWT Hosted Mode.
 }}}
 
-To work around, install a 32-bit JRE, and modify the launch configuration, see http://code.google.com/p/google-web-toolkit/issues/detail?id=134#c39 
+To work around, install a 32-bit JRE, and modify the run configuration to use the 32-bit JRE you installed. See also: http://code.google.com/p/google-web-toolkit/issues/detail?id=134#c39 
 
 On Ubuntu, I installed a 32 bit JVM by doing...
 
