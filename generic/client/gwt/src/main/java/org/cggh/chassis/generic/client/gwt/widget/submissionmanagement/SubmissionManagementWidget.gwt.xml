@@ -3,7 +3,6 @@
 <module>
 	<inherits name="com.google.gwt.user.User" />
   	<inherits name="org.cggh.chassis.generic.atom.submission.Submission" />
-  	<inherits name="org.cggh.chassis.generic.client.gwt.configuration.Configuration" />
   	<inherits name="org.cggh.chassis.generic.client.gwt.widget.submission.create.CreateSubmissionWidget"/>
   	<inherits name="org.cggh.chassis.generic.client.gwt.widget.submission.view.ViewSubmissionWidget"/>
   	<inherits name="org.cggh.chassis.generic.client.gwt.widget.submission.viewsubmissions.ViewSubmissionsWidget"/>

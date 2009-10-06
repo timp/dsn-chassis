@@ -9,6 +9,6 @@ package org.cggh.chassis.generic.client.gwt.widget.study.controller.client;
  */
 public interface StudyControllerEditAPI extends AbstractStudyControllerCreateEditAPI, AbstractStudyControllerViewEditAPI {
 
-	public void updateStudyEntry(String feedURL);
+	public void updateStudyEntry();
 
 }

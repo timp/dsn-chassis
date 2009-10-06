@@ -12,6 +12,8 @@ import org.cggh.chassis.generic.atom.study.client.format.impl.StudyFactoryImpl;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomProtocolException;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
+import org.cggh.chassis.generic.atom.vanilla.client.protocol.impl.AtomServiceImpl;
+import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
 import org.cggh.chassis.generic.client.gwt.widget.study.model.client.StudyModel;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
@@ -25,30 +27,26 @@ import org.cggh.chassis.generic.twisted.client.Function;
 public class StudyController implements StudyControllerEditAPI, StudyControllerCreateAPI, StudyControllerViewAPI {
 
 	final private StudyModel model;
-	final private AtomService service;
+	private AtomService persistenceService;
 	private StudyFactory studyFactory;
 	final private AbstractStudyControllerPubSubAPI owner;
 	private Log log = LogFactory.getLog(this.getClass());
+	private String studyFeedURL;
 
-	public StudyController(StudyModel model, AtomService service, AbstractStudyControllerPubSubAPI owner) {
+	public StudyController(StudyModel model, AbstractStudyControllerPubSubAPI owner) {
 		this.model = model;
-		this.service = service;
 		this.owner = owner;
-				
+		
+		//Get studyFeedURL from config
+		studyFeedURL = ConfigurationBean.getStudyFeedURL();
+		
 		//this.studyFactory = new MockStudyFactory();
+		//this.service = new MockAtomService(studyFactory);
 		this.studyFactory = new StudyFactoryImpl();
+		this.persistenceService = new AtomServiceImpl(studyFactory);
 	}
 
-	//Used for testing purposes
-	void setStudyFactory(StudyFactory testFactory) {
-		this.studyFactory = testFactory;
-	}
-
-	//Used for testing purposes
-	StudyFactory getStudyFactory() {
-		return studyFactory;
-	}
-
+	
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerCreateAPI#setUpNewStudy(java.lang.String)
 	 */
@@ -136,7 +134,7 @@ public class StudyController implements StudyControllerEditAPI, StudyControllerC
 		
 		//request studyEntry
 		log.trace("loading study entry at: " + studyEntryURL);
-		Deferred<AtomEntry> deffered = service.getEntry(studyEntryURL);
+		Deferred<AtomEntry> deffered = persistenceService.getEntry(studyEntryURL);
 		
 		//add callbacks
 		deffered.addCallbacks(new LoadStudyEntryCallback(), new LoadStudyEntryErrback());
@@ -178,14 +176,14 @@ public class StudyController implements StudyControllerEditAPI, StudyControllerC
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerCreateAPI#saveNewStudyEntry()
 	 */
-	public void saveNewStudyEntry(String feedURL) {
+	public void saveNewStudyEntry() {
 		log.enter("saveNewStudyEntry");
 	
 		model.setStatus(StudyModel.STATUS_SAVING);
 		
 		//post new studyEntry
-		log.trace("SavingstudyEntry to feed: " + feedURL);
-		Deferred<AtomEntry> deffered = service.postEntry(feedURL, model.getStudyEntry());
+		log.trace("Saving studyEntry to feed: " + studyFeedURL);
+		Deferred<AtomEntry> deffered = persistenceService.postEntry(studyFeedURL, model.getStudyEntry());
 		
 		//add callbacks
 		deffered.addCallbacks(new SaveOrUpdateStudyEntryCallback(), new SaveOrUpdateStudyEntryErrback());
@@ -196,7 +194,7 @@ public class StudyController implements StudyControllerEditAPI, StudyControllerC
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerEditAPI#updateStudyEntry()
 	 */
-	public void updateStudyEntry(String feedURL) {
+	public void updateStudyEntry() {
 		log.enter("updateStudyEntry");
 		
 		model.setStatus(StudyModel.STATUS_SAVING);
@@ -205,11 +203,11 @@ public class StudyController implements StudyControllerEditAPI, StudyControllerC
 		StudyEntry studyEntry = model.getStudyEntry();
 		
 		// assume link is relative
-		String entryUrl = feedURL + studyEntry.getEditLink().getHref();
+		String entryUrl = studyFeedURL + studyEntry.getEditLink().getHref();
 		log.trace("Putting updated entry at: " + entryUrl);		
 		
 		//put studyEntry
-		Deferred<AtomEntry> deffered = service.putEntry(entryUrl, studyEntry);
+		Deferred<AtomEntry> deffered = persistenceService.putEntry(entryUrl, studyEntry);
 		
 		//add callbacks
 		deffered.addCallbacks(new SaveOrUpdateStudyEntryCallback(), new SaveOrUpdateStudyEntryErrback());

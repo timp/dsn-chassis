@@ -7,12 +7,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
-import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
-import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetAPI;
-import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetController;
-import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetDefaultRenderer;
-import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetModel;
-import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetPubSubAPI;
 
 import com.google.gwt.user.client.ui.Panel;
 
@@ -27,11 +21,11 @@ public class ViewStudiesWidget implements ViewStudiesWidgetAPI {
 	final private ViewStudiesWidgetModelListener renderer;
 	private Set<ViewStudiesWidgetPubSubAPI> listeners = new HashSet<ViewStudiesWidgetPubSubAPI>();
 	
-	public ViewStudiesWidget(Panel canvas, AtomService service, String feedURL) {
+	public ViewStudiesWidget(Panel canvas) {
 		
 		model = new ViewStudiesWidgetModel();
 		
-		controller = new ViewStudiesWidgetController(model, service, this, feedURL);
+		controller = new ViewStudiesWidgetController(model, this);
 		
 		renderer = new ViewStudiesWidgetDefaultRenderer(canvas, controller);
 		
@@ -40,11 +34,11 @@ public class ViewStudiesWidget implements ViewStudiesWidgetAPI {
 		
 	}
 	
-	public ViewStudiesWidget(AtomService service, String feedURL, ViewStudiesWidgetModelListener customRenderer) {
+	public ViewStudiesWidget(ViewStudiesWidgetModelListener customRenderer) {
 
 		model = new ViewStudiesWidgetModel();		
 
-		controller = new ViewStudiesWidgetController(model, service, this, feedURL);
+		controller = new ViewStudiesWidgetController(model, this);
 		
 		renderer = customRenderer;
 		
@@ -79,6 +73,10 @@ public class ViewStudiesWidget implements ViewStudiesWidgetAPI {
 
 	public void loadStudies(Set<String> studyEntryURLsToLoad) {
 		controller.loadStudiesByEntryURLs(studyEntryURLsToLoad);
+	}
+
+	public void loadStudiesByAuthorEmail(String authorEmail) {
+		controller.loadStudiesByAuthorEmail(authorEmail);
 	}
 	
 	

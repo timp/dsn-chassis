@@ -1,7 +1,7 @@
 import httplib
 import base64
 
-host = "localhost:8080"
+host = "localhost:8088"
 contextpath = "/chassis-generic-service-exist/atom/edit"
 # contextpath = "/eXist-1.2.6-rev9165/atom/edit"
 

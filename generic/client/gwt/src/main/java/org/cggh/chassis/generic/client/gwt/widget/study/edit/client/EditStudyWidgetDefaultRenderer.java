@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
 import org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerEditAPI;
 import org.cggh.chassis.generic.client.gwt.widget.study.model.client.StudyModelListener;
 
@@ -46,14 +47,12 @@ public class EditStudyWidgetDefaultRenderer implements StudyModelListener {
 	final private Panel canvas;
 	private StudyControllerEditAPI controller;
 	private Boolean isFormComplete = false;
-	private String feedURL;
 	private Map<String, String> modulesConfig;
 
-	public EditStudyWidgetDefaultRenderer(Panel canvas, StudyControllerEditAPI controller, String feedURL, Map<String, String> modulesMap) {
+	public EditStudyWidgetDefaultRenderer(Panel canvas, StudyControllerEditAPI controller) {
 		this.canvas = canvas;
 		this.controller = controller;
-		this.feedURL = feedURL;
-		this.modulesConfig = modulesMap;
+		this.modulesConfig = ConfigurationBean.getModules();
 		
 		initCanvas();
 	}
@@ -149,7 +148,7 @@ public class EditStudyWidgetDefaultRenderer implements StudyModelListener {
 
 		public void onClick(ClickEvent arg0) {
 			if (isFormComplete) {
-				controller.updateStudyEntry(feedURL);
+				controller.updateStudyEntry();
 			} else {
 				//TODO move to management widget?
 				DecoratedPopupPanel errorPopUp = new DecoratedPopupPanel(true);

@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
 import org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerCreateAPI;
 
 import com.google.gwt.dom.client.Document;
@@ -52,8 +53,11 @@ public class GWTTestCreateStudyWidgetDefaultRenderer extends GWTTestCase {
 		testModules.put(module1Id, module1Label);
 		testModules.put(module2Id, module2Label);
 		
+		//Set up ConfigurationBean with test values
+		ConfigurationBean.useUnitTestConfiguration = true;
+		ConfigurationBean.testModules = testModules;
 		
-		testRenderer = new CreateStudyWidgetDefaultRenderer(new SimplePanel(), mockController, null, testModules);
+		testRenderer = new CreateStudyWidgetDefaultRenderer(new SimplePanel(), mockController);
 		
 	}
 	
@@ -220,7 +224,7 @@ public class GWTTestCreateStudyWidgetDefaultRenderer extends GWTTestCase {
 			this.cancelSaveOrUpdateStudyEntry = true;
 		}
 
-		public void saveNewStudyEntry(String feedURL) {
+		public void saveNewStudyEntry() {
 			this.saveNewStudyEntryCalled = true;
 		}
 

@@ -9,7 +9,7 @@ import java.util.TreeSet;
 
 import org.cggh.chassis.generic.user.gwtrpc.client.GWTUserDetailsServiceAsync;
 import org.cggh.chassis.generic.user.transfer.UserDetailsTO;
-import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
+import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -75,7 +75,7 @@ public class UserDetailsWidgetController {
 			
 			// TODO move to wwarn specific package?
 			// Filter out roles relevant to chassis
-			String userChassisRolesPrefix = Configuration.getUserChassisRolesPrefix();
+			String userChassisRolesPrefix = ConfigurationBean.getUserChassisRolesPrefix();
 			Set<String> roles = new HashSet<String>();
 			for ( String role : user.getRoles() ) {
 				if (role.startsWith(userChassisRolesPrefix)) {

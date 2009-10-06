@@ -6,6 +6,7 @@ package org.cggh.chassis.generic.client.gwt.widget.study.view.client;
 import java.util.Map;
 import java.util.Set;
 
+import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
 import org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerViewAPI;
 import org.cggh.chassis.generic.client.gwt.widget.study.model.client.StudyModel;
 import org.cggh.chassis.generic.client.gwt.widget.study.model.client.StudyModelListener;
@@ -36,10 +37,10 @@ public class ViewStudyWidgetDefaultRenderer implements StudyModelListener {
 	final private StudyControllerViewAPI controller;
 	private Map<String, String> modulesConfig;
 
-	public ViewStudyWidgetDefaultRenderer(Panel canvas, StudyControllerViewAPI controller, Map<String, String> modulesMap) {
+	public ViewStudyWidgetDefaultRenderer(Panel canvas, StudyControllerViewAPI controller) {
 		this.canvas = canvas;
 		this.controller = controller;
-		this.modulesConfig = modulesMap;
+		this.modulesConfig = ConfigurationBean.getModules();
 		
 		initCanvas();
 	}

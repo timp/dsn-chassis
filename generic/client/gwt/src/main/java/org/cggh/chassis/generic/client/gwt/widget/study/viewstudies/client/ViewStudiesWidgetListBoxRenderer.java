@@ -63,7 +63,7 @@ public class ViewStudiesWidgetListBoxRenderer implements ViewStudiesWidgetModelL
 		//store a studyEntryId to Study Entry map
 		Map<String, StudyEntry> studyEntryIdMap = new HashMap<String, StudyEntry>();
 		
-		studiesListBox.addItem("Please select", "-1");
+		studiesListBox.addItem("Please select", null);
 		
 		for (StudyEntry study : after) {
 			

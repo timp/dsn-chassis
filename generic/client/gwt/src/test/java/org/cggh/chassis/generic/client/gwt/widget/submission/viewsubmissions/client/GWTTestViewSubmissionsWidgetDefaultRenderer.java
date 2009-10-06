@@ -8,7 +8,7 @@ import java.util.List;
 
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
 import org.cggh.chassis.generic.atom.submission.client.mockimpl.MockSubmissionFactory;
-import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
+import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
 import org.cggh.chassis.generic.client.gwt.widget.submission.viewsubmissions.client.ViewSubmissionsWidgetDefaultRenderer.ViewSubmissionClickHandler;
 
 import com.google.gwt.junit.client.GWTTestCase;
@@ -27,10 +27,8 @@ public class GWTTestViewSubmissionsWidgetDefaultRenderer extends GWTTestCase {
 	
 	private class MockViewAllSubmissionsWidgetController extends ViewSubmissionsWidgetController {
 
-		public MockViewAllSubmissionsWidgetController(
-				ViewSubmissionsWidgetModel model, AtomService service,
-				ViewSubmissionsWidget owner) {
-			super(model, service, owner, null);
+		public MockViewAllSubmissionsWidgetController(ViewSubmissionsWidgetModel model,	ViewSubmissionsWidget owner) {
+			super(model, owner);
 		}
 		
 		public SubmissionEntry submissionEntry;
@@ -54,11 +52,16 @@ public class GWTTestViewSubmissionsWidgetDefaultRenderer extends GWTTestCase {
 	@Override
 	protected void gwtSetUp() {
 		
+		//Set up ConfigurationBean with test values for controller
+		ConfigurationBean.useUnitTestConfiguration = true;
+		ConfigurationBean.testSubmissionFeedURL = "http://foo.com/submissions";
+		ConfigurationBean.testSubmissionQueryServiceURL = "http://foo.com/submissions_query";
+		
 		//Create testModel
 		testModel = new ViewSubmissionsWidgetModel();
 						
 		//create mockController
-		mockController = new MockViewAllSubmissionsWidgetController(null, null, null);
+		mockController = new MockViewAllSubmissionsWidgetController(null, null);
 		
 		// instantiate a renderer
 		testRenderer = new ViewSubmissionsWidgetDefaultRenderer(new SimplePanel(), mockController);

@@ -8,7 +8,7 @@ import java.util.List;
 
 import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
 import org.cggh.chassis.generic.atom.study.client.mockimpl.MockStudyFactory;
-import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
+import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
 import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetController;
 import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetDefaultRenderer;
 import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetModel;
@@ -30,10 +30,8 @@ public class GWTTestViewStudiesWidgetDefaultRenderer extends GWTTestCase {
 	
 	private class MockViewAllStudiesWidgetController extends ViewStudiesWidgetController {
 
-		public MockViewAllStudiesWidgetController(
-				ViewStudiesWidgetModel model, AtomService service,
-				ViewStudiesWidget owner) {
-			super(model, service, owner, null);
+		public MockViewAllStudiesWidgetController(ViewStudiesWidgetModel model, ViewStudiesWidget owner) {
+			super(model, owner);
 		}
 		
 		public StudyEntry studyEntry;
@@ -57,11 +55,16 @@ public class GWTTestViewStudiesWidgetDefaultRenderer extends GWTTestCase {
 	@Override
 	protected void gwtSetUp() {
 		
+		//Set up ConfigurationBean with test values for controller
+		ConfigurationBean.useUnitTestConfiguration = true;
+		ConfigurationBean.testStudyFeedURL = "http://foo.com/studies";
+		ConfigurationBean.testStudyQueryServiceURL = "http://foo.com/study_query";
+		
 		//Create testModel
 		testModel = new ViewStudiesWidgetModel();
 						
 		//create mockController
-		mockController = new MockViewAllStudiesWidgetController(null, null, null);
+		mockController = new MockViewAllStudiesWidgetController(null, null);
 		
 		// instantiate a renderer
 		testRenderer = new ViewStudiesWidgetDefaultRenderer(new SimplePanel(), mockController);

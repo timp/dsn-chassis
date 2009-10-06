@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
-import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
+import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
 import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidget;
 import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetListBoxRenderer;
 import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetModelListener;
@@ -66,17 +66,19 @@ public class EditSubmissionWidgetDefaultRenderer implements SubmissionModelListe
 	final Button cancelEditSubmissionUI = new Button("Cancel", new CancelCreateSubmissionUIClickHandler());
 	final Button updateSubmissionEntryUI = new Button("Create Submission", new SaveNewSubmissionUIClickHandler());
 
-	public EditSubmissionWidgetDefaultRenderer(Panel canvas, SubmissionControllerEditAPI controller, Map<String, String> modulesMap, AtomService studyService, String studyFeedURL) {
+	public EditSubmissionWidgetDefaultRenderer(Panel canvas, SubmissionControllerEditAPI controller) {
 		this.canvas = canvas;
 		this.controller = controller;
-		this.modulesConfig = modulesMap;
+		
+		//get modules from config
+		this.modulesConfig = ConfigurationBean.getModules();
 		
 		//Create ViewStudies widget to view linked studies
-		studiesLinkedWidget = new ViewStudiesWidget(studiesLinkedCanvas, studyService, studyFeedURL);
+		studiesLinkedWidget = new ViewStudiesWidget(studiesLinkedCanvas);
 
 		//Create ViewStudiesWidget with ListBox renderer
 		ViewStudiesWidgetModelListener customRenderer = new ViewStudiesWidgetListBoxRenderer(studyLinkListBoxCanvas, null);
-		viewStudiesWidgetListBox = new ViewStudiesWidget(studyService, studyFeedURL, customRenderer);
+		viewStudiesWidgetListBox = new ViewStudiesWidget(customRenderer);
 		
 		//add this as listener
 		viewStudiesWidgetListBox.addViewAllStudiesWidgetListener(this);
@@ -144,16 +146,35 @@ public class EditSubmissionWidgetDefaultRenderer implements SubmissionModelListe
 		addStudyLinkUI.addClickHandler(new ClickHandler() {
 		
 			public void onClick(ClickEvent arg0) {
-				//add study link
-				controller.addStudyLink(studyLinkToAdd);
 				
+				if (studyLinkToAdd != null) {
+					//add study link
+					controller.addStudyLink(studyLinkToAdd);
+					
+					//close popup
+					studyLinkChooserPopup.hide();
+				}
+			}
+			
+		});
+		
+		//Create cancel addStudy Button
+		Button cancelAddStudyLinkUI = new Button("Cancel");
+		cancelAddStudyLinkUI.addClickHandler(new ClickHandler() {
+		
+			public void onClick(ClickEvent arg0) {
 				//close popup
 				studyLinkChooserPopup.hide();
 			}
 			
 		});
 		
-		studyLinkChooserVP.add(addStudyLinkUI);
+		HorizontalPanel addStudyButtonsPanel = new HorizontalPanel();
+		addStudyButtonsPanel.add(addStudyLinkUI);
+		addStudyButtonsPanel.add(cancelAddStudyLinkUI);
+		
+		
+		studyLinkChooserVP.add(addStudyButtonsPanel);
 		
 		
 		
@@ -162,7 +183,7 @@ public class EditSubmissionWidgetDefaultRenderer implements SubmissionModelListe
 			
 			public void onClick(ClickEvent arg0) {
 
-				//TODO only load owned studies
+				//FIXME only load owned studies
 				viewStudiesWidgetListBox.loadStudies();
 				
 				studyLinkChooserPopup.center();

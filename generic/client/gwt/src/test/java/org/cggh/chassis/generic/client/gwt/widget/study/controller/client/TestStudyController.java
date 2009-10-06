@@ -3,8 +3,14 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.study.controller.client;
 
-import static org.easymock.EasyMock.*;
-import static org.junit.Assert.*;
+import static org.easymock.EasyMock.createMock;
+import static org.easymock.EasyMock.createNiceMock;
+import static org.easymock.EasyMock.expect;
+import static org.easymock.EasyMock.expectLastCall;
+import static org.easymock.EasyMock.isA;
+import static org.easymock.EasyMock.replay;
+import static org.easymock.EasyMock.verify;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -14,10 +20,13 @@ import junit.framework.JUnit4TestAdapter;
 
 import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
 import org.cggh.chassis.generic.atom.study.client.format.StudyFactory;
+import org.cggh.chassis.generic.atom.study.client.format.impl.StudyFactoryImpl;
 import org.cggh.chassis.generic.atom.study.client.mockimpl.MockStudyFactory;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomLink;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
+import org.cggh.chassis.generic.atom.vanilla.client.protocol.impl.AtomServiceImpl;
+import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
 import org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyController.LoadStudyEntryCallback;
 import org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyController.LoadStudyEntryErrback;
 import org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyController.SaveOrUpdateStudyEntryCallback;
@@ -36,7 +45,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
  *
  */
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({Deferred.class})
+@PrepareForTest({StudyController.class, Deferred.class, StudyFactoryImpl.class, AtomServiceImpl.class})
 public class TestStudyController {
 
 	
@@ -45,26 +54,32 @@ public class TestStudyController {
 	}
 
 	private StudyController testController;
-	private MockStudyFactory testFactory = new MockStudyFactory();
 	private StudyModel testModel;
 	private AtomService mockService;
 	private StudyFactory mockFactory;
-	String feedURL = "http://foo.com/studies";
+	private MockStudyFactory testFactory = new MockStudyFactory();
+	String testStudyFeedURL = "http://foo.com/studies";
 	private StudyEntry testStudyEntry;
 		
 	@Before
-	public void setUp() {
+	public void setUp() throws Exception {
+		
+		//Set up ConfigurationBean with test values
+		ConfigurationBean.useUnitTestConfiguration = true;
+		ConfigurationBean.testStudyFeedURL = testStudyFeedURL;
 		
 		//create testModel and mockService to inject
 		testModel = new StudyModel();
-		mockService = createMock(AtomService.class);
-		mockFactory = createMock(StudyFactory.class);
+		mockFactory = PowerMock.createMock(StudyFactoryImpl.class);
+		mockService = PowerMock.createMock(AtomServiceImpl.class);
+				
+		//Setup to use mock service and factory
+		PowerMock.expectNew(StudyFactoryImpl.class).andReturn((StudyFactoryImpl) mockFactory);
+		PowerMock.expectNew(AtomServiceImpl.class, mockFactory).andReturn((AtomServiceImpl) mockService);
+		PowerMock.replay(StudyFactoryImpl.class,AtomServiceImpl.class);
 		
 		//create test controller
-		testController = new StudyController(testModel, mockService, null);
-		
-		//Replace default factory with MockFactory for testing
-		testController.setStudyFactory(mockFactory);
+		testController = new StudyController(testModel, null);
 		
 		//create test data
 		testStudyEntry = testFactory.createStudyEntry();
@@ -74,18 +89,11 @@ public class TestStudyController {
 	}
 	
 	@Test
-	public void testTestFactorySetter() {
-		
-		//Check setter works
-		assertEquals(mockFactory, testController.getStudyFactory());
-	}
-	
-	@Test
 	public void testSetUpNewStudy() {
 				
 		//set up expectations
 		expect(mockFactory.createStudyEntry()).andReturn(testStudyEntry);
-		replay(mockFactory);
+		PowerMock.replay(mockFactory);
 		
 		//call method under test
 		testController.setUpNewStudy();
@@ -94,7 +102,7 @@ public class TestStudyController {
 		assertEquals(StudyModel.STATUS_LOADED, testModel.getStatus());
 		assertEquals(testStudyEntry, testModel.getStudyEntry());
 		
-		verify(mockFactory);
+		PowerMock.verify(mockFactory);
 	}
 	
 	@Test
@@ -120,7 +128,7 @@ public class TestStudyController {
 		
 		//set up expectations
 		expect(mockService.getEntry(studyEntryURL)).andReturn(mockDeffered);
-		replay(mockService);
+		PowerMock.replay(mockService);
 		mockDeffered.addCallbacks(isA(LoadStudyEntryCallback.class), isA(LoadStudyEntryErrback.class));
 		PowerMock.expectLastCall().andReturn(mockDeffered);
 		PowerMock.replay(mockDeffered);
@@ -131,7 +139,7 @@ public class TestStudyController {
 		//test outcome
 		assertEquals(StudyModel.STATUS_LOADING, testModel.getStatus());
 		
-		verify(mockService);
+		PowerMock.verify(mockService);
 		PowerMock.verify(mockDeffered);
 	}
 	
@@ -249,18 +257,18 @@ public class TestStudyController {
 		
 		//set up expectations
 		expect(mockService.postEntry(feedURL, testStudyEntry)).andReturn(mockDeffered);
-		replay(mockService);
+		PowerMock.replay(mockService);
 		mockDeffered.addCallbacks(isA(SaveOrUpdateStudyEntryCallback.class), isA(SaveOrUpdateStudyEntryErrback.class));
 		PowerMock.expectLastCall().andReturn(mockDeffered);
 		PowerMock.replay(mockDeffered);
 		
 		//call method under test
-		testController.saveNewStudyEntry(feedURL);
+		testController.saveNewStudyEntry();
 		
 		//test outcome
 		assertEquals(StudyModel.STATUS_SAVING, testModel.getStatus());
 		
-		verify(mockService);
+		PowerMock.verify(mockService);
 		PowerMock.verify(mockDeffered);
 	}
 	
@@ -269,7 +277,9 @@ public class TestStudyController {
 	public void testUpdateStudyEntry() {
 		
 		//test data
-		String entryURL = "http://foo.com/studies/study1";
+		//Note: assumes editLink is stored as a relative link.
+		String relEntryURL = "/study1"; 
+		String entryURL = testStudyFeedURL + relEntryURL;
 		
 		//create mockStudyEntry and AtomLink for this test
 		StudyEntry mockStudyEntry = createNiceMock(StudyEntry.class);
@@ -284,11 +294,11 @@ public class TestStudyController {
 		expectLastCall().anyTimes();
 		replay(mockStudyEntry);
 		
-		expect(mockAtomLink.getHref()).andReturn(entryURL);
+		expect(mockAtomLink.getHref()).andReturn(relEntryURL);
 		replay(mockAtomLink);
 		
 		expect(mockService.putEntry(entryURL, mockStudyEntry)).andReturn(mockDeffered);
-		replay(mockService);
+		PowerMock.replay(mockService);
 		
 		mockDeffered.addCallbacks(isA(SaveOrUpdateStudyEntryCallback.class), isA(SaveOrUpdateStudyEntryErrback.class));
 		PowerMock.expectLastCall().andReturn(mockDeffered);
@@ -299,15 +309,14 @@ public class TestStudyController {
 		testModel.setStudyEntry(mockStudyEntry);
 		
 		//call method under test
-		// note mockService uses full URL, so do not need to pass it the feedURL
-		testController.updateStudyEntry("");
+		testController.updateStudyEntry();
 		
 		//test outcome
 		assertEquals(StudyModel.STATUS_SAVING, testModel.getStatus());
 
 		verify(mockStudyEntry);
 		verify(mockAtomLink);
-		verify(mockService);
+		PowerMock.verify(mockService);
 		PowerMock.verify(mockDeffered);
 	}
 	
@@ -346,11 +355,17 @@ public class TestStudyController {
 	}
 	
 	@Test
-	public void testPubSubCreateAPI() {
-
+	public void testPubSubCreateAPI() throws Exception {
+		
+		//Setup to use mock service and factory
+		PowerMock.resetAll();
+		PowerMock.expectNew(StudyFactoryImpl.class).andReturn((StudyFactoryImpl) mockFactory);
+		PowerMock.expectNew(AtomServiceImpl.class, mockFactory).andReturn((AtomServiceImpl) mockService);
+		PowerMock.replay(StudyFactoryImpl.class,AtomServiceImpl.class);
+		
 		//create mock Widget and inject into new testController using Create API
 		StudyControllerPubSubCreateAPI mockListener = createMock(StudyControllerPubSubCreateAPI.class);
-		StudyControllerCreateAPI testCreateController = new StudyController(testModel, mockService, mockListener);
+		StudyControllerCreateAPI testCreateController = new StudyController(testModel, mockListener);
 						
 		//set up expectations
 		mockListener.onNewStudySaved(testStudyEntry);
@@ -370,11 +385,17 @@ public class TestStudyController {
 	}
 	
 	@Test
-	public void testPubSubEditAPI() {
+	public void testPubSubEditAPI() throws Exception {
+		
+		//Setup to use mock service and factory
+		PowerMock.resetAll();
+		PowerMock.expectNew(StudyFactoryImpl.class).andReturn((StudyFactoryImpl) mockFactory);
+		PowerMock.expectNew(AtomServiceImpl.class, mockFactory).andReturn((AtomServiceImpl) mockService);
+		PowerMock.replay(StudyFactoryImpl.class,AtomServiceImpl.class);
 
 		//create mock Widget and inject into new testController using Create API
 		StudyControllerPubSubEditAPI mockListener = createMock(StudyControllerPubSubEditAPI.class);
-		StudyControllerEditAPI testEditController = new StudyController(testModel, mockService, mockListener);
+		StudyControllerEditAPI testEditController = new StudyController(testModel, mockListener);
 						
 		//set up expectations
 		mockListener.onStudyUpdated(testStudyEntry);
@@ -394,11 +415,17 @@ public class TestStudyController {
 	}
 	
 	@Test
-	public void testPubSubViewAPI() {
+	public void testPubSubViewAPI() throws Exception {
+		
+		//Setup to use mock service and factory
+		PowerMock.resetAll();
+		PowerMock.expectNew(StudyFactoryImpl.class).andReturn((StudyFactoryImpl) mockFactory);
+		PowerMock.expectNew(AtomServiceImpl.class, mockFactory).andReturn((AtomServiceImpl) mockService);
+		PowerMock.replay(StudyFactoryImpl.class,AtomServiceImpl.class);
 
 		//create mock Widget and inject into new testController using Create API
 		StudyControllerPubSubViewAPI mockListener = createMock(StudyControllerPubSubViewAPI.class);
-		StudyControllerViewAPI testViewController = new StudyController(testModel, mockService, mockListener);
+		StudyControllerViewAPI testViewController = new StudyController(testModel, mockListener);
 						
 		//set up expectations
 		mockListener.onUserActionEditStudy(testStudyEntry);

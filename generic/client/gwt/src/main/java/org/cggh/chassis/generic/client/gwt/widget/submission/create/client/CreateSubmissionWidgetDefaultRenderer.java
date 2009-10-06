@@ -9,11 +9,11 @@ import java.util.Map;
 import java.util.Set;
 
 import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
-import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
+import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
 import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidget;
+import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetListBoxRenderer;
 import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetModelListener;
 import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetPubSubAPI;
-import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetListBoxRenderer;
 import org.cggh.chassis.generic.client.gwt.widget.submission.controller.client.SubmissionControllerCreateAPI;
 import org.cggh.chassis.generic.client.gwt.widget.submission.model.client.SubmissionModelListener;
 import org.cggh.chassis.generic.log.client.Log;
@@ -47,6 +47,7 @@ public class CreateSubmissionWidgetDefaultRenderer implements SubmissionModelLis
 	private SubmissionControllerCreateAPI controller;
 	private Boolean isFormComplete = false;
 	private Map<String, String> modulesConfig;
+	private String authorEmail;
 	
 	//Expose view elements for testing purposes.
 	final Panel createSubmissionFormPanel = new SimplePanel();
@@ -69,17 +70,20 @@ public class CreateSubmissionWidgetDefaultRenderer implements SubmissionModelLis
 	final Button cancelCreateSubmissionUI = new Button("Cancel", new CancelCreateSubmissionUIClickHandler());
 	final Button saveNewSubmissionEntryUI = new Button("Create Submission", new SaveNewSubmissionUIClickHandler());
 
-	public CreateSubmissionWidgetDefaultRenderer(Panel canvas, SubmissionControllerCreateAPI controller, Map<String, String> modulesMap, AtomService studyService, String studyFeedURL) {
+	public CreateSubmissionWidgetDefaultRenderer(Panel canvas, SubmissionControllerCreateAPI controller, String authorEmail) {
 		this.canvas = canvas;
 		this.controller = controller;
-		this.modulesConfig = modulesMap;
+		this.authorEmail = authorEmail;
+		
+		//get modules from config
+		this.modulesConfig = ConfigurationBean.getModules();
 		
 		//Create ViewStudies widget to view linked studies
-		studiesLinkedWidget = new ViewStudiesWidget(studiesLinkedCanvas, studyService, studyFeedURL);
+		studiesLinkedWidget = new ViewStudiesWidget(studiesLinkedCanvas);
 
 		//Create ViewStudiesWidget with ListBox renderer
 		ViewStudiesWidgetModelListener customRenderer = new ViewStudiesWidgetListBoxRenderer(studyLinkListBoxCanvas, null);
-		viewStudiesWidgetListBox = new ViewStudiesWidget(studyService, studyFeedURL, customRenderer);
+		viewStudiesWidgetListBox = new ViewStudiesWidget(customRenderer);
 		
 		//add this as listener
 		viewStudiesWidgetListBox.addViewAllStudiesWidgetListener(this);
@@ -147,16 +151,35 @@ public class CreateSubmissionWidgetDefaultRenderer implements SubmissionModelLis
 		addStudyLinkUI.addClickHandler(new ClickHandler() {
 		
 			public void onClick(ClickEvent arg0) {
-				//add study link
-				controller.addStudyLink(studyLinkToAdd);
 				
+				if (studyLinkToAdd != null) {
+					//add study link
+					controller.addStudyLink(studyLinkToAdd);
+					
+					//close popup
+					studyLinkChooserPopup.hide();
+				}
+			}
+			
+		});
+		
+		//Create cancel addStudy Button
+		Button cancelAddStudyLinkUI = new Button("Cancel");
+		cancelAddStudyLinkUI.addClickHandler(new ClickHandler() {
+		
+			public void onClick(ClickEvent arg0) {
 				//close popup
 				studyLinkChooserPopup.hide();
 			}
 			
 		});
 		
-		studyLinkChooserVP.add(addStudyLinkUI);
+		HorizontalPanel addStudyButtonsPanel = new HorizontalPanel();
+		addStudyButtonsPanel.add(addStudyLinkUI);
+		addStudyButtonsPanel.add(cancelAddStudyLinkUI);
+		
+		
+		studyLinkChooserVP.add(addStudyButtonsPanel);
 		
 		
 		
@@ -165,8 +188,7 @@ public class CreateSubmissionWidgetDefaultRenderer implements SubmissionModelLis
 			
 			public void onClick(ClickEvent arg0) {
 
-				//TODO only load owned studies
-				viewStudiesWidgetListBox.loadStudies();
+				viewStudiesWidgetListBox.loadStudiesByAuthorEmail(authorEmail);
 				
 				studyLinkChooserPopup.center();
 				studyLinkChooserPopup.show();

@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
-import org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomService;
+import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
 import org.cggh.chassis.generic.client.gwt.widget.submission.controller.client.SubmissionControllerEditAPI;
 
 import com.google.gwt.dom.client.Document;
@@ -50,8 +50,12 @@ public class GWTTestEditSubmissionWidgetDefaultRenderer extends GWTTestCase {
 		Map<String, String> testModules = new HashMap<String, String>();
 		testModules.put(module1Id, module1Label);
 		testModules.put(module2Id, module2Label);
+
+		//Set up ConfigurationBean with test values
+		ConfigurationBean.useUnitTestConfiguration = true;
+		ConfigurationBean.testModules = testModules;
 		
-		testRenderer = new EditSubmissionWidgetDefaultRenderer(new SimplePanel(), mockController, testModules, new MockAtomService(), null);
+		testRenderer = new EditSubmissionWidgetDefaultRenderer(new SimplePanel(), mockController);
 					
 	}
 	

@@ -10,7 +10,6 @@ import java.util.Map;
 
 import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
 import org.cggh.chassis.generic.atom.study.client.mockimpl.MockStudyFactory;
-import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
 import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetController;
 import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetModel;
 import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetListBoxRenderer;
@@ -32,10 +31,8 @@ public class GWTTestViewStudiesWidgetListBoxRenderer extends GWTTestCase {
 	
 	private class MockViewAllStudiesWidgetController extends ViewStudiesWidgetController {
 
-		public MockViewAllStudiesWidgetController(
-				ViewStudiesWidgetModel model, AtomService service,
-				ViewStudiesWidget owner) {
-			super(model, service, owner, null);
+		public MockViewAllStudiesWidgetController(ViewStudiesWidgetModel model, ViewStudiesWidget owner) {
+			super(model, owner);
 		}
 		
 		public StudyEntry onUserSelectStudy;
@@ -63,7 +60,7 @@ public class GWTTestViewStudiesWidgetListBoxRenderer extends GWTTestCase {
 		testModel = new ViewStudiesWidgetModel();
 						
 		//create mockController
-		mockController = new MockViewAllStudiesWidgetController(null, null, null);
+		mockController = new MockViewAllStudiesWidgetController(null, null);
 		
 		// instantiate a renderer
 		testRenderer = new ViewStudiesWidgetListBoxRenderer(new SimplePanel(), mockController);

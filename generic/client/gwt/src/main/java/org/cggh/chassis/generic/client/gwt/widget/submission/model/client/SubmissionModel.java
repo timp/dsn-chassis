@@ -94,6 +94,7 @@ public class SubmissionModel {
 		submissionEntry.setTitle(title);
 		
 		fireOnTitleChanged(before);
+		fireOnSubmissionEntryModelChanged();
 	}
 
 
@@ -125,7 +126,9 @@ public class SubmissionModel {
 		String before = getSummary();
 		
 		submissionEntry.setSummary(summary);
+		
 		fireOnSummaryChanged(before);
+		fireOnSubmissionEntryModelChanged();
 	}
 
 
@@ -158,7 +161,9 @@ public class SubmissionModel {
 		Set<String> before = getStudyLinks();
 		
 		submissionEntry.setStudyLinks(new ArrayList<String>(studyLinks));
+		
 		fireOnStudyLinksChanged(before);
+		fireOnSubmissionEntryModelChanged();
 	}
 
 

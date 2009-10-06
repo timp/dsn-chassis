@@ -3,9 +3,6 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.studymanagement.client;
 
-import java.util.Map;
-
-import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
 import org.cggh.chassis.generic.client.gwt.widget.study.create.client.CreateStudyWidget;
 import org.cggh.chassis.generic.client.gwt.widget.study.create.client.CreateStudyWidgetAPI;
 import org.cggh.chassis.generic.client.gwt.widget.study.edit.client.EditStudyWidget;
@@ -37,6 +34,7 @@ public class StudyManagementWidgetDefaultRenderer implements StudyManagementWidg
 	final DecoratedPopupPanel menuPopUp = new DecoratedPopupPanel(true);
 
 	final private StudyManagementWidgetController controller;
+	private String authorEmail;
 	
 	//child widgets made package private to allow parent widget to access them
 	final CreateStudyWidgetAPI createStudyWidget; 
@@ -49,20 +47,20 @@ public class StudyManagementWidgetDefaultRenderer implements StudyManagementWidg
 	final Panel editStudyWidgetCanvas = new SimplePanel();
 
 	
-	public StudyManagementWidgetDefaultRenderer(Panel menuCanvas, Panel displayCanvas,
+	public StudyManagementWidgetDefaultRenderer(Panel menuCanvas, 
+												Panel displayCanvas,
 												StudyManagementWidgetController controller,
-												String feedURL, 
-												AtomService service,
-												Map<String, String> modulesMap) {
+												String authorEmail) {
 		this.menuCanvas = menuCanvas;
 		this.displayCanvas = displayCanvas;
 		this.controller = controller;
+		this.authorEmail = authorEmail;
 		
 		//create child widgets
-		viewStudyWidget = new ViewStudyWidget(viewStudyWidgetCanvas, service, modulesMap);
-		createStudyWidget = new CreateStudyWidget(createStudyWidgetCanvas, service, feedURL, modulesMap);
-		viewAllStudiesWidget = new ViewStudiesWidget(viewAllStudiesWidgetCanvas, service, feedURL);
-		editStudyWidget = new EditStudyWidget(editStudyWidgetCanvas, service, feedURL, modulesMap);
+		viewStudyWidget = new ViewStudyWidget(viewStudyWidgetCanvas);
+		createStudyWidget = new CreateStudyWidget(createStudyWidgetCanvas);
+		viewAllStudiesWidget = new ViewStudiesWidget(viewAllStudiesWidgetCanvas);
+		editStudyWidget = new EditStudyWidget(editStudyWidgetCanvas);
 		
 		//initialise view
 		initMenu();
@@ -129,7 +127,7 @@ public class StudyManagementWidgetDefaultRenderer implements StudyManagementWidg
 			displayCanvas.add(viewStudyWidgetCanvas);
 		} else if (after == StudyManagementWidgetModel.DISPLAYING_VIEW_ALL_STUDIES) {
 			displayCanvas.clear();
-			viewAllStudiesWidget.loadStudies();
+			viewAllStudiesWidget.loadStudiesByAuthorEmail(authorEmail);
 			displayCanvas.add(viewAllStudiesWidgetCanvas);
 		} else if (after == StudyManagementWidgetModel.DISPLAYING_EDIT_STUDY) {
 			displayCanvas.clear();

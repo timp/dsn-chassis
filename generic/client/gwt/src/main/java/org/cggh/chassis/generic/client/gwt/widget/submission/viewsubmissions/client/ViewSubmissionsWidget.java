@@ -7,7 +7,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
-import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
 
 import com.google.gwt.user.client.ui.Panel;
 
@@ -22,11 +21,11 @@ public class ViewSubmissionsWidget implements ViewSubmissionsWidgetAPI {
 	final private ViewSubmissionsWidgetModelListener renderer;
 	private Set<ViewSubmissionsWidgetPubSubAPI> listeners = new HashSet<ViewSubmissionsWidgetPubSubAPI>();
 	
-	public ViewSubmissionsWidget(Panel canvas, AtomService service, String feedURL) {
+	public ViewSubmissionsWidget(Panel canvas) {
 		
 		model = new ViewSubmissionsWidgetModel();
 		
-		controller = new ViewSubmissionsWidgetController(model, service, this, feedURL);
+		controller = new ViewSubmissionsWidgetController(model, this);
 		
 		renderer = new ViewSubmissionsWidgetDefaultRenderer(canvas, controller);
 		
@@ -58,6 +57,11 @@ public class ViewSubmissionsWidget implements ViewSubmissionsWidgetAPI {
 
 	public void loadSubmissions(Set<String> submissionEntryURLsToLoad) {
 		controller.loadSubmissionsByEntryURLs(submissionEntryURLsToLoad);
+	}
+
+
+	public void loadSubmissionsByAuthorEmail(String authorEmail) {
+		controller.loadSubmissionsByAuthorEmail(authorEmail);
 	}
 	
 	
