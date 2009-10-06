@@ -134,7 +134,9 @@ public class TestSubmissionModel {
 		
 		//set up expectations
 		listener.onTitleChanged(null, invalid, false);
+		listener.onSubmissionEntryChanged(isA(Boolean.class));
 		listener.onTitleChanged(invalid, valid, true);	
+		listener.onSubmissionEntryChanged(isA(Boolean.class));
 		replay(listener);
 		
 		// register with model
@@ -163,7 +165,9 @@ public class TestSubmissionModel {
 		
 		//set up expectations
 		listener.onSummaryChanged(null, invalid, false);
+		listener.onSubmissionEntryChanged(isA(Boolean.class));
 		listener.onSummaryChanged(invalid, valid, true);
+		listener.onSubmissionEntryChanged(isA(Boolean.class));
 		replay(listener);
 		
 		// register with model
@@ -193,7 +197,9 @@ public class TestSubmissionModel {
 		
 		//set up expectations
 		listener.onStudyLinksChanged(new HashSet<String>(), invalid, false);
+		listener.onSubmissionEntryChanged(isA(Boolean.class));
 		listener.onStudyLinksChanged(invalid, valid, true);
+		listener.onSubmissionEntryChanged(isA(Boolean.class));
 		replay(listener);
 		
 		// register with model

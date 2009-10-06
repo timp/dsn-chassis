@@ -7,10 +7,12 @@ import java.util.Set;
 
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionFactory;
-import org.cggh.chassis.generic.atom.submission.client.mockimpl.MockSubmissionFactory;
+import org.cggh.chassis.generic.atom.submission.client.format.impl.SubmissionFactoryImpl;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomProtocolException;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
+import org.cggh.chassis.generic.atom.vanilla.client.protocol.impl.AtomServiceImpl;
+import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
 import org.cggh.chassis.generic.client.gwt.widget.submission.model.client.SubmissionModel;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
@@ -26,28 +28,19 @@ public class SubmissionController implements SubmissionControllerEditAPI, Submis
 	final private SubmissionModel model;
 	final private AtomService service;
 	private SubmissionFactory submissionFactory;
-	private String feedURL;
+	private String submissionFeedURL;
 	final private AbstractSubmissionControllerPubSubAPI owner;
 	private Log log = LogFactory.getLog(this.getClass());
 
-	public SubmissionController(SubmissionModel model, AtomService service, AbstractSubmissionControllerPubSubAPI owner, String feedURL) {
+	public SubmissionController(SubmissionModel model, AbstractSubmissionControllerPubSubAPI owner) {
 		this.model = model;
-		this.service = service;
-		this.owner = owner;
-		this.feedURL = feedURL;
+		this.owner = owner;		
+
+		//Get studyFeedURL from config
+		submissionFeedURL = ConfigurationBean.getSubmissionFeedURL();
 		
-		// TODO replace default with real factory
-		this.submissionFactory = new MockSubmissionFactory();		
-	}
-
-	//Used for testing purposes
-	void setSubmissionFactory(SubmissionFactory testFactory) {
-		this.submissionFactory = testFactory;
-	}
-
-	//Used for testing purposes
-	SubmissionFactory getSubmissionFactory() {
-		return submissionFactory;
+		this.submissionFactory = new SubmissionFactoryImpl();
+		this.service = new AtomServiceImpl(submissionFactory);
 	}
 
 	/* (non-Javadoc)
@@ -131,7 +124,9 @@ public class SubmissionController implements SubmissionControllerEditAPI, Submis
 		//alert owner
 		if (owner instanceof SubmissionControllerPubSubCreateAPI) {
 			((SubmissionControllerPubSubCreateAPI)owner).cancelCreateNewSubmissionEntry();
-		} 
+		} else if (owner instanceof SubmissionControllerPubSubEditAPI) {
+			((SubmissionControllerPubSubEditAPI)owner).onUserActionEditSubmissionEntryCancelled();
+		}
 		
 		log.leave();
 	}
@@ -204,7 +199,7 @@ public class SubmissionController implements SubmissionControllerEditAPI, Submis
 		model.setStatus(SubmissionModel.STATUS_SAVING);
 		
 		//post new submissionEntry
-		Deferred<AtomEntry> deffered = service.postEntry(feedURL, model.getSubmissionEntry());
+		Deferred<AtomEntry> deffered = service.postEntry(submissionFeedURL, model.getSubmissionEntry());
 		
 		//add callbacks
 		deffered.addCallbacks(new SaveOrUpdateSubmissionEntryCallback(), new SaveOrUpdateSubmissionEntryErrback());
@@ -257,15 +252,23 @@ public class SubmissionController implements SubmissionControllerEditAPI, Submis
 	class SaveOrUpdateSubmissionEntryCallback implements Function<SubmissionEntry,SubmissionEntry> {
 
 		public SubmissionEntry apply(SubmissionEntry submissionEntry) {
+			log.enter("SaveOrUpdateSubmissionEntryCallback::apply");
 			
 			model.setStatus(SubmissionModel.STATUS_SAVED);
 			model.setSubmissionEntry(submissionEntry);
 			
 			//alert owner
 			if (owner instanceof SubmissionControllerPubSubCreateAPI) {
+				log.trace("alerted create owner");
+				
 				((SubmissionControllerPubSubCreateAPI)owner).newSubmissionSaved(submissionEntry);
-			} 
+			} else if (owner instanceof SubmissionControllerPubSubEditAPI) {
+				log.trace("alerted edit owner");
+				
+				((SubmissionControllerPubSubEditAPI)owner).onSubmissionEntryUpdated(submissionEntry);
+			}
 			
+			log.leave();
 			return submissionEntry;
 		}
 

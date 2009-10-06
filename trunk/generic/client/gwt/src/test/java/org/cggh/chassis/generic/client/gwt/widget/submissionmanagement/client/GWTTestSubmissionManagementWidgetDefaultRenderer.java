@@ -9,6 +9,7 @@ import java.util.Map;
 
 import org.cggh.chassis.generic.atom.submission.client.mockimpl.MockSubmissionFactory;
 import org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomService;
+import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
 import org.junit.Test;
 
 import com.google.gwt.dom.client.Document;
@@ -57,9 +58,13 @@ public class GWTTestSubmissionManagementWidgetDefaultRenderer extends GWTTestCas
 		Map<String, String> testModules = new HashMap<String, String>();
 		testModules.put("module1Id", "module1Label");
 		testModules.put("module2Id", "module2Label");
+
+		//Set up ConfigurationBean with test values
+		ConfigurationBean.useUnitTestConfiguration = true;
+		ConfigurationBean.testModules = testModules;
 		
 		//instantiate a test renderer
-		testRenderer = new SubmissionManagementWidgetDefaultRenderer(new SimplePanel(), new SimplePanel(), testController, feedURL, mockService, testModules);
+		testRenderer = new SubmissionManagementWidgetDefaultRenderer(new SimplePanel(), new SimplePanel(), testController, null);
 		
 		//add as listener
 		testModel.addListener(testRenderer);

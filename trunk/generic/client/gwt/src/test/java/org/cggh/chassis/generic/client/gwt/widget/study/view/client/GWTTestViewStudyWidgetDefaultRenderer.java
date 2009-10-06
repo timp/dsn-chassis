@@ -10,6 +10,7 @@ import java.util.Set;
 
 import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
 import org.cggh.chassis.generic.atom.study.client.mockimpl.MockStudyFactory;
+import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
 import org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerViewAPI;
 import org.cggh.chassis.generic.client.gwt.widget.study.model.client.StudyModel;
 
@@ -53,8 +54,12 @@ public class GWTTestViewStudyWidgetDefaultRenderer extends GWTTestCase {
 		Map<String, String> testModules = new HashMap<String, String>();
 		testModules.put(module1Id, module1Label);
 		testModules.put(module2Id, module2Label);
+
+		//Set up ConfigurationBean with test values
+		ConfigurationBean.useUnitTestConfiguration = true;
+		ConfigurationBean.testModules = testModules;
 		
-		testRenderer = new ViewStudyWidgetDefaultRenderer(new SimplePanel(), mockController, testModules);
+		testRenderer = new ViewStudyWidgetDefaultRenderer(new SimplePanel(), mockController);
 				
 
 		//create testStudyEntry to load

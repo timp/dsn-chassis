@@ -11,5 +11,5 @@ public interface StudyControllerCreateAPI extends AbstractStudyControllerCreateE
 
 	public void setUpNewStudy();
 	
-	public void saveNewStudyEntry(String feedURL);
+	public void saveNewStudyEntry();
 }

@@ -10,5 +10,7 @@ public interface ViewSubmissionsWidgetAPI {
 	public void loadSubmissions(Set<String> submissionEntryURLsToLoad);
 
 	public void addViewAllSubmissionsWidgetListener(ViewSubmissionsWidgetPubSubAPI listener);
+	
+	public void loadSubmissionsByAuthorEmail(String authorEmail);
 
 }

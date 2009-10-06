@@ -3,8 +3,16 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.submission.controller.client;
 
-import static org.easymock.EasyMock.*;
-import static org.junit.Assert.*;
+import static org.easymock.EasyMock.createMock;
+import static org.easymock.EasyMock.createNiceMock;
+import static org.easymock.EasyMock.expect;
+import static org.easymock.EasyMock.expectLastCall;
+import static org.easymock.EasyMock.isA;
+import static org.easymock.EasyMock.replay;
+import static org.easymock.EasyMock.verify;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -14,10 +22,13 @@ import junit.framework.JUnit4TestAdapter;
 
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionFactory;
+import org.cggh.chassis.generic.atom.submission.client.format.impl.SubmissionFactoryImpl;
 import org.cggh.chassis.generic.atom.submission.client.mockimpl.MockSubmissionFactory;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomLink;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
+import org.cggh.chassis.generic.atom.vanilla.client.protocol.impl.AtomServiceImpl;
+import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
 import org.cggh.chassis.generic.client.gwt.widget.submission.controller.client.SubmissionController.LoadSubmissionEntryCallback;
 import org.cggh.chassis.generic.client.gwt.widget.submission.controller.client.SubmissionController.LoadSubmissionEntryErrback;
 import org.cggh.chassis.generic.client.gwt.widget.submission.controller.client.SubmissionController.SaveOrUpdateSubmissionEntryCallback;
@@ -36,7 +47,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
  *
  */
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({Deferred.class})
+@PrepareForTest({SubmissionController.class, Deferred.class, SubmissionFactoryImpl.class, AtomServiceImpl.class})
 public class TestSubmissionController {
 
 	
@@ -49,23 +60,29 @@ public class TestSubmissionController {
 	private SubmissionModel testModel;
 	private AtomService mockService;
 	private SubmissionFactory mockFactory;
-	private String feedURL = "http://foo.com/submissions";
+	private String submissionFeedURL = "http://foo.com/submissions";
 	private SubmissionEntry testSubmissionEntry;
 		
 	@Before
-	public void setUp() {
+	public void setUp() throws Exception {
+
+		//Set up ConfigurationBean with test values
+		ConfigurationBean.useUnitTestConfiguration = true;
+		ConfigurationBean.testSubmissionFeedURL = submissionFeedURL;
 		
 		//create testModel and mockService to inject
 		testModel = new SubmissionModel();
-		mockService = createMock(AtomService.class);
-		mockFactory = createMock(SubmissionFactory.class);
-		
+		mockService = PowerMock.createMock(AtomServiceImpl.class);
+		mockFactory = PowerMock.createMock(SubmissionFactoryImpl.class);
+
+		//Setup to use mock service and factory
+		PowerMock.expectNew(SubmissionFactoryImpl.class).andReturn((SubmissionFactoryImpl) mockFactory);
+		PowerMock.expectNew(AtomServiceImpl.class, mockFactory).andReturn((AtomServiceImpl) mockService);
+		PowerMock.replay(AtomServiceImpl.class, SubmissionFactoryImpl.class);
+				
 		//create test controller
-		testController = new SubmissionController(testModel, mockService, null, feedURL);
-		
-		//Replace default factory with MockFactory for testing
-		testController.setSubmissionFactory(mockFactory);
-		
+		testController = new SubmissionController(testModel, null);
+				
 		//create test data
 		testSubmissionEntry = testFactory.createSubmissionEntry();
 		testSubmissionEntry.setTitle("existing title");
@@ -73,20 +90,13 @@ public class TestSubmissionController {
 		testSubmissionEntry.addStudyLink("http://foo.com/studies/study1");
 		
 	}
-	
-	@Test
-	public void testTestFactorySetter() {
 		
-		//Check setter works
-		assertEquals(mockFactory, testController.getSubmissionFactory());
-	}
-	
 	@Test
 	public void testSetUpNewSubmission() {
 				
 		//set up expectations
 		expect(mockFactory.createSubmissionEntry()).andReturn(testSubmissionEntry);
-		replay(mockFactory);
+		PowerMock.replay(mockFactory);
 		
 		//call method under test
 		testController.setUpNewSubmission();
@@ -95,7 +105,7 @@ public class TestSubmissionController {
 		assertEquals(SubmissionModel.STATUS_LOADED, testModel.getStatus());
 		assertEquals(testSubmissionEntry, testModel.getSubmissionEntry());
 		
-		verify(mockFactory);
+		PowerMock.verify(mockFactory);
 	}
 	
 	@Test
@@ -121,7 +131,7 @@ public class TestSubmissionController {
 		
 		//set up expectations
 		expect(mockService.getEntry(submissionEntryURL)).andReturn(mockDeffered);
-		replay(mockService);
+		PowerMock.replay(mockService);
 		mockDeffered.addCallbacks(isA(LoadSubmissionEntryCallback.class), isA(LoadSubmissionEntryErrback.class));
 		PowerMock.expectLastCall().andReturn(mockDeffered);
 		PowerMock.replay(mockDeffered);
@@ -132,7 +142,7 @@ public class TestSubmissionController {
 		//test outcome
 		assertEquals(SubmissionModel.STATUS_LOADING, testModel.getStatus());
 		
-		verify(mockService);
+		PowerMock.verify(mockService);
 		PowerMock.verify(mockDeffered);
 	}
 	
@@ -273,8 +283,8 @@ public class TestSubmissionController {
 		Deferred<AtomEntry> mockDeffered = PowerMock.createMock(Deferred.class);
 		
 		//set up expectations
-		expect(mockService.postEntry(feedURL, testSubmissionEntry)).andReturn(mockDeffered);
-		replay(mockService);
+		expect(mockService.postEntry(submissionFeedURL, testSubmissionEntry)).andReturn(mockDeffered);
+		PowerMock.replay(mockService);
 		mockDeffered.addCallbacks(isA(SaveOrUpdateSubmissionEntryCallback.class), isA(SaveOrUpdateSubmissionEntryErrback.class));
 		PowerMock.expectLastCall().andReturn(mockDeffered);
 		PowerMock.replay(mockDeffered);
@@ -285,7 +295,7 @@ public class TestSubmissionController {
 		//test outcome
 		assertEquals(SubmissionModel.STATUS_SAVING, testModel.getStatus());
 		
-		verify(mockService);
+		PowerMock.verify(mockService);
 		PowerMock.verify(mockDeffered);
 	}
 	
@@ -315,7 +325,7 @@ public class TestSubmissionController {
 		replay(mockAtomLink);
 		
 		expect(mockService.putEntry(entryURL, mockSubmissionEntry)).andReturn(mockDeffered);
-		replay(mockService);
+		PowerMock.replay(mockService);
 		
 		mockDeffered.addCallbacks(isA(SaveOrUpdateSubmissionEntryCallback.class), isA(SaveOrUpdateSubmissionEntryErrback.class));
 		PowerMock.expectLastCall().andReturn(mockDeffered);
@@ -333,7 +343,7 @@ public class TestSubmissionController {
 
 		verify(mockSubmissionEntry);
 		verify(mockAtomLink);
-		verify(mockService);
+		PowerMock.verify(mockService);
 		PowerMock.verify(mockDeffered);
 	}
 	
@@ -372,11 +382,17 @@ public class TestSubmissionController {
 	}
 	
 	@Test
-	public void testPubSubCreateAPI() {
+	public void testPubSubCreateAPI() throws Exception {
 
+		//Setup to use mock service and factory
+		PowerMock.resetAll();
+		PowerMock.expectNew(SubmissionFactoryImpl.class).andReturn((SubmissionFactoryImpl) mockFactory);
+		PowerMock.expectNew(AtomServiceImpl.class, mockFactory).andReturn((AtomServiceImpl) mockService);
+		PowerMock.replay(AtomServiceImpl.class, SubmissionFactoryImpl.class);
+		
 		//create mock Widget and inject into new testController using Create API
 		SubmissionControllerPubSubCreateAPI mockListener = createMock(SubmissionControllerPubSubCreateAPI.class);
-		SubmissionControllerCreateAPI testCreateController = new SubmissionController(testModel, mockService, mockListener, feedURL);
+		SubmissionControllerCreateAPI testCreateController = new SubmissionController(testModel, mockListener);
 						
 		//set up expectations
 		mockListener.newSubmissionSaved(testSubmissionEntry);
@@ -390,6 +406,64 @@ public class TestSubmissionController {
 		callback.apply(testSubmissionEntry);
 		testCreateController.cancelCreateOrUpdateSubmissionEntry();
 		
+		
+		verify(mockListener);		
+		
+	}
+	
+
+	@Test
+	public void testPubSubEditAPI() throws Exception {
+		
+		//Setup to use mock service and factory
+		PowerMock.resetAll();
+		PowerMock.expectNew(SubmissionFactoryImpl.class).andReturn((SubmissionFactoryImpl) mockFactory);
+		PowerMock.expectNew(AtomServiceImpl.class, mockFactory).andReturn((AtomServiceImpl) mockService);
+		PowerMock.replay(SubmissionFactoryImpl.class,AtomServiceImpl.class);
+
+		//create mock Widget and inject into new testController using Create API
+		SubmissionControllerPubSubEditAPI mockListener = createMock(SubmissionControllerPubSubEditAPI.class);
+		SubmissionControllerEditAPI testEditController = new SubmissionController(testModel, mockListener);
+						
+		//set up expectations
+		mockListener.onSubmissionEntryUpdated(testSubmissionEntry);
+		mockListener.onUserActionEditSubmissionEntryCancelled();
+		replay(mockListener);
+		
+		//set up test
+		SaveOrUpdateSubmissionEntryCallback callback = ((SubmissionController)testEditController).new SaveOrUpdateSubmissionEntryCallback();
+				
+		//call methods under test
+		callback.apply(testSubmissionEntry);
+		testEditController.cancelCreateOrUpdateSubmissionEntry();
+		
+		
+		verify(mockListener);		
+		
+	}
+	
+
+	@Test
+	public void testPubSubViewAPI() throws Exception {
+		
+		//Setup to use mock service and factory
+		PowerMock.resetAll();
+		PowerMock.expectNew(SubmissionFactoryImpl.class).andReturn((SubmissionFactoryImpl) mockFactory);
+		PowerMock.expectNew(AtomServiceImpl.class, mockFactory).andReturn((AtomServiceImpl) mockService);
+		PowerMock.replay(SubmissionFactoryImpl.class,AtomServiceImpl.class);
+
+		//create mock Widget and inject into new testController using Create API
+		SubmissionControllerPubSubViewAPI mockListener = createMock(SubmissionControllerPubSubViewAPI.class);
+		SubmissionControllerViewAPI testViewController = new SubmissionController(testModel, mockListener);
+						
+		//set up expectations
+		mockListener.onUserActionEditSubmission(testSubmissionEntry);
+		replay(mockListener);
+		
+		//set up test
+		testModel.setSubmissionEntry(testSubmissionEntry);
+		
+		testViewController.onUserActionEditThisSubmission();
 		
 		verify(mockListener);		
 		

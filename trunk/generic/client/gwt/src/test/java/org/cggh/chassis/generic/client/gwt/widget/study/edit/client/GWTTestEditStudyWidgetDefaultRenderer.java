@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
+import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
 import org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerEditAPI;
 
 import com.google.gwt.dom.client.Document;
@@ -50,7 +51,11 @@ public class GWTTestEditStudyWidgetDefaultRenderer extends GWTTestCase {
 		testModules.put(module1Id, module1Label);
 		testModules.put(module2Id, module2Label);
 		
-		testRenderer = new EditStudyWidgetDefaultRenderer(new SimplePanel(), mockController, null, testModules);
+		//Set up ConfigurationBean with test values
+		ConfigurationBean.useUnitTestConfiguration = true;
+		ConfigurationBean.testModules = testModules;
+		
+		testRenderer = new EditStudyWidgetDefaultRenderer(new SimplePanel(), mockController);
 					
 	}
 	
@@ -223,7 +228,7 @@ public class GWTTestEditStudyWidgetDefaultRenderer extends GWTTestCase {
 			this.modules = modules;
 		}
 
-		public void updateStudyEntry(String feedURL) {
+		public void updateStudyEntry() {
 			this.updateStudyEntryCalled = true;
 		}
 

@@ -3,9 +3,6 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.submissionmanagement.client;
 
-import java.util.Map;
-
-import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
 import org.cggh.chassis.generic.client.gwt.widget.submission.create.client.CreateSubmissionWidget;
 import org.cggh.chassis.generic.client.gwt.widget.submission.create.client.CreateSubmissionWidgetAPI;
 import org.cggh.chassis.generic.client.gwt.widget.submission.edit.client.EditSubmissionWidget;
@@ -49,20 +46,19 @@ public class SubmissionManagementWidgetDefaultRenderer implements SubmissionMana
 	final Panel editSubmissionWidgetCanvas = new SimplePanel();
 
 	
-	public SubmissionManagementWidgetDefaultRenderer(Panel menuCanvas, Panel displayCanvas,
-												SubmissionManagementWidgetController controller,
-												String feedURL, 
-												AtomService service,
-												Map<String, String> modulesMap) {
+	public SubmissionManagementWidgetDefaultRenderer(Panel menuCanvas,
+													 Panel displayCanvas,
+													 SubmissionManagementWidgetController controller, 
+													 String authorEmail) {
 		this.menuCanvas = menuCanvas;
 		this.displayCanvas = displayCanvas;
 		this.controller = controller;
 		
 		//create child widgets
-		viewSubmissionWidget = new ViewSubmissionWidget(viewSubmissionWidgetCanvas, service, feedURL, modulesMap);
-		createSubmissionWidget = new CreateSubmissionWidget(createSubmissionWidgetCanvas, service, feedURL, modulesMap);
-		viewAllSubmissionsWidget = new ViewSubmissionsWidget(viewAllSubmissionsWidgetCanvas, service, feedURL);
-		editSubmissionWidget = new EditSubmissionWidget(editSubmissionWidgetCanvas, service, feedURL, modulesMap);
+		viewSubmissionWidget = new ViewSubmissionWidget(viewSubmissionWidgetCanvas);
+		createSubmissionWidget = new CreateSubmissionWidget(createSubmissionWidgetCanvas, authorEmail);
+		viewAllSubmissionsWidget = new ViewSubmissionsWidget(viewAllSubmissionsWidgetCanvas);
+		editSubmissionWidget = new EditSubmissionWidget(editSubmissionWidgetCanvas);
 		
 		//initialise view
 		initMenu();
@@ -129,7 +125,8 @@ public class SubmissionManagementWidgetDefaultRenderer implements SubmissionMana
 			displayCanvas.add(viewSubmissionWidgetCanvas);
 		} else if (after == SubmissionManagementWidgetModel.DISPLAYING_VIEW_ALL_STUDIES) {
 			displayCanvas.clear();
-			viewAllSubmissionsWidget.loadSubmissions();
+			//FIXME use current user's email address
+			viewAllSubmissionsWidget.loadSubmissionsByAuthorEmail("alice@example.com");
 			displayCanvas.add(viewAllSubmissionsWidgetCanvas);
 		} else if (after == SubmissionManagementWidgetModel.DISPLAYING_EDIT_STUDY) {
 			displayCanvas.clear();

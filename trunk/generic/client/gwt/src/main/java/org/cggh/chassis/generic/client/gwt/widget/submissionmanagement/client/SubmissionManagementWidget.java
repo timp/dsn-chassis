@@ -3,10 +3,7 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.submissionmanagement.client;
 
-import java.util.Map;
-
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
-import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
 import org.cggh.chassis.generic.client.gwt.widget.submission.create.client.CreateSubmissionWidgetPubSubAPI;
 import org.cggh.chassis.generic.client.gwt.widget.submission.edit.client.EditSubmissionWidgetPubSubAPI;
 import org.cggh.chassis.generic.client.gwt.widget.submission.view.client.ViewSubmissionWidgetPubSubAPI;
@@ -32,13 +29,13 @@ public class SubmissionManagementWidget implements CreateSubmissionWidgetPubSubA
 	private SubmissionManagementWidgetController controller;
 	private SubmissionManagementWidgetDefaultRenderer renderer;
 
-	public SubmissionManagementWidget(Panel menuCanvas, Panel displayCanvas, AtomService service, String feedURL, Map<String, String> modulesMap) {
+	public SubmissionManagementWidget(Panel menuCanvas, Panel displayCanvas, String authorEmail) {
 		
 		model = new SubmissionManagementWidgetModel();
 		
 		controller = new SubmissionManagementWidgetController(model);
 		
-		renderer = new SubmissionManagementWidgetDefaultRenderer(menuCanvas, displayCanvas, controller, feedURL, service, modulesMap);
+		renderer = new SubmissionManagementWidgetDefaultRenderer(menuCanvas, displayCanvas, controller, authorEmail);
 		
 		// register renderer as listener to model
 		model.addListener(renderer);

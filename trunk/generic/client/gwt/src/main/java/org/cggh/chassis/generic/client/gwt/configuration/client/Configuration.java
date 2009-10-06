@@ -17,7 +17,7 @@ public class Configuration {
 	}-*/;
 	
 	public static native String getUserChassisRolesPrefix() /*-{
-	return $wnd.CHASSIS.userChassisRolesPrefix;
+		return $wnd.CHASSIS.userChassisRolesPrefix;
 	}-*/;
 	
 	public static native String getStudyFeedURL() /*-{

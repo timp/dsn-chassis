@@ -4,7 +4,6 @@
 package org.cggh.chassis.generic.client.gwt.widget.study.edit.client;
 
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
@@ -28,13 +27,13 @@ public class EditStudyWidget implements EditStudyWidgetAPI, StudyControllerPubSu
 	
 	private Set<EditStudyWidgetPubSubAPI> listeners = new HashSet<EditStudyWidgetPubSubAPI>();
 
-	public EditStudyWidget(Panel canvas, AtomService service, String feedURL, Map<String, String> modulesMap) {
+	public EditStudyWidget(Panel canvas) {
 		
 		model = new StudyModel();
 		
-		controller = new StudyController(model, service, this);
+		controller = new StudyController(model, this);
 		
-		renderer = new EditStudyWidgetDefaultRenderer(canvas, controller, feedURL, modulesMap);
+		renderer = new EditStudyWidgetDefaultRenderer(canvas, controller);
 		
 		// register renderer as listener to model
 		model.addListener(renderer);			
@@ -44,7 +43,7 @@ public class EditStudyWidget implements EditStudyWidgetAPI, StudyControllerPubSu
 		
 		model = new StudyModel();
 		
-		controller = new StudyController(model, service, this);
+		controller = new StudyController(model, this);
 		
 		renderer = customRenderer;
 		

@@ -6,7 +6,7 @@ package org.cggh.chassis.generic.client.gwt.widget.submission.view.client;
 import java.util.Map;
 import java.util.Set;
 
-import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
+import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
 import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidget;
 import org.cggh.chassis.generic.client.gwt.widget.submission.controller.client.SubmissionControllerViewAPI;
 import org.cggh.chassis.generic.client.gwt.widget.submission.model.client.SubmissionModel;
@@ -43,13 +43,15 @@ public class ViewSubmissionWidgetDefaultRenderer implements SubmissionModelListe
 	final Panel studiesLinkedCanvas = new SimplePanel();
 	private ViewStudiesWidget studiesLinkedWidget;
 	
-	public ViewSubmissionWidgetDefaultRenderer(Panel canvas, SubmissionControllerViewAPI controller, Map<String, String> modulesMap, AtomService studyService, String studyFeedURL) {
+	public ViewSubmissionWidgetDefaultRenderer(Panel canvas, SubmissionControllerViewAPI controller) {
 		this.canvas = canvas;
 		this.controller = controller;
-		this.modulesConfig = modulesMap;
+		
+		//get modules from config
+		this.modulesConfig = ConfigurationBean.getModules();
 		
 		//Create ViewStudies widget to view linked studies
-		studiesLinkedWidget = new ViewStudiesWidget(studiesLinkedCanvas, studyService, studyFeedURL);
+		studiesLinkedWidget = new ViewStudiesWidget(studiesLinkedCanvas);
 		
 		initCanvas();
 	}
@@ -73,6 +75,8 @@ public class ViewSubmissionWidgetDefaultRenderer implements SubmissionModelListe
 		submissionDetailsVPanel.add(summaryHPanel);
 
 		submissionDetailsVPanel.add(modulesListPanel);
+		
+		submissionDetailsVPanel.add(studiesLinkedCanvas);
 		
 		submissionDetailsPanel.add(submissionDetailsVPanel);
 		

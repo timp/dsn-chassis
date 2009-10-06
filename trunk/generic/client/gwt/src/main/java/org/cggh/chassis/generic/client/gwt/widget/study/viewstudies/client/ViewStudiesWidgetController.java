@@ -9,9 +9,14 @@ import java.util.Set;
 
 import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
 import org.cggh.chassis.generic.atom.study.client.format.StudyFeed;
+import org.cggh.chassis.generic.atom.study.client.format.impl.StudyFactoryImpl;
+import org.cggh.chassis.generic.atom.study.client.protocol.StudyQueryService;
+import org.cggh.chassis.generic.atom.study.client.protocol.impl.StudyQueryServiceImpl;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
+import org.cggh.chassis.generic.atom.vanilla.client.protocol.impl.AtomServiceImpl;
+import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
 import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidget;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
@@ -23,37 +28,42 @@ import org.cggh.chassis.generic.twisted.client.Function;
  *
  */
 public class ViewStudiesWidgetController {
+	private Log log = LogFactory.getLog(this.getClass());
 
 	final private ViewStudiesWidgetModel model;
-	final private AtomService service;
+	final private AtomService persistenceService;
 	final private ViewStudiesWidget owner;
-	private Log log = LogFactory.getLog(this.getClass());
-	private String feedURL;
+	private String studyFeedURL;
+	private StudyQueryService studyQueryService;
 
-	public ViewStudiesWidgetController(ViewStudiesWidgetModel model, AtomService service, ViewStudiesWidget owner, String feedURL) {
+	public ViewStudiesWidgetController(ViewStudiesWidgetModel model, ViewStudiesWidget owner) {
 		this.model = model;
-		this.service = service;
 		this.owner = owner;
-		this.feedURL = feedURL;
+		
+		//Get studyFeedURL from config
+		this.studyFeedURL = ConfigurationBean.getStudyFeedURL();
+		
+		this.persistenceService = new AtomServiceImpl(new StudyFactoryImpl());
+		
+		String serviceUrl = ConfigurationBean.getStudyQueryServiceURL();
+		this.studyQueryService = new StudyQueryServiceImpl(serviceUrl);
 	}
 	
 	public void loadStudiesByFeedURL() {
 		log.enter("loadStudiesByFeedURL");
 		
-		log.trace("loading studies from feed: " + feedURL);
-		getStudiesByFeedURL().addCallback(new GetStudyFeedCallback());
+		log.trace("loading studies from feed: " + studyFeedURL);
+		Deferred<AtomFeed> deferred = persistenceService.getFeed(studyFeedURL);
+		deferred.addCallbacks(new LoadStudyFeedCallback(), new LoadStudyFeedErrback());
 		
 		log.leave();
 	}
-	
-	Deferred<AtomFeed> getStudiesByFeedURL() {
-		return service.getFeed(feedURL);
-	}
 
-	class GetStudyFeedCallback implements Function<StudyFeed,StudyFeed> {
+	//package private for testing purposes
+	class LoadStudyFeedCallback implements Function<StudyFeed,StudyFeed> {
 
 		public StudyFeed apply(StudyFeed studyFeed) {
-			log.enter("GetStudyFeedCallback::apply");
+			log.enter("LoadStudyFeedCallback::apply");
 			
 			model.setStudyEntries(studyFeed.getStudyEntries());
 			model.setStatus(ViewStudiesWidgetModel.STATUS_LOADED);
@@ -61,6 +71,18 @@ public class ViewStudiesWidgetController {
 			
 			log.leave();
 			return studyFeed;
+		}
+		
+	}
+
+	//package private for testing purposes
+	class LoadStudyFeedErrback implements Function<Throwable, Throwable> {
+
+		public Throwable apply(Throwable err) {
+			log.enter("LoadStudyFeedErrback::apply");
+			
+			log.leave();
+			return err;
 		}
 		
 	}
@@ -80,16 +102,17 @@ public class ViewStudiesWidgetController {
 		
 		for (String relativeStudyEntryURL : relativeStudyEntryURLsToLoad) {
 			
-			String studyEntryURL = feedURL + relativeStudyEntryURL;
+			String studyEntryURL = studyFeedURL + relativeStudyEntryURL;
 			
-			Deferred<AtomEntry> deferred = service.getEntry(studyEntryURL);
+			Deferred<AtomEntry> deferred = persistenceService.getEntry(studyEntryURL);
 			
 			deferred.addCallbacks(new LoadStudiesByEntryURLsCallback(studyEntries, relativeStudyEntryURLsToLoad.size()), new LoadStudiesByEntryURLsErrback());
 		}
 		
 		log.leave();
 	}
-	
+
+	//package private for testing purposes
 	class LoadStudiesByEntryURLsCallback implements Function<StudyEntry, StudyEntry> {
 	
 		private List<StudyEntry> studyEntries;
@@ -101,7 +124,7 @@ public class ViewStudiesWidgetController {
 		}
 
 		public StudyEntry apply(StudyEntry studyEntry) {
-			log.enter("LoadStudiesByEntryURLsCallback::apply");
+			log.enter("LoadStudiesCallback::apply");
 			
 			studyEntries.add(studyEntry);
 			
@@ -110,7 +133,7 @@ public class ViewStudiesWidgetController {
 				model.setStudyEntries(studyEntries);
 				model.setStatus(ViewStudiesWidgetModel.STATUS_LOADED);
 				
-				log.trace(noOfStudies + " loaded");
+				log.trace(noOfStudies + " studies loaded");
 			}
 			
 			log.leave();
@@ -119,6 +142,7 @@ public class ViewStudiesWidgetController {
 		
 	}	
 
+	//package private for testing purposes
 	class LoadStudiesByEntryURLsErrback implements Function<Throwable, Throwable> {
 
 		public Throwable apply(Throwable err) {
@@ -126,6 +150,16 @@ public class ViewStudiesWidgetController {
 			return err;
 		}
 		
+	}
+
+	public void loadStudiesByAuthorEmail(String authorEmail) {
+		log.enter("loadStudiesByAuthorEmail");
+		
+		Deferred<StudyFeed> deferred = studyQueryService.getStudiesByAuthorEmail(authorEmail);
+		
+		deferred.addCallbacks(new LoadStudyFeedCallback(), new LoadStudyFeedErrback());
+		
+		log.leave();
 	}
 	
 }

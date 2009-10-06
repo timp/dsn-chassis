@@ -9,9 +9,14 @@ import java.util.Set;
 
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionFeed;
+import org.cggh.chassis.generic.atom.submission.client.format.impl.SubmissionFactoryImpl;
+import org.cggh.chassis.generic.atom.submission.client.protocol.SubmissionQueryService;
+import org.cggh.chassis.generic.atom.submission.client.protocol.impl.SubmissionQueryServiceImpl;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
+import org.cggh.chassis.generic.atom.vanilla.client.protocol.impl.AtomServiceImpl;
+import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.twisted.client.Deferred;
@@ -22,37 +27,42 @@ import org.cggh.chassis.generic.twisted.client.Function;
  *
  */
 public class ViewSubmissionsWidgetController {
+	private Log log = LogFactory.getLog(this.getClass());
 
 	final private ViewSubmissionsWidgetModel model;
-	final private AtomService service;
+	final private AtomService persistenceService;
 	final private ViewSubmissionsWidget owner;
-	private Log log = LogFactory.getLog(this.getClass());
-	private String feedURL;
+	private String submissionFeedURL;
+	private SubmissionQueryService submissionQueryService;
 
-	public ViewSubmissionsWidgetController(ViewSubmissionsWidgetModel model, AtomService service, ViewSubmissionsWidget owner, String feedURL) {
+	public ViewSubmissionsWidgetController(ViewSubmissionsWidgetModel model, ViewSubmissionsWidget owner) {
 		this.model = model;
-		this.service = service;
 		this.owner = owner;
-		this.feedURL = feedURL;
+				
+		this.submissionFeedURL = ConfigurationBean.getSubmissionFeedURL();
+		
+		this.persistenceService = new AtomServiceImpl(new SubmissionFactoryImpl());
+		
+		String serviceUrl = ConfigurationBean.getSubmissionQueryServiceURL();
+		this.submissionQueryService = new SubmissionQueryServiceImpl(serviceUrl);
+		
 	}
 	
 	public void loadSubmissionsByFeedURL() {
 		log.enter("loadSubmissionsByFeedURL");
 		
-		log.trace("loading submissions from feed: " + feedURL);
-		getSubmissionsByFeedURL().addCallback(new GetSubmissionFeedCallback());
+		log.trace("loading submissions from feed: " + submissionFeedURL);
+		Deferred<AtomFeed> deferred = persistenceService.getFeed(submissionFeedURL);
+		deferred.addCallbacks(new LoadSubmissionFeedCallback(), new LoadSubmissionFeedErrback());
 		
 		log.leave();
 	}
-	
-	Deferred<AtomFeed> getSubmissionsByFeedURL() {
-		return service.getFeed(feedURL);
-	}
 
-	class GetSubmissionFeedCallback implements Function<SubmissionFeed,SubmissionFeed> {
+	//package private for testing purposes
+	class LoadSubmissionFeedCallback implements Function<SubmissionFeed,SubmissionFeed> {
 
 		public SubmissionFeed apply(SubmissionFeed submissionFeed) {
-			log.enter("GetSubmissionFeedCallback::apply");
+			log.enter("LoadSubmissionFeedCallback::apply");
 			
 			model.setSubmissionEntries(submissionFeed.getSubmissionEntries());
 			model.setStatus(ViewSubmissionsWidgetModel.STATUS_LOADED);
@@ -60,6 +70,18 @@ public class ViewSubmissionsWidgetController {
 			
 			log.leave();
 			return submissionFeed;
+		}
+		
+	}
+
+	//package private for testing purposes
+	class LoadSubmissionFeedErrback implements Function<Throwable, Throwable> {
+
+		public Throwable apply(Throwable err) {
+			log.enter("LoadSubmissionFeedErrback::apply");
+			
+			log.leave();
+			return err;
 		}
 		
 	}
@@ -79,16 +101,17 @@ public class ViewSubmissionsWidgetController {
 		
 		for (String relativeSubmissionEntryURL : relativeSubmissionEntryURLsToLoad) {
 			
-			String submissionEntryURL = feedURL + relativeSubmissionEntryURL;
+			String submissionEntryURL = submissionFeedURL + relativeSubmissionEntryURL;
 			
-			Deferred<AtomEntry> deferred = service.getEntry(submissionEntryURL);
+			Deferred<AtomEntry> deferred = persistenceService.getEntry(submissionEntryURL);
 			
 			deferred.addCallbacks(new LoadSubmissionsByEntryURLsCallback(submissionEntries, relativeSubmissionEntryURLsToLoad.size()), new LoadSubmissionsByEntryURLsErrback());
 		}
 		
 		log.leave();
 	}
-	
+
+	//package private for testing purposes
 	class LoadSubmissionsByEntryURLsCallback implements Function<SubmissionEntry, SubmissionEntry> {
 	
 		private List<SubmissionEntry> submissionEntries;
@@ -118,12 +141,24 @@ public class ViewSubmissionsWidgetController {
 		
 	}	
 
+	//package private for testing purposes
 	class LoadSubmissionsByEntryURLsErrback implements Function<Throwable, Throwable> {
 
 		public Throwable apply(Throwable err) {
 			
 			return err;
 		}
+		
+	}
+
+	public void loadSubmissionsByAuthorEmail(String authorEmail) {
+		log.enter("loadSubmissionsByAuthorEmail");
+		
+		log.trace("loading submissions with authorEmail: " + authorEmail);
+		Deferred<SubmissionFeed> deferred = submissionQueryService.getSubmissionsByAuthorEmail(authorEmail);
+		deferred.addCallbacks(new LoadSubmissionFeedCallback(), new LoadSubmissionFeedErrback());
+		
+		log.leave();
 		
 	}
 	

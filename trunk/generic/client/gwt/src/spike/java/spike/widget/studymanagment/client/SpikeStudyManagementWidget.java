@@ -3,19 +3,9 @@
  */
 package spike.widget.studymanagment.client;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.cggh.chassis.generic.atom.study.client.format.StudyFactory;
-import org.cggh.chassis.generic.atom.study.client.format.impl.StudyFactoryImpl;
-import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
-import org.cggh.chassis.generic.atom.vanilla.client.protocol.impl.AtomServiceImpl;
-import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
-import org.cggh.chassis.generic.client.gwt.configuration.client.Module;
 import org.cggh.chassis.generic.client.gwt.widget.studymanagement.client.StudyManagementWidget;
 
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.core.client.JsArray;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -38,33 +28,9 @@ public class SpikeStudyManagementWidget implements EntryPoint {
 		VerticalPanel verticalPanel = new VerticalPanel();
 		verticalPanel.add(menuCanvas);
 		verticalPanel.add(displayCanvas);
-		
-		//Use mock service
-//		MockStudyFactory factory = new MockStudyFactory();
-//		MockAtomService service = new MockAtomService(factory);
-		
-		// bootstrap mock service with study feed
-//		String feedURL = "http://example.com/studies";
-//		((MockAtomService)service).createFeed(feedURL, "all studies");
-		
-		// use real thing
-		StudyFactory factory = new StudyFactoryImpl();
-		AtomService service = new AtomServiceImpl(factory);
-		String feedURL = Configuration.getStudyFeedURL();
-		
-		//get modules from config and convert to more useable format
-		JsArray<Module> modules = Configuration.getModules();
-		
-		Map<String, String> modulesMap = new HashMap<String, String>();
-		for (int i = 0; i < modules.length(); ++i) {
-			
-			String id = modules.get(i).getId();
-			String label = modules.get(i).getLabel("en");
-			
-			modulesMap.put(id, label);
-		}
-		
-		StudyManagementWidget studyManagementWidget = new StudyManagementWidget(menuCanvas, displayCanvas, service, feedURL, modulesMap);
+				
+		@SuppressWarnings("unused")
+		StudyManagementWidget studyManagementWidget = new StudyManagementWidget(menuCanvas, displayCanvas, "alice@example.com");
 		
 		RootPanel.get().add(verticalPanel);
 		

@@ -22,15 +22,21 @@ import junit.framework.JUnit4TestAdapter;
 import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
 import org.cggh.chassis.generic.atom.study.client.format.StudyFactory;
 import org.cggh.chassis.generic.atom.study.client.format.StudyFeed;
+import org.cggh.chassis.generic.atom.study.client.format.impl.StudyFactoryImpl;
 import org.cggh.chassis.generic.atom.study.client.mockimpl.MockStudyFactory;
+import org.cggh.chassis.generic.atom.study.client.protocol.StudyQueryService;
+import org.cggh.chassis.generic.atom.study.client.protocol.impl.StudyQueryServiceImpl;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
+import org.cggh.chassis.generic.atom.vanilla.client.protocol.impl.AtomServiceImpl;
+import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
 import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetController;
 import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetModel;
-import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetController.GetStudyFeedCallback;
+import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetController.LoadStudyFeedCallback;
 import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetController.LoadStudiesByEntryURLsCallback;
 import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetController.LoadStudiesByEntryURLsErrback;
+import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetController.LoadStudyFeedErrback;
 import org.cggh.chassis.generic.twisted.client.Deferred;
 import org.junit.Before;
 import org.junit.Test;
@@ -44,7 +50,8 @@ import org.powermock.modules.junit4.PowerMockRunner;
  *
  */
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({ViewStudiesWidget.class, Deferred.class})
+@PrepareForTest({ViewStudiesWidgetController.class, AtomServiceImpl.class, StudyFactoryImpl.class, 
+				 StudyQueryServiceImpl.class, ViewStudiesWidget.class, Deferred.class})
 public class TestViewStudiesWidgetController {
 
 	
@@ -55,35 +62,50 @@ public class TestViewStudiesWidgetController {
 	private ViewStudiesWidgetController testController;
 	private ViewStudiesWidgetModel testModel;
 	private AtomService mockService;
+	private StudyQueryService mockStudyQueryService;
 	private StudyFactory mockFactory;
 	private ViewStudiesWidget mockWidget;
+	private MockStudyFactory testFactory = new MockStudyFactory();
 	private List<StudyEntry> testStudies;
 	
-	//empty URL because MockEntries already carry the feedURL within their editLink
-	String feedURL = "";
+	private String testStudyFeedURL = "";
+	private String testStudyQueryServiceURL = "http://www.foo.com/study_query";
 		
 	@Before
-	public void setUp() {
+	public void setUp() throws Exception {
+
+		//Set up ConfigurationBean with test values
+		ConfigurationBean.useUnitTestConfiguration = true;
+		ConfigurationBean.testStudyFeedURL = testStudyFeedURL;
+		ConfigurationBean.testStudyQueryServiceURL = testStudyQueryServiceURL;
 		
-		//Create testController, inject mockModel and a mock Service
+		//Create testController, inject mockModel and a mock Services
 		testModel = new ViewStudiesWidgetModel();
-		mockFactory = new MockStudyFactory();
-		mockService = createMock(AtomService.class);
+		mockFactory = PowerMock.createMock(StudyFactoryImpl.class);
+		mockService = PowerMock.createMock(AtomServiceImpl.class);
+		mockStudyQueryService = PowerMock.createMock(StudyQueryServiceImpl.class);
+		
+		//Setup to use mock service and factory
+		PowerMock.expectNew(StudyFactoryImpl.class).andReturn((StudyFactoryImpl) mockFactory);
+		PowerMock.expectNew(AtomServiceImpl.class, mockFactory).andReturn((AtomServiceImpl) mockService);
+		PowerMock.expectNew(StudyQueryServiceImpl.class, testStudyQueryServiceURL).andReturn((StudyQueryServiceImpl) mockStudyQueryService);
+		PowerMock.replay(StudyFactoryImpl.class, AtomServiceImpl.class, StudyQueryServiceImpl.class);
 		
 		//create mockWidget
-		mockWidget = PowerMock.createPartialMock(ViewStudiesWidget.class, "onUserSelectStudy");
+		mockWidget = PowerMock.createMock(ViewStudiesWidget.class);
 		
-		testController = new ViewStudiesWidgetController(testModel, mockService, mockWidget, feedURL);
+		//instantiate test Object
+		testController = new ViewStudiesWidgetController(testModel, mockWidget);
 
 		
 		//create test Study Entries to view
-		StudyEntry testStudy1 = mockFactory.createStudyEntry();
+		StudyEntry testStudy1 = testFactory.createStudyEntry();
 		testStudy1.setTitle("study foo");
 		testStudy1.setSummary("summary foo");
 		testStudy1.addModule("module1");
 		testStudy1.addModule("module2");
 
-		StudyEntry testStudy2 = mockFactory.createStudyEntry();
+		StudyEntry testStudy2 = testFactory.createStudyEntry();
 		testStudy2.setTitle("study foo2");
 		testStudy2.setSummary("summary foo2");
 		testStudy1.addModule("module1");
@@ -103,23 +125,29 @@ public class TestViewStudiesWidgetController {
 		
 	}
 		
+	@SuppressWarnings("unchecked")
 	@Test
 	public void testLoadStudiesByFeedURL_callback() {
-						
-		//set up expectations
-		expect(mockService.getFeed(feedURL)).andReturn(new Deferred<AtomFeed>());
-		replay(mockService);
 
-				
-		Deferred<AtomFeed> deffered = testController.getStudiesByFeedURL();
+		//create mock Deffered object
+		Deferred<AtomFeed> mockDeffered = PowerMock.createMock(Deferred.class);
 		
-		assertNotNull(deffered);
+		//set up expectations
+		expect(mockService.getFeed(testStudyFeedURL)).andReturn(mockDeffered);
+		PowerMock.replay(mockService);
+		mockDeffered.addCallbacks(isA(LoadStudyFeedCallback.class), isA(LoadStudyFeedErrback.class));
+		PowerMock.expectLastCall().andReturn(mockDeffered);
+		PowerMock.replay(mockDeffered);
+
+		//call method under test		
+		testController.loadStudiesByFeedURL();
 		
-		verify(mockService);		
+		PowerMock.verify(mockService);		
+		PowerMock.verify(mockDeffered);		
 	}
 	
 	@Test
-	public void testLoadStudiesByFeedURL_success() {
+	public void testLoadStudyFeedCallback() {
 		
 				
 		//create mock Study Feed Entry to view
@@ -130,7 +158,7 @@ public class TestViewStudiesWidgetController {
 		expectLastCall().atLeastOnce();
 		replay(mockStudyFeed);
 
-		GetStudyFeedCallback callback = testController.new GetStudyFeedCallback();
+		LoadStudyFeedCallback callback = testController.new LoadStudyFeedCallback();
 		
 		//call method under test
 		callback.apply(mockStudyFeed);
@@ -162,7 +190,7 @@ public class TestViewStudiesWidgetController {
 		//set up expectations
 		expect(mockService.getEntry(entryURL1)).andReturn(mockDeffered);
 		expect(mockService.getEntry(entryURL2)).andReturn(mockDeffered);
-		replay(mockService);
+		PowerMock.replay(mockService);
 		mockDeffered.addCallbacks(isA(LoadStudiesByEntryURLsCallback.class), isA(LoadStudiesByEntryURLsErrback.class));
 		PowerMock.expectLastCall().andReturn(mockDeffered).times(2);
 		PowerMock.replay(mockDeffered);
@@ -172,7 +200,7 @@ public class TestViewStudiesWidgetController {
 		testController.loadStudiesByEntryURLs(studyEntryURLS);
 				
 		//test outcome
-		verify(mockService);	
+		PowerMock.verify(mockService);	
 		PowerMock.verify(mockDeffered);	
 		
 	}
@@ -194,6 +222,32 @@ public class TestViewStudiesWidgetController {
 		assertEquals(ViewStudiesWidgetModel.STATUS_LOADED, testModel.getStatus());
 					
 	}
+	
+	@SuppressWarnings("unchecked")
+	@Test
+	public void testLoadStudiesByAuthorEmail_callback() {
+		
+		//test data
+		String authorEmail = "foo@bar.com";
+
+		//create mock Deffered object
+		Deferred<StudyFeed> mockDeffered = PowerMock.createMock(Deferred.class);
+		
+		//set up expectations
+		expect(mockStudyQueryService.getStudiesByAuthorEmail(authorEmail)).andReturn(mockDeffered);
+		PowerMock.replay(mockStudyQueryService);
+		mockDeffered.addCallbacks(isA(LoadStudyFeedCallback.class), isA(LoadStudyFeedErrback.class));
+		PowerMock.expectLastCall().andReturn(mockDeffered);
+		PowerMock.replay(mockDeffered);
+		
+		//call method under test
+		testController.loadStudiesByAuthorEmail(authorEmail);
+
+		//test outcome
+		PowerMock.verify(mockStudyQueryService);	
+		PowerMock.verify(mockDeffered);	
+	}
+
 	
 	@Test
 	public void testOnViewStudyUIClicked() {

@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
 import org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerCreateAPI;
 import org.cggh.chassis.generic.client.gwt.widget.study.model.client.StudyModelListener;
 
@@ -34,7 +35,6 @@ class CreateStudyWidgetDefaultRenderer implements StudyModelListener {
 	final private Panel canvas;
 	private StudyControllerCreateAPI controller;
 	private Boolean isFormComplete = false;
-	private String feedURL;
 	private Map<String, String> modulesConfig;
 	
 	//Expose view elements for testing purposes.
@@ -45,11 +45,10 @@ class CreateStudyWidgetDefaultRenderer implements StudyModelListener {
 	final Map<String, CheckBox> modulesUIHash = new HashMap<String, CheckBox>();
 	
 
-	public CreateStudyWidgetDefaultRenderer(Panel canvas, StudyControllerCreateAPI controller, String feedURL, Map<String, String> modulesMap) {
+	public CreateStudyWidgetDefaultRenderer(Panel canvas, StudyControllerCreateAPI controller) {
 		this.canvas = canvas;
 		this.controller = controller;
-		this.feedURL = feedURL;
-		this.modulesConfig = modulesMap;
+		this.modulesConfig = ConfigurationBean.getModules();
 		
 		//initialise view
 		initCanvas();
@@ -144,7 +143,7 @@ class CreateStudyWidgetDefaultRenderer implements StudyModelListener {
 
 		public void onClick(ClickEvent arg0) {
 			if (isFormComplete) {
-				controller.saveNewStudyEntry(feedURL);
+				controller.saveNewStudyEntry();
 			} else {
 				//TODO move to management widget?
 				DecoratedPopupPanel errorPopUp = new DecoratedPopupPanel(true);

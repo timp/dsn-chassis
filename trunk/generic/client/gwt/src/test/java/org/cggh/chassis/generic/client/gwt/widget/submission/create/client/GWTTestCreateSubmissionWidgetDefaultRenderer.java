@@ -8,7 +8,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomService;
+import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
 import org.cggh.chassis.generic.client.gwt.widget.submission.controller.client.SubmissionControllerCreateAPI;
 
 import com.google.gwt.dom.client.Document;
@@ -43,6 +43,10 @@ public class GWTTestCreateSubmissionWidgetDefaultRenderer extends GWTTestCase {
 
 	@Override
 	protected void gwtSetUp() {
+
+		//Set up ConfigurationBean with test values for controller
+		ConfigurationBean.useUnitTestConfiguration = true;
+		ConfigurationBean.testStudyFeedURL = "http://foo.com/studies";
 		
 		//create mockController and inject into testRenderer
 		mockController = new MockSubmissionController();
@@ -52,7 +56,11 @@ public class GWTTestCreateSubmissionWidgetDefaultRenderer extends GWTTestCase {
 		testModules.put(module1Id, module1Label);
 		testModules.put(module2Id, module2Label);
 		
-		testRenderer = new CreateSubmissionWidgetDefaultRenderer(new SimplePanel(), mockController, testModules, new MockAtomService(), null);
+		//Set up ConfigurationBean with test values
+		ConfigurationBean.useUnitTestConfiguration = true;
+		ConfigurationBean.testModules = testModules;
+		
+		testRenderer = new CreateSubmissionWidgetDefaultRenderer(new SimplePanel(), mockController, "");
 		
 	}
 	

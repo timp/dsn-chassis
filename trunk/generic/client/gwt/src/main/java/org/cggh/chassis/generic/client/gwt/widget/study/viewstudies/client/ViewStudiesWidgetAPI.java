@@ -10,5 +10,7 @@ public interface ViewStudiesWidgetAPI {
 	public void loadStudies(Set<String> studyEntryURLsToLoad);
 
 	public void addViewAllStudiesWidgetListener(ViewStudiesWidgetPubSubAPI listener);
+	
+	public void loadStudiesByAuthorEmail(String authorEmail);
 
 }

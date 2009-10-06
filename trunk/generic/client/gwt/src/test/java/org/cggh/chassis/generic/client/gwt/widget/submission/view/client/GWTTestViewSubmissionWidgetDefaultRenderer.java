@@ -10,10 +10,9 @@ import java.util.Set;
 
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
 import org.cggh.chassis.generic.atom.submission.client.mockimpl.MockSubmissionFactory;
-import org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomService;
+import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
 import org.cggh.chassis.generic.client.gwt.widget.submission.controller.client.SubmissionControllerViewAPI;
 import org.cggh.chassis.generic.client.gwt.widget.submission.model.client.SubmissionModel;
-
 
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.event.dom.client.DomEvent;
@@ -56,8 +55,12 @@ public class GWTTestViewSubmissionWidgetDefaultRenderer extends GWTTestCase {
 		Map<String, String> testModules = new HashMap<String, String>();
 		testModules.put(module1Id, module1Label);
 		testModules.put(module2Id, module2Label);
+
+		//Set up ConfigurationBean with test values
+		ConfigurationBean.useUnitTestConfiguration = true;
+		ConfigurationBean.testModules = testModules;
 		
-		testRenderer = new ViewSubmissionWidgetDefaultRenderer(new SimplePanel(), mockController, testModules, new MockAtomService(), null);
+		testRenderer = new ViewSubmissionWidgetDefaultRenderer(new SimplePanel(), mockController);
 				
 
 		//create testSubmissionEntry to load
