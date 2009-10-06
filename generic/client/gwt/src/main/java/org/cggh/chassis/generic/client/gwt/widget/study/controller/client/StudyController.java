@@ -9,6 +9,7 @@ import java.util.Set;
 import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
 import org.cggh.chassis.generic.atom.study.client.format.StudyFactory;
 import org.cggh.chassis.generic.atom.study.client.format.impl.StudyFactoryImpl;
+import org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomProtocolException;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
@@ -50,10 +51,16 @@ public class StudyController implements StudyControllerEditAPI, StudyControllerC
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerCreateAPI#setUpNewStudy(java.lang.String)
 	 */
-	public void setUpNewStudy() {
+	public void setUpNewStudy(String authorEmail) {
 		log.enter("setUpNewStudy");
 		
-		model.setStudyEntry(studyFactory.createStudyEntry());
+		//Create atom author holding author's email, then add to new submission.
+		AtomAuthor atomAuthor = studyFactory.createAuthor();
+		atomAuthor.setEmail(authorEmail);		
+		StudyEntry newSubmissionEntry = studyFactory.createStudyEntry(); 
+		newSubmissionEntry.addAuthor(atomAuthor);	
+		
+		model.setStudyEntry(newSubmissionEntry);
 		model.setStatus(StudyModel.STATUS_LOADED);
 		
 		log.leave();
@@ -82,6 +89,11 @@ public class StudyController implements StudyControllerEditAPI, StudyControllerC
 	public void updateModules(Set<String> modules) {
 		model.setModules(modules);
 	}
+
+	public void updateAuthors(Set<AtomAuthor> authors) {
+		model.setAuthors(authors);
+	}
+
 
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerEditAPI#cancelCreateStudy()

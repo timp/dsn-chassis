@@ -73,8 +73,8 @@ public class CreateStudyWidget implements CreateStudyWidgetAPI, StudyControllerP
 		}
 	}
 
-	public void setUpNewStudy() {
-		controller.setUpNewStudy();
+	public void setUpNewStudy(String authorEmail) {
+		controller.setUpNewStudy(authorEmail);
 	}
 	
 }

@@ -23,7 +23,7 @@ public class SpikeCreateSubmissionWidget implements EntryPoint {
 		
 		CreateSubmissionWidgetAPI widget = new CreateSubmissionWidget(RootPanel.get(), "bob@example.com");
 		
-		widget.setUpNewSubmission();
+		widget.setUpNewSubmission("bob@example.com");
 		
 	}
 

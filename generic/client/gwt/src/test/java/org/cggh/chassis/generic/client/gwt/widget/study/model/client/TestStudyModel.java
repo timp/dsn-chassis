@@ -6,6 +6,7 @@ package org.cggh.chassis.generic.client.gwt.widget.study.model.client;
 import static org.easymock.EasyMock.*;
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,6 +14,7 @@ import junit.framework.JUnit4TestAdapter;
 
 import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
 import org.cggh.chassis.generic.atom.study.client.mockimpl.MockStudyFactory;
+import org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
 import org.cggh.chassis.generic.client.gwt.widget.study.model.client.StudyModel;
 import org.cggh.chassis.generic.client.gwt.widget.study.model.client.StudyModelListener;
 import org.junit.Before;
@@ -30,8 +32,9 @@ public class TestStudyModel {
 
 	private StudyModel testModel;
 	private StudyEntry newStudyEntry;
-	private MockStudyFactory mockStudyFactory;
+	private MockStudyFactory testStudyFactory;
 	private StudyEntry validStudyEntry;
+	private Set<AtomAuthor> testAuthors;
 	
 	@Before
 	public void setUp() {
@@ -40,13 +43,20 @@ public class TestStudyModel {
 		testModel = new StudyModel();
 		
 		//create new study entry
-		mockStudyFactory = new MockStudyFactory();
-		newStudyEntry = mockStudyFactory.createStudyEntry();
+		testStudyFactory = new MockStudyFactory();
+		newStudyEntry = testStudyFactory.createStudyEntry();
+		
+		//create test authors
+		testAuthors = new HashSet<AtomAuthor>();
+		AtomAuthor testAtomAuthor = testStudyFactory.createAuthor();
+		testAtomAuthor.setEmail("foo@bar.com");
+		testAuthors.add(testAtomAuthor);
 		
 		//create a valid study entry
-		validStudyEntry = mockStudyFactory.createStudyEntry();
+		validStudyEntry = testStudyFactory.createStudyEntry();
 		validStudyEntry.setTitle("title foo");
 		validStudyEntry.setSummary("summary foo");
+		validStudyEntry.setAuthors(new ArrayList<AtomAuthor>(testAuthors));
 		validStudyEntry.addModule("module1");
 		validStudyEntry.addModule("module2");
 			
@@ -97,6 +107,7 @@ public class TestStudyModel {
 		testModel.setTitle(title);
 		testModel.setSummary(summary);
 		testModel.setModules(modulesSet1);
+		testModel.setAuthors(testAuthors);
 		testModel.setStatus(status);
 		
 		
@@ -104,6 +115,7 @@ public class TestStudyModel {
 		assertEquals(title, testModel.getTitle());
 		assertEquals(summary, testModel.getSummary());
 		assertEquals(modulesSet1, testModel.getModules());
+		assertEquals(testAuthors, testModel.getAuthors());
 		assertEquals(status, testModel.getStatus());
 		
 	}
@@ -204,6 +216,35 @@ public class TestStudyModel {
 		
 		verify(listener);
 	}
+	
+
+	@Test
+	public void testOnAuthorsChanged() {
+		
+		Set<AtomAuthor> valid = testAuthors;
+		Set<AtomAuthor> invalid = new HashSet<AtomAuthor>();
+		
+		//place in ready state
+		testModel.setStudyEntry(newStudyEntry);
+				
+		StudyModelListener listener = createMock(StudyModelListener.class);
+		
+		//set up expectations
+		listener.onAuthorsChanged(new HashSet<AtomAuthor>(), valid, true);
+		listener.onStudyEntryChanged(isA(Boolean.class));
+		listener.onAuthorsChanged(valid, invalid, false);
+		listener.onStudyEntryChanged(isA(Boolean.class));
+		replay(listener);
+		
+		// register with model
+		testModel.addListener(listener);
+		
+		// call method under test
+		testModel.setAuthors(valid);
+		testModel.setAuthors(invalid);
+		
+		verify(listener);
+	}
 		
 		
 	@SuppressWarnings("unchecked")
@@ -223,12 +264,14 @@ public class TestStudyModel {
 		listener.onTitleChanged(invalid.getTitle(), invalid.getTitle(), false);
 		listener.onSummaryChanged(invalid.getSummary(), invalid.getSummary(), false);
 		listener.onModulesChanged(isA(Set.class), isA(Set.class), isA(Boolean.class));
+		listener.onAuthorsChanged(isA(Set.class), isA(Set.class), isA(Boolean.class));
 		
 		listener.onStudyEntryChanged(Boolean.TRUE);	
 		//assert other events called, but do not check validation again here
 		listener.onTitleChanged(valid.getTitle(), valid.getTitle(), true);
 		listener.onSummaryChanged(valid.getSummary(), valid.getSummary(), true);
 		listener.onModulesChanged(isA(Set.class), isA(Set.class), isA(Boolean.class));
+		listener.onAuthorsChanged(isA(Set.class), isA(Set.class), isA(Boolean.class));
 		replay(listener);
 		
 		// register with model

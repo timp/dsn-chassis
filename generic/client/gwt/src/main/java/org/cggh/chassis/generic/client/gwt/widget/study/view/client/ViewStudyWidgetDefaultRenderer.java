@@ -6,6 +6,7 @@ package org.cggh.chassis.generic.client.gwt.widget.study.view.client;
 import java.util.Map;
 import java.util.Set;
 
+import org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
 import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
 import org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerViewAPI;
 import org.cggh.chassis.generic.client.gwt.widget.study.model.client.StudyModel;
@@ -32,6 +33,7 @@ public class ViewStudyWidgetDefaultRenderer implements StudyModelListener {
 	final Panel studyDetailsPanel = new HorizontalPanel();
 	final Label editThisStudyUI = new Label("Edit Study");
 	final VerticalPanel modulesListPanel = new VerticalPanel();
+	final VerticalPanel authorsListPanel = new VerticalPanel();
 	
 	final private Panel canvas;
 	final private StudyControllerViewAPI controller;
@@ -63,7 +65,11 @@ public class ViewStudyWidgetDefaultRenderer implements StudyModelListener {
 		summaryHPanel.add(summaryLabel);
 		studyDetailsVPanel.add(summaryHPanel);
 
+		studyDetailsVPanel.add(new Label("Data accepted:"));
 		studyDetailsVPanel.add(modulesListPanel);
+		
+		studyDetailsVPanel.add(new Label("Study owners:"));
+		studyDetailsVPanel.add(authorsListPanel);
 		
 		studyDetailsPanel.add(studyDetailsVPanel);
 		
@@ -120,6 +126,16 @@ public class ViewStudyWidgetDefaultRenderer implements StudyModelListener {
 		for (String module : after) {
 			modulesListPanel.add(new Label(modulesConfig.get(module)));
 		}
+	}
+
+	public void onAuthorsChanged(Set<AtomAuthor> before, Set<AtomAuthor> after, Boolean isValid) {
+
+		authorsListPanel.clear();
+		
+		for (AtomAuthor atomAuthor : after) {
+			authorsListPanel.add(new Label(atomAuthor.getEmail()));
+		}
+		
 	}
 	
 }

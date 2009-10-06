@@ -10,7 +10,7 @@ import static org.easymock.EasyMock.expectLastCall;
 import static org.easymock.EasyMock.isA;
 import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.verify;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -22,6 +22,7 @@ import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
 import org.cggh.chassis.generic.atom.study.client.format.StudyFactory;
 import org.cggh.chassis.generic.atom.study.client.format.impl.StudyFactoryImpl;
 import org.cggh.chassis.generic.atom.study.client.mockimpl.MockStudyFactory;
+import org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomLink;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
@@ -60,6 +61,8 @@ public class TestStudyController {
 	private MockStudyFactory testFactory = new MockStudyFactory();
 	String testStudyFeedURL = "http://foo.com/studies";
 	private StudyEntry testStudyEntry;
+	private HashSet<AtomAuthor> testAuthors;
+	private String testAuthorEmail = "foo@bar.com";
 		
 	@Before
 	public void setUp() throws Exception {
@@ -81,8 +84,16 @@ public class TestStudyController {
 		//create test controller
 		testController = new StudyController(testModel, null);
 		
+
+		//create test authors
+		testAuthors = new HashSet<AtomAuthor>();
+		AtomAuthor testAtomAuthor = testFactory.createAuthor();
+		testAtomAuthor.setEmail(testAuthorEmail );
+		testAuthors.add(testAtomAuthor);
+		
 		//create test data
 		testStudyEntry = testFactory.createStudyEntry();
+		testStudyEntry.setAuthors(new ArrayList<AtomAuthor>(testAuthors));
 		testStudyEntry.setTitle("existing title");
 		testStudyEntry.setSummary("existing summary");
 		
@@ -90,17 +101,18 @@ public class TestStudyController {
 	
 	@Test
 	public void testSetUpNewStudy() {
-				
+		
 		//set up expectations
-		expect(mockFactory.createStudyEntry()).andReturn(testStudyEntry);
+		expect(mockFactory.createStudyEntry()).andReturn(testFactory.createStudyEntry());
+		expect(mockFactory.createAuthor()).andReturn(testFactory.createAuthor());
 		PowerMock.replay(mockFactory);
 		
 		//call method under test
-		testController.setUpNewStudy();
+		testController.setUpNewStudy(testAuthorEmail);
 		
 		//test outcome
 		assertEquals(StudyModel.STATUS_LOADED, testModel.getStatus());
-		assertEquals(testStudyEntry, testModel.getStudyEntry());
+		assertEquals(testAuthorEmail, testModel.getStudyEntry().getAuthors().iterator().next().getEmail());
 		
 		PowerMock.verify(mockFactory);
 	}
@@ -227,6 +239,26 @@ public class TestStudyController {
 		
 	}
 	
+	@Test
+	public void testUpdateAuthors() {
+
+		//mock loaded state
+		testModel.setStudyEntry(testStudyEntry);
+		
+		//test data
+		Set<AtomAuthor> testAuthors = new HashSet<AtomAuthor>();
+		AtomAuthor testAtomAuthor = testFactory.createAuthor();
+		testAtomAuthor.setEmail("foo@bar.com");
+		testAuthors.add(testAtomAuthor);
+		
+		//call method under test
+		testController.updateAuthors(testAuthors);
+		
+		//test outcome
+		assertEquals(testAuthors, testModel.getAuthors());		
+		
+	}
+	
 	
 	@Test
 	public void testCancelCreateStudy() {
@@ -291,6 +323,7 @@ public class TestStudyController {
 		//set up expectations
 		expect(mockStudyEntry.getEditLink()).andReturn(mockAtomLink);
 		expect(mockStudyEntry.getModules()).andReturn(new ArrayList<String>());
+		expect(mockStudyEntry.getAuthors()).andReturn(new ArrayList<AtomAuthor>());
 		expectLastCall().anyTimes();
 		replay(mockStudyEntry);
 		

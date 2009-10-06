@@ -64,7 +64,7 @@ public class GWTTestSubmissionManagementWidgetDefaultRenderer extends GWTTestCas
 		ConfigurationBean.testModules = testModules;
 		
 		//instantiate a test renderer
-		testRenderer = new SubmissionManagementWidgetDefaultRenderer(new SimplePanel(), new SimplePanel(), testController, null);
+		testRenderer = new SubmissionManagementWidgetDefaultRenderer(new SimplePanel(), new SimplePanel(), testController, "");
 		
 		//add as listener
 		testModel.addListener(testRenderer);

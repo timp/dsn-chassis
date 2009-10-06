@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
+import org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
 import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
 import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidget;
 import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetListBoxRenderer;
@@ -327,6 +328,12 @@ public class CreateSubmissionWidgetDefaultRenderer implements SubmissionModelLis
 
 	public void onUserActionSelectStudy(StudyEntry studyEntry) {
 		studyLinkToAdd = studyEntry.getEditLink().getHref();
+	}
+
+	public void onAuthorsChanged(Set<AtomAuthor> before, Set<AtomAuthor> after,
+			Boolean isValid) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

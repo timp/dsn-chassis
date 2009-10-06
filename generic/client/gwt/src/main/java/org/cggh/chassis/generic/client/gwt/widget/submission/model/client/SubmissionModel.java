@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
+import org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomLink;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
@@ -35,11 +36,18 @@ public class SubmissionModel {
 	
 	
 	
+	public SubmissionEntry getSubmissionEntry() {
+		return submissionEntry;
+	}
+
+
+
 	public void setSubmissionEntry(SubmissionEntry submissionEntry) {
 				
 		this.submissionEntry = submissionEntry;
 		
 		//fire all property events
+		fireOnAuthorsChanged(getAuthors());
 		fireOnTitleChanged(getTitle());
 		fireOnSummaryChanged(getSummary());
 		fireOnStudyLinksChanged(getStudyLinks());
@@ -65,7 +73,8 @@ public class SubmissionModel {
 		Boolean isSubmissionEntryValid = isTitleValid()
 										 && isSummaryValid()
 										 && isStudyLinksValid()
-										 && isModulesValid();
+										 && isModulesValid()
+										 && isAuthorsValid();
 		
 		log.trace("isSubmissionEntryValid: " + isSubmissionEntryValid);
 		
@@ -74,15 +83,42 @@ public class SubmissionModel {
 	}
 
 
-
-	public Integer getStatus() {
-		return status;
+	public Set<AtomAuthor> getAuthors() {
+		return new HashSet<AtomAuthor>(submissionEntry.getAuthors());
 	}
 
 
 
-	public SubmissionEntry getSubmissionEntry() {
-		return submissionEntry;
+	public void setAuthors(Set<AtomAuthor> authors) {
+		
+		Set<AtomAuthor> before = getAuthors();
+		
+		submissionEntry.setAuthors(new ArrayList<AtomAuthor>(authors));
+		
+		fireOnAuthorsChanged(before);
+		fireOnSubmissionEntryModelChanged();
+		
+	}
+
+
+	private Boolean isAuthorsValid() {
+		//require at least one author
+		return (getAuthors().size() > 0);
+	}
+
+
+
+	private void fireOnAuthorsChanged(Set<AtomAuthor> before) {
+
+		for (SubmissionModelListener listener : listeners) {
+			listener.onAuthorsChanged(before, getAuthors(), isAuthorsValid());
+		}
+	}
+
+
+
+	public String getTitle() {
+		return submissionEntry.getTitle();
 	}
 
 
@@ -95,14 +131,6 @@ public class SubmissionModel {
 		
 		fireOnTitleChanged(before);
 		fireOnSubmissionEntryModelChanged();
-	}
-
-
-
-	private void fireOnTitleChanged(String before) {
-		for (SubmissionModelListener listener : listeners) {
-			listener.onTitleChanged(before, getTitle(), isTitleValid());
-		}
 	}
 
 
@@ -121,6 +149,20 @@ public class SubmissionModel {
 
 
 
+	private void fireOnTitleChanged(String before) {
+		for (SubmissionModelListener listener : listeners) {
+			listener.onTitleChanged(before, getTitle(), isTitleValid());
+		}
+	}
+
+
+
+	public String getSummary() {
+		return submissionEntry.getSummary();
+	}
+
+
+
 	public void setSummary(String summary) {
 		
 		String before = getSummary();
@@ -129,15 +171,6 @@ public class SubmissionModel {
 		
 		fireOnSummaryChanged(before);
 		fireOnSubmissionEntryModelChanged();
-	}
-
-
-
-	private void fireOnSummaryChanged(String before) {
-		
-		for (SubmissionModelListener listener : listeners) {
-			listener.onSummaryChanged(before, getSummary(), isSummaryValid());
-		}
 	}
 
 
@@ -156,6 +189,28 @@ public class SubmissionModel {
 
 
 
+	private void fireOnSummaryChanged(String before) {
+		
+		for (SubmissionModelListener listener : listeners) {
+			listener.onSummaryChanged(before, getSummary(), isSummaryValid());
+		}
+	}
+
+
+
+	public Set<String> getStudyLinks() {
+		
+		Set<String> studyLinks = new HashSet<String>();
+		
+		for (AtomLink link : submissionEntry.getStudyLinks()) {
+			studyLinks.add(link.getHref());
+		}		
+		
+		return studyLinks;
+	}
+
+
+
 	public void setStudyLinks(Set<String> studyLinks) {
 		
 		Set<String> before = getStudyLinks();
@@ -164,15 +219,6 @@ public class SubmissionModel {
 		
 		fireOnStudyLinksChanged(before);
 		fireOnSubmissionEntryModelChanged();
-	}
-
-
-
-	private void fireOnStudyLinksChanged(Set<String> before) {
-		
-		for (SubmissionModelListener listener : listeners) {
-			listener.onStudyLinksChanged(before, getStudyLinks(), isStudyLinksValid());
-		}
 	}
 
 
@@ -190,35 +236,61 @@ public class SubmissionModel {
 	}
 
 
-	public String getTitle() {
-		return submissionEntry.getTitle();
+
+	private void fireOnStudyLinksChanged(Set<String> before) {
+		
+		for (SubmissionModelListener listener : listeners) {
+			listener.onStudyLinksChanged(before, getStudyLinks(), isStudyLinksValid());
+		}
 	}
 
 
-
-	public String getSummary() {
-		return submissionEntry.getSummary();
-	}
-
-
-
-	public Set<String> getStudyLinks() {
-		
-		Set<String> studyLinks = new HashSet<String>();
-		
-		for (AtomLink link : submissionEntry.getStudyLinks()) {
-			studyLinks.add(link.getHref());
-		}		
-		
-		return studyLinks;
-	}
 
 	public Set<String> getModules() {
 		return new HashSet<String>(submissionEntry.getModules());
 	}
 
-	public void addListener(SubmissionModelListener listener) {
-		listeners.add(listener);
+
+
+	public void setModules(Set<String> modules) {
+	
+		Set<String> before = getModules();
+		
+		submissionEntry.setModules(new ArrayList<String>(modules));
+	
+		fireOnModulesChanged(before);
+		fireOnSubmissionEntryModelChanged();
+	}
+
+
+
+	private Boolean isModulesValid() {
+		log.enter("isModulesValid");
+	
+		//TODO check studyLinks accept data for these modules
+		// require at least one module
+		boolean isValid = (getModules().size() > 0);
+		
+		log.trace("isValid: " + isValid);
+		
+		log.leave();
+		return isValid;
+	}
+
+
+
+	private void fireOnModulesChanged(Set<String> before) {
+	
+		for (SubmissionModelListener listener : listeners) {
+			listener.onModulesChanged(before, getModules(), isModulesValid());
+		}
+			
+	}
+
+
+
+	public Integer getStatus() {
+		return status;
 	}
 
 
@@ -239,38 +311,8 @@ public class SubmissionModel {
 
 
 
-	public void setModules(Set<String> modules) {
-
-		Set<String> before = getModules();
-		
-		submissionEntry.setModules(new ArrayList<String>(modules));
-
-		fireOnModulesChanged(before);
-		fireOnSubmissionEntryModelChanged();
-	}
-
-
-	private void fireOnModulesChanged(Set<String> before) {
-
-		for (SubmissionModelListener listener : listeners) {
-			listener.onModulesChanged(before, getModules(), isModulesValid());
-		}
-			
-	}
-
-
-
-	private Boolean isModulesValid() {
-		log.enter("isModulesValid");
-
-		//TODO check studyLinks accept data for these modules
-		// require at least one module
-		boolean isValid = (getModules().size() > 0);
-		
-		log.trace("isValid: " + isValid);
-		
-		log.leave();
-		return isValid;
+	public void addListener(SubmissionModelListener listener) {
+		listeners.add(listener);
 	}
 	
 }

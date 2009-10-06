@@ -2,8 +2,12 @@ package org.cggh.chassis.generic.client.gwt.widget.submission.controller.client;
 
 import java.util.Set;
 
-public abstract interface AbstractSubmissionControllerCreateEditAPI {
+import org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
 
+public abstract interface AbstractSubmissionControllerCreateEditAPI {
+	
+	public void updateAuthors(Set<AtomAuthor> authors);
+	
 	public void updateTitle(String title);
 
 	public void updateSummary(String summary);

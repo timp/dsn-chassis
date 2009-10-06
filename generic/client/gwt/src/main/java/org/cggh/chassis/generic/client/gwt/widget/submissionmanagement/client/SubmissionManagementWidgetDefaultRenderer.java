@@ -34,6 +34,7 @@ public class SubmissionManagementWidgetDefaultRenderer implements SubmissionMana
 	final DecoratedPopupPanel menuPopUp = new DecoratedPopupPanel(true);
 
 	final private SubmissionManagementWidgetController controller;
+	private String authorEmail;
 	
 	//child widgets made package private to allow parent widget to access them
 	final CreateSubmissionWidgetAPI createSubmissionWidget; 
@@ -53,12 +54,13 @@ public class SubmissionManagementWidgetDefaultRenderer implements SubmissionMana
 		this.menuCanvas = menuCanvas;
 		this.displayCanvas = displayCanvas;
 		this.controller = controller;
+		this.authorEmail = authorEmail;
 		
 		//create child widgets
 		viewSubmissionWidget = new ViewSubmissionWidget(viewSubmissionWidgetCanvas);
 		createSubmissionWidget = new CreateSubmissionWidget(createSubmissionWidgetCanvas, authorEmail);
 		viewAllSubmissionsWidget = new ViewSubmissionsWidget(viewAllSubmissionsWidgetCanvas);
-		editSubmissionWidget = new EditSubmissionWidget(editSubmissionWidgetCanvas);
+		editSubmissionWidget = new EditSubmissionWidget(editSubmissionWidgetCanvas, authorEmail);
 		
 		//initialise view
 		initMenu();
@@ -118,15 +120,14 @@ public class SubmissionManagementWidgetDefaultRenderer implements SubmissionMana
 	public void onDisplayStatusChanged(Integer before, Integer after) {
 		if (after == SubmissionManagementWidgetModel.DISPLAYING_CREATE_STUDY) {
 			displayCanvas.clear();
-			createSubmissionWidget.setUpNewSubmission();
+			createSubmissionWidget.setUpNewSubmission(authorEmail);
 			displayCanvas.add(createSubmissionWidgetCanvas);
 		} else if (after == SubmissionManagementWidgetModel.DISPLAYING_VIEW_STUDY) {
 			displayCanvas.clear();
 			displayCanvas.add(viewSubmissionWidgetCanvas);
 		} else if (after == SubmissionManagementWidgetModel.DISPLAYING_VIEW_ALL_STUDIES) {
 			displayCanvas.clear();
-			//FIXME use current user's email address
-			viewAllSubmissionsWidget.loadSubmissionsByAuthorEmail("alice@example.com");
+			viewAllSubmissionsWidget.loadSubmissionsByAuthorEmail(authorEmail);
 			displayCanvas.add(viewAllSubmissionsWidgetCanvas);
 		} else if (after == SubmissionManagementWidgetModel.DISPLAYING_EDIT_STUDY) {
 			displayCanvas.clear();

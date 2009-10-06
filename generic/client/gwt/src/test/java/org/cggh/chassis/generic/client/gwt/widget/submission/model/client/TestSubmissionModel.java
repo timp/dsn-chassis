@@ -3,9 +3,14 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.submission.model.client;
 
-import static org.easymock.EasyMock.*;
-import static org.junit.Assert.*;
+import static org.easymock.EasyMock.createMock;
+import static org.easymock.EasyMock.isA;
+import static org.easymock.EasyMock.replay;
+import static org.easymock.EasyMock.verify;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,8 +18,7 @@ import junit.framework.JUnit4TestAdapter;
 
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
 import org.cggh.chassis.generic.atom.submission.client.mockimpl.MockSubmissionFactory;
-import org.cggh.chassis.generic.client.gwt.widget.submission.model.client.SubmissionModel;
-import org.cggh.chassis.generic.client.gwt.widget.submission.model.client.SubmissionModelListener;
+import org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -32,6 +36,7 @@ public class TestSubmissionModel {
 	private SubmissionEntry newSubmissionEntry;
 	private MockSubmissionFactory mockSubmissionFactory;
 	private SubmissionEntry validSubmissionEntry;
+	private Set<AtomAuthor> testAuthors;
 	
 	@Before
 	public void setUp() {
@@ -43,8 +48,15 @@ public class TestSubmissionModel {
 		mockSubmissionFactory = new MockSubmissionFactory();
 		newSubmissionEntry = mockSubmissionFactory.createSubmissionEntry();
 		
+		//create test authors
+		testAuthors = new HashSet<AtomAuthor>();
+		AtomAuthor testAtomAuthor = mockSubmissionFactory.createAuthor();
+		testAtomAuthor.setEmail("foo@bar.com");
+		testAuthors.add(testAtomAuthor);
+		
 		//create a valid submission entry
 		validSubmissionEntry = mockSubmissionFactory.createSubmissionEntry();
+		validSubmissionEntry.setAuthors(new ArrayList<AtomAuthor>(testAuthors));
 		validSubmissionEntry.setTitle("title foo");
 		validSubmissionEntry.setSummary("summary foo");
 		validSubmissionEntry.addStudyLink("http://example.com/studies/study1");
@@ -101,6 +113,7 @@ public class TestSubmissionModel {
 		
 				
 		//call methods under test
+		testModel.setAuthors(testAuthors);
 		testModel.setTitle(title);
 		testModel.setSummary(summary);
 		testModel.setStudyLinks(studyLinks);
@@ -109,12 +122,42 @@ public class TestSubmissionModel {
 		
 		
 		// test outcome
+		assertEquals(testAuthors, testModel.getAuthors());
 		assertEquals(title, testModel.getTitle());
 		assertEquals(summary, testModel.getSummary());
 		assertEquals(studyLinks, testModel.getStudyLinks());
 		assertEquals(modulesSet1, testModel.getModules());
 		assertEquals(status, testModel.getStatus());
 		
+	}
+	
+
+	@Test
+	public void testOnAuthorsChanged() {
+		
+		Set<AtomAuthor> valid = testAuthors;
+		Set<AtomAuthor> invalid = new HashSet<AtomAuthor>();
+		
+		//place in ready state
+		testModel.setSubmissionEntry(newSubmissionEntry);
+				
+		SubmissionModelListener listener = createMock(SubmissionModelListener.class);
+		
+		//set up expectations
+		listener.onAuthorsChanged(new HashSet<AtomAuthor>(), valid, true);
+		listener.onSubmissionEntryChanged(isA(Boolean.class));
+		listener.onAuthorsChanged(valid, invalid, false);
+		listener.onSubmissionEntryChanged(isA(Boolean.class));
+		replay(listener);
+		
+		// register with model
+		testModel.addListener(listener);
+		
+		// call method under test
+		testModel.setAuthors(valid);
+		testModel.setAuthors(invalid);
+		
+		verify(listener);
 	}
 	
 	
@@ -266,6 +309,7 @@ public class TestSubmissionModel {
 		listener.onSummaryChanged(invalid.getSummary(), invalid.getSummary(), false);
 		listener.onStudyLinksChanged(isA(Set.class), isA(Set.class), isA(Boolean.class));
 		listener.onModulesChanged(isA(Set.class), isA(Set.class), isA(Boolean.class));
+		listener.onAuthorsChanged(isA(Set.class), isA(Set.class), isA(Boolean.class));
 		
 		listener.onSubmissionEntryChanged(Boolean.TRUE);	
 		//assert other events called, but do not check validation again here
@@ -273,6 +317,7 @@ public class TestSubmissionModel {
 		listener.onSummaryChanged(valid.getSummary(), valid.getSummary(), true);
 		listener.onStudyLinksChanged(isA(Set.class), isA(Set.class), isA(Boolean.class));
 		listener.onModulesChanged(isA(Set.class), isA(Set.class), isA(Boolean.class));
+		listener.onAuthorsChanged(isA(Set.class), isA(Set.class), isA(Boolean.class));
 		replay(listener);
 		
 		// register with model
