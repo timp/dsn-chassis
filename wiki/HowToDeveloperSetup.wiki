@@ -14,8 +14,52 @@ Java 1.5 is also the standard used to run Chassis in the development environment
 sudo apt-get install sun-java5-jdk
 }}}
 
-== Install Eclipse IDE for Java EE Developers (Galileo - Eclipse 3.5) ==
+== Install Eclipse IDE for Java EE Developers ==
 
-Visit [http://www.eclipse.org/downloads/ eclipse.org downloads] and download the the Eclipse IDE for Java EE Developers, based on Eclipse 3.5 (Galileo), for your platform. 
+Visit [http://www.eclipse.org/downloads/ eclipse.org downloads] and download the the Eclipse IDE for Java EE Developers, based on *Eclipse 3.5 (Galileo)*, for your platform. Install it at your preferred location. 
 
-TODO finish this
+== Install the Google Plugin for Eclipse ==
+
+Install the [http://code.google.com/eclipse/docs/getting_started.html Google Plugin for Eclipse 3.5 (Galileo)] via the following update site URL:
+
+  * http://dl.google.com/eclipse/plugin/3.5
+
+You'll need the plugin and the web toolkit SDK.
+
+== Install SVN Plugin (Subversive) for Eclipse ==
+
+Install the Subversive SVN Team Provider for Eclipse 3.5. This takes two steps.
+
+First, from "Help -> Install New Software", choose the Galileo site (already added), expand the "Collaboration" section, and select "Subversive SVN Team Provider (Incubation". Continue through to install.
+
+Second, from "Help -> Install New Software", add a new update site with the following URL:
+
+  * http://www.polarion.org/projects/subversive/download/eclipse/2.0/update-site/
+
+From there, select "SVNKit 1.3.0 Implementation (Optional)" and continue through to install.
+
+(These instructions are also written up with screenshots [http://benjchristensen.com/2009/06/24/eclipse-galileo-3-5-and-subversion/ here].)
+
+== Check Out Chassis Source Code Projects ==
+
+First, ask one of the [http://dsn-chassis.googlecode.com Chassis project] owners to be added as a project committer.
+
+Switch to perspective "SVN Repository Exploring", click on the "New Repository Location" button, set the URL as:
+
+  * https://dsn-chassis.googlecode.com/svn
+
+...and enter your Google Code user name and password (if you don't know your googlecode.com password, visit http://code.google.com/hosting/settings).
+
+Check out projects from the following SVN locations:
+
+  * /trunk/generic/lib/java
+  * /trunk/generic/lib/gwt
+  * /trunk/generic/client/gwt
+  * /trunk/generic/service/user
+  * /branches/generic/service/exist-1.4.0rc-rev10028
+
+(If you browse to the location in the SVN repositories view, then right click on the location, you can do "Check Out" from there.)
+
+== Install Apache Tomcat 6.0 ==
+
+TODO
