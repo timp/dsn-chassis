@@ -179,57 +179,52 @@ public class DataFileUploadServlet extends HttpServlet {
 
 	private Entry persistMetadata(AbderaClient client, RequestOptions options, Entry entry, Map<String, String> fields) throws IOException {
 
-		boolean modified = false;
-		
 		// modify entry and put back
+		
+		// add category
+		entry.addCategory(Chassis.Types.SCHEME, Chassis.Types.TERM_DATAFILE, null);
 		
 		if (fields.containsKey(FIELD_SUBMISSION)) {
 			String href = fields.get(FIELD_SUBMISSION); // link to submission
 			String rel = Chassis.REL_SUBMISSION;
 			entry.addLink(href, rel);
-			modified = true;
 		}
 		
 		if (fields.containsKey(FIELD_AUTHOREMAIL)) {
 			String authoremail = fields.get(FIELD_AUTHOREMAIL);
 			entry.addAuthor(null, authoremail, null);
-			modified = true;
 		}
 
 		// ignore any other fields
 		
-		if (modified) {
-		
-			String entryUrl = collectionUrl + entry.getEditLink().getHref().toASCIIString();
+		String entryUrl = collectionUrl + entry.getEditLink().getHref().toASCIIString();
 
-			options.setContentType("application/atom+xml; type=entry; charset=UTF-8"); // needed, otherwise content type application/xml, which exist rejects
-			ClientResponse res = client.put(entryUrl, entry, options);
+		options.setContentType("application/atom+xml; type=entry; charset=UTF-8"); // needed, otherwise content type application/xml, which exist rejects
+		ClientResponse res = client.put(entryUrl, entry, options);
 
-			if (res.getType() == ResponseType.SUCCESS) {
+		if (res.getType() == ResponseType.SUCCESS) {
 
-				Document<Entry> doc = res.getDocument();
-				entry = doc.getRoot();
+			Document<Entry> doc = res.getDocument();
+			entry = doc.getRoot();
 
-				log.info("persisted metadata OK");
-				log.info("title: "+entry.getTitle());
-				log.info("edit link: "+entry.getEditLink());
-				log.info("edit media link: "+entry.getEditMediaLink());
-				log.info("chassis.submission link: "+entry.getLink(Chassis.REL_SUBMISSION));
-				
+			log.info("persisted metadata OK");
+			log.info("title: "+entry.getTitle());
+			log.info("edit link: "+entry.getEditLink());
+			log.info("edit media link: "+entry.getEditMediaLink());
+			log.info("chassis.submission link: "+entry.getLink(Chassis.REL_SUBMISSION));
+			
+		}
+		else {
+			
+			String message = "failed to persist metadata, response: "+res.getStatus()+" "+res.getStatusText()+"\n";
+			BufferedReader reader = new BufferedReader(new InputStreamReader(res.getInputStream()));
+			String line = reader.readLine();
+			while (line != null) {
+				message += line;
+				line = reader.readLine();
 			}
-			else {
-				
-				String message = "failed to persist metadata, response: "+res.getStatus()+" "+res.getStatusText()+"\n";
-				BufferedReader reader = new BufferedReader(new InputStreamReader(res.getInputStream()));
-				String line = reader.readLine();
-				while (line != null) {
-					message += line;
-					line = reader.readLine();
-				}
-				throw new RuntimeException(message);
+			throw new RuntimeException(message);
 
-			}
-						
 		}
 		
 		return entry;
