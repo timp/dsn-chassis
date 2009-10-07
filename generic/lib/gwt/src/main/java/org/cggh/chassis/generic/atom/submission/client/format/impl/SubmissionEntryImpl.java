@@ -6,7 +6,7 @@ package org.cggh.chassis.generic.atom.submission.client.format.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.cggh.chassis.generic.atom.chassis.base.client.format.Chassis;
+import org.cggh.chassis.generic.atom.chassis.base.vocab.Chassis;
 import org.cggh.chassis.generic.atom.submission.client.format.Submission;
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionFactory;

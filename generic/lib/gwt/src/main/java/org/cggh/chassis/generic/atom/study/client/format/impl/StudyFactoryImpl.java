@@ -3,7 +3,7 @@
  */
 package org.cggh.chassis.generic.atom.study.client.format.impl;
 
-import org.cggh.chassis.generic.atom.chassis.base.client.format.Chassis;
+import org.cggh.chassis.generic.atom.chassis.base.vocab.Chassis;
 import org.cggh.chassis.generic.atom.study.client.format.Study;
 import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
 import org.cggh.chassis.generic.atom.study.client.format.StudyFactory;
