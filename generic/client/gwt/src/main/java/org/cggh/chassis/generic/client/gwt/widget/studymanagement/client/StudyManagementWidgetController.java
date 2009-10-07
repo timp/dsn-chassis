@@ -11,20 +11,26 @@ import org.cggh.chassis.generic.log.client.LogFactory;
  *
  */
 public class StudyManagementWidgetController {
+	private Log log = LogFactory.getLog(this.getClass());
 
 	final private StudyManagementWidgetModel model;
-	private Log log = LogFactory.getLog(this.getClass());
 
 	public StudyManagementWidgetController(StudyManagementWidgetModel model) {
 		this.model = model;
 	}
 
 	public void displayCreateStudyWidget() {
+		displayCreateStudyWidget(false);
+	}
+
+	public void displayCreateStudyWidget(Boolean userConfirmed) {
 		log.enter("displayCreateStudyWidget");
-		
-		model.setDisplayStatus(StudyManagementWidgetModel.DISPLAYING_CREATE_STUDY);
+		log.trace("userConfirmed: " + userConfirmed);
+			
+		model.setDisplayStatus(StudyManagementWidgetModel.DISPLAYING_CREATE_STUDY, userConfirmed);
 		
 		log.leave();
+		
 	}
 
 	public void displayEditStudyWidget() {
@@ -44,11 +50,16 @@ public class StudyManagementWidgetController {
 	}
 
 	public void displayViewAllStudiesWidget() {
+		displayViewAllStudiesWidget(false);
+	}
+
+	public void displayViewAllStudiesWidget(Boolean userConfirmed) {
 		log.enter("displayViewAllStudiesWidget");
+		log.trace("userConfirmed: " + userConfirmed);
 		
-		model.setDisplayStatus(StudyManagementWidgetModel.DISPLAYING_VIEW_ALL_STUDIES);
-		
-		log.leave();		
+		model.setDisplayStatus(StudyManagementWidgetModel.DISPLAYING_VIEW_ALL_STUDIES, userConfirmed);
+					
+		log.leave();
 	}
 
 	

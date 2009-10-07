@@ -14,7 +14,9 @@ import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewS
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DecoratedPopupPanel;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.SimplePanel;
@@ -32,6 +34,7 @@ public class StudyManagementWidgetDefaultRenderer implements StudyManagementWidg
 	final Panel displayCanvas;
 	final Panel menuCanvas;
 	final DecoratedPopupPanel menuPopUp = new DecoratedPopupPanel(true);
+	final DecoratedPopupPanel confirmLoseChangesPopup = new DecoratedPopupPanel(false);
 
 	final private StudyManagementWidgetController controller;
 	private String authorEmail;
@@ -134,6 +137,55 @@ public class StudyManagementWidgetDefaultRenderer implements StudyManagementWidg
 			displayCanvas.add(editStudyWidgetCanvas);
 		}
 		
+	}
+
+	public void onUserMightLoseChanges(final Integer userRequestedView) {
+
+		confirmLoseChangesPopup.clear();
+		
+		//create message box
+		VerticalPanel messagePanel = new VerticalPanel();
+		
+		messagePanel.add(new Label("Any unsaved data will be lost."));
+		
+		//create cancel button and ClickHandler
+		Button cancelButton = new Button("Cancel");
+		cancelButton.addClickHandler(new ClickHandler() {
+			
+			public void onClick(ClickEvent arg0) {
+				confirmLoseChangesPopup.hide();
+			}
+		});
+		
+		
+		//create continue button
+		Button continueButton = new Button("Continue anyway");
+		continueButton.addClickHandler(new ClickHandler() {
+			
+			public void onClick(ClickEvent arg0) {
+				
+				if (userRequestedView == StudyManagementWidgetModel.DISPLAYING_CREATE_STUDY) {
+					confirmLoseChangesPopup.hide();
+					controller.displayCreateStudyWidget(true);
+				} else if (userRequestedView == StudyManagementWidgetModel.DISPLAYING_VIEW_ALL_STUDIES) {
+					confirmLoseChangesPopup.hide();
+					controller.displayViewAllStudiesWidget(true);
+				}
+			}
+		});
+		
+		//Create button panel
+		HorizontalPanel buttonPanel = new HorizontalPanel();
+		buttonPanel.add(continueButton);
+		buttonPanel.add(cancelButton);
+		
+		messagePanel.add(buttonPanel);
+		
+		confirmLoseChangesPopup.add(messagePanel);			
+
+		confirmLoseChangesPopup.center();
+		confirmLoseChangesPopup.show();		
+
 	}	
 
 }

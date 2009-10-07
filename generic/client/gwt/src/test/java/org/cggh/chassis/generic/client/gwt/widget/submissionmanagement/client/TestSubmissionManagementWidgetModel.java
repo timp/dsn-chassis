@@ -3,17 +3,26 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.submissionmanagement.client;
 
-import static org.junit.Assert.*;
-import static org.easymock.EasyMock.*;
+import static org.easymock.EasyMock.createMock;
+import static org.easymock.EasyMock.replay;
+import static org.easymock.EasyMock.verify;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import junit.framework.JUnit4TestAdapter;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.powermock.api.easymock.PowerMock;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author raok
  *
  */
+@RunWith(PowerMockRunner.class)
+@PrepareForTest({SubmissionManagementWidget.class})
 public class TestSubmissionManagementWidgetModel {
 
 	public static junit.framework.Test suite() {
@@ -21,12 +30,16 @@ public class TestSubmissionManagementWidgetModel {
 	}
 
 	private SubmissionManagementWidgetModel testModel;
+	private SubmissionManagementWidget mockOwner;
 	
 	@Before
 	public void setUp() {
 		
+		//create mockOwner
+		mockOwner = PowerMock.createMock(SubmissionManagementWidget.class);
+		
 		//create test object
-		testModel = new SubmissionManagementWidgetModel();
+		testModel = new SubmissionManagementWidgetModel(mockOwner);
 		
 	}
 	
@@ -45,10 +58,10 @@ public class TestSubmissionManagementWidgetModel {
 	public void testStatusConstants() {
 		
 		assertEquals(new Integer(0), SubmissionManagementWidgetModel.DISPLAYING_NONE);
-		assertEquals(new Integer(1), SubmissionManagementWidgetModel.DISPLAYING_CREATE_STUDY);
-		assertEquals(new Integer(2), SubmissionManagementWidgetModel.DISPLAYING_VIEW_STUDY);
-		assertEquals(new Integer(3), SubmissionManagementWidgetModel.DISPLAYING_EDIT_STUDY);
-		assertEquals(new Integer(4), SubmissionManagementWidgetModel.DISPLAYING_VIEW_ALL_STUDIES);
+		assertEquals(new Integer(1), SubmissionManagementWidgetModel.DISPLAYING_CREATE_SUBMISSION);
+		assertEquals(new Integer(2), SubmissionManagementWidgetModel.DISPLAYING_VIEW_SUBMISSION);
+		assertEquals(new Integer(3), SubmissionManagementWidgetModel.DISPLAYING_EDIT_SUBMISSION);
+		assertEquals(new Integer(4), SubmissionManagementWidgetModel.DISPLAYING_VIEW_ALL_SUBMISSIONS);
 				
 	}
 		
@@ -58,15 +71,56 @@ public class TestSubmissionManagementWidgetModel {
 		SubmissionManagementWidgetModelListener listener = createMock(SubmissionManagementWidgetModelListener.class);
 		
 		// set up expectations
-		listener.onDisplayStatusChanged(SubmissionManagementWidgetModel.DISPLAYING_NONE, SubmissionManagementWidgetModel.DISPLAYING_CREATE_STUDY);
-		listener.onDisplayStatusChanged(SubmissionManagementWidgetModel.DISPLAYING_CREATE_STUDY, SubmissionManagementWidgetModel.DISPLAYING_EDIT_STUDY);
+		listener.onDisplayStatusChanged(SubmissionManagementWidgetModel.DISPLAYING_NONE, SubmissionManagementWidgetModel.DISPLAYING_CREATE_SUBMISSION);
+		mockOwner.displayStatusChanged(true);
+		replay(listener);
+		PowerMock.replay(mockOwner);
+		
+		//register listener with model
+		testModel.addListener(listener);
+		
+		testModel.setDisplayStatus(SubmissionManagementWidgetModel.DISPLAYING_CREATE_SUBMISSION);
+		
+		verify(listener);
+		PowerMock.verify(mockOwner);
+	}
+		
+	@Test
+	public void testStatusChanged_UserMightLoseChanges() {
+	
+		//set up test
+		testModel.setDisplayStatus(SubmissionManagementWidgetModel.DISPLAYING_CREATE_SUBMISSION);
+		
+		SubmissionManagementWidgetModelListener listener = createMock(SubmissionManagementWidgetModelListener.class);
+		
+		// set up expectations
+		listener.userMightLoseChanges(SubmissionManagementWidgetModel.DISPLAYING_EDIT_SUBMISSION);
 		replay(listener);
 		
 		//register listener with model
 		testModel.addListener(listener);
 		
-		testModel.setDisplayStatus(SubmissionManagementWidgetModel.DISPLAYING_CREATE_STUDY);
-		testModel.setDisplayStatus(SubmissionManagementWidgetModel.DISPLAYING_EDIT_STUDY);
+		testModel.setDisplayStatus(SubmissionManagementWidgetModel.DISPLAYING_EDIT_SUBMISSION);
+		
+		verify(listener);
+	}
+		
+	@Test
+	public void testStatusChanged_UserMightLoseChanges_confirmed() {
+	
+		//set up test
+		testModel.setDisplayStatus(SubmissionManagementWidgetModel.DISPLAYING_EDIT_SUBMISSION);
+		
+		SubmissionManagementWidgetModelListener listener = createMock(SubmissionManagementWidgetModelListener.class);
+		
+		// set up expectations
+		listener.onDisplayStatusChanged(SubmissionManagementWidgetModel.DISPLAYING_EDIT_SUBMISSION, SubmissionManagementWidgetModel.DISPLAYING_VIEW_ALL_SUBMISSIONS);
+		replay(listener);
+		
+		//register listener with model
+		testModel.addListener(listener);
+		
+		testModel.setDisplayStatus(SubmissionManagementWidgetModel.DISPLAYING_VIEW_ALL_SUBMISSIONS, true);
 		
 		verify(listener);
 	}

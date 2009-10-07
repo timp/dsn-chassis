@@ -20,27 +20,62 @@ public class StudyManagementWidgetModel {
 	
 	private Integer displayStatus = DISPLAYING_NONE;
 	private Set<StudyManagementWidgetModelListener> listeners = new HashSet<StudyManagementWidgetModelListener>();
+	final private StudyManagementWidget owner;
 
-	public Integer getDisplayStatus() {
-		return displayStatus;
+	public StudyManagementWidgetModel(StudyManagementWidget owner) {
+		this.owner = owner;
 	}
 
 	public void addListener(StudyManagementWidgetModelListener listener) {
 		listeners.add(listener);
 	}
 
-	public void setDisplayStatus(Integer displayStatus) {
-		// TODO Handle work flow errors
+	public Integer getDisplayStatus() {
+		return displayStatus;
+	}
+
+	public void setDisplayStatus(Integer requestedDisplay) {
+		setDisplayStatus(requestedDisplay, false);
+	}
+
+	public void setDisplayStatus(Integer requestedDisplay, Boolean userConfirmed) {
 		
 		Integer before = this.displayStatus;
-		this.displayStatus = displayStatus;
-		fireOnDisplayStatusChanged(before, displayStatus);
+		
+		if ( !userConfirmed && couldStatusContainUnsavedData(before) ) {
+			
+			fireUserMightLoseChanges(requestedDisplay);
+			
+		} else {
+		
+			this.displayStatus = requestedDisplay;
+		
+			fireOnDisplayStatusChanged(before, requestedDisplay);
+			
+			Boolean couldStatusContainUnsavedData = couldStatusContainUnsavedData(displayStatus);
+			
+			//alert owner
+			owner.displayStatusChanged(couldStatusContainUnsavedData);
+		}
+		
+	}
+
+	private Boolean couldStatusContainUnsavedData(Integer displayStatus) {
+		return (displayStatus == DISPLAYING_CREATE_STUDY) || (displayStatus == DISPLAYING_EDIT_STUDY);
 	}
 
 	private void fireOnDisplayStatusChanged(Integer before, Integer after) {
 		for (StudyManagementWidgetModelListener listener : listeners) {
 			listener.onDisplayStatusChanged(before, after);
 		}
+	}
+
+	private void fireUserMightLoseChanges(Integer requestedDisplay) {
+
+		for (StudyManagementWidgetModelListener listener : listeners) {
+			listener.onUserMightLoseChanges(requestedDisplay);			
+		}
+		
 	}
 
 }

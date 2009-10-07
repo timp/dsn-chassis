@@ -43,10 +43,6 @@ public class GWTTestStudyManagementWidgetDefaultRenderer extends GWTTestCase {
 	@Override
 	protected void gwtSetUp() {
 		
-		//create testController and inject testModel
-		testModel = new StudyManagementWidgetModel();
-		testController = new StudyManagementWidgetController(testModel);
-		
 		//Create testController, inject mockModel and a mock Service
 		mockFactory = new MockStudyFactory();
 		mockService = new MockAtomService(mockFactory);
@@ -63,6 +59,10 @@ public class GWTTestStudyManagementWidgetDefaultRenderer extends GWTTestCase {
 		ConfigurationBean.useUnitTestConfiguration = true;
 		ConfigurationBean.testModules = testModules;
 		
+		//create testController and inject testModel
+		testModel = new StudyManagementWidgetModel(new StudyManagementWidget(new SimplePanel(), ""));
+		testController = new StudyManagementWidgetController(testModel);
+		
 		//instantiate a test renderer
 		testRenderer = new StudyManagementWidgetDefaultRenderer(new SimplePanel(), new SimplePanel(), testController, "");
 		
@@ -75,10 +75,7 @@ public class GWTTestStudyManagementWidgetDefaultRenderer extends GWTTestCase {
 	public void testInitialState() {
 		
 		assertNotNull(testRenderer);
-		
-		//display menu, but do not display any main widgets initially
-		// TODO test?
-		
+				
 	}
 	
 	@Test
@@ -109,31 +106,46 @@ public class GWTTestStudyManagementWidgetDefaultRenderer extends GWTTestCase {
 	public void testOnDisplayStatusChanged() {
 		
 		// call method under test
-		testModel.setDisplayStatus(StudyManagementWidgetModel.DISPLAYING_CREATE_STUDY);		
+		testRenderer.onDisplayStatusChanged(null, StudyManagementWidgetModel.DISPLAYING_CREATE_STUDY);
 
 		// test outcome 
 		assertTrue( (testRenderer.createStudyWidgetCanvas.getParent() != null)
 					 && (testRenderer.createStudyWidgetCanvas.isVisible()) );
 		
-		testModel.setDisplayStatus(StudyManagementWidgetModel.DISPLAYING_VIEW_STUDY);		
+		// call method under test
+		testRenderer.onDisplayStatusChanged(null, StudyManagementWidgetModel.DISPLAYING_VIEW_STUDY);
 
 		// test outcome 
 		assertTrue( (testRenderer.viewStudyWidgetCanvas.getParent() != null)
 					 && (testRenderer.viewStudyWidgetCanvas.isVisible()) );
 		
-		testModel.setDisplayStatus(StudyManagementWidgetModel.DISPLAYING_VIEW_ALL_STUDIES);		
+		// call method under test
+		testRenderer.onDisplayStatusChanged(null, StudyManagementWidgetModel.DISPLAYING_VIEW_ALL_STUDIES);
 
 		// test outcome 
 		assertTrue( (testRenderer.viewStudiesWidgetCanvas.getParent() != null)
 					 && (testRenderer.viewStudiesWidgetCanvas.isVisible()) );
 		
-		testModel.setDisplayStatus(StudyManagementWidgetModel.DISPLAYING_EDIT_STUDY);		
+		// call method under test
+		testRenderer.onDisplayStatusChanged(null, StudyManagementWidgetModel.DISPLAYING_EDIT_STUDY);
 
 		// test outcome 
 		assertTrue( (testRenderer.editStudyWidgetCanvas.getParent() != null)
 					 && (testRenderer.editStudyWidgetCanvas.isVisible()) );
 		
 	}
+	
+	@Test
+	public void testUserMightLoseChanges() {
 		
+		//call method under test
+		testRenderer.onUserMightLoseChanges(StudyManagementWidgetModel.DISPLAYING_CREATE_STUDY);
+		
+		//test outcome 
+		assertTrue( testRenderer.confirmLoseChangesPopup.isShowing() );
+			
+		
+	}
+	
 	
 }

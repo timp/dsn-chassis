@@ -11,4 +11,6 @@ public interface StudyManagementWidgetModelListener {
 
 	void onDisplayStatusChanged(Integer before, Integer after);
 
+	void onUserMightLoseChanges(Integer userRequestedView);
+
 }

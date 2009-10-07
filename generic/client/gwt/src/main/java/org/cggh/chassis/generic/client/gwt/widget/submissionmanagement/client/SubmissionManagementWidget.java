@@ -3,6 +3,9 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.submissionmanagement.client;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
 import org.cggh.chassis.generic.client.gwt.widget.submission.create.client.CreateSubmissionWidgetPubSubAPI;
 import org.cggh.chassis.generic.client.gwt.widget.submission.edit.client.EditSubmissionWidgetPubSubAPI;
@@ -31,10 +34,11 @@ public class SubmissionManagementWidget implements SubmissionManagementWidgetAPI
 	private SubmissionManagementWidgetController controller;
 	private SubmissionManagementWidgetDefaultRenderer renderer;
 	private Panel menuCanvas = new SimplePanel();
+	private Set<SubmissionManagementWidgetPubSubAPI> listeners = new HashSet<SubmissionManagementWidgetPubSubAPI>();
 
 	public SubmissionManagementWidget(Panel displayCanvas, String authorEmail) {
 		
-		model = new SubmissionManagementWidgetModel();
+		model = new SubmissionManagementWidgetModel(this);
 		
 		controller = new SubmissionManagementWidgetController(model);
 		
@@ -101,6 +105,20 @@ public class SubmissionManagementWidget implements SubmissionManagementWidgetAPI
 	 */
 	public Panel getMenuCanvas() {
 		return menuCanvas;
+	}
+
+	public void displayStatusChanged(Boolean couldStatusContainUnsavedData) {
+		
+		for (SubmissionManagementWidgetPubSubAPI listener : listeners) {
+			listener.onSubmissionManagmentDisplayStatusChanged(couldStatusContainUnsavedData);
+		}
+		
+	}
+
+	public void addSubmissionManagementWidgetListener(SubmissionManagementWidgetPubSubAPI listener) {
+
+		listeners.add(listener);
+		
 	}
 	
 	

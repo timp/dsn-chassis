@@ -11,26 +11,31 @@ import org.cggh.chassis.generic.log.client.LogFactory;
  *
  */
 public class SubmissionManagementWidgetController {
+	private Log log = LogFactory.getLog(this.getClass());
 
 	final private SubmissionManagementWidgetModel model;
-	private Log log = LogFactory.getLog(this.getClass());
 
 	public SubmissionManagementWidgetController(SubmissionManagementWidgetModel model) {
 		this.model = model;
 	}
 
 	public void displayCreateSubmissionWidget() {
+		displayCreateSubmissionWidget(false);
+	}
+
+	public void displayCreateSubmissionWidget(Boolean userConfirmed) {
 		log.enter("displayCreateSubmissionWidget");
+		log.trace("userConfirmed: " + userConfirmed);
 		
-		model.setDisplayStatus(SubmissionManagementWidgetModel.DISPLAYING_CREATE_STUDY);
-		
+		model.setDisplayStatus(SubmissionManagementWidgetModel.DISPLAYING_CREATE_SUBMISSION, userConfirmed);
+				
 		log.leave();
 	}
 
 	public void displayEditSubmissionWidget() {
 		log.enter("displayEditSubmissionWidget");
 
-		model.setDisplayStatus(SubmissionManagementWidgetModel.DISPLAYING_EDIT_STUDY);
+		model.setDisplayStatus(SubmissionManagementWidgetModel.DISPLAYING_EDIT_SUBMISSION);
 		
 		log.leave();
 	}
@@ -38,16 +43,21 @@ public class SubmissionManagementWidgetController {
 	public void displayViewSubmissionWidget() {
 		log.enter("displayViewSubmissionWidget");
 
-		model.setDisplayStatus(SubmissionManagementWidgetModel.DISPLAYING_VIEW_STUDY);
+		model.setDisplayStatus(SubmissionManagementWidgetModel.DISPLAYING_VIEW_SUBMISSION);
 		
 		log.leave();
 	}
 
 	public void displayViewAllSubmissionsWidget() {
+		displayViewAllSubmissionsWidget(false);
+	}
+
+	public void displayViewAllSubmissionsWidget(Boolean userConfirmed) {
 		log.enter("displayViewAllSubmissionsWidget");
+		log.trace("userConfirmed: " + userConfirmed);
 		
-		model.setDisplayStatus(SubmissionManagementWidgetModel.DISPLAYING_VIEW_ALL_STUDIES);
-		
+		model.setDisplayStatus(SubmissionManagementWidgetModel.DISPLAYING_VIEW_ALL_SUBMISSIONS, userConfirmed);
+					
 		log.leave();		
 	}
 
