@@ -28,6 +28,7 @@ import org.apache.commons.fileupload.util.Streams;
 import org.apache.commons.httpclient.methods.InputStreamRequestEntity;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.cggh.chassis.generic.atom.chassis.base.vocab.Chassis;
 
 /**
  * Servlet implementation class DataFileUploadServlet
@@ -41,6 +42,12 @@ public class DataFileUploadServlet extends HttpServlet {
 	
 	
 	public static final String INITPARAM_COLLECTIONURL = "atomCollectionUrl";
+
+
+
+	public static final Object FIELD_SUBMISSION = "submission";
+	public static final Object FIELD_DATAFILE = "datafile";
+	public static final Object FIELD_AUTHOREMAIL = "authoremail";
 
 
 
@@ -112,24 +119,24 @@ public class DataFileUploadServlet extends HttpServlet {
 			while (iter.hasNext()) {
 
 				FileItemStream item = iter.next();
-			    String name = item.getFieldName();
+			    String fieldName = item.getFieldName();
 			    InputStream stream = item.openStream();
 
 			    if (item.isFormField()) {
 			    	
 			    	String value = Streams.asString(stream);
 			        
-			    	log.info("Form field " + name + " with value " + value + " detected.");
+			    	log.info("Form field " + fieldName + " with value " + value + " detected.");
 			        
-			        fields.put(name, value);
+			        fields.put(fieldName, value);
 			        
 			    } else {
 			    	
 				    String contentType = item.getContentType();
 
-				    log.info("File field " + name + " with file name " + item.getName() + ", content type " + contentType + " detected.");
+				    log.info("File field " + fieldName + " with file name " + item.getName() + ", content type " + contentType + " detected.");
 			        
-				    if ("chassis.datafile".equals(name)) {
+				    if (FIELD_DATAFILE.equals(fieldName)) {
 				        // process the input stream
 				        entry = persistFile(client, createRequestOptions(request), stream, contentType);
 				    }
@@ -175,13 +182,21 @@ public class DataFileUploadServlet extends HttpServlet {
 		boolean modified = false;
 		
 		// modify entry and put back
-		if (fields.containsKey("chassis.submission")) {
-			String href = fields.get("chassis.submission"); // link to submission
-			String rel = "chassis.submission";
+		
+		if (fields.containsKey(FIELD_SUBMISSION)) {
+			String href = fields.get(FIELD_SUBMISSION); // link to submission
+			String rel = Chassis.REL_SUBMISSION;
 			entry.addLink(href, rel);
 			modified = true;
 		}
-		// ignore other fields for now
+		
+		if (fields.containsKey(FIELD_AUTHOREMAIL)) {
+			String authoremail = fields.get(FIELD_AUTHOREMAIL);
+			entry.addAuthor(null, authoremail, null);
+			modified = true;
+		}
+
+		// ignore any other fields
 		
 		if (modified) {
 		
@@ -199,7 +214,7 @@ public class DataFileUploadServlet extends HttpServlet {
 				log.info("title: "+entry.getTitle());
 				log.info("edit link: "+entry.getEditLink());
 				log.info("edit media link: "+entry.getEditMediaLink());
-				log.info("chassis.submission link: "+entry.getLink("chassis.submission"));
+				log.info("chassis.submission link: "+entry.getLink(Chassis.REL_SUBMISSION));
 				
 			}
 			else {
@@ -240,7 +255,7 @@ public class DataFileUploadServlet extends HttpServlet {
 			log.info("title: "+entry.getTitle());
 			log.info("edit link: "+entry.getEditLink());
 			log.info("edit media link: "+entry.getEditMediaLink());
-			log.info("chassis.submission link: "+entry.getLink("chassis.submission"));
+			log.info("chassis.submission link: "+entry.getLink(Chassis.REL_SUBMISSION));
 
 		}
 		else {
