@@ -3,10 +3,15 @@
  */
 package spike.widget.userdetails.client;
 
+import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
 import org.cggh.chassis.generic.client.gwt.widget.userdetails.client.UserDetailsWidget;
 import org.cggh.chassis.generic.client.gwt.widget.userdetails.client.UserDetailsWidgetAPI;
+import org.cggh.chassis.generic.user.gwtrpc.client.GWTUserDetailsService;
+import org.cggh.chassis.generic.user.gwtrpc.client.GWTUserDetailsServiceAsync;
 
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.google.gwt.user.client.ui.RootPanel;
 
 /**
@@ -19,8 +24,15 @@ public class SpikeUserDetailsEntryPoint implements EntryPoint {
 	 * @see com.google.gwt.core.client.EntryPoint#onModuleLoad()
 	 */
 	public void onModuleLoad() {
-				
-		UserDetailsWidgetAPI widget = new UserDetailsWidget(RootPanel.get());
+
+		// instantiate service
+		GWTUserDetailsServiceAsync userService = GWT.create(GWTUserDetailsService.class);
+		
+		// set service URL
+		ServiceDefTarget target = (ServiceDefTarget) userService;
+		target.setServiceEntryPoint(ConfigurationBean.getUserDetailsServiceEndpointURL());
+		
+		UserDetailsWidgetAPI widget = new UserDetailsWidget(RootPanel.get(), userService);
 		widget.refreshUserDetails();
 		
 	}
