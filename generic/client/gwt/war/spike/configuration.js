@@ -11,6 +11,7 @@ CHASSIS.submissionFeedURL = "/chassis-generic-service-exist/atom/edit/submission
 CHASSIS.submissionQueryServiceURL = "/chassis-generic-service-exist/query/submissions.xql";
 
 CHASSIS.dataFileFeedURL = "/chassis-generic-service-exist/atom/edit/datafiles";
+CHASSIS.dataFileQueryServiceURL = "/chassis-generic-service-exist/query/datafiles.xql";
 
 // configure role name prefix
 CHASSIS.userChassisRolesPrefix = "ROLE_CHASSIS_";
