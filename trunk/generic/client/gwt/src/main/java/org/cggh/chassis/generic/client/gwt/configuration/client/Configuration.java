@@ -50,4 +50,8 @@ public class Configuration {
 		return $wnd.CHASSIS.studyQueryServiceURL;
 	}-*/;
 	
+	public static native String getDataFileQueryServiceURL() /*-{
+		return $wnd.CHASSIS.dataFileQueryServiceURL;
+	}-*/;
+
 }
