@@ -3,6 +3,9 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.studymanagement.client;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
 import org.cggh.chassis.generic.client.gwt.widget.study.create.client.CreateStudyWidgetPubSubAPI;
 import org.cggh.chassis.generic.client.gwt.widget.study.edit.client.EditStudyWidgetPubSubAPI;
@@ -27,10 +30,11 @@ public class StudyManagementWidget implements StudyManagementWidgetAPI,
 	private StudyManagementWidgetController controller;
 	private StudyManagementWidgetDefaultRenderer renderer;
 	private Panel menuCanvas = new SimplePanel();
+	private Set<StudyManagementWidgetPubSubAPI> listeners = new HashSet<StudyManagementWidgetPubSubAPI>();
 
 	public StudyManagementWidget(Panel displayCanvas, String authorEmail) {
 		
-		model = new StudyManagementWidgetModel();
+		model = new StudyManagementWidgetModel(this);
 		
 		controller = new StudyManagementWidgetController(model);
 		
@@ -76,6 +80,19 @@ public class StudyManagementWidget implements StudyManagementWidgetAPI,
 	 */
 	public Panel getMenuCanvas() {
 		return menuCanvas;
+	}
+
+	public void displayStatusChanged(Boolean couldStatusContainUnsavedData) {
+
+		for (StudyManagementWidgetPubSubAPI listener : listeners) {
+			listener.onStudyManagmentDisplayStatusChanged(couldStatusContainUnsavedData);
+		}
+		
+	}
+
+	public void addStudyManagementWidgetListener(StudyManagementWidgetPubSubAPI listener) {
+
+		listeners.add(listener);
 	}
 	
 }

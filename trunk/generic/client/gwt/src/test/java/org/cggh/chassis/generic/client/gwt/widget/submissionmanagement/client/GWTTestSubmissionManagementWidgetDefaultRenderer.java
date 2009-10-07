@@ -43,10 +43,6 @@ public class GWTTestSubmissionManagementWidgetDefaultRenderer extends GWTTestCas
 	@Override
 	protected void gwtSetUp() {
 		
-		//create testController and inject testModel
-		testModel = new SubmissionManagementWidgetModel();
-		testController = new SubmissionManagementWidgetController(testModel);
-		
 		//Create testController, inject mockModel and a mock Service
 		mockFactory = new MockSubmissionFactory();
 		mockService = new MockAtomService(mockFactory);
@@ -62,6 +58,10 @@ public class GWTTestSubmissionManagementWidgetDefaultRenderer extends GWTTestCas
 		//Set up ConfigurationBean with test values
 		ConfigurationBean.useUnitTestConfiguration = true;
 		ConfigurationBean.testModules = testModules;
+		
+		//create testController and inject testModel
+		testModel = new SubmissionManagementWidgetModel(new SubmissionManagementWidget(new SimplePanel(), ""));
+		testController = new SubmissionManagementWidgetController(testModel);
 		
 		//instantiate a test renderer
 		testRenderer = new SubmissionManagementWidgetDefaultRenderer(new SimplePanel(), new SimplePanel(), testController, "");
@@ -89,7 +89,7 @@ public class GWTTestSubmissionManagementWidgetDefaultRenderer extends GWTTestCas
 								 (HasHandlers)testRenderer.displayCreateSubmissionUI );
 		
 		//test outcome
-		assertEquals(SubmissionManagementWidgetModel.DISPLAYING_CREATE_STUDY, testModel.getDisplayStatus());
+		assertEquals(SubmissionManagementWidgetModel.DISPLAYING_CREATE_SUBMISSION, testModel.getDisplayStatus());
 		
 	}
 	
@@ -101,7 +101,7 @@ public class GWTTestSubmissionManagementWidgetDefaultRenderer extends GWTTestCas
 								 (HasHandlers)testRenderer.displayViewAllSubmissionsUI );
 		
 		//test outcome
-		assertEquals(SubmissionManagementWidgetModel.DISPLAYING_VIEW_ALL_STUDIES, testModel.getDisplayStatus());
+		assertEquals(SubmissionManagementWidgetModel.DISPLAYING_VIEW_ALL_SUBMISSIONS, testModel.getDisplayStatus());
 		
 	}
 	
@@ -109,31 +109,45 @@ public class GWTTestSubmissionManagementWidgetDefaultRenderer extends GWTTestCas
 	public void testOnDisplayStatusChanged() {
 		
 		// call method under test
-		testModel.setDisplayStatus(SubmissionManagementWidgetModel.DISPLAYING_CREATE_STUDY);		
+		testRenderer.onDisplayStatusChanged(null, SubmissionManagementWidgetModel.DISPLAYING_CREATE_SUBMISSION);
 
 		// test outcome 
 		assertTrue( (testRenderer.createSubmissionWidgetCanvas.getParent() != null)
 					 && (testRenderer.createSubmissionWidgetCanvas.isVisible()) );
 		
-		testModel.setDisplayStatus(SubmissionManagementWidgetModel.DISPLAYING_VIEW_STUDY);		
+		// call method under test
+		testRenderer.onDisplayStatusChanged(null, SubmissionManagementWidgetModel.DISPLAYING_VIEW_SUBMISSION);
 
 		// test outcome 
 		assertTrue( (testRenderer.viewSubmissionWidgetCanvas.getParent() != null)
 					 && (testRenderer.viewSubmissionWidgetCanvas.isVisible()) );
 		
-		testModel.setDisplayStatus(SubmissionManagementWidgetModel.DISPLAYING_VIEW_ALL_STUDIES);		
+		// call method under test
+		testRenderer.onDisplayStatusChanged(null, SubmissionManagementWidgetModel.DISPLAYING_VIEW_ALL_SUBMISSIONS);	
 
 		// test outcome 
 		assertTrue( (testRenderer.viewAllSubmissionsWidgetCanvas.getParent() != null)
 					 && (testRenderer.viewAllSubmissionsWidgetCanvas.isVisible()) );
 		
-		testModel.setDisplayStatus(SubmissionManagementWidgetModel.DISPLAYING_EDIT_STUDY);		
+		// call method under test
+		testRenderer.onDisplayStatusChanged(null, SubmissionManagementWidgetModel.DISPLAYING_EDIT_SUBMISSION);
 
 		// test outcome 
 		assertTrue( (testRenderer.editSubmissionWidgetCanvas.getParent() != null)
 					 && (testRenderer.editSubmissionWidgetCanvas.isVisible()) );
 		
 	}
+	
+	@Test
+	public void testUserMightLoseChanges() {
 		
+		//call method under test
+		testRenderer.userMightLoseChanges(SubmissionManagementWidgetModel.DISPLAYING_EDIT_SUBMISSION);
+		
+
+		//test outcome 
+		assertTrue( testRenderer.confirmLoseChangesPopup.isShowing() );
+		
+	}
 	
 }

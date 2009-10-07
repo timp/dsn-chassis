@@ -3,78 +3,97 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.submissionmanagement.client;
 
-import static org.junit.Assert.*;
+import junit.framework.JUnit4TestAdapter;
 
 import org.junit.Before;
 import org.junit.Test;
-
-import junit.framework.JUnit4TestAdapter;
+import org.junit.runner.RunWith;
+import org.powermock.api.easymock.PowerMock;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 
 /**
  * @author raok
  *
  */
+@RunWith(PowerMockRunner.class)
+@PrepareForTest({SubmissionManagementWidget.class})
 public class TestSubmissionManagementWidgetController {
 
 	public static junit.framework.Test suite() {
 	   return new JUnit4TestAdapter(TestSubmissionManagementWidgetController.class);
 	}
 
-	private SubmissionManagementWidgetModel testModel;
+	private SubmissionManagementWidgetModel mockModel;
 	private SubmissionManagementWidgetController testController;
 	
 	@Before
 	public void setUp() {
 		
-		testModel = new SubmissionManagementWidgetModel();
+		mockModel = PowerMock.createMock(SubmissionManagementWidgetModel.class);
 		
-		testController = new SubmissionManagementWidgetController(testModel);
+		testController = new SubmissionManagementWidgetController(mockModel);
 		
 	}
 	
 	@Test
 	public void testDisplayCreateSubmissionWidget() {
 		
+		//set expectations
+		mockModel.setDisplayStatus(SubmissionManagementWidgetModel.DISPLAYING_CREATE_SUBMISSION, false);
+		PowerMock.expectLastCall();
+		PowerMock.replay(mockModel);
+		
 		//call method under test
 		testController.displayCreateSubmissionWidget();
-		
-		//test outcome
-		assertEquals(SubmissionManagementWidgetModel.DISPLAYING_CREATE_STUDY, testModel.getDisplayStatus());
+
+		PowerMock.verify(mockModel);
 		
 	}
 	
 	@Test
 	public void testDisplayEditSubmissionWidget() {
 		
+		//set expectations
+		mockModel.setDisplayStatus(SubmissionManagementWidgetModel.DISPLAYING_EDIT_SUBMISSION);
+		PowerMock.expectLastCall();
+		PowerMock.replay(mockModel);
+		
 		//call method under test
 		testController.displayEditSubmissionWidget();
-		
-		//test outcome
-		assertEquals(SubmissionManagementWidgetModel.DISPLAYING_EDIT_STUDY, testModel.getDisplayStatus());
+
+		PowerMock.verify(mockModel);
 	}
 	
 	@Test
 	public void testDisplayViewSubmissionWidget() {
 		
+		//set expectations
+		mockModel.setDisplayStatus(SubmissionManagementWidgetModel.DISPLAYING_VIEW_SUBMISSION);
+		PowerMock.expectLastCall();
+		PowerMock.replay(mockModel);
+		
 		//call method under test
 		testController.displayViewSubmissionWidget();
-		
-		//test outcome
-		assertEquals(SubmissionManagementWidgetModel.DISPLAYING_VIEW_STUDY, testModel.getDisplayStatus());
+
+		PowerMock.verify(mockModel);
 		
 	}
 	
 	@Test
 	public void testDisplayViewAllSubmissionsWidget() {
 		
+		//set expectations
+		mockModel.setDisplayStatus(SubmissionManagementWidgetModel.DISPLAYING_VIEW_ALL_SUBMISSIONS, false);
+		PowerMock.expectLastCall();
+		PowerMock.replay(mockModel);
+		
 		//method under test
 		testController.displayViewAllSubmissionsWidget();
-		
-		//test outcome
-		assertEquals(SubmissionManagementWidgetModel.DISPLAYING_VIEW_ALL_STUDIES, testModel.getDisplayStatus());
+
+		PowerMock.verify(mockModel);
 		
 	}
-	
 	
 }

@@ -5,5 +5,7 @@ import com.google.gwt.user.client.ui.Panel;
 public interface StudyManagementWidgetAPI {
 
 	public Panel getMenuCanvas();
+	
+	public void addStudyManagementWidgetListener(StudyManagementWidgetPubSubAPI listener);
 
 }

@@ -9,11 +9,17 @@ import junit.framework.JUnit4TestAdapter;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.powermock.api.easymock.PowerMock;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author raok
  *
  */
+@RunWith(PowerMockRunner.class)
+@PrepareForTest({StudyManagementWidget.class})
 public class TestStudyManagementWidgetModel {
 
 	public static junit.framework.Test suite() {
@@ -21,12 +27,16 @@ public class TestStudyManagementWidgetModel {
 	}
 
 	private StudyManagementWidgetModel testModel;
+	private StudyManagementWidget mockOwner;
 	
 	@Before
 	public void setUp() {
-		
+
+		//create mockOwner
+		mockOwner = PowerMock.createMock(StudyManagementWidget.class);
+				
 		//create test object
-		testModel = new StudyManagementWidgetModel();
+		testModel = new StudyManagementWidgetModel(mockOwner);
 		
 	}
 	
@@ -59,15 +69,57 @@ public class TestStudyManagementWidgetModel {
 		
 		// set up expectations
 		listener.onDisplayStatusChanged(StudyManagementWidgetModel.DISPLAYING_NONE, StudyManagementWidgetModel.DISPLAYING_CREATE_STUDY);
-		listener.onDisplayStatusChanged(StudyManagementWidgetModel.DISPLAYING_CREATE_STUDY, StudyManagementWidgetModel.DISPLAYING_EDIT_STUDY);
+		mockOwner.displayStatusChanged(true);
 		replay(listener);
+		PowerMock.replay(mockOwner);
 		
 		//register listener with model
 		testModel.addListener(listener);
 		
 		testModel.setDisplayStatus(StudyManagementWidgetModel.DISPLAYING_CREATE_STUDY);
+		
+		verify(listener);
+		PowerMock.verify(mockOwner);
+	}
+		
+	@Test
+	public void testStatusChanged_UserMightLoseChanges() {
+	
+		//set up test
+		testModel.setDisplayStatus(StudyManagementWidgetModel.DISPLAYING_CREATE_STUDY);
+		
+		StudyManagementWidgetModelListener listener = createMock(StudyManagementWidgetModelListener.class);
+		
+		// set up expectations
+		listener.onUserMightLoseChanges(StudyManagementWidgetModel.DISPLAYING_EDIT_STUDY);
+		replay(listener);
+		
+		//register listener with model
+		testModel.addListener(listener);
+		
 		testModel.setDisplayStatus(StudyManagementWidgetModel.DISPLAYING_EDIT_STUDY);
 		
 		verify(listener);
 	}
+		
+	@Test
+	public void testStatusChanged_UserMightLoseChanges_confirmed() {
+	
+		//set up test
+		testModel.setDisplayStatus(StudyManagementWidgetModel.DISPLAYING_EDIT_STUDY);
+		
+		StudyManagementWidgetModelListener listener = createMock(StudyManagementWidgetModelListener.class);
+		
+		// set up expectations
+		listener.onDisplayStatusChanged(StudyManagementWidgetModel.DISPLAYING_EDIT_STUDY, StudyManagementWidgetModel.DISPLAYING_VIEW_ALL_STUDIES);
+		replay(listener);
+		
+		//register listener with model
+		testModel.addListener(listener);
+		
+		testModel.setDisplayStatus(StudyManagementWidgetModel.DISPLAYING_VIEW_ALL_STUDIES, true);
+		
+		verify(listener);
+	}
+	
 }

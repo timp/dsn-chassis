@@ -14,7 +14,9 @@ import org.cggh.chassis.generic.client.gwt.widget.submission.viewsubmissions.cli
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DecoratedPopupPanel;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.SimplePanel;
@@ -32,6 +34,7 @@ public class SubmissionManagementWidgetDefaultRenderer implements SubmissionMana
 	final Panel displayCanvas;
 	final Panel menuCanvas;
 	final DecoratedPopupPanel menuPopUp = new DecoratedPopupPanel(true);
+	final DecoratedPopupPanel confirmLoseChangesPopup = new DecoratedPopupPanel(false);
 
 	final private SubmissionManagementWidgetController controller;
 	private String authorEmail;
@@ -118,22 +121,71 @@ public class SubmissionManagementWidgetDefaultRenderer implements SubmissionMana
 	}
 	
 	public void onDisplayStatusChanged(Integer before, Integer after) {
-		if (after == SubmissionManagementWidgetModel.DISPLAYING_CREATE_STUDY) {
+		if (after == SubmissionManagementWidgetModel.DISPLAYING_CREATE_SUBMISSION) {
 			displayCanvas.clear();
 			createSubmissionWidget.setUpNewSubmission(authorEmail);
 			displayCanvas.add(createSubmissionWidgetCanvas);
-		} else if (after == SubmissionManagementWidgetModel.DISPLAYING_VIEW_STUDY) {
+		} else if (after == SubmissionManagementWidgetModel.DISPLAYING_VIEW_SUBMISSION) {
 			displayCanvas.clear();
 			displayCanvas.add(viewSubmissionWidgetCanvas);
-		} else if (after == SubmissionManagementWidgetModel.DISPLAYING_VIEW_ALL_STUDIES) {
+		} else if (after == SubmissionManagementWidgetModel.DISPLAYING_VIEW_ALL_SUBMISSIONS) {
 			displayCanvas.clear();
 			viewAllSubmissionsWidget.loadSubmissionsByAuthorEmail(authorEmail);
 			displayCanvas.add(viewAllSubmissionsWidgetCanvas);
-		} else if (after == SubmissionManagementWidgetModel.DISPLAYING_EDIT_STUDY) {
+		} else if (after == SubmissionManagementWidgetModel.DISPLAYING_EDIT_SUBMISSION) {
 			displayCanvas.clear();
 			displayCanvas.add(editSubmissionWidgetCanvas);
 		}
 		
+	}
+
+	public void userMightLoseChanges(final Integer userRequestedView) {
+		
+		confirmLoseChangesPopup.clear();
+		
+		//create message box
+		VerticalPanel messagePanel = new VerticalPanel();
+		
+		messagePanel.add(new Label("Any unsaved data will be lost."));
+		
+		//create cancel button and ClickHandler
+		Button cancelButton = new Button("Cancel");
+		cancelButton.addClickHandler(new ClickHandler() {
+			
+			public void onClick(ClickEvent arg0) {
+				confirmLoseChangesPopup.hide();
+			}
+		});
+		
+		
+		//create continue button
+		Button continueButton = new Button("Continue anyway");
+		continueButton.addClickHandler(new ClickHandler() {
+			
+			public void onClick(ClickEvent arg0) {
+				
+				if (userRequestedView == SubmissionManagementWidgetModel.DISPLAYING_CREATE_SUBMISSION) {
+					confirmLoseChangesPopup.hide();
+					controller.displayCreateSubmissionWidget(true);
+				} else if (userRequestedView == SubmissionManagementWidgetModel.DISPLAYING_VIEW_ALL_SUBMISSIONS) {
+					confirmLoseChangesPopup.hide();
+					controller.displayViewAllSubmissionsWidget(true);
+				}
+			}
+		});
+		
+		//Create button panel
+		HorizontalPanel buttonPanel = new HorizontalPanel();
+		buttonPanel.add(continueButton);
+		buttonPanel.add(cancelButton);
+		
+		messagePanel.add(buttonPanel);
+		
+		confirmLoseChangesPopup.add(messagePanel);			
+		
+		confirmLoseChangesPopup.center();
+		confirmLoseChangesPopup.show();
+				
 	}	
 
 }

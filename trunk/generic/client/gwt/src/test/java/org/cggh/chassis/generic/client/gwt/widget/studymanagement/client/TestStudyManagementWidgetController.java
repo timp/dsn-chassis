@@ -3,78 +3,99 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.studymanagement.client;
 
-import static org.junit.Assert.*;
+import junit.framework.JUnit4TestAdapter;
 
 import org.junit.Before;
 import org.junit.Test;
-
-import junit.framework.JUnit4TestAdapter;
+import org.junit.runner.RunWith;
+import org.powermock.api.easymock.PowerMock;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 
 /**
  * @author raok
  *
  */
+@RunWith(PowerMockRunner.class)
+@PrepareForTest({StudyManagementWidgetModel.class})
 public class TestStudyManagementWidgetController {
 
 	public static junit.framework.Test suite() {
 	   return new JUnit4TestAdapter(TestStudyManagementWidgetController.class);
 	}
 
-	private StudyManagementWidgetModel testModel;
+	private StudyManagementWidgetModel mockModel;
 	private StudyManagementWidgetController testController;
 	
 	@Before
 	public void setUp() {
 		
-		testModel = new StudyManagementWidgetModel();
+		mockModel = PowerMock.createMock(StudyManagementWidgetModel.class);
 		
-		testController = new StudyManagementWidgetController(testModel);
+		testController = new StudyManagementWidgetController(mockModel);
 		
 	}
+	
 	
 	@Test
 	public void testDisplayCreateStudyWidget() {
 		
+		//set expectations
+		mockModel.setDisplayStatus(StudyManagementWidgetModel.DISPLAYING_CREATE_STUDY, false);
+		PowerMock.expectLastCall();
+		PowerMock.replay(mockModel);
+		
 		//call method under test
 		testController.displayCreateStudyWidget();
-		
-		//test outcome
-		assertEquals(StudyManagementWidgetModel.DISPLAYING_CREATE_STUDY, testModel.getDisplayStatus());
+
+		PowerMock.verify(mockModel);
 		
 	}
 	
 	@Test
 	public void testDisplayEditStudyWidget() {
 		
+		//set expectations
+		mockModel.setDisplayStatus(StudyManagementWidgetModel.DISPLAYING_EDIT_STUDY);
+		PowerMock.expectLastCall();
+		PowerMock.replay(mockModel);
+		
 		//call method under test
 		testController.displayEditStudyWidget();
-		
-		//test outcome
-		assertEquals(StudyManagementWidgetModel.DISPLAYING_EDIT_STUDY, testModel.getDisplayStatus());
+
+		PowerMock.verify(mockModel);
 	}
 	
 	@Test
 	public void testDisplayViewStudyWidget() {
 		
+		//set expectations
+		mockModel.setDisplayStatus(StudyManagementWidgetModel.DISPLAYING_VIEW_STUDY);
+		PowerMock.expectLastCall();
+		PowerMock.replay(mockModel);
+		
 		//call method under test
 		testController.displayViewStudyWidget();
-		
-		//test outcome
-		assertEquals(StudyManagementWidgetModel.DISPLAYING_VIEW_STUDY, testModel.getDisplayStatus());
+
+		PowerMock.verify(mockModel);
 		
 	}
 	
 	@Test
 	public void testDisplayViewAllStudiesWidget() {
 		
+		//set expectations
+		mockModel.setDisplayStatus(StudyManagementWidgetModel.DISPLAYING_VIEW_ALL_STUDIES, false);
+		PowerMock.expectLastCall();
+		PowerMock.replay(mockModel);
+		
 		//method under test
 		testController.displayViewAllStudiesWidget();
-		
-		//test outcome
-		assertEquals(StudyManagementWidgetModel.DISPLAYING_VIEW_ALL_STUDIES, testModel.getDisplayStatus());
+
+		PowerMock.verify(mockModel);
 		
 	}
-	
+			
 	
 }
