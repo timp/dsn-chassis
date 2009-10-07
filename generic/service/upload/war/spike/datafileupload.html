@@ -9,15 +9,22 @@
 
 <h1>Spike Data File Upload</h1>
 
-<form action="../datafileupload" method="post" enctype="multipart/form-data">
+<form action="../datafileupload" method="post" enctype="multipart/form-data" target="response">
 
 <p>
-<input type="file" name="chassis.datafile" size="40"/>
-<input type="hidden" name="chassis.submission" value="http://localhost:8080/chassis-generic-service-exist/atom/edit/submissions?id=todo"/>
+<input type="file" name="datafile" size="40"/>
+<input type="hidden" name="submission" value="http://localhost:8080/chassis-generic-service-exist/atom/edit/submissions?id=todo"/>
+<input type="hidden" name="authoremail" value="alice@example.org"/>
 <input type="submit" value="go"/>
 </p>
 
 </form>
+
+<hr/>
+
+<p>
+<iframe name="response" style="width: 100%; height: 500px"></iframe>
+</p>
 
 </body>
 </html>
