@@ -3,6 +3,9 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.application.client.perspective;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.cggh.chassis.generic.client.gwt.widget.studymanagement.client.StudyManagementWidgetPubSubAPI;
 import org.cggh.chassis.generic.client.gwt.widget.submissionmanagement.client.SubmissionManagementWidgetPubSubAPI;
 
@@ -20,6 +23,7 @@ public class PerspectiveWidget implements PerspectiveWidgetAPI,
 	final private PerspectiveWidgetModel model;
 	final private PerspectiveWidgetController controller;
 	final private PerspectiveWidgetDefaultRenderer renderer;
+	private Set<PerspectiveWidgetPubSubAPI> listeners = new HashSet<PerspectiveWidgetPubSubAPI>();
 
 	public PerspectiveWidget(Panel canvas, String authorEmail) {
 		
@@ -49,6 +53,11 @@ public class PerspectiveWidget implements PerspectiveWidgetAPI,
 		
 		controller.displaySubmissionManagementWidget(couldStatusContainUnsavedData);
 		
+	}
+
+
+	public void addPerspectiveWidgetListener(PerspectiveWidgetPubSubAPI listener) {
+		listeners.add(listener);
 	}
 
 }

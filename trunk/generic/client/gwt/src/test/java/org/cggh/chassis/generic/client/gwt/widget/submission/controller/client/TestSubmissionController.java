@@ -6,7 +6,6 @@ package org.cggh.chassis.generic.client.gwt.widget.submission.controller.client;
 import static org.easymock.EasyMock.createMock;
 import static org.easymock.EasyMock.createNiceMock;
 import static org.easymock.EasyMock.expect;
-import static org.easymock.EasyMock.expectLastCall;
 import static org.easymock.EasyMock.isA;
 import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.verify;
@@ -29,7 +28,7 @@ import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomLink;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.impl.AtomServiceImpl;
-import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
+import org.cggh.chassis.generic.client.gwt.configuration.client.TestConfigurationSetUp;
 import org.cggh.chassis.generic.client.gwt.widget.submission.controller.client.SubmissionController.LoadSubmissionEntryCallback;
 import org.cggh.chassis.generic.client.gwt.widget.submission.controller.client.SubmissionController.LoadSubmissionEntryErrback;
 import org.cggh.chassis.generic.client.gwt.widget.submission.controller.client.SubmissionController.SaveOrUpdateSubmissionEntryCallback;
@@ -61,16 +60,15 @@ public class TestSubmissionController {
 	private SubmissionModel testModel;
 	private AtomService mockService;
 	private SubmissionFactory mockFactory;
-	private String submissionFeedURL = "http://foo.com/submissions";
+	private String submissionFeedURL = TestConfigurationSetUp.testSubmissionFeedURL;
 	private SubmissionEntry testSubmissionEntry;
 	private String testAuthorEmail = "foo@bar.com";
 		
 	@Before
 	public void setUp() throws Exception {
-
-		//Set up ConfigurationBean with test values
-		ConfigurationBean.useUnitTestConfiguration = true;
-		ConfigurationBean.testSubmissionFeedURL = submissionFeedURL;
+		
+		//setup ConfigurationBean
+		TestConfigurationSetUp.createTestConfiguration();
 		
 		//create testModel and mockService to inject
 		testModel = new SubmissionModel();
@@ -327,7 +325,8 @@ public class TestSubmissionController {
 	public void testUpdateSubmissionEntry() {
 		
 		//test data
-		String entryURL = "http://foo.com/submissions/submission1";
+		//test handling of relative entryURLs
+		String relEntryURL = "/submission1";
 		
 		//create mockSubmissionEntry and AtomLink for this test
 		SubmissionEntry mockSubmissionEntry = createNiceMock(SubmissionEntry.class);
@@ -341,13 +340,13 @@ public class TestSubmissionController {
 		//return something nice for call to studyLinks, and modules
 		expect(mockSubmissionEntry.getStudyLinks()).andReturn(new ArrayList<AtomLink>());
 		expect(mockSubmissionEntry.getModules()).andReturn(new ArrayList<String>());
-		expectLastCall().anyTimes();
+		expect(mockSubmissionEntry.getAuthors()).andReturn(new ArrayList<AtomAuthor>());
 		replay(mockSubmissionEntry);
 		
-		expect(mockAtomLink.getHref()).andReturn(entryURL);
+		expect(mockAtomLink.getHref()).andReturn(relEntryURL);
 		replay(mockAtomLink);
 		
-		expect(mockService.putEntry(entryURL, mockSubmissionEntry)).andReturn(mockDeffered);
+		expect(mockService.putEntry(relEntryURL, mockSubmissionEntry)).andReturn(mockDeffered);
 		PowerMock.replay(mockService);
 		
 		mockDeffered.addCallbacks(isA(SaveOrUpdateSubmissionEntryCallback.class), isA(SaveOrUpdateSubmissionEntryErrback.class));

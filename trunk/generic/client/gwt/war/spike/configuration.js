@@ -16,6 +16,33 @@ CHASSIS.dataFileQueryServiceURL = "/chassis-generic-service-exist/query/datafile
 // configure role name prefix
 CHASSIS.userChassisRolesPrefix = "ROLE_CHASSIS_";
 
+// configure permission suffix to chassis role mappings
+CHASSIS.chassisRoleCoordinator = {"permissionSuffix":"COORDINATOR",
+								  "label":{
+											"en":"Coordinator"
+										  }
+								 };
+CHASSIS.chassisRoleCurator = {"permissionSuffix":"CURATOR",
+							  "label":{
+										"en":"Curator"
+									  }
+							 };
+CHASSIS.chassisRoleGatekeeper = {"permissionSuffix":"GATEKEEPER",
+								  "label":{
+											"en":"Gate Keeper"
+										  }
+								 };
+CHASSIS.chassisRoleSubmitter = {"permissionSuffix":"SUBMITTER",
+								  "label":{
+											"en":"Submitter"
+										  }
+								 };
+CHASSIS.chassisRoleUser = {"permissionSuffix":"USER",
+							  "label":{
+										"en":"User"
+									  }
+							 };
+
 // configure modules
 CHASSIS.modules = [
                    {

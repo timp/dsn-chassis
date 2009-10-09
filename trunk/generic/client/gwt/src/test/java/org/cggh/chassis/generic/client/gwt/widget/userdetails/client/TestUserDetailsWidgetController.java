@@ -15,7 +15,8 @@ import java.util.Set;
 
 import junit.framework.JUnit4TestAdapter;
 
-import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
+import org.cggh.chassis.generic.client.gwt.configuration.client.ChassisRole;
+import org.cggh.chassis.generic.client.gwt.configuration.client.TestConfigurationSetUp;
 import org.cggh.chassis.generic.client.gwt.widget.userdetails.client.UserDetailsWidgetController.RefreshUserDetailsCallback;
 import org.cggh.chassis.generic.user.gwtrpc.client.GWTUserDetailsServiceAsync;
 import org.cggh.chassis.generic.user.transfer.UserDetailsTO;
@@ -43,19 +44,18 @@ public class TestUserDetailsWidgetController {
 	   return new JUnit4TestAdapter(TestUserDetailsWidgetController.class);
 	}
 
-	private String testUserChassisRolesPrefix = "ROLE_";
-	private String testUserDetailsServiceEndpointURL = "http://foo.com/users";
+	private String testUserChassisRolesPrefix = TestConfigurationSetUp.testUserChassisRolesPrefix;
+	private ChassisRole testRole1 = TestConfigurationSetUp.testChassisRoleCoordinator;
+	private ChassisRole testRole2 = TestConfigurationSetUp.testChassisRoleSubmitter;
 	private UserDetailsWidgetModel testModel;
 	private UserDetailsWidgetController testController;
 	private UserDetailsWidget mockOwner; 
 		
 	@Before
 	public void setUp() {
-
-		//Set up ConfigurationBean with test values
-		ConfigurationBean.useUnitTestConfiguration = true;
-		ConfigurationBean.testUserChassisRolesPrefix = testUserChassisRolesPrefix;
-		ConfigurationBean.testUserDetailsServiceEndpointURL = testUserDetailsServiceEndpointURL;
+		
+		//setup ConfigurationBean
+		TestConfigurationSetUp.createTestConfiguration();
 		
 		//Create mock owner
 		mockOwner = PowerMock.createMock(UserDetailsWidget.class);
@@ -113,14 +113,11 @@ public class TestUserDetailsWidgetController {
 		testModel.setStatus(UserDetailsWidgetModel.STATUS_LOADING);
 		
 		// test data
-		String prefixToRemove = testUserChassisRolesPrefix;
 		UserDetailsTO user = new UserDetailsTO();
 		user.setId("fooid");
 		Set<String> roles = new HashSet<String>();
-		String foo = "foo";
-		roles.add(prefixToRemove + foo);
-		String bar = "bar";
-		roles.add(prefixToRemove + bar);
+		roles.add(testUserChassisRolesPrefix + testRole1.permissionSuffix);
+		roles.add(testUserChassisRolesPrefix + testRole2.permissionSuffix);
 		user.setRoles(roles);
 						
 		// instantiate class under test
@@ -138,13 +135,9 @@ public class TestUserDetailsWidgetController {
 		/* test outcome at model */
 		assertEquals(UserDetailsWidgetModel.STATUS_FOUND, testModel.getStatus());
 		assertEquals(user.getId(), testModel.getUserName());
-		assertEquals(user.getRoles().size(), user.getRoles().size());
-		// Check prefix has been removed
-		for (String role : user.getRoles()) {
-			assertTrue(testModel.getRoles().contains(role.replace(prefixToRemove, "")));
-		}
-		
-		assertEquals(bar, testModel.getCurrentRole());
+		assertTrue(testModel.getRoles().contains(testRole1));
+		assertTrue(testModel.getRoles().contains(testRole2));
+		assertNotNull(testModel.getCurrentRole());
 				
 	}
 	
@@ -155,16 +148,14 @@ public class TestUserDetailsWidgetController {
 		testModel.setStatus(UserDetailsWidgetModel.STATUS_FOUND);
 		testModel.setUserName("user");
 		
-		Set<String> roles = new HashSet<String>();
-		String foo = "foo";
-		roles.add(foo);
-		String bar = "bar";
-		roles.add(bar);
-		String newCurrentRole = "newCurrentRole";
-		roles.add(newCurrentRole);
+		Set<ChassisRole> roles = new HashSet<ChassisRole>();
+		roles.add(testRole1);
+		roles.add(testRole2);
+		ChassisRole newCurrentRole = testRole2;
 		
+		//set up test
 		testModel.setRoles(roles);
-		testModel.setCurrentRole(foo);
+		testModel.setCurrentRole(testRole1);
 
 		// instantiate class under test
 		UserDetailsWidgetController controller = new UserDetailsWidgetController(testModel, mockOwner, null);

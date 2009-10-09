@@ -10,7 +10,7 @@ import static org.easymock.EasyMock.expectLastCall;
 import static org.easymock.EasyMock.isA;
 import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.verify;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -27,7 +27,7 @@ import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomLink;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.impl.AtomServiceImpl;
-import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
+import org.cggh.chassis.generic.client.gwt.configuration.client.TestConfigurationSetUp;
 import org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyController.LoadStudyEntryCallback;
 import org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyController.LoadStudyEntryErrback;
 import org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyController.SaveOrUpdateStudyEntryCallback;
@@ -59,7 +59,7 @@ public class TestStudyController {
 	private AtomService mockService;
 	private StudyFactory mockFactory;
 	private MockStudyFactory testFactory = new MockStudyFactory();
-	String testStudyFeedURL = "http://foo.com/studies";
+	String testStudyFeedURL = TestConfigurationSetUp.testStudyFeedURL;
 	private StudyEntry testStudyEntry;
 	private HashSet<AtomAuthor> testAuthors;
 	private String testAuthorEmail = "foo@bar.com";
@@ -67,9 +67,8 @@ public class TestStudyController {
 	@Before
 	public void setUp() throws Exception {
 		
-		//Set up ConfigurationBean with test values
-		ConfigurationBean.useUnitTestConfiguration = true;
-		ConfigurationBean.testStudyFeedURL = testStudyFeedURL;
+		//setup ConfigurationBean
+		TestConfigurationSetUp.createTestConfiguration();
 		
 		//create testModel and mockService to inject
 		testModel = new StudyModel();
@@ -324,7 +323,6 @@ public class TestStudyController {
 		expect(mockStudyEntry.getEditLink()).andReturn(mockAtomLink);
 		expect(mockStudyEntry.getModules()).andReturn(new ArrayList<String>());
 		expect(mockStudyEntry.getAuthors()).andReturn(new ArrayList<AtomAuthor>());
-		expectLastCall().anyTimes();
 		replay(mockStudyEntry);
 		
 		expect(mockAtomLink.getHref()).andReturn(relEntryURL);

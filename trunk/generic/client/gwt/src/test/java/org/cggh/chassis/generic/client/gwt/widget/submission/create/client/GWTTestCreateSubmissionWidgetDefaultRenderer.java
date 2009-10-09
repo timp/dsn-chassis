@@ -3,13 +3,11 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.submission.create.client;
 
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
-import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
+import org.cggh.chassis.generic.client.gwt.configuration.client.TestConfigurationSetUp;
 import org.cggh.chassis.generic.client.gwt.widget.submission.controller.client.SubmissionControllerCreateAPI;
 
 import com.google.gwt.dom.client.Document;
@@ -28,10 +26,10 @@ public class GWTTestCreateSubmissionWidgetDefaultRenderer extends GWTTestCase {
 	private CreateSubmissionWidgetDefaultRenderer testRenderer;
 
 	//test data
-	String module1Id = "module1Id";
-	String module2Id = "module2Id";
-	String module1Label = "module1Label";
-	String module2Label = "module2Label";
+	String module1Id = TestConfigurationSetUp.module1Id;
+	String module2Id = TestConfigurationSetUp.module2Id;
+	String module1Label = TestConfigurationSetUp.module1Label;
+	String module2Label = TestConfigurationSetUp.module2Label;
 
 
 	/* (non-Javadoc)
@@ -44,22 +42,12 @@ public class GWTTestCreateSubmissionWidgetDefaultRenderer extends GWTTestCase {
 
 	@Override
 	protected void gwtSetUp() {
-
-		//Set up ConfigurationBean with test values for controller
-		ConfigurationBean.useUnitTestConfiguration = true;
-		ConfigurationBean.testStudyFeedURL = "http://foo.com/studies";
+		
+		//setup ConfigurationBean
+		TestConfigurationSetUp.createTestConfiguration();
 		
 		//create mockController and inject into testRenderer
 		mockController = new MockSubmissionController();
-
-		//Create modules test data
-		Map<String, String> testModules = new HashMap<String, String>();
-		testModules.put(module1Id, module1Label);
-		testModules.put(module2Id, module2Label);
-		
-		//Set up ConfigurationBean with test values
-		ConfigurationBean.useUnitTestConfiguration = true;
-		ConfigurationBean.testModules = testModules;
 		
 		testRenderer = new CreateSubmissionWidgetDefaultRenderer(new SimplePanel(), mockController, "");
 		

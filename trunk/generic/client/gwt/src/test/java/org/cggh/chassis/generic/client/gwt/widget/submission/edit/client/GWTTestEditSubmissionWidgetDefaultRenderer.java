@@ -10,7 +10,7 @@ import java.util.Set;
 
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
-import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
+import org.cggh.chassis.generic.client.gwt.configuration.client.TestConfigurationSetUp;
 import org.cggh.chassis.generic.client.gwt.widget.submission.controller.client.SubmissionControllerEditAPI;
 
 import com.google.gwt.dom.client.Document;
@@ -28,10 +28,10 @@ public class GWTTestEditSubmissionWidgetDefaultRenderer extends GWTTestCase {
 	private EditSubmissionWidgetDefaultRenderer testRenderer;
 	private MockSubmissionController mockController;
 	//test data
-	String module1Id = "module1Id";
-	String module2Id = "module2Id";
-	String module1Label = "module1Label";
-	String module2Label = "module2Label";
+	String module1Id = TestConfigurationSetUp.module1Id;
+	String module2Id = TestConfigurationSetUp.module2Id;
+	String module1Label = TestConfigurationSetUp.module1Label;
+	String module2Label = TestConfigurationSetUp.module2Label;
 
 	/* (non-Javadoc)
 	 * @see com.google.gwt.junit.client.GWTTestCase#getModuleName()
@@ -43,18 +43,12 @@ public class GWTTestEditSubmissionWidgetDefaultRenderer extends GWTTestCase {
 
 	@Override
 	protected void gwtSetUp() {
+		
+		//setup ConfigurationBean
+		TestConfigurationSetUp.createTestConfiguration();
 
 		//create mockController and inject into testRenderer
 		mockController = new MockSubmissionController();
-
-		//Create modules test data
-		Map<String, String> testModules = new HashMap<String, String>();
-		testModules.put(module1Id, module1Label);
-		testModules.put(module2Id, module2Label);
-
-		//Set up ConfigurationBean with test values
-		ConfigurationBean.useUnitTestConfiguration = true;
-		ConfigurationBean.testModules = testModules;
 		
 		testRenderer = new EditSubmissionWidgetDefaultRenderer(new SimplePanel(), mockController, module1Id);
 					

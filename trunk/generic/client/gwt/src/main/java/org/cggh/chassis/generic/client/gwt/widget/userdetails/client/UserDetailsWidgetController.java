@@ -7,9 +7,10 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.cggh.chassis.generic.client.gwt.configuration.client.ChassisRole;
+import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
 import org.cggh.chassis.generic.user.gwtrpc.client.GWTUserDetailsServiceAsync;
 import org.cggh.chassis.generic.user.transfer.UserDetailsTO;
-import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -78,15 +79,36 @@ public class UserDetailsWidgetController {
 
 			// Filter out roles relevant to chassis
 			String userChassisRolesPrefix = ConfigurationBean.getUserChassisRolesPrefix();
-			Set<String> roles = new HashSet<String>();
+			Set<ChassisRole> roles = new HashSet<ChassisRole>();
 			for ( String role : user.getRoles() ) {
 				if (role.startsWith(userChassisRolesPrefix)) {
-					roles.add(role.replace(userChassisRolesPrefix, ""));
+					
+					String permissionSuffix = role.replace(userChassisRolesPrefix, "");
+					
+					//get chassisRoles
+					ChassisRole coordinatorRole = ConfigurationBean.getChassisRoleCoordinator();
+					ChassisRole curatorRole = ConfigurationBean.getChassisRoleCurator();
+					ChassisRole gatekeeperRole = ConfigurationBean.getChassisRoleGatekeeper();
+					ChassisRole submitterRole = ConfigurationBean.getChassisRoleSubmitter();
+					ChassisRole userRole = ConfigurationBean.getChassisRoleUser();
+					
+					if (permissionSuffix.equalsIgnoreCase(coordinatorRole.permissionSuffix)) {
+						roles.add(coordinatorRole);
+					} else if (permissionSuffix.equalsIgnoreCase(curatorRole.permissionSuffix)) {
+						roles.add(curatorRole);
+					} else if (permissionSuffix.equalsIgnoreCase(gatekeeperRole.permissionSuffix)) {
+						roles.add(gatekeeperRole);
+					} else if (permissionSuffix.equalsIgnoreCase(submitterRole.permissionSuffix)) {
+						roles.add(submitterRole);
+					} else if (permissionSuffix.equalsIgnoreCase(userRole.permissionSuffix)) {
+						roles.add(userRole);
+					}
+					
 				}
 			}
 			
-			// populate roles in alphabetical order
-			model.setRoles(new TreeSet<String>(roles));
+			// populate roles, ordered by roleId
+			model.setRoles(new TreeSet<ChassisRole>(roles));
 			
 			// TODO prevent currentRole changing if it is already set.
 			
@@ -110,8 +132,11 @@ public class UserDetailsWidgetController {
 	}
 
 
-	public void updateCurrentRole(String currentRole) {
+	public void updateCurrentRole(ChassisRole currentRole) {
 		model.setCurrentRole(currentRole);
+		
+		//alert owner
+		owner.onCurrentRoleChanged(currentRole);
 	}
 
 	

@@ -40,6 +40,8 @@ public class StudyManagementWidgetModel {
 
 	public void setDisplayStatus(Integer requestedDisplay, Boolean userConfirmed) {
 		
+		//FIXME allow transition when save sucessful, etc
+		
 		Integer before = this.displayStatus;
 		
 		if ( !userConfirmed && couldStatusContainUnsavedData(before) ) {

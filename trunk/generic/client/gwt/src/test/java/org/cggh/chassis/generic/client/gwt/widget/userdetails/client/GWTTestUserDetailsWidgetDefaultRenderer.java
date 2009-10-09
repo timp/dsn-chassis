@@ -6,7 +6,10 @@ package org.cggh.chassis.generic.client.gwt.widget.userdetails.client;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.cggh.chassis.generic.client.gwt.configuration.client.ChassisRole;
+import org.cggh.chassis.generic.client.gwt.configuration.client.TestConfigurationSetUp;
 import org.cggh.chassis.generic.client.gwt.widget.userdetails.client.UserDetailsWidgetDefaultRenderer.RoleChangeHandler;
+import org.cggh.chassis.generic.user.gwtrpc.client.GWTUserDetailsServiceAsync;
 
 import com.google.gwt.junit.client.GWTTestCase;
 import com.google.gwt.user.client.ui.Label;
@@ -21,8 +24,12 @@ import com.google.gwt.user.client.ui.SimplePanel;
 public class GWTTestUserDetailsWidgetDefaultRenderer extends GWTTestCase {
 
 	private UserDetailsWidgetModel model;
-	private UserDetailsWidgetController controller;
+	private MockUserDetailsWidgetController mockController;
 	private UserDetailsWidgetDefaultRenderer renderer;
+	
+	//test data
+	private ChassisRole testRole1 = TestConfigurationSetUp.testChassisRoleCoordinator;
+	private ChassisRole testRole2 = TestConfigurationSetUp.testChassisRoleSubmitter;
 
 	/* (non-Javadoc)
 	 * @see com.google.gwt.junit.client.GWTTestCase#getModuleName()
@@ -39,15 +46,18 @@ public class GWTTestUserDetailsWidgetDefaultRenderer extends GWTTestCase {
 	 */
 	@Override
 	protected void gwtSetUp() {
+		
+		//setup ConfigurationBean
+		TestConfigurationSetUp.createTestConfiguration();
 
 		// instantiate a model
 		model = new UserDetailsWidgetModel();
 		
 		// instantiate a controller
-		controller = new UserDetailsWidgetController(model, null, null);
+		mockController = new MockUserDetailsWidgetController(model, null, null);
 		
 		// instantiate a renderer
-		renderer = new UserDetailsWidgetDefaultRenderer(new SimplePanel(), controller);
+		renderer = new UserDetailsWidgetDefaultRenderer(new SimplePanel(), mockController);
 
 		// register renderer as listener to model
 		model.addListener(renderer);
@@ -92,9 +102,9 @@ public class GWTTestUserDetailsWidgetDefaultRenderer extends GWTTestCase {
 		assertEquals(0, userRolesListBox.getItemCount());
 		
 		// test data
-		Set<String> roles = new HashSet<String>();
-		roles.add("foo");
-		roles.add("bar");
+		Set<ChassisRole> roles = new HashSet<ChassisRole>();
+		roles.add(testRole1);
+		roles.add(testRole2);
 				
 		// update model
 		model.setRoles(roles);
@@ -102,17 +112,22 @@ public class GWTTestUserDetailsWidgetDefaultRenderer extends GWTTestCase {
 		// check new state of ListBox
 		assertEquals(roles.size(), userRolesListBox.getItemCount());
 
-		for (String role : roles) {
-			boolean isRoleListed = false;
+		for (ChassisRole role : roles) {
+			boolean isRoleIdSet = false;
+			boolean isRoleLabelSet = false;
 			
 			//Check a value exists for each role in the ListBox
 			for (int i = 0; i < userRolesListBox.getItemCount(); ++i) {
-				if (userRolesListBox.getValue(i).equalsIgnoreCase(role)) {
-					isRoleListed = true;
-					break;
+				if (userRolesListBox.getValue(i).equalsIgnoreCase(role.roleId.toString())) {
+					isRoleIdSet = true;
+				}
+				
+				if (userRolesListBox.getItemText(i).equalsIgnoreCase(role.roleLabel)) {
+					isRoleLabelSet = true;
 				}
 			}
-			assertTrue(isRoleListed);
+			assertTrue(isRoleIdSet);
+			assertTrue(isRoleLabelSet);
 		}
 	}
 	
@@ -122,12 +137,12 @@ public class GWTTestUserDetailsWidgetDefaultRenderer extends GWTTestCase {
 		Panel changeUserRolePanel = renderer.changeUserRolePanel;
 		
 		// test data
-		Set<String> multiRoles = new HashSet<String>();
-		multiRoles.add("foo");
-		multiRoles.add("bar");
+		Set<ChassisRole> multiRoles = new HashSet<ChassisRole>();
+		multiRoles.add(testRole1);
+		multiRoles.add(testRole2);
 
-		Set<String> singleRole = new HashSet<String>();
-		singleRole.add("oneRole");		
+		Set<ChassisRole> singleRole = new HashSet<ChassisRole>();
+		singleRole.add(testRole2);
 				
 		// update model
 		model.setRoles(multiRoles);
@@ -151,15 +166,12 @@ public class GWTTestUserDetailsWidgetDefaultRenderer extends GWTTestCase {
 		
 		// check initial state
 		assertEquals("", currentRoleLabel.getText());
-		
-		// test data
-		String role = "foo";
-		
+				
 		// update model
-		model.setCurrentRole(role);
+		model.setCurrentRole(testRole2);
 
 		// check new state of label
-		assertEquals(role, currentRoleLabel.getText());
+		assertEquals(testRole2.roleLabel, currentRoleLabel.getText());
 		
 	}
 	
@@ -173,11 +185,10 @@ public class GWTTestUserDetailsWidgetDefaultRenderer extends GWTTestCase {
 		assertEquals("", currentRoleLabel.getText());
 		
 		// test data
-		Set<String> roles = new HashSet<String>();
-		roles.add("foo");
-		roles.add("bar");
-		String differentRole = "differentRole";
-		roles.add(differentRole);
+		Set<ChassisRole> roles = new HashSet<ChassisRole>();
+		roles.add(testRole1);
+		roles.add(testRole2);
+		ChassisRole differentRole = testRole2;
 		
 		// update model
 		model.setRoles(roles);
@@ -189,7 +200,7 @@ public class GWTTestUserDetailsWidgetDefaultRenderer extends GWTTestCase {
 		// Get index of role to change to
 		int differentRoleIndex = 0;
 		for ( ; differentRoleIndex < userRolesListBox.getItemCount(); ++differentRoleIndex) {
-			if (userRolesListBox.getValue(differentRoleIndex).equalsIgnoreCase(differentRole)) {
+			if (userRolesListBox.getValue(differentRoleIndex).equalsIgnoreCase(differentRole.roleId.toString())) {
 				break;
 			}
 		}
@@ -200,7 +211,7 @@ public class GWTTestUserDetailsWidgetDefaultRenderer extends GWTTestCase {
 		eventHandler.onChange(null);
 		
 		// check new state of
-		assertEquals(differentRole, currentRoleLabel.getText());		
+		assertEquals(differentRole, mockController.currentRole);		
 	}
 	
 	public void testOnStatusChanged() {
@@ -230,6 +241,21 @@ public class GWTTestUserDetailsWidgetDefaultRenderer extends GWTTestCase {
 		assertTrue((loadingUIObject.getParent() == null) || !loadingUIObject.isVisible());
 		assertTrue((userDetailsUIObject.getParent() != null) && userDetailsUIObject.isVisible());
 		
+	}
+
+	private class MockUserDetailsWidgetController extends UserDetailsWidgetController {
+
+		public ChassisRole currentRole;
+
+		MockUserDetailsWidgetController(UserDetailsWidgetModel model, UserDetailsWidget owner, GWTUserDetailsServiceAsync service) {
+			super(model, owner, service);
+			// TODO Auto-generated constructor stub
+		}
+		
+		@Override
+		public void updateCurrentRole(ChassisRole currentRole) {
+			this.currentRole = currentRole;
+		}
 	}
 	
 }

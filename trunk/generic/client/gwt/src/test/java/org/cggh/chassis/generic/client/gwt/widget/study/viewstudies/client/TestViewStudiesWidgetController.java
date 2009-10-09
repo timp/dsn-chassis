@@ -30,12 +30,10 @@ import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.impl.AtomServiceImpl;
-import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
-import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetController;
-import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetModel;
-import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetController.LoadStudyFeedCallback;
+import org.cggh.chassis.generic.client.gwt.configuration.client.TestConfigurationSetUp;
 import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetController.LoadStudiesByEntryURLsCallback;
 import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetController.LoadStudiesByEntryURLsErrback;
+import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetController.LoadStudyFeedCallback;
 import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetController.LoadStudyFeedErrback;
 import org.cggh.chassis.generic.twisted.client.Deferred;
 import org.junit.Before;
@@ -68,16 +66,14 @@ public class TestViewStudiesWidgetController {
 	private MockStudyFactory testFactory = new MockStudyFactory();
 	private List<StudyEntry> testStudies;
 	
-	private String testStudyFeedURL = "";
-	private String testStudyQueryServiceURL = "http://www.foo.com/study_query";
+	private String testStudyFeedURL = TestConfigurationSetUp.testStudyFeedURL;
+	private String testStudyQueryServiceURL = TestConfigurationSetUp.testStudyQueryServiceURL;
 		
 	@Before
 	public void setUp() throws Exception {
-
-		//Set up ConfigurationBean with test values
-		ConfigurationBean.useUnitTestConfiguration = true;
-		ConfigurationBean.testStudyFeedURL = testStudyFeedURL;
-		ConfigurationBean.testStudyQueryServiceURL = testStudyQueryServiceURL;
+		
+		//setup ConfigurationBean
+		TestConfigurationSetUp.createTestConfiguration();
 		
 		//Create testController, inject mockModel and a mock Services
 		testModel = new ViewStudiesWidgetModel();
@@ -177,19 +173,20 @@ public class TestViewStudiesWidgetController {
 	public void testOnLoadStudiesByEntryURLs_callback() {
 		
 		//test data
-		String entryURL1 = "http://example.com/studies/study1";
-		String entryURL2 = "http://example.com/studies/study2";
+		//test handling of relative entryURLs
+		String relEntryURL1 = "/study1";
+		String relEntryURL2 = "/study2";
 		Set<String> studyEntryURLS = new HashSet<String>();
-		studyEntryURLS.add(entryURL1);
-		studyEntryURLS.add(entryURL2);
+		studyEntryURLS.add(relEntryURL1);
+		studyEntryURLS.add(relEntryURL2);
 		
 		
 		//create mock Deffered object
 		Deferred<AtomEntry> mockDeffered = PowerMock.createMock(Deferred.class);
 		
 		//set up expectations
-		expect(mockService.getEntry(entryURL1)).andReturn(mockDeffered);
-		expect(mockService.getEntry(entryURL2)).andReturn(mockDeffered);
+		expect(mockService.getEntry(testStudyFeedURL + relEntryURL1)).andReturn(mockDeffered);
+		expect(mockService.getEntry(testStudyFeedURL + relEntryURL2)).andReturn(mockDeffered);
 		PowerMock.replay(mockService);
 		mockDeffered.addCallbacks(isA(LoadStudiesByEntryURLsCallback.class), isA(LoadStudiesByEntryURLsErrback.class));
 		PowerMock.expectLastCall().andReturn(mockDeffered).times(2);

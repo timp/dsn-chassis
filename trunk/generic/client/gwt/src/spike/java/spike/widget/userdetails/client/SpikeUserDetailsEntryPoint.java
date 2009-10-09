@@ -3,7 +3,7 @@
  */
 package spike.widget.userdetails.client;
 
-import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
+import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
 import org.cggh.chassis.generic.client.gwt.widget.userdetails.client.UserDetailsWidget;
 import org.cggh.chassis.generic.client.gwt.widget.userdetails.client.UserDetailsWidgetAPI;
 import org.cggh.chassis.generic.user.gwtrpc.client.GWTUserDetailsService;
@@ -30,7 +30,7 @@ public class SpikeUserDetailsEntryPoint implements EntryPoint {
 		
 		// set service URL
 		ServiceDefTarget target = (ServiceDefTarget) userService;
-		target.setServiceEntryPoint(ConfigurationBean.getUserDetailsServiceEndpointURL());
+		target.setServiceEntryPoint(Configuration.getUserDetailsServiceEndpointURL());
 		
 		UserDetailsWidgetAPI widget = new UserDetailsWidget(RootPanel.get(), userService);
 		widget.refreshUserDetails();

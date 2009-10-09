@@ -4,10 +4,7 @@
 package org.cggh.chassis.generic.client.gwt.widget.application.client.perspective;
 
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
+import org.cggh.chassis.generic.client.gwt.configuration.client.TestConfigurationSetUp;
 import org.junit.Test;
 
 import com.google.gwt.junit.client.GWTTestCase;
@@ -35,18 +32,12 @@ public class GWTTestPerspectiveWidgetDefaultRenderer extends GWTTestCase {
 	@Override
 	protected void gwtSetUp() {
 		
+		//setup ConfigurationBean
+		TestConfigurationSetUp.createTestConfiguration();
+		
 		//create testController and inject testModel
 		testModel = new PerspectiveWidgetModel();
 		testController = new PerspectiveWidgetController(testModel);
-
-		//Create configuration test data
-		Map<String, String> testModules = new HashMap<String, String>();
-		testModules.put("module1Id", "module1Label");
-		testModules.put("module2Id", "module2Label");
-
-		//Set up ConfigurationBean with test values
-		ConfigurationBean.useUnitTestConfiguration = true;
-		ConfigurationBean.testModules = testModules;
 		
 		//instantiate a test renderer
 		testRenderer = new PerspectiveWidgetDefaultRenderer(new SimplePanel(), testController, "");
