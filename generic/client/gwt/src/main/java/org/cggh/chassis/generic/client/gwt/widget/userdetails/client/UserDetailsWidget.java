@@ -6,6 +6,7 @@ package org.cggh.chassis.generic.client.gwt.widget.userdetails.client;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.cggh.chassis.generic.client.gwt.configuration.client.ChassisRole;
 import org.cggh.chassis.generic.user.gwtrpc.client.GWTUserDetailsServiceAsync;
 
 import com.google.gwt.user.client.ui.Panel;
@@ -19,7 +20,7 @@ public class UserDetailsWidget implements UserDetailsWidgetAPI {
 	final private UserDetailsWidgetModel model;
 	final private UserDetailsWidgetController controller;
 	final private UserDetailsWidgetDefaultRenderer renderer;
-	final private Set<UserDetailsUserIdPubSubAPI> listeners = new HashSet<UserDetailsUserIdPubSubAPI>();
+	final private Set<UserDetailsPubSubAPI> listeners = new HashSet<UserDetailsPubSubAPI>();
 
 	public UserDetailsWidget(Panel canvas, GWTUserDetailsServiceAsync userService) {
 				
@@ -63,16 +64,23 @@ public class UserDetailsWidget implements UserDetailsWidgetAPI {
 		controller.refreshUserDetails();
 	}
 
-	public void addUserDetailsWidgetListener(UserDetailsUserIdPubSubAPI listener) {
+	public void addUserDetailsWidgetListener(UserDetailsPubSubAPI listener) {
 		listeners.add(listener);
 	}
 
 	public void onUserDetailsRefreshed(String userName) {
 
-		for (UserDetailsUserIdPubSubAPI listener : listeners) {
+		for (UserDetailsPubSubAPI listener : listeners) {
 			listener.onUserIdRefreshed(userName);
 		}
 		
+	}
+
+	public void onCurrentRoleChanged(ChassisRole currentRole) {
+
+		for (UserDetailsPubSubAPI listener : listeners) {
+			listener.onCurrentRoleChanged(currentRole);
+		}
 	}
 	
 	

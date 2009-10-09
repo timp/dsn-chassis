@@ -11,6 +11,9 @@ import java.util.Set;
 
 import junit.framework.JUnit4TestAdapter;
 
+import org.cggh.chassis.generic.client.gwt.configuration.client.ChassisRole;
+import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
+import org.cggh.chassis.generic.client.gwt.configuration.client.TestConfigurationSetUp;
 import org.cggh.chassis.generic.client.gwt.widget.userdetails.client.UserDetailsWidgetModel;
 import org.cggh.chassis.generic.client.gwt.widget.userdetails.client.UserDetailsWidgetModelListener;
 import org.junit.Test;
@@ -27,10 +30,16 @@ public class TestUserDetailsWidgetModel {
 	   return new JUnit4TestAdapter(TestUserDetailsWidgetModel.class);
 	} 
 	
-	
+	private ChassisRole testRole1;
+	private ChassisRole testRole2;
 	
 	@Test
 	public void testConstructor() {
+		
+		//setup ConfigurationBean
+		TestConfigurationSetUp.createTestConfiguration();
+		testRole1 = ConfigurationBean.getChassisRoleCurator();
+		testRole2 = ConfigurationBean.getChassisRoleSubmitter();
 		
 		UserDetailsWidgetModel model = new UserDetailsWidgetModel();
 		
@@ -46,6 +55,18 @@ public class TestUserDetailsWidgetModel {
 	
 	
 	
+	@Test
+	public void testStatusConstants() {
+		
+		assertEquals(new Integer(0), UserDetailsWidgetModel.STATUS_INITIAL);
+		assertEquals(new Integer(1), UserDetailsWidgetModel.STATUS_LOADING);
+		assertEquals(new Integer(2), UserDetailsWidgetModel.STATUS_FOUND);
+		assertEquals(new Integer(3), UserDetailsWidgetModel.STATUS_ERROR);
+		
+	}
+
+
+
 	@Test
 	public void testSetUserName() {
 
@@ -100,58 +121,38 @@ public class TestUserDetailsWidgetModel {
 	public void testSetCurrentRole() {
 
 		UserDetailsWidgetModel model = new UserDetailsWidgetModel();
-		
-		// test data
-		String currentRole = "foo";
-		
+				
 		// method under test
-		model.setCurrentRole(currentRole);
+		model.setCurrentRole(testRole1);
 		
 		// test outcome
-		assertEquals(currentRole, model.getCurrentRole());
+		assertEquals(testRole1, model.getCurrentRole());
 		
 	}
-	
-	
+		
 	
 	@Test
 	public void testCurrentRoleChanged() {
 		
 		UserDetailsWidgetModel model = new UserDetailsWidgetModel();
-
-		// test data
-		String foo = "foo";
-		String bar = "bar";
 		
 		// instantiate a mock model listener 
 		UserDetailsWidgetModelListener listener = createMock(UserDetailsWidgetModelListener.class);
 		
 		// set up expectations
-		listener.onCurrentRoleChanged(null, foo);
-		listener.onCurrentRoleChanged(foo, bar);
+		listener.onCurrentRoleChanged(null, testRole1);
+		listener.onCurrentRoleChanged(testRole1, testRole2);
 		replay(listener);
 		
 		// register with model
 		model.addListener(listener);
 
 		// call method under test
-		model.setCurrentRole(foo);
-		model.setCurrentRole(bar);
+		model.setCurrentRole(testRole1);
+		model.setCurrentRole(testRole2);
 		
 		// verify expectations
 		verify(listener);
-		
-	}
-	
-	
-	
-	@Test
-	public void testStatusConstants() {
-		
-		assertEquals(new Integer(0), UserDetailsWidgetModel.STATUS_INITIAL);
-		assertEquals(new Integer(1), UserDetailsWidgetModel.STATUS_LOADING);
-		assertEquals(new Integer(2), UserDetailsWidgetModel.STATUS_FOUND);
-		assertEquals(new Integer(3), UserDetailsWidgetModel.STATUS_ERROR);
 		
 	}
 	
@@ -210,9 +211,9 @@ public class TestUserDetailsWidgetModel {
 		assertNull(model.getRoles());
 
 		// test data
-		Set<String> roles = new HashSet<String>();
-		roles.add("foo");
-		roles.add("bar");
+		Set<ChassisRole> roles = new HashSet<ChassisRole>();
+		roles.add(testRole1);
+		roles.add(testRole2);
 		
 		// method under test
 		model.setRoles(roles);
@@ -233,9 +234,9 @@ public class TestUserDetailsWidgetModel {
 		UserDetailsWidgetModelListener listener = createMock(UserDetailsWidgetModelListener.class);
 
 		// test data
-		Set<String> roles = new HashSet<String>();
-		roles.add("foo");
-		roles.add("bar");
+		Set<ChassisRole> roles = new HashSet<ChassisRole>();
+		roles.add(testRole1);
+		roles.add(testRole2);
 		
 		// set up expectations
 		listener.onRolesChanged(null, roles);

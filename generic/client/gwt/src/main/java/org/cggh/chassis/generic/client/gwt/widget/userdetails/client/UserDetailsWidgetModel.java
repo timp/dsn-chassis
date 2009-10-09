@@ -6,15 +6,14 @@ package org.cggh.chassis.generic.client.gwt.widget.userdetails.client;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.cggh.chassis.generic.client.gwt.configuration.client.ChassisRole;
+
 
 /**
  * @author raok
  *
  */
 class UserDetailsWidgetModel {
-
-	
-	
 	
 	public static final Integer STATUS_INITIAL = 0;
 	public static final Integer STATUS_LOADING = 1;
@@ -22,13 +21,18 @@ class UserDetailsWidgetModel {
 	public static final Integer STATUS_ERROR = 3;
 	
 	
-	
 	private String userName;
 	private Set<UserDetailsWidgetModelListener> listeners = new HashSet<UserDetailsWidgetModelListener>();
-	private String currentRole;
+	private ChassisRole currentRole;
 	private Integer status = STATUS_INITIAL;
-	private Set<String> roles;
+	private Set<ChassisRole> roles;
 
+	//prevent initialisation outside package
+	UserDetailsWidgetModel() {
+		
+	}
+	
+	
 	void setUserName(String userName) {
 		String before = this.userName ;
 		this.userName = userName;
@@ -49,19 +53,19 @@ class UserDetailsWidgetModel {
 		this.listeners.add(listener);
 	}
 
-	void setCurrentRole(String currentRole) {
-		String before = this.currentRole;
-		this.currentRole = currentRole;
-		this.fireCurrentRoleChanged(before, currentRole);
+	void setCurrentRole(ChassisRole role) {
+		ChassisRole before = this.currentRole;
+		this.currentRole = role;
+		this.fireCurrentRoleChanged(before, role);
 	}
 
-	private void fireCurrentRoleChanged(String before, String after) {
+	private void fireCurrentRoleChanged(ChassisRole before, ChassisRole after) {
 		for (UserDetailsWidgetModelListener l : listeners) {
 			l.onCurrentRoleChanged(before, after);
 		}
 	}
 
-	String getCurrentRole() {
+	ChassisRole getCurrentRole() {
 		return this.currentRole;
 	}
 
@@ -81,17 +85,17 @@ class UserDetailsWidgetModel {
 		}
 	}
 
-	Set<String> getRoles() {
+	Set<ChassisRole> getRoles() {
 		return this.roles;
 	}
 
-	void setRoles(Set<String> roles) {
-		Set<String> before = this.roles;
+	void setRoles(Set<ChassisRole> roles) {
+		Set<ChassisRole> before = this.roles;
 		this.roles = roles;
 		this.fireRolesChanged(before, roles);
 	}
 
-	private void fireRolesChanged(Set<String> before, Set<String> after) {
+	private void fireRolesChanged(Set<ChassisRole> before, Set<ChassisRole> after) {
 		for (UserDetailsWidgetModelListener l : listeners) {
 			l.onRolesChanged(before, after);
 		}

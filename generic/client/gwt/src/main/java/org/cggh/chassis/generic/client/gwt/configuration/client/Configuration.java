@@ -20,6 +20,26 @@ public class Configuration {
 		return $wnd.CHASSIS.userChassisRolesPrefix;
 	}-*/;
 	
+	public static native JsChassisRole getChassisRoleCoordinator() /*-{
+		return $wnd.CHASSIS.chassisRoleCoordinator;
+	}-*/;
+	
+	public static native JsChassisRole getChassisRoleCurator() /*-{
+		return $wnd.CHASSIS.chassisRoleCurator;
+	}-*/;
+	
+	public static native JsChassisRole getChassisRoleGatekeeper() /*-{
+		return $wnd.CHASSIS.chassisRoleGatekeeper;
+	}-*/;
+	
+	public static native JsChassisRole getChassisRoleSubmitter() /*-{
+		return $wnd.CHASSIS.chassisRoleSubmitter;
+	}-*/;
+	
+	public static native JsChassisRole getChassisRoleUser() /*-{
+		return $wnd.CHASSIS.chassisRoleUser;
+	}-*/;
+	
 	public static native String getStudyFeedURL() /*-{
 		return $wnd.CHASSIS.studyFeedURL;
 	}-*/;

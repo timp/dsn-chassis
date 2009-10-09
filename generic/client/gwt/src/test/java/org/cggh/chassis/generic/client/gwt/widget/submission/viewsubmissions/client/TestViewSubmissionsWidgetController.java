@@ -29,7 +29,7 @@ import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.impl.AtomServiceImpl;
-import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
+import org.cggh.chassis.generic.client.gwt.configuration.client.TestConfigurationSetUp;
 import org.cggh.chassis.generic.client.gwt.widget.submission.viewsubmissions.client.ViewSubmissionsWidgetController.LoadSubmissionFeedCallback;
 import org.cggh.chassis.generic.client.gwt.widget.submission.viewsubmissions.client.ViewSubmissionsWidgetController.LoadSubmissionFeedErrback;
 import org.cggh.chassis.generic.client.gwt.widget.submission.viewsubmissions.client.ViewSubmissionsWidgetController.LoadSubmissionsByEntryURLsCallback;
@@ -66,16 +66,14 @@ public class TestViewSubmissionsWidgetController {
 	private List<SubmissionEntry> testSubmissions;
 	
 	//empty URL because MockEntries already carry the feedURL within their editLink
-	private String testSubmissionFeedURL = "";
-	private String testSubmissionQueryServiceURL = "Http://www.foo.com/submission_query";
+	private String testSubmissionFeedURL = TestConfigurationSetUp.testSubmissionFeedURL;
+	private String testSubmissionQueryServiceURL = TestConfigurationSetUp.testSubmissionQueryServiceURL;
 		
 	@Before
 	public void setUp() throws Exception {
-
-		//Set up ConfigurationBean with test values
-		ConfigurationBean.useUnitTestConfiguration = true;
-		ConfigurationBean.testSubmissionFeedURL = testSubmissionFeedURL;
-		ConfigurationBean.testSubmissionQueryServiceURL = testSubmissionQueryServiceURL;
+		
+		//setup ConfigurationBean
+		TestConfigurationSetUp.createTestConfiguration();
 				
 		//Create testController, inject mockModel and a mock Service
 		testModel = new ViewSubmissionsWidgetModel();
@@ -174,19 +172,20 @@ public class TestViewSubmissionsWidgetController {
 	public void testOnLoadSubmissionsByEntryURLs_callback() {
 		
 		//test data
-		String entryURL1 = "http://example.com/submissions/submission1";
-		String entryURL2 = "http://example.com/submissions/submission2";
+		//test handling of relative entryURLs
+		String relEntryURL1 = "/submission1";
+		String relEntryURL2 = "/submission2";
 		Set<String> submissionEntryURLS = new HashSet<String>();
-		submissionEntryURLS.add(entryURL1);
-		submissionEntryURLS.add(entryURL2);
+		submissionEntryURLS.add(relEntryURL1);
+		submissionEntryURLS.add(relEntryURL2);
 		
 		
 		//create mock Deffered object
 		Deferred<AtomEntry> mockDeffered = PowerMock.createMock(Deferred.class);
 		
 		//set up expectations
-		expect(mockService.getEntry(entryURL1)).andReturn(mockDeffered);
-		expect(mockService.getEntry(entryURL2)).andReturn(mockDeffered);
+		expect(mockService.getEntry(testSubmissionFeedURL + relEntryURL1)).andReturn(mockDeffered);
+		expect(mockService.getEntry(testSubmissionFeedURL + relEntryURL2)).andReturn(mockDeffered);
 		PowerMock.replay(mockService);
 		mockDeffered.addCallbacks(isA(LoadSubmissionsByEntryURLsCallback.class), isA(LoadSubmissionsByEntryURLsErrback.class));
 		PowerMock.expectLastCall().andReturn(mockDeffered).times(2);

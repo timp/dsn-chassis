@@ -5,6 +5,9 @@ package org.cggh.chassis.generic.client.gwt.widget.userdetails.client;
 
 import java.util.Set;
 
+import org.cggh.chassis.generic.client.gwt.configuration.client.ChassisRole;
+import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
+
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -67,19 +70,18 @@ class UserDetailsWidgetDefaultRenderer implements UserDetailsWidgetModelListener
 	
 	
 	
-	
-	public void onCurrentRoleChanged(String before, String after) {
-		currentRoleLabel.setText(after);
+	public void onCurrentRoleChanged(ChassisRole before, ChassisRole after) {
+		currentRoleLabel.setText(after.roleLabel);
 	}
 
-	public void onRolesChanged(Set<String> before, Set<String> after) {
+	public void onRolesChanged(Set<ChassisRole> before, Set<ChassisRole> after) {
 		
 		// clear ListBox
 		userRolesListBox.clear();
 		
-		for (String role : after) {
+		for (ChassisRole role : after) {
 			// TODO create friendly translator for roles?
-			userRolesListBox.addItem(role, role);
+			userRolesListBox.addItem(role.roleLabel, role.roleId.toString());
 		}
 		
 		//show/hide changeUserRolePanel
@@ -117,7 +119,29 @@ class UserDetailsWidgetDefaultRenderer implements UserDetailsWidgetModelListener
 	
 	class RoleChangeHandler implements ChangeHandler {
 		public void onChange(ChangeEvent arg0) {
-			controller.updateCurrentRole(userRolesListBox.getValue(userRolesListBox.getSelectedIndex()));
+			
+			//listBox value
+			String selectedRoleId = userRolesListBox.getValue(userRolesListBox.getSelectedIndex());
+			
+			//get chassisRoles
+			ChassisRole coordinatorRole = ConfigurationBean.getChassisRoleCoordinator();
+			ChassisRole curatorRole = ConfigurationBean.getChassisRoleCurator();
+			ChassisRole gatekeeperRole = ConfigurationBean.getChassisRoleGatekeeper();
+			ChassisRole submitterRole = ConfigurationBean.getChassisRoleSubmitter();
+			ChassisRole userRole = ConfigurationBean.getChassisRoleUser();
+			
+			
+			if (selectedRoleId.equalsIgnoreCase(coordinatorRole.roleId.toString())) {
+				controller.updateCurrentRole(coordinatorRole);
+			} else if (selectedRoleId.equalsIgnoreCase(curatorRole.roleId.toString())) {
+				controller.updateCurrentRole(curatorRole);
+			} else if (selectedRoleId.equalsIgnoreCase(gatekeeperRole.roleId.toString())) {
+				controller.updateCurrentRole(gatekeeperRole);
+			} else if (selectedRoleId.equalsIgnoreCase(submitterRole.roleId.toString())) {
+				controller.updateCurrentRole(submitterRole);
+			} else if (selectedRoleId.equalsIgnoreCase(userRole.roleId.toString())) {
+				controller.updateCurrentRole(userRole);
+			}
 		}
 	}
 	

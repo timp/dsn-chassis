@@ -4,12 +4,9 @@
 package org.cggh.chassis.generic.client.gwt.widget.studymanagement.client;
 
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.cggh.chassis.generic.atom.study.client.mockimpl.MockStudyFactory;
 import org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomService;
-import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
+import org.cggh.chassis.generic.client.gwt.configuration.client.TestConfigurationSetUp;
 import org.junit.Test;
 
 import com.google.gwt.dom.client.Document;
@@ -43,21 +40,15 @@ public class GWTTestStudyManagementWidgetDefaultRenderer extends GWTTestCase {
 	@Override
 	protected void gwtSetUp() {
 		
+		//setup ConfigurationBean
+		TestConfigurationSetUp.createTestConfiguration();
+		
 		//Create testController, inject mockModel and a mock Service
 		mockFactory = new MockStudyFactory();
 		mockService = new MockAtomService(mockFactory);
 
 		// bootstrap mock service with study feed
 		((MockAtomService)mockService).createFeed(feedURL, "all studies");
-
-		//Create modules test data
-		Map<String, String> testModules = new HashMap<String, String>();
-		testModules.put("module1Id", "module1Label");
-		testModules.put("module2Id", "module2Label");
-		
-		//Set up ConfigurationBean with test values
-		ConfigurationBean.useUnitTestConfiguration = true;
-		ConfigurationBean.testModules = testModules;
 		
 		//create testController and inject testModel
 		testModel = new StudyManagementWidgetModel(new StudyManagementWidget(new SimplePanel(), ""));

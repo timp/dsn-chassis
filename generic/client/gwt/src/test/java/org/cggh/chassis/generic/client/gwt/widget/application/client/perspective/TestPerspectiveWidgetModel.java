@@ -115,9 +115,7 @@ public class TestPerspectiveWidgetModel {
 		testModel.setDisplayStatus(PerspectiveWidgetModel.DISPLAYING_SUBMISSION_MANAGEMENT_WIDGET, true);
 		
 		verify(mockListener);
-		
-		
-		
+				
 		
 	}
 	

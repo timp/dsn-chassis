@@ -4,12 +4,9 @@
 package org.cggh.chassis.generic.client.gwt.widget.submissionmanagement.client;
 
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.cggh.chassis.generic.atom.submission.client.mockimpl.MockSubmissionFactory;
 import org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomService;
-import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
+import org.cggh.chassis.generic.client.gwt.configuration.client.TestConfigurationSetUp;
 import org.junit.Test;
 
 import com.google.gwt.dom.client.Document;
@@ -43,21 +40,15 @@ public class GWTTestSubmissionManagementWidgetDefaultRenderer extends GWTTestCas
 	@Override
 	protected void gwtSetUp() {
 		
+		//setup ConfigurationBean
+		TestConfigurationSetUp.createTestConfiguration();
+		
 		//Create testController, inject mockModel and a mock Service
 		mockFactory = new MockSubmissionFactory();
 		mockService = new MockAtomService(mockFactory);
 
 		// bootstrap mock service with submission feed
 		((MockAtomService)mockService).createFeed(feedURL, "all submissions");
-
-		//Create modules test data
-		Map<String, String> testModules = new HashMap<String, String>();
-		testModules.put("module1Id", "module1Label");
-		testModules.put("module2Id", "module2Label");
-
-		//Set up ConfigurationBean with test values
-		ConfigurationBean.useUnitTestConfiguration = true;
-		ConfigurationBean.testModules = testModules;
 		
 		//create testController and inject testModel
 		testModel = new SubmissionManagementWidgetModel(new SubmissionManagementWidget(new SimplePanel(), ""));

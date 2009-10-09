@@ -8,10 +8,7 @@ import java.util.List;
 
 import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
 import org.cggh.chassis.generic.atom.study.client.mockimpl.MockStudyFactory;
-import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
-import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetController;
-import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetDefaultRenderer;
-import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetModel;
+import org.cggh.chassis.generic.client.gwt.configuration.client.TestConfigurationSetUp;
 import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetDefaultRenderer.ViewStudyClickHandler;
 
 import com.google.gwt.junit.client.GWTTestCase;
@@ -55,10 +52,8 @@ public class GWTTestViewStudiesWidgetDefaultRenderer extends GWTTestCase {
 	@Override
 	protected void gwtSetUp() {
 		
-		//Set up ConfigurationBean with test values for controller
-		ConfigurationBean.useUnitTestConfiguration = true;
-		ConfigurationBean.testStudyFeedURL = "http://foo.com/studies";
-		ConfigurationBean.testStudyQueryServiceURL = "http://foo.com/study_query";
+		//setup ConfigurationBean
+		TestConfigurationSetUp.createTestConfiguration();
 		
 		//Create testModel
 		testModel = new ViewStudiesWidgetModel();

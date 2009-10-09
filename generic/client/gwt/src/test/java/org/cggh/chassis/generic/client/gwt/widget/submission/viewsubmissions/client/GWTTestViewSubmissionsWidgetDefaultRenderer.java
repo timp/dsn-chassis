@@ -8,7 +8,7 @@ import java.util.List;
 
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
 import org.cggh.chassis.generic.atom.submission.client.mockimpl.MockSubmissionFactory;
-import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
+import org.cggh.chassis.generic.client.gwt.configuration.client.TestConfigurationSetUp;
 import org.cggh.chassis.generic.client.gwt.widget.submission.viewsubmissions.client.ViewSubmissionsWidgetDefaultRenderer.ViewSubmissionClickHandler;
 
 import com.google.gwt.junit.client.GWTTestCase;
@@ -52,10 +52,8 @@ public class GWTTestViewSubmissionsWidgetDefaultRenderer extends GWTTestCase {
 	@Override
 	protected void gwtSetUp() {
 		
-		//Set up ConfigurationBean with test values for controller
-		ConfigurationBean.useUnitTestConfiguration = true;
-		ConfigurationBean.testSubmissionFeedURL = "http://foo.com/submissions";
-		ConfigurationBean.testSubmissionQueryServiceURL = "http://foo.com/submissions_query";
+		//setup ConfigurationBean
+		TestConfigurationSetUp.createTestConfiguration();
 		
 		//Create testModel
 		testModel = new ViewSubmissionsWidgetModel();
