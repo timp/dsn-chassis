@@ -7,5 +7,7 @@ public interface SubmissionManagementWidgetAPI {
 	public Panel getMenuCanvas();
 	
 	public void addSubmissionManagementWidgetListener(SubmissionManagementWidgetPubSubAPI listener);
+	
+	public void resetWidget();
 
 }

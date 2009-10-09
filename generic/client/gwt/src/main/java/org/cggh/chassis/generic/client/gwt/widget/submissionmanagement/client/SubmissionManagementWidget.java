@@ -107,7 +107,7 @@ public class SubmissionManagementWidget implements SubmissionManagementWidgetAPI
 		return menuCanvas;
 	}
 
-	public void displayStatusChanged(Boolean couldStatusContainUnsavedData) {
+	void displayStatusChanged(Boolean couldStatusContainUnsavedData) {
 		
 		for (SubmissionManagementWidgetPubSubAPI listener : listeners) {
 			listener.onSubmissionManagmentDisplayStatusChanged(couldStatusContainUnsavedData);
@@ -118,6 +118,12 @@ public class SubmissionManagementWidget implements SubmissionManagementWidgetAPI
 	public void addSubmissionManagementWidgetListener(SubmissionManagementWidgetPubSubAPI listener) {
 
 		listeners.add(listener);
+		
+	}
+
+	public void resetWidget() {
+		
+		controller.reset();
 		
 	}
 	

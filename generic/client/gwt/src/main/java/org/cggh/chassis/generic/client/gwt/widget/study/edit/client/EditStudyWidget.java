@@ -77,7 +77,7 @@ public class EditStudyWidget implements EditStudyWidgetAPI, StudyControllerPubSu
 
 	public void onUserActionEditStudyEntryCancelled() {
 		for (EditStudyWidgetPubSubAPI listener : listeners) {
-			listener.onUserActionCreateStudyCancelled();
+			listener.onUserActionEditStudyCancelled();
 		}
 	}
 	

@@ -124,4 +124,20 @@ public class TestSubmissionManagementWidgetModel {
 		
 		verify(listener);
 	}
+	
+	@Test
+	public void testReset() {
+		
+		SubmissionManagementWidgetModelListener listener = createMock(SubmissionManagementWidgetModelListener.class);
+		
+		// set up expectations, reset silently
+		replay(listener);
+		
+		//register listener with model
+		testModel.addListener(listener);
+		
+		testModel.reset();
+		
+		verify(listener);
+	}
 }

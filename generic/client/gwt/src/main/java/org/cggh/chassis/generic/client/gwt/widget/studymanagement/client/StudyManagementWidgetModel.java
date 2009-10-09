@@ -78,4 +78,8 @@ public class StudyManagementWidgetModel {
 		
 	}
 
+	public void reset() {
+		displayStatus = DISPLAYING_NONE;
+	}
+
 }
