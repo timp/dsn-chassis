@@ -80,4 +80,8 @@ public class SubmissionManagementWidgetModel {
 		
 	}
 
+	public void reset() {
+		displayStatus = DISPLAYING_NONE;
+	}
+
 }

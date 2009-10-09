@@ -96,6 +96,23 @@ public class TestStudyManagementWidgetController {
 		PowerMock.verify(mockModel);
 		
 	}
+	
+	@Test
+	public void testReset() {
+		
+		//set expectations
+		mockModel.reset();
+		PowerMock.expectLastCall();
+		PowerMock.replay(mockModel);
+		
+		//method under test
+		testController.reset();
+
+		PowerMock.verify(mockModel);
+		
+	}
+	
+	
 			
 	
 }

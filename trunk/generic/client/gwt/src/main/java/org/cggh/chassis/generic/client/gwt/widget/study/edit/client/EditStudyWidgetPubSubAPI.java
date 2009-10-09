@@ -13,6 +13,6 @@ public interface EditStudyWidgetPubSubAPI {
 
 	void onStudyUpdateSuccess(StudyEntry updatedStudyEntry);
 
-	void onUserActionCreateStudyCancelled();
+	void onUserActionEditStudyCancelled();
 
 }

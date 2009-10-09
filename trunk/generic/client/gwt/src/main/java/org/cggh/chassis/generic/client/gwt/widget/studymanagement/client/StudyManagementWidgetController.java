@@ -62,6 +62,14 @@ public class StudyManagementWidgetController {
 		log.leave();
 	}
 
+	public void reset() {
+		log.enter("reset");
+		
+		model.reset();
+		
+		log.leave();
+	}
+
 	
 	
 	

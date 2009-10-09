@@ -75,6 +75,11 @@ public class StudyManagementWidget implements StudyManagementWidgetAPI,
 		
 	}
 	
+	public void onUserActionEditStudyCancelled() {
+		// TODO Auto-generated method stub
+		
+	}
+
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.client.gwt.widget.studymanagement.client.StudyManagementWidgetAPI#getMenuCanvas()
 	 */
@@ -93,6 +98,10 @@ public class StudyManagementWidget implements StudyManagementWidgetAPI,
 	public void addStudyManagementWidgetListener(StudyManagementWidgetPubSubAPI listener) {
 
 		listeners.add(listener);
+	}
+
+	public void resetWidget() {
+		controller.reset();
 	}
 	
 }

@@ -7,5 +7,7 @@ public interface StudyManagementWidgetAPI {
 	public Panel getMenuCanvas();
 	
 	public void addStudyManagementWidgetListener(StudyManagementWidgetPubSubAPI listener);
-
+	
+	public void resetWidget();
+	
 }
