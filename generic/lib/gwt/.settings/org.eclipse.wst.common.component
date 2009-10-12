@@ -5,6 +5,7 @@
 <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
 <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/spike/java"/>
 <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/test/java"/>
+<wb-resource deploy-path="/WEB-INF/classes" source-path="/src/spike/resources"/>
 <property name="context-root" value="googlecode_dsn-chassis_generic_lib_gwt"/>
 <property name="java-output-path"/>
 </wb-module>
