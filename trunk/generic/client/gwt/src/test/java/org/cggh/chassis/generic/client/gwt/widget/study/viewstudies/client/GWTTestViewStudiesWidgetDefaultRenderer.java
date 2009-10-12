@@ -9,7 +9,7 @@ import java.util.List;
 import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
 import org.cggh.chassis.generic.atom.study.client.mockimpl.MockStudyFactory;
 import org.cggh.chassis.generic.client.gwt.configuration.client.TestConfigurationSetUp;
-import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetDefaultRenderer.ViewStudyClickHandler;
+import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetDefaultRenderer.SelectStudyClickHandler;
 
 import com.google.gwt.junit.client.GWTTestCase;
 import com.google.gwt.user.client.ui.SimplePanel;
@@ -62,7 +62,7 @@ public class GWTTestViewStudiesWidgetDefaultRenderer extends GWTTestCase {
 		mockController = new MockViewAllStudiesWidgetController(null, null);
 		
 		// instantiate a renderer
-		testRenderer = new ViewStudiesWidgetDefaultRenderer(new SimplePanel(), mockController);
+		testRenderer = new ViewStudiesWidgetDefaultRenderer(new SimplePanel(), mockController, "");
 		
 		//register as listener
 		testModel.addListener(testRenderer);
@@ -135,7 +135,7 @@ public class GWTTestViewStudiesWidgetDefaultRenderer extends GWTTestCase {
 		StudyEntry testStudyEntry = studies.get(0);
 		
 		//create click handler
-		ViewStudyClickHandler testClickHandler = testRenderer.new ViewStudyClickHandler(testStudyEntry);
+		SelectStudyClickHandler testClickHandler = testRenderer.new SelectStudyClickHandler(testStudyEntry);
 		
 		//simulate click event
 		testClickHandler.onClick(null);

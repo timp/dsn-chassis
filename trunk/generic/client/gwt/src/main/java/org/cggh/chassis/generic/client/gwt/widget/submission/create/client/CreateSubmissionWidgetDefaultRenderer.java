@@ -59,6 +59,7 @@ public class CreateSubmissionWidgetDefaultRenderer implements SubmissionModelLis
 	String studyLinkToAdd;
 	
 	//Add studyLink UI
+	final DecoratedPopupPanel studyLinkChooserPopup = new DecoratedPopupPanel(false);
 	final Panel studyLinkListBoxCanvas = new SimplePanel();
 	final private ViewStudiesWidget viewStudiesWidgetListBox;
 	final Map<String, CheckBox> modulesUIHash = new HashMap<String, CheckBox>();
@@ -80,7 +81,7 @@ public class CreateSubmissionWidgetDefaultRenderer implements SubmissionModelLis
 		this.modulesConfig = ConfigurationBean.getModules();
 		
 		//Create ViewStudies widget to view linked studies
-		studiesLinkedWidget = new ViewStudiesWidget(studiesLinkedCanvas);
+		studiesLinkedWidget = new ViewStudiesWidget(studiesLinkedCanvas, "remove study link");
 
 		//Create ViewStudiesWidget with ListBox renderer
 		ViewStudiesWidgetModelListener customRenderer = new ViewStudiesWidgetListBoxRenderer(studyLinkListBoxCanvas, null);
@@ -88,6 +89,7 @@ public class CreateSubmissionWidgetDefaultRenderer implements SubmissionModelLis
 		
 		//add this as listener
 		viewStudiesWidgetListBox.addViewAllStudiesWidgetListener(this);
+		studiesLinkedWidget.addViewAllStudiesWidgetListener(this);
 		
 		
 		//initialise view
@@ -141,7 +143,6 @@ public class CreateSubmissionWidgetDefaultRenderer implements SubmissionModelLis
 		
 		
 		//prepare the studyLink chooser panel
-		final DecoratedPopupPanel studyLinkChooserPopup = new DecoratedPopupPanel(false);
 		VerticalPanel studyLinkChooserVP = new VerticalPanel();
 		studyLinkChooserPopup.add(studyLinkChooserVP);
 		studyLinkChooserVP.add(new Label("Choose a study for the drop down box and then click 'Add study'."));
@@ -327,11 +328,16 @@ public class CreateSubmissionWidgetDefaultRenderer implements SubmissionModelLis
 	}
 
 	public void onUserActionSelectStudy(StudyEntry studyEntry) {
-		studyLinkToAdd = studyEntry.getEditLink().getHref();
+		
+		//Distinguish between studies list panel and add study popup panel
+		if (studyLinkChooserPopup.isShowing()) {
+			studyLinkToAdd = studyEntry.getEditLink().getHref();
+		} else {
+			controller.removeStudyLink(studyEntry.getEditLink().getHref());
+		}
 	}
 
-	public void onAuthorsChanged(Set<AtomAuthor> before, Set<AtomAuthor> after,
-			Boolean isValid) {
+	public void onAuthorsChanged(Set<AtomAuthor> before, Set<AtomAuthor> after, Boolean isValid) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -225,8 +225,11 @@ public class SubmissionController implements SubmissionControllerEditAPI, Submis
 		//SubmissionEntry to update
 		SubmissionEntry submissionEntry = model.getSubmissionEntry();
 		
+		//assume link is relative
+		String entryURL = submissionFeedURL + submissionEntry.getEditLink().getHref();
+		
 		//put submissionEntry
-		Deferred<AtomEntry> deffered = service.putEntry(submissionEntry.getEditLink().getHref(), submissionEntry);
+		Deferred<AtomEntry> deffered = service.putEntry(entryURL, submissionEntry);
 		
 		//add callbacks
 		deffered.addCallbacks(new SaveOrUpdateSubmissionEntryCallback(), new SaveOrUpdateSubmissionEntryErrback());

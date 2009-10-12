@@ -30,7 +30,7 @@ public class SubmissionManagementWidgetDefaultRenderer implements SubmissionMana
 
 	//Expose view elements for testing purposes.
 	final Label displayCreateSubmissionUI = new Label("Create Submission");
-	final Label displayViewAllSubmissionsUI = new Label("View All Submissions");
+	final Label displayViewAllSubmissionsUI = new Label("View My Submissions");
 	final Panel displayCanvas;
 	final Panel menuCanvas;
 	final DecoratedPopupPanel menuPopUp = new DecoratedPopupPanel(true);

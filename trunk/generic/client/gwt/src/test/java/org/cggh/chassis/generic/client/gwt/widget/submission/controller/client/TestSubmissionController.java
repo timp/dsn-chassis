@@ -327,6 +327,7 @@ public class TestSubmissionController {
 		//test data
 		//test handling of relative entryURLs
 		String relEntryURL = "/submission1";
+		String fullEntryURL = TestConfigurationSetUp.testSubmissionFeedURL + relEntryURL;
 		
 		//create mockSubmissionEntry and AtomLink for this test
 		SubmissionEntry mockSubmissionEntry = createNiceMock(SubmissionEntry.class);
@@ -346,7 +347,7 @@ public class TestSubmissionController {
 		expect(mockAtomLink.getHref()).andReturn(relEntryURL);
 		replay(mockAtomLink);
 		
-		expect(mockService.putEntry(relEntryURL, mockSubmissionEntry)).andReturn(mockDeffered);
+		expect(mockService.putEntry(fullEntryURL, mockSubmissionEntry)).andReturn(mockDeffered);
 		PowerMock.replay(mockService);
 		
 		mockDeffered.addCallbacks(isA(SaveOrUpdateSubmissionEntryCallback.class), isA(SaveOrUpdateSubmissionEntryErrback.class));

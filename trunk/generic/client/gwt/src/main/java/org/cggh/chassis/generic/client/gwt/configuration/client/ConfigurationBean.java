@@ -6,6 +6,8 @@ package org.cggh.chassis.generic.client.gwt.configuration.client;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.cggh.chassis.generic.atom.chassis.base.constants.ChassisConstants;
+
 import com.google.gwt.core.client.JsArray;
 
 
@@ -16,13 +18,6 @@ import com.google.gwt.core.client.JsArray;
 public class ConfigurationBean {
 
 	private static final String lang = "en";
-	
-	//define roleId
-	public static final Integer coordinatorId = new Integer(0);
-	public static final Integer curatorId = new Integer(1);
-	public static final Integer gatekeeperId = new Integer(2);
-	public static final Integer submitterId = new Integer(3);
-	public static final Integer userId = new Integer(4);
 	
 	//package private to allow population in test
 	static boolean useUnitTestConfiguration = false;
@@ -57,7 +52,7 @@ public class ConfigurationBean {
 			
 			JsChassisRole role = Configuration.getChassisRoleCoordinator();
 			
-			return new ChassisRole(coordinatorId, role.getPermissionSuffix(), role.getLabel(lang));
+			return new ChassisRole(ChassisConstants.coordinatorRoleId, role.getPermissionSuffix(), role.getLabel(lang));
 		}
 			
 	}
@@ -71,7 +66,7 @@ public class ConfigurationBean {
 			
 			JsChassisRole role = Configuration.getChassisRoleCurator();
 			
-			return new ChassisRole(curatorId, role.getPermissionSuffix(), role.getLabel(lang));
+			return new ChassisRole(ChassisConstants.curatorRoleId, role.getPermissionSuffix(), role.getLabel(lang));
 		}
 			
 	}
@@ -85,7 +80,7 @@ public class ConfigurationBean {
 			
 			JsChassisRole role = Configuration.getChassisRoleGatekeeper();
 			
-			return new ChassisRole(gatekeeperId, role.getPermissionSuffix(), role.getLabel(lang));
+			return new ChassisRole(ChassisConstants.gatekeeperRoleId, role.getPermissionSuffix(), role.getLabel(lang));
 		}
 			
 	}
@@ -99,7 +94,7 @@ public class ConfigurationBean {
 			
 			JsChassisRole role = Configuration.getChassisRoleSubmitter();
 			
-			return new ChassisRole(submitterId, role.getPermissionSuffix(), role.getLabel(lang));
+			return new ChassisRole(ChassisConstants.submitterRoleId, role.getPermissionSuffix(), role.getLabel(lang));
 		}
 			
 	}
@@ -113,7 +108,7 @@ public class ConfigurationBean {
 			
 			JsChassisRole role = Configuration.getChassisRoleUser();
 			
-			return new ChassisRole(userId, role.getPermissionSuffix(), role.getLabel(lang));
+			return new ChassisRole(ChassisConstants.userRoleId, role.getPermissionSuffix(), role.getLabel(lang));
 		}
 			
 	}

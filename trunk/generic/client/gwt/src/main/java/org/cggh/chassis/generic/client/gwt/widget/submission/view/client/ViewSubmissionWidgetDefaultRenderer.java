@@ -53,7 +53,7 @@ public class ViewSubmissionWidgetDefaultRenderer implements SubmissionModelListe
 		this.modulesConfig = ConfigurationBean.getModules();
 		
 		//Create ViewStudies widget to view linked studies
-		studiesLinkedWidget = new ViewStudiesWidget(studiesLinkedCanvas);
+		studiesLinkedWidget = new ViewStudiesWidget(studiesLinkedCanvas, "");
 		
 		initCanvas();
 	}
