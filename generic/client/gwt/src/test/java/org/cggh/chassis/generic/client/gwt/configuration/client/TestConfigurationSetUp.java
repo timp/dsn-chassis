@@ -6,6 +6,8 @@ package org.cggh.chassis.generic.client.gwt.configuration.client;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.cggh.chassis.generic.atom.chassis.base.constants.ChassisConstants;
+
 /**
  * @author raok
  *
@@ -15,11 +17,11 @@ public class TestConfigurationSetUp {
 	//test data
 	public static final String testUserDetailsServiceEndpointURL = "http://foo.com/users";
 	public static final String testUserChassisRolesPrefix = "ROLE_";
-	public static final ChassisRole testChassisRoleCoordinator = new ChassisRole(ConfigurationBean.coordinatorId, "Coord", "Coordinator");
-	public static final ChassisRole testChassisRoleCurator = new ChassisRole(ConfigurationBean.curatorId, "Cur", "Curator");
-	public static final ChassisRole testChassisRoleGatekeeper = new ChassisRole(ConfigurationBean.gatekeeperId, "Gk", "Gate Keeper");
-	public static final ChassisRole testChassisRoleSubmitter = new ChassisRole(ConfigurationBean.submitterId, "Sub", "Submitter");
-	public static final ChassisRole testChassisRoleUser = new ChassisRole(ConfigurationBean.userId, "User", "User");
+	public static final ChassisRole testChassisRoleCoordinator = new ChassisRole(ChassisConstants.coordinatorRoleId, "Coord", "Coordinator");
+	public static final ChassisRole testChassisRoleCurator = new ChassisRole(ChassisConstants.curatorRoleId, "Cur", "Curator");
+	public static final ChassisRole testChassisRoleGatekeeper = new ChassisRole(ChassisConstants.gatekeeperRoleId, "Gk", "Gate Keeper");
+	public static final ChassisRole testChassisRoleSubmitter = new ChassisRole(ChassisConstants.submitterRoleId, "Sub", "Submitter");
+	public static final ChassisRole testChassisRoleUser = new ChassisRole(ChassisConstants.userRoleId, "User", "User");
 	public static final String testStudyFeedURL = "http://foo.com/studies";
 	public static final String testStudyQueryServiceURL = "http://foo.com/study_query";
 	public static final String testSubmissionFeedURL = "http://foo.com/submission";

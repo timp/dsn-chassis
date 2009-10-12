@@ -26,10 +26,20 @@ public class ViewStudiesWidgetDefaultRenderer implements ViewStudiesWidgetModelL
 	
 	private Panel canvas;
 	private ViewStudiesWidgetController controller;
+	private String selectStudyLinkText = "";
 
+	//use this if a select study link is not required
 	public ViewStudiesWidgetDefaultRenderer(Panel canvas, ViewStudiesWidgetController controller) {
 		this.canvas = canvas;
 		this.controller = controller;
+		
+		initCanvas();
+	}
+	
+	public ViewStudiesWidgetDefaultRenderer(Panel canvas, ViewStudiesWidgetController controller, String selectStudyLinkText) {
+		this.canvas = canvas;
+		this.controller = controller;
+		this.selectStudyLinkText = selectStudyLinkText;
 		
 		initCanvas();
 	}
@@ -75,10 +85,10 @@ public class ViewStudiesWidgetDefaultRenderer implements ViewStudiesWidgetModelL
 			studiesTable.setWidget(++rowNo, 0, new Label(studyEntry.getTitle()));
 			studiesTable.setWidget(rowNo, 1, new Label(studyEntry.getSummary()));
 			
-			//add view study link
-			Label editStudy = new Label("view");
-			editStudy.addClickHandler(new ViewStudyClickHandler(studyEntry));
-			studiesTable.setWidget(rowNo, 2, editStudy);
+			//add a select study link
+			Label selectStudy = new Label(selectStudyLinkText);
+			selectStudy.addClickHandler(new SelectStudyClickHandler(studyEntry));
+			studiesTable.setWidget(rowNo, 2, selectStudy);
 						
 		}
 		
@@ -87,11 +97,11 @@ public class ViewStudiesWidgetDefaultRenderer implements ViewStudiesWidgetModelL
 	}
 	
 	//package private to allow testing
-	class ViewStudyClickHandler implements ClickHandler {
+	class SelectStudyClickHandler implements ClickHandler {
 		
 		private final StudyEntry studyEntry;
 		
-		public ViewStudyClickHandler(StudyEntry studyEntry) {
+		public SelectStudyClickHandler(StudyEntry studyEntry) {
 			this.studyEntry = studyEntry;
 		}
 		

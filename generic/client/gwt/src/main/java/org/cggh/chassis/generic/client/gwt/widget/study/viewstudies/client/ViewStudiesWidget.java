@@ -21,13 +21,13 @@ public class ViewStudiesWidget implements ViewStudiesWidgetAPI {
 	final private ViewStudiesWidgetModelListener renderer;
 	private Set<ViewStudiesWidgetPubSubAPI> listeners = new HashSet<ViewStudiesWidgetPubSubAPI>();
 	
-	public ViewStudiesWidget(Panel canvas) {
+	public ViewStudiesWidget(Panel canvas, String selectStudyLinkText) {
 		
 		model = new ViewStudiesWidgetModel();
 		
 		controller = new ViewStudiesWidgetController(model, this);
 		
-		renderer = new ViewStudiesWidgetDefaultRenderer(canvas, controller);
+		renderer = new ViewStudiesWidgetDefaultRenderer(canvas, controller,selectStudyLinkText);
 		
 		// register renderer as listener to model
 		model.addListener(renderer);

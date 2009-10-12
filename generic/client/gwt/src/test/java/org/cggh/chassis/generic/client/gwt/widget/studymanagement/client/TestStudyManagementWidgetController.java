@@ -57,7 +57,7 @@ public class TestStudyManagementWidgetController {
 	public void testDisplayEditStudyWidget() {
 		
 		//set expectations
-		mockModel.setDisplayStatus(StudyManagementWidgetModel.DISPLAYING_EDIT_STUDY);
+		mockModel.setDisplayStatus(StudyManagementWidgetModel.DISPLAYING_EDIT_STUDY, true);
 		PowerMock.expectLastCall();
 		PowerMock.replay(mockModel);
 		
@@ -71,7 +71,7 @@ public class TestStudyManagementWidgetController {
 	public void testDisplayViewStudyWidget() {
 		
 		//set expectations
-		mockModel.setDisplayStatus(StudyManagementWidgetModel.DISPLAYING_VIEW_STUDY);
+		mockModel.setDisplayStatus(StudyManagementWidgetModel.DISPLAYING_VIEW_STUDY, true);
 		PowerMock.expectLastCall();
 		PowerMock.replay(mockModel);
 		

@@ -30,7 +30,7 @@ public class StudyManagementWidgetDefaultRenderer implements StudyManagementWidg
 
 	//Expose view elements for testing purposes.
 	final Label displayCreateStudyUI = new Label("Create Study");
-	final Label displayViewAllStudiesUI = new Label("View All Studies");
+	final Label displayViewAllStudiesUI = new Label("View My Studies");
 	final Panel displayCanvas;
 	final Panel menuCanvas;
 	final DecoratedPopupPanel menuPopUp = new DecoratedPopupPanel(true);
@@ -62,7 +62,7 @@ public class StudyManagementWidgetDefaultRenderer implements StudyManagementWidg
 		//create child widgets
 		viewStudyWidget = new ViewStudyWidget(viewStudyWidgetCanvas);
 		createStudyWidget = new CreateStudyWidget(createStudyWidgetCanvas);
-		viewStudiesWidget = new ViewStudiesWidget(viewStudiesWidgetCanvas);
+		viewStudiesWidget = new ViewStudiesWidget(viewStudiesWidgetCanvas, "view");
 		editStudyWidget = new EditStudyWidget(editStudyWidgetCanvas);
 		
 		//initialise view

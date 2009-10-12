@@ -3,9 +3,7 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.submission.edit.client;
 
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;

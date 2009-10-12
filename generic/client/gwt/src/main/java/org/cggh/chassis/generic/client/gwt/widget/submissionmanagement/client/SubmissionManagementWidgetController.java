@@ -35,7 +35,7 @@ public class SubmissionManagementWidgetController {
 	public void displayEditSubmissionWidget() {
 		log.enter("displayEditSubmissionWidget");
 
-		model.setDisplayStatus(SubmissionManagementWidgetModel.DISPLAYING_EDIT_SUBMISSION);
+		model.setDisplayStatus(SubmissionManagementWidgetModel.DISPLAYING_EDIT_SUBMISSION, true);
 		
 		log.leave();
 	}
@@ -43,7 +43,7 @@ public class SubmissionManagementWidgetController {
 	public void displayViewSubmissionWidget() {
 		log.enter("displayViewSubmissionWidget");
 
-		model.setDisplayStatus(SubmissionManagementWidgetModel.DISPLAYING_VIEW_SUBMISSION);
+		model.setDisplayStatus(SubmissionManagementWidgetModel.DISPLAYING_VIEW_SUBMISSION, true);
 		
 		log.leave();
 	}

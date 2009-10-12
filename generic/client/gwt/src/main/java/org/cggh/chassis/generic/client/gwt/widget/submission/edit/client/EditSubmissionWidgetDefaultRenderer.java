@@ -66,7 +66,7 @@ public class EditSubmissionWidgetDefaultRenderer implements SubmissionModelListe
 	
 	
 	final Button cancelEditSubmissionUI = new Button("Cancel", new CancelCreateSubmissionUIClickHandler());
-	final Button updateSubmissionEntryUI = new Button("Create Submission", new SaveNewSubmissionUIClickHandler());
+	final Button updateSubmissionEntryUI = new Button("Update Submission", new SaveNewSubmissionUIClickHandler());
 
 	public EditSubmissionWidgetDefaultRenderer(Panel canvas, SubmissionControllerEditAPI controller, String authorEmail) {
 		this.canvas = canvas;
@@ -77,7 +77,7 @@ public class EditSubmissionWidgetDefaultRenderer implements SubmissionModelListe
 		this.modulesConfig = ConfigurationBean.getModules();
 		
 		//Create ViewStudies widget to view linked studies
-		studiesLinkedWidget = new ViewStudiesWidget(studiesLinkedCanvas);
+		studiesLinkedWidget = new ViewStudiesWidget(studiesLinkedCanvas, "remove study link");
 
 		//Create ViewStudiesWidget with ListBox renderer
 		ViewStudiesWidgetModelListener customRenderer = new ViewStudiesWidgetListBoxRenderer(studyLinkListBoxCanvas, null);

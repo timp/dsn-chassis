@@ -56,7 +56,7 @@ public class TestSubmissionManagementWidgetController {
 	public void testDisplayEditSubmissionWidget() {
 		
 		//set expectations
-		mockModel.setDisplayStatus(SubmissionManagementWidgetModel.DISPLAYING_EDIT_SUBMISSION);
+		mockModel.setDisplayStatus(SubmissionManagementWidgetModel.DISPLAYING_EDIT_SUBMISSION, true);
 		PowerMock.expectLastCall();
 		PowerMock.replay(mockModel);
 		
@@ -70,7 +70,7 @@ public class TestSubmissionManagementWidgetController {
 	public void testDisplayViewSubmissionWidget() {
 		
 		//set expectations
-		mockModel.setDisplayStatus(SubmissionManagementWidgetModel.DISPLAYING_VIEW_SUBMISSION);
+		mockModel.setDisplayStatus(SubmissionManagementWidgetModel.DISPLAYING_VIEW_SUBMISSION, true);
 		PowerMock.expectLastCall();
 		PowerMock.replay(mockModel);
 		

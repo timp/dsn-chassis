@@ -36,7 +36,7 @@ public class StudyManagementWidgetController {
 	public void displayEditStudyWidget() {
 		log.enter("displayEditStudyWidget");
 
-		model.setDisplayStatus(StudyManagementWidgetModel.DISPLAYING_EDIT_STUDY);
+		model.setDisplayStatus(StudyManagementWidgetModel.DISPLAYING_EDIT_STUDY, true);
 		
 		log.leave();
 	}
@@ -44,7 +44,7 @@ public class StudyManagementWidgetController {
 	public void displayViewStudyWidget() {
 		log.enter("displayViewStudyWidget");
 
-		model.setDisplayStatus(StudyManagementWidgetModel.DISPLAYING_VIEW_STUDY);
+		model.setDisplayStatus(StudyManagementWidgetModel.DISPLAYING_VIEW_STUDY, true);
 		
 		log.leave();
 	}
