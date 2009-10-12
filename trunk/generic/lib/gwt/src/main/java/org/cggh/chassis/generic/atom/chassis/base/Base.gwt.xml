@@ -4,4 +4,6 @@
   <inherits name="com.google.gwt.user.User" />
   <inherits name="org.cggh.chassis.generic.atom.vanilla.Atom" />
   <source path="vocab" />
+  <source path="constants" />
+  <source path="client" />
 </module>
