@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<questionnaire
+  defaultPrefix="foo"
+  defaultNamespaceUri="http://example.org/foo">
+
+  <model>
+    <element name="person"/>
+  </model>
+  
+  <view>
+
+    <html>
+      <h1>Personal Details Questionnaire</h1>
+      <h2>The Questionnaire to End All Questionnaires</h2>  
+    </html>
+
+    <label>Please enter your personal details...</label>
+
+    <question>  
+      <model>
+        <element name="givenName"/>
+      </model>
+      <view>
+        <label>What is your given name?</label>
+        <input type="text"/>
+      </view>
+    </question>
+  
+    <question>
+      <model>
+        <element name="familyName"/>
+      </model>
+      <view>
+        <label>What is your family name?</label>
+        <input type="text"/>
+      </view>
+    </question>
+  
+    <question>  
+      <model>
+        <element name="middleName"/>
+      </model>
+      <view>
+        <label>What are your middle names?</label>
+        <input type="text"/>
+      </view>
+    </question>
+  
+    <question>
+      <model>
+        <element name="email"/>
+      </model>
+      <view>
+        <label>What is your email address?</label>
+        <input type="text"/>
+        <html><em>some more text...</em></html>
+      </view>
+    </question>
+  
+    <questionnaire>
+    
+      <model>
+        <element name="address"/>
+      </model>
+      
+      <view>
+      
+        <html><h3>Address</h3></html>
+        
+        <question>  
+          <model>
+            <element name="houseNumber"/>
+          </model>
+          <view>
+            <html><strong>House name or number?</strong></html>
+            <input type="text"/>
+            <label>(some afterthoughts...)</label>
+          </view>
+        </question>
+    
+        <question>
+          <model>
+            <element name="street"/>
+          </model>
+          <view>
+            <label>Street name?</label>
+            <input type="text"/>
+          </view>
+        </question>
+            
+      </view>
+
+    </questionnaire>
+  
+  </view>
+
+</questionnaire>
