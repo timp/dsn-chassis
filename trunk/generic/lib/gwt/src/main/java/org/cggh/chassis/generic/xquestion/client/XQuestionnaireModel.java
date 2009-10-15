@@ -47,4 +47,38 @@ public class XQuestionnaireModel extends XQSModelBase {
 
 
 
+
+	/**
+	 * @param child
+	 * @param previousSibling
+	 */
+	public void addChild(XQuestionModel child, XQuestionModel previousSibling) {
+		if (previousSibling != null) {
+			this.element.insertBefore(child.getElement(), previousSibling.getElement().getNextSibling());
+		}
+		else {
+			this.addChild(child);
+		}
+	}
+
+
+
+
+
+	/**
+	 * @param model
+	 * @param model2
+	 */
+	public void addChild(XQuestionnaireModel child, XQuestionnaireModel previousSibling) {
+		if (previousSibling != null) {
+			this.element.insertBefore(child.getElement(), previousSibling.getElement().getNextSibling());
+		}
+		else {
+			this.addChild(child);
+		}
+	}
+
+
+
+
 }

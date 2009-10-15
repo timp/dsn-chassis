@@ -3,6 +3,8 @@
  */
 package org.cggh.chassis.generic.xquestion.client;
 
+import org.cggh.chassis.generic.log.client.Log;
+import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.xml.client.XML;
 
 import com.google.gwt.xml.client.Element;
@@ -16,6 +18,7 @@ public class XQuestionModel extends XQSModelBase {
 	
 	
 	
+	private Log log = LogFactory.getLog(this.getClass());
 	private XQuestionnaire parentQuestionnaire;
 
 	
@@ -42,11 +45,14 @@ public class XQuestionModel extends XQSModelBase {
 	
 	
 	public void setValue(String value) {
+		log.enter("setValue");
 		
 		if (this.element != null) {
+			log.trace("found element, setting simple content: "+value);
 			XML.setSimpleContent(element, value);
 		}
-		
+	
+		log.leave();
 	}
 	
 	

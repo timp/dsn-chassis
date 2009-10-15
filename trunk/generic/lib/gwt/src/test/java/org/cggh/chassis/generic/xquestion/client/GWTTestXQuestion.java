@@ -54,7 +54,7 @@ public class GWTTestXQuestion extends GWTTestCase {
 		Document d = XMLParser.parse(definition);
 		XQuestion q = new XQuestion(d.getDocumentElement());
 		
-		Widget w = q.getView().getInput();
+		Widget w = q.getView().getFormControl();
 		TextBox t = (TextBox) w;
 		t.setValue("bar", true); // fire events
 		
@@ -88,7 +88,7 @@ public class GWTTestXQuestion extends GWTTestCase {
 		Document d = XMLParser.parse(definition);
 		XQuestion q = new XQuestion(d.getDocumentElement());
 		
-		Widget w = q.getView().getInput();
+		Widget w = q.getView().getFormControl();
 		TextBox t = (TextBox) w;
 		t.setValue("bar", true); // fire events
 		
