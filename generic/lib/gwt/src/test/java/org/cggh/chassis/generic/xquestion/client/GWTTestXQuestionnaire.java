@@ -80,7 +80,7 @@ public class GWTTestXQuestionnaire extends GWTTestCase {
 		String[] values = { "quux", "spong" };
 		
 		for (int i=0; i<2; i++) {
-			Widget w = questions.get(i).getView().getInput();
+			Widget w = questions.get(i).getView().getFormControl();
 			TextBox t = (TextBox) w;
 			t.setValue(values[i], true); // fire events
 		}
@@ -147,7 +147,7 @@ public class GWTTestXQuestionnaire extends GWTTestCase {
 		String[] values = { "quux", "spong" };
 		
 		for (int i=0; i<2; i++) {
-			Widget w = questions.get(i).getView().getInput();
+			Widget w = questions.get(i).getView().getFormControl();
 			TextBox t = (TextBox) w;
 			t.setValue(values[i], true); // fire events
 		}
@@ -226,11 +226,11 @@ public class GWTTestXQuestionnaire extends GWTTestCase {
 		List<XQuestion> nestedQuestions = nestedQuestionnaires.get(0).getView().getQuestions();
 		assertEquals(1, nestedQuestions.size());
 		
-		Widget w0 = questions.get(0).getView().getInput();
+		Widget w0 = questions.get(0).getView().getFormControl();
 		TextBox t0 = (TextBox) w0;
 		t0.setValue("spong", true); // fire events
 
-		Widget w1 = nestedQuestions.get(0).getView().getInput();
+		Widget w1 = nestedQuestions.get(0).getView().getFormControl();
 		TextBox t1 = (TextBox) w1;
 		t1.setValue("ding", true); // fire events
 
@@ -310,11 +310,11 @@ public class GWTTestXQuestionnaire extends GWTTestCase {
 		List<XQuestion> nestedQuestions = nestedQuestionnaires.get(0).getView().getQuestions();
 		assertEquals(1, nestedQuestions.size());
 		
-		Widget w0 = questions.get(0).getView().getInput();
+		Widget w0 = questions.get(0).getView().getFormControl();
 		TextBox t0 = (TextBox) w0;
 		t0.setValue("spong", true); // fire events
 
-		Widget w1 = nestedQuestions.get(0).getView().getInput();
+		Widget w1 = nestedQuestions.get(0).getView().getFormControl();
 		TextBox t1 = (TextBox) w1;
 		t1.setValue("ding", true); // fire events
 
@@ -405,11 +405,11 @@ public class GWTTestXQuestionnaire extends GWTTestCase {
 		List<XQuestion> nestedQuestions = nestedQuestionnaires.get(0).getView().getQuestions();
 		assertEquals(1, nestedQuestions.size());
 		
-		Widget w0 = questions.get(0).getView().getInput();
+		Widget w0 = questions.get(0).getView().getFormControl();
 		TextBox t0 = (TextBox) w0;
 		t0.setValue("spong", true); // fire events
 
-		Widget w1 = nestedQuestions.get(0).getView().getInput();
+		Widget w1 = nestedQuestions.get(0).getView().getFormControl();
 		TextBox t1 = (TextBox) w1;
 		t1.setValue("ding", true); // fire events
 
@@ -451,6 +451,86 @@ public class GWTTestXQuestionnaire extends GWTTestCase {
 	}
 
 
+
+	public void testQuestionnaireWithRepeatableQuestion() {
+		log.enter("testQuestionnaireWithRepeatableQuestion");
+		
+		String definition = 
+			"<questionnaire>" +
+				"<model>" +
+					"<element name='foo'/>" +
+				"</model>" +
+				"<view>" +
+					"<question repeatable='yes'>" +
+						"<model>" +
+							"<element name='bar'/>" +
+						"</model>" +
+						"<view>" +
+							"<input type='text'/>" +
+						"</view>" +
+					"</question>" +
+				"</view>" +
+			"</questionnaire>";
+		
+		Document d = XMLParser.parse(definition);
+		XQuestionnaire q = new XQuestionnaire(d.getDocumentElement());
+
+		// test before repeat
+		
+		List<XQuestion> questions = q.getView().getQuestions();
+		
+		assertEquals(1, questions.size());
+
+		Widget w = questions.get(0).getView().getFormControl();
+		TextBox t = (TextBox) w;
+		t.setValue("baz", true); // fire events
+
+		Element e = q.getModel().getElement();
+		
+		log.trace("model element, before repeat: "+e.toString());
+		
+		assertEquals("foo", e.getTagName());
+		
+		List<Element> children = XML.elements(e.getChildNodes());
+		assertEquals(1, children.size());
+		
+		Element child = children.get(0);
+		assertEquals("bar", child.getTagName());
+		assertEquals("baz", XML.firstChildNodeValueOrNullIfNoChildren(child));
+
+		// now call repeat
+		
+		questions.get(0).repeat();
+		
+		questions = q.getView().getQuestions();
+		
+		assertEquals(2, questions.size()); // should now be two questions	
+		
+		String[] values = { "baz", "quux" };
+		
+		for (int i=0; i<2; i++) {
+			w = questions.get(i).getView().getFormControl();
+			t = (TextBox) w;
+			t.setValue(values[i], true); // fire events
+		}
+		
+		e = q.getModel().getElement();
+		
+		log.trace("model element, after repeat: "+e.toString());
+		
+		assertEquals("foo", e.getTagName());
+		
+		children = XML.elements(e.getChildNodes());
+		assertEquals(2, children.size()); // should now be two children
+		
+		for (int i=0; i<2; i++) {
+			child = children.get(i);
+			assertEquals("bar", child.getTagName());
+			assertEquals(values[i], XML.firstChildNodeValueOrNullIfNoChildren(child));
+		}
+
+		log.leave();
+	}
 
 
 }

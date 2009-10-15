@@ -3,6 +3,8 @@
  */
 package org.cggh.chassis.generic.xquestion.client;
 
+import org.cggh.chassis.generic.log.client.Log;
+import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.xml.client.XML;
 
 import com.google.gwt.user.client.ui.Composite;
@@ -17,12 +19,15 @@ public class XQuestionnaire extends Composite {
 	
 	
 	
+	private Log log = LogFactory.getLog(this.getClass());
 	private Element definition;
 	private XQuestionnaireModel model;
 	private XQuestionnaireView view;
 	private XQuestionnaire parentQuestionnaire;
 	private String defaultPrefix;
 	private String defaultNamespaceUri;
+	private boolean repeatable;
+	private XQuestionnaire previousSibling;
 
 	
 	
@@ -90,8 +95,31 @@ public class XQuestionnaire extends Composite {
 	
 	
 	
+	/**
+	 * @param documentElement
+	 */
+	public XQuestionnaire(Element definition, XQuestionnaire parent, String defaultPrefix, String defaultNamespaceUri, XQuestionnaire previousSibling) {
+
+		this.definition = definition;
+		this.parentQuestionnaire = parent;
+		this.setDefaultPrefix(defaultPrefix);
+		this.setDefaultNamespaceUri(defaultNamespaceUri);
+		this.previousSibling = previousSibling;
+		
+		init();
+
+	}
+	
+	
+	
+	
 	private void init() {
 		
+		String repeatable = definition.getAttribute(XQS.ATTR_REPEATABLE);
+		if (repeatable != null && XQS.YES.equals(repeatable)) {
+			this.repeatable = true;
+		}
+
 		String defaultPrefix = definition.getAttribute(XQS.ATTR_DEFAULTPREFIX);
 		if (defaultPrefix != null) {
 			this.setDefaultPrefix(defaultPrefix);
@@ -140,8 +168,15 @@ public class XQuestionnaire extends Composite {
 
 		if (this.parentQuestionnaire != null) {
 			
-			this.parentQuestionnaire.getModel().addChild(this.model);
+//			this.parentQuestionnaire.getModel().addChild(this.model);
 			
+			if (this.previousSibling != null) {
+				this.parentQuestionnaire.getModel().addChild(this.model, this.previousSibling.getModel());
+			}
+			else {
+				this.parentQuestionnaire.getModel().addChild(this.model);				
+			}
+
 		}
 
 
@@ -216,5 +251,33 @@ public class XQuestionnaire extends Composite {
 	public String getDefaultNamespaceUri() {
 		return defaultNamespaceUri;
 	}
+
+	
+	
+	public boolean isRepeatable() {
+		return this.repeatable;
+	}
+
+	
+	
+	/**
+	 * 
+	 */
+	public void repeat() {
+		log.enter("repeat");
+		
+		if (this.repeatable && this.parentQuestionnaire != null) {
+			
+			log.trace("clone this XQuestion");
+			XQuestionnaire clone = new XQuestionnaire(this.definition, this.parentQuestionnaire, this.defaultPrefix, this.defaultNamespaceUri, this);
+			
+			log.trace("insert cloned XQuestion into parent view");
+			this.parentQuestionnaire.getView().addQuestionnaire(clone, this);
+
+		}
+		
+		log.leave();
+	}
+	
 
 }

@@ -3,6 +3,8 @@
  */
 package org.cggh.chassis.generic.xquestion.client;
 
+import org.cggh.chassis.generic.log.client.Log;
+import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.xml.client.XML;
 
 import com.google.gwt.user.client.ui.Composite;
@@ -16,11 +18,13 @@ public class XQuestion extends Composite {
 
 	
 	
-	
+	private Log log = LogFactory.getLog(this.getClass());
 	private Element definition;
 	private XQuestionModel model;
 	private XQuestionView view;
 	private XQuestionnaire parentQuestionnaire;
+	private boolean repeatable = false;
+	private XQuestion previousSibling;
 
 	
 	
@@ -56,9 +60,32 @@ public class XQuestion extends Composite {
 
 
 	/**
+	 * @param definition2
+	 * @param parentQuestionnaire2
+	 * @param xQuestion
+	 */
+	public XQuestion(Element definition, XQuestionnaire parent, XQuestion previousSibling) {
+
+		this.definition = definition;
+		this.parentQuestionnaire = parent;
+		this.previousSibling = previousSibling;
+		
+		init();
+
+	}
+
+
+
+
+	/**
 	 * 
 	 */
 	private void init() {
+		
+		String repeatable = definition.getAttribute(XQS.ATTR_REPEATABLE);
+		if (repeatable != null && XQS.YES.equals(repeatable)) {
+			this.repeatable = true;
+		}
 
 		for (Element e : XML.elements(definition.getChildNodes())) {
 			
@@ -92,7 +119,12 @@ public class XQuestion extends Composite {
 		
 		if (this.parentQuestionnaire != null) {
 			
-			this.parentQuestionnaire.getModel().addChild(this.model);
+			if (this.previousSibling != null) {
+				this.parentQuestionnaire.getModel().addChild(this.model, this.previousSibling.getModel());
+			}
+			else {
+				this.parentQuestionnaire.getModel().addChild(this.model);				
+			}
 			
 		}
 
@@ -111,7 +143,7 @@ public class XQuestion extends Composite {
 			throw new XQuestionFormatException("bad question definition, found more than one view");
 		}
 
-		this.view = new XQuestionView(viewDef, this.model);
+		this.view = new XQuestionView(viewDef, this);
 
 	}
 	
@@ -133,6 +165,33 @@ public class XQuestion extends Composite {
 
 	public XQuestionnaire getParentQuestionnaire() {
 		return this.parentQuestionnaire;
+	}
+
+
+
+	public boolean isRepeatable() {
+		return this.repeatable;
+	}
+
+	
+	
+	/**
+	 * 
+	 */
+	public void repeat() {
+		log.enter("repeat");
+		
+		if (this.repeatable) {
+			
+			log.trace("clone this XQuestion");
+			XQuestion clone = new XQuestion(this.definition, this.parentQuestionnaire, this);
+			
+			log.trace("insert cloned XQuestion into parent view");
+			this.parentQuestionnaire.getView().addQuestion(clone, this);
+
+		}
+		
+		log.leave();
 	}
 	
 	
