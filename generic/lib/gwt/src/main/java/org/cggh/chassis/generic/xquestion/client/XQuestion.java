@@ -25,6 +25,7 @@ public class XQuestion extends Composite {
 	private XQuestionnaire parentQuestionnaire;
 	private boolean repeatable = false;
 	private XQuestion previousSibling;
+	private String id;
 
 	
 	
@@ -36,7 +37,7 @@ public class XQuestion extends Composite {
 		
 		this.definition = definition;
 		
-		init();
+		construct();
 
 	}
 
@@ -52,7 +53,7 @@ public class XQuestion extends Composite {
 		this.definition = definition;
 		this.parentQuestionnaire = parent;
 		
-		init();
+		construct();
 
 	}
 
@@ -70,31 +71,33 @@ public class XQuestion extends Composite {
 		this.parentQuestionnaire = parent;
 		this.previousSibling = previousSibling;
 		
-		init();
+		construct();
 
 	}
 
+	
+	
+	
+	private void construct() {
 
-
-
-	/**
-	 * 
-	 */
-	private void init() {
-		
 		String repeatable = definition.getAttribute(XQS.ATTR_REPEATABLE);
 		if (repeatable != null && XQS.YES.equals(repeatable)) {
 			this.repeatable = true;
 		}
 
+		this.id = definition.getAttribute(XQS.ATTR_ID);
+		if (this.id == null) {
+			throw new XQuestionFormatException("bad question definition, no id attribute found");
+		}
+
 		for (Element e : XML.elements(definition.getChildNodes())) {
 			
 			if (e.getTagName().equals(XQS.ELEMENT_MODEL)) {
-				initModel(e);
+				constructModel(e);
 			}
 
 			if (e.getTagName().equals(XQS.ELEMENT_VIEW)) {
-				initView(e);
+				constructView(e);
 			}
 			
 		}
@@ -105,12 +108,87 @@ public class XQuestion extends Composite {
 
 
 
+	/**
+	 * 
+	 */
+	public void init() {
+		
+		this.model.init();
+		this.view.init();
+		
+//		String repeatable = definition.getAttribute(XQS.ATTR_REPEATABLE);
+//		if (repeatable != null && XQS.YES.equals(repeatable)) {
+//			this.repeatable = true;
+//		}
+//
+//		this.id = definition.getAttribute(XQS.ATTR_ID);
+//		if (this.id == null) {
+//			throw new XQuestionFormatException("bad question definition, no id attribute found");
+//		}
+//
+//		for (Element e : XML.elements(definition.getChildNodes())) {
+//			
+//			if (e.getTagName().equals(XQS.ELEMENT_MODEL)) {
+//				initModel(e);
+//			}
+//
+//			if (e.getTagName().equals(XQS.ELEMENT_VIEW)) {
+//				initView(e);
+//			}
+//			
+//		}
+//
+//		initWidget(this.view.getCanvas());
+
+	}
+
+	
+	
+	/**
+	 * @param element
+	 */
+	public void init(Element data) {
+		this.model.init(data);
+		this.view.init(data);
+	}
+	
+	
+	
+
+
+
+	public String getId() {
+		return this.id;
+	}
 
 	/**
 	 * 
 	 */
 	private void initModel(Element modelDef) {
 		
+//		if (this.model != null) {
+//			throw new XQuestionFormatException("bad question definition, found more than one model");
+//		}
+//
+//		this.model = new XQuestionModel(modelDef, this.parentQuestionnaire);
+//		
+//		if (this.parentQuestionnaire != null) {
+//			
+//			if (this.previousSibling != null) {
+//				this.parentQuestionnaire.getModel().addChild(this.model, this.previousSibling.getModel());
+//			}
+//			else {
+//				this.parentQuestionnaire.getModel().addChild(this.model);				
+//			}
+//			
+//		}
+
+	}
+	
+	
+	
+	private void constructModel(Element modelDef) {
+
 		if (this.model != null) {
 			throw new XQuestionFormatException("bad question definition, found more than one model");
 		}
@@ -139,14 +217,26 @@ public class XQuestion extends Composite {
 	 */
 	private void initView(Element viewDef) {
 
-		if (this.view != null) {
-			throw new XQuestionFormatException("bad question definition, found more than one view");
-		}
-
-		this.view = new XQuestionView(viewDef, this);
+//		if (this.view != null) {
+//			throw new XQuestionFormatException("bad question definition, found more than one view");
+//		}
+//
+//		this.view = new XQuestionView(viewDef, this);
 
 	}
 	
+	
+	
+	
+	private void constructView(Element viewDef) {
+
+		if (this.view != null) {
+			throw new XQuestionFormatException("bad question definition, found more than one view");
+		}
+	
+		this.view = new XQuestionView(viewDef, this);
+
+	}
 	
 
 
@@ -175,6 +265,17 @@ public class XQuestion extends Composite {
 
 	
 	
+	public XQuestion clone() {
+		log.enter("clone");
+		
+		log.trace("clone this XQuestion");
+		XQuestion clone = new XQuestion(this.definition, this.parentQuestionnaire, this);
+		
+		log.leave();
+		return clone;
+	}
+	
+	
 	/**
 	 * 
 	 */
@@ -184,7 +285,7 @@ public class XQuestion extends Composite {
 		if (this.repeatable) {
 			
 			log.trace("clone this XQuestion");
-			XQuestion clone = new XQuestion(this.definition, this.parentQuestionnaire, this);
+			XQuestion clone = this.clone();
 			
 			log.trace("insert cloned XQuestion into parent view");
 			this.parentQuestionnaire.getView().addQuestion(clone, this);
@@ -193,7 +294,8 @@ public class XQuestion extends Composite {
 		
 		log.leave();
 	}
-	
-	
-	
+
+
+
+
 }

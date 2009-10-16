@@ -4,6 +4,8 @@
 package org.cggh.chassis.generic.xquestion.client;
 
 
+import org.cggh.chassis.generic.xml.client.XML;
+
 import com.google.gwt.xml.client.Element;
 
 /**
@@ -29,7 +31,7 @@ public class XQuestionnaireModel extends XQSModelBase {
 		this.defaultPrefix = owner.getDefaultPrefix();
 		this.defaultNamespaceUri = owner.getDefaultNamespaceUri();
 		
-		init();
+		construct();
 
 	}
 
@@ -76,6 +78,30 @@ public class XQuestionnaireModel extends XQSModelBase {
 		else {
 			this.addChild(child);
 		}
+	}
+
+
+
+
+
+	/**
+	 * @param data
+	 */
+	public void init(Element data) {
+		
+		// check data matches definition
+		if (
+//			this.elementPrefix.equals(data.getPrefix()) && // don't need to compare prefixes
+			this.elementName.equals(XML.getLocalName(data)) &&
+			this.elementNamespaceUri.equals(data.getNamespaceURI())
+		) {
+			this.element = data;
+		}
+		else {
+			String message = "data element does not match model definition; expected ["+this.elementPrefix+", "+this.elementName+", "+this.elementNamespaceUri+"], found ["+data.getPrefix()+", "+XML.getLocalName(data)+", "+element.getNamespaceURI()+"]";
+			throw new XQuestionDataException(message);
+		}
+		
 	}
 
 
