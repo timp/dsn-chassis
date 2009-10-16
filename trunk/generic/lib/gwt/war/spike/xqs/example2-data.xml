@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<foo:person xmlns:foo="http://example.org/foo">
+  <foo:givenName>Alstair</foo:givenName>
+  <foo:familyName>Miles</foo:familyName>
+  <foo:middleName>John</foo:middleName>
+  <foo:email>alimanfoo@gmail.com</foo:email>
+  <foo:email>foo@bar.com</foo:email>
+  <foo:title>mr</foo:title>
+  <foo:title>mrs</foo:title>
+  <foo:favouriteFlavour>van</foo:favouriteFlavour>
+  <foo:favouriteFlavour>cho</foo:favouriteFlavour>
+  <foo:vegetable>pea pot</foo:vegetable>
+  <foo:address>
+    <foo:houseNumber>orchard</foo:houseNumber>
+    <foo:street>bessels lea</foo:street>
+  </foo:address>
+  <foo:address>
+    <foo:houseNumber>23</foo:houseNumber>
+    <foo:street>foo st</foo:street>
+  </foo:address>
+  <foo:describe>i'm a nice guy</foo:describe>
+</foo:person>

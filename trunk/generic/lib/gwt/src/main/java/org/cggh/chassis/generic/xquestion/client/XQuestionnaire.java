@@ -40,7 +40,7 @@ public class XQuestionnaire extends Composite {
 
 		this.definition = definition;
 		
-		init();
+		construct();
 
 	}
 	
@@ -56,7 +56,7 @@ public class XQuestionnaire extends Composite {
 		this.setDefaultPrefix(defaultPrefix);
 		this.setDefaultNamespaceUri(defaultNamespaceUri);
 		
-		init();
+		construct();
 
 	}
 	
@@ -71,7 +71,7 @@ public class XQuestionnaire extends Composite {
 		this.definition = definition;
 		this.parentQuestionnaire = parent;
 		
-		init();
+		construct();
 
 	}
 	
@@ -88,7 +88,7 @@ public class XQuestionnaire extends Composite {
 		this.setDefaultPrefix(defaultPrefix);
 		this.setDefaultNamespaceUri(defaultNamespaceUri);
 		
-		init();
+		construct();
 
 	}
 	
@@ -106,15 +106,14 @@ public class XQuestionnaire extends Composite {
 		this.setDefaultNamespaceUri(defaultNamespaceUri);
 		this.previousSibling = previousSibling;
 		
-		init();
+		construct();
 
 	}
 	
 	
 	
-	
-	private void init() {
-		
+	private void construct() {
+
 		String repeatable = definition.getAttribute(XQS.ATTR_REPEATABLE);
 		if (repeatable != null && XQS.YES.equals(repeatable)) {
 			this.repeatable = true;
@@ -139,11 +138,11 @@ public class XQuestionnaire extends Composite {
 		for (Element e : XML.elements(definition.getChildNodes())) {
 			
 			if (e.getTagName().equals(XQS.ELEMENT_MODEL)) {
-				initModel(e);
+				constructModel(e);
 			}
 
 			if (e.getTagName().equals(XQS.ELEMENT_VIEW)) {
-				initView(e);
+				constructView(e);
 			}
 			
 		}
@@ -154,11 +153,85 @@ public class XQuestionnaire extends Composite {
 	
 	
 	
+	public void init() {
+
+		this.model.init();
+		this.view.init();
+		
+//		String repeatable = definition.getAttribute(XQS.ATTR_REPEATABLE);
+//		if (repeatable != null && XQS.YES.equals(repeatable)) {
+//			this.repeatable = true;
+//		}
+//
+//		String defaultPrefix = definition.getAttribute(XQS.ATTR_DEFAULTPREFIX);
+//		if (defaultPrefix != null) {
+//			this.setDefaultPrefix(defaultPrefix);
+//		}
+//		else if (parentQuestionnaire != null) {
+//			this.setDefaultPrefix(parentQuestionnaire.getDefaultPrefix()); // inherit from parent
+//		}
+//
+//		String defaultNamespaceUri = definition.getAttribute(XQS.ATTR_DEFAULTNAMESPACEURI);
+//		if (defaultNamespaceUri != null) {
+//			this.setDefaultNamespaceUri(defaultNamespaceUri);
+//		}
+//		else if (parentQuestionnaire != null) {
+//			this.setDefaultNamespaceUri(parentQuestionnaire.getDefaultNamespaceUri()); // inherit from parent
+//		}
+//
+//		for (Element e : XML.elements(definition.getChildNodes())) {
+//			
+//			if (e.getTagName().equals(XQS.ELEMENT_MODEL)) {
+//				initModel(e);
+//			}
+//
+//			if (e.getTagName().equals(XQS.ELEMENT_VIEW)) {
+//				initView(e);
+//			}
+//			
+//		}
+//
+//		initWidget(this.view.getCanvas());
+
+	}
+	
+	
+	
 	
 	/**
 	 * 
 	 */
-	private void initModel(Element modelDef) {
+	private void initModel(/*Element modelDef*/) {
+		
+//		if (this.model != null) {
+//			throw new XQuestionFormatException("bad questionnaire definition, found more than one model");
+//		}
+//
+//		this.model = new XQuestionnaireModel(modelDef, this);
+//
+//		if (this.parentQuestionnaire != null) {
+//			
+////			this.parentQuestionnaire.getModel().addChild(this.model);
+//			
+//			if (this.previousSibling != null) {
+//				this.parentQuestionnaire.getModel().addChild(this.model, this.previousSibling.getModel());
+//			}
+//			else {
+//				this.parentQuestionnaire.getModel().addChild(this.model);				
+//			}
+//
+//		}
+
+
+	}
+
+	
+	
+	
+	/**
+	 * 
+	 */
+	private void constructModel(Element modelDef) {
 		
 		if (this.model != null) {
 			throw new XQuestionFormatException("bad questionnaire definition, found more than one model");
@@ -189,14 +262,31 @@ public class XQuestionnaire extends Composite {
 	 * @param e 
 	 * 
 	 */
-	private void initView(Element viewDef) {
+	private void initView(/*Element viewDef*/) {
+
+//		if (this.view != null) {
+//			throw new XQuestionFormatException("bad questionnaire definition, found more than one view");
+//		}
+//
+//		this.view = new XQuestionnaireView(viewDef, this);
+
+	}
+	
+	
+
+
+	/**
+	 * @param e 
+	 * 
+	 */
+	private void constructView(Element viewDef) {
 
 		if (this.view != null) {
 			throw new XQuestionFormatException("bad questionnaire definition, found more than one view");
 		}
 
 		this.view = new XQuestionnaireView(viewDef, this);
-
+		
 	}
 	
 	
@@ -277,6 +367,17 @@ public class XQuestionnaire extends Composite {
 		}
 		
 		log.leave();
+	}
+
+
+
+
+	/**
+	 * @param documentElement
+	 */
+	public void init(Element data) {
+		this.model.init(data);
+		this.view.init(data);
 	}
 	
 

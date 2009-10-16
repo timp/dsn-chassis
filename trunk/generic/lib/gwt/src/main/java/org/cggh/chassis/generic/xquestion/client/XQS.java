@@ -21,10 +21,14 @@ public class XQS {
 	public static final String ELEMENT_SELECT = "select";
 	public static final String ELEMENT_SELECT1 = "select1";
 	
+	public static final String ELEMENT_ITEM = "item";
 	public static final String ELEMENT_LABEL = "label";
-	public static final String ELEMENT_HTML = "html";
+	public static final String ELEMENT_VALUE = "value";
 	public static final String ELEMENT_HINT = "hint";
 
+	public static final String ELEMENT_HTML = "html";
+
+	public static final String ATTR_ID = "id";
 	public static final String ATTR_TYPE = "type";
 	public static final String ATTR_NAME = "name";
 	public static final String ATTR_NAMESPACEURI = "namespaceUri";
@@ -33,8 +37,12 @@ public class XQS {
 	public static final String ATTR_DEFAULTNAMESPACEURI = "defaultNamespaceUri";
 	public static final String ATTR_REPEATABLE = "repeatable";
 	public static final String ATTR_CLASS = "class";
+	public static final String ATTR_APPEARANCE = "appearance";
 
 	public static final String YES = "yes";
+	public static final String APPEARANCE_FULL = "full";
+	public static final String APPEARANCE_MINIMAL = "minimal";
+	public static final String APPEARANCE_COMPACT = "compact";
 
 
 }

@@ -51,8 +51,10 @@
         <xs:element name="model" type="QuestionModelType" maxOccurs="1"/>
         <xs:element name="view" type="QuestionViewType" maxOccurs="1"/>
       </xs:sequence>
+      <xs:attribute name="id" use="required" type="xs:NCName"/>
       <xs:attribute ref="repeatable" use="optional" default="no"/>      
     </xs:complexType>
+    <!-- TODO key for id attribute -->
   </xs:element>
 
   <xs:complexType name="QuestionModelType">
@@ -155,23 +157,25 @@
     </xs:complexType>
   </xs:element>
 
-  <xs:element name="select">
-    <xs:complexType>
-      <!-- TODO -->
-      <xs:attribute ref="class"/>
-    </xs:complexType>
-  </xs:element>
+  <xs:element name="select" type="selectType"/>
 
-  <xs:element name="select1">
-    <xs:complexType>
-      <!-- TODO -->
+  <xs:element name="select1" type="selectType"/>
+  
+  <xs:complexType name="selectType">
       <xs:sequence>
         <xs:element ref="label" minOccurs="0" maxOccurs="1"/>
+        <xs:element ref="hint" minOccurs="0" maxOccurs="1"/>
         <xs:element ref="item" minOccurs="1" maxOccurs="unbounded"/>
       </xs:sequence>
       <xs:attribute ref="class"/>
-    </xs:complexType>
-  </xs:element>
+      <xs:attribute name="appearance" use="optional">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:pattern value="(full|compact|minimal)"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+  </xs:complexType>
 
   <xs:element name="item">
     <xs:complexType>

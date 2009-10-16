@@ -46,6 +46,18 @@ public class XQuestionnaireView extends XQSViewBase {
 		this.canvas = new VerticalPanel();
 		this.canvas.addStyleName(STYLENAME);
 		this.repeatable = owner.isRepeatable();
+		
+	}
+	
+	
+	
+	
+	public void init() {
+		
+		this.canvas.clear();
+		this.widgets = new ArrayList<Widget>();
+		this.questions = new ArrayList<XQuestion>();
+		this.nestedQuestionnaires = new ArrayList<XQuestionnaire>();
 
 		for (Element e : XML.elements(definition.getChildNodes())) {
 
@@ -74,9 +86,51 @@ public class XQuestionnaireView extends XQSViewBase {
 		}
 		
 		refresh();
-		
+
 	}
 	
+	
+	
+
+	/**
+	 * @param data
+	 */
+	public void init(Element data) {
+
+		this.canvas.clear();
+		this.widgets = new ArrayList<Widget>();
+		this.questions = new ArrayList<XQuestion>();
+		this.nestedQuestionnaires = new ArrayList<XQuestionnaire>();
+
+		for (Element childDefinition : XML.elements(definition.getChildNodes())) {
+
+			if (childDefinition.getTagName().equals(XQS.ELEMENT_QUESTION)) {
+				
+				renderQuestion(childDefinition, data);
+			
+			}
+
+			else if (childDefinition.getTagName().equals(XQS.ELEMENT_QUESTIONNAIRE)) {
+				
+				renderQuestionnaire(childDefinition, data);
+			
+			}
+			
+			else {
+				
+				render(childDefinition);
+				
+			}
+
+		}
+		
+		if (this.repeatable) {
+			initRepeatable();
+		}
+		
+		refresh();
+
+	}
 	
 	
 
@@ -100,15 +154,18 @@ public class XQuestionnaireView extends XQSViewBase {
 	
 	
 	
+	
 	/**
-	 * @param e
+	 * @param questionDefinition
 	 */
-	private void renderQuestion(Element e) {
+	private void renderQuestion(Element questionDefinition) {
 		log.enter("renderQuestion");
 		
-		XQuestion q = new XQuestion(e, owner);
+		XQuestion q = new XQuestion(questionDefinition, owner);
 		
 		this.questions.add(q);
+		
+		q.init();
 		
 //		this.canvas.add(q);
 		this.widgets.add(q);
@@ -122,15 +179,99 @@ public class XQuestionnaireView extends XQSViewBase {
 	/**
 	 * @param e
 	 */
-	private void renderQuestionnaire(Element e) {
+	private void renderQuestion(Element questionDefinition, Element dataParent) {
+		log.enter("renderQuestion");
+		
+		log.trace("find expected element for definition");
+		
+		XQuestion prototype = new XQuestion(questionDefinition, owner);
+		this.questions.add(prototype);
+		this.widgets.add(prototype);
+
+		// we need to know, is it repeatable, and if so, how many matching data elements?
+		
+		log.trace("look for potentially matching data elements");
+		List<Element> dataElements = new ArrayList<Element>();
+		for (Element e : XML.elements(dataParent.getChildNodes())) {
+			if (
+				prototype.getModel().getElementName().equals(XML.getLocalName(e)) &&
+				prototype.getModel().getElementNamespaceUri().equals(e.getNamespaceURI())
+			) {
+				dataElements.add(e);
+			}
+		}
+
+		if (dataElements.size() == 0) {
+			log.trace("no matching data elements, use prototype");
+			prototype.init(); // initialise without data
+		}
+		else if (dataElements.size() >= 1) {
+			log.trace("found at least one matching data element, initialising prototype with first data element");
+			prototype.init(dataElements.get(0));
+		}
+		
+		if (dataElements.size() > 1 && prototype.isRepeatable()) {
+			log.trace("found more than one matching data element, and prototype is repeatable");
+			
+			for (int i=1; i<dataElements.size(); i++) {
+				Element dataElement = dataElements.get(i);
+				XQuestion clone = prototype.clone();
+				log.trace("init clone "+i+" with data");
+				clone.init(dataElement);
+				this.questions.add(clone);
+				this.widgets.add(clone);
+			}
+		}
+		
+		log.leave();
+	}
+
+
+
+
+	/**
+	 * @param questionnaireDefinition
+	 */
+	private void renderQuestionnaire(Element questionnaireDefinition) {
 		log.enter("renderQuestionnaire");
 		
-		XQuestionnaire q = new XQuestionnaire(e, owner);
+		XQuestionnaire q = new XQuestionnaire(questionnaireDefinition, owner);
+		q.init();
 		
 		this.nestedQuestionnaires.add(q);
 		
 //		this.canvas.add(q);
 		this.widgets.add(q);
+		
+		log.leave();
+	}
+
+
+
+
+	/**
+	 * @param e
+	 */
+	private void renderQuestionnaire(Element questionnaireDefinition, Element dataParent) {
+		log.enter("renderQuestionnaire");
+		
+		XQuestionnaire prototype = new XQuestionnaire(questionnaireDefinition, owner);
+
+		// TODO find data elements
+		List<Element> dataElements = XML.elements(dataParent.getChildNodes());
+		int created = 0;
+		
+		for (Element data : dataElements) {
+
+				
+		}
+		
+		prototype.init(); // TODO init with data
+		
+		this.nestedQuestionnaires.add(prototype);
+		
+//		this.canvas.add(q);
+		this.widgets.add(prototype);
 		
 		log.leave();
 	}
@@ -183,6 +324,9 @@ public class XQuestionnaireView extends XQSViewBase {
 		// next, add to widgets
 		int windex = this.widgets.indexOf(previousSibling) + 1;
 		this.widgets.add(windex, newQuestion);
+		
+		// initialise new question
+		newQuestion.init();
 			
 		// finally, refresh
 		refresh();
@@ -207,12 +351,16 @@ public class XQuestionnaireView extends XQSViewBase {
 		// next, add to widgets
 		int windex = this.widgets.indexOf(previousSibling) + 1;
 		this.widgets.add(windex, newQuestionnaire);
+		
+		// initialise new questionnaire
+		newQuestionnaire.init();
 			
 		// finally, refresh
 		refresh();
 
 	}
-	
-	
+
+
+
 
 }

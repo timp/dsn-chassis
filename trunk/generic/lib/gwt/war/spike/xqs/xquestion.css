@@ -12,16 +12,19 @@
 	margin: 3px;
 }
 
+.xinput {
+
+}
+
 .givenName {
 	border: 1px solid gray;
-	width: 200px;
 }
 
 .familyName {
 	border: 1px solid red;
 }
 
-.describe {
+.describe textarea {
 	width: 500px;
 	border: 2px solid blue;
 }

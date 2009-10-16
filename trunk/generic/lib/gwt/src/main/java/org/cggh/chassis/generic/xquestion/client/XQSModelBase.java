@@ -18,16 +18,19 @@ public abstract class XQSModelBase {
 	protected Element element;
 	protected String defaultPrefix;
 	protected String defaultNamespaceUri;
+	protected String elementName;
+	protected String elementPrefix;
+	protected String elementNamespaceUri;
 
 	
 	
 	
-	protected void init() {
+	protected void construct() {
 
 		for (Element e : XML.elements(definition.getChildNodes())) {
 			
 			if (e.getTagName().equals(XQS.ELEMENT_ELEMENT)) {
-				initElement(e);
+				constructElement(e);
 			}
 			
 		}
@@ -37,26 +40,33 @@ public abstract class XQSModelBase {
 	
 	
 	
+	public void init() {
+		// nothing to do
+	}
+	
+	
+	
+	
 	/**
 	 * @param e
 	 */
-	protected void initElement(Element e) {
+	protected void constructElement(Element e) {
 		
 		if (this.element != null) {
 			throw new XQuestionFormatException("bad model definition, found more than one element");
 		}
 
-		String name = e.getAttribute(XQS.ATTR_NAME);
-		String prefix = e.getAttribute(XQS.ATTR_PREFIX);
-		if (prefix == null ) {
-			prefix = this.defaultPrefix;
+		elementName = e.getAttribute(XQS.ATTR_NAME);
+		elementPrefix = e.getAttribute(XQS.ATTR_PREFIX);
+		if (elementPrefix == null ) {
+			elementPrefix = this.defaultPrefix;
 		}
-		String namespaceUri = e.getAttribute(XQS.ATTR_NAMESPACEURI);
-		if (namespaceUri == null) {
-			namespaceUri = this.defaultNamespaceUri;
+		elementNamespaceUri = e.getAttribute(XQS.ATTR_NAMESPACEURI);
+		if (elementNamespaceUri == null) {
+			elementNamespaceUri = this.defaultNamespaceUri;
 		}
 		
-		this.element = XMLNS.createElementNS(name, prefix, namespaceUri);
+		this.element = XMLNS.createElementNS(elementName, elementPrefix, elementNamespaceUri);
 		
 	}
 	

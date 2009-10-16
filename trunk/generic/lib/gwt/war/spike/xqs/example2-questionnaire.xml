@@ -13,18 +13,66 @@
 
     <html>
       <h1>Personal Details Questionnaire</h1>
-      <h2>The Questionnaire to End All Questionnaires</h2>  
+      <h2>An example questionnaire using the XQuestion module</h2>  
     </html>
 
     <label>Please enter your personal details...</label>
     
-    <question>
+    <question id="givenName">  
+      <model>
+        <element name="givenName"/>
+      </model>
+      <view>
+        <input class="givenName">
+          <label>What is your given name?</label>
+          <hint>Enter your first or given name.</hint>      
+        </input>
+      </view>
+    </question>
+  
+    <question id="familyName">
+      <model>
+        <element name="familyName"/>
+      </model>
+      <view>
+        <secret class="familyName">
+          <label>What is your family name?</label>
+          <hint>What you type will be hidden.</hint>
+        </secret>
+      </view>
+    </question>
+  
+    <question id="middleName">  
+      <model>
+        <element name="middleName"/>
+      </model>
+      <view>
+        <input>
+          <label>What is your middle name?</label>
+        </input>
+      </view>
+    </question>
+  
+    <question id="email" repeatable="yes">
+      <model>
+        <element name="email"/>
+      </model>
+      <view>
+        <input>
+          <label>What is your email address?</label>        
+        </input>
+        <html><em>some more text...</em></html>
+      </view>
+    </question>
+  
+    <question id="title" repeatable="yes">
       <model>
         <element name="title"/>
       </model>
       <view>
-        <select1>
+        <select1 appearance="minimal">
           <label>Title:</label>
+          <hint>select your title</hint>
           <item>
             <label>Mr</label>
             <value>mr</value>
@@ -45,53 +93,58 @@
       </view>
     </question>
 
-    <question>  
+    <question id="flavour" repeatable="yes">
       <model>
-        <element name="givenName"/>
+        <element name="favouriteFlavour"/>
       </model>
       <view>
-        <input class="givenName">
-          <label>What is your given name?</label>
-          <hint>Enter your first or given name.</hint>      
-        </input>
+        <select1 appearance="full">
+          <label>Favourite ice cream flavour:</label>
+          <hint>select only one!</hint>
+          <item>
+            <label>Vanilla</label>
+            <value>van</value>
+          </item>
+          <item>
+            <label>Chocolate</label>
+            <value>cho</value>
+          </item>
+          <item>
+            <label>Strawberry</label>
+            <value>str</value>
+          </item>
+        </select1>
       </view>
     </question>
-  
-    <question>
+
+    <question id="vegetables">
       <model>
-        <element name="familyName"/>
+        <element name="vegetable"/>
       </model>
       <view>
-        <secret class="familyName">
-          <label>What is your family name?</label>
-          <hint>What you type will be hidden.</hint>
-        </secret>
+        <select appearance="full">
+          <label>Vegetables you like:</label>
+          <hint>select as many as you like!</hint>
+          <item>
+            <label>Potato</label>
+            <value>pot</value>
+          </item>
+          <item>
+            <label>Carrot</label>
+            <value>car</value>
+          </item>
+          <item>
+            <label>Peas</label>
+            <value>pea</value>
+          </item>
+          <item>
+            <label>Broccoli</label>
+            <value>bro</value>
+          </item>
+        </select>
       </view>
     </question>
-  
-    <question>  
-      <model>
-        <element name="middleName"/>
-      </model>
-      <view>
-        <input>
-          <label>What is your middle name?</label>
-        </input>
-      </view>
-    </question>
-  
-    <question repeatable="yes">
-      <model>
-        <element name="email"/>
-      </model>
-      <view>
-        <input>
-          <label>What is your email address?</label>        
-        </input>
-        <html><em>some more text...</em></html>
-      </view>
-    </question>
-  
+
     <questionnaire repeatable="yes">
     
       <model>
@@ -102,7 +155,7 @@
       
         <html><h3>Address</h3></html>
         
-        <question>  
+        <question id="houseNumber">  
           <model>
             <element name="houseNumber"/>
           </model>
@@ -115,7 +168,7 @@
           </view>
         </question>
     
-        <question>
+        <question id="street">
           <model>
             <element name="street"/>
           </model>
@@ -130,7 +183,7 @@
 
     </questionnaire>
     
-    <question>
+    <question id="describe">
       <model>
         <element name="describe"/>
       </model>
