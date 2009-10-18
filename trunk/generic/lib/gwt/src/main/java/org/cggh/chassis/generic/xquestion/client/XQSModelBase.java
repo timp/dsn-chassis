@@ -14,6 +14,9 @@ import com.google.gwt.xml.client.Element;
  */
 public abstract class XQSModelBase {
 
+	
+	
+	
 	protected Element definition;
 	protected Element element;
 	protected String defaultPrefix;
@@ -21,7 +24,30 @@ public abstract class XQSModelBase {
 	protected String elementName;
 	protected String elementPrefix;
 	protected String elementNamespaceUri;
+	protected XQuestionnaire parentQuestionnaire;
 
+	
+	
+	
+	public XQSModelBase(Element definition) {
+		
+		this.definition = definition;
+		
+		construct();
+		
+	}
+	
+	
+
+	
+	public XQSModelBase(Element definition, XQuestionnaire parentQuestionnaire) {
+		
+		this.definition = definition;
+		this.parentQuestionnaire = parentQuestionnaire;
+		
+		construct();
+		
+	}
 	
 	
 	
@@ -30,9 +56,24 @@ public abstract class XQSModelBase {
 		for (Element e : XML.elements(definition.getChildNodes())) {
 			
 			if (e.getTagName().equals(XQS.ELEMENT_ELEMENT)) {
-				constructElement(e);
+				this.elementName = e.getAttribute(XQS.ATTR_NAME);
+				this.elementNamespaceUri = e.getAttribute(XQS.ATTR_NAMESPACEURI);
+				this.elementPrefix = e.getAttribute(XQS.ATTR_PREFIX);
 			}
 			
+		}
+		
+		if (this.parentQuestionnaire != null) {
+			this.defaultPrefix = parentQuestionnaire.getDefaultPrefix();
+			this.defaultNamespaceUri = parentQuestionnaire.getDefaultNamespaceUri();
+		}
+
+		if (this.elementPrefix == null ) {
+			this.elementPrefix = this.defaultPrefix;
+		}
+
+		if (this.elementNamespaceUri == null) {
+			this.elementNamespaceUri = this.defaultNamespaceUri;
 		}
 		
 	}
@@ -41,33 +82,68 @@ public abstract class XQSModelBase {
 	
 	
 	public void init() {
-		// nothing to do
+		
+		initElement();
+
 	}
+	
+	
+	
+	/**
+	 * @param data
+	 */
+	public void init(Element data) {
+
+		initElement(data);
+		
+	}
+	
+	
+
+	
+
 	
 	
 	
 	
 	/**
-	 * @param e
+	 * @param elementDefinition
 	 */
-	protected void constructElement(Element e) {
+	protected void initElement() {
 		
 		if (this.element != null) {
-			throw new XQuestionFormatException("bad model definition, found more than one element");
+			throw new XQuestionFormatException("element already initialised");
 		}
 
-		elementName = e.getAttribute(XQS.ATTR_NAME);
-		elementPrefix = e.getAttribute(XQS.ATTR_PREFIX);
-		if (elementPrefix == null ) {
-			elementPrefix = this.defaultPrefix;
-		}
-		elementNamespaceUri = e.getAttribute(XQS.ATTR_NAMESPACEURI);
-		if (elementNamespaceUri == null) {
-			elementNamespaceUri = this.defaultNamespaceUri;
-		}
-		
 		this.element = XMLNS.createElementNS(elementName, elementPrefix, elementNamespaceUri);
 		
+	}
+	
+	
+	
+	
+	protected void initElement(Element data) {
+
+		if (this.element != null) {
+			if (this.element.getParentNode() != null) {
+				this.element.getParentNode().removeChild(this.element);
+			}
+//			throw new XQuestionFormatException("element already initialised");
+		}
+
+		// check data matches definition
+		if (
+//			this.elementPrefix.equals(data.getPrefix()) && // don't need to compare prefixes
+			this.elementName.equals(XML.getLocalName(data)) &&
+			this.elementNamespaceUri.equals(data.getNamespaceURI())
+		) {
+			this.element = data;
+		}
+		else {
+			String message = "data element does not match model definition; expected ["+this.elementPrefix+", "+this.elementName+", "+this.elementNamespaceUri+"], found ["+data.getPrefix()+", "+XML.getLocalName(data)+", "+element.getNamespaceURI()+"]";
+			throw new XQuestionDataException(message);
+		}
+
 	}
 	
 	
@@ -79,6 +155,28 @@ public abstract class XQSModelBase {
 	public Element getElement() {
 		return this.element;
 	}
+
+
+	
+
+	/**
+	 * @return
+	 */
+	public String getElementName() {
+		return this.elementName;
+	}
+
+
+
+
+	/**
+	 * @return
+	 */
+	public String getElementNamespaceUri() {
+		return this.elementNamespaceUri;
+	}
+
+
 
 
 

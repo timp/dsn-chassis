@@ -114,32 +114,21 @@ public class XQuestion extends Composite {
 	public void init() {
 		
 		this.model.init();
+		
+		// TODO move this to model.init() ?
+		if (this.parentQuestionnaire != null) {
+			
+			if (this.previousSibling != null) {
+				this.parentQuestionnaire.getModel().addChild(this.model, this.previousSibling.getModel());
+			}
+			else {
+				this.parentQuestionnaire.getModel().addChild(this.model);				
+			}
+			
+		}
+
 		this.view.init();
 		
-//		String repeatable = definition.getAttribute(XQS.ATTR_REPEATABLE);
-//		if (repeatable != null && XQS.YES.equals(repeatable)) {
-//			this.repeatable = true;
-//		}
-//
-//		this.id = definition.getAttribute(XQS.ATTR_ID);
-//		if (this.id == null) {
-//			throw new XQuestionFormatException("bad question definition, no id attribute found");
-//		}
-//
-//		for (Element e : XML.elements(definition.getChildNodes())) {
-//			
-//			if (e.getTagName().equals(XQS.ELEMENT_MODEL)) {
-//				initModel(e);
-//			}
-//
-//			if (e.getTagName().equals(XQS.ELEMENT_VIEW)) {
-//				initView(e);
-//			}
-//			
-//		}
-//
-//		initWidget(this.view.getCanvas());
-
 	}
 
 	
@@ -148,7 +137,21 @@ public class XQuestion extends Composite {
 	 * @param element
 	 */
 	public void init(Element data) {
+
 		this.model.init(data);
+
+		// TODO move this to model.init() ?
+		if (this.parentQuestionnaire != null) {
+			
+			if (this.previousSibling != null) {
+				this.parentQuestionnaire.getModel().addChild(this.model, this.previousSibling.getModel());
+			}
+			else {
+				this.parentQuestionnaire.getModel().addChild(this.model);				
+			}
+			
+		}
+
 		this.view.init(data);
 	}
 	
@@ -161,29 +164,6 @@ public class XQuestion extends Composite {
 		return this.id;
 	}
 
-	/**
-	 * 
-	 */
-	private void initModel(Element modelDef) {
-		
-//		if (this.model != null) {
-//			throw new XQuestionFormatException("bad question definition, found more than one model");
-//		}
-//
-//		this.model = new XQuestionModel(modelDef, this.parentQuestionnaire);
-//		
-//		if (this.parentQuestionnaire != null) {
-//			
-//			if (this.previousSibling != null) {
-//				this.parentQuestionnaire.getModel().addChild(this.model, this.previousSibling.getModel());
-//			}
-//			else {
-//				this.parentQuestionnaire.getModel().addChild(this.model);				
-//			}
-//			
-//		}
-
-	}
 	
 	
 	
@@ -195,36 +175,8 @@ public class XQuestion extends Composite {
 
 		this.model = new XQuestionModel(modelDef, this.parentQuestionnaire);
 		
-		if (this.parentQuestionnaire != null) {
-			
-			if (this.previousSibling != null) {
-				this.parentQuestionnaire.getModel().addChild(this.model, this.previousSibling.getModel());
-			}
-			else {
-				this.parentQuestionnaire.getModel().addChild(this.model);				
-			}
-			
-		}
-
 	}
 
-	
-	
-	
-	/**
-	 * @param e 
-	 * 
-	 */
-	private void initView(Element viewDef) {
-
-//		if (this.view != null) {
-//			throw new XQuestionFormatException("bad question definition, found more than one view");
-//		}
-//
-//		this.view = new XQuestionView(viewDef, this);
-
-	}
-	
 	
 	
 	
