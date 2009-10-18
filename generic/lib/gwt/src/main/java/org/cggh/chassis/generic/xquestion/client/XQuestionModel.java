@@ -23,7 +23,6 @@ public class XQuestionModel extends XQSModelBase {
 	
 	
 	private Log log = LogFactory.getLog(this.getClass());
-	private XQuestionnaire parentQuestionnaire;
 
 	
 	
@@ -36,16 +35,7 @@ public class XQuestionModel extends XQSModelBase {
 	 * @param e
 	 */
 	public XQuestionModel(Element definition, XQuestionnaire parentQuestionnaire) {
-		
-		this.definition = definition;
-		this.parentQuestionnaire = parentQuestionnaire;
-		if (this.parentQuestionnaire != null) {
-			this.defaultPrefix = parentQuestionnaire.getDefaultPrefix();
-			this.defaultNamespaceUri = parentQuestionnaire.getDefaultNamespaceUri();
-		}
-		
-		construct();
-		
+		super(definition, parentQuestionnaire);
 	}
 
 	
@@ -86,8 +76,7 @@ public class XQuestionModel extends XQSModelBase {
 	}
 
 
-
-
+	
 	/**
 	 * @return
 	 */
@@ -98,47 +87,7 @@ public class XQuestionModel extends XQSModelBase {
 
 
 
-	/**
-	 * @return
-	 */
-	public String getElementName() {
-		return this.elementName;
-	}
 
 
 
-
-	/**
-	 * @return
-	 */
-	public String getElementNamespaceUri() {
-		return this.elementNamespaceUri;
-	}
-
-
-
-
-	/**
-	 * @param data
-	 */
-	public void init(Element data) {
-
-		// check data matches definition
-		if (
-//			this.elementPrefix.equals(data.getPrefix()) && // don't need to compare prefixes
-			this.elementName.equals(XML.getLocalName(data)) &&
-			this.elementNamespaceUri.equals(data.getNamespaceURI())
-		) {
-			this.element = data;
-		}
-		else {
-			String message = "data element does not match model definition; expected ["+this.elementPrefix+", "+this.elementName+", "+this.elementNamespaceUri+"], found ["+data.getPrefix()+", "+XML.getLocalName(data)+", "+element.getNamespaceURI()+"]";
-			throw new XQuestionDataException(message);
-		}
-
-	}
-	
-	
-
-	
 }

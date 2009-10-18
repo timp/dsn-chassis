@@ -140,7 +140,6 @@ public class XQuestionnaireView extends XQSViewBase {
 	private void initRepeatable() {
 		Button repeatButton = new Button();
 		repeatButton.setText("+");
-//		this.canvas.add(repeatButton);
 		this.widgets.add(repeatButton);
 		repeatButton.addClickHandler(new ClickHandler() {
 			
@@ -167,7 +166,6 @@ public class XQuestionnaireView extends XQSViewBase {
 		
 		q.init();
 		
-//		this.canvas.add(q);
 		this.widgets.add(q);
 		
 		log.leave();
@@ -190,17 +188,22 @@ public class XQuestionnaireView extends XQSViewBase {
 
 		// we need to know, is it repeatable, and if so, how many matching data elements?
 		
-		log.trace("look for potentially matching data elements");
+		String expectedElementName = prototype.getModel().getElementName();
+		String expectedElementNamespaceUri = prototype.getModel().getElementNamespaceUri();
+		log.trace("look for potentially matching data elements ["+expectedElementNamespaceUri+" :: "+expectedElementName+"]");
 		List<Element> dataElements = new ArrayList<Element>();
 		for (Element e : XML.elements(dataParent.getChildNodes())) {
+			log.trace("examining element: "+e.toString());
 			if (
-				prototype.getModel().getElementName().equals(XML.getLocalName(e)) &&
-				prototype.getModel().getElementNamespaceUri().equals(e.getNamespaceURI())
+				expectedElementName.equals(XML.getLocalName(e)) &&
+				expectedElementNamespaceUri.equals(e.getNamespaceURI())
 			) {
 				dataElements.add(e);
 			}
 		}
 
+		log.trace("found "+dataElements.size()+" data elements");
+		
 		if (dataElements.size() == 0) {
 			log.trace("no matching data elements, use prototype");
 			prototype.init(); // initialise without data
@@ -211,7 +214,7 @@ public class XQuestionnaireView extends XQSViewBase {
 		}
 		
 		if (dataElements.size() > 1 && prototype.isRepeatable()) {
-			log.trace("found more than one matching data element, and prototype is repeatable");
+			log.trace("found more than one matching data element ("+dataElements.size()+"), and prototype is repeatable");
 			
 			for (int i=1; i<dataElements.size(); i++) {
 				Element dataElement = dataElements.get(i);
@@ -240,7 +243,6 @@ public class XQuestionnaireView extends XQSViewBase {
 		
 		this.nestedQuestionnaires.add(q);
 		
-//		this.canvas.add(q);
 		this.widgets.add(q);
 		
 		log.leave();
@@ -263,6 +265,7 @@ public class XQuestionnaireView extends XQSViewBase {
 		
 		for (Element data : dataElements) {
 
+			// TODO
 				
 		}
 		
@@ -270,7 +273,6 @@ public class XQuestionnaireView extends XQSViewBase {
 		
 		this.nestedQuestionnaires.add(prototype);
 		
-//		this.canvas.add(q);
 		this.widgets.add(prototype);
 		
 		log.leave();
