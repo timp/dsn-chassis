@@ -13,6 +13,8 @@ import org.cggh.chassis.generic.xml.client.XML;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.xml.client.Element;
@@ -143,9 +145,13 @@ public class XQuestionnaireView extends XQSViewBase {
 	 * 
 	 */
 	private void initRepeatable() {
+
+		Panel buttonPanel = new HorizontalPanel();
+		this.widgets.add(buttonPanel);
+		
 		Button repeatButton = new Button();
 		repeatButton.setText("+");
-		this.widgets.add(repeatButton);
+		buttonPanel.add(repeatButton);
 		repeatButton.addClickHandler(new ClickHandler() {
 			
 			public void onClick(ClickEvent event) {
@@ -153,6 +159,23 @@ public class XQuestionnaireView extends XQSViewBase {
 			}
 
 		});
+		
+		List<XQuestionnaire> repeats = owner.getRepeats();
+		if (repeats.size() > 1) {
+
+			Button removeButton = new Button();
+			removeButton.setText("-");
+			buttonPanel.add(removeButton);
+			removeButton.addClickHandler(new ClickHandler() {
+				
+				public void onClick(ClickEvent event) {
+					owner.remove();
+				}
+
+			});
+			
+		}
+
 	}
 
 	
@@ -404,6 +427,17 @@ public class XQuestionnaireView extends XQSViewBase {
 		this.widgets.remove(question);
 		refresh();
 
+	}
+
+
+
+
+	public void removeQuestion(XQuestionnaire questionnaire) {
+		
+		this.nestedQuestionnaires.remove(questionnaire);
+		this.widgets.remove(questionnaire);
+		refresh();
+		
 	}
 
 
