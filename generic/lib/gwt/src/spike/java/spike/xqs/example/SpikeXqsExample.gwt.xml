@@ -6,5 +6,5 @@
   <inherits name="org.cggh.chassis.generic.log.Log" />
   <inherits name="org.cggh.chassis.generic.xquestion.XQuestion" />
   <entry-point
-    class="spike.xqs.example2.client.SpikeXqsExample2EntryPoint" />
+    class="spike.xqs.example.client.SpikeXqsExampleEntryPoint" />
 </module>
