@@ -247,11 +247,12 @@ public class XQuestionnaireView extends XQSViewBase {
 			for (int i=1; i<dataElements.size(); i++) {
 				Element dataElement = dataElements.get(i);
 				XQuestion clone = prototype.clone();
-				log.trace("init clone "+i+" with data");
-				clone.init(dataElement);
 				this.questions.add(clone);
 				this.widgets.add(clone);
+				log.trace("init clone "+i+" with data");
+				clone.init(dataElement);				
 			}
+			
 		}
 		
 		log.leave();
@@ -325,9 +326,9 @@ public class XQuestionnaireView extends XQSViewBase {
 				Element dataElement = dataElements.get(i);
 				XQuestionnaire clone = prototype.clone();
 				log.trace("init clone "+i+" with data");
-				clone.init(dataElement);
 				this.nestedQuestionnaires.add(clone);
 				this.widgets.add(clone);
+				clone.init(dataElement);
 			}
 		}
 		

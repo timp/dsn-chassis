@@ -155,8 +155,7 @@ public class XInputDate extends XFormControl {
 	 */
 	@Override
 	public void setValue(String value, boolean fireEvents) {
-		// TODO Auto-generated method stub
-
+		this.setValue(xsDateFormat.parse(value), fireEvents);
 	}
 
 	
