@@ -52,6 +52,7 @@ public class XQuestionView extends XQSViewBase {
 	
 	
 	public void init() {
+		log.enter("init");
 	
 		for (Element e : XML.elements(definition.getChildNodes())) {
 
@@ -90,6 +91,7 @@ public class XQuestionView extends XQSViewBase {
 	 * @param data
 	 */
 	public void init(Element data) {
+		log.enter("init[Element]");
 
 		for (Element e : XML.elements(definition.getChildNodes())) {
 
@@ -102,7 +104,10 @@ public class XQuestionView extends XQSViewBase {
 			) {
 				
 				initFormControl(e);
-				this.formControl.setValue(owner.getModel().getValue(), false);
+				
+				String value = owner.getModel().getValue();
+				log.trace("setting form control value: "+value);
+				this.formControl.setValue(value, false);
 			
 			}
 			

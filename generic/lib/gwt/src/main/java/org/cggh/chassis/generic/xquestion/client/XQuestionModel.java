@@ -40,6 +40,13 @@ public class XQuestionModel extends XQSModelBase {
 
 	
 	
+	@Override
+	protected void initElement(Element data) {
+		super.initElement(data);
+		parseMultiValues();
+	}
+	
+	
 	
 	public void setValue(String value) {
 		log.enter("setValue");
@@ -47,6 +54,7 @@ public class XQuestionModel extends XQSModelBase {
 		if (this.element != null) {
 			log.trace("found element, setting simple content: "+value);
 			XML.setSimpleContent(element, value);
+			parseMultiValues();
 		}
 	
 		log.leave();
@@ -60,10 +68,14 @@ public class XQuestionModel extends XQSModelBase {
 		setValue(this.serialiseMultiValues());
 	}
 	
+	
+	
 	public void removeValue(String value) {
 		values.remove(value);
 		setValue(this.serialiseMultiValues());
 	}
+	
+	
 	
 	private String serialiseMultiValues() {
 		String content = "";
@@ -74,6 +86,21 @@ public class XQuestionModel extends XQSModelBase {
 		}
 		return content;
 	}
+	
+	private void parseMultiValues() {
+		log.enter("parseMultiValues");
+		
+		log.trace("parsing: "+this.getValue());
+		if (this.getValue() != null) {
+			String[] tokens = this.getValue().split("\\s");
+			log.trace("found "+tokens.length+" tokens");
+			for (String token : tokens) {
+				log.trace("found token: "+token);
+				this.values.add(token);
+			}
+		}
+		log.leave();
+	}
 
 
 	
@@ -82,6 +109,13 @@ public class XQuestionModel extends XQSModelBase {
 	 */
 	public String getValue() {
 		return XML.firstChildNodeValueOrNullIfNoChildren(element);
+	}
+
+
+
+
+	public Set<String> getValues() {
+		return new HashSet<String>(this.values);
 	}
 
 

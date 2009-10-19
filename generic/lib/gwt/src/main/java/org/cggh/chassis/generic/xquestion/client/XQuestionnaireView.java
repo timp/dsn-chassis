@@ -180,14 +180,14 @@ public class XQuestionnaireView extends XQSViewBase {
 	private void renderQuestion(Element questionDefinition, Element dataParent) {
 		log.enter("renderQuestion");
 		
-		log.trace("find expected element for definition");
-		
+		log.trace("create prototype");
 		XQuestion prototype = new XQuestion(questionDefinition, owner);
 		this.questions.add(prototype);
 		this.widgets.add(prototype);
 
 		// we need to know, is it repeatable, and if so, how many matching data elements?
 		
+		log.trace("find expected element for definition");
 		String expectedElementName = prototype.getModel().getElementName();
 		String expectedElementNamespaceUri = prototype.getModel().getElementNamespaceUri();
 		log.trace("look for potentially matching data elements ["+expectedElementNamespaceUri+" :: "+expectedElementName+"]");
@@ -257,23 +257,51 @@ public class XQuestionnaireView extends XQSViewBase {
 	private void renderQuestionnaire(Element questionnaireDefinition, Element dataParent) {
 		log.enter("renderQuestionnaire");
 		
+		log.trace("create prototype");
 		XQuestionnaire prototype = new XQuestionnaire(questionnaireDefinition, owner);
+		this.nestedQuestionnaires.add(prototype);
+		this.widgets.add(prototype);
 
-		// TODO find data elements
-		List<Element> dataElements = XML.elements(dataParent.getChildNodes());
-		int created = 0;
+		// we need to know, is it repeatable, and if so, how many matching data elements?
 		
-		for (Element data : dataElements) {
-
-			// TODO
-				
+		// TODO code smell
+		log.trace("find expected element for definition");
+		String expectedElementName = prototype.getModel().getElementName();
+		String expectedElementNamespaceUri = prototype.getModel().getElementNamespaceUri();
+		log.trace("look for potentially matching data elements ["+expectedElementNamespaceUri+" :: "+expectedElementName+"]");
+		List<Element> dataElements = new ArrayList<Element>();
+		for (Element e : XML.elements(dataParent.getChildNodes())) {
+			log.trace("examining element: "+e.toString());
+			if (
+				expectedElementName.equals(XML.getLocalName(e)) &&
+				expectedElementNamespaceUri.equals(e.getNamespaceURI())
+			) {
+				dataElements.add(e);
+			}
+		}
+		log.trace("found "+dataElements.size()+" data elements");
+		
+		if (dataElements.size() == 0) {
+			log.trace("no matching data elements, use prototype");
+			prototype.init(); // initialise without data
+		}
+		else if (dataElements.size() >= 1) {
+			log.trace("found at least one matching data element, initialising prototype with first data element");
+			prototype.init(dataElements.get(0));
 		}
 		
-		prototype.init(); // TODO init with data
-		
-		this.nestedQuestionnaires.add(prototype);
-		
-		this.widgets.add(prototype);
+		if (dataElements.size() > 1 && prototype.isRepeatable()) {
+			log.trace("found more than one matching data element ("+dataElements.size()+"), and prototype is repeatable");
+			
+			for (int i=1; i<dataElements.size(); i++) {
+				Element dataElement = dataElements.get(i);
+				XQuestionnaire clone = prototype.clone();
+				log.trace("init clone "+i+" with data");
+				clone.init(dataElement);
+				this.nestedQuestionnaires.add(clone);
+				this.widgets.add(clone);
+			}
+		}
 		
 		log.leave();
 	}

@@ -62,7 +62,7 @@ public class XSelect1Minimal extends XFormControl {
 		log.trace("look for label");
 		constructLabel();
 		
-		log.trace("instantiate radio buttons");
+		log.trace("instantiate list box");
 		constructListBox();
 		
 		log.trace("look for hint");
@@ -119,7 +119,9 @@ public class XSelect1Minimal extends XFormControl {
 			box.addItem(itemLabel, itemValue);
 			
 			if (i == 0) {
-				model.setValue(itemValue); // set initial value
+				if (model.getValue() == null) {
+					model.setValue(itemValue); // set initial value
+				}
 			}
 							
 		}
@@ -136,15 +138,19 @@ public class XSelect1Minimal extends XFormControl {
 	 */
 	@Override
 	public void setValue(String value, boolean fireEvents) {
+		log.enter("setValue");
 		
 		for (int index=0; index<box.getItemCount(); index++) {
 			String itemValue = box.getValue(index);
+			log.trace("comparing item value ["+itemValue+"] with value to set ["+value+"]");
 			if (value.equals(itemValue)) {
+				log.trace("found match, setting selected index: "+index);
 				box.setSelectedIndex(index);
 				return;
 			}
 		}
 		
+		log.leave();
 	}
 	
 	
