@@ -10,6 +10,7 @@
 	padding: 3px;
 	margin: 3px 0 3px 0;
 	width: 100%;
+	background-color: #eee;
 }
 
 .xquestionnaire {
@@ -48,9 +49,6 @@
 .address {
 	background-color: #cfc;
 }
-
-
-
 
 .personQuestionnaire {
 	width: 80%;
