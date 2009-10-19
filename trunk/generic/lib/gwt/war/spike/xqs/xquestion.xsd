@@ -35,6 +35,7 @@
         <xs:element ref="questionnaire"/>
       </xs:choice>
     </xs:sequence>
+    <xs:attribute ref="class"/>
   </xs:complexType>
 
 
@@ -76,6 +77,7 @@
         <xs:element ref="select1"/>        
       </xs:choice>
     </xs:sequence>
+    <xs:attribute ref="class"/>
   </xs:complexType>
 
 

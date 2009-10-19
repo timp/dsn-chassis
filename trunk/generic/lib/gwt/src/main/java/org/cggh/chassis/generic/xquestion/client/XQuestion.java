@@ -3,6 +3,9 @@
  */
 package org.cggh.chassis.generic.xquestion.client;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.xml.client.XML;
@@ -248,6 +251,43 @@ public class XQuestion extends Composite {
 	}
 
 
+	
+	public List<XQuestion> getRepeats() {
+		List<XQuestion> siblings = this.parentQuestionnaire.getView().getQuestions();
+		List<XQuestion> repeats = new ArrayList<XQuestion>();
+		for (XQuestion q : siblings) {
+			if (q.getDefinition() == this.definition) {
+				repeats.add(q);
+			}
+		}
+		return repeats;
+	}
+
+
+
+
+	private Element getDefinition() {
+		return this.definition;
+	}
+
+
+
+
+	public void remove() {
+		log.enter("remove");
+		
+		if (this.repeatable) {
+			
+			log.trace("remove question from view");
+			this.parentQuestionnaire.getView().removeQuestion(this);
+
+			log.trace("remove question from model");
+			this.parentQuestionnaire.getModel().removeChild(this.getModel());
+			
+		}
+		
+		log.leave();
+	}
 
 
 }

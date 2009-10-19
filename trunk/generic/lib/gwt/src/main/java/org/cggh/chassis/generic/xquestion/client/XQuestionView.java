@@ -3,6 +3,8 @@
  */
 package org.cggh.chassis.generic.xquestion.client;
 
+import java.util.List;
+
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.xml.client.XML;
@@ -10,6 +12,8 @@ import org.cggh.chassis.generic.xml.client.XML;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.xml.client.Element;
@@ -45,6 +49,11 @@ public class XQuestionView extends XQSViewBase {
 		this.repeatable  = owner.isRepeatable();
 		this.canvas = new VerticalPanel();
 		this.canvas.addStyleName(STYLENAME);
+		
+		String classAttr = definition.getAttribute(XQS.ATTR_CLASS);
+		if (classAttr != null) {
+			this.canvas.addStyleName(classAttr);
+		}
 				
 	}
 	
@@ -138,9 +147,13 @@ public class XQuestionView extends XQSViewBase {
 	 * 
 	 */
 	private void initRepeatable() {
+
+		Panel buttonPanel = new HorizontalPanel();
+		this.widgets.add(buttonPanel);
+		
 		Button repeatButton = new Button();
 		repeatButton.setText("+");
-		this.widgets.add(repeatButton);
+		buttonPanel.add(repeatButton);
 		repeatButton.addClickHandler(new ClickHandler() {
 			
 			public void onClick(ClickEvent event) {
@@ -148,6 +161,22 @@ public class XQuestionView extends XQSViewBase {
 			}
 
 		});
+		
+		List<XQuestion> repeats = owner.getRepeats();
+		if (repeats.size() > 1) {
+
+			Button removeButton = new Button();
+			removeButton.setText("-");
+			buttonPanel.add(removeButton);
+			removeButton.addClickHandler(new ClickHandler() {
+				
+				public void onClick(ClickEvent event) {
+					owner.remove();
+				}
+
+			});
+			
+		}
 	}
 
 
