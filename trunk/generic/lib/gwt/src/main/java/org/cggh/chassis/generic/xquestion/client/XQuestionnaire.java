@@ -292,6 +292,18 @@ public class XQuestionnaire extends Composite {
 
 	
 	
+	public XQuestionnaire clone() {
+		log.enter("clone");
+		
+		log.trace("clone this XQuestion");
+		XQuestionnaire clone = new XQuestionnaire(this.definition, this.parentQuestionnaire, this.defaultPrefix, this.defaultNamespaceUri, this);
+		
+		log.leave();
+		return clone;
+	}
+	
+	
+	
 	/**
 	 * 
 	 */
@@ -301,7 +313,7 @@ public class XQuestionnaire extends Composite {
 		if (this.repeatable && this.parentQuestionnaire != null) {
 			
 			log.trace("clone this XQuestion");
-			XQuestionnaire clone = new XQuestionnaire(this.definition, this.parentQuestionnaire, this.defaultPrefix, this.defaultNamespaceUri, this);
+			XQuestionnaire clone = this.clone();
 			
 			log.trace("insert cloned XQuestion into parent view");
 			this.parentQuestionnaire.getView().addQuestionnaire(clone, this);

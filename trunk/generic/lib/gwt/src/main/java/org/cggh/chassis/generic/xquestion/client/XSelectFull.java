@@ -5,6 +5,7 @@ package org.cggh.chassis.generic.xquestion.client;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
@@ -67,6 +68,9 @@ public class XSelectFull extends XFormControl {
 		
 		log.trace("look for hint");
 		constructHint();
+		
+		log.trace("initialise value from model");
+		initValues();
 
 		log.trace("complete construction");
 		initWidget(this.canvas);
@@ -150,17 +154,42 @@ public class XSelectFull extends XFormControl {
 	 */
 	@Override
 	public void setValue(String value, boolean fireEvents) {
+		log.enter("setValue");
 		
 		for (CheckBox b : checkBoxes) {
-			if (b.getFormValue().equals(value)) {
+			String formValue = b.getFormValue();
+			log.trace("compare form value ["+formValue+"] with value to set ["+value+"]");
+			if (formValue.equals(value)) {
+				log.trace("found match, setting value");
 				b.setValue(true, fireEvents);
 			}
 		}
 
+		log.leave();
 	}
 	
 	
 	
+	
+	private void initValues() {
+		log.enter("initValues");
+
+		if (this.model.getValue() != null) {
+			Set<String> values = this.model.getValues();
+			for (CheckBox b : checkBoxes) {
+				String formValue = b.getFormValue();
+				if (values.contains(formValue)) {
+					log.trace("found match, setting value: "+formValue);
+					b.setValue(true, false);
+				}
+			}
+		}
+
+		log.leave();
+	}
+
+
+
 
 	protected class CheckBoxValueChangeHandler implements ValueChangeHandler<Boolean> {
 
