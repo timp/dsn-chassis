@@ -10,12 +10,12 @@ import org.cggh.chassis.generic.atom.study.client.format.impl.StudyFactoryImpl;
 import org.cggh.chassis.generic.atom.study.client.protocol.impl.StudyQueryServiceImpl;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
-import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomProtocolException;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.impl.AtomServiceImpl;
 import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
+import org.cggh.chassis.generic.twisted.client.HttpException;
 import org.cggh.chassis.generic.twisted.client.Deferred;
 import org.cggh.chassis.generic.twisted.client.Function;
 
@@ -136,8 +136,8 @@ public class SpikeStudyQueryServiceByAuthorEmailEntryPoint implements EntryPoint
 
 				Window.alert("error ["+t.getClass().toString()+"]: "+t.getLocalizedMessage());
 				
-				if (t instanceof AtomProtocolException) {
-					AtomProtocolException ape = (AtomProtocolException) t;
+				if (t instanceof HttpException) {
+					HttpException ape = (HttpException) t;
 					log.trace(ape.getResponse().getText());
 				}
 				

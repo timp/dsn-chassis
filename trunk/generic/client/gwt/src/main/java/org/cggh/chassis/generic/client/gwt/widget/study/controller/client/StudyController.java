@@ -11,13 +11,13 @@ import org.cggh.chassis.generic.atom.study.client.format.StudyFactory;
 import org.cggh.chassis.generic.atom.study.client.format.impl.StudyFactoryImpl;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
-import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomProtocolException;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.impl.AtomServiceImpl;
 import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
 import org.cggh.chassis.generic.client.gwt.widget.study.model.client.StudyModel;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
+import org.cggh.chassis.generic.twisted.client.HttpException;
 import org.cggh.chassis.generic.twisted.client.Deferred;
 import org.cggh.chassis.generic.twisted.client.Function;
 
@@ -233,8 +233,8 @@ public class StudyController implements StudyControllerEditAPI, StudyControllerC
 		public Throwable apply(Throwable error) {
 			log.enter("SaveOrUpdateStudyEntryErrback :: apply");
 			
-			if (error instanceof AtomProtocolException) {
-				AtomProtocolException e = (AtomProtocolException) error;
+			if (error instanceof HttpException) {
+				HttpException e = (HttpException) error;
 				log.trace(e.getLocalizedMessage());
 				log.trace(e.getResponse().getText());
 			}
