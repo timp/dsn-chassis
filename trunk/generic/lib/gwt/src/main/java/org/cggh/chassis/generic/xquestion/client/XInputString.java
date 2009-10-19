@@ -7,6 +7,7 @@ import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.xml.client.Element;
 
@@ -21,6 +22,7 @@ public class XInputString extends XFormControl {
 	
 	private Log log = LogFactory.getLog(this.getClass());
 	protected TextBox textBox;
+	protected Label readOnlyLabel;
 	
 	
 	
@@ -29,8 +31,8 @@ public class XInputString extends XFormControl {
 	
 	
 	
-	public XInputString(Element definition, XQuestionModel model) {
-		super(definition, model);		
+	public XInputString(Element definition, XQuestionModel model, boolean readOnly) {
+		super(definition, model, readOnly);		
 		construct();
 	}
 	
@@ -49,7 +51,7 @@ public class XInputString extends XFormControl {
 		log.trace("add custom style");
 		addCustomStyle();
 		
-		log.trace("look for label");
+		log.trace("look for readOnlyLabel");
 		constructLabel();
 		
 		log.trace("instantiate text box");
@@ -90,8 +92,15 @@ public class XInputString extends XFormControl {
 	
 	protected void constructTextBox() {
 
-		textBox = new TextBox();
-		this.canvas.add(textBox);		
+		if (readOnly) {
+			readOnlyLabel = new Label();
+			readOnlyLabel.addStyleName(XFormControl.STYLENAME_ANSWER);
+			this.canvas.add(readOnlyLabel);
+		}
+		else {
+			textBox = new TextBox();
+			this.canvas.add(textBox);		
+		}
 
 	}
 
@@ -103,7 +112,9 @@ public class XInputString extends XFormControl {
 	 */
 	protected void addValueChangeHandler() {
 
-		textBox.addValueChangeHandler(new TextInputValueChangeHandler());
+		if (!readOnly) {
+			textBox.addValueChangeHandler(new TextInputValueChangeHandler());
+		}
 
 	}
 
@@ -112,7 +123,14 @@ public class XInputString extends XFormControl {
 
 	
 	public void setValue(String value, boolean fireEvents) {
-		this.textBox.setValue(value, fireEvents);
+		
+		if (readOnly) {
+			this.readOnlyLabel.setText(value);
+		}
+		else {
+			this.textBox.setValue(value, fireEvents);
+		}
+		
 	}
 
 

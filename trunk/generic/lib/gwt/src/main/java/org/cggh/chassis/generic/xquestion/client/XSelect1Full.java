@@ -4,7 +4,10 @@
 package org.cggh.chassis.generic.xquestion.client;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
@@ -13,6 +16,7 @@ import org.cggh.chassis.generic.xml.client.XML;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.ui.Grid;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -22,16 +26,16 @@ import com.google.gwt.xml.client.Element;
  * @author aliman
  *
  */
-public class XSelect1Full extends XFormControl {
+public class XSelect1Full extends XSelectBase {
 
 	
 	
 	
 	private Log log = LogFactory.getLog(this.getClass());
-	private XQuestion owner;
 	private Grid radioButtonGrid;
 	private String buttonGroupName;
 	private List<RadioButton> buttons = new ArrayList<RadioButton>();
+	protected XQuestion owner;
 	
 	
 	
@@ -43,9 +47,10 @@ public class XSelect1Full extends XFormControl {
 	/**
 	 * @param definition
 	 * @param model
+	 * @param readOnly 
 	 */
-	XSelect1Full(Element definition, XQuestionModel model, XQuestion owner) {
-		super(definition, model);
+	XSelect1Full(Element definition, XQuestionModel model, XQuestion owner, boolean readOnly) {
+		super(definition, model, readOnly);
 		this.owner = owner;
 		construct();
 	}
@@ -67,6 +72,9 @@ public class XSelect1Full extends XFormControl {
 		
 		log.trace("look for label");
 		constructLabel();
+		
+		log.trace("map values to items");
+		constructItemMap();
 		
 		log.trace("construct button group name");
 		constructButtonGroupName();
@@ -95,7 +103,12 @@ public class XSelect1Full extends XFormControl {
 	
 	
 	private void constructCanvas() {
-		this.canvas = new VerticalPanel();
+		if (readOnly) {
+			this.canvas = new HorizontalPanel();
+		}
+		else {
+			this.canvas = new VerticalPanel();
+		}
 		this.canvas.addStyleName(STYLENAME);
 	}
 	
@@ -104,15 +117,19 @@ public class XSelect1Full extends XFormControl {
 	
 	private void constructButtonGroupName() {
 
-		buttonGroupName = this.owner.getId();
-		if (this.owner.isRepeatable()) {
-			XQuestionnaire parent = this.owner.getParentQuestionnaire();
-			XQuestionnaireView parentView = parent.getView();
-			List<XQuestion> siblings = parentView.getQuestions();
-			buttonGroupName += siblings.indexOf(this.owner);
+		if (!readOnly) {
+			
+			buttonGroupName = this.owner.getId();
+			if (this.owner.isRepeatable()) {
+				XQuestionnaire parent = this.owner.getParentQuestionnaire();
+				XQuestionnaireView parentView = parent.getView();
+				List<XQuestion> siblings = parentView.getQuestions();
+				buttonGroupName += siblings.indexOf(this.owner);
+			}
+			
+			log.trace("using button group name: "+buttonGroupName);	
+
 		}
-		
-		log.trace("using button group name: "+buttonGroupName);	
 
 		// TODO what if repeatable and can remove as well as add, need to rename button groups?
 		
@@ -123,15 +140,34 @@ public class XSelect1Full extends XFormControl {
 	
 	private void constructRadioButtonGrid() {
 
-		List<Element> itemElements = XML.getElementsByTagName(definition, XQS.ELEMENT_ITEM);
-		radioButtonGrid = new Grid(itemElements.size(), 2);
-		this.canvas.add(radioButtonGrid);
-		
-		for (int index=0; index < itemElements.size() ; index++) {
+		if (readOnly) {
+
+			readOnlyLabel = new Label();
+			readOnlyLabel.addStyleName(XFormControl.STYLENAME_ANSWER);
+			this.canvas.add(readOnlyLabel);
+
+		}
+		else {
 			
-			Element itemElement = itemElements.get(index);
-			constructRadioButton(itemElement, index);
+//			List<Element> itemElements = XML.getElementsByTagName(definition, XQS.ELEMENT_ITEM);
+
+			radioButtonGrid = new Grid(items.keySet().size(), 2);
+			this.canvas.add(radioButtonGrid);
 			
+//			for (int index=0; index < itemElements.size() ; index++) {
+//				
+//				Element itemElement = itemElements.get(index);
+//				constructRadioButton(itemElement, index);
+//				
+//			}
+
+			Iterator<String> it = items.keySet().iterator();
+			
+			for (int index=0; it.hasNext(); index++) {
+				String value = it.next();
+				String label = items.get(value);
+				constructRadioButton(value, label, index);
+			}
 		}
 
 	}
@@ -139,10 +175,10 @@ public class XSelect1Full extends XFormControl {
 	
 	
 	
-	private void constructRadioButton(Element itemElement, int index) {
+	private void constructRadioButton(String itemValue, String itemLabel, int index) {
 
-		String itemLabel = XML.getElementSimpleContentByTagName(itemElement, XQS.ELEMENT_LABEL);
-		String itemValue = XML.getElementSimpleContentByTagName(itemElement, XQS.ELEMENT_VALUE);
+//		String itemLabel = XML.getElementSimpleContentByTagName(itemElement, XQS.ELEMENT_LABEL);
+//		String itemValue = XML.getElementSimpleContentByTagName(itemElement, XQS.ELEMENT_VALUE);
 		
 		log.trace("adding radio button for item label: "+itemLabel+"; value: "+itemValue);
 
@@ -179,9 +215,14 @@ public class XSelect1Full extends XFormControl {
 	@Override
 	public void setValue(String value, boolean fireEvents) {
 		
-		for (RadioButton b : buttons) {
-			if (b.getFormValue().equals(value)) {
-				b.setValue(true, fireEvents);
+		if (readOnly) {
+			this.readOnlyLabel.setText(items.get(value));
+		}
+		else {
+			for (RadioButton b : buttons) {
+				if (b.getFormValue().equals(value)) {
+					b.setValue(true, fireEvents);
+				}
 			}
 		}
 

@@ -116,6 +116,13 @@ public class XQuestion extends Composite {
 	 */
 	public void init() {
 		
+		this.init(false);
+	}
+	
+	
+	
+	public void init(boolean readOnly) {
+
 		this.model.init();
 		
 		// TODO move this to model.init() ?
@@ -130,16 +137,27 @@ public class XQuestion extends Composite {
 			
 		}
 
-		this.view.init();
+		this.view.init(readOnly);
 		
+	}
+
+
+
+	/**
+	 * @param readOnly 
+	 * @param element
+	 */
+	public void init(Element data) {
+		this.init(data, false);
 	}
 
 	
 	
 	/**
+	 * @param readOnly 
 	 * @param element
 	 */
-	public void init(Element data) {
+	public void init(Element data, boolean readOnly) {
 
 		this.model.init(data);
 
@@ -155,7 +173,7 @@ public class XQuestion extends Composite {
 			
 		}
 
-		this.view.init(data);
+		this.view.init(data, readOnly);
 	}
 	
 	
@@ -288,6 +306,8 @@ public class XQuestion extends Composite {
 		
 		log.leave();
 	}
+
+
 
 
 }

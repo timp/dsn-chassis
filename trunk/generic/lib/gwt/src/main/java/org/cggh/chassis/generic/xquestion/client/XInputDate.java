@@ -12,6 +12,7 @@ import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.datepicker.client.DateBox;
 import com.google.gwt.xml.client.Element;
 
@@ -26,6 +27,7 @@ public class XInputDate extends XFormControl {
 	private Log log = LogFactory.getLog(this.getClass());
 	private DateBox dateBox;
 	private DateTimeFormat xsDateFormat = DateTimeFormat.getFormat("yyyy-MM-dd");
+	private Label readOnlyLabel;
 	
 	
 	
@@ -34,8 +36,8 @@ public class XInputDate extends XFormControl {
 	public static final String STYLENAME = "xinput-date";
 
 	
-	protected XInputDate(Element definition, XQuestionModel model) {
-		super(definition, model);
+	protected XInputDate(Element definition, XQuestionModel model, boolean readOnly) {
+		super(definition, model, readOnly);
 		construct();
 	}
 
@@ -92,31 +94,42 @@ public class XInputDate extends XFormControl {
 	
 	protected void constructDateBox() {
 
-		dateBox = new DateBox();
-		
-		dateBox.setFormat(new DateBox.Format() {
+		if (readOnly) {
+
+			readOnlyLabel = new Label();
+			readOnlyLabel.addStyleName(XFormControl.STYLENAME_ANSWER);
+			this.canvas.add(readOnlyLabel);
 			
-			public void reset(DateBox dateBox, boolean abandon) {
-				// TODO Auto-generated method stub
+		}
+		else {
+			
+			dateBox = new DateBox();
+			
+			dateBox.setFormat(new DateBox.Format() {
 				
-			}
-			
-			public Date parse(DateBox dateBox, String text, boolean reportError) {
-				if (text != null && !text.equals("")) {
-					return xsDateFormat.parse(text);
+				public void reset(DateBox dateBox, boolean abandon) {
+					// TODO Auto-generated method stub
+					
 				}
-				return null;
-			}
-			
-			public String format(DateBox dateBox, Date date) {
-				if (date != null) {
-					return xsDateFormat.format(date);
+				
+				public Date parse(DateBox dateBox, String text, boolean reportError) {
+					if (text != null && !text.equals("")) {
+						return xsDateFormat.parse(text);
+					}
+					return null;
 				}
-				return null;
-			}
-		});
-		
-		this.canvas.add(dateBox);		
+				
+				public String format(DateBox dateBox, Date date) {
+					if (date != null) {
+						return xsDateFormat.format(date);
+					}
+					return null;
+				}
+			});
+			
+			this.canvas.add(dateBox);		
+
+		}
 
 	}
 
@@ -128,22 +141,26 @@ public class XInputDate extends XFormControl {
 	 */
 	protected void addValueChangeHandler() {
 		
-		dateBox.addValueChangeHandler(new ValueChangeHandler<Date>() {
+		if (!readOnly) {
 			
-			private Log log = LogFactory.getLog(this.getClass());
-			
-			/* (non-Javadoc)
-			 * @see com.google.gwt.event.logical.shared.ValueChangeHandler#onValueChange(com.google.gwt.event.logical.shared.ValueChangeEvent)
-			 */
-			public void onValueChange(ValueChangeEvent<Date> event) {
-				log.enter("onValueChange");
-				log.trace("event value: "+event.getValue());
-				String dateString = xsDateFormat.format(event.getValue());
-				model.setValue(dateString);
-				log.leave();
-			}
+			dateBox.addValueChangeHandler(new ValueChangeHandler<Date>() {
+				
+				private Log log = LogFactory.getLog(this.getClass());
+				
+				/* (non-Javadoc)
+				 * @see com.google.gwt.event.logical.shared.ValueChangeHandler#onValueChange(com.google.gwt.event.logical.shared.ValueChangeEvent)
+				 */
+				public void onValueChange(ValueChangeEvent<Date> event) {
+					log.enter("onValueChange");
+					log.trace("event value: "+event.getValue());
+					String dateString = xsDateFormat.format(event.getValue());
+					model.setValue(dateString);
+					log.leave();
+				}
 
-		});
+			});
+
+		}
 		
 	}
 
@@ -155,13 +172,23 @@ public class XInputDate extends XFormControl {
 	 */
 	@Override
 	public void setValue(String value, boolean fireEvents) {
-		this.setValue(xsDateFormat.parse(value), fireEvents);
+		if (readOnly) {
+			this.readOnlyLabel.setText(value);
+		}
+		else {
+			this.setValue(xsDateFormat.parse(value), fireEvents);
+		}
 	}
 
 	
 	
 	public void setValue(Date value, boolean fireEvents) {
-		this.dateBox.setValue(value, fireEvents);
+		if (readOnly) {
+			this.readOnlyLabel.setText(xsDateFormat.format(value));
+		}
+		else {
+			this.dateBox.setValue(value, fireEvents);
+		}
 	}
 	
 }

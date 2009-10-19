@@ -3,6 +3,7 @@
  */
 package org.cggh.chassis.generic.xquestion.client;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.cggh.chassis.generic.log.client.Log;
@@ -12,6 +13,7 @@ import org.cggh.chassis.generic.xml.client.XML;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.xml.client.Element;
 
@@ -19,13 +21,14 @@ import com.google.gwt.xml.client.Element;
  * @author aliman
  *
  */
-public class XSelect1Minimal extends XFormControl {
+public class XSelect1Minimal extends XSelectBase {
 
 
 	
 	
 	private Log log = LogFactory.getLog(this.getClass());
 	private ListBox box;
+	private Label readOnlyLabel;
 	
 	
 	
@@ -38,9 +41,10 @@ public class XSelect1Minimal extends XFormControl {
 	/**
 	 * @param definition
 	 * @param model
+	 * @param readOnly 
 	 */
-	public XSelect1Minimal(Element definition, XQuestionModel model) {
-		super(definition, model);
+	public XSelect1Minimal(Element definition, XQuestionModel model, boolean readOnly) {
+		super(definition, model, readOnly);
 		construct();
 	}
 
@@ -61,6 +65,9 @@ public class XSelect1Minimal extends XFormControl {
 		
 		log.trace("look for label");
 		constructLabel();
+
+		log.trace("map values to items");
+		constructItemMap();
 		
 		log.trace("instantiate list box");
 		constructListBox();
@@ -95,38 +102,40 @@ public class XSelect1Minimal extends XFormControl {
 	
 	private void constructListBox() {
 
-		box = new ListBox();
-		this.canvas.add(box);
-		
-		List<Element> itemElements = XML.getElementsByTagName(definition, XQS.ELEMENT_ITEM);
-		
-		for (int i=0; i < itemElements.size() ; i++) {
+		if (readOnly) {
 			
-			Element ie = itemElements.get(i);
-			String itemLabel = XML.getElementSimpleContentByTagName(ie, XQS.ELEMENT_LABEL);
-			String itemValue = XML.getElementSimpleContentByTagName(ie, XQS.ELEMENT_VALUE);
-			
-			if (itemLabel == null) {
-				throw new XQuestionFormatException("bad select1 definition, found no label for item ["+i+"]");
-			}
-			
-			if (itemValue == null) {
-				throw new XQuestionFormatException("bad select1 definition, found no value for item ["+i+"]");
-			}
-			
-			log.trace("adding list item for item label: "+itemLabel+"; value: "+itemValue);
-			
-			box.addItem(itemLabel, itemValue);
-			
-			if (i == 0) {
-				if (model.getValue() == null) {
-					model.setValue(itemValue); // set initial value
-				}
-			}
-							
-		}
+			readOnlyLabel = new Label();
+			readOnlyLabel.addStyleName(XFormControl.STYLENAME_ANSWER);
+			this.canvas.add(readOnlyLabel);
 
-		box.addClickHandler(new ListBoxClickHandler());
+		}
+		else {
+
+			box = new ListBox();
+			this.canvas.add(box);
+			
+			Iterator<String> it = items.keySet().iterator();
+			
+			for (int index=0; it.hasNext(); index++) {
+				
+				String itemValue = it.next();
+				String itemLabel = items.get(itemValue);
+				
+				log.trace("adding list item for item label: "+itemLabel+"; value: "+itemValue);
+				
+				box.addItem(itemLabel, itemValue);
+				
+				if (index == 0) {
+					if (model.getValue() == null) {
+						model.setValue(itemValue); // set initial value
+					}
+				}
+								
+			}
+
+			box.addClickHandler(new ListBoxClickHandler());
+
+		}
 		
 	}
 	
@@ -140,14 +149,23 @@ public class XSelect1Minimal extends XFormControl {
 	public void setValue(String value, boolean fireEvents) {
 		log.enter("setValue");
 		
-		for (int index=0; index<box.getItemCount(); index++) {
-			String itemValue = box.getValue(index);
-			log.trace("comparing item value ["+itemValue+"] with value to set ["+value+"]");
-			if (value.equals(itemValue)) {
-				log.trace("found match, setting selected index: "+index);
-				box.setSelectedIndex(index);
-				return;
+		if (readOnly) {
+			
+			this.readOnlyLabel.setText(items.get(value));
+			
+		}
+		else {
+
+			for (int index=0; index<box.getItemCount(); index++) {
+				String itemValue = box.getValue(index);
+				log.trace("comparing item value ["+itemValue+"] with value to set ["+value+"]");
+				if (value.equals(itemValue)) {
+					log.trace("found match, setting selected index: "+index);
+					box.setSelectedIndex(index);
+					return;
+				}
 			}
+
 		}
 		
 		log.leave();

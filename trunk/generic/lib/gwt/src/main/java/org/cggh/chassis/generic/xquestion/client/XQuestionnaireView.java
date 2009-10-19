@@ -59,7 +59,7 @@ public class XQuestionnaireView extends XQSViewBase {
 	
 	
 	
-	public void init() {
+	public void init(boolean readOnly) {
 		
 		this.canvas.clear();
 		this.widgets = new ArrayList<Widget>();
@@ -70,13 +70,13 @@ public class XQuestionnaireView extends XQSViewBase {
 
 			if (e.getTagName().equals(XQS.ELEMENT_QUESTION)) {
 				
-				renderQuestion(e);
+				renderQuestion(e, readOnly);
 			
 			}
 
 			else if (e.getTagName().equals(XQS.ELEMENT_QUESTIONNAIRE)) {
 				
-				renderQuestionnaire(e);
+				renderQuestionnaire(e, readOnly);
 			
 			}
 			
@@ -99,10 +99,9 @@ public class XQuestionnaireView extends XQSViewBase {
 	
 	
 
-	/**
-	 * @param data
-	 */
-	public void init(Element data) {
+	
+	
+	public void init(Element data, boolean readOnly) {
 
 		this.canvas.clear();
 		this.widgets = new ArrayList<Widget>();
@@ -113,13 +112,13 @@ public class XQuestionnaireView extends XQSViewBase {
 
 			if (childDefinition.getTagName().equals(XQS.ELEMENT_QUESTION)) {
 				
-				renderQuestion(childDefinition, data);
+				renderQuestion(childDefinition, data, readOnly);
 			
 			}
 
 			else if (childDefinition.getTagName().equals(XQS.ELEMENT_QUESTIONNAIRE)) {
 				
-				renderQuestionnaire(childDefinition, data);
+				renderQuestionnaire(childDefinition, data, readOnly);
 			
 			}
 			
@@ -136,9 +135,13 @@ public class XQuestionnaireView extends XQSViewBase {
 		}
 		
 		refresh();
-
+		
 	}
-	
+
+
+
+
+
 	
 
 	/**
@@ -184,8 +187,9 @@ public class XQuestionnaireView extends XQSViewBase {
 	
 	/**
 	 * @param questionDefinition
+	 * @param readOnly 
 	 */
-	private void renderQuestion(Element questionDefinition) {
+	private void renderQuestion(Element questionDefinition, boolean readOnly) {
 		log.enter("renderQuestion");
 		
 		XQuestion q = new XQuestion(questionDefinition, owner);
@@ -203,9 +207,10 @@ public class XQuestionnaireView extends XQSViewBase {
 
 
 	/**
+	 * @param readOnly 
 	 * @param e
 	 */
-	private void renderQuestion(Element questionDefinition, Element dataParent) {
+	private void renderQuestion(Element questionDefinition, Element dataParent, boolean readOnly) {
 		log.enter("renderQuestion");
 		
 		log.trace("create prototype");
@@ -234,11 +239,11 @@ public class XQuestionnaireView extends XQSViewBase {
 		
 		if (dataElements.size() == 0) {
 			log.trace("no matching data elements, use prototype");
-			prototype.init(); // initialise without data
+			prototype.init(readOnly); // initialise without data
 		}
 		else if (dataElements.size() >= 1) {
 			log.trace("found at least one matching data element, initialising prototype with first data element");
-			prototype.init(dataElements.get(0));
+			prototype.init(dataElements.get(0), readOnly);
 		}
 		
 		if (dataElements.size() > 1 && prototype.isRepeatable()) {
@@ -250,7 +255,7 @@ public class XQuestionnaireView extends XQSViewBase {
 				this.questions.add(clone);
 				this.widgets.add(clone);
 				log.trace("init clone "+i+" with data");
-				clone.init(dataElement);				
+				clone.init(dataElement, readOnly);				
 			}
 			
 		}
@@ -263,8 +268,9 @@ public class XQuestionnaireView extends XQSViewBase {
 
 	/**
 	 * @param questionnaireDefinition
+	 * @param readOnly 
 	 */
-	private void renderQuestionnaire(Element questionnaireDefinition) {
+	private void renderQuestionnaire(Element questionnaireDefinition, boolean readOnly) {
 		log.enter("renderQuestionnaire");
 		
 		XQuestionnaire q = new XQuestionnaire(questionnaireDefinition, owner);
@@ -281,9 +287,10 @@ public class XQuestionnaireView extends XQSViewBase {
 
 
 	/**
+	 * @param readOnly 
 	 * @param e
 	 */
-	private void renderQuestionnaire(Element questionnaireDefinition, Element dataParent) {
+	private void renderQuestionnaire(Element questionnaireDefinition, Element dataParent, boolean readOnly) {
 		log.enter("renderQuestionnaire");
 		
 		log.trace("create prototype");
@@ -312,11 +319,11 @@ public class XQuestionnaireView extends XQSViewBase {
 		
 		if (dataElements.size() == 0) {
 			log.trace("no matching data elements, use prototype");
-			prototype.init(); // initialise without data
+			prototype.init(readOnly); // initialise without data
 		}
 		else if (dataElements.size() >= 1) {
 			log.trace("found at least one matching data element, initialising prototype with first data element");
-			prototype.init(dataElements.get(0));
+			prototype.init(dataElements.get(0), readOnly);
 		}
 		
 		if (dataElements.size() > 1 && prototype.isRepeatable()) {
@@ -328,7 +335,7 @@ public class XQuestionnaireView extends XQSViewBase {
 				log.trace("init clone "+i+" with data");
 				this.nestedQuestionnaires.add(clone);
 				this.widgets.add(clone);
-				clone.init(dataElement);
+				clone.init(dataElement, readOnly);
 			}
 		}
 		

@@ -5,6 +5,9 @@ package org.cggh.chassis.generic.xquestion.client;
 
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
+
+import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.xml.client.Element;
@@ -26,12 +29,13 @@ public class XTextArea extends XFormControl {
 	
 	private Log log = LogFactory.getLog(this.getClass());
 	private TextArea textArea;
+	private Label readOnlyLabel;
 
 	
 	
 	
-	public XTextArea(Element definition, XQuestionModel model) {
-		super(definition, model);
+	public XTextArea(Element definition, XQuestionModel model, boolean readOnly) {
+		super(definition, model, readOnly);
 		construct();
 	}
 	
@@ -84,8 +88,17 @@ public class XTextArea extends XFormControl {
 	
 	private void constructTextArea() {
 
-		textArea = new TextArea();
-		this.canvas.add(textArea);		
+		if (readOnly) {
+
+			readOnlyLabel = new Label();
+			readOnlyLabel.addStyleName(XFormControl.STYLENAME_ANSWER);
+			this.canvas.add(readOnlyLabel);
+
+		}
+		else {
+			textArea = new TextArea();
+			this.canvas.add(textArea);					
+		}
 
 	}
 
@@ -97,7 +110,9 @@ public class XTextArea extends XFormControl {
 	 */
 	private void addValueChangeHandler() {
 
-		textArea.addValueChangeHandler(new TextInputValueChangeHandler());
+		if (!readOnly) {
+			textArea.addValueChangeHandler(new TextInputValueChangeHandler());
+		}
 
 	}
 
@@ -106,7 +121,12 @@ public class XTextArea extends XFormControl {
 
 	@Override
 	public void setValue(String value, boolean fireEvents) {
-		this.textArea.setValue(value, fireEvents);
+		if (readOnly) {
+			this.readOnlyLabel.setText(value);
+		}
+		else {
+			this.textArea.setValue(value, fireEvents);
+		}
 	}
 
 

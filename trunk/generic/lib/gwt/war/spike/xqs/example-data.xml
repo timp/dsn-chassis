@@ -3,6 +3,7 @@
   <foo:familyName>Foo</foo:familyName>
   <foo:title>ms</foo:title>
   <foo:dob>1978-10-01</foo:dob>
+  <foo:pin>1234</foo:pin>
   <foo:email>alice@example.com</foo:email>
   <foo:email>alice.foo@example.org</foo:email>
   <foo:address>
