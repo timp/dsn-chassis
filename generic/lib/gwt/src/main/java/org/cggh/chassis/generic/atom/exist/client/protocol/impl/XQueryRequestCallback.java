@@ -3,7 +3,7 @@
  */
 package org.cggh.chassis.generic.atom.exist.client.protocol.impl;
 
-import org.cggh.chassis.generic.atom.vanilla.client.protocol.impl.CallbackBase;
+import org.cggh.chassis.generic.twisted.client.HttpCallbackBase;
 import org.cggh.chassis.generic.twisted.client.HttpDeferred;
 
 import com.google.gwt.http.client.Request;
@@ -14,7 +14,7 @@ import com.google.gwt.http.client.Response;
  * @author aliman
  *
  */
-public class XQueryRequestCallback extends CallbackBase implements
+public class XQueryRequestCallback extends HttpCallbackBase implements
 		RequestCallback {
 
 	private HttpDeferred<String> result;

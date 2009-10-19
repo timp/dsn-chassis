@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.atom.vanilla.client.protocol;
+package org.cggh.chassis.generic.twisted.client;
 
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.Response;
@@ -10,7 +10,7 @@ import com.google.gwt.http.client.Response;
  * @author aliman
  *
  */
-public class AtomProtocolException extends Exception {
+public class HttpException extends Exception {
 
 	private Request request;
 	private Response response;
@@ -34,7 +34,7 @@ public class AtomProtocolException extends Exception {
 	 * @param request 
 	 * @param string
 	 */
-	public AtomProtocolException(String message, Request request, Response response) {
+	public HttpException(String message, Request request, Response response) {
 		super(message);
 		this.request = request;
 		this.response = response;

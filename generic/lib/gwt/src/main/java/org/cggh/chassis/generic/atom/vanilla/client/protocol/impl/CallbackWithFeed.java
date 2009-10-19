@@ -7,6 +7,7 @@ import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactory;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
+import org.cggh.chassis.generic.twisted.client.HttpCallbackBase;
 import org.cggh.chassis.generic.twisted.client.HttpDeferred;
 
 import com.google.gwt.http.client.Request;
@@ -17,7 +18,7 @@ import com.google.gwt.http.client.Response;
  * @author aliman
  *
  */
-public class CallbackWithFeed extends CallbackBase implements RequestCallback {
+public class CallbackWithFeed extends HttpCallbackBase implements RequestCallback {
 
 	private AtomFactory factory;
 	private HttpDeferred<AtomFeed> result;

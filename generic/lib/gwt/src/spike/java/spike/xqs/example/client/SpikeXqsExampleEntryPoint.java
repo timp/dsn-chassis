@@ -5,6 +5,8 @@ package spike.xqs.example.client;
 
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
+import org.cggh.chassis.generic.twisted.client.Deferred;
+import org.cggh.chassis.generic.twisted.client.Function;
 import org.cggh.chassis.generic.xquestion.client.XQuestionnaire;
 
 import com.google.gwt.core.client.EntryPoint;
@@ -17,6 +19,7 @@ import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.Response;
 import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
@@ -81,46 +84,31 @@ public class SpikeXqsExampleEntryPoint implements EntryPoint {
 	
 	private void loadQuestionnaire() {
 
-		try {
+		String qloc = InputElement.as(DOM.getElementById("qloc")).getValue();
+		Deferred<XQuestionnaire> d = XQuestionnaire.load(qloc);
+		
+		d.addCallback(new Function<XQuestionnaire,XQuestionnaire>() {
+
+			public XQuestionnaire apply(XQuestionnaire in) {
+				RootPanel qp = RootPanel.get("questionnaire");
+				qp.clear();
+				qp.add(in);
+				in.init();
+				questionnaire = in;
+				return in;
+			}
 			
-			String qloc = InputElement.as(DOM.getElementById("qloc")).getValue();
-			
-//			RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, "/spike/xqs/example2-questionnaire.xml");
-			RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, qloc);
+		});
+		
+		d.addErrback(new Function<Throwable, Throwable>() {
 
-			builder.setCallback(new RequestCallback() {
+			public Throwable apply(Throwable in) {
+				Window.alert("an error has occurred: "+in.getLocalizedMessage());
+				log.trace("errback", in);
+				return in;
+			}
 
-				public void onError(Request request, Throwable t) {
-
-					log.trace("caught throwable: "+t.getLocalizedMessage(), t);
-
-				}
-
-				public void onResponseReceived(Request request, Response response) {
-
-					log.trace("received content: "+response.getText());
-					if (response.getStatusCode() == 200) {
-						Document doc = XMLParser.parse(response.getText());
-						questionnaire = new XQuestionnaire(doc.getDocumentElement());
-						RootPanel qp = RootPanel.get("questionnaire");
-						qp.clear();
-						qp.add(questionnaire);
-						questionnaire.init();
-					}
-					
-				}
-				
-				
-			});
-			
-			builder.send();
-
-		}
-		catch (Throwable t) {
-			
-			log.trace("caught throwable: "+t.getLocalizedMessage(), t);
-			
-		}
+		});
 
 	}
 
@@ -128,41 +116,19 @@ public class SpikeXqsExampleEntryPoint implements EntryPoint {
 
 	private void loadData() {
 
-		try {
-			
-			String dloc = InputElement.as(DOM.getElementById("dloc")).getValue();
-			
-			RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, dloc);
+		String dloc = InputElement.as(DOM.getElementById("dloc")).getValue();
 
-			builder.setCallback(new RequestCallback() {
+		Deferred<Void> d = XQuestionnaire.loadData(questionnaire, dloc);
 
-				public void onError(Request request, Throwable t) {
+		d.addErrback(new Function<Throwable, Throwable>() {
 
-					log.trace("caught throwable: "+t.getLocalizedMessage(), t);
+			public Throwable apply(Throwable in) {
+				Window.alert("an error has occurred: "+in.getLocalizedMessage());
+				log.trace("errback", in);
+				return in;
+			}
 
-				}
-
-				public void onResponseReceived(Request request, Response response) {
-
-					log.trace("received content: "+response.getText());
-					if (response.getStatusCode() == 200) {
-						Document doc = XMLParser.parse(response.getText());
-						questionnaire.init(doc.getDocumentElement());
-					}
-					
-				}
-				
-				
-			});
-			
-			builder.send();
-
-		}
-		catch (Throwable t) {
-			
-			log.trace("caught throwable: "+t.getLocalizedMessage(), t);
-			
-		}
+		});
 
 	}
 

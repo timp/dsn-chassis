@@ -1,25 +1,24 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.atom.vanilla.client.protocol.impl;
+package org.cggh.chassis.generic.twisted.client;
 
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomProtocolException;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
-import org.cggh.chassis.generic.twisted.client.HttpDeferred;
 
 import com.google.gwt.http.client.Request;
+import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.Response;
 
 /**
  * @author aliman
  *
  */
-public class CallbackBase {
+public class HttpCallbackBase implements RequestCallback {
 
 	protected Set<Integer> expectedStatusCodes = new HashSet<Integer>();
 	private Log log = LogFactory.getLog(this.getClass());
@@ -28,7 +27,7 @@ public class CallbackBase {
 	private HttpDeferred genericResult;
 	
 	@SuppressWarnings("unchecked")
-	protected CallbackBase(HttpDeferred genericResult) {
+	protected HttpCallbackBase(HttpDeferred genericResult) {
 		this.genericResult = genericResult;
 	}
 	
@@ -64,7 +63,7 @@ public class CallbackBase {
 		this.genericResult.errback(exception);
 	}
 
-	protected void checkResponsePreconditions(Request request, Response response) throws AtomProtocolException {
+	protected void checkResponsePreconditions(Request request, Response response) throws HttpException {
 
 		// precondition: check status code
 		checkStatusCode(request, response);
@@ -74,22 +73,22 @@ public class CallbackBase {
 		
 	}
 	
-	protected void checkStatusCode(Request request, Response response) throws AtomProtocolException {
+	protected void checkStatusCode(Request request, Response response) throws HttpException {
 
 		// precondition: check status code
 		int statusCode = response.getStatusCode();
 		if ( ! this.expectedStatusCodes.contains(statusCode) ) {
-			throw new AtomProtocolException("bad status code, expected one of "+formatExpectedStatusCodes()+", found "+statusCode, request, response);
+			throw new HttpException("bad status code, expected one of "+formatExpectedStatusCodes()+", found "+statusCode, request, response);
 		}
 		
 	}
 	
-	protected void checkContentType(Request request, Response response) throws AtomProtocolException {
+	protected void checkContentType(Request request, Response response) throws HttpException {
 
 		// precondition: check content type
 		String contentType = response.getHeader("Content-Type");
 		if (!contentType.startsWith("application/atom+xml") && !contentType.startsWith("application/xml")) {
-			throw new AtomProtocolException("bad content type, expected content type starts with \"application/atom+xml\" or \"application/xml\", found \""+contentType+"\"", request, response);
+			throw new HttpException("bad content type, expected content type starts with \"application/atom+xml\" or \"application/xml\", found \""+contentType+"\"", request, response);
 		}
 
 	}

@@ -6,12 +6,25 @@ package org.cggh.chassis.generic.xquestion.client;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
+import org.cggh.chassis.generic.twisted.client.Deferred;
+import org.cggh.chassis.generic.twisted.client.HttpCallbackBase;
+import org.cggh.chassis.generic.twisted.client.HttpCanceller;
+import org.cggh.chassis.generic.twisted.client.HttpDeferred;
 import org.cggh.chassis.generic.xml.client.XML;
 
+import com.google.gwt.http.client.Request;
+import com.google.gwt.http.client.RequestBuilder;
+import com.google.gwt.http.client.RequestCallback;
+import com.google.gwt.http.client.Response;
+import com.google.gwt.http.client.URL;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;
+import com.google.gwt.xml.client.XMLParser;
 
 /**
  * @author aliman
@@ -381,5 +394,130 @@ public class XQuestionnaire extends Composite {
 
 
 
+	public static Deferred<XQuestionnaire> load(String decodedUrl) {
+		final HttpDeferred<XQuestionnaire> d = new HttpDeferred<XQuestionnaire>();
+		
+		RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, URL.encode(decodedUrl));
 
+		builder.setCallback(new LoadQuestionnaireCallback(d));	
+		
+		try {
+			Request r = builder.send();
+			d.setCanceller(new HttpCanceller(r));
+		}
+		catch (Throwable t) {
+			d.errback(t);
+		}
+		
+		return d;
+	}
+	
+	
+	
+	private static class LoadQuestionnaireCallback extends HttpCallbackBase {
+
+		private Log log = LogFactory.getLog(this.getClass());
+		private Deferred<XQuestionnaire> result;
+		
+		private LoadQuestionnaireCallback(HttpDeferred<XQuestionnaire> result) {
+			super(result);
+			this.result = result;
+			this.expectedStatusCodes.add(200);
+		}
+
+		public void onResponseReceived(Request request, Response response) {
+			log.enter("onResponseReceived");
+
+			super.onResponseReceived(request, response);
+
+			try {
+
+				log.trace("check preconditions");
+				checkStatusCode(request, response);
+				
+				log.trace("parse the response");
+				Document doc = XMLParser.parse(response.getText());
+				XQuestionnaire questionnaire = new XQuestionnaire(doc.getDocumentElement());
+				
+				log.trace("pass through result");
+				this.result.callback(questionnaire);
+				
+			} catch (Throwable t) {
+
+				log.trace("pass through error");
+				this.result.errback(t);
+
+			}
+
+			log.leave();
+		}
+
+	}
+
+	
+	
+	
+	public static Deferred<Void> loadData(XQuestionnaire questionnaire, String decodedUrl) {
+		
+		final HttpDeferred<Void> d = new HttpDeferred<Void>();
+		
+		RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, URL.encode(decodedUrl));
+
+		builder.setCallback(new LoadDataCallback(questionnaire, d));	
+		
+		try {
+			Request r = builder.send();
+			d.setCanceller(new HttpCanceller(r));
+		}
+		catch (Throwable t) {
+			d.errback(t);
+		}
+		
+		return d;
+	}
+	
+	
+	
+	
+	private static class LoadDataCallback extends HttpCallbackBase {
+
+		private Log log = LogFactory.getLog(this.getClass());
+		private Deferred<Void> result;
+		private XQuestionnaire questionnaire;
+		
+		private LoadDataCallback(XQuestionnaire questionnaire, HttpDeferred<Void> result) {
+			super(result);
+			this.questionnaire = questionnaire;
+			this.result = result;
+			this.expectedStatusCodes.add(200);
+		}
+
+		public void onResponseReceived(Request request, Response response) {
+			log.enter("onResponseReceived");
+
+			super.onResponseReceived(request, response);
+
+			try {
+
+				log.trace("check preconditions");
+				checkStatusCode(request, response);
+				
+				log.trace("parse the response");
+				Document doc = XMLParser.parse(response.getText());
+				this.questionnaire.init(doc.getDocumentElement());
+				
+				log.trace("pass through result");
+				this.result.callback(null);
+				
+			} catch (Throwable t) {
+
+				log.trace("pass through error");
+				this.result.errback(t);
+
+			}
+
+			log.leave();
+		}
+
+	}
 }

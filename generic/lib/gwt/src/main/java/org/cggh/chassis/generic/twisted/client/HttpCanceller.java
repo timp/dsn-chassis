@@ -1,9 +1,8 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.atom.vanilla.client.protocol.impl;
+package org.cggh.chassis.generic.twisted.client;
 
-import org.cggh.chassis.generic.twisted.client.Function;
 
 import com.google.gwt.http.client.Request;
 

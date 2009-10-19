@@ -11,7 +11,7 @@ import static org.easymock.classextension.EasyMock.verify;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactory;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFormatException;
-import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomProtocolException;
+import org.cggh.chassis.generic.twisted.client.HttpException;
 import org.cggh.chassis.generic.twisted.client.HttpDeferred;
 import org.cggh.chassis.generic.twisted.client.Function;
 
@@ -218,7 +218,7 @@ public class TestPutEntryCallback extends TestCase {
 		assertEquals(0, callback.called);
 		assertEquals(1, errback.called);
 		assertNull(deferred.getSuccessResult());
-		assertTrue(deferred.getErrorResult() instanceof AtomProtocolException);
+		assertTrue(deferred.getErrorResult() instanceof HttpException);
 		
 		// verify all mocks
 		verify(request); verify(response); verify(factory);

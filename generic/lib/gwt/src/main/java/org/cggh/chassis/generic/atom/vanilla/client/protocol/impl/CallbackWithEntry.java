@@ -5,6 +5,7 @@ package org.cggh.chassis.generic.atom.vanilla.client.protocol.impl;
 
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactory;
+import org.cggh.chassis.generic.twisted.client.HttpCallbackBase;
 import org.cggh.chassis.generic.twisted.client.HttpDeferred;
 
 import com.google.gwt.http.client.Request;
@@ -15,7 +16,7 @@ import com.google.gwt.http.client.Response;
  * @author aliman
  *
  */
-public class CallbackWithEntry extends CallbackBase implements RequestCallback {
+public class CallbackWithEntry extends HttpCallbackBase implements RequestCallback {
 
 	private AtomFactory factory;
 	private HttpDeferred<AtomEntry> result;
