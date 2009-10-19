@@ -4,8 +4,8 @@
 package org.cggh.chassis.generic.atom.exist.client.protocol.impl;
 
 import org.cggh.chassis.generic.atom.exist.client.protocol.AtomXQueryService;
-import org.cggh.chassis.generic.atom.vanilla.client.protocol.impl.HttpCanceller;
 import org.cggh.chassis.generic.twisted.client.Deferred;
+import org.cggh.chassis.generic.twisted.client.HttpCanceller;
 import org.cggh.chassis.generic.twisted.client.HttpDeferred;
 
 import com.google.gwt.http.client.Request;
