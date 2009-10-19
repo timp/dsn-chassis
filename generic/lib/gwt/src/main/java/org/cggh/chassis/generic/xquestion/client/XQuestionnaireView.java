@@ -46,7 +46,12 @@ public class XQuestionnaireView extends XQSViewBase {
 		this.canvas = new VerticalPanel();
 		this.canvas.addStyleName(STYLENAME);
 		this.repeatable = owner.isRepeatable();
-		
+
+		String classAttr = definition.getAttribute(XQS.ATTR_CLASS);
+		if (classAttr != null) {
+			this.canvas.addStyleName(classAttr);
+		}
+				
 	}
 	
 	
@@ -386,6 +391,17 @@ public class XQuestionnaireView extends XQSViewBase {
 		newQuestionnaire.init();
 			
 		// finally, refresh
+		refresh();
+
+	}
+
+
+
+
+	public void removeQuestion(XQuestion question) {
+		
+		this.questions.remove(question);
+		this.widgets.remove(question);
 		refresh();
 
 	}

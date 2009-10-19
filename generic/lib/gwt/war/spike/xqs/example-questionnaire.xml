@@ -34,8 +34,8 @@
       <model>
         <element name="familyName"/>
       </model>
-      <view>
-        <secret class="familyName">
+      <view class="familyName">
+        <secret>
           <label>What is your family name?</label>
           <hint>What you type will be hidden.</hint>
         </secret>
@@ -163,7 +163,7 @@
         <element name="address"/>
       </model>
       
-      <view>
+      <view class="address">
       
         <html><h3>Address</h3></html>
         

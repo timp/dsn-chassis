@@ -146,6 +146,16 @@ public class XQuestionnaire extends Composite {
 			}
 			
 		}
+		
+		if (this.model == null) {
+			String message = "bad questionnaire definition, no model was found";
+			throw new XQuestionFormatException(message);
+		}
+		
+		if (this.view == null) {
+			String message = "questionnaire definition, no view was found";
+			throw new XQuestionFormatException(message);
+		}
 
 		initWidget(this.view.getCanvas());
 

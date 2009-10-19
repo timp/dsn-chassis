@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<questionnaire 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xsi:noNamespaceSchemaLocation="xquestion.xsd"
+  defaultPrefix="foo"
+  defaultNamespaceUri="http://example.org/foo">
+
+  <model>
+    <element name="person"/>
+  </model>
+
+  <view class="personQuestionnaire">
+
+    <html><h2>Personal Details Questionnaire</h2></html>
+    
+    <html><h3>Your Name</h3></html>
+
+    <question id="givenName">
+      <model>
+        <element name="givenName"/>
+      </model>
+      <view>
+        <input>
+          <label>What is your given name?</label>
+          <hint>your given name in Western cultures is typically your first name</hint>
+        </input>
+      </view>
+    </question>   
+    
+    <question id="familyName">
+      <model>
+        <element name="familyName"/>
+      </model>
+      <view>
+        <input>
+          <label>What is your family name?</label>
+        </input>
+        <html><em>(your family name in Western cultures is typically your <strong>last</strong> name)</em></html>
+      </view>
+    </question>
+    
+    <question id="otherName" repeatable="yes">
+      <model>
+        <element name="name"/>
+      </model>
+      <view>
+        <input>
+          <label>Do you have another name?</label>
+          <hint>e.g., a middle name</hint>
+        </input>
+      </view>
+    </question>
+    
+    
+  </view>
+
+</questionnaire>
