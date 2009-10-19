@@ -121,7 +121,16 @@ public abstract class XFormControl extends Composite {
 
 		if (definition.getTagName().equals(XQS.ELEMENT_INPUT)) {
 
-			return new XInput(definition, model);
+			if (model.getElementType() == null || model.getElementType().equals(XQS.TYPE_STRING)) {
+				return new XInputString(definition, model);				
+			}
+			else if (model.getElementType().equals(XQS.TYPE_DATE)) {
+				return new XInputDate(definition, model);
+			}
+			else {
+				// TODO
+				return null;
+			}
 			
 		}
 

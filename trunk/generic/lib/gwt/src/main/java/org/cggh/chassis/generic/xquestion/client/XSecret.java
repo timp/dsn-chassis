@@ -10,7 +10,7 @@ import com.google.gwt.xml.client.Element;
  * @author aliman
  *
  */
-public class XSecret extends XInput {
+public class XSecret extends XInputString {
 
 	
 	

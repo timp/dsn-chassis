@@ -103,6 +103,7 @@
       <xs:attribute name="name" type="xs:NCName" use="required"/>
       <xs:attribute name="prefix" type="xs:NCName" use="optional"/>  
       <xs:attribute name="namespaceUri" type="xs:anyURI" use="optional"/>
+      <xs:attribute name="type" type="xs:NCName" use="optional" default="string"/>
     </xs:complexType>
   </xs:element>
   

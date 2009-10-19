@@ -92,6 +92,18 @@
         </select1>
       </view>
     </question>
+    
+    <question id="dob">
+      <model>
+        <element name="dob" type="date"/>
+      </model>
+      <view>
+        <input>
+          <label>Enter your date of birth:</label>
+          <hint>Put the cursor in the text box and a date picker should appear...</hint>
+        </input>
+      </view>
+    </question>
 
     <question id="flavour" repeatable="yes">
       <model>

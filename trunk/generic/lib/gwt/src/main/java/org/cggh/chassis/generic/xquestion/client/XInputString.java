@@ -14,7 +14,7 @@ import com.google.gwt.xml.client.Element;
  * @author aliman
  *
  */
-public class XInput extends XFormControl {
+public class XInputString extends XFormControl {
 	
 	
 	
@@ -25,11 +25,11 @@ public class XInput extends XFormControl {
 	
 	
 	
-	public static final String STYLENAME = "xinput";
+	public static final String STYLENAME = "xinput-string";
 	
 	
 	
-	public XInput(Element definition, XQuestionModel model) {
+	public XInputString(Element definition, XQuestionModel model) {
 		super(definition, model);		
 		construct();
 	}
