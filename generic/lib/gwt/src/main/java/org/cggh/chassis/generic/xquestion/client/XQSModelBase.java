@@ -25,6 +25,7 @@ public abstract class XQSModelBase {
 	protected String elementPrefix;
 	protected String elementNamespaceUri;
 	protected XQuestionnaire parentQuestionnaire;
+	protected String elementType;
 
 	
 	
@@ -59,6 +60,7 @@ public abstract class XQSModelBase {
 				this.elementName = e.getAttribute(XQS.ATTR_NAME);
 				this.elementNamespaceUri = e.getAttribute(XQS.ATTR_NAMESPACEURI);
 				this.elementPrefix = e.getAttribute(XQS.ATTR_PREFIX);
+				this.elementType = e.getAttribute(XQS.ATTR_TYPE);
 			}
 			
 		}
@@ -174,6 +176,12 @@ public abstract class XQSModelBase {
 	 */
 	public String getElementNamespaceUri() {
 		return this.elementNamespaceUri;
+	}
+	
+	
+	
+	public String getElementType() {
+		return this.elementType;
 	}
 
 

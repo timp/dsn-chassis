@@ -40,9 +40,13 @@ public class XQS {
 	public static final String ATTR_APPEARANCE = "appearance";
 
 	public static final String YES = "yes";
+
 	public static final String APPEARANCE_FULL = "full";
 	public static final String APPEARANCE_MINIMAL = "minimal";
 	public static final String APPEARANCE_COMPACT = "compact";
+
+	public static final String TYPE_STRING = "string";
+	public static final String TYPE_DATE = "date";
 
 
 }
