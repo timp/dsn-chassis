@@ -1,7 +1,7 @@
 /**
  * 
  */
-package spike.xqs.example2.client;
+package spike.xqs.example.client;
 
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
@@ -27,7 +27,7 @@ import com.google.gwt.xml.client.XMLParser;
  * @author aliman
  *
  */
-public class SpikeXqsExample2EntryPoint implements EntryPoint {
+public class SpikeXqsExampleEntryPoint implements EntryPoint {
 
 	private Log log = LogFactory.getLog(this.getClass());
 	private XQuestionnaire questionnaire;
