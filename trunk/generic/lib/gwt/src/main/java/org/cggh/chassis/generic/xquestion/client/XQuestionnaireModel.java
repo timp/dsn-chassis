@@ -93,4 +93,12 @@ public class XQuestionnaireModel extends XQSModelBase {
 
 
 
+	public void removeChild(XQuestionnaireModel model) {
+		this.element.removeChild(model.getElement());
+	}
+
+
+
+
+
 }
