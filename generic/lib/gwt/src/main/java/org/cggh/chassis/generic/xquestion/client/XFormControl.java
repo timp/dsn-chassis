@@ -23,8 +23,10 @@ public abstract class XFormControl extends Composite {
 	
 	
 	
+	public static final String STYLENAME_ANSWER = "answer";
 	protected Element definition;
 	protected XQuestionModel model;
+	protected boolean readOnly = false;
 	protected Panel canvas;
 	
 	
@@ -36,9 +38,10 @@ public abstract class XFormControl extends Composite {
 
 	
 	
-	protected XFormControl(Element definition, XQuestionModel model) {
+	protected XFormControl(Element definition, XQuestionModel model, boolean readOnly) {
 		this.definition = definition;
 		this.model = model;
+		this.readOnly = readOnly;
 	}
 	
 	
@@ -117,15 +120,15 @@ public abstract class XFormControl extends Composite {
 	
 	
 	
-	public static XFormControl create(Element definition, XQuestionModel model, XQuestion owner) {
+	public static XFormControl create(Element definition, XQuestionModel model, XQuestion owner, boolean readOnly) {
 
 		if (definition.getTagName().equals(XQS.ELEMENT_INPUT)) {
 
 			if (model.getElementType() == null || model.getElementType().equals(XQS.TYPE_STRING)) {
-				return new XInputString(definition, model);				
+				return new XInputString(definition, model, readOnly);				
 			}
 			else if (model.getElementType().equals(XQS.TYPE_DATE)) {
-				return new XInputDate(definition, model);
+				return new XInputDate(definition, model, readOnly);
 			}
 			else {
 				// TODO
@@ -136,13 +139,13 @@ public abstract class XFormControl extends Composite {
 
 		else if (definition.getTagName().equals(XQS.ELEMENT_SECRET)) {
 
-			return new XSecret(definition, model);
+			return new XSecret(definition, model, readOnly);
 			
 		}
 
 		else if (definition.getTagName().equals(XQS.ELEMENT_TEXTAREA)) {
 
-			return new XTextArea(definition, model);
+			return new XTextArea(definition, model, readOnly);
 
 		}
 
@@ -151,7 +154,7 @@ public abstract class XFormControl extends Composite {
 				( definition.getAttribute(XQS.ATTR_APPEARANCE) == null || definition.getAttribute(XQS.ATTR_APPEARANCE).equals(XQS.APPEARANCE_FULL) ) 
 			) {
 
-			return new XSelect1Full(definition, model, owner);
+			return new XSelect1Full(definition, model, owner, readOnly);
 
 		}
 
@@ -160,7 +163,7 @@ public abstract class XFormControl extends Composite {
 				definition.getAttribute(XQS.ATTR_APPEARANCE).equals(XQS.APPEARANCE_MINIMAL) 
 			) {
 
-			return new XSelect1Minimal(definition, model);			
+			return new XSelect1Minimal(definition, model, readOnly);			
 
 		}
 
@@ -179,7 +182,7 @@ public abstract class XFormControl extends Composite {
 				( definition.getAttribute(XQS.ATTR_APPEARANCE) == null || definition.getAttribute(XQS.ATTR_APPEARANCE).equals(XQS.APPEARANCE_FULL) ) 
 			) {
 
-			return new XSelectFull(definition, model);			
+			return new XSelectFull(definition, model, readOnly);			
 
 		}
 

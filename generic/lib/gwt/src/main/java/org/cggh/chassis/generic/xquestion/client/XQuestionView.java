@@ -60,7 +60,7 @@ public class XQuestionView extends XQSViewBase {
 	
 	
 	
-	public void init() {
+	public void init(boolean readOnly) {
 		log.enter("init");
 	
 		for (Element e : XML.elements(definition.getChildNodes())) {
@@ -73,7 +73,7 @@ public class XQuestionView extends XQSViewBase {
 					e.getTagName().equals(XQS.ELEMENT_SELECT1)					
 			) {
 				
-				initFormControl(e);
+				initFormControl(e, readOnly);
 			
 			}
 			
@@ -99,7 +99,7 @@ public class XQuestionView extends XQSViewBase {
 	/**
 	 * @param data
 	 */
-	public void init(Element data) {
+	public void init(Element data, boolean readOnly) {
 		log.enter("init[Element]");
 
 		for (Element e : XML.elements(definition.getChildNodes())) {
@@ -112,7 +112,7 @@ public class XQuestionView extends XQSViewBase {
 					e.getTagName().equals(XQS.ELEMENT_SELECT1)					
 			) {
 				
-				initFormControl(e);
+				initFormControl(e, readOnly);
 				
 				String value = owner.getModel().getValue();
 				log.trace("setting form control value: "+value);
@@ -184,15 +184,16 @@ public class XQuestionView extends XQSViewBase {
 
 	/**
 	 * @param formControlDefinition
+	 * @param readOnly 
 	 */
-	private void initFormControl(Element formControlDefinition) {
+	private void initFormControl(Element formControlDefinition, boolean readOnly) {
 		log.enter("initInput");
 		
 		if (this.formControl != null) {
 			throw new XQuestionFormatException("bad view definition, found more than one form control");
 		}
 		
-		this.formControl = XFormControl.create(formControlDefinition, this.model, this.owner);
+		this.formControl = XFormControl.create(formControlDefinition, this.model, this.owner, readOnly);
 
 		if (this.formControl != null) {
 			

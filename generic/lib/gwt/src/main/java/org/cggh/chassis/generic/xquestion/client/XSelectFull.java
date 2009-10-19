@@ -4,6 +4,7 @@
 package org.cggh.chassis.generic.xquestion.client;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -15,6 +16,7 @@ import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Grid;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.xml.client.Element;
@@ -23,11 +25,12 @@ import com.google.gwt.xml.client.Element;
  * @author aliman
  *
  */
-public class XSelectFull extends XFormControl {
+public class XSelectFull extends XSelectBase {
 
 	private Log log = LogFactory.getLog(this.getClass());
 	private Grid checkBoxGrid;
 	private List<CheckBox> checkBoxes = new ArrayList<CheckBox>();
+	private Label readOnlyLabel;
 	
 	
 	
@@ -39,9 +42,10 @@ public class XSelectFull extends XFormControl {
 	/**
 	 * @param definition
 	 * @param model
+	 * @param readOnly 
 	 */
-	XSelectFull(Element definition, XQuestionModel model) {
-		super(definition, model);
+	XSelectFull(Element definition, XQuestionModel model, boolean readOnly) {
+		super(definition, model, readOnly);
 		construct();
 	}
 
@@ -62,6 +66,9 @@ public class XSelectFull extends XFormControl {
 		
 		log.trace("look for label");
 		constructLabel();
+		
+		log.trace("map values to items");
+		constructItemMap();
 		
 		log.trace("instantiate radio buttons");
 		constructCheckBoxGrid();
@@ -90,7 +97,12 @@ public class XSelectFull extends XFormControl {
 	
 	
 	private void constructCanvas() {
-		this.canvas = new VerticalPanel();
+		if (readOnly) {
+			this.canvas = new HorizontalPanel();
+		}
+		else {
+			this.canvas = new VerticalPanel();
+		}
 		this.canvas.addStyleName(STYLENAME);
 	}
 	
@@ -99,17 +111,26 @@ public class XSelectFull extends XFormControl {
 	
 	private void constructCheckBoxGrid() {
 
-		List<Element> itemElements = XML.getElementsByTagName(definition, XQS.ELEMENT_ITEM);
-		checkBoxGrid = new Grid(itemElements.size(), 2);
-		this.canvas.add(checkBoxGrid);
-		
-		for (int index=0; index < itemElements.size() ; index++) {
-			
-			Element itemElement = itemElements.get(index);
-			constructCheckBox(itemElement, index);
-			
-		}
+		if (readOnly) {
 
+			readOnlyLabel = new Label();
+			readOnlyLabel.addStyleName(XFormControl.STYLENAME_ANSWER);
+			this.canvas.add(readOnlyLabel);
+
+		}
+		else {
+
+			List<Element> itemElements = XML.getElementsByTagName(definition, XQS.ELEMENT_ITEM);
+			checkBoxGrid = new Grid(itemElements.size(), 2);
+			this.canvas.add(checkBoxGrid);
+			
+			for (int index=0; index < itemElements.size() ; index++) {
+				
+				Element itemElement = itemElements.get(index);
+				constructCheckBox(itemElement, index);
+				
+			}
+		}
 	}
 	
 	
@@ -164,7 +185,7 @@ public class XSelectFull extends XFormControl {
 				b.setValue(true, fireEvents);
 			}
 		}
-
+		
 		log.leave();
 	}
 	
@@ -176,13 +197,28 @@ public class XSelectFull extends XFormControl {
 
 		if (this.model.getValue() != null) {
 			Set<String> values = this.model.getValues();
-			for (CheckBox b : checkBoxes) {
-				String formValue = b.getFormValue();
-				if (values.contains(formValue)) {
-					log.trace("found match, setting value: "+formValue);
-					b.setValue(true, false);
+			
+			if (readOnly) {
+				String content = "";
+				Iterator<String> it = values.iterator();
+				for (int index=0; it.hasNext(); index++) {
+					content += items.get(it.next());
+					if (it.hasNext()) {
+						content += ", ";
+					}
+				}
+				this.readOnlyLabel.setText(content);
+			}
+			else {
+				for (CheckBox b : checkBoxes) {
+					String formValue = b.getFormValue();
+					if (values.contains(formValue)) {
+						log.trace("found match, setting value: "+formValue);
+						b.setValue(true, false);
+					}
 				}
 			}
+			
 		}
 
 		log.leave();

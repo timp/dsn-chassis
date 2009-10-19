@@ -3,7 +3,9 @@
  */
 package org.cggh.chassis.generic.xquestion.client;
 
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PasswordTextBox;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.xml.client.Element;
 
 /**
@@ -18,9 +20,10 @@ public class XSecret extends XInputString {
 	/**
 	 * @param definition
 	 * @param model
+	 * @param readOnly 
 	 */
-	public XSecret(Element definition, XQuestionModel model) {
-		super(definition, model);
+	public XSecret(Element definition, XQuestionModel model, boolean readOnly) {
+		super(definition, model, readOnly);
 	}
 
 	
@@ -37,12 +40,34 @@ public class XSecret extends XInputString {
 	@Override
 	protected void constructTextBox() {
 
-		textBox = new PasswordTextBox();
-		this.canvas.add(textBox);		
+		if (readOnly) {
+			
+			readOnlyLabel = new Label();
+			readOnlyLabel.addStyleName(XFormControl.STYLENAME_ANSWER);
+			this.canvas.add(readOnlyLabel);
+			
+		}
+		else {
+
+			textBox = new PasswordTextBox();
+			this.canvas.add(textBox);		
+
+		}
 
 	}
 
 
+	@Override
+	public void setValue(String value, boolean fireEvents) {
+		
+		if (readOnly) {
+			this.readOnlyLabel.setText("****");
+		}
+		else {
+			this.textBox.setValue(value, fireEvents);
+		}
+		
+	}
 
 
 

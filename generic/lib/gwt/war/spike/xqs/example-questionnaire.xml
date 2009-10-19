@@ -85,6 +85,18 @@
       </view>
     </question>
 
+    <question id="pin">
+      <model>
+        <element name="pin"/>
+      </model>
+      <view>
+        <secret>
+          <label>What is your bank card PIN?</label>
+          <hint>don't worry, what you type will be secret</hint>
+        </secret>
+        <html><em>What you type will be hidden from others.</em></html>
+      </view>
+    </question>
     
     
     <html><h3>Your Contact Details</h3></html>

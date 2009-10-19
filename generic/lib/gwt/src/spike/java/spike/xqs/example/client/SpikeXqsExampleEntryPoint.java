@@ -62,6 +62,16 @@ public class SpikeXqsExampleEntryPoint implements EntryPoint {
 		});
 		RootPanel.get("loaddata").add(loadDataButton);
 
+		Button loadDataReadOnlyButton = new Button();
+		loadDataReadOnlyButton.setText("load (read only)");
+		loadDataReadOnlyButton.addClickHandler(new ClickHandler() {
+			
+			public void onClick(ClickEvent event) {
+				loadDataReadOnly();
+			}
+		});
+		RootPanel.get("loaddata").add(loadDataReadOnlyButton);
+
 		Button getDataButton = new Button();
 		getDataButton.setText("get form data");
 		getDataButton.addClickHandler(new ClickHandler() {
@@ -74,6 +84,8 @@ public class SpikeXqsExampleEntryPoint implements EntryPoint {
 			
 		});
 		RootPanel.get("controls").add(getDataButton);
+		
+		
 
 		loadQuestionnaire();
 		
@@ -119,6 +131,26 @@ public class SpikeXqsExampleEntryPoint implements EntryPoint {
 		String dloc = InputElement.as(DOM.getElementById("dloc")).getValue();
 
 		Deferred<Void> d = XQuestionnaire.loadData(questionnaire, dloc);
+
+		d.addErrback(new Function<Throwable, Throwable>() {
+
+			public Throwable apply(Throwable in) {
+				Window.alert("an error has occurred: "+in.getLocalizedMessage());
+				log.trace("errback", in);
+				return in;
+			}
+
+		});
+
+	}
+
+	
+	
+	private void loadDataReadOnly() {
+
+		String dloc = InputElement.as(DOM.getElementById("dloc")).getValue();
+
+		Deferred<Void> d = XQuestionnaire.loadDataReadOnly(questionnaire, dloc);
 
 		d.addErrback(new Function<Throwable, Throwable>() {
 

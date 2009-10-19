@@ -180,7 +180,13 @@ public class XQuestionnaire extends Composite {
 	
 	
 	public void init() {
-
+		this.init(false);
+	}
+	
+	
+	
+	public void init(boolean readOnly) {
+		
 		this.model.init();
 
 		// TODO move this to model.init() ?
@@ -195,17 +201,26 @@ public class XQuestionnaire extends Composite {
 
 		}
 
-		this.view.init();
-
+		this.view.init(readOnly);
+		
 	}
-	
+
+
+
+
+
 	
 	
 	/**
 	 * @param documentElement
 	 */
 	public void init(Element data) {
-		
+		this.init(data, false);
+	}
+	
+
+	
+	public void init(Element data, boolean readOnly) {
 		this.model.init(data);
 
 		// TODO move this to model.init() ?
@@ -221,9 +236,12 @@ public class XQuestionnaire extends Composite {
 		}
 
 
-		this.view.init(data);
+		this.view.init(data, readOnly);
 	}
-	
+
+
+
+
 
 	
 	
@@ -520,4 +538,73 @@ public class XQuestionnaire extends Composite {
 		}
 
 	}
+
+
+
+
+	public static Deferred<Void> loadDataReadOnly(XQuestionnaire questionnaire,	String decodedUrl) {
+		final HttpDeferred<Void> d = new HttpDeferred<Void>();
+		
+		RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, URL.encode(decodedUrl));
+
+		builder.setCallback(new LoadDataReadOnlyCallback(questionnaire, d));	
+		
+		try {
+			Request r = builder.send();
+			d.setCanceller(new HttpCanceller(r));
+		}
+		catch (Throwable t) {
+			d.errback(t);
+		}
+		
+		return d;
+	}
+	
+	
+	
+	private static class LoadDataReadOnlyCallback extends HttpCallbackBase {
+
+		private Log log = LogFactory.getLog(this.getClass());
+		private Deferred<Void> result;
+		private XQuestionnaire questionnaire;
+		
+		private LoadDataReadOnlyCallback(XQuestionnaire questionnaire, HttpDeferred<Void> result) {
+			super(result);
+			this.questionnaire = questionnaire;
+			this.result = result;
+			this.expectedStatusCodes.add(200);
+		}
+
+		public void onResponseReceived(Request request, Response response) {
+			log.enter("onResponseReceived");
+
+			super.onResponseReceived(request, response);
+
+			try {
+
+				log.trace("check preconditions");
+				checkStatusCode(request, response);
+				
+				log.trace("parse the response");
+				Document doc = XMLParser.parse(response.getText());
+				this.questionnaire.init(doc.getDocumentElement(), true);
+				
+				log.trace("pass through result");
+				this.result.callback(null);
+				
+			} catch (Throwable t) {
+
+				log.trace("pass through error");
+				this.result.errback(t);
+
+			}
+
+			log.leave();
+		}
+
+	}
+
+
+
+
 }

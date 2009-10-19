@@ -53,3 +53,8 @@
 .personQuestionnaire {
 	width: 80%;
 }
+
+.answer {
+	font-weight: bold;
+	margin-left: 5px;
+}
