@@ -73,5 +73,9 @@ public class Configuration {
 	public static native String getDataFileQueryServiceURL() /*-{
 		return $wnd.CHASSIS.dataFileQueryServiceURL;
 	}-*/;
+	
+	public static native String getStudyQuestionnaireURL() /*-{
+		return $wnd.CHASSIS.studyQuestionnaireURL;
+	}-*/;
 
 }
