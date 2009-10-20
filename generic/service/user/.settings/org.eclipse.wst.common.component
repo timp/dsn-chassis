@@ -6,9 +6,6 @@
 <wb-resource deploy-path="/WEB-INF/classes" source-path="/src-main"/>
 <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
 <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
-<dependent-module archiveName="googlecode_dsn-chassis_generic_lib_java.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/googlecode_dsn-chassis_generic_lib_java/googlecode_dsn-chassis_generic_lib_java">
-<dependency-type>uses</dependency-type>
-</dependent-module>
 <property name="context-root" value="chassis-generic-service-user"/>
 <property name="java-output-path"/>
 </wb-module>

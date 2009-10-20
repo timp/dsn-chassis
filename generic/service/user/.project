@@ -3,7 +3,6 @@
 	<name>googlecode_dsn-chassis_generic_service_user</name>
 	<comment></comment>
 	<projects>
-		<project>googlecode_dsn-chassis_generic_lib_java</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
