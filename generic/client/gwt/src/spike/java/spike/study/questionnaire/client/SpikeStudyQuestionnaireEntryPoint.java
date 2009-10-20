@@ -29,6 +29,7 @@ public class SpikeStudyQuestionnaireEntryPoint implements EntryPoint {
 	
 	private Log log = LogFactory.getLog(this.getClass());
 	protected XQuestionnaire questionnaire;
+	boolean editable = true;
 
 	
 	
@@ -39,6 +40,8 @@ public class SpikeStudyQuestionnaireEntryPoint implements EntryPoint {
 
 		initGetDataButton();
 		
+		initReadOnlyButton();
+		
 		loadQuestionnaire();
 		
 	}
@@ -46,6 +49,34 @@ public class SpikeStudyQuestionnaireEntryPoint implements EntryPoint {
 	
 	
 	
+	private void initReadOnlyButton() {
+
+		final Button readOnlyButton = new Button();
+		readOnlyButton.setText("view read-only");
+		readOnlyButton.addClickHandler(new ClickHandler() {
+
+			public void onClick(ClickEvent event) {
+				
+				if (editable) {
+					questionnaire.init(questionnaire.getModel().getElement(), true);
+					editable = false;
+					readOnlyButton.setText("view editable");
+				}
+				else {
+					questionnaire.init(questionnaire.getModel().getElement(), false);
+					editable = true;
+					readOnlyButton.setText("view read-only");
+				}
+			}
+			
+		});
+		RootPanel.get("controls").add(readOnlyButton);
+		
+	}
+
+
+
+
 	private void initGetDataButton() {
 
 		Button getDataButton = new Button();
