@@ -67,7 +67,7 @@
         
         <question id="piName">
           <model>
-            <element name="name" namespaceUri="http://www.w3.org/2005/Atom" prefix="atom"/>
+            <element name="name"/>
           </model>
           <view>
             <input>
@@ -78,7 +78,7 @@
 
         <question id="piEmail" repeatable="yes">
           <model>
-            <element name="email" namespaceUri="http://www.w3.org/2005/Atom" prefix="atom"/>
+            <element name="email"/>
           </model>
           <view>
             <input>
@@ -89,12 +89,24 @@
 
         <question id="piUri" repeatable="yes">
           <model>
-            <element name="uri" namespaceUri="http://www.w3.org/2005/Atom" prefix="atom"/>
+            <element name="uri"/>
           </model>
           <view>
             <input>
               <label>Home page?</label>
               <hint>Enter the URL of a web page that is the person's home page.</hint>
+            </input>
+          </view>
+        </question>
+
+        <question id="piOrg" repeatable="yes">
+          <model>
+            <element name="org"/>
+          </model>
+          <view>
+            <input>
+              <label>Host organisation or institution?</label>
+              <hint>Enter the name of the person's host organisation or institution.</hint>
             </input>
           </view>
         </question>
