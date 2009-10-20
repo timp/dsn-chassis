@@ -57,7 +57,8 @@ public abstract class XSelectBase extends XFormControl {
 			}
 			
 			if (itemValue == null) {
-				throw new XQuestionFormatException("bad select1 definition, found no value for item ["+index+"]");
+				itemValue = "";
+//				throw new XQuestionFormatException("bad select1 definition, found no value for item ["+index+"]");
 			}
 
 			items.put(itemValue, itemLabel);

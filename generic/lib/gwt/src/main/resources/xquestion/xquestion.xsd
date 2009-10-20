@@ -197,6 +197,6 @@
     </xs:complexType>
   </xs:element>
   
-  <xs:element name="value" type="xs:NCName"/>
+  <xs:element name="value" type="xs:string"/>
   
 </xs:schema>
