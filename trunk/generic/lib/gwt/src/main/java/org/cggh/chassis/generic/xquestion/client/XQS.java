@@ -22,6 +22,7 @@ public class XQS {
 	public static final String ELEMENT_SELECT1 = "select1";
 	
 	public static final String ELEMENT_ITEM = "item";
+	public static final String ELEMENT_ITEMS = "items";
 	public static final String ELEMENT_LABEL = "label";
 	public static final String ELEMENT_VALUE = "value";
 	public static final String ELEMENT_HINT = "hint";
@@ -39,6 +40,7 @@ public class XQS {
 	public static final String ATTR_CLASS = "class";
 	public static final String ATTR_APPEARANCE = "appearance";
 	public static final String ATTR_READONLY = "readOnly";
+	public static final String ATTR_SRC = "src";
 
 	public static final String YES = "yes";
 	public static final String NO = "no";

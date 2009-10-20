@@ -8,6 +8,8 @@ import java.util.List;
 
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
+import org.cggh.chassis.generic.twisted.client.Deferred;
+import org.cggh.chassis.generic.twisted.client.Function;
 import org.cggh.chassis.generic.xml.client.XML;
 
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -67,10 +69,16 @@ public class XSelect1Minimal extends XSelectBase {
 		constructLabel();
 
 		log.trace("map values to items");
-		constructItemMap();
-		
-		log.trace("instantiate list box");
-		constructListBox();
+		Deferred<List<Element>> deferredItems = constructItemMap();
+		deferredItems.addCallback(new Function<List<Element>, List<Element>>() {
+
+			public List<Element> apply(List<Element> in) {
+				addItems(in);
+				constructListBox();
+				return in;
+			}
+			
+		});
 		
 		log.trace("look for hint");
 		constructHint();
@@ -114,12 +122,12 @@ public class XSelect1Minimal extends XSelectBase {
 			box = new ListBox();
 			this.canvas.add(box);
 			
-			Iterator<String> it = items.keySet().iterator();
+			Iterator<String> it = values.iterator();
 			
 			for (int index=0; it.hasNext(); index++) {
 				
 				String itemValue = it.next();
-				String itemLabel = items.get(itemValue);
+				String itemLabel = labels.get(itemValue);
 				
 				log.trace("adding list item for item label: "+itemLabel+"; value: "+itemValue);
 				
@@ -151,7 +159,8 @@ public class XSelect1Minimal extends XSelectBase {
 		
 		if (readOnly) {
 			
-			this.readOnlyLabel.setText(items.get(value));
+			String text = (value.equals("")) ? value : labels.get(value);
+			this.readOnlyLabel.setText(text);
 			
 		}
 		else {

@@ -24,7 +24,7 @@ public class HttpCallbackBase implements RequestCallback {
 	private Log log = LogFactory.getLog(this.getClass());
 	
 	@SuppressWarnings("unchecked")
-	private HttpDeferred genericResult;
+	protected HttpDeferred genericResult;
 	
 	@SuppressWarnings("unchecked")
 	protected HttpCallbackBase(HttpDeferred genericResult) {

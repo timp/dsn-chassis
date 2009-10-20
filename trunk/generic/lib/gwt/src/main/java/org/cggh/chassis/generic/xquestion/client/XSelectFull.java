@@ -10,6 +10,8 @@ import java.util.Set;
 
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
+import org.cggh.chassis.generic.twisted.client.Deferred;
+import org.cggh.chassis.generic.twisted.client.Function;
 import org.cggh.chassis.generic.xml.client.XML;
 
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
@@ -69,9 +71,18 @@ public class XSelectFull extends XSelectBase {
 		
 		log.trace("map values to items");
 		constructItemMap();
-		
-		log.trace("instantiate radio buttons");
-		constructCheckBoxGrid();
+
+		log.trace("map values to items");
+		Deferred<List<Element>> deferredItems = constructItemMap();
+		deferredItems.addCallback(new Function<List<Element>, List<Element>>() {
+
+			public List<Element> apply(List<Element> in) {
+				addItems(in);
+				constructCheckBoxGrid();
+				return in;
+			}
+			
+		});
 		
 		log.trace("look for hint");
 		constructHint();
@@ -120,27 +131,29 @@ public class XSelectFull extends XSelectBase {
 		}
 		else {
 
-			List<Element> itemElements = XML.getElementsByTagName(definition, XQS.ELEMENT_ITEM);
-			checkBoxGrid = new Grid(itemElements.size(), 2);
-			this.canvas.add(checkBoxGrid);
+			checkBoxGrid = new Grid(values.size(), 2);
+			Iterator<String> it = values.iterator();
 			
-			for (int index=0; index < itemElements.size() ; index++) {
+			for (int index=0; it.hasNext(); index++) {
 				
-				Element itemElement = itemElements.get(index);
-				constructCheckBox(itemElement, index);
+				String itemValue = it.next();
+				String itemLabel = labels.get(itemValue);
 				
+				log.trace("adding list item for item label: "+itemLabel+"; value: "+itemValue);
+				constructCheckBox(itemValue, itemLabel, index);
+								
 			}
+			
+			this.canvas.add(checkBoxGrid);
+
 		}
 	}
 	
 	
 	
 	
-	private void constructCheckBox(Element itemElement, int index) {
+	private void constructCheckBox(String itemValue, String itemLabel, int index) {
 
-		String itemLabel = XML.getElementSimpleContentByTagName(itemElement, XQS.ELEMENT_LABEL);
-		String itemValue = XML.getElementSimpleContentByTagName(itemElement, XQS.ELEMENT_VALUE);
-		
 		log.trace("adding radio button for item label: "+itemLabel+"; value: "+itemValue);
 
 		if (itemLabel != null) {
@@ -202,7 +215,7 @@ public class XSelectFull extends XSelectBase {
 				String content = "";
 				Iterator<String> it = values.iterator();
 				for (int index=0; it.hasNext(); index++) {
-					content += items.get(it.next());
+					content += labels.get(it.next());
 					if (it.hasNext()) {
 						content += ", ";
 					}
