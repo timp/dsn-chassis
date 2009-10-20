@@ -16,6 +16,8 @@ public class Chassis {
 	public static final String PREFIX = "chassis";
 	public static final String ELEMENT_SUBMISSION = "submission";
 	public static final String REL_SUBMISSION = "chassis.submission";
+	public static final String ELEMENT_STARTYEAR = "startYear";
+	public static final String ELEMENT_ENDYEAR = "endYear";
 
 	public static class Types {
 		
