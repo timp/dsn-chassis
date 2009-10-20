@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <questionnaire 
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-  xsi:noNamespaceSchemaLocation="xquestion.xsd"
+  xsi:noNamespaceSchemaLocation="http://dsn-chassis.googlecode.com/svn/trunk/generic/lib/gwt/src/main/resources/xquestion/xquestion.xsd"
   defaultPrefix="foo"
   defaultNamespaceUri="http://example.org/foo">
 
