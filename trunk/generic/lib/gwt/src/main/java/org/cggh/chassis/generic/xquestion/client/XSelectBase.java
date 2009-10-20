@@ -36,11 +36,16 @@ public abstract class XSelectBase extends XFormControl {
 	
 	
 	
+	private static final String STYLENAME_LOADING = "loading";
+	
 	private Log log = LogFactory.getLog(this.getClass());
 	protected Label readOnlyLabel;
+	protected Label loadingLabel;
 	protected Map<String,String> labels = new HashMap<String,String>();
 	protected List<String> values = new ArrayList<String>();
-	
+	HttpDeferred<List<Element>> deferredItems = new HttpDeferred<List<Element>>();
+
+
 	
 	
 	/**
@@ -58,10 +63,20 @@ public abstract class XSelectBase extends XFormControl {
 	
 
 	
-	protected Deferred<List<Element>> constructItemMap() {
+	@SuppressWarnings("unchecked")
+	protected void constructItemMap() {
 		
-		HttpDeferred<List<Element>> deferredItems = new HttpDeferred<List<Element>>();
-
+		if (loadingLabel == null) {
+			loadingLabel = new Label("loading...");
+			loadingLabel.addStyleName(STYLENAME_LOADING);
+			this.canvas.add(loadingLabel);
+		}
+		else {
+			loadingLabel.setVisible(true);
+		}
+		
+		deferredItems = new HttpDeferred<List<Element>>();
+		
 		List<Element> itemElements = XML.getElementsByTagName(definition, XQS.ELEMENT_ITEM);
 		
 		Element itemsElement = XML.getElementByTagName(definition, XQS.ELEMENT_ITEMS);
@@ -78,7 +93,14 @@ public abstract class XSelectBase extends XFormControl {
 			deferredItems.callback(itemElements); // callback immediately
 		}
 		
-		return deferredItems;
+		deferredItems.addCallback(new Function() {
+
+			public Object apply(Object in) {
+				loadingLabel.setVisible(false);
+				return in;
+			}
+
+		});
 	}
 	
 	
@@ -145,7 +167,7 @@ public abstract class XSelectBase extends XFormControl {
 	
 	
 
-	private static class ConstructItemMapAsyncCallback extends HttpCallbackBase {
+	private class ConstructItemMapAsyncCallback extends HttpCallbackBase {
 
 		private Log log = LogFactory.getLog(this.getClass());
 		private Deferred<List<Element>> result;

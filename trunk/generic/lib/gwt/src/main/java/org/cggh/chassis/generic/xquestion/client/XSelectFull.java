@@ -20,6 +20,7 @@ import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.xml.client.Element;
 
@@ -72,8 +73,6 @@ public class XSelectFull extends XSelectBase {
 		log.trace("map values to items");
 		constructItemMap();
 
-		log.trace("map values to items");
-		Deferred<List<Element>> deferredItems = constructItemMap();
 		deferredItems.addCallback(new Function<List<Element>, List<Element>>() {
 
 			public List<Element> apply(List<Element> in) {
@@ -186,53 +185,75 @@ public class XSelectFull extends XSelectBase {
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.xquestion.client.XFormControl#setValue(java.lang.String, boolean)
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
-	public void setValue(String value, boolean fireEvents) {
+	public void setValue(final String value, final boolean fireEvents) {
 		log.enter("setValue");
 		
-		for (CheckBox b : checkBoxes) {
-			String formValue = b.getFormValue();
-			log.trace("compare form value ["+formValue+"] with value to set ["+value+"]");
-			if (formValue.equals(value)) {
-				log.trace("found match, setting value");
-				b.setValue(true, fireEvents);
+		Function setValue = new Function() {
+
+			public Object apply(Object in) {
+
+				for (CheckBox b : checkBoxes) {
+					String formValue = b.getFormValue();
+					log.trace("compare form value ["+formValue+"] with value to set ["+value+"]");
+					if (formValue.equals(value)) {
+						log.trace("found match, setting value");
+						b.setValue(true, fireEvents);
+					}
+				}
+								
+				return in;
 			}
-		}
+			
+		};
 		
+		deferredItems.addCallback(setValue); // make sure this gets done after any pending async requests
+
 		log.leave();
 	}
 	
 	
 	
 	
+	@SuppressWarnings("unchecked")
 	private void initValues() {
 		log.enter("initValues");
+		
+		Function initValues = new Function() {
 
-		if (this.model.getValue() != null) {
-			Set<String> values = this.model.getValues();
-			
-			if (readOnly) {
-				String content = "";
-				Iterator<String> it = values.iterator();
-				for (int index=0; it.hasNext(); index++) {
-					content += labels.get(it.next());
-					if (it.hasNext()) {
-						content += ", ";
+			public Object apply(Object in) {
+				if (model.getValue() != null) {
+					Set<String> values = model.getValues();
+					
+					if (readOnly) {
+						String content = "";
+						Iterator<String> it = values.iterator();
+						for (int index=0; it.hasNext(); index++) {
+							content += labels.get(it.next());
+							if (it.hasNext()) {
+								content += ", ";
+							}
+						}
+						readOnlyLabel.setText(content);
 					}
-				}
-				this.readOnlyLabel.setText(content);
-			}
-			else {
-				for (CheckBox b : checkBoxes) {
-					String formValue = b.getFormValue();
-					if (values.contains(formValue)) {
-						log.trace("found match, setting value: "+formValue);
-						b.setValue(true, false);
+					else {
+						for (CheckBox b : checkBoxes) {
+							String formValue = b.getFormValue();
+							if (values.contains(formValue)) {
+								log.trace("found match, setting value: "+formValue);
+								b.setValue(true, false);
+							}
+						}
 					}
+					
 				}
+				return in;
 			}
 			
-		}
+		};
+
+		deferredItems.addCallback(initValues); // make sure this gets done after any pending async requests
 
 		log.leave();
 	}
