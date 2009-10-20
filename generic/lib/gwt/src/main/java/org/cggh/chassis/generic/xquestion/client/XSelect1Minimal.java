@@ -67,14 +67,20 @@ public class XSelect1Minimal extends XSelectBase {
 		
 		log.trace("look for label");
 		constructLabel();
-
+		
 		log.trace("map values to items");
-		Deferred<List<Element>> deferredItems = constructItemMap();
+		constructItemMap();
+
 		deferredItems.addCallback(new Function<List<Element>, List<Element>>() {
 
 			public List<Element> apply(List<Element> in) {
 				addItems(in);
-				constructListBox();
+				if (readOnly) {
+					constructReadOnlyLabel();
+				}
+				else {
+					constructListBox();
+				}
 				return in;
 			}
 			
@@ -106,9 +112,7 @@ public class XSelect1Minimal extends XSelectBase {
 	}
 	
 	
-	
-	
-	private void constructListBox() {
+	private void constructReadOnlyLabel() {
 
 		if (readOnly) {
 			
@@ -117,7 +121,12 @@ public class XSelect1Minimal extends XSelectBase {
 			this.canvas.add(readOnlyLabel);
 
 		}
-		else {
+
+	}
+	
+	private void constructListBox() {
+
+		if (!readOnly) {
 
 			box = new ListBox();
 			this.canvas.add(box);
@@ -153,29 +162,41 @@ public class XSelect1Minimal extends XSelectBase {
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.xquestion.client.XFormControl#setValue(java.lang.String, boolean)
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
-	public void setValue(String value, boolean fireEvents) {
+	public void setValue(final String value, final boolean fireEvents) {
 		log.enter("setValue");
 		
-		if (readOnly) {
-			
-			String text = (value.equals("")) ? value : labels.get(value);
-			this.readOnlyLabel.setText(text);
-			
-		}
-		else {
+		Function setValue = new Function() {
 
-			for (int index=0; index<box.getItemCount(); index++) {
-				String itemValue = box.getValue(index);
-				log.trace("comparing item value ["+itemValue+"] with value to set ["+value+"]");
-				if (value.equals(itemValue)) {
-					log.trace("found match, setting selected index: "+index);
-					box.setSelectedIndex(index);
-					return;
+			public Object apply(Object in) {
+
+				if (readOnly) {
+					
+					String text = (value.equals("")) ? value : labels.get(value);
+					readOnlyLabel.setText(text);
+					
 				}
-			}
+				else {
 
-		}
+					for (int index=0; index<box.getItemCount(); index++) {
+						String itemValue = box.getValue(index);
+						log.trace("comparing item value ["+itemValue+"] with value to set ["+value+"]");
+						if (value.equals(itemValue)) {
+							log.trace("found match, setting selected index: "+index);
+							box.setSelectedIndex(index);
+							return in;
+						}
+					}
+
+				}
+				
+				return in;
+			}
+			
+		};
+		
+		deferredItems.addCallback(setValue); // make sure this gets done after any pending async requests
 		
 		log.leave();
 	}

@@ -76,7 +76,8 @@ public class XSelect1Full extends XSelectBase {
 		constructLabel();
 		
 		log.trace("map values to items");
-		Deferred<List<Element>> deferredItems = constructItemMap();
+		constructItemMap();
+		
 		deferredItems.addCallback(new Function<List<Element>, List<Element>>() {
 
 			public List<Element> apply(List<Element> in) {
@@ -209,19 +210,31 @@ public class XSelect1Full extends XSelectBase {
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.xquestion.client.XFormControl#setValue(java.lang.String, boolean)
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
-	public void setValue(String value, boolean fireEvents) {
+	public void setValue(final String value, final boolean fireEvents) {
 		
-		if (readOnly) {
-			this.readOnlyLabel.setText(labels.get(value));
-		}
-		else {
-			for (RadioButton b : buttons) {
-				if (b.getFormValue().equals(value)) {
-					b.setValue(true, fireEvents);
+		Function setValue = new Function() {
+
+			public Object apply(Object in) {
+
+				if (readOnly) {
+					readOnlyLabel.setText(labels.get(value));
 				}
+				else {
+					for (RadioButton b : buttons) {
+						if (b.getFormValue().equals(value)) {
+							b.setValue(true, fireEvents);
+						}
+					}
+				}
+				
+				return in;
 			}
-		}
+			
+		};
+		
+		deferredItems.addCallback(setValue); // make sure this gets done after any pending async requests
 
 	}
 	
