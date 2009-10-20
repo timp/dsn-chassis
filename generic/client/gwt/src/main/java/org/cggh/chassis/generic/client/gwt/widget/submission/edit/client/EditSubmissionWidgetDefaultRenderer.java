@@ -56,6 +56,7 @@ public class EditSubmissionWidgetDefaultRenderer implements SubmissionModelListe
 	String studyLinkToAdd;
 	
 	//Add studyLink UI
+	final DecoratedPopupPanel studyLinkChooserPopup = new DecoratedPopupPanel(false);
 	final Panel studyLinkListBoxCanvas = new SimplePanel();
 	final private ViewStudiesWidget viewStudiesWidgetListBox;
 	final Map<String, CheckBox> modulesUIHash = new HashMap<String, CheckBox>();
@@ -85,6 +86,7 @@ public class EditSubmissionWidgetDefaultRenderer implements SubmissionModelListe
 		
 		//add this as listener
 		viewStudiesWidgetListBox.addViewAllStudiesWidgetListener(this);
+		studiesLinkedWidget.addViewAllStudiesWidgetListener(this);
 		
 		
 		//initialise view
@@ -138,7 +140,6 @@ public class EditSubmissionWidgetDefaultRenderer implements SubmissionModelListe
 		
 		
 		//prepare the studyLink chooser panel
-		final DecoratedPopupPanel studyLinkChooserPopup = new DecoratedPopupPanel(false);
 		VerticalPanel studyLinkChooserVP = new VerticalPanel();
 		studyLinkChooserPopup.add(studyLinkChooserVP);
 		studyLinkChooserVP.add(new Label("Choose a study for the drop down box and then click 'Add study'."));
@@ -319,7 +320,13 @@ public class EditSubmissionWidgetDefaultRenderer implements SubmissionModelListe
 	}
 
 	public void onUserActionSelectStudy(StudyEntry studyEntry) {
-		studyLinkToAdd = studyEntry.getEditLink().getHref();
+		
+		//Distinguish between studies list panel and add study popup panel
+		if (studyLinkChooserPopup.isShowing()) {
+			studyLinkToAdd = studyEntry.getEditLink().getHref();
+		} else {
+			controller.removeStudyLink(studyEntry.getEditLink().getHref());
+		}
 	}
 
 	public void onAuthorsChanged(Set<AtomAuthor> before, Set<AtomAuthor> after, Boolean isValid) {
