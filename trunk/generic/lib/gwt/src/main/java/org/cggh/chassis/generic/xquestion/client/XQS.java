@@ -47,6 +47,7 @@ public class XQS {
 
 	public static final String TYPE_STRING = "string";
 	public static final String TYPE_DATE = "date";
+	public static final Object TYPE_GYEAR = "gYear";
 
 
 }

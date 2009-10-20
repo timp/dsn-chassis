@@ -130,6 +130,9 @@ public abstract class XFormControl extends Composite {
 			else if (model.getElementType().equals(XQS.TYPE_DATE)) {
 				return new XInputDate(definition, model, readOnly);
 			}
+			else if (model.getElementType().equals(XQS.TYPE_GYEAR)) {
+				return new XInputString(definition, model, readOnly); // TODO anything special?
+			}
 			else {
 				// TODO
 				return null;
