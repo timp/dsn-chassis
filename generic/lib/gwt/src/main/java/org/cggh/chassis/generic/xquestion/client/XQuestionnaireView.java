@@ -13,6 +13,7 @@ import org.cggh.chassis.generic.xml.client.XML;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -82,13 +83,13 @@ public class XQuestionnaireView extends XQSViewBase {
 			
 			else {
 				
-				render(e);
+				render(e, readOnly);
 				
 			}
 
 		}
 		
-		if (this.repeatable) {
+		if (this.repeatable && !readOnly) {
 			initRepeatable();
 		}
 		
@@ -124,13 +125,13 @@ public class XQuestionnaireView extends XQSViewBase {
 			
 			else {
 				
-				render(childDefinition);
+				render(childDefinition, readOnly);
 				
 			}
 
 		}
 		
-		if (this.repeatable) {
+		if (this.repeatable && !readOnly) {
 			initRepeatable();
 		}
 		
@@ -149,11 +150,13 @@ public class XQuestionnaireView extends XQSViewBase {
 	 */
 	private void initRepeatable() {
 
-		Panel buttonPanel = new HorizontalPanel();
+		FlowPanel buttonPanel = new FlowPanel();
+		buttonPanel.addStyleName(XQuestionView.STYLENAME_REPEATABLEBUTTONPANEL);
 		this.widgets.add(buttonPanel);
 		
 		Button repeatButton = new Button();
 		repeatButton.setText("+");
+		repeatButton.setTitle("click to add another");
 		buttonPanel.add(repeatButton);
 		repeatButton.addClickHandler(new ClickHandler() {
 			
@@ -168,6 +171,7 @@ public class XQuestionnaireView extends XQSViewBase {
 
 			Button removeButton = new Button();
 			removeButton.setText("-");
+			removeButton.setTitle("click to remove");
 			buttonPanel.add(removeButton);
 			removeButton.addClickHandler(new ClickHandler() {
 				

@@ -38,8 +38,10 @@ public class XQS {
 	public static final String ATTR_REPEATABLE = "repeatable";
 	public static final String ATTR_CLASS = "class";
 	public static final String ATTR_APPEARANCE = "appearance";
+	public static final String ATTR_READONLY = "readOnly";
 
 	public static final String YES = "yes";
+	public static final String NO = "no";
 
 	public static final String APPEARANCE_FULL = "full";
 	public static final String APPEARANCE_MINIMAL = "minimal";
@@ -47,7 +49,8 @@ public class XQS {
 
 	public static final String TYPE_STRING = "string";
 	public static final String TYPE_DATE = "date";
-	public static final Object TYPE_GYEAR = "gYear";
+	public static final String TYPE_GYEAR = "gYear";
+	public static final String READONLY_HIDE = "hide";
 
 
 }
