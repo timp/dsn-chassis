@@ -114,8 +114,16 @@
       <xs:sequence>
         <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##any" processContents="skip"/>
       </xs:sequence>
+      <xs:attribute name="readOnly" use="optional" type="ShowHideType"/>
     </xs:complexType>
   </xs:element>
+
+  <xs:simpleType name="ShowHideType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="(show|hide)" />
+    </xs:restriction>
+  </xs:simpleType>
+
 
   <xs:element name="label" type="xs:string"/>  
   <xs:element name="hint" type="xs:string"/>  

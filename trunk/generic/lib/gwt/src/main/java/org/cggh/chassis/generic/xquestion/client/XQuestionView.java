@@ -3,6 +3,7 @@
  */
 package org.cggh.chassis.generic.xquestion.client;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.cggh.chassis.generic.log.client.Log;
@@ -12,10 +13,12 @@ import org.cggh.chassis.generic.xml.client.XML;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.HasHorizontalAlignment.HorizontalAlignmentConstant;
 import com.google.gwt.xml.client.Element;
 
 /**
@@ -28,11 +31,15 @@ public class XQuestionView extends XQSViewBase {
 	
 	
 	private static final String STYLENAME = "xquestion";
+	static final String STYLENAME_REPEATABLEBUTTONPANEL = "repeatableButtonPanel";
 	private Log log = LogFactory.getLog(this.getClass());
 	private XFormControl formControl;
 	private XQuestionModel model;
 	private boolean repeatable = false;
 	private XQuestion owner;
+	private Element formControlDefinitionElement;
+	private List<Element> viewElements = new ArrayList<Element>();
+	private boolean vertical =true;
 
 	
 	
@@ -47,7 +54,55 @@ public class XQuestionView extends XQSViewBase {
 		this.owner = owner;
 		this.model = owner.getModel();
 		this.repeatable  = owner.isRepeatable();
-		this.canvas = new VerticalPanel();
+		
+		parseDefinition();
+		
+		constructCanvas();
+		
+	}
+	
+	
+	
+	
+	private void parseDefinition() {
+
+		for (Element e : XML.elements(definition.getChildNodes())) {
+
+			if (
+				e.getTagName().equals(XQS.ELEMENT_INPUT) ||
+				e.getTagName().equals(XQS.ELEMENT_SECRET)
+			) {	
+				formControlDefinitionElement = e;
+				vertical = false;
+			}
+			else if (
+				e.getTagName().equals(XQS.ELEMENT_TEXTAREA) ||
+				e.getTagName().equals(XQS.ELEMENT_SELECT) ||
+				e.getTagName().equals(XQS.ELEMENT_SELECT1)
+			) {
+				formControlDefinitionElement = e;
+				vertical = true;
+			}
+			else {
+				viewElements.add(e);
+			}
+			
+		}
+		
+	}
+
+
+
+
+	private void constructCanvas() {
+
+		if (vertical) {
+			this.canvas = new VerticalPanel();			
+		}
+		else {
+			this.canvas = new HorizontalPanel();
+		}
+		
 		this.canvas.addStyleName(STYLENAME);
 		
 		String classAttr = definition.getAttribute(XQS.ATTR_CLASS);
@@ -56,10 +111,10 @@ public class XQuestionView extends XQSViewBase {
 		}
 				
 	}
-	
-	
-	
-	
+
+
+
+
 	public void init(boolean readOnly) {
 		log.enter("init");
 	
@@ -79,13 +134,13 @@ public class XQuestionView extends XQSViewBase {
 			
 			else {
 				
-				render(e);
+				render(e, readOnly);
 				
 			}
 
 		}
 		
-		if (repeatable) {
+		if (repeatable && !readOnly) {
 			initRepeatable();
 		}
 		
@@ -122,13 +177,13 @@ public class XQuestionView extends XQSViewBase {
 			
 			else {
 				
-				render(e);
+				render(e, readOnly);
 				
 			}
 
 		}
 		
-		if (repeatable) {
+		if (repeatable && !readOnly) {
 			initRepeatable();
 		}
 		
@@ -148,11 +203,15 @@ public class XQuestionView extends XQSViewBase {
 	 */
 	private void initRepeatable() {
 
-		Panel buttonPanel = new HorizontalPanel();
+		FlowPanel buttonPanel = new FlowPanel();
+		buttonPanel.addStyleName(STYLENAME_REPEATABLEBUTTONPANEL);
+//		buttonPanel.setHorizontalAlignment(HorizontalPanel.ALIGN_RIGHT);
+//		buttonPanel.setBorderWidth(4);
 		this.widgets.add(buttonPanel);
 		
 		Button repeatButton = new Button();
 		repeatButton.setText("+");
+		repeatButton.setTitle("click to add another");
 		buttonPanel.add(repeatButton);
 		repeatButton.addClickHandler(new ClickHandler() {
 			
@@ -167,6 +226,7 @@ public class XQuestionView extends XQSViewBase {
 
 			Button removeButton = new Button();
 			removeButton.setText("-");
+			removeButton.setTitle("click to remove");
 			buttonPanel.add(removeButton);
 			removeButton.addClickHandler(new ClickHandler() {
 				
@@ -194,7 +254,7 @@ public class XQuestionView extends XQSViewBase {
 		}
 		
 		this.formControl = XFormControl.create(formControlDefinition, this.model, this.owner, readOnly);
-
+		
 		if (this.formControl != null) {
 			
 			log.trace("adding form control to list of widgets");

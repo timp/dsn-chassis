@@ -37,38 +37,48 @@ public abstract class XQSViewBase {
 
 	
 	
-	protected void render(Element e) {
+	protected void render(Element e, boolean readOnly) {
 		log.enter("render");
 
 		Widget w = null;
 		
-		if (e.getTagName().equals(XQS.ELEMENT_LABEL)) {
-			w = new Label(XML.firstChildNodeValueOrNullIfNoChildren(e));
-//			this.canvas.add(w);
-		}
-
-		if (e.getTagName().equals(XQS.ELEMENT_HTML)) {
-			String html = "";
-			NodeList nodes = e.getChildNodes();
-			for (int i=0; i<nodes.getLength(); i++) {
-				Node n = nodes.item(i);
-				if (n instanceof Element) {
-					html += n.toString();
-				}
-				else if (n instanceof Text) {
-					html += n.toString();
-				}
-			}
-			log.trace("rendering html: "+html);
-			w = new HTML(html);
-//			this.canvas.add(w);
-		}
-
-		if (w != null) {
-			this.widgets.add(w);
-		}
+		String readOnlyAttribute = e.getAttribute(XQS.ATTR_READONLY);
 		
-		log.leave();
+		if (readOnly && readOnlyAttribute != null && readOnlyAttribute.equals(XQS.READONLY_HIDE)) {
+			// do not render
+		}
+		else {
+			
+			if (e.getTagName().equals(XQS.ELEMENT_LABEL)) {
+				w = new Label(XML.firstChildNodeValueOrNullIfNoChildren(e));
+//				this.canvas.add(w);
+			}
+
+			if (e.getTagName().equals(XQS.ELEMENT_HTML)) {
+				String html = "";
+				NodeList nodes = e.getChildNodes();
+				for (int i=0; i<nodes.getLength(); i++) {
+					Node n = nodes.item(i);
+					if (n instanceof Element) {
+						html += n.toString();
+					}
+					else if (n instanceof Text) {
+						html += n.toString();
+					}
+				}
+				log.trace("rendering html: "+html);
+				w = new HTML(html);
+//				this.canvas.add(w);
+			}
+
+			if (w != null) {
+				this.widgets.add(w);
+			}
+			
+			log.leave();
+
+		} 
+		
 	}
 	
 	
