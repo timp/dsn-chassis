@@ -63,7 +63,7 @@
       
       <view>
 
-        <html><p>Who was the principal investigator of this study?</p></html>
+        <html readOnly="hide"><p>Who was the principal investigator of this study?</p></html>
         
         <question id="piName">
           <model>
@@ -147,7 +147,7 @@
       
       <view>
 
-        <html><p>Describe the site (location) where study subjects were recruited from...</p></html>
+        <html readOnly="hide"><p>Describe the site (location) where study subjects were recruited from...</p></html>
         
         <question id="siteCountry">
           <model><element name="country"/></model>
@@ -186,11 +186,13 @@
           </view>
         </question>
 
+        <html readOnly="hide"><p style="display: block;"><em>If the study involves more than one site, what identifier (i.e., code) is used for this site in the submitted study data?</em></p></html>
+
         <question id="siteId">
           <model><element name="identifier"/></model>
           <view>
             <input>
-              <label>If the study involves more than one site, what identifier (i.e., code) is used for this site in the submitted study data?</label>
+              <label>Study site code?</label>
             </input>
           </view>
         </question>
@@ -211,7 +213,7 @@
       </model>
     
       <view>
-        <html><p>Is this study described in any published research papers?</p></html>  
+        <html readOnly="hide"><p>Is this study described in any published research papers?</p></html>  
         
         <question id="pubTitle">
           <model><element name="title"/></model>
