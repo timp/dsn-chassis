@@ -22,6 +22,11 @@ import com.google.gwt.user.client.ui.SimplePanel;
  */
 class UserDetailsWidgetDefaultRenderer implements UserDetailsWidgetModelListener {
 
+	public static final String STYLENAME_BASE = "chassis-userDetailsWidget";
+	public static final String STYLENAME_USERNAME = STYLENAME_BASE + "-userName";
+	public static final String STYLENAME_CURRENTROLE = STYLENAME_BASE + "-currentRole";
+	public static final String STYLENAME_ROLESWITCHER = STYLENAME_BASE + "-roleSwitcher";
+
 	private UserDetailsWidgetController controller;
 
 	private Panel canvas;
@@ -41,18 +46,35 @@ class UserDetailsWidgetDefaultRenderer implements UserDetailsWidgetModelListener
 		initCanvas();
 	}
 
+	UserDetailsWidgetDefaultRenderer(UserDetailsWidgetController controller) {
+		this.canvas = new HorizontalPanel();
+		this.controller = controller;
+		
+		initCanvas();
+	}
+
+	public Panel getCanvas() {
+		return this.canvas;
+	}
+
 	
 	private void initCanvas() {
+		
+		this.canvas.addStyleName(STYLENAME_BASE);
+		this.userNameLabel.addStyleName(STYLENAME_USERNAME);
+		this.currentRoleLabel.addStyleName(STYLENAME_CURRENTROLE);
+		this.userRolesListBox.addStyleName(STYLENAME_ROLESWITCHER);
 		
 		// Prepare loading panel
 		Label loadingLabel = new Label("Loading...");
 		loadingPanel.add(loadingLabel);
+		this.canvas.add(loadingPanel);
 		
 		// Prepare userDetailsPanel
-		Label loggedInAsLabel = new Label("Logged in as: ");
+		Label loggedInAsLabel = new Label("logged in as: ");
 		userDetailsPanel.add(loggedInAsLabel);
 		userDetailsPanel.add(userNameLabel);
-		Label roleLabel = new Label("| role: ");
+		Label roleLabel = new Label(" | role: ");
 		userDetailsPanel.add(roleLabel);
 		userDetailsPanel.add(currentRoleLabel);
 		
@@ -60,12 +82,11 @@ class UserDetailsWidgetDefaultRenderer implements UserDetailsWidgetModelListener
 		userRolesListBox.addChangeHandler(new RoleChangeHandler());
 		
 		// Prepare changeUserRolePanel
-		Label changeRoleLabel = new Label("| switch role: ");		
+		Label changeRoleLabel = new Label(" | switch role: ");		
 		changeUserRolePanel.add(changeRoleLabel);
 		changeUserRolePanel.add(userRolesListBox);
 		userDetailsPanel.add(changeUserRolePanel);		
 		
-		canvas.add(loadingPanel);
 	}
 	
 	

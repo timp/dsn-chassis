@@ -1,0 +1,30 @@
+@CHARSET "UTF-8";
+
+body {
+	margin: 2em;
+}
+
+.chassis-userDetailsWidget {
+	position: absolute;
+	top: 1em;
+	right: 1em;
+	left: auto;
+	bottom: auto;
+	padding: .2em;
+}
+
+.chassis-userDetailsWidget-userName {
+	font-weight: bold;
+	margin-left: .2em;
+	margin-right: .2em;
+}
+
+.chassis-userDetailsWidget-currentRole {
+	font-weight: bold;
+	margin-left: .2em;
+	margin-right: .2em;
+}
+
+.chassis-userDetailsWidget-roleSwitcher {
+	margin-left: .2em;
+}
