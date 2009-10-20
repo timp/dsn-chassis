@@ -154,18 +154,7 @@
           <view>
             <select1 appearance="minimal">
               <label>Country?</label>
-              <item>
-                <label>(please select one)</label>
-                <value></value>
-              </item>
-              <item>
-                <label>Kenya</label>
-                <value>KE</value>
-              </item>
-              <item>
-                <label>Uganda</label>
-                <value>UG</value>
-              </item>
+              <items src="/chassis-generic-client-gwt/questionnaire/countries.en.xml"/>
             </select1>
           </view>
         </question>
