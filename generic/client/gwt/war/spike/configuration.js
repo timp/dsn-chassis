@@ -7,6 +7,8 @@ CHASSIS.userDetailsServiceEndpointURL = "/chassis-generic-service-user/gwtrpc/us
 CHASSIS.studyFeedURL = "/chassis-generic-service-exist/atom/edit/studies";
 CHASSIS.studyQueryServiceURL = "/chassis-generic-service-exist/query/studies.xql";
 
+CHASSIS.studyQuestionnaireURL = "/chassis-generic-client-gwt/questionnaire/study-questionnaire.xml";
+
 CHASSIS.submissionFeedURL = "/chassis-generic-service-exist/atom/edit/submissions";
 CHASSIS.submissionQueryServiceURL = "/chassis-generic-service-exist/query/submissions.xql";
 
