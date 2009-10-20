@@ -11,9 +11,22 @@
   
   <view>
   
-    <html><h2>Study Questionnaire</h2></html>
+    <html><h2>Study Questionnaire - General Questions</h2></html>
     
-    <html><h3>Study Start and End</h3></html>
+    <html>
+    
+      <p>Jump to section:</p>
+      <ul>
+        <li><a href="#startend">Study Start and End</a></li>
+        <li><a href="#pi">Principal Investigator(s)</a></li>
+        <li><a href="#pathogens">Pathogen Species</a></li>
+        <li><a href="#sites">Study Site(s)</a></li>
+        <li><a href="#pubs">Publications</a></li>
+      </ul>
+      
+    </html>
+    
+    <html><h3 id="startend">Study Start and End</h3></html>
   
     <question id="startYear">
       <model>
@@ -39,7 +52,7 @@
       </view>
     </question>
     
-    <html><h3>Principal Investigator(s)</h3></html>
+    <html><h3 id="pi">Principal Investigator(s)</h3></html>
     
     <questionnaire 
       repeatable="yes">
@@ -86,14 +99,14 @@
           </view>
         </question>
 
-        <html><p><em>You can add another principal investigator by clicking the "+" button below.</em></p></html>
+        <html readOnly="hide"><p><em>You can add another principal investigator by clicking the "+" button below.</em></p></html>
 
       </view>
       
     </questionnaire>
     
     
-    <html><h3>Pathogen Species</h3></html>
+    <html><h3 id="pathogens">Pathogen Species</h3></html>
     
     <question id="pathogenSpecies">
       <model>
@@ -114,6 +127,142 @@
       </view>
     </question>
 
+    <html><h3 id="sites">Study Site(s)</h3></html>
+    
+    <questionnaire repeatable="yes">
+      
+      <model><element name="site"/></model>
+      
+      <view>
+
+        <html><p>Describe the site (location) where study subjects were recruited from...</p></html>
+        
+        <question id="siteCountry">
+          <model><element name="country"/></model>
+          <view>
+            <select1 appearance="minimal">
+              <label>Country?</label>
+              <item>
+                <label>(please select one)</label>
+                <value></value>
+              </item>
+              <item>
+                <label>Kenya</label>
+                <value>KE</value>
+              </item>
+              <item>
+                <label>Uganda</label>
+                <value>UG</value>
+              </item>
+            </select1>
+          </view>
+        </question>
+        
+        <question id="siteRegion">
+          <model><element name="region"/></model>
+          <view>
+            <input>
+              <label>Region?</label>
+            </input>
+          </view>
+        </question>
+
+        <question id="siteDistrict">
+          <model><element name="district"/></model>
+          <view>
+            <input>
+              <label>District?</label>
+            </input>
+          </view>
+        </question>
+              
+        <question id="siteLocality">
+          <model><element name="locality"/></model>
+          <view>
+            <input>
+              <label>Locality?</label>
+            </input>
+          </view>
+        </question>
+
+        <question id="siteId">
+          <model><element name="identifier"/></model>
+          <view>
+            <input>
+              <label>If the study involves more than one site, what identifier (i.e., code) is used for this site in the submitted study data?</label>
+            </input>
+          </view>
+        </question>
+
+        <html readOnly="hide"><p><em>You can add another site by clicking the "+" button below.</em></p></html>
+
+      </view>
+
+    </questionnaire>
+
+
+    <html><h3 id="pubs">Publications</h3></html>
+    
+    <questionnaire repeatable="yes">
+    
+      <model>
+        <element name="publication"/>
+      </model>
+    
+      <view>
+        <html><p>Is this study described in any published research papers?</p></html>  
+        
+        <question id="pubTitle">
+          <model><element name="title"/></model>
+          <view>
+            <input>
+              <label>Title?</label>
+            </input>
+          </view>
+        </question>
+
+        <question id="pubYear">
+          <model><element name="year"/></model>
+          <view>
+            <input>
+              <label>Year?</label>
+            </input>
+          </view>
+        </question>
+
+        <question id="pubJournal">
+          <model><element name="journal"/></model>
+          <view>
+            <input>
+              <label>Journal?</label>
+            </input>
+          </view>
+        </question>
+
+        <question id="pubLink" repeatable="yes">
+          <model><element name="uri"/></model>
+          <view>
+            <input>
+              <label>Web link?</label>
+            </input>
+          </view>
+        </question>
+
+        <question id="pubDoi">
+          <model><element name="doi"/></model>
+          <view>
+            <input>
+              <label>DOI?</label>
+            </input>
+          </view>
+        </question>
+
+        <html readOnly="hide"><p><em>You can add another publication by clicking the "+" button below.</em></p></html>
+
+      </view>
+      
+    </questionnaire>
+    
   </view>
 
 
