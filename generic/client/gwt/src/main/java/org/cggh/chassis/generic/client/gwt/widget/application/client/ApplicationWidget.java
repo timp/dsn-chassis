@@ -34,7 +34,7 @@ public class ApplicationWidget implements PerspectiveWidgetPubSubAPI, UserDetail
 		model.addListener(renderer);
 				
 		//register as listener to userDetailsWidget
-		renderer.userDetailsWidget.addUserDetailsWidgetListener(this);
+		renderer.userDetailsWidget.addListener(this);
 		
 		//load user details
 		renderer.userDetailsWidget.refreshUserDetails();

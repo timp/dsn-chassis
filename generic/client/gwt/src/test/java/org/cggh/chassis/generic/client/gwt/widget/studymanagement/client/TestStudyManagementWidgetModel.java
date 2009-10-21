@@ -69,7 +69,7 @@ public class TestStudyManagementWidgetModel {
 		
 		// set up expectations
 		listener.onDisplayStatusChanged(StudyManagementWidgetModel.DISPLAYING_NONE, StudyManagementWidgetModel.DISPLAYING_CREATE_STUDY);
-		mockOwner.displayStatusChanged(true);
+		mockOwner.fireOnDisplayStatusChanged(true);
 		replay(listener);
 		PowerMock.replay(mockOwner);
 		

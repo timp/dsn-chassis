@@ -21,11 +21,13 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.DecoratedPopupPanel;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.TextBoxBase;
+import com.google.gwt.user.client.ui.Widget;
 
 /**
  * @author raok
@@ -33,10 +35,16 @@ import com.google.gwt.user.client.ui.TextBoxBase;
  */
 class CreateStudyWidgetDefaultRenderer implements StudyModelListener {
 
+	
+	
+	
 	final private Panel canvas;
 	private StudyControllerCreateAPI controller;
 	private Boolean isFormComplete = false;
 	private Map<String, String> modulesConfig;
+	
+	
+	
 	
 	//Expose view elements for testing purposes.
 	final TextBoxBase titleUI = new TextBox();
@@ -44,6 +52,8 @@ class CreateStudyWidgetDefaultRenderer implements StudyModelListener {
 	final Button createStudyUI = new Button("Create Study", new CreateStudyClickHandler());
 	final Button cancelCreateStudyUI = new Button("Cancel", new CancelStudyClickHandler());
 	final Map<String, CheckBox> modulesUIHash = new HashMap<String, CheckBox>();
+	
+	
 	
 
 	public CreateStudyWidgetDefaultRenderer(Panel canvas, StudyControllerCreateAPI controller) {
@@ -55,6 +65,24 @@ class CreateStudyWidgetDefaultRenderer implements StudyModelListener {
 		initCanvas();
 	}
 
+	
+	
+	
+	/**
+	 * @param controller
+	 */
+	public CreateStudyWidgetDefaultRenderer(StudyControllerCreateAPI controller) {
+		this.canvas = new FlowPanel();
+		this.controller = controller;
+		this.modulesConfig = ConfigurationBean.getModules();
+		
+		//initialise view
+		initCanvas();
+	}
+
+	
+	
+	
 	private void initCanvas() {
 
 		//Prepare form
@@ -99,6 +127,9 @@ class CreateStudyWidgetDefaultRenderer implements StudyModelListener {
 		
 	}
 	
+	
+	
+	
 	class TitleChangeHandler implements ValueChangeHandler<String> {
 
 		public void onValueChange(ValueChangeEvent<String> arg0) {
@@ -106,6 +137,9 @@ class CreateStudyWidgetDefaultRenderer implements StudyModelListener {
 		}
 		
 	}
+	
+	
+	
 	
 	class SummaryChangeHandler implements ValueChangeHandler<String> {
 
@@ -115,6 +149,9 @@ class CreateStudyWidgetDefaultRenderer implements StudyModelListener {
 		
 	}
 
+	
+	
+	
 	class ModulesUIValueChangeHandler implements ValueChangeHandler<Boolean> {
 
 		public void onValueChange(ValueChangeEvent<Boolean> arg0) {
@@ -140,6 +177,8 @@ class CreateStudyWidgetDefaultRenderer implements StudyModelListener {
 	}
 	
 	
+	
+	
 	class CreateStudyClickHandler implements ClickHandler {
 
 		public void onClick(ClickEvent arg0) {
@@ -156,6 +195,9 @@ class CreateStudyWidgetDefaultRenderer implements StudyModelListener {
 		
 	}
 	
+	
+	
+	
 	//TODO handle cancel button (with history?)
 	class CancelStudyClickHandler implements ClickHandler {
 		
@@ -164,29 +206,47 @@ class CreateStudyWidgetDefaultRenderer implements StudyModelListener {
 		}
 	}
 
+	
+	
+	
 	public void setController(StudyControllerCreateAPI controller) {
 		this.controller = controller;
 	}
 
+	
+	
+	
 	public void onStatusChanged(Integer before, Integer after) {
 		// TODO Auto-generated method stub
 	}
+	
+	
+	
 	
 	public void onStudyEntryChanged(Boolean isValid) {
 		this.isFormComplete = isValid;		
 	}
 
+	
+	
+	
 	public void onTitleChanged(String before, String after, Boolean isValid) {
 		
 		//do not fire events, otherwise a probably dangerous feedback loop will be created!
 		titleUI.setValue(after, false);
 	}
 
+	
+	
+	
 	public void onSummaryChanged(String before, String after, Boolean isValid) {
 
 		summaryUI.setValue(after, false);
 	}
 
+	
+	
+	
 	public void onModulesChanged(Set<String> before, Set<String> after, Boolean isValid) {
 		
 		for (String moduleId : modulesConfig.keySet()) {
@@ -197,10 +257,26 @@ class CreateStudyWidgetDefaultRenderer implements StudyModelListener {
 		
 	}
 
+	
+	
+	
 	public void onAuthorsChanged(Set<AtomAuthor> before, Set<AtomAuthor> after,
 			Boolean isValid) {
 		// TODO Auto-generated method stub
 		
 	}
+
+	
+	
+	
+	/**
+	 * @return
+	 */
+	public Panel getCanvas() {
+		return this.canvas;
+	}
+	
+	
+	
 	
 }

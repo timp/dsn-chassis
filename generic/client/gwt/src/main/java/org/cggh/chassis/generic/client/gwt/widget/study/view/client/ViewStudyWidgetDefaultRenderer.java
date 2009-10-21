@@ -14,11 +14,13 @@ import org.cggh.chassis.generic.client.gwt.widget.study.model.client.StudyModelL
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.Widget;
 
 /**
  * @author raok
@@ -39,6 +41,9 @@ public class ViewStudyWidgetDefaultRenderer implements StudyModelListener {
 	final private StudyControllerViewAPI controller;
 	private Map<String, String> modulesConfig;
 
+	
+	
+	
 	public ViewStudyWidgetDefaultRenderer(Panel canvas, StudyControllerViewAPI controller) {
 		this.canvas = canvas;
 		this.controller = controller;
@@ -47,6 +52,23 @@ public class ViewStudyWidgetDefaultRenderer implements StudyModelListener {
 		initCanvas();
 	}
 
+	
+	
+	
+	/**
+	 * @param controller2
+	 */
+	public ViewStudyWidgetDefaultRenderer(StudyControllerViewAPI controller) {
+		this.canvas = new FlowPanel();
+		this.controller = controller;
+		this.modulesConfig = ConfigurationBean.getModules();
+		
+		initCanvas();
+	}
+
+	
+	
+	
 	private void initCanvas() {
 
 		//prepare loading panel
@@ -136,6 +158,13 @@ public class ViewStudyWidgetDefaultRenderer implements StudyModelListener {
 			authorsListPanel.add(new Label(atomAuthor.getEmail()));
 		}
 		
+	}
+
+	/**
+	 * @return
+	 */
+	public Panel getCanvas() {
+		return this.canvas;
 	}
 	
 }

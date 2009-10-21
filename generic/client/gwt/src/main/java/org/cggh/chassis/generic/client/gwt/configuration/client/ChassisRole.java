@@ -36,7 +36,8 @@ public class ChassisRole implements Comparable<ChassisRole> {
 	}
 
 	public int compareTo(ChassisRole another) {
-		return roleId.compareTo(another.roleId);
+//		return roleId.compareTo(another.roleId);
+		return permissionSuffix.compareTo(another.permissionSuffix); // so we get in alphabetical order
 	}
 	
 }

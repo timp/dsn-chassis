@@ -6,6 +6,7 @@ package org.cggh.chassis.generic.client.gwt.widget.application.client.perspectiv
 import java.util.HashSet;
 import java.util.Set;
 
+import org.cggh.chassis.generic.client.gwt.widget.studymanagement.client.StudyManagementWidget;
 import org.cggh.chassis.generic.client.gwt.widget.studymanagement.client.StudyManagementWidgetPubSubAPI;
 import org.cggh.chassis.generic.client.gwt.widget.submissionmanagement.client.SubmissionManagementWidgetPubSubAPI;
 
@@ -37,13 +38,13 @@ public class PerspectiveWidget implements PerspectiveWidgetAPI,
 		model.addListener(renderer);
 		
 		//register this widget as a listener to child widgets.
-		renderer.studyManagmentWidget.addStudyManagementWidgetListener(this);
+		renderer.studyManagmentWidget.addListener(this);
 		renderer.submissionManagmentWidget.addSubmissionManagementWidgetListener(this);
 		
 	}
 	
 	
-	public void onStudyManagmentDisplayStatusChanged(Boolean couldStatusContainUnsavedData) {
+	public void onStudyManagementDisplayStatusChanged(Boolean couldStatusContainUnsavedData) {
 		
 		controller.displayStudyManagementWidget(couldStatusContainUnsavedData);
 		
@@ -58,6 +59,15 @@ public class PerspectiveWidget implements PerspectiveWidgetAPI,
 
 	public void addPerspectiveWidgetListener(PerspectiveWidgetPubSubAPI listener) {
 		listeners.add(listener);
+	}
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.client.gwt.widget.studymanagement.client.StudyManagementWidgetPubSubAPI#onStudyManagementMenuAction(org.cggh.chassis.generic.client.gwt.widget.studymanagement.client.StudyManagementWidget)
+	 */
+	public void onStudyManagementMenuAction(StudyManagementWidget source) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

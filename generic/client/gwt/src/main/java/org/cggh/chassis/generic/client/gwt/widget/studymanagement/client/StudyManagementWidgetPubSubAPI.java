@@ -9,6 +9,8 @@ package org.cggh.chassis.generic.client.gwt.widget.studymanagement.client;
  */
 public interface StudyManagementWidgetPubSubAPI {
 	
-	public void onStudyManagmentDisplayStatusChanged(Boolean couldStatusContainUnsavedData);
+	public void onStudyManagementDisplayStatusChanged(Boolean couldStatusContainUnsavedData);
+	
+	public void onStudyManagementMenuAction(StudyManagementWidget source);
 	
 }

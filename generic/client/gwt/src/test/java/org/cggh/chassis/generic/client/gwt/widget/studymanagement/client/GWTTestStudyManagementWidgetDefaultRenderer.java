@@ -52,10 +52,10 @@ public class GWTTestStudyManagementWidgetDefaultRenderer extends GWTTestCase {
 		
 		//create testController and inject testModel
 		testModel = new StudyManagementWidgetModel(new StudyManagementWidget(new SimplePanel(), ""));
-		testController = new StudyManagementWidgetController(testModel);
+		testController = new StudyManagementWidgetController(null, testModel);
 		
 		//instantiate a test renderer
-		testRenderer = new StudyManagementWidgetDefaultRenderer(new SimplePanel(), new SimplePanel(), testController, "");
+		testRenderer = new StudyManagementWidgetDefaultRenderer(null, new SimplePanel(), new SimplePanel(), testController, "");
 		
 		//add as listener
 		testModel.addListener(testRenderer);

@@ -13,18 +13,25 @@ import org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyC
 import org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerPubSubCreateAPI;
 import org.cggh.chassis.generic.client.gwt.widget.study.model.client.StudyModel;
 
+import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Panel;
 
 /**
  * @author raok
  *
  */
-public class CreateStudyWidget implements CreateStudyWidgetAPI, StudyControllerPubSubCreateAPI {
+public class CreateStudyWidget extends Composite implements CreateStudyWidgetAPI, StudyControllerPubSubCreateAPI {
 
+	
+	
+	
 	final private StudyModel model;
 	final private StudyControllerCreateAPI controller;
 	final private CreateStudyWidgetDefaultRenderer renderer;
 	private Set<CreateStudyWidgetPubSubAPI> listeners = new HashSet<CreateStudyWidgetPubSubAPI>();
+	
+	
+	
 	
 	public CreateStudyWidget(Panel canvas) {
 		
@@ -37,7 +44,12 @@ public class CreateStudyWidget implements CreateStudyWidgetAPI, StudyControllerP
 		// register renderer as listener to model
 		model.addListener(renderer);
 		
+		this.initWidget(this.renderer.getCanvas());
+		
 	}
+	
+	
+	
 	
 	public CreateStudyWidget(CreateStudyWidgetDefaultRenderer customRenderer) {
 		
@@ -52,7 +64,34 @@ public class CreateStudyWidget implements CreateStudyWidgetAPI, StudyControllerP
 
 		// register renderer as listener to model
 		model.addListener(renderer);
+
+		this.initWidget(this.renderer.getCanvas());
+		
 	}
+	
+	
+	
+	
+	/**
+	 * 
+	 */
+	public CreateStudyWidget() {
+
+		model = new StudyModel();
+		
+		controller = new StudyController(model, this);
+				
+		renderer = new CreateStudyWidgetDefaultRenderer(controller);
+		
+		// register renderer as listener to model
+		model.addListener(renderer);
+		
+		this.initWidget(this.renderer.getCanvas());
+		
+	}
+
+	
+	
 	
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.client.gwt.widget.study.create.client.CreateStudyWidgetAPI#addCreateStudyWidgetListener(org.cggh.chassis.generic.client.gwt.widget.study.create.client.CreateStudyWidgetPubSubAPI)

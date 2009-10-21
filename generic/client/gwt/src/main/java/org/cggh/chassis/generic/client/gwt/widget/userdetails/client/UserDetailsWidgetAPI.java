@@ -4,6 +4,6 @@ public interface UserDetailsWidgetAPI {
 
 	public void refreshUserDetails();
 	
-	public void addUserDetailsWidgetListener(UserDetailsPubSubAPI listener);
+	public void addListener(UserDetailsPubSubAPI listener);
 
 }

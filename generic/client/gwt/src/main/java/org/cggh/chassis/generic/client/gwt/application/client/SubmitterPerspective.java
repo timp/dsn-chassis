@@ -1,0 +1,72 @@
+/**
+ * 
+ */
+package org.cggh.chassis.generic.client.gwt.application.client;
+
+import org.cggh.chassis.generic.client.gwt.widget.studymanagement.client.StudyManagementWidget;
+import org.cggh.chassis.generic.client.gwt.widget.studymanagement.client.StudyManagementWidgetPubSubAPI;
+import org.cggh.chassis.generic.client.gwt.widget.submitter.home.client.SubmitterHomeWidget;
+import org.cggh.chassis.generic.log.client.Log;
+import org.cggh.chassis.generic.log.client.LogFactory;
+
+import com.google.gwt.user.client.ui.Composite;
+
+/**
+ * @author aliman
+ *
+ */
+public class SubmitterPerspective extends Perspective implements StudyManagementWidgetPubSubAPI {
+
+	
+	
+	
+	private Log log = LogFactory.getLog(this.getClass());
+	private SubmitterPerspectiveRenderer renderer;
+	private SubmitterPerspectiveController controller;
+	private SubmitterPerspectiveModel model;
+	
+	
+	
+	public SubmitterPerspective() {
+		log.enter("<constructor>");
+		
+		this.model = new SubmitterPerspectiveModel();
+		
+		this.controller = new SubmitterPerspectiveController(this.model);
+		
+		this.renderer = new SubmitterPerspectiveDefaultRenderer(this, this.controller);
+		
+		this.model.addListener(this.renderer);
+		
+		this.controller.show(SubmitterHomeWidget.class.getName());
+		
+		this.initWidget(this.renderer.getCanvas());
+		
+		log.leave();
+	}
+
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.client.gwt.widget.studymanagement.client.StudyManagementWidgetPubSubAPI#onStudyManagementDisplayStatusChanged(java.lang.Boolean)
+	 */
+	public void onStudyManagementDisplayStatusChanged(Boolean couldStatusContainUnsavedData) {
+		// not interested
+	}
+
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.client.gwt.widget.studymanagement.client.StudyManagementWidgetPubSubAPI#onStudyManagementMenuAction()
+	 */
+	public void onStudyManagementMenuAction(StudyManagementWidget source) {
+		log.enter("onStudyManagementMenuAction");
+		
+		this.controller.show(source.getClass().getName());
+		
+		log.leave();
+	}
+	
+	
+	
+}

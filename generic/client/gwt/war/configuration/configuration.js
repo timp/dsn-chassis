@@ -44,6 +44,11 @@ CHASSIS.chassisRoleUser = {"permissionSuffix":"USER",
 										"en":"User"
 									  }
 							 };
+CHASSIS.chassisRoleAdministrator = {"permissionSuffix":"ADMINISTRATOR",
+		  "label":{
+					"en":"Administrator"
+				  }
+		 };
 
 // configure modules
 CHASSIS.modules = [

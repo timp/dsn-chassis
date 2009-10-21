@@ -104,6 +104,13 @@ public class ViewStudiesWidgetListBoxRenderer implements ViewStudiesWidgetModelL
 	public void setController(ViewStudiesWidgetController controller) {
 		this.controller = controller;
 	}
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetModelListener#getCanvas()
+	 */
+	public Panel getCanvas() {
+		return this.canvas;
+	}
 	
 
 }

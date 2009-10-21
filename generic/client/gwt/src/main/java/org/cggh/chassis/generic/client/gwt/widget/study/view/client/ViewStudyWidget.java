@@ -13,18 +13,26 @@ import org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyC
 import org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerViewAPI;
 import org.cggh.chassis.generic.client.gwt.widget.study.model.client.StudyModel;
 
+import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Panel;
+import com.google.gwt.user.client.ui.Widget;
 
 /**
  * @author raok
  *
  */
-public class ViewStudyWidget implements ViewStudyWidgetAPI, StudyControllerPubSubViewAPI {
+public class ViewStudyWidget extends Composite implements ViewStudyWidgetAPI, StudyControllerPubSubViewAPI {
 
+	
+	
+	
 	final private StudyModel model;
 	final private StudyControllerViewAPI controller;
 	final private ViewStudyWidgetDefaultRenderer renderer;
 	private Set<ViewStudyWidgetPubSubAPI> listeners = new HashSet<ViewStudyWidgetPubSubAPI>();
+	
+	
+	
 	
 	public ViewStudyWidget(Panel canvas) {
 		
@@ -37,7 +45,12 @@ public class ViewStudyWidget implements ViewStudyWidgetAPI, StudyControllerPubSu
 		// register renderer as listener to model
 		model.addListener(renderer);
 		
+		this.initWidget(renderer.getCanvas());
+		
 	}
+
+	
+	
 	
 	public ViewStudyWidget(AtomService service, ViewStudyWidgetDefaultRenderer customRenderer) {
 
@@ -49,10 +62,35 @@ public class ViewStudyWidget implements ViewStudyWidgetAPI, StudyControllerPubSu
 		
 		// register renderer as listener to model
 		model.addListener(renderer);
+
+		this.initWidget(renderer.getCanvas());
 		
 	}
 	
+	
+	
 		
+	/**
+	 * 
+	 */
+	public ViewStudyWidget() {
+
+		model = new StudyModel();
+		
+		controller = new StudyController(model, this);
+		
+		renderer = new ViewStudyWidgetDefaultRenderer(controller);
+		
+		// register renderer as listener to model
+		model.addListener(renderer);
+		
+		this.initWidget(renderer.getCanvas());
+		
+	}
+
+	
+	
+	
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.client.gwt.widget.study.view.client.ViewStudyWidgetAPI#loadStudyEntry(org.cggh.chassis.generic.atom.study.client.format.StudyEntry)
 	 */

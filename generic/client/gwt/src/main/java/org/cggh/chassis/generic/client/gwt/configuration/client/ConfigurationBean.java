@@ -4,7 +4,9 @@
 package org.cggh.chassis.generic.client.gwt.configuration.client;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.cggh.chassis.generic.atom.chassis.base.constants.ChassisConstants;
 
@@ -23,6 +25,7 @@ public class ConfigurationBean {
 	static boolean useUnitTestConfiguration = false;
 	static String testUserDetailsServiceEndpointURL;
 	static String testUserChassisRolesPrefix;
+	static ChassisRole testChassisRoleAdministrator;
 	static ChassisRole testChassisRoleCoordinator;
 	static ChassisRole testChassisRoleCurator;
 	static ChassisRole testChassisRoleGatekeeper;
@@ -41,6 +44,31 @@ public class ConfigurationBean {
 	
 	public static String getUserChassisRolesPrefix() {
 		return (useUnitTestConfiguration) ? testUserChassisRolesPrefix : Configuration.getUserChassisRolesPrefix();
+	}
+	
+	public static Set<ChassisRole> getChassisRoles() {
+		Set<ChassisRole> roles = new HashSet<ChassisRole>();
+		roles.add(ConfigurationBean.getChassisRoleAdministrator());
+		roles.add(ConfigurationBean.getChassisRoleCoordinator());
+		roles.add(ConfigurationBean.getChassisRoleCurator());
+		roles.add(ConfigurationBean.getChassisRoleGatekeeper());
+		roles.add(ConfigurationBean.getChassisRoleSubmitter());
+		roles.add(ConfigurationBean.getChassisRoleUser());
+		return roles;
+	}
+	
+	public static ChassisRole getChassisRoleAdministrator() {
+		if (useUnitTestConfiguration) {
+			
+			return testChassisRoleAdministrator;
+			
+		} else {
+			
+			JsChassisRole role = Configuration.getChassisRoleAdministrator();
+			
+			return new ChassisRole(ChassisConstants.administratorRoleId, role.getPermissionSuffix(), role.getLabel(lang));
+		}
+			
 	}
 	
 	public static ChassisRole getChassisRoleCoordinator() {
