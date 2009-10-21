@@ -10,7 +10,9 @@ import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBea
 
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.Panel;
@@ -26,18 +28,20 @@ class UserDetailsWidgetDefaultRenderer implements UserDetailsWidgetModelListener
 	public static final String STYLENAME_USERNAME = STYLENAME_BASE + "-userName";
 	public static final String STYLENAME_CURRENTROLE = STYLENAME_BASE + "-currentRole";
 	public static final String STYLENAME_ROLESWITCHER = STYLENAME_BASE + "-roleSwitcher";
+	public static final String STYLENAME_USERDETAILS = STYLENAME_BASE + "-userDetails";
+	public static final String STYLENAME_SWITCHEROLEPANEL = STYLENAME_BASE + "-switchRolePanel";
 
 	private UserDetailsWidgetController controller;
 
 	private Panel canvas;
 	
 	//Expose view elements for testing purposes.
-	final Panel loadingPanel = new SimplePanel();
-	final Panel userDetailsPanel = new HorizontalPanel();
-	final Label userNameLabel = new Label();
-	final Label currentRoleLabel = new Label();
-	final Panel changeUserRolePanel = new HorizontalPanel();
-	final ListBox userRolesListBox = new ListBox();
+	Panel loadingPanel = new FlowPanel();
+	Panel userDetailsPanel = new FlowPanel();
+	Label userNameLabel = new InlineLabel();
+	Label currentRoleLabel = new InlineLabel();
+	Panel changeUserRolePanel = new FlowPanel();
+	ListBox userRolesListBox = new ListBox();
 
 	UserDetailsWidgetDefaultRenderer(Panel canvas, UserDetailsWidgetController controller) {
 		this.canvas = canvas;
@@ -47,8 +51,8 @@ class UserDetailsWidgetDefaultRenderer implements UserDetailsWidgetModelListener
 	}
 
 	UserDetailsWidgetDefaultRenderer(UserDetailsWidgetController controller) {
-		this.canvas = new HorizontalPanel();
 		this.controller = controller;
+		this.canvas = new FlowPanel();
 		
 		initCanvas();
 	}
@@ -61,9 +65,11 @@ class UserDetailsWidgetDefaultRenderer implements UserDetailsWidgetModelListener
 	private void initCanvas() {
 		
 		this.canvas.addStyleName(STYLENAME_BASE);
+		this.userDetailsPanel.addStyleName(STYLENAME_USERDETAILS);
 		this.userNameLabel.addStyleName(STYLENAME_USERNAME);
 		this.currentRoleLabel.addStyleName(STYLENAME_CURRENTROLE);
 		this.userRolesListBox.addStyleName(STYLENAME_ROLESWITCHER);
+		
 		
 		// Prepare loading panel
 		Label loadingLabel = new Label("Loading...");
@@ -71,10 +77,10 @@ class UserDetailsWidgetDefaultRenderer implements UserDetailsWidgetModelListener
 		this.canvas.add(loadingPanel);
 		
 		// Prepare userDetailsPanel
-		Label loggedInAsLabel = new Label("logged in as: ");
+		Label loggedInAsLabel = new InlineLabel("logged in as: ");
 		userDetailsPanel.add(loggedInAsLabel);
 		userDetailsPanel.add(userNameLabel);
-		Label roleLabel = new Label(" | role: ");
+		Label roleLabel = new InlineLabel(" | role: ");
 		userDetailsPanel.add(roleLabel);
 		userDetailsPanel.add(currentRoleLabel);
 		
@@ -82,8 +88,9 @@ class UserDetailsWidgetDefaultRenderer implements UserDetailsWidgetModelListener
 		userRolesListBox.addChangeHandler(new RoleChangeHandler());
 		
 		// Prepare changeUserRolePanel
-		Label changeRoleLabel = new Label(" | switch role: ");		
+		Label changeRoleLabel = new InlineLabel(" | switch role: ");		
 		changeUserRolePanel.add(changeRoleLabel);
+		changeUserRolePanel.addStyleName(STYLENAME_SWITCHEROLEPANEL);
 		changeUserRolePanel.add(userRolesListBox);
 		userDetailsPanel.add(changeUserRolePanel);		
 		

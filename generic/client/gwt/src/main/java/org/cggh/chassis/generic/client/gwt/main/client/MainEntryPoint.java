@@ -12,6 +12,7 @@ import com.allen_sauer.gwt.log.client.DivLogger;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -45,6 +46,8 @@ public class MainEntryPoint implements EntryPoint {
 		RootPanel.get("chassisClientPane").add(client);
 		
 		constructDeveloperTools();
+		
+		log.info("application loaded");
 
 	}
 
@@ -60,9 +63,13 @@ public class MainEntryPoint implements EntryPoint {
 		final RootPanel loggerPane = RootPanel.get("loggerPane");
 		loggerPane.setVisible(false);
 		
+		Anchor logShowHide = new Anchor();
+		logShowHide.setText("show/hide logger");
+		
 		Button logShowHideButton = new Button("show/hide log");
-		RootPanel.get("developerToolsPane").add(logShowHideButton);
-		logShowHideButton.addClickHandler(new ClickHandler() {
+		
+		RootPanel.get("developerToolsPane").add(logShowHide);
+		logShowHide.addClickHandler(new ClickHandler() {
 			
 			public void onClick(ClickEvent event) {
 				loggerPane.setVisible(!loggerPane.isVisible());

@@ -4,17 +4,46 @@ body {
 }
 
 #holdall {
-	font-size: 12pt;
-	margin: 1em;
+	margin: 0.5em;
 }
 
+
+
+#chassisClientPane {
+	border-top: 2px solid black;
+}
+
+
+.gwt-Anchor {
+	cursor: pointer;
+	text-decoration: underline;
+}
+
+/*
+ * begin styles for chassis client
+ */
+
+.chassis-client {
+	border: 2px solid black;
+}
+
+
+/*
+ * begin styles for user details widget
+ */
+ 
 .chassis-userDetailsWidget {
 	position: absolute;
 	top: 0.5em;
 	right: 0.5em;
 	left: auto;
 	bottom: auto;
-	padding: .2em;
+/*	border: 2px solid red;*/
+	text-align: right;
+}
+
+.chassis-userDetailsWidget-userDetails {
+/*	border: 2px solid green;*/
 }
 
 .chassis-userDetailsWidget-userName {
@@ -33,12 +62,15 @@ body {
 	margin-left: .2em;
 }
 
+.chassis-userDetailsWidget-switchRolePanel {
+	display: inline;
+}
+
 
 
 #developerPane {
 	margin-top: 2em;
 	border-top: 2px solid black;
-	font-size: 80%;
 }
 
 
@@ -49,7 +81,7 @@ body {
 }
 
 .log-scroll-panel {
-	border: 2px solid black;
+	border: 1px solid #ccc;
 	width: 100%;
 }
 
