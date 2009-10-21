@@ -398,8 +398,8 @@ public class TestStudyController {
 		StudyControllerCreateAPI testCreateController = new StudyController(testModel, mockListener);
 						
 		//set up expectations
-		mockListener.onNewStudySaved(testStudyEntry);
-		mockListener.onUserActionCreateStudyEntryCancelled();
+		mockListener.fireOnNewStudySaved(testStudyEntry);
+		mockListener.fireOnUserActionCreateStudyEntryCancelled();
 		replay(mockListener);
 		
 		//set up test
@@ -464,7 +464,7 @@ public class TestStudyController {
 		//set up test
 		testModel.setStudyEntry(testStudyEntry);
 		
-		testViewController.onUserActionEditThisStudy();
+		testViewController.fireOnUserActionEditThisStudy();
 		
 		verify(mockListener);		
 		

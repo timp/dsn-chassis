@@ -27,6 +27,9 @@ import org.cggh.chassis.generic.twisted.client.Function;
  */
 public class StudyController implements StudyControllerEditAPI, StudyControllerCreateAPI, StudyControllerViewAPI {
 
+	
+	
+	
 	final private StudyModel model;
 	private AtomService persistenceService;
 	private StudyFactory studyFactory;
@@ -34,6 +37,9 @@ public class StudyController implements StudyControllerEditAPI, StudyControllerC
 	private Log log = LogFactory.getLog(this.getClass());
 	private String studyFeedURL;
 
+	
+	
+	
 	public StudyController(StudyModel model, AbstractStudyControllerPubSubAPI owner) {
 		this.model = model;
 		this.owner = owner;
@@ -48,17 +54,28 @@ public class StudyController implements StudyControllerEditAPI, StudyControllerC
 	}
 
 	
+	
+	
+	
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerCreateAPI#setUpNewStudy(java.lang.String)
 	 */
 	public void setUpNewStudy(String authorEmail) {
 		log.enter("setUpNewStudy");
 		
-		//Create atom author holding author's email, then add to new submission.
-		AtomAuthor atomAuthor = studyFactory.createAuthor();
-		atomAuthor.setEmail(authorEmail);		
+		log.debug("create new submission");
 		StudyEntry newSubmissionEntry = studyFactory.createStudyEntry(); 
-		newSubmissionEntry.addAuthor(atomAuthor);	
+		
+		if (authorEmail != null) {
+			log.debug("add author by email: "+authorEmail);
+			AtomAuthor atomAuthor = studyFactory.createAuthor();
+			atomAuthor.setEmail(authorEmail);		
+			newSubmissionEntry.addAuthor(atomAuthor);	
+		}
+		else {
+			log.warn("authorEmail is null");
+			// TODO anything else?
+		}
 		
 		model.setStudyEntry(newSubmissionEntry);
 		model.setStatus(StudyModel.STATUS_LOADED);
@@ -66,19 +83,16 @@ public class StudyController implements StudyControllerEditAPI, StudyControllerC
 		log.leave();
 	}
 
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerEditAPI#updateTitle(java.lang.String)
-	 */
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerCreateAPI#updateTitle(java.lang.String)
-	 */
+	
+	
+	
 	public void updateTitle(String title) {
 		model.setTitle(title);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerEditAPI#updateSummary(java.lang.String)
-	 */
+
+	
+	
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerCreateAPI#updateSummary(java.lang.String)
 	 */
@@ -86,18 +100,23 @@ public class StudyController implements StudyControllerEditAPI, StudyControllerC
 		model.setSummary(summary);
 	}
 
+	
+	
+	
 	public void updateModules(Set<String> modules) {
 		model.setModules(modules);
 	}
 
+	
+	
+	
 	public void updateAuthors(Set<AtomAuthor> authors) {
 		model.setAuthors(authors);
 	}
 
+	
+	
 
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerEditAPI#cancelCreateStudy()
-	 */
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerCreateAPI#cancelCreateStudy()
 	 */
@@ -108,7 +127,7 @@ public class StudyController implements StudyControllerEditAPI, StudyControllerC
 		
 		//alert owner
 		if (owner instanceof StudyControllerPubSubCreateAPI) {
-			((StudyControllerPubSubCreateAPI)owner).onUserActionCreateStudyEntryCancelled();
+			((StudyControllerPubSubCreateAPI)owner).fireOnUserActionCreateStudyEntryCancelled();
 		} else if (owner instanceof StudyControllerPubSubEditAPI) {
 			((StudyControllerPubSubEditAPI)owner).onUserActionEditStudyEntryCancelled();
 		}
@@ -116,9 +135,9 @@ public class StudyController implements StudyControllerEditAPI, StudyControllerC
 		log.leave();
 	}
 
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerEditAPI#loadStudyEntry(org.cggh.chassis.generic.atom.study.client.format.StudyEntry)
-	 */
+	
+	
+	
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerViewAPI#loadStudyEntry(org.cggh.chassis.generic.atom.study.client.format.StudyEntry)
 	 */
@@ -133,9 +152,9 @@ public class StudyController implements StudyControllerEditAPI, StudyControllerC
 		log.leave();
 	}
 
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerEditAPI#loadStudyEntryByURL(java.lang.String)
-	 */
+	
+	
+	
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerViewAPI#loadStudyEntryByURL(java.lang.String)
 	 */
@@ -154,6 +173,9 @@ public class StudyController implements StudyControllerEditAPI, StudyControllerC
 		log.leave();
 	}
 
+	
+	
+	
 	//package private for testing purposes
 	class LoadStudyEntryCallback implements Function<StudyEntry,StudyEntry> {
 
@@ -170,6 +192,9 @@ public class StudyController implements StudyControllerEditAPI, StudyControllerC
 		
 	}
 	
+	
+	
+	
 	//package private for testing purposes
 	class LoadStudyEntryErrback implements Function<Throwable,Throwable> {
 
@@ -184,6 +209,9 @@ public class StudyController implements StudyControllerEditAPI, StudyControllerC
 
 		
 	}
+	
+	
+	
 	
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerCreateAPI#saveNewStudyEntry()
@@ -203,6 +231,9 @@ public class StudyController implements StudyControllerEditAPI, StudyControllerC
 		log.leave();
 	}
 
+	
+	
+	
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerEditAPI#updateStudyEntry()
 	 */
@@ -227,6 +258,9 @@ public class StudyController implements StudyControllerEditAPI, StudyControllerC
 		log.leave();
 	}
 
+	
+	
+	
 	//package private for testing purposes
 	class SaveOrUpdateStudyEntryErrback implements Function<Throwable,Throwable> {
 
@@ -248,6 +282,9 @@ public class StudyController implements StudyControllerEditAPI, StudyControllerC
 		
 	}
 	
+	
+	
+	
 	//package private for testing purposes
 	class SaveOrUpdateStudyEntryCallback implements Function<StudyEntry,StudyEntry> {
 
@@ -259,7 +296,7 @@ public class StudyController implements StudyControllerEditAPI, StudyControllerC
 			
 			//alert owner
 			if (owner instanceof StudyControllerPubSubCreateAPI) {
-				((StudyControllerPubSubCreateAPI)owner).onNewStudySaved(studyEntry);
+				((StudyControllerPubSubCreateAPI)owner).fireOnNewStudySaved(studyEntry);
 			} else if (owner instanceof StudyControllerPubSubEditAPI) {
 				((StudyControllerPubSubEditAPI)owner).onStudyUpdated(studyEntry);
 			}
@@ -271,8 +308,11 @@ public class StudyController implements StudyControllerEditAPI, StudyControllerC
 		
 	}
 
-	public void onUserActionEditThisStudy() {
-		log.enter("onUserActionEditThisStudy");
+	
+	
+	
+	public void fireOnUserActionEditThisStudy() {
+		log.enter("fireOnUserActionEditThisStudy");
 		
 		if (owner instanceof StudyControllerPubSubViewAPI) {
 			StudyEntry studyEntryToEdit = model.getStudyEntry();
@@ -282,5 +322,8 @@ public class StudyController implements StudyControllerEditAPI, StudyControllerC
 		
 		log.leave();
 	}
+	
+	
+	
 	
 }

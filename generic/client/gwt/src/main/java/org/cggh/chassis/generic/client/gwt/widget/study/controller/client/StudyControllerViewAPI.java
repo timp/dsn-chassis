@@ -10,6 +10,6 @@ package org.cggh.chassis.generic.client.gwt.widget.study.controller.client;
  */
 public interface StudyControllerViewAPI extends AbstractStudyControllerViewEditAPI {
 	
-	public void onUserActionEditThisStudy();
+	public void fireOnUserActionEditThisStudy();
 
 }

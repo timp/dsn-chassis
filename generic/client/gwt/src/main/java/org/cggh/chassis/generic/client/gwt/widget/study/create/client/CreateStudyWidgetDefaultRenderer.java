@@ -22,6 +22,8 @@ import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.DecoratedPopupPanel;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.TextArea;
@@ -35,6 +37,14 @@ import com.google.gwt.user.client.ui.Widget;
  */
 class CreateStudyWidgetDefaultRenderer implements StudyModelListener {
 
+	
+	
+	
+	public static final String STYLENAME_QUESTION = "chassis-question";
+	public static final String STYLENAME_BASE = "chassis-createStudy";
+	public static final String STYLENAME_TITLEINPUT = STYLENAME_BASE + "-titleInput";
+	public static final String STYLENAME_ACTIONS = STYLENAME_BASE + "-actions";
+	
 	
 	
 	
@@ -84,29 +94,65 @@ class CreateStudyWidgetDefaultRenderer implements StudyModelListener {
 	
 	
 	private void initCanvas() {
-
-		//Prepare form
-		FlexTable createStudyForm = new FlexTable();
-		int rowNumber = -1;
 		
-		Label titleLabel = new Label("Enter title:");
-		createStudyForm.setWidget(++rowNumber, 0, titleLabel);
+		this.canvas.addStyleName(STYLENAME_BASE);
+		
+		this.canvas.add(new HTML("<h2>Create New Study</h2>"));
+		
+		this.canvas.add(new HTML("<p>Use this form to create a new record of a study."));
+				
+		// prepare form
+
+		FlowPanel createStudyForm = new FlowPanel();
+
+		createStudyForm.add(new HTML("<h3>Study Title and Summary</h3>"));
+
+		// title question
+		
+		FlowPanel titleQuestion = new FlowPanel();
+		InlineLabel titleLabel = new InlineLabel("What is the title of the study?");
+		titleQuestion.add(titleLabel);
+		titleQuestion.add(titleUI);
+		titleQuestion.addStyleName(STYLENAME_QUESTION);
+		
+		titleUI.addStyleName(STYLENAME_TITLEINPUT);
 		titleUI.addValueChangeHandler(new TitleChangeHandler());
-		createStudyForm.setWidget(++rowNumber, 0, titleUI);
-		
-		Label summaryLabel = new Label("Enter summary:");
-		createStudyForm.setWidget(++rowNumber, 0, summaryLabel);
-		summaryUI.addValueChangeHandler(new SummaryChangeHandler());
-		createStudyForm.setWidget(++rowNumber, 0, summaryUI);
 
-		Label modulesLabel = new Label("Select modules (at least one must be selected):");
-		createStudyForm.setWidget(++rowNumber, 0, modulesLabel);
+		createStudyForm.add(titleQuestion);
 		
+		// summary question
+		
+		FlowPanel summaryQuestion = new FlowPanel();
+		
+		Label summaryLabel = new Label("Please provide a textual summary of the study...");
+		summaryQuestion.add(summaryLabel);
+		summaryQuestion.add(summaryUI);
+		summaryQuestion.addStyleName(STYLENAME_QUESTION);
+		
+		summaryUI.addValueChangeHandler(new SummaryChangeHandler());
+
+		createStudyForm.add(summaryQuestion);
+		
+		// modules question
+		
+		createStudyForm.add(new HTML("<h3>Modules</h3>"));
+		
+		FlowPanel modulesQuestion = new FlowPanel();
+		modulesQuestion.addStyleName(STYLENAME_QUESTION);
+		createStudyForm.add(modulesQuestion);
+		
+		Label modulesLabel = new Label("Please select the modules that this study is relevant to... (at least one must be selected)");
+		modulesQuestion.add(modulesLabel);
+
+		FlexTable boxTable = new FlexTable();
+		modulesQuestion.add(boxTable);
+		int rowNumber = -1;
+
 		//Create as many modules checkboxes as required
 		for (String moduleId : modulesConfig.keySet()) {
 			
 			String UILabel = modulesConfig.get(moduleId);
-			CheckBox moduleUICheckBox = new CheckBox(UILabel);
+			CheckBox moduleUICheckBox = new CheckBox();
 			
 			//add valueChangeHandler
 			moduleUICheckBox.addValueChangeHandler(new ModulesUIValueChangeHandler());
@@ -115,13 +161,18 @@ class CreateStudyWidgetDefaultRenderer implements StudyModelListener {
 			modulesUIHash.put(moduleId, moduleUICheckBox);
 			
 			//add to GUI
-			createStudyForm.setWidget(++rowNumber, 0, moduleUICheckBox);
+			int rn = ++rowNumber;
+			boxTable.setWidget(rn, 0, new InlineLabel(UILabel));
+			boxTable.setWidget(rn, 1, moduleUICheckBox);
 			
 		}
 		
-		
-		createStudyForm.setWidget(++rowNumber, 0, createStudyUI);
-		createStudyForm.setWidget(rowNumber, 1, cancelCreateStudyUI);
+		FlowPanel buttonsPanel = new FlowPanel();
+		buttonsPanel.addStyleName(STYLENAME_ACTIONS);
+		buttonsPanel.add(createStudyUI);
+		buttonsPanel.add(cancelCreateStudyUI);
+
+		createStudyForm.add(buttonsPanel);
 		
 		canvas.add(createStudyForm);	
 		

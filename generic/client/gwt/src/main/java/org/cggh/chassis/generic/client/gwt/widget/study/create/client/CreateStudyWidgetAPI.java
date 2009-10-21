@@ -4,6 +4,6 @@ public interface CreateStudyWidgetAPI {
 
 	public void setUpNewStudy(String authorEmail);
 
-	public void addCreateStudyWidgetListener(CreateStudyWidgetPubSubAPI listener);
+	public void addListener(CreateStudyWidgetPubSubAPI listener);
 
 }

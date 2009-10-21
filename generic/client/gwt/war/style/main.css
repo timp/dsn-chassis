@@ -3,6 +3,10 @@
 body {
 }
 
+input, textarea {
+	border: 1px solid #aaa;
+}
+
 #holdall {
 	margin: 0.5em;
 }
@@ -17,6 +21,23 @@ body {
 	cursor: pointer;
 	text-decoration: underline;
 }
+
+
+
+.chassis-question {
+	border-top: 1px solid #aaa;
+	border-bottom: 1px solid #aaa;
+	padding: 0.3em;
+	margin: 0.3em 0 0.3em 0;
+	background-color: #eee;
+}
+
+.chassis-question input {
+	margin-left: 0.3em;
+}
+
+
+
 
 /*
  * begin styles for chassis client
@@ -71,6 +92,23 @@ body {
 	border-top: 2px solid black;
 
 }
+
+
+
+.chassis-createStudy-titleInput {
+	width: 30em;
+}
+
+.chassis-createStudy-actions {
+	margin-top: 1em;
+}
+
+.chassis-createStudy textarea {
+	width: 60em;
+	height: 15em;
+}
+
+
 
 #developerPane {
 	margin-top: 2em;

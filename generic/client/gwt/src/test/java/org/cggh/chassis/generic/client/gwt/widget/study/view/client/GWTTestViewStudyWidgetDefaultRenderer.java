@@ -180,7 +180,7 @@ public class GWTTestViewStudyWidgetDefaultRenderer extends GWTTestCase {
 		
 		private boolean studyEntryToEditFired = false;
 
-		public void onUserActionEditThisStudy() {
+		public void fireOnUserActionEditThisStudy() {
 			this.studyEntryToEditFired  = true;
 		}
 

@@ -147,8 +147,15 @@ public class StudyManagementWidgetDefaultRenderer implements StudyManagementWidg
 
 		Command newStudyCommand = new Command() { 
 			public void execute() { 
+				log.enter("[anon Command] :: execute");
+				
+				log.debug("call displayCreateStudyWidget on controller");
 				controller.displayCreateStudyWidget();
+				
+				log.debug("fire menu action on owner");
 				owner.fireOnStudyManagementMenuAction();
+				
+				log.leave();
 			} 
 		};
 
@@ -159,8 +166,15 @@ public class StudyManagementWidgetDefaultRenderer implements StudyManagementWidg
 		
 		Command viewStudiesCommand = new Command() { 
 			public void execute() { 
+				log.enter("[anon Command] :: execute");
+				
+				log.debug("call displayViewStudiesWidget on controller");
 				controller.displayViewStudiesWidget(); 
+				
+				log.debug("fire menu action on owner");
 				owner.fireOnStudyManagementMenuAction();
+				
+				log.leave();
 			} 
 		};
 

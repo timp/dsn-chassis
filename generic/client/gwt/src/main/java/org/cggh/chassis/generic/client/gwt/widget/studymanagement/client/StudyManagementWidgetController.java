@@ -44,6 +44,7 @@ public class StudyManagementWidgetController {
 //		model.setDisplayStatus(StudyManagementWidgetModel.DISPLAYING_CREATE_STUDY, userConfirmed);
 		
 		// disable confirmation for now, because of interaction with other widgets
+		log.debug("set display status on model");
 		model.setDisplayStatus(StudyManagementWidgetModel.DISPLAYING_CREATE_STUDY, true);
 		
 		log.leave();

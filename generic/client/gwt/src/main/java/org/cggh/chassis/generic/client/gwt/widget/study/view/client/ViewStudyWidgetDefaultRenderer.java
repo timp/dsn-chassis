@@ -125,7 +125,7 @@ public class ViewStudyWidgetDefaultRenderer implements StudyModelListener {
 	class EditStudyClickHandler implements ClickHandler {
 		
 		public void onClick(ClickEvent arg0) {
-			controller.onUserActionEditThisStudy();
+			controller.fireOnUserActionEditThisStudy();
 		}
 	}
 
