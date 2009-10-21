@@ -149,27 +149,36 @@ class UserDetailsWidgetDefaultRenderer implements UserDetailsWidgetModelListener
 		public void onChange(ChangeEvent arg0) {
 			
 			//listBox value
-			String selectedRoleId = userRolesListBox.getValue(userRolesListBox.getSelectedIndex());
+			int selectedRoleId = Integer.parseInt(userRolesListBox.getValue(userRolesListBox.getSelectedIndex()));
 			
-			//get chassisRoles
-			ChassisRole coordinatorRole = ConfigurationBean.getChassisRoleCoordinator();
-			ChassisRole curatorRole = ConfigurationBean.getChassisRoleCurator();
-			ChassisRole gatekeeperRole = ConfigurationBean.getChassisRoleGatekeeper();
-			ChassisRole submitterRole = ConfigurationBean.getChassisRoleSubmitter();
-			ChassisRole userRole = ConfigurationBean.getChassisRoleUser();
-			
-			
-			if (selectedRoleId.equalsIgnoreCase(coordinatorRole.roleId.toString())) {
-				controller.updateCurrentRole(coordinatorRole);
-			} else if (selectedRoleId.equalsIgnoreCase(curatorRole.roleId.toString())) {
-				controller.updateCurrentRole(curatorRole);
-			} else if (selectedRoleId.equalsIgnoreCase(gatekeeperRole.roleId.toString())) {
-				controller.updateCurrentRole(gatekeeperRole);
-			} else if (selectedRoleId.equalsIgnoreCase(submitterRole.roleId.toString())) {
-				controller.updateCurrentRole(submitterRole);
-			} else if (selectedRoleId.equalsIgnoreCase(userRole.roleId.toString())) {
-				controller.updateCurrentRole(userRole);
+			for (ChassisRole role : ConfigurationBean.getChassisRoles()) {
+				if (selectedRoleId == role.roleId) {
+					controller.updateCurrentRole(role);
+				}
 			}
+			
+//			//get chassisRoles
+//			ChassisRole administratorRole = ConfigurationBean.getChassisRoleAdministrator();
+//			ChassisRole coordinatorRole = ConfigurationBean.getChassisRoleCoordinator();
+//			ChassisRole curatorRole = ConfigurationBean.getChassisRoleCurator();
+//			ChassisRole gatekeeperRole = ConfigurationBean.getChassisRoleGatekeeper();
+//			ChassisRole submitterRole = ConfigurationBean.getChassisRoleSubmitter();
+//			ChassisRole userRole = ConfigurationBean.getChassisRoleUser();
+//			
+//			
+//			// TODO why are we serialising integers to strings and then comparing?
+//			
+//			if (selectedRoleId.equalsIgnoreCase(coordinatorRole.roleId.toString())) {
+//				controller.updateCurrentRole(coordinatorRole);
+//			} else if (selectedRoleId.equalsIgnoreCase(curatorRole.roleId.toString())) {
+//				controller.updateCurrentRole(curatorRole);
+//			} else if (selectedRoleId.equalsIgnoreCase(gatekeeperRole.roleId.toString())) {
+//				controller.updateCurrentRole(gatekeeperRole);
+//			} else if (selectedRoleId.equalsIgnoreCase(submitterRole.roleId.toString())) {
+//				controller.updateCurrentRole(submitterRole);
+//			} else if (selectedRoleId.equalsIgnoreCase(userRole.roleId.toString())) {
+//				controller.updateCurrentRole(userRole);
+//			}
 		}
 	}
 	

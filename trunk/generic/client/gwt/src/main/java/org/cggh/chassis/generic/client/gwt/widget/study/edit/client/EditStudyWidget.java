@@ -13,13 +13,14 @@ import org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyC
 import org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerPubSubEditAPI;
 import org.cggh.chassis.generic.client.gwt.widget.study.model.client.StudyModel;
 
+import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Panel;
 
 /**
  * @author raok
  *
  */
-public class EditStudyWidget implements EditStudyWidgetAPI, StudyControllerPubSubEditAPI {
+public class EditStudyWidget extends Composite implements EditStudyWidgetAPI, StudyControllerPubSubEditAPI {
 
 	private StudyModel model;
 	private StudyControllerEditAPI controller;
@@ -36,7 +37,10 @@ public class EditStudyWidget implements EditStudyWidgetAPI, StudyControllerPubSu
 		renderer = new EditStudyWidgetDefaultRenderer(canvas, controller);
 		
 		// register renderer as listener to model
-		model.addListener(renderer);			
+		model.addListener(renderer);	
+		
+		this.initWidget(this.renderer.getCanvas());
+		
 	}
 	
 	public EditStudyWidget(AtomService service, EditStudyWidgetDefaultRenderer customRenderer) {
@@ -53,8 +57,34 @@ public class EditStudyWidget implements EditStudyWidgetAPI, StudyControllerPubSu
 		// register renderer as listener to model
 		model.addListener(renderer);
 		
+		this.initWidget(this.renderer.getCanvas());
+		
 	}
 
+	
+	
+	
+	/**
+	 * 
+	 */
+	public EditStudyWidget() {
+		
+		model = new StudyModel();
+		
+		controller = new StudyController(model, this);
+		
+		renderer = new EditStudyWidgetDefaultRenderer(controller);
+		
+		// register renderer as listener to model
+		model.addListener(renderer);	
+		
+		this.initWidget(this.renderer.getCanvas());
+		
+	}
+
+	
+	
+	
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.client.gwt.widget.study.edit.client.EditStudyWidgetAPI#addEditStudyWidgetListener(org.cggh.chassis.generic.client.gwt.widget.study.edit.client.EditStudyWidgetPubSubAPI)
 	 */

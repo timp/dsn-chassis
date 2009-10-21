@@ -21,11 +21,13 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.DecoratedPopupPanel;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.TextBoxBase;
+import com.google.gwt.user.client.ui.Widget;
 
 /**
  * @author raok
@@ -33,6 +35,8 @@ import com.google.gwt.user.client.ui.TextBoxBase;
  */
 public class EditStudyWidgetDefaultRenderer implements StudyModelListener {
 
+	
+	
 
 	//Expose view elements for testing purposes.
 	final TextBoxBase titleUI = new TextBox();
@@ -45,11 +49,17 @@ public class EditStudyWidgetDefaultRenderer implements StudyModelListener {
 	final Button updateStudyUI = new Button("Update Study", new UpdateStudyClickHandler());
 	final Map<String, CheckBox> modulesUIHash = new HashMap<String, CheckBox>();
 	
+	
+	
+	
 	final private Panel canvas;
 	private StudyControllerEditAPI controller;
 	private Boolean isFormComplete = false;
 	private Map<String, String> modulesConfig;
 
+	
+	
+	
 	public EditStudyWidgetDefaultRenderer(Panel canvas, StudyControllerEditAPI controller) {
 		this.canvas = canvas;
 		this.controller = controller;
@@ -58,6 +68,24 @@ public class EditStudyWidgetDefaultRenderer implements StudyModelListener {
 		initCanvas();
 	}
 
+	
+	
+	
+	/**
+	 * 
+	 * @param controller
+	 */
+	public EditStudyWidgetDefaultRenderer(StudyControllerEditAPI controller) {
+		this.canvas = new FlowPanel();
+		this.controller = controller;
+		this.modulesConfig = ConfigurationBean.getModules();
+		
+		initCanvas();
+	}
+
+	
+	
+	
 	private void initCanvas() {
 
 		//Prepare form
@@ -203,6 +231,13 @@ public class EditStudyWidgetDefaultRenderer implements StudyModelListener {
 			Boolean isValid) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	/**
+	 * @return
+	 */
+	public Widget getCanvas() {
+		return this.canvas;
 	}
 
 }

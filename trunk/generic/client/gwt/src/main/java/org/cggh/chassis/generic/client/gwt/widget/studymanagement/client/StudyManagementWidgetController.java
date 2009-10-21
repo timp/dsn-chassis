@@ -11,28 +11,48 @@ import org.cggh.chassis.generic.log.client.LogFactory;
  *
  */
 public class StudyManagementWidgetController {
+	
+	
+	
+	
 	private Log log = LogFactory.getLog(this.getClass());
-
 	final private StudyManagementWidgetModel model;
+	private StudyManagementWidget owner;
 
-	public StudyManagementWidgetController(StudyManagementWidgetModel model) {
+	
+	
+	
+	public StudyManagementWidgetController(StudyManagementWidget owner, StudyManagementWidgetModel model) {
+		this.owner = owner;
 		this.model = model;
 	}
 
+	
+	
+	
 	public void displayCreateStudyWidget() {
 		displayCreateStudyWidget(false);
 	}
 
+	
+	
+	
 	public void displayCreateStudyWidget(Boolean userConfirmed) {
 		log.enter("displayCreateStudyWidget");
 		log.debug("userConfirmed: " + userConfirmed);
 			
-		model.setDisplayStatus(StudyManagementWidgetModel.DISPLAYING_CREATE_STUDY, userConfirmed);
+//		model.setDisplayStatus(StudyManagementWidgetModel.DISPLAYING_CREATE_STUDY, userConfirmed);
+		
+		// disable confirmation for now, because of interaction with other widgets
+		model.setDisplayStatus(StudyManagementWidgetModel.DISPLAYING_CREATE_STUDY, true);
 		
 		log.leave();
 		
 	}
 
+	
+	
+	
 	public void displayEditStudyWidget() {
 		log.enter("displayEditStudyWidget");
 
@@ -41,6 +61,9 @@ public class StudyManagementWidgetController {
 		log.leave();
 	}
 
+	
+	
+	
 	public void displayViewStudyWidget() {
 		log.enter("displayViewStudyWidget");
 
@@ -49,19 +72,31 @@ public class StudyManagementWidgetController {
 		log.leave();
 	}
 
-	public void displayViewAllStudiesWidget() {
-		displayViewAllStudiesWidget(false);
+	
+	
+	
+	public void displayViewStudiesWidget() {
+		displayViewStudiesWidget(false);
 	}
 
-	public void displayViewAllStudiesWidget(Boolean userConfirmed) {
-		log.enter("displayViewAllStudiesWidget");
+	
+	
+	
+	public void displayViewStudiesWidget(Boolean userConfirmed) {
+		log.enter("displayViewStudiesWidget");
 		log.debug("userConfirmed: " + userConfirmed);
 		
-		model.setDisplayStatus(StudyManagementWidgetModel.DISPLAYING_VIEW_ALL_STUDIES, userConfirmed);
-					
+//		model.setDisplayStatus(StudyManagementWidgetModel.DISPLAYING_VIEW_ALL_STUDIES, userConfirmed);
+
+		// disable confirmation for now, because of interaction with other widgets
+		model.setDisplayStatus(StudyManagementWidgetModel.DISPLAYING_VIEW_ALL_STUDIES, true);
+
 		log.leave();
 	}
 
+	
+	
+	
 	public void reset() {
 		log.enter("reset");
 		

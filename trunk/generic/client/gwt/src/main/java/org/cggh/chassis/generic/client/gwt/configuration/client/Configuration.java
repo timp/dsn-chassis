@@ -20,6 +20,10 @@ public class Configuration {
 		return $wnd.CHASSIS.userChassisRolesPrefix;
 	}-*/;
 	
+	public static native JsChassisRole getChassisRoleAdministrator() /*-{
+		return $wnd.CHASSIS.chassisRoleAdministrator;
+	}-*/;
+
 	public static native JsChassisRole getChassisRoleCoordinator() /*-{
 		return $wnd.CHASSIS.chassisRoleCoordinator;
 	}-*/;

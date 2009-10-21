@@ -8,18 +8,25 @@ import java.util.Set;
 
 import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
 
+import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Panel;
 
 /**
  * @author raok
  *
  */
-public class ViewStudiesWidget implements ViewStudiesWidgetAPI {
+public class ViewStudiesWidget extends Composite implements ViewStudiesWidgetAPI {
 
+	
+	
+	
 	final private ViewStudiesWidgetModel model;
 	final private ViewStudiesWidgetController controller;
 	final private ViewStudiesWidgetModelListener renderer;
 	private Set<ViewStudiesWidgetPubSubAPI> listeners = new HashSet<ViewStudiesWidgetPubSubAPI>();
+	
+	
+	
 	
 	public ViewStudiesWidget(Panel canvas, String selectStudyLinkText) {
 		
@@ -32,7 +39,12 @@ public class ViewStudiesWidget implements ViewStudiesWidgetAPI {
 		// register renderer as listener to model
 		model.addListener(renderer);
 		
+		this.initWidget(renderer.getCanvas());
+		
 	}
+	
+	
+	
 	
 	public ViewStudiesWidget(ViewStudiesWidgetModelListener customRenderer) {
 
@@ -48,7 +60,32 @@ public class ViewStudiesWidget implements ViewStudiesWidgetAPI {
 		// register renderer as listener to model
 		model.addListener(renderer);
 		
+		this.initWidget(renderer.getCanvas());
+		
 	}
+	
+	
+	
+	
+	/**
+	 * @param string
+	 */
+	public ViewStudiesWidget(String selectStudyLinkText) {
+
+		model = new ViewStudiesWidgetModel();
+		
+		controller = new ViewStudiesWidgetController(model, this);
+		
+		renderer = new ViewStudiesWidgetDefaultRenderer(controller, selectStudyLinkText);
+		
+		// register renderer as listener to model
+		model.addListener(renderer);
+		
+		this.initWidget(renderer.getCanvas());
+		
+	}
+
+	
 	
 	
 	/* (non-Javadoc)
@@ -58,11 +95,17 @@ public class ViewStudiesWidget implements ViewStudiesWidgetAPI {
 		controller.loadStudiesByFeedURL();
 	}
 
+	
+	
+	
 	void onUserSelectStudy(StudyEntry studyEntry) {
 		for (ViewStudiesWidgetPubSubAPI listener : listeners) {
 			listener.onUserActionSelectStudy(studyEntry);
 		}
 	}
+	
+	
+	
 	
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.client.gwt.widget.study.viewall.client.ViewAllStudiesWidgetAPI#addViewAllStudiesWidgetListener(org.cggh.chassis.generic.client.gwt.widget.study.viewall.client.ViewAllStudiesWidgetPubSubAPI)
@@ -71,13 +114,20 @@ public class ViewStudiesWidget implements ViewStudiesWidgetAPI {
 		listeners.add(listener);
 	}
 
+	
+	
+	
 	public void loadStudies(Set<String> studyEntryURLsToLoad) {
 		controller.loadStudiesByEntryURLs(studyEntryURLsToLoad);
 	}
 
+	
+	
+	
 	public void loadStudiesByAuthorEmail(String authorEmail) {
 		controller.loadStudiesByAuthorEmail(authorEmail);
 	}
+	
 	
 	
 }

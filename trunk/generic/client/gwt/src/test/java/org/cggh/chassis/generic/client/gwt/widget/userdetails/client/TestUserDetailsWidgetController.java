@@ -125,7 +125,7 @@ public class TestUserDetailsWidgetController {
 		RefreshUserDetailsCallback callback = controller.new RefreshUserDetailsCallback();
 		
 		//set up expectations on owner
-		mockOwner.onUserDetailsRefreshed(user.getId());
+		mockOwner.fireOnUserDetailsRefreshed(user.getId());
 		PowerMock.replay(mockOwner);
 		
 		

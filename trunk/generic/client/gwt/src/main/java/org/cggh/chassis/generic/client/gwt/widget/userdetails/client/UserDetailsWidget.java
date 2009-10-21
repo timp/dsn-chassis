@@ -26,11 +26,11 @@ public class UserDetailsWidget extends Composite implements UserDetailsWidgetAPI
 
 	
 	
-	final private Log log = LogFactory.getLog(this.getClass());
-	final private UserDetailsWidgetModel model;
-	final private UserDetailsWidgetController controller;
-	final private UserDetailsWidgetDefaultRenderer renderer;
-	final private Set<UserDetailsPubSubAPI> listeners = new HashSet<UserDetailsPubSubAPI>();
+	private Log log = LogFactory.getLog(this.getClass());
+	private UserDetailsWidgetModel model;
+	private UserDetailsWidgetController controller;
+	private UserDetailsWidgetDefaultRenderer renderer;
+	private Set<UserDetailsPubSubAPI> listeners = new HashSet<UserDetailsPubSubAPI>();
 
 	
 	
@@ -57,7 +57,7 @@ public class UserDetailsWidget extends Composite implements UserDetailsWidgetAPI
 	
 	
 	public UserDetailsWidget() {
-		log.enter("<init>");
+		log.enter("<constructor>");
 		
 		log.debug("instantiate service");
 		GWTUserDetailsServiceAsync userService = GWT.create(GWTUserDetailsService.class);
@@ -88,30 +88,7 @@ public class UserDetailsWidget extends Composite implements UserDetailsWidgetAPI
 	
 	
 	
-	
-	
-//	public UserDetailsWidget(UserDetailsWidgetDefaultRenderer customRenderer, GWTUserDetailsServiceAsync userService) {
-//
-//		// instantiate a model
-//		model = new UserDetailsWidgetModel();
-//		
-//		// instantiate a controller
-//		controller = new UserDetailsWidgetController(model, this, userService);
-//		
-//		// set renderer
-//		renderer = customRenderer;
-//		
-//		// inject controller into renderer
-//		renderer.setController(controller);
-//
-//		// register renderer as listener to model
-//		model.addListener(renderer);
-//
-//	}
-
-	
-	
-	
+		
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.client.gwt.widget.userdetails.client.UserDetailsWidgetAPI#refreshUserDetails()
 	 */
@@ -122,14 +99,14 @@ public class UserDetailsWidget extends Composite implements UserDetailsWidgetAPI
 	
 	
 	
-	public void addUserDetailsWidgetListener(UserDetailsPubSubAPI listener) {
+	public void addListener(UserDetailsPubSubAPI listener) {
 		listeners.add(listener);
 	}
 
 	
 	
 	
-	public void onUserDetailsRefreshed(String userName) {
+	public void fireOnUserDetailsRefreshed(String userName) {
 
 		for (UserDetailsPubSubAPI listener : listeners) {
 			listener.onUserIdRefreshed(userName);
@@ -140,7 +117,7 @@ public class UserDetailsWidget extends Composite implements UserDetailsWidgetAPI
 	
 	
 	
-	public void onCurrentRoleChanged(ChassisRole currentRole) {
+	public void fireOnCurrentRoleChanged(ChassisRole currentRole) {
 
 		for (UserDetailsPubSubAPI listener : listeners) {
 			listener.onCurrentRoleChanged(currentRole);

@@ -40,20 +40,32 @@ public class MainEntryPoint implements EntryPoint {
 	 * @see com.google.gwt.core.client.EntryPoint#onModuleLoad()
 	 */
 	public void onModuleLoad() {
+		log.enter("onModuleLoad");
 
-		ChassisClient client = new ChassisClient();
-		
-		RootPanel.get("chassisClientPane").add(client);
+		contructChassisClient();
 		
 		constructDeveloperTools();
 		
 		log.info("application loaded");
 
+		log.leave();
 	}
 
 	
 	
 	
+	/**
+	 * 
+	 */
+	private void contructChassisClient() {
+		ChassisClient client = new ChassisClient();
+		RootPanel.get("chassisClientPane").add(client);
+		client.init();
+	}
+
+
+
+
 	/**
 	 * 
 	 */
@@ -64,9 +76,7 @@ public class MainEntryPoint implements EntryPoint {
 		loggerPane.setVisible(false);
 		
 		Anchor logShowHide = new Anchor();
-		logShowHide.setText("show/hide logger");
-		
-		Button logShowHideButton = new Button("show/hide log");
+		logShowHide.setText("show/hide log");
 		
 		RootPanel.get("developerToolsPane").add(logShowHide);
 		logShowHide.addClickHandler(new ClickHandler() {

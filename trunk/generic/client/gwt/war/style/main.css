@@ -10,7 +10,6 @@ body {
 
 
 #chassisClientPane {
-	border-top: 2px solid black;
 }
 
 
@@ -24,7 +23,7 @@ body {
  */
 
 .chassis-client {
-	border: 2px solid black;
+/*	border: 2px solid black; */
 }
 
 
@@ -68,9 +67,18 @@ body {
 
 
 
+.chassis-administratorHome-resourceCollections {
+	border-top: 2px solid black;
+
+}
+
 #developerPane {
 	margin-top: 2em;
 	border-top: 2px solid black;
+}
+
+#developerToolsPane {
+	margin-top: 0.5em;
 }
 
 

@@ -11,16 +11,23 @@ import org.cggh.chassis.generic.client.gwt.widget.study.view.client.ViewStudyWid
 import org.cggh.chassis.generic.client.gwt.widget.study.view.client.ViewStudyWidgetAPI;
 import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidget;
 import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetAPI;
+import org.cggh.chassis.generic.log.client.Log;
+import org.cggh.chassis.generic.log.client.LogFactory;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DecoratedPopupPanel;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.MenuBar;
+import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.Widget;
 
 /**
  * @author raok
@@ -28,97 +35,145 @@ import com.google.gwt.user.client.ui.VerticalPanel;
  */
 public class StudyManagementWidgetDefaultRenderer implements StudyManagementWidgetModelListener {
 
+	
+	
+	
 	//Expose view elements for testing purposes.
-	final Label displayCreateStudyUI = new Label("Create Study");
-	final Label displayViewAllStudiesUI = new Label("View My Studies");
-	final Panel displayCanvas;
-	final Panel menuCanvas;
-	final DecoratedPopupPanel menuPopUp = new DecoratedPopupPanel(true);
-	final DecoratedPopupPanel confirmLoseChangesPopup = new DecoratedPopupPanel(false);
+	Label displayCreateStudyUI = new Label("Create Study");
+	Label displayViewAllStudiesUI = new Label("View My Studies");
+	Panel displayCanvas;
+	Panel menuCanvas;
+//	DecoratedPopupPanel menuPopUp = new DecoratedPopupPanel(true);
+	DecoratedPopupPanel confirmLoseChangesPopup = new DecoratedPopupPanel(false);
 
-	final private StudyManagementWidgetController controller;
+	
+	
+	private Log log = LogFactory.getLog(this.getClass());
+	private StudyManagementWidgetController controller;
 	private String authorEmail;
 	
+	
+	
+	
 	//child widgets made package private to allow parent widget to access them
-	final CreateStudyWidgetAPI createStudyWidget; 
-	final Panel createStudyWidgetCanvas = new SimplePanel();
-	final ViewStudyWidgetAPI viewStudyWidget;
-	final Panel viewStudyWidgetCanvas = new SimplePanel();	
-	final ViewStudiesWidgetAPI viewStudiesWidget;
-	final Panel viewStudiesWidgetCanvas = new SimplePanel();
-	final EditStudyWidgetAPI editStudyWidget;
-	final Panel editStudyWidgetCanvas = new SimplePanel();
+	CreateStudyWidget createStudyWidget; 
+	Widget createStudyWidgetCanvas = new FlowPanel();
+	ViewStudyWidget viewStudyWidget;
+	Widget viewStudyWidgetCanvas = new FlowPanel();	
+	ViewStudiesWidget viewStudiesWidget;
+	Widget viewStudiesWidgetCanvas = new FlowPanel();
+	EditStudyWidget editStudyWidget;
+	Widget editStudyWidgetCanvas = new FlowPanel();
+	private MenuBar menu;
+	private StudyManagementWidget owner;
 
 	
-	public StudyManagementWidgetDefaultRenderer(Panel menuCanvas, 
+	
+	
+	/**
+	 * Construct a study management widget renderer, injecting the panel to use 
+	 * as the widget's display canvas.
+	 * 
+	 * @param menuCanvas
+	 * @param displayCanvas
+	 * @param controller
+	 * @param authorEmail
+	 */
+	public StudyManagementWidgetDefaultRenderer(StudyManagementWidget owner, 
+												Panel menuCanvas, 
 												Panel displayCanvas,
 												StudyManagementWidgetController controller,
 												String authorEmail) {
+
+		this.owner = owner;
 		this.menuCanvas = menuCanvas;
 		this.displayCanvas = displayCanvas;
 		this.controller = controller;
 		this.authorEmail = authorEmail;
 		
 		//create child widgets
-		viewStudyWidget = new ViewStudyWidget(viewStudyWidgetCanvas);
-		createStudyWidget = new CreateStudyWidget(createStudyWidgetCanvas);
-		viewStudiesWidget = new ViewStudiesWidget(viewStudiesWidgetCanvas, "view");
-		editStudyWidget = new EditStudyWidget(editStudyWidgetCanvas);
+		this.viewStudyWidget = new ViewStudyWidget((Panel)this.viewStudyWidgetCanvas);
+		this.createStudyWidget = new CreateStudyWidget((Panel)this.createStudyWidgetCanvas);
+		this.viewStudiesWidget = new ViewStudiesWidget((Panel)this.viewStudiesWidgetCanvas, "view");
+		this.editStudyWidget = new EditStudyWidget((Panel)this.editStudyWidgetCanvas);
 		
 		//initialise view
 		initMenu();
 		
 	}
 
+	
+	
+	
+	/**
+	 * Construct a study management widget default renderer, allowing the 
+	 * renderer to create its own display canvas.
+	 * 
+	 * @param controller
+	 */
+	public StudyManagementWidgetDefaultRenderer(StudyManagementWidget owner, StudyManagementWidgetController controller) {
+
+		this.owner = owner;
+		this.menuCanvas = new FlowPanel();
+		this.displayCanvas = new FlowPanel();
+		this.controller = controller;
+		
+		//create child widgets
+		this.viewStudyWidget = new ViewStudyWidget();
+		this.createStudyWidget = new CreateStudyWidget();
+		this.viewStudiesWidget = new ViewStudiesWidget("view");
+		this.editStudyWidget = new EditStudyWidget();
+		
+		// override using composites
+		this.viewStudyWidgetCanvas = this.viewStudyWidget;
+		this.viewStudiesWidgetCanvas = this.viewStudiesWidget;
+		this.createStudyWidgetCanvas = this.createStudyWidget;
+		this.editStudyWidgetCanvas = this.editStudyWidget;
+		
+		//initialise view
+		this.initMenu();
+		
+	}
+
+	
+	
+	
 	private void initMenu() {
+		log.enter("initMenu");
 		
-		//add click handlers to menu items
-		displayCreateStudyUI.addClickHandler(new DisplayCreateStudyClickHandler());
-		displayViewAllStudiesUI.addClickHandler(new DisplayViewAllStudiesClickHandler());
+		menu = new MenuBar(true);
 		
-		//Create menu
-		VerticalPanel menuItemsVerticalPanel = new VerticalPanel();
-		menuItemsVerticalPanel.add(displayCreateStudyUI);
-		menuItemsVerticalPanel.add(displayViewAllStudiesUI);
-		
-		//add menu to popupPanel
-		menuPopUp.add(menuItemsVerticalPanel);
-						
-		//create menu header to display menu on click.
-		final Label studiesMenuLabel = new Label("Studies");
-		studiesMenuLabel.addClickHandler(new ClickHandler() {
+		log.debug("construct new study menu item");
 
-			public void onClick(ClickEvent arg0) {
-				int popUpHOffset = studiesMenuLabel.getAbsoluteLeft();
-				int popUpVOffset = studiesMenuLabel.getAbsoluteTop() + studiesMenuLabel.getOffsetHeight();
-				menuPopUp.setPopupPosition(popUpHOffset, popUpVOffset);
-				menuPopUp.show();
-			}
-			
-		});
+		Command newStudyCommand = new Command() { 
+			public void execute() { 
+				controller.displayCreateStudyWidget();
+				owner.fireOnStudyManagementMenuAction();
+			} 
+		};
+
+		MenuItem newStudyMenuItem = new MenuItem("new study", newStudyCommand );
+		menu.addItem(newStudyMenuItem);
 		
-		//add menuHeader to menuCanvas
-		menuCanvas.add(studiesMenuLabel);
+		log.debug("construct my studies menu item");
 		
+		Command viewStudiesCommand = new Command() { 
+			public void execute() { 
+				controller.displayViewStudiesWidget(); 
+				owner.fireOnStudyManagementMenuAction();
+			} 
+		};
+
+		MenuItem viewStudiesMenuItem = new MenuItem("my studies", viewStudiesCommand );
+		menu.addItem(viewStudiesMenuItem);
+		
+		menuCanvas.add(menu); // only needed for legacy
+		
+		log.leave();
 	}
 	
-	class DisplayCreateStudyClickHandler implements ClickHandler {
-
-		public void onClick(ClickEvent arg0) {
-			controller.displayCreateStudyWidget();
-			menuPopUp.hide();
-		}
-		
-	}
 	
-	class DisplayViewAllStudiesClickHandler implements ClickHandler {
-
-		public void onClick(ClickEvent arg0) {
-			controller.displayViewAllStudiesWidget();
-			menuPopUp.hide();
-		}
-		
-	}
+	
 	
 	public void onDisplayStatusChanged(Integer before, Integer after) {
 		if (after == StudyManagementWidgetModel.DISPLAYING_CREATE_STUDY) {
@@ -139,6 +194,9 @@ public class StudyManagementWidgetDefaultRenderer implements StudyManagementWidg
 		
 	}
 
+	
+	
+	
 	public void onUserMightLoseChanges(final Integer userRequestedView) {
 
 		confirmLoseChangesPopup.clear();
@@ -169,7 +227,7 @@ public class StudyManagementWidgetDefaultRenderer implements StudyManagementWidg
 					controller.displayCreateStudyWidget(true);
 				} else if (userRequestedView == StudyManagementWidgetModel.DISPLAYING_VIEW_ALL_STUDIES) {
 					confirmLoseChangesPopup.hide();
-					controller.displayViewAllStudiesWidget(true);
+					controller.displayViewStudiesWidget(true);
 				}
 			}
 		});
@@ -186,6 +244,29 @@ public class StudyManagementWidgetDefaultRenderer implements StudyManagementWidg
 		confirmLoseChangesPopup.center();
 		confirmLoseChangesPopup.show();		
 
+	}
+
+	
+	
+	
+	/**
+	 * @return
+	 */
+	public Panel getCanvas() {
+		return this.displayCanvas;
+	}
+
+
+
+
+	/**
+	 * @return
+	 */
+	public MenuBar getMenu() {
+		return this.menu;
 	}	
 
+	
+	
+	
 }

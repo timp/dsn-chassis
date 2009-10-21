@@ -33,7 +33,7 @@ public class TestStudyManagementWidgetController {
 		
 		mockModel = PowerMock.createMock(StudyManagementWidgetModel.class);
 		
-		testController = new StudyManagementWidgetController(mockModel);
+		testController = new StudyManagementWidgetController(null, mockModel);
 		
 	}
 	
@@ -91,7 +91,7 @@ public class TestStudyManagementWidgetController {
 		PowerMock.replay(mockModel);
 		
 		//method under test
-		testController.displayViewAllStudiesWidget();
+		testController.displayViewStudiesWidget();
 
 		PowerMock.verify(mockModel);
 		

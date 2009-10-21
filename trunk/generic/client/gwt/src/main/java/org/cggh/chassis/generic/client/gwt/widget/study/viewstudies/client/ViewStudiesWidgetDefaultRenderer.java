@@ -10,6 +10,7 @@ import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.SimplePanel;
@@ -20,14 +21,23 @@ import com.google.gwt.user.client.ui.SimplePanel;
  */
 public class ViewStudiesWidgetDefaultRenderer implements ViewStudiesWidgetModelListener {
 
+	
+	
+	
 	//Expose view elements for testing purposes.
 	Panel studiesListPanel = new SimplePanel();
 	Panel loadingPanel = new SimplePanel();
+	
+	
+	
 	
 	private Panel canvas;
 	private ViewStudiesWidgetController controller;
 	private String selectStudyLinkText = "";
 
+	
+	
+	
 	//use this if a select study link is not required
 	public ViewStudiesWidgetDefaultRenderer(Panel canvas, ViewStudiesWidgetController controller) {
 		this.canvas = canvas;
@@ -36,8 +46,26 @@ public class ViewStudiesWidgetDefaultRenderer implements ViewStudiesWidgetModelL
 		initCanvas();
 	}
 	
+	
+	
+	
 	public ViewStudiesWidgetDefaultRenderer(Panel canvas, ViewStudiesWidgetController controller, String selectStudyLinkText) {
 		this.canvas = canvas;
+		this.controller = controller;
+		this.selectStudyLinkText = selectStudyLinkText;
+		
+		initCanvas();
+	}
+
+	
+	
+	
+	/**
+	 * @param controller
+	 * @param selectStudyLinkText
+	 */
+	public ViewStudiesWidgetDefaultRenderer(ViewStudiesWidgetController controller, String selectStudyLinkText) {
+		this.canvas = new FlowPanel();
 		this.controller = controller;
 		this.selectStudyLinkText = selectStudyLinkText;
 		
@@ -112,6 +140,16 @@ public class ViewStudiesWidgetDefaultRenderer implements ViewStudiesWidgetModelL
 
 	public void setController(ViewStudiesWidgetController controller) {
 		this.controller = controller;
+	}
+
+
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetModelListener#getCanvas()
+	 */
+	public Panel getCanvas() {
+		return this.canvas;
 	}
 	
 
