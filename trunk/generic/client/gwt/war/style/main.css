@@ -1,13 +1,17 @@
 @CHARSET "UTF-8";
 
 body {
-	margin: 2em;
+}
+
+#holdall {
+	font-size: 12pt;
+	margin: 1em;
 }
 
 .chassis-userDetailsWidget {
 	position: absolute;
-	top: 1em;
-	right: 1em;
+	top: 0.5em;
+	right: 0.5em;
 	left: auto;
 	bottom: auto;
 	padding: .2em;
@@ -28,3 +32,25 @@ body {
 .chassis-userDetailsWidget-roleSwitcher {
 	margin-left: .2em;
 }
+
+
+
+#developerPane {
+	margin-top: 2em;
+	border-top: 2px solid black;
+	font-size: 80%;
+}
+
+
+
+
+.log-panel {
+	width: 96%;
+}
+
+.log-scroll-panel {
+	border: 2px solid black;
+	width: 100%;
+}
+
+
