@@ -59,26 +59,26 @@ public class UserDetailsWidget extends Composite implements UserDetailsWidgetAPI
 	public UserDetailsWidget() {
 		log.enter("<init>");
 		
-		log.trace("instantiate service");
+		log.debug("instantiate service");
 		GWTUserDetailsServiceAsync userService = GWT.create(GWTUserDetailsService.class);
 		
-		log.trace("set service URL");
+		log.debug("set service URL");
 		ServiceDefTarget target = (ServiceDefTarget) userService;
 		target.setServiceEntryPoint(Configuration.getUserDetailsServiceEndpointURL());
 
-		log.trace("instantiate a model");
+		log.debug("instantiate a model");
 		this.model = new UserDetailsWidgetModel();
 		
-		log.trace("instantiate a controller");
+		log.debug("instantiate a controller");
 		this.controller = new UserDetailsWidgetController(this.model, this, userService);
 		
-		log.trace("instantiate a renderer");
+		log.debug("instantiate a renderer");
 		this.renderer = new UserDetailsWidgetDefaultRenderer(this.controller);
 
-		log.trace("register renderer as listener to model");
+		log.debug("register renderer as listener to model");
 		this.model.addListener(this.renderer);
 		
-		log.trace("initialise this widget");
+		log.debug("initialise this widget");
 		this.initWidget(this.renderer.getCanvas());
 
 		log.leave();

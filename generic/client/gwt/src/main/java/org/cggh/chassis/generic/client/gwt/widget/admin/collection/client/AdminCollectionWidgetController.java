@@ -140,7 +140,7 @@ public class AdminCollectionWidgetController {
 
 			else {
 				model.setError(true);
-				log.trace("unexpected error: ["+in.getClass()+"] "+in.getLocalizedMessage());
+				log.debug("unexpected error: ["+in.getClass()+"] "+in.getLocalizedMessage());
 			}
 
 			log.leave();

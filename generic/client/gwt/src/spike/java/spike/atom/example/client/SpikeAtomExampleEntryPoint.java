@@ -50,28 +50,28 @@ public class SpikeAtomExampleEntryPoint implements EntryPoint {
 
 		String feedURL = "http://example.com/atom/feeds/example";
 			
-		log.trace("create an atom factory");
+		log.debug("create an atom factory");
 		MockAtomFactory factory = new MockAtomFactory(); // use mock for now
 		
-		log.trace("create an atom service");
+		log.debug("create an atom service");
 		MockAtomService service = new MockAtomService(factory); // use mock for now
 		service.createFeed(feedURL, "my first atom feed"); // bootstrap mock service with a feed, not needed for real service
 		
-		log.trace("create a new entry");
+		log.debug("create a new entry");
 		AtomEntry entry = factory.createEntry();
 		entry.setTitle("my first vanilla atom entry");
 		entry.setSummary("this is a vanilla atom entry, that's all");
 		
-		log.trace("create and set author");
+		log.debug("create and set author");
 		AtomAuthor bob = factory.createAuthor(); 
 		bob.setName("bob");
 		bob.setEmail("bob@example.com");
 		entry.addAuthor(bob);
 		
-		log.trace("persist new entry");
+		log.debug("persist new entry");
 		Deferred<AtomEntry> deferredEntry = service.postEntry(feedURL, entry);
 		
-		log.trace("add callback to handle successful service response");
+		log.debug("add callback to handle successful service response");
 		deferredEntry.addCallback(new Function<AtomEntry,AtomEntry>() {
 
 			public AtomEntry apply(AtomEntry persistedEntry) {
@@ -94,7 +94,7 @@ public class SpikeAtomExampleEntryPoint implements EntryPoint {
 			
 		});
 		
-		log.trace("add errback to handle service error");
+		log.debug("add errback to handle service error");
 		deferredEntry.addErrback(new Function<Throwable,Throwable>() {
 
 			public Throwable apply(Throwable t) {
@@ -128,32 +128,32 @@ public class SpikeAtomExampleEntryPoint implements EntryPoint {
 		
 		String feedURL = Configuration.getStudyFeedURL();
 
-		log.trace("create a study factory");
+		log.debug("create a study factory");
 		MockStudyFactory factory = new MockStudyFactory(); // use mock for now
 		
-		log.trace("create an atom service");
+		log.debug("create an atom service");
 		MockAtomService service = new MockAtomService(factory); // use mock for now
 		service.createFeed(feedURL, "all studies"); // bootstrap mock service with study feed, not needed for real service
 		
-		log.trace("create a new entry");
+		log.debug("create a new entry");
 		StudyEntry study = factory.createStudyEntry();
 		study.setTitle("my first study");
 		study.setSummary("this study was done from 2004-2005 in the Gambia");
 		
-		log.trace("create and set author");
+		log.debug("create and set author");
 		AtomAuthor bob = factory.createAuthor(); 
 		bob.setName("bob");
 		bob.setEmail("bob@example.com");
 		study.addAuthor(bob);
 
-		log.trace("add study module names");
+		log.debug("add study module names");
 		study.addModule("in vitro");
 		study.addModule("molecular");
 
-		log.trace("persist new study");
+		log.debug("persist new study");
 		Deferred<AtomEntry> deferredEntry = service.postEntry(feedURL, study);
 		
-		log.trace("add callback to handle successful service response");
+		log.debug("add callback to handle successful service response");
 		deferredEntry.addCallback(new Function<StudyEntry,StudyEntry>() { 
 
 			public StudyEntry apply(StudyEntry persistedStudy) {
@@ -177,7 +177,7 @@ public class SpikeAtomExampleEntryPoint implements EntryPoint {
 			
 		});
 		
-		log.trace("add errback to handle service error");
+		log.debug("add errback to handle service error");
 		deferredEntry.addErrback(new Function<Throwable,Throwable>() {
 
 			public Throwable apply(Throwable t) {

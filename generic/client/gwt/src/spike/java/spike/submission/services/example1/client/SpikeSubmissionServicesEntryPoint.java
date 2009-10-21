@@ -52,7 +52,7 @@ public class SpikeSubmissionServicesEntryPoint implements EntryPoint {
 	public Deferred<AtomEntry> createStudyByAlice() {
 		log.enter("createStudyByAlice");
 		
-		log.trace("create a study by Alice");
+		log.debug("create a study by Alice");
 		StudyFactory factory = new StudyFactoryImpl();
 		StudyEntry studyEntry = factory.createStudyEntry();
 		studyEntry.setTitle("One of Alice's Studies");
@@ -61,7 +61,7 @@ public class SpikeSubmissionServicesEntryPoint implements EntryPoint {
 		alice.setEmail("alice@example.org");
 		studyEntry.addAuthor(alice);
 		
-		log.trace("persist the study");
+		log.debug("persist the study");
 		AtomService service = new AtomServiceImpl(factory);
 		Deferred<AtomEntry> deferredResult = service.postEntry(Configuration.getStudyFeedURL(), studyEntry);
 			
@@ -74,7 +74,7 @@ public class SpikeSubmissionServicesEntryPoint implements EntryPoint {
 	public Deferred<StudyFeed> getStudiesByAlice() {
 		log.enter("getStudiesByAlice");
 		
-		log.trace("get Alice's studies");
+		log.debug("get Alice's studies");
 		StudyQueryService service = new StudyQueryServiceImpl(Configuration.getStudyQueryServiceURL());
 		Deferred<StudyFeed> deferredResults = service.getStudiesByAuthorEmail("alice@example.org");
 
@@ -87,7 +87,7 @@ public class SpikeSubmissionServicesEntryPoint implements EntryPoint {
 	public Deferred<AtomEntry> createSubmissionByAlice(StudyEntry studyEntry) {
 		log.enter("createSubmissionByAlice");
 
-		log.trace("create a submission by Alice, linked to the given study");
+		log.debug("create a submission by Alice, linked to the given study");
 		SubmissionFactory factory = new SubmissionFactoryImpl();
 		SubmissionEntry submissionEntry = factory.createSubmissionEntry();
 		submissionEntry.setTitle("One of Alice's Submissions");
@@ -96,11 +96,11 @@ public class SpikeSubmissionServicesEntryPoint implements EntryPoint {
 		alice.setEmail("alice@example.org");
 		submissionEntry.addAuthor(alice);
 		
-		log.trace("link submission to a study");
+		log.debug("link submission to a study");
 		String studyAbsoluteUrl = "http://" + Window.Location.getHost() + Configuration.getStudyFeedURL() + studyEntry.getEditLink().getHref(); // convert to absolute URL
 		submissionEntry.addStudyLink(studyAbsoluteUrl);
 		
-		log.trace("persist the submission");
+		log.debug("persist the submission");
 		AtomService service = new AtomServiceImpl(factory);
 		Deferred<AtomEntry> deferredResult = service.postEntry(Configuration.getSubmissionFeedURL(), submissionEntry);
 		
@@ -113,7 +113,7 @@ public class SpikeSubmissionServicesEntryPoint implements EntryPoint {
 	public Deferred<SubmissionFeed> getSubmissionsByAlice() {
 		log.enter("getSubmissionsByAlice");
 	
-		log.trace("get Alice's submissions");
+		log.debug("get Alice's submissions");
 		SubmissionQueryService service = new SubmissionQueryServiceImpl(Configuration.getSubmissionQueryServiceURL());
 		Deferred<SubmissionFeed> deferredResults = service.getSubmissionsByAuthorEmail("alice@example.org");
 		

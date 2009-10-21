@@ -61,15 +61,15 @@ public class SpikeVanillaAtomServiceEntryPoint implements EntryPoint {
 	private Deferred<AtomFeed> doGetFeed() {
 		log.enter("doGetFeed");
 
-		log.trace("create an atom factory");
+		log.debug("create an atom factory");
 		AtomFactory factory = new AtomFactoryImpl(); 
 		
-		log.trace("create an atom service");
+		log.debug("create an atom service");
 		AtomService service = new AtomServiceImpl(factory); 
 
 		Deferred<AtomFeed> deferredFeed = service.getFeed(feedURL);
 		
-		log.trace("add callback to handle successful service response");
+		log.debug("add callback to handle successful service response");
 		deferredFeed.addCallback(new Function<AtomFeed,AtomFeed>() {
 
 			public AtomFeed apply(AtomFeed feed) {
@@ -91,7 +91,7 @@ public class SpikeVanillaAtomServiceEntryPoint implements EntryPoint {
 			
 		});
 		
-		log.trace("add errback to handle service error");
+		log.debug("add errback to handle service error");
 		deferredFeed.addErrback(new Function<Throwable,Throwable>() {
 
 			public Throwable apply(Throwable t) {
@@ -123,15 +123,15 @@ public class SpikeVanillaAtomServiceEntryPoint implements EntryPoint {
 		
 		String entryURL = feedURL + entry.getEditLink().getHref(); // assume relative
 		
-		log.trace("create an atom factory");
+		log.debug("create an atom factory");
 		AtomFactory factory = new AtomFactoryImpl(); 
 		
-		log.trace("create an atom service");
+		log.debug("create an atom service");
 		AtomService service = new AtomServiceImpl(factory); 
 
 		Deferred<AtomEntry> deferredEntry = service.putEntry(entryURL, entry);
 		
-		log.trace("add callback to handle successful service response");
+		log.debug("add callback to handle successful service response");
 		deferredEntry.addCallback(new Function<AtomEntry,AtomEntry>() {
 
 			public AtomEntry apply(AtomEntry updatedEntry) {
@@ -155,7 +155,7 @@ public class SpikeVanillaAtomServiceEntryPoint implements EntryPoint {
 			
 		});
 		
-		log.trace("add errback to handle service error");
+		log.debug("add errback to handle service error");
 		deferredEntry.addErrback(new Function<Throwable,Throwable>() {
 
 			public Throwable apply(Throwable t) {

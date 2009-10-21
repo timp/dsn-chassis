@@ -52,7 +52,7 @@ public class ViewStudiesWidgetController {
 	public void loadStudiesByFeedURL() {
 		log.enter("loadStudiesByFeedURL");
 		
-		log.trace("loading studies from feed: " + studyFeedURL);
+		log.debug("loading studies from feed: " + studyFeedURL);
 		Deferred<AtomFeed> deferred = persistenceService.getFeed(studyFeedURL);
 		deferred.addCallbacks(new LoadStudyFeedCallback(), new LoadStudyFeedErrback());
 		
@@ -67,7 +67,7 @@ public class ViewStudiesWidgetController {
 			
 			model.setStudyEntries(studyFeed.getStudyEntries());
 			model.setStatus(ViewStudiesWidgetModel.STATUS_LOADED);
-			log.trace(studyFeed.getStudyEntries().size() + " studies loaded.");
+			log.debug(studyFeed.getStudyEntries().size() + " studies loaded.");
 			
 			log.leave();
 			return studyFeed;
@@ -96,7 +96,7 @@ public class ViewStudiesWidgetController {
 	public void loadStudiesByEntryURLs(Set<String> relativeStudyEntryURLsToLoad) {
 		log.enter("loadStudyEntryURLs");
 		
-		log.trace(relativeStudyEntryURLsToLoad.size() + " being loaded.");
+		log.debug(relativeStudyEntryURLsToLoad.size() + " being loaded.");
 		
 		final List<StudyEntry> studyEntries = new ArrayList<StudyEntry>();
 		
@@ -133,7 +133,7 @@ public class ViewStudiesWidgetController {
 				model.setStudyEntries(studyEntries);
 				model.setStatus(ViewStudiesWidgetModel.STATUS_LOADED);
 				
-				log.trace(noOfStudies + " studies loaded");
+				log.debug(noOfStudies + " studies loaded");
 			}
 			
 			log.leave();

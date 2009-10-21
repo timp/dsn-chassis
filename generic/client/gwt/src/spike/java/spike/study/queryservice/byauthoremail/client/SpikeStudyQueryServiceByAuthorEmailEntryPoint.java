@@ -56,7 +56,7 @@ public class SpikeStudyQueryServiceByAuthorEmailEntryPoint implements EntryPoint
 		studyPersistenceService = new AtomServiceImpl(factory);
 		studyQueryService = new StudyQueryServiceImpl(Configuration.getStudyQueryServiceURL());
 		
-		log.trace("create first study");
+		log.debug("create first study");
 		Deferred<AtomEntry> callChain = createFirstStudy();
 		
 		callChain.addCallback(new Function<AtomEntry,Deferred<AtomEntry>>(){
@@ -65,7 +65,7 @@ public class SpikeStudyQueryServiceByAuthorEmailEntryPoint implements EntryPoint
 				log.enter("apply [first callback]");
 				
 				root.add(new HTML("<p>first study created</p>"));
-				log.trace("first study created, now create second");
+				log.debug("first study created, now create second");
 				Deferred<AtomEntry> def = createSecondStudy();
 
 				log.leave();
@@ -82,7 +82,7 @@ public class SpikeStudyQueryServiceByAuthorEmailEntryPoint implements EntryPoint
 				log.enter("apply [second callback]");
 
 				root.add(new HTML("<p>second study created</p>"));
-				log.trace("second study created, now create third");
+				log.debug("second study created, now create third");
 				Deferred<AtomEntry> def = createThirdStudy();
 
 				log.leave();
@@ -101,7 +101,7 @@ public class SpikeStudyQueryServiceByAuthorEmailEntryPoint implements EntryPoint
 				log.enter("apply [third callback]");
 
 				root.add(new HTML("<p>third study created</p>"));
-				log.trace("all studies created, now try query");
+				log.debug("all studies created, now try query");
 				Deferred<StudyFeed> def = queryStudiesByAuthorEmail();
 				
 				log.leave();
@@ -120,7 +120,7 @@ public class SpikeStudyQueryServiceByAuthorEmailEntryPoint implements EntryPoint
 				log.enter("apply [fourth callback]");
 
 				root.add(new HTML("<p>query results received</p>"));
-				log.trace("study query success, check results");
+				log.debug("study query success, check results");
 				checkQueryResults(results);
 				
 				log.leave();
@@ -138,7 +138,7 @@ public class SpikeStudyQueryServiceByAuthorEmailEntryPoint implements EntryPoint
 				
 				if (t instanceof HttpException) {
 					HttpException ape = (HttpException) t;
-					log.trace(ape.getResponse().getText());
+					log.debug(ape.getResponse().getText());
 				}
 				
 				// any other handling of error goes here
@@ -242,11 +242,11 @@ public class SpikeStudyQueryServiceByAuthorEmailEntryPoint implements EntryPoint
 	private void checkQueryResults(StudyFeed results) {
 		log.enter("checkQueryResults");
 		
-		log.trace("feed title: "+results.getTitle());
-		log.trace(results.toString());
+		log.debug("feed title: "+results.getTitle());
+		log.debug(results.toString());
 		
 		for (StudyEntry entry : results.getStudyEntries()) {
-			log.trace("found entry: "+entry.getTitle() + " ["+entry.getId()+"]");
+			log.debug("found entry: "+entry.getTitle() + " ["+entry.getId()+"]");
 			root.add(new HTML("<p>found entry: "+entry.getTitle() + " ["+entry.getId()+"]</p>"));
 			boolean alice = false;
 			for (AtomAuthor author : entry.getAuthors()) {

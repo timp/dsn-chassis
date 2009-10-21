@@ -27,8 +27,8 @@ public class PerspectiveWidgetController {
 	public void displayStudyManagementWidget(Boolean couldStatusContainUnsavedData, Boolean userConfirmed) {
 		log.enter("displayStudyManagementWidget");
 		
-		log.trace("couldStatusContainUnsavedData: " + couldStatusContainUnsavedData);
-		log.trace("userConfirmed: " + userConfirmed);
+		log.debug("couldStatusContainUnsavedData: " + couldStatusContainUnsavedData);
+		log.debug("userConfirmed: " + userConfirmed);
 		
 		if (couldStatusContainUnsavedData) {
 			model.setDisplayStatus(PerspectiveWidgetModel.DISPLAYING_STUDY_MANAGEMENT_WIDGET_DATA_ENTRY, userConfirmed);
@@ -46,8 +46,8 @@ public class PerspectiveWidgetController {
 	public void displaySubmissionManagementWidget(Boolean couldStatusContainUnsavedData, Boolean userConfirmed) {
 		log.enter("displaySubmissionManagementWidget");
 		
-		log.trace("couldStatusContainUnsavedData: " + couldStatusContainUnsavedData);
-		log.trace("userConfirmed: " + userConfirmed);
+		log.debug("couldStatusContainUnsavedData: " + couldStatusContainUnsavedData);
+		log.debug("userConfirmed: " + userConfirmed);
 		
 		if (couldStatusContainUnsavedData) {
 			model.setDisplayStatus(PerspectiveWidgetModel.DISPLAYING_SUBMISSION_MANAGEMENT_WIDGET_DATA_ENTRY, userConfirmed);

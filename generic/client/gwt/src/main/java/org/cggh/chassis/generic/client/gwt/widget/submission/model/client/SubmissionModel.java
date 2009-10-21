@@ -76,7 +76,7 @@ public class SubmissionModel {
 										 && isModulesValid()
 										 && isAuthorsValid();
 		
-		log.trace("isSubmissionEntryValid: " + isSubmissionEntryValid);
+		log.debug("isSubmissionEntryValid: " + isSubmissionEntryValid);
 		
 		log.leave();
 		return isSubmissionEntryValid;
@@ -141,7 +141,7 @@ public class SubmissionModel {
 		//TODO improve validation
 		boolean isValid = ((getTitle() != null) && !(getTitle().length() == 0));
 		
-		log.trace("isValid: " + isValid);
+		log.debug("isValid: " + isValid);
 		
 		log.leave();
 		return isValid;
@@ -181,7 +181,7 @@ public class SubmissionModel {
 		//TODO improve validation
 		boolean isValid = ((getSummary() != null) && !(getSummary().length() == 0));
 		
-		log.trace("isValid: " + isValid);
+		log.debug("isValid: " + isValid);
 		
 		log.leave();
 		return isValid;
@@ -229,7 +229,7 @@ public class SubmissionModel {
 		//Require at least one study link
 		boolean isValid = (getStudyLinks().size() > 0);
 		
-		log.trace("isValid: " + isValid);
+		log.debug("isValid: " + isValid);
 		
 		log.leave();
 		return isValid;
@@ -271,7 +271,7 @@ public class SubmissionModel {
 		// require at least one module
 		boolean isValid = (getModules().size() > 0);
 		
-		log.trace("isValid: " + isValid);
+		log.debug("isValid: " + isValid);
 		
 		log.leave();
 		return isValid;
