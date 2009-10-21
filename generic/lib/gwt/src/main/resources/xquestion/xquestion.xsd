@@ -176,7 +176,12 @@
       <xs:sequence>
         <xs:element ref="label" minOccurs="0" maxOccurs="1"/>
         <xs:element ref="hint" minOccurs="0" maxOccurs="1"/>
-        <xs:element ref="item" minOccurs="1" maxOccurs="unbounded"/>
+        <xs:element ref="item" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element name="items" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+            <xs:attribute name="src" type="xs:anyURI"/>
+          </xs:complexType>
+        </xs:element>
       </xs:sequence>
       <xs:attribute ref="class"/>
       <xs:attribute name="appearance" use="optional">
