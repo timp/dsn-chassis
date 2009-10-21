@@ -15,5 +15,6 @@ public class ChassisConstants {
 	public static final Integer gatekeeperRoleId = new Integer(2);
 	public static final Integer submitterRoleId = new Integer(3);
 	public static final Integer userRoleId = new Integer(4);
+	public static final Integer administratorRoleId = new Integer(5);
 
 }
