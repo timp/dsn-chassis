@@ -38,7 +38,7 @@ public class DataFileQueryServiceImpl implements DataFileQueryService {
 			url += "submission=" + query.getSubmissionUrl() + "&";
 		}
 		
-		log.trace("url: "+url);
+		log.debug("url: "+url);
 
 		AtomFactory factory = new AtomFactoryImpl();
 		AtomService service = new AtomServiceImpl(factory);

@@ -56,19 +56,19 @@ public class XSelect1Minimal extends XSelectBase {
 	private void construct() {
 		log.enter("construct");
 		
-		log.trace("check guard conditions");
+		log.debug("check guard conditions");
 		checkDefinition();
 
-		log.trace("construct canvas");
+		log.debug("construct canvas");
 		constructCanvas();
 		
-		log.trace("add custom style");
+		log.debug("add custom style");
 		addCustomStyle();
 		
-		log.trace("look for label");
+		log.debug("look for label");
 		constructLabel();
 		
-		log.trace("map values to items");
+		log.debug("map values to items");
 		constructItemMap();
 
 		deferredItems.addCallback(new Function<List<Element>, List<Element>>() {
@@ -86,10 +86,10 @@ public class XSelect1Minimal extends XSelectBase {
 			
 		});
 		
-		log.trace("look for hint");
+		log.debug("look for hint");
 		constructHint();
 
-		log.trace("complete construction");
+		log.debug("complete construction");
 		initWidget(this.canvas);
 		
 		log.leave();
@@ -138,7 +138,7 @@ public class XSelect1Minimal extends XSelectBase {
 				String itemValue = it.next();
 				String itemLabel = labels.get(itemValue);
 				
-				log.trace("adding list item for item label: "+itemLabel+"; value: "+itemValue);
+				log.debug("adding list item for item label: "+itemLabel+"; value: "+itemValue);
 				
 				box.addItem(itemLabel, itemValue);
 				
@@ -181,9 +181,9 @@ public class XSelect1Minimal extends XSelectBase {
 
 					for (int index=0; index<box.getItemCount(); index++) {
 						String itemValue = box.getValue(index);
-						log.trace("comparing item value ["+itemValue+"] with value to set ["+value+"]");
+						log.debug("comparing item value ["+itemValue+"] with value to set ["+value+"]");
 						if (value.equals(itemValue)) {
-							log.trace("found match, setting selected index: "+index);
+							log.debug("found match, setting selected index: "+index);
 							box.setSelectedIndex(index);
 							return in;
 						}
@@ -214,10 +214,10 @@ public class XSelect1Minimal extends XSelectBase {
 			String value = box.getValue(index);
 			if (model.getValue() == null || !model.getValue().equals(value)) {
 				model.setValue(value);	
-				log.trace("setting model with value: "+value);
+				log.debug("setting model with value: "+value);
 			}
 			else {
-				log.trace("no change to selection");
+				log.debug("no change to selection");
 			}
 			log.leave();
 		}

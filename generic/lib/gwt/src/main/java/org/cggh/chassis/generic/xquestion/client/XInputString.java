@@ -43,28 +43,28 @@ public class XInputString extends XFormControl {
 	protected void construct() {
 		log.enter("construct");
 		
-		log.trace("check guard conditions");
+		log.debug("check guard conditions");
 		checkDefinitionTagName();
 
-		log.trace("construct canvas");
+		log.debug("construct canvas");
 		constructCanvas();
 		
-		log.trace("add custom style");
+		log.debug("add custom style");
 		addCustomStyle();
 		
-		log.trace("look for readOnlyLabel");
+		log.debug("look for readOnlyLabel");
 		constructLabel();
 		
-		log.trace("instantiate text box");
+		log.debug("instantiate text box");
 		constructTextBox();
 		
-		log.trace("add value change handler");
+		log.debug("add value change handler");
 		addValueChangeHandler();
 		
-		log.trace("look for hint");
+		log.debug("look for hint");
 		constructHint();
 
-		log.trace("complete construction");
+		log.debug("complete construction");
 		initWidget(this.canvas);
 		
 		log.leave();

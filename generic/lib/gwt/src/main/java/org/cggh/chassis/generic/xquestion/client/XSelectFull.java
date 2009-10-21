@@ -58,19 +58,19 @@ public class XSelectFull extends XSelectBase {
 	private void construct() {
 		log.enter("construct");
 		
-		log.trace("check guard conditions");
+		log.debug("check guard conditions");
 		checkDefinition();
 
-		log.trace("construct canvas");
+		log.debug("construct canvas");
 		constructCanvas();
 		
-		log.trace("add custom style");
+		log.debug("add custom style");
 		addCustomStyle();
 		
-		log.trace("look for label");
+		log.debug("look for label");
 		constructLabel();
 		
-		log.trace("map values to items");
+		log.debug("map values to items");
 		constructItemMap();
 
 		deferredItems.addCallback(new Function<List<Element>, List<Element>>() {
@@ -83,13 +83,13 @@ public class XSelectFull extends XSelectBase {
 			
 		});
 		
-		log.trace("look for hint");
+		log.debug("look for hint");
 		constructHint();
 		
-		log.trace("initialise value from model");
+		log.debug("initialise value from model");
 		initValues();
 
-		log.trace("complete construction");
+		log.debug("complete construction");
 		initWidget(this.canvas);
 		
 		log.leave();
@@ -138,7 +138,7 @@ public class XSelectFull extends XSelectBase {
 				String itemValue = it.next();
 				String itemLabel = labels.get(itemValue);
 				
-				log.trace("adding list item for item label: "+itemLabel+"; value: "+itemValue);
+				log.debug("adding list item for item label: "+itemLabel+"; value: "+itemValue);
 				constructCheckBox(itemValue, itemLabel, index);
 								
 			}
@@ -153,10 +153,10 @@ public class XSelectFull extends XSelectBase {
 	
 	private void constructCheckBox(String itemValue, String itemLabel, int index) {
 
-		log.trace("adding radio button for item label: "+itemLabel+"; value: "+itemValue);
+		log.debug("adding radio button for item label: "+itemLabel+"; value: "+itemValue);
 
 		if (itemLabel != null) {
-			log.trace("label != null, adding label widget");
+			log.debug("label != null, adding label widget");
 			checkBoxGrid.setWidget(index, 0, new Label(itemLabel));
 		}
 		
@@ -168,9 +168,9 @@ public class XSelectFull extends XSelectBase {
 		checkBoxes.add(box);
 		
 		box.setFormValue(itemValue);
-		log.trace("checking box form value, expect: "+itemValue+"; found: "+box.getFormValue());
+		log.debug("checking box form value, expect: "+itemValue+"; found: "+box.getFormValue());
 		
-		log.trace("adding box to grid");
+		log.debug("adding box to grid");
 		checkBoxGrid.setWidget(index, 1, box);
 		
 		box.addValueChangeHandler(new CheckBoxValueChangeHandler(box));
@@ -196,9 +196,9 @@ public class XSelectFull extends XSelectBase {
 
 				for (CheckBox b : checkBoxes) {
 					String formValue = b.getFormValue();
-					log.trace("compare form value ["+formValue+"] with value to set ["+value+"]");
+					log.debug("compare form value ["+formValue+"] with value to set ["+value+"]");
 					if (formValue.equals(value)) {
-						log.trace("found match, setting value");
+						log.debug("found match, setting value");
 						b.setValue(true, fireEvents);
 					}
 				}
@@ -241,7 +241,7 @@ public class XSelectFull extends XSelectBase {
 						for (CheckBox b : checkBoxes) {
 							String formValue = b.getFormValue();
 							if (values.contains(formValue)) {
-								log.trace("found match, setting value: "+formValue);
+								log.debug("found match, setting value: "+formValue);
 								b.setValue(true, false);
 							}
 						}
@@ -275,18 +275,18 @@ public class XSelectFull extends XSelectBase {
 		 */
 		public void onValueChange(ValueChangeEvent<Boolean> event) {
 			log.enter("onValueChange");
-			log.trace("event value: "+event.getValue());
+			log.debug("event value: "+event.getValue());
 
 			if (event.getValue()) {
 				String value = this.box.getFormValue();
 				model.addValue(value);	
-				log.trace("adding value: "+value);
+				log.debug("adding value: "+value);
 			}
 
 			else {
 				String value = this.box.getFormValue();
 				model.removeValue(value);	
-				log.trace("adding value: "+value);
+				log.debug("adding value: "+value);
 			}
 
 			log.leave();

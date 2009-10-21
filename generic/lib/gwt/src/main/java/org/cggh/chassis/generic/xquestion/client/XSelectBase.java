@@ -152,7 +152,7 @@ public abstract class XSelectBase extends XFormControl {
 
 			public Throwable apply(Throwable in) {
 				log.enter("[anon errback function] :: apply");
-				log.trace("caught exception trying to fetch items: "+in.getLocalizedMessage(), in);
+				log.debug("caught exception trying to fetch items: "+in.getLocalizedMessage(), in);
 				log.leave();
 				return null;
 			}
@@ -185,19 +185,19 @@ public abstract class XSelectBase extends XFormControl {
 
 			try {
 
-				log.trace("check preconditions");
+				log.debug("check preconditions");
 				checkStatusCode(request, response);
 				
-				log.trace("parse the response");
+				log.debug("parse the response");
 				Document doc = XMLParser.parse(response.getText());
 				List<Element> itemElements = XML.getElementsByTagName(doc, XQS.ELEMENT_ITEM);
 				
-				log.trace("pass through result");
+				log.debug("pass through result");
 				this.result.callback(itemElements);
 				
 			} catch (Throwable t) {
 
-				log.trace("pass through error");
+				log.debug("pass through error");
 				this.result.errback(t);
 
 			}

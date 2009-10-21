@@ -32,8 +32,8 @@ public class SystemOutLog extends LogBase {
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.wwarn.prototype.client.shared.Logger#info(java.lang.String)
 	 */
-	public void trace(String message) {
-		System.out.println(contextualise(message));
+	public void debug(String message) {
+		System.out.println("[DEBUG] "+contextualise(message));
 	}
 	
 	
@@ -41,9 +41,29 @@ public class SystemOutLog extends LogBase {
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.wwarn.prototype.client.shared.Logger#info(java.lang.String, java.lang.Throwable)
 	 */
-	public void trace(String message, Throwable exception) {
-		System.out.println(contextualise(message));
-		System.out.println(contextualise(exception.getLocalizedMessage()));
+	public void debug(String message, Throwable exception) {
+		System.out.println("[DEBUG] "+contextualise(message));
+		System.out.println("[DEBUG] "+contextualise(exception.getLocalizedMessage()));
+		exception.printStackTrace();
+	}
+
+	
+	
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.wwarn.prototype.client.shared.Logger#info(java.lang.String)
+	 */
+	public void info(String message) {
+		System.out.println("[INFO] "+contextualise(message));
+	}
+	
+	
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.wwarn.prototype.client.shared.Logger#info(java.lang.String, java.lang.Throwable)
+	 */
+	public void info(String message, Throwable exception) {
+		System.out.println("[INFO] "+contextualise(message));
+		System.out.println("[INFO] "+contextualise(exception.getLocalizedMessage()));
 		exception.printStackTrace();
 	}
 

@@ -47,28 +47,28 @@ public class XInputDate extends XFormControl {
 	protected void construct() {
 		log.enter("construct");
 		
-		log.trace("check guard conditions");
+		log.debug("check guard conditions");
 		checkDefinitionTagName();
 
-		log.trace("construct canvas");
+		log.debug("construct canvas");
 		constructCanvas();
 		
-		log.trace("add custom style");
+		log.debug("add custom style");
 		addCustomStyle();
 		
-		log.trace("look for label");
+		log.debug("look for label");
 		constructLabel();
 		
-		log.trace("instantiate date box");
+		log.debug("instantiate date box");
 		constructDateBox();
 		
-		log.trace("add value change handler");
+		log.debug("add value change handler");
 		addValueChangeHandler();
 		
-		log.trace("look for hint");
+		log.debug("look for hint");
 		constructHint();
 
-		log.trace("complete construction");
+		log.debug("complete construction");
 		initWidget(this.canvas);
 		
 		log.leave();
@@ -152,7 +152,7 @@ public class XInputDate extends XFormControl {
 				 */
 				public void onValueChange(ValueChangeEvent<Date> event) {
 					log.enter("onValueChange");
-					log.trace("event value: "+event.getValue());
+					log.debug("event value: "+event.getValue());
 					String dateString = xsDateFormat.format(event.getValue());
 					model.setValue(dateString);
 					log.leave();

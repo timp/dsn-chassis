@@ -36,10 +36,10 @@ public class HttpCallbackBase implements RequestCallback {
 		try {
 
 			// log response details
-			log.trace("response status: "+response.getStatusCode() + " " + response.getStatusText());
-			log.trace("response headers: "+response.getHeadersAsString());
-			log.trace("response body: "+response.getText());
-			log.trace("content length (actual): "+response.getText().length());
+			log.debug("response status: "+response.getStatusCode() + " " + response.getStatusText());
+			log.debug("response headers: "+response.getHeadersAsString());
+			log.debug("response body: "+response.getText());
+			log.debug("content length (actual): "+response.getText().length());
 			
 			// store request and response
 			genericResult.addRequest(request);

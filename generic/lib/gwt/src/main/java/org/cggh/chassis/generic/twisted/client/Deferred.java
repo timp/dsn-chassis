@@ -92,11 +92,11 @@ public class Deferred<T> {
 		log.enter("_resback");
 		
 		this.fired = (res instanceof Throwable) ? ERROR : SUCCESS;
-		log.trace("set fired to: "+this.fired);
+		log.debug("set fired to: "+this.fired);
 		
 		this.results[this.fired] = res;
 		if (this.paused == 0) {
-			log.trace("firing callback chain");
+			log.debug("firing callback chain");
 			this._fire();
 		}
 		
@@ -121,7 +121,7 @@ public class Deferred<T> {
 	
 	public void callback(T res) {
 		log.enter("callback");
-		log.trace("result: "+res);
+		log.debug("result: "+res);
 		
 		this._check();
 		
@@ -247,32 +247,32 @@ public class Deferred<T> {
 
 		Queue<Pair> chain = this.chain;
 		int fired = this.fired;
-		log.trace("fired: "+fired);
+		log.debug("fired: "+fired);
 		
 		Object res = this.results[fired];
 		Function cb = null;
 		final Deferred self = this;
 		Deferred defres = null;
 
-		log.trace("iterate through queue");
+		log.debug("iterate through queue");
 		for (int i=0; chain.size() > 0 && this.paused == 0; i++) {
 			
-			log.trace("iteration: "+i);
-			log.trace("result: "+res+"; fired: "+fired);
+			log.debug("iteration: "+i);
+			log.debug("result: "+res+"; fired: "+fired);
 
-			log.trace("pick pair of head of queue");
+			log.debug("pick pair of head of queue");
 			Pair pair = chain.poll();
 			
 			Function f = (fired == SUCCESS)? pair.getCallback() : pair.getErrback();
 
 			if (f == null) {
-				log.trace("function to apply is null, continuing");
+				log.debug("function to apply is null, continuing");
 				continue;
 			}
 			
             try {
             	
-            	log.trace("apply function");
+            	log.debug("apply function");
             	res = f.apply(res);
             	
             	//
@@ -288,14 +288,14 @@ public class Deferred<T> {
 
             	// handle a deferred result
     			if (res instanceof Deferred) {
-            		log.trace("handle a deferred result");
+            		log.debug("handle a deferred result");
     				defres = (Deferred) res;
             		cb = new Function() {
             			public Object apply(Object in) {
             				log.enter("anonymous chain Function :: apply");
-            				log.trace("decrement paused");
+            				log.debug("decrement paused");
                 			self.paused--;
-                			log.trace("chain result");
+                			log.debug("chain result");
                 			self._resback(in);
                 			log.leave();
                 			return null;
@@ -305,20 +305,20 @@ public class Deferred<T> {
     			}
 
             } catch (Throwable err) {
-            	log.trace("caught throwable from function: "+err.getLocalizedMessage());
+            	log.debug("caught throwable from function: "+err.getLocalizedMessage());
             	fired = ERROR;
             	res = err;
             }	
             
 		}
 		
-		log.trace("left iteration loop");
+		log.debug("left iteration loop");
 		
         this.fired = fired;
         this.results[fired] = res;
         
         if (this.chain.size() == 0 && this.paused == 0 && this.finalizer != null) {
-        	log.trace("finalizing");
+        	log.debug("finalizing");
         	this.finalized = true;
         	this.finalizer.apply(res);
         }
@@ -326,12 +326,12 @@ public class Deferred<T> {
         if (cb != null && this.paused == 1) {
         	// this is for "tail recursion" in case the dependent deferred
         	// is already fired
-        	log.trace("add callback to deferred result to chain together");
+        	log.debug("add callback to deferred result to chain together");
         	defres.addBoth(cb);
         	defres.chained = true;
         }
         
-        log.trace("leaving; fired: "+fired+"; paused: "+paused);
+        log.debug("leaving; fired: "+fired+"; paused: "+paused);
         log.leave();
 	}
 

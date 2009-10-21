@@ -217,20 +217,20 @@ public class XQuestionnaireView extends XQSViewBase {
 	private void renderQuestion(Element questionDefinition, Element dataParent, boolean readOnly) {
 		log.enter("renderQuestion");
 		
-		log.trace("create prototype");
+		log.debug("create prototype");
 		XQuestion prototype = new XQuestion(questionDefinition, owner);
 		this.questions.add(prototype);
 		this.widgets.add(prototype);
 
 		// we need to know, is it repeatable, and if so, how many matching data elements?
 		
-		log.trace("find expected element for definition");
+		log.debug("find expected element for definition");
 		String expectedElementName = prototype.getModel().getElementName();
 		String expectedElementNamespaceUri = prototype.getModel().getElementNamespaceUri();
-		log.trace("look for potentially matching data elements ["+expectedElementNamespaceUri+" :: "+expectedElementName+"]");
+		log.debug("look for potentially matching data elements ["+expectedElementNamespaceUri+" :: "+expectedElementName+"]");
 		List<Element> dataElements = new ArrayList<Element>();
 		for (Element e : XML.elements(dataParent.getChildNodes())) {
-			log.trace("examining element: "+e.toString());
+			log.debug("examining element: "+e.toString());
 			if (
 				expectedElementName.equals(XML.getLocalName(e)) &&
 				expectedElementNamespaceUri.equals(e.getNamespaceURI())
@@ -239,26 +239,26 @@ public class XQuestionnaireView extends XQSViewBase {
 			}
 		}
 
-		log.trace("found "+dataElements.size()+" data elements");
+		log.debug("found "+dataElements.size()+" data elements");
 		
 		if (dataElements.size() == 0) {
-			log.trace("no matching data elements, use prototype");
+			log.debug("no matching data elements, use prototype");
 			prototype.init(readOnly); // initialise without data
 		}
 		else if (dataElements.size() >= 1) {
-			log.trace("found at least one matching data element, initialising prototype with first data element");
+			log.debug("found at least one matching data element, initialising prototype with first data element");
 			prototype.init(dataElements.get(0), readOnly);
 		}
 		
 		if (dataElements.size() > 1 && prototype.isRepeatable()) {
-			log.trace("found more than one matching data element ("+dataElements.size()+"), and prototype is repeatable");
+			log.debug("found more than one matching data element ("+dataElements.size()+"), and prototype is repeatable");
 			
 			for (int i=1; i<dataElements.size(); i++) {
 				Element dataElement = dataElements.get(i);
 				XQuestion clone = prototype.clone();
 				this.questions.add(clone);
 				this.widgets.add(clone);
-				log.trace("init clone "+i+" with data");
+				log.debug("init clone "+i+" with data");
 				clone.init(dataElement, readOnly);				
 			}
 			
@@ -297,7 +297,7 @@ public class XQuestionnaireView extends XQSViewBase {
 	private void renderQuestionnaire(Element questionnaireDefinition, Element dataParent, boolean readOnly) {
 		log.enter("renderQuestionnaire");
 		
-		log.trace("create prototype");
+		log.debug("create prototype");
 		XQuestionnaire prototype = new XQuestionnaire(questionnaireDefinition, owner);
 		this.nestedQuestionnaires.add(prototype);
 		this.widgets.add(prototype);
@@ -305,13 +305,13 @@ public class XQuestionnaireView extends XQSViewBase {
 		// we need to know, is it repeatable, and if so, how many matching data elements?
 		
 		// TODO code smell
-		log.trace("find expected element for definition");
+		log.debug("find expected element for definition");
 		String expectedElementName = prototype.getModel().getElementName();
 		String expectedElementNamespaceUri = prototype.getModel().getElementNamespaceUri();
-		log.trace("look for potentially matching data elements ["+expectedElementNamespaceUri+" :: "+expectedElementName+"]");
+		log.debug("look for potentially matching data elements ["+expectedElementNamespaceUri+" :: "+expectedElementName+"]");
 		List<Element> dataElements = new ArrayList<Element>();
 		for (Element e : XML.elements(dataParent.getChildNodes())) {
-			log.trace("examining element: "+e.toString());
+			log.debug("examining element: "+e.toString());
 			if (
 				expectedElementName.equals(XML.getLocalName(e)) &&
 				expectedElementNamespaceUri.equals(e.getNamespaceURI())
@@ -319,24 +319,24 @@ public class XQuestionnaireView extends XQSViewBase {
 				dataElements.add(e);
 			}
 		}
-		log.trace("found "+dataElements.size()+" data elements");
+		log.debug("found "+dataElements.size()+" data elements");
 		
 		if (dataElements.size() == 0) {
-			log.trace("no matching data elements, use prototype");
+			log.debug("no matching data elements, use prototype");
 			prototype.init(readOnly); // initialise without data
 		}
 		else if (dataElements.size() >= 1) {
-			log.trace("found at least one matching data element, initialising prototype with first data element");
+			log.debug("found at least one matching data element, initialising prototype with first data element");
 			prototype.init(dataElements.get(0), readOnly);
 		}
 		
 		if (dataElements.size() > 1 && prototype.isRepeatable()) {
-			log.trace("found more than one matching data element ("+dataElements.size()+"), and prototype is repeatable");
+			log.debug("found more than one matching data element ("+dataElements.size()+"), and prototype is repeatable");
 			
 			for (int i=1; i<dataElements.size(); i++) {
 				Element dataElement = dataElements.get(i);
 				XQuestionnaire clone = prototype.clone();
-				log.trace("init clone "+i+" with data");
+				log.debug("init clone "+i+" with data");
 				this.nestedQuestionnaires.add(clone);
 				this.widgets.add(clone);
 				clone.init(dataElement, readOnly);

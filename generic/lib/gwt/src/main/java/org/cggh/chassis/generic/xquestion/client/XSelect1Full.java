@@ -63,19 +63,19 @@ public class XSelect1Full extends XSelectBase {
 	private void construct() {
 		log.enter("construct");
 		
-		log.trace("check guard conditions");
+		log.debug("check guard conditions");
 		checkDefinition();
 
-		log.trace("construct canvas");
+		log.debug("construct canvas");
 		constructCanvas();
 		
-		log.trace("add custom style");
+		log.debug("add custom style");
 		addCustomStyle();
 		
-		log.trace("look for label");
+		log.debug("look for label");
 		constructLabel();
 		
-		log.trace("map values to items");
+		log.debug("map values to items");
 		constructItemMap();
 		
 		deferredItems.addCallback(new Function<List<Element>, List<Element>>() {
@@ -89,13 +89,13 @@ public class XSelect1Full extends XSelectBase {
 		});
 		
 		
-		log.trace("construct button group name");
+		log.debug("construct button group name");
 		constructButtonGroupName();
 		
-		log.trace("look for hint");
+		log.debug("look for hint");
 		constructHint();
 
-		log.trace("complete construction");
+		log.debug("complete construction");
 		initWidget(this.canvas);
 		
 		log.leave();
@@ -137,7 +137,7 @@ public class XSelect1Full extends XSelectBase {
 				buttonGroupName += siblings.indexOf(this.owner);
 			}
 			
-			log.trace("using button group name: "+buttonGroupName);	
+			log.debug("using button group name: "+buttonGroupName);	
 
 		}
 
@@ -178,10 +178,10 @@ public class XSelect1Full extends XSelectBase {
 	
 	private void constructRadioButton(String itemValue, String itemLabel, int index) {
 
-		log.trace("adding radio button for item label: "+itemLabel+"; value: "+itemValue);
+		log.debug("adding radio button for item label: "+itemLabel+"; value: "+itemValue);
 
 		if (itemLabel != null) {
-			log.trace("label != null, adding label widget");
+			log.debug("label != null, adding label widget");
 			radioButtonGrid.setWidget(index, 0, new Label(itemLabel));
 		}
 		
@@ -193,9 +193,9 @@ public class XSelect1Full extends XSelectBase {
 		buttons.add(button);
 		
 		button.setFormValue(itemValue);
-		log.trace("checking button form value, expect: "+itemValue+"; found: "+button.getFormValue());
+		log.debug("checking button form value, expect: "+itemValue+"; found: "+button.getFormValue());
 		
-		log.trace("adding button to grid");
+		log.debug("adding button to grid");
 		radioButtonGrid.setWidget(index, 1, button);
 		
 		button.addValueChangeHandler(new RadioButtonValueChangeHandler(button));
@@ -255,12 +255,12 @@ public class XSelect1Full extends XSelectBase {
 		 */
 		public void onValueChange(ValueChangeEvent<Boolean> event) {
 			log.enter("onValueChange");
-			log.trace("event value: "+event.getValue());
+			log.debug("event value: "+event.getValue());
 
 			if (event.getValue()) {
 				String value = this.button.getFormValue();
 				model.setValue(value);	
-				log.trace("setting model with value: "+value);
+				log.debug("setting model with value: "+value);
 			}
 
 			log.leave();

@@ -45,7 +45,7 @@ public class SubmissionQueryServiceImpl implements SubmissionQueryService {
 		log.enter("getSubmissionsByAuthorEmail");
 
 		String url = this.serviceUrl + "?authoremail=" + email;
-		log.trace("url: "+url);
+		log.debug("url: "+url);
 
 		SubmissionFactory factory = new SubmissionFactoryImpl();
 		AtomService service = new AtomServiceImpl(factory);
@@ -55,7 +55,7 @@ public class SubmissionQueryServiceImpl implements SubmissionQueryService {
 		Function<AtomFeed,SubmissionFeed> adapter = new Function<AtomFeed,SubmissionFeed>() {
 			public SubmissionFeed apply(AtomFeed in) {
 				log.enter("[anonymous adapter function]");
-				log.trace("found "+in.getEntries().size()+" results; casting as submission feed");
+				log.debug("found "+in.getEntries().size()+" results; casting as submission feed");
 				log.leave();
 				return (SubmissionFeed) in;
 			}
