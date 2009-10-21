@@ -1,5 +1,5 @@
-function org_cggh_chassis_generic_client_gwt_application_Application(){
-  var $intern_0 = '', $intern_27 = '" for "gwt:onLoadErrorFn"', $intern_25 = '" for "gwt:onPropertyErrorFn"', $intern_10 = '"><\/script>', $intern_12 = '#', $intern_14 = '/', $intern_47 = '<script defer="defer">org_cggh_chassis_generic_client_gwt_application_Application.onInjectionDone(\'org.cggh.chassis.generic.client.gwt.application.Application\')<\/script>', $intern_9 = '<script id="', $intern_22 = '=', $intern_13 = '?', $intern_24 = 'Bad handler "', $intern_46 = 'DOMContentLoaded', $intern_45 = "GWT module 'org.cggh.chassis.generic.client.gwt.application.Application' needs to be (re)compiled, please run a compile or use the Compile/Browse button in hosted mode", $intern_11 = 'SCRIPT', $intern_8 = '__gwt_marker_org.cggh.chassis.generic.client.gwt.application.Application', $intern_15 = 'base', $intern_4 = 'begin', $intern_3 = 'bootstrap', $intern_17 = 'clear.cache.gif', $intern_21 = 'content', $intern_7 = 'end', $intern_39 = 'gecko', $intern_40 = 'gecko1_8', $intern_5 = 'gwt.hybrid', $intern_26 = 'gwt:onLoadErrorFn', $intern_23 = 'gwt:onPropertyErrorFn', $intern_20 = 'gwt:property', $intern_43 = 'hosted.html?org_cggh_chassis_generic_client_gwt_application_Application', $intern_38 = 'ie6', $intern_37 = 'ie8', $intern_28 = 'iframe', $intern_16 = 'img', $intern_29 = "javascript:''", $intern_42 = 'loadExternalRefs', $intern_18 = 'meta', $intern_31 = 'moduleRequested', $intern_6 = 'moduleStartup', $intern_36 = 'msie', $intern_19 = 'name', $intern_33 = 'opera', $intern_1 = 'org.cggh.chassis.generic.client.gwt.application.Application', $intern_30 = 'position:absolute;width:0;height:0;border:none', $intern_35 = 'safari', $intern_44 = 'selectingPermutation', $intern_2 = 'startup', $intern_41 = 'unknown', $intern_32 = 'user.agent', $intern_34 = 'webkit';
+function org_cggh_chassis_generic_client_gwt_main_Main(){
+  var $intern_0 = '', $intern_27 = '" for "gwt:onLoadErrorFn"', $intern_25 = '" for "gwt:onPropertyErrorFn"', $intern_10 = '"><\/script>', $intern_12 = '#', $intern_14 = '/', $intern_54 = '<script defer="defer">org_cggh_chassis_generic_client_gwt_main_Main.onInjectionDone(\'org.cggh.chassis.generic.client.gwt.main.Main\')<\/script>', $intern_9 = '<script id="', $intern_22 = '=', $intern_13 = '?', $intern_24 = 'Bad handler "', $intern_53 = 'DOMContentLoaded', $intern_45 = "GWT module 'org.cggh.chassis.generic.client.gwt.main.Main' needs to be (re)compiled, please run a compile or use the Compile/Browse button in hosted mode", $intern_11 = 'SCRIPT', $intern_8 = '__gwt_marker_org.cggh.chassis.generic.client.gwt.main.Main', $intern_15 = 'base', $intern_4 = 'begin', $intern_3 = 'bootstrap', $intern_17 = 'clear.cache.gif', $intern_21 = 'content', $intern_7 = 'end', $intern_39 = 'gecko', $intern_40 = 'gecko1_8', $intern_52 = 'gwt-log.css', $intern_5 = 'gwt.hybrid', $intern_46 = 'gwt/chrome/chrome.css', $intern_26 = 'gwt:onLoadErrorFn', $intern_23 = 'gwt:onPropertyErrorFn', $intern_20 = 'gwt:property', $intern_51 = 'head', $intern_43 = 'hosted.html?org_cggh_chassis_generic_client_gwt_main_Main', $intern_50 = 'href', $intern_38 = 'ie6', $intern_37 = 'ie8', $intern_28 = 'iframe', $intern_16 = 'img', $intern_29 = "javascript:''", $intern_47 = 'link', $intern_42 = 'loadExternalRefs', $intern_18 = 'meta', $intern_31 = 'moduleRequested', $intern_6 = 'moduleStartup', $intern_36 = 'msie', $intern_19 = 'name', $intern_33 = 'opera', $intern_1 = 'org.cggh.chassis.generic.client.gwt.main.Main', $intern_30 = 'position:absolute;width:0;height:0;border:none', $intern_48 = 'rel', $intern_35 = 'safari', $intern_44 = 'selectingPermutation', $intern_2 = 'startup', $intern_49 = 'stylesheet', $intern_41 = 'unknown', $intern_32 = 'user.agent', $intern_34 = 'webkit';
   var $wnd = window, $doc = document, $stats = $wnd.__gwtStatsEvent?function(a){
     return $wnd.__gwtStatsEvent(a);
   }
@@ -35,7 +35,7 @@ function org_cggh_chassis_generic_client_gwt_application_Application(){
         }
         ;
       }
-      org_cggh_chassis_generic_client_gwt_application_Application = null;
+      org_cggh_chassis_generic_client_gwt_main_Main = null;
       frameWnd.gwtOnLoad(onLoadErrorFunc, $intern_1, base);
       $stats && $stats({moduleName:$intern_1, subSystem:$intern_2, evtGroup:$intern_6, millis:(new Date()).getTime(), type:$intern_7});
     }
@@ -201,14 +201,14 @@ function org_cggh_chassis_generic_client_gwt_application_Application(){
   }
   ;
   values[$intern_32] = {gecko:0, gecko1_8:1, ie6:2, ie8:3, opera:4, safari:5};
-  org_cggh_chassis_generic_client_gwt_application_Application.onScriptLoad = function(){
+  org_cggh_chassis_generic_client_gwt_main_Main.onScriptLoad = function(){
     if (frameInjected) {
       loadDone = true;
       maybeStartModule();
     }
   }
   ;
-  org_cggh_chassis_generic_client_gwt_application_Application.onInjectionDone = function(){
+  org_cggh_chassis_generic_client_gwt_main_Main.onInjectionDone = function(){
     scriptsDone = true;
     $stats && $stats({moduleName:$intern_1, subSystem:$intern_2, evtGroup:$intern_42, millis:(new Date()).getTime(), type:$intern_7});
     maybeStartModule();
@@ -238,9 +238,23 @@ function org_cggh_chassis_generic_client_gwt_application_Application(){
   function onBodyDone(){
     if (!bodyDone) {
       bodyDone = true;
+      if (!__gwt_stylesLoaded[$intern_46]) {
+        var l = $doc.createElement($intern_47);
+        __gwt_stylesLoaded[$intern_46] = l;
+        l.setAttribute($intern_48, $intern_49);
+        l.setAttribute($intern_50, base + $intern_46);
+        $doc.getElementsByTagName($intern_51)[0].appendChild(l);
+      }
+      if (!__gwt_stylesLoaded[$intern_52]) {
+        var l = $doc.createElement($intern_47);
+        __gwt_stylesLoaded[$intern_52] = l;
+        l.setAttribute($intern_48, $intern_49);
+        l.setAttribute($intern_50, base + $intern_52);
+        $doc.getElementsByTagName($intern_51)[0].appendChild(l);
+      }
       maybeStartModule();
       if ($doc.removeEventListener) {
-        $doc.removeEventListener($intern_46, onBodyDone, false);
+        $doc.removeEventListener($intern_53, onBodyDone, false);
       }
       if (onBodyDoneTimerId) {
         clearInterval(onBodyDoneTimerId);
@@ -249,7 +263,7 @@ function org_cggh_chassis_generic_client_gwt_application_Application(){
   }
 
   if ($doc.addEventListener) {
-    $doc.addEventListener($intern_46, function(){
+    $doc.addEventListener($intern_53, function(){
       maybeInjectFrame();
       onBodyDone();
     }
@@ -264,7 +278,7 @@ function org_cggh_chassis_generic_client_gwt_application_Application(){
   , 50);
   $stats && $stats({moduleName:$intern_1, subSystem:$intern_2, evtGroup:$intern_3, millis:(new Date()).getTime(), type:$intern_7});
   $stats && $stats({moduleName:$intern_1, subSystem:$intern_2, evtGroup:$intern_42, millis:(new Date()).getTime(), type:$intern_4});
-  $doc.write($intern_47);
+  $doc.write($intern_54);
 }
 
-org_cggh_chassis_generic_client_gwt_application_Application();
+org_cggh_chassis_generic_client_gwt_main_Main();
