@@ -14,7 +14,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
  * @author aliman
  *
  */
-public class ApplicationDefaultRenderer implements ApplicationRenderer {
+public class ChassisClientDefaultRenderer implements ChassisClientRenderer {
 
 	
 	
@@ -26,7 +26,7 @@ public class ApplicationDefaultRenderer implements ApplicationRenderer {
 	
 	
 	
-	public ApplicationDefaultRenderer() {
+	public ChassisClientDefaultRenderer() {
 		log.enter("<init>");
 
 		log.trace("create user details widget");

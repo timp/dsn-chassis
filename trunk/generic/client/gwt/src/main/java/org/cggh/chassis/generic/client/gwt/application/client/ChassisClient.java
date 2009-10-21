@@ -9,14 +9,14 @@ import com.google.gwt.user.client.ui.Composite;
  * @author aliman
  *
  */
-public class Application extends Composite {
+public class ChassisClient extends Composite {
 
-	private ApplicationRenderer renderer;
+	private ChassisClientRenderer renderer;
 
-	public Application() {
+	public ChassisClient() {
 		// TODO
 		
-		this.renderer = new ApplicationDefaultRenderer();
+		this.renderer = new ChassisClientDefaultRenderer();
 		
 		this.initWidget(this.renderer.getCanvas());
 		

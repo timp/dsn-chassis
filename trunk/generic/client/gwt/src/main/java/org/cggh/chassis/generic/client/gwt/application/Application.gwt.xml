@@ -8,20 +8,10 @@
   <inherits name="com.google.gwt.user.User" />
 
 
-  <!-- theme GWT dependencies -->
-
-  <!-- <inherits name="com.google.gwt.user.theme.standard.Standard"/> -->
-  <inherits name="com.google.gwt.user.theme.chrome.Chrome" />
-  <!-- <inherits name="com.google.gwt.user.theme.dark.Dark"/> -->
-
-
   <!-- Chassis GWT client dependencies -->
+
   <inherits name="org.cggh.chassis.generic.client.gwt.widget.userdetails.UserDetailsWidget" />
 
-
-  <!-- entry points -->
-  
-  <entry-point class="org.cggh.chassis.generic.client.gwt.application.client.ApplicationEntryPoint" />
 
 
 </module>
