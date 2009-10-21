@@ -39,21 +39,21 @@ public class MockSubmissionQueryService implements SubmissionQueryService {
 		
 		// TODO Auto-generated method stub
 		
-		log.trace("create deferred submission feed for results");
+		log.debug("create deferred submission feed for results");
 		Deferred<SubmissionFeed> deferred = new Deferred<SubmissionFeed>();
 		
-		log.trace("hack to get feed URL for all submissions");
+		log.debug("hack to get feed URL for all submissions");
 		String submissionFeedURL = serviceURL.replaceFirst("query", "edit"); // hack, assume we can get from submission query service URL to submission feed URL by replacing "query" with "edit"
 		
-		log.trace("set up feed to hold results");
+		log.debug("set up feed to hold results");
 		MockSubmissionFeed results = factory.createMockSubmissionFeed("query submissions by author email results ["+email+"]");
 
 		try {
 			
-			log.trace("fish out the feed to query");
+			log.debug("fish out the feed to query");
 			AtomFeed submissions = store.retrieveAll(submissionFeedURL);
 
-			log.trace("execute the query");
+			log.debug("execute the query");
 			for (AtomEntry entry : submissions.getEntries()) {
 				if (entry instanceof MockSubmissionEntry) {
 					MockSubmissionEntry submission = (MockSubmissionEntry) entry;

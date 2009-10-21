@@ -44,7 +44,7 @@ public class StudyQueryServiceImpl implements StudyQueryService {
 		log.enter("getStudiesByAuthorEmail");
 
 		String url = this.serviceUrl + "?authoremail=" + email;
-		log.trace("url: "+url);
+		log.debug("url: "+url);
 
 		StudyFactory factory = new StudyFactoryImpl();
 		AtomService service = new AtomServiceImpl(factory);
@@ -54,7 +54,7 @@ public class StudyQueryServiceImpl implements StudyQueryService {
 		Function<AtomFeed,StudyFeed> adapter = new Function<AtomFeed,StudyFeed>() {
 			public StudyFeed apply(AtomFeed in) {
 				log.enter("[anonymous adapter function]");
-				log.trace("found "+in.getEntries().size()+" results; casting as study feed");
+				log.debug("found "+in.getEntries().size()+" results; casting as study feed");
 				log.leave();
 				return (StudyFeed) in;
 			}

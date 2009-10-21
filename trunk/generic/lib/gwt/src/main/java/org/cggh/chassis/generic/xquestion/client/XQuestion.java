@@ -241,7 +241,7 @@ public class XQuestion extends Composite {
 	public XQuestion clone() {
 		log.enter("clone");
 		
-		log.trace("clone this XQuestion");
+		log.debug("clone this XQuestion");
 		XQuestion clone = new XQuestion(this.definition, this.parentQuestionnaire, this);
 		
 		log.leave();
@@ -257,10 +257,10 @@ public class XQuestion extends Composite {
 		
 		if (this.repeatable) {
 			
-			log.trace("clone this XQuestion");
+			log.debug("clone this XQuestion");
 			XQuestion clone = this.clone();
 			
-			log.trace("insert cloned XQuestion into parent view");
+			log.debug("insert cloned XQuestion into parent view");
 			this.parentQuestionnaire.getView().addQuestion(clone, this);
 
 		}
@@ -296,10 +296,10 @@ public class XQuestion extends Composite {
 		
 		if (this.repeatable) {
 			
-			log.trace("remove question from view");
+			log.debug("remove question from view");
 			this.parentQuestionnaire.getView().removeQuestion(this);
 
-			log.trace("remove question from model");
+			log.debug("remove question from model");
 			this.parentQuestionnaire.getModel().removeChild(this.getModel());
 			
 		}

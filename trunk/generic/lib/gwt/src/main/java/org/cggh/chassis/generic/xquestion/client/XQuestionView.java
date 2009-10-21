@@ -170,7 +170,7 @@ public class XQuestionView extends XQSViewBase {
 				initFormControl(e, readOnly);
 				
 				String value = owner.getModel().getValue();
-				log.trace("setting form control value: "+value);
+				log.debug("setting form control value: "+value);
 				this.formControl.setValue(value, false);
 			
 			}
@@ -257,7 +257,7 @@ public class XQuestionView extends XQSViewBase {
 		
 		if (this.formControl != null) {
 			
-			log.trace("adding form control to list of widgets");
+			log.debug("adding form control to list of widgets");
 			this.widgets.add(formControl);
 			
 		}

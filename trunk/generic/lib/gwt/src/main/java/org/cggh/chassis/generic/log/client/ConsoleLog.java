@@ -32,38 +32,50 @@ public class ConsoleLog extends LogBase {
 
 	
 
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.wwarn.prototype.client.shared.Logger#log(java.lang.String)
-	 */
-	public native void doTrace(String contextualisedMessage) /*-{
+	public native void doDebug(String contextualisedMessage) /*-{
 		console.debug(contextualisedMessage);
 	}-*/;
 	
 	
 	
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.wwarn.prototype.client.shared.Logger#log(java.lang.String, java.lang.Throwable)
-	 */
-	public native void doTrace(String contextualisedMessage, Throwable exception) /*-{
+	public native void doDebug(String contextualisedMessage, Throwable exception) /*-{
 		console.debug(contextualisedMessage, exception);
 	}-*/;
 
 
 
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.log.client.Log#trace(java.lang.String)
-	 */
-	public void trace(String message) {
-		doTrace(contextualise(message));
+	public native void doInfo(String contextualisedMessage) /*-{
+		console.info(contextualisedMessage);
+	}-*/;
+
+
+
+	public native void doInfo(String contextualisedMessage, Throwable exception) /*-{
+		console.info(contextualisedMessage, exception);
+	}-*/;
+
+
+
+	public void debug(String message) {
+		doDebug(contextualise(message));
 	}
 
 
 
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.log.client.Log#trace(java.lang.String, java.lang.Throwable)
-	 */
-	public void trace(String message, Throwable exception) {
-		doTrace(contextualise(message), exception);
+	public void debug(String message, Throwable exception) {
+		doDebug(contextualise(message), exception);
+	}
+
+
+
+	public void info(String message) {
+		doInfo(contextualise(message));
+	}
+
+
+
+	public void info(String message, Throwable exception) {
+		doInfo(contextualise(message), exception);
 	}
 
 

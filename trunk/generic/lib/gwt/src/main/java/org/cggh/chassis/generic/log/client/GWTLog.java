@@ -35,8 +35,8 @@ public class GWTLog extends LogBase {
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.wwarn.prototype.client.shared.Logger#log(java.lang.String)
 	 */
-	public void trace(String message) {
-		GWT.log(contextualise(message), null);
+	public void debug(String message) {
+		GWT.log("[DEBUG] "+contextualise(message), null);
 	}
 	
 	
@@ -44,8 +44,26 @@ public class GWTLog extends LogBase {
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.wwarn.prototype.client.shared.Logger#log(java.lang.String, java.lang.Throwable)
 	 */
-	public void trace(String message, Throwable exception) {
-		GWT.log(contextualise(message), exception);
+	public void debug(String message, Throwable exception) {
+		GWT.log("[DEBUG] "+contextualise(message), exception);
+	}
+
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.log.client.Log#info(java.lang.String)
+	 */
+	public void info(String message) {
+		GWT.log("[INFO] "+contextualise(message), null);
+	}
+
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.log.client.Log#info(java.lang.String, java.lang.Throwable)
+	 */
+	public void info(String message, Throwable exception) {
+		GWT.log("[INFO] "+contextualise(message), exception);
 	}
 
 

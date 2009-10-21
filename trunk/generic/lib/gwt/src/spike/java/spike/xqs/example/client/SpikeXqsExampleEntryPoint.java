@@ -116,7 +116,7 @@ public class SpikeXqsExampleEntryPoint implements EntryPoint {
 
 			public Throwable apply(Throwable in) {
 				Window.alert("an error has occurred: "+in.getLocalizedMessage());
-				log.trace("errback", in);
+				log.debug("errback", in);
 				return in;
 			}
 
@@ -136,7 +136,7 @@ public class SpikeXqsExampleEntryPoint implements EntryPoint {
 
 			public Throwable apply(Throwable in) {
 				Window.alert("an error has occurred: "+in.getLocalizedMessage());
-				log.trace("errback", in);
+				log.debug("errback", in);
 				return in;
 			}
 
@@ -156,7 +156,7 @@ public class SpikeXqsExampleEntryPoint implements EntryPoint {
 
 			public Throwable apply(Throwable in) {
 				Window.alert("an error has occurred: "+in.getLocalizedMessage());
-				log.trace("errback", in);
+				log.debug("errback", in);
 				return in;
 			}
 

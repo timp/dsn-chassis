@@ -45,28 +45,28 @@ public class XTextArea extends XFormControl {
 	private void construct() {
 		log.enter("construct");
 		
-		log.trace("check guard conditions");
+		log.debug("check guard conditions");
 		checkDefinitionTagName(XQS.ELEMENT_TEXTAREA);
 
-		log.trace("construct canvas");
+		log.debug("construct canvas");
 		constructCanvas();
 		
-		log.trace("add custom style");
+		log.debug("add custom style");
 		addCustomStyle();
 		
-		log.trace("look for label");
+		log.debug("look for label");
 		constructLabel();
 		
-		log.trace("instantiate text area");
+		log.debug("instantiate text area");
 		constructTextArea();
 		
-		log.trace("add value change handler");
+		log.debug("add value change handler");
 		addValueChangeHandler();
 		
-		log.trace("look for hint");
+		log.debug("look for hint");
 		constructHint();
 
-		log.trace("complete construction");
+		log.debug("complete construction");
 		initWidget(this.canvas);
 		
 		log.leave();

@@ -339,7 +339,7 @@ public class XQuestionnaire extends Composite {
 	public XQuestionnaire clone() {
 		log.enter("clone");
 		
-		log.trace("clone this XQuestion");
+		log.debug("clone this XQuestion");
 		XQuestionnaire clone = new XQuestionnaire(this.definition, this.parentQuestionnaire, this.defaultPrefix, this.defaultNamespaceUri, this);
 		
 		log.leave();
@@ -356,10 +356,10 @@ public class XQuestionnaire extends Composite {
 		
 		if (this.repeatable && this.parentQuestionnaire != null) {
 			
-			log.trace("clone this XQuestion");
+			log.debug("clone this XQuestion");
 			XQuestionnaire clone = this.clone();
 			
-			log.trace("insert cloned XQuestion into parent view");
+			log.debug("insert cloned XQuestion into parent view");
 			this.parentQuestionnaire.getView().addQuestionnaire(clone, this);
 
 		}
@@ -374,10 +374,10 @@ public class XQuestionnaire extends Composite {
 		
 		if (this.repeatable && this.parentQuestionnaire != null) {
 			
-			log.trace("remove question from view");
+			log.debug("remove question from view");
 			this.parentQuestionnaire.getView().removeQuestion(this);
 
-			log.trace("remove question from model");
+			log.debug("remove question from model");
 			this.parentQuestionnaire.getModel().removeChild(this.getModel());
 			
 		}
@@ -450,19 +450,19 @@ public class XQuestionnaire extends Composite {
 
 			try {
 
-				log.trace("check preconditions");
+				log.debug("check preconditions");
 				checkStatusCode(request, response);
 				
-				log.trace("parse the response");
+				log.debug("parse the response");
 				Document doc = XMLParser.parse(response.getText());
 				XQuestionnaire questionnaire = new XQuestionnaire(doc.getDocumentElement());
 				
-				log.trace("pass through result");
+				log.debug("pass through result");
 				this.result.callback(questionnaire);
 				
 			} catch (Throwable t) {
 
-				log.trace("pass through error");
+				log.debug("pass through error");
 				this.result.errback(t);
 
 			}
@@ -517,19 +517,19 @@ public class XQuestionnaire extends Composite {
 
 			try {
 
-				log.trace("check preconditions");
+				log.debug("check preconditions");
 				checkStatusCode(request, response);
 				
-				log.trace("parse the response");
+				log.debug("parse the response");
 				Document doc = XMLParser.parse(response.getText());
 				this.questionnaire.init(doc.getDocumentElement());
 				
-				log.trace("pass through result");
+				log.debug("pass through result");
 				this.result.callback(null);
 				
 			} catch (Throwable t) {
 
-				log.trace("pass through error");
+				log.debug("pass through error");
 				this.result.errback(t);
 
 			}
@@ -582,19 +582,19 @@ public class XQuestionnaire extends Composite {
 
 			try {
 
-				log.trace("check preconditions");
+				log.debug("check preconditions");
 				checkStatusCode(request, response);
 				
-				log.trace("parse the response");
+				log.debug("parse the response");
 				Document doc = XMLParser.parse(response.getText());
 				this.questionnaire.init(doc.getDocumentElement(), true);
 				
-				log.trace("pass through result");
+				log.debug("pass through result");
 				this.result.callback(null);
 				
 			} catch (Throwable t) {
 
-				log.trace("pass through error");
+				log.debug("pass through error");
 				this.result.errback(t);
 
 			}

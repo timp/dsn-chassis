@@ -52,7 +52,7 @@ public class XQuestionModel extends XQSModelBase {
 		log.enter("setValue");
 		
 		if (this.element != null) {
-			log.trace("found element, setting simple content: "+value);
+			log.debug("found element, setting simple content: "+value);
 			XML.setSimpleContent(element, value);
 			parseMultiValues();
 		}
@@ -90,12 +90,12 @@ public class XQuestionModel extends XQSModelBase {
 	private void parseMultiValues() {
 		log.enter("parseMultiValues");
 		
-		log.trace("parsing: "+this.getValue());
+		log.debug("parsing: "+this.getValue());
 		if (this.getValue() != null) {
 			String[] tokens = this.getValue().split("\\s");
-			log.trace("found "+tokens.length+" tokens");
+			log.debug("found "+tokens.length+" tokens");
 			for (String token : tokens) {
-				log.trace("found token: "+token);
+				log.debug("found token: "+token);
 				this.values.add(token);
 			}
 		}

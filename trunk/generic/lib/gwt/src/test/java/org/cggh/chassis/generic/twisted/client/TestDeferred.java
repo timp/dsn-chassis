@@ -365,14 +365,14 @@ public class TestDeferred {
 	public void testCallbackReturnsDeferred() {
 		log.enter("testCallbackReturnsDeferred");
 
-		log.trace("create deferred under test");
+		log.debug("create deferred under test");
 		Deferred<String> def1 = new Deferred<String>();
 		final Deferred<Integer> def2 = new Deferred<Integer>();
 
-		log.trace("create test variables");
+		log.debug("create test variables");
 		final String s = "42";
 
-		log.trace("create callback functions");
+		log.debug("create callback functions");
 		
 		TestFunction<String,Deferred<Integer>> first = new TestFunction<String,Deferred<Integer>>() {
 			public Deferred<Integer> apply(String in) {
@@ -390,7 +390,7 @@ public class TestDeferred {
 			}
 		};
 
-		log.trace("check initial state");
+		log.debug("check initial state");
 		assertEquals(Deferred.INITIAL, def1.getStatus());
 		assertEquals(Deferred.INITIAL, def2.getStatus());
 		assertEquals(0, def1.getPaused());
@@ -398,14 +398,14 @@ public class TestDeferred {
 		assertEquals(0, first.called);
 		assertEquals(0, second.called);
 		
-		log.trace("add callback functions to def1");
+		log.debug("add callback functions to def1");
 		def1.addCallback(first);
 		def1.addCallback(second);
 		
-		log.trace("callback def1");
+		log.debug("callback def1");
 		def1.callback(s);
 		
-		log.trace("check state");
+		log.debug("check state");
 		assertEquals(Deferred.SUCCESS, def1.getStatus());
 		assertEquals(Deferred.INITIAL, def2.getStatus()); // has not been called yet
 		assertEquals(1, def1.getPaused()); // def1 should be paused, awaiting callback on def2
@@ -413,10 +413,10 @@ public class TestDeferred {
 		assertEquals(1, first.called); // should have been called
 		assertEquals(0, second.called); // should not be called until callback on def2
 		
-		log.trace("callback def2");
+		log.debug("callback def2");
 		def2.callback(42);
 
-		log.trace("check state");
+		log.debug("check state");
 		assertEquals(Deferred.SUCCESS, def1.getStatus());
 		assertEquals(Deferred.SUCCESS, def2.getStatus());
 		assertEquals(0, def1.getPaused()); // def1 should no longer be paused

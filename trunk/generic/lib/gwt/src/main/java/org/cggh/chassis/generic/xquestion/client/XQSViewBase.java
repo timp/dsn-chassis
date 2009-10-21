@@ -66,7 +66,7 @@ public abstract class XQSViewBase {
 						html += n.toString();
 					}
 				}
-				log.trace("rendering html: "+html);
+				log.debug("rendering html: "+html);
 				w = new HTML(html);
 //				this.canvas.add(w);
 			}

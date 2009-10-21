@@ -71,7 +71,7 @@ public abstract class XFormControl extends Composite {
 	
 	protected void addCustomStyle() {
 
-		log.trace("look for css class");
+		log.debug("look for css class");
 		String classAttribute = this.definition.getAttribute(XQS.ATTR_CLASS);
 		if (classAttribute != null) {
 			this.canvas.addStyleName(classAttribute);
@@ -84,7 +84,7 @@ public abstract class XFormControl extends Composite {
 
 		String labelContent = XML.getElementSimpleContentByTagName(definition, XQS.ELEMENT_LABEL);
 		if (labelContent != null) {
-			log.trace("found label: "+labelContent);
+			log.debug("found label: "+labelContent);
 			this.canvas.add(new Label(labelContent));
 		}
 		
@@ -100,7 +100,7 @@ public abstract class XFormControl extends Composite {
 
 		String hintContent = XML.getElementSimpleContentByTagName(definition, XQS.ELEMENT_HINT);
 		if (hintContent != null) {
-			log.trace("found hint: "+hintContent);
+			log.debug("found hint: "+hintContent);
 			this.canvas.setTitle(hintContent);
 		}
 
@@ -229,7 +229,7 @@ public abstract class XFormControl extends Composite {
 		 */
 		public void onValueChange(ValueChangeEvent<String> event) {
 			log.enter("onValueChange");
-			log.trace("event value: "+event.getValue());
+			log.debug("event value: "+event.getValue());
 			model.setValue(event.getValue());
 			log.leave();
 		}

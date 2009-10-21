@@ -60,7 +60,7 @@ public class GWTTestXQuestion extends GWTTestCase {
 		
 		Element e = q.getModel().getElement();
 		
-		log.trace("model element: "+e.toString());
+		log.debug("model element: "+e.toString());
 		
 		assertEquals("foo", e.getTagName());
 		assertEquals(1, e.getChildNodes().getLength()); // 1 text node
@@ -94,7 +94,7 @@ public class GWTTestXQuestion extends GWTTestCase {
 		
 		Element e = q.getModel().getElement();
 		
-		log.trace("model element: "+e.toString());
+		log.debug("model element: "+e.toString());
 		
 		assertEquals("x:foo", e.getTagName());
 		assertEquals("foo", XML.getLocalName(e));

@@ -35,7 +35,7 @@ public class AllenSauerLog extends LogBase {
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.wwarn.prototype.client.shared.Logger#log(java.lang.String)
 	 */
-	public void trace(String message) {
+	public void debug(String message) {
 		com.allen_sauer.gwt.log.client.Log.debug(contextualise(message));
 	}
 	
@@ -44,8 +44,26 @@ public class AllenSauerLog extends LogBase {
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.wwarn.prototype.client.shared.Logger#log(java.lang.String, java.lang.Throwable)
 	 */
-	public void trace(String message, Throwable exception) {
+	public void debug(String message, Throwable exception) {
 		com.allen_sauer.gwt.log.client.Log.debug(contextualise(message), exception);
+	}
+
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.log.client.Log#info(java.lang.String)
+	 */
+	public void info(String message) {
+		com.allen_sauer.gwt.log.client.Log.info(contextualise(message));
+	}
+
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.log.client.Log#info(java.lang.String, java.lang.Throwable)
+	 */
+	public void info(String message, Throwable exception) {
+		com.allen_sauer.gwt.log.client.Log.info(contextualise(message), exception);
 	}
 
 

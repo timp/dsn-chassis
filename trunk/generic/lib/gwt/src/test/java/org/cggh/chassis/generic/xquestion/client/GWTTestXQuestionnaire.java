@@ -87,7 +87,7 @@ public class GWTTestXQuestionnaire extends GWTTestCase {
 		
 		Element e = q.getModel().getElement();
 		
-		log.trace("model element: "+e.toString());
+		log.debug("model element: "+e.toString());
 		
 		assertEquals("foo", e.getTagName());
 		
@@ -154,7 +154,7 @@ public class GWTTestXQuestionnaire extends GWTTestCase {
 		
 		Element e = q.getModel().getElement();
 		
-		log.trace("model element: "+e.toString());
+		log.debug("model element: "+e.toString());
 		
 		assertEquals("x:foo", e.getTagName());
 		assertEquals("foo", XML.getLocalName(e));
@@ -236,7 +236,7 @@ public class GWTTestXQuestionnaire extends GWTTestCase {
 
 		Element e = questionnaire.getModel().getElement();
 		
-		log.trace("model element: "+e.toString());
+		log.debug("model element: "+e.toString());
 		
 		assertEquals("foo", e.getTagName());
 		
@@ -320,7 +320,7 @@ public class GWTTestXQuestionnaire extends GWTTestCase {
 
 		Element e = questionnaire.getModel().getElement();
 		
-		log.trace("model element: "+e.toString());
+		log.debug("model element: "+e.toString());
 		
 		assertEquals("a:foo", e.getTagName());
 		assertEquals("foo", XML.getLocalName(e));
@@ -415,7 +415,7 @@ public class GWTTestXQuestionnaire extends GWTTestCase {
 
 		Element e = questionnaire.getModel().getElement();
 		
-		log.trace("model element: "+e.toString());
+		log.debug("model element: "+e.toString());
 		
 		assertEquals("x:foo", e.getTagName());
 		assertEquals("foo", XML.getLocalName(e));
@@ -487,7 +487,7 @@ public class GWTTestXQuestionnaire extends GWTTestCase {
 
 		Element e = q.getModel().getElement();
 		
-		log.trace("model element, before repeat: "+e.toString());
+		log.debug("model element, before repeat: "+e.toString());
 		
 		assertEquals("foo", e.getTagName());
 		
@@ -516,7 +516,7 @@ public class GWTTestXQuestionnaire extends GWTTestCase {
 		
 		e = q.getModel().getElement();
 		
-		log.trace("model element, after repeat: "+e.toString());
+		log.debug("model element, after repeat: "+e.toString());
 		
 		assertEquals("foo", e.getTagName());
 		

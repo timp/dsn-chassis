@@ -40,11 +40,11 @@ public abstract class LogBase implements Log {
 	public void enter(String methodName) {
 		methodStack.push(methodName);
 		this.methodName = methodName;
-		this.trace("enter");
+		this.debug("enter");
 	}
 	
 	public void leave() {
-		this.trace("leave");
+		this.debug("leave");
 		methodStack.pop();
 		if (methodStack.size() > 0) {
 			methodName = methodStack.peek();
