@@ -9,7 +9,7 @@ import com.google.gwt.user.client.ui.Panel;
  * @author aliman
  *
  */
-public interface ApplicationRenderer {
+public interface ChassisClientRenderer {
 
 	public Panel getCanvas();
 	

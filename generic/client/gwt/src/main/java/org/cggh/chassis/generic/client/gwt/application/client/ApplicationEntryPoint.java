@@ -7,7 +7,7 @@ public class ApplicationEntryPoint implements EntryPoint {
 
 	public void onModuleLoad() {
 
-		Application application = new Application();
+		ChassisClient application = new ChassisClient();
 		
 		RootPanel.get("application").add(application);
 
