@@ -11,8 +11,8 @@ import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
  */
 public interface StudyControllerPubSubCreateAPI extends AbstractStudyControllerPubSubAPI {
 
-	public void onUserActionCreateStudyEntryCancelled();
+	public void fireOnUserActionCreateStudyEntryCancelled();
 
-	public void onNewStudySaved(StudyEntry studyEntry);
+	public void fireOnNewStudySaved(StudyEntry studyEntry);
 
 }

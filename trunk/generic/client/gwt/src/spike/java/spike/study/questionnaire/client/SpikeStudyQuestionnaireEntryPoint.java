@@ -4,6 +4,7 @@
 package spike.study.questionnaire.client;
 
 import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
+import org.cggh.chassis.generic.log.client.AllenSauerLog;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.twisted.client.Deferred;
@@ -27,6 +28,13 @@ public class SpikeStudyQuestionnaireEntryPoint implements EntryPoint {
 
 	
 	
+	static {
+		LogFactory.create = AllenSauerLog.create;
+	}
+	
+	
+	
+	
 	private Log log = LogFactory.getLog(this.getClass());
 	protected XQuestionnaire questionnaire;
 	boolean editable = true;
@@ -37,19 +45,22 @@ public class SpikeStudyQuestionnaireEntryPoint implements EntryPoint {
 	 * @see com.google.gwt.core.client.EntryPoint#onModuleLoad()
 	 */
 	public void onModuleLoad() {
-
+		log.enter("onModuleLoad");
+		
 		initGetDataButton();
 		
 		initReadOnlyButton();
 		
 		loadQuestionnaire();
 		
+		log.leave();
 	}
 	
 	
 	
 	
 	private void initReadOnlyButton() {
+		log.enter("initReadOnlyButton");
 
 		final Button readOnlyButton = new Button();
 		readOnlyButton.setText("view read-only");
@@ -72,12 +83,14 @@ public class SpikeStudyQuestionnaireEntryPoint implements EntryPoint {
 		});
 		RootPanel.get("controls").add(readOnlyButton);
 		
+		log.leave();
 	}
 
 
 
 
 	private void initGetDataButton() {
+		log.enter("initGetDataButton");
 
 		Button getDataButton = new Button();
 		getDataButton.setText("get form data");
@@ -92,12 +105,14 @@ public class SpikeStudyQuestionnaireEntryPoint implements EntryPoint {
 		});
 		RootPanel.get("controls").add(getDataButton);
 		
+		log.leave();
 	}
 
 
 
 
 	private void loadQuestionnaire() {
+		log.enter("loadQuestionnaire");
 		
 		final RootPanel qp = RootPanel.get("questionnaire");
 		
@@ -132,6 +147,7 @@ public class SpikeStudyQuestionnaireEntryPoint implements EntryPoint {
 
 		});
 
+		log.leave();
 	}
 	
 	

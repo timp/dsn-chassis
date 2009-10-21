@@ -6,6 +6,9 @@ package org.cggh.chassis.generic.client.gwt.widget.studymanagement.client;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.cggh.chassis.generic.log.client.Log;
+import org.cggh.chassis.generic.log.client.LogFactory;
+
 /**
  * @author raok
  *
@@ -24,6 +27,7 @@ public class StudyManagementWidgetModel {
 	
 	
 	
+	private Log log = LogFactory.getLog(this.getClass());
 	private Integer displayStatus = DISPLAYING_NONE;
 	private Set<StudyManagementWidgetModelListener> listeners = new HashSet<StudyManagementWidgetModelListener>();
 	final private StudyManagementWidget owner;
@@ -60,6 +64,7 @@ public class StudyManagementWidgetModel {
 	
 	
 	void setDisplayStatus(Integer requestedDisplay, Boolean userConfirmed) {
+		log.enter("setDisplayStatus");
 	
 		// TODO review this method, contains business logic - model should be
 		// dumb bean
@@ -67,21 +72,29 @@ public class StudyManagementWidgetModel {
 		Integer before = this.displayStatus;
 		
 		if ( !userConfirmed && couldStatusContainUnsavedData(before) ) {
+			log.debug("not user confirmed and could contain unsaved data ... firing user might lose changes");
 			
 			fireUserMightLoseChanges(requestedDisplay);
 			
 		} else {
-		
+
+			log.debug("user confirmed or safe transition");
+			
 			this.displayStatus = requestedDisplay;
 		
+			log.debug("firing display status changed");
 			fireOnDisplayStatusChanged(before, requestedDisplay);
 			
 			Boolean couldStatusContainUnsavedData = couldStatusContainUnsavedData(displayStatus);
 			
-			//alert owner
+			// alert owner TODO why?
+			
+			log.debug("firing event on owner");
 			owner.fireOnDisplayStatusChanged(couldStatusContainUnsavedData);
+
 		}
 		
+		log.leave();
 	}
 
 	

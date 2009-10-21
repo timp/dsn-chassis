@@ -33,6 +33,12 @@ public class CreateStudyWidget extends Composite implements CreateStudyWidgetAPI
 	
 	
 	
+	/**
+	 * Construct a create study widget, passing in the panel to use as the
+	 * widget's canvas.
+	 * 
+	 * @param canvas
+	 */
 	public CreateStudyWidget(Panel canvas) {
 		
 		model = new StudyModel();
@@ -51,6 +57,11 @@ public class CreateStudyWidget extends Composite implements CreateStudyWidgetAPI
 	
 	
 	
+	/**
+	 * Construct a create study widget with a custom renderer.
+	 * 
+	 * @param customRenderer
+	 */
 	public CreateStudyWidget(CreateStudyWidgetDefaultRenderer customRenderer) {
 		
 		model = new StudyModel();
@@ -73,7 +84,8 @@ public class CreateStudyWidget extends Composite implements CreateStudyWidgetAPI
 	
 	
 	/**
-	 * 
+	 * Construct a create study widget, letting the widget create its own
+	 * canvas.
 	 */
 	public CreateStudyWidget() {
 
@@ -96,24 +108,36 @@ public class CreateStudyWidget extends Composite implements CreateStudyWidgetAPI
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.client.gwt.widget.study.create.client.CreateStudyWidgetAPI#addCreateStudyWidgetListener(org.cggh.chassis.generic.client.gwt.widget.study.create.client.CreateStudyWidgetPubSubAPI)
 	 */
-	public void addCreateStudyWidgetListener(CreateStudyWidgetPubSubAPI listener) {
+	public void addListener(CreateStudyWidgetPubSubAPI listener) {
 		listeners.add(listener);
 	}
+	
+	
+	
 
-	public void onNewStudySaved(StudyEntry studyEntry) {
+	public void fireOnNewStudySaved(StudyEntry studyEntry) {
 		for (CreateStudyWidgetPubSubAPI listener : listeners) {
 			listener.onNewStudyCreated(studyEntry);
 		}
 	}
 
-	public void onUserActionCreateStudyEntryCancelled() {
+	
+	
+	
+	public void fireOnUserActionCreateStudyEntryCancelled() {
 		for (CreateStudyWidgetPubSubAPI listener : listeners) {
 			listener.onUserActionCreateStudyCancelled();
 		}
 	}
 
+	
+	
+	
 	public void setUpNewStudy(String authorEmail) {
 		controller.setUpNewStudy(authorEmail);
 	}
+	
+	
+	
 	
 }

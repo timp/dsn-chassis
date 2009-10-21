@@ -84,7 +84,7 @@ public class StudyManagementWidget extends Composite implements StudyManagementW
 
 		//register this widget as a listener to child widgets.
 		renderer.viewStudyWidget.addViewStudyWidgetListener(this);
-		renderer.createStudyWidget.addCreateStudyWidgetListener(this);
+		renderer.createStudyWidget.addListener(this);
 		renderer.editStudyWidget.addEditStudyWidgetListener(this);
 		renderer.viewStudiesWidget.addViewAllStudiesWidgetListener(this);
 		
