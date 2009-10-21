@@ -33,10 +33,10 @@ public class SpikeSubmissionExampleEntryPoint implements EntryPoint {
 	public void onModuleLoad() {
 		log.enter("onModuleLoad");
 		
-		log.trace("first create a study & persist");
+		log.debug("first create a study & persist");
 		Deferred<AtomEntry> deferredStudy = createStudy();
 		
-		log.trace("now create a submission linked to that study");
+		log.debug("now create a submission linked to that study");
 		deferredStudy.addCallback(new Function<StudyEntry,StudyEntry>() {
 
 			public StudyEntry apply(StudyEntry study) {
@@ -57,34 +57,34 @@ public class SpikeSubmissionExampleEntryPoint implements EntryPoint {
 
 		String feedURL = Configuration.getSubmissionFeedURL();
 		
-		log.trace("create a submission factory");
+		log.debug("create a submission factory");
 		MockSubmissionFactory factory = new MockSubmissionFactory(); // use mock for now
 		
-		log.trace("create an atom service");
+		log.debug("create an atom service");
 		MockAtomService service = new MockAtomService(factory); // use mock for now
 		service.createFeed(feedURL, "all submissions"); // bootstrap mock service with study feed, not needed for real service
 
-		log.trace("create a new entry");
+		log.debug("create a new entry");
 		SubmissionEntry submission = factory.createSubmissionEntry();
 		submission.setTitle("my first submission");
 		submission.setSummary("this submission contains all the clinical data for the 2004-05 Gambia study");
 		
-		log.trace("create and set author");
+		log.debug("create and set author");
 		AtomAuthor bob = factory.createAuthor(); 
 		bob.setName("bob");
 		bob.setEmail("bob@example.com");
 		submission.addAuthor(bob);
 
-		log.trace("add submission module names");
+		log.debug("add submission module names");
 		submission.addModule("clinical");
 
-		log.trace("set link from submission to study");
+		log.debug("set link from submission to study");
 		submission.addStudyLink(study.getEditLink().getHref());
 		
-		log.trace("persist new submission");
+		log.debug("persist new submission");
 		Deferred<AtomEntry> deferredEntry = service.postEntry(feedURL, submission);
 		
-		log.trace("add callback to handle successful service response");
+		log.debug("add callback to handle successful service response");
 		deferredEntry.addCallback(new Function<SubmissionEntry,SubmissionEntry>() { 
 
 			public SubmissionEntry apply(SubmissionEntry persistedSubmission) {
@@ -109,7 +109,7 @@ public class SpikeSubmissionExampleEntryPoint implements EntryPoint {
 			
 		});
 		
-		log.trace("add errback to handle service error");
+		log.debug("add errback to handle service error");
 		deferredEntry.addErrback(new Function<Throwable,Throwable>() {
 
 			public Throwable apply(Throwable t) {
@@ -138,32 +138,32 @@ public class SpikeSubmissionExampleEntryPoint implements EntryPoint {
 		
 		String feedURL = Configuration.getStudyFeedURL();
 
-		log.trace("create a study factory");
+		log.debug("create a study factory");
 		MockStudyFactory factory = new MockStudyFactory(); // use mock for now
 		
-		log.trace("create an atom service");
+		log.debug("create an atom service");
 		MockAtomService service = new MockAtomService(factory); // use mock for now
 		service.createFeed(feedURL, "all studies"); // bootstrap mock service with study feed, not needed for real service
 		
-		log.trace("create a new entry");
+		log.debug("create a new entry");
 		StudyEntry study = factory.createStudyEntry();
 		study.setTitle("my first study");
 		study.setSummary("this study was done from 2004-2005 in the Gambia");
 		
-		log.trace("create and set author");
+		log.debug("create and set author");
 		AtomAuthor bob = factory.createAuthor(); 
 		bob.setName("bob");
 		bob.setEmail("bob@example.com");
 		study.addAuthor(bob);
 
-		log.trace("add study module names");
+		log.debug("add study module names");
 		study.addModule("in vitro");
 		study.addModule("molecular");
 
-		log.trace("persist new study");
+		log.debug("persist new study");
 		Deferred<AtomEntry> deferredEntry = service.postEntry(feedURL, study);
 		
-		log.trace("add callback to handle successful service response");
+		log.debug("add callback to handle successful service response");
 		deferredEntry.addCallback(new Function<StudyEntry,StudyEntry>() { 
 
 			public StudyEntry apply(StudyEntry persistedStudy) {
@@ -187,7 +187,7 @@ public class SpikeSubmissionExampleEntryPoint implements EntryPoint {
 			
 		});
 		
-		log.trace("add errback to handle service error");
+		log.debug("add errback to handle service error");
 		deferredEntry.addErrback(new Function<Throwable,Throwable>() {
 
 			public Throwable apply(Throwable t) {

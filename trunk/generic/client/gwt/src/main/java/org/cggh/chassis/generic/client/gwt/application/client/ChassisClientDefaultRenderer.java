@@ -29,7 +29,7 @@ public class ChassisClientDefaultRenderer implements ChassisClientRenderer {
 	public ChassisClientDefaultRenderer() {
 		log.enter("<init>");
 
-		log.trace("create user details widget");
+		log.debug("create user details widget");
 		this.userDetailsWidget = new UserDetailsWidget();		
 		this.canvas.add(this.userDetailsWidget);
 		this.userDetailsWidget.refreshUserDetails();

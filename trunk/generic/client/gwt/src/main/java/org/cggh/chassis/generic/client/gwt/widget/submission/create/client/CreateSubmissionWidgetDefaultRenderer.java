@@ -308,7 +308,7 @@ public class CreateSubmissionWidgetDefaultRenderer implements SubmissionModelLis
 		log.enter("onSubmissionEntryChanged");
 		
 		this.isFormComplete = isValid;
-		log.trace("isFormComplete: " + isFormComplete);
+		log.debug("isFormComplete: " + isFormComplete);
 		
 		log.leave();
 	}

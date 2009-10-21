@@ -25,7 +25,7 @@ public class StudyManagementWidgetController {
 
 	public void displayCreateStudyWidget(Boolean userConfirmed) {
 		log.enter("displayCreateStudyWidget");
-		log.trace("userConfirmed: " + userConfirmed);
+		log.debug("userConfirmed: " + userConfirmed);
 			
 		model.setDisplayStatus(StudyManagementWidgetModel.DISPLAYING_CREATE_STUDY, userConfirmed);
 		
@@ -55,7 +55,7 @@ public class StudyManagementWidgetController {
 
 	public void displayViewAllStudiesWidget(Boolean userConfirmed) {
 		log.enter("displayViewAllStudiesWidget");
-		log.trace("userConfirmed: " + userConfirmed);
+		log.debug("userConfirmed: " + userConfirmed);
 		
 		model.setDisplayStatus(StudyManagementWidgetModel.DISPLAYING_VIEW_ALL_STUDIES, userConfirmed);
 					

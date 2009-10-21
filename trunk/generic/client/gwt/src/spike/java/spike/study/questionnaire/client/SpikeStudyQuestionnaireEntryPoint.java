@@ -126,7 +126,7 @@ public class SpikeStudyQuestionnaireEntryPoint implements EntryPoint {
 			public Throwable apply(Throwable in) {
 				qp.clear();
 				qp.add(new HTML("an error has occurred, see log for more details: "+in.getLocalizedMessage()));
-				log.trace("load questionnaire errback", in);
+				log.debug("load questionnaire errback", in);
 				return in;
 			}
 

@@ -149,7 +149,7 @@ public class SubmissionController implements SubmissionControllerEditAPI, Submis
 		
 		model.setSubmissionEntry(submissionEntryToLoad);
 		model.setStatus(SubmissionModel.STATUS_LOADED);
-		log.trace("submissionEntryToLoad: " + submissionEntryToLoad.toString());		
+		log.debug("submissionEntryToLoad: " + submissionEntryToLoad.toString());		
 		
 		log.leave();
 	}
@@ -170,7 +170,7 @@ public class SubmissionController implements SubmissionControllerEditAPI, Submis
 		
 		//add callbacks
 		deffered.addCallbacks(new LoadSubmissionEntryCallback(), new LoadSubmissionEntryErrback());
-		log.trace("Loading entryURL: " + submissionEntryURL);
+		log.debug("Loading entryURL: " + submissionEntryURL);
 		
 		log.leave();
 	}
@@ -245,8 +245,8 @@ public class SubmissionController implements SubmissionControllerEditAPI, Submis
 
 			if (error instanceof HttpException) {
 				HttpException e = (HttpException) error;
-				log.trace(e.getLocalizedMessage());
-				log.trace(e.getResponse().getText());
+				log.debug(e.getLocalizedMessage());
+				log.debug(e.getResponse().getText());
 			}
 			
 			model.setStatus(SubmissionModel.STATUS_ERROR);
@@ -269,11 +269,11 @@ public class SubmissionController implements SubmissionControllerEditAPI, Submis
 			
 			//alert owner
 			if (owner instanceof SubmissionControllerPubSubCreateAPI) {
-				log.trace("alerted create owner");
+				log.debug("alerted create owner");
 				
 				((SubmissionControllerPubSubCreateAPI)owner).newSubmissionSaved(submissionEntry);
 			} else if (owner instanceof SubmissionControllerPubSubEditAPI) {
-				log.trace("alerted edit owner");
+				log.debug("alerted edit owner");
 				
 				((SubmissionControllerPubSubEditAPI)owner).onSubmissionEntryUpdated(submissionEntry);
 			}

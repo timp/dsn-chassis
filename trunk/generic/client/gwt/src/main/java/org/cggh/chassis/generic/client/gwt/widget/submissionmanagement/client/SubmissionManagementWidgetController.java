@@ -25,7 +25,7 @@ public class SubmissionManagementWidgetController {
 
 	public void displayCreateSubmissionWidget(Boolean userConfirmed) {
 		log.enter("displayCreateSubmissionWidget");
-		log.trace("userConfirmed: " + userConfirmed);
+		log.debug("userConfirmed: " + userConfirmed);
 		
 		model.setDisplayStatus(SubmissionManagementWidgetModel.DISPLAYING_CREATE_SUBMISSION, userConfirmed);
 				
@@ -54,7 +54,7 @@ public class SubmissionManagementWidgetController {
 
 	public void displayViewAllSubmissionsWidget(Boolean userConfirmed) {
 		log.enter("displayViewAllSubmissionsWidget");
-		log.trace("userConfirmed: " + userConfirmed);
+		log.debug("userConfirmed: " + userConfirmed);
 		
 		model.setDisplayStatus(SubmissionManagementWidgetModel.DISPLAYING_VIEW_ALL_SUBMISSIONS, userConfirmed);
 					

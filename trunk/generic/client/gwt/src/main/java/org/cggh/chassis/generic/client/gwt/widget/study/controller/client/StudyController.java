@@ -128,7 +128,7 @@ public class StudyController implements StudyControllerEditAPI, StudyControllerC
 		model.setStudyEntry(studyEntryToLoad);
 		model.setStatus(StudyModel.STATUS_LOADED);
 		
-		log.trace("Loading study entry: " + studyEntryToLoad.toString());
+		log.debug("Loading study entry: " + studyEntryToLoad.toString());
 		
 		log.leave();
 	}
@@ -145,7 +145,7 @@ public class StudyController implements StudyControllerEditAPI, StudyControllerC
 		model.setStatus(StudyModel.STATUS_LOADING);
 		
 		//request studyEntry
-		log.trace("loading study entry at: " + studyEntryURL);
+		log.debug("loading study entry at: " + studyEntryURL);
 		Deferred<AtomEntry> deffered = persistenceService.getEntry(studyEntryURL);
 		
 		//add callbacks
@@ -194,7 +194,7 @@ public class StudyController implements StudyControllerEditAPI, StudyControllerC
 		model.setStatus(StudyModel.STATUS_SAVING);
 		
 		//post new studyEntry
-		log.trace("Saving studyEntry to feed: " + studyFeedURL);
+		log.debug("Saving studyEntry to feed: " + studyFeedURL);
 		Deferred<AtomEntry> deffered = persistenceService.postEntry(studyFeedURL, model.getStudyEntry());
 		
 		//add callbacks
@@ -216,7 +216,7 @@ public class StudyController implements StudyControllerEditAPI, StudyControllerC
 		
 		// assume link is relative
 		String entryUrl = studyFeedURL + studyEntry.getEditLink().getHref();
-		log.trace("Putting updated entry at: " + entryUrl);		
+		log.debug("Putting updated entry at: " + entryUrl);		
 		
 		//put studyEntry
 		Deferred<AtomEntry> deffered = persistenceService.putEntry(entryUrl, studyEntry);
@@ -235,8 +235,8 @@ public class StudyController implements StudyControllerEditAPI, StudyControllerC
 			
 			if (error instanceof HttpException) {
 				HttpException e = (HttpException) error;
-				log.trace(e.getLocalizedMessage());
-				log.trace(e.getResponse().getText());
+				log.debug(e.getLocalizedMessage());
+				log.debug(e.getResponse().getText());
 			}
 			
 			model.setStatus(StudyModel.STATUS_ERROR);

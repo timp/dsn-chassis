@@ -74,7 +74,7 @@ public class MainEntryPoint implements EntryPoint {
 		loggerPane.add(divLogger);
 
 
-		log.trace("developer tools constructed");
+		log.debug("developer tools constructed");
 		
 		log.leave();
 	}

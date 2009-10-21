@@ -46,27 +46,27 @@ public class SpikeVanillaAtomServiceEntryPoint implements EntryPoint {
 
 		String feedURL = "/chassis-generic-service-exist/atom/edit/example";
 			
-		log.trace("create an atom factory");
+		log.debug("create an atom factory");
 		AtomFactory factory = new AtomFactoryImpl(); 
 		
-		log.trace("create an atom service");
+		log.debug("create an atom service");
 		AtomService service = new AtomServiceImpl(factory); 
 		
-		log.trace("create a new entry");
+		log.debug("create a new entry");
 		AtomEntry entry = factory.createEntry();
 		entry.setTitle("a vanilla atom entry");
 		entry.setSummary("this is a vanilla atom entry, that's all");
 		
-		log.trace("create and set author");
+		log.debug("create and set author");
 		AtomAuthor bob = factory.createAuthor(); 
 		bob.setName("bob");
 		bob.setEmail("bob@example.com");
 		entry.addAuthor(bob);
 		
-		log.trace("persist new entry");
+		log.debug("persist new entry");
 		Deferred<AtomEntry> deferredEntry = service.postEntry(feedURL, entry);
 		
-		log.trace("add callback to handle successful service response");
+		log.debug("add callback to handle successful service response");
 		deferredEntry.addCallback(new Function<AtomEntry,AtomEntry>() {
 
 			public AtomEntry apply(AtomEntry persistedEntry) {
@@ -90,7 +90,7 @@ public class SpikeVanillaAtomServiceEntryPoint implements EntryPoint {
 			
 		});
 		
-		log.trace("add errback to handle service error");
+		log.debug("add errback to handle service error");
 		deferredEntry.addErrback(new Function<Throwable,Throwable>() {
 
 			public Throwable apply(Throwable t) {

@@ -51,7 +51,7 @@ public class ViewSubmissionsWidgetController {
 	public void loadSubmissionsByFeedURL() {
 		log.enter("loadSubmissionsByFeedURL");
 		
-		log.trace("loading submissions from feed: " + submissionFeedURL);
+		log.debug("loading submissions from feed: " + submissionFeedURL);
 		Deferred<AtomFeed> deferred = persistenceService.getFeed(submissionFeedURL);
 		deferred.addCallbacks(new LoadSubmissionFeedCallback(), new LoadSubmissionFeedErrback());
 		
@@ -66,7 +66,7 @@ public class ViewSubmissionsWidgetController {
 			
 			model.setSubmissionEntries(submissionFeed.getSubmissionEntries());
 			model.setStatus(ViewSubmissionsWidgetModel.STATUS_LOADED);
-			log.trace(submissionFeed.getSubmissionEntries().size() + " submissions loaded.");
+			log.debug(submissionFeed.getSubmissionEntries().size() + " submissions loaded.");
 			
 			log.leave();
 			return submissionFeed;
@@ -95,7 +95,7 @@ public class ViewSubmissionsWidgetController {
 	public void loadSubmissionsByEntryURLs(Set<String> relativeSubmissionEntryURLsToLoad) {
 		log.enter("loadSubmissionEntryURLs");
 		
-		log.trace(relativeSubmissionEntryURLsToLoad.size() + " being loaded.");
+		log.debug(relativeSubmissionEntryURLsToLoad.size() + " being loaded.");
 		
 		final List<SubmissionEntry> submissionEntries = new ArrayList<SubmissionEntry>();
 		
@@ -132,7 +132,7 @@ public class ViewSubmissionsWidgetController {
 				model.setSubmissionEntries(submissionEntries);
 				model.setStatus(ViewSubmissionsWidgetModel.STATUS_LOADED);
 				
-				log.trace(noOfSubmissions + " loaded");
+				log.debug(noOfSubmissions + " loaded");
 			}
 			
 			log.leave();
@@ -154,7 +154,7 @@ public class ViewSubmissionsWidgetController {
 	public void loadSubmissionsByAuthorEmail(String authorEmail) {
 		log.enter("loadSubmissionsByAuthorEmail");
 		
-		log.trace("loading submissions with authorEmail: " + authorEmail);
+		log.debug("loading submissions with authorEmail: " + authorEmail);
 		Deferred<SubmissionFeed> deferred = submissionQueryService.getSubmissionsByAuthorEmail(authorEmail);
 		deferred.addCallbacks(new LoadSubmissionFeedCallback(), new LoadSubmissionFeedErrback());
 		
