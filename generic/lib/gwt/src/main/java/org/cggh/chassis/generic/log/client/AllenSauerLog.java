@@ -6,8 +6,6 @@ package org.cggh.chassis.generic.log.client;
 
 import org.cggh.chassis.generic.twisted.client.Function;
 
-import com.google.gwt.core.client.GWT;
-
 /**
  * @author aliman
  *
@@ -64,6 +62,42 @@ public class AllenSauerLog extends LogBase {
 	 */
 	public void info(String message, Throwable exception) {
 		com.allen_sauer.gwt.log.client.Log.info(contextualise(message), exception);
+	}
+
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.log.client.Log#error(java.lang.String)
+	 */
+	public void error(String message) {
+		com.allen_sauer.gwt.log.client.Log.error(contextualise(message));
+	}
+
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.log.client.Log#error(java.lang.String, java.lang.Throwable)
+	 */
+	public void error(String message, Throwable exception) {
+		com.allen_sauer.gwt.log.client.Log.error(contextualise(message), exception);
+	}
+
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.log.client.Log#warn(java.lang.String)
+	 */
+	public void warn(String message) {
+		com.allen_sauer.gwt.log.client.Log.warn(contextualise(message));
+	}
+
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.log.client.Log#warn(java.lang.String, java.lang.Throwable)
+	 */
+	public void warn(String message, Throwable exception) {
+		com.allen_sauer.gwt.log.client.Log.warn(contextualise(message), exception);
 	}
 
 

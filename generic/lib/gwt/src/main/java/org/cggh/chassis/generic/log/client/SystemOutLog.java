@@ -69,4 +69,44 @@ public class SystemOutLog extends LogBase {
 
 	
 	
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.wwarn.prototype.client.shared.Logger#warn(java.lang.String)
+	 */
+	public void warn(String message) {
+		System.out.println("[WARN] "+contextualise(message));
+	}
+	
+	
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.wwarn.prototype.client.shared.Logger#warn(java.lang.String, java.lang.Throwable)
+	 */
+	public void warn(String message, Throwable exception) {
+		System.out.println("[WARN] "+contextualise(message));
+		System.out.println("[WARN] "+contextualise(exception.getLocalizedMessage()));
+		exception.printStackTrace();
+	}
+
+	
+	
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.werror.prototype.client.shared.Logger#error(java.lang.String)
+	 */
+	public void error(String message) {
+		System.out.println("[ERROR] "+contextualise(message));
+	}
+	
+	
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.werror.prototype.client.shared.Logger#error(java.lang.String, java.lang.Throwable)
+	 */
+	public void error(String message, Throwable exception) {
+		System.out.println("[ERROR] "+contextualise(message));
+		System.out.println("[ERROR] "+contextualise(exception.getLocalizedMessage()));
+		exception.printStackTrace();
+	}
+
+	
+	
 }

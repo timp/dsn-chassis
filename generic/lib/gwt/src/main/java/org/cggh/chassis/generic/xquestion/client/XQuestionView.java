@@ -97,10 +97,10 @@ public class XQuestionView extends XQSViewBase {
 	private void constructCanvas() {
 
 		if (vertical) {
-			this.canvas = new VerticalPanel();			
+			this.canvas = new FlowPanel();			
 		}
 		else {
-			this.canvas = new HorizontalPanel();
+			this.canvas = new FlowPanel();
 		}
 		
 		this.canvas.addStyleName(STYLENAME);
