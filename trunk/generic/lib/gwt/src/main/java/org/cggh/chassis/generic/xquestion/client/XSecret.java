@@ -3,6 +3,7 @@
  */
 package org.cggh.chassis.generic.xquestion.client;
 
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.TextBox;
@@ -42,7 +43,7 @@ public class XSecret extends XInputString {
 
 		if (readOnly) {
 			
-			readOnlyLabel = new Label();
+			readOnlyLabel = new InlineLabel();
 			readOnlyLabel.addStyleName(XFormControl.STYLENAME_ANSWER);
 			this.canvas.add(readOnlyLabel);
 			

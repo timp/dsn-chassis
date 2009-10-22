@@ -8,6 +8,7 @@ import org.cggh.chassis.generic.log.client.LogFactory;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.xml.client.Element;
@@ -23,7 +24,7 @@ public class XInputString extends XFormControl {
 	
 	private Log log = LogFactory.getLog(this.getClass());
 	protected TextBox textBox;
-	protected Label readOnlyLabel;
+	protected InlineLabel readOnlyLabel;
 	
 	
 	
@@ -83,7 +84,7 @@ public class XInputString extends XFormControl {
 	
 	protected void constructCanvas() {
 
-		this.canvas = new HorizontalPanel();
+		this.canvas = new FlowPanel();
 		this.canvas.addStyleName(STYLENAME);
 		
 	}
@@ -94,7 +95,7 @@ public class XInputString extends XFormControl {
 	protected void constructTextBox() {
 
 		if (readOnly) {
-			readOnlyLabel = new Label();
+			readOnlyLabel = new InlineLabel();
 			readOnlyLabel.addStyleName(XFormControl.STYLENAME_ANSWER);
 			this.canvas.add(readOnlyLabel);
 		}

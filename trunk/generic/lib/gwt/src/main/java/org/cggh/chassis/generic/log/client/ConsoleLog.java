@@ -6,8 +6,6 @@ package org.cggh.chassis.generic.log.client;
 
 import org.cggh.chassis.generic.twisted.client.Function;
 
-import com.google.gwt.core.client.GWT;
-
 /**
  * @author aliman
  *
@@ -42,6 +40,21 @@ public class ConsoleLog extends LogBase {
 		console.debug(contextualisedMessage, exception);
 	}-*/;
 
+	
+	
+	public void debug(String message) {
+		doDebug(contextualise(message));
+	}
+
+
+
+	public void debug(String message, Throwable exception) {
+		doDebug(contextualise(message), exception);
+	}
+
+
+
+
 
 
 	public native void doInfo(String contextualisedMessage) /*-{
@@ -56,16 +69,6 @@ public class ConsoleLog extends LogBase {
 
 
 
-	public void debug(String message) {
-		doDebug(contextualise(message));
-	}
-
-
-
-	public void debug(String message, Throwable exception) {
-		doDebug(contextualise(message), exception);
-	}
-
 
 
 	public void info(String message) {
@@ -78,6 +81,73 @@ public class ConsoleLog extends LogBase {
 		doInfo(contextualise(message), exception);
 	}
 
+
+	
+	
+	
+	
+	
+	
+
+
+
+	public native void doWarn(String contextualisedMessage) /*-{
+		console.warn(contextualisedMessage);
+	}-*/;
+
+
+
+	public native void doWarn(String contextualisedMessage, Throwable exception) /*-{
+		console.warn(contextualisedMessage, exception);
+	}-*/;
+
+
+
+
+
+	public void warn(String message) {
+		doWarn(contextualise(message));
+	}
+
+
+
+	public void warn(String message, Throwable exception) {
+		doWarn(contextualise(message), exception);
+	}
+
+	
+	
+	
+	
+	
+	
+	
+
+
+
+	public native void doError(String contextualisedMessage) /*-{
+		console.error(contextualisedMessage);
+	}-*/;
+
+
+
+	public native void doError(String contextualisedMessage, Throwable exception) /*-{
+		console.error(contextualisedMessage, exception);
+	}-*/;
+
+
+
+
+
+	public void error(String message) {
+		doError(contextualise(message));
+	}
+
+
+
+	public void error(String message, Throwable exception) {
+		doError(contextualise(message), exception);
+	}
 
 
 }

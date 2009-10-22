@@ -126,12 +126,13 @@ public abstract class XQSModelBase {
 	
 	protected void initElement(Element data) {
 
-		if (this.element != null) {
-			if (this.element.getParentNode() != null) {
-				this.element.getParentNode().removeChild(this.element);
-			}
-//			throw new XQuestionFormatException("element already initialised");
-		}
+		// disable... why did we do this?
+//		if (this.element != null) {
+//			if (this.element.getParentNode() != null) {
+//				this.element.getParentNode().removeChild(this.element);
+//			}
+////			throw new XQuestionFormatException("element already initialised");
+//		}
 
 		// check data matches definition
 		if (

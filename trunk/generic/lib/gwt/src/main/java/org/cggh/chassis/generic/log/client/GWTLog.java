@@ -68,4 +68,40 @@ public class GWTLog extends LogBase {
 
 
 
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.log.client.Log#error(java.lang.String)
+	 */
+	public void error(String message) {
+		GWT.log("[ERROR] "+contextualise(message), null);
+	}
+
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.log.client.Log#error(java.lang.String, java.lang.Throwable)
+	 */
+	public void error(String message, Throwable exception) {
+		GWT.log("[ERROR] "+contextualise(message), exception);
+	}
+
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.log.client.Log#warn(java.lang.String)
+	 */
+	public void warn(String message) {
+		GWT.log("[WARN] "+contextualise(message), null);
+	}
+
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.log.client.Log#warn(java.lang.String, java.lang.Throwable)
+	 */
+	public void warn(String message, Throwable exception) {
+		GWT.log("[WARN] "+contextualise(message), exception);
+	}
+
+
+
 }

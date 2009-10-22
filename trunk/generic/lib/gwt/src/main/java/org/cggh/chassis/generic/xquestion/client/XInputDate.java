@@ -11,7 +11,9 @@ import org.cggh.chassis.generic.log.client.LogFactory;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.datepicker.client.DateBox;
 import com.google.gwt.xml.client.Element;
@@ -27,7 +29,7 @@ public class XInputDate extends XFormControl {
 	private Log log = LogFactory.getLog(this.getClass());
 	private DateBox dateBox;
 	private DateTimeFormat xsDateFormat = DateTimeFormat.getFormat("yyyy-MM-dd");
-	private Label readOnlyLabel;
+	private InlineLabel readOnlyLabel;
 	
 	
 	
@@ -85,7 +87,7 @@ public class XInputDate extends XFormControl {
 
 	protected void constructCanvas() {
 
-		this.canvas = new HorizontalPanel();
+		this.canvas = new FlowPanel();
 		this.canvas.addStyleName(STYLENAME);
 		
 	}
@@ -96,7 +98,7 @@ public class XInputDate extends XFormControl {
 
 		if (readOnly) {
 
-			readOnlyLabel = new Label();
+			readOnlyLabel = new InlineLabel();
 			readOnlyLabel.addStyleName(XFormControl.STYLENAME_ANSWER);
 			this.canvas.add(readOnlyLabel);
 			

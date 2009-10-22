@@ -10,6 +10,7 @@ import org.cggh.chassis.generic.xml.client.XML;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.RadioButton;
@@ -85,7 +86,7 @@ public abstract class XFormControl extends Composite {
 		String labelContent = XML.getElementSimpleContentByTagName(definition, XQS.ELEMENT_LABEL);
 		if (labelContent != null) {
 			log.debug("found label: "+labelContent);
-			this.canvas.add(new Label(labelContent));
+			this.canvas.add(new InlineLabel(labelContent));
 		}
 		
 	}
