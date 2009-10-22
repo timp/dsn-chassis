@@ -5,14 +5,11 @@ package org.cggh.chassis.generic.client.gwt.widget.studymanagement.client;
 
 import org.cggh.chassis.generic.client.gwt.common.client.ChassisUser;
 import org.cggh.chassis.generic.client.gwt.widget.study.create.client.CreateStudyWidget;
-import org.cggh.chassis.generic.client.gwt.widget.study.create.client.CreateStudyWidgetAPI;
 import org.cggh.chassis.generic.client.gwt.widget.study.edit.client.EditStudyWidget;
-import org.cggh.chassis.generic.client.gwt.widget.study.edit.client.EditStudyWidgetAPI;
 import org.cggh.chassis.generic.client.gwt.widget.study.view.client.ViewStudyWidget;
-import org.cggh.chassis.generic.client.gwt.widget.study.view.client.ViewStudyWidgetAPI;
 import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidget;
-import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetAPI;
-import org.cggh.chassis.generic.client.gwt.widget.studyquestionnaire.client.StudyQuestionnaireWidget;
+import org.cggh.chassis.generic.client.gwt.widget.studyquestionnaire.client.EditStudyQuestionnaireWidget;
+import org.cggh.chassis.generic.client.gwt.widget.studyquestionnaire.client.ViewStudyQuestionnaireWidget;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 
@@ -27,7 +24,6 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.ui.Panel;
-import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -68,7 +64,8 @@ public class StudyManagementWidgetDefaultRenderer implements StudyManagementWidg
 	Widget editStudyWidgetCanvas = new FlowPanel();
 	private MenuBar menu;
 	private StudyManagementWidget owner;
-	StudyQuestionnaireWidget studyQuestionnaireWidget;
+	ViewStudyQuestionnaireWidget viewStudyQuestionnaireWidget;
+	EditStudyQuestionnaireWidget editStudyQuestionnaireWidget;
 
 	
 	
@@ -99,7 +96,8 @@ public class StudyManagementWidgetDefaultRenderer implements StudyManagementWidg
 		this.createStudyWidget = new CreateStudyWidget((Panel)this.createStudyWidgetCanvas);
 		this.viewStudiesWidget = new ViewStudiesWidget((Panel)this.viewStudiesWidgetCanvas, "view");
 		this.editStudyWidget = new EditStudyWidget((Panel)this.editStudyWidgetCanvas);
-		this.studyQuestionnaireWidget = new StudyQuestionnaireWidget();
+		this.viewStudyQuestionnaireWidget = new ViewStudyQuestionnaireWidget();
+		this.editStudyQuestionnaireWidget = new EditStudyQuestionnaireWidget();
 		
 		//initialise view
 		initMenu();
@@ -127,7 +125,8 @@ public class StudyManagementWidgetDefaultRenderer implements StudyManagementWidg
 		this.createStudyWidget = new CreateStudyWidget();
 		this.viewStudiesWidget = new ViewStudiesWidget("view");
 		this.editStudyWidget = new EditStudyWidget();
-		this.studyQuestionnaireWidget = new StudyQuestionnaireWidget();
+		this.viewStudyQuestionnaireWidget = new ViewStudyQuestionnaireWidget();
+		this.editStudyQuestionnaireWidget = new EditStudyQuestionnaireWidget();
 		
 		// override using composites
 		this.viewStudyWidgetCanvas = this.viewStudyWidget;
@@ -222,10 +221,16 @@ public class StudyManagementWidgetDefaultRenderer implements StudyManagementWidg
 			displayCanvas.clear();
 			displayCanvas.add(editStudyWidgetCanvas);
 		}
-		else if (after == StudyManagementWidgetModel.DISPLAYING_STUDY_QUESTIONNAIRE) {
+		else if (after == StudyManagementWidgetModel.DISPLAYING_VIEW_STUDY_QUESTIONNAIRE) {
 			
 			this.displayCanvas.clear();
-			this.displayCanvas.add(this.studyQuestionnaireWidget);
+			this.displayCanvas.add(this.viewStudyQuestionnaireWidget);
+
+		}
+		else if (after == StudyManagementWidgetModel.DISPLAYING_EDIT_STUDY_QUESTIONNAIRE) {
+			
+			this.displayCanvas.clear();
+			this.displayCanvas.add(this.editStudyQuestionnaireWidget);
 
 		}
 		

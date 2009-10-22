@@ -16,6 +16,7 @@ public class CSS {
 	public static final String COMMON_ACTIONS = COMMON_BASE + "-actions";
 	public static final String COMMON_ACTION = COMMON_BASE + "-action";
 	public static final String COMMON_MAINWITHACTIONS = COMMON_BASE + "-mainWithActions";
+	public static final String COMMON_LOADING = COMMON_BASE + "-loading";
 	
 	public static final String VIEWSTUDIES_BASE = COMMON_BASE + "-viewStudies";
 
@@ -37,6 +38,7 @@ public class CSS {
 	public static final String EDITSTUDY_TITLEINPUT = EDITSTUDY_BASE + "-titleInput";
 	public static final String EDITSTUDY_ACTIONS = EDITSTUDY_BASE + "-actions";
 	public static final String EDITSTUDY_MODULES = EDITSTUDY_BASE + "-modules";
+
 
 
 

@@ -49,7 +49,7 @@ public class EditStudyWidgetDefaultRenderer implements StudyModelListener {
 	final CheckBox acceptInVitroDataUI = new CheckBox("In Vitro");
 	final CheckBox acceptPharmacologyDataUI = new CheckBox("Pharmacology");
 	final Button cancelEditStudyUI = new Button("Cancel", new CancelStudyClickHandler());
-	final Button updateStudyUI = new Button("Update Study", new UpdateStudyClickHandler());
+	final Button updateStudyUI = new Button("Save Changes", new UpdateStudyClickHandler());
 	final Map<String, CheckBox> modulesUIHash = new HashMap<String, CheckBox>();
 	
 	

@@ -114,10 +114,25 @@ public class StudyManagementWidgetController {
 	 * @param studyEntry
 	 * @param readOnly
 	 */
-	public void displayStudyQuestionnaireWidget() {
-		log.enter("displayStudyQuestionnaireWidget");
+	public void displayViewStudyQuestionnaireWidget() {
+		log.enter("displayViewStudyQuestionnaireWidget");
 		
-		model.setDisplayStatus(StudyManagementWidgetModel.DISPLAYING_STUDY_QUESTIONNAIRE, true);
+		model.setDisplayStatus(StudyManagementWidgetModel.DISPLAYING_VIEW_STUDY_QUESTIONNAIRE, true);
+
+		log.leave();
+	}
+
+	
+	
+	
+	/**
+	 * @param studyEntry
+	 * @param readOnly
+	 */
+	public void displayEditStudyQuestionnaireWidget() {
+		log.enter("displayEditStudyQuestionnaireWidget");
+		
+		model.setDisplayStatus(StudyManagementWidgetModel.DISPLAYING_EDIT_STUDY_QUESTIONNAIRE, true);
 
 		log.leave();
 	}
