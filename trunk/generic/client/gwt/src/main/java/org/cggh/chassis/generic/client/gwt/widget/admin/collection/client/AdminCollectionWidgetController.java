@@ -82,7 +82,7 @@ public class AdminCollectionWidgetController {
 	
 	
 	@SuppressWarnings("unchecked")
-	private class Callback implements Function<Void,Void> {
+	private class Callback implements Function {
 		
 		private HttpDeferred result;
 
@@ -93,7 +93,7 @@ public class AdminCollectionWidgetController {
 		/* (non-Javadoc)
 		 * @see org.cggh.chassis.generic.twisted.client.Function#apply(java.lang.Object)
 		 */
-		public Void apply(Void in) {
+		public Object apply(Object in) {
 			log.enter("[anonymous callback function]");
 
 			model.setPending(false);
@@ -105,7 +105,7 @@ public class AdminCollectionWidgetController {
 			model.setStatusText(response.getStatusText());
 
 			log.leave();
-			return null;
+			return in;
 		}
 		
 	}

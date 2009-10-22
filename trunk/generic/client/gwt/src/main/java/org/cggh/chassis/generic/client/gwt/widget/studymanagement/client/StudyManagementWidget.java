@@ -11,8 +11,9 @@ import org.cggh.chassis.generic.client.gwt.widget.study.create.client.CreateStud
 import org.cggh.chassis.generic.client.gwt.widget.study.edit.client.EditStudyWidgetPubSubAPI;
 import org.cggh.chassis.generic.client.gwt.widget.study.view.client.ViewStudyWidgetPubSubAPI;
 import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetPubSubAPI;
+import org.cggh.chassis.generic.client.gwt.widget.studyquestionnaire.client.ViewStudyQuestionnaireWidget;
+import org.cggh.chassis.generic.client.gwt.widget.studyquestionnaire.client.EditStudyQuestionnaireWidget;
 
-import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.Panel;
@@ -26,7 +27,9 @@ public class StudyManagementWidget extends Composite implements StudyManagementW
 											  CreateStudyWidgetPubSubAPI,
 											  EditStudyWidgetPubSubAPI,
 											  ViewStudyWidgetPubSubAPI,
-											  ViewStudiesWidgetPubSubAPI {
+											  ViewStudiesWidgetPubSubAPI,
+											  ViewStudyQuestionnaireWidget.PubSubAPI, 
+											  EditStudyQuestionnaireWidget.PubSubAPI {
 
 	
 	
@@ -87,6 +90,8 @@ public class StudyManagementWidget extends Composite implements StudyManagementW
 		renderer.createStudyWidget.addListener(this);
 		renderer.editStudyWidget.addEditStudyWidgetListener(this);
 		renderer.viewStudiesWidget.addViewAllStudiesWidgetListener(this);
+		renderer.viewStudyQuestionnaireWidget.addListener(this);
+		renderer.editStudyQuestionnaireWidget.addListener(this);
 		
 	}
 
@@ -133,7 +138,7 @@ public class StudyManagementWidget extends Composite implements StudyManagementW
 	
 	
 	public void onUserActionEditStudyCancelled() {
-		controller.displayViewStudiesWidget();
+		controller.displayViewStudyWidget();
 	}
 
 	
@@ -142,8 +147,13 @@ public class StudyManagementWidget extends Composite implements StudyManagementW
 	 * @see org.cggh.chassis.generic.client.gwt.widget.study.view.client.ViewStudyWidgetPubSubAPI#onUserActionEditStudyQuestionnaire(org.cggh.chassis.generic.atom.study.client.format.StudyEntry)
 	 */
 	public void onUserActionEditStudyQuestionnaire(StudyEntry studyEntry) {
-		renderer.studyQuestionnaireWidget.setEntry(studyEntry, false);
-		controller.displayStudyQuestionnaireWidget();
+		
+//		renderer.studyQuestionnaireWidget.setEntry(studyEntry, false);
+//		controller.displayStudyQuestionnaireWidget();
+
+		renderer.editStudyQuestionnaireWidget.setEntry(studyEntry);
+		controller.displayEditStudyQuestionnaireWidget();
+
 	}
 
 
@@ -153,8 +163,13 @@ public class StudyManagementWidget extends Composite implements StudyManagementW
 	 * @see org.cggh.chassis.generic.client.gwt.widget.study.view.client.ViewStudyWidgetPubSubAPI#onUserActionViewStudyQuestionnaire(org.cggh.chassis.generic.atom.study.client.format.StudyEntry)
 	 */
 	public void onUserActionViewStudyQuestionnaire(StudyEntry studyEntry) {
-		renderer.studyQuestionnaireWidget.setEntry(studyEntry, true);
-		controller.displayStudyQuestionnaireWidget();
+		
+//		renderer.studyQuestionnaireWidget.setEntry(studyEntry, true);
+//		controller.displayStudyQuestionnaireWidget();
+		
+		renderer.viewStudyQuestionnaireWidget.setEntry(studyEntry);
+		controller.displayViewStudyQuestionnaireWidget();
+
 	}
 
 	
@@ -214,6 +229,38 @@ public class StudyManagementWidget extends Composite implements StudyManagementW
 			listener.onStudyManagementMenuAction(this);
 		}
 
+	}
+
+
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.client.gwt.widget.studyquestionnaire.client.ViewStudyQuestionnaireWidget.PubSubAPI#onUserActionViewStudy(org.cggh.chassis.generic.atom.study.client.format.StudyEntry)
+	 */
+	public void onUserActionViewStudy(StudyEntry entry) {
+		renderer.viewStudyWidget.loadStudyEntry(entry);
+		controller.displayViewStudyWidget();
+	}
+
+
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.client.gwt.widget.studyquestionnaire.client.EditStudyQuestionnaireWidget.PubSubAPI#onUserActionEditStudyQuestionnaireCancelled()
+	 */
+	public void onUserActionEditStudyQuestionnaireCancelled() {
+		controller.displayViewStudyQuestionnaireWidget();
+	}
+
+
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.client.gwt.widget.studyquestionnaire.client.EditStudyQuestionnaireWidget.PubSubAPI#onStudyQuestionnaireUpdateSuccess(org.cggh.chassis.generic.atom.study.client.format.StudyEntry)
+	 */
+	public void onStudyQuestionnaireUpdateSuccess(StudyEntry entry) {
+		renderer.viewStudyQuestionnaireWidget.setEntry(entry);
+		controller.displayViewStudyQuestionnaireWidget();
 	}
 
 

@@ -106,7 +106,7 @@ public class ViewStudyWidgetDefaultRenderer implements StudyModelListener {
 		FlowPanel studyDetailsPanel = new FlowPanel();
 		
 		FlowPanel titlePanel = new FlowPanel();
-		titlePanel.add(new InlineLabel("Title: "));
+		titlePanel.add(new InlineLabel("Study title: "));
 		this.titleLabel.addStyleName(CSS.COMMON_ANSWER);
 		titlePanel.add(this.titleLabel);
 		titlePanel.addStyleName(CSS.COMMON_QUESTION);
