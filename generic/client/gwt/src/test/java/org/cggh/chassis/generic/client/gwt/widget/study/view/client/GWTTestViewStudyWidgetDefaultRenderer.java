@@ -75,8 +75,8 @@ public class GWTTestViewStudyWidgetDefaultRenderer extends GWTTestCase {
 		assertTrue( (testRenderer.loadingPanel.getParent() == null)
 			        || !(testRenderer.loadingPanel.isVisible()) );
 		
-		assertTrue( (testRenderer.studyDetailsPanel.getParent() == null)
-			        || !(testRenderer.studyDetailsPanel.isVisible()) );
+		assertTrue( (testRenderer.mainPanel.getParent() == null)
+			        || !(testRenderer.mainPanel.isVisible()) );
 		
 	}
 	
@@ -135,7 +135,7 @@ public class GWTTestViewStudyWidgetDefaultRenderer extends GWTTestCase {
 		testRenderer.onAuthorsChanged(null, testAuthors, true);		
 		
 		// test outcome
-		assertEquals(testAuthors.size(), testRenderer.authorsListPanel.getWidgetCount());
+		assertEquals(testAuthors.size(), testRenderer.ownersListPanel.getWidgetCount());
 		
 	}
 	
@@ -148,15 +148,15 @@ public class GWTTestViewStudyWidgetDefaultRenderer extends GWTTestCase {
 		//check loading state
 		assertTrue( (testRenderer.loadingPanel.getParent() != null)
 		            && (testRenderer.loadingPanel.isVisible()) );
-		assertTrue( (testRenderer.studyDetailsPanel.getParent() == null)
-		            || !(testRenderer.studyDetailsPanel.isVisible()) );
+		assertTrue( (testRenderer.mainPanel.getParent() == null)
+		            || !(testRenderer.mainPanel.isVisible()) );
 		
 		//mock loaded state
 		testRenderer.onStatusChanged(StudyModel.STATUS_LOADING, StudyModel.STATUS_LOADED);
 		
 		//check loaded state
-		assertTrue( (testRenderer.studyDetailsPanel.getParent() != null)
-	                 && (testRenderer.studyDetailsPanel.isVisible()) );
+		assertTrue( (testRenderer.mainPanel.getParent() != null)
+	                 && (testRenderer.mainPanel.isVisible()) );
 		assertTrue( (testRenderer.loadingPanel.getParent() == null)
 	                 || !(testRenderer.loadingPanel.isVisible()) );
 		
@@ -190,6 +190,22 @@ public class GWTTestViewStudyWidgetDefaultRenderer extends GWTTestCase {
 
 		public void loadStudyEntryByURL(String studyEntryURL) {
 			// not tested here
+		}
+
+		/* (non-Javadoc)
+		 * @see org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerViewAPI#fireOnUserActionEditStudyQuestionnaire()
+		 */
+		public void fireOnUserActionEditStudyQuestionnaire() {
+			// TODO Auto-generated method stub
+			
+		}
+
+		/* (non-Javadoc)
+		 * @see org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerViewAPI#fireOnUserActionViewStudyQuestionnaire()
+		 */
+		public void fireOnUserActionViewStudyQuestionnaire() {
+			// TODO Auto-generated method stub
+			
 		}
 		
 	}

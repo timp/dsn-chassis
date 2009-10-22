@@ -24,6 +24,12 @@ input, textarea {
 
 
 
+/*
+ * -----------------------------------------------------------------------------
+ * common styles across widgets
+ * -----------------------------------------------------------------------------
+ */
+
 .chassis-question {
 	border-top: 1px solid #aaa;
 	border-bottom: 1px solid #aaa;
@@ -36,6 +42,35 @@ input, textarea {
 	margin-left: 0.3em;
 }
 
+.chassis-answer {
+	font-weight: bold;
+}
+
+.chassis-actions {
+	position: absolute;
+	top: 8em;
+	right: 0.5em;
+	left: auto;
+	bottom: auto;
+	border: 1px solid #aaa;
+	width: 20em;
+	padding: 0.3em;
+	background-color: #eee;
+}
+
+.chassis-action {
+	display: block;
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+.chassis-mainWithActions {
+	margin-right: 22em;
+}
+
+.chassis-actions h3 {
+	margin-top: 0.2em;
+}
 
 
 
@@ -48,8 +83,13 @@ input, textarea {
 }
 
 
+
+
+
 /*
- * begin styles for user details widget
+ * -----------------------------------------------------------------------------
+ * styles for user details widget
+ * -----------------------------------------------------------------------------
  */
  
 .chassis-userDetailsWidget {
@@ -88,6 +128,13 @@ input, textarea {
 
 
 
+
+/*
+ * -----------------------------------------------------------------------------
+ * styles for administrator home widget
+ * -----------------------------------------------------------------------------
+ */
+ 
 .chassis-administratorHome-resourceCollections {
 	border-top: 2px solid black;
 
@@ -95,6 +142,12 @@ input, textarea {
 
 
 
+/*
+ * -----------------------------------------------------------------------------
+ * styles for create study widget
+ * -----------------------------------------------------------------------------
+ */
+ 
 .chassis-createStudy-titleInput {
 	width: 30em;
 }
@@ -108,6 +161,95 @@ input, textarea {
 	height: 15em;
 }
 
+.chassis-createStudy-modules input {
+	border: none;
+}
+
+
+
+/*
+ * -----------------------------------------------------------------------------
+ * styles for edit study widget
+ * -----------------------------------------------------------------------------
+ */
+ 
+.chassis-editStudy-titleInput {
+	width: 30em;
+}
+
+.chassis-editStudy-actions {
+	margin-top: 1em;
+}
+
+.chassis-editStudy textarea {
+	width: 60em;
+	height: 15em;
+}
+
+.chassis-editStudy-modules input {
+	border: none;
+}
+
+
+
+
+/*
+ * -----------------------------------------------------------------------------
+ * styles for view study widget
+ * -----------------------------------------------------------------------------
+ */
+ 
+ .chassis-viewStudy-modules {
+ 	display: inline;
+ 	margin-left: 0.3em;
+ }
+
+ .chassis-viewStudy-owners {
+ 	display: inline;
+ 	margin-left: 0.3em;
+ }
+
+ .chassis-viewStudy-summary {
+	font-weight: normal;
+	font-style: italic;
+	display: block;
+	margin: .2em 0 .2em 0;
+ }
+
+
+
+
+
+/*
+ * -----------------------------------------------------------------------------
+ * styles for view studies widget
+ * -----------------------------------------------------------------------------
+ */
+
+.chassis-viewStudies-studiesTable {
+}
+
+.chassis-viewStudies-studiesTable td {
+	border-bottom: 1px solid #aaa;
+	padding: 0.3em;
+	vertical-align: top;
+}
+
+.chassis-viewStudies-tableHeader {
+	font-weight: bold;
+}
+
+.chassis-viewStudies-studyTitle {
+	font-weight: bold;
+}
+
+
+/*
+ * -----------------------------------------------------------------------------
+ * styles for developer pane
+ * -----------------------------------------------------------------------------
+ */
+ 
 
 
 #developerPane {
@@ -118,9 +260,6 @@ input, textarea {
 #developerToolsPane {
 	margin-top: 0.5em;
 }
-
-
-
 
 .log-panel {
 	width: 96%;

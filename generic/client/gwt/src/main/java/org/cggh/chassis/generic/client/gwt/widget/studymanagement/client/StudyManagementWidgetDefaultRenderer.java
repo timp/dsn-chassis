@@ -3,6 +3,7 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.studymanagement.client;
 
+import org.cggh.chassis.generic.client.gwt.common.client.ChassisUser;
 import org.cggh.chassis.generic.client.gwt.widget.study.create.client.CreateStudyWidget;
 import org.cggh.chassis.generic.client.gwt.widget.study.create.client.CreateStudyWidgetAPI;
 import org.cggh.chassis.generic.client.gwt.widget.study.edit.client.EditStudyWidget;
@@ -11,6 +12,7 @@ import org.cggh.chassis.generic.client.gwt.widget.study.view.client.ViewStudyWid
 import org.cggh.chassis.generic.client.gwt.widget.study.view.client.ViewStudyWidgetAPI;
 import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidget;
 import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetAPI;
+import org.cggh.chassis.generic.client.gwt.widget.studyquestionnaire.client.StudyQuestionnaireWidget;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 
@@ -66,6 +68,7 @@ public class StudyManagementWidgetDefaultRenderer implements StudyManagementWidg
 	Widget editStudyWidgetCanvas = new FlowPanel();
 	private MenuBar menu;
 	private StudyManagementWidget owner;
+	StudyQuestionnaireWidget studyQuestionnaireWidget;
 
 	
 	
@@ -96,6 +99,7 @@ public class StudyManagementWidgetDefaultRenderer implements StudyManagementWidg
 		this.createStudyWidget = new CreateStudyWidget((Panel)this.createStudyWidgetCanvas);
 		this.viewStudiesWidget = new ViewStudiesWidget((Panel)this.viewStudiesWidgetCanvas, "view");
 		this.editStudyWidget = new EditStudyWidget((Panel)this.editStudyWidgetCanvas);
+		this.studyQuestionnaireWidget = new StudyQuestionnaireWidget();
 		
 		//initialise view
 		initMenu();
@@ -123,6 +127,7 @@ public class StudyManagementWidgetDefaultRenderer implements StudyManagementWidg
 		this.createStudyWidget = new CreateStudyWidget();
 		this.viewStudiesWidget = new ViewStudiesWidget("view");
 		this.editStudyWidget = new EditStudyWidget();
+		this.studyQuestionnaireWidget = new StudyQuestionnaireWidget();
 		
 		// override using composites
 		this.viewStudyWidgetCanvas = this.viewStudyWidget;
@@ -190,20 +195,38 @@ public class StudyManagementWidgetDefaultRenderer implements StudyManagementWidg
 	
 	
 	public void onDisplayStatusChanged(Integer before, Integer after) {
+
+		String authorEmail = this.authorEmail; // default to legacy pattern
+		if (authorEmail == null) {
+			authorEmail = ChassisUser.getCurrentUserEmail(); // new pattern
+		}
+
 		if (after == StudyManagementWidgetModel.DISPLAYING_CREATE_STUDY) {
 			displayCanvas.clear();
-			createStudyWidget.setUpNewStudy(authorEmail);
+			
+			// TODO should this go here? coordination logic
+			createStudyWidget.setUpNewStudy(authorEmail); 
+			
 			displayCanvas.add(createStudyWidgetCanvas);
 		} else if (after == StudyManagementWidgetModel.DISPLAYING_VIEW_STUDY) {
 			displayCanvas.clear();
 			displayCanvas.add(viewStudyWidgetCanvas);
 		} else if (after == StudyManagementWidgetModel.DISPLAYING_VIEW_ALL_STUDIES) {
 			displayCanvas.clear();
+			
+			// TODO should this go here? coordination logic
 			viewStudiesWidget.loadStudiesByAuthorEmail(authorEmail);
+
 			displayCanvas.add(viewStudiesWidgetCanvas);
 		} else if (after == StudyManagementWidgetModel.DISPLAYING_EDIT_STUDY) {
 			displayCanvas.clear();
 			displayCanvas.add(editStudyWidgetCanvas);
+		}
+		else if (after == StudyManagementWidgetModel.DISPLAYING_STUDY_QUESTIONNAIRE) {
+			
+			this.displayCanvas.clear();
+			this.displayCanvas.add(this.studyQuestionnaireWidget);
+
 		}
 		
 	}

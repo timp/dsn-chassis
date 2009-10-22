@@ -11,7 +11,7 @@
   
   <view>
   
-    <html><h2>Study Questionnaire - General Questions</h2></html>
+    <html><h3>General Questions</h3></html>
     
     <html>
     
@@ -26,7 +26,7 @@
       
     </html>
     
-    <html><h3 id="startend">Study Start and End</h3></html>
+    <html><h4 id="startend">Study Start and End</h4></html>
   
     <question id="startYear">
       <model>
@@ -52,7 +52,7 @@
       </view>
     </question>
     
-    <html><h3 id="pi">Principal Investigator(s)</h3></html>
+    <html><h4 id="pi">Principal Investigator(s)</h4></html>
     
     <questionnaire 
       repeatable="yes">
@@ -118,7 +118,7 @@
     </questionnaire>
     
     
-    <html><h3 id="pathogens">Pathogen Species</h3></html>
+    <html><h4 id="pathogens">Pathogen Species</h4></html>
     
     <question id="pathogenSpecies">
       <model>
@@ -139,7 +139,7 @@
       </view>
     </question>
 
-    <html><h3 id="sites">Study Site(s)</h3></html>
+    <html><h4 id="sites">Study Site(s)</h4></html>
     
     <questionnaire repeatable="yes">
       
@@ -204,7 +204,7 @@
     </questionnaire>
 
 
-    <html><h3 id="pubs">Publications</h3></html>
+    <html><h4 id="pubs">Publications</h4></html>
     
     <questionnaire repeatable="yes">
     

@@ -48,6 +48,8 @@ public class StudyModel {
 		fireOnSummaryChanged(getSummary());
 		fireOnModulesChanged(getModules());
 		fireOnAuthorsChanged(getAuthors());
+		fireOnCreatedChanged(getCreated());
+		fireOnUpdatedChanged(getUpdated());
 		
 		//fire form validation
 		fireOnStudyEntryModelChanged();
@@ -106,12 +108,30 @@ public class StudyModel {
 		}
 	}
 
+	private void fireOnCreatedChanged(String before) {
+		for (StudyModelListener listener : listeners) {
+			listener.onCreatedChanged(before, getCreated());
+		}
+	}
+
+	private void fireOnUpdatedChanged(String before) {
+		for (StudyModelListener listener : listeners) {
+			listener.onUpdatedChanged(before, getUpdated());
+		}
+	}
 
 
 	public String getSummary() {
 		return studyEntry.getSummary();
 	}
 
+	public String getCreated() {
+		return studyEntry.getPublished();
+	}
+
+	public String getUpdated() {
+		return studyEntry.getUpdated();
+	}
 
 
 	public void setSummary(String summary) {

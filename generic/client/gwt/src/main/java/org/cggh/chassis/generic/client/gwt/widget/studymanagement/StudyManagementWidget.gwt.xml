@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 1.7.0//EN" "http://google-web-toolkit.googlecode.com/svn/tags/1.7.0/distro-source/core/src/gwt-module.dtd">
 <module>
-	<inherits name="com.google.gwt.user.User" />
-  	<inherits name="org.cggh.chassis.generic.atom.study.Study" />
-  	<inherits name="org.cggh.chassis.generic.client.gwt.widget.study.create.CreateStudyWidget"/>
-  	<inherits name="org.cggh.chassis.generic.client.gwt.widget.study.view.ViewStudyWidget"/>
-  	<inherits name="org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.ViewStudiesWidget"/>
-  	<inherits name="org.cggh.chassis.generic.client.gwt.widget.study.edit.EditStudyWidget"/>
+  <inherits name="com.google.gwt.user.User" />
+  <inherits name="org.cggh.chassis.generic.atom.study.Study" />
+  <inherits name="org.cggh.chassis.generic.client.gwt.common.Common" />
+  <inherits name="org.cggh.chassis.generic.client.gwt.widget.study.create.CreateStudyWidget"/>
+  <inherits name="org.cggh.chassis.generic.client.gwt.widget.study.view.ViewStudyWidget"/>
+  <inherits name="org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.ViewStudiesWidget"/>
+  <inherits name="org.cggh.chassis.generic.client.gwt.widget.study.edit.EditStudyWidget"/>
+  <inherits name="org.cggh.chassis.generic.client.gwt.widget.studyquestionnaire.StudyQuestionnaireWidget"/>
     
 </module>

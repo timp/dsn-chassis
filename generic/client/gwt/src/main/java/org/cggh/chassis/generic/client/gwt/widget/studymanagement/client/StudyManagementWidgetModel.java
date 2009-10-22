@@ -23,6 +23,7 @@ public class StudyManagementWidgetModel {
 	public static final Integer DISPLAYING_VIEW_STUDY = 2;
 	public static final Integer DISPLAYING_EDIT_STUDY = 3;
 	public static final Integer DISPLAYING_VIEW_ALL_STUDIES = 4;
+	public static final Integer DISPLAYING_STUDY_QUESTIONNAIRE = 5;
 	
 	
 	

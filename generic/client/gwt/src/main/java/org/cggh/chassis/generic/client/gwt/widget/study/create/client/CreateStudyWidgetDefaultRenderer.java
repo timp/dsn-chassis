@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
+import org.cggh.chassis.generic.client.gwt.common.client.CSS;
 import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
 import org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerCreateAPI;
 import org.cggh.chassis.generic.client.gwt.widget.study.model.client.StudyModelListener;
@@ -37,14 +38,6 @@ import com.google.gwt.user.client.ui.Widget;
  */
 class CreateStudyWidgetDefaultRenderer implements StudyModelListener {
 
-	
-	
-	
-	public static final String STYLENAME_QUESTION = "chassis-question";
-	public static final String STYLENAME_BASE = "chassis-createStudy";
-	public static final String STYLENAME_TITLEINPUT = STYLENAME_BASE + "-titleInput";
-	public static final String STYLENAME_ACTIONS = STYLENAME_BASE + "-actions";
-	
 	
 	
 	
@@ -95,9 +88,9 @@ class CreateStudyWidgetDefaultRenderer implements StudyModelListener {
 	
 	private void initCanvas() {
 		
-		this.canvas.addStyleName(STYLENAME_BASE);
+		this.canvas.addStyleName(CSS.CREATESTUDY_BASE);
 		
-		this.canvas.add(new HTML("<h2>Create New Study</h2>"));
+		this.canvas.add(new HTML("<h2>New Study</h2>"));
 		
 		this.canvas.add(new HTML("<p>Use this form to create a new record of a study."));
 				
@@ -113,9 +106,9 @@ class CreateStudyWidgetDefaultRenderer implements StudyModelListener {
 		InlineLabel titleLabel = new InlineLabel("What is the title of the study?");
 		titleQuestion.add(titleLabel);
 		titleQuestion.add(titleUI);
-		titleQuestion.addStyleName(STYLENAME_QUESTION);
+		titleQuestion.addStyleName(CSS.COMMON_QUESTION);
 		
-		titleUI.addStyleName(STYLENAME_TITLEINPUT);
+		titleUI.addStyleName(CSS.CREATESTUDY_TITLEINPUT);
 		titleUI.addValueChangeHandler(new TitleChangeHandler());
 
 		createStudyForm.add(titleQuestion);
@@ -127,7 +120,7 @@ class CreateStudyWidgetDefaultRenderer implements StudyModelListener {
 		Label summaryLabel = new Label("Please provide a textual summary of the study...");
 		summaryQuestion.add(summaryLabel);
 		summaryQuestion.add(summaryUI);
-		summaryQuestion.addStyleName(STYLENAME_QUESTION);
+		summaryQuestion.addStyleName(CSS.COMMON_QUESTION);
 		
 		summaryUI.addValueChangeHandler(new SummaryChangeHandler());
 
@@ -138,7 +131,8 @@ class CreateStudyWidgetDefaultRenderer implements StudyModelListener {
 		createStudyForm.add(new HTML("<h3>Modules</h3>"));
 		
 		FlowPanel modulesQuestion = new FlowPanel();
-		modulesQuestion.addStyleName(STYLENAME_QUESTION);
+		modulesQuestion.addStyleName(CSS.COMMON_QUESTION);
+		modulesQuestion.addStyleName(CSS.CREATESTUDY_MODULES);
 		createStudyForm.add(modulesQuestion);
 		
 		Label modulesLabel = new Label("Please select the modules that this study is relevant to... (at least one must be selected)");
@@ -168,7 +162,7 @@ class CreateStudyWidgetDefaultRenderer implements StudyModelListener {
 		}
 		
 		FlowPanel buttonsPanel = new FlowPanel();
-		buttonsPanel.addStyleName(STYLENAME_ACTIONS);
+		buttonsPanel.addStyleName(CSS.CREATESTUDY_ACTIONS);
 		buttonsPanel.add(createStudyUI);
 		buttonsPanel.add(cancelCreateStudyUI);
 
@@ -325,6 +319,26 @@ class CreateStudyWidgetDefaultRenderer implements StudyModelListener {
 	 */
 	public Panel getCanvas() {
 		return this.canvas;
+	}
+
+
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.client.gwt.widget.study.model.client.StudyModelListener#onCreatedChanged(java.lang.String, java.lang.String)
+	 */
+	public void onCreatedChanged(String before, String created) {
+		// not interested
+	}
+
+
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.client.gwt.widget.study.model.client.StudyModelListener#onUpdatedChanged(java.lang.String, java.lang.String)
+	 */
+	public void onUpdatedChanged(String before, String created) {
+		// not interested
 	}
 	
 	
