@@ -13,4 +13,14 @@ public interface StudyControllerPubSubViewAPI extends AbstractStudyControllerPub
 
 	public void onUserActionEditStudy(StudyEntry studyEntryToEdit);
 
+	/**
+	 * @param studyEntry
+	 */
+	public void onUserActionEditStudyQuestionnaire(StudyEntry studyEntry);
+
+	/**
+	 * @param studyEntry
+	 */
+	public void onUserActionViewStudyQuestionnaire(StudyEntry studyEntry);
+
 }

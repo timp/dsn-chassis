@@ -3,6 +3,7 @@
  */
 package org.cggh.chassis.generic.client.gwt.application.client;
 
+import org.cggh.chassis.generic.client.gwt.common.client.ChassisUser;
 import org.cggh.chassis.generic.client.gwt.configuration.client.ChassisRole;
 import org.cggh.chassis.generic.client.gwt.widget.userdetails.client.UserDetailsPubSubAPI;
 import org.cggh.chassis.generic.log.client.Log;
@@ -85,7 +86,8 @@ public class ChassisClient extends Composite implements UserDetailsPubSubAPI {
 		
 		log.debug("userId: "+userId);
 		
-		// do nothing, for now
+		log.debug("set on static class for global access");
+		ChassisUser.setCurrentUserEmail(userId);
 		
 		log.leave();
 	}

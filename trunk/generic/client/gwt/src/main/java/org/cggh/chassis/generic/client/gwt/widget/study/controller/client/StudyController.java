@@ -322,6 +322,44 @@ public class StudyController implements StudyControllerEditAPI, StudyControllerC
 		
 		log.leave();
 	}
+
+
+
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerViewAPI#fireOnUserActionEditStudyQuestionnaire()
+	 */
+	public void fireOnUserActionEditStudyQuestionnaire() {
+		log.enter("fireOnUserActionEditStudyQuestionnaire");
+		
+		if (owner instanceof StudyControllerPubSubViewAPI) {
+			StudyEntry studyEntry = model.getStudyEntry();
+			
+			((StudyControllerPubSubViewAPI)owner).onUserActionEditStudyQuestionnaire(studyEntry);
+		}
+		
+		log.leave();
+	}
+
+
+
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerViewAPI#fireOnUserActionViewStudyQuestionnaire()
+	 */
+	public void fireOnUserActionViewStudyQuestionnaire() {
+		log.enter("fireOnUserActionViewStudyQuestionnaire");
+		
+		if (owner instanceof StudyControllerPubSubViewAPI) {
+			StudyEntry studyEntry = model.getStudyEntry();
+			
+			((StudyControllerPubSubViewAPI)owner).onUserActionViewStudyQuestionnaire(studyEntry);
+		}
+		
+		log.leave();
+	}
 	
 	
 	

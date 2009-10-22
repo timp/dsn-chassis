@@ -126,19 +126,37 @@ public class StudyManagementWidget extends Composite implements StudyManagementW
 	
 	
 	public void onUserActionCreateStudyCancelled() {
-		// TODO Auto-generated method stub
-		
+		controller.displayViewStudiesWidget();
 	}
 	
 	
 	
 	
 	public void onUserActionEditStudyCancelled() {
-		// TODO Auto-generated method stub
-		
+		controller.displayViewStudiesWidget();
 	}
 
 	
+	
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.client.gwt.widget.study.view.client.ViewStudyWidgetPubSubAPI#onUserActionEditStudyQuestionnaire(org.cggh.chassis.generic.atom.study.client.format.StudyEntry)
+	 */
+	public void onUserActionEditStudyQuestionnaire(StudyEntry studyEntry) {
+		renderer.studyQuestionnaireWidget.setEntry(studyEntry, false);
+		controller.displayStudyQuestionnaireWidget();
+	}
+
+
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.client.gwt.widget.study.view.client.ViewStudyWidgetPubSubAPI#onUserActionViewStudyQuestionnaire(org.cggh.chassis.generic.atom.study.client.format.StudyEntry)
+	 */
+	public void onUserActionViewStudyQuestionnaire(StudyEntry studyEntry) {
+		renderer.studyQuestionnaireWidget.setEntry(studyEntry, true);
+		controller.displayStudyQuestionnaireWidget();
+	}
+
 	
 	
 	/* (non-Javadoc)
@@ -197,5 +215,9 @@ public class StudyManagementWidget extends Composite implements StudyManagementW
 		}
 
 	}
+
+
+
+
 	
 }

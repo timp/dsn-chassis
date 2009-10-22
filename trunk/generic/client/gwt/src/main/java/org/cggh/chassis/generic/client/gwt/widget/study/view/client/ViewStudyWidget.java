@@ -117,5 +117,29 @@ public class ViewStudyWidget extends Composite implements ViewStudyWidgetAPI, St
 			listener.onUserActionEditStudy(studyEntryToEdit);
 		}
 	}
+
+
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerPubSubViewAPI#onUserActionEditStudyQuestionnaire(org.cggh.chassis.generic.atom.study.client.format.StudyEntry)
+	 */
+	public void onUserActionEditStudyQuestionnaire(StudyEntry studyEntry) {
+		for (ViewStudyWidgetPubSubAPI listener : listeners ) {
+			listener.onUserActionEditStudyQuestionnaire(studyEntry);
+		}
+	}
+
+
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerPubSubViewAPI#onUserActionViewStudyQuestionnaire(org.cggh.chassis.generic.atom.study.client.format.StudyEntry)
+	 */
+	public void onUserActionViewStudyQuestionnaire(StudyEntry studyEntry) {
+		for (ViewStudyWidgetPubSubAPI listener : listeners ) {
+			listener.onUserActionViewStudyQuestionnaire(studyEntry);
+		}
+	}
 	
 }

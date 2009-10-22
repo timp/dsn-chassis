@@ -10,6 +10,8 @@
 
   <!-- Chassis GWT client dependencies -->
 
+  <inherits name="org.cggh.chassis.generic.client.gwt.common.Common" />
+
   <inherits name="org.cggh.chassis.generic.client.gwt.widget.userdetails.UserDetailsWidget" />
   
   <inherits name="org.cggh.chassis.generic.client.gwt.widget.submitter.home.SubmitterHomeWidget" />

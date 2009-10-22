@@ -12,4 +12,14 @@ public interface StudyControllerViewAPI extends AbstractStudyControllerViewEditA
 	
 	public void fireOnUserActionEditThisStudy();
 
+	/**
+	 * 
+	 */
+	public void fireOnUserActionEditStudyQuestionnaire();
+
+	/**
+	 * 
+	 */
+	public void fireOnUserActionViewStudyQuestionnaire();
+
 }

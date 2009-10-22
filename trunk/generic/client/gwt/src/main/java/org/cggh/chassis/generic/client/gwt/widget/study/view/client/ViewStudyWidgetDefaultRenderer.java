@@ -3,19 +3,26 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.study.view.client;
 
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
+import org.cggh.chassis.generic.client.gwt.common.client.CSS;
 import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
 import org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerViewAPI;
 import org.cggh.chassis.generic.client.gwt.widget.study.model.client.StudyModel;
 import org.cggh.chassis.generic.client.gwt.widget.study.model.client.StudyModelListener;
+import org.cggh.chassis.generic.log.client.Log;
+import org.cggh.chassis.generic.log.client.LogFactory;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.SimplePanel;
@@ -29,21 +36,33 @@ import com.google.gwt.user.client.ui.Widget;
 public class ViewStudyWidgetDefaultRenderer implements StudyModelListener {
 
 	//Expose view elements for testing purposes.
-	final Label titleLabel = new Label();
-	final Label summaryLabel = new Label();
-	final Panel loadingPanel = new SimplePanel();
-	final Panel studyDetailsPanel = new HorizontalPanel();
-	final Label editThisStudyUI = new Label("Edit Study");
-	final VerticalPanel modulesListPanel = new VerticalPanel();
-	final VerticalPanel authorsListPanel = new VerticalPanel();
+	final Label titleLabel = new InlineLabel();
+	final Label summaryLabel = new InlineLabel();
+	final Label createdLabel = new InlineLabel();
+	final Label updatedLabel = new InlineLabel();
+	final FlowPanel loadingPanel = new FlowPanel();
+	final FlowPanel mainPanel = new FlowPanel();
+	final Anchor editThisStudyUI = new Anchor();
+	final Anchor viewStudyQuestionnaireUI = new Anchor();
+	final Anchor editStudyQuestionnaireUI = new Anchor();
+	final FlowPanel modulesListPanel = new FlowPanel();
+	final FlowPanel ownersListPanel = new FlowPanel();
 	
 	final private Panel canvas;
 	final private StudyControllerViewAPI controller;
 	private Map<String, String> modulesConfig;
+	private Log log = LogFactory.getLog(this.getClass());
 
 	
 	
 	
+	/**
+	 * Construct a renderer, passing in the panel to use as the renderer's
+	 * canvas.
+	 * 
+	 * @param canvas
+	 * @param controller
+	 */
 	public ViewStudyWidgetDefaultRenderer(Panel canvas, StudyControllerViewAPI controller) {
 		this.canvas = canvas;
 		this.controller = controller;
@@ -56,7 +75,9 @@ public class ViewStudyWidgetDefaultRenderer implements StudyModelListener {
 	
 	
 	/**
-	 * @param controller2
+	 * Construct a renderer, allowing the renderer to create its own canvas.
+	 * 
+	 * @param controller
 	 */
 	public ViewStudyWidgetDefaultRenderer(StudyControllerViewAPI controller) {
 		this.canvas = new FlowPanel();
@@ -70,53 +91,115 @@ public class ViewStudyWidgetDefaultRenderer implements StudyModelListener {
 	
 	
 	private void initCanvas() {
+		log.enter("initCanvas");
 
-		//prepare loading panel
-		loadingPanel.add(new Label("Loading..."));
+		this.canvas.add(new HTML("<h2>View Study</h2>"));
 		
-		//prepare study details panel
-		VerticalPanel studyDetailsVPanel = new VerticalPanel();
-		
-		HorizontalPanel titleHPanel = new HorizontalPanel();
-		titleHPanel.add(new Label("Title: "));
-		titleHPanel.add(titleLabel);
-		studyDetailsVPanel.add(titleHPanel);
-		
-		HorizontalPanel summaryHPanel = new HorizontalPanel();
-		summaryHPanel.add(new Label("Summary: "));
-		summaryHPanel.add(summaryLabel);
-		studyDetailsVPanel.add(summaryHPanel);
+		log.debug("prepare loading panel");
 
-		studyDetailsVPanel.add(new Label("Data accepted:"));
-		studyDetailsVPanel.add(modulesListPanel);
+		this.loadingPanel.add(new Label("Loading..."));
+		this.loadingPanel.setVisible(false);
+		this.canvas.add(this.loadingPanel);
 		
-		studyDetailsVPanel.add(new Label("Study owners:"));
-		studyDetailsVPanel.add(authorsListPanel);
+		log.debug("prepare study details panel");
 		
-		studyDetailsPanel.add(studyDetailsVPanel);
+		FlowPanel studyDetailsPanel = new FlowPanel();
+		
+		FlowPanel titlePanel = new FlowPanel();
+		titlePanel.add(new InlineLabel("Title: "));
+		this.titleLabel.addStyleName(CSS.COMMON_ANSWER);
+		titlePanel.add(this.titleLabel);
+		titlePanel.addStyleName(CSS.COMMON_QUESTION);
+		studyDetailsPanel.add(titlePanel);
+		
+		FlowPanel summaryPanel = new FlowPanel();
+		summaryPanel.add(new InlineLabel("Summary: "));
+		this.summaryLabel.addStyleName(CSS.COMMON_ANSWER);
+		this.summaryLabel.addStyleName(CSS.VIEWSTUDY_SUMMARY);
+		summaryPanel.add(this.summaryLabel);
+		summaryPanel.addStyleName(CSS.COMMON_QUESTION);
+		studyDetailsPanel.add(summaryPanel);
+
+		FlowPanel modulesPanel = new FlowPanel();
+		modulesPanel.add(new InlineLabel("Modules:"));
+		this.modulesListPanel.addStyleName(CSS.VIEWSTUDY_MODULES);
+		modulesPanel.add(this.modulesListPanel);
+		modulesPanel.addStyleName(CSS.COMMON_QUESTION);
+		studyDetailsPanel.add(modulesPanel);
+		
+		FlowPanel ownersPanel = new FlowPanel();
+		ownersPanel.add(new InlineLabel("Owners:"));
+		this.ownersListPanel.addStyleName(CSS.VIEWSTUDY_OWNERS);
+		ownersPanel.add(this.ownersListPanel);
+		ownersPanel.addStyleName(CSS.COMMON_QUESTION);
+		studyDetailsPanel.add(ownersPanel);
+
+		FlowPanel createdPanel = new FlowPanel();
+		createdPanel.add(new InlineLabel("Created: "));
+		this.createdLabel.addStyleName(CSS.COMMON_ANSWER);
+		createdPanel.add(this.createdLabel);
+		createdPanel.addStyleName(CSS.COMMON_QUESTION);
+		studyDetailsPanel.add(createdPanel);
+
+		FlowPanel updatedPanel = new FlowPanel();
+		updatedPanel.add(new InlineLabel("Updated: "));
+		this.updatedLabel.addStyleName(CSS.COMMON_ANSWER);
+		updatedPanel.add(this.updatedLabel);
+		updatedPanel.addStyleName(CSS.COMMON_QUESTION);
+		studyDetailsPanel.add(updatedPanel);
 		
 		//TODO add other actions
-		//Create actions panel
-		VerticalPanel actionsVPanel = new VerticalPanel();
 		
-		//add clickhandler to editStudyUI
-		editThisStudyUI.addClickHandler(new EditStudyClickHandler());
+		log.debug("create actions panel");
+
+		FlowPanel actionsPanel = new FlowPanel();
+		actionsPanel.add(new HTML("<h3>Actions</h3>"));
+		actionsPanel.addStyleName(CSS.COMMON_ACTIONS);
+
+		this.editThisStudyUI.setText("Edit Study");
+		this.editThisStudyUI.addStyleName(CSS.COMMON_ACTION);
+		actionsPanel.add(this.editThisStudyUI);
+		this.editThisStudyUI.addClickHandler(new EditStudyClickHandler());
+
+		this.viewStudyQuestionnaireUI.setText("View Study Questionnaire");
+		this.viewStudyQuestionnaireUI.addStyleName(CSS.COMMON_ACTION);
+		actionsPanel.add(this.viewStudyQuestionnaireUI);
+		this.viewStudyQuestionnaireUI.addClickHandler(new ViewStudyQuestionnaireClickHandler());
+
+		this.editStudyQuestionnaireUI.setText("Edit Study Questionnaire");
+		this.editStudyQuestionnaireUI.addStyleName(CSS.COMMON_ACTION);
+		actionsPanel.add(this.editStudyQuestionnaireUI);
+		this.editStudyQuestionnaireUI.addClickHandler(new EditStudyQuestionnaireClickHandler());
+
+		log.debug("prepare main panel");
+
+		this.mainPanel.addStyleName(CSS.COMMON_MAINWITHACTIONS);
+		this.mainPanel.add(studyDetailsPanel);
+		this.mainPanel.add(actionsPanel);
+		this.mainPanel.setVisible(false);
+		this.canvas.add(this.mainPanel);
 		
-		actionsVPanel.add(editThisStudyUI);
-		
-		studyDetailsPanel.add(actionsVPanel);
-		
-		
+		log.leave();
 	}
 
 	public void onStatusChanged(Integer before, Integer after) {
 		
 		if (after == StudyModel.STATUS_LOADING) {
-			canvas.clear();
-			canvas.add(loadingPanel);
+
+//			canvas.clear();
+//			canvas.add(loadingPanel);
+			
+			this.mainPanel.setVisible(false);
+			this.loadingPanel.setVisible(true);
+		
 		} else if (after == StudyModel.STATUS_LOADED) {
-			canvas.clear();
-			canvas.add(studyDetailsPanel);
+
+//			canvas.clear();
+//			canvas.add(studyDetailsPanel);
+
+			this.loadingPanel.setVisible(false);
+			this.mainPanel.setVisible(true);
+
 		} else if (after == StudyModel.STATUS_ERROR) {
 			// TODO handle error case (could use extra panel or pass error to parent)
 		}
@@ -126,6 +209,20 @@ public class ViewStudyWidgetDefaultRenderer implements StudyModelListener {
 		
 		public void onClick(ClickEvent arg0) {
 			controller.fireOnUserActionEditThisStudy();
+		}
+	}
+
+	class EditStudyQuestionnaireClickHandler implements ClickHandler {
+		
+		public void onClick(ClickEvent arg0) {
+			controller.fireOnUserActionEditStudyQuestionnaire();
+		}
+	}
+
+	class ViewStudyQuestionnaireClickHandler implements ClickHandler {
+		
+		public void onClick(ClickEvent arg0) {
+			controller.fireOnUserActionViewStudyQuestionnaire();
 		}
 	}
 
@@ -145,18 +242,36 @@ public class ViewStudyWidgetDefaultRenderer implements StudyModelListener {
 
 		modulesListPanel.clear();
 		
-		for (String module : after) {
-			modulesListPanel.add(new Label(modulesConfig.get(module)));
+		String modulesContent = "";
+		for (Iterator<String> it = after.iterator(); it.hasNext(); ) {
+			String ml = modulesConfig.get(it.next());
+			modulesContent += ml;
+			if (it.hasNext()) {
+				modulesContent += ", ";
+			}
 		}
+		
+		InlineLabel answer = new InlineLabel(modulesContent);
+		answer.addStyleName(CSS.COMMON_ANSWER);
+		modulesListPanel.add(answer);
+
 	}
 
 	public void onAuthorsChanged(Set<AtomAuthor> before, Set<AtomAuthor> after, Boolean isValid) {
 
-		authorsListPanel.clear();
+		ownersListPanel.clear();
 		
-		for (AtomAuthor atomAuthor : after) {
-			authorsListPanel.add(new Label(atomAuthor.getEmail()));
+		String authorsContent = "";
+		for (Iterator<AtomAuthor> it = after.iterator(); it.hasNext(); ) {
+			authorsContent += it.next().getEmail();
+			if (it.hasNext()) {
+				authorsContent += ", ";
+			}
 		}
+
+		InlineLabel answer = new InlineLabel(authorsContent);
+		answer.addStyleName(CSS.COMMON_ANSWER);
+		ownersListPanel.add(answer);
 		
 	}
 
@@ -165,6 +280,26 @@ public class ViewStudyWidgetDefaultRenderer implements StudyModelListener {
 	 */
 	public Panel getCanvas() {
 		return this.canvas;
+	}
+
+
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.client.gwt.widget.study.model.client.StudyModelListener#onCreatedChanged(java.lang.String, java.lang.String)
+	 */
+	public void onCreatedChanged(String before, String created) {
+		this.createdLabel.setText(created);
+	}
+
+
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.client.gwt.widget.study.model.client.StudyModelListener#onUpdatedChanged(java.lang.String, java.lang.String)
+	 */
+	public void onUpdatedChanged(String before, String updated) {
+		this.updatedLabel.setText(updated);
 	}
 	
 }
