@@ -449,8 +449,8 @@ public class TestSubmissionController {
 		SubmissionControllerEditAPI testEditController = new SubmissionController(testModel, mockListener);
 						
 		//set up expectations
-		mockListener.onSubmissionEntryUpdated(testSubmissionEntry);
-		mockListener.onUserActionEditSubmissionEntryCancelled();
+		mockListener.fireOnSubmissionEntryUpdated(testSubmissionEntry);
+		mockListener.fireOnUserActionEditSubmissionEntryCancelled();
 		replay(mockListener);
 		
 		//set up test

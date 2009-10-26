@@ -9,9 +9,14 @@ import java.util.List;
 import java.util.Map;
 
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
+import org.cggh.chassis.generic.atom.vanilla.client.format.AtomLink;
 import org.cggh.chassis.generic.client.gwt.common.client.CSS;
+import org.cggh.chassis.generic.client.gwt.common.client.ChassisUser;
 import org.cggh.chassis.generic.client.gwt.common.client.ChassisUtils;
+import org.cggh.chassis.generic.client.gwt.common.client.ChassisResources;
+import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
 import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
+import org.cggh.chassis.generic.client.gwt.form.submission.client.SubmissionForm.Resources;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.twisted.client.Function;
@@ -53,12 +58,22 @@ public class SubmissionFormRenderer {
 	private FlowPanel modulesQuestionPanel;
 	private FlowPanel studiesQuestionPanel;
 	private Map<String,String> studyLinks = new HashMap<String,String>();
+	private ChassisResources resources;
+	private FlowPanel selectStudiesPanel;
 
 	
 	
 	
 	public SubmissionFormRenderer(Panel canvas, SubmissionEntry model) {
 		this.canvas = canvas;
+		this.model = model;
+	}
+	
+	
+	
+	
+	
+	public void bind(SubmissionEntry model) {
 		this.model = model;
 	}
 	
@@ -73,18 +88,17 @@ public class SubmissionFormRenderer {
 		
 		this.initCanvas();
 		
-		this.canvas.add(new HTML("<h3>Submission Title and Summary</h3>"));
+		this.canvas.add(new HTML("<h3>"+Resources.get(Resources.HEADINGTITLEANDSUMMARY)+"</h3>"));
 		this.initTitleQuestion();
 		this.canvas.add(this.titleQuestionPanel);
 		this.initSummaryQuestion();
 		this.canvas.add(this.summaryQuestionPanel);			
 
-		this.canvas.add(new HTML("<h3>Modules</h3>"));
+		this.canvas.add(new HTML("<h3>"+Resources.get(Resources.HEADINGMODULES)+"</h3>"));
 		this.initModulesQuestion();
 		this.canvas.add(this.modulesQuestionPanel);
 		
-		this.canvas.add(new HTML("<h3>Studies</h3>"));
-		this.canvas.add(new HTML("<p>Please select the study that this submission is linked to...</p>"));
+		this.canvas.add(new HTML("<h3>"+Resources.get(Resources.HEADINGSTUDIES)+"</h3>"));
 		this.initStudiesQuestion();
 		this.canvas.add(this.studiesQuestionPanel);
 		
@@ -99,6 +113,7 @@ public class SubmissionFormRenderer {
 	 */
 	private void initCanvas() {
 		
+		this.canvas.clear();
 		this.canvas.addStyleName(CSS.SUBMISSIONFORM_BASE);
 		
 	}
@@ -113,12 +128,18 @@ public class SubmissionFormRenderer {
 		log.enter("initTitleQuestion");
 
 		titleQuestionPanel = new FlowPanel();
-		InlineLabel titleLabel = new InlineLabel("Please provide a title for the submission:");
+		InlineLabel titleLabel = new InlineLabel(Resources.get(Resources.QUESTIONLABELTITLE)); 
 		titleQuestionPanel.add(titleLabel);
 		titleQuestionPanel.add(titleInput);
 		titleQuestionPanel.addStyleName(CSS.COMMON_QUESTION);
 		titleQuestionPanel.addStyleName(CSS.SUBMISSIONFORM_TITLEQUESTION);
 
+		String title = this.model.getTitle();
+		if (title != null) {
+			log.debug("found model title: "+title);
+			this.titleInput.setText(title);
+		}
+		
 		titleInput.addValueChangeHandler(new TitleChangeHandler());
 		
 		log.leave();
@@ -136,11 +157,16 @@ public class SubmissionFormRenderer {
 
 		this.summaryQuestionPanel = new FlowPanel();
 		
-		Label summaryLabel = new Label("Please provide a textual summary of the submission...");
+		Label summaryLabel = new Label(Resources.get(Resources.QUESTIONLABELSUMMARY));
 		summaryQuestionPanel.add(summaryLabel);
 		summaryQuestionPanel.add(summaryInput);
 		summaryQuestionPanel.addStyleName(CSS.COMMON_QUESTION);
 		summaryQuestionPanel.addStyleName(CSS.SUBMISSIONFORM_SUMMARYQUESTION);
+		
+		String summary = this.model.getSummary();
+		if (summary != null) {
+			this.summaryInput.setText(summary);
+		}
 		
 		summaryInput.addValueChangeHandler(new SummaryChangeHandler());
 
@@ -162,7 +188,7 @@ public class SubmissionFormRenderer {
 		modulesQuestionPanel.addStyleName(CSS.COMMON_QUESTION);
 		modulesQuestionPanel.addStyleName(CSS.SUBMISSIONFORM_MODULESQUESTION);
 		
-		Label modulesLabel = new Label("Please select the modules that this submission is relevant to...");
+		Label modulesLabel = new Label(Resources.get(Resources.QUESTIONLABELMODULES));
 		modulesQuestionPanel.add(modulesLabel);
 
 		FlexTable boxTable = new FlexTable();
@@ -177,6 +203,11 @@ public class SubmissionFormRenderer {
 			String UILabel = modulesConfig.get(moduleId);
 			CheckBox moduleUICheckBox = new CheckBox();
 			moduleUICheckBox.setFormValue(moduleId);
+			
+			if (this.model.getModules().contains(moduleId)) {
+				moduleUICheckBox.setValue(true, false);
+			}
+			
 			moduleUICheckBox.addValueChangeHandler(new ModulesChangeHandler());
 			
 			//add to GUI
@@ -200,13 +231,24 @@ public class SubmissionFormRenderer {
 		log.enter("initStudiesQuestion");
 		
 		this.studiesQuestionPanel = new FlowPanel();
-		studiesQuestionPanel.addStyleName(CSS.COMMON_QUESTION);
-		studiesQuestionPanel.addStyleName(CSS.SUBMISSIONFORM_STUDIESQUESTION);
+		this.studiesQuestionPanel.addStyleName(CSS.COMMON_QUESTION);
+		this.studiesQuestionPanel.addStyleName(CSS.SUBMISSIONFORM_STUDIESQUESTION);
+		this.studiesQuestionPanel.add(new HTML("<p>"+Resources.get(Resources.QUESTIONLABELSTUDIES)+"</p>"));
+		
+		this.selectStudiesPanel = new FlowPanel();
+		this.studiesQuestionPanel.add(this.selectStudiesPanel);
 		
 		this.selectStudies = new ArrayList<SelectStudy>();
-		
-		this.selectStudies.add(new SelectStudy());
-		
+
+		SelectStudy prototype = new SelectStudy();
+		this.selectStudies.add(prototype);
+
+		List<AtomLink> links = this.model.getStudyLinks();
+		for (int i=1; i<links.size(); i++) {
+			SelectStudy s = new SelectStudy();
+			this.selectStudies.add(s);
+		}
+
 		this.refreshStudyLinks();
 		
 		log.leave();
@@ -220,11 +262,17 @@ public class SubmissionFormRenderer {
 	 * 
 	 */
 	private void renderSelectStudies() {
-
-		this.studiesQuestionPanel.clear();
+		
+		this.selectStudiesPanel.clear();
 		for (SelectStudy s : this.selectStudies) {
 			s.render();
-			this.studiesQuestionPanel.add(s);
+			this.selectStudiesPanel.add(s);
+		}
+
+		List<AtomLink> links = this.model.getStudyLinks();
+		for (int i=0; i<links.size(); i++) {
+			String link = Configuration.getSubmissionFeedURL() + links.get(i).getHref(); // TODO fix for absolute uris
+			selectStudies.get(i).setSelectedValue(link);
 		}
 		
 	}
@@ -268,6 +316,14 @@ public class SubmissionFormRenderer {
 			}
 			return null;
 		}
+		
+		private void setSelectedValue(String value) {
+			for (int i=0; i<listBox.getItemCount(); i++) {
+				if (listBox.getValue(i).equals(value)) {
+					listBox.setSelectedIndex(i);
+				}
+			}
+		}
 
 		/**
 		 * 
@@ -282,19 +338,19 @@ public class SubmissionFormRenderer {
 			}
 			
 			listBox = new ListBox();
+			int cutoff = 60;
 			if (studyLinks != null) {
 				for (String link : studyLinks.keySet()) {
-					listBox.addItem(studyLinks.get(link), link);
+					String title = studyLinks.get(link);
+					if (title.length() > cutoff) {
+						title = title.substring(0, cutoff) + "...";
+					}
+					listBox.addItem(title, link);
 				}
 			}
 
 			if (previousValue != null) {
-				for (int index=0; index<listBox.getItemCount(); index++) {
-					if (listBox.getValue(index).equals(previousValue)) {
-						listBox.setSelectedIndex(index);
-						
-					}
-				}
+				this.setSelectedValue(previousValue);
 			}
 			
 			listBox.addClickHandler(new StudiesClickHandler());
@@ -393,7 +449,10 @@ public class SubmissionFormRenderer {
 		}
 
 	}
-
+	
+	
+	
+	
 	
 
 }

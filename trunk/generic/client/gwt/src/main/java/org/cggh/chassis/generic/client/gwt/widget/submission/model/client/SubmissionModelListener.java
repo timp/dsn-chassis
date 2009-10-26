@@ -27,4 +27,8 @@ public interface SubmissionModelListener {
 
 	void onAuthorsChanged(Set<AtomAuthor> before, Set<AtomAuthor> after, Boolean isValid);
 
+	void onCreatedChanged(String before, String created);
+
+	void onUpdatedChanged(String before, String created);
+
 }

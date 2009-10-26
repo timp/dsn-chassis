@@ -11,8 +11,8 @@ import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
  */
 public interface SubmissionControllerPubSubEditAPI extends AbstractSubmissionControllerPubSubAPI {
 	
-	public void onSubmissionEntryUpdated(SubmissionEntry updatedSubmissionEntry);
+	public void fireOnSubmissionEntryUpdated(SubmissionEntry updatedSubmissionEntry);
 
-	public void onUserActionEditSubmissionEntryCancelled();
+	public void fireOnUserActionEditSubmissionEntryCancelled();
 	
 }

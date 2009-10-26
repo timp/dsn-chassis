@@ -9,6 +9,7 @@ import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionFactory;
 import org.cggh.chassis.generic.atom.submission.client.format.impl.SubmissionFactoryImpl;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
+import org.cggh.chassis.generic.client.gwt.common.client.ChassisResources;
 import org.cggh.chassis.generic.client.gwt.common.client.ChassisUser;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
@@ -58,8 +59,11 @@ public class SubmissionForm extends SubmissionEntryForm {
 	
 	
 	public void setModel(SubmissionEntry model) {
+		log.enter("setModel");
 		this.model = model;
+		this.renderer.bind(model);
 		this.render();
+		log.leave();
 	}
 	
 	
@@ -84,6 +88,23 @@ public class SubmissionForm extends SubmissionEntryForm {
 		
 	}
 	
+	
+	
+	public static class Resources {
+	
+		public static final String HEADINGTITLEANDSUMMARY = "HEADINGTITLEANDSUMMARY";
+		public static final String HEADINGMODULES = "HEADINGMODULES";
+		public static final String HEADINGSTUDIES = "HEADINGSTUDIES";
+		public static final String QUESTIONLABELTITLE = "QUESTIONLABELTITLE";
+		public static final String QUESTIONLABELSUMMARY = "QUESTIONLABELSUMMARY";
+		public static final String QUESTIONLABELMODULES = "QUESTIONLABELMODULES";
+		public static final String QUESTIONLABELSTUDIES = "QUESTIONLABELSTUDIES";
+		
+		public static String get(String key) {
+			return ChassisResources.get(SubmissionForm.class.getName(), ChassisUser.getLang(), key);
+		}
+		
+	}
 	
 	
 	

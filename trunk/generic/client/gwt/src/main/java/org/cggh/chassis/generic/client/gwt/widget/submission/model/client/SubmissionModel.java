@@ -10,6 +10,7 @@ import java.util.Set;
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomLink;
+import org.cggh.chassis.generic.client.gwt.widget.study.model.client.StudyModelListener;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 
@@ -52,6 +53,8 @@ public class SubmissionModel {
 		fireOnSummaryChanged(getSummary());
 		fireOnStudyLinksChanged(getStudyLinks());
 		fireOnModulesChanged(getModules());
+		fireOnCreatedChanged(getCreated());
+		fireOnUpdatedChanged(getUpdated());
 		
 		//fire form validation
 		fireOnSubmissionEntryModelChanged();
@@ -188,6 +191,14 @@ public class SubmissionModel {
 	}
 
 
+	public String getCreated() {
+		return submissionEntry.getPublished();
+	}
+
+	public String getUpdated() {
+		return submissionEntry.getUpdated();
+	}
+
 
 	private void fireOnSummaryChanged(String before) {
 		
@@ -315,4 +326,20 @@ public class SubmissionModel {
 		listeners.add(listener);
 	}
 	
+	
+	
+	private void fireOnCreatedChanged(String before) {
+		for (SubmissionModelListener listener : listeners) {
+			listener.onCreatedChanged(before, getCreated());
+		}
+	}
+
+	private void fireOnUpdatedChanged(String before) {
+		for (SubmissionModelListener listener : listeners) {
+			listener.onUpdatedChanged(before, getUpdated());
+		}
+	}
+
+
+
 }

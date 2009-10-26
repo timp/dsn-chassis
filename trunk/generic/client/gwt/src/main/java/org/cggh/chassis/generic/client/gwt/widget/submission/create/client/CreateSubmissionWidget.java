@@ -80,14 +80,6 @@ public class CreateSubmissionWidget extends Composite {
 	
 	
 	
-	public void addCreateSubmissionWidgetListener(CreateSubmissionWidgetPubSubAPI listener) {
-		listeners.add(listener);				
-	}
-
-
-
-
-
 	/**
 	 * @param error
 	 */
@@ -96,6 +88,15 @@ public class CreateSubmissionWidget extends Composite {
 			listener.onNewSubmissionSaveError(error);
 		}
 	}
+
+
+
+
+	public void addCreateSubmissionWidgetListener(CreateSubmissionWidgetPubSubAPI listener) {
+		listeners.add(listener);				
+	}
+
+
 
 
 

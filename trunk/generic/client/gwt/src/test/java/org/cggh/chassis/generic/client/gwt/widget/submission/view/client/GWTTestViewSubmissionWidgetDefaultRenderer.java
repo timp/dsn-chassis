@@ -78,8 +78,8 @@ public class GWTTestViewSubmissionWidgetDefaultRenderer extends GWTTestCase {
 		assertTrue( (testRenderer.loadingPanel.getParent() == null)
 			        || !(testRenderer.loadingPanel.isVisible()) );
 		
-		assertTrue( (testRenderer.submissionDetailsPanel.getParent() == null)
-			        || !(testRenderer.submissionDetailsPanel.isVisible()) );
+		assertTrue( (testRenderer.mainPanel.getParent() == null)
+			        || !(testRenderer.mainPanel.isVisible()) );
 		
 	}
 	
@@ -144,7 +144,7 @@ public class GWTTestViewSubmissionWidgetDefaultRenderer extends GWTTestCase {
 		testRenderer.onAuthorsChanged(null, testAuthors, true);		
 		
 		// test outcome
-		assertEquals(testAuthors.size(), testRenderer.authorsListPanel.getWidgetCount());
+		assertEquals(testAuthors.size(), testRenderer.ownersListPanel.getWidgetCount());
 		
 	}
 	
@@ -157,15 +157,15 @@ public class GWTTestViewSubmissionWidgetDefaultRenderer extends GWTTestCase {
 		//check loading state
 		assertTrue( (testRenderer.loadingPanel.getParent() != null)
 		            && (testRenderer.loadingPanel.isVisible()) );
-		assertTrue( (testRenderer.submissionDetailsPanel.getParent() == null)
-		            || !(testRenderer.submissionDetailsPanel.isVisible()) );
+		assertTrue( (testRenderer.mainPanel.getParent() == null)
+		            || !(testRenderer.mainPanel.isVisible()) );
 		
 		//mock loaded state
 		testRenderer.onStatusChanged(SubmissionModel.STATUS_LOADING, SubmissionModel.STATUS_LOADED);
 		
 		//check loaded state
-		assertTrue( (testRenderer.submissionDetailsPanel.getParent() != null)
-	                 && (testRenderer.submissionDetailsPanel.isVisible()) );
+		assertTrue( (testRenderer.mainPanel.getParent() != null)
+	                 && (testRenderer.mainPanel.isVisible()) );
 		assertTrue( (testRenderer.loadingPanel.getParent() == null)
 	                 || !(testRenderer.loadingPanel.isVisible()) );
 		

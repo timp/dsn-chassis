@@ -42,6 +42,10 @@ public class ViewStudyWidgetDefaultRenderer implements StudyModelListener {
 	final Label updatedLabel = new InlineLabel();
 	final FlowPanel loadingPanel = new FlowPanel();
 	final FlowPanel mainPanel = new FlowPanel();
+	
+	
+	
+	
 	final Anchor editThisStudyUI = new Anchor();
 	final Anchor viewStudyQuestionnaireUI = new Anchor();
 	final Anchor editStudyQuestionnaireUI = new Anchor();
@@ -97,7 +101,7 @@ public class ViewStudyWidgetDefaultRenderer implements StudyModelListener {
 		
 		log.debug("prepare loading panel");
 
-		this.loadingPanel.add(new Label("Loading..."));
+		this.loadingPanel.add(new Label("loading..."));
 		this.loadingPanel.setVisible(false);
 		this.canvas.add(this.loadingPanel);
 		
@@ -148,8 +152,7 @@ public class ViewStudyWidgetDefaultRenderer implements StudyModelListener {
 		updatedPanel.addStyleName(CSS.COMMON_QUESTION);
 		studyDetailsPanel.add(updatedPanel);
 		
-		//TODO add other actions
-		
+
 		log.debug("create actions panel");
 
 		FlowPanel actionsPanel = new FlowPanel();
@@ -158,18 +161,18 @@ public class ViewStudyWidgetDefaultRenderer implements StudyModelListener {
 
 		this.editThisStudyUI.setText("edit study");
 		this.editThisStudyUI.addStyleName(CSS.COMMON_ACTION);
-		actionsPanel.add(this.editThisStudyUI);
 		this.editThisStudyUI.addClickHandler(new EditStudyClickHandler());
+		actionsPanel.add(this.editThisStudyUI);
 
 		this.viewStudyQuestionnaireUI.setText("view study questionnaire");
 		this.viewStudyQuestionnaireUI.addStyleName(CSS.COMMON_ACTION);
-		actionsPanel.add(this.viewStudyQuestionnaireUI);
 		this.viewStudyQuestionnaireUI.addClickHandler(new ViewStudyQuestionnaireClickHandler());
+		actionsPanel.add(this.viewStudyQuestionnaireUI);
 
 		this.editStudyQuestionnaireUI.setText("edit study questionnaire");
 		this.editStudyQuestionnaireUI.addStyleName(CSS.COMMON_ACTION);
-		actionsPanel.add(this.editStudyQuestionnaireUI);
 		this.editStudyQuestionnaireUI.addClickHandler(new EditStudyQuestionnaireClickHandler());
+		actionsPanel.add(this.editStudyQuestionnaireUI);
 
 		log.debug("prepare main panel");
 
@@ -186,23 +189,20 @@ public class ViewStudyWidgetDefaultRenderer implements StudyModelListener {
 		
 		if (after == StudyModel.STATUS_LOADING) {
 
-//			canvas.clear();
-//			canvas.add(loadingPanel);
-			
 			this.mainPanel.setVisible(false);
 			this.loadingPanel.setVisible(true);
 		
 		} else if (after == StudyModel.STATUS_LOADED) {
 
-//			canvas.clear();
-//			canvas.add(studyDetailsPanel);
-
 			this.loadingPanel.setVisible(false);
 			this.mainPanel.setVisible(true);
 
 		} else if (after == StudyModel.STATUS_ERROR) {
+
 			// TODO handle error case (could use extra panel or pass error to parent)
+
 		}
+
 	}
 
 	class EditStudyClickHandler implements ClickHandler {

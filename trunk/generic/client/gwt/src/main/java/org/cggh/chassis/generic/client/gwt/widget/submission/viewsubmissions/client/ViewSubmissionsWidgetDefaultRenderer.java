@@ -3,18 +3,29 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.submission.viewsubmissions.client;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
+import org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
+import org.cggh.chassis.generic.client.gwt.common.client.CSS;
+import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
+import org.cggh.chassis.generic.log.client.Log;
+import org.cggh.chassis.generic.log.client.LogFactory;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.SimplePanel;
-import com.google.gwt.user.client.ui.Widget;
+
+
+
 
 /**
  * @author raok
@@ -24,6 +35,10 @@ public class ViewSubmissionsWidgetDefaultRenderer implements ViewSubmissionsWidg
 
 	
 	
+	
+	
+	private Log log = LogFactory.getLog(this.getClass());
+
 	
 	
 	//Expose view elements for testing purposes.
@@ -68,63 +83,192 @@ public class ViewSubmissionsWidgetDefaultRenderer implements ViewSubmissionsWidg
 	
 	
 	private void initCanvas() {
+		log.enter("initCanvas");
 		
-		//prepare loading panel
-		loadingPanel.add(new Label("Loading..."));
-				
+		this.canvas.addStyleName(CSS.VIEWSUBMISSIONS_BASE);
+		
+		this.canvas.add(new HTML("<h2>My Data Submissions</h2>"));
+		
+		this.canvas.add(new HTML("<p>Listed below are all of the data submissions that you own.</p>"));
+		
+		log.debug("prepare loading panel");
+		this.loadingPanel.add(new Label("Loading..."));
+		this.loadingPanel.setVisible(false);
+		this.canvas.add(this.loadingPanel);
+		
+		log.debug("prepare studies list panel");
+		this.submissionsListPanel.setVisible(false);
+		this.canvas.add(this.submissionsListPanel);
+		
+		log.leave();
 	}
 
+	
+	
+	
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.client.gwt.widget.submission.viewall.client.ViewAllSubmissionsWidgetModelListener#onStatusChanged(java.lang.Integer, java.lang.Integer)
 	 */
 	public void onStatusChanged(Integer before, Integer after) {
+//
+//		if (after == ViewSubmissionsWidgetModel.STATUS_LOADING) {
+//			canvas.clear();
+//			canvas.add(loadingPanel);
+//		} else if (after == ViewSubmissionsWidgetModel.STATUS_LOADED) {
+//			canvas.clear();
+//			canvas.add(submissionsListPanel);			
+//		}
+
 
 		if (after == ViewSubmissionsWidgetModel.STATUS_LOADING) {
-			canvas.clear();
-			canvas.add(loadingPanel);
+
+//			canvas.clear();
+//			canvas.add(loadingPanel);
+			
+			this.submissionsListPanel.setVisible(false);
+			this.loadingPanel.setVisible(true);
+			
 		} else if (after == ViewSubmissionsWidgetModel.STATUS_LOADED) {
-			canvas.clear();
-			canvas.add(submissionsListPanel);			
+
+//			canvas.clear();
+//			canvas.add(studiesListPanel);			
+
+			this.loadingPanel.setVisible(false);
+			this.submissionsListPanel.setVisible(true);
+
 		}
+		
 	}
 
+	
+	
+	
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.client.gwt.widget.submission.viewall.client.ViewAllSubmissionsWidgetModelListener#onSubmissionEntriesChanged(java.util.List, java.util.List)
 	 */
 	public void onSubmissionEntriesChanged(List<SubmissionEntry> before, List<SubmissionEntry> after) {
 		
-		//remove old entries
+//		//remove old entries
+//		submissionsListPanel.clear();
+//		
+//		//Panel to list submissions in
+//		FlexTable submissionsTable = new FlexTable();
+//		int rowNo = 0;		
+//		
+//		//add header row
+//		submissionsTable.setWidget(rowNo, 0, new Label("Title"));
+//		submissionsTable.setWidget(rowNo, 1, new Label("Summary"));
+//		
+//		for (SubmissionEntry submissionEntry : after) {
+//			submissionsTable.setWidget(++rowNo, 0, new Label(submissionEntry.getTitle()));
+//			submissionsTable.setWidget(rowNo, 1, new Label(submissionEntry.getSummary()));
+//			
+//			//add view submission link
+//			Label editSubmission = new Label("view");
+//			editSubmission.addClickHandler(new ViewSubmissionClickHandler(submissionEntry));
+//			submissionsTable.setWidget(rowNo, 2, editSubmission);
+//						
+//		}
+//		
+//		submissionsListPanel.add(submissionsTable);
+
+
+		log.enter("onSubmissionEntriesChanged");
+		
+		log.debug("remove old entries");
+
 		submissionsListPanel.clear();
 		
-		//Panel to list submissions in
+		log.debug("create table to list submissions in");
+
 		FlexTable submissionsTable = new FlexTable();
+		submissionsTable.setCellPadding(0);
+		submissionsTable.setCellSpacing(0);
+		submissionsTable.addStyleName(CSS.VIEWSUBMISSIONS_SUBMISSIONSTABLE);
 		int rowNo = 0;		
 		
-		//add header row
-		submissionsTable.setWidget(rowNo, 0, new Label("Title"));
-		submissionsTable.setWidget(rowNo, 1, new Label("Summary"));
+		log.debug("add header row");
+
+//		String[] headers = { "Title", "Summary", "Modules", "Owners", "Created", "Updated", "Actions" };
+		String[] headers = { "Title", "Summary", "Modules", "Owners", "Actions" };
+		
+		for (int i=0; i<headers.length; i++) {
+			Label headerLabel = new Label(headers[i]);
+			headerLabel.addStyleName(CSS.VIEWSUBMISSIONS_TABLEHEADER);
+			submissionsTable.setWidget(rowNo, i, headerLabel);
+		}
+		
+		log.debug("add submissions");
 		
 		for (SubmissionEntry submissionEntry : after) {
-			submissionsTable.setWidget(++rowNo, 0, new Label(submissionEntry.getTitle()));
-			submissionsTable.setWidget(rowNo, 1, new Label(submissionEntry.getSummary()));
+
+			String title = submissionEntry.getTitle();
 			
-			//add view submission link
-			Label editSubmission = new Label("view");
-			editSubmission.addClickHandler(new ViewSubmissionClickHandler(submissionEntry));
-			submissionsTable.setWidget(rowNo, 2, editSubmission);
+			String summary = submissionEntry.getSummary();
+			int cutoff = 100;
+			if (summary.length() > cutoff) {
+				log.debug("truncate long summary");
+				summary = summary.substring(0, cutoff) + "...";
+			}
+			
+			List<String> modules = submissionEntry.getModules();
+			Map<String,String> moduleLabels = ConfigurationBean.getModules();
+			String modulesContent = "";
+			for (Iterator<String> it = modules.iterator(); it.hasNext(); ) {
+				String ml = moduleLabels.get(it.next());
+				modulesContent += ml;
+				if (it.hasNext()) {
+					modulesContent += ", ";
+				}
+			}
+			
+			String created = submissionEntry.getPublished();
+			String updated = submissionEntry.getUpdated();
+			
+			Label submissionTitleLabel = new Label(title);
+			submissionTitleLabel.addStyleName(CSS.VIEWSUBMISSIONS_SUBMISSIONTITLE);
+			submissionsTable.setWidget(++rowNo, 0, submissionTitleLabel);
+			
+			submissionsTable.setWidget(rowNo, 1, new Label(summary));
+			submissionsTable.setWidget(rowNo, 2, new Label(modulesContent));
+			
+			String authorsContent = "";
+			for (Iterator<AtomAuthor> it = submissionEntry.getAuthors().iterator(); it.hasNext(); ) {
+				authorsContent += it.next().getEmail();
+				if (it.hasNext()) {
+					authorsContent += ", ";
+				}
+			}
+			
+			submissionsTable.setWidget(rowNo, 3, new Label(authorsContent));
+
+//			submissionsTable.setWidget(rowNo, 4, new Label(created));
+//			submissionsTable.setWidget(rowNo, 5, new Label(updated));
+			
+			log.debug("add a select submission link");
+			Anchor selectSubmission = new Anchor();
+			selectSubmission.setText("view");
+			selectSubmission.addStyleName(CSS.COMMON_ACTION);
+			selectSubmission.addClickHandler(new SelectSubmissionClickHandler(submissionEntry));
+			submissionsTable.setWidget(rowNo, 4, selectSubmission);
 						
 		}
 		
 		submissionsListPanel.add(submissionsTable);
 		
+		log.leave();
+	
 	}
 	
+	
+	
+	
 	//package private to allow testing
-	class ViewSubmissionClickHandler implements ClickHandler {
+	class SelectSubmissionClickHandler implements ClickHandler {
 		
 		private final SubmissionEntry submissionEntry;
 		
-		public ViewSubmissionClickHandler(SubmissionEntry submissionEntry) {
+		public SelectSubmissionClickHandler(SubmissionEntry submissionEntry) {
 			this.submissionEntry = submissionEntry;
 		}
 		
@@ -133,16 +277,24 @@ public class ViewSubmissionsWidgetDefaultRenderer implements ViewSubmissionsWidg
 		}
 	}
 
+	
+	
+	
 	public void setController(ViewSubmissionsWidgetController controller) {
 		this.controller = controller;
 	}
 
+	
+	
+	
 	/**
 	 * @return
 	 */
 	public Panel getCanvas() {
 		return this.canvas;
 	}
+	
+	
 	
 
 }

@@ -52,6 +52,18 @@ public class CSS {
 	public static final String SUBMISSIONFORM_STUDIESQUESTION = SUBMISSIONFORM_BASE + "-studiesQuestion";
 	public static final String SUBMISSIONFORM_SELECTSTUDY = SUBMISSIONFORM_BASE + "-selectStudy";
 
+	public static final String VIEWSUBMISSION_BASE = COMMON_BASE + "-viewSubmission";
+	public static final String VIEWSUBMISSION_SUMMARY = VIEWSUBMISSION_BASE + "-summary";
+
+	public static final String VIEWSUBMISSIONS_BASE = COMMON_BASE + "-viewSubmissions";
+	public static final String VIEWSUBMISSIONS_SUBMISSIONSTABLE = VIEWSUBMISSIONS_BASE + "-submissionsTable";
+	public static final String VIEWSUBMISSIONS_TABLEHEADER = VIEWSUBMISSIONS_BASE + "-tableHeader";
+	public static final String VIEWSUBMISSIONS_SUBMISSIONTITLE = VIEWSUBMISSIONS_BASE + "-submissionTitle";
+
+	public static final String EDITSUBMISSION_BASE = COMMON_BASE + "-editSubmission";
+	public static final String EDITSUBMISSION_ACTIONS = EDITSUBMISSION_BASE + "-actions";
+
+
 
 
 

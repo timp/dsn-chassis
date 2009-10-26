@@ -11,8 +11,10 @@ import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
  */
 public interface EditSubmissionWidgetPubSubAPI {
 
-	void onSubmissionUpdateSuccess(SubmissionEntry updatedSubmissionEntry);
+	public void onNewSubmissionSaveSuccess(SubmissionEntry submissionEntry);
+	
+	public void onUserActionCreateNewSubmissionCancelled();
 
-	void onUserActionUpdateSubmissionCancelled();
+	public void onNewSubmissionSaveError(Throwable error);
 
 }

@@ -232,6 +232,7 @@ public class ViewStudiesWidgetDefaultRenderer implements ViewStudiesWidgetModelL
 			log.debug("add a select study link");
 			Anchor selectStudy = new Anchor();
 			selectStudy.setText(selectStudyLinkText);
+			selectStudy.addStyleName(CSS.COMMON_ACTION);
 			selectStudy.addClickHandler(new SelectStudyClickHandler(studyEntry));
 			studiesTable.setWidget(rowNo, 4, selectStudy);
 						
