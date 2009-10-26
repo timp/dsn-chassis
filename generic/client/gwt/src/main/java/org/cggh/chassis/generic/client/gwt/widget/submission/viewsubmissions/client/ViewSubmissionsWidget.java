@@ -8,19 +8,31 @@ import java.util.Set;
 
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
 
+import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Panel;
 
 /**
  * @author raok
  *
  */
-public class ViewSubmissionsWidget implements ViewSubmissionsWidgetAPI {
+public class ViewSubmissionsWidget extends Composite implements ViewSubmissionsWidgetAPI {
 
+	
+	
+	
 	final private ViewSubmissionsWidgetModel model;
 	final private ViewSubmissionsWidgetController controller;
-	final private ViewSubmissionsWidgetModelListener renderer;
+	final private ViewSubmissionsWidgetDefaultRenderer renderer;
 	private Set<ViewSubmissionsWidgetPubSubAPI> listeners = new HashSet<ViewSubmissionsWidgetPubSubAPI>();
 	
+	
+	
+	
+	
+	/**
+	 * 
+	 * @param canvas
+	 */
 	public ViewSubmissionsWidget(Panel canvas) {
 		
 		model = new ViewSubmissionsWidgetModel();
@@ -31,8 +43,35 @@ public class ViewSubmissionsWidget implements ViewSubmissionsWidgetAPI {
 		
 		// register renderer as listener to model
 		model.addListener(renderer);
+
+		this.initWidget(this.renderer.getCanvas());
 		
 	}
+	
+	
+	
+	
+	
+	/**
+	 * 
+	 */
+	public ViewSubmissionsWidget() {
+
+		model = new ViewSubmissionsWidgetModel();
+		
+		controller = new ViewSubmissionsWidgetController(model, this);
+		
+		renderer = new ViewSubmissionsWidgetDefaultRenderer(controller);
+		
+		// register renderer as listener to model
+		model.addListener(renderer);
+
+		this.initWidget(this.renderer.getCanvas());
+
+	}
+
+
+	
 	
 	
 	/* (non-Javadoc)
@@ -42,11 +81,17 @@ public class ViewSubmissionsWidget implements ViewSubmissionsWidgetAPI {
 		controller.loadSubmissionsByFeedURL();
 	}
 
+	
+	
+	
 	void onUserSelectSubmission(SubmissionEntry submissionEntry) {
 		for (ViewSubmissionsWidgetPubSubAPI listener : listeners) {
 			listener.onUserActionSelectSubmission(submissionEntry);
 		}
 	}
+	
+	
+	
 	
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.client.gwt.widget.submission.viewall.client.ViewAllSubmissionsWidgetAPI#addViewAllSubmissionsWidgetListener(org.cggh.chassis.generic.client.gwt.widget.submission.viewall.client.ViewAllSubmissionsWidgetPubSubAPI)
@@ -55,14 +100,21 @@ public class ViewSubmissionsWidget implements ViewSubmissionsWidgetAPI {
 		listeners.add(listener);
 	}
 
+	
+	
+	
 	public void loadSubmissions(Set<String> submissionEntryURLsToLoad) {
 		controller.loadSubmissionsByEntryURLs(submissionEntryURLsToLoad);
 	}
 
+	
+	
 
 	public void loadSubmissionsByAuthorEmail(String authorEmail) {
 		controller.loadSubmissionsByAuthorEmail(authorEmail);
 	}
+	
+	
 	
 	
 }

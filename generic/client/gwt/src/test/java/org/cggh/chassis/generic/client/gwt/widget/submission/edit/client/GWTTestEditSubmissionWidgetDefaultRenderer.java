@@ -48,7 +48,7 @@ public class GWTTestEditSubmissionWidgetDefaultRenderer extends GWTTestCase {
 		//create mockController and inject into testRenderer
 		mockController = new MockSubmissionController();
 		
-		testRenderer = new EditSubmissionWidgetDefaultRenderer(new SimplePanel(), mockController, module1Id);
+		testRenderer = new EditSubmissionWidgetDefaultRenderer(new SimplePanel(), mockController);
 					
 	}
 	

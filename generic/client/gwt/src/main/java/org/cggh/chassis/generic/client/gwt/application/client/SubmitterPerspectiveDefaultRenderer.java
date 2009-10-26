@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.cggh.chassis.generic.client.gwt.widget.studymanagement.client.StudyManagementWidget;
+import org.cggh.chassis.generic.client.gwt.widget.submissionmanagement.client.SubmissionManagementWidget;
 import org.cggh.chassis.generic.client.gwt.widget.submitter.home.client.SubmitterHomeWidget;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
@@ -38,11 +39,13 @@ public class SubmitterPerspectiveDefaultRenderer implements	SubmitterPerspective
 	private Panel canvas;
 	private MenuBar mainMenu;
 	private MenuBar studyMenu;
+	private MenuBar submissionMenu;
 	private SubmitterPerspectiveController controller;
 	private List<Widget> widgets = new ArrayList<Widget>();
 	private StudyManagementWidget studyManagementWidget;
 	private SubmitterPerspective owner;
 	private SubmitterHomeWidget submitterHomeWidget;
+	private SubmissionManagementWidget submissionManagementWidget;
 
 	
 	
@@ -73,6 +76,8 @@ public class SubmitterPerspectiveDefaultRenderer implements	SubmitterPerspective
 		this.constructSubmitterHomeWidget();
 		
 		this.constructStudyManagementWidget();
+		
+		this.constructSubmissionManagementWidget();
 		
 		this.constructMenuBar();
 		
@@ -118,6 +123,22 @@ public class SubmitterPerspectiveDefaultRenderer implements	SubmitterPerspective
 	/**
 	 * 
 	 */
+	private void constructSubmissionManagementWidget() {
+		
+		this.submissionManagementWidget = new SubmissionManagementWidget();
+		this.submissionManagementWidget.addSubmissionManagementWidgetListener(this.owner);
+		this.submissionManagementWidget.setVisible(false);
+		this.widgets.add(this.submissionManagementWidget);
+		
+	}
+
+
+
+
+
+	/**
+	 * 
+	 */
 	private void constructMenuBar() {
 		log.enter("constructMenuBar");
 		
@@ -131,7 +152,8 @@ public class SubmitterPerspectiveDefaultRenderer implements	SubmitterPerspective
 		this.studyMenu = this.studyManagementWidget.getMenu();
 		this.mainMenu.addItem("studies", this.studyMenu);
 
-		// TODO finish this
+		this.submissionMenu = this.submissionManagementWidget.getMenu();
+		this.mainMenu.addItem("data", this.submissionMenu);
 		
 		this.canvas.add(this.mainMenu);
 

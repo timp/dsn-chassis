@@ -44,7 +44,7 @@ class CreateStudyWidgetDefaultRenderer implements StudyModelListener {
 	final private Panel canvas;
 	private StudyControllerCreateAPI controller;
 	private Boolean isFormComplete = false;
-	private Map<String, String> modulesConfig;
+	private Map<String, String> modulesConfig = ConfigurationBean.getModules();
 	
 	
 	
@@ -62,7 +62,6 @@ class CreateStudyWidgetDefaultRenderer implements StudyModelListener {
 	public CreateStudyWidgetDefaultRenderer(Panel canvas, StudyControllerCreateAPI controller) {
 		this.canvas = canvas;
 		this.controller = controller;
-		this.modulesConfig = ConfigurationBean.getModules();
 		
 		//initialise view
 		initCanvas();
@@ -77,7 +76,6 @@ class CreateStudyWidgetDefaultRenderer implements StudyModelListener {
 	public CreateStudyWidgetDefaultRenderer(StudyControllerCreateAPI controller) {
 		this.canvas = new FlowPanel();
 		this.controller = controller;
-		this.modulesConfig = ConfigurationBean.getModules();
 		
 		//initialise view
 		initCanvas();
@@ -103,7 +101,7 @@ class CreateStudyWidgetDefaultRenderer implements StudyModelListener {
 		// title question
 		
 		FlowPanel titleQuestion = new FlowPanel();
-		InlineLabel titleLabel = new InlineLabel("What is the title of the study?");
+		InlineLabel titleLabel = new InlineLabel("Please provide a title for the study:");
 		titleQuestion.add(titleLabel);
 		titleQuestion.add(titleUI);
 		titleQuestion.addStyleName(CSS.COMMON_QUESTION);

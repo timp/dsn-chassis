@@ -3,6 +3,7 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.application.client;
 
+import org.cggh.chassis.generic.client.gwt.common.client.ChassisUser;
 import org.cggh.chassis.generic.client.gwt.widget.application.client.perspective.PerspectiveWidget;
 import org.cggh.chassis.generic.client.gwt.widget.application.client.perspective.PerspectiveWidgetAPI;
 import org.cggh.chassis.generic.client.gwt.widget.userdetails.client.UserDetailsWidget;
@@ -94,8 +95,10 @@ public class ApplicationWidgetDefaultRenderer implements ApplicationWidgetModelL
 
 	public void onUserRefreshed(String userId) {
 
+		ChassisUser.setCurrentUserEmail(userId);
+		
 		// initialise perspective widgets
-		submitterPerspectiveWidget = new PerspectiveWidget(submitterPerspectiveWidgetCanvas, userId);
+		submitterPerspectiveWidget = new PerspectiveWidget(submitterPerspectiveWidgetCanvas);
 		
 		//TODO initialise other widgets
 		curatorPerspectiveWidgetCanvas.add(new Label("curator perspective placeholder"));

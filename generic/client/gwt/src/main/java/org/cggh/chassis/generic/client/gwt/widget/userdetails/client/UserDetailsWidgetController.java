@@ -9,6 +9,9 @@ import java.util.TreeSet;
 
 import org.cggh.chassis.generic.client.gwt.configuration.client.ChassisRole;
 import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
+import org.cggh.chassis.generic.log.client.Log;
+import org.cggh.chassis.generic.log.client.LogFactory;
+import org.cggh.chassis.generic.twisted.client.Deferred;
 import org.cggh.chassis.generic.user.gwtrpc.client.GWTUserDetailsServiceAsync;
 import org.cggh.chassis.generic.user.transfer.UserDetailsTO;
 
@@ -53,9 +56,13 @@ public class UserDetailsWidgetController {
 	/**
 	 * Refresh the currently authenticated user.
 	 */
-	void refreshUserDetails() {
+	Deferred<UserDetailsTO> refreshUserDetails() {
 		
-		refreshUserDetails(new RefreshUserDetailsCallback());
+		Deferred<UserDetailsTO> d = new Deferred<UserDetailsTO>();
+		
+		refreshUserDetails(new RefreshUserDetailsCallback(d));
+		
+		return d;
 		
 	}
 
@@ -63,15 +70,30 @@ public class UserDetailsWidgetController {
 	
 	class RefreshUserDetailsCallback implements AsyncCallback<UserDetailsTO> {
 
+		private Deferred<UserDetailsTO> deferredUser;
+		private Log log = LogFactory.getLog(this.getClass());
+		
+		/**
+		 * @param d
+		 */
+		public RefreshUserDetailsCallback(Deferred<UserDetailsTO> d) {
+			this.deferredUser = d;
+		}
+
 		public void onFailure(Throwable ex) {
+			log.enter("onFailure");
 			
 			// TODO implement this method
+			log.error("error refreshing user details", ex);
 			
+			log.leave();
 		}
 
 		public void onSuccess(UserDetailsTO user) {
 
 			// TODO handle case where user is null
+			
+			this.deferredUser.callback(user);
 			
 			// populate username
 			model.setUserName(user.getId());

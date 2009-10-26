@@ -317,7 +317,7 @@ public class StudyController implements StudyControllerEditAPI, StudyControllerC
 		if (owner instanceof StudyControllerPubSubViewAPI) {
 			StudyEntry studyEntryToEdit = model.getStudyEntry();
 			
-			((StudyControllerPubSubViewAPI)owner).onUserActionEditStudy(studyEntryToEdit);
+			((StudyControllerPubSubViewAPI)owner).fireOnUserActionEditStudy(studyEntryToEdit);
 		}
 		
 		log.leave();
@@ -336,7 +336,7 @@ public class StudyController implements StudyControllerEditAPI, StudyControllerC
 		if (owner instanceof StudyControllerPubSubViewAPI) {
 			StudyEntry studyEntry = model.getStudyEntry();
 			
-			((StudyControllerPubSubViewAPI)owner).onUserActionEditStudyQuestionnaire(studyEntry);
+			((StudyControllerPubSubViewAPI)owner).fireOnUserActionEditStudyQuestionnaire(studyEntry);
 		}
 		
 		log.leave();
@@ -355,7 +355,7 @@ public class StudyController implements StudyControllerEditAPI, StudyControllerC
 		if (owner instanceof StudyControllerPubSubViewAPI) {
 			StudyEntry studyEntry = model.getStudyEntry();
 			
-			((StudyControllerPubSubViewAPI)owner).onUserActionViewStudyQuestionnaire(studyEntry);
+			((StudyControllerPubSubViewAPI)owner).fireOnUserActionViewStudyQuestionnaire(studyEntry);
 		}
 		
 		log.leave();

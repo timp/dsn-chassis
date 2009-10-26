@@ -48,7 +48,6 @@ public class StudyManagementWidgetDefaultRenderer implements StudyManagementWidg
 	
 	private Log log = LogFactory.getLog(this.getClass());
 	private StudyManagementWidgetController controller;
-	private String authorEmail;
 	
 	
 	
@@ -82,14 +81,12 @@ public class StudyManagementWidgetDefaultRenderer implements StudyManagementWidg
 	public StudyManagementWidgetDefaultRenderer(StudyManagementWidget owner, 
 												Panel menuCanvas, 
 												Panel displayCanvas,
-												StudyManagementWidgetController controller,
-												String authorEmail) {
+												StudyManagementWidgetController controller) {
 
 		this.owner = owner;
 		this.menuCanvas = menuCanvas;
 		this.displayCanvas = displayCanvas;
 		this.controller = controller;
-		this.authorEmail = authorEmail;
 		
 		//create child widgets
 		this.viewStudyWidget = new ViewStudyWidget((Panel)this.viewStudyWidgetCanvas);
@@ -195,10 +192,7 @@ public class StudyManagementWidgetDefaultRenderer implements StudyManagementWidg
 	
 	public void onDisplayStatusChanged(Integer before, Integer after) {
 
-		String authorEmail = this.authorEmail; // default to legacy pattern
-		if (authorEmail == null) {
-			authorEmail = ChassisUser.getCurrentUserEmail(); // new pattern
-		}
+		String authorEmail = ChassisUser.getCurrentUserEmail();
 
 		if (after == StudyManagementWidgetModel.DISPLAYING_CREATE_STUDY) {
 			displayCanvas.clear();

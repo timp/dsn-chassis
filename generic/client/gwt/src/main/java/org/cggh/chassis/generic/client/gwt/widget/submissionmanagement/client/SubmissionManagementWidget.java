@@ -14,6 +14,8 @@ import org.cggh.chassis.generic.client.gwt.widget.submission.viewsubmissions.cli
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 
+import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.SimplePanel;
 
@@ -21,14 +23,19 @@ import com.google.gwt.user.client.ui.SimplePanel;
  * @author raok
  *
  */
-public class SubmissionManagementWidget implements SubmissionManagementWidgetAPI,
-												   CreateSubmissionWidgetPubSubAPI,
-											  	   EditSubmissionWidgetPubSubAPI,
-											  	   ViewSubmissionWidgetPubSubAPI,
-											  	   ViewSubmissionsWidgetPubSubAPI {
+public class SubmissionManagementWidget extends Composite implements SubmissionManagementWidgetAPI,
+												   					CreateSubmissionWidgetPubSubAPI,
+												   					EditSubmissionWidgetPubSubAPI,
+												   					ViewSubmissionWidgetPubSubAPI,
+												   					ViewSubmissionsWidgetPubSubAPI {
+	
+	
+	
 	
 	private Log log = LogFactory.getLog(this.getClass());
 
+
+	
 	
 	private SubmissionManagementWidgetModel model;
 	private SubmissionManagementWidgetController controller;
@@ -36,69 +43,108 @@ public class SubmissionManagementWidget implements SubmissionManagementWidgetAPI
 	private Panel menuCanvas = new SimplePanel();
 	private Set<SubmissionManagementWidgetPubSubAPI> listeners = new HashSet<SubmissionManagementWidgetPubSubAPI>();
 
-	public SubmissionManagementWidget(Panel displayCanvas, String authorEmail) {
-		
+	
+	
+	
+	/**
+	 * 
+	 */
+	public SubmissionManagementWidget() {
+
 		model = new SubmissionManagementWidgetModel(this);
 		
-		controller = new SubmissionManagementWidgetController(model);
+		controller = new SubmissionManagementWidgetController(this, model);
 		
-		renderer = new SubmissionManagementWidgetDefaultRenderer(menuCanvas, displayCanvas, controller, authorEmail);
+		renderer = new SubmissionManagementWidgetDefaultRenderer(this, controller);
 		
 		// register renderer as listener to model
 		model.addListener(renderer);
+
+		this.subscribeToChildWidgetEvents();
 		
+		this.initWidget(this.renderer.getCanvas());
+
+	}
+
+	
+	
+	
+	
+	private void subscribeToChildWidgetEvents() {
 		//register this widget as a listener to child widgets.
 		renderer.viewSubmissionWidget.addViewSubmissionWidgetListener(this);
 		renderer.createSubmissionWidget.addCreateSubmissionWidgetListener(this);
 		renderer.editSubmissionWidget.addEditSubmissionWidgetListener(this);
 		renderer.viewAllSubmissionsWidget.addViewAllSubmissionsWidgetListener(this);
 	}
-
-	public void onNewSubmissionCreated(SubmissionEntry newSubmissionEntry) {
+	
+	
+	
+	
+	
+	public void onNewSubmissionSaveSuccess(SubmissionEntry newSubmissionEntry) {
 		log.enter("onNewSubmissionCreated");
 		
-		renderer.viewSubmissionWidget.loadSubmissionEntry(newSubmissionEntry);
 		controller.displayViewSubmissionWidget();
+		renderer.viewSubmissionWidget.loadSubmissionEntry(newSubmissionEntry);
 		
 		log.leave();
 	}
 
+	
+	
+	
 	public void onSubmissionUpdateSuccess(SubmissionEntry updatedSubmissionEntry) {
 		log.enter("onSubmissionUpdateSuccess");
 		
-		renderer.viewSubmissionWidget.loadSubmissionEntry(updatedSubmissionEntry);
 		controller.displayViewSubmissionWidget();
+		renderer.viewSubmissionWidget.loadSubmissionEntry(updatedSubmissionEntry);
 		
 		log.leave();
 	}
 
+	
+	
+	
 	public void onUserActionEditSubmission(SubmissionEntry submissionEntryToEdit) {
 		log.enter("onUserActionEditSubmission");
 		
-		renderer.editSubmissionWidget.editSubmissionEntry(submissionEntryToEdit);
 		controller.displayEditSubmissionWidget();
+		renderer.editSubmissionWidget.editSubmissionEntry(submissionEntryToEdit);
 		
 		log.leave();
 	}
 
+	
+	
+	
 	public void onUserActionSelectSubmission(SubmissionEntry submissionEntry) {
 		log.enter("onUserActionSelectSubmission");
 		
-		renderer.viewSubmissionWidget.loadSubmissionEntry(submissionEntry);
 		controller.displayViewSubmissionWidget();
+		renderer.viewSubmissionWidget.loadSubmissionEntry(submissionEntry);
 		
 		log.leave();
 	}
 
+	
+	
+	
 	public void onUserActionUpdateSubmissionCancelled() {
 		// TODO Auto-generated method stub
 		
 	}
 
+	
+	
+	
 	public void onUserActionCreateNewSubmissionCancelled() {
 		// TODO Auto-generated method stub
 		
 	}
+
+	
+	
 	
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.client.gwt.widget.submissionmanagement.client.SubmissionManagementWidgetAPI#getMenuCanvas()
@@ -107,7 +153,38 @@ public class SubmissionManagementWidget implements SubmissionManagementWidgetAPI
 		return menuCanvas;
 	}
 
-	void displayStatusChanged(Boolean couldStatusContainUnsavedData) {
+	
+	
+	
+	public void addSubmissionManagementWidgetListener(SubmissionManagementWidgetPubSubAPI listener) {
+
+		listeners.add(listener);
+		
+	}
+
+	
+	
+	
+	public void resetWidget() {
+		
+		controller.reset();
+		
+	}
+
+
+
+
+	/**
+	 * @return
+	 */
+	public MenuBar getMenu() {
+		return this.renderer.getMenu();
+	}
+
+
+
+
+	void fireOnDisplayStatusChanged(Boolean couldStatusContainUnsavedData) {
 		
 		for (SubmissionManagementWidgetPubSubAPI listener : listeners) {
 			listener.onSubmissionManagmentDisplayStatusChanged(couldStatusContainUnsavedData);
@@ -115,15 +192,27 @@ public class SubmissionManagementWidget implements SubmissionManagementWidgetAPI
 		
 	}
 
-	public void addSubmissionManagementWidgetListener(SubmissionManagementWidgetPubSubAPI listener) {
-
-		listeners.add(listener);
-		
+	
+	
+	
+	/**
+	 * 
+	 */
+	public void fireOnSubmissionManagementMenuAction() {
+		for (SubmissionManagementWidgetPubSubAPI listener : listeners) {
+			listener.onSubmissionManagementMenuAction(this);
+		}
 	}
 
-	public void resetWidget() {
-		
-		controller.reset();
+
+
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.client.gwt.widget.submission.create.client.CreateSubmissionWidgetPubSubAPI#onNewSubmissionSaveError(java.lang.Throwable)
+	 */
+	public void onNewSubmissionSaveError(Throwable error) {
+		// TODO Auto-generated method stub
 		
 	}
 	

@@ -51,11 +51,11 @@ public class GWTTestSubmissionManagementWidgetDefaultRenderer extends GWTTestCas
 		((MockAtomService)mockService).createFeed(feedURL, "all submissions");
 		
 		//create testController and inject testModel
-		testModel = new SubmissionManagementWidgetModel(new SubmissionManagementWidget(new SimplePanel(), ""));
-		testController = new SubmissionManagementWidgetController(testModel);
+		testModel = new SubmissionManagementWidgetModel(new SubmissionManagementWidget());
+		testController = new SubmissionManagementWidgetController(null, testModel);
 		
 		//instantiate a test renderer
-		testRenderer = new SubmissionManagementWidgetDefaultRenderer(new SimplePanel(), new SimplePanel(), testController, "");
+		testRenderer = new SubmissionManagementWidgetDefaultRenderer(null, testController);
 		
 		//add as listener
 		testModel.addListener(testRenderer);

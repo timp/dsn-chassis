@@ -39,6 +39,20 @@ public class CSS {
 	public static final String EDITSTUDY_ACTIONS = EDITSTUDY_BASE + "-actions";
 	public static final String EDITSTUDY_MODULES = EDITSTUDY_BASE + "-modules";
 
+	public static final String CREATESUBMISSION_BASE = COMMON_BASE + "-createSubmission";
+	public static final String CREATESUBMISSION_TITLEINPUT = CREATESUBMISSION_BASE + "-titleInput";
+	public static final String CREATESUBMISSION_SUMMARYINPUT = CREATESUBMISSION_BASE + "-summaryInput";
+	public static final String CREATESUBMISSION_MODULES = CREATESUBMISSION_BASE + "-modules";
+	public static final String CREATESUBMISSION_ACTIONS = CREATESUBMISSION_BASE + "-actions";
+
+	public static final String SUBMISSIONFORM_BASE = COMMON_BASE + "-submissionForm";
+	public static final String SUBMISSIONFORM_TITLEQUESTION = SUBMISSIONFORM_BASE + "-titleQuestion";
+	public static final String SUBMISSIONFORM_SUMMARYQUESTION = SUBMISSIONFORM_BASE + "-summaryQuestion";
+	public static final String SUBMISSIONFORM_MODULESQUESTION = SUBMISSIONFORM_BASE + "-modulesQuestion";
+	public static final String SUBMISSIONFORM_STUDIESQUESTION = SUBMISSIONFORM_BASE + "-studiesQuestion";
+	public static final String SUBMISSIONFORM_SELECTSTUDY = SUBMISSIONFORM_BASE + "-selectStudy";
+
+
 
 
 

@@ -10,6 +10,7 @@ import java.util.Set;
 
 import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
+import org.cggh.chassis.generic.client.gwt.common.client.ChassisUser;
 import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
 import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidget;
 import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetListBoxRenderer;
@@ -26,6 +27,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.DecoratedPopupPanel;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
@@ -34,6 +36,7 @@ import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.TextBoxBase;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.Widget;
 
 /**
  * @author raok
@@ -41,11 +44,16 @@ import com.google.gwt.user.client.ui.VerticalPanel;
  */
 public class EditSubmissionWidgetDefaultRenderer implements SubmissionModelListener, ViewStudiesWidgetPubSubAPI {
 
+	
+	
+	
 	private Panel canvas;
 	private SubmissionControllerEditAPI controller;
 	private Boolean isFormComplete = false;
 	private Map<String, String> modulesConfig;
-	private String authorEmail;
+	
+	
+	
 	
 	//Expose view elements for testing purposes.
 	final Panel editSubmissionFormPanel = new SimplePanel();
@@ -55,44 +63,91 @@ public class EditSubmissionWidgetDefaultRenderer implements SubmissionModelListe
 	final Button showAddStudyLinkUI = new Button("Add a study");
 	String studyLinkToAdd;
 	
+	
+	
+	
 	//Add studyLink UI
 	final DecoratedPopupPanel studyLinkChooserPopup = new DecoratedPopupPanel(false);
-	final Panel studyLinkListBoxCanvas = new SimplePanel();
-	final private ViewStudiesWidget viewStudiesWidgetListBox;
+	private ViewStudiesWidget viewStudiesWidgetListBox;
 	final Map<String, CheckBox> modulesUIHash = new HashMap<String, CheckBox>();
 	
+	
+	
+	
 	//show linked Studies
-	final Panel studiesLinkedCanvas = new SimplePanel();
 	private ViewStudiesWidget studiesLinkedWidget;
 	
 	
 	final Button cancelEditSubmissionUI = new Button("Cancel", new CancelCreateSubmissionUIClickHandler());
 	final Button updateSubmissionEntryUI = new Button("Update Submission", new SaveNewSubmissionUIClickHandler());
 
-	public EditSubmissionWidgetDefaultRenderer(Panel canvas, SubmissionControllerEditAPI controller, String authorEmail) {
+	
+	
+	
+	/**
+	 * 
+	 * @param canvas
+	 * @param controller
+	 * @param authorEmail
+	 */
+	public EditSubmissionWidgetDefaultRenderer(Panel canvas, SubmissionControllerEditAPI controller) {
 		this.canvas = canvas;
 		this.controller = controller;
-		this.authorEmail = authorEmail;
 		
 		//get modules from config
 		this.modulesConfig = ConfigurationBean.getModules();
 		
-		//Create ViewStudies widget to view linked studies
-		studiesLinkedWidget = new ViewStudiesWidget(studiesLinkedCanvas, "remove study link");
-
-		//Create ViewStudiesWidget with ListBox renderer
-		ViewStudiesWidgetModelListener customRenderer = new ViewStudiesWidgetListBoxRenderer(studyLinkListBoxCanvas, null);
-		viewStudiesWidgetListBox = new ViewStudiesWidget(customRenderer);
-		
-		//add this as listener
-		viewStudiesWidgetListBox.addViewAllStudiesWidgetListener(this);
-		studiesLinkedWidget.addViewAllStudiesWidgetListener(this);
-		
+		this.constructStudiesLinkedWidget();
 		
 		//initialise view
 		initCanvas();
 	}
 
+	
+	
+	
+	/**
+	 * @param controller
+	 */
+	public EditSubmissionWidgetDefaultRenderer(SubmissionControllerEditAPI controller) {
+
+		this.canvas = new FlowPanel();
+		this.controller = controller;
+		
+		//get modules from config
+		this.modulesConfig = ConfigurationBean.getModules();
+		
+		this.constructStudiesLinkedWidget();
+		
+		//initialise view
+		initCanvas();
+	}
+
+	
+	
+	
+	/**
+	 * 
+	 */
+	private void constructStudiesLinkedWidget() {
+
+		//Create ViewStudies widget to view linked studies
+		studiesLinkedWidget = new ViewStudiesWidget("remove study link");
+
+		//Create ViewStudiesWidget with ListBox renderer
+		ViewStudiesWidgetModelListener customRenderer = new ViewStudiesWidgetListBoxRenderer(null);
+		viewStudiesWidgetListBox = new ViewStudiesWidget(customRenderer);
+		
+		//add this as listener
+		viewStudiesWidgetListBox.addViewAllStudiesWidgetListener(this);
+		studiesLinkedWidget.addViewAllStudiesWidgetListener(this);
+				
+	}
+
+
+
+
+	
 	private void initCanvas() {
 				
 		//prepare form
@@ -135,7 +190,7 @@ public class EditSubmissionWidgetDefaultRenderer implements SubmissionModelListe
 		
 		studiesLinkedDisplayPanel.add(new Label("Studies Linked:"));
 		studiesLinkedDisplayPanel.add(noStudiesAddedPanel);
-		studiesLinkedDisplayPanel.add(studiesLinkedCanvas);
+		studiesLinkedDisplayPanel.add(this.studiesLinkedWidget);
 		studiesLinkedDisplayPanel.add(showAddStudyLinkUI);		
 		
 		
@@ -143,7 +198,7 @@ public class EditSubmissionWidgetDefaultRenderer implements SubmissionModelListe
 		VerticalPanel studyLinkChooserVP = new VerticalPanel();
 		studyLinkChooserPopup.add(studyLinkChooserVP);
 		studyLinkChooserVP.add(new Label("Choose a study for the drop down box and then click 'Add study'."));
-		studyLinkChooserVP.add(studyLinkListBoxCanvas);
+		studyLinkChooserVP.add(this.viewStudiesWidgetListBox);
 		
 		//Create addStudy Button
 		Button addStudyLinkUI = new Button("Add study");
@@ -187,7 +242,7 @@ public class EditSubmissionWidgetDefaultRenderer implements SubmissionModelListe
 			
 			public void onClick(ClickEvent arg0) {
 
-				viewStudiesWidgetListBox.loadStudiesByAuthorEmail(authorEmail);
+				viewStudiesWidgetListBox.loadStudiesByAuthorEmail(ChassisUser.getCurrentUserEmail());
 				
 				studyLinkChooserPopup.center();
 				studyLinkChooserPopup.show();
@@ -294,7 +349,7 @@ public class EditSubmissionWidgetDefaultRenderer implements SubmissionModelListe
 		//show hide panel depending on if studies added
 		boolean noStudiesLinked = (after.size() == 0);
 		noStudiesAddedPanel.setVisible(noStudiesLinked);
-		studiesLinkedCanvas.setVisible(!noStudiesLinked);		
+		studiesLinkedWidget.setVisible(!noStudiesLinked);		
 				
 		//load linked studies
 		studiesLinkedWidget.loadStudies(after);		
@@ -332,6 +387,13 @@ public class EditSubmissionWidgetDefaultRenderer implements SubmissionModelListe
 	public void onAuthorsChanged(Set<AtomAuthor> before, Set<AtomAuthor> after, Boolean isValid) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	/**
+	 * @return
+	 */
+	public Panel getCanvas() {
+		return this.canvas;
 	}
 
 }

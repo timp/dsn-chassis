@@ -418,8 +418,8 @@ public class TestSubmissionController {
 		SubmissionControllerCreateAPI testCreateController = new SubmissionController(testModel, mockListener);
 						
 		//set up expectations
-		mockListener.newSubmissionSaved(testSubmissionEntry);
-		mockListener.cancelCreateNewSubmissionEntry();
+		mockListener.fireOnNewSubmissionCreated(testSubmissionEntry);
+		mockListener.fireOnUserActionCreateNewSubmissionCancelled();
 		replay(mockListener);
 		
 		//set up test
@@ -480,7 +480,7 @@ public class TestSubmissionController {
 		SubmissionControllerViewAPI testViewController = new SubmissionController(testModel, mockListener);
 						
 		//set up expectations
-		mockListener.onUserActionEditSubmission(testSubmissionEntry);
+		mockListener.fireOnUserActionEditSubmission(testSubmissionEntry);
 		replay(mockListener);
 		
 		//set up test

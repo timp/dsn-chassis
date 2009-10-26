@@ -458,7 +458,7 @@ public class TestStudyController {
 		StudyControllerViewAPI testViewController = new StudyController(testModel, mockListener);
 						
 		//set up expectations
-		mockListener.onUserActionEditStudy(testStudyEntry);
+		mockListener.fireOnUserActionEditStudy(testStudyEntry);
 		replay(mockListener);
 		
 		//set up test

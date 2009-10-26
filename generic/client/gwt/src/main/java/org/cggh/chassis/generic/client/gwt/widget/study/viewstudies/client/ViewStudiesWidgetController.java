@@ -63,7 +63,7 @@ public class ViewStudiesWidgetController {
 	class LoadStudyFeedCallback implements Function<StudyFeed,StudyFeed> {
 
 		public StudyFeed apply(StudyFeed studyFeed) {
-			log.enter("LoadStudyFeedCallback::apply");
+			log.enter("LoadStudyFeedCallback :: apply");
 			
 			model.setStudyEntries(studyFeed.getStudyEntries());
 			model.setStatus(ViewStudiesWidgetModel.STATUS_LOADED);
@@ -79,7 +79,10 @@ public class ViewStudiesWidgetController {
 	class LoadStudyFeedErrback implements Function<Throwable, Throwable> {
 
 		public Throwable apply(Throwable err) {
-			log.enter("LoadStudyFeedErrback::apply");
+			log.enter("LoadStudyFeedErrback :: apply");
+			
+			log.error("an error occurred retrieving study feed: "+err.getLocalizedMessage(), err);
+			// TODO error handling
 			
 			log.leave();
 			return err;
@@ -155,9 +158,12 @@ public class ViewStudiesWidgetController {
 	public void loadStudiesByAuthorEmail(String authorEmail) {
 		log.enter("loadStudiesByAuthorEmail");
 		
+		log.debug("request studies for author email: "+authorEmail);
+		
 		Deferred<StudyFeed> deferred = studyQueryService.getStudiesByAuthorEmail(authorEmail);
 		
-		deferred.addCallbacks(new LoadStudyFeedCallback(), new LoadStudyFeedErrback());
+		deferred.addCallback(new LoadStudyFeedCallback());
+		deferred.addErrback(new LoadStudyFeedErrback());
 		
 		log.leave();
 	}

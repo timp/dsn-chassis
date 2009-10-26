@@ -11,14 +11,25 @@ import org.cggh.chassis.generic.log.client.LogFactory;
  *
  */
 public class SubmissionManagementWidgetController {
+
+	
+	
+	
 	private Log log = LogFactory.getLog(this.getClass());
-
 	final private SubmissionManagementWidgetModel model;
+	final private SubmissionManagementWidget owner;
 
-	public SubmissionManagementWidgetController(SubmissionManagementWidgetModel model) {
+	
+	
+	
+	public SubmissionManagementWidgetController(SubmissionManagementWidget owner, SubmissionManagementWidgetModel model) {
+		this.owner = owner;
 		this.model = model;
 	}
 
+	
+	
+	
 	public void displayCreateSubmissionWidget() {
 		displayCreateSubmissionWidget(false);
 	}

@@ -72,7 +72,7 @@ public class TestSubmissionManagementWidgetModel {
 		
 		// set up expectations
 		listener.onDisplayStatusChanged(SubmissionManagementWidgetModel.DISPLAYING_NONE, SubmissionManagementWidgetModel.DISPLAYING_CREATE_SUBMISSION);
-		mockOwner.displayStatusChanged(true);
+		mockOwner.fireOnDisplayStatusChanged(true);
 		replay(listener);
 		PowerMock.replay(mockOwner);
 		

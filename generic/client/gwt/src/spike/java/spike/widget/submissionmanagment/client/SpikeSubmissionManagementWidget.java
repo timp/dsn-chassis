@@ -3,6 +3,7 @@
  */
 package spike.widget.submissionmanagment.client;
 
+import org.cggh.chassis.generic.client.gwt.common.client.ChassisUser;
 import org.cggh.chassis.generic.client.gwt.widget.submissionmanagement.client.SubmissionManagementWidget;
 import org.cggh.chassis.generic.client.gwt.widget.submissionmanagement.client.SubmissionManagementWidgetAPI;
 
@@ -24,14 +25,15 @@ public class SpikeSubmissionManagementWidget implements EntryPoint {
 		
 		VerticalPanel vPanel = new VerticalPanel();
 		SimplePanel menuCanvas = new SimplePanel();
-		SimplePanel displayCanvas = new SimplePanel();
 		vPanel.add(menuCanvas);
-		vPanel.add(displayCanvas);
 		
 		RootPanel.get().add(vPanel);
 		
-		SubmissionManagementWidgetAPI widget = new SubmissionManagementWidget(displayCanvas, "bob@example.com");
+		ChassisUser.setCurrentUserEmail("bob@example.com");
+		SubmissionManagementWidget widget = new SubmissionManagementWidget();
 		menuCanvas.add(widget.getMenuCanvas());
+
+		vPanel.add(widget);
 
 	}
 

@@ -95,6 +95,7 @@ class StudyQuestionnaireWidgetController {
 	 * @param entry
 	 */
 	public void setEntry(StudyEntry entry, boolean readOnly) {
+		log.enter("setEntry( "+entry.getId()+" , "+readOnly+" )");
 
 		if (model.getStatus() != StudyQuestionnaireWidgetModel.STATUS_READY) {
 			throw new Error("cannot set entry, widget is not ready; maybe questionnaire could not be loaded?");
@@ -102,9 +103,12 @@ class StudyQuestionnaireWidgetController {
 
 		model.setEntry(entry);
 		model.setStatus(StudyQuestionnaireWidgetModel.STATUS_INITIALISINGQUESTIONNAIRE);
+		
+		log.debug("initialising questionnaire");
 		questionnaire.init(entry.getStudy().getElement(), readOnly);
 		model.setStatus(StudyQuestionnaireWidgetModel.STATUS_READY);
 
+		log.leave();
 	}
 
 

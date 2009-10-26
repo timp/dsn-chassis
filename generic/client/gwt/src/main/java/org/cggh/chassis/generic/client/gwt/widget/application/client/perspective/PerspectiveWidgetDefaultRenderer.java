@@ -25,24 +25,23 @@ public class PerspectiveWidgetDefaultRenderer implements PerspectiveWidgetModelL
 	//Expose view elements for testing purposes.
 	final Panel activeChildWidgetDisplayCanvas = new SimplePanel();
 	final Panel studyManagmentWidgetDisplayCanvas = new SimplePanel();
-	final Panel submissionManagmentWidgetDisplayCanvas = new SimplePanel();
 	final DecoratedPopupPanel confirmLoseChangesPopup = new DecoratedPopupPanel(false);
 	
 	//child widgets, package private to allow owner widget access.
 	StudyManagementWidget studyManagmentWidget;
-	SubmissionManagementWidget submissionManagmentWidget;
+	SubmissionManagementWidget submissionManagementWidget;
 	
 	final private Panel canvas;
 	final private PerspectiveWidgetController controller;
 	
 
-	public PerspectiveWidgetDefaultRenderer(Panel canvas, PerspectiveWidgetController controller, String authorEmail) {
+	public PerspectiveWidgetDefaultRenderer(Panel canvas, PerspectiveWidgetController controller) {
 		this.canvas = canvas;
 		this.controller = controller;
 		
 		//initialise child widgets
-		studyManagmentWidget = new StudyManagementWidget(studyManagmentWidgetDisplayCanvas, authorEmail);
-		submissionManagmentWidget = new SubmissionManagementWidget(submissionManagmentWidgetDisplayCanvas, authorEmail);
+		studyManagmentWidget = new StudyManagementWidget(studyManagmentWidgetDisplayCanvas);
+		submissionManagementWidget = new SubmissionManagementWidget();
 		
 		initCanvas();
 	}
@@ -53,7 +52,7 @@ public class PerspectiveWidgetDefaultRenderer implements PerspectiveWidgetModelL
 		HorizontalPanel menuBar = new HorizontalPanel();
 		
 		menuBar.add(studyManagmentWidget.getMenuCanvas());
-		menuBar.add(submissionManagmentWidget.getMenuCanvas());
+		menuBar.add(submissionManagementWidget.getMenuCanvas());
 
 		//Add panels to canvas using vertical panel
 		VerticalPanel displayCanvas = new VerticalPanel();
@@ -71,7 +70,7 @@ public class PerspectiveWidgetDefaultRenderer implements PerspectiveWidgetModelL
 			|| (after == PerspectiveWidgetModel.DISPLAYING_STUDY_MANAGEMENT_WIDGET_DATA_ENTRY)) {
 			
 			//reset other widgets
-			submissionManagmentWidget.resetWidget();
+			submissionManagementWidget.resetWidget();
 			
 			activeChildWidgetDisplayCanvas.clear();
 			activeChildWidgetDisplayCanvas.add(studyManagmentWidgetDisplayCanvas);
@@ -83,7 +82,7 @@ public class PerspectiveWidgetDefaultRenderer implements PerspectiveWidgetModelL
 			studyManagmentWidget.resetWidget();
 			
 			activeChildWidgetDisplayCanvas.clear();
-			activeChildWidgetDisplayCanvas.add(submissionManagmentWidgetDisplayCanvas);
+			activeChildWidgetDisplayCanvas.add(submissionManagementWidget);
 			
 		}
 		
