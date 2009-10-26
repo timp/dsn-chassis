@@ -244,6 +244,56 @@ input, textarea {
 }
 
 
+
+
+/*
+ * -----------------------------------------------------------------------------
+ * styles for create submission widget
+ * -----------------------------------------------------------------------------
+ */
+ 
+.chassis-createSubmission-actions {
+	margin-top: 1em;
+}
+
+
+
+
+
+/*
+ * -----------------------------------------------------------------------------
+ * styles for submission form
+ * -----------------------------------------------------------------------------
+ */
+
+.chassis-submissionForm-titleQuestion input {
+	width: 30em;
+}
+
+.chassis-submissionForm-summaryQuestion textarea {
+	width: 60em;
+	height: 15em;
+}
+
+.chassis-submissionForm-modulesQuestion input {
+	border: none;
+}
+
+.chassis-submissionForm-studiesQuestion {
+}
+
+.chassis-submissionForm-selectStudy {
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+} 
+
+.chassis-submissionForm-selectStudy div {
+	display: inline;
+	padding-right: 0.3em;
+} 
+
+
+
 /*
  * -----------------------------------------------------------------------------
  * styles for developer pane

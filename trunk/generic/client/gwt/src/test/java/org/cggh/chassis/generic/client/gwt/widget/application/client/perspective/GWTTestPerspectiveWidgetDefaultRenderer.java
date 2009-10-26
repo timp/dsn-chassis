@@ -40,7 +40,7 @@ public class GWTTestPerspectiveWidgetDefaultRenderer extends GWTTestCase {
 		testController = new PerspectiveWidgetController(testModel);
 		
 		//instantiate a test renderer
-		testRenderer = new PerspectiveWidgetDefaultRenderer(new SimplePanel(), testController, "");
+		testRenderer = new PerspectiveWidgetDefaultRenderer(new SimplePanel(), testController);
 		
 		//add as listener
 		testModel.addListener(testRenderer);
@@ -72,8 +72,8 @@ public class GWTTestPerspectiveWidgetDefaultRenderer extends GWTTestCase {
 		testRenderer.onDisplayStatusChanged(null, PerspectiveWidgetModel.DISPLAYING_SUBMISSION_MANAGEMENT_WIDGET_DATA_ENTRY);
 
 		// test outcome 
-		assertTrue( (testRenderer.submissionManagmentWidgetDisplayCanvas.getParent() != null)
-					 && (testRenderer.submissionManagmentWidgetDisplayCanvas.isVisible()) );
+		assertTrue( (testRenderer.submissionManagementWidget.getParent() != null)
+					 && (testRenderer.submissionManagementWidget.isVisible()) );
 		
 	}		
 	

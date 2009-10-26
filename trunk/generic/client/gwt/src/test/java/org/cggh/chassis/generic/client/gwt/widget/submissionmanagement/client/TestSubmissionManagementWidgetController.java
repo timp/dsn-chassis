@@ -33,7 +33,7 @@ public class TestSubmissionManagementWidgetController {
 		
 		mockModel = PowerMock.createMock(SubmissionManagementWidgetModel.class);
 		
-		testController = new SubmissionManagementWidgetController(mockModel);
+		testController = new SubmissionManagementWidgetController(null, mockModel);
 		
 	}
 	

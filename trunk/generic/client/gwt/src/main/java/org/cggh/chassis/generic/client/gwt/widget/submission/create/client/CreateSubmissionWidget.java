@@ -7,58 +7,98 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
-import org.cggh.chassis.generic.client.gwt.widget.submission.controller.client.SubmissionController;
-import org.cggh.chassis.generic.client.gwt.widget.submission.controller.client.SubmissionControllerCreateAPI;
-import org.cggh.chassis.generic.client.gwt.widget.submission.controller.client.SubmissionControllerPubSubCreateAPI;
-import org.cggh.chassis.generic.client.gwt.widget.submission.model.client.SubmissionModel;
+import org.cggh.chassis.generic.client.gwt.widget.submission.create.client.CreateSubmissionWidgetModel;
+import org.cggh.chassis.generic.log.client.Log;
+import org.cggh.chassis.generic.log.client.LogFactory;
 
-import com.google.gwt.user.client.ui.Panel;
+import com.google.gwt.user.client.ui.Composite;
 
 /**
  * @author raok
  *
  */
-public class CreateSubmissionWidget implements CreateSubmissionWidgetAPI, SubmissionControllerPubSubCreateAPI {
+public class CreateSubmissionWidget extends Composite {
 	
-	final private SubmissionModel model;
-	final private SubmissionControllerCreateAPI controller;
+	
+	
+	private Log log = LogFactory.getLog(this.getClass());
+	
+	
+	
+	
+	private CreateSubmissionWidgetModel model;
+	private CreateSubmissionWidgetController controller; 
 	final private CreateSubmissionWidgetDefaultRenderer renderer;
-	private Set<CreateSubmissionWidgetPubSubAPI> listeners = new HashSet<CreateSubmissionWidgetPubSubAPI>(); 
+	private Set<CreateSubmissionWidgetPubSubAPI> listeners = new HashSet<CreateSubmissionWidgetPubSubAPI>();
 
-	public CreateSubmissionWidget(Panel canvas, String authorEmail) {
+	
+	
+	
+	/**
+	 * Construct a widget.
+	 * 
+	 * @param canvas
+	 * @param authorEmail
+	 */
+	public CreateSubmissionWidget() {
+		log.enter("<constructor>");
 		
-		model = new SubmissionModel();
+		this.model = new CreateSubmissionWidgetModel();
 		
-		controller = new SubmissionController(model, this);
+		this.controller = new CreateSubmissionWidgetController(this, this.model);
 						
-		renderer = new CreateSubmissionWidgetDefaultRenderer(canvas, controller, authorEmail);
+		this.renderer = new CreateSubmissionWidgetDefaultRenderer(this.controller);
 		
-		// register renderer as listener to model
-		model.addListener(renderer);		
+		this.model.addListener(this.renderer);
+		
+		this.initWidget(this.renderer.getCanvas());
+		
+		this.controller.ready();
+		
+		log.leave();
 	}
 	
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.client.gwt.widget.submission.create.client.CreateSubmissionWidgetAPI#setUpNewSubmission(java.lang.String)
-	 */
-	public void setUpNewSubmission(String authorEmail) {
-		controller.setUpNewSubmission(authorEmail);
-	}
-
-	public void cancelCreateNewSubmissionEntry() {
+	
+	
+	
+	
+	public void fireOnUserActionCreateNewSubmissionCancelled() {
 		for (CreateSubmissionWidgetPubSubAPI listener : listeners) {
 			listener.onUserActionCreateNewSubmissionCancelled();
 		}
 	}
+	
+	
+	
 
-	public void newSubmissionSaved(SubmissionEntry submissionEntry) {
+	public void fireOnNewSubmissionSaveSuccess(SubmissionEntry submissionEntry) {
 		for (CreateSubmissionWidgetPubSubAPI listener : listeners) {
-			listener.onNewSubmissionCreated(submissionEntry);
+			listener.onNewSubmissionSaveSuccess(submissionEntry);
 		}
 	}
 
+	
+	
+	
 	public void addCreateSubmissionWidgetListener(CreateSubmissionWidgetPubSubAPI listener) {
 		listeners.add(listener);				
 	}
+
+
+
+
+
+	/**
+	 * @param error
+	 */
+	public void fireOnNewSubmissionSaveError(Throwable error) {
+		for (CreateSubmissionWidgetPubSubAPI listener : listeners) {
+			listener.onNewSubmissionSaveError(error);
+		}
+	}
+
+
+
 
 
 }

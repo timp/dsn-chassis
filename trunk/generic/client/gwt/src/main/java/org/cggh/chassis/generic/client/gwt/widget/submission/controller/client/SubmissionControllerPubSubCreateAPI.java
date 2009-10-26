@@ -11,8 +11,8 @@ import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
  */
 public interface SubmissionControllerPubSubCreateAPI extends AbstractSubmissionControllerPubSubAPI {
 
-	public void newSubmissionSaved(SubmissionEntry submissionEntry);
+	public void fireOnNewSubmissionCreated(SubmissionEntry submissionEntry);
 	
-	public void cancelCreateNewSubmissionEntry();
+	public void fireOnUserActionCreateNewSubmissionCancelled();
 	
 }

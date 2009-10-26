@@ -15,11 +15,13 @@ import org.cggh.chassis.generic.client.gwt.widget.submission.model.client.Submis
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.Widget;
 
 /**
  * @author raok
@@ -27,10 +29,13 @@ import com.google.gwt.user.client.ui.VerticalPanel;
  */
 public class ViewSubmissionWidgetDefaultRenderer implements SubmissionModelListener {
 
+	
+	
+	
 	//Expose view elements for testing purposes.
 	final Label titleLabel = new Label();
 	final Label summaryLabel = new Label();
-	final Panel loadingPanel = new SimplePanel();
+	final Panel loadingPanel = new FlowPanel();
 	final Panel submissionDetailsPanel = new HorizontalPanel();
 	final Label editThisSubmissionUI = new Label("Edit Submission");
 	final VerticalPanel modulesListPanel = new VerticalPanel();
@@ -42,9 +47,18 @@ public class ViewSubmissionWidgetDefaultRenderer implements SubmissionModelListe
 	private Map<String, String> modulesConfig;
 	
 	//Linked Studies
-	final Panel studiesLinkedCanvas = new SimplePanel();
 	private ViewStudiesWidget studiesLinkedWidget;
 	
+	
+	
+	
+	/**
+	 * Construct a renderer, passing in the panel to use as the renderer's
+	 * canvas.
+	 * 
+	 * @param canvas
+	 * @param controller
+	 */
 	public ViewSubmissionWidgetDefaultRenderer(Panel canvas, SubmissionControllerViewAPI controller) {
 		this.canvas = canvas;
 		this.controller = controller;
@@ -53,11 +67,36 @@ public class ViewSubmissionWidgetDefaultRenderer implements SubmissionModelListe
 		this.modulesConfig = ConfigurationBean.getModules();
 		
 		//Create ViewStudies widget to view linked studies
-		studiesLinkedWidget = new ViewStudiesWidget(studiesLinkedCanvas, "");
+		studiesLinkedWidget = new ViewStudiesWidget("");
 		
 		initCanvas();
 	}
 
+	
+	
+	
+	/**
+	 * Construct a renderer, allowing the renderer to create its own canvas.
+	 * 
+	 * @param controller
+	 */
+	public ViewSubmissionWidgetDefaultRenderer(SubmissionControllerViewAPI controller) {
+		this.canvas = new FlowPanel();
+		this.controller = controller;
+		
+		//get modules from config
+		this.modulesConfig = ConfigurationBean.getModules();
+		
+		//Create ViewStudies widget to view linked studies
+		studiesLinkedWidget = new ViewStudiesWidget("");
+		
+		initCanvas();
+	}
+
+	
+	
+	
+	
 	private void initCanvas() {
 
 		//prepare loading panel
@@ -80,7 +119,7 @@ public class ViewSubmissionWidgetDefaultRenderer implements SubmissionModelListe
 		submissionDetailsVPanel.add(modulesListPanel);
 
 		submissionDetailsVPanel.add(new Label("Studies to submit to:"));
-		submissionDetailsVPanel.add(studiesLinkedCanvas);
+		submissionDetailsVPanel.add(studiesLinkedWidget);
 		
 		submissionDetailsVPanel.add(new Label("Submission owners:"));
 		submissionDetailsVPanel.add(authorsListPanel);
@@ -100,6 +139,9 @@ public class ViewSubmissionWidgetDefaultRenderer implements SubmissionModelListe
 				
 	}
 
+	
+	
+	
 	class EditSubmissionClickHandler implements ClickHandler {
 		
 		public void onClick(ClickEvent arg0) {
@@ -107,6 +149,9 @@ public class ViewSubmissionWidgetDefaultRenderer implements SubmissionModelListe
 		}
 	}
 
+	
+	
+	
 	public void onModulesChanged(Set<String> before, Set<String> after, Boolean isValid) {
 
 		modulesListPanel.clear();
@@ -115,6 +160,9 @@ public class ViewSubmissionWidgetDefaultRenderer implements SubmissionModelListe
 			modulesListPanel.add(new Label(modulesConfig.get(module)));
 		}
 	}
+	
+	
+	
 
 	public void onStatusChanged(Integer before, Integer after) {
 
@@ -130,27 +178,42 @@ public class ViewSubmissionWidgetDefaultRenderer implements SubmissionModelListe
 			
 	}
 
+	
+	
+	
 	public void onStudyLinksChanged(Set<String> before, Set<String> after, Boolean isValid) {
 		
 		studiesLinkedWidget.loadStudies(after);
 		
 	}
 
+	
+	
+	
 	public void onSubmissionEntryChanged(Boolean isValid) {
 		// TODO Auto-generated method stub
 		
 	}
 
+	
+	
+	
 	public void onSummaryChanged(String before, String after, Boolean isValid) {
 		summaryLabel.setText(after);
 		
 	}
 
+	
+	
+	
 	public void onTitleChanged(String before, String after, Boolean isValid) {
 		titleLabel.setText(after);
 		
 	}
 
+	
+	
+	
 	public void onAuthorsChanged(Set<AtomAuthor> before, Set<AtomAuthor> after, Boolean isValid) {
 
 		authorsListPanel.clear();
@@ -159,5 +222,18 @@ public class ViewSubmissionWidgetDefaultRenderer implements SubmissionModelListe
 			authorsListPanel.add(new Label(atomAuthor.getEmail()));
 		}
 	}
+
+	
+	
+	
+	/**
+	 * @return
+	 */
+	public Panel getCanvas() {
+		return this.canvas;
+	}
+	
+	
+	
 
 }

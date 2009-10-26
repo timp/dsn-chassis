@@ -8,9 +8,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
+import org.cggh.chassis.generic.log.client.Log;
+import org.cggh.chassis.generic.log.client.LogFactory;
 
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.Panel;
@@ -22,6 +25,13 @@ import com.google.gwt.user.client.ui.SimplePanel;
  */
 public class ViewStudiesWidgetListBoxRenderer implements ViewStudiesWidgetModelListener {
 
+	
+	
+	private Log log = LogFactory.getLog(this.getClass());
+	
+	
+	
+	
 	//Expose view elements for testing purposes.
 	ListBox studiesListBox = new ListBox();
 	Panel loadingPanel = new SimplePanel();
@@ -29,6 +39,9 @@ public class ViewStudiesWidgetListBoxRenderer implements ViewStudiesWidgetModelL
 	private Panel canvas;
 	private ViewStudiesWidgetController controller;
 
+	
+	
+	
 	public ViewStudiesWidgetListBoxRenderer(Panel canvas, ViewStudiesWidgetController controller) {
 		this.canvas = canvas;
 		this.controller = controller;
@@ -36,12 +49,42 @@ public class ViewStudiesWidgetListBoxRenderer implements ViewStudiesWidgetModelL
 		initCanvas();
 	}
 
+	
+	
+	
+	/**
+	 * @param object
+	 */
+	public ViewStudiesWidgetListBoxRenderer(ViewStudiesWidgetController controller) {
+		this.canvas = new FlowPanel();
+		this.controller = controller;
+		
+		initCanvas();
+	}
+
+	
+	
+	
+	/**
+	 * 
+	 */
+	public ViewStudiesWidgetListBoxRenderer() {
+		this.canvas = new FlowPanel();
+		initCanvas();
+	}
+	
+	
+	
+	
 	private void initCanvas() {
 		
 		//prepare loading panel
 		loadingPanel.add(new Label("Loading..."));
 				
 	}
+	
+	
+	
 	
 	public void onStatusChanged(Integer before, Integer after) {
 
@@ -56,6 +99,7 @@ public class ViewStudiesWidgetListBoxRenderer implements ViewStudiesWidgetModelL
 	}
 
 	public void onStudyEntriesChanged(List<StudyEntry> before, List<StudyEntry> after) {
+		log.enter("onStudyEntriesChanged");
 
 		//remove old entries
 		studiesListBox.clear();
@@ -63,12 +107,14 @@ public class ViewStudiesWidgetListBoxRenderer implements ViewStudiesWidgetModelL
 		//store a studyEntryId to Study Entry map
 		Map<String, StudyEntry> studyEntryIdMap = new HashMap<String, StudyEntry>();
 		
-		studiesListBox.addItem("Please select", null);
+		studiesListBox.addItem("(please select a study)", null);
 		
 		for (StudyEntry study : after) {
 			
 			String studyEntryId = study.getId();
 			String studyDesc = study.getTitle();
+			
+			log.debug("adding study to list box: "+studyDesc);
 			
 			studiesListBox.addItem(studyDesc, studyEntryId);
 			
@@ -78,7 +124,8 @@ public class ViewStudiesWidgetListBoxRenderer implements ViewStudiesWidgetModelL
 		
 		//add changeHandler
 		studiesListBox.addChangeHandler(new ViewStudyChangeHandler(studyEntryIdMap));
-				
+		
+		log.leave();
 	}
 	
 	class ViewStudyChangeHandler implements ChangeHandler {

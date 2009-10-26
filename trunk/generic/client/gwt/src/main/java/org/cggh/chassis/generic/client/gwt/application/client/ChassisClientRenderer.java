@@ -16,5 +16,10 @@ public interface ChassisClientRenderer extends ChassisClientModelListener {
 	public Panel getCanvas();
 
 	public UserDetailsWidget getUserDetailsWidget();
+
+	/**
+	 * 
+	 */
+	public void refreshPerspectives();
 	
 }

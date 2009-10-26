@@ -112,7 +112,7 @@ public class ViewStudyWidget extends Composite implements ViewStudyWidgetAPI, St
 		listeners.add(listener);
 	}
 
-	public void onUserActionEditStudy(StudyEntry studyEntryToEdit) {
+	public void fireOnUserActionEditStudy(StudyEntry studyEntryToEdit) {
 		for (ViewStudyWidgetPubSubAPI listener : listeners ) {
 			listener.onUserActionEditStudy(studyEntryToEdit);
 		}
@@ -124,7 +124,7 @@ public class ViewStudyWidget extends Composite implements ViewStudyWidgetAPI, St
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerPubSubViewAPI#onUserActionEditStudyQuestionnaire(org.cggh.chassis.generic.atom.study.client.format.StudyEntry)
 	 */
-	public void onUserActionEditStudyQuestionnaire(StudyEntry studyEntry) {
+	public void fireOnUserActionEditStudyQuestionnaire(StudyEntry studyEntry) {
 		for (ViewStudyWidgetPubSubAPI listener : listeners ) {
 			listener.onUserActionEditStudyQuestionnaire(studyEntry);
 		}
@@ -136,10 +136,13 @@ public class ViewStudyWidget extends Composite implements ViewStudyWidgetAPI, St
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerPubSubViewAPI#onUserActionViewStudyQuestionnaire(org.cggh.chassis.generic.atom.study.client.format.StudyEntry)
 	 */
-	public void onUserActionViewStudyQuestionnaire(StudyEntry studyEntry) {
+	public void fireOnUserActionViewStudyQuestionnaire(StudyEntry studyEntry) {
 		for (ViewStudyWidgetPubSubAPI listener : listeners ) {
 			listener.onUserActionViewStudyQuestionnaire(studyEntry);
 		}
 	}
+	
+	
+	
 	
 }

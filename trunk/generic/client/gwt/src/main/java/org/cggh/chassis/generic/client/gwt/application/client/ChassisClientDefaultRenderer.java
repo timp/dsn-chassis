@@ -50,11 +50,9 @@ public class ChassisClientDefaultRenderer implements ChassisClientRenderer {
 		
 		this.constructUserDetailsWidget();
 		
-		this.constructPerspectives();
-		
 		log.leave();
 	}
-
+	
 	
 	
 	
@@ -93,9 +91,13 @@ public class ChassisClientDefaultRenderer implements ChassisClientRenderer {
 	/**
 	 * 
 	 */
-	private void constructPerspectives() {
+	public void refreshPerspectives() {
 		
 		// TODO only construct those perspectives we actually need for the current user
+		
+		for (Perspective p : perspectives.values()) {
+			this.canvas.remove(p);
+		}
 		
 		//get chassisRoles
 		ChassisRole administratorRole = ConfigurationBean.getChassisRoleAdministrator();

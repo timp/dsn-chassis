@@ -44,13 +44,13 @@ public class StudyManagementWidget extends Composite implements StudyManagementW
 	
 	
 	
-	public StudyManagementWidget(Panel displayCanvas, String authorEmail) {
+	public StudyManagementWidget(Panel displayCanvas) {
 		
 		model = new StudyManagementWidgetModel(this);
 		
 		controller = new StudyManagementWidgetController(this, model);
 		
-		renderer = new StudyManagementWidgetDefaultRenderer(this, menuCanvas, displayCanvas, controller, authorEmail);
+		renderer = new StudyManagementWidgetDefaultRenderer(this, menuCanvas, displayCanvas, controller);
 		
 		// register renderer as listener to model
 		model.addListener(renderer);
@@ -99,32 +99,32 @@ public class StudyManagementWidget extends Composite implements StudyManagementW
 	
 	
 	public void onNewStudyCreated(StudyEntry newStudyEntry) {
-		renderer.viewStudyWidget.loadStudyEntry(newStudyEntry);
 		controller.displayViewStudyWidget();
+		renderer.viewStudyWidget.loadStudyEntry(newStudyEntry);
 	}
 
 	
 	
 	
 	public void onStudyUpdateSuccess(StudyEntry updatedStudyEntry) {
-		renderer.viewStudyWidget.loadStudyEntry(updatedStudyEntry);
 		controller.displayViewStudyWidget();
+		renderer.viewStudyWidget.loadStudyEntry(updatedStudyEntry);
 	}
 
 	
 	
 	
 	public void onUserActionEditStudy(StudyEntry studyEntryToEdit) {
-		renderer.editStudyWidget.editStudyEntry(studyEntryToEdit);
 		controller.displayEditStudyWidget();
+		renderer.editStudyWidget.editStudyEntry(studyEntryToEdit);
 	}
 	
 	
 	
 
 	public void onUserActionSelectStudy(StudyEntry studyEntry) {
-		renderer.viewStudyWidget.loadStudyEntry(studyEntry);
 		controller.displayViewStudyWidget();
+		renderer.viewStudyWidget.loadStudyEntry(studyEntry);
 	}
 
 	
@@ -151,8 +151,8 @@ public class StudyManagementWidget extends Composite implements StudyManagementW
 //		renderer.studyQuestionnaireWidget.setEntry(studyEntry, false);
 //		controller.displayStudyQuestionnaireWidget();
 
-		renderer.editStudyQuestionnaireWidget.setEntry(studyEntry);
 		controller.displayEditStudyQuestionnaireWidget();
+		renderer.editStudyQuestionnaireWidget.setEntry(studyEntry);
 
 	}
 
@@ -167,8 +167,8 @@ public class StudyManagementWidget extends Composite implements StudyManagementW
 //		renderer.studyQuestionnaireWidget.setEntry(studyEntry, true);
 //		controller.displayStudyQuestionnaireWidget();
 		
-		renderer.viewStudyQuestionnaireWidget.setEntry(studyEntry);
 		controller.displayViewStudyQuestionnaireWidget();
+		renderer.viewStudyQuestionnaireWidget.setEntry(studyEntry);
 
 	}
 
@@ -238,8 +238,8 @@ public class StudyManagementWidget extends Composite implements StudyManagementW
 	 * @see org.cggh.chassis.generic.client.gwt.widget.studyquestionnaire.client.ViewStudyQuestionnaireWidget.PubSubAPI#onUserActionViewStudy(org.cggh.chassis.generic.atom.study.client.format.StudyEntry)
 	 */
 	public void onUserActionViewStudy(StudyEntry entry) {
-		renderer.viewStudyWidget.loadStudyEntry(entry);
 		controller.displayViewStudyWidget();
+		renderer.viewStudyWidget.loadStudyEntry(entry);
 	}
 
 
@@ -259,8 +259,8 @@ public class StudyManagementWidget extends Composite implements StudyManagementW
 	 * @see org.cggh.chassis.generic.client.gwt.widget.studyquestionnaire.client.EditStudyQuestionnaireWidget.PubSubAPI#onStudyQuestionnaireUpdateSuccess(org.cggh.chassis.generic.atom.study.client.format.StudyEntry)
 	 */
 	public void onStudyQuestionnaireUpdateSuccess(StudyEntry entry) {
-		renderer.viewStudyQuestionnaireWidget.setEntry(entry);
 		controller.displayViewStudyQuestionnaireWidget();
+		renderer.viewStudyQuestionnaireWidget.setEntry(entry);
 	}
 
 

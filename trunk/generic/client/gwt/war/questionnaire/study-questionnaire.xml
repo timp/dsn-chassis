@@ -110,7 +110,18 @@
             </input>
           </view>
         </question>
-
+        
+        <question id="foo">
+          <model>
+            <element name="foo"/>
+          </model>
+          <view>
+            <input>
+              <label>What is your favourite ice cream?</label>
+            </input>
+          </view>
+        </question>
+        
         <html readOnly="hide"><p><em>You can add another principal investigator by clicking the "+" button below.</em></p></html>
 
       </view>

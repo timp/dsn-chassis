@@ -10,8 +10,10 @@ import org.cggh.chassis.generic.client.gwt.configuration.client.ChassisRole;
 import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
+import org.cggh.chassis.generic.twisted.client.Deferred;
 import org.cggh.chassis.generic.user.gwtrpc.client.GWTUserDetailsService;
 import org.cggh.chassis.generic.user.gwtrpc.client.GWTUserDetailsServiceAsync;
+import org.cggh.chassis.generic.user.transfer.UserDetailsTO;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
@@ -92,8 +94,8 @@ public class UserDetailsWidget extends Composite implements UserDetailsWidgetAPI
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.client.gwt.widget.userdetails.client.UserDetailsWidgetAPI#refreshUserDetails()
 	 */
-	public void refreshUserDetails() {
-		controller.refreshUserDetails();
+	public Deferred<UserDetailsTO> refreshUserDetails() {
+		return controller.refreshUserDetails();
 	}
 
 	

@@ -156,17 +156,17 @@ public class ViewStudyWidgetDefaultRenderer implements StudyModelListener {
 		actionsPanel.add(new HTML("<h3>Actions</h3>"));
 		actionsPanel.addStyleName(CSS.COMMON_ACTIONS);
 
-		this.editThisStudyUI.setText("Edit Study");
+		this.editThisStudyUI.setText("edit study");
 		this.editThisStudyUI.addStyleName(CSS.COMMON_ACTION);
 		actionsPanel.add(this.editThisStudyUI);
 		this.editThisStudyUI.addClickHandler(new EditStudyClickHandler());
 
-		this.viewStudyQuestionnaireUI.setText("View Study Questionnaire");
+		this.viewStudyQuestionnaireUI.setText("view study questionnaire");
 		this.viewStudyQuestionnaireUI.addStyleName(CSS.COMMON_ACTION);
 		actionsPanel.add(this.viewStudyQuestionnaireUI);
 		this.viewStudyQuestionnaireUI.addClickHandler(new ViewStudyQuestionnaireClickHandler());
 
-		this.editStudyQuestionnaireUI.setText("Edit Study Questionnaire");
+		this.editStudyQuestionnaireUI.setText("edit study questionnaire");
 		this.editStudyQuestionnaireUI.addStyleName(CSS.COMMON_ACTION);
 		actionsPanel.add(this.editStudyQuestionnaireUI);
 		this.editStudyQuestionnaireUI.addClickHandler(new EditStudyQuestionnaireClickHandler());

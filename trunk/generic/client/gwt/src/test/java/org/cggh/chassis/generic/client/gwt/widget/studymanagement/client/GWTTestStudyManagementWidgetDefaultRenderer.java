@@ -51,11 +51,11 @@ public class GWTTestStudyManagementWidgetDefaultRenderer extends GWTTestCase {
 		((MockAtomService)mockService).createFeed(feedURL, "all studies");
 		
 		//create testController and inject testModel
-		testModel = new StudyManagementWidgetModel(new StudyManagementWidget(new SimplePanel(), ""));
+		testModel = new StudyManagementWidgetModel(new StudyManagementWidget(new SimplePanel()));
 		testController = new StudyManagementWidgetController(null, testModel);
 		
 		//instantiate a test renderer
-		testRenderer = new StudyManagementWidgetDefaultRenderer(null, new SimplePanel(), new SimplePanel(), testController, "");
+		testRenderer = new StudyManagementWidgetDefaultRenderer(null, new SimplePanel(), new SimplePanel(), testController);
 		
 		//add as listener
 		testModel.addListener(testRenderer);

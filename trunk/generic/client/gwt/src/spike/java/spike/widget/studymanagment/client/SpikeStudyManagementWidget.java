@@ -3,6 +3,7 @@
  */
 package spike.widget.studymanagment.client;
 
+import org.cggh.chassis.generic.client.gwt.common.client.ChassisUser;
 import org.cggh.chassis.generic.client.gwt.widget.studymanagement.client.StudyManagementWidget;
 import org.cggh.chassis.generic.client.gwt.widget.studymanagement.client.StudyManagementWidgetAPI;
 
@@ -30,7 +31,8 @@ public class SpikeStudyManagementWidget implements EntryPoint {
 		verticalPanel.add(menuCanvas);
 		verticalPanel.add(displayCanvas);
 				
-		StudyManagementWidgetAPI studyManagementWidget = new StudyManagementWidget(displayCanvas, "alice@example.com");
+		ChassisUser.setCurrentUserEmail("alice@example.com");
+		StudyManagementWidgetAPI studyManagementWidget = new StudyManagementWidget(displayCanvas);
 		menuCanvas.add(studyManagementWidget.getMenuCanvas());
 		
 		RootPanel.get().add(verticalPanel);

@@ -56,7 +56,7 @@ public class SubmissionManagementWidgetModel {
 			Boolean couldStatusContainUnsavedData = couldStatusContainUnsavedData(displayStatus);
 			
 			//alert owner
-			owner.displayStatusChanged(couldStatusContainUnsavedData);
+			owner.fireOnDisplayStatusChanged(couldStatusContainUnsavedData);
 			
 		}
 		

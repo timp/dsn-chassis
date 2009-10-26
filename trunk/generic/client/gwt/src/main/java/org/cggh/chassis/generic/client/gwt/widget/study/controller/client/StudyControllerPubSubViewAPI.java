@@ -11,16 +11,16 @@ import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
  */
 public interface StudyControllerPubSubViewAPI extends AbstractStudyControllerPubSubAPI {
 
-	public void onUserActionEditStudy(StudyEntry studyEntryToEdit);
+	public void fireOnUserActionEditStudy(StudyEntry studyEntryToEdit);
 
 	/**
 	 * @param studyEntry
 	 */
-	public void onUserActionEditStudyQuestionnaire(StudyEntry studyEntry);
+	public void fireOnUserActionEditStudyQuestionnaire(StudyEntry studyEntry);
 
 	/**
 	 * @param studyEntry
 	 */
-	public void onUserActionViewStudyQuestionnaire(StudyEntry studyEntry);
+	public void fireOnUserActionViewStudyQuestionnaire(StudyEntry studyEntry);
 
 }

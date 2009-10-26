@@ -130,7 +130,7 @@ public class SubmissionController implements SubmissionControllerEditAPI, Submis
 		
 		//alert owner
 		if (owner instanceof SubmissionControllerPubSubCreateAPI) {
-			((SubmissionControllerPubSubCreateAPI)owner).cancelCreateNewSubmissionEntry();
+			((SubmissionControllerPubSubCreateAPI)owner).fireOnUserActionCreateNewSubmissionCancelled();
 		} else if (owner instanceof SubmissionControllerPubSubEditAPI) {
 			((SubmissionControllerPubSubEditAPI)owner).onUserActionEditSubmissionEntryCancelled();
 		}
@@ -271,7 +271,7 @@ public class SubmissionController implements SubmissionControllerEditAPI, Submis
 			if (owner instanceof SubmissionControllerPubSubCreateAPI) {
 				log.debug("alerted create owner");
 				
-				((SubmissionControllerPubSubCreateAPI)owner).newSubmissionSaved(submissionEntry);
+				((SubmissionControllerPubSubCreateAPI)owner).fireOnNewSubmissionCreated(submissionEntry);
 			} else if (owner instanceof SubmissionControllerPubSubEditAPI) {
 				log.debug("alerted edit owner");
 				
@@ -295,7 +295,7 @@ public class SubmissionController implements SubmissionControllerEditAPI, Submis
 		if (owner instanceof SubmissionControllerPubSubViewAPI) {
 			SubmissionEntry submissionEntryToEdit = model.getSubmissionEntry();
 			
-			((SubmissionControllerPubSubViewAPI)owner).onUserActionEditSubmission(submissionEntryToEdit);
+			((SubmissionControllerPubSubViewAPI)owner).fireOnUserActionEditSubmission(submissionEntryToEdit);
 		}
 		
 		log.leave();

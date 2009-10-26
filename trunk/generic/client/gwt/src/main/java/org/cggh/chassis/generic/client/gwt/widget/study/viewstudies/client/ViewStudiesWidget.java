@@ -7,6 +7,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
+import org.cggh.chassis.generic.log.client.Log;
+import org.cggh.chassis.generic.log.client.LogFactory;
 
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Panel;
@@ -16,6 +18,10 @@ import com.google.gwt.user.client.ui.Panel;
  *
  */
 public class ViewStudiesWidget extends Composite implements ViewStudiesWidgetAPI {
+
+	
+	
+	private Log log = LogFactory.getLog(this.getClass());
 
 	
 	
@@ -125,7 +131,9 @@ public class ViewStudiesWidget extends Composite implements ViewStudiesWidgetAPI
 	
 	
 	public void loadStudiesByAuthorEmail(String authorEmail) {
+		log.enter("loadStudiesByAuthorEmail( "+authorEmail+" )");
 		controller.loadStudiesByAuthorEmail(authorEmail);
+		log.leave();
 	}
 	
 	

@@ -8,6 +8,9 @@ import org.cggh.chassis.generic.client.gwt.configuration.client.ChassisRole;
 import org.cggh.chassis.generic.client.gwt.widget.userdetails.client.UserDetailsPubSubAPI;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
+import org.cggh.chassis.generic.twisted.client.Deferred;
+import org.cggh.chassis.generic.twisted.client.Function;
+import org.cggh.chassis.generic.user.transfer.UserDetailsTO;
 
 import com.google.gwt.user.client.ui.Composite;
 
@@ -54,7 +57,8 @@ public class ChassisClient extends Composite implements UserDetailsPubSubAPI {
 		this.renderer.getUserDetailsWidget().addListener(this);
 		
 		log.debug("refresh user details");
-		this.renderer.getUserDetailsWidget().refreshUserDetails();
+		Deferred<UserDetailsTO> deferredUser = this.renderer.getUserDetailsWidget().refreshUserDetails();
+		ChassisUser.setCurrentUserDeferred(deferredUser);
 
 		log.leave();
 	}
@@ -85,9 +89,11 @@ public class ChassisClient extends Composite implements UserDetailsPubSubAPI {
 		log.enter("onUserIdRefreshed");
 		
 		log.debug("userId: "+userId);
-		
-		log.debug("set on static class for global access");
+		log.debug("set current user email on static class for global access");
 		ChassisUser.setCurrentUserEmail(userId);
+		
+		log.debug("refresh perspectives");
+		this.renderer.refreshPerspectives();
 		
 		log.leave();
 	}

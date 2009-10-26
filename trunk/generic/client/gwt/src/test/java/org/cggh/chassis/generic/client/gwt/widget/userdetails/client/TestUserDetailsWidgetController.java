@@ -18,6 +18,7 @@ import junit.framework.JUnit4TestAdapter;
 import org.cggh.chassis.generic.client.gwt.configuration.client.ChassisRole;
 import org.cggh.chassis.generic.client.gwt.configuration.client.TestConfigurationSetUp;
 import org.cggh.chassis.generic.client.gwt.widget.userdetails.client.UserDetailsWidgetController.RefreshUserDetailsCallback;
+import org.cggh.chassis.generic.twisted.client.Deferred;
 import org.cggh.chassis.generic.user.gwtrpc.client.GWTUserDetailsServiceAsync;
 import org.cggh.chassis.generic.user.transfer.UserDetailsTO;
 import org.junit.Before;
@@ -122,7 +123,7 @@ public class TestUserDetailsWidgetController {
 						
 		// instantiate class under test
 		UserDetailsWidgetController controller = new UserDetailsWidgetController(testModel, mockOwner, null);
-		RefreshUserDetailsCallback callback = controller.new RefreshUserDetailsCallback();
+		RefreshUserDetailsCallback callback = controller.new RefreshUserDetailsCallback(new Deferred<UserDetailsTO>());
 		
 		//set up expectations on owner
 		mockOwner.fireOnUserDetailsRefreshed(user.getId());

@@ -5,6 +5,8 @@ package org.cggh.chassis.generic.client.gwt.application.client;
 
 import org.cggh.chassis.generic.client.gwt.widget.studymanagement.client.StudyManagementWidget;
 import org.cggh.chassis.generic.client.gwt.widget.studymanagement.client.StudyManagementWidgetPubSubAPI;
+import org.cggh.chassis.generic.client.gwt.widget.submissionmanagement.client.SubmissionManagementWidget;
+import org.cggh.chassis.generic.client.gwt.widget.submissionmanagement.client.SubmissionManagementWidgetPubSubAPI;
 import org.cggh.chassis.generic.client.gwt.widget.submitter.home.client.SubmitterHomeWidget;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
@@ -15,7 +17,8 @@ import com.google.gwt.user.client.ui.Composite;
  * @author aliman
  *
  */
-public class SubmitterPerspective extends Perspective implements StudyManagementWidgetPubSubAPI {
+public class SubmitterPerspective extends Perspective implements 	StudyManagementWidgetPubSubAPI, 
+																	SubmissionManagementWidgetPubSubAPI {
 
 	
 	
@@ -47,20 +50,46 @@ public class SubmitterPerspective extends Perspective implements StudyManagement
 
 
 
+	
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.client.gwt.widget.studymanagement.client.StudyManagementWidgetPubSubAPI#onStudyManagementDisplayStatusChanged(java.lang.Boolean)
 	 */
 	public void onStudyManagementDisplayStatusChanged(Boolean couldStatusContainUnsavedData) {
-		// not interested
+		// TODO not interested?
 	}
 
 
 
+	
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.client.gwt.widget.studymanagement.client.StudyManagementWidgetPubSubAPI#onStudyManagementMenuAction()
 	 */
 	public void onStudyManagementMenuAction(StudyManagementWidget source) {
 		log.enter("onStudyManagementMenuAction");
+		
+		this.controller.show(source.getClass().getName());
+		
+		log.leave();
+	}
+
+
+	
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.client.gwt.widget.submissionmanagement.client.SubmissionManagementWidgetPubSubAPI#onSubmissionManagmentDisplayStatusChanged(java.lang.Boolean)
+	 */
+	public void onSubmissionManagmentDisplayStatusChanged(Boolean couldStatusContainUnsavedData) {
+		// TODO not interested?
+	}
+
+
+	
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.client.gwt.widget.submissionmanagement.client.SubmissionManagementWidgetPubSubAPI#onSubmissionManagementMenuAction()
+	 */
+	public void onSubmissionManagementMenuAction(SubmissionManagementWidget source) {
+		log.enter("onSubmissionManagementMenuAction");
 		
 		this.controller.show(source.getClass().getName());
 		

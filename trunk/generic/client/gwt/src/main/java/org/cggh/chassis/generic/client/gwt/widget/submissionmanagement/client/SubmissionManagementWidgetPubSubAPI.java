@@ -10,5 +10,7 @@ package org.cggh.chassis.generic.client.gwt.widget.submissionmanagement.client;
 public interface SubmissionManagementWidgetPubSubAPI {
 	
 	public void onSubmissionManagmentDisplayStatusChanged(Boolean couldStatusContainUnsavedData);
+
+	public void onSubmissionManagementMenuAction(SubmissionManagementWidget source);
 	
 }

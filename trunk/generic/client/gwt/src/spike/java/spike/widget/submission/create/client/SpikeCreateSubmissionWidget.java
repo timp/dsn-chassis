@@ -3,6 +3,7 @@
  */
 package spike.widget.submission.create.client;
 
+import org.cggh.chassis.generic.client.gwt.common.client.ChassisUser;
 import org.cggh.chassis.generic.client.gwt.widget.submission.create.client.CreateSubmissionWidget;
 import org.cggh.chassis.generic.client.gwt.widget.submission.create.client.CreateSubmissionWidgetAPI;
 
@@ -21,9 +22,13 @@ public class SpikeCreateSubmissionWidget implements EntryPoint {
 	public void onModuleLoad() {
 
 		
-		CreateSubmissionWidgetAPI widget = new CreateSubmissionWidget(RootPanel.get(), "bob@example.com");
+		ChassisUser.setCurrentUserEmail("bob@example.com");
+		CreateSubmissionWidget widget = new CreateSubmissionWidget();
+
+		ChassisUser.setCurrentUserEmail("bob@example.com");
+//		widget.setUpNewSubmission("bob@example.com");
 		
-		widget.setUpNewSubmission("bob@example.com");
+		RootPanel.get().add(new CreateSubmissionWidget());
 		
 	}
 

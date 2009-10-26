@@ -10,9 +10,11 @@ import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.SimplePanel;
+import com.google.gwt.user.client.ui.Widget;
 
 /**
  * @author raok
@@ -20,6 +22,10 @@ import com.google.gwt.user.client.ui.SimplePanel;
  */
 public class ViewSubmissionsWidgetDefaultRenderer implements ViewSubmissionsWidgetModelListener {
 
+	
+	
+	
+	
 	//Expose view elements for testing purposes.
 	Panel submissionsListPanel = new SimplePanel();
 	Panel loadingPanel = new SimplePanel();
@@ -27,6 +33,15 @@ public class ViewSubmissionsWidgetDefaultRenderer implements ViewSubmissionsWidg
 	private Panel canvas;
 	private ViewSubmissionsWidgetController controller;
 
+	
+	
+	
+	
+	/**
+	 * 
+	 * @param canvas
+	 * @param controller
+	 */
 	public ViewSubmissionsWidgetDefaultRenderer(Panel canvas, ViewSubmissionsWidgetController controller) {
 		this.canvas = canvas;
 		this.controller = controller;
@@ -34,6 +49,24 @@ public class ViewSubmissionsWidgetDefaultRenderer implements ViewSubmissionsWidg
 		initCanvas();
 	}
 
+	
+	
+	
+	
+	/**
+	 * @param controller
+	 */
+	public ViewSubmissionsWidgetDefaultRenderer(ViewSubmissionsWidgetController controller) {
+		this.canvas = new FlowPanel();
+		this.controller = controller;
+		
+		initCanvas();
+	}
+
+	
+	
+	
+	
 	private void initCanvas() {
 		
 		//prepare loading panel
@@ -102,6 +135,13 @@ public class ViewSubmissionsWidgetDefaultRenderer implements ViewSubmissionsWidg
 
 	public void setController(ViewSubmissionsWidgetController controller) {
 		this.controller = controller;
+	}
+
+	/**
+	 * @return
+	 */
+	public Panel getCanvas() {
+		return this.canvas;
 	}
 	
 

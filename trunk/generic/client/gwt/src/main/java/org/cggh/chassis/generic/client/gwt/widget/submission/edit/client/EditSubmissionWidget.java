@@ -12,40 +12,84 @@ import org.cggh.chassis.generic.client.gwt.widget.submission.controller.client.S
 import org.cggh.chassis.generic.client.gwt.widget.submission.controller.client.SubmissionControllerPubSubEditAPI;
 import org.cggh.chassis.generic.client.gwt.widget.submission.model.client.SubmissionModel;
 
+import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Panel;
 
 /**
  * @author raok
  *
  */
-public class EditSubmissionWidget implements EditSubmissionWidgetAPI, SubmissionControllerPubSubEditAPI {
+public class EditSubmissionWidget extends Composite implements EditSubmissionWidgetAPI, SubmissionControllerPubSubEditAPI {
+	
+	
+	
 	
 	final private SubmissionModel model;
 	final private SubmissionControllerEditAPI controller;
 	final private EditSubmissionWidgetDefaultRenderer renderer;
 	private Set<EditSubmissionWidgetPubSubAPI> listeners = new HashSet<EditSubmissionWidgetPubSubAPI>(); 
 
-	public EditSubmissionWidget(Panel canvas, String authorEmail) {
+	
+	
+	
+	/**
+	 * 
+	 * @param canvas
+	 * @param authorEmail
+	 */
+	public EditSubmissionWidget(Panel canvas) {
 		
 		model = new SubmissionModel();
 		
 		controller = new SubmissionController(model, this);
 						
-		renderer = new EditSubmissionWidgetDefaultRenderer(canvas, controller, authorEmail);
+		renderer = new EditSubmissionWidgetDefaultRenderer(canvas, controller);
 		
 		// register renderer as listener to model
-		model.addListener(renderer);		
+		model.addListener(renderer);	
+		
+		this.initWidget(this.renderer.getCanvas());
+		
 	}
+	
+	
+	
+	
+	/**
+	 * 
+	 */
+	public EditSubmissionWidget() {
+
+		model = new SubmissionModel();
+		
+		controller = new SubmissionController(model, this);
+						
+		renderer = new EditSubmissionWidgetDefaultRenderer(controller);
+		
+		// register renderer as listener to model
+		model.addListener(renderer);	
+		
+		this.initWidget(this.renderer.getCanvas());
+
+	}
+
+
 	
 	
 	public void addEditSubmissionWidgetListener(EditSubmissionWidgetPubSubAPI listener) {
 		listeners.add(listener);				
 	}
 
+	
+	
+	
 	public void editSubmissionEntry(SubmissionEntry submissionEntryToEdit) {
 		controller.loadSubmissionEntry(submissionEntryToEdit);
 	}
 
+	
+	
+	
 	public void onSubmissionEntryUpdated(SubmissionEntry updatedSubmissionEntry) {
 
 		for (EditSubmissionWidgetPubSubAPI listener : listeners) {
@@ -53,6 +97,9 @@ public class EditSubmissionWidget implements EditSubmissionWidgetAPI, Submission
 		}
 	}
 
+	
+	
+	
 	public void onUserActionEditSubmissionEntryCancelled() {
 		
 		for (EditSubmissionWidgetPubSubAPI listener : listeners) {
@@ -61,4 +108,5 @@ public class EditSubmissionWidget implements EditSubmissionWidgetAPI, Submission
 	}
 
 
+	
 }

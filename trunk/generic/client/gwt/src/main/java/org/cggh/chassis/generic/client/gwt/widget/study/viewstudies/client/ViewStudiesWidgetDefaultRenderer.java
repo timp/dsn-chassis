@@ -173,7 +173,8 @@ public class ViewStudiesWidgetDefaultRenderer implements ViewStudiesWidgetModelL
 		
 		log.debug("add header row");
 
-		String[] headers = { "Title", "Summary", "Modules", "Owners", "Created", "Updated", "Actions" };
+//		String[] headers = { "Title", "Summary", "Modules", "Owners", "Created", "Updated", "Actions" };
+		String[] headers = { "Title", "Summary", "Modules", "Owners", "Actions" };
 		
 		for (int i=0; i<headers.length; i++) {
 			Label headerLabel = new Label(headers[i]);
@@ -225,14 +226,14 @@ public class ViewStudiesWidgetDefaultRenderer implements ViewStudiesWidgetModelL
 			
 			studiesTable.setWidget(rowNo, 3, new Label(authorsContent));
 
-			studiesTable.setWidget(rowNo, 4, new Label(created));
-			studiesTable.setWidget(rowNo, 5, new Label(updated));
+//			studiesTable.setWidget(rowNo, 4, new Label(created));
+//			studiesTable.setWidget(rowNo, 5, new Label(updated));
 			
 			log.debug("add a select study link");
 			Anchor selectStudy = new Anchor();
 			selectStudy.setText(selectStudyLinkText);
 			selectStudy.addClickHandler(new SelectStudyClickHandler(studyEntry));
-			studiesTable.setWidget(rowNo, 6, selectStudy);
+			studiesTable.setWidget(rowNo, 4, selectStudy);
 						
 		}
 		
