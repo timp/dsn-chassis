@@ -26,16 +26,8 @@ public interface StudyModelListener {
 
 	void onAuthorsChanged(Set<AtomAuthor> before, Set<AtomAuthor> after, Boolean isValid);
 
-	/**
-	 * @param before
-	 * @param created
-	 */
 	void onCreatedChanged(String before, String created);
 
-	/**
-	 * @param before
-	 * @param created
-	 */
 	void onUpdatedChanged(String before, String created);
 
 }

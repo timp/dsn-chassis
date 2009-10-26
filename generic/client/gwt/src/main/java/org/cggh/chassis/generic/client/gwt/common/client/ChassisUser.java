@@ -30,6 +30,13 @@ public class ChassisUser {
 	public static Deferred<UserDetailsTO> getCurrentUserDeferred() {
 		return currentUserDeferred;
 	}
+
+	/**
+	 * @return
+	 */
+	public static String getLang() {
+		return "en"; // TODO i18n
+	}
 	
 	
 }

@@ -132,7 +132,7 @@ public class SubmissionController implements SubmissionControllerEditAPI, Submis
 		if (owner instanceof SubmissionControllerPubSubCreateAPI) {
 			((SubmissionControllerPubSubCreateAPI)owner).fireOnUserActionCreateNewSubmissionCancelled();
 		} else if (owner instanceof SubmissionControllerPubSubEditAPI) {
-			((SubmissionControllerPubSubEditAPI)owner).onUserActionEditSubmissionEntryCancelled();
+			((SubmissionControllerPubSubEditAPI)owner).fireOnUserActionEditSubmissionEntryCancelled();
 		}
 		
 		log.leave();
@@ -275,7 +275,7 @@ public class SubmissionController implements SubmissionControllerEditAPI, Submis
 			} else if (owner instanceof SubmissionControllerPubSubEditAPI) {
 				log.debug("alerted edit owner");
 				
-				((SubmissionControllerPubSubEditAPI)owner).onSubmissionEntryUpdated(submissionEntry);
+				((SubmissionControllerPubSubEditAPI)owner).fireOnSubmissionEntryUpdated(submissionEntry);
 			}
 			
 			log.leave();

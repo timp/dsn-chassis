@@ -127,7 +127,7 @@ public class SubmissionManagementWidgetDefaultRenderer implements SubmissionMana
 			} 
 		};
 
-		MenuItem newSubmissionMenuItem = new MenuItem("new submission", newSubmissionCommand );
+		MenuItem newSubmissionMenuItem = new MenuItem("new data submission", newSubmissionCommand );
 		menu.addItem(newSubmissionMenuItem);
 		
 		log.debug("construct my submissions menu item");
@@ -146,7 +146,7 @@ public class SubmissionManagementWidgetDefaultRenderer implements SubmissionMana
 			} 
 		};
 
-		MenuItem viewSubmissionsMenuItem = new MenuItem("my submissions", viewSubmissionsCommand );
+		MenuItem viewSubmissionsMenuItem = new MenuItem("my data submissions", viewSubmissionsCommand );
 		menu.addItem(viewSubmissionsMenuItem);
 		
 		menuCanvas.add(menu); // only needed for legacy

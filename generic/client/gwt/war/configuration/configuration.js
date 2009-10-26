@@ -1,4 +1,6 @@
-CHASSIS = new Object();
+if (typeof CHASSIS == "undefined" || !CHASSIS) {
+	CHASSIS = new Object();
+}
 
 // configure service URLs
 

@@ -296,6 +296,58 @@ input, textarea {
 
 /*
  * -----------------------------------------------------------------------------
+ * styles for view submission widget
+ * -----------------------------------------------------------------------------
+ */
+ 
+ .chassis-viewSubmission-modules {
+ 	display: inline;
+ 	margin-left: 0.3em;
+ }
+
+ .chassis-viewSubmission-owners {
+ 	display: inline;
+ 	margin-left: 0.3em;
+ }
+
+ .chassis-viewSubmission-summary {
+	font-weight: normal;
+	font-style: italic;
+	display: block;
+	margin: .2em 0 .2em 0;
+ }
+
+
+
+
+/*
+ * -----------------------------------------------------------------------------
+ * styles for view submissions widget
+ * -----------------------------------------------------------------------------
+ */
+
+.chassis-viewSubmissions-submissionsTable {
+}
+
+.chassis-viewSubmissions-submissionsTable td {
+	border-bottom: 1px solid #aaa;
+	padding: 0.3em;
+	vertical-align: top;
+}
+
+.chassis-viewSubmissions-tableHeader {
+	font-weight: bold;
+}
+
+.chassis-viewSubmissions-submissionTitle {
+	font-weight: bold;
+}
+
+
+
+
+/*
+ * -----------------------------------------------------------------------------
  * styles for developer pane
  * -----------------------------------------------------------------------------
  */
