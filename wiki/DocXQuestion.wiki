@@ -10,7 +10,7 @@ See also the [http://dsn-chassis.googlecode.com/svn/trunk/generic/lib/gwt/static
 
 XQuestion uses XML in two ways.
 
-Firsly, the declarative form definition is given in XML. For example, the snippet below defines a simple form asking for your name and title.
+Firstly, the declarative form definition is given in XML. For example, the snippet below defines a simple form asking for your name and title.
 
 {{{
 <?xml version="1.0" encoding="UTF-8"?>
@@ -28,8 +28,6 @@ Firsly, the declarative form definition is given in XML. For example, the snippe
 
     <html><h2>Personal Information Questionnaire</h2></html>
     
-    <html><h3>Your Name</h3></html>
-
     <question id="name">
       <model>
         <element name="name"/>
@@ -70,3 +68,22 @@ Firsly, the declarative form definition is given in XML. For example, the snippe
     
 </questionnaire>
 }}}
+
+XQuestion then uses this definition to render the form, and to marshall XML data to and from the form. I.e., once the user has entered some data into the form, you can then obtain an XML representation of those data. You can also prepopulate a form with existing XML data that fits the form's model.
+
+E.g., you could obtain the following XML data from a form generated from the above XQuestion definition...
+
+{{{
+<foo:person xmlns:foo="http://example.org/foo">
+  <foo:name>Alice Foo</foo:givenName>
+  <foo:title>ms</foo:title>
+</foo:person>
+}}}
+
+= XQuestion and XForms =
+
+XQuestion is heavily inspired by XForms. If there was cross-browser support for XForms, we probably would have used it. But, afaik, there isn't (without a plugin), so we baked XQuestion ourselves, as a simple way to move forwards with integrating data entry forms with an XML-based data persistence architecture.
+
+= Status =
+
+XQuestion is pre-alpha so caveat emptor.
