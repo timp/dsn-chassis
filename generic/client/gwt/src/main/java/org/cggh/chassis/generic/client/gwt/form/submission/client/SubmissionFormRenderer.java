@@ -249,7 +249,7 @@ public class SubmissionFormRenderer {
 			this.selectStudies.add(s);
 		}
 
-		this.refreshStudyLinks();
+		this.refreshStudies();
 		
 		log.leave();
 	}
@@ -271,7 +271,8 @@ public class SubmissionFormRenderer {
 
 		List<AtomLink> links = this.model.getStudyLinks();
 		for (int i=0; i<links.size(); i++) {
-			String link = Configuration.getSubmissionFeedURL() + links.get(i).getHref(); // TODO fix for absolute uris
+//			String link = Configuration.getSubmissionFeedURL() + links.get(i).getHref(); // TODO fix for absolute uris
+			String link = links.get(i).getHref(); // TODO fix for absolute uris
 			selectStudies.get(i).setSelectedValue(link);
 		}
 		
@@ -281,7 +282,7 @@ public class SubmissionFormRenderer {
 	
 	
 	
-	private void refreshStudyLinks() {
+	public void refreshStudies() {
 
 		ChassisUtils.getMapOfStudyLinksToTitlesForCurrentUser().addCallback(new Function<Map<String,String>, Map<String,String>>() {
 
@@ -338,6 +339,7 @@ public class SubmissionFormRenderer {
 			}
 			
 			listBox = new ListBox();
+			listBox.addItem("(please select one)", null);
 			int cutoff = 60;
 			if (studyLinks != null) {
 				for (String link : studyLinks.keySet()) {
@@ -441,7 +443,8 @@ public class SubmissionFormRenderer {
 
 			List<String> links = new ArrayList<String>();
 			for (SelectStudy s : selectStudies) {
-				links.add(s.getSelectedValue());
+				String value = s.getSelectedValue();
+				if (value != null) links.add(value);
 			}
 			
 			model.setStudyLinks(links);

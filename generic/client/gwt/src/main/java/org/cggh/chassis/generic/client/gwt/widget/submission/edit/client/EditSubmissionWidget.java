@@ -48,8 +48,6 @@ public class EditSubmissionWidget extends Composite {
 		
 		this.initWidget(this.renderer.getCanvas());
 		
-		this.controller.ready();
-		
 		log.leave();
 		
 	}
@@ -70,6 +68,7 @@ public class EditSubmissionWidget extends Composite {
 		log.debug("setting model on submission form with entry: "+submissionEntryToEdit.getTitle());
 
 		this.renderer.getForm().setModel(submissionEntryToEdit);
+		this.controller.ready();
 
 		log.leave();
 	}
@@ -102,6 +101,26 @@ public class EditSubmissionWidget extends Composite {
 		for (EditSubmissionWidgetPubSubAPI listener : listeners) {
 			listener.onCreateSubmissionError(error);
 		}
+	}
+
+
+
+
+	/**
+	 * 
+	 */
+	public void refreshStudies() {
+		this.renderer.getForm().refreshStudies();
+	}
+
+
+
+
+	/**
+	 * 
+	 */
+	public void render() {
+		this.renderer.render();
 	}
 
 

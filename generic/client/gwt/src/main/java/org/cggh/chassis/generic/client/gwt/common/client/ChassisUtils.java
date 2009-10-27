@@ -34,7 +34,8 @@ public class ChassisUtils {
 				Map<String,String> studyLinks = new HashMap<String,String>();
 				for (StudyEntry e : in.getStudyEntries()) {
 					String title = e.getTitle();
-					String link = Configuration.getStudyFeedURL() + e.getEditLink().getHref();
+//					String link = Configuration.getStudyFeedURL() + e.getEditLink().getHref();
+					String link = e.getEditLink().getHref(); // TODO fix for aboslute URIs
 					studyLinks.put(link, title);
 				}
 				return studyLinks;

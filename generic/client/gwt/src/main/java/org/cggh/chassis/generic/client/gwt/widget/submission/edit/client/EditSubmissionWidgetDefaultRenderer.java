@@ -47,6 +47,7 @@ public class EditSubmissionWidgetDefaultRenderer implements EditSubmissionWidget
 		
 		this.controller = controller;
 		this.canvas.addStyleName(CSS.EDITSUBMISSION_BASE);
+		this.render();
 
 	}
 	
@@ -104,10 +105,11 @@ public class EditSubmissionWidgetDefaultRenderer implements EditSubmissionWidget
 	 * @see org.cggh.chassis.generic.client.gwt.widget.submission.create.client.EditSubmissionWidgetModel.Listener#onStatusChanged(int, int)
 	 */
 	public void onStatusChanged(int before, int after) {
+		log.enter("onStatusChanged( "+before+", "+after+" )");
 
-		if (before == EditSubmissionWidgetModel.STATUS_INITIAL && after == EditSubmissionWidgetModel.STATUS_READY) {
+		if (after == EditSubmissionWidgetModel.STATUS_READY) {
 			
-			this.render();
+			this.savingPanel.setVisible(false);
 			this.mainPanel.setVisible(true);
 			
 		}
@@ -135,6 +137,8 @@ public class EditSubmissionWidgetDefaultRenderer implements EditSubmissionWidget
 		else {
 			throw new Error("unexpected state transition");
 		}
+		
+		log.leave();
 		
 	}
 
