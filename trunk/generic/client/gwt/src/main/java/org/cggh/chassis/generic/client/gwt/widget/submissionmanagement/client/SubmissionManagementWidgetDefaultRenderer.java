@@ -153,6 +153,7 @@ public class SubmissionManagementWidgetDefaultRenderer implements SubmissionMana
 //			createSubmissionWidget.setUpNewSubmission(ChassisUser.getCurrentUserEmail());
 
 			displayCanvas.add(createSubmissionWidget);
+			createSubmissionWidget.render();
 			
 		} else if (after == SubmissionManagementWidgetModel.DISPLAYING_VIEW_SUBMISSION) {
 			
@@ -169,6 +170,7 @@ public class SubmissionManagementWidgetDefaultRenderer implements SubmissionMana
 			
 			displayCanvas.clear();
 			displayCanvas.add(editSubmissionWidget);
+			editSubmissionWidget.render();
 			
 		}
 		

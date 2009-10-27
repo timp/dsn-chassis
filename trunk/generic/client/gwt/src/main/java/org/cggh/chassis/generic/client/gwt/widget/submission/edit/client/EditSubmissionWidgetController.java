@@ -90,10 +90,10 @@ public class EditSubmissionWidgetController {
 		
 		this.model.setStatus(EditSubmissionWidgetModel.STATUS_UPDATE_PENDING);
 		
-		String feedUrl = Configuration.getSubmissionFeedURL();
+		String entryUrl = Configuration.getSubmissionFeedURL() + entry.getEditLink().getHref();
 
 		log.debug("kick off put request");
-		Deferred<AtomEntry> def = service.putEntry(feedUrl, entry);
+		Deferred<AtomEntry> def = service.putEntry(entryUrl, entry);
 		
 		log.debug("add callbacks");
 		def.addCallback(new UpdateSubmissionEntryCallback());

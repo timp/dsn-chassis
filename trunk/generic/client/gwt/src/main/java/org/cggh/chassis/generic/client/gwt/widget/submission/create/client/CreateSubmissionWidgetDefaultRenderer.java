@@ -47,6 +47,7 @@ public class CreateSubmissionWidgetDefaultRenderer implements CreateSubmissionWi
 		
 		this.controller = controller;
 		this.canvas.addStyleName(CSS.CREATESUBMISSION_BASE);
+		this.render();
 
 	}
 
@@ -99,9 +100,9 @@ public class CreateSubmissionWidgetDefaultRenderer implements CreateSubmissionWi
 	 */
 	public void onStatusChanged(int before, int after) {
 
-		if (before == CreateSubmissionWidgetModel.STATUS_INITIAL && after == CreateSubmissionWidgetModel.STATUS_READY) {
+		if (after == CreateSubmissionWidgetModel.STATUS_READY) {
 			
-			this.render();
+			this.savingPanel.setVisible(false);
 			this.mainPanel.setVisible(true);
 			
 		}
@@ -164,6 +165,13 @@ public class CreateSubmissionWidgetDefaultRenderer implements CreateSubmissionWi
 			controller.createSubmissionEntry(form.getModel());
 		}
 		
+	}
+
+	/**
+	 * @return
+	 */
+	public SubmissionForm getForm() {
+		return this.form;
 	}
 		
 

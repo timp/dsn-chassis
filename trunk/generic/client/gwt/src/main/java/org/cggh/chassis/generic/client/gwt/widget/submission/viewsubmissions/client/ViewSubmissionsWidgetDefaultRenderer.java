@@ -166,7 +166,7 @@ public class ViewSubmissionsWidgetDefaultRenderer implements ViewSubmissionsWidg
 			
 			String summary = submissionEntry.getSummary();
 			int cutoff = 100;
-			if (summary.length() > cutoff) {
+			if (summary != null && summary.length() > cutoff) {
 				log.debug("truncate long summary");
 				summary = summary.substring(0, cutoff) + "...";
 			}

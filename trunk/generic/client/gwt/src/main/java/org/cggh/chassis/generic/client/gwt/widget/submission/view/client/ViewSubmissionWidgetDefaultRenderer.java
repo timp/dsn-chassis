@@ -9,10 +9,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.cggh.chassis.generic.atom.study.client.protocol.StudyQuery;
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomLink;
 import org.cggh.chassis.generic.client.gwt.common.client.CSS;
+import org.cggh.chassis.generic.client.gwt.common.client.ChassisUser;
 import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
 import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidget;
 import org.cggh.chassis.generic.log.client.Log;
@@ -84,7 +86,7 @@ public class ViewSubmissionWidgetDefaultRenderer implements ViewSubmissionWidget
 		this.modulesConfig = ConfigurationBean.getModules();
 
 		// Create ViewStudies widget to view linked studies
-		studiesLinkedWidget = new ViewStudiesWidget("");
+		studiesLinkedWidget = new ViewStudiesWidget(new ViewStudiesWidgetCustomRenderer());
 
 		initCanvas();
 	}
@@ -145,6 +147,14 @@ public class ViewSubmissionWidgetDefaultRenderer implements ViewSubmissionWidget
 		ownersPanel.addStyleName(CSS.COMMON_QUESTION);
 		submissionDetailsPanel.add(ownersPanel);
 
+		log.debug("studies panel");
+
+		FlowPanel studiesPanel = new FlowPanel();
+		studiesPanel.add(new InlineLabel("Studies: "));
+		studiesPanel.add(this.studiesLinkedWidget);
+		studiesPanel.addStyleName(CSS.COMMON_QUESTION);
+		submissionDetailsPanel.add(studiesPanel);
+
 		log.debug("created panel");
 
 		FlowPanel createdPanel = new FlowPanel();
@@ -162,11 +172,6 @@ public class ViewSubmissionWidgetDefaultRenderer implements ViewSubmissionWidget
 		updatedPanel.add(this.updatedLabel);
 		updatedPanel.addStyleName(CSS.COMMON_QUESTION);
 		submissionDetailsPanel.add(updatedPanel);
-
-		// TODO studies panel
-
-		// submissionDetailsPanel.add(new Label("Studies to submit to:"));
-		// submissionDetailsPanel.add(studiesLinkedWidget);
 
 		mainPanel.add(submissionDetailsPanel);
 
@@ -239,6 +244,15 @@ public class ViewSubmissionWidgetDefaultRenderer implements ViewSubmissionWidget
 		}
 		studiesLinkedWidget.loadStudies(s);
 
+	}
+	
+	
+	
+	public void renderStudiesForSubmission(SubmissionEntry entry) {
+		StudyQuery query = new StudyQuery();
+		query.setAuthorEmail(ChassisUser.getCurrentUserEmail());
+		query.setSubmissionUrl(entry.getEditLink().getHref());
+		studiesLinkedWidget.loadStudies(query);
 	}
 
 	
@@ -318,7 +332,8 @@ public class ViewSubmissionWidgetDefaultRenderer implements ViewSubmissionWidget
 		this.renderUpdated(entry.getUpdated());
 		this.renderOwners(entry.getAuthors());
 		this.renderModules(entry.getModules());
-		this.renderStudyLinks(entry.getStudyLinks());
+//		this.renderStudyLinks(entry.getStudyLinks());
+		this.renderStudiesForSubmission(entry);
 		
 		log.leave();
 	}

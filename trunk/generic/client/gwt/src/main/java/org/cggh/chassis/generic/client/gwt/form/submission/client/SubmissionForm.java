@@ -105,6 +105,15 @@ public class SubmissionForm extends SubmissionEntryForm {
 		}
 		
 	}
+
+
+
+	/**
+	 * 
+	 */
+	public void refreshStudies() {
+		this.renderer.refreshStudies();
+	}
 	
 	
 	

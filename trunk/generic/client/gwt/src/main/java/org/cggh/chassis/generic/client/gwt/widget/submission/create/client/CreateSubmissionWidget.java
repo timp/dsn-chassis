@@ -100,6 +100,29 @@ public class CreateSubmissionWidget extends Composite {
 
 
 
+	/**
+	 * 
+	 */
+	public void refreshStudies() {
+		this.renderer.getForm().refreshStudies();
+	}
+
+
+
+
+
+	/**
+	 * 
+	 */
+	public void render() {
+		this.renderer.render();
+		this.controller.ready();
+	}
+
+
+
+
+
 
 
 }

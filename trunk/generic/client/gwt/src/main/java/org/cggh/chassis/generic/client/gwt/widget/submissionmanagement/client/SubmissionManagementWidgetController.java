@@ -38,8 +38,9 @@ public class SubmissionManagementWidgetController {
 		log.enter("displayCreateSubmissionWidget");
 		log.debug("userConfirmed: " + userConfirmed);
 		
-		model.setDisplayStatus(SubmissionManagementWidgetModel.DISPLAYING_CREATE_SUBMISSION, userConfirmed);
-				
+//		model.setDisplayStatus(SubmissionManagementWidgetModel.DISPLAYING_CREATE_SUBMISSION, userConfirmed);
+		model.setDisplayStatus(SubmissionManagementWidgetModel.DISPLAYING_CREATE_SUBMISSION, true);
+		
 		log.leave();
 	}
 
@@ -67,8 +68,9 @@ public class SubmissionManagementWidgetController {
 		log.enter("displayViewAllSubmissionsWidget");
 		log.debug("userConfirmed: " + userConfirmed);
 		
-		model.setDisplayStatus(SubmissionManagementWidgetModel.DISPLAYING_VIEW_ALL_SUBMISSIONS, userConfirmed);
-					
+//		model.setDisplayStatus(SubmissionManagementWidgetModel.DISPLAYING_VIEW_ALL_SUBMISSIONS, userConfirmed);
+		model.setDisplayStatus(SubmissionManagementWidgetModel.DISPLAYING_VIEW_ALL_SUBMISSIONS, true);
+		
 		log.leave();		
 	}
 

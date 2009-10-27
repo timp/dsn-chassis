@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
+import org.cggh.chassis.generic.atom.study.client.protocol.StudyQuery;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 
@@ -18,7 +19,7 @@ import com.google.gwt.user.client.ui.Panel;
  * @author raok
  *
  */
-public class ViewStudiesWidget extends Composite implements ViewStudiesWidgetAPI {
+public class ViewStudiesWidget extends Composite {
 
 	
 	
@@ -29,7 +30,7 @@ public class ViewStudiesWidget extends Composite implements ViewStudiesWidgetAPI
 	
 	final private ViewStudiesWidgetModel model;
 	final private ViewStudiesWidgetController controller;
-	final private ViewStudiesWidgetModelListener renderer;
+	final private ViewStudiesWidgetRenderer renderer;
 	private Set<ViewStudiesWidgetPubSubAPI> listeners = new HashSet<ViewStudiesWidgetPubSubAPI>();
 	
 	
@@ -53,7 +54,7 @@ public class ViewStudiesWidget extends Composite implements ViewStudiesWidgetAPI
 	
 	
 	
-	public ViewStudiesWidget(ViewStudiesWidgetModelListener customRenderer) {
+	public ViewStudiesWidget(ViewStudiesWidgetRenderer customRenderer) {
 
 		model = new ViewStudiesWidgetModel();		
 
@@ -62,7 +63,7 @@ public class ViewStudiesWidget extends Composite implements ViewStudiesWidgetAPI
 		renderer = customRenderer;
 		
 		//inject controller into customRenderer
-		((ViewStudiesWidgetListBoxRenderer)renderer).setController(controller);
+		renderer.setController(controller);
 
 		// register renderer as listener to model
 		model.addListener(renderer);
@@ -143,6 +144,16 @@ public class ViewStudiesWidget extends Composite implements ViewStudiesWidgetAPI
 		log.enter("loadStudiesByAuthorEmail( "+authorEmail+" )");
 		controller.loadStudiesByAuthorEmail(authorEmail);
 		log.leave();
+	}
+
+
+
+
+	/**
+	 * @param query
+	 */
+	public void loadStudies(StudyQuery query) {
+		controller.loadStudies(query);
 	}
 	
 	

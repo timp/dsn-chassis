@@ -10,6 +10,7 @@ import java.util.Set;
 import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
 import org.cggh.chassis.generic.atom.study.client.format.StudyFeed;
 import org.cggh.chassis.generic.atom.study.client.format.impl.StudyFactoryImpl;
+import org.cggh.chassis.generic.atom.study.client.protocol.StudyQuery;
 import org.cggh.chassis.generic.atom.study.client.protocol.StudyQueryService;
 import org.cggh.chassis.generic.atom.study.client.protocol.impl.StudyQueryServiceImpl;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
@@ -166,6 +167,18 @@ public class ViewStudiesWidgetController {
 		deferred.addErrback(new LoadStudyFeedErrback());
 		
 		log.leave();
+	}
+
+	/**
+	 * @param query
+	 */
+	public void loadStudies(StudyQuery query) {
+
+		Deferred<StudyFeed> deferred = studyQueryService.query(query);
+		
+		deferred.addCallback(new LoadStudyFeedCallback());
+		deferred.addErrback(new LoadStudyFeedErrback());
+
 	}
 	
 }
