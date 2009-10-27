@@ -6,8 +6,11 @@ package org.cggh.chassis.generic.atom.study.client.protocol.impl;
 import org.cggh.chassis.generic.atom.study.client.format.StudyFactory;
 import org.cggh.chassis.generic.atom.study.client.format.StudyFeed;
 import org.cggh.chassis.generic.atom.study.client.format.impl.StudyFactoryImpl;
+import org.cggh.chassis.generic.atom.study.client.protocol.StudyQuery;
 import org.cggh.chassis.generic.atom.study.client.protocol.StudyQueryService;
+import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactory;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
+import org.cggh.chassis.generic.atom.vanilla.client.format.impl.AtomFactoryImpl;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.impl.AtomServiceImpl;
 import org.cggh.chassis.generic.log.client.Log;
@@ -43,7 +46,50 @@ public class StudyQueryServiceImpl implements StudyQueryService {
 	public Deferred<StudyFeed> getStudiesByAuthorEmail(String email) {
 		log.enter("getStudiesByAuthorEmail");
 
-		String url = this.serviceUrl + "?authoremail=" + email;
+//		String url = this.serviceUrl + "?authoremail=" + email;
+//		log.debug("url: "+url);
+//
+//		StudyFactory factory = new StudyFactoryImpl();
+//		AtomService service = new AtomServiceImpl(factory);
+//
+//		Deferred<AtomFeed> deferredFeed = service.getFeed(url);
+//
+//		Function<AtomFeed,StudyFeed> adapter = new Function<AtomFeed,StudyFeed>() {
+//			public StudyFeed apply(AtomFeed in) {
+//				log.enter("[anonymous adapter function]");
+//				log.debug("found "+in.getEntries().size()+" results; casting as study feed");
+//				log.leave();
+//				return (StudyFeed) in;
+//			}
+//		};
+//		
+//		Deferred<StudyFeed> deferredResults = deferredFeed.adapt(adapter);
+
+		StudyQuery query = new StudyQuery();
+		query.setAuthorEmail(email);
+		
+		log.leave();
+		return this.query(query);
+	}
+
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.atom.study.client.protocol.StudyQueryService#query(org.cggh.chassis.generic.atom.study.client.protocol.StudyQuery)
+	 */
+	public Deferred<StudyFeed> query(StudyQuery query) {
+		log.enter("query");
+
+		String url = this.serviceUrl + "?";
+
+		if (query.getAuthorEmail() != null) {
+			url += "authoremail=" + query.getAuthorEmail() + "&";
+		}
+		
+		if (query.getSubmissionUrl() != null) {
+			url += "submission=" + query.getSubmissionUrl() + "&";
+		}
+		
 		log.debug("url: "+url);
 
 		StudyFactory factory = new StudyFactoryImpl();

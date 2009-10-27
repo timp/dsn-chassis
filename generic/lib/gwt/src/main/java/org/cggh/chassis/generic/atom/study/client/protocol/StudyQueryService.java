@@ -14,4 +14,6 @@ public interface StudyQueryService {
 
 	public Deferred<StudyFeed> getStudiesByAuthorEmail(String email);
 	
+	public Deferred<StudyFeed> query(StudyQuery query);
+	
 }
