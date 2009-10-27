@@ -4,6 +4,7 @@
 package org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
@@ -125,6 +126,14 @@ public class ViewStudiesWidget extends Composite implements ViewStudiesWidgetAPI
 	
 	public void loadStudies(Set<String> studyEntryURLsToLoad) {
 		controller.loadStudiesByEntryURLs(studyEntryURLsToLoad);
+	}
+
+	
+	
+	
+	public void loadStudies(List<String> studyEntryURLsToLoad) {
+		Set<String> urls = new HashSet<String>(studyEntryURLsToLoad);
+		controller.loadStudiesByEntryURLs(urls);
 	}
 
 	

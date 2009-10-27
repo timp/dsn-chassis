@@ -103,29 +103,29 @@ public class GWTTestSubmissionManagementWidgetDefaultRenderer extends GWTTestCas
 		testRenderer.onDisplayStatusChanged(null, SubmissionManagementWidgetModel.DISPLAYING_CREATE_SUBMISSION);
 
 		// test outcome 
-		assertTrue( (testRenderer.createSubmissionWidgetCanvas.getParent() != null)
-					 && (testRenderer.createSubmissionWidgetCanvas.isVisible()) );
+		assertTrue( (testRenderer.createSubmissionWidget.getParent() != null)
+					 && (testRenderer.createSubmissionWidget.isVisible()) );
 		
 		// call method under test
 		testRenderer.onDisplayStatusChanged(null, SubmissionManagementWidgetModel.DISPLAYING_VIEW_SUBMISSION);
 
 		// test outcome 
-		assertTrue( (testRenderer.viewSubmissionWidgetCanvas.getParent() != null)
-					 && (testRenderer.viewSubmissionWidgetCanvas.isVisible()) );
+		assertTrue( (testRenderer.viewSubmissionWidget.getParent() != null)
+					 && (testRenderer.viewSubmissionWidget.isVisible()) );
 		
 		// call method under test
 		testRenderer.onDisplayStatusChanged(null, SubmissionManagementWidgetModel.DISPLAYING_VIEW_ALL_SUBMISSIONS);	
 
 		// test outcome 
-		assertTrue( (testRenderer.viewAllSubmissionsWidgetCanvas.getParent() != null)
-					 && (testRenderer.viewAllSubmissionsWidgetCanvas.isVisible()) );
+		assertTrue( (testRenderer.viewAllSubmissionsWidget.getParent() != null)
+					 && (testRenderer.viewAllSubmissionsWidget.isVisible()) );
 		
 		// call method under test
 		testRenderer.onDisplayStatusChanged(null, SubmissionManagementWidgetModel.DISPLAYING_EDIT_SUBMISSION);
 
 		// test outcome 
-		assertTrue( (testRenderer.editSubmissionWidgetCanvas.getParent() != null)
-					 && (testRenderer.editSubmissionWidgetCanvas.isVisible()) );
+		assertTrue( (testRenderer.editSubmissionWidget.getParent() != null)
+					 && (testRenderer.editSubmissionWidget.isVisible()) );
 		
 	}
 	

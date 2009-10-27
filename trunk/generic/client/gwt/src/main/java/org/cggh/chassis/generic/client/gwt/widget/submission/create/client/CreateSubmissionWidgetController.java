@@ -7,13 +7,13 @@ import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
 import org.cggh.chassis.generic.atom.submission.client.format.impl.SubmissionFactoryImpl;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.impl.AtomServiceImpl;
-import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
-import org.cggh.chassis.generic.client.gwt.widget.submission.model.client.SubmissionModel;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.twisted.client.Deferred;
 import org.cggh.chassis.generic.twisted.client.Function;
 import org.cggh.chassis.generic.twisted.client.HttpException;
+
+import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
 
 /**
  * @author aliman
@@ -71,7 +71,7 @@ public class CreateSubmissionWidgetController {
 		
 		this.model.setStatus(CreateSubmissionWidgetModel.STATUS_CANCELLED);
 		
-		this.owner.fireOnUserActionCreateNewSubmissionCancelled();
+		this.owner.fireOnUserActionCreateSubmissionCancelled();
 		
 		log.leave();
 	}
@@ -83,10 +83,10 @@ public class CreateSubmissionWidgetController {
 	 * @param entry 
 	 * 
 	 */
-	public void saveNewSubmissionEntry(SubmissionEntry entry) {
-		log.enter("saveNewSubmissionEntry");
+	public void createSubmissionEntry(SubmissionEntry entry) {
+		log.enter("createSubmissionEntry");
 		
-		this.model.setStatus(CreateSubmissionWidgetModel.STATUS_SAVING);
+		this.model.setStatus(CreateSubmissionWidgetModel.STATUS_CREATE_PENDING);
 		
 		String feedUrl = Configuration.getSubmissionFeedURL();
 
@@ -94,8 +94,8 @@ public class CreateSubmissionWidgetController {
 		Deferred<AtomEntry> def = service.postEntry(feedUrl, entry);
 		
 		log.debug("add callbacks");
-		def.addCallback(new SaveSubmissionEntryCallback());
-		def.addErrback(new SaveSubmissionEntryErrback());
+		def.addCallback(new CreateSubmissionEntryCallback());
+		def.addErrback(new CreateSubmissionEntryErrback());
 		
 		log.leave();
 	}
@@ -103,16 +103,16 @@ public class CreateSubmissionWidgetController {
 	
 	
 	
-	class SaveSubmissionEntryCallback implements Function<SubmissionEntry,SubmissionEntry> {
+	class CreateSubmissionEntryCallback implements Function<SubmissionEntry,SubmissionEntry> {
 
 		private Log log = LogFactory.getLog(this.getClass());
 
 		public SubmissionEntry apply(SubmissionEntry submissionEntry) {
 			log.enter("apply");
 			
-			model.setStatus(SubmissionModel.STATUS_SAVED);
+			model.setStatus(CreateSubmissionWidgetModel.STATUS_CREATE_SUCCESS);
 
-			owner.fireOnNewSubmissionSaveSuccess(submissionEntry);
+			owner.fireOnCreateSubmissionSuccess(submissionEntry);
 			
 			log.leave();
 			return submissionEntry;
@@ -123,7 +123,7 @@ public class CreateSubmissionWidgetController {
 	
 	
 	
-	class SaveSubmissionEntryErrback implements Function<Throwable,Throwable> {
+	class CreateSubmissionEntryErrback implements Function<Throwable,Throwable> {
 
 		private Log log = LogFactory.getLog(this.getClass());
 
@@ -137,9 +137,9 @@ public class CreateSubmissionWidgetController {
 				log.debug(e.getResponse().getText());
 			}
 			
-			model.setStatus(SubmissionModel.STATUS_ERROR);
+			model.setStatus(CreateSubmissionWidgetModel.STATUS_CREATE_ERROR);
 						
-			owner.fireOnNewSubmissionSaveError(error);
+			owner.fireOnCreateSubmissionError(error);
 			
 			log.leave();
 			return error;

@@ -15,7 +15,7 @@ import com.google.gwt.user.client.ui.Panel;
  * @author raok
  *
  */
-public class ViewSubmissionsWidget extends Composite implements ViewSubmissionsWidgetAPI {
+public class ViewSubmissionsWidget extends Composite {
 
 	
 	
