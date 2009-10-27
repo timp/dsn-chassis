@@ -30,7 +30,6 @@ import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.TextBoxBase;
-import com.google.gwt.user.client.ui.Widget;
 
 /**
  * @author raok
@@ -59,8 +58,11 @@ class CreateStudyWidgetDefaultRenderer implements StudyModelListener {
 	
 	
 
-	public CreateStudyWidgetDefaultRenderer(Panel canvas, StudyControllerCreateAPI controller) {
-		this.canvas = canvas;
+	public CreateStudyWidgetDefaultRenderer(Panel givenCanvas, StudyControllerCreateAPI controller) {
+		
+		this.canvas = new FlowPanel();
+		givenCanvas.add(canvas);
+		
 		this.controller = controller;
 		
 		//initialise view
@@ -90,7 +92,7 @@ class CreateStudyWidgetDefaultRenderer implements StudyModelListener {
 		
 		this.canvas.add(new HTML("<h2>New Study</h2>"));
 		
-		this.canvas.add(new HTML("<p>Use this form to create a new record of a study."));
+		this.canvas.add(new HTML("<p>Use this form to create a new record of a study.</p>"));
 				
 		// prepare form
 

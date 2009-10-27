@@ -6,6 +6,8 @@ package org.cggh.chassis.generic.client.gwt.widget.submissionmanagement.client;
 import org.cggh.chassis.generic.client.gwt.common.client.ChassisUser;
 import org.cggh.chassis.generic.client.gwt.widget.submission.create.client.CreateSubmissionWidget;
 import org.cggh.chassis.generic.client.gwt.widget.submission.edit.client.EditSubmissionWidget;
+import org.cggh.chassis.generic.client.gwt.widget.submission.uploaddatafile.client.SubmissionDataFileWidget;
+import org.cggh.chassis.generic.client.gwt.widget.submission.uploaddatafile.client.SubmissionDataFileWidgetAPI;
 import org.cggh.chassis.generic.client.gwt.widget.submission.view.client.ViewSubmissionWidget;
 import org.cggh.chassis.generic.client.gwt.widget.submission.viewsubmissions.client.ViewSubmissionsWidget;
 import org.cggh.chassis.generic.log.client.Log;
@@ -22,7 +24,6 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.ui.Panel;
-import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -60,6 +61,7 @@ public class SubmissionManagementWidgetDefaultRenderer implements SubmissionMana
 	final ViewSubmissionsWidget viewAllSubmissionsWidget;
 	final EditSubmissionWidget editSubmissionWidget;
 	private MenuBar menu;
+	final SubmissionDataFileWidgetAPI submissionDataFileWidget;
 
 	
 	
@@ -77,11 +79,13 @@ public class SubmissionManagementWidgetDefaultRenderer implements SubmissionMana
 		this.menuCanvas = new FlowPanel();
 		this.displayCanvas = new FlowPanel();
 
+		//TODO Remove use of canvas paramter constructors 
 		//create child widgets
 		this.viewSubmissionWidget = new ViewSubmissionWidget();
 		this.createSubmissionWidget = new CreateSubmissionWidget();
 		this.viewAllSubmissionsWidget = new ViewSubmissionsWidget();
 		this.editSubmissionWidget = new EditSubmissionWidget();
+		submissionDataFileWidget = new SubmissionDataFileWidget(ChassisUser.getCurrentUserEmail());
 		
 		//initialise view
 		initMenu();
@@ -171,6 +175,11 @@ public class SubmissionManagementWidgetDefaultRenderer implements SubmissionMana
 			displayCanvas.clear();
 			displayCanvas.add(editSubmissionWidget);
 			editSubmissionWidget.render();
+			
+		} else if (after == SubmissionManagementWidgetModel.DISPLAYING_SUBMISSION_DATA_FILE_UPLOAD_WIDGET) {
+			
+			displayCanvas.clear();
+			displayCanvas.add((SubmissionDataFileWidget)submissionDataFileWidget);
 			
 		}
 		

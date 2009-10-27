@@ -5,4 +5,6 @@ public interface SubmissionControllerViewAPI extends AbstractSubmissionControlle
 
 	public void onUserActionEditThisSubmission();
 
+	public void onUserActionUploadDataFile();
+
 }

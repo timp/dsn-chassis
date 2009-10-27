@@ -17,6 +17,7 @@ import org.cggh.chassis.generic.client.gwt.common.client.CSS;
 import org.cggh.chassis.generic.client.gwt.common.client.ChassisUser;
 import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
 import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidget;
+import org.cggh.chassis.generic.client.gwt.widget.submission.viewdatafiles.client.ViewSubmissionDataFilesWidget;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 
@@ -34,13 +35,7 @@ import com.google.gwt.user.client.ui.Panel;
  * 
  */
 public class ViewSubmissionWidgetDefaultRenderer implements ViewSubmissionWidgetModel.Listener {
-
-	
-	
-	
-	private Log log = LogFactory.getLog(this.getClass());
-
-	
+	private Log log = LogFactory.getLog(this.getClass());	
 	
 	
 	// Expose view elements for testing purposes.
@@ -52,6 +47,7 @@ public class ViewSubmissionWidgetDefaultRenderer implements ViewSubmissionWidget
 	final FlowPanel mainPanel = new FlowPanel();
 
 	Anchor editThisSubmissionUI = new Anchor();
+	Anchor uploadDataFileUI = new Anchor();
 
 	final FlowPanel modulesListPanel = new FlowPanel();
 	final FlowPanel ownersListPanel = new FlowPanel();
@@ -62,11 +58,14 @@ public class ViewSubmissionWidgetDefaultRenderer implements ViewSubmissionWidget
 
 	// Linked Studies
 	private ViewStudiesWidget studiesLinkedWidget;
+	private ViewSubmissionDataFilesWidget submissionDataFilesWidget;
 
 
 
 
 	final private ViewSubmissionWidgetController controller;
+
+
 
 	
 	
@@ -87,6 +86,9 @@ public class ViewSubmissionWidgetDefaultRenderer implements ViewSubmissionWidget
 
 		// Create ViewStudies widget to view linked studies
 		studiesLinkedWidget = new ViewStudiesWidget(new ViewStudiesWidgetCustomRenderer());
+		
+		//Create dataFiles linked widget to view linked data files
+		submissionDataFilesWidget = new ViewSubmissionDataFilesWidget();
 
 		initCanvas();
 	}
@@ -101,7 +103,7 @@ public class ViewSubmissionWidgetDefaultRenderer implements ViewSubmissionWidget
 		this.canvas.add(new HTML("<h2>View Data Submission</h2>"));
 
 		log.debug("prepare loading panel");
-
+		
 		this.loadingPanel.add(new Label("loading..."));
 		this.loadingPanel.setVisible(false);
 		this.canvas.add(this.loadingPanel);
@@ -155,6 +157,14 @@ public class ViewSubmissionWidgetDefaultRenderer implements ViewSubmissionWidget
 		studiesPanel.addStyleName(CSS.COMMON_QUESTION);
 		submissionDetailsPanel.add(studiesPanel);
 
+		log.debug("data files panel");
+
+		FlowPanel dataFilesPanel = new FlowPanel();
+		dataFilesPanel.add(new InlineLabel("Data files: "));
+		dataFilesPanel.add(this.submissionDataFilesWidget);
+		dataFilesPanel.addStyleName(CSS.COMMON_QUESTION);
+		submissionDetailsPanel.add(dataFilesPanel);
+
 		log.debug("created panel");
 
 		FlowPanel createdPanel = new FlowPanel();
@@ -186,6 +196,11 @@ public class ViewSubmissionWidgetDefaultRenderer implements ViewSubmissionWidget
 		this.editThisSubmissionUI.addClickHandler(new EditSubmissionClickHandler());
 		actionsPanel.add(this.editThisSubmissionUI);
 
+		this.uploadDataFileUI.setText("upload submission data file");
+		this.uploadDataFileUI.addStyleName(CSS.COMMON_ACTION);
+		this.uploadDataFileUI.addClickHandler(new UploadDataFileClickHandler());
+		actionsPanel.add(this.uploadDataFileUI);
+
 		log.debug("prepare main panel");
 
 		this.mainPanel.addStyleName(CSS.COMMON_MAINWITHACTIONS);
@@ -208,9 +223,13 @@ public class ViewSubmissionWidgetDefaultRenderer implements ViewSubmissionWidget
 		}
 	}
 
-	
-	
-	
+	class UploadDataFileClickHandler implements ClickHandler {
+		
+		public void onClick(ClickEvent arg0) {
+			controller.onUserActionUploadDataFile();
+		}
+	}
+
 	
 	public void renderModules(List<String> modules) {
 
@@ -253,6 +272,7 @@ public class ViewSubmissionWidgetDefaultRenderer implements ViewSubmissionWidget
 		query.setAuthorEmail(ChassisUser.getCurrentUserEmail());
 		query.setSubmissionUrl(entry.getEditLink().getHref());
 		studiesLinkedWidget.loadStudies(query);
+		submissionDataFilesWidget.loadDataFilesBySubmissionLink(entry.getEditLink().getHref());
 	}
 
 	

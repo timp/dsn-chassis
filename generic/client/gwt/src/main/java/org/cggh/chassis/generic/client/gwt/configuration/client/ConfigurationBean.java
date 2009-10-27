@@ -32,10 +32,13 @@ public class ConfigurationBean {
 	static ChassisRole testChassisRoleSubmitter;
 	static ChassisRole testChassisRoleUser;
 	static String testStudyFeedURL;
+	static String testStudyQueryServiceURL;
 	static String testSubmissionFeedURL;
 	static String testSubmissionQueryServiceURL;
+	static String testDataFileFeedURL;
+	static String testDataFileQueryServiceURL;
 	static Map<String, String> testModules;
-	static String testStudyQueryServiceURL;
+
 
 	
 	public static String getUserDetailsServiceEndpointURL() {
@@ -145,12 +148,24 @@ public class ConfigurationBean {
 		return (useUnitTestConfiguration) ? testStudyFeedURL : Configuration.getStudyFeedURL();				
 	}
 	
+	public static String getStudyQueryServiceURL() {
+		return (useUnitTestConfiguration) ? testStudyQueryServiceURL : Configuration.getStudyQueryServiceURL();
+	}
+
 	public static String getSubmissionFeedURL() {
 		return (useUnitTestConfiguration) ? testSubmissionFeedURL : Configuration.getSubmissionFeedURL();				
 	}
 	
 	public static String getSubmissionQueryServiceURL() {
 		return (useUnitTestConfiguration) ? testSubmissionQueryServiceURL : Configuration.getSubmissionQueryServiceURL();
+	}
+	
+	public static String getDataFileFeedURL() {
+		return (useUnitTestConfiguration) ? testDataFileFeedURL : Configuration.getDataFileFeedURL();
+	}
+	
+	public static String getDataFileQueryServiceURL() {
+		return (useUnitTestConfiguration) ? testDataFileQueryServiceURL : Configuration.getDataFileQueryServiceURL();
 	}
 	
 	public static Map<String, String> getModules() {
@@ -172,10 +187,6 @@ public class ConfigurationBean {
 			
 			return modulesMap;
 		}
-	}
-	
-	public static String getStudyQueryServiceURL() {
-		return (useUnitTestConfiguration) ? testStudyQueryServiceURL : Configuration.getStudyQueryServiceURL();
 	}	
 	
 }

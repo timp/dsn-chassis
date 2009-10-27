@@ -6,4 +6,5 @@
   	<inherits name="org.cggh.chassis.generic.atom.submission.Submission" />
   	<inherits name="org.cggh.chassis.generic.client.gwt.widget.submission.model.SubmissionModel" />
   	<inherits name="org.cggh.chassis.generic.client.gwt.widget.submission.controller.SubmissionController" />
+  	<inherits name="org.cggh.chassis.generic.client.gwt.widget.submission.viewdatafiles.ViewSubmissionDataFilesWidget"/>
 </module>

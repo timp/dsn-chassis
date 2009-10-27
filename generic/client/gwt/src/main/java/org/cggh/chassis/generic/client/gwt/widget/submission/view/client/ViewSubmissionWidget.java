@@ -81,6 +81,14 @@ public class ViewSubmissionWidget extends Composite {
 	}
 	
 
+	public void fireOnUserActionUploadSubmissionDataFile(String submissionLink) {
+
+		for (ViewSubmissionWidgetPubSubAPI listener : listeners) {
+			listener.onUserActionUploadDataFile(submissionLink);
+		}
+	}
+	
+
 	
 	
 

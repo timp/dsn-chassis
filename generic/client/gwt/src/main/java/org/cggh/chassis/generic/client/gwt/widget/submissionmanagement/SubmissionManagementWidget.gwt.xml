@@ -7,4 +7,5 @@
   	<inherits name="org.cggh.chassis.generic.client.gwt.widget.submission.view.ViewSubmissionWidget"/>
   	<inherits name="org.cggh.chassis.generic.client.gwt.widget.submission.viewsubmissions.ViewSubmissionsWidget"/>
   	<inherits name="org.cggh.chassis.generic.client.gwt.widget.submission.edit.EditSubmissionWidget"/>
+    <inherits name="org.cggh.chassis.generic.client.gwt.widget.submission.uploaddatafile.UploadSubmissionDataFileWidget"/>
 </module>

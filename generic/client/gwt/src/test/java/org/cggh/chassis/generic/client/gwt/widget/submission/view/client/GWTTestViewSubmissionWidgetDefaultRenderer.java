@@ -189,11 +189,24 @@ public class GWTTestViewSubmissionWidgetDefaultRenderer extends GWTTestCase {
 		
 		
 	}
+	
+	public void testOnUploadDataFileClicked() {
+				
+		//simulate click event
+		DomEvent.fireNativeEvent(Document.get().createClickEvent(0, 0, 0, 0, 0, false, false, false, false),
+								 (HasHandlers)testRenderer.uploadDataFileUI);
+		
+		
+		assertTrue(mockController.onUserActionUploadDataFile);
+		
+		
+	}
 
 	//mock MockSubmissionController
 	private class MockSubmissionController implements SubmissionControllerViewAPI {
 		
 		private boolean onUserActionEditThisSubmission = false;
+		private boolean onUserActionUploadDataFile = false;
 
 		public void loadSubmissionEntry(SubmissionEntry submissionEntryToLoad) {
 			// not tested here
@@ -205,6 +218,11 @@ public class GWTTestViewSubmissionWidgetDefaultRenderer extends GWTTestCase {
 
 		public void onUserActionEditThisSubmission() {
 			this.onUserActionEditThisSubmission = true;
+		}
+
+		public void onUserActionUploadDataFile() {
+			this.onUserActionUploadDataFile  = true;
+			
 		}
 		
 	}
