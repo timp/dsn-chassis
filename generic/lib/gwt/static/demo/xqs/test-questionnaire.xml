@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<questionnaire 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xsi:noNamespaceSchemaLocation="xquestion.xsd"
+  defaultPrefix="foo"
+  defaultNamespaceUri="http://example.org/foo">
+
+  <model>
+    <element name="person"/>
+  </model>
+  
+  <view>
+
+    <html>
+      <h1>Personal Details Questionnaire</h1>
+      <h2>An example questionnaire using the XQuestion module</h2>  
+    </html>
+
+    <label>Please enter your personal details...</label>
+    
+    <question id="givenName">  
+      <model>
+        <element name="givenName"/>
+      </model>
+      <view>
+        <input class="givenName">
+          <label>What is your given name?</label>
+          <hint>Enter your first or given name.</hint>      
+        </input>
+      </view>
+    </question>
+  
+    <question id="familyName">
+      <model>
+        <element name="familyName"/>
+      </model>
+      <view class="familyName">
+        <secret>
+          <label>What is your family name?</label>
+          <hint>What you type will be hidden.</hint>
+        </secret>
+      </view>
+    </question>
+  
+    <question id="middleName">  
+      <model>
+        <element name="middleName"/>
+      </model>
+      <view>
+        <input>
+          <label>What is your middle name?</label>
+        </input>
+      </view>
+    </question>
+  
+    <question id="email" repeatable="yes">
+      <model>
+        <element name="email"/>
+      </model>
+      <view>
+        <input>
+          <label>What is your email address?</label>        
+        </input>
+        <html><em>some more text...</em></html>
+      </view>
+    </question>
+  
+    <question id="title" repeatable="yes">
+      <model>
+        <element name="title"/>
+      </model>
+      <view>
+        <select1 appearance="minimal">
+          <label>Title:</label>
+          <hint>select your title</hint>
+          <item>
+            <label>Mr</label>
+            <value>mr</value>
+          </item>
+          <item>
+            <label>Mrs</label>
+            <value>mrs</value>
+          </item>
+          <item>
+            <label>Miss</label>
+            <value>miss</value>
+          </item>
+          <item>
+            <label>Ms</label>
+            <value>ms</value>
+          </item>
+        </select1>
+      </view>
+    </question>
+    
+    <question id="dob">
+      <model>
+        <element name="dob" type="date"/>
+      </model>
+      <view>
+        <input>
+          <label>Enter your date of birth:</label>
+          <hint>Put the cursor in the text box and a date picker should appear...</hint>
+        </input>
+      </view>
+    </question>
+
+    <question id="flavour" repeatable="yes">
+      <model>
+        <element name="favouriteFlavour"/>
+      </model>
+      <view>
+        <select1 appearance="full">
+          <label>Favourite ice cream flavour:</label>
+          <hint>select only one!</hint>
+          <item>
+            <label>Vanilla</label>
+            <value>van</value>
+          </item>
+          <item>
+            <label>Chocolate</label>
+            <value>cho</value>
+          </item>
+          <item>
+            <label>Strawberry</label>
+            <value>str</value>
+          </item>
+        </select1>
+      </view>
+    </question>
+
+    <question id="vegetables">
+      <model>
+        <element name="vegetable"/>
+      </model>
+      <view>
+        <select appearance="full">
+          <label>Vegetables you like:</label>
+          <hint>select as many as you like!</hint>
+          <item>
+            <label>Potato</label>
+            <value>pot</value>
+          </item>
+          <item>
+            <label>Carrot</label>
+            <value>car</value>
+          </item>
+          <item>
+            <label>Peas</label>
+            <value>pea</value>
+          </item>
+          <item>
+            <label>Broccoli</label>
+            <value>bro</value>
+          </item>
+        </select>
+      </view>
+    </question>
+
+    <questionnaire repeatable="yes">
+    
+      <model>
+        <element name="address"/>
+      </model>
+      
+      <view class="address">
+      
+        <html><h3>Address</h3></html>
+        
+        <question id="houseNumber">  
+          <model>
+            <element name="houseNumber"/>
+          </model>
+          <view>
+            <html><strong>some preamble...</strong></html>
+            <input>
+              <label>House name or number?</label>
+            </input>
+            <label>...some afterthoughts</label>
+          </view>
+        </question>
+    
+        <question id="street">
+          <model>
+            <element name="street"/>
+          </model>
+          <view>
+            <input>
+              <label>Street name?</label>
+            </input>
+          </view>
+        </question>
+            
+      </view>
+
+    </questionnaire>
+    
+    <question id="describe">
+      <model>
+        <element name="describe"/>
+      </model>
+      <view>
+        <textarea class="describe">
+          <label>Describe yourself, in your own words...</label>
+          <hint>Say whatever comes into your head!</hint>
+        </textarea>
+      </view>
+    </question>
+  
+  </view>
+
+</questionnaire>
