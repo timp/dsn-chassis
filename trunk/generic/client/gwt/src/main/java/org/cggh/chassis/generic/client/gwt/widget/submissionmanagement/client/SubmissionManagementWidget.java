@@ -9,6 +9,7 @@ import java.util.Set;
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
 import org.cggh.chassis.generic.client.gwt.widget.submission.create.client.CreateSubmissionWidgetPubSubAPI;
 import org.cggh.chassis.generic.client.gwt.widget.submission.edit.client.EditSubmissionWidgetPubSubAPI;
+import org.cggh.chassis.generic.client.gwt.widget.submission.uploaddatafile.client.SubmissionDataFileWidgetPubSubAPI;
 import org.cggh.chassis.generic.client.gwt.widget.submission.view.client.ViewSubmissionWidgetPubSubAPI;
 import org.cggh.chassis.generic.client.gwt.widget.submission.viewsubmissions.client.ViewSubmissionsWidgetPubSubAPI;
 import org.cggh.chassis.generic.log.client.Log;
@@ -24,13 +25,10 @@ import com.google.gwt.user.client.ui.SimplePanel;
  *
  */
 public class SubmissionManagementWidget extends Composite implements CreateSubmissionWidgetPubSubAPI,
-												   					EditSubmissionWidgetPubSubAPI,
-												   					ViewSubmissionWidgetPubSubAPI,
-												   					ViewSubmissionsWidgetPubSubAPI {
-	
-	
-	
-	
+																  	 EditSubmissionWidgetPubSubAPI,
+																  	 ViewSubmissionWidgetPubSubAPI,
+																  	 ViewSubmissionsWidgetPubSubAPI,
+																  	 SubmissionDataFileWidgetPubSubAPI {
 	private Log log = LogFactory.getLog(this.getClass());
 
 
@@ -75,6 +73,7 @@ public class SubmissionManagementWidget extends Composite implements CreateSubmi
 		renderer.createSubmissionWidget.addCreateSubmissionWidgetListener(this);
 		renderer.editSubmissionWidget.addEditSubmissionWidgetListener(this);
 		renderer.viewAllSubmissionsWidget.addViewAllSubmissionsWidgetListener(this);
+		renderer.submissionDataFileWidget.addSubmissionDataFileWidget(this);
 	}
 	
 	
@@ -102,9 +101,16 @@ public class SubmissionManagementWidget extends Composite implements CreateSubmi
 		log.leave();
 	}
 
-	
-	
-	
+	public void onUserActionUploadDataFile(String submissionLink) {
+		log.enter("onUserActionUploadDataFile");
+		log.debug("submissionLink: " + submissionLink);
+		
+		renderer.submissionDataFileWidget.setUpNewSubmissionDataFile(submissionLink);
+		controller.displaySubmissionDataFileUploadWidget();
+		
+		log.leave();
+	}
+
 	public void onUserActionSelectSubmission(SubmissionEntry submissionEntry) {
 		log.enter("onUserActionSelectSubmission");
 		
@@ -143,6 +149,20 @@ public class SubmissionManagementWidget extends Composite implements CreateSubmi
 	
 	
 	
+	public void onSubmissionDataFileCancelled() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void onSubmissionDataFileUploaded(String submissionLink) {
+		log.enter("onSubmissionDataFileUploaded");
+		
+		renderer.viewSubmissionWidget.retrieveSubmissionEntry(submissionLink);
+		controller.displayViewSubmissionWidget();
+		
+		log.leave();
+	}
+
 	public void addSubmissionManagementWidgetListener(SubmissionManagementWidgetPubSubAPI listener) {
 
 		listeners.add(listener);

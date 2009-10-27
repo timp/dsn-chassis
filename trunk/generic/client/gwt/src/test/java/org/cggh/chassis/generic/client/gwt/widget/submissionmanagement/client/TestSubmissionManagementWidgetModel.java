@@ -62,6 +62,7 @@ public class TestSubmissionManagementWidgetModel {
 		assertEquals(new Integer(2), SubmissionManagementWidgetModel.DISPLAYING_VIEW_SUBMISSION);
 		assertEquals(new Integer(3), SubmissionManagementWidgetModel.DISPLAYING_EDIT_SUBMISSION);
 		assertEquals(new Integer(4), SubmissionManagementWidgetModel.DISPLAYING_VIEW_ALL_SUBMISSIONS);
+		assertEquals(new Integer(5), SubmissionManagementWidgetModel.DISPLAYING_SUBMISSION_DATA_FILE_UPLOAD_WIDGET);
 				
 	}
 		

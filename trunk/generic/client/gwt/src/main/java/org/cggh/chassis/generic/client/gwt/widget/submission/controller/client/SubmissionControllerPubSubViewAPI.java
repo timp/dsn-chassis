@@ -13,4 +13,6 @@ public interface SubmissionControllerPubSubViewAPI extends AbstractSubmissionCon
 
 	public void fireOnUserActionEditSubmission(SubmissionEntry submissionEntryToEdit);
 
+	public void onUserActionUploadDataFile(String submissionLink);
+
 }

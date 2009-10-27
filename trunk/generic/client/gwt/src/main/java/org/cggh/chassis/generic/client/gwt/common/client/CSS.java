@@ -63,10 +63,14 @@ public class CSS {
 	public static final String EDITSUBMISSION_BASE = COMMON_BASE + "-editSubmission";
 	public static final String EDITSUBMISSION_ACTIONS = EDITSUBMISSION_BASE + "-actions";
 
+	//FIXME define in main.css
+	public static final String UPLOADSUBMISSIONDATAFILE_BASE = COMMON_BASE + "-uploadSubmissionDataFile";
+	public static final String UPLOADSUBMISSIONDATAFILE_FILEINPUT = UPLOADSUBMISSIONDATAFILE_BASE + "-fileInput";
+	public static final String UPLOADSUBMISSIONDATAFILE_COMMENTINPUT = UPLOADSUBMISSIONDATAFILE_BASE + "-commentInput";
+	public static final String UPLOADSUBMISSIONDATAFILE_ACTIONS = UPLOADSUBMISSIONDATAFILE_BASE + "-actions";
 
-
-
-
+	//FIXME define in main.css
+	public static final String VIEWSUBMISSIONDATAFILES_BASE = COMMON_BASE + "-viewSubmissionDataFiles";
 
 
 

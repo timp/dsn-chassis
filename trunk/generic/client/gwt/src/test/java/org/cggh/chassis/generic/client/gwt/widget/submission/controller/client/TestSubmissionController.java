@@ -469,6 +469,9 @@ public class TestSubmissionController {
 	@Test
 	public void testPubSubViewAPI() throws Exception {
 		
+		//test data
+		String submissionLink = "http://foo.com/submissions/sub1";
+		
 		//Setup to use mock service and factory
 		PowerMock.resetAll();
 		PowerMock.expectNew(SubmissionFactoryImpl.class).andReturn((SubmissionFactoryImpl) mockFactory);
@@ -479,15 +482,31 @@ public class TestSubmissionController {
 		SubmissionControllerPubSubViewAPI mockListener = createMock(SubmissionControllerPubSubViewAPI.class);
 		SubmissionControllerViewAPI testViewController = new SubmissionController(testModel, mockListener);
 						
+		//create a mockSubmissionEntry
+		SubmissionEntry mockSubmissionEntry = createNiceMock(SubmissionEntry.class);
+		AtomLink mockAtomLink = createMock(AtomLink.class);
+				
 		//set up expectations
-		mockListener.fireOnUserActionEditSubmission(testSubmissionEntry);
+		expect(mockSubmissionEntry.getEditLink()).andReturn(mockAtomLink);
+		//return something nice for call to studyLinks, and modules
+		expect(mockSubmissionEntry.getStudyLinks()).andReturn(new ArrayList<AtomLink>());
+		expect(mockSubmissionEntry.getModules()).andReturn(new ArrayList<String>());
+		expect(mockSubmissionEntry.getAuthors()).andReturn(new ArrayList<AtomAuthor>());
+		expect(mockAtomLink.getHref()).andReturn(submissionLink);
+		mockListener.fireOnUserActionEditSubmission(mockSubmissionEntry);
+		mockListener.onUserActionUploadDataFile(submissionLink);
+		replay(mockSubmissionEntry);
+		replay(mockAtomLink);
 		replay(mockListener);
 		
 		//set up test
-		testModel.setSubmissionEntry(testSubmissionEntry);
+		testModel.setSubmissionEntry(mockSubmissionEntry);
 		
 		testViewController.onUserActionEditThisSubmission();
-		
+		testViewController.onUserActionUploadDataFile();
+
+		verify(mockSubmissionEntry);	
+		verify(mockAtomLink);	
 		verify(mockListener);		
 		
 	}

@@ -13,4 +13,6 @@ public interface ViewSubmissionWidgetPubSubAPI {
 
 	void onUserActionEditSubmission(SubmissionEntry submissionEntryToEdit);
 
+	void onUserActionUploadDataFile(String submissionLink);
+
 }

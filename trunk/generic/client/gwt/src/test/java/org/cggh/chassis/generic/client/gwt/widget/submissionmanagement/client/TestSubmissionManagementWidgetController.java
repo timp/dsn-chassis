@@ -97,6 +97,21 @@ public class TestSubmissionManagementWidgetController {
 	}
 	
 	@Test
+	public void testDisplaySubmissionDataFileUploadWidget() {
+		
+		//set expectations
+		mockModel.setDisplayStatus(SubmissionManagementWidgetModel.DISPLAYING_SUBMISSION_DATA_FILE_UPLOAD_WIDGET, true);
+		PowerMock.expectLastCall();
+		PowerMock.replay(mockModel);
+		
+		//method under test
+		testController.displaySubmissionDataFileUploadWidget();
+
+		PowerMock.verify(mockModel);
+		
+	}
+	
+	@Test
 	public void testReset() {
 		
 		//set expectations

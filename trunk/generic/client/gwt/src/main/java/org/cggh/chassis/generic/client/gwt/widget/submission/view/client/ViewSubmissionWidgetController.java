@@ -59,6 +59,13 @@ public class ViewSubmissionWidgetController {
 	
 	
 	
+	public void onUserActionUploadDataFile() {
+		owner.fireOnUserActionUploadSubmissionDataFile(model.getSubmissionEntry().getEditLink().getHref());
+	}
+
+
+
+
 	public void setSubmissionEntry(SubmissionEntry entry) {
 		log.enter("setSubmissionEntry");
 		

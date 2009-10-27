@@ -305,5 +305,17 @@ public class SubmissionController implements SubmissionControllerEditAPI, Submis
 	public void updateAuthors(Set<AtomAuthor> authors) {
 		model.setAuthors(authors);
 	}
+
+	public void onUserActionUploadDataFile() {
+		log.enter("onUserActionUploadDataFile");
+		
+		if (owner instanceof SubmissionControllerPubSubViewAPI) {
+			String submissionLink = model.getSubmissionEntry().getEditLink().getHref();
+			
+			((SubmissionControllerPubSubViewAPI)owner).onUserActionUploadDataFile(submissionLink);
+		}
+		
+		log.leave();
+	}
 	
 }

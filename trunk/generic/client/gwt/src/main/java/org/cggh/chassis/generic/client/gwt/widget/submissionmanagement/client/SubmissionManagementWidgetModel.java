@@ -17,6 +17,7 @@ public class SubmissionManagementWidgetModel {
 	public static final Integer DISPLAYING_VIEW_SUBMISSION = 2;
 	public static final Integer DISPLAYING_EDIT_SUBMISSION = 3;
 	public static final Integer DISPLAYING_VIEW_ALL_SUBMISSIONS = 4;
+	public static final Integer DISPLAYING_SUBMISSION_DATA_FILE_UPLOAD_WIDGET = 5;
 	
 	private Integer displayStatus = DISPLAYING_NONE;
 	final private Set<SubmissionManagementWidgetModelListener> listeners = new HashSet<SubmissionManagementWidgetModelListener>();
@@ -63,7 +64,9 @@ public class SubmissionManagementWidgetModel {
 	}
 
 	private Boolean couldStatusContainUnsavedData(Integer displayStatus) {
-		return (displayStatus == DISPLAYING_CREATE_SUBMISSION) || (displayStatus == DISPLAYING_EDIT_SUBMISSION);
+		return (displayStatus == DISPLAYING_CREATE_SUBMISSION)
+				|| (displayStatus == DISPLAYING_EDIT_SUBMISSION)
+				|| (displayStatus == DISPLAYING_SUBMISSION_DATA_FILE_UPLOAD_WIDGET);
 	}
 
 	private void fireOnDisplayStatusChanged(Integer before, Integer after) {

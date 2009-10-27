@@ -74,6 +74,14 @@ public class SubmissionManagementWidgetController {
 		log.leave();		
 	}
 
+	public void displaySubmissionDataFileUploadWidget() {
+		log.enter("displaySubmissionDataFileUploadWidget");
+		
+		model.setDisplayStatus(SubmissionManagementWidgetModel.DISPLAYING_SUBMISSION_DATA_FILE_UPLOAD_WIDGET, true);
+		
+		log.leave();
+	}
+
 	public void reset() {
 		log.enter("reset");
 

@@ -26,6 +26,8 @@ public class TestConfigurationSetUp {
 	public static final String testStudyQueryServiceURL = "http://foo.com/study_query";
 	public static final String testSubmissionFeedURL = "http://foo.com/submission";
 	public static final String testSubmissionQueryServiceURL = "http://foo.com/submission_query";
+	public static final String testDataFileFeedURL = "http://foo.com/data_file_feed";
+	public static final String testDataFileQueryServiceURL = "http://foo.com/data_file_query";
 	public static final String module1Id = "module1Id";
 	public static final String module2Id = "module2Id";
 	public static final String module1Label = "module1Label";
@@ -47,6 +49,9 @@ public class TestConfigurationSetUp {
 		
 		ConfigurationBean.testSubmissionFeedURL = testSubmissionFeedURL;
 		ConfigurationBean.testSubmissionQueryServiceURL = testSubmissionQueryServiceURL;
+		
+		ConfigurationBean.testDataFileFeedURL = testDataFileFeedURL;
+		ConfigurationBean.testDataFileQueryServiceURL = testDataFileQueryServiceURL;
 		
 		//Create modules test data
 		Map<String, String> testModules = new HashMap<String, String>();
