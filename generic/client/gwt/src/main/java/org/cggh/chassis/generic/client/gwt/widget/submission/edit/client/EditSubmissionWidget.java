@@ -7,19 +7,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
-import org.cggh.chassis.generic.client.gwt.widget.submission.controller.client.SubmissionController;
-import org.cggh.chassis.generic.client.gwt.widget.submission.controller.client.SubmissionControllerEditAPI;
-import org.cggh.chassis.generic.client.gwt.widget.submission.controller.client.SubmissionControllerPubSubEditAPI;
-import org.cggh.chassis.generic.client.gwt.widget.submission.create.client.CreateSubmissionWidgetController;
-import org.cggh.chassis.generic.client.gwt.widget.submission.create.client.CreateSubmissionWidgetDefaultRenderer;
-import org.cggh.chassis.generic.client.gwt.widget.submission.create.client.CreateSubmissionWidgetModel;
-import org.cggh.chassis.generic.client.gwt.widget.submission.create.client.CreateSubmissionWidgetPubSubAPI;
-import org.cggh.chassis.generic.client.gwt.widget.submission.model.client.SubmissionModel;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.Panel;
 
 /**
  * @author raok
@@ -73,9 +64,8 @@ public class EditSubmissionWidget extends Composite {
 	
 	
 	
-	public void editSubmissionEntry(SubmissionEntry submissionEntryToEdit) {
-		log.enter("editSubmissionEntry");
-//		controller.loadSubmissionEntry(submissionEntryToEdit);
+	public void setSubmissionEntry(SubmissionEntry submissionEntryToEdit) {
+		log.enter("setSubmissionEntry");
 		
 		log.debug("setting model on submission form with entry: "+submissionEntryToEdit.getTitle());
 
@@ -87,18 +77,18 @@ public class EditSubmissionWidget extends Composite {
 	
 	
 	
-	public void fireOnUserActionEditNewSubmissionCancelled() {
+	public void fireOnUserActionEditSubmissionCancelled() {
 		for (EditSubmissionWidgetPubSubAPI listener : listeners) {
-			listener.onUserActionCreateNewSubmissionCancelled();
+			listener.onUserActionCreateSubmissionCancelled();
 		}
 	}
 	
 	
 	
 
-	public void fireOnNewSubmissionSaveSuccess(SubmissionEntry submissionEntry) {
+	public void fireOnSubmissionUpdateSuccess(SubmissionEntry submissionEntry) {
 		for (EditSubmissionWidgetPubSubAPI listener : listeners) {
-			listener.onNewSubmissionSaveSuccess(submissionEntry);
+			listener.onCreateSubmissionSuccess(submissionEntry);
 		}
 	}
 
@@ -108,9 +98,9 @@ public class EditSubmissionWidget extends Composite {
 	/**
 	 * @param error
 	 */
-	public void fireOnNewSubmissionSaveError(Throwable error) {
+	public void fireOnSubmissionUpdateError(Throwable error) {
 		for (EditSubmissionWidgetPubSubAPI listener : listeners) {
-			listener.onNewSubmissionSaveError(error);
+			listener.onCreateSubmissionError(error);
 		}
 	}
 

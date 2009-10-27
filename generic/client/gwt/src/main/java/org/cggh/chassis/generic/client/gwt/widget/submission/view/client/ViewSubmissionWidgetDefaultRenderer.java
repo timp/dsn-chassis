@@ -3,18 +3,18 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.submission.view.client;
 
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
+import org.cggh.chassis.generic.atom.vanilla.client.format.AtomLink;
 import org.cggh.chassis.generic.client.gwt.common.client.CSS;
 import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
-import org.cggh.chassis.generic.client.gwt.widget.study.model.client.StudyModel;
 import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidget;
-import org.cggh.chassis.generic.client.gwt.widget.submission.controller.client.SubmissionControllerViewAPI;
-import org.cggh.chassis.generic.client.gwt.widget.submission.model.client.SubmissionModel;
-import org.cggh.chassis.generic.client.gwt.widget.submission.model.client.SubmissionModelListener;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 
@@ -23,23 +23,24 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
-import com.google.gwt.user.client.ui.SimplePanel;
-import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.Widget;
 
 /**
  * @author raok
  * 
  */
-public class ViewSubmissionWidgetDefaultRenderer implements
-		SubmissionModelListener {
+public class ViewSubmissionWidgetDefaultRenderer implements ViewSubmissionWidgetModel.Listener {
 
+	
+	
+	
 	private Log log = LogFactory.getLog(this.getClass());
 
+	
+	
+	
 	// Expose view elements for testing purposes.
 	final Label titleLabel = new InlineLabel();
 	final Label summaryLabel = new InlineLabel();
@@ -55,40 +56,27 @@ public class ViewSubmissionWidgetDefaultRenderer implements
 	final FlowPanel studyLinksListPanel = new FlowPanel();
 
 	final private Panel canvas;
-	final private SubmissionControllerViewAPI controller;
 	private Map<String, String> modulesConfig;
 
 	// Linked Studies
 	private ViewStudiesWidget studiesLinkedWidget;
 
-	/**
-	 * Construct a renderer, passing in the panel to use as the renderer's
-	 * canvas.
-	 * 
-	 * @param canvas
-	 * @param controller
-	 */
-	public ViewSubmissionWidgetDefaultRenderer(Panel canvas,
-			SubmissionControllerViewAPI controller) {
-		this.canvas = canvas;
-		this.controller = controller;
 
-		// get modules from config
-		this.modulesConfig = ConfigurationBean.getModules();
 
-		// Create ViewStudies widget to view linked studies
-		studiesLinkedWidget = new ViewStudiesWidget("");
 
-		initCanvas();
-	}
+	final private ViewSubmissionWidgetController controller;
 
+	
+	
+	
+	
 	/**
 	 * Construct a renderer, allowing the renderer to create its own canvas.
 	 * 
 	 * @param controller
 	 */
-	public ViewSubmissionWidgetDefaultRenderer(
-			SubmissionControllerViewAPI controller) {
+	public ViewSubmissionWidgetDefaultRenderer(ViewSubmissionWidgetController controller) {
+
 		this.canvas = new FlowPanel();
 		this.controller = controller;
 
@@ -101,6 +89,10 @@ public class ViewSubmissionWidgetDefaultRenderer implements
 		initCanvas();
 	}
 
+	
+	
+	
+	
 	private void initCanvas() {
 		log.enter("initCanvas");
 
@@ -186,8 +178,7 @@ public class ViewSubmissionWidgetDefaultRenderer implements
 
 		this.editThisSubmissionUI.setText("edit submission");
 		this.editThisSubmissionUI.addStyleName(CSS.COMMON_ACTION);
-		this.editThisSubmissionUI
-				.addClickHandler(new EditSubmissionClickHandler());
+		this.editThisSubmissionUI.addClickHandler(new EditSubmissionClickHandler());
 		actionsPanel.add(this.editThisSubmissionUI);
 
 		log.debug("prepare main panel");
@@ -201,6 +192,10 @@ public class ViewSubmissionWidgetDefaultRenderer implements
 		log.leave();
 	}
 
+	
+	
+	
+	
 	class EditSubmissionClickHandler implements ClickHandler {
 
 		public void onClick(ClickEvent arg0) {
@@ -208,19 +203,16 @@ public class ViewSubmissionWidgetDefaultRenderer implements
 		}
 	}
 
-	public void onModulesChanged(Set<String> before, Set<String> after,
-			Boolean isValid) {
-
-		// modulesListPanel.clear();
-		//		
-		// for (String module : after) {
-		// modulesListPanel.add(new Label(modulesConfig.get(module)));
-		// }
+	
+	
+	
+	
+	public void renderModules(List<String> modules) {
 
 		modulesListPanel.clear();
 
 		String modulesContent = "";
-		for (Iterator<String> it = after.iterator(); it.hasNext();) {
+		for (Iterator<String> it = modules.iterator(); it.hasNext();) {
 			String ml = modulesConfig.get(it.next());
 			modulesContent += ml;
 			if (it.hasNext()) {
@@ -234,74 +226,47 @@ public class ViewSubmissionWidgetDefaultRenderer implements
 
 	}
 
-	public void onStatusChanged(Integer before, Integer after) {
-		//
-		// if (after == SubmissionModel.STATUS_LOADING) {
-		// canvas.clear();
-		// canvas.add(loadingPanel);
-		// } else if (after == SubmissionModel.STATUS_LOADED) {
-		// canvas.clear();
-		// canvas.add(mainPanel);
-		// } else if (after == SubmissionModel.STATUS_ERROR) {
-		// // TODO handle error case (could use extra panel or pass error to
-		// parent)
-		// }
-		//			
 
-		if (after == SubmissionModel.STATUS_LOADING) {
+	
+	
+	
+	
+	public void renderStudyLinks(List<AtomLink> links) {
 
-			this.mainPanel.setVisible(false);
-			this.loadingPanel.setVisible(true);
-
-		} else if (after == SubmissionModel.STATUS_LOADED) {
-
-			this.loadingPanel.setVisible(false);
-			this.mainPanel.setVisible(true);
-
-		} else if (after == SubmissionModel.STATUS_ERROR) {
-
-			// TODO handle error case (could use extra panel or pass error to
-			// parent)
-
+		Set<String> s = new HashSet<String>();
+		for (AtomLink l : links) {
+			s.add(l.getHref());
 		}
+		studiesLinkedWidget.loadStudies(s);
 
 	}
 
-	public void onStudyLinksChanged(Set<String> before, Set<String> after,
-			Boolean isValid) {
-
-		studiesLinkedWidget.loadStudies(after);
-
-	}
-
-	public void onSubmissionEntryChanged(Boolean isValid) {
-		// TODO Auto-generated method stub
+	
+	
+	
+	
+	public void renderSummary(String summary) {
+		summaryLabel.setText(summary);
 
 	}
 
-	public void onSummaryChanged(String before, String after, Boolean isValid) {
-		summaryLabel.setText(after);
+	
+	
+	
+	public void renderTitle(String title) {
+		titleLabel.setText(title);
 
 	}
 
-	public void onTitleChanged(String before, String after, Boolean isValid) {
-		titleLabel.setText(after);
-
-	}
-
-	public void onAuthorsChanged(Set<AtomAuthor> before, Set<AtomAuthor> after,
-			Boolean isValid) {
-
-		// ownersListPanel.clear();
-		//		
-		// for (AtomAuthor atomAuthor : after) {
-		// ownersListPanel.add(new Label(atomAuthor.getEmail()));
-		// }
+	
+	
+	
+	public void renderOwners(List<AtomAuthor> owners) {
 
 		ownersListPanel.clear();
 
 		String authorsContent = "";
-		for (Iterator<AtomAuthor> it = after.iterator(); it.hasNext();) {
+		for (Iterator<AtomAuthor> it = owners.iterator(); it.hasNext();) {
 			authorsContent += it.next().getEmail();
 			if (it.hasNext()) {
 				authorsContent += ", ";
@@ -314,6 +279,9 @@ public class ViewSubmissionWidgetDefaultRenderer implements
 
 	}
 
+	
+	
+	
 	/**
 	 * @return
 	 */
@@ -321,12 +289,67 @@ public class ViewSubmissionWidgetDefaultRenderer implements
 		return this.canvas;
 	}
 
-	public void onCreatedChanged(String before, String created) {
+	
+	
+	
+	public void renderCreated(String created) {
 		this.createdLabel.setText(created);
 	}
 
-	public void onUpdatedChanged(String before, String updated) {
+	
+	
+	
+	public void renderUpdated(String updated) {
 		this.updatedLabel.setText(updated);
 	}
+
+	
+	
+	
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.client.gwt.widget.submission.view.client.ViewSubmissionWidgetModel.Listener#onEntryChanged(org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry, org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry)
+	 */
+	public void onEntryChanged(SubmissionEntry before, SubmissionEntry entry) {
+		log.enter("onEntryChanged");
+		
+		this.renderTitle(entry.getTitle());
+		this.renderSummary(entry.getSummary());
+		this.renderCreated(entry.getPublished());
+		this.renderUpdated(entry.getUpdated());
+		this.renderOwners(entry.getAuthors());
+		this.renderModules(entry.getModules());
+		this.renderStudyLinks(entry.getStudyLinks());
+		
+		log.leave();
+	}
+
+
+
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.client.gwt.common.client.mvc.ModelBase.Listener#onStatusChanged(int, int)
+	 */
+	public void onStatusChanged(int before, int after) {
+
+		if (after == ViewSubmissionWidgetModel.STATUS_RETRIEVE_PENDING) {
+
+			this.mainPanel.setVisible(false);
+			this.loadingPanel.setVisible(true);
+
+		} else if (after == ViewSubmissionWidgetModel.STATUS_READY) {
+
+			this.loadingPanel.setVisible(false);
+			this.mainPanel.setVisible(true);
+
+		} else if (after == ViewSubmissionWidgetModel.STATUS_RETRIEVE_ERROR) {
+
+			// TODO handle error case (could use extra panel or pass error to
+			// parent)
+
+		}
+		
+	}
+
 
 }

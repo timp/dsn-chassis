@@ -71,7 +71,7 @@ public class EditSubmissionWidgetController {
 		
 		this.model.setStatus(EditSubmissionWidgetModel.STATUS_CANCELLED);
 		
-		this.owner.fireOnUserActionEditNewSubmissionCancelled();
+		this.owner.fireOnUserActionEditSubmissionCancelled();
 		
 		log.leave();
 	}
@@ -83,21 +83,21 @@ public class EditSubmissionWidgetController {
 	 * @param entry 
 	 * 
 	 */
-	public void saveNewSubmissionEntry(SubmissionEntry entry) {
-		log.enter("saveNewSubmissionEntry");
+	public void updateSubmissionEntry(SubmissionEntry entry) {
+		log.enter("updateSubmissionEntry");
 		
 		log.debug("entry to save: "+entry.toString());
 		
-		this.model.setStatus(EditSubmissionWidgetModel.STATUS_SAVING);
+		this.model.setStatus(EditSubmissionWidgetModel.STATUS_UPDATE_PENDING);
 		
 		String feedUrl = Configuration.getSubmissionFeedURL();
 
-		log.debug("kick off post request");
-		Deferred<AtomEntry> def = service.postEntry(feedUrl, entry);
+		log.debug("kick off put request");
+		Deferred<AtomEntry> def = service.putEntry(feedUrl, entry);
 		
 		log.debug("add callbacks");
-		def.addCallback(new SaveSubmissionEntryCallback());
-		def.addErrback(new SaveSubmissionEntryErrback());
+		def.addCallback(new UpdateSubmissionEntryCallback());
+		def.addErrback(new UpdateSubmissionEntryErrback());
 		
 		log.leave();
 	}
@@ -105,7 +105,7 @@ public class EditSubmissionWidgetController {
 	
 	
 	
-	class SaveSubmissionEntryCallback implements Function<SubmissionEntry,SubmissionEntry> {
+	class UpdateSubmissionEntryCallback implements Function<SubmissionEntry,SubmissionEntry> {
 
 		private Log log = LogFactory.getLog(this.getClass());
 
@@ -114,18 +114,17 @@ public class EditSubmissionWidgetController {
 			
 			model.setStatus(SubmissionModel.STATUS_SAVED);
 
-			owner.fireOnNewSubmissionSaveSuccess(submissionEntry);
+			owner.fireOnSubmissionUpdateSuccess(submissionEntry);
 			
 			log.leave();
 			return submissionEntry;
 		}
-
 		
 	}
 	
 	
 	
-	class SaveSubmissionEntryErrback implements Function<Throwable,Throwable> {
+	class UpdateSubmissionEntryErrback implements Function<Throwable,Throwable> {
 
 		private Log log = LogFactory.getLog(this.getClass());
 
@@ -141,7 +140,7 @@ public class EditSubmissionWidgetController {
 			
 			model.setStatus(SubmissionModel.STATUS_ERROR);
 						
-			owner.fireOnNewSubmissionSaveError(error);
+			owner.fireOnSubmissionUpdateError(error);
 			
 			log.leave();
 			return error;

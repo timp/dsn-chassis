@@ -5,13 +5,9 @@ package org.cggh.chassis.generic.client.gwt.widget.submissionmanagement.client;
 
 import org.cggh.chassis.generic.client.gwt.common.client.ChassisUser;
 import org.cggh.chassis.generic.client.gwt.widget.submission.create.client.CreateSubmissionWidget;
-import org.cggh.chassis.generic.client.gwt.widget.submission.create.client.CreateSubmissionWidgetAPI;
 import org.cggh.chassis.generic.client.gwt.widget.submission.edit.client.EditSubmissionWidget;
-import org.cggh.chassis.generic.client.gwt.widget.submission.edit.client.EditSubmissionWidgetAPI;
 import org.cggh.chassis.generic.client.gwt.widget.submission.view.client.ViewSubmissionWidget;
-import org.cggh.chassis.generic.client.gwt.widget.submission.view.client.ViewSubmissionWidgetAPI;
 import org.cggh.chassis.generic.client.gwt.widget.submission.viewsubmissions.client.ViewSubmissionsWidget;
-import org.cggh.chassis.generic.client.gwt.widget.submission.viewsubmissions.client.ViewSubmissionsWidgetAPI;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 
@@ -60,13 +56,9 @@ public class SubmissionManagementWidgetDefaultRenderer implements SubmissionMana
 	
 	//child widgets made package private to allow parent widget to access them
 	final CreateSubmissionWidget createSubmissionWidget; 
-	Widget createSubmissionWidgetCanvas = new SimplePanel();
 	final ViewSubmissionWidget viewSubmissionWidget;
-	Widget viewSubmissionWidgetCanvas = new SimplePanel();	
 	final ViewSubmissionsWidget viewAllSubmissionsWidget;
-	Widget viewAllSubmissionsWidgetCanvas = new SimplePanel();
 	final EditSubmissionWidget editSubmissionWidget;
-	Widget editSubmissionWidgetCanvas = new SimplePanel();
 	private MenuBar menu;
 
 	
@@ -90,12 +82,6 @@ public class SubmissionManagementWidgetDefaultRenderer implements SubmissionMana
 		this.createSubmissionWidget = new CreateSubmissionWidget();
 		this.viewAllSubmissionsWidget = new ViewSubmissionsWidget();
 		this.editSubmissionWidget = new EditSubmissionWidget();
-		
-		// override using composites
-		this.viewSubmissionWidgetCanvas = this.viewSubmissionWidget;
-		this.createSubmissionWidgetCanvas = this.createSubmissionWidget;
-		this.viewAllSubmissionsWidgetCanvas = this.viewAllSubmissionsWidget;
-		this.editSubmissionWidgetCanvas = this.editSubmissionWidget;
 		
 		//initialise view
 		initMenu();
@@ -151,69 +137,14 @@ public class SubmissionManagementWidgetDefaultRenderer implements SubmissionMana
 		
 		menuCanvas.add(menu); // only needed for legacy
 		
-		log.leave();
-
-		
-		
-		
-//		//add click handlers to menu items
-//		displayCreateSubmissionUI.addClickHandler(new DisplayCreateSubmissionClickHandler());
-//		displayViewAllSubmissionsUI.addClickHandler(new DisplayViewAllSubmissionsClickHandler());
-//		
-//		//Create menu
-//		VerticalPanel menuItemsVerticalPanel = new VerticalPanel();
-//		menuItemsVerticalPanel.add(displayCreateSubmissionUI);
-//		menuItemsVerticalPanel.add(displayViewAllSubmissionsUI);
-//		
-//		//add menu to popupPanel
-//		menuPopUp.add(menuItemsVerticalPanel);
-//						
-//		//create menu header to display menu on click.
-//		final Label submissionsMenuLabel = new Label("Submissions");
-//		submissionsMenuLabel.addClickHandler(new ClickHandler() {
-//
-//			public void onClick(ClickEvent arg0) {
-//				int popUpHOffset = submissionsMenuLabel.getAbsoluteLeft();
-//				int popUpVOffset = submissionsMenuLabel.getAbsoluteTop() + submissionsMenuLabel.getOffsetHeight();
-//				menuPopUp.setPopupPosition(popUpHOffset, popUpVOffset);
-//				menuPopUp.show();
-//			}
-//			
-//		});
-//		
-//		//add menuHeader to menuCanvas
-//		menuCanvas.add(submissionsMenuLabel);
-		
+		log.leave();		
 	}
 	
 	
 	
 	
-//	class DisplayCreateSubmissionClickHandler implements ClickHandler {
-//
-//		public void onClick(ClickEvent arg0) {
-//			controller.displayCreateSubmissionWidget();
-//			menuPopUp.hide();
-//		}
-//		
-//	}
-	
-	
-	
-	
-//	class DisplayViewAllSubmissionsClickHandler implements ClickHandler {
-//
-//		public void onClick(ClickEvent arg0) {
-//			controller.displayViewAllSubmissionsWidget();
-//			menuPopUp.hide();
-//		}
-//		
-//	}
-	
-	
-	
-	
 	public void onDisplayStatusChanged(Integer before, Integer after) {
+		
 		if (after == SubmissionManagementWidgetModel.DISPLAYING_CREATE_SUBMISSION) {
 			
 			displayCanvas.clear();
@@ -221,23 +152,23 @@ public class SubmissionManagementWidgetDefaultRenderer implements SubmissionMana
 			// TODO
 //			createSubmissionWidget.setUpNewSubmission(ChassisUser.getCurrentUserEmail());
 
-			displayCanvas.add(createSubmissionWidgetCanvas);
+			displayCanvas.add(createSubmissionWidget);
 			
 		} else if (after == SubmissionManagementWidgetModel.DISPLAYING_VIEW_SUBMISSION) {
 			
 			displayCanvas.clear();
-			displayCanvas.add(viewSubmissionWidgetCanvas);
+			displayCanvas.add(viewSubmissionWidget);
 			
 		} else if (after == SubmissionManagementWidgetModel.DISPLAYING_VIEW_ALL_SUBMISSIONS) {
 			
 			displayCanvas.clear();
 			viewAllSubmissionsWidget.loadSubmissionsByAuthorEmail(ChassisUser.getCurrentUserEmail());
-			displayCanvas.add(viewAllSubmissionsWidgetCanvas);
+			displayCanvas.add(viewAllSubmissionsWidget);
 			
 		} else if (after == SubmissionManagementWidgetModel.DISPLAYING_EDIT_SUBMISSION) {
 			
 			displayCanvas.clear();
-			displayCanvas.add(editSubmissionWidgetCanvas);
+			displayCanvas.add(editSubmissionWidget);
 			
 		}
 		

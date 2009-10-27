@@ -7,49 +7,23 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
-import org.cggh.chassis.generic.client.gwt.widget.submission.controller.client.SubmissionController;
-import org.cggh.chassis.generic.client.gwt.widget.submission.controller.client.SubmissionControllerPubSubViewAPI;
-import org.cggh.chassis.generic.client.gwt.widget.submission.controller.client.SubmissionControllerViewAPI;
-import org.cggh.chassis.generic.client.gwt.widget.submission.model.client.SubmissionModel;
 
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.Panel;
+
 
 /**
  * @author raok
  *
  */
-public class ViewSubmissionWidget extends Composite implements ViewSubmissionWidgetAPI, SubmissionControllerPubSubViewAPI {
+public class ViewSubmissionWidget extends Composite {
 	
 	
 	
 	
-	final private SubmissionModel model;
-	final private SubmissionControllerViewAPI controller;
+	final private ViewSubmissionWidgetModel model;
+	final private ViewSubmissionWidgetController controller;
 	final private ViewSubmissionWidgetDefaultRenderer renderer;
 	private Set<ViewSubmissionWidgetPubSubAPI> listeners = new HashSet<ViewSubmissionWidgetPubSubAPI>(); 
-
-	
-	
-	
-	/**
-	 * Construct a widget, passing in the panel to use as the widget's canvas.
-	 * 
-	 * @param canvas
-	 */
-	public ViewSubmissionWidget(Panel canvas) {
-		
-		model = new SubmissionModel();
-		
-		controller = new SubmissionController(model, this);
-						
-		renderer = new ViewSubmissionWidgetDefaultRenderer(canvas, controller);
-		
-		// register renderer as listener to model
-		model.addListener(renderer);	
-		
-		this.initWidget(this.renderer.getCanvas());
-	}
 
 	
 	
@@ -60,9 +34,9 @@ public class ViewSubmissionWidget extends Composite implements ViewSubmissionWid
 	 */
 	public ViewSubmissionWidget() {
 
-		model = new SubmissionModel();
+		model = new ViewSubmissionWidgetModel();
 		
-		controller = new SubmissionController(model, this);
+		controller = new ViewSubmissionWidgetController(model, this);
 						
 		renderer = new ViewSubmissionWidgetDefaultRenderer(controller);
 		
@@ -76,6 +50,7 @@ public class ViewSubmissionWidget extends Composite implements ViewSubmissionWid
 	
 	
 	
+	
 	public void addViewSubmissionWidgetListener(ViewSubmissionWidgetPubSubAPI listener) {
 		listeners.add(listener);
 	}
@@ -83,15 +58,15 @@ public class ViewSubmissionWidget extends Composite implements ViewSubmissionWid
 	
 	
 	
-	public void loadSubmissionByEntryURL(String entryURL) {
-		controller.loadSubmissionEntryByURL(entryURL);
+	public void retrieveSubmissionEntry(String entryURL) {
+		controller.retrieveSubmissionEntry(entryURL);
 	}
 
 	
 	
 	
-	public void loadSubmissionEntry(SubmissionEntry submissionEntry) {
-		controller.loadSubmissionEntry(submissionEntry);
+	public void setSubmissionEntry(SubmissionEntry submissionEntry) {
+		controller.setSubmissionEntry(submissionEntry);
 	}
 
 	

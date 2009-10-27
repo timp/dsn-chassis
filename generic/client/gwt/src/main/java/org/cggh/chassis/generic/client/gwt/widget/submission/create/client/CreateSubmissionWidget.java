@@ -62,18 +62,18 @@ public class CreateSubmissionWidget extends Composite {
 	
 	
 	
-	public void fireOnUserActionCreateNewSubmissionCancelled() {
+	public void fireOnUserActionCreateSubmissionCancelled() {
 		for (CreateSubmissionWidgetPubSubAPI listener : listeners) {
-			listener.onUserActionCreateNewSubmissionCancelled();
+			listener.onUserActionCreateSubmissionCancelled();
 		}
 	}
 	
 	
 	
 
-	public void fireOnNewSubmissionSaveSuccess(SubmissionEntry submissionEntry) {
+	public void fireOnCreateSubmissionSuccess(SubmissionEntry submissionEntry) {
 		for (CreateSubmissionWidgetPubSubAPI listener : listeners) {
-			listener.onNewSubmissionSaveSuccess(submissionEntry);
+			listener.onCreateSubmissionSuccess(submissionEntry);
 		}
 	}
 
@@ -83,9 +83,9 @@ public class CreateSubmissionWidget extends Composite {
 	/**
 	 * @param error
 	 */
-	public void fireOnNewSubmissionSaveError(Throwable error) {
+	public void fireOnCreateSubmissionError(Throwable error) {
 		for (CreateSubmissionWidgetPubSubAPI listener : listeners) {
-			listener.onNewSubmissionSaveError(error);
+			listener.onCreateSubmissionError(error);
 		}
 	}
 

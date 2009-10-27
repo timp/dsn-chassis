@@ -105,18 +105,18 @@ public class CreateSubmissionWidgetDefaultRenderer implements CreateSubmissionWi
 			this.mainPanel.setVisible(true);
 			
 		}
-		else if (before == CreateSubmissionWidgetModel.STATUS_READY && after == CreateSubmissionWidgetModel.STATUS_SAVING) {
+		else if (before == CreateSubmissionWidgetModel.STATUS_READY && after == CreateSubmissionWidgetModel.STATUS_CREATE_PENDING) {
 
 			this.mainPanel.setVisible(false);
 			this.savingPanel.setVisible(true);
 
 		}
-		else if (before == CreateSubmissionWidgetModel.STATUS_SAVING && after == CreateSubmissionWidgetModel.STATUS_SAVED) {
+		else if (before == CreateSubmissionWidgetModel.STATUS_CREATE_PENDING && after == CreateSubmissionWidgetModel.STATUS_CREATE_SUCCESS) {
 
 			// TODO anything?
 			
 		}
-		else if (after == CreateSubmissionWidgetModel.STATUS_ERROR) {
+		else if (after == CreateSubmissionWidgetModel.STATUS_CREATE_ERROR) {
 
 			// TODO anything?
 			
@@ -161,7 +161,7 @@ public class CreateSubmissionWidgetDefaultRenderer implements CreateSubmissionWi
 	private class SaveNewSubmissionUIClickHandler implements ClickHandler {
 		
 		public void onClick(ClickEvent arg0) {
-			controller.saveNewSubmissionEntry(form.getModel());
+			controller.createSubmissionEntry(form.getModel());
 		}
 		
 	}

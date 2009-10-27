@@ -110,28 +110,13 @@ public class ViewSubmissionsWidgetDefaultRenderer implements ViewSubmissionsWidg
 	 * @see org.cggh.chassis.generic.client.gwt.widget.submission.viewall.client.ViewAllSubmissionsWidgetModelListener#onStatusChanged(java.lang.Integer, java.lang.Integer)
 	 */
 	public void onStatusChanged(Integer before, Integer after) {
-//
-//		if (after == ViewSubmissionsWidgetModel.STATUS_LOADING) {
-//			canvas.clear();
-//			canvas.add(loadingPanel);
-//		} else if (after == ViewSubmissionsWidgetModel.STATUS_LOADED) {
-//			canvas.clear();
-//			canvas.add(submissionsListPanel);			
-//		}
-
 
 		if (after == ViewSubmissionsWidgetModel.STATUS_LOADING) {
 
-//			canvas.clear();
-//			canvas.add(loadingPanel);
-			
 			this.submissionsListPanel.setVisible(false);
 			this.loadingPanel.setVisible(true);
 			
 		} else if (after == ViewSubmissionsWidgetModel.STATUS_LOADED) {
-
-//			canvas.clear();
-//			canvas.add(studiesListPanel);			
 
 			this.loadingPanel.setVisible(false);
 			this.submissionsListPanel.setVisible(true);
@@ -148,31 +133,6 @@ public class ViewSubmissionsWidgetDefaultRenderer implements ViewSubmissionsWidg
 	 */
 	public void onSubmissionEntriesChanged(List<SubmissionEntry> before, List<SubmissionEntry> after) {
 		
-//		//remove old entries
-//		submissionsListPanel.clear();
-//		
-//		//Panel to list submissions in
-//		FlexTable submissionsTable = new FlexTable();
-//		int rowNo = 0;		
-//		
-//		//add header row
-//		submissionsTable.setWidget(rowNo, 0, new Label("Title"));
-//		submissionsTable.setWidget(rowNo, 1, new Label("Summary"));
-//		
-//		for (SubmissionEntry submissionEntry : after) {
-//			submissionsTable.setWidget(++rowNo, 0, new Label(submissionEntry.getTitle()));
-//			submissionsTable.setWidget(rowNo, 1, new Label(submissionEntry.getSummary()));
-//			
-//			//add view submission link
-//			Label editSubmission = new Label("view");
-//			editSubmission.addClickHandler(new ViewSubmissionClickHandler(submissionEntry));
-//			submissionsTable.setWidget(rowNo, 2, editSubmission);
-//						
-//		}
-//		
-//		submissionsListPanel.add(submissionsTable);
-
-
 		log.enter("onSubmissionEntriesChanged");
 		
 		log.debug("remove old entries");

@@ -6,26 +6,25 @@ package org.cggh.chassis.generic.client.gwt.widget.submission.create.client;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.cggh.chassis.generic.client.gwt.common.client.mvc.ModelBase;
+
 
 /**
  * @author aliman
  *
  */
-public class CreateSubmissionWidgetModel {
+public class CreateSubmissionWidgetModel extends ModelBase {
 
 	
 	
 	
 	public static final int STATUS_INITIAL = 0;
 	public static final int STATUS_READY = 1;
-	public static final int STATUS_SAVING = 2;
-	public static final int STATUS_SAVED = 3;
-	public static final int STATUS_ERROR = 4;
+	public static final int STATUS_CREATE_PENDING = 2;
+	public static final int STATUS_CREATE_SUCCESS = 3;
+	public static final int STATUS_CREATE_ERROR = 4;
 	public static final int STATUS_CANCELLED = 5;
-	
-	
-	
-	private int status = STATUS_INITIAL;
+
 	
 	
 	
@@ -34,29 +33,24 @@ public class CreateSubmissionWidgetModel {
 	
 	
 	
+	public CreateSubmissionWidgetModel() {
+		this.status = STATUS_INITIAL;
+	}
+	
+	
+
+	
+	
 	public void addListener(Listener l) {
+		super.addListener(l);
 		this.listeners.add(l);
 	}
 	
 	
 	
 	
-	public void setStatus(int status) {
-		int before = this.status;
-		this.status = status;
-		for (Listener l : listeners) {
-			l.onStatusChanged(before, status);
-		}
-	}
-
+	public static interface Listener extends ModelBase.Listener {}
 	
-	
-	
-	public static interface Listener {
-		
-		public void onStatusChanged(int before, int after);
-		
-	}
 	
 	
 	

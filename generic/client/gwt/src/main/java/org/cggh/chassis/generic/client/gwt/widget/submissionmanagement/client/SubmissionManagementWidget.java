@@ -23,8 +23,7 @@ import com.google.gwt.user.client.ui.SimplePanel;
  * @author raok
  *
  */
-public class SubmissionManagementWidget extends Composite implements SubmissionManagementWidgetAPI,
-												   					CreateSubmissionWidgetPubSubAPI,
+public class SubmissionManagementWidget extends Composite implements CreateSubmissionWidgetPubSubAPI,
 												   					EditSubmissionWidgetPubSubAPI,
 												   					ViewSubmissionWidgetPubSubAPI,
 												   					ViewSubmissionsWidgetPubSubAPI {
@@ -82,23 +81,11 @@ public class SubmissionManagementWidget extends Composite implements SubmissionM
 	
 	
 	
-	public void onNewSubmissionSaveSuccess(SubmissionEntry newSubmissionEntry) {
+	public void onCreateSubmissionSuccess(SubmissionEntry newSubmissionEntry) {
 		log.enter("onNewSubmissionCreated");
 		
 		controller.displayViewSubmissionWidget();
-		renderer.viewSubmissionWidget.loadSubmissionEntry(newSubmissionEntry);
-		
-		log.leave();
-	}
-
-	
-	
-	
-	public void onSubmissionUpdateSuccess(SubmissionEntry updatedSubmissionEntry) {
-		log.enter("onSubmissionUpdateSuccess");
-		
-		controller.displayViewSubmissionWidget();
-		renderer.viewSubmissionWidget.loadSubmissionEntry(updatedSubmissionEntry);
+		renderer.viewSubmissionWidget.setSubmissionEntry(newSubmissionEntry);
 		
 		log.leave();
 	}
@@ -110,7 +97,7 @@ public class SubmissionManagementWidget extends Composite implements SubmissionM
 		log.enter("onUserActionEditSubmission");
 		
 		controller.displayEditSubmissionWidget();
-		renderer.editSubmissionWidget.editSubmissionEntry(submissionEntryToEdit);
+		renderer.editSubmissionWidget.setSubmissionEntry(submissionEntryToEdit);
 		
 		log.leave();
 	}
@@ -122,7 +109,7 @@ public class SubmissionManagementWidget extends Composite implements SubmissionM
 		log.enter("onUserActionSelectSubmission");
 		
 		controller.displayViewSubmissionWidget();
-		renderer.viewSubmissionWidget.loadSubmissionEntry(submissionEntry);
+		renderer.viewSubmissionWidget.setSubmissionEntry(submissionEntry);
 		
 		log.leave();
 	}
@@ -138,7 +125,7 @@ public class SubmissionManagementWidget extends Composite implements SubmissionM
 	
 	
 	
-	public void onUserActionCreateNewSubmissionCancelled() {
+	public void onUserActionCreateSubmissionCancelled() {
 		// TODO Auto-generated method stub
 		
 	}
@@ -211,7 +198,7 @@ public class SubmissionManagementWidget extends Composite implements SubmissionM
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.client.gwt.widget.submission.create.client.CreateSubmissionWidgetPubSubAPI#onNewSubmissionSaveError(java.lang.Throwable)
 	 */
-	public void onNewSubmissionSaveError(Throwable error) {
+	public void onCreateSubmissionError(Throwable error) {
 		// TODO Auto-generated method stub
 		
 	}

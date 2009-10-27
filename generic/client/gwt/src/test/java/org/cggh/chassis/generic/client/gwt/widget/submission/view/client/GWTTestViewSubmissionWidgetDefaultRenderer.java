@@ -3,7 +3,9 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.submission.view.client;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.cggh.chassis.generic.atom.study.client.format.StudyFactory;
@@ -54,7 +56,7 @@ public class GWTTestViewSubmissionWidgetDefaultRenderer extends GWTTestCase {
 		//create mockController and inject into testRenderer
 		mockController = new MockSubmissionController();	
 		
-		testRenderer = new ViewSubmissionWidgetDefaultRenderer(new SimplePanel(), mockController);
+		testRenderer = new ViewSubmissionWidgetDefaultRenderer(null); // TODO fix this
 				
 
 		//create testSubmissionEntry to load
@@ -89,7 +91,7 @@ public class GWTTestViewSubmissionWidgetDefaultRenderer extends GWTTestCase {
 		String title = "title foo";
 		
 		// call method under test
-		testRenderer.onTitleChanged(null, title, true);		
+		testRenderer.renderTitle(title);		
 		
 		
 		//test outcome
@@ -103,7 +105,8 @@ public class GWTTestViewSubmissionWidgetDefaultRenderer extends GWTTestCase {
 		String summary = "summary foo";
 		
 		// call method under test
-		testRenderer.onSummaryChanged(null, summary, true);		
+//		testRenderer.onSummaryChanged(null, summary, true);		
+		testRenderer.renderSummary(summary);		
 		
 		
 		//test outcome
@@ -120,11 +123,13 @@ public class GWTTestViewSubmissionWidgetDefaultRenderer extends GWTTestCase {
 	public void testOnModulesChanged() {
 		
 		//test data
-		Set<String> modulesSet1 = new HashSet<String>();
+		List<String> modulesSet1 = new ArrayList<String>();
 		modulesSet1.add("module1");		
 
 		// call method under test
-		testRenderer.onModulesChanged(null, modulesSet1, true);		
+//		testRenderer.onModulesChanged(null, modulesSet1, true);	
+		testRenderer.renderModules(modulesSet1);	
+		
 		
 		// test outcome
 		assertEquals(modulesSet1.size(), testRenderer.modulesListPanel.getWidgetCount());
@@ -135,13 +140,14 @@ public class GWTTestViewSubmissionWidgetDefaultRenderer extends GWTTestCase {
 
 		//test data
 		StudyFactory testFactory = new MockStudyFactory();
-		Set<AtomAuthor> testAuthors = new HashSet<AtomAuthor>();
+		List<AtomAuthor> testAuthors = new ArrayList<AtomAuthor>();
 		AtomAuthor testAtomAuthor = testFactory.createAuthor();
 		testAtomAuthor.setEmail("foo@bar.com");
 		testAuthors.add(testAtomAuthor);	
 
 		// call method under test
-		testRenderer.onAuthorsChanged(null, testAuthors, true);		
+//		testRenderer.onAuthorsChanged(null, testAuthors, true);		
+		testRenderer.renderOwners(testAuthors);	
 		
 		// test outcome
 		assertEquals(testAuthors.size(), testRenderer.ownersListPanel.getWidgetCount());
