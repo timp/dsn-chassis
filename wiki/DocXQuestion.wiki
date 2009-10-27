@@ -87,3 +87,5 @@ XQuestion is heavily inspired by XForms. If there was cross-browser support for 
 = Status =
 
 XQuestion is pre-alpha so caveat emptor.
+
+The underlying XML library also has a workaround for GWT's patchy support for handling XML in a namespace aware manner, which means that xmlns attributes are generated for every element, which means that XML generated from an XQuestion form will be quite verbose, but it's well-formed XML. 
