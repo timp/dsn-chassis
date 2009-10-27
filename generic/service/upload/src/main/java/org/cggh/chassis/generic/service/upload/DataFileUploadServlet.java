@@ -48,6 +48,8 @@ public class DataFileUploadServlet extends HttpServlet {
 	public static final Object FIELD_SUBMISSION = "submission";
 	public static final Object FIELD_DATAFILE = "datafile";
 	public static final Object FIELD_AUTHOREMAIL = "authoremail";
+	public static final Object FIELD_SUMMARY = "summary";
+	public static final String FIELD_FILENAME = "filename";
 
 
 
@@ -138,6 +140,7 @@ public class DataFileUploadServlet extends HttpServlet {
 			        
 				    if (FIELD_DATAFILE.equals(fieldName)) {
 				        // process the input stream
+				    	fields.put(FIELD_FILENAME, item.getName()); // TODO what happens if this field set as form data?
 				        entry = persistFile(client, createRequestOptions(request), stream, contentType);
 				    }
 			        
@@ -194,7 +197,17 @@ public class DataFileUploadServlet extends HttpServlet {
 			String authoremail = fields.get(FIELD_AUTHOREMAIL);
 			entry.addAuthor(null, authoremail, null);
 		}
+		
+		if (fields.containsKey(FIELD_SUMMARY)) {
+			String summary = fields.get(FIELD_SUMMARY);
+			entry.setSummary(summary);
+		}
 
+		if (fields.containsKey(FIELD_FILENAME)) {
+			String title = fields.get(FIELD_FILENAME);
+			entry.setTitle(title);
+		}
+		
 		// ignore any other fields
 		
 		String entryUrl = collectionUrl + entry.getEditLink().getHref().toASCIIString();

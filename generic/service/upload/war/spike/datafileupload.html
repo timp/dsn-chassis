@@ -10,13 +10,13 @@
 <h1>Spike Data File Upload</h1>
 
 <form action="../datafileupload" method="post" enctype="multipart/form-data" target="response">
-
-<p>
-<input type="file" name="datafile" size="40"/>
+<div>
+<p><input type="file" name="datafile" size="40"/></p>
+<p><textarea name="summary" cols="70" rows="10"></textarea></p>
 <input type="hidden" name="submission" value="http://localhost:8080/chassis-generic-service-exist/atom/edit/submissions?id=todo"/>
 <input type="hidden" name="authoremail" value="bob@example.org"/>
 <input type="submit" value="go"/>
-</p>
+</div>
 
 </form>
 
