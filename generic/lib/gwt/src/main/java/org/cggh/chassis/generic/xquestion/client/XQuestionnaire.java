@@ -186,6 +186,7 @@ public class XQuestionnaire extends Composite {
 	
 	
 	public void init(boolean readOnly) {
+		log.enter("init( "+readOnly+" )");
 		
 		this.model.init();
 
@@ -203,6 +204,7 @@ public class XQuestionnaire extends Composite {
 
 		this.view.init(readOnly);
 		
+		log.leave();
 	}
 
 

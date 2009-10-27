@@ -200,7 +200,7 @@ public class XQuestionnaireView extends XQSViewBase {
 		
 		this.questions.add(q);
 		
-		q.init();
+		q.init(readOnly);
 		
 		this.widgets.add(q);
 		
