@@ -269,4 +269,20 @@ public class MockAtomEntry implements AtomEntry {
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry#addListener(org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry.PropertyChangeListener)
+	 */
+	public void addListener(PropertyChangeListener l) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry#removeListener(org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry.PropertyChangeListener)
+	 */
+	public void removeListener(PropertyChangeListener l) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
