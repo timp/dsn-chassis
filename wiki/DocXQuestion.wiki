@@ -89,3 +89,7 @@ XQuestion is heavily inspired by XForms. If there was cross-browser support for 
 XQuestion is pre-alpha so caveat emptor.
 
 The underlying XML library also has a workaround for GWT's patchy support for handling XML in a namespace aware manner, which means that xmlns attributes are generated for every element, which means that XML generated from an XQuestion form will be quite verbose, but it's well-formed XML. 
+
+= What it Doesn't Do (But Probably Should) =
+
+The two main things that XQUestion currently doesn't do are provide support for client-side form validation, and provide support for enabling/disabling parts of a form based on answers to other parts of the form. We will have to get round to these at some point, but we will probably never need very deep functionality here, so if you have deep requirements here you will probably want to use XForms.
