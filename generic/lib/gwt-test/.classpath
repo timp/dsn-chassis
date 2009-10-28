@@ -10,5 +10,5 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/googlecode_dsn-chassis_generic_lib_gwt"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER"/>
-	<classpathentry kind="output" path="war/WEB-INF/classes"/>
+	<classpathentry kind="output" path="target/classes"/>
 </classpath>
