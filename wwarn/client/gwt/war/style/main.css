@@ -22,6 +22,16 @@ input, textarea {
 	text-decoration: underline;
 }
 
+div.gwt-MenuBar-horizontal {
+	background-color: transparent;
+	background-image: url("../assets/images/bg-blue-stripes.gif");
+	background-position: bottom;
+	background-repeat: repeat;
+}
+
+div.gwt-MenuBar-horizontal .gwt-MenuItem {
+	color: white;
+}
 
 
 /*
@@ -35,7 +45,10 @@ input, textarea {
 	border-bottom: 1px solid #aaa;
 	padding: 0.3em;
 	margin: 0.3em 0 0.3em 0;
-	background-color: #eee;
+	background-color: transparent;
+	background-image: url("../assets/images/bg-blue-w-stripes.gif");
+	background-position: bottom;
+	background-repeat: repeat;
 }
 
 .chassis-question input {
@@ -55,7 +68,10 @@ input, textarea {
 	border: 1px solid #aaa;
 	width: 20em;
 	padding: 0.3em;
-	background-color: #eee;
+	background-color: transparent;
+	background-image: url("../assets/images/bg-blue-w-stripes.gif");
+	background-position: bottom;
+	background-repeat: repeat;
 }
 
 .chassis-action {
@@ -354,9 +370,12 @@ input, textarea {
  
 
 
-#developerPane {
+#footer {
 	margin-top: 2em;
-	border-top: 2px solid black;
+	color: white;
+	background-image: url("../assets/images/bg-blue-stripes.gif");
+	background-position: bottom;
+	padding: 0.3em 0.3em 20em 0.3em;
 }
 
 #developerToolsPane {
