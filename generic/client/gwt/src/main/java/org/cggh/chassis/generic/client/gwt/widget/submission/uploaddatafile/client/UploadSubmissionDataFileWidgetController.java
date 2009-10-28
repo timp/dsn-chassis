@@ -13,49 +13,27 @@ import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteHandler;
  * @author raok
  *
  */
-public class SubmissionDataFileWidgetController {
+public class UploadSubmissionDataFileWidgetController {
 	private Log log = LogFactory.getLog(this.getClass());
 
-	final private SubmissionDataFileWidgetModel model;
-	final private SubmissionDataFileWidget owner;
+	final private UploadSubmissionDataFileWidgetModel model;
+	final private UploadSubmissionDataFileWidget owner;
 	final private SubmitCompleteHandler submissionDataFileCompleteHandler = new SubmissionDataFileCompleteHandler();
 
 
-	SubmissionDataFileWidgetController(SubmissionDataFileWidgetModel model, SubmissionDataFileWidget owner) {
+	UploadSubmissionDataFileWidgetController(UploadSubmissionDataFileWidgetModel model, UploadSubmissionDataFileWidget owner) {
 		this.model = model;
 		this.owner = owner;
 	}
-
-	void setUpUploadSubmissionDataFile(String submissionLink, String authorEmail) {
-		log.enter("setUpUploadSubmissionDataFile");
-		
-		model.setSubmissionLink(submissionLink);
-		model.setAuthor(authorEmail);
-		model.setStatus(SubmissionDataFileWidgetModel.STATUS_READY);
-		
-		log.leave();
-	}
-
-	void updateFileName(String fileName) {
-		log.enter("updateFileName");
-		
-		model.setFileName(fileName);
-		
-		log.leave();
-	}
-
-	void updateComment(String comment) {
-		log.enter("updateComment");
-		
-		model.setComment(comment);
-		
-		log.leave();
+	
+	public void ready() {
+		model.setStatus(UploadSubmissionDataFileWidgetModel.STATUS_READY);
 	}
 
 	void cancelUploadSubmissionDataFile() {
 		log.enter("cancelUploadSubmissionDataFile");
 		
-		model.setStatus(SubmissionDataFileWidgetModel.STATUS_CANCELLED);
+		model.setStatus(UploadSubmissionDataFileWidgetModel.STATUS_CANCELLED);
 		
 		log.leave();
 	}
@@ -76,10 +54,10 @@ public class SubmissionDataFileWidgetController {
 			
 			log.debug(arg0.getResults());
 			
-			model.setStatus(SubmissionDataFileWidgetModel.STATUS_UPLOADED);
+			model.setStatus(UploadSubmissionDataFileWidgetModel.STATUS_CREATE_SUCCESS);
 			
 			//alert owner
-			owner.fireOnUserActionSubmissionDataFileUploaded(model.getSubmissionLink());
+			owner.fireOnUserActionSubmissionDataFileUploaded();
 			
 			log.leave();
 		}

@@ -343,7 +343,51 @@ input, textarea {
 	font-weight: bold;
 }
 
+/*
+ * -----------------------------------------------------------------------------
+ * styles for upload submission data file widget
+ * -----------------------------------------------------------------------------
+ */
+ 
+.chassis-uploadSubmissionDataFile-fileInput {
+    width: 30em;
+}
 
+.chassis-uploadSubmissionDataFile-commentInput {
+    width: 60em;
+    height: 15em;
+}
+
+.chassis-uploadSubmissionDataFile-actions {
+    margin-top: 1em;
+}
+
+/*
+ * -----------------------------------------------------------------------------
+ * styles for view submission data files widget
+ * -----------------------------------------------------------------------------
+ */
+
+.chassis-viewSubmissionDataFiles-dataFilesTable {
+}
+
+.chassis-viewSubmissionDataFiles-dataFilesTable td {
+    border-bottom: 1px solid #aaa;
+    padding: 0.3em;
+    vertical-align: top;
+}
+
+.chassis-viewSubmissionDataFiles-tableHeader {
+    font-weight: bold;
+}
+
+.chassis-viewSubmissionDataFiles-fileTitle,
+.chassis-viewSubmissionDataFiles-fileSummary {
+    font-weight: bold;
+}
+
+.chassis-viewSubmissionDataFiles-downloadLink {
+}
 
 
 /*

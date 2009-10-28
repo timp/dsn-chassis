@@ -11,5 +11,6 @@
     
     <inherits name="org.cggh.chassis.generic.client.gwt.common.Common" />
     <inherits name="org.cggh.chassis.generic.client.gwt.configuration.Configuration" />
+  <inherits name="org.cggh.chassis.generic.atom.vanilla.Atom" />
     
 </module>

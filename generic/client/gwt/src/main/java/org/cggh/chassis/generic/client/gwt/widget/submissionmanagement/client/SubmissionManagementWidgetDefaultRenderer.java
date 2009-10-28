@@ -6,8 +6,8 @@ package org.cggh.chassis.generic.client.gwt.widget.submissionmanagement.client;
 import org.cggh.chassis.generic.client.gwt.common.client.ChassisUser;
 import org.cggh.chassis.generic.client.gwt.widget.submission.create.client.CreateSubmissionWidget;
 import org.cggh.chassis.generic.client.gwt.widget.submission.edit.client.EditSubmissionWidget;
-import org.cggh.chassis.generic.client.gwt.widget.submission.uploaddatafile.client.SubmissionDataFileWidget;
-import org.cggh.chassis.generic.client.gwt.widget.submission.uploaddatafile.client.SubmissionDataFileWidgetAPI;
+import org.cggh.chassis.generic.client.gwt.widget.submission.uploaddatafile.client.UploadSubmissionDataFileWidget;
+import org.cggh.chassis.generic.client.gwt.widget.submission.uploaddatafile.client.UploadSubmissionDataFileWidgetAPI;
 import org.cggh.chassis.generic.client.gwt.widget.submission.view.client.ViewSubmissionWidget;
 import org.cggh.chassis.generic.client.gwt.widget.submission.viewsubmissions.client.ViewSubmissionsWidget;
 import org.cggh.chassis.generic.log.client.Log;
@@ -61,7 +61,7 @@ public class SubmissionManagementWidgetDefaultRenderer implements SubmissionMana
 	final ViewSubmissionsWidget viewAllSubmissionsWidget;
 	final EditSubmissionWidget editSubmissionWidget;
 	private MenuBar menu;
-	final SubmissionDataFileWidgetAPI submissionDataFileWidget;
+	final UploadSubmissionDataFileWidgetAPI submissionDataFileWidget;
 
 	
 	
@@ -85,7 +85,7 @@ public class SubmissionManagementWidgetDefaultRenderer implements SubmissionMana
 		this.createSubmissionWidget = new CreateSubmissionWidget();
 		this.viewAllSubmissionsWidget = new ViewSubmissionsWidget();
 		this.editSubmissionWidget = new EditSubmissionWidget();
-		submissionDataFileWidget = new SubmissionDataFileWidget(ChassisUser.getCurrentUserEmail());
+		submissionDataFileWidget = new UploadSubmissionDataFileWidget();
 		
 		//initialise view
 		initMenu();
@@ -179,7 +179,7 @@ public class SubmissionManagementWidgetDefaultRenderer implements SubmissionMana
 		} else if (after == SubmissionManagementWidgetModel.DISPLAYING_SUBMISSION_DATA_FILE_UPLOAD_WIDGET) {
 			
 			displayCanvas.clear();
-			displayCanvas.add((SubmissionDataFileWidget)submissionDataFileWidget);
+			displayCanvas.add((UploadSubmissionDataFileWidget)submissionDataFileWidget);
 			
 		}
 		

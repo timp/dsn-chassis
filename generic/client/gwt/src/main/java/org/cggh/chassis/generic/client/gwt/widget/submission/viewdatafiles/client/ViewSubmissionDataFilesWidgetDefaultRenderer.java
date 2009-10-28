@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
 import org.cggh.chassis.generic.client.gwt.common.client.CSS;
+import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
 
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -40,8 +41,6 @@ public class ViewSubmissionDataFilesWidgetDefaultRenderer implements ViewSubmiss
 
 		canvas.addStyleName(CSS.VIEWSUBMISSIONDATAFILES_BASE);
 		
-		this.canvas.add(new HTML("<h2>Data File Revisions</h2>"));
-		
 		this.canvas.add(new HTML("<p>Listed below is a revision list of the data file associated with this submission.</p>"));
 
 		this.loadingPanel.add(new Label("Loading..."));
@@ -61,16 +60,40 @@ public class ViewSubmissionDataFilesWidgetDefaultRenderer implements ViewSubmiss
 		//TODO order by date?
 		
 		FlexTable dataFilesTable = new FlexTable();
+		dataFilesTable.setCellPadding(0);
+		dataFilesTable.setCellSpacing(0);
+		dataFilesTable.addStyleName(CSS.VIEWSUBMISSIONDATAFILES_DATAFILESTABLE);
 		int rowNo = 0;
 		
 		//headers
-		dataFilesTable.setWidget(rowNo, 0, new Label("File Name"));
-		dataFilesTable.setWidget(rowNo, 1, new Label("Summary"));
+		String[] headers = { "Title", "Summary", ""};
+		
+		for (int i=0; i<headers.length; i++) {
+			Label headerLabel = new Label(headers[i]);
+			headerLabel.addStyleName(CSS.VIEWSUBMISSIONDATAFILES_TABLEHEADER);
+			dataFilesTable.setWidget(rowNo, i, headerLabel);
+		}
 		
 		for (AtomEntry dataFileEntry : after) {
-
-			dataFilesTable.setWidget(++rowNo, 0, new Label(dataFileEntry.getTitle()));
-			dataFilesTable.setWidget(++rowNo, 1, new Label(dataFileEntry.getSummary()));
+			
+			String title = dataFileEntry.getTitle();
+			Label dataFileTitle = new Label(title);
+			dataFileTitle.addStyleName(CSS.VIEWSUBMISSIONDATAFILES_FILETITLE);
+			dataFilesTable.setWidget(++rowNo, 0, dataFileTitle);
+			
+			String summary = dataFileEntry.getSummary();
+			int cutoff = 100;
+			if (summary.length() > cutoff) {
+				summary = summary.substring(0, cutoff) + "...";
+			}
+			Label fileSummary = new Label(summary);
+			fileSummary.addStyleName(CSS.VIEWSUBMISSIONDATAFILES_FILESUMMARY);
+			dataFilesTable.setWidget(rowNo, 1, fileSummary);
+			
+			String editMediaLink = ConfigurationBean.getDataFileFeedURL() + "/" + dataFileEntry.getEditMediaLink().getHref();
+			HTML downloadFileLink = new HTML("<a href=\"" + editMediaLink + "\" >download</a>" );
+			downloadFileLink.addStyleName(CSS.VIEWSUBMISSIONDATAFILES_DOWNLOADLINK);
+			dataFilesTable.setWidget(rowNo, 2, downloadFileLink);
 			
 		}
 		

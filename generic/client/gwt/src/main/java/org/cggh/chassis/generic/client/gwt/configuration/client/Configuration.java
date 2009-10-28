@@ -56,6 +56,10 @@ public class Configuration {
 		return $wnd.CHASSIS.dataFileFeedURL;
 	}-*/;
 
+	public static native String getDataFileUploadServiceURL() /*-{
+		return $wnd.CHASSIS.dataFileUploadServiceURL;
+	}-*/;
+
 	/**
 	 * @return
 	 */
