@@ -28,6 +28,7 @@ import org.apache.commons.fileupload.util.Streams;
 import org.apache.commons.httpclient.methods.InputStreamRequestEntity;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.cggh.chassis.generic.atom.chassis.base.constants.ChassisConstants;
 import org.cggh.chassis.generic.atom.chassis.base.vocab.Chassis;
 
 /**
@@ -42,14 +43,6 @@ public class DataFileUploadServlet extends HttpServlet {
 	
 	
 	public static final String INITPARAM_COLLECTIONURL = "atomCollectionUrl";
-
-
-
-	public static final Object FIELD_SUBMISSION = "submission";
-	public static final Object FIELD_DATAFILE = "datafile";
-	public static final Object FIELD_AUTHOREMAIL = "authoremail";
-	public static final Object FIELD_SUMMARY = "summary";
-	public static final String FIELD_FILENAME = "filename";
 
 
 
@@ -138,9 +131,9 @@ public class DataFileUploadServlet extends HttpServlet {
 
 				    log.info("File field " + fieldName + " with file name " + item.getName() + ", content type " + contentType + " detected.");
 			        
-				    if (FIELD_DATAFILE.equals(fieldName)) {
+				    if (ChassisConstants.FIELD_DATAFILE.equals(fieldName)) {
 				        // process the input stream
-				    	fields.put(FIELD_FILENAME, item.getName()); // TODO what happens if this field set as form data?
+				    	fields.put(ChassisConstants.FIELD_FILENAME, item.getName()); // TODO what happens if this field set as form data?
 				        entry = persistFile(client, createRequestOptions(request), stream, contentType);
 				    }
 			        
@@ -187,24 +180,24 @@ public class DataFileUploadServlet extends HttpServlet {
 		// add category
 		entry.addCategory(Chassis.Types.SCHEME, Chassis.Types.TERM_DATAFILE, null);
 		
-		if (fields.containsKey(FIELD_SUBMISSION)) {
-			String href = fields.get(FIELD_SUBMISSION); // link to submission
+		if (fields.containsKey(ChassisConstants.FIELD_SUBMISSION)) {
+			String href = fields.get(ChassisConstants.FIELD_SUBMISSION); // link to submission
 			String rel = Chassis.REL_SUBMISSION;
 			entry.addLink(href, rel);
 		}
 		
-		if (fields.containsKey(FIELD_AUTHOREMAIL)) {
-			String authoremail = fields.get(FIELD_AUTHOREMAIL);
+		if (fields.containsKey(ChassisConstants.FIELD_AUTHOREMAIL)) {
+			String authoremail = fields.get(ChassisConstants.FIELD_AUTHOREMAIL);
 			entry.addAuthor(null, authoremail, null);
 		}
 		
-		if (fields.containsKey(FIELD_SUMMARY)) {
-			String summary = fields.get(FIELD_SUMMARY);
+		if (fields.containsKey(ChassisConstants.FIELD_SUMMARY)) {
+			String summary = fields.get(ChassisConstants.FIELD_SUMMARY);
 			entry.setSummary(summary);
 		}
 
-		if (fields.containsKey(FIELD_FILENAME)) {
-			String title = fields.get(FIELD_FILENAME);
+		if (fields.containsKey(ChassisConstants.FIELD_FILENAME)) {
+			String title = fields.get(ChassisConstants.FIELD_FILENAME);
 			entry.setTitle(title);
 		}
 		

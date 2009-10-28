@@ -8,10 +8,10 @@ package org.cggh.chassis.generic.client.gwt.widget.submission.uploaddatafile.cli
  * @author raok
  *
  */
-public interface SubmissionDataFileWidgetAPI {
+public interface UploadSubmissionDataFileWidgetAPI {
 
 	public void setUpNewSubmissionDataFile(String submissionLink);
 	
-	public void addSubmissionDataFileWidget(SubmissionDataFileWidgetPubSubAPI listener);
+	public void addSubmissionDataFileWidget(UploadSubmissionDataFileWidgetPubSubAPI listener);
 	
 }

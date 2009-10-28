@@ -37,6 +37,7 @@ public class ConfigurationBean {
 	static String testSubmissionQueryServiceURL;
 	static String testDataFileFeedURL;
 	static String testDataFileQueryServiceURL;
+	static String testDataFileUploadServiceURL;
 	static Map<String, String> testModules;
 
 
@@ -166,6 +167,10 @@ public class ConfigurationBean {
 	
 	public static String getDataFileQueryServiceURL() {
 		return (useUnitTestConfiguration) ? testDataFileQueryServiceURL : Configuration.getDataFileQueryServiceURL();
+	}
+	
+	public static String getDataFileUploadServiceURL() {
+		return (useUnitTestConfiguration) ? testDataFileUploadServiceURL : Configuration.getDataFileUploadServiceURL();
 	}
 	
 	public static Map<String, String> getModules() {

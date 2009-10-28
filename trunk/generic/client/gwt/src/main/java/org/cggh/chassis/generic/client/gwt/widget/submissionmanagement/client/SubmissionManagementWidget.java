@@ -9,7 +9,7 @@ import java.util.Set;
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
 import org.cggh.chassis.generic.client.gwt.widget.submission.create.client.CreateSubmissionWidgetPubSubAPI;
 import org.cggh.chassis.generic.client.gwt.widget.submission.edit.client.EditSubmissionWidgetPubSubAPI;
-import org.cggh.chassis.generic.client.gwt.widget.submission.uploaddatafile.client.SubmissionDataFileWidgetPubSubAPI;
+import org.cggh.chassis.generic.client.gwt.widget.submission.uploaddatafile.client.UploadSubmissionDataFileWidgetPubSubAPI;
 import org.cggh.chassis.generic.client.gwt.widget.submission.view.client.ViewSubmissionWidgetPubSubAPI;
 import org.cggh.chassis.generic.client.gwt.widget.submission.viewsubmissions.client.ViewSubmissionsWidgetPubSubAPI;
 import org.cggh.chassis.generic.log.client.Log;
@@ -28,7 +28,7 @@ public class SubmissionManagementWidget extends Composite implements CreateSubmi
 																  	 EditSubmissionWidgetPubSubAPI,
 																  	 ViewSubmissionWidgetPubSubAPI,
 																  	 ViewSubmissionsWidgetPubSubAPI,
-																  	 SubmissionDataFileWidgetPubSubAPI {
+																  	 UploadSubmissionDataFileWidgetPubSubAPI {
 	private Log log = LogFactory.getLog(this.getClass());
 
 
