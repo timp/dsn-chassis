@@ -28,6 +28,7 @@ public class XQS {
 	public static final String ELEMENT_HINT = "hint";
 
 	public static final String ELEMENT_HTML = "html";
+	public static final String ELEMENT_INLINEHTML = "inlinehtml";
 
 	public static final String ATTR_ID = "id";
 	public static final String ATTR_TYPE = "type";

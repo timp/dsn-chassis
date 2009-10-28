@@ -11,6 +11,7 @@ import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.xml.client.XML;
 
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.InlineHTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.Widget;
@@ -55,19 +56,36 @@ public abstract class XQSViewBase {
 			}
 
 			if (e.getTagName().equals(XQS.ELEMENT_HTML)) {
-				String html = "";
-				NodeList nodes = e.getChildNodes();
-				for (int i=0; i<nodes.getLength(); i++) {
-					Node n = nodes.item(i);
-					if (n instanceof Element) {
-						html += n.toString();
-					}
-					else if (n instanceof Text) {
-						html += n.toString();
-					}
-				}
+				String html = getHTMLContent(e);
+//				NodeList nodes = e.getChildNodes();
+//				for (int i=0; i<nodes.getLength(); i++) {
+//					Node n = nodes.item(i);
+//					if (n instanceof Element) {
+//						html += n.toString();
+//					}
+//					else if (n instanceof Text) {
+//						html += n.toString();
+//					}
+//				}
 				log.debug("rendering html: "+html);
 				w = new HTML(html);
+//				this.canvas.add(w);
+			}
+
+			if (e.getTagName().equals(XQS.ELEMENT_INLINEHTML)) {
+				String html = getHTMLContent(e);
+//				NodeList nodes = e.getChildNodes();
+//				for (int i=0; i<nodes.getLength(); i++) {
+//					Node n = nodes.item(i);
+//					if (n instanceof Element) {
+//						html += n.toString();
+//					}
+//					else if (n instanceof Text) {
+//						html += n.toString();
+//					}
+//				}
+				log.debug("rendering html: "+html);
+				w = new InlineHTML(html);
 //				this.canvas.add(w);
 			}
 
@@ -79,6 +97,23 @@ public abstract class XQSViewBase {
 
 		} 
 		
+	}
+	
+	
+	
+	protected static String getHTMLContent(Element e) {
+		String html = "";
+		NodeList nodes = e.getChildNodes();
+		for (int i=0; i<nodes.getLength(); i++) {
+			Node n = nodes.item(i);
+			if (n instanceof Element) {
+				html += n.toString();
+			}
+			else if (n instanceof Text) {
+				html += n.toString();
+			}
+		}
+		return html;
 	}
 	
 	
