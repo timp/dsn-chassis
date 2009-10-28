@@ -4,80 +4,99 @@ if (typeof CHASSIS == "undefined" || !CHASSIS) {
 
 // configure service URLs
 
-CHASSIS.userDetailsServiceEndpointURL = "/chassis-generic-service-user/gwtrpc/userdetails";
+CHASSIS.client = "/chassis-wwarn-client-gwt";
+CHASSIS.userService = "/chassis-generic-service-user";
+CHASSIS.existService = "/chassis-generic-service-exist";
+CHASSIS.uploadService = "/chassis-generic-service-upload";
 
-CHASSIS.studyFeedURL = "/chassis-generic-service-exist/atom/edit/studies";
-CHASSIS.studyQueryServiceURL = "/chassis-generic-service-exist/query/studies.xql";
+CHASSIS.userDetailsServiceEndpointURL = CHASSIS.userService + "/gwtrpc/userdetails";
 
-CHASSIS.studyQuestionnaireURL = "/chassis-generic-client-gwt/questionnaire/study-questionnaire.xml";
+CHASSIS.studyFeedURL = CHASSIS.existService + "/atom/edit/studies";
+CHASSIS.studyQueryServiceURL = CHASSIS.existService + "/query/studies.xql";
 
-CHASSIS.submissionFeedURL = "/chassis-generic-service-exist/atom/edit/submissions";
-CHASSIS.submissionQueryServiceURL = "/chassis-generic-service-exist/query/submissions.xql";
+CHASSIS.studyQuestionnaireURL = CHASSIS.client + "/questionnaire/study-questionnaire.xml";
 
-CHASSIS.dataFileFeedURL = "/chassis-generic-service-exist/atom/edit/datafiles";
-CHASSIS.dataFileQueryServiceURL = "/chassis-generic-service-exist/query/datafiles.xql";
+CHASSIS.submissionFeedURL = CHASSIS.existService + "/atom/edit/submissions";
+CHASSIS.submissionQueryServiceURL = CHASSIS.existService + "/query/submissions.xql";
 
-// configure role name prefix
+CHASSIS.dataFileFeedURL = CHASSIS.existService + "/atom/edit/datafiles";
+CHASSIS.dataFileQueryServiceURL = CHASSIS.existService + "/query/datafiles.xql";
+
+CHASSIS.dataFileUploadServiceURL = CHASSIS.uploadService + "/datafileupload";
+
+//configure role name prefix
+
 CHASSIS.userChassisRolesPrefix = "ROLE_CHASSIS_";
 
-// configure permission suffix to chassis role mappings
-CHASSIS.chassisRoleCoordinator = {"permissionSuffix":"COORDINATOR",
-								  "label":{
-											"en":"Coordinator"
-										  }
-								 };
-CHASSIS.chassisRoleCurator = {"permissionSuffix":"CURATOR",
-							  "label":{
-										"en":"Curator"
-									  }
-							 };
-CHASSIS.chassisRoleGatekeeper = {"permissionSuffix":"GATEKEEPER",
-								  "label":{
-											"en":"Gate Keeper"
-										  }
-								 };
-CHASSIS.chassisRoleSubmitter = {"permissionSuffix":"SUBMITTER",
-								  "label":{
-											"en":"Submitter"
-										  }
-								 };
-CHASSIS.chassisRoleUser = {"permissionSuffix":"USER",
-							  "label":{
-										"en":"User"
-									  }
-							 };
-CHASSIS.chassisRoleAdministrator = {"permissionSuffix":"ADMINISTRATOR",
-		  "label":{
-					"en":"Administrator"
-				  }
-		 };
+//configure permission suffix to chassis role mappings
+
+CHASSIS.chassisRoleCoordinator = {
+	"permissionSuffix": "COORDINATOR",
+	"label": {
+		"en": "Coordinator"
+	}
+};
+
+CHASSIS.chassisRoleCurator = {
+	"permissionSuffix": "CURATOR",
+	"label": {
+		"en": "Curator"
+	}
+};
+
+CHASSIS.chassisRoleGatekeeper = {
+	"permissionSuffix": "GATEKEEPER",
+	"label": {
+		"en": "Gate Keeper"
+	}
+};
+
+CHASSIS.chassisRoleSubmitter = {
+	"permissionSuffix": "SUBMITTER",
+	"label": {
+		"en": "Submitter"
+	}
+};
+
+CHASSIS.chassisRoleUser = {
+	"permissionSuffix": "USER",
+	"label": {
+		"en": "User"
+	}
+};
+
+CHASSIS.chassisRoleAdministrator = {
+	"permissionSuffix": "ADMINISTRATOR",
+	"label": {
+		"en": "Administrator"
+	}
+};
 
 
 // configure modules
-CHASSIS.modules = 
-[
+CHASSIS.modules = [
    {
-	   "id":"clinical",
-	   "label":{
-	   		"en":"Clinical"
+	   "id": "clinical",
+	   "label": {
+	   		"en": "Clinical"
    		}
    },
    {
-	   "id":"molecular",
-	   "label":{
-	   		"en":"Molecular"
+	   "id": "molecular",
+	   "label": {
+	   		"en": "Molecular"
    		}
    },
    {
-	   "id":"invitro",
-	   "label":{
-	   		"en":"In Vitro"
+	   "id": "invitro",
+	   "label": {
+	   		"en": "In Vitro"
    		}
    },
    {
-	   "id":"pharmacology",
-	   "label":{
-	   		"en":"Pharmacology"
+	   "id": "pharmacology",
+	   "label": {
+	   		"en": "Pharmacology"
 		}
    }
 ];

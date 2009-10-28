@@ -3,6 +3,7 @@
 	<name>googlecode_dsn-chassis_wwarn_client_gwt</name>
 	<comment></comment>
 	<projects>
+		<project>googlecode_dsn-chassis_generic_lib_java</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
