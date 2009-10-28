@@ -38,6 +38,7 @@ public class ViewStudyWidgetDefaultRenderer implements StudyModelListener {
 	//Expose view elements for testing purposes.
 	final Label titleLabel = new InlineLabel();
 	final Label summaryLabel = new InlineLabel();
+	final Label idLabel = new InlineLabel();
 	final Label createdLabel = new InlineLabel();
 	final Label updatedLabel = new InlineLabel();
 	final FlowPanel loadingPanel = new FlowPanel();
@@ -152,6 +153,13 @@ public class ViewStudyWidgetDefaultRenderer implements StudyModelListener {
 		updatedPanel.addStyleName(CSS.COMMON_QUESTION);
 		studyDetailsPanel.add(updatedPanel);
 		
+		FlowPanel idPanel = new FlowPanel();
+		idPanel.add(new InlineLabel("Chassis ID: "));
+		this.idLabel.addStyleName(CSS.COMMON_ANSWER);
+		this.idLabel.addStyleName(CSS.VIEWSTUDY_ID);
+		idPanel.add(this.idLabel);
+		idPanel.addStyleName(CSS.COMMON_QUESTION);
+		studyDetailsPanel.add(idPanel);
 
 		log.debug("create actions panel");
 
@@ -300,6 +308,16 @@ public class ViewStudyWidgetDefaultRenderer implements StudyModelListener {
 	 */
 	public void onUpdatedChanged(String before, String updated) {
 		this.updatedLabel.setText(updated);
+	}
+
+
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.client.gwt.widget.study.model.client.StudyModelListener#onTitleChanged(java.lang.String, java.lang.String)
+	 */
+	public void onTitleChanged(String before, String id) {
+		this.idLabel.setText(id);
 	}
 	
 }

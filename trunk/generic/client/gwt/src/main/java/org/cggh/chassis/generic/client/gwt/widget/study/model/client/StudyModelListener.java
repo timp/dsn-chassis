@@ -30,4 +30,10 @@ public interface StudyModelListener {
 
 	void onUpdatedChanged(String before, String created);
 
+	/**
+	 * @param before
+	 * @param id
+	 */
+	void onTitleChanged(String before, String id);
+
 }

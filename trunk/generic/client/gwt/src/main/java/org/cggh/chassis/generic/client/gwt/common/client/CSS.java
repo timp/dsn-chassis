@@ -28,6 +28,7 @@ public class CSS {
 	public static final String VIEWSTUDY_MODULES = VIEWSTUDY_BASE + "-modules";
 	public static final String VIEWSTUDY_OWNERS = VIEWSTUDY_BASE + "-owners";
 	public static final String VIEWSTUDY_SUMMARY = VIEWSTUDY_BASE + "-summary";
+	public static final String VIEWSTUDY_ID = VIEWSTUDY_BASE + "-id";
 
 	public static final String CREATESTUDY_BASE = COMMON_BASE + "-createStudy";
 	public static final String CREATESTUDY_TITLEINPUT = CREATESTUDY_BASE + "-titleInput";
@@ -71,6 +72,7 @@ public class CSS {
 
 	//FIXME define in main.css
 	public static final String VIEWSUBMISSIONDATAFILES_BASE = COMMON_BASE + "-viewSubmissionDataFiles";
+
 
 
 
