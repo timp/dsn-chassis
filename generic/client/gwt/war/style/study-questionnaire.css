@@ -32,6 +32,12 @@ h3, h4 {
 .xquestionnaire .xquestionnaire {
 }
 
+.xquestionnaire-transparent {
+	border: none;
+	padding: 0;
+	margin: 0;
+}
+
 .xinput-string {
 	display: inline;
 	padding: 0px;
