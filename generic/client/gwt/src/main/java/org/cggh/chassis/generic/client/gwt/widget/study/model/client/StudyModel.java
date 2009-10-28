@@ -44,6 +44,7 @@ public class StudyModel {
 		this.studyEntry = studyEntry;
 		
 		//fire all property events
+		fireOnIdChanged(getId());
 		fireOnTitleChanged(getTitle());
 		fireOnSummaryChanged(getSummary());
 		fireOnModulesChanged(getModules());
@@ -53,6 +54,26 @@ public class StudyModel {
 		
 		//fire form validation
 		fireOnStudyEntryModelChanged();
+	}
+
+
+
+	/**
+	 * @param id
+	 */
+	private void fireOnIdChanged(String before) {
+		for (StudyModelListener listener : listeners) {
+			listener.onTitleChanged(before, getId());
+		}
+	}
+
+
+
+	/**
+	 * @return
+	 */
+	private String getId() {
+		return this.studyEntry.getId();
 	}
 
 

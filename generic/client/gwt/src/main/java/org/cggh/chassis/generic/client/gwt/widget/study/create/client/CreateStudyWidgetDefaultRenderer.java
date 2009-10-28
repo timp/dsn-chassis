@@ -340,6 +340,17 @@ class CreateStudyWidgetDefaultRenderer implements StudyModelListener {
 	public void onUpdatedChanged(String before, String created) {
 		// not interested
 	}
+
+
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.client.gwt.widget.study.model.client.StudyModelListener#onTitleChanged(java.lang.String, java.lang.String)
+	 */
+	public void onTitleChanged(String before, String id) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 	
