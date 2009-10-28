@@ -338,7 +338,7 @@
               <view>
                 <inlinehtml>CO<sub>2</sub>?</inlinehtml>
                 <input/>
-                <html><em>Temperature of 37<sup>o</sup>C.</em></html>
+                <html readOnly="hide"><em>Temperature of 37<sup>o</sup>C.</em></html>
               </view>
             </question>
             
@@ -349,7 +349,7 @@
               <view>
                 <inlinehtml>O<sub>2</sub>?</inlinehtml>
                 <input/>
-                <html><em>Monitoring of the incubator system.</em></html>
+                <html readOnly="hide"><em>Monitoring of the incubator system.</em></html>
               </view>
             </question>
             
@@ -371,7 +371,7 @@
                 <input>
                   <label>Healthy erythrocytes source?</label>
                 </input>
-                <html><em>Healthy erythrocytes have to be deleucocyted.</em></html>
+                <html readOnly="hide"><em>Healthy erythrocytes have to be deleucocyted.</em></html>
               </view>
             </question>
             
@@ -428,7 +428,7 @@
                 <input>
                   <label>Medium?</label>
                 </input>
-                <html><em>Storage temperature: 6 months at -20<sup>o</sup>C and 1 week at +4<sup>o</sup>C after using.</em></html>
+                <html readOnly="hide"><em>Storage temperature: 6 months at -20<sup>o</sup>C and 1 week at +4<sup>o</sup>C after using.</em></html>
               </view>
             </question>
 
@@ -809,7 +809,7 @@
                 <input>
                   <label>Kind of plate?</label>
                 </input>
-                <html><em>Storage temperature and shelf-lives for predisposed plates will be recommended.</em></html>
+                <html readOnly="hide"><em>Storage temperature and shelf-lives for predisposed plates will be recommended.</em></html>
               </view>
             </question>
                 
@@ -821,7 +821,7 @@
                 <input>
                   <label>Volume in each well (&#xB5;l)?</label>
                 </input>
-                <html><em>Storage temperature and shelf-lives for predisposed plates will be recommended.</em></html>
+                <html readOnly="hide"><em>Storage temperature and shelf-lives for predisposed plates will be recommended.</em></html>
               </view>
             </question>
 
@@ -1069,7 +1069,7 @@
                     <value>no</value>
                   </item>
                 </select1>
-                <html><em>If no, please complete the section below for each batch.</em></html>
+                <html readOnly="hide"><em>If no, please complete the section below for each batch.</em></html>
               </view>
             </question>
             
