@@ -21,7 +21,6 @@ public class GWTTestViewSubmissionDataFilesWidgetDefaultRenderer extends GWTTest
 	private ViewSubmissionDataFilesWidgetModel testModel;
 	private ViewSubmissionDataFilesWidgetDefaultRenderer testRenderer;
 	private List<AtomEntry> testDataFileEntries;
-	private ViewSubmissionDataFilesWidgetController testController;
 		
 	private MockAtomFactory testFactory = new MockAtomFactory();
 	
@@ -42,11 +41,8 @@ public class GWTTestViewSubmissionDataFilesWidgetDefaultRenderer extends GWTTest
 		//Create testModel
 		testModel = new ViewSubmissionDataFilesWidgetModel();
 						
-		//create testController
-		testController = new ViewSubmissionDataFilesWidgetController(null, null);
-		
 		// instantiate a renderer
-		testRenderer = new ViewSubmissionDataFilesWidgetDefaultRenderer(testController);
+		testRenderer = new ViewSubmissionDataFilesWidgetDefaultRenderer();
 		
 		//register as listener
 		testModel.addListener(testRenderer);
