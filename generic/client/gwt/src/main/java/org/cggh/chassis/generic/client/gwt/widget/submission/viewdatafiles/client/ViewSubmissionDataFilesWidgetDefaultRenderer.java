@@ -7,7 +7,9 @@ import java.util.List;
 
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
 import org.cggh.chassis.generic.client.gwt.common.client.CSS;
+import org.cggh.chassis.generic.client.gwt.common.client.RenderUtils;
 import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
+import org.cggh.chassis.generic.twisted.client.Function;
 
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -15,6 +17,7 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.SimplePanel;
+import com.google.gwt.user.client.ui.Widget;
 
 
 /**
@@ -23,25 +26,40 @@ import com.google.gwt.user.client.ui.SimplePanel;
  */
 public class ViewSubmissionDataFilesWidgetDefaultRenderer implements ViewSubmissionDataFilesWidgetModelListener {
 
+	
+	
+	
+	// TODO refactor to use I18N resources
+	
+	
+	
+	
 	//Expose view elements for testing purposes.
 	FlowPanel submissionDataFilesListPanel = new FlowPanel();
 	Panel loadingPanel = new SimplePanel();
 	
-	private ViewSubmissionDataFilesWidgetController controller;
+	
+	
+	
 	final private FlowPanel canvas;
 
-	public ViewSubmissionDataFilesWidgetDefaultRenderer(ViewSubmissionDataFilesWidgetController controller) {
+	
+	
+	
+	public ViewSubmissionDataFilesWidgetDefaultRenderer() {
 		this.canvas = new FlowPanel();
-		this.controller = controller;
 
 		initCanvas();
 	}
 
+	
+	
+	
 	private void initCanvas() {
 
 		canvas.addStyleName(CSS.VIEWSUBMISSIONDATAFILES_BASE);
 		
-		this.canvas.add(new HTML("<p>Listed below is a revision list of the data file associated with this submission.</p>"));
+		this.canvas.add(new HTML("<p>Listed below are the uploaded data files associated with this submission.</p>"));
 
 		this.loadingPanel.add(new Label("Loading..."));
 		this.loadingPanel.setVisible(false);
@@ -52,54 +70,83 @@ public class ViewSubmissionDataFilesWidgetDefaultRenderer implements ViewSubmiss
 		
 	}
 
-	public void onDataFileAtomEntriesChanged(List<AtomEntry> before, List<AtomEntry> after) {
+	
+	
+
+	private Widget[] renderRow(AtomEntry in) {
+
+		String title = in.getTitle();
+		Label fileTitleLabel = new Label(title);
+		fileTitleLabel.addStyleName(CSS.VIEWSUBMISSIONDATAFILES_FILETITLE);
 		
+		String summary = in.getSummary();
+		Label fileSummaryLabel = new Label(RenderUtils.truncate(summary, 100));
+		fileSummaryLabel.addStyleName(CSS.VIEWSUBMISSIONDATAFILES_FILESUMMARY);
+		
+		Label byLabel = new Label(in.getAuthors().get(0).getEmail());
+
+		Label dateLabel = new Label(in.getPublished());
+		
+		String editMediaLink = ConfigurationBean.getDataFileFeedURL() + "/" + in.getEditMediaLink().getHref();
+		HTML downloadFileLink = new HTML("<a href=\"" + editMediaLink + "\" >download</a>" );
+		downloadFileLink.addStyleName(CSS.VIEWSUBMISSIONDATAFILES_DOWNLOADLINK);
+		
+		Widget[] out = { fileTitleLabel, fileSummaryLabel, byLabel, dateLabel, downloadFileLink };
+		return out;
+
+	}
+	
+	
+	
+	
+	
+	private Function<AtomEntry, Widget[]> rowGenerator = new Function<AtomEntry, Widget[]>() {
+		
+		public Widget[] apply(AtomEntry in) {
+
+			return renderRow(in);
+			
+		}
+		
+	};
+	
+	
+	
+	
+	
+	public void onDataFileAtomEntriesChanged(List<AtomEntry> before, List<AtomEntry> entries) {
+		
+		// clear container panel
 		submissionDataFilesListPanel.clear();
 		
-		//create file revision list
-		//TODO order by date?
+		// define headers
+		String[] headers = { "Original File Name", "Comment", "Uploaded By", "Upload Date", "Actions" };
 		
-		FlexTable dataFilesTable = new FlexTable();
+		// create header row
+		Widget[] headerRow = RenderUtils.renderLabels(headers, CSS.VIEWSUBMISSIONDATAFILES_TABLEHEADER);
+		
+		// create rows
+		List<Widget[]> rows = RenderUtils.renderAsRows(entries, this.rowGenerator);
+		
+		// insert header row at the top
+		rows.add(0, headerRow);
+		
+		// render flex table from rows
+		FlexTable dataFilesTable = RenderUtils.renderFlexTable(rows);
+		
+		// tweak table style
 		dataFilesTable.setCellPadding(0);
 		dataFilesTable.setCellSpacing(0);
 		dataFilesTable.addStyleName(CSS.VIEWSUBMISSIONDATAFILES_DATAFILESTABLE);
-		int rowNo = 0;
 		
-		//headers
-		String[] headers = { "Title", "Summary", ""};
-		
-		for (int i=0; i<headers.length; i++) {
-			Label headerLabel = new Label(headers[i]);
-			headerLabel.addStyleName(CSS.VIEWSUBMISSIONDATAFILES_TABLEHEADER);
-			dataFilesTable.setWidget(rowNo, i, headerLabel);
-		}
-		
-		for (AtomEntry dataFileEntry : after) {
-			
-			String title = dataFileEntry.getTitle();
-			Label dataFileTitle = new Label(title);
-			dataFileTitle.addStyleName(CSS.VIEWSUBMISSIONDATAFILES_FILETITLE);
-			dataFilesTable.setWidget(++rowNo, 0, dataFileTitle);
-			
-			String summary = dataFileEntry.getSummary();
-			int cutoff = 100;
-			if (summary.length() > cutoff) {
-				summary = summary.substring(0, cutoff) + "...";
-			}
-			Label fileSummary = new Label(summary);
-			fileSummary.addStyleName(CSS.VIEWSUBMISSIONDATAFILES_FILESUMMARY);
-			dataFilesTable.setWidget(rowNo, 1, fileSummary);
-			
-			String editMediaLink = ConfigurationBean.getDataFileFeedURL() + "/" + dataFileEntry.getEditMediaLink().getHref();
-			HTML downloadFileLink = new HTML("<a href=\"" + editMediaLink + "\" >download</a>" );
-			downloadFileLink.addStyleName(CSS.VIEWSUBMISSIONDATAFILES_DOWNLOADLINK);
-			dataFilesTable.setWidget(rowNo, 2, downloadFileLink);
-			
-		}
-		
+		// add table to container panel
 		submissionDataFilesListPanel.add(dataFilesTable);
+		
 	}
 
+	
+	
+	
 	public void onStatusChanged(Integer before, Integer after) {
 
 		if (after == ViewSubmissionDataFilesWidgetModel.STATUS_LOADING) {
@@ -112,8 +159,14 @@ public class ViewSubmissionDataFilesWidgetDefaultRenderer implements ViewSubmiss
 
 	}
 
+	
+	
+	
 	public Panel getCanvas() {
 		return canvas;
 	}
 
+	
+	
+	
 }

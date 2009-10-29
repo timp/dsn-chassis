@@ -3,12 +3,12 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.study.view.client;
 
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
 import org.cggh.chassis.generic.client.gwt.common.client.CSS;
+import org.cggh.chassis.generic.client.gwt.common.client.RenderUtils;
 import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
 import org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerViewAPI;
 import org.cggh.chassis.generic.client.gwt.widget.study.model.client.StudyModel;
@@ -21,13 +21,12 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
-import com.google.gwt.user.client.ui.SimplePanel;
-import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
+
+
 
 /**
  * @author raok
@@ -35,6 +34,10 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class ViewStudyWidgetDefaultRenderer implements StudyModelListener {
 
+	
+	
+	
+	
 	//Expose view elements for testing purposes.
 	final Label titleLabel = new InlineLabel();
 	final Label summaryLabel = new InlineLabel();
@@ -47,11 +50,11 @@ public class ViewStudyWidgetDefaultRenderer implements StudyModelListener {
 	
 	
 	
-	final Anchor editThisStudyUI = new Anchor();
-	final Anchor viewStudyQuestionnaireUI = new Anchor();
-	final Anchor editStudyQuestionnaireUI = new Anchor();
-	final FlowPanel modulesListPanel = new FlowPanel();
-	final FlowPanel ownersListPanel = new FlowPanel();
+	Anchor editThisStudyUI = new Anchor();
+	Anchor viewStudyQuestionnaireUI = new Anchor();
+	Anchor editStudyQuestionnaireUI = new Anchor();
+	FlowPanel modulesListPanel = new FlowPanel();
+	FlowPanel ownersListPanel = new FlowPanel();
 	
 	final private Panel canvas;
 	final private StudyControllerViewAPI controller;
@@ -106,82 +109,9 @@ public class ViewStudyWidgetDefaultRenderer implements StudyModelListener {
 		this.loadingPanel.setVisible(false);
 		this.canvas.add(this.loadingPanel);
 		
-		log.debug("prepare study details panel");
+		FlowPanel studyDetailsPanel = this.renderStudyDetailsPanel();
+		FlowPanel actionsPanel = this.renderActionsPanel();
 		
-		FlowPanel studyDetailsPanel = new FlowPanel();
-		
-		FlowPanel titlePanel = new FlowPanel();
-		titlePanel.add(new InlineLabel("Study title: "));
-		this.titleLabel.addStyleName(CSS.COMMON_ANSWER);
-		titlePanel.add(this.titleLabel);
-		titlePanel.addStyleName(CSS.COMMON_QUESTION);
-		studyDetailsPanel.add(titlePanel);
-		
-		FlowPanel summaryPanel = new FlowPanel();
-		summaryPanel.add(new InlineLabel("Summary: "));
-		this.summaryLabel.addStyleName(CSS.COMMON_ANSWER);
-		this.summaryLabel.addStyleName(CSS.VIEWSTUDY_SUMMARY);
-		summaryPanel.add(this.summaryLabel);
-		summaryPanel.addStyleName(CSS.COMMON_QUESTION);
-		studyDetailsPanel.add(summaryPanel);
-
-		FlowPanel modulesPanel = new FlowPanel();
-		modulesPanel.add(new InlineLabel("Modules:"));
-		this.modulesListPanel.addStyleName(CSS.VIEWSTUDY_MODULES);
-		modulesPanel.add(this.modulesListPanel);
-		modulesPanel.addStyleName(CSS.COMMON_QUESTION);
-		studyDetailsPanel.add(modulesPanel);
-		
-		FlowPanel ownersPanel = new FlowPanel();
-		ownersPanel.add(new InlineLabel("Owners:"));
-		this.ownersListPanel.addStyleName(CSS.VIEWSTUDY_OWNERS);
-		ownersPanel.add(this.ownersListPanel);
-		ownersPanel.addStyleName(CSS.COMMON_QUESTION);
-		studyDetailsPanel.add(ownersPanel);
-
-		FlowPanel createdPanel = new FlowPanel();
-		createdPanel.add(new InlineLabel("Created: "));
-		this.createdLabel.addStyleName(CSS.COMMON_ANSWER);
-		createdPanel.add(this.createdLabel);
-		createdPanel.addStyleName(CSS.COMMON_QUESTION);
-		studyDetailsPanel.add(createdPanel);
-
-		FlowPanel updatedPanel = new FlowPanel();
-		updatedPanel.add(new InlineLabel("Updated: "));
-		this.updatedLabel.addStyleName(CSS.COMMON_ANSWER);
-		updatedPanel.add(this.updatedLabel);
-		updatedPanel.addStyleName(CSS.COMMON_QUESTION);
-		studyDetailsPanel.add(updatedPanel);
-		
-		FlowPanel idPanel = new FlowPanel();
-		idPanel.add(new InlineLabel("Chassis ID: "));
-		this.idLabel.addStyleName(CSS.COMMON_ANSWER);
-		this.idLabel.addStyleName(CSS.VIEWSTUDY_ID);
-		idPanel.add(this.idLabel);
-		idPanel.addStyleName(CSS.COMMON_QUESTION);
-		studyDetailsPanel.add(idPanel);
-
-		log.debug("create actions panel");
-
-		FlowPanel actionsPanel = new FlowPanel();
-		actionsPanel.add(new HTML("<h3>Actions</h3>"));
-		actionsPanel.addStyleName(CSS.COMMON_ACTIONS);
-
-		this.editThisStudyUI.setText("edit study");
-		this.editThisStudyUI.addStyleName(CSS.COMMON_ACTION);
-		this.editThisStudyUI.addClickHandler(new EditStudyClickHandler());
-		actionsPanel.add(this.editThisStudyUI);
-
-		this.viewStudyQuestionnaireUI.setText("view study questionnaire");
-		this.viewStudyQuestionnaireUI.addStyleName(CSS.COMMON_ACTION);
-		this.viewStudyQuestionnaireUI.addClickHandler(new ViewStudyQuestionnaireClickHandler());
-		actionsPanel.add(this.viewStudyQuestionnaireUI);
-
-		this.editStudyQuestionnaireUI.setText("edit study questionnaire");
-		this.editStudyQuestionnaireUI.addStyleName(CSS.COMMON_ACTION);
-		this.editStudyQuestionnaireUI.addClickHandler(new EditStudyQuestionnaireClickHandler());
-		actionsPanel.add(this.editStudyQuestionnaireUI);
-
 		log.debug("prepare main panel");
 
 		this.mainPanel.addStyleName(CSS.COMMON_MAINWITHACTIONS);
@@ -193,6 +123,62 @@ public class ViewStudyWidgetDefaultRenderer implements StudyModelListener {
 		log.leave();
 	}
 
+	
+	
+	
+	private FlowPanel renderStudyDetailsPanel() {
+		log.enter("renderStudyDetailsPanel");
+
+		log.debug("prepare study details panel");
+		
+		FlowPanel studyDetailsPanel = new FlowPanel();
+		
+		FlowPanel titlePanel = RenderUtils.renderTitlePropertyPanel(this.titleLabel, CSS.VIEWSTUDY_TITLE);
+		FlowPanel summaryPanel = RenderUtils.renderSummaryPropertyPanel(this.summaryLabel, CSS.VIEWSTUDY_SUMMARY);
+		FlowPanel modulesPanel = RenderUtils.renderModulesPropertyPanel(this.modulesListPanel, CSS.VIEWSTUDY_MODULES);
+		FlowPanel ownersPanel = RenderUtils.renderOwnersPropertyPanel(this.ownersListPanel, CSS.VIEWSTUDY_OWNERS);
+		FlowPanel createdPanel = RenderUtils.renderCreatedPropertyPanel(this.createdLabel, null);
+		FlowPanel updatedPanel = RenderUtils.renderUpdatedPropertyPanel(this.updatedLabel, null);
+		FlowPanel idPanel = RenderUtils.renderIdPropertyPanel(this.idLabel, CSS.VIEWSTUDY_ID);
+
+		studyDetailsPanel.add(titlePanel);
+		studyDetailsPanel.add(summaryPanel);
+		studyDetailsPanel.add(modulesPanel);
+		studyDetailsPanel.add(ownersPanel);
+		studyDetailsPanel.add(createdPanel);
+		studyDetailsPanel.add(updatedPanel);
+		studyDetailsPanel.add(idPanel);
+
+		log.leave();
+		return studyDetailsPanel;
+	}
+	
+	
+	
+	private FlowPanel renderActionsPanel() {
+		log.enter("renderActionsPanel");
+
+		log.debug("create actions panel");
+
+		this.editThisStudyUI = RenderUtils.renderActionAsAnchor("edit study", new EditStudyClickHandler());
+		this.editStudyQuestionnaireUI = RenderUtils.renderActionAsAnchor("edit study questionnaire", new EditStudyQuestionnaireClickHandler());
+		this.viewStudyQuestionnaireUI = RenderUtils.renderActionAsAnchor("view study questionnaire", new ViewStudyQuestionnaireClickHandler());
+		
+		Widget[] actions = {
+			this.editThisStudyUI,
+			this.editStudyQuestionnaireUI,
+			this.viewStudyQuestionnaireUI
+		};
+		
+		FlowPanel actionsPanel = RenderUtils.renderActionsPanel(actions);
+		
+		log.leave();
+		return actionsPanel;
+	}
+	
+	
+	
+	
 	public void onStatusChanged(Integer before, Integer after) {
 		
 		if (after == StudyModel.STATUS_LOADING) {
@@ -212,6 +198,9 @@ public class ViewStudyWidgetDefaultRenderer implements StudyModelListener {
 		}
 
 	}
+	
+	
+	
 
 	class EditStudyClickHandler implements ClickHandler {
 		
@@ -220,12 +209,19 @@ public class ViewStudyWidgetDefaultRenderer implements StudyModelListener {
 		}
 	}
 
+	
+	
+	
+	
 	class EditStudyQuestionnaireClickHandler implements ClickHandler {
 		
 		public void onClick(ClickEvent arg0) {
 			controller.fireOnUserActionEditStudyQuestionnaire();
 		}
 	}
+	
+	
+	
 
 	class ViewStudyQuestionnaireClickHandler implements ClickHandler {
 		
@@ -234,55 +230,56 @@ public class ViewStudyWidgetDefaultRenderer implements StudyModelListener {
 		}
 	}
 
+	
+	
+	
 	public void onStudyEntryChanged(Boolean isValid) {
 		// TODO Auto-generated method stub
 	}
 
+	
+	
+	
 	public void onSummaryChanged(String before, String after, Boolean isValid) {
 		summaryLabel.setText(after);
 	}
 
+	
+	
+	
 	public void onTitleChanged(String before, String after, Boolean isValid) {
 		titleLabel.setText(after);
 	}
 
+	
+	
+	
 	public void onModulesChanged(Set<String> before, Set<String> after, Boolean isValid) {
 
-		modulesListPanel.clear();
-		
-		String modulesContent = "";
-		for (Iterator<String> it = after.iterator(); it.hasNext(); ) {
-			String ml = modulesConfig.get(it.next());
-			modulesContent += ml;
-			if (it.hasNext()) {
-				modulesContent += ", ";
-			}
-		}
-		
-		InlineLabel answer = new InlineLabel(modulesContent);
+		Label answer = RenderUtils.renderModulesAsLabel(after, modulesConfig, true);
 		answer.addStyleName(CSS.COMMON_ANSWER);
+
+		modulesListPanel.clear();
 		modulesListPanel.add(answer);
 
 	}
 
-	public void onAuthorsChanged(Set<AtomAuthor> before, Set<AtomAuthor> after, Boolean isValid) {
+	
+	
+	
+	public void onAuthorsChanged(Set<AtomAuthor> before, Set<AtomAuthor> authors, Boolean isValid) {
+		
+		Label answer = RenderUtils.renderAtomAuthorsAsLabel(authors, true);
+		answer.addStyleName(CSS.COMMON_ANSWER);
 
 		ownersListPanel.clear();
-		
-		String authorsContent = "";
-		for (Iterator<AtomAuthor> it = after.iterator(); it.hasNext(); ) {
-			authorsContent += it.next().getEmail();
-			if (it.hasNext()) {
-				authorsContent += ", ";
-			}
-		}
-
-		InlineLabel answer = new InlineLabel(authorsContent);
-		answer.addStyleName(CSS.COMMON_ANSWER);
 		ownersListPanel.add(answer);
 		
 	}
 
+	
+	
+	
 	/**
 	 * @return
 	 */

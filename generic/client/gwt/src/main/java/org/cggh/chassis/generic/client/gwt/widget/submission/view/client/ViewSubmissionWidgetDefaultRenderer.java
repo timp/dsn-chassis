@@ -43,6 +43,8 @@ public class ViewSubmissionWidgetDefaultRenderer implements ViewSubmissionWidget
 	final Label summaryLabel = new InlineLabel();
 	final Label createdLabel = new InlineLabel();
 	final Label updatedLabel = new InlineLabel();
+	final Label idLabel = new InlineLabel();
+
 	final FlowPanel loadingPanel = new FlowPanel();
 	final FlowPanel mainPanel = new FlowPanel();
 
@@ -64,6 +66,8 @@ public class ViewSubmissionWidgetDefaultRenderer implements ViewSubmissionWidget
 
 
 	final private ViewSubmissionWidgetController controller;
+
+
 
 
 
@@ -100,6 +104,8 @@ public class ViewSubmissionWidgetDefaultRenderer implements ViewSubmissionWidget
 	private void initCanvas() {
 		log.enter("initCanvas");
 
+		this.canvas.addStyleName(CSS.VIEWSUBMISSION_BASE);
+		
 		this.canvas.add(new HTML("<h2>View Data Submission</h2>"));
 
 		log.debug("prepare loading panel");
@@ -115,8 +121,9 @@ public class ViewSubmissionWidgetDefaultRenderer implements ViewSubmissionWidget
 		log.debug("title panel");
 
 		Panel titlePanel = new FlowPanel();
-		titlePanel.add(new InlineLabel("Submission title: "));
+		titlePanel.add(new InlineLabel("Title: "));
 		this.titleLabel.addStyleName(CSS.COMMON_ANSWER);
+		this.titleLabel.addStyleName(CSS.VIEWSUBMISSION_TITLE);
 		titlePanel.add(titleLabel);
 		titlePanel.addStyleName(CSS.COMMON_QUESTION);
 		submissionDetailsPanel.add(titlePanel);
@@ -157,14 +164,6 @@ public class ViewSubmissionWidgetDefaultRenderer implements ViewSubmissionWidget
 		studiesPanel.addStyleName(CSS.COMMON_QUESTION);
 		submissionDetailsPanel.add(studiesPanel);
 
-		log.debug("data files panel");
-
-		FlowPanel dataFilesPanel = new FlowPanel();
-		dataFilesPanel.add(new InlineLabel("Data files: "));
-		dataFilesPanel.add(this.submissionDataFilesWidget);
-		dataFilesPanel.addStyleName(CSS.COMMON_QUESTION);
-		submissionDetailsPanel.add(dataFilesPanel);
-
 		log.debug("created panel");
 
 		FlowPanel createdPanel = new FlowPanel();
@@ -183,6 +182,23 @@ public class ViewSubmissionWidgetDefaultRenderer implements ViewSubmissionWidget
 		updatedPanel.addStyleName(CSS.COMMON_QUESTION);
 		submissionDetailsPanel.add(updatedPanel);
 
+		log.debug("id panel");
+
+		FlowPanel idPanel = new FlowPanel();
+		idPanel.add(new InlineLabel("Chassis ID: "));
+		this.idLabel.addStyleName(CSS.COMMON_ANSWER);
+		idPanel.add(this.idLabel);
+		idPanel.addStyleName(CSS.COMMON_QUESTION);
+		submissionDetailsPanel.add(idPanel);
+
+		log.debug("data files panel");
+
+		FlowPanel dataFilesPanel = new FlowPanel();
+		dataFilesPanel.add(new HTML("<h3>Data Files</h3>"));
+		dataFilesPanel.add(this.submissionDataFilesWidget);
+//		dataFilesPanel.addStyleName(CSS.COMMON_QUESTION);
+		submissionDetailsPanel.add(dataFilesPanel);
+
 		mainPanel.add(submissionDetailsPanel);
 
 		log.debug("create actions panel");
@@ -196,7 +212,7 @@ public class ViewSubmissionWidgetDefaultRenderer implements ViewSubmissionWidget
 		this.editThisSubmissionUI.addClickHandler(new EditSubmissionClickHandler());
 		actionsPanel.add(this.editThisSubmissionUI);
 
-		this.uploadDataFileUI.setText("upload submission data file");
+		this.uploadDataFileUI.setText("upload data file");
 		this.uploadDataFileUI.addStyleName(CSS.COMMON_ACTION);
 		this.uploadDataFileUI.addClickHandler(new UploadDataFileClickHandler());
 		actionsPanel.add(this.uploadDataFileUI);
@@ -340,6 +356,13 @@ public class ViewSubmissionWidgetDefaultRenderer implements ViewSubmissionWidget
 	
 	
 	
+	public void renderId(String id) {
+		this.idLabel.setText(id);
+	}
+
+	
+	
+	
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.client.gwt.widget.submission.view.client.ViewSubmissionWidgetModel.Listener#onEntryChanged(org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry, org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry)
 	 */
@@ -350,6 +373,7 @@ public class ViewSubmissionWidgetDefaultRenderer implements ViewSubmissionWidget
 		this.renderSummary(entry.getSummary());
 		this.renderCreated(entry.getPublished());
 		this.renderUpdated(entry.getUpdated());
+		this.renderId(entry.getId());
 		this.renderOwners(entry.getAuthors());
 		this.renderModules(entry.getModules());
 //		this.renderStudyLinks(entry.getStudyLinks());

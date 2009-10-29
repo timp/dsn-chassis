@@ -161,6 +161,7 @@ class EditStudyQuestionnaireWidgetDefaultRenderer implements StudyQuestionnaireW
 		titlePanel = new FlowPanel();
 		titlePanel.add(new InlineLabel("Study title: "));
 		titleLabel.addStyleName(CSS.COMMON_ANSWER);
+		titleLabel.addStyleName(CSS.VIEWSTUDY_TITLE);
 		titlePanel.add(titleLabel);
 		titlePanel.addStyleName(CSS.COMMON_QUESTION);
 		studyInfoPanel.add(titlePanel);

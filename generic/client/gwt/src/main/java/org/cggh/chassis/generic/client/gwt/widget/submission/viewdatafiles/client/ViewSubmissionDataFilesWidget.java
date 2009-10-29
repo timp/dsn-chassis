@@ -21,7 +21,7 @@ public class ViewSubmissionDataFilesWidget extends Composite {
 		
 		controller = new ViewSubmissionDataFilesWidgetController(model, this);
 		
-		renderer = new ViewSubmissionDataFilesWidgetDefaultRenderer(controller);
+		renderer = new ViewSubmissionDataFilesWidgetDefaultRenderer();
 		
 		// register renderer as listener to model
 		model.addListener(renderer);
