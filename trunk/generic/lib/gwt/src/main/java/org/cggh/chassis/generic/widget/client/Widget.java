@@ -18,12 +18,20 @@ public abstract class Widget extends Composite {
 	
 	
 	
-	private Log log = LogFactory.getLog(this.getClass());
+	private Log log = LogFactory.getLog(Widget.class);
 
 	
 	
-	
+	/**
+	 * The outer panel that this composite widget wraps.
+	 */
 	protected FlowPanel boundingBox = new FlowPanel();
+
+	
+	
+	/**
+	 * The inner panel that all child widgets should be added to.
+	 */
 	protected FlowPanel contentBox = new FlowPanel();
 	
 	
@@ -34,10 +42,23 @@ public abstract class Widget extends Composite {
 	 * Construct a widget.
 	 */
 	public Widget() {
+		log.enter("<constructor>");
+		
+		log.debug("initialise composite widget");
 		this.initWidget(this.boundingBox);
+		
+		log.debug("set up boundingBox and contentBox");
 		this.boundingBox.add(this.contentBox);
-		String stylePrimaryName = "chassis-" + this.getClass().getSimpleName();
+		
+		String stylePrimaryName = "chassis-" + this.getName();
+
+		log.debug("set style primary name: "+stylePrimaryName);
 		this.setStylePrimaryName(stylePrimaryName);
+
+		log.debug("call init()");
+		this.init();
+		
+		log.leave();
 	}
 	
 	
@@ -45,7 +66,7 @@ public abstract class Widget extends Composite {
 
 	/**
 	 * Establishes the initialisation life-cycle phase. Extensions to Widget
-	 * sub-classes MUST call init() on the super class BEFORE any further action,
+	 * sub-classes MUST call init() on the super-class BEFORE any further action,
 	 * to ensure that the init() call propagates DOWN the class hierarchy from
 	 * the top.
 	 */
@@ -57,7 +78,7 @@ public abstract class Widget extends Composite {
 	/**
 	 * Establishes the destruction life-cycle phase. Extensions to Widget
 	 * sub-classes MUST call destroy() on the super class AFTER any specific action,
-	 * to ensure that the destro() call propagates UP the class hierarchy from the
+	 * to ensure that the destroy() call propagates UP the class hierarchy from the
 	 * bottom.
 	 */
 	public abstract void destroy();
@@ -84,7 +105,7 @@ public abstract class Widget extends Composite {
 	
 	/**
 	 * This method is responsible for creating and adding the child widgets of
-	 * this widget.
+	 * this widget's content box.
 	 */
 	protected abstract void renderUI();
 
@@ -111,6 +132,52 @@ public abstract class Widget extends Composite {
 	protected abstract void syncUI();
 
 	
+	
+	
+	/**
+	 * Resets the widget's state to its initial state by calling the init() method, 
+	 * and then renders the widget by calling the render() method.
+	 */
+	public void reset() {
+		log.enter("reset");
+		
+		this.unbindUI();
+		this.init();
+		this.render();
+		
+		log.leave();
+	}
+
+
+
+
+	/**
+	 * Detach the widget from any event listeners.
+	 */
+	protected abstract void unbindUI();
+	
+	
+	
+	
+	
+	@Override
+	protected void onAttach() {
+		log.enter("onAttach");
+		
+		super.onAttach();
+	
+		// call render() when widget is attached to browser document
+		// see http://google-web-toolkit.googlecode.com/svn/javadoc/1.6/com/google/gwt/user/client/ui/Widget.html#onAttach()
+		this.render();
+		
+		log.leave();
+	}
+	
+	
+	
+	
+	
+	protected abstract String getName();
 	
 	
 }
