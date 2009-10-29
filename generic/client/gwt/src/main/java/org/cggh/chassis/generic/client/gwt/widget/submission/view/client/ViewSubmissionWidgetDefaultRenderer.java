@@ -15,6 +15,7 @@ import org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomLink;
 import org.cggh.chassis.generic.client.gwt.common.client.CSS;
 import org.cggh.chassis.generic.client.gwt.common.client.ChassisUser;
+import org.cggh.chassis.generic.client.gwt.common.client.RenderUtils;
 import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
 import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidget;
 import org.cggh.chassis.generic.client.gwt.widget.submission.viewdatafiles.client.ViewSubmissionDataFilesWidget;
@@ -29,6 +30,7 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
+import com.google.gwt.user.client.ui.Widget;
 
 /**
  * @author raok
@@ -114,108 +116,8 @@ public class ViewSubmissionWidgetDefaultRenderer implements ViewSubmissionWidget
 		this.loadingPanel.setVisible(false);
 		this.canvas.add(this.loadingPanel);
 
-		log.debug("prepare submission details panel");
-
-		Panel submissionDetailsPanel = new FlowPanel();
-
-		log.debug("title panel");
-
-		Panel titlePanel = new FlowPanel();
-		titlePanel.add(new InlineLabel("Title: "));
-		this.titleLabel.addStyleName(CSS.COMMON_ANSWER);
-		this.titleLabel.addStyleName(CSS.VIEWSUBMISSION_TITLE);
-		titlePanel.add(titleLabel);
-		titlePanel.addStyleName(CSS.COMMON_QUESTION);
-		submissionDetailsPanel.add(titlePanel);
-
-		log.debug("summary panel");
-
-		Panel summaryPanel = new FlowPanel();
-		summaryPanel.add(new InlineLabel("Summary: "));
-		this.summaryLabel.addStyleName(CSS.COMMON_ANSWER);
-		this.summaryLabel.addStyleName(CSS.VIEWSUBMISSION_SUMMARY);
-		summaryPanel.add(this.summaryLabel);
-		summaryPanel.addStyleName(CSS.COMMON_QUESTION);
-		submissionDetailsPanel.add(summaryPanel);
-
-		log.debug("modules panel");
-
-		FlowPanel modulesPanel = new FlowPanel();
-		modulesPanel.add(new InlineLabel("Modules:"));
-		this.modulesListPanel.addStyleName(CSS.VIEWSTUDY_MODULES);
-		modulesPanel.add(this.modulesListPanel);
-		modulesPanel.addStyleName(CSS.COMMON_QUESTION);
-		submissionDetailsPanel.add(modulesPanel);
-
-		log.debug("owners panel");
-
-		FlowPanel ownersPanel = new FlowPanel();
-		ownersPanel.add(new InlineLabel("Owners:"));
-		this.ownersListPanel.addStyleName(CSS.VIEWSTUDY_OWNERS);
-		ownersPanel.add(this.ownersListPanel);
-		ownersPanel.addStyleName(CSS.COMMON_QUESTION);
-		submissionDetailsPanel.add(ownersPanel);
-
-		log.debug("studies panel");
-
-		FlowPanel studiesPanel = new FlowPanel();
-		studiesPanel.add(new InlineLabel("Studies: "));
-		studiesPanel.add(this.studiesLinkedWidget);
-		studiesPanel.addStyleName(CSS.COMMON_QUESTION);
-		submissionDetailsPanel.add(studiesPanel);
-
-		log.debug("created panel");
-
-		FlowPanel createdPanel = new FlowPanel();
-		createdPanel.add(new InlineLabel("Created: "));
-		this.createdLabel.addStyleName(CSS.COMMON_ANSWER);
-		createdPanel.add(this.createdLabel);
-		createdPanel.addStyleName(CSS.COMMON_QUESTION);
-		submissionDetailsPanel.add(createdPanel);
-
-		log.debug("updated panel");
-
-		FlowPanel updatedPanel = new FlowPanel();
-		updatedPanel.add(new InlineLabel("Updated: "));
-		this.updatedLabel.addStyleName(CSS.COMMON_ANSWER);
-		updatedPanel.add(this.updatedLabel);
-		updatedPanel.addStyleName(CSS.COMMON_QUESTION);
-		submissionDetailsPanel.add(updatedPanel);
-
-		log.debug("id panel");
-
-		FlowPanel idPanel = new FlowPanel();
-		idPanel.add(new InlineLabel("Chassis ID: "));
-		this.idLabel.addStyleName(CSS.COMMON_ANSWER);
-		idPanel.add(this.idLabel);
-		idPanel.addStyleName(CSS.COMMON_QUESTION);
-		submissionDetailsPanel.add(idPanel);
-
-		log.debug("data files panel");
-
-		FlowPanel dataFilesPanel = new FlowPanel();
-		dataFilesPanel.add(new HTML("<h3>Data Files</h3>"));
-		dataFilesPanel.add(this.submissionDataFilesWidget);
-//		dataFilesPanel.addStyleName(CSS.COMMON_QUESTION);
-		submissionDetailsPanel.add(dataFilesPanel);
-
-		mainPanel.add(submissionDetailsPanel);
-
-		log.debug("create actions panel");
-
-		FlowPanel actionsPanel = new FlowPanel();
-		actionsPanel.add(new HTML("<h3>Actions</h3>"));
-		actionsPanel.addStyleName(CSS.COMMON_ACTIONS);
-
-		this.editThisSubmissionUI.setText("edit submission");
-		this.editThisSubmissionUI.addStyleName(CSS.COMMON_ACTION);
-		this.editThisSubmissionUI.addClickHandler(new EditSubmissionClickHandler());
-		actionsPanel.add(this.editThisSubmissionUI);
-
-		this.uploadDataFileUI.setText("upload data file");
-		this.uploadDataFileUI.addStyleName(CSS.COMMON_ACTION);
-		this.uploadDataFileUI.addClickHandler(new UploadDataFileClickHandler());
-		actionsPanel.add(this.uploadDataFileUI);
+		Panel submissionDetailsPanel = this.renderSubmissionDetailsPanel();
+		FlowPanel actionsPanel = this.renderActionsPanel();
 
 		log.debug("prepare main panel");
 
@@ -227,11 +129,82 @@ public class ViewSubmissionWidgetDefaultRenderer implements ViewSubmissionWidget
 
 		log.leave();
 	}
+	
+	
+	
 
 	
 	
 	
 	
+
+
+
+	/**
+	 * @return
+	 */
+	private Panel renderSubmissionDetailsPanel() {
+		log.enter("renderSubmissionDetailsPanel");
+		
+		FlowPanel titlePanel = RenderUtils.renderTitlePropertyPanel(this.titleLabel, CSS.VIEWSUBMISSION_TITLE);
+		FlowPanel summaryPanel = RenderUtils.renderSummaryPropertyPanel(this.summaryLabel, CSS.VIEWSUBMISSION_SUMMARY);
+		FlowPanel modulesPanel = RenderUtils.renderModulesPropertyPanel(this.modulesListPanel, CSS.VIEWSUBMISSION_MODULES);
+		FlowPanel ownersPanel = RenderUtils.renderOwnersPropertyPanel(this.ownersListPanel, CSS.VIEWSUBMISSION_OWNERS);
+		FlowPanel studiesPanel = RenderUtils.renderPropertyPanel("Studies", this.studiesLinkedWidget, null); // TODO i18n
+		FlowPanel createdPanel = RenderUtils.renderCreatedPropertyPanel(this.createdLabel, null);
+		FlowPanel updatedPanel = RenderUtils.renderUpdatedPropertyPanel(this.updatedLabel, null);
+		FlowPanel idPanel = RenderUtils.renderIdPropertyPanel(this.idLabel, CSS.VIEWSUBMISSION_ID);
+		
+		log.debug("render data files panel");
+
+		FlowPanel dataFilesPanel = new FlowPanel();
+		dataFilesPanel.add(new HTML("<h3>Data Files</h3>")); // TODO i18n
+		dataFilesPanel.add(this.submissionDataFilesWidget);
+
+		FlowPanel submissionDetailsPanel = new FlowPanel();
+		
+		submissionDetailsPanel.add(titlePanel);
+		submissionDetailsPanel.add(summaryPanel);
+		submissionDetailsPanel.add(modulesPanel);
+		submissionDetailsPanel.add(ownersPanel);
+		submissionDetailsPanel.add(studiesPanel);
+		submissionDetailsPanel.add(createdPanel);
+		submissionDetailsPanel.add(updatedPanel);
+		submissionDetailsPanel.add(idPanel);
+		submissionDetailsPanel.add(dataFilesPanel);		
+
+		log.leave();
+		return submissionDetailsPanel;
+	}
+
+
+
+
+
+	/**
+	 * @return
+	 */
+	private FlowPanel renderActionsPanel() {
+		log.enter("renderActionsPanel");
+		
+		this.editThisSubmissionUI = RenderUtils.renderActionAsAnchor("edit submission", new EditSubmissionClickHandler());
+		this.uploadDataFileUI = RenderUtils.renderActionAsAnchor("upload data file", new UploadDataFileClickHandler());
+
+		Widget[] actions = {
+			this.editThisSubmissionUI,
+			this.uploadDataFileUI
+		};
+		
+		FlowPanel actionsPanel = RenderUtils.renderActionsPanel(actions);
+		
+		log.leave();
+		return actionsPanel;
+	}
+
+
+
+
+
 	class EditSubmissionClickHandler implements ClickHandler {
 
 		public void onClick(ClickEvent arg0) {
@@ -247,39 +220,33 @@ public class ViewSubmissionWidgetDefaultRenderer implements ViewSubmissionWidget
 	}
 
 	
-	public void renderModules(List<String> modules) {
+	public void renderModules(List<String> moduleIds) {
+
+		Label answer = RenderUtils.renderModulesAsLabel(moduleIds, modulesConfig, true);
+		answer.addStyleName(CSS.COMMON_ANSWER);
 
 		modulesListPanel.clear();
-
-		String modulesContent = "";
-		for (Iterator<String> it = modules.iterator(); it.hasNext();) {
-			String ml = modulesConfig.get(it.next());
-			modulesContent += ml;
-			if (it.hasNext()) {
-				modulesContent += ", ";
-			}
-		}
-
-		InlineLabel answer = new InlineLabel(modulesContent);
-		answer.addStyleName(CSS.COMMON_ANSWER);
 		modulesListPanel.add(answer);
 
+//		modulesListPanel.clear();
+//
+//		String modulesContent = "";
+//		for (Iterator<String> it = modules.iterator(); it.hasNext();) {
+//			String ml = modulesConfig.get(it.next());
+//			modulesContent += ml;
+//			if (it.hasNext()) {
+//				modulesContent += ", ";
+//			}
+//		}
+//
+//		InlineLabel answer = new InlineLabel(modulesContent);
+//		answer.addStyleName(CSS.COMMON_ANSWER);
+//		modulesListPanel.add(answer);
+
 	}
 
 
 	
-	
-	
-	
-	public void renderStudyLinks(List<AtomLink> links) {
-
-		Set<String> s = new HashSet<String>();
-		for (AtomLink l : links) {
-			s.add(l.getHref());
-		}
-		studiesLinkedWidget.loadStudies(s);
-
-	}
 	
 	
 	
@@ -313,19 +280,25 @@ public class ViewSubmissionWidgetDefaultRenderer implements ViewSubmissionWidget
 	
 	public void renderOwners(List<AtomAuthor> owners) {
 
-		ownersListPanel.clear();
-
-		String authorsContent = "";
-		for (Iterator<AtomAuthor> it = owners.iterator(); it.hasNext();) {
-			authorsContent += it.next().getEmail();
-			if (it.hasNext()) {
-				authorsContent += ", ";
-			}
-		}
-
-		InlineLabel answer = new InlineLabel(authorsContent);
+		Label answer = RenderUtils.renderAtomAuthorsAsLabel(owners, true);
 		answer.addStyleName(CSS.COMMON_ANSWER);
+
+		ownersListPanel.clear();
 		ownersListPanel.add(answer);
+
+//		ownersListPanel.clear();
+//
+//		String authorsContent = "";
+//		for (Iterator<AtomAuthor> it = owners.iterator(); it.hasNext();) {
+//			authorsContent += it.next().getEmail();
+//			if (it.hasNext()) {
+//				authorsContent += ", ";
+//			}
+//		}
+//
+//		InlineLabel answer = new InlineLabel(authorsContent);
+//		answer.addStyleName(CSS.COMMON_ANSWER);
+//		ownersListPanel.add(answer);
 
 	}
 
@@ -376,7 +349,6 @@ public class ViewSubmissionWidgetDefaultRenderer implements ViewSubmissionWidget
 		this.renderId(entry.getId());
 		this.renderOwners(entry.getAuthors());
 		this.renderModules(entry.getModules());
-//		this.renderStudyLinks(entry.getStudyLinks());
 		this.renderStudiesForSubmission(entry);
 		
 		log.leave();

@@ -131,8 +131,6 @@ public class ViewStudyWidgetDefaultRenderer implements StudyModelListener {
 
 		log.debug("prepare study details panel");
 		
-		FlowPanel studyDetailsPanel = new FlowPanel();
-		
 		FlowPanel titlePanel = RenderUtils.renderTitlePropertyPanel(this.titleLabel, CSS.VIEWSTUDY_TITLE);
 		FlowPanel summaryPanel = RenderUtils.renderSummaryPropertyPanel(this.summaryLabel, CSS.VIEWSTUDY_SUMMARY);
 		FlowPanel modulesPanel = RenderUtils.renderModulesPropertyPanel(this.modulesListPanel, CSS.VIEWSTUDY_MODULES);
@@ -141,6 +139,7 @@ public class ViewStudyWidgetDefaultRenderer implements StudyModelListener {
 		FlowPanel updatedPanel = RenderUtils.renderUpdatedPropertyPanel(this.updatedLabel, null);
 		FlowPanel idPanel = RenderUtils.renderIdPropertyPanel(this.idLabel, CSS.VIEWSTUDY_ID);
 
+		FlowPanel studyDetailsPanel = new FlowPanel();
 		studyDetailsPanel.add(titlePanel);
 		studyDetailsPanel.add(summaryPanel);
 		studyDetailsPanel.add(modulesPanel);
@@ -157,8 +156,6 @@ public class ViewStudyWidgetDefaultRenderer implements StudyModelListener {
 	
 	private FlowPanel renderActionsPanel() {
 		log.enter("renderActionsPanel");
-
-		log.debug("create actions panel");
 
 		this.editThisStudyUI = RenderUtils.renderActionAsAnchor("edit study", new EditStudyClickHandler());
 		this.editStudyQuestionnaireUI = RenderUtils.renderActionAsAnchor("edit study questionnaire", new EditStudyQuestionnaireClickHandler());

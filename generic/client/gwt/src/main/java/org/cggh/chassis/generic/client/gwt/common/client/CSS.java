@@ -57,6 +57,9 @@ public class CSS {
 	public static final String VIEWSUBMISSION_BASE = COMMON_BASE + "-viewSubmission";
 	public static final String VIEWSUBMISSION_SUMMARY = VIEWSUBMISSION_BASE + "-summary";
 	public static final String VIEWSUBMISSION_TITLE = VIEWSUBMISSION_BASE + "-title";
+	public static final String VIEWSUBMISSION_MODULES = VIEWSUBMISSION_BASE + "-modules";
+	public static final String VIEWSUBMISSION_OWNERS = VIEWSUBMISSION_BASE + "-owners";
+	public static final String VIEWSUBMISSION_ID = VIEWSUBMISSION_BASE + "-id";
 
 	public static final String VIEWSUBMISSIONS_BASE = COMMON_BASE + "-viewSubmissions";
 	public static final String VIEWSUBMISSIONS_SUBMISSIONSTABLE = VIEWSUBMISSIONS_BASE + "-submissionsTable";
@@ -77,6 +80,7 @@ public class CSS {
 	public static final String VIEWSUBMISSIONDATAFILES_FILETITLE = VIEWSUBMISSIONDATAFILES_BASE + "-fileTitle";
 	public static final String VIEWSUBMISSIONDATAFILES_FILESUMMARY = VIEWSUBMISSIONDATAFILES_BASE + "-fileSummary";
 	public static final String VIEWSUBMISSIONDATAFILES_DOWNLOADLINK = VIEWSUBMISSIONDATAFILES_BASE + "-downloadLink";
+
 
 
 
