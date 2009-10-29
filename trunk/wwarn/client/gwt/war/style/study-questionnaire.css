@@ -14,16 +14,16 @@ h3, h4 {
 }
 
 .xquestion {
-	border-top: 1px solid #aaa;
-	border-bottom: 1px solid #aaa;
+	border-top: 1px solid #abd;
+	border-bottom: 1px solid #abd;
 	padding: 3px;
 	margin: 3px 0 3px 0;
-	background-color: #eee;
+	background-color: #eef;
 }
 
 .xquestionnaire {
-	border: 2px solid #ccc;
-	border-left: 10px solid #ccc;
+	border: 2px solid #abd;
+	border-left: 10px solid #abd;
 	border-right: none;
 	padding: 5px 0px 5px 10px;
 	margin: 5px 0px 5px 0px;
@@ -44,7 +44,7 @@ h3, h4 {
 }
 
 .xinput-string input, .xinput-date input {
-	border: 1px solid #aaa;
+	border: 1px solid #abd;
 	margin-left: 5px;
 }
 
