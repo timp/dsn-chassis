@@ -4,6 +4,7 @@
 package org.cggh.chassis.generic.twisted.client;
 
 import java.util.Collection;
+import java.util.Map;
 
 /**
  * @author aliman
@@ -11,13 +12,37 @@ import java.util.Collection;
  */
 public class Functional {
 	
+	
+	
+	
 	public static <I,O> void map(Collection<I> in, Collection<O> out, Function<I,O> f) {
 		for (I i : in) {
 			O o = f.apply(i);
 			if (o != null) {
-				out.add(f.apply(i));
+				out.add(o);
 			}
 		}
 	}
 
+	
+	
+	
+	
+	/**
+	 * @param ids
+	 * @param labels
+	 * @param idsToLabels
+	 */
+	public static <I,O> void map(Collection<I> in, Collection<O> out, Map<I, O> f) {
+		for (I i : in) {
+			O o = f.get(i);
+			if (o != null) {
+				out.add(o);
+			}
+		}
+	}
+
+	
+	
+	
 }
