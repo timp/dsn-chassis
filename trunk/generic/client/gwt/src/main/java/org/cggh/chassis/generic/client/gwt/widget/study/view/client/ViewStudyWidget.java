@@ -21,7 +21,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author raok
  *
  */
-public class ViewStudyWidget extends Composite implements ViewStudyWidgetAPI, StudyControllerPubSubViewAPI {
+public class ViewStudyWidget extends Composite implements StudyControllerPubSubViewAPI {
 
 	
 	
@@ -98,12 +98,18 @@ public class ViewStudyWidget extends Composite implements ViewStudyWidgetAPI, St
 		controller.loadStudyEntry(studyEntry);
 	}
 	
+	
+	
+	
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.client.gwt.widget.study.view.client.ViewStudyWidgetAPI#loadStudyByEntryURL(java.lang.String)
 	 */
 	public void loadStudyByEntryURL(String entryURL) {
 		controller.loadStudyEntryByURL(entryURL);
 	}
+	
+	
+	
 	
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.client.gwt.widget.study.view.client.ViewStudyWidgetAPI#addViewStudyWidgetListener(org.cggh.chassis.generic.client.gwt.widget.study.view.client.ViewStudyWidgetPubSubAPI)
@@ -112,6 +118,9 @@ public class ViewStudyWidget extends Composite implements ViewStudyWidgetAPI, St
 		listeners.add(listener);
 	}
 
+	
+	
+	
 	public void fireOnUserActionEditStudy(StudyEntry studyEntryToEdit) {
 		for (ViewStudyWidgetPubSubAPI listener : listeners ) {
 			listener.onUserActionEditStudy(studyEntryToEdit);
