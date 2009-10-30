@@ -98,17 +98,34 @@ public class SubmissionActionsPanel extends ChassisWidget {
 	@Override
 	protected void bindUI() {
 		log.enter("bindUI");
+		
+		// no model, so don't need to register handlers for model changes
 
-		HandlerRegistration a = this.editThisSubmissionAction.addClickHandler(new EditSubmissionActionClickHandler());
-		HandlerRegistration b = this.uploadDataFileAction.addClickHandler(new UploadDataFileActionClickHandler());
-
-		// store registrations so we can remove handlers later if necessary
-		this.uiEventHandlerRegistrations.add(a);
-		this.uiEventHandlerRegistrations.add(b);
+		this.registerHandlersForChildWidgetEvents();
 		
 		log.leave();
 
 	}
+
+	
+	
+	
+	/**
+	 * 
+	 */
+	private void registerHandlersForChildWidgetEvents() {
+		log.enter("registerHandlersForChildWidgetEvents");
+		
+		HandlerRegistration a = this.editThisSubmissionAction.addClickHandler(new EditSubmissionActionClickHandler());
+		HandlerRegistration b = this.uploadDataFileAction.addClickHandler(new UploadDataFileActionClickHandler());
+
+		// store registrations so we can remove handlers later if necessary
+		this.childWidgetEventHandlerRegistrations.add(a);
+		this.childWidgetEventHandlerRegistrations.add(b);
+		
+		log.leave();
+	}
+
 
 	
 	
