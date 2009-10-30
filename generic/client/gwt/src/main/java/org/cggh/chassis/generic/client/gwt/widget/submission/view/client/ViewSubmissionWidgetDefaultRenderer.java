@@ -5,13 +5,10 @@ package org.cggh.chassis.generic.client.gwt.widget.submission.view.client;
 
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
 import org.cggh.chassis.generic.client.gwt.common.client.CSS;
-import org.cggh.chassis.generic.client.gwt.common.client.RenderUtils;
 import org.cggh.chassis.generic.client.gwt.widget.submission.viewdatafiles.client.ViewSubmissionDataFilesWidget;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
@@ -24,24 +21,18 @@ import com.google.gwt.user.client.ui.Widget;
  * 
  */
 public class ViewSubmissionWidgetDefaultRenderer implements ViewSubmissionWidgetModel.Listener {
-	private Log log = LogFactory.getLog(this.getClass());	
+	private Log log = LogFactory.getLog(ViewSubmissionWidgetDefaultRenderer.class);	
 	
 	
 
 	FlowPanel loadingPanel = new FlowPanel();
 	FlowPanel mainPanel = new FlowPanel();
 
-	Anchor editThisSubmissionUI = new Anchor();
-	Anchor uploadDataFileUI = new Anchor();
-
 	final private Panel canvas;
-
 	private ViewSubmissionDataFilesWidget submissionDataFilesWidget;
-
 	private ViewSubmissionWidgetController controller;
-
-
 	private SubmissionPropertiesWidget submissionPropsWidget;
+	private ViewSubmissionWidget owner;
 
 
 
@@ -56,8 +47,9 @@ public class ViewSubmissionWidgetDefaultRenderer implements ViewSubmissionWidget
 	 * 
 	 * @param controller
 	 */
-	public ViewSubmissionWidgetDefaultRenderer(ViewSubmissionWidgetController controller) {
+	public ViewSubmissionWidgetDefaultRenderer(ViewSubmissionWidget owner, ViewSubmissionWidgetController controller) {
 
+		this.owner = owner;
 		this.canvas = new FlowPanel();
 		this.controller = controller;
 
@@ -85,7 +77,7 @@ public class ViewSubmissionWidgetDefaultRenderer implements ViewSubmissionWidget
 		this.canvas.add(this.loadingPanel);
 
 		Panel contentPanel = this.renderContentPanel();
-		FlowPanel actionsPanel = this.renderActionsPanel();
+		Widget actionsPanel = this.renderActionsPanel();
 
 		log.debug("prepare main panel");
 
@@ -134,40 +126,17 @@ public class ViewSubmissionWidgetDefaultRenderer implements ViewSubmissionWidget
 	/**
 	 * @return
 	 */
-	private FlowPanel renderActionsPanel() {
+	private Widget renderActionsPanel() {
 		log.enter("renderActionsPanel");
 		
-		this.editThisSubmissionUI = RenderUtils.renderActionAsAnchor("edit submission", new EditSubmissionClickHandler());
-		this.uploadDataFileUI = RenderUtils.renderActionAsAnchor("upload data file", new UploadDataFileClickHandler());
-
-		Widget[] actions = {
-			this.editThisSubmissionUI,
-			this.uploadDataFileUI
-		};
-		
-		FlowPanel actionsPanel = RenderUtils.renderActionsPanel(actions);
+		SubmissionActionsPanel actionsPanel = new SubmissionActionsPanel();
+		actionsPanel.addEditSubmissionActionHandler(this.owner);
+		actionsPanel.addUploadDataFileActionHandler(this.owner);
 		
 		log.leave();
 		return actionsPanel;
 	}
 
-
-
-
-
-	class EditSubmissionClickHandler implements ClickHandler {
-
-		public void onClick(ClickEvent arg0) {
-			controller.onUserActionEditThisSubmission();
-		}
-	}
-
-	class UploadDataFileClickHandler implements ClickHandler {
-		
-		public void onClick(ClickEvent arg0) {
-			controller.onUserActionUploadDataFile();
-		}
-	}
 
 	
 	
