@@ -4,15 +4,8 @@
 package org.cggh.chassis.generic.client.gwt.widget.submission.view.client;
 
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
-import org.cggh.chassis.generic.atom.submission.client.format.impl.SubmissionFactoryImpl;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
-import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
-import org.cggh.chassis.generic.atom.vanilla.client.protocol.impl.AtomServiceImpl;
-import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
-import org.cggh.chassis.generic.twisted.client.Deferred;
-import org.cggh.chassis.generic.twisted.client.Function;
 import org.cggh.chassis.generic.widget.client.ChassisWidget;
 
 import com.google.gwt.event.shared.HandlerRegistration;
@@ -28,9 +21,8 @@ public class ViewSubmissionWidget extends ChassisWidget {
 	
 	private Log log;
 	private ViewSubmissionWidgetModel model;
+	private ViewSubmissionWidgetController controller;
 	private ViewSubmissionWidgetDefaultRenderer renderer;
-	private SubmissionFactoryImpl submissionFactory;
-	private AtomService service;
 
 	
 	
@@ -55,12 +47,11 @@ public class ViewSubmissionWidget extends ChassisWidget {
 		log = LogFactory.getLog(ViewSubmissionWidget.class); // instantiate here because called from superclass constructor
 		log.enter("init");
 		
-		log.debug("instantiate helpers");
-		this.submissionFactory = new SubmissionFactoryImpl();
-		this.service = new AtomServiceImpl(this.submissionFactory);
-		
 		log.debug("instantiate a model");
 		this.model = new ViewSubmissionWidgetModel(this);
+		
+		log.debug("instantiate a controller");
+		this.controller = new ViewSubmissionWidgetController(this.model);
 		
 		log.debug("instantiate a renderer");
 		this.renderer = new ViewSubmissionWidgetDefaultRenderer(this);
@@ -69,7 +60,6 @@ public class ViewSubmissionWidget extends ChassisWidget {
 		this.renderer.setCanvas(this.contentBox);
 		
 		log.leave();
-		
 	}
 
 	
@@ -174,11 +164,8 @@ public class ViewSubmissionWidget extends ChassisWidget {
 	public void setSubmissionEntry(SubmissionEntry entry) {
 		log.enter("setSubmissionEntry");
 
-		this.model.setSubmissionEntry(entry);
-		this.model.setStatus(ViewSubmissionWidgetModel.STATUS_READY);
-
-		// should not need to do anything else, renderer will automatically
-		// update UI on submission entry change
+		// delegate to controller
+		this.controller.setSubmissionEntry(entry);
 		
 		log.leave();
 	}
@@ -190,48 +177,15 @@ public class ViewSubmissionWidget extends ChassisWidget {
 	public void retrieveSubmissionEntry(String submissionEntryUrl) {
 		log.enter("retrieveSubmissionEntry");
 		
-		log.debug("retrieving entry: " + submissionEntryUrl);
-
-		model.setStatus(ViewSubmissionWidgetModel.STATUS_RETRIEVE_PENDING);
-		
-		//request submissionEntry
-		Deferred<AtomEntry> deferred = service.getEntry(ConfigurationBean.getSubmissionFeedURL() + submissionEntryUrl);
-		
-		//add callbacks
-		deferred.addCallback(new RetrieveSubmissionEntryCallback());
-		deferred.addErrback(new RetrieveSubmissionEntryErrback());
+		// delegate to controller
+		this.controller.retrieveSubmissionEntry(submissionEntryUrl);
 		
 		log.leave();
 	}
 
 	
 	
-	
-	private class RetrieveSubmissionEntryCallback implements Function<SubmissionEntry,SubmissionEntry> {
-
-		public SubmissionEntry apply(SubmissionEntry submissionEntry) {
-			
-			model.setSubmissionEntry(submissionEntry);
-			model.setStatus(ViewSubmissionWidgetModel.STATUS_READY);
-
-			return submissionEntry;
-		}
 		
-	}
-	
-	
-	
-	
-	private class RetrieveSubmissionEntryErrback implements Function<Throwable,Throwable> {
-
-		public Throwable apply(Throwable error) {
-			model.setStatus(ViewSubmissionWidgetModel.STATUS_ERROR);
-			return error;
-		}
-		
-	}
-	
-	
 	
 	/**
 	 * Register interest in edit submission action events.
