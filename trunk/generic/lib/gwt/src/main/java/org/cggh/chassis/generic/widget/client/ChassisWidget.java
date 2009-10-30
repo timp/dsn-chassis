@@ -33,7 +33,7 @@ public abstract class ChassisWidget extends Composite {
 	/**
 	 * Set to store handler registrations so they can be removed if needed.
 	 */
-	protected Set<HandlerRegistration> uiEventHandlerRegistrations = new HashSet<HandlerRegistration>();
+	protected Set<HandlerRegistration> childWidgetEventHandlerRegistrations = new HashSet<HandlerRegistration>();
 
 	
 	
@@ -214,7 +214,7 @@ public abstract class ChassisWidget extends Composite {
 	
 	
 	protected void clearUIEventHandlers() {
-		for (HandlerRegistration hr : this.uiEventHandlerRegistrations) {
+		for (HandlerRegistration hr : this.childWidgetEventHandlerRegistrations) {
 			hr.removeHandler();
 		}
 	}
