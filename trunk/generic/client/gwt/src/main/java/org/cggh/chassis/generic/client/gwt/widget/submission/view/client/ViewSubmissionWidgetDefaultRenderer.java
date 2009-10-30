@@ -5,6 +5,7 @@ package org.cggh.chassis.generic.client.gwt.widget.submission.view.client;
 
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
 import org.cggh.chassis.generic.client.gwt.common.client.CSS;
+import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
 import org.cggh.chassis.generic.client.gwt.widget.submission.view.client.ViewSubmissionWidgetModel.ChangeHandler;
 import org.cggh.chassis.generic.client.gwt.widget.submission.view.client.ViewSubmissionWidgetModel.StatusChangeEvent;
 import org.cggh.chassis.generic.client.gwt.widget.submission.view.client.ViewSubmissionWidgetModel.SubmissionEntryChangeEvent;
@@ -308,10 +309,15 @@ public class ViewSubmissionWidgetDefaultRenderer extends ChassisWidgetRenderer i
 
 			// TODO handle error case (could use extra panel or pass error to
 			// parent)
+			
+			log.error("unexpected error", new Error("unexpected error"));
 
 		}
 		else {
-			throw new Error("unexpected status change"); // TODO review this
+
+			// TODO review this
+			log.error("unexpected status change", new Error("unexpected status change"));
+
 		}
 		
 	}
@@ -344,7 +350,7 @@ public class ViewSubmissionWidgetDefaultRenderer extends ChassisWidgetRenderer i
 		if (entry != null) {
 
 			this.submissionPropsWidget.setSubmissionEntry(entry);
-			this.submissionDataFilesWidget.loadDataFilesBySubmissionLink(entry.getEditLink().getHref());
+			this.submissionDataFilesWidget.loadDataFilesBySubmissionLink(Configuration.getSubmissionFeedURL() + entry.getEditLink().getHref());
 
 		}
 		else {
