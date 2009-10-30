@@ -66,28 +66,36 @@ public abstract class ChassisWidgetRenderer {
 
 
 
+	/**
+	 * TODO review this, often throws NPE or AssertionError
+	 */
 	protected void clearModelChangeHandlers() {
+		log.enter("clearModelChangeHandlers");
 		for (HandlerRegistration hr : this.modelChangeHandlerRegistrations) {
 			try {
 				hr.removeHandler();
 			}
-			catch (NullPointerException npe) {
-				log.warn("caught null pointer exception attempting to remove model change handler", npe);
+			catch (Throwable t) {
+				log.warn("caught throwable attempting to remove model change handler", t);
 			}
 		}
+		log.leave();
 	}
 	
 	
 	
 	
 
+	/**
+	 * TODO review this, often throws NPE
+	 */
 	protected void clearChildWidgetEventHandlers() {
 		for (HandlerRegistration hr : this.childWidgetEventHandlerRegistrations) {
 			try {
 				hr.removeHandler();
 			}
-			catch (NullPointerException npe) {
-				log.warn("caught null pointer exception attempting to remove child widget event handler", npe);
+			catch (Throwable t) {
+				log.warn("caught throwable attempting to remove child widget event handler", t);
 			}
 		}
 	}
