@@ -9,7 +9,7 @@ import org.cggh.chassis.generic.client.gwt.widget.submission.edit.client.EditSub
 import org.cggh.chassis.generic.client.gwt.widget.submission.uploaddatafile.client.UploadSubmissionDataFileWidget;
 import org.cggh.chassis.generic.client.gwt.widget.submission.uploaddatafile.client.UploadSubmissionDataFileWidgetAPI;
 import org.cggh.chassis.generic.client.gwt.widget.submission.view.client.NewViewSubmissionWidget;
-import org.cggh.chassis.generic.client.gwt.widget.submission.view.client.ViewSubmissionWidget;
+//import org.cggh.chassis.generic.client.gwt.widget.submission.view.client.ViewSubmissionWidget;
 import org.cggh.chassis.generic.client.gwt.widget.submission.viewsubmissions.client.ViewSubmissionsWidget;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;

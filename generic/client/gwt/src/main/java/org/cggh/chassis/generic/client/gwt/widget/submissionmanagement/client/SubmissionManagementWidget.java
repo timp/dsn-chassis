@@ -15,7 +15,7 @@ import org.cggh.chassis.generic.client.gwt.widget.submission.view.client.EditSub
 import org.cggh.chassis.generic.client.gwt.widget.submission.view.client.EditSubmissionActionHandler;
 import org.cggh.chassis.generic.client.gwt.widget.submission.view.client.UploadDataFileActionEvent;
 import org.cggh.chassis.generic.client.gwt.widget.submission.view.client.UploadDataFileActionHandler;
-import org.cggh.chassis.generic.client.gwt.widget.submission.view.client.ViewSubmissionWidgetPubSubAPI;
+//import org.cggh.chassis.generic.client.gwt.widget.submission.view.client.ViewSubmissionWidgetPubSubAPI;
 import org.cggh.chassis.generic.client.gwt.widget.submission.viewsubmissions.client.ViewSubmissionsWidgetPubSubAPI;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
