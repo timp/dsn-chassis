@@ -172,7 +172,7 @@
           <view>
             <select1 appearance="minimal">
               <label>Country?</label>
-              <items src="/chassis-generic-client-gwt/questionnaire/countries.en.xml"/>
+              <items src="countries.en.xml"/>
             </select1>
           </view>
         </question>
