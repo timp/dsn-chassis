@@ -222,7 +222,7 @@ public class RenderUtils {
 	 * @return a label
 	 */
 	public static Label renderAtomAuthorsAsLabel(Collection<AtomAuthor> authors, boolean inline) {
-		String text = RenderUtils.renderAtomAuthorsAsCommaDelimitedEmailString(authors);
+		String text = (authors == null) ? "" : RenderUtils.renderAtomAuthorsAsCommaDelimitedEmailString(authors);
 		if (inline) return new InlineLabel(text);
 		else return new Label(text);
 	}
@@ -241,7 +241,9 @@ public class RenderUtils {
 	 */
 	public static String renderModulesAsDelimitedString(Collection<String> ids, Map<String,String> idsToLabels, String delimiter) {
 		Collection<String> labels = new ArrayList<String>();
-		Functional.map(ids, labels, idsToLabels);
+		if (ids != null && idsToLabels != null) {
+			Functional.map(ids, labels, idsToLabels);
+		}
 		return RenderUtils.concatenate(labels, delimiter);
 	}
 	
@@ -274,7 +276,7 @@ public class RenderUtils {
 	 * @return
 	 */
 	public static Label renderModulesAsLabel(Collection<String> ids, Map<String,String> idsToLabels, boolean inline) {
-		String text = RenderUtils.renderModulesAsCommaDelimitedString(ids, idsToLabels);
+		String text = (ids == null || idsToLabels == null) ? "" : RenderUtils.renderModulesAsCommaDelimitedString(ids, idsToLabels);
 		if (inline) return new InlineLabel(text);
 		else return new Label(text);
 	}
@@ -311,8 +313,11 @@ public class RenderUtils {
 	 */
 	public static List<String> getEmails(Collection<AtomAuthor> in) {
 		List<String> out = new ArrayList<String>();
-		for (AtomAuthor a : in) {
-			out.add(a.getEmail());
+		if (in != null) {
+			for (AtomAuthor a : in) {
+				String email = a.getEmail();
+				if (email != null) out.add(email);
+			}
 		}
 		return out;
 	}

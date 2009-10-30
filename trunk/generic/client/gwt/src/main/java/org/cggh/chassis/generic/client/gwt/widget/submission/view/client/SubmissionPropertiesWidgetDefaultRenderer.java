@@ -16,7 +16,7 @@ import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewS
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.ChangeEvent;
-import org.cggh.chassis.generic.widget.client.WidgetRenderer;
+import org.cggh.chassis.generic.widget.client.ChassisWidgetRenderer;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
@@ -26,7 +26,7 @@ import com.google.gwt.user.client.ui.Label;
  * @author aliman
  *
  */
-public class SubmissionPropertiesWidgetDefaultRenderer extends WidgetRenderer implements SubmissionPropertiesWidgetModelListener {
+public class SubmissionPropertiesWidgetDefaultRenderer extends ChassisWidgetRenderer implements SubmissionPropertiesWidgetModelListener {
 	
 	
 	
@@ -103,20 +103,24 @@ public class SubmissionPropertiesWidgetDefaultRenderer extends WidgetRenderer im
 	
 	
 	/**
-	 * 
+	 * Completely synchronise the UI with the current state of the model.
 	 */
 	public void syncUI() {
 		log.enter("syncUI");
+		
+		if (this.model != null) {
 
-		if (this.model.getSubmissionEntry() != null) {
-			this.syncTitle();
-			this.syncSummary();
-			this.syncCreated();
-			this.syncUpdated();
-			this.syncId();
-			this.syncOwners();
-			this.syncModules();
-			this.syncStudies();
+			log.debug("sync submission entry");
+			SubmissionEntry entry = this.model.getSubmissionEntry();
+			this.updateSubmissionProperties(entry);
+
+		}
+		else {
+
+			// TODO could this method legitimately be called when model is null,
+			// or should we throw an error here if model is null?
+			log.warn("model is null, not updating anything");
+
 		}
 		
 		log.leave();
@@ -126,8 +130,46 @@ public class SubmissionPropertiesWidgetDefaultRenderer extends WidgetRenderer im
 	
 	
 	
-	private void syncTitle() {
-		titleLabel.setText(this.model.getSubmissionEntry().getTitle());
+	/**
+	 * @param entry
+	 */
+	private void updateSubmissionProperties(SubmissionEntry entry) {
+		log.enter("updateSubmissionProperties");
+		
+		if (entry != null) {
+			
+			this.updateTitleLabel(entry.getTitle());
+			this.updateSummaryLabel(entry.getSummary());
+			this.updateDateCreatedLabel(entry.getPublished());
+			this.updateDateUpdatedLabel(entry.getUpdated());
+			this.updateIdLabel(entry.getId());
+			this.updateOwnersLabel(entry.getAuthors());
+			this.updateModulesLabel(entry.getModules());
+			this.updateStudiesWidget(entry);
+
+		}
+		else {
+
+			this.updateTitleLabel(null);
+			this.updateSummaryLabel(null);
+			this.updateDateCreatedLabel(null);
+			this.updateDateUpdatedLabel(null);
+			this.updateIdLabel(null);
+			this.updateOwnersLabel(null);
+			this.updateModulesLabel(null);
+			this.updateStudiesWidget(null);
+
+		}
+		
+		log.leave();
+	}
+
+
+
+
+	private void updateTitleLabel(String title) {
+		if (title == null) title = "";
+		titleLabel.setText(title);
 	}
 
 	
@@ -135,8 +177,9 @@ public class SubmissionPropertiesWidgetDefaultRenderer extends WidgetRenderer im
 	
 
 
-	private void syncSummary() {
-		summaryLabel.setText(this.model.getSubmissionEntry().getSummary());
+	private void updateSummaryLabel(String summary) {
+		if (summary == null) summary = "";
+		summaryLabel.setText(summary);
 	}
 
 	
@@ -144,20 +187,24 @@ public class SubmissionPropertiesWidgetDefaultRenderer extends WidgetRenderer im
 	
 	
 	
-	private void syncStudies() {
-		// TODO should this logic go elsewhere? or OK here?
-		StudyQuery query = new StudyQuery();
-		query.setAuthorEmail(ChassisUser.getCurrentUserEmail());
-		query.setSubmissionUrl(this.model.getSubmissionEntry().getEditLink().getHref());
-		studiesLinkedWidget.loadStudies(query);
+	private void updateStudiesWidget(SubmissionEntry submissionEntry) {
+		if (submissionEntry != null) {
+			// TODO should this logic go elsewhere? or OK here?
+			StudyQuery query = new StudyQuery();
+			query.setAuthorEmail(ChassisUser.getCurrentUserEmail());
+			query.setSubmissionUrl(submissionEntry.getEditLink().getHref());
+			studiesLinkedWidget.loadStudies(query);
+		}
+		else {
+			// TODO clear studiesLinkedWidget somehow?
+		}
 	}
 
 
 	
 	
-	private void syncModules() {
+	private void updateModulesLabel(List<String> moduleIds) {
 
-		List<String> moduleIds = this.model.getSubmissionEntry().getModules();
 		Label answer = RenderUtils.renderModulesAsLabel(moduleIds, ConfigurationBean.getModules(), true);
 		answer.addStyleName(CSS.COMMON_ANSWER);
 
@@ -172,9 +219,8 @@ public class SubmissionPropertiesWidgetDefaultRenderer extends WidgetRenderer im
 	
 	
 	
-	private void syncOwners() {
+	private void updateOwnersLabel(List<AtomAuthor> owners) {
 
-		List<AtomAuthor> owners = this.model.getSubmissionEntry().getAuthors();
 		Label answer = RenderUtils.renderAtomAuthorsAsLabel(owners, true);
 		answer.addStyleName(CSS.COMMON_ANSWER);
 
@@ -185,22 +231,25 @@ public class SubmissionPropertiesWidgetDefaultRenderer extends WidgetRenderer im
 
 
 	
-	private void syncCreated() {
-		this.createdLabel.setText(this.model.getSubmissionEntry().getPublished());
+	private void updateDateCreatedLabel(String created) {
+		if (created == null) created = "";
+		this.createdLabel.setText(created);
 	}
 
 	
 	
 	
-	private void syncUpdated() {
-		this.updatedLabel.setText(this.model.getSubmissionEntry().getUpdated());
+	private void updateDateUpdatedLabel(String updated) {
+		if (updated == null) updated = "";
+		this.updatedLabel.setText(updated);
 	}
 
 	
 	
 	
-	private void syncId() {
-		this.idLabel.setText(this.model.getSubmissionEntry().getId());
+	private void updateIdLabel(String id) {
+		if (id == null) id = "";
+		this.idLabel.setText(id);
 	}
 
 	
@@ -211,7 +260,7 @@ public class SubmissionPropertiesWidgetDefaultRenderer extends WidgetRenderer im
 	 * 
 	 */
 	public void unbindUI() {
-		log.enter("detachUI");
+		log.enter("unbindUI");
 		
 		// detach from model
 		if (this.model != null) this.model.removeListener(this);
@@ -232,7 +281,7 @@ public class SubmissionPropertiesWidgetDefaultRenderer extends WidgetRenderer im
 	public void onSubmissionEntryChanged(ChangeEvent<SubmissionEntry> e) {
 		log.enter("onSubmissionEntryChanged");
 		
-		this.syncUI();
+		this.updateSubmissionProperties(e.getAfter());
 		
 		log.leave();
 		
