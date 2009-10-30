@@ -6,9 +6,10 @@ package org.cggh.chassis.generic.client.gwt.widget.submission.view.client;
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
 import org.cggh.chassis.generic.client.gwt.common.client.CSS;
 import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
-import org.cggh.chassis.generic.client.gwt.widget.submission.view.client.ViewSubmissionWidgetModel.ChangeHandler;
 import org.cggh.chassis.generic.client.gwt.widget.submission.view.client.ViewSubmissionWidgetModel.StatusChangeEvent;
+import org.cggh.chassis.generic.client.gwt.widget.submission.view.client.ViewSubmissionWidgetModel.StatusChangeHandler;
 import org.cggh.chassis.generic.client.gwt.widget.submission.view.client.ViewSubmissionWidgetModel.SubmissionEntryChangeEvent;
+import org.cggh.chassis.generic.client.gwt.widget.submission.view.client.ViewSubmissionWidgetModel.SubmissionEntryChangeHandler;
 import org.cggh.chassis.generic.client.gwt.widget.submission.viewdatafiles.client.ViewSubmissionDataFilesWidget;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
@@ -24,7 +25,7 @@ import com.google.gwt.user.client.ui.Panel;
  * @author aliman
  *
  */
-public class ViewSubmissionWidgetDefaultRenderer extends ChassisWidgetRenderer implements ChangeHandler {
+public class ViewSubmissionWidgetDefaultRenderer extends ChassisWidgetRenderer {
 
 	
 	
@@ -154,8 +155,29 @@ public class ViewSubmissionWidgetDefaultRenderer extends ChassisWidgetRenderer i
 	private void registerHandlersForModelChanges() {
 		log.enter("registerHandlersForModelChanges");
 		
-		HandlerRegistration a = this.model.addStatusChangeHandler(this);
-		HandlerRegistration b = this.model.addSubmissionEntryChangeHandler(this);
+		HandlerRegistration a = this.model.addStatusChangeHandler(new StatusChangeHandler() {
+			
+			public void onStatusChanged(StatusChangeEvent e) {
+				log.enter("onStatusChanged");
+				
+				log.debug("before: "+e.getBefore()+"; after: "+e.getAfter());
+				
+				updatePanelVisibility(e.getAfter());
+				
+				log.leave();
+			}
+		});
+		
+		HandlerRegistration b = this.model.addSubmissionEntryChangeHandler(new SubmissionEntryChangeHandler() {
+			
+			public void onSubmissionEntryChanged(SubmissionEntryChangeEvent e) {
+				log.enter("onSubmissionEntryChanged");
+				
+				updateSubmissionInfo(e.getAfter());
+				
+				log.leave();
+			}
+		});
 
 		// store registrations so can remove later if necessary
 		this.modelChangeHandlerRegistrations.add(a);
@@ -267,22 +289,6 @@ public class ViewSubmissionWidgetDefaultRenderer extends ChassisWidgetRenderer i
 	}
 
 
-
-
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.client.gwt.widget.submission.view.client.NewViewSubmissionWidgetModel.ChangeHandler#onStatusChanged(org.cggh.chassis.generic.client.gwt.widget.submission.view.client.NewViewSubmissionWidgetModel.StatusChangeEvent)
-	 */
-	public void onStatusChanged(StatusChangeEvent e) {
-		log.enter("onStatusChanged");
-		
-		log.debug("before: "+e.getBefore()+"; after: "+e.getAfter());
-		
-		this.updatePanelVisibility(e.getAfter());
-		
-		log.leave();
-	}
-	
-	
 	
 	
 	private void updatePanelVisibility(int status) {
@@ -324,22 +330,6 @@ public class ViewSubmissionWidgetDefaultRenderer extends ChassisWidgetRenderer i
 
 
 
-
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.client.gwt.widget.submission.view.client.NewViewSubmissionWidgetModel.ChangeHandler#onSubmissionEntryChanged(org.cggh.chassis.generic.client.gwt.widget.submission.view.client.NewViewSubmissionWidgetModel.SubmissionEntryChangeEvent)
-	 */
-	public void onSubmissionEntryChanged(SubmissionEntryChangeEvent e) {
-		log.enter("onSubmissionEntryChanged");
-		
-		this.updateSubmissionInfo(e.getAfter());
-		
-		log.leave();
-		
-	}
-	
-	
-	
-	
 
 	/**
 	 * @param after

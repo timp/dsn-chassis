@@ -4,7 +4,7 @@
 package org.cggh.chassis.generic.client.gwt.widget.submission.view.client;
 
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
-import org.cggh.chassis.generic.client.gwt.widget.submission.view.client.SubmissionPropertiesWidgetModel.ChangeHandler;
+import org.cggh.chassis.generic.client.gwt.widget.submission.view.client.SubmissionPropertiesWidgetModel.SubmissionEntryChangeHandler;
 import org.cggh.chassis.generic.client.gwt.widget.submission.view.client.SubmissionPropertiesWidgetModel.SubmissionEntryChangeEvent;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
@@ -106,9 +106,17 @@ public class ViewSubmissionWidgetModel extends ChassisWidgetModel {
 	
 	
 	
-	public interface ChangeHandler extends ModelChangeHandler {
+	public interface StatusChangeHandler extends ModelChangeHandler {
 		
 		public void onStatusChanged(StatusChangeEvent e);
+
+	}
+	
+	
+	
+	
+	public interface SubmissionEntryChangeHandler extends ModelChangeHandler {
+		
 		public void onSubmissionEntryChanged(SubmissionEntryChangeEvent e);
 
 	}
@@ -116,17 +124,17 @@ public class ViewSubmissionWidgetModel extends ChassisWidgetModel {
 	
 	
 	
-	public static class StatusChangeEvent extends ModelChangeEvent<Integer, ChangeHandler> {
+	public static class StatusChangeEvent extends ModelChangeEvent<Integer, StatusChangeHandler> {
 
-		public static final Type<ChangeHandler> TYPE = new Type<ChangeHandler>();
+		public static final Type<StatusChangeHandler> TYPE = new Type<StatusChangeHandler>();
 			
 		public StatusChangeEvent(Integer before, Integer after) { super(before, after); }
 
 		@Override
-		protected void dispatch(ChangeHandler handler) { handler.onStatusChanged(this); }
+		protected void dispatch(StatusChangeHandler handler) { handler.onStatusChanged(this); }
 
 		@Override
-		public Type<ChangeHandler> getAssociatedType() { return TYPE; }
+		public Type<StatusChangeHandler> getAssociatedType() { return TYPE; }
 		
 	}
 	
@@ -134,35 +142,35 @@ public class ViewSubmissionWidgetModel extends ChassisWidgetModel {
 	
 	
 
-	public static class SubmissionEntryChangeEvent extends ModelChangeEvent<SubmissionEntry, ChangeHandler> {
+	public static class SubmissionEntryChangeEvent extends ModelChangeEvent<SubmissionEntry, SubmissionEntryChangeHandler> {
 
-		public static final Type<ChangeHandler> TYPE = new Type<ChangeHandler>();
+		public static final Type<SubmissionEntryChangeHandler> TYPE = new Type<SubmissionEntryChangeHandler>();
 			
 		public SubmissionEntryChangeEvent(SubmissionEntry before, SubmissionEntry after) { super(before, after); }
 
 		@Override
-		protected void dispatch(ChangeHandler handler) { handler.onSubmissionEntryChanged(this); }
+		protected void dispatch(SubmissionEntryChangeHandler handler) { handler.onSubmissionEntryChanged(this); }
 
 		@Override
-		public Type<ChangeHandler> getAssociatedType() { return TYPE; }
+		public Type<SubmissionEntryChangeHandler> getAssociatedType() { return TYPE; }
 		
 	}
 	
 	
 	
 	
-	public HandlerRegistration addSubmissionEntryChangeHandler(ChangeHandler h) {
-		return this.addChangeHandler(h, SubmissionEntryChangeEvent.TYPE);
-	}
-	
-	
-	
-	
-	public HandlerRegistration addStatusChangeHandler(ChangeHandler h) {
+	public HandlerRegistration addStatusChangeHandler(StatusChangeHandler h) {
 		return this.addChangeHandler(h, StatusChangeEvent.TYPE);
 	}
 
 
 
+	
+	public HandlerRegistration addSubmissionEntryChangeHandler(SubmissionEntryChangeHandler h) {
+		return this.addChangeHandler(h, SubmissionEntryChangeEvent.TYPE);
+	}
+	
+	
+	
 	
 }

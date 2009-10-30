@@ -81,7 +81,7 @@ public class SubmissionPropertiesWidgetModel extends ChassisWidgetModel {
 
 	
 
-	public HandlerRegistration addSubmissionEntryChangeHandler(ChangeHandler h) {
+	public HandlerRegistration addSubmissionEntryChangeHandler(SubmissionEntryChangeHandler h) {
 		return this.addChangeHandler(h, SubmissionEntryChangeEvent.TYPE);
 	}
 	
@@ -89,7 +89,7 @@ public class SubmissionPropertiesWidgetModel extends ChassisWidgetModel {
 	
 	
 	
-	public interface ChangeHandler extends ModelChangeHandler {
+	public interface SubmissionEntryChangeHandler extends ModelChangeHandler {
 		
 		public void onSubmissionEntryChanged(SubmissionEntryChangeEvent e);
 
@@ -99,23 +99,17 @@ public class SubmissionPropertiesWidgetModel extends ChassisWidgetModel {
 	
 	
 	
-	public static class SubmissionEntryChangeEvent extends ModelChangeEvent<SubmissionEntry, ChangeHandler> {
+	public static class SubmissionEntryChangeEvent extends ModelChangeEvent<SubmissionEntry, SubmissionEntryChangeHandler> {
 
-		public static final Type<ChangeHandler> TYPE = new Type<ChangeHandler>();
+		public static final Type<SubmissionEntryChangeHandler> TYPE = new Type<SubmissionEntryChangeHandler>();
 			
-		public SubmissionEntryChangeEvent(SubmissionEntry before, SubmissionEntry after) {
-			super(before, after);
-		}
+		public SubmissionEntryChangeEvent(SubmissionEntry before, SubmissionEntry after) { super(before, after); }
 
 		@Override
-		protected void dispatch(ChangeHandler handler) {
-			handler.onSubmissionEntryChanged(this);
-		}
+		protected void dispatch(SubmissionEntryChangeHandler handler) { handler.onSubmissionEntryChanged(this); }
 
 		@Override
-		public Type<ChangeHandler> getAssociatedType() {
-			return TYPE;
-		}
+		public Type<SubmissionEntryChangeHandler> getAssociatedType() { return TYPE; }
 		
 	}
 	

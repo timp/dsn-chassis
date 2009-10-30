@@ -9,7 +9,6 @@ import org.cggh.chassis.generic.atom.submission.client.format.impl.SubmissionFac
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.impl.AtomServiceImpl;
-import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.twisted.client.Deferred;
@@ -54,7 +53,10 @@ public class ViewSubmissionWidgetController {
 	public void setSubmissionEntry(SubmissionEntry entry) {
 		log.enter("setSubmissionEntry");
 
+		this.model.setStatus(ViewSubmissionWidgetModel.STATUS_RETRIEVE_PENDING); // simulate retrieve
+		
 		this.model.setSubmissionEntry(entry);
+
 		this.model.setStatus(ViewSubmissionWidgetModel.STATUS_READY);
 
 		// should not need to do anything else, renderer will automatically

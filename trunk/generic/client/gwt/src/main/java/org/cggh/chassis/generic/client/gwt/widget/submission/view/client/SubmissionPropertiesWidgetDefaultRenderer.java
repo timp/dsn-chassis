@@ -14,6 +14,7 @@ import org.cggh.chassis.generic.client.gwt.common.client.RenderUtils;
 import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
 import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidget;
 import org.cggh.chassis.generic.client.gwt.widget.submission.view.client.SubmissionPropertiesWidgetModel.SubmissionEntryChangeEvent;
+import org.cggh.chassis.generic.client.gwt.widget.submission.view.client.SubmissionPropertiesWidgetModel.SubmissionEntryChangeHandler;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.ChassisWidgetRenderer;
@@ -28,8 +29,7 @@ import com.google.gwt.user.client.ui.Label;
  *
  */
 public class SubmissionPropertiesWidgetDefaultRenderer 
-			extends ChassisWidgetRenderer 
-			implements SubmissionPropertiesWidgetModel.ChangeHandler {
+			extends ChassisWidgetRenderer {
 	
 	
 	
@@ -113,8 +113,18 @@ public class SubmissionPropertiesWidgetDefaultRenderer
 	private void registerHandlersForModelChanges() {
 		log.enter("registerHandlersForModelChanges");
 		
-		// register this as handler for model property change events
-		HandlerRegistration a = this.model.addSubmissionEntryChangeHandler(this);
+		// register handler for model property change events
+		HandlerRegistration a = this.model.addSubmissionEntryChangeHandler(new SubmissionEntryChangeHandler() {
+			
+			public void onSubmissionEntryChanged(SubmissionEntryChangeEvent e) {
+				log.enter("onSubmissionEntryChanged");
+				
+				updateSubmissionProperties(e.getAfter());
+				
+				log.leave();
+				
+			}
+		});
 		
 		// store registrations so can remove later if necessary
 		this.modelChangeHandlerRegistrations.add(a);
@@ -287,21 +297,6 @@ public class SubmissionPropertiesWidgetDefaultRenderer
 		
 		// detach from child widgets
 		// not needed for this widget
-		
-		log.leave();
-		
-	}
-
-
-
-
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.client.gwt.widget.submission.view.client.SubmissionPropertiesWidgetModel.ChangeHandler#onSubmissionEntryChanged(org.cggh.chassis.generic.client.gwt.widget.submission.view.client.SubmissionPropertiesWidgetModel.SubmissionEntryChangeEvent)
-	 */
-	public void onSubmissionEntryChanged(SubmissionEntryChangeEvent e) {
-		log.enter("onSubmissionEntryChanged");
-		
-		this.updateSubmissionProperties(e.getAfter());
 		
 		log.leave();
 		
