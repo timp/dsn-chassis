@@ -3,33 +3,32 @@
  */
 package org.cggh.chassis.generic.widget.client;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
+
+import com.google.gwt.event.shared.GwtEvent;
+import com.google.gwt.event.shared.HandlerRegistration;
 
 /**
  * @author aliman
  *
  */
-public abstract class ChassisWidgetModel<L> {
+public abstract class ChassisWidgetModel {
 	
 	
 	
 	
 	private Log log = LogFactory.getLog(ChassisWidgetModel.class);
+	protected ChassisWidget owner;
 	
 	
 	
 	
-	protected Set<L> listeners = new HashSet<L>();
 	
-	
-	
-	
-	public ChassisWidgetModel() {
+	public ChassisWidgetModel(ChassisWidget owner) {
 		log.enter("<constructor>");
+		
+		this.owner = owner;
 		
 		log.debug("call init()");
 		this.init();
@@ -40,22 +39,18 @@ public abstract class ChassisWidgetModel<L> {
 	
 	
 	
-	public void addListener(L listener) {
-		this.listeners.add(listener);
+	protected <H extends ModelChangeHandler> HandlerRegistration addChangeHandler(H handler, GwtEvent.Type<H> type) {
+		// use owner to manage change event handlers
+		return this.owner.addEventHandler(handler, type);
 	}
 	
 	
 	
 	
-	public void removeListener(L listener) {
-		this.listeners.remove(listener);
-	}
 	
-	
-	
-	
-	public void clearListeners() {
-		this.listeners.clear();
+	protected <T, H extends ModelChangeHandler> void fireChangeEvent(ModelChangeEvent<T, H> e) {
+		// use owner to manage change event handlers
+		this.owner.fireEvent(e);
 	}
 	
 	

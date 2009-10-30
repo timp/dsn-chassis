@@ -3,9 +3,13 @@
  */
 package org.cggh.chassis.generic.widget.client;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.Panel;
 
 /**
@@ -23,6 +27,14 @@ public abstract class ChassisWidgetRenderer {
 
 	protected Panel canvas;
 	
+	
+	
+	
+	/**
+	 * Set to store model change handler registrations so they can be removed if needed.
+	 */
+	protected Set<HandlerRegistration> modelChangeHandlerRegistrations = new HashSet<HandlerRegistration>();
+
 	
 	
 	
@@ -45,6 +57,21 @@ public abstract class ChassisWidgetRenderer {
 
 
 
+
+	protected void clearModelChangeHandlers() {
+		for (HandlerRegistration hr : this.modelChangeHandlerRegistrations) {
+			try {
+				hr.removeHandler();
+			}
+			catch (NullPointerException npe) {
+				log.warn("caught null pointer exception attempting to remove model change handler", npe);
+			}
+		}
+	}
+	
+	
+	
+	
 
 	
 }

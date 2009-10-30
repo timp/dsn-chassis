@@ -3,10 +3,15 @@
  */
 package org.cggh.chassis.generic.widget.client;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 
-import com.google.gwt.event.shared.HandlerManager;
+import com.google.gwt.event.shared.EventHandler;
+import com.google.gwt.event.shared.GwtEvent;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 
@@ -20,14 +25,25 @@ public abstract class ChassisWidget extends Composite {
 	
 	
 	private Log log = LogFactory.getLog(ChassisWidget.class);
+	
+	
+	
+	
+	
+	/**
+	 * Set to store handler registrations so they can be removed if needed.
+	 */
+	protected Set<HandlerRegistration> uiEventHandlerRegistrations = new HashSet<HandlerRegistration>();
 
+	
 	
 	
 	/**
 	 * The outer panel that this composite widget wraps.
 	 */
-	protected FlowPanel boundingBox = new FlowPanel();
+	private FlowPanel boundingBox = new FlowPanel();
 
+	
 	
 	
 	/**
@@ -37,15 +53,6 @@ public abstract class ChassisWidget extends Composite {
 
 
 
-	
-	/** 
-	 * Handler manager for this widget.
-	 */
-	protected HandlerManager handlerManager;
-	
-	
-	
-	
 	
 	/**
 	 * Construct a widget.
@@ -202,6 +209,30 @@ public abstract class ChassisWidget extends Composite {
 	
 	
 	protected abstract String getName();
+	
+	
+	
+	
+	protected void clearUIEventHandlers() {
+		for (HandlerRegistration hr : this.uiEventHandlerRegistrations) {
+			hr.removeHandler();
+		}
+	}
+	
+	
+	
+	
+	/**
+	 * Expose Widget.addHandler() to package so it can be used by ChassisWidgetModel.
+	 * 
+	 * @param <H>
+	 * @param handler
+	 * @param type
+	 * @return
+	 */
+	final <H extends EventHandler> HandlerRegistration addEventHandler(H handler, GwtEvent.Type<H> type) {
+		return this.addHandler(handler, type);
+	}
 	
 	
 	
