@@ -6,14 +6,17 @@ package org.cggh.chassis.generic.client.gwt.widget.submission.view.client;
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
-import org.cggh.chassis.generic.widget.client.ChangeEvent;
+import org.cggh.chassis.generic.widget.client.ModelChangeEvent;
+import org.cggh.chassis.generic.widget.client.ModelChangeHandler;
 import org.cggh.chassis.generic.widget.client.ChassisWidgetModel;
+
+import com.google.gwt.event.shared.HandlerRegistration;
 
 /**
  * @author aliman
  *
  */
-public class SubmissionPropertiesWidgetModel extends ChassisWidgetModel<SubmissionPropertiesWidgetModelListener> {
+public class SubmissionPropertiesWidgetModel extends ChassisWidgetModel {
 
 	
 	
@@ -23,6 +26,34 @@ public class SubmissionPropertiesWidgetModel extends ChassisWidgetModel<Submissi
 	
 	
 	private SubmissionEntry entry;
+	
+	
+	
+	
+	public SubmissionPropertiesWidgetModel(SubmissionPropertiesWidget owner) {
+		super(owner);
+	}
+	
+	
+
+	
+	
+	/**
+	 * Set up initial state of model.
+	 * 
+	 * @see org.cggh.chassis.generic.widget.client.WidgetModel#init()
+	 */
+	@Override
+	protected void init() {
+		log = LogFactory.getLog(SubmissionPropertiesWidgetModel.class); // need to instantiate log here because init() is called from superclass constructor
+		log.enter("init");
+		
+		this.entry = null;
+		
+		log.leave();
+		
+	}
+	
 	
 	
 	
@@ -41,41 +72,50 @@ public class SubmissionPropertiesWidgetModel extends ChassisWidgetModel<Submissi
 	 * @param entry the entry to set
 	 */
 	public void setSubmissionEntry(SubmissionEntry entry) {
-		ChangeEvent<SubmissionEntry> e = new ChangeEvent<SubmissionEntry>(this.entry, entry);
+		SubmissionEntryChangeEvent e = new SubmissionEntryChangeEvent(this.entry, entry);
 		this.entry = entry;
-		this.fireOnSubmissionEntryChanged(e);
+		this.fireChangeEvent(e);
 	}
 
 
 
 	
-	/**
-	 * @param e
-	 */
-	private void fireOnSubmissionEntryChanged(ChangeEvent<SubmissionEntry> e) {
-		log.enter("fireOnSubmissionEntryChanged");
-		
-		for (SubmissionPropertiesWidgetModelListener l : listeners) {
-			l.onSubmissionEntryChanged(e);
-		}
-		
-		log.leave();
+
+	public HandlerRegistration addSubmissionEntryChangeHandler(ChangeHandler h) {
+		return this.addChangeHandler(h, SubmissionEntryChangeEvent.TYPE);
 	}
-
-
-
-
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.widget.client.WidgetModel#init()
-	 */
-	@Override
-	protected void init() {
-		log = LogFactory.getLog(SubmissionPropertiesWidgetModel.class); // need to instantiate here because init() is called from superclass constructor
-		log.enter("init");
+	
+	
+	
+	
+	
+	public interface ChangeHandler extends ModelChangeHandler {
 		
-		this.entry = null;
-		
-		log.leave();
+		public void onSubmissionEntryChanged(SubmissionEntryChangeEvent e);
+
+	}
+	
+	
+	
+	
+	
+	public static class SubmissionEntryChangeEvent extends ModelChangeEvent<SubmissionEntry, ChangeHandler> {
+
+		public static final Type<ChangeHandler> TYPE = new Type<ChangeHandler>();
+			
+		public SubmissionEntryChangeEvent(SubmissionEntry before, SubmissionEntry after) {
+			super(before, after);
+		}
+
+		@Override
+		protected void dispatch(ChangeHandler handler) {
+			handler.onSubmissionEntryChanged(this);
+		}
+
+		@Override
+		public Type<ChangeHandler> getAssociatedType() {
+			return TYPE;
+		}
 		
 	}
 	

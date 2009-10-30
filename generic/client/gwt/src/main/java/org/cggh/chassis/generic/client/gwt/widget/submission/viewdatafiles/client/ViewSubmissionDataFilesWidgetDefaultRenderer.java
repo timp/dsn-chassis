@@ -59,7 +59,7 @@ public class ViewSubmissionDataFilesWidgetDefaultRenderer implements ViewSubmiss
 
 		canvas.addStyleName(CSS.VIEWSUBMISSIONDATAFILES_BASE);
 		
-		this.canvas.add(new HTML("<p>Listed below are the uploaded data files associated with this submission.</p>"));
+		this.canvas.add(new HTML("<p>The following data files are associated with this submission...</p>"));
 
 		this.loadingPanel.add(new Label("Loading..."));
 		this.loadingPanel.setVisible(false);
