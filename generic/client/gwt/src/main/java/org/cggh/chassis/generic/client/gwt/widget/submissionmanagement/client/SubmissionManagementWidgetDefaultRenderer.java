@@ -8,8 +8,7 @@ import org.cggh.chassis.generic.client.gwt.widget.submission.create.client.Creat
 import org.cggh.chassis.generic.client.gwt.widget.submission.edit.client.EditSubmissionWidget;
 import org.cggh.chassis.generic.client.gwt.widget.submission.uploaddatafile.client.UploadSubmissionDataFileWidget;
 import org.cggh.chassis.generic.client.gwt.widget.submission.uploaddatafile.client.UploadSubmissionDataFileWidgetAPI;
-import org.cggh.chassis.generic.client.gwt.widget.submission.view.client.NewViewSubmissionWidget;
-//import org.cggh.chassis.generic.client.gwt.widget.submission.view.client.ViewSubmissionWidget;
+import org.cggh.chassis.generic.client.gwt.widget.submission.view.client.ViewSubmissionWidget;
 import org.cggh.chassis.generic.client.gwt.widget.submission.viewsubmissions.client.ViewSubmissionsWidget;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
@@ -58,8 +57,7 @@ public class SubmissionManagementWidgetDefaultRenderer implements SubmissionMana
 	
 	//child widgets made package private to allow parent widget to access them
 	final CreateSubmissionWidget createSubmissionWidget; 
-//	final ViewSubmissionWidget viewSubmissionWidget;
-	final NewViewSubmissionWidget viewSubmissionWidget;
+	final ViewSubmissionWidget viewSubmissionWidget;
 	final ViewSubmissionsWidget viewAllSubmissionsWidget;
 	final EditSubmissionWidget editSubmissionWidget;
 	private MenuBar menu;
@@ -83,8 +81,7 @@ public class SubmissionManagementWidgetDefaultRenderer implements SubmissionMana
 
 		//TODO Remove use of canvas paramter constructors 
 		//create child widgets
-//		this.viewSubmissionWidget = new ViewSubmissionWidget();
-		this.viewSubmissionWidget = new NewViewSubmissionWidget();
+		this.viewSubmissionWidget = new ViewSubmissionWidget();
 		this.createSubmissionWidget = new CreateSubmissionWidget();
 		this.viewAllSubmissionsWidget = new ViewSubmissionsWidget();
 		this.editSubmissionWidget = new EditSubmissionWidget();
@@ -155,9 +152,6 @@ public class SubmissionManagementWidgetDefaultRenderer implements SubmissionMana
 		if (after == SubmissionManagementWidgetModel.DISPLAYING_CREATE_SUBMISSION) {
 			
 			displayCanvas.clear();
-
-			// TODO
-//			createSubmissionWidget.setUpNewSubmission(ChassisUser.getCurrentUserEmail());
 
 			displayCanvas.add(createSubmissionWidget);
 			createSubmissionWidget.render();

@@ -21,14 +21,14 @@ import com.google.gwt.event.shared.HandlerRegistration;
  * @author aliman
  *
  */
-public class NewViewSubmissionWidget extends ChassisWidget {
+public class ViewSubmissionWidget extends ChassisWidget {
 
 	
 	
 	
 	private Log log;
-	private NewViewSubmissionWidgetModel model;
-	private NewViewSubmissionWidgetDefaultRenderer renderer;
+	private ViewSubmissionWidgetModel model;
+	private ViewSubmissionWidgetDefaultRenderer renderer;
 	private SubmissionFactoryImpl submissionFactory;
 	private AtomService service;
 
@@ -52,7 +52,7 @@ public class NewViewSubmissionWidget extends ChassisWidget {
 	 */
 	@Override
 	public void init() {
-		log = LogFactory.getLog(NewViewSubmissionWidget.class); // instantiate here because called from superclass constructor
+		log = LogFactory.getLog(ViewSubmissionWidget.class); // instantiate here because called from superclass constructor
 		log.enter("init");
 		
 		log.debug("instantiate helpers");
@@ -60,10 +60,10 @@ public class NewViewSubmissionWidget extends ChassisWidget {
 		this.service = new AtomServiceImpl(this.submissionFactory);
 		
 		log.debug("instantiate a model");
-		this.model = new NewViewSubmissionWidgetModel(this);
+		this.model = new ViewSubmissionWidgetModel(this);
 		
 		log.debug("instantiate a renderer");
-		this.renderer = new NewViewSubmissionWidgetDefaultRenderer(this);
+		this.renderer = new ViewSubmissionWidgetDefaultRenderer(this);
 		
 		log.debug("set renderer canvas");
 		this.renderer.setCanvas(this.contentBox);
@@ -175,7 +175,7 @@ public class NewViewSubmissionWidget extends ChassisWidget {
 		log.enter("setSubmissionEntry");
 
 		this.model.setSubmissionEntry(entry);
-		this.model.setStatus(NewViewSubmissionWidgetModel.STATUS_READY);
+		this.model.setStatus(ViewSubmissionWidgetModel.STATUS_READY);
 
 		// should not need to do anything else, renderer will automatically
 		// update UI on submission entry change
@@ -192,7 +192,7 @@ public class NewViewSubmissionWidget extends ChassisWidget {
 		
 		log.debug("retrieving entry: " + submissionEntryUrl);
 
-		model.setStatus(NewViewSubmissionWidgetModel.STATUS_RETRIEVE_PENDING);
+		model.setStatus(ViewSubmissionWidgetModel.STATUS_RETRIEVE_PENDING);
 		
 		//request submissionEntry
 		Deferred<AtomEntry> deferred = service.getEntry(ConfigurationBean.getSubmissionFeedURL() + submissionEntryUrl);
@@ -212,7 +212,7 @@ public class NewViewSubmissionWidget extends ChassisWidget {
 		public SubmissionEntry apply(SubmissionEntry submissionEntry) {
 			
 			model.setSubmissionEntry(submissionEntry);
-			model.setStatus(NewViewSubmissionWidgetModel.STATUS_READY);
+			model.setStatus(ViewSubmissionWidgetModel.STATUS_READY);
 
 			return submissionEntry;
 		}
@@ -225,7 +225,7 @@ public class NewViewSubmissionWidget extends ChassisWidget {
 	private class RetrieveSubmissionEntryErrback implements Function<Throwable,Throwable> {
 
 		public Throwable apply(Throwable error) {
-			model.setStatus(NewViewSubmissionWidgetModel.STATUS_ERROR);
+			model.setStatus(ViewSubmissionWidgetModel.STATUS_ERROR);
 			return error;
 		}
 		
