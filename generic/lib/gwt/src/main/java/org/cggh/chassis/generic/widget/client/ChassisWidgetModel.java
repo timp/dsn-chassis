@@ -13,12 +13,12 @@ import org.cggh.chassis.generic.log.client.LogFactory;
  * @author aliman
  *
  */
-public abstract class WidgetModel<L> {
+public abstract class ChassisWidgetModel<L> {
 	
 	
 	
 	
-	private Log log = LogFactory.getLog(WidgetModel.class);
+	private Log log = LogFactory.getLog(ChassisWidgetModel.class);
 	
 	
 	
@@ -28,7 +28,7 @@ public abstract class WidgetModel<L> {
 	
 	
 	
-	public WidgetModel() {
+	public ChassisWidgetModel() {
 		log.enter("<constructor>");
 		
 		log.debug("call init()");
