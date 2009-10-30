@@ -5,9 +5,9 @@ package org.cggh.chassis.generic.client.gwt.widget.submission.view.client;
 
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
 import org.cggh.chassis.generic.client.gwt.common.client.CSS;
-import org.cggh.chassis.generic.client.gwt.widget.submission.view.client.NewViewSubmissionWidgetModel.ChangeHandler;
-import org.cggh.chassis.generic.client.gwt.widget.submission.view.client.NewViewSubmissionWidgetModel.StatusChangeEvent;
-import org.cggh.chassis.generic.client.gwt.widget.submission.view.client.NewViewSubmissionWidgetModel.SubmissionEntryChangeEvent;
+import org.cggh.chassis.generic.client.gwt.widget.submission.view.client.ViewSubmissionWidgetModel.ChangeHandler;
+import org.cggh.chassis.generic.client.gwt.widget.submission.view.client.ViewSubmissionWidgetModel.StatusChangeEvent;
+import org.cggh.chassis.generic.client.gwt.widget.submission.view.client.ViewSubmissionWidgetModel.SubmissionEntryChangeEvent;
 import org.cggh.chassis.generic.client.gwt.widget.submission.viewdatafiles.client.ViewSubmissionDataFilesWidget;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
@@ -23,17 +23,17 @@ import com.google.gwt.user.client.ui.Panel;
  * @author aliman
  *
  */
-public class NewViewSubmissionWidgetDefaultRenderer extends ChassisWidgetRenderer implements ChangeHandler {
+public class ViewSubmissionWidgetDefaultRenderer extends ChassisWidgetRenderer implements ChangeHandler {
 
 	
 	
 	
-	private Log log = LogFactory.getLog(NewViewSubmissionWidgetDefaultRenderer.class);
+	private Log log = LogFactory.getLog(ViewSubmissionWidgetDefaultRenderer.class);
 
 	
 	
-	private NewViewSubmissionWidget owner;
-	private NewViewSubmissionWidgetModel model;
+	private ViewSubmissionWidget owner;
+	private ViewSubmissionWidgetModel model;
 
 
 
@@ -46,7 +46,7 @@ public class NewViewSubmissionWidgetDefaultRenderer extends ChassisWidgetRendere
 
 
 
-	public NewViewSubmissionWidgetDefaultRenderer(NewViewSubmissionWidget owner) {
+	public ViewSubmissionWidgetDefaultRenderer(ViewSubmissionWidget owner) {
 		this.owner = owner;
 	}
 	
@@ -126,7 +126,7 @@ public class NewViewSubmissionWidgetDefaultRenderer extends ChassisWidgetRendere
 	/**
 	 * @param model
 	 */
-	public void bindUI(NewViewSubmissionWidgetModel model) {
+	public void bindUI(ViewSubmissionWidgetModel model) {
 		log.enter("bindUI");
 		
 		// unbind to clear anything
@@ -286,25 +286,25 @@ public class NewViewSubmissionWidgetDefaultRenderer extends ChassisWidgetRendere
 	
 	private void updatePanelVisibility(int status) {
 
-		if ( status == NewViewSubmissionWidgetModel.STATUS_INITIAL) {
+		if ( status == ViewSubmissionWidgetModel.STATUS_INITIAL) {
 
 			this.mainPanel.setVisible(false);
 			this.loadingPanel.setVisible(false);
 
 		} 
-		else if ( status == NewViewSubmissionWidgetModel.STATUS_RETRIEVE_PENDING ) {
+		else if ( status == ViewSubmissionWidgetModel.STATUS_RETRIEVE_PENDING ) {
 
 			this.mainPanel.setVisible(false);
 			this.loadingPanel.setVisible(true);
 
 		} 
-		else if ( status == NewViewSubmissionWidgetModel.STATUS_READY ) {
+		else if ( status == ViewSubmissionWidgetModel.STATUS_READY ) {
 
 			this.loadingPanel.setVisible(false);
 			this.mainPanel.setVisible(true);
 
 		} 
-		else if ( status == NewViewSubmissionWidgetModel.STATUS_ERROR ) {
+		else if ( status == ViewSubmissionWidgetModel.STATUS_ERROR ) {
 
 			// TODO handle error case (could use extra panel or pass error to
 			// parent)

@@ -19,7 +19,7 @@ import com.google.gwt.event.shared.HandlerRegistration;
  * @author aliman
  *
  */
-public class NewViewSubmissionWidgetModel extends ChassisWidgetModel {
+public class ViewSubmissionWidgetModel extends ChassisWidgetModel {
 
 	
 	
@@ -48,7 +48,7 @@ public class NewViewSubmissionWidgetModel extends ChassisWidgetModel {
 	/**
 	 * @param owner
 	 */
-	public NewViewSubmissionWidgetModel(NewViewSubmissionWidget owner) {
+	public ViewSubmissionWidgetModel(ViewSubmissionWidget owner) {
 		super(owner);
 	}
 
@@ -60,7 +60,7 @@ public class NewViewSubmissionWidgetModel extends ChassisWidgetModel {
 	 */
 	@Override
 	protected void init() {
-		log = LogFactory.getLog(NewViewSubmissionWidgetModel.class); // need to instantiate here because called from superclass constructor
+		log = LogFactory.getLog(ViewSubmissionWidgetModel.class); // need to instantiate here because called from superclass constructor
 		log.enter("init");
 		
 		// initialise model properties

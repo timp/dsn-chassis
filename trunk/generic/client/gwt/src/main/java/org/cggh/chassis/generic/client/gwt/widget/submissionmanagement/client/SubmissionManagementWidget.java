@@ -15,7 +15,6 @@ import org.cggh.chassis.generic.client.gwt.widget.submission.view.client.EditSub
 import org.cggh.chassis.generic.client.gwt.widget.submission.view.client.EditSubmissionActionHandler;
 import org.cggh.chassis.generic.client.gwt.widget.submission.view.client.UploadDataFileActionEvent;
 import org.cggh.chassis.generic.client.gwt.widget.submission.view.client.UploadDataFileActionHandler;
-//import org.cggh.chassis.generic.client.gwt.widget.submission.view.client.ViewSubmissionWidgetPubSubAPI;
 import org.cggh.chassis.generic.client.gwt.widget.submission.viewsubmissions.client.ViewSubmissionsWidgetPubSubAPI;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
@@ -77,7 +76,6 @@ public class SubmissionManagementWidget extends Composite implements CreateSubmi
 	private void subscribeToChildWidgetEvents() {
 		//register this widget as a listener to child widgets.
 
-//		renderer.viewSubmissionWidget.addViewSubmissionWidgetListener(this);
 		renderer.viewSubmissionWidget.addEditSubmissionActionHandler(this);
 		renderer.viewSubmissionWidget.addUploadDataFileActionHandler(this);
 		
@@ -105,24 +103,6 @@ public class SubmissionManagementWidget extends Composite implements CreateSubmi
 	
 	
 	
-//	public void onUserActionEditSubmission(SubmissionEntry submissionEntryToEdit) {
-//		log.enter("onUserActionEditSubmission");
-//		
-//		controller.displayEditSubmissionWidget();
-//		renderer.editSubmissionWidget.setSubmissionEntry(submissionEntryToEdit);
-//		
-//		log.leave();
-//	}
-//
-//	public void onUserActionUploadDataFile(String submissionLink) {
-//		log.enter("onUserActionUploadDataFile");
-//		log.debug("submissionLink: " + submissionLink);
-//		
-//		renderer.submissionDataFileWidget.setUpNewSubmissionDataFile(submissionLink);
-//		controller.displaySubmissionDataFileUploadWidget();
-//		
-//		log.leave();
-//	}
 
 	public void onUserActionSelectSubmission(SubmissionEntry submissionEntry) {
 		log.enter("onUserActionSelectSubmission");
