@@ -12,7 +12,7 @@ import com.google.gwt.user.client.ui.Panel;
  * @author aliman
  *
  */
-public abstract class WidgetRenderer {
+public abstract class ChassisWidgetRenderer {
 	
 	
 	

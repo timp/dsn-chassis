@@ -6,6 +6,7 @@ package org.cggh.chassis.generic.widget.client;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 
+import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 
@@ -13,12 +14,12 @@ import com.google.gwt.user.client.ui.FlowPanel;
  * @author aliman
  *
  */
-public abstract class Widget extends Composite {
+public abstract class ChassisWidget extends Composite {
 
 	
 	
 	
-	private Log log = LogFactory.getLog(Widget.class);
+	private Log log = LogFactory.getLog(ChassisWidget.class);
 
 	
 	
@@ -33,6 +34,14 @@ public abstract class Widget extends Composite {
 	 * The inner panel that all child widgets should be added to.
 	 */
 	protected FlowPanel contentBox = new FlowPanel();
+
+
+
+	
+	/** 
+	 * Handler manager for this widget.
+	 */
+	protected HandlerManager handlerManager;
 	
 	
 	
@@ -41,7 +50,7 @@ public abstract class Widget extends Composite {
 	/**
 	 * Construct a widget.
 	 */
-	public Widget() {
+	public ChassisWidget() {
 		log.enter("<constructor>");
 		
 		log.debug("initialise composite widget");
@@ -177,7 +186,24 @@ public abstract class Widget extends Composite {
 	
 	
 	
+	@Override
+	protected void onDetach() {
+		log.enter("onDetach");
+		
+		super.onDetach();
+	
+		// TODO should we call destroy() here? If not, where?
+		
+		log.leave();
+	}
+	
+	
+	
+	
+	
 	protected abstract String getName();
+	
+	
 	
 	
 }
