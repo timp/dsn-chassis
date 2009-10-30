@@ -150,9 +150,8 @@ public class SubmissionManagementWidget extends Composite implements CreateSubmi
 	public void onSubmissionDataFileUploaded(String submissionLink) {
 		log.enter("onSubmissionDataFileUploaded");
 		
-		renderer.viewSubmissionWidget.retrieveSubmissionEntry(submissionLink);
-		
 		controller.displayViewSubmissionWidget();
+		renderer.viewSubmissionWidget.retrieveSubmissionEntry(submissionLink);
 		
 		log.leave();
 	}

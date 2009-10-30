@@ -75,7 +75,7 @@ public class ViewSubmissionWidgetController {
 		model.setStatus(ViewSubmissionWidgetModel.STATUS_RETRIEVE_PENDING);
 		
 		//request submissionEntry
-		Deferred<AtomEntry> deferred = service.getEntry(ConfigurationBean.getSubmissionFeedURL() + submissionEntryUrl);
+		Deferred<AtomEntry> deferred = service.getEntry(submissionEntryUrl);
 		
 		//add callbacks
 		deferred.addCallback(new RetrieveSubmissionEntryCallback());
@@ -89,11 +89,15 @@ public class ViewSubmissionWidgetController {
 	
 	private class RetrieveSubmissionEntryCallback implements Function<SubmissionEntry,SubmissionEntry> {
 
+		private Log log = LogFactory.getLog(this.getClass());
+		
 		public SubmissionEntry apply(SubmissionEntry submissionEntry) {
+			log.enter("apply");
 			
 			model.setSubmissionEntry(submissionEntry);
 			model.setStatus(ViewSubmissionWidgetModel.STATUS_READY);
 
+			log.leave();
 			return submissionEntry;
 		}
 		
@@ -104,8 +108,16 @@ public class ViewSubmissionWidgetController {
 	
 	private class RetrieveSubmissionEntryErrback implements Function<Throwable,Throwable> {
 
+		private Log log = LogFactory.getLog(this.getClass());
+
 		public Throwable apply(Throwable error) {
+			log.enter("apply");
+
+			log.error("error retrieving submission entry", error);
+			
 			model.setStatus(ViewSubmissionWidgetModel.STATUS_ERROR);
+			
+			log.leave();
 			return error;
 		}
 		

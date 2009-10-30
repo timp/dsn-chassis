@@ -3,8 +3,11 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.submission.viewdatafiles.client;
 
+import java.util.ArrayList;
+
 import org.cggh.chassis.generic.atom.datafile.client.protocol.DataFileQuery;
 import org.cggh.chassis.generic.atom.datafile.client.protocol.impl.DataFileQueryServiceImpl;
+import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
 import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
 import org.cggh.chassis.generic.log.client.Log;
@@ -41,12 +44,24 @@ public class ViewSubmissionDataFilesWidgetController {
 
 		log.debug("loading DataFiles associated with: " + submissionLink);
 		
-		//create query
-		DataFileQuery query = new DataFileQuery();
-		query.setSubmissionUrl(submissionLink);
-		
-		Deferred<AtomFeed> deferred = dataFileQueryService.query(query);
-		deferred.addCallbacks(new LoadDataFileFeedCallback(), new LoadDataFileFeedErrback());
+		if (submissionLink != null) {
+
+			//create query
+			DataFileQuery query = new DataFileQuery();
+			query.setSubmissionUrl(submissionLink);
+			
+			Deferred<AtomFeed> deferred = dataFileQueryService.query(query);
+			deferred.addCallback(new LoadDataFileFeedCallback());
+			deferred.addErrback(new LoadDataFileFeedErrback());
+			
+		}
+		else {
+			
+			// TODO consider moving to reset() or clear() method
+			model.setFileDataAtomEntries(new ArrayList<AtomEntry>());
+			model.setStatus(ViewSubmissionDataFilesWidgetModel.STATUS_LOADED);
+
+		}
 		
 		log.leave();
 	}
