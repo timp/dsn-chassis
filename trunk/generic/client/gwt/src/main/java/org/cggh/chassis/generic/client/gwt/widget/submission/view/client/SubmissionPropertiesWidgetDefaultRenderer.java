@@ -89,18 +89,16 @@ public class SubmissionPropertiesWidgetDefaultRenderer
 	public void bindUI(SubmissionPropertiesWidgetModel model) {
 		log.enter("bindUI");
 		
-		// unbind to clear anything
+		// un-bind to clear anything
 		this.unbindUI();
 		
 		// keep reference to model
 		this.model = model;
-
-		// listen to model property change events to update UI
-//		this.model.addListener(this);
-		HandlerRegistration a = this.model.addSubmissionEntryChangeHandler(this);
-		this.modelChangeHandlerRegistrations.add(a);
 		
-		// listen to UI events from user interactions to update model
+		// register handlers for model changes
+		this.registerHandlersForModelChanges();
+
+		// register handlers for child widget events
 		// not needed for this widget
 		
 		log.leave();	
@@ -109,6 +107,24 @@ public class SubmissionPropertiesWidgetDefaultRenderer
 	
 	
 	
+	/**
+	 * 
+	 */
+	private void registerHandlersForModelChanges() {
+		log.enter("registerHandlersForModelChanges");
+		
+		// register this as handler for model property change events
+		HandlerRegistration a = this.model.addSubmissionEntryChangeHandler(this);
+		
+		// store registrations so can remove later if necessary
+		this.modelChangeHandlerRegistrations.add(a);
+		
+		log.leave();
+	}
+
+
+
+
 	/**
 	 * Completely synchronise the UI with the current state of the model.
 	 */
@@ -269,7 +285,7 @@ public class SubmissionPropertiesWidgetDefaultRenderer
 		// detach from model
 		this.clearModelChangeHandlers();
 		
-		// detach from UI
+		// detach from child widgets
 		// not needed for this widget
 		
 		log.leave();

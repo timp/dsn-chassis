@@ -41,7 +41,7 @@ public class ViewSubmissionWidget extends Composite implements EditSubmissionAct
 		
 		controller = new ViewSubmissionWidgetController(model, this);
 						
-		renderer = new ViewSubmissionWidgetDefaultRenderer(this, controller);
+		renderer = new ViewSubmissionWidgetDefaultRenderer(this);
 		
 		// register renderer as listener to model
 		model.addListener(renderer);		

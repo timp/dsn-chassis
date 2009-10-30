@@ -9,7 +9,6 @@ import org.cggh.chassis.generic.client.gwt.widget.submission.viewdatafiles.clien
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 
-import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
@@ -25,13 +24,14 @@ public class ViewSubmissionWidgetDefaultRenderer implements ViewSubmissionWidget
 	
 	
 
+	final private Panel canvas;
+
 	FlowPanel loadingPanel = new FlowPanel();
 	FlowPanel mainPanel = new FlowPanel();
 
-	final private Panel canvas;
 	private ViewSubmissionDataFilesWidget submissionDataFilesWidget;
-	private ViewSubmissionWidgetController controller;
 	private SubmissionPropertiesWidget submissionPropsWidget;
+
 	private ViewSubmissionWidget owner;
 
 
@@ -47,11 +47,10 @@ public class ViewSubmissionWidgetDefaultRenderer implements ViewSubmissionWidget
 	 * 
 	 * @param controller
 	 */
-	public ViewSubmissionWidgetDefaultRenderer(ViewSubmissionWidget owner, ViewSubmissionWidgetController controller) {
+	public ViewSubmissionWidgetDefaultRenderer(ViewSubmissionWidget owner) {
 
 		this.owner = owner;
 		this.canvas = new FlowPanel();
-		this.controller = controller;
 
 		//Create dataFiles linked widget to view linked data files
 		submissionDataFilesWidget = new ViewSubmissionDataFilesWidget();

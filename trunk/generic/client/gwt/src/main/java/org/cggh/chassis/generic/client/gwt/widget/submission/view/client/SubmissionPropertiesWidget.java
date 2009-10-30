@@ -24,21 +24,14 @@ public class SubmissionPropertiesWidget extends ChassisWidget {
 	
 	
 	
-	/**
-	 * Set the submission entry to display properties for.
-	 * 
-	 * @param entry
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.widget.client.Widget#getName()
 	 */
-	public void setSubmissionEntry(SubmissionEntry entry) {
-		log.enter("setSubmissionEntry");
-
-		this.model.setSubmissionEntry(entry);
-
-		// should not need to do anything else, renderer will automatically
-		// update UI on submission entry change
-		
-		log.leave();
+	@Override
+	protected String getName() {
+		return "submissionPropertiesWidget";
 	}
+
 	
 	
 	
@@ -60,28 +53,6 @@ public class SubmissionPropertiesWidget extends ChassisWidget {
 		log.debug("set renderer canvas");
 		this.renderer.setCanvas(this.contentBox);
 
-		log.leave();
-
-	}
-
-	
-	
-	
-	
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.widget.client.Widget#destroy()
-	 */
-	@Override
-	public void destroy() {
-		log.enter("destroy");
-
-		// unbind
-		this.unbindUI();
-		
-		// clear all model listeners
-//		if (this.model != null) this.model.clearListeners();
-		// TODO detach model change handlers
-		
 		log.leave();
 
 	}
@@ -145,6 +116,26 @@ public class SubmissionPropertiesWidget extends ChassisWidget {
 
 	
 	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.widget.client.Widget#destroy()
+	 */
+	@Override
+	public void destroy() {
+		log.enter("destroy");
+
+		// unbind
+		this.unbindUI();
+
+		// TODO anything else?
+		
+		log.leave();
+
+	}
+
+	
+	
+	
+	
+	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.widget.client.Widget#unbindUI()
 	 */
 	@Override
@@ -155,20 +146,28 @@ public class SubmissionPropertiesWidget extends ChassisWidget {
 		if (this.renderer != null) this.renderer.unbindUI();
 		
 		log.leave();
-
 	}
 
 
 
 
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.widget.client.Widget#getName()
+
+	/**
+	 * Set the submission entry to display properties for.
+	 * 
+	 * @param entry
 	 */
-	@Override
-	protected String getName() {
-		return "submissionPropertiesWidget";
-	}
+	public void setSubmissionEntry(SubmissionEntry entry) {
+		log.enter("setSubmissionEntry");
 
+		this.model.setSubmissionEntry(entry);
+
+		// should not need to do anything else, renderer will automatically
+		// update UI on submission entry change
+		
+		log.leave();
+	}
+	
 	
 	
 	

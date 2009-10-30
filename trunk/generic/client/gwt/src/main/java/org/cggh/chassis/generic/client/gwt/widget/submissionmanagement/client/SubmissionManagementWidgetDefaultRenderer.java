@@ -8,6 +8,7 @@ import org.cggh.chassis.generic.client.gwt.widget.submission.create.client.Creat
 import org.cggh.chassis.generic.client.gwt.widget.submission.edit.client.EditSubmissionWidget;
 import org.cggh.chassis.generic.client.gwt.widget.submission.uploaddatafile.client.UploadSubmissionDataFileWidget;
 import org.cggh.chassis.generic.client.gwt.widget.submission.uploaddatafile.client.UploadSubmissionDataFileWidgetAPI;
+import org.cggh.chassis.generic.client.gwt.widget.submission.view.client.NewViewSubmissionWidget;
 import org.cggh.chassis.generic.client.gwt.widget.submission.view.client.ViewSubmissionWidget;
 import org.cggh.chassis.generic.client.gwt.widget.submission.viewsubmissions.client.ViewSubmissionsWidget;
 import org.cggh.chassis.generic.log.client.Log;
@@ -57,7 +58,8 @@ public class SubmissionManagementWidgetDefaultRenderer implements SubmissionMana
 	
 	//child widgets made package private to allow parent widget to access them
 	final CreateSubmissionWidget createSubmissionWidget; 
-	final ViewSubmissionWidget viewSubmissionWidget;
+//	final ViewSubmissionWidget viewSubmissionWidget;
+	final NewViewSubmissionWidget viewSubmissionWidget;
 	final ViewSubmissionsWidget viewAllSubmissionsWidget;
 	final EditSubmissionWidget editSubmissionWidget;
 	private MenuBar menu;
@@ -81,7 +83,8 @@ public class SubmissionManagementWidgetDefaultRenderer implements SubmissionMana
 
 		//TODO Remove use of canvas paramter constructors 
 		//create child widgets
-		this.viewSubmissionWidget = new ViewSubmissionWidget();
+//		this.viewSubmissionWidget = new ViewSubmissionWidget();
+		this.viewSubmissionWidget = new NewViewSubmissionWidget();
 		this.createSubmissionWidget = new CreateSubmissionWidget();
 		this.viewAllSubmissionsWidget = new ViewSubmissionsWidget();
 		this.editSubmissionWidget = new EditSubmissionWidget();
