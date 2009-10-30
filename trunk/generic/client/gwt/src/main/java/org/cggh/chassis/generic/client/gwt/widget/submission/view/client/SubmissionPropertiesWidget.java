@@ -52,7 +52,7 @@ public class SubmissionPropertiesWidget extends ChassisWidget {
 		log.enter("init");
 
 		log.debug("instantiate model");
-		this.model = new SubmissionPropertiesWidgetModel();
+		this.model = new SubmissionPropertiesWidgetModel(this);
 
 		log.debug("instantiate default renderer");
 		this.renderer = new SubmissionPropertiesWidgetDefaultRenderer();
@@ -79,7 +79,8 @@ public class SubmissionPropertiesWidget extends ChassisWidget {
 		this.unbindUI();
 		
 		// clear all model listeners
-		if (this.model != null) this.model.clearListeners();
+//		if (this.model != null) this.model.clearListeners();
+		// TODO detach model change handlers
 		
 		log.leave();
 

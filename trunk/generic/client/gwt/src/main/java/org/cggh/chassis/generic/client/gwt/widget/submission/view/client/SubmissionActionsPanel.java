@@ -3,9 +3,6 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.submission.view.client;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.cggh.chassis.generic.client.gwt.common.client.RenderUtils;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
@@ -30,7 +27,6 @@ public class SubmissionActionsPanel extends ChassisWidget {
 	
 	private Log log;
 	private Anchor editThisSubmissionAction, uploadDataFileAction;
-	private Set<HandlerRegistration> handlerRegistrations = new HashSet<HandlerRegistration>();
 
 
 	
@@ -107,8 +103,8 @@ public class SubmissionActionsPanel extends ChassisWidget {
 		HandlerRegistration b = this.uploadDataFileAction.addClickHandler(new UploadDataFileActionClickHandler());
 
 		// store registrations so we can remove handlers later if necessary
-		this.handlerRegistrations.add(a);
-		this.handlerRegistrations.add(b);
+		this.uiEventHandlerRegistrations.add(a);
+		this.uiEventHandlerRegistrations.add(b);
 		
 		log.leave();
 
@@ -167,9 +163,7 @@ public class SubmissionActionsPanel extends ChassisWidget {
 	protected void unbindUI() {
 		log.enter("unbindUI");
 
-		for (HandlerRegistration hr : this.handlerRegistrations) {
-			hr.removeHandler();
-		}
+		this.clearUIEventHandlers();
 
 		log.leave();
 	}
