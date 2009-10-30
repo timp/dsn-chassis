@@ -35,6 +35,14 @@ public abstract class ChassisWidgetRenderer {
 	 */
 	protected Set<HandlerRegistration> modelChangeHandlerRegistrations = new HashSet<HandlerRegistration>();
 
+
+	
+	
+	/**
+	 * Set to store child widget event handler registrations so they can be removed if needed.
+	 */
+	protected Set<HandlerRegistration> childWidgetEventHandlerRegistrations = new HashSet<HandlerRegistration>();
+
 	
 	
 	
@@ -65,6 +73,21 @@ public abstract class ChassisWidgetRenderer {
 			}
 			catch (NullPointerException npe) {
 				log.warn("caught null pointer exception attempting to remove model change handler", npe);
+			}
+		}
+	}
+	
+	
+	
+	
+
+	protected void clearChildWidgetEventHandlers() {
+		for (HandlerRegistration hr : this.childWidgetEventHandlerRegistrations) {
+			try {
+				hr.removeHandler();
+			}
+			catch (NullPointerException npe) {
+				log.warn("caught null pointer exception attempting to remove child widget event handler", npe);
 			}
 		}
 	}
