@@ -46,6 +46,9 @@ public class MainEntryPoint implements EntryPoint {
 		
 		constructDeveloperTools();
 		
+		RootPanel.get("apploading").addStyleName("invisible");
+		RootPanel.get("apploaded").removeStyleName("invisible");
+		
 		log.info("application loaded");
 
 		log.leave();
@@ -75,20 +78,25 @@ public class MainEntryPoint implements EntryPoint {
 		final RootPanel loggerPane = RootPanel.get("loggerPane");
 		loggerPane.setVisible(false);
 		
-		Anchor logShowHide = new Anchor();
-		logShowHide.setText("show/hide log");
-		
-		RootPanel.get("developerToolsPane").add(logShowHide);
-		logShowHide.addClickHandler(new ClickHandler() {
+		DivLogger l = com.allen_sauer.gwt.log.client.Log.getLogger(DivLogger.class);
+		if (l != null) {
+
+			Anchor logShowHide = new Anchor();
+			logShowHide.setText("show/hide log");
 			
-			public void onClick(ClickEvent event) {
-				loggerPane.setVisible(!loggerPane.isVisible());
-			}
+			RootPanel.get("developerToolsPane").add(logShowHide);
+			logShowHide.addClickHandler(new ClickHandler() {
+				
+				public void onClick(ClickEvent event) {
+					loggerPane.setVisible(!loggerPane.isVisible());
+				}
+				
+			});
 			
-		});
-		
-		Widget divLogger = com.allen_sauer.gwt.log.client.Log.getLogger(DivLogger.class).getWidget();
-		loggerPane.add(divLogger);
+			Widget divLogger = l.getWidget();
+			loggerPane.add(divLogger);
+
+		}
 
 
 		log.debug("developer tools constructed");

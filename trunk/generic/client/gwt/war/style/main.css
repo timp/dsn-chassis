@@ -24,6 +24,11 @@ input, textarea {
 
 
 
+.invisible {
+	display: none;
+}
+
+
 /*
  * -----------------------------------------------------------------------------
  * common styles across widgets
