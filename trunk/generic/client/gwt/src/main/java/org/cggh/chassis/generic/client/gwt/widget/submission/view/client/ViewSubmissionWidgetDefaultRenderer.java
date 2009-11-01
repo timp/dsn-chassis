@@ -131,16 +131,16 @@ public class ViewSubmissionWidgetDefaultRenderer extends ChassisWidgetRenderer {
 	public void bindUI(ViewSubmissionWidgetModel model) {
 		log.enter("bindUI");
 		
-		// unbind to clear anything
+		log.debug("unbind to clear anything");
 		this.unbindUI();
 		
-		// keep reference to model
+		log.debug("keep reference to model");
 		this.model = model;
 		
-		// register this as handler for model property change events
+		log.debug("register this as handler for model property change events");
 		this.registerHandlersForModelChanges();
 		
-		// register handlers for child widget events
+		log.debug("register handlers for child widget events");
 		this.registerHandlersForChildWidgetEvents();
 		
 		log.leave();
@@ -179,7 +179,7 @@ public class ViewSubmissionWidgetDefaultRenderer extends ChassisWidgetRenderer {
 			}
 		});
 
-		// store registrations so can remove later if necessary
+		log.debug("store registrations so can remove later if necessary");
 		this.modelChangeHandlerRegistrations.add(a);
 		this.modelChangeHandlerRegistrations.add(b);
 		
@@ -231,7 +231,7 @@ public class ViewSubmissionWidgetDefaultRenderer extends ChassisWidgetRenderer {
 			}
 		});
 		
-		// store registrations so can remove later if necessary
+		log.debug("store registrations so can remove later if necessary");
 		this.childWidgetEventHandlerRegistrations.add(a);
 		this.childWidgetEventHandlerRegistrations.add(b);
 		

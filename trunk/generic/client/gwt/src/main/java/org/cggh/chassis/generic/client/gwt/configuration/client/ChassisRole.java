@@ -3,6 +3,12 @@
  */
 package org.cggh.chassis.generic.client.gwt.configuration.client;
 
+import java.util.HashSet;
+import java.util.Set;
+import java.util.TreeSet;
+
+import org.cggh.chassis.generic.user.transfer.UserDetailsTO;
+
 /**
  * @author raok
  *
@@ -38,6 +44,34 @@ public class ChassisRole implements Comparable<ChassisRole> {
 	public int compareTo(ChassisRole another) {
 //		return roleId.compareTo(another.roleId);
 		return permissionSuffix.compareTo(another.permissionSuffix); // so we get in alphabetical order
+	}
+
+	/**
+	 * @param after
+	 * @return
+	 */
+	public static Set<ChassisRole> getRoles(UserDetailsTO user) {
+
+		Set<ChassisRole> roles = new TreeSet<ChassisRole>();
+
+		// Filter out roles relevant to chassis
+		String userChassisRolesPrefix = ConfigurationBean.getUserChassisRolesPrefix();
+
+		for ( String role : user.getRoles() ) {
+			if (role.startsWith(userChassisRolesPrefix)) {
+				
+				String permissionSuffix = role.replace(userChassisRolesPrefix, "");
+				
+				for (ChassisRole r : ConfigurationBean.getChassisRoles()) {
+					if (permissionSuffix.equalsIgnoreCase(r.permissionSuffix)) {
+						roles.add(r);
+					}
+				}
+				
+			}
+		}
+		
+		return roles;
 	}
 	
 }

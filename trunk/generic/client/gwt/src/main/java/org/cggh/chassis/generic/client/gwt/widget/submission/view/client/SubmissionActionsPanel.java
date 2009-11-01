@@ -180,7 +180,7 @@ public class SubmissionActionsPanel extends ChassisWidget {
 	protected void unbindUI() {
 		log.enter("unbindUI");
 
-		this.clearUIEventHandlers();
+		this.clearChildWidgetEventHandlers();
 
 		log.leave();
 	}
