@@ -192,6 +192,21 @@ public class ConfigurationBean {
 			
 			return modulesMap;
 		}
+	}
+
+	/**
+	 * @param selectedRoleId
+	 * @return
+	 */
+	public static ChassisRole getChassisRole(int selectedRoleId) {
+		
+		for (ChassisRole role : ConfigurationBean.getChassisRoles()) {
+			if (selectedRoleId == role.roleId) {
+				return role;
+			}
+		}
+		
+		return null;
 	}	
 	
 }
