@@ -157,6 +157,8 @@ public abstract class ChassisWidget extends Composite {
 	public void reset() {
 		log.enter("reset");
 		
+		// TODO review this
+		
 		this.unbindUI();
 		this.init();
 		this.render();
@@ -213,7 +215,7 @@ public abstract class ChassisWidget extends Composite {
 	
 	
 	
-	protected void clearUIEventHandlers() {
+	protected void clearChildWidgetEventHandlers() {
 		for (HandlerRegistration hr : this.childWidgetEventHandlerRegistrations) {
 			hr.removeHandler();
 		}
@@ -234,6 +236,20 @@ public abstract class ChassisWidget extends Composite {
 		return this.addHandler(handler, type);
 	}
 	
+	
+	
+	
+	
+	/**
+	 * Create a style name by appending the name passed in to the widget's
+	 * primary style name, delimited by a "-".
+	 * 
+	 * @param dependentName
+	 * @return
+	 */
+	public String createStyleName(String dependentName) {
+		return this.getStylePrimaryName() + "-" + dependentName;
+	}
 	
 	
 	
