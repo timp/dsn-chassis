@@ -39,7 +39,7 @@ public abstract class ChassisWidgetModel {
 	
 	
 	
-	protected <H extends ModelChangeHandler> HandlerRegistration addChangeHandler(H handler, GwtEvent.Type<H> type) {
+	public <H extends ModelChangeHandler> HandlerRegistration addChangeHandler(H handler, GwtEvent.Type<H> type) {
 		// use owner to manage change event handlers
 		return this.owner.addEventHandler(handler, type);
 	}
