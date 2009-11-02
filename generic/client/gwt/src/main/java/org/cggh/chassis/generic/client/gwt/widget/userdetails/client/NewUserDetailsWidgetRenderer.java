@@ -253,7 +253,8 @@ public class NewUserDetailsWidgetRenderer extends ChassisWidgetRenderer {
 	public void unbindUI() {
 		log.enter("unbindUI");
 		
-		// TODO Auto-generated method stub
+		this.clearModelChangeHandlers();
+		this.clearChildWidgetEventHandlers();
 		
 		log.leave();
 		

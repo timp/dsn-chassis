@@ -12,17 +12,21 @@ import org.cggh.chassis.generic.user.transfer.UserDetailsTO;
  */
 public class ChassisUser {
 
-	private static String currentUserEmail;
+	private static UserDetailsTO currentUser;
 	private static Deferred<UserDetailsTO> currentUserDeferred;
 	
 	public static String getCurrentUserEmail() {
-		return currentUserEmail;
-	}
-	
-	public static void setCurrentUserEmail(String email) {
-		currentUserEmail = email;
+		return currentUser.getId();
 	}
 
+	public static UserDetailsTO getCurrentUser() {
+		return currentUser;
+	}
+	
+	public static void setCurrentUser(UserDetailsTO user) {
+		currentUser = user;
+	}
+	
 	public static void setCurrentUserDeferred(Deferred<UserDetailsTO> deferredUser) {
 		currentUserDeferred = deferredUser;
 	}

@@ -13,7 +13,6 @@ import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Anchor;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -27,6 +26,9 @@ public class MainEntryPoint implements EntryPoint {
 	
 	static {
 		LogFactory.create = AllenSauerLog.create;
+		LogFactory.hide("*");
+		LogFactory.show("org.cggh.chassis.generic.client.gwt.application.client.ChassisClient");
+		LogFactory.show("org.cggh.chassis.generic.client.gwt.widget.userdetails.*");
 	}
 
 
@@ -41,7 +43,7 @@ public class MainEntryPoint implements EntryPoint {
 	 */
 	public void onModuleLoad() {
 		log.enter("onModuleLoad");
-
+		
 		contructChassisClient();
 		
 		constructDeveloperTools();
