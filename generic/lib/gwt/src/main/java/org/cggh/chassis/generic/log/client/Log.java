@@ -21,4 +21,5 @@ public interface Log {
 	public void enter(String methodName);
 	public void leave();
 	public String contextualise(String message);
+	public String getName();
 }

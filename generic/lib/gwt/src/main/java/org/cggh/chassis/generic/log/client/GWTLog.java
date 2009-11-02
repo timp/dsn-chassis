@@ -36,7 +36,9 @@ public class GWTLog extends LogBase {
 	 * @see org.cggh.chassis.wwarn.prototype.client.shared.Logger#log(java.lang.String)
 	 */
 	public void debug(String message) {
-		GWT.log("[DEBUG] "+contextualise(message), null);
+		if (LogFactory.visible(this)) {
+			GWT.log("[DEBUG] "+contextualise(message), null);
+		}
 	}
 	
 	
@@ -45,7 +47,9 @@ public class GWTLog extends LogBase {
 	 * @see org.cggh.chassis.wwarn.prototype.client.shared.Logger#log(java.lang.String, java.lang.Throwable)
 	 */
 	public void debug(String message, Throwable exception) {
-		GWT.log("[DEBUG] "+contextualise(message), exception);
+		if (LogFactory.visible(this)) {
+			GWT.log("[DEBUG] "+contextualise(message), exception);
+		}
 	}
 
 
@@ -54,7 +58,9 @@ public class GWTLog extends LogBase {
 	 * @see org.cggh.chassis.generic.log.client.Log#info(java.lang.String)
 	 */
 	public void info(String message) {
-		GWT.log("[INFO] "+contextualise(message), null);
+		if (LogFactory.visible(this)) {
+			GWT.log("[INFO] "+contextualise(message), null);
+		}
 	}
 
 
@@ -63,7 +69,9 @@ public class GWTLog extends LogBase {
 	 * @see org.cggh.chassis.generic.log.client.Log#info(java.lang.String, java.lang.Throwable)
 	 */
 	public void info(String message, Throwable exception) {
-		GWT.log("[INFO] "+contextualise(message), exception);
+		if (LogFactory.visible(this)) {
+			GWT.log("[INFO] "+contextualise(message), exception);
+		}
 	}
 
 
@@ -72,7 +80,9 @@ public class GWTLog extends LogBase {
 	 * @see org.cggh.chassis.generic.log.client.Log#error(java.lang.String)
 	 */
 	public void error(String message) {
-		GWT.log("[ERROR] "+contextualise(message), null);
+		if (LogFactory.visible(this)) {
+			GWT.log("[ERROR] "+contextualise(message), null);
+		}
 	}
 
 
@@ -81,7 +91,9 @@ public class GWTLog extends LogBase {
 	 * @see org.cggh.chassis.generic.log.client.Log#error(java.lang.String, java.lang.Throwable)
 	 */
 	public void error(String message, Throwable exception) {
-		GWT.log("[ERROR] "+contextualise(message), exception);
+		if (LogFactory.visible(this)) {
+			GWT.log("[ERROR] "+contextualise(message), exception);
+		}
 	}
 
 
@@ -90,7 +102,9 @@ public class GWTLog extends LogBase {
 	 * @see org.cggh.chassis.generic.log.client.Log#warn(java.lang.String)
 	 */
 	public void warn(String message) {
-		GWT.log("[WARN] "+contextualise(message), null);
+		if (LogFactory.visible(this)) {
+			GWT.log("[WARN] "+contextualise(message), null);
+		}
 	}
 
 
@@ -99,7 +113,9 @@ public class GWTLog extends LogBase {
 	 * @see org.cggh.chassis.generic.log.client.Log#warn(java.lang.String, java.lang.Throwable)
 	 */
 	public void warn(String message, Throwable exception) {
-		GWT.log("[WARN] "+contextualise(message), exception);
+		if (LogFactory.visible(this)) {
+			GWT.log("[WARN] "+contextualise(message), exception);
+		}
 	}
 
 

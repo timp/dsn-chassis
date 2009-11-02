@@ -34,7 +34,9 @@ public class AllenSauerLog extends LogBase {
 	 * @see org.cggh.chassis.wwarn.prototype.client.shared.Logger#log(java.lang.String)
 	 */
 	public void debug(String message) {
-		com.allen_sauer.gwt.log.client.Log.debug(contextualise(message));
+		if (LogFactory.visible(this)) {
+			com.allen_sauer.gwt.log.client.Log.debug(contextualise(message));
+		}
 	}
 	
 	
@@ -43,7 +45,9 @@ public class AllenSauerLog extends LogBase {
 	 * @see org.cggh.chassis.wwarn.prototype.client.shared.Logger#log(java.lang.String, java.lang.Throwable)
 	 */
 	public void debug(String message, Throwable exception) {
-		com.allen_sauer.gwt.log.client.Log.debug(contextualise(message), exception);
+		if (LogFactory.visible(this)) {
+			com.allen_sauer.gwt.log.client.Log.debug(contextualise(message), exception);
+		}		
 	}
 
 
@@ -52,7 +56,9 @@ public class AllenSauerLog extends LogBase {
 	 * @see org.cggh.chassis.generic.log.client.Log#info(java.lang.String)
 	 */
 	public void info(String message) {
-		com.allen_sauer.gwt.log.client.Log.info(contextualise(message));
+		if (LogFactory.visible(this)) {
+			com.allen_sauer.gwt.log.client.Log.info(contextualise(message));
+		}
 	}
 
 
@@ -61,7 +67,9 @@ public class AllenSauerLog extends LogBase {
 	 * @see org.cggh.chassis.generic.log.client.Log#info(java.lang.String, java.lang.Throwable)
 	 */
 	public void info(String message, Throwable exception) {
-		com.allen_sauer.gwt.log.client.Log.info(contextualise(message), exception);
+		if (LogFactory.visible(this)) {
+			com.allen_sauer.gwt.log.client.Log.info(contextualise(message), exception);
+		}
 	}
 
 
@@ -70,7 +78,9 @@ public class AllenSauerLog extends LogBase {
 	 * @see org.cggh.chassis.generic.log.client.Log#error(java.lang.String)
 	 */
 	public void error(String message) {
-		com.allen_sauer.gwt.log.client.Log.error(contextualise(message));
+		if (LogFactory.visible(this)) {
+			com.allen_sauer.gwt.log.client.Log.error(contextualise(message));
+		}
 	}
 
 
@@ -79,7 +89,9 @@ public class AllenSauerLog extends LogBase {
 	 * @see org.cggh.chassis.generic.log.client.Log#error(java.lang.String, java.lang.Throwable)
 	 */
 	public void error(String message, Throwable exception) {
-		com.allen_sauer.gwt.log.client.Log.error(contextualise(message), exception);
+		if (LogFactory.visible(this)) {
+			com.allen_sauer.gwt.log.client.Log.error(contextualise(message), exception);
+		}
 	}
 
 
@@ -88,7 +100,9 @@ public class AllenSauerLog extends LogBase {
 	 * @see org.cggh.chassis.generic.log.client.Log#warn(java.lang.String)
 	 */
 	public void warn(String message) {
-		com.allen_sauer.gwt.log.client.Log.warn(contextualise(message));
+		if (LogFactory.visible(this)) {
+			com.allen_sauer.gwt.log.client.Log.warn(contextualise(message));
+		}
 	}
 
 
@@ -97,7 +111,9 @@ public class AllenSauerLog extends LogBase {
 	 * @see org.cggh.chassis.generic.log.client.Log#warn(java.lang.String, java.lang.Throwable)
 	 */
 	public void warn(String message, Throwable exception) {
-		com.allen_sauer.gwt.log.client.Log.warn(contextualise(message), exception);
+		if (LogFactory.visible(this)) {
+			com.allen_sauer.gwt.log.client.Log.warn(contextualise(message), exception);
+		}
 	}
 
 
