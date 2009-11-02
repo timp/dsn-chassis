@@ -7,10 +7,10 @@ import java.util.Set;
 
 import org.cggh.chassis.generic.client.gwt.configuration.client.ChassisRole;
 import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
-import org.cggh.chassis.generic.client.gwt.widget.userdetails.client.NewUserDetailsWidgetModel.CurrentRoleChangeEvent;
-import org.cggh.chassis.generic.client.gwt.widget.userdetails.client.NewUserDetailsWidgetModel.CurrentRoleChangeHandler;
-import org.cggh.chassis.generic.client.gwt.widget.userdetails.client.NewUserDetailsWidgetModel.CurrentUserChangeEvent;
-import org.cggh.chassis.generic.client.gwt.widget.userdetails.client.NewUserDetailsWidgetModel.CurrentUserChangeHandler;
+import org.cggh.chassis.generic.client.gwt.widget.userdetails.client.UserDetailsWidgetModel.CurrentRoleChangeEvent;
+import org.cggh.chassis.generic.client.gwt.widget.userdetails.client.UserDetailsWidgetModel.CurrentRoleChangeHandler;
+import org.cggh.chassis.generic.client.gwt.widget.userdetails.client.UserDetailsWidgetModel.CurrentUserChangeEvent;
+import org.cggh.chassis.generic.client.gwt.widget.userdetails.client.UserDetailsWidgetModel.CurrentUserChangeHandler;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.user.transfer.UserDetailsTO;
@@ -35,12 +35,12 @@ import com.google.gwt.user.client.ui.Panel;
  * @author aliman
  *
  */
-public class NewUserDetailsWidgetRenderer extends ChassisWidgetRenderer {
+public class UserDetailsWidgetRenderer extends ChassisWidgetRenderer {
 	
 	
 	
 	
-	private Log log = LogFactory.getLog(NewUserDetailsWidgetRenderer.class);
+	private Log log = LogFactory.getLog(UserDetailsWidgetRenderer.class);
 
 
 	
@@ -48,7 +48,7 @@ public class NewUserDetailsWidgetRenderer extends ChassisWidgetRenderer {
 	private Panel loadingPanel, userDetailsPanel, changeUserRolePanel;
 	private Label userNameLabel, currentRoleLabel;
 	private ListBox userRolesListBox;
-	private NewUserDetailsWidgetModel model;
+	private UserDetailsWidgetModel model;
 
 	
 	
@@ -64,7 +64,7 @@ public class NewUserDetailsWidgetRenderer extends ChassisWidgetRenderer {
 	/**
 	 * @param newUserDetailsWidget
 	 */
-	public NewUserDetailsWidgetRenderer() {}
+	public UserDetailsWidgetRenderer() {}
 
 
 
@@ -91,12 +91,10 @@ public class NewUserDetailsWidgetRenderer extends ChassisWidgetRenderer {
 		changeUserRolePanel.addStyleName(STYLENAME_SWITCHEROLEPANEL);
 		
 		log.debug("render loading panel");
-		loadingPanel.setVisible(false);
 		Label loadingLabel = new Label("loading..."); // TODO i18n
 		loadingPanel.add(loadingLabel);
 		
 		log.debug("render userDetailsPanel");
-		userDetailsPanel.setVisible(false);
 		Label loggedInAsLabel = new InlineLabel("logged in as: "); // TODO i18n
 		userDetailsPanel.add(loggedInAsLabel);
 		userDetailsPanel.add(userNameLabel);
@@ -123,7 +121,7 @@ public class NewUserDetailsWidgetRenderer extends ChassisWidgetRenderer {
 	/**
 	 * @param model
 	 */
-	public void bindUI(NewUserDetailsWidgetModel model) {
+	public void bindUI(UserDetailsWidgetModel model) {
 		log.enter("bindUI");
 		
 		log.debug("unbind to clear anything");
