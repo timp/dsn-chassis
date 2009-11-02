@@ -8,74 +8,98 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.cggh.chassis.generic.client.gwt.configuration.client.ChassisRole;
+import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
 import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.twisted.client.Deferred;
+import org.cggh.chassis.generic.user.gwtrpc.client.GWTUserDetailsService;
 import org.cggh.chassis.generic.user.gwtrpc.client.GWTUserDetailsServiceAsync;
 import org.cggh.chassis.generic.user.transfer.UserDetailsTO;
+import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.rpc.ServiceDefTarget;
 
 /**
- * @author raok
+ * @author aliman
  *
  */
 public class UserDetailsWidgetController {
+	
+	
+	
+	
+	private Log log = LogFactory.getLog(UserDetailsWidgetController.class);
+	private UserDetailsWidgetModel model;
+	private GWTUserDetailsServiceAsync userService;
+	
+	
+	
 
-	
-	
-	final private UserDetailsWidgetModel model;
-	final private GWTUserDetailsServiceAsync service;
-	final private UserDetailsWidget owner;
-	
-	
-	
-	UserDetailsWidgetController(UserDetailsWidgetModel model, UserDetailsWidget owner, GWTUserDetailsServiceAsync service) {
+	/**
+	 * @param model
+	 */
+	public UserDetailsWidgetController(UserDetailsWidgetModel model) {
+		log.enter("<constructor>");
+		
 		this.model = model;
-		this.service = service;
-		this.owner = owner;
+		
+		log.debug("instantiate service");
+		this.userService = GWT.create(GWTUserDetailsService.class);
+		
+		log.debug("set service URL");
+		ServiceDefTarget target = (ServiceDefTarget) userService;
+		target.setServiceEntryPoint(Configuration.getUserDetailsServiceEndpointURL());
+
+		log.leave();
 	}
 
-	
-	
+
+
+
 	/**
-	 * Parameterised method to allow injection of callback for testing purposes.
-	 * @param callback
+	 * @return
 	 */
-	void refreshUserDetails(AsyncCallback<UserDetailsTO> callback) {
-		
-		this.model.setStatus(UserDetailsWidgetModel.STATUS_LOADING);
-		
-		this.service.getAuthenticatedUserDetails(callback);
-		
-	}
-	
-	
-	
-	/**
-	 * Refresh the currently authenticated user.
-	 */
-	Deferred<UserDetailsTO> refreshUserDetails() {
+	public Deferred<UserDetailsTO> refreshCurrentUserDetails() {
+		log.enter("refreshCurrentUserDetails");
 		
 		Deferred<UserDetailsTO> d = new Deferred<UserDetailsTO>();
 		
-		refreshUserDetails(new RefreshUserDetailsCallback(d));
+		this.refreshCurrentUserDetails(new RefreshUserDetailsCallback(d));
 		
+		log.leave();
 		return d;
+	}
+	
+	
+	
+	
+
+	/**
+	 * @param refreshUserDetailsCallback
+	 */
+	private void refreshCurrentUserDetails(RefreshUserDetailsCallback callback) {
+		log.enter("refreshCurrentUserDetails");
+		
+		this.model.setStatus(AsyncWidgetModel.STATUS_ASYNC_REQUEST_PENDING);
+		
+		this.userService.getAuthenticatedUserDetails(callback);
+		
+		log.leave();
 		
 	}
 
-	
-	
-	class RefreshUserDetailsCallback implements AsyncCallback<UserDetailsTO> {
+
+
+
+
+	private class RefreshUserDetailsCallback implements AsyncCallback<UserDetailsTO> {
 
 		private Deferred<UserDetailsTO> deferredUser;
-		private Log log = LogFactory.getLog(this.getClass());
+		private Log log = LogFactory.getLog(RefreshUserDetailsCallback.class);
 		
-		/**
-		 * @param d
-		 */
 		public RefreshUserDetailsCallback(Deferred<UserDetailsTO> d) {
 			this.deferredUser = d;
 		}
@@ -84,95 +108,54 @@ public class UserDetailsWidgetController {
 			log.enter("onFailure");
 			
 			// TODO implement this method
+			
 			log.error("error refreshing user details", ex);
+			
+			this.deferredUser.errback(ex);
 			
 			log.leave();
 		}
 
 		public void onSuccess(UserDetailsTO user) {
+			log.enter("onSuccess");
 
-			// TODO handle case where user is null
+			log.debug("set current user on model");
+			model.setCurrentUser(user);
 			
+			log.debug("set current role using default");
+			Set<ChassisRole> roles = ChassisRole.getRoles(user);
+			if (roles.size() > 0) {
+				ChassisRole defaultRole = roles.iterator().next();
+				model.setCurrentRole(defaultRole);
+			}
+			
+			log.debug("set model status to ready");
+			model.setStatus(AsyncWidgetModel.STATUS_READY);
+			
+			log.debug("callback with user, to signal operation complete");
 			this.deferredUser.callback(user);
-			
-			// populate username
-			model.setUserName(user.getId());
 
-			// fire events
-			owner.fireOnUserDetailsRefreshed(user.getId());
-
-			// Filter out roles relevant to chassis
-			String userChassisRolesPrefix = ConfigurationBean.getUserChassisRolesPrefix();
-			Set<ChassisRole> roles = new HashSet<ChassisRole>();
-			for ( String role : user.getRoles() ) {
-				if (role.startsWith(userChassisRolesPrefix)) {
-					
-					String permissionSuffix = role.replace(userChassisRolesPrefix, "");
-					
-					for (ChassisRole r : ConfigurationBean.getChassisRoles()) {
-						if (permissionSuffix.equalsIgnoreCase(r.permissionSuffix)) {
-							roles.add(r);
-						}
-					}
-					
-//					//get chassisRoles
-//					ChassisRole coordinatorRole = ConfigurationBean.getChassisRoleCoordinator();
-//					ChassisRole curatorRole = ConfigurationBean.getChassisRoleCurator();
-//					ChassisRole gatekeeperRole = ConfigurationBean.getChassisRoleGatekeeper();
-//					ChassisRole submitterRole = ConfigurationBean.getChassisRoleSubmitter();
-////					ChassisRole userRole = ConfigurationBean.getChassisRoleUser();
-//					
-//					if (permissionSuffix.equalsIgnoreCase(coordinatorRole.permissionSuffix)) {
-//						roles.add(coordinatorRole);
-//					} else if (permissionSuffix.equalsIgnoreCase(curatorRole.permissionSuffix)) {
-//						roles.add(curatorRole);
-//					} else if (permissionSuffix.equalsIgnoreCase(gatekeeperRole.permissionSuffix)) {
-//						roles.add(gatekeeperRole);
-//					} else if (permissionSuffix.equalsIgnoreCase(submitterRole.permissionSuffix)) {
-//						roles.add(submitterRole);
-//					} 
-					
-					// disable this, because we're not interested in the "user" role
-//					else if (permissionSuffix.equalsIgnoreCase(userRole.permissionSuffix)) {
-//						roles.add(userRole);
-//					}
-					
-				}
-			}
-			
-			// populate roles, ordered by roleId
-			model.setRoles(new TreeSet<ChassisRole>(roles));
-			
-			// TODO prevent currentRole changing if it is already set.
-			
-			// populate current role
-			if (model.getRoles().size() > 0) {
-				
-				ChassisRole r = model.getRoles().iterator().next();
-				owner.fireOnCurrentRoleChanged(r);
-				model.setCurrentRole(r);
-				
-			}
-
-			// TODO handle case where no roles found
-			
-			// set status
-			model.setStatus(UserDetailsWidgetModel.STATUS_FOUND);
-			
-			// N.B. if we get wierd GWT errors later, maybe due to problems with GWT handling inner classes?
-			
-			
+			log.leave();
 		}
 		
 	}
 
+	
 
-	public void updateCurrentRole(ChassisRole currentRole) {
-		model.setCurrentRole(currentRole);
+	
+	/**
+	 * @param role
+	 */
+	public void setCurrentRole(ChassisRole role) {
+		log.enter("setCurrentRole");
 		
-		//alert owner
-		owner.fireOnCurrentRoleChanged(currentRole);
+		this.model.setCurrentRole(role);
+		
+		log.leave();
+		
 	}
 
+	
+	
 	
 }
