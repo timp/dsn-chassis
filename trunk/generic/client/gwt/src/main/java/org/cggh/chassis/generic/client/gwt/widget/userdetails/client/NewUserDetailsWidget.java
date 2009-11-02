@@ -163,6 +163,11 @@ public class NewUserDetailsWidget extends ChassisWidget {
 
 
 
+	/**
+	 * Refresh the currently authenticated user's details.
+	 * 
+	 * @return the currently authenticated user's details, deferred
+	 */
 	public Deferred<UserDetailsTO> refreshCurrentUserDetails() {
 		log.enter("refreshCurrentUserDetails");
 
@@ -176,6 +181,11 @@ public class NewUserDetailsWidget extends ChassisWidget {
 	
 	
 	
+	/**
+	 * Set the current role for the user.
+	 * 
+	 * @param role
+	 */
 	public void setCurrentRole(ChassisRole role) {
 		log.enter("setCurrentRole");
 		
@@ -189,16 +199,34 @@ public class NewUserDetailsWidget extends ChassisWidget {
 	
 	
 	
+	/**
+	 * Add a handler for the model property change event.
+	 * 
+	 * @param h the handler to add
+	 * @return a handler registration to remove the handler if required
+	 */
 	public HandlerRegistration addCurrentUserChangeHandler(CurrentUserChangeHandler h) {
-		return this.model.addChangeHandler(h, CurrentUserChangeEvent.TYPE);
+		
+		// delegate to model
+		return this.model.addCurrentUserChangeHandler(h);
+		
 	}
 	
 	
 	
 	
 	
+	/**
+	 * Add a handler for the model property change event.
+	 * 
+	 * @param h the handler to add
+	 * @return a handler registration to remove the handler if required
+	 */
 	public HandlerRegistration addCurrentRoleChangeHandler(CurrentRoleChangeHandler h) {
-		return this.model.addChangeHandler(h, CurrentRoleChangeEvent.TYPE);
+		
+		// delegate to model
+		return this.model.addCurrentRoleChangeHandler(h);
+		
 	}
 	
 	

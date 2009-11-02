@@ -103,31 +103,29 @@ input, textarea {
 	right: 0.5em;
 	left: auto;
 	bottom: auto;
-/*	border: 2px solid red;*/
 	text-align: right;
 }
 
-.chassis-userDetailsWidget-userDetails {
-/*	border: 2px solid green;*/
+.chassis-userDetailsWidget .userDetails {
 }
 
-.chassis-userDetailsWidget-userName {
+.chassis-userDetailsWidget .userName {
 	font-weight: bold;
 	margin-left: .2em;
 	margin-right: .2em;
 }
 
-.chassis-userDetailsWidget-currentRole {
+.chassis-userDetailsWidget .currentRole {
 	font-weight: bold;
 	margin-left: .2em;
 	margin-right: .2em;
 }
 
-.chassis-userDetailsWidget-roleSwitcher {
+.chassis-userDetailsWidget .roleSwitcher {
 	margin-left: .2em;
 }
 
-.chassis-userDetailsWidget-switchRolePanel {
+.chassis-userDetailsWidget .switchRolePanel {
 	display: inline;
 }
 

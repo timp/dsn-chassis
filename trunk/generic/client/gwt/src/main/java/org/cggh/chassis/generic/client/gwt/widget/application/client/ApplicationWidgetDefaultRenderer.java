@@ -95,7 +95,8 @@ public class ApplicationWidgetDefaultRenderer implements ApplicationWidgetModelL
 
 	public void onUserRefreshed(String userId) {
 
-		ChassisUser.setCurrentUserEmail(userId);
+//		ChassisUser.setCurrentUserEmail(userId);
+		// TODO fix above?
 		
 		// initialise perspective widgets
 		submitterPerspectiveWidget = new PerspectiveWidget(submitterPerspectiveWidgetCanvas);

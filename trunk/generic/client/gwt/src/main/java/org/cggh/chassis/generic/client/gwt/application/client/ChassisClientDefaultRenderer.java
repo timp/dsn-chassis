@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.cggh.chassis.generic.client.gwt.configuration.client.ChassisRole;
 import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
+import org.cggh.chassis.generic.client.gwt.widget.userdetails.client.NewUserDetailsWidget;
 import org.cggh.chassis.generic.client.gwt.widget.userdetails.client.UserDetailsWidget;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
@@ -32,7 +33,8 @@ public class ChassisClientDefaultRenderer implements ChassisClientRenderer {
 	private Log log = LogFactory.getLog(this.getClass());
 
 	private Panel canvas;
-	private UserDetailsWidget userDetailsWidget;
+//	private UserDetailsWidget userDetailsWidget;
+	private NewUserDetailsWidget userDetailsWidget;
 	private ChassisClient owner;
 	private ChassisClientController controller;
 	private Map<Integer,Perspective> perspectives = new HashMap<Integer,Perspective>();
@@ -79,7 +81,9 @@ public class ChassisClientDefaultRenderer implements ChassisClientRenderer {
 	private void constructUserDetailsWidget() {
 		log.enter("constructUserDetailsWidget");
 
-		this.userDetailsWidget = new UserDetailsWidget();		
+//		this.userDetailsWidget = new UserDetailsWidget();		
+		this.userDetailsWidget = new NewUserDetailsWidget();		
+
 		this.canvas.add(this.userDetailsWidget);
 
 		log.leave();
@@ -136,10 +140,15 @@ public class ChassisClientDefaultRenderer implements ChassisClientRenderer {
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.client.gwt.application.client.ChassisClientRenderer#getUserDetailsWidget()
 	 */
-	public UserDetailsWidget getUserDetailsWidget() {
+//	public UserDetailsWidget getUserDetailsWidget() {
+//		return this.userDetailsWidget;
+//	}
+
+
+	
+	public NewUserDetailsWidget getUserDetailsWidget() {
 		return this.userDetailsWidget;
 	}
-
 
 
 
