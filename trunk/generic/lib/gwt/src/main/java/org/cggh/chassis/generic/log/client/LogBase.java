@@ -27,6 +27,10 @@ public abstract class LogBase implements Log {
 		this.name = name;
 	}
 	
+	public String getName() {
+		return this.name;
+	}
+	
 	public String contextualise(String message) {
 		if (methodName != null) {
 			message = methodName + " :: " + message;

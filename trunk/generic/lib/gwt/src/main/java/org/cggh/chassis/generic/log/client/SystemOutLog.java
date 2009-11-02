@@ -5,6 +5,8 @@ package org.cggh.chassis.generic.log.client;
 
 import org.cggh.chassis.generic.twisted.client.Function;
 
+import com.google.gwt.core.client.GWT;
+
 /**
  * @author aliman
  *
@@ -33,7 +35,9 @@ public class SystemOutLog extends LogBase {
 	 * @see org.cggh.chassis.wwarn.prototype.client.shared.Logger#info(java.lang.String)
 	 */
 	public void debug(String message) {
-		System.out.println("[DEBUG] "+contextualise(message));
+		if (LogFactory.visible(this)) {
+			System.out.println("[DEBUG] "+contextualise(message));
+		}
 	}
 	
 	
@@ -42,9 +46,11 @@ public class SystemOutLog extends LogBase {
 	 * @see org.cggh.chassis.wwarn.prototype.client.shared.Logger#info(java.lang.String, java.lang.Throwable)
 	 */
 	public void debug(String message, Throwable exception) {
-		System.out.println("[DEBUG] "+contextualise(message));
-		System.out.println("[DEBUG] "+contextualise(exception.getLocalizedMessage()));
-		exception.printStackTrace();
+		if (LogFactory.visible(this)) {
+			System.out.println("[DEBUG] "+contextualise(message));
+			System.out.println("[DEBUG] "+contextualise(exception.getLocalizedMessage()));
+			exception.printStackTrace();
+		}
 	}
 
 	
@@ -53,7 +59,9 @@ public class SystemOutLog extends LogBase {
 	 * @see org.cggh.chassis.wwarn.prototype.client.shared.Logger#info(java.lang.String)
 	 */
 	public void info(String message) {
-		System.out.println("[INFO] "+contextualise(message));
+		if (LogFactory.visible(this)) {
+			System.out.println("[INFO] "+contextualise(message));
+		}
 	}
 	
 	
@@ -62,9 +70,11 @@ public class SystemOutLog extends LogBase {
 	 * @see org.cggh.chassis.wwarn.prototype.client.shared.Logger#info(java.lang.String, java.lang.Throwable)
 	 */
 	public void info(String message, Throwable exception) {
-		System.out.println("[INFO] "+contextualise(message));
-		System.out.println("[INFO] "+contextualise(exception.getLocalizedMessage()));
-		exception.printStackTrace();
+		if (LogFactory.visible(this)) {
+			System.out.println("[INFO] "+contextualise(message));
+			System.out.println("[INFO] "+contextualise(exception.getLocalizedMessage()));
+			exception.printStackTrace();
+		}
 	}
 
 	
@@ -73,7 +83,9 @@ public class SystemOutLog extends LogBase {
 	 * @see org.cggh.chassis.wwarn.prototype.client.shared.Logger#warn(java.lang.String)
 	 */
 	public void warn(String message) {
-		System.out.println("[WARN] "+contextualise(message));
+		if (LogFactory.visible(this)) {
+			System.out.println("[WARN] "+contextualise(message));
+		}
 	}
 	
 	
@@ -82,9 +94,11 @@ public class SystemOutLog extends LogBase {
 	 * @see org.cggh.chassis.wwarn.prototype.client.shared.Logger#warn(java.lang.String, java.lang.Throwable)
 	 */
 	public void warn(String message, Throwable exception) {
-		System.out.println("[WARN] "+contextualise(message));
-		System.out.println("[WARN] "+contextualise(exception.getLocalizedMessage()));
-		exception.printStackTrace();
+		if (LogFactory.visible(this)) {
+			System.out.println("[WARN] "+contextualise(message));
+			System.out.println("[WARN] "+contextualise(exception.getLocalizedMessage()));
+			exception.printStackTrace();
+		}
 	}
 
 	
@@ -93,7 +107,9 @@ public class SystemOutLog extends LogBase {
 	 * @see org.cggh.chassis.werror.prototype.client.shared.Logger#error(java.lang.String)
 	 */
 	public void error(String message) {
-		System.out.println("[ERROR] "+contextualise(message));
+		if (LogFactory.visible(this)) {
+			System.out.println("[ERROR] "+contextualise(message));
+		}
 	}
 	
 	
@@ -102,9 +118,11 @@ public class SystemOutLog extends LogBase {
 	 * @see org.cggh.chassis.werror.prototype.client.shared.Logger#error(java.lang.String, java.lang.Throwable)
 	 */
 	public void error(String message, Throwable exception) {
-		System.out.println("[ERROR] "+contextualise(message));
-		System.out.println("[ERROR] "+contextualise(exception.getLocalizedMessage()));
-		exception.printStackTrace();
+		if (LogFactory.visible(this)) {
+			System.out.println("[ERROR] "+contextualise(message));
+			System.out.println("[ERROR] "+contextualise(exception.getLocalizedMessage()));
+			exception.printStackTrace();
+		}
 	}
 
 	

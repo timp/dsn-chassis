@@ -43,6 +43,7 @@ public class AsyncWidgetModel extends ChassisWidgetModel {
 	 */
 	@Override
 	protected void init() {
+		log = LogFactory.getLog(AsyncWidgetModel.class); // instantiate here because called from superclass constructor
 		log.enter("init");
 
 		this.status = STATUS_INITIAL;
