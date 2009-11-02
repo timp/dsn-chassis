@@ -54,8 +54,13 @@ Check out projects from the following SVN locations:
 
   * /trunk/generic/lib/java
   * /trunk/generic/lib/gwt
+  * /trunk/generic/lib/gwt-test
   * /trunk/generic/client/gwt
+  * /trunk/generic/client/gwt-test
+  * /trunk/wwarn/client/gwt
+  * /trunk/wwarn/client/gwt-test
   * /trunk/generic/service/user
+  * /trunk/generic/service/upload
   * /branches/generic/service/exist-1.4.0rc-rev10028
 
 (If you browse to the location in the SVN repositories view, then right click on the location, you can do "Check Out" from there.)
@@ -94,15 +99,15 @@ You should now be able to start the server from within the Servers view, and bro
 
 == Compiling the Chassis Generic Client GWT Modules ==
 
-To try out any of the Chassis GWT Client Spike applications, you need to first compile them.
+To try out the Chassis GWT client, you need to first compile it.
 
-Click on the chassis_generic_client_gwt project. Then click the GWT Compile button (a red toolbox with a white "G" on it). Add only those entry point modules that start with "Spike..." in the name (I usually remove them all first, then add back the ones you want). Click "Compile". 
+Click on the chassis_generic_client_gwt project. Then click the GWT Compile button (a red toolbox with a white "G" on it). Add the "Main" module (I usually remove them all first, then add back the one I want). Click "Compile". 
 
 (If you have a decent amount of RAM, you might want to up the default -Xmx in the VM arguments, under the Advanced section.)
 
 N.B., whenever you compile a new module for the first time, *remember to add the compiled output to svn:ignore*. Otherwise, if the compiled output gets accidentally committed, repeated compilation causes various SVN problems.
 
-Once compiled, with the Tomcat server started, you should be able to browse to http://localhost:8080/chassis-generic-client-gwt/spike/ and try out the spike apps.
+Once compiled, with the Tomcat server started, you should be able to browse to http://localhost:8080/chassis-generic-client-gwt/ and try out the app.
 
 == Running Apps in GWT Hosted Mode ==
 
