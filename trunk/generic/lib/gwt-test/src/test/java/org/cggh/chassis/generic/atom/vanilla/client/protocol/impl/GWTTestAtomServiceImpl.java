@@ -5,7 +5,7 @@ package org.cggh.chassis.generic.atom.vanilla.client.protocol.impl;
 
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactory;
-import org.cggh.chassis.generic.atom.vanilla.client.format.impl.AtomFactoryImpl;
+import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactoryImpl;
 
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.URL;

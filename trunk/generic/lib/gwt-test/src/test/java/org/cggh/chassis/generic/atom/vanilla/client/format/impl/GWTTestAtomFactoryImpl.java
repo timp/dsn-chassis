@@ -8,6 +8,7 @@ import org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomCategory;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactory;
+import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactoryImpl;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFormatException;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomLink;
