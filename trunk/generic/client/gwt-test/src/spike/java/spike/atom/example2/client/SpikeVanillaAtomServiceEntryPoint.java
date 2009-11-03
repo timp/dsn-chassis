@@ -6,7 +6,7 @@ package spike.atom.example2.client;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactory;
-import org.cggh.chassis.generic.atom.vanilla.client.format.impl.AtomFactoryImpl;
+import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactoryImpl;
 import org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomFactory;
 import org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomService;
 import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
