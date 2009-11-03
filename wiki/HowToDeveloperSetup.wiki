@@ -88,7 +88,7 @@ Another option is
 apt-get install tomcat6
 mkdir /opt/tomcat6
 cd /opt/tomcat6
-ln -s /usr/share/tomcat6\/* .
+ln -s /usr/share/tomcat6/* .
 ln -s /var/log/tomcat6 log
 ln -s /etc/tomcat6 conf
 }}}
