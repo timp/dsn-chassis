@@ -10,9 +10,9 @@ import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionFactory;
 import org.cggh.chassis.generic.atom.vanilla.client.format.Atom;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
+import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactoryImpl;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFormatException;
-import org.cggh.chassis.generic.atom.vanilla.client.format.impl.AtomFactoryImpl;
 import org.cggh.chassis.generic.xml.client.XML;
 
 import com.google.gwt.xml.client.Document;
@@ -30,7 +30,7 @@ public class SubmissionFactoryImpl extends AtomFactoryImpl implements Submission
 	
 	public static String TEMPLATE_SUBMISSIONENTRY = 
 		"<atom:entry xmlns:atom=\""+Atom.NSURI+"\">" +
-			"<atom:category scheme=\"http://www.cggh.org/2009/chassis/atom/types\" term=\"submission\"/>" +
+			"<atom:category scheme=\"http://www.cggh.org/2009/chassis/type/\" term=\"submission\"/>" +
 			"<atom:content type=\"application/xml\">" +
 				"<chassis:submission xmlns:chassis=\""+Chassis.NSURI+"\"></chassis:submission>" +
 			"</atom:content>" +

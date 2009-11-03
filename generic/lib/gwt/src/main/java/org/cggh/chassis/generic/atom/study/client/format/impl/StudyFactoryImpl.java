@@ -10,9 +10,9 @@ import org.cggh.chassis.generic.atom.study.client.format.StudyFactory;
 import org.cggh.chassis.generic.atom.study.client.format.StudyFeed;
 import org.cggh.chassis.generic.atom.vanilla.client.format.Atom;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
+import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactoryImpl;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFormatException;
-import org.cggh.chassis.generic.atom.vanilla.client.format.impl.AtomFactoryImpl;
 import org.cggh.chassis.generic.xml.client.XML;
 
 import com.google.gwt.xml.client.Document;
@@ -31,7 +31,7 @@ public class StudyFactoryImpl extends AtomFactoryImpl implements StudyFactory {
 	
 	public static String TEMPLATE_STUDYENTRY = 
 		"<atom:entry xmlns:atom=\""+Atom.NSURI+"\">" +
-			"<atom:category scheme=\"http://www.cggh.org/2009/chassis/atom/types\" term=\"study\"/>" +
+			"<atom:category scheme=\"http://www.cggh.org/2009/chassis/type/\" term=\"study\"/>" +
 			"<atom:content type=\"application/xml\">" +
 				"<chassis:study xmlns:chassis=\""+Chassis.NSURI+"\"></chassis:study>" +
 			"</atom:content>" +
@@ -107,54 +107,6 @@ public class StudyFactoryImpl extends AtomFactoryImpl implements StudyFactory {
 	@Override
 	public AtomFeed createFeed(String feedDocument) {
 		return createStudyFeed(feedDocument);
-//		Document d;
-//		Element feedElement;
-//		
-//		// guard conditions
-//		// TODO refactor
-//		
-//		try {
-//			d = XMLParser.parse(feedDocument);
-//		} catch (DOMParseException e) {
-//			throw new AtomFormatException("parse exception: "+e.getLocalizedMessage());
-//		}
-//
-//		feedElement = d.getDocumentElement();
-//			
-//		if (!XML.getLocalName(feedElement).equals(Atom.ELEMENT_FEED)) {
-//			throw new AtomFormatException("bad tag local name, expected: "+Atom.ELEMENT_FEED+"; found: "+XML.getLocalName(feedElement));
-//		}
-//
-//		if (feedElement.getNamespaceURI() == null || !feedElement.getNamespaceURI().equals(Atom.NSURI)) {
-//			throw new AtomFormatException("bad namespace URI, expected: "+Atom.NSURI+"; found: "+feedElement.getNamespaceURI());
-//		}
-//		
-//		return new StudyFeedImpl(d.getDocumentElement(), this);
-
-	}
-
-
-
-
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.atom.study.client.format.StudyFactory#createStudy(com.google.gwt.xml.client.Element)
-	 */
-	public Study createStudy(Element studyElement) {
-		
-		if (studyElement == null) {
-			throw new NullPointerException("studyElement is null, cannot create study");
-		}
-		
-		if (!XML.getLocalName(studyElement).equals(Chassis.ELEMENT_STUDY)) {
-			throw new AtomFormatException("bad local tag name, expected: "+Chassis.ELEMENT_STUDY+"; found: "+XML.getLocalName(studyElement));
-		}
-
-		if (studyElement.getNamespaceURI() == null || !studyElement.getNamespaceURI().equals(Chassis.NSURI)) {
-			throw new AtomFormatException("bad namespace URI, expected: "+Chassis.NSURI+"; found: "+studyElement.getNamespaceURI());
-		}
-		
-		return new StudyImpl(studyElement, this);
-
 	}
 
 
@@ -193,4 +145,28 @@ public class StudyFactoryImpl extends AtomFactoryImpl implements StudyFactory {
 	
 	
 	
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.atom.study.client.format.StudyFactory#createStudy(com.google.gwt.xml.client.Element)
+	 */
+	public Study createStudy(Element studyElement) {
+		
+		if (studyElement == null) {
+			throw new NullPointerException("studyElement is null, cannot create study");
+		}
+		
+		if (!XML.getLocalName(studyElement).equals(Chassis.ELEMENT_STUDY)) {
+			throw new AtomFormatException("bad local tag name, expected: "+Chassis.ELEMENT_STUDY+"; found: "+XML.getLocalName(studyElement));
+		}
+
+		if (studyElement.getNamespaceURI() == null || !studyElement.getNamespaceURI().equals(Chassis.NSURI)) {
+			throw new AtomFormatException("bad namespace URI, expected: "+Chassis.NSURI+"; found: "+studyElement.getNamespaceURI());
+		}
+		
+		return new StudyImpl(studyElement, this);
+
+	}
+
+
+
+
 }

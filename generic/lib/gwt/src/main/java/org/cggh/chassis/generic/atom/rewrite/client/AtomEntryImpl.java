@@ -1,20 +1,13 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.atom.vanilla.client.format.impl;
+package org.cggh.chassis.generic.atom.rewrite.client;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.cggh.chassis.generic.atom.vanilla.client.format.Atom;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomCategory;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactory;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFormatException;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomLink;
 import org.cggh.chassis.generic.twisted.client.Function;
 import org.cggh.chassis.generic.twisted.client.Functional;
 import org.cggh.chassis.generic.xml.client.XMLNS;
@@ -30,7 +23,7 @@ public class AtomEntryImpl extends ElementWrapperImpl implements AtomEntry {
 	
 	
 	
-	protected AtomFactory factory;
+	protected AtomComponentFactory factory;
 	protected Set<AtomEntry.PropertyChangeListener> listeners = new HashSet<AtomEntry.PropertyChangeListener>();
 
 	
@@ -39,8 +32,9 @@ public class AtomEntryImpl extends ElementWrapperImpl implements AtomEntry {
 	/**
 	 * @param e
 	 */
-	protected AtomEntryImpl(Element e, AtomFactory factory) {
+	protected AtomEntryImpl(Element e, AtomComponentFactory factory) {
 		super(e);
+		AtomUtils.verifyElement(Atom.ELEMENT_ENTRY, Atom.NSURI, e);
 		this.factory = factory;
 	}
 
@@ -434,7 +428,6 @@ public class AtomEntryImpl extends ElementWrapperImpl implements AtomEntry {
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry#setSummary(java.lang.String)
 	 */
 	public void setSummary(String summary) {
-//		XML.setElementSimpleContentByLocalName(element, Atom.ELEMENT_SUMMARY, summary);
 
 		String before = this.getSummary();
 
@@ -451,8 +444,7 @@ public class AtomEntryImpl extends ElementWrapperImpl implements AtomEntry {
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry#setTitle(java.lang.String)
 	 */
 	public void setTitle(String title) {
-//		XML.setElementSimpleContentByLocalName(element, Atom.ELEMENT_TITLE, title);
-		
+
 		String before = this.getTitle();
 		
 		XMLNS.setSingleElementSimpleContentByTagNameNS(element, Atom.ELEMENT_TITLE, Atom.PREFIX, Atom.NSURI, title);

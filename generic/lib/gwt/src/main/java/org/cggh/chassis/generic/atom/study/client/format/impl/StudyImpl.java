@@ -9,7 +9,7 @@ import org.cggh.chassis.generic.atom.chassis.base.client.format.ChassisFormatExc
 import org.cggh.chassis.generic.atom.chassis.base.vocab.Chassis;
 import org.cggh.chassis.generic.atom.study.client.format.Study;
 import org.cggh.chassis.generic.atom.study.client.format.StudyFactory;
-import org.cggh.chassis.generic.atom.vanilla.client.format.impl.ElementWrapperImpl;
+import org.cggh.chassis.generic.atom.vanilla.client.format.ElementWrapperImpl;
 import org.cggh.chassis.generic.xml.client.XMLNS;
 
 import com.google.gwt.xml.client.Element;

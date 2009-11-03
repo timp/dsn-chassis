@@ -8,7 +8,7 @@ import java.util.List;
 import org.cggh.chassis.generic.atom.chassis.base.vocab.Chassis;
 import org.cggh.chassis.generic.atom.submission.client.format.Submission;
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionFactory;
-import org.cggh.chassis.generic.atom.vanilla.client.format.impl.ElementWrapperImpl;
+import org.cggh.chassis.generic.atom.vanilla.client.format.ElementWrapperImpl;
 import org.cggh.chassis.generic.xml.client.XMLNS;
 
 import com.google.gwt.xml.client.Element;

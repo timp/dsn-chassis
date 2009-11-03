@@ -1,10 +1,9 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.atom.vanilla.client.format.impl;
+package org.cggh.chassis.generic.atom.rewrite.client;
 
-import org.cggh.chassis.generic.atom.vanilla.client.format.Atom;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomLink;
+
 
 import com.google.gwt.xml.client.Element;
 
@@ -17,8 +16,9 @@ public class AtomLinkImpl extends ElementWrapperImpl implements AtomLink {
 	/**
 	 * @param element
 	 */
-	protected AtomLinkImpl(Element element) {
-		super(element);
+	protected AtomLinkImpl(Element e) {
+		super(e);
+		AtomUtils.verifyElement(Atom.ELEMENT_LINK, Atom.NSURI, e);
 	}
 
 	/* (non-Javadoc)
