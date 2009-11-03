@@ -29,6 +29,9 @@ Install the [http://code.google.com/eclipse/docs/getting_started.html Google Plu
   * http://dl.google.com/eclipse/plugin/3.5
 
 You'll need the plugin and the web toolkit SDK.
+Note that you may need to manually install the Eclipse WST, see 
+
+* http://code.google.com/eclipse/docs/faq.html#wstinstallerror
 
 == Install SVN Plugin (Subversive) for Eclipse ==
 
