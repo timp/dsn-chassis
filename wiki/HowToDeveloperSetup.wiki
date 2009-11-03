@@ -17,6 +17,10 @@ sudo apt-get install sun-java5-jdk
 == Install Eclipse IDE for Java EE Developers ==
 
 Visit [http://www.eclipse.org/downloads/ eclipse.org downloads] and download the Eclipse IDE for Java EE Developers, based on *Eclipse 3.5 (Galileo)*, for your platform. Install it at your preferred location. 
+_or_
+{{{
+sudo apt-get install eclipse
+}}}
 
 == Install the Google Plugin for Eclipse ==
 
