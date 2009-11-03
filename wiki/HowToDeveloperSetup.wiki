@@ -101,6 +101,14 @@ Finally, in the Servers view in Eclipse, right click the empty space, and do...
   * Add all Chassis projects, except for the generic_lib_gwt project
   * Finish
 
+Note if any of this fails try the following before repeating: 
+ * Ensure the eclipse user owns the tomcat6 installation
+ * Close eclipse
+ * rm org.eclipse.wst.server.core.prefs 
+ * rm org.eclipse.jst.server.tomcat.core.prefs
+
+
+
 You should now be able to start the server from within the Servers view, and browse to http://localhost:8080/chassis-generic-service-exist/ ... you should see the eXist home page.
 
 == Compiling the Chassis Generic Client GWT Modules ==
