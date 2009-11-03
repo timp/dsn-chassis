@@ -5,6 +5,7 @@ package spike.widget.submissionmanagment.client;
 
 import org.cggh.chassis.generic.client.gwt.common.client.ChassisUser;
 import org.cggh.chassis.generic.client.gwt.widget.submissionmanagement.client.SubmissionManagementWidget;
+import org.cggh.chassis.generic.user.transfer.UserDetailsTO;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -28,7 +29,10 @@ public class SpikeSubmissionManagementWidget implements EntryPoint {
 		
 		RootPanel.get().add(vPanel);
 		
-		ChassisUser.setCurrentUserEmail("bob@example.com");
+		UserDetailsTO user = new UserDetailsTO();
+		user.setId("alice@example.com");
+		ChassisUser.setCurrentUser(user);
+
 		SubmissionManagementWidget widget = new SubmissionManagementWidget();
 		menuCanvas.add(widget.getMenuCanvas());
 
