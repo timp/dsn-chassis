@@ -92,7 +92,7 @@ ln -s /usr/share/tomcat6/* .
 ln -s /var/log/tomcat6 log
 ln -s /etc/tomcat6 conf
 }}}
-then use /opt/tomcat6 below
+then use /opt/tomcat6 below.
 
 
 Next, add Tomcat v6.0 as a Runtime Environment in Eclipse. In Eclipse, do...
