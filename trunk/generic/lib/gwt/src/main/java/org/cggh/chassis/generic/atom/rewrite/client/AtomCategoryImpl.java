@@ -1,10 +1,8 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.atom.vanilla.client.format.impl;
+package org.cggh.chassis.generic.atom.rewrite.client;
 
-import org.cggh.chassis.generic.atom.vanilla.client.format.Atom;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomCategory;
 
 import com.google.gwt.xml.client.Element;
 
@@ -19,6 +17,7 @@ public class AtomCategoryImpl extends ElementWrapperImpl implements AtomCategory
 	 */
 	protected AtomCategoryImpl(Element e) {
 		super(e);
+		AtomUtils.verifyElement(Atom.ELEMENT_CATEGORY, Atom.NSURI, e);
 	}
 
 	/* (non-Javadoc)

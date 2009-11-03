@@ -10,7 +10,7 @@ import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
 import org.cggh.chassis.generic.atom.study.client.format.StudyFactory;
 import org.cggh.chassis.generic.atom.study.client.format.StudyFeed;
 import org.cggh.chassis.generic.atom.vanilla.client.format.Atom;
-import org.cggh.chassis.generic.atom.vanilla.client.format.impl.AtomFeedImpl;
+import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeedImpl;
 import org.cggh.chassis.generic.twisted.client.Function;
 import org.cggh.chassis.generic.twisted.client.Functional;
 import org.cggh.chassis.generic.xml.client.XML;

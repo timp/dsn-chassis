@@ -1,9 +1,8 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.atom.vanilla.client.format.impl;
+package org.cggh.chassis.generic.atom.rewrite.client;
 
-import org.cggh.chassis.generic.atom.vanilla.client.format.ElementWrapper;
 
 import com.google.gwt.xml.client.Element;
 

@@ -16,15 +16,16 @@ public interface StudyFactory extends AtomFactory {
 	public StudyEntry createStudyEntry();
 
 	/**
+	 * @param studyFeedDoc
+	 * @return
+	 */
+	public StudyFeed createStudyFeed(String studyFeedDoc);
+
+	/**
 	 * @param studyElement
 	 * @return
 	 */
 	public Study createStudy(Element studyElement);
 
-	/**
-	 * @param studyFeedDoc
-	 * @return
-	 */
-	public StudyFeed createStudyFeed(String studyFeedDoc);
-	
+
 }
