@@ -21,7 +21,7 @@ public class Chassis {
 
 	public static class Types {
 		
-		public static final String SCHEME = "http://www.cggh.org/2009/chassis/atom/types";
+		public static final String SCHEME = "http://www.cggh.org/2009/chassis/type/";
 		public static final String TERM_SUBMISSION = "submission";
 		public static final String TERM_STUDY = "study";
 		public static final String TERM_DATAFILE = "datafile";
