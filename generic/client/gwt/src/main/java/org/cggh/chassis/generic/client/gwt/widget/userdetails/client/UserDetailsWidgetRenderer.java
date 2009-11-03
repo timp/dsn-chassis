@@ -267,7 +267,7 @@ public class UserDetailsWidgetRenderer extends ChassisWidgetRenderer {
 	protected void updatePanelVisibility(Status status) {
 		log.enter("updatePanelVisibility");
 		
-		if (status instanceof InitialStatus) {
+		if (status == null || status instanceof InitialStatus) {
 
 			this.userDetailsPanel.setVisible(false);
 			this.loadingPanel.setVisible(false);

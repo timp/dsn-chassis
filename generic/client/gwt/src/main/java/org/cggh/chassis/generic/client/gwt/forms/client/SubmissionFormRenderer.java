@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.client.gwt.form.submission.client;
+package org.cggh.chassis.generic.client.gwt.forms.client;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,12 +11,10 @@ import java.util.Map;
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomLink;
 import org.cggh.chassis.generic.client.gwt.common.client.CSS;
-import org.cggh.chassis.generic.client.gwt.common.client.ChassisUser;
 import org.cggh.chassis.generic.client.gwt.common.client.ChassisUtils;
 import org.cggh.chassis.generic.client.gwt.common.client.ChassisResources;
-import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
 import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
-import org.cggh.chassis.generic.client.gwt.form.submission.client.SubmissionForm.Resources;
+import org.cggh.chassis.generic.client.gwt.forms.client.SubmissionForm.Resources;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.twisted.client.Function;
@@ -58,7 +56,6 @@ public class SubmissionFormRenderer {
 	private FlowPanel modulesQuestionPanel;
 	private FlowPanel studiesQuestionPanel;
 	private Map<String,String> studyLinks = new HashMap<String,String>();
-	private ChassisResources resources;
 	private FlowPanel selectStudiesPanel;
 
 	

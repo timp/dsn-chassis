@@ -6,8 +6,8 @@ package org.cggh.chassis.generic.client.gwt.widget.admin.collection.client;
 import org.cggh.chassis.generic.atom.exist.client.protocol.ExistAtomService;
 import org.cggh.chassis.generic.atom.exist.client.protocol.impl.ExistAtomServiceImpl;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactory;
+import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactoryImpl;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
-import org.cggh.chassis.generic.atom.vanilla.client.format.impl.AtomFactoryImpl;
 import org.cggh.chassis.generic.twisted.client.Deferred;
 
 import com.google.gwt.user.client.ui.Composite;

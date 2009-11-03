@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.client.gwt.form.submission.client;
+package org.cggh.chassis.generic.client.gwt.forms.client;
 
 import org.cggh.chassis.generic.atom.submission.client.form.SubmissionEntryForm;
 import org.cggh.chassis.generic.atom.submission.client.form.SubmissionEntryValidator;

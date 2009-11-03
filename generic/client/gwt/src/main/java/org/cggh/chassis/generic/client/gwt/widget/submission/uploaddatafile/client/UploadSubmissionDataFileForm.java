@@ -6,7 +6,7 @@ package org.cggh.chassis.generic.client.gwt.widget.submission.uploaddatafile.cli
 import org.cggh.chassis.generic.atom.datafile.client.form.DataFileEntryForm;
 import org.cggh.chassis.generic.atom.datafile.client.form.DataFileEntryValidator;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactory;
-import org.cggh.chassis.generic.atom.vanilla.client.format.impl.AtomFactoryImpl;
+import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactoryImpl;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Panel;
