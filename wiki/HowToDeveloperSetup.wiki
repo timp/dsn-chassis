@@ -111,6 +111,12 @@ Note if any of this fails try the following before repeating:
 
 You should now be able to start the server from within the Servers view, and browse to http://localhost:8080/chassis-generic-service-exist/ ... you should see the eXist home page.
 
+If using ubuntu 9.10 you may need to extract old libstdc++.so.5 from jaunty ia32-libs 
+as per http://blog.dalejefferson.com/2009/09/gwt-on-64bit-ubuntu-karmic-910.html
+
+
+
+
 == Compiling the Chassis Generic Client GWT Modules ==
 
 To try out the Chassis GWT client, you need to first compile it.
