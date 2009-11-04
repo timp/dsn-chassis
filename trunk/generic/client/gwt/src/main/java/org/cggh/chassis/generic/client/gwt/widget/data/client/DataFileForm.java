@@ -1,13 +1,13 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.client.gwt.forms.client;
+package org.cggh.chassis.generic.client.gwt.widget.data.client;
 
-import org.cggh.chassis.generic.atom.datafile2.client.DataFileEntry;
-import org.cggh.chassis.generic.atom.datafile2.client.DataFileEntryForm;
-import org.cggh.chassis.generic.atom.datafile2.client.DataFileEntryValidator;
-import org.cggh.chassis.generic.atom.datafile2.client.DataFileFactory;
 import org.cggh.chassis.generic.atom.rewrite.client.AtomAuthor;
+import org.cggh.chassis.generic.atom.rewrite.client.datafile.DataFileEntry;
+import org.cggh.chassis.generic.atom.rewrite.client.datafile.DataFileEntryForm;
+import org.cggh.chassis.generic.atom.rewrite.client.datafile.DataFileEntryValidator;
+import org.cggh.chassis.generic.atom.rewrite.client.datafile.DataFileFactory;
 import org.cggh.chassis.generic.client.gwt.common.client.ChassisResources;
 import org.cggh.chassis.generic.client.gwt.common.client.ChassisUser;
 import org.cggh.chassis.generic.log.client.Log;
@@ -54,6 +54,19 @@ public class DataFileForm extends DataFileEntryForm {
 		
 	}
 	
+	
+	
+	
+	public void resetModel() {
+		DataFileFactory factory = new DataFileFactory();
+		DataFileEntry model = factory.createEntry();
+
+		AtomAuthor author = factory.createAuthor();
+		author.setEmail(ChassisUser.getCurrentUserEmail());
+		model.addAuthor(author);
+		
+		this.setModel(model);
+	}
 	
 	
 	

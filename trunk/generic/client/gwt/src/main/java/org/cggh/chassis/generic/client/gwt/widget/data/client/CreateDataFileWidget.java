@@ -27,7 +27,7 @@ public class CreateDataFileWidget extends ChassisWidget {
 	
 	
 	
-	private Log log = LogFactory.getLog(CreateDataFileWidget.class);
+	private Log log;
 	private AsyncWidgetModel model;
 	private CreateDataFileWidgetController controller;
 	private CreateDataFileWidgetRenderer renderer;
@@ -47,14 +47,23 @@ public class CreateDataFileWidget extends ChassisWidget {
 
 	
 	
+	private void ensureLog() {
+		if (log == null) log = LogFactory.getLog(CreateDataFileWidget.class);
+	}
+	
+	
+	
+	
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#init()
 	 */
 	@Override
 	public void init() {
+		ensureLog(); // instantiate here because called from superclass constructor
 		log.enter("init");
 
 		this.model = new AsyncWidgetModel(this);
+		this.model.setStatus(AsyncWidgetModel.STATUS_READY);
 		this.controller = new CreateDataFileWidgetController(this, this.model);
 		this.renderer = new CreateDataFileWidgetRenderer(this);
 		this.renderer.setCanvas(this.contentBox);
@@ -186,6 +195,8 @@ public class CreateDataFileWidget extends ChassisWidget {
 	public HandlerRegistration addErrorHandler(ErrorHandler h) {
 		return this.addHandler(h, ErrorEvent.TYPE);
 	}
+	
+	
 	
 
 }

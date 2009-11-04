@@ -43,7 +43,7 @@ CHASSIS.resources["org.cggh.chassis.generic.client.gwt.forms.client.SubmissionFo
 
 
 
-CHASSIS.resources["org.cggh.chassis.generic.client.gwt.forms.client.DataFileForm"] = {
+CHASSIS.resources["org.cggh.chassis.generic.client.gwt.widget.data.client.DataFileForm"] = {
 	"HEADINGTITLEANDSUMMARY" : {
 		"en" : "Title and Summary",
 		"fr" : "TODO"

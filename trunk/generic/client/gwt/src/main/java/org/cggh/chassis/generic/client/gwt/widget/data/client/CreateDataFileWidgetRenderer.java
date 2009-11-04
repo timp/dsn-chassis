@@ -3,9 +3,7 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.data.client;
 
-import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
 import org.cggh.chassis.generic.client.gwt.common.client.CancelEvent;
-import org.cggh.chassis.generic.client.gwt.forms.client.DataFileForm;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
@@ -78,6 +76,7 @@ public class CreateDataFileWidgetRenderer extends ChassisWidgetRenderer {
 		this.mainPanel.add(new HTML("<p>Use the form below to create a new data file.</p>")); // TODO i18n
 		
 		this.form = new DataFileForm();
+		this.form.render(); // TODO remove necessity for this call
 		this.mainPanel.add(this.form);
 		
 		this.renderButtonsPanel();
@@ -234,22 +233,6 @@ public class CreateDataFileWidgetRenderer extends ChassisWidgetRenderer {
 
 
 
-	/**
-	 * 
-	 */
-	public void unbindUI() {
-		log.enter("unbindUI");
-		
-		this.clearModelChangeHandlers();
-		this.clearChildWidgetEventHandlers();
-		
-		log.leave();
-		
-	}
-
-
-
-
 
 	/**
 	 * @param controller
@@ -284,6 +267,7 @@ public class CreateDataFileWidgetRenderer extends ChassisWidgetRenderer {
 			
 			this.savingPanel.setVisible(false);
 			this.mainPanel.setVisible(true);
+			this.form.resetModel(); // TODO put this elsewhere?
 
 		}
 		else if (status instanceof ErrorStatus) {

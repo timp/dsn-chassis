@@ -3,7 +3,7 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.data.client;
 
-import org.cggh.chassis.generic.atom.datafile2.client.DataFileEntry;
+import org.cggh.chassis.generic.atom.rewrite.client.datafile.DataFileEntry;
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
 import org.cggh.chassis.generic.client.gwt.widget.submission.view.client.EditSubmissionActionHandler;
 import org.cggh.chassis.generic.log.client.Log;

@@ -5,6 +5,7 @@
   	<inherits name="org.cggh.chassis.generic.client.gwt.configuration.Configuration" />
   	<inherits name="org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.ViewStudiesWidget"/>
   	<inherits name="org.cggh.chassis.generic.atom.submission.Submission" />
+    <inherits name="org.cggh.chassis.generic.client.gwt.forms.Forms" />
 	<inherits name="org.cggh.chassis.generic.client.gwt.widget.submission.controller.SubmissionController" />
 	<inherits name="org.cggh.chassis.generic.client.gwt.widget.submission.model.SubmissionModel" />
 </module>

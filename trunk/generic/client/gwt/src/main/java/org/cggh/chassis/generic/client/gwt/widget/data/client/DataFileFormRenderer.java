@@ -1,15 +1,11 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.client.gwt.forms.client;
+package org.cggh.chassis.generic.client.gwt.widget.data.client;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.cggh.chassis.generic.atom.datafile2.client.DataFileEntry;
+import org.cggh.chassis.generic.atom.rewrite.client.datafile.DataFileEntry;
 import org.cggh.chassis.generic.client.gwt.common.client.CSS;
-import org.cggh.chassis.generic.client.gwt.common.client.ChassisResources;
-import org.cggh.chassis.generic.client.gwt.forms.client.DataFileForm.Resources;
+import org.cggh.chassis.generic.client.gwt.widget.data.client.DataFileForm.Resources;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 
@@ -40,7 +36,6 @@ public class DataFileFormRenderer {
 	private TextBoxBase summaryInput = new TextArea();
 	private FlowPanel titleQuestionPanel;
 	private FlowPanel summaryQuestionPanel;
-	private ChassisResources resources;
 
 
 	
@@ -105,10 +100,8 @@ public class DataFileFormRenderer {
 		titleQuestionPanel.addStyleName(CSS.SUBMISSIONFORM_TITLEQUESTION);
 
 		String title = this.model.getTitle();
-		if (title != null) {
-			log.debug("found model title: "+title);
-			this.titleInput.setText(title);
-		}
+		if (title == null) title = "";
+		this.titleInput.setText(title);
 		
 		titleInput.addValueChangeHandler(new TitleChangeHandler());
 		
@@ -134,9 +127,8 @@ public class DataFileFormRenderer {
 		summaryQuestionPanel.addStyleName(CSS.SUBMISSIONFORM_SUMMARYQUESTION);
 		
 		String summary = this.model.getSummary();
-		if (summary != null) {
-			this.summaryInput.setText(summary);
-		}
+		if (summary == null) summary = "";
+		this.summaryInput.setText(summary);
 		
 		summaryInput.addValueChangeHandler(new SummaryChangeHandler());
 

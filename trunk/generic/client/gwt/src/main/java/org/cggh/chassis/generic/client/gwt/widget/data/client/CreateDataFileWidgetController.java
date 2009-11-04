@@ -3,8 +3,8 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.data.client;
 
-import org.cggh.chassis.generic.atom.datafile2.client.DataFileEntry;
-import org.cggh.chassis.generic.atom.datafile2.client.DataFilePersistenceService;
+import org.cggh.chassis.generic.atom.rewrite.client.datafile.DataFileEntry;
+import org.cggh.chassis.generic.atom.rewrite.client.datafile.DataFilePersistenceService;
 import org.cggh.chassis.generic.client.gwt.common.client.ErrorEvent;
 import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
 import org.cggh.chassis.generic.log.client.Log;
