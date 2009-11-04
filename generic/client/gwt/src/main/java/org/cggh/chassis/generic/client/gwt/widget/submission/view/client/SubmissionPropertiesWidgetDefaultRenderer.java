@@ -5,9 +5,9 @@ package org.cggh.chassis.generic.client.gwt.widget.submission.view.client;
 
 import java.util.List;
 
+import org.cggh.chassis.generic.atom.rewrite.client.AtomAuthor;
+import org.cggh.chassis.generic.atom.rewrite.client.submission.SubmissionEntry;
 import org.cggh.chassis.generic.atom.study.client.protocol.StudyQuery;
-import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
 import org.cggh.chassis.generic.client.gwt.common.client.CSS;
 import org.cggh.chassis.generic.client.gwt.common.client.ChassisUser;
 import org.cggh.chassis.generic.client.gwt.common.client.RenderUtils;
@@ -251,7 +251,7 @@ public class SubmissionPropertiesWidgetDefaultRenderer
 	
 	private void updateOwnersLabel(List<AtomAuthor> owners) {
 
-		Label answer = RenderUtils.renderAtomAuthorsAsLabel(owners, true);
+		Label answer = RenderUtils.renderRewriteAtomAuthorsAsLabel(owners, true);
 		answer.addStyleName(CSS.COMMON_ANSWER);
 
 		ownersListPanel.clear();

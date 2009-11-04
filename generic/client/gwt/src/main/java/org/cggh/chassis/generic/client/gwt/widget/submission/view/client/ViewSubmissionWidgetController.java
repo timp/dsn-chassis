@@ -3,12 +3,8 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.submission.view.client;
 
-import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
-import org.cggh.chassis.generic.atom.submission.client.format.SubmissionFactory;
-import org.cggh.chassis.generic.atom.submission.client.format.impl.SubmissionFactoryImpl;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
-import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
-import org.cggh.chassis.generic.atom.vanilla.client.protocol.impl.AtomServiceImpl;
+import org.cggh.chassis.generic.atom.rewrite.client.submission.SubmissionEntry;
+import org.cggh.chassis.generic.atom.rewrite.client.submission.SubmissionPersistenceService;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.twisted.client.Deferred;
@@ -25,8 +21,6 @@ public class ViewSubmissionWidgetController {
 	
 	private Log log = LogFactory.getLog(ViewSubmissionWidgetController.class);
 	private ViewSubmissionWidgetModel model;
-	private SubmissionFactory submissionFactory;
-	private AtomService service;
 
 	
 	
@@ -35,10 +29,6 @@ public class ViewSubmissionWidgetController {
 		
 		this.model = model;
 
-		log.debug("instantiate helpers");
-		this.submissionFactory = new SubmissionFactoryImpl();
-		this.service = new AtomServiceImpl(this.submissionFactory);
-		
 		log.leave();
 	}
 	
@@ -77,11 +67,13 @@ public class ViewSubmissionWidgetController {
 		model.setStatus(ViewSubmissionWidgetModel.STATUS_RETRIEVE_PENDING);
 		
 		//request submissionEntry
-		Deferred<AtomEntry> deferred = service.getEntry(submissionEntryUrl);
+//		Deferred<AtomEntry> deferred = service.getEntry(submissionEntryUrl);
+		SubmissionPersistenceService service = new SubmissionPersistenceService();
+		Deferred<SubmissionEntry> def = service.getEntry(submissionEntryUrl);
 		
 		//add callbacks
-		deferred.addCallback(new RetrieveSubmissionEntryCallback());
-		deferred.addErrback(new RetrieveSubmissionEntryErrback());
+		def.addCallback(new RetrieveSubmissionEntryCallback());
+		def.addErrback(new RetrieveSubmissionEntryErrback());
 		
 		log.leave();
 	}

@@ -6,7 +6,7 @@ package org.cggh.chassis.generic.client.gwt.widget.submissionmanagement.client;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
+import org.cggh.chassis.generic.atom.rewrite.client.submission.SubmissionEntry;
 import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
 import org.cggh.chassis.generic.client.gwt.widget.submission.create.client.CreateSubmissionWidgetPubSubAPI;
 import org.cggh.chassis.generic.client.gwt.widget.submission.edit.client.EditSubmissionWidgetPubSubAPI;
@@ -252,7 +252,9 @@ public class SubmissionManagementWidget extends Composite implements CreateSubmi
 		log.leave();
 		
 	}
-	
-	
+
+
+
+
 	
 }

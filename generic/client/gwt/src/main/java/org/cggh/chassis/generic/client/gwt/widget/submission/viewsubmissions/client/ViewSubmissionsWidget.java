@@ -6,7 +6,8 @@ package org.cggh.chassis.generic.client.gwt.widget.submission.viewsubmissions.cl
 import java.util.HashSet;
 import java.util.Set;
 
-import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
+import org.cggh.chassis.generic.atom.rewrite.client.submission.SubmissionEntry;
+
 
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Panel;

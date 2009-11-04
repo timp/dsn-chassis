@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
 import org.cggh.chassis.generic.twisted.client.Function;
 import org.cggh.chassis.generic.twisted.client.Functional;
 
@@ -200,6 +199,20 @@ public class RenderUtils {
 
 	
 	/**
+	 * Render a string from a collection of authors by concatenating their emails.
+	 * 
+	 * @param authors the authors to render
+	 * @param delimiter the delimiter to use to separate each author in the collection
+	 * @return a string concatenation of the authors' emails
+	 */
+	public static String renderRewriteAtomAuthorsAsDelimitedEmailString(Collection<org.cggh.chassis.generic.atom.rewrite.client.AtomAuthor> authors, String delimiter) {
+		return RenderUtils.concatenate(RenderUtils.getRewriteEmails(authors), delimiter);
+	}
+	
+	
+
+	
+	/**
 	 * Render a string from a collection of authors by concatenating their emails,
 	 * using commas as the delimiter.
 	 * 
@@ -208,6 +221,20 @@ public class RenderUtils {
 	 */
 	public static String renderAtomAuthorsAsCommaDelimitedEmailString(Collection<AtomAuthor> authors) {
 		return RenderUtils.renderAtomAuthorsAsDelimitedEmailString(authors, ", ");
+	}
+	
+	
+	
+	
+	/**
+	 * Render a string from a collection of authors by concatenating their emails,
+	 * using commas as the delimiter.
+	 * 
+	 * @param authors the authors to render
+	 * @return a string of the authors' emails separated by commas
+	 */
+	public static String renderRewriteAtomAuthorsAsCommaDelimitedEmailString(Collection<org.cggh.chassis.generic.atom.rewrite.client.AtomAuthor> authors) {
+		return RenderUtils.renderRewriteAtomAuthorsAsDelimitedEmailString(authors, ", ");
 	}
 	
 	
@@ -223,6 +250,23 @@ public class RenderUtils {
 	 */
 	public static Label renderAtomAuthorsAsLabel(Collection<AtomAuthor> authors, boolean inline) {
 		String text = (authors == null) ? "" : RenderUtils.renderAtomAuthorsAsCommaDelimitedEmailString(authors);
+		if (inline) return new InlineLabel(text);
+		else return new Label(text);
+	}
+	
+	
+	// TODO renaming after obsolete old atom stuff
+	
+	/**
+	 * Render a collection of authors as a label, where the label text is a comma
+	 * delimited list of author emails.
+	 * 
+	 * @param authors the authors to render
+	 * @param inline if true, return an inline label, otherwise a normal label
+	 * @return a label
+	 */
+	public static Label renderRewriteAtomAuthorsAsLabel(Collection<org.cggh.chassis.generic.atom.rewrite.client.AtomAuthor> authors, boolean inline) {
+		String text = (authors == null) ? "" : RenderUtils.renderRewriteAtomAuthorsAsCommaDelimitedEmailString(authors);
 		if (inline) return new InlineLabel(text);
 		else return new Label(text);
 	}
@@ -315,6 +359,26 @@ public class RenderUtils {
 		List<String> out = new ArrayList<String>();
 		if (in != null) {
 			for (AtomAuthor a : in) {
+				String email = a.getEmail();
+				if (email != null) out.add(email);
+			}
+		}
+		return out;
+	}
+	
+	
+	
+	
+	/**
+	 * Get a list of emails for the given atom authors.
+	 * 
+	 * @param in the list of authors to get emails from
+	 * @return a list of emails as strings
+	 */
+	public static List<String> getRewriteEmails(Collection<org.cggh.chassis.generic.atom.rewrite.client.AtomAuthor> in) {
+		List<String> out = new ArrayList<String>();
+		if (in != null) {
+			for (org.cggh.chassis.generic.atom.rewrite.client.AtomAuthor a : in) {
 				String email = a.getEmail();
 				if (email != null) out.add(email);
 			}

@@ -31,7 +31,7 @@ public abstract class BaseFormRenderer<E extends AtomEntry>
 	
 	
 	private Log log = LogFactory.getLog(BaseFormRenderer.class);
-	private Resources resources;
+	protected Resources resources;
 	protected TextBoxBase titleInput, summaryInput;
 	protected FlowPanel titleQuestionPanel, summaryQuestionPanel;
 	protected E model;
@@ -52,10 +52,12 @@ public abstract class BaseFormRenderer<E extends AtomEntry>
 	public void renderUI() {
 		log.enter("renderUI");
 		
+		this.canvas.clear();
+		
 		this.canvas.add(new HTML("<h3>"+resources.get(Resources.HEADINGTITLEANDSUMMARY)+"</h3>"));
-		this.initTitleQuestion();
+		this.renderTitleQuestion();
 		this.canvas.add(this.titleQuestionPanel);
-		this.initSummaryQuestion();
+		this.renderSummaryQuestion();
 		this.canvas.add(this.summaryQuestionPanel);			
 		
 		log.leave();
@@ -69,8 +71,8 @@ public abstract class BaseFormRenderer<E extends AtomEntry>
 	/**
 	 * 
 	 */
-	protected void initTitleQuestion() {
-		log.enter("initTitleQuestion");
+	protected void renderTitleQuestion() {
+		log.enter("renderTitleQuestion");
 
 		this.titleQuestionPanel = new FlowPanel();
 		this.titleInput = new TextBox();
@@ -90,8 +92,8 @@ public abstract class BaseFormRenderer<E extends AtomEntry>
 	/**
 	 * 
 	 */
-	protected void initSummaryQuestion() {
-		log.enter("initSummaryQuestion");
+	protected void renderSummaryQuestion() {
+		log.enter("renderSummaryQuestion");
 
 		this.summaryQuestionPanel = new FlowPanel();
 		this.summaryInput = new TextArea();

@@ -3,6 +3,9 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.data.client;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.cggh.chassis.generic.client.gwt.common.client.CancelEvent;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
@@ -24,6 +27,8 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.InlineLabel;
 
+
+
 /**
  * @author aliman
  *
@@ -40,8 +45,6 @@ public class CreateDataFileWidgetRenderer extends ChassisWidgetRenderer {
 	private DataFileForm form;
 	private AsyncWidgetModel model;
 	private CreateDataFileWidget owner;
-
-	
 	
 	
 	
@@ -76,16 +79,15 @@ public class CreateDataFileWidgetRenderer extends ChassisWidgetRenderer {
 		this.mainPanel.add(new HTML("<p>Use the form below to create a new data file.</p>")); // TODO i18n
 		
 		this.form = new DataFileForm();
-		this.form.render(); // TODO remove necessity for this call
+//		this.form.render(); // TODO remove necessity for this call
 		this.mainPanel.add(this.form);
 		
 		this.renderButtonsPanel();
 		this.mainPanel.add(this.buttonsPanel);
 		
 		this.canvas.add(this.mainPanel);
-
-		log.leave();
 		
+		log.leave();
 	}
 
 
@@ -267,7 +269,7 @@ public class CreateDataFileWidgetRenderer extends ChassisWidgetRenderer {
 			
 			this.savingPanel.setVisible(false);
 			this.mainPanel.setVisible(true);
-			this.form.resetModel(); // TODO put this elsewhere?
+			this.form.reset(); // TODO put this elsewhere? (also, causes double call to render on first added to dom)
 
 		}
 		else if (status instanceof ErrorStatus) {
