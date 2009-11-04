@@ -67,6 +67,21 @@ public abstract class ChassisWidgetRenderer {
 
 
 	/**
+	 * 
+	 */
+	public void unbindUI() {
+		log.enter("unbindUI");
+		
+		this.clearModelChangeHandlers();
+		this.clearChildWidgetEventHandlers();
+		
+		log.leave();
+	}
+	
+	
+	
+	
+	/**
 	 * TODO review this, often throws NPE or AssertionError
 	 */
 	protected void clearModelChangeHandlers() {
