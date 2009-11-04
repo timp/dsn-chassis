@@ -3,10 +3,8 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.submission.edit.client;
 
-import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
-import org.cggh.chassis.generic.atom.submission.client.format.impl.SubmissionFactoryImpl;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
-import org.cggh.chassis.generic.atom.vanilla.client.protocol.impl.AtomServiceImpl;
+import org.cggh.chassis.generic.atom.rewrite.client.submission.SubmissionEntry;
+import org.cggh.chassis.generic.atom.rewrite.client.submission.SubmissionPersistenceService;
 import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
 import org.cggh.chassis.generic.client.gwt.widget.submission.model.client.SubmissionModel;
 import org.cggh.chassis.generic.log.client.Log;
@@ -27,8 +25,6 @@ public class EditSubmissionWidgetController {
 	private Log log = LogFactory.getLog(this.getClass());
 	private EditSubmissionWidget owner;
 	private EditSubmissionWidgetModel model;
-	private SubmissionFactoryImpl submissionFactory;
-	private AtomServiceImpl service;
 
 	
 	
@@ -43,8 +39,6 @@ public class EditSubmissionWidgetController {
 
 		this.owner = owner;
 		this.model = model;
-		this.submissionFactory = new SubmissionFactoryImpl();
-		this.service = new AtomServiceImpl(this.submissionFactory);
 		
 	}
 	
@@ -93,7 +87,9 @@ public class EditSubmissionWidgetController {
 		String entryUrl = Configuration.getSubmissionFeedURL() + entry.getEditLink().getHref();
 
 		log.debug("kick off put request");
-		Deferred<AtomEntry> def = service.putEntry(entryUrl, entry);
+//		Deferred<AtomEntry> def = service.putEntry(entryUrl, entry);
+		SubmissionPersistenceService service = new SubmissionPersistenceService();
+		Deferred<SubmissionEntry> def = service.putEntry(entryUrl, entry);
 		
 		log.debug("add callbacks");
 		def.addCallback(new UpdateSubmissionEntryCallback());

@@ -25,15 +25,12 @@ public abstract class BaseForm<E extends AtomEntry, F extends AtomFeed<E>>
 	
 	private Log log = LogFactory.getLog(BaseForm.class);
 	private E model;
-	private AtomFactory<E, F> factory;
-	private BaseFormRenderer<E> renderer;
+	protected BaseFormRenderer<E> renderer;
 
 
 	
 	
-	protected BaseForm(AtomFactory<E, F> factory) {
-		this.factory = factory;
-	}
+	protected BaseForm() {}
 	
 	
 	
@@ -77,12 +74,18 @@ public abstract class BaseForm<E extends AtomEntry, F extends AtomFeed<E>>
 	
 	
 	protected E createModel() {
-		E model = this.factory.createEntry();
-		AtomAuthor author = this.factory.createAuthor();
+		AtomFactory<E, F> factory = this.createAtomFactory();
+		E model = factory.createEntry();
+		AtomAuthor author = factory.createAuthor();
 		author.setEmail(ChassisUser.getCurrentUserEmail());
 		model.addAuthor(author);
 		return model;
 	}
+	
+	
+	
+	
+	protected abstract AtomFactory<E, F> createAtomFactory();
 	
 	
 	
@@ -178,6 +181,13 @@ public abstract class BaseForm<E extends AtomEntry, F extends AtomFeed<E>>
 		this.model = model;
 		this.bindUI();
 		this.syncUI();
+	}
+	
+	
+	
+	
+	public E getModel() {
+		return this.model;
 	}
 	
 	

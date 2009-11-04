@@ -6,7 +6,7 @@ package org.cggh.chassis.generic.client.gwt.widget.submission.create.client;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
+import org.cggh.chassis.generic.atom.rewrite.client.submission.SubmissionEntry;
 import org.cggh.chassis.generic.client.gwt.widget.submission.create.client.CreateSubmissionWidgetModel;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;

@@ -6,8 +6,6 @@ package org.cggh.chassis.generic.client.gwt.common.client.mvc;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.cggh.chassis.generic.client.gwt.widget.submission.edit.client.EditSubmissionWidgetModel.Listener;
-
 /**
  * @author aliman
  *

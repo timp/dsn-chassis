@@ -3,16 +3,14 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.submission.create.client;
 
-import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
-import org.cggh.chassis.generic.atom.submission.client.format.impl.SubmissionFactoryImpl;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
-import org.cggh.chassis.generic.atom.vanilla.client.protocol.impl.AtomServiceImpl;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.twisted.client.Deferred;
 import org.cggh.chassis.generic.twisted.client.Function;
 import org.cggh.chassis.generic.twisted.client.HttpException;
 
+import org.cggh.chassis.generic.atom.rewrite.client.submission.SubmissionEntry;
+import org.cggh.chassis.generic.atom.rewrite.client.submission.SubmissionPersistenceService;
 import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
 
 /**
@@ -27,8 +25,8 @@ public class CreateSubmissionWidgetController {
 	private Log log = LogFactory.getLog(this.getClass());
 	private CreateSubmissionWidget owner;
 	private CreateSubmissionWidgetModel model;
-	private SubmissionFactoryImpl submissionFactory;
-	private AtomServiceImpl service;
+//	private SubmissionFactoryImpl submissionFactory;
+//	private AtomServiceImpl service;
 
 	
 	
@@ -43,8 +41,8 @@ public class CreateSubmissionWidgetController {
 
 		this.owner = owner;
 		this.model = model;
-		this.submissionFactory = new SubmissionFactoryImpl();
-		this.service = new AtomServiceImpl(this.submissionFactory);
+//		this.submissionFactory = new SubmissionFactoryImpl();
+//		this.service = new AtomServiceImpl(this.submissionFactory);
 		
 	}
 	
@@ -91,7 +89,9 @@ public class CreateSubmissionWidgetController {
 		String feedUrl = Configuration.getSubmissionFeedURL();
 
 		log.debug("kick off post request");
-		Deferred<AtomEntry> def = service.postEntry(feedUrl, entry);
+//		Deferred<AtomEntry> def = service.postEntry(feedUrl, entry);
+		SubmissionPersistenceService service = new SubmissionPersistenceService();
+		Deferred<SubmissionEntry> def = service.postEntry(feedUrl, entry);
 		
 		log.debug("add callbacks");
 		def.addCallback(new CreateSubmissionEntryCallback());
