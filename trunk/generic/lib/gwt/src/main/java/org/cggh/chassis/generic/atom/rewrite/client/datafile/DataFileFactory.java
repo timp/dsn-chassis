@@ -1,12 +1,12 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.atom.datafile2.client;
+package org.cggh.chassis.generic.atom.rewrite.client.datafile;
 
-import org.cggh.chassis.generic.atom.datafile2.client.DataFileEntry;
-import org.cggh.chassis.generic.atom.datafile2.client.DataFileFeed;
 import org.cggh.chassis.generic.atom.rewrite.client.Atom;
 import org.cggh.chassis.generic.atom.rewrite.client.AtomFactory;
+import org.cggh.chassis.generic.atom.rewrite.client.datafile.DataFileEntry;
+import org.cggh.chassis.generic.atom.rewrite.client.datafile.DataFileFeed;
 
 import com.google.gwt.xml.client.Element;
 
@@ -21,14 +21,14 @@ public class DataFileFactory extends AtomFactory<DataFileEntry, DataFileFeed> {
 	
 	
 	
-	public static String TEMPLATE_DATAFILEENTRY = 
+	public static String TEMPLATE_ENTRY = 
 		"<atom:entry xmlns:atom=\""+Atom.NSURI+"\">" +
 			"<atom:category scheme=\"http://www.cggh.org/2009/chassis/type/\" term=\"DataFile\"/>" +
 		"</atom:entry>";
 	
 
 	
-	public static String TEMPLATE_DATAFILEFEED = 
+	public static String TEMPLATE_FEED = 
 		"<atom:feed xmlns:atom=\""+Atom.NSURI+"\"/>";
 
 	
@@ -56,7 +56,7 @@ public class DataFileFactory extends AtomFactory<DataFileEntry, DataFileFeed> {
 	 */
 	@Override
 	public String getEntryTemplate() {
-		return TEMPLATE_DATAFILEENTRY;
+		return TEMPLATE_ENTRY;
 	}
 
 
@@ -67,7 +67,7 @@ public class DataFileFactory extends AtomFactory<DataFileEntry, DataFileFeed> {
 	 */
 	@Override
 	public String getFeedTemplate() {
-		return TEMPLATE_DATAFILEFEED;
+		return TEMPLATE_FEED;
 	}
 
 

@@ -158,7 +158,7 @@ public class AtomServiceImpl<E extends AtomEntry, F extends AtomFeed<E>>
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService#postEntry(java.lang.String, org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry)
 	 */
-	public Deferred<E> postEntry(String feedURL, AtomEntry entry) {
+	public Deferred<E> postEntry(String feedURL, E entry) {
 
 		HttpDeferred<E> deferredResult = new HttpDeferred<E>();
 
