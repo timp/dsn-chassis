@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.atomext.shared;
+package org.cggh.chassis.generic.atomext.client.shared;
 
 import org.cggh.chassis.generic.atom.rewrite.client.ValidationReport;
 import org.cggh.chassis.generic.atom.rewrite.client.Validator;

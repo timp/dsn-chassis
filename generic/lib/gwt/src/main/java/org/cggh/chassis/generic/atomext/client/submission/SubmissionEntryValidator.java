@@ -5,7 +5,7 @@ package org.cggh.chassis.generic.atomext.client.submission;
 
 import org.cggh.chassis.generic.atom.rewrite.client.AtomEntryValidator;
 import org.cggh.chassis.generic.atom.rewrite.client.ValidationReport;
-import org.cggh.chassis.generic.atomext.shared.ModulesValidator;
+import org.cggh.chassis.generic.atomext.client.shared.ModulesValidator;
 
 
 /**
