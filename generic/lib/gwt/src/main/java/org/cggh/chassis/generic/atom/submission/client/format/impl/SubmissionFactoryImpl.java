@@ -3,16 +3,17 @@
  */
 package org.cggh.chassis.generic.atom.submission.client.format.impl;
 
-import org.cggh.chassis.generic.atom.chassis.base.vocab.Chassis;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.Atom;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactoryImpl;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomFormatException;
+
 import org.cggh.chassis.generic.atom.submission.client.format.Submission;
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionFeed;
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionFactory;
-import org.cggh.chassis.generic.atom.vanilla.client.format.Atom;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactoryImpl;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFormatException;
+import org.cggh.chassis.generic.atomext.shared.Chassis;
 import org.cggh.chassis.generic.xml.client.XML;
 
 import com.google.gwt.xml.client.Document;

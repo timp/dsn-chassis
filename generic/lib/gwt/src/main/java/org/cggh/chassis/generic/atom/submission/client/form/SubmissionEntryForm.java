@@ -3,8 +3,9 @@
  */
 package org.cggh.chassis.generic.atom.submission.client.form;
 
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.form.AtomEntryForm;
+
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
-import org.cggh.chassis.generic.atom.vanilla.client.form.AtomEntryForm;
 
 /**
  * @author aliman

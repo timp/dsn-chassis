@@ -6,11 +6,12 @@ package org.cggh.chassis.generic.atom.submission.client.mockimpl;
 import java.util.ArrayList;
 import java.util.List;
 
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomFeed;
+
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionFeed;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
-import org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomFeed;
 
 /**
  * @author aliman

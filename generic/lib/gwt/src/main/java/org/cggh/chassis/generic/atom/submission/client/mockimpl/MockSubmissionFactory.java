@@ -3,14 +3,15 @@
  */
 package org.cggh.chassis.generic.atom.submission.client.mockimpl;
 
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomEntry;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomFactory;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomFeed;
+
 import org.cggh.chassis.generic.atom.submission.client.format.Submission;
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionFactory;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
-import org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomEntry;
-import org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomFactory;
-import org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomFeed;
 
 import com.google.gwt.xml.client.Element;
 

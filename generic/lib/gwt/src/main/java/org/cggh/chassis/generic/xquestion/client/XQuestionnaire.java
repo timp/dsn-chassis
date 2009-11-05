@@ -6,7 +6,8 @@ package org.cggh.chassis.generic.xquestion.client;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
+
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.twisted.client.Deferred;

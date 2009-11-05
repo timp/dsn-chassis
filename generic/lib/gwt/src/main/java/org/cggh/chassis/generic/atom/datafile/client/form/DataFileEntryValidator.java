@@ -3,8 +3,8 @@
  */
 package org.cggh.chassis.generic.atom.datafile.client.form;
 
-import org.cggh.chassis.generic.atom.vanilla.client.form.AtomEntryValidator;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.form.AtomEntryValidator;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
 
 /**
  * @author raok

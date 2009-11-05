@@ -3,13 +3,14 @@
  */
 package org.cggh.chassis.generic.atom.submission.client.protocol.impl;
 
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.protocol.impl.AtomServiceImpl;
+
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionFactory;
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionFeed;
 import org.cggh.chassis.generic.atom.submission.client.format.impl.SubmissionFactoryImpl;
 import org.cggh.chassis.generic.atom.submission.client.protocol.SubmissionQueryService;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
-import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
-import org.cggh.chassis.generic.atom.vanilla.client.protocol.impl.AtomServiceImpl;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.twisted.client.Deferred;

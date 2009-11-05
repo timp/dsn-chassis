@@ -3,11 +3,11 @@
  */
 package org.cggh.chassis.generic.atomext.client.datafile;
 
-import org.cggh.chassis.generic.atom.chassis.base.vocab.Chassis;
 import org.cggh.chassis.generic.atom.rewrite.client.Atom;
 import org.cggh.chassis.generic.atom.rewrite.client.AtomFactory;
 import org.cggh.chassis.generic.atomext.client.datafile.DataFileEntry;
 import org.cggh.chassis.generic.atomext.client.datafile.DataFileFeed;
+import org.cggh.chassis.generic.atomext.shared.Chassis;
 
 import com.google.gwt.xml.client.Element;
 

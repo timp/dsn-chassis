@@ -3,7 +3,8 @@
  */
 package org.cggh.chassis.generic.atom.datafile.client.protocol;
 
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
+
 import org.cggh.chassis.generic.twisted.client.Deferred;
 
 /**

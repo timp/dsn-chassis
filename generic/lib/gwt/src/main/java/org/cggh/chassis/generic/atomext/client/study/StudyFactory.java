@@ -3,9 +3,9 @@
  */
 package org.cggh.chassis.generic.atomext.client.study;
 
-import org.cggh.chassis.generic.atom.chassis.base.vocab.Chassis;
 import org.cggh.chassis.generic.atom.rewrite.client.Atom;
 import org.cggh.chassis.generic.atom.rewrite.client.AtomFactory;
+import org.cggh.chassis.generic.atomext.shared.Chassis;
 
 import com.google.gwt.xml.client.Element;
 

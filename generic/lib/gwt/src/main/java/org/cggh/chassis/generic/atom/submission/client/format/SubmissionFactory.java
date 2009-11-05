@@ -3,7 +3,7 @@
  */
 package org.cggh.chassis.generic.atom.submission.client.format;
 
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactory;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactory;
 
 import com.google.gwt.xml.client.Element;
 
