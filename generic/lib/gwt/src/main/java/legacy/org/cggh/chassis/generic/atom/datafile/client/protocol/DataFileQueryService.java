@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.atom.datafile.client.protocol;
+package legacy.org.cggh.chassis.generic.atom.datafile.client.protocol;
 
 import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
 
