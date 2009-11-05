@@ -6,7 +6,7 @@ package org.cggh.chassis.generic.client.gwt.widget.study.client;
 
 import java.util.Set;
 
-import org.cggh.chassis.generic.atom.rewrite.client.AtomAuthor;
+import org.cggh.chassis.generic.atom.client.AtomAuthor;
 import org.cggh.chassis.generic.atomext.client.study.StudyEntry;
 import org.cggh.chassis.generic.atomext.client.study.StudyFactory;
 import org.cggh.chassis.generic.atomext.client.study.StudyPersistenceService;

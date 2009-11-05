@@ -3,8 +3,8 @@
  */
 package org.cggh.chassis.generic.client.gwt.forms.client;
 
-import org.cggh.chassis.generic.atom.rewrite.client.AtomEntry;
-import org.cggh.chassis.generic.atom.rewrite.client.AtomFeed;
+import org.cggh.chassis.generic.atom.client.AtomEntry;
+import org.cggh.chassis.generic.atom.client.AtomFeed;
 import org.cggh.chassis.generic.client.gwt.common.client.CommonStyles;
 import org.cggh.chassis.generic.client.gwt.forms.client.BaseForm.Resources;
 import org.cggh.chassis.generic.log.client.Log;
