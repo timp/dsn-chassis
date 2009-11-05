@@ -3,7 +3,6 @@
  */
 package org.cggh.chassis.generic.client.gwt.configuration.client;
 
-import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
