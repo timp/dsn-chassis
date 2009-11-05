@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.client.gwt.widget.submission.viewsubmissions.client;
+package org.cggh.chassis.generic.client.gwt.widget.submission.client;
 
 import static org.junit.Assert.*;
 import static org.easymock.EasyMock.*;
@@ -11,8 +11,10 @@ import java.util.List;
 
 import junit.framework.JUnit4TestAdapter;
 
-import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
-import org.cggh.chassis.generic.atom.submission.client.mockimpl.MockSubmissionFactory;
+import org.cggh.chassis.generic.atomext.client.submission.SubmissionEntry;
+import org.cggh.chassis.generic.atomext.client.submission.SubmissionFactory;
+import org.cggh.chassis.generic.client.gwt.widget.submission.client.ViewSubmissionsWidgetModel;
+import org.cggh.chassis.generic.client.gwt.widget.submission.client.ViewSubmissionsWidgetModelListener;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -39,15 +41,15 @@ public class TestViewSubmissionsWidgetModel {
 		testSubmissions = new ArrayList<SubmissionEntry>();
 		
 		// use mock factory to create test submissions
-		MockSubmissionFactory mockSubmissionFactory = new MockSubmissionFactory();
-		SubmissionEntry submission1 = mockSubmissionFactory.createSubmissionEntry();
+		SubmissionFactory mockSubmissionFactory = new SubmissionFactory();
+		SubmissionEntry submission1 = mockSubmissionFactory.createEntry();
 		submission1.setTitle("foo1");
 		submission1.setSummary("bar 1");
-		submission1.addModule("module foo1");
-		SubmissionEntry submission2 = mockSubmissionFactory.createSubmissionEntry();
+		submission1.getSubmission().addModule("module foo1");
+		SubmissionEntry submission2 = mockSubmissionFactory.createEntry();
 		submission2.setTitle("foo2");
 		submission2.setSummary("bar 2");
-		submission2.addModule("module foo2");
+		submission2.getSubmission().addModule("module foo2");
 		
 		testSubmissions.add(submission1);
 		testSubmissions.add(submission2);

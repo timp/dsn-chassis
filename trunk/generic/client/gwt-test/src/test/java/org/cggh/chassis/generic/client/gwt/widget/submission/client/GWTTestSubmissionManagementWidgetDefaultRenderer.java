@@ -1,13 +1,16 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.client.gwt.widget.submissionmanagement.client;
+package org.cggh.chassis.generic.client.gwt.widget.submission.client;
 
 
-import legacy.org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomService;
-
-import org.cggh.chassis.generic.atom.submission.client.mockimpl.MockSubmissionFactory;
+import org.cggh.chassis.generic.atomext.client.submission.SubmissionFactory;
+import org.cggh.chassis.generic.atomext.client.submission.SubmissionPersistenceService;
 import org.cggh.chassis.generic.client.gwt.configuration.client.TestConfigurationSetUp;
+import org.cggh.chassis.generic.client.gwt.widget.submission.client.SubmissionManagementWidget;
+import org.cggh.chassis.generic.client.gwt.widget.submission.client.SubmissionManagementWidgetController;
+import org.cggh.chassis.generic.client.gwt.widget.submission.client.SubmissionManagementWidgetDefaultRenderer;
+import org.cggh.chassis.generic.client.gwt.widget.submission.client.SubmissionManagementWidgetModel;
 import org.junit.Test;
 
 import com.google.gwt.dom.client.Document;
@@ -26,8 +29,8 @@ public class GWTTestSubmissionManagementWidgetDefaultRenderer extends GWTTestCas
 	private SubmissionManagementWidgetModel testModel;
 	private SubmissionManagementWidgetController testController;
 	private SubmissionManagementWidgetDefaultRenderer testRenderer;
-	private MockSubmissionFactory mockFactory;
-	private MockAtomService mockService;
+	private SubmissionFactory mockFactory;
+	private SubmissionPersistenceService mockService;
 	private String feedURL = "http://www.foo.com/submissions";
 
 	/* (non-Javadoc)
@@ -45,12 +48,9 @@ public class GWTTestSubmissionManagementWidgetDefaultRenderer extends GWTTestCas
 		TestConfigurationSetUp.createTestConfiguration();
 		
 		//Create testController, inject mockModel and a mock Service
-		mockFactory = new MockSubmissionFactory();
-		mockService = new MockAtomService(mockFactory);
+		mockFactory = new SubmissionFactory();
+		mockService = new SubmissionPersistenceService();
 
-		// bootstrap mock service with submission feed
-		((MockAtomService)mockService).createFeed(feedURL, "all submissions");
-		
 		//create testController and inject testModel
 		testModel = new SubmissionManagementWidgetModel(new SubmissionManagementWidget());
 		testController = new SubmissionManagementWidgetController(null, testModel);

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.client.gwt.widget.submission.model.client;
+package org.cggh.chassis.generic.client.gwt.widget.submission.client;
 
 import static org.easymock.EasyMock.createMock;
 import static org.easymock.EasyMock.isA;
@@ -15,10 +15,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 import junit.framework.JUnit4TestAdapter;
-import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
 
-import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
-import org.cggh.chassis.generic.atom.submission.client.mockimpl.MockSubmissionFactory;
+import org.cggh.chassis.generic.atom.client.AtomAuthor;
+import org.cggh.chassis.generic.atomext.client.submission.SubmissionEntry;
+import org.cggh.chassis.generic.atomext.client.submission.SubmissionFactory;
+import org.cggh.chassis.generic.client.gwt.widget.submission.client.SubmissionModel;
+import org.cggh.chassis.generic.client.gwt.widget.submission.client.SubmissionModelListener;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -34,7 +36,7 @@ public class TestSubmissionModel {
 
 	private SubmissionModel testModel;
 	private SubmissionEntry newSubmissionEntry;
-	private MockSubmissionFactory mockSubmissionFactory;
+	private SubmissionFactory mockSubmissionFactory;
 	private SubmissionEntry validSubmissionEntry;
 	private Set<AtomAuthor> testAuthors;
 	
@@ -45,8 +47,8 @@ public class TestSubmissionModel {
 		testModel = new SubmissionModel();
 		
 		//create new submission entry
-		mockSubmissionFactory = new MockSubmissionFactory();
-		newSubmissionEntry = mockSubmissionFactory.createSubmissionEntry();
+		mockSubmissionFactory = new SubmissionFactory();
+		newSubmissionEntry = mockSubmissionFactory.createEntry();
 		
 		//create test authors
 		testAuthors = new HashSet<AtomAuthor>();
@@ -55,14 +57,14 @@ public class TestSubmissionModel {
 		testAuthors.add(testAtomAuthor);
 		
 		//create a valid submission entry
-		validSubmissionEntry = mockSubmissionFactory.createSubmissionEntry();
+		validSubmissionEntry = mockSubmissionFactory.createEntry();
 		validSubmissionEntry.setAuthors(new ArrayList<AtomAuthor>(testAuthors));
 		validSubmissionEntry.setTitle("title foo");
 		validSubmissionEntry.setSummary("summary foo");
 		validSubmissionEntry.addStudyLink("http://example.com/studies/study1");
 		validSubmissionEntry.addStudyLink("http://example.com/studies/study2");
-		validSubmissionEntry.addModule("module1");
-		validSubmissionEntry.addModule("module2");
+		validSubmissionEntry.getSubmission().addModule("module1");
+		validSubmissionEntry.getSubmission().addModule("module2");
 			
 	}
 	

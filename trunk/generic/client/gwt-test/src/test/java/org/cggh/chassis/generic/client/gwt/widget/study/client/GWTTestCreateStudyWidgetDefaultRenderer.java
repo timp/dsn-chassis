@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 
-import org.cggh.chassis.generic.atom.rewrite.client.AtomAuthor;
+import org.cggh.chassis.generic.atom.client.AtomAuthor;
 import org.cggh.chassis.generic.client.gwt.configuration.client.TestConfigurationSetUp;
 import org.cggh.chassis.generic.client.gwt.widget.study.client.CreateStudyWidgetDefaultRenderer;
 import org.cggh.chassis.generic.client.gwt.widget.study.client.StudyControllerCreateAPI;

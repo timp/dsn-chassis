@@ -1,15 +1,15 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.client.gwt.widget.submission.create.client;
+package org.cggh.chassis.generic.client.gwt.widget.submission.client;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
-
+import org.cggh.chassis.generic.atom.client.AtomAuthor;
 import org.cggh.chassis.generic.client.gwt.configuration.client.TestConfigurationSetUp;
-import org.cggh.chassis.generic.client.gwt.widget.submission.controller.client.SubmissionControllerCreateAPI;
+import org.cggh.chassis.generic.client.gwt.widget.submission.client.CreateSubmissionWidgetRenderer;
+import org.cggh.chassis.generic.client.gwt.widget.submission.client.SubmissionControllerCreateAPI;
 
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.event.dom.client.DomEvent;

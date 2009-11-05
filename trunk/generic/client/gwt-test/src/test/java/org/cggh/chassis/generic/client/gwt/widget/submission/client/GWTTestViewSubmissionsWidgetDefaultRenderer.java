@@ -1,14 +1,18 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.client.gwt.widget.submission.viewsubmissions.client;
+package org.cggh.chassis.generic.client.gwt.widget.submission.client;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
-import org.cggh.chassis.generic.atom.submission.client.mockimpl.MockSubmissionFactory;
+import org.cggh.chassis.generic.atomext.client.submission.SubmissionEntry;
+import org.cggh.chassis.generic.atomext.client.submission.SubmissionFactory;
 import org.cggh.chassis.generic.client.gwt.configuration.client.TestConfigurationSetUp;
+import org.cggh.chassis.generic.client.gwt.widget.submission.client.ViewSubmissionsWidget;
+import org.cggh.chassis.generic.client.gwt.widget.submission.client.ViewSubmissionsWidgetController;
+import org.cggh.chassis.generic.client.gwt.widget.submission.client.ViewSubmissionsWidgetDefaultRenderer;
+import org.cggh.chassis.generic.client.gwt.widget.submission.client.ViewSubmissionsWidgetModel;
 
 import com.google.gwt.junit.client.GWTTestCase;
 import com.google.gwt.user.client.ui.SimplePanel;
@@ -66,15 +70,15 @@ public class GWTTestViewSubmissionsWidgetDefaultRenderer extends GWTTestCase {
 		testModel.addListener(testRenderer);
 		
 		// use mock factory to create test submissions
-		MockSubmissionFactory mockSubmissionFactory = new MockSubmissionFactory();
-		SubmissionEntry submission1 = mockSubmissionFactory.createSubmissionEntry();
+		SubmissionFactory mockSubmissionFactory = new SubmissionFactory();
+		SubmissionEntry submission1 = mockSubmissionFactory.createEntry();
 		submission1.setTitle("foo1");
 		submission1.setSummary("bar 1");
-		submission1.addModule("module foo1");
-		SubmissionEntry submission2 = mockSubmissionFactory.createSubmissionEntry();
+		submission1.getSubmission().addModule("module foo1");
+		SubmissionEntry submission2 = mockSubmissionFactory.createEntry();
 		submission2.setTitle("foo2");
 		submission2.setSummary("bar 2");
-		submission2.addModule("module foo2");
+		submission2.getSubmission().addModule("module foo2");
 		
 		submissions = new ArrayList<SubmissionEntry>();
 		submissions.add(submission1);

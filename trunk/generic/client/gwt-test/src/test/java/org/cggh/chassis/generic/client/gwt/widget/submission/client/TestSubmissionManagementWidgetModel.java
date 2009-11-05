@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.client.gwt.widget.submissionmanagement.client;
+package org.cggh.chassis.generic.client.gwt.widget.submission.client;
 
 import static org.easymock.EasyMock.createMock;
 import static org.easymock.EasyMock.replay;
@@ -10,6 +10,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import junit.framework.JUnit4TestAdapter;
 
+import org.cggh.chassis.generic.client.gwt.widget.submission.client.SubmissionManagementWidget;
+import org.cggh.chassis.generic.client.gwt.widget.submission.client.SubmissionManagementWidgetModel;
+import org.cggh.chassis.generic.client.gwt.widget.submission.client.SubmissionManagementWidgetModelListener;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

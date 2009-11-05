@@ -3,15 +3,12 @@
  */
 package spike.atom.submission.query.client;
 
-import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
-import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
-import legacy.org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomService;
-
-import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
-import org.cggh.chassis.generic.atom.submission.client.format.SubmissionFeed;
-import org.cggh.chassis.generic.atom.submission.client.mockimpl.MockSubmissionFactory;
-import org.cggh.chassis.generic.atom.submission.client.mockimpl.MockSubmissionQueryService;
-import org.cggh.chassis.generic.atom.submission.client.protocol.SubmissionQueryService;
+import org.cggh.chassis.generic.atom.client.AtomAuthor;
+import org.cggh.chassis.generic.atomext.client.submission.SubmissionEntry;
+import org.cggh.chassis.generic.atomext.client.submission.SubmissionFactory;
+import org.cggh.chassis.generic.atomext.client.submission.SubmissionFeed;
+import org.cggh.chassis.generic.atomext.client.submission.SubmissionPersistenceService;
+import org.cggh.chassis.generic.atomext.client.submission.SubmissionQueryService;
 import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
@@ -41,7 +38,7 @@ public class SpikeSubmissionQueryEntryPoint implements EntryPoint {
 		String serviceURL = Configuration.getSubmissionQueryServiceURL();
 		
 		log.debug("create a query service");
-		SubmissionQueryService service = new MockSubmissionQueryService(serviceURL); // use mock for now
+		SubmissionQueryService service = new SubmissionQueryService(serviceURL); 
 
 		log.debug("make query service call");
 		Deferred<SubmissionFeed> deferredResults = service.getSubmissionsByAuthorEmail("bob@example.com");
@@ -53,16 +50,16 @@ public class SpikeSubmissionQueryEntryPoint implements EntryPoint {
 				log.enter("apply (inner callback function)");
 
 				Window.alert("results feed title: "+results.getTitle());
-				Window.alert("found "+results.getSubmissionEntries().size()+" matching submissions");
+				Window.alert("found "+results.getEntries().size()+" matching submissions");
 
-				if (results.getSubmissionEntries().size() > 0) {
+				if (results.getEntries().size() > 0) {
 					
-					SubmissionEntry firstResult = results.getSubmissionEntries().get(0);
+					SubmissionEntry firstResult = results.getEntries().get(0);
 					String submissionId = firstResult.getId();
 					String published = firstResult.getPublished();
 					String updated = firstResult.getUpdated();
 					String submissionURL = firstResult.getEditLink().getHref();
-					String firstModule = firstResult.getModules().get(0);
+					String firstModule = firstResult.getSubmission().getModules().get(0);
 					String studyLink = firstResult.getStudyLinks().get(0).getHref();
 					
 					Window.alert("first matching result; id: "+submissionId+"; published: "+published+"; updated: "+updated+"; edit link (entryURL): "+submissionURL+"; first modules: "+firstModule+"; first study link: "+studyLink);
@@ -108,12 +105,12 @@ public class SpikeSubmissionQueryEntryPoint implements EntryPoint {
 		log.enter("onModuleLoad");
 
 		log.debug("first need to set up spike by creating a submission");
-		Deferred<AtomEntry> setup = setup();
+		Deferred<SubmissionEntry> setup = setup();
 		
 		log.debug("when setup complete, then try query submissions by author");
-		setup.addCallback(new Function<AtomEntry,AtomEntry>() {
+		setup.addCallback(new Function<SubmissionEntry,SubmissionEntry>() {
 
-			public AtomEntry apply(AtomEntry in) {
+			public SubmissionEntry apply(SubmissionEntry in) {
 				
 				log.debug("setup is complete, now try query submissions");
 				querySubmissions();
@@ -129,20 +126,19 @@ public class SpikeSubmissionQueryEntryPoint implements EntryPoint {
 	
 	
 
-	private Deferred<AtomEntry> setup() {
+	private Deferred<SubmissionEntry> setup() {
 		log.enter("setup");
 
 		String feedURL = Configuration.getSubmissionFeedURL();
 		
 		log.debug("create a submission factory");
-		MockSubmissionFactory factory = new MockSubmissionFactory(); // use mock for now
+		SubmissionFactory factory = new SubmissionFactory(); 
 		
 		log.debug("create an atom service");
-		MockAtomService service = new MockAtomService(factory); // use mock for now
-		service.createFeed(feedURL, "all submissions"); // bootstrap mock service with study feed, not needed for real service
+		SubmissionPersistenceService service = new SubmissionPersistenceService();
 
 		log.debug("create a new entry");
-		SubmissionEntry submission = factory.createSubmissionEntry();
+		SubmissionEntry submission = factory.createEntry();
 		submission.setTitle("my first submission");
 		submission.setSummary("this submission contains all the clinical data for the 2004-05 Gambia study");
 		
@@ -153,13 +149,13 @@ public class SpikeSubmissionQueryEntryPoint implements EntryPoint {
 		submission.addAuthor(bob);
 
 		log.debug("add submission module names");
-		submission.addModule("clinical");
+		submission.getSubmission().addModule("clinical");
 
 		log.debug("set link from submission to study");
 		submission.addStudyLink("/chassis-generic-service-atom/edit/studies?id=foo");
 		
 		log.debug("persist new submission");
-		Deferred<AtomEntry> deferredEntry = service.postEntry(feedURL, submission);
+		Deferred<SubmissionEntry> deferredEntry = service.postEntry(feedURL, submission);
 		
 		log.debug("add callback to handle successful service response");
 		deferredEntry.addCallback(new Function<SubmissionEntry,SubmissionEntry>() { 
@@ -171,7 +167,7 @@ public class SpikeSubmissionQueryEntryPoint implements EntryPoint {
 				String published = persistedSubmission.getPublished();
 				String updated = persistedSubmission.getUpdated();
 				String submissionURL = persistedSubmission.getEditLink().getHref();
-				String firstModule = persistedSubmission.getModules().get(0);
+				String firstModule = persistedSubmission.getSubmission().getModules().get(0);
 				String studyLink = persistedSubmission.getStudyLinks().get(0).getHref();
 				
 				Window.alert("persisted submission success; id: "+submissionId+"; published: "+published+"; updated: "+updated+"; edit link (entryURL): "+submissionURL+"; first modules: "+firstModule+"; first study link: "+studyLink);

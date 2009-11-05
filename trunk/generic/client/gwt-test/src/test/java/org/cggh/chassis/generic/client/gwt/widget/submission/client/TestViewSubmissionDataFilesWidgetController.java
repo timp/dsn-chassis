@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.client.gwt.widget.submission.viewdatafiles.client;
+package org.cggh.chassis.generic.client.gwt.widget.submission.client;
 
 import static org.easymock.EasyMock.createMock;
 import static org.easymock.EasyMock.expect;
@@ -16,16 +16,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import junit.framework.JUnit4TestAdapter;
+import legacy.org.cggh.chassis.generic.atom.datafile.client.protocol.DataFileQuery;
+import legacy.org.cggh.chassis.generic.atom.datafile.client.protocol.DataFileQueryService;
+import legacy.org.cggh.chassis.generic.atom.datafile.client.protocol.impl.DataFileQueryServiceImpl;
 import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
 import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
 import legacy.org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomFactory;
 
-import org.cggh.chassis.generic.atom.datafile.client.protocol.DataFileQuery;
-import org.cggh.chassis.generic.atom.datafile.client.protocol.DataFileQueryService;
-import org.cggh.chassis.generic.atom.datafile.client.protocol.impl.DataFileQueryServiceImpl;
 import org.cggh.chassis.generic.client.gwt.configuration.client.TestConfigurationSetUp;
-import org.cggh.chassis.generic.client.gwt.widget.submission.viewdatafiles.client.ViewSubmissionDataFilesWidgetController.LoadDataFileFeedCallback;
-import org.cggh.chassis.generic.client.gwt.widget.submission.viewdatafiles.client.ViewSubmissionDataFilesWidgetController.LoadDataFileFeedErrback;
+import org.cggh.chassis.generic.client.gwt.widget.submission.client.ViewSubmissionDataFilesWidget;
+import org.cggh.chassis.generic.client.gwt.widget.submission.client.ViewSubmissionDataFilesWidgetController;
+import org.cggh.chassis.generic.client.gwt.widget.submission.client.ViewSubmissionDataFilesWidgetModel;
+import org.cggh.chassis.generic.client.gwt.widget.submission.client.ViewSubmissionDataFilesWidgetController.LoadDataFileFeedCallback;
+import org.cggh.chassis.generic.client.gwt.widget.submission.client.ViewSubmissionDataFilesWidgetController.LoadDataFileFeedErrback;
 import org.cggh.chassis.generic.twisted.client.Deferred;
 import org.junit.Before;
 import org.junit.Test;
