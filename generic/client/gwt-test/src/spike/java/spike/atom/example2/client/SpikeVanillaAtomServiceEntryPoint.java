@@ -44,7 +44,7 @@ public class SpikeVanillaAtomServiceEntryPoint implements EntryPoint {
 	private Deferred<AtomEntry> doCreateEntry() {
 		log.enter("doCreateEntry");
 
-		String feedURL = "/chassis-generic-service-exist/atom/edit/example";
+		String feedURL = "/chassis-generic-service-exist/atom/edit/sandbox";
 			
 		log.debug("create an atom factory");
 		AtomFactory factory = new AtomFactoryImpl(); 

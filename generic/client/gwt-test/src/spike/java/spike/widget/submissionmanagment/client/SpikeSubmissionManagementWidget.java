@@ -8,9 +8,9 @@ import org.cggh.chassis.generic.client.gwt.widget.submissionmanagement.client.Su
 import org.cggh.chassis.generic.user.transfer.UserDetailsTO;
 
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.SimplePanel;
-import com.google.gwt.user.client.ui.VerticalPanel;
 
 /**
  * @author raok
@@ -23,20 +23,22 @@ public class SpikeSubmissionManagementWidget implements EntryPoint {
 	 */
 	public void onModuleLoad() {
 		
-		VerticalPanel vPanel = new VerticalPanel();
-		SimplePanel menuCanvas = new SimplePanel();
-		vPanel.add(menuCanvas);
+		FlowPanel mainPanel = new FlowPanel();
+		FlowPanel menuCanvas = new FlowPanel();
+		mainPanel.add(menuCanvas);
 		
-		RootPanel.get().add(vPanel);
+		RootPanel.get("holdall").add(mainPanel);
 		
 		UserDetailsTO user = new UserDetailsTO();
 		user.setId("alice@example.com");
 		ChassisUser.setCurrentUser(user);
 
 		SubmissionManagementWidget widget = new SubmissionManagementWidget();
-		menuCanvas.add(widget.getMenuCanvas());
+		MenuBar m = new MenuBar();
+		m.addItem("submissions", widget.getMenu());
+		menuCanvas.add(m);
 
-		vPanel.add(widget);
+		mainPanel.add(widget);
 
 	}
 

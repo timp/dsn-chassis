@@ -40,7 +40,7 @@ public class SpikeCreateSubmissionWidget implements EntryPoint {
 		user.setId("alice@example.com");
 		ChassisUser.setCurrentUser(user);
 
-		RootPanel.get().add(new CreateSubmissionWidget());
+		RootPanel.get("holdall").add(new CreateSubmissionWidget());
 		
 	}
 

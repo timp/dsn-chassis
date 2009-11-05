@@ -29,7 +29,7 @@ public class SpikeVanillaAtomServiceEntryPoint implements EntryPoint {
 	private Log log = LogFactory.getLog(this.getClass());
 
 	
-	String feedURL = "/chassis-generic-service-exist/atom/edit/example";
+	String feedURL = "/chassis-generic-service-exist/atom/edit/sandbox";
 	
 
 	/* (non-Javadoc)
