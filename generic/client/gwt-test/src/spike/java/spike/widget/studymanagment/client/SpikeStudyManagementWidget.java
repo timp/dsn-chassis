@@ -4,7 +4,7 @@
 package spike.widget.studymanagment.client;
 
 import org.cggh.chassis.generic.client.gwt.common.client.ChassisUser;
-import org.cggh.chassis.generic.client.gwt.widget.studymanagement.client.StudyManagementWidget;
+import org.cggh.chassis.generic.client.gwt.widget.study.client.StudyManagementWidget;
 import org.cggh.chassis.generic.user.transfer.UserDetailsTO;
 
 import com.google.gwt.core.client.EntryPoint;

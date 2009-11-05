@@ -3,7 +3,7 @@
 <module>
 	<inherits name="com.google.gwt.user.User" />
   	<inherits name="org.cggh.chassis.generic.client.gwt.configuration.Configuration" />
-	<inherits name="org.cggh.chassis.generic.client.gwt.widget.studymanagement.StudyManagementWidget" />
+	<inherits name="org.cggh.chassis.generic.client.gwt.widget.study.Study" />
 	<entry-point class="spike.widget.studymanagment.client.SpikeStudyManagementWidget" />
 		
 	<!-- Inherit the default GWT style sheet.  You can change       -->

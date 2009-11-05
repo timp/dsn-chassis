@@ -1,12 +1,14 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.client.gwt.widget.studymanagement.client;
+package org.cggh.chassis.generic.client.gwt.widget.study.client;
 
 
-import org.cggh.chassis.generic.atom.study.client.mockimpl.MockStudyFactory;
-import org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomService;
 import org.cggh.chassis.generic.client.gwt.configuration.client.TestConfigurationSetUp;
+import org.cggh.chassis.generic.client.gwt.widget.study.client.StudyManagementWidget;
+import org.cggh.chassis.generic.client.gwt.widget.study.client.StudyManagementWidgetController;
+import org.cggh.chassis.generic.client.gwt.widget.study.client.StudyManagementWidgetDefaultRenderer;
+import org.cggh.chassis.generic.client.gwt.widget.study.client.StudyManagementWidgetModel;
 import org.junit.Test;
 
 import com.google.gwt.dom.client.Document;
@@ -25,9 +27,6 @@ public class GWTTestStudyManagementWidgetDefaultRenderer extends GWTTestCase {
 	private StudyManagementWidgetModel testModel;
 	private StudyManagementWidgetController testController;
 	private StudyManagementWidgetDefaultRenderer testRenderer;
-	private MockStudyFactory mockFactory;
-	private MockAtomService mockService;
-	private String feedURL = "http://www.foo.com/studies";
 
 	/* (non-Javadoc)
 	 * @see com.google.gwt.junit.client.GWTTestCase#getModuleName()
@@ -43,16 +42,9 @@ public class GWTTestStudyManagementWidgetDefaultRenderer extends GWTTestCase {
 		//setup ConfigurationBean
 		TestConfigurationSetUp.createTestConfiguration();
 		
-		//Create testController, inject mockModel and a mock Service
-		mockFactory = new MockStudyFactory();
-		mockService = new MockAtomService(mockFactory);
-
-		// bootstrap mock service with study feed
-		((MockAtomService)mockService).createFeed(feedURL, "all studies");
-		
 		//create testController and inject testModel
 		testModel = new StudyManagementWidgetModel(new StudyManagementWidget(new SimplePanel()));
-		testController = new StudyManagementWidgetController(null, testModel);
+		testController = new StudyManagementWidgetController(testModel);
 		
 		//instantiate a test renderer
 		testRenderer = new StudyManagementWidgetDefaultRenderer(null, new SimplePanel(), new SimplePanel(), testController);

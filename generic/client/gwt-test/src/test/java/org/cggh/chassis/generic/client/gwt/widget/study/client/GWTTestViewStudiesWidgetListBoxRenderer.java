@@ -1,19 +1,20 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client;
+package org.cggh.chassis.generic.client.gwt.widget.study.client;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
-import org.cggh.chassis.generic.atom.study.client.mockimpl.MockStudyFactory;
-import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetController;
-import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetModel;
-import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetListBoxRenderer;
-import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetListBoxRenderer.ViewStudyChangeHandler;
+import org.cggh.chassis.generic.atomext.client.study.StudyEntry;
+import org.cggh.chassis.generic.atomext.client.study.StudyFactory;
+import org.cggh.chassis.generic.client.gwt.widget.study.client.ViewStudiesWidget;
+import org.cggh.chassis.generic.client.gwt.widget.study.client.ViewStudiesWidgetController;
+import org.cggh.chassis.generic.client.gwt.widget.study.client.ViewStudiesWidgetListBoxRenderer;
+import org.cggh.chassis.generic.client.gwt.widget.study.client.ViewStudiesWidgetModel;
+import org.cggh.chassis.generic.client.gwt.widget.study.client.ViewStudiesWidgetListBoxRenderer.ViewStudyChangeHandler;
 
 import com.google.gwt.junit.client.GWTTestCase;
 import com.google.gwt.user.client.ui.SimplePanel;
@@ -69,15 +70,15 @@ public class GWTTestViewStudiesWidgetListBoxRenderer extends GWTTestCase {
 		testModel.addListener(testRenderer);
 		
 		// use mock factory to create test studies
-		MockStudyFactory mockStudyFactory = new MockStudyFactory();
-		StudyEntry study1 = mockStudyFactory.createStudyEntry();
+		StudyFactory mockStudyFactory = new StudyFactory();
+		StudyEntry study1 = mockStudyFactory.createEntry();
 		study1.setTitle("foo1");
 		study1.setSummary("bar 1");
-		study1.addModule("module foo1");
-		StudyEntry study2 = mockStudyFactory.createStudyEntry();
+		study1.getStudy().addModule("module foo1");
+		StudyEntry study2 = mockStudyFactory.createEntry();
 		study2.setTitle("foo2");
 		study2.setSummary("bar 2");
-		study2.addModule("module foo2");
+		study2.getStudy().addModule("module foo2");
 		
 		studies = new ArrayList<StudyEntry>();
 		studies.add(study1);

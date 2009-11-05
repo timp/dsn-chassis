@@ -15,10 +15,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 import junit.framework.JUnit4TestAdapter;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
 
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
 import org.cggh.chassis.generic.atom.submission.client.mockimpl.MockSubmissionFactory;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
 import org.junit.Before;
 import org.junit.Test;
 

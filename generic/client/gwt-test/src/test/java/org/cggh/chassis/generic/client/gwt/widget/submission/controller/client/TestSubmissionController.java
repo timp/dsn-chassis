@@ -18,16 +18,16 @@ import java.util.HashSet;
 import java.util.Set;
 
 import junit.framework.JUnit4TestAdapter;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomLink;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.protocol.impl.AtomServiceImpl;
 
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionFactory;
 import org.cggh.chassis.generic.atom.submission.client.format.impl.SubmissionFactoryImpl;
 import org.cggh.chassis.generic.atom.submission.client.mockimpl.MockSubmissionFactory;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomLink;
-import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
-import org.cggh.chassis.generic.atom.vanilla.client.protocol.impl.AtomServiceImpl;
 import org.cggh.chassis.generic.client.gwt.configuration.client.TestConfigurationSetUp;
 import org.cggh.chassis.generic.client.gwt.widget.submission.controller.client.SubmissionController.LoadSubmissionEntryCallback;
 import org.cggh.chassis.generic.client.gwt.widget.submission.controller.client.SubmissionController.LoadSubmissionEntryErrback;

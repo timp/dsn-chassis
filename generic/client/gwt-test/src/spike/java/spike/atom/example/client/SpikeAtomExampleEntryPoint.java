@@ -3,12 +3,13 @@
  */
 package spike.atom.example.client;
 
-import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
-import org.cggh.chassis.generic.atom.study.client.mockimpl.MockStudyFactory;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
-import org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomFactory;
-import org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomService;
+import org.cggh.chassis.generic.atom.rewrite.client.AtomAuthor;
+import org.cggh.chassis.generic.atom.rewrite.client.vanilla.VanillaAtomEntry;
+import org.cggh.chassis.generic.atom.rewrite.client.vanilla.VanillaAtomFactory;
+import org.cggh.chassis.generic.atom.rewrite.client.vanilla.VanillaAtomService;
+import org.cggh.chassis.generic.atomext.client.study.StudyEntry;
+import org.cggh.chassis.generic.atomext.client.study.StudyFactory;
+import org.cggh.chassis.generic.atomext.client.study.StudyPersistenceService;
 import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
@@ -48,17 +49,16 @@ public class SpikeAtomExampleEntryPoint implements EntryPoint {
 	public void doVanillaAtomExamples() {
 		log.enter("doVanillaAtomExamples");
 
-		String feedURL = "http://example.com/atom/feeds/example";
+		String feedURL = "http://localhost:8080/chassis-generic-service-exist/atom/edit/sandbox";
 			
 		log.debug("create an atom factory");
-		MockAtomFactory factory = new MockAtomFactory(); // use mock for now
+		VanillaAtomFactory factory = new VanillaAtomFactory(); 
 		
 		log.debug("create an atom service");
-		MockAtomService service = new MockAtomService(factory); // use mock for now
-		service.createFeed(feedURL, "my first atom feed"); // bootstrap mock service with a feed, not needed for real service
+		VanillaAtomService service = new VanillaAtomService(factory); 
 		
 		log.debug("create a new entry");
-		AtomEntry entry = factory.createEntry();
+		VanillaAtomEntry entry = factory.createEntry();
 		entry.setTitle("my first vanilla atom entry");
 		entry.setSummary("this is a vanilla atom entry, that's all");
 		
@@ -69,12 +69,12 @@ public class SpikeAtomExampleEntryPoint implements EntryPoint {
 		entry.addAuthor(bob);
 		
 		log.debug("persist new entry");
-		Deferred<AtomEntry> deferredEntry = service.postEntry(feedURL, entry);
+		Deferred<VanillaAtomEntry> deferredEntry = service.postEntry(feedURL, entry);
 		
 		log.debug("add callback to handle successful service response");
-		deferredEntry.addCallback(new Function<AtomEntry,AtomEntry>() {
+		deferredEntry.addCallback(new Function<VanillaAtomEntry,VanillaAtomEntry>() {
 
-			public AtomEntry apply(AtomEntry persistedEntry) {
+			public VanillaAtomEntry apply(VanillaAtomEntry persistedEntry) {
 				log.enter("apply (inner callback function)");
 
 				String entryId = persistedEntry.getId();
@@ -129,14 +129,13 @@ public class SpikeAtomExampleEntryPoint implements EntryPoint {
 		String feedURL = Configuration.getStudyFeedURL();
 
 		log.debug("create a study factory");
-		MockStudyFactory factory = new MockStudyFactory(); // use mock for now
+		StudyFactory factory = new StudyFactory(); 
 		
 		log.debug("create an atom service");
-		MockAtomService service = new MockAtomService(factory); // use mock for now
-		service.createFeed(feedURL, "all studies"); // bootstrap mock service with study feed, not needed for real service
+		StudyPersistenceService service = new StudyPersistenceService(); 
 		
 		log.debug("create a new entry");
-		StudyEntry study = factory.createStudyEntry();
+		StudyEntry study = factory.createEntry();
 		study.setTitle("my first study");
 		study.setSummary("this study was done from 2004-2005 in the Gambia");
 		
@@ -147,11 +146,11 @@ public class SpikeAtomExampleEntryPoint implements EntryPoint {
 		study.addAuthor(bob);
 
 		log.debug("add study module names");
-		study.addModule("in vitro");
-		study.addModule("molecular");
+		study.getStudy().addModule("in vitro");
+		study.getStudy().addModule("molecular");
 
 		log.debug("persist new study");
-		Deferred<AtomEntry> deferredEntry = service.postEntry(feedURL, study);
+		Deferred<StudyEntry> deferredEntry = service.postEntry(feedURL, study);
 		
 		log.debug("add callback to handle successful service response");
 		deferredEntry.addCallback(new Function<StudyEntry,StudyEntry>() { 
@@ -163,7 +162,7 @@ public class SpikeAtomExampleEntryPoint implements EntryPoint {
 				String published = persistedStudy.getPublished();
 				String updated = persistedStudy.getUpdated();
 				String studyURL = persistedStudy.getEditLink().getHref();
-				String firstModule = persistedStudy.getModules().get(0);
+				String firstModule = persistedStudy.getStudy().getModules().get(0);
 				
 				Window.alert("persisted study success; id: "+studyId+"; published: "+published+"; updated: "+updated+"; edit link (entryURL): "+studyURL+"; first modules: "+firstModule);
 

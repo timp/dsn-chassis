@@ -3,14 +3,15 @@
  */
 package spike.atom.example2.client;
 
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactory;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactoryImpl;
-import org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomFactory;
-import org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomService;
-import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
-import org.cggh.chassis.generic.atom.vanilla.client.protocol.impl.AtomServiceImpl;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactory;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactoryImpl;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomFactory;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomService;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.protocol.impl.AtomServiceImpl;
+
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.twisted.client.Deferred;

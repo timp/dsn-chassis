@@ -6,7 +6,7 @@ package org.cggh.chassis.generic.client.gwt.configuration.client;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.cggh.chassis.generic.atom.chassis.base.constants.ChassisConstants;
+import org.cggh.chassis.generic.atomext.shared.ChassisConstants;
 
 /**
  * @author raok

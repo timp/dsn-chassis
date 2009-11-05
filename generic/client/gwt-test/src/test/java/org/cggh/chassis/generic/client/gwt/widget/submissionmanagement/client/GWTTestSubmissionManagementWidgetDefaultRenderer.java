@@ -4,8 +4,9 @@
 package org.cggh.chassis.generic.client.gwt.widget.submissionmanagement.client;
 
 
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomService;
+
 import org.cggh.chassis.generic.atom.submission.client.mockimpl.MockSubmissionFactory;
-import org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomService;
 import org.cggh.chassis.generic.client.gwt.configuration.client.TestConfigurationSetUp;
 import org.junit.Test;
 

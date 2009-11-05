@@ -6,8 +6,9 @@ package org.cggh.chassis.generic.client.gwt.widget.submission.edit.client;
 import java.util.HashSet;
 import java.util.Set;
 
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
+
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
 import org.cggh.chassis.generic.client.gwt.configuration.client.TestConfigurationSetUp;
 import org.cggh.chassis.generic.client.gwt.widget.submission.controller.client.SubmissionControllerEditAPI;
 
