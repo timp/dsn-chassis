@@ -17,7 +17,7 @@ public class AllJavaTests {
 		//$JUnit-BEGIN$
 		
 		// module org.cggh.chassis.generic.atom.vanilla.Atom
-		suite.addTest(org.cggh.chassis.generic.atom.vanilla.AllJavaTests.suite());
+		suite.addTest(legacy.org.cggh.chassis.generic.atom.vanilla.AllJavaTests.suite());
 		
 		// module org.cggh.chassis.generic.twisted.Twisted
 		suite.addTest(org.cggh.chassis.generic.twisted.AllJavaTests.suite());

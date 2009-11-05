@@ -1,17 +1,18 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.atom.vanilla.client.format.impl;
+package legacy.org.cggh.chassis.generic.atom.vanilla.client.format.impl;
 
-import org.cggh.chassis.generic.atom.vanilla.client.format.Atom;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomCategory;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactory;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactoryImpl;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFormatException;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomLink;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.Atom;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomCategory;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactory;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactoryImpl;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomFormatException;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomLink;
+
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.xml.client.XMLNS;

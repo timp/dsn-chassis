@@ -1,17 +1,13 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.atom.vanilla.client.protocol.impl;
+package legacy.org.cggh.chassis.generic.atom.vanilla.client.protocol.impl;
 
 import static org.easymock.EasyMock.expect;
 import static org.easymock.classextension.EasyMock.createMock;
 import static org.easymock.classextension.EasyMock.replay;
 import static org.easymock.classextension.EasyMock.verify;
 
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactory;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFormatException;
-import org.cggh.chassis.generic.twisted.client.HttpException;
 import org.cggh.chassis.generic.twisted.client.HttpDeferred;
 import org.cggh.chassis.generic.twisted.client.Function;
 
@@ -19,12 +15,16 @@ import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.Response;
 
 import junit.framework.TestCase;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactory;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomFormatException;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.protocol.impl.PostEntryCallback;
 
 /**
  * @author aliman
  *
  */
-public class TestPutEntryCallback extends TestCase {
+public class TestPostEntryCallback extends TestCase {
 
 	
 	
@@ -56,7 +56,7 @@ public class TestPutEntryCallback extends TestCase {
 		replay(deferred);
 		
 		// create object under test
-		PutEntryCallback testee = new PutEntryCallback(factory, deferred);
+		PostEntryCallback testee = new PostEntryCallback(factory, deferred);
 		
 		// call method under test
 		testee.onError(request, exception);
@@ -69,7 +69,7 @@ public class TestPutEntryCallback extends TestCase {
 	
 	
 	@SuppressWarnings("unchecked")
-	public void testOnResponseReceived_200() {
+	public void testOnResponseReceived_201() {
 		
 		// test constants
 		String entryDocXML = "doesn't matter, we don't test parsing here";
@@ -83,7 +83,7 @@ public class TestPutEntryCallback extends TestCase {
 		// mock response
 		Response response = createMock(Response.class);
 		// expectations
-		expect(response.getStatusCode()).andReturn(200); 
+		expect(response.getStatusCode()).andReturn(201); // 201 CREATED
 		expect(response.getHeader("Content-Type")).andReturn("application/atom+xml");
 		expect(response.getText()).andReturn(entryDocXML);
 		replay(response);
@@ -107,7 +107,7 @@ public class TestPutEntryCallback extends TestCase {
 		replay(deferred);
 		
 		// create object under test
-		PutEntryCallback testee = new PutEntryCallback(factory, deferred);
+		PostEntryCallback testee = new PostEntryCallback(factory, deferred);
 		
 		// call method under test
 		testee.onResponseReceived(request, response);
@@ -120,7 +120,7 @@ public class TestPutEntryCallback extends TestCase {
 	
 	
 	@SuppressWarnings("unchecked")
-	public void testOnResponseReceived_200_AtomFormatException() {
+	public void testOnResponseReceived_201_AtomFormatException() {
 
 		// test constants
 		String entryDocXML = "doesn't matter, we don't test parsing here";
@@ -134,7 +134,7 @@ public class TestPutEntryCallback extends TestCase {
 		// mock response
 		Response response = createMock(Response.class);
 		// expectations
-		expect(response.getStatusCode()).andReturn(200);
+		expect(response.getStatusCode()).andReturn(201);
 		expect(response.getHeader("Content-Type")).andReturn("application/atom+xml");
 		expect(response.getText()).andReturn(entryDocXML);
 		replay(response);
@@ -153,7 +153,7 @@ public class TestPutEntryCallback extends TestCase {
 		replay(deferred);
 		
 		// create object under test
-		PutEntryCallback testee = new PutEntryCallback(factory, deferred);
+		PostEntryCallback testee = new PostEntryCallback(factory, deferred);
 		
 		// call method under test
 		testee.onResponseReceived(request, response);
@@ -209,7 +209,7 @@ public class TestPutEntryCallback extends TestCase {
 		deferred.addCallbacks(callback, errback);
 		
 		// create object under test
-		PutEntryCallback testee = new PutEntryCallback(factory, deferred);
+		PostEntryCallback testee = new PostEntryCallback(factory, deferred);
 		
 		// call method under test
 		testee.onResponseReceived(request, response);
@@ -217,8 +217,6 @@ public class TestPutEntryCallback extends TestCase {
 		// check errback was called
 		assertEquals(0, callback.called);
 		assertEquals(1, errback.called);
-		assertNull(deferred.getSuccessResult());
-		assertTrue(deferred.getErrorResult() instanceof HttpException);
 		
 		// verify all mocks
 		verify(request); verify(response); verify(factory);

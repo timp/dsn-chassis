@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.atom.vanilla.client.protocol.impl;
+package legacy.org.cggh.chassis.generic.atom.vanilla.client.protocol.impl;
 
 import static org.easymock.EasyMock.expect;
 import static org.easymock.classextension.EasyMock.createMock;
@@ -16,6 +16,7 @@ import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.Response;
 
 import junit.framework.TestCase;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.protocol.impl.CallbackWithNoContent;
 
 /**
  * @author aliman
