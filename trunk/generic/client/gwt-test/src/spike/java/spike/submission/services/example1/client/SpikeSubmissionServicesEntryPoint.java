@@ -3,22 +3,17 @@
  */
 package spike.submission.services.example1.client;
 
-import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
-import org.cggh.chassis.generic.atom.study.client.format.StudyFactory;
-import org.cggh.chassis.generic.atom.study.client.format.StudyFeed;
-import org.cggh.chassis.generic.atom.study.client.format.impl.StudyFactoryImpl;
-import org.cggh.chassis.generic.atom.study.client.protocol.StudyQueryService;
-import org.cggh.chassis.generic.atom.study.client.protocol.impl.StudyQueryServiceImpl;
-import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
-import org.cggh.chassis.generic.atom.submission.client.format.SubmissionFactory;
-import org.cggh.chassis.generic.atom.submission.client.format.SubmissionFeed;
-import org.cggh.chassis.generic.atom.submission.client.format.impl.SubmissionFactoryImpl;
-import org.cggh.chassis.generic.atom.submission.client.protocol.SubmissionQueryService;
-import org.cggh.chassis.generic.atom.submission.client.protocol.impl.SubmissionQueryServiceImpl;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
-import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
-import org.cggh.chassis.generic.atom.vanilla.client.protocol.impl.AtomServiceImpl;
+import org.cggh.chassis.generic.atom.rewrite.client.AtomAuthor;
+import org.cggh.chassis.generic.atomext.client.study.StudyEntry;
+import org.cggh.chassis.generic.atomext.client.study.StudyFactory;
+import org.cggh.chassis.generic.atomext.client.study.StudyFeed;
+import org.cggh.chassis.generic.atomext.client.study.StudyPersistenceService;
+import org.cggh.chassis.generic.atomext.client.study.StudyQueryService;
+import org.cggh.chassis.generic.atomext.client.submission.SubmissionEntry;
+import org.cggh.chassis.generic.atomext.client.submission.SubmissionFactory;
+import org.cggh.chassis.generic.atomext.client.submission.SubmissionFeed;
+import org.cggh.chassis.generic.atomext.client.submission.SubmissionPersistenceService;
+import org.cggh.chassis.generic.atomext.client.submission.SubmissionQueryService;
 import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
@@ -49,12 +44,12 @@ public class SpikeSubmissionServicesEntryPoint implements EntryPoint {
 	
 	
 	
-	public Deferred<AtomEntry> createStudyByAlice() {
+	public Deferred<StudyEntry> createStudyByAlice() {
 		log.enter("createStudyByAlice");
 		
 		log.debug("create a study by Alice");
-		StudyFactory factory = new StudyFactoryImpl();
-		StudyEntry studyEntry = factory.createStudyEntry();
+		StudyFactory factory = new StudyFactory();
+		StudyEntry studyEntry = factory.createEntry();
 		studyEntry.setTitle("One of Alice's Studies");
 		studyEntry.setSummary("A study create by Alice.");
 		AtomAuthor alice = factory.createAuthor();
@@ -62,8 +57,8 @@ public class SpikeSubmissionServicesEntryPoint implements EntryPoint {
 		studyEntry.addAuthor(alice);
 		
 		log.debug("persist the study");
-		AtomService service = new AtomServiceImpl(factory);
-		Deferred<AtomEntry> deferredResult = service.postEntry(Configuration.getStudyFeedURL(), studyEntry);
+		StudyPersistenceService service = new StudyPersistenceService();
+		Deferred<StudyEntry> deferredResult = service.postEntry(Configuration.getStudyFeedURL(), studyEntry);
 			
 		log.leave();
 		return deferredResult;
@@ -75,7 +70,7 @@ public class SpikeSubmissionServicesEntryPoint implements EntryPoint {
 		log.enter("getStudiesByAlice");
 		
 		log.debug("get Alice's studies");
-		StudyQueryService service = new StudyQueryServiceImpl(Configuration.getStudyQueryServiceURL());
+		StudyQueryService service = new StudyQueryService(Configuration.getStudyQueryServiceURL());
 		Deferred<StudyFeed> deferredResults = service.getStudiesByAuthorEmail("alice@example.org");
 
 		log.leave();
@@ -84,12 +79,12 @@ public class SpikeSubmissionServicesEntryPoint implements EntryPoint {
 	
 	
 	
-	public Deferred<AtomEntry> createSubmissionByAlice(StudyEntry studyEntry) {
+	public Deferred<SubmissionEntry> createSubmissionByAlice(StudyEntry studyEntry) {
 		log.enter("createSubmissionByAlice");
 
 		log.debug("create a submission by Alice, linked to the given study");
-		SubmissionFactory factory = new SubmissionFactoryImpl();
-		SubmissionEntry submissionEntry = factory.createSubmissionEntry();
+		SubmissionFactory factory = new SubmissionFactory();
+		SubmissionEntry submissionEntry = factory.createEntry();
 		submissionEntry.setTitle("One of Alice's Submissions");
 		submissionEntry.setSummary("A data submission created by Alice, linked to a study.");
 		AtomAuthor alice = factory.createAuthor();
@@ -101,8 +96,8 @@ public class SpikeSubmissionServicesEntryPoint implements EntryPoint {
 		submissionEntry.addStudyLink(studyAbsoluteUrl);
 		
 		log.debug("persist the submission");
-		AtomService service = new AtomServiceImpl(factory);
-		Deferred<AtomEntry> deferredResult = service.postEntry(Configuration.getSubmissionFeedURL(), submissionEntry);
+		SubmissionPersistenceService service = new SubmissionPersistenceService(factory);
+		Deferred<SubmissionEntry> deferredResult = service.postEntry(Configuration.getSubmissionFeedURL(), submissionEntry);
 		
 		log.leave();
 		return deferredResult;
@@ -114,7 +109,7 @@ public class SpikeSubmissionServicesEntryPoint implements EntryPoint {
 		log.enter("getSubmissionsByAlice");
 	
 		log.debug("get Alice's submissions");
-		SubmissionQueryService service = new SubmissionQueryServiceImpl(Configuration.getSubmissionQueryServiceURL());
+		SubmissionQueryService service = new SubmissionQueryService(Configuration.getSubmissionQueryServiceURL());
 		Deferred<SubmissionFeed> deferredResults = service.getSubmissionsByAuthorEmail("alice@example.org");
 		
 		log.leave();
@@ -126,9 +121,9 @@ public class SpikeSubmissionServicesEntryPoint implements EntryPoint {
 	public void checkSubmissionsBelongToAlice(SubmissionFeed results) {
 		log.enter("checkSubmissionsBelongToAlice");
 		
-		render("found "+results.getSubmissionEntries().size()+" results");
+		render("found "+results.getEntries().size()+" results");
 		
-		for (SubmissionEntry e : results.getSubmissionEntries()) {
+		for (SubmissionEntry e : results.getEntries()) {
 			render("checking result is by Alice: "+e.getTitle()+" ["+e.getId()+"]");
 			boolean alice = false;
 			for (AtomAuthor a : e.getAuthors()) {
@@ -156,12 +151,12 @@ public class SpikeSubmissionServicesEntryPoint implements EntryPoint {
 		RootPanel.get().add(new HTML("<h1>Spike Submission Services</h1>"));
 
 		render("create a study by alice...");
-		Deferred<AtomEntry> chain = createStudyByAlice();
+		Deferred<StudyEntry> chain = createStudyByAlice();
 		
 		
-		chain.addCallback(new Function<AtomEntry,Deferred<StudyFeed>>() {
+		chain.addCallback(new Function<StudyEntry,Deferred<StudyFeed>>() {
 
-			public Deferred<StudyFeed> apply(AtomEntry in) {
+			public Deferred<StudyFeed> apply(StudyEntry in) {
 				log.enter("first callback");
 
 				render("study created, now get all studies by alice...");
@@ -174,17 +169,17 @@ public class SpikeSubmissionServicesEntryPoint implements EntryPoint {
 		});
 		
 		
-		chain.addCallback(new Function<StudyFeed,Deferred<AtomEntry>>() {
+		chain.addCallback(new Function<StudyFeed,Deferred<SubmissionEntry>>() {
 
-			public Deferred<AtomEntry> apply(StudyFeed results) {
+			public Deferred<SubmissionEntry> apply(StudyFeed results) {
 				log.enter("second callback");
 				
-				if (results.getStudyEntries().size() == 0) {
+				if (results.getEntries().size() == 0) {
 					throw new RuntimeException("unexpected, no studies found");
 				}
 
-				render("retrieved "+results.getStudyEntries().size()+" studies by alice, now create a submission by alice linked to first study in results...");
-				Deferred<AtomEntry> deferredResult = createSubmissionByAlice(results.getStudyEntries().get(0));
+				render("retrieved "+results.getEntries().size()+" studies by alice, now create a submission by alice linked to first study in results...");
+				Deferred<SubmissionEntry> deferredResult = createSubmissionByAlice(results.getEntries().get(0));
 
 				log.leave();
 				return deferredResult;
@@ -193,9 +188,9 @@ public class SpikeSubmissionServicesEntryPoint implements EntryPoint {
 		});
 		
 		
-		chain.addCallback(new Function<AtomEntry, Deferred<SubmissionFeed>>() {
+		chain.addCallback(new Function<SubmissionEntry, Deferred<SubmissionFeed>>() {
 
-			public Deferred<SubmissionFeed> apply(AtomEntry in) {
+			public Deferred<SubmissionFeed> apply(SubmissionEntry in) {
 				log.enter("third callback");
 				
 				render("created submission by alice, now query all submissions by alice...");
@@ -213,11 +208,11 @@ public class SpikeSubmissionServicesEntryPoint implements EntryPoint {
 			public Void apply(SubmissionFeed results) {
 				log.enter("fourth callback");
 
-				if (results.getSubmissionEntries().size() == 0) {
+				if (results.getEntries().size() == 0) {
 					throw new RuntimeException("unexpected, no submissions found");
 				}
 
-				render("retrieved "+results.getSubmissionEntries().size()+" submissions by alice, now check the results...");
+				render("retrieved "+results.getEntries().size()+" submissions by alice, now check the results...");
 				checkSubmissionsBelongToAlice(results);
 				
 				log.leave();

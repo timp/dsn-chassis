@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.client.gwt.widget.study.model.client;
+package org.cggh.chassis.generic.client.gwt.widget.study.client;
 
 import static org.easymock.EasyMock.*;
 import static org.junit.Assert.*;
@@ -12,11 +12,11 @@ import java.util.Set;
 
 import junit.framework.JUnit4TestAdapter;
 
-import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
-import org.cggh.chassis.generic.atom.study.client.mockimpl.MockStudyFactory;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
-import org.cggh.chassis.generic.client.gwt.widget.study.model.client.StudyModel;
-import org.cggh.chassis.generic.client.gwt.widget.study.model.client.StudyModelListener;
+import org.cggh.chassis.generic.atom.rewrite.client.AtomAuthor;
+import org.cggh.chassis.generic.atomext.client.study.StudyEntry;
+import org.cggh.chassis.generic.atomext.client.study.StudyFactory;
+import org.cggh.chassis.generic.client.gwt.widget.study.client.StudyModel;
+import org.cggh.chassis.generic.client.gwt.widget.study.client.StudyModelListener;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -32,7 +32,7 @@ public class TestStudyModel {
 
 	private StudyModel testModel;
 	private StudyEntry newStudyEntry;
-	private MockStudyFactory testStudyFactory;
+	private StudyFactory testStudyFactory;
 	private StudyEntry validStudyEntry;
 	private Set<AtomAuthor> testAuthors;
 	
@@ -43,8 +43,8 @@ public class TestStudyModel {
 		testModel = new StudyModel();
 		
 		//create new study entry
-		testStudyFactory = new MockStudyFactory();
-		newStudyEntry = testStudyFactory.createStudyEntry();
+		testStudyFactory = new StudyFactory();
+		newStudyEntry = testStudyFactory.createEntry();
 		
 		//create test authors
 		testAuthors = new HashSet<AtomAuthor>();
@@ -53,12 +53,12 @@ public class TestStudyModel {
 		testAuthors.add(testAtomAuthor);
 		
 		//create a valid study entry
-		validStudyEntry = testStudyFactory.createStudyEntry();
+		validStudyEntry = testStudyFactory.createEntry();
 		validStudyEntry.setTitle("title foo");
 		validStudyEntry.setSummary("summary foo");
 		validStudyEntry.setAuthors(new ArrayList<AtomAuthor>(testAuthors));
-		validStudyEntry.addModule("module1");
-		validStudyEntry.addModule("module2");
+		validStudyEntry.getStudy().addModule("module1");
+		validStudyEntry.getStudy().addModule("module2");
 			
 	}
 	

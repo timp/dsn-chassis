@@ -1,10 +1,12 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.client.gwt.widget.studymanagement.client;
+package org.cggh.chassis.generic.client.gwt.widget.study.client;
 
 import junit.framework.JUnit4TestAdapter;
 
+import org.cggh.chassis.generic.client.gwt.widget.study.client.StudyManagementWidgetController;
+import org.cggh.chassis.generic.client.gwt.widget.study.client.StudyManagementWidgetModel;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,7 +35,7 @@ public class TestStudyManagementWidgetController {
 		
 		mockModel = PowerMock.createMock(StudyManagementWidgetModel.class);
 		
-		testController = new StudyManagementWidgetController(null, mockModel);
+		testController = new StudyManagementWidgetController(mockModel);
 		
 	}
 	

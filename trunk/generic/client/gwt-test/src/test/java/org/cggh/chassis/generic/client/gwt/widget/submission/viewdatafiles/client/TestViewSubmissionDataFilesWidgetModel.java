@@ -14,9 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import junit.framework.JUnit4TestAdapter;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomFactory;
 
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
-import org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomFactory;
 import org.junit.Before;
 import org.junit.Test;
 

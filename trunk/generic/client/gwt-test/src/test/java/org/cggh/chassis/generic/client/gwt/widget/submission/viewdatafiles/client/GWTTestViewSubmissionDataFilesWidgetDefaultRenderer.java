@@ -6,8 +6,9 @@ package org.cggh.chassis.generic.client.gwt.widget.submission.viewdatafiles.clie
 import java.util.ArrayList;
 import java.util.List;
 
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
-import org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomFactory;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomFactory;
+
 import org.cggh.chassis.generic.client.gwt.configuration.client.TestConfigurationSetUp;
 
 import com.google.gwt.junit.client.GWTTestCase;

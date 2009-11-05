@@ -1,12 +1,15 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.client.gwt.widget.studymanagement.client;
+package org.cggh.chassis.generic.client.gwt.widget.study.client;
 
 import static org.junit.Assert.*;
 import static org.easymock.EasyMock.*;
 import junit.framework.JUnit4TestAdapter;
 
+import org.cggh.chassis.generic.client.gwt.widget.study.client.StudyManagementWidget;
+import org.cggh.chassis.generic.client.gwt.widget.study.client.StudyManagementWidgetModel;
+import org.cggh.chassis.generic.client.gwt.widget.study.client.StudyManagementWidgetModelListener;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

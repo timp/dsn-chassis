@@ -3,13 +3,13 @@
  */
 package spike.atom.submission.example.client;
 
-import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
-import org.cggh.chassis.generic.atom.study.client.mockimpl.MockStudyFactory;
-import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
-import org.cggh.chassis.generic.atom.submission.client.mockimpl.MockSubmissionFactory;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
-import org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomService;
+import org.cggh.chassis.generic.atom.rewrite.client.AtomAuthor;
+import org.cggh.chassis.generic.atomext.client.study.StudyEntry;
+import org.cggh.chassis.generic.atomext.client.study.StudyFactory;
+import org.cggh.chassis.generic.atomext.client.study.StudyPersistenceService;
+import org.cggh.chassis.generic.atomext.client.submission.SubmissionEntry;
+import org.cggh.chassis.generic.atomext.client.submission.SubmissionFactory;
+import org.cggh.chassis.generic.atomext.client.submission.SubmissionPersistenceService;
 import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
@@ -34,7 +34,7 @@ public class SpikeSubmissionExampleEntryPoint implements EntryPoint {
 		log.enter("onModuleLoad");
 		
 		log.debug("first create a study & persist");
-		Deferred<AtomEntry> deferredStudy = createStudy();
+		Deferred<StudyEntry> deferredStudy = createStudy();
 		
 		log.debug("now create a submission linked to that study");
 		deferredStudy.addCallback(new Function<StudyEntry,StudyEntry>() {
@@ -52,20 +52,19 @@ public class SpikeSubmissionExampleEntryPoint implements EntryPoint {
 	
 	
 	
-	private Deferred<AtomEntry> createSubmission(StudyEntry study) {
+	private Deferred<SubmissionEntry> createSubmission(StudyEntry study) {
 		log.enter("createSubmission");
 
 		String feedURL = Configuration.getSubmissionFeedURL();
 		
 		log.debug("create a submission factory");
-		MockSubmissionFactory factory = new MockSubmissionFactory(); // use mock for now
+		SubmissionFactory factory = new SubmissionFactory(); 
 		
 		log.debug("create an atom service");
-		MockAtomService service = new MockAtomService(factory); // use mock for now
-		service.createFeed(feedURL, "all submissions"); // bootstrap mock service with study feed, not needed for real service
+		SubmissionPersistenceService service = new SubmissionPersistenceService(); 
 
 		log.debug("create a new entry");
-		SubmissionEntry submission = factory.createSubmissionEntry();
+		SubmissionEntry submission = factory.createEntry();
 		submission.setTitle("my first submission");
 		submission.setSummary("this submission contains all the clinical data for the 2004-05 Gambia study");
 		
@@ -76,13 +75,13 @@ public class SpikeSubmissionExampleEntryPoint implements EntryPoint {
 		submission.addAuthor(bob);
 
 		log.debug("add submission module names");
-		submission.addModule("clinical");
+		submission.getSubmission().addModule("clinical");
 
 		log.debug("set link from submission to study");
 		submission.addStudyLink(study.getEditLink().getHref());
 		
 		log.debug("persist new submission");
-		Deferred<AtomEntry> deferredEntry = service.postEntry(feedURL, submission);
+		Deferred<SubmissionEntry> deferredEntry = service.postEntry(feedURL, submission);
 		
 		log.debug("add callback to handle successful service response");
 		deferredEntry.addCallback(new Function<SubmissionEntry,SubmissionEntry>() { 
@@ -94,7 +93,7 @@ public class SpikeSubmissionExampleEntryPoint implements EntryPoint {
 				String published = persistedSubmission.getPublished();
 				String updated = persistedSubmission.getUpdated();
 				String submissionURL = persistedSubmission.getEditLink().getHref();
-				String firstModule = persistedSubmission.getModules().get(0);
+				String firstModule = persistedSubmission.getSubmission().getModules().get(0);
 				String studyLink = persistedSubmission.getStudyLinks().get(0).getHref();
 				
 				Window.alert("persisted submission success; id: "+submissionId+"; published: "+published+"; updated: "+updated+"; edit link (entryURL): "+submissionURL+"; first modules: "+firstModule+"; first study link: "+studyLink);
@@ -133,20 +132,19 @@ public class SpikeSubmissionExampleEntryPoint implements EntryPoint {
 	
 	
 	
-	private Deferred<AtomEntry> createStudy() {
+	private Deferred<StudyEntry> createStudy() {
 		log.enter("createStudy");
 		
 		String feedURL = Configuration.getStudyFeedURL();
 
 		log.debug("create a study factory");
-		MockStudyFactory factory = new MockStudyFactory(); // use mock for now
+		StudyFactory factory = new StudyFactory(); 
 		
 		log.debug("create an atom service");
-		MockAtomService service = new MockAtomService(factory); // use mock for now
-		service.createFeed(feedURL, "all studies"); // bootstrap mock service with study feed, not needed for real service
+		StudyPersistenceService service = new StudyPersistenceService();
 		
 		log.debug("create a new entry");
-		StudyEntry study = factory.createStudyEntry();
+		StudyEntry study = factory.createEntry();
 		study.setTitle("my first study");
 		study.setSummary("this study was done from 2004-2005 in the Gambia");
 		
@@ -157,11 +155,11 @@ public class SpikeSubmissionExampleEntryPoint implements EntryPoint {
 		study.addAuthor(bob);
 
 		log.debug("add study module names");
-		study.addModule("in vitro");
-		study.addModule("molecular");
+		study.getStudy().addModule("in vitro");
+		study.getStudy().addModule("molecular");
 
 		log.debug("persist new study");
-		Deferred<AtomEntry> deferredEntry = service.postEntry(feedURL, study);
+		Deferred<StudyEntry> deferredEntry = service.postEntry(feedURL, study);
 		
 		log.debug("add callback to handle successful service response");
 		deferredEntry.addCallback(new Function<StudyEntry,StudyEntry>() { 
@@ -173,7 +171,7 @@ public class SpikeSubmissionExampleEntryPoint implements EntryPoint {
 				String published = persistedStudy.getPublished();
 				String updated = persistedStudy.getUpdated();
 				String studyURL = persistedStudy.getEditLink().getHref();
-				String firstModule = persistedStudy.getModules().get(0);
+				String firstModule = persistedStudy.getStudy().getModules().get(0);
 				
 				Window.alert("persisted study success; id: "+studyId+"; published: "+published+"; updated: "+updated+"; edit link (entryURL): "+studyURL+"; first modules: "+firstModule);
 

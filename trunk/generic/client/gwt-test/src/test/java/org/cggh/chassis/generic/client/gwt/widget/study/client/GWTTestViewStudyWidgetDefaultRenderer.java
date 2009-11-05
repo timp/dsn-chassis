@@ -1,18 +1,18 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.client.gwt.widget.study.view.client;
+package org.cggh.chassis.generic.client.gwt.widget.study.client;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
-import org.cggh.chassis.generic.atom.study.client.format.StudyFactory;
-import org.cggh.chassis.generic.atom.study.client.mockimpl.MockStudyFactory;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
+import org.cggh.chassis.generic.atom.rewrite.client.AtomAuthor;
+import org.cggh.chassis.generic.atomext.client.study.StudyEntry;
+import org.cggh.chassis.generic.atomext.client.study.StudyFactory;
 import org.cggh.chassis.generic.client.gwt.configuration.client.TestConfigurationSetUp;
-import org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerViewAPI;
-import org.cggh.chassis.generic.client.gwt.widget.study.model.client.StudyModel;
+import org.cggh.chassis.generic.client.gwt.widget.study.client.StudyControllerViewAPI;
+import org.cggh.chassis.generic.client.gwt.widget.study.client.StudyModel;
+import org.cggh.chassis.generic.client.gwt.widget.study.client.ViewStudyWidgetDefaultRenderer;
 
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.event.dom.client.DomEvent;
@@ -56,11 +56,11 @@ public class GWTTestViewStudyWidgetDefaultRenderer extends GWTTestCase {
 				
 
 		//create testStudyEntry to load
-		MockStudyFactory mockFactory = new MockStudyFactory();
-		testStudyEntry = mockFactory.createStudyEntry();
+		StudyFactory mockFactory = new StudyFactory();
+		testStudyEntry = mockFactory.createEntry();
 		testStudyEntry.setTitle("title");
 		testStudyEntry.setSummary("summary");	
-		testStudyEntry.addModule(module1Id);
+		testStudyEntry.getStudy().addModule(module1Id);
 	}
 	
 	public void testInitialState() {
@@ -125,7 +125,7 @@ public class GWTTestViewStudyWidgetDefaultRenderer extends GWTTestCase {
 	public void testOnAuthorsChanged() {
 
 		//test data
-		StudyFactory testFactory = new MockStudyFactory();
+		StudyFactory testFactory = new StudyFactory();
 		Set<AtomAuthor> testAuthors = new HashSet<AtomAuthor>();
 		AtomAuthor testAtomAuthor = testFactory.createAuthor();
 		testAtomAuthor.setEmail("foo@bar.com");

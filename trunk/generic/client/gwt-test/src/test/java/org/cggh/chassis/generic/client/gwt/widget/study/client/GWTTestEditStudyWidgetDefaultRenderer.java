@@ -1,14 +1,17 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.client.gwt.widget.study.create.client;
+package org.cggh.chassis.generic.client.gwt.widget.study.client;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
+
+import org.cggh.chassis.generic.atom.rewrite.client.AtomAuthor;
+import org.cggh.chassis.generic.atomext.client.study.StudyEntry;
 import org.cggh.chassis.generic.client.gwt.configuration.client.TestConfigurationSetUp;
-import org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerCreateAPI;
+import org.cggh.chassis.generic.client.gwt.widget.study.client.EditStudyWidgetDefaultRenderer;
+import org.cggh.chassis.generic.client.gwt.widget.study.client.StudyControllerEditAPI;
 
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.event.dom.client.DomEvent;
@@ -20,25 +23,22 @@ import com.google.gwt.user.client.ui.SimplePanel;
  * @author raok
  *
  */
-public class GWTTestCreateStudyWidgetDefaultRenderer extends GWTTestCase {
+public class GWTTestEditStudyWidgetDefaultRenderer extends GWTTestCase {
 	
+	private EditStudyWidgetDefaultRenderer testRenderer;
 	private MockStudyController mockController;
-	private CreateStudyWidgetDefaultRenderer testRenderer;
-	
 	//test data
 	String module1Id = TestConfigurationSetUp.module1Id;
 	String module2Id = TestConfigurationSetUp.module2Id;
 	String module1Label = TestConfigurationSetUp.module1Label;
 	String module2Label = TestConfigurationSetUp.module2Label;
 
-
-
 	/* (non-Javadoc)
 	 * @see com.google.gwt.junit.client.GWTTestCase#getModuleName()
 	 */
 	@Override
 	public String getModuleName() {
-		return "org.cggh.chassis.generic.client.gwt.widget.study.create.CreateStudyWidget";
+		return "org.cggh.chassis.generic.client.gwt.widget.study.edit.EditStudyWidget";
 	}
 
 	@Override
@@ -46,20 +46,18 @@ public class GWTTestCreateStudyWidgetDefaultRenderer extends GWTTestCase {
 		
 		//setup ConfigurationBean
 		TestConfigurationSetUp.createTestConfiguration();
-		
+
 		//create mockController and inject into testRenderer
 		mockController = new MockStudyController();
-						
-		testRenderer = new CreateStudyWidgetDefaultRenderer(new SimplePanel(), mockController);
 		
+		testRenderer = new EditStudyWidgetDefaultRenderer(new SimplePanel(), mockController);
+					
 	}
-	
 	
 	public void testInitialState() {
 		
 		assertNotNull(testRenderer);
-				
-		//check no values set
+		
 		assertEquals("", testRenderer.titleUI.getValue());
 		assertEquals("", testRenderer.summaryUI.getValue());
 		
@@ -68,7 +66,6 @@ public class GWTTestCreateStudyWidgetDefaultRenderer extends GWTTestCase {
 		assertFalse(testRenderer.modulesUIHash.get(module1Id).getValue());
 		assertTrue(testRenderer.modulesUIHash.containsKey(module2Id));
 		assertFalse(testRenderer.modulesUIHash.get(module2Id).getValue());
-				
 		
 	}
 	
@@ -127,7 +124,7 @@ public class GWTTestCreateStudyWidgetDefaultRenderer extends GWTTestCase {
 	}
 	
 	public void testOnModulesChanged() {
-		
+
 		//test data
 		Set<String> modulesSet1 = new HashSet<String>();
 		modulesSet1.add(module1Id);		
@@ -146,9 +143,8 @@ public class GWTTestCreateStudyWidgetDefaultRenderer extends GWTTestCase {
 		assertFalse(testRenderer.modulesUIHash.get(module1Id).getValue());	
 		assertFalse(testRenderer.modulesUIHash.get(module2Id).getValue());	
 		
-		
 	}
-	
+
 	public void testOnModulesChanged_UI() {
 		
 		//test data
@@ -158,7 +154,7 @@ public class GWTTestCreateStudyWidgetDefaultRenderer extends GWTTestCase {
 		testRenderer.modulesUIHash.get(module1Id).setValue(isChecked, true);
 		
 		//test outcome
-		assertEquals(isChecked, mockController.updateModules.contains(module1Id));
+		assertEquals(isChecked, mockController.modules.contains(module1Id));
 		
 	}
 	
@@ -168,68 +164,58 @@ public class GWTTestCreateStudyWidgetDefaultRenderer extends GWTTestCase {
 		
 	}
 	
-		
-	public void testCancelCreateStudyButton_UI() {
-		
+	public void testCancelEditStudyButton_UI() {
 		//simulate click event
 		DomEvent.fireNativeEvent(Document.get().createClickEvent(0, 0, 0, 0, 0, false, false, false, false),
-								 (HasHandlers)testRenderer.cancelCreateStudyUI );
+								 (HasHandlers)testRenderer.cancelEditStudyUI );
 		
 		// test outcome
 		assertTrue(mockController.cancelSaveOrUpdateStudyEntry);
-		
 	}
 	
 	
-	public void testSaveNewStudyEntryButtonUI_onStudyEntryChanged_valid() {
-		
-		//call method under test
-		testRenderer.onStudyEntryChanged(true);
-		
-		//simulate click event
-		DomEvent.fireNativeEvent(Document.get().createClickEvent(0, 0, 0, 0, 0, false, false, false, false),
-								 (HasHandlers)testRenderer.createStudyUI );
-		
-		// test outcome
-		assertTrue(mockController.saveNewStudyEntryCalled);
-		
-	}
-	
-	public void testSaveNewStudyEntryButtonUI_onStudyEntryChanged_invalid() {
+	public void testUpdateStudyButton_UI_formIncomplete() {
 		
 		//call method under test
 		testRenderer.onStudyEntryChanged(false);
 		
 		//simulate click event
 		DomEvent.fireNativeEvent(Document.get().createClickEvent(0, 0, 0, 0, 0, false, false, false, false),
-								 (HasHandlers)testRenderer.createStudyUI );
+								 (HasHandlers)testRenderer.updateStudyUI );
+		
+
+		// test outcome
+		assertFalse(mockController.updateStudyEntryCalled);
+				
+	}
+	
+	public void testUpdateStudyButton_UI_formComplete() {
+		
+		//call method under test
+		testRenderer.onStudyEntryChanged(true);
+		
+		//simulate click event
+		DomEvent.fireNativeEvent(Document.get().createClickEvent(0, 0, 0, 0, 0, false, false, false, false),
+								 (HasHandlers)testRenderer.updateStudyUI );
 		
 		// test outcome
-		assertFalse(mockController.saveNewStudyEntryCalled);
-		
+		assertTrue(mockController.updateStudyEntryCalled);
+				
 	}
 	
 	
 	//Define mock controller
-	private class MockStudyController implements StudyControllerCreateAPI {
+	private class MockStudyController implements StudyControllerEditAPI {
 
 		boolean cancelSaveOrUpdateStudyEntry;
-		boolean saveNewStudyEntryCalled;
 		String updateSummary;
 		String updateTitle;
-		Set<String> updateModules;
+		Set<String> modules;
+		boolean updateStudyEntryCalled;
 		Set<AtomAuthor> updateAuthors;
 
 		public void cancelSaveOrUpdateStudyEntry() {
 			this.cancelSaveOrUpdateStudyEntry = true;
-		}
-
-		public void saveNewStudyEntry() {
-			this.saveNewStudyEntryCalled = true;
-		}
-
-		public void setUpNewStudy(String authorEmail) {
-			// not tested here
 		}
 
 		public void updateSummary(String summary) {
@@ -241,7 +227,19 @@ public class GWTTestCreateStudyWidgetDefaultRenderer extends GWTTestCase {
 		}
 
 		public void updateModules(Set<String> modules) {
-			this.updateModules = modules;
+			this.modules = modules;
+		}
+
+		public void updateStudyEntry() {
+			this.updateStudyEntryCalled = true;
+		}
+
+		public void loadStudyEntry(StudyEntry studyEntryToLoad) {
+			// not tested here
+		}
+
+		public void loadStudyEntryByURL(String studyEntryURL) {
+			// not tested here
 		}
 
 		public void updateAuthors(Set<AtomAuthor> authors) {

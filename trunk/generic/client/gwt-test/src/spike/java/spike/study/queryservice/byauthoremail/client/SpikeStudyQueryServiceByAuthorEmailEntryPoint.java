@@ -3,15 +3,12 @@
  */
 package spike.study.queryservice.byauthoremail.client;
 
-import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
-import org.cggh.chassis.generic.atom.study.client.format.StudyFactory;
-import org.cggh.chassis.generic.atom.study.client.format.StudyFeed;
-import org.cggh.chassis.generic.atom.study.client.format.impl.StudyFactoryImpl;
-import org.cggh.chassis.generic.atom.study.client.protocol.impl.StudyQueryServiceImpl;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
-import org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
-import org.cggh.chassis.generic.atom.vanilla.client.protocol.impl.AtomServiceImpl;
+import org.cggh.chassis.generic.atom.rewrite.client.AtomAuthor;
+import org.cggh.chassis.generic.atomext.client.study.StudyEntry;
+import org.cggh.chassis.generic.atomext.client.study.StudyFactory;
+import org.cggh.chassis.generic.atomext.client.study.StudyFeed;
+import org.cggh.chassis.generic.atomext.client.study.StudyPersistenceService;
+import org.cggh.chassis.generic.atomext.client.study.StudyQueryService;
 import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
@@ -35,8 +32,8 @@ public class SpikeStudyQueryServiceByAuthorEmailEntryPoint implements EntryPoint
 	
 	
 	private StudyFactory factory;
-	private AtomService studyPersistenceService;
-	private StudyQueryServiceImpl studyQueryService;
+	private StudyPersistenceService studyPersistenceService;
+	private StudyQueryService studyQueryService;
 	private Log log = LogFactory.getLog(this.getClass());
 	RootPanel root = RootPanel.get();
 
@@ -52,21 +49,21 @@ public class SpikeStudyQueryServiceByAuthorEmailEntryPoint implements EntryPoint
 		
 		root.add(new HTML("<h1>Spike Study Query Service - by Author Email</h1>"));
 		
-		factory = new StudyFactoryImpl();
-		studyPersistenceService = new AtomServiceImpl(factory);
-		studyQueryService = new StudyQueryServiceImpl(Configuration.getStudyQueryServiceURL());
+		factory = new StudyFactory();
+		studyPersistenceService = new StudyPersistenceService();
+		studyQueryService = new StudyQueryService(Configuration.getStudyQueryServiceURL());
 		
 		log.debug("create first study");
-		Deferred<AtomEntry> callChain = createFirstStudy();
+		Deferred<StudyEntry> callChain = createFirstStudy();
 		
-		callChain.addCallback(new Function<AtomEntry,Deferred<AtomEntry>>(){
+		callChain.addCallback(new Function<StudyEntry,Deferred<StudyEntry>>(){
 
-			public Deferred<AtomEntry> apply(AtomEntry first) {
+			public Deferred<StudyEntry> apply(StudyEntry first) {
 				log.enter("apply [first callback]");
 				
 				root.add(new HTML("<p>first study created</p>"));
 				log.debug("first study created, now create second");
-				Deferred<AtomEntry> def = createSecondStudy();
+				Deferred<StudyEntry> def = createSecondStudy();
 
 				log.leave();
 				
@@ -76,14 +73,14 @@ public class SpikeStudyQueryServiceByAuthorEmailEntryPoint implements EntryPoint
 
 		});
 		
-		callChain.addCallback(new Function<AtomEntry,Deferred<AtomEntry>>(){
+		callChain.addCallback(new Function<StudyEntry,Deferred<StudyEntry>>(){
 
-			public Deferred<AtomEntry> apply(AtomEntry second) {
+			public Deferred<StudyEntry> apply(StudyEntry second) {
 				log.enter("apply [second callback]");
 
 				root.add(new HTML("<p>second study created</p>"));
 				log.debug("second study created, now create third");
-				Deferred<AtomEntry> def = createThirdStudy();
+				Deferred<StudyEntry> def = createThirdStudy();
 
 				log.leave();
 				
@@ -95,9 +92,9 @@ public class SpikeStudyQueryServiceByAuthorEmailEntryPoint implements EntryPoint
 		
 
 		
-		callChain.addCallback(new Function<AtomEntry,Deferred<StudyFeed>>(){
+		callChain.addCallback(new Function<StudyEntry,Deferred<StudyFeed>>(){
 
-			public Deferred<StudyFeed> apply(AtomEntry second) {
+			public Deferred<StudyFeed> apply(StudyEntry second) {
 				log.enter("apply [third callback]");
 
 				root.add(new HTML("<p>third study created</p>"));
@@ -161,10 +158,10 @@ public class SpikeStudyQueryServiceByAuthorEmailEntryPoint implements EntryPoint
 	/**
 	 * @return
 	 */
-	private Deferred<AtomEntry> createFirstStudy() {
+	private Deferred<StudyEntry> createFirstStudy() {
 		log.enter("createFirstStudy");
 		
-		StudyEntry first = factory.createStudyEntry();
+		StudyEntry first = factory.createEntry();
 		first.setTitle("one of bob's studies");
 		
 		AtomAuthor bob = factory.createAuthor();
@@ -172,7 +169,7 @@ public class SpikeStudyQueryServiceByAuthorEmailEntryPoint implements EntryPoint
 		
 		first.addAuthor(bob);
 		
-		Deferred<AtomEntry> deferredEntry = studyPersistenceService.postEntry(Configuration.getStudyFeedURL(), first);
+		Deferred<StudyEntry> deferredEntry = studyPersistenceService.postEntry(Configuration.getStudyFeedURL(), first);
 		
 		log.leave();
 		return deferredEntry;
@@ -182,10 +179,10 @@ public class SpikeStudyQueryServiceByAuthorEmailEntryPoint implements EntryPoint
 	
 	
 	
-	private Deferred<AtomEntry> createSecondStudy() {
+	private Deferred<StudyEntry> createSecondStudy() {
 		log.enter("createSecondStudy");
 		
-		StudyEntry second = factory.createStudyEntry();
+		StudyEntry second = factory.createEntry();
 		second.setTitle("one of alice's studies");
 		
 		AtomAuthor alice = factory.createAuthor();
@@ -193,7 +190,7 @@ public class SpikeStudyQueryServiceByAuthorEmailEntryPoint implements EntryPoint
 		
 		second.addAuthor(alice);
 		
-		Deferred<AtomEntry> deferredEntry = studyPersistenceService.postEntry(Configuration.getStudyFeedURL(), second);
+		Deferred<StudyEntry> deferredEntry = studyPersistenceService.postEntry(Configuration.getStudyFeedURL(), second);
 		
 		log.leave();
 		return deferredEntry;
@@ -203,10 +200,10 @@ public class SpikeStudyQueryServiceByAuthorEmailEntryPoint implements EntryPoint
 	
 	
 	
-	private Deferred<AtomEntry> createThirdStudy() {
+	private Deferred<StudyEntry> createThirdStudy() {
 		log.enter("createThirdStudy");
 		
-		StudyEntry third = factory.createStudyEntry();
+		StudyEntry third = factory.createEntry();
 		third.setTitle("one of alice & bob's studies");
 		
 		AtomAuthor alice = factory.createAuthor();
@@ -217,7 +214,7 @@ public class SpikeStudyQueryServiceByAuthorEmailEntryPoint implements EntryPoint
 		bob.setEmail("bob@example.com");
 		third.addAuthor(bob);
 		
-		Deferred<AtomEntry> deferredEntry = studyPersistenceService.postEntry(Configuration.getStudyFeedURL(), third);
+		Deferred<StudyEntry> deferredEntry = studyPersistenceService.postEntry(Configuration.getStudyFeedURL(), third);
 		
 		log.leave();
 		return deferredEntry;
@@ -245,7 +242,7 @@ public class SpikeStudyQueryServiceByAuthorEmailEntryPoint implements EntryPoint
 		log.debug("feed title: "+results.getTitle());
 		log.debug(results.toString());
 		
-		for (StudyEntry entry : results.getStudyEntries()) {
+		for (StudyEntry entry : results.getEntries()) {
 			log.debug("found entry: "+entry.getTitle() + " ["+entry.getId()+"]");
 			root.add(new HTML("<p>found entry: "+entry.getTitle() + " ["+entry.getId()+"]</p>"));
 			boolean alice = false;
