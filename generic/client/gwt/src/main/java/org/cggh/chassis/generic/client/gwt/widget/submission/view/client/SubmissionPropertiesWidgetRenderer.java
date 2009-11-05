@@ -6,8 +6,8 @@ package org.cggh.chassis.generic.client.gwt.widget.submission.view.client;
 import java.util.List;
 
 import org.cggh.chassis.generic.atom.rewrite.client.AtomAuthor;
-import org.cggh.chassis.generic.atom.rewrite.client.submission.SubmissionEntry;
 import org.cggh.chassis.generic.atom.study.client.protocol.StudyQuery;
+import org.cggh.chassis.generic.atomext.client.submission.SubmissionEntry;
 import org.cggh.chassis.generic.client.gwt.common.client.CommonStyles;
 import org.cggh.chassis.generic.client.gwt.common.client.ChassisUser;
 import org.cggh.chassis.generic.client.gwt.common.client.RenderUtils;
@@ -167,7 +167,7 @@ public class SubmissionPropertiesWidgetRenderer
 			this.updateDateUpdatedLabel(entry.getUpdated());
 			this.updateIdLabel(entry.getId());
 			this.updateOwnersLabel(entry.getAuthors());
-			this.updateModulesLabel(entry.getModules());
+			this.updateModulesLabel(entry.getSubmission().getModules());
 			this.updateStudiesWidget(entry);
 
 		}

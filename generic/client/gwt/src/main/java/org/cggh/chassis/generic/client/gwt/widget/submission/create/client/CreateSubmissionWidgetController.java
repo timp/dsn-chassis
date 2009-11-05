@@ -10,8 +10,8 @@ import org.cggh.chassis.generic.twisted.client.Function;
 import org.cggh.chassis.generic.widget.client.AsyncErrback;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 
-import org.cggh.chassis.generic.atom.rewrite.client.submission.SubmissionEntry;
-import org.cggh.chassis.generic.atom.rewrite.client.submission.SubmissionPersistenceService;
+import org.cggh.chassis.generic.atomext.client.submission.SubmissionEntry;
+import org.cggh.chassis.generic.atomext.client.submission.SubmissionPersistenceService;
 import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
 
 /**

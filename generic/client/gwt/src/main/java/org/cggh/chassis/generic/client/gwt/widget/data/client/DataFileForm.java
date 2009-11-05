@@ -4,9 +4,9 @@
 package org.cggh.chassis.generic.client.gwt.widget.data.client;
 
 import org.cggh.chassis.generic.atom.rewrite.client.AtomFactory;
-import org.cggh.chassis.generic.atom.rewrite.client.datafile.DataFileEntry;
-import org.cggh.chassis.generic.atom.rewrite.client.datafile.DataFileFactory;
-import org.cggh.chassis.generic.atom.rewrite.client.datafile.DataFileFeed;
+import org.cggh.chassis.generic.atomext.client.datafile.DataFileEntry;
+import org.cggh.chassis.generic.atomext.client.datafile.DataFileFactory;
+import org.cggh.chassis.generic.atomext.client.datafile.DataFileFeed;
 import org.cggh.chassis.generic.client.gwt.forms.client.BaseForm;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;

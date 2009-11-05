@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.cggh.chassis.generic.atom.rewrite.client.AtomAuthor;
-import org.cggh.chassis.generic.atom.rewrite.client.submission.SubmissionEntry;
+import org.cggh.chassis.generic.atomext.client.submission.SubmissionEntry;
 import org.cggh.chassis.generic.client.gwt.common.client.CommonStyles;
 import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
 import org.cggh.chassis.generic.log.client.Log;
@@ -171,7 +171,7 @@ public class ViewSubmissionsWidgetDefaultRenderer implements ViewSubmissionsWidg
 				summary = summary.substring(0, cutoff) + "...";
 			}
 			
-			List<String> modules = submissionEntry.getModules();
+			List<String> modules = submissionEntry.getSubmission().getModules();
 			Map<String,String> moduleLabels = ConfigurationBean.getModules();
 			String modulesContent = "";
 			for (Iterator<String> it = modules.iterator(); it.hasNext(); ) {
@@ -182,8 +182,8 @@ public class ViewSubmissionsWidgetDefaultRenderer implements ViewSubmissionsWidg
 				}
 			}
 			
-			String created = submissionEntry.getPublished();
-			String updated = submissionEntry.getUpdated();
+//			String created = submissionEntry.getPublished();
+//			String updated = submissionEntry.getUpdated();
 			
 			Label submissionTitleLabel = new Label(title);
 			submissionTitleLabel.addStyleName(CommonStyles.VIEWSUBMISSIONS_SUBMISSIONTITLE);
