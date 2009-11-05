@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.atomext.shared;
+package org.cggh.chassis.generic.atomext.client.shared;
 
 import java.util.List;
 

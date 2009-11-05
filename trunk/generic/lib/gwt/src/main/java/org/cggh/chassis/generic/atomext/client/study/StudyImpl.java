@@ -4,7 +4,7 @@
 package org.cggh.chassis.generic.atomext.client.study;
 
 
-import org.cggh.chassis.generic.atomext.shared.HasModulesImpl;
+import org.cggh.chassis.generic.atomext.client.shared.HasModulesImpl;
 
 import com.google.gwt.xml.client.Element;
 

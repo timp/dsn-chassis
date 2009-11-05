@@ -15,7 +15,8 @@ import com.google.gwt.http.client.URL;
  * @author aliman
  *
  */
-public class AtomServiceImpl<E extends AtomEntry, F extends AtomFeed<E>> 
+public class AtomServiceImpl
+	<E extends AtomEntry, F extends AtomFeed<E>> 
 	implements AtomService<E, F> {
 
 	
@@ -162,7 +163,7 @@ public class AtomServiceImpl<E extends AtomEntry, F extends AtomFeed<E>>
 
 		HttpDeferred<E> deferredResult = new HttpDeferred<E>();
 
-		RequestBuilder requestBuilder = buildPostEntryRequest(feedURL, entry);
+		RequestBuilder requestBuilder = buildPostEntryRequest(feedURL, entry.toString());
 		
 		requestBuilder.setCallback(new PostEntryCallback<E, F>(factory, deferredResult));
 
@@ -175,12 +176,11 @@ public class AtomServiceImpl<E extends AtomEntry, F extends AtomFeed<E>>
 	
 	
 	
-	public static RequestBuilder buildPostEntryRequest(String feedURL, AtomEntry entry) {
+	public static RequestBuilder buildPostEntryRequest(String feedURL, String content) {
 
 		RequestBuilder builder = new RequestBuilder(RequestBuilder.POST, URL.encode(feedURL));		
 		builder.setHeader("Accept", "application/atom+xml,application/xml");
 		builder.setHeader("Content-Type", "application/atom+xml;type=entry;charset=\"utf-8\"");
-		String content = entry.toString();
 		builder.setHeader("Content-Length", Integer.toString(content.length()));
 		// TODO other headers?
 		
@@ -200,7 +200,7 @@ public class AtomServiceImpl<E extends AtomEntry, F extends AtomFeed<E>>
 
 		HttpDeferred<E> deferredResult = new HttpDeferred<E>();
 
-		RequestBuilder requestBuilder = buildPutEntryRequest(entryURL, entry);
+		RequestBuilder requestBuilder = buildPutEntryRequest(entryURL, entry.toString());
 		
 		requestBuilder.setCallback(new PutEntryCallback<E, F>(factory, deferredResult));
 
@@ -213,12 +213,11 @@ public class AtomServiceImpl<E extends AtomEntry, F extends AtomFeed<E>>
 	
 	
 	
-	public static RequestBuilder buildPutEntryRequest(String entryURL, AtomEntry entry) {
+	public static RequestBuilder buildPutEntryRequest(String entryURL, String content) {
 
 		RequestBuilder builder = new RequestBuilder(RequestBuilder.POST, URL.encode(entryURL));		
 		builder.setHeader("Accept", "application/atom+xml,application/xml");
 		builder.setHeader("Content-Type", "application/atom+xml;type=entry;charset=\"utf-8\"");
-		String content = entry.toString();
 		builder.setHeader("Content-Length", Integer.toString(content.length()));
 		builder.setHeader("X-HTTP-Method-Override", "PUT");
 		// TODO other headers?
