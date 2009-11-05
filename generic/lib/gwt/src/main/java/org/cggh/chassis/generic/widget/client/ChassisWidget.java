@@ -71,8 +71,6 @@ public abstract class ChassisWidget extends Composite {
 		log.debug("set style primary name: "+stylePrimaryName);
 		this.setStylePrimaryName(stylePrimaryName);
 
-		this.ensureLog();
-		
 		log.debug("call init()");
 		this.init();
 		
@@ -81,11 +79,6 @@ public abstract class ChassisWidget extends Composite {
 	
 	
 	
-	protected abstract void ensureLog();
-	
-	
-	
-
 	/**
 	 * Establishes the initialisation life-cycle phase. Extensions to Widget
 	 * sub-classes MUST call init() on the super-class BEFORE any further action,
