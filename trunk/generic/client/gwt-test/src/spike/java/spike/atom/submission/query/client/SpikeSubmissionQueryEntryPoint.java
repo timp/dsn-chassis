@@ -107,12 +107,12 @@ public class SpikeSubmissionQueryEntryPoint implements EntryPoint {
 		log.enter("onModuleLoad");
 
 		log.debug("first need to set up spike by creating a submission");
-		Deferred<Void> setup = setup();
+		Deferred<AtomEntry> setup = setup();
 		
 		log.debug("when setup complete, then try query submissions by author");
-		setup.addCallback(new Function<Void,Void>() {
+		setup.addCallback(new Function<AtomEntry,AtomEntry>() {
 
-			public Void apply(Void in) {
+			public AtomEntry apply(AtomEntry in) {
 				
 				log.debug("setup is complete, now try query submissions");
 				querySubmissions();
@@ -128,7 +128,7 @@ public class SpikeSubmissionQueryEntryPoint implements EntryPoint {
 	
 	
 
-	private Deferred<Void> setup() {
+	private Deferred<AtomEntry> setup() {
 		log.enter("setup");
 
 		String feedURL = Configuration.getSubmissionFeedURL();
@@ -189,7 +189,7 @@ public class SpikeSubmissionQueryEntryPoint implements EntryPoint {
 		deferredEntry.addErrback(new Function<Throwable,Throwable>() {
 
 			public Throwable apply(Throwable t) {
-				log.enter("apply (inner callback function)");
+				log.enter("apply (inner errback function)");
 
 				Window.alert("service error: "+t.getClass().getName()+": "+t.getLocalizedMessage());
 				
@@ -204,7 +204,7 @@ public class SpikeSubmissionQueryEntryPoint implements EntryPoint {
 		});
 		log.leave();
 		
-		return null;
+		return deferredEntry;
 	}
 	
 }
