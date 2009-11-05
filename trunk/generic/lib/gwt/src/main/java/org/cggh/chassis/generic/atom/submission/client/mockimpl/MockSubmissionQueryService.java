@@ -3,7 +3,6 @@
  */
 package org.cggh.chassis.generic.atom.submission.client.mockimpl;
 
-import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionFeed;
 import org.cggh.chassis.generic.atom.submission.client.protocol.SubmissionQueryService;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
@@ -43,7 +42,8 @@ public class MockSubmissionQueryService implements SubmissionQueryService {
 		Deferred<SubmissionFeed> deferred = new Deferred<SubmissionFeed>();
 		
 		log.debug("hack to get feed URL for all submissions");
-		String submissionFeedURL = serviceURL.replaceFirst("query", "edit"); // hack, assume we can get from submission query service URL to submission feed URL by replacing "query" with "edit"
+		String submissionFeedURL = serviceURL.replaceFirst("/query/submissions.xql", "/atom/edit/submissions"); // hack, assume we can get from submission query service URL to submission feed URL by replacing "query" with "edit"
+		log.debug("submission feed url: "+submissionFeedURL);
 		
 		log.debug("set up feed to hold results");
 		MockSubmissionFeed results = factory.createMockSubmissionFeed("query submissions by author email results ["+email+"]");
@@ -67,6 +67,7 @@ public class MockSubmissionQueryService implements SubmissionQueryService {
 			
 		} catch (NotFoundException e) {
 			
+			log.error("unexpected error", e);
 			deferred.errback(e);
 			
 		}
