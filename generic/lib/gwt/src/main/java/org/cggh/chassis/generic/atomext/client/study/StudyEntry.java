@@ -3,7 +3,7 @@
  */
 package org.cggh.chassis.generic.atomext.client.study;
 
-import org.cggh.chassis.generic.atom.rewrite.client.AtomEntry;
+import org.cggh.chassis.generic.atom.client.AtomEntry;
 
 /**
  * @author aliman

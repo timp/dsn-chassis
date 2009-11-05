@@ -3,7 +3,7 @@
  */
 package org.cggh.chassis.generic.atomext.client.submission;
 
-import org.cggh.chassis.generic.atom.rewrite.client.AtomFeedImpl;
+import org.cggh.chassis.generic.atom.client.AtomFeedImpl;
 
 import com.google.gwt.xml.client.Element;
 

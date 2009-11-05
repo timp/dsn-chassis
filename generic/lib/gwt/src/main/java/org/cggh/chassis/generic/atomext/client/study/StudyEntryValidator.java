@@ -3,8 +3,8 @@
  */
 package org.cggh.chassis.generic.atomext.client.study;
 
-import org.cggh.chassis.generic.atom.rewrite.client.AtomEntryValidator;
-import org.cggh.chassis.generic.atom.rewrite.client.ValidationReport;
+import org.cggh.chassis.generic.atom.client.AtomEntryValidator;
+import org.cggh.chassis.generic.atom.client.ValidationReport;
 import org.cggh.chassis.generic.atomext.client.shared.ModulesValidator;
 
 

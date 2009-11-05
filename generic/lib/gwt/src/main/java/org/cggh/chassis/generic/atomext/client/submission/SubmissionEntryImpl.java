@@ -6,8 +6,8 @@ package org.cggh.chassis.generic.atomext.client.submission;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.cggh.chassis.generic.atom.rewrite.client.AtomEntryImpl;
-import org.cggh.chassis.generic.atom.rewrite.client.AtomLink;
+import org.cggh.chassis.generic.atom.client.AtomEntryImpl;
+import org.cggh.chassis.generic.atom.client.AtomLink;
 import org.cggh.chassis.generic.atomext.shared.Chassis;
 import org.cggh.chassis.generic.xml.client.XMLNS;
 

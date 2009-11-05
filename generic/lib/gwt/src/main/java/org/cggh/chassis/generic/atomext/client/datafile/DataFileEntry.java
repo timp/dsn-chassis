@@ -5,8 +5,8 @@ package org.cggh.chassis.generic.atomext.client.datafile;
 
 import java.util.List;
 
-import org.cggh.chassis.generic.atom.rewrite.client.AtomEntry;
-import org.cggh.chassis.generic.atom.rewrite.client.AtomLink;
+import org.cggh.chassis.generic.atom.client.AtomEntry;
+import org.cggh.chassis.generic.atom.client.AtomLink;
 
 
 /**
