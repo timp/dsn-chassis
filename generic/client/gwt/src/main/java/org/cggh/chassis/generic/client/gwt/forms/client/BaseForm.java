@@ -3,10 +3,10 @@
  */
 package org.cggh.chassis.generic.client.gwt.forms.client;
 
-import org.cggh.chassis.generic.atom.rewrite.client.AtomAuthor;
-import org.cggh.chassis.generic.atom.rewrite.client.AtomEntry;
-import org.cggh.chassis.generic.atom.rewrite.client.AtomFactory;
-import org.cggh.chassis.generic.atom.rewrite.client.AtomFeed;
+import org.cggh.chassis.generic.atom.client.AtomAuthor;
+import org.cggh.chassis.generic.atom.client.AtomEntry;
+import org.cggh.chassis.generic.atom.client.AtomFactory;
+import org.cggh.chassis.generic.atom.client.AtomFeed;
 import org.cggh.chassis.generic.client.gwt.common.client.ChassisResources;
 import org.cggh.chassis.generic.client.gwt.common.client.ChassisUser;
 import org.cggh.chassis.generic.log.client.Log;

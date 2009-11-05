@@ -206,7 +206,7 @@ public class RenderUtils {
 	 * @param delimiter the delimiter to use to separate each author in the collection
 	 * @return a string concatenation of the authors' emails
 	 */
-	public static String renderRewriteAtomAuthorsAsDelimitedEmailString(Collection<org.cggh.chassis.generic.atom.rewrite.client.AtomAuthor> authors, String delimiter) {
+	public static String renderRewriteAtomAuthorsAsDelimitedEmailString(Collection<org.cggh.chassis.generic.atom.client.AtomAuthor> authors, String delimiter) {
 		return RenderUtils.concatenate(RenderUtils.getRewriteEmails(authors), delimiter);
 	}
 	
@@ -234,7 +234,7 @@ public class RenderUtils {
 	 * @param authors the authors to render
 	 * @return a string of the authors' emails separated by commas
 	 */
-	public static String renderRewriteAtomAuthorsAsCommaDelimitedEmailString(Collection<org.cggh.chassis.generic.atom.rewrite.client.AtomAuthor> authors) {
+	public static String renderRewriteAtomAuthorsAsCommaDelimitedEmailString(Collection<org.cggh.chassis.generic.atom.client.AtomAuthor> authors) {
 		return RenderUtils.renderRewriteAtomAuthorsAsDelimitedEmailString(authors, ", ");
 	}
 	
@@ -266,7 +266,7 @@ public class RenderUtils {
 	 * @param inline if true, return an inline label, otherwise a normal label
 	 * @return a label
 	 */
-	public static Label renderRewriteAtomAuthorsAsLabel(Collection<org.cggh.chassis.generic.atom.rewrite.client.AtomAuthor> authors, boolean inline) {
+	public static Label renderRewriteAtomAuthorsAsLabel(Collection<org.cggh.chassis.generic.atom.client.AtomAuthor> authors, boolean inline) {
 		String text = (authors == null) ? "" : RenderUtils.renderRewriteAtomAuthorsAsCommaDelimitedEmailString(authors);
 		if (inline) return new InlineLabel(text);
 		else return new Label(text);
@@ -376,10 +376,10 @@ public class RenderUtils {
 	 * @param in the list of authors to get emails from
 	 * @return a list of emails as strings
 	 */
-	public static List<String> getRewriteEmails(Collection<org.cggh.chassis.generic.atom.rewrite.client.AtomAuthor> in) {
+	public static List<String> getRewriteEmails(Collection<org.cggh.chassis.generic.atom.client.AtomAuthor> in) {
 		List<String> out = new ArrayList<String>();
 		if (in != null) {
-			for (org.cggh.chassis.generic.atom.rewrite.client.AtomAuthor a : in) {
+			for (org.cggh.chassis.generic.atom.client.AtomAuthor a : in) {
 				String email = a.getEmail();
 				if (email != null) out.add(email);
 			}

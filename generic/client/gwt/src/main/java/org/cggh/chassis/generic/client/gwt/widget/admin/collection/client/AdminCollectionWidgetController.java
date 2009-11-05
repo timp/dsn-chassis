@@ -3,9 +3,9 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.admin.collection.client;
 
-import org.cggh.chassis.generic.atom.rewrite.client.vanilla.VanillaAtomEntry;
-import org.cggh.chassis.generic.atom.rewrite.client.vanilla.VanillaAtomFactory;
-import org.cggh.chassis.generic.atom.rewrite.client.vanilla.VanillaAtomFeed;
+import org.cggh.chassis.generic.atom.client.vanilla.VanillaAtomEntry;
+import org.cggh.chassis.generic.atom.client.vanilla.VanillaAtomFactory;
+import org.cggh.chassis.generic.atom.client.vanilla.VanillaAtomFeed;
 import org.cggh.chassis.generic.atomext.client.exist.ExistAtomService;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;

@@ -5,8 +5,8 @@ package org.cggh.chassis.generic.client.gwt.application.client;
 
 import org.cggh.chassis.generic.client.gwt.widget.study.client.StudyManagementWidget;
 import org.cggh.chassis.generic.client.gwt.widget.study.client.StudyManagementWidgetPubSubAPI;
-import org.cggh.chassis.generic.client.gwt.widget.submissionmanagement.client.SubmissionManagementWidget;
-import org.cggh.chassis.generic.client.gwt.widget.submissionmanagement.client.SubmissionManagementWidgetPubSubAPI;
+import org.cggh.chassis.generic.client.gwt.widget.submission.client.SubmissionManagementWidget;
+import org.cggh.chassis.generic.client.gwt.widget.submission.client.SubmissionManagementWidgetPubSubAPI;
 import org.cggh.chassis.generic.client.gwt.widget.submitter.home.client.SubmitterHomeWidget;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;

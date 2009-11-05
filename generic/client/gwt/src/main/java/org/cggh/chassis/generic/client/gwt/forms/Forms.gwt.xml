@@ -3,7 +3,7 @@
 <module>
   <inherits name="com.google.gwt.user.User" />
   <inherits name="org.cggh.chassis.generic.atom.submission.Submission"/>
-  <inherits name="org.cggh.chassis.generic.atom.rewrite.Atom"/>
+  <inherits name="org.cggh.chassis.generic.atom.Atom"/>
   <inherits name="org.cggh.chassis.generic.widget.Widget"/>
   <inherits name="org.cggh.chassis.generic.client.gwt.common.Common"/>
 </module>

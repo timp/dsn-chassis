@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.cggh.chassis.generic.atom.rewrite.client.AtomLink;
+import org.cggh.chassis.generic.atom.client.AtomLink;
 import org.cggh.chassis.generic.atomext.client.submission.SubmissionEntry;
 import org.cggh.chassis.generic.atomext.client.submission.SubmissionFeed;
 import org.cggh.chassis.generic.client.gwt.common.client.CommonStyles;

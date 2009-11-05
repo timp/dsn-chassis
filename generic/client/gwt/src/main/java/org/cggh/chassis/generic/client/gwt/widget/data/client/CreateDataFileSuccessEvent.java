@@ -3,9 +3,9 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.data.client;
 
-import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
+import org.cggh.chassis.generic.atomext.client.submission.SubmissionEntry;
 import org.cggh.chassis.generic.atomext.client.datafile.DataFileEntry;
-import org.cggh.chassis.generic.client.gwt.widget.submission.view.client.EditSubmissionActionHandler;
+import org.cggh.chassis.generic.client.gwt.widget.submission.client.EditSubmissionActionHandler;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 
