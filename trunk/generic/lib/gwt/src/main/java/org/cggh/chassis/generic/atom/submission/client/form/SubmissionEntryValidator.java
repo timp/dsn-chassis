@@ -3,9 +3,10 @@
  */
 package org.cggh.chassis.generic.atom.submission.client.form;
 
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.form.AtomEntryValidator;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.form.ValidationReport;
+
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
-import org.cggh.chassis.generic.atom.vanilla.client.form.AtomEntryValidator;
-import org.cggh.chassis.generic.atom.vanilla.client.form.ValidationReport;
 
 
 /**

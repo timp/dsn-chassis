@@ -3,13 +3,14 @@
  */
 package org.cggh.chassis.generic.atom.submission.client.mockimpl;
 
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomStore;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.protocol.NotFoundException;
+
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionFeed;
 import org.cggh.chassis.generic.atom.submission.client.protocol.SubmissionQueryService;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
-import org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomStore;
-import org.cggh.chassis.generic.atom.vanilla.client.protocol.NotFoundException;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.twisted.client.Deferred;

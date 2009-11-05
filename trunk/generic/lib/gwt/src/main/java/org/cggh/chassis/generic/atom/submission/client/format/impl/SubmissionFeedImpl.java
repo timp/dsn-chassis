@@ -6,11 +6,12 @@ package org.cggh.chassis.generic.atom.submission.client.format.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.Atom;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeedImpl;
+
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionFactory;
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionFeed;
-import org.cggh.chassis.generic.atom.vanilla.client.format.Atom;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeedImpl;
 import org.cggh.chassis.generic.twisted.client.Function;
 import org.cggh.chassis.generic.twisted.client.Functional;
 import org.cggh.chassis.generic.xml.client.XML;

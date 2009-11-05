@@ -5,7 +5,7 @@ package org.cggh.chassis.generic.atomext.client.shared;
 
 import java.util.List;
 
-import org.cggh.chassis.generic.atom.chassis.base.vocab.Chassis;
+import org.cggh.chassis.generic.atomext.shared.Chassis;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.xml.client.ElementWrapper;

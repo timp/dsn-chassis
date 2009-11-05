@@ -5,8 +5,9 @@ package org.cggh.chassis.generic.atom.submission.client.format;
 
 import java.util.List;
 
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomLink;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomLink;
+
 
 /**
  * @author aliman

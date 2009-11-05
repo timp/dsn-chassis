@@ -3,4 +3,6 @@
 <module>
   <inherits name="com.google.gwt.user.User" />
   <inherits name="org.cggh.chassis.generic.atom.rewrite.Atom" />
+  <source path="shared" />
+  <source path="client" />
 </module>
