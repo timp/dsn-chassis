@@ -6,7 +6,7 @@ package org.cggh.chassis.generic.client.gwt.widget.data.client;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
-import org.cggh.chassis.generic.widget.client.DelegatingChassisWidget;
+import org.cggh.chassis.generic.widget.client.DelegatingWidget;
 
 import com.google.gwt.event.shared.HandlerRegistration;
 
@@ -17,19 +17,21 @@ import com.google.gwt.event.shared.HandlerRegistration;
  * @author aliman
  *
  */
-public class CreateDataFileWidget 
-	extends DelegatingChassisWidget<AsyncWidgetModel, CreateDataFileWidgetRenderer> {
+public class NewDataFileWidget 
+	extends DelegatingWidget<AsyncWidgetModel, CreateDataFileWidgetRenderer> {
 
 	
 	
 	
-	public static final String NAME = "createDataFileWidget";
 	
 	
 	private Log log;
 	private CreateDataFileWidgetController controller;
 
 	
+	
+	public static final String NAME = "createDataFileWidget";
+
 	
 	
 	
@@ -45,7 +47,7 @@ public class CreateDataFileWidget
 	
 	
 	protected void ensureLog() {
-		if (log == null) log = LogFactory.getLog(CreateDataFileWidget.class);
+		if (log == null) log = LogFactory.getLog(NewDataFileWidget.class);
 	}
 	
 	

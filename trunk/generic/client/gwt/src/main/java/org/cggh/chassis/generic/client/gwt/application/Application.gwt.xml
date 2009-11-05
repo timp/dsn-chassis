@@ -18,7 +18,7 @@
 
   <inherits name="org.cggh.chassis.generic.client.gwt.widget.study.Study" />
 
-  <inherits name="org.cggh.chassis.generic.client.gwt.widget.submissionmanagement.SubmissionManagementWidget" />
+  <inherits name="org.cggh.chassis.generic.client.gwt.widget.submission.Submission" />
 
   <!-- TODO should get factored out to AdministratorHomeWidget module -->
   <inherits name="org.cggh.chassis.generic.client.gwt.widget.admin.collection.AdminCollectionWidget" />

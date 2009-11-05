@@ -26,7 +26,7 @@ public class CreateDataFileWidgetController {
 	
 	private Log log = LogFactory.getLog(CreateDataFileWidgetController.class);
 	private AsyncWidgetModel model;
-	private CreateDataFileWidget owner;
+	private NewDataFileWidget owner;
 
 	
 	
@@ -35,7 +35,7 @@ public class CreateDataFileWidgetController {
 	 * @param owner 
 	 * @param model
 	 */
-	public CreateDataFileWidgetController(CreateDataFileWidget owner, AsyncWidgetModel model) {
+	public CreateDataFileWidgetController(NewDataFileWidget owner, AsyncWidgetModel model) {
 		this.owner = owner;
 		this.model = model;
 	}
