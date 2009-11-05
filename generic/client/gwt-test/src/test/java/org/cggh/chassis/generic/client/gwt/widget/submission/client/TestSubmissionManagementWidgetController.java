@@ -1,10 +1,13 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.client.gwt.widget.submissionmanagement.client;
+package org.cggh.chassis.generic.client.gwt.widget.submission.client;
 
 import junit.framework.JUnit4TestAdapter;
 
+import org.cggh.chassis.generic.client.gwt.widget.submission.client.SubmissionManagementWidget;
+import org.cggh.chassis.generic.client.gwt.widget.submission.client.SubmissionManagementWidgetController;
+import org.cggh.chassis.generic.client.gwt.widget.submission.client.SubmissionManagementWidgetModel;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

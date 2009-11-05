@@ -1,11 +1,11 @@
 package org.cggh.chassis.generic.client.gwt.widget.submission;
 
 
-import org.cggh.chassis.generic.client.gwt.widget.submission.create.client.GWTTestCreateSubmissionWidgetDefaultRenderer;
-import org.cggh.chassis.generic.client.gwt.widget.submission.edit.client.GWTTestEditSubmissionWidgetDefaultRenderer;
+import org.cggh.chassis.generic.client.gwt.widget.submission.client.GWTTestCreateSubmissionWidgetDefaultRenderer;
+import org.cggh.chassis.generic.client.gwt.widget.submission.client.GWTTestEditSubmissionWidgetDefaultRenderer;
+import org.cggh.chassis.generic.client.gwt.widget.submission.client.GWTTestSubmissionManagementWidgetDefaultRenderer;
+import org.cggh.chassis.generic.client.gwt.widget.submission.client.GWTTestViewSubmissionsWidgetDefaultRenderer;
 //import org.cggh.chassis.generic.client.gwt.widget.submission.view.client.GWTTestViewSubmissionWidgetDefaultRenderer;
-import org.cggh.chassis.generic.client.gwt.widget.submission.viewsubmissions.client.GWTTestViewSubmissionsWidgetDefaultRenderer;
-import org.cggh.chassis.generic.client.gwt.widget.submissionmanagement.client.GWTTestSubmissionManagementWidgetDefaultRenderer;
 
 import com.google.gwt.junit.tools.GWTTestSuite;
 

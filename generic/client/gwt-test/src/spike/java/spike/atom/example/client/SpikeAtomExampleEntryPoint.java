@@ -3,10 +3,10 @@
  */
 package spike.atom.example.client;
 
-import org.cggh.chassis.generic.atom.rewrite.client.AtomAuthor;
-import org.cggh.chassis.generic.atom.rewrite.client.vanilla.VanillaAtomEntry;
-import org.cggh.chassis.generic.atom.rewrite.client.vanilla.VanillaAtomFactory;
-import org.cggh.chassis.generic.atom.rewrite.client.vanilla.VanillaAtomService;
+import org.cggh.chassis.generic.atom.client.AtomAuthor;
+import org.cggh.chassis.generic.atom.client.vanilla.VanillaAtomEntry;
+import org.cggh.chassis.generic.atom.client.vanilla.VanillaAtomFactory;
+import org.cggh.chassis.generic.atom.client.vanilla.VanillaAtomService;
 import org.cggh.chassis.generic.atomext.client.study.StudyEntry;
 import org.cggh.chassis.generic.atomext.client.study.StudyFactory;
 import org.cggh.chassis.generic.atomext.client.study.StudyPersistenceService;

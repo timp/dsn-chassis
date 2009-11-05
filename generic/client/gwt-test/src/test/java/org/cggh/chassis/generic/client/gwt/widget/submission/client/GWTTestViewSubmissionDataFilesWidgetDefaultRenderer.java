@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.client.gwt.widget.submission.viewdatafiles.client;
+package org.cggh.chassis.generic.client.gwt.widget.submission.client;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +10,8 @@ import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
 import legacy.org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomFactory;
 
 import org.cggh.chassis.generic.client.gwt.configuration.client.TestConfigurationSetUp;
+import org.cggh.chassis.generic.client.gwt.widget.submission.client.ViewSubmissionDataFilesWidgetDefaultRenderer;
+import org.cggh.chassis.generic.client.gwt.widget.submission.client.ViewSubmissionDataFilesWidgetModel;
 
 import com.google.gwt.junit.client.GWTTestCase;
 

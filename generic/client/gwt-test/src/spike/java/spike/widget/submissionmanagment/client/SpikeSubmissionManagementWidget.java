@@ -4,7 +4,7 @@
 package spike.widget.submissionmanagment.client;
 
 import org.cggh.chassis.generic.client.gwt.common.client.ChassisUser;
-import org.cggh.chassis.generic.client.gwt.widget.submissionmanagement.client.SubmissionManagementWidget;
+import org.cggh.chassis.generic.client.gwt.widget.submission.client.SubmissionManagementWidget;
 import org.cggh.chassis.generic.user.transfer.UserDetailsTO;
 
 import com.google.gwt.core.client.EntryPoint;

@@ -4,7 +4,7 @@
 package spike.widget.submission.create.client;
 
 import org.cggh.chassis.generic.client.gwt.common.client.ChassisUser;
-import org.cggh.chassis.generic.client.gwt.widget.submission.create.client.CreateSubmissionWidget;
+import org.cggh.chassis.generic.client.gwt.widget.submission.client.CreateSubmissionWidget;
 import org.cggh.chassis.generic.log.client.AllenSauerLog;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.user.transfer.UserDetailsTO;

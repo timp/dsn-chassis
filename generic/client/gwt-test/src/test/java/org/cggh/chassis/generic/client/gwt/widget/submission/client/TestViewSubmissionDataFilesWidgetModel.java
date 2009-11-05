@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.client.gwt.widget.submission.viewdatafiles.client;
+package org.cggh.chassis.generic.client.gwt.widget.submission.client;
 
 import static org.easymock.EasyMock.createMock;
 import static org.easymock.EasyMock.replay;
@@ -17,6 +17,8 @@ import junit.framework.JUnit4TestAdapter;
 import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
 import legacy.org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomFactory;
 
+import org.cggh.chassis.generic.client.gwt.widget.submission.client.ViewSubmissionDataFilesWidgetModel;
+import org.cggh.chassis.generic.client.gwt.widget.submission.client.ViewSubmissionDataFilesWidgetModelListener;
 import org.junit.Before;
 import org.junit.Test;
 
