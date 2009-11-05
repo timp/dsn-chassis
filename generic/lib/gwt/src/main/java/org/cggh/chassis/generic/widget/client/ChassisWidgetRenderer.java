@@ -16,16 +16,17 @@ import com.google.gwt.user.client.ui.Panel;
  * @author aliman
  *
  */
-public abstract class ChassisWidgetRenderer {
+public abstract class ChassisWidgetRenderer<M> {
 	
 	
 	
 	
-	private Log log = LogFactory.getLog(this.getClass());
+	private Log log = LogFactory.getLog(ChassisWidgetRenderer.class);
 
 
 
 	protected Panel canvas;
+	protected M model;
 	
 	
 	
@@ -65,7 +66,69 @@ public abstract class ChassisWidgetRenderer {
 
 
 
+	/**
+	 * This method is responsible for creating and adding the child widgets of
+	 * this widget's content box.
+	 */
+	protected abstract void renderUI();
 
+	
+	
+	
+	/**
+	 * This method is responsible for attaching event listeners which bind the UI
+	 * to the widget state (i.e., the widget's model). These listeners are generally
+	 * property change listeners - used to update the state of the UI in response
+	 * to changes in the model's properties. This method also attaches event listeners
+	 * to child widgets making up the UI to map user interactions to the widget's 
+	 * API.
+	 */
+	protected void bindUI(M model) {
+		log.enter("bindUI");
+		
+		log.debug("unbind to clear anything");
+		this.unbindUI();
+		
+		log.debug("keep reference to model");
+		this.model = model;
+		
+		log.debug("register handlers for model property change events");
+		this.registerHandlersForModelChanges();
+		
+		log.debug("register handlers for child widget events");
+		this.registerHandlersForChildWidgetEvents();
+		
+		log.leave();
+	}
+
+	
+	
+	
+	/**
+	 * 
+	 */
+	protected abstract void registerHandlersForModelChanges();
+
+
+
+
+	/**
+	 * 
+	 */
+	protected abstract void registerHandlersForChildWidgetEvents();
+
+	
+
+
+	/**
+	 * This method is responsible for setting the state of the UI based on the 
+	 * current state of the widget at the time of rendering.
+	 */
+	protected abstract void syncUI();
+
+	
+	
+	
 	/**
 	 * 
 	 */

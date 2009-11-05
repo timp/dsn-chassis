@@ -143,7 +143,7 @@ public abstract class XQSModelBase {
 			this.element = data;
 		}
 		else {
-			String message = "data element does not match model definition; expected ["+this.elementPrefix+", "+this.elementName+", "+this.elementNamespaceUri+"], found ["+data.getPrefix()+", "+XML.getLocalName(data)+", "+element.getNamespaceURI()+"]";
+			String message = "data element does not match model definition; expected ["+this.elementName+", "+this.elementNamespaceUri+"], found ["+XML.getLocalName(data)+", "+data.getNamespaceURI()+"]";
 			throw new XQuestionDataException(message);
 		}
 

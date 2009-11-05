@@ -71,11 +71,17 @@ public abstract class ChassisWidget extends Composite {
 		log.debug("set style primary name: "+stylePrimaryName);
 		this.setStylePrimaryName(stylePrimaryName);
 
+		this.ensureLog();
+		
 		log.debug("call init()");
 		this.init();
 		
 		log.leave();
 	}
+	
+	
+	
+	protected abstract void ensureLog();
 	
 	
 	
@@ -252,5 +258,28 @@ public abstract class ChassisWidget extends Composite {
 	}
 	
 	
+	
+	
+	/**
+	 * Register handler for cancel event.
+	 * 
+	 * @param h handler to receive events
+	 * @return a handler registration to remove the handler if needed
+	 */
+	public HandlerRegistration addCancelHandler(CancelHandler h) {
+		return this.addHandler(h, CancelEvent.TYPE);
+	}
+	
+	
+	
+	
+	public HandlerRegistration addErrorHandler(ErrorHandler h) {
+		return this.addHandler(h, ErrorEvent.TYPE);
+	}
+	
+	
+	
+
+
 	
 }
