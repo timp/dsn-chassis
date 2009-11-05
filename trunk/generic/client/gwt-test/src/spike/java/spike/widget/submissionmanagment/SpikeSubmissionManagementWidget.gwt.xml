@@ -2,19 +2,13 @@
 <!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 1.7.0//EN" "http://google-web-toolkit.googlecode.com/svn/tags/1.7.0/distro-source/core/src/gwt-module.dtd">
 <module>
 	<inherits name="com.google.gwt.user.User" />
-	<inherits
-		name="org.cggh.chassis.generic.client.gwt.widget.submissionmanagement.SubmissionManagementWidget" />
-
 
 	<!-- Inherit the default GWT style sheet.  You can change       -->
 	<!-- the theme of your GWT application by uncommenting          -->
 	<!-- any one of the following lines.                            -->
-	<inherits name='com.google.gwt.user.theme.standard.Standard' />
+	<inherits name="com.google.gwt.user.theme.standard.Standard" />
 	<!-- Specify the application specific style sheet.              -->
 
-	<entry-point
-		class="spike.widget.submissionmanagment.client.SpikeSubmissionManagementWidget" />
-		
 		
   <!--+
       | logging configuration 
@@ -27,15 +21,21 @@
 <!--  <inherits name="com.allen_sauer.gwt.log.gwt-log-OFF" />-->
 
    <!-- Loggers Enabled by default -->
-  <set-property name="log_ConsoleLogger" value="ENABLED" />
-  <set-property name="log_DivLogger" value="ENABLED" />
-  <set-property name="log_FirebugLogger" value="ENABLED" />
   <set-property name="log_GWTLogger" value="ENABLED" />
   <set-property name="log_SystemLogger" value="ENABLED" />
+  <set-property name="log_ConsoleLogger" value="DISABLED" />
+  <set-property name="log_DivLogger" value="DISABLED" />
+  <set-property name="log_FirebugLogger" value="DISABLED" />
   
   <!-- Loggers Disabled by default -->
   <set-property name="log_RemoteLogger" value="DISABLED" />
   <set-property name="log_WindowLogger" value="DISABLED" />
+
+  <inherits name="org.cggh.chassis.generic.client.gwt.widget.submissionmanagement.SubmissionManagementWidget" />
+
+
+  <entry-point class="spike.widget.submissionmanagment.client.SpikeSubmissionManagementWidget" />
+    
   
 		
 </module>
