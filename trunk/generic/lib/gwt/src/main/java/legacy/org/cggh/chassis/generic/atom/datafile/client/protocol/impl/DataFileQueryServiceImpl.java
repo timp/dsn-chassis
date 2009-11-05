@@ -1,16 +1,16 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.atom.datafile.client.protocol.impl;
+package legacy.org.cggh.chassis.generic.atom.datafile.client.protocol.impl;
 
+import legacy.org.cggh.chassis.generic.atom.datafile.client.protocol.DataFileQuery;
+import legacy.org.cggh.chassis.generic.atom.datafile.client.protocol.DataFileQueryService;
 import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactory;
 import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactoryImpl;
 import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
 import legacy.org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
 import legacy.org.cggh.chassis.generic.atom.vanilla.client.protocol.impl.AtomServiceImpl;
 
-import org.cggh.chassis.generic.atom.datafile.client.protocol.DataFileQuery;
-import org.cggh.chassis.generic.atom.datafile.client.protocol.DataFileQueryService;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.twisted.client.Deferred;
