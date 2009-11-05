@@ -9,7 +9,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
+
 import org.cggh.chassis.generic.twisted.client.Function;
 import org.cggh.chassis.generic.twisted.client.Functional;
 

@@ -7,7 +7,6 @@ import org.cggh.chassis.generic.atomext.client.submission.SubmissionEntry;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
-import org.cggh.chassis.generic.widget.client.ChassisWidgetModel;
 import org.cggh.chassis.generic.widget.client.ModelChangeEvent;
 import org.cggh.chassis.generic.widget.client.ModelChangeHandler;
 

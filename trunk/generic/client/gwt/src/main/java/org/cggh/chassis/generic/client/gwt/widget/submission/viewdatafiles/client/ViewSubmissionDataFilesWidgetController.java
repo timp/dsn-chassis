@@ -5,10 +5,11 @@ package org.cggh.chassis.generic.client.gwt.widget.submission.viewdatafiles.clie
 
 import java.util.ArrayList;
 
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
+
 import org.cggh.chassis.generic.atom.datafile.client.protocol.DataFileQuery;
 import org.cggh.chassis.generic.atom.datafile.client.protocol.impl.DataFileQueryServiceImpl;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
 import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;

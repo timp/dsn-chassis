@@ -5,11 +5,11 @@ package org.cggh.chassis.generic.client.gwt.widget.submission.view.client;
 
 import java.util.List;
 
-import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
+import org.cggh.chassis.generic.atomext.client.study.StudyEntry;
 import org.cggh.chassis.generic.client.gwt.common.client.CommonStyles;
-import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetController;
-import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetModel;
-import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetRenderer;
+import org.cggh.chassis.generic.client.gwt.widget.study.client.ViewStudiesWidgetController;
+import org.cggh.chassis.generic.client.gwt.widget.study.client.ViewStudiesWidgetModel;
+import org.cggh.chassis.generic.client.gwt.widget.study.client.ViewStudiesWidgetRenderer;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 

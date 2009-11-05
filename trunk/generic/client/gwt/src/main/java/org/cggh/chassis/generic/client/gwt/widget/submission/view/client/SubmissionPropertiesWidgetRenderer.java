@@ -6,13 +6,13 @@ package org.cggh.chassis.generic.client.gwt.widget.submission.view.client;
 import java.util.List;
 
 import org.cggh.chassis.generic.atom.rewrite.client.AtomAuthor;
-import org.cggh.chassis.generic.atom.study.client.protocol.StudyQuery;
+import org.cggh.chassis.generic.atomext.client.study.StudyQuery;
 import org.cggh.chassis.generic.atomext.client.submission.SubmissionEntry;
 import org.cggh.chassis.generic.client.gwt.common.client.CommonStyles;
 import org.cggh.chassis.generic.client.gwt.common.client.ChassisUser;
 import org.cggh.chassis.generic.client.gwt.common.client.RenderUtils;
 import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
-import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidget;
+import org.cggh.chassis.generic.client.gwt.widget.study.client.ViewStudiesWidget;
 import org.cggh.chassis.generic.client.gwt.widget.submission.view.client.SubmissionPropertiesWidgetModel.SubmissionEntryChangeEvent;
 import org.cggh.chassis.generic.client.gwt.widget.submission.view.client.SubmissionPropertiesWidgetModel.SubmissionEntryChangeHandler;
 import org.cggh.chassis.generic.log.client.Log;

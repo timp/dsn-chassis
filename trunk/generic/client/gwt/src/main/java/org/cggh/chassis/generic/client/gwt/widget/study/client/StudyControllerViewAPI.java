@@ -1,0 +1,25 @@
+/**
+ * 
+ */
+package org.cggh.chassis.generic.client.gwt.widget.study.client;
+
+
+/**
+ * @author raok
+ *
+ */
+public interface StudyControllerViewAPI extends AbstractStudyControllerViewEditAPI {
+	
+	public void fireOnUserActionEditThisStudy();
+
+	/**
+	 * 
+	 */
+	public void fireOnUserActionEditStudyQuestionnaire();
+
+	/**
+	 * 
+	 */
+	public void fireOnUserActionViewStudyQuestionnaire();
+
+}

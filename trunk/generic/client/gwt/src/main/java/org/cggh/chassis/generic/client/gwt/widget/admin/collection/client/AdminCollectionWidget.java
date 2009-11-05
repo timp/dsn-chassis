@@ -3,11 +3,7 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.admin.collection.client;
 
-import org.cggh.chassis.generic.atom.exist.client.protocol.ExistAtomService;
-import org.cggh.chassis.generic.atom.exist.client.protocol.impl.ExistAtomServiceImpl;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactory;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactoryImpl;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
+import org.cggh.chassis.generic.atom.rewrite.client.vanilla.VanillaAtomFeed;
 import org.cggh.chassis.generic.twisted.client.Deferred;
 
 import com.google.gwt.user.client.ui.Composite;
@@ -28,9 +24,7 @@ public class AdminCollectionWidget extends Composite {
 		model = new AdminCollectionWidgetModel();
 		
 		// then controller
-		AtomFactory factory = new AtomFactoryImpl();
-		ExistAtomService service = new ExistAtomServiceImpl(factory);
-		controller = new AdminCollectionWidgetController(model, service, factory);
+		controller = new AdminCollectionWidgetController(model);
 		
 		// then renderer
 		renderer = new AdminCollectionWidgetDefaultRenderer(controller);
@@ -45,7 +39,7 @@ public class AdminCollectionWidget extends Composite {
 		
 	}
 	
-	public Deferred<AtomFeed> refreshStatus() {
+	public Deferred<VanillaAtomFeed> refreshStatus() {
 		return controller.refreshStatus();
 	}
 	
