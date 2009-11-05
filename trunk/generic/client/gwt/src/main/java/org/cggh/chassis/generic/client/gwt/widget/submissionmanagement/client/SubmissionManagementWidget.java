@@ -6,7 +6,7 @@ package org.cggh.chassis.generic.client.gwt.widget.submissionmanagement.client;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.cggh.chassis.generic.atom.rewrite.client.submission.SubmissionEntry;
+import org.cggh.chassis.generic.atomext.client.submission.SubmissionEntry;
 import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
 import org.cggh.chassis.generic.client.gwt.widget.submission.create.client.CreateSubmissionSuccessEvent;
 import org.cggh.chassis.generic.client.gwt.widget.submission.create.client.CreateSubmissionSuccessHandler;

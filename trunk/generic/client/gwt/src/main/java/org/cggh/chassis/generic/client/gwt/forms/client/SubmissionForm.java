@@ -5,9 +5,9 @@ package org.cggh.chassis.generic.client.gwt.forms.client;
 
 
 import org.cggh.chassis.generic.atom.rewrite.client.AtomFactory;
-import org.cggh.chassis.generic.atom.rewrite.client.submission.SubmissionEntry;
-import org.cggh.chassis.generic.atom.rewrite.client.submission.SubmissionFactory;
-import org.cggh.chassis.generic.atom.rewrite.client.submission.SubmissionFeed;
+import org.cggh.chassis.generic.atomext.client.submission.SubmissionEntry;
+import org.cggh.chassis.generic.atomext.client.submission.SubmissionFactory;
+import org.cggh.chassis.generic.atomext.client.submission.SubmissionFeed;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 
