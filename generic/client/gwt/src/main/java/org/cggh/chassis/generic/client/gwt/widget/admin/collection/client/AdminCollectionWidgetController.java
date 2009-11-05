@@ -3,9 +3,10 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.admin.collection.client;
 
-import org.cggh.chassis.generic.atom.exist.client.protocol.ExistAtomService;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactory;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
+import org.cggh.chassis.generic.atom.rewrite.client.vanilla.VanillaAtomEntry;
+import org.cggh.chassis.generic.atom.rewrite.client.vanilla.VanillaAtomFactory;
+import org.cggh.chassis.generic.atom.rewrite.client.vanilla.VanillaAtomFeed;
+import org.cggh.chassis.generic.atomext.client.exist.ExistAtomService;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.twisted.client.Deferred;
@@ -23,32 +24,29 @@ public class AdminCollectionWidgetController {
 	
 	
 	private AdminCollectionWidgetModel model;
-	private ExistAtomService service;
-	private AtomFactory factory;
+	private ExistAtomService<VanillaAtomEntry, VanillaAtomFeed> service;
 	private Log log = LogFactory.getLog(this.getClass());
+	private VanillaAtomFactory factory;
 
 	
 	
 	public AdminCollectionWidgetController(
-			AdminCollectionWidgetModel model,
-			ExistAtomService service,
-			AtomFactory factory
+			AdminCollectionWidgetModel model
 	) {
 
 		this.model = model;
-		this.service = service;
-		this.factory = factory;
-
+		this.factory = new VanillaAtomFactory();
+		this.service = new ExistAtomService<VanillaAtomEntry, VanillaAtomFeed>(this.factory);
 	}
 	
 	
 	
-	public Deferred<AtomFeed> refreshStatus() {
+	public Deferred<VanillaAtomFeed> refreshStatus() {
 		log.enter("refreshStatus");
 
 		model.setPending(true);
 		
-		HttpDeferred<AtomFeed> deferredResult = (HttpDeferred<AtomFeed>) service.getFeed(model.getUrl());
+		HttpDeferred<VanillaAtomFeed> deferredResult = (HttpDeferred<VanillaAtomFeed>) service.getFeed(model.getUrl());
 		
 		deferredResult.addCallback(new Callback(deferredResult));
 		
@@ -66,7 +64,7 @@ public class AdminCollectionWidgetController {
 		model.setPending(true);
 
 		// set up new feed document
-		AtomFeed feed = factory.createFeed();
+		VanillaAtomFeed feed = factory.createFeed();
 		feed.setTitle(model.getTitle());
 		
 		HttpDeferred<Void> deferredResult = (HttpDeferred<Void>) service.postFeed(model.getUrl(), feed);

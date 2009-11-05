@@ -8,7 +8,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.cggh.chassis.generic.atom.chassis.base.constants.ChassisConstants;
+import org.cggh.chassis.generic.atomext.shared.ChassisConstants;
 
 import com.google.gwt.core.client.JsArray;
 

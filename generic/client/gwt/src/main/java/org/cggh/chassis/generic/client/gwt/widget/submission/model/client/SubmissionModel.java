@@ -7,10 +7,11 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomLink;
+
 import org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomLink;
-import org.cggh.chassis.generic.client.gwt.widget.study.model.client.StudyModelListener;
+import org.cggh.chassis.generic.client.gwt.widget.study.client.StudyModelListener;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 

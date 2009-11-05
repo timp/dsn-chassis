@@ -1,0 +1,14 @@
+/**
+ * 
+ */
+package org.cggh.chassis.generic.client.gwt.widget.study.client;
+
+/**
+ * @author raok
+ *
+ */
+public interface StudyControllerEditAPI extends AbstractStudyControllerCreateEditAPI, AbstractStudyControllerViewEditAPI {
+
+	public void updateStudyEntry();
+
+}

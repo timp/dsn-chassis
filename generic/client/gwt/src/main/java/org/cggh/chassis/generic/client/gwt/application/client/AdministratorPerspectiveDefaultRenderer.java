@@ -6,7 +6,7 @@ package org.cggh.chassis.generic.client.gwt.application.client;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.cggh.chassis.generic.client.gwt.widget.studymanagement.client.StudyManagementWidget;
+import org.cggh.chassis.generic.client.gwt.widget.study.client.StudyManagementWidget;
 import org.cggh.chassis.generic.client.gwt.widget.submitter.home.client.SubmitterHomeWidget;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;

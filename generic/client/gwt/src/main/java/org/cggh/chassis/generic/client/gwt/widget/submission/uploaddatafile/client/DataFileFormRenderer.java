@@ -3,8 +3,9 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.submission.uploaddatafile.client;
 
-import org.cggh.chassis.generic.atom.chassis.base.constants.ChassisConstants;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
+
+import org.cggh.chassis.generic.atomext.shared.ChassisConstants;
 import org.cggh.chassis.generic.client.gwt.common.client.CommonStyles;
 import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
 
