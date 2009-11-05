@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.atom.chassis.base.constants;
+package org.cggh.chassis.generic.atomext.shared;
 
 /**
  * @author raok
