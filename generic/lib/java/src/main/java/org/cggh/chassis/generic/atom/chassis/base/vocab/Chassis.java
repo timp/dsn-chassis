@@ -10,7 +10,7 @@ package org.cggh.chassis.generic.atom.chassis.base.vocab;
 public class Chassis {
 	
 	public static final String REL_STUDY = "chassis.study";
-	public static final String NSURI = "http://www.cggh.org/2009/chassis/atom/xmlns";
+	public static final String NSURI = "http://www.cggh.org/2009/chassis/xmlns/";
 	public static final String ELEMENT_STUDY = "study";
 	public static final String ELEMENT_MODULE = "module";
 	public static final String PREFIX = "chassis";
