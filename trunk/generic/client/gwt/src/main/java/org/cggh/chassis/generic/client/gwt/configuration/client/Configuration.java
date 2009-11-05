@@ -56,6 +56,11 @@ public class Configuration {
 		return $wnd.CHASSIS.dataFileFeedURL;
 	}-*/;
 
+
+	public static native String getSandboxFeedURL() /*-{
+		return $wnd.CHASSIS.sandboxFeedURL;
+	}-*/;
+
 	public static native String getDataFileUploadServiceURL() /*-{
 		return $wnd.CHASSIS.dataFileUploadServiceURL;
 	}-*/;
@@ -85,5 +90,4 @@ public class Configuration {
 	public static native String getStudyQuestionnaireURL() /*-{
 		return $wnd.CHASSIS.studyQuestionnaireURL;
 	}-*/;
-
 }

@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
-import org.cggh.chassis.generic.client.gwt.common.client.CSS;
+import org.cggh.chassis.generic.client.gwt.common.client.CommonStyles;
 import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
 import org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerCreateAPI;
 import org.cggh.chassis.generic.client.gwt.widget.study.model.client.StudyModelListener;
@@ -88,7 +88,7 @@ class CreateStudyWidgetDefaultRenderer implements StudyModelListener {
 	
 	private void initCanvas() {
 		
-		this.canvas.addStyleName(CSS.CREATESTUDY_BASE);
+		this.canvas.addStyleName(CommonStyles.CREATESTUDY_BASE);
 		
 		this.canvas.add(new HTML("<h2>New Study</h2>"));
 		
@@ -106,9 +106,9 @@ class CreateStudyWidgetDefaultRenderer implements StudyModelListener {
 		InlineLabel titleLabel = new InlineLabel("Please provide a title for the study:");
 		titleQuestion.add(titleLabel);
 		titleQuestion.add(titleUI);
-		titleQuestion.addStyleName(CSS.COMMON_QUESTION);
+		titleQuestion.addStyleName(CommonStyles.COMMON_QUESTION);
 		
-		titleUI.addStyleName(CSS.CREATESTUDY_TITLEINPUT);
+		titleUI.addStyleName(CommonStyles.CREATESTUDY_TITLEINPUT);
 		titleUI.addValueChangeHandler(new TitleChangeHandler());
 
 		createStudyForm.add(titleQuestion);
@@ -120,7 +120,7 @@ class CreateStudyWidgetDefaultRenderer implements StudyModelListener {
 		Label summaryLabel = new Label("Please provide a textual summary of the study...");
 		summaryQuestion.add(summaryLabel);
 		summaryQuestion.add(summaryUI);
-		summaryQuestion.addStyleName(CSS.COMMON_QUESTION);
+		summaryQuestion.addStyleName(CommonStyles.COMMON_QUESTION);
 		
 		summaryUI.addValueChangeHandler(new SummaryChangeHandler());
 
@@ -131,8 +131,8 @@ class CreateStudyWidgetDefaultRenderer implements StudyModelListener {
 		createStudyForm.add(new HTML("<h3>Modules</h3>"));
 		
 		FlowPanel modulesQuestion = new FlowPanel();
-		modulesQuestion.addStyleName(CSS.COMMON_QUESTION);
-		modulesQuestion.addStyleName(CSS.CREATESTUDY_MODULES);
+		modulesQuestion.addStyleName(CommonStyles.COMMON_QUESTION);
+		modulesQuestion.addStyleName(CommonStyles.CREATESTUDY_MODULES);
 		createStudyForm.add(modulesQuestion);
 		
 		Label modulesLabel = new Label("Please select the modules that this study is relevant to... (at least one must be selected)");
@@ -162,7 +162,7 @@ class CreateStudyWidgetDefaultRenderer implements StudyModelListener {
 		}
 		
 		FlowPanel buttonsPanel = new FlowPanel();
-		buttonsPanel.addStyleName(CSS.CREATESTUDY_ACTIONS);
+		buttonsPanel.addStyleName(CommonStyles.CREATESTUDY_ACTIONS);
 		buttonsPanel.add(createStudyUI);
 		buttonsPanel.add(cancelCreateStudyUI);
 

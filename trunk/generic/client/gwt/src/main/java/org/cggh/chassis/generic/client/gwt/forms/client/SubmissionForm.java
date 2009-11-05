@@ -8,6 +8,8 @@ import org.cggh.chassis.generic.atom.rewrite.client.AtomFactory;
 import org.cggh.chassis.generic.atom.rewrite.client.submission.SubmissionEntry;
 import org.cggh.chassis.generic.atom.rewrite.client.submission.SubmissionFactory;
 import org.cggh.chassis.generic.atom.rewrite.client.submission.SubmissionFeed;
+import org.cggh.chassis.generic.log.client.Log;
+import org.cggh.chassis.generic.log.client.LogFactory;
 
 
 /**
@@ -16,6 +18,11 @@ import org.cggh.chassis.generic.atom.rewrite.client.submission.SubmissionFeed;
  */
 public class SubmissionForm 
 	extends BaseForm<SubmissionEntry, SubmissionFeed, SubmissionFormRenderer> {
+	
+	
+	
+	
+	private Log log;
 	
 	
 	
@@ -31,6 +38,44 @@ public class SubmissionForm
 	
 	
 	
+
+	
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#getName()
+	 */
+	@Override
+	protected String getName() {
+		return "submissionForm";
+	}
+
+
+	
+	
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#init()
+	 */
+	@Override
+	public void init() {
+		ensureLog();
+		log.enter("init");
+
+		super.init();
+		
+		// nothing else to do
+
+		log.leave();
+	}
+	
+
+	
+	
+	
+	private void ensureLog() {
+		if (log == null) log = LogFactory.getLog(SubmissionForm.class);
+	}
+
+	
+	
 	
 
 	/* (non-Javadoc)
@@ -38,7 +83,7 @@ public class SubmissionForm
 	 */
 	@Override
 	protected SubmissionFormRenderer createRenderer() {
-		return new SubmissionFormRenderer();
+		return new SubmissionFormRenderer(this);
 	}
 	
 	
@@ -65,7 +110,9 @@ public class SubmissionForm
 	 * 
 	 */
 	public void refreshStudies() {
+		log.enter("refreshStudies");
 		this.renderer.refreshStudies();
+		log.leave();
 	}
 
 

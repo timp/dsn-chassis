@@ -3,7 +3,7 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.submission.edit.client;
 
-import org.cggh.chassis.generic.client.gwt.common.client.CSS;
+import org.cggh.chassis.generic.client.gwt.common.client.CommonStyles;
 import org.cggh.chassis.generic.client.gwt.forms.client.SubmissionForm;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
@@ -46,7 +46,7 @@ public class EditSubmissionWidgetDefaultRenderer implements EditSubmissionWidget
 	public EditSubmissionWidgetDefaultRenderer(EditSubmissionWidgetController controller) {
 		
 		this.controller = controller;
-		this.canvas.addStyleName(CSS.EDITSUBMISSION_BASE);
+		this.canvas.addStyleName(CommonStyles.EDITSUBMISSION_BASE);
 		this.render();
 
 	}
@@ -153,7 +153,7 @@ public class EditSubmissionWidgetDefaultRenderer implements EditSubmissionWidget
 		buttonsPanel = new FlowPanel();
 		buttonsPanel.add(saveNewSubmissionEntryUI);
 		buttonsPanel.add(cancelEditSubmissionUI);
-		buttonsPanel.addStyleName(CSS.EDITSUBMISSION_ACTIONS);
+		buttonsPanel.addStyleName(CommonStyles.EDITSUBMISSION_ACTIONS);
 
 	}
 

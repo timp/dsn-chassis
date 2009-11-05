@@ -55,6 +55,7 @@ public class AdministratorHomeWidget extends Composite {
 		final AdminCollectionWidget studies = new AdminCollectionWidget("Studies", Configuration.getStudyFeedURL());
 		final AdminCollectionWidget submissions = new AdminCollectionWidget("Submissions", Configuration.getSubmissionFeedURL());
 		final AdminCollectionWidget datafiles = new AdminCollectionWidget("Data Files", Configuration.getDataFileFeedURL());
+		final AdminCollectionWidget sandbox = new AdminCollectionWidget("Sandbox", Configuration.getSandboxFeedURL());
 
 		Button refreshAllButton = new Button();
 		refreshAllButton.setText("refresh all");
@@ -64,6 +65,7 @@ public class AdministratorHomeWidget extends Composite {
 				studies.refreshStatus();
 				submissions.refreshStatus();
 				datafiles.refreshStatus();
+				sandbox.refreshStatus();
 			}
 			
 		});
@@ -76,6 +78,7 @@ public class AdministratorHomeWidget extends Composite {
 				studies.createCollection();
 				submissions.createCollection();
 				datafiles.createCollection();
+				sandbox.createCollection();
 			}
 			
 		});
@@ -98,9 +101,14 @@ public class AdministratorHomeWidget extends Composite {
 		
 		collectionsPanel.add(datafiles);
 
+		collectionsPanel.add(new HTML("<h4>Sandbox</h4>"));
+		
+		collectionsPanel.add(sandbox);
+
 		studies.refreshStatus();
 		submissions.refreshStatus();
 		datafiles.refreshStatus();
+		sandbox.refreshStatus();
 		
 		// TODO Auto-generated method stub
 		

@@ -4,7 +4,7 @@ import java.util.Iterator;
 
 import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
-import org.cggh.chassis.generic.client.gwt.common.client.CSS;
+import org.cggh.chassis.generic.client.gwt.common.client.CommonStyles;
 import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
@@ -101,7 +101,7 @@ class ViewStudyQuestionnaireWidgetDefaultRenderer implements StudyQuestionnaireW
 		
 		statusPanel = new FlowPanel();
 		statusPanel.setVisible(false);
-		statusPanel.addStyleName(CSS.COMMON_LOADING);
+		statusPanel.addStyleName(CommonStyles.COMMON_LOADING);
 		statusLabel = new InlineLabel();
 		statusPanel.add(statusLabel);
 		
@@ -117,7 +117,7 @@ class ViewStudyQuestionnaireWidgetDefaultRenderer implements StudyQuestionnaireW
 		
 		mainPanel = new FlowPanel();
 		mainPanel.setVisible(false);
-		mainPanel.addStyleName(CSS.COMMON_MAINWITHACTIONS);
+		mainPanel.addStyleName(CommonStyles.COMMON_MAINWITHACTIONS);
 		
 		mainPanel.add(new HTML("<h2>View Study Questionnaire</h2>"));
 
@@ -141,32 +141,32 @@ class ViewStudyQuestionnaireWidgetDefaultRenderer implements StudyQuestionnaireW
 
 		titlePanel = new FlowPanel();
 		titlePanel.add(new InlineLabel("Study title: "));
-		titleLabel.addStyleName(CSS.COMMON_ANSWER);
-		titleLabel.addStyleName(CSS.VIEWSTUDY_TITLE);
+		titleLabel.addStyleName(CommonStyles.COMMON_ANSWER);
+		titleLabel.addStyleName(CommonStyles.VIEWSTUDY_TITLE);
 		titlePanel.add(titleLabel);
-		titlePanel.addStyleName(CSS.COMMON_QUESTION);
+		titlePanel.addStyleName(CommonStyles.COMMON_QUESTION);
 		studyInfoPanel.add(titlePanel);
 		
 		summaryPanel = new FlowPanel();
 		summaryPanel.add(new InlineLabel("Summary: "));
-		summaryLabel.addStyleName(CSS.COMMON_ANSWER);
-		summaryLabel.addStyleName(CSS.VIEWSTUDY_SUMMARY);
+		summaryLabel.addStyleName(CommonStyles.COMMON_ANSWER);
+		summaryLabel.addStyleName(CommonStyles.VIEWSTUDY_SUMMARY);
 		summaryPanel.add(summaryLabel);
-		summaryPanel.addStyleName(CSS.COMMON_QUESTION);
+		summaryPanel.addStyleName(CommonStyles.COMMON_QUESTION);
 		studyInfoPanel.add(summaryPanel);
 
 		modulesPanel = new FlowPanel();
 		modulesPanel.add(new InlineLabel("Modules:"));
-		modulesListPanel.addStyleName(CSS.VIEWSTUDY_MODULES);
+		modulesListPanel.addStyleName(CommonStyles.VIEWSTUDY_MODULES);
 		modulesPanel.add(modulesListPanel);
-		modulesPanel.addStyleName(CSS.COMMON_QUESTION);
+		modulesPanel.addStyleName(CommonStyles.COMMON_QUESTION);
 		studyInfoPanel.add(modulesPanel);
 
 		ownersPanel = new FlowPanel();
 		ownersPanel.add(new InlineLabel("Owners:"));
-		ownersListPanel.addStyleName(CSS.VIEWSTUDY_OWNERS);
+		ownersListPanel.addStyleName(CommonStyles.VIEWSTUDY_OWNERS);
 		ownersPanel.add(ownersListPanel);
-		ownersPanel.addStyleName(CSS.COMMON_QUESTION);
+		ownersPanel.addStyleName(CommonStyles.COMMON_QUESTION);
 		studyInfoPanel.add(ownersPanel);
 
 		// hide these for now
@@ -185,12 +185,12 @@ class ViewStudyQuestionnaireWidgetDefaultRenderer implements StudyQuestionnaireW
 
 		actionsPanel = new FlowPanel();
 		actionsPanel.setVisible(false);
-		actionsPanel.addStyleName(CSS.COMMON_ACTIONS);
+		actionsPanel.addStyleName(CommonStyles.COMMON_ACTIONS);
 
 		actionsPanel.add(new HTML("<h3>Actions</h3>"));
 		
 		actionViewStudy = new Anchor();
-		actionViewStudy.addStyleName(CSS.COMMON_ACTION);
+		actionViewStudy.addStyleName(CommonStyles.COMMON_ACTION);
 		actionViewStudy.setText("view study");
 		actionViewStudy.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent arg0) { ViewStudyQuestionnaireWidgetDefaultRenderer.this.owner.fireOnUserActionViewStudy(); }
@@ -198,7 +198,7 @@ class ViewStudyQuestionnaireWidgetDefaultRenderer implements StudyQuestionnaireW
 		actionsPanel.add(actionViewStudy);
 
 		actionEditStudyQuestionnaire = new Anchor();
-		actionEditStudyQuestionnaire.addStyleName(CSS.COMMON_ACTION);
+		actionEditStudyQuestionnaire.addStyleName(CommonStyles.COMMON_ACTION);
 		actionEditStudyQuestionnaire.setText("edit study questionnaire");
 		actionEditStudyQuestionnaire.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent arg0) { ViewStudyQuestionnaireWidgetDefaultRenderer.this.owner.fireOnUserActionEditStudyQuestionnaire(); }
@@ -275,7 +275,7 @@ class ViewStudyQuestionnaireWidgetDefaultRenderer implements StudyQuestionnaireW
 		}
 		
 		InlineLabel modulesAnswer = new InlineLabel(modulesContent);
-		modulesAnswer.addStyleName(CSS.COMMON_ANSWER);
+		modulesAnswer.addStyleName(CommonStyles.COMMON_ANSWER);
 		modulesListPanel.add(modulesAnswer);
 
 		ownersListPanel.clear();
@@ -289,7 +289,7 @@ class ViewStudyQuestionnaireWidgetDefaultRenderer implements StudyQuestionnaireW
 		}
 
 		InlineLabel authorsAnswer = new InlineLabel(authorsContent);
-		authorsAnswer.addStyleName(CSS.COMMON_ANSWER);
+		authorsAnswer.addStyleName(CommonStyles.COMMON_ANSWER);
 		ownersListPanel.add(authorsAnswer);
 		
 	}

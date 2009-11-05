@@ -6,7 +6,7 @@ package org.cggh.chassis.generic.client.gwt.widget.submission.viewdatafiles.clie
 import java.util.List;
 
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
-import org.cggh.chassis.generic.client.gwt.common.client.CSS;
+import org.cggh.chassis.generic.client.gwt.common.client.CommonStyles;
 import org.cggh.chassis.generic.client.gwt.common.client.RenderUtils;
 import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
 import org.cggh.chassis.generic.twisted.client.Function;
@@ -57,7 +57,7 @@ public class ViewSubmissionDataFilesWidgetDefaultRenderer implements ViewSubmiss
 	
 	private void initCanvas() {
 
-		canvas.addStyleName(CSS.VIEWSUBMISSIONDATAFILES_BASE);
+		canvas.addStyleName(CommonStyles.VIEWSUBMISSIONDATAFILES_BASE);
 		
 		this.canvas.add(new HTML("<p>The following data files are associated with this submission...</p>"));
 
@@ -77,11 +77,11 @@ public class ViewSubmissionDataFilesWidgetDefaultRenderer implements ViewSubmiss
 
 		String title = in.getTitle();
 		Label fileTitleLabel = new Label(title);
-		fileTitleLabel.addStyleName(CSS.VIEWSUBMISSIONDATAFILES_FILETITLE);
+		fileTitleLabel.addStyleName(CommonStyles.VIEWSUBMISSIONDATAFILES_FILETITLE);
 		
 		String summary = in.getSummary();
 		Label fileSummaryLabel = new Label(RenderUtils.truncate(summary, 100));
-		fileSummaryLabel.addStyleName(CSS.VIEWSUBMISSIONDATAFILES_FILESUMMARY);
+		fileSummaryLabel.addStyleName(CommonStyles.VIEWSUBMISSIONDATAFILES_FILESUMMARY);
 		
 		Label byLabel = new Label(in.getAuthors().get(0).getEmail());
 
@@ -89,7 +89,7 @@ public class ViewSubmissionDataFilesWidgetDefaultRenderer implements ViewSubmiss
 		
 		String editMediaLink = ConfigurationBean.getDataFileFeedURL() + "/" + in.getEditMediaLink().getHref();
 		HTML downloadFileLink = new HTML("<a href=\"" + editMediaLink + "\" >download</a>" );
-		downloadFileLink.addStyleName(CSS.VIEWSUBMISSIONDATAFILES_DOWNLOADLINK);
+		downloadFileLink.addStyleName(CommonStyles.VIEWSUBMISSIONDATAFILES_DOWNLOADLINK);
 		
 		Widget[] out = { fileTitleLabel, fileSummaryLabel, byLabel, dateLabel, downloadFileLink };
 		return out;
@@ -123,7 +123,7 @@ public class ViewSubmissionDataFilesWidgetDefaultRenderer implements ViewSubmiss
 		String[] headers = { "Original File Name", "Comment", "Uploaded By", "Upload Date", "Actions" };
 		
 		// create header row
-		Widget[] headerRow = RenderUtils.renderLabels(headers, CSS.VIEWSUBMISSIONDATAFILES_TABLEHEADER);
+		Widget[] headerRow = RenderUtils.renderLabels(headers, CommonStyles.VIEWSUBMISSIONDATAFILES_TABLEHEADER);
 		
 		// create rows
 		List<Widget[]> rows = RenderUtils.renderAsRows(entries, this.rowGenerator);
@@ -137,7 +137,7 @@ public class ViewSubmissionDataFilesWidgetDefaultRenderer implements ViewSubmiss
 		// tweak table style
 		dataFilesTable.setCellPadding(0);
 		dataFilesTable.setCellSpacing(0);
-		dataFilesTable.addStyleName(CSS.VIEWSUBMISSIONDATAFILES_DATAFILESTABLE);
+		dataFilesTable.addStyleName(CommonStyles.VIEWSUBMISSIONDATAFILES_DATAFILESTABLE);
 		
 		// add table to container panel
 		submissionDataFilesListPanel.add(dataFilesTable);

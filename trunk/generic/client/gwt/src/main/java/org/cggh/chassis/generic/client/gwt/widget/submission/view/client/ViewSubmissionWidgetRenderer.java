@@ -4,7 +4,7 @@
 package org.cggh.chassis.generic.client.gwt.widget.submission.view.client;
 
 import org.cggh.chassis.generic.atom.rewrite.client.submission.SubmissionEntry;
-import org.cggh.chassis.generic.client.gwt.common.client.CSS;
+import org.cggh.chassis.generic.client.gwt.common.client.CommonStyles;
 import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
 import org.cggh.chassis.generic.client.gwt.widget.submission.view.client.ViewSubmissionWidgetModel.SubmissionEntryChangeEvent;
 import org.cggh.chassis.generic.client.gwt.widget.submission.view.client.ViewSubmissionWidgetModel.SubmissionEntryChangeHandler;
@@ -70,7 +70,7 @@ public class ViewSubmissionWidgetRenderer
 
 		this.mainPanel.add(new HTML("<h2>View Data Submission</h2>")); // TODO i18n
 
-		this.mainPanel.addStyleName(CSS.COMMON_MAINWITHACTIONS);
+		this.mainPanel.addStyleName(CommonStyles.COMMON_MAINWITHACTIONS);
 		this.mainPanel.add(contentPanel);
 		this.mainPanel.add(this.submissionActionsPanel);
 		this.mainPanel.setVisible(false);

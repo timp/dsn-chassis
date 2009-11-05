@@ -21,9 +21,7 @@ public class ViewSubmissionWidget
 	
 	
 	private Log log;
-	private ViewSubmissionWidgetModel model;
 	private ViewSubmissionWidgetController controller;
-	private ViewSubmissionWidgetRenderer renderer;
 
 	
 	
@@ -45,6 +43,7 @@ public class ViewSubmissionWidget
 	 */
 	@Override
 	public void init() {
+		ensureLog();
 		log.enter("init");
 		
 		log.debug("instantiate a model");
@@ -125,11 +124,7 @@ public class ViewSubmissionWidget
 
 
 
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#ensureLog()
-	 */
-	@Override
-	protected void ensureLog() {
+	private void ensureLog() {
 		log = LogFactory.getLog(ViewSubmissionWidget.class); 
 	}
 	

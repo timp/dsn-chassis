@@ -4,6 +4,7 @@
 package org.cggh.chassis.generic.client.gwt.widget.data.client;
 
 import org.cggh.chassis.generic.atom.rewrite.client.datafile.DataFileEntry;
+import org.cggh.chassis.generic.atom.rewrite.client.datafile.DataFileFeed;
 import org.cggh.chassis.generic.client.gwt.forms.client.BaseFormRenderer;
 import org.cggh.chassis.generic.client.gwt.widget.data.client.DataFileForm.Resources;
 import org.cggh.chassis.generic.log.client.Log;
@@ -14,7 +15,7 @@ import org.cggh.chassis.generic.log.client.LogFactory;
  * @author aliman
  *
  */
-public class DataFileFormRenderer extends BaseFormRenderer<DataFileEntry> {
+public class DataFileFormRenderer extends BaseFormRenderer<DataFileEntry, DataFileFeed> {
 
 	
 	
@@ -23,7 +24,8 @@ public class DataFileFormRenderer extends BaseFormRenderer<DataFileEntry> {
 	
 	
 	
-	public DataFileFormRenderer() {
+	public DataFileFormRenderer(DataFileForm owner) {
+		super(owner);
 		log.enter("<constructor>");
 		// nothing to do
 		log.leave();

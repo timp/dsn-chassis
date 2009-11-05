@@ -8,7 +8,7 @@ import java.util.List;
 import org.cggh.chassis.generic.atom.rewrite.client.AtomAuthor;
 import org.cggh.chassis.generic.atom.rewrite.client.submission.SubmissionEntry;
 import org.cggh.chassis.generic.atom.study.client.protocol.StudyQuery;
-import org.cggh.chassis.generic.client.gwt.common.client.CSS;
+import org.cggh.chassis.generic.client.gwt.common.client.CommonStyles;
 import org.cggh.chassis.generic.client.gwt.common.client.ChassisUser;
 import org.cggh.chassis.generic.client.gwt.common.client.RenderUtils;
 import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
@@ -57,14 +57,14 @@ public class SubmissionPropertiesWidgetRenderer
 		this.ownersListPanel = new FlowPanel();
 		this.studiesLinkedWidget = new ViewStudiesWidget(new ViewStudiesWidgetCustomRenderer());
 
-		FlowPanel titlePanel = RenderUtils.renderTitlePropertyPanel(this.titleLabel, CSS.VIEWSUBMISSION_TITLE);
-		FlowPanel summaryPanel = RenderUtils.renderSummaryPropertyPanel(this.summaryLabel, CSS.VIEWSUBMISSION_SUMMARY);
-		FlowPanel modulesPanel = RenderUtils.renderModulesPropertyPanel(this.modulesListPanel, CSS.VIEWSUBMISSION_MODULES);
-		FlowPanel ownersPanel = RenderUtils.renderOwnersPropertyPanel(this.ownersListPanel, CSS.VIEWSUBMISSION_OWNERS);
+		FlowPanel titlePanel = RenderUtils.renderTitlePropertyPanel(this.titleLabel, CommonStyles.VIEWSUBMISSION_TITLE);
+		FlowPanel summaryPanel = RenderUtils.renderSummaryPropertyPanel(this.summaryLabel, CommonStyles.VIEWSUBMISSION_SUMMARY);
+		FlowPanel modulesPanel = RenderUtils.renderModulesPropertyPanel(this.modulesListPanel, CommonStyles.VIEWSUBMISSION_MODULES);
+		FlowPanel ownersPanel = RenderUtils.renderOwnersPropertyPanel(this.ownersListPanel, CommonStyles.VIEWSUBMISSION_OWNERS);
 		FlowPanel studiesPanel = RenderUtils.renderPropertyPanel("Studies", this.studiesLinkedWidget, null); // TODO i18n
 		FlowPanel createdPanel = RenderUtils.renderCreatedPropertyPanel(this.createdLabel, null);
 		FlowPanel updatedPanel = RenderUtils.renderUpdatedPropertyPanel(this.updatedLabel, null);
-		FlowPanel idPanel = RenderUtils.renderIdPropertyPanel(this.idLabel, CSS.VIEWSUBMISSION_ID);
+		FlowPanel idPanel = RenderUtils.renderIdPropertyPanel(this.idLabel, CommonStyles.VIEWSUBMISSION_ID);
 
 		this.canvas.clear();
 		this.canvas.add(titlePanel);
@@ -229,7 +229,7 @@ public class SubmissionPropertiesWidgetRenderer
 	private void updateModulesLabel(List<String> moduleIds) {
 
 		Label answer = RenderUtils.renderModulesAsLabel(moduleIds, ConfigurationBean.getModules(), true);
-		answer.addStyleName(CSS.COMMON_ANSWER);
+		answer.addStyleName(CommonStyles.COMMON_ANSWER);
 
 		modulesListPanel.clear();
 		modulesListPanel.add(answer);
@@ -242,7 +242,7 @@ public class SubmissionPropertiesWidgetRenderer
 	private void updateOwnersLabel(List<AtomAuthor> owners) {
 
 		Label answer = RenderUtils.renderRewriteAtomAuthorsAsLabel(owners, true);
-		answer.addStyleName(CSS.COMMON_ANSWER);
+		answer.addStyleName(CommonStyles.COMMON_ANSWER);
 
 		ownersListPanel.clear();
 		ownersListPanel.add(answer);

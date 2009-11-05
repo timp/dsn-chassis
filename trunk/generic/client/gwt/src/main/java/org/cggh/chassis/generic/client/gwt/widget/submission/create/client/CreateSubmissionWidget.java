@@ -42,7 +42,8 @@ public class CreateSubmissionWidget
 
 	
 	
-	protected void ensureLog() {
+	
+	private void ensureLog() {
 		if (log == null) log = LogFactory.getLog(CreateSubmissionWidget.class);
 	}
 	
@@ -55,6 +56,7 @@ public class CreateSubmissionWidget
 	 */
 	@Override
 	public void init() {
+		ensureLog();
 		log.enter("init");
 		
 		this.model = new AsyncWidgetModel(this);

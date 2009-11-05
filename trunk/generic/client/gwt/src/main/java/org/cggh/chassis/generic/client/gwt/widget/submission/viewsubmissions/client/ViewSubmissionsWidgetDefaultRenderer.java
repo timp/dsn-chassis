@@ -9,7 +9,7 @@ import java.util.Map;
 
 import org.cggh.chassis.generic.atom.rewrite.client.AtomAuthor;
 import org.cggh.chassis.generic.atom.rewrite.client.submission.SubmissionEntry;
-import org.cggh.chassis.generic.client.gwt.common.client.CSS;
+import org.cggh.chassis.generic.client.gwt.common.client.CommonStyles;
 import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
@@ -85,7 +85,7 @@ public class ViewSubmissionsWidgetDefaultRenderer implements ViewSubmissionsWidg
 	private void initCanvas() {
 		log.enter("initCanvas");
 		
-		this.canvas.addStyleName(CSS.VIEWSUBMISSIONS_BASE);
+		this.canvas.addStyleName(CommonStyles.VIEWSUBMISSIONS_BASE);
 		
 		this.canvas.add(new HTML("<h2>My Data Submissions</h2>"));
 		
@@ -144,7 +144,7 @@ public class ViewSubmissionsWidgetDefaultRenderer implements ViewSubmissionsWidg
 		FlexTable submissionsTable = new FlexTable();
 		submissionsTable.setCellPadding(0);
 		submissionsTable.setCellSpacing(0);
-		submissionsTable.addStyleName(CSS.VIEWSUBMISSIONS_SUBMISSIONSTABLE);
+		submissionsTable.addStyleName(CommonStyles.VIEWSUBMISSIONS_SUBMISSIONSTABLE);
 		int rowNo = 0;		
 		
 		log.debug("add header row");
@@ -154,7 +154,7 @@ public class ViewSubmissionsWidgetDefaultRenderer implements ViewSubmissionsWidg
 		
 		for (int i=0; i<headers.length; i++) {
 			Label headerLabel = new Label(headers[i]);
-			headerLabel.addStyleName(CSS.VIEWSUBMISSIONS_TABLEHEADER);
+			headerLabel.addStyleName(CommonStyles.VIEWSUBMISSIONS_TABLEHEADER);
 			submissionsTable.setWidget(rowNo, i, headerLabel);
 		}
 		
@@ -186,7 +186,7 @@ public class ViewSubmissionsWidgetDefaultRenderer implements ViewSubmissionsWidg
 			String updated = submissionEntry.getUpdated();
 			
 			Label submissionTitleLabel = new Label(title);
-			submissionTitleLabel.addStyleName(CSS.VIEWSUBMISSIONS_SUBMISSIONTITLE);
+			submissionTitleLabel.addStyleName(CommonStyles.VIEWSUBMISSIONS_SUBMISSIONTITLE);
 			submissionsTable.setWidget(++rowNo, 0, submissionTitleLabel);
 			
 			submissionsTable.setWidget(rowNo, 1, new Label(summary));
@@ -208,7 +208,7 @@ public class ViewSubmissionsWidgetDefaultRenderer implements ViewSubmissionsWidg
 			log.debug("add a select submission link");
 			Anchor selectSubmission = new Anchor();
 			selectSubmission.setText("view");
-			selectSubmission.addStyleName(CSS.COMMON_ACTION);
+			selectSubmission.addStyleName(CommonStyles.COMMON_ACTION);
 			selectSubmission.addClickHandler(new SelectSubmissionClickHandler(submissionEntry));
 			submissionsTable.setWidget(rowNo, 4, selectSubmission);
 						

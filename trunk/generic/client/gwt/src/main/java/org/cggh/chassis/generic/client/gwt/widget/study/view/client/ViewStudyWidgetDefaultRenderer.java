@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
-import org.cggh.chassis.generic.client.gwt.common.client.CSS;
+import org.cggh.chassis.generic.client.gwt.common.client.CommonStyles;
 import org.cggh.chassis.generic.client.gwt.common.client.RenderUtils;
 import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
 import org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerViewAPI;
@@ -114,7 +114,7 @@ public class ViewStudyWidgetDefaultRenderer implements StudyModelListener {
 		
 		log.debug("prepare main panel");
 
-		this.mainPanel.addStyleName(CSS.COMMON_MAINWITHACTIONS);
+		this.mainPanel.addStyleName(CommonStyles.COMMON_MAINWITHACTIONS);
 		this.mainPanel.add(studyDetailsPanel);
 		this.mainPanel.add(actionsPanel);
 		this.mainPanel.setVisible(false);
@@ -131,13 +131,13 @@ public class ViewStudyWidgetDefaultRenderer implements StudyModelListener {
 
 		log.debug("prepare study details panel");
 		
-		FlowPanel titlePanel = RenderUtils.renderTitlePropertyPanel(this.titleLabel, CSS.VIEWSTUDY_TITLE);
-		FlowPanel summaryPanel = RenderUtils.renderSummaryPropertyPanel(this.summaryLabel, CSS.VIEWSTUDY_SUMMARY);
-		FlowPanel modulesPanel = RenderUtils.renderModulesPropertyPanel(this.modulesListPanel, CSS.VIEWSTUDY_MODULES);
-		FlowPanel ownersPanel = RenderUtils.renderOwnersPropertyPanel(this.ownersListPanel, CSS.VIEWSTUDY_OWNERS);
+		FlowPanel titlePanel = RenderUtils.renderTitlePropertyPanel(this.titleLabel, CommonStyles.VIEWSTUDY_TITLE);
+		FlowPanel summaryPanel = RenderUtils.renderSummaryPropertyPanel(this.summaryLabel, CommonStyles.VIEWSTUDY_SUMMARY);
+		FlowPanel modulesPanel = RenderUtils.renderModulesPropertyPanel(this.modulesListPanel, CommonStyles.VIEWSTUDY_MODULES);
+		FlowPanel ownersPanel = RenderUtils.renderOwnersPropertyPanel(this.ownersListPanel, CommonStyles.VIEWSTUDY_OWNERS);
 		FlowPanel createdPanel = RenderUtils.renderCreatedPropertyPanel(this.createdLabel, null);
 		FlowPanel updatedPanel = RenderUtils.renderUpdatedPropertyPanel(this.updatedLabel, null);
-		FlowPanel idPanel = RenderUtils.renderIdPropertyPanel(this.idLabel, CSS.VIEWSTUDY_ID);
+		FlowPanel idPanel = RenderUtils.renderIdPropertyPanel(this.idLabel, CommonStyles.VIEWSTUDY_ID);
 
 		FlowPanel studyDetailsPanel = new FlowPanel();
 		studyDetailsPanel.add(titlePanel);
@@ -254,7 +254,7 @@ public class ViewStudyWidgetDefaultRenderer implements StudyModelListener {
 	public void onModulesChanged(Set<String> before, Set<String> after, Boolean isValid) {
 
 		Label answer = RenderUtils.renderModulesAsLabel(after, modulesConfig, true);
-		answer.addStyleName(CSS.COMMON_ANSWER);
+		answer.addStyleName(CommonStyles.COMMON_ANSWER);
 
 		modulesListPanel.clear();
 		modulesListPanel.add(answer);
@@ -267,7 +267,7 @@ public class ViewStudyWidgetDefaultRenderer implements StudyModelListener {
 	public void onAuthorsChanged(Set<AtomAuthor> before, Set<AtomAuthor> authors, Boolean isValid) {
 		
 		Label answer = RenderUtils.renderAtomAuthorsAsLabel(authors, true);
-		answer.addStyleName(CSS.COMMON_ANSWER);
+		answer.addStyleName(CommonStyles.COMMON_ANSWER);
 
 		ownersListPanel.clear();
 		ownersListPanel.add(answer);

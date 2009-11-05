@@ -12,7 +12,8 @@ import java.util.Set;
 
 import org.cggh.chassis.generic.atom.rewrite.client.AtomLink;
 import org.cggh.chassis.generic.atom.rewrite.client.submission.SubmissionEntry;
-import org.cggh.chassis.generic.client.gwt.common.client.CSS;
+import org.cggh.chassis.generic.atom.rewrite.client.submission.SubmissionFeed;
+import org.cggh.chassis.generic.client.gwt.common.client.CommonStyles;
 import org.cggh.chassis.generic.client.gwt.common.client.ChassisUtils;
 import org.cggh.chassis.generic.client.gwt.common.client.RenderUtils;
 import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
@@ -43,7 +44,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author aliman
  *
  */
-public class SubmissionFormRenderer extends BaseFormRenderer<SubmissionEntry> {
+public class SubmissionFormRenderer extends BaseFormRenderer<SubmissionEntry, SubmissionFeed> {
 
 	
 	
@@ -56,12 +57,19 @@ public class SubmissionFormRenderer extends BaseFormRenderer<SubmissionEntry> {
 	
 	
 	
-	public SubmissionFormRenderer() {
-		log.enter("<constructor>");
-		log.leave();
+	public SubmissionFormRenderer(SubmissionForm owner) {
+		super(owner);
 	}
 	
 	
+	
+	
+	public static class Styles {
+		public static final String MODULESQUESTION = "modulesQuestion";
+		public static final String STUDIESQUESTION = "studiesQuestion";
+	}
+
+
 	
 	
 	/* (non-Javadoc)
@@ -101,8 +109,9 @@ public class SubmissionFormRenderer extends BaseFormRenderer<SubmissionEntry> {
 		log.enter("renderModulesQuestion");
 	
 		modulesQuestionPanel = new FlowPanel();
-		modulesQuestionPanel.addStyleName(CSS.COMMON_QUESTION);
-		modulesQuestionPanel.addStyleName(CSS.SUBMISSIONFORM_MODULESQUESTION);
+		modulesQuestionPanel.addStyleName(CommonStyles.COMMON_QUESTION);
+//		modulesQuestionPanel.addStyleName(CSS.SUBMISSIONFORM_MODULESQUESTION);
+		modulesQuestionPanel.addStyleName(Styles.MODULESQUESTION);
 		
 		Label modulesLabel = new Label(text(Resources.QUESTIONLABELMODULES));
 		modulesQuestionPanel.add(modulesLabel);
@@ -126,32 +135,6 @@ public class SubmissionFormRenderer extends BaseFormRenderer<SubmissionEntry> {
 		
 		FlexTable modulesInputTable = RenderUtils.renderFlexTable(rows);
 		modulesQuestionPanel.add(modulesInputTable);
-		
-//		FlexTable boxTable = new FlexTable();
-//		modulesQuestionPanel.add(boxTable);
-//		int rowNumber = -1;
-//	
-//		//Create as many modules checkboxes as required
-//		for (String moduleId : modulesConfig.keySet()) {
-//			
-//			String moduleLabel = modulesConfig.get(moduleId);
-//			CheckBox moduleCheckBox = new CheckBox();
-//			moduleCheckBox.setFormValue(moduleId);
-//
-//			// TODO
-////			if (this.model.getModules().contains(moduleId)) {
-////				moduleCheckBox.setValue(true, false);
-////			}
-//
-//			// TODO
-////			moduleCheckBox.addValueChangeHandler(new ModulesChangeHandler());
-//			
-//			//add to GUI
-//			int rn = ++rowNumber;
-//			boxTable.setWidget(rn, 0, new InlineLabel(moduleLabel));
-//			boxTable.setWidget(rn, 1, moduleCheckBox);
-//			
-//		}
 	
 		log.leave();
 	}
@@ -163,8 +146,9 @@ public class SubmissionFormRenderer extends BaseFormRenderer<SubmissionEntry> {
 		log.enter("renderStudiesQuestion");
 
 		this.studiesQuestionPanel = new FlowPanel();
-		this.studiesQuestionPanel.addStyleName(CSS.COMMON_QUESTION);
-		this.studiesQuestionPanel.addStyleName(CSS.SUBMISSIONFORM_STUDIESQUESTION);
+		this.studiesQuestionPanel.addStyleName(CommonStyles.COMMON_QUESTION);
+		this.studiesQuestionPanel.addStyleName(Styles.STUDIESQUESTION);
+
 		this.studiesQuestionPanel.add(new HTML("<p>"+text(Resources.QUESTIONLABELSTUDIES)+"</p>"));
 		
 		this.selectStudiesPanel = new FlowPanel();
@@ -232,7 +216,7 @@ public class SubmissionFormRenderer extends BaseFormRenderer<SubmissionEntry> {
 		
 		private SelectStudy() {
 			this.initWidget(this.canvas);
-			this.canvas.addStyleName(CSS.SUBMISSIONFORM_SELECTSTUDY);
+			this.canvas.addStyleName("selectStudy"); // TODO fix CSS
 		}
 		
 		private String getSelectedValue() {
