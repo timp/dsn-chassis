@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.atom.rewrite.client.submission;
+package org.cggh.chassis.generic.atomext.client.submission;
 
 import org.cggh.chassis.generic.atom.chassis.base.vocab.Chassis;
 import org.cggh.chassis.generic.atom.rewrite.client.Atom;
@@ -21,7 +21,7 @@ public class SubmissionFactory
 	
 	public static String TEMPLATE_ENTRY = 
 		"<atom:entry xmlns:atom=\""+Atom.NSURI+"\">" +
-			"<atom:category scheme=\"http://www.cggh.org/2009/chassis/type/\" term=\"Submission\"/>" +
+			"<atom:category scheme=\""+Chassis.SCHEME_TYPES+"\" term=\""+Chassis.Type.SUBMISSION+"\"/>" +
 			"<atom:content type=\"application/xml\">" +
 				"<chassis:submission xmlns:chassis=\""+Chassis.NSURI+"\"></chassis:submission>" +
 			"</atom:content>" +

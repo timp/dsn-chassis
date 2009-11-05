@@ -3,6 +3,8 @@
  */
 package org.cggh.chassis.generic.atom.rewrite.client;
 
+import org.cggh.chassis.generic.xml.client.ElementWrapper;
+
 /**
  * @author aliman
  *

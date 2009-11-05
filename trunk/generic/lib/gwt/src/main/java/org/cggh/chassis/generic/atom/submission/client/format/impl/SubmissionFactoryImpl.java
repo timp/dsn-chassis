@@ -123,8 +123,8 @@ public class SubmissionFactoryImpl extends AtomFactoryImpl implements Submission
 			throw new NullPointerException("submissionElement is null, cannot create submission");
 		}
 		
-		if (!XML.getLocalName(submissionElement).equals(Chassis.ELEMENT_SUBMISSION)) {
-			throw new AtomFormatException("bad local tag name, expected: "+Chassis.ELEMENT_SUBMISSION+"; found: "+XML.getLocalName(submissionElement));
+		if (!XML.getLocalName(submissionElement).equals(Chassis.Element.SUBMISSION)) {
+			throw new AtomFormatException("bad local tag name, expected: "+Chassis.Element.SUBMISSION+"; found: "+XML.getLocalName(submissionElement));
 		}
 
 		if (submissionElement.getNamespaceURI() == null || !submissionElement.getNamespaceURI().equals(Chassis.NSURI)) {

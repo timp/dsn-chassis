@@ -1,12 +1,13 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.atom.rewrite.client.datafile;
+package org.cggh.chassis.generic.atomext.client.datafile;
 
+import org.cggh.chassis.generic.atom.chassis.base.vocab.Chassis;
 import org.cggh.chassis.generic.atom.rewrite.client.Atom;
 import org.cggh.chassis.generic.atom.rewrite.client.AtomFactory;
-import org.cggh.chassis.generic.atom.rewrite.client.datafile.DataFileEntry;
-import org.cggh.chassis.generic.atom.rewrite.client.datafile.DataFileFeed;
+import org.cggh.chassis.generic.atomext.client.datafile.DataFileEntry;
+import org.cggh.chassis.generic.atomext.client.datafile.DataFileFeed;
 
 import com.google.gwt.xml.client.Element;
 
@@ -23,7 +24,7 @@ public class DataFileFactory extends AtomFactory<DataFileEntry, DataFileFeed> {
 	
 	public static String TEMPLATE_ENTRY = 
 		"<atom:entry xmlns:atom=\""+Atom.NSURI+"\">" +
-			"<atom:category scheme=\"http://www.cggh.org/2009/chassis/type/\" term=\"DataFile\"/>" +
+			"<atom:category scheme=\""+Chassis.SCHEME_TYPES+"\" term=\""+Chassis.Type.DATAFILE+"\"/>" +
 		"</atom:entry>";
 	
 

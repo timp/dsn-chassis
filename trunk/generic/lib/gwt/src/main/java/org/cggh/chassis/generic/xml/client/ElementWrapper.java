@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.atom.rewrite.client;
+package org.cggh.chassis.generic.xml.client;
 
 import com.google.gwt.xml.client.Element;
 

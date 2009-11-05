@@ -69,7 +69,7 @@ public class MockSubmissionEntry extends MockAtomEntry implements SubmissionEntr
 		
 		// create and add a new link
 		AtomLink link = factory.createLink();
-		link.setRel(Chassis.REL_STUDY);
+		link.setRel(Chassis.Rel.STUDY);
 		link.setHref(href);
 		this.links.add(link);
 		
@@ -79,7 +79,7 @@ public class MockSubmissionEntry extends MockAtomEntry implements SubmissionEntr
 	 * @see org.cggh.chassis.generic.atom.submission.client.format.SubmissionEntry#getStudyLinks()
 	 */
 	public List<AtomLink> getStudyLinks() {
-		return this.getLinksByRel(Chassis.REL_STUDY);
+		return this.getLinksByRel(Chassis.Rel.STUDY);
 	}
 	
 	/* (non-Javadoc)

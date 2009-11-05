@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.cggh.chassis.generic.twisted.client.Function;
 import org.cggh.chassis.generic.twisted.client.Functional;
+import org.cggh.chassis.generic.xml.client.ElementWrapperImpl;
 import org.cggh.chassis.generic.xml.client.XMLNS;
 
 import com.google.gwt.xml.client.Element;

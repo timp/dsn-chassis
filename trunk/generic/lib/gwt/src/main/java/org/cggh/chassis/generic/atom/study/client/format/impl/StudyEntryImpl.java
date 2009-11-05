@@ -65,7 +65,7 @@ public class StudyEntryImpl extends AtomEntryImpl implements StudyEntry {
 	
 	public Element getStudyElement() {
 //		return XML.getElementByTagNameNS(element, Chassis.NSURI, Chassis.ELEMENT_STUDY);
-		return XMLNS.getFirstElementByTagNameNS(element, Chassis.ELEMENT_STUDY, Chassis.NSURI);
+		return XMLNS.getFirstElementByTagNameNS(element, Chassis.Element.STUDY, Chassis.NSURI);
 	}
 
 	/* (non-Javadoc)
