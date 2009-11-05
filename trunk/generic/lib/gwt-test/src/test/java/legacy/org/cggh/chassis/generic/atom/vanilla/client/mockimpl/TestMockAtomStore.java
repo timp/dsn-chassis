@@ -1,11 +1,15 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.atom.vanilla.client.mockimpl;
+package legacy.org.cggh.chassis.generic.atom.vanilla.client.mockimpl;
 
 import static org.junit.Assert.*;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomEntry;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomFactory;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomFeed;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomStore;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.protocol.NotFoundException;
 
-import org.cggh.chassis.generic.atom.vanilla.client.protocol.NotFoundException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -36,7 +40,7 @@ public class TestMockAtomStore {
 	}
 
 	/**
-	 * Test method for {@link org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomStore#create(java.lang.String, org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry)}.
+	 * Test method for {@link legacy.org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomStore#create(java.lang.String, org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry)}.
 	 */
 	@Test
 	public void testCreate() {
@@ -83,7 +87,7 @@ public class TestMockAtomStore {
 	}
 
 	/**
-	 * Test method for {@link org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomStore#retrieve(java.lang.String)}.
+	 * Test method for {@link legacy.org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomStore#retrieve(java.lang.String)}.
 	 */
 	@Test
 	public void testRetrieve() {
@@ -116,7 +120,7 @@ public class TestMockAtomStore {
 	}
 
 	/**
-	 * Test method for {@link org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomStore#update(java.lang.String, org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry)}.
+	 * Test method for {@link legacy.org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomStore#update(java.lang.String, org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry)}.
 	 */
 	@Test
 	public void testUpdate() {
@@ -160,7 +164,7 @@ public class TestMockAtomStore {
 	}
 
 	/**
-	 * Test method for {@link org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomStore#delete(java.lang.String)}.
+	 * Test method for {@link legacy.org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomStore#delete(java.lang.String)}.
 	 */
 	@Test
 	public void testDelete() {
@@ -192,7 +196,7 @@ public class TestMockAtomStore {
 	}
 
 	/**
-	 * Test method for {@link org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomStore#retrieveAll(java.lang.String)}.
+	 * Test method for {@link legacy.org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomStore#retrieveAll(java.lang.String)}.
 	 */
 	@Test
 	public void testRetrieveAll() {

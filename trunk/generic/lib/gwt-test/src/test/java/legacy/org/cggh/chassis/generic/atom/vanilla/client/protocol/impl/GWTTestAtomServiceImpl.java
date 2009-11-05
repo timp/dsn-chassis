@@ -1,11 +1,12 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.atom.vanilla.client.protocol.impl;
+package legacy.org.cggh.chassis.generic.atom.vanilla.client.protocol.impl;
 
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactory;
-import org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactoryImpl;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactory;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactoryImpl;
+import legacy.org.cggh.chassis.generic.atom.vanilla.client.protocol.impl.AtomServiceImpl;
 
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.URL;
