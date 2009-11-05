@@ -28,8 +28,8 @@ import org.apache.commons.fileupload.util.Streams;
 import org.apache.commons.httpclient.methods.InputStreamRequestEntity;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.cggh.chassis.generic.atom.chassis.base.constants.ChassisConstants;
-import org.cggh.chassis.generic.atom.chassis.base.vocab.Chassis;
+import org.cggh.chassis.generic.atomext.shared.Chassis;
+import org.cggh.chassis.generic.atomext.shared.ChassisConstants;
 
 /**
  * Servlet implementation class DataFileUploadServlet
@@ -178,11 +178,11 @@ public class DataFileUploadServlet extends HttpServlet {
 		// modify entry and put back
 		
 		// add category
-		entry.addCategory(Chassis.Types.SCHEME, Chassis.Types.TERM_DATAFILE, null);
+		entry.addCategory(Chassis.SCHEME_TYPES, Chassis.Type.DATAFILE, null);
 		
 		if (fields.containsKey(ChassisConstants.FIELD_SUBMISSION)) {
 			String href = fields.get(ChassisConstants.FIELD_SUBMISSION); // link to submission
-			String rel = Chassis.REL_SUBMISSION;
+			String rel = Chassis.Rel.SUBMISSION;
 			entry.addLink(href, rel);
 		}
 		
@@ -217,7 +217,7 @@ public class DataFileUploadServlet extends HttpServlet {
 			log.info("title: "+entry.getTitle());
 			log.info("edit link: "+entry.getEditLink());
 			log.info("edit media link: "+entry.getEditMediaLink());
-			log.info("chassis.submission link: "+entry.getLink(Chassis.REL_SUBMISSION));
+			log.info("chassis.submission link: "+entry.getLink(Chassis.Rel.SUBMISSION));
 			
 		}
 		else {
@@ -256,7 +256,7 @@ public class DataFileUploadServlet extends HttpServlet {
 			log.info("title: "+entry.getTitle());
 			log.info("edit link: "+entry.getEditLink());
 			log.info("edit media link: "+entry.getEditMediaLink());
-			log.info("chassis.submission link: "+entry.getLink(Chassis.REL_SUBMISSION));
+			log.info("chassis.submission link: "+entry.getLink(Chassis.Rel.SUBMISSION));
 
 		}
 		else {
