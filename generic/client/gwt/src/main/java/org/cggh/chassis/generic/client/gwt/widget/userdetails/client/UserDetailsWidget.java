@@ -10,7 +10,7 @@ import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.twisted.client.Deferred;
 import org.cggh.chassis.generic.user.transfer.UserDetailsTO;
-import org.cggh.chassis.generic.widget.client.DelegatingChassisWidget;
+import org.cggh.chassis.generic.widget.client.DelegatingWidget;
 
 import com.google.gwt.event.shared.HandlerRegistration;
 
@@ -19,7 +19,7 @@ import com.google.gwt.event.shared.HandlerRegistration;
  *
  */
 public class UserDetailsWidget 
-	extends DelegatingChassisWidget<UserDetailsWidgetModel, UserDetailsWidgetRenderer> {
+	extends DelegatingWidget<UserDetailsWidgetModel, UserDetailsWidgetRenderer> {
 	
 	
 	

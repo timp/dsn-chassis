@@ -37,7 +37,7 @@ public class CreateDataFileWidgetRenderer
 	private FlowPanel buttonsPanel;
 	private Button cancelButton, createButton;
 	private DataFileForm form;
-	private CreateDataFileWidget owner;
+	private NewDataFileWidget owner;
 	
 	
 	
@@ -46,7 +46,7 @@ public class CreateDataFileWidgetRenderer
 	/**
 	 * @param owner
 	 */
-	public CreateDataFileWidgetRenderer(CreateDataFileWidget owner) {
+	public CreateDataFileWidgetRenderer(NewDataFileWidget owner) {
 		this.owner = owner;
 	}
 

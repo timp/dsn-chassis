@@ -11,7 +11,7 @@ import org.cggh.chassis.generic.client.gwt.common.client.ChassisResources;
 import org.cggh.chassis.generic.client.gwt.common.client.ChassisUser;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
-import org.cggh.chassis.generic.widget.client.DelegatingChassisWidget;
+import org.cggh.chassis.generic.widget.client.DelegatingWidget;
 
 /**
  * @author aliman
@@ -19,7 +19,7 @@ import org.cggh.chassis.generic.widget.client.DelegatingChassisWidget;
  */
 public abstract class BaseForm
 	<E extends AtomEntry, F extends AtomFeed<E>, R extends BaseFormRenderer<E, F>> 
-	extends DelegatingChassisWidget<E, R> {
+	extends DelegatingWidget<E, R> {
 
 	
 	
