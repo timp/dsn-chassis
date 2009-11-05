@@ -23,7 +23,7 @@ import com.google.gwt.user.client.ui.SimplePanel;
 public class GWTTestCreateSubmissionWidgetDefaultRenderer extends GWTTestCase {
 	
 	private MockSubmissionController mockController;
-	private CreateSubmissionWidgetDefaultRenderer testRenderer;
+	private CreateSubmissionWidgetRenderer testRenderer;
 
 	//test data
 	String module1Id = TestConfigurationSetUp.module1Id;
@@ -49,7 +49,7 @@ public class GWTTestCreateSubmissionWidgetDefaultRenderer extends GWTTestCase {
 		//create mockController and inject into testRenderer
 		mockController = new MockSubmissionController();
 		
-		testRenderer = new CreateSubmissionWidgetDefaultRenderer(null); // TODO fix this
+		testRenderer = new CreateSubmissionWidgetRenderer(null); // TODO fix this
 		
 	}
 	
