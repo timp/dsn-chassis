@@ -7,7 +7,8 @@ import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.twisted.client.Deferred;
 import org.cggh.chassis.generic.twisted.client.Function;
-import org.cggh.chassis.generic.twisted.client.HttpException;
+import org.cggh.chassis.generic.widget.client.AsyncErrback;
+import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 
 import org.cggh.chassis.generic.atom.rewrite.client.submission.SubmissionEntry;
 import org.cggh.chassis.generic.atom.rewrite.client.submission.SubmissionPersistenceService;
@@ -24,9 +25,7 @@ public class CreateSubmissionWidgetController {
 	
 	private Log log = LogFactory.getLog(this.getClass());
 	private CreateSubmissionWidget owner;
-	private CreateSubmissionWidgetModel model;
-//	private SubmissionFactoryImpl submissionFactory;
-//	private AtomServiceImpl service;
+	private AsyncWidgetModel model;
 
 	
 	
@@ -37,45 +36,15 @@ public class CreateSubmissionWidgetController {
 	 */
 	public CreateSubmissionWidgetController(
 			CreateSubmissionWidget owner,
-			CreateSubmissionWidgetModel model) {
+			AsyncWidgetModel model) {
 
 		this.owner = owner;
 		this.model = model;
-//		this.submissionFactory = new SubmissionFactoryImpl();
-//		this.service = new AtomServiceImpl(this.submissionFactory);
 		
 	}
 	
 	
 	
-	
-	/**
-	 * 
-	 */
-	public void ready() {
-		
-		this.model.setStatus(CreateSubmissionWidgetModel.STATUS_READY);
-		
-	}
-
-
-
-
-	/**
-	 * 
-	 */
-	public void cancelCreateSubmissionEntry() {
-		log.enter("cancelCreateSubmissionEntry");
-		
-		this.model.setStatus(CreateSubmissionWidgetModel.STATUS_CANCELLED);
-		
-		this.owner.fireOnUserActionCreateSubmissionCancelled();
-		
-		log.leave();
-	}
-
-
-
 
 	/**
 	 * @param entry 
@@ -84,18 +53,16 @@ public class CreateSubmissionWidgetController {
 	public void createSubmissionEntry(SubmissionEntry entry) {
 		log.enter("createSubmissionEntry");
 		
-		this.model.setStatus(CreateSubmissionWidgetModel.STATUS_CREATE_PENDING);
+		this.model.setStatus(AsyncWidgetModel.STATUS_ASYNC_REQUEST_PENDING);
 		
-		String feedUrl = Configuration.getSubmissionFeedURL();
+		SubmissionPersistenceService service = new SubmissionPersistenceService();
 
 		log.debug("kick off post request");
-//		Deferred<AtomEntry> def = service.postEntry(feedUrl, entry);
-		SubmissionPersistenceService service = new SubmissionPersistenceService();
-		Deferred<SubmissionEntry> def = service.postEntry(feedUrl, entry);
+		Deferred<SubmissionEntry> def = service.postEntry(Configuration.getSubmissionFeedURL(), entry);
 		
 		log.debug("add callbacks");
 		def.addCallback(new CreateSubmissionEntryCallback());
-		def.addErrback(new CreateSubmissionEntryErrback());
+		def.addErrback(new AsyncErrback(this.owner, this.model));
 		
 		log.leave();
 	}
@@ -107,47 +74,21 @@ public class CreateSubmissionWidgetController {
 
 		private Log log = LogFactory.getLog(this.getClass());
 
-		public SubmissionEntry apply(SubmissionEntry submissionEntry) {
+		public SubmissionEntry apply(SubmissionEntry entry) {
 			log.enter("apply");
 			
-			model.setStatus(CreateSubmissionWidgetModel.STATUS_CREATE_SUCCESS);
-
-			owner.fireOnCreateSubmissionSuccess(submissionEntry);
+			model.setStatus(AsyncWidgetModel.STATUS_READY);
+			
+			CreateSubmissionSuccessEvent e = new CreateSubmissionSuccessEvent();
+			e.setSubmissionEntry(entry);
+			owner.fireEvent(e);
 			
 			log.leave();
-			return submissionEntry;
+			return entry;
 		}
 
-		
 	}
 	
 	
-	
-	class CreateSubmissionEntryErrback implements Function<Throwable,Throwable> {
-
-		private Log log = LogFactory.getLog(this.getClass());
-
-		public Throwable apply(Throwable error) {
-			log.enter("apply");
-
-			if (error instanceof HttpException) {
-				HttpException e = (HttpException) error;
-				log.debug(e.getLocalizedMessage());
-				log.debug("response code: "+e.getResponse().getStatusCode());
-				log.debug(e.getResponse().getText());
-			}
-			
-			model.setStatus(CreateSubmissionWidgetModel.STATUS_CREATE_ERROR);
-						
-			owner.fireOnCreateSubmissionError(error);
-			
-			log.leave();
-			return error;
-		}
-
-		
-	}
-	
-
 	
 }

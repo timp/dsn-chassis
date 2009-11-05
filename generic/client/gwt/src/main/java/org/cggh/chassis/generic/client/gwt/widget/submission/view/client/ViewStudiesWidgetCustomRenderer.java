@@ -40,7 +40,6 @@ public class ViewStudiesWidgetCustomRenderer implements ViewStudiesWidgetRendere
 	private Log log = LogFactory.getLog(this.getClass());
 	private Panel canvas;
 	private ViewStudiesWidgetController controller;
-	private String selectStudyLinkText = "view";
 
 	
 	

@@ -5,14 +5,15 @@ package org.cggh.chassis.generic.client.gwt.widget.data.client;
 
 import org.cggh.chassis.generic.atom.rewrite.client.datafile.DataFileEntry;
 import org.cggh.chassis.generic.atom.rewrite.client.datafile.DataFilePersistenceService;
-import org.cggh.chassis.generic.client.gwt.common.client.ErrorEvent;
 import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.twisted.client.Deferred;
 import org.cggh.chassis.generic.twisted.client.Function;
 import org.cggh.chassis.generic.twisted.client.HttpException;
+import org.cggh.chassis.generic.widget.client.AsyncErrback;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
+import org.cggh.chassis.generic.widget.client.ErrorEvent;
 
 /**
  * @author aliman
@@ -55,7 +56,7 @@ public class CreateDataFileWidgetController {
 		Deferred<DataFileEntry> entryDeferred = service.postEntry(Configuration.getDataFileFeedURL(), entry);
 		
 		entryDeferred.addCallback(new CreateDataFileEntryCallback());
-		entryDeferred.addErrback(new CreateDataFileEntryErrback());
+		entryDeferred.addErrback(new AsyncErrback(this.owner, this.model));
 		
 		log.leave();
 		
@@ -86,36 +87,4 @@ public class CreateDataFileWidgetController {
 	
 	
 	
-	class CreateDataFileEntryErrback implements Function<Throwable,Throwable> {
-
-		private Log log = LogFactory.getLog(this.getClass());
-
-		public Throwable apply(Throwable error) {
-			log.enter("apply");
-			
-			log.error("error saving data file", error);
-
-			if (error instanceof HttpException) {
-				HttpException e = (HttpException) error;
-				log.debug(e.getLocalizedMessage());
-				log.debug("response code: "+e.getResponse().getStatusCode());
-				log.debug(e.getResponse().getText());
-			}
-			
-			model.setStatus(AsyncWidgetModel.STATUS_ERROR);
-						
-			owner.fireEvent(new ErrorEvent(error));
-			
-			log.leave();
-			return error;
-		}
-
-		
-	}
-	
-
-	
-
-	
-
 }

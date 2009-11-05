@@ -9,6 +9,8 @@ import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.twisted.client.Deferred;
 import org.cggh.chassis.generic.twisted.client.Function;
+import org.cggh.chassis.generic.widget.client.AsyncErrback;
+import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 
 /**
  * @author aliman
@@ -21,12 +23,14 @@ public class ViewSubmissionWidgetController {
 	
 	private Log log = LogFactory.getLog(ViewSubmissionWidgetController.class);
 	private ViewSubmissionWidgetModel model;
+	private ViewSubmissionWidget owner;
 
 	
 	
-	public ViewSubmissionWidgetController(ViewSubmissionWidgetModel model) {
+	public ViewSubmissionWidgetController(ViewSubmissionWidget owner, ViewSubmissionWidgetModel model) {
 		log.enter("<constructor>");
 		
+		this.owner = owner;
 		this.model = model;
 
 		log.leave();
@@ -43,11 +47,11 @@ public class ViewSubmissionWidgetController {
 	public void setSubmissionEntry(SubmissionEntry entry) {
 		log.enter("setSubmissionEntry");
 
-		this.model.setStatus(ViewSubmissionWidgetModel.STATUS_RETRIEVE_PENDING); // simulate retrieve
+		this.model.setStatus(AsyncWidgetModel.STATUS_ASYNC_REQUEST_PENDING); // simulate retrieve
 		
 		this.model.setSubmissionEntry(entry);
 
-		this.model.setStatus(ViewSubmissionWidgetModel.STATUS_READY);
+		this.model.setStatus(AsyncWidgetModel.STATUS_READY);
 
 		// should not need to do anything else, renderer will automatically
 		// update UI on submission entry change
@@ -64,16 +68,13 @@ public class ViewSubmissionWidgetController {
 		
 		log.debug("retrieving entry: " + submissionEntryUrl);
 
-		model.setStatus(ViewSubmissionWidgetModel.STATUS_RETRIEVE_PENDING);
+		model.setStatus(AsyncWidgetModel.STATUS_ASYNC_REQUEST_PENDING);
 		
-		//request submissionEntry
-//		Deferred<AtomEntry> deferred = service.getEntry(submissionEntryUrl);
 		SubmissionPersistenceService service = new SubmissionPersistenceService();
 		Deferred<SubmissionEntry> def = service.getEntry(submissionEntryUrl);
 		
-		//add callbacks
 		def.addCallback(new RetrieveSubmissionEntryCallback());
-		def.addErrback(new RetrieveSubmissionEntryErrback());
+		def.addErrback(new AsyncErrback(this.owner, this.model));
 		
 		log.leave();
 	}
@@ -89,7 +90,7 @@ public class ViewSubmissionWidgetController {
 			log.enter("apply");
 			
 			model.setSubmissionEntry(submissionEntry);
-			model.setStatus(ViewSubmissionWidgetModel.STATUS_READY);
+			model.setStatus(AsyncWidgetModel.STATUS_READY);
 
 			log.leave();
 			return submissionEntry;
@@ -100,25 +101,5 @@ public class ViewSubmissionWidgetController {
 	
 	
 	
-	private class RetrieveSubmissionEntryErrback implements Function<Throwable,Throwable> {
 
-		private Log log = LogFactory.getLog(this.getClass());
-
-		public Throwable apply(Throwable error) {
-			log.enter("apply");
-
-			log.error("error retrieving submission entry", error);
-			
-			model.setStatus(ViewSubmissionWidgetModel.STATUS_ERROR);
-			
-			log.leave();
-			return error;
-		}
-		
-	}
-	
-	
-	
-	
-	
 }

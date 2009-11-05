@@ -14,8 +14,8 @@ public interface EditSubmissionWidgetPubSubAPI {
 
 	public void onUserActionCreateSubmissionCancelled();
 
-	public void onCreateSubmissionSuccess(SubmissionEntry submissionEntry);
+	public void onEditSubmissionSuccess(SubmissionEntry submissionEntry);
 	
-	public void onCreateSubmissionError(Throwable error);
+	public void onEditSubmissionError(Throwable error);
 
 }

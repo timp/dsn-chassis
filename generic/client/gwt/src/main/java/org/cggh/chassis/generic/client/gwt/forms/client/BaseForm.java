@@ -11,21 +11,22 @@ import org.cggh.chassis.generic.client.gwt.common.client.ChassisResources;
 import org.cggh.chassis.generic.client.gwt.common.client.ChassisUser;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
-import org.cggh.chassis.generic.widget.client.ChassisWidget;
+import org.cggh.chassis.generic.widget.client.DelegatingChassisWidget;
 
 /**
  * @author aliman
  *
  */
-public abstract class BaseForm<E extends AtomEntry, F extends AtomFeed<E>> 
-	extends ChassisWidget {
+public abstract class BaseForm
+	<E extends AtomEntry, F extends AtomFeed<E>, R extends BaseFormRenderer<E>> 
+	extends DelegatingChassisWidget<E, R> {
 
 	
 	
 	
 	private Log log = LogFactory.getLog(BaseForm.class);
 	private E model;
-	protected BaseFormRenderer<E> renderer;
+	protected R renderer;
 
 
 	
@@ -46,7 +47,7 @@ public abstract class BaseForm<E extends AtomEntry, F extends AtomFeed<E>>
 
 	
 	
-	private void ensureLog() {
+	protected void ensureLog() {
 		if (log == null) log = LogFactory.getLog(BaseForm.class);
 	}
 
@@ -90,90 +91,9 @@ public abstract class BaseForm<E extends AtomEntry, F extends AtomFeed<E>>
 	
 	
 	
-	protected abstract BaseFormRenderer<E> createRenderer();
+	protected abstract R createRenderer();
 
 
-	
-	
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#renderUI()
-	 */
-	@Override
-	protected void renderUI() {
-		log.enter("renderUI");
-
-		// delegate
-		this.renderer.renderUI();
-
-		log.leave();
-	}
-
-
-	
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#bindUI()
-	 */
-	@Override
-	protected void bindUI() {
-		log.enter("bindUI");
-
-		// delegate
-		this.renderer.bindUI(this.model);
-
-		log.leave();
-	}
-	
-	
-	
-	
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#syncUI()
-	 */
-	@Override
-	protected void syncUI() {
-		log.enter("syncUI");
-
-		// delegate
-		this.renderer.syncUI();
-
-		log.leave();
-	}
-
-	
-	
-	
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#unbindUI()
-	 */
-	@Override
-	protected void unbindUI() {
-		log.enter("unbindUI");
-
-		// delegate
-		this.renderer.unbindUI();
-
-		log.leave();
-	}
-
-	
-	
-	
-
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#destroy()
-	 */
-	@Override
-	public void destroy() {
-		log.enter("destroy");
-
-		this.unbindUI();
-		
-		// TODO anything else?
-
-		log.leave();
-	}
-	
-	
 	
 	
 	public void setModel(E model) {

@@ -6,20 +6,21 @@ package org.cggh.chassis.generic.client.gwt.widget.submission.view.client;
 import org.cggh.chassis.generic.atom.rewrite.client.submission.SubmissionEntry;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
-import org.cggh.chassis.generic.widget.client.ChassisWidget;
+import org.cggh.chassis.generic.widget.client.DelegatingChassisWidget;
 
 /**
  * @author aliman
  *
  */
-public class SubmissionPropertiesWidget extends ChassisWidget {
+public class SubmissionPropertiesWidget 
+	extends DelegatingChassisWidget<SubmissionPropertiesWidgetModel, SubmissionPropertiesWidgetRenderer> {
 
 	
 	
 	
 	private Log log;
 	private SubmissionPropertiesWidgetModel model;
-	private SubmissionPropertiesWidgetDefaultRenderer renderer;
+	private SubmissionPropertiesWidgetRenderer renderer;
 
 	
 	
@@ -41,14 +42,13 @@ public class SubmissionPropertiesWidget extends ChassisWidget {
 	 */
 	@Override
 	public void init() {
-		log = LogFactory.getLog(SubmissionPropertiesWidget.class); // need to instantiate here
 		log.enter("init");
 
 		log.debug("instantiate model");
 		this.model = new SubmissionPropertiesWidgetModel(this);
 
 		log.debug("instantiate default renderer");
-		this.renderer = new SubmissionPropertiesWidgetDefaultRenderer();
+		this.renderer = new SubmissionPropertiesWidgetRenderer();
 		
 		log.debug("set renderer canvas");
 		this.renderer.setCanvas(this.contentBox);
@@ -61,97 +61,6 @@ public class SubmissionPropertiesWidget extends ChassisWidget {
 	
 	
 	
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.widget.client.Widget#renderUI()
-	 */
-	@Override
-	protected void renderUI() {
-		log.enter("renderUI");
-
-		// delegate this to renderer
-		this.renderer.renderUI();
-
-		log.leave();
-
-	}
-
-	
-	
-	
-	
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.widget.client.Widget#bindUI()
-	 */
-	@Override
-	protected void bindUI() {
-		log.enter("bindUI");
-
-		// delegate to renderer
-		this.renderer.bindUI(this.model);
-
-		log.leave();
-
-	}
-
-	
-	
-	
-	
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.widget.client.Widget#syncUI()
-	 */
-	@Override
-	protected void syncUI() {
-		log.enter("syncUI");
-
-		// delegate to renderer
-		this.renderer.syncUI();
-
-		log.leave();
-
-	}
-
-
-
-
-	
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.widget.client.Widget#destroy()
-	 */
-	@Override
-	public void destroy() {
-		log.enter("destroy");
-
-		// unbind
-		this.unbindUI();
-
-		// TODO anything else?
-		
-		log.leave();
-
-	}
-
-	
-	
-	
-	
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.widget.client.Widget#unbindUI()
-	 */
-	@Override
-	protected void unbindUI() {
-		log.enter("unbindUI");
-		
-		// delegate to renderer
-		if (this.renderer != null) this.renderer.unbindUI();
-		
-		log.leave();
-	}
-
-
-
-
-
 	/**
 	 * Set the submission entry to display properties for.
 	 * 
@@ -166,6 +75,18 @@ public class SubmissionPropertiesWidget extends ChassisWidget {
 		// update UI on submission entry change
 		
 		log.leave();
+	}
+
+
+
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#ensureLog()
+	 */
+	@Override
+	protected void ensureLog() {
+		log = LogFactory.getLog(SubmissionPropertiesWidget.class);
 	}
 	
 	

@@ -6,41 +6,37 @@ package org.cggh.chassis.generic.client.gwt.widget.submission.view.client;
 import org.cggh.chassis.generic.atom.rewrite.client.submission.SubmissionEntry;
 import org.cggh.chassis.generic.client.gwt.common.client.CSS;
 import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
-import org.cggh.chassis.generic.client.gwt.widget.submission.view.client.ViewSubmissionWidgetModel.StatusChangeEvent;
-import org.cggh.chassis.generic.client.gwt.widget.submission.view.client.ViewSubmissionWidgetModel.StatusChangeHandler;
 import org.cggh.chassis.generic.client.gwt.widget.submission.view.client.ViewSubmissionWidgetModel.SubmissionEntryChangeEvent;
 import org.cggh.chassis.generic.client.gwt.widget.submission.view.client.ViewSubmissionWidgetModel.SubmissionEntryChangeHandler;
 import org.cggh.chassis.generic.client.gwt.widget.submission.viewdatafiles.client.ViewSubmissionDataFilesWidget;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
-import org.cggh.chassis.generic.widget.client.ChassisWidgetRenderer;
+import org.cggh.chassis.generic.widget.client.AsyncWidgetRenderer;
 
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
 
 /**
  * @author aliman
  *
  */
-public class ViewSubmissionWidgetDefaultRenderer extends ChassisWidgetRenderer {
+public class ViewSubmissionWidgetRenderer 
+	extends AsyncWidgetRenderer<ViewSubmissionWidgetModel> {
 
 	
 	
 	
-	private Log log = LogFactory.getLog(ViewSubmissionWidgetDefaultRenderer.class);
+	private Log log = LogFactory.getLog(ViewSubmissionWidgetRenderer.class);
 
 	
 	
 	private ViewSubmissionWidget owner;
-	private ViewSubmissionWidgetModel model;
 
 
 
 	
-	private FlowPanel loadingPanel, mainPanel;
 	private SubmissionActionsPanel submissionActionsPanel;
 	private SubmissionPropertiesWidget submissionPropsWidget;
 	private ViewSubmissionDataFilesWidget submissionDataFilesWidget;
@@ -48,7 +44,7 @@ public class ViewSubmissionWidgetDefaultRenderer extends ChassisWidgetRenderer {
 
 
 
-	public ViewSubmissionWidgetDefaultRenderer(ViewSubmissionWidget owner) {
+	public ViewSubmissionWidgetRenderer(ViewSubmissionWidget owner) {
 		this.owner = owner;
 	}
 	
@@ -58,20 +54,10 @@ public class ViewSubmissionWidgetDefaultRenderer extends ChassisWidgetRenderer {
 	/**
 	 * 
 	 */
-	public void renderUI() {
-		log.enter("renderUI");
+	@Override
+	public void renderMainPanel() {
+		log.enter("renderMainPanel");
 		
-		this.canvas.clear();
-		
-		this.canvas.add(new HTML("<h2>View Data Submission</h2>")); // TODO i18n
-
-		log.debug("render loading panel");
-		
-		this.loadingPanel = new FlowPanel();
-		this.loadingPanel.add(new Label("loading...")); // TODO i18n
-		this.loadingPanel.setVisible(false);
-		this.canvas.add(this.loadingPanel);
-
 		log.debug("render content panel");
 		
 		Panel contentPanel = this.renderContentPanel();
@@ -82,12 +68,12 @@ public class ViewSubmissionWidgetDefaultRenderer extends ChassisWidgetRenderer {
 
 		log.debug("render main panel");
 
-		this.mainPanel = new FlowPanel();
+		this.mainPanel.add(new HTML("<h2>View Data Submission</h2>")); // TODO i18n
+
 		this.mainPanel.addStyleName(CSS.COMMON_MAINWITHACTIONS);
 		this.mainPanel.add(contentPanel);
 		this.mainPanel.add(this.submissionActionsPanel);
 		this.mainPanel.setVisible(false);
-		this.canvas.add(this.mainPanel);
 
 		log.leave();
 		
@@ -125,49 +111,16 @@ public class ViewSubmissionWidgetDefaultRenderer extends ChassisWidgetRenderer {
 
 	
 	
-	/**
-	 * @param model
-	 */
-	public void bindUI(ViewSubmissionWidgetModel model) {
-		log.enter("bindUI");
-		
-		log.debug("unbind to clear anything");
-		this.unbindUI();
-		
-		log.debug("keep reference to model");
-		this.model = model;
-		
-		log.debug("register this as handler for model property change events");
-		this.registerHandlersForModelChanges();
-		
-		log.debug("register handlers for child widget events");
-		this.registerHandlersForChildWidgetEvents();
-		
-		log.leave();
-	}
-
-
-
 
 	/**
 	 * 
 	 */
-	private void registerHandlersForModelChanges() {
+	@Override
+	protected void registerHandlersForModelChanges() {
 		log.enter("registerHandlersForModelChanges");
 		
-		HandlerRegistration a = this.model.addStatusChangeHandler(new StatusChangeHandler() {
-			
-			public void onStatusChanged(StatusChangeEvent e) {
-				log.enter("onStatusChanged");
-				
-				log.debug("before: "+e.getBefore()+"; after: "+e.getAfter());
-				
-				updatePanelVisibility(e.getAfter());
-				
-				log.leave();
-			}
-		});
-		
+		super.registerHandlersForModelChanges();
+
 		HandlerRegistration b = this.model.addSubmissionEntryChangeHandler(new SubmissionEntryChangeHandler() {
 			
 			public void onSubmissionEntryChanged(SubmissionEntryChangeEvent e) {
@@ -180,7 +133,6 @@ public class ViewSubmissionWidgetDefaultRenderer extends ChassisWidgetRenderer {
 		});
 
 		log.debug("store registrations so can remove later if necessary");
-		this.modelChangeHandlerRegistrations.add(a);
 		this.modelChangeHandlerRegistrations.add(b);
 		
 		log.leave();
@@ -193,7 +145,8 @@ public class ViewSubmissionWidgetDefaultRenderer extends ChassisWidgetRenderer {
 	/**
 	 * 
 	 */
-	private void registerHandlersForChildWidgetEvents() {
+	@Override
+	protected void registerHandlersForChildWidgetEvents() {
 		log.enter("registerHandlersForChildWidgetEvents");
 		
 		log.debug("register handler for edit submission action");
@@ -249,11 +202,10 @@ public class ViewSubmissionWidgetDefaultRenderer extends ChassisWidgetRenderer {
 	public void syncUI() {
 		log.enter("syncUI");
 		
+		super.syncUI();
+		
 		if (this.model != null) {
 
-			log.debug("sync panel visibility");
-			this.updatePanelVisibility(this.model.getStatus());
-			
 			log.debug("sync submission info");
 			SubmissionEntry entry = this.model.getSubmissionEntry();
 			this.updateSubmissionInfo(entry);
@@ -272,61 +224,6 @@ public class ViewSubmissionWidgetDefaultRenderer extends ChassisWidgetRenderer {
 		
 	}
 
-
-
-
-	/**
-	 * 
-	 */
-	public void unbindUI() {
-		log.enter("unbindUI");
-		
-		this.clearModelChangeHandlers();
-		this.clearChildWidgetEventHandlers();
-		
-		log.leave();
-		
-	}
-
-
-	
-	
-	private void updatePanelVisibility(int status) {
-
-		if ( status == ViewSubmissionWidgetModel.STATUS_INITIAL) {
-
-			this.mainPanel.setVisible(false);
-			this.loadingPanel.setVisible(false);
-
-		} 
-		else if ( status == ViewSubmissionWidgetModel.STATUS_RETRIEVE_PENDING ) {
-
-			this.mainPanel.setVisible(false);
-			this.loadingPanel.setVisible(true);
-
-		} 
-		else if ( status == ViewSubmissionWidgetModel.STATUS_READY ) {
-
-			this.loadingPanel.setVisible(false);
-			this.mainPanel.setVisible(true);
-
-		} 
-		else if ( status == ViewSubmissionWidgetModel.STATUS_ERROR ) {
-
-			// TODO handle error case (could use extra panel or pass error to
-			// parent)
-			
-			log.error("unexpected error", new Error("unexpected error"));
-
-		}
-		else {
-
-			// TODO review this
-			log.error("unexpected status change", new Error("unexpected status change"));
-
-		}
-		
-	}
 
 
 

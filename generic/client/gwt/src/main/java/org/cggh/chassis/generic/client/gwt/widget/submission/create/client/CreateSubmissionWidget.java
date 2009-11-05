@@ -3,102 +3,88 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.submission.create.client;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import org.cggh.chassis.generic.atom.rewrite.client.submission.SubmissionEntry;
-import org.cggh.chassis.generic.client.gwt.widget.submission.create.client.CreateSubmissionWidgetModel;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
+import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
+import org.cggh.chassis.generic.widget.client.DelegatingChassisWidget;
 
-import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.event.shared.HandlerRegistration;
+
 
 /**
  * @author raok
  *
  */
-public class CreateSubmissionWidget extends Composite {
+public class CreateSubmissionWidget 
+	extends DelegatingChassisWidget<AsyncWidgetModel, CreateSubmissionWidgetRenderer> {
+	
+	
+	
+	public static final String NAME = "createSubmissionWidget";
+	
 	
 	
 	
 	private Log log = LogFactory.getLog(this.getClass());
-	
-	
-	
-	
-	private CreateSubmissionWidgetModel model;
 	private CreateSubmissionWidgetController controller; 
-	final private CreateSubmissionWidgetDefaultRenderer renderer;
-	private Set<CreateSubmissionWidgetPubSubAPI> listeners = new HashSet<CreateSubmissionWidgetPubSubAPI>();
+	
+	
+	
+	
+	
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#getName()
+	 */
+	@Override
+	protected String getName() {
+		return NAME;
+	}
 
 	
 	
+	protected void ensureLog() {
+		if (log == null) log = LogFactory.getLog(CreateSubmissionWidget.class);
+	}
 	
-	/**
-	 * Construct a widget.
-	 * 
-	 * @param canvas
-	 * @param authorEmail
+	
+	
+	
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#init()
 	 */
-	public CreateSubmissionWidget() {
-		log.enter("<constructor>");
+	@Override
+	public void init() {
+		log.enter("init");
 		
-		this.model = new CreateSubmissionWidgetModel();
-		
+		this.model = new AsyncWidgetModel(this);
 		this.controller = new CreateSubmissionWidgetController(this, this.model);
-						
-		this.renderer = new CreateSubmissionWidgetDefaultRenderer(this.controller);
-		
-		this.model.addListener(this.renderer);
-		
-		this.initWidget(this.renderer.getCanvas());
-		
-		this.controller.ready();
+		this.renderer = new CreateSubmissionWidgetRenderer(this);
+		this.renderer.setCanvas(this.contentBox);
+		this.renderer.setController(this.controller);
 		
 		log.leave();
 	}
-	
-	
-	
-	
-	
-	public void fireOnUserActionCreateSubmissionCancelled() {
-		for (CreateSubmissionWidgetPubSubAPI listener : listeners) {
-			listener.onUserActionCreateSubmissionCancelled();
-		}
-	}
-	
-	
-	
-
-	public void fireOnCreateSubmissionSuccess(SubmissionEntry submissionEntry) {
-		for (CreateSubmissionWidgetPubSubAPI listener : listeners) {
-			listener.onCreateSubmissionSuccess(submissionEntry);
-		}
-	}
 
 	
 	
 	
+	
+
 	/**
-	 * @param error
+	 * Register handler for create success event.
+	 * 
+	 * @param h handler to receive events
+	 * @return a handler registration to remove the handler if needed
 	 */
-	public void fireOnCreateSubmissionError(Throwable error) {
-		for (CreateSubmissionWidgetPubSubAPI listener : listeners) {
-			listener.onCreateSubmissionError(error);
-		}
+	public HandlerRegistration addCreateSubmissionSuccessHandler(CreateSubmissionSuccessHandler h) {
+		return this.addHandler(h, CreateSubmissionSuccessEvent.TYPE);
 	}
-
-
-
-
-	public void addCreateSubmissionWidgetListener(CreateSubmissionWidgetPubSubAPI listener) {
-		listeners.add(listener);				
-	}
-
-
-
-
+	
+	
+	
+	
+	
 
 	/**
 	 * 
@@ -107,22 +93,8 @@ public class CreateSubmissionWidget extends Composite {
 		this.renderer.getForm().refreshStudies();
 	}
 
-
-
-
-
-	/**
-	 * 
-	 */
-	public void render() {
-		this.renderer.render();
-		this.controller.ready();
-	}
-
-
-
-
-
+	
+	
 
 
 }
