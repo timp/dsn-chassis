@@ -56,6 +56,7 @@ public class CreateDataFileWidget
 	 */
 	@Override
 	public void init() {
+		ensureLog();
 		log.enter("init");
 
 		this.model = new AsyncWidgetModel(this);

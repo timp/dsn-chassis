@@ -18,15 +18,13 @@ import org.cggh.chassis.generic.widget.client.DelegatingChassisWidget;
  *
  */
 public abstract class BaseForm
-	<E extends AtomEntry, F extends AtomFeed<E>, R extends BaseFormRenderer<E>> 
+	<E extends AtomEntry, F extends AtomFeed<E>, R extends BaseFormRenderer<E, F>> 
 	extends DelegatingChassisWidget<E, R> {
 
 	
 	
 	
 	private Log log = LogFactory.getLog(BaseForm.class);
-	private E model;
-	protected R renderer;
 
 
 	
@@ -47,7 +45,7 @@ public abstract class BaseForm
 
 	
 	
-	protected void ensureLog() {
+	private void ensureLog() {
 		if (log == null) log = LogFactory.getLog(BaseForm.class);
 	}
 
@@ -75,11 +73,13 @@ public abstract class BaseForm
 	
 	
 	protected E createModel() {
+		log.enter("createModel");
 		AtomFactory<E, F> factory = this.createAtomFactory();
 		E model = factory.createEntry();
 		AtomAuthor author = factory.createAuthor();
 		author.setEmail(ChassisUser.getCurrentUserEmail());
 		model.addAuthor(author);
+		log.leave();
 		return model;
 	}
 	

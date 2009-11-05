@@ -48,6 +48,7 @@ public class UserDetailsWidget
 	 */
 	@Override
 	public void init() {
+		ensureLog();
 		log.enter("init");
 
 		log.debug("instantiate a model");
@@ -139,11 +140,7 @@ public class UserDetailsWidget
 
 
 
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#ensureLog()
-	 */
-	@Override
-	protected void ensureLog() {
+	private void ensureLog() {
 		log = LogFactory.getLog(UserDetailsWidget.class);
 	}
 	

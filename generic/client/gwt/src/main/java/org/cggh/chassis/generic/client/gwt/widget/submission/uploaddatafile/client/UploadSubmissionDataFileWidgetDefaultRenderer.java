@@ -3,7 +3,7 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.submission.uploaddatafile.client;
 
-import org.cggh.chassis.generic.client.gwt.common.client.CSS;
+import org.cggh.chassis.generic.client.gwt.common.client.CommonStyles;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -70,7 +70,7 @@ public class UploadSubmissionDataFileWidgetDefaultRenderer implements UploadSubm
 		buttonsPanel = new FlowPanel();
 		buttonsPanel.add(saveUploadSubmissionDataFileUI);
 		buttonsPanel.add(cancelUploadSubmissionDataFileUI);
-		buttonsPanel.addStyleName(CSS.UPLOADSUBMISSIONDATAFILE_ACTIONS);
+		buttonsPanel.addStyleName(CommonStyles.UPLOADSUBMISSIONDATAFILE_ACTIONS);
 
 	}
 			

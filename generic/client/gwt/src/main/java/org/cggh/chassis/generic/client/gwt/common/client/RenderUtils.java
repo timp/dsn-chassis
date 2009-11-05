@@ -414,7 +414,7 @@ public class RenderUtils {
 	public static Anchor renderActionAsAnchor(String text) {
 		Anchor out = new Anchor();
 		out.setText(text);
-		out.addStyleName(CSS.COMMON_ACTION);
+		out.addStyleName(CommonStyles.COMMON_ACTION);
 		return out;
 	}
 	
@@ -430,7 +430,7 @@ public class RenderUtils {
 	 */
 	public static FlowPanel renderActionsPanel(Widget[] actions) {
 		FlowPanel out = new FlowPanel();
-		out.addStyleName(CSS.COMMON_ACTIONS);
+		out.addStyleName(CommonStyles.COMMON_ACTIONS);
 		out.add(new HTML("<h3>Actions</h3>")); // TODO use I18N resources
 		for (Widget w : actions) {
 			out.add(w);
@@ -454,10 +454,10 @@ public class RenderUtils {
 	public static FlowPanel renderPropertyPanel(String propertyName, Widget valueHolder, String valueHolderStyleName) {
 		FlowPanel out = new FlowPanel();
 		out.add(new InlineLabel(propertyName + ": ")); 
-		valueHolder.addStyleName(CSS.COMMON_ANSWER);
+		valueHolder.addStyleName(CommonStyles.COMMON_ANSWER);
 		if (valueHolderStyleName != null) valueHolder.addStyleName(valueHolderStyleName);
 		out.add(valueHolder);
-		out.addStyleName(CSS.COMMON_QUESTION);
+		out.addStyleName(CommonStyles.COMMON_QUESTION);
 		return out;
 	}
 

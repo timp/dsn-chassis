@@ -6,7 +6,7 @@ package org.cggh.chassis.generic.client.gwt.widget.submission.view.client;
 import java.util.List;
 
 import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
-import org.cggh.chassis.generic.client.gwt.common.client.CSS;
+import org.cggh.chassis.generic.client.gwt.common.client.CommonStyles;
 import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetController;
 import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetModel;
 import org.cggh.chassis.generic.client.gwt.widget.study.viewstudies.client.ViewStudiesWidgetRenderer;
@@ -65,7 +65,7 @@ public class ViewStudiesWidgetCustomRenderer implements ViewStudiesWidgetRendere
 	private void initCanvas() {
 		log.enter("initCanvas");
 		
-		this.canvas.addStyleName(CSS.VIEWSTUDIES_BASE);
+		this.canvas.addStyleName(CommonStyles.VIEWSTUDIES_BASE);
 		
 		log.debug("prepare loading panel");
 		this.loadingPanel.add(new Label("Loading..."));
@@ -124,7 +124,7 @@ public class ViewStudiesWidgetCustomRenderer implements ViewStudiesWidgetRendere
 		FlexTable studiesTable = new FlexTable();
 		studiesTable.setCellPadding(0);
 		studiesTable.setCellSpacing(0);
-		studiesTable.addStyleName(CSS.VIEWSTUDIES_STUDIESTABLE);
+		studiesTable.addStyleName(CommonStyles.VIEWSTUDIES_STUDIESTABLE);
 		int rowNo = 0;		
 		
 		log.debug("add header row");
@@ -166,7 +166,7 @@ public class ViewStudiesWidgetCustomRenderer implements ViewStudiesWidgetRendere
 //			String updated = studyEntry.getUpdated();
 			
 			Label studyTitleLabel = new Label(title);
-			studyTitleLabel.addStyleName(CSS.VIEWSTUDIES_STUDYTITLE);
+			studyTitleLabel.addStyleName(CommonStyles.VIEWSTUDIES_STUDYTITLE);
 			studiesTable.setWidget(++rowNo, 0, studyTitleLabel);
 			
 //			studiesTable.setWidget(rowNo, 1, new Label(summary));

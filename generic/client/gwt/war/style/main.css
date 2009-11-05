@@ -268,33 +268,42 @@ input, textarea {
  * styles for submission form
  * -----------------------------------------------------------------------------
  */
+ 
+.chassis-submissionForm {
+}
 
-.chassis-submissionForm-titleQuestion input {
+.chassis-submissionForm .titleQuestion {
+}
+
+.chassis-submissionForm .titleQuestion input {
 	width: 30em;
 }
 
-.chassis-submissionForm-summaryQuestion textarea {
+.chassis-submissionForm .summaryQuestion textarea {
 	width: 60em;
 	height: 15em;
 }
 
-.chassis-submissionForm-modulesQuestion input {
+.chassis-submissionForm .modulesQuestion {
+}
+
+.chassis-submissionForm .modulesQuestion input {
 	border: none;
 }
 
-.chassis-submissionForm-studiesQuestion {
+.chassis-submissionForm .studiesQuestion {
 }
 
-.chassis-submissionForm-selectStudy {
+.chassis-submissionForm .studiesQuestion p {
+	/* TODO why is this necessary? */
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.chassis-submissionForm .selectStudy {
 	margin-top: 0.3em;
 	margin-bottom: 0.3em;
 } 
-
-.chassis-submissionForm-selectStudy div {
-	display: inline;
-	padding-right: 0.3em;
-} 
-
 
 
 /*

@@ -5,7 +5,7 @@ package org.cggh.chassis.generic.client.gwt.widget.submission.uploaddatafile.cli
 
 import org.cggh.chassis.generic.atom.chassis.base.constants.ChassisConstants;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
-import org.cggh.chassis.generic.client.gwt.common.client.CSS;
+import org.cggh.chassis.generic.client.gwt.common.client.CommonStyles;
 import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
 
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
@@ -48,7 +48,7 @@ public class DataFileFormRenderer {
 		
 		//prepare canvas
 		canvas.clear();
-		canvas.addStyleName(CSS.UPLOADSUBMISSIONDATAFILE_BASE);
+		canvas.addStyleName(CommonStyles.UPLOADSUBMISSIONDATAFILE_BASE);
 		canvas.add(new HTML("<h2>Upload Submission Data File</h2>"));		
 		canvas.add(new HTML("<p>Use this form to upload a data file for this submission.</p>"));
 		
@@ -71,21 +71,21 @@ public class DataFileFormRenderer {
 		
 		//add fileBrowser section
 		FlowPanel fileBrowserSection = new FlowPanel();
-		fileBrowserSection.addStyleName(CSS.COMMON_QUESTION);
+		fileBrowserSection.addStyleName(CommonStyles.COMMON_QUESTION);
 		InlineLabel fileBrowserLabel = new InlineLabel("Please select the file you wish to upload:");
 		fileBrowserSection.add(fileBrowserLabel);
 		fileUI.setName(ChassisConstants.FIELD_DATAFILE);
-		fileUI.addStyleName(CSS.UPLOADSUBMISSIONDATAFILE_FILEINPUT);
+		fileUI.addStyleName(CommonStyles.UPLOADSUBMISSIONDATAFILE_FILEINPUT);
 		fileBrowserSection.add(fileUI);
 		submissionDataFileForm.add(fileBrowserSection);
 		
 		//Comment section
 		FlowPanel commentSection = new FlowPanel();
-		commentSection.addStyleName(CSS.COMMON_QUESTION);
+		commentSection.addStyleName(CommonStyles.COMMON_QUESTION);
 		Label commentLabel = new Label("Please add a comment about the file...");
 		commentSection.add(commentLabel);
 		commentUI.setName(ChassisConstants.FIELD_SUMMARY);
-		commentUI.addStyleName(CSS.UPLOADSUBMISSIONDATAFILE_COMMENTINPUT);
+		commentUI.addStyleName(CommonStyles.UPLOADSUBMISSIONDATAFILE_COMMENTINPUT);
 		commentUI.addValueChangeHandler(new CommentValueChangeHandler());
 		commentSection.add(commentUI);
 		submissionDataFileForm.add(commentSection);

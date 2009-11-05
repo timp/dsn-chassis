@@ -19,8 +19,6 @@ public class SubmissionPropertiesWidget
 	
 	
 	private Log log;
-	private SubmissionPropertiesWidgetModel model;
-	private SubmissionPropertiesWidgetRenderer renderer;
 
 	
 	
@@ -42,6 +40,7 @@ public class SubmissionPropertiesWidget
 	 */
 	@Override
 	public void init() {
+		ensureLog();
 		log.enter("init");
 
 		log.debug("instantiate model");
@@ -81,11 +80,8 @@ public class SubmissionPropertiesWidget
 
 
 
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#ensureLog()
-	 */
-	@Override
-	protected void ensureLog() {
+
+	private void ensureLog() {
 		log = LogFactory.getLog(SubmissionPropertiesWidget.class);
 	}
 	

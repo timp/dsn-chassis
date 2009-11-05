@@ -7,7 +7,7 @@ package org.cggh.chassis.generic.client.gwt.common.client;
  * @author aliman
  *
  */
-public class CSS {
+public class CommonStyles {
 
 	public static final String COMMON_BASE = "chassis";
 	

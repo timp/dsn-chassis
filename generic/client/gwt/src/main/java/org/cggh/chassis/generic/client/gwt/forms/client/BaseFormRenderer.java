@@ -4,7 +4,8 @@
 package org.cggh.chassis.generic.client.gwt.forms.client;
 
 import org.cggh.chassis.generic.atom.rewrite.client.AtomEntry;
-import org.cggh.chassis.generic.client.gwt.common.client.CSS;
+import org.cggh.chassis.generic.atom.rewrite.client.AtomFeed;
+import org.cggh.chassis.generic.client.gwt.common.client.CommonStyles;
 import org.cggh.chassis.generic.client.gwt.forms.client.BaseForm.Resources;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
@@ -25,7 +26,8 @@ import com.google.gwt.user.client.ui.TextBoxBase;
  * @author aliman
  *
  */
-public abstract class BaseFormRenderer<E extends AtomEntry> 
+public abstract class BaseFormRenderer
+	<E extends AtomEntry, F extends AtomFeed<E>> 
 	extends ChassisWidgetRenderer<E> {
 
 	
@@ -35,11 +37,21 @@ public abstract class BaseFormRenderer<E extends AtomEntry>
 	protected TextBoxBase titleInput, summaryInput;
 	protected FlowPanel titleQuestionPanel, summaryQuestionPanel;
 	protected E model;
+	protected BaseForm<E, F, ?> owner;
+	
+	
+	
+	
+	public static class Styles {
+		public static final String TITLEQUESTION = "titleQuestion";
+		public static final String SUMMARYQUESTION = "summaryQuestion";
+	}
 
 	
 	
 	
-	public BaseFormRenderer() {
+	public BaseFormRenderer(BaseForm<E, F, ?> owner) {
+		this.owner = owner;
 		this.resources = this.createResources();
 	}
 	
@@ -75,12 +87,13 @@ public abstract class BaseFormRenderer<E extends AtomEntry>
 		log.enter("renderTitleQuestion");
 
 		this.titleQuestionPanel = new FlowPanel();
+		this.titleQuestionPanel.addStyleName(Styles.TITLEQUESTION);
+		this.titleQuestionPanel.addStyleName(CommonStyles.COMMON_QUESTION);
+		
 		this.titleInput = new TextBox();
-
 		InlineLabel titleLabel = new InlineLabel(text(Resources.QUESTIONLABELTITLE)); 
 		this.titleQuestionPanel.add(titleLabel);
 		this.titleQuestionPanel.add(titleInput);
-		this.titleQuestionPanel.addStyleName(CSS.COMMON_QUESTION);
 
 		log.leave();
 	}
@@ -96,12 +109,13 @@ public abstract class BaseFormRenderer<E extends AtomEntry>
 		log.enter("renderSummaryQuestion");
 
 		this.summaryQuestionPanel = new FlowPanel();
+		summaryQuestionPanel.addStyleName(CommonStyles.COMMON_QUESTION);
+		summaryQuestionPanel.addStyleName(Styles.SUMMARYQUESTION);
+
 		this.summaryInput = new TextArea();
-		
 		Label summaryLabel = new Label(text(Resources.QUESTIONLABELSUMMARY));
 		summaryQuestionPanel.add(summaryLabel);
 		summaryQuestionPanel.add(summaryInput);
-		summaryQuestionPanel.addStyleName(CSS.COMMON_QUESTION);
 		
 		log.leave();		
 	}
@@ -172,7 +186,8 @@ public abstract class BaseFormRenderer<E extends AtomEntry>
 	protected class TitleInputChangeHandler implements ValueChangeHandler<String> {
 		
 		public void onValueChange(ValueChangeEvent<String> arg0) {
-			model.setTitle(arg0.getValue());
+			String title = arg0.getValue();
+			model.setTitle(title);
 		}
 		
 	}
@@ -183,7 +198,8 @@ public abstract class BaseFormRenderer<E extends AtomEntry>
 	protected class SummaryInputChangeHandler implements ValueChangeHandler<String> {
 
 		public void onValueChange(ValueChangeEvent<String> arg0) {
-			model.setSummary(arg0.getValue());
+			String summary = arg0.getValue();
+			model.setSummary(summary);
 		}
 		
 	}

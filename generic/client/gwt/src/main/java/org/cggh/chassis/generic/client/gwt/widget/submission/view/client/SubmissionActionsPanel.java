@@ -50,6 +50,7 @@ public class SubmissionActionsPanel extends ChassisWidget {
 	 */
 	@Override
 	public void init() {
+		ensureLog();
 		log.enter("init");
 
 		// we won't use a separate model or renderer here, so nothing to do
@@ -232,11 +233,7 @@ public class SubmissionActionsPanel extends ChassisWidget {
 
 
 
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#ensureLog()
-	 */
-	@Override
-	protected void ensureLog() {
+	private void ensureLog() {
 		if (log == null) log = LogFactory.getLog(SubmissionActionsPanel.class);
 	}
 	

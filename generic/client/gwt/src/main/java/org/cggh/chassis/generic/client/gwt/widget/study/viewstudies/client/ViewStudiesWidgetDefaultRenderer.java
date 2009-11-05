@@ -9,7 +9,7 @@ import java.util.Map;
 
 import org.cggh.chassis.generic.atom.study.client.format.StudyEntry;
 import org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
-import org.cggh.chassis.generic.client.gwt.common.client.CSS;
+import org.cggh.chassis.generic.client.gwt.common.client.CommonStyles;
 import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
@@ -105,7 +105,7 @@ public class ViewStudiesWidgetDefaultRenderer implements ViewStudiesWidgetRender
 	private void initCanvas() {
 		log.enter("initCanvas");
 		
-		this.canvas.addStyleName(CSS.VIEWSTUDIES_BASE);
+		this.canvas.addStyleName(CommonStyles.VIEWSTUDIES_BASE);
 		
 		this.canvas.add(new HTML("<h2>My Studies</h2>"));
 		
@@ -168,7 +168,7 @@ public class ViewStudiesWidgetDefaultRenderer implements ViewStudiesWidgetRender
 		FlexTable studiesTable = new FlexTable();
 		studiesTable.setCellPadding(0);
 		studiesTable.setCellSpacing(0);
-		studiesTable.addStyleName(CSS.VIEWSTUDIES_STUDIESTABLE);
+		studiesTable.addStyleName(CommonStyles.VIEWSTUDIES_STUDIESTABLE);
 		int rowNo = 0;		
 		
 		log.debug("add header row");
@@ -178,7 +178,7 @@ public class ViewStudiesWidgetDefaultRenderer implements ViewStudiesWidgetRender
 		
 		for (int i=0; i<headers.length; i++) {
 			Label headerLabel = new Label(headers[i]);
-			headerLabel.addStyleName(CSS.VIEWSTUDIES_TABLEHEADER);
+			headerLabel.addStyleName(CommonStyles.VIEWSTUDIES_TABLEHEADER);
 			studiesTable.setWidget(rowNo, i, headerLabel);
 		}
 		
@@ -210,7 +210,7 @@ public class ViewStudiesWidgetDefaultRenderer implements ViewStudiesWidgetRender
 			String updated = studyEntry.getUpdated();
 			
 			Label studyTitleLabel = new Label(title);
-			studyTitleLabel.addStyleName(CSS.VIEWSTUDIES_STUDYTITLE);
+			studyTitleLabel.addStyleName(CommonStyles.VIEWSTUDIES_STUDYTITLE);
 			studiesTable.setWidget(++rowNo, 0, studyTitleLabel);
 			
 			studiesTable.setWidget(rowNo, 1, new Label(summary));
@@ -232,7 +232,7 @@ public class ViewStudiesWidgetDefaultRenderer implements ViewStudiesWidgetRender
 			log.debug("add a select study link");
 			Anchor selectStudy = new Anchor();
 			selectStudy.setText(selectStudyLinkText);
-			selectStudy.addStyleName(CSS.COMMON_ACTION);
+			selectStudy.addStyleName(CommonStyles.COMMON_ACTION);
 			selectStudy.addClickHandler(new SelectStudyClickHandler(studyEntry));
 			studiesTable.setWidget(rowNo, 4, selectStudy);
 						

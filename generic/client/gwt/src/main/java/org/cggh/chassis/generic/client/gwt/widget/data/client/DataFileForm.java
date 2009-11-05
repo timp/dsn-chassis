@@ -25,6 +25,26 @@ public class DataFileForm extends BaseForm<DataFileEntry, DataFileFeed, DataFile
 	
 	
 	
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#init()
+	 */
+	@Override
+	public void init() {
+		ensureLog();
+		log.enter("init");
+
+		super.init();
+		
+		// nothing else to do
+
+		log.leave();
+	}
+	
+
+	
+	
+	
+	
 	public DataFileForm() {
 		log.enter("<constructor>");
 		// nothing to do
@@ -34,13 +54,12 @@ public class DataFileForm extends BaseForm<DataFileEntry, DataFileFeed, DataFile
 	
 	
 	
-	
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.client.gwt.forms.client.BaseForm#createRenderer()
 	 */
 	@Override
 	protected DataFileFormRenderer createRenderer() {
-		return new DataFileFormRenderer();
+		return new DataFileFormRenderer(this);
 	}
 	
 	
@@ -68,11 +87,7 @@ public class DataFileForm extends BaseForm<DataFileEntry, DataFileFeed, DataFile
 
 
 
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#ensureLog()
-	 */
-	@Override
-	protected void ensureLog() {
+	private void ensureLog() {
 		if (log == null) log = LogFactory.getLog(DataFileForm.class);
 	}
 
