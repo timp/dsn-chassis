@@ -26,7 +26,7 @@ import com.google.gwt.user.client.ui.TextBoxBase;
  *
  */
 public abstract class BaseFormRenderer<E extends AtomEntry> 
-	extends ChassisWidgetRenderer {
+	extends ChassisWidgetRenderer<E> {
 
 	
 	

@@ -50,7 +50,6 @@ public class SubmissionActionsPanel extends ChassisWidget {
 	 */
 	@Override
 	public void init() {
-		log = LogFactory.getLog(SubmissionActionsPanel.class); // instantiate here because this method is called from superclass constructor
 		log.enter("init");
 
 		// we won't use a separate model or renderer here, so nothing to do
@@ -227,6 +226,18 @@ public class SubmissionActionsPanel extends ChassisWidget {
 	 */
 	public HandlerRegistration addUploadDataFileActionHandler(UploadDataFileActionHandler h) {
 		return this.addHandler(h, UploadDataFileActionEvent.TYPE);
+	}
+
+
+
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#ensureLog()
+	 */
+	@Override
+	protected void ensureLog() {
+		if (log == null) log = LogFactory.getLog(SubmissionActionsPanel.class);
 	}
 	
 	

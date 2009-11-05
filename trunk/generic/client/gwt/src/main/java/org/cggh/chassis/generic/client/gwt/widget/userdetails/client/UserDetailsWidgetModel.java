@@ -12,7 +12,6 @@ import org.cggh.chassis.generic.widget.client.ModelChangeEvent;
 import org.cggh.chassis.generic.widget.client.ModelChangeHandler;
 
 import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.event.shared.GwtEvent.Type;
 
 /**
  * @author aliman
@@ -99,7 +98,18 @@ public class UserDetailsWidgetModel extends AsyncWidgetModel {
 	
 	
 	public HandlerRegistration addCurrentUserChangeHandler(CurrentUserChangeHandler h) {
-		return this.addChangeHandler(h, CurrentUserChangeEvent.TYPE);
+		log.enter("addCurrentUserChangeHandler");
+		
+		HandlerRegistration r = null;
+		try {
+			r = this.addChangeHandler(h, CurrentUserChangeEvent.TYPE);
+		}
+		catch (Throwable t) {
+			log.error("caught trying to add change handler", t);
+		}
+		
+		log.leave();
+		return r;
 	}
 	
 	

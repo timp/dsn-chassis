@@ -3,17 +3,11 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.data.client;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.cggh.chassis.generic.client.gwt.common.client.CancelEvent;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
-import org.cggh.chassis.generic.widget.client.ChassisWidgetRenderer;
-import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.AsyncRequestPendingStatus;
-import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.ErrorStatus;
-import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.InitialStatus;
+import org.cggh.chassis.generic.widget.client.AsyncWidgetRenderer;
+import org.cggh.chassis.generic.widget.client.CancelEvent;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.ReadyStatus;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.Status;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.StatusChangeEvent;
@@ -25,7 +19,6 @@ import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.InlineLabel;
 
 
 
@@ -33,17 +26,17 @@ import com.google.gwt.user.client.ui.InlineLabel;
  * @author aliman
  *
  */
-public class CreateDataFileWidgetRenderer extends ChassisWidgetRenderer {
+public class CreateDataFileWidgetRenderer 
+	extends AsyncWidgetRenderer<AsyncWidgetModel> {
 	
 	
 	
 	
 	private Log log = LogFactory.getLog(CreateDataFileWidgetRenderer.class);
 	private CreateDataFileWidgetController controller;
-	private FlowPanel buttonsPanel, savingPanel, mainPanel;
+	private FlowPanel buttonsPanel;
 	private Button cancelButton, createButton;
 	private DataFileForm form;
-	private AsyncWidgetModel model;
 	private CreateDataFileWidget owner;
 	
 	
@@ -64,28 +57,18 @@ public class CreateDataFileWidgetRenderer extends ChassisWidgetRenderer {
 	/**
 	 * 
 	 */
-	public void renderUI() {
-		log.enter("renderUI");
-		
-		this.canvas.clear();
-
-		this.savingPanel = new FlowPanel();
-		this.savingPanel.add(new InlineLabel("saving...")); // TODO i18n
-		this.canvas.add(this.savingPanel);
-
-		this.mainPanel = new FlowPanel();
+	@Override
+	public void renderMainPanel() {
+		log.enter("renderMainPanel");
 		
 		this.mainPanel.add(new HTML("<h2>New Data File</h2>")); // TODO i18n
 		this.mainPanel.add(new HTML("<p>Use the form below to create a new data file.</p>")); // TODO i18n
 		
 		this.form = new DataFileForm();
-//		this.form.render(); // TODO remove necessity for this call
 		this.mainPanel.add(this.form);
 		
 		this.renderButtonsPanel();
 		this.mainPanel.add(this.buttonsPanel);
-		
-		this.canvas.add(this.mainPanel);
 		
 		log.leave();
 	}
@@ -97,7 +80,7 @@ public class CreateDataFileWidgetRenderer extends ChassisWidgetRenderer {
 	/**
 	 * @return
 	 */
-	private FlowPanel renderButtonsPanel() {
+	private void renderButtonsPanel() {
 		log.enter("renderButtonsPanel");
 		
 		this.buttonsPanel = new FlowPanel();
@@ -109,35 +92,7 @@ public class CreateDataFileWidgetRenderer extends ChassisWidgetRenderer {
 		this.buttonsPanel.add(this.cancelButton);
 		
 		log.leave();
-		return null;
 	}
-
-
-
-
-
-	/**
-	 * @param model
-	 */
-	public void bindUI(AsyncWidgetModel model) {
-		log.enter("bindUI");
-		
-		log.debug("unbind to clear anything");
-		this.unbindUI();
-		
-		log.debug("keep reference to model");
-		this.model = model;
-		
-		log.debug("register this as handler for model property change events");
-		this.registerHandlersForModelChanges();
-		
-		log.debug("register handlers for child widget events");
-		this.registerHandlersForChildWidgetEvents();
-		
-		log.leave();
-		
-	}
-
 
 
 
@@ -145,15 +100,18 @@ public class CreateDataFileWidgetRenderer extends ChassisWidgetRenderer {
 	/**
 	 * 
 	 */
-	private void registerHandlersForModelChanges() {
+	@Override
+	protected void registerHandlersForModelChanges() {
 		log.enter("registerHandlersForModelChanges");
+		
+		super.registerHandlersForModelChanges();
 		
 		HandlerRegistration a = this.model.addStatusChangeHandler(new StatusChangeHandler() {
 			
 			public void onStatusChanged(StatusChangeEvent e) {
 				log.enter("onStatusChanged");
 				
-				updatePanelVisibility(e.getAfter());
+				updateForm(e.getAfter());
 				
 				log.leave();
 			}
@@ -163,7 +121,6 @@ public class CreateDataFileWidgetRenderer extends ChassisWidgetRenderer {
 		this.modelChangeHandlerRegistrations.add(a);
 		
 		log.leave();
-		
 	}
 
 
@@ -173,17 +130,15 @@ public class CreateDataFileWidgetRenderer extends ChassisWidgetRenderer {
 	/**
 	 * 
 	 */
-	private void registerHandlersForChildWidgetEvents() {
+	@Override
+	protected void registerHandlersForChildWidgetEvents() {
 		log.enter("registerHandlersForChildWidgetEvents");
 		
 		this.createButton.addClickHandler(new ClickHandler() {
 			
 			public void onClick(ClickEvent arg0) {
-				log.enter("onClick");
 				
 				controller.createDataFileEntry(form.getModel());
-				
-				log.leave();
 				
 			}
 		});
@@ -191,11 +146,8 @@ public class CreateDataFileWidgetRenderer extends ChassisWidgetRenderer {
 		this.cancelButton.addClickHandler(new ClickHandler() {
 			
 			public void onClick(ClickEvent arg0) {
-				log.enter("onClick");
 				
 				owner.fireEvent(new CancelEvent());
-				
-				log.leave();
 				
 			}
 		});
@@ -211,13 +163,15 @@ public class CreateDataFileWidgetRenderer extends ChassisWidgetRenderer {
 	/**
 	 * 
 	 */
+	@Override
 	public void syncUI() {
 		log.enter("syncUI");
 		
+		super.syncUI();
+		
 		if (this.model != null) {
 
-			log.debug("sync panel visibility");
-			this.updatePanelVisibility(this.model.getStatus());
+			this.updateForm(this.model.getStatus());
 			
 		}
 		else {
@@ -250,41 +204,16 @@ public class CreateDataFileWidgetRenderer extends ChassisWidgetRenderer {
 	/**
 	 * @param after
 	 */
-	protected void updatePanelVisibility(Status status) {
-		log.enter("updatePanelVisibility");
+	protected void updateForm(Status status) {
+		log.enter("updateForm");
 		
-		if (status == null || status instanceof InitialStatus) {
+		if (status instanceof ReadyStatus) {
 			
-			this.savingPanel.setVisible(false);
-			this.mainPanel.setVisible(false);
-			
-		}
-		else if (status instanceof AsyncRequestPendingStatus) {
-			
-			this.mainPanel.setVisible(false);
-			this.savingPanel.setVisible(true);
-			
-		}
-		else if (status instanceof ReadyStatus) {
-			
-			this.savingPanel.setVisible(false);
-			this.mainPanel.setVisible(true);
-			this.form.reset(); // TODO put this elsewhere? (also, causes double call to render on first added to dom)
+			this.form.reset(); 
 
 		}
-		else if (status instanceof ErrorStatus) {
-			
-			log.error("TODO handle error status");
-			
-		}
-		else {
 
-			log.error("unexpected status: "+status.getClass().getName());
-			
-		}
-		
 		log.leave();
-		
 	}
 
 

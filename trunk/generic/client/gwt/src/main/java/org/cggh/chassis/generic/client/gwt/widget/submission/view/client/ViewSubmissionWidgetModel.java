@@ -6,6 +6,7 @@ package org.cggh.chassis.generic.client.gwt.widget.submission.view.client;
 import org.cggh.chassis.generic.atom.rewrite.client.submission.SubmissionEntry;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
+import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 import org.cggh.chassis.generic.widget.client.ChassisWidgetModel;
 import org.cggh.chassis.generic.widget.client.ModelChangeEvent;
 import org.cggh.chassis.generic.widget.client.ModelChangeHandler;
@@ -17,7 +18,7 @@ import com.google.gwt.event.shared.HandlerRegistration;
  * @author aliman
  *
  */
-public class ViewSubmissionWidgetModel extends ChassisWidgetModel {
+public class ViewSubmissionWidgetModel extends AsyncWidgetModel {
 
 	
 	
@@ -28,17 +29,7 @@ public class ViewSubmissionWidgetModel extends ChassisWidgetModel {
 	
 	
 	// model properties
-	private int status;
 	private SubmissionEntry entry;
-	
-	
-	
-	
-	// property value constants
-	public static final int STATUS_ERROR = -1;
-	public static final int STATUS_INITIAL = 0;
-	public static final int STATUS_READY = 1;
-	public static final int STATUS_RETRIEVE_PENDING = 2;
 	
 	
 	
@@ -61,8 +52,9 @@ public class ViewSubmissionWidgetModel extends ChassisWidgetModel {
 		log = LogFactory.getLog(ViewSubmissionWidgetModel.class); // need to instantiate here because called from superclass constructor
 		log.enter("init");
 		
+		super.init();
+
 		// initialise model properties
-		this.status = STATUS_INITIAL;
 		this.entry = null;
 		
 		log.leave();
@@ -71,23 +63,7 @@ public class ViewSubmissionWidgetModel extends ChassisWidgetModel {
 
 
 
-
-	public void setStatus(int status) {
-		StatusChangeEvent e = new StatusChangeEvent(this.status, status);
-		this.status = status;
-		this.fireChangeEvent(e);
-	}
-
-
-
-
-	public int getStatus() {
-		return status;
-	}
-
-
-
-
+	
 	public void setSubmissionEntry(SubmissionEntry entry) {
 		SubmissionEntryChangeEvent e = new SubmissionEntryChangeEvent(this.entry, entry);
 		this.entry = entry;
@@ -104,14 +80,6 @@ public class ViewSubmissionWidgetModel extends ChassisWidgetModel {
 	
 	
 	
-	public interface StatusChangeHandler extends ModelChangeHandler {
-		
-		public void onStatusChanged(StatusChangeEvent e);
-
-	}
-	
-	
-	
 	
 	public interface SubmissionEntryChangeHandler extends ModelChangeHandler {
 		
@@ -122,24 +90,6 @@ public class ViewSubmissionWidgetModel extends ChassisWidgetModel {
 	
 	
 	
-	public static class StatusChangeEvent extends ModelChangeEvent<Integer, StatusChangeHandler> {
-
-		public static final Type<StatusChangeHandler> TYPE = new Type<StatusChangeHandler>();
-			
-		public StatusChangeEvent(Integer before, Integer after) { super(before, after); }
-
-		@Override
-		protected void dispatch(StatusChangeHandler handler) { handler.onStatusChanged(this); }
-
-		@Override
-		public Type<StatusChangeHandler> getAssociatedType() { return TYPE; }
-		
-	}
-	
-	
-	
-	
-
 	public static class SubmissionEntryChangeEvent extends ModelChangeEvent<SubmissionEntry, SubmissionEntryChangeHandler> {
 
 		public static final Type<SubmissionEntryChangeHandler> TYPE = new Type<SubmissionEntryChangeHandler>();
@@ -156,11 +106,6 @@ public class ViewSubmissionWidgetModel extends ChassisWidgetModel {
 	
 	
 	
-	
-	public HandlerRegistration addStatusChangeHandler(StatusChangeHandler h) {
-		return this.addChangeHandler(h, StatusChangeEvent.TYPE);
-	}
-
 
 
 	

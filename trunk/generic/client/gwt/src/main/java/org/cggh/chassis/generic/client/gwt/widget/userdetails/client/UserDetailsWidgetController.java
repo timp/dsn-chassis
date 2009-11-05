@@ -3,13 +3,10 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.userdetails.client;
 
-import java.util.HashSet;
 import java.util.Set;
-import java.util.TreeSet;
 
 import org.cggh.chassis.generic.client.gwt.configuration.client.ChassisRole;
 import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
-import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.twisted.client.Deferred;

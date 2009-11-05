@@ -28,14 +28,13 @@ import com.google.gwt.user.client.ui.Label;
  * @author aliman
  *
  */
-public class SubmissionPropertiesWidgetDefaultRenderer 
-			extends ChassisWidgetRenderer {
+public class SubmissionPropertiesWidgetRenderer 
+			extends ChassisWidgetRenderer<SubmissionPropertiesWidgetModel> {
 	
 	
 	
 	
 	private Log log = LogFactory.getLog(this.getClass());
-	private SubmissionPropertiesWidgetModel model;
 	private Label titleLabel, summaryLabel, createdLabel, updatedLabel, idLabel;
 	private FlowPanel modulesListPanel, ownersListPanel;
 	private ViewStudiesWidget studiesLinkedWidget;
@@ -84,33 +83,10 @@ public class SubmissionPropertiesWidgetDefaultRenderer
 
 
 	/**
-	 * @param model
-	 */
-	public void bindUI(SubmissionPropertiesWidgetModel model) {
-		log.enter("bindUI");
-		
-		// un-bind to clear anything
-		this.unbindUI();
-		
-		// keep reference to model
-		this.model = model;
-		
-		// register handlers for model changes
-		this.registerHandlersForModelChanges();
-
-		// register handlers for child widget events
-		// not needed for this widget
-		
-		log.leave();	
-	}
-	
-	
-	
-	
-	/**
 	 * 
 	 */
-	private void registerHandlersForModelChanges() {
+	@Override
+	protected void registerHandlersForModelChanges() {
 		log.enter("registerHandlersForModelChanges");
 		
 		// register handler for model property change events
@@ -131,6 +107,20 @@ public class SubmissionPropertiesWidgetDefaultRenderer
 		
 		log.leave();
 	}
+
+	
+	
+	
+	
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.widget.client.ChassisWidgetRenderer#registerHandlersForChildWidgetEvents()
+	 */
+	@Override
+	protected void registerHandlersForChildWidgetEvents() {
+		// no events of interest
+	}
+
+
 
 
 
@@ -284,23 +274,6 @@ public class SubmissionPropertiesWidgetDefaultRenderer
 
 	
 
-
-
-	/**
-	 * 
-	 */
-	public void unbindUI() {
-		log.enter("unbindUI");
-		
-		// detach from model
-		this.clearModelChangeHandlers();
-		
-		// detach from child widgets
-		// not needed for this widget
-		
-		log.leave();
-		
-	}
 
 
 

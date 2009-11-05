@@ -14,17 +14,11 @@ import org.cggh.chassis.generic.client.gwt.widget.userdetails.client.UserDetails
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.user.transfer.UserDetailsTO;
-import org.cggh.chassis.generic.widget.client.ChassisWidgetRenderer;
-import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.AsyncRequestPendingStatus;
-import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.ErrorStatus;
-import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.InitialStatus;
-import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.ReadyStatus;
-import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.Status;
-import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.StatusChangeEvent;
-import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.StatusChangeHandler;
+import org.cggh.chassis.generic.widget.client.AsyncWidgetRenderer;
 
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
@@ -35,7 +29,8 @@ import com.google.gwt.user.client.ui.Panel;
  * @author aliman
  *
  */
-public class UserDetailsWidgetRenderer extends ChassisWidgetRenderer {
+public class UserDetailsWidgetRenderer 
+	extends AsyncWidgetRenderer<UserDetailsWidgetModel> {
 	
 	
 	
@@ -45,10 +40,9 @@ public class UserDetailsWidgetRenderer extends ChassisWidgetRenderer {
 
 	
 	// child widgets
-	private Panel loadingPanel, userDetailsPanel, changeUserRolePanel;
+	private Panel changeUserRolePanel;
 	private Label userNameLabel, currentRoleLabel;
 	private ListBox userRolesListBox;
-	private UserDetailsWidgetModel model;
 
 	
 	
@@ -72,72 +66,39 @@ public class UserDetailsWidgetRenderer extends ChassisWidgetRenderer {
 	/**
 	 * 
 	 */
-	public void renderUI() {
-		log.enter("renderUI");
+	public void renderMainPanel() {
+		log.enter("renderMainPanel");
 		
 		log.debug("instantiate child widgets");
-		this.loadingPanel = new FlowPanel();
-		this.userDetailsPanel = new FlowPanel();
 		this.changeUserRolePanel = new FlowPanel();
 		this.userNameLabel = new InlineLabel();
 		this.currentRoleLabel = new InlineLabel();
 		this.userRolesListBox = new ListBox();
 		
 		log.debug("add styles");
-		this.userDetailsPanel.addStyleName(STYLENAME_USERDETAILS);
+		this.mainPanel.addStyleName(STYLENAME_USERDETAILS);
 		this.userNameLabel.addStyleName(STYLENAME_USERNAME);
 		this.currentRoleLabel.addStyleName(STYLENAME_CURRENTROLE);
 		this.userRolesListBox.addStyleName(STYLENAME_ROLESWITCHER);
 		changeUserRolePanel.addStyleName(STYLENAME_SWITCHEROLEPANEL);
 		
-		log.debug("render loading panel");
-		Label loadingLabel = new Label("loading..."); // TODO i18n
-		loadingPanel.add(loadingLabel);
-		
-		log.debug("render userDetailsPanel");
+		log.debug("render mainPanel");
 		Label loggedInAsLabel = new InlineLabel("logged in as: "); // TODO i18n
-		userDetailsPanel.add(loggedInAsLabel);
-		userDetailsPanel.add(userNameLabel);
+		mainPanel.add(loggedInAsLabel);
+		mainPanel.add(userNameLabel);
 		Label roleLabel = new InlineLabel(" | role: "); // TODO i18n
-		userDetailsPanel.add(roleLabel);
-		userDetailsPanel.add(currentRoleLabel);
+		mainPanel.add(roleLabel);
+		mainPanel.add(currentRoleLabel);
 		
 		log.debug("render changeUserRolePanel");
 		Label changeRoleLabel = new InlineLabel(" | switch role: "); // TODO i18n		
 		changeUserRolePanel.add(changeRoleLabel);
 		changeUserRolePanel.add(userRolesListBox);
-		userDetailsPanel.add(changeUserRolePanel);	
-		
-		log.debug("render canvas");
-		this.canvas.add(this.loadingPanel);
-		this.canvas.add(this.userDetailsPanel);
+		mainPanel.add(changeUserRolePanel);	
 		
 		log.leave();
 	}
 
-
-
-
-	/**
-	 * @param model
-	 */
-	public void bindUI(UserDetailsWidgetModel model) {
-		log.enter("bindUI");
-		
-		log.debug("unbind to clear anything");
-		this.unbindUI();
-		
-		log.debug("keep reference to model");
-		this.model = model;
-		
-		log.debug("register this as handler for model property change events");
-		this.registerHandlersForModelChanges();
-		
-		log.debug("register handlers for child widget events");
-		this.registerHandlersForChildWidgetEvents();
-		
-		log.leave();
-	}
 
 
 
@@ -145,22 +106,15 @@ public class UserDetailsWidgetRenderer extends ChassisWidgetRenderer {
 	/**
 	 * 
 	 */
-	private void registerHandlersForModelChanges() {
+	@Override
+	protected void registerHandlersForModelChanges() {
 		log.enter("registerHandlersForModelChanges");
+
+		log.debug("call on super first");
+		super.registerHandlersForModelChanges();
 		
-		this.model.addStatusChangeHandler(new StatusChangeHandler() {
-			
-			public void onStatusChanged(StatusChangeEvent e) {
-				log.enter("[anon StatusChangeHandler] onStatusChanged");
-				
-				updatePanelVisibility(e.getAfter());
-				
-				log.leave();
-				
-			}
-		});
-		
-		this.model.addCurrentUserChangeHandler(new CurrentUserChangeHandler() {
+		log.debug("register handler for current user change");
+		HandlerRegistration a = this.model.addCurrentUserChangeHandler(new CurrentUserChangeHandler() {
 			
 			public void onCurrentUserChanged(CurrentUserChangeEvent e) {
 				log.enter("[anon CurrentUserChangeHandler] onCurrentUserChanged");
@@ -173,7 +127,8 @@ public class UserDetailsWidgetRenderer extends ChassisWidgetRenderer {
 			}
 		});
 		
-		this.model.addCurrentRoleChangeHandler(new CurrentRoleChangeHandler() {
+		log.debug("register handler for current role change");
+		HandlerRegistration b = this.model.addCurrentRoleChangeHandler(new CurrentRoleChangeHandler() {
 			
 			public void onCurrentRoleChanged(CurrentRoleChangeEvent e) {
 				log.enter("onCurrentRoleChanged");
@@ -185,8 +140,11 @@ public class UserDetailsWidgetRenderer extends ChassisWidgetRenderer {
 			}
 		});
 		
-		log.leave();
+		log.debug("store handler registrations for later");
+		this.modelChangeHandlerRegistrations.add(a);
+		this.modelChangeHandlerRegistrations.add(b);
 		
+		log.leave();		
 	}
 
 
@@ -195,7 +153,8 @@ public class UserDetailsWidgetRenderer extends ChassisWidgetRenderer {
 	/**
 	 * 
 	 */
-	private void registerHandlersForChildWidgetEvents() {
+	@Override
+	protected void registerHandlersForChildWidgetEvents() {
 		log.enter("registerHandlersForChildWidgetEvents");
 		
 		userRolesListBox.addChangeHandler(new RolesListBoxChangeHandler());
@@ -233,7 +192,8 @@ public class UserDetailsWidgetRenderer extends ChassisWidgetRenderer {
 	public void syncUI() {
 		log.enter("syncUI");
 		
-		this.updatePanelVisibility(this.model.getStatus());
+		super.syncUI();
+		
 		this.updateUserNameLabel(this.model.getCurrentUser());
 		this.updateRolesListBox(this.model.getCurrentUser());
 		this.updateCurrentRoleLabel(this.model.getCurrentRole());
@@ -242,62 +202,6 @@ public class UserDetailsWidgetRenderer extends ChassisWidgetRenderer {
 		
 	}
 
-
-
-
-	/**
-	 * 
-	 */
-	public void unbindUI() {
-		log.enter("unbindUI");
-		
-		this.clearModelChangeHandlers();
-		this.clearChildWidgetEventHandlers();
-		
-		log.leave();
-		
-	}
-	
-	
-	
-
-	/**
-	 * @param e
-	 */
-	protected void updatePanelVisibility(Status status) {
-		log.enter("updatePanelVisibility");
-		
-		if (status == null || status instanceof InitialStatus) {
-
-			this.userDetailsPanel.setVisible(false);
-			this.loadingPanel.setVisible(false);
-
-		}
-		else if (status instanceof AsyncRequestPendingStatus) {
-			
-			this.userDetailsPanel.setVisible(false);
-			this.loadingPanel.setVisible(true);
-			
-		}
-		else if (status instanceof ReadyStatus) {
-
-			this.loadingPanel.setVisible(false);
-			this.userDetailsPanel.setVisible(true);
-
-		}
-		else if (status instanceof ErrorStatus) {
-		
-			log.error("TODO handle error status");
-			
-		}
-		else {
-
-			log.error("unexpected status: "+status.getClass().getName());
-			
-		}
-		
-		log.leave();		
-	}
 
 
 

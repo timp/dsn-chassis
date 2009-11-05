@@ -4,15 +4,13 @@
 package org.cggh.chassis.generic.client.gwt.widget.userdetails.client;
 
 import org.cggh.chassis.generic.client.gwt.configuration.client.ChassisRole;
-import org.cggh.chassis.generic.client.gwt.widget.userdetails.client.UserDetailsWidgetModel.CurrentRoleChangeEvent;
 import org.cggh.chassis.generic.client.gwt.widget.userdetails.client.UserDetailsWidgetModel.CurrentRoleChangeHandler;
-import org.cggh.chassis.generic.client.gwt.widget.userdetails.client.UserDetailsWidgetModel.CurrentUserChangeEvent;
 import org.cggh.chassis.generic.client.gwt.widget.userdetails.client.UserDetailsWidgetModel.CurrentUserChangeHandler;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.twisted.client.Deferred;
 import org.cggh.chassis.generic.user.transfer.UserDetailsTO;
-import org.cggh.chassis.generic.widget.client.ChassisWidget;
+import org.cggh.chassis.generic.widget.client.DelegatingChassisWidget;
 
 import com.google.gwt.event.shared.HandlerRegistration;
 
@@ -20,14 +18,13 @@ import com.google.gwt.event.shared.HandlerRegistration;
  * @author aliman
  *
  */
-public class UserDetailsWidget extends ChassisWidget {
+public class UserDetailsWidget 
+	extends DelegatingChassisWidget<UserDetailsWidgetModel, UserDetailsWidgetRenderer> {
 	
 	
 	
 	
 	private Log log;
-	private UserDetailsWidgetModel model;
-	private UserDetailsWidgetRenderer renderer;
 	private UserDetailsWidgetController controller;
 
 	
@@ -51,7 +48,6 @@ public class UserDetailsWidget extends ChassisWidget {
 	 */
 	@Override
 	public void init() {
-		log = LogFactory.getLog(UserDetailsWidget.class); // instantiate here because called from superclass constructor
 		log.enter("init");
 
 		log.debug("instantiate a model");
@@ -71,96 +67,6 @@ public class UserDetailsWidget extends ChassisWidget {
 
 	
 	
-	
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#renderUI()
-	 */
-	@Override
-	protected void renderUI() {
-		log.enter("renderUI");
-
-		// delegate to renderer
-		this.renderer.renderUI();
-
-		log.leave();
-
-	}
-
-	
-	
-	
-	
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#bindUI()
-	 */
-	@Override
-	protected void bindUI() {
-		log.enter("bindUI");
-
-		// delegate to renderer
-		this.renderer.bindUI(this.model);
-
-		log.leave();
-
-	}
-
-	
-	
-	
-	
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#syncUI()
-	 */
-	@Override
-	protected void syncUI() {
-		log.enter("syncUI");
-
-		// delegate to renderer
-		this.renderer.syncUI();
-
-		log.leave();
-
-	}
-
-	
-	
-	
-	
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#destroy()
-	 */
-	@Override
-	public void destroy() {
-		log.enter("destroy");
-
-		// unbind
-		this.unbindUI();
-
-		// TODO anything else?
-
-		log.leave();
-
-	}
-
-	
-	
-	
-	
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#unbindUI()
-	 */
-	@Override
-	protected void unbindUI() {
-		log.enter("unbindUI");
-
-		// delegate to renderer
-		this.renderer.unbindUI();
-
-		log.leave();
-
-	}
-
-
 
 
 	/**
@@ -227,6 +133,18 @@ public class UserDetailsWidget extends ChassisWidget {
 		// delegate to model
 		return this.model.addCurrentRoleChangeHandler(h);
 		
+	}
+
+
+
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#ensureLog()
+	 */
+	@Override
+	protected void ensureLog() {
+		log = LogFactory.getLog(UserDetailsWidget.class);
 	}
 	
 	

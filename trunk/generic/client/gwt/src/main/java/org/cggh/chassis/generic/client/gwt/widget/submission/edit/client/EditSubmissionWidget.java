@@ -87,7 +87,7 @@ public class EditSubmissionWidget extends Composite {
 
 	public void fireOnSubmissionUpdateSuccess(SubmissionEntry submissionEntry) {
 		for (EditSubmissionWidgetPubSubAPI listener : listeners) {
-			listener.onCreateSubmissionSuccess(submissionEntry);
+			listener.onEditSubmissionSuccess(submissionEntry);
 		}
 	}
 
@@ -99,7 +99,7 @@ public class EditSubmissionWidget extends Composite {
 	 */
 	public void fireOnSubmissionUpdateError(Throwable error) {
 		for (EditSubmissionWidgetPubSubAPI listener : listeners) {
-			listener.onCreateSubmissionError(error);
+			listener.onEditSubmissionError(error);
 		}
 	}
 
