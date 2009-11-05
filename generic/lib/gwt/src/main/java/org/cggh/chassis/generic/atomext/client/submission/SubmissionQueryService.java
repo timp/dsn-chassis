@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.atom.rewrite.client.submission;
+package org.cggh.chassis.generic.atomext.client.submission;
 
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;

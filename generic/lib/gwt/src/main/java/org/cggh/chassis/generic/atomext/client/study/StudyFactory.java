@@ -1,8 +1,9 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.atom.rewrite.client.vanilla;
+package org.cggh.chassis.generic.atomext.client.study;
 
+import org.cggh.chassis.generic.atom.chassis.base.vocab.Chassis;
 import org.cggh.chassis.generic.atom.rewrite.client.Atom;
 import org.cggh.chassis.generic.atom.rewrite.client.AtomFactory;
 
@@ -12,44 +13,53 @@ import com.google.gwt.xml.client.Element;
  * @author aliman
  *
  */
-public class VanillaAtomFactory extends AtomFactory<VanillaAtomEntry, VanillaAtomFeed> {
-
-
+public class StudyFactory extends AtomFactory<StudyEntry, StudyFeed> {
+	
 	
 	
 	
 	public static String TEMPLATE_ENTRY = 
-		"<atom:entry xmlns:atom=\""+Atom.NSURI+"\"/>";
+		"<atom:entry xmlns:atom=\""+Atom.NSURI+"\">" +
+			"<atom:category scheme=\""+Chassis.SCHEME_TYPES+"\" term=\""+Chassis.Type.STUDY+"\"/>" +
+			"<atom:content type=\"application/xml\">" +
+				"<chassis:study xmlns:chassis=\""+Chassis.NSURI+"\"></chassis:study>" +
+			"</atom:content>" +
+		"</atom:entry>";
 	
-
+	
+	
 	
 	public static String TEMPLATE_FEED = 
 		"<atom:feed xmlns:atom=\""+Atom.NSURI+"\"/>";
 
 	
-
 	
+	
+	
+
 	
 	
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.atom.rewrite.client.AtomFactory#createEntry(com.google.gwt.xml.client.Element)
 	 */
 	@Override
-	public VanillaAtomEntry createEntry(Element entryElement) {
-		return new VanillaAtomEntryImpl(entryElement, this);
+	public StudyEntry createEntry(Element e) {
+		return new StudyEntryImpl(e, this);
 	}
-	
-	
-	
 
+	
+	
+	
+	
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.atom.rewrite.client.AtomFactory#createFeed(com.google.gwt.xml.client.Element)
 	 */
 	@Override
-	public VanillaAtomFeed createFeed(Element feedElement) {
-		return new VanillaAtomFeedImpl(feedElement, this);
+	public StudyFeed createFeed(Element e) {
+		return new StudyFeedImpl(e, this);
 	}
 
+	
 	
 	
 	
@@ -60,10 +70,11 @@ public class VanillaAtomFactory extends AtomFactory<VanillaAtomEntry, VanillaAto
 	public String getEntryTemplate() {
 		return TEMPLATE_ENTRY;
 	}
-	
-	
-	
 
+	
+	
+	
+	
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.atom.rewrite.client.AtomFactory#getFeedTemplate()
 	 */
@@ -71,8 +82,21 @@ public class VanillaAtomFactory extends AtomFactory<VanillaAtomEntry, VanillaAto
 	public String getFeedTemplate() {
 		return TEMPLATE_FEED;
 	}
-	
-	
-	
 
+
+
+
+
+	/**
+	 * @param studyElement
+	 * @return
+	 */
+	public Study createStudy(Element studyElement) {
+		return new StudyImpl(studyElement);
+	}
+
+	
+	
+	
+	
 }

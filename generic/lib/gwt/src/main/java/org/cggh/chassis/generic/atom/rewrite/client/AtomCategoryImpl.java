@@ -4,6 +4,8 @@
 package org.cggh.chassis.generic.atom.rewrite.client;
 
 
+import org.cggh.chassis.generic.xml.client.ElementWrapperImpl;
+
 import com.google.gwt.xml.client.Element;
 
 /**

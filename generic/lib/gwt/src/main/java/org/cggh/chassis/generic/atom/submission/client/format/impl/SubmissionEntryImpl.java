@@ -70,7 +70,7 @@ public class SubmissionEntryImpl extends AtomEntryImpl implements SubmissionEntr
 	 */
 	public void addStudyLink(String href) {
 		AtomLink link = factory.createLink();
-		link.setRel(Chassis.REL_STUDY);
+		link.setRel(Chassis.Rel.STUDY);
 		link.setHref(href);
 		this.addLink(link);
 	}
@@ -94,7 +94,7 @@ public class SubmissionEntryImpl extends AtomEntryImpl implements SubmissionEntr
 		List<AtomLink> links = this.getLinks();
 		List<AtomLink> studyLinks = new ArrayList<AtomLink>();
 		for (AtomLink link : links) {
-			if (Chassis.REL_STUDY.equals(link.getRel())) {
+			if (Chassis.Rel.STUDY.equals(link.getRel())) {
 				studyLinks.add(link);
 			}
 		}
@@ -123,7 +123,7 @@ public class SubmissionEntryImpl extends AtomEntryImpl implements SubmissionEntr
 	
 	public Element getSubmissionElement() {
 //		return XML.getElementByTagNameNS(element, Chassis.NSURI, Chassis.ELEMENT_STUDY);
-		return XMLNS.getFirstElementByTagNameNS(element, Chassis.ELEMENT_SUBMISSION, Chassis.NSURI);
+		return XMLNS.getFirstElementByTagNameNS(element, Chassis.Element.SUBMISSION, Chassis.NSURI);
 	}
 
 	/* (non-Javadoc)

@@ -154,8 +154,8 @@ public class StudyFactoryImpl extends AtomFactoryImpl implements StudyFactory {
 			throw new NullPointerException("studyElement is null, cannot create study");
 		}
 		
-		if (!XML.getLocalName(studyElement).equals(Chassis.ELEMENT_STUDY)) {
-			throw new AtomFormatException("bad local tag name, expected: "+Chassis.ELEMENT_STUDY+"; found: "+XML.getLocalName(studyElement));
+		if (!XML.getLocalName(studyElement).equals(Chassis.Element.STUDY)) {
+			throw new AtomFormatException("bad local tag name, expected: "+Chassis.Element.STUDY+"; found: "+XML.getLocalName(studyElement));
 		}
 
 		if (studyElement.getNamespaceURI() == null || !studyElement.getNamespaceURI().equals(Chassis.NSURI)) {

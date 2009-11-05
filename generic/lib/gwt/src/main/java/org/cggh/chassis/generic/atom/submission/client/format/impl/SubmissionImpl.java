@@ -45,7 +45,7 @@ public class SubmissionImpl extends ElementWrapperImpl implements Submission {
 	 */
 	public List<String> getModules() {
 //		return XML.getElementsSimpleContentsByTagName(element, Chassis.ELEMENT_MODULE);
-		return XMLNS.getElementsSimpleContentsByTagNameNS(element, Chassis.ELEMENT_MODULE, Chassis.NSURI);
+		return XMLNS.getElementsSimpleContentsByTagNameNS(element, Chassis.Element.MODULE, Chassis.NSURI);
 	}
 
 	/* (non-Javadoc)
@@ -62,7 +62,7 @@ public class SubmissionImpl extends ElementWrapperImpl implements Submission {
 	 */
 	public void setModules(List<String> modules) {
 //		XML.setElementsSimpleContentsByLocalName(element, Chassis.ELEMENT_MODULE, modules);
-		XMLNS.setElementsSimpleContentsByTagNameNS(element, Chassis.ELEMENT_MODULE, Chassis.PREFIX, Chassis.NSURI, modules);
+		XMLNS.setElementsSimpleContentsByTagNameNS(element, Chassis.Element.MODULE, Chassis.PREFIX, Chassis.NSURI, modules);
 	}
 
 }

@@ -1,10 +1,11 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.atom.rewrite.client.submission;
+package org.cggh.chassis.generic.atomext.client.submission;
 
 import org.cggh.chassis.generic.atom.rewrite.client.AtomEntryValidator;
 import org.cggh.chassis.generic.atom.rewrite.client.ValidationReport;
+import org.cggh.chassis.generic.atomext.shared.ModulesValidator;
 
 
 /**
@@ -16,44 +17,14 @@ public class SubmissionEntryValidator extends AtomEntryValidator<SubmissionEntry
 	
 	
 
-	protected Integer minModules = null;
-	protected Integer maxModules = null;
 	protected Integer minStudyLinks = null;
 	protected Integer maxStudyLinks = null;
+	protected String minStudyLinksMessage = "at least " + N + " study links are required";
+	protected String maxStudyLinksMessage = "at most " + N + " study links are required";
+	protected ModulesValidator modulesValidator;
 	
-	protected String minModulesMessage = "at least {n} modules are required";
-	protected String maxModulesMessage = "at most {n} modules are required";
-
-	protected String minStudyLinksMessage = "at least {n} study links are required";
-	protected String maxStudyLinksMessage = "at most {n} study links are required";
 	
-	/**
-	 * @return the minModules
-	 */
-	public Integer getMinModules() {
-		return minModules;
-	}
 	
-	/**
-	 * @param minModules the minModules to set
-	 */
-	public void setMinModules(Integer minModules) {
-		this.minModules = minModules;
-	}
-	
-	/**
-	 * @return the maxModules
-	 */
-	public Integer getMaxModules() {
-		return maxModules;
-	}
-	
-	/**
-	 * @param maxModules the maxModules to set
-	 */
-	public void setMaxModules(Integer maxModules) {
-		this.maxModules = maxModules;
-	}
 	
 	/**
 	 * @return the minStudyLinks
@@ -84,34 +55,6 @@ public class SubmissionEntryValidator extends AtomEntryValidator<SubmissionEntry
 	}
 	
 	/**
-	 * @return the minModulesMessage
-	 */
-	public String getMinModulesMessage() {
-		return minModulesMessage;
-	}
-	
-	/**
-	 * @param minModulesMessage the minModulesMessage to set
-	 */
-	public void setMinModulesMessage(String minModulesMessage) {
-		this.minModulesMessage = minModulesMessage;
-	}
-	
-	/**
-	 * @return the maxModulesMessage
-	 */
-	public String getMaxModulesMessage() {
-		return maxModulesMessage;
-	}
-	
-	/**
-	 * @param maxModulesMessage the maxModulesMessage to set
-	 */
-	public void setMaxModulesMessage(String maxModulesMessage) {
-		this.maxModulesMessage = maxModulesMessage;
-	}
-	
-	/**
 	 * @return the minStudyLinksMessage
 	 */
 	public String getMinStudyLinksMessage() {
@@ -139,20 +82,24 @@ public class SubmissionEntryValidator extends AtomEntryValidator<SubmissionEntry
 		this.maxStudyLinksMessage = maxStudyLinksMessage;
 	}
 	
-	
-	
+	public void setModulesValidator(ModulesValidator modulesValidator) {
+		this.modulesValidator = modulesValidator;
+	}
+
+	public ModulesValidator getModulesValidator() {
+		return modulesValidator;
+	}
 	
 	public void validate(ValidationReport report, SubmissionEntry entry) {
 		super.validate(report, entry);
 		
-		validateMinCardinality(this.minModules, entry.getModules(), this.minModulesMessage, report);
 		validateMinCardinality(this.minStudyLinks, entry.getStudyLinks(), this.minStudyLinksMessage, report);
-		
-		validateMaxCardinality(this.maxModules, entry.getModules(), this.maxModulesMessage, report);
 		validateMaxCardinality(this.maxStudyLinks, entry.getStudyLinks(), this.maxStudyLinksMessage, report);
 		
+		if (this.modulesValidator != null) {
+			this.modulesValidator.validate(report, entry.getSubmission());
+		}
+		
 	}
-	
-	
 	
 }

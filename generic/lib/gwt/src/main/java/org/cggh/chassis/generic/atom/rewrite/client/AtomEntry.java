@@ -5,6 +5,8 @@ package org.cggh.chassis.generic.atom.rewrite.client;
 
 import java.util.List;
 
+import org.cggh.chassis.generic.xml.client.ElementWrapper;
+
 /**
  * @author aliman
  *

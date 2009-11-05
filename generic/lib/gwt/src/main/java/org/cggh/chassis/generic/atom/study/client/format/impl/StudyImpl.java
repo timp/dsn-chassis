@@ -45,7 +45,7 @@ public class StudyImpl extends ElementWrapperImpl implements Study {
 	 */
 	public List<String> getModules() {
 //		return XML.getElementsSimpleContentsByTagName(element, Chassis.ELEMENT_MODULE);
-		return XMLNS.getElementsSimpleContentsByTagNameNS(element, Chassis.ELEMENT_MODULE, Chassis.NSURI);
+		return XMLNS.getElementsSimpleContentsByTagNameNS(element, Chassis.Element.MODULE, Chassis.NSURI);
 	}
 
 	/* (non-Javadoc)
@@ -62,11 +62,11 @@ public class StudyImpl extends ElementWrapperImpl implements Study {
 	 */
 	public void setModules(List<String> modules) {
 //		XML.setElementsSimpleContentsByLocalName(element, Chassis.ELEMENT_MODULE, modules);
-		XMLNS.setElementsSimpleContentsByTagNameNS(element, Chassis.ELEMENT_MODULE, Chassis.PREFIX, Chassis.NSURI, modules);
+		XMLNS.setElementsSimpleContentsByTagNameNS(element, Chassis.Element.MODULE, Chassis.PREFIX, Chassis.NSURI, modules);
 	}
 
 	public int getEndYear() throws ChassisFormatException {
-		String content = XMLNS.getFirstElementSimpleContentByTagNameNS(element, Chassis.ELEMENT_ENDYEAR, Chassis.NSURI);
+		String content = XMLNS.getFirstElementSimpleContentByTagNameNS(element, Chassis.Element.ENDYEAR, Chassis.NSURI);
 		int year = -1;
 		try {
 			year = Integer.parseInt(content);
@@ -85,7 +85,7 @@ public class StudyImpl extends ElementWrapperImpl implements Study {
 
 	public void setEndYear(int endYear) {
 		String content = Integer.toString(endYear);
-		XMLNS.setSingleElementSimpleContentByTagNameNS(element, Chassis.ELEMENT_ENDYEAR, Chassis.PREFIX, Chassis.NSURI, content);
+		XMLNS.setSingleElementSimpleContentByTagNameNS(element, Chassis.Element.ENDYEAR, Chassis.PREFIX, Chassis.NSURI, content);
 	}
 
 	public void setStartYear(int startYear) {

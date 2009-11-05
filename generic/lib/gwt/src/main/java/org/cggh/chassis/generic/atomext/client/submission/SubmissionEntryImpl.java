@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.atom.rewrite.client.submission;
+package org.cggh.chassis.generic.atomext.client.submission;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,40 +40,10 @@ public class SubmissionEntryImpl
 
 	
 	
-	
 
-	public void addModule(String module) {
-		getSubmission().addModule(module);
-	}
-
-	
-	
-	
-	public List<String> getModules() {
-		return getSubmission().getModules();
-	}
-
-	
-	
-	
-	public void removeModule(String module) {
-		getSubmission().removeModule(module);
-	}
-
-	
-	
-	
-	public void setModules(List<String> modules) {
-		getSubmission().setModules(modules);
-	}
-
-
-
-	
-	
 	public void addStudyLink(String href) {
 		AtomLink link = factory.createLink();
-		link.setRel(Chassis.REL_STUDY);
+		link.setRel(Chassis.Rel.STUDY);
 		link.setHref(href);
 		this.addLink(link);
 	}
@@ -98,7 +68,7 @@ public class SubmissionEntryImpl
 		List<AtomLink> links = this.getLinks();
 		List<AtomLink> studyLinks = new ArrayList<AtomLink>();
 		for (AtomLink link : links) {
-			if (Chassis.REL_STUDY.equals(link.getRel())) {
+			if (Chassis.Rel.STUDY.equals(link.getRel())) {
 				studyLinks.add(link);
 			}
 		}
@@ -129,7 +99,7 @@ public class SubmissionEntryImpl
 	
 	
 	public Element getSubmissionElement() {
-		return XMLNS.getFirstElementByTagNameNS(element, Chassis.ELEMENT_SUBMISSION, Chassis.NSURI);
+		return XMLNS.getFirstElementByTagNameNS(element, Chassis.Element.SUBMISSION, Chassis.NSURI);
 	}
 
 
