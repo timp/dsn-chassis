@@ -3,8 +3,8 @@
  */
 package org.cggh.chassis.generic.atomext.client.study;
 
-import org.cggh.chassis.generic.atom.rewrite.client.AtomFactory;
-import org.cggh.chassis.generic.atom.rewrite.client.AtomFeedImpl;
+import org.cggh.chassis.generic.atom.client.AtomFactory;
+import org.cggh.chassis.generic.atom.client.AtomFeedImpl;
 
 import com.google.gwt.xml.client.Element;
 

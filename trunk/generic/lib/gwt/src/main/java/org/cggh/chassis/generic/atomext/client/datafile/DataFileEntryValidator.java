@@ -3,7 +3,7 @@
  */
 package org.cggh.chassis.generic.atomext.client.datafile;
 
-import org.cggh.chassis.generic.atom.rewrite.client.AtomEntryValidator;
+import org.cggh.chassis.generic.atom.client.AtomEntryValidator;
 
 
 /**
