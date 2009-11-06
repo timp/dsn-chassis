@@ -18,7 +18,7 @@ import com.google.gwt.user.client.History;
  * @author aliman
  *
  */
-public abstract class MemoryWidget extends ChassisWidget {
+public abstract class WidgetMemory {
 
 	
 
@@ -29,28 +29,34 @@ public abstract class MemoryWidget extends ChassisWidget {
 	
 	
 	
-	private Log log = LogFactory.getLog(MemoryWidget.class);
-	private MemoryWidget memoryChild;
-	private MemoryWidget memoryParent;
+	private Log log = LogFactory.getLog(WidgetMemory.class);
+	private WidgetMemory child;
+	private WidgetMemory parent;
 	
 	
 
 
-	public void setMemoryChild(MemoryWidget child) {
-		this.memoryChild = child;
-		this.memoryChild.setMemoryParent(this);
+	public void setChild(WidgetMemory child) {
+		this.child = child;
+		this.child.setParent(this);
 	}
 	
 
 	
-	private MemoryWidget getMemoryChild() {
-		return this.memoryChild;
+	public WidgetMemory getChild() {
+		return this.child;
 	}
 	
 	
 	
-	private void setMemoryParent(MemoryWidget parent) {
-		this.memoryParent = parent;
+	public boolean hasChild() {
+		return (this.child != null);
+	}
+	
+	
+	
+	private void setParent(WidgetMemory parent) {
+		this.parent = parent;
 	}
 
 
@@ -59,12 +65,12 @@ public abstract class MemoryWidget extends ChassisWidget {
 	public void memorise() {
 		log.enter("memorise");
 		
-		if (this.memoryParent == null) {
+		if (this.parent == null) {
 			String historyToken = this.createHistoryToken();
 			History.newItem(historyToken, false); // N.B. no event, otherwise go round in circles
 		}
 		else {
-			this.memoryParent.memorise(); // bubble
+			this.parent.memorise(); // bubble
 		}
 		
 		log.leave();
@@ -86,8 +92,8 @@ public abstract class MemoryWidget extends ChassisWidget {
 
 		b.append(mnemonic);
 
-		if (this.memoryChild != null) {
-			String rest = this.memoryChild.createHistoryToken();
+		if (this.child != null) {
+			String rest = this.child.createHistoryToken();
 			if (rest != null && !rest.equals("")) {
 				b.append(delimiter);
 				b.append(rest);
@@ -105,7 +111,7 @@ public abstract class MemoryWidget extends ChassisWidget {
 	
 	
 	
-	public abstract Deferred<MemoryWidget> remember(String mnemonic);
+	public abstract Deferred<WidgetMemory> remember(String mnemonic);
 	
 	
 	
@@ -116,14 +122,14 @@ public abstract class MemoryWidget extends ChassisWidget {
 
 			// remember
 			String mnemonic = mnemonics.pop();
-			Deferred<MemoryWidget> deferredSelf = this.remember(mnemonic);
+			Deferred<WidgetMemory> deferredSelf = this.remember(mnemonic);
 			
 			// pass on to child if we have one, after remembering is complete (which might involve async actions, hence deferred)
-			deferredSelf.addCallback(new Function<MemoryWidget, MemoryWidget>() {
+			deferredSelf.addCallback(new Function<WidgetMemory, WidgetMemory>() {
 
-				public MemoryWidget apply(MemoryWidget self) {
+				public WidgetMemory apply(WidgetMemory self) {
 					
-					MemoryWidget child = self.getMemoryChild();
+					WidgetMemory child = self.getChild();
 
 					if (child != null) {
 						child.remember(mnemonics);
@@ -146,11 +152,11 @@ public abstract class MemoryWidget extends ChassisWidget {
 		
 		
 		private Log log = LogFactory.getLog(HistoryManager.class);
-		private MemoryWidget top;
+		private WidgetMemory top;
 		
 		
 		
-		public HistoryManager(MemoryWidget top) {
+		public HistoryManager(WidgetMemory top) {
 			this.top = top;
 		}
 		
