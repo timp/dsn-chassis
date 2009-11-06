@@ -10,14 +10,14 @@ import org.cggh.chassis.generic.log.client.LogFactory;
  * @author aliman
  *
  */
-public abstract class DelegatingChassisWidget
+public abstract class DelegatingWidget
 	<M, R extends ChassisWidgetRenderer<M>> 
 	extends ChassisWidget {
 	
 	
 	
 	
-	private Log log = LogFactory.getLog(DelegatingChassisWidget.class);
+	private Log log = LogFactory.getLog(DelegatingWidget.class);
 	protected R renderer;
 	protected M model;
 	
@@ -32,10 +32,10 @@ public abstract class DelegatingChassisWidget
 		log.enter("renderUI");
 
 		// delegate to renderer
-		this.renderer.renderUI();
+		if (this.renderer != null) this.renderer.renderUI();
+		else log.warn("renderer is null");
 
 		log.leave();
-
 	}
 
 
@@ -50,10 +50,10 @@ public abstract class DelegatingChassisWidget
 		log.enter("bindUI");
 
 		// delegate to renderer
-		this.renderer.bindUI(this.model);
+		if (this.renderer != null) this.renderer.bindUI(this.model);
+		else log.warn("renderer is null");
 
 		log.leave();
-
 	}
 	
 	
@@ -68,7 +68,8 @@ public abstract class DelegatingChassisWidget
 		log.enter("syncUI");
 
 		// delegate to renderer
-		this.renderer.syncUI();
+		if (this.renderer != null) this.renderer.syncUI();
+		else log.warn("renderer is null");
 
 		log.leave();
 	}
@@ -85,10 +86,10 @@ public abstract class DelegatingChassisWidget
 		log.enter("unbindUI");
 
 		// delegate to renderer
-		this.renderer.unbindUI();
-
+		if (this.renderer != null) this.renderer.unbindUI();
+		else log.warn("renderer is null");
+		
 		log.leave();
-
 	}
 	
 	

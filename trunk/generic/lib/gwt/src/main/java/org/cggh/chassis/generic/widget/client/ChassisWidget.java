@@ -4,6 +4,7 @@
 package org.cggh.chassis.generic.widget.client;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 import org.cggh.chassis.generic.log.client.Log;
@@ -12,14 +13,21 @@ import org.cggh.chassis.generic.log.client.LogFactory;
 import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.user.client.ui.ComplexPanel;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HasWidgets;
+import com.google.gwt.user.client.ui.IndexedPanel;
+import com.google.gwt.user.client.ui.Panel;
+import com.google.gwt.user.client.ui.Widget;
 
 /**
  * @author aliman
  *
  */
-public abstract class ChassisWidget extends Composite {
+public abstract class ChassisWidget 
+	extends Composite 
+	implements HasWidgets, IndexedPanel {
 
 	
 	
@@ -41,7 +49,7 @@ public abstract class ChassisWidget extends Composite {
 	/**
 	 * The outer panel that this composite widget wraps.
 	 */
-	private FlowPanel boundingBox = new FlowPanel();
+	protected Panel boundingBox = new FlowPanel();
 
 	
 	
@@ -49,7 +57,15 @@ public abstract class ChassisWidget extends Composite {
 	/**
 	 * The inner panel that all child widgets should be added to.
 	 */
-	protected FlowPanel contentBox = new FlowPanel();
+	protected ComplexPanel contentBox = new FlowPanel();
+	
+	
+	
+	
+	/**
+	 * Widget may or may not have memory. If so, store in this field.
+	 */
+	protected WidgetMemory memory = null;
 
 
 
@@ -59,6 +75,9 @@ public abstract class ChassisWidget extends Composite {
 	 */
 	public ChassisWidget() {
 		log.enter("<constructor>");
+		
+		log.debug("call init() here, so subclass can override boundingBox and/or contentBox implementation");
+		this.init();
 		
 		log.debug("initialise composite widget");
 		this.initWidget(this.boundingBox);
@@ -71,9 +90,6 @@ public abstract class ChassisWidget extends Composite {
 		log.debug("set style primary name: "+stylePrimaryName);
 		this.setStylePrimaryName(stylePrimaryName);
 
-		log.debug("call init()");
-		this.init();
-		
 		log.leave();
 	}
 	
@@ -201,6 +217,7 @@ public abstract class ChassisWidget extends Composite {
 		super.onDetach();
 	
 		// TODO should we call destroy() here? If not, where?
+		this.destroy();
 		
 		log.leave();
 	}
@@ -209,7 +226,15 @@ public abstract class ChassisWidget extends Composite {
 	
 	
 	
-	protected abstract String getName();
+	public String getName() {
+		String s = this.getClass().getName();
+		String[] t = s.split("\\.");
+		s = t[t.length-1];
+		StringBuffer o = new StringBuffer();
+		o.append(s.substring(0, 1).toLowerCase());
+		o.append(s.substring(1));
+		return o.toString();
+	}
 	
 	
 	
@@ -243,11 +268,11 @@ public abstract class ChassisWidget extends Composite {
 	 * Create a style name by appending the name passed in to the widget's
 	 * primary style name, delimited by a "-".
 	 * 
-	 * @param dependentName
+	 * @param suffix
 	 * @return
 	 */
-	public String createStyleName(String dependentName) {
-		return this.getStylePrimaryName() + "-" + dependentName;
+	public String createStyleName(String suffix) {
+		return this.getStylePrimaryName() + "-" + suffix;
 	}
 	
 	
@@ -273,6 +298,144 @@ public abstract class ChassisWidget extends Composite {
 	
 	
 
+	/*
+	 * (non-Javadoc)
+	 * @see com.google.gwt.user.client.ui.HasWidgets#add(com.google.gwt.user.client.ui.Widget)
+	 */
+	public void add(Widget w) {
+		this.contentBox.add(w);
+	}
+	
+	
+	
+	
+	/*
+	 * (non-Javadoc)
+	 * @see com.google.gwt.user.client.ui.HasWidgets#remove(com.google.gwt.user.client.ui.Widget)
+	 */
+	public boolean remove(Widget w) {
+		return this.contentBox.remove(w);
+	}
+	
+	
+	
+	
+	/*
+	 * (non-Javadoc)
+	 * @see com.google.gwt.user.client.ui.HasWidgets#iterator()
+	 */
+	public Iterator<Widget> iterator() {
+		return this.contentBox.iterator();
+	}
+	
+	
+	
+	
+	/*
+	 * (non-Javadoc)
+	 * @see com.google.gwt.user.client.ui.HasWidgets#clear()
+	 */
+	public void clear() {
+		this.contentBox.clear();
+	}
+	
+	
+	
+	
+	
+	/*
+	 * (non-Javadoc)
+	 * @see com.google.gwt.user.client.ui.IndexedPanel#getWidget(int)
+	 */
+	public Widget getWidget(int index) {
+		return this.contentBox.getWidget(index);
+	}
+	
+	
+	
+	
+	/*
+	 * (non-Javadoc)
+	 * @see com.google.gwt.user.client.ui.IndexedPanel#getWidgetCount()
+	 */
+	public int getWidgetCount() {
+		return this.contentBox.getWidgetCount();
+	}
+	
 
 	
+	
+	/*
+	 * (non-Javadoc)
+	 * @see com.google.gwt.user.client.ui.IndexedPanel#getWidgetIndex(com.google.gwt.user.client.ui.Widget)
+	 */
+	public int getWidgetIndex(Widget child) {
+		return this.contentBox.getWidgetIndex(child);
+	}
+	
+	
+	
+	
+	/*
+	 * (non-Javadoc)
+	 * @see com.google.gwt.user.client.ui.IndexedPanel#remove(int)
+	 */
+	public boolean remove(int index) {
+		return this.contentBox.remove(index);
+	}
+	
+	
+	
+	
+
+	/**
+	 * Show only this child widget, hiding all others.
+	 * @param child
+	 * @return false if the widget is not present
+	 */
+	public boolean showOnly(Widget child) {
+		if (child != null && this.getWidgetIndex(child) >= 0) {
+			this.hideAll();
+			child.setVisible(true);
+			return true;
+		}
+		return false;
+	}
+	
+	
+	
+	
+	/**
+	 * Hide all child widgets.
+	 */
+	public void hideAll() {
+		for (Widget w : this) {
+			w.setVisible(false);
+		}
+	}
+
+	
+	
+	
+	public WidgetMemory getMemory() {
+		return this.memory;
+	}
+
+	
+	
+	
+	public void setMemory(WidgetMemory memory) {
+		this.memory = memory;
+	}
+	
+	
+	
+	
+	public boolean hasMemory() {
+		return (this.memory != null);
+	}
+
+
+
+
 }
