@@ -13,8 +13,8 @@ import junit.framework.JUnit4TestAdapter;
 
 import org.cggh.chassis.generic.atomext.client.submission.SubmissionEntry;
 import org.cggh.chassis.generic.atomext.client.submission.SubmissionFactory;
-import org.cggh.chassis.generic.client.gwt.widget.submission.client.ViewSubmissionsWidgetModel;
-import org.cggh.chassis.generic.client.gwt.widget.submission.client.ViewSubmissionsWidgetModelListener;
+import org.cggh.chassis.generic.client.gwt.widget.submission.client.MySubmissionsWidgetModel;
+import org.cggh.chassis.generic.client.gwt.widget.submission.client.MySubmissionsWidgetModelListener;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -28,14 +28,14 @@ public class TestViewSubmissionsWidgetModel {
 		return new JUnit4TestAdapter(TestViewSubmissionsWidgetModel.class);
 	}
 
-	private ViewSubmissionsWidgetModel testModel;
+	private MySubmissionsWidgetModel testModel;
 	private List<SubmissionEntry> testSubmissions;
 	
 	@Before
 	public void setUp() {
 		
 		//create test object
-		testModel = new ViewSubmissionsWidgetModel();
+		testModel = new MySubmissionsWidgetModel();
 		
 		//create list of test submissionEntries
 		testSubmissions = new ArrayList<SubmissionEntry>();
@@ -60,10 +60,10 @@ public class TestViewSubmissionsWidgetModel {
 	@Test
 	public void testStatusConstants() {
 		
-		assertEquals(new Integer(0), ViewSubmissionsWidgetModel.STATUS_INITIAL);
-		assertEquals(new Integer(1), ViewSubmissionsWidgetModel.STATUS_LOADING);
-		assertEquals(new Integer(2), ViewSubmissionsWidgetModel.STATUS_LOADED);
-		assertEquals(new Integer(3), ViewSubmissionsWidgetModel.STATUS_ERROR);
+		assertEquals(new Integer(0), MySubmissionsWidgetModel.STATUS_INITIAL);
+		assertEquals(new Integer(1), MySubmissionsWidgetModel.STATUS_LOADING);
+		assertEquals(new Integer(2), MySubmissionsWidgetModel.STATUS_LOADED);
+		assertEquals(new Integer(3), MySubmissionsWidgetModel.STATUS_ERROR);
 		
 	}
 	
@@ -75,7 +75,7 @@ public class TestViewSubmissionsWidgetModel {
 		
 		// test initial state
 		assertNull(testModel.getSubmissionEntries());
-		assertEquals(ViewSubmissionsWidgetModel.STATUS_INITIAL, testModel.getStatus());
+		assertEquals(MySubmissionsWidgetModel.STATUS_INITIAL, testModel.getStatus());
 	}
 	
 	@Test
@@ -101,17 +101,17 @@ public class TestViewSubmissionsWidgetModel {
 	public void testOnStatusChanged() {
 		
 		//create listener mock
-		ViewSubmissionsWidgetModelListener listener = createMock(ViewSubmissionsWidgetModelListener.class);
+		MySubmissionsWidgetModelListener listener = createMock(MySubmissionsWidgetModelListener.class);
 		testModel.addListener(listener);
 		
 		//set up expectations
-		listener.onStatusChanged(ViewSubmissionsWidgetModel.STATUS_INITIAL, ViewSubmissionsWidgetModel.STATUS_LOADING);
-		listener.onStatusChanged(ViewSubmissionsWidgetModel.STATUS_LOADING, ViewSubmissionsWidgetModel.STATUS_ERROR);
+		listener.onStatusChanged(MySubmissionsWidgetModel.STATUS_INITIAL, MySubmissionsWidgetModel.STATUS_LOADING);
+		listener.onStatusChanged(MySubmissionsWidgetModel.STATUS_LOADING, MySubmissionsWidgetModel.STATUS_ERROR);
 		replay(listener);
 		
 		//call methods under test
-		testModel.setStatus(ViewSubmissionsWidgetModel.STATUS_LOADING);
-		testModel.setStatus(ViewSubmissionsWidgetModel.STATUS_ERROR);
+		testModel.setStatus(MySubmissionsWidgetModel.STATUS_LOADING);
+		testModel.setStatus(MySubmissionsWidgetModel.STATUS_ERROR);
 		
 
 		//test outcome

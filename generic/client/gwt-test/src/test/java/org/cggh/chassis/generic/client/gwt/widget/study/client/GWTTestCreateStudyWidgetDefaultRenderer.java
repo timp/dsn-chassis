@@ -9,7 +9,7 @@ import java.util.Set;
 
 import org.cggh.chassis.generic.atom.client.AtomAuthor;
 import org.cggh.chassis.generic.client.gwt.configuration.client.TestConfigurationSetUp;
-import org.cggh.chassis.generic.client.gwt.widget.study.client.CreateStudyWidgetDefaultRenderer;
+import org.cggh.chassis.generic.client.gwt.widget.study.client.NewStudyWidgetDefaultRenderer;
 import org.cggh.chassis.generic.client.gwt.widget.study.client.StudyControllerCreateAPI;
 
 import com.google.gwt.dom.client.Document;
@@ -25,7 +25,7 @@ import com.google.gwt.user.client.ui.SimplePanel;
 public class GWTTestCreateStudyWidgetDefaultRenderer extends GWTTestCase {
 	
 	private MockStudyController mockController;
-	private CreateStudyWidgetDefaultRenderer testRenderer;
+	private NewStudyWidgetDefaultRenderer testRenderer;
 	
 	//test data
 	String module1Id = TestConfigurationSetUp.module1Id;
@@ -52,7 +52,7 @@ public class GWTTestCreateStudyWidgetDefaultRenderer extends GWTTestCase {
 		//create mockController and inject into testRenderer
 		mockController = new MockStudyController();
 						
-		testRenderer = new CreateStudyWidgetDefaultRenderer(new SimplePanel(), mockController);
+		testRenderer = new NewStudyWidgetDefaultRenderer(new SimplePanel(), mockController);
 		
 	}
 	

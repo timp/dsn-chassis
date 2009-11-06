@@ -13,8 +13,8 @@ import junit.framework.JUnit4TestAdapter;
 
 import org.cggh.chassis.generic.atomext.client.study.StudyEntry;
 import org.cggh.chassis.generic.atomext.client.study.StudyFactory;
-import org.cggh.chassis.generic.client.gwt.widget.study.client.ViewStudiesWidgetModel;
-import org.cggh.chassis.generic.client.gwt.widget.study.client.ViewStudiesWidgetModelListener;
+import org.cggh.chassis.generic.client.gwt.widget.study.client.MyStudiesWidgetModel;
+import org.cggh.chassis.generic.client.gwt.widget.study.client.MyStudiesWidgetModelListener;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -28,14 +28,14 @@ public class TestViewStudiesWidgetModel {
 		return new JUnit4TestAdapter(TestViewStudiesWidgetModel.class);
 	}
 
-	private ViewStudiesWidgetModel testModel;
+	private MyStudiesWidgetModel testModel;
 	private List<StudyEntry> testStudies;
 	
 	@Before
 	public void setUp() {
 		
 		//create test object
-		testModel = new ViewStudiesWidgetModel();
+		testModel = new MyStudiesWidgetModel();
 		
 		//create list of test studyEntries
 		testStudies = new ArrayList<StudyEntry>();
@@ -60,10 +60,10 @@ public class TestViewStudiesWidgetModel {
 	@Test
 	public void testStatusConstants() {
 		
-		assertEquals(new Integer(0), ViewStudiesWidgetModel.STATUS_INITIAL);
-		assertEquals(new Integer(1), ViewStudiesWidgetModel.STATUS_LOADING);
-		assertEquals(new Integer(2), ViewStudiesWidgetModel.STATUS_LOADED);
-		assertEquals(new Integer(3), ViewStudiesWidgetModel.STATUS_ERROR);
+		assertEquals(new Integer(0), MyStudiesWidgetModel.STATUS_INITIAL);
+		assertEquals(new Integer(1), MyStudiesWidgetModel.STATUS_LOADING);
+		assertEquals(new Integer(2), MyStudiesWidgetModel.STATUS_LOADED);
+		assertEquals(new Integer(3), MyStudiesWidgetModel.STATUS_ERROR);
 		
 	}
 	
@@ -75,14 +75,14 @@ public class TestViewStudiesWidgetModel {
 		
 		// test initial state
 		assertNull(testModel.getStudyEntries());
-		assertEquals(ViewStudiesWidgetModel.STATUS_INITIAL, testModel.getStatus());
+		assertEquals(MyStudiesWidgetModel.STATUS_INITIAL, testModel.getStatus());
 	}
 	
 	@Test
 	public void testGettersSetters() {
 		
 		//test data
-		Integer status = ViewStudiesWidgetModel.STATUS_LOADED;	
+		Integer status = MyStudiesWidgetModel.STATUS_LOADED;	
 		
 		
 		//call methods under test
@@ -101,17 +101,17 @@ public class TestViewStudiesWidgetModel {
 	public void testOnStatusChanged() {
 		
 		//create listener mock
-		ViewStudiesWidgetModelListener listener = createMock(ViewStudiesWidgetModelListener.class);
+		MyStudiesWidgetModelListener listener = createMock(MyStudiesWidgetModelListener.class);
 		testModel.addListener(listener);
 		
 		//set up expectations
-		listener.onStatusChanged(ViewStudiesWidgetModel.STATUS_INITIAL, ViewStudiesWidgetModel.STATUS_LOADING);
-		listener.onStatusChanged(ViewStudiesWidgetModel.STATUS_LOADING, ViewStudiesWidgetModel.STATUS_ERROR);
+		listener.onStatusChanged(MyStudiesWidgetModel.STATUS_INITIAL, MyStudiesWidgetModel.STATUS_LOADING);
+		listener.onStatusChanged(MyStudiesWidgetModel.STATUS_LOADING, MyStudiesWidgetModel.STATUS_ERROR);
 		replay(listener);
 		
 		//call methods under test
-		testModel.setStatus(ViewStudiesWidgetModel.STATUS_LOADING);
-		testModel.setStatus(ViewStudiesWidgetModel.STATUS_ERROR);
+		testModel.setStatus(MyStudiesWidgetModel.STATUS_LOADING);
+		testModel.setStatus(MyStudiesWidgetModel.STATUS_ERROR);
 		
 
 		//test outcome
@@ -123,7 +123,7 @@ public class TestViewStudiesWidgetModel {
 	public void testOnStudyEntriesChanged() {
 		
 		//create listener mock
-		ViewStudiesWidgetModelListener listener = createMock(ViewStudiesWidgetModelListener.class);
+		MyStudiesWidgetModelListener listener = createMock(MyStudiesWidgetModelListener.class);
 		testModel.addListener(listener);
 		
 		//set up expectations
