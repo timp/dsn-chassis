@@ -5,7 +5,7 @@
   -->
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.cggh.chassis</groupId>
-  <artifactId>generic</artifactId>
+  <artifactId>generic-lib</artifactId>
   <packaging>jar</packaging>
   <version>0.2-SNAPSHOT</version>
   <name>googlecode_dsn-chassis_generic_lib_java</name>
