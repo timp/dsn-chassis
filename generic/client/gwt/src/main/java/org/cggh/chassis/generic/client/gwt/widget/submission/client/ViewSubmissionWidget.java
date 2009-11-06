@@ -27,18 +27,6 @@ public class ViewSubmissionWidget
 	
 	
 	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#getName()
-	 */
-	@Override
-	protected String getName() {
-		return "viewSubmissionWidget";
-	}
-	
-	
-	
-
-
-	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#init()
 	 */
 	@Override

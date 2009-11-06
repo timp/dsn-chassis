@@ -15,36 +15,25 @@ import com.google.gwt.event.shared.HandlerRegistration;
  * @author raok
  *
  */
-public class CreateSubmissionWidget 
-	extends DelegatingWidget<AsyncWidgetModel, CreateSubmissionWidgetRenderer> {
+public class NewSubmissionWidget 
+	extends DelegatingWidget<AsyncWidgetModel, NewSubmissionWidgetRenderer> {
 	
 	
 	
-	public static final String NAME = "createSubmissionWidget";
 	
 	
 	
 	
 	private Log log = LogFactory.getLog(this.getClass());
-	private CreateSubmissionWidgetController controller; 
+	private NewSubmissionWidgetController controller; 
 	
 	
 	
-	
-	
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#getName()
-	 */
-	@Override
-	protected String getName() {
-		return NAME;
-	}
-
 	
 	
 	
 	private void ensureLog() {
-		if (log == null) log = LogFactory.getLog(CreateSubmissionWidget.class);
+		if (log == null) log = LogFactory.getLog(NewSubmissionWidget.class);
 	}
 	
 	
@@ -60,8 +49,8 @@ public class CreateSubmissionWidget
 		log.enter("init");
 		
 		this.model = new AsyncWidgetModel(this);
-		this.controller = new CreateSubmissionWidgetController(this, this.model);
-		this.renderer = new CreateSubmissionWidgetRenderer(this);
+		this.controller = new NewSubmissionWidgetController(this, this.model);
+		this.renderer = new NewSubmissionWidgetRenderer(this);
 		this.renderer.setCanvas(this.contentBox);
 		this.renderer.setController(this.controller);
 		

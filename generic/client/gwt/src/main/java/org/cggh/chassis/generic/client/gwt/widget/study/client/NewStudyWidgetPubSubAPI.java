@@ -10,8 +10,10 @@ import org.cggh.chassis.generic.atomext.client.study.StudyEntry;
  * @author raok
  *
  */
-public interface ViewStudiesWidgetPubSubAPI {
+public interface NewStudyWidgetPubSubAPI {
 
-	void onUserActionSelectStudy(StudyEntry studyEntry);
+	public void onNewStudyCreated(StudyEntry studyEntry);
+
+	public void onUserActionCreateStudyCancelled();
 
 }

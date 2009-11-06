@@ -14,7 +14,7 @@ import org.cggh.chassis.generic.atomext.client.study.StudyEntry;
  * @author raok
  *
  */
-public class ViewStudiesWidgetModel {
+public class MyStudiesWidgetModel {
 
 	public static final Integer STATUS_INITIAL = 0;
 	public static final Integer STATUS_LOADING = 1;
@@ -22,7 +22,7 @@ public class ViewStudiesWidgetModel {
 	public static final Integer STATUS_ERROR = 3;
 	
 	private Integer status = STATUS_INITIAL;
-	private Set<ViewStudiesWidgetModelListener> listeners = new HashSet<ViewStudiesWidgetModelListener>();
+	private Set<MyStudiesWidgetModelListener> listeners = new HashSet<MyStudiesWidgetModelListener>();
 	private List<StudyEntry> studyEntries; 
 
 
@@ -39,12 +39,12 @@ public class ViewStudiesWidgetModel {
 	}
 
 	private void fireOnStatusChanged(Integer before, Integer after) {
-		for (ViewStudiesWidgetModelListener listener : listeners) {
+		for (MyStudiesWidgetModelListener listener : listeners) {
 			listener.onStatusChanged(before, after);
 		}
 	}
 
-	public void addListener(ViewStudiesWidgetModelListener listener) {
+	public void addListener(MyStudiesWidgetModelListener listener) {
 		listeners.add(listener);
 	}
 
@@ -59,7 +59,7 @@ public class ViewStudiesWidgetModel {
 	}
 
 	private void fireOnStudyEntriesChanged(List<StudyEntry> before, List<StudyEntry> after) {
-		for (ViewStudiesWidgetModelListener listener : listeners) {
+		for (MyStudiesWidgetModelListener listener : listeners) {
 			listener.onStudyEntriesChanged(before, after);
 		}
 	}

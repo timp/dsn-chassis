@@ -23,7 +23,7 @@ import com.google.gwt.user.client.ui.SimplePanel;
  * @author raok
  *
  */
-public class ViewStudiesWidgetListBoxRenderer implements ViewStudiesWidgetModelListener {
+public class MyStudiesWidgetListBoxRenderer implements MyStudiesWidgetModelListener {
 
 	
 	
@@ -37,12 +37,12 @@ public class ViewStudiesWidgetListBoxRenderer implements ViewStudiesWidgetModelL
 	Panel loadingPanel = new SimplePanel();
 	
 	private Panel canvas;
-	private ViewStudiesWidgetController controller;
+	private MyStudiesWidgetController controller;
 
 	
 	
 	
-	public ViewStudiesWidgetListBoxRenderer(Panel canvas, ViewStudiesWidgetController controller) {
+	public MyStudiesWidgetListBoxRenderer(Panel canvas, MyStudiesWidgetController controller) {
 		this.canvas = canvas;
 		this.controller = controller;
 		
@@ -55,7 +55,7 @@ public class ViewStudiesWidgetListBoxRenderer implements ViewStudiesWidgetModelL
 	/**
 	 * @param object
 	 */
-	public ViewStudiesWidgetListBoxRenderer(ViewStudiesWidgetController controller) {
+	public MyStudiesWidgetListBoxRenderer(MyStudiesWidgetController controller) {
 		this.canvas = new FlowPanel();
 		this.controller = controller;
 		
@@ -68,7 +68,7 @@ public class ViewStudiesWidgetListBoxRenderer implements ViewStudiesWidgetModelL
 	/**
 	 * 
 	 */
-	public ViewStudiesWidgetListBoxRenderer() {
+	public MyStudiesWidgetListBoxRenderer() {
 		this.canvas = new FlowPanel();
 		initCanvas();
 	}
@@ -88,10 +88,10 @@ public class ViewStudiesWidgetListBoxRenderer implements ViewStudiesWidgetModelL
 	
 	public void onStatusChanged(Integer before, Integer after) {
 
-		if (after == ViewStudiesWidgetModel.STATUS_LOADING) {
+		if (after == MyStudiesWidgetModel.STATUS_LOADING) {
 			canvas.clear();
 			canvas.add(loadingPanel);
-		} else if (after == ViewStudiesWidgetModel.STATUS_LOADED) {
+		} else if (after == MyStudiesWidgetModel.STATUS_LOADED) {
 			canvas.clear();
 			canvas.add(studiesListBox);			
 		}
@@ -148,7 +148,7 @@ public class ViewStudiesWidgetListBoxRenderer implements ViewStudiesWidgetModelL
 		
 	}
 
-	public void setController(ViewStudiesWidgetController controller) {
+	public void setController(MyStudiesWidgetController controller) {
 		this.controller = controller;
 	}
 

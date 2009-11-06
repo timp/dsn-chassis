@@ -34,7 +34,7 @@ import com.google.gwt.user.client.ui.TextBoxBase;
  * @author raok
  *
  */
-class CreateStudyWidgetDefaultRenderer implements StudyModelListener {
+class NewStudyWidgetDefaultRenderer implements StudyModelListener {
 
 	
 	
@@ -57,7 +57,7 @@ class CreateStudyWidgetDefaultRenderer implements StudyModelListener {
 	
 	
 
-	public CreateStudyWidgetDefaultRenderer(Panel givenCanvas, StudyControllerCreateAPI controller) {
+	public NewStudyWidgetDefaultRenderer(Panel givenCanvas, StudyControllerCreateAPI controller) {
 		
 		this.canvas = new FlowPanel();
 		givenCanvas.add(canvas);
@@ -74,7 +74,7 @@ class CreateStudyWidgetDefaultRenderer implements StudyModelListener {
 	/**
 	 * @param controller
 	 */
-	public CreateStudyWidgetDefaultRenderer(StudyControllerCreateAPI controller) {
+	public NewStudyWidgetDefaultRenderer(StudyControllerCreateAPI controller) {
 		this.canvas = new FlowPanel();
 		this.controller = controller;
 		

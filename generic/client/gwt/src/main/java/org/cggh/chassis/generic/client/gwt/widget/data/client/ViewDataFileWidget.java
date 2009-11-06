@@ -14,23 +14,10 @@ import org.cggh.chassis.generic.widget.client.DelegatingWidget;
 public class ViewDataFileWidget extends DelegatingWidget {
 	private Log log = LogFactory.getLog(ViewDataFileWidget.class);
 
-	public static final String NAME = "viewDataFileWidget";
 
 	
 	
 	
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#getName()
-	 */
-	@Override
-	protected String getName() {
-		return NAME;
-	}
-
-
-	
-	
-
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#init()
 	 */

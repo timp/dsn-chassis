@@ -1,9 +1,9 @@
 package org.cggh.chassis.generic.client.gwt.widget.study.client;
 
-public interface CreateStudyWidgetAPI {
+public interface NewStudyWidgetAPI {
 
 	public void setUpNewStudy(String authorEmail);
 
-	public void addListener(CreateStudyWidgetPubSubAPI listener);
+	public void addListener(NewStudyWidgetPubSubAPI listener);
 
 }

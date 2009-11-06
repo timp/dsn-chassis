@@ -14,7 +14,7 @@ import com.google.gwt.user.client.ui.Panel;
  * @author raok
  *
  */
-public interface ViewStudiesWidgetModelListener {
+public interface MyStudiesWidgetModelListener {
 
 	void onStatusChanged(Integer before, Integer after);
 

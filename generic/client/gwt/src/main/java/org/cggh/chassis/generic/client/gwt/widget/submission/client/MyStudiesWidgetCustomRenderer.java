@@ -7,9 +7,9 @@ import java.util.List;
 
 import org.cggh.chassis.generic.atomext.client.study.StudyEntry;
 import org.cggh.chassis.generic.client.gwt.common.client.CommonStyles;
-import org.cggh.chassis.generic.client.gwt.widget.study.client.ViewStudiesWidgetController;
-import org.cggh.chassis.generic.client.gwt.widget.study.client.ViewStudiesWidgetModel;
-import org.cggh.chassis.generic.client.gwt.widget.study.client.ViewStudiesWidgetRenderer;
+import org.cggh.chassis.generic.client.gwt.widget.study.client.MyStudiesWidgetController;
+import org.cggh.chassis.generic.client.gwt.widget.study.client.MyStudiesWidgetModel;
+import org.cggh.chassis.generic.client.gwt.widget.study.client.MyStudiesWidgetRenderer;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 
@@ -25,7 +25,7 @@ import com.google.gwt.user.client.ui.SimplePanel;
  * @author raok
  *
  */
-public class ViewStudiesWidgetCustomRenderer implements ViewStudiesWidgetRenderer {
+public class MyStudiesWidgetCustomRenderer implements MyStudiesWidgetRenderer {
 
 	
 	
@@ -39,7 +39,7 @@ public class ViewStudiesWidgetCustomRenderer implements ViewStudiesWidgetRendere
 	
 	private Log log = LogFactory.getLog(this.getClass());
 	private Panel canvas;
-	private ViewStudiesWidgetController controller;
+	private MyStudiesWidgetController controller;
 
 	
 	
@@ -51,7 +51,7 @@ public class ViewStudiesWidgetCustomRenderer implements ViewStudiesWidgetRendere
 	 * @param canvas
 	 * @param controller
 	 */
-	public ViewStudiesWidgetCustomRenderer() {
+	public MyStudiesWidgetCustomRenderer() {
 		this.canvas = new FlowPanel();
 		
 		initCanvas();
@@ -87,7 +87,7 @@ public class ViewStudiesWidgetCustomRenderer implements ViewStudiesWidgetRendere
 	 */
 	public void onStatusChanged(Integer before, Integer after) {
 
-		if (after == ViewStudiesWidgetModel.STATUS_LOADING) {
+		if (after == MyStudiesWidgetModel.STATUS_LOADING) {
 
 //			canvas.clear();
 //			canvas.add(loadingPanel);
@@ -95,7 +95,7 @@ public class ViewStudiesWidgetCustomRenderer implements ViewStudiesWidgetRendere
 			this.studiesListPanel.setVisible(false);
 			this.loadingPanel.setVisible(true);
 			
-		} else if (after == ViewStudiesWidgetModel.STATUS_LOADED) {
+		} else if (after == MyStudiesWidgetModel.STATUS_LOADED) {
 
 //			canvas.clear();
 //			canvas.add(studiesListPanel);			
@@ -219,7 +219,7 @@ public class ViewStudiesWidgetCustomRenderer implements ViewStudiesWidgetRendere
 	
 	
 	
-	public void setController(ViewStudiesWidgetController controller) {
+	public void setController(MyStudiesWidgetController controller) {
 		this.controller = controller;
 	}
 

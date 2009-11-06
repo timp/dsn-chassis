@@ -19,7 +19,7 @@ import com.google.gwt.user.client.ui.Panel;
  * @author raok
  *
  */
-public class ViewStudiesWidget extends Composite {
+public class MyStudiesWidget extends Composite {
 
 	
 	
@@ -28,21 +28,21 @@ public class ViewStudiesWidget extends Composite {
 	
 	
 	
-	final private ViewStudiesWidgetModel model;
-	final private ViewStudiesWidgetController controller;
-	final private ViewStudiesWidgetRenderer renderer;
-	private Set<ViewStudiesWidgetPubSubAPI> listeners = new HashSet<ViewStudiesWidgetPubSubAPI>();
+	final private MyStudiesWidgetModel model;
+	final private MyStudiesWidgetController controller;
+	final private MyStudiesWidgetRenderer renderer;
+	private Set<MyStudiesWidgetPubSubAPI> listeners = new HashSet<MyStudiesWidgetPubSubAPI>();
 	
 	
 	
 	
-	public ViewStudiesWidget(Panel canvas, String selectStudyLinkText) {
+	public MyStudiesWidget(Panel canvas, String selectStudyLinkText) {
 		
-		model = new ViewStudiesWidgetModel();
+		model = new MyStudiesWidgetModel();
 		
-		controller = new ViewStudiesWidgetController(model, this);
+		controller = new MyStudiesWidgetController(model, this);
 		
-		renderer = new ViewStudiesWidgetDefaultRenderer(canvas, controller,selectStudyLinkText);
+		renderer = new MyStudiesWidgetDefaultRenderer(canvas, controller,selectStudyLinkText);
 		
 		// register renderer as listener to model
 		model.addListener(renderer);
@@ -54,11 +54,11 @@ public class ViewStudiesWidget extends Composite {
 	
 	
 	
-	public ViewStudiesWidget(ViewStudiesWidgetRenderer customRenderer) {
+	public MyStudiesWidget(MyStudiesWidgetRenderer customRenderer) {
 
-		model = new ViewStudiesWidgetModel();		
+		model = new MyStudiesWidgetModel();		
 
-		controller = new ViewStudiesWidgetController(model, this);
+		controller = new MyStudiesWidgetController(model, this);
 		
 		renderer = customRenderer;
 		
@@ -78,13 +78,13 @@ public class ViewStudiesWidget extends Composite {
 	/**
 	 * @param string
 	 */
-	public ViewStudiesWidget(String selectStudyLinkText) {
+	public MyStudiesWidget(String selectStudyLinkText) {
 
-		model = new ViewStudiesWidgetModel();
+		model = new MyStudiesWidgetModel();
 		
-		controller = new ViewStudiesWidgetController(model, this);
+		controller = new MyStudiesWidgetController(model, this);
 		
-		renderer = new ViewStudiesWidgetDefaultRenderer(controller, selectStudyLinkText);
+		renderer = new MyStudiesWidgetDefaultRenderer(controller, selectStudyLinkText);
 		
 		// register renderer as listener to model
 		model.addListener(renderer);
@@ -107,7 +107,7 @@ public class ViewStudiesWidget extends Composite {
 	
 	
 	void onUserSelectStudy(StudyEntry studyEntry) {
-		for (ViewStudiesWidgetPubSubAPI listener : listeners) {
+		for (MyStudiesWidgetPubSubAPI listener : listeners) {
 			listener.onUserActionSelectStudy(studyEntry);
 		}
 	}
@@ -118,7 +118,7 @@ public class ViewStudiesWidget extends Composite {
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.client.gwt.widget.study.viewall.client.ViewAllStudiesWidgetAPI#addViewAllStudiesWidgetListener(org.cggh.chassis.generic.client.gwt.widget.study.viewall.client.ViewAllStudiesWidgetPubSubAPI)
 	 */
-	public void addViewAllStudiesWidgetListener(ViewStudiesWidgetPubSubAPI listener) {
+	public void addViewAllStudiesWidgetListener(MyStudiesWidgetPubSubAPI listener) {
 		listeners.add(listener);
 	}
 

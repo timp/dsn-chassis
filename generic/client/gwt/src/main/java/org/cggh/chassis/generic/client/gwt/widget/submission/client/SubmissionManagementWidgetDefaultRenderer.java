@@ -50,9 +50,9 @@ public class SubmissionManagementWidgetDefaultRenderer implements SubmissionMana
 	
 	
 	//child widgets made package private to allow parent widget to access them
-	final CreateSubmissionWidget createSubmissionWidget; 
+	final NewSubmissionWidget createSubmissionWidget; 
 	final ViewSubmissionWidget viewSubmissionWidget;
-	final ViewSubmissionsWidget viewAllSubmissionsWidget;
+	final MySubmissionsWidget viewAllSubmissionsWidget;
 	final EditSubmissionWidget editSubmissionWidget;
 	private MenuBar menu;
 	final UploadSubmissionDataFileWidgetAPI submissionDataFileWidget;
@@ -76,8 +76,8 @@ public class SubmissionManagementWidgetDefaultRenderer implements SubmissionMana
 		//TODO Remove use of canvas paramter constructors 
 		//create child widgets
 		this.viewSubmissionWidget = new ViewSubmissionWidget();
-		this.createSubmissionWidget = new CreateSubmissionWidget();
-		this.viewAllSubmissionsWidget = new ViewSubmissionsWidget();
+		this.createSubmissionWidget = new NewSubmissionWidget();
+		this.viewAllSubmissionsWidget = new MySubmissionsWidget();
 		this.editSubmissionWidget = new EditSubmissionWidget();
 		submissionDataFileWidget = new UploadSubmissionDataFileWidget();
 		

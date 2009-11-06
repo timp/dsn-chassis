@@ -16,15 +16,15 @@ import com.google.gwt.user.client.ui.Panel;
  * @author raok
  *
  */
-public class CreateStudyWidget extends Composite implements CreateStudyWidgetAPI, StudyControllerPubSubCreateAPI {
+public class NewStudyWidget extends Composite implements NewStudyWidgetAPI, StudyControllerPubSubCreateAPI {
 
 	
 	
 	
 	final private StudyModel model;
 	final private StudyControllerCreateAPI controller;
-	final private CreateStudyWidgetDefaultRenderer renderer;
-	private Set<CreateStudyWidgetPubSubAPI> listeners = new HashSet<CreateStudyWidgetPubSubAPI>();
+	final private NewStudyWidgetDefaultRenderer renderer;
+	private Set<NewStudyWidgetPubSubAPI> listeners = new HashSet<NewStudyWidgetPubSubAPI>();
 	
 	
 	
@@ -35,13 +35,13 @@ public class CreateStudyWidget extends Composite implements CreateStudyWidgetAPI
 	 * 
 	 * @param canvas
 	 */
-	public CreateStudyWidget(Panel canvas) {
+	public NewStudyWidget(Panel canvas) {
 		
 		model = new StudyModel();
 		
 		controller = new StudyController(model, this);
 				
-		renderer = new CreateStudyWidgetDefaultRenderer(canvas, controller);
+		renderer = new NewStudyWidgetDefaultRenderer(canvas, controller);
 		
 		// register renderer as listener to model
 		model.addListener(renderer);
@@ -58,7 +58,7 @@ public class CreateStudyWidget extends Composite implements CreateStudyWidgetAPI
 	 * 
 	 * @param customRenderer
 	 */
-	public CreateStudyWidget(CreateStudyWidgetDefaultRenderer customRenderer) {
+	public NewStudyWidget(NewStudyWidgetDefaultRenderer customRenderer) {
 		
 		model = new StudyModel();
 		
@@ -83,13 +83,13 @@ public class CreateStudyWidget extends Composite implements CreateStudyWidgetAPI
 	 * Construct a create study widget, letting the widget create its own
 	 * canvas.
 	 */
-	public CreateStudyWidget() {
+	public NewStudyWidget() {
 
 		model = new StudyModel();
 		
 		controller = new StudyController(model, this);
 				
-		renderer = new CreateStudyWidgetDefaultRenderer(controller);
+		renderer = new NewStudyWidgetDefaultRenderer(controller);
 		
 		// register renderer as listener to model
 		model.addListener(renderer);
@@ -104,7 +104,7 @@ public class CreateStudyWidget extends Composite implements CreateStudyWidgetAPI
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.client.gwt.widget.study.create.client.CreateStudyWidgetAPI#addCreateStudyWidgetListener(org.cggh.chassis.generic.client.gwt.widget.study.create.client.CreateStudyWidgetPubSubAPI)
 	 */
-	public void addListener(CreateStudyWidgetPubSubAPI listener) {
+	public void addListener(NewStudyWidgetPubSubAPI listener) {
 		listeners.add(listener);
 	}
 	
@@ -112,7 +112,7 @@ public class CreateStudyWidget extends Composite implements CreateStudyWidgetAPI
 	
 
 	public void fireOnNewStudySaved(StudyEntry studyEntry) {
-		for (CreateStudyWidgetPubSubAPI listener : listeners) {
+		for (NewStudyWidgetPubSubAPI listener : listeners) {
 			listener.onNewStudyCreated(studyEntry);
 		}
 	}
@@ -121,7 +121,7 @@ public class CreateStudyWidget extends Composite implements CreateStudyWidgetAPI
 	
 	
 	public void fireOnUserActionCreateStudyEntryCancelled() {
-		for (CreateStudyWidgetPubSubAPI listener : listeners) {
+		for (NewStudyWidgetPubSubAPI listener : listeners) {
 			listener.onUserActionCreateStudyCancelled();
 		}
 	}

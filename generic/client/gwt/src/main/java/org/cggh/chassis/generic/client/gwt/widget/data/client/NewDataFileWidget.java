@@ -30,21 +30,6 @@ public class NewDataFileWidget
 
 	
 	
-	public static final String NAME = "createDataFileWidget";
-
-	
-	
-	
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#getName()
-	 */
-	@Override
-	protected String getName() {
-		return NAME;
-	}
-
-
-	
 	
 	protected void ensureLog() {
 		if (log == null) log = LogFactory.getLog(NewDataFileWidget.class);
