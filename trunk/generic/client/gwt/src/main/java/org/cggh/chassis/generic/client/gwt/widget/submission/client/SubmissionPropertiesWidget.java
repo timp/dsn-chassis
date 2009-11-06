@@ -23,17 +23,6 @@ public class SubmissionPropertiesWidget
 	
 	
 	
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.widget.client.Widget#getName()
-	 */
-	@Override
-	protected String getName() {
-		return "submissionPropertiesWidget";
-	}
-
-	
-	
-	
 	
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.widget.client.Widget#init()

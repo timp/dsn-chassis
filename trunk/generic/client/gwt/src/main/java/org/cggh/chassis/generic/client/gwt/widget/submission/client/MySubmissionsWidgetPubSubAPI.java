@@ -10,7 +10,7 @@ import org.cggh.chassis.generic.atomext.client.submission.SubmissionEntry;
  * @author raok
  *
  */
-public interface ViewSubmissionsWidgetPubSubAPI {
+public interface MySubmissionsWidgetPubSubAPI {
 
 	void onUserActionSelectSubmission(SubmissionEntry submissionEntry);
 

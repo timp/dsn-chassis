@@ -25,15 +25,15 @@ import com.google.gwt.user.client.ui.HTML;
  * @author raok
  *
  */
-public class CreateSubmissionWidgetRenderer 
+public class NewSubmissionWidgetRenderer 
 	extends AsyncWidgetRenderer<AsyncWidgetModel> {
 	
 	
 	
 	
-	private Log log = LogFactory.getLog(CreateSubmissionWidgetRenderer.class);
-	private CreateSubmissionWidget owner;
-	private CreateSubmissionWidgetController controller;
+	private Log log = LogFactory.getLog(NewSubmissionWidgetRenderer.class);
+	private NewSubmissionWidget owner;
+	private NewSubmissionWidgetController controller;
 	private FlowPanel buttonsPanel;
 	private Button cancelButton, createButton;
 	private SubmissionForm form;
@@ -45,7 +45,7 @@ public class CreateSubmissionWidgetRenderer
 	/**
 	 * @param owner
 	 */
-	public CreateSubmissionWidgetRenderer(CreateSubmissionWidget owner) {
+	public NewSubmissionWidgetRenderer(NewSubmissionWidget owner) {
 		this.owner = owner;
 	}
 
@@ -56,7 +56,7 @@ public class CreateSubmissionWidgetRenderer
 	/**
 	 * @param controller
 	 */
-	public void setController(CreateSubmissionWidgetController controller) {
+	public void setController(NewSubmissionWidgetController controller) {
 		this.controller = controller;
 	}
 

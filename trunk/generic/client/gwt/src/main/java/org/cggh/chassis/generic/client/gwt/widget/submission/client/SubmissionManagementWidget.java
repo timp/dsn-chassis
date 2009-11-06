@@ -25,7 +25,7 @@ import com.google.gwt.user.client.ui.SimplePanel;
  *
  */
 public class SubmissionManagementWidget extends Composite implements EditSubmissionWidgetPubSubAPI,
-																  	 ViewSubmissionsWidgetPubSubAPI,
+																  	 MySubmissionsWidgetPubSubAPI,
 																  	 UploadSubmissionDataFileWidgetPubSubAPI, 
 																  	 EditSubmissionActionHandler, 
 																  	 UploadDataFileActionHandler, 

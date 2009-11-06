@@ -11,25 +11,10 @@ import org.cggh.chassis.generic.widget.client.DelegatingWidget;
  * @author aliman
  *
  */
-public class MyDatasetsWidget extends DelegatingWidget {
+public class MyDatasetsWidget 
+	extends DelegatingWidget<MyDatasetsWidgetModel, MyDatasetsWidgetRenderer> {
 	private Log log = LogFactory.getLog(MyDatasetsWidget.class);
 
-	public static final String NAME = "viewMyDatasetsWidget";
-
-	
-	
-	
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#getName()
-	 */
-	@Override
-	protected String getName() {
-		return NAME;
-	}
-
-
-	
-	
 
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#init()
@@ -39,7 +24,9 @@ public class MyDatasetsWidget extends DelegatingWidget {
 		ensureLog();
 		log.enter("init");
 
-		// TODO
+		this.model = new MyDatasetsWidgetModel();
+		this.renderer = new MyDatasetsWidgetRenderer();
+		this.renderer.setCanvas(this.contentBox);
 
 		log.leave();
 	}

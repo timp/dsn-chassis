@@ -12,7 +12,7 @@ import org.cggh.chassis.generic.client.gwt.common.client.CommonStyles;
 import org.cggh.chassis.generic.client.gwt.common.client.ChassisUser;
 import org.cggh.chassis.generic.client.gwt.common.client.RenderUtils;
 import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
-import org.cggh.chassis.generic.client.gwt.widget.study.client.ViewStudiesWidget;
+import org.cggh.chassis.generic.client.gwt.widget.study.client.MyStudiesWidget;
 import org.cggh.chassis.generic.client.gwt.widget.submission.client.SubmissionPropertiesWidgetModel.SubmissionEntryChangeEvent;
 import org.cggh.chassis.generic.client.gwt.widget.submission.client.SubmissionPropertiesWidgetModel.SubmissionEntryChangeHandler;
 import org.cggh.chassis.generic.log.client.Log;
@@ -37,7 +37,7 @@ public class SubmissionPropertiesWidgetRenderer
 	private Log log = LogFactory.getLog(this.getClass());
 	private Label titleLabel, summaryLabel, createdLabel, updatedLabel, idLabel;
 	private FlowPanel modulesListPanel, ownersListPanel;
-	private ViewStudiesWidget studiesLinkedWidget;
+	private MyStudiesWidget studiesLinkedWidget;
 
 	
 
@@ -55,7 +55,7 @@ public class SubmissionPropertiesWidgetRenderer
 		this.idLabel = new InlineLabel();
 		this.modulesListPanel = new FlowPanel();
 		this.ownersListPanel = new FlowPanel();
-		this.studiesLinkedWidget = new ViewStudiesWidget(new ViewStudiesWidgetCustomRenderer());
+		this.studiesLinkedWidget = new MyStudiesWidget(new MyStudiesWidgetCustomRenderer());
 
 		FlowPanel titlePanel = RenderUtils.renderTitlePropertyPanel(this.titleLabel, CommonStyles.VIEWSUBMISSION_TITLE);
 		FlowPanel summaryPanel = RenderUtils.renderSummaryPropertyPanel(this.summaryLabel, CommonStyles.VIEWSUBMISSION_SUMMARY);

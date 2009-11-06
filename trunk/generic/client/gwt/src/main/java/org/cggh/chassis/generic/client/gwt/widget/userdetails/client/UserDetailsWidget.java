@@ -32,18 +32,6 @@ public class UserDetailsWidget
 	
 	
 	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#getName()
-	 */
-	@Override
-	protected String getName() {
-		return "userDetailsWidget";
-	}
-
-	
-	
-	
-	
-	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#init()
 	 */
 	@Override

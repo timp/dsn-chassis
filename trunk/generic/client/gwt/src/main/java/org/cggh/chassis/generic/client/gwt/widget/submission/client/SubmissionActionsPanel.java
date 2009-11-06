@@ -34,18 +34,6 @@ public class SubmissionActionsPanel extends ChassisWidget {
 	
 	
 	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.widget.client.Widget#getName()
-	 */
-	@Override
-	protected String getName() {
-		return "submissionActionsPanel";
-	}
-
-	
-	
-	
-	
-	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.widget.client.Widget#init()
 	 */
 	@Override

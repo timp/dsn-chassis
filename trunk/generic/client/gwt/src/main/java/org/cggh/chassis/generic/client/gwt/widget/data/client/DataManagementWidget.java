@@ -2,12 +2,13 @@
  * 
  */
 package org.cggh.chassis.generic.client.gwt.widget.data.client;
-import java.util.ArrayList;
-import java.util.List;
+
 
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
+import org.cggh.chassis.generic.twisted.client.Deferred;
 import org.cggh.chassis.generic.widget.client.ChassisWidget;
+import org.cggh.chassis.generic.widget.client.WidgetMemory;
 
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.MenuBar;
@@ -19,11 +20,6 @@ import com.google.gwt.user.client.ui.Widget;
  *
  */
 public class DataManagementWidget extends ChassisWidget {
-
-	
-	
-	
-	public static final String NAME = "dataManagementWidget";
 
 	
 	
@@ -43,22 +39,11 @@ public class DataManagementWidget extends ChassisWidget {
 
 
 	private Widget activeChild;
-	
-	
-	
-	
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#getName()
-	 */
-	@Override
-	protected String getName() {
-		return NAME;
-	}
 
-	
-	
-	
-	
+
+
+
+
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#init()
 	 */
@@ -68,7 +53,8 @@ public class DataManagementWidget extends ChassisWidget {
 		log.enter("init");
 
 		// TODO
-
+		this.memory = new Memory();
+		
 		log.leave();
 	}
 	
@@ -146,6 +132,7 @@ public class DataManagementWidget extends ChassisWidget {
 
 		this.menuBar.addItem(new MenuItem("new data file", newDataFileMenuCommand));
 		this.menuBar.addItem(new MenuItem("my data files", myDataFilesMenuCommand));
+		this.menuBar.addSeparator();
 		this.menuBar.addItem(new MenuItem("new dataset", newDatasetMenuCommand));
 		this.menuBar.addItem(new MenuItem("my datasets", myDatasetsMenuCommand));
 
@@ -160,10 +147,22 @@ public class DataManagementWidget extends ChassisWidget {
 	 * @param child
 	 */
 	protected void setActiveChild(Widget child) {
+		this.setActiveChild(child, true);
+	}
+
+	
+	
+	
+	
+	protected void setActiveChild(Widget child, boolean memorise) {
 		log.enter("setActiveChild");
 		
 		this.activeChild = child;
 		this.syncUI();
+		
+		if (memorise) {
+			this.memory.memorise();
+		}
 		
 		log.leave();
 	}
@@ -179,44 +178,13 @@ public class DataManagementWidget extends ChassisWidget {
 	protected void syncUI() {
 		log.enter("syncUI");
 		
-		this.hideAllWidgets();
-		this.showActiveChild();
+		if (this.activeChild == null) this.hideAll();
+		else this.showOnly(this.activeChild);
 		
 		log.leave();
 	}
 	
 	
-	
-	
-	/**
-	 * 
-	 */
-	private void hideAllWidgets() {
-		log.enter("hideAllChildren");
-		
-		for (Widget w : this.getWidgets()) {
-			w.setVisible(false);
-		}
-		
-		log.leave();
-	}
-
-
-
-
-	/**
-	 * 
-	 */
-	private void showActiveChild() {
-		log.enter("showActiveChild");
-		
-		if (this.activeChild != null) this.activeChild.setVisible(true);
-		
-		log.leave();
-		
-	}
-
-
 
 
 
@@ -260,5 +228,64 @@ public class DataManagementWidget extends ChassisWidget {
 	
 	
 	
+	
+	/**
+	 * @author aliman
+	 *
+	 */
+	public class Memory extends WidgetMemory {
+		private Log log = LogFactory.getLog(Memory.class);
+
+		/* (non-Javadoc)
+		 * @see org.cggh.chassis.generic.widget.client.WidgetMemory#createMnemonic()
+		 */
+		@Override
+		public String createMnemonic() {
+			log.enter("createMnemonic");
+
+			String mnemonic = null;
+			
+			if (activeChild != null && activeChild instanceof ChassisWidget) {
+				mnemonic = this.createMnemonic((ChassisWidget)activeChild);
+			}
+			
+			log.debug("mnemonic: "+mnemonic);
+
+			log.leave();
+			return mnemonic;
+		}
+		
+		protected String createMnemonic(ChassisWidget w) {
+			return w.getName().toLowerCase().replaceAll("widget", "");
+		}
+
+		/* (non-Javadoc)
+		 * @see org.cggh.chassis.generic.widget.client.WidgetMemory#remember(java.lang.String)
+		 */
+		@Override
+		public Deferred<WidgetMemory> remember(String mnemonic) {
+			log.enter("remember");
+
+			Deferred<WidgetMemory> def = new Deferred<WidgetMemory>();
+			
+			for (Widget w : DataManagementWidget.this) {
+				if (w instanceof ChassisWidget) {
+					if (this.createMnemonic((ChassisWidget)w).equals(mnemonic)) {
+						setActiveChild(w, false);
+					}
+				}
+			}
+			
+			def.callback(this); // no async action so callback immediately
+
+			log.leave();
+			return def;
+		}
+
+	}
+
+
+
+
 
 }

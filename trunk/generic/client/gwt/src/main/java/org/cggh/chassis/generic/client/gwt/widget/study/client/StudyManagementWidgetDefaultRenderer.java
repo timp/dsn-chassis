@@ -47,11 +47,11 @@ public class StudyManagementWidgetDefaultRenderer implements StudyManagementWidg
 	
 	
 	//child widgets made package private to allow parent widget to access them
-	CreateStudyWidget createStudyWidget; 
+	NewStudyWidget createStudyWidget; 
 	Widget createStudyWidgetCanvas = new FlowPanel();
 	ViewStudyWidget viewStudyWidget;
 	Widget viewStudyWidgetCanvas = new FlowPanel();	
-	ViewStudiesWidget viewStudiesWidget;
+	MyStudiesWidget viewStudiesWidget;
 	Widget viewStudiesWidgetCanvas = new FlowPanel();
 	EditStudyWidget editStudyWidget;
 	Widget editStudyWidgetCanvas = new FlowPanel();
@@ -84,8 +84,8 @@ public class StudyManagementWidgetDefaultRenderer implements StudyManagementWidg
 		
 		//create child widgets
 		this.viewStudyWidget = new ViewStudyWidget((Panel)this.viewStudyWidgetCanvas);
-		this.createStudyWidget = new CreateStudyWidget((Panel)this.createStudyWidgetCanvas);
-		this.viewStudiesWidget = new ViewStudiesWidget((Panel)this.viewStudiesWidgetCanvas, "view");
+		this.createStudyWidget = new NewStudyWidget((Panel)this.createStudyWidgetCanvas);
+		this.viewStudiesWidget = new MyStudiesWidget((Panel)this.viewStudiesWidgetCanvas, "view");
 		this.editStudyWidget = new EditStudyWidget((Panel)this.editStudyWidgetCanvas);
 		this.viewStudyQuestionnaireWidget = new ViewStudyQuestionnaireWidget();
 		this.editStudyQuestionnaireWidget = new EditStudyQuestionnaireWidget();
@@ -113,8 +113,8 @@ public class StudyManagementWidgetDefaultRenderer implements StudyManagementWidg
 		
 		//create child widgets
 		this.viewStudyWidget = new ViewStudyWidget();
-		this.createStudyWidget = new CreateStudyWidget();
-		this.viewStudiesWidget = new ViewStudiesWidget("view");
+		this.createStudyWidget = new NewStudyWidget();
+		this.viewStudiesWidget = new MyStudiesWidget("view");
 		this.editStudyWidget = new EditStudyWidget();
 		this.viewStudyQuestionnaireWidget = new ViewStudyQuestionnaireWidget();
 		this.editStudyQuestionnaireWidget = new EditStudyQuestionnaireWidget();

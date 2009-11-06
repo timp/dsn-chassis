@@ -31,7 +31,7 @@ import com.google.gwt.user.client.ui.SimplePanel;
  * @author raok
  *
  */
-public class ViewSubmissionsWidgetDefaultRenderer implements ViewSubmissionsWidgetModelListener {
+public class MySubmissionsWidgetDefaultRenderer implements MySubmissionsWidgetModelListener {
 
 	
 	
@@ -46,7 +46,7 @@ public class ViewSubmissionsWidgetDefaultRenderer implements ViewSubmissionsWidg
 	Panel loadingPanel = new SimplePanel();
 	
 	private Panel canvas;
-	private ViewSubmissionsWidgetController controller;
+	private MySubmissionsWidgetController controller;
 
 	
 	
@@ -57,7 +57,7 @@ public class ViewSubmissionsWidgetDefaultRenderer implements ViewSubmissionsWidg
 	 * @param canvas
 	 * @param controller
 	 */
-	public ViewSubmissionsWidgetDefaultRenderer(Panel canvas, ViewSubmissionsWidgetController controller) {
+	public MySubmissionsWidgetDefaultRenderer(Panel canvas, MySubmissionsWidgetController controller) {
 		this.canvas = canvas;
 		this.controller = controller;
 		
@@ -71,7 +71,7 @@ public class ViewSubmissionsWidgetDefaultRenderer implements ViewSubmissionsWidg
 	/**
 	 * @param controller
 	 */
-	public ViewSubmissionsWidgetDefaultRenderer(ViewSubmissionsWidgetController controller) {
+	public MySubmissionsWidgetDefaultRenderer(MySubmissionsWidgetController controller) {
 		this.canvas = new FlowPanel();
 		this.controller = controller;
 		
@@ -111,12 +111,12 @@ public class ViewSubmissionsWidgetDefaultRenderer implements ViewSubmissionsWidg
 	 */
 	public void onStatusChanged(Integer before, Integer after) {
 
-		if (after == ViewSubmissionsWidgetModel.STATUS_LOADING) {
+		if (after == MySubmissionsWidgetModel.STATUS_LOADING) {
 
 			this.submissionsListPanel.setVisible(false);
 			this.loadingPanel.setVisible(true);
 			
-		} else if (after == ViewSubmissionsWidgetModel.STATUS_LOADED) {
+		} else if (after == MySubmissionsWidgetModel.STATUS_LOADED) {
 
 			this.loadingPanel.setVisible(false);
 			this.submissionsListPanel.setVisible(true);
@@ -240,7 +240,7 @@ public class ViewSubmissionsWidgetDefaultRenderer implements ViewSubmissionsWidg
 	
 	
 	
-	public void setController(ViewSubmissionsWidgetController controller) {
+	public void setController(MySubmissionsWidgetController controller) {
 		this.controller = controller;
 	}
 

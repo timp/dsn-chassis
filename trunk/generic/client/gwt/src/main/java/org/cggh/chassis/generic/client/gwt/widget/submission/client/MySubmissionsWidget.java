@@ -16,15 +16,15 @@ import com.google.gwt.user.client.ui.Panel;
  * @author raok
  *
  */
-public class ViewSubmissionsWidget extends Composite {
+public class MySubmissionsWidget extends Composite {
 
 	
 	
 	
-	final private ViewSubmissionsWidgetModel model;
-	final private ViewSubmissionsWidgetController controller;
-	final private ViewSubmissionsWidgetDefaultRenderer renderer;
-	private Set<ViewSubmissionsWidgetPubSubAPI> listeners = new HashSet<ViewSubmissionsWidgetPubSubAPI>();
+	final private MySubmissionsWidgetModel model;
+	final private MySubmissionsWidgetController controller;
+	final private MySubmissionsWidgetDefaultRenderer renderer;
+	private Set<MySubmissionsWidgetPubSubAPI> listeners = new HashSet<MySubmissionsWidgetPubSubAPI>();
 	
 	
 	
@@ -34,13 +34,13 @@ public class ViewSubmissionsWidget extends Composite {
 	 * 
 	 * @param canvas
 	 */
-	public ViewSubmissionsWidget(Panel canvas) {
+	public MySubmissionsWidget(Panel canvas) {
 		
-		model = new ViewSubmissionsWidgetModel();
+		model = new MySubmissionsWidgetModel();
 		
-		controller = new ViewSubmissionsWidgetController(model, this);
+		controller = new MySubmissionsWidgetController(model, this);
 		
-		renderer = new ViewSubmissionsWidgetDefaultRenderer(canvas, controller);
+		renderer = new MySubmissionsWidgetDefaultRenderer(canvas, controller);
 		
 		// register renderer as listener to model
 		model.addListener(renderer);
@@ -56,13 +56,13 @@ public class ViewSubmissionsWidget extends Composite {
 	/**
 	 * 
 	 */
-	public ViewSubmissionsWidget() {
+	public MySubmissionsWidget() {
 
-		model = new ViewSubmissionsWidgetModel();
+		model = new MySubmissionsWidgetModel();
 		
-		controller = new ViewSubmissionsWidgetController(model, this);
+		controller = new MySubmissionsWidgetController(model, this);
 		
-		renderer = new ViewSubmissionsWidgetDefaultRenderer(controller);
+		renderer = new MySubmissionsWidgetDefaultRenderer(controller);
 		
 		// register renderer as listener to model
 		model.addListener(renderer);
@@ -86,7 +86,7 @@ public class ViewSubmissionsWidget extends Composite {
 	
 	
 	void onUserSelectSubmission(SubmissionEntry submissionEntry) {
-		for (ViewSubmissionsWidgetPubSubAPI listener : listeners) {
+		for (MySubmissionsWidgetPubSubAPI listener : listeners) {
 			listener.onUserActionSelectSubmission(submissionEntry);
 		}
 	}
@@ -97,7 +97,7 @@ public class ViewSubmissionsWidget extends Composite {
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.client.gwt.widget.submission.viewall.client.ViewAllSubmissionsWidgetAPI#addViewAllSubmissionsWidgetListener(org.cggh.chassis.generic.client.gwt.widget.submission.viewall.client.ViewAllSubmissionsWidgetPubSubAPI)
 	 */
-	public void addViewAllSubmissionsWidgetListener(ViewSubmissionsWidgetPubSubAPI listener) {
+	public void addViewAllSubmissionsWidgetListener(MySubmissionsWidgetPubSubAPI listener) {
 		listeners.add(listener);
 	}
 

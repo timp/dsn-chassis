@@ -14,19 +14,6 @@ import org.cggh.chassis.generic.widget.client.DelegatingWidget;
 public class EditDataFileWidget extends DelegatingWidget {
 	private Log log = LogFactory.getLog(EditDataFileWidget.class);
 
-	public static final String NAME = "editDataFileWidget";
-
-	
-	
-	
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#getName()
-	 */
-	@Override
-	protected String getName() {
-		return NAME;
-	}
-
 
 	
 	

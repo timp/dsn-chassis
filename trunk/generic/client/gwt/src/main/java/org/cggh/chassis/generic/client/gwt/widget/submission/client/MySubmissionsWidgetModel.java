@@ -14,7 +14,7 @@ import org.cggh.chassis.generic.atomext.client.submission.SubmissionEntry;
  * @author raok
  *
  */
-public class ViewSubmissionsWidgetModel {
+public class MySubmissionsWidgetModel {
 
 	public static final Integer STATUS_INITIAL = 0;
 	public static final Integer STATUS_LOADING = 1;
@@ -22,7 +22,7 @@ public class ViewSubmissionsWidgetModel {
 	public static final Integer STATUS_ERROR = 3;
 	
 	private Integer status = STATUS_INITIAL;
-	private Set<ViewSubmissionsWidgetModelListener> listeners = new HashSet<ViewSubmissionsWidgetModelListener>();
+	private Set<MySubmissionsWidgetModelListener> listeners = new HashSet<MySubmissionsWidgetModelListener>();
 	private List<SubmissionEntry> submissionEntries; 
 
 
@@ -39,12 +39,12 @@ public class ViewSubmissionsWidgetModel {
 	}
 
 	private void fireOnStatusChanged(Integer before, Integer after) {
-		for (ViewSubmissionsWidgetModelListener listener : listeners) {
+		for (MySubmissionsWidgetModelListener listener : listeners) {
 			listener.onStatusChanged(before, after);
 		}
 	}
 
-	public void addListener(ViewSubmissionsWidgetModelListener listener) {
+	public void addListener(MySubmissionsWidgetModelListener listener) {
 		listeners.add(listener);
 	}
 
@@ -59,7 +59,7 @@ public class ViewSubmissionsWidgetModel {
 	}
 
 	private void fireOnSubmissionEntriesChanged(List<SubmissionEntry> before, List<SubmissionEntry> after) {
-		for (ViewSubmissionsWidgetModelListener listener : listeners) {
+		for (MySubmissionsWidgetModelListener listener : listeners) {
 			listener.onSubmissionEntriesChanged(before, after);
 		}
 	}

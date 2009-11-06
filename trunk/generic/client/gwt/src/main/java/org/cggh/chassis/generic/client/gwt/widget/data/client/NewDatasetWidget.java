@@ -11,23 +11,20 @@ import org.cggh.chassis.generic.widget.client.DelegatingWidget;
  * @author aliman
  *
  */
-public class NewDatasetWidget extends DelegatingWidget {
+public class NewDatasetWidget 
+	extends DelegatingWidget<NewDatasetWidgetModel, NewDatasetWidgetRenderer> {
+
+	
+	
+	
+
+	
+	
+	
 	private Log log = LogFactory.getLog(NewDatasetWidget.class);
 
-	public static final String NAME = "newDatasetWidget";
 
 	
-	
-	
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#getName()
-	 */
-	@Override
-	protected String getName() {
-		return NAME;
-	}
-
-
 	
 	
 
@@ -39,7 +36,9 @@ public class NewDatasetWidget extends DelegatingWidget {
 		ensureLog();
 		log.enter("init");
 
-		// TODO
+		this.model = new NewDatasetWidgetModel();
+		this.renderer = new NewDatasetWidgetRenderer();
+		this.renderer.setCanvas(this.contentBox);
 
 		log.leave();
 	}

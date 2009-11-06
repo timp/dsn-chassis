@@ -29,7 +29,7 @@ import com.google.gwt.user.client.ui.SimplePanel;
  * @author raok
  *
  */
-public class ViewStudiesWidgetDefaultRenderer implements ViewStudiesWidgetRenderer {
+public class MyStudiesWidgetDefaultRenderer implements MyStudiesWidgetRenderer {
 
 	
 	
@@ -43,7 +43,7 @@ public class ViewStudiesWidgetDefaultRenderer implements ViewStudiesWidgetRender
 	
 	private Log log = LogFactory.getLog(this.getClass());
 	private Panel canvas;
-	private ViewStudiesWidgetController controller;
+	private MyStudiesWidgetController controller;
 	private String selectStudyLinkText = "";
 
 	
@@ -56,7 +56,7 @@ public class ViewStudiesWidgetDefaultRenderer implements ViewStudiesWidgetRender
 	 * @param canvas
 	 * @param controller
 	 */
-	public ViewStudiesWidgetDefaultRenderer(Panel canvas, ViewStudiesWidgetController controller) {
+	public MyStudiesWidgetDefaultRenderer(Panel canvas, MyStudiesWidgetController controller) {
 		this.canvas = canvas;
 		this.controller = controller;
 		
@@ -74,7 +74,7 @@ public class ViewStudiesWidgetDefaultRenderer implements ViewStudiesWidgetRender
 	 * @param controller
 	 * @param selectStudyLinkText
 	 */
-	public ViewStudiesWidgetDefaultRenderer(Panel canvas, ViewStudiesWidgetController controller, String selectStudyLinkText) {
+	public MyStudiesWidgetDefaultRenderer(Panel canvas, MyStudiesWidgetController controller, String selectStudyLinkText) {
 		this.canvas = canvas;
 		this.controller = controller;
 		this.selectStudyLinkText = selectStudyLinkText;
@@ -91,7 +91,7 @@ public class ViewStudiesWidgetDefaultRenderer implements ViewStudiesWidgetRender
 	 * @param controller
 	 * @param selectStudyLinkText
 	 */
-	public ViewStudiesWidgetDefaultRenderer(ViewStudiesWidgetController controller, String selectStudyLinkText) {
+	public MyStudiesWidgetDefaultRenderer(MyStudiesWidgetController controller, String selectStudyLinkText) {
 		this.canvas = new FlowPanel();
 		this.controller = controller;
 		this.selectStudyLinkText = selectStudyLinkText;
@@ -132,7 +132,7 @@ public class ViewStudiesWidgetDefaultRenderer implements ViewStudiesWidgetRender
 	 */
 	public void onStatusChanged(Integer before, Integer after) {
 
-		if (after == ViewStudiesWidgetModel.STATUS_LOADING) {
+		if (after == MyStudiesWidgetModel.STATUS_LOADING) {
 
 //			canvas.clear();
 //			canvas.add(loadingPanel);
@@ -140,7 +140,7 @@ public class ViewStudiesWidgetDefaultRenderer implements ViewStudiesWidgetRender
 			this.studiesListPanel.setVisible(false);
 			this.loadingPanel.setVisible(true);
 			
-		} else if (after == ViewStudiesWidgetModel.STATUS_LOADED) {
+		} else if (after == MyStudiesWidgetModel.STATUS_LOADED) {
 
 //			canvas.clear();
 //			canvas.add(studiesListPanel);			
@@ -264,7 +264,7 @@ public class ViewStudiesWidgetDefaultRenderer implements ViewStudiesWidgetRender
 	
 	
 	
-	public void setController(ViewStudiesWidgetController controller) {
+	public void setController(MyStudiesWidgetController controller) {
 		this.controller = controller;
 	}
 

@@ -18,10 +18,10 @@ import com.google.gwt.user.client.ui.SimplePanel;
  *
  */
 public class StudyManagementWidget extends Composite implements StudyManagementWidgetAPI,
-											  CreateStudyWidgetPubSubAPI,
+											  NewStudyWidgetPubSubAPI,
 											  EditStudyWidgetPubSubAPI,
 											  ViewStudyWidgetPubSubAPI,
-											  ViewStudiesWidgetPubSubAPI,
+											  MyStudiesWidgetPubSubAPI,
 											  ViewStudyQuestionnaireWidget.PubSubAPI, 
 											  EditStudyQuestionnaireWidget.PubSubAPI {
 

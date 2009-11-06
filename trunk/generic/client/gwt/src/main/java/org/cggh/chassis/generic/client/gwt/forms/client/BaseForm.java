@@ -34,17 +34,6 @@ public abstract class BaseForm
 	
 	
 	
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#getName()
-	 */
-	@Override
-	protected String getName() {
-		return "baseForm";
-	}
-
-
-	
-	
 	private void ensureLog() {
 		if (log == null) log = LogFactory.getLog(BaseForm.class);
 	}

@@ -21,16 +21,16 @@ import org.cggh.chassis.generic.twisted.client.Function;
  * @author raok
  *
  */
-public class ViewSubmissionsWidgetController {
+public class MySubmissionsWidgetController {
 	private Log log = LogFactory.getLog(this.getClass());
 
-	final private ViewSubmissionsWidgetModel model;
+	final private MySubmissionsWidgetModel model;
 //	final private AtomService persistenceService;
-	final private ViewSubmissionsWidget owner;
+	final private MySubmissionsWidget owner;
 	private String submissionFeedURL;
 	private SubmissionQueryService submissionQueryService;
 
-	public ViewSubmissionsWidgetController(ViewSubmissionsWidgetModel model, ViewSubmissionsWidget owner) {
+	public MySubmissionsWidgetController(MySubmissionsWidgetModel model, MySubmissionsWidget owner) {
 		this.model = model;
 		this.owner = owner;
 				
@@ -62,7 +62,7 @@ public class ViewSubmissionsWidgetController {
 			log.enter("LoadSubmissionFeedCallback::apply");
 			
 			model.setSubmissionEntries(submissionFeed.getEntries());
-			model.setStatus(ViewSubmissionsWidgetModel.STATUS_LOADED);
+			model.setStatus(MySubmissionsWidgetModel.STATUS_LOADED);
 			log.debug(submissionFeed.getEntries().size() + " submissions loaded.");
 			
 			log.leave();
@@ -129,7 +129,7 @@ public class ViewSubmissionsWidgetController {
 			//update model when all submissions have been loaded
 			if (submissionEntries.size() == noOfSubmissions) {
 				model.setSubmissionEntries(submissionEntries);
-				model.setStatus(ViewSubmissionsWidgetModel.STATUS_LOADED);
+				model.setStatus(MySubmissionsWidgetModel.STATUS_LOADED);
 				
 				log.debug(noOfSubmissions + " loaded");
 			}

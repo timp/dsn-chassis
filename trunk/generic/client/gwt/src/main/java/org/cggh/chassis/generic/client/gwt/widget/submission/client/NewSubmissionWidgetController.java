@@ -18,13 +18,13 @@ import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
  * @author aliman
  *
  */
-public class CreateSubmissionWidgetController {
+public class NewSubmissionWidgetController {
 
 	
 	
 	
 	private Log log = LogFactory.getLog(this.getClass());
-	private CreateSubmissionWidget owner;
+	private NewSubmissionWidget owner;
 	private AsyncWidgetModel model;
 
 	
@@ -34,8 +34,8 @@ public class CreateSubmissionWidgetController {
 	 * @param owner
 	 * @param model
 	 */
-	public CreateSubmissionWidgetController(
-			CreateSubmissionWidget owner,
+	public NewSubmissionWidgetController(
+			NewSubmissionWidget owner,
 			AsyncWidgetModel model) {
 
 		this.owner = owner;

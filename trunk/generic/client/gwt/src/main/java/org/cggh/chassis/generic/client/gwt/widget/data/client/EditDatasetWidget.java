@@ -14,22 +14,7 @@ import org.cggh.chassis.generic.widget.client.DelegatingWidget;
 public class EditDatasetWidget extends DelegatingWidget {
 	private Log log = LogFactory.getLog(EditDatasetWidget.class);
 
-	public static final String NAME = "editDatasetWidget";
 
-	
-	
-	
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#getName()
-	 */
-	@Override
-	protected String getName() {
-		return NAME;
-	}
-
-
-	
-	
 
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#init()
