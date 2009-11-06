@@ -8,7 +8,7 @@ import java.util.Set;
 
 import org.cggh.chassis.generic.atom.client.AtomAuthor;
 import org.cggh.chassis.generic.client.gwt.configuration.client.TestConfigurationSetUp;
-import org.cggh.chassis.generic.client.gwt.widget.submission.client.CreateSubmissionWidgetRenderer;
+import org.cggh.chassis.generic.client.gwt.widget.submission.client.NewSubmissionWidgetRenderer;
 import org.cggh.chassis.generic.client.gwt.widget.submission.client.SubmissionControllerCreateAPI;
 
 import com.google.gwt.dom.client.Document;
@@ -24,7 +24,7 @@ import com.google.gwt.user.client.ui.SimplePanel;
 public class GWTTestCreateSubmissionWidgetDefaultRenderer extends GWTTestCase {
 	
 	private MockSubmissionController mockController;
-	private CreateSubmissionWidgetRenderer testRenderer;
+	private NewSubmissionWidgetRenderer testRenderer;
 
 	//test data
 	String module1Id = TestConfigurationSetUp.module1Id;
@@ -50,7 +50,7 @@ public class GWTTestCreateSubmissionWidgetDefaultRenderer extends GWTTestCase {
 		//create mockController and inject into testRenderer
 		mockController = new MockSubmissionController();
 		
-		testRenderer = new CreateSubmissionWidgetRenderer(null); // TODO fix this
+		testRenderer = new NewSubmissionWidgetRenderer(null); // TODO fix this
 		
 	}
 	

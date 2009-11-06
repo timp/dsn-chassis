@@ -9,10 +9,10 @@ import java.util.List;
 import org.cggh.chassis.generic.atomext.client.submission.SubmissionEntry;
 import org.cggh.chassis.generic.atomext.client.submission.SubmissionFactory;
 import org.cggh.chassis.generic.client.gwt.configuration.client.TestConfigurationSetUp;
-import org.cggh.chassis.generic.client.gwt.widget.submission.client.ViewSubmissionsWidget;
-import org.cggh.chassis.generic.client.gwt.widget.submission.client.ViewSubmissionsWidgetController;
-import org.cggh.chassis.generic.client.gwt.widget.submission.client.ViewSubmissionsWidgetDefaultRenderer;
-import org.cggh.chassis.generic.client.gwt.widget.submission.client.ViewSubmissionsWidgetModel;
+import org.cggh.chassis.generic.client.gwt.widget.submission.client.MySubmissionsWidget;
+import org.cggh.chassis.generic.client.gwt.widget.submission.client.MySubmissionsWidgetController;
+import org.cggh.chassis.generic.client.gwt.widget.submission.client.MySubmissionsWidgetDefaultRenderer;
+import org.cggh.chassis.generic.client.gwt.widget.submission.client.MySubmissionsWidgetModel;
 
 import com.google.gwt.junit.client.GWTTestCase;
 import com.google.gwt.user.client.ui.SimplePanel;
@@ -23,14 +23,14 @@ import com.google.gwt.user.client.ui.SimplePanel;
  */
 public class GWTTestViewSubmissionsWidgetDefaultRenderer extends GWTTestCase {
 
-	private ViewSubmissionsWidgetModel testModel;
-	private ViewSubmissionsWidgetDefaultRenderer testRenderer;
+	private MySubmissionsWidgetModel testModel;
+	private MySubmissionsWidgetDefaultRenderer testRenderer;
 	private MockViewAllSubmissionsWidgetController mockController;
 	private List<SubmissionEntry> submissions;
 	
-	private class MockViewAllSubmissionsWidgetController extends ViewSubmissionsWidgetController {
+	private class MockViewAllSubmissionsWidgetController extends MySubmissionsWidgetController {
 
-		public MockViewAllSubmissionsWidgetController(ViewSubmissionsWidgetModel model,	ViewSubmissionsWidget owner) {
+		public MockViewAllSubmissionsWidgetController(MySubmissionsWidgetModel model,	MySubmissionsWidget owner) {
 			super(model, owner);
 		}
 		
@@ -58,13 +58,13 @@ public class GWTTestViewSubmissionsWidgetDefaultRenderer extends GWTTestCase {
 		TestConfigurationSetUp.createTestConfiguration();
 		
 		//Create testModel
-		testModel = new ViewSubmissionsWidgetModel();
+		testModel = new MySubmissionsWidgetModel();
 						
 		//create mockController
 		mockController = new MockViewAllSubmissionsWidgetController(null, null);
 		
 		// instantiate a renderer
-		testRenderer = new ViewSubmissionsWidgetDefaultRenderer(new SimplePanel(), mockController);
+		testRenderer = new MySubmissionsWidgetDefaultRenderer(new SimplePanel(), mockController);
 		
 		//register as listener
 		testModel.addListener(testRenderer);
@@ -111,7 +111,7 @@ public class GWTTestViewSubmissionsWidgetDefaultRenderer extends GWTTestCase {
 	public void testOnStatusChanged() {
 				
 		//mock loading state
-		testRenderer.onStatusChanged(ViewSubmissionsWidgetModel.STATUS_INITIAL, ViewSubmissionsWidgetModel.STATUS_LOADING);
+		testRenderer.onStatusChanged(MySubmissionsWidgetModel.STATUS_INITIAL, MySubmissionsWidgetModel.STATUS_LOADING);
 		
 		//check loading state
 		assertTrue( (testRenderer.loadingPanel.getParent() != null)
@@ -120,7 +120,7 @@ public class GWTTestViewSubmissionsWidgetDefaultRenderer extends GWTTestCase {
 		            || !(testRenderer.submissionsListPanel.isVisible()) );
 		
 		//mock loaded state
-		testRenderer.onStatusChanged(ViewSubmissionsWidgetModel.STATUS_LOADING, ViewSubmissionsWidgetModel.STATUS_LOADED);
+		testRenderer.onStatusChanged(MySubmissionsWidgetModel.STATUS_LOADING, MySubmissionsWidgetModel.STATUS_LOADED);
 		
 		//check loaded state
 		assertTrue( (testRenderer.submissionsListPanel.getParent() != null)

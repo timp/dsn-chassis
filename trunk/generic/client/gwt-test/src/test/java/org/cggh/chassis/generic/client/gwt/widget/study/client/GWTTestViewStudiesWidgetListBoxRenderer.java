@@ -10,11 +10,11 @@ import java.util.Map;
 
 import org.cggh.chassis.generic.atomext.client.study.StudyEntry;
 import org.cggh.chassis.generic.atomext.client.study.StudyFactory;
-import org.cggh.chassis.generic.client.gwt.widget.study.client.ViewStudiesWidget;
-import org.cggh.chassis.generic.client.gwt.widget.study.client.ViewStudiesWidgetController;
-import org.cggh.chassis.generic.client.gwt.widget.study.client.ViewStudiesWidgetListBoxRenderer;
-import org.cggh.chassis.generic.client.gwt.widget.study.client.ViewStudiesWidgetModel;
-import org.cggh.chassis.generic.client.gwt.widget.study.client.ViewStudiesWidgetListBoxRenderer.ViewStudyChangeHandler;
+import org.cggh.chassis.generic.client.gwt.widget.study.client.MyStudiesWidget;
+import org.cggh.chassis.generic.client.gwt.widget.study.client.MyStudiesWidgetController;
+import org.cggh.chassis.generic.client.gwt.widget.study.client.MyStudiesWidgetListBoxRenderer;
+import org.cggh.chassis.generic.client.gwt.widget.study.client.MyStudiesWidgetModel;
+import org.cggh.chassis.generic.client.gwt.widget.study.client.MyStudiesWidgetListBoxRenderer.ViewStudyChangeHandler;
 
 import com.google.gwt.junit.client.GWTTestCase;
 import com.google.gwt.user.client.ui.SimplePanel;
@@ -25,14 +25,14 @@ import com.google.gwt.user.client.ui.SimplePanel;
  */
 public class GWTTestViewStudiesWidgetListBoxRenderer extends GWTTestCase {
 
-	private ViewStudiesWidgetModel testModel;
-	private ViewStudiesWidgetListBoxRenderer testRenderer;
+	private MyStudiesWidgetModel testModel;
+	private MyStudiesWidgetListBoxRenderer testRenderer;
 	private MockViewAllStudiesWidgetController mockController;
 	private List<StudyEntry> studies;
 	
-	private class MockViewAllStudiesWidgetController extends ViewStudiesWidgetController {
+	private class MockViewAllStudiesWidgetController extends MyStudiesWidgetController {
 
-		public MockViewAllStudiesWidgetController(ViewStudiesWidgetModel model, ViewStudiesWidget owner) {
+		public MockViewAllStudiesWidgetController(MyStudiesWidgetModel model, MyStudiesWidget owner) {
 			super(model, owner);
 		}
 		
@@ -58,13 +58,13 @@ public class GWTTestViewStudiesWidgetListBoxRenderer extends GWTTestCase {
 	protected void gwtSetUp() {
 		
 		//Create testModel
-		testModel = new ViewStudiesWidgetModel();
+		testModel = new MyStudiesWidgetModel();
 						
 		//create mockController
 		mockController = new MockViewAllStudiesWidgetController(null, null);
 		
 		// instantiate a renderer
-		testRenderer = new ViewStudiesWidgetListBoxRenderer(new SimplePanel(), mockController);
+		testRenderer = new MyStudiesWidgetListBoxRenderer(new SimplePanel(), mockController);
 		
 		//register as listener
 		testModel.addListener(testRenderer);
@@ -110,7 +110,7 @@ public class GWTTestViewStudiesWidgetListBoxRenderer extends GWTTestCase {
 	public void testOnStatusChanged() {
 				
 		//mock loading state
-		testRenderer.onStatusChanged(ViewStudiesWidgetModel.STATUS_INITIAL, ViewStudiesWidgetModel.STATUS_LOADING);
+		testRenderer.onStatusChanged(MyStudiesWidgetModel.STATUS_INITIAL, MyStudiesWidgetModel.STATUS_LOADING);
 		
 		//check loading state
 		assertTrue( (testRenderer.loadingPanel.getParent() != null)
@@ -119,7 +119,7 @@ public class GWTTestViewStudiesWidgetListBoxRenderer extends GWTTestCase {
 		            || !(testRenderer.studiesListBox.isVisible()) );
 		
 		//mock loaded state
-		testRenderer.onStatusChanged(ViewStudiesWidgetModel.STATUS_LOADING, ViewStudiesWidgetModel.STATUS_LOADED);
+		testRenderer.onStatusChanged(MyStudiesWidgetModel.STATUS_LOADING, MyStudiesWidgetModel.STATUS_LOADED);
 		
 		//check loaded state
 		assertTrue( (testRenderer.studiesListBox.getParent() != null)
