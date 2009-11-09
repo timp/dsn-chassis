@@ -17,6 +17,7 @@ public class Chassis {
 
 		public static final String STUDY = "chassis.study";
 		public static final String SUBMISSION = "chassis.submission";
+		public static final String REVISION = "chassis.revision";
 		
 	}
 
@@ -35,6 +36,7 @@ public class Chassis {
 		public static final String SUBMISSION = "Submission";
 		public static final String STUDY = "Study";
 		public static final String DATAFILE = "DataFile";
+		public static final String MEDIARESOURCE = "MediaResource";
 
 	}
 	

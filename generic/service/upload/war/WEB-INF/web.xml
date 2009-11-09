@@ -32,10 +32,36 @@
   </filter-mapping>
   
   <servlet>
+    <description>new data file servlet</description>
+    <display-name>NewDataFileServlet</display-name>
+    <servlet-name>NewDataFileServlet</servlet-name>
+    <servlet-class>org.cggh.chassis.generic.service.data.NewDataFileServlet</servlet-class>
+    <init-param>
+      <description>the URL of the Atom collection where the uploaded file content (i.e., media) will be POSTed</description>
+      <param-name>mediaCollectionUrl</param-name>
+      <param-value>http://localhost:8080/chassis-generic-service-exist/atom/edit/media</param-value>
+    </init-param>
+    <init-param>
+      <description>the URL of the data files collection </description>
+      <param-name>dataFilesCollectionUrl</param-name>
+      <param-value>http://localhost:8080/chassis-generic-service-exist/atom/edit/datafiles</param-value>
+    </init-param>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>NewDataFileServlet</servlet-name>
+    <url-pattern>/newdatafile</url-pattern>
+  </servlet-mapping>
+
+  
+  
+  <!-- legacy -->
+  
+  <servlet>
     <description>upload servlet using Atom service for file persistence</description>
     <display-name>DataFileUploadServlet</display-name>
     <servlet-name>DataFileUploadServlet</servlet-name>
-    <servlet-class>org.cggh.chassis.generic.service.upload.DataFileUploadServlet</servlet-class>
+    <servlet-class>legacy.org.cggh.chassis.generic.service.upload.DataFileUploadServlet</servlet-class>
     <init-param>
       <description>the URL of the Atom collection where file content will be POSTed</description>
       <param-name>atomCollectionUrl</param-name>

@@ -1,4 +1,4 @@
-package org.cggh.chassis.generic.service.upload;
+package legacy.org.cggh.chassis.generic.service.upload;
 
 import java.io.BufferedReader;
 import java.io.IOException;
