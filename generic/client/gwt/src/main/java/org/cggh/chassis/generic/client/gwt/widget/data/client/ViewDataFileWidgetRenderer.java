@@ -26,6 +26,7 @@ public class ViewDataFileWidgetRenderer
 	
 	private Log log = LogFactory.getLog(ViewDataFileWidgetRenderer.class);
 	private DataFilePropertiesWidget dataFilePropertiesWidget;
+	private DataFileRevisionsWidget revisionsWidget;
 
 	
 	
@@ -38,7 +39,6 @@ public class ViewDataFileWidgetRenderer
 	protected void renderMainPanel() {
 		log.enter("renderMainPanel");
 
-		// TODO Auto-generated method stub
 		log.debug("render content panel");
 		
 		Panel contentPanel = this.renderContentPanel();
@@ -70,12 +70,15 @@ public class ViewDataFileWidgetRenderer
 	private Panel renderContentPanel() {
 		log.enter("renderContentPanel");
 		
-		// TODO Auto-generated method stub
-		
 		FlowPanel contentPanel = new FlowPanel();
 		
 		this.dataFilePropertiesWidget = new DataFilePropertiesWidget();
 		contentPanel.add(this.dataFilePropertiesWidget);
+		
+		contentPanel.add(new HTML("<h3>Revisions</h3>"));
+		
+		this.revisionsWidget = new DataFileRevisionsWidget();
+		contentPanel.add(this.revisionsWidget);
 		
 		log.leave();
 		return contentPanel;
@@ -96,7 +99,7 @@ public class ViewDataFileWidgetRenderer
 		HandlerRegistration b = this.model.addDataFileEntryChangeHandler(new DataFileEntryChangeHandler() {
 			
 			public void onDataFileEntryChanged(DataFileEntryChangeEvent e) {
-				log.enter("onSubmissionEntryChanged");
+				log.enter("onDataFileEntryChanged");
 				
 				updateInfo(e.getAfter());
 				
@@ -124,7 +127,6 @@ public class ViewDataFileWidgetRenderer
 		// TODO Auto-generated method stub
 
 		log.leave();
-
 	}
 
 	
@@ -170,9 +172,11 @@ public class ViewDataFileWidgetRenderer
 		
 		if (entry != null) {
 			this.dataFilePropertiesWidget.setEntry(entry);
+			this.revisionsWidget.setEntry(entry);
 		}
 		else {
 			this.dataFilePropertiesWidget.setEntry(null); // TODO review this, rather call reset() ?
+			this.revisionsWidget.setEntry(null); // TODO review this, rather call reset() ?
 		}
 		
 		log.leave();

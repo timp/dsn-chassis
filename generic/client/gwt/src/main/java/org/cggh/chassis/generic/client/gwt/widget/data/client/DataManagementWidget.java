@@ -196,7 +196,7 @@ public class DataManagementWidget extends ChassisWidget {
 				log.enter("onCreateDataFileSuccess");
 				
 				setActiveChild(viewDataFileWidget);
-				viewDataFileWidget.setEntry(e.getDataFileEntry());
+				viewDataFileWidget.getEntry(e.getDataFileEntry().getId());
 				
 				log.leave();
 				

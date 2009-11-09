@@ -3,10 +3,12 @@
  */
 package org.cggh.chassis.generic.atomext.client.datafile;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.cggh.chassis.generic.atom.client.AtomEntryImpl;
 import org.cggh.chassis.generic.atom.client.AtomLink;
+import org.cggh.chassis.generic.atomext.shared.Chassis;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 
@@ -37,31 +39,18 @@ public class DataFileEntryImpl extends AtomEntryImpl implements DataFileEntry {
 	
 	
 
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.atom.datafile2.client.format.DataFileEntry#addFileRevisionLink(java.lang.String)
-	 */
-	public void addFileRevisionLink(String href) {
-		log.enter("addFileRevisionLink");
-		
-		// TODO Auto-generated method stub
-		
-		log.leave();
-		
-	}
-
-	
-	
-	
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.atom.datafile2.client.format.DataFileEntry#getFileRevisionLinks()
-	 */
-	public List<AtomLink> getFileRevisionLinks() {
+	public List<RevisionLink> getRevisionLinks() {
 		log.enter("getFileRevisionLinks");
 		
-		// TODO Auto-generated method stub
+		List<RevisionLink> links = new ArrayList<RevisionLink>();
+		for (AtomLink l : this.getLinks()) {
+			if (l.getRel().equals(Chassis.Rel.REVISION)) {
+				links.add(RevisionLinkImpl.as(l));
+			}
+		}
 		
 		log.leave();
-		return null;
+		return links;
 	}
 	
 	

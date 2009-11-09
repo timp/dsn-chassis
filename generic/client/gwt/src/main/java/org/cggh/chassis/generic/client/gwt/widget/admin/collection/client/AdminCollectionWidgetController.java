@@ -129,6 +129,7 @@ public class AdminCollectionWidgetController {
 			Response response = result.getLastResponse();
 
 			if (response != null) {
+				log.debug("found error response");
 				model.setError(false);
 				model.setResponseHeaders(response.getHeadersAsString());
 				model.setResponseText(response.getText());
