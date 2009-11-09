@@ -27,8 +27,8 @@ public class MainEntryPoint implements EntryPoint {
 	static {
 		LogFactory.create = AllenSauerLog.create;
 		LogFactory.hide("*");
-		LogFactory.show("org.cggh.chassis.generic.client.gwt.application.client.ChassisClient");
-		LogFactory.show("org.cggh.chassis.generic.client.gwt.widget.userdetails.*");
+		LogFactory.show("org.cggh.chassis.generic.client.gwt.application.client.*");
+		LogFactory.show("org.cggh.chassis.generic.client.gwt.widget.admin.*");
 	}
 
 

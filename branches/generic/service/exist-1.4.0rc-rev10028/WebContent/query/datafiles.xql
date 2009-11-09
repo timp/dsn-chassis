@@ -1,23 +1,57 @@
 (: namespace declarations :)
 declare namespace atom = "http://www.w3.org/2005/Atom" ;
+declare namespace my = "http://www.cggh.org/2009/chassis/xquery-function" ;
 
 (: serialization options :)
 declare option exist:serialize "method=xml media-type=application/xml indent=yes" ;
 
-(: find submissions colletion :) 
+
+declare function my:include-media( $link as element() ) as element() {
+	let $rel := $link/@rel
+	let $href := $link/@href
+	return 
+	<atom:link rel="{$rel}" href="{$href}">
+		{
+			let $revision := collection("/db/media")//atom:entry[atom:link[@rel="edit" and @href=$href]]
+			return $revision
+		}
+	</atom:link>
+};
+
+
+declare function my:expand-datafile-link( $link as element() ) as element() {
+	let $rel := $link/@rel
+	return if ($rel = "chassis.revision") then my:include-media($link) else $link
+};
+
+
+declare function my:expand-datafile( $entry as element() ) as element() {
+	let $id := $entry/atom:id
+	return 
+	<atom:entry>
+	{
+		$id,
+		$entry/atom:published,
+		$entry/atom:updated,
+		$entry/atom:title,
+		$entry/atom:summary,
+		$entry/atom:category,
+		for $link in $entry/atom:link return my:expand-datafile-link($link)
+	}
+	</atom:entry>
+};
+
+
+(: find collection :) 
 let $datafiles := collection("/db/datafiles")
 
 (: fish out request params :)
-let $authoremail := request:get-parameter("authoremail","")
-let $submission  := request:get-parameter("submission","")
+let $param-authoremail := request:get-parameter("authoremail","")
+let $param-id := request:get-parameter("id","")
 
 (: return an Atom feed document :)
 return 
 <atom:feed>
-	<params>
-		<authoremail>{$authoremail}</authoremail>
-		<submission>{$submission}</submission>
-	</params>
 	<atom:title>Query Results</atom:title>
 	{
 		(: for all Atom entries within the collection :)
@@ -26,14 +60,19 @@ return
 		where 
 		
 		(: filter by author email, if request parameter is given :)
-		( ($authoremail != "" and $e/atom:author/atom:email = $authoremail) or ($authoremail = "") )
+		
+		( ($param-authoremail != "" and $e/atom:author/atom:email = $param-authoremail) or ($param-authoremail = "") )
 
-		(: filter by submission URL, if request parameter is given :)
-		and ( ($submission != "" and $e/atom:link[@rel="chassis.submission"]/@href = $submission) or ($submission = "") )
+		and
+		
+		(: filter by ID, if request parameter is given :)
+
+		( ($param-id != "" and $e/atom:id = $param-id) or ($param-id = "") )
 			
 		(: order by most recently updated :)
+
 		order by $e/atom:updated descending
 		
-		return $e
+		return my:expand-datafile($e)
 	}
 </atom:feed>

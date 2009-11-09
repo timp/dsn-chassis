@@ -3,7 +3,6 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.data.client;
 
-import org.cggh.chassis.generic.atomext.client.datafile.DataFileEntry;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.DelegatingWidget;
@@ -15,6 +14,7 @@ import org.cggh.chassis.generic.widget.client.DelegatingWidget;
 public class ViewDataFileWidget 
 	extends DelegatingWidget<ViewDataFileWidgetModel, ViewDataFileWidgetRenderer> {
 	private Log log = LogFactory.getLog(ViewDataFileWidget.class);
+	private ViewDataFileWidgetController controller;
 
 
 	
@@ -29,6 +29,7 @@ public class ViewDataFileWidget
 		log.enter("init");
 
 		this.model = new ViewDataFileWidgetModel(this);
+		this.controller = new ViewDataFileWidgetController(this, this.model);
 		this.renderer = new ViewDataFileWidgetRenderer();
 		this.renderer.setCanvas(this.contentBox);
 
@@ -51,11 +52,11 @@ public class ViewDataFileWidget
 	/**
 	 * @param dataFileEntry
 	 */
-	public void setEntry(DataFileEntry dataFileEntry) {
+	public void getEntry(String id) {
 		log.enter("setEntry");
 
-		// delegate
-		this.model.setEntry(dataFileEntry);
+		// delegate to controller
+		this.controller.getEntry(id);
 		
 		log.leave();
 	}
