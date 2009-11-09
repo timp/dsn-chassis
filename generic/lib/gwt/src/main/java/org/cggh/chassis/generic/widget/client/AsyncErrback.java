@@ -3,10 +3,10 @@
  */
 package org.cggh.chassis.generic.widget.client;
 
+import org.cggh.chassis.generic.async.client.Function;
+import org.cggh.chassis.generic.async.client.HttpException;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
-import org.cggh.chassis.generic.twisted.client.Function;
-import org.cggh.chassis.generic.twisted.client.HttpException;
 
 /**
  * @author aliman

@@ -3,9 +3,9 @@
  */
 package org.cggh.chassis.generic.atomext.client.study;
 
+import org.cggh.chassis.generic.async.client.Deferred;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
-import org.cggh.chassis.generic.twisted.client.Deferred;
 
 /**
  * @author aliman

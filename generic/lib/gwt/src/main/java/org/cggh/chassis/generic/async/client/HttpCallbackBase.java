@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.twisted.client;
+package org.cggh.chassis.generic.async.client;
 
 import java.util.HashSet;
 import java.util.Iterator;

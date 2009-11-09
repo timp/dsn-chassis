@@ -6,8 +6,8 @@ package org.cggh.chassis.generic.atom.client;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.cggh.chassis.generic.twisted.client.Function;
-import org.cggh.chassis.generic.twisted.client.Functional;
+import org.cggh.chassis.generic.async.client.Function;
+import org.cggh.chassis.generic.async.client.Functional;
 import org.cggh.chassis.generic.xml.client.ElementWrapperImpl;
 import org.cggh.chassis.generic.xml.client.XMLNS;
 

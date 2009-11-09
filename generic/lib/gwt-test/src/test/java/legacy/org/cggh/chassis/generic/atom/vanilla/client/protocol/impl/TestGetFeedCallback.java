@@ -13,8 +13,8 @@ import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
 import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomFormatException;
 import legacy.org.cggh.chassis.generic.atom.vanilla.client.protocol.impl.GetFeedCallback;
 
-import org.cggh.chassis.generic.twisted.client.HttpDeferred;
-import org.cggh.chassis.generic.twisted.client.Function;
+import org.cggh.chassis.generic.async.client.Function;
+import org.cggh.chassis.generic.async.client.HttpDeferred;
 
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.Response;

@@ -7,7 +7,7 @@ import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
 import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
 import legacy.org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
 
-import org.cggh.chassis.generic.twisted.client.Deferred;
+import org.cggh.chassis.generic.async.client.Deferred;
 
 /**
  * @author aliman

@@ -3,13 +3,13 @@
  */
 package org.cggh.chassis.generic.atomext.client.exist;
 
+import org.cggh.chassis.generic.async.client.Deferred;
+import org.cggh.chassis.generic.async.client.HttpDeferred;
 import org.cggh.chassis.generic.atom.client.AtomEntry;
 import org.cggh.chassis.generic.atom.client.AtomFactory;
 import org.cggh.chassis.generic.atom.client.AtomFeed;
 import org.cggh.chassis.generic.atom.client.AtomServiceImpl;
 import org.cggh.chassis.generic.atom.client.CallbackWithNoContent;
-import org.cggh.chassis.generic.twisted.client.Deferred;
-import org.cggh.chassis.generic.twisted.client.HttpDeferred;
 
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.URL;

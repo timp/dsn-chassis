@@ -6,7 +6,7 @@ package org.cggh.chassis.generic.log.client;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.cggh.chassis.generic.twisted.client.Function;
+import org.cggh.chassis.generic.async.client.Function;
 
 /**
  * @author aliman

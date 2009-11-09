@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.twisted.client;
+package org.cggh.chassis.generic.async.client;
 
 import java.util.LinkedList;
 import java.util.Queue;

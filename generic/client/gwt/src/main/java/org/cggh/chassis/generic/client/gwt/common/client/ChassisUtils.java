@@ -6,12 +6,12 @@ package org.cggh.chassis.generic.client.gwt.common.client;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.cggh.chassis.generic.async.client.Deferred;
+import org.cggh.chassis.generic.async.client.Function;
 import org.cggh.chassis.generic.atomext.client.study.StudyEntry;
 import org.cggh.chassis.generic.atomext.client.study.StudyFeed;
 import org.cggh.chassis.generic.atomext.client.study.StudyQueryService;
 import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
-import org.cggh.chassis.generic.twisted.client.Deferred;
-import org.cggh.chassis.generic.twisted.client.Function;
 
 /**
  * @author aliman

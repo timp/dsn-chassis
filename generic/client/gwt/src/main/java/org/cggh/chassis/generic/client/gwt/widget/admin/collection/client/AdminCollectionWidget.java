@@ -3,8 +3,8 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.admin.collection.client;
 
+import org.cggh.chassis.generic.async.client.Deferred;
 import org.cggh.chassis.generic.atom.client.vanilla.VanillaAtomFeed;
-import org.cggh.chassis.generic.twisted.client.Deferred;
 
 import com.google.gwt.user.client.ui.Composite;
 

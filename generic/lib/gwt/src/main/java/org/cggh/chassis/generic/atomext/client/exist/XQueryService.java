@@ -3,9 +3,9 @@
  */
 package org.cggh.chassis.generic.atomext.client.exist;
 
-import org.cggh.chassis.generic.twisted.client.Deferred;
-import org.cggh.chassis.generic.twisted.client.HttpCanceller;
-import org.cggh.chassis.generic.twisted.client.HttpDeferred;
+import org.cggh.chassis.generic.async.client.Deferred;
+import org.cggh.chassis.generic.async.client.HttpCanceller;
+import org.cggh.chassis.generic.async.client.HttpDeferred;
 
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;

@@ -3,6 +3,8 @@
  */
 package spike.atom.submission.query.client;
 
+import org.cggh.chassis.generic.async.client.Deferred;
+import org.cggh.chassis.generic.async.client.Function;
 import org.cggh.chassis.generic.atom.client.AtomAuthor;
 import org.cggh.chassis.generic.atomext.client.submission.SubmissionEntry;
 import org.cggh.chassis.generic.atomext.client.submission.SubmissionFactory;
@@ -12,8 +14,6 @@ import org.cggh.chassis.generic.atomext.client.submission.SubmissionQueryService
 import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
-import org.cggh.chassis.generic.twisted.client.Deferred;
-import org.cggh.chassis.generic.twisted.client.Function;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.Window;

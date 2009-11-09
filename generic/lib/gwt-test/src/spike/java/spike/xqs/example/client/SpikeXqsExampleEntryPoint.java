@@ -3,10 +3,10 @@
  */
 package spike.xqs.example.client;
 
+import org.cggh.chassis.generic.async.client.Deferred;
+import org.cggh.chassis.generic.async.client.Function;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
-import org.cggh.chassis.generic.twisted.client.Deferred;
-import org.cggh.chassis.generic.twisted.client.Function;
 import org.cggh.chassis.generic.xquestion.client.XQuestionnaire;
 
 import com.google.gwt.core.client.EntryPoint;

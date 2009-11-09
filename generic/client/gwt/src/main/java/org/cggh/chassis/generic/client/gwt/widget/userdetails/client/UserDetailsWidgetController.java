@@ -5,11 +5,11 @@ package org.cggh.chassis.generic.client.gwt.widget.userdetails.client;
 
 import java.util.Set;
 
+import org.cggh.chassis.generic.async.client.Deferred;
 import org.cggh.chassis.generic.client.gwt.configuration.client.ChassisRole;
 import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
-import org.cggh.chassis.generic.twisted.client.Deferred;
 import org.cggh.chassis.generic.user.gwtrpc.client.GWTUserDetailsService;
 import org.cggh.chassis.generic.user.gwtrpc.client.GWTUserDetailsServiceAsync;
 import org.cggh.chassis.generic.user.transfer.UserDetailsTO;

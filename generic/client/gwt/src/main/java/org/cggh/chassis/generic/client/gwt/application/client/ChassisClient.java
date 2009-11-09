@@ -3,6 +3,7 @@
  */
 package org.cggh.chassis.generic.client.gwt.application.client;
 
+import org.cggh.chassis.generic.async.client.Deferred;
 import org.cggh.chassis.generic.client.gwt.common.client.ChassisUser;
 import org.cggh.chassis.generic.client.gwt.configuration.client.ChassisRole;
 import org.cggh.chassis.generic.client.gwt.widget.userdetails.client.UserDetailsWidget;
@@ -12,7 +13,6 @@ import org.cggh.chassis.generic.client.gwt.widget.userdetails.client.UserDetails
 import org.cggh.chassis.generic.client.gwt.widget.userdetails.client.UserDetailsWidgetModel.CurrentUserChangeHandler;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
-import org.cggh.chassis.generic.twisted.client.Deferred;
 import org.cggh.chassis.generic.user.transfer.UserDetailsTO;
 
 import com.google.gwt.user.client.ui.Composite;

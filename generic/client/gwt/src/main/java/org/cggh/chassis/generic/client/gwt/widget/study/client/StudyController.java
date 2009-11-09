@@ -6,6 +6,9 @@ package org.cggh.chassis.generic.client.gwt.widget.study.client;
 
 import java.util.Set;
 
+import org.cggh.chassis.generic.async.client.Deferred;
+import org.cggh.chassis.generic.async.client.Function;
+import org.cggh.chassis.generic.async.client.HttpException;
 import org.cggh.chassis.generic.atom.client.AtomAuthor;
 import org.cggh.chassis.generic.atomext.client.study.StudyEntry;
 import org.cggh.chassis.generic.atomext.client.study.StudyFactory;
@@ -13,9 +16,6 @@ import org.cggh.chassis.generic.atomext.client.study.StudyPersistenceService;
 import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
-import org.cggh.chassis.generic.twisted.client.HttpException;
-import org.cggh.chassis.generic.twisted.client.Deferred;
-import org.cggh.chassis.generic.twisted.client.Function;
 
 /**
  * @author raok

@@ -3,7 +3,7 @@
  */
 package org.cggh.chassis.generic.log.client;
 
-import org.cggh.chassis.generic.twisted.client.Function;
+import org.cggh.chassis.generic.async.client.Function;
 
 import com.google.gwt.core.client.GWT;
 

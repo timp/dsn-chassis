@@ -7,10 +7,10 @@ import java.util.List;
 
 import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
 
+import org.cggh.chassis.generic.async.client.Function;
 import org.cggh.chassis.generic.client.gwt.common.client.CommonStyles;
 import org.cggh.chassis.generic.client.gwt.common.client.RenderUtils;
 import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
-import org.cggh.chassis.generic.twisted.client.Function;
 
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FlowPanel;

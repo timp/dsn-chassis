@@ -19,6 +19,7 @@ import java.util.Set;
 
 import junit.framework.JUnit4TestAdapter;
 
+import org.cggh.chassis.generic.async.client.Deferred;
 import org.cggh.chassis.generic.atomext.client.submission.SubmissionEntry;
 import org.cggh.chassis.generic.atomext.client.submission.SubmissionFeed;
 import org.cggh.chassis.generic.client.gwt.configuration.client.TestConfigurationSetUp;
@@ -29,7 +30,6 @@ import org.cggh.chassis.generic.client.gwt.widget.submission.client.MySubmission
 import org.cggh.chassis.generic.client.gwt.widget.submission.client.MySubmissionsWidgetController.LoadSubmissionFeedErrback;
 import org.cggh.chassis.generic.client.gwt.widget.submission.client.MySubmissionsWidgetController.LoadSubmissionsByEntryURLsCallback;
 import org.cggh.chassis.generic.client.gwt.widget.submission.client.MySubmissionsWidgetController.LoadSubmissionsByEntryURLsErrback;
-import org.cggh.chassis.generic.twisted.client.Deferred;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

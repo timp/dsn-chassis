@@ -3,5 +3,5 @@
 <module>
 	<inherits name="com.google.gwt.user.User" />
     <inherits name="com.google.gwt.xml.XML" />
-    <inherits name="org.cggh.chassis.generic.twisted.Twisted" />
+    <inherits name="org.cggh.chassis.generic.async.Async" />
 </module>

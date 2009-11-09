@@ -3,7 +3,7 @@
  */
 package org.cggh.chassis.generic.client.gwt.common.client;
 
-import org.cggh.chassis.generic.twisted.client.Deferred;
+import org.cggh.chassis.generic.async.client.Deferred;
 import org.cggh.chassis.generic.user.transfer.UserDetailsTO;
 
 /**

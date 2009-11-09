@@ -18,12 +18,13 @@ import java.util.List;
 import java.util.Set;
 
 import junit.framework.JUnit4TestAdapter;
+
+import org.cggh.chassis.generic.async.client.Deferred;
 import org.cggh.chassis.generic.client.gwt.configuration.client.TestConfigurationSetUp;
 import org.cggh.chassis.generic.client.gwt.widget.study.client.MyStudiesWidgetController.LoadStudiesByEntryURLsCallback;
 import org.cggh.chassis.generic.client.gwt.widget.study.client.MyStudiesWidgetController.LoadStudiesByEntryURLsErrback;
 import org.cggh.chassis.generic.client.gwt.widget.study.client.MyStudiesWidgetController.LoadStudyFeedCallback;
 import org.cggh.chassis.generic.client.gwt.widget.study.client.MyStudiesWidgetController.LoadStudyFeedErrback;
-import org.cggh.chassis.generic.twisted.client.Deferred;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
