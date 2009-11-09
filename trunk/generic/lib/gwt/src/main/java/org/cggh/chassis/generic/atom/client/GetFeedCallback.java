@@ -3,7 +3,7 @@
  */
 package org.cggh.chassis.generic.atom.client;
 
-import org.cggh.chassis.generic.twisted.client.HttpDeferred;
+import org.cggh.chassis.generic.async.client.HttpDeferred;
 
 /**
  * @author aliman

@@ -8,9 +8,9 @@ import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactory;
 import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
 import legacy.org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
 
-import org.cggh.chassis.generic.twisted.client.Deferred;
-import org.cggh.chassis.generic.twisted.client.HttpCanceller;
-import org.cggh.chassis.generic.twisted.client.HttpDeferred;
+import org.cggh.chassis.generic.async.client.Deferred;
+import org.cggh.chassis.generic.async.client.HttpCanceller;
+import org.cggh.chassis.generic.async.client.HttpDeferred;
 
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;

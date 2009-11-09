@@ -8,9 +8,9 @@ import static org.easymock.classextension.EasyMock.createMock;
 import static org.easymock.classextension.EasyMock.replay;
 import static org.easymock.classextension.EasyMock.verify;
 
-import org.cggh.chassis.generic.twisted.client.HttpException;
-import org.cggh.chassis.generic.twisted.client.HttpDeferred;
-import org.cggh.chassis.generic.twisted.client.Function;
+import org.cggh.chassis.generic.async.client.Function;
+import org.cggh.chassis.generic.async.client.HttpDeferred;
+import org.cggh.chassis.generic.async.client.HttpException;
 
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.Response;

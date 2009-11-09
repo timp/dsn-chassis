@@ -5,10 +5,10 @@ package org.cggh.chassis.generic.widget.client;
 
 import java.util.Stack;
 
+import org.cggh.chassis.generic.async.client.Deferred;
+import org.cggh.chassis.generic.async.client.Function;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
-import org.cggh.chassis.generic.twisted.client.Deferred;
-import org.cggh.chassis.generic.twisted.client.Function;
 
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;

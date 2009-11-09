@@ -23,13 +23,13 @@ import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
 import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
 import legacy.org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomFactory;
 
+import org.cggh.chassis.generic.async.client.Deferred;
 import org.cggh.chassis.generic.client.gwt.configuration.client.TestConfigurationSetUp;
 import org.cggh.chassis.generic.client.gwt.widget.submission.client.ViewSubmissionDataFilesWidget;
 import org.cggh.chassis.generic.client.gwt.widget.submission.client.ViewSubmissionDataFilesWidgetController;
 import org.cggh.chassis.generic.client.gwt.widget.submission.client.ViewSubmissionDataFilesWidgetModel;
 import org.cggh.chassis.generic.client.gwt.widget.submission.client.ViewSubmissionDataFilesWidgetController.LoadDataFileFeedCallback;
 import org.cggh.chassis.generic.client.gwt.widget.submission.client.ViewSubmissionDataFilesWidgetController.LoadDataFileFeedErrback;
-import org.cggh.chassis.generic.twisted.client.Deferred;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

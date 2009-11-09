@@ -8,8 +8,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.cggh.chassis.generic.twisted.client.Function;
-import org.cggh.chassis.generic.twisted.client.Functional;
+import org.cggh.chassis.generic.async.client.Function;
+import org.cggh.chassis.generic.async.client.Functional;
 import org.cggh.chassis.generic.xml.client.ElementWrapperImpl;
 import org.cggh.chassis.generic.xml.client.XMLNS;
 

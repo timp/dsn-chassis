@@ -11,8 +11,8 @@ import java.util.Map;
 
 import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
 
-import org.cggh.chassis.generic.twisted.client.Function;
-import org.cggh.chassis.generic.twisted.client.Functional;
+import org.cggh.chassis.generic.async.client.Function;
+import org.cggh.chassis.generic.async.client.Functional;
 
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Anchor;

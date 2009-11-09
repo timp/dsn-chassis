@@ -3,13 +3,13 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.study.client;
 
+import org.cggh.chassis.generic.async.client.Deferred;
+import org.cggh.chassis.generic.async.client.Function;
 import org.cggh.chassis.generic.atomext.client.study.StudyEntry;
 import org.cggh.chassis.generic.atomext.client.study.StudyPersistenceService;
 import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
-import org.cggh.chassis.generic.twisted.client.Deferred;
-import org.cggh.chassis.generic.twisted.client.Function;
 import org.cggh.chassis.generic.xquestion.client.XQuestionnaire;
 
 class StudyQuestionnaireWidgetController {

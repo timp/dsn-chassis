@@ -10,11 +10,11 @@ import legacy.org.cggh.chassis.generic.atom.datafile.client.protocol.impl.DataFi
 import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
 import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
 
+import org.cggh.chassis.generic.async.client.Deferred;
+import org.cggh.chassis.generic.async.client.Function;
 import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
-import org.cggh.chassis.generic.twisted.client.Deferred;
-import org.cggh.chassis.generic.twisted.client.Function;
 
 /**
  * @author raok

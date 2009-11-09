@@ -6,10 +6,10 @@ package legacy.org.cggh.chassis.generic.atom.vanilla.client.protocol.impl;
 import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactory;
 import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
 
+import org.cggh.chassis.generic.async.client.HttpCallbackBase;
+import org.cggh.chassis.generic.async.client.HttpDeferred;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
-import org.cggh.chassis.generic.twisted.client.HttpCallbackBase;
-import org.cggh.chassis.generic.twisted.client.HttpDeferred;
 
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestCallback;

@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import org.cggh.chassis.generic.async.client.Deferred;
+import org.cggh.chassis.generic.async.client.Function;
 import org.cggh.chassis.generic.atomext.client.study.StudyEntry;
 import org.cggh.chassis.generic.atomext.client.study.StudyFeed;
 import org.cggh.chassis.generic.atomext.client.study.StudyPersistenceService;
@@ -16,8 +18,6 @@ import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBea
 import org.cggh.chassis.generic.client.gwt.widget.study.client.MyStudiesWidget;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
-import org.cggh.chassis.generic.twisted.client.Deferred;
-import org.cggh.chassis.generic.twisted.client.Function;
 
 /**
  * @author raok

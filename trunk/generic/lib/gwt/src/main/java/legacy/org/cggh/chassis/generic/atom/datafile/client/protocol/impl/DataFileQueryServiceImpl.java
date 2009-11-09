@@ -11,9 +11,9 @@ import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
 import legacy.org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
 import legacy.org.cggh.chassis.generic.atom.vanilla.client.protocol.impl.AtomServiceImpl;
 
+import org.cggh.chassis.generic.async.client.Deferred;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
-import org.cggh.chassis.generic.twisted.client.Deferred;
 
 /**
  * @author aliman

@@ -12,8 +12,8 @@ import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomCategory;
 import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
 import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomLink;
 
-import org.cggh.chassis.generic.twisted.client.Function;
-import org.cggh.chassis.generic.twisted.client.Functional;
+import org.cggh.chassis.generic.async.client.Function;
+import org.cggh.chassis.generic.async.client.Functional;
 
 import com.google.gwt.xml.client.Element;
 

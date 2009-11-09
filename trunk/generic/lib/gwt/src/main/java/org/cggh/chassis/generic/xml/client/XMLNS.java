@@ -6,8 +6,8 @@ package org.cggh.chassis.generic.xml.client;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.cggh.chassis.generic.twisted.client.Function;
-import org.cggh.chassis.generic.twisted.client.Functional;
+import org.cggh.chassis.generic.async.client.Function;
+import org.cggh.chassis.generic.async.client.Functional;
 
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;

@@ -3,11 +3,11 @@
  */
 package org.cggh.chassis.generic.twisted.client;
 
+import org.cggh.chassis.generic.async.client.Deferred;
+import org.cggh.chassis.generic.async.client.Function;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.log.client.SystemOutLog;
-import org.cggh.chassis.generic.twisted.client.Deferred;
-import org.cggh.chassis.generic.twisted.client.Function;
 import org.junit.Before;
 import org.junit.Test;
 

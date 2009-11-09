@@ -3,8 +3,8 @@
  */
 package legacy.org.cggh.chassis.generic.atom.vanilla.client.protocol.impl;
 
-import org.cggh.chassis.generic.twisted.client.HttpCallbackBase;
-import org.cggh.chassis.generic.twisted.client.HttpDeferred;
+import org.cggh.chassis.generic.async.client.HttpCallbackBase;
+import org.cggh.chassis.generic.async.client.HttpDeferred;
 
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestCallback;

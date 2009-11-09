@@ -3,12 +3,12 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.userdetails.client;
 
+import org.cggh.chassis.generic.async.client.Deferred;
 import org.cggh.chassis.generic.client.gwt.configuration.client.ChassisRole;
 import org.cggh.chassis.generic.client.gwt.widget.userdetails.client.UserDetailsWidgetModel.CurrentRoleChangeHandler;
 import org.cggh.chassis.generic.client.gwt.widget.userdetails.client.UserDetailsWidgetModel.CurrentUserChangeHandler;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
-import org.cggh.chassis.generic.twisted.client.Deferred;
 import org.cggh.chassis.generic.user.transfer.UserDetailsTO;
 import org.cggh.chassis.generic.widget.client.DelegatingWidget;
 

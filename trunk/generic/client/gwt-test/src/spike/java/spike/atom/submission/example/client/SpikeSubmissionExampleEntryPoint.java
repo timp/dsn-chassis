@@ -3,6 +3,8 @@
  */
 package spike.atom.submission.example.client;
 
+import org.cggh.chassis.generic.async.client.Deferred;
+import org.cggh.chassis.generic.async.client.Function;
 import org.cggh.chassis.generic.atom.client.AtomAuthor;
 import org.cggh.chassis.generic.atomext.client.study.StudyEntry;
 import org.cggh.chassis.generic.atomext.client.study.StudyFactory;
@@ -13,8 +15,6 @@ import org.cggh.chassis.generic.atomext.client.submission.SubmissionPersistenceS
 import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
-import org.cggh.chassis.generic.twisted.client.Deferred;
-import org.cggh.chassis.generic.twisted.client.Function;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.Window;

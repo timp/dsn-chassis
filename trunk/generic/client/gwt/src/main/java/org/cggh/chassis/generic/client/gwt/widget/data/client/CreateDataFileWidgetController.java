@@ -3,14 +3,14 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.data.client;
 
+import org.cggh.chassis.generic.async.client.Deferred;
+import org.cggh.chassis.generic.async.client.Function;
+import org.cggh.chassis.generic.async.client.HttpException;
 import org.cggh.chassis.generic.atomext.client.datafile.DataFileEntry;
 import org.cggh.chassis.generic.atomext.client.datafile.DataFilePersistenceService;
 import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
-import org.cggh.chassis.generic.twisted.client.Deferred;
-import org.cggh.chassis.generic.twisted.client.Function;
-import org.cggh.chassis.generic.twisted.client.HttpException;
 import org.cggh.chassis.generic.widget.client.AsyncErrback;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 import org.cggh.chassis.generic.widget.client.ErrorEvent;
