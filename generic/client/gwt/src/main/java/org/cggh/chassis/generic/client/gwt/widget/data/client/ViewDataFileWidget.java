@@ -12,7 +12,8 @@ import org.cggh.chassis.generic.widget.client.DelegatingWidget;
  * @author aliman
  *
  */
-public class ViewDataFileWidget extends DelegatingWidget {
+public class ViewDataFileWidget 
+	extends DelegatingWidget<ViewDataFileWidgetModel, ViewDataFileWidgetRenderer> {
 	private Log log = LogFactory.getLog(ViewDataFileWidget.class);
 
 
@@ -27,7 +28,9 @@ public class ViewDataFileWidget extends DelegatingWidget {
 		ensureLog();
 		log.enter("init");
 
-		// TODO
+		this.model = new ViewDataFileWidgetModel(this);
+		this.renderer = new ViewDataFileWidgetRenderer();
+		this.renderer.setCanvas(this.contentBox);
 
 		log.leave();
 	}
@@ -48,13 +51,13 @@ public class ViewDataFileWidget extends DelegatingWidget {
 	/**
 	 * @param dataFileEntry
 	 */
-	public void setModel(DataFileEntry dataFileEntry) {
-		log.enter("setModel");
-		
-		// TODO Auto-generated method stub
+	public void setEntry(DataFileEntry dataFileEntry) {
+		log.enter("setEntry");
+
+		// delegate
+		this.model.setEntry(dataFileEntry);
 		
 		log.leave();
-		
 	}
 
 
