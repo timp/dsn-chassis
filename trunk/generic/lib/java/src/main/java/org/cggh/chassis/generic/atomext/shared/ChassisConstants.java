@@ -23,5 +23,6 @@ public class ChassisConstants {
 	public static final String FIELD_AUTHOREMAIL = "authoremail";
 	public static final String FIELD_SUMMARY = "summary";
 	public static final String FIELD_FILENAME = "filename";
+	public static final String FIELD_TITLE = "title";
 
 }
