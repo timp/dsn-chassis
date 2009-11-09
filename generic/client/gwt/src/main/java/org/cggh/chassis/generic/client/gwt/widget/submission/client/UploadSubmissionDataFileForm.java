@@ -20,14 +20,14 @@ public class UploadSubmissionDataFileForm extends DataFileEntryForm {
 
 	
 	private Panel canvas = new FlowPanel();
-	private DataFileFormRenderer renderer;
+	private UploadSubmissionDataFileFormRenderer renderer;
 
 	public UploadSubmissionDataFileForm() {
 		super();
 		this.initWidget(this.canvas);
 		this.initModel();
 		this.validator = new Validator();
-		this.renderer = new DataFileFormRenderer(this.canvas, this.model);
+		this.renderer = new UploadSubmissionDataFileFormRenderer(this.canvas, this.model);
 	}
 	
 	private void initModel() {
@@ -52,7 +52,7 @@ public class UploadSubmissionDataFileForm extends DataFileEntryForm {
 		
 	}
 	
-	public DataFileFormRenderer getRenderer() {
+	public UploadSubmissionDataFileFormRenderer getRenderer() {
 		return renderer;
 	}
 	

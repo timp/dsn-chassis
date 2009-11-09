@@ -13,14 +13,20 @@ import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
 
 import org.cggh.chassis.generic.async.client.Function;
 import org.cggh.chassis.generic.async.client.Functional;
+import org.cggh.chassis.generic.atomext.shared.ChassisConstants;
 
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.FileUpload;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.Hidden;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.Panel;
+import com.google.gwt.user.client.ui.TextArea;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -585,4 +591,67 @@ public class RenderUtils {
 	
 	
 	
+	
+	public static Panel renderTitleQuestion(String questionLabelText) {
+		
+		FlowPanel titleQuestionPanel = new FlowPanel();
+		titleQuestionPanel.addStyleName(CommonStyles.COMMON_QUESTION);
+		
+		TextBox titleInput = new TextBox();
+		titleInput.setName(ChassisConstants.FIELD_TITLE);
+		InlineLabel titleLabel = new InlineLabel(questionLabelText); 
+		titleQuestionPanel.add(titleLabel);
+		titleQuestionPanel.add(titleInput);
+		
+		return titleQuestionPanel;
+	}
+
+
+
+
+	/**
+	 * @param string
+	 * @return
+	 */
+	public static Panel renderSummaryQuestion(String questionLabelText) {
+
+		FlowPanel summaryQuestionPanel = new FlowPanel();
+		summaryQuestionPanel.addStyleName(CommonStyles.COMMON_QUESTION);
+
+		TextArea summaryInput = new TextArea();
+		summaryInput.setName(ChassisConstants.FIELD_SUMMARY);
+		Label summaryLabel = new Label(questionLabelText);
+		summaryQuestionPanel.add(summaryLabel);
+		summaryQuestionPanel.add(summaryInput);
+		
+		return summaryQuestionPanel;
+	}
+	
+	
+	
+	
+	public static Hidden renderHiddenAuthorEmail() {
+		Hidden h = new Hidden();
+		h.setName(ChassisConstants.FIELD_AUTHOREMAIL);
+		h.setValue(ChassisUser.getCurrentUserEmail());
+		return h;
+	}
+	
+	
+	
+	
+	public static Panel renderFileInputQuestion(String questionLabelText, String inputName) {
+
+		FlowPanel fileQuestionPanel = new FlowPanel();
+		fileQuestionPanel.addStyleName(CommonStyles.COMMON_QUESTION);
+		
+		InlineLabel fileBrowserLabel = new InlineLabel(questionLabelText);
+		fileQuestionPanel.add(fileBrowserLabel);
+
+		FileUpload fileInput = new FileUpload();
+		fileInput.setName(inputName);
+		fileQuestionPanel.add(fileInput);
+		
+		return fileQuestionPanel;
+	}
 }

@@ -22,9 +22,13 @@ CHASSIS.submissionQueryServiceURL = CHASSIS.existService + "/query/submissions.x
 CHASSIS.dataFileFeedURL = CHASSIS.existService + "/atom/edit/datafiles";
 CHASSIS.dataFileQueryServiceURL = CHASSIS.existService + "/query/datafiles.xql";
 
+CHASSIS.mediaFeedURL = CHASSIS.existService + "/atom/edit/media";
+
 CHASSIS.sandboxFeedURL = CHASSIS.existService + "/atom/edit/sandbox";
 
-CHASSIS.dataFileUploadServiceURL = CHASSIS.uploadService + "/datafileupload";
+CHASSIS.newDataFileServiceURL = CHASSIS.uploadService + "/newdatafile";
+
+// CHASSIS.dataFileUploadServiceURL = CHASSIS.uploadService + "/datafileupload";
 
 // configure role name prefix
 

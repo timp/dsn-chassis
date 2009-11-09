@@ -13,6 +13,7 @@ public class ErrorEvent extends GwtEvent<ErrorHandler> {
 	
 	public static final Type<ErrorHandler> TYPE = new Type<ErrorHandler>();
 	private Throwable exception;
+	private String message;
 	
 	public ErrorEvent() {}
 	
@@ -20,6 +21,13 @@ public class ErrorEvent extends GwtEvent<ErrorHandler> {
 		this.exception = t;
 	}
 	
+	/**
+	 * @param string
+	 */
+	public ErrorEvent(String message) {
+		this.setMessage(message);
+	}
+
 	public Throwable getException() {
 		return this.exception;
 	}
@@ -38,6 +46,14 @@ public class ErrorEvent extends GwtEvent<ErrorHandler> {
 	@Override
 	public Type<ErrorHandler> getAssociatedType() {
 		return TYPE;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	public String getMessage() {
+		return message;
 	}
 	
 	

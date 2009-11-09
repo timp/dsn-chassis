@@ -3,6 +3,9 @@
  */
 package org.cggh.chassis.generic.client.gwt.application.client;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
 import org.cggh.chassis.generic.client.gwt.widget.admin.collection.client.AdminCollectionWidget;
 
@@ -55,17 +58,25 @@ public class AdministratorHomeWidget extends Composite {
 		final AdminCollectionWidget studies = new AdminCollectionWidget("Studies", Configuration.getStudyFeedURL());
 		final AdminCollectionWidget submissions = new AdminCollectionWidget("Submissions", Configuration.getSubmissionFeedURL());
 		final AdminCollectionWidget datafiles = new AdminCollectionWidget("Data Files", Configuration.getDataFileFeedURL());
+		final AdminCollectionWidget media = new AdminCollectionWidget("Media", Configuration.getMediaFeedURL());
 		final AdminCollectionWidget sandbox = new AdminCollectionWidget("Sandbox", Configuration.getSandboxFeedURL());
+		
+		final Set<AdminCollectionWidget> widgets = new HashSet<AdminCollectionWidget>();
+		widgets.add(studies);
+		widgets.add(submissions);
+		widgets.add(datafiles);
+		widgets.add(media);
+		widgets.add(sandbox);
+		
 
 		Button refreshAllButton = new Button();
 		refreshAllButton.setText("refresh all");
 		refreshAllButton.addClickHandler(new ClickHandler() {
 
 			public void onClick(ClickEvent arg0) {
-				studies.refreshStatus();
-				submissions.refreshStatus();
-				datafiles.refreshStatus();
-				sandbox.refreshStatus();
+				for (AdminCollectionWidget w : widgets) {
+					w.refreshStatus();
+				}
 			}
 			
 		});
@@ -75,10 +86,9 @@ public class AdministratorHomeWidget extends Composite {
 		createAllButton.addClickHandler(new ClickHandler() {
 
 			public void onClick(ClickEvent arg0) {
-				studies.createCollection();
-				submissions.createCollection();
-				datafiles.createCollection();
-				sandbox.createCollection();
+				for (AdminCollectionWidget w : widgets) {
+					w.createCollection();
+				}
 			}
 			
 		});
@@ -101,17 +111,18 @@ public class AdministratorHomeWidget extends Composite {
 		
 		collectionsPanel.add(datafiles);
 
+		collectionsPanel.add(new HTML("<h4>Media</h4>"));
+		
+		collectionsPanel.add(media);
+
 		collectionsPanel.add(new HTML("<h4>Sandbox</h4>"));
 		
 		collectionsPanel.add(sandbox);
 
-		studies.refreshStatus();
-		submissions.refreshStatus();
-		datafiles.refreshStatus();
-		sandbox.refreshStatus();
-		
-		// TODO Auto-generated method stub
-		
+		for (AdminCollectionWidget w : widgets) {
+			w.refreshStatus();
+		}
+
 	}
 	
 	

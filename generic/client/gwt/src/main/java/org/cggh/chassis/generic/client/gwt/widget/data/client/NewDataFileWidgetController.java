@@ -19,12 +19,12 @@ import org.cggh.chassis.generic.widget.client.ErrorEvent;
  * @author aliman
  *
  */
-public class CreateDataFileWidgetController {
+public class NewDataFileWidgetController {
 
 	
 	
 	
-	private Log log = LogFactory.getLog(CreateDataFileWidgetController.class);
+	private Log log = LogFactory.getLog(NewDataFileWidgetController.class);
 	private AsyncWidgetModel model;
 	private NewDataFileWidget owner;
 
@@ -35,7 +35,7 @@ public class CreateDataFileWidgetController {
 	 * @param owner 
 	 * @param model
 	 */
-	public CreateDataFileWidgetController(NewDataFileWidget owner, AsyncWidgetModel model) {
+	public NewDataFileWidgetController(NewDataFileWidget owner, AsyncWidgetModel model) {
 		this.owner = owner;
 		this.model = model;
 	}

@@ -29,6 +29,8 @@ public class SpikeDataManagementWidgetEntryPoint implements EntryPoint {
 	
 	static {
 		LogFactory.create = AllenSauerLog.create;
+		LogFactory.hide("*");
+		LogFactory.show("org.cggh.chassis.generic.client.gwt.widget.data.*");
 	}
 	
 	
