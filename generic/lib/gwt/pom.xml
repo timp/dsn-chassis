@@ -36,7 +36,6 @@
      <version>0.2-SNAPSHOT</version>
     </dependency> 
 
-    <!--  GWT deps (from central repo) -->
     <dependency>
       <groupId>com.google.code.gwt-log</groupId>
       <artifactId>gwt-log</artifactId>
@@ -47,7 +46,7 @@
       <groupId>com.google.gwt</groupId>
       <artifactId>gwt-user</artifactId>
       <version>${gwtVersion}</version>
-      <scope>provided</scope>
+      <scope>compile</scope>
     </dependency>
     
     <!-- 
