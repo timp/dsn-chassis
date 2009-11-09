@@ -18,7 +18,7 @@ import com.google.gwt.event.shared.HandlerRegistration;
  *
  */
 public class NewDataFileWidget 
-	extends DelegatingWidget<AsyncWidgetModel, CreateDataFileWidgetRenderer> {
+	extends DelegatingWidget<AsyncWidgetModel, NewDataFileWidgetRenderer> {
 
 	
 	
@@ -26,7 +26,7 @@ public class NewDataFileWidget
 	
 	
 	private Log log;
-	private CreateDataFileWidgetController controller;
+	private NewDataFileWidgetController controller;
 
 	
 	
@@ -47,8 +47,8 @@ public class NewDataFileWidget
 		log.enter("init");
 
 		this.model = new AsyncWidgetModel(this);
-		this.controller = new CreateDataFileWidgetController(this, this.model);
-		this.renderer = new CreateDataFileWidgetRenderer(this);
+		this.controller = new NewDataFileWidgetController(this, this.model);
+		this.renderer = new NewDataFileWidgetRenderer(this);
 		this.renderer.setCanvas(this.contentBox);
 		this.renderer.setController(this.controller);
 

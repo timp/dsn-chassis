@@ -7,10 +7,16 @@ package org.cggh.chassis.generic.client.gwt.widget.data.client;
 import org.cggh.chassis.generic.async.client.Deferred;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
+import org.cggh.chassis.generic.widget.client.CancelEvent;
+import org.cggh.chassis.generic.widget.client.CancelHandler;
 import org.cggh.chassis.generic.widget.client.ChassisWidget;
+import org.cggh.chassis.generic.widget.client.ErrorEvent;
+import org.cggh.chassis.generic.widget.client.ErrorHandler;
 import org.cggh.chassis.generic.widget.client.WidgetMemory;
 
 import com.google.gwt.user.client.Command;
+import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.ui.Widget;
@@ -24,6 +30,10 @@ public class DataManagementWidget extends ChassisWidget {
 	
 	
 	
+
+
+
+
 	private Log log;
 	private NewDataFileWidget newDataFileWidget;
 	private MyDataFilesWidget myDataFilesWidget;
@@ -114,6 +124,24 @@ public class DataManagementWidget extends ChassisWidget {
 	protected void bindUI() {
 		log.enter("bindUI");
 		
+		this.bindMenuBar();
+		
+		this.registerHandlersForNewDataFileWidgetEvents();
+		
+		// TODO others
+		
+		log.leave();
+	}
+
+	
+	
+	
+	/**
+	 * 
+	 */
+	private void bindMenuBar() {
+		log.enter("bindMenuBar");
+		
 		Command newDataFileMenuCommand = new Command() {
 			public void execute() {	setActiveChild(newDataFileWidget); }
 		};
@@ -139,10 +167,51 @@ public class DataManagementWidget extends ChassisWidget {
 		log.leave();
 	}
 
+
+
+
+
 	
 	
-	
-	
+	/**
+	 * 
+	 */
+	private void registerHandlersForNewDataFileWidgetEvents() {
+		log.enter("registerHandlersForNewDataFileWidgetEvents");
+		
+		this.newDataFileWidget.addCancelHandler(new CancelHandler() {
+			
+			public void onCancel(CancelEvent e) {
+				log.enter("onCancel");
+				
+				History.back();
+				
+				log.leave();
+			}
+		});
+
+		this.newDataFileWidget.addCreateDataFileSuccessHandler(new CreateDataFileSuccessHandler() {
+			
+			public void onCreateDataFileSuccess(CreateDataFileSuccessEvent e) {
+				log.enter("onCreateDataFileSuccess");
+				
+				setActiveChild(viewDataFileWidget);
+				viewDataFileWidget.setModel(e.getDataFileEntry());
+				
+				log.leave();
+				
+			}
+			
+		});
+		
+		this.newDataFileWidget.addErrorHandler(new CommonErrorHandler());
+		
+		log.leave();
+	}
+
+
+
+
 	/**
 	 * @param child
 	 */
@@ -285,6 +354,29 @@ public class DataManagementWidget extends ChassisWidget {
 	}
 
 
+
+	
+
+	/**
+	 * @author aliman
+	 *
+	 */
+	public class CommonErrorHandler implements ErrorHandler {
+		private Log log = LogFactory.getLog(CommonErrorHandler.class);
+
+		/* (non-Javadoc)
+		 * @see org.cggh.chassis.generic.widget.client.ErrorHandler#onError(org.cggh.chassis.generic.widget.client.ErrorEvent)
+		 */
+		public void onError(ErrorEvent e) {
+			log.enter("onError");
+
+			Window.alert("an unexpected error has occurred");
+			log.error("an unexpected error has occurred", e.getException());
+
+			log.leave();
+		}
+
+	}
 
 
 

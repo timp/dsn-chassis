@@ -129,7 +129,7 @@ public class NewDataFileServlet extends HttpServlet {
 		catch (Throwable t) {
 
 			t.printStackTrace();
-			sendError(response, t.getLocalizedMessage(), HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			sendError(response, "the server encountered an internal error which prevented it from completing the request", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 
 		}
 		
@@ -362,9 +362,9 @@ public class NewDataFileServlet extends HttpServlet {
 		}
 		else {
 			
-			String message = "request failed, "+res.getStatus()+" "+res.getStatusText()+"\n";
-			log.error(message);
+			log.error("request failed, "+res.getStatus()+" "+res.getStatusText()+"\n");
 			
+			String message = "";
 			BufferedReader reader = new BufferedReader(new InputStreamReader(res.getInputStream()));
 			String line = reader.readLine();
 			while (line != null) {
@@ -383,21 +383,25 @@ public class NewDataFileServlet extends HttpServlet {
 	private void respondWithEntry(HttpServletResponse response, Entry entry) throws IOException {
 
 		response.setStatus(HttpServletResponse.SC_OK);
-		response.setContentType("application/xml");
+
+		// workaround for GWT forms - needs content-type text/html
+		response.setContentType("text/html"); 
 		
-		// serialise entry
-		entry.writeTo(response.getOutputStream());
+		// embed content in body comment so it is preserved and available to GWT client
+		String content = "<html><head><title>response</title></head><body><!--" + entry.toString() + "--></body></html>";
+		
+		response.getWriter().print(content);
 		response.flushBuffer();
 	}
 
 
 
 
-	protected void sendError(HttpServletResponse response, String message, int code) throws IOException {
+	protected void sendError(HttpServletResponse response, String content, int code) throws IOException {
 		
 		response.setStatus(code);
-		response.setContentType("text/plain");
-		response.getWriter().print(message);
+		response.setContentType("text/html");
+		response.getWriter().print(content);
 		response.flushBuffer();
 
 	}

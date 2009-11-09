@@ -3,11 +3,14 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.data.client;
 
+import org.cggh.chassis.generic.atomext.client.datafile.DataFileEntry;
+import org.cggh.chassis.generic.atomext.client.datafile.DataFileFactory;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetRenderer;
 import org.cggh.chassis.generic.widget.client.CancelEvent;
+import org.cggh.chassis.generic.widget.client.ErrorEvent;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.ReadyStatus;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.Status;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.StatusChangeEvent;
@@ -19,6 +22,8 @@ import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteEvent;
+import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteHandler;
 
 
 
@@ -26,17 +31,17 @@ import com.google.gwt.user.client.ui.HTML;
  * @author aliman
  *
  */
-public class CreateDataFileWidgetRenderer 
+public class NewDataFileWidgetRenderer 
 	extends AsyncWidgetRenderer<AsyncWidgetModel> {
 	
 	
 	
 	
-	private Log log = LogFactory.getLog(CreateDataFileWidgetRenderer.class);
-	private CreateDataFileWidgetController controller;
+	private Log log = LogFactory.getLog(NewDataFileWidgetRenderer.class);
+	private NewDataFileWidgetController controller;
 	private FlowPanel buttonsPanel;
 	private Button cancelButton, createButton;
-	private DataFileForm form;
+	private NewDataFileForm form;
 	private NewDataFileWidget owner;
 	
 	
@@ -46,7 +51,7 @@ public class CreateDataFileWidgetRenderer
 	/**
 	 * @param owner
 	 */
-	public CreateDataFileWidgetRenderer(NewDataFileWidget owner) {
+	public NewDataFileWidgetRenderer(NewDataFileWidget owner) {
 		this.owner = owner;
 	}
 
@@ -64,7 +69,7 @@ public class CreateDataFileWidgetRenderer
 		this.mainPanel.add(new HTML("<h2>New Data File</h2>")); // TODO i18n
 		this.mainPanel.add(new HTML("<p>Use the form below to create a new data file.</p>")); // TODO i18n
 		
-		this.form = new DataFileForm();
+		this.form = new NewDataFileForm();
 		this.mainPanel.add(this.form);
 		
 		this.renderButtonsPanel();
@@ -138,7 +143,7 @@ public class CreateDataFileWidgetRenderer
 			
 			public void onClick(ClickEvent arg0) {
 				
-				controller.createDataFileEntry(form.getModel());
+				form.submit();
 				
 			}
 		});
@@ -152,10 +157,53 @@ public class CreateDataFileWidgetRenderer
 			}
 		});
 		
+		// add submit complete handler
+		this.form.addSubmitCompleteHandler(new FormSubmitCompleteHandler());
+		
 		log.leave();
 		
 	}
 
+	
+	
+	
+	private class FormSubmitCompleteHandler implements SubmitCompleteHandler {
+
+		private Log log = LogFactory.getLog(FormSubmitCompleteHandler.class);
+
+		public void onSubmitComplete(SubmitCompleteEvent event) {
+			log.enter("onSubmitComplete");
+			
+			log.debug("submit results: "+event.getResults());
+			
+			try {
+				
+				DataFileFactory factory = new DataFileFactory();
+				String results = event.getResults();
+				if (results.startsWith("<!--") && results.endsWith("-->")) {
+					String content = results.substring(4, results.length()-3);
+					log.debug("attempting to parse: "+content);
+					DataFileEntry entry = factory.createEntry(content);
+					CreateDataFileSuccessEvent successEvent = new CreateDataFileSuccessEvent();
+					successEvent.setDataFileEntry(entry);
+					owner.fireEvent(successEvent);
+				}
+				else {
+					owner.fireEvent(new ErrorEvent("could not parse results: "+results));
+				}
+				
+			} catch (Throwable t) {
+				
+				log.error("caught trying to parse submit results: "+t.getLocalizedMessage(), t);
+				owner.fireEvent(new ErrorEvent(t));
+				
+			}
+			
+			log.leave();
+			
+		}
+
+	}
 
 
 
@@ -193,7 +241,7 @@ public class CreateDataFileWidgetRenderer
 	/**
 	 * @param controller
 	 */
-	public void setController(CreateDataFileWidgetController controller) {
+	public void setController(NewDataFileWidgetController controller) {
 		this.controller = controller;
 	}
 

@@ -26,7 +26,7 @@ import com.google.gwt.user.client.ui.TextBoxBase;
  * @author raok
  *
  */
-public class DataFileFormRenderer {
+public class UploadSubmissionDataFileFormRenderer {
 
 	private Panel canvas;
 	private AtomEntry model;
@@ -36,7 +36,7 @@ public class DataFileFormRenderer {
 	final Hidden submissionLinkHiddenField = new Hidden(ChassisConstants.FIELD_SUBMISSION);
 	final Hidden authorHiddenField = new Hidden(ChassisConstants.FIELD_AUTHOREMAIL);
 
-	public DataFileFormRenderer(Panel canvas, AtomEntry model) {
+	public UploadSubmissionDataFileFormRenderer(Panel canvas, AtomEntry model) {
 		this.canvas = canvas;
 		this.model = model;
 	}

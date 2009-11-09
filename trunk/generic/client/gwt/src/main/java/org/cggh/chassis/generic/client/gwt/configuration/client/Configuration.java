@@ -90,4 +90,19 @@ public class Configuration {
 	public static native String getStudyQuestionnaireURL() /*-{
 		return $wnd.CHASSIS.studyQuestionnaireURL;
 	}-*/;
+
+	
+	
+	public static native String getMediaFeedURL() /*-{
+		return $wnd.CHASSIS.mediaFeedURL;
+	}-*/;
+
+	/**
+	 * @return
+	 */
+	public static native String getNewDataFileServiceURL() /*-{
+		return $wnd.CHASSIS.newDataFileServiceURL;
+	}-*/;
+	
+	
 }
