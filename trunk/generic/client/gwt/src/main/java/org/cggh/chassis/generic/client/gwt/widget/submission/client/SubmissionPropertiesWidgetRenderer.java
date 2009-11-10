@@ -241,7 +241,7 @@ public class SubmissionPropertiesWidgetRenderer
 	
 	private void updateOwnersLabel(List<AtomAuthor> owners) {
 
-		Label answer = RenderUtils.renderRewriteAtomAuthorsAsLabel(owners, true);
+		Label answer = RenderUtils.renderAtomAuthorsAsLabel(owners, true);
 		answer.addStyleName(CommonStyles.COMMON_ANSWER);
 
 		ownersListPanel.clear();

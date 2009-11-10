@@ -120,7 +120,7 @@ public class UploadDataFileRevisionWidgetRenderer
 		
 		HandlerRegistration b = this.model.addDataFileEntryChangeHandler(new DataFileEntryChangeHandler() {
 			
-			public void onDataFileEntryChanged(DataFileEntryChangeEvent e) {
+			public void onChange(DataFileEntryChangeEvent e) {
 				log.enter("onDataFileEntryChanged");
 				
 				updateForm(e.getAfter());

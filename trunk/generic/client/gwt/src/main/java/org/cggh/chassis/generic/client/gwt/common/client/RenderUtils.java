@@ -13,6 +13,7 @@ import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
 
 import org.cggh.chassis.generic.async.client.Function;
 import org.cggh.chassis.generic.async.client.Functional;
+import org.cggh.chassis.generic.atom.client.AtomEntry;
 import org.cggh.chassis.generic.atomext.shared.ChassisConstants;
 
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -198,7 +199,7 @@ public class RenderUtils {
 	 * @param delimiter the delimiter to use to separate each author in the collection
 	 * @return a string concatenation of the authors' emails
 	 */
-	public static String renderAtomAuthorsAsDelimitedEmailString(Collection<AtomAuthor> authors, String delimiter) {
+	public static String renderLegacyAtomAuthorsAsDelimitedEmailString(Collection<AtomAuthor> authors, String delimiter) {
 		return RenderUtils.concatenate(RenderUtils.getEmails(authors), delimiter);
 	}
 	
@@ -212,7 +213,7 @@ public class RenderUtils {
 	 * @param delimiter the delimiter to use to separate each author in the collection
 	 * @return a string concatenation of the authors' emails
 	 */
-	public static String renderRewriteAtomAuthorsAsDelimitedEmailString(Collection<org.cggh.chassis.generic.atom.client.AtomAuthor> authors, String delimiter) {
+	public static String renderAtomAuthorsAsDelimitedEmailString(Collection<org.cggh.chassis.generic.atom.client.AtomAuthor> authors, String delimiter) {
 		return RenderUtils.concatenate(RenderUtils.getRewriteEmails(authors), delimiter);
 	}
 	
@@ -226,8 +227,8 @@ public class RenderUtils {
 	 * @param authors the authors to render
 	 * @return a string of the authors' emails separated by commas
 	 */
-	public static String renderAtomAuthorsAsCommaDelimitedEmailString(Collection<AtomAuthor> authors) {
-		return RenderUtils.renderAtomAuthorsAsDelimitedEmailString(authors, ", ");
+	public static String renderLegacyAtomAuthorsAsCommaDelimitedEmailString(Collection<AtomAuthor> authors) {
+		return RenderUtils.renderLegacyAtomAuthorsAsDelimitedEmailString(authors, ", ");
 	}
 	
 	
@@ -240,8 +241,8 @@ public class RenderUtils {
 	 * @param authors the authors to render
 	 * @return a string of the authors' emails separated by commas
 	 */
-	public static String renderRewriteAtomAuthorsAsCommaDelimitedEmailString(Collection<org.cggh.chassis.generic.atom.client.AtomAuthor> authors) {
-		return RenderUtils.renderRewriteAtomAuthorsAsDelimitedEmailString(authors, ", ");
+	public static String renderAtomAuthorsAsCommaDelimitedEmailString(Collection<org.cggh.chassis.generic.atom.client.AtomAuthor> authors) {
+		return RenderUtils.renderAtomAuthorsAsDelimitedEmailString(authors, ", ");
 	}
 	
 	
@@ -255,8 +256,8 @@ public class RenderUtils {
 	 * @param inline if true, return an inline label, otherwise a normal label
 	 * @return a label
 	 */
-	public static Label renderAtomAuthorsAsLabel(Collection<AtomAuthor> authors, boolean inline) {
-		String text = (authors == null) ? "" : RenderUtils.renderAtomAuthorsAsCommaDelimitedEmailString(authors);
+	public static Label renderLegacyAtomAuthorsAsLabel(Collection<AtomAuthor> authors, boolean inline) {
+		String text = (authors == null) ? "" : RenderUtils.renderLegacyAtomAuthorsAsCommaDelimitedEmailString(authors);
 		if (inline) return new InlineLabel(text);
 		else return new Label(text);
 	}
@@ -272,10 +273,16 @@ public class RenderUtils {
 	 * @param inline if true, return an inline label, otherwise a normal label
 	 * @return a label
 	 */
-	public static Label renderRewriteAtomAuthorsAsLabel(Collection<org.cggh.chassis.generic.atom.client.AtomAuthor> authors, boolean inline) {
-		String text = (authors == null) ? "" : RenderUtils.renderRewriteAtomAuthorsAsCommaDelimitedEmailString(authors);
+	public static Label renderAtomAuthorsAsLabel(Collection<org.cggh.chassis.generic.atom.client.AtomAuthor> authors, boolean inline) {
+		String text = (authors == null) ? "" : RenderUtils.renderAtomAuthorsAsCommaDelimitedEmailString(authors);
 		if (inline) return new InlineLabel(text);
 		else return new Label(text);
+	}
+	
+	
+	
+	public static Label renderAtomAuthorsAsLabel(AtomEntry entry, boolean inline) {
+		return RenderUtils.renderAtomAuthorsAsLabel(entry.getAuthors(), inline);
 	}
 	
 	
