@@ -24,8 +24,13 @@ public class SubmissionActionsPanel extends ChassisWidget {
 	
 	
 	
-	
+	// utility fields
 	private Log log;
+	
+	
+	
+	
+	// UI fields
 	private Anchor editThisSubmissionAction, uploadDataFileAction;
 
 
@@ -58,6 +63,8 @@ public class SubmissionActionsPanel extends ChassisWidget {
 	protected void renderUI() {
 		log.enter("renderUI");
 
+		this.clear();
+		
 		this.editThisSubmissionAction = RenderUtils.renderActionAsAnchor("edit submission"); // TODO i18n
 		this.uploadDataFileAction = RenderUtils.renderActionAsAnchor("upload data file"); // TODO i18n
 
@@ -68,10 +75,9 @@ public class SubmissionActionsPanel extends ChassisWidget {
 			
 		FlowPanel actionsPanel = RenderUtils.renderActionsPanel(actions);
 
-		this.contentBox.add(actionsPanel);
+		this.add(actionsPanel);
 
 		log.leave();
-
 	}
 
 	

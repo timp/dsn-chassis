@@ -97,12 +97,13 @@ public class Configuration {
 		return $wnd.CHASSIS.mediaFeedURL;
 	}-*/;
 
-	/**
-	 * @return
-	 */
 	public static native String getNewDataFileServiceURL() /*-{
 		return $wnd.CHASSIS.newDataFileServiceURL;
 	}-*/;
 	
+	public static native String getUploadDataFileRevisionServiceURL() /*-{
+		return $wnd.CHASSIS.uploadDataFileRevisionServiceURL;
+	}-*/;
+
 	
 }
