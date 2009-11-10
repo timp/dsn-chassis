@@ -12,6 +12,8 @@ import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.DataFileA
 import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.EditDataFileWidget;
 import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.MyDataFilesWidget;
 import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.NewDataFileWidget;
+import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.UpdateDataFileSuccessEvent;
+import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.UpdateDataFileSuccessHandler;
 import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.UploadDataFileRevisionSuccessEvent;
 import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.UploadDataFileRevisionSuccessHandler;
 import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.UploadDataFileRevisionWidget;
@@ -153,6 +155,8 @@ public class DataManagementWidget extends ChassisWidget {
 		
 		this.registerHandlersForMyDataFilesWidgetEvents();
 
+		this.registerHandlersForEditDataFileWidgetEvents();
+
 		// TODO add handlers for other child widget events
 		
 		log.leave();
@@ -161,6 +165,8 @@ public class DataManagementWidget extends ChassisWidget {
 	
 	
 	
+
+
 
 	/**
 	 * 
@@ -211,20 +217,11 @@ public class DataManagementWidget extends ChassisWidget {
 	private void registerHandlersForNewDataFileWidgetEvents() {
 		log.enter("registerHandlersForNewDataFileWidgetEvents");
 		
-		HandlerRegistration a = this.newDataFileWidget.addCancelHandler(new CancelHandler() {
-			
-			public void onCancel(CancelEvent e) {
-				log.enter("onCancel");
-				
-				History.back();
-				
-				log.leave();
-			}
-		});
+		HandlerRegistration a = this.newDataFileWidget.addCancelHandler(new CommonCancelHandler());
 
 		HandlerRegistration b = this.newDataFileWidget.addSuccessHandler(new CreateDataFileSuccessHandler() {
 			
-			public void onCreateDataFileSuccess(CreateDataFileSuccessEvent e) {
+			public void onSuccess(CreateDataFileSuccessEvent e) {
 				log.enter("onCreateDataFileSuccess");
 				
 				viewDataFileWidget.setEntry(e.getDataFileEntry().getId());
@@ -259,7 +256,8 @@ public class DataManagementWidget extends ChassisWidget {
 			public void onAction(DataFileActionEvent e) {
 				log.enter("onAction");
 				
-				// TODO Auto-generated method stub
+				editDataFileWidget.setEntry(e.getDataFileEntry());
+				setActiveChild(editDataFileWidget);
 				
 				log.leave();
 			}
@@ -341,6 +339,38 @@ public class DataManagementWidget extends ChassisWidget {
 
 
 
+
+
+
+	/**
+	 * 
+	 */
+	private void registerHandlersForEditDataFileWidgetEvents() {
+		log.enter("registerHandlersForEditDataFileWidgetEvents");
+		
+		HandlerRegistration a = this.editDataFileWidget.addCancelHandler(new CommonCancelHandler());
+
+		HandlerRegistration b = this.editDataFileWidget.addSuccessHandler(new UpdateDataFileSuccessHandler() {
+			
+			public void onSuccess(UpdateDataFileSuccessEvent e) {
+				log.enter("onSuccess");
+				
+				viewDataFileWidget.setEntry(e.getDataFileEntry().getId());
+				setActiveChild(viewDataFileWidget);
+				
+				log.leave();
+			}
+			
+		});
+		
+		HandlerRegistration c = this.editDataFileWidget.addErrorHandler(new CommonErrorHandler());
+		
+		this.childWidgetEventHandlerRegistrations.add(a);
+		this.childWidgetEventHandlerRegistrations.add(b);
+		this.childWidgetEventHandlerRegistrations.add(c);		
+		log.leave();
+		
+	}
 
 
 

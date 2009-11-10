@@ -11,16 +11,16 @@ import com.google.gwt.event.shared.GwtEvent;
  * @author aliman
  *
  */
-public class CreateDataFileSuccessEvent extends GwtEvent<CreateDataFileSuccessHandler> {
+public class UpdateDataFileSuccessEvent extends GwtEvent<UpdateDataFileSuccessHandler> {
 	
-	public static final Type<CreateDataFileSuccessHandler> TYPE = new Type<CreateDataFileSuccessHandler>();
+	public static final Type<UpdateDataFileSuccessHandler> TYPE = new Type<UpdateDataFileSuccessHandler>();
 	private DataFileEntry dataFileEntry;
 	
 	/* (non-Javadoc)
 	 * @see com.google.gwt.event.shared.GwtEvent#dispatch(com.google.gwt.event.shared.EventHandler)
 	 */
 	@Override
-	protected void dispatch(CreateDataFileSuccessHandler handler) {
+	protected void dispatch(UpdateDataFileSuccessHandler handler) {
 		handler.onSuccess(this);
 	}
 
@@ -28,7 +28,7 @@ public class CreateDataFileSuccessEvent extends GwtEvent<CreateDataFileSuccessHa
 	 * @see com.google.gwt.event.shared.GwtEvent#getAssociatedType()
 	 */
 	@Override
-	public Type<CreateDataFileSuccessHandler> getAssociatedType() {
+	public Type<UpdateDataFileSuccessHandler> getAssociatedType() {
 		return TYPE;
 	}
 	
