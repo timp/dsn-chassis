@@ -110,9 +110,12 @@ public abstract class ChassisWidget
 	 * Establishes the destruction life-cycle phase. Extensions to Widget
 	 * sub-classes MUST call destroy() on the super class AFTER any specific action,
 	 * to ensure that the destroy() call propagates UP the class hierarchy from the
-	 * bottom.
+	 * bottom. The default behaviour is simply to call unbindUI(). Override this
+	 * method to get custom behaviour.
 	 */
-	public abstract void destroy();
+	public void destroy() {
+		this.unbindUI();
+	}
 	
 	
 
@@ -214,11 +217,11 @@ public abstract class ChassisWidget
 	protected void onDetach() {
 		log.enter("onDetach");
 		
-		super.onDetach();
-	
 		// TODO should we call destroy() here? If not, where?
 		this.destroy();
 		
+		super.onDetach();
+	
 		log.leave();
 	}
 	

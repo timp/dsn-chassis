@@ -38,7 +38,7 @@ public abstract class WidgetMemory {
 
 	public void setChild(WidgetMemory child) {
 		this.child = child;
-		this.child.setParent(this);
+		if (this.child != null)	this.child.setParent(this);
 	}
 	
 
