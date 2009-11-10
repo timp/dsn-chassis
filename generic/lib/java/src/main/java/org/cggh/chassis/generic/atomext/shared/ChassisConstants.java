@@ -19,10 +19,11 @@ public class ChassisConstants {
 	
 	//define file upload form field identifiers
 	public static final String FIELD_SUBMISSION = "submission";
-	public static final String FIELD_DATAFILE = "datafile";
+	public static final String FIELD_MEDIA = "media";
 	public static final String FIELD_AUTHOREMAIL = "authoremail";
 	public static final String FIELD_SUMMARY = "summary";
 	public static final String FIELD_FILENAME = "filename";
 	public static final String FIELD_TITLE = "title";
+	public static final String FIELD_DATAFILEURL = "datafileurl";
 
 }

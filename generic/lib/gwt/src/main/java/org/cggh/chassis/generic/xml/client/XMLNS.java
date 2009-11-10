@@ -45,7 +45,29 @@ public class XMLNS {
 	
 	
 	
-	/**
+
+	static class FilterElementsByLocalName implements Function<Element,Element> {
+
+		private String localName;
+
+		FilterElementsByLocalName(String localName) {
+			this.localName = localName;
+		}
+		
+		/* (non-Javadoc)
+		 * @see org.cggh.chassis.generic.twisted.client.Function#apply(java.lang.Object)
+		 */
+		public Element apply(Element e) {
+			boolean match = localName.equals(XML.getLocalName(e));
+			if (match) return e;
+			return null;
+		}
+		
+	}
+	
+	
+	
+/**
 	 * @param ancestor the element to search within
 	 * @param namespaceUri the namespace URI to match
 	 * @param localName the element local name to match
@@ -55,6 +77,18 @@ public class XMLNS {
 		return XMLNS.filterElementsByNamespaceUri(ancestor.getElementsByTagName(localName), namespaceUri);
 	}
 
+	
+	
+	
+	public static List<Element> getChildrenByTagNameNS(Element parent, String localName, String namespaceUri) {
+
+		List<Element> out = XMLNS.filterElementsByNamespaceUri(parent.getChildNodes(), namespaceUri);
+		out = XMLNS.filterElementsByLocalName(out, localName);
+		
+		return out;
+	}
+	
+	
 	
 	
 	
@@ -72,12 +106,24 @@ public class XMLNS {
 	
 	public static List<Element> filterElementsByNamespaceUri(NodeList nodes, String namespaceUri) {
 
-		List<Element> elements = new ArrayList<Element>();
+		List<Element> out = new ArrayList<Element>();
 		
-		Functional.map(XML.elements(nodes), elements, new FilterElementsByNamespaceUri(namespaceUri));
+		Functional.map(XML.elements(nodes), out, new FilterElementsByNamespaceUri(namespaceUri));
 		
-		return elements;
+		return out;
 		
+	}
+
+	
+	
+	
+	public static List<Element> filterElementsByLocalName(List<Element> in, String localName) {
+
+		List<Element> out = new ArrayList<Element>();
+		
+		Functional.map(in, out, new FilterElementsByLocalName(localName));
+		
+		return out;
 	}
 
 	
@@ -130,12 +176,29 @@ public class XMLNS {
 	
 	
 	
+	public static void removeChildrenByTagNameNS(Element parent, String localName, String namespaceUri) {
+		for (Element e : XMLNS.getChildrenByTagNameNS(parent, localName, namespaceUri)) {
+			e.getParentNode().removeChild(e);
+		}
+	}
+	
+	
+	
+	
 	public static Element getFirstElementByTagNameNS(Element ancestor, String localName, String namespaceUri) {
 		List<Element> elements = XMLNS.getElementsByTagNameNS(ancestor, localName, namespaceUri);
 		if (elements.size() > 0) return elements.get(0);
 		else return null;
 	}
 	
+	
+	
+	
+	public static Element getFirstChildByTagNameNS(Element parent, String localName, String namespaceUri) {
+		List<Element> elements = XMLNS.getChildrenByTagNameNS(parent, localName, namespaceUri);
+		if (elements.size() > 0) return elements.get(0);
+		else return null;
+	}
 	
 	
 	public static String getFirstElementSimpleContentByTagNameNS(Element ancestor, String localName, String namespaceUri) {
@@ -145,12 +208,30 @@ public class XMLNS {
 	}
 	
 
+	public static String getFirstChildSimpleContentByTagNameNS(Element parent, String localName, String namespaceUri) {
+		Element e = XMLNS.getFirstChildByTagNameNS(parent, localName, namespaceUri);
+		if (e != null) return XML.firstChildNodeValueOrNullIfNoChildren(e);
+		else return null;
+	}
+	
+
+	
 	
 	public static void setSingleElementSimpleContentByTagNameNS(Element ancestor, String localName, String prefix, String namespaceUri, String content) {
 		XMLNS.removeElementsByTagNameNS(ancestor, localName, namespaceUri);
 		Element e = XMLNS.createElementNS(localName, prefix, namespaceUri);
 		XML.setSimpleContent(e, content);
 		ancestor.appendChild(e);
+	}
+
+
+
+
+	public static void setSingleChildSimpleContentByTagNameNS(Element parent, String localName, String prefix, String namespaceUri, String content) {
+		XMLNS.removeChildrenByTagNameNS(parent, localName, namespaceUri);
+		Element e = XMLNS.createElementNS(localName, prefix, namespaceUri);
+		XML.setSimpleContent(e, content);
+		parent.appendChild(e);
 	}
 
 

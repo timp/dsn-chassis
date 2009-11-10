@@ -52,9 +52,30 @@
     <servlet-name>NewDataFileServlet</servlet-name>
     <url-pattern>/newdatafile</url-pattern>
   </servlet-mapping>
+  
+    <servlet>
+    <description>revise data file servlet</description>
+    <display-name>UploadDataFileRevisionServlet</display-name>
+    <servlet-name>UploadDataFileRevisionServlet</servlet-name>
+    <servlet-class>org.cggh.chassis.generic.service.data.UploadDataFileRevisionServlet</servlet-class>
+    <init-param>
+      <description>the URL of the Atom collection where the uploaded file content (i.e., media) will be POSTed</description>
+      <param-name>mediaCollectionUrl</param-name>
+      <param-value>http://localhost:8080/chassis-generic-service-exist/atom/edit/media</param-value>
+    </init-param>
+    <init-param>
+      <description>the URL of the data files collection</description>
+      <param-name>dataFilesCollectionUrl</param-name>
+      <param-value>http://localhost:8080/chassis-generic-service-exist/atom/edit/datafiles</param-value>
+    </init-param>
+  </servlet>
 
-  
-  
+  <servlet-mapping>
+    <servlet-name>UploadDataFileRevisionServlet</servlet-name>
+    <url-pattern>/revisedatafile</url-pattern>
+  </servlet-mapping>
+
+
   <!-- legacy -->
   
   <servlet>

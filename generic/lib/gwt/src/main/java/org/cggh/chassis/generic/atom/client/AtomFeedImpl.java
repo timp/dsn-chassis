@@ -57,7 +57,7 @@ public class AtomFeedImpl<E extends AtomEntry, F extends AtomFeed<E>>
 			
 		};
 
-		Functional.map(XMLNS.getElementsByTagNameNS(element, Atom.ELEMENT_ENTRY, Atom.NSURI), entries, wrapper);
+		Functional.map(XMLNS.getChildrenByTagNameNS(element, Atom.ELEMENT_ENTRY, Atom.NSURI), entries, wrapper);
 		
 		return entries;
 	}
@@ -69,7 +69,7 @@ public class AtomFeedImpl<E extends AtomEntry, F extends AtomFeed<E>>
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed#getId()
 	 */
 	public String getId() {
-		return XMLNS.getFirstElementSimpleContentByTagNameNS(element, Atom.ELEMENT_ID, Atom.NSURI);
+		return XMLNS.getFirstChildSimpleContentByTagNameNS(element, Atom.ELEMENT_ID, Atom.NSURI);
 	}
 
 	
@@ -79,7 +79,7 @@ public class AtomFeedImpl<E extends AtomEntry, F extends AtomFeed<E>>
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed#getTitle()
 	 */
 	public String getTitle() {
-		return XMLNS.getFirstElementSimpleContentByTagNameNS(element, Atom.ELEMENT_TITLE, Atom.NSURI);
+		return XMLNS.getFirstChildSimpleContentByTagNameNS(element, Atom.ELEMENT_TITLE, Atom.NSURI);
 	}
 
 	
@@ -89,7 +89,7 @@ public class AtomFeedImpl<E extends AtomEntry, F extends AtomFeed<E>>
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed#getUpdated()
 	 */
 	public String getUpdated() {
-		return XMLNS.getFirstElementSimpleContentByTagNameNS(element, Atom.ELEMENT_UPDATED, Atom.NSURI);
+		return XMLNS.getFirstChildSimpleContentByTagNameNS(element, Atom.ELEMENT_UPDATED, Atom.NSURI);
 	}
 
 	
