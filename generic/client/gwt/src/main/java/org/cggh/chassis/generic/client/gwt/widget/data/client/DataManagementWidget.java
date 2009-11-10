@@ -150,6 +150,8 @@ public class DataManagementWidget extends ChassisWidget {
 		this.registerHandlersForViewDataFileWidgetEvents();
 		
 		this.registerHandlersForUploadDataFileRevisionWidgetEvents();
+		
+		this.registerHandlersForMyDataFilesWidgetEvents();
 
 		// TODO add handlers for other child widget events
 		
@@ -171,7 +173,9 @@ public class DataManagementWidget extends ChassisWidget {
 		};
 		
 		Command myDataFilesMenuCommand = new Command() {
-			public void execute() {	setActiveChild(myDataFilesWidget); }
+			public void execute() {
+				setActiveChild(myDataFilesWidget);
+			}
 		};
 		
 		Command newDatasetMenuCommand = new Command() {
@@ -223,7 +227,7 @@ public class DataManagementWidget extends ChassisWidget {
 			public void onCreateDataFileSuccess(CreateDataFileSuccessEvent e) {
 				log.enter("onCreateDataFileSuccess");
 				
-				viewDataFileWidget.getEntry(e.getDataFileEntry().getId());
+				viewDataFileWidget.setEntry(e.getDataFileEntry().getId());
 				setActiveChild(viewDataFileWidget);
 				
 				log.leave();
@@ -293,7 +297,7 @@ public class DataManagementWidget extends ChassisWidget {
 			public void onUploadDataFileRevisionSuccess(UploadDataFileRevisionSuccessEvent e) {
 				log.enter("onUploadDataFileRevisionSuccess");
 				
-				viewDataFileWidget.getEntry(e.getDataFileEntry().getId());
+				viewDataFileWidget.setEntry(e.getDataFileEntry().getId());
 				setActiveChild(viewDataFileWidget);
 				
 				log.leave();
@@ -307,6 +311,34 @@ public class DataManagementWidget extends ChassisWidget {
 		
 		log.leave();
 	}
+
+
+
+
+	
+	/**
+	 * 
+	 */
+	private void registerHandlersForMyDataFilesWidgetEvents() {
+		log.enter("registerHandlersForMyDataFilesWidgetEvents");
+		
+		HandlerRegistration a = this.myDataFilesWidget.addViewDataFileActionHandler(new DataFileActionHandler() {
+			
+			public void onAction(DataFileActionEvent e) {
+				log.enter("onAction");
+				
+				viewDataFileWidget.setEntry(e.getDataFileEntry().getId());
+				setActiveChild(viewDataFileWidget);
+				
+				log.leave();
+			}
+		});
+
+		this.childWidgetEventHandlerRegistrations.add(a);
+
+		log.leave();
+	}
+
 
 
 
@@ -330,6 +362,10 @@ public class DataManagementWidget extends ChassisWidget {
 		
 		this.activeChild = child;
 		this.syncUI();
+		
+		if (child == myDataFilesWidget) {
+			myDataFilesWidget.refreshDataFiles();
+		}
 
 		if (child instanceof ChassisWidget) {
 			ChassisWidget cw = (ChassisWidget) child;
@@ -434,6 +470,7 @@ public class DataManagementWidget extends ChassisWidget {
 		}
 		
 		protected String createMnemonic(ChassisWidget w) {
+			// turn the widget name into something slightly more aesthetically pleasing
 			return w.getName().toLowerCase().replaceAll("widget", "");
 		}
 

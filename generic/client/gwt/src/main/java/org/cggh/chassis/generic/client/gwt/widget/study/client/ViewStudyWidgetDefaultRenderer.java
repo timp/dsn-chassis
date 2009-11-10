@@ -264,7 +264,7 @@ public class ViewStudyWidgetDefaultRenderer implements StudyModelListener {
 	
 	public void onAuthorsChanged(Set<AtomAuthor> before, Set<AtomAuthor> authors, Boolean isValid) {
 		
-		Label answer = RenderUtils.renderRewriteAtomAuthorsAsLabel(authors, true);
+		Label answer = RenderUtils.renderAtomAuthorsAsLabel(authors, true);
 		answer.addStyleName(CommonStyles.COMMON_ANSWER);
 
 		ownersListPanel.clear();

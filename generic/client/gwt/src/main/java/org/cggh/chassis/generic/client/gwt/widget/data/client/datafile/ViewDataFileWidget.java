@@ -61,7 +61,7 @@ public class ViewDataFileWidget
 	/**
 	 * @param dataFileEntry
 	 */
-	public Deferred<DataFileEntry> getEntry(String id) {
+	public Deferred<DataFileEntry> setEntry(String id) {
 		log.enter("setEntry");
 
 		// store to use as mnemonic
@@ -121,7 +121,7 @@ public class ViewDataFileWidget
 		public Deferred<WidgetMemory> remember(String mnemonic) {
 			log.enter("remember");
 
-			Deferred<DataFileEntry> deferredEntry = getEntry(mnemonic);
+			Deferred<DataFileEntry> deferredEntry = setEntry(mnemonic);
 			
 			final WidgetMemory self = this;
 			

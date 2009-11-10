@@ -162,7 +162,7 @@ public class DataFileRevisionsWidget extends ChassisWidget {
 		Widget[] row = { 
 			new HTML("<strong>"+Integer.toString(index+1)+"</strong>"),
 			new HTML(entry.getPublished()),
-			new HTML(RenderUtils.renderRewriteAtomAuthorsAsCommaDelimitedEmailString(entry.getAuthors())),
+			new HTML(RenderUtils.renderAtomAuthorsAsCommaDelimitedEmailString(entry.getAuthors())),
 			new HTML(entry.getTitle()),
 			new HTML(RenderUtils.truncate(entry.getSummary(), 20)),
 			new HTML("<a href='"+Configuration.getMediaFeedURL() + "/" + entry.getEditMediaLink().getHref() + "'>download</a>")

@@ -14,7 +14,7 @@ public class DataFileEntryChangeEvent extends ModelChangeEvent<DataFileEntry, Da
 	public DataFileEntryChangeEvent(DataFileEntry before, DataFileEntry after) { super(before, after); }
 
 	@Override
-	protected void dispatch(DataFileEntryChangeHandler handler) { handler.onDataFileEntryChanged(this); }
+	protected void dispatch(DataFileEntryChangeHandler handler) { handler.onChange(this); }
 
 	@Override
 	public Type<DataFileEntryChangeHandler> getAssociatedType() { return TYPE; }

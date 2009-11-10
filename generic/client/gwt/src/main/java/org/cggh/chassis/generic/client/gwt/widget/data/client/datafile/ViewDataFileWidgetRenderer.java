@@ -104,7 +104,7 @@ public class ViewDataFileWidgetRenderer
 
 		HandlerRegistration b = this.model.addDataFileEntryChangeHandler(new DataFileEntryChangeHandler() {
 			
-			public void onDataFileEntryChanged(DataFileEntryChangeEvent e) {
+			public void onChange(DataFileEntryChangeEvent e) {
 				log.enter("onDataFileEntryChanged");
 				
 				updateInfo(e.getAfter());
@@ -185,9 +185,7 @@ public class ViewDataFileWidgetRenderer
 
 		}
 		
-		
 		log.leave();
-		
 	}
 
 
