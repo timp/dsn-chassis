@@ -45,20 +45,5 @@ public interface AtomEntry extends ElementWrapper {
 	public void setCategories(List<AtomCategory> categories);
 	public void addCategory(AtomCategory category);
 	public void removeCategory(AtomCategory category);
-	
-	// pub-sub
-	
-	public void addListener(PropertyChangeListener l);
-	public void removeListener(PropertyChangeListener l);
-	
-	public static interface PropertyChangeListener {
-		
-		public void onTitleChanged(String before, String after);
-		public void onSummaryChanged(String before, String after);
-		public void onAuthorsChanged(List<AtomAuthor> before, List<AtomAuthor> after);
-		public void onLinksChanged(List<AtomLink> before, List<AtomLink> after);
-		public void onCategoriesChanged(List<AtomCategory> before, List<AtomCategory> after);
-		
-	}
 
 }
