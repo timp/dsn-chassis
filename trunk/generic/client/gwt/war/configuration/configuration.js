@@ -27,6 +27,7 @@ CHASSIS.mediaFeedURL = CHASSIS.existService + "/atom/edit/media";
 CHASSIS.sandboxFeedURL = CHASSIS.existService + "/atom/edit/sandbox";
 
 CHASSIS.newDataFileServiceURL = CHASSIS.uploadService + "/newdatafile";
+CHASSIS.uploadDataFileRevisionServiceURL = CHASSIS.uploadService + "/revisedatafile";
 
 // CHASSIS.dataFileUploadServiceURL = CHASSIS.uploadService + "/datafileupload";
 

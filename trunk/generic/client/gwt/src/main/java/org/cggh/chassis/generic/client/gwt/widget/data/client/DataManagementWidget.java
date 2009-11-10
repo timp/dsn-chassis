@@ -5,6 +5,19 @@ package org.cggh.chassis.generic.client.gwt.widget.data.client;
 
 
 import org.cggh.chassis.generic.async.client.Deferred;
+import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.CreateDataFileSuccessEvent;
+import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.CreateDataFileSuccessHandler;
+import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.DataFileActionEvent;
+import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.DataFileActionHandler;
+import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.EditDataFileWidget;
+import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.MyDataFilesWidget;
+import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.NewDataFileWidget;
+import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.UploadDataFileRevisionWidget;
+import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.ViewDataFileWidget;
+import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.EditDatasetWidget;
+import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.MyDatasetsWidget;
+import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.NewDatasetWidget;
+import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.ViewDatasetWidget;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.CancelEvent;
@@ -14,6 +27,7 @@ import org.cggh.chassis.generic.widget.client.ErrorEvent;
 import org.cggh.chassis.generic.widget.client.ErrorHandler;
 import org.cggh.chassis.generic.widget.client.WidgetMemory;
 
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
@@ -49,6 +63,7 @@ public class DataManagementWidget extends ChassisWidget {
 
 
 	private Widget activeChild;
+	private UploadDataFileRevisionWidget uploadDataFileRevisionWidget;
 
 
 
@@ -62,7 +77,6 @@ public class DataManagementWidget extends ChassisWidget {
 		ensureLog();
 		log.enter("init");
 
-		// TODO
 		this.memory = new Memory();
 		
 		log.leave();
@@ -93,6 +107,7 @@ public class DataManagementWidget extends ChassisWidget {
 		this.viewDataFileWidget = new ViewDataFileWidget();
 		this.editDataFileWidget = new EditDataFileWidget();
 		this.myDataFilesWidget = new MyDataFilesWidget();
+		this.uploadDataFileRevisionWidget = new UploadDataFileRevisionWidget();
 		
 		this.newDatasetWidget = new NewDatasetWidget();
 		this.viewDatasetWidget = new ViewDatasetWidget();
@@ -103,6 +118,7 @@ public class DataManagementWidget extends ChassisWidget {
 		this.add(this.viewDataFileWidget);
 		this.add(this.editDataFileWidget);
 		this.add(this.myDataFilesWidget);
+		this.add(this.uploadDataFileRevisionWidget);
 		this.add(this.newDatasetWidget);
 		this.add(this.viewDatasetWidget);
 		this.add(this.editDatasetWidget);
@@ -128,7 +144,9 @@ public class DataManagementWidget extends ChassisWidget {
 		
 		this.registerHandlersForNewDataFileWidgetEvents();
 		
-		// TODO others
+		this.registerHandlersForViewDataFileWidgetEvents();
+
+		// TODO add handlers for other child widget events
 		
 		log.leave();
 	}
@@ -158,6 +176,10 @@ public class DataManagementWidget extends ChassisWidget {
 			public void execute() {	setActiveChild(myDatasetsWidget); }
 		};
 
+		// normally we should render the UI components (in this case, menu items)
+		// during the rendering phase, then add event handlers here, but we have 
+		// to actually create the menu items here (during binding phase) because 
+		// the GWT API does not allow you to add a menu item without a command
 		this.menuBar.addItem(new MenuItem("new data file", newDataFileMenuCommand));
 		this.menuBar.addItem(new MenuItem("my data files", myDataFilesMenuCommand));
 		this.menuBar.addSeparator();
@@ -179,7 +201,7 @@ public class DataManagementWidget extends ChassisWidget {
 	private void registerHandlersForNewDataFileWidgetEvents() {
 		log.enter("registerHandlersForNewDataFileWidgetEvents");
 		
-		this.newDataFileWidget.addCancelHandler(new CancelHandler() {
+		HandlerRegistration a = this.newDataFileWidget.addCancelHandler(new CancelHandler() {
 			
 			public void onCancel(CancelEvent e) {
 				log.enter("onCancel");
@@ -190,24 +212,68 @@ public class DataManagementWidget extends ChassisWidget {
 			}
 		});
 
-		this.newDataFileWidget.addCreateDataFileSuccessHandler(new CreateDataFileSuccessHandler() {
+		HandlerRegistration b = this.newDataFileWidget.addSuccessHandler(new CreateDataFileSuccessHandler() {
 			
 			public void onCreateDataFileSuccess(CreateDataFileSuccessEvent e) {
 				log.enter("onCreateDataFileSuccess");
 				
-				setActiveChild(viewDataFileWidget);
 				viewDataFileWidget.getEntry(e.getDataFileEntry().getId());
+				setActiveChild(viewDataFileWidget);
 				
 				log.leave();
-				
 			}
 			
 		});
 		
-		this.newDataFileWidget.addErrorHandler(new CommonErrorHandler());
+		HandlerRegistration c = this.newDataFileWidget.addErrorHandler(new CommonErrorHandler());
+		
+		this.childWidgetEventHandlerRegistrations.add(a);
+		this.childWidgetEventHandlerRegistrations.add(b);
+		this.childWidgetEventHandlerRegistrations.add(c);
 		
 		log.leave();
 	}
+
+
+	
+	
+	
+	/**
+	 * 
+	 */
+	private void registerHandlersForViewDataFileWidgetEvents() {
+		log.enter("registerHandlersForViewDataFileWidgetEvents");
+		
+		HandlerRegistration a = this.viewDataFileWidget.addEditDataFileActionHandler(new DataFileActionHandler() {
+			private Log log = LogFactory.getLog(this.getClass());
+			public void onAction(DataFileActionEvent e) {
+				log.enter("onAction");
+				
+				// TODO Auto-generated method stub
+				
+				log.leave();
+			}
+		});
+		
+		HandlerRegistration b = this.viewDataFileWidget.addUploadRevisionActionHandler(new DataFileActionHandler() {
+			private Log log = LogFactory.getLog(this.getClass());
+			public void onAction(DataFileActionEvent e) {
+				log.enter("onAction");
+				
+				setActiveChild(uploadDataFileRevisionWidget);
+				
+				log.leave();
+			}
+		});
+		
+		this.childWidgetEventHandlerRegistrations.add(a);
+		this.childWidgetEventHandlerRegistrations.add(b);
+		
+		log.leave();
+	}
+
+
+
 
 
 
@@ -228,6 +294,14 @@ public class DataManagementWidget extends ChassisWidget {
 		
 		this.activeChild = child;
 		this.syncUI();
+
+		if (child instanceof ChassisWidget) {
+			ChassisWidget cw = (ChassisWidget) child;
+			this.memory.setChild(cw.getMemory());
+		}
+		else {
+			this.memory.setChild(null);
+		}
 		
 		if (memorise) {
 			this.memory.memorise();
@@ -281,10 +355,9 @@ public class DataManagementWidget extends ChassisWidget {
 	protected void unbindUI() {
 		log.enter("unbindUI");
 		
-		// nothing to do
+		this.clearChildWidgetEventHandlers();
 		
 		log.leave();
-		
 	}
 
 	
