@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,7 +36,7 @@ import org.cggh.chassis.generic.atomext.shared.ChassisConstants;
 /**
  * Servlet implementation class DataFileUploadServlet
  */
-public class NewDataFileServlet extends HttpServlet {
+public class UploadDataFileRevisionServlet extends HttpServlet {
 	
 	
 	
@@ -53,14 +54,14 @@ public class NewDataFileServlet extends HttpServlet {
 	
 	
 	private Abdera abdera = new Abdera();
-    private Log log = LogFactory.getLog(NewDataFileServlet.class);
+    private Log log = LogFactory.getLog(UploadDataFileRevisionServlet.class);
 	
 	
 	
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public NewDataFileServlet() {
+    public UploadDataFileRevisionServlet() {
         super();
     }
 
@@ -120,7 +121,7 @@ public class NewDataFileServlet extends HttpServlet {
 			mediaEntry = putMediaMetadata(request, mediaEntry, fields);
 			
 			// now try to create a new data file entry
-			Entry dataFileEntry = postDataFile(request, mediaEntry, fields);
+			Entry dataFileEntry = putDataFile(request, mediaEntry, fields);
 			
 			// assume if we reach here, can return success
 			respondWithEntry(response, dataFileEntry);
@@ -205,52 +206,45 @@ public class NewDataFileServlet extends HttpServlet {
 	 * @return
 	 * @throws IOException 
 	 */
-	private Entry postDataFile(
+	private Entry putDataFile(
 			HttpServletRequest request, 
 			Entry mediaEntry,
 			Map<String, String> fields) throws IOException {
 		
-		AbderaClient client = createAbderaClient(request);
-	
-		RequestOptions options = createRequestOptions(request);
+		if (fields.containsKey(ChassisConstants.FIELD_DATAFILEURL) && !fields.get(ChassisConstants.FIELD_DATAFILEURL).equals("")) {
+			
+			AbderaClient client = createAbderaClient(request);
+			
+			RequestOptions options = createRequestOptions(request);
 
-		Entry dataFileEntry = abdera.newEntry();
-		
-		// set title
-		if (fields.containsKey(ChassisConstants.FIELD_TITLE)) {
-			String title = fields.get(ChassisConstants.FIELD_TITLE);
-			dataFileEntry.setTitle(title);
+			String url = this.dataFilesCollectionUrl + fields.get(ChassisConstants.FIELD_DATAFILEURL); // assume relative
+
+			log.info("retrieving datafile entry to update: "+url);
+			ClientResponse res = client.get(url, options);
+			
+			Entry dataFileEntry = this.getEntry(res);
+			
+			// add link to new revision
+			String revisionLink = mediaEntry.getEditLink().getHref().toASCIIString();
+			dataFileEntry.addLink(revisionLink, Chassis.Rel.REVISION);
+			
+			// POST new datafile
+			log.info("putting revised data file to: "+url);
+
+			options.setContentType("application/atom+xml; type=entry; charset=UTF-8"); // needed, otherwise content type application/xml, which exist rejects
+
+			res = client.put(url, dataFileEntry, options);
+
+			dataFileEntry = getEntry(res);
+			
+			return dataFileEntry;
 		}
-		
-		// set summary
-		if (fields.containsKey(ChassisConstants.FIELD_SUMMARY)) {
-			String summary = fields.get(ChassisConstants.FIELD_SUMMARY);
-			dataFileEntry.setSummary(summary);
+		else {
+			
+			log.warn("no data file url provided, media was persisted but no data file was updated");
+			return null;
+			
 		}
-		
-		// set author
-		if (fields.containsKey(ChassisConstants.FIELD_AUTHOREMAIL)) {
-			String authoremail = fields.get(ChassisConstants.FIELD_AUTHOREMAIL);
-			dataFileEntry.addAuthor(null, authoremail, null);
-		}
-		
-		// set type category
-		dataFileEntry.addCategory(Chassis.SCHEME_TYPES, Chassis.Type.DATAFILE, null);
-		
-		// set link to initial revision
-		String revisionLink = mediaEntry.getEditLink().getHref().toASCIIString();
-		dataFileEntry.addLink(revisionLink, Chassis.Rel.REVISION);
-		
-		// POST new datafile
-		log.info("posting new data file to: "+dataFilesCollectionUrl);
-
-		options.setContentType("application/atom+xml; type=entry; charset=UTF-8"); // needed, otherwise content type application/xml, which exist rejects
-
-		ClientResponse res = client.post(dataFilesCollectionUrl, dataFileEntry, options);
-
-		dataFileEntry = getEntry(res);
-		
-		return dataFileEntry;
 	}
 
 
@@ -274,7 +268,10 @@ public class NewDataFileServlet extends HttpServlet {
 			mediaEntry.setTitle(title);
 		}
 
-		mediaEntry.setSummary("initial revision");
+		if (fields.containsKey(ChassisConstants.FIELD_SUMMARY)) {
+			String summary = fields.get(ChassisConstants.FIELD_SUMMARY);
+			mediaEntry.setSummary(summary);
+		}
 
 		String entryUrl = mediaCollectionUrl + mediaEntry.getEditLink().getHref().toASCIIString(); // handle relative urls
 
@@ -355,6 +352,9 @@ public class NewDataFileServlet extends HttpServlet {
 			log.info("request success");
 
 			Document<Entry> doc = res.getDocument(abdera.getParser());
+			StringWriter sw = new StringWriter();
+			doc.writeTo(sw);
+			log.info(sw.getBuffer().toString());
 			entry = doc.getRoot();
 
 			return entry;

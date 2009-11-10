@@ -3,6 +3,7 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.data.client.datafile;
 
+import org.cggh.chassis.generic.atomext.client.datafile.DataFileEntry;
 import org.cggh.chassis.generic.atomext.shared.ChassisConstants;
 import org.cggh.chassis.generic.client.gwt.common.client.RenderUtils;
 import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
@@ -26,7 +27,18 @@ public class UploadDataFileRevisionForm extends ChassisWidget {
 	
 	
 	private Log log;
+	
+	
+	
+	
+	// state fields (model)
+	DataFileEntry entry;
+	
+	
+	
+	// UI fields (view)
 	private FormPanel formPanel;
+	private Hidden dataFileHidden;
 
 	
 	
@@ -39,10 +51,9 @@ public class UploadDataFileRevisionForm extends ChassisWidget {
 		ensureLog();
 		log.enter("init");
 
-		// nothing to do
+		entry = null;
 
 		log.leave();
-
 	}
 	
 	
@@ -76,7 +87,7 @@ public class UploadDataFileRevisionForm extends ChassisWidget {
 		FlowPanel formContentsPanel = new FlowPanel();
 
 		// upload input
-		Panel fileQuestionPanel = RenderUtils.renderFileInputQuestion("Please select the file to upload as the new revision of the data file:", ChassisConstants.FIELD_DATAFILE); // TODO i18n
+		Panel fileQuestionPanel = RenderUtils.renderFileInputQuestion("Please select the file to upload as the new revision of the data file:", ChassisConstants.FIELD_MEDIA); // TODO i18n
 		formContentsPanel.add(fileQuestionPanel);
 		
 		// summary
@@ -86,6 +97,11 @@ public class UploadDataFileRevisionForm extends ChassisWidget {
 		// hidden authoremail
 		Hidden authorEmailHidden = RenderUtils.renderHiddenAuthorEmail();
 		formContentsPanel.add(authorEmailHidden);
+
+		// hidden datafile
+		this.dataFileHidden = new Hidden();
+		this.dataFileHidden.setName(ChassisConstants.FIELD_DATAFILEURL);
+		formContentsPanel.add(dataFileHidden);
 
 		this.formPanel.add(formContentsPanel);
 		this.add(this.formPanel);
@@ -120,7 +136,8 @@ public class UploadDataFileRevisionForm extends ChassisWidget {
 	protected void syncUI() {
 		log.enter("syncUI");
 
-		// nothing to do
+		String value = (this.entry != null) ? this.entry.getEditLink().getHref() : "";
+		this.dataFileHidden.setValue(value);
 
 		log.leave();
 	}
@@ -143,22 +160,6 @@ public class UploadDataFileRevisionForm extends ChassisWidget {
 	
 	
 	
-
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#destroy()
-	 */
-	@Override
-	public void destroy() {
-		log.enter("destroy");
-
-		// nothing to do
-
-		log.leave();
-	}
-
-	
-	
-
 	/**
 	 * 
 	 */
@@ -174,6 +175,22 @@ public class UploadDataFileRevisionForm extends ChassisWidget {
 
 	public HandlerRegistration addSubmitCompleteHandler(SubmitCompleteHandler h) {
 		return this.formPanel.addSubmitCompleteHandler(h);
+	}
+
+
+
+
+
+	/**
+	 * @param entry
+	 */
+	public void setDataFileEntry(DataFileEntry entry) {
+		log.enter("setDataFileEntry");
+		
+		this.entry = entry;
+		this.syncUI();
+		
+		log.leave();
 	}
 
 

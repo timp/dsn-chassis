@@ -46,6 +46,7 @@ public class DataFileRevisionsWidget extends ChassisWidget {
 		new HTML("<strong>Date</strong>"),
 		new HTML("<strong>Uploaded By</strong>"),
 		new HTML("<strong>Original File Name</strong>"),
+		new HTML("<strong>Summary</strong>"),
 		new HTML("<strong>Actions</strong>")
 	};
 	
@@ -163,6 +164,7 @@ public class DataFileRevisionsWidget extends ChassisWidget {
 			new HTML(entry.getPublished()),
 			new HTML(RenderUtils.renderRewriteAtomAuthorsAsCommaDelimitedEmailString(entry.getAuthors())),
 			new HTML(entry.getTitle()),
+			new HTML(RenderUtils.truncate(entry.getSummary(), 20)),
 			new HTML("<a href='"+Configuration.getMediaFeedURL() + "/" + entry.getEditMediaLink().getHref() + "'>download</a>")
 		};
 		

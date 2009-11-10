@@ -283,7 +283,7 @@ public class AtomEntryImpl extends ElementWrapperImpl implements AtomEntry {
 			
 		};
 
-		Functional.map(XMLNS.getElementsByTagNameNS(element, Atom.ELEMENT_AUTHOR, Atom.NSURI), authors, wrapper);
+		Functional.map(XMLNS.getChildrenByTagNameNS(element, Atom.ELEMENT_AUTHOR, Atom.NSURI), authors, wrapper);
 		
 		return authors;
 		
@@ -307,7 +307,7 @@ public class AtomEntryImpl extends ElementWrapperImpl implements AtomEntry {
 			
 		};
 
-		Functional.map(XMLNS.getElementsByTagNameNS(element, Atom.ELEMENT_CATEGORY, Atom.NSURI), categories, wrapper);
+		Functional.map(XMLNS.getChildrenByTagNameNS(element, Atom.ELEMENT_CATEGORY, Atom.NSURI), categories, wrapper);
 		
 		return categories;
 
@@ -351,7 +351,7 @@ public class AtomEntryImpl extends ElementWrapperImpl implements AtomEntry {
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry#getId()
 	 */
 	public String getId() {
-		return XMLNS.getFirstElementSimpleContentByTagNameNS(element, Atom.ELEMENT_ID, Atom.NSURI);
+		return XMLNS.getFirstChildSimpleContentByTagNameNS(element, Atom.ELEMENT_ID, Atom.NSURI);
 	}
 	
 	
@@ -372,7 +372,7 @@ public class AtomEntryImpl extends ElementWrapperImpl implements AtomEntry {
 			
 		};
 
-		Functional.map(XMLNS.getElementsByTagNameNS(element, Atom.ELEMENT_LINK, Atom.NSURI), links, wrapper);
+		Functional.map(XMLNS.getChildrenByTagNameNS(element, Atom.ELEMENT_LINK, Atom.NSURI), links, wrapper);
 		
 		return links;
 
@@ -385,7 +385,7 @@ public class AtomEntryImpl extends ElementWrapperImpl implements AtomEntry {
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry#getPublished()
 	 */
 	public String getPublished() {
-		return XMLNS.getFirstElementSimpleContentByTagNameNS(element, Atom.ELEMENT_PUBLISHED, Atom.NSURI);
+		return XMLNS.getFirstChildSimpleContentByTagNameNS(element, Atom.ELEMENT_PUBLISHED, Atom.NSURI);
 	}
 
 	
@@ -395,7 +395,7 @@ public class AtomEntryImpl extends ElementWrapperImpl implements AtomEntry {
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry#getSummary()
 	 */
 	public String getSummary() {
-		return XMLNS.getFirstElementSimpleContentByTagNameNS(element, Atom.ELEMENT_SUMMARY, Atom.NSURI);
+		return XMLNS.getFirstChildSimpleContentByTagNameNS(element, Atom.ELEMENT_SUMMARY, Atom.NSURI);
 	}
 
 	
@@ -405,7 +405,7 @@ public class AtomEntryImpl extends ElementWrapperImpl implements AtomEntry {
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry#getTitle()
 	 */
 	public String getTitle() {
-		return XMLNS.getFirstElementSimpleContentByTagNameNS(element, Atom.ELEMENT_TITLE, Atom.NSURI);
+		return XMLNS.getFirstChildSimpleContentByTagNameNS(element, Atom.ELEMENT_TITLE, Atom.NSURI);
 	}
 
 	
@@ -415,7 +415,7 @@ public class AtomEntryImpl extends ElementWrapperImpl implements AtomEntry {
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry#getUpdated()
 	 */
 	public String getUpdated() {
-		return XMLNS.getFirstElementSimpleContentByTagNameNS(element, Atom.ELEMENT_UPDATED, Atom.NSURI);
+		return XMLNS.getFirstChildSimpleContentByTagNameNS(element, Atom.ELEMENT_UPDATED, Atom.NSURI);
 	}
 
 	
@@ -432,7 +432,7 @@ public class AtomEntryImpl extends ElementWrapperImpl implements AtomEntry {
 
 		String before = this.getSummary();
 
-		XMLNS.setSingleElementSimpleContentByTagNameNS(element, Atom.ELEMENT_SUMMARY, Atom.PREFIX, Atom.NSURI, summary);
+		XMLNS.setSingleChildSimpleContentByTagNameNS(element, Atom.ELEMENT_SUMMARY, Atom.PREFIX, Atom.NSURI, summary);
 
 		String after = this.getSummary();
 		for (AtomEntry.PropertyChangeListener l : listeners) {
@@ -448,7 +448,7 @@ public class AtomEntryImpl extends ElementWrapperImpl implements AtomEntry {
 
 		String before = this.getTitle();
 		
-		XMLNS.setSingleElementSimpleContentByTagNameNS(element, Atom.ELEMENT_TITLE, Atom.PREFIX, Atom.NSURI, title);
+		XMLNS.setSingleChildSimpleContentByTagNameNS(element, Atom.ELEMENT_TITLE, Atom.PREFIX, Atom.NSURI, title);
 		
 		String after = this.getTitle();
 		for (AtomEntry.PropertyChangeListener l : listeners) {

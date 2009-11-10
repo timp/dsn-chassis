@@ -7,7 +7,6 @@ import org.cggh.chassis.generic.atomext.client.datafile.DataFileEntry;
 import org.cggh.chassis.generic.atomext.client.datafile.DataFileFactory;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
-import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetRenderer;
 import org.cggh.chassis.generic.widget.client.CancelEvent;
 import org.cggh.chassis.generic.widget.client.ErrorEvent;
@@ -30,7 +29,7 @@ import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteHandler;
  *
  */
 public class UploadDataFileRevisionWidgetRenderer 
-	extends	AsyncWidgetRenderer<AsyncWidgetModel> {
+	extends	AsyncWidgetRenderer<UploadDataFileRevisionWidgetModel> {
 	
 	
 	
@@ -119,7 +118,21 @@ public class UploadDataFileRevisionWidgetRenderer
 			
 		});
 		
+		HandlerRegistration b = this.model.addDataFileEntryChangeHandler(new DataFileEntryChangeHandler() {
+			
+			public void onDataFileEntryChanged(DataFileEntryChangeEvent e) {
+				log.enter("onDataFileEntryChanged");
+				
+				updateForm(e.getAfter());
+				
+				log.leave();
+				
+			}
+
+		});
+		
 		this.modelChangeHandlerRegistrations.add(a);
+		this.modelChangeHandlerRegistrations.add(b);
 		
 		log.leave();
 	}
@@ -143,6 +156,14 @@ public class UploadDataFileRevisionWidgetRenderer
 	}
 
 
+
+	private void updateForm(DataFileEntry after) {
+		log.enter("updateHiddenDataFile");
+		
+		this.form.setDataFileEntry(after);
+		
+		log.leave();
+	}
 
 
 

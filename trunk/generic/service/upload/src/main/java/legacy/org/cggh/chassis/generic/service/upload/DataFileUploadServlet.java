@@ -131,7 +131,7 @@ public class DataFileUploadServlet extends HttpServlet {
 
 				    log.info("File field " + fieldName + " with file name " + item.getName() + ", content type " + contentType + " detected.");
 			        
-				    if (ChassisConstants.FIELD_DATAFILE.equals(fieldName)) {
+				    if (ChassisConstants.FIELD_MEDIA.equals(fieldName)) {
 				        // process the input stream
 				    	fields.put(ChassisConstants.FIELD_FILENAME, item.getName()); // TODO what happens if this field set as form data?
 				        entry = persistFile(client, createRequestOptions(request), stream, contentType);

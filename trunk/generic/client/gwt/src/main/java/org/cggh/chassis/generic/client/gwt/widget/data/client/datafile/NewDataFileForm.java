@@ -82,7 +82,7 @@ public class NewDataFileForm extends ChassisWidget {
 		formContentsPanel.add(summaryQuestionPanel);
 		
 		// upload input
-		Panel fileQuestionPanel = RenderUtils.renderFileInputQuestion("Please select the file to upload as the initial revision of the data file:", ChassisConstants.FIELD_DATAFILE); // TODO i18n
+		Panel fileQuestionPanel = RenderUtils.renderFileInputQuestion("Please select the file to upload as the initial revision of the data file:", ChassisConstants.FIELD_MEDIA); // TODO i18n
 		formContentsPanel.add(fileQuestionPanel);
 		
 		// hidden authoremail

@@ -75,7 +75,7 @@ public class UploadSubmissionDataFileFormRenderer {
 		fileBrowserSection.addStyleName(CommonStyles.COMMON_QUESTION);
 		InlineLabel fileBrowserLabel = new InlineLabel("Please select the file you wish to upload:");
 		fileBrowserSection.add(fileBrowserLabel);
-		fileUI.setName(ChassisConstants.FIELD_DATAFILE);
+		fileUI.setName(ChassisConstants.FIELD_MEDIA);
 		fileUI.addStyleName(CommonStyles.UPLOADSUBMISSIONDATAFILE_FILEINPUT);
 		fileBrowserSection.add(fileUI);
 		submissionDataFileForm.add(fileBrowserSection);

@@ -4,7 +4,7 @@
 package spike.widget.datafile.create.client;
 
 import org.cggh.chassis.generic.client.gwt.common.client.ChassisUser;
-import org.cggh.chassis.generic.client.gwt.widget.data.client.NewDataFileWidget;
+import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.NewDataFileWidget;
 import org.cggh.chassis.generic.log.client.AllenSauerLog;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;

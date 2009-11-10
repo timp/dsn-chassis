@@ -3,6 +3,7 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.data.client.datafile;
 
+import org.cggh.chassis.generic.atomext.client.datafile.DataFileEntry;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
@@ -15,7 +16,7 @@ import com.google.gwt.event.shared.HandlerRegistration;
  *
  */
 public class UploadDataFileRevisionWidget extends
-		DelegatingWidget<AsyncWidgetModel, UploadDataFileRevisionWidgetRenderer> {
+		DelegatingWidget<UploadDataFileRevisionWidgetModel, UploadDataFileRevisionWidgetRenderer> {
 	
 	
 	
@@ -35,7 +36,7 @@ public class UploadDataFileRevisionWidget extends
 		ensureLog();
 		log.enter("init");
 		
-		this.model = new AsyncWidgetModel(this);
+		this.model = new UploadDataFileRevisionWidgetModel(this);
 		this.renderer = new UploadDataFileRevisionWidgetRenderer(this);
 		this.renderer.setCanvas(this.contentBox);
 		
@@ -58,6 +59,21 @@ public class UploadDataFileRevisionWidget extends
 	
 	public HandlerRegistration addSuccessHandler(UploadDataFileRevisionSuccessHandler h) {
 		return this.addHandler(h, UploadDataFileRevisionSuccessEvent.TYPE);
+	}
+
+
+
+
+
+	/**
+	 * @param dataFileEntry
+	 */
+	public void setEntry(DataFileEntry dataFileEntry) {
+		log.enter("setEntry");
+
+		this.model.setEntry(dataFileEntry);
+		
+		log.leave();
 	}
 	
 	
