@@ -1,9 +1,23 @@
+(: 
+    A script implementing a simple REST service to query and retrieve entries
+    in the datafiles collection.
+:)
+
+
 (: namespace declarations :)
+
+declare namespace exist = "http://exist.sourceforge.net/NS/exist" ;
+declare namespace request = "http://exist-db.org/xquery/request" ;
 declare namespace atom = "http://www.w3.org/2005/Atom" ;
 declare namespace my = "http://www.cggh.org/2009/chassis/xquery-function" ;
 
+
 (: serialization options :)
+
 declare option exist:serialize "method=xml media-type=application/xml indent=yes" ;
+
+
+(: function declarations :)
 
 
 declare function my:include-media( $link as element() ) as element() {
@@ -44,6 +58,7 @@ declare function my:expand-datafile( $entry as element() ) as element() {
 
 
 (: find collection :) 
+
 let $datafiles := collection("/db/datafiles")
 
 (: fish out request params :)
