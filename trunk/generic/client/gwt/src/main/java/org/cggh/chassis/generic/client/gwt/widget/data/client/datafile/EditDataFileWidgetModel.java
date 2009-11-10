@@ -8,18 +8,17 @@ package org.cggh.chassis.generic.client.gwt.widget.data.client.datafile;
  * @author aliman
  *
  */
-public class ViewDataFileWidgetModel extends AsyncWidgetModelWithDataFileEntry {
+public class EditDataFileWidgetModel extends AsyncWidgetModelWithDataFileEntry {
+
 	
 	
 	
 	/**
 	 * @param owner
 	 */
-	public ViewDataFileWidgetModel(ViewDataFileWidget owner) {
+	public EditDataFileWidgetModel(EditDataFileWidget owner) {
 		super(owner);
 	}
 
-	
-	
 
 }

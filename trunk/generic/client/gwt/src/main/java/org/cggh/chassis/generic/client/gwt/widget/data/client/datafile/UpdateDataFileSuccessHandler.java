@@ -12,8 +12,8 @@ import com.google.gwt.event.shared.EventHandler;
  * @author aliman
  *
  */
-public interface CreateDataFileSuccessHandler extends EventHandler {
+public interface UpdateDataFileSuccessHandler extends EventHandler {
 
-	public void onSuccess(CreateDataFileSuccessEvent e);
+	public void onSuccess(UpdateDataFileSuccessEvent e);
 	
 }
