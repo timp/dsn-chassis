@@ -36,6 +36,7 @@ declare function my:expand-datafile( $entry as element() ) as element() {
 		$entry/atom:title,
 		$entry/atom:summary,
 		$entry/atom:category,
+		$entry/atom:author,
 		for $link in $entry/atom:link return my:expand-datafile-link($link)
 	}
 	</atom:entry>
