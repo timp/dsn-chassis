@@ -166,40 +166,8 @@ public class SubmissionActionsPanel extends ChassisWidget {
 	
 	
 	
-	
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.widget.client.Widget#unbindUI()
-	 */
-	@Override
-	protected void unbindUI() {
-		log.enter("unbindUI");
-
-		this.clearChildWidgetEventHandlers();
-
-		log.leave();
-	}
 
 
-
-
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.widget.client.Widget#destroy()
-	 */
-	@Override
-	public void destroy() {
-		log.enter("destroy");
-
-		this.unbindUI();
-		// TODO anything else?
-
-		log.leave();
-
-	}
-
-	
-	
-	
-	
 	/**
 	 * Register interest in edit submission action events.
 	 * 

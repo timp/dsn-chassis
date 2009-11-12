@@ -133,20 +133,6 @@ public class AdministratorHomeWidget extends ChassisWidget {
 	}
 
 
-
-
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#unbindUI()
-	 */
-	@Override
-	protected void unbindUI() {
-		log.enter("unbindUI");
-		
-		// nothing to do
-		
-		log.leave();
-	}
-	
 	
 	
 }

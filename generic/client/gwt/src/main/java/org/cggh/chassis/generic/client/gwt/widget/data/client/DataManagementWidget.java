@@ -31,6 +31,9 @@ import org.cggh.chassis.generic.widget.client.CancelHandler;
 import org.cggh.chassis.generic.widget.client.ChassisWidget;
 import org.cggh.chassis.generic.widget.client.ErrorEvent;
 import org.cggh.chassis.generic.widget.client.ErrorHandler;
+import org.cggh.chassis.generic.widget.client.HasMenuEventHandlers;
+import org.cggh.chassis.generic.widget.client.MenuEvent;
+import org.cggh.chassis.generic.widget.client.MenuEventHandler;
 import org.cggh.chassis.generic.widget.client.WidgetMemory;
 
 import com.google.gwt.event.shared.HandlerRegistration;
@@ -45,7 +48,9 @@ import com.google.gwt.user.client.ui.Widget;
  * @author aliman
  *
  */
-public class DataManagementWidget extends ChassisWidget {
+public class DataManagementWidget 
+	extends ChassisWidget 
+	implements HasMenuEventHandlers {
 
 	
 	
@@ -174,21 +179,31 @@ public class DataManagementWidget extends ChassisWidget {
 		log.enter("bindMenuBar");
 		
 		Command newDataFileMenuCommand = new Command() {
-			public void execute() {	setActiveChild(newDataFileWidget); }
+			public void execute() {	
+				setActiveChild(newDataFileWidget); 
+				fireEvent(new MenuEvent());
+			}
 		};
 		
 		Command myDataFilesMenuCommand = new Command() {
 			public void execute() {
 				setActiveChild(myDataFilesWidget);
+				fireEvent(new MenuEvent());
 			}
 		};
 		
 		Command newDatasetMenuCommand = new Command() {
-			public void execute() {	setActiveChild(newDatasetWidget); }
+			public void execute() {	
+				setActiveChild(newDatasetWidget); 
+				fireEvent(new MenuEvent());
+			}
 		};
 		
 		Command myDatasetsMenuCommand = new Command() {
-			public void execute() {	setActiveChild(myDatasetsWidget); }
+			public void execute() {	
+				setActiveChild(myDatasetsWidget); 
+				fireEvent(new MenuEvent());
+			}
 		};
 
 		// normally we should render the UI components (in this case, menu items)
@@ -380,7 +395,6 @@ public class DataManagementWidget extends ChassisWidget {
 	private void registerHandlersForNewDatasetWidgetEvents() {
 		log.enter("registerHandlersForNewDatasetWidgetEvents");
 		
-		// TODO Auto-generated method stub
 		HandlerRegistration a = this.newDatasetWidget.addCancelHandler(new CommonCancelHandler());
 		
 		HandlerRegistration b = this.newDatasetWidget.addErrorHandler(new CommonErrorHandler());
@@ -397,6 +411,10 @@ public class DataManagementWidget extends ChassisWidget {
 				
 			}
 		});
+		
+		this.childWidgetEventHandlerRegistrations.add(a);
+		this.childWidgetEventHandlerRegistrations.add(b);
+		this.childWidgetEventHandlerRegistrations.add(c);		
 		
 		log.leave();
 		
@@ -463,37 +481,6 @@ public class DataManagementWidget extends ChassisWidget {
 
 
 
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#destroy()
-	 */
-	@Override
-	public void destroy() {
-		log.enter("destroy");
-		
-		this.unbindUI();
-		
-		log.leave();
-	}
-
-	
-	
-	
-
-	
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#unbindUI()
-	 */
-	@Override
-	protected void unbindUI() {
-		log.enter("unbindUI");
-		
-		this.clearChildWidgetEventHandlers();
-		
-		log.leave();
-	}
-
-	
-	
 	
 	public MenuBar getMenu() {
 		return this.menuBar;
@@ -607,7 +594,9 @@ public class DataManagementWidget extends ChassisWidget {
 
 
 
-
+	public HandlerRegistration addMenuEventHandler(MenuEventHandler h) {
+		return this.addHandler(h, MenuEvent.TYPE);
+	}
 
 
 

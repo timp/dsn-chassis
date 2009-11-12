@@ -6,6 +6,7 @@ package org.cggh.chassis.generic.client.gwt.widget.userdetails.client;
 import java.util.Set;
 
 import org.cggh.chassis.generic.async.client.Deferred;
+import org.cggh.chassis.generic.client.gwt.common.client.ChassisUser;
 import org.cggh.chassis.generic.client.gwt.configuration.client.ChassisRole;
 import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
 import org.cggh.chassis.generic.log.client.Log;
@@ -116,6 +117,9 @@ public class UserDetailsWidgetController {
 		public void onSuccess(UserDetailsTO user) {
 			log.enter("onSuccess");
 
+			log.debug("set static current user");
+			ChassisUser.setCurrentUser(user);
+			
 			log.debug("set current user on model");
 			model.setCurrentUser(user);
 			

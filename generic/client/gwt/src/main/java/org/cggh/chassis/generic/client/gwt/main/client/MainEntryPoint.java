@@ -3,7 +3,7 @@
  */
 package org.cggh.chassis.generic.client.gwt.main.client;
 
-import org.cggh.chassis.generic.client.gwt.application.client.ChassisClient;
+import org.cggh.chassis.generic.client.gwt.application.client.NewChassisClient;
 import org.cggh.chassis.generic.log.client.AllenSauerLog;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
@@ -63,9 +63,8 @@ public class MainEntryPoint implements EntryPoint {
 	 * 
 	 */
 	private void contructChassisClient() {
-		ChassisClient client = new ChassisClient();
+		NewChassisClient client = new NewChassisClient();
 		RootPanel.get("chassisClientPane").add(client);
-		client.init();
 	}
 
 

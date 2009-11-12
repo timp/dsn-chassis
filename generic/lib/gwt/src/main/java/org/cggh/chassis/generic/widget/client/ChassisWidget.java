@@ -190,7 +190,13 @@ public abstract class ChassisWidget
 	/**
 	 * Detach the widget from any event listeners.
 	 */
-	protected abstract void unbindUI();
+	protected void unbindUI() {
+		log.enter("unbindUI");
+		
+		this.clearChildWidgetEventHandlers();
+		
+		log.leave();
+	}
 	
 	
 	
