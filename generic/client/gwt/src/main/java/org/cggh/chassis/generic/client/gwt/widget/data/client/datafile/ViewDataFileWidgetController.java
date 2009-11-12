@@ -46,16 +46,21 @@ public class ViewDataFileWidgetController {
 	/**
 	 * @param id
 	 */
-	public Deferred<DataFileEntry> getEntry(String id) {
-		log.enter("getEntry");
+	public Deferred<DataFileEntry> viewEntry(String id) {
+		log.enter("viewEntry");
 		
+		// store to use as mnemonic
+		this.model.setCurrentEntryId(id);
+		
+		// set status pending async request
 		this.model.setStatus(AsyncWidgetModel.STATUS_ASYNC_REQUEST_PENDING);
 		
+		// make async request
 		DataFileQueryService service = new DataFileQueryService(Configuration.getDataFileQueryServiceUrl());
 		DataFileQuery query = new DataFileQuery();
 		query.setId(id);
 		Deferred<DataFileEntry> deferredResult = service.queryOne(query);
-		deferredResult.addCallback(new GetEntryCallback());
+		deferredResult.addCallback(new ViewEntryCallback());
 		deferredResult.addErrback(new AsyncErrback(this.owner, this.model));
 		
 		log.leave();	
@@ -69,8 +74,8 @@ public class ViewDataFileWidgetController {
 	 * @author aliman
 	 *
 	 */
-	public class GetEntryCallback implements Function<DataFileEntry, DataFileEntry> {
-		private Log log = LogFactory.getLog(GetEntryCallback.class);
+	public class ViewEntryCallback implements Function<DataFileEntry, DataFileEntry> {
+		private Log log = LogFactory.getLog(ViewEntryCallback.class);
 
 		/* (non-Javadoc)
 		 * @see org.cggh.chassis.generic.async.client.Function#apply(java.lang.Object)

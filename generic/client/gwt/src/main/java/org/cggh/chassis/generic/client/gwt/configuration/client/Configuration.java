@@ -42,6 +42,7 @@ public class Configuration {
 	static String testNewDataFileServiceUrl;
 	static String testUploadDataFileRevisionServiceUrl;
 	static String testDatasetCollectionUrl;
+	static String testDatasetQueryServiceUrl;
 	static String testMediaCollectionUrl;
 	static String testSandboxCollectionUrl;
 	static Map<String, String> testModules;
@@ -193,6 +194,10 @@ public class Configuration {
 
 	public static String getDatasetCollectionUrl() {
 		return (useUnitTestConfiguration) ? testDatasetCollectionUrl : JsConfiguration.getDatasetCollectionUrl();
+	}
+
+	public static String getDatasetQueryServiceUrl() {
+		return (useUnitTestConfiguration) ? testDatasetQueryServiceUrl : JsConfiguration.getDatasetQueryServiceUrl();
 	}
 	
 	public static String getMediaCollectionUrl() {

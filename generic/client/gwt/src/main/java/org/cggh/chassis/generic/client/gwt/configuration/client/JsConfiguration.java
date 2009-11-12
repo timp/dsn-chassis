@@ -91,6 +91,10 @@ public class JsConfiguration {
 		return $wnd.CHASSIS.dataFileQueryServiceUrl;
 	}-*/;
 	
+	public static native String getDatasetQueryServiceUrl() /*-{
+		return $wnd.CHASSIS.datasetQueryServiceUrl;
+	}-*/;
+
 	public static native String getStudyQuestionnaireUrl() /*-{
 		return $wnd.CHASSIS.studyQuestionnaireUrl;
 	}-*/;

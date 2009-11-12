@@ -223,7 +223,7 @@ public class DataManagementWidget extends ChassisWidget {
 			public void onSuccess(CreateDataFileSuccessEvent e) {
 				log.enter("onCreateDataFileSuccess");
 				
-				viewDataFileWidget.setEntry(e.getEntry().getId());
+				viewDataFileWidget.viewEntry(e.getEntry().getId());
 				setActiveChild(viewDataFileWidget);
 				
 				log.leave();
@@ -294,7 +294,7 @@ public class DataManagementWidget extends ChassisWidget {
 			public void onUploadDataFileRevisionSuccess(UploadDataFileRevisionSuccessEvent e) {
 				log.enter("onUploadDataFileRevisionSuccess");
 				
-				viewDataFileWidget.setEntry(e.getDataFileEntry().getId());
+				viewDataFileWidget.viewEntry(e.getDataFileEntry().getId());
 				setActiveChild(viewDataFileWidget);
 				
 				log.leave();
@@ -324,7 +324,7 @@ public class DataManagementWidget extends ChassisWidget {
 			public void onAction(DataFileActionEvent e) {
 				log.enter("onAction");
 				
-				viewDataFileWidget.setEntry(e.getEntry().getId());
+				viewDataFileWidget.viewEntry(e.getEntry().getId());
 				setActiveChild(viewDataFileWidget);
 				
 				log.leave();
@@ -354,7 +354,7 @@ public class DataManagementWidget extends ChassisWidget {
 			public void onSuccess(UpdateDataFileSuccessEvent e) {
 				log.enter("onSuccess");
 				
-				viewDataFileWidget.setEntry(e.getEntry().getId());
+				viewDataFileWidget.viewEntry(e.getEntry().getId());
 				setActiveChild(viewDataFileWidget);
 				
 				log.leave();
@@ -390,7 +390,7 @@ public class DataManagementWidget extends ChassisWidget {
 			public void onSuccess(CreateDatasetSuccessEvent e) {
 				log.enter("onSuccess");
 				
-				viewDatasetWidget.setEntry(e.getEntry().getId());
+				viewDatasetWidget.setCurrentEntry(e.getEntry().getId());
 				setActiveChild(viewDatasetWidget);
 				
 				log.leave();

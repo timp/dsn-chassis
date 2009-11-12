@@ -6,7 +6,6 @@ package org.cggh.chassis.generic.client.gwt.widget.data.client.datafile;
 import org.cggh.chassis.generic.async.client.Deferred;
 import org.cggh.chassis.generic.async.client.Function;
 import org.cggh.chassis.generic.atomext.client.datafile.DataFileEntry;
-import org.cggh.chassis.generic.client.gwt.widget.data.client.DataManagementWidget;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.DelegatingWidget;
@@ -20,9 +19,14 @@ import com.google.gwt.event.shared.HandlerRegistration;
  */
 public class ViewDataFileWidget 
 	extends DelegatingWidget<ViewDataFileWidgetModel, ViewDataFileWidgetRenderer> {
-	private Log log = LogFactory.getLog(ViewDataFileWidget.class);
+	
+	
+	
+	
+	
+	
+	private Log log;
 	private ViewDataFileWidgetController controller;
-	private String currentEntryId;
 
 
 	
@@ -73,7 +77,7 @@ public class ViewDataFileWidget
 	 * 
 	 */
 	private void ensureLog() {
-		if (log == null) log = LogFactory.getLog(DataManagementWidget.class);
+		if (log == null) log = LogFactory.getLog(ViewDataFileWidget.class);
 	}
 
 
@@ -82,14 +86,11 @@ public class ViewDataFileWidget
 	/**
 	 * @param dataFileEntry
 	 */
-	public Deferred<DataFileEntry> setEntry(String id) {
-		log.enter("setEntry");
+	public Deferred<DataFileEntry> viewEntry(String id) {
+		log.enter("viewEntry");
 
-		// store to use as mnemonic
-		this.currentEntryId = id;
-		
 		// delegate to controller
-		Deferred<DataFileEntry> def = this.controller.getEntry(id);
+		Deferred<DataFileEntry> def = this.controller.viewEntry(id);
 		
 		log.leave();
 		return def;
@@ -127,7 +128,8 @@ public class ViewDataFileWidget
 		public String createMnemonic() {
 			log.enter("createMnemonic");
 
-			String mnemonic = currentEntryId;
+			// use current entry id as mnemonic
+			String mnemonic = model.getCurrentEntryId();
 			
 			log.debug("mnemonic: "+mnemonic);
 
@@ -142,17 +144,22 @@ public class ViewDataFileWidget
 		public Deferred<WidgetMemory> remember(String mnemonic) {
 			log.enter("remember");
 
-			Deferred<DataFileEntry> deferredEntry = setEntry(mnemonic);
+			Deferred<DataFileEntry> deferredEntry = viewEntry(mnemonic);
 			
 			final WidgetMemory self = this;
 			
 			Deferred<WidgetMemory> deferredSelf = deferredEntry.adapt(new Function<DataFileEntry, WidgetMemory>() {
 
 				public WidgetMemory apply(DataFileEntry in) {
+					// when async operation is complete, return self
 					return self;
 				}
 			});
-
+			
+			// actually, async operation here doesn't have any impact on 
+			// memory child, so could callback with self immediately - 
+			// however, will leave as is for now
+			
 			log.leave();
 			return deferredSelf;
 		}
