@@ -241,7 +241,7 @@ public class GWTTestEditSubmissionWidgetDefaultRenderer extends GWTTestCase {
 			// not tested here
 		}
 
-		public void loadSubmissionEntryByURL(String SubmissionEntryURL) {
+		public void loadSubmissionEntryByUrl(String SubmissionEntryURL) {
 			// not tested here
 		}
 

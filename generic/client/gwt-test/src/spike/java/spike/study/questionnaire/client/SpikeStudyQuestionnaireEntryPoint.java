@@ -5,7 +5,7 @@ package spike.study.questionnaire.client;
 
 import org.cggh.chassis.generic.async.client.Deferred;
 import org.cggh.chassis.generic.async.client.Function;
-import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
+import org.cggh.chassis.generic.client.gwt.configuration.client.JsConfiguration;
 import org.cggh.chassis.generic.log.client.AllenSauerLog;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
@@ -118,7 +118,7 @@ public class SpikeStudyQuestionnaireEntryPoint implements EntryPoint {
 		
 		qp.add(new HTML("<p>Loading questionnaire...</p>"));
 
-		String url = Configuration.getStudyQuestionnaireURL();
+		String url = JsConfiguration.getStudyQuestionnaireUrl();
 		
 		Deferred<XQuestionnaire> def = XQuestionnaire.load(url);
 		

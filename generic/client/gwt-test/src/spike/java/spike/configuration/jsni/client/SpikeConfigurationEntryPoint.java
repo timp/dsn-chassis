@@ -3,7 +3,7 @@
  */
 package spike.configuration.jsni.client;
 
-import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
+import org.cggh.chassis.generic.client.gwt.configuration.client.JsConfiguration;
 import org.cggh.chassis.generic.client.gwt.configuration.client.Module;
 
 import com.google.gwt.core.client.EntryPoint;
@@ -24,11 +24,11 @@ public class SpikeConfigurationEntryPoint implements EntryPoint {
 
 		RootPanel root = RootPanel.get("gwtcontent");
 
-		root.add(new HTML("<p>userDetailsServiceEndpointURL: "+Configuration.getUserDetailsServiceEndpointURL()+"</p>"));
-		root.add(new HTML("<p>studyFeedURL: "+Configuration.getStudyFeedURL()+"</p>"));
-		root.add(new HTML("<p>submissionFeedURL: "+Configuration.getSubmissionFeedURL()+"</p>"));
+		root.add(new HTML("<p>userDetailsServiceEndpointURL: "+JsConfiguration.getUserDetailsServiceEndpointUrl()+"</p>"));
+		root.add(new HTML("<p>studyCollectionUrl: "+JsConfiguration.getStudyCollectionUrl()+"</p>"));
+		root.add(new HTML("<p>submissionCollectionUrl: "+JsConfiguration.getSubmissionCollectionUrl()+"</p>"));
 		
-		JsArray<Module> modules = Configuration.getModules();
+		JsArray<Module> modules = JsConfiguration.getModules();
 		root.add(new HTML("<h2>Modules</h2>"));
 		String content = "<ul>";
 		for (int i=0; i<modules.length(); i++) {

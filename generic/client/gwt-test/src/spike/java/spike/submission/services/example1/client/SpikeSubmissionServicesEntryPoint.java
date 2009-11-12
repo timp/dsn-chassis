@@ -16,7 +16,7 @@ import org.cggh.chassis.generic.atomext.client.submission.SubmissionFactory;
 import org.cggh.chassis.generic.atomext.client.submission.SubmissionFeed;
 import org.cggh.chassis.generic.atomext.client.submission.SubmissionPersistenceService;
 import org.cggh.chassis.generic.atomext.client.submission.SubmissionQueryService;
-import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
+import org.cggh.chassis.generic.client.gwt.configuration.client.JsConfiguration;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 
@@ -58,7 +58,7 @@ public class SpikeSubmissionServicesEntryPoint implements EntryPoint {
 		
 		log.debug("persist the study");
 		StudyPersistenceService service = new StudyPersistenceService();
-		Deferred<StudyEntry> deferredResult = service.postEntry(Configuration.getStudyFeedURL(), studyEntry);
+		Deferred<StudyEntry> deferredResult = service.postEntry(JsConfiguration.getStudyCollectionUrl(), studyEntry);
 			
 		log.leave();
 		return deferredResult;
@@ -70,7 +70,7 @@ public class SpikeSubmissionServicesEntryPoint implements EntryPoint {
 		log.enter("getStudiesByAlice");
 		
 		log.debug("get Alice's studies");
-		StudyQueryService service = new StudyQueryService(Configuration.getStudyQueryServiceURL());
+		StudyQueryService service = new StudyQueryService(JsConfiguration.getStudyQueryServiceUrl());
 		Deferred<StudyFeed> deferredResults = service.getStudiesByAuthorEmail("alice@example.org");
 
 		log.leave();
@@ -92,12 +92,12 @@ public class SpikeSubmissionServicesEntryPoint implements EntryPoint {
 		submissionEntry.addAuthor(alice);
 		
 		log.debug("link submission to a study");
-		String studyAbsoluteUrl = "http://" + Window.Location.getHost() + Configuration.getStudyFeedURL() + studyEntry.getEditLink().getHref(); // convert to absolute URL
+		String studyAbsoluteUrl = "http://" + Window.Location.getHost() + JsConfiguration.getStudyCollectionUrl() + studyEntry.getEditLink().getHref(); // convert to absolute URL
 		submissionEntry.addStudyLink(studyAbsoluteUrl);
 		
 		log.debug("persist the submission");
 		SubmissionPersistenceService service = new SubmissionPersistenceService(factory);
-		Deferred<SubmissionEntry> deferredResult = service.postEntry(Configuration.getSubmissionFeedURL(), submissionEntry);
+		Deferred<SubmissionEntry> deferredResult = service.postEntry(JsConfiguration.getSubmissionCollectionUrl(), submissionEntry);
 		
 		log.leave();
 		return deferredResult;
@@ -109,7 +109,7 @@ public class SpikeSubmissionServicesEntryPoint implements EntryPoint {
 		log.enter("getSubmissionsByAlice");
 	
 		log.debug("get Alice's submissions");
-		SubmissionQueryService service = new SubmissionQueryService(Configuration.getSubmissionQueryServiceURL());
+		SubmissionQueryService service = new SubmissionQueryService(JsConfiguration.getSubmissionQueryServiceUrl());
 		Deferred<SubmissionFeed> deferredResults = service.getSubmissionsByAuthorEmail("alice@example.org");
 		
 		log.leave();

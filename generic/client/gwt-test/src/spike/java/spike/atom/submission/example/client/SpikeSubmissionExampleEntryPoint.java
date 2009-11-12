@@ -12,7 +12,7 @@ import org.cggh.chassis.generic.atomext.client.study.StudyPersistenceService;
 import org.cggh.chassis.generic.atomext.client.submission.SubmissionEntry;
 import org.cggh.chassis.generic.atomext.client.submission.SubmissionFactory;
 import org.cggh.chassis.generic.atomext.client.submission.SubmissionPersistenceService;
-import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
+import org.cggh.chassis.generic.client.gwt.configuration.client.JsConfiguration;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 
@@ -55,7 +55,7 @@ public class SpikeSubmissionExampleEntryPoint implements EntryPoint {
 	private Deferred<SubmissionEntry> createSubmission(StudyEntry study) {
 		log.enter("createSubmission");
 
-		String feedURL = Configuration.getSubmissionFeedURL();
+		String feedURL = JsConfiguration.getSubmissionCollectionUrl();
 		
 		log.debug("create a submission factory");
 		SubmissionFactory factory = new SubmissionFactory(); 
@@ -135,7 +135,7 @@ public class SpikeSubmissionExampleEntryPoint implements EntryPoint {
 	private Deferred<StudyEntry> createStudy() {
 		log.enter("createStudy");
 		
-		String feedURL = Configuration.getStudyFeedURL();
+		String feedURL = JsConfiguration.getStudyCollectionUrl();
 
 		log.debug("create a study factory");
 		StudyFactory factory = new StudyFactory(); 

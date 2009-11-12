@@ -3,7 +3,7 @@
  */
 package spike.admin.collection.client;
 
-import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
+import org.cggh.chassis.generic.client.gwt.configuration.client.JsConfiguration;
 import org.cggh.chassis.generic.client.gwt.widget.admin.collection.client.AdminCollectionWidget;
 
 import com.google.gwt.core.client.EntryPoint;
@@ -65,17 +65,17 @@ public class SpikeAdminCollectionWidgetEntryPoint implements EntryPoint {
 
 		root.add(new HTML("<h2>Studies</h2>"));
 		
-		studies = new AdminCollectionWidget("Studies", Configuration.getStudyFeedURL());
+		studies = new AdminCollectionWidget("Studies", JsConfiguration.getStudyCollectionUrl());
 		root.add(studies);
 		
 		root.add(new HTML("<h2>Submissions</h2>"));
 		
-		submissions = new AdminCollectionWidget("Submissions", Configuration.getSubmissionFeedURL());
+		submissions = new AdminCollectionWidget("Submissions", JsConfiguration.getSubmissionCollectionUrl());
 		root.add(submissions);
 
 		root.add(new HTML("<h2>Data Files</h2>"));
 		
-		datafiles = new AdminCollectionWidget("Data Files", Configuration.getDataFileFeedURL());
+		datafiles = new AdminCollectionWidget("Data Files", JsConfiguration.getDataFileCollectionUrl());
 		root.add(datafiles);
 
 		studies.refreshStatus();

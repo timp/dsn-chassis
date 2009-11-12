@@ -22,11 +22,11 @@ public class TestConfigurationSetUp {
 	public static final ChassisRole testChassisRoleGatekeeper = new ChassisRole(ChassisConstants.gatekeeperRoleId, "Gk", "Gate Keeper");
 	public static final ChassisRole testChassisRoleSubmitter = new ChassisRole(ChassisConstants.submitterRoleId, "Sub", "Submitter");
 	public static final ChassisRole testChassisRoleUser = new ChassisRole(ChassisConstants.userRoleId, "User", "User");
-	public static final String testStudyFeedURL = "http://foo.com/studies";
+	public static final String testStudyCollectionUrl = "http://foo.com/studies";
 	public static final String testStudyQueryServiceURL = "http://foo.com/study_query";
-	public static final String testSubmissionFeedURL = "http://foo.com/submission";
+	public static final String testSubmissionCollectionUrl = "http://foo.com/submission";
 	public static final String testSubmissionQueryServiceURL = "http://foo.com/submission_query";
-	public static final String testDataFileFeedURL = "http://foo.com/data_file_feed";
+	public static final String testDataFileCollectionUrl = "http://foo.com/data_file_feed";
 	public static final String testDataFileQueryServiceURL = "http://foo.com/data_file_query";
 	public static final String module1Id = "module1Id";
 	public static final String module2Id = "module2Id";
@@ -35,23 +35,23 @@ public class TestConfigurationSetUp {
 	
 	public static void createTestConfiguration() {
 
-		ConfigurationBean.testUserDetailsServiceEndpointURL = testUserDetailsServiceEndpointURL;
-		ConfigurationBean.testUserChassisRolesPrefix = testUserChassisRolesPrefix;
-		ConfigurationBean.testChassisRoleCoordinator = testChassisRoleCoordinator;
-		ConfigurationBean.testChassisRoleCurator = testChassisRoleCurator;
-		ConfigurationBean.testChassisRoleGatekeeper = testChassisRoleGatekeeper;
-		ConfigurationBean.testChassisRoleSubmitter = testChassisRoleSubmitter;
-		ConfigurationBean.testChassisRoleUser = testChassisRoleUser;
+		Configuration.testUserDetailsServiceEndpointUrl = testUserDetailsServiceEndpointURL;
+		Configuration.testUserChassisRolesPrefix = testUserChassisRolesPrefix;
+		Configuration.testChassisRoleCoordinator = testChassisRoleCoordinator;
+		Configuration.testChassisRoleCurator = testChassisRoleCurator;
+		Configuration.testChassisRoleGatekeeper = testChassisRoleGatekeeper;
+		Configuration.testChassisRoleSubmitter = testChassisRoleSubmitter;
+		Configuration.testChassisRoleUser = testChassisRoleUser;
 		
 		
-		ConfigurationBean.testStudyFeedURL = testStudyFeedURL;
-		ConfigurationBean.testStudyQueryServiceURL = testStudyQueryServiceURL;
+		Configuration.testStudyCollectionUrl = testStudyCollectionUrl;
+		Configuration.testStudyQueryServiceUrl = testStudyQueryServiceURL;
 		
-		ConfigurationBean.testSubmissionFeedURL = testSubmissionFeedURL;
-		ConfigurationBean.testSubmissionQueryServiceURL = testSubmissionQueryServiceURL;
+		Configuration.testSubmissionCollectionUrl = testSubmissionCollectionUrl;
+		Configuration.testSubmissionQueryServiceUrl = testSubmissionQueryServiceURL;
 		
-		ConfigurationBean.testDataFileFeedURL = testDataFileFeedURL;
-		ConfigurationBean.testDataFileQueryServiceURL = testDataFileQueryServiceURL;
+		Configuration.testDataFileCollectionUrl = testDataFileCollectionUrl;
+		Configuration.testDataFileQueryServiceUrl = testDataFileQueryServiceURL;
 		
 		//Create modules test data
 		Map<String, String> testModules = new HashMap<String, String>();
@@ -59,8 +59,8 @@ public class TestConfigurationSetUp {
 		testModules.put(module2Id, module2Label);
 
 		//Set up ConfigurationBean with test values
-		ConfigurationBean.useUnitTestConfiguration = true;
-		ConfigurationBean.testModules = testModules;
+		Configuration.useUnitTestConfiguration = true;
+		Configuration.testModules = testModules;
 		
 	}
 	
