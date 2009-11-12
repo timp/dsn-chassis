@@ -15,9 +15,9 @@ public abstract interface AbstractSubmissionControllerCreateEditAPI {
 
 	public void updateModules(Set<String> modules);
 
-	public void addStudyLink(String studyEntryURL);
+	public void addStudyLink(String studyEntryUrl);
 
-	public void removeStudyLink(String studyEntryURL);
+	public void removeStudyLink(String studyEntryUrl);
 
 	public void cancelCreateOrUpdateSubmissionEntry();
 

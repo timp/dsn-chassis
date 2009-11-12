@@ -21,11 +21,11 @@ public class AdminCollectionWidgetDefaultRenderer implements AdminCollectionWidg
 	
 	
 	private Grid canvas;
-	private Label titleLabel;
-	private Label urlLabel;
-	private Label statusTextLabel;
-	private HorizontalPanel actionsPanel;
-	private Label statusCodeLabel;
+	Label titleLabel;
+	Label urlLabel;
+	Label statusTextLabel;
+	HorizontalPanel actionsPanel;
+	Label statusCodeLabel;
 	private AdminCollectionWidgetController controller;
 
 	public AdminCollectionWidgetDefaultRenderer(AdminCollectionWidgetController controller) {

@@ -11,7 +11,7 @@ import java.util.Set;
 
 import org.cggh.chassis.generic.atom.client.AtomAuthor;
 import org.cggh.chassis.generic.client.gwt.common.client.CommonStyles;
-import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
+import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -65,7 +65,7 @@ public class EditStudyWidgetDefaultRenderer implements StudyModelListener {
 	public EditStudyWidgetDefaultRenderer(Panel canvas, StudyControllerEditAPI controller) {
 		this.canvas = canvas;
 		this.controller = controller;
-		this.modulesConfig = ConfigurationBean.getModules();
+		this.modulesConfig = Configuration.getModules();
 		
 		initCanvas();
 	}
@@ -80,7 +80,7 @@ public class EditStudyWidgetDefaultRenderer implements StudyModelListener {
 	public EditStudyWidgetDefaultRenderer(StudyControllerEditAPI controller) {
 		this.canvas = new FlowPanel();
 		this.controller = controller;
-		this.modulesConfig = ConfigurationBean.getModules();
+		this.modulesConfig = Configuration.getModules();
 		
 		initCanvas();
 	}

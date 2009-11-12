@@ -12,7 +12,7 @@ import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
 
 import org.cggh.chassis.generic.async.client.Deferred;
 import org.cggh.chassis.generic.async.client.Function;
-import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
+import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 
@@ -26,7 +26,7 @@ public class ViewSubmissionDataFilesWidgetController {
 	final private ViewSubmissionDataFilesWidgetModel model;
 	final private ViewSubmissionDataFilesWidget owner;
 
-	private String dataFilesQueryServiceURL;
+	private String dataFilesQueryServiceUrl;
 
 	private DataFileQueryServiceImpl dataFileQueryService;
 
@@ -35,8 +35,8 @@ public class ViewSubmissionDataFilesWidgetController {
 		this.owner = owner;
 		
 		//Set up query service
-		this.dataFilesQueryServiceURL = ConfigurationBean.getDataFileQueryServiceURL();
-		this.dataFileQueryService = new DataFileQueryServiceImpl(dataFilesQueryServiceURL);
+		this.dataFilesQueryServiceUrl = Configuration.getDataFileQueryServiceUrl();
+		this.dataFileQueryService = new DataFileQueryServiceImpl(dataFilesQueryServiceUrl);
 		
 	}
 

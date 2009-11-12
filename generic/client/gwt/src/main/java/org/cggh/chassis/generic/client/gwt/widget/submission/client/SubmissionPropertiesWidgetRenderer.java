@@ -11,7 +11,7 @@ import org.cggh.chassis.generic.atomext.client.submission.SubmissionEntry;
 import org.cggh.chassis.generic.client.gwt.common.client.CommonStyles;
 import org.cggh.chassis.generic.client.gwt.common.client.ChassisUser;
 import org.cggh.chassis.generic.client.gwt.common.client.RenderUtils;
-import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
+import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
 import org.cggh.chassis.generic.client.gwt.widget.study.client.MyStudiesWidget;
 import org.cggh.chassis.generic.client.gwt.widget.submission.client.SubmissionPropertiesWidgetModel.SubmissionEntryChangeEvent;
 import org.cggh.chassis.generic.client.gwt.widget.submission.client.SubmissionPropertiesWidgetModel.SubmissionEntryChangeHandler;
@@ -228,7 +228,7 @@ public class SubmissionPropertiesWidgetRenderer
 	
 	private void updateModulesLabel(List<String> moduleIds) {
 
-		Label answer = RenderUtils.renderModulesAsLabel(moduleIds, ConfigurationBean.getModules(), true);
+		Label answer = RenderUtils.renderModulesAsLabel(moduleIds, Configuration.getModules(), true);
 		answer.addStyleName(CommonStyles.COMMON_ANSWER);
 
 		modulesListPanel.clear();

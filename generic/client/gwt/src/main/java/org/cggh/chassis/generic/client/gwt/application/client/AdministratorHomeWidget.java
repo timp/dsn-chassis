@@ -3,126 +3,148 @@
  */
 package org.cggh.chassis.generic.client.gwt.application.client;
 
-import java.util.HashSet;
-import java.util.Set;
 
 import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
-import org.cggh.chassis.generic.client.gwt.widget.admin.collection.client.AdminCollectionWidget;
+import org.cggh.chassis.generic.client.gwt.widget.admin.collection.client.AdminCollectionsWidget;
+import org.cggh.chassis.generic.log.client.Log;
+import org.cggh.chassis.generic.log.client.LogFactory;
+import org.cggh.chassis.generic.widget.client.ChassisWidget;
 
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Panel;
 
 /**
  * @author aliman
  *
  */
-public class AdministratorHomeWidget extends Composite {
+public class AdministratorHomeWidget extends ChassisWidget {
 
 	
 	
 	
-	private static final String STYLENAME_BASE = "chassis-administratorHome";
-	private static final String STYLENAME_RESOURCECOLLECTIONS = STYLENAME_BASE + "-resourceCollections";
-	private Panel canvas = new FlowPanel();
+	// utility fields
+	private Log log;
 	
 	
 	
 	
-	public AdministratorHomeWidget() {
-		this.canvas.addStyleName(STYLENAME_BASE);
-		this.canvas.add(new HTML("<h2>Administrator Home</h2>"));
-		this.constructAdminCollectionWidgets();
-		this.initWidget(this.canvas);
+	// UI fields
+	private AdminCollectionsWidget adminCollectionsWidget;
+	
+	
+	
+	
+	
+	// state fields
+	private String[][] collections = {
+			{ "Studies", Configuration.getStudyCollectionUrl() },	
+			{ "Data Files", Configuration.getDataFileCollectionUrl() },
+			{ "Datasets", Configuration.getDatasetCollectionUrl() },
+			{ "Media", Configuration.getMediaCollectionUrl() },
+			{ "Submissions", Configuration.getSubmissionCollectionUrl() },
+			{ "Sandbox", Configuration.getSandboxCollectionUrl() }
+	};
+
+
+	
+	
+	
+	
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#init()
+	 */
+	@Override
+	public void init() {
+		ensureLog();
+		log.enter("init");
+		
+		// nothing to do
+		
+		log.leave();
 	}
 
 
 
 
+	
 	/**
 	 * 
 	 */
-	private void constructAdminCollectionWidgets() {
+	private void ensureLog() {
+		if (log == null) log = LogFactory.getLog(AdministratorHomeWidget.class);
+	}
+
+
+
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#renderUI()
+	 */
+	@Override
+	protected void renderUI() {
+		log.enter("renderUI");
+		
+		this.add(new HTML("<h2>Administrator Home</h2>"));
 		
 		FlowPanel collectionsPanel = new FlowPanel();
-		collectionsPanel.addStyleName(STYLENAME_RESOURCECOLLECTIONS);
-		this.canvas.add(collectionsPanel);
+		this.add(collectionsPanel);
 		
-		collectionsPanel.add(new HTML("<h3>Data &amp; Metadata Collections</h3>"));
-				
-		final AdminCollectionWidget studies = new AdminCollectionWidget("Studies", Configuration.getStudyFeedURL());
-		final AdminCollectionWidget submissions = new AdminCollectionWidget("Submissions", Configuration.getSubmissionFeedURL());
-		final AdminCollectionWidget datafiles = new AdminCollectionWidget("Data Files", Configuration.getDataFileFeedURL());
-		final AdminCollectionWidget media = new AdminCollectionWidget("Media", Configuration.getMediaFeedURL());
-		final AdminCollectionWidget sandbox = new AdminCollectionWidget("Sandbox", Configuration.getSandboxFeedURL());
+		this.adminCollectionsWidget = new AdminCollectionsWidget(collections);
+		collectionsPanel.add(this.adminCollectionsWidget);
 		
-		final Set<AdminCollectionWidget> widgets = new HashSet<AdminCollectionWidget>();
-		widgets.add(studies);
-		widgets.add(submissions);
-		widgets.add(datafiles);
-		widgets.add(media);
-		widgets.add(sandbox);
+		log.leave();
+	}
+
+
+	
+	
+
+
+	
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#bindUI()
+	 */
+	@Override
+	protected void bindUI() {
+		log.enter("bindUI");
 		
-
-		Button refreshAllButton = new Button();
-		refreshAllButton.setText("refresh all");
-		refreshAllButton.addClickHandler(new ClickHandler() {
-
-			public void onClick(ClickEvent arg0) {
-				for (AdminCollectionWidget w : widgets) {
-					w.refreshStatus();
-				}
-			}
-			
-		});
-
-		Button createAllButton = new Button();
-		createAllButton.setText("create all");
-		createAllButton.addClickHandler(new ClickHandler() {
-
-			public void onClick(ClickEvent arg0) {
-				for (AdminCollectionWidget w : widgets) {
-					w.createCollection();
-				}
-			}
-			
-		});
-
-		HorizontalPanel buttonsPanel = new HorizontalPanel();
-		buttonsPanel.add(refreshAllButton);
-		buttonsPanel.add(createAllButton);
-
-		collectionsPanel.add(buttonsPanel);
-
-		collectionsPanel.add(new HTML("<h4>Studies</h4>"));
+		// nothing to do
 		
-		collectionsPanel.add(studies);
-		
-		collectionsPanel.add(new HTML("<h4>Submissions</h4>"));
-		
-		collectionsPanel.add(submissions);
+		log.leave();
+	}
 
-		collectionsPanel.add(new HTML("<h4>Data Files</h4>"));
+
+
+
+
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#syncUI()
+	 */
+	@Override
+	protected void syncUI() {
+		log.enter("syncUI");
 		
-		collectionsPanel.add(datafiles);
-
-		collectionsPanel.add(new HTML("<h4>Media</h4>"));
+		adminCollectionsWidget.refreshAll();
 		
-		collectionsPanel.add(media);
+		log.leave();
+	}
 
-		collectionsPanel.add(new HTML("<h4>Sandbox</h4>"));
+
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#unbindUI()
+	 */
+	@Override
+	protected void unbindUI() {
+		log.enter("unbindUI");
 		
-		collectionsPanel.add(sandbox);
-
-		for (AdminCollectionWidget w : widgets) {
-			w.refreshStatus();
-		}
-
+		// nothing to do
+		
+		log.leave();
 	}
 	
 	

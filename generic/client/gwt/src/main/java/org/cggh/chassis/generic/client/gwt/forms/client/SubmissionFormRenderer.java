@@ -18,7 +18,7 @@ import org.cggh.chassis.generic.atomext.client.submission.SubmissionFeed;
 import org.cggh.chassis.generic.client.gwt.common.client.CommonStyles;
 import org.cggh.chassis.generic.client.gwt.common.client.ChassisUtils;
 import org.cggh.chassis.generic.client.gwt.common.client.RenderUtils;
-import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
+import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
 import org.cggh.chassis.generic.client.gwt.forms.client.SubmissionForm.Resources;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
@@ -117,7 +117,7 @@ public class SubmissionFormRenderer extends BaseFormRenderer<SubmissionEntry, Su
 	
 		moduleCheckBoxes = new HashSet<CheckBox>();
 		List<Widget[]> rows = new ArrayList<Widget[]>();
-		Map<String, String> modules = ConfigurationBean.getModules();
+		Map<String, String> modules = Configuration.getModules();
 
 		for (String moduleId : modules.keySet()) {
 

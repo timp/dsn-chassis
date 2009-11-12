@@ -3,107 +3,241 @@
  */
 package org.cggh.chassis.generic.client.gwt.configuration.client;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
+import org.cggh.chassis.generic.atomext.shared.ChassisConstants;
 
 import com.google.gwt.core.client.JsArray;
 
+
 /**
- * @author aliman
+ * @author raok
  *
  */
 public class Configuration {
 
-	public static native String getUserDetailsServiceEndpointURL() /*-{
-		return $wnd.CHASSIS.userDetailsServiceEndpointURL;
-	}-*/;
+	private static final String lang = "en";
 	
-	public static native String getUserChassisRolesPrefix() /*-{
-		return $wnd.CHASSIS.userChassisRolesPrefix;
-	}-*/;
-	
-	public static native JsChassisRole getChassisRoleAdministrator() /*-{
-		return $wnd.CHASSIS.chassisRoleAdministrator;
-	}-*/;
-
-	public static native JsChassisRole getChassisRoleCoordinator() /*-{
-		return $wnd.CHASSIS.chassisRoleCoordinator;
-	}-*/;
-	
-	public static native JsChassisRole getChassisRoleCurator() /*-{
-		return $wnd.CHASSIS.chassisRoleCurator;
-	}-*/;
-	
-	public static native JsChassisRole getChassisRoleGatekeeper() /*-{
-		return $wnd.CHASSIS.chassisRoleGatekeeper;
-	}-*/;
-	
-	public static native JsChassisRole getChassisRoleSubmitter() /*-{
-		return $wnd.CHASSIS.chassisRoleSubmitter;
-	}-*/;
-	
-	public static native JsChassisRole getChassisRoleUser() /*-{
-		return $wnd.CHASSIS.chassisRoleUser;
-	}-*/;
-	
-	public static native String getStudyFeedURL() /*-{
-		return $wnd.CHASSIS.studyFeedURL;
-	}-*/;
-
-	public static native String getSubmissionFeedURL() /*-{
-		return $wnd.CHASSIS.submissionFeedURL;
-	}-*/;
-
-	public static native String getDataFileFeedURL() /*-{
-		return $wnd.CHASSIS.dataFileFeedURL;
-	}-*/;
+	//package private to allow population in test
+	static boolean useUnitTestConfiguration = false;
+	static String testUserDetailsServiceEndpointUrl;
+	static String testUserChassisRolesPrefix;
+	static ChassisRole testChassisRoleAdministrator;
+	static ChassisRole testChassisRoleCoordinator;
+	static ChassisRole testChassisRoleCurator;
+	static ChassisRole testChassisRoleGatekeeper;
+	static ChassisRole testChassisRoleSubmitter;
+	static ChassisRole testChassisRoleUser;
+	static String testStudyCollectionUrl;
+	static String testStudyQueryServiceUrl;
+	static String testStudyQuestionnaireUrl;
+	static String testSubmissionCollectionUrl;
+	static String testSubmissionQueryServiceUrl;
+	static String testDataFileCollectionUrl;
+	static String testDataFileQueryServiceUrl;
+	static String testDataFileUploadServiceUrl;
+	static String testNewDataFileServiceUrl;
+	static String testUploadDataFileRevisionServiceUrl;
+	static String testDatasetCollectionUrl;
+	static String testMediaCollectionUrl;
+	static String testSandboxCollectionUrl;
+	static Map<String, String> testModules;
 
 
-	public static native String getSandboxFeedURL() /*-{
-		return $wnd.CHASSIS.sandboxFeedURL;
-	}-*/;
+	
+	public static String getUserDetailsServiceEndpointUrl() {
+		return (useUnitTestConfiguration) ? testUserDetailsServiceEndpointUrl : JsConfiguration.getUserDetailsServiceEndpointUrl();
+	}
+	
+	public static String getUserChassisRolesPrefix() {
+		return (useUnitTestConfiguration) ? testUserChassisRolesPrefix : JsConfiguration.getUserChassisRolesPrefix();
+	}
+	
+	public static Set<ChassisRole> getChassisRoles() {
+		Set<ChassisRole> roles = new HashSet<ChassisRole>();
+		roles.add(Configuration.getChassisRoleAdministrator());
+		roles.add(Configuration.getChassisRoleCoordinator());
+		roles.add(Configuration.getChassisRoleCurator());
+		roles.add(Configuration.getChassisRoleGatekeeper());
+		roles.add(Configuration.getChassisRoleSubmitter());
+		roles.add(Configuration.getChassisRoleUser());
+		return roles;
+	}
+	
+	public static ChassisRole getChassisRoleAdministrator() {
+		if (useUnitTestConfiguration) {
+			
+			return testChassisRoleAdministrator;
+			
+		} else {
+			
+			JsChassisRole role = JsConfiguration.getChassisRoleAdministrator();
+			
+			return new ChassisRole(ChassisConstants.administratorRoleId, role.getPermissionSuffix(), role.getLabel(lang));
+		}
+			
+	}
+	
+	public static ChassisRole getChassisRoleCoordinator() {
+		if (useUnitTestConfiguration) {
+			
+			return testChassisRoleCoordinator;
+			
+		} else {
+			
+			JsChassisRole role = JsConfiguration.getChassisRoleCoordinator();
+			
+			return new ChassisRole(ChassisConstants.coordinatorRoleId, role.getPermissionSuffix(), role.getLabel(lang));
+		}
+			
+	}
+	
+	public static ChassisRole getChassisRoleCurator() {
+		if (useUnitTestConfiguration) {
+			
+			return testChassisRoleCurator;
+			
+		} else {
+			
+			JsChassisRole role = JsConfiguration.getChassisRoleCurator();
+			
+			return new ChassisRole(ChassisConstants.curatorRoleId, role.getPermissionSuffix(), role.getLabel(lang));
+		}
+			
+	}
+	
+	public static ChassisRole getChassisRoleGatekeeper() {
+		if (useUnitTestConfiguration) {
+			
+			return testChassisRoleGatekeeper;
+			
+		} else {
+			
+			JsChassisRole role = JsConfiguration.getChassisRoleGatekeeper();
+			
+			return new ChassisRole(ChassisConstants.gatekeeperRoleId, role.getPermissionSuffix(), role.getLabel(lang));
+		}
+			
+	}
+	
+	public static ChassisRole getChassisRoleSubmitter() {
+		if (useUnitTestConfiguration) {
+			
+			return testChassisRoleSubmitter;
+			
+		} else {
+			
+			JsChassisRole role = JsConfiguration.getChassisRoleSubmitter();
+			
+			return new ChassisRole(ChassisConstants.submitterRoleId, role.getPermissionSuffix(), role.getLabel(lang));
+		}
+			
+	}
+	
+	public static ChassisRole getChassisRoleUser() {
+		if (useUnitTestConfiguration) {
+			
+			return testChassisRoleUser;
+			
+		} else {
+			
+			JsChassisRole role = JsConfiguration.getChassisRoleUser();
+			
+			return new ChassisRole(ChassisConstants.userRoleId, role.getPermissionSuffix(), role.getLabel(lang));
+		}
+			
+	}
+	
+	public static String getStudyCollectionUrl() {
+		return (useUnitTestConfiguration) ? testStudyCollectionUrl : JsConfiguration.getStudyCollectionUrl();				
+	}
+	
+	public static String getStudyQueryServiceUrl() {
+		return (useUnitTestConfiguration) ? testStudyQueryServiceUrl : JsConfiguration.getStudyQueryServiceUrl();
+	}
 
-	public static native String getDataFileUploadServiceURL() /*-{
-		return $wnd.CHASSIS.dataFileUploadServiceURL;
-	}-*/;
+	public static String getStudyQuestionnaireUrl() {
+		return (useUnitTestConfiguration) ? testStudyQuestionnaireUrl : JsConfiguration.getStudyQuestionnaireUrl();
+	}
+
+	public static String getSubmissionCollectionUrl() {
+		return (useUnitTestConfiguration) ? testSubmissionCollectionUrl : JsConfiguration.getSubmissionCollectionUrl();				
+	}
+	
+	public static String getSubmissionQueryServiceUrl() {
+		return (useUnitTestConfiguration) ? testSubmissionQueryServiceUrl : JsConfiguration.getSubmissionQueryServiceUrl();
+	}
+	
+	public static String getDataFileCollectionUrl() {
+		return (useUnitTestConfiguration) ? testDataFileCollectionUrl : JsConfiguration.getDataFileCollectionUrl();
+	}
+	
+	public static String getDataFileQueryServiceUrl() {
+		return (useUnitTestConfiguration) ? testDataFileQueryServiceUrl : JsConfiguration.getDataFileQueryServiceUrl();
+	}
+	
+	public static String getDataFileUploadServiceUrl() {
+		return (useUnitTestConfiguration) ? testDataFileUploadServiceUrl : JsConfiguration.getDataFileUploadServiceUrl();
+	}
+
+	public static String getNewDataFileServiceUrl() {
+		return (useUnitTestConfiguration) ? testNewDataFileServiceUrl : JsConfiguration.getNewDataFileServiceUrl();
+	}
+
+	public static String getUploadDataFileRevisionServiceUrl() {
+		return (useUnitTestConfiguration) ? testUploadDataFileRevisionServiceUrl : JsConfiguration.getUploadDataFileRevisionServiceUrl();
+	}
+
+	public static String getDatasetCollectionUrl() {
+		return (useUnitTestConfiguration) ? testDatasetCollectionUrl : JsConfiguration.getDatasetCollectionUrl();
+	}
+	
+	public static String getMediaCollectionUrl() {
+		return (useUnitTestConfiguration) ? testMediaCollectionUrl : JsConfiguration.getMediaCollectionUrl();
+	}
+	
+	public static String getSandboxCollectionUrl() {
+		return (useUnitTestConfiguration) ? testSandboxCollectionUrl : JsConfiguration.getSandboxCollectionUrl();
+	}
+	
+
+	public static Map<String, String> getModules() {
+		
+		if (useUnitTestConfiguration) {
+			return testModules;
+		} else {
+			//get modules from config and convert to more useable format
+			JsArray<Module> modules = JsConfiguration.getModules();
+			
+			Map<String, String> modulesMap = new HashMap<String, String>();
+			for (int i = 0; i < modules.length(); ++i) {
+				
+				String id = modules.get(i).getId();
+				String label = modules.get(i).getLabel(lang);
+				
+				modulesMap.put(id, label);
+			}
+			
+			return modulesMap;
+		}
+	}
 
 	/**
+	 * @param selectedRoleId
 	 * @return
 	 */
-	public static native String getSubmissionQueryServiceURL()  /*-{
-		return $wnd.CHASSIS.submissionQueryServiceURL;
-	}-*/;
-
-	public static native JsArray<Module> getModules() /*-{
-		return $wnd.CHASSIS.modules;
-	}-*/;
-
-	/**
-	 * @return
-	 */
-	public static native String getStudyQueryServiceURL() /*-{
-		return $wnd.CHASSIS.studyQueryServiceURL;
-	}-*/;
-	
-	public static native String getDataFileQueryServiceURL() /*-{
-		return $wnd.CHASSIS.dataFileQueryServiceURL;
-	}-*/;
-	
-	public static native String getStudyQuestionnaireURL() /*-{
-		return $wnd.CHASSIS.studyQuestionnaireURL;
-	}-*/;
-
-	
-	
-	public static native String getMediaFeedURL() /*-{
-		return $wnd.CHASSIS.mediaFeedURL;
-	}-*/;
-
-	public static native String getNewDataFileServiceURL() /*-{
-		return $wnd.CHASSIS.newDataFileServiceURL;
-	}-*/;
-	
-	public static native String getUploadDataFileRevisionServiceURL() /*-{
-		return $wnd.CHASSIS.uploadDataFileRevisionServiceURL;
-	}-*/;
-
+	public static ChassisRole getChassisRole(int selectedRoleId) {
+		
+		for (ChassisRole role : Configuration.getChassisRoles()) {
+			if (selectedRoleId == role.roleId) {
+				return role;
+			}
+		}
+		
+		return null;
+	}	
 	
 }

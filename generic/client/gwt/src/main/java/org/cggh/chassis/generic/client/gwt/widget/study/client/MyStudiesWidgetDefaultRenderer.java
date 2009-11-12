@@ -11,7 +11,7 @@ import java.util.Map;
 import org.cggh.chassis.generic.atom.client.AtomAuthor;
 import org.cggh.chassis.generic.atomext.client.study.StudyEntry;
 import org.cggh.chassis.generic.client.gwt.common.client.CommonStyles;
-import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
+import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 
@@ -197,7 +197,7 @@ public class MyStudiesWidgetDefaultRenderer implements MyStudiesWidgetRenderer {
 			}
 			
 			List<String> modules = studyEntry.getStudy().getModules();
-			Map<String,String> moduleLabels = ConfigurationBean.getModules();
+			Map<String,String> moduleLabels = Configuration.getModules();
 			String modulesContent = "";
 			for (Iterator<String> it = modules.iterator(); it.hasNext(); ) {
 				String ml = moduleLabels.get(it.next());

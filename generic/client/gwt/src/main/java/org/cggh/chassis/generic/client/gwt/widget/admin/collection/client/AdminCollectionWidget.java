@@ -7,6 +7,8 @@ import org.cggh.chassis.generic.async.client.Deferred;
 import org.cggh.chassis.generic.atom.client.vanilla.VanillaAtomFeed;
 
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.Widget;
 
 /**
  * @author aliman
@@ -45,6 +47,38 @@ public class AdminCollectionWidget extends Composite {
 	
 	public Deferred<Void> createCollection() {
 		return controller.createCollection();
+	}
+	
+	public Label getTitleLabel() {
+		return this.renderer.titleLabel;
+	}
+
+	/**
+	 * @return
+	 */
+	public Widget getUrlLabel() {
+		return this.renderer.urlLabel;
+	}
+
+	/**
+	 * @return
+	 */
+	public Widget getActionsPanel() {
+		return this.renderer.actionsPanel;
+	}
+
+	/**
+	 * @return
+	 */
+	public Widget getStatusCodeLabel() {
+		return this.renderer.statusCodeLabel;
+	}
+
+	/**
+	 * @return
+	 */
+	public Widget getStatusTextLabel() {
+		return this.renderer.statusTextLabel;
 	}
 	
 }

@@ -14,7 +14,7 @@ import org.cggh.chassis.generic.atomext.client.study.StudyFeed;
 import org.cggh.chassis.generic.atomext.client.study.StudyPersistenceService;
 import org.cggh.chassis.generic.atomext.client.study.StudyQuery;
 import org.cggh.chassis.generic.atomext.client.study.StudyQueryService;
-import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
+import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
 import org.cggh.chassis.generic.client.gwt.widget.study.client.MyStudiesWidget;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
@@ -29,27 +29,27 @@ public class MyStudiesWidgetController {
 	final private MyStudiesWidgetModel model;
 	final private StudyPersistenceService persistenceService;
 	final private MyStudiesWidget owner;
-	private String studyFeedURL;
+	private String studyCollectionUrl;
 	private StudyQueryService studyQueryService;
 
 	public MyStudiesWidgetController(MyStudiesWidgetModel model, MyStudiesWidget owner) {
 		this.model = model;
 		this.owner = owner;
 		
-		//Get studyFeedURL from config
-		this.studyFeedURL = ConfigurationBean.getStudyFeedURL();
+		//Get studyCollectionUrl from config
+		this.studyCollectionUrl = Configuration.getStudyCollectionUrl();
 		
 		this.persistenceService = new StudyPersistenceService();
 		
-		String serviceUrl = ConfigurationBean.getStudyQueryServiceURL();
+		String serviceUrl = Configuration.getStudyQueryServiceUrl();
 		this.studyQueryService = new StudyQueryService(serviceUrl);
 	}
 	
-	public void loadStudiesByFeedURL() {
-		log.enter("loadStudiesByFeedURL");
+	public void loadStudiesByCollectionUrl() {
+		log.enter("loadStudiesByCollectionUrl");
 		
-		log.debug("loading studies from feed: " + studyFeedURL);
-		Deferred<StudyFeed> deferred = persistenceService.getFeed(studyFeedURL);
+		log.debug("loading studies from feed: " + studyCollectionUrl);
+		Deferred<StudyFeed> deferred = persistenceService.getFeed(studyCollectionUrl);
 		deferred.addCallbacks(new LoadStudyFeedCallback(), new LoadStudyFeedErrback());
 		
 		log.leave();
@@ -92,32 +92,32 @@ public class MyStudiesWidgetController {
 	
 	}
 
-	public void loadStudiesByEntryURLs(Set<String> relativeStudyEntryURLsToLoad) {
-		log.enter("loadStudyEntryURLs");
+	public void loadStudiesByEntryUrls(Set<String> relativeStudyEntryUrlsToLoad) {
+		log.enter("loadStudyEntryUrls");
 		
-		log.debug(relativeStudyEntryURLsToLoad.size() + " being loaded.");
+		log.debug(relativeStudyEntryUrlsToLoad.size() + " being loaded.");
 		
 		final List<StudyEntry> studyEntries = new ArrayList<StudyEntry>();
 		
-		for (String relativeStudyEntryURL : relativeStudyEntryURLsToLoad) {
+		for (String relativeStudyEntryUrl : relativeStudyEntryUrlsToLoad) {
 			
-			String studyEntryURL = studyFeedURL + relativeStudyEntryURL;
+			String studyEntryUrl = studyCollectionUrl + relativeStudyEntryUrl;
 			
-			Deferred<StudyEntry> deferred = persistenceService.getEntry(studyEntryURL);
+			Deferred<StudyEntry> deferred = persistenceService.getEntry(studyEntryUrl);
 			
-			deferred.addCallbacks(new LoadStudiesByEntryURLsCallback(studyEntries, relativeStudyEntryURLsToLoad.size()), new LoadStudiesByEntryURLsErrback());
+			deferred.addCallbacks(new LoadStudiesByEntryUrlsCallback(studyEntries, relativeStudyEntryUrlsToLoad.size()), new LoadStudiesByEntryUrlsErrback());
 		}
 		
 		log.leave();
 	}
 
 	//package private for testing purposes
-	class LoadStudiesByEntryURLsCallback implements Function<StudyEntry, StudyEntry> {
+	class LoadStudiesByEntryUrlsCallback implements Function<StudyEntry, StudyEntry> {
 	
 		private List<StudyEntry> studyEntries;
 		private Integer noOfStudies;
 
-		public LoadStudiesByEntryURLsCallback(List<StudyEntry> studyEntries, Integer noOfStudies) {
+		public LoadStudiesByEntryUrlsCallback(List<StudyEntry> studyEntries, Integer noOfStudies) {
 			this.studyEntries = studyEntries;
 			this.noOfStudies = noOfStudies;
 		}
@@ -142,7 +142,7 @@ public class MyStudiesWidgetController {
 	}	
 
 	//package private for testing purposes
-	class LoadStudiesByEntryURLsErrback implements Function<Throwable, Throwable> {
+	class LoadStudiesByEntryUrlsErrback implements Function<Throwable, Throwable> {
 
 		public Throwable apply(Throwable err) {
 			

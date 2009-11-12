@@ -10,7 +10,7 @@ import java.util.Set;
 import org.cggh.chassis.generic.atom.client.AtomAuthor;
 import org.cggh.chassis.generic.client.gwt.common.client.CommonStyles;
 import org.cggh.chassis.generic.client.gwt.common.client.RenderUtils;
-import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
+import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 
@@ -72,7 +72,7 @@ public class ViewStudyWidgetDefaultRenderer implements StudyModelListener {
 	public ViewStudyWidgetDefaultRenderer(Panel canvas, StudyControllerViewAPI controller) {
 		this.canvas = canvas;
 		this.controller = controller;
-		this.modulesConfig = ConfigurationBean.getModules();
+		this.modulesConfig = Configuration.getModules();
 		
 		initCanvas();
 	}
@@ -88,7 +88,7 @@ public class ViewStudyWidgetDefaultRenderer implements StudyModelListener {
 	public ViewStudyWidgetDefaultRenderer(StudyControllerViewAPI controller) {
 		this.canvas = new FlowPanel();
 		this.controller = controller;
-		this.modulesConfig = ConfigurationBean.getModules();
+		this.modulesConfig = Configuration.getModules();
 		
 		initCanvas();
 	}

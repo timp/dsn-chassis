@@ -41,27 +41,10 @@ public abstract class BaseForm
 	
 	
 	
-	
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#init()
-	 */
+
 	@Override
-	public void init() {
-		ensureLog();
-		log.enter("init");
-
-		this.model = this.createModel();
-		this.renderer = this.createRenderer();
-		this.renderer.setCanvas(this.contentBox);
-
-		log.leave();
-
-	}
-	
-	
-	
-	
 	protected E createModel() {
+		ensureLog();
 		log.enter("createModel");
 		AtomFactory<E, F> factory = this.createAtomFactory();
 		E model = factory.createEntry();
@@ -78,11 +61,6 @@ public abstract class BaseForm
 	protected abstract AtomFactory<E, F> createAtomFactory();
 	
 	
-	
-	
-	protected abstract R createRenderer();
-
-
 	
 	
 	public void setModel(E model) {

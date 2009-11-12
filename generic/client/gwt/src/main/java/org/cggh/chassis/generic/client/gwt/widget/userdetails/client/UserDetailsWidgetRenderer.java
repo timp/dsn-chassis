@@ -6,7 +6,7 @@ package org.cggh.chassis.generic.client.gwt.widget.userdetails.client;
 import java.util.Set;
 
 import org.cggh.chassis.generic.client.gwt.configuration.client.ChassisRole;
-import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
+import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
 import org.cggh.chassis.generic.client.gwt.widget.userdetails.client.UserDetailsWidgetModel.CurrentRoleChangeEvent;
 import org.cggh.chassis.generic.client.gwt.widget.userdetails.client.UserDetailsWidgetModel.CurrentRoleChangeHandler;
 import org.cggh.chassis.generic.client.gwt.widget.userdetails.client.UserDetailsWidgetModel.CurrentUserChangeEvent;
@@ -173,7 +173,7 @@ public class UserDetailsWidgetRenderer
 			
 			int selectedRoleId = Integer.parseInt(userRolesListBox.getValue(userRolesListBox.getSelectedIndex()));
 			
-			ChassisRole role = ConfigurationBean.getChassisRole(selectedRoleId);
+			ChassisRole role = Configuration.getChassisRole(selectedRoleId);
 			
 			// map directly to model change
 			model.setCurrentRole(role);

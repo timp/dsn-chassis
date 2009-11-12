@@ -6,7 +6,7 @@ import org.cggh.chassis.generic.async.client.Function;
 import org.cggh.chassis.generic.atom.client.AtomAuthor;
 import org.cggh.chassis.generic.atomext.client.study.StudyEntry;
 import org.cggh.chassis.generic.client.gwt.common.client.CommonStyles;
-import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
+import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 
@@ -316,7 +316,7 @@ class EditStudyQuestionnaireWidgetDefaultRenderer implements StudyQuestionnaireW
 		
 		String modulesContent = "";
 		for (Iterator<String> it = entry.getStudy().getModules().iterator(); it.hasNext(); ) {
-			String ml = ConfigurationBean.getModules().get(it.next());
+			String ml = Configuration.getModules().get(it.next());
 			modulesContent += ml;
 			if (it.hasNext()) {
 				modulesContent += ", ";

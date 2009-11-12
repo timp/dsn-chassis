@@ -13,7 +13,7 @@ import org.cggh.chassis.generic.atom.client.AtomAuthor;
 import org.cggh.chassis.generic.atomext.client.study.StudyEntry;
 import org.cggh.chassis.generic.atomext.client.study.StudyFactory;
 import org.cggh.chassis.generic.atomext.client.study.StudyPersistenceService;
-import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
+import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 
@@ -31,7 +31,7 @@ public class StudyController implements StudyControllerEditAPI, StudyControllerC
 	private StudyFactory studyFactory;
 	final private AbstractStudyControllerPubSubAPI owner;
 	private Log log = LogFactory.getLog(this.getClass());
-	private String studyFeedURL;
+	private String studyCollectionUrl;
 
 	
 	
@@ -40,8 +40,8 @@ public class StudyController implements StudyControllerEditAPI, StudyControllerC
 		this.model = model;
 		this.owner = owner;
 		
-		//Get studyFeedURL from config
-		studyFeedURL = ConfigurationBean.getStudyFeedURL();
+		//Get studyCollectionUrl from config
+		studyCollectionUrl = Configuration.getStudyCollectionUrl();
 		
 		//this.studyFactory = new MockStudyFactory();
 		//this.service = new MockAtomService(studyFactory);
@@ -152,16 +152,16 @@ public class StudyController implements StudyControllerEditAPI, StudyControllerC
 	
 	
 	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerViewAPI#loadStudyEntryByURL(java.lang.String)
+	 * @see org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerViewAPI#loadStudyEntryByUrl(java.lang.String)
 	 */
-	public void loadStudyEntryByURL(String studyEntryURL) {
-		log.enter("loadStudyEntryByURL");
+	public void loadStudyEntryByUrl(String studyEntryUrl) {
+		log.enter("loadStudyEntryByUrl");
 		
 		model.setStatus(StudyModel.STATUS_LOADING);
 		
 		//request studyEntry
-		log.debug("loading study entry at: " + studyEntryURL);
-		Deferred<StudyEntry> deffered = persistenceService.getEntry(studyEntryURL);
+		log.debug("loading study entry at: " + studyEntryUrl);
+		Deferred<StudyEntry> deffered = persistenceService.getEntry(studyEntryUrl);
 		
 		//add callbacks
 		deffered.addCallbacks(new LoadStudyEntryCallback(), new LoadStudyEntryErrback());
@@ -218,8 +218,8 @@ public class StudyController implements StudyControllerEditAPI, StudyControllerC
 		model.setStatus(StudyModel.STATUS_SAVING);
 		
 		//post new studyEntry
-		log.debug("Saving studyEntry to feed: " + studyFeedURL);
-		Deferred<StudyEntry> deffered = persistenceService.postEntry(studyFeedURL, model.getStudyEntry());
+		log.debug("Saving studyEntry to feed: " + studyCollectionUrl);
+		Deferred<StudyEntry> deffered = persistenceService.postEntry(studyCollectionUrl, model.getStudyEntry());
 		
 		//add callbacks
 		deffered.addCallbacks(new SaveOrUpdateStudyEntryCallback(), new SaveOrUpdateStudyEntryErrback());
@@ -242,7 +242,7 @@ public class StudyController implements StudyControllerEditAPI, StudyControllerC
 		StudyEntry studyEntry = model.getStudyEntry();
 		
 		// assume link is relative
-		String entryUrl = studyFeedURL + studyEntry.getEditLink().getHref();
+		String entryUrl = studyCollectionUrl + studyEntry.getEditLink().getHref();
 		log.debug("Putting updated entry at: " + entryUrl);		
 		
 		//put studyEntry

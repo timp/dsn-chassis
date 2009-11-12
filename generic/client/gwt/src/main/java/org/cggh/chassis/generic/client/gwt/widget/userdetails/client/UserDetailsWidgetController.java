@@ -48,7 +48,7 @@ public class UserDetailsWidgetController {
 		
 		log.debug("set service URL");
 		ServiceDefTarget target = (ServiceDefTarget) userService;
-		target.setServiceEntryPoint(Configuration.getUserDetailsServiceEndpointURL());
+		target.setServiceEntryPoint(Configuration.getUserDetailsServiceEndpointUrl());
 
 		log.leave();
 	}

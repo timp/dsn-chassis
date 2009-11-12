@@ -80,7 +80,7 @@ public class UploadDataFileRevisionForm extends ChassisWidget {
 
 		// TODO Auto-generated method stub
 		this.formPanel = new FormPanel();
-		this.formPanel.setAction(Configuration.getUploadDataFileRevisionServiceURL());
+		this.formPanel.setAction(Configuration.getUploadDataFileRevisionServiceUrl());
 		this.formPanel.setEncoding(FormPanel.ENCODING_MULTIPART);
 		this.formPanel.setMethod(FormPanel.METHOD_POST);
 		

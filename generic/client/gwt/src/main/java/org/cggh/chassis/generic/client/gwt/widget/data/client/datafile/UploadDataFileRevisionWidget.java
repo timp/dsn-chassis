@@ -22,39 +22,36 @@ public class UploadDataFileRevisionWidget extends
 	
 	
 	
-	private Log log;
+	private Log log = LogFactory.getLog(UploadDataFileRevisionWidget.class);
 
 	
 	
 	
 	
 	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#init()
+	 * @see org.cggh.chassis.generic.widget.client.DelegatingWidget#createModel()
 	 */
 	@Override
-	public void init() {
-		ensureLog();
-		log.enter("init");
-		
-		this.model = new UploadDataFileRevisionWidgetModel(this);
-		this.renderer = new UploadDataFileRevisionWidgetRenderer(this);
-		this.renderer.setCanvas(this.contentBox);
-		
-		log.leave();
+	protected UploadDataFileRevisionWidgetModel createModel() {
+		return new UploadDataFileRevisionWidgetModel(this);
 	}
 
 
 
 
 
-	/**
-	 * 
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.widget.client.DelegatingWidget#createRenderer()
 	 */
-	private void ensureLog() {
-		if (log == null) log = LogFactory.getLog(UploadDataFileRevisionWidget.class);
+	@Override
+	protected UploadDataFileRevisionWidgetRenderer createRenderer() {
+		return new UploadDataFileRevisionWidgetRenderer(this);
 	}
-
 	
+	
+	
+	
+
 	
 	
 	public HandlerRegistration addSuccessHandler(UploadDataFileRevisionSuccessHandler h) {
@@ -75,7 +72,11 @@ public class UploadDataFileRevisionWidget extends
 		
 		log.leave();
 	}
-	
-	
+
+
+
+
+
+
 	
 }

@@ -43,7 +43,7 @@ public class EditDataFileWidgetController {
 		
 		DataFilePersistenceService service = new DataFilePersistenceService();
 		
-		String url = Configuration.getDataFileFeedURL() + entry.getEditLink().getHref(); // assume relative
+		String url = Configuration.getDataFileCollectionUrl() + entry.getEditLink().getHref(); // assume relative
 		
 		Deferred<DataFileEntry> deferredEntry = service.putEntry(url, entry);
 		
@@ -73,7 +73,7 @@ public class EditDataFileWidgetController {
 			owner.fireEvent(e);
 
 			log.leave();
-			return null;
+			return in;
 		}
 
 	}

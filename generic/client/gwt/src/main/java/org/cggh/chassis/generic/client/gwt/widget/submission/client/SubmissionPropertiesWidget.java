@@ -23,28 +23,28 @@ public class SubmissionPropertiesWidget
 	
 	
 	
-	
 	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.widget.client.Widget#init()
+	 * @see org.cggh.chassis.generic.widget.client.DelegatingWidget#createModel()
 	 */
 	@Override
-	public void init() {
-		ensureLog();
-		log.enter("init");
-
-		log.debug("instantiate model");
-		this.model = new SubmissionPropertiesWidgetModel(this);
-
-		log.debug("instantiate default renderer");
-		this.renderer = new SubmissionPropertiesWidgetRenderer();
-		
-		log.debug("set renderer canvas");
-		this.renderer.setCanvas(this.contentBox);
-
-		log.leave();
-
+	protected SubmissionPropertiesWidgetModel createModel() {
+		return new SubmissionPropertiesWidgetModel(this);
 	}
 
+
+
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.widget.client.DelegatingWidget#createRenderer()
+	 */
+	@Override
+	protected SubmissionPropertiesWidgetRenderer createRenderer() {
+		return new SubmissionPropertiesWidgetRenderer();
+	}
+	
+	
+	
 	
 	
 	
@@ -73,9 +73,10 @@ public class SubmissionPropertiesWidget
 	private void ensureLog() {
 		log = LogFactory.getLog(SubmissionPropertiesWidget.class);
 	}
-	
-	
-	
-	
-	
+
+
+
+
+
+
 }

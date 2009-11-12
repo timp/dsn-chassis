@@ -97,10 +97,10 @@ public class ViewStudyWidget extends Composite implements StudyControllerPubSubV
 	
 	
 	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.client.gwt.widget.study.view.client.ViewStudyWidgetAPI#loadStudyByEntryURL(java.lang.String)
+	 * @see org.cggh.chassis.generic.client.gwt.widget.study.view.client.ViewStudyWidgetAPI#loadStudyByEntryUrl(java.lang.String)
 	 */
-	public void loadStudyByEntryURL(String entryURL) {
-		controller.loadStudyEntryByURL(entryURL);
+	public void loadStudyByEntryUrl(String entryUrl) {
+		controller.loadStudyEntryByUrl(entryUrl);
 	}
 	
 	

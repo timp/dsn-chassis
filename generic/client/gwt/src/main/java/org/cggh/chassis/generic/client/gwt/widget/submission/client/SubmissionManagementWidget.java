@@ -270,7 +270,7 @@ public class SubmissionManagementWidget extends Composite implements EditSubmiss
 	public void onActionUploadDataFile(UploadDataFileActionEvent e) {
 		log.enter("onActionUploadDataFile");
 		
-		String submissionLink = Configuration.getSubmissionFeedURL() + e.getSubmissionEntry().getEditLink().getHref();
+		String submissionLink = Configuration.getSubmissionCollectionUrl() + e.getSubmissionEntry().getEditLink().getHref();
 
 		renderer.submissionDataFileWidget.setUpNewSubmissionDataFile(submissionLink);
 		

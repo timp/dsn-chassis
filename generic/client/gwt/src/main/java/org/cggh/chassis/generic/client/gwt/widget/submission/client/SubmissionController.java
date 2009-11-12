@@ -12,7 +12,7 @@ import org.cggh.chassis.generic.atom.client.AtomAuthor;
 import org.cggh.chassis.generic.atomext.client.submission.SubmissionEntry;
 import org.cggh.chassis.generic.atomext.client.submission.SubmissionFactory;
 import org.cggh.chassis.generic.atomext.client.submission.SubmissionPersistenceService;
-import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
+import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 
@@ -25,7 +25,7 @@ public class SubmissionController implements SubmissionControllerEditAPI, Submis
 	final private SubmissionModel model;
 	final private SubmissionPersistenceService service;
 	private SubmissionFactory submissionFactory;
-	private String submissionFeedURL;
+	private String submissionCollectionUrl;
 	final private AbstractSubmissionControllerPubSubAPI owner;
 	private Log log = LogFactory.getLog(this.getClass());
 
@@ -33,8 +33,8 @@ public class SubmissionController implements SubmissionControllerEditAPI, Submis
 		this.model = model;
 		this.owner = owner;		
 
-		//Get studyFeedURL from config
-		submissionFeedURL = ConfigurationBean.getSubmissionFeedURL();
+		//Get studyCollectionUrl from config
+		submissionCollectionUrl = Configuration.getSubmissionCollectionUrl();
 		
 		this.submissionFactory = new SubmissionFactory();
 		this.service = new SubmissionPersistenceService();
@@ -84,13 +84,13 @@ public class SubmissionController implements SubmissionControllerEditAPI, Submis
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.client.gwt.widget.submission.controller.client.SubmissionControllerCreateAPI#addStudyLink(java.lang.String)
 	 */
-	public void addStudyLink(String studyEntryURL) {
+	public void addStudyLink(String studyEntryUrl) {
 		
 		//get study links
 		Set<String> studyLinks = model.getStudyLinks();
 		
 		//add link
-		studyLinks.add(studyEntryURL);
+		studyLinks.add(studyEntryUrl);
 		
 		//set study links
 		model.setStudyLinks(studyLinks);
@@ -102,12 +102,12 @@ public class SubmissionController implements SubmissionControllerEditAPI, Submis
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.client.gwt.widget.submission.controller.client.SubmissionControllerCreateAPI#removeStudyLink(java.lang.String)
 	 */
-	public void removeStudyLink(String studyEntryURL) {
+	public void removeStudyLink(String studyEntryUrl) {
 		//get study links
 		Set<String> studyLinks = model.getStudyLinks();
 		
 		//remove link
-		studyLinks.remove(studyEntryURL);
+		studyLinks.remove(studyEntryUrl);
 		
 		//set study links
 		model.setStudyLinks(studyLinks);
@@ -151,22 +151,22 @@ public class SubmissionController implements SubmissionControllerEditAPI, Submis
 	}
 
 	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.client.gwt.widget.submission.controller.client.SubmissionControllerEditAPI#loadSubmissionEntryByURL(java.lang.String)
+	 * @see org.cggh.chassis.generic.client.gwt.widget.submission.controller.client.SubmissionControllerEditAPI#loadSubmissionEntryByUrl(java.lang.String)
 	 */
 	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.client.gwt.widget.submission.controller.client.SubmissionControllerViewAPI#loadSubmissionEntryByURL(java.lang.String)
+	 * @see org.cggh.chassis.generic.client.gwt.widget.submission.controller.client.SubmissionControllerViewAPI#loadSubmissionEntryByUrl(java.lang.String)
 	 */
-	public void loadSubmissionEntryByURL(String submissionEntryURL) {
-		log.enter("loadSubmissionEntryByURL");
+	public void loadSubmissionEntryByUrl(String submissionEntryUrl) {
+		log.enter("loadSubmissionEntryByUrl");
 		
 		model.setStatus(SubmissionModel.STATUS_LOADING);
 		
 		//request submissionEntry
-		Deferred<SubmissionEntry> deffered = service.getEntry(submissionEntryURL);
+		Deferred<SubmissionEntry> deffered = service.getEntry(submissionEntryUrl);
 		
 		//add callbacks
 		deffered.addCallbacks(new LoadSubmissionEntryCallback(), new LoadSubmissionEntryErrback());
-		log.debug("Loading entryURL: " + submissionEntryURL);
+		log.debug("Loading entryUrl: " + submissionEntryUrl);
 		
 		log.leave();
 	}
@@ -202,7 +202,7 @@ public class SubmissionController implements SubmissionControllerEditAPI, Submis
 		model.setStatus(SubmissionModel.STATUS_SAVING);
 		
 		//post new submissionEntry
-		Deferred<SubmissionEntry> deffered = service.postEntry(submissionFeedURL, model.getSubmissionEntry());
+		Deferred<SubmissionEntry> deffered = service.postEntry(submissionCollectionUrl, model.getSubmissionEntry());
 		
 		//add callbacks
 		deffered.addCallbacks(new SaveOrUpdateSubmissionEntryCallback(), new SaveOrUpdateSubmissionEntryErrback());
@@ -222,10 +222,10 @@ public class SubmissionController implements SubmissionControllerEditAPI, Submis
 		SubmissionEntry submissionEntry = model.getSubmissionEntry();
 		
 		//assume link is relative
-		String entryURL = submissionFeedURL + submissionEntry.getEditLink().getHref();
+		String entryUrl = submissionCollectionUrl + submissionEntry.getEditLink().getHref();
 		
 		//put submissionEntry
-		Deferred<SubmissionEntry> deffered = service.putEntry(entryURL, submissionEntry);
+		Deferred<SubmissionEntry> deffered = service.putEntry(entryUrl, submissionEntry);
 		
 		//add callbacks
 		deffered.addCallbacks(new SaveOrUpdateSubmissionEntryCallback(), new SaveOrUpdateSubmissionEntryErrback());

@@ -155,7 +155,7 @@ public class MyDataFilesWidgetRenderer
 				log.enter("onClick");
 				
 				ViewDataFileActionEvent e = new ViewDataFileActionEvent();
-				e.setDataFileEntry(entry);
+				e.setEntry(entry);
 				owner.fireEvent(e);
 				
 				log.leave();

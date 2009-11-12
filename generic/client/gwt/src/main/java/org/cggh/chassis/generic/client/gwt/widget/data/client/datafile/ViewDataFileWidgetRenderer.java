@@ -135,7 +135,7 @@ public class ViewDataFileWidgetRenderer
 			public void onAction(DataFileActionEvent e) {
 				
 				// augment event and bubble 
-				e.setDataFileEntry(model.getEntry());
+				e.setEntry(model.getEntry());
 				owner.fireEvent(e);
 				
 			}
@@ -146,7 +146,7 @@ public class ViewDataFileWidgetRenderer
 			public void onAction(DataFileActionEvent e) {
 
 				// augment event and bubble 
-				e.setDataFileEntry(model.getEntry());
+				e.setEntry(model.getEntry());
 				owner.fireEvent(e);
 
 			}

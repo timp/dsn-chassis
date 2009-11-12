@@ -58,3 +58,21 @@ CHASSIS.resources["org.cggh.chassis.generic.client.gwt.widget.data.client.datafi
 	}
 };
 
+
+
+
+CHASSIS.resources["org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.DatasetForm"] = {
+		"HEADINGTITLEANDSUMMARY" : {
+			"en" : "Title and Summary",
+			"fr" : "TODO"
+		},
+		"QUESTIONLABELTITLE" : {
+			"en" : "Please provide a title for the dataset:",
+			"fr" : "TODO"
+		},
+		"QUESTIONLABELSUMMARY" : {
+			"en" : "Please provide a summary of the dataset...",
+			"fr" : "TODO"
+		}
+	};
+

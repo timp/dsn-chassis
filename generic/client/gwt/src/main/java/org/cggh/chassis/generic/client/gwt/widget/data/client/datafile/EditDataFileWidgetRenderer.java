@@ -127,6 +127,7 @@ public class EditDataFileWidgetRenderer
 		});
 		
 		this.modelChangeHandlerRegistrations.add(a);
+		this.modelChangeHandlerRegistrations.add(b);
 		
 		log.leave();
 	}

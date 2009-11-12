@@ -23,7 +23,7 @@ public class ChassisUtils {
 	
 	public static Deferred<Map<String,String>> getMapOfStudyLinksToTitlesForCurrentUser() {
 		
-		StudyQueryService service = new StudyQueryService(Configuration.getStudyQueryServiceURL());
+		StudyQueryService service = new StudyQueryService(Configuration.getStudyQueryServiceUrl());
 		
 		Deferred<StudyFeed> deferredFeed = service.getStudiesByAuthorEmail(ChassisUser.getCurrentUserEmail());
 		
@@ -33,7 +33,7 @@ public class ChassisUtils {
 				Map<String,String> studyLinks = new HashMap<String,String>();
 				for (StudyEntry e : in.getEntries()) {
 					String title = e.getTitle();
-//					String link = Configuration.getStudyFeedURL() + e.getEditLink().getHref();
+//					String link = Configuration.getStudyCollectionUrl() + e.getEditLink().getHref();
 					String link = e.getEditLink().getHref(); // TODO fix for aboslute URIs
 					studyLinks.put(link, title);
 				}

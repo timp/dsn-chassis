@@ -39,6 +39,31 @@ public class NewSubmissionWidget
 	
 	
 	
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.widget.client.DelegatingWidget#createModel()
+	 */
+	@Override
+	protected AsyncWidgetModel createModel() {
+		return new AsyncWidgetModel(this);
+	}
+
+
+
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.widget.client.DelegatingWidget#createRenderer()
+	 */
+	@Override
+	protected NewSubmissionWidgetRenderer createRenderer() {
+		return new NewSubmissionWidgetRenderer(this);
+	}
+
+	
+	
+
+
+	
 
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#init()
@@ -47,11 +72,10 @@ public class NewSubmissionWidget
 	public void init() {
 		ensureLog();
 		log.enter("init");
+
+		super.init(); // will instantiate model and renderer
 		
-		this.model = new AsyncWidgetModel(this);
 		this.controller = new NewSubmissionWidgetController(this, this.model);
-		this.renderer = new NewSubmissionWidgetRenderer(this);
-		this.renderer.setCanvas(this.contentBox);
 		this.renderer.setController(this.controller);
 		
 		log.leave();
@@ -84,8 +108,9 @@ public class NewSubmissionWidget
 		this.renderer.getForm().refreshStudies();
 	}
 
-	
-	
+
+
+
 
 
 }

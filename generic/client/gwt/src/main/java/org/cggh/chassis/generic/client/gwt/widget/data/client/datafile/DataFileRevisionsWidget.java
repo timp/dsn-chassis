@@ -165,7 +165,7 @@ public class DataFileRevisionsWidget extends ChassisWidget {
 			new HTML(RenderUtils.renderAtomAuthorsAsCommaDelimitedEmailString(entry.getAuthors())),
 			new HTML(entry.getTitle()),
 			new HTML(RenderUtils.truncate(entry.getSummary(), 20)),
-			new HTML("<a href='"+Configuration.getMediaFeedURL() + "/" + entry.getEditMediaLink().getHref() + "'>download</a>")
+			new HTML("<a href='"+Configuration.getMediaCollectionUrl() + "/" + entry.getEditMediaLink().getHref() + "'>download</a>")
 		};
 		
 		log.leave();

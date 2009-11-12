@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.cggh.chassis.generic.client.gwt.configuration.client.ChassisRole;
-import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
+import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
 import org.cggh.chassis.generic.client.gwt.widget.userdetails.client.UserDetailsWidget;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
@@ -101,12 +101,12 @@ public class ChassisClientDefaultRenderer implements ChassisClientRenderer {
 		}
 		
 		//get chassisRoles
-		ChassisRole administratorRole = ConfigurationBean.getChassisRoleAdministrator();
-		ChassisRole coordinatorRole = ConfigurationBean.getChassisRoleCoordinator();
-		ChassisRole curatorRole = ConfigurationBean.getChassisRoleCurator();
-		ChassisRole gatekeeperRole = ConfigurationBean.getChassisRoleGatekeeper();
-		ChassisRole submitterRole = ConfigurationBean.getChassisRoleSubmitter();
-		ChassisRole userRole = ConfigurationBean.getChassisRoleUser();
+		ChassisRole administratorRole = Configuration.getChassisRoleAdministrator();
+		ChassisRole coordinatorRole = Configuration.getChassisRoleCoordinator();
+		ChassisRole curatorRole = Configuration.getChassisRoleCurator();
+		ChassisRole gatekeeperRole = Configuration.getChassisRoleGatekeeper();
+		ChassisRole submitterRole = Configuration.getChassisRoleSubmitter();
+		ChassisRole userRole = Configuration.getChassisRoleUser();
 
 		Perspective p;
 		
