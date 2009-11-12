@@ -76,10 +76,10 @@ public class MySubmissionsWidget extends Composite {
 	
 	
 	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.client.gwt.widget.submission.viewall.client.ViewAllSubmissionsWidgetAPI#loadSubmissionsByFeedURL(java.lang.String)
+	 * @see org.cggh.chassis.generic.client.gwt.widget.submission.viewall.client.ViewAllSubmissionsWidgetAPI#loadSubmissionsByCollectionUrl(java.lang.String)
 	 */
 	public void loadSubmissions() {
-		controller.loadSubmissionsByFeedURL();
+		controller.loadSubmissionsByCollectionUrl();
 	}
 
 	
@@ -104,8 +104,8 @@ public class MySubmissionsWidget extends Composite {
 	
 	
 	
-	public void loadSubmissions(Set<String> submissionEntryURLsToLoad) {
-		controller.loadSubmissionsByEntryURLs(submissionEntryURLsToLoad);
+	public void loadSubmissions(Set<String> submissionEntryUrlsToLoad) {
+		controller.loadSubmissionsByEntryUrls(submissionEntryUrlsToLoad);
 	}
 
 	

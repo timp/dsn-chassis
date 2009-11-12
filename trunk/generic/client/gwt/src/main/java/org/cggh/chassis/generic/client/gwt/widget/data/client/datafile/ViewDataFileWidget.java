@@ -29,6 +29,28 @@ public class ViewDataFileWidget
 	
 	
 	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.widget.client.DelegatingWidget#createModel()
+	 */
+	@Override
+	protected ViewDataFileWidgetModel createModel() {
+		return new ViewDataFileWidgetModel(this);
+	}
+
+
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.widget.client.DelegatingWidget#createRenderer()
+	 */
+	@Override
+	protected ViewDataFileWidgetRenderer createRenderer() {
+		return new ViewDataFileWidgetRenderer(this);
+	}
+
+
+	
+	
+	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#init()
 	 */
 	@Override
@@ -36,10 +58,9 @@ public class ViewDataFileWidget
 		ensureLog();
 		log.enter("init");
 
-		this.model = new ViewDataFileWidgetModel(this);
+		super.init(); // this will instantiate model and renderer
+		
 		this.controller = new ViewDataFileWidgetController(this, this.model);
-		this.renderer = new ViewDataFileWidgetRenderer(this);
-		this.renderer.setCanvas(this.contentBox);
 		this.memory = new Memory();
 
 		log.leave();
@@ -68,7 +89,7 @@ public class ViewDataFileWidget
 		this.currentEntryId = id;
 		
 		// delegate to controller
-		Deferred<DataFileEntry> def = this.controller.getEntry(id);;
+		Deferred<DataFileEntry> def = this.controller.getEntry(id);
 		
 		log.leave();
 		return def;
@@ -137,6 +158,7 @@ public class ViewDataFileWidget
 		}
 
 	}
+
 
 
 

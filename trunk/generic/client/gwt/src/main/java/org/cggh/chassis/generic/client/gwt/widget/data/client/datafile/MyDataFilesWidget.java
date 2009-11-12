@@ -24,6 +24,26 @@ public class MyDataFilesWidget
 
 	
 	
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.widget.client.DelegatingWidget#createModel()
+	 */
+	@Override
+	protected MyDataFilesWidgetModel createModel() {
+		return new MyDataFilesWidgetModel(this);
+	}
+
+
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.widget.client.DelegatingWidget#createRenderer()
+	 */
+	@Override
+	protected MyDataFilesWidgetRenderer createRenderer() {
+		return new MyDataFilesWidgetRenderer(this);
+	}
+
+
 
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#init()
@@ -33,10 +53,9 @@ public class MyDataFilesWidget
 		ensureLog();
 		log.enter("init");
 
-		this.model = new MyDataFilesWidgetModel(this);
+		super.init(); // this will instantiate model and renderer
+
 		this.controller = new MyDataFilesWidgetController(this, this.model);
-		this.renderer = new MyDataFilesWidgetRenderer(this);
-		this.renderer.setCanvas(this.contentBox);
 
 		log.leave();
 	}
@@ -72,6 +91,9 @@ public class MyDataFilesWidget
 	public HandlerRegistration addViewDataFileActionHandler(DataFileActionHandler h) {
 		return this.addHandler(h, ViewDataFileActionEvent.TYPE);
 	}
+
+
+
 
 
 }

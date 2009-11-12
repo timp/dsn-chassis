@@ -51,7 +51,7 @@ public class ViewDataFileWidgetController {
 		
 		this.model.setStatus(AsyncWidgetModel.STATUS_ASYNC_REQUEST_PENDING);
 		
-		DataFileQueryService service = new DataFileQueryService(Configuration.getDataFileQueryServiceURL());
+		DataFileQueryService service = new DataFileQueryService(Configuration.getDataFileQueryServiceUrl());
 		DataFileQuery query = new DataFileQuery();
 		query.setId(id);
 		Deferred<DataFileEntry> deferredResult = service.queryOne(query);

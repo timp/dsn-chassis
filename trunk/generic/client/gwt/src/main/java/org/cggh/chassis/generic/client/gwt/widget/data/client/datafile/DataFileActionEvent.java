@@ -6,12 +6,10 @@ package org.cggh.chassis.generic.client.gwt.widget.data.client.datafile;
 
 
 import org.cggh.chassis.generic.atomext.client.datafile.DataFileEntry;
+import org.cggh.chassis.generic.client.gwt.common.client.EventWithEntry;
 
-import com.google.gwt.event.shared.GwtEvent;
-
-public abstract class DataFileActionEvent extends GwtEvent<DataFileActionHandler> {
-	
-	private DataFileEntry entry;
+public abstract class DataFileActionEvent 
+	extends EventWithEntry<DataFileActionHandler, DataFileEntry> {
 	
 	public DataFileActionEvent() {}
 	
@@ -27,12 +25,4 @@ public abstract class DataFileActionEvent extends GwtEvent<DataFileActionHandler
 		handler.onAction(this);
 	}
 
-	public void setDataFileEntry(DataFileEntry entry) {
-		this.entry = entry;
-	}
-	
-	public DataFileEntry getDataFileEntry() {
-		return this.entry;
-	}
-	
 }

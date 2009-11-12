@@ -26,6 +26,32 @@ public class ViewSubmissionWidget
 	
 	
 	
+	
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.widget.client.DelegatingWidget#createModel()
+	 */
+	@Override
+	protected ViewSubmissionWidgetModel createModel() {
+		return new ViewSubmissionWidgetModel(this);
+	}
+
+
+
+
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.widget.client.DelegatingWidget#createRenderer()
+	 */
+	@Override
+	protected ViewSubmissionWidgetRenderer createRenderer() {
+		return new ViewSubmissionWidgetRenderer(this);
+	}
+	
+	
+
+	
+	
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#init()
 	 */
@@ -34,17 +60,10 @@ public class ViewSubmissionWidget
 		ensureLog();
 		log.enter("init");
 		
-		log.debug("instantiate a model");
-		this.model = new ViewSubmissionWidgetModel(this);
+		super.init(); // will instantiate model and renderer
 		
 		log.debug("instantiate a controller");
 		this.controller = new ViewSubmissionWidgetController(this, this.model);
-		
-		log.debug("instantiate a renderer");
-		this.renderer = new ViewSubmissionWidgetRenderer(this);
-		
-		log.debug("set renderer canvas");
-		this.renderer.setCanvas(this.contentBox);
 		
 		log.leave();
 	}
@@ -115,10 +134,12 @@ public class ViewSubmissionWidget
 	private void ensureLog() {
 		log = LogFactory.getLog(ViewSubmissionWidget.class); 
 	}
-	
-	
 
-	
-	
+
+
+
+
+
+
 	
 }

@@ -97,10 +97,10 @@ public class MyStudiesWidget extends Composite {
 	
 	
 	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.client.gwt.widget.study.viewall.client.ViewAllStudiesWidgetAPI#loadStudiesByFeedURL(java.lang.String)
+	 * @see org.cggh.chassis.generic.client.gwt.widget.study.viewall.client.ViewAllStudiesWidgetAPI#loadStudiesByCollectionUrl(java.lang.String)
 	 */
 	public void loadStudies() {
-		controller.loadStudiesByFeedURL();
+		controller.loadStudiesByCollectionUrl();
 	}
 
 	
@@ -125,16 +125,16 @@ public class MyStudiesWidget extends Composite {
 	
 	
 	
-	public void loadStudies(Set<String> studyEntryURLsToLoad) {
-		controller.loadStudiesByEntryURLs(studyEntryURLsToLoad);
+	public void loadStudies(Set<String> studyEntryUrlsToLoad) {
+		controller.loadStudiesByEntryUrls(studyEntryUrlsToLoad);
 	}
 
 	
 	
 	
-	public void loadStudies(List<String> studyEntryURLsToLoad) {
-		Set<String> urls = new HashSet<String>(studyEntryURLsToLoad);
-		controller.loadStudiesByEntryURLs(urls);
+	public void loadStudies(List<String> studyEntryUrlsToLoad) {
+		Set<String> urls = new HashSet<String>(studyEntryUrlsToLoad);
+		controller.loadStudiesByEntryUrls(urls);
 	}
 
 	

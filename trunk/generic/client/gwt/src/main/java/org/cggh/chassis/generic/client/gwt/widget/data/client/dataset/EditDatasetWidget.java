@@ -6,6 +6,7 @@ package org.cggh.chassis.generic.client.gwt.widget.data.client.dataset;
 import org.cggh.chassis.generic.client.gwt.widget.data.client.DataManagementWidget;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
+import org.cggh.chassis.generic.widget.client.ChassisWidgetRenderer;
 import org.cggh.chassis.generic.widget.client.DelegatingWidget;
 
 /**
@@ -17,27 +18,37 @@ public class EditDatasetWidget extends DelegatingWidget {
 
 
 
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#init()
-	 */
-	@Override
-	public void init() {
-		ensureLog();
-		log.enter("init");
 
-		// TODO implement this method
-
-		log.leave();
-	}
-	
-	
-	
 
 	/**
 	 * 
 	 */
 	private void ensureLog() {
 		if (log == null) log = LogFactory.getLog(DataManagementWidget.class);
+	}
+
+
+
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.widget.client.DelegatingWidget#createModel()
+	 */
+	@Override
+	protected Object createModel() {
+		return null;
+	}
+
+
+
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.widget.client.DelegatingWidget#createRenderer()
+	 */
+	@Override
+	protected ChassisWidgetRenderer createRenderer() {
+		return null;
 	}
 
 

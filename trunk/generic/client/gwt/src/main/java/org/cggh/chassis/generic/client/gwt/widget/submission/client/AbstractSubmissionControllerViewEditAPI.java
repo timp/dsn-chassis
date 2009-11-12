@@ -7,6 +7,6 @@ public abstract interface AbstractSubmissionControllerViewEditAPI {
 
 	public void loadSubmissionEntry(SubmissionEntry submissionEntryToLoad);
 
-	public void loadSubmissionEntryByURL(String submissionEntryURL);
+	public void loadSubmissionEntryByUrl(String submissionEntryUrl);
 
 }

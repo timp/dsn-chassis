@@ -48,7 +48,7 @@ class StudyQuestionnaireWidgetController {
 		
 		this.model.setStatus(StudyQuestionnaireWidgetModel.STATUS_LOADINGQUESTIONNAIRE);
 		
-		Deferred<XQuestionnaire> deferredQuestionnaire = XQuestionnaire.load(Configuration.getStudyQuestionnaireURL());
+		Deferred<XQuestionnaire> deferredQuestionnaire = XQuestionnaire.load(Configuration.getStudyQuestionnaireUrl());
 
 		deferredQuestionnaire.addCallback(new Function<XQuestionnaire, XQuestionnaire>() {
 
@@ -121,7 +121,7 @@ class StudyQuestionnaireWidgetController {
 		
 		StudyEntry studyEntry = model.getEntry();
 		
-		String url = Configuration.getStudyFeedURL() + studyEntry.getEditLink().getHref();
+		String url = Configuration.getStudyCollectionUrl() + studyEntry.getEditLink().getHref();
 		Deferred<StudyEntry> def = service.putEntry(url, studyEntry);
 
 		def.addCallback(new Function<StudyEntry, StudyEntry>() {

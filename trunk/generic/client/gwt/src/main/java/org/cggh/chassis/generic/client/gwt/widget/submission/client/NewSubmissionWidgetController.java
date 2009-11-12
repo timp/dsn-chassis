@@ -58,7 +58,7 @@ public class NewSubmissionWidgetController {
 		SubmissionPersistenceService service = new SubmissionPersistenceService();
 
 		log.debug("kick off post request");
-		Deferred<SubmissionEntry> def = service.postEntry(Configuration.getSubmissionFeedURL(), entry);
+		Deferred<SubmissionEntry> def = service.postEntry(Configuration.getSubmissionCollectionUrl(), entry);
 		
 		log.debug("add callbacks");
 		def.addCallback(new CreateSubmissionEntryCallback());

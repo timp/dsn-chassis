@@ -14,5 +14,5 @@ public interface AbstractStudyControllerViewEditAPI {
 
 	public void loadStudyEntry(StudyEntry studyEntryToLoad);
 
-	public void loadStudyEntryByURL(String studyEntryURL);
+	public void loadStudyEntryByUrl(String studyEntryUrl);
 }

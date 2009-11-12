@@ -25,7 +25,7 @@ public class AdminCollectionWidgetController {
 	
 	private AdminCollectionWidgetModel model;
 	private ExistAtomService<VanillaAtomEntry, VanillaAtomFeed> service;
-	private Log log = LogFactory.getLog(this.getClass());
+	private Log log = LogFactory.getLog(AdminCollectionWidgetController.class);
 	private VanillaAtomFactory factory;
 
 	
@@ -45,6 +45,9 @@ public class AdminCollectionWidgetController {
 		log.enter("refreshStatus");
 
 		model.setPending(true);
+		
+		log.debug("collection Title: "+model.getTitle());
+		log.debug("collection URL: "+model.getUrl());
 		
 		HttpDeferred<VanillaAtomFeed> deferredResult = (HttpDeferred<VanillaAtomFeed>) service.getFeed(model.getUrl());
 		

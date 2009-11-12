@@ -36,7 +36,7 @@ public class UpdateDataFileSuccessEvent extends GwtEvent<UpdateDataFileSuccessHa
 		this.dataFileEntry = entry;
 	}
 	
-	public DataFileEntry getDataFileEntry() {
+	public DataFileEntry getEntry() {
 		return this.dataFileEntry;
 	}
 	

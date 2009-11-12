@@ -187,7 +187,7 @@ public class NewDataFileWidgetRenderer
 					log.debug("attempting to parse: "+content);
 					DataFileEntry entry = factory.createEntry(content);
 					CreateDataFileSuccessEvent successEvent = new CreateDataFileSuccessEvent();
-					successEvent.setDataFileEntry(entry);
+					successEvent.setEntry(entry);
 					owner.fireEvent(successEvent);
 				}
 				else {

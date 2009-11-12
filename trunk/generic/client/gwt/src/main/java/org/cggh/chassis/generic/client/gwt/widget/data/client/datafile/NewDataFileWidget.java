@@ -38,24 +38,30 @@ public class NewDataFileWidget
 	
 	
 	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#init()
+	 * @see org.cggh.chassis.generic.widget.client.DelegatingWidget#createModel()
 	 */
 	@Override
-	public void init() {
-		ensureLog();
-		log.enter("init");
-
-		this.model = new AsyncWidgetModel(this);
-		this.renderer = new NewDataFileWidgetRenderer(this);
-		this.renderer.setCanvas(this.contentBox);
-
-		log.leave();
+	protected AsyncWidgetModel createModel() {
+		return new AsyncWidgetModel(this);
 	}
 
 
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.widget.client.DelegatingWidget#createRenderer()
+	 */
+	@Override
+	protected NewDataFileWidgetRenderer createRenderer() {
+		return new NewDataFileWidgetRenderer(this);
+	}
 	
 	
 	
+	
+	
+	
+
 	/**
 	 * Register handler for create success event.
 	 * 
@@ -65,9 +71,9 @@ public class NewDataFileWidget
 	public HandlerRegistration addSuccessHandler(CreateDataFileSuccessHandler h) {
 		return this.addHandler(h, CreateDataFileSuccessEvent.TYPE);
 	}
-	
-	
-	
-	
-	
+
+
+
+
+
 }

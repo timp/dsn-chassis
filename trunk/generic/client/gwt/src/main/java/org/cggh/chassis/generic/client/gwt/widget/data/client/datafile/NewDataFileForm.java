@@ -67,7 +67,7 @@ public class NewDataFileForm extends ChassisWidget {
 		log.enter("renderUI");
 
 		this.formPanel = new FormPanel();
-		this.formPanel.setAction(Configuration.getNewDataFileServiceURL());
+		this.formPanel.setAction(Configuration.getNewDataFileServiceUrl());
 		this.formPanel.setEncoding(FormPanel.ENCODING_MULTIPART);
 		this.formPanel.setMethod(FormPanel.METHOD_POST);
 		

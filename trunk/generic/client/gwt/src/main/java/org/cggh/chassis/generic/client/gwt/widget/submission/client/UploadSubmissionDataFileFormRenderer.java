@@ -7,7 +7,7 @@ import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
 
 import org.cggh.chassis.generic.atomext.shared.ChassisConstants;
 import org.cggh.chassis.generic.client.gwt.common.client.CommonStyles;
-import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
+import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
 
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
@@ -54,7 +54,7 @@ public class UploadSubmissionDataFileFormRenderer {
 		canvas.add(new HTML("<p>Use this form to upload a data file for this submission.</p>"));
 		
 		//prepare htmlFormPanel
-		htmlFormPanel.setAction(ConfigurationBean.getDataFileUploadServiceURL());
+		htmlFormPanel.setAction(Configuration.getDataFileUploadServiceUrl());
 		htmlFormPanel.setEncoding(FormPanel.ENCODING_MULTIPART);
 		htmlFormPanel.setMethod(FormPanel.METHOD_POST);
 		canvas.add(htmlFormPanel);

@@ -4,17 +4,16 @@
 package org.cggh.chassis.generic.client.gwt.widget.data.client.datafile;
 
 import org.cggh.chassis.generic.atomext.client.datafile.DataFileEntry;
-
-import com.google.gwt.event.shared.GwtEvent;
+import org.cggh.chassis.generic.client.gwt.common.client.EventWithEntry;
 
 /**
  * @author aliman
  *
  */
-public class CreateDataFileSuccessEvent extends GwtEvent<CreateDataFileSuccessHandler> {
+public class CreateDataFileSuccessEvent 
+	extends EventWithEntry<CreateDataFileSuccessHandler, DataFileEntry> {
 	
 	public static final Type<CreateDataFileSuccessHandler> TYPE = new Type<CreateDataFileSuccessHandler>();
-	private DataFileEntry dataFileEntry;
 	
 	/* (non-Javadoc)
 	 * @see com.google.gwt.event.shared.GwtEvent#dispatch(com.google.gwt.event.shared.EventHandler)
@@ -30,14 +29,6 @@ public class CreateDataFileSuccessEvent extends GwtEvent<CreateDataFileSuccessHa
 	@Override
 	public Type<CreateDataFileSuccessHandler> getAssociatedType() {
 		return TYPE;
-	}
-	
-	public void setDataFileEntry(DataFileEntry entry) {
-		this.dataFileEntry = entry;
-	}
-	
-	public DataFileEntry getDataFileEntry() {
-		return this.dataFileEntry;
 	}
 	
 }

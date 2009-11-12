@@ -25,6 +25,31 @@ public class EditDataFileWidget
 	
 
 	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.widget.client.DelegatingWidget#createModel()
+	 */
+	@Override
+	protected EditDataFileWidgetModel createModel() {
+		return new EditDataFileWidgetModel(this);
+	}
+
+
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.widget.client.DelegatingWidget#createRenderer()
+	 */
+	@Override
+	protected EditDataFileWidgetRenderer createRenderer() {
+		return new EditDataFileWidgetRenderer(this);
+	}
+	
+	
+	
+	
+	
+
+
+	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#init()
 	 */
 	@Override
@@ -32,10 +57,9 @@ public class EditDataFileWidget
 		ensureLog();
 		log.enter("init");
 
-		this.model = new EditDataFileWidgetModel(this);
+		super.init(); // this will instantiate model and renderer
+		
 		this.controller = new EditDataFileWidgetController(this, this.model);
-		this.renderer = new EditDataFileWidgetRenderer(this);
-		this.renderer.setCanvas(this.contentBox);
 		this.renderer.setController(this.controller);
 
 		log.leave();
@@ -79,11 +103,9 @@ public class EditDataFileWidget
 	public HandlerRegistration addSuccessHandler(UpdateDataFileSuccessHandler h) {
 		return this.addHandler(h, UpdateDataFileSuccessEvent.TYPE);
 	}
-	
-	
-	
-	
-	
+
+
+
 
 
 }

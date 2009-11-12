@@ -236,7 +236,7 @@ public class ViewSubmissionWidgetRenderer
 		if (entry != null) {
 
 			this.submissionPropsWidget.setSubmissionEntry(entry);
-			this.submissionDataFilesWidget.loadDataFilesBySubmissionLink(Configuration.getSubmissionFeedURL() + entry.getEditLink().getHref());
+			this.submissionDataFilesWidget.loadDataFilesBySubmissionLink(Configuration.getSubmissionCollectionUrl() + entry.getEditLink().getHref());
 
 		}
 		else {

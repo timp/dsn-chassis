@@ -10,7 +10,7 @@ import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
 import org.cggh.chassis.generic.async.client.Function;
 import org.cggh.chassis.generic.client.gwt.common.client.CommonStyles;
 import org.cggh.chassis.generic.client.gwt.common.client.RenderUtils;
-import org.cggh.chassis.generic.client.gwt.configuration.client.ConfigurationBean;
+import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
 
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -88,7 +88,7 @@ public class ViewSubmissionDataFilesWidgetDefaultRenderer implements ViewSubmiss
 
 		Label dateLabel = new Label(in.getPublished());
 		
-		String editMediaLink = ConfigurationBean.getDataFileFeedURL() + "/" + in.getEditMediaLink().getHref();
+		String editMediaLink = Configuration.getDataFileCollectionUrl() + "/" + in.getEditMediaLink().getHref();
 		HTML downloadFileLink = new HTML("<a href=\"" + editMediaLink + "\" >download</a>" );
 		downloadFileLink.addStyleName(CommonStyles.VIEWSUBMISSIONDATAFILES_DOWNLOADLINK);
 		

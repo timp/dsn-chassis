@@ -5,6 +5,6 @@
     <inherits name="legacy.org.cggh.chassis.generic.atom.vanilla.Atom" />
     <inherits name="org.cggh.chassis.generic.atom.Atom" />
     <inherits name="org.cggh.chassis.generic.atomext.AtomExtensions" />
-    <inherits name="org.cggh.chassis.generic.user.UserDetailsService" />
+    <inherits name="org.cggh.chassis.generic.user.User" />
     <inherits name="org.cggh.chassis.generic.client.gwt.configuration.Configuration" />
 </module>

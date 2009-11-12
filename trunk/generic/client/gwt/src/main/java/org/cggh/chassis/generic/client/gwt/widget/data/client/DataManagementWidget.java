@@ -18,6 +18,8 @@ import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.UploadDat
 import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.UploadDataFileRevisionSuccessHandler;
 import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.UploadDataFileRevisionWidget;
 import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.ViewDataFileWidget;
+import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.CreateDatasetSuccessEvent;
+import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.CreateDatasetSuccessHandler;
 import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.EditDatasetWidget;
 import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.MyDatasetsWidget;
 import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.NewDatasetWidget;
@@ -148,14 +150,11 @@ public class DataManagementWidget extends ChassisWidget {
 		this.bindMenuBar();
 		
 		this.registerHandlersForNewDataFileWidgetEvents();
-		
 		this.registerHandlersForViewDataFileWidgetEvents();
-		
 		this.registerHandlersForUploadDataFileRevisionWidgetEvents();
-		
 		this.registerHandlersForMyDataFilesWidgetEvents();
-
 		this.registerHandlersForEditDataFileWidgetEvents();
+		this.registerHandlersForNewDatasetWidgetEvents();
 
 		// TODO add handlers for other child widget events
 		
@@ -224,7 +223,7 @@ public class DataManagementWidget extends ChassisWidget {
 			public void onSuccess(CreateDataFileSuccessEvent e) {
 				log.enter("onCreateDataFileSuccess");
 				
-				viewDataFileWidget.setEntry(e.getDataFileEntry().getId());
+				viewDataFileWidget.setEntry(e.getEntry().getId());
 				setActiveChild(viewDataFileWidget);
 				
 				log.leave();
@@ -256,7 +255,7 @@ public class DataManagementWidget extends ChassisWidget {
 			public void onAction(DataFileActionEvent e) {
 				log.enter("onAction");
 				
-				editDataFileWidget.setEntry(e.getDataFileEntry());
+				editDataFileWidget.setEntry(e.getEntry());
 				setActiveChild(editDataFileWidget);
 				
 				log.leave();
@@ -268,7 +267,7 @@ public class DataManagementWidget extends ChassisWidget {
 			public void onAction(DataFileActionEvent e) {
 				log.enter("onAction");
 				
-				uploadDataFileRevisionWidget.setEntry(e.getDataFileEntry());
+				uploadDataFileRevisionWidget.setEntry(e.getEntry());
 				setActiveChild(uploadDataFileRevisionWidget);
 				
 				log.leave();
@@ -325,7 +324,7 @@ public class DataManagementWidget extends ChassisWidget {
 			public void onAction(DataFileActionEvent e) {
 				log.enter("onAction");
 				
-				viewDataFileWidget.setEntry(e.getDataFileEntry().getId());
+				viewDataFileWidget.setEntry(e.getEntry().getId());
 				setActiveChild(viewDataFileWidget);
 				
 				log.leave();
@@ -355,7 +354,7 @@ public class DataManagementWidget extends ChassisWidget {
 			public void onSuccess(UpdateDataFileSuccessEvent e) {
 				log.enter("onSuccess");
 				
-				viewDataFileWidget.setEntry(e.getDataFileEntry().getId());
+				viewDataFileWidget.setEntry(e.getEntry().getId());
 				setActiveChild(viewDataFileWidget);
 				
 				log.leave();
@@ -368,6 +367,37 @@ public class DataManagementWidget extends ChassisWidget {
 		this.childWidgetEventHandlerRegistrations.add(a);
 		this.childWidgetEventHandlerRegistrations.add(b);
 		this.childWidgetEventHandlerRegistrations.add(c);		
+		log.leave();
+		
+	}
+
+
+
+
+	/**
+	 * 
+	 */
+	private void registerHandlersForNewDatasetWidgetEvents() {
+		log.enter("registerHandlersForNewDatasetWidgetEvents");
+		
+		// TODO Auto-generated method stub
+		HandlerRegistration a = this.newDatasetWidget.addCancelHandler(new CommonCancelHandler());
+		
+		HandlerRegistration b = this.newDatasetWidget.addErrorHandler(new CommonErrorHandler());
+		
+		HandlerRegistration c = this.newDatasetWidget.addSuccessHandler(new CreateDatasetSuccessHandler() {
+			
+			public void onSuccess(CreateDatasetSuccessEvent e) {
+				log.enter("onSuccess");
+				
+				viewDatasetWidget.setEntry(e.getEntry().getId());
+				setActiveChild(viewDatasetWidget);
+				
+				log.leave();
+				
+			}
+		});
+		
 		log.leave();
 		
 	}

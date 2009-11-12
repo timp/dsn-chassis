@@ -30,6 +30,29 @@ public class UserDetailsWidget
 	
 	
 	
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.widget.client.DelegatingWidget#createModel()
+	 */
+	@Override
+	protected UserDetailsWidgetModel createModel() {
+		return new UserDetailsWidgetModel(this);
+	}
+
+
+
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.widget.client.DelegatingWidget#createRenderer()
+	 */
+	@Override
+	protected UserDetailsWidgetRenderer createRenderer() {
+		return new UserDetailsWidgetRenderer();
+	}
+	
+	
+	
+	
 	
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#init()
@@ -39,17 +62,10 @@ public class UserDetailsWidget
 		ensureLog();
 		log.enter("init");
 
-		log.debug("instantiate a model");
-		this.model = new UserDetailsWidgetModel(this);
+		super.init(); // will instantiate model and renderer
 		
 		log.debug("instantiate a controller");
 		this.controller = new UserDetailsWidgetController(this.model);
-		
-		log.debug("instantiate a renderer");
-		this.renderer = new UserDetailsWidgetRenderer();
-		
-		log.debug("set renderer canvas");
-		this.renderer.setCanvas(this.contentBox);
 		
 		log.leave();
 	}
@@ -131,9 +147,10 @@ public class UserDetailsWidget
 	private void ensureLog() {
 		log = LogFactory.getLog(UserDetailsWidget.class);
 	}
-	
-	
-	
-	
-	
+
+
+
+
+
+
 }
