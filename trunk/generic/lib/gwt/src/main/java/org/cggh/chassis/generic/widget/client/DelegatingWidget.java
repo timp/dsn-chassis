@@ -17,13 +17,64 @@ public abstract class DelegatingWidget
 	
 	
 	
-	private Log log = LogFactory.getLog(DelegatingWidget.class);
+	private Log log;
 	protected R renderer;
 	protected M model;
 	
 	
 	
 	
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#init()
+	 */
+	@Override
+	public void init() {
+		ensureLog();
+		log.enter("init");
+
+		this.model = createModel();
+		this.renderer = createRenderer();
+		
+		if (renderer != null) this.renderer.setCanvas(this.contentBox);
+		else log.error("renderer is null, cannot set canvas", new NullPointerException());
+		
+		log.leave();
+	}
+	
+	
+	
+
+	
+	
+	/**
+	 * @return
+	 */
+	protected abstract M createModel();
+
+
+	
+	
+	/**
+	 * @return
+	 */
+	protected abstract R createRenderer();
+
+
+
+
+
+	/**
+	 * 
+	 */
+	private void ensureLog() {
+		if (log == null) log = LogFactory.getLog(DelegatingWidget.class);
+	}
+
+
+
+
+
+
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#renderUI()
 	 */
