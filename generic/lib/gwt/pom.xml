@@ -56,7 +56,17 @@
   
   <build>
     <outputDirectory>war/WEB-INF/classes</outputDirectory>
+    <resources>
+     <resource>
+      <directory>src/main/java</directory>
+      <includes>
+        <include>**/*.java</include>
+        <include>**/*.xml</include>
+      </includes>
+     </resource>
+    </resources>
     <!-- added from this post http://osdir.com/ml/GoogleWebToolkit/2009-04/msg02003.html -->
+    <!-- TPP TLDR
     <resources>
       <resource>
         <directory>${project.build.sourceDirectory}</directory>
@@ -66,6 +76,7 @@
         </excludes>
       </resource>
     </resources>
+    -->
     <plugins>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
@@ -74,22 +85,23 @@
         <executions>
           <execution>
             <goals>
+              <goal>generateAsync</goal>
               <goal>compile</goal>
               <!-- 
-                <goal>generateAsync</goal>
                 <goal>test</goal>
               -->
             </goals>
+            <configuration>
+	      <module>org.cggh.chassis.generic.lib.All</module>
+              <!--output>${basedir}/war</output>
+              <runTarget>
+                com.company.Application/Application.html
+              </runTarget>
+              <webXml>${basedir}/war/WEB-INF/web.xml</webXml>
+              <hostedWebapp>${basedir}/war</hostedWebapp -->
+            </configuration>
           </execution>
         </executions>
-        <configuration>
-          <output>${basedir}/war</output>
-          <runTarget>
-            com.company.Application/Application.html
-          </runTarget>
-          <webXml>${basedir}/war/WEB-INF/web.xml</webXml>
-          <hostedWebapp>${basedir}/war</hostedWebapp>
-        </configuration>
       </plugin>
 
       <plugin>
@@ -118,7 +130,7 @@
           <target>${maven.compiler.target}</target>
         </configuration>
       </plugin>
-    </plugins>
+
       <!--  Use the dependency plugin to unpack gwt-dev-PLATFORM-libs.zip -->
       <!--
         (this is a replacement for the old "automatic" mode - useful if you
