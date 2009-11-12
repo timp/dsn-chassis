@@ -18,13 +18,13 @@ import com.google.gwt.user.client.ui.MenuBar;
  * @author aliman
  *
  */
-public class NewSubmitterPerspective 
-	extends NewPerspectiveBase {
+public class SubmitterPerspective 
+	extends PerspectiveBase {
 
 	
 	
 	// utility fields
-	private Log log = LogFactory.getLog(NewSubmitterPerspective.class);
+	private Log log = LogFactory.getLog(SubmitterPerspective.class);
 
 	
 	
@@ -44,7 +44,7 @@ public class NewSubmitterPerspective
 	 * 
 	 */
 	private void ensureLog() {
-		if (log == null) log = LogFactory.getLog(NewSubmitterPerspective.class);
+		if (log == null) log = LogFactory.getLog(SubmitterPerspective.class);
 	}
 
 
