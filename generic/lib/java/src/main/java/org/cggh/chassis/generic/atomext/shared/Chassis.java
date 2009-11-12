@@ -37,6 +37,7 @@ public class Chassis {
 		public static final String STUDY = "Study";
 		public static final String DATAFILE = "DataFile";
 		public static final String MEDIARESOURCE = "MediaResource";
+		public static final String DATASET = "Dataset";
 
 	}
 	
