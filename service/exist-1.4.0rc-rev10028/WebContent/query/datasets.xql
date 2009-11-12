@@ -1,6 +1,6 @@
 (: 
     A script implementing a simple REST service to query and retrieve entries
-    in the datafiles collection.
+    in the datasets collection.
 :)
 
 
@@ -26,33 +26,24 @@ declare function my:expand-link( $collection-path as xs:string, $link as element
 	return 
 	<atom:link rel="{$rel}" href="{$href}">
 		{
-			let $revision := collection("/db/study")//atom:entry[atom:link[@rel="edit" and @href=$href]]
-			return $revision
+			collection($collection-path)//atom:entry[atom:link[@rel="edit" and @href=$href]]
 		}
 	</atom:link>
 };
 
 
-declare function my:include-study( $link as element() ) as element() {
+
+declare function my:expand-dataset-link( $link as element() ) as element() {
 	let $rel := $link/@rel
-	let $href := $link/@href
 	return 
-	<atom:link rel="{$rel}" href="{$href}">
-		{
-			let $revision := collection("/db/media")//atom:entry[atom:link[@rel="edit" and @href=$href]]
-			return $revision
-		}
-	</atom:link>
+	    if ($rel = "chassis.study") then my:expand-link("/db/studies", $link) 
+	    else if ($rel = "chassis.datafile") then my:expand-link("/db/datafiles", $link)
+	    else $link
 };
 
 
-declare function my:expand-datafile-link( $link as element() ) as element() {
-	let $rel := $link/@rel
-	return if ($rel = "chassis.revision") then my:include-media($link) else $link
-};
 
-
-declare function my:expand-datafile( $entry as element() ) as element() {
+declare function my:expand-dataset( $entry as element() ) as element() {
 	let $id := $entry/atom:id
 	return 
 	<atom:entry>
@@ -64,7 +55,7 @@ declare function my:expand-datafile( $entry as element() ) as element() {
 		$entry/atom:summary,
 		$entry/atom:category,
 		$entry/atom:author,
-		for $link in $entry/atom:link return my:expand-datafile-link($link)
+		for $link in $entry/atom:link return my:expand-dataset-link($link)
 	}
 	</atom:entry>
 };
@@ -72,7 +63,7 @@ declare function my:expand-datafile( $entry as element() ) as element() {
 
 (: find collection :) 
 
-let $datafiles := collection("/db/datafiles")
+let $datasets := collection("/db/datasets")
 
 (: fish out request params :)
 let $param-authoremail := request:get-parameter("authoremail","")
@@ -84,7 +75,7 @@ return
 	<atom:title>Query Results</atom:title>
 	{
 		(: for all Atom entries within the collection :)
-		for $e in ($datafiles//atom:entry)
+		for $e in ($datasets//atom:entry)
 		
 		where 
 		
@@ -102,6 +93,6 @@ return
 
 		order by $e/atom:updated descending
 		
-		return my:expand-datafile($e)
+		return my:expand-dataset($e)
 	}
 </atom:feed>
