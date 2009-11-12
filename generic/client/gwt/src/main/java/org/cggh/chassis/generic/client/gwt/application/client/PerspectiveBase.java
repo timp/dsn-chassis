@@ -21,7 +21,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author aliman
  *
  */
-public abstract class NewPerspectiveBase 
+public abstract class PerspectiveBase 
 	extends ChassisWidget {
 	
 	
@@ -69,7 +69,7 @@ public abstract class NewPerspectiveBase
 	 * 
 	 */
 	private void ensureLog() {
-		if (log == null) log = LogFactory.getLog(NewPerspectiveBase.class);
+		if (log == null) log = LogFactory.getLog(PerspectiveBase.class);
 	}
 
 

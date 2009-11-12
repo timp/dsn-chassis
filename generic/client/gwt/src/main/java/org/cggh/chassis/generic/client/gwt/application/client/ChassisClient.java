@@ -26,7 +26,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author aliman
  *
  */
-public class NewChassisClient extends ChassisWidget {
+public class ChassisClient extends ChassisWidget {
 
 	
 	
@@ -73,7 +73,7 @@ public class NewChassisClient extends ChassisWidget {
 	 * 
 	 */
 	private void ensureLog() {
-		if (log == null) log = LogFactory.getLog(NewChassisClient.class);
+		if (log == null) log = LogFactory.getLog(ChassisClient.class);
 	}
 
 
@@ -145,13 +145,13 @@ public class NewChassisClient extends ChassisWidget {
 			if (role.equals(Configuration.getChassisRoleAdministrator())) {
 				
 				log.enter("adding administrator perspective");
-				perspective = new NewAdministratorPerspective();
+				perspective = new AdministratorPerspective();
 
 			}
 			else if (role.equals(Configuration.getChassisRoleSubmitter())) {
 
 				log.enter("adding submitter perspective");
-				perspective = new NewSubmitterPerspective();
+				perspective = new SubmitterPerspective();
 
 			}
 

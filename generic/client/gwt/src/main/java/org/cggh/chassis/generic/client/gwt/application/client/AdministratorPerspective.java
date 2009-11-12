@@ -9,7 +9,7 @@ import com.google.gwt.user.client.Command;
  * @author aliman
  *
  */
-public class NewAdministratorPerspective extends NewPerspectiveBase {
+public class AdministratorPerspective extends PerspectiveBase {
 
 	
 	
