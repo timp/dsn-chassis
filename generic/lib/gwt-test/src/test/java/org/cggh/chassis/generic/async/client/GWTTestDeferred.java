@@ -1,46 +1,44 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.twisted.client;
+package org.cggh.chassis.generic.async.client;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
 
 import org.cggh.chassis.generic.async.client.Deferred;
 import org.cggh.chassis.generic.async.client.Function;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
-import org.cggh.chassis.generic.log.client.SystemOutLog;
-import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
-
+import com.google.gwt.junit.client.GWTTestCase;
 
 /**
  * @author aliman
  *
  */
-public class TestDeferred {
-	
-	
-	
-	static {
-		// need to change because default is gwt log, which won't output in plain junit tests
-		LogFactory.create = SystemOutLog.create;
+public class GWTTestDeferred extends GWTTestCase {
+
+	/* (non-Javadoc)
+	 * @see com.google.gwt.junit.client.GWTTestCase#getModuleName()
+	 */
+	@Override
+	public String getModuleName() {
+		return "org.cggh.chassis.generic.async.Async";
 	}
-	
-	
-	
+
+
 	private abstract class TestFunction<I,O> implements Function<I,O> {
 		protected int called = 0;
 	}
 
 	private Log log = LogFactory.getLog(this.getClass());
 	
-	@Before
-	public void setUp() {
+	
+	public GWTTestDeferred() {
 	}
 
-	@Test
 	public void testCallback() {
 		log.enter("testCallback");
 		
@@ -75,7 +73,7 @@ public class TestDeferred {
 		log.leave();
 	}
 	
-	@Test
+	
 	public void testAddCallbackTestFunctionAfterCallback() {
 		log.enter("testAddCallbackFunctionAfterCallback");
 		
@@ -114,7 +112,7 @@ public class TestDeferred {
 		log.leave();
 	}
 	
-	@Test
+	
 	public void testErrback() {
 		log.enter("testErrback");
 		
@@ -149,7 +147,7 @@ public class TestDeferred {
 		log.leave();
 	}
 	
-	@Test
+	
 	public void testAddErrbackFunctionAfterErrback() {
 		log.enter("testAddErrbackFunctionAfterErrback");
 		
@@ -188,7 +186,7 @@ public class TestDeferred {
 		log.leave();
 	}
 	
-	@Test
+	
 	public void testThreeCallbacks() {
 		log.enter("testTwoCallbacks");
 		
@@ -259,7 +257,7 @@ public class TestDeferred {
 		log.leave();
 	}
 	
-	@Test
+	
 	public void testCallbackThrows() {
 		log.enter("testCallbackThrows");
 		
@@ -310,7 +308,7 @@ public class TestDeferred {
 		log.leave();
 	}
 
-	@Test
+	
 	public void testCallbackReturnsThrowable() {
 		log.enter("testCallbackReturnsThrowable");
 		
@@ -361,7 +359,7 @@ public class TestDeferred {
 		log.leave();
 	}
 	
-	@Test
+	
 	public void testCallbackReturnsDeferred() {
 		log.enter("testCallbackReturnsDeferred");
 
@@ -426,7 +424,7 @@ public class TestDeferred {
 
 		log.leave();
 	}
-
+	
 	
 	
 	/**
@@ -461,5 +459,7 @@ public class TestDeferred {
 		
 		log.leave();
 	}
+	
+
 	
 }

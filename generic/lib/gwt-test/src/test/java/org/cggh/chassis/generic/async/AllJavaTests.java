@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.twisted;
+package org.cggh.chassis.generic.async;
 
 import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
@@ -18,7 +18,7 @@ public class AllJavaTests {
 		//$JUnit-BEGIN$
 		
 		// module org.cggh.chassis.generic.twisted.Twisted
-		suite.addTest(new JUnit4TestAdapter(org.cggh.chassis.generic.twisted.client.TestDeferred.class));
+		suite.addTest(new JUnit4TestAdapter(org.cggh.chassis.generic.async.client.TestDeferred.class));
 
 		//$JUnit-END$
 		return suite;

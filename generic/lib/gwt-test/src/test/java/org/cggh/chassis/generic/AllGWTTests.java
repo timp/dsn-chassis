@@ -20,7 +20,7 @@ public class AllGWTTests {
 		//suite.addTest(legacy.org.cggh.chassis.generic.atom.vanilla.AllGWTTests.suite());
 
 		// module org.cggh.chassis.generic.twisted.Twisted
-		suite.addTest(org.cggh.chassis.generic.twisted.AllGWTTests.suite());
+		suite.addTest(org.cggh.chassis.generic.async.AllGWTTests.suite());
 		
 		// module org.cggh.chassis.generic.xml.XML
 		suite.addTest(org.cggh.chassis.generic.xml.AllGWTTests.suite());

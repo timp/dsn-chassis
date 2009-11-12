@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.twisted;
+package org.cggh.chassis.generic.async;
 
 
 import junit.framework.Test;
@@ -17,7 +17,7 @@ public class AllGWTTests {
 		TestSuite suite = new TestSuite("org.cggh.chassis.generic.twisted.Twisted - All GWT Tests");
 		//$JUnit-BEGIN$
 
-		suite.addTestSuite(org.cggh.chassis.generic.twisted.client.GWTTestDeferred.class);
+		suite.addTestSuite(org.cggh.chassis.generic.async.client.GWTTestDeferred.class);
 		
 		//$JUnit-END$
 		return suite;

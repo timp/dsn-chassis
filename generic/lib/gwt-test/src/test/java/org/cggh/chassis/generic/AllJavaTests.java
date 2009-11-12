@@ -20,7 +20,7 @@ public class AllJavaTests {
 		//suite.addTest(legacy.org.cggh.chassis.generic.atom.vanilla.AllJavaTests.suite());
 		
 		// module org.cggh.chassis.generic.twisted.Twisted
-		suite.addTest(org.cggh.chassis.generic.twisted.AllJavaTests.suite());
+		suite.addTest(org.cggh.chassis.generic.async.AllJavaTests.suite());
 
 		// module org.cggh.chassis.generic.xml.XML
 		// none
