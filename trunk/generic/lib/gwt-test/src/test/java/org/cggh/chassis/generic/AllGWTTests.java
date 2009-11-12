@@ -17,7 +17,7 @@ public class AllGWTTests {
 		//$JUnit-BEGIN$
 
 		// module org.cggh.chassis.generic.atom.vanilla.Atom
-		suite.addTest(legacy.org.cggh.chassis.generic.atom.vanilla.AllGWTTests.suite());
+		//suite.addTest(legacy.org.cggh.chassis.generic.atom.vanilla.AllGWTTests.suite());
 
 		// module org.cggh.chassis.generic.twisted.Twisted
 		suite.addTest(org.cggh.chassis.generic.twisted.AllGWTTests.suite());
