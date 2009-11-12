@@ -12,7 +12,7 @@ import org.cggh.chassis.generic.atom.client.vanilla.VanillaAtomService;
 import org.cggh.chassis.generic.atomext.client.study.StudyEntry;
 import org.cggh.chassis.generic.atomext.client.study.StudyFactory;
 import org.cggh.chassis.generic.atomext.client.study.StudyPersistenceService;
-import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
+import org.cggh.chassis.generic.client.gwt.configuration.client.JsConfiguration;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 
@@ -126,7 +126,7 @@ public class SpikeAtomExampleEntryPoint implements EntryPoint {
 	public void doStudyExamples() {
 		log.enter("doStudyExamples");
 		
-		String feedURL = Configuration.getStudyFeedURL();
+		String feedURL = JsConfiguration.getStudyCollectionUrl();
 
 		log.debug("create a study factory");
 		StudyFactory factory = new StudyFactory(); 

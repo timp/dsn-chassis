@@ -238,7 +238,7 @@ public class GWTTestEditStudyWidgetDefaultRenderer extends GWTTestCase {
 			// not tested here
 		}
 
-		public void loadStudyEntryByURL(String studyEntryURL) {
+		public void loadStudyEntryByUrl(String studyEntryURL) {
 			// not tested here
 		}
 

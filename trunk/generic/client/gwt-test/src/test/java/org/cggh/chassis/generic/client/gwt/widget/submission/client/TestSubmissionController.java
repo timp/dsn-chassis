@@ -59,7 +59,7 @@ public class TestSubmissionController {
 //	private SubmissionModel testModel;
 //	private AtomService mockService;
 //	private SubmissionFactory mockFactory;
-//	private String submissionFeedURL = TestConfigurationSetUp.testSubmissionFeedURL;
+//	private String submissionCollectionUrl = TestConfigurationSetUp.testSubmissionCollectionUrl;
 //	private SubmissionEntry testSubmissionEntry;
 //	private String testAuthorEmail = "foo@bar.com";
 //		
@@ -303,7 +303,7 @@ public class TestSubmissionController {
 //		Deferred<AtomEntry> mockDeffered = PowerMock.createMock(Deferred.class);
 //		
 //		//set up expectations
-//		expect(mockService.postEntry(submissionFeedURL, testSubmissionEntry)).andReturn(mockDeffered);
+//		expect(mockService.postEntry(submissionCollectionUrl, testSubmissionEntry)).andReturn(mockDeffered);
 //		PowerMock.replay(mockService);
 //		mockDeffered.addCallbacks(isA(SaveOrUpdateSubmissionEntryCallback.class), isA(SaveOrUpdateSubmissionEntryErrback.class));
 //		PowerMock.expectLastCall().andReturn(mockDeffered);
@@ -326,7 +326,7 @@ public class TestSubmissionController {
 //		//test data
 //		//test handling of relative entryURLs
 //		String relEntryURL = "/submission1";
-//		String fullEntryURL = TestConfigurationSetUp.testSubmissionFeedURL + relEntryURL;
+//		String fullEntryURL = TestConfigurationSetUp.testSubmissionCollectionUrl + relEntryURL;
 //		
 //		//create mockSubmissionEntry and AtomLink for this test
 //		SubmissionEntry mockSubmissionEntry = createNiceMock(SubmissionEntry.class);

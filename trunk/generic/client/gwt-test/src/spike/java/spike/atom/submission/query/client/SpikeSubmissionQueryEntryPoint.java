@@ -11,7 +11,7 @@ import org.cggh.chassis.generic.atomext.client.submission.SubmissionFactory;
 import org.cggh.chassis.generic.atomext.client.submission.SubmissionFeed;
 import org.cggh.chassis.generic.atomext.client.submission.SubmissionPersistenceService;
 import org.cggh.chassis.generic.atomext.client.submission.SubmissionQueryService;
-import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
+import org.cggh.chassis.generic.client.gwt.configuration.client.JsConfiguration;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 
@@ -35,7 +35,7 @@ public class SpikeSubmissionQueryEntryPoint implements EntryPoint {
 	private void querySubmissions() {
 		log.enter("querySubmissions");
 		
-		String serviceURL = Configuration.getSubmissionQueryServiceURL();
+		String serviceURL = JsConfiguration.getSubmissionQueryServiceUrl();
 		
 		log.debug("create a query service");
 		SubmissionQueryService service = new SubmissionQueryService(serviceURL); 
@@ -129,7 +129,7 @@ public class SpikeSubmissionQueryEntryPoint implements EntryPoint {
 	private Deferred<SubmissionEntry> setup() {
 		log.enter("setup");
 
-		String feedURL = Configuration.getSubmissionFeedURL();
+		String feedURL = JsConfiguration.getSubmissionCollectionUrl();
 		
 		log.debug("create a submission factory");
 		SubmissionFactory factory = new SubmissionFactory(); 

@@ -28,8 +28,8 @@ import org.cggh.chassis.generic.client.gwt.widget.submission.client.MySubmission
 import org.cggh.chassis.generic.client.gwt.widget.submission.client.MySubmissionsWidgetModel;
 import org.cggh.chassis.generic.client.gwt.widget.submission.client.MySubmissionsWidgetController.LoadSubmissionFeedCallback;
 import org.cggh.chassis.generic.client.gwt.widget.submission.client.MySubmissionsWidgetController.LoadSubmissionFeedErrback;
-import org.cggh.chassis.generic.client.gwt.widget.submission.client.MySubmissionsWidgetController.LoadSubmissionsByEntryURLsCallback;
-import org.cggh.chassis.generic.client.gwt.widget.submission.client.MySubmissionsWidgetController.LoadSubmissionsByEntryURLsErrback;
+import org.cggh.chassis.generic.client.gwt.widget.submission.client.MySubmissionsWidgetController.LoadSubmissionsByEntryUrlsCallback;
+import org.cggh.chassis.generic.client.gwt.widget.submission.client.MySubmissionsWidgetController.LoadSubmissionsByEntryUrlsErrback;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -61,7 +61,7 @@ public class TestViewSubmissionsWidgetController {
 //	private List<SubmissionEntry> testSubmissions;
 //	
 //	//empty URL because MockEntries already carry the feedURL within their editLink
-//	private String testSubmissionFeedURL = TestConfigurationSetUp.testSubmissionFeedURL;
+//	private String testSubmissionCollectionUrl = TestConfigurationSetUp.testSubmissionCollectionUrl;
 //	private String testSubmissionQueryServiceURL = TestConfigurationSetUp.testSubmissionQueryServiceURL;
 //		
 //	@Before
@@ -117,20 +117,20 @@ public class TestViewSubmissionsWidgetController {
 //		
 //	@SuppressWarnings("unchecked")
 //	@Test
-//	public void testLoadSubmissionsByFeedURL_callback() {
+//	public void testLoadSubmissionsByCollectionUrl_callback() {
 //
 //		//create mock Deffered object
 //		Deferred<AtomFeed> mockDeffered = PowerMock.createMock(Deferred.class);
 //		
 //		//set up expectations
-//		expect(mockService.getFeed(testSubmissionFeedURL)).andReturn(mockDeffered);
+//		expect(mockService.getFeed(testSubmissionCollectionUrl)).andReturn(mockDeffered);
 //		PowerMock.replay(mockService);
 //		mockDeffered.addCallbacks(isA(LoadSubmissionFeedCallback.class), isA(LoadSubmissionFeedErrback.class));
 //		PowerMock.expectLastCall().andReturn(mockDeffered);
 //		PowerMock.replay(mockDeffered);
 //
 //		//call method under test		
-//		testController.loadSubmissionsByFeedURL();
+//		testController.loadSubmissionsByCollectionUrl();
 //				
 //		PowerMock.verify(mockService);		
 //		PowerMock.verify(mockDeffered);	
@@ -179,8 +179,8 @@ public class TestViewSubmissionsWidgetController {
 //		Deferred<AtomEntry> mockDeffered = PowerMock.createMock(Deferred.class);
 //		
 //		//set up expectations
-//		expect(mockService.getEntry(testSubmissionFeedURL + relEntryURL1)).andReturn(mockDeffered);
-//		expect(mockService.getEntry(testSubmissionFeedURL + relEntryURL2)).andReturn(mockDeffered);
+//		expect(mockService.getEntry(testSubmissionCollectionUrl + relEntryURL1)).andReturn(mockDeffered);
+//		expect(mockService.getEntry(testSubmissionCollectionUrl + relEntryURL2)).andReturn(mockDeffered);
 //		PowerMock.replay(mockService);
 //		mockDeffered.addCallbacks(isA(LoadSubmissionsByEntryURLsCallback.class), isA(LoadSubmissionsByEntryURLsErrback.class));
 //		PowerMock.expectLastCall().andReturn(mockDeffered).times(2);

@@ -12,7 +12,7 @@ import org.cggh.chassis.generic.atomext.client.study.StudyFactory;
 import org.cggh.chassis.generic.atomext.client.study.StudyFeed;
 import org.cggh.chassis.generic.atomext.client.study.StudyPersistenceService;
 import org.cggh.chassis.generic.atomext.client.study.StudyQueryService;
-import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
+import org.cggh.chassis.generic.client.gwt.configuration.client.JsConfiguration;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 
@@ -51,7 +51,7 @@ public class SpikeStudyQueryServiceByAuthorEmailEntryPoint implements EntryPoint
 		
 		factory = new StudyFactory();
 		studyPersistenceService = new StudyPersistenceService();
-		studyQueryService = new StudyQueryService(Configuration.getStudyQueryServiceURL());
+		studyQueryService = new StudyQueryService(JsConfiguration.getStudyQueryServiceUrl());
 		
 		log.debug("create first study");
 		Deferred<StudyEntry> callChain = createFirstStudy();
@@ -169,7 +169,7 @@ public class SpikeStudyQueryServiceByAuthorEmailEntryPoint implements EntryPoint
 		
 		first.addAuthor(bob);
 		
-		Deferred<StudyEntry> deferredEntry = studyPersistenceService.postEntry(Configuration.getStudyFeedURL(), first);
+		Deferred<StudyEntry> deferredEntry = studyPersistenceService.postEntry(JsConfiguration.getStudyCollectionUrl(), first);
 		
 		log.leave();
 		return deferredEntry;
@@ -190,7 +190,7 @@ public class SpikeStudyQueryServiceByAuthorEmailEntryPoint implements EntryPoint
 		
 		second.addAuthor(alice);
 		
-		Deferred<StudyEntry> deferredEntry = studyPersistenceService.postEntry(Configuration.getStudyFeedURL(), second);
+		Deferred<StudyEntry> deferredEntry = studyPersistenceService.postEntry(JsConfiguration.getStudyCollectionUrl(), second);
 		
 		log.leave();
 		return deferredEntry;
@@ -214,7 +214,7 @@ public class SpikeStudyQueryServiceByAuthorEmailEntryPoint implements EntryPoint
 		bob.setEmail("bob@example.com");
 		third.addAuthor(bob);
 		
-		Deferred<StudyEntry> deferredEntry = studyPersistenceService.postEntry(Configuration.getStudyFeedURL(), third);
+		Deferred<StudyEntry> deferredEntry = studyPersistenceService.postEntry(JsConfiguration.getStudyCollectionUrl(), third);
 		
 		log.leave();
 		return deferredEntry;

@@ -3,7 +3,7 @@
  */
 package spike.security.user.client;
 
-import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
+import org.cggh.chassis.generic.client.gwt.configuration.client.JsConfiguration;
 import org.cggh.chassis.generic.user.gwtrpc.client.GWTUserDetailsService;
 import org.cggh.chassis.generic.user.gwtrpc.client.GWTUserDetailsServiceAsync;
 import org.cggh.chassis.generic.user.transfer.UserDetailsTO;
@@ -32,7 +32,7 @@ public class SpikeUserDetailsEntryPoint implements EntryPoint {
 		
 		// set service URL
 		ServiceDefTarget target = (ServiceDefTarget) userService;
-		target.setServiceEntryPoint(Configuration.getUserDetailsServiceEndpointURL());
+		target.setServiceEntryPoint(JsConfiguration.getUserDetailsServiceEndpointUrl());
 		
 		// get root panel
 		final RootPanel root = RootPanel.get("gwtcontent");

@@ -21,8 +21,8 @@ import junit.framework.JUnit4TestAdapter;
 
 import org.cggh.chassis.generic.async.client.Deferred;
 import org.cggh.chassis.generic.client.gwt.configuration.client.TestConfigurationSetUp;
-import org.cggh.chassis.generic.client.gwt.widget.study.client.MyStudiesWidgetController.LoadStudiesByEntryURLsCallback;
-import org.cggh.chassis.generic.client.gwt.widget.study.client.MyStudiesWidgetController.LoadStudiesByEntryURLsErrback;
+import org.cggh.chassis.generic.client.gwt.widget.study.client.MyStudiesWidgetController.LoadStudiesByEntryUrlsCallback;
+import org.cggh.chassis.generic.client.gwt.widget.study.client.MyStudiesWidgetController.LoadStudiesByEntryUrlsErrback;
 import org.cggh.chassis.generic.client.gwt.widget.study.client.MyStudiesWidgetController.LoadStudyFeedCallback;
 import org.cggh.chassis.generic.client.gwt.widget.study.client.MyStudiesWidgetController.LoadStudyFeedErrback;
 import org.junit.Before;
@@ -55,7 +55,7 @@ public class TestViewStudiesWidgetController {
 //	private MockStudyFactory testFactory = new MockStudyFactory();
 //	private List<StudyEntry> testStudies;
 	
-	private String testStudyFeedURL = TestConfigurationSetUp.testStudyFeedURL;
+	private String testStudyCollectionUrl = TestConfigurationSetUp.testStudyCollectionUrl;
 	private String testStudyQueryServiceURL = TestConfigurationSetUp.testStudyQueryServiceURL;
 		
 	@Before
@@ -112,20 +112,20 @@ public class TestViewStudiesWidgetController {
 		
 	@SuppressWarnings("unchecked")
 	@Test
-	public void testLoadStudiesByFeedURL_callback() {
+	public void testLoadStudiesByCollectionUrl_callback() {
 
 //		//create mock Deffered object
 //		Deferred<AtomFeed> mockDeffered = PowerMock.createMock(Deferred.class);
 //		
 //		//set up expectations
-//		expect(mockService.getFeed(testStudyFeedURL)).andReturn(mockDeffered);
+//		expect(mockService.getFeed(testStudyCollectionUrl)).andReturn(mockDeffered);
 //		PowerMock.replay(mockService);
 //		mockDeffered.addCallbacks(isA(LoadStudyFeedCallback.class), isA(LoadStudyFeedErrback.class));
 //		PowerMock.expectLastCall().andReturn(mockDeffered);
 //		PowerMock.replay(mockDeffered);
 //
 //		//call method under test		
-//		testController.loadStudiesByFeedURL();
+//		testController.loadStudiesByCollectionUrl();
 //		
 //		PowerMock.verify(mockService);		
 //		PowerMock.verify(mockDeffered);		
@@ -174,8 +174,8 @@ public class TestViewStudiesWidgetController {
 //		Deferred<AtomEntry> mockDeffered = PowerMock.createMock(Deferred.class);
 //		
 //		//set up expectations
-//		expect(mockService.getEntry(testStudyFeedURL + relEntryURL1)).andReturn(mockDeffered);
-//		expect(mockService.getEntry(testStudyFeedURL + relEntryURL2)).andReturn(mockDeffered);
+//		expect(mockService.getEntry(testStudyCollectionUrl + relEntryURL1)).andReturn(mockDeffered);
+//		expect(mockService.getEntry(testStudyCollectionUrl + relEntryURL2)).andReturn(mockDeffered);
 //		PowerMock.replay(mockService);
 //		mockDeffered.addCallbacks(isA(LoadStudiesByEntryURLsCallback.class), isA(LoadStudiesByEntryURLsErrback.class));
 //		PowerMock.expectLastCall().andReturn(mockDeffered).times(2);

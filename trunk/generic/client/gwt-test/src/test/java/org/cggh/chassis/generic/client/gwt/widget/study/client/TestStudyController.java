@@ -49,7 +49,7 @@ public class TestStudyController {
 //	private AtomService mockService;
 //	private StudyFactory mockFactory;
 //	private MockStudyFactory testFactory = new MockStudyFactory();
-//	String testStudyFeedURL = TestConfigurationSetUp.testStudyFeedURL;
+//	String testStudyCollectionUrl = TestConfigurationSetUp.testStudyCollectionUrl;
 //	private StudyEntry testStudyEntry;
 //	private HashSet<AtomAuthor> testAuthors;
 //	private String testAuthorEmail = "foo@bar.com";
@@ -300,7 +300,7 @@ public class TestStudyController {
 //		//test data
 //		//Note: assumes editLink is stored as a relative link.
 //		String relEntryURL = "/study1"; 
-//		String entryURL = testStudyFeedURL + relEntryURL;
+//		String entryURL = testStudyCollectionUrl + relEntryURL;
 //		
 //		//create mockStudyEntry and AtomLink for this test
 //		StudyEntry mockStudyEntry = createNiceMock(StudyEntry.class);
