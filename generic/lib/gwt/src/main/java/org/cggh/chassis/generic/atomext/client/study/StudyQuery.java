@@ -3,13 +3,16 @@
  */
 package org.cggh.chassis.generic.atomext.client.study;
 
+import org.cggh.chassis.generic.atomext.client.shared.AtomQuery;
+
 /**
  * @author aliman
  *
  */
-public class StudyQuery {
+public class StudyQuery 
+	extends AtomQuery {
 
-	private String authorEmail, submissionUrl;
+	private String submissionUrl;
 
 	/**
 	 * @param submissionUrl the submissionUrl to set
@@ -25,18 +28,4 @@ public class StudyQuery {
 		return submissionUrl;
 	}
 
-	/**
-	 * @param authorEmail the authorEmail to set
-	 */
-	public void setAuthorEmail(String authorEmail) {
-		this.authorEmail = authorEmail;
-	}
-
-	/**
-	 * @return the authorEmail
-	 */
-	public String getAuthorEmail() {
-		return authorEmail;
-	}
-	
 }

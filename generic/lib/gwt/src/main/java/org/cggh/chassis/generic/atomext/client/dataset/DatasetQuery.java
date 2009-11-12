@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.atomext.client.datafile;
+package org.cggh.chassis.generic.atomext.client.dataset;
 
 import org.cggh.chassis.generic.atomext.client.shared.AtomQuery;
 
@@ -9,7 +9,7 @@ import org.cggh.chassis.generic.atomext.client.shared.AtomQuery;
  * @author aliman
  *
  */
-public class DataFileQuery extends AtomQuery {
+public class DatasetQuery extends AtomQuery {
 
 	// no other params needed for now
 	

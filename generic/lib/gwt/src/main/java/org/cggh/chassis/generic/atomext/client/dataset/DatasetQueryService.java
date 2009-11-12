@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.atomext.client.datafile;
+package org.cggh.chassis.generic.atomext.client.dataset;
 
 import org.cggh.chassis.generic.atom.client.AtomService;
 import org.cggh.chassis.generic.atomext.client.shared.AtomQueryService;
@@ -10,8 +10,8 @@ import org.cggh.chassis.generic.atomext.client.shared.AtomQueryService;
  * @author aliman
  *
  */
-public class DataFileQueryService 
-	extends AtomQueryService<DataFileEntry, DataFileFeed, DataFileQuery> {
+public class DatasetQueryService 
+	extends AtomQueryService<DatasetEntry, DatasetFeed, DatasetQuery> {
 
 	
 	
@@ -19,7 +19,7 @@ public class DataFileQueryService
 	/**
 	 * @param serviceUrl
 	 */
-	public DataFileQueryService(String serviceUrl) {
+	public DatasetQueryService(String serviceUrl) {
 		super(serviceUrl);
 	}
 
@@ -29,12 +29,12 @@ public class DataFileQueryService
 	 * @see org.cggh.chassis.generic.atomext.client.shared.AtomQueryService#createPersistenceService()
 	 */
 	@Override
-	protected AtomService<DataFileEntry, DataFileFeed> createPersistenceService() {
-		return new DataFilePersistenceService();
+	protected AtomService<DatasetEntry, DatasetFeed> createPersistenceService() {
+		return new DatasetPersistenceService();
 	}
 
+
+
 	
-
-
 
 }
