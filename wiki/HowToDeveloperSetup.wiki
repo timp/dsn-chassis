@@ -114,6 +114,7 @@ You should now be able to start the server from within the Servers view, and bro
 If using ubuntu 9.10 you may need to extract old libstdc++.so.5 from jaunty ia32-libs 
 as per http://blog.dalejefferson.com/2009/09/gwt-on-64bit-ubuntu-karmic-910.html
 
+On ubunto 9.10 32 bit install from http://packages.ubuntu.com/jaunty/i386/libstdc++5/download
 
 
 
