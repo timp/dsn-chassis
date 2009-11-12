@@ -3,7 +3,6 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.data.client.dataset;
 
-import org.cggh.chassis.generic.client.gwt.widget.data.client.DataManagementWidget;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.ChassisWidgetRenderer;
@@ -24,7 +23,7 @@ public class EditDatasetWidget extends DelegatingWidget {
 	 * 
 	 */
 	private void ensureLog() {
-		if (log == null) log = LogFactory.getLog(DataManagementWidget.class);
+		if (log == null) log = LogFactory.getLog(EditDatasetWidget.class);
 	}
 
 

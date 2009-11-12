@@ -14,6 +14,7 @@ import org.cggh.chassis.generic.widget.client.DelegatingWidget;
 public class ViewDatasetWidget 
 	extends DelegatingWidget<ViewDatasetWidgetModel, ViewDatasetWidgetRenderer> {
 	private Log log = LogFactory.getLog(ViewDatasetWidget.class);
+	private ViewDatasetWidgetController controller;
 
 
 	
@@ -40,15 +41,48 @@ public class ViewDatasetWidget
 	}
 
 
+	
+	
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#init()
+	 */
+	@Override
+	public void init() {
+		ensureLog();
+		log.enter("init");
+
+		super.init(); // this will instantiate model and renderer
+		
+		this.controller = new ViewDatasetWidgetController(this, this.model);
+		// TODO memory
+		
+		log.leave();
+	}
+	
+	
+	
+	
+	/**
+	 * 
+	 */
+	private void ensureLog() {
+		if (log == null) log = LogFactory.getLog(ViewDatasetWidget.class);
+	}
+
+
+
+
+	
 
 
 	/**
 	 * @param id
 	 */
-	public void setEntry(String id) {
+	public void setCurrentEntry(String id) {
 		log.enter("setEntry");
 		
-		// TODO Auto-generated method stub
+		// delegate to controller
+		this.controller.viewEntry(id);
 		
 		log.leave();
 		
@@ -56,7 +90,12 @@ public class ViewDatasetWidget
 
 
 
+	
+	// TODO adders for action handlers
 
 
+	
+	
+	// TODO memory
 
 }

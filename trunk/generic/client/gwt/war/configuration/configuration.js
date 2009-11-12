@@ -23,6 +23,7 @@ CHASSIS.dataFileCollectionUrl = CHASSIS.existService + "/atom/edit/datafiles";
 CHASSIS.dataFileQueryServiceUrl = CHASSIS.existService + "/query/datafiles.xql";
 
 CHASSIS.datasetCollectionUrl = CHASSIS.existService + "/atom/edit/datasets";
+CHASSIS.datasetQueryServiceUrl = CHASSIS.existService + "/query/datasets.xql";
 
 CHASSIS.mediaCollectionUrl = CHASSIS.existService + "/atom/edit/media";
 
