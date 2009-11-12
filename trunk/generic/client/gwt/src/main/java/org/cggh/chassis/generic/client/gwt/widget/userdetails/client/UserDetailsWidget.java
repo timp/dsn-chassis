@@ -152,5 +152,27 @@ public class UserDetailsWidget
 
 
 
+	/**
+	 * @return
+	 */
+	public UserDetailsTO getCurrentUser() {
+		return this.model.getCurrentUser();
+	}
+
+
+
+
+
+	/**
+	 * @return
+	 */
+	public ChassisRole getCurrentRole() {
+		return this.model.getCurrentRole();
+	}
+
+
+
+
+
 
 }

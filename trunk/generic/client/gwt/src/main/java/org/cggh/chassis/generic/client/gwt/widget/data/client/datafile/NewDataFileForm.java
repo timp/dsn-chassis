@@ -142,34 +142,5 @@ public class NewDataFileForm extends ChassisWidget {
 	
 	
 	
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#destroy()
-	 */
-	@Override
-	public void destroy() {
-		log.enter("destroy");
-
-		// nothing to do
-
-		log.leave();
-
-	}
-
-	
-	
-	
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#unbindUI()
-	 */
-	@Override
-	protected void unbindUI() {
-		log.enter("unbindUI");
-
-		// nothing to do
-
-		log.leave();
-	}
-	
-	
 
 }

@@ -56,17 +56,19 @@ public class ChassisRole implements Comparable<ChassisRole> {
 		// Filter out roles relevant to chassis
 		String userChassisRolesPrefix = Configuration.getUserChassisRolesPrefix();
 
-		for ( String role : user.getRoles() ) {
-			if (role.startsWith(userChassisRolesPrefix)) {
-				
-				String permissionSuffix = role.replace(userChassisRolesPrefix, "");
-				
-				for (ChassisRole r : Configuration.getChassisRoles()) {
-					if (permissionSuffix.equalsIgnoreCase(r.permissionSuffix)) {
-						roles.add(r);
+		if (user != null) {
+			for ( String role : user.getRoles() ) {
+				if (role.startsWith(userChassisRolesPrefix)) {
+					
+					String permissionSuffix = role.replace(userChassisRolesPrefix, "");
+					
+					for (ChassisRole r : Configuration.getChassisRoles()) {
+						if (permissionSuffix.equalsIgnoreCase(r.permissionSuffix)) {
+							roles.add(r);
+						}
 					}
+					
 				}
-				
 			}
 		}
 		
