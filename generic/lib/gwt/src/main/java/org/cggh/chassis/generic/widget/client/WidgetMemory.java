@@ -81,8 +81,13 @@ public abstract class WidgetMemory {
 	
 	
 	private String createHistoryToken() {
+		log.enter("createHistoryToken");
 		
 		String mnemonic = this.createMnemonic();
+		
+		if (mnemonic == null) {
+			return ""; // is this sensible?
+		}
 		
 		if (mnemonic.indexOf(delimiter) >= 0) {
 			throw new Error("mnemonic must not contain character '"+delimiter+"'");
@@ -100,6 +105,7 @@ public abstract class WidgetMemory {
 			}
 		}
 		
+		log.leave();
 		return b.toString();
 	}
 	

@@ -27,17 +27,6 @@ public class AsyncWidgetModel extends ChassisWidgetModel {
 
 	
 	
-	/**
-	 * @param owner
-	 */
-	public AsyncWidgetModel(ChassisWidget owner) {
-		super(owner);
-	}
-
-	
-	
-	
-	
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.widget.client.ChassisWidgetModel#init()
 	 */
