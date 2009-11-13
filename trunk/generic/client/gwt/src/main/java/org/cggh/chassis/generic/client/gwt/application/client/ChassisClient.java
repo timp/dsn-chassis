@@ -53,12 +53,6 @@ public class ChassisClient extends ChassisWidget {
 
 
 
-	private Deferred<UserDetailsTO> currentUserDeferred;
-
-	
-	
-	
-
 
 
 	/* (non-Javadoc)
@@ -98,9 +92,6 @@ public class ChassisClient extends ChassisWidget {
 		this.userDetailsWidget = new UserDetailsWidget();		
 		this.add(this.userDetailsWidget);
 		
-		log.debug("refresh current user details");
-		this.currentUserDeferred = this.userDetailsWidget.refreshCurrentUserDetails();
-
 		this.perspectivesContainer = new FlowPanel();
 		this.add(this.perspectivesContainer);
 
@@ -185,6 +176,16 @@ public class ChassisClient extends ChassisWidget {
 	 * @param currentRole
 	 */
 	protected void updateCurrentPerspective(ChassisRole currentRole) {
+		this.updateCurrentPerspective(currentRole, true);
+	}
+	
+	
+	
+	
+	/**
+	 * @param currentRole
+	 */
+	protected void updateCurrentPerspective(ChassisRole currentRole, boolean memorise) {
 		log.enter("updateCurrentPerspective");
 		
 		for (Widget w : this.perspectives.values()) {
@@ -196,7 +197,7 @@ public class ChassisClient extends ChassisWidget {
 			log.debug("currentRole: "+currentRole.roleLabel);
 			ChassisWidget w = this.perspectives.get(currentRole.roleId);
 
-			if (w != null && !w.isVisible()) {
+			if (w != null) {
 				
 				log.debug("setting active widget visible");
 				w.setVisible(true);
@@ -204,8 +205,10 @@ public class ChassisClient extends ChassisWidget {
 				log.debug("setting memory child");
 				this.memory.setChild(w.getMemory());
 				
-				log.debug("memorising");
-				this.memory.memorise();
+				if (memorise) {
+					log.debug("memorising");
+					this.memory.memorise();
+				}
 				
 			}
 			else {
@@ -279,37 +282,24 @@ public class ChassisClient extends ChassisWidget {
 
 			log.debug("mnemonic: "+mnemonic);
 			
-			final WidgetMemory self = this;
-			final Deferred<WidgetMemory> deferredSelf = new Deferred<WidgetMemory>();
-			
-			Function<UserDetailsTO, UserDetailsTO> remember = new Function<UserDetailsTO, UserDetailsTO>() {
-
-				public UserDetailsTO apply(UserDetailsTO in) {
-					for (ChassisRole role : ChassisRole.getRoles(in)) {
-						if (mnemonic != null && mnemonic.equals(role.roleLabel.toLowerCase())) {
-							userDetailsWidget.setCurrentRole(role, false); // could this happen more than once?
-						}
-					}
-					deferredSelf.callback(self); 
-					return in;
-				}
-				
-			};
+			Deferred<WidgetMemory> deferredSelf = new Deferred<WidgetMemory>();
 			
 			UserDetailsTO user = userDetailsWidget.getCurrentUser();
 			
 			if (user != null) {
 
-				// remember immediately
-				remember.apply(user);
+				log.debug("current user is available, remember immediately");
 
-			}
-			else {
+				for (ChassisRole role : ChassisRole.getRoles(user)) {
+					if (mnemonic != null && mnemonic.equals(role.roleLabel.toLowerCase())) {
+						log.debug("setting current role: "+role.roleLabel);
+						userDetailsWidget.setCurrentRole(role, false); 
+						updateCurrentPerspective(role, false);
+					}
+				}
 				
-				// refresh user details is in progress, will need to wait
-				// before remembering
-				currentUserDeferred.addCallback(remember);
-				
+				deferredSelf.callback(this); // callback immediately
+
 			}
 			
 			log.leave();
@@ -318,5 +308,14 @@ public class ChassisClient extends ChassisWidget {
 
 	}
 
+	
+	
+	
+	public Deferred<UserDetailsTO> refreshCurrentUser() {
+		return this.userDetailsWidget.refreshCurrentUserDetails();
+	}
 
+	
+	
+	
 }

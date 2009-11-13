@@ -3,10 +3,13 @@
  */
 package org.cggh.chassis.generic.client.gwt.main.client;
 
+import org.cggh.chassis.generic.async.client.Deferred;
+import org.cggh.chassis.generic.async.client.Function;
 import org.cggh.chassis.generic.client.gwt.application.client.ChassisClient;
 import org.cggh.chassis.generic.log.client.AllenSauerLog;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
+import org.cggh.chassis.generic.user.transfer.UserDetailsTO;
 import org.cggh.chassis.generic.widget.client.WidgetMemory;
 import org.cggh.chassis.generic.widget.client.WidgetMemory.HistoryManager;
 
@@ -30,9 +33,11 @@ public class MainEntryPoint implements EntryPoint {
 	static {
 		LogFactory.create = AllenSauerLog.create;
 		LogFactory.hide("*");
+		LogFactory.show("org.cggh.chassis.generic.widget.*");
+		LogFactory.show("org.cggh.chassis.generic.client.gwt.main.*");
 		LogFactory.show("org.cggh.chassis.generic.client.gwt.application.*");
 		LogFactory.show("org.cggh.chassis.generic.client.gwt.widget.data.*");
-		LogFactory.show("org.cggh.chassis.generic.client.gwt.widget.study.*");
+//		LogFactory.show("org.cggh.chassis.generic.client.gwt.widget.study.*");
 	}
 
 
@@ -67,13 +72,34 @@ public class MainEntryPoint implements EntryPoint {
 	 * 
 	 */
 	private void contructChassisClient() {
+		log.enter("contructChassisClient");
+		
 		ChassisClient client = new ChassisClient();
 		RootPanel.get("chassisClientPane").add(client);
 		
 		HistoryManager hm = new WidgetMemory.HistoryManager(client.getMemory());
 		History.addValueChangeHandler(hm);
-		History.fireCurrentHistoryState();
+		final String token = History.getToken();
+		
+		Deferred<UserDetailsTO> deferredUser = client.refreshCurrentUser();
 
+		deferredUser.addCallback(new Function<UserDetailsTO, UserDetailsTO>() {
+
+			public UserDetailsTO apply(UserDetailsTO in) {
+				log.enter("anon callback function");
+				
+				if (token != null) {
+					log.debug("applying history token: "+token);
+					History.newItem(token);
+				}
+
+				log.leave();
+				return in;
+			}
+			
+		});
+
+		log.leave();
 	}
 
 
