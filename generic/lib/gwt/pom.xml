@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <!--
-    GWT-Maven archetype generated POM 
-  -->
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.cggh.chassis</groupId>
   <artifactId>generic-lib-gwt</artifactId>
@@ -65,18 +62,6 @@
       </includes>
      </resource>
     </resources>
-    <!-- added from this post http://osdir.com/ml/GoogleWebToolkit/2009-04/msg02003.html -->
-    <!-- TPP TLDR
-    <resources>
-      <resource>
-        <directory>${project.build.sourceDirectory}</directory>
-        <targetPath>.</targetPath>
-        <excludes>
-          <exclude>**/*.java</exclude>
-        </excludes>
-      </resource>
-    </resources>
-    -->
     <plugins>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
@@ -85,41 +70,13 @@
         <executions>
           <execution>
             <goals>
-              <goal>generateAsync</goal>
               <goal>compile</goal>
-              <!-- 
-                <goal>test</goal>
-              -->
             </goals>
             <configuration>
 	      <module>org.cggh.chassis.generic.lib.All</module>
-              <!--output>${basedir}/war</output>
-              <runTarget>
-                com.company.Application/Application.html
-              </runTarget>
-              <webXml>${basedir}/war/WEB-INF/web.xml</webXml>
-              <hostedWebapp>${basedir}/war</hostedWebapp -->
             </configuration>
           </execution>
         </executions>
-      </plugin>
-
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-war-plugin</artifactId>
-        <configuration>
-          <!--
-            If you want to use the target/web.xml file mergewebxml produces,
-            tell the war plugin to use it.
-            Also, exclude what you want from the final artifact here.
-          -->
-          <!-- <webXml>target/web.xml</webXml>  -->
-          <!-- added to comply with gwt 1.6 structure -->
-          <warSourceDirectory>${basedir}/war</warSourceDirectory>
-          <!-- gwt puts dependencies in /war/WEB-INF/lib (even though some of them are marked provided in maven -->
-          <warSourceExcludes>.gwt-tmp/**,WEB-INF/lib/gwt-user*</warSourceExcludes>
-
-        </configuration>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -129,90 +86,6 @@
            <target>1.5</target>
           </configuration>
       </plugin>
-
-      <!--  Use the dependency plugin to unpack gwt-dev-PLATFORM-libs.zip -->
-      <!--
-        (this is a replacement for the old "automatic" mode - useful if you
-        don't have GWT installed already, or you just want a maven way to
-        handle gwt deps)
-      -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-dependency-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>unpack</id>
-            <phase>compile</phase>
-            <goals>
-              <goal>unpack</goal>
-            </goals>
-            <configuration>
-              <artifactItems>
-                <artifactItem>
-                  <groupId>com.google.gwt</groupId>
-                  <artifactId>gwt-dev</artifactId>
-                  <version>${gwtVersion}</version>
-                  <classifier>${platform}-libs</classifier>
-                  <type>zip</type>
-                  <overWrite>false</overWrite>
-                  <outputDirectory>${settings.localRepository}/com/google/gwt/gwt-dev/${gwtVersion}</outputDirectory>
-                </artifactItem>
-              </artifactItems>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <!--
-                If you want to use the target/web.xml file mergewebxml produces,
-                tell the war plugin to use it. 
-                Also, exclude what you want from the final artifact here. 
-       -->
-       <plugin>
-         <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-war-plugin</artifactId>
-          <configuration>
-          <!-- <webXml>target/web.xml</webXml>-->
-          <warSourceExcludes>.gwt-tmp/**</warSourceExcludes>                  
-          </configuration>                
-        </plugin>
     </plugins>
   </build>
-  
-  <!--  profiles (with activation per platform) -->
-  <profiles>
-    <profile>
-      <id>gwt-dev-windows</id>
-      <properties>
-        <platform>windows</platform>
-      </properties>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-        <os>
-          <family>Windows</family>
-        </os>
-      </activation>
-    </profile>
-    <profile>
-      <id>gwt-dev-mac</id>
-      <properties>
-        <platform>mac</platform>
-      </properties>
-      <activation>
-        <os>
-          <family>mac</family>
-        </os>
-      </activation>
-    </profile>
-    <profile>
-      <id>gwt-dev-linux</id>
-      <properties>
-        <platform>linux</platform>
-      </properties>
-      <activation>
-        <os>
-          <name>Linux</name>
-        </os>
-      </activation>
-    </profile>
-  </profiles>
 </project>
