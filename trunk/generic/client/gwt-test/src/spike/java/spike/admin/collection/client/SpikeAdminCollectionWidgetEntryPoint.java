@@ -4,7 +4,7 @@
 package spike.admin.collection.client;
 
 import org.cggh.chassis.generic.client.gwt.configuration.client.JsConfiguration;
-import org.cggh.chassis.generic.client.gwt.widget.admin.collection.client.AdminCollectionWidget;
+import org.cggh.chassis.generic.client.gwt.widget.admin.client.AdminCollectionWidget;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.event.dom.client.ClickEvent;

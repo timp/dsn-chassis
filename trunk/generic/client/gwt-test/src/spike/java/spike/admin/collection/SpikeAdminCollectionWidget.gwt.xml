@@ -4,7 +4,7 @@
   <inherits name="com.google.gwt.user.User" />
   <inherits name="org.cggh.chassis.generic.client.gwt.configuration.Configuration" />
   <inherits
-    name="org.cggh.chassis.generic.client.gwt.widget.admin.collection.AdminCollectionWidget" />
+    name="org.cggh.chassis.generic.client.gwt.widget.admin.Admin" />
   <entry-point
     class="spike.admin.collection.client.SpikeAdminCollectionWidgetEntryPoint" />
 </module>
