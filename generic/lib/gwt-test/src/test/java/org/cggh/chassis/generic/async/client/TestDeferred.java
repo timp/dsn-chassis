@@ -29,6 +29,7 @@ public class TestDeferred {
 	}
 	
 	
+	public TestDeferred() {}
 	
 	private abstract class TestFunction<I,O> implements Function<I,O> {
 		protected int called = 0;
