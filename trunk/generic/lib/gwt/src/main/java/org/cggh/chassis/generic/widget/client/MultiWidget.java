@@ -308,11 +308,15 @@ public abstract class MultiWidget
 		public Deferred<WidgetMemory> remember(String mnemonic) {
 			log.enter("remember");
 
+			log.debug("mnemonic: "+mnemonic);
+			
 			Deferred<WidgetMemory> def = new Deferred<WidgetMemory>();
 			
-			for (Widget w : MultiWidget.this) {
+			for (Widget w : mainChildren) {
 				if (w instanceof ChassisWidget) {
-					if (this.createMnemonic((ChassisWidget)w).equals(mnemonic)) {
+					ChassisWidget cw = (ChassisWidget) w;
+					if (this.createMnemonic(cw).equals(mnemonic)) {
+						log.debug("found matching child, setting active child: "+cw.getName());
 						setActiveChild(w, false);
 					}
 				}
