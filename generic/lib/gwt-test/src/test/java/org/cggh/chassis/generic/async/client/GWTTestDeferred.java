@@ -3,14 +3,11 @@
  */
 package org.cggh.chassis.generic.async.client;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
 
 import org.cggh.chassis.generic.async.client.Deferred;
 import org.cggh.chassis.generic.async.client.Function;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
-import org.junit.Test;
 
 import com.google.gwt.junit.client.GWTTestCase;
 
@@ -431,7 +428,6 @@ public class GWTTestDeferred extends GWTTestCase {
 	 * Test that an exception thrown from an adapter function is passed on
 	 * to an adapted deferred.
 	 */
-	@Test
 	public void testAdapt_errBack() {
 		log.enter("testAdapt_errBack");
 		

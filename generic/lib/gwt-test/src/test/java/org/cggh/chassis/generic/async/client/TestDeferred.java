@@ -3,15 +3,13 @@
  */
 package org.cggh.chassis.generic.async.client;
 
+import junit.framework.TestCase;
+
 import org.cggh.chassis.generic.async.client.Deferred;
 import org.cggh.chassis.generic.async.client.Function;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.log.client.SystemOutLog;
-import org.junit.Before;
-import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 
 
@@ -19,7 +17,7 @@ import static org.junit.Assert.*;
  * @author aliman
  *
  */
-public class TestDeferred {
+public class TestDeferred extends TestCase {
 	
 	
 	
@@ -37,11 +35,9 @@ public class TestDeferred {
 
 	private Log log = LogFactory.getLog(this.getClass());
 	
-	@Before
 	public void setUp() {
 	}
 
-	@Test
 	public void testCallback() {
 		log.enter("testCallback");
 		
@@ -76,7 +72,6 @@ public class TestDeferred {
 		log.leave();
 	}
 	
-	@Test
 	public void testAddCallbackTestFunctionAfterCallback() {
 		log.enter("testAddCallbackFunctionAfterCallback");
 		
@@ -115,7 +110,6 @@ public class TestDeferred {
 		log.leave();
 	}
 	
-	@Test
 	public void testErrback() {
 		log.enter("testErrback");
 		
@@ -150,7 +144,6 @@ public class TestDeferred {
 		log.leave();
 	}
 	
-	@Test
 	public void testAddErrbackFunctionAfterErrback() {
 		log.enter("testAddErrbackFunctionAfterErrback");
 		
@@ -189,7 +182,6 @@ public class TestDeferred {
 		log.leave();
 	}
 	
-	@Test
 	public void testThreeCallbacks() {
 		log.enter("testTwoCallbacks");
 		
@@ -260,7 +252,6 @@ public class TestDeferred {
 		log.leave();
 	}
 	
-	@Test
 	public void testCallbackThrows() {
 		log.enter("testCallbackThrows");
 		
@@ -311,7 +302,6 @@ public class TestDeferred {
 		log.leave();
 	}
 
-	@Test
 	public void testCallbackReturnsThrowable() {
 		log.enter("testCallbackReturnsThrowable");
 		
@@ -362,7 +352,6 @@ public class TestDeferred {
 		log.leave();
 	}
 	
-	@Test
 	public void testCallbackReturnsDeferred() {
 		log.enter("testCallbackReturnsDeferred");
 
@@ -434,7 +423,6 @@ public class TestDeferred {
 	 * Test that an exception thrown from an adapter function is passed on
 	 * to an adapted deferred.
 	 */
-	@Test
 	public void testAdapt_errBack() {
 		log.enter("testAdapt_errBack");
 		
