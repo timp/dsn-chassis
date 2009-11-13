@@ -3,262 +3,221 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.study.client;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.cggh.chassis.generic.atomext.client.study.StudyEntry;
+import org.cggh.chassis.generic.client.gwt.common.client.ChassisUser;
+import org.cggh.chassis.generic.log.client.Log;
+import org.cggh.chassis.generic.log.client.LogFactory;
+import org.cggh.chassis.generic.widget.client.HasMenuEventHandlers;
+import org.cggh.chassis.generic.widget.client.MenuEvent;
+import org.cggh.chassis.generic.widget.client.MultiWidget;
 
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.MenuBar;
-import com.google.gwt.user.client.ui.Panel;
-import com.google.gwt.user.client.ui.SimplePanel;
+import com.google.gwt.user.client.Command;
+import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.ui.MenuItem;
 
 /**
- * @author raok
+ * @author aliman
  *
  */
-public class StudyManagementWidget extends Composite implements StudyManagementWidgetAPI,
-											  NewStudyWidgetPubSubAPI,
-											  EditStudyWidgetPubSubAPI,
-											  ViewStudyWidgetPubSubAPI,
-											  MyStudiesWidgetPubSubAPI,
-											  ViewStudyQuestionnaireWidget.PubSubAPI, 
-											  EditStudyQuestionnaireWidget.PubSubAPI {
+public class StudyManagementWidget 
+	extends MultiWidget 
+	implements HasMenuEventHandlers {
 
 	
 	
 	
 	
-	private StudyManagementWidgetModel model;
-	private StudyManagementWidgetController controller;
-	private StudyManagementWidgetDefaultRenderer renderer;
-	private Panel menuCanvas = new SimplePanel();
-	private Set<StudyManagementWidgetPubSubAPI> listeners = new HashSet<StudyManagementWidgetPubSubAPI>();
+	// utility fields
+	private Log log = LogFactory.getLog(StudyManagementWidget.class);
+	
+	
+	
+	
+	// UI fields
+	private NewStudyWidget createStudyWidget; 
+	private ViewStudyWidget viewStudyWidget;
+	private MyStudiesWidget viewStudiesWidget;
+	private EditStudyWidget editStudyWidget;
+	private ViewStudyQuestionnaireWidget viewStudyQuestionnaireWidget;
+	private EditStudyQuestionnaireWidget editStudyQuestionnaireWidget;
 
 	
 	
-	
-//	public StudyManagementWidget(Panel displayCanvas) {
-//		
-//		model = new StudyManagementWidgetModel(this);
-//		
-//		controller = new StudyManagementWidgetController(model);
-//		
-//		renderer = new StudyManagementWidgetDefaultRenderer(this, menuCanvas, displayCanvas, controller);
-//		
-//		// register renderer as listener to model
-//		model.addListener(renderer);
-//		
-//		this.subscribeToChildWidgetEvents();
-//		
-//		this.initWidget(renderer.getCanvas());
-//	}
-	
-	
-	
-	
-	public StudyManagementWidget() {
 
-		model = new StudyManagementWidgetModel(this);
+	@Override
+	protected void renderChildWidgets() {
+		log.enter("renderChildWidgets");
 		
-		controller = new StudyManagementWidgetController(model);
+		// create child widgets
+		this.viewStudyWidget = new ViewStudyWidget();
+		this.createStudyWidget = new NewStudyWidget();
+		this.viewStudiesWidget = new MyStudiesWidget("view");
+		this.editStudyWidget = new EditStudyWidget();
+		this.viewStudyQuestionnaireWidget = new ViewStudyQuestionnaireWidget();
+		this.editStudyQuestionnaireWidget = new EditStudyQuestionnaireWidget();
 		
-		renderer = new StudyManagementWidgetDefaultRenderer(this, controller);
+		this.add(this.viewStudyWidget);
+		this.add(this.createStudyWidget);
+		this.add(this.viewStudiesWidget);
+		this.add(this.editStudyWidget);
+		this.add(this.viewStudyQuestionnaireWidget);
+		this.add(this.editStudyQuestionnaireWidget);
 		
-		// register renderer as listener to model
-		model.addListener(renderer);
+		log.leave();
+	}
+
+	
+	
+	
+	
+	@Override
+	protected void registerHandlersForChildWidgetEvents() {
+
+		// TODO rewrite below using gwt event pattern
 		
-		this.subscribeToChildWidgetEvents();
+		this.viewStudyWidget.addViewStudyWidgetListener(new ViewStudyWidgetPubSubAPI() {
+			
+			public void onUserActionViewStudyQuestionnaire(StudyEntry studyEntry) {
+
+				setActiveChild(viewStudyQuestionnaireWidget);
+				viewStudyQuestionnaireWidget.setEntry(studyEntry);
+				
+			}
+			
+			public void onUserActionEditStudyQuestionnaire(StudyEntry studyEntry) {
+
+				setActiveChild(editStudyQuestionnaireWidget);
+				editStudyQuestionnaireWidget.setEntry(studyEntry);
+				
+			}
+			
+			public void onUserActionEditStudy(StudyEntry studyEntryToEdit) {
+				
+				setActiveChild(editStudyWidget);
+				editStudyWidget.editStudyEntry(studyEntryToEdit);
+				
+			}
+		});
 		
-		this.initWidget(renderer.getCanvas());
+		this.createStudyWidget.addListener(new NewStudyWidgetPubSubAPI() {
+			
+			public void onUserActionCreateStudyCancelled() {
+				History.back();
+			}
+			
+			public void onNewStudyCreated(StudyEntry studyEntry) {
+
+				setActiveChild(viewStudyWidget);
+				viewStudyWidget.loadStudyEntry(studyEntry);
+
+			}
+		});
 		
-	}
-	
-	
-	
-	
-	private void subscribeToChildWidgetEvents() {
+		this.editStudyWidget.addListener(new EditStudyWidgetPubSubAPI() {
+			
+			public void onUserActionEditStudyCancelled() {
+				History.back();
+			}				
+			
+			public void onStudyUpdateSuccess(StudyEntry updatedStudyEntry) {
 
-		//register this widget as a listener to child widgets.
-		renderer.viewStudyWidget.addViewStudyWidgetListener(this);
-		renderer.createStudyWidget.addListener(this);
-		renderer.editStudyWidget.addListener(this);
-		renderer.viewStudiesWidget.addListener(this);
-		renderer.viewStudyQuestionnaireWidget.addListener(this);
-		renderer.editStudyQuestionnaireWidget.addListener(this);
+				setActiveChild(viewStudyWidget);
+				viewStudyWidget.loadStudyEntry(updatedStudyEntry);
+
+			}
+		});
 		
-	}
+		this.viewStudiesWidget.addListener(new MyStudiesWidgetPubSubAPI() {
+			
+			public void onUserActionSelectStudy(StudyEntry studyEntry) {
 
-	
-	
-	
-	public void onNewStudyCreated(StudyEntry newStudyEntry) {
-		controller.displayViewStudyWidget();
-		renderer.viewStudyWidget.loadStudyEntry(newStudyEntry);
-	}
-
-	
-	
-	
-	public void onStudyUpdateSuccess(StudyEntry updatedStudyEntry) {
-		controller.displayViewStudyWidget();
-		renderer.viewStudyWidget.loadStudyEntry(updatedStudyEntry);
-	}
-
-	
-	
-	
-	public void onUserActionEditStudy(StudyEntry studyEntryToEdit) {
-		controller.displayEditStudyWidget();
-		renderer.editStudyWidget.editStudyEntry(studyEntryToEdit);
-	}
-	
-	
-	
-
-	public void onUserActionSelectStudy(StudyEntry studyEntry) {
-		controller.displayViewStudyWidget();
-		renderer.viewStudyWidget.loadStudyEntry(studyEntry);
-	}
-
-	
-	
-	
-	public void onUserActionCreateStudyCancelled() {
-		controller.displayViewStudiesWidget();
-	}
-	
-	
-	
-	
-	public void onUserActionEditStudyCancelled() {
-		controller.displayViewStudyWidget();
-	}
-
-	
-	
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.client.gwt.widget.study.view.client.ViewStudyWidgetPubSubAPI#onUserActionEditStudyQuestionnaire(org.cggh.chassis.generic.atom.study.client.format.StudyEntry)
-	 */
-	public void onUserActionEditStudyQuestionnaire(StudyEntry studyEntry) {
+				setActiveChild(viewStudyWidget);
+				viewStudyWidget.loadStudyEntry(studyEntry);
+				
+			}
+		});
 		
-//		renderer.studyQuestionnaireWidget.setEntry(studyEntry, false);
-//		controller.displayStudyQuestionnaireWidget();
+		this.viewStudyQuestionnaireWidget.addListener(new ViewStudyQuestionnaireWidget.PubSubAPI() {
+			
+			public void onUserActionViewStudy(StudyEntry entry) {
 
-		controller.displayEditStudyQuestionnaireWidget();
-		renderer.editStudyQuestionnaireWidget.setEntry(studyEntry);
+				setActiveChild(viewStudyWidget);
+				viewStudyWidget.loadStudyEntry(entry);
+				
+			}
+			
+			public void onUserActionEditStudyQuestionnaire(StudyEntry entry) {
 
-	}
-
-
-
-
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.client.gwt.widget.study.view.client.ViewStudyWidgetPubSubAPI#onUserActionViewStudyQuestionnaire(org.cggh.chassis.generic.atom.study.client.format.StudyEntry)
-	 */
-	public void onUserActionViewStudyQuestionnaire(StudyEntry studyEntry) {
+				setActiveChild(editStudyQuestionnaireWidget);
+				editStudyQuestionnaireWidget.setEntry(entry);
+				
+			}
+		});
 		
-//		renderer.studyQuestionnaireWidget.setEntry(studyEntry, true);
-//		controller.displayStudyQuestionnaireWidget();
-		
-		controller.displayViewStudyQuestionnaireWidget();
-		renderer.viewStudyQuestionnaireWidget.setEntry(studyEntry);
+		this.editStudyQuestionnaireWidget.addListener(new EditStudyQuestionnaireWidget.PubSubAPI() {
+			
+			public void onUserActionEditStudyQuestionnaireCancelled() {
+				History.back();
+			}
+			
+			public void onStudyQuestionnaireUpdateSuccess(StudyEntry entry) {
 
-	}
+				setActiveChild(viewStudyQuestionnaireWidget);
+				viewStudyQuestionnaireWidget.setEntry(entry);
 
-	
-	
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.client.gwt.widget.studymanagement.client.StudyManagementWidgetAPI#getMenuCanvas()
-	 */
-	public Panel getMenuCanvas() {
-		return menuCanvas;
-	}
-
-	
-	
-	
-	protected void fireOnDisplayStatusChanged(Boolean couldStatusContainUnsavedData) {
-
-		for (StudyManagementWidgetPubSubAPI listener : listeners) {
-			listener.onStudyManagementDisplayStatusChanged(couldStatusContainUnsavedData);
-		}
+			}
+		});
 		
 	}
 
 	
 	
 	
-	public void addListener(StudyManagementWidgetPubSubAPI listener) {
+	
+	@Override
+	protected void bindMenuBar() {
+		log.enter("bindMenuBar");
+		
+		log.debug("construct new study menu item");
 
-		listeners.add(listener);
+		Command newStudyCommand = new Command() { 
+			public void execute() { 
+				log.enter("[anon Command] :: execute");
+
+				createStudyWidget.setUpNewStudy(ChassisUser.getCurrentUserEmail());
+				setActiveChild(createStudyWidget);
+				fireEvent(new MenuEvent());
+				
+				log.leave();
+			} 
+		};
+
+		MenuItem newStudyMenuItem = new MenuItem("new study", newStudyCommand );
+		menuBar.addItem(newStudyMenuItem);
+		
+		log.debug("construct my studies menu item");
+		
+		Command viewStudiesCommand = new Command() { 
+			public void execute() { 
+				log.enter("[anon Command] :: execute");
+
+				viewStudiesWidget.loadStudiesByAuthorEmail(ChassisUser.getCurrentUserEmail());
+				setActiveChild(viewStudiesWidget);
+				fireEvent(new MenuEvent());
+				
+				log.leave();
+			} 
+		};
+
+		MenuItem viewStudiesMenuItem = new MenuItem("my studies", viewStudiesCommand );
+		menuBar.addItem(viewStudiesMenuItem);		
+		
+		log.leave();
 	}
+
+
+
 
 	
-	
-	
-	public void resetWidget() {
-		controller.reset();
-	}
-
-
-
-
-	/**
-	 * @return
-	 */
-	public MenuBar getMenu() {
-		return this.renderer.getMenu();
-	}
-
-
-
-
-	/**
-	 * 
-	 */
-	public void fireOnStudyManagementMenuAction() {
-
-		for (StudyManagementWidgetPubSubAPI listener : listeners) {
-			listener.onStudyManagementMenuAction(this);
-		}
-
-	}
-
-
-
-
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.client.gwt.widget.studyquestionnaire.client.ViewStudyQuestionnaireWidget.PubSubAPI#onUserActionViewStudy(org.cggh.chassis.generic.atom.study.client.format.StudyEntry)
-	 */
-	public void onUserActionViewStudy(StudyEntry entry) {
-		controller.displayViewStudyWidget();
-		renderer.viewStudyWidget.loadStudyEntry(entry);
-	}
-
-
-
-
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.client.gwt.widget.studyquestionnaire.client.EditStudyQuestionnaireWidget.PubSubAPI#onUserActionEditStudyQuestionnaireCancelled()
-	 */
-	public void onUserActionEditStudyQuestionnaireCancelled() {
-		controller.displayViewStudyQuestionnaireWidget();
-	}
-
-
-
-
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.client.gwt.widget.studyquestionnaire.client.EditStudyQuestionnaireWidget.PubSubAPI#onStudyQuestionnaireUpdateSuccess(org.cggh.chassis.generic.atom.study.client.format.StudyEntry)
-	 */
-	public void onStudyQuestionnaireUpdateSuccess(StudyEntry entry) {
-		controller.displayViewStudyQuestionnaireWidget();
-		renderer.viewStudyQuestionnaireWidget.setEntry(entry);
-	}
-
-
-
-
 	
 }
