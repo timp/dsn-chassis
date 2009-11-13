@@ -5,7 +5,7 @@
   <artifactId>generic-lib-gwt-test</artifactId>
   <packaging>jar</packaging>
   <version>0.2-SNAPSHOT</version>
-  <name>googlecode_dsn-chassis_generic_lib_gwt</name>
+  <name>googlecode_dsn-chassis_generic_lib_gwt-test</name>
   
   <!--  include pluginRepository and repository for GWT-Maven -->
   <pluginRepositories>
