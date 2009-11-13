@@ -112,6 +112,7 @@
           </execution>
         </executions>
       </plugin>
+      -->
       <plugin>
        <groupId>org.apache.maven.plugins</groupId>
        <artifactId>maven-surefire-plugin</artifactId>
@@ -121,7 +122,6 @@
         </excludes>
        </configuration>
       </plugin>
-      -->
       <!--
                 If you want to use the target/web.xml file mergewebxml produces,
                 tell the war plugin to use it. 
