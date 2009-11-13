@@ -7,6 +7,7 @@ import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 
 import com.google.gwt.event.shared.GwtEvent;
+import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.event.shared.HandlerRegistration;
 
 /**
@@ -19,16 +20,17 @@ public abstract class ChassisWidgetModel {
 	
 	
 	private Log log = LogFactory.getLog(ChassisWidgetModel.class);
-	protected ChassisWidget owner;
+	private HandlerManager handlerManager;
 	
 	
 	
 	
 	
-	public ChassisWidgetModel(ChassisWidget owner) {
+	public ChassisWidgetModel() {
 		log.enter("<constructor>");
 		
-		this.owner = owner;
+		log.debug("instantiate handler manager");
+		this.handlerManager = new HandlerManager(this);
 		
 		log.debug("call init()");
 		this.init();
@@ -40,8 +42,7 @@ public abstract class ChassisWidgetModel {
 	
 	
 	public <H extends ModelChangeHandler> HandlerRegistration addChangeHandler(H handler, GwtEvent.Type<H> type) {
-		// use owner to manage change event handlers
-		return this.owner.addEventHandler(handler, type);
+		return this.handlerManager.addHandler(type, handler);
 	}
 	
 	
@@ -49,8 +50,7 @@ public abstract class ChassisWidgetModel {
 	
 	
 	protected <T, H extends ModelChangeHandler> void fireChangeEvent(ModelChangeEvent<T, H> e) {
-		// use owner to manage change event handlers
-		this.owner.fireEvent(e);
+		this.handlerManager.fireEvent(e);
 	}
 	
 	
