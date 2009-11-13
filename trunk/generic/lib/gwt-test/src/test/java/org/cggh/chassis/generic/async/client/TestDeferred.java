@@ -31,7 +31,7 @@ public class TestDeferred {
 	
 	public TestDeferred() {}
 	
-	private abstract class TestFunction<I,O> implements Function<I,O> {
+	private abstract class HelperTestFunction<I,O> implements Function<I,O> {
 		protected int called = 0;
 	}
 
@@ -51,7 +51,7 @@ public class TestDeferred {
 		final String testString = "hello world!";
 
 		// test callback function
-		TestFunction<String,String> callback = new TestFunction<String,String>() {
+		HelperTestFunction<String,String> callback = new HelperTestFunction<String,String>() {
 			public String apply(String s) {
 				called++;
 				assertEquals(testString, s);
@@ -86,7 +86,7 @@ public class TestDeferred {
 		final String testString = "hello world!";
 
 		// test callback function
-		TestFunction<String,String> callback = new TestFunction<String,String>() {
+		HelperTestFunction<String,String> callback = new HelperTestFunction<String,String>() {
 			public String apply(String s) {
 				called++;
 				assertEquals(testString, s);
@@ -125,7 +125,7 @@ public class TestDeferred {
 		final Throwable testException = new Exception("test exception");
 
 		// test errback function
-		TestFunction<Throwable,Throwable> errback = new TestFunction<Throwable,Throwable>() {
+		HelperTestFunction<Throwable,Throwable> errback = new HelperTestFunction<Throwable,Throwable>() {
 			public Throwable apply(Throwable t) {
 				called++;
 				assertEquals(testException, t);
@@ -160,7 +160,7 @@ public class TestDeferred {
 		final Throwable testException = new Exception("test exception");
 
 		// test errback function
-		TestFunction<Throwable,Throwable> errback = new TestFunction<Throwable,Throwable>() {
+		HelperTestFunction<Throwable,Throwable> errback = new HelperTestFunction<Throwable,Throwable>() {
 			public Throwable apply(Throwable t) {
 				called++;
 				assertEquals(testException, t);
@@ -202,7 +202,7 @@ public class TestDeferred {
 		final Integer j = 42;
 		
 		// first callback function
-		TestFunction<String,Integer> first = new TestFunction<String,Integer>() {
+		HelperTestFunction<String,Integer> first = new HelperTestFunction<String,Integer>() {
 			public Integer apply(String in) {
 				called++;
 				assertEquals(s, in);
@@ -211,7 +211,7 @@ public class TestDeferred {
 		};
 		
 		// second callback function
-		TestFunction<Integer,Integer> second = new TestFunction<Integer,Integer>() {
+		HelperTestFunction<Integer,Integer> second = new HelperTestFunction<Integer,Integer>() {
 			public Integer apply(Integer in) {
 				called++;
 				assertEquals(i, in);
@@ -237,7 +237,7 @@ public class TestDeferred {
 		assertEquals(1, second.called);
 		
 		// try another callback
-		TestFunction<Integer,Boolean> third = new TestFunction<Integer,Boolean>() {
+		HelperTestFunction<Integer,Boolean> third = new HelperTestFunction<Integer,Boolean>() {
 			public Boolean apply(Integer in) {
 				called++;
 				assertEquals(j, in);
@@ -272,7 +272,7 @@ public class TestDeferred {
 		final String bar = "bar";
 		
 		// callback function
-		TestFunction<String,String> callback = new TestFunction<String,String>() {
+		HelperTestFunction<String,String> callback = new HelperTestFunction<String,String>() {
 			public String apply(String in) {
 				called++;
 				assertEquals(foo, in);
@@ -281,7 +281,7 @@ public class TestDeferred {
 		};
 		
 		// errback
-		TestFunction<Throwable,Throwable> errback = new TestFunction<Throwable,Throwable>() {
+		HelperTestFunction<Throwable,Throwable> errback = new HelperTestFunction<Throwable,Throwable>() {
 			public Throwable apply(Throwable in) {
 				called++;
 				assertEquals(bar, in.getLocalizedMessage());
@@ -323,7 +323,7 @@ public class TestDeferred {
 		final String bar = "bar";
 		
 		// callback function
-		TestFunction<String,Object> callback = new TestFunction<String,Object>() {
+		HelperTestFunction<String,Object> callback = new HelperTestFunction<String,Object>() {
 			public Object apply(String in) {
 				called++;
 				assertEquals(foo, in);
@@ -332,7 +332,7 @@ public class TestDeferred {
 		};
 		
 		// errback
-		TestFunction<Throwable,Throwable> errback = new TestFunction<Throwable,Throwable>() {
+		HelperTestFunction<Throwable,Throwable> errback = new HelperTestFunction<Throwable,Throwable>() {
 			public Throwable apply(Throwable in) {
 				called++;
 				assertEquals(bar, in.getLocalizedMessage());
@@ -375,7 +375,7 @@ public class TestDeferred {
 
 		log.debug("create callback functions");
 		
-		TestFunction<String,Deferred<Integer>> first = new TestFunction<String,Deferred<Integer>>() {
+		HelperTestFunction<String,Deferred<Integer>> first = new HelperTestFunction<String,Deferred<Integer>>() {
 			public Deferred<Integer> apply(String in) {
 				called++;
 				assertEquals(s, in);
@@ -383,7 +383,7 @@ public class TestDeferred {
 			}
 		};
 		
-		TestFunction<Integer,Boolean> second = new TestFunction<Integer,Boolean>() {
+		HelperTestFunction<Integer,Boolean> second = new HelperTestFunction<Integer,Boolean>() {
 			public Boolean apply(Integer in) {
 				called++;
 				assertEquals(new Integer(42), in);
