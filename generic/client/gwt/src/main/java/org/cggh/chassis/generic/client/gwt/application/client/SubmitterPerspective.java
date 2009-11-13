@@ -5,7 +5,7 @@ package org.cggh.chassis.generic.client.gwt.application.client;
 
 
 import org.cggh.chassis.generic.client.gwt.widget.data.client.DataManagementWidget;
-import org.cggh.chassis.generic.client.gwt.widget.study.client.NewStudyManagementWidget;
+import org.cggh.chassis.generic.client.gwt.widget.study.client.StudyManagementWidget;
 import org.cggh.chassis.generic.client.gwt.widget.submitter.home.client.SubmitterHomeWidget;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
@@ -30,7 +30,7 @@ public class SubmitterPerspective
 	
 	// UI fields
 	private SubmitterHomeWidget submitterHomeWidget;
-	private NewStudyManagementWidget studyManagementWidget;
+	private StudyManagementWidget studyManagementWidget;
 	private DataManagementWidget dataManagementWidget;
 	private MenuBar studyMenu, dataMenu;
 
@@ -46,7 +46,7 @@ public class SubmitterPerspective
 	protected void renderMainChildren() {
 
 		this.submitterHomeWidget = new SubmitterHomeWidget();
-		this.studyManagementWidget = new NewStudyManagementWidget();
+		this.studyManagementWidget = new StudyManagementWidget();
 		this.dataManagementWidget = new DataManagementWidget();
 		
 		this.mainChildren.add(this.submitterHomeWidget);
