@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.cggh.chassis</groupId>
   <artifactId>generic-client-gwt</artifactId>
-  <packaging>war</packaging>
+  <packaging>jar</packaging>
   <version>0.2-SNAPSHOT</version>
   <name>googlecode_dsn-chassis_generic_client_gwt</name>
   
