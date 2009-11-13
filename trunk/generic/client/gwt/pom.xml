@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.cggh.chassis</groupId>
+  <artifactId>generic-client-gwt</artifactId>
+  <packaging>war</packaging>
+  <version>0.2-SNAPSHOT</version>
+  <name>googlecode_dsn-chassis_generic_client_gwt</name>
+  
+  <!--  include pluginRepository and repository for GWT-Maven -->
+  <pluginRepositories>
+    <pluginRepository>
+      <id>gwt-maven-plugins</id>
+      <url>http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/</url>
+    </pluginRepository>
+    </pluginRepositories>    
+    <repositories>        
+      <repository>
+        <id>gwt-maven</id>
+        <url>http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/</url>
+      </repository>
+    </repositories>
+    
+  <!--  convenience to define GWT version in one place -->
+  <properties>
+    <gwtVersion>1.7.1</gwtVersion>
+  </properties>
+  
+  <dependencies>
+    <dependency>
+     <groupId>org.cggh.chassis</groupId>
+     <artifactId>generic-lib-gwt</artifactId>
+     <version>0.2-SNAPSHOT</version>
+    </dependency> 
+  </dependencies>
+  
+  <build>
+    <outputDirectory>war/WEB-INF/classes</outputDirectory>
+    <resources>
+     <resource>
+      <directory>src/main/java</directory>
+      <includes>
+        <include>**/*.java</include>
+        <include>**/*.xml</include>
+      </includes>
+     </resource>
+    </resources>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>gwt-maven-plugin</artifactId>
+        <version>1.1</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>compile</goal>
+            </goals>
+            <configuration>
+	      <module>org.cggh.chassis.generic.lib.All</module>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <configuration>
+          <!--
+            If you want to use the target/web.xml file mergewebxml produces,
+            tell the war plugin to use it.
+            Also, exclude what you want from the final artifact here.
+          -->
+          <!-- <webXml>target/web.xml</webXml>  -->
+          <!-- added to comply with gwt 1.6 structure -->
+          <warSourceDirectory>${basedir}/war</warSourceDirectory>
+          <!-- gwt puts dependencies in /war/WEB-INF/lib (even though some of them are marked provided in maven -->
+          <warSourceExcludes>.gwt-tmp/**,WEB-INF/lib/gwt-user*</warSourceExcludes>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <configuration>
+           <source>1.5</source>
+           <target>1.5</target>
+          </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
