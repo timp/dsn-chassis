@@ -6,7 +6,6 @@ package org.cggh.chassis.generic.client.gwt.application.client;
 
 import org.cggh.chassis.generic.client.gwt.widget.data.client.DataManagementWidget;
 import org.cggh.chassis.generic.client.gwt.widget.study.client.StudyManagementWidget;
-import org.cggh.chassis.generic.client.gwt.widget.submitter.home.client.SubmitterHomeWidget;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 

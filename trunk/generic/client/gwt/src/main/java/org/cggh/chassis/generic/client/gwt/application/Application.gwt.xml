@@ -14,8 +14,6 @@
 
   <inherits name="org.cggh.chassis.generic.client.gwt.widget.userdetails.UserDetailsWidget" />
   
-  <inherits name="org.cggh.chassis.generic.client.gwt.widget.submitter.home.SubmitterHomeWidget" />
-
   <inherits name="org.cggh.chassis.generic.client.gwt.widget.study.Study" />
 
   <inherits name="org.cggh.chassis.generic.client.gwt.widget.data.Data" />

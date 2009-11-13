@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.client.gwt.widget.submitter.home.client;
+package org.cggh.chassis.generic.client.gwt.application.client;
 
 import org.cggh.chassis.generic.widget.client.ChassisWidget;
 
