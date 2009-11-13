@@ -7,24 +7,6 @@
   <version>0.2-SNAPSHOT</version>
   <name>googlecode_dsn-chassis_generic_lib_gwt-test</name>
   
-  <!--  include pluginRepository and repository for GWT-Maven -->
-  <pluginRepositories>
-    <!--
-    <pluginRepository>
-      <id>gwt-maven-plugins</id>
-      <url>http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/</url>
-      <id>codehause</id>
-      <url>http://codehaus/svn/trunk/mavenrepo/</url>
-    </pluginRepository>
-    -->
-  </pluginRepositories>    
-  <repositories>        
-    <repository>
-      <id>gwt-maven</id>
-      <url>http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/</url>
-    </repository>
-  </repositories>
-    
   <!--  convenience to define GWT version in one place -->
   <properties>
     <gwtVersion>1.7.1</gwtVersion>
@@ -33,33 +15,11 @@
   <dependencies>
     <dependency>
      <groupId>org.cggh.chassis</groupId>
-     <artifactId>generic-lib</artifactId>
-     <version>0.2-SNAPSHOT</version>
-    </dependency> 
-    <dependency>
-     <groupId>org.cggh.chassis</groupId>
      <artifactId>generic-lib-gwt</artifactId>
      <version>0.2-SNAPSHOT</version>
     </dependency> 
-
-    <dependency>
-      <groupId>com.google.gwt</groupId>
-      <artifactId>gwt-servlet</artifactId>
-      <version>${gwtVersion}</version>
-      <scope>runtime</scope>
-    </dependency>
-    <!--dependency>
-      <groupId>com.google.gwt</groupId>
-      <artifactId>gwt-dev</artifactId>
-      <version>${gwtVersion}</version>
-      <classifier>${platform}-libs</classifier>
-      <type>zip</type>
-      <scope>provided</scope>
-    </dependency -->
     <!--  test -->
-
-
-    <dependency>
+     <dependency>
       <groupId>org.easymock</groupId>
       <artifactId>easymock</artifactId>
       <version>2.0</version>
@@ -77,7 +37,6 @@
       <version>4.1</version>
       <scope>test</scope>
     </dependency>
-
   </dependencies>
   
   <build>
@@ -108,20 +67,6 @@
           </execution>
         </executions>
       </plugin>
-      <!--
-                If you want to use the target/web.xml file mergewebxml produces,
-                tell the war plugin to use it. 
-                Also, exclude what you want from the final artifact here. 
-       -->
-       <plugin>
-         <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-war-plugin</artifactId>
-          <configuration>
-          <!-- <webXml>target/web.xml</webXml>-->
-          <warSourceExcludes>.gwt-tmp/**</warSourceExcludes>                  
-          </configuration>                
-        </plugin>
-      <!--  tell the compiler we can use 1.5 -->  
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>
@@ -133,42 +78,4 @@
           
     </plugins>
   </build>
-  
-  <!--  profiles (with activation per platform) -->
-  <profiles>
-    <profile>
-      <id>gwt-dev-windows</id>
-      <properties>
-        <platform>windows</platform>
-      </properties>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-        <os>
-          <family>Windows</family>
-        </os>
-      </activation>
-    </profile>
-    <profile>
-      <id>gwt-dev-mac</id>
-      <properties>
-        <platform>mac</platform>
-      </properties>
-      <activation>
-        <os>
-          <family>mac</family>
-        </os>
-      </activation>
-    </profile>
-    <profile>
-      <id>gwt-dev-linux</id>
-      <properties>
-        <platform>linux</platform>
-      </properties>
-      <activation>
-        <os>
-          <name>Linux</name>
-        </os>
-      </activation>
-    </profile>
-  </profiles>
 </project>
