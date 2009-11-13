@@ -225,7 +225,7 @@ public class UploadDataFileRevisionWidgetRenderer
 					log.debug("attempting to parse: "+content);
 					DataFileEntry entry = factory.createEntry(content);
 					UploadDataFileRevisionSuccessEvent successEvent = new UploadDataFileRevisionSuccessEvent();
-					successEvent.setDataFileEntry(entry);
+					successEvent.setEntry(entry);
 					owner.fireEvent(successEvent);
 				}
 				else {

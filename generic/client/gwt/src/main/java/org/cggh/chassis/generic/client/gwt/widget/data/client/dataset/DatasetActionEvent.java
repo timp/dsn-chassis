@@ -8,16 +8,14 @@ package org.cggh.chassis.generic.client.gwt.widget.data.client.dataset;
 
 import org.cggh.chassis.generic.atomext.client.dataset.DatasetEntry;
 
-import com.google.gwt.event.shared.GwtEvent;
 
-public abstract class DatasetActionEvent extends GwtEvent<DatasetActionHandler> {
-	
-	private DatasetEntry entry;
+public abstract class DatasetActionEvent 
+	extends DatasetEvent<DatasetActionHandler> {
 	
 	public DatasetActionEvent() {}
 	
 	public DatasetActionEvent(DatasetEntry entry) {
-		this.entry = entry;
+		super(entry);
 	}
 	
 	/* (non-Javadoc)
@@ -28,12 +26,4 @@ public abstract class DatasetActionEvent extends GwtEvent<DatasetActionHandler> 
 		handler.onAction(this);
 	}
 
-	public void setEntry(DatasetEntry entry) {
-		this.entry = entry;
-	}
-	
-	public DatasetEntry getEntry() {
-		return this.entry;
-	}
-	
 }

@@ -26,9 +26,15 @@ public class ViewDatasetWidgetRenderer
 	
 	private Log log = LogFactory.getLog(ViewDatasetWidgetRenderer.class);
 	private DatasetPropertiesWidget datasetPropertiesWidget;
+	private DatasetActionsPanel actionsPanel;
+	private ViewDatasetWidget owner;
 
 	
 	
+	
+	public ViewDatasetWidgetRenderer(ViewDatasetWidget owner) {
+		this.owner = owner;
+	}
 	
 	
 	/* (non-Javadoc)
@@ -44,7 +50,7 @@ public class ViewDatasetWidgetRenderer
 
 		log.debug("render actions panel");
 
-		// TODO
+		this.actionsPanel = new DatasetActionsPanel();
 		
 		log.debug("render main panel");
 
@@ -52,6 +58,7 @@ public class ViewDatasetWidgetRenderer
 
 		this.mainPanel.addStyleName(CommonStyles.COMMON_MAINWITHACTIONS);
 		this.mainPanel.add(contentPanel);
+		this.mainPanel.add(this.actionsPanel);
 
 		log.leave();
 	}
@@ -114,7 +121,18 @@ public class ViewDatasetWidgetRenderer
 	protected void registerHandlersForChildWidgetEvents() {
 		log.enter("registerHandlersForChildWidgetEvents");
 
-		// TODO Auto-generated method stub
+		HandlerRegistration a = this.actionsPanel.addEditDatasetActionHandler(new DatasetActionHandler() {
+			
+			public void onAction(DatasetActionEvent e) {
+				
+				// augment event and bubble
+				e.setEntry(model.getEntry());
+				owner.fireEvent(e);
+				
+			}
+		});
+		
+		this.childWidgetEventHandlerRegistrations.add(a);
 
 		log.leave();
 

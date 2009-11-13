@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.cggh.chassis.generic.async.client.Deferred;
-import org.cggh.chassis.generic.async.client.Function;
 import org.cggh.chassis.generic.client.gwt.configuration.client.ChassisRole;
 import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
 import org.cggh.chassis.generic.client.gwt.widget.userdetails.client.UserDetailsWidget;
