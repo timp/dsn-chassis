@@ -8,7 +8,6 @@
   <name>googlecode_dsn-chassis_generic_client_gwt</name>
   
     
-  <!--  convenience to define GWT version in one place -->
   <properties>
     <gwtVersion>1.7.1</gwtVersion>
   </properties>
@@ -22,7 +21,6 @@
   </dependencies>
   
   <build>
-    <outputDirectory>war/WEB-INF/classes</outputDirectory>
     <resources>
      <resource>
       <directory>src/main/java</directory>
@@ -52,13 +50,6 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-war-plugin</artifactId>
         <configuration>
-          <!--
-            If you want to use the target/web.xml file mergewebxml produces,
-            tell the war plugin to use it.
-            Also, exclude what you want from the final artifact here.
-          -->
-          <!-- <webXml>target/web.xml</webXml>  -->
-          <!-- added to comply with gwt 1.6 structure -->
           <warSourceDirectory>${basedir}/war</warSourceDirectory>
           <!-- gwt puts dependencies in /war/WEB-INF/lib (even though some of them are marked provided in maven -->
           <warSourceExcludes>.gwt-tmp/**,WEB-INF/lib/gwt-user*</warSourceExcludes>
