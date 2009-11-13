@@ -123,12 +123,11 @@
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>2.0.2</version>
-        <configuration>
-          <source>${maven.compiler.source}</source>
-          <target>${maven.compiler.target}</target>
-        </configuration>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <configuration>
+           <source>1.5</source>
+           <target>1.5</target>
+          </configuration>
       </plugin>
 
       <!--  Use the dependency plugin to unpack gwt-dev-PLATFORM-libs.zip -->
