@@ -119,6 +119,7 @@
        <configuration>
         <excludes>
          <exclude>**/legacy/**/*</exclude>
+         <exclude>**/*$*</exclude>
         </excludes>
        </configuration>
       </plugin>
