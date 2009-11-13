@@ -5,7 +5,7 @@ package org.cggh.chassis.generic.client.gwt.application.client;
 
 
 import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
-import org.cggh.chassis.generic.client.gwt.widget.admin.collection.client.AdminCollectionsWidget;
+import org.cggh.chassis.generic.client.gwt.widget.admin.client.AdminCollectionsWidget;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.ChassisWidget;

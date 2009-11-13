@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.client.gwt.widget.admin.collection.client;
+package org.cggh.chassis.generic.client.gwt.widget.admin.client;
 
 import java.util.ArrayList;
 import java.util.List;

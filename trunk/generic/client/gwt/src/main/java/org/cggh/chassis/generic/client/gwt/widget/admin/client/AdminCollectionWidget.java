@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.client.gwt.widget.admin.collection.client;
+package org.cggh.chassis.generic.client.gwt.widget.admin.client;
 
 import org.cggh.chassis.generic.async.client.Deferred;
 import org.cggh.chassis.generic.atom.client.vanilla.VanillaAtomFeed;
