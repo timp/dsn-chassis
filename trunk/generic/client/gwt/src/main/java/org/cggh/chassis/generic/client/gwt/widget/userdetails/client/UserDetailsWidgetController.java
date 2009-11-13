@@ -121,13 +121,13 @@ public class UserDetailsWidgetController {
 			ChassisUser.setCurrentUser(user);
 			
 			log.debug("set current user on model");
-			model.setCurrentUser(user);
+			model.setCurrentUser(user, true);
 			
 			log.debug("set current role using default");
 			Set<ChassisRole> roles = ChassisRole.getRoles(user);
 			if (roles.size() > 0) {
 				ChassisRole defaultRole = roles.iterator().next();
-				model.setCurrentRole(defaultRole);
+				model.setCurrentRole(defaultRole, true);
 			}
 			
 			log.debug("set model status to ready");
@@ -146,11 +146,15 @@ public class UserDetailsWidgetController {
 	
 	/**
 	 * @param role
+	 * @param fireChangeEvent 
 	 */
-	public void setCurrentRole(ChassisRole role) {
+	public void setCurrentRole(ChassisRole role, boolean fireChangeEvent) {
 		log.enter("setCurrentRole");
 		
-		this.model.setCurrentRole(role);
+		// TODO review this, should throw exception if user does not have that role?
+		if (ChassisRole.getRoles(this.model.getCurrentUser()).contains(role)) {
+			this.model.setCurrentRole(role, fireChangeEvent);
+		}
 		
 		log.leave();
 		

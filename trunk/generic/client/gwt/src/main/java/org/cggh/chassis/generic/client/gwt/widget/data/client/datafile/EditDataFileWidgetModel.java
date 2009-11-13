@@ -9,16 +9,5 @@ package org.cggh.chassis.generic.client.gwt.widget.data.client.datafile;
  *
  */
 public class EditDataFileWidgetModel extends AsyncWidgetModelWithDataFileEntry {
-
 	
-	
-	
-	/**
-	 * @param owner
-	 */
-	public EditDataFileWidgetModel(EditDataFileWidget owner) {
-		super(owner);
-	}
-
-
 }

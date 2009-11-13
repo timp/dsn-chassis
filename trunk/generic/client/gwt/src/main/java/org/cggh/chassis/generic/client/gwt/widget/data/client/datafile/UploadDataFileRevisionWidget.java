@@ -33,7 +33,7 @@ public class UploadDataFileRevisionWidget extends
 	 */
 	@Override
 	protected UploadDataFileRevisionWidgetModel createModel() {
-		return new UploadDataFileRevisionWidgetModel(this);
+		return new UploadDataFileRevisionWidgetModel();
 	}
 
 

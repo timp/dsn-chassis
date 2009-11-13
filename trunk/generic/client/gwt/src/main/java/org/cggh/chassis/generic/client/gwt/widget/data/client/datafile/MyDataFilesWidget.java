@@ -29,7 +29,7 @@ public class MyDataFilesWidget
 	 */
 	@Override
 	protected MyDataFilesWidgetModel createModel() {
-		return new MyDataFilesWidgetModel(this);
+		return new MyDataFilesWidgetModel();
 	}
 
 

@@ -13,16 +13,6 @@ public class ViewDataFileWidgetModel extends AsyncWidgetModelWithDataFileEntry {
 	
 	
 	
-
-	/**
-	 * @param owner
-	 */
-	public ViewDataFileWidgetModel(ViewDataFileWidget owner) {
-		super(owner);
-	}
-	
-	
-	
 	
 
 	private String currentEntryId;

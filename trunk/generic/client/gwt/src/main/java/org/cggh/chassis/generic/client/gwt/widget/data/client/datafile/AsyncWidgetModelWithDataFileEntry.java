@@ -32,17 +32,6 @@ public class AsyncWidgetModelWithDataFileEntry extends AsyncWidgetModel {
 
 	
 	
-	
-	/**
-	 * @param owner
-	 */
-	public AsyncWidgetModelWithDataFileEntry(ChassisWidget owner) {
-		super(owner);
-	}
-
-	
-	
-	
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.widget.client.ChassisWidgetModel#init()
 	 */
@@ -71,7 +60,7 @@ public class AsyncWidgetModelWithDataFileEntry extends AsyncWidgetModel {
 	public void setEntry(DataFileEntry entry) {
 		DataFileEntryChangeEvent e = new DataFileEntryChangeEvent(this.entry, entry);
 		this.entry = entry;
-		this.owner.fireEvent(e);
+		this.fireChangeEvent(e);
 	}
 
 

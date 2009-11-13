@@ -32,7 +32,7 @@ public class ViewSubmissionWidget
 	 */
 	@Override
 	protected ViewSubmissionWidgetModel createModel() {
-		return new ViewSubmissionWidgetModel(this);
+		return new ViewSubmissionWidgetModel();
 	}
 
 

@@ -5,7 +5,7 @@ import org.cggh.chassis.generic.atomext.client.study.StudyEntry;
 
 public interface EditStudyWidgetAPI {
 
-	public void addEditStudyWidgetListener(EditStudyWidgetPubSubAPI listener);
+	public void addListener(EditStudyWidgetPubSubAPI listener);
 
 	public void editStudyEntry(StudyEntry studyEntryToEdit);
 

@@ -5,8 +5,7 @@ package org.cggh.chassis.generic.client.gwt.application.client;
 
 
 import org.cggh.chassis.generic.client.gwt.widget.data.client.DataManagementWidget;
-import org.cggh.chassis.generic.client.gwt.widget.study.client.StudyManagementWidget;
-import org.cggh.chassis.generic.client.gwt.widget.study.client.StudyManagementWidgetPubSubAPI;
+import org.cggh.chassis.generic.client.gwt.widget.study.client.NewStudyManagementWidget;
 import org.cggh.chassis.generic.client.gwt.widget.submitter.home.client.SubmitterHomeWidget;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
@@ -31,23 +30,13 @@ public class SubmitterPerspective
 	
 	// UI fields
 	private SubmitterHomeWidget submitterHomeWidget;
-	private StudyManagementWidget studyManagementWidget;
+	private NewStudyManagementWidget studyManagementWidget;
 	private DataManagementWidget dataManagementWidget;
 	private MenuBar studyMenu, dataMenu;
 
 	
 	
 	
-
-	
-	/**
-	 * 
-	 */
-	private void ensureLog() {
-		if (log == null) log = LogFactory.getLog(SubmitterPerspective.class);
-	}
-
-
 
 	
 	/* (non-Javadoc)
@@ -57,7 +46,7 @@ public class SubmitterPerspective
 	protected void renderMainChildren() {
 
 		this.submitterHomeWidget = new SubmitterHomeWidget();
-		this.studyManagementWidget = new StudyManagementWidget();
+		this.studyManagementWidget = new NewStudyManagementWidget();
 		this.dataManagementWidget = new DataManagementWidget();
 		
 		this.mainChildren.add(this.submitterHomeWidget);
@@ -65,6 +54,7 @@ public class SubmitterPerspective
 		this.mainChildren.add(this.dataManagementWidget);
 
 		this.activeChild = this.submitterHomeWidget;
+		this.memory.setChild(this.activeChild.getMemory());
 
 	}
 
@@ -99,32 +89,5 @@ public class SubmitterPerspective
 
 
 
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#bindUI()
-	 */
-	@Override
-	protected void bindUI() {
-		
-		super.bindUI();
-
-		// TODO rewrite to gwt event pattern
-		this.studyManagementWidget.addListener(new StudyManagementWidgetPubSubAPI() {
-			
-			public void onStudyManagementMenuAction(StudyManagementWidget source) {
-				setActiveChild(studyManagementWidget);
-			}
-			
-			public void onStudyManagementDisplayStatusChanged(
-					Boolean couldStatusContainUnsavedData) {
-				// TODO 
-			}
-			
-		});
-		
-	}
-
-	
-	
-	
 	
 }

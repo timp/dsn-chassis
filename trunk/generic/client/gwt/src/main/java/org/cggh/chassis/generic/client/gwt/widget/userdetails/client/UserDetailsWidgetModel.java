@@ -23,6 +23,7 @@ public class UserDetailsWidgetModel extends AsyncWidgetModel {
 	
 	
 	private Log log;
+	private UserDetailsWidget owner;
 	
 	
 	
@@ -31,6 +32,10 @@ public class UserDetailsWidgetModel extends AsyncWidgetModel {
 	private UserDetailsTO currentUser;
 	private ChassisRole currentRole;
 
+
+
+
+
 	
 	
 	
@@ -38,7 +43,7 @@ public class UserDetailsWidgetModel extends AsyncWidgetModel {
 	 * @param owner
 	 */
 	public UserDetailsWidgetModel(UserDetailsWidget owner) {
-		super(owner);
+		this.owner = owner;
 	}
 
 	
@@ -64,10 +69,11 @@ public class UserDetailsWidgetModel extends AsyncWidgetModel {
 
 
 
-	public void setCurrentUser(UserDetailsTO currentUser) {
+	public void setCurrentUser(UserDetailsTO currentUser, boolean fireEvent) {
 		CurrentUserChangeEvent e = new CurrentUserChangeEvent(this.currentUser, currentUser);
 		this.currentUser = currentUser;
-		this.fireChangeEvent(e);
+		this.fireChangeEvent(e); // fire event locally so renderer will pick it up
+		if (fireEvent) this.owner.fireEvent(e); // broadcast from widget so collaborators can be notified
 	}
 
 
@@ -80,10 +86,11 @@ public class UserDetailsWidgetModel extends AsyncWidgetModel {
 
 
 
-	public void setCurrentRole(ChassisRole currentRole) {
+	public void setCurrentRole(ChassisRole currentRole, boolean fireChangeEvent) {
 		CurrentRoleChangeEvent e = new CurrentRoleChangeEvent(this.currentRole, currentRole);
 		this.currentRole = currentRole;
-		this.fireChangeEvent(e);
+		this.fireChangeEvent(e); // fire locally so renderer will pick it up and update UI
+		if (fireChangeEvent) this.owner.fireEvent(e); // broadcast from widget
 	}
 
 
@@ -98,18 +105,7 @@ public class UserDetailsWidgetModel extends AsyncWidgetModel {
 	
 	
 	public HandlerRegistration addCurrentUserChangeHandler(CurrentUserChangeHandler h) {
-		log.enter("addCurrentUserChangeHandler");
-		
-		HandlerRegistration r = null;
-		try {
-			r = this.addChangeHandler(h, CurrentUserChangeEvent.TYPE);
-		}
-		catch (Throwable t) {
-			log.error("caught trying to add change handler", t);
-		}
-		
-		log.leave();
-		return r;
+		return this.addChangeHandler(h, CurrentUserChangeEvent.TYPE);
 	}
 	
 	

@@ -226,15 +226,18 @@ class NewStudyWidgetDefaultRenderer implements StudyModelListener {
 	class CreateStudyClickHandler implements ClickHandler {
 
 		public void onClick(ClickEvent arg0) {
-			if (isFormComplete) {
-				controller.saveNewStudyEntry();
-			} else {
-				//TODO move to management widget?
-				DecoratedPopupPanel errorPopUp = new DecoratedPopupPanel(true);
-				errorPopUp.add(new Label("Form invalid."));
-				errorPopUp.center();
-				errorPopUp.show();
-			}
+
+			controller.saveNewStudyEntry();
+
+//			if (isFormComplete) {
+//				controller.saveNewStudyEntry();
+//			} else {
+//				//TODO move to management widget?
+//				DecoratedPopupPanel errorPopUp = new DecoratedPopupPanel(true);
+//				errorPopUp.add(new Label("Form invalid."));
+//				errorPopUp.center();
+//				errorPopUp.show();
+//			}
 		}
 		
 	}

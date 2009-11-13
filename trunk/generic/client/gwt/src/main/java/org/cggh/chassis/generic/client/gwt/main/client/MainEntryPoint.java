@@ -7,11 +7,14 @@ import org.cggh.chassis.generic.client.gwt.application.client.ChassisClient;
 import org.cggh.chassis.generic.log.client.AllenSauerLog;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
+import org.cggh.chassis.generic.widget.client.WidgetMemory;
+import org.cggh.chassis.generic.widget.client.WidgetMemory.HistoryManager;
 
 import com.allen_sauer.gwt.log.client.DivLogger;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -27,8 +30,9 @@ public class MainEntryPoint implements EntryPoint {
 	static {
 		LogFactory.create = AllenSauerLog.create;
 		LogFactory.hide("*");
-		LogFactory.show("org.cggh.chassis.generic.client.gwt.application.client.*");
-		LogFactory.show("org.cggh.chassis.generic.client.gwt.widget.admin.*");
+		LogFactory.show("org.cggh.chassis.generic.client.gwt.application.*");
+		LogFactory.show("org.cggh.chassis.generic.client.gwt.widget.data.*");
+		LogFactory.show("org.cggh.chassis.generic.client.gwt.widget.study.*");
 	}
 
 
@@ -65,6 +69,11 @@ public class MainEntryPoint implements EntryPoint {
 	private void contructChassisClient() {
 		ChassisClient client = new ChassisClient();
 		RootPanel.get("chassisClientPane").add(client);
+		
+		HistoryManager hm = new WidgetMemory.HistoryManager(client.getMemory());
+		History.addValueChangeHandler(hm);
+		History.fireCurrentHistoryState();
+
 	}
 
 

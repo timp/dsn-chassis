@@ -15,13 +15,6 @@ public class ViewDatasetWidgetModel
 	
 	
 	
-	public ViewDatasetWidgetModel(ViewDatasetWidget owner) {
-		super(owner);
-	}
-
-	
-	
-	
 	private String currentEntryId;
 
 	

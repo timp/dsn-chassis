@@ -29,15 +29,6 @@ public class SubmissionPropertiesWidgetModel extends ChassisWidgetModel {
 	
 	
 	
-	
-	public SubmissionPropertiesWidgetModel(SubmissionPropertiesWidget owner) {
-		super(owner);
-	}
-	
-	
-
-	
-	
 	/**
 	 * Set up initial state of model.
 	 * 

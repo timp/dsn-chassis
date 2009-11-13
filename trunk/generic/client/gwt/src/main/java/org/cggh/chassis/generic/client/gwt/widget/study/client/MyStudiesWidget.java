@@ -118,7 +118,7 @@ public class MyStudiesWidget extends Composite {
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.client.gwt.widget.study.viewall.client.ViewAllStudiesWidgetAPI#addViewAllStudiesWidgetListener(org.cggh.chassis.generic.client.gwt.widget.study.viewall.client.ViewAllStudiesWidgetPubSubAPI)
 	 */
-	public void addViewAllStudiesWidgetListener(MyStudiesWidgetPubSubAPI listener) {
+	public void addListener(MyStudiesWidgetPubSubAPI listener) {
 		listeners.add(listener);
 	}
 

@@ -7,7 +7,6 @@ import org.cggh.chassis.generic.atomext.client.dataset.DatasetEntry;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
-import org.cggh.chassis.generic.widget.client.ChassisWidget;
 
 import com.google.gwt.event.shared.HandlerRegistration;
 
@@ -31,17 +30,7 @@ public class AsyncWidgetModelWithDatasetEntry extends AsyncWidgetModel {
 	private DatasetEntry entry;
 
 	
-	
-	
-	/**
-	 * @param owner
-	 */
-	public AsyncWidgetModelWithDatasetEntry(ChassisWidget owner) {
-		super(owner);
-	}
 
-	
-	
 	
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.widget.client.ChassisWidgetModel#init()
@@ -71,7 +60,7 @@ public class AsyncWidgetModelWithDatasetEntry extends AsyncWidgetModel {
 	public void setEntry(DatasetEntry entry) {
 		DatasetEntryChangeEvent e = new DatasetEntryChangeEvent(this.entry, entry);
 		this.entry = entry;
-		this.owner.fireEvent(e);
+		this.fireChangeEvent(e);
 	}
 
 

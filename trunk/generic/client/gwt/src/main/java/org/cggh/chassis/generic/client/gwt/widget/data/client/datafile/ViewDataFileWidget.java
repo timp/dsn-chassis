@@ -37,7 +37,7 @@ public class ViewDataFileWidget
 	 */
 	@Override
 	protected ViewDataFileWidgetModel createModel() {
-		return new ViewDataFileWidgetModel(this);
+		return new ViewDataFileWidgetModel();
 	}
 
 
