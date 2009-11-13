@@ -4,21 +4,23 @@
 package org.cggh.chassis.generic.client.gwt.widget.data.client;
 
 
-import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.CreateDataFileSuccessEvent;
-import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.CreateDataFileSuccessHandler;
+import org.cggh.chassis.generic.atom.client.CreateSuccessEvent;
+import org.cggh.chassis.generic.atom.client.CreateSuccessHandler;
+import org.cggh.chassis.generic.atom.client.UpdateSuccessEvent;
+import org.cggh.chassis.generic.atom.client.UpdateSuccessHandler;
+import org.cggh.chassis.generic.atomext.client.datafile.DataFileEntry;
+import org.cggh.chassis.generic.atomext.client.dataset.DatasetEntry;
 import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.DataFileActionEvent;
 import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.DataFileActionHandler;
 import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.EditDataFileWidget;
 import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.MyDataFilesWidget;
 import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.NewDataFileWidget;
-import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.UpdateDataFileSuccessEvent;
-import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.UpdateDataFileSuccessHandler;
 import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.UploadDataFileRevisionSuccessEvent;
 import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.UploadDataFileRevisionSuccessHandler;
 import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.UploadDataFileRevisionWidget;
 import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.ViewDataFileWidget;
-import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.CreateDatasetSuccessEvent;
-import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.CreateDatasetSuccessHandler;
+import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.DatasetActionEvent;
+import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.DatasetActionHandler;
 import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.EditDatasetWidget;
 import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.MyDatasetsWidget;
 import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.NewDatasetWidget;
@@ -134,9 +136,8 @@ public class DataManagementWidget
 		};
 
 		// normally we should render the UI components (in this case, menu items)
-		// during the rendering phase, then add event handlers here, but we have 
-		// to actually create the menu items here (during binding phase) because 
-		// the GWT API does not allow you to add a menu item without a command
+		// during the rendering phase, then add event handlers later during the
+		// binding phase, but the GWT API doesn't let us
 		this.menu.addItem(new MenuItem("new data file", newDataFileMenuCommand));
 		this.menu.addItem(new MenuItem("my data files", myDataFilesMenuCommand));
 		this.menu.addSeparator();
@@ -163,6 +164,7 @@ public class DataManagementWidget
 		this.registerHandlersForMyDataFilesWidgetEvents();
 		this.registerHandlersForEditDataFileWidgetEvents();
 		this.registerHandlersForNewDatasetWidgetEvents();
+		this.registerHandlersForViewDatasetWidgetEvents();
 
 	}
 
@@ -179,10 +181,10 @@ public class DataManagementWidget
 		
 		HandlerRegistration a = this.newDataFileWidget.addCancelHandler(new CommonCancelHandler());
 
-		HandlerRegistration b = this.newDataFileWidget.addSuccessHandler(new CreateDataFileSuccessHandler() {
+		HandlerRegistration b = this.newDataFileWidget.addCreateSuccessHandler(new CreateSuccessHandler<DataFileEntry>() {
 			
-			public void onSuccess(CreateDataFileSuccessEvent e) {
-				log.enter("onCreateDataFileSuccess");
+			public void onCreateSuccess(CreateSuccessEvent<DataFileEntry> e) {
+				log.enter("onCreateSuccess");
 				
 				viewDataFileWidget.viewEntry(e.getEntry().getId());
 				setActiveChild(viewDataFileWidget);
@@ -255,7 +257,7 @@ public class DataManagementWidget
 			public void onUploadDataFileRevisionSuccess(UploadDataFileRevisionSuccessEvent e) {
 				log.enter("onUploadDataFileRevisionSuccess");
 				
-				viewDataFileWidget.viewEntry(e.getDataFileEntry().getId());
+				viewDataFileWidget.viewEntry(e.getEntry().getId());
 				setActiveChild(viewDataFileWidget);
 				
 				log.leave();
@@ -310,10 +312,10 @@ public class DataManagementWidget
 		
 		HandlerRegistration a = this.editDataFileWidget.addCancelHandler(new CommonCancelHandler());
 
-		HandlerRegistration b = this.editDataFileWidget.addSuccessHandler(new UpdateDataFileSuccessHandler() {
+		HandlerRegistration b = this.editDataFileWidget.addUpdateSuccessHandler(new UpdateSuccessHandler<DataFileEntry>() {
 			
-			public void onSuccess(UpdateDataFileSuccessEvent e) {
-				log.enter("onSuccess");
+			public void onUpdateSuccess(UpdateSuccessEvent<DataFileEntry> e) {
+				log.enter("onUpdateSuccess");
 				
 				viewDataFileWidget.viewEntry(e.getEntry().getId());
 				setActiveChild(viewDataFileWidget);
@@ -345,12 +347,12 @@ public class DataManagementWidget
 		
 		HandlerRegistration b = this.newDatasetWidget.addErrorHandler(new CommonErrorHandler());
 		
-		HandlerRegistration c = this.newDatasetWidget.addSuccessHandler(new CreateDatasetSuccessHandler() {
+		HandlerRegistration c = this.newDatasetWidget.addCreateSuccessHandler(new CreateSuccessHandler<DatasetEntry>() {
 			
-			public void onSuccess(CreateDatasetSuccessEvent e) {
+			public void onCreateSuccess(CreateSuccessEvent<DatasetEntry> e) {
 				log.enter("onSuccess");
 				
-				viewDatasetWidget.setCurrentEntry(e.getEntry().getId());
+				viewDatasetWidget.viewEntry(e.getEntry().getId());
 				setActiveChild(viewDatasetWidget);
 				
 				log.leave();
@@ -365,6 +367,28 @@ public class DataManagementWidget
 		log.leave();
 		
 	}
+
+
+
+
+	/**
+	 * 
+	 */
+	private void registerHandlersForViewDatasetWidgetEvents() {
+		// TODO Auto-generated method stub
+		HandlerRegistration a  = this.viewDatasetWidget.addEditDatasetActionHandler(new DatasetActionHandler() {
+			
+			public void onAction(DatasetActionEvent e) {
+
+				editDatasetWidget.setEntry(e.getEntry());
+				setActiveChild(editDatasetWidget);
+				
+			}
+		});
+		
+	}
+
+
 
 
 

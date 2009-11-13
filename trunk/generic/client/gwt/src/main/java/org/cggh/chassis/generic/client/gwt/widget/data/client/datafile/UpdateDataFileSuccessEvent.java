@@ -3,41 +3,26 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.data.client.datafile;
 
+import org.cggh.chassis.generic.atom.client.UpdateSuccessEvent;
+import org.cggh.chassis.generic.atom.client.UpdateSuccessHandler;
 import org.cggh.chassis.generic.atomext.client.datafile.DataFileEntry;
 
-import com.google.gwt.event.shared.GwtEvent;
 
 /**
  * @author aliman
  *
  */
-public class UpdateDataFileSuccessEvent extends GwtEvent<UpdateDataFileSuccessHandler> {
+public class UpdateDataFileSuccessEvent 
+	extends UpdateSuccessEvent<DataFileEntry> {
 	
-	public static final Type<UpdateDataFileSuccessHandler> TYPE = new Type<UpdateDataFileSuccessHandler>();
-	private DataFileEntry dataFileEntry;
+	public static final Type<UpdateSuccessHandler<DataFileEntry>> TYPE = new Type<UpdateSuccessHandler<DataFileEntry>>();
 	
-	/* (non-Javadoc)
-	 * @see com.google.gwt.event.shared.GwtEvent#dispatch(com.google.gwt.event.shared.EventHandler)
-	 */
-	@Override
-	protected void dispatch(UpdateDataFileSuccessHandler handler) {
-		handler.onSuccess(this);
-	}
-
 	/* (non-Javadoc)
 	 * @see com.google.gwt.event.shared.GwtEvent#getAssociatedType()
 	 */
 	@Override
-	public Type<UpdateDataFileSuccessHandler> getAssociatedType() {
+	public Type<UpdateSuccessHandler<DataFileEntry>> getAssociatedType() {
 		return TYPE;
-	}
-	
-	public void setDataFileEntry(DataFileEntry entry) {
-		this.dataFileEntry = entry;
-	}
-	
-	public DataFileEntry getEntry() {
-		return this.dataFileEntry;
 	}
 	
 }

@@ -3,6 +3,8 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.data.client.dataset;
 
+import org.cggh.chassis.generic.atom.client.CreateSuccessHandler;
+import org.cggh.chassis.generic.atomext.client.dataset.DatasetEntry;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
@@ -83,7 +85,7 @@ public class NewDatasetWidget
 	 * @param h handler to receive events
 	 * @return a handler registration to remove the handler if needed
 	 */
-	public HandlerRegistration addSuccessHandler(CreateDatasetSuccessHandler h) {
+	public HandlerRegistration addCreateSuccessHandler(CreateSuccessHandler<DatasetEntry> h) {
 		return this.addHandler(h, CreateDatasetSuccessEvent.TYPE);
 	}
 

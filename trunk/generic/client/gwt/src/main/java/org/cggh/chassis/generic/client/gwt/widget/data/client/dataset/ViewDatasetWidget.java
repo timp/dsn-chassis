@@ -3,9 +3,15 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.data.client.dataset;
 
+import org.cggh.chassis.generic.async.client.Deferred;
+import org.cggh.chassis.generic.async.client.Function;
+import org.cggh.chassis.generic.atomext.client.dataset.DatasetEntry;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.DelegatingWidget;
+import org.cggh.chassis.generic.widget.client.WidgetMemory;
+
+import com.google.gwt.event.shared.HandlerRegistration;
 
 /**
  * @author aliman
@@ -37,7 +43,7 @@ public class ViewDatasetWidget
 	 */
 	@Override
 	protected ViewDatasetWidgetRenderer createRenderer() {
-		return new ViewDatasetWidgetRenderer();
+		return new ViewDatasetWidgetRenderer(this);
 	}
 
 
@@ -54,7 +60,7 @@ public class ViewDatasetWidget
 		super.init(); // this will instantiate model and renderer
 		
 		this.controller = new ViewDatasetWidgetController(this, this.model);
-		// TODO memory
+		this.memory = new Memory();
 		
 		log.leave();
 	}
@@ -78,24 +84,76 @@ public class ViewDatasetWidget
 	/**
 	 * @param id
 	 */
-	public void setCurrentEntry(String id) {
-		log.enter("setEntry");
-		
+	public Deferred<DatasetEntry> viewEntry(String id) {
+
 		// delegate to controller
-		this.controller.viewEntry(id);
-		
-		log.leave();
+		return this.controller.viewEntry(id);
 		
 	}
 
 
 
 	
-	// TODO adders for action handlers
+	public HandlerRegistration addEditDatasetActionHandler(DatasetActionHandler h) {
+		return this.addHandler(h, EditDatasetActionEvent.TYPE);
+	}
+
+
 
 
 	
 	
-	// TODO memory
+	/**
+	 * @author aliman
+	 *
+	 */
+	public class Memory extends WidgetMemory {
+		private Log log = LogFactory.getLog(Memory.class);
+
+		/* (non-Javadoc)
+		 * @see org.cggh.chassis.generic.widget.client.WidgetMemory#createMnemonic()
+		 */
+		@Override
+		public String createMnemonic() {
+			log.enter("createMnemonic");
+
+			// use current entry id as mnemonic
+			String mnemonic = model.getCurrentEntryId();
+			
+			log.debug("mnemonic: "+mnemonic);
+
+			log.leave();
+			return mnemonic;
+		}
+		
+		/* (non-Javadoc)
+		 * @see org.cggh.chassis.generic.widget.client.WidgetMemory#remember(java.lang.String)
+		 */
+		@Override
+		public Deferred<WidgetMemory> remember(String mnemonic) {
+			log.enter("remember");
+
+			Deferred<DatasetEntry> deferredEntry = viewEntry(mnemonic);
+			
+			final WidgetMemory self = this;
+			
+			Deferred<WidgetMemory> deferredSelf = deferredEntry.adapt(new Function<DatasetEntry, WidgetMemory>() {
+
+				public WidgetMemory apply(DatasetEntry in) {
+					// when async operation is complete, return self
+					return self;
+				}
+			});
+			
+			// actually, async operation here doesn't have any impact on 
+			// memory child, so could callback with self immediately - 
+			// however, will leave as is for now
+			
+			log.leave();
+			return deferredSelf;
+		}
+
+	}
+
 
 }

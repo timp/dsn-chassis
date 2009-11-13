@@ -3,6 +3,7 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.data.client.datafile;
 
+import org.cggh.chassis.generic.atom.client.UpdateSuccessHandler;
 import org.cggh.chassis.generic.atomext.client.datafile.DataFileEntry;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
@@ -16,6 +17,11 @@ import com.google.gwt.event.shared.HandlerRegistration;
  */
 public class EditDataFileWidget 
 	extends DelegatingWidget<EditDataFileWidgetModel, EditDataFileWidgetRenderer> {
+	
+	
+	
+	
+	
 	private Log log = LogFactory.getLog(EditDataFileWidget.class);
 	private EditDataFileWidgetController controller;
 
@@ -99,7 +105,7 @@ public class EditDataFileWidget
 	 * @param h handler to receive events
 	 * @return a handler registration to remove the handler if needed
 	 */
-	public HandlerRegistration addSuccessHandler(UpdateDataFileSuccessHandler h) {
+	public HandlerRegistration addUpdateSuccessHandler(UpdateSuccessHandler<DataFileEntry> h) {
 		return this.addHandler(h, UpdateDataFileSuccessEvent.TYPE);
 	}
 

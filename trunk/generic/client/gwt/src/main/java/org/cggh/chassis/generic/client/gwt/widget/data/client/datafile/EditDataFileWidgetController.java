@@ -69,7 +69,7 @@ public class EditDataFileWidgetController {
 			model.setStatus(AsyncWidgetModel.STATUS_READY);
 			
 			UpdateDataFileSuccessEvent e = new UpdateDataFileSuccessEvent();
-			e.setDataFileEntry(in);
+			e.setEntry(in);
 			owner.fireEvent(e);
 
 			log.leave();
