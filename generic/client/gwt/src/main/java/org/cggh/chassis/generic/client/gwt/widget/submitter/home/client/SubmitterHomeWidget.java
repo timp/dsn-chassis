@@ -3,6 +3,8 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.submitter.home.client;
 
+import org.cggh.chassis.generic.widget.client.ChassisWidget;
+
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
@@ -12,21 +14,46 @@ import com.google.gwt.user.client.ui.Panel;
  * @author aliman
  *
  */
-public class SubmitterHomeWidget extends Composite {
+public class SubmitterHomeWidget 
+	extends ChassisWidget {
 	
 
-	
-	
-	private static final String STYLENAME_BASE = "chassis-submitterHome";
-	private Panel canvas = new FlowPanel();
-	
-	
-	
-	
-	public SubmitterHomeWidget() {
-		this.canvas.addStyleName(STYLENAME_BASE);
-		this.canvas.add(new HTML("<h2>Submitter Home</h2>"));
-		this.initWidget(this.canvas);
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#init()
+	 */
+	@Override
+	public void init() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#renderUI()
+	 */
+	@Override
+	protected void renderUI() {
+		// TODO Auto-generated method stub
+		this.add(new HTML("<h2>Submitter Home</h2>"));
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#bindUI()
+	 */
+	@Override
+	protected void bindUI() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#syncUI()
+	 */
+	@Override
+	protected void syncUI() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

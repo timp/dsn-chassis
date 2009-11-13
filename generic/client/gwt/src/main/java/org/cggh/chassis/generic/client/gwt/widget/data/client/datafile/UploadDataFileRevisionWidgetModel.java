@@ -29,16 +29,6 @@ public class UploadDataFileRevisionWidgetModel extends AsyncWidgetModel {
 	
 	
 	
-	/**
-	 * @param owner
-	 */
-	public UploadDataFileRevisionWidgetModel(UploadDataFileRevisionWidget owner) {
-		super(owner);
-	}
-	
-	
-	
-	
 	
 	@Override
 	public void init() {

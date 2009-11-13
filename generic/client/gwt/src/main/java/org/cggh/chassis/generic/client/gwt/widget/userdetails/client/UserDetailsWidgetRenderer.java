@@ -176,7 +176,7 @@ public class UserDetailsWidgetRenderer
 			ChassisRole role = Configuration.getChassisRole(selectedRoleId);
 			
 			// map directly to model change
-			model.setCurrentRole(role);
+			model.setCurrentRole(role, true);
 
 		}
 

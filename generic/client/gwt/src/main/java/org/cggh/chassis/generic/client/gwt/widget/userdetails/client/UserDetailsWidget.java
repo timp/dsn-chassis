@@ -5,7 +5,9 @@ package org.cggh.chassis.generic.client.gwt.widget.userdetails.client;
 
 import org.cggh.chassis.generic.async.client.Deferred;
 import org.cggh.chassis.generic.client.gwt.configuration.client.ChassisRole;
+import org.cggh.chassis.generic.client.gwt.widget.userdetails.client.UserDetailsWidgetModel.CurrentRoleChangeEvent;
 import org.cggh.chassis.generic.client.gwt.widget.userdetails.client.UserDetailsWidgetModel.CurrentRoleChangeHandler;
+import org.cggh.chassis.generic.client.gwt.widget.userdetails.client.UserDetailsWidgetModel.CurrentUserChangeEvent;
 import org.cggh.chassis.generic.client.gwt.widget.userdetails.client.UserDetailsWidgetModel.CurrentUserChangeHandler;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
@@ -100,14 +102,30 @@ public class UserDetailsWidget
 	public void setCurrentRole(ChassisRole role) {
 		log.enter("setCurrentRole");
 		
-		// delegate to controller
-		this.controller.setCurrentRole(role);
+		this.setCurrentRole(role, true);
 		
 		log.leave();
 	}
 	
 	
 	
+	
+	/**
+	 * @param role
+	 * @param fireChangeEvent
+	 */
+	public void setCurrentRole(ChassisRole role, boolean fireChangeEvent) {
+		
+		// delegate to controller
+		this.controller.setCurrentRole(role, fireChangeEvent);
+		
+	}
+
+
+
+
+
+
 	
 	
 	/**
@@ -118,9 +136,8 @@ public class UserDetailsWidget
 	 */
 	public HandlerRegistration addCurrentUserChangeHandler(CurrentUserChangeHandler h) {
 		
-		// delegate to model
-		return this.model.addCurrentUserChangeHandler(h);
-		
+		return this.addHandler(h, CurrentUserChangeEvent.TYPE);
+
 	}
 	
 	
@@ -135,8 +152,7 @@ public class UserDetailsWidget
 	 */
 	public HandlerRegistration addCurrentRoleChangeHandler(CurrentRoleChangeHandler h) {
 		
-		// delegate to model
-		return this.model.addCurrentRoleChangeHandler(h);
+		return this.addHandler(h, CurrentRoleChangeEvent.TYPE);
 		
 	}
 

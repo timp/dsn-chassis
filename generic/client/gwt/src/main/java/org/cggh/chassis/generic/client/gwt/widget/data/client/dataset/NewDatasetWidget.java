@@ -36,7 +36,7 @@ public class NewDatasetWidget
 	 */
 	@Override
 	protected AsyncWidgetModel createModel() {
-		return new AsyncWidgetModel(this);
+		return new AsyncWidgetModel();
 	}
 
 

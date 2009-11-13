@@ -7,19 +7,11 @@ import org.cggh.chassis.generic.client.gwt.common.client.ChassisUser;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Command;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.DecoratedPopupPanel;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.ui.Panel;
-import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.Widget;
 
 /**
  * @author raok
@@ -31,12 +23,8 @@ public class StudyManagementWidgetDefaultRenderer implements StudyManagementWidg
 	
 	
 	//Expose view elements for testing purposes.
-	Label displayCreateStudyUI = new Label("Create Study");
-	Label displayViewAllStudiesUI = new Label("View My Studies");
 	Panel displayCanvas;
 	Panel menuCanvas;
-//	DecoratedPopupPanel menuPopUp = new DecoratedPopupPanel(true);
-	DecoratedPopupPanel confirmLoseChangesPopup = new DecoratedPopupPanel(false);
 
 	
 	
@@ -48,13 +36,9 @@ public class StudyManagementWidgetDefaultRenderer implements StudyManagementWidg
 	
 	//child widgets made package private to allow parent widget to access them
 	NewStudyWidget createStudyWidget; 
-	Widget createStudyWidgetCanvas = new FlowPanel();
 	ViewStudyWidget viewStudyWidget;
-	Widget viewStudyWidgetCanvas = new FlowPanel();	
 	MyStudiesWidget viewStudiesWidget;
-	Widget viewStudiesWidgetCanvas = new FlowPanel();
 	EditStudyWidget editStudyWidget;
-	Widget editStudyWidgetCanvas = new FlowPanel();
 	private MenuBar menu;
 	private StudyManagementWidget owner;
 	ViewStudyQuestionnaireWidget viewStudyQuestionnaireWidget;
@@ -63,39 +47,7 @@ public class StudyManagementWidgetDefaultRenderer implements StudyManagementWidg
 	
 	
 	
-	/**
-	 * Construct a study management widget renderer, injecting the panel to use 
-	 * as the widget's display canvas.
-	 * 
-	 * @param menuCanvas
-	 * @param displayCanvas
-	 * @param controller
-	 * @param authorEmail
-	 */
-	public StudyManagementWidgetDefaultRenderer(StudyManagementWidget owner, 
-												Panel menuCanvas, 
-												Panel displayCanvas,
-												StudyManagementWidgetController controller) {
 
-		this.owner = owner;
-		this.menuCanvas = menuCanvas;
-		this.displayCanvas = displayCanvas;
-		this.controller = controller;
-		
-		//create child widgets
-		this.viewStudyWidget = new ViewStudyWidget((Panel)this.viewStudyWidgetCanvas);
-		this.createStudyWidget = new NewStudyWidget((Panel)this.createStudyWidgetCanvas);
-		this.viewStudiesWidget = new MyStudiesWidget((Panel)this.viewStudiesWidgetCanvas, "view");
-		this.editStudyWidget = new EditStudyWidget((Panel)this.editStudyWidgetCanvas);
-		this.viewStudyQuestionnaireWidget = new ViewStudyQuestionnaireWidget();
-		this.editStudyQuestionnaireWidget = new EditStudyQuestionnaireWidget();
-		
-		//initialise view
-		initMenu();
-		
-	}
-
-	
 	
 	
 	/**
@@ -118,12 +70,6 @@ public class StudyManagementWidgetDefaultRenderer implements StudyManagementWidg
 		this.editStudyWidget = new EditStudyWidget();
 		this.viewStudyQuestionnaireWidget = new ViewStudyQuestionnaireWidget();
 		this.editStudyQuestionnaireWidget = new EditStudyQuestionnaireWidget();
-		
-		// override using composites
-		this.viewStudyWidgetCanvas = this.viewStudyWidget;
-		this.viewStudiesWidgetCanvas = this.viewStudiesWidget;
-		this.createStudyWidgetCanvas = this.createStudyWidget;
-		this.editStudyWidgetCanvas = this.editStudyWidget;
 		
 		//initialise view
 		this.initMenu();
@@ -194,20 +140,20 @@ public class StudyManagementWidgetDefaultRenderer implements StudyManagementWidg
 			// TODO should this go here? coordination logic
 			createStudyWidget.setUpNewStudy(authorEmail); 
 			
-			displayCanvas.add(createStudyWidgetCanvas);
+			displayCanvas.add(createStudyWidget);
 		} else if (after == StudyManagementWidgetModel.DISPLAYING_VIEW_STUDY) {
 			displayCanvas.clear();
-			displayCanvas.add(viewStudyWidgetCanvas);
+			displayCanvas.add(viewStudyWidget);
 		} else if (after == StudyManagementWidgetModel.DISPLAYING_VIEW_ALL_STUDIES) {
 			displayCanvas.clear();
 			
 			// TODO should this go here? coordination logic
 			viewStudiesWidget.loadStudiesByAuthorEmail(authorEmail);
 
-			displayCanvas.add(viewStudiesWidgetCanvas);
+			displayCanvas.add(viewStudiesWidget);
 		} else if (after == StudyManagementWidgetModel.DISPLAYING_EDIT_STUDY) {
 			displayCanvas.clear();
-			displayCanvas.add(editStudyWidgetCanvas);
+			displayCanvas.add(editStudyWidget);
 		}
 		else if (after == StudyManagementWidgetModel.DISPLAYING_VIEW_STUDY_QUESTIONNAIRE) {
 			
@@ -226,59 +172,6 @@ public class StudyManagementWidgetDefaultRenderer implements StudyManagementWidg
 
 	
 	
-	
-	public void onUserMightLoseChanges(final Integer userRequestedView) {
-
-		confirmLoseChangesPopup.clear();
-		
-		//create message box
-		VerticalPanel messagePanel = new VerticalPanel();
-		
-		messagePanel.add(new Label("Any unsaved data will be lost."));
-		
-		//create cancel button and ClickHandler
-		Button cancelButton = new Button("Cancel");
-		cancelButton.addClickHandler(new ClickHandler() {
-			
-			public void onClick(ClickEvent arg0) {
-				confirmLoseChangesPopup.hide();
-			}
-		});
-		
-		
-		//create continue button
-		Button continueButton = new Button("Continue anyway");
-		continueButton.addClickHandler(new ClickHandler() {
-			
-			public void onClick(ClickEvent arg0) {
-				
-				if (userRequestedView == StudyManagementWidgetModel.DISPLAYING_CREATE_STUDY) {
-					confirmLoseChangesPopup.hide();
-					controller.displayCreateStudyWidget(true);
-				} else if (userRequestedView == StudyManagementWidgetModel.DISPLAYING_VIEW_ALL_STUDIES) {
-					confirmLoseChangesPopup.hide();
-					controller.displayViewStudiesWidget(true);
-				}
-			}
-		});
-		
-		//Create button panel
-		HorizontalPanel buttonPanel = new HorizontalPanel();
-		buttonPanel.add(continueButton);
-		buttonPanel.add(cancelButton);
-		
-		messagePanel.add(buttonPanel);
-		
-		confirmLoseChangesPopup.add(messagePanel);			
-
-		confirmLoseChangesPopup.center();
-		confirmLoseChangesPopup.show();		
-
-	}
-
-	
-	
-	
 	/**
 	 * @return
 	 */
@@ -294,6 +187,17 @@ public class StudyManagementWidgetDefaultRenderer implements StudyManagementWidg
 	 */
 	public MenuBar getMenu() {
 		return this.menu;
+	}
+
+
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.client.gwt.widget.study.client.StudyManagementWidgetModelListener#onUserMightLoseChanges(java.lang.Integer)
+	 */
+	public void onUserMightLoseChanges(Integer userRequestedView) {
+		// TODO Auto-generated method stub
+		
 	}	
 
 	

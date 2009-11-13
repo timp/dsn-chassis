@@ -32,13 +32,6 @@ public class ViewSubmissionWidgetModel extends AsyncWidgetModel {
 	
 	
 	
-	
-	/**
-	 * @param owner
-	 */
-	public ViewSubmissionWidgetModel(ViewSubmissionWidget owner) {
-		super(owner);
-	}
 
 
 

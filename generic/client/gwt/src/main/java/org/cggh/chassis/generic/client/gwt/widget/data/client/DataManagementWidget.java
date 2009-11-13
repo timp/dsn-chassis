@@ -57,10 +57,14 @@ public class DataManagementWidget
 	
 
 
-
-
-
+	// utility fields
 	private Log log;
+	
+	
+	
+	
+	
+	// UI fields
 	private NewDataFileWidget newDataFileWidget;
 	private MyDataFilesWidget myDataFilesWidget;
 	private NewDatasetWidget newDatasetWidget;
@@ -69,13 +73,14 @@ public class DataManagementWidget
 	private EditDataFileWidget editDataFileWidget;
 	private EditDatasetWidget editDatasetWidget;
 	private ViewDatasetWidget viewDatasetWidget;
+	private UploadDataFileRevisionWidget uploadDataFileRevisionWidget;
 	private MenuBar menuBar;
 
 
 
 
+	// state fields
 	private Widget activeChild;
-	private UploadDataFileRevisionWidget uploadDataFileRevisionWidget;
 
 
 

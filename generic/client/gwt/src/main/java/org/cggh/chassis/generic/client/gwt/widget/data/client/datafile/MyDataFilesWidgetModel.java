@@ -30,16 +30,6 @@ public class MyDataFilesWidgetModel extends AsyncWidgetModel {
 	
 	
 	
-	/**
-	 * @param owner
-	 */
-	public MyDataFilesWidgetModel(MyDataFilesWidget owner) {
-		super(owner);
-	}
-
-
-	
-	
 	@Override
 	public void init() {
 		ensureLog();

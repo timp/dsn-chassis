@@ -28,7 +28,7 @@ public class EditDataFileWidget
 	 */
 	@Override
 	protected EditDataFileWidgetModel createModel() {
-		return new EditDataFileWidgetModel(this);
+		return new EditDataFileWidgetModel();
 	}
 
 

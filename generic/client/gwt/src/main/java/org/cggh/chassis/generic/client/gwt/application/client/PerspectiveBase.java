@@ -6,12 +6,14 @@ package org.cggh.chassis.generic.client.gwt.application.client;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.cggh.chassis.generic.async.client.Deferred;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.ChassisWidget;
 import org.cggh.chassis.generic.widget.client.HasMenuEventHandlers;
 import org.cggh.chassis.generic.widget.client.MenuEvent;
 import org.cggh.chassis.generic.widget.client.MenuEventHandler;
+import org.cggh.chassis.generic.widget.client.WidgetMemory;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.MenuBar;
@@ -42,8 +44,8 @@ public abstract class PerspectiveBase
 	
 	
 	// state fields
-	protected Set<Widget> mainChildren;
-	protected Widget activeChild;
+	protected Set<ChassisWidget> mainChildren;
+	protected ChassisWidget activeChild;
 
 	
 	
@@ -57,8 +59,10 @@ public abstract class PerspectiveBase
 		ensureLog();
 		log.enter("init");
 		
-		this.mainChildren = new HashSet<Widget>();
+		this.mainChildren = new HashSet<ChassisWidget>();
 		this.activeChild = null;
+		
+		this.memory = new Memory();
 
 		log.leave();
 	}
@@ -108,6 +112,8 @@ public abstract class PerspectiveBase
 	
 	
 	
+	
+	
 
 	/**
 	 * 
@@ -139,7 +145,7 @@ public abstract class PerspectiveBase
 				((HasMenuEventHandlers)w).addMenuEventHandler(new MenuEventHandler() {
 					
 					public void onMenuCommand(MenuEvent e) {
-						Widget source = (Widget) e.getSource();
+						ChassisWidget source = (ChassisWidget) e.getSource();
 						setActiveChild(source);
 					}
 					
@@ -171,12 +177,100 @@ public abstract class PerspectiveBase
 	/**
 	 * @param w
 	 */
-	protected void setActiveChild(Widget w) {
-		this.activeChild = w;
-		this.syncUI();
+	protected void setActiveChild(ChassisWidget w) {
+		this.setActiveChild(w, true);
 	}
 
 
 
+	
+	
+
+	/**
+	 * @param w
+	 */
+	protected void setActiveChild(ChassisWidget w, boolean memorise) {
+		
+		this.activeChild = w;
+		
+		if (this.activeChild != null) {
+			this.memory.setChild(this.activeChild.getMemory());
+		}
+		else {
+			this.memory.setChild(null);
+		}
+		
+		this.syncUI();
+		
+		if (memorise) {
+			this.memory.memorise();
+		}
+		
+	}
+
+
+
+	
+	
+
+	/**
+	 * @author aliman
+	 *
+	 */
+	public class Memory extends WidgetMemory {
+		private Log log = LogFactory.getLog(Memory.class);
+
+		/* (non-Javadoc)
+		 * @see org.cggh.chassis.generic.widget.client.WidgetMemory#createMnemonic()
+		 */
+		@Override
+		public String createMnemonic() {
+			log.enter("createMnemonic");
+
+			String mnemonic = null;
+			
+			if (activeChild != null && activeChild instanceof ChassisWidget) {
+				mnemonic = this.createMnemonic((ChassisWidget)activeChild);
+			}
+			
+			log.debug("mnemonic: "+mnemonic);
+
+			log.leave();
+			return mnemonic;
+		}
+		
+		protected String createMnemonic(ChassisWidget w) {
+			// turn the widget name into something slightly more aesthetically pleasing
+			return w.getName().toLowerCase().replaceAll("widget", "");
+		}
+
+		/* (non-Javadoc)
+		 * @see org.cggh.chassis.generic.widget.client.WidgetMemory#remember(java.lang.String)
+		 */
+		@Override
+		public Deferred<WidgetMemory> remember(String mnemonic) {
+			log.enter("remember");
+
+			Deferred<WidgetMemory> def = new Deferred<WidgetMemory>();
+			
+			for (ChassisWidget w : mainChildren) {
+				if (this.createMnemonic(w).equals(mnemonic)) {
+					setActiveChild(w, false);
+				}
+			}
+			
+			def.callback(this); // no async action so callback immediately
+
+			log.leave();
+			return def;
+		}
+
+	}
+
+
+
+	
+	
+	
 
 }

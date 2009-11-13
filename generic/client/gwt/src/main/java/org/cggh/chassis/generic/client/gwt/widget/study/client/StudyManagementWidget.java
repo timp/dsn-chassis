@@ -38,21 +38,21 @@ public class StudyManagementWidget extends Composite implements StudyManagementW
 	
 	
 	
-	public StudyManagementWidget(Panel displayCanvas) {
-		
-		model = new StudyManagementWidgetModel(this);
-		
-		controller = new StudyManagementWidgetController(model);
-		
-		renderer = new StudyManagementWidgetDefaultRenderer(this, menuCanvas, displayCanvas, controller);
-		
-		// register renderer as listener to model
-		model.addListener(renderer);
-		
-		this.subscribeToChildWidgetEvents();
-		
-		this.initWidget(renderer.getCanvas());
-	}
+//	public StudyManagementWidget(Panel displayCanvas) {
+//		
+//		model = new StudyManagementWidgetModel(this);
+//		
+//		controller = new StudyManagementWidgetController(model);
+//		
+//		renderer = new StudyManagementWidgetDefaultRenderer(this, menuCanvas, displayCanvas, controller);
+//		
+//		// register renderer as listener to model
+//		model.addListener(renderer);
+//		
+//		this.subscribeToChildWidgetEvents();
+//		
+//		this.initWidget(renderer.getCanvas());
+//	}
 	
 	
 	
@@ -82,8 +82,8 @@ public class StudyManagementWidget extends Composite implements StudyManagementW
 		//register this widget as a listener to child widgets.
 		renderer.viewStudyWidget.addViewStudyWidgetListener(this);
 		renderer.createStudyWidget.addListener(this);
-		renderer.editStudyWidget.addEditStudyWidgetListener(this);
-		renderer.viewStudiesWidget.addViewAllStudiesWidgetListener(this);
+		renderer.editStudyWidget.addListener(this);
+		renderer.viewStudiesWidget.addListener(this);
 		renderer.viewStudyQuestionnaireWidget.addListener(this);
 		renderer.editStudyQuestionnaireWidget.addListener(this);
 		

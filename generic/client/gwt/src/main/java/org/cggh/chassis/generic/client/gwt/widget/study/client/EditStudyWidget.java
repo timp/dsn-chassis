@@ -85,7 +85,7 @@ public class EditStudyWidget extends Composite implements EditStudyWidgetAPI, St
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.client.gwt.widget.study.edit.client.EditStudyWidgetAPI#addEditStudyWidgetListener(org.cggh.chassis.generic.client.gwt.widget.study.edit.client.EditStudyWidgetPubSubAPI)
 	 */
-	public void addEditStudyWidgetListener(EditStudyWidgetPubSubAPI listener) {
+	public void addListener(EditStudyWidgetPubSubAPI listener) {
 		listeners.add(listener);
 	}
 

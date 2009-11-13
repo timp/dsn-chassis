@@ -26,7 +26,7 @@ public class ViewDatasetWidget
 	 */
 	@Override
 	protected ViewDatasetWidgetModel createModel() {
-		return new ViewDatasetWidgetModel(this);
+		return new ViewDatasetWidgetModel();
 	}
 
 

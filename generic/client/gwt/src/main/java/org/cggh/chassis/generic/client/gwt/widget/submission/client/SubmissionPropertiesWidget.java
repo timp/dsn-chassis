@@ -28,7 +28,7 @@ public class SubmissionPropertiesWidget
 	 */
 	@Override
 	protected SubmissionPropertiesWidgetModel createModel() {
-		return new SubmissionPropertiesWidgetModel(this);
+		return new SubmissionPropertiesWidgetModel();
 	}
 
 

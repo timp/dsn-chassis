@@ -8,8 +8,6 @@ import org.cggh.chassis.generic.atomext.client.dataset.DatasetEntry;
 import org.cggh.chassis.generic.atomext.client.dataset.DatasetFactory;
 import org.cggh.chassis.generic.atomext.client.dataset.DatasetFeed;
 import org.cggh.chassis.generic.client.gwt.forms.client.BaseForm;
-import org.cggh.chassis.generic.log.client.Log;
-import org.cggh.chassis.generic.log.client.LogFactory;
 
 /**
  * @author aliman
@@ -17,7 +15,6 @@ import org.cggh.chassis.generic.log.client.LogFactory;
  */
 public class DatasetForm extends
 		BaseForm<DatasetEntry, DatasetFeed, DatasetFormRenderer> {
-	private Log log = LogFactory.getLog(DatasetForm.class);
 
 	
 	
