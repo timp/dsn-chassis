@@ -5,10 +5,7 @@ package org.cggh.chassis.generic.client.gwt.application.client;
 
 import org.cggh.chassis.generic.widget.client.ChassisWidget;
 
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.Panel;
 
 /**
  * @author aliman
@@ -19,6 +16,9 @@ public class SubmitterHomeWidget
 	
 
 
+	
+	
+	
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#init()
 	 */
@@ -27,6 +27,9 @@ public class SubmitterHomeWidget
 		// TODO Auto-generated method stub
 		
 	}
+	
+	
+	
 
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#renderUI()
