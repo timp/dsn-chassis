@@ -54,13 +54,6 @@
           <!-- gwt puts dependencies in /war/WEB-INF/lib (even though some of them are marked provided in maven -->
           <warSourceExcludes>.gwt-tmp/**,WEB-INF/lib/gwt-user*</warSourceExcludes>
         </configuration>
-        <executions>
-          <execution>
-            <goals>
-              <goal>war</goal>
-            </goals>
-          </execution>
-        </executions>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
