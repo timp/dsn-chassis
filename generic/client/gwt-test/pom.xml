@@ -7,7 +7,6 @@
   <version>0.2-SNAPSHOT</version>
   <name>googlecode_dsn-chassis_generic_client_gwt-test</name>
   
-  <!--  convenience to define GWT version in one place -->
   <properties>
     <gwtVersion>1.7.1</gwtVersion>
     <powermock.version>1.2.5</powermock.version>
