@@ -69,8 +69,8 @@ public class DataManagementWidget
 
 
 	@Override
-	protected void renderChildWidgets() {
-		log.enter("renderChildWidgets");
+	protected void renderMainChildren() {
+		log.enter("renderMainChildren");
 		
 		this.newDataFileWidget = new NewDataFileWidget();
 		this.viewDataFileWidget = new ViewDataFileWidget();
@@ -83,15 +83,15 @@ public class DataManagementWidget
 		this.editDatasetWidget = new EditDatasetWidget();
 		this.myDatasetsWidget = new MyDatasetsWidget();
 		
-		this.add(this.newDataFileWidget);
-		this.add(this.viewDataFileWidget);
-		this.add(this.editDataFileWidget);
-		this.add(this.myDataFilesWidget);
-		this.add(this.uploadDataFileRevisionWidget);
-		this.add(this.newDatasetWidget);
-		this.add(this.viewDatasetWidget);
-		this.add(this.editDatasetWidget);
-		this.add(this.myDatasetsWidget);
+		this.mainChildren.add(this.newDataFileWidget);
+		this.mainChildren.add(this.viewDataFileWidget);
+		this.mainChildren.add(this.editDataFileWidget);
+		this.mainChildren.add(this.myDataFilesWidget);
+		this.mainChildren.add(this.uploadDataFileRevisionWidget);
+		this.mainChildren.add(this.newDatasetWidget);
+		this.mainChildren.add(this.viewDatasetWidget);
+		this.mainChildren.add(this.editDatasetWidget);
+		this.mainChildren.add(this.myDatasetsWidget);
 		
 		log.leave();
 	}
@@ -102,8 +102,8 @@ public class DataManagementWidget
 
 
 	@Override
-	protected void bindMenuBar() {
-		log.enter("bindMenuBar");
+	protected void renderMenuBar() {
+		log.enter("renderMenuBar");
 		
 		Command newDataFileMenuCommand = new Command() {
 			public void execute() {	
@@ -137,11 +137,11 @@ public class DataManagementWidget
 		// during the rendering phase, then add event handlers here, but we have 
 		// to actually create the menu items here (during binding phase) because 
 		// the GWT API does not allow you to add a menu item without a command
-		this.menuBar.addItem(new MenuItem("new data file", newDataFileMenuCommand));
-		this.menuBar.addItem(new MenuItem("my data files", myDataFilesMenuCommand));
-		this.menuBar.addSeparator();
-		this.menuBar.addItem(new MenuItem("new dataset", newDatasetMenuCommand));
-		this.menuBar.addItem(new MenuItem("my datasets", myDatasetsMenuCommand));
+		this.menu.addItem(new MenuItem("new data file", newDataFileMenuCommand));
+		this.menu.addItem(new MenuItem("my data files", myDataFilesMenuCommand));
+		this.menu.addSeparator();
+		this.menu.addItem(new MenuItem("new dataset", newDatasetMenuCommand));
+		this.menu.addItem(new MenuItem("my datasets", myDatasetsMenuCommand));
 
 		log.leave();
 	}

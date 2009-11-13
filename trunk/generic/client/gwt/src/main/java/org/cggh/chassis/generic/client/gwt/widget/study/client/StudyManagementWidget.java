@@ -7,7 +7,6 @@ import org.cggh.chassis.generic.atomext.client.study.StudyEntry;
 import org.cggh.chassis.generic.client.gwt.common.client.ChassisUser;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
-import org.cggh.chassis.generic.widget.client.HasMenuEventHandlers;
 import org.cggh.chassis.generic.widget.client.MenuEvent;
 import org.cggh.chassis.generic.widget.client.MultiWidget;
 
@@ -20,8 +19,7 @@ import com.google.gwt.user.client.ui.MenuItem;
  *
  */
 public class StudyManagementWidget 
-	extends MultiWidget 
-	implements HasMenuEventHandlers {
+	extends MultiWidget {
 
 	
 	
@@ -43,12 +41,21 @@ public class StudyManagementWidget
 
 	
 	
+	
+	public StudyManagementWidget() {
+		super(false, true);
+	}
+	
+	
+	
+	
 
 	@Override
-	protected void renderChildWidgets() {
-		log.enter("renderChildWidgets");
+	protected void renderMainChildren() {
+		log.enter("renderMainChildren");
 		
 		// create child widgets
+		
 		this.viewStudyWidget = new ViewStudyWidget();
 		this.createStudyWidget = new NewStudyWidget();
 		this.viewStudiesWidget = new MyStudiesWidget("view");
@@ -56,12 +63,12 @@ public class StudyManagementWidget
 		this.viewStudyQuestionnaireWidget = new ViewStudyQuestionnaireWidget();
 		this.editStudyQuestionnaireWidget = new EditStudyQuestionnaireWidget();
 		
-		this.add(this.viewStudyWidget);
-		this.add(this.createStudyWidget);
-		this.add(this.viewStudiesWidget);
-		this.add(this.editStudyWidget);
-		this.add(this.viewStudyQuestionnaireWidget);
-		this.add(this.editStudyQuestionnaireWidget);
+		this.mainChildren.add(this.viewStudyWidget);
+		this.mainChildren.add(this.createStudyWidget);
+		this.mainChildren.add(this.viewStudiesWidget);
+		this.mainChildren.add(this.editStudyWidget);
+		this.mainChildren.add(this.viewStudyQuestionnaireWidget);
+		this.mainChildren.add(this.editStudyQuestionnaireWidget);
 		
 		log.leave();
 	}
@@ -175,8 +182,8 @@ public class StudyManagementWidget
 	
 	
 	@Override
-	protected void bindMenuBar() {
-		log.enter("bindMenuBar");
+	protected void renderMenuBar() {
+		log.enter("renderMenuBar");
 		
 		log.debug("construct new study menu item");
 
@@ -193,7 +200,7 @@ public class StudyManagementWidget
 		};
 
 		MenuItem newStudyMenuItem = new MenuItem("new study", newStudyCommand );
-		menuBar.addItem(newStudyMenuItem);
+		this.menu.addItem(newStudyMenuItem);
 		
 		log.debug("construct my studies menu item");
 		
@@ -210,7 +217,7 @@ public class StudyManagementWidget
 		};
 
 		MenuItem viewStudiesMenuItem = new MenuItem("my studies", viewStudiesCommand );
-		menuBar.addItem(viewStudiesMenuItem);		
+		this.menu.addItem(viewStudiesMenuItem);		
 		
 		log.leave();
 	}

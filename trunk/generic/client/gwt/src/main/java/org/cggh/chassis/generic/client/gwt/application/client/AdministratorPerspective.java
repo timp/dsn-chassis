@@ -45,7 +45,7 @@ public class AdministratorPerspective extends PerspectiveBase {
 	@Override
 	protected void renderMenuBar() {
 
-		this.mainMenu.addItem("home", new Command() {
+		this.menu.addItem("home", new Command() {
 			public void execute() {
 				setActiveChild(administratorHomeWidget);
 			} 

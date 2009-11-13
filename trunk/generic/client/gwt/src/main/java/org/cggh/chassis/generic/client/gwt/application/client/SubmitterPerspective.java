@@ -53,7 +53,7 @@ public class SubmitterPerspective
 		this.mainChildren.add(this.dataManagementWidget);
 
 		this.activeChild = this.submitterHomeWidget;
-		this.memory.setChild(this.activeChild.getMemory());
+		this.memory.setChild(this.submitterHomeWidget.getMemory());
 
 	}
 
@@ -68,17 +68,17 @@ public class SubmitterPerspective
 	protected void renderMenuBar() {
 		log.enter("renderMenuBar");
 		
-		this.mainMenu.addItem("home", new Command() {
+		this.menu.addItem("home", new Command() {
 			public void execute() {
 				setActiveChild(submitterHomeWidget);
 			} 
 		});
 		
 		this.studyMenu = this.studyManagementWidget.getMenu();
-		this.mainMenu.addItem("studies", this.studyMenu);
+		this.menu.addItem("studies", this.studyMenu);
 
 		this.dataMenu = this.dataManagementWidget.getMenu();
-		this.mainMenu.addItem("data", this.dataMenu);
+		this.menu.addItem("data", this.dataMenu);
 		
 		log.leave();
 	}
