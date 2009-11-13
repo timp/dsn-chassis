@@ -4,6 +4,9 @@
 package org.cggh.chassis.generic.widget.client;
 
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.cggh.chassis.generic.async.client.Deferred;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
@@ -20,6 +23,7 @@ import org.cggh.chassis.generic.widget.client.WidgetMemory;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -44,16 +48,38 @@ public abstract class MultiWidget
 	
 	
 	// UI fields
-	protected MenuBar menuBar;
+	protected FlowPanel menuContainer;
+	protected FlowPanel mainPanel;
+	protected MenuBar menu;
 
 
 
 
 	// state fields
 	protected Widget activeChild;
+	protected Set<Widget> mainChildren;
+	
+	
+	
+	
+	
+	// configuration fields
+	protected boolean showMenu = false;
+	private boolean verticalMenu = true;
 
 
 
+	
+	public MultiWidget() {}
+
+	
+	
+	public MultiWidget(boolean showMenu, boolean verticalMenu) {
+		this.showMenu = showMenu;
+		this.verticalMenu = verticalMenu;
+	}
+	
+	
 
 
 	/* (non-Javadoc)
@@ -64,6 +90,8 @@ public abstract class MultiWidget
 		ensureLog();
 		log.enter("init");
 
+		this.mainChildren = new HashSet<Widget>();
+		this.activeChild = null;
 		this.memory = new Memory();
 		
 		log.leave();
@@ -90,10 +118,25 @@ public abstract class MultiWidget
 	protected void renderUI() {
 		log.enter("renderUI");
 		
-		this.menuBar = new MenuBar(true);
+		this.menu = new MenuBar(this.verticalMenu);
 		
-		this.renderChildWidgets();
+		if (this.showMenu) {
+			this.menuContainer = new FlowPanel();
+			this.add(this.menuContainer);
+			this.menuContainer.add(this.menu);
+		}
 		
+		this.mainPanel = new FlowPanel();
+		this.add(this.mainPanel);
+
+		this.renderMainChildren();
+
+		for (Widget w : this.mainChildren) {
+			this.mainPanel.add(w);
+		}
+
+		this.renderMenuBar(); // has to come last, because menus from child widgets won't be ready until widget is added to main panel
+
 		log.leave();
 	}
 
@@ -101,19 +144,26 @@ public abstract class MultiWidget
 	
 	
 
-	protected abstract void renderChildWidgets();
+	protected abstract void renderMainChildren();
 
 
 
 
+	/**
+	 * 
+	 */
+	protected abstract void renderMenuBar();
+
+
+	
+	
+	
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#bindUI()
 	 */
 	@Override
 	protected void bindUI() {
 		log.enter("bindUI");
-		
-		this.bindMenuBar();
 		
 		this.registerHandlersForChildWidgetEvents();
 		
@@ -126,18 +176,29 @@ public abstract class MultiWidget
 
 
 
-	/**
-	 * 
-	 */
-	protected abstract void bindMenuBar();
-
 
 	
 	
 	/**
 	 * 
 	 */
-	protected abstract void registerHandlersForChildWidgetEvents();
+	protected void registerHandlersForChildWidgetEvents() {
+
+		for (Widget w : this.mainChildren) {
+			
+			if (w instanceof HasMenuEventHandlers) {
+				((HasMenuEventHandlers)w).addMenuEventHandler(new MenuEventHandler() {
+					
+					public void onMenuCommand(MenuEvent e) {
+						ChassisWidget source = (ChassisWidget) e.getSource();
+						setActiveChild(source);
+					}
+					
+				});
+			}
+		}
+
+	}
 
 
 
@@ -187,8 +248,11 @@ public abstract class MultiWidget
 	protected void syncUI() {
 		log.enter("syncUI");
 		
-		if (this.activeChild == null) this.hideAll();
-		else this.showOnly(this.activeChild);
+		for (Widget w : this.mainChildren) {
+			w.setVisible(false);
+		}
+		
+		if (this.activeChild != null) this.activeChild.setVisible(true);
 		
 		log.leave();
 	}
@@ -199,7 +263,7 @@ public abstract class MultiWidget
 
 	
 	public MenuBar getMenu() {
-		return this.menuBar;
+		return this.menu;
 	}
 	
 	
