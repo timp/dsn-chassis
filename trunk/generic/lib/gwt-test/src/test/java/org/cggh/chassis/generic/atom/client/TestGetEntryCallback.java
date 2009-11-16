@@ -1,12 +1,13 @@
 /**
  * 
  */
-package legacy.org.cggh.chassis.generic.atom.vanilla.client.protocol.impl;
+package org.cggh.chassis.generic.atom.client;
 
 import static org.easymock.EasyMock.expect;
 import static org.easymock.classextension.EasyMock.createMock;
 import static org.easymock.classextension.EasyMock.replay;
 import static org.easymock.classextension.EasyMock.verify;
+import junit.framework.TestCase;
 
 import org.cggh.chassis.generic.async.client.Function;
 import org.cggh.chassis.generic.async.client.HttpDeferred;
@@ -14,23 +15,30 @@ import org.cggh.chassis.generic.async.client.HttpDeferred;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.Response;
 
-import junit.framework.TestCase;
-import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
-import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactory;
-import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomFormatException;
-import legacy.org.cggh.chassis.generic.atom.vanilla.client.protocol.impl.PostEntryCallback;
-
 /**
  * @author aliman
  *
  */
-public class TestPostEntryCallback extends TestCase {
+public class TestGetEntryCallback extends TestCase {
 
 	
 	
+	class TestFunction<I,O> implements Function<I,O> {
+		int called = 0;
+		public O apply(I in) {
+			called++;
+			return null;
+		}
+	}
+	
+	
+	
+	/**
+	 * Test method for {@link legacy.org.cggh.chassis.generic.atom.vanilla.client.protocol.impl.GetEntryCallback#onError(com.google.gwt.http.client.Request, java.lang.Throwable)}.
+	 */
 	@SuppressWarnings("unchecked")
 	public void testOnError() {
-
+		
 		// mock request
 		Request request = createMock(Request.class);
 		// expectations
@@ -56,7 +64,7 @@ public class TestPostEntryCallback extends TestCase {
 		replay(deferred);
 		
 		// create object under test
-		PostEntryCallback testee = new PostEntryCallback(factory, deferred);
+		GetEntryCallback testee = new GetEntryCallback(factory, deferred);
 		
 		// call method under test
 		testee.onError(request, exception);
@@ -65,12 +73,15 @@ public class TestPostEntryCallback extends TestCase {
 		verify(request); verify(exception); verify(factory); verify(deferred);
 
 	}
+
 	
 	
-	
+	/**
+	 * Test method for {@link legacy.org.cggh.chassis.generic.atom.vanilla.client.protocol.impl.GetEntryCallback#onResponseReceived(com.google.gwt.http.client.Request, com.google.gwt.http.client.Response)}.
+	 */
 	@SuppressWarnings("unchecked")
-	public void testOnResponseReceived_201() {
-		
+	public void testOnResponseReceived_200() {
+
 		// test constants
 		String entryDocXML = "doesn't matter, we don't test parsing here";
 
@@ -83,7 +94,9 @@ public class TestPostEntryCallback extends TestCase {
 		// mock response
 		Response response = createMock(Response.class);
 		// expectations
-		expect(response.getStatusCode()).andReturn(201); // 201 CREATED
+		expect(response.getStatusCode()).andReturn(200);
+		expect(response.getStatusText()).andReturn("OK"); 
+		expect(response.getHeadersAsString()).andReturn("Content-Type: application/atom+xml"); 
 		expect(response.getHeader("Content-Type")).andReturn("application/atom+xml");
 		expect(response.getText()).andReturn(entryDocXML);
 		replay(response);
@@ -103,11 +116,13 @@ public class TestPostEntryCallback extends TestCase {
 		// mock deferred
 		HttpDeferred deferred = createMock(HttpDeferred.class);
 		// expectations
+		deferred.addRequest(request);
+		deferred.addResponse(response);
 		deferred.callback(entry);
 		replay(deferred);
 		
 		// create object under test
-		PostEntryCallback testee = new PostEntryCallback(factory, deferred);
+		GetEntryCallback testee = new GetEntryCallback(factory, deferred);
 		
 		// call method under test
 		testee.onResponseReceived(request, response);
@@ -116,11 +131,14 @@ public class TestPostEntryCallback extends TestCase {
 		verify(request); verify(response); verify(entry); verify(factory); verify(deferred);
 		
 	}
+
 	
 	
-	
+	/**
+	 * Test method for {@link legacy.org.cggh.chassis.generic.atom.vanilla.client.protocol.impl.GetEntryCallback#onResponseReceived(com.google.gwt.http.client.Request, com.google.gwt.http.client.Response)}.
+	 */
 	@SuppressWarnings("unchecked")
-	public void testOnResponseReceived_201_AtomFormatException() {
+	public void testOnResponseReceived_200_AtomFormatException() {
 
 		// test constants
 		String entryDocXML = "doesn't matter, we don't test parsing here";
@@ -134,7 +152,9 @@ public class TestPostEntryCallback extends TestCase {
 		// mock response
 		Response response = createMock(Response.class);
 		// expectations
-		expect(response.getStatusCode()).andReturn(201);
+		expect(response.getStatusCode()).andReturn(200);
+		expect(response.getStatusText()).andReturn("OK"); 
+		expect(response.getHeadersAsString()).andReturn("Content-Type: application/atom+xml"); 
 		expect(response.getHeader("Content-Type")).andReturn("application/atom+xml");
 		expect(response.getText()).andReturn(entryDocXML);
 		replay(response);
@@ -149,11 +169,13 @@ public class TestPostEntryCallback extends TestCase {
 		// mock deferred
 		HttpDeferred deferred = createMock(HttpDeferred.class);
 		// expectations
+		deferred.addRequest(request);
+		deferred.addResponse(response);
 		deferred.errback(exception);
 		replay(deferred);
 		
 		// create object under test
-		PostEntryCallback testee = new PostEntryCallback(factory, deferred);
+		GetEntryCallback testee = new GetEntryCallback(factory, deferred);
 		
 		// call method under test
 		testee.onResponseReceived(request, response);
@@ -162,23 +184,14 @@ public class TestPostEntryCallback extends TestCase {
 		verify(request); verify(response); verify(factory); verify(deferred);
 		
 	}
+
 	
 	
-	
-	
-	class TestFunction<I,O> implements Function<I,O> {
-		int called = 0;
-		public O apply(I in) {
-			called++;
-			return null;
-		}
-	}
-	
-	
-	
+	/**
+	 * Test method for {@link legacy.org.cggh.chassis.generic.atom.vanilla.client.protocol.impl.GetEntryCallback#onResponseReceived(com.google.gwt.http.client.Request, com.google.gwt.http.client.Response)}.
+	 */
 	@SuppressWarnings("unchecked")
 	public void testOnResponseReceived_404() {
-		
 
 		// mock request
 		Request request = createMock(Request.class);
@@ -190,6 +203,10 @@ public class TestPostEntryCallback extends TestCase {
 		Response response = createMock(Response.class);
 		// expectations
 		expect(response.getStatusCode()).andReturn(404);
+		expect(response.getStatusText()).andReturn("Not Found"); 
+		expect(response.getHeadersAsString()).andReturn("foo: bar"); 
+		expect(response.getHeader("Content-Type")).andReturn("text/plain"); 
+		expect(response.getText()).andReturn("resource was not found"); 
 		replay(response);
 		
 		// mock atom factory
@@ -209,7 +226,7 @@ public class TestPostEntryCallback extends TestCase {
 		deferred.addCallbacks(callback, errback);
 		
 		// create object under test
-		PostEntryCallback testee = new PostEntryCallback(factory, deferred);
+		GetEntryCallback testee = new GetEntryCallback(factory, deferred);
 		
 		// call method under test
 		testee.onResponseReceived(request, response);
@@ -224,4 +241,6 @@ public class TestPostEntryCallback extends TestCase {
 	}
 
 	
+	
+
 }

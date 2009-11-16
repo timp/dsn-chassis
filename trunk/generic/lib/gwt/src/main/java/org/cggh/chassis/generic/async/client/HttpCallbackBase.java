@@ -25,6 +25,11 @@ public class HttpCallbackBase implements RequestCallback {
 	
 	@SuppressWarnings("unchecked")
 	protected HttpDeferred genericResult;
+	protected int statusCode;
+	protected String statusText;
+	protected String headersAsString;
+	protected String responseText;
+	private String contentType;
 	
 	@SuppressWarnings("unchecked")
 	protected HttpCallbackBase(HttpDeferred genericResult) {
@@ -35,9 +40,15 @@ public class HttpCallbackBase implements RequestCallback {
 		log.enter("onResponseReceived");
 		try {
 
+			this.statusCode = response.getStatusCode();
+			this.statusText = response.getStatusText();
+			this.headersAsString = response.getHeadersAsString();
+			this.contentType = response.getHeader("Content-Type");
+			this.responseText = response.getText();
+			
 			// log response details
-			log.debug("response status: "+response.getStatusCode() + " " + response.getStatusText());
-			log.debug("response headers: "+response.getHeadersAsString());
+			log.debug("response status: " + this.statusCode + " " + this.statusText);
+			log.debug("response headers: " + this.headersAsString);
 //			log.debug("response body: "+response.getText());
 //			log.debug("content length (actual): "+response.getText().length());
 			
@@ -47,6 +58,8 @@ public class HttpCallbackBase implements RequestCallback {
 			
 		} catch (Throwable t) {
 
+			log.error("caught handling response", t);
+			
 			// pass through as error
 			genericResult.errback(t);
 
@@ -76,8 +89,8 @@ public class HttpCallbackBase implements RequestCallback {
 	protected void checkStatusCode(Request request, Response response) throws HttpException {
 
 		// precondition: check status code
-		int statusCode = response.getStatusCode();
-		if ( ! this.expectedStatusCodes.contains(statusCode) ) {
+//		int statusCode = response.getStatusCode();
+		if ( ! this.expectedStatusCodes.contains(this.statusCode) ) {
 			throw new HttpException("bad status code, expected one of "+formatExpectedStatusCodes()+", found "+statusCode, request, response);
 		}
 		
@@ -86,8 +99,10 @@ public class HttpCallbackBase implements RequestCallback {
 	protected void checkContentType(Request request, Response response) throws HttpException {
 
 		// precondition: check content type
-		String contentType = response.getHeader("Content-Type");
-		if (!contentType.startsWith("application/atom+xml") && !contentType.startsWith("application/xml")) {
+//		String contentType = response.getHeader("Content-Type");
+		if (
+				!this.contentType.startsWith("application/atom+xml") && 
+				!this.contentType.startsWith("application/xml")) {
 			throw new HttpException("bad content type, expected content type starts with \"application/atom+xml\" or \"application/xml\", found \""+contentType+"\"", request, response);
 		}
 

@@ -44,7 +44,7 @@ public class CallbackWithEntry<E extends AtomEntry, F extends AtomFeed<E>>
 			checkResponsePreconditions(request, response);
 
 			// parse the response
-			E entry = factory.createEntry(response.getText()); 
+			E entry = factory.createEntry(this.responseText); 
 			
 			// pass through result
 			result.callback(entry);
