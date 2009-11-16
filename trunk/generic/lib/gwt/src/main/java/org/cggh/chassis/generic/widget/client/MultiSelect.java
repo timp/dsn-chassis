@@ -3,7 +3,6 @@
  */
 package org.cggh.chassis.generic.widget.client;
 
-import java.util.List;
 import java.util.Map;
 
 import org.cggh.chassis.generic.async.client.Deferred;
@@ -11,8 +10,6 @@ import org.cggh.chassis.generic.async.client.Function;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.AsyncRequestPendingStatus;
-import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.Status;
-import org.cggh.chassis.generic.widget.client.MultiSelectModel.SelectItem;
 
 /**
  * @author aliman
@@ -76,11 +73,11 @@ public class MultiSelect
 		this.model.setStatus(STATUS_LOAD_ITEMS_PENDING);
 
 		log.debug("load items for select");
-		Deferred<List<SelectItem>> deferredItems = this.selectModel.loadItems(true);
+		Deferred<Map<String,String>> deferredItems = this.selectModel.loadItems(true);
 		
 		deferredItems.addCallback(new Function<Map<String,String>, Map<String,String>>() {
 
-			public Map<String, String> apply(Map<String, String> in) {
+			public Map<String,String> apply(Map<String,String> in) {
 				log.enter("[anon callback] :: apply");
 				
 				model.setStatus(AsyncWidgetModel.STATUS_READY);
