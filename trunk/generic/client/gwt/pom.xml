@@ -41,7 +41,7 @@
               <goal>compile</goal>
             </goals>
             <configuration>
-	      <module>org.cggh.chassis.generic.lib.All</module>
+	      <module>org.cggh.chassis.generic.client.gwt.main.Main</module>
             </configuration>
           </execution>
         </executions>
