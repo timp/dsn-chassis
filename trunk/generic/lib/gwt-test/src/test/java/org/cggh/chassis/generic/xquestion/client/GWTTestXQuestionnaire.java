@@ -10,7 +10,6 @@ import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.xml.client.XML;
 
 import com.google.gwt.junit.client.GWTTestCase;
-import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;
@@ -50,20 +49,20 @@ public class GWTTestXQuestionnaire extends GWTTestCase {
 					"<element name='foo'/>" +
 				"</model>" +
 				"<view>" +
-					"<question>" +
+					"<question id='bar'>" +
 						"<model>" +
 							"<element name='bar'/>" +
 						"</model>" +
 						"<view>" +
-							"<input type='text'/>" +
+							"<input type='string'/>" +
 						"</view>" +
 					"</question>" +
-					"<question>" +
+					"<question id='baz'>" +
 						"<model>" +
 							"<element name='baz'/>" +
 						"</model>" +
 						"<view>" +
-							"<input type='text'/>" +
+							"<input type='string'/>" +
 						"</view>" +
 					"</question>" +
 				"</view>" +
@@ -71,6 +70,7 @@ public class GWTTestXQuestionnaire extends GWTTestCase {
 		
 		Document d = XMLParser.parse(definition);
 		XQuestionnaire q = new XQuestionnaire(d.getDocumentElement());
+		q.init();
 		
 		List<XQuestion> questions = q.getView().getQuestions();
 		
@@ -81,7 +81,9 @@ public class GWTTestXQuestionnaire extends GWTTestCase {
 		
 		for (int i=0; i<2; i++) {
 			Widget w = questions.get(i).getView().getFormControl();
-			TextBox t = (TextBox) w;
+			assertNotNull(w);
+			assertTrue((w instanceof XInputString));
+			XInputString t = (XInputString) w;
 			t.setValue(values[i], true); // fire events
 		}
 		
@@ -115,20 +117,20 @@ public class GWTTestXQuestionnaire extends GWTTestCase {
 					"<element name='foo' prefix='x' namespaceUri='http://example.org/x'/>" +
 				"</model>" +
 				"<view>" +
-					"<question>" +
+					"<question id='bar'>" +
 						"<model>" +
 							"<element name='bar' prefix='y' namespaceUri='http://example.org/y'/>" +
 						"</model>" +
 						"<view>" +
-							"<input type='text'/>" +
+							"<input type='string'/>" +
 						"</view>" +
 					"</question>" +
-					"<question>" +
+					"<question id='baz'>" +
 						"<model>" +
 							"<element name='baz' prefix='z' namespaceUri='http://example.org/z'/>" +
 						"</model>" +
 						"<view>" +
-							"<input type='text'/>" +
+							"<input type='string'/>" +
 						"</view>" +
 					"</question>" +
 				"</view>" +
@@ -136,6 +138,7 @@ public class GWTTestXQuestionnaire extends GWTTestCase {
 		
 		Document d = XMLParser.parse(definition);
 		XQuestionnaire q = new XQuestionnaire(d.getDocumentElement());
+		q.init();
 		
 		List<XQuestion> questions = q.getView().getQuestions();
 		
@@ -148,7 +151,9 @@ public class GWTTestXQuestionnaire extends GWTTestCase {
 		
 		for (int i=0; i<2; i++) {
 			Widget w = questions.get(i).getView().getFormControl();
-			TextBox t = (TextBox) w;
+			assertNotNull(w);
+			assertTrue((w instanceof XInputString));
+			XInputString t = (XInputString) w;
 			t.setValue(values[i], true); // fire events
 		}
 		
@@ -188,12 +193,12 @@ public class GWTTestXQuestionnaire extends GWTTestCase {
 					"<element name='foo'/>" +
 				"</model>" +
 				"<view>" +
-					"<question>" +
+					"<question id='bar'>" +
 						"<model>" +
 							"<element name='bar'/>" +
 						"</model>" +
 						"<view>" +
-							"<input type='text'/>" +
+							"<input type='string'/>" +
 						"</view>" +
 					"</question>" +
 					"<questionnaire>" +
@@ -201,12 +206,12 @@ public class GWTTestXQuestionnaire extends GWTTestCase {
 							"<element name='baz'/>" +
 						"</model>" +
 						"<view>" +
-							"<question>" +
+							"<question id='quux'>" +
 								"<model>" +
 									"<element name='quux'/>" +
 								"</model>" +
 								"<view>" +
-									"<input type='text'/>" +
+									"<input type='string'/>" +
 								"</view>" +
 							"</question>" +
 						"</view>" +
@@ -216,6 +221,7 @@ public class GWTTestXQuestionnaire extends GWTTestCase {
 		
 		Document d = XMLParser.parse(definition);
 		XQuestionnaire questionnaire = new XQuestionnaire(d.getDocumentElement());
+		questionnaire.init();
 		
 		List<XQuestion> questions = questionnaire.getView().getQuestions();		
 		assertEquals(1, questions.size());
@@ -227,11 +233,15 @@ public class GWTTestXQuestionnaire extends GWTTestCase {
 		assertEquals(1, nestedQuestions.size());
 		
 		Widget w0 = questions.get(0).getView().getFormControl();
-		TextBox t0 = (TextBox) w0;
+		assertNotNull(w0);
+		assertTrue((w0 instanceof XInputString));
+		XInputString t0 = (XInputString) w0;
 		t0.setValue("spong", true); // fire events
 
 		Widget w1 = nestedQuestions.get(0).getView().getFormControl();
-		TextBox t1 = (TextBox) w1;
+		assertNotNull(w1);
+		assertTrue((w1 instanceof XInputString));
+		XInputString t1 = (XInputString) w1;
 		t1.setValue("ding", true); // fire events
 
 		Element e = questionnaire.getModel().getElement();
@@ -272,12 +282,12 @@ public class GWTTestXQuestionnaire extends GWTTestCase {
 					"<element name='foo' prefix='a' namespaceUri='http://example.org/a'/>" +
 				"</model>" +
 				"<view>" +
-					"<question>" +
+					"<question id='bar'>" +
 						"<model>" +
 							"<element name='bar' prefix='b' namespaceUri='http://example.org/b'/>" +
 						"</model>" +
 						"<view>" +
-							"<input type='text'/>" +
+							"<input type='string'/>" +
 						"</view>" +
 					"</question>" +
 					"<questionnaire>" +
@@ -285,12 +295,12 @@ public class GWTTestXQuestionnaire extends GWTTestCase {
 							"<element name='baz' prefix='c' namespaceUri='http://example.org/c'/>" +
 						"</model>" +
 						"<view>" +
-							"<question>" +
+							"<question id='quux'>" +
 								"<model>" +
 									"<element name='quux' prefix='d' namespaceUri='http://example.org/d'/>" +
 								"</model>" +
 								"<view>" +
-									"<input type='text'/>" +
+									"<input type='string'/>" +
 								"</view>" +
 							"</question>" +
 						"</view>" +
@@ -300,6 +310,7 @@ public class GWTTestXQuestionnaire extends GWTTestCase {
 		
 		Document d = XMLParser.parse(definition);
 		XQuestionnaire questionnaire = new XQuestionnaire(d.getDocumentElement());
+		questionnaire.init();
 		
 		List<XQuestion> questions = questionnaire.getView().getQuestions();		
 		assertEquals(1, questions.size());
@@ -311,11 +322,15 @@ public class GWTTestXQuestionnaire extends GWTTestCase {
 		assertEquals(1, nestedQuestions.size());
 		
 		Widget w0 = questions.get(0).getView().getFormControl();
-		TextBox t0 = (TextBox) w0;
+		assertNotNull(w0);
+		assertTrue((w0 instanceof XInputString));
+		XInputString t0 = (XInputString) w0;
 		t0.setValue("spong", true); // fire events
 
 		Widget w1 = nestedQuestions.get(0).getView().getFormControl();
-		TextBox t1 = (TextBox) w1;
+		assertNotNull(w1);
+		assertTrue((w1 instanceof XInputString));
+		XInputString t1 = (XInputString) w1;
 		t1.setValue("ding", true); // fire events
 
 		Element e = questionnaire.getModel().getElement();
@@ -367,12 +382,12 @@ public class GWTTestXQuestionnaire extends GWTTestCase {
 					"<element name='foo'/>" +
 				"</model>" +
 				"<view>" +
-					"<question>" +
+					"<question id='bar'>" +
 						"<model>" +
 							"<element name='bar'/>" +
 						"</model>" +
 						"<view>" +
-							"<input type='text'/>" +
+							"<input type='string'/>" +
 						"</view>" +
 					"</question>" +
 					"<questionnaire>" +
@@ -380,12 +395,12 @@ public class GWTTestXQuestionnaire extends GWTTestCase {
 							"<element name='baz'/>" +
 						"</model>" +
 						"<view>" +
-							"<question>" +
+							"<question id='quux'>" +
 								"<model>" +
 									"<element name='quux'/>" +
 								"</model>" +
 								"<view>" +
-									"<input type='text'/>" +
+									"<input type='string'/>" +
 								"</view>" +
 							"</question>" +
 						"</view>" +
@@ -395,6 +410,7 @@ public class GWTTestXQuestionnaire extends GWTTestCase {
 		
 		Document d = XMLParser.parse(definition);
 		XQuestionnaire questionnaire = new XQuestionnaire(d.getDocumentElement());
+		questionnaire.init();
 		
 		List<XQuestion> questions = questionnaire.getView().getQuestions();		
 		assertEquals(1, questions.size());
@@ -406,11 +422,15 @@ public class GWTTestXQuestionnaire extends GWTTestCase {
 		assertEquals(1, nestedQuestions.size());
 		
 		Widget w0 = questions.get(0).getView().getFormControl();
-		TextBox t0 = (TextBox) w0;
+		assertNotNull(w0);
+		assertTrue((w0 instanceof XInputString));
+		XInputString t0 = (XInputString) w0;
 		t0.setValue("spong", true); // fire events
 
 		Widget w1 = nestedQuestions.get(0).getView().getFormControl();
-		TextBox t1 = (TextBox) w1;
+		assertNotNull(w1);
+		assertTrue((w1 instanceof XInputString));
+		XInputString t1 = (XInputString) w1;
 		t1.setValue("ding", true); // fire events
 
 		Element e = questionnaire.getModel().getElement();
@@ -461,12 +481,12 @@ public class GWTTestXQuestionnaire extends GWTTestCase {
 					"<element name='foo'/>" +
 				"</model>" +
 				"<view>" +
-					"<question repeatable='yes'>" +
+					"<question id='bar' repeatable='yes'>" +
 						"<model>" +
 							"<element name='bar'/>" +
 						"</model>" +
 						"<view>" +
-							"<input type='text'/>" +
+							"<input type='string'/>" +
 						"</view>" +
 					"</question>" +
 				"</view>" +
@@ -474,6 +494,7 @@ public class GWTTestXQuestionnaire extends GWTTestCase {
 		
 		Document d = XMLParser.parse(definition);
 		XQuestionnaire q = new XQuestionnaire(d.getDocumentElement());
+		q.init();
 
 		// test before repeat
 		
@@ -482,7 +503,7 @@ public class GWTTestXQuestionnaire extends GWTTestCase {
 		assertEquals(1, questions.size());
 
 		Widget w = questions.get(0).getView().getFormControl();
-		TextBox t = (TextBox) w;
+		XInputString t = (XInputString) w;
 		t.setValue("baz", true); // fire events
 
 		Element e = q.getModel().getElement();
@@ -510,7 +531,9 @@ public class GWTTestXQuestionnaire extends GWTTestCase {
 		
 		for (int i=0; i<2; i++) {
 			w = questions.get(i).getView().getFormControl();
-			t = (TextBox) w;
+			assertNotNull(w);
+			assertTrue((w instanceof XInputString));
+			t = (XInputString) w;
 			t.setValue(values[i], true); // fire events
 		}
 		
