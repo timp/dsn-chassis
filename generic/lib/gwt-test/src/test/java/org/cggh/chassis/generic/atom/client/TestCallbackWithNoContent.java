@@ -1,7 +1,7 @@
 /**
  * 
  */
-package legacy.org.cggh.chassis.generic.atom.vanilla.client.protocol.impl;
+package org.cggh.chassis.generic.atom.client;
 
 import static org.easymock.EasyMock.expect;
 import static org.easymock.classextension.EasyMock.createMock;
@@ -16,13 +16,12 @@ import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.Response;
 
 import junit.framework.TestCase;
-import legacy.org.cggh.chassis.generic.atom.vanilla.client.protocol.impl.CallbackWithNoContent;
 
 /**
  * @author aliman
  *
  */
-public class TestDeleteEntryCallback extends TestCase {
+public class TestCallbackWithNoContent extends TestCase {
 
 	
 	
@@ -73,11 +72,17 @@ public class TestDeleteEntryCallback extends TestCase {
 		Response response = createMock(Response.class);
 		// expectations
 		expect(response.getStatusCode()).andReturn(204); // 204 NO CONTENT 
+		expect(response.getStatusText()).andReturn("No Content"); 
+		expect(response.getHeadersAsString()).andReturn("foo: bar"); 
+		expect(response.getHeader("Content-Type")).andReturn("text/plain"); 
+		expect(response.getText()).andReturn(""); 
 		replay(response);
 		
 		// mock deferred
 		HttpDeferred deferred = createMock(HttpDeferred.class);
 		// expectations
+		deferred.addRequest(request);
+		deferred.addResponse(response);
 		deferred.callback(null);
 		replay(deferred);
 		
@@ -119,6 +124,10 @@ public class TestDeleteEntryCallback extends TestCase {
 		Response response = createMock(Response.class);
 		// expectations
 		expect(response.getStatusCode()).andReturn(404);
+		expect(response.getStatusText()).andReturn("Not Found"); 
+		expect(response.getHeadersAsString()).andReturn("foo: bar"); 
+		expect(response.getHeader("Content-Type")).andReturn("text/plain"); 
+		expect(response.getText()).andReturn("resource was not found"); 
 		replay(response);
 		
 		// deferred

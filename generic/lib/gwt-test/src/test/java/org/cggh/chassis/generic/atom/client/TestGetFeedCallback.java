@@ -1,17 +1,13 @@
 /**
  * 
  */
-package legacy.org.cggh.chassis.generic.atom.vanilla.client.protocol.impl;
+package org.cggh.chassis.generic.atom.client;
 
 import static org.easymock.EasyMock.expect;
 import static org.easymock.classextension.EasyMock.createMock;
 import static org.easymock.classextension.EasyMock.replay;
 import static org.easymock.classextension.EasyMock.verify;
 import junit.framework.TestCase;
-import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactory;
-import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
-import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomFormatException;
-import legacy.org.cggh.chassis.generic.atom.vanilla.client.protocol.impl.GetFeedCallback;
 
 import org.cggh.chassis.generic.async.client.Function;
 import org.cggh.chassis.generic.async.client.HttpDeferred;
@@ -99,6 +95,8 @@ public class TestGetFeedCallback extends TestCase {
 		Response response = createMock(Response.class);
 		// expectations
 		expect(response.getStatusCode()).andReturn(200);
+		expect(response.getStatusText()).andReturn("OK"); 
+		expect(response.getHeadersAsString()).andReturn("foo: bar"); 
 		expect(response.getHeader("Content-Type")).andReturn("application/atom+xml");
 		expect(response.getText()).andReturn(feedDocXML);
 		replay(response);
@@ -118,6 +116,8 @@ public class TestGetFeedCallback extends TestCase {
 		// mock deferred
 		HttpDeferred deferred = createMock(HttpDeferred.class);
 		// expectations
+		deferred.addRequest(request);
+		deferred.addResponse(response);
 		deferred.callback(feed);
 		replay(deferred);
 		
@@ -153,6 +153,8 @@ public class TestGetFeedCallback extends TestCase {
 		Response response = createMock(Response.class);
 		// expectations
 		expect(response.getStatusCode()).andReturn(200);
+		expect(response.getStatusText()).andReturn("OK"); 
+		expect(response.getHeadersAsString()).andReturn("Content-Type: application/atom+xml"); 
 		expect(response.getHeader("Content-Type")).andReturn("application/atom+xml");
 		expect(response.getText()).andReturn(feedDocXML);
 		replay(response);
@@ -167,6 +169,8 @@ public class TestGetFeedCallback extends TestCase {
 		// mock deferred
 		HttpDeferred deferred = createMock(HttpDeferred.class);
 		// expectations
+		deferred.addRequest(request);
+		deferred.addResponse(response);
 		deferred.errback(exception);
 		replay(deferred);
 		
@@ -199,6 +203,10 @@ public class TestGetFeedCallback extends TestCase {
 		Response response = createMock(Response.class);
 		// expectations
 		expect(response.getStatusCode()).andReturn(404);
+		expect(response.getStatusText()).andReturn("Not Found"); 
+		expect(response.getHeadersAsString()).andReturn("foo: bar"); 
+		expect(response.getHeader("Content-Type")).andReturn("text/plain"); 
+		expect(response.getText()).andReturn("resource was not found"); 
 		replay(response);
 		
 		// mock atom factory
