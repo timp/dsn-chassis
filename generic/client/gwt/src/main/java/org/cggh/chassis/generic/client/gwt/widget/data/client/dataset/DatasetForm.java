@@ -61,6 +61,30 @@ public class DatasetForm extends
 
 
 
+//	/**
+//	 * 
+//	 */
+//	public void refreshStudies() {
+//		this.renderer.updateStudies();
+//	}
+
+
+
+
+
+
+
+//	/**
+//	 * 
+//	 */
+//	public void refreshDataFiles() {
+//		this.renderer.updateDataFiles();
+//	}
+
+
+
+
+
 
 
 }

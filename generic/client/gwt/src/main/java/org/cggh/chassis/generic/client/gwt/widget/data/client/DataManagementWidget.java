@@ -163,8 +163,11 @@ public class DataManagementWidget
 		this.registerHandlersForUploadDataFileRevisionWidgetEvents();
 		this.registerHandlersForMyDataFilesWidgetEvents();
 		this.registerHandlersForEditDataFileWidgetEvents();
+
 		this.registerHandlersForNewDatasetWidgetEvents();
 		this.registerHandlersForViewDatasetWidgetEvents();
+		this.registerHandlersForMyDatasetsWidgetEvents();
+		this.registerHandlersForEditDatasetWidgetEvents();
 
 	}
 
@@ -173,6 +176,8 @@ public class DataManagementWidget
 
 
 	
+
+
 	/**
 	 * 
 	 */
@@ -330,8 +335,8 @@ public class DataManagementWidget
 		this.childWidgetEventHandlerRegistrations.add(a);
 		this.childWidgetEventHandlerRegistrations.add(b);
 		this.childWidgetEventHandlerRegistrations.add(c);		
+
 		log.leave();
-		
 	}
 
 
@@ -375,7 +380,7 @@ public class DataManagementWidget
 	 * 
 	 */
 	private void registerHandlersForViewDatasetWidgetEvents() {
-		// TODO Auto-generated method stub
+
 		HandlerRegistration a  = this.viewDatasetWidget.addEditDatasetActionHandler(new DatasetActionHandler() {
 			
 			public void onAction(DatasetActionEvent e) {
@@ -392,6 +397,67 @@ public class DataManagementWidget
 
 
 
+	/**
+	 * 
+	 */
+	private void registerHandlersForMyDatasetsWidgetEvents() {
+
+		HandlerRegistration a = this.myDatasetsWidget.addViewDatasetActionHandler(new DatasetActionHandler() {
+			
+			public void onAction(DatasetActionEvent e) {
+				log.enter("onAction");
+				
+				viewDatasetWidget.viewEntry(e.getEntry().getId());
+				setActiveChild(viewDatasetWidget);
+				
+				log.leave();
+			}
+		});
+
+		this.childWidgetEventHandlerRegistrations.add(a);
+		
+	}
+
+
+
+
+	
+	/**
+	 * 
+	 */
+	private void registerHandlersForEditDatasetWidgetEvents() {
+		log.enter("registerHandlersForEditDatasetWidgetEvents");
+		
+		HandlerRegistration a = this.editDatasetWidget.addCancelHandler(new CommonCancelHandler());
+
+		HandlerRegistration b = this.editDatasetWidget.addUpdateSuccessHandler(new UpdateSuccessHandler<DatasetEntry>() {
+			
+			public void onUpdateSuccess(UpdateSuccessEvent<DatasetEntry> e) {
+				log.enter("onUpdateSuccess");
+				
+				viewDatasetWidget.viewEntry(e.getEntry().getId());
+				setActiveChild(viewDatasetWidget);
+				
+				log.leave();
+			}
+			
+		});
+		
+		HandlerRegistration c = this.editDatasetWidget.addErrorHandler(new CommonErrorHandler());
+		
+		this.childWidgetEventHandlerRegistrations.add(a);
+		this.childWidgetEventHandlerRegistrations.add(b);
+		this.childWidgetEventHandlerRegistrations.add(c);		
+
+		log.leave();
+	}
+
+
+
+
+
+
+
 
 
 	@Override
@@ -402,6 +468,10 @@ public class DataManagementWidget
 		
 		if (child == myDataFilesWidget) {
 			myDataFilesWidget.refreshDataFiles();
+		}
+
+		if (child == myDatasetsWidget) {
+			myDatasetsWidget.refreshDatasets();
 		}
 
 		log.leave();

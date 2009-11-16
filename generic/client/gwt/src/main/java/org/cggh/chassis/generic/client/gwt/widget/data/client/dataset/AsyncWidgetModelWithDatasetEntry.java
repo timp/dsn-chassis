@@ -19,6 +19,10 @@ public class AsyncWidgetModelWithDatasetEntry extends AsyncWidgetModel {
 	
 	
 	
+	// TODO consider push up to new superclass
+	
+	
+	
 	
 	private Log log;
 	

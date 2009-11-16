@@ -13,6 +13,9 @@ import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.AsyncErrback;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 
+
+
+
 /**
  * @author aliman
  *
@@ -22,7 +25,11 @@ public class EditDataFileWidgetController {
 
 	private EditDataFileWidgetModel model;
 	private EditDataFileWidget owner;
+	private Log log = LogFactory.getLog(EditDataFileWidgetController.class);
 
+	
+	
+	
 	/**
 	 * @param model
 	 */
@@ -31,8 +38,10 @@ public class EditDataFileWidgetController {
 		this.model = model;
 	}
 
-	private Log log = LogFactory.getLog(EditDataFileWidgetController.class);
 
+	
+	
+	
 	/**
 	 * @param entry
 	 */
@@ -53,6 +62,9 @@ public class EditDataFileWidgetController {
 		log.leave();
 	}
 
+	
+	
+	
 	/**
 	 * @author aliman
 	 *
@@ -77,4 +89,8 @@ public class EditDataFileWidgetController {
 		}
 
 	}
+	
+	
+	
+	
 }

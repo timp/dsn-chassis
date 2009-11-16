@@ -37,6 +37,8 @@ public class MyDataFilesWidgetModel extends AsyncWidgetModel {
 		
 		super.init();
 		
+		this.feed = null;
+		
 		log.leave();
 	}
 	
