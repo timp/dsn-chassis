@@ -5,7 +5,7 @@
   -->
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.cggh.chassis</groupId>
-  <artifactId>generic-lib</artifactId>
+  <artifactId>chassis-generic-lib</artifactId>
   <packaging>jar</packaging>
   <version>0.2-SNAPSHOT</version>
   <name>googlecode_dsn-chassis_generic_lib_java</name>
@@ -46,7 +46,7 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.1</version>
+      <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
 
