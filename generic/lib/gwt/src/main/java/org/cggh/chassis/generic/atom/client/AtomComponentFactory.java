@@ -3,6 +3,7 @@
  */
 package org.cggh.chassis.generic.atom.client;
 
+import org.cggh.chassis.generic.atomext.client.dataset.StudyLink;
 import org.cggh.chassis.generic.xml.client.XMLNS;
 
 import com.google.gwt.xml.client.Element;
@@ -38,6 +39,16 @@ public class AtomComponentFactory {
 	
 	
 
+	public AtomLink createLink(String href, String rel) {
+		AtomLink link = this.createLink();
+		link.setHref(href);
+		link.setRel(rel);
+		return link;
+	}
+	
+	
+	
+
 	public AtomLink createLink(Element linkElement) {
 		return new AtomLinkImpl(linkElement);
 	}
@@ -56,9 +67,8 @@ public class AtomComponentFactory {
 	public AtomCategory createCategory(Element categoryElement) {
 		return new AtomCategoryImpl(categoryElement);
 	}
-	
-	
-	
-	
+
+
+
 
 }
