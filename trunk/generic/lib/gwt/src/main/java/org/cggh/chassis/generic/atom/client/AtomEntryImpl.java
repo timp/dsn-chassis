@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.cggh.chassis.generic.async.client.Function;
 import org.cggh.chassis.generic.async.client.Functional;
+import org.cggh.chassis.generic.atomext.client.dataset.StudyLink;
 import org.cggh.chassis.generic.xml.client.ElementWrapperImpl;
 import org.cggh.chassis.generic.xml.client.XMLNS;
 
@@ -329,8 +330,69 @@ public class AtomEntryImpl extends ElementWrapperImpl implements AtomEntry {
 		XMLNS.setSingleChildSimpleContentByTagNameNS(element, Atom.ELEMENT_TITLE, Atom.PREFIX, Atom.NSURI, title);
 	}
 
+
+
+
+	/**
+	 * @param href
+	 * @param rel
+	 */
+	public void addLink(String href, String rel) {
+		AtomLink link = this.factory.createLink(href, rel);
+		this.addLink(link);
+	}
+
+
+
+
+	/**
+	 * @param index
+	 * @param href
+	 * @param rel
+	 */
+	public void addLinkAfter(Element e, String href, String rel) {
+		AtomLink link = this.factory.createLink(href, rel);
+		this.addLinkAfter(e, link);
+	}
+
+
+
+
+	/**
+	 * @param index
+	 * @param link
+	 */
+	private void addLinkAfter(Element e, AtomLink link) {
+		this.getElement().insertBefore(link.getElement(), e.getNextSibling());
+	}
+
+
+
+
+	/**
+	 * @param first
+	 * @param href
+	 * @param study
+	 */
+	public void addLinkBefore(Element e, String href, String rel) {
+		AtomLink link = this.factory.createLink(href, rel);
+		this.addLinkBefore(e, link);
+	}
+
 	
 	
 	
-	
+
+	/**
+	 * @param index
+	 * @param link
+	 */
+	private void addLinkBefore(Element e, AtomLink link) {
+		this.getElement().insertBefore(link.getElement(), e);
+	}
+
+
+
+
+
 }

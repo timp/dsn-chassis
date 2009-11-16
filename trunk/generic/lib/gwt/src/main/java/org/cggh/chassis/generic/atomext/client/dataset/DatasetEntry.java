@@ -15,5 +15,13 @@ public interface DatasetEntry extends AtomEntry {
 
 	public List<StudyLink> getStudyLinks();
 	public List<DataFileLink> getDataFileLinks();
+	public void addStudyLink(String href);
+	public void addStudyLink(int index, String href);
+	public void removeStudyLink(String href);
+	public void removeStudyLink(int index);
+	public void addDataFileLink(String value);
+	public void addDataFileLink(int index, String value);
+	public void removeDataFileLink(String value);
+	public void removeDataFileLink(int index);
 
 }

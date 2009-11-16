@@ -56,7 +56,9 @@ public class MultiSelect
 	
 	
 	public MultiSelect(MultiSelectModel model) {
+		log.enter("<constructor>");
 		this.selectModel = model;
+		log.leave();
 	}
 
 
@@ -82,6 +84,7 @@ public class MultiSelect
 				
 				model.setStatus(AsyncWidgetModel.STATUS_READY);
 				
+				log.debug("items retrieved, rendering select");
 				renderSelect();
 				
 				log.leave();
@@ -102,9 +105,11 @@ public class MultiSelect
 	 * Make sure we don't render select until items have been loaded.
 	 */
 	public void renderSelect() {
+		log.enter("renderSelect");
 		this.renderer.renderSelectUI();
 		this.renderer.bindSelectUI(this.selectModel);
 		this.renderer.syncSelectUI();
+		log.leave();
 	}
 	
 	

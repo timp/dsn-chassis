@@ -121,6 +121,7 @@ public class MultiSelectRenderer
 			final int index = i;
 			
 			String value = values.get(index);
+			log.debug("found value: "+value+"; label: "+items.get(value));
 			
 			p.add(new InlineLabel(items.get(value)));
 			
@@ -138,6 +139,9 @@ public class MultiSelectRenderer
 			p.add(removeButton);
 
 			if (more) {
+				
+				log.debug("there are more items, provide add button");
+				
 				Button addButton = new Button("add another");
 				addButton.addClickHandler(new ClickHandler() {
 					
@@ -153,12 +157,13 @@ public class MultiSelectRenderer
 			}
 			
 			this.selectPanel.add(p);
-			
 
 		}
 		
 		if (values.size() == 0) {
 
+			log.debug("no selected values found");
+			
 			Button addButton = new Button("add");
 			addButton.addClickHandler(new ClickHandler() {
 				
