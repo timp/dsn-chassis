@@ -15,6 +15,8 @@ import org.cggh.chassis.generic.atomext.client.dataset.DatasetEntry;
 public class UpdateDatasetSuccessEvent 
 	extends UpdateSuccessEvent<DatasetEntry> {
 	
+	// TODO consider push up to superclass, remove this class
+	
 	public static final Type<UpdateSuccessHandler<DatasetEntry>> TYPE = new Type<UpdateSuccessHandler<DatasetEntry>>();
 	
 	/* (non-Javadoc)

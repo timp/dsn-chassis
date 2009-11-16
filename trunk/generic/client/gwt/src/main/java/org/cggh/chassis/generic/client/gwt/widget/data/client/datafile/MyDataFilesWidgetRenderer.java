@@ -73,7 +73,7 @@ public class MyDataFilesWidgetRenderer
 	protected void registerHandlersForChildWidgetEvents() {
 		log.enter("registerHandlersForChildWidgetEvents");
 
-		// TODO Auto-generated method stub
+		// nothing to do
 
 		log.leave();
 	}

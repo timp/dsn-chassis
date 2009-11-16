@@ -89,6 +89,8 @@ public class EditDatasetWidget
 	 */
 	public void setEntry(DatasetEntry entry) {
 		this.model.setEntry(entry);
+//		this.refreshStudies();
+//		this.refreshDataFiles();
 	}
 
 
@@ -105,6 +107,22 @@ public class EditDatasetWidget
 	}
 
 
+
+	
+//	public void refreshStudies() {
+//		this.renderer.refreshStudies();
+//	}
+
+
+
+
+
+//	/**
+//	 * 
+//	 */
+//	private void refreshDataFiles() {
+//		this.renderer.refreshDataFiles();
+//	}
 
 
 

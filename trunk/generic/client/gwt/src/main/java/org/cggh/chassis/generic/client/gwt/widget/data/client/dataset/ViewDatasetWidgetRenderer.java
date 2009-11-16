@@ -28,6 +28,8 @@ public class ViewDatasetWidgetRenderer
 	private DatasetPropertiesWidget datasetPropertiesWidget;
 	private DatasetActionsPanel actionsPanel;
 	private ViewDatasetWidget owner;
+	private DatasetStudiesWidget studiesWidget;
+	private DatasetDataFilesWidget dataFilesWidget;
 
 	
 	
@@ -77,6 +79,18 @@ public class ViewDatasetWidgetRenderer
 		this.datasetPropertiesWidget = new DatasetPropertiesWidget();
 		contentPanel.add(this.datasetPropertiesWidget);
 		
+		contentPanel.add(new HTML("<h3>Studies</h3>")); // TODO i18n
+		contentPanel.add(new HTML("<p>This dataset is associated with the following studies...")); // TODO I18N
+		
+		this.studiesWidget = new DatasetStudiesWidget();
+		contentPanel.add(this.studiesWidget);
+
+		contentPanel.add(new HTML("<h3>Data Files</h3>")); // TODO i18n
+		contentPanel.add(new HTML("<p>This dataset includes the following data files...")); // TODO I18N
+		
+		this.dataFilesWidget = new DatasetDataFilesWidget();
+		contentPanel.add(this.dataFilesWidget);
+
 		log.leave();
 		return contentPanel;
 	}
@@ -180,6 +194,8 @@ public class ViewDatasetWidgetRenderer
 		
 		if (entry != null) {
 			this.datasetPropertiesWidget.setEntry(entry);
+			this.studiesWidget.setEntry(entry);
+			this.dataFilesWidget.setEntry(entry);
 		}
 		else {
 			this.datasetPropertiesWidget.setEntry(null); // TODO review this, rather call reset() ?
