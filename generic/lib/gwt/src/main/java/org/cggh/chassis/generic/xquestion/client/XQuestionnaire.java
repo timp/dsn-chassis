@@ -6,7 +6,6 @@ package org.cggh.chassis.generic.xquestion.client;
 import java.util.ArrayList;
 import java.util.List;
 
-import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
 
 import org.cggh.chassis.generic.async.client.Deferred;
 import org.cggh.chassis.generic.async.client.HttpCallbackBase;
@@ -18,11 +17,9 @@ import org.cggh.chassis.generic.xml.client.XML;
 
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
-import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.Response;
 import com.google.gwt.http.client.URL;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;
 import com.google.gwt.xml.client.XMLParser;

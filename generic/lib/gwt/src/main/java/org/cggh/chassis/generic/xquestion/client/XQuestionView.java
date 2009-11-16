@@ -14,11 +14,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Panel;
-import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.user.client.ui.HasHorizontalAlignment.HorizontalAlignmentConstant;
 import com.google.gwt.xml.client.Element;
 
 /**
@@ -37,7 +33,6 @@ public class XQuestionView extends XQSViewBase {
 	private XQuestionModel model;
 	private boolean repeatable = false;
 	private XQuestion owner;
-	private Element formControlDefinitionElement;
 	private List<Element> viewElements = new ArrayList<Element>();
 	private boolean vertical =true;
 
@@ -72,7 +67,6 @@ public class XQuestionView extends XQSViewBase {
 				e.getTagName().equals(XQS.ELEMENT_INPUT) ||
 				e.getTagName().equals(XQS.ELEMENT_SECRET)
 			) {	
-				formControlDefinitionElement = e;
 				vertical = false;
 			}
 			else if (
@@ -80,7 +74,6 @@ public class XQuestionView extends XQSViewBase {
 				e.getTagName().equals(XQS.ELEMENT_SELECT) ||
 				e.getTagName().equals(XQS.ELEMENT_SELECT1)
 			) {
-				formControlDefinitionElement = e;
 				vertical = true;
 			}
 			else {

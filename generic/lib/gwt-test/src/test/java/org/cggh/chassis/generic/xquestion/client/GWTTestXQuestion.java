@@ -8,7 +8,6 @@ import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.xml.client.XML;
 
 import com.google.gwt.junit.client.GWTTestCase;
-import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;
@@ -42,21 +41,29 @@ public class GWTTestXQuestion extends GWTTestCase {
 		log.enter("testQuestionWithTextInput");
 		
 		String definition = 
-			"<question>" +
+			"<question id=\"foo\">" +
 				"<model>" +
 					"<element name='foo'/>" +
 				"</model>" +
 				"<view>" +
-					"<input type='text'/>" +
+					"<input type='string'/>" +
 				"</view>" +
 			"</question>";
 		
 		Document d = XMLParser.parse(definition);
 		XQuestion q = new XQuestion(d.getDocumentElement());
+		q.init();
 		
 		Widget w = q.getView().getFormControl();
-		TextBox t = (TextBox) w;
-		t.setValue("bar", true); // fire events
+		
+		assertNotNull(w);
+		assertTrue((w instanceof XInputString));
+		
+		XInputString input = (XInputString) w;
+		
+		assertNotNull(input);
+		
+		input.setValue("bar", true); // fire events
 		
 		Element e = q.getModel().getElement();
 		
@@ -76,21 +83,27 @@ public class GWTTestXQuestion extends GWTTestCase {
 		log.enter("testQuestionWithTextInput");
 		
 		String definition = 
-			"<question>" +
+			"<question id=\"foo\">" +
 				"<model>" +
 					"<element name='foo' prefix='x' namespaceUri='http://example.org/bar'/>" +
 				"</model>" +
 				"<view>" +
-					"<input type='text'/>" +
+					"<input type='string'/>" +
 				"</view>" +
 			"</question>";
 		
 		Document d = XMLParser.parse(definition);
 		XQuestion q = new XQuestion(d.getDocumentElement());
+		q.init();
 		
 		Widget w = q.getView().getFormControl();
-		TextBox t = (TextBox) w;
-		t.setValue("bar", true); // fire events
+		
+		assertNotNull(w);
+		assertTrue((w instanceof XInputString));
+
+		XInputString input = (XInputString) w;
+
+		input.setValue("bar", true); // fire events
 		
 		Element e = q.getModel().getElement();
 		

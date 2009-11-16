@@ -4,9 +4,7 @@
 package org.cggh.chassis.generic.xquestion.client;
 
 import com.google.gwt.user.client.ui.InlineLabel;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PasswordTextBox;
-import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.xml.client.Element;
 
 /**
