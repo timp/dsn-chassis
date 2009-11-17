@@ -96,7 +96,7 @@
                     <id>do</id>
                     <phase>pre-integration-test</phase>
                     <goals>
-                        <goal>deployer-deploy</goal>
+                        <goal>deployer-redeploy</goal>
                     </goals>
                 </execution>
             </executions>
