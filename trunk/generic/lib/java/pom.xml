@@ -10,7 +10,6 @@
   <version>0.2-SNAPSHOT</version>
   <name>googlecode_dsn-chassis_generic_lib_java</name>
   
-    
   <!--  convenience to define GWT version in one place -->
   <properties>
     <gwtVersion>1.7.1</gwtVersion>
