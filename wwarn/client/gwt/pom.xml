@@ -15,7 +15,7 @@
   <dependencies>
     <dependency>
      <groupId>org.cggh.chassis</groupId>
-     <artifactId>generic-client-gwt</artifactId>
+     <artifactId>chassis-generic-client-gwt</artifactId>
      <version>0.2-SNAPSHOT</version>
     </dependency> 
   </dependencies>
