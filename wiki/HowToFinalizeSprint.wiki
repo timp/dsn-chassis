@@ -2,7 +2,7 @@
 
 = Introduction =
 
-During the SprintPlanningMeeting the version that is being sprinted towards is defined.
+During the PreSprintPlanningMeeting the version that is being sprinted towards is defined.
 At the end of the sprint, prior to the SprintDemo the versions of deliverables are 
 changed to the defined version number.
 
