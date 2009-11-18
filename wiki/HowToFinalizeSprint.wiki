@@ -31,6 +31,10 @@ The artifact id is made up of the following elements
 
 = Release Procedure = 
 
+Tagging the source control system
+
+deploying the artifacts. 
+
 *Immediately* after the version is released the version number is incremented to 
 the next version with the addition of (*-SNAPSHOT*)
 
