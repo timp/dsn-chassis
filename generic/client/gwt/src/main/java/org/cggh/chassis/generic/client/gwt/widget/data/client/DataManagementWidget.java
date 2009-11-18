@@ -4,10 +4,10 @@
 package org.cggh.chassis.generic.client.gwt.widget.data.client;
 
 
-import org.cggh.chassis.generic.atom.client.CreateSuccessEvent;
-import org.cggh.chassis.generic.atom.client.CreateSuccessHandler;
-import org.cggh.chassis.generic.atom.client.UpdateSuccessEvent;
-import org.cggh.chassis.generic.atom.client.UpdateSuccessHandler;
+import org.cggh.chassis.generic.atom.client.ui.CreateSuccessEvent;
+import org.cggh.chassis.generic.atom.client.ui.CreateSuccessHandler;
+import org.cggh.chassis.generic.atom.client.ui.UpdateSuccessEvent;
+import org.cggh.chassis.generic.atom.client.ui.UpdateSuccessHandler;
 import org.cggh.chassis.generic.atomext.client.datafile.DataFileEntry;
 import org.cggh.chassis.generic.atomext.client.dataset.DatasetEntry;
 import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.DataFileActionEvent;
@@ -223,7 +223,7 @@ public class DataManagementWidget
 			public void onAction(DataFileActionEvent e) {
 				log.enter("onAction");
 				
-				editDataFileWidget.setEntry(e.getEntry());
+				editDataFileWidget.editEntry(e.getEntry());
 				setActiveChild(editDataFileWidget);
 				
 				log.leave();
@@ -385,11 +385,14 @@ public class DataManagementWidget
 			
 			public void onAction(DatasetActionEvent e) {
 
-				editDatasetWidget.setEntry(e.getEntry());
+//				editDatasetWidget.setEntry(e.getEntry());
+				editDatasetWidget.editEntry(e.getEntry());
 				setActiveChild(editDatasetWidget);
 				
 			}
 		});
+		
+		this.childWidgetEventHandlerRegistrations.add(a);
 		
 	}
 
@@ -465,6 +468,10 @@ public class DataManagementWidget
 		log.enter("setActiveChild");
 		
 		super.setActiveChild(child, memorise);
+		
+		if (child == newDatasetWidget) {
+			newDatasetWidget.reset();
+		}
 		
 		if (child == myDataFilesWidget) {
 			myDataFilesWidget.refreshDataFiles();

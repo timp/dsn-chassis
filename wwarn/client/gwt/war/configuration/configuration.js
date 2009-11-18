@@ -4,25 +4,33 @@ if (typeof CHASSIS == "undefined" || !CHASSIS) {
 
 // configure service URLs
 
-CHASSIS.client = "/chassis-wwarn-client-gwt";
+CHASSIS.client = "/chassis-generic-client-gwt";
 CHASSIS.userService = "/chassis-generic-service-user";
 CHASSIS.existService = "/chassis-generic-service-exist";
 CHASSIS.uploadService = "/chassis-generic-service-upload";
 
-CHASSIS.userDetailsServiceEndpointURL = CHASSIS.userService + "/gwtrpc/userdetails";
+CHASSIS.userDetailsServiceEndpointUrl = CHASSIS.userService + "/gwtrpc/userdetails";
 
-CHASSIS.studyFeedURL = CHASSIS.existService + "/atom/edit/studies";
-CHASSIS.studyQueryServiceURL = CHASSIS.existService + "/query/studies.xql";
+CHASSIS.studyCollectionUrl = CHASSIS.existService + "/atom/edit/studies";
+CHASSIS.studyQueryServiceUrl = CHASSIS.existService + "/query/studies.xql";
 
-CHASSIS.studyQuestionnaireURL = CHASSIS.client + "/questionnaire/study-questionnaire.xml";
+CHASSIS.studyQuestionnaireUrl = CHASSIS.client + "/questionnaire/study-questionnaire.xml";
 
-CHASSIS.submissionFeedURL = CHASSIS.existService + "/atom/edit/submissions";
-CHASSIS.submissionQueryServiceURL = CHASSIS.existService + "/query/submissions.xql";
+CHASSIS.submissionCollectionUrl = CHASSIS.existService + "/atom/edit/submissions";
+CHASSIS.submissionQueryServiceUrl = CHASSIS.existService + "/query/submissions.xql";
 
-CHASSIS.dataFileFeedURL = CHASSIS.existService + "/atom/edit/datafiles";
-CHASSIS.dataFileQueryServiceURL = CHASSIS.existService + "/query/datafiles.xql";
+CHASSIS.dataFileCollectionUrl = CHASSIS.existService + "/atom/edit/datafiles";
+CHASSIS.dataFileQueryServiceUrl = CHASSIS.existService + "/query/datafiles.xql";
 
-CHASSIS.dataFileUploadServiceURL = CHASSIS.uploadService + "/datafileupload";
+CHASSIS.datasetCollectionUrl = CHASSIS.existService + "/atom/edit/datasets";
+CHASSIS.datasetQueryServiceUrl = CHASSIS.existService + "/query/datasets.xql";
+
+CHASSIS.mediaCollectionUrl = CHASSIS.existService + "/atom/edit/media";
+
+CHASSIS.sandboxCollectionUrl = CHASSIS.existService + "/atom/edit/sandbox";
+
+CHASSIS.newDataFileServiceUrl = CHASSIS.uploadService + "/newdatafile";
+CHASSIS.uploadDataFileRevisionServiceUrl = CHASSIS.uploadService + "/revisedatafile";
 
 //configure role name prefix
 

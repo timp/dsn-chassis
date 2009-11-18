@@ -3,12 +3,10 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.data.client.dataset;
 
-import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.DataFileEntryChangeEvent;
-import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.DataFileEntryChangeHandler;
-import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.NewDataFileForm;
+import org.cggh.chassis.generic.atom.client.ui.AtomCrudWidgetModel;
+import org.cggh.chassis.generic.atomext.client.dataset.DatasetEntry;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
-import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetRenderer;
 import org.cggh.chassis.generic.widget.client.CancelEvent;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.ReadyStatus;
@@ -28,7 +26,10 @@ import com.google.gwt.user.client.ui.HTML;
  *
  */
 public class NewDatasetWidgetRenderer 
-	extends AsyncWidgetRenderer<AsyncWidgetModel> {
+//	extends AsyncWidgetRenderer<AsyncWidgetModel> 
+	extends AsyncWidgetRenderer<AtomCrudWidgetModel<DatasetEntry>> 
+
+{
 	
 	
 	
@@ -137,7 +138,7 @@ public class NewDatasetWidgetRenderer
 			
 			public void onClick(ClickEvent arg0) {
 				
-				controller.postEntry(form.getModel());
+				controller.createEntry(form.getModel());
 				
 			}
 		});

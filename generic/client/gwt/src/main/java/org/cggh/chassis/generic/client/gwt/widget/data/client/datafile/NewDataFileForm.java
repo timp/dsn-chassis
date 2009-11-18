@@ -66,6 +66,8 @@ public class NewDataFileForm extends ChassisWidget {
 	protected void renderUI() {
 		log.enter("renderUI");
 
+		this.clear();
+		
 		this.formPanel = new FormPanel();
 		this.formPanel.setAction(Configuration.getNewDataFileServiceUrl());
 		this.formPanel.setEncoding(FormPanel.ENCODING_MULTIPART);

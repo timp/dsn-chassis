@@ -1,7 +1,9 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.atom.client;
+package org.cggh.chassis.generic.atom.client.ui;
+
+import org.cggh.chassis.generic.atom.client.AtomEntry;
 
 import com.google.gwt.event.shared.EventHandler;
 
@@ -14,4 +16,5 @@ public interface UpdateSuccessHandler
 	extends EventHandler {
 
 	public void onUpdateSuccess(UpdateSuccessEvent<E> e);
+	
 }
