@@ -3,17 +3,12 @@
  */
 package spike.atom.example2.client;
 
-import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
-import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
-import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactory;
-import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactoryImpl;
-import legacy.org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomFactory;
-import legacy.org.cggh.chassis.generic.atom.vanilla.client.mockimpl.MockAtomService;
-import legacy.org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
-import legacy.org.cggh.chassis.generic.atom.vanilla.client.protocol.impl.AtomServiceImpl;
-
 import org.cggh.chassis.generic.async.client.Deferred;
 import org.cggh.chassis.generic.async.client.Function;
+import org.cggh.chassis.generic.atom.client.AtomAuthor;
+import org.cggh.chassis.generic.atom.client.vanilla.VanillaAtomEntry;
+import org.cggh.chassis.generic.atom.client.vanilla.VanillaAtomFactory;
+import org.cggh.chassis.generic.atom.client.vanilla.VanillaAtomService;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 
@@ -34,7 +29,7 @@ public class SpikeVanillaAtomServiceEntryPoint implements EntryPoint {
 	public void onModuleLoad() {
 		log.enter("onModuleLoad");
 		
-		Deferred<AtomEntry> deferredEntry = doCreateEntry();
+		Deferred<VanillaAtomEntry> deferredEntry = doCreateEntry();
 		
 		log.leave();
 	}
@@ -42,19 +37,19 @@ public class SpikeVanillaAtomServiceEntryPoint implements EntryPoint {
 	/**
 	 * 
 	 */
-	private Deferred<AtomEntry> doCreateEntry() {
+	private Deferred<VanillaAtomEntry> doCreateEntry() {
 		log.enter("doCreateEntry");
 
 		String feedURL = "/chassis-generic-service-exist/atom/edit/sandbox";
 			
 		log.debug("create an atom factory");
-		AtomFactory factory = new AtomFactoryImpl(); 
+		VanillaAtomFactory factory = new VanillaAtomFactory(); 
 		
 		log.debug("create an atom service");
-		AtomService service = new AtomServiceImpl(factory); 
+		VanillaAtomService service = new VanillaAtomService(factory); 
 		
 		log.debug("create a new entry");
-		AtomEntry entry = factory.createEntry();
+		VanillaAtomEntry entry = factory.createEntry();
 		entry.setTitle("a vanilla atom entry");
 		entry.setSummary("this is a vanilla atom entry, that's all");
 		
@@ -65,12 +60,12 @@ public class SpikeVanillaAtomServiceEntryPoint implements EntryPoint {
 		entry.addAuthor(bob);
 		
 		log.debug("persist new entry");
-		Deferred<AtomEntry> deferredEntry = service.postEntry(feedURL, entry);
+		Deferred<VanillaAtomEntry> deferredEntry = service.postEntry(feedURL, entry);
 		
 		log.debug("add callback to handle successful service response");
-		deferredEntry.addCallback(new Function<AtomEntry,AtomEntry>() {
+		deferredEntry.addCallback(new Function<VanillaAtomEntry,VanillaAtomEntry>() {
 
-			public AtomEntry apply(AtomEntry persistedEntry) {
+			public VanillaAtomEntry apply(VanillaAtomEntry persistedEntry) {
 				log.enter("apply (inner callback function)");
 
 				String entryId = persistedEntry.getId();

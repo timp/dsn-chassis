@@ -3,16 +3,12 @@
  */
 package spike.atom.example3.client;
 
-import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
-import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
-import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactory;
-import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactoryImpl;
-import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
-import legacy.org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
-import legacy.org.cggh.chassis.generic.atom.vanilla.client.protocol.impl.AtomServiceImpl;
-
 import org.cggh.chassis.generic.async.client.Deferred;
 import org.cggh.chassis.generic.async.client.Function;
+import org.cggh.chassis.generic.atom.client.vanilla.VanillaAtomEntry;
+import org.cggh.chassis.generic.atom.client.vanilla.VanillaAtomFactory;
+import org.cggh.chassis.generic.atom.client.vanilla.VanillaAtomFeed;
+import org.cggh.chassis.generic.atom.client.vanilla.VanillaAtomService;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 
@@ -39,11 +35,11 @@ public class SpikeVanillaAtomServiceEntryPoint implements EntryPoint {
 	public void onModuleLoad() {
 		log.enter("onModuleLoad");
 		
-		Deferred<AtomFeed> deferredFeed = doGetFeed();
+		Deferred<VanillaAtomFeed> deferredFeed = doGetFeed();
 		
-		deferredFeed.addCallback(new Function<AtomFeed,AtomFeed>() {
+		deferredFeed.addCallback(new Function<VanillaAtomFeed,VanillaAtomFeed>() {
 
-			public AtomFeed apply(AtomFeed feed) {
+			public VanillaAtomFeed apply(VanillaAtomFeed feed) {
 				doUpdateFirstEntry(feed);
 				return feed;
 			}
@@ -59,21 +55,21 @@ public class SpikeVanillaAtomServiceEntryPoint implements EntryPoint {
 	/**
 	 * @return
 	 */
-	private Deferred<AtomFeed> doGetFeed() {
+	private Deferred<VanillaAtomFeed> doGetFeed() {
 		log.enter("doGetFeed");
 
 		log.debug("create an atom factory");
-		AtomFactory factory = new AtomFactoryImpl(); 
+		VanillaAtomFactory factory = new VanillaAtomFactory(); 
 		
 		log.debug("create an atom service");
-		AtomService service = new AtomServiceImpl(factory); 
+		VanillaAtomService service = new VanillaAtomService(factory); 
 
-		Deferred<AtomFeed> deferredFeed = service.getFeed(feedURL);
+		Deferred<VanillaAtomFeed> deferredFeed = service.getFeed(feedURL);
 		
 		log.debug("add callback to handle successful service response");
-		deferredFeed.addCallback(new Function<AtomFeed,AtomFeed>() {
+		deferredFeed.addCallback(new Function<VanillaAtomFeed,VanillaAtomFeed>() {
 
-			public AtomFeed apply(AtomFeed feed) {
+			public VanillaAtomFeed apply(VanillaAtomFeed feed) {
 				log.enter("apply (inner callback function)");
 
 				String feedId = feed.getId();
@@ -115,27 +111,27 @@ public class SpikeVanillaAtomServiceEntryPoint implements EntryPoint {
 	}
 	
 	
-	private Deferred<AtomEntry> doUpdateFirstEntry(AtomFeed feed) {
+	private Deferred<VanillaAtomEntry> doUpdateFirstEntry(VanillaAtomFeed feed) {
 		log.enter("doUpdateFirstEntry");
 
-		AtomEntry entry = feed.getEntries().get(0);
+		VanillaAtomEntry entry = feed.getEntries().get(0);
 		
 		entry.setTitle(entry.getTitle() + " updated");
 		
 		String entryURL = feedURL + entry.getEditLink().getHref(); // assume relative
 		
 		log.debug("create an atom factory");
-		AtomFactory factory = new AtomFactoryImpl(); 
+		VanillaAtomFactory factory = new VanillaAtomFactory(); 
 		
 		log.debug("create an atom service");
-		AtomService service = new AtomServiceImpl(factory); 
+		VanillaAtomService service = new VanillaAtomService(factory); 
 
-		Deferred<AtomEntry> deferredEntry = service.putEntry(entryURL, entry);
+		Deferred<VanillaAtomEntry> deferredEntry = service.putEntry(entryURL, entry);
 		
 		log.debug("add callback to handle successful service response");
-		deferredEntry.addCallback(new Function<AtomEntry,AtomEntry>() {
+		deferredEntry.addCallback(new Function<VanillaAtomEntry,VanillaAtomEntry>() {
 
-			public AtomEntry apply(AtomEntry updatedEntry) {
+			public VanillaAtomEntry apply(VanillaAtomEntry updatedEntry) {
 				log.enter("apply (inner callback function)");
 
 				String entryId = updatedEntry.getId();

@@ -1,12 +1,7 @@
 /**
  * 
  */
-package legacy.org.cggh.chassis.generic.atom.vanilla.client.protocol.impl;
-
-import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
-import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactory;
-import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactoryImpl;
-import legacy.org.cggh.chassis.generic.atom.vanilla.client.protocol.impl.AtomServiceImpl;
+package org.cggh.chassis.generic.atom.client;
 
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.URL;
@@ -27,7 +22,7 @@ public class GWTTestAtomServiceImpl extends GWTTestCase {
 	 */
 	@Override
 	public String getModuleName() {
-		return "org.cggh.chassis.generic.atom.vanilla.Atom";
+		return "org.cggh.chassis.generic.atom.Atom";
 	}
 	
 	
@@ -82,13 +77,8 @@ public class GWTTestAtomServiceImpl extends GWTTestCase {
 		// test constants
 		String feedURL = "/atom/edit/myfeed";
 
-		AtomFactory factory = new AtomFactoryImpl();
-		AtomEntry entry = factory.createEntry();
-		
-		entry.setTitle("test entry");
-		entry.setSummary("test summary foo bar");
-		
-		RequestBuilder request = AtomServiceImpl.buildPostEntryRequest(feedURL, entry);
+		String content = "<entry xmlns='http://www.w3.org/2005/Atom'></entry>";
+		RequestBuilder request = AtomServiceImpl.buildPostEntryRequest(feedURL, content);
 		
 		String expectedMethod = "POST";
 		assertEquals(expectedMethod, request.getHTTPMethod());
@@ -99,13 +89,13 @@ public class GWTTestAtomServiceImpl extends GWTTestCase {
 		String expectedContentTypeHeader = "application/atom+xml;type=entry;charset=\"utf-8\"";
 		assertEquals(expectedContentTypeHeader, request.getHeader("Content-Type"));
 		
-		String expectedContentLengthHeader = Integer.toString(entry.toString().length());
+		String expectedContentLengthHeader = Integer.toString(content.length());
 		assertEquals(expectedContentLengthHeader, request.getHeader("Content-Length"));
 			
 		String expectedUrl = URL.encode(feedURL);
 		assertEquals(expectedUrl, request.getUrl());
 		
-		String expectedData = entry.toString();
+		String expectedData = content;
 		assertEquals(expectedData, request.getRequestData());
 		
 	}
@@ -117,12 +107,9 @@ public class GWTTestAtomServiceImpl extends GWTTestCase {
 		// test constants
 		String entryURL = "/atom/edit/mycollection?id=foo";
 
-		AtomFactory factory = new AtomFactoryImpl();
-		AtomEntry entry = factory.createEntry();
-		entry.setTitle("test entry");
-		entry.setSummary("test summary foo bar");
-				
-		RequestBuilder request = AtomServiceImpl.buildPutEntryRequest(entryURL, entry);
+		String content = "<entry xmlns='http://www.w3.org/2005/Atom'></entry>";
+		
+		RequestBuilder request = AtomServiceImpl.buildPutEntryRequest(entryURL, content);
 		
 		String expectedMethod = "POST";
 		assertEquals(expectedMethod, request.getHTTPMethod());
@@ -136,13 +123,13 @@ public class GWTTestAtomServiceImpl extends GWTTestCase {
 		String expectedContentTypeHeader = "application/atom+xml;type=entry;charset=\"utf-8\"";
 		assertEquals(expectedContentTypeHeader, request.getHeader("Content-Type"));
 		
-		String expectedContentLengthHeader = Integer.toString(entry.toString().length());
+		String expectedContentLengthHeader = Integer.toString(content.length());
 		assertEquals(expectedContentLengthHeader, request.getHeader("Content-Length"));
 			
 		String expectedUrl = URL.encode(entryURL);
 		assertEquals(expectedUrl, request.getUrl());
 		
-		String expectedData = entry.toString();
+		String expectedData = content;
 		assertEquals(expectedData, request.getRequestData());		
 		
 	}

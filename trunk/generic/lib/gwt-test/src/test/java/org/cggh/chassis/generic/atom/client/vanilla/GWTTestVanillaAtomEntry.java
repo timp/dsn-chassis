@@ -1,19 +1,15 @@
 /**
  * 
  */
-package legacy.org.cggh.chassis.generic.atom.vanilla.client.format.impl;
+package org.cggh.chassis.generic.atom.client.vanilla;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.Atom;
-import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
-import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomCategory;
-import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
-import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactory;
-import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactoryImpl;
-import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomLink;
-
+import org.cggh.chassis.generic.atom.client.Atom;
+import org.cggh.chassis.generic.atom.client.AtomAuthor;
+import org.cggh.chassis.generic.atom.client.AtomCategory;
+import org.cggh.chassis.generic.atom.client.AtomLink;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.xml.client.XML;
@@ -28,12 +24,12 @@ import com.google.gwt.xml.client.XMLParser;
  * @author aliman
  *
  */
-public class GWTTestAtomEntryImpl extends GWTTestCase {
+public class GWTTestVanillaAtomEntry extends GWTTestCase {
 
 	
 	
-	private AtomFactory factory;
-	private Log log = LogFactory.getLog("GWTTestAtomEntryImpl");
+	private VanillaAtomFactory factory;
+	private Log log = LogFactory.getLog(GWTTestVanillaAtomEntry.class);
 
 	
 	
@@ -42,21 +38,21 @@ public class GWTTestAtomEntryImpl extends GWTTestCase {
 	 */
 	@Override
 	public String getModuleName() {
-		return "org.cggh.chassis.generic.atom.vanilla.Atom";
+		return "org.cggh.chassis.generic.atom.Atom";
 	}
 	
 	
 	
 	@Override
 	public void gwtSetUp() {
-		factory = new AtomFactoryImpl();
+		factory = new VanillaAtomFactory();
 	}
 
 	
 	
 	public void testAddAuthor() {
 	
-		AtomEntry entry = factory.createEntry();
+		VanillaAtomEntry entry = factory.createEntry();
 		
 		// test initial state
 		assertEquals(0, entry.getAuthors().size());
@@ -78,7 +74,7 @@ public class GWTTestAtomEntryImpl extends GWTTestCase {
 	
 	public void testRemoveAuthor() {
 		
-		AtomEntry entry = factory.createEntry();
+		VanillaAtomEntry entry = factory.createEntry();
 		AtomAuthor author = factory.createAuthor();
 		author.setName("Bob");
 		entry.addAuthor(author);
@@ -101,7 +97,7 @@ public class GWTTestAtomEntryImpl extends GWTTestCase {
 	
 	public void testSetAuthors() {
 
-		AtomEntry entry = factory.createEntry();
+		VanillaAtomEntry entry = factory.createEntry();
 		
 		// test initial state
 		assertEquals(0, entry.getAuthors().size());
@@ -125,7 +121,7 @@ public class GWTTestAtomEntryImpl extends GWTTestCase {
 	
 	public void testAddCategory() {
 		
-		AtomEntry entry = factory.createEntry();
+		VanillaAtomEntry entry = factory.createEntry();
 		
 		// test initial state
 		assertEquals(0, entry.getCategories().size());
@@ -147,7 +143,7 @@ public class GWTTestAtomEntryImpl extends GWTTestCase {
 	
 	public void testRemoveCategory() {
 		
-		AtomEntry entry = factory.createEntry();
+		VanillaAtomEntry entry = factory.createEntry();
 		AtomCategory category = factory.createCategory();
 		category.setTerm("foo");
 		entry.addCategory(category);
@@ -170,7 +166,7 @@ public class GWTTestAtomEntryImpl extends GWTTestCase {
 	
 	public void testSetCategories() {
 
-		AtomEntry entry = factory.createEntry();
+		VanillaAtomEntry entry = factory.createEntry();
 		
 		// test initial state
 		assertEquals(0, entry.getCategories().size());
@@ -194,7 +190,7 @@ public class GWTTestAtomEntryImpl extends GWTTestCase {
 	
 	public void testAddLink() {
 		
-		AtomEntry entry = factory.createEntry();
+		VanillaAtomEntry entry = factory.createEntry();
 		
 		// test initial state
 		assertEquals(0, entry.getLinks().size());
@@ -216,7 +212,7 @@ public class GWTTestAtomEntryImpl extends GWTTestCase {
 	
 	public void testRemoveLink() {
 		
-		AtomEntry entry = factory.createEntry();
+		VanillaAtomEntry entry = factory.createEntry();
 		AtomLink link = factory.createLink();
 		link.setHref("http://example.org/foo");
 		entry.addLink(link);
@@ -239,7 +235,7 @@ public class GWTTestAtomEntryImpl extends GWTTestCase {
 	
 	public void testSetLinks() {
 
-		AtomEntry entry = factory.createEntry();
+		VanillaAtomEntry entry = factory.createEntry();
 		
 		// test initial state
 		assertEquals(0, entry.getLinks().size());
@@ -263,7 +259,7 @@ public class GWTTestAtomEntryImpl extends GWTTestCase {
 	
 	public void testToString() {
 		
-		AtomEntry entry = factory.createEntry();
+		VanillaAtomEntry entry = factory.createEntry();
 
 		String title = "foo title";
 		entry.setTitle(title);
@@ -322,7 +318,7 @@ public class GWTTestAtomEntryImpl extends GWTTestCase {
 	public void testNamespacesNotEmpty() {
 		log.enter("testNamespacesNotEmpty");
 		
-		AtomEntry entry = factory.createEntry();
+		VanillaAtomEntry entry = factory.createEntry();
 
 		String title = "foo title";
 		entry.setTitle(title);
