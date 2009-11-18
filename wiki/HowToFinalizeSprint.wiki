@@ -1,11 +1,16 @@
-#summary One-sentence summary of this page.
+#summary At the end of each sprint the version of the deliverables should be incremented.
 
 = Introduction =
 
-Add your content here.
+During the SprintPlanningMeeting the version that is being sprinted towards is defined.
+At the end of the sprint, prior to the SprintDemo the versions of deliverables are 
+changed to the agreed version number.
+
+= Version Examples =
 
 
-= Details =
+
+
 
 Add your content here.  Format your content with:
   * Text in *bold* or _italic_
