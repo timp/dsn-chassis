@@ -1,18 +1,13 @@
 /**
  * 
  */
-package legacy.org.cggh.chassis.generic.atom.vanilla.client.format.impl;
+package org.cggh.chassis.generic.atom.client.vanilla;
 
-import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.Atom;
-import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomAuthor;
-import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomCategory;
-import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry;
-import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactory;
-import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomFactoryImpl;
-import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomFeed;
-import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomFormatException;
-import legacy.org.cggh.chassis.generic.atom.vanilla.client.format.AtomLink;
-
+import org.cggh.chassis.generic.atom.client.Atom;
+import org.cggh.chassis.generic.atom.client.AtomAuthor;
+import org.cggh.chassis.generic.atom.client.AtomCategory;
+import org.cggh.chassis.generic.atom.client.AtomFormatException;
+import org.cggh.chassis.generic.atom.client.AtomLink;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.xml.client.XMLNS;
@@ -27,17 +22,19 @@ import com.google.gwt.xml.client.XMLParser;
  * @author aliman
  *
  */
-public class GWTTestAtomFactoryImpl extends GWTTestCase {
+public class GWTTestVanillaAtomFactory extends GWTTestCase {
 
 	
 	
-	private AtomFactory factory;
+	
+	private VanillaAtomFactory factory;
 	
 	
 	
 	
-	private Log log = LogFactory.getLog(this.getClass());
+	private Log log = LogFactory.getLog(GWTTestVanillaAtomFactory.class);
 
+	
 	
 	
 	/* (non-Javadoc)
@@ -45,15 +42,18 @@ public class GWTTestAtomFactoryImpl extends GWTTestCase {
 	 */
 	@Override
 	public String getModuleName() {
-		return "org.cggh.chassis.generic.atom.vanilla.Atom";
+		return "org.cggh.chassis.generic.atom.Atom";
 	}
+	
 	
 	
 	
 	@Override
 	public void gwtSetUp() {
-		factory = new AtomFactoryImpl();
+		factory = new VanillaAtomFactory();
 	}
+	
+	
 	
 	
 	
@@ -376,7 +376,7 @@ public class GWTTestAtomFactoryImpl extends GWTTestCase {
 
 	public void testCreateEntry() {
 		
-		AtomEntry entry = factory.createEntry();
+		VanillaAtomEntry entry = factory.createEntry();
 
 		String title = "foo title";
 		entry.setTitle(title);
@@ -439,7 +439,7 @@ public class GWTTestAtomFactoryImpl extends GWTTestCase {
 
 		try {
 
-			AtomEntry entry = factory.createEntry(entryDocument);
+			VanillaAtomEntry entry = factory.createEntry(entryDocument);
 			
 			// check simple properties
 			assertEquals("Atom draft-07 snapshot", entry.getTitle());
@@ -496,7 +496,7 @@ public class GWTTestAtomFactoryImpl extends GWTTestCase {
 		try {
 
 			String xml = "<foo/>";
-			AtomEntry entry = factory.createEntry(xml);
+			VanillaAtomEntry entry = factory.createEntry(xml);
 			fail("expected format exception (bad element name)");
 			
 		}
@@ -509,7 +509,7 @@ public class GWTTestAtomFactoryImpl extends GWTTestCase {
 		try {
 
 			String xml = "<entry/>";
-			AtomEntry entry = factory.createEntry(xml);
+			VanillaAtomEntry entry = factory.createEntry(xml);
 			fail("expected format exception (bad namespace URI)");
 			
 		}
@@ -522,7 +522,7 @@ public class GWTTestAtomFactoryImpl extends GWTTestCase {
 		try {
 			
 			String xml = "<entry>";
-			AtomEntry entry = factory.createEntry(xml);
+			VanillaAtomEntry entry = factory.createEntry(xml);
 			fail("expected format exception (not well-formed XML)");
 
 		}
@@ -593,7 +593,7 @@ public class GWTTestAtomFactoryImpl extends GWTTestCase {
 		
 		try {
 		
-			AtomFeed feed = factory.createFeed(feedDocument);
+			VanillaAtomFeed feed = factory.createFeed(feedDocument);
 			
 			// check feed simple properties
 			assertEquals("dive into mark", feed.getTitle());
@@ -653,7 +653,7 @@ public class GWTTestAtomFactoryImpl extends GWTTestCase {
 		
 		try {
 		
-			AtomFeed feed = factory.createFeed(feedDocument);
+			VanillaAtomFeed feed = factory.createFeed(feedDocument);
 			
 			// check feed simple properties
 			assertEquals("Example Collection", feed.getTitle());
@@ -710,7 +710,7 @@ public class GWTTestAtomFactoryImpl extends GWTTestCase {
 		
 		try {
 		
-			AtomFeed feed = factory.createFeed(feedDocument);
+			VanillaAtomFeed feed = factory.createFeed(feedDocument);
 			
 			// check feed simple properties
 			assertEquals("Example Collection", feed.getTitle());
@@ -738,7 +738,7 @@ public class GWTTestAtomFactoryImpl extends GWTTestCase {
 		try {
 
 			String xml = "<foo/>";
-			AtomFeed feed = factory.createFeed(xml);
+			VanillaAtomFeed feed = factory.createFeed(xml);
 			fail("expected format exception (bad element name)");
 			
 		}
@@ -751,7 +751,7 @@ public class GWTTestAtomFactoryImpl extends GWTTestCase {
 		try {
 
 			String xml = "<feed/>";
-			AtomFeed feed = factory.createFeed(xml);
+			VanillaAtomFeed feed = factory.createFeed(xml);
 			fail("expected format exception (bad namespace URI)");
 			
 		}
@@ -764,7 +764,7 @@ public class GWTTestAtomFactoryImpl extends GWTTestCase {
 		try {
 			
 			String xml = "<feed>";
-			AtomFeed feed = factory.createFeed(xml);
+			VanillaAtomFeed feed = factory.createFeed(xml);
 			fail("expected format exception (not well-formed XML)");
 
 		}

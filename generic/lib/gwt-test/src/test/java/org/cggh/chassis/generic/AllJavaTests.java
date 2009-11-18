@@ -16,15 +16,9 @@ public class AllJavaTests {
 		TestSuite suite = new TestSuite("Chassis Generic Lib GWT - All Plain Java Tests");
 		//$JUnit-BEGIN$
 		
-		// module org.cggh.chassis.generic.atom.vanilla.Atom
-		//suite.addTest(legacy.org.cggh.chassis.generic.atom.vanilla.AllJavaTests.suite());
-		
-		// module org.cggh.chassis.generic.twisted.Twisted
 		suite.addTest(org.cggh.chassis.generic.async.AllJavaTests.suite());
+		suite.addTest(org.cggh.chassis.generic.atom.AllJavaTests.suite());
 
-		// module org.cggh.chassis.generic.xml.XML
-		// none
-		
 		//$JUnit-END$
 		return suite;
 	}

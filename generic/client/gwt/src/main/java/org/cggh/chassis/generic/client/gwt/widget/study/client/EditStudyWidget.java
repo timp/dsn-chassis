@@ -6,8 +6,6 @@ package org.cggh.chassis.generic.client.gwt.widget.study.client;
 import java.util.HashSet;
 import java.util.Set;
 
-import legacy.org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService;
-
 import org.cggh.chassis.generic.atomext.client.study.StudyEntry;
 
 import com.google.gwt.user.client.ui.Composite;
@@ -25,38 +23,6 @@ public class EditStudyWidget extends Composite implements EditStudyWidgetAPI, St
 	
 	private Set<EditStudyWidgetPubSubAPI> listeners = new HashSet<EditStudyWidgetPubSubAPI>();
 
-	public EditStudyWidget(Panel canvas) {
-		
-		model = new StudyModel();
-		
-		controller = new StudyController(model, this);
-		
-		renderer = new EditStudyWidgetDefaultRenderer(canvas, controller);
-		
-		// register renderer as listener to model
-		model.addListener(renderer);	
-		
-		this.initWidget(this.renderer.getCanvas());
-		
-	}
-	
-	public EditStudyWidget(AtomService service, EditStudyWidgetDefaultRenderer customRenderer) {
-		
-		model = new StudyModel();
-		
-		controller = new StudyController(model, this);
-		
-		renderer = customRenderer;
-		
-		// inject controller into renderer
-		renderer.setController(controller);
-
-		// register renderer as listener to model
-		model.addListener(renderer);
-		
-		this.initWidget(this.renderer.getCanvas());
-		
-	}
 
 	
 	

@@ -17,6 +17,7 @@ public class AllGWTTests {
 		//$JUnit-BEGIN$
 
 		suite.addTest(org.cggh.chassis.generic.async.AllGWTTests.suite());
+		suite.addTest(org.cggh.chassis.generic.atom.AllGWTTests.suite());
 		suite.addTest(org.cggh.chassis.generic.xml.AllGWTTests.suite());
 		suite.addTest(org.cggh.chassis.generic.xquestion.AllGWTTests.suite());
 		
