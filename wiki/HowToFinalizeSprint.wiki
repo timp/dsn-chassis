@@ -4,10 +4,39 @@
 
 During the SprintPlanningMeeting the version that is being sprinted towards is defined.
 At the end of the sprint, prior to the SprintDemo the versions of deliverables are 
-changed to the agreed version number.
+changed to the defined version number.
 
 = Version Examples =
 
+Examples of release versions
+
+  * chassis-generic-client-gwt-0.1-alpha-1.war 
+  * chassis-generic-client-gwt-0.1-alpha-2.war 
+  * chassis-generic-client-gwt-0.1-alpha-3.war 
+  * chassis-generic-client-gwt-0.1-beta-1.war 
+  * chassis-generic-client-gwt-0.1-beta-2.war 
+  * chassis-generic-client-gwt-0.1-beta-3.war 
+  * chassis-generic-client-gwt-0.1-rc-1.war 
+  * chassis-generic-client-gwt-0.1-rc-2.war 
+  * chassis-generic-client-gwt-0.1-rc-3.war 
+  * chassis-generic-client-gwt-0.1.war 
+
+The artifact id is made up of the following elements
+  * Module name (_chassis-generic-client-gwt_)
+  * Major version number (_0_)
+  * Minor version number (_1_)
+  * Optional status (_alpha/beta/rc_)
+  * Sprint attempt (*should be*  _1_)
+  * File type 
+
+= Release Procedure = 
+
+*Immediately* after the version is released the version number is incremented to 
+
+= Notes = 
+A non-SNAPSHOT build should not depend upon any SNAPSHOT artefacts.
+
+Beta versions imply no guarantee that the API will not change. 
 
 
 
