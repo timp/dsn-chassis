@@ -32,16 +32,13 @@ The artifact id is made up of the following elements
 = Release Procedure = 
 
 *Immediately* after the version is released the version number is incremented to 
+the next version with the addition of (*-SNAPSHOT*)
+
 
 = Notes = 
-A non-SNAPSHOT build should not depend upon any SNAPSHOT artefacts.
+
+A non-SNAPSHOT build should not depend upon any SNAPSHOT artifacts.
 
 Beta versions imply no guarantee that the API will not change. 
 
-
-
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+All the artifacts inherit their version fro a single parent pom to enable easy maintenance of the above mechanism. 
