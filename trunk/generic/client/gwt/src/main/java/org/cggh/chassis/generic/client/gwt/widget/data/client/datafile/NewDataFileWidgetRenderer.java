@@ -3,6 +3,7 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.data.client.datafile;
 
+import org.cggh.chassis.generic.atom.client.ui.CreateSuccessEvent;
 import org.cggh.chassis.generic.atomext.client.datafile.DataFileEntry;
 import org.cggh.chassis.generic.atomext.client.datafile.DataFileFactory;
 import org.cggh.chassis.generic.log.client.Log;
@@ -142,6 +143,7 @@ public class NewDataFileWidgetRenderer
 			
 			public void onClick(ClickEvent arg0) {
 				
+				model.setStatus(AsyncWidgetModel.STATUS_ASYNC_REQUEST_PENDING);
 				form.submit();
 				
 			}
@@ -183,20 +185,23 @@ public class NewDataFileWidgetRenderer
 				DataFileFactory factory = new DataFileFactory();
 				String results = event.getResults();
 				if (results.startsWith("<!--") && results.endsWith("-->")) {
+					model.setStatus(AsyncWidgetModel.STATUS_READY);
 					String content = results.substring(4, results.length()-3);
 					log.debug("attempting to parse: "+content);
 					DataFileEntry entry = factory.createEntry(content);
-					CreateDataFileSuccessEvent successEvent = new CreateDataFileSuccessEvent();
+					CreateSuccessEvent<DataFileEntry> successEvent = new CreateSuccessEvent<DataFileEntry>();
 					successEvent.setEntry(entry);
 					owner.fireEvent(successEvent);
 				}
 				else {
+					model.setStatus(AsyncWidgetModel.STATUS_ERROR);
 					owner.fireEvent(new ErrorEvent("could not parse results: "+results));
 				}
 				
 			} catch (Throwable t) {
 				
 				log.error("caught trying to parse submit results: "+t.getLocalizedMessage(), t);
+				model.setStatus(AsyncWidgetModel.STATUS_ERROR);
 				owner.fireEvent(new ErrorEvent(t));
 				
 			}
@@ -247,9 +252,12 @@ public class NewDataFileWidgetRenderer
 	protected void updateForm(Status status) {
 		log.enter("updateForm");
 		
+		log.debug("status: "+status);
+		
 		if (status instanceof ReadyStatus) {
 			
-			this.form.reset(); 
+//			this.form.reset(); 
+			this.owner.reset();
 
 		}
 

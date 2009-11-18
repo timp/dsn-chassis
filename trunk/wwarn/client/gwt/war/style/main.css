@@ -32,6 +32,11 @@ input, textarea {
 	text-decoration: underline;
 }
 
+.invisible {
+	display: none;
+}
+
+
 div.gwt-MenuBar-horizontal {
 	background-color: transparent;
 	background-image: url("../assets/images/bg-blue-stripes.gif");

@@ -3,7 +3,8 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.data.client.datafile;
 
-import org.cggh.chassis.generic.atom.client.CreateSuccessHandler;
+import org.cggh.chassis.generic.atom.client.ui.CreateSuccessEvent;
+import org.cggh.chassis.generic.atom.client.ui.CreateSuccessHandler;
 import org.cggh.chassis.generic.atomext.client.datafile.DataFileEntry;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
@@ -71,7 +72,7 @@ public class NewDataFileWidget
 	 * @return a handler registration to remove the handler if needed
 	 */
 	public HandlerRegistration addCreateSuccessHandler(CreateSuccessHandler<DataFileEntry> h) {
-		return this.addHandler(h, CreateDataFileSuccessEvent.TYPE);
+		return this.addHandler(h, CreateSuccessEvent.TYPE);
 	}
 
 

@@ -3,15 +3,16 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.data.client.datafile;
 
-import org.cggh.chassis.generic.async.client.Deferred;
-import org.cggh.chassis.generic.async.client.Function;
+import org.cggh.chassis.generic.atom.client.AtomService;
+import org.cggh.chassis.generic.atom.client.ui.AtomCrudWidgetController;
+import org.cggh.chassis.generic.atom.client.ui.AtomCrudWidgetModel;
 import org.cggh.chassis.generic.atomext.client.datafile.DataFileEntry;
+import org.cggh.chassis.generic.atomext.client.datafile.DataFileFeed;
 import org.cggh.chassis.generic.atomext.client.datafile.DataFilePersistenceService;
+import org.cggh.chassis.generic.atomext.client.datafile.DataFileQuery;
+import org.cggh.chassis.generic.atomext.client.datafile.DataFileQueryService;
+import org.cggh.chassis.generic.atomext.client.shared.AtomQueryService;
 import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
-import org.cggh.chassis.generic.log.client.Log;
-import org.cggh.chassis.generic.log.client.LogFactory;
-import org.cggh.chassis.generic.widget.client.AsyncErrback;
-import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 
 
 
@@ -20,75 +21,60 @@ import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
  * @author aliman
  *
  */
-public class EditDataFileWidgetController {
+public class EditDataFileWidgetController 
+	extends AtomCrudWidgetController<DataFileEntry, DataFileFeed, DataFileQuery>
+{
 
 
-	private EditDataFileWidgetModel model;
-	private EditDataFileWidget owner;
-	private Log log = LogFactory.getLog(EditDataFileWidgetController.class);
 
 	
+		
 	
 	
 	/**
 	 * @param model
 	 */
-	public EditDataFileWidgetController(EditDataFileWidget owner, EditDataFileWidgetModel model) {
-		this.owner = owner;
-		this.model = model;
+	public EditDataFileWidgetController(
+			EditDataFileWidget owner, 
+			AtomCrudWidgetModel<DataFileEntry> model) {
+		super(owner, model, ""); // use relative collection URL
 	}
 
 
-	
-	
-	
-	/**
-	 * @param entry
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.atom.client.ui.AtomCrudWidgetController#createAtomService()
 	 */
-	public void putEntry(DataFileEntry entry) {
-		log.enter("putEntry");
-		
-		this.model.setStatus(AsyncWidgetModel.STATUS_ASYNC_REQUEST_PENDING);
-		
-		DataFilePersistenceService service = new DataFilePersistenceService();
-		
-		String url = Configuration.getDataFileCollectionUrl() + entry.getEditLink().getHref(); // assume relative
-		
-		Deferred<DataFileEntry> deferredEntry = service.putEntry(url, entry);
-		
-		deferredEntry.addCallback(new PutEntryCallback());
-		deferredEntry.addErrback(new AsyncErrback(this.owner, this.model));
-		
-		log.leave();
+	@Override
+	public AtomService<DataFileEntry, DataFileFeed> createAtomService() {
+		return new DataFilePersistenceService(Configuration.getDataFileCollectionUrl());
 	}
 
-	
-	
-	
-	/**
-	 * @author aliman
-	 *
+
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.atom.client.ui.AtomCrudWidgetController#createQueryService()
 	 */
-	public class PutEntryCallback implements Function<DataFileEntry, DataFileEntry> {
-		private Log log = LogFactory.getLog(PutEntryCallback.class);
-
-		/* (non-Javadoc)
-		 * @see org.cggh.chassis.generic.async.client.Function#apply(java.lang.Object)
-		 */
-		public DataFileEntry apply(DataFileEntry in) {
-			log.enter("apply");
-
-			model.setStatus(AsyncWidgetModel.STATUS_READY);
-			
-			UpdateDataFileSuccessEvent e = new UpdateDataFileSuccessEvent();
-			e.setEntry(in);
-			owner.fireEvent(e);
-
-			log.leave();
-			return in;
-		}
-
+	@Override
+	public AtomQueryService<DataFileEntry, DataFileFeed, DataFileQuery> createQueryService() {
+		return new DataFileQueryService(Configuration.getDataFileQueryServiceUrl());
 	}
+
+
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.atom.client.ui.AtomCrudWidgetController#createQuery()
+	 */
+	@Override
+	public DataFileQuery createQuery() {
+		return new DataFileQuery();
+	}
+
+
+	
 	
 	
 	

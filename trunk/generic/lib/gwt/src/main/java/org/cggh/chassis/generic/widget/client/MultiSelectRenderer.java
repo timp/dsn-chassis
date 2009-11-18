@@ -236,7 +236,16 @@ public class MultiSelectRenderer
 				syncSelectUI();
 			}
 		});
+
+		Button cancel = new Button("cancel");
+		content.add(cancel);
+		cancel.addClickHandler(new ClickHandler() {
 			
+			public void onClick(ClickEvent event) {
+				db.hide();
+			}
+		});
+
 		db.center();
 		db.show();
 		

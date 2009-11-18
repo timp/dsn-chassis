@@ -1,7 +1,9 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.atom.client;
+package org.cggh.chassis.generic.atom.client.ui;
+
+import org.cggh.chassis.generic.atom.client.AtomEntry;
 
 import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.event.shared.GwtEvent;
@@ -10,17 +12,13 @@ import com.google.gwt.event.shared.GwtEvent;
  * @author aliman
  *
  */
-public abstract class AtomEntryEvent
+public abstract class EventWithAtomEntry
 	<H extends EventHandler, E extends AtomEntry> 
 	extends GwtEvent<H> {
 	
 	protected E entry;
 	
-	public AtomEntryEvent() {}
-	
-	public AtomEntryEvent(E entry) {
-		this.entry = entry;
-	}	
+	public EventWithAtomEntry() {}
 	
 	public void setEntry(E entry) {
 		this.entry = entry;

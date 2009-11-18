@@ -19,4 +19,8 @@ public class DataFilePersistenceService extends AtomServiceImpl<DataFileEntry, D
 		super(new DataFileFactory());
 	}
 
+	public DataFilePersistenceService(String baseUrl) {
+		super(new DataFileFactory(), baseUrl);
+	}
+
 }

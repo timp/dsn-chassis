@@ -3,43 +3,45 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.data.client.datafile;
 
-import org.cggh.chassis.generic.atom.client.UpdateSuccessHandler;
+import org.cggh.chassis.generic.atom.client.ui.AtomCrudWidget;
+import org.cggh.chassis.generic.atom.client.ui.AtomCrudWidgetModel;
 import org.cggh.chassis.generic.atomext.client.datafile.DataFileEntry;
+import org.cggh.chassis.generic.atomext.client.datafile.DataFileFeed;
+import org.cggh.chassis.generic.atomext.client.datafile.DataFileQuery;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
-import org.cggh.chassis.generic.widget.client.DelegatingWidget;
-
-import com.google.gwt.event.shared.HandlerRegistration;
 
 /**
  * @author aliman
  *
  */
 public class EditDataFileWidget 
-	extends DelegatingWidget<EditDataFileWidgetModel, EditDataFileWidgetRenderer> {
+//	extends DelegatingWidget<EditDataFileWidgetModel, EditDataFileWidgetRenderer> 
+	extends AtomCrudWidget<DataFileEntry, DataFileFeed, DataFileQuery, AtomCrudWidgetModel<DataFileEntry>, EditDataFileWidgetRenderer, EditDataFileWidgetController>
+{
 	
 	
 	
 	
 	
 	private Log log = LogFactory.getLog(EditDataFileWidget.class);
-	private EditDataFileWidgetController controller;
 
 
 	
 	
-
+	
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.widget.client.DelegatingWidget#createModel()
 	 */
 	@Override
-	protected EditDataFileWidgetModel createModel() {
-		return new EditDataFileWidgetModel();
+	protected AtomCrudWidgetModel<DataFileEntry> createModel() {
+		return new AtomCrudWidgetModel<DataFileEntry>();
 	}
 
 
 
-
+	
+	
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.widget.client.DelegatingWidget#createRenderer()
 	 */
@@ -51,7 +53,19 @@ public class EditDataFileWidget
 	
 	
 	
-	
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.atom.client.ui.AtomCrudWidget#createController()
+	 */
+	@Override
+	protected EditDataFileWidgetController createController() {
+		return new EditDataFileWidgetController(this, this.model);
+	}
+
+
+
+
+
+
 
 
 	/* (non-Javadoc)
@@ -62,9 +76,8 @@ public class EditDataFileWidget
 		ensureLog();
 		log.enter("init");
 
-		super.init(); // this will instantiate model and renderer
+		super.init(); // this will instantiate model, renderer and controller
 		
-		this.controller = new EditDataFileWidgetController(this, this.model);
 		this.renderer.setController(this.controller);
 
 		log.leave();
@@ -83,32 +96,31 @@ public class EditDataFileWidget
 
 
 
+
 	/**
-	 * @param entry
+	 * @param id
 	 */
-	public void setEntry(DataFileEntry entry) {
-		log.enter("setEntry");
+	public void editEntry(DataFileEntry entry) {
 		
-		this.model.setEntry(entry);
-		// shouldn't have to do anything else
+		// make sure we do a plain retrieve before editing so we don't persist any expanded links
+		controller.retrieveEntry(entry.getEditLink().getHref());
 		
-		log.leave();
 	}
 
 
 
 
-	
-	/**
-	 * Register handler for create success event.
-	 * 
-	 * @param h handler to receive events
-	 * @return a handler registration to remove the handler if needed
-	 */
-	public HandlerRegistration addUpdateSuccessHandler(UpdateSuccessHandler<DataFileEntry> h) {
-		return this.addHandler(h, UpdateDataFileSuccessEvent.TYPE);
-	}
-
+//	/**
+//	 * @param entry
+//	 */
+//	public void setEntry(DataFileEntry entry) {
+//		log.enter("setEntry");
+//		
+//		this.model.setEntry(entry);
+//		// shouldn't have to do anything else
+//		
+//		log.leave();
+//	}
 
 
 

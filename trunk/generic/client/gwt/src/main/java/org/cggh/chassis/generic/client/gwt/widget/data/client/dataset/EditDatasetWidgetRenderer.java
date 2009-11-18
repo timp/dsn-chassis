@@ -3,6 +3,9 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.data.client.dataset;
 
+import org.cggh.chassis.generic.atom.client.ui.AtomCrudWidgetModel;
+import org.cggh.chassis.generic.atom.client.ui.AtomEntryChangeEvent;
+import org.cggh.chassis.generic.atom.client.ui.AtomEntryChangeHandler;
 import org.cggh.chassis.generic.atomext.client.dataset.DatasetEntry;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
@@ -24,8 +27,11 @@ import com.google.gwt.user.client.ui.HTML;
  * @author aliman
  *
  */
-public class EditDatasetWidgetRenderer extends
-		AsyncWidgetRenderer<EditDatasetWidgetModel> {
+public class EditDatasetWidgetRenderer 
+//	extends AsyncWidgetRenderer<EditDatasetWidgetModel> 
+	extends AsyncWidgetRenderer<AtomCrudWidgetModel<DatasetEntry>>
+
+{
 
 	
 	
@@ -125,9 +131,9 @@ public class EditDatasetWidgetRenderer extends
 			
 		});
 		
-		HandlerRegistration b = this.model.addDatasetEntryChangeHandler(new DatasetEntryChangeHandler() {
+		HandlerRegistration b = this.model.addEntryChangeHandler(new AtomEntryChangeHandler<DatasetEntry>() {
 			
-			public void onChange(DatasetEntryChangeEvent e) {
+			public void onEntryChanged(AtomEntryChangeEvent<DatasetEntry> e) {
 				log.enter("onChange");
 				
 				updateForm(e.getAfter());
@@ -158,7 +164,7 @@ public class EditDatasetWidgetRenderer extends
 			
 			public void onClick(ClickEvent arg0) {
 				
-				controller.putEntry(form.getModel());
+				controller.updateEntry(form.getModel());
 				
 			}
 		});
@@ -223,7 +229,7 @@ public class EditDatasetWidgetRenderer extends
 		
 		if (status instanceof ReadyStatus) {
 			
-			this.form.reset(); 
+//			this.form.reset(); 
 
 		}
 
@@ -258,27 +264,6 @@ public class EditDatasetWidgetRenderer extends
 
 
 
-
-
-//	/**
-//	 * 
-//	 */
-//	public void refreshStudies() {
-//		this.form.refreshStudies();
-//	}
-
-
-
-
-
-//	/**
-//	 * 
-//	 */
-//	public void refreshDataFiles() {
-////		this.form.refreshDataFiles();
-//	}
-
-	
 	
 	
 }

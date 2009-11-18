@@ -3,6 +3,9 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.data.client.datafile;
 
+import org.cggh.chassis.generic.atom.client.ui.AtomCrudWidgetModel;
+import org.cggh.chassis.generic.atom.client.ui.AtomEntryChangeEvent;
+import org.cggh.chassis.generic.atom.client.ui.AtomEntryChangeHandler;
 import org.cggh.chassis.generic.atomext.client.datafile.DataFileEntry;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
@@ -25,7 +28,9 @@ import com.google.gwt.user.client.ui.HTML;
  *
  */
 public class EditDataFileWidgetRenderer 
-	extends AsyncWidgetRenderer<EditDataFileWidgetModel> {
+//	extends AsyncWidgetRenderer<EditDataFileWidgetModel> 
+	extends AsyncWidgetRenderer<AtomCrudWidgetModel<DataFileEntry>>
+{
 
 	
 	
@@ -74,6 +79,8 @@ public class EditDataFileWidgetRenderer
 
 	
 	
+	
+	
 	/**
 	 * @return
 	 */
@@ -115,9 +122,9 @@ public class EditDataFileWidgetRenderer
 			
 		});
 		
-		HandlerRegistration b = this.model.addDataFileEntryChangeHandler(new DataFileEntryChangeHandler() {
+		HandlerRegistration b = this.model.addEntryChangeHandler(new AtomEntryChangeHandler<DataFileEntry>() {
 			
-			public void onChange(DataFileEntryChangeEvent e) {
+			public void onEntryChanged(AtomEntryChangeEvent<DataFileEntry> e) {
 				log.enter("onChange");
 				
 				updateForm(e.getAfter());
@@ -147,7 +154,7 @@ public class EditDataFileWidgetRenderer
 			
 			public void onClick(ClickEvent arg0) {
 				
-				controller.putEntry(form.getModel());
+				controller.updateEntry(form.getModel());
 				
 			}
 		});
@@ -208,7 +215,7 @@ public class EditDataFileWidgetRenderer
 		
 		if (status instanceof ReadyStatus) {
 			
-			this.form.reset(); 
+//			this.form.reset(); 
 
 		}
 

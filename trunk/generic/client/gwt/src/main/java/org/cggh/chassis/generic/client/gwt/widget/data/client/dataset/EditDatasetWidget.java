@@ -3,20 +3,24 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.data.client.dataset;
 
-import org.cggh.chassis.generic.atom.client.UpdateSuccessHandler;
+import org.cggh.chassis.generic.atom.client.ui.AtomCrudWidget;
+import org.cggh.chassis.generic.atom.client.ui.AtomCrudWidgetModel;
 import org.cggh.chassis.generic.atomext.client.dataset.DatasetEntry;
+import org.cggh.chassis.generic.atomext.client.dataset.DatasetFeed;
+import org.cggh.chassis.generic.atomext.client.dataset.DatasetQuery;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
-import org.cggh.chassis.generic.widget.client.DelegatingWidget;
-
-import com.google.gwt.event.shared.HandlerRegistration;
 
 /**
  * @author aliman
  *
  */
 public class EditDatasetWidget 
-	extends DelegatingWidget<EditDatasetWidgetModel, EditDatasetWidgetRenderer> {
+//	extends DelegatingWidget<EditDatasetWidgetModel, EditDatasetWidgetRenderer> 
+	extends AtomCrudWidget<DatasetEntry, DatasetFeed, DatasetQuery, AtomCrudWidgetModel<DatasetEntry>, EditDatasetWidgetRenderer, EditDatasetWidgetController>
+
+
+{
 	
 	
 	
@@ -24,7 +28,6 @@ public class EditDatasetWidget
 	
 	
 	private Log log = LogFactory.getLog(EditDatasetWidget.class);
-	private EditDatasetWidgetController controller;
 
 
 
@@ -45,9 +48,10 @@ public class EditDatasetWidget
 	 * @see org.cggh.chassis.generic.widget.client.DelegatingWidget#createModel()
 	 */
 	@Override
-	protected EditDatasetWidgetModel createModel() {
-		return new EditDatasetWidgetModel();
+	protected AtomCrudWidgetModel<DatasetEntry> createModel() {
+		return new AtomCrudWidgetModel<DatasetEntry>();
 	}
+
 
 
 
@@ -61,6 +65,21 @@ public class EditDatasetWidget
 		return new EditDatasetWidgetRenderer(this);
 	}
 
+	
+	
+	
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.atom.client.ui.AtomCrudWidget#createController()
+	 */
+	@Override
+	protected EditDatasetWidgetController createController() {
+		return new EditDatasetWidgetController(this, this.model);
+	}
+
+
+
+
+
 
 
 	
@@ -72,60 +91,29 @@ public class EditDatasetWidget
 		ensureLog();
 		log.enter("init");
 
-		super.init(); // this will instantiate model and renderer
+		super.init(); // this will instantiate model, renderer and controller
 		
-		this.controller = new EditDatasetWidgetController(this, this.model);
 		this.renderer.setController(this.controller);
 
 		log.leave();
 	}
-	
-	
-	
+
+
+
 
 
 	/**
 	 * @param entry
 	 */
-	public void setEntry(DatasetEntry entry) {
-		this.model.setEntry(entry);
-//		this.refreshStudies();
-//		this.refreshDataFiles();
+	public void editEntry(DatasetEntry entry) {
+
+		// make sure we do a plain retrieve before editing so we don't persist any expanded links
+		this.controller.retrieveEntry(entry.getEditLink().getHref());
+		
 	}
-
-
-
-
-	/**
-	 * Register handler for create success event.
-	 * 
-	 * @param h handler to receive events
-	 * @return a handler registration to remove the handler if needed
-	 */
-	public HandlerRegistration addUpdateSuccessHandler(UpdateSuccessHandler<DatasetEntry> h) {
-		return this.addHandler(h, UpdateDatasetSuccessEvent.TYPE);
-	}
-
-
-
 	
-//	public void refreshStudies() {
-//		this.renderer.refreshStudies();
-//	}
-
-
-
-
-
-//	/**
-//	 * 
-//	 */
-//	private void refreshDataFiles() {
-//		this.renderer.refreshDataFiles();
-//	}
-
-
-
+	
+	
 
 
 }

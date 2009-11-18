@@ -23,5 +23,9 @@ public class DatasetPersistenceService extends
 		super(new DatasetFactory());
 	}
 
+	public DatasetPersistenceService(String baseUrl) {
+		super(new DatasetFactory(), baseUrl);
+	}
+
 
 }

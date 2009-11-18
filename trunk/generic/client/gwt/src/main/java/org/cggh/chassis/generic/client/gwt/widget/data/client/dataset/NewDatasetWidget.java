@@ -3,8 +3,12 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.data.client.dataset;
 
-import org.cggh.chassis.generic.atom.client.CreateSuccessHandler;
+import org.cggh.chassis.generic.atom.client.ui.AtomCrudWidget;
+import org.cggh.chassis.generic.atom.client.ui.AtomCrudWidgetModel;
+import org.cggh.chassis.generic.atom.client.ui.CreateSuccessHandler;
 import org.cggh.chassis.generic.atomext.client.dataset.DatasetEntry;
+import org.cggh.chassis.generic.atomext.client.dataset.DatasetFeed;
+import org.cggh.chassis.generic.atomext.client.dataset.DatasetQuery;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
@@ -17,7 +21,10 @@ import com.google.gwt.event.shared.HandlerRegistration;
  *
  */
 public class NewDatasetWidget 
-	extends DelegatingWidget<AsyncWidgetModel, NewDatasetWidgetRenderer> {
+//	extends DelegatingWidget<AsyncWidgetModel, NewDatasetWidgetRenderer> 
+	extends AtomCrudWidget<DatasetEntry, DatasetFeed, DatasetQuery, AtomCrudWidgetModel<DatasetEntry>, NewDatasetWidgetRenderer, NewDatasetWidgetController>
+
+{
 
 	
 	
@@ -27,18 +34,14 @@ public class NewDatasetWidget
 	
 	
 	private Log log;
-	private NewDatasetWidgetController controller;
 
 
 	
 	
 
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.widget.client.DelegatingWidget#createModel()
-	 */
 	@Override
-	protected AsyncWidgetModel createModel() {
-		return new AsyncWidgetModel();
+	protected AtomCrudWidgetModel<DatasetEntry> createModel() {
+		return new AtomCrudWidgetModel<DatasetEntry>();
 	}
 
 
@@ -56,14 +59,25 @@ public class NewDatasetWidget
 
 
 
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.atom.client.ui.AtomCrudWidget#createController()
+	 */
+	@Override
+	protected NewDatasetWidgetController createController() {
+		return new NewDatasetWidgetController(this, this.model);
+	}
+
+
+
+
+
 	@Override
 	public void init() {
 		ensureLog();
 		log.enter("init");
 		
-		super.init(); // will instantiate model and renderer
+		super.init(); // will instantiate model, renderer and controller
 		
-		this.controller = new NewDatasetWidgetController(this, this.model);
 		this.renderer.setController(this.controller);
 		
 		log.leave();
@@ -75,21 +89,6 @@ public class NewDatasetWidget
 	private void ensureLog() {
 		if (log == null) log = LogFactory.getLog(NewDatasetWidget.class);
 	}
-
-	
-	
-	
-	/**
-	 * Register handler for create success event.
-	 * 
-	 * @param h handler to receive events
-	 * @return a handler registration to remove the handler if needed
-	 */
-	public HandlerRegistration addCreateSuccessHandler(CreateSuccessHandler<DatasetEntry> h) {
-		return this.addHandler(h, CreateDatasetSuccessEvent.TYPE);
-	}
-
-
 
 
 

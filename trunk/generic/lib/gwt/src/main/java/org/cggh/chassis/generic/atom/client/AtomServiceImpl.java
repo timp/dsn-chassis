@@ -22,6 +22,7 @@ public class AtomServiceImpl
 	
 	
 	protected AtomFactory<E, F> factory;
+	private String baseUrl = null;
 
 
 
@@ -33,14 +34,24 @@ public class AtomServiceImpl
 	
 	
 	
+	public AtomServiceImpl(AtomFactory<E, F> factory, String baseUrl) {
+		this.factory = factory;
+		this.baseUrl  = baseUrl;
+	}
+	
+	
+	
+	
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService#deleteEntry(java.lang.String)
 	 */
-	public Deferred<Void> deleteEntry(String entryURL) {
+	public Deferred<Void> deleteEntry(String entryUrl) {
+		
+		if (baseUrl != null) entryUrl = baseUrl + entryUrl;
 
 		HttpDeferred<Void> deferredResult = new HttpDeferred<Void>();
 
-		RequestBuilder requestBuilder = buildDeleteEntryRequest(entryURL);
+		RequestBuilder requestBuilder = buildDeleteEntryRequest(entryUrl);
 		
 		requestBuilder.setCallback(new CallbackWithNoContent(deferredResult));
 
@@ -70,11 +81,13 @@ public class AtomServiceImpl
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService#getEntry(java.lang.String)
 	 */
-	public Deferred<E> getEntry(String entryURL) {
+	public Deferred<E> getEntry(String entryUrl) {
 		
+		if (baseUrl != null) entryUrl = baseUrl + entryUrl;
+
 		HttpDeferred<E> deferredResult = new HttpDeferred<E>();
 
-		RequestBuilder requestBuilder = buildGetEntryRequest(entryURL);
+		RequestBuilder requestBuilder = buildGetEntryRequest(entryUrl);
 		
 		requestBuilder.setCallback(new GetEntryCallback<E, F>(factory, deferredResult));
 
@@ -126,11 +139,13 @@ public class AtomServiceImpl
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService#getFeed(java.lang.String)
 	 */
-	public Deferred<F> getFeed(String feedURL) {
+	public Deferred<F> getFeed(String feedUrl) {
+
+		if (baseUrl != null) feedUrl = baseUrl + feedUrl;
 
 		HttpDeferred<F> deferredResult = new HttpDeferred<F>();
 
-		RequestBuilder requestBuilder = buildGetFeedRequest(feedURL);
+		RequestBuilder requestBuilder = buildGetFeedRequest(feedUrl);
 		
 		requestBuilder.setCallback(new GetFeedCallback<E, F>(factory, deferredResult));
 
@@ -159,11 +174,13 @@ public class AtomServiceImpl
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService#postEntry(java.lang.String, org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry)
 	 */
-	public Deferred<E> postEntry(String feedURL, E entry) {
+	public Deferred<E> postEntry(String feedUrl, E entry) {
+
+		if (baseUrl != null) feedUrl = baseUrl + feedUrl;
 
 		HttpDeferred<E> deferredResult = new HttpDeferred<E>();
 
-		RequestBuilder requestBuilder = buildPostEntryRequest(feedURL, entry.toString());
+		RequestBuilder requestBuilder = buildPostEntryRequest(feedUrl, entry.toString());
 		
 		requestBuilder.setCallback(new PostEntryCallback<E, F>(factory, deferredResult));
 
@@ -196,11 +213,13 @@ public class AtomServiceImpl
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.atom.vanilla.client.protocol.AtomService#putEntry(java.lang.String, org.cggh.chassis.generic.atom.vanilla.client.format.AtomEntry)
 	 */
-	public Deferred<E> putEntry(String entryURL, E entry) {
+	public Deferred<E> putEntry(String entryUrl, E entry) {
+
+		if (baseUrl != null) entryUrl = baseUrl + entryUrl;
 
 		HttpDeferred<E> deferredResult = new HttpDeferred<E>();
 
-		RequestBuilder requestBuilder = buildPutEntryRequest(entryURL, entry.toString());
+		RequestBuilder requestBuilder = buildPutEntryRequest(entryUrl, entry.toString());
 		
 		requestBuilder.setCallback(new PutEntryCallback<E, F>(factory, deferredResult));
 
