@@ -5,8 +5,8 @@ package org.cggh.chassis.generic.client.gwt.widget.data.client.dataset;
 
 
 
-import org.cggh.chassis.generic.atom.client.ui.EventWithAtomEntry;
 import org.cggh.chassis.generic.atomext.client.dataset.DatasetEntry;
+import org.cggh.chassis.generic.atomui.client.EventWithAtomEntry;
 
 import com.google.gwt.event.shared.EventHandler;
 

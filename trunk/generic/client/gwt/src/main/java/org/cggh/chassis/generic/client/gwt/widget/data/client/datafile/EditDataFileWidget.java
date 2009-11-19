@@ -3,11 +3,11 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.data.client.datafile;
 
-import org.cggh.chassis.generic.atom.client.ui.AtomCrudWidget;
-import org.cggh.chassis.generic.atom.client.ui.AtomCrudWidgetModel;
 import org.cggh.chassis.generic.atomext.client.datafile.DataFileEntry;
 import org.cggh.chassis.generic.atomext.client.datafile.DataFileFeed;
 import org.cggh.chassis.generic.atomext.client.datafile.DataFileQuery;
+import org.cggh.chassis.generic.atomui.client.AtomCrudWidget;
+import org.cggh.chassis.generic.atomui.client.AtomCrudWidgetModel;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 

@@ -12,19 +12,23 @@ import org.cggh.chassis.generic.atom.client.AtomServiceImpl;
 public class VanillaAtomService extends
 		AtomServiceImpl<VanillaAtomEntry, VanillaAtomFeed> {
 	
-	/**
-	 * @param factory
-	 */
 	public VanillaAtomService() {
 		super(new VanillaAtomFactory());
 	}
 
-	/**
-	 * @param factory
-	 */
 	public VanillaAtomService(
 			VanillaAtomFactory factory) {
 		super(factory);
+	}
+
+	public VanillaAtomService(String baseUrl) {
+		super(new VanillaAtomFactory(), baseUrl);
+	}
+
+	public VanillaAtomService(
+			VanillaAtomFactory factory,
+			String baseUrl) {
+		super(factory, baseUrl);
 	}
 
 }

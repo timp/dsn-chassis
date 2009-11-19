@@ -3,15 +3,15 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.data.client.datafile;
 
+import org.cggh.chassis.generic.atom.client.AtomQueryService;
 import org.cggh.chassis.generic.atom.client.AtomService;
-import org.cggh.chassis.generic.atom.client.ui.AtomCrudWidgetController;
-import org.cggh.chassis.generic.atom.client.ui.AtomCrudWidgetModel;
 import org.cggh.chassis.generic.atomext.client.datafile.DataFileEntry;
 import org.cggh.chassis.generic.atomext.client.datafile.DataFileFeed;
 import org.cggh.chassis.generic.atomext.client.datafile.DataFilePersistenceService;
 import org.cggh.chassis.generic.atomext.client.datafile.DataFileQuery;
 import org.cggh.chassis.generic.atomext.client.datafile.DataFileQueryService;
-import org.cggh.chassis.generic.atomext.client.shared.AtomQueryService;
+import org.cggh.chassis.generic.atomui.client.AtomCrudWidgetController;
+import org.cggh.chassis.generic.atomui.client.AtomCrudWidgetModel;
 import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
 
 

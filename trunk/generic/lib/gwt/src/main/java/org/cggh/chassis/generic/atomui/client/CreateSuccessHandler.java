@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.atom.client.ui;
+package org.cggh.chassis.generic.atomui.client;
 
 import org.cggh.chassis.generic.atom.client.AtomEntry;
 
@@ -11,10 +11,10 @@ import com.google.gwt.event.shared.EventHandler;
  * @author aliman
  *
  */
-public interface RetrieveSuccessHandler
+public interface CreateSuccessHandler
 	<E extends AtomEntry>
 	extends EventHandler {
 
-	public void onRetrieveSuccess(RetrieveSuccessEvent<E> e);
+	public void onCreateSuccess(CreateSuccessEvent<E> e);
 	
 }

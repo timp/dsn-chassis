@@ -3,8 +3,8 @@
  */
 package org.cggh.chassis.generic.atomext.client.dataset;
 
+import org.cggh.chassis.generic.atom.client.AtomQueryService;
 import org.cggh.chassis.generic.atom.client.AtomService;
-import org.cggh.chassis.generic.atomext.client.shared.AtomQueryService;
 
 /**
  * @author aliman
