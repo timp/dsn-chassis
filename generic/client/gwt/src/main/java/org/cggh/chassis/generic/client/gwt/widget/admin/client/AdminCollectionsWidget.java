@@ -188,7 +188,7 @@ public class AdminCollectionsWidget extends ChassisWidget {
 			rows.add(row);
 		}
 		
-		FlexTable table = RenderUtils.renderFlexTable(rows);
+		FlexTable table = RenderUtils.renderResultsTable(rows);
 		this.tableContainer.clear();
 		this.tableContainer.add(table);
 

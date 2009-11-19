@@ -1,4 +1,8 @@
-@CHARSET "UTF-8";
+/*
+ * -----------------------------------------------------------------------------
+ * html element styles
+ * -----------------------------------------------------------------------------
+ */
 
 body {
 }
@@ -7,15 +11,31 @@ input, textarea {
 	border: 1px solid #aaa;
 }
 
+
+
+
+/*
+ * -----------------------------------------------------------------------------
+ * fixed page elements
+ * -----------------------------------------------------------------------------
+ */
+ 
 #holdall {
 	margin: 0.5em;
 }
 
-
-
 #chassisClientPane {
 }
 
+
+
+
+
+/*
+ * -----------------------------------------------------------------------------
+ * GWT style overrides
+ * -----------------------------------------------------------------------------
+ */
 
 .gwt-Anchor {
 	cursor: pointer;
@@ -24,9 +44,20 @@ input, textarea {
 
 
 
+
+
+/*
+ * -----------------------------------------------------------------------------
+ * utility styles
+ * -----------------------------------------------------------------------------
+ */
+
 .invisible {
 	display: none;
 }
+
+
+
 
 
 /*
@@ -79,8 +110,11 @@ input, textarea {
 
 
 
+
 /*
- * begin styles for chassis client
+ * -----------------------------------------------------------------------------
+ * styles for chassis client
+ * -----------------------------------------------------------------------------
  */
 
 .chassis-client {
@@ -140,8 +174,8 @@ input, textarea {
  
 .chassis-administratorHome-resourceCollections {
 	border-top: 2px solid black;
-
 }
+
 
 
 
@@ -167,6 +201,8 @@ input, textarea {
 .chassis-createStudy-modules input {
 	border: none;
 }
+
+
 
 
 
@@ -202,23 +238,26 @@ input, textarea {
  * -----------------------------------------------------------------------------
  */
  
- .chassis-viewStudy-modules {
+.chassis-viewStudy-modules {
+    display: inline;
+    margin-left: 0.3em;
+}
+
+.chassis-viewStudy-owners {
  	display: inline;
  	margin-left: 0.3em;
- }
+}
 
- .chassis-viewStudy-owners {
- 	display: inline;
- 	margin-left: 0.3em;
- }
-
- .chassis-viewStudy-summary {
-	font-weight: normal;
+.chassis-viewStudy-summary {
+    font-weight: normal;
 	font-style: italic;
 	display: block;
 	margin: .2em 0 .2em 0;
- }
+}
 
+.chassis-viewStudy-title {
+	font-size: 120%;
+}
 
 
 
@@ -249,158 +288,6 @@ input, textarea {
 
 
 
-/*
- * -----------------------------------------------------------------------------
- * styles for create submission widget
- * -----------------------------------------------------------------------------
- */
- 
-.chassis-createSubmission-actions {
-	margin-top: 1em;
-}
-
-
-
-
-
-/*
- * -----------------------------------------------------------------------------
- * styles for submission form
- * -----------------------------------------------------------------------------
- */
- 
-.chassis-submissionForm {
-}
-
-.chassis-submissionForm .titleQuestion {
-}
-
-.chassis-submissionForm .titleQuestion input {
-	width: 30em;
-}
-
-.chassis-submissionForm .summaryQuestion textarea {
-	width: 60em;
-	height: 15em;
-}
-
-.chassis-submissionForm .modulesQuestion {
-}
-
-.chassis-submissionForm .modulesQuestion input {
-	border: none;
-}
-
-.chassis-submissionForm .studiesQuestion {
-}
-
-.chassis-submissionForm .studiesQuestion p {
-	/* TODO why is this necessary? */
-	margin-top: 0;
-	margin-bottom: 0;
-}
-
-.chassis-submissionForm .selectStudy {
-	margin-top: 0.3em;
-	margin-bottom: 0.3em;
-} 
-
-
-/*
- * -----------------------------------------------------------------------------
- * styles for view submission widget
- * -----------------------------------------------------------------------------
- */
- 
- .chassis-viewSubmission-modules {
- 	display: inline;
- 	margin-left: 0.3em;
- }
-
- .chassis-viewSubmission-owners {
- 	display: inline;
- 	margin-left: 0.3em;
- }
-
- .chassis-viewSubmission-summary {
-	font-weight: normal;
-	font-style: italic;
-	display: block;
-	margin: .2em 0 .2em 0;
- }
-
-
-
-
-/*
- * -----------------------------------------------------------------------------
- * styles for view submissions widget
- * -----------------------------------------------------------------------------
- */
-
-.chassis-viewSubmissions-submissionsTable {
-}
-
-.chassis-viewSubmissions-submissionsTable td {
-	border-bottom: 1px solid #aaa;
-	padding: 0.3em;
-	vertical-align: top;
-}
-
-.chassis-viewSubmissions-tableHeader {
-	font-weight: bold;
-}
-
-.chassis-viewSubmissions-submissionTitle {
-	font-weight: bold;
-}
-
-/*
- * -----------------------------------------------------------------------------
- * styles for upload submission data file widget
- * -----------------------------------------------------------------------------
- */
- 
-.chassis-uploadSubmissionDataFile-fileInput {
-    width: 30em;
-}
-
-.chassis-uploadSubmissionDataFile-commentInput {
-    width: 60em;
-    height: 15em;
-}
-
-.chassis-uploadSubmissionDataFile-actions {
-    margin-top: 1em;
-}
-
-/*
- * -----------------------------------------------------------------------------
- * styles for view submission data files widget
- * -----------------------------------------------------------------------------
- */
-
-.chassis-viewSubmissionDataFiles-dataFilesTable {
-}
-
-.chassis-viewSubmissionDataFiles-dataFilesTable td {
-    border-bottom: 1px solid #aaa;
-    padding: 0.3em;
-    vertical-align: top;
-}
-
-.chassis-viewSubmissionDataFiles-tableHeader {
-    font-weight: bold;
-}
-
-.chassis-viewSubmissionDataFiles-fileTitle,
-.chassis-viewSubmissionDataFiles-fileSummary {
-    font-weight: bold;
-}
-
-.chassis-viewSubmissionDataFiles-downloadLink {
-}
-
 
 /*
  * -----------------------------------------------------------------------------
@@ -408,9 +295,7 @@ input, textarea {
  * -----------------------------------------------------------------------------
  */
  
-
-
-#developerPane {
+#footer {
 	margin-top: 2em;
 	border-top: 2px solid black;
 }

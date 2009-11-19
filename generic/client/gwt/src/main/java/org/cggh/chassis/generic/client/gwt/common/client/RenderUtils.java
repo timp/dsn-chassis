@@ -44,13 +44,24 @@ public class RenderUtils {
 	 * 
 	 * @return a flex table
 	 */
-	public static FlexTable renderFlexTable(List<Widget[]> in) {
+	public static FlexTable renderResultsTable(List<Widget[]> in) {
 		FlexTable out = new FlexTable();
+		out.setCellPadding(0);
+		out.setCellSpacing(0);
+		out.setBorderWidth(0);
+		
+		out.addStyleName(CommonStyles.RESULTSTABLE);
+		
 		for (int r=0; r<in.size(); r++) {
 			Widget[] row = in.get(r);
 			for (int c=0; c<row.length; c++) {
 				Widget w = row[c];
+				w.addStyleName(CommonStyles.RESULTSTABLE_CELL);
 				out.setWidget(r, c, w);
+				if (r == 0) w.addStyleName(CommonStyles.RESULTSTABLE_FIRSTROW);
+				if (c == 0) w.addStyleName(CommonStyles.RESULTSTABLE_FIRSTCOL);
+				if (r % 2 == 0) w.addStyleName(CommonStyles.RESULTSTABLE_EVEN);
+				else w.addStyleName(CommonStyles.RESULTSTABLE_ODD);
 			}
 		}
 		return out;

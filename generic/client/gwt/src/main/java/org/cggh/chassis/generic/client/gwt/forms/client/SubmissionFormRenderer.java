@@ -132,7 +132,7 @@ public class SubmissionFormRenderer extends BaseFormRenderer<SubmissionEntry, Su
 			rows.add(row);
 		}
 		
-		FlexTable modulesInputTable = RenderUtils.renderFlexTable(rows);
+		FlexTable modulesInputTable = RenderUtils.renderResultsTable(rows);
 		modulesQuestionPanel.add(modulesInputTable);
 	
 		log.leave();
