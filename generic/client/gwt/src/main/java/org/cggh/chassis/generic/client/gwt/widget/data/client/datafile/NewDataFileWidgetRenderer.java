@@ -3,9 +3,9 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.data.client.datafile;
 
-import org.cggh.chassis.generic.atom.client.ui.CreateSuccessEvent;
 import org.cggh.chassis.generic.atomext.client.datafile.DataFileEntry;
 import org.cggh.chassis.generic.atomext.client.datafile.DataFileFactory;
+import org.cggh.chassis.generic.atomui.client.CreateSuccessEvent;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;

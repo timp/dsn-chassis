@@ -1,15 +1,12 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.atomext.client.shared;
+package org.cggh.chassis.generic.atom.client;
 
 import java.util.Map.Entry;
 
 import org.cggh.chassis.generic.async.client.Deferred;
 import org.cggh.chassis.generic.async.client.Function;
-import org.cggh.chassis.generic.atom.client.AtomEntry;
-import org.cggh.chassis.generic.atom.client.AtomFeed;
-import org.cggh.chassis.generic.atom.client.AtomService;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 

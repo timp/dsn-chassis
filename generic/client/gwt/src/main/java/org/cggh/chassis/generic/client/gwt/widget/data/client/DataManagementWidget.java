@@ -4,12 +4,12 @@
 package org.cggh.chassis.generic.client.gwt.widget.data.client;
 
 
-import org.cggh.chassis.generic.atom.client.ui.CreateSuccessEvent;
-import org.cggh.chassis.generic.atom.client.ui.CreateSuccessHandler;
-import org.cggh.chassis.generic.atom.client.ui.UpdateSuccessEvent;
-import org.cggh.chassis.generic.atom.client.ui.UpdateSuccessHandler;
 import org.cggh.chassis.generic.atomext.client.datafile.DataFileEntry;
 import org.cggh.chassis.generic.atomext.client.dataset.DatasetEntry;
+import org.cggh.chassis.generic.atomui.client.CreateSuccessEvent;
+import org.cggh.chassis.generic.atomui.client.CreateSuccessHandler;
+import org.cggh.chassis.generic.atomui.client.UpdateSuccessEvent;
+import org.cggh.chassis.generic.atomui.client.UpdateSuccessHandler;
 import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.DataFileActionEvent;
 import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.DataFileActionHandler;
 import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.EditDataFileWidget;

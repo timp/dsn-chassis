@@ -8,6 +8,8 @@ import org.cggh.chassis.generic.async.client.HttpException;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 
+import com.google.gwt.user.client.ui.Widget;
+
 /**
  * @author aliman
  *
@@ -18,14 +20,14 @@ public class AsyncErrback implements Function<Throwable, Throwable> {
 	
 	
 	private Log log = LogFactory.getLog(AsyncErrback.class);
-	private ChassisWidget eventSource;
+	private Widget eventSource;
 	private AsyncWidgetModel model;
 	
 	
 	
 	
 	
-	public AsyncErrback(ChassisWidget eventSource, AsyncWidgetModel model) {
+	public AsyncErrback(Widget eventSource, AsyncWidgetModel model) {
 		this.eventSource = eventSource;
 		this.model = model;
 	}

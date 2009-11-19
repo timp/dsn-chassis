@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.atomext.client.shared;
+package org.cggh.chassis.generic.atom.client;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,20 +30,28 @@ public class AtomQuery {
 		return this.params;
 	}
 	
+	public void set(String param, String value) {
+		this.params.put(param, value);
+	}
+	
+	public String get(String param) {
+		return this.params.get(param);
+	}
+	
 	public void setAuthorEmail(String authorEmail) {
-		this.params.put(PARAM_AUTHOREMAIL, authorEmail);
+		this.set(PARAM_AUTHOREMAIL, authorEmail);
 	}
 
 	public String getAuthorEmail() {
-		return this.params.get(PARAM_AUTHOREMAIL);
+		return this.get(PARAM_AUTHOREMAIL);
 	}
 
 	public void setId(String id) {
-		this.params.put(PARAM_ID, id);
+		this.set(PARAM_ID, id);
 	}
 
 	public String getId() {
-		return this.params.get(PARAM_ID);
+		return this.get(PARAM_ID);
 	}
 	
 }

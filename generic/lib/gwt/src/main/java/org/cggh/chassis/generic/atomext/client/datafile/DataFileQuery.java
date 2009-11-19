@@ -3,7 +3,7 @@
  */
 package org.cggh.chassis.generic.atomext.client.datafile;
 
-import org.cggh.chassis.generic.atomext.client.shared.AtomQuery;
+import org.cggh.chassis.generic.atom.client.AtomQuery;
 
 /**
  * @author aliman

@@ -1,11 +1,11 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.atom.client.ui;
+package org.cggh.chassis.generic.atomui.client;
 
 import org.cggh.chassis.generic.atom.client.AtomEntry;
 import org.cggh.chassis.generic.atom.client.AtomFeed;
-import org.cggh.chassis.generic.atomext.client.shared.AtomQuery;
+import org.cggh.chassis.generic.atom.client.AtomQuery;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetRenderer;
 import org.cggh.chassis.generic.widget.client.DelegatingWidget;
 

@@ -4,8 +4,8 @@
 package org.cggh.chassis.generic.atomext.client.datafile;
 
 import org.cggh.chassis.generic.async.client.Deferred;
+import org.cggh.chassis.generic.atom.client.AtomQueryService;
 import org.cggh.chassis.generic.atom.client.AtomService;
-import org.cggh.chassis.generic.atomext.client.shared.AtomQueryService;
 
 /**
  * @author aliman
