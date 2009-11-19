@@ -112,7 +112,7 @@ public class NewDatasetWidgetRenderer
 			public void onStatusChanged(StatusChangeEvent e) {
 				log.enter("onStatusChanged");
 				
-				updateForm(e.getAfter());
+				syncForm(e.getAfter());
 				
 				log.leave();
 			}
@@ -172,7 +172,7 @@ public class NewDatasetWidgetRenderer
 		
 		if (this.model != null) {
 
-			this.updateForm(this.model.getStatus());
+			this.syncForm(this.model.getStatus());
 			
 		}
 		else {
@@ -192,7 +192,7 @@ public class NewDatasetWidgetRenderer
 	/**
 	 * @param after
 	 */
-	protected void updateForm(Status status) {
+	protected void syncForm(Status status) {
 		log.enter("updateForm");
 		
 		if (status instanceof ReadyStatus) {

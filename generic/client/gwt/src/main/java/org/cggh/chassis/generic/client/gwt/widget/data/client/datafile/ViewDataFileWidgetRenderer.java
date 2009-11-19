@@ -4,6 +4,9 @@
 package org.cggh.chassis.generic.client.gwt.widget.data.client.datafile;
 
 import org.cggh.chassis.generic.atomext.client.datafile.DataFileEntry;
+import org.cggh.chassis.generic.atomui.client.AtomCrudWidgetModel;
+import org.cggh.chassis.generic.atomui.client.AtomEntryChangeEvent;
+import org.cggh.chassis.generic.atomui.client.AtomEntryChangeHandler;
 import org.cggh.chassis.generic.client.gwt.common.client.CommonStyles;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
@@ -19,7 +22,9 @@ import com.google.gwt.user.client.ui.Panel;
  *
  */
 public class ViewDataFileWidgetRenderer 
-	extends AsyncWidgetRenderer<ViewDataFileWidgetModel> {
+	extends AsyncWidgetRenderer<AtomCrudWidgetModel<DataFileEntry>> 
+
+{
 
 	
 	
@@ -102,12 +107,12 @@ public class ViewDataFileWidgetRenderer
 		
 		super.registerHandlersForModelChanges();
 
-		HandlerRegistration b = this.model.addDataFileEntryChangeHandler(new DataFileEntryChangeHandler() {
+		HandlerRegistration b = this.model.addEntryChangeHandler(new AtomEntryChangeHandler<DataFileEntry>() {
 			
-			public void onChange(DataFileEntryChangeEvent e) {
+			public void onEntryChanged(AtomEntryChangeEvent<DataFileEntry> e) {
 				log.enter("onDataFileEntryChanged");
 				
-				updateInfo(e.getAfter());
+				syncEntryUI(e.getAfter());
 				
 				log.leave();
 			}
@@ -174,7 +179,7 @@ public class ViewDataFileWidgetRenderer
 
 			log.debug("sync submission info");
 			DataFileEntry entry = this.model.getEntry();
-			this.updateInfo(entry);
+			this.syncEntryUI(entry);
 
 		}
 		else {
@@ -195,7 +200,7 @@ public class ViewDataFileWidgetRenderer
 	/**
 	 * @param entry
 	 */
-	private void updateInfo(DataFileEntry entry) {
+	private void syncEntryUI(DataFileEntry entry) {
 		log.enter("updateInfo");
 		
 		if (entry != null) {
@@ -208,7 +213,6 @@ public class ViewDataFileWidgetRenderer
 		}
 		
 		log.leave();
-		
 	}
 	
 	

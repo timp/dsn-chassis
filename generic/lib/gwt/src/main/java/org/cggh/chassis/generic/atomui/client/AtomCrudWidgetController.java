@@ -64,22 +64,23 @@ public abstract class AtomCrudWidgetController
 	/**
 	 * @param entry
 	 */
-	public void createEntry(E entry) {
+	public Deferred<E> createEntry(E entry) {
 		log.enter("createEntry");
 		
 		AtomService<E, F> service = this.createAtomService();
 		Function<E, E> callback = new CreateEntryCallback<E>(this.owner, this.model);
 		Function<Throwable, Throwable> errback = new AsyncErrback(this.owner, this.model);
 		
-		createEntry(entry, this.model, service, this.collectionUrl, callback, errback);
+		Deferred<E> deferredEntry = createEntry(entry, this.model, service, this.collectionUrl, callback, errback);
 		
 		log.leave();
+		return deferredEntry;
 	}
 	
 	
 	
 	
-	protected static <E extends AtomEntry, F extends AtomFeed<E>> void createEntry(
+	protected static <E extends AtomEntry, F extends AtomFeed<E>> Deferred<E> createEntry(
 			E entry,
 			AtomCrudWidgetModel<E> model,
 			AtomService<E, F> service,
@@ -92,29 +93,30 @@ public abstract class AtomCrudWidgetController
 		Deferred<E> deferredEntry = service.postEntry(collectionUrl, entry);
 		deferredEntry.addCallback(callback);
 		deferredEntry.addErrback(errback);
-		
+		return deferredEntry;
 	}
 	
 	
 	
 	
 	
-	public void retrieveEntry(String entryUrl) {
+	public Deferred<E> retrieveEntry(String entryUrl) {
 		log.enter("retrieveEntry");
 				
 		AtomService<E, F> service = this.createAtomService();
 		Function<E, E> callback = new RetrieveEntryCallback<E>(this.owner, this.model);
 		Function<Throwable, Throwable> errback = new AsyncErrback(this.owner, this.model);
 		
-		retrieveEntry(this.model, service, entryUrl, callback, errback);
+		Deferred<E> deferredEntry = retrieveEntry(this.model, service, entryUrl, callback, errback);
 		
 		log.leave();
+		return deferredEntry;
 	}
 	
 	
 
 	
-	protected static <E extends AtomEntry, F extends AtomFeed<E>> void retrieveEntry(
+	protected static <E extends AtomEntry, F extends AtomFeed<E>> Deferred<E> retrieveEntry(
 			AtomCrudWidgetModel<E> model,
 			AtomService<E, F> service,
 			String entryUrl,
@@ -126,13 +128,14 @@ public abstract class AtomCrudWidgetController
 		Deferred<E> deferredEntry = service.getEntry(entryUrl);
 		deferredEntry.addCallback(callback);
 		deferredEntry.addErrback(errback);
+		return deferredEntry;
 
 	}
 
 
 	
 	
-	public void retrieveExpandedEntry(String entryId) {
+	public Deferred<E> retrieveExpandedEntry(String entryId) {
 		log.enter("retrieveExpandedEntry");
 		
 		// use query service to retrieve entry, so we can do link expansion
@@ -142,16 +145,17 @@ public abstract class AtomCrudWidgetController
 		Function<E, E> callback = new RetrieveEntryCallback<E>(this.owner, this.model);
 		Function<Throwable, Throwable> errback = new AsyncErrback(this.owner, this.model);
 		
-		retrieveExpandedEntry(this.model, service, query, entryId, callback, errback);
+		Deferred<E> deferredEntry = retrieveExpandedEntry(this.model, service, query, entryId, callback, errback);
 		
 		log.leave();
+		return deferredEntry;
 	}
 	
 
 	
 	
 	
-	protected static <E extends AtomEntry, F extends AtomFeed<E>, Q extends AtomQuery> void retrieveExpandedEntry(
+	protected static <E extends AtomEntry, F extends AtomFeed<E>, Q extends AtomQuery> Deferred<E> retrieveExpandedEntry(
 			AtomCrudWidgetModel<E> model,
 			AtomQueryService<E, F, Q> service,
 			Q query,
@@ -161,10 +165,12 @@ public abstract class AtomCrudWidgetController
 	) {
 
 		model.setStatus(AtomCrudWidgetModel.STATUS_RETRIEVE_PENDING);
+		model.setEntryId(entryId);
 		query.setId(entryId);
 		Deferred<E> deferredEntry = service.queryOne(query);
 		deferredEntry.addCallback(callback);
 		deferredEntry.addErrback(errback);
+		return deferredEntry;
 
 	}
 
@@ -178,7 +184,7 @@ public abstract class AtomCrudWidgetController
 	/**
 	 * @param entry
 	 */
-	public void updateEntry(E entry) {
+	public Deferred<E> updateEntry(E entry) {
 		log.enter("updateEntry");
 		
 		AtomService<E, F> service = this.createAtomService();
@@ -186,15 +192,16 @@ public abstract class AtomCrudWidgetController
 		Function<Throwable, Throwable> errback = new AsyncErrback(this.owner, this.model);
 		String entryUrl = entry.getEditLink().getHref();
 		
-		updateEntry(this.model, service, entryUrl, entry, callback, errback);
+		Deferred<E> deferredEntry = updateEntry(this.model, service, entryUrl, entry, callback, errback);
 		
 		log.leave();
+		return deferredEntry;
 	}
 	
 	
 	
 	
-	protected static <E extends AtomEntry, F extends AtomFeed<E>> void updateEntry(
+	protected static <E extends AtomEntry, F extends AtomFeed<E>> Deferred<E> updateEntry(
 			AtomCrudWidgetModel<E> model,
 			AtomService<E, F> service,
 			String entryUrl,
@@ -207,7 +214,7 @@ public abstract class AtomCrudWidgetController
 		Deferred<E> deferredEntry = service.putEntry(entryUrl, entry);
 		deferredEntry.addCallback(callback);
 		deferredEntry.addErrback(errback);
-		
+		return deferredEntry;
 	}
 
 

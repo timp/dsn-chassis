@@ -16,7 +16,6 @@ import org.cggh.chassis.generic.log.client.LogFactory;
  *
  */
 public class EditDataFileWidget 
-//	extends DelegatingWidget<EditDataFileWidgetModel, EditDataFileWidgetRenderer> 
 	extends AtomCrudWidget<DataFileEntry, DataFileFeed, DataFileQuery, AtomCrudWidgetModel<DataFileEntry>, EditDataFileWidgetRenderer, EditDataFileWidgetController>
 {
 	
@@ -106,21 +105,6 @@ public class EditDataFileWidget
 		controller.retrieveEntry(entry.getEditLink().getHref());
 		
 	}
-
-
-
-
-//	/**
-//	 * @param entry
-//	 */
-//	public void setEntry(DataFileEntry entry) {
-//		log.enter("setEntry");
-//		
-//		this.model.setEntry(entry);
-//		// shouldn't have to do anything else
-//		
-//		log.leave();
-//	}
 
 
 

@@ -28,7 +28,6 @@ import com.google.gwt.user.client.ui.HTML;
  *
  */
 public class EditDataFileWidgetRenderer 
-//	extends AsyncWidgetRenderer<EditDataFileWidgetModel> 
 	extends AsyncWidgetRenderer<AtomCrudWidgetModel<DataFileEntry>>
 {
 

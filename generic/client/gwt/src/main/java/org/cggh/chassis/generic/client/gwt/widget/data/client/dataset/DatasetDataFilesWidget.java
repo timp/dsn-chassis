@@ -9,8 +9,6 @@ import java.util.List;
 import org.cggh.chassis.generic.atomext.client.datafile.DataFileEntry;
 import org.cggh.chassis.generic.atomext.client.dataset.DataFileLink;
 import org.cggh.chassis.generic.atomext.client.dataset.DatasetEntry;
-import org.cggh.chassis.generic.atomext.client.dataset.StudyLink;
-import org.cggh.chassis.generic.atomext.client.study.StudyEntry;
 import org.cggh.chassis.generic.client.gwt.common.client.RenderUtils;
 import org.cggh.chassis.generic.widget.client.ChassisWidget;
 

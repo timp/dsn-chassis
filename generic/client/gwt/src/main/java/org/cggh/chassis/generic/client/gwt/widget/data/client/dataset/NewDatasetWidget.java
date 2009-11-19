@@ -8,20 +8,14 @@ import org.cggh.chassis.generic.atomext.client.dataset.DatasetFeed;
 import org.cggh.chassis.generic.atomext.client.dataset.DatasetQuery;
 import org.cggh.chassis.generic.atomui.client.AtomCrudWidget;
 import org.cggh.chassis.generic.atomui.client.AtomCrudWidgetModel;
-import org.cggh.chassis.generic.atomui.client.CreateSuccessHandler;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
-import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
-import org.cggh.chassis.generic.widget.client.DelegatingWidget;
-
-import com.google.gwt.event.shared.HandlerRegistration;
 
 /**
  * @author aliman
  *
  */
 public class NewDatasetWidget 
-//	extends DelegatingWidget<AsyncWidgetModel, NewDatasetWidgetRenderer> 
 	extends AtomCrudWidget<DatasetEntry, DatasetFeed, DatasetQuery, AtomCrudWidgetModel<DatasetEntry>, NewDatasetWidgetRenderer, NewDatasetWidgetController>
 
 {

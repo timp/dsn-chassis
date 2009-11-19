@@ -48,7 +48,11 @@ public abstract class DatasetCrudWidgetController extends
 	 */
 	@Override
 	public AtomService<DatasetEntry, DatasetFeed> createAtomService() {
-		return new DatasetPersistenceService(Configuration.getDatasetCollectionUrl());
+		
+		// use collection url as base url
+		String baseUrl = Configuration.getDatasetCollectionUrl();
+		
+		return new DatasetPersistenceService(baseUrl);
 	}
 
 

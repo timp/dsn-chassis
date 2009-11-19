@@ -4,6 +4,9 @@
 package org.cggh.chassis.generic.client.gwt.widget.data.client.dataset;
 
 import org.cggh.chassis.generic.atomext.client.dataset.DatasetEntry;
+import org.cggh.chassis.generic.atomui.client.AtomCrudWidgetModel;
+import org.cggh.chassis.generic.atomui.client.AtomEntryChangeEvent;
+import org.cggh.chassis.generic.atomui.client.AtomEntryChangeHandler;
 import org.cggh.chassis.generic.client.gwt.common.client.CommonStyles;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
@@ -19,7 +22,7 @@ import com.google.gwt.user.client.ui.Panel;
  *
  */
 public class ViewDatasetWidgetRenderer 
-	extends AsyncWidgetRenderer<ViewDatasetWidgetModel> {
+	extends AsyncWidgetRenderer<AtomCrudWidgetModel<DatasetEntry>> {
 	
 	
 	
@@ -107,12 +110,12 @@ public class ViewDatasetWidgetRenderer
 		
 		super.registerHandlersForModelChanges();
 
-		HandlerRegistration b = this.model.addDatasetEntryChangeHandler(new DatasetEntryChangeHandler() {
+		HandlerRegistration b = this.model.addEntryChangeHandler(new AtomEntryChangeHandler<DatasetEntry>() {
 			
-			public void onChange(DatasetEntryChangeEvent e) {
-				log.enter("onDataFileEntryChanged");
+			public void onEntryChanged(AtomEntryChangeEvent<DatasetEntry> e) {
+				log.enter("onEntryChanged");
 				
-				updateInfo(e.getAfter());
+				syncEntryUI(e.getAfter());
 				
 				log.leave();
 			}
@@ -168,7 +171,7 @@ public class ViewDatasetWidgetRenderer
 
 			log.debug("sync properties");
 			DatasetEntry entry = this.model.getEntry();
-			this.updateInfo(entry);
+			this.syncEntryUI(entry);
 
 		}
 		else {
@@ -189,7 +192,7 @@ public class ViewDatasetWidgetRenderer
 	/**
 	 * @param entry
 	 */
-	private void updateInfo(DatasetEntry entry) {
+	private void syncEntryUI(DatasetEntry entry) {
 		log.enter("updateInfo");
 		
 		if (entry != null) {
