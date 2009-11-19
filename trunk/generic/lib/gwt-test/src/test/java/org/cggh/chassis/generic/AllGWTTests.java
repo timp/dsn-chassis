@@ -18,6 +18,7 @@ public class AllGWTTests {
 
 		suite.addTest(org.cggh.chassis.generic.async.AllGWTTests.suite());
 		suite.addTest(org.cggh.chassis.generic.atom.AllGWTTests.suite());
+		suite.addTest(org.cggh.chassis.generic.atomui.AllGWTTests.suite());
 		suite.addTest(org.cggh.chassis.generic.xml.AllGWTTests.suite());
 		suite.addTest(org.cggh.chassis.generic.xquestion.AllGWTTests.suite());
 		
