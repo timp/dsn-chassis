@@ -24,7 +24,6 @@ public class AllJavaTests {
 		TestSuite suite = new TestSuite("org.cggh.chassis.generic.atom.Atom - All Plain Java Tests");
 		//$JUnit-BEGIN$
 		
-		// module org.cggh.chassis.generic.twisted.Twisted
 		suite.addTestSuite(org.cggh.chassis.generic.atom.client.TestCallbackWithNoContent.class);
 		suite.addTestSuite(org.cggh.chassis.generic.atom.client.TestGetEntryCallback.class);
 		suite.addTestSuite(org.cggh.chassis.generic.atom.client.TestGetFeedCallback.class);

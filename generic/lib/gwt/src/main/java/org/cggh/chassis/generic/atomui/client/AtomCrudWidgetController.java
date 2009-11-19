@@ -13,7 +13,6 @@ import org.cggh.chassis.generic.atom.client.AtomService;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.AsyncErrback;
-import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 
 import com.google.gwt.user.client.ui.Widget;
 
@@ -27,9 +26,9 @@ public abstract class AtomCrudWidgetController
 	
 	
 	
-	private AtomCrudWidgetModel<E> model;
+	AtomCrudWidgetModel<E> model;
 	private static Log log = LogFactory.getLog(AtomCrudWidgetController.class);
-	private Widget owner;
+	Widget owner;
 	protected String collectionUrl;
 	
 	
@@ -69,7 +68,7 @@ public abstract class AtomCrudWidgetController
 		log.enter("createEntry");
 		
 		AtomService<E, F> service = this.createAtomService();
-		Function<E, E> callback = new CreateEntryCallback();
+		Function<E, E> callback = new CreateEntryCallback<E>(this.owner, this.model);
 		Function<Throwable, Throwable> errback = new AsyncErrback(this.owner, this.model);
 		
 		createEntry(entry, this.model, service, this.collectionUrl, callback, errback);
@@ -100,37 +99,11 @@ public abstract class AtomCrudWidgetController
 	
 	
 	
-	public class CreateEntryCallback implements Function<E, E> {
-		private Log log = LogFactory.getLog(CreateEntryCallback.class);
-
-		/* (non-Javadoc)
-		 * @see org.cggh.chassis.generic.async.client.Function#apply(java.lang.Object)
-		 */
-		public E apply(E in) {
-			log.enter("apply");
-
-			model.setEntry(in);
-			
-			model.setStatus(AsyncWidgetModel.STATUS_READY);
-			
-			CreateSuccessEvent<E> e = new CreateSuccessEvent<E>();
-			e.setEntry(in);
-			owner.fireEvent(e);
-
-			log.leave();
-			return in;
-		}
-
-	}
-
-
-	
-	
 	public void retrieveEntry(String entryUrl) {
 		log.enter("retrieveEntry");
 				
 		AtomService<E, F> service = this.createAtomService();
-		Function<E, E> callback = new RetrieveEntryCallback();
+		Function<E, E> callback = new RetrieveEntryCallback<E>(this.owner, this.model);
 		Function<Throwable, Throwable> errback = new AsyncErrback(this.owner, this.model);
 		
 		retrieveEntry(this.model, service, entryUrl, callback, errback);
@@ -166,7 +139,7 @@ public abstract class AtomCrudWidgetController
 		
 		AtomQueryService<E, F, Q> service = this.createQueryService();
 		Q query = this.createQuery();
-		Function<E, E> callback = new RetrieveEntryCallback();
+		Function<E, E> callback = new RetrieveEntryCallback<E>(this.owner, this.model);
 		Function<Throwable, Throwable> errback = new AsyncErrback(this.owner, this.model);
 		
 		retrieveExpandedEntry(this.model, service, query, entryId, callback, errback);
@@ -202,32 +175,6 @@ public abstract class AtomCrudWidgetController
 	
 	
 	
-	public class RetrieveEntryCallback implements Function<E, E> {
-		private Log log = LogFactory.getLog(RetrieveEntryCallback.class);
-
-		/* (non-Javadoc)
-		 * @see org.cggh.chassis.generic.async.client.Function#apply(java.lang.Object)
-		 */
-		public E apply(E in) {
-			log.enter("apply");
-
-			model.setEntry(in);
-			
-			model.setStatus(AsyncWidgetModel.STATUS_READY);
-			
-			RetrieveSuccessEvent<E> e = new RetrieveSuccessEvent<E>();
-			e.setEntry(in);
-			owner.fireEvent(e);
-
-			log.leave();
-			return in;
-		}
-
-	}
-
-
-
-
 	/**
 	 * @param entry
 	 */
@@ -235,7 +182,7 @@ public abstract class AtomCrudWidgetController
 		log.enter("updateEntry");
 		
 		AtomService<E, F> service = this.createAtomService();
-		Function<E, E> callback = new UpdateEntryCallback();
+		Function<E, E> callback = new UpdateEntryCallback<E>(this.owner, this.model);
 		Function<Throwable, Throwable> errback = new AsyncErrback(this.owner, this.model);
 		String entryUrl = entry.getEditLink().getHref();
 		
@@ -261,32 +208,6 @@ public abstract class AtomCrudWidgetController
 		deferredEntry.addCallback(callback);
 		deferredEntry.addErrback(errback);
 		
-	}
-
-
-	
-	
-	public class UpdateEntryCallback implements Function<E, E> {
-		private Log log = LogFactory.getLog(UpdateEntryCallback.class);
-
-		/* (non-Javadoc)
-		 * @see org.cggh.chassis.generic.async.client.Function#apply(java.lang.Object)
-		 */
-		public E apply(E in) {
-			log.enter("apply");
-
-			model.setEntry(in);
-			
-			model.setStatus(AsyncWidgetModel.STATUS_READY);
-			
-			UpdateSuccessEvent<E> e = new UpdateSuccessEvent<E>();
-			e.setEntry(in);
-			owner.fireEvent(e);
-
-			log.leave();
-			return in;
-		}
-
 	}
 
 
