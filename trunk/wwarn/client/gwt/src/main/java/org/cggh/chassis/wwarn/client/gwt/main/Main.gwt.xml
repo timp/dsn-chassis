@@ -33,16 +33,13 @@
   <!-- for production -->
 <!--  <inherits name="com.allen_sauer.gwt.log.gwt-log-OFF" />-->
 
-   <!-- Loggers Enabled by default -->
-  <set-property name="log_ConsoleLogger" value="ENABLED" />
-  <set-property name="log_DivLogger" value="ENABLED" />
-  <set-property name="log_FirebugLogger" value="ENABLED" />
-  <set-property name="log_GWTLogger" value="ENABLED" />
-  <set-property name="log_SystemLogger" value="ENABLED" />
-  
-  <!-- Loggers Disabled by default -->
-  <set-property name="log_RemoteLogger" value="DISABLED" />
-  <set-property name="log_WindowLogger" value="DISABLED" />
+    <set-property name="log_GWTLogger" value="ENABLED" />
+    <set-property name="log_SystemLogger" value="ENABLED" />
+    <set-property name="log_ConsoleLogger" value="DISABLED" />
+    <set-property name="log_DivLogger" value="DISABLED" />
+    <set-property name="log_FirebugLogger" value="DISABLED" />
+    <set-property name="log_RemoteLogger" value="DISABLED" />
+    <set-property name="log_WindowLogger" value="DISABLED" />
   
   
   

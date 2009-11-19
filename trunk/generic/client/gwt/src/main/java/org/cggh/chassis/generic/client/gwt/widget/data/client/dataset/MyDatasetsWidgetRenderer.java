@@ -142,7 +142,7 @@ public class MyDatasetsWidgetRenderer
 				
 			}
 			
-			FlexTable table = RenderUtils.renderFlexTable(rows);
+			FlexTable table = RenderUtils.renderResultsTable(rows);
 			this.resultsTableContainer.add(table);
 			
 		}

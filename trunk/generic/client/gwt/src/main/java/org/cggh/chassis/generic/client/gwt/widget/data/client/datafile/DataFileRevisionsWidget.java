@@ -18,6 +18,7 @@ import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.ChassisWidget;
 
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -42,12 +43,12 @@ public class DataFileRevisionsWidget extends ChassisWidget {
 	
 	// UI variables
 	private Widget[] headerRow = { 
-		new HTML("<strong>Revision</strong>"),
-		new HTML("<strong>Date</strong>"),
-		new HTML("<strong>Uploaded By</strong>"),
-		new HTML("<strong>Original File Name</strong>"),
-		new HTML("<strong>Summary</strong>"),
-		new HTML("<strong>Actions</strong>")
+		new Label("Revision"),
+		new Label("Date"),
+		new Label("Uploaded By"),
+		new Label("Original File Name"),
+		new Label("Summary"),
+		new Label("Actions")
 	};
 	
 	
@@ -119,6 +120,8 @@ public class DataFileRevisionsWidget extends ChassisWidget {
 		this.clear();
 
 		List<Widget[]> rows = new ArrayList<Widget[]>();
+
+		rows.add(this.headerRow);
 		
 		if (this.entry != null) {
 			
@@ -142,9 +145,8 @@ public class DataFileRevisionsWidget extends ChassisWidget {
 
 		}
 		
-		rows.add(0, this.headerRow);
 		
-		this.add(RenderUtils.renderFlexTable(rows));
+		this.add(RenderUtils.renderResultsTable(rows));
 
 		log.leave();
 	}
@@ -160,11 +162,11 @@ public class DataFileRevisionsWidget extends ChassisWidget {
 		log.enter("renderRow");
 		
 		Widget[] row = { 
-			new HTML("<strong>"+Integer.toString(index+1)+"</strong>"),
-			new HTML(entry.getPublished()),
-			new HTML(RenderUtils.renderAtomAuthorsAsCommaDelimitedEmailString(entry.getAuthors())),
-			new HTML(entry.getTitle()),
-			new HTML(RenderUtils.truncate(entry.getSummary(), 20)),
+			new Label(Integer.toString(index+1)),
+			new Label(entry.getPublished()),
+			new Label(RenderUtils.renderAtomAuthorsAsCommaDelimitedEmailString(entry.getAuthors())),
+			new Label(entry.getTitle()),
+			new Label(RenderUtils.truncate(entry.getSummary(), 20)),
 			new HTML("<a href='"+Configuration.getMediaCollectionUrl() + "/" + entry.getEditMediaLink().getHref() + "'>download</a>")
 		};
 		

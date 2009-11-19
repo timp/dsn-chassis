@@ -86,7 +86,8 @@ public class ViewDataFileWidgetRenderer
 		this.dataFilePropertiesWidget = new DataFilePropertiesWidget();
 		contentPanel.add(this.dataFilePropertiesWidget);
 		
-		contentPanel.add(new HTML("<h3>Revisions</h3>"));
+		contentPanel.add(new HTML("<h3>Revisions</h3>")); // TODO i18n
+		contentPanel.add(new HTML("<p>This data file has the following revisions...</p>")); // TODO i18n
 		
 		this.revisionsWidget = new DataFileRevisionsWidget();
 		contentPanel.add(this.revisionsWidget);

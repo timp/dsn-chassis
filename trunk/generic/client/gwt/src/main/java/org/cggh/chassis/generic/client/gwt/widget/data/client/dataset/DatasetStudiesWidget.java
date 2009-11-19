@@ -100,7 +100,7 @@ public class DatasetStudiesWidget extends ChassisWidget {
 		
 		rows.add(0, this.headerRow);
 		
-		this.add(RenderUtils.renderFlexTable(rows));
+		this.add(RenderUtils.renderResultsTable(rows));
 	}
 
 	

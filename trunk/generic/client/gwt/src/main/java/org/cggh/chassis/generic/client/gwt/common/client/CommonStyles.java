@@ -81,6 +81,13 @@ public class CommonStyles {
 	public static final String VIEWSUBMISSIONDATAFILES_FILESUMMARY = VIEWSUBMISSIONDATAFILES_BASE + "-fileSummary";
 	public static final String VIEWSUBMISSIONDATAFILES_DOWNLOADLINK = VIEWSUBMISSIONDATAFILES_BASE + "-downloadLink";
 
+	public static final String RESULTSTABLE = "chassis-resultsTable";
+	public static final String RESULTSTABLE_FIRSTROW = "chassis-resultsTable-firstRow";
+	public static final String RESULTSTABLE_FIRSTCOL = "chassis-resultsTable-firstCol";
+	public static final String RESULTSTABLE_EVEN = "chassis-resultsTable-even";
+	public static final String RESULTSTABLE_ODD = "chassis-resultsTable-odd";
+	public static final String RESULTSTABLE_CELL = "chassis-resultsTable-cell";
+
 
 
 

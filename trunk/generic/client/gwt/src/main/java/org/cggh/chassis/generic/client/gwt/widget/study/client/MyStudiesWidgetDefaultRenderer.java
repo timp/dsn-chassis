@@ -3,6 +3,7 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.study.client;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,7 @@ import java.util.Map;
 import org.cggh.chassis.generic.atom.client.AtomAuthor;
 import org.cggh.chassis.generic.atomext.client.study.StudyEntry;
 import org.cggh.chassis.generic.client.gwt.common.client.CommonStyles;
+import org.cggh.chassis.generic.client.gwt.common.client.RenderUtils;
 import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
@@ -24,6 +26,7 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.SimplePanel;
+import com.google.gwt.user.client.ui.Widget;
 
 /**
  * @author raok
@@ -165,79 +168,49 @@ public class MyStudiesWidgetDefaultRenderer implements MyStudiesWidgetRenderer {
 		studiesListPanel.clear();
 		
 		log.debug("create table to list studies in");
-
-		FlexTable studiesTable = new FlexTable();
-		studiesTable.setCellPadding(0);
-		studiesTable.setCellSpacing(0);
-		studiesTable.addStyleName(CommonStyles.VIEWSTUDIES_STUDIESTABLE);
-		int rowNo = 0;		
 		
-		log.debug("add header row");
+		List<Widget[]> rows = new ArrayList<Widget[]>();
 
-//		String[] headers = { "Title", "Summary", "Modules", "Owners", "Created", "Updated", "Actions" };
-		String[] headers = { "Title", "Summary", "Modules", "Owners", "Actions" };
-		
-		for (int i=0; i<headers.length; i++) {
-			Label headerLabel = new Label(headers[i]);
-			headerLabel.addStyleName(CommonStyles.VIEWSTUDIES_TABLEHEADER);
-			studiesTable.setWidget(rowNo, i, headerLabel);
-		}
+		Widget[] headerRow = { 
+				new Label("Title"),
+				new Label("Summary"),
+				new Label("Modules"),
+				new Label("Owners"),
+				new Label("Actions")
+		};
+
+		rows.add(headerRow);
 		
 		log.debug("add studies");
 		
 		for (StudyEntry studyEntry : after) {
 
 			String title = studyEntry.getTitle();
-			
-			String summary = studyEntry.getSummary();
-			int cutoff = 100;
-			if (summary.length() > cutoff) {
-				log.debug("truncate long summary");
-				summary = summary.substring(0, cutoff) + "...";
-			}
-			
-			List<String> modules = studyEntry.getStudy().getModules();
-			Map<String,String> moduleLabels = Configuration.getModules();
-			String modulesContent = "";
-			for (Iterator<String> it = modules.iterator(); it.hasNext(); ) {
-				String ml = moduleLabels.get(it.next());
-				modulesContent += ml;
-				if (it.hasNext()) {
-					modulesContent += ", ";
-				}
-			}
-			
-//			String created = studyEntry.getPublished();
-//			String updated = studyEntry.getUpdated();
-			
-			Label studyTitleLabel = new Label(title);
-			studyTitleLabel.addStyleName(CommonStyles.VIEWSTUDIES_STUDYTITLE);
-			studiesTable.setWidget(++rowNo, 0, studyTitleLabel);
-			
-			studiesTable.setWidget(rowNo, 1, new Label(summary));
-			studiesTable.setWidget(rowNo, 2, new Label(modulesContent));
-			
-			String authorsContent = "";
-			for (Iterator<AtomAuthor> it = studyEntry.getAuthors().iterator(); it.hasNext(); ) {
-				authorsContent += it.next().getEmail();
-				if (it.hasNext()) {
-					authorsContent += ", ";
-				}
-			}
-			
-			studiesTable.setWidget(rowNo, 3, new Label(authorsContent));
-
-//			studiesTable.setWidget(rowNo, 4, new Label(created));
-//			studiesTable.setWidget(rowNo, 5, new Label(updated));
+			String summary = RenderUtils.truncate(studyEntry.getSummary(), 100);
+			String modules = RenderUtils.renderModulesAsCommaDelimitedString(studyEntry.getStudy().getModules(), Configuration.getModules());
+			String authors = RenderUtils.renderAtomAuthorsAsCommaDelimitedEmailString(studyEntry.getAuthors());
 			
 			log.debug("add a select study link");
 			Anchor selectStudy = new Anchor();
 			selectStudy.setText(selectStudyLinkText);
 			selectStudy.addStyleName(CommonStyles.COMMON_ACTION);
 			selectStudy.addClickHandler(new SelectStudyClickHandler(studyEntry));
-			studiesTable.setWidget(rowNo, 4, selectStudy);
+			FlowPanel actionsPanel = new FlowPanel();
+			actionsPanel.add(selectStudy);
+			
+			Widget[] row = {
+				new Label(title),
+				new Label(summary),
+				new Label(modules),
+				new Label(authors),
+				actionsPanel
+			};
+			
+			rows.add(row);
 						
 		}
+		
+		FlexTable studiesTable = RenderUtils.renderResultsTable(rows);
 		
 		studiesListPanel.add(studiesTable);
 		
