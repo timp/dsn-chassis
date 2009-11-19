@@ -6,7 +6,6 @@ package org.cggh.chassis.generic.client.gwt.widget.data.client.datafile;
 import org.cggh.chassis.generic.atomext.client.datafile.DataFileEntry;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
-import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 import org.cggh.chassis.generic.widget.client.DelegatingWidget;
 
 import com.google.gwt.event.shared.HandlerRegistration;

@@ -16,7 +16,6 @@ import org.cggh.chassis.generic.log.client.LogFactory;
  *
  */
 public class EditDatasetWidget 
-//	extends DelegatingWidget<EditDatasetWidgetModel, EditDatasetWidgetRenderer> 
 	extends AtomCrudWidget<DatasetEntry, DatasetFeed, DatasetQuery, AtomCrudWidgetModel<DatasetEntry>, EditDatasetWidgetRenderer, EditDatasetWidgetController>
 
 

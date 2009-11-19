@@ -180,7 +180,7 @@ public class RenderUtils {
 	 * @return the string truncated if too long, otherwise the string unchanged
 	 */
 	public static String truncate(String in, int cutoff) {
-		if (in.length() > cutoff) {
+		if (in != null && in.length() > cutoff) {
 			in = in.substring(0, cutoff) + "...";
 		}
 		return in;

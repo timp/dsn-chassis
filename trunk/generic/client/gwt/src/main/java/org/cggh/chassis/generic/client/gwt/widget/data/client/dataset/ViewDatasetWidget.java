@@ -4,12 +4,14 @@
 package org.cggh.chassis.generic.client.gwt.widget.data.client.dataset;
 
 import org.cggh.chassis.generic.async.client.Deferred;
-import org.cggh.chassis.generic.async.client.Function;
 import org.cggh.chassis.generic.atomext.client.dataset.DatasetEntry;
+import org.cggh.chassis.generic.atomext.client.dataset.DatasetFeed;
+import org.cggh.chassis.generic.atomext.client.dataset.DatasetQuery;
+import org.cggh.chassis.generic.atomui.client.AtomCrudWidget;
+import org.cggh.chassis.generic.atomui.client.AtomCrudWidgetMemory;
+import org.cggh.chassis.generic.atomui.client.AtomCrudWidgetModel;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
-import org.cggh.chassis.generic.widget.client.DelegatingWidget;
-import org.cggh.chassis.generic.widget.client.WidgetMemory;
 
 import com.google.gwt.event.shared.HandlerRegistration;
 
@@ -18,9 +20,16 @@ import com.google.gwt.event.shared.HandlerRegistration;
  *
  */
 public class ViewDatasetWidget 
-	extends DelegatingWidget<ViewDatasetWidgetModel, ViewDatasetWidgetRenderer> {
+	extends AtomCrudWidget<DatasetEntry, DatasetFeed, DatasetQuery, AtomCrudWidgetModel<DatasetEntry>, ViewDatasetWidgetRenderer, ViewDatasetWidgetController>
+
+
+{
+
+	
+	
+	
+	
 	private Log log = LogFactory.getLog(ViewDatasetWidget.class);
-	private ViewDatasetWidgetController controller;
 
 
 	
@@ -31,8 +40,8 @@ public class ViewDatasetWidget
 	 * @see org.cggh.chassis.generic.widget.client.DelegatingWidget#createModel()
 	 */
 	@Override
-	protected ViewDatasetWidgetModel createModel() {
-		return new ViewDatasetWidgetModel();
+	protected AtomCrudWidgetModel<DatasetEntry> createModel() {
+		return new AtomCrudWidgetModel<DatasetEntry>();
 	}
 
 
@@ -50,6 +59,20 @@ public class ViewDatasetWidget
 	
 	
 	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.atomui.client.AtomCrudWidget#createController()
+	 */
+	@Override
+	protected ViewDatasetWidgetController createController() {
+		return new ViewDatasetWidgetController(this, this.model);
+	}
+
+
+
+	
+
+	
+	
+	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#init()
 	 */
 	@Override
@@ -57,10 +80,9 @@ public class ViewDatasetWidget
 		ensureLog();
 		log.enter("init");
 
-		super.init(); // this will instantiate model and renderer
+		super.init(); // this will instantiate controller, model and renderer
 		
-		this.controller = new ViewDatasetWidgetController(this, this.model);
-		this.memory = new Memory();
+		this.memory = new AtomCrudWidgetMemory<DatasetEntry, DatasetFeed>(this.model, this.controller);
 		
 		log.leave();
 	}
@@ -87,7 +109,7 @@ public class ViewDatasetWidget
 	public Deferred<DatasetEntry> viewEntry(String id) {
 
 		// delegate to controller
-		return this.controller.viewEntry(id);
+		return this.controller.retrieveExpandedEntry(id);
 		
 	}
 
@@ -99,61 +121,6 @@ public class ViewDatasetWidget
 	}
 
 
-
-
-	
-	
-	/**
-	 * @author aliman
-	 *
-	 */
-	public class Memory extends WidgetMemory {
-		private Log log = LogFactory.getLog(Memory.class);
-
-		/* (non-Javadoc)
-		 * @see org.cggh.chassis.generic.widget.client.WidgetMemory#createMnemonic()
-		 */
-		@Override
-		public String createMnemonic() {
-			log.enter("createMnemonic");
-
-			// use current entry id as mnemonic
-			String mnemonic = model.getCurrentEntryId();
-			
-			log.debug("mnemonic: "+mnemonic);
-
-			log.leave();
-			return mnemonic;
-		}
-		
-		/* (non-Javadoc)
-		 * @see org.cggh.chassis.generic.widget.client.WidgetMemory#remember(java.lang.String)
-		 */
-		@Override
-		public Deferred<WidgetMemory> remember(String mnemonic) {
-			log.enter("remember");
-
-			Deferred<DatasetEntry> deferredEntry = viewEntry(mnemonic);
-			
-			final WidgetMemory self = this;
-			
-			Deferred<WidgetMemory> deferredSelf = deferredEntry.adapt(new Function<DatasetEntry, WidgetMemory>() {
-
-				public WidgetMemory apply(DatasetEntry in) {
-					// when async operation is complete, return self
-					return self;
-				}
-			});
-			
-			// actually, async operation here doesn't have any impact on 
-			// memory child, so could callback with self immediately - 
-			// however, will leave as is for now
-			
-			log.leave();
-			return deferredSelf;
-		}
-
-	}
 
 
 }

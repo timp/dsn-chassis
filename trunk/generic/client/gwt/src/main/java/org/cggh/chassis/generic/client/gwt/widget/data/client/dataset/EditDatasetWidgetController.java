@@ -18,9 +18,6 @@ public class EditDatasetWidgetController
 
 	
 	
-	/**
-	 * @param model
-	 */
 	public EditDatasetWidgetController(
 			EditDatasetWidget owner, 
 			AtomCrudWidgetModel<DatasetEntry> model) {

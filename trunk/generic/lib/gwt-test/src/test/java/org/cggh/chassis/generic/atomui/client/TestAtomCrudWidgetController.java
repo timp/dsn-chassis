@@ -52,6 +52,7 @@ public class TestAtomCrudWidgetController extends TestCase {
 
 		assertTrue(model.getStatus() instanceof AsyncWidgetModel.InitialStatus);
 		assertNull(model.getEntry());
+		assertNull(model.getEntryId());
 		
 		// setup test variables
 				
@@ -95,6 +96,11 @@ public class TestAtomCrudWidgetController extends TestCase {
 				model.getEntry()
 		); 
 		
+		assertNull(
+				"entry id should be still null, won't be set at all",
+				model.getEntryId()
+		); 
+		
 		// verify expectations on mocks
 		verify(mockEntry);
 		verify(mockService); 
@@ -117,6 +123,7 @@ public class TestAtomCrudWidgetController extends TestCase {
 
 		assertTrue(model.getStatus() instanceof AsyncWidgetModel.InitialStatus);
 		assertNull(model.getEntry());
+		assertNull(model.getEntryId());
 		
 		// setup test variables
 				
@@ -158,6 +165,11 @@ public class TestAtomCrudWidgetController extends TestCase {
 				model.getEntry()
 		); 
 		
+		assertNull(
+				"entry id should be still null, won't be set at all",
+				model.getEntryId()
+		); 
+		
 		// verify expectations on mocks
 		verify(mockService); 
 		verify(mockDeferred); 
@@ -178,6 +190,7 @@ public class TestAtomCrudWidgetController extends TestCase {
 
 		assertTrue(model.getStatus() instanceof AsyncWidgetModel.InitialStatus);
 		assertNull(model.getEntry());
+		assertNull(model.getEntryId());
 		
 		// setup test variables
 				
@@ -221,6 +234,12 @@ public class TestAtomCrudWidgetController extends TestCase {
 				model.getEntry()
 		); 
 		
+		assertEquals(
+				"entry id should be set prior to callback, to support history",
+				entryId,
+				model.getEntryId()
+		); 
+		
 		// verify expectations on mocks
 		verify(mockQuery); 
 		verify(mockService); 
@@ -242,6 +261,7 @@ public class TestAtomCrudWidgetController extends TestCase {
 
 		assertTrue(model.getStatus() instanceof AsyncWidgetModel.InitialStatus);
 		assertNull(model.getEntry());
+		assertNull(model.getEntryId());
 		
 		// setup test variables
 				
@@ -283,6 +303,11 @@ public class TestAtomCrudWidgetController extends TestCase {
 		assertNull(
 				"entry should be still null, won't be set until callback",
 				model.getEntry()
+		); 
+		
+		assertNull(
+				"entry id should be still null, won't be set at all",
+				model.getEntryId()
 		); 
 		
 		// verify expectations on mocks

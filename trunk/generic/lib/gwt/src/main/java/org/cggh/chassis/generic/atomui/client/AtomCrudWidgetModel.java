@@ -20,6 +20,7 @@ public class AtomCrudWidgetModel
 	
 	
 	private E entry;
+	private String entryId;
 	
 	
 	
@@ -61,6 +62,27 @@ public class AtomCrudWidgetModel
 
 	public E getEntry() {
 		return this.entry;
+	}
+
+
+
+
+	/**
+	 * @param entryId the entryId to set
+	 */
+	public void setEntryId(String entryId) {
+		this.entryId = entryId;
+		// don't fire events, no-one is interested
+	}
+
+
+
+
+	/**
+	 * @return the entryId
+	 */
+	public String getEntryId() {
+		return entryId;
 	}
 
 
