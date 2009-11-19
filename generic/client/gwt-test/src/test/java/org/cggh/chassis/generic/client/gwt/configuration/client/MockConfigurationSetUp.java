@@ -12,7 +12,7 @@ import org.cggh.chassis.generic.atomext.shared.ChassisConstants;
  * @author raok
  *
  */
-public class TestConfigurationSetUp {
+public class MockConfigurationSetUp {
 	
 	//test data
 	public static final String testUserDetailsServiceEndpointURL = "http://foo.com/users";
