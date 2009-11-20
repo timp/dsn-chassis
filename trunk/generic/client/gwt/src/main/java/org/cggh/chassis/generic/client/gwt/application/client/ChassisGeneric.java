@@ -70,7 +70,7 @@ public class ChassisGeneric {
 			public UserDetailsTO apply(UserDetailsTO in) {
 				log.enter("anon callback function");
 				
-				if (token != null) {
+				if (token != null && !token.equals("")) {
 					log.debug("applying history token: "+token);
 					History.newItem(token);
 				}
