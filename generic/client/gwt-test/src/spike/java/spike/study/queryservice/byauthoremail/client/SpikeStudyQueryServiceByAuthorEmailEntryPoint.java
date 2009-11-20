@@ -11,6 +11,7 @@ import org.cggh.chassis.generic.atomext.client.study.StudyEntry;
 import org.cggh.chassis.generic.atomext.client.study.StudyFactory;
 import org.cggh.chassis.generic.atomext.client.study.StudyFeed;
 import org.cggh.chassis.generic.atomext.client.study.StudyPersistenceService;
+import org.cggh.chassis.generic.atomext.client.study.StudyQuery;
 import org.cggh.chassis.generic.atomext.client.study.StudyQueryService;
 import org.cggh.chassis.generic.client.gwt.configuration.client.JsConfiguration;
 import org.cggh.chassis.generic.log.client.Log;
@@ -227,7 +228,9 @@ public class SpikeStudyQueryServiceByAuthorEmailEntryPoint implements EntryPoint
 	private Deferred<StudyFeed> queryStudiesByAuthorEmail() {
 		log.enter("queryStudiesByAuthorEmail");
 		
-		Deferred<StudyFeed> deferredResults = studyQueryService.getStudiesByAuthorEmail("alice@example.com");
+		StudyQuery query = new StudyQuery();
+		query.setAuthorEmail("alice@example.org");
+		Deferred<StudyFeed> deferredResults = studyQueryService.query(query);
 
 		log.leave();
 		return deferredResults;
