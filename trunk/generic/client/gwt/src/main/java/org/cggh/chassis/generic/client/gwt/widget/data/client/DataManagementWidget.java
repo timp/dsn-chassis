@@ -126,6 +126,7 @@ public class DataManagementWidget
 		
 		Command newDatasetMenuCommand = new Command() {
 			public void execute() {	
+				newDatasetWidget.reset();
 				setActiveChild(newDatasetWidget); 
 				fireEvent(new MenuEvent());
 			}

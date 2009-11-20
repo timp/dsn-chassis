@@ -70,7 +70,7 @@ public abstract class ChassisWidgetRenderer<M> {
 	 * This method is responsible for creating and adding the child widgets of
 	 * this widget's content box.
 	 */
-	protected abstract void renderUI();
+	protected void renderUI() {}
 
 	
 	
@@ -107,7 +107,7 @@ public abstract class ChassisWidgetRenderer<M> {
 	/**
 	 * 
 	 */
-	protected abstract void registerHandlersForModelChanges();
+	protected void registerHandlersForModelChanges() {}
 
 
 
@@ -115,7 +115,7 @@ public abstract class ChassisWidgetRenderer<M> {
 	/**
 	 * 
 	 */
-	protected abstract void registerHandlersForChildWidgetEvents();
+	protected void registerHandlersForChildWidgetEvents() {}
 
 	
 
@@ -124,7 +124,7 @@ public abstract class ChassisWidgetRenderer<M> {
 	 * This method is responsible for setting the state of the UI based on the 
 	 * current state of the widget at the time of rendering.
 	 */
-	protected abstract void syncUI();
+	protected void syncUI() {}
 
 	
 	

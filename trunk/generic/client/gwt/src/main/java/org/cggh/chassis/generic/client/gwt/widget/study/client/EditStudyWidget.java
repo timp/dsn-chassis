@@ -3,75 +3,66 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.study.client;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.cggh.chassis.generic.atomext.client.study.StudyEntry;
+import org.cggh.chassis.generic.atomext.client.study.StudyFeed;
+import org.cggh.chassis.generic.atomext.client.study.StudyQuery;
+import org.cggh.chassis.generic.atomui.client.AtomCrudWidget;
+import org.cggh.chassis.generic.atomui.client.AtomCrudWidgetModel;
 
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.Panel;
 
 /**
  * @author raok
  *
  */
-public class EditStudyWidget extends Composite implements EditStudyWidgetAPI, StudyControllerPubSubEditAPI {
+public class EditStudyWidget 
+	extends AtomCrudWidget<StudyEntry, StudyFeed, StudyQuery, AtomCrudWidgetModel<StudyEntry>, EditStudyWidgetRenderer, EditStudyWidgetController>
+	
+{
 
-	private StudyModel model;
-	private StudyControllerEditAPI controller;
-	private EditStudyWidgetDefaultRenderer renderer;
-	
-	private Set<EditStudyWidgetPubSubAPI> listeners = new HashSet<EditStudyWidgetPubSubAPI>();
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.atomui.client.AtomCrudWidget#createController()
+	 */
+	@Override
+	protected EditStudyWidgetController createController() {
+		return new EditStudyWidgetController(this, model);
+	}
 
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.widget.client.DelegatingWidget#createModel()
+	 */
+	@Override
+	protected AtomCrudWidgetModel<StudyEntry> createModel() {
+		return new AtomCrudWidgetModel<StudyEntry>();
+	}
 
-	
-	
-	
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.widget.client.DelegatingWidget#createRenderer()
+	 */
+	@Override
+	protected EditStudyWidgetRenderer createRenderer() {
+		return new EditStudyWidgetRenderer(this);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#init()
+	 */
+	@Override
+	public void init() {
+
+		super.init(); // this will instantiate model, renderer and controller
+		
+		this.renderer.setController(this.controller);
+
+	}
+
 	/**
-	 * 
+	 * @param entry
 	 */
-	public EditStudyWidget() {
-		
-		model = new StudyModel();
-		
-		controller = new StudyController(model, this);
-		
-		renderer = new EditStudyWidgetDefaultRenderer(controller);
-		
-		// register renderer as listener to model
-		model.addListener(renderer);	
-		
-		this.initWidget(this.renderer.getCanvas());
-		
-	}
+	public void editEntry(StudyEntry entry) {
 
-	
-	
-	
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.client.gwt.widget.study.edit.client.EditStudyWidgetAPI#addEditStudyWidgetListener(org.cggh.chassis.generic.client.gwt.widget.study.edit.client.EditStudyWidgetPubSubAPI)
-	 */
-	public void addListener(EditStudyWidgetPubSubAPI listener) {
-		listeners.add(listener);
-	}
-
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.client.gwt.widget.study.edit.client.EditStudyWidgetAPI#editStudyEntry(org.cggh.chassis.generic.atom.study.client.format.StudyEntry)
-	 */
-	public void editStudyEntry(StudyEntry studyEntryToEdit) {
-		controller.loadStudyEntry(studyEntryToEdit);
-	}
-
-	public void onStudyUpdated(StudyEntry studyEntry) {
-		for (EditStudyWidgetPubSubAPI listener : listeners) {
-			listener.onStudyUpdateSuccess(studyEntry);
-		}
-	}
-
-	public void onUserActionEditStudyEntryCancelled() {
-		for (EditStudyWidgetPubSubAPI listener : listeners) {
-			listener.onUserActionEditStudyCancelled();
-		}
+		// make sure we do a plain retrieve before editing so we don't persist any expanded links
+		this.controller.retrieveEntry(entry.getEditLink().getHref());
+		
 	}
 	
 }

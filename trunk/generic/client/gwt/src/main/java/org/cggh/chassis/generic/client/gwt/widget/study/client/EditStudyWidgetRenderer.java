@@ -1,12 +1,12 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.client.gwt.widget.data.client.dataset;
+package org.cggh.chassis.generic.client.gwt.widget.study.client;
 
-import org.cggh.chassis.generic.atomext.client.dataset.DatasetEntry;
+import org.cggh.chassis.generic.atomext.client.study.StudyEntry;
 import org.cggh.chassis.generic.atomui.client.AtomCrudWidgetModel;
-import org.cggh.chassis.generic.log.client.Log;
-import org.cggh.chassis.generic.log.client.LogFactory;
+import org.cggh.chassis.generic.atomui.client.AtomEntryChangeEvent;
+import org.cggh.chassis.generic.atomui.client.AtomEntryChangeHandler;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetRenderer;
 import org.cggh.chassis.generic.widget.client.CancelEvent;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.ReadyStatus;
@@ -21,123 +21,125 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 
+
 /**
  * @author aliman
  *
  */
-public class NewDatasetWidgetRenderer 
-	extends AsyncWidgetRenderer<AtomCrudWidgetModel<DatasetEntry>> 
-
-{
-	
-	
-	
-	
-	private Log log = LogFactory.getLog(NewDatasetWidgetRenderer.class);
-	private DatasetForm form;
-	private FlowPanel buttonsPanel;
-	private Button createButton;
-	private Button cancelButton;
-	private NewDatasetWidgetController controller;
-	private NewDatasetWidget owner;
+public class EditStudyWidgetRenderer 
+	extends AsyncWidgetRenderer<AtomCrudWidgetModel<StudyEntry>> {
 
 	
 	
+	
+	private EditStudyWidget owner;
+	private EditStudyWidgetController controller;
 
+	
+	
+	
+	// UI fields
+	StudyForm form;
+	FlowPanel buttonsPanel;
+	Button saveButton, cancelButton;
+	
+	
+	
+	
 	/**
 	 * @param owner
 	 */
-	public NewDatasetWidgetRenderer(NewDatasetWidget owner) {
+	public EditStudyWidgetRenderer(EditStudyWidget owner) {
 		this.owner = owner;
 	}
-
-
-
+	
+	
+	
 
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.widget.client.AsyncWidgetRenderer#renderMainPanel()
 	 */
 	@Override
 	protected void renderMainPanel() {
-		log.enter("renderMainPanel");
-		
-		this.mainPanel.add(new HTML("<h2>New Dataset</h2>")); // TODO i18n
 
-		this.mainPanel.add(new HTML("<p>Use the form below to create a new dataset.</p>")); // TODO i18n
+		this.mainPanel.add(new HTML("<h2>Edit Study</h2>")); // TODO i18n
+		this.mainPanel.add(new HTML("<p>Use the form below to make changes to the study.</p>")); // TODO i18n
 		
-		this.form = new DatasetForm();
+		this.form = new StudyForm();
 		this.mainPanel.add(this.form);
 		
 		this.renderButtonsPanel();
 		this.mainPanel.add(this.buttonsPanel);
-
-		log.leave();
+		
 	}
+
 	
 	
-	
-	
+
 	/**
 	 * @return
 	 */
 	private void renderButtonsPanel() {
-		log.enter("renderButtonsPanel");
 		
 		this.buttonsPanel = new FlowPanel();
 		
-		this.createButton = new Button("Create Dataset"); // TODO i18n
+		this.saveButton = new Button("Save Changes"); // TODO i18n
 		this.cancelButton = new Button("Cancel"); // TODO i18n
 		
-		this.buttonsPanel.add(this.createButton);
+		this.buttonsPanel.add(this.saveButton);
 		this.buttonsPanel.add(this.cancelButton);
 		
-		log.leave();
 	}
 
-
-
-
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.widget.client.ChassisWidgetRenderer#registerHandlersForModelChanges()
+	
+	
+	
+	/**
+	 * 
 	 */
 	@Override
 	protected void registerHandlersForModelChanges() {
-		log.enter("registerHandlersForModelChanges");
-
+		
 		super.registerHandlersForModelChanges();
-
+		
 		HandlerRegistration a = this.model.addStatusChangeHandler(new StatusChangeHandler() {
 			
 			public void onStatusChanged(StatusChangeEvent e) {
-				log.enter("onStatusChanged");
 				
-				syncForm(e.getAfter());
+				updateForm(e.getAfter());
 				
-				log.leave();
 			}
 			
 		});
 		
+		HandlerRegistration b = this.model.addEntryChangeHandler(new AtomEntryChangeHandler<StudyEntry>() {
+			
+			public void onEntryChanged(AtomEntryChangeEvent<StudyEntry> e) {
+				
+				updateForm(e.getAfter());
+				
+			}
+		});
+		
 		this.modelChangeHandlerRegistrations.add(a);
-
-		log.leave();
+		this.modelChangeHandlerRegistrations.add(b);
+		
 	}
 
+
 	
-	
-	
+
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.widget.client.ChassisWidgetRenderer#registerHandlersForChildWidgetEvents()
 	 */
 	@Override
 	protected void registerHandlersForChildWidgetEvents() {
-		log.enter("registerHandlersForChildWidgetEvents");
 
-		HandlerRegistration a = this.createButton.addClickHandler(new ClickHandler() {
+		HandlerRegistration a = this.saveButton.addClickHandler(new ClickHandler() {
 			
 			public void onClick(ClickEvent arg0) {
 				
-				controller.createEntry(form.getModel());
+				controller.updateEntry(form.getModel());
 				
 			}
 		});
@@ -154,68 +156,77 @@ public class NewDatasetWidgetRenderer
 		this.childWidgetEventHandlerRegistrations.add(a);
 		this.childWidgetEventHandlerRegistrations.add(b);
 
-		log.leave();
 	}
 
+
+
 	
-	
-	
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.widget.client.ChassisWidgetRenderer#syncUI()
+	/**
+	 * 
 	 */
 	@Override
-	protected void syncUI() {
-		log.enter("syncUI");
-
+	public void syncUI() {
+		
 		super.syncUI();
 		
 		if (this.model != null) {
 
-			this.syncForm(this.model.getStatus());
+			this.updateForm(this.model.getStatus());
+			this.updateForm(this.model.getEntry());
 			
 		}
 		else {
 
 			// TODO could this method legitimately be called when model is null,
 			// or should we throw an error here if model is null?
-			log.warn("model is null, not updating anything");
 
 		}
-
-		log.leave();
+		
 	}
 
-
-
-
+	
+	
+	
+	
 	/**
 	 * @param after
 	 */
-	protected void syncForm(Status status) {
-		log.enter("updateForm");
+	protected void updateForm(Status status) {
 		
 		if (status instanceof ReadyStatus) {
 			
-			this.form.reset(); 
+//			this.form.reset(); 
 
 		}
 
-		log.leave();
 	}
+
 
 
 
 
 	/**
+	 * @param entry
+	 */
+	protected void updateForm(StudyEntry entry) {
+		
+		this.form.setModel(entry);
+		
+	}
+
+	
+	
+	
+
+	
+	/**
 	 * @param controller
 	 */
-	public void setController(NewDatasetWidgetController controller) {
+	public void setController(EditStudyWidgetController controller) {
 		this.controller = controller;
 	}
 
-
-
-
-
-
+	
+	
+	
 }
