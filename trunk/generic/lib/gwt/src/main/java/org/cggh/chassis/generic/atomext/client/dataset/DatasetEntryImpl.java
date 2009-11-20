@@ -8,6 +8,8 @@ import java.util.List;
 
 import org.cggh.chassis.generic.atom.client.AtomEntryImpl;
 import org.cggh.chassis.generic.atom.client.AtomLink;
+import org.cggh.chassis.generic.atomext.client.datafile.DataFileLink;
+import org.cggh.chassis.generic.atomext.client.study.StudyLink;
 import org.cggh.chassis.generic.atomext.shared.Chassis;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;

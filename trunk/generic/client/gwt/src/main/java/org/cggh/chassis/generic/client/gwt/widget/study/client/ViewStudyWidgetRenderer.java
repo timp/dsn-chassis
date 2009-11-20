@@ -10,6 +10,8 @@ import org.cggh.chassis.generic.atomui.client.AtomCrudWidgetModel;
 import org.cggh.chassis.generic.atomui.client.AtomEntryChangeEvent;
 import org.cggh.chassis.generic.atomui.client.AtomEntryChangeHandler;
 import org.cggh.chassis.generic.client.gwt.common.client.CommonStyles;
+import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.DatasetActionEvent;
+import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.DatasetActionHandler;
 import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.DatasetStudiesWidget;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
@@ -156,9 +158,18 @@ public class ViewStudyWidgetRenderer
 		HandlerRegistration b = this.actionsPanel.addEditStudyQuestionnaireActionHandler(new BubbleStudyActionHandler());
 		HandlerRegistration c = this.actionsPanel.addViewStudyQuestionnaireActionHandler(new BubbleStudyActionHandler());
 		
+		HandlerRegistration d = this.datasetsWidget.addViewDatasetActionHandler(new DatasetActionHandler() {
+			
+			public void onAction(DatasetActionEvent e) {
+				// just bubble
+				owner.fireEvent(e);
+			}
+		});
+		
 		this.childWidgetEventHandlerRegistrations.add(a);
 		this.childWidgetEventHandlerRegistrations.add(b);
 		this.childWidgetEventHandlerRegistrations.add(c);
+		this.childWidgetEventHandlerRegistrations.add(d);
 
 		log.leave();
 

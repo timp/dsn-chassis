@@ -51,9 +51,19 @@ declare function my:expand-datafile( $entry as element() ) as element() {
 		$entry/atom:summary,
 		$entry/atom:category,
 		$entry/atom:author,
-		for $link in $entry/atom:link return my:expand-datafile-link($link)
+		for $link in $entry/atom:link return my:expand-datafile-link($link),
+		my:rev-dataset-links($entry)
 	}
 	</atom:entry>
+};
+
+declare function my:rev-dataset-links( $entry as element() ) as element()* {
+    let $href := $entry/atom:link[@rel="edit"]/@href
+    for $dataset in collection("/db/datasets")//atom:entry[atom:link[@rel="chassis.datafile" and @href=$href]]
+    return
+    <atom:link rel="chassis.dataset" href="{$dataset/atom:link[@rel='edit']/@href}">
+        { $dataset }
+    </atom:link>
 };
 
 

@@ -10,6 +10,8 @@ import org.cggh.chassis.generic.atomext.client.datafile.DataFileQuery;
 import org.cggh.chassis.generic.atomui.client.AtomCrudWidget;
 import org.cggh.chassis.generic.atomui.client.AtomCrudWidgetMemory;
 import org.cggh.chassis.generic.atomui.client.AtomCrudWidgetModel;
+import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.DatasetActionHandler;
+import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.ViewDatasetActionEvent;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 
@@ -123,6 +125,15 @@ public class ViewDataFileWidget
 	public HandlerRegistration addUploadRevisionActionHandler(DataFileActionHandler h) {
 		return this.addHandler(h, UploadDataFileRevisionActionEvent.TYPE);
 	}
+
+
+
+
+	public HandlerRegistration addViewDatasetActionHandler(DatasetActionHandler h) {
+		return this.addHandler(h, ViewDatasetActionEvent.TYPE);
+	}
+
+
 
 
 

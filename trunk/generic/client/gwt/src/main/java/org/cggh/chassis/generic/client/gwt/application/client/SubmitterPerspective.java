@@ -5,10 +5,15 @@ package org.cggh.chassis.generic.client.gwt.application.client;
 
 
 import org.cggh.chassis.generic.client.gwt.widget.data.client.DataManagementWidget;
+import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.DatasetActionEvent;
+import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.DatasetActionHandler;
+import org.cggh.chassis.generic.client.gwt.widget.study.client.StudyActionEvent;
+import org.cggh.chassis.generic.client.gwt.widget.study.client.StudyActionHandler;
 import org.cggh.chassis.generic.client.gwt.widget.study.client.StudyManagementWidget;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.MenuBar;
 
@@ -87,6 +92,33 @@ public class SubmitterPerspective
 
 
 
+	@Override
+	protected void registerHandlersForChildWidgetEvents() {
+		super.registerHandlersForChildWidgetEvents();
+	
+		HandlerRegistration a = this.studyManagementWidget.addViewDatasetActionHandler(new DatasetActionHandler() {
+			
+			public void onAction(DatasetActionEvent e) {
+				dataManagementWidget.viewDataset(e.getEntry().getId());
+				setActiveChild(dataManagementWidget);
+			}
+		});
 
+		HandlerRegistration b = this.dataManagementWidget.addViewStudyActionHandler(new StudyActionHandler() {
+			
+			public void onAction(StudyActionEvent e) {
+				studyManagementWidget.viewStudy(e.getEntry().getId());
+				setActiveChild(studyManagementWidget);
+			}
+		});
+		
+		this.childWidgetEventHandlerRegistrations.add(a);
+		this.childWidgetEventHandlerRegistrations.add(b);
+		
+	}
+
+	
+	
+	
 	
 }

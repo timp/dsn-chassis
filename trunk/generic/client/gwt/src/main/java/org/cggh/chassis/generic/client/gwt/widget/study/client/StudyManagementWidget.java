@@ -5,11 +5,15 @@ package org.cggh.chassis.generic.client.gwt.widget.study.client;
 
 import org.cggh.chassis.generic.atomext.client.study.StudyEntry;
 import org.cggh.chassis.generic.client.gwt.common.client.ChassisUser;
+import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.DatasetActionEvent;
+import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.DatasetActionHandler;
+import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.ViewDatasetActionEvent;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.MenuEvent;
 import org.cggh.chassis.generic.widget.client.MultiWidget;
 
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.ui.MenuItem;
@@ -123,8 +127,17 @@ public class StudyManagementWidget
 				setActiveChild(editStudyQuestionnaireWidget);
 				
 			}
+			
 		});
 		
+		this.viewStudyWidget.addViewDatasetActionHandler(new DatasetActionHandler() {
+			
+			public void onAction(DatasetActionEvent e) {
+				// just bubble
+				fireEvent(e);
+			}
+			
+		});
 		
 		// TODO rewrite below using gwt event pattern
 		
@@ -256,6 +269,26 @@ public class StudyManagementWidget
 
 
 
+
+	public HandlerRegistration addViewDatasetActionHandler(DatasetActionHandler h) {
+		return this.addHandler(h, ViewDatasetActionEvent.TYPE);
+	}
+
+
+
+
+
+	/**
+	 * @param id
+	 */
+	public void viewStudy(String id) {
+		log.enter("viewStudy");
+
+		this.viewStudyWidget.viewEntry(id);
+		this.setActiveChild(this.viewStudyWidget);
+		
+		log.leave();
+	}
 
 
 	

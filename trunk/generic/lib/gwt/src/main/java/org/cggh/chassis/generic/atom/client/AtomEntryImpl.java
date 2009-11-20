@@ -8,7 +8,7 @@ import java.util.List;
 
 import org.cggh.chassis.generic.async.client.Function;
 import org.cggh.chassis.generic.async.client.Functional;
-import org.cggh.chassis.generic.atomext.client.dataset.StudyLink;
+import org.cggh.chassis.generic.atomext.client.study.StudyLink;
 import org.cggh.chassis.generic.xml.client.ElementWrapperImpl;
 import org.cggh.chassis.generic.xml.client.XMLNS;
 

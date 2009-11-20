@@ -7,12 +7,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.cggh.chassis.generic.atomext.client.datafile.DataFileEntry;
-import org.cggh.chassis.generic.atomext.client.dataset.DataFileLink;
+import org.cggh.chassis.generic.atomext.client.datafile.DataFileLink;
 import org.cggh.chassis.generic.atomext.client.dataset.DatasetEntry;
 import org.cggh.chassis.generic.client.gwt.common.client.RenderUtils;
+import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.DataFileActionHandler;
+import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.ViewDataFileActionEvent;
 import org.cggh.chassis.generic.widget.client.ChassisWidget;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -110,18 +118,33 @@ public class DatasetDataFilesWidget extends ChassisWidget {
 	
 	
 
+	// TODO refactor with my datafiles widget renderer
 
 	/**
 	 * @param entry
 	 * @return
 	 */
-	private Widget[] renderRow(int index, DataFileEntry entry) {
+	private Widget[] renderRow(int index, final DataFileEntry entry) {
 		
+		Anchor viewAction = RenderUtils.renderActionAsAnchor("view", new ClickHandler() {
+			
+			public void onClick(ClickEvent arg0) {
+				
+				ViewDataFileActionEvent e = new ViewDataFileActionEvent();
+				e.setEntry(entry);
+				fireEvent(e);
+				
+			}
+		});
+		
+		FlowPanel actionsPanel = new FlowPanel();
+		actionsPanel.add(viewAction);
+
 		Widget[] row = { 
-			new HTML("<strong>"+entry.getTitle()+"</strong>"),
-			new HTML(RenderUtils.truncate(entry.getSummary(), 30)),
-			new HTML(RenderUtils.renderAtomAuthorsAsCommaDelimitedEmailString(entry.getAuthors())),
-			new HTML("TODO")
+			new Label(entry.getTitle()),
+			new Label(RenderUtils.truncate(entry.getSummary(), 30)),
+			new Label(RenderUtils.renderAtomAuthorsAsCommaDelimitedEmailString(entry.getAuthors())),
+			actionsPanel
 		};
 		
 		return row;
@@ -137,6 +160,19 @@ public class DatasetDataFilesWidget extends ChassisWidget {
 		this.entry = entry;
 		this.syncUI();
 	}
+	
+	
+	
+	
+	public HandlerRegistration addViewDataFileActionHandler(DataFileActionHandler h) {
+		return this.addHandler(h, ViewDataFileActionEvent.TYPE);
+	}
+
+
+
+
+
+
 
 
 }

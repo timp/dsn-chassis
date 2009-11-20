@@ -3,7 +3,7 @@
  */
 package org.cggh.chassis.generic.atom.client;
 
-import org.cggh.chassis.generic.atomext.client.dataset.StudyLink;
+import org.cggh.chassis.generic.atomext.client.study.StudyLink;
 import org.cggh.chassis.generic.xml.client.XMLNS;
 
 import com.google.gwt.xml.client.Element;

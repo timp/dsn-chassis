@@ -8,6 +8,11 @@ import org.cggh.chassis.generic.atomui.client.AtomCrudWidgetModel;
 import org.cggh.chassis.generic.atomui.client.AtomEntryChangeEvent;
 import org.cggh.chassis.generic.atomui.client.AtomEntryChangeHandler;
 import org.cggh.chassis.generic.client.gwt.common.client.CommonStyles;
+import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.DataFileActionEvent;
+import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.DataFileActionHandler;
+import org.cggh.chassis.generic.client.gwt.widget.study.client.StudyActionEvent;
+import org.cggh.chassis.generic.client.gwt.widget.study.client.StudyActionHandler;
+import org.cggh.chassis.generic.client.gwt.widget.study.client.ViewStudyActionEvent;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetRenderer;
@@ -157,7 +162,25 @@ public class ViewDatasetWidgetRenderer
 			}
 		});
 		
+		HandlerRegistration b = this.studiesWidget.addViewStudyActionHandler(new StudyActionHandler() {
+			
+			public void onAction(StudyActionEvent e) {
+				// just bubble
+				owner.fireEvent(e);
+			}
+		});
+		
+		HandlerRegistration c = this.dataFilesWidget.addViewDataFileActionHandler(new DataFileActionHandler() {
+			
+			public void onAction(DataFileActionEvent e) {
+				// just bubble
+				owner.fireEvent(e);
+			}
+		});
+		
 		this.childWidgetEventHandlerRegistrations.add(a);
+		this.childWidgetEventHandlerRegistrations.add(b);
+		this.childWidgetEventHandlerRegistrations.add(c);
 
 		log.leave();
 

@@ -1,14 +1,12 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.atomext.client.dataset;
+package org.cggh.chassis.generic.atomext.client.datafile;
 
 import java.util.List;
 
 import org.cggh.chassis.generic.atom.client.Atom;
 import org.cggh.chassis.generic.atom.client.AtomLinkImpl;
-import org.cggh.chassis.generic.atomext.client.datafile.DataFileEntry;
-import org.cggh.chassis.generic.atomext.client.datafile.DataFileFactory;
 import org.cggh.chassis.generic.xml.client.XMLNS;
 
 import com.google.gwt.xml.client.Element;
@@ -26,7 +24,7 @@ public class DataFileLinkImpl extends AtomLinkImpl implements DataFileLink {
 	/**
 	 * @param e
 	 */
-	protected DataFileLinkImpl(Element e) {
+	public DataFileLinkImpl(Element e) {
 		super(e);
 	}
 
