@@ -3,64 +3,80 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.study.client;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import org.cggh.chassis.generic.atomext.client.study.StudyFeed;
+import org.cggh.chassis.generic.log.client.Log;
+import org.cggh.chassis.generic.log.client.LogFactory;
+import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 
-import org.cggh.chassis.generic.atomext.client.study.StudyEntry;
+import com.google.gwt.event.shared.HandlerRegistration;
 
 
 /**
  * @author raok
  *
  */
-public class MyStudiesWidgetModel {
-
-	public static final Integer STATUS_INITIAL = 0;
-	public static final Integer STATUS_LOADING = 1;
-	public static final Integer STATUS_LOADED = 2;
-	public static final Integer STATUS_ERROR = 3;
+public class MyStudiesWidgetModel 
+	extends AsyncWidgetModel {
 	
-	private Integer status = STATUS_INITIAL;
-	private Set<MyStudiesWidgetModelListener> listeners = new HashSet<MyStudiesWidgetModelListener>();
-	private List<StudyEntry> studyEntries; 
+	
+	
+	// TODO consider refactoring with mydatafileswidgetmodel
+	
+	
+	
+	
+	private Log log = LogFactory.getLog(MyStudiesWidgetModel.class);
+	
+	
+	
+	
+	private StudyFeed feed;
 
-
-	public Integer getStatus() {
-		return status;
-	}
-
-
-	public void setStatus(Integer status) {
-		Integer before = this.status;
-		this.status = status;
-		fireOnStatusChanged(before, status);
+	
+	
+	
+	
+	@Override
+	public void init() {
+		ensureLog();
+		log.enter("init");
 		
+		super.init();
+		
+		this.feed = null;
+		
+		log.leave();
+	}
+	
+	
+	
+	
+	private void ensureLog() {
+		if (log == null) log = LogFactory.getLog(MyStudiesWidgetModel.class);
 	}
 
-	private void fireOnStatusChanged(Integer before, Integer after) {
-		for (MyStudiesWidgetModelListener listener : listeners) {
-			listener.onStatusChanged(before, after);
-		}
+
+	
+
+
+	public void setFeed(StudyFeed feed) {
+		StudyFeedChangeEvent e = new StudyFeedChangeEvent(this.feed, feed);
+		this.feed = feed;
+		this.fireChangeEvent(e);
 	}
 
-	public void addListener(MyStudiesWidgetModelListener listener) {
-		listeners.add(listener);
+
+
+
+	public StudyFeed getFeed() {
+		return feed;
 	}
 
-	public List<StudyEntry> getStudyEntries() {
-		return studyEntries;
+	
+	
+	
+	public HandlerRegistration addChangeHandler(StudyFeedChangeHandler h) {
+		return this.addChangeHandler(h, StudyFeedChangeEvent.TYPE);
 	}
 
-	public void setStudyEntries(List<StudyEntry> studyEntries) {
-		List<StudyEntry> before = this.studyEntries;
-		this.studyEntries = studyEntries;
-		fireOnStudyEntriesChanged(before, studyEntries);
-	}
-
-	private void fireOnStudyEntriesChanged(List<StudyEntry> before, List<StudyEntry> after) {
-		for (MyStudiesWidgetModelListener listener : listeners) {
-			listener.onStudyEntriesChanged(before, after);
-		}
-	}
 }
