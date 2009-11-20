@@ -75,12 +75,11 @@ public class DatasetFormRenderer
 		this.canvas.add(new HTML("<h3>Studies</h3>")); // TODO i18n
 		this.studiesQuestionPanel = new FlowPanel();
 		this.canvas.add(this.studiesQuestionPanel);
-//		this.renderStudiesQuestion();
 
 		this.canvas.add(new HTML("<h3>Data Files</h3>")); // TODO i18n
 		this.dataFilesQuestionPanel = new FlowPanel();
 		this.canvas.add(this.dataFilesQuestionPanel);
-//		this.syncDataFilesQuestion();
+
 	}
 	
 	

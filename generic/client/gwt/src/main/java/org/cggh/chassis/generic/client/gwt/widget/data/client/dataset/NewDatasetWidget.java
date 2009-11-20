@@ -23,9 +23,6 @@ public class NewDatasetWidget
 	
 	
 	
-
-	
-	
 	
 	private Log log;
 

@@ -36,7 +36,6 @@ public abstract class BaseFormRenderer
 	protected Resources resources;
 	protected TextBoxBase titleInput, summaryInput;
 	protected FlowPanel titleQuestionPanel, summaryQuestionPanel;
-	protected E model;
 	protected BaseForm<E, F, ?> owner;
 	
 	
@@ -61,7 +60,8 @@ public abstract class BaseFormRenderer
 	/**
 	 * 
 	 */
-	public void renderUI() {
+	@Override
+	protected void renderUI() {
 		log.enter("renderUI");
 		
 		this.canvas.clear();
@@ -123,45 +123,6 @@ public abstract class BaseFormRenderer
 	
 
 
-	/**
-	 * 
-	 */
-	public void bindUI(E model) {
-		log.enter("bindUI");
-		
-		log.debug("unbind to clear anything");
-		this.unbindUI();
-		
-		log.debug("keep reference to model");
-		this.model = model;
-		
-		log.debug("register this as handler for model property change events");
-		this.registerHandlersForModelChanges();
-		
-		log.debug("register handlers for child widget events");
-		this.registerHandlersForChildWidgetEvents();
-		
-		log.leave();
-		
-	}
-
-
-
-
-	/**
-	 * 
-	 */
-	protected void registerHandlersForModelChanges() {
-		log.enter("registerHandlersForModelChanges");
-		
-		// not needed
-		
-		log.leave();
-		
-	}
-
-
-
 
 	/**
 	 * 
@@ -176,7 +137,6 @@ public abstract class BaseFormRenderer
 		this.childWidgetEventHandlerRegistrations.add(b);
 		
 		log.leave();
-		
 	}
 
 	
@@ -214,7 +174,8 @@ public abstract class BaseFormRenderer
 	/**
 	 * 
 	 */
-	public void syncUI() {
+	@Override
+	protected void syncUI() {
 		log.enter("syncUI");
 		
 		if (this.model != null) {

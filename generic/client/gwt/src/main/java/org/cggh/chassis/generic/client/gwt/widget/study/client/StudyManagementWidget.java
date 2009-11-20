@@ -4,12 +4,17 @@
 package org.cggh.chassis.generic.client.gwt.widget.study.client;
 
 import org.cggh.chassis.generic.atomext.client.study.StudyEntry;
-import org.cggh.chassis.generic.client.gwt.common.client.ChassisUser;
+import org.cggh.chassis.generic.atomui.client.CreateSuccessEvent;
+import org.cggh.chassis.generic.atomui.client.CreateSuccessHandler;
+import org.cggh.chassis.generic.atomui.client.UpdateSuccessEvent;
+import org.cggh.chassis.generic.atomui.client.UpdateSuccessHandler;
 import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.DatasetActionEvent;
 import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.DatasetActionHandler;
 import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.ViewDatasetActionEvent;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
+import org.cggh.chassis.generic.widget.client.CancelEvent;
+import org.cggh.chassis.generic.widget.client.CancelHandler;
 import org.cggh.chassis.generic.widget.client.MenuEvent;
 import org.cggh.chassis.generic.widget.client.MultiWidget;
 
@@ -37,7 +42,7 @@ public class StudyManagementWidget
 	
 	
 	// UI fields
-	private NewStudyWidget createStudyWidget; 
+	private NewStudyWidget newStudyWidget; 
 	private ViewStudyWidget viewStudyWidget;
 	private MyStudiesWidget myStudiesWidget;
 	private EditStudyWidget editStudyWidget;
@@ -62,14 +67,14 @@ public class StudyManagementWidget
 		// create child widgets
 		
 		this.viewStudyWidget = new ViewStudyWidget();
-		this.createStudyWidget = new NewStudyWidget();
+		this.newStudyWidget = new NewStudyWidget();
 		this.myStudiesWidget = new MyStudiesWidget();
 		this.editStudyWidget = new EditStudyWidget();
 		this.viewStudyQuestionnaireWidget = new ViewStudyQuestionnaireWidget();
 		this.editStudyQuestionnaireWidget = new EditStudyQuestionnaireWidget();
 		
 		this.mainChildren.add(this.viewStudyWidget);
-		this.mainChildren.add(this.createStudyWidget);
+		this.mainChildren.add(this.newStudyWidget);
 		this.mainChildren.add(this.myStudiesWidget);
 		this.mainChildren.add(this.editStudyWidget);
 		this.mainChildren.add(this.viewStudyQuestionnaireWidget);
@@ -101,7 +106,7 @@ public class StudyManagementWidget
 			
 			public void onAction(StudyActionEvent e) {
 				
-				editStudyWidget.editStudyEntry(e.getEntry());
+				editStudyWidget.editEntry(e.getEntry());
 				setActiveChild(editStudyWidget);
 				
 			}
@@ -139,36 +144,37 @@ public class StudyManagementWidget
 			
 		});
 		
+		this.newStudyWidget.addCancelHandler(new CancelHandler() {
+			
+			public void onCancel(CancelEvent e) {
+				History.back();
+			}
+		});
+		
+		this.newStudyWidget.addCreateSuccessHandler(new CreateSuccessHandler<StudyEntry>() {
+			
+			public void onCreateSuccess(CreateSuccessEvent<StudyEntry> e) {
+				viewStudyWidget.viewEntry(e.getEntry().getId());
+				setActiveChild(viewStudyWidget);
+			}
+		});
+
+		this.editStudyWidget.addCancelHandler(new CancelHandler() {
+			
+			public void onCancel(CancelEvent e) {
+				History.back();
+			}
+		});
+		
+		this.editStudyWidget.addUpdateSuccessHandler(new UpdateSuccessHandler<StudyEntry>() {
+			
+			public void onUpdateSuccess(UpdateSuccessEvent<StudyEntry> e) {
+				viewStudyWidget.viewEntry(e.getEntry().getId());
+				setActiveChild(viewStudyWidget);
+			}
+		});
+		
 		// TODO rewrite below using gwt event pattern
-		
-		
-		this.createStudyWidget.addListener(new NewStudyWidgetPubSubAPI() {
-			
-			public void onUserActionCreateStudyCancelled() {
-				History.back();
-			}
-			
-			public void onNewStudyCreated(StudyEntry studyEntry) {
-
-				setActiveChild(viewStudyWidget);
-				viewStudyWidget.viewEntry(studyEntry.getId());
-
-			}
-		});
-		
-		this.editStudyWidget.addListener(new EditStudyWidgetPubSubAPI() {
-			
-			public void onUserActionEditStudyCancelled() {
-				History.back();
-			}				
-			
-			public void onStudyUpdateSuccess(StudyEntry updatedStudyEntry) {
-
-				setActiveChild(viewStudyWidget);
-				viewStudyWidget.viewEntry(updatedStudyEntry.getId());
-
-			}
-		});
 		
 		this.viewStudyQuestionnaireWidget.addListener(new ViewStudyQuestionnaireWidget.PubSubAPI() {
 			
@@ -217,8 +223,9 @@ public class StudyManagementWidget
 			public void execute() { 
 				log.enter("[anon Command] :: execute");
 
-				createStudyWidget.setUpNewStudy(ChassisUser.getCurrentUserEmail());
-				setActiveChild(createStudyWidget);
+//				createStudyWidget.setUpNewStudy(ChassisUser.getCurrentUserEmail());
+				newStudyWidget.reset();
+				setActiveChild(newStudyWidget);
 				fireEvent(new MenuEvent());
 				
 				log.leave();
