@@ -9,9 +9,17 @@ import java.util.Set;
 
 import org.cggh.chassis.generic.atomext.client.study.StudyEntry;
 import org.cggh.chassis.generic.atomext.client.study.StudyQuery;
+import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.DatasetActionHandler;
+import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.MyDatasetsWidget;
+import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.MyDatasetsWidgetController;
+import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.MyDatasetsWidgetModel;
+import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.MyDatasetsWidgetRenderer;
+import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.ViewDatasetActionEvent;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
+import org.cggh.chassis.generic.widget.client.DelegatingWidget;
 
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Panel;
 
@@ -19,143 +27,95 @@ import com.google.gwt.user.client.ui.Panel;
  * @author raok
  *
  */
-public class MyStudiesWidget extends Composite {
+public class MyStudiesWidget 
+	extends DelegatingWidget<MyStudiesWidgetModel, MyStudiesWidgetRenderer> 
+
+
+{
 
 	
 	
-	private Log log = LogFactory.getLog(this.getClass());
+	private Log log = LogFactory.getLog(MyStudiesWidget.class);
+	private MyStudiesWidgetController controller;
+	
+	
+	
+	
+	
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.widget.client.DelegatingWidget#createModel()
+	 */
+	@Override
+	protected MyStudiesWidgetModel createModel() {
+		return new MyStudiesWidgetModel();
+	}
 
 	
 	
 	
-	final private MyStudiesWidgetModel model;
-	final private MyStudiesWidgetController controller;
-	final private MyStudiesWidgetRenderer renderer;
-	private Set<MyStudiesWidgetPubSubAPI> listeners = new HashSet<MyStudiesWidgetPubSubAPI>();
+	
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.widget.client.DelegatingWidget#createRenderer()
+	 */
+	@Override
+	protected MyStudiesWidgetRenderer createRenderer() {
+		return new MyStudiesWidgetRenderer(this);
+	}
+
 	
 	
 	
 	
-	public MyStudiesWidget(Panel canvas, String selectStudyLinkText) {
-		
-		model = new MyStudiesWidgetModel();
-		
-		controller = new MyStudiesWidgetController(model, this);
-		
-		renderer = new MyStudiesWidgetDefaultRenderer(canvas, controller,selectStudyLinkText);
-		
-		// register renderer as listener to model
-		model.addListener(renderer);
-		
-		this.initWidget(renderer.getCanvas());
-		
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#init()
+	 */
+	@Override
+	public void init() {
+		ensureLog();
+		log.enter("init");
+
+		super.init(); // this will instantiate model and renderer
+
+		this.controller = new MyStudiesWidgetController(this.model, this);
+
+		log.leave();
 	}
 	
-	
-	
-	
-	public MyStudiesWidget(MyStudiesWidgetRenderer customRenderer) {
-
-		model = new MyStudiesWidgetModel();		
-
-		controller = new MyStudiesWidgetController(model, this);
-		
-		renderer = customRenderer;
-		
-		//inject controller into customRenderer
-		renderer.setController(controller);
-
-		// register renderer as listener to model
-		model.addListener(renderer);
-		
-		this.initWidget(renderer.getCanvas());
-		
-	}
 	
 	
 	
 	
 	/**
-	 * @param string
+	 * 
 	 */
-	public MyStudiesWidget(String selectStudyLinkText) {
-
-		model = new MyStudiesWidgetModel();
-		
-		controller = new MyStudiesWidgetController(model, this);
-		
-		renderer = new MyStudiesWidgetDefaultRenderer(controller, selectStudyLinkText);
-		
-		// register renderer as listener to model
-		model.addListener(renderer);
-		
-		this.initWidget(renderer.getCanvas());
-		
+	private void ensureLog() {
+		if (log == null) log = LogFactory.getLog(MyStudiesWidget.class);
 	}
 
-	
-	
-	
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.client.gwt.widget.study.viewall.client.ViewAllStudiesWidgetAPI#loadStudiesByCollectionUrl(java.lang.String)
+
+
+
+	/**
+	 * 
 	 */
-	public void loadStudies() {
-		controller.loadStudiesByCollectionUrl();
-	}
-
-	
-	
-	
-	void onUserSelectStudy(StudyEntry studyEntry) {
-		for (MyStudiesWidgetPubSubAPI listener : listeners) {
-			listener.onUserActionSelectStudy(studyEntry);
-		}
-	}
-	
-	
-	
-	
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.client.gwt.widget.study.viewall.client.ViewAllStudiesWidgetAPI#addViewAllStudiesWidgetListener(org.cggh.chassis.generic.client.gwt.widget.study.viewall.client.ViewAllStudiesWidgetPubSubAPI)
-	 */
-	public void addListener(MyStudiesWidgetPubSubAPI listener) {
-		listeners.add(listener);
-	}
-
-	
-	
-	
-	public void loadStudies(Set<String> studyEntryUrlsToLoad) {
-		controller.loadStudiesByEntryUrls(studyEntryUrlsToLoad);
-	}
-
-	
-	
-	
-	public void loadStudies(List<String> studyEntryUrlsToLoad) {
-		Set<String> urls = new HashSet<String>(studyEntryUrlsToLoad);
-		controller.loadStudiesByEntryUrls(urls);
-	}
-
-	
-	
-	
-	public void loadStudiesByAuthorEmail(String authorEmail) {
-		log.enter("loadStudiesByAuthorEmail( "+authorEmail+" )");
-		controller.loadStudiesByAuthorEmail(authorEmail);
+	public void refreshStudies() {
+		log.enter("refreshStudies");
+		
+		// delegate to controller
+		this.controller.refreshStudies();
+		
 		log.leave();
 	}
 
 
 
 
-	/**
-	 * @param query
-	 */
-	public void loadStudies(StudyQuery query) {
-		controller.loadStudies(query);
+	public HandlerRegistration addViewStudyActionHandler(StudyActionHandler h) {
+		return this.addHandler(h, ViewStudyActionEvent.TYPE);
 	}
-	
-	
+
+
+
+
 	
 }

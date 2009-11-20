@@ -14,7 +14,13 @@ import com.google.gwt.event.shared.HandlerRegistration;
  *
  */
 public class MyDatasetsWidget 
-	extends DelegatingWidget<MyDatasetsWidgetModel, MyDatasetsWidgetRenderer> {
+	extends DelegatingWidget<MyDatasetsWidgetModel, MyDatasetsWidgetRenderer> 
+
+
+{
+
+	
+	
 	private Log log = LogFactory.getLog(MyDatasetsWidget.class);
 	private MyDatasetsWidgetController controller;
 

@@ -13,6 +13,7 @@ import org.cggh.chassis.generic.widget.client.MultiWidget;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.ui.MenuItem;
+import com.google.gwt.user.client.ui.Widget;
 
 /**
  * @author aliman
@@ -34,7 +35,7 @@ public class StudyManagementWidget
 	// UI fields
 	private NewStudyWidget createStudyWidget; 
 	private ViewStudyWidget viewStudyWidget;
-	private MyStudiesWidget viewStudiesWidget;
+	private MyStudiesWidget myStudiesWidget;
 	private EditStudyWidget editStudyWidget;
 	private ViewStudyQuestionnaireWidget viewStudyQuestionnaireWidget;
 	private EditStudyQuestionnaireWidget editStudyQuestionnaireWidget;
@@ -58,14 +59,14 @@ public class StudyManagementWidget
 		
 		this.viewStudyWidget = new ViewStudyWidget();
 		this.createStudyWidget = new NewStudyWidget();
-		this.viewStudiesWidget = new MyStudiesWidget("view");
+		this.myStudiesWidget = new MyStudiesWidget();
 		this.editStudyWidget = new EditStudyWidget();
 		this.viewStudyQuestionnaireWidget = new ViewStudyQuestionnaireWidget();
 		this.editStudyQuestionnaireWidget = new EditStudyQuestionnaireWidget();
 		
 		this.mainChildren.add(this.viewStudyWidget);
 		this.mainChildren.add(this.createStudyWidget);
-		this.mainChildren.add(this.viewStudiesWidget);
+		this.mainChildren.add(this.myStudiesWidget);
 		this.mainChildren.add(this.editStudyWidget);
 		this.mainChildren.add(this.viewStudyQuestionnaireWidget);
 		this.mainChildren.add(this.editStudyQuestionnaireWidget);
@@ -79,6 +80,16 @@ public class StudyManagementWidget
 	
 	@Override
 	protected void registerHandlersForChildWidgetEvents() {
+
+		this.myStudiesWidget.addViewStudyActionHandler(new StudyActionHandler() {
+			
+			public void onAction(StudyActionEvent e) {
+				setActiveChild(viewStudyWidget);
+				viewStudyWidget.loadStudyEntry(e.getEntry());
+			}
+
+		});
+		
 
 		// TODO rewrite below using gwt event pattern
 		
@@ -131,16 +142,6 @@ public class StudyManagementWidget
 				setActiveChild(viewStudyWidget);
 				viewStudyWidget.loadStudyEntry(updatedStudyEntry);
 
-			}
-		});
-		
-		this.viewStudiesWidget.addListener(new MyStudiesWidgetPubSubAPI() {
-			
-			public void onUserActionSelectStudy(StudyEntry studyEntry) {
-
-				setActiveChild(viewStudyWidget);
-				viewStudyWidget.loadStudyEntry(studyEntry);
-				
 			}
 		});
 		
@@ -208,8 +209,9 @@ public class StudyManagementWidget
 			public void execute() { 
 				log.enter("[anon Command] :: execute");
 
-				viewStudiesWidget.loadStudiesByAuthorEmail(ChassisUser.getCurrentUserEmail());
-				setActiveChild(viewStudiesWidget);
+//				viewStudiesWidget.loadStudiesByAuthorEmail(ChassisUser.getCurrentUserEmail());
+				myStudiesWidget.refreshStudies();
+				setActiveChild(myStudiesWidget);
 				fireEvent(new MenuEvent());
 				
 				log.leave();
@@ -221,6 +223,25 @@ public class StudyManagementWidget
 		
 		log.leave();
 	}
+
+
+
+
+	
+	@Override
+	protected void setActiveChild(Widget child, boolean memorise) {
+		log.enter("setActiveChild");
+		
+		super.setActiveChild(child, memorise);
+		
+		if (child == myStudiesWidget) {
+			myStudiesWidget.refreshStudies();
+		}
+
+		log.leave();
+	}
+
+
 
 
 
