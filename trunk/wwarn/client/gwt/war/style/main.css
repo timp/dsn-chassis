@@ -1,8 +1,8 @@
-/* 
- * this file should be kept in sync with the corresponding file in the generic client gwt project
- * any style overrides should be put in wwarn.css
+/*
+ * N.B. this file should be identical in content to the main.css file in
+ * the generic-client-gwt project - any style overrides should go in the
+ * wwarn.css file.
  */
- 
  
  
 /*
@@ -333,4 +333,3 @@ h3 {
 }
 
 
- 
