@@ -88,7 +88,7 @@ public abstract class BaseFormRenderer
 
 		this.titleQuestionPanel = new FlowPanel();
 		this.titleQuestionPanel.addStyleName(Styles.TITLEQUESTION);
-		this.titleQuestionPanel.addStyleName(CommonStyles.COMMON_QUESTION);
+		this.titleQuestionPanel.addStyleName(CommonStyles.QUESTION);
 		
 		this.titleInput = new TextBox();
 		InlineLabel titleLabel = new InlineLabel(text(Resources.QUESTIONLABELTITLE)); 
@@ -109,7 +109,7 @@ public abstract class BaseFormRenderer
 		log.enter("renderSummaryQuestion");
 
 		this.summaryQuestionPanel = new FlowPanel();
-		summaryQuestionPanel.addStyleName(CommonStyles.COMMON_QUESTION);
+		summaryQuestionPanel.addStyleName(CommonStyles.QUESTION);
 		summaryQuestionPanel.addStyleName(Styles.SUMMARYQUESTION);
 
 		this.summaryInput = new TextArea();

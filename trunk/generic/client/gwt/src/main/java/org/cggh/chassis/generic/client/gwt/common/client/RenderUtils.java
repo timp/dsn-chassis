@@ -11,6 +11,7 @@ import java.util.Map;
 
 import org.cggh.chassis.generic.async.client.Function;
 import org.cggh.chassis.generic.async.client.Functional;
+import org.cggh.chassis.generic.atom.client.AtomAuthor;
 import org.cggh.chassis.generic.atom.client.AtomEntry;
 import org.cggh.chassis.generic.atomext.shared.ChassisConstants;
 
@@ -208,7 +209,7 @@ public class RenderUtils {
 	 * @param delimiter the delimiter to use to separate each author in the collection
 	 * @return a string concatenation of the authors' emails
 	 */
-	public static String renderAtomAuthorsAsDelimitedEmailString(Collection<org.cggh.chassis.generic.atom.client.AtomAuthor> authors, String delimiter) {
+	public static String renderAtomAuthorsAsDelimitedEmailString(Collection<AtomAuthor> authors, String delimiter) {
 		return RenderUtils.concatenate(RenderUtils.getEmails(authors), delimiter);
 	}
 	
@@ -222,7 +223,7 @@ public class RenderUtils {
 	 * @param authors the authors to render
 	 * @return a string of the authors' emails separated by commas
 	 */
-	public static String renderAtomAuthorsAsCommaDelimitedEmailString(Collection<org.cggh.chassis.generic.atom.client.AtomAuthor> authors) {
+	public static String renderAtomAuthorsAsCommaDelimitedEmailString(Collection<AtomAuthor> authors) {
 		return RenderUtils.renderAtomAuthorsAsDelimitedEmailString(authors, ", ");
 	}
 	
@@ -239,7 +240,7 @@ public class RenderUtils {
 	 * @param inline if true, return an inline label, otherwise a normal label
 	 * @return a label
 	 */
-	public static Label renderAtomAuthorsAsLabel(Collection<org.cggh.chassis.generic.atom.client.AtomAuthor> authors, boolean inline) {
+	public static Label renderAtomAuthorsAsLabel(Collection<AtomAuthor> authors, boolean inline) {
 		String text = (authors == null) ? "" : RenderUtils.renderAtomAuthorsAsCommaDelimitedEmailString(authors);
 		if (inline) return new InlineLabel(text);
 		else return new Label(text);
@@ -251,6 +252,19 @@ public class RenderUtils {
 		return RenderUtils.renderAtomAuthorsAsLabel(entry.getAuthors(), inline);
 	}
 	
+	
+	
+	public static HTML renderAtomAuthorsAsList(Collection<AtomAuthor> authors) {
+		String content = "";
+		if (authors != null) {
+			content = "<ul>";
+			for (AtomAuthor author : authors) {
+				content += "<li>" + author.getEmail() + "</li>";
+			}
+			content += "</ul>";
+		}
+		return new HTML(content);
+	}
 	
 	
 	
@@ -335,10 +349,10 @@ public class RenderUtils {
 	 * @param in the list of authors to get emails from
 	 * @return a list of emails as strings
 	 */
-	public static List<String> getEmails(Collection<org.cggh.chassis.generic.atom.client.AtomAuthor> in) {
+	public static List<String> getEmails(Collection<AtomAuthor> in) {
 		List<String> out = new ArrayList<String>();
 		if (in != null) {
-			for (org.cggh.chassis.generic.atom.client.AtomAuthor a : in) {
+			for (AtomAuthor a : in) {
 				String email = a.getEmail();
 				if (email != null) out.add(email);
 			}
@@ -374,7 +388,7 @@ public class RenderUtils {
 	public static Anchor renderActionAsAnchor(String text) {
 		Anchor out = new Anchor();
 		out.setText(text);
-		out.addStyleName(CommonStyles.COMMON_ACTION);
+		out.addStyleName(CommonStyles.ACTION);
 		return out;
 	}
 	
@@ -390,7 +404,7 @@ public class RenderUtils {
 	 */
 	public static FlowPanel renderActionsPanel(Widget[] actions) {
 		FlowPanel out = new FlowPanel();
-		out.addStyleName(CommonStyles.COMMON_ACTIONS);
+		out.addStyleName(CommonStyles.ACTIONS);
 		out.add(new HTML("<h3>Actions</h3>")); // TODO use I18N resources
 		for (Widget w : actions) {
 			out.add(w);
@@ -411,14 +425,15 @@ public class RenderUtils {
 	 * @param valueHolderStyleName a custom style name to add to the value holder
 	 * @return
 	 */
-	public static FlowPanel renderPropertyPanel(String propertyName, Widget valueHolder, String valueHolderStyleName) {
-		FlowPanel out = new FlowPanel();
-		out.add(new InlineLabel(propertyName + ": ")); 
-		valueHolder.addStyleName(CommonStyles.COMMON_ANSWER);
+	public static FlowPanel renderPropertyPanel(String propertyName, Widget valueHolder, String valueHolderStyleName, String containerStyleName) {
+		FlowPanel container = new FlowPanel();
+		container.add(new InlineLabel(propertyName + ": ")); 
+		valueHolder.addStyleName(CommonStyles.ANSWER);
 		if (valueHolderStyleName != null) valueHolder.addStyleName(valueHolderStyleName);
-		out.add(valueHolder);
-		out.addStyleName(CommonStyles.COMMON_QUESTION);
-		return out;
+		container.add(valueHolder);
+		container.addStyleName(CommonStyles.QUESTION);
+		if (containerStyleName != null) container.addStyleName(containerStyleName);
+		return container;
 	}
 
 
@@ -435,7 +450,7 @@ public class RenderUtils {
 	 * @return
 	 */
 	public static FlowPanel renderTitlePropertyPanel(Widget valueHolder, String valueHolderStyleName) {
-		return RenderUtils.renderPropertyPanel("Title", valueHolder, valueHolderStyleName); // TODO use I18N resources
+		return RenderUtils.renderPropertyPanel("Title", valueHolder, valueHolderStyleName, CommonStyles.QUESTION_TITLE); // TODO use I18N resources
 	}
 	
 	
@@ -452,7 +467,7 @@ public class RenderUtils {
 	 * @return
 	 */
 	public static FlowPanel renderSummaryPropertyPanel(Widget valueHolder, String valueHolderStyleName) {
-		return RenderUtils.renderPropertyPanel("Summary", valueHolder, valueHolderStyleName); // TODO use I18N resources
+		return RenderUtils.renderPropertyPanel("Summary", valueHolder, valueHolderStyleName, CommonStyles.QUESTION_SUMMARY); // TODO use I18N resources
 	}
 
 
@@ -469,7 +484,7 @@ public class RenderUtils {
 	 * @return
 	 */
 	public static FlowPanel renderModulesPropertyPanel(Widget valueHolder, String valueHolderStyleName) {
-		return RenderUtils.renderPropertyPanel("Modules", valueHolder, valueHolderStyleName); // TODO use I18N resources
+		return RenderUtils.renderPropertyPanel("Modules", valueHolder, valueHolderStyleName, CommonStyles.QUESTION_MODULES); // TODO use I18N resources
 	}
 	
 	
@@ -486,7 +501,7 @@ public class RenderUtils {
 	 * @return
 	 */
 	public static FlowPanel renderOwnersPropertyPanel(Widget valueHolder, String valueHolderStyleName) {
-		return RenderUtils.renderPropertyPanel("Owners", valueHolder, valueHolderStyleName); // TODO use I18N resources
+		return RenderUtils.renderPropertyPanel("Owners", valueHolder, valueHolderStyleName, CommonStyles.QUESTION_OWNERS); // TODO use I18N resources
 	}
 	
 	
@@ -503,7 +518,7 @@ public class RenderUtils {
 	 * @return
 	 */
 	public static FlowPanel renderCreatedPropertyPanel(Widget valueHolder, String valueHolderStyleName) {
-		return RenderUtils.renderPropertyPanel("Created", valueHolder, valueHolderStyleName); // TODO use I18N resources
+		return RenderUtils.renderPropertyPanel("Created", valueHolder, valueHolderStyleName, CommonStyles.QUESTION_CREATED); // TODO use I18N resources
 	}
 	
 
@@ -521,7 +536,7 @@ public class RenderUtils {
 	 * @return
 	 */
 	public static FlowPanel renderUpdatedPropertyPanel(Widget valueHolder, String valueHolderStyleName) {
-		return RenderUtils.renderPropertyPanel("Updated", valueHolder, valueHolderStyleName); // TODO use I18N resources
+		return RenderUtils.renderPropertyPanel("Updated", valueHolder, valueHolderStyleName, CommonStyles.QUESTION_UPDATED); // TODO use I18N resources
 	}
 	
 	
@@ -538,7 +553,7 @@ public class RenderUtils {
 	 * @return
 	 */
 	public static FlowPanel renderIdPropertyPanel(Widget valueHolder, String valueHolderStyleName) {
-		return RenderUtils.renderPropertyPanel("Chassis ID", valueHolder, valueHolderStyleName); // TODO use I18N resources
+		return RenderUtils.renderPropertyPanel("Chassis ID", valueHolder, valueHolderStyleName, CommonStyles.QUESTION_ID); // TODO use I18N resources
 	}
 	
 	
@@ -548,7 +563,7 @@ public class RenderUtils {
 	public static Panel renderTitleQuestion(String questionLabelText) {
 		
 		FlowPanel titleQuestionPanel = new FlowPanel();
-		titleQuestionPanel.addStyleName(CommonStyles.COMMON_QUESTION);
+		titleQuestionPanel.addStyleName(CommonStyles.QUESTION);
 		
 		TextBox titleInput = new TextBox();
 		titleInput.setName(ChassisConstants.FIELD_TITLE);
@@ -569,7 +584,7 @@ public class RenderUtils {
 	public static Panel renderSummaryQuestion(String questionLabelText) {
 
 		FlowPanel summaryQuestionPanel = new FlowPanel();
-		summaryQuestionPanel.addStyleName(CommonStyles.COMMON_QUESTION);
+		summaryQuestionPanel.addStyleName(CommonStyles.QUESTION);
 
 		TextArea summaryInput = new TextArea();
 		summaryInput.setName(ChassisConstants.FIELD_SUMMARY);
@@ -596,7 +611,7 @@ public class RenderUtils {
 	public static Panel renderFileInputQuestion(String questionLabelText, String inputName) {
 
 		FlowPanel fileQuestionPanel = new FlowPanel();
-		fileQuestionPanel.addStyleName(CommonStyles.COMMON_QUESTION);
+		fileQuestionPanel.addStyleName(CommonStyles.QUESTION);
 		
 		InlineLabel fileBrowserLabel = new InlineLabel(questionLabelText);
 		fileQuestionPanel.add(fileBrowserLabel);

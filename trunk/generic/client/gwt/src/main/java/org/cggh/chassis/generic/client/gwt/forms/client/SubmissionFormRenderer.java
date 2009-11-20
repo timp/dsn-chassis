@@ -109,7 +109,7 @@ public class SubmissionFormRenderer extends BaseFormRenderer<SubmissionEntry, Su
 		log.enter("renderModulesQuestion");
 	
 		modulesQuestionPanel = new FlowPanel();
-		modulesQuestionPanel.addStyleName(CommonStyles.COMMON_QUESTION);
+		modulesQuestionPanel.addStyleName(CommonStyles.QUESTION);
 		modulesQuestionPanel.addStyleName(Styles.MODULESQUESTION);
 		
 		Label modulesLabel = new Label(text(Resources.QUESTIONLABELMODULES));
@@ -145,7 +145,7 @@ public class SubmissionFormRenderer extends BaseFormRenderer<SubmissionEntry, Su
 		log.enter("renderStudiesQuestion");
 
 		this.studiesQuestionPanel = new FlowPanel();
-		this.studiesQuestionPanel.addStyleName(CommonStyles.COMMON_QUESTION);
+		this.studiesQuestionPanel.addStyleName(CommonStyles.QUESTION);
 		this.studiesQuestionPanel.addStyleName(Styles.STUDIESQUESTION);
 
 		this.studiesQuestionPanel.add(new HTML("<p>"+text(Resources.QUESTIONLABELSTUDIES)+"</p>"));

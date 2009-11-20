@@ -113,7 +113,7 @@ public class DatasetFormRenderer
 
 		this.studiesQuestionPanel.clear();
 		
-		this.studiesQuestionPanel.addStyleName(CommonStyles.COMMON_QUESTION);
+		this.studiesQuestionPanel.addStyleName(CommonStyles.QUESTION);
 		this.studiesQuestionPanel.add(new Label("Associate this dataset with one or more studies..."));
 		
 		log.debug("instantiate multi select");
@@ -138,7 +138,7 @@ public class DatasetFormRenderer
 
 		this.dataFilesQuestionPanel.clear();
 		
-		this.dataFilesQuestionPanel.addStyleName(CommonStyles.COMMON_QUESTION);
+		this.dataFilesQuestionPanel.addStyleName(CommonStyles.QUESTION);
 		this.dataFilesQuestionPanel.add(new Label("Add/remove data files..."));
 		
 		log.debug("instantiate multi select");

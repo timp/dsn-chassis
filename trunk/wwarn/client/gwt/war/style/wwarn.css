@@ -75,7 +75,6 @@ div.gwt-MenuBar-vertical .gwt-MenuItem-selected {
 	background-position: bottom;
 	background-repeat: repeat;
 	*/
-	font-weight: bold;
 }
 
 .chassis-actions {
@@ -91,6 +90,14 @@ div.gwt-MenuBar-vertical .gwt-MenuItem-selected {
 	background-position: bottom;
 	background-repeat: repeat;
 	color: white;*/
+}
+
+.chassis-resultsTable td {
+	border-bottom: 1px solid #abd;
+}
+
+.chassis-resultsTable-firstRow {
+	background-color: #eef;	
 }
 
 

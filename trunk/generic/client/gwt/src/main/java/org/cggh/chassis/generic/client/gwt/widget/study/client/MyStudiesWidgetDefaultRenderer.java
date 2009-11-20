@@ -113,7 +113,7 @@ public class MyStudiesWidgetDefaultRenderer implements MyStudiesWidgetRenderer {
 		
 		this.canvas.add(new HTML("<h2>My Studies</h2>"));
 		
-		this.canvas.add(new HTML("<p>Listed below are all of the studies that you own.</p>"));
+		this.canvas.add(new HTML("<p>The table below lists all of the studies that you own...</p>"));
 		
 		log.debug("prepare loading panel");
 		this.loadingPanel.add(new Label("Loading..."));
@@ -193,7 +193,7 @@ public class MyStudiesWidgetDefaultRenderer implements MyStudiesWidgetRenderer {
 			log.debug("add a select study link");
 			Anchor selectStudy = new Anchor();
 			selectStudy.setText(selectStudyLinkText);
-			selectStudy.addStyleName(CommonStyles.COMMON_ACTION);
+			selectStudy.addStyleName(CommonStyles.ACTION);
 			selectStudy.addClickHandler(new SelectStudyClickHandler(studyEntry));
 			FlowPanel actionsPanel = new FlowPanel();
 			actionsPanel.add(selectStudy);

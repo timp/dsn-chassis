@@ -16,6 +16,7 @@ import org.cggh.chassis.generic.widget.client.ChassisWidget;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.Widget;
 
 /**
  * @author aliman
@@ -90,12 +91,12 @@ public class AtomEntryPropertiesWidget
 		this.ownersListPanel = new FlowPanel();
 
 		// TODO fix styles
-		FlowPanel titlePanel = RenderUtils.renderTitlePropertyPanel(this.titleLabel, CommonStyles.VIEWSUBMISSION_TITLE);
-		FlowPanel summaryPanel = RenderUtils.renderSummaryPropertyPanel(this.summaryLabel, CommonStyles.VIEWSUBMISSION_SUMMARY);
-		FlowPanel ownersPanel = RenderUtils.renderOwnersPropertyPanel(this.ownersListPanel, CommonStyles.VIEWSUBMISSION_OWNERS);
-		FlowPanel createdPanel = RenderUtils.renderCreatedPropertyPanel(this.createdLabel, null);
-		FlowPanel updatedPanel = RenderUtils.renderUpdatedPropertyPanel(this.updatedLabel, null);
-		FlowPanel idPanel = RenderUtils.renderIdPropertyPanel(this.idLabel, CommonStyles.VIEWSUBMISSION_ID);
+		FlowPanel titlePanel = RenderUtils.renderTitlePropertyPanel(this.titleLabel, CommonStyles.VALUE_TITLE);
+		FlowPanel summaryPanel = RenderUtils.renderSummaryPropertyPanel(this.summaryLabel, CommonStyles.VALUE_SUMMARY);
+		FlowPanel ownersPanel = RenderUtils.renderOwnersPropertyPanel(this.ownersListPanel, CommonStyles.VALUE_OWNERS);
+		FlowPanel createdPanel = RenderUtils.renderCreatedPropertyPanel(this.createdLabel, CommonStyles.VALUE_CREATED);
+		FlowPanel updatedPanel = RenderUtils.renderUpdatedPropertyPanel(this.updatedLabel, CommonStyles.VALUE_UPDATED);
+		FlowPanel idPanel = RenderUtils.renderIdPropertyPanel(this.idLabel, CommonStyles.VALUE_ID);
 
 		this.clear();
 		this.add(titlePanel);
@@ -137,23 +138,23 @@ public class AtomEntryPropertiesWidget
 		
 		if (entry != null) {
 			
-			this.updateTitleLabel(entry.getTitle());
-			this.updateSummaryLabel(entry.getSummary());
-			this.updateDateCreatedLabel(entry.getPublished());
-			this.updateDateUpdatedLabel(entry.getUpdated());
-			this.updateIdLabel(entry.getId());
-			this.updateOwnersLabel(entry.getAuthors());
+			this.syncTitleLabel(entry.getTitle());
+			this.syncSummaryLabel(entry.getSummary());
+			this.syncDateCreatedLabel(entry.getPublished());
+			this.syncDateUpdatedLabel(entry.getUpdated());
+			this.syncIdLabel(entry.getId());
+			this.syncOwnersLabel(entry.getAuthors());
 
 		}
 		else {
 
 			// clear all properties
-			this.updateTitleLabel(null);
-			this.updateSummaryLabel(null);
-			this.updateDateCreatedLabel(null);
-			this.updateDateUpdatedLabel(null);
-			this.updateIdLabel(null);
-			this.updateOwnersLabel(null);
+			this.syncTitleLabel(null);
+			this.syncSummaryLabel(null);
+			this.syncDateCreatedLabel(null);
+			this.syncDateUpdatedLabel(null);
+			this.syncIdLabel(null);
+			this.syncOwnersLabel(null);
 
 		}		
 
@@ -164,7 +165,7 @@ public class AtomEntryPropertiesWidget
 	
 	
 
-	private void updateTitleLabel(String title) {
+	private void syncTitleLabel(String title) {
 		if (title == null) title = "";
 		titleLabel.setText(title);
 	}
@@ -174,7 +175,7 @@ public class AtomEntryPropertiesWidget
 	
 
 
-	private void updateSummaryLabel(String summary) {
+	private void syncSummaryLabel(String summary) {
 		if (summary == null) summary = "";
 		summaryLabel.setText(summary);
 	}
@@ -183,10 +184,11 @@ public class AtomEntryPropertiesWidget
 	
 	
 	
-	private void updateOwnersLabel(List<AtomAuthor> owners) {
+	private void syncOwnersLabel(List<AtomAuthor> owners) {
 
-		Label answer = RenderUtils.renderAtomAuthorsAsLabel(owners, true);
-		answer.addStyleName(CommonStyles.COMMON_ANSWER);
+		Widget answer = RenderUtils.renderAtomAuthorsAsLabel(owners, true);
+//		Widget answer = RenderUtils.renderAtomAuthorsAsList(owners);
+		answer.addStyleName(CommonStyles.ANSWER);
 
 		ownersListPanel.clear();
 		ownersListPanel.add(answer);
@@ -195,7 +197,7 @@ public class AtomEntryPropertiesWidget
 
 
 	
-	private void updateDateCreatedLabel(String created) {
+	private void syncDateCreatedLabel(String created) {
 		if (created == null) created = "";
 		this.createdLabel.setText(created);
 	}
@@ -203,7 +205,7 @@ public class AtomEntryPropertiesWidget
 	
 	
 	
-	private void updateDateUpdatedLabel(String updated) {
+	private void syncDateUpdatedLabel(String updated) {
 		if (updated == null) updated = "";
 		this.updatedLabel.setText(updated);
 	}
@@ -211,7 +213,7 @@ public class AtomEntryPropertiesWidget
 	
 	
 	
-	private void updateIdLabel(String id) {
+	private void syncIdLabel(String id) {
 		if (id == null) id = "";
 		this.idLabel.setText(id);
 	}

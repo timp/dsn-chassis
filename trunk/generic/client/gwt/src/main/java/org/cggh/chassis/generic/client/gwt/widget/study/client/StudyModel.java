@@ -54,7 +54,7 @@ public class StudyModel {
 		fireOnUpdatedChanged(getUpdated());
 		
 		//fire form validation
-		fireOnStudyEntryModelChanged();
+		fireOnStudyEntryModelChanged(studyEntry);
 	}
 
 
@@ -91,9 +91,9 @@ public class StudyModel {
 
 
 
-	private void fireOnStudyEntryModelChanged() {
+	private void fireOnStudyEntryModelChanged(StudyEntry studyEntry) {
 		for (StudyModelListener listener : listeners) {
-			listener.onStudyEntryChanged(isStudyEntryValid());
+			listener.onStudyEntryChanged(studyEntry, isStudyEntryValid());
 		}
 	}
 
@@ -112,7 +112,7 @@ public class StudyModel {
 		studyEntry.setTitle(title);
 		
 		fireOnTitleChanged(before);
-		fireOnStudyEntryModelChanged();
+		fireOnStudyEntryModelChanged(this.studyEntry);
 	}
 
 
@@ -162,7 +162,7 @@ public class StudyModel {
 		
 		studyEntry.setSummary(summary);
 		fireOnSummaryChanged(before);
-		fireOnStudyEntryModelChanged();
+		fireOnStudyEntryModelChanged(this.studyEntry);
 	}
 
 
@@ -196,7 +196,7 @@ public class StudyModel {
 		studyEntry.getStudy().setModules(new ArrayList<String>(modules));
 		
 		fireOnModulesChanged(before);
-		fireOnStudyEntryModelChanged();
+		fireOnStudyEntryModelChanged(this.studyEntry);
 	}
 
 
@@ -229,7 +229,7 @@ public class StudyModel {
 		studyEntry.setAuthors(new ArrayList<AtomAuthor>(authors));
 		
 		fireOnAuthorsChanged(before);
-		fireOnStudyEntryModelChanged();
+		fireOnStudyEntryModelChanged(this.studyEntry);
 		
 	}
 

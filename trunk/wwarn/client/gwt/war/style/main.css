@@ -5,8 +5,6 @@
  
  
  
- 
- 
 /*
  * -----------------------------------------------------------------------------
  * html element styles
@@ -20,6 +18,18 @@ input, textarea {
 	border: 1px solid #aaa;
 }
 
+p {
+    margin-top: .5em;
+}
+
+ul {
+    margin: 0;
+    padding: 0 0 0 2em;
+}
+
+h3 {
+    border-bottom: 2px solid #aaa;
+}
 
 
 
@@ -97,10 +107,8 @@ input, textarea {
 	right: 0.5em;
 	left: auto;
 	bottom: auto;
-	border: 1px solid #aaa;
 	width: 20em;
 	padding: 0.3em;
-	background-color: #eee;
 }
 
 .chassis-action {
@@ -119,10 +127,12 @@ input, textarea {
 
 
 .chassis-resultsTable {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
 }
 
 .chassis-resultsTable td {
-	border-bottom: 1px solid #abd;
+	border-bottom: 1px solid #aaa;
 	padding: 0;
 	margin: 0;
 	vertical-align: top;
@@ -136,23 +146,35 @@ input, textarea {
 	font-size: 80%;
 	text-align: left;
 	font-weight: bold;
+	background-color: #eee;	
 }
 
 .chassis-resultsTable-even {
-	background-color: white;
 }
 
 .chassis-resultsTable-odd {
-	background-color: #eef;	
 }
 
 .chassis-resultsTable-cell {
 	padding: .3em;
 }
 
+.chassis-question-title {
+    font-size: 130%;
+}
 
+.chassis-value-summary {
+    display: block;
+    font-style: italic;
+}
 
+.chassis-value-owners {
+    display: inline;
+}
 
+.chassis-value-modules {
+    display: inline;
+}
 
 /*
  * -----------------------------------------------------------------------------
@@ -281,22 +303,6 @@ input, textarea {
  * -----------------------------------------------------------------------------
  */
  
-.chassis-viewStudy-modules {
-    display: inline;
-    margin-left: 0.3em;
-}
-
-.chassis-viewStudy-owners {
- 	display: inline;
- 	margin-left: 0.3em;
-}
-
-.chassis-viewStudy-summary {
-    font-weight: normal;
-	font-style: italic;
-	display: block;
-	margin: .2em 0 .2em 0;
-}
 
 
 

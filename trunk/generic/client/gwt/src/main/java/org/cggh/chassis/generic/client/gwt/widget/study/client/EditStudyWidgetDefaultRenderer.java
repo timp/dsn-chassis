@@ -10,6 +10,7 @@ import java.util.Set;
 
 
 import org.cggh.chassis.generic.atom.client.AtomAuthor;
+import org.cggh.chassis.generic.atomext.client.study.StudyEntry;
 import org.cggh.chassis.generic.client.gwt.common.client.CommonStyles;
 import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
 
@@ -148,7 +149,7 @@ public class EditStudyWidgetDefaultRenderer implements StudyModelListener {
 		InlineLabel titleLabel = new InlineLabel("What is the title of the study?");
 		titleQuestion.add(titleLabel);
 		titleQuestion.add(titleUI);
-		titleQuestion.addStyleName(CommonStyles.COMMON_QUESTION);
+		titleQuestion.addStyleName(CommonStyles.QUESTION);
 		
 		titleUI.addStyleName(CommonStyles.EDITSTUDY_TITLEINPUT);
 		titleUI.addValueChangeHandler(new TitleChangeHandler());
@@ -162,7 +163,7 @@ public class EditStudyWidgetDefaultRenderer implements StudyModelListener {
 		Label summaryLabel = new Label("Please provide a textual summary of the study...");
 		summaryQuestion.add(summaryLabel);
 		summaryQuestion.add(summaryUI);
-		summaryQuestion.addStyleName(CommonStyles.COMMON_QUESTION);
+		summaryQuestion.addStyleName(CommonStyles.QUESTION);
 		
 		summaryUI.addValueChangeHandler(new SummaryChangeHandler());
 
@@ -173,7 +174,7 @@ public class EditStudyWidgetDefaultRenderer implements StudyModelListener {
 		editStudyForm.add(new HTML("<h3>Modules</h3>"));
 		
 		FlowPanel modulesQuestion = new FlowPanel();
-		modulesQuestion.addStyleName(CommonStyles.COMMON_QUESTION);
+		modulesQuestion.addStyleName(CommonStyles.QUESTION);
 		modulesQuestion.addStyleName(CommonStyles.EDITSTUDY_MODULES);
 		editStudyForm.add(modulesQuestion);
 		
@@ -286,7 +287,7 @@ public class EditStudyWidgetDefaultRenderer implements StudyModelListener {
 	}
 
 	
-	public void onStudyEntryChanged(Boolean isValid) {
+	public void onStudyEntryChanged(StudyEntry entry, Boolean isValid) {
 		this.isFormComplete = isValid;		
 	}
 
