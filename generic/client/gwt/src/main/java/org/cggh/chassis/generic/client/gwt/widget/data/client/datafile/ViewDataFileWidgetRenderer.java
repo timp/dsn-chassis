@@ -8,6 +8,9 @@ import org.cggh.chassis.generic.atomui.client.AtomCrudWidgetModel;
 import org.cggh.chassis.generic.atomui.client.AtomEntryChangeEvent;
 import org.cggh.chassis.generic.atomui.client.AtomEntryChangeHandler;
 import org.cggh.chassis.generic.client.gwt.common.client.CommonStyles;
+import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.DatasetActionEvent;
+import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.DatasetActionHandler;
+import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.ViewDatasetActionEvent;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetRenderer;
@@ -32,6 +35,7 @@ public class ViewDataFileWidgetRenderer
 	private Log log = LogFactory.getLog(ViewDataFileWidgetRenderer.class);
 	private DataFilePropertiesWidget dataFilePropertiesWidget;
 	private DataFileRevisionsWidget revisionsWidget;
+	private DataFileDatasetsWidget datasetsWidget;
 	private DataFileActionsPanel actionsPanel;
 	private ViewDataFileWidget owner;
 
@@ -92,6 +96,12 @@ public class ViewDataFileWidgetRenderer
 		this.revisionsWidget = new DataFileRevisionsWidget();
 		contentPanel.add(this.revisionsWidget);
 		
+		contentPanel.add(new HTML("<h3>Datasets</h3>")); // TODO i18n
+		contentPanel.add(new HTML("<p>This data file is included in the following datasets...</p>")); // TODO i18n
+		
+		this.datasetsWidget = new DataFileDatasetsWidget();
+		contentPanel.add(this.datasetsWidget);
+
 		log.leave();
 		return contentPanel;
 	}
@@ -158,9 +168,21 @@ public class ViewDataFileWidgetRenderer
 			}
 		});
 		
+		HandlerRegistration c = this.datasetsWidget.addViewDatasetActionHandler(new DatasetActionHandler() {
+			
+			public void onAction(DatasetActionEvent e) {
+				
+				// just bubble
+				owner.fireEvent(e);
+				
+			}
+			
+		});
+		
 		// store handler registrations for later
 		this.childWidgetEventHandlerRegistrations.add(a);
 		this.childWidgetEventHandlerRegistrations.add(b);
+		this.childWidgetEventHandlerRegistrations.add(c);
 
 		log.leave();
 	}
@@ -207,10 +229,12 @@ public class ViewDataFileWidgetRenderer
 		if (entry != null) {
 			this.dataFilePropertiesWidget.setEntry(entry);
 			this.revisionsWidget.setEntry(entry);
+			this.datasetsWidget.setEntry(entry);
 		}
 		else {
 			this.dataFilePropertiesWidget.setEntry(null); // TODO review this, rather call reset() ?
 			this.revisionsWidget.setEntry(null); // TODO review this, rather call reset() ?
+			this.datasetsWidget.setEntry(null);
 		}
 		
 		log.leave();
@@ -218,4 +242,6 @@ public class ViewDataFileWidgetRenderer
 	
 	
 	
+	
+
 }

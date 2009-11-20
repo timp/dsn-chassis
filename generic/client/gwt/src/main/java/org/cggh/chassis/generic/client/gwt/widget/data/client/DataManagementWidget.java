@@ -25,6 +25,9 @@ import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.EditDatase
 import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.MyDatasetsWidget;
 import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.NewDatasetWidget;
 import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.ViewDatasetWidget;
+import org.cggh.chassis.generic.client.gwt.widget.study.client.StudyActionEvent;
+import org.cggh.chassis.generic.client.gwt.widget.study.client.StudyActionHandler;
+import org.cggh.chassis.generic.client.gwt.widget.study.client.ViewStudyActionEvent;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.MenuEvent;
@@ -242,8 +245,19 @@ public class DataManagementWidget
 			}
 		});
 		
+		HandlerRegistration c = this.viewDataFileWidget.addViewDatasetActionHandler(new DatasetActionHandler() {
+			
+			public void onAction(DatasetActionEvent e) {
+				
+				viewDatasetWidget.viewEntry(e.getEntry().getId());
+				setActiveChild(viewDatasetWidget);
+				
+			}
+		});
+		
 		this.childWidgetEventHandlerRegistrations.add(a);
 		this.childWidgetEventHandlerRegistrations.add(b);
+		this.childWidgetEventHandlerRegistrations.add(c);
 		
 		log.leave();
 	}
@@ -381,7 +395,7 @@ public class DataManagementWidget
 	 */
 	private void registerHandlersForViewDatasetWidgetEvents() {
 
-		HandlerRegistration a  = this.viewDatasetWidget.addEditDatasetActionHandler(new DatasetActionHandler() {
+		HandlerRegistration a = this.viewDatasetWidget.addEditDatasetActionHandler(new DatasetActionHandler() {
 			
 			public void onAction(DatasetActionEvent e) {
 
@@ -392,7 +406,26 @@ public class DataManagementWidget
 			}
 		});
 		
+		HandlerRegistration b = this.viewDatasetWidget.addViewStudyActionHandler(new StudyActionHandler() {
+			
+			public void onAction(StudyActionEvent e) {
+				// just bubble
+				fireEvent(e);
+			}
+		});
+		
+		HandlerRegistration c = this.viewDatasetWidget.addViewDataFileActionHandler(new DataFileActionHandler() {
+			
+			public void onAction(DataFileActionEvent e) {
+
+				viewDataFileWidget.viewEntry(e.getEntry().getId());
+				setActiveChild(viewDataFileWidget);
+				
+			}
+		});
+		
 		this.childWidgetEventHandlerRegistrations.add(a);
+		this.childWidgetEventHandlerRegistrations.add(b);
 		
 	}
 
@@ -486,6 +519,29 @@ public class DataManagementWidget
 
 
 
+
+
+
+	/**
+	 * @param id
+	 */
+	public void viewDataset(String id) {
+		this.viewDatasetWidget.viewEntry(id);
+		this.setActiveChild(this.viewDatasetWidget);
+	}
+
+
+
+
+
+	public HandlerRegistration addViewStudyActionHandler(StudyActionHandler h) {
+		return this.addHandler(h, ViewStudyActionEvent.TYPE);
+	}
+
+
+
+
+	
 
 
 

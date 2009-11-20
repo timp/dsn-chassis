@@ -7,11 +7,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.cggh.chassis.generic.atomext.client.dataset.DatasetEntry;
-import org.cggh.chassis.generic.atomext.client.study.DatasetLink;
+import org.cggh.chassis.generic.atomext.client.dataset.DatasetLink;
 import org.cggh.chassis.generic.atomext.client.study.StudyEntry;
 import org.cggh.chassis.generic.client.gwt.common.client.RenderUtils;
+import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.DatasetActionHandler;
+import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.ViewDatasetActionEvent;
 import org.cggh.chassis.generic.widget.client.ChassisWidget;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -95,13 +102,27 @@ public class StudyDatasetsWidget extends ChassisWidget {
 	 * @param entry
 	 * @return
 	 */
-	private Widget[] renderRow(int index, DatasetEntry entry) {
+	private Widget[] renderRow(int index, final DatasetEntry entry) {
+
+		Anchor viewAction = RenderUtils.renderActionAsAnchor("view", new ClickHandler() {
+			
+			public void onClick(ClickEvent arg0) {
+				
+				ViewDatasetActionEvent e = new ViewDatasetActionEvent();
+				e.setEntry(entry);
+				fireEvent(e);
+				
+			}
+		});
 		
+		FlowPanel actionsPanel = new FlowPanel();
+		actionsPanel.add(viewAction);
+
 		Widget[] row = { 
 			new HTML("<strong>"+entry.getTitle()+"</strong>"),
 			new HTML(RenderUtils.truncate(entry.getSummary(), 30)),
 			new HTML(RenderUtils.renderAtomAuthorsAsCommaDelimitedEmailString(entry.getAuthors())),
-			new HTML("TODO")
+			actionsPanel
 		};
 		
 		return row;
@@ -119,4 +140,11 @@ public class StudyDatasetsWidget extends ChassisWidget {
 	}
 
 	
+	
+	public HandlerRegistration addViewDatasetActionHandler(DatasetActionHandler h) {
+		return this.addHandler(h, ViewDatasetActionEvent.TYPE);
+	}
+
+
+
 }

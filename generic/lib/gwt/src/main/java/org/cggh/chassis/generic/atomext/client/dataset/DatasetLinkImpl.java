@@ -1,14 +1,12 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.atomext.client.study;
+package org.cggh.chassis.generic.atomext.client.dataset;
 
 import java.util.List;
 
 import org.cggh.chassis.generic.atom.client.Atom;
 import org.cggh.chassis.generic.atom.client.AtomLinkImpl;
-import org.cggh.chassis.generic.atomext.client.dataset.DatasetEntry;
-import org.cggh.chassis.generic.atomext.client.dataset.DatasetFactory;
 import org.cggh.chassis.generic.xml.client.XMLNS;
 
 import com.google.gwt.xml.client.Element;
@@ -22,7 +20,7 @@ public class DatasetLinkImpl extends AtomLinkImpl implements DatasetLink {
 	/**
 	 * @param e
 	 */
-	protected DatasetLinkImpl(Element e) {
+	public DatasetLinkImpl(Element e) {
 		super(e);
 	}
 

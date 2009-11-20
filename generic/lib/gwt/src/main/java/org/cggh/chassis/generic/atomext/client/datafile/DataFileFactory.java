@@ -5,8 +5,11 @@ package org.cggh.chassis.generic.atomext.client.datafile;
 
 import org.cggh.chassis.generic.atom.client.Atom;
 import org.cggh.chassis.generic.atom.client.AtomFactory;
+import org.cggh.chassis.generic.atom.client.AtomLink;
 import org.cggh.chassis.generic.atomext.client.datafile.DataFileEntry;
 import org.cggh.chassis.generic.atomext.client.datafile.DataFileFeed;
+import org.cggh.chassis.generic.atomext.client.dataset.DatasetLink;
+import org.cggh.chassis.generic.atomext.client.dataset.DatasetLinkImpl;
 import org.cggh.chassis.generic.atomext.shared.Chassis;
 
 import com.google.gwt.xml.client.Element;
@@ -69,6 +72,18 @@ public class DataFileFactory extends AtomFactory<DataFileEntry, DataFileFeed> {
 	@Override
 	public String getFeedTemplate() {
 		return TEMPLATE_FEED;
+	}
+
+
+
+
+
+	/**
+	 * @param link
+	 * @return
+	 */
+	public DatasetLink createDatasetLink(AtomLink link) {
+		return new DatasetLinkImpl(link.getElement());
 	}
 
 

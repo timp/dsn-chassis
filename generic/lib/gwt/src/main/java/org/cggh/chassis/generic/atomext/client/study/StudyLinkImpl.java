@@ -1,14 +1,12 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.atomext.client.dataset;
+package org.cggh.chassis.generic.atomext.client.study;
 
 import java.util.List;
 
 import org.cggh.chassis.generic.atom.client.Atom;
 import org.cggh.chassis.generic.atom.client.AtomLinkImpl;
-import org.cggh.chassis.generic.atomext.client.study.StudyEntry;
-import org.cggh.chassis.generic.atomext.client.study.StudyFactory;
 import org.cggh.chassis.generic.xml.client.XMLNS;
 
 import com.google.gwt.xml.client.Element;
@@ -22,7 +20,7 @@ public class StudyLinkImpl extends AtomLinkImpl implements StudyLink {
 	/**
 	 * @param e
 	 */
-	protected StudyLinkImpl(Element e) {
+	public StudyLinkImpl(Element e) {
 		super(e);
 	}
 

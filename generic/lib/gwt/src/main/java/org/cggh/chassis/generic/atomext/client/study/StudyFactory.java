@@ -6,6 +6,8 @@ package org.cggh.chassis.generic.atomext.client.study;
 import org.cggh.chassis.generic.atom.client.Atom;
 import org.cggh.chassis.generic.atom.client.AtomFactory;
 import org.cggh.chassis.generic.atom.client.AtomLink;
+import org.cggh.chassis.generic.atomext.client.dataset.DatasetLink;
+import org.cggh.chassis.generic.atomext.client.dataset.DatasetLinkImpl;
 import org.cggh.chassis.generic.atomext.shared.Chassis;
 
 import com.google.gwt.xml.client.Element;

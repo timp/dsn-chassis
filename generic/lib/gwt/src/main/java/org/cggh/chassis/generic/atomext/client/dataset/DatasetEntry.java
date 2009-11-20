@@ -6,6 +6,8 @@ package org.cggh.chassis.generic.atomext.client.dataset;
 import java.util.List;
 
 import org.cggh.chassis.generic.atom.client.AtomEntry;
+import org.cggh.chassis.generic.atomext.client.datafile.DataFileLink;
+import org.cggh.chassis.generic.atomext.client.study.StudyLink;
 
 /**
  * @author aliman

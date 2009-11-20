@@ -6,6 +6,7 @@ package org.cggh.chassis.generic.atomext.client.datafile;
 import java.util.List;
 
 import org.cggh.chassis.generic.atom.client.AtomEntry;
+import org.cggh.chassis.generic.atomext.client.dataset.DatasetLink;
 
 
 /**
@@ -15,5 +16,7 @@ import org.cggh.chassis.generic.atom.client.AtomEntry;
 public interface DataFileEntry extends AtomEntry {
 
 	public List<RevisionLink> getRevisionLinks();
+
+	public List<DatasetLink> getDatasetLinks();
 	
 }

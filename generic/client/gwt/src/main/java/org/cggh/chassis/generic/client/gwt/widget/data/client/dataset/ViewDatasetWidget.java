@@ -10,6 +10,10 @@ import org.cggh.chassis.generic.atomext.client.dataset.DatasetQuery;
 import org.cggh.chassis.generic.atomui.client.AtomCrudWidget;
 import org.cggh.chassis.generic.atomui.client.AtomCrudWidgetMemory;
 import org.cggh.chassis.generic.atomui.client.AtomCrudWidgetModel;
+import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.DataFileActionHandler;
+import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.ViewDataFileActionEvent;
+import org.cggh.chassis.generic.client.gwt.widget.study.client.StudyActionHandler;
+import org.cggh.chassis.generic.client.gwt.widget.study.client.ViewStudyActionEvent;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 
@@ -119,6 +123,22 @@ public class ViewDatasetWidget
 	public HandlerRegistration addEditDatasetActionHandler(DatasetActionHandler h) {
 		return this.addHandler(h, EditDatasetActionEvent.TYPE);
 	}
+
+
+
+
+	public HandlerRegistration addViewStudyActionHandler(StudyActionHandler h) {
+		return this.addHandler(h, ViewStudyActionEvent.TYPE);
+	}
+
+
+
+	public HandlerRegistration addViewDataFileActionHandler(DataFileActionHandler h) {
+		return this.addHandler(h, ViewDataFileActionEvent.TYPE);
+	}
+
+
+
 
 
 
