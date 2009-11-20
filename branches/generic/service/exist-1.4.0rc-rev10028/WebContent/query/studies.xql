@@ -1,32 +1,69 @@
+(: 
+    A script implementing a simple REST service to query and retrieve entries
+    in the studies collection.
+:)
+
 (: namespace declarations :)
+
+declare namespace exist = "http://exist.sourceforge.net/NS/exist" ;
+declare namespace request = "http://exist-db.org/xquery/request" ;
 declare namespace atom = "http://www.w3.org/2005/Atom" ;
 declare namespace my = "http://www.cggh.org/2009/chassis/xquery-function" ;
 
 
 
 (: serialization options :)
+
 declare option exist:serialize "method=xml media-type=application/xml indent=yes" ;
 
 
 
 (: declare functions :)
 
-declare function my:link( $entry as element(), $rel as xs:string ) as xs:string* {
-	$entry/atom:link[@rel=$rel]/@href
+declare function my:expand-study( $entry as element() ) as element() {
+	let $id := $entry/atom:id
+	return 
+	<atom:entry>
+	{
+		$id,
+		$entry/atom:published,
+		$entry/atom:updated,
+		$entry/atom:title,
+		$entry/atom:summary,
+		$entry/atom:category,
+		$entry/atom:author,
+		for $link in $entry/atom:link return my:expand-study-link($link),
+		my:rev-dataset-links($entry),
+		$entry/atom:content
+	}
+	</atom:entry>
 };
 
-declare function my:get-submission-by-url( $url as xs:string ) as element() {
-	collection("/db/submissions")//atom:entry[ my:link(., 'edit') = $url ]
+declare function my:expand-study-link( $link as element() ) as element() {
+	let $rel := $link/@rel
+	return $link
+	(: add logic here to expand any outbound links :)
 };
 
-declare function my:is-linked-from-submission( $study as element() , $submissionUrl as xs:string ) as xs:boolean {
-
-	let $submission := my:get-submission-by-url($submissionUrl)
-
-	return if ( my:link($submission, 'chassis.study') = my:link($study, 'edit') ) then true() else false()
-
+declare function my:expand-link( $collection-path as xs:string, $link as element() ) as element() {
+	let $rel := $link/@rel
+	let $href := $link/@href
+	return 
+	<atom:link rel="{$rel}" href="{$href}">
+		{
+			collection($collection-path)//atom:entry[atom:link[@rel="edit" and @href=$href]]
+		}
+	</atom:link>
 };
 
+declare function my:rev-dataset-links( $entry as element() ) as element()* {
+    let $href := $entry/atom:link[@rel="edit"]/@href
+    for $dataset in collection("/db/datasets")//atom:entry[atom:link[@rel="chassis.study" and @href=$href]]
+    return
+    <atom:link rel="chassis.dataset" href="{$dataset/atom:link[@rel='edit']/@href}">
+        { $dataset }
+    </atom:link>
+};
 
 
 (: find collections :)
@@ -36,8 +73,8 @@ let $studies := collection("/db/studies")
 
 (: fish out request params :)
 
-let $param_authoremail := request:get-parameter("authoremail","")
-let $param_submission := request:get-parameter("submission","")
+let $param-authoremail := request:get-parameter("authoremail","")
+let $param-id := request:get-parameter("id","")
 
 
 
@@ -45,7 +82,6 @@ let $param_submission := request:get-parameter("submission","")
 
 return 
 <atom:feed>
-    <params><authoremail>{$param_authoremail}</authoremail><submission>{$param_submission}</submission></params>
 	<atom:title>Query Results</atom:title>
 	{
 		(: for all Atom entries within the collection :)
@@ -56,18 +92,18 @@ return
 		
 		(: filter by author email, if request parameter is given :)
 
-		( ( $param_authoremail != "" and $param_authoremail = $study/atom:author/atom:email ) or ( $param_authoremail = "" ) )
+		( ( $param-authoremail != "" and $param-authoremail = $study/atom:author/atom:email ) or ( $param-authoremail = "" ) )
 
-		(: filter by submission, if request parameter is given :)
-		
 		and
 		
-		( ( $param_submission != "" and my:is-linked-from-submission($study, $param_submission) ) or ( $param_submission = "" ) )
+		(: filter by ID, if request parameter is given :)
 
-		(: order by most recently updated :)
+		( ($param-id != "" and $study/atom:id = $param-id) or ($param-id = "") )
+
+        (: order by most recently updated :)
 		
 		order by $study/atom:updated descending
 		
-		return $study
+		return my:expand-study($study)
 	}
 </atom:feed>

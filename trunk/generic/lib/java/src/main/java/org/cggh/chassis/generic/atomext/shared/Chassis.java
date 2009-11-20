@@ -19,6 +19,7 @@ public class Chassis {
 		public static final String SUBMISSION = "chassis.submission";
 		public static final String REVISION = "chassis.revision";
 		public static final String DATAFILE = "chassis.datafile";
+		public static final Object DATASET = "chassis.dataset";
 		
 	}
 

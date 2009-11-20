@@ -7,8 +7,19 @@ import java.util.HashSet;
 import java.util.Set;
 
 
+import org.cggh.chassis.generic.async.client.Deferred;
+import org.cggh.chassis.generic.atomext.client.dataset.DatasetEntry;
+import org.cggh.chassis.generic.atomext.client.dataset.DatasetFeed;
 import org.cggh.chassis.generic.atomext.client.study.StudyEntry;
+import org.cggh.chassis.generic.atomext.client.study.StudyFeed;
+import org.cggh.chassis.generic.atomext.client.study.StudyQuery;
+import org.cggh.chassis.generic.atomui.client.AtomCrudWidget;
+import org.cggh.chassis.generic.atomui.client.AtomCrudWidgetMemory;
+import org.cggh.chassis.generic.atomui.client.AtomCrudWidgetModel;
+import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.DatasetActionHandler;
+import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.EditDatasetActionEvent;
 
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Panel;
 
@@ -16,137 +27,102 @@ import com.google.gwt.user.client.ui.Panel;
  * @author raok
  *
  */
-public class ViewStudyWidget extends Composite implements StudyControllerPubSubViewAPI {
+public class ViewStudyWidget 
+	extends AtomCrudWidget<StudyEntry, StudyFeed, StudyQuery, AtomCrudWidgetModel<StudyEntry>, ViewStudyWidgetRenderer, ViewStudyWidgetController>
+	
+{
 
 	
 	
 	
-	final private StudyModel model;
-	final private StudyControllerViewAPI controller;
-	final private ViewStudyWidgetDefaultRenderer renderer;
-	private Set<ViewStudyWidgetPubSubAPI> listeners = new HashSet<ViewStudyWidgetPubSubAPI>();
-	
-	
-	
-	
-	public ViewStudyWidget(Panel canvas) {
-		
-		model = new StudyModel();
-		
-		controller = new StudyController(model, this);
-		
-		renderer = new ViewStudyWidgetDefaultRenderer(canvas, controller);
-		
-		// register renderer as listener to model
-		model.addListener(renderer);
-		
-		this.initWidget(renderer.getCanvas());
-		
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.atomui.client.AtomCrudWidget#createController()
+	 */
+	@Override
+	protected ViewStudyWidgetController createController() {
+		return new ViewStudyWidgetController(this, model);
 	}
 
 	
 	
 	
-	public ViewStudyWidget(ViewStudyWidgetDefaultRenderer customRenderer) {
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.widget.client.DelegatingWidget#createModel()
+	 */
+	@Override
+	protected AtomCrudWidgetModel<StudyEntry> createModel() {
+		return new AtomCrudWidgetModel<StudyEntry>();
+	}
 
-		model = new StudyModel();
-		
-		controller = new StudyController(model, this);
-		
-		renderer = customRenderer;
-		
-		// register renderer as listener to model
-		model.addListener(renderer);
+	
+	
+	
+	
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.widget.client.DelegatingWidget#createRenderer()
+	 */
+	@Override
+	protected ViewStudyWidgetRenderer createRenderer() {
+		return new ViewStudyWidgetRenderer(this);
+	}
 
-		this.initWidget(renderer.getCanvas());
+	
+	
+	
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#init()
+	 */
+	@Override
+	public void init() {
+
+		super.init(); // this will instantiate controller, model and renderer
+		
+		this.memory = new AtomCrudWidgetMemory<StudyEntry, StudyFeed>(this.model, this.controller);
 		
 	}
 	
 	
 	
-		
+	
+	
+
 	/**
-	 * 
+	 * @param id
 	 */
-	public ViewStudyWidget() {
+	public Deferred<StudyEntry> viewEntry(String id) {
 
-		model = new StudyModel();
-		
-		controller = new StudyController(model, this);
-		
-		renderer = new ViewStudyWidgetDefaultRenderer(controller);
-		
-		// register renderer as listener to model
-		model.addListener(renderer);
-		
-		this.initWidget(renderer.getCanvas());
+		// delegate to controller
+		return this.controller.retrieveExpandedEntry(id);
 		
 	}
 
-	
-	
-	
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.client.gwt.widget.study.view.client.ViewStudyWidgetAPI#loadStudyEntry(org.cggh.chassis.generic.atom.study.client.format.StudyEntry)
-	 */
-	public void loadStudyEntry(StudyEntry studyEntry) {
-		controller.loadStudyEntry(studyEntry);
-	}
-	
-	
-	
-	
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.client.gwt.widget.study.view.client.ViewStudyWidgetAPI#loadStudyByEntryUrl(java.lang.String)
-	 */
-	public void loadStudyByEntryUrl(String entryUrl) {
-		controller.loadStudyEntryByUrl(entryUrl);
-	}
-	
-	
-	
-	
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.client.gwt.widget.study.view.client.ViewStudyWidgetAPI#addViewStudyWidgetListener(org.cggh.chassis.generic.client.gwt.widget.study.view.client.ViewStudyWidgetPubSubAPI)
-	 */
-	public void addViewStudyWidgetListener(ViewStudyWidgetPubSubAPI listener) {
-		listeners.add(listener);
-	}
+
 
 	
-	
-	
-	public void fireOnUserActionEditStudy(StudyEntry studyEntryToEdit) {
-		for (ViewStudyWidgetPubSubAPI listener : listeners ) {
-			listener.onUserActionEditStudy(studyEntryToEdit);
-		}
+	public HandlerRegistration addEditStudyActionHandler(StudyActionHandler h) {
+		return this.addHandler(h, EditStudyActionEvent.TYPE);
 	}
 
 
 
 
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerPubSubViewAPI#onUserActionEditStudyQuestionnaire(org.cggh.chassis.generic.atom.study.client.format.StudyEntry)
-	 */
-	public void fireOnUserActionEditStudyQuestionnaire(StudyEntry studyEntry) {
-		for (ViewStudyWidgetPubSubAPI listener : listeners ) {
-			listener.onUserActionEditStudyQuestionnaire(studyEntry);
-		}
+	
+	public HandlerRegistration addEditStudyQuestionnaireActionHandler(StudyActionHandler h) {
+		return this.addHandler(h, EditStudyQuestionnaireActionEvent.TYPE);
 	}
 
 
 
 
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.client.gwt.widget.study.controller.client.StudyControllerPubSubViewAPI#onUserActionViewStudyQuestionnaire(org.cggh.chassis.generic.atom.study.client.format.StudyEntry)
-	 */
-	public void fireOnUserActionViewStudyQuestionnaire(StudyEntry studyEntry) {
-		for (ViewStudyWidgetPubSubAPI listener : listeners ) {
-			listener.onUserActionViewStudyQuestionnaire(studyEntry);
-		}
+	
+
+	public HandlerRegistration addViewStudyQuestionnaireActionHandler(StudyActionHandler h) {
+		return this.addHandler(h, ViewStudyQuestionnaireActionEvent.TYPE);
 	}
-	
-	
+
+
+
 	
 	
 }

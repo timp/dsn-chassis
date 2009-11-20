@@ -1,13 +1,13 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.client.gwt.widget.data.client.dataset;
+package org.cggh.chassis.generic.client.gwt.widget.study.client;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.cggh.chassis.generic.atomext.client.dataset.DatasetEntry;
-import org.cggh.chassis.generic.atomext.client.dataset.StudyLink;
+import org.cggh.chassis.generic.atomext.client.study.DatasetLink;
 import org.cggh.chassis.generic.atomext.client.study.StudyEntry;
 import org.cggh.chassis.generic.client.gwt.common.client.RenderUtils;
 import org.cggh.chassis.generic.widget.client.ChassisWidget;
@@ -19,17 +19,17 @@ import com.google.gwt.user.client.ui.Widget;
  * @author aliman
  *
  */
-public class DatasetStudiesWidget extends ChassisWidget {
+public class StudyDatasetsWidget extends ChassisWidget {
+
+	
+	// TODO consider refactoring with other results table-like widgets,
+	// e.g. datasetstudieswidget
 	
 	
 	
-	// TODO consider factoring out to studies table or something like that
-	
-	
-	
-	
+
 	// state variables
-	private DatasetEntry entry;
+	private StudyEntry entry;
 	
 	
 	
@@ -70,11 +70,11 @@ public class DatasetStudiesWidget extends ChassisWidget {
 		
 		if (this.entry != null) {
 			
-			List<StudyLink> links = this.entry.getStudyLinks();
+			List<DatasetLink> links = this.entry.getDatasetLinks();
 			
 			for (int i=0; i<links.size(); i++) {
 				
-				StudyEntry se = links.get(i).getEntry();
+				DatasetEntry se = links.get(i).getEntry();
 				if (se != null)	rows.add(this.renderRow(i, se));
 				
 			}
@@ -95,7 +95,7 @@ public class DatasetStudiesWidget extends ChassisWidget {
 	 * @param entry
 	 * @return
 	 */
-	private Widget[] renderRow(int index, StudyEntry entry) {
+	private Widget[] renderRow(int index, DatasetEntry entry) {
 		
 		Widget[] row = { 
 			new HTML("<strong>"+entry.getTitle()+"</strong>"),
@@ -113,12 +113,10 @@ public class DatasetStudiesWidget extends ChassisWidget {
 	/**
 	 * @param entry
 	 */
-	public void setEntry(DatasetEntry entry) {
+	public void setEntry(StudyEntry entry) {
 		this.entry = entry;
 		this.syncUI();
 	}
 
-	
-	
 	
 }

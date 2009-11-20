@@ -28,6 +28,11 @@ public class ViewDatasetWidgetRenderer
 	
 	
 	private Log log = LogFactory.getLog(ViewDatasetWidgetRenderer.class);
+	
+	
+	
+	
+	// UI fields
 	private DatasetPropertiesWidget datasetPropertiesWidget;
 	private DatasetActionsPanel actionsPanel;
 	private ViewDatasetWidget owner;
@@ -40,6 +45,9 @@ public class ViewDatasetWidgetRenderer
 	public ViewDatasetWidgetRenderer(ViewDatasetWidget owner) {
 		this.owner = owner;
 	}
+	
+	
+	
 	
 	
 	/* (non-Javadoc)

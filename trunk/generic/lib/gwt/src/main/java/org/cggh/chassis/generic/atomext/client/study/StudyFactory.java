@@ -5,6 +5,7 @@ package org.cggh.chassis.generic.atomext.client.study;
 
 import org.cggh.chassis.generic.atom.client.Atom;
 import org.cggh.chassis.generic.atom.client.AtomFactory;
+import org.cggh.chassis.generic.atom.client.AtomLink;
 import org.cggh.chassis.generic.atomext.shared.Chassis;
 
 import com.google.gwt.xml.client.Element;
@@ -95,6 +96,12 @@ public class StudyFactory extends AtomFactory<StudyEntry, StudyFeed> {
 		return new StudyImpl(studyElement);
 	}
 
+	
+	
+	
+	public DatasetLink createDatasetLink(AtomLink link) {
+		return new DatasetLinkImpl(link.getElement());
+	}
 	
 	
 	

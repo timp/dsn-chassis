@@ -13,6 +13,7 @@ import org.cggh.chassis.generic.atomext.client.datafile.DataFileFeed;
 import org.cggh.chassis.generic.atomext.client.datafile.DataFileQueryService;
 import org.cggh.chassis.generic.atomext.client.study.StudyEntry;
 import org.cggh.chassis.generic.atomext.client.study.StudyFeed;
+import org.cggh.chassis.generic.atomext.client.study.StudyQuery;
 import org.cggh.chassis.generic.atomext.client.study.StudyQueryService;
 import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
 import org.cggh.chassis.generic.log.client.Log;
@@ -35,8 +36,9 @@ public class ChassisUtils {
 	public static Deferred<Map<String,String>> getMapOfStudyLinksToTitlesForCurrentUser() {
 		
 		StudyQueryService service = new StudyQueryService(Configuration.getStudyQueryServiceUrl());
-		
-		Deferred<StudyFeed> deferredFeed = service.getStudiesByAuthorEmail(ChassisUser.getCurrentUserEmail());
+		StudyQuery query = new StudyQuery();
+		query.setAuthorEmail(ChassisUser.getCurrentUserEmail());
+		Deferred<StudyFeed> deferredFeed = service.query(query);
 		
 		Deferred<Map<String,String>> deferredMap = deferredFeed.adapt(new Function<StudyFeed, Map<String,String>>() {
 
