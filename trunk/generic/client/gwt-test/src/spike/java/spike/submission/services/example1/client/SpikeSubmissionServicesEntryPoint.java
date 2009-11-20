@@ -10,6 +10,7 @@ import org.cggh.chassis.generic.atomext.client.study.StudyEntry;
 import org.cggh.chassis.generic.atomext.client.study.StudyFactory;
 import org.cggh.chassis.generic.atomext.client.study.StudyFeed;
 import org.cggh.chassis.generic.atomext.client.study.StudyPersistenceService;
+import org.cggh.chassis.generic.atomext.client.study.StudyQuery;
 import org.cggh.chassis.generic.atomext.client.study.StudyQueryService;
 import org.cggh.chassis.generic.atomext.client.submission.SubmissionEntry;
 import org.cggh.chassis.generic.atomext.client.submission.SubmissionFactory;
@@ -71,7 +72,9 @@ public class SpikeSubmissionServicesEntryPoint implements EntryPoint {
 		
 		log.debug("get Alice's studies");
 		StudyQueryService service = new StudyQueryService(JsConfiguration.getStudyQueryServiceUrl());
-		Deferred<StudyFeed> deferredResults = service.getStudiesByAuthorEmail("alice@example.org");
+		StudyQuery query = new StudyQuery();
+		query.setAuthorEmail("alice@example.org");
+		Deferred<StudyFeed> deferredResults = service.query(query);
 
 		log.leave();
 		return deferredResults;
