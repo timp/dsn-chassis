@@ -18,7 +18,7 @@ public class AdminCollectionWidget extends Composite {
 	
 	private AdminCollectionWidgetModel model;
 	private AdminCollectionWidgetController controller;
-	private AdminCollectionWidgetDefaultRenderer renderer;
+	private AdminCollectionWidgetRenderer renderer;
 
 	public AdminCollectionWidget(String title, String url) {
 		
@@ -29,7 +29,7 @@ public class AdminCollectionWidget extends Composite {
 		controller = new AdminCollectionWidgetController(model);
 		
 		// then renderer
-		renderer = new AdminCollectionWidgetDefaultRenderer(controller);
+		renderer = new AdminCollectionWidgetRenderer(controller);
 		model.addListener(renderer);
 		
 		// init model

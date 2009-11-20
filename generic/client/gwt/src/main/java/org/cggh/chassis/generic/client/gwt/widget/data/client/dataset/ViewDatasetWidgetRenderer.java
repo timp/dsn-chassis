@@ -61,7 +61,7 @@ public class ViewDatasetWidgetRenderer
 
 		this.mainPanel.add(new HTML("<h2>View Dataset</h2>")); // TODO i18n
 
-		this.mainPanel.addStyleName(CommonStyles.COMMON_MAINWITHACTIONS);
+		this.mainPanel.addStyleName(CommonStyles.MAINWITHACTIONS);
 		this.mainPanel.add(contentPanel);
 		this.mainPanel.add(this.actionsPanel);
 

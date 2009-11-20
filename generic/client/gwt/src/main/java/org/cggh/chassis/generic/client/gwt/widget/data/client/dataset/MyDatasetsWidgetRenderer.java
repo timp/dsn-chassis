@@ -20,6 +20,7 @@ import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -57,7 +58,7 @@ public class MyDatasetsWidgetRenderer
 
 		this.canvas.add(new HTML("<h2>My Datasets</h2>")); // TODO i18n
 
-		this.canvas.add(new HTML("<p>Listed below are all of the datasets you own.</p>")); // TODO i18n
+		this.canvas.add(new HTML("<p>The table below lists all of the datasets that you own...</p>")); // TODO i18n
 
 		this.resultsTableContainer = new FlowPanel();
 		this.canvas.add(this.resultsTableContainer);
@@ -125,12 +126,14 @@ public class MyDatasetsWidgetRenderer
 		
 		if (feed != null) {
 			
-			Widget[] headerRow = {
-				new HTML("<strong>Title</strong>"),	
-				new HTML("<strong>Summary</strong>"),	
-				new HTML("<strong>Owners</strong>"),	
-				new HTML("<strong>Actions</strong>")
+			String[] headers = {
+					"Title",	
+					"Summary",	
+					"Owners",	
+					"Actions"
 			};
+			
+			Widget[] headerRow = RenderUtils.renderLabels(headers);
 			
 			List<Widget[]> rows = new ArrayList<Widget[]>();
 			rows.add(headerRow);
@@ -170,7 +173,7 @@ public class MyDatasetsWidgetRenderer
 		
 		Widget[] row = {
 				new HTML("<strong>"+entry.getTitle()+"</strong>"),	
-				new HTML(RenderUtils.truncate(entry.getSummary(), 20)),	
+				new Label(RenderUtils.truncate(entry.getSummary(), 20)),	
 				RenderUtils.renderAtomAuthorsAsLabel(entry, false),	
 				viewAction
 		};

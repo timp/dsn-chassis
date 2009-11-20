@@ -4,7 +4,7 @@ if (typeof CHASSIS == "undefined" || !CHASSIS) {
 
 // configure service URLs
 
-CHASSIS.client = "/chassis-generic-client-gwt";
+CHASSIS.client = "/chassis-wwarn-client-gwt";
 CHASSIS.userService = "/chassis-generic-service-user";
 CHASSIS.existService = "/chassis-generic-service-exist";
 CHASSIS.uploadService = "/chassis-generic-service-upload";

@@ -85,7 +85,7 @@ public class AdministratorHomeWidget extends ChassisWidget {
 	protected void renderUI() {
 		log.enter("renderUI");
 		
-		this.add(new HTML("<h2>Administrator Home</h2>"));
+		this.add(new HTML("<h2>Administrator Home</h2>")); // TODO i18n
 		
 		FlowPanel collectionsPanel = new FlowPanel();
 		this.add(collectionsPanel);

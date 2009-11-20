@@ -15,7 +15,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author aliman
  *
  */
-public class AdminCollectionWidgetDefaultRenderer implements AdminCollectionWidgetModelListener {
+public class AdminCollectionWidgetRenderer implements AdminCollectionWidgetModelListener {
 
 	
 	
@@ -28,7 +28,7 @@ public class AdminCollectionWidgetDefaultRenderer implements AdminCollectionWidg
 	Label statusCodeLabel;
 	private AdminCollectionWidgetController controller;
 
-	public AdminCollectionWidgetDefaultRenderer(AdminCollectionWidgetController controller) {
+	public AdminCollectionWidgetRenderer(AdminCollectionWidgetController controller) {
 		this.controller = controller;
 		this.initCanvas();
 	}

@@ -9,89 +9,65 @@ package org.cggh.chassis.generic.client.gwt.common.client;
  */
 public class CommonStyles {
 
-	public static final String COMMON_BASE = "chassis";
+	public static final String BASE = "chassis";
 	
-	public static final String COMMON_QUESTION = COMMON_BASE + "-question";
-	public static final String COMMON_ANSWER = COMMON_BASE + "-answer";
-	public static final String COMMON_ACTIONS = COMMON_BASE + "-actions";
-	public static final String COMMON_ACTION = COMMON_BASE + "-action";
-	public static final String COMMON_MAINWITHACTIONS = COMMON_BASE + "-mainWithActions";
-	public static final String COMMON_LOADING = COMMON_BASE + "-loading";
+	public static final String QUESTION = BASE + "-question";
+	public static final String QUESTION_TITLE = QUESTION + "-title";
+	public static final String QUESTION_SUMMARY = QUESTION + "-summary";
+	public static final String QUESTION_MODULES = QUESTION + "-modules";
+	public static final String QUESTION_OWNERS = QUESTION + "-owners";
+	public static final String QUESTION_ID = QUESTION + "-id";
+	public static final String QUESTION_CREATED = QUESTION + "-created";
+	public static final String QUESTION_UPDATED = QUESTION + "-updated";
+
+	public static final String ANSWER = BASE + "-answer";
+	public static final String ACTIONS = BASE + "-actions";
+	public static final String ACTION = BASE + "-action";
+	public static final String MAINWITHACTIONS = BASE + "-mainWithActions";
+	public static final String LOADING = BASE + "-loading";
+
+
+	public static final String VALUE = BASE + "-value";
+	public static final String VALUE_SUMMARY = VALUE + "-summary";
+	public static final String VALUE_TITLE = VALUE + "-title";
+	public static final String VALUE_MODULES = VALUE + "-modules";
+	public static final String VALUE_OWNERS = VALUE + "-owners";
+	public static final String VALUE_ID = VALUE + "-id";
+	public static final String VALUE_CREATED = VALUE + "-created";
+	public static final String VALUE_UPDATED = VALUE + "-updated";
+
+	public static final String RESULTSTABLE = BASE + "-resultsTable";
+	public static final String RESULTSTABLE_FIRSTROW = RESULTSTABLE + "-firstRow";
+	public static final String RESULTSTABLE_FIRSTCOL = RESULTSTABLE + "-firstCol";
+	public static final String RESULTSTABLE_EVEN = RESULTSTABLE + "-even";
+	public static final String RESULTSTABLE_ODD = RESULTSTABLE + "-odd";
+	public static final String RESULTSTABLE_CELL = RESULTSTABLE + "-cell";
+
+
+	// TODO factor out widget-specific styles
 	
-	public static final String VIEWSTUDIES_BASE = COMMON_BASE + "-viewStudies";
+	public static final String VIEWSTUDIES_BASE = BASE + "-viewStudies";
 
 	public static final String VIEWSTUDIES_STUDIESTABLE = VIEWSTUDIES_BASE + "-studiesTable";
 	public static final String VIEWSTUDIES_TABLEHEADER = VIEWSTUDIES_BASE + "-tableHeader";
 	public static final String VIEWSTUDIES_STUDYTITLE = VIEWSTUDIES_BASE + "-studyTitle";
 
-	public static final String VIEWSTUDY_BASE = COMMON_BASE + "-viewStudy";
+	public static final String VIEWSTUDY_BASE = BASE + "-viewStudy";
 	public static final String VIEWSTUDY_MODULES = VIEWSTUDY_BASE + "-modules";
 	public static final String VIEWSTUDY_OWNERS = VIEWSTUDY_BASE + "-owners";
 	public static final String VIEWSTUDY_TITLE = VIEWSTUDY_BASE + "-title";
 	public static final String VIEWSTUDY_SUMMARY = VIEWSTUDY_BASE + "-summary";
 	public static final String VIEWSTUDY_ID = VIEWSTUDY_BASE + "-id";
 
-	public static final String CREATESTUDY_BASE = COMMON_BASE + "-createStudy";
+	public static final String CREATESTUDY_BASE = BASE + "-createStudy";
 	public static final String CREATESTUDY_TITLEINPUT = CREATESTUDY_BASE + "-titleInput";
 	public static final String CREATESTUDY_ACTIONS = CREATESTUDY_BASE + "-actions";
 	public static final String CREATESTUDY_MODULES = CREATESTUDY_BASE + "-modules";
 
-	public static final String EDITSTUDY_BASE = COMMON_BASE + "-editStudy";
+	public static final String EDITSTUDY_BASE = BASE + "-editStudy";
 	public static final String EDITSTUDY_TITLEINPUT = EDITSTUDY_BASE + "-titleInput";
 	public static final String EDITSTUDY_ACTIONS = EDITSTUDY_BASE + "-actions";
 	public static final String EDITSTUDY_MODULES = EDITSTUDY_BASE + "-modules";
-
-	public static final String CREATESUBMISSION_BASE = COMMON_BASE + "-createSubmission";
-	public static final String CREATESUBMISSION_TITLEINPUT = CREATESUBMISSION_BASE + "-titleInput";
-	public static final String CREATESUBMISSION_SUMMARYINPUT = CREATESUBMISSION_BASE + "-summaryInput";
-	public static final String CREATESUBMISSION_MODULES = CREATESUBMISSION_BASE + "-modules";
-	public static final String CREATESUBMISSION_ACTIONS = CREATESUBMISSION_BASE + "-actions";
-
-	public static final String SUBMISSIONFORM_BASE = COMMON_BASE + "-submissionForm";
-	public static final String SUBMISSIONFORM_TITLEQUESTION = SUBMISSIONFORM_BASE + "-titleQuestion";
-	public static final String SUBMISSIONFORM_SUMMARYQUESTION = SUBMISSIONFORM_BASE + "-summaryQuestion";
-	public static final String SUBMISSIONFORM_MODULESQUESTION = SUBMISSIONFORM_BASE + "-modulesQuestion";
-	public static final String SUBMISSIONFORM_STUDIESQUESTION = SUBMISSIONFORM_BASE + "-studiesQuestion";
-	public static final String SUBMISSIONFORM_SELECTSTUDY = SUBMISSIONFORM_BASE + "-selectStudy";
-
-	public static final String VIEWSUBMISSION_BASE = COMMON_BASE + "-viewSubmission";
-	public static final String VIEWSUBMISSION_SUMMARY = VIEWSUBMISSION_BASE + "-summary";
-	public static final String VIEWSUBMISSION_TITLE = VIEWSUBMISSION_BASE + "-title";
-	public static final String VIEWSUBMISSION_MODULES = VIEWSUBMISSION_BASE + "-modules";
-	public static final String VIEWSUBMISSION_OWNERS = VIEWSUBMISSION_BASE + "-owners";
-	public static final String VIEWSUBMISSION_ID = VIEWSUBMISSION_BASE + "-id";
-
-	public static final String VIEWSUBMISSIONS_BASE = COMMON_BASE + "-viewSubmissions";
-	public static final String VIEWSUBMISSIONS_SUBMISSIONSTABLE = VIEWSUBMISSIONS_BASE + "-submissionsTable";
-	public static final String VIEWSUBMISSIONS_TABLEHEADER = VIEWSUBMISSIONS_BASE + "-tableHeader";
-	public static final String VIEWSUBMISSIONS_SUBMISSIONTITLE = VIEWSUBMISSIONS_BASE + "-submissionTitle";
-
-	public static final String EDITSUBMISSION_BASE = COMMON_BASE + "-editSubmission";
-	public static final String EDITSUBMISSION_ACTIONS = EDITSUBMISSION_BASE + "-actions";
-
-	public static final String UPLOADSUBMISSIONDATAFILE_BASE = COMMON_BASE + "-uploadSubmissionDataFile";
-	public static final String UPLOADSUBMISSIONDATAFILE_FILEINPUT = UPLOADSUBMISSIONDATAFILE_BASE + "-fileInput";
-	public static final String UPLOADSUBMISSIONDATAFILE_COMMENTINPUT = UPLOADSUBMISSIONDATAFILE_BASE + "-commentInput";
-	public static final String UPLOADSUBMISSIONDATAFILE_ACTIONS = UPLOADSUBMISSIONDATAFILE_BASE + "-actions";
-
-	public static final String VIEWSUBMISSIONDATAFILES_BASE = COMMON_BASE + "-viewSubmissionDataFiles";
-	public static final String VIEWSUBMISSIONDATAFILES_DATAFILESTABLE = VIEWSUBMISSIONDATAFILES_BASE + "-dataFilesTable";
-	public static final String VIEWSUBMISSIONDATAFILES_TABLEHEADER = VIEWSUBMISSIONDATAFILES_BASE + "-tableHeader";
-	public static final String VIEWSUBMISSIONDATAFILES_FILETITLE = VIEWSUBMISSIONDATAFILES_BASE + "-fileTitle";
-	public static final String VIEWSUBMISSIONDATAFILES_FILESUMMARY = VIEWSUBMISSIONDATAFILES_BASE + "-fileSummary";
-	public static final String VIEWSUBMISSIONDATAFILES_DOWNLOADLINK = VIEWSUBMISSIONDATAFILES_BASE + "-downloadLink";
-
-	public static final String RESULTSTABLE = "chassis-resultsTable";
-	public static final String RESULTSTABLE_FIRSTROW = "chassis-resultsTable-firstRow";
-	public static final String RESULTSTABLE_FIRSTCOL = "chassis-resultsTable-firstCol";
-	public static final String RESULTSTABLE_EVEN = "chassis-resultsTable-even";
-	public static final String RESULTSTABLE_ODD = "chassis-resultsTable-odd";
-	public static final String RESULTSTABLE_CELL = "chassis-resultsTable-cell";
-
-
-
-
-
 
 
 	

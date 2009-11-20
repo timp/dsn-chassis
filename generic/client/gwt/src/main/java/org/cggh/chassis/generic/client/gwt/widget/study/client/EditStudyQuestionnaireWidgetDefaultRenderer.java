@@ -115,7 +115,7 @@ class EditStudyQuestionnaireWidgetDefaultRenderer implements StudyQuestionnaireW
 		
 		statusPanel = new FlowPanel();
 		statusPanel.setVisible(false);
-		statusPanel.addStyleName(CommonStyles.COMMON_LOADING);
+		statusPanel.addStyleName(CommonStyles.LOADING);
 		statusLabel = new InlineLabel();
 		statusPanel.add(statusLabel);
 		
@@ -159,32 +159,32 @@ class EditStudyQuestionnaireWidgetDefaultRenderer implements StudyQuestionnaireW
 
 		titlePanel = new FlowPanel();
 		titlePanel.add(new InlineLabel("Study title: "));
-		titleLabel.addStyleName(CommonStyles.COMMON_ANSWER);
+		titleLabel.addStyleName(CommonStyles.ANSWER);
 		titleLabel.addStyleName(CommonStyles.VIEWSTUDY_TITLE);
 		titlePanel.add(titleLabel);
-		titlePanel.addStyleName(CommonStyles.COMMON_QUESTION);
+		titlePanel.addStyleName(CommonStyles.QUESTION);
 		studyInfoPanel.add(titlePanel);
 		
 		summaryPanel = new FlowPanel();
 		summaryPanel.add(new InlineLabel("Summary: "));
-		summaryLabel.addStyleName(CommonStyles.COMMON_ANSWER);
+		summaryLabel.addStyleName(CommonStyles.ANSWER);
 		summaryLabel.addStyleName(CommonStyles.VIEWSTUDY_SUMMARY);
 		summaryPanel.add(summaryLabel);
-		summaryPanel.addStyleName(CommonStyles.COMMON_QUESTION);
+		summaryPanel.addStyleName(CommonStyles.QUESTION);
 		studyInfoPanel.add(summaryPanel);
 		
 		modulesPanel = new FlowPanel();
 		modulesPanel.add(new InlineLabel("Modules:"));
 		modulesListPanel.addStyleName(CommonStyles.VIEWSTUDY_MODULES);
 		modulesPanel.add(modulesListPanel);
-		modulesPanel.addStyleName(CommonStyles.COMMON_QUESTION);
+		modulesPanel.addStyleName(CommonStyles.QUESTION);
 		studyInfoPanel.add(modulesPanel);
 
 		ownersPanel = new FlowPanel();
 		ownersPanel.add(new InlineLabel("Owners:"));
 		ownersListPanel.addStyleName(CommonStyles.VIEWSTUDY_OWNERS);
 		ownersPanel.add(ownersListPanel);
-		ownersPanel.addStyleName(CommonStyles.COMMON_QUESTION);
+		ownersPanel.addStyleName(CommonStyles.QUESTION);
 		studyInfoPanel.add(ownersPanel);
 
 		// hide these for now
@@ -324,7 +324,7 @@ class EditStudyQuestionnaireWidgetDefaultRenderer implements StudyQuestionnaireW
 		}
 		
 		InlineLabel modulesAnswer = new InlineLabel(modulesContent);
-		modulesAnswer.addStyleName(CommonStyles.COMMON_ANSWER);
+		modulesAnswer.addStyleName(CommonStyles.ANSWER);
 		modulesListPanel.add(modulesAnswer);
 
 		ownersListPanel.clear();
@@ -338,7 +338,7 @@ class EditStudyQuestionnaireWidgetDefaultRenderer implements StudyQuestionnaireW
 		}
 
 		InlineLabel authorsAnswer = new InlineLabel(authorsContent);
-		authorsAnswer.addStyleName(CommonStyles.COMMON_ANSWER);
+		authorsAnswer.addStyleName(CommonStyles.ANSWER);
 		ownersListPanel.add(authorsAnswer);
 		
 	}
