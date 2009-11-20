@@ -84,38 +84,50 @@ public class StudyManagementWidget
 		this.myStudiesWidget.addViewStudyActionHandler(new StudyActionHandler() {
 			
 			public void onAction(StudyActionEvent e) {
+			
+				// N.B. the order of these two calls must be as follows, otherwise history is broken
+				viewStudyWidget.viewEntry(e.getEntry().getId());
 				setActiveChild(viewStudyWidget);
-				viewStudyWidget.loadStudyEntry(e.getEntry());
+
 			}
 
 		});
 		
+		this.viewStudyWidget.addEditStudyActionHandler(new StudyActionHandler() {
+			
+			public void onAction(StudyActionEvent e) {
+				
+				editStudyWidget.editStudyEntry(e.getEntry());
+				setActiveChild(editStudyWidget);
+				
+			}
 
+		});
+		
+		this.viewStudyWidget.addViewStudyQuestionnaireActionHandler(new StudyActionHandler() {
+			
+			public void onAction(StudyActionEvent e) {
+				
+				viewStudyQuestionnaireWidget.setEntry(e.getEntry());
+				setActiveChild(viewStudyQuestionnaireWidget);
+				
+			}
+
+		});
+		
+		this.viewStudyWidget.addEditStudyQuestionnaireActionHandler(new StudyActionHandler() {
+			
+			public void onAction(StudyActionEvent e) {
+				
+				editStudyQuestionnaireWidget.setEntry(e.getEntry());
+				setActiveChild(editStudyQuestionnaireWidget);
+				
+			}
+		});
+		
+		
 		// TODO rewrite below using gwt event pattern
 		
-		this.viewStudyWidget.addViewStudyWidgetListener(new ViewStudyWidgetPubSubAPI() {
-			
-			public void onUserActionViewStudyQuestionnaire(StudyEntry studyEntry) {
-
-				setActiveChild(viewStudyQuestionnaireWidget);
-				viewStudyQuestionnaireWidget.setEntry(studyEntry);
-				
-			}
-			
-			public void onUserActionEditStudyQuestionnaire(StudyEntry studyEntry) {
-
-				setActiveChild(editStudyQuestionnaireWidget);
-				editStudyQuestionnaireWidget.setEntry(studyEntry);
-				
-			}
-			
-			public void onUserActionEditStudy(StudyEntry studyEntryToEdit) {
-				
-				setActiveChild(editStudyWidget);
-				editStudyWidget.editStudyEntry(studyEntryToEdit);
-				
-			}
-		});
 		
 		this.createStudyWidget.addListener(new NewStudyWidgetPubSubAPI() {
 			
@@ -126,7 +138,7 @@ public class StudyManagementWidget
 			public void onNewStudyCreated(StudyEntry studyEntry) {
 
 				setActiveChild(viewStudyWidget);
-				viewStudyWidget.loadStudyEntry(studyEntry);
+				viewStudyWidget.viewEntry(studyEntry.getId());
 
 			}
 		});
@@ -140,7 +152,7 @@ public class StudyManagementWidget
 			public void onStudyUpdateSuccess(StudyEntry updatedStudyEntry) {
 
 				setActiveChild(viewStudyWidget);
-				viewStudyWidget.loadStudyEntry(updatedStudyEntry);
+				viewStudyWidget.viewEntry(updatedStudyEntry.getId());
 
 			}
 		});
@@ -150,7 +162,7 @@ public class StudyManagementWidget
 			public void onUserActionViewStudy(StudyEntry entry) {
 
 				setActiveChild(viewStudyWidget);
-				viewStudyWidget.loadStudyEntry(entry);
+				viewStudyWidget.viewEntry(entry.getId());
 				
 			}
 			

@@ -27,7 +27,7 @@ public class DatasetActionsPanel extends ChassisWidget {
 	
 
 	// utility fields
-	private Log log;
+	private Log log = LogFactory.getLog(DatasetActionsPanel.class);
 	
 	
 	
@@ -39,32 +39,6 @@ public class DatasetActionsPanel extends ChassisWidget {
 	
 	
 	
-
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#init()
-	 */
-	@Override
-	public void init() {
-		ensureLog();
-		log.enter("init");
-
-		// no state variables, nothing to do
-
-		log.leave();
-
-	}
-
-	
-	
-	
-	/**
-	 * 
-	 */
-	private void ensureLog() {
-		if (log == null) log = LogFactory.getLog(DatasetActionsPanel.class);
-	}
-
-
 
 
 	/* (non-Javadoc)
@@ -127,22 +101,6 @@ public class DatasetActionsPanel extends ChassisWidget {
 
 
 
-
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#syncUI()
-	 */
-	@Override
-	protected void syncUI() {
-		log.enter("syncUI");
-
-		// no state variables, so nothing to do
-
-		log.leave();
-
-	}
-
-	
-	
 	
 	
 	/**

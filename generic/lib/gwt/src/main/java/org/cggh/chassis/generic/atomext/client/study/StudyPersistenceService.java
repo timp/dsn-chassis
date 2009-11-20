@@ -24,4 +24,8 @@ public class StudyPersistenceService extends
 		super(new StudyFactory());
 	}
 
+	public StudyPersistenceService(String baseUrl) {
+		super(new StudyFactory(), baseUrl);
+	}
+
 }

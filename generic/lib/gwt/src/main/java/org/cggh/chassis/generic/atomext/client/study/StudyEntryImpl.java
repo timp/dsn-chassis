@@ -3,7 +3,12 @@
  */
 package org.cggh.chassis.generic.atomext.client.study;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.cggh.chassis.generic.atom.client.AtomEntryImpl;
+import org.cggh.chassis.generic.atom.client.AtomLink;
+import org.cggh.chassis.generic.atomext.client.dataset.DataFileLink;
 import org.cggh.chassis.generic.atomext.shared.Chassis;
 import org.cggh.chassis.generic.xml.client.XMLNS;
 
@@ -45,6 +50,23 @@ public class StudyEntryImpl
 	
 	public Study getStudy() {
 		return studyFactory.createStudy(getStudyElement());
+	}
+
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.atomext.client.study.StudyEntry#getDatasetLinks()
+	 */
+	public List<DatasetLink> getDatasetLinks() {
+		List<AtomLink> links = this.getLinks();
+		List<DatasetLink> datasetLinks = new ArrayList<DatasetLink>();
+		for (AtomLink link : links) {
+			if (link.getRel() != null && link.getRel().equals(Chassis.Rel.DATASET)) {
+				datasetLinks.add(this.studyFactory.createDatasetLink(link));
+			}
+		}
+		
+		return datasetLinks;
 	}
 
 	
