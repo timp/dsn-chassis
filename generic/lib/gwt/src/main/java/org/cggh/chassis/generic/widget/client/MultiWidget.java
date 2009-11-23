@@ -384,4 +384,17 @@ public abstract class MultiWidget
 
 
 
+	
+	@Override
+	public void refresh() {
+		if (this.activeChild instanceof ChassisWidget) {
+			ChassisWidget cw = (ChassisWidget) this.activeChild;
+			cw.refresh();
+		}
+	}
+
+
+
+
+
 }

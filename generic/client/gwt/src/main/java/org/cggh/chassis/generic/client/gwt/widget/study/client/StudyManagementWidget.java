@@ -11,6 +11,8 @@ import org.cggh.chassis.generic.atomui.client.UpdateSuccessHandler;
 import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.DatasetActionEvent;
 import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.DatasetActionHandler;
 import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.ViewDatasetActionEvent;
+import org.cggh.chassis.generic.client.gwt.widget.study.client.sq.ViewStudyQuestionnaireWidget;
+import org.cggh.chassis.generic.client.gwt.widget.study.client.sq.EditStudyQuestionnaireWidget;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.CancelEvent;
@@ -106,7 +108,7 @@ public class StudyManagementWidget
 			
 			public void onAction(StudyActionEvent e) {
 				
-				editStudyWidget.editEntry(e.getEntry());
+				editStudyWidget.editEntry(e.getEntry().getEditLink().getHref());
 				setActiveChild(editStudyWidget);
 				
 			}
@@ -117,7 +119,7 @@ public class StudyManagementWidget
 			
 			public void onAction(StudyActionEvent e) {
 				
-				viewStudyQuestionnaireWidget.setEntry(e.getEntry());
+				viewStudyQuestionnaireWidget.viewEntry(e.getEntry().getEditLink().getHref());
 				setActiveChild(viewStudyQuestionnaireWidget);
 				
 			}
@@ -128,7 +130,7 @@ public class StudyManagementWidget
 			
 			public void onAction(StudyActionEvent e) {
 				
-				editStudyQuestionnaireWidget.setEntry(e.getEntry());
+				editStudyQuestionnaireWidget.editEntry(e.getEntry().getEditLink().getHref());
 				setActiveChild(editStudyQuestionnaireWidget);
 				
 			}
@@ -173,38 +175,52 @@ public class StudyManagementWidget
 				setActiveChild(viewStudyWidget);
 			}
 		});
-		
-		// TODO rewrite below using gwt event pattern
-		
-		this.viewStudyQuestionnaireWidget.addListener(new ViewStudyQuestionnaireWidget.PubSubAPI() {
-			
-			public void onUserActionViewStudy(StudyEntry entry) {
 
-				setActiveChild(viewStudyWidget);
-				viewStudyWidget.viewEntry(entry.getId());
-				
-			}
+		this.viewStudyQuestionnaireWidget.addEditStudyActionHandler(new StudyActionHandler() {
 			
-			public void onUserActionEditStudyQuestionnaire(StudyEntry entry) {
-
-				setActiveChild(editStudyQuestionnaireWidget);
-				editStudyQuestionnaireWidget.setEntry(entry);
-				
+			public void onAction(StudyActionEvent e) {
+				editStudyWidget.editEntry(e.getEntry().getEditLink().getHref());
+				setActiveChild(editStudyWidget);
 			}
+
 		});
 		
-		this.editStudyQuestionnaireWidget.addListener(new EditStudyQuestionnaireWidget.PubSubAPI() {
+		this.viewStudyQuestionnaireWidget.addViewStudyActionHandler(new StudyActionHandler() {
 			
-			public void onUserActionEditStudyQuestionnaireCancelled() {
+			public void onAction(StudyActionEvent e) {
+			
+				// N.B. the order of these two calls must be as follows, otherwise history is broken
+				viewStudyWidget.viewEntry(e.getEntry().getId());
+				setActiveChild(viewStudyWidget);
+
+			}
+
+		});
+				
+		this.viewStudyQuestionnaireWidget.addEditStudyQuestionnaireActionHandler(new StudyActionHandler() {
+			
+			public void onAction(StudyActionEvent e) {
+				editStudyQuestionnaireWidget.editEntry(e.getEntry().getEditLink().getHref());
+				setActiveChild(editStudyQuestionnaireWidget);
+			}
+
+		});
+
+		this.editStudyQuestionnaireWidget.addUpdateSuccessHandler(new UpdateSuccessHandler<StudyEntry>() {
+			
+			public void onUpdateSuccess(UpdateSuccessEvent<StudyEntry> e) {
+				viewStudyQuestionnaireWidget.viewEntry(e.getEntry().getEditLink().getHref());
+				setActiveChild(viewStudyQuestionnaireWidget);
+			}
+			
+		});
+		
+		this.editStudyQuestionnaireWidget.addCancelHandler(new CancelHandler() {
+			
+			public void onCancel(CancelEvent e) {
 				History.back();
 			}
 			
-			public void onStudyQuestionnaireUpdateSuccess(StudyEntry entry) {
-
-				setActiveChild(viewStudyQuestionnaireWidget);
-				viewStudyQuestionnaireWidget.setEntry(entry);
-
-			}
 		});
 		
 	}
@@ -223,7 +239,6 @@ public class StudyManagementWidget
 			public void execute() { 
 				log.enter("[anon Command] :: execute");
 
-//				createStudyWidget.setUpNewStudy(ChassisUser.getCurrentUserEmail());
 				newStudyWidget.reset();
 				setActiveChild(newStudyWidget);
 				fireEvent(new MenuEvent());
@@ -241,7 +256,6 @@ public class StudyManagementWidget
 			public void execute() { 
 				log.enter("[anon Command] :: execute");
 
-//				viewStudiesWidget.loadStudiesByAuthorEmail(ChassisUser.getCurrentUserEmail());
 				myStudiesWidget.refreshStudies();
 				setActiveChild(myStudiesWidget);
 				fireEvent(new MenuEvent());

@@ -54,12 +54,12 @@ public class MyDataFilesWidgetRenderer
 	protected void renderMainPanel() {
 		log.enter("renderMainPanel");
 		
-		this.canvas.add(new HTML("<h2>My Data Files</h2>")); // TODO i18n
+		this.mainPanel.add(new HTML("<h2>My Data Files</h2>")); // TODO i18n
 
-		this.canvas.add(new HTML("<p>The table below lists all of the data files that you own...</p>")); // TODO i18n
+		this.mainPanel.add(new HTML("<p>The table below lists all of the data files that you own...</p>")); // TODO i18n
 
 		this.resultsTableContainer = new FlowPanel();
-		this.canvas.add(this.resultsTableContainer);
+		this.mainPanel.add(this.resultsTableContainer);
 		
 		log.leave();
 	}

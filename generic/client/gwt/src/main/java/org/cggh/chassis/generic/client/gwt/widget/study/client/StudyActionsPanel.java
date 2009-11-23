@@ -32,11 +32,55 @@ public class StudyActionsPanel extends ChassisWidget {
 	
 	
 	// UI fields
-	private Anchor editAction, editQuestionnaireAction, viewQuestionnaireAction;
+	private Anchor viewAction, editAction, editQuestionnaireAction, viewQuestionnaireAction;
 
 	
 	
 	
+	/**
+	 * @return the viewAction
+	 */
+	public Anchor getViewAction() {
+		return viewAction;
+	}
+
+
+
+
+
+	/**
+	 * @return the editAction
+	 */
+	public Anchor getEditAction() {
+		return editAction;
+	}
+
+
+
+
+
+	/**
+	 * @return the editQuestionnaireAction
+	 */
+	public Anchor getEditQuestionnaireAction() {
+		return editQuestionnaireAction;
+	}
+
+
+
+
+
+	/**
+	 * @return the viewQuestionnaireAction
+	 */
+	public Anchor getViewQuestionnaireAction() {
+		return viewQuestionnaireAction;
+	}
+
+
+
+
+
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#renderUI()
 	 */
@@ -46,11 +90,13 @@ public class StudyActionsPanel extends ChassisWidget {
 
 		this.clear();
 		
+		this.viewAction = RenderUtils.renderActionAsAnchor("view study"); // TODO i18n
 		this.editAction = RenderUtils.renderActionAsAnchor("edit study"); // TODO i18n
 		this.viewQuestionnaireAction = RenderUtils.renderActionAsAnchor("view study questionnaire"); // TODO i18n
 		this.editQuestionnaireAction = RenderUtils.renderActionAsAnchor("edit study questionnaire"); // TODO i18n
 
 		Widget[] actions = {
+			this.viewAction,
 			this.editAction, 
 			this.viewQuestionnaireAction, 
 			this.editQuestionnaireAction
@@ -88,19 +134,25 @@ public class StudyActionsPanel extends ChassisWidget {
 	private void registerHandlersForChildWidgetEvents() {
 		log.enter("registerHandlersForChildWidgetEvents");
 		
-		HandlerRegistration a = this.editAction.addClickHandler(new ClickHandler() {
+		HandlerRegistration a = this.viewAction.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent arg0) {
+				fireEvent(new ViewStudyActionEvent());
+			}
+		});
+		
+		HandlerRegistration b = this.editAction.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent arg0) {
 				fireEvent(new EditStudyActionEvent());
 			}
 		});
 		
-		HandlerRegistration b = this.editQuestionnaireAction.addClickHandler(new ClickHandler() {
+		HandlerRegistration c = this.editQuestionnaireAction.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent arg0) {
 				fireEvent(new EditStudyQuestionnaireActionEvent());
 			}
 		});
 		
-		HandlerRegistration c = this.viewQuestionnaireAction.addClickHandler(new ClickHandler() {
+		HandlerRegistration d = this.viewQuestionnaireAction.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent arg0) {
 				fireEvent(new ViewStudyQuestionnaireActionEvent());
 			}
@@ -110,10 +162,19 @@ public class StudyActionsPanel extends ChassisWidget {
 		this.childWidgetEventHandlerRegistrations.add(a);
 		this.childWidgetEventHandlerRegistrations.add(b);
 		this.childWidgetEventHandlerRegistrations.add(c);
+		this.childWidgetEventHandlerRegistrations.add(d);
 		
 		log.leave();
 	}
 
+	
+	
+	
+	public HandlerRegistration addViewStudyActionHandler(StudyActionHandler h) {
+		return this.addHandler(h, ViewStudyActionEvent.TYPE);
+	}
+	
+	
 	
 	
 	

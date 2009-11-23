@@ -3,25 +3,11 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.study.client;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import org.cggh.chassis.generic.atomext.client.study.StudyEntry;
-import org.cggh.chassis.generic.atomext.client.study.StudyQuery;
-import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.DatasetActionHandler;
-import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.MyDatasetsWidget;
-import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.MyDatasetsWidgetController;
-import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.MyDatasetsWidgetModel;
-import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.MyDatasetsWidgetRenderer;
-import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.ViewDatasetActionEvent;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.DelegatingWidget;
 
 import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.Panel;
 
 /**
  * @author raok
@@ -116,6 +102,16 @@ public class MyStudiesWidget
 
 
 
+	
 
+	
+	@Override
+	public void refresh() {
+		this.refreshStudies();
+	}
+
+	
+	
+	
 	
 }

@@ -21,6 +21,7 @@ public class AtomCrudWidgetModel
 	
 	private E entry;
 	private String entryId;
+	private AtomCrudRequest lastRequest;
 	
 	
 	
@@ -83,6 +84,21 @@ public class AtomCrudWidgetModel
 	 */
 	public String getEntryId() {
 		return entryId;
+	}
+
+
+
+
+	public void setLastRequest(AtomCrudRequest lastRequest) {
+		// don't bother to fire an event, nobody is interested
+		this.lastRequest = lastRequest;
+	}
+
+
+
+
+	public AtomCrudRequest getLastRequest() {
+		return lastRequest;
 	}
 
 

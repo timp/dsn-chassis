@@ -22,7 +22,7 @@ public class SpikeCreateStudyEntryPoint implements EntryPoint {
 		NewStudyWidget widget = new NewStudyWidget();
 		RootPanel.get().add(widget);
 		
-		widget.setUpNewStudy("alice@example.com");
+//		widget.setUpNewStudy("alice@example.com");
 		
 	}
 

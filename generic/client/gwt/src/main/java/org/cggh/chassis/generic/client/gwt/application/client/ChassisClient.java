@@ -201,6 +201,9 @@ public class ChassisClient extends ChassisWidget {
 				log.debug("setting active widget visible");
 				w.setVisible(true);
 				
+				log.debug("refreshing active widget");
+				w.refresh();
+				
 				log.debug("setting memory child");
 				this.memory.setChild(w.getMemory());
 				

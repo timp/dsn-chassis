@@ -3,13 +3,9 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.study.client;
 
-import java.util.HashSet;
-import java.util.Set;
 
 
 import org.cggh.chassis.generic.async.client.Deferred;
-import org.cggh.chassis.generic.atomext.client.dataset.DatasetEntry;
-import org.cggh.chassis.generic.atomext.client.dataset.DatasetFeed;
 import org.cggh.chassis.generic.atomext.client.study.StudyEntry;
 import org.cggh.chassis.generic.atomext.client.study.StudyFeed;
 import org.cggh.chassis.generic.atomext.client.study.StudyQuery;
@@ -17,12 +13,9 @@ import org.cggh.chassis.generic.atomui.client.AtomCrudWidget;
 import org.cggh.chassis.generic.atomui.client.AtomCrudWidgetMemory;
 import org.cggh.chassis.generic.atomui.client.AtomCrudWidgetModel;
 import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.DatasetActionHandler;
-import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.EditDatasetActionEvent;
 import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.ViewDatasetActionEvent;
 
 import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.Panel;
 
 /**
  * @author raok

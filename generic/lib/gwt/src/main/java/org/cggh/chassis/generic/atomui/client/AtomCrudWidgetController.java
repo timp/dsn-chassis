@@ -26,9 +26,9 @@ public abstract class AtomCrudWidgetController
 	
 	
 	
-	AtomCrudWidgetModel<E> model;
+	protected AtomCrudWidgetModel<E> model;
 	private static Log log = LogFactory.getLog(AtomCrudWidgetController.class);
-	Widget owner;
+	protected Widget owner;
 	protected String collectionUrl;
 	
 	
@@ -89,6 +89,8 @@ public abstract class AtomCrudWidgetController
 			Function<Throwable, Throwable> errback
 	) {
 		
+		model.setLastRequest(new AtomCrudRequest(collectionUrl, null, null, AtomCrudRequest.RequestType.CREATE));
+
 		model.setStatus(AtomCrudWidgetModel.STATUS_CREATE_PENDING);
 		Deferred<E> deferredEntry = service.postEntry(collectionUrl, entry);
 		deferredEntry.addCallback(callback);
@@ -103,6 +105,8 @@ public abstract class AtomCrudWidgetController
 	public Deferred<E> retrieveEntry(String entryUrl) {
 		log.enter("retrieveEntry");
 				
+		log.debug("entryUrl: "+entryUrl);
+		
 		AtomService<E, F> service = this.createAtomService();
 		Function<E, E> callback = new RetrieveEntryCallback<E>(this.owner, this.model);
 		Function<Throwable, Throwable> errback = new AsyncErrback(this.owner, this.model);
@@ -124,6 +128,8 @@ public abstract class AtomCrudWidgetController
 			Function<Throwable, Throwable> errback
 	) {
 
+		model.setLastRequest(new AtomCrudRequest(null, null, entryUrl, AtomCrudRequest.RequestType.RETRIEVE));
+
 		model.setStatus(AtomCrudWidgetModel.STATUS_RETRIEVE_PENDING);
 		Deferred<E> deferredEntry = service.getEntry(entryUrl);
 		deferredEntry.addCallback(callback);
@@ -137,6 +143,8 @@ public abstract class AtomCrudWidgetController
 	
 	public Deferred<E> retrieveExpandedEntry(String entryId) {
 		log.enter("retrieveExpandedEntry");
+		
+		log.debug("entryId: "+entryId);
 		
 		// use query service to retrieve entry, so we can do link expansion
 		
@@ -163,6 +171,8 @@ public abstract class AtomCrudWidgetController
 			Function<E, E> callback,
 			Function<Throwable, Throwable> errback
 	) {
+
+		model.setLastRequest(new AtomCrudRequest(null, entryId, null, AtomCrudRequest.RequestType.RETRIEVEEXPANDED));
 
 		model.setStatus(AtomCrudWidgetModel.STATUS_RETRIEVE_PENDING);
 		model.setEntryId(entryId);
@@ -209,6 +219,8 @@ public abstract class AtomCrudWidgetController
 			Function<E, E> callback,
 			Function<Throwable, Throwable> errback
 	) {
+
+		model.setLastRequest(new AtomCrudRequest(null, null, entryUrl, AtomCrudRequest.RequestType.UPDATE));
 
 		model.setStatus(AtomCrudWidgetModel.STATUS_UPDATE_PENDING);
 		Deferred<E> deferredEntry = service.putEntry(entryUrl, entry);
