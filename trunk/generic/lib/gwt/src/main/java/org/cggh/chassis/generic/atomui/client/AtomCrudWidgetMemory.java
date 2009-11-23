@@ -45,8 +45,19 @@ public class AtomCrudWidgetMemory<E extends AtomEntry, F extends AtomFeed<E>> ex
 	public String createMnemonic() {
 		log.enter("createMnemonic");
 
-		// use current entry id as mnemonic
-		String mnemonic = model.getEntryId();
+//		// use current entry id as mnemonic
+//		String mnemonic = model.getEntryId();
+
+		String mnemonic = "";
+		
+		AtomCrudRequest r = model.getLastRequest();
+		
+		if (r.getRequestType() == AtomCrudRequest.RequestType.RETRIEVEEXPANDED) {
+			mnemonic += "re;id=" + r.getEntryId();
+		}
+		if (r.getRequestType() == AtomCrudRequest.RequestType.RETRIEVE) {
+			mnemonic += "r;url=" + r.getEntryUrl();
+		}
 		
 		log.debug("mnemonic: "+mnemonic);
 
@@ -65,7 +76,27 @@ public class AtomCrudWidgetMemory<E extends AtomEntry, F extends AtomFeed<E>> ex
 	public Deferred<WidgetMemory> remember(String mnemonic) {
 		log.enter("remember");
 
-		Deferred<E> deferredEntry = controller.retrieveExpandedEntry(mnemonic);
+//		Deferred<E> deferredEntry = controller.retrieveExpandedEntry(mnemonic);
+
+		Deferred<E> deferredEntry;
+		
+		if (mnemonic.startsWith("re;")) {
+
+			String id = mnemonic.substring(6);
+			log.debug("id="+id);
+			deferredEntry = controller.retrieveExpandedEntry(id);
+
+		}
+		else if (mnemonic.startsWith("r;")) {
+
+			String url = mnemonic.substring(6);
+			log.debug("url="+url);
+			deferredEntry = controller.retrieveEntry(url);
+
+		}
+		else {
+			throw new Error("could not parse mnemonic: "+mnemonic);
+		}
 		
 		final WidgetMemory self = this;
 		

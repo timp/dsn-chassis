@@ -76,7 +76,7 @@ public class DataFileActionsPanel extends ChassisWidget {
 
 		this.clear();
 		
-		this.editAction = RenderUtils.renderActionAsAnchor("edit title and summary"); // TODO i18n
+		this.editAction = RenderUtils.renderActionAsAnchor("edit data file"); // TODO i18n
 		this.uploadRevisionAction = RenderUtils.renderActionAsAnchor("upload a new revision"); // TODO i18n
 
 		Widget[] actions = {

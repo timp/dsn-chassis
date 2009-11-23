@@ -1,22 +1,29 @@
 /**
  * 
  */
-package org.cggh.chassis.generic.client.gwt.widget.study.client;
+package org.cggh.chassis.generic.client.gwt.widget.study.client.sq;
 
 
 
+import org.cggh.chassis.generic.async.client.Function;
 import org.cggh.chassis.generic.atomext.client.study.StudyEntry;
-import org.cggh.chassis.generic.atomui.client.AtomCrudWidgetModel;
 import org.cggh.chassis.generic.atomui.client.AtomEntryChangeEvent;
 import org.cggh.chassis.generic.atomui.client.AtomEntryChangeHandler;
 import org.cggh.chassis.generic.client.gwt.common.client.CommonStyles;
-import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.DatasetActionEvent;
-import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.DatasetActionHandler;
+import org.cggh.chassis.generic.client.gwt.widget.study.client.StudyActionEvent;
+import org.cggh.chassis.generic.client.gwt.widget.study.client.StudyActionHandler;
+import org.cggh.chassis.generic.client.gwt.widget.study.client.StudyActionsPanel;
+import org.cggh.chassis.generic.client.gwt.widget.study.client.StudyPropertiesWidget;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetRenderer;
+import org.cggh.chassis.generic.widget.client.CancelEvent;
+import org.cggh.chassis.generic.xquestion.client.XQuestionnaire;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Panel;
@@ -27,8 +34,8 @@ import com.google.gwt.user.client.ui.Panel;
  * @author raok
  *
  */
-public class ViewStudyWidgetRenderer 
-	extends AsyncWidgetRenderer<AtomCrudWidgetModel<StudyEntry>>
+public class EditStudyQuestionnaireWidgetRenderer 
+	extends AsyncWidgetRenderer<StudyQuestionnaireWidgetModel>
 
 
 {
@@ -36,7 +43,8 @@ public class ViewStudyWidgetRenderer
 	
 	
 	
-	private Log log = LogFactory.getLog(ViewStudyWidgetRenderer.class);
+	private Log log = LogFactory.getLog(EditStudyQuestionnaireWidgetRenderer.class);
+	private StudyQuestionnaireWidgetController controller;
 	
 	
 	
@@ -44,8 +52,19 @@ public class ViewStudyWidgetRenderer
 	// UI fields
 	private StudyPropertiesWidget studyPropertiesWidget;
 	private StudyActionsPanel actionsPanel;
-	private ViewStudyWidget owner;
-	private StudyDatasetsWidget datasetsWidget;
+	private EditStudyQuestionnaireWidget owner;
+	private FlowPanel questionnaireContainer;
+	private XQuestionnaire questionnaire;
+	private FlowPanel buttonsPanel1;
+	private FlowPanel buttonsPanel2;
+	private Button saveButton1;
+	private Button cancelButton1;
+	private Button saveButton2;
+	private Button cancelButton2;
+
+
+
+
 
 	
 	
@@ -57,11 +76,16 @@ public class ViewStudyWidgetRenderer
 	 * @param canvas
 	 * @param controller
 	 */
-	public ViewStudyWidgetRenderer(ViewStudyWidget owner) {
+	public EditStudyQuestionnaireWidgetRenderer(EditStudyQuestionnaireWidget owner) {
 		this.owner = owner;
 	}
 
 
+	
+	
+	public void setController(StudyQuestionnaireWidgetController controller) {
+		this.controller = controller;
+	}
 	
 	
 	/* (non-Javadoc)
@@ -74,20 +98,12 @@ public class ViewStudyWidgetRenderer
 		log.debug("render content panel");
 		
 		Panel contentPanel = this.renderContentPanel();
-
-		log.debug("render actions panel");
-
-		this.actionsPanel = new StudyActionsPanel();
 		
 		log.debug("render main panel");
 
-		this.mainPanel.add(new HTML("<h2>View Study</h2>")); // TODO i18n
+		this.mainPanel.add(new HTML("<h2>Edit Study Questionnaire</h2>")); // TODO i18n
 
-		this.mainPanel.addStyleName(CommonStyles.MAINWITHACTIONS);
 		this.mainPanel.add(contentPanel);
-		this.mainPanel.add(this.actionsPanel);
-
-		this.actionsPanel.getViewAction().setVisible(false); // has to go here, after added to panel
 
 		log.leave();
 	}
@@ -107,11 +123,16 @@ public class ViewStudyWidgetRenderer
 		this.studyPropertiesWidget = new StudyPropertiesWidget();
 		contentPanel.add(this.studyPropertiesWidget);
 		
-		contentPanel.add(new HTML("<h3>Datasets</h3>")); // TODO i18n
-		contentPanel.add(new HTML("<p>The following datasets are associated with this study...")); // TODO I18N
+		contentPanel.add(new HTML("<h3>Study Questionnaire</h3>")); // TODO i18n
+
+		this.renderButtonsPanels();
 		
-		this.datasetsWidget = new StudyDatasetsWidget();
-		contentPanel.add(this.datasetsWidget);
+		contentPanel.add(buttonsPanel1);
+
+		this.questionnaireContainer = new FlowPanel();
+		contentPanel.add(this.questionnaireContainer);
+
+		contentPanel.add(buttonsPanel2);
 
 		log.leave();
 		return contentPanel;
@@ -119,6 +140,27 @@ public class ViewStudyWidgetRenderer
 	
 	
 	
+	/**
+	 * 
+	 */
+	private void renderButtonsPanels() {
+		
+		saveButton1 = new Button("Save Changes");
+		cancelButton1 = new Button("Cancel");
+		saveButton2 = new Button("Save Changes");
+		cancelButton2 = new Button("Cancel");
+
+		buttonsPanel1 = new FlowPanel();
+		buttonsPanel2 = new FlowPanel();
+
+		buttonsPanel1.add(saveButton1);
+		buttonsPanel1.add(cancelButton1);
+
+		buttonsPanel2.add(saveButton2);
+		buttonsPanel2.add(cancelButton2);
+
+	}
+
 	
 	/**
 	 * 
@@ -143,6 +185,8 @@ public class ViewStudyWidgetRenderer
 		log.debug("store registrations so can remove later if necessary");
 		this.modelChangeHandlerRegistrations.add(b);
 		
+		// TODO handle read only change
+		
 		log.leave();
 	}
 
@@ -155,25 +199,35 @@ public class ViewStudyWidgetRenderer
 	protected void registerHandlersForChildWidgetEvents() {
 		log.enter("registerHandlersForChildWidgetEvents");
 
-		HandlerRegistration a = this.actionsPanel.addEditStudyActionHandler(new BubbleStudyActionHandler());
-		HandlerRegistration b = this.actionsPanel.addEditStudyQuestionnaireActionHandler(new BubbleStudyActionHandler());
-		HandlerRegistration c = this.actionsPanel.addViewStudyQuestionnaireActionHandler(new BubbleStudyActionHandler());
-		
-		HandlerRegistration d = this.datasetsWidget.addViewDatasetActionHandler(new DatasetActionHandler() {
+		ClickHandler saveButtonClickHandler = new ClickHandler() {
 			
-			public void onAction(DatasetActionEvent e) {
-				// just bubble
-				owner.fireEvent(e);
+			public void onClick(ClickEvent arg0) {
+				
+				controller.updateEntry(model.getEntry());
+				
 			}
-		});
+			
+		};
 		
-		this.childWidgetEventHandlerRegistrations.add(a);
-		this.childWidgetEventHandlerRegistrations.add(b);
-		this.childWidgetEventHandlerRegistrations.add(c);
-		this.childWidgetEventHandlerRegistrations.add(d);
+		ClickHandler cancelButtonClickHandler = new ClickHandler() {
+			
+			public void onClick(ClickEvent arg0) {
+				
+				owner.fireEvent(new CancelEvent());
+
+			}
+			
+		};
+			
+		saveButton1.addClickHandler(saveButtonClickHandler);
+		
+		cancelButton1.addClickHandler(cancelButtonClickHandler);
+		
+		saveButton2.addClickHandler(saveButtonClickHandler);
+		
+		cancelButton2.addClickHandler(cancelButtonClickHandler);
 
 		log.leave();
-
 	}
 	
 	
@@ -233,13 +287,33 @@ public class ViewStudyWidgetRenderer
 		
 		if (entry != null) {
 			this.studyPropertiesWidget.setEntry(entry);
-			this.datasetsWidget.setEntry(entry);
+			if (this.questionnaire != null) this.questionnaire.init(entry.getStudy().getElement(), this.model.getReadOnly());
 		}
 		else {
 			this.studyPropertiesWidget.setEntry(null); // TODO review this, rather call reset() ?
+			if (this.questionnaire != null) this.questionnaire.init();
 		}
 		
 		log.leave();
+	}
+
+
+
+
+
+	public void setQuestionnaire(XQuestionnaire questionnaire) {
+		if (this.questionnaire != null) {
+			this.questionnaireContainer.clear();
+		}
+		this.questionnaire = questionnaire;
+		this.questionnaireContainer.add(this.questionnaire);
+	}
+
+
+
+
+	public XQuestionnaire getQuestionnaire() {
+		return questionnaire;
 	}
 	
 	

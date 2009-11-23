@@ -446,5 +446,12 @@ public abstract class ChassisWidget
 
 
 
+	/**
+	 * Refresh any data loaded asynchronously
+	 */
+	public void refresh() {}
+
+
+
 
 }

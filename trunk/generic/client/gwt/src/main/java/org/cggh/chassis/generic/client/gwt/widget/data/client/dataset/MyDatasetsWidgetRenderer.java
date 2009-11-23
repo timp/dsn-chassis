@@ -56,12 +56,12 @@ public class MyDatasetsWidgetRenderer
 	protected void renderMainPanel() {
 		log.enter("renderMainPanel");
 
-		this.canvas.add(new HTML("<h2>My Datasets</h2>")); // TODO i18n
+		this.mainPanel.add(new HTML("<h2>My Datasets</h2>")); // TODO i18n
 
-		this.canvas.add(new HTML("<p>The table below lists all of the datasets that you own...</p>")); // TODO i18n
+		this.mainPanel.add(new HTML("<p>The table below lists all of the datasets that you own...</p>")); // TODO i18n
 
 		this.resultsTableContainer = new FlowPanel();
-		this.canvas.add(this.resultsTableContainer);
+		this.mainPanel.add(this.resultsTableContainer);
 
 		log.leave();
 	}

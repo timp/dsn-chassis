@@ -7,6 +7,7 @@ import org.cggh.chassis.generic.atomext.client.datafile.DataFileEntry;
 import org.cggh.chassis.generic.atomext.client.datafile.DataFileFeed;
 import org.cggh.chassis.generic.atomext.client.datafile.DataFileQuery;
 import org.cggh.chassis.generic.atomui.client.AtomCrudWidget;
+import org.cggh.chassis.generic.atomui.client.AtomCrudWidgetMemory;
 import org.cggh.chassis.generic.atomui.client.AtomCrudWidgetModel;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
@@ -78,6 +79,8 @@ public class EditDataFileWidget
 		super.init(); // this will instantiate model, renderer and controller
 		
 		this.renderer.setController(this.controller);
+
+		this.memory = new AtomCrudWidgetMemory<DataFileEntry, DataFileFeed>(this.model, this.controller);
 
 		log.leave();
 	}

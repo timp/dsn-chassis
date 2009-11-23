@@ -7,6 +7,7 @@ import org.cggh.chassis.generic.atomext.client.study.StudyEntry;
 import org.cggh.chassis.generic.atomext.client.study.StudyFeed;
 import org.cggh.chassis.generic.atomext.client.study.StudyQuery;
 import org.cggh.chassis.generic.atomui.client.AtomCrudWidget;
+import org.cggh.chassis.generic.atomui.client.AtomCrudWidgetMemory;
 import org.cggh.chassis.generic.atomui.client.AtomCrudWidgetModel;
 
 
@@ -53,15 +54,17 @@ public class EditStudyWidget
 		
 		this.renderer.setController(this.controller);
 
+		this.memory = new AtomCrudWidgetMemory<StudyEntry, StudyFeed>(this.model, this.controller);
+
 	}
 
 	/**
 	 * @param entry
 	 */
-	public void editEntry(StudyEntry entry) {
+	public void editEntry(String url) {
 
 		// make sure we do a plain retrieve before editing so we don't persist any expanded links
-		this.controller.retrieveEntry(entry.getEditLink().getHref());
+		this.controller.retrieveEntry(url);
 		
 	}
 	
