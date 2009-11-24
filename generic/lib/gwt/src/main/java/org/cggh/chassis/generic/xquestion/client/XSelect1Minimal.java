@@ -98,7 +98,7 @@ public class XSelect1Minimal extends XSelectBase {
 	
 	private void checkDefinition() {
 		checkDefinitionTagName(XQS.ELEMENT_SELECT1);
-		checkDefinitionAppearance(XQS.APPEARANCE_MINIMAL);
+		checkDefinitionAppearance(XQS.APPEARANCE_MINIMAL, false);
 	}
 	
 	
@@ -180,7 +180,7 @@ public class XSelect1Minimal extends XSelectBase {
 					for (int index=0; index<box.getItemCount(); index++) {
 						String itemValue = box.getValue(index);
 						log.debug("comparing item value ["+itemValue+"] with value to set ["+value+"]");
-						if (value.equals(itemValue)) {
+						if (value != null && itemValue != null && value.equals(itemValue)) {
 							log.debug("found match, setting selected index: "+index);
 							box.setSelectedIndex(index);
 							return in;
