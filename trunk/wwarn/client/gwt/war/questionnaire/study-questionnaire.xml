@@ -361,55 +361,6 @@
 
         <html><h3 id="pharmacology">WWARN Pharmacology Module Questions</h3></html>
         
-        <html><h4 id="wwarn-pharmacology-drugAssayCapacity">Drug Assay Capacity</h4></html>
-        
-        <html readOnly="hide"><p>Please complete the section below for each drug...</p></html>        
-
-        <questionnaire id="wwarn-pharmacology-drugAssayCapacity" repeatable="yes">
-        
-          <model>
-            <element name="drugAssayCapacity"/>
-          </model>
-        
-          <view>
-            
-            <question id="wwarn-pharmacology-drugAssayCapacity-assayMethodReference">
-              <model>
-                <element name="assayMethodReference"/>
-              </model>
-              <view>
-                <input>
-                  <label>Assay method reference?</label>
-                </input>
-              </view>
-            </question>
-
-            <question id="wwarn-pharmacology-drugAssayCapacity-assayMethodDescription">
-              <model>
-                <element name="assayMethodDescription"/>
-              </model>
-              <view>
-                <textarea>
-                  <label>Assay method description?</label>
-                </textarea>
-              </view>
-            </question>
-
-            <question id="wwarn-pharmacology-drugAssayCapacity-assayValidation">
-              <model>
-                <element name="assayValidation"/>
-              </model>
-              <view>
-                <input>
-                  <label>Assay validation?</label>
-                </input>
-              </view>
-            </question>
-
-          </view>
-          
-        </questionnaire>
-        
         <html><h4 id="wwarn-pharmacology-sample">Sample</h4></html>
 
 
@@ -725,6 +676,294 @@
           </view>
 
         </questionnaire>
+        
+        
+        
+        
+        <!--+
+            |
+            | BEGIN PHARMACOLOGY DRUG NESTED QUESTIONNAIRE
+            |
+            +-->
+        
+        <html><h4 id="wwarn-pharmacology-drug">Drugs</h4></html>
+        
+        <html><p>Please complete the section below for each drug...</p></html>
+        
+        <questionnaire id="wwarn-pharmacology-drug" repeatable="yes">
+
+          <model>
+            <element name="drug"/>
+          </model>
+
+          <view>
+            
+            <question id="wwarn-pharmacology-drug-name">
+              <model>
+                <element name="name"/>
+              </model>
+              <view>
+                <input>
+                  <label>Drug name?</label>
+                </input>
+              </view>
+            </question>
+            
+            <question id="wwarn-pharmacology-drug-manufacturer">
+              <model>
+                <element name="manufacturer"/>
+              </model>
+              <view>
+                <input>
+                  <label>Manufacturer?</label>
+                </input>
+              </view>
+            </question>
+            
+            <question id="wwarn-pharmacology-drug-numberOfDoses">
+              <model>
+                <element name="numberOfDoses"/>
+              </model>
+              <view>
+                <input>
+                  <label>Number of doses?</label>
+                </input>
+              </view>
+            </question>
+
+            <question id="wwarn-pharmacology-drug-daysOfTreatment">
+              <model>
+                <element name="daysOfTreatment"/>
+              </model>
+              <view>
+                <input>
+                  <label>Days of treatment?</label>
+                </input>
+              </view>
+            </question>
+            
+            <question id="wwarn-pharmacology-drug-dosingByAgeOrWeight">
+              <model>
+                <element name="dosingByAgeOrWeight"/>
+              </model>
+              <view>
+                <select1 appearance="minimal">
+                  <label>Dosing by age or weight?</label>
+                  <item>
+                    <label>(please select age or weight)</label>
+                    <value></value>
+                  </item>
+                  <item>
+                    <label>age</label>
+                    <value>age</value>
+                  </item>
+                  <item>
+                    <label>weight</label>
+                    <value>weight</value>
+                  </item>
+                </select1>
+              </view>
+            </question>
+            
+            <question id="wwarn-pharmacology-drug-batchNumber">
+              <model>
+                <element name="batchNumber"/>
+              </model>
+              <view>
+                <input>
+                  <label>Batch number?</label>
+                </input>
+              </view>
+            </question>
+            
+            <question id="wwarn-pharmacology-drug-expirationDate">
+              <model>
+                <element name="expirationDate" type="date"/>
+              </model>
+              <view>
+                <input>
+                  <label>Expiration date?</label>
+                </input>
+              </view>
+            </question>
+            
+            <html><h5>Drug Assay Capacity</h5></html>
+            
+            <questionnaire id="wwarn-pharmacology-drug-assayCapacity" repeatable="no">
+              
+              <model>
+                <element name="assayCapacity"/>
+              </model>
+              
+              <view>
+                
+                <question id="wwarn-pharmacology-drug-assayCapacity-assayMethodReference">
+                  <model>
+                    <element name="assayMethodReference"/>
+                  </model>
+                  <view>
+                    <input>
+                      <label>Assay method reference?</label>
+                    </input>
+                  </view>
+                </question>
+                
+                <question id="wwarn-pharmacology-assayCapacity-assayMethodDescription">
+                  <model>
+                    <element name="assayMethodDescription"/>
+                  </model>
+                  <view>
+                    <textarea>
+                      <label>Assay method description?</label>
+                    </textarea>
+                  </view>
+                </question>
+                
+                <question id="wwarn-pharmacology-assayCapacity-assayValidation">
+                  <model>
+                    <element name="assayValidation"/>
+                  </model>
+                  <view>
+                    <input>
+                      <label>Assay validation?</label>
+                    </input>
+                  </view>
+                </question>
+                
+              </view>
+              
+            </questionnaire>
+            
+            <html readOnly="hide">
+              <p><em>Use the "+" button below to add another drug.</em></p>
+            </html>
+            
+          </view>
+
+        </questionnaire>
+        
+        <!--+
+            |
+            | END PHARMACOLOGY DRUG NESTED QUESTIONNAIRE
+            |
+            +-->
+        
+        
+        
+        <!--+
+            |
+            | BEGIN TREATMENT REGIMENS NESTED QUESTIONNAIRE
+            |
+            +-->
+        
+        <html><h4 id="wwarn-pharmacology-treatmentRegimens">Treatment Regimens</h4></html>
+        
+        <html><p>Please complete the section below for each treatment regimen...</p></html>
+        <questionnaire id="wwarn-pharmacology-treatmentRegimens" >
+          <model>
+            <element name="treatmentRegimens"/>
+          </model>
+          <view class="xquestionnaire-transparent">
+            <questionnaire id="wwarn-pharmacology-treatmentRegimen" repeatable="yes">
+              <model>
+                <element name="regimen"/>
+              </model>
+              <view>
+                <question id="wwarn-pharmacology-treatmentRegimens-name">
+                  <model>
+                    <element name="name"/>
+                  </model>
+                  <view>
+                    <input>
+                      <label>Name?</label>
+                    </input>
+                  </view>
+                </question>
+                <question id="wwarn-pharmacology-treatmentRegimens-supervised">
+                  <model>
+                    <element name="supervised"/>
+                  </model>
+                  <view>
+                    <select1 appearance="minimal">
+                      <label>Supervised?</label>
+                      <item>
+                        <label>(please select)</label>
+                        <value></value>
+                      </item>
+                      <item>
+                        <label>full</label>
+                        <value>full</value>
+                      </item>
+                      <item>
+                        <label>partial</label>
+                        <value>partial</value>
+                      </item>
+                      <item>
+                        <label>none</label>
+                        <value>none</value>
+                      </item>
+                    </select1>
+                  </view>
+                </question>
+                <question id="wwarn-pharmacology-treatmentRegimens-allocation">
+                  <model>
+                    <element name="allocation"/>
+                  </model>
+                  <view>
+                    <select1 appearance="minimal">
+                      <label>Allocation?</label>
+                      <item>
+                        <label>(please select if more than 1 treatment regimen)</label>
+                        <value></value>
+                      </item>
+                      <item>
+                        <label>randomised</label>
+                        <value>full</value>
+                      </item>
+                      <item>
+                        <label>quasi randomised</label>
+                        <value>quasirandomised</value>
+                      </item>
+                    </select1>
+                  </view>
+                </question>
+                <question id="wwarn-pharmacology-treatmentRegimens-blinding">
+                  <model>
+                    <element name="blinding"/>
+                  </model>
+                  <view>
+                    <select1 appearance="minimal">
+                      <label>Blinding?</label>
+                      <item>
+                        <label>(please select)</label>
+                        <value></value>
+                      </item>
+                      <item>
+                        <label>open label</label>
+                        <value>openlabel</value>
+                      </item>
+                      <item>
+                        <label>single</label>
+                        <value>single</value>
+                      </item>
+                      <item>
+                        <label>double</label>
+                        <value>double</value>
+                      </item>
+                    </select1>
+                  </view>
+                </question>
+                
+              </view>
+            </questionnaire>
+            <html readOnly="hide">
+              <p><em>Use the "+" button below to add another treatment regimen.</em></p>
+            </html>                
+          </view>
+        </questionnaire>
+        
+        
+        
         
       </view>
       
