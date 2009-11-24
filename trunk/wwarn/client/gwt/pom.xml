@@ -2,12 +2,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.cggh.chassis</groupId>
-  <artifactId>wwarn-client-gwt</artifactId>
-  <packaging>jar</packaging>
+  <artifactId>chassis-wwarn-client-gwt</artifactId>
+  <packaging>war</packaging>
   <version>0.2-SNAPSHOT</version>
   <name>googlecode_dsn-chassis_wwarn_client_gwt</name>
   
-  <!--  convenience to define GWT version in one place -->
   <properties>
     <gwtVersion>1.7.1</gwtVersion>
   </properties>
@@ -21,15 +20,6 @@
   </dependencies>
   
   <build>
-    <resources>
-     <resource>
-      <directory>src/main/java</directory>
-      <includes>
-        <include>**/*.java</include>
-        <include>**/*.xml</include>
-      </includes>
-     </resource>
-    </resources>
     <plugins>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
@@ -57,11 +47,84 @@
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+	<configuration>
+         <resources>
+          <resource>
+           <directory>src/main/java</directory>
+           <includes>
+            <include>**/*.java</include>
+            <include>**/*.xml</include>
+           </includes>
+          </resource>
+         </resources>	
+	</configuration>
+	<executions>
+	 <execution>
+	  <goals>
+	   <goal>jar</goal>
+	  </goals>
+	 </execution>
+	</executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>
           <configuration>
            <source>1.5</source>
            <target>1.5</target>
           </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-install-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>install</phase>
+            <goals>
+              <goal>install-file</goal>
+            </goals>
+            <configuration>
+             <packaging>jar</packaging>
+             <artifactId>${project.artifactId}</artifactId>
+             <groupId>${project.groupId}</groupId>
+             <version>${project.version}</version>
+             <file>
+               ${project.build.directory}/${project.artifactId}-${project.version}.jar
+             </file>
+           </configuration>
+         </execution>
+       </executions>
+     </plugin>
+     <plugin>
+       <groupId>org.codehaus.mojo</groupId>
+       <artifactId>cobertura-maven-plugin</artifactId>
+       <!--version>2.0</version-->
+       <configuration>
+         <instrumentation>
+           <ignores>
+            <ignore>**Exception</ignore>
+           </ignores>
+           <excludes>
+             <exclude>**/*Exception.class</exclude>
+           </excludes>
+         </instrumentation>
+       </configuration>
+       <executions>
+         <execution>
+           <goals>
+             <goal>clean</goal>
+           </goals>
+         </execution>
+       </executions>
+     </plugin>
+   </plugins>
+  </build>
+  <reporting>
+    <plugins>
+      <plugin>
+       <groupId>org.codehaus.mojo</groupId>
+       <artifactId>cobertura-maven-plugin</artifactId>
       </plugin>
     </plugins>
   </build>
