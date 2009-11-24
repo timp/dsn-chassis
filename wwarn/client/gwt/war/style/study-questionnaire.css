@@ -1,4 +1,3 @@
-@CHARSET "UTF-8";
 
 p {
 	margin-top: 5px;
@@ -7,6 +6,11 @@ p {
 
 h3, h4 {
 	margin-bottom: 2px;
+}
+
+textarea {
+    width: 60em;
+    height: 10em;
 }
 
 #holdall {

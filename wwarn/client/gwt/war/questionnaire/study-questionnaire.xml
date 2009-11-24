@@ -60,249 +60,258 @@
       
     </html>
   
-    <html><h3>General Questions</h3></html>
-    
-    
-    <html><h4 id="startend">Study Start and End</h4></html>
-  
-    <question id="startYear">
+    <questionnaire id="general">
+      
       <model>
-        <element name="startYear" type="gYear"/>
-      </model>
-      <view>
-        <input>
-          <label>What year did the study start?</label>
-          <hint>Enter the year in which the study started, e.g., 2006.</hint>
-        </input>
-      </view>
-    </question>
-
-    <question id="endYear">
-      <model>
-        <element name="endYear" type="gYear"/>
-      </model>
-      <view>
-        <input>
-          <label>What year did the study end?</label>
-          <hint>Enter the year in which the study ended, e.g., 2008.</hint>
-        </input>
-      </view>
-    </question>
-    
-    <html><h4 id="pi">Principal Investigator(s)</h4></html>
-    
-    <questionnaire id="principalInvestigator" repeatable="yes">
-
-      <model>
-        <element name="principalInvestigator"/>
+        <element name="general"/>
       </model>
       
-      <view>
-
-        <html readOnly="hide"><p>Who was the principal investigator of this study?</p></html>
+      <view class="xquestionnaire-transparent">
         
-        <question id="principalInvestigator-name">
+        <html><h3>General Questions</h3></html>
+        
+        <html><h4 id="startend">Study Start and End</h4></html>
+      
+        <question id="startYear">
           <model>
-            <element name="name"/>
+            <element name="startYear" type="gYear"/>
           </model>
           <view>
             <input>
-              <label>Name? </label>
+              <label>What year did the study start?</label>
+              <hint>Enter the year in which the study started, e.g., 2006.</hint>
             </input>
           </view>
         </question>
-
-        <question id="principalInvestigator-email" repeatable="yes">
+    
+        <question id="endYear">
           <model>
-            <element name="email"/>
+            <element name="endYear" type="gYear"/>
           </model>
           <view>
             <input>
-              <label>Email address? </label>
-            </input>
-          </view>
-        </question>
-
-        <question id="principalInvestigator-uri" repeatable="yes">
-          <model>
-            <element name="uri"/>
-          </model>
-          <view>
-            <input>
-              <label>Home page?</label>
-              <hint>Enter the URL of a web page that is the person's home page.</hint>
-            </input>
-          </view>
-        </question>
-
-        <question id="principalInvestigator-org" repeatable="yes">
-          <model>
-            <element name="org"/>
-          </model>
-          <view>
-            <input>
-              <label>Host organisation or institution?</label>
-              <hint>Enter the name of the person's host organisation or institution.</hint>
+              <label>What year did the study end?</label>
+              <hint>Enter the year in which the study ended, e.g., 2008.</hint>
             </input>
           </view>
         </question>
         
-        <html readOnly="hide"><p><em>You can add another principal investigator by clicking the "+" button below.</em></p></html>
-
+        <html><h4 id="pi">Principal Investigator(s)</h4></html>
+        
+        <questionnaire id="principalInvestigator" repeatable="yes">
+    
+          <model>
+            <element name="principalInvestigator"/>
+          </model>
+          
+          <view>
+    
+            <html readOnly="hide"><p>Who was the principal investigator of this study?</p></html>
+            
+            <question id="principalInvestigator-name">
+              <model>
+                <element name="name"/>
+              </model>
+              <view>
+                <input>
+                  <label>Name? </label>
+                </input>
+              </view>
+            </question>
+    
+            <question id="principalInvestigator-email" repeatable="yes">
+              <model>
+                <element name="email"/>
+              </model>
+              <view>
+                <input>
+                  <label>Email address? </label>
+                </input>
+              </view>
+            </question>
+    
+            <question id="principalInvestigator-uri" repeatable="yes">
+              <model>
+                <element name="uri"/>
+              </model>
+              <view>
+                <input>
+                  <label>Home page?</label>
+                  <hint>Enter the URL of a web page that is the person's home page.</hint>
+                </input>
+              </view>
+            </question>
+    
+            <question id="principalInvestigator-org" repeatable="yes">
+              <model>
+                <element name="org"/>
+              </model>
+              <view>
+                <input>
+                  <label>Host organisation or institution?</label>
+                  <hint>Enter the name of the person's host organisation or institution.</hint>
+                </input>
+              </view>
+            </question>
+            
+            <html readOnly="hide"><p><em>You can add another principal investigator by clicking the "+" button below.</em></p></html>
+    
+          </view>
+          
+        </questionnaire>
+        
+        
+        <html><h4 id="pathogens">Pathogen Species</h4></html>
+        
+        <question id="pathogenSpecies">
+          <model>
+            <element name="pathogenSpecies"/>
+          </model>
+          <view>
+            <select appearance="full">
+              <label>What pathogen species were studied?</label>
+              <item>
+                <label>P. falciparum</label>
+                <value>plasmodiumfalciparum</value>
+              </item>
+              <item>
+                <label>P. vivax</label>
+                <value>plasmodiumvivax</value>
+              </item>
+            </select>
+          </view>
+        </question>
+    
+        <html><h4 id="sites">Study Site(s)</h4></html>
+        
+        <questionnaire id="site" repeatable="yes">
+          
+          <model><element name="site"/></model>
+          
+          <view>
+    
+            <html readOnly="hide"><p>Describe the site (location) where study subjects were recruited from...</p></html>
+            
+            <question id="site-country">
+              <model><element name="country"/></model>
+              <view>
+                <select1 appearance="minimal">
+                  <label>Country?</label>
+                  <items src="/chassis-generic-client-gwt/questionnaire/countries.en.xml"/>
+                </select1>
+              </view>
+            </question>
+            
+            <question id="site-region">
+              <model><element name="region"/></model>
+              <view>
+                <input>
+                  <label>Region?</label>
+                </input>
+              </view>
+            </question>
+    
+            <question id="site-district">
+              <model><element name="district"/></model>
+              <view>
+                <input>
+                  <label>District?</label>
+                </input>
+              </view>
+            </question>
+                  
+            <question id="site-locality">
+              <model><element name="locality"/></model>
+              <view>
+                <input>
+                  <label>Locality?</label>
+                </input>
+              </view>
+            </question>
+    
+            <html readOnly="hide"><p style="display: block;"><em>If the study involves more than one site, what identifier (i.e., code) is used for this site in the submitted study data?</em></p></html>
+    
+            <question id="siteId">
+              <model><element name="identifier"/></model>
+              <view>
+                <input>
+                  <label>Study site code?</label>
+                </input>
+              </view>
+            </question>
+    
+            <html readOnly="hide"><p><em>You can add another site by clicking the "+" button below.</em></p></html>
+    
+          </view>
+    
+        </questionnaire>
+    
+    
+        <html><h4 id="pubs">Publications</h4></html>
+        
+        <questionnaire id="publication" repeatable="yes">
+        
+          <model>
+            <element name="publication"/>
+          </model>
+        
+          <view>
+            <html readOnly="hide"><p>Is this study described in any published research papers?</p></html>  
+            
+            <question id="publication-title">
+              <model><element name="title"/></model>
+              <view>
+                <input>
+                  <label>Title?</label>
+                </input>
+              </view>
+            </question>
+    
+            <question id="publication-year">
+              <model><element name="year"/></model>
+              <view>
+                <input>
+                  <label>Year?</label>
+                </input>
+              </view>
+            </question>
+    
+            <question id="publication-journal">
+              <model><element name="journal"/></model>
+              <view>
+                <input>
+                  <label>Journal?</label>
+                </input>
+              </view>
+            </question>
+    
+            <question id="publication-link" repeatable="yes">
+              <model><element name="uri"/></model>
+              <view>
+                <input>
+                  <label>Web link?</label>
+                </input>
+              </view>
+            </question>
+    
+            <question id="publication-doi">
+              <model><element name="doi"/></model>
+              <view>
+                <input>
+                  <label>DOI?</label>
+                </input>
+              </view>
+            </question>
+    
+            <html readOnly="hide"><p><em>You can add another publication by clicking the "+" button below.</em></p></html>
+    
+          </view>
+          
+        </questionnaire>
+        
       </view>
       
     </questionnaire>
-    
-    
-    <html><h4 id="pathogens">Pathogen Species</h4></html>
-    
-    <question id="pathogenSpecies">
-      <model>
-        <element name="pathogenSpecies"/>
-      </model>
-      <view>
-        <select appearance="full">
-          <label>What pathogen species were studied?</label>
-          <item>
-            <label>P. falciparum</label>
-            <value>plasmodiumfalciparum</value>
-          </item>
-          <item>
-            <label>P. vivax</label>
-            <value>plasmodiumvivax</value>
-          </item>
-        </select>
-      </view>
-    </question>
-
-    <html><h4 id="sites">Study Site(s)</h4></html>
-    
-    <questionnaire id="site" repeatable="yes">
-      
-      <model><element name="site"/></model>
-      
-      <view>
-
-        <html readOnly="hide"><p>Describe the site (location) where study subjects were recruited from...</p></html>
-        
-        <question id="site-country">
-          <model><element name="country"/></model>
-          <view>
-            <select1 appearance="minimal">
-              <label>Country?</label>
-              <items src="/chassis-generic-client-gwt/questionnaire/countries.en.xml"/>
-            </select1>
-          </view>
-        </question>
-        
-        <question id="site-region">
-          <model><element name="region"/></model>
-          <view>
-            <input>
-              <label>Region?</label>
-            </input>
-          </view>
-        </question>
-
-        <question id="site-district">
-          <model><element name="district"/></model>
-          <view>
-            <input>
-              <label>District?</label>
-            </input>
-          </view>
-        </question>
-              
-        <question id="site-locality">
-          <model><element name="locality"/></model>
-          <view>
-            <input>
-              <label>Locality?</label>
-            </input>
-          </view>
-        </question>
-
-        <html readOnly="hide"><p style="display: block;"><em>If the study involves more than one site, what identifier (i.e., code) is used for this site in the submitted study data?</em></p></html>
-
-        <question id="siteId">
-          <model><element name="identifier"/></model>
-          <view>
-            <input>
-              <label>Study site code?</label>
-            </input>
-          </view>
-        </question>
-
-        <html readOnly="hide"><p><em>You can add another site by clicking the "+" button below.</em></p></html>
-
-      </view>
-
-    </questionnaire>
-
-
-    <html><h4 id="pubs">Publications</h4></html>
-    
-    <questionnaire id="publication" repeatable="yes">
-    
-      <model>
-        <element name="publication"/>
-      </model>
-    
-      <view>
-        <html readOnly="hide"><p>Is this study described in any published research papers?</p></html>  
-        
-        <question id="publication-title">
-          <model><element name="title"/></model>
-          <view>
-            <input>
-              <label>Title?</label>
-            </input>
-          </view>
-        </question>
-
-        <question id="publication-year">
-          <model><element name="year"/></model>
-          <view>
-            <input>
-              <label>Year?</label>
-            </input>
-          </view>
-        </question>
-
-        <question id="publication-journal">
-          <model><element name="journal"/></model>
-          <view>
-            <input>
-              <label>Journal?</label>
-            </input>
-          </view>
-        </question>
-
-        <question id="publication-link" repeatable="yes">
-          <model><element name="uri"/></model>
-          <view>
-            <input>
-              <label>Web link?</label>
-            </input>
-          </view>
-        </question>
-
-        <question id="publication-doi">
-          <model><element name="doi"/></model>
-          <view>
-            <input>
-              <label>DOI?</label>
-            </input>
-          </view>
-        </question>
-
-        <html readOnly="hide"><p><em>You can add another publication by clicking the "+" button below.</em></p></html>
-
-      </view>
-      
-    </questionnaire>
-    
-
 
 
 
@@ -312,23 +321,32 @@
         |
         +-->
 
+    <questionnaire 
+      id="wwarn-clinical"
+      defaultPrefix="wwarn"
+      defaultNamespaceUri="http://www.cggh.org/2009/chassis/wwarn/xmlns">
 
-    <html><h3 id="clinical">WWARN Clinical Module Questions</h3></html>
+      <model>
+        <element name="clinical"/>
+      </model>
 
-    <html><p>TODO</p></html>
+      <view class="xquestionnaire-transparent">
+        
+        <html><h3 id="clinical">WWARN Clinical Module Questions</h3></html>
+        
+        <html><p>TODO</p></html>
+        
+      </view>
+
+    </questionnaire>
 
 
 
 
 
 
-    <!--+
-        |
-        | BEGIN PHARMACOLOGY QUESTIONNAIRE
-        |
-        +-->
 
-    <html><h3 id="pharmacology">WWARN Pharmacology Module Questions</h3></html>
+    <!-- BEGIN PHARMACOLOGY QUESTIONNAIRE -->
 
     <questionnaire
       defaultPrefix="wwarn"
@@ -341,6 +359,8 @@
       
       <view class="xquestionnaire-transparent">
 
+        <html><h3 id="pharmacology">WWARN Pharmacology Module Questions</h3></html>
+        
         <html><h4 id="wwarn-pharmacology-drugAssayCapacity">Drug Assay Capacity</h4></html>
         
         <html readOnly="hide"><p>Please complete the section below for each drug...</p></html>        
@@ -391,6 +411,13 @@
         </questionnaire>
         
         <html><h4 id="wwarn-pharmacology-sample">Sample</h4></html>
+
+
+        <!--+
+            |
+            | BEGIN PHARMACOLOGY SAMPLE NESTED QUESTIONNAIRE
+            |
+            +-->
         
         <questionnaire id="wwarn-pharmacology-sample" repeatable="no">
         
@@ -400,9 +427,9 @@
         
           <view>
           
-            <question id="wwarn-pharmacology-sample-sampleMatrix">
+            <question id="wwarn-pharmacology-sample-matrix">
               <model>
-                <element name="sampleMatrix"/>
+                <element name="matrix"/>
               </model>
               <view>
                 <select1 appearance="minimal">
@@ -433,12 +460,272 @@
                   </item>
                 </select1>
               </view>
+            </question>
             
+            <question id="wwarn-pharmacology-sample-volume">
+              <model>
+                <element name="volume"/>
+              </model>
+              <view>
+                <input>
+                  <label>Sample volume?</label>
+                </input>
+              </view>
             </question>
           
+            <question id="wwarn-pharmacology-sample-storageTemperature">
+              <model>
+                <element name="storageTemperature"/>
+              </model>
+              <view>
+                <inlinehtml>Sample storage temperature (<sup>o</sup>C)?</inlinehtml>
+                <input/>
+              </view>
+            </question>
+            
+            <question id="wwarn-pharmacology-sample-storageDuration">
+              <model>
+                <element name="storageDuration"/>
+              </model>
+              <view>
+                <input>
+                  <label>Sample storage duration (weeks)?</label>
+                </input>
+              </view>
+            </question>
+          
+            <question id="wwarn-pharmacology-sample-storageHandling">
+              <model>
+                <element name="storageHandling"/>
+              </model>
+              <view>
+                <textarea>
+                  <label>Storage handling (description)?</label>
+                </textarea>
+              </view>
+            </question>
+            
+            <question id="wwarn-pharmacology-sample-preparation">
+              <model>
+                <element name="preparation"/>
+              </model>
+              <view>
+                <textarea>
+                  <label>Sample preparation reference (description)?</label>
+                </textarea>
+              </view>
+            </question>
+            
+            <question id="wwarn-pharmacology-sample-samplingTimes">
+              <model>
+                <element name="samplingTimes"/>
+              </model>
+              <view>
+                <input>
+                  <label>Sampling times?</label>
+                </input>
+              </view>
+            </question>
           </view>
           
         </questionnaire>
+
+        <!--+
+            |
+            |  END PHARMACOLOGY SAMPLE NESTED QUESTIONNAIRE
+            |
+            +-->
+
+
+        <!--+
+            |
+            | BEGIN PHARMACOLOGY ANALYTES NESTED QUESTIONNAIRE
+            |
+            +-->
+        
+        <html><h4 id="wwarn-pharmacology-analytes">Analytes</h4></html>
+        
+        <questionnaire id="wwarn-pharmacology-analytes">
+          
+          <model>
+            <element name="analytes"/>
+          </model>
+
+          <view>
+            
+            <question id="wwarn-pharmacology-analytes-totalDrug">
+              <model>
+                <element name="totalDrug"/>
+              </model>
+              <view>
+                <input>
+                  <label>Total drug?</label>
+                </input>
+              </view>
+            </question>
+            
+            <question id="wwarn-pharmacology-analytes-freeDrug">
+              <model>
+                <element name="freeDrug"/>
+              </model>
+              <view>
+                <input>
+                  <label>Free drug?</label>
+                </input>
+              </view>
+            </question>
+            
+            <question id="wwarn-pharmacology-analytes-metabolite1">
+              <model>
+                <element name="metabolite1"/>
+              </model>
+              <view>
+                <input>
+                  <label>Metabolite 1 (spec)?</label>
+                </input>
+              </view>
+            </question>
+
+            <question id="wwarn-pharmacology-analytes-metabolite2">
+              <model>
+                <element name="metabolite2"/>
+              </model>
+              <view>
+                <input>
+                  <label>Metabolite 2 (spec)?</label>
+                </input>
+              </view>
+            </question>
+            
+          </view>
+
+        </questionnaire>
+        
+        
+        <!--+
+            |
+            | END PHARMACOLOGY ANALYTES NESTED QUESTIONNAIRE
+            |
+            +-->
+        
+        
+        <html><h4 id="wwarn-pharmacology-analysisModel">PK Data Analysis Model</h4></html>
+          
+        <question id="wwarn-pharmacology-analysisModel">
+          <model>
+            <element name="analysisModel"/>
+          </model>
+          <view>
+            <select1 appearance="minimal">
+              <label>Type?</label>
+              <item>
+                <label>compartmental model</label>
+                <value>compartmentalmodel</value>
+              </item>
+              <item>
+                <label>non-compartmental model</label>
+                <value>noncompartmentalmodel</value>
+              </item>
+              <item>
+                <label>population model</label>
+                <value>populationmodel</value>
+              </item>
+            </select1>
+          </view>
+        </question>
+        
+        <html><h4 id="wwarn-pharmacology-inclusionExclusionCriteria">Inclusion/Exclusion Criteria</h4></html>
+        
+        <questionnaire id="wwarn-pharmacology-inclusionExclusionCriteria">
+          
+          <model>
+            <element name="inclusionExclusionCriteria"/>
+          </model>
+          
+          <view>
+            
+            <question id="wwarn-pharmacology-inclusionExclusionCriteria-minAge">
+              <model>
+                <element name="minAge"/>
+              </model>
+              <view>
+                <input>
+                  <label>Minimum age?</label>
+                </input>
+              </view>
+            </question>
+            
+            <question id="wwarn-pharmacology-inclusionExclusionCriteria-maxAge">
+              <model>
+                <element name="maxAge"/>
+              </model>
+              <view>
+                <input>
+                  <label>Maximum age?</label>
+                </input>
+              </view>
+            </question>
+            
+            <question id="wwarn-pharmacology-inclusionExclusionCriteria-minParasitaemia">
+              <model>
+                <element name="minParasitaemia"/>
+              </model>
+              <view>
+                <input>
+                  <label>Minimum parasitaemia?</label>
+                </input>
+              </view>
+            </question>
+            
+            <question id="wwarn-pharmacology-inclusionExclusionCriteria-maxParasitaemia">
+              <model>
+                <element name="maxParasitaemia"/>
+              </model>
+              <view>
+                <input>
+                  <label>Maximum parasitaemia?</label>
+                </input>
+              </view>
+            </question>
+            
+            <question id="wwarn-pharmacology-inclusionExclusionCriteria-excludeIfPriorAntimalarials">
+              <model>
+                <element name="excludeIfPriorAntimalarials"/>
+              </model>
+              <view>
+                <select1 appearance="minimal">
+                  <label>Exclude if prior anti-malarials?</label>
+                  <item>
+                    <label>(please select yes or no)</label>
+                    <value></value>
+                  </item>
+                  <item>
+                    <label>yes</label>
+                    <value>yes</value>
+                  </item>
+                  <item>
+                    <label>no</label>
+                    <value>no</value>
+                  </item>
+                </select1>
+              </view>
+            </question>
+            
+            <question id="wwarn-pharmacology-inclusionExclusionCriteria-excludeIfPriorAntimalarialsTime">
+              <model>
+                <element name="excludeIfPriorAntimalarialsTime"/>
+              </model>
+              <view>
+                <input>
+                  <label>If yes, over what time (weeks)?</label>
+                </input>
+              </view>
+            </question>
+            
+          </view>
+
+        </questionnaire>
+        
       </view>
       
     </questionnaire>  
@@ -453,15 +740,13 @@
 
 
 
-    <!--+
-        |
-        | BEGIN IN VITRO QUESTIONNAIRE
-        |
-        +-->
+    <!-- +
+         |
+         | BEGIN IN VITRO QUESTIONNAIRE
+         |
+         + -->
         
 
-    <html><h3 id="invitro">WWARN <em>in vitro</em> Module Questions</h3></html>
-    
     <questionnaire
       defaultPrefix="wwarn"
       defaultNamespaceUri="http://www.cggh.org/2009/chassis/wwarn/xmlns"
@@ -473,7 +758,9 @@
       
       <view class="xquestionnaire-transparent">
       
-      
+        <html><h3 id="invitro">WWARN <em>in vitro</em> Module Questions</h3></html>
+        
+        
       
         <!--+
             |
@@ -1330,10 +1617,27 @@
     
     
     
-    <html><h3 id="molecular">WWARN Molecular Module Questions</h3></html>
-    
-    <html><p>TODO</p></html>
-    
+    <questionnaire
+      defaultPrefix="wwarn"
+      defaultNamespaceUri="http://www.cggh.org/2009/chassis/wwarn/xmlns"
+      id="wwarn-molecular">
+  
+      <model>
+        <element name="molecular"/>
+      </model>
+      
+      <view class="xquestionnaire-transparent">
+        
+        <html><h3 id="molecular">WWARN Molecular Module Questions</h3></html>
+        
+        <html><p>TODO</p></html>
+        
+        
+        
+      </view>
+
+    </questionnaire>
+
   </view>
 
 
