@@ -175,8 +175,17 @@ public class XInputDate extends XFormControl {
 		if (readOnly) {
 			this.readOnlyLabel.setText(value);
 		}
-		else {
+		else if (value != null && !value.equals("")) {
+			
+			// TODO handle parse errors
+			
 			this.setValue(xsDateFormat.parse(value), fireEvents);
+			
+		}
+		else {
+			
+			log.debug("value was null or empty string, do nothing; value: "+value);
+			
 		}
 	}
 
