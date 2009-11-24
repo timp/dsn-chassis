@@ -102,7 +102,7 @@ public class XSelect1Full extends XSelectBase {
 	
 	private void checkDefinition() {
 		checkDefinitionTagName(XQS.ELEMENT_SELECT1);
-		checkDefinitionAppearance(XQS.APPEARANCE_FULL);
+		checkDefinitionAppearance(XQS.APPEARANCE_FULL, true);
 	}
 	
 	

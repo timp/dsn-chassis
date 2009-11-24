@@ -57,8 +57,13 @@ public abstract class XFormControl extends Composite {
 	
 
 	
-	protected void checkDefinitionAppearance(String expected) {
+	protected void checkDefinitionAppearance(String expected, boolean defaultAppearance) {
 		String actual = definition.getAttribute(XQS.ATTR_APPEARANCE);
+		
+		if (defaultAppearance && actual == null) {
+			return; // can omit appearance attribute if default
+		}
+		
 		if (!expected.equals(actual)) {
 			String message = "bad definition appearance attribute, expected: "+expected+"; found: "+actual;
 			throw new XQuestionFormatException(message);
