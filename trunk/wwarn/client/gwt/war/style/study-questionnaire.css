@@ -70,3 +70,26 @@ h3, h4 {
 	margin-left: 5px;
 	text-align: right;
 }
+
+#clinical, #pharmacology, #invitro, #molecular {
+	background-repeat: no-repeat;
+	background-position: left bottom;
+	padding-left: 75px;
+	padding-top: 50px;
+}
+
+#clinical {
+	background-image: url(http://www.wwarn.org/home/images/home/clinical-module.gif);
+}
+
+#pharmacology {
+	background-image: url(http://www.wwarn.org/home/images/home/pharmacalogy-module.gif);
+}
+
+#invitro {
+	background-image: url(http://www.wwarn.org/home/images/home/in-vitro-module.gif);
+}
+
+#molecular {
+	background-image: url(http://www.wwarn.org/home/images/home/molecular-module.gif);
+}
