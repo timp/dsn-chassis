@@ -21,6 +21,15 @@
   </dependencies>
   
   <build>
+    <resources>
+      <resource>
+        <directory>src/main/java</directory>
+        <includes>
+         <include>**/*.java</include>
+         <include>**/*.xml</include>
+        </includes>
+      </resource>
+    </resources>	
     <plugins>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
@@ -49,24 +58,14 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
-	<configuration>
-         <resources>
-          <resource>
-           <directory>src/main/java</directory>
-           <includes>
-            <include>**/*.java</include>
-            <include>**/*.xml</include>
-           </includes>
-          </resource>
-         </resources>	
-	</configuration>
 	<executions>
-	 <execution>
-	  <goals>
-	   <goal>jar</goal>
-	  </goals>
-	 </execution>
-	</executions>
+          <execution>
+	    <phase>package</phase>
+	    <goals>
+	      <goal>jar</goal>
+	    </goals>
+	  </execution>
+        </executions>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
