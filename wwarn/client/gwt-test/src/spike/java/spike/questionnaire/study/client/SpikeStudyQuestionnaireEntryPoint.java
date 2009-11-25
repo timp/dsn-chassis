@@ -12,12 +12,8 @@ import org.cggh.chassis.generic.xquestion.client.XQuestionnaire;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.dom.client.InputElement;
-import com.google.gwt.dom.client.PreElement;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.RootPanel;
 
 /**
@@ -27,8 +23,6 @@ import com.google.gwt.user.client.ui.RootPanel;
 public class SpikeStudyQuestionnaireEntryPoint implements EntryPoint {
 
 	private Log log = LogFactory.getLog(SpikeStudyQuestionnaireEntryPoint.class);
-
-	private XQuestionnaire questionnaire;
 
 	
 	/* (non-Javadoc)
@@ -45,24 +39,27 @@ public class SpikeStudyQuestionnaireEntryPoint implements EntryPoint {
 	
 	
 	private void loadQuestionnaire() {
+		log.enter("loadQuestionnaire");
 
 		String qloc = InputElement.as(DOM.getElementById("qloc")).getValue();
-		Deferred<XQuestionnaire> d = XQuestionnaire.load(qloc);
+		log.debug("qloc: "+qloc);
 		
-		d.addCallback(new Function<XQuestionnaire,XQuestionnaire>() {
+		Deferred<XQuestionnaire> deferredQuestionnaire = XQuestionnaire.load(qloc);
+		
+		deferredQuestionnaire.addCallback(new Function<XQuestionnaire, XQuestionnaire>() {
 
-			public XQuestionnaire apply(XQuestionnaire in) {
+			public XQuestionnaire apply(XQuestionnaire questionnaire) {
 				RootPanel qp = RootPanel.get("questionnaire");
 				qp.clear();
-				qp.add(in);
-				in.init();
-				questionnaire = in;
-				return in;
+				qp.add(questionnaire);
+				questionnaire.init();
+				RootPanel.get("loading").setVisible(false);
+				return questionnaire;
 			}
 			
 		});
 		
-		d.addErrback(new Function<Throwable, Throwable>() {
+		deferredQuestionnaire.addErrback(new Function<Throwable, Throwable>() {
 
 			public Throwable apply(Throwable in) {
 				Window.alert("an error has occurred: "+in.getLocalizedMessage());
@@ -72,6 +69,7 @@ public class SpikeStudyQuestionnaireEntryPoint implements EntryPoint {
 
 		});
 
+		log.leave();
 	}
 
 
