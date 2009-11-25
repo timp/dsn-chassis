@@ -4,7 +4,10 @@
 <wb-resource deploy-path="/" source-path="/war"/>
 <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/test/java"/>
 <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/spike/java"/>
-<property name="context-root" value="googlecode_dsn-chassis_wwarn_client_gwt-test"/>
+        <dependent-module archiveName="googlecode_dsn-chassis_generic_lib_java.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/googlecode_dsn-chassis_generic_lib_java/googlecode_dsn-chassis_generic_lib_java">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
 <property name="java-output-path"/>
+        <property name="context-root" value="chassis-wwarn-client-gwt-test"/>
 </wb-module>
 </project-modules>

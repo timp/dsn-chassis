@@ -3,7 +3,9 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <title>WWARN Study Questionnaire - Demo</title>
-    <link rel="stylesheet" type="text/css" href="example.css"/>
+    <link rel="stylesheet" type="text/css" href="/chassis-wwarn-client-gwt/style/main.css"/>
+    <link rel="stylesheet" type="text/css" href="/chassis-wwarn-client-gwt/style/wwarn.css"/>
+    <link rel="stylesheet" type="text/css" href="/chassis-wwarn-client-gwt/style/study-questionnaire.css"/>
     <script type="text/javascript" language="javascript" src="../../../spike.questionnaire.study.SpikeStudyQuestionnaire/spike.questionnaire.study.SpikeStudyQuestionnaire.nocache.js"></script>
   </head>
 
@@ -11,7 +13,10 @@
 	<div id="holdall">
 	
 		<h1>WWARN Study Questionnaire - Demo</h1>
-		<input type="hidden" id="qloc" value="/chassis-generic-lib-gwt/spike/xqs/example-questionnaire.xml"></input>
+		
+		<input type="hidden" id="qloc" value="/chassis-wwarn-client-gwt/questionnaire/study-questionnaire.xml"></input>
+
+		<p id="loading">please wait while the questionnaire loads...</p>
 
 	    <div id="questionnaire"></div>
 	    
