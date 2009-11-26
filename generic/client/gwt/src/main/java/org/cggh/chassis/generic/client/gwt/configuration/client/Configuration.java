@@ -243,6 +243,20 @@ public class Configuration {
 		}
 		
 		return null;
+	}
+
+	
+	
+	
+	
+	/**
+	 * @return
+	 */
+	public static String getNetworkName() {
+		return JsConfiguration.getNetworkName();
 	}	
+	
+	
+	
 	
 }

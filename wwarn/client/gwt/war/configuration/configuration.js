@@ -2,6 +2,10 @@ if (typeof CHASSIS == "undefined" || !CHASSIS) {
 	CHASSIS = new Object();
 }
 
+// configure network name
+
+CHASSIS.networkName = "WWARN";
+
 // configure service URLs
 
 CHASSIS.client = "/chassis-wwarn-client-gwt";

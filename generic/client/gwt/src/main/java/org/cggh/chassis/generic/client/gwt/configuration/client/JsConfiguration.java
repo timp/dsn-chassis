@@ -113,5 +113,10 @@ public class JsConfiguration {
 		return $wnd.CHASSIS.uploadDataFileRevisionServiceUrl;
 	}-*/;
 
+	public static native String getNetworkName() /*-{
+		return $wnd.CHASSIS.networkName;
+	}-*/;
+
+	
 	
 }

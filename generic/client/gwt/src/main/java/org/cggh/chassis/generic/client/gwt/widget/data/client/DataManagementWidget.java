@@ -24,6 +24,7 @@ import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.DatasetAct
 import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.EditDatasetWidget;
 import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.MyDatasetsWidget;
 import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.NewDatasetWidget;
+import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.ShareDatasetWidget;
 import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.ViewDatasetWidget;
 import org.cggh.chassis.generic.client.gwt.widget.study.client.StudyActionEvent;
 import org.cggh.chassis.generic.client.gwt.widget.study.client.StudyActionHandler;
@@ -67,6 +68,7 @@ public class DataManagementWidget
 	private EditDatasetWidget editDatasetWidget;
 	private ViewDatasetWidget viewDatasetWidget;
 	private UploadDataFileRevisionWidget uploadDataFileRevisionWidget;
+	private ShareDatasetWidget shareDatasetWidget;
 
 
 
@@ -87,6 +89,7 @@ public class DataManagementWidget
 		this.viewDatasetWidget = new ViewDatasetWidget();
 		this.editDatasetWidget = new EditDatasetWidget();
 		this.myDatasetsWidget = new MyDatasetsWidget();
+		this.shareDatasetWidget = new ShareDatasetWidget();
 		
 		this.mainChildren.add(this.newDataFileWidget);
 		this.mainChildren.add(this.viewDataFileWidget);
@@ -97,6 +100,7 @@ public class DataManagementWidget
 		this.mainChildren.add(this.viewDatasetWidget);
 		this.mainChildren.add(this.editDatasetWidget);
 		this.mainChildren.add(this.myDatasetsWidget);
+		this.mainChildren.add(this.shareDatasetWidget);
 		
 		log.leave();
 	}
@@ -425,8 +429,20 @@ public class DataManagementWidget
 			}
 		});
 		
+		HandlerRegistration d = this.viewDatasetWidget.addShareDatasetActionHandler(new DatasetActionHandler() {
+			
+			public void onAction(DatasetActionEvent e) {
+
+				shareDatasetWidget.retrieveEntry(e.getEntry().getId());
+				setActiveChild(shareDatasetWidget);
+
+			}
+		});
+		
 		this.childWidgetEventHandlerRegistrations.add(a);
 		this.childWidgetEventHandlerRegistrations.add(b);
+		this.childWidgetEventHandlerRegistrations.add(c);
+		this.childWidgetEventHandlerRegistrations.add(d);
 		
 	}
 
