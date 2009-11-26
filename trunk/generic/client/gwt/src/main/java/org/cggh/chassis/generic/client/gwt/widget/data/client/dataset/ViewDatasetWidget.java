@@ -139,8 +139,10 @@ public class ViewDatasetWidget
 
 
 
-
-
-
+	public HandlerRegistration addShareDatasetActionHandler(DatasetActionHandler h) {
+		return this.addHandler(h, ShareDatasetActionEvent.TYPE);
+	}
+	
+	
 
 }

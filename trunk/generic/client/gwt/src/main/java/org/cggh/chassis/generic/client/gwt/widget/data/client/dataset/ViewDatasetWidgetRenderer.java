@@ -43,7 +43,7 @@ public class ViewDatasetWidgetRenderer
 	private DatasetActionsWidget actionsWidget;
 	private DatasetStudiesWidget studiesWidget;
 	private DatasetDataFilesWidget dataFilesWidget;
-//	private DataSharingWidget dataSharingWidget;
+	private DatasetDataSharingWidget dataSharingWidget;
 
 	
 	
@@ -109,7 +109,9 @@ public class ViewDatasetWidgetRenderer
 		contentPanel.add(this.dataFilesWidget);
 
 		contentPanel.add(h3("Data Sharing")); // TODO i18n
-//		contentPanel.add(this.dataSharingWidget);
+		
+		this.dataSharingWidget = new DatasetDataSharingWidget();
+		contentPanel.add(this.dataSharingWidget);
 		
 		log.leave();
 		return contentPanel;
@@ -182,9 +184,19 @@ public class ViewDatasetWidgetRenderer
 			}
 		});
 		
+		HandlerRegistration d = this.dataSharingWidget.addShareDatasetActionHandler(new DatasetActionHandler() {
+			
+			public void onAction(DatasetActionEvent e) {
+				// augment event and bubble
+				e.setEntry(model.getEntry());
+				owner.fireEvent(e);
+			}
+		});
+		
 		this.childWidgetEventHandlerRegistrations.add(a);
 		this.childWidgetEventHandlerRegistrations.add(b);
 		this.childWidgetEventHandlerRegistrations.add(c);
+		this.childWidgetEventHandlerRegistrations.add(d);
 
 		log.leave();
 
@@ -234,6 +246,7 @@ public class ViewDatasetWidgetRenderer
 			this.datasetPropertiesWidget.setEntry(entry);
 			this.studiesWidget.setEntry(entry);
 			this.dataFilesWidget.setEntry(entry);
+			this.dataSharingWidget.setEntry(entry);
 		}
 		else {
 			this.datasetPropertiesWidget.setEntry(null); // TODO review this, rather call reset() ?
@@ -241,6 +254,9 @@ public class ViewDatasetWidgetRenderer
 		
 		log.leave();
 	}
+	
+	
+	
 	
 	
 	

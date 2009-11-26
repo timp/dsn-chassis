@@ -10,6 +10,7 @@ import org.cggh.chassis.generic.atom.client.AtomEntryImpl;
 import org.cggh.chassis.generic.atom.client.AtomLink;
 import org.cggh.chassis.generic.atomext.client.datafile.DataFileLink;
 import org.cggh.chassis.generic.atomext.client.study.StudyLink;
+import org.cggh.chassis.generic.atomext.client.submission.SubmissionLink;
 import org.cggh.chassis.generic.atomext.shared.Chassis;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
@@ -229,6 +230,18 @@ public class DatasetEntryImpl extends AtomEntryImpl implements DatasetEntry {
 		}
 		DataFileLink link = links.get(index);
 		this.removeLink(link);
+	}
+
+
+
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.atomext.client.dataset.DatasetEntry#getSubmissionLink()
+	 */
+	public SubmissionLink getSubmissionLink() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	
