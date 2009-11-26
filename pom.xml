@@ -3,26 +3,17 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.cggh.chassis</groupId>
   <artifactId>chassis-parent</artifactId>
-  <version>0.2-SNAPSHOT</version>
-
+  <version>0.1-alpha-3</version>
   <packaging>pom</packaging>
   <name>CGGH Chassis</name>
-  <!--modules>
-    <module>poem</module>
-    <module>melati</module>
-    <module>melati-example-contacts</module>
-    <module>melati-example-odmg</module>
-    <module>maven-dsd-plugin</module>
-    <module>melati-webapp</module>
-    <module>melati-archetype</module>
-    <module>melati-skin</module>
-    <module>throwing-jdbc</module>
-  </modules-->  
   <description>
 CGGH Data Sharing Network Chassis
   </description>
   <url>http://code.google.com/p/dsn-chassis/</url>
 
+  <modules>
+  <module>chassis-generic-lib-gwt</module>
+  </modules>
   <issueManagement>
    <system>Google Code</system>
     <url>       
