@@ -16,10 +16,10 @@ import org.cggh.chassis.generic.atomext.client.study.StudyQueryService;
 import org.cggh.chassis.generic.client.gwt.configuration.client.JsConfiguration;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
+import static org.cggh.chassis.generic.widget.client.HtmlElements.*;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.RootPanel;
 
 /**
@@ -48,7 +48,7 @@ public class SpikeStudyQueryServiceByAuthorEmailEntryPoint implements EntryPoint
 	public void onModuleLoad() {
 		log.enter("onModuleLoad");
 		
-		root.add(new HTML("<h1>Spike Study Query Service - by Author Email</h1>"));
+		root.add(h1("Spike Study Query Service - by Author Email"));
 		
 		factory = new StudyFactory();
 		studyPersistenceService = new StudyPersistenceService();
@@ -62,7 +62,7 @@ public class SpikeStudyQueryServiceByAuthorEmailEntryPoint implements EntryPoint
 			public Deferred<StudyEntry> apply(StudyEntry first) {
 				log.enter("apply [first callback]");
 				
-				root.add(new HTML("<p>first study created</p>"));
+				root.add(p("first study created"));
 				log.debug("first study created, now create second");
 				Deferred<StudyEntry> def = createSecondStudy();
 
@@ -79,7 +79,7 @@ public class SpikeStudyQueryServiceByAuthorEmailEntryPoint implements EntryPoint
 			public Deferred<StudyEntry> apply(StudyEntry second) {
 				log.enter("apply [second callback]");
 
-				root.add(new HTML("<p>second study created</p>"));
+				root.add(p("second study created"));
 				log.debug("second study created, now create third");
 				Deferred<StudyEntry> def = createThirdStudy();
 
@@ -98,7 +98,7 @@ public class SpikeStudyQueryServiceByAuthorEmailEntryPoint implements EntryPoint
 			public Deferred<StudyFeed> apply(StudyEntry second) {
 				log.enter("apply [third callback]");
 
-				root.add(new HTML("<p>third study created</p>"));
+				root.add(p("third study created"));
 				log.debug("all studies created, now try query");
 				Deferred<StudyFeed> def = queryStudiesByAuthorEmail();
 				
@@ -117,7 +117,7 @@ public class SpikeStudyQueryServiceByAuthorEmailEntryPoint implements EntryPoint
 			public StudyFeed apply(StudyFeed results) {
 				log.enter("apply [fourth callback]");
 
-				root.add(new HTML("<p>query results received</p>"));
+				root.add(p("query results received"));
 				log.debug("study query success, check results");
 				checkQueryResults(results);
 				
@@ -247,15 +247,15 @@ public class SpikeStudyQueryServiceByAuthorEmailEntryPoint implements EntryPoint
 		
 		for (StudyEntry entry : results.getEntries()) {
 			log.debug("found entry: "+entry.getTitle() + " ["+entry.getId()+"]");
-			root.add(new HTML("<p>found entry: "+entry.getTitle() + " ["+entry.getId()+"]</p>"));
+			root.add(p("found entry: "+entry.getTitle() + " ["+entry.getId()+"]"));
 			boolean alice = false;
 			for (AtomAuthor author : entry.getAuthors()) {
 				if ("alice@example.com".equals(author.getEmail())) {
 					alice = true;
 				}
 			}
-			if (alice) root.add(new HTML("<p>found alice</p>"));
-			else root.add(new HTML("<p>did not find alice</p>"));
+			if (alice) root.add(p("found alice"));
+			else root.add(p("did not find alice"));
 		}
 		
 		log.leave();

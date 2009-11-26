@@ -9,13 +9,13 @@ import java.util.Map.Entry;
 
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
+import static org.cggh.chassis.generic.widget.client.HtmlElements.*;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.ListBox;
 
@@ -213,7 +213,7 @@ public class MultiSelectRenderer
 		db.setText("add item");
 		db.setWidget(content);
 		
-		content.add(new HTML("<p>Please select one...</p>"));
+		content.add(p("Please select one..."));
 		
 		final ListBox lb = new ListBox();
 		for (Entry<String,String> entry : this.selectModel.getItems().entrySet()) {

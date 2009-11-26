@@ -5,12 +5,12 @@ package spike.admin.collection.client;
 
 import org.cggh.chassis.generic.client.gwt.configuration.client.JsConfiguration;
 import org.cggh.chassis.generic.client.gwt.widget.admin.client.AdminCollectionWidget;
+import static org.cggh.chassis.generic.widget.client.HtmlElements.*;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 
@@ -31,7 +31,7 @@ public class SpikeAdminCollectionWidgetEntryPoint implements EntryPoint {
 
 		RootPanel root = RootPanel.get();
 		
-		root.add(new HTML("<h1>Spike Admin Collection Widget</h1>"));
+		root.add(h1("Spike Admin Collection Widget"));
 
 		Button refreshAllButton = new Button();
 		refreshAllButton.setText("refresh all");
@@ -63,17 +63,17 @@ public class SpikeAdminCollectionWidgetEntryPoint implements EntryPoint {
 
 		root.add(buttonsPanel);
 
-		root.add(new HTML("<h2>Studies</h2>"));
+		root.add(h2("Studies"));
 		
 		studies = new AdminCollectionWidget("Studies", JsConfiguration.getStudyCollectionUrl());
 		root.add(studies);
 		
-		root.add(new HTML("<h2>Submissions</h2>"));
+		root.add(h2("Submissions"));
 		
 		submissions = new AdminCollectionWidget("Submissions", JsConfiguration.getSubmissionCollectionUrl());
 		root.add(submissions);
 
-		root.add(new HTML("<h2>Data Files</h2>"));
+		root.add(h2("Data Files"));
 		
 		datafiles = new AdminCollectionWidget("Data Files", JsConfiguration.getDataFileCollectionUrl());
 		root.add(datafiles);

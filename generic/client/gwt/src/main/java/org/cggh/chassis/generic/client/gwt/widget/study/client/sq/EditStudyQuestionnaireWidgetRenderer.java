@@ -5,27 +5,22 @@ package org.cggh.chassis.generic.client.gwt.widget.study.client.sq;
 
 
 
-import org.cggh.chassis.generic.async.client.Function;
 import org.cggh.chassis.generic.atomext.client.study.StudyEntry;
 import org.cggh.chassis.generic.atomui.client.AtomEntryChangeEvent;
 import org.cggh.chassis.generic.atomui.client.AtomEntryChangeHandler;
-import org.cggh.chassis.generic.client.gwt.common.client.CommonStyles;
-import org.cggh.chassis.generic.client.gwt.widget.study.client.StudyActionEvent;
-import org.cggh.chassis.generic.client.gwt.widget.study.client.StudyActionHandler;
-import org.cggh.chassis.generic.client.gwt.widget.study.client.StudyActionsPanel;
 import org.cggh.chassis.generic.client.gwt.widget.study.client.StudyPropertiesWidget;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetRenderer;
 import org.cggh.chassis.generic.widget.client.CancelEvent;
 import org.cggh.chassis.generic.xquestion.client.XQuestionnaire;
+import static org.cggh.chassis.generic.widget.client.HtmlElements.*;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Panel;
 
 
@@ -51,7 +46,6 @@ public class EditStudyQuestionnaireWidgetRenderer
 	
 	// UI fields
 	private StudyPropertiesWidget studyPropertiesWidget;
-	private StudyActionsPanel actionsPanel;
 	private EditStudyQuestionnaireWidget owner;
 	private FlowPanel questionnaireContainer;
 	private XQuestionnaire questionnaire;
@@ -101,7 +95,7 @@ public class EditStudyQuestionnaireWidgetRenderer
 		
 		log.debug("render main panel");
 
-		this.mainPanel.add(new HTML("<h2>Edit Study Questionnaire</h2>")); // TODO i18n
+		this.mainPanel.add(h2("Edit Study Questionnaire")); // TODO i18n
 
 		this.mainPanel.add(contentPanel);
 
@@ -123,7 +117,7 @@ public class EditStudyQuestionnaireWidgetRenderer
 		this.studyPropertiesWidget = new StudyPropertiesWidget();
 		contentPanel.add(this.studyPropertiesWidget);
 		
-		contentPanel.add(new HTML("<h3>Study Questionnaire</h3>")); // TODO i18n
+		contentPanel.add(h3("Study Questionnaire")); // TODO i18n
 
 		this.renderButtonsPanels();
 		
@@ -232,25 +226,6 @@ public class EditStudyQuestionnaireWidgetRenderer
 	
 	
 	
-	private class BubbleStudyActionHandler implements StudyActionHandler {
-
-		/* (non-Javadoc)
-		 * @see org.cggh.chassis.generic.client.gwt.widget.study.client.StudyActionHandler#onAction(org.cggh.chassis.generic.client.gwt.widget.study.client.StudyActionEvent)
-		 */
-		public void onAction(StudyActionEvent e) {
-
-			// augment event and bubble
-			e.setEntry(model.getEntry());
-			owner.fireEvent(e);
-			
-		}
-		
-	}
-
-	
-	
-	
-
 	/**
 	 * 
 	 */

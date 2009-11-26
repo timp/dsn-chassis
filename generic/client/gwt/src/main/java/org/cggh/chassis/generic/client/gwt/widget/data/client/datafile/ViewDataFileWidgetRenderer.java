@@ -10,14 +10,13 @@ import org.cggh.chassis.generic.atomui.client.AtomEntryChangeHandler;
 import org.cggh.chassis.generic.client.gwt.common.client.CommonStyles;
 import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.DatasetActionEvent;
 import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.DatasetActionHandler;
-import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.ViewDatasetActionEvent;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetRenderer;
+import static org.cggh.chassis.generic.widget.client.HtmlElements.*;
 
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Panel;
 
 /**
@@ -66,7 +65,7 @@ public class ViewDataFileWidgetRenderer
 
 		log.debug("render main panel");
 
-		this.mainPanel.add(new HTML("<h2>View Data File</h2>")); // TODO i18n
+		this.mainPanel.add(h2("View Data File")); // TODO i18n
 
 		this.mainPanel.addStyleName(CommonStyles.MAINWITHACTIONS);
 		this.mainPanel.add(contentPanel);
@@ -90,14 +89,14 @@ public class ViewDataFileWidgetRenderer
 		this.dataFilePropertiesWidget = new DataFilePropertiesWidget();
 		contentPanel.add(this.dataFilePropertiesWidget);
 		
-		contentPanel.add(new HTML("<h3>Revisions</h3>")); // TODO i18n
-		contentPanel.add(new HTML("<p>This data file has the following revisions...</p>")); // TODO i18n
+		contentPanel.add(h3("Revisions")); // TODO i18n
+		contentPanel.add(p("This data file has the following revisions...")); // TODO i18n
 		
 		this.revisionsWidget = new DataFileRevisionsWidget();
 		contentPanel.add(this.revisionsWidget);
 		
-		contentPanel.add(new HTML("<h3>Datasets</h3>")); // TODO i18n
-		contentPanel.add(new HTML("<p>This data file is included in the following datasets...</p>")); // TODO i18n
+		contentPanel.add(h3("Datasets")); // TODO i18n
+		contentPanel.add(p("This data file is included in the following datasets...")); // TODO i18n
 		
 		this.datasetsWidget = new DataFileDatasetsWidget();
 		contentPanel.add(this.datasetsWidget);

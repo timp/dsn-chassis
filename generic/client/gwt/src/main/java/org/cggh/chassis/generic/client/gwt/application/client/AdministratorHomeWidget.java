@@ -9,9 +9,9 @@ import org.cggh.chassis.generic.client.gwt.widget.admin.client.AdminCollectionsW
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.ChassisWidget;
+import static org.cggh.chassis.generic.widget.client.HtmlElements.*;
 
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.HTML;
 
 /**
  * @author aliman
@@ -85,7 +85,7 @@ public class AdministratorHomeWidget extends ChassisWidget {
 	protected void renderUI() {
 		log.enter("renderUI");
 		
-		this.add(new HTML("<h2>Administrator Home</h2>")); // TODO i18n
+		this.add(h2("Administrator Home")); // TODO i18n
 		
 		FlowPanel collectionsPanel = new FlowPanel();
 		this.add(collectionsPanel);

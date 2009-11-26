@@ -20,10 +20,10 @@ import org.cggh.chassis.generic.atomext.client.submission.SubmissionQueryService
 import org.cggh.chassis.generic.client.gwt.configuration.client.JsConfiguration;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
+import static org.cggh.chassis.generic.widget.client.HtmlElements.*;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.RootPanel;
 
 /**
@@ -39,7 +39,7 @@ public class SpikeSubmissionServicesEntryPoint implements EntryPoint {
 	
 	
 	private void render(String message) {
-		RootPanel.get().add(new HTML("<p>"+message+"</p>"));
+		RootPanel.get().add(p(""+message+""));
 	}
 	
 	
@@ -151,7 +151,7 @@ public class SpikeSubmissionServicesEntryPoint implements EntryPoint {
 		log.enter("onModuleLoad");
 		
 		
-		RootPanel.get().add(new HTML("<h1>Spike Submission Services</h1>"));
+		RootPanel.get().add(h1("Spike Submission Services"));
 
 		render("create a study by alice...");
 		Deferred<StudyEntry> chain = createStudyByAlice();

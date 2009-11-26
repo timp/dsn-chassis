@@ -14,6 +14,7 @@ import org.cggh.chassis.generic.client.gwt.common.client.CommonStyles;
 import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
 import org.cggh.chassis.generic.client.gwt.forms.client.BaseFormRenderer;
 import org.cggh.chassis.generic.client.gwt.forms.client.BaseForm.Resources;
+import static org.cggh.chassis.generic.widget.client.HtmlElements.*;
 
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
@@ -21,7 +22,6 @@ import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 
@@ -70,7 +70,7 @@ public class StudyFormRenderer extends BaseFormRenderer<StudyEntry, StudyFeed> {
 
 		// modules question
 		
-		this.canvas.add(new HTML("<h3>Modules</h3>")); // TODO i18n
+		this.canvas.add(h3("Modules")); // TODO i18n
 
 		FlowPanel modulesQuestion = new FlowPanel();
 		modulesQuestion.addStyleName(CommonStyles.QUESTION);

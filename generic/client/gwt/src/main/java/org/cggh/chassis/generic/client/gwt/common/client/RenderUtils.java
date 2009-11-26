@@ -14,6 +14,7 @@ import org.cggh.chassis.generic.async.client.Functional;
 import org.cggh.chassis.generic.atom.client.AtomAuthor;
 import org.cggh.chassis.generic.atom.client.AtomEntry;
 import org.cggh.chassis.generic.atomext.shared.ChassisConstants;
+import static org.cggh.chassis.generic.widget.client.HtmlElements.*;
 
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Anchor;
@@ -28,6 +29,7 @@ import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
+
 
 /**
  * @author aliman
@@ -405,7 +407,7 @@ public class RenderUtils {
 	public static FlowPanel renderActionsPanel(Widget[] actions) {
 		FlowPanel out = new FlowPanel();
 		out.addStyleName(CommonStyles.ACTIONS);
-		out.add(new HTML("<h3>Actions</h3>")); // TODO use I18N resources
+		out.add(h3("Actions")); // TODO use I18N resources
 		for (Widget w : actions) {
 			out.add(w);
 		}
@@ -622,4 +624,6 @@ public class RenderUtils {
 		
 		return fileQuestionPanel;
 	}
+
+
 }

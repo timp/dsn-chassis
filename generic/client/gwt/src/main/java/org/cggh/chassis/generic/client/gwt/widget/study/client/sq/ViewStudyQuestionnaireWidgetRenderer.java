@@ -17,10 +17,10 @@ import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetRenderer;
 import org.cggh.chassis.generic.xquestion.client.XQuestionnaire;
+import static org.cggh.chassis.generic.widget.client.HtmlElements.*;
 
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Panel;
 
 
@@ -84,7 +84,7 @@ public class ViewStudyQuestionnaireWidgetRenderer
 		
 		log.debug("render main panel");
 
-		this.mainPanel.add(new HTML("<h2>View Study Questionnaire</h2>")); // TODO i18n
+		this.mainPanel.add(h2("View Study Questionnaire")); // TODO i18n
 
 		this.mainPanel.addStyleName(CommonStyles.MAINWITHACTIONS);
 		this.mainPanel.add(contentPanel);
@@ -110,7 +110,7 @@ public class ViewStudyQuestionnaireWidgetRenderer
 		this.studyPropertiesWidget = new StudyPropertiesWidget();
 		contentPanel.add(this.studyPropertiesWidget);
 		
-		contentPanel.add(new HTML("<h3>Study Questionnaire</h3>")); // TODO i18n
+		contentPanel.add(h3("Study Questionnaire")); // TODO i18n
 		
 		this.questionnaireContainer = new FlowPanel();
 		contentPanel.add(this.questionnaireContainer);

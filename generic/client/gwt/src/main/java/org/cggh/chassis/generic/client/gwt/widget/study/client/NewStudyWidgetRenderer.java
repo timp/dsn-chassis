@@ -11,13 +11,13 @@ import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.ReadyStatus;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.Status;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.StatusChangeEvent;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.StatusChangeHandler;
+import static org.cggh.chassis.generic.widget.client.HtmlElements.*;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.HTML;
 
 /**
  * @author aliman
@@ -59,9 +59,9 @@ public class NewStudyWidgetRenderer extends
 	@Override
 	protected void renderMainPanel() {
 
-		this.mainPanel.add(new HTML("<h2>New Study</h2>")); // TODO i18n
+		this.mainPanel.add(h2("New Study")); // TODO i18n
 
-		this.mainPanel.add(new HTML("<p>Use the form below to create a new study.</p>")); // TODO i18n
+		this.mainPanel.add(p("Use the form below to create a new study.")); // TODO i18n
 		
 		this.form = new StudyForm();
 		this.mainPanel.add(this.form);

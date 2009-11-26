@@ -13,13 +13,13 @@ import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.ReadyStatus;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.Status;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.StatusChangeEvent;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.StatusChangeHandler;
+import static org.cggh.chassis.generic.widget.client.HtmlElements.*;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.HTML;
 
 /**
  * @author aliman
@@ -61,9 +61,9 @@ public class NewDatasetWidgetRenderer
 	protected void renderMainPanel() {
 		log.enter("renderMainPanel");
 		
-		this.mainPanel.add(new HTML("<h2>New Dataset</h2>")); // TODO i18n
+		this.mainPanel.add(h2("New Dataset")); // TODO i18n
 
-		this.mainPanel.add(new HTML("<p>Use the form below to create a new dataset.</p>")); // TODO i18n
+		this.mainPanel.add(p("Use the form below to create a new dataset.")); // TODO i18n
 		
 		this.form = new DatasetForm();
 		this.mainPanel.add(this.form);
