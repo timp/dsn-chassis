@@ -7,7 +7,6 @@
   <version>0.2-SNAPSHOT</version>
   <name>googlecode_dsn-chassis_generic_client_gwt</name>
   
-    
   <properties>
     <gwtVersion>1.7.1</gwtVersion>
   </properties>
@@ -96,6 +95,36 @@
          </execution>
        </executions>
      </plugin>
+     <plugin>
+       <groupId>org.codehaus.mojo</groupId>
+       <artifactId>cobertura-maven-plugin</artifactId>
+       <!--version>2.0</version-->
+       <configuration>
+         <instrumentation>
+           <ignores>
+            <ignore>**Exception</ignore>
+           </ignores>
+           <excludes>
+             <exclude>**/*Exception.class</exclude>
+           </excludes>
+         </instrumentation>
+       </configuration>
+       <executions>
+         <execution>
+           <goals>
+             <goal>clean</goal>
+           </goals>
+         </execution>
+       </executions>
+     </plugin>
    </plugins>
   </build>
+  <reporting>
+    <plugins>
+      <plugin>
+       <groupId>org.codehaus.mojo</groupId>
+       <artifactId>cobertura-maven-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </reporting>
 </project>
