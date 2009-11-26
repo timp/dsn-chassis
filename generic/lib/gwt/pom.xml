@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.cggh.chassis</groupId>
+  <parent>
+    <groupId>org.cggh.chassis</groupId>
+    <artifactId>chassis-parent</artifactId>
+    <version>0.1-alpha-3</version>
+  </parent>
   <artifactId>chassis-generic-lib-gwt</artifactId>
   <packaging>jar</packaging>
-  <version>0.2-SNAPSHOT</version>
   <name>googlecode_dsn-chassis_generic_lib_gwt</name>
   
   <!--  convenience to define GWT version in one place -->
