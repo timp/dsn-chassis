@@ -13,13 +13,13 @@ import org.cggh.chassis.generic.client.gwt.common.client.RenderUtils;
 import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.DataFileActionHandler;
 import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.ViewDataFileActionEvent;
 import org.cggh.chassis.generic.widget.client.ChassisWidget;
+import static org.cggh.chassis.generic.widget.client.HtmlElements.*;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -40,10 +40,10 @@ public class DatasetDataFilesWidget extends ChassisWidget {
 	
 	// UI variables
 	private Widget[] headerRow = { 
-		new HTML("<strong>Title</strong>"),
-		new HTML("<strong>Summary</strong>"),
-		new HTML("<strong>Owners</strong>"),
-		new HTML("<strong>Actions</strong>")
+		strong("Title"),
+		strong("Summary"),
+		strong("Owners"),
+		strong("Actions")
 	};
 
 

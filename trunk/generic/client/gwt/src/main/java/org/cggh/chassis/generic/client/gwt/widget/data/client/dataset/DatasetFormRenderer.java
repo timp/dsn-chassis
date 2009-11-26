@@ -22,9 +22,9 @@ import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.MultiSelect;
 import org.cggh.chassis.generic.widget.client.MultiSelectModel;
+import static org.cggh.chassis.generic.widget.client.HtmlElements.*;
 
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 
 /**
@@ -72,11 +72,11 @@ public class DatasetFormRenderer
 	public void renderUI() {
 		super.renderUI();
 		
-		this.canvas.add(new HTML("<h3>Studies</h3>")); // TODO i18n
+		this.canvas.add(h3("Studies")); // TODO i18n
 		this.studiesQuestionPanel = new FlowPanel();
 		this.canvas.add(this.studiesQuestionPanel);
 
-		this.canvas.add(new HTML("<h3>Data Files</h3>")); // TODO i18n
+		this.canvas.add(h3("Data Files")); // TODO i18n
 		this.dataFilesQuestionPanel = new FlowPanel();
 		this.canvas.add(this.dataFilesQuestionPanel);
 

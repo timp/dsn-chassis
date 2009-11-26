@@ -10,6 +10,7 @@ import org.cggh.chassis.generic.log.client.AllenSauerLog;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.xquestion.client.XQuestionnaire;
+import static org.cggh.chassis.generic.widget.client.HtmlElements.*;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.dom.client.PreElement;
@@ -116,7 +117,7 @@ public class SpikeStudyQuestionnaireEntryPoint implements EntryPoint {
 		
 		final RootPanel qp = RootPanel.get("questionnaire");
 		
-		qp.add(new HTML("<p>Loading questionnaire...</p>"));
+		qp.add(p("Loading questionnaire..."));
 
 		String url = JsConfiguration.getStudyQuestionnaireUrl();
 		

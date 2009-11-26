@@ -9,11 +9,11 @@ import java.util.List;
 import org.cggh.chassis.generic.atomext.client.datafile.DataFileEntry;
 import org.cggh.chassis.generic.atomext.client.dataset.DatasetEntry;
 import org.cggh.chassis.generic.atomext.client.dataset.DatasetLink;
-import org.cggh.chassis.generic.atomext.client.study.StudyEntry;
 import org.cggh.chassis.generic.client.gwt.common.client.RenderUtils;
 import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.DatasetActionHandler;
 import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.ViewDatasetActionEvent;
 import org.cggh.chassis.generic.widget.client.ChassisWidget;
+import static org.cggh.chassis.generic.widget.client.HtmlElements.*;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -44,10 +44,10 @@ public class DataFileDatasetsWidget extends ChassisWidget {
 	
 	// UI variables
 	private Widget[] headerRow = { 
-		new HTML("<strong>Title</strong>"),
-		new HTML("<strong>Summary</strong>"),
-		new HTML("<strong>Owners</strong>"),
-		new HTML("<strong>Actions</strong>")
+		strong("Title"),
+		strong("Summary"),
+		strong("Owners"),
+		strong("Actions")
 	};
 
 
@@ -120,9 +120,9 @@ public class DataFileDatasetsWidget extends ChassisWidget {
 		actionsPanel.add(viewAction);
 
 		Widget[] row = { 
-			new HTML("<strong>"+entry.getTitle()+"</strong>"),
-			new HTML(RenderUtils.truncate(entry.getSummary(), 30)),
-			new HTML(RenderUtils.renderAtomAuthorsAsCommaDelimitedEmailString(entry.getAuthors())),
+			strong(entry.getTitle()),
+			new HTML(RenderUtils.truncate(entry.getSummary(), 30)), // TODO consider refactor with RenderUtils
+			new HTML(RenderUtils.renderAtomAuthorsAsCommaDelimitedEmailString(entry.getAuthors())), // TODO consider refactor with RenderUtils
 			actionsPanel
 		};
 		

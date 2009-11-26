@@ -19,7 +19,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author aliman
  *
  */
-public class DatasetActionsPanel extends ChassisWidget {
+public class DatasetActionsWidget extends ChassisWidget {
 
 	
 	
@@ -27,7 +27,7 @@ public class DatasetActionsPanel extends ChassisWidget {
 	
 
 	// utility fields
-	private Log log = LogFactory.getLog(DatasetActionsPanel.class);
+	private Log log = LogFactory.getLog(DatasetActionsWidget.class);
 	
 	
 	

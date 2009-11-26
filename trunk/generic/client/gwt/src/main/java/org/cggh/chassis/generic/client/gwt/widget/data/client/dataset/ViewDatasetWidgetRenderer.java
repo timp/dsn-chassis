@@ -12,10 +12,10 @@ import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.DataFileA
 import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.DataFileActionHandler;
 import org.cggh.chassis.generic.client.gwt.widget.study.client.StudyActionEvent;
 import org.cggh.chassis.generic.client.gwt.widget.study.client.StudyActionHandler;
-import org.cggh.chassis.generic.client.gwt.widget.study.client.ViewStudyActionEvent;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetRenderer;
+import static org.cggh.chassis.generic.widget.client.HtmlElements.*;
 
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -33,16 +33,17 @@ public class ViewDatasetWidgetRenderer
 	
 	
 	private Log log = LogFactory.getLog(ViewDatasetWidgetRenderer.class);
-	
-	
-	
-	
-	// UI fields
-	private DatasetPropertiesWidget datasetPropertiesWidget;
-	private DatasetActionsPanel actionsPanel;
 	private ViewDatasetWidget owner;
+	
+	
+	
+	
+	// UI fields, i.e., child widgets
+	private DatasetPropertiesWidget datasetPropertiesWidget;
+	private DatasetActionsWidget actionsWidget;
 	private DatasetStudiesWidget studiesWidget;
 	private DatasetDataFilesWidget dataFilesWidget;
+//	private DataSharingWidget dataSharingWidget;
 
 	
 	
@@ -65,18 +66,18 @@ public class ViewDatasetWidgetRenderer
 		log.debug("render content panel");
 		
 		Panel contentPanel = this.renderContentPanel();
-
+		
 		log.debug("render actions panel");
 
-		this.actionsPanel = new DatasetActionsPanel();
+		this.actionsWidget = new DatasetActionsWidget();
 		
 		log.debug("render main panel");
 
-		this.mainPanel.add(new HTML("<h2>View Dataset</h2>")); // TODO i18n
+		this.mainPanel.add(h2("View Dataset")); // TODO i18n
 
 		this.mainPanel.addStyleName(CommonStyles.MAINWITHACTIONS);
 		this.mainPanel.add(contentPanel);
-		this.mainPanel.add(this.actionsPanel);
+		this.mainPanel.add(this.actionsWidget);
 
 		log.leave();
 	}
@@ -95,18 +96,21 @@ public class ViewDatasetWidgetRenderer
 		this.datasetPropertiesWidget = new DatasetPropertiesWidget();
 		contentPanel.add(this.datasetPropertiesWidget);
 		
-		contentPanel.add(new HTML("<h3>Studies</h3>")); // TODO i18n
-		contentPanel.add(new HTML("<p>This dataset is associated with the following studies...")); // TODO I18N
+		contentPanel.add(h3("Studies")); // TODO i18n
+		contentPanel.add(p("This dataset is associated with the following studies...")); // TODO I18N
 		
 		this.studiesWidget = new DatasetStudiesWidget();
 		contentPanel.add(this.studiesWidget);
 
-		contentPanel.add(new HTML("<h3>Data Files</h3>")); // TODO i18n
-		contentPanel.add(new HTML("<p>This dataset includes the following data files...")); // TODO I18N
+		contentPanel.add(h3("Data Files")); // TODO i18n
+		contentPanel.add(p("This dataset includes the following data files...")); // TODO I18N
 		
 		this.dataFilesWidget = new DatasetDataFilesWidget();
 		contentPanel.add(this.dataFilesWidget);
 
+		contentPanel.add(h3("Data Sharing")); // TODO i18n
+//		contentPanel.add(this.dataSharingWidget);
+		
 		log.leave();
 		return contentPanel;
 	}
@@ -151,7 +155,7 @@ public class ViewDatasetWidgetRenderer
 	protected void registerHandlersForChildWidgetEvents() {
 		log.enter("registerHandlersForChildWidgetEvents");
 
-		HandlerRegistration a = this.actionsPanel.addEditDatasetActionHandler(new DatasetActionHandler() {
+		HandlerRegistration a = this.actionsWidget.addEditDatasetActionHandler(new DatasetActionHandler() {
 			
 			public void onAction(DatasetActionEvent e) {
 				

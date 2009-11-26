@@ -10,12 +10,12 @@ import org.cggh.chassis.generic.client.gwt.forms.client.BaseForm.Resources;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.ChassisWidgetRenderer;
+import static org.cggh.chassis.generic.widget.client.HtmlElements.*;
 
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextArea;
@@ -66,7 +66,7 @@ public abstract class BaseFormRenderer
 		
 		this.canvas.clear();
 		
-		this.canvas.add(new HTML("<h3>"+resources.get(Resources.HEADINGTITLEANDSUMMARY)+"</h3>"));
+		this.canvas.add(h3(""+resources.get(Resources.HEADINGTITLEANDSUMMARY)+""));
 		this.renderTitleQuestion();
 		this.canvas.add(this.titleQuestionPanel);
 		this.renderSummaryQuestion();

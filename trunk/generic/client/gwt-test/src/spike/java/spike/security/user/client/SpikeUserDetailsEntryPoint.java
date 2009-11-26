@@ -7,6 +7,7 @@ import org.cggh.chassis.generic.client.gwt.configuration.client.JsConfiguration;
 import org.cggh.chassis.generic.user.gwtrpc.client.GWTUserDetailsService;
 import org.cggh.chassis.generic.user.gwtrpc.client.GWTUserDetailsServiceAsync;
 import org.cggh.chassis.generic.user.transfer.UserDetailsTO;
+import static org.cggh.chassis.generic.widget.client.HtmlElements.*;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -48,7 +49,7 @@ public class SpikeUserDetailsEntryPoint implements EntryPoint {
 			public void onSuccess(UserDetailsTO user) {
 				root.clear();
 				root.add(new HTML("<p>Authenticated user: <strong>"+user.getId()+"</strong></p>"));
-				root.add(new HTML("<p>Roles:</p>"));
+				root.add(p("Roles:"));
 				String content = "<ul>";
 				for (String role : user.getRoles()) {
 					content += "<li>"+role+"</li>";

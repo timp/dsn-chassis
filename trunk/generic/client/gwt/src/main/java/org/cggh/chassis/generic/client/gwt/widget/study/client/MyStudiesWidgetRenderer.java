@@ -13,6 +13,7 @@ import org.cggh.chassis.generic.client.gwt.common.client.RenderUtils;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetRenderer;
+import static org.cggh.chassis.generic.widget.client.HtmlElements.*;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -20,7 +21,6 @@ import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -63,9 +63,9 @@ public class MyStudiesWidgetRenderer
 	protected void renderMainPanel() {
 		log.enter("renderMainPanel");
 
-		this.mainPanel.add(new HTML("<h2>My Studies</h2>")); // TODO i18n
+		this.mainPanel.add(h2("My Studies")); // TODO i18n
 
-		this.mainPanel.add(new HTML("<p>The table below lists all of the studies that you own...</p>")); // TODO i18n
+		this.mainPanel.add(p("The table below lists all of the studies that you own...")); // TODO i18n
 
 		this.resultsTableContainer = new FlowPanel();
 		this.mainPanel.add(this.resultsTableContainer);
@@ -179,7 +179,7 @@ public class MyStudiesWidgetRenderer
 		});
 		
 		Widget[] row = {
-				new HTML("<strong>"+entry.getTitle()+"</strong>"),	
+				strong(""+entry.getTitle()+""),	
 				new Label(RenderUtils.truncate(entry.getSummary(), 20)),	
 				RenderUtils.renderAtomAuthorsAsLabel(entry, false),	
 				viewAction

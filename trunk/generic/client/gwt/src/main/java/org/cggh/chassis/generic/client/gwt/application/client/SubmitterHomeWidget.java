@@ -4,8 +4,8 @@
 package org.cggh.chassis.generic.client.gwt.application.client;
 
 import org.cggh.chassis.generic.widget.client.ChassisWidget;
+import static org.cggh.chassis.generic.widget.client.HtmlElements.*;
 
-import com.google.gwt.user.client.ui.HTML;
 
 /**
  * @author aliman
@@ -37,7 +37,7 @@ public class SubmitterHomeWidget
 	@Override
 	protected void renderUI() {
 		// TODO Auto-generated method stub
-		this.add(new HTML("<h2>Submitter Home</h2>"));
+		this.add(h2("Submitter Home"));
 		
 	}
 

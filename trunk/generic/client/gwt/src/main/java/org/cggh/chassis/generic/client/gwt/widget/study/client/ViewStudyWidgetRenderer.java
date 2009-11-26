@@ -15,6 +15,7 @@ import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.DatasetAct
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetRenderer;
+import static org.cggh.chassis.generic.widget.client.HtmlElements.*;
 
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -81,7 +82,7 @@ public class ViewStudyWidgetRenderer
 		
 		log.debug("render main panel");
 
-		this.mainPanel.add(new HTML("<h2>View Study</h2>")); // TODO i18n
+		this.mainPanel.add(h2("View Study")); // TODO i18n
 
 		this.mainPanel.addStyleName(CommonStyles.MAINWITHACTIONS);
 		this.mainPanel.add(contentPanel);
@@ -107,8 +108,8 @@ public class ViewStudyWidgetRenderer
 		this.studyPropertiesWidget = new StudyPropertiesWidget();
 		contentPanel.add(this.studyPropertiesWidget);
 		
-		contentPanel.add(new HTML("<h3>Datasets</h3>")); // TODO i18n
-		contentPanel.add(new HTML("<p>The following datasets are associated with this study...")); // TODO I18N
+		contentPanel.add(h3("Datasets")); // TODO i18n
+		contentPanel.add(p("The following datasets are associated with this study...")); // TODO I18N
 		
 		this.datasetsWidget = new StudyDatasetsWidget();
 		contentPanel.add(this.datasetsWidget);
