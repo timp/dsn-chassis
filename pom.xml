@@ -6,14 +6,16 @@
   <version>0.1-alpha-3</version>
   <packaging>pom</packaging>
   <name>CGGH Chassis</name>
+  <modules>
+    <module>wwarn</module>
+    <module>generic</module>
+  </modules>
+
   <description>
 CGGH Data Sharing Network Chassis
   </description>
   <url>http://code.google.com/p/dsn-chassis/</url>
 
-  <modules>
-  <module>chassis-generic-lib-gwt</module>
-  </modules>
   <issueManagement>
    <system>Google Code</system>
     <url>       
@@ -30,9 +32,14 @@ http://code.google.com/p/dsn-chassis/issues/list
 
   <ciManagement>
     <system>Hudson</system>
-    <url>http://localhost/</url>
+    <url>http://hudson.cggh.org/</url>
   </ciManagement>
 
+  <properties>
+    <gwtVersion>1.7.1</gwtVersion>
+  </properties>
+  
+  
   <developers>
     <developer>
       <name>Alistair Miles</name>
@@ -82,8 +89,61 @@ http://code.google.com/p/dsn-chassis/issues/list
   </licenses>
 
   <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+         <source>1.5</source>
+         <target>1.5</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>jar</goal>
+	    </goals>
+	  </execution>
+        </executions>
+      </plugin>
+     <plugin>
+       <groupId>org.codehaus.mojo</groupId>
+       <artifactId>cobertura-maven-plugin</artifactId>
+       <!--version>2.0</version-->
+       <configuration>
+         <instrumentation>
+           <ignores>
+            <ignore>**Exception</ignore>
+           </ignores>
+           <excludes>
+             <exclude>**/*Exception.class</exclude>
+           </excludes>
+         </instrumentation>
+       </configuration>
+       <executions>
+         <execution>
+           <goals>
+             <goal>clean</goal>
+           </goals>
+         </execution>
+       </executions>
+     </plugin>
+    </plugins>
+  </build>
   <reporting>
      <plugins>
       <plugin>
@@ -185,32 +245,11 @@ http://code.google.com/p/dsn-chassis/issues/list
          <debug>true</debug>
         </configuration>
       </plugin>
+      <plugin>
+       <groupId>org.codehaus.mojo</groupId>
+       <artifactId>cobertura-maven-plugin</artifactId>
+      </plugin>
     </plugins>
   </reporting>
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-         <source>1.5</source>
-         <target>1.5</target>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-source-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>attach-sources</id>
-            <phase>verify</phase>
-            <goals>
-              <goal>jar</goal>
-	    </goals>
-	  </execution>
-        </executions>
-      </plugin>
-    </plugins>
-  </build>
 </project>
 
