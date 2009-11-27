@@ -39,11 +39,17 @@ declare function my:expand-study( $entry as element() ) as element() {
 	</atom:entry>
 };
 
+
+
+
 declare function my:expand-study-link( $link as element() ) as element() {
 	let $rel := $link/@rel
 	return $link
 	(: add logic here to expand any outbound links :)
 };
+
+
+
 
 declare function my:expand-link( $collection-path as xs:string, $link as element() ) as element() {
 	let $rel := $link/@rel
@@ -56,6 +62,9 @@ declare function my:expand-link( $collection-path as xs:string, $link as element
 	</atom:link>
 };
 
+
+
+
 declare function my:rev-dataset-links( $entry as element() ) as element()* {
     let $href := $entry/atom:link[@rel="edit"]/@href
     for $dataset in collection("/db/datasets")//atom:entry[atom:link[@rel="chassis.study" and @href=$href]]
@@ -64,6 +73,8 @@ declare function my:rev-dataset-links( $entry as element() ) as element()* {
         { $dataset }
     </atom:link>
 };
+
+
 
 
 (: find collections :)

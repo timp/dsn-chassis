@@ -55,10 +55,24 @@ declare function my:expand-dataset( $entry as element() ) as element() {
 		$entry/atom:summary,
 		$entry/atom:category,
 		$entry/atom:author,
-		for $link in $entry/atom:link return my:expand-dataset-link($link)
+		for $link in $entry/atom:link return my:expand-dataset-link($link),
+		my:rev-submission-links($entry)
 	}
 	</atom:entry>
 };
+
+
+
+
+declare function my:rev-submission-links( $datasetEntry as element() ) as element()* {
+    let $href := $datasetEntry/atom:link[@rel="edit"]/@href
+    for $submissionEntry in collection("/db/submissions")//atom:entry[atom:link[@rel="chassis.dataset" and @href=$href]]
+    return
+    <atom:link rel="chassis.submission" href="{$submissionEntry/atom:link[@rel='edit']/@href}">
+        { $submissionEntry }
+    </atom:link>
+};
+
 
 
 (: find collection :) 
