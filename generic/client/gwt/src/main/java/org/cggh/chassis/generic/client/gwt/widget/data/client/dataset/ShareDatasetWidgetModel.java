@@ -6,6 +6,8 @@ package org.cggh.chassis.generic.client.gwt.widget.data.client.dataset;
 import org.cggh.chassis.generic.atomext.client.dataset.DatasetEntry;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 
+import com.google.gwt.event.shared.HandlerRegistration;
+
 /**
  * @author aliman
  *
@@ -17,6 +19,8 @@ public class ShareDatasetWidgetModel extends AsyncWidgetModel {
 	
 	// state fields
 	private DatasetEntry datasetEntry;
+
+	private String id;
 	
 
 	
@@ -25,8 +29,9 @@ public class ShareDatasetWidgetModel extends AsyncWidgetModel {
 	 * @param datasetEntry the datasetEntry to set
 	 */
 	public void setDatasetEntry(DatasetEntry datasetEntry) {
-		// TODO fire a model change event
+		DatasetEntryChangeEvent e = new DatasetEntryChangeEvent(this.datasetEntry, datasetEntry);
 		this.datasetEntry = datasetEntry;
+		this.fireChangeEvent(e);
 	}
 
 	
@@ -42,6 +47,27 @@ public class ShareDatasetWidgetModel extends AsyncWidgetModel {
 
 
 
+	
+
+	public void setDatasetEntryId(String id) {
+		this.id = id;
+		// N.B. we will not fire events, because not used in UI, only used for memory
+	}
+	
+	
+	
+	
+	public String getDatasetEntryId() {
+		return this.id;
+	}
+
+	
+
+	
+	public HandlerRegistration addDatasetEntryChangeHandler(DatasetEntryChangeHandler h) {
+		return this.addChangeHandler(h, DatasetEntryChangeEvent.TYPE);
+	}
+	
 	
 	
 	

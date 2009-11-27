@@ -117,6 +117,10 @@ public class JsConfiguration {
 		return $wnd.CHASSIS.networkName;
 	}-*/;
 
+	public static native String getDataSharingAgreementUrl() /*-{
+		return $wnd.CHASSIS.dataSharingAgreementUrl;
+	}-*/;
+
 	
 	
 }
