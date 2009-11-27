@@ -176,6 +176,7 @@ public class DataManagementWidget
 		this.registerHandlersForViewDatasetWidgetEvents();
 		this.registerHandlersForMyDatasetsWidgetEvents();
 		this.registerHandlersForEditDatasetWidgetEvents();
+		this.registerHandlersForShareDatasetWidgetEvents();
 
 	}
 
@@ -184,8 +185,6 @@ public class DataManagementWidget
 
 
 	
-
-
 	/**
 	 * 
 	 */
@@ -506,6 +505,33 @@ public class DataManagementWidget
 	}
 
 
+
+
+
+
+
+	/**
+	 * 
+	 */
+	private void registerHandlersForShareDatasetWidgetEvents() {
+		log.enter("registerHandlersForShareDatasetWidgetEvents");
+
+		HandlerRegistration a = this.shareDatasetWidget.addViewDatasetActionHandler(new DatasetActionHandler() {
+			
+			public void onAction(DatasetActionEvent e) {
+				viewDatasetWidget.viewEntry(e.getEntry().getId());
+				setActiveChild(viewDatasetWidget);
+			}
+
+		});
+		
+		HandlerRegistration b = this.shareDatasetWidget.addCancelHandler(new CommonCancelHandler());
+
+		this.childWidgetEventHandlerRegistrations.add(a);
+		this.childWidgetEventHandlerRegistrations.add(b);
+
+		log.leave();
+	}
 
 
 

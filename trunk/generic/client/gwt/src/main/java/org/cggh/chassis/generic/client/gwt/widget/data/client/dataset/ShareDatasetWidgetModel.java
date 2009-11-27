@@ -4,6 +4,7 @@
 package org.cggh.chassis.generic.client.gwt.widget.data.client.dataset;
 
 import org.cggh.chassis.generic.atomext.client.dataset.DatasetEntry;
+import org.cggh.chassis.generic.atomext.client.submission.SubmissionEntry;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 
 import com.google.gwt.event.shared.HandlerRegistration;
@@ -19,7 +20,7 @@ public class ShareDatasetWidgetModel extends AsyncWidgetModel {
 	
 	// state fields
 	private DatasetEntry datasetEntry;
-
+	private SubmissionEntry submissionEntry;
 	private String id;
 	
 
@@ -63,6 +64,21 @@ public class ShareDatasetWidgetModel extends AsyncWidgetModel {
 
 	
 
+	public void setSubmissionEntry(SubmissionEntry submissionEntry) {
+		// TODO fire event? is anybody interested?
+		this.submissionEntry = submissionEntry;
+	}
+
+
+	
+	
+	public SubmissionEntry getSubmissionEntry() {
+		return this.submissionEntry;
+	}
+	
+	
+	
+	
 	
 	public HandlerRegistration addDatasetEntryChangeHandler(DatasetEntryChangeHandler h) {
 		return this.addChangeHandler(h, DatasetEntryChangeEvent.TYPE);
@@ -84,6 +100,10 @@ public class ShareDatasetWidgetModel extends AsyncWidgetModel {
 	protected static final Status STATUS_DATASET_RETRIEVED = new DatasetRetrievedStatus();
 	
 	public static class DatasetRetrievedStatus extends ReadyStatus {}
+
+	protected static final Status STATUS_DATASET_SHARED = new DatasetSharedStatus();
+	
+	public static class DatasetSharedStatus extends ReadyStatus {}
 
 	
 }

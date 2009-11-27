@@ -4,6 +4,7 @@
 package org.cggh.chassis.generic.client.gwt.widget.data.client.dataset;
 
 import org.cggh.chassis.generic.atomext.client.dataset.DatasetEntry;
+import org.cggh.chassis.generic.atomext.client.submission.SubmissionEntry;
 import org.cggh.chassis.generic.atomext.client.submission.SubmissionLink;
 import org.cggh.chassis.generic.client.gwt.common.client.RenderUtils;
 import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
@@ -123,7 +124,7 @@ public class DatasetDataSharingWidget extends ChassisWidget {
 		
 		add(p("This dataset has <strong>not</strong> been shared with "+Configuration.getNetworkName()+".")); // TODO i18n
 		
-		Anchor shareDatasetAction = RenderUtils.renderActionAsAnchor("share this dataset with "+Configuration.getNetworkName());
+		Anchor shareDatasetAction = RenderUtils.renderActionAsAnchor("share this dataset with "+Configuration.getNetworkName()+"...");
 
 		shareDatasetAction.addClickHandler(new ClickHandler() {
 			
@@ -146,8 +147,16 @@ public class DatasetDataSharingWidget extends ChassisWidget {
 	 * 
 	 */
 	private void syncShared() {
-		// TODO Auto-generated method stub
+		log.enter("syncShared");
 		
+		SubmissionEntry se = this.entry.getSubmissionLink().getEntry();
+		
+		String author = RenderUtils.renderAtomAuthorsAsCommaDelimitedEmailString(se.getAuthors());
+		String created = se.getPublished();
+		
+		add(p("This dataset was shared with "+Configuration.getNetworkName()+" by <strong>"+author+"</strong> on <strong>"+created+"</strong>."));
+		
+		log.leave();
 	}
 
 
