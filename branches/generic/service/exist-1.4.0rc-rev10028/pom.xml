@@ -1,24 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <parent>
+    <groupId>org.cggh.chassis</groupId>
+    <artifactId>chassis-parent</artifactId>
+    <version>0.1-alpha-3</version>
+  </parent>
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.cggh.chassis</groupId>
   <artifactId>chassis-generic-service-exist</artifactId>
   <packaging>war</packaging>
-  <version>0.2-SNAPSHOT</version>
   <name>googlecode_dsn-chassis_generic_service_exist</name>
-  
-  <!--  convenience to define GWT version in one place -->
-  <properties>
-    <gwtVersion>1.7.1</gwtVersion>
-  </properties>
   
   <dependencies>
     <dependency>
      <groupId>org.cggh.chassis</groupId>
      <artifactId>chassis-generic-lib</artifactId>
-     <version>0.2-SNAPSHOT</version>
+     <version>${project.version}</version>
     </dependency> 
-
   </dependencies>
   
   <build>
@@ -63,6 +60,7 @@
 	  </excludes>
         </configuration>
       </plugin>
+      <!-- Standard tomcat:deploy fails due to the vast size of this war -->
       <plugin>
             <groupId>org.codehaus.cargo</groupId>
             <artifactId>cargo-maven2-plugin</artifactId>
