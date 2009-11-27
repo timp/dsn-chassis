@@ -22,9 +22,6 @@ public class SubmissionFactory
 	public static String TEMPLATE_ENTRY = 
 		"<atom:entry xmlns:atom=\""+Atom.NSURI+"\">" +
 			"<atom:category scheme=\""+Chassis.SCHEME_TYPES+"\" term=\""+Chassis.Type.SUBMISSION+"\"/>" +
-			"<atom:content type=\"application/xml\">" +
-				"<chassis:submission xmlns:chassis=\""+Chassis.NSURI+"\"></chassis:submission>" +
-			"</atom:content>" +
 		"</atom:entry>";
 	
 	
@@ -57,13 +54,6 @@ public class SubmissionFactory
 		return new SubmissionFeedImpl(feedElement, this);
 	}
 
-	
-	
-	
-	public Submission createSubmission(Element submissionElement) {
-		return new SubmissionImpl(submissionElement);
-	}
-	
 	
 	
 	

@@ -11,6 +11,7 @@ import org.cggh.chassis.generic.atom.client.AtomLink;
 import org.cggh.chassis.generic.atomext.client.datafile.DataFileLink;
 import org.cggh.chassis.generic.atomext.client.study.StudyLink;
 import org.cggh.chassis.generic.atomext.client.submission.SubmissionLink;
+import org.cggh.chassis.generic.atomext.client.submission.SubmissionLinkImpl;
 import org.cggh.chassis.generic.atomext.shared.Chassis;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
@@ -240,8 +241,19 @@ public class DatasetEntryImpl extends AtomEntryImpl implements DatasetEntry {
 	 * @see org.cggh.chassis.generic.atomext.client.dataset.DatasetEntry#getSubmissionLink()
 	 */
 	public SubmissionLink getSubmissionLink() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		List<AtomLink> links = this.getLinks();
+		SubmissionLink submissionLink = null;
+		
+		for (AtomLink link : links) {
+			if (Chassis.Rel.SUBMISSION.equals(link.getRel())) {
+				submissionLink = new SubmissionLinkImpl(link.getElement());
+			}
+		}
+		
+		// TODO should we throw an exception if we find more than one submission link?
+		
+		return submissionLink;
 	}
 	
 	

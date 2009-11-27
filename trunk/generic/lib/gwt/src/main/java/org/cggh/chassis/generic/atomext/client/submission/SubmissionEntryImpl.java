@@ -3,13 +3,10 @@
  */
 package org.cggh.chassis.generic.atomext.client.submission;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import org.cggh.chassis.generic.atom.client.AtomEntryImpl;
 import org.cggh.chassis.generic.atom.client.AtomLink;
 import org.cggh.chassis.generic.atomext.shared.Chassis;
-import org.cggh.chassis.generic.xml.client.XMLNS;
 
 import com.google.gwt.xml.client.Element;
 
@@ -38,79 +35,26 @@ public class SubmissionEntryImpl
 		this.submissionFactory = factory;
 	}
 
-	
-	
 
-	public void addStudyLink(String href) {
-		AtomLink link = factory.createLink();
-		link.setRel(Chassis.Rel.STUDY);
-		link.setHref(href);
-		this.addLink(link);
-	}
 
-	
-	
-	
-	public AtomLink getStudyLink(String href) {
-		for (AtomLink link : getStudyLinks()) {
-			if (href != null && href.equals(link.getHref())) {
-				return link;
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.atomext.client.submission.SubmissionEntry#setDatasetLink(java.lang.String)
+	 */
+	public void setDatasetLink(String datasetEntryUrl) {
+		
+		// TODO consider refactor to super-class method like removeLinks(String rel)
+		
+		for (AtomLink link : this.getLinks()) {
+			if (Chassis.Rel.DATASET.equals(link.getRel())) {
+				this.removeLink(link);
 			}
 		}
-		return null;
-	}
-	
-	
-	
-	
 
-	public List<AtomLink> getStudyLinks() {
-		List<AtomLink> links = this.getLinks();
-		List<AtomLink> studyLinks = new ArrayList<AtomLink>();
-		for (AtomLink link : links) {
-			if (Chassis.Rel.STUDY.equals(link.getRel())) {
-				studyLinks.add(link);
-			}
-		}
-		return studyLinks;
+		this.addLink(datasetEntryUrl, Chassis.Rel.DATASET);
+		
 	}
 
-
-
-	
-	public void removeStudyLink(String href) {
-		AtomLink link = getStudyLink(href);
-		this.removeLink(link);
-	}
-
-
-
-	
-	public void setStudyLinks(List<String> hrefs) {
-		for (AtomLink link : getStudyLinks()) {
-			removeLink(link);
-		}
-		for (String href : hrefs) {
-			addStudyLink(href);
-		}
-	}
-	
-	
-	
-	
-	public Element getSubmissionElement() {
-		return XMLNS.getFirstElementByTagNameNS(element, Chassis.Element.SUBMISSION, Chassis.NSURI);
-	}
-
-
-
-	
-	
-	public Submission getSubmission() {
-		return submissionFactory.createSubmission(getSubmissionElement());
-	}
-
-	
-	
+		
 
 }

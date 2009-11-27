@@ -20,4 +20,8 @@ public class SubmissionPersistenceService
 		super(new SubmissionFactory());
 	}
 
+	public SubmissionPersistenceService(String baseUrl) {
+		super(new SubmissionFactory(), baseUrl);
+	}
+
 }
