@@ -43,8 +43,12 @@ public class ShareDatasetWidgetController {
 	/**
 	 * @param id
 	 */
-	public void retrieveEntry(String id) {
+	public Deferred<DatasetEntry> retrieveEntry(String id) {
 		log.enter("retrieveEntry");
+		
+		log.debug("store dataset entry id to use as mnemonic");
+		
+		this.model.setDatasetEntryId(id);
 		
 		log.debug("set status to retrieve dataset pending");
 		
@@ -82,6 +86,7 @@ public class ShareDatasetWidgetController {
 		deferredEntry.addErrback(new AsyncErrback(owner, model));
 		
 		log.leave();
+		return deferredEntry;
 	}
 
 	

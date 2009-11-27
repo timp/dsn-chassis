@@ -254,6 +254,17 @@ public class Configuration {
 	 */
 	public static String getNetworkName() {
 		return JsConfiguration.getNetworkName();
+	}
+
+	
+	
+	
+	
+	/**
+	 * @return
+	 */
+	public static String getDataSharingAgreementUrl() {
+		return JsConfiguration.getDataSharingAgreementUrl();
 	}	
 	
 	

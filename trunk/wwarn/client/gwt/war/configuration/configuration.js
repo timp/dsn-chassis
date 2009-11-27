@@ -6,7 +6,7 @@ if (typeof CHASSIS == "undefined" || !CHASSIS) {
 
 CHASSIS.networkName = "WWARN";
 
-// configure service URLs
+// configure URLs
 
 CHASSIS.client = "/chassis-wwarn-client-gwt";
 CHASSIS.userService = "/chassis-generic-service-user";
@@ -35,6 +35,8 @@ CHASSIS.sandboxCollectionUrl = CHASSIS.existService + "/atom/edit/sandbox";
 
 CHASSIS.newDataFileServiceUrl = CHASSIS.uploadService + "/newdatafile";
 CHASSIS.uploadDataFileRevisionServiceUrl = CHASSIS.uploadService + "/revisedatafile";
+
+CHASSIS.dataSharingAgreementUrl = CHASSIS.client + "/data-sharing-agreement.html";
 
 //configure role name prefix
 
