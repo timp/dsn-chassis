@@ -11,6 +11,8 @@ import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.DelegatingWidget;
 import org.cggh.chassis.generic.widget.client.WidgetMemory;
 
+import com.google.gwt.event.shared.HandlerRegistration;
+
 
 
 /**
@@ -34,6 +36,8 @@ public class ShareDatasetWidget
 		super.init(); // will instantiate model and renderer
 		
 		this.controller = new ShareDatasetWidgetController(this, this.model);
+		
+		this.renderer.setController(controller);
 		
 		this.memory = new Memory();
 	}
@@ -120,6 +124,21 @@ public class ShareDatasetWidget
 	
 	
 	
+	
+	public HandlerRegistration addViewDatasetActionHandler(DatasetActionHandler h) {
+		return this.addHandler(h, ViewDatasetActionEvent.TYPE);
+	}
+
+
+
+
+	public void fireViewDatasetActionEvent() {
+		ViewDatasetActionEvent e = new ViewDatasetActionEvent();
+		e.setEntry(model.getDatasetEntry());
+		this.fireEvent(e);
+	}
+
+
 	
 	
 }

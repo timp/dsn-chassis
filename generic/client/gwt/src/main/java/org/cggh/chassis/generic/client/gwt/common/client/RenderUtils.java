@@ -13,9 +13,14 @@ import org.cggh.chassis.generic.async.client.Function;
 import org.cggh.chassis.generic.async.client.Functional;
 import org.cggh.chassis.generic.atom.client.AtomAuthor;
 import org.cggh.chassis.generic.atom.client.AtomEntry;
+import org.cggh.chassis.generic.atomext.client.dataset.DatasetEntry;
 import org.cggh.chassis.generic.atomext.shared.ChassisConstants;
+import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.DatasetActionEvent;
+import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.ViewDatasetActionEvent;
+
 import static org.cggh.chassis.generic.widget.client.HtmlElements.*;
 
+import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.FileUpload;
@@ -396,6 +401,19 @@ public class RenderUtils {
 	
 	
 	
+	public static Anchor renderViewDatasetAction(String text, final DatasetEntry entry, final Widget eventSource) {
+		Anchor out = renderActionAsAnchor(text);
+		out.addClickHandler(new ClickHandler() {
+			
+			public void onClick(ClickEvent arg0) {
+				DatasetActionEvent e = new ViewDatasetActionEvent();
+				e.setEntry(entry);
+				eventSource.fireEvent(e);
+			}
+			
+		});
+		return out;
+	}
 	
 	
 	/**

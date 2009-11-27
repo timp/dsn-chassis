@@ -3,16 +3,25 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.data.client.dataset;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.cggh.chassis.generic.atomext.client.dataset.DatasetEntry;
+import org.cggh.chassis.generic.client.gwt.common.client.RenderUtils;
 import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
+import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetRenderer;
 import org.cggh.chassis.generic.widget.client.CancelEvent;
+import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.Status;
+import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.StatusChangeEvent;
+import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.StatusChangeHandler;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.History;
+import com.google.gwt.event.dom.client.HasClickHandlers;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Frame;
@@ -41,15 +50,13 @@ public class ShareDatasetWidgetRenderer
 	private DatasetPropertiesWidget datasetPropertiesWidget;
 	private Button acceptButton;
 	private Button cancelButton;
+	private ShareDatasetWidgetController controller;
+	private Set<HasClickHandlers> viewDatasetActions = new HashSet<HasClickHandlers>();
 
 
 
 
 
-	
-	
-	
-	
 	/**
 	 * @param owner
 	 */
@@ -137,7 +144,20 @@ public class ShareDatasetWidgetRenderer
 	 * 
 	 */
 	private void renderDatasetSharedSuccessPanel() {
-		// TODO Auto-generated method stub
+
+		FlowPanel panel = this.datasetSharedSuccessPanel;
+		
+		panel.add(h3("Dataset Shared"));
+		
+		panel.add(p("Your dataset has been successfully shared with "+Configuration.getNetworkName()));
+		
+		panel.add(p("TODO what happens next..."));
+		
+		Anchor viewDatasetAction = RenderUtils.renderActionAsAnchor("back to view dataset...");
+
+		panel.add(viewDatasetAction);
+
+		this.viewDatasetActions.add(viewDatasetAction);
 		
 	}
 
@@ -149,7 +169,18 @@ public class ShareDatasetWidgetRenderer
 	 * 
 	 */
 	private void renderDatasetAlreadySharedPanel() {
-		// TODO Auto-generated method stub
+		
+		FlowPanel panel = this.datasetAlreadySharedPanel;
+		
+		panel.add(h3("Dataset Shared"));
+		
+		panel.add(p("This dataset has already been shared with "+Configuration.getNetworkName()+"."));
+
+		Anchor viewDatasetAction = RenderUtils.renderActionAsAnchor("back to view dataset...");
+
+		panel.add(viewDatasetAction);
+
+		this.viewDatasetActions.add(viewDatasetAction);
 		
 	}
 	
@@ -167,6 +198,14 @@ public class ShareDatasetWidgetRenderer
 			}
 			
 		});
+		
+		this.model.addStatusChangeHandler(new StatusChangeHandler() {
+			
+			public void onStatusChanged(StatusChangeEvent e) {
+				syncUIWithStatus(e.getAfter());
+			}
+			
+		});
 	}
 
 
@@ -180,7 +219,7 @@ public class ShareDatasetWidgetRenderer
 			
 			public void onClick(ClickEvent arg0) {
 				
-				// TODO invoke controller to create a submission
+				controller.shareDataset();
 				
 			}
 			
@@ -194,9 +233,31 @@ public class ShareDatasetWidgetRenderer
 			
 		});
 		
+		for (HasClickHandlers action : this.viewDatasetActions) {
+		
+			action.addClickHandler(new ClickHandler() {
+				
+				public void onClick(ClickEvent arg0) {
+					owner.fireViewDatasetActionEvent();
+				}
+				
+			});
+		}
+		
 	}
 	
 	
+	
+	
+	@Override
+	public void syncUI() {
+		
+		super.syncUI();
+		
+		this.syncUIWithDatasetEntry(this.model.getDatasetEntry());
+		this.syncUIWithStatus(this.model.getStatus());
+		
+	}
 	
 	
 
@@ -207,6 +268,70 @@ public class ShareDatasetWidgetRenderer
 
 		this.datasetPropertiesWidget.setEntry(entry);
 		
+	}
+
+
+
+	
+	/**
+	 * @param status
+	 */
+	private void syncUIWithStatus(Status status) {
+		log.enter("syncUIWithStatus");
+		
+		if (status instanceof AsyncWidgetModel.InitialStatus) {
+			
+			this.dataSharingAgreementPanel.setVisible(false);
+			this.datasetSharedSuccessPanel.setVisible(false);
+			this.datasetAlreadySharedPanel.setVisible(false);
+			
+		}
+		else if (status instanceof ShareDatasetWidgetModel.DatasetRetrievedStatus) {
+
+			log.debug("has dataset already been shared?");
+			
+			boolean alreadyShared = (this.model.getDatasetEntry().getSubmissionLink() != null);
+			
+			if (alreadyShared) {
+
+				log.debug("already shared");
+				
+				this.dataSharingAgreementPanel.setVisible(false);
+				this.datasetSharedSuccessPanel.setVisible(false);
+				this.datasetAlreadySharedPanel.setVisible(true);
+				
+			}
+			else {
+			
+				log.debug("not yet shared");
+				
+				this.dataSharingAgreementPanel.setVisible(true);
+				this.datasetSharedSuccessPanel.setVisible(false);
+				this.datasetAlreadySharedPanel.setVisible(false);
+				
+			}
+			
+		}
+		else if (status instanceof ShareDatasetWidgetModel.DatasetSharedStatus) {
+			
+			this.dataSharingAgreementPanel.setVisible(false);
+			this.datasetSharedSuccessPanel.setVisible(true);
+			this.datasetAlreadySharedPanel.setVisible(false);
+			
+		}
+		
+		log.leave();
+	}
+
+
+
+
+
+	/**
+	 * @param controller
+	 */
+	public void setController(ShareDatasetWidgetController controller) {
+		this.controller = controller;
 	}
 
 	
