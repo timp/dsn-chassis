@@ -37,6 +37,7 @@ http://code.google.com/p/dsn-chassis/issues/list
 
   <properties>
     <gwtVersion>1.7.1</gwtVersion>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
   
   
