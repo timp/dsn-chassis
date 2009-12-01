@@ -105,6 +105,9 @@ declare function chassis:link-subjects(
 
 
 
+(:~
+ : TODO doc me
+ :)
 declare function chassis:expand-links(
     $subject as element(atom:entry),
     $rel as xs:string,
@@ -116,12 +119,28 @@ declare function chassis:expand-links(
     where $link/@rel = $rel
     return chassis:expand-link($link, $collection)
     
+    (:
+    
+    Alternative implementation, maybe less efficient? (Shouldn't matter if XQuery optimiser is any good) ...
+    
+    for $object in chassis:link-objects($subject, $rel, $collection)
+    return 
+    <atom:link rel="{$rel}" href="{chassis:entry-uri($object)}">
+        {
+            $object
+        }
+    </atom:link>
+    
+    :)
 };
 
 
 
 
 
+(:~
+ : TODO doc me
+ :)
 declare function chassis:expand-link( 
     $link as element(atom:link),
     $collection as xs:string
@@ -140,6 +159,9 @@ declare function chassis:expand-link(
 
 
 
+(:~
+ : TODO doc me
+ :)
 declare function chassis:expand-rev-links(
     $object as element(atom:entry),
     $rel as xs:string,
