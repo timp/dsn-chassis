@@ -12,13 +12,6 @@ import com.google.gwt.user.client.rpc.IsSerializable;
  *
  */
 public class UserDetailsTO implements IsSerializable {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	
-	
 	
 	private String id = null;
 	private Set<String> roles = null;

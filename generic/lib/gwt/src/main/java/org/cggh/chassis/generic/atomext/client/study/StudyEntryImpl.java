@@ -10,6 +10,7 @@ import org.cggh.chassis.generic.atom.client.AtomEntryImpl;
 import org.cggh.chassis.generic.atom.client.AtomLink;
 import org.cggh.chassis.generic.atomext.client.datafile.DataFileLink;
 import org.cggh.chassis.generic.atomext.client.dataset.DatasetLink;
+import org.cggh.chassis.generic.atomext.client.dataset.DatasetLinkImpl;
 import org.cggh.chassis.generic.atomext.shared.Chassis;
 import org.cggh.chassis.generic.xml.client.XMLNS;
 
@@ -63,7 +64,7 @@ public class StudyEntryImpl
 		List<DatasetLink> datasetLinks = new ArrayList<DatasetLink>();
 		for (AtomLink link : links) {
 			if (link.getRel() != null && link.getRel().equals(Chassis.Rel.DATASET)) {
-				datasetLinks.add(this.studyFactory.createDatasetLink(link));
+				datasetLinks.add(new DatasetLinkImpl(link.getElement()));
 			}
 		}
 		

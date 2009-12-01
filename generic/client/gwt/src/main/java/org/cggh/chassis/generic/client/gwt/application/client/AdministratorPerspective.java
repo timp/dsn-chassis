@@ -21,9 +21,6 @@ public class AdministratorPerspective extends PerspectiveBase {
 	
 	
 	
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.client.gwt.application.client.NewPerspectiveBase#renderMainChildren()
-	 */
 	@Override
 	protected void renderMainChildren() {
 
@@ -39,9 +36,6 @@ public class AdministratorPerspective extends PerspectiveBase {
 	
 	
 	
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.client.gwt.application.client.NewPerspectiveBase#renderMenuBar()
-	 */
 	@Override
 	protected void renderMenuBar() {
 

@@ -6,6 +6,7 @@ package org.cggh.chassis.generic.atomext.client.submission;
 import java.util.List;
 
 import org.cggh.chassis.generic.atom.client.AtomEntry;
+import org.cggh.chassis.generic.atomext.client.dataset.DatasetLink;
 
 
 
@@ -18,7 +19,9 @@ public interface SubmissionEntry extends AtomEntry {
 	/**
 	 * @param datasetEntryUrl
 	 */
-	void setDatasetLink(String datasetEntryUrl);
+	public void setDatasetLink(String datasetEntryUrl);
 
+	public DatasetLink getDatasetLink();
+	
 
 }

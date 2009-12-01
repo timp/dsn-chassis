@@ -11,7 +11,7 @@ import static org.cggh.chassis.generic.widget.client.HtmlElements.*;
  * @author aliman
  *
  */
-public class SubmitterHomeWidget 
+public class GatekeeperHomeWidget 
 	extends ChassisWidget {
 	
 
@@ -37,7 +37,7 @@ public class SubmitterHomeWidget
 	@Override
 	protected void renderUI() {
 		// TODO Auto-generated method stub
-		this.add(h2("Submitter Home"));
+		this.add(h2("Gatekeeper Home"));
 		
 		this.add(p("TODO"));
 		
