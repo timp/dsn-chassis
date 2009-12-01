@@ -42,6 +42,7 @@ public class AdministratorHomeWidget extends ChassisWidget {
 			{ "Datasets", Configuration.getDatasetCollectionUrl() },
 			{ "Media", Configuration.getMediaCollectionUrl() },
 			{ "Submissions", Configuration.getSubmissionCollectionUrl() },
+			{ "Reviews", Configuration.getReviewCollectionUrl() },
 			{ "Sandbox", Configuration.getSandboxCollectionUrl() }
 	};
 

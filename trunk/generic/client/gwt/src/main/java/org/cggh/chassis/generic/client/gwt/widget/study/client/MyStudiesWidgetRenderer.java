@@ -108,7 +108,7 @@ public class MyStudiesWidgetRenderer
 			public void onChange(StudyFeedChangeEvent e) {
 				log.enter("onChange");
 				
-				updateResultsTable(e.getAfter());
+				syncResultsTable(e.getAfter());
 				
 				log.leave();
 			}
@@ -126,8 +126,8 @@ public class MyStudiesWidgetRenderer
 	/**
 	 * @param feed
 	 */
-	protected void updateResultsTable(StudyFeed feed) {
-		log.enter("updateResultsTable");
+	protected void syncResultsTable(StudyFeed feed) {
+		log.enter("syncResultsTable");
 		
 		this.resultsTableContainer.clear();
 		
@@ -179,8 +179,8 @@ public class MyStudiesWidgetRenderer
 		});
 		
 		Widget[] row = {
-				strong(""+entry.getTitle()+""),	
-				new Label(RenderUtils.truncate(entry.getSummary(), 20)),	
+				new Label(entry.getTitle()),	
+				new Label(RenderUtils.truncate(entry.getSummary(), 40)),	
 				RenderUtils.renderAtomAuthorsAsLabel(entry, false),	
 				viewAction
 		};
@@ -200,7 +200,7 @@ public class MyStudiesWidgetRenderer
 
 		super.syncUI();
 		
-		this.updateResultsTable(this.model.getFeed());
+		this.syncResultsTable(this.model.getFeed());
 		
 		log.leave();
 	}

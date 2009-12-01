@@ -60,18 +60,18 @@ public class JsConfiguration {
 		return $wnd.CHASSIS.datasetCollectionUrl;
 	}-*/;
 
-
 	public static native String getSandboxCollectionUrl() /*-{
 		return $wnd.CHASSIS.sandboxCollectionUrl;
+	}-*/;
+
+	public static native String getReviewCollectionUrl() /*-{
+		return $wnd.CHASSIS.reviewCollectionUrl;
 	}-*/;
 
 	public static native String getDataFileUploadServiceUrl() /*-{
 		return $wnd.CHASSIS.dataFileUploadServiceUrl;
 	}-*/;
 
-	/**
-	 * @return
-	 */
 	public static native String getSubmissionQueryServiceUrl()  /*-{
 		return $wnd.CHASSIS.submissionQueryServiceUrl;
 	}-*/;
@@ -80,9 +80,6 @@ public class JsConfiguration {
 		return $wnd.CHASSIS.modules;
 	}-*/;
 
-	/**
-	 * @return
-	 */
 	public static native String getStudyQueryServiceUrl() /*-{
 		return $wnd.CHASSIS.studyQueryServiceUrl;
 	}-*/;
@@ -99,8 +96,6 @@ public class JsConfiguration {
 		return $wnd.CHASSIS.studyQuestionnaireUrl;
 	}-*/;
 
-	
-	
 	public static native String getMediaCollectionUrl() /*-{
 		return $wnd.CHASSIS.mediaCollectionUrl;
 	}-*/;
@@ -120,6 +115,7 @@ public class JsConfiguration {
 	public static native String getDataSharingAgreementUrl() /*-{
 		return $wnd.CHASSIS.dataSharingAgreementUrl;
 	}-*/;
+
 
 	
 	

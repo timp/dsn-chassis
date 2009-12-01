@@ -12,20 +12,4 @@ import org.cggh.chassis.generic.atom.client.AtomQuery;
 public class StudyQuery 
 	extends AtomQuery {
 
-	private String submissionUrl;
-
-	/**
-	 * @param submissionUrl the submissionUrl to set
-	 */
-	public void setSubmissionUrl(String submissionUrl) {
-		this.submissionUrl = submissionUrl;
-	}
-
-	/**
-	 * @return the submissionUrl
-	 */
-	public String getSubmissionUrl() {
-		return submissionUrl;
-	}
-
 }

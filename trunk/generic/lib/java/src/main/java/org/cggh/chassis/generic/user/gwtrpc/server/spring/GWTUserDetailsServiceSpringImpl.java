@@ -16,20 +16,11 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
  */
 public class GWTUserDetailsServiceSpringImpl extends RemoteServiceServlet implements GWTUserDetailsService {
 
-	
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	
-	
-	
+	private static final long serialVersionUID = -9112474157363327179L;
+
 	public UserDetailsTO getAuthenticatedUserDetails() {
 		UserDetailsService delegate = new UserDetailsServiceSpringImpl();
 		return delegate.getAuthenticatedUserDetails();
 	}
-
-	
 	
 }

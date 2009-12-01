@@ -110,7 +110,7 @@ public class ChassisClient extends ChassisWidget {
 			
 			public void onCurrentUserChanged(CurrentUserChangeEvent e) {
 
-				updatePerspectives(e.getAfter());
+				syncPerspectives(e.getAfter());
 				
 			}
 		});
@@ -119,7 +119,7 @@ public class ChassisClient extends ChassisWidget {
 			
 			public void onCurrentRoleChanged(CurrentRoleChangeEvent e) {
 				
-				updateCurrentPerspective(e.getAfter());
+				syncCurrentPerspective(e.getAfter());
 				
 			}
 		});
@@ -134,8 +134,8 @@ public class ChassisClient extends ChassisWidget {
 	/**
 	 * @param user
 	 */
-	protected void updatePerspectives(UserDetailsTO user) {
-		log.enter("updatePerspectives");
+	protected void syncPerspectives(UserDetailsTO user) {
+		log.enter("syncPerspectives");
 
 		this.perspectivesContainer.clear();
 		this.perspectives.clear();
@@ -146,15 +146,21 @@ public class ChassisClient extends ChassisWidget {
 			
 			if (role.equals(Configuration.getChassisRoleAdministrator())) {
 				
-				log.enter("adding administrator perspective");
+				log.debug("adding administrator perspective");
 				perspective = new AdministratorPerspective();
 
 			}
 			else if (role.equals(Configuration.getChassisRoleSubmitter())) {
 
-				log.enter("adding submitter perspective");
+				log.debug("adding submitter perspective");
 				perspective = new SubmitterPerspective();
 
+			}
+			else if (role.equals(Configuration.getChassisRoleGatekeeper())) {
+				
+				log.debug("adding gatekeeper perspective");
+				perspective = new GatekeeperPerspective();
+				
 			}
 
 			if (perspective != null) {
@@ -174,8 +180,8 @@ public class ChassisClient extends ChassisWidget {
 	/**
 	 * @param currentRole
 	 */
-	protected void updateCurrentPerspective(ChassisRole currentRole) {
-		this.updateCurrentPerspective(currentRole, true);
+	protected void syncCurrentPerspective(ChassisRole currentRole) {
+		this.syncCurrentPerspective(currentRole, true);
 	}
 	
 	
@@ -184,8 +190,8 @@ public class ChassisClient extends ChassisWidget {
 	/**
 	 * @param currentRole
 	 */
-	protected void updateCurrentPerspective(ChassisRole currentRole, boolean memorise) {
-		log.enter("updateCurrentPerspective");
+	protected void syncCurrentPerspective(ChassisRole currentRole, boolean memorise) {
+		log.enter("syncCurrentPerspective");
 		
 		for (Widget w : this.perspectives.values()) {
 			w.setVisible(false);
@@ -194,18 +200,18 @@ public class ChassisClient extends ChassisWidget {
 		if (currentRole != null) {
 
 			log.debug("currentRole: "+currentRole.roleLabel);
-			ChassisWidget w = this.perspectives.get(currentRole.roleId);
+			ChassisWidget perspective = this.perspectives.get(currentRole.roleId);
 
-			if (w != null) {
+			if (perspective != null) {
 				
 				log.debug("setting active widget visible");
-				w.setVisible(true);
+				perspective.setVisible(true);
 				
 				log.debug("refreshing active widget");
-				w.refresh();
+				perspective.refresh();
 				
 				log.debug("setting memory child");
-				this.memory.setChild(w.getMemory());
+				this.memory.setChild(perspective.getMemory());
 				
 				if (memorise) {
 					log.debug("memorising");
@@ -235,10 +241,10 @@ public class ChassisClient extends ChassisWidget {
 	protected void syncUI() {
 
 		UserDetailsTO user = this.userDetailsWidget.getCurrentUser();
-		this.updatePerspectives(user);
+		this.syncPerspectives(user);
 		
 		ChassisRole role = this.userDetailsWidget.getCurrentRole();
-		this.updateCurrentPerspective(role);
+		this.syncCurrentPerspective(role);
 
 	}
 
@@ -265,7 +271,7 @@ public class ChassisClient extends ChassisWidget {
 			if (userDetailsWidget != null) {
 				ChassisRole currentRole = userDetailsWidget.getCurrentRole();
 				if (currentRole != null) {
-					mnemonic = currentRole.roleLabel.toLowerCase();
+					mnemonic = createMnemonic(currentRole);
 				}
 			}
 			
@@ -273,6 +279,10 @@ public class ChassisClient extends ChassisWidget {
 
 			log.leave();
 			return mnemonic;
+		}
+		
+		public String createMnemonic(ChassisRole role) {
+			return role.roleLabel.toLowerCase().replaceAll(" ", "");
 		}
 		
 		/* (non-Javadoc)
@@ -293,10 +303,10 @@ public class ChassisClient extends ChassisWidget {
 				log.debug("current user is available, remember immediately");
 
 				for (ChassisRole role : ChassisRole.getRoles(user)) {
-					if (mnemonic != null && mnemonic.equals(role.roleLabel.toLowerCase())) {
+					if (mnemonic != null && mnemonic.equals(createMnemonic(role))) {
 						log.debug("setting current role: "+role.roleLabel);
 						userDetailsWidget.setCurrentRole(role, false); 
-						updateCurrentPerspective(role, false);
+						syncCurrentPerspective(role, false);
 					}
 				}
 				

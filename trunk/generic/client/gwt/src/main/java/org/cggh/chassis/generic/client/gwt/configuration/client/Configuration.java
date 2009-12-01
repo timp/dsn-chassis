@@ -265,6 +265,16 @@ public class Configuration {
 	 */
 	public static String getDataSharingAgreementUrl() {
 		return JsConfiguration.getDataSharingAgreementUrl();
+	}
+
+	
+	
+	
+	/**
+	 * @return
+	 */
+	public static String getReviewCollectionUrl() {
+		return JsConfiguration.getReviewCollectionUrl();
 	}	
 	
 	
