@@ -22,7 +22,7 @@ declare option exist:serialize "method=xml media-type=application/xml indent=yes
 (: function declarations :)
 
 
-declare function local:expand-dataset( $entry as element() ) as element() {
+declare function local:expand-dataset( $entry as element(atom:entry) ) as element(atom:entry) {
 	let $id := $entry/atom:id
 	return 
 	<atom:entry>
