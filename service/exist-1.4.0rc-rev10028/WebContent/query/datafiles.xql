@@ -9,7 +9,9 @@
 declare namespace exist = "http://exist.sourceforge.net/NS/exist" ;
 declare namespace request = "http://exist-db.org/xquery/request" ;
 declare namespace atom = "http://www.w3.org/2005/Atom" ;
-declare namespace my = "http://www.cggh.org/2009/chassis/xquery-function" ;
+
+
+import module namespace chassis = "http://www.cggh.org/2009/chassis/xquery-functions" at "chassis-functions.xqm" ;
 
 
 (: serialization options :)
@@ -20,26 +22,7 @@ declare option exist:serialize "method=xml media-type=application/xml indent=yes
 (: function declarations :)
 
 
-declare function my:include-media( $link as element() ) as element() {
-	let $rel := $link/@rel
-	let $href := $link/@href
-	return 
-	<atom:link rel="{$rel}" href="{$href}">
-		{
-			let $revision := collection("/db/media")//atom:entry[atom:link[@rel="edit" and @href=$href]]
-			return $revision
-		}
-	</atom:link>
-};
-
-
-declare function my:expand-datafile-link( $link as element() ) as element() {
-	let $rel := $link/@rel
-	return if ($rel = "chassis.revision") then my:include-media($link) else $link
-};
-
-
-declare function my:expand-datafile( $entry as element() ) as element() {
+declare function local:expand-datafile( $entry as element() ) as element() {
 	let $id := $entry/atom:id
 	return 
 	<atom:entry>
@@ -51,19 +34,11 @@ declare function my:expand-datafile( $entry as element() ) as element() {
 		$entry/atom:summary,
 		$entry/atom:category,
 		$entry/atom:author,
-		for $link in $entry/atom:link return my:expand-datafile-link($link),
-		my:rev-dataset-links($entry)
+		$entry/atom:link[@rel = 'edit'],
+		chassis:expand-links($entry, "chassis.revision", "/db/media"),
+        chassis:expand-rev-links($entry, "chassis.datafile", "chassis.dataset", "/db/datasets")
 	}
 	</atom:entry>
-};
-
-declare function my:rev-dataset-links( $entry as element() ) as element()* {
-    let $href := $entry/atom:link[@rel="edit"]/@href
-    for $dataset in collection("/db/datasets")//atom:entry[atom:link[@rel="chassis.datafile" and @href=$href]]
-    return
-    <atom:link rel="chassis.dataset" href="{$dataset/atom:link[@rel='edit']/@href}">
-        { $dataset }
-    </atom:link>
 };
 
 
@@ -99,6 +74,6 @@ return
 
 		order by $e/atom:updated descending
 		
-		return my:expand-datafile($e)
+		return local:expand-datafile($e)
 	}
 </atom:feed>

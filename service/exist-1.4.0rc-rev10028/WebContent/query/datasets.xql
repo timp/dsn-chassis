@@ -9,7 +9,9 @@
 declare namespace exist = "http://exist.sourceforge.net/NS/exist" ;
 declare namespace request = "http://exist-db.org/xquery/request" ;
 declare namespace atom = "http://www.w3.org/2005/Atom" ;
-declare namespace my = "http://www.cggh.org/2009/chassis/xquery-function" ;
+
+
+import module namespace chassis = "http://www.cggh.org/2009/chassis/xquery-functions" at "chassis-functions.xqm" ;
 
 
 (: serialization options :)
@@ -20,30 +22,7 @@ declare option exist:serialize "method=xml media-type=application/xml indent=yes
 (: function declarations :)
 
 
-declare function my:expand-link( $collection-path as xs:string, $link as element() ) as element() {
-	let $rel := $link/@rel
-	let $href := $link/@href
-	return 
-	<atom:link rel="{$rel}" href="{$href}">
-		{
-			collection($collection-path)//atom:entry[atom:link[@rel="edit" and @href=$href]]
-		}
-	</atom:link>
-};
-
-
-
-declare function my:expand-dataset-link( $link as element() ) as element() {
-	let $rel := $link/@rel
-	return 
-	    if ($rel = "chassis.study") then my:expand-link("/db/studies", $link) 
-	    else if ($rel = "chassis.datafile") then my:expand-link("/db/datafiles", $link)
-	    else $link
-};
-
-
-
-declare function my:expand-dataset( $entry as element() ) as element() {
+declare function local:expand-dataset( $entry as element() ) as element() {
 	let $id := $entry/atom:id
 	return 
 	<atom:entry>
@@ -55,22 +34,12 @@ declare function my:expand-dataset( $entry as element() ) as element() {
 		$entry/atom:summary,
 		$entry/atom:category,
 		$entry/atom:author,
-		for $link in $entry/atom:link return my:expand-dataset-link($link),
-		my:rev-submission-links($entry)
+		$entry/atom:link[@rel = 'edit'],
+		chassis:expand-links($entry, "chassis.study", "/db/studies"),
+		chassis:expand-links($entry, "chassis.datafile", "/db/datafiles"),
+        chassis:expand-rev-links($entry, "chassis.dataset", "chassis.submission", "/db/submissions")
 	}
 	</atom:entry>
-};
-
-
-
-
-declare function my:rev-submission-links( $datasetEntry as element() ) as element()* {
-    let $href := $datasetEntry/atom:link[@rel="edit"]/@href
-    for $submissionEntry in collection("/db/submissions")//atom:entry[atom:link[@rel="chassis.dataset" and @href=$href]]
-    return
-    <atom:link rel="chassis.submission" href="{$submissionEntry/atom:link[@rel='edit']/@href}">
-        { $submissionEntry }
-    </atom:link>
 };
 
 
@@ -108,6 +77,6 @@ return
 
 		order by $e/atom:updated descending
 		
-		return my:expand-dataset($e)
+		return local:expand-dataset($e)
 	}
 </atom:feed>

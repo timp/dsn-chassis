@@ -8,7 +8,9 @@
 declare namespace exist = "http://exist.sourceforge.net/NS/exist" ;
 declare namespace request = "http://exist-db.org/xquery/request" ;
 declare namespace atom = "http://www.w3.org/2005/Atom" ;
-declare namespace my = "http://www.cggh.org/2009/chassis/xquery-function" ;
+
+
+import module namespace chassis = "http://www.cggh.org/2009/chassis/xquery-functions" at "chassis-functions.xqm" ;
 
 
 
@@ -20,7 +22,7 @@ declare option exist:serialize "method=xml media-type=application/xml indent=yes
 
 (: declare functions :)
 
-declare function my:expand-study( $entry as element() ) as element() {
+declare function local:expand-study( $entry as element() ) as element() {
 	let $id := $entry/atom:id
 	return 
 	<atom:entry>
@@ -32,46 +34,11 @@ declare function my:expand-study( $entry as element() ) as element() {
 		$entry/atom:summary,
 		$entry/atom:category,
 		$entry/atom:author,
-		for $link in $entry/atom:link return my:expand-study-link($link),
-		my:rev-dataset-links($entry),
+		$entry/atom:link[@rel = 'edit'],
+        chassis:expand-rev-links($entry, "chassis.study", "chassis.dataset", "/db/datasets"),
 		$entry/atom:content
 	}
 	</atom:entry>
-};
-
-
-
-
-declare function my:expand-study-link( $link as element() ) as element() {
-	let $rel := $link/@rel
-	return $link
-	(: add logic here to expand any outbound links :)
-};
-
-
-
-
-declare function my:expand-link( $collection-path as xs:string, $link as element() ) as element() {
-	let $rel := $link/@rel
-	let $href := $link/@href
-	return 
-	<atom:link rel="{$rel}" href="{$href}">
-		{
-			collection($collection-path)//atom:entry[atom:link[@rel="edit" and @href=$href]]
-		}
-	</atom:link>
-};
-
-
-
-
-declare function my:rev-dataset-links( $entry as element() ) as element()* {
-    let $href := $entry/atom:link[@rel="edit"]/@href
-    for $dataset in collection("/db/datasets")//atom:entry[atom:link[@rel="chassis.study" and @href=$href]]
-    return
-    <atom:link rel="chassis.dataset" href="{$dataset/atom:link[@rel='edit']/@href}">
-        { $dataset }
-    </atom:link>
 };
 
 
@@ -115,6 +82,6 @@ return
 		
 		order by $study/atom:updated descending
 		
-		return my:expand-study($study)
+		return local:expand-study($study)
 	}
 </atom:feed>
