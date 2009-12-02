@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.cggh.chassis</groupId>
   <artifactId>chassis-parent</artifactId>
-  <version>0.1-alpha-3</version>
+  <version>0.1-alpha-3-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>CGGH Chassis</name>
   <modules>
@@ -39,6 +39,12 @@ http://code.google.com/p/dsn-chassis/issues/list
     <gwtVersion>1.7.1</gwtVersion>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
+
+  <scm>
+    <url>http://dsn-chassis.googlecode.com/svn/</url>
+    <connection>scm:svn:http://dsn-chassis.googlecode.com/svn/</connection>
+    <developerConnection>scm:svn:https://dsn-chassis.googlecode.com/svn/</developerConnection>
+  </scm>
   
   
   <developers>
