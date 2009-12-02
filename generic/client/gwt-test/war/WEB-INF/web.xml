@@ -9,7 +9,7 @@
   <context-param>
     <param-name>contextConfigLocation</param-name>
     <param-value>
-      classpath:/dev/configuration/spring/security.xml
+      WEB-INF/security.xml
     </param-value>
   </context-param>
   
