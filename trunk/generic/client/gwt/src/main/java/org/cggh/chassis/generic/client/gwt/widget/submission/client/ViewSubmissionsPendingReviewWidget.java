@@ -8,6 +8,8 @@ import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.ChassisWidgetRenderer;
 import org.cggh.chassis.generic.widget.client.DelegatingWidget;
 
+import com.google.gwt.event.shared.HandlerRegistration;
+
 /**
  * @author aliman
  *
@@ -42,7 +44,7 @@ public class ViewSubmissionsPendingReviewWidget
 	 */
 	@Override
 	protected ViewSubmissionsPendingReviewWidgetRenderer createRenderer() {
-		return new ViewSubmissionsPendingReviewWidgetRenderer();
+		return new ViewSubmissionsPendingReviewWidgetRenderer(this);
 	}
 	
 	
@@ -70,5 +72,13 @@ public class ViewSubmissionsPendingReviewWidget
 	}
 	
 	
+	
+	
+	public HandlerRegistration addViewSubmissionActionHandler(SubmissionActionHandler h) {
+		return this.addHandler(h, ViewSubmissionActionEvent.TYPE);
+	}
 
+	
+	
+	
 }
