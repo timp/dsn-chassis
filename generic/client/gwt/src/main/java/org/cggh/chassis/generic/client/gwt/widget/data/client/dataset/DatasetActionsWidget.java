@@ -50,7 +50,7 @@ public class DatasetActionsWidget extends ChassisWidget {
 
 		this.clear();
 		
-		this.editAction = RenderUtils.renderActionAsAnchor("edit dataset"); // TODO i18n
+		this.editAction = RenderUtils.renderActionAnchor("edit dataset"); // TODO i18n
 
 		Widget[] actions = {
 			this.editAction

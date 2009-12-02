@@ -124,7 +124,7 @@ public class DatasetDataSharingWidget extends ChassisWidget {
 		
 		add(p("This dataset has <strong>not</strong> been shared with "+Configuration.getNetworkName()+".")); // TODO i18n
 		
-		Anchor shareDatasetAction = RenderUtils.renderActionAsAnchor("share this dataset with "+Configuration.getNetworkName()+"...");
+		Anchor shareDatasetAction = RenderUtils.renderActionAnchor("share this dataset with "+Configuration.getNetworkName()+"...");
 
 		shareDatasetAction.addClickHandler(new ClickHandler() {
 			

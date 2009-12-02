@@ -19,7 +19,6 @@ import static org.cggh.chassis.generic.widget.client.HtmlElements.*;
 
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Panel;
 
 /**
@@ -44,6 +43,7 @@ public class ViewDatasetWidgetRenderer
 	private DatasetStudiesWidget studiesWidget;
 	private DatasetDataFilesWidget dataFilesWidget;
 	private DatasetDataSharingWidget dataSharingWidget;
+	protected FlowPanel contentPanel;
 
 	
 	
@@ -65,7 +65,7 @@ public class ViewDatasetWidgetRenderer
 
 		log.debug("render content panel");
 		
-		Panel contentPanel = this.renderContentPanel();
+		this.renderContentPanel();
 		
 		log.debug("render actions panel");
 
@@ -73,15 +73,21 @@ public class ViewDatasetWidgetRenderer
 		
 		log.debug("render main panel");
 
-		this.mainPanel.add(h2("View Dataset")); // TODO i18n
+		this.renderMainHeading();
 
 		this.mainPanel.addStyleName(CommonStyles.MAINWITHACTIONS);
-		this.mainPanel.add(contentPanel);
+		this.mainPanel.add(this.contentPanel);
 		this.mainPanel.add(this.actionsWidget);
 
 		log.leave();
 	}
 
+	
+	
+	
+	protected void renderMainHeading() {
+		this.mainPanel.add(h2("View Dataset")); // TODO i18n
+	}
 	
 	
 	
@@ -91,28 +97,25 @@ public class ViewDatasetWidgetRenderer
 	private Panel renderContentPanel() {
 		log.enter("renderContentPanel");
 		
-		FlowPanel contentPanel = new FlowPanel();
+		this.contentPanel = new FlowPanel();
 		
 		this.datasetPropertiesWidget = new DatasetPropertiesWidget();
 		contentPanel.add(this.datasetPropertiesWidget);
 		
-		contentPanel.add(h3("Studies")); // TODO i18n
+		this.renderStudiesSubHeading();
 		contentPanel.add(p("This dataset is associated with the following studies...")); // TODO I18N
 		
 		this.studiesWidget = new DatasetStudiesWidget();
 		contentPanel.add(this.studiesWidget);
 
-		contentPanel.add(h3("Data Files")); // TODO i18n
+		this.renderDataFilesSubHeading();
 		contentPanel.add(p("This dataset includes the following data files...")); // TODO I18N
 		
 		this.dataFilesWidget = new DatasetDataFilesWidget();
 		contentPanel.add(this.dataFilesWidget);
+		
+		this.renderDataSharingSection();
 
-		contentPanel.add(h3("Data Sharing")); // TODO i18n
-		
-		this.dataSharingWidget = new DatasetDataSharingWidget();
-		contentPanel.add(this.dataSharingWidget);
-		
 		log.leave();
 		return contentPanel;
 	}
@@ -120,6 +123,35 @@ public class ViewDatasetWidgetRenderer
 	
 	
 	
+	protected void renderDataSharingSection() {
+
+		contentPanel.add(h3("Data Sharing")); // TODO i18n
+		
+		this.dataSharingWidget = new DatasetDataSharingWidget();
+		contentPanel.add(this.dataSharingWidget);
+		
+	}
+
+
+
+
+
+	protected void renderDataFilesSubHeading() {
+		this.contentPanel.add(h3("Data Files")); // TODO i18n
+	}
+
+
+
+
+
+	protected void renderStudiesSubHeading() {
+		this.contentPanel.add(h3("Studies")); // TODO i18n
+	}
+
+
+
+
+
 	/**
 	 * 
 	 */
@@ -184,19 +216,24 @@ public class ViewDatasetWidgetRenderer
 			}
 		});
 		
-		HandlerRegistration d = this.dataSharingWidget.addShareDatasetActionHandler(new DatasetActionHandler() {
-			
-			public void onAction(DatasetActionEvent e) {
-				// augment event and bubble
-				e.setEntry(model.getEntry());
-				owner.fireEvent(e);
-			}
-		});
-		
 		this.childWidgetEventHandlerRegistrations.add(a);
 		this.childWidgetEventHandlerRegistrations.add(b);
 		this.childWidgetEventHandlerRegistrations.add(c);
-		this.childWidgetEventHandlerRegistrations.add(d);
+
+		if (this.dataSharingWidget != null) {
+			
+			HandlerRegistration d = this.dataSharingWidget.addShareDatasetActionHandler(new DatasetActionHandler() {
+				
+				public void onAction(DatasetActionEvent e) {
+					// augment event and bubble
+					e.setEntry(model.getEntry());
+					owner.fireEvent(e);
+				}
+			});
+			
+			this.childWidgetEventHandlerRegistrations.add(d);
+
+		}
 
 		log.leave();
 
@@ -246,7 +283,11 @@ public class ViewDatasetWidgetRenderer
 			this.datasetPropertiesWidget.setEntry(entry);
 			this.studiesWidget.setEntry(entry);
 			this.dataFilesWidget.setEntry(entry);
-			this.dataSharingWidget.setEntry(entry);
+			
+			if (this.dataSharingWidget != null) {
+				this.dataSharingWidget.setEntry(entry);
+			}
+
 		}
 		else {
 			this.datasetPropertiesWidget.setEntry(null); // TODO review this, rather call reset() ?

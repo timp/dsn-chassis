@@ -153,7 +153,7 @@ public class ShareDatasetWidgetRenderer
 		
 		panel.add(p("TODO what happens next..."));
 		
-		Anchor viewDatasetAction = RenderUtils.renderActionAsAnchor("back to view dataset...");
+		Anchor viewDatasetAction = RenderUtils.renderActionAnchor("back to view dataset...");
 
 		panel.add(viewDatasetAction);
 
@@ -176,7 +176,7 @@ public class ShareDatasetWidgetRenderer
 		
 		panel.add(p("This dataset has already been shared with "+Configuration.getNetworkName()+"."));
 
-		Anchor viewDatasetAction = RenderUtils.renderActionAsAnchor("back to view dataset...");
+		Anchor viewDatasetAction = RenderUtils.renderActionAnchor("back to view dataset...");
 
 		panel.add(viewDatasetAction);
 

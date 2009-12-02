@@ -80,7 +80,7 @@ public class AtomEntryPropertiesWidget
 	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#renderUI()
 	 */
 	@Override
-	protected void renderUI() {
+	public void renderUI() {
 		log.enter("renderUI");
 		
 		this.titleLabel = new InlineLabel();
@@ -114,26 +114,10 @@ public class AtomEntryPropertiesWidget
 	
 	
 	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#bindUI()
-	 */
-	@Override
-	protected void bindUI() {
-		log.enter("bindUI");
-		
-		// nothing to do
-		
-		log.leave();
-	}
-
-	
-	
-	
-	
-	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#syncUI()
 	 */
 	@Override
-	protected void syncUI() {
+	public void syncUI() {
 		log.enter("syncUI");
 		
 		if (entry != null) {

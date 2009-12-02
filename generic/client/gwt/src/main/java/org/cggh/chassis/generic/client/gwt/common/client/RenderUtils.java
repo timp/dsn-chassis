@@ -378,7 +378,7 @@ public class RenderUtils {
 	 * @return an anchor with the given text and the given click handler added
 	 */
 	public static Anchor renderActionAsAnchor(String text, ClickHandler h) {
-		Anchor out = RenderUtils.renderActionAsAnchor(text);
+		Anchor out = RenderUtils.renderActionAnchor(text);
 		out.addClickHandler(h);
 		return out;
 	}
@@ -392,7 +392,7 @@ public class RenderUtils {
 	 * @param text the anchor text
 	 * @return an anchor with the given text
 	 */
-	public static Anchor renderActionAsAnchor(String text) {
+	public static Anchor renderActionAnchor(String text) {
 		Anchor out = new Anchor();
 		out.setText(text);
 		out.addStyleName(CommonStyles.ACTION);
@@ -402,7 +402,7 @@ public class RenderUtils {
 	
 	
 	public static Anchor renderViewDatasetAction(String text, final DatasetEntry entry, final Widget eventSource) {
-		Anchor out = renderActionAsAnchor(text);
+		Anchor out = renderActionAnchor(text);
 		out.addClickHandler(new ClickHandler() {
 			
 			public void onClick(ClickEvent arg0) {

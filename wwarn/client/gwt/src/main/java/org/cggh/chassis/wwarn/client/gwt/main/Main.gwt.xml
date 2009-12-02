@@ -28,7 +28,7 @@
       +-->
   
   <!-- For development a default of `DEBUG` is recommended -->
-  <inherits name="com.allen_sauer.gwt.log.gwt-log-OFF" />
+  <inherits name="com.allen_sauer.gwt.log.gwt-log-DEBUG" />
   
   <!-- for production -->
 <!--    <inherits name="com.allen_sauer.gwt.log.gwt-log-OFF" /> -->

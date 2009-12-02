@@ -11,6 +11,7 @@ import org.cggh.chassis.generic.atom.client.AtomEntryImpl;
 import org.cggh.chassis.generic.atom.client.AtomLink;
 import org.cggh.chassis.generic.atomext.client.dataset.DatasetLink;
 import org.cggh.chassis.generic.atomext.client.dataset.DatasetLinkImpl;
+import org.cggh.chassis.generic.atomext.client.review.ReviewLink;
 import org.cggh.chassis.generic.atomext.shared.Chassis;
 
 import com.google.gwt.xml.client.Element;
@@ -82,6 +83,29 @@ public class SubmissionEntryImpl
 		// TODO throw error if no links found
 			
 		return datasetLinks.get(0);
+	}
+
+
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.atomext.client.submission.SubmissionEntry#getCurator()
+	 */
+	public Curator getCurator() {
+		// TODO
+		return null;
+	}
+
+
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.atomext.client.submission.SubmissionEntry#getReviewLinks()
+	 */
+	public List<ReviewLink> getReviewLinks() {
+		List<ReviewLink> reviewLinks = new ArrayList<ReviewLink>();
+		// TODO Auto-generated method stub
+		return reviewLinks;
 	}
 
 		
