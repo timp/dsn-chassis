@@ -16,6 +16,29 @@
     <description>eXist Open Source Native XML Database</description>
     <display-name>eXist XML Database</display-name>
 
+    <!--+
+        |
+        | HTTP Method Override Filter
+        | (N.B. put this before spring security, so security is applied to value of
+        | method override if given)
+        |
+        +-->
+
+    <filter>
+      <filter-name>HttpMethodOverrideFilter</filter-name>
+      <filter-class>org.cggh.chassis.generic.http.HttpMethodOverrideFilter</filter-class>
+      <init-param>
+        <param-name>allowedOverrides</param-name>
+        <param-value>PUT DELETE</param-value>
+      </init-param>
+    </filter>
+    
+    <filter-mapping>
+      <filter-name>HttpMethodOverrideFilter</filter-name>
+      <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    
+
   <!--+
       | Spring security configuration
       +-->
@@ -23,9 +46,7 @@
    
   <context-param>
     <param-name>contextConfigLocation</param-name>
-    <param-value>
-      classpath:/dev/configuration/spring/security.xml
-    </param-value>
+    <param-value>WEB-INF/security.xml</param-value>
   </context-param>
     
   <listener>
@@ -219,22 +240,6 @@
           <param-value></param-value>
         </init-param>
     </servlet>
-    
-    <!-- HTTP Method Override Filter, for Atom Services -->
-
-    <filter>
-      <filter-name>HttpMethodOverrideFilter</filter-name>
-      <filter-class>org.cggh.chassis.generic.http.HttpMethodOverrideFilter</filter-class>
-      <init-param>
-        <param-name>allowedOverrides</param-name>
-        <param-value>PUT DELETE</param-value>
-      </init-param>
-    </filter>
-    
-    <filter-mapping>
-      <filter-name>HttpMethodOverrideFilter</filter-name>
-      <servlet-name>AtomServlet</servlet-name>
-    </filter-mapping>
     
     <!--+
         | HTTP Content Type Override Filter, for Atom Services 
