@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<atom-services xmlns="http://www.exist-db.org/Vocabulary/AtomConfiguration/2006/1/0">
+<module name="edit" class="org.exist.atom.modules.AtomProtocol" authenticate="false"/>
+</atom-services>

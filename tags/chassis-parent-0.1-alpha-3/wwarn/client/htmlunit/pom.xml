@@ -1,0 +1,81 @@
+<?xml version="1.0"?><project>
+  <parent>
+    <groupId>org.cggh.chassis</groupId>
+    <artifactId>chassis-parent</artifactId>
+    <version>0.1-alpha-3-SNAPSHOT</version>
+  </parent>
+  <artifactId>chassis-wwarn-client-htmlunit</artifactId>
+  <packaging>jar</packaging>
+  <name>googlecode_dsn-chassis_wwarn_client_htmlunit</name>
+  
+  <modelVersion>4.0.0</modelVersion>
+  <description>
+  Smoke test. 
+  </description>
+  
+  <dependencies>
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+      <version>1.2.12</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+     <groupId>net.sourceforge.jwebunit</groupId>
+     <artifactId>jwebunit-core</artifactId>
+     <version>2.2</version>
+     <scope>test</scope>
+    </dependency>
+    <dependency>
+     <groupId>net.sourceforge.jwebunit</groupId>
+     <artifactId>jwebunit-htmlunit-plugin</artifactId>
+     <version>2.2</version>
+     <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+   <sourceDirectory>src/main/java</sourceDirectory>
+   <testSourceDirectory>src/test/java</testSourceDirectory>
+   <plugins>
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-jar-plugin</artifactId>
+      <executions>
+        <execution>
+          <goals>
+            <goal>test-jar</goal>
+          </goals>
+        </execution>
+      </executions>
+    </plugin>
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-source-plugin</artifactId>
+      <executions>
+        <execution>
+          <goals>
+            <goal>jar</goal>
+          </goals>
+        </execution>
+      </executions>
+    </plugin>
+    <plugin>
+     <groupId>org.apache.maven.plugins</groupId>
+     <artifactId>maven-surefire-plugin</artifactId>
+     <configuration>
+      <redirectTestOutputToFile>true</redirectTestOutputToFile>
+      <forkMode>once</forkMode>
+      <!-- threadCount>1</threadCount-->
+      <!-- childDelegation>false</childDelegation -->
+      <useFile>true</useFile>
+      <includes>
+       <include>**/*Test.java</include>
+      </includes>
+      <excludes>
+      </excludes>
+     </configuration>
+    </plugin>
+   </plugins>
+  </build>
+</project>

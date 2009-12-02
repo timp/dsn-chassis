@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <parent>
+    <groupId>org.cggh.chassis</groupId>
+    <artifactId>chassis-parent</artifactId>
+    <version>0.1-alpha-3</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>chassis-generic-service-user</artifactId>
+  <packaging>war</packaging>
+  <name>googlecode_dsn-chassis_generic_service_user</name>
+  
+  <dependencies>
+    <dependency>
+     <groupId>org.cggh.chassis</groupId>
+     <artifactId>chassis-generic-lib-java</artifactId>
+     <version>${project.version}</version>
+    </dependency> 
+
+    <dependency>
+      <groupId>com.google.code.gwt-log</groupId>
+      <artifactId>gwt-log</artifactId>
+      <version>2.6.2</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.google.gwt</groupId>
+      <artifactId>gwt-user</artifactId>
+      <version>${gwtVersion}</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>5.1.10</version>
+    </dependency> 
+
+    <dependency>
+      <groupId>commons-codec</groupId>
+      <artifactId>commons-codec</artifactId>
+      <version>1.4</version>
+    </dependency> 
+    <dependency>
+      <groupId>commons-logging</groupId>
+      <artifactId>commons-logging</artifactId>
+      <version>1.1.1</version>
+    </dependency> 
+
+  </dependencies>
+  
+  <build>
+    <resources>
+     <resource>
+      <directory>src/main/java</directory>
+      <includes>
+        <include>**/*.java</include>
+        <include>**/*.xml</include>
+      </includes>
+     </resource>
+    </resources>
+    <outputDirectory>war/WEB-INF/classes</outputDirectory>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <configuration>
+          <warSourceDirectory>war</warSourceDirectory>
+	  <!-- FIXME Recommended, not yet implemented -->
+          <!-- webXml>src/main/webapp/WEB-INF/web.xml</webXml -->
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
+
