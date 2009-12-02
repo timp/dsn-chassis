@@ -7,6 +7,11 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import net.sourceforge.jwebunit.junit.WebTestCase;
 import net.sourceforge.jwebunit.exception.TestingEngineResponseException;
 
+/**
+ * @author Tim.Pizey
+ * @since 01 December 2009
+ * 
+ */
 public class LocalhostSmokeTestCase extends WebTestCase {
 
 	public void testTomcatRunning() throws Exception {
@@ -35,7 +40,6 @@ public class LocalhostSmokeTestCase extends WebTestCase {
 	}
 
 	private String url(String url) {
-
 		return "http://localhost:8080" + url;
 	}
 
