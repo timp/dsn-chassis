@@ -90,10 +90,10 @@ public class StudyActionsPanel extends ChassisWidget {
 
 		this.clear();
 		
-		this.viewAction = RenderUtils.renderActionAsAnchor("view study"); // TODO i18n
-		this.editAction = RenderUtils.renderActionAsAnchor("edit study"); // TODO i18n
-		this.viewQuestionnaireAction = RenderUtils.renderActionAsAnchor("view study questionnaire"); // TODO i18n
-		this.editQuestionnaireAction = RenderUtils.renderActionAsAnchor("edit study questionnaire"); // TODO i18n
+		this.viewAction = RenderUtils.renderActionAnchor("view study"); // TODO i18n
+		this.editAction = RenderUtils.renderActionAnchor("edit study"); // TODO i18n
+		this.viewQuestionnaireAction = RenderUtils.renderActionAnchor("view study questionnaire"); // TODO i18n
+		this.editQuestionnaireAction = RenderUtils.renderActionAnchor("edit study questionnaire"); // TODO i18n
 
 		Widget[] actions = {
 			this.viewAction,

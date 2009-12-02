@@ -35,7 +35,7 @@ public class StudyPropertiesWidget
 	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#renderUI()
 	 */
 	@Override
-	protected void renderUI() {
+	public void renderUI() {
 
 		super.renderUI();
 
@@ -54,7 +54,7 @@ public class StudyPropertiesWidget
 	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#syncUI()
 	 */
 	@Override
-	protected void syncUI() {
+	public void syncUI() {
 		
 		super.syncUI();
 		

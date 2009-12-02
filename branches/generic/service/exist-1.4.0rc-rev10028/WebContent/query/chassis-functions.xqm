@@ -183,6 +183,57 @@ declare function chassis:expand-rev-links(
 
 
 
+(:~
+ : Recursively expand links in an entry given a specification of the 
+ : desired expansion, e.g., 
+ :
+ : <expand rel="chassis.dataset" collection="/db/datasets">
+ :    <expand rel="chassis.study" collection="/db/studies"/>
+ :    <expand rel="chassis.datafile" collection="/db/datafiles"/>
+ : </expand>
+ :
+ :)
+declare function chassis:recursive-expand-entry( 
+    $entry as element(atom:entry), 
+    $expansions as element(expand)* 
+    ) as element(atom:link)* {
+    
+    <atom:entry>
+    {
+        for $element in $entry/*
+        return 
+            if (local-name($element) = "link" and namespace-uri($element) = "http://www.w3.org/2005/Atom") 
+                then chassis:recursive-expand-link($element, $expansions)
+            else $element
+    }    
+    </atom:entry>
+    
+    
+};
 
+
+
+
+declare function chassis:recursive-expand-link( $link as element(atom:link), $expansions as element(expand)* ) as element(atom:link) {
+
+    let $rel := $link/@rel
+    let $href := $link/@href
+    
+    return
+        if ($expansions/@rel = $rel) then
+            
+            for $expand in $expansions[@rel = $rel]
+            let $collection := $expand/@collection
+            let $object := chassis:get-entry-by-uri($href, $collection)
+            return
+                <atom:link rel="{$rel}" href="{$href}">
+                {
+                    chassis:recursive-expand-entry($object, $expand/expand)
+                }
+                </atom:link>
+        
+        else $link
+
+};
 
 

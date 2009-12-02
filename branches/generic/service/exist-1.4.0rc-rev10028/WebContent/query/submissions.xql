@@ -15,6 +15,20 @@ declare option exist:serialize "method=xml media-type=application/xml indent=yes
 
 declare function local:expand-submission( $submissionEntry as element(atom:entry) ) as element(atom:entry) {
 
+    let $expansions := 
+        <expand rel="chassis.dataset" collection="/db/datasets">
+            <expand rel="chassis.study" collection="/db/studies"/>
+            <expand rel="chassis.datafile" collection="/db/datafiles"/>
+        </expand>
+
+    return chassis:recursive-expand-entry($submissionEntry, $expansions)
+    
+};
+
+
+
+declare function local:simple-expand-submission( $submissionEntry as element(atom:entry) ) as element(atom:entry) {
+
     <atom:entry>
     {
         $submissionEntry/atom:title,

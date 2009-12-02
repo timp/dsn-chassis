@@ -22,10 +22,10 @@ public class MainEntryPoint implements EntryPoint {
 	
 	static {
 		LogFactory.create = AllenSauerLog.create;
-//		LogFactory.hide("*");
+		LogFactory.hide("*");
 //		LogFactory.show("org.cggh.chassis.generic.xquestion.client.*");
-//		LogFactory.show("org.cggh.chassis.generic.widget.client.*");
-//		LogFactory.show("org.cggh.chassis.generic.async.client.*");
+		LogFactory.show("org.cggh.chassis.generic.widget.client.*");
+		LogFactory.show("org.cggh.chassis.generic.async.client.*");
 //		LogFactory.show("org.cggh.chassis.generic.client.gwt.main.*");
 //		LogFactory.show("org.cggh.chassis.generic.client.gwt.application.*");
 //		LogFactory.show("org.cggh.chassis.generic.client.gwt.common.*");
@@ -33,6 +33,7 @@ public class MainEntryPoint implements EntryPoint {
 //		LogFactory.show("org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.DatasetDataSharingWidget");
 //		LogFactory.show("org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.ShareDatasetWidget*");
 //		LogFactory.show("org.cggh.chassis.generic.client.gwt.widget.study.*");
+		LogFactory.show("org.cggh.chassis.generic.client.gwt.widget.submission.*");
 	}
 
 
