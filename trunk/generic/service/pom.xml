@@ -10,8 +10,10 @@
   <packaging>pom</packaging>
   <name>CGGH Generic Chassis Services</name>
   <modules>
+    <!-- We are using branch -->
     <!-- module>exist</module -->
-    <module>upload</module>
+    <!-- Relies upon abdera snapshot -->
+    <!-- module>upload</module -->
     <module>user</module>
   </modules>
 </project>
