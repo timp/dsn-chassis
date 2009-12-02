@@ -8,6 +8,7 @@ import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.MenuEvent;
 import org.cggh.chassis.generic.widget.client.MultiWidget;
 
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.ui.Widget;
@@ -31,6 +32,7 @@ public class SubmissionManagementWidget
 	
 	// UI fields
 	ViewSubmissionsPendingReviewWidget vsprwWidget;
+	ViewSubmissionWidget viewSubmissionWidget;
 	
 	
 	
@@ -47,8 +49,10 @@ public class SubmissionManagementWidget
 		log.enter("renderMainChildren");
 		
 		this.vsprwWidget = new ViewSubmissionsPendingReviewWidget();
+		this.viewSubmissionWidget = new ViewSubmissionWidget();
 		
 		this.mainChildren.add(this.vsprwWidget);
+		this.mainChildren.add(this.viewSubmissionWidget);
 		
 		log.leave();
 	}
@@ -60,7 +64,17 @@ public class SubmissionManagementWidget
 	@Override
 	protected void registerHandlersForChildWidgetEvents() {
 
-		// TODO
+		HandlerRegistration a = this.vsprwWidget.addViewSubmissionActionHandler(new SubmissionActionHandler() {
+			
+			public void onAction(SubmissionActionEvent e) {
+
+				viewSubmissionWidget.viewEntry(e.getEntry().getId());
+				setActiveChild(viewSubmissionWidget);
+				
+			}
+		});
+		
+		this.childWidgetEventHandlerRegistrations.add(a);
 		
 	}
 

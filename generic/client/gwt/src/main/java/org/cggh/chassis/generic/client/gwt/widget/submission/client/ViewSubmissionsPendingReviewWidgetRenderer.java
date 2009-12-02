@@ -33,8 +33,16 @@ public class ViewSubmissionsPendingReviewWidgetRenderer extends
 	
 	
 	private FlowPanel resultsTableContainer;
+	private ViewSubmissionsPendingReviewWidget owner;
 
 
+	
+	
+	public ViewSubmissionsPendingReviewWidgetRenderer(ViewSubmissionsPendingReviewWidget owner) {
+		this.owner = owner;
+	}
+	
+	
 
 
 	/* (non-Javadoc)
@@ -116,7 +124,7 @@ public class ViewSubmissionsPendingReviewWidgetRenderer extends
 	 * @param entry
 	 * @return
 	 */
-	private Widget[] renderRow(SubmissionEntry submissionEntry) {
+	private Widget[] renderRow(final SubmissionEntry submissionEntry) {
 
 		DatasetEntry datasetEntry = submissionEntry.getDatasetLink().getEntry();
 		
@@ -129,7 +137,9 @@ public class ViewSubmissionsPendingReviewWidgetRenderer extends
 			
 			public void onClick(ClickEvent arg0) {
 
-				// TODO Auto-generated method stub
+				ViewSubmissionActionEvent e = new ViewSubmissionActionEvent();
+				e.setEntry(submissionEntry);
+				owner.fireEvent(e);
 				
 			}
 		});

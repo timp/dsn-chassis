@@ -20,6 +20,9 @@ public class AtomCrudWidgetModel
 	
 	
 	private E entry;
+	
+	
+	
 	private String entryId;
 	private AtomCrudRequest lastRequest;
 	

@@ -94,7 +94,7 @@ public abstract class AsyncWidgetRenderer
 			public void onStatusChanged(StatusChangeEvent e) {
 				log.enter("onStatusChanged");
 				
-				updatePanelVisibility(e.getAfter());
+				syncPanelVisibility(e.getAfter());
 				
 				log.leave();
 			}
@@ -119,7 +119,7 @@ public abstract class AsyncWidgetRenderer
 		if (this.model != null) {
 
 			log.debug("sync panel visibility");
-			this.updatePanelVisibility(this.model.getStatus());
+			this.syncPanelVisibility(this.model.getStatus());
 			
 		}
 		else {
@@ -141,7 +141,7 @@ public abstract class AsyncWidgetRenderer
 	/**
 	 * @param after
 	 */
-	protected void updatePanelVisibility(Status status) {
+	protected void syncPanelVisibility(Status status) {
 		log.enter("updatePanelVisibility");
 		
 		if (status == null || status instanceof InitialStatus) {
