@@ -17,7 +17,6 @@ import static org.cggh.chassis.generic.widget.client.HtmlElements.*;
 
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.Panel;
 
 /**
  * @author aliman
@@ -35,8 +34,9 @@ public class ViewDataFileWidgetRenderer
 	private DataFilePropertiesWidget dataFilePropertiesWidget;
 	private DataFileRevisionsWidget revisionsWidget;
 	private DataFileDatasetsWidget datasetsWidget;
-	private DataFileActionsPanel actionsPanel;
+	private DataFileActionsWidget actionsWidget;
 	private ViewDataFileWidget owner;
+	private FlowPanel contentPanel;
 
 	
 	
@@ -55,21 +55,13 @@ public class ViewDataFileWidgetRenderer
 	protected void renderMainPanel() {
 		log.enter("renderMainPanel");
 
-		log.debug("render content panel");
-		
-		Panel contentPanel = this.renderContentPanel();
-
-		log.debug("render actions panel");
-
-		this.actionsPanel = new DataFileActionsPanel();
-
-		log.debug("render main panel");
-
 		this.mainPanel.add(h2("View Data File")); // TODO i18n
 
-		this.mainPanel.addStyleName(CommonStyles.MAINWITHACTIONS);
-		this.mainPanel.add(contentPanel);
-		this.mainPanel.add(this.actionsPanel); 
+		this.renderContentPanel();
+
+		this.renderActionsWidget();
+		
+		this.setMainPanelStyle();
 		
 		log.leave();
 	}
@@ -78,13 +70,32 @@ public class ViewDataFileWidgetRenderer
 	
 	
 	
+	protected void setMainPanelStyle() {
+		this.mainPanel.addStyleName(CommonStyles.MAINWITHACTIONS);
+	}
+
+
+
+
+	protected void renderActionsWidget() {
+		log.enter("renderActionsWidget");
+		
+		this.actionsWidget = new DataFileActionsWidget();
+		this.mainPanel.add(this.actionsWidget); 
+		
+		log.leave();
+	}
+
+
+
+
 	/**
 	 * @return
 	 */
-	private Panel renderContentPanel() {
+	protected void renderContentPanel() {
 		log.enter("renderContentPanel");
 		
-		FlowPanel contentPanel = new FlowPanel();
+		this.contentPanel = new FlowPanel();
 		
 		this.dataFilePropertiesWidget = new DataFilePropertiesWidget();
 		contentPanel.add(this.dataFilePropertiesWidget);
@@ -95,19 +106,31 @@ public class ViewDataFileWidgetRenderer
 		this.revisionsWidget = new DataFileRevisionsWidget();
 		contentPanel.add(this.revisionsWidget);
 		
-		contentPanel.add(h3("Datasets")); // TODO i18n
-		contentPanel.add(p("This data file is included in the following datasets...")); // TODO i18n
-		
-		this.datasetsWidget = new DataFileDatasetsWidget();
-		contentPanel.add(this.datasetsWidget);
+		this.renderDatasetsSection();
+
+		this.mainPanel.add(contentPanel);
 
 		log.leave();
-		return contentPanel;
 	}
 
 
 
 	
+	protected void renderDatasetsSection() {
+		log.enter("renderDatasetsSection");
+
+		contentPanel.add(h3("Datasets")); // TODO i18n
+		contentPanel.add(p("This data file is included in the following datasets...")); // TODO i18n
+		
+		this.datasetsWidget = new DataFileDatasetsWidget();
+		contentPanel.add(this.datasetsWidget);
+		
+		log.leave();
+	}
+
+
+
+
 	/**
 	 * 
 	 */
@@ -145,43 +168,52 @@ public class ViewDataFileWidgetRenderer
 	protected void registerHandlersForChildWidgetEvents() {
 		log.enter("registerHandlersForChildWidgetEvents");
 
-		HandlerRegistration a = this.actionsPanel.addEditDataFileActionHandler(new DataFileActionHandler() {
+		if (this.actionsWidget != null) {
 			
-			public void onAction(DataFileActionEvent e) {
+			HandlerRegistration a = this.actionsWidget.addEditDataFileActionHandler(new DataFileActionHandler() {
 				
-				// augment event and bubble 
-				e.setEntry(model.getEntry());
-				owner.fireEvent(e);
-				
-			}
-		});
-		
-		HandlerRegistration b = this.actionsPanel.addUploadRevisionActionHandler(new DataFileActionHandler() {
+				public void onAction(DataFileActionEvent e) {
+					
+					// augment event and bubble 
+					e.setEntry(model.getEntry());
+					owner.fireEvent(e);
+					
+				}
+			});
 			
-			public void onAction(DataFileActionEvent e) {
+			HandlerRegistration b = this.actionsWidget.addUploadRevisionActionHandler(new DataFileActionHandler() {
+				
+				public void onAction(DataFileActionEvent e) {
 
-				// augment event and bubble 
-				e.setEntry(model.getEntry());
-				owner.fireEvent(e);
+					// augment event and bubble 
+					e.setEntry(model.getEntry());
+					owner.fireEvent(e);
 
-			}
-		});
+				}
+			});
+
+			this.childWidgetEventHandlerRegistrations.add(a);
+			this.childWidgetEventHandlerRegistrations.add(b);
+
+		}
 		
-		HandlerRegistration c = this.datasetsWidget.addViewDatasetActionHandler(new DatasetActionHandler() {
+		if (this.datasetsWidget != null) {
 			
-			public void onAction(DatasetActionEvent e) {
+			HandlerRegistration c = this.datasetsWidget.addViewDatasetActionHandler(new DatasetActionHandler() {
 				
-				// just bubble
-				owner.fireEvent(e);
+				public void onAction(DatasetActionEvent e) {
+					
+					// just bubble
+					owner.fireEvent(e);
+					
+				}
 				
-			}
+			});
 			
-		});
-		
-		// store handler registrations for later
-		this.childWidgetEventHandlerRegistrations.add(a);
-		this.childWidgetEventHandlerRegistrations.add(b);
-		this.childWidgetEventHandlerRegistrations.add(c);
+			// store handler registrations for later
+			this.childWidgetEventHandlerRegistrations.add(c);
+
+		}
 
 		log.leave();
 	}
@@ -228,12 +260,12 @@ public class ViewDataFileWidgetRenderer
 		if (entry != null) {
 			this.dataFilePropertiesWidget.setEntry(entry);
 			this.revisionsWidget.setEntry(entry);
-			this.datasetsWidget.setEntry(entry);
+			if (this.datasetsWidget != null) this.datasetsWidget.setEntry(entry);
 		}
 		else {
 			this.dataFilePropertiesWidget.setEntry(null); // TODO review this, rather call reset() ?
 			this.revisionsWidget.setEntry(null); // TODO review this, rather call reset() ?
-			this.datasetsWidget.setEntry(null);
+			if (this.datasetsWidget != null) this.datasetsWidget.setEntry(null);
 		}
 		
 		log.leave();

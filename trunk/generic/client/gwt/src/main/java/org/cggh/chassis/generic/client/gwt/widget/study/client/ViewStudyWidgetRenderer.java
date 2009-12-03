@@ -43,9 +43,14 @@ public class ViewStudyWidgetRenderer
 	
 	// UI fields
 	private StudyPropertiesWidget studyPropertiesWidget;
-	private StudyActionsPanel actionsPanel;
+	private StudyActionsWidget actionsWidget;
 	private ViewStudyWidget owner;
 	private StudyDatasetsWidget datasetsWidget;
+
+
+
+
+	protected FlowPanel contentPanel;
 
 	
 	
@@ -71,55 +76,76 @@ public class ViewStudyWidgetRenderer
 	protected void renderMainPanel() {
 		log.enter("renderMainPanel");
 
-		log.debug("render content panel");
-		
-		Panel contentPanel = this.renderContentPanel();
-
-		log.debug("render actions panel");
-
-		this.actionsPanel = new StudyActionsPanel();
-		
-		log.debug("render main panel");
-
 		this.mainPanel.add(h2("View Study")); // TODO i18n
 
-		this.mainPanel.addStyleName(CommonStyles.MAINWITHACTIONS);
-		this.mainPanel.add(contentPanel);
-		this.mainPanel.add(this.actionsPanel);
+		this.renderContentPanel();
 
-		this.actionsPanel.getViewAction().setVisible(false); // has to go here, after added to panel
+		this.renderActionsWidget();
+		
+		this.setMainPanelStyle();
 
 		log.leave();
 	}
 
+	
+	
+	
+	
+	protected void setMainPanelStyle() {
+		this.mainPanel.addStyleName(CommonStyles.MAINWITHACTIONS);
+	}
+
+
+
+
+	protected void renderActionsWidget() {
+		this.actionsWidget = new StudyActionsWidget();
+		this.mainPanel.add(this.actionsWidget);
+		this.actionsWidget.getViewAction().setVisible(false); // has to go here, after added to panel
+	}
+
+
+
+
+	/**
+	 * @return
+	 */
+	protected void renderContentPanel() {
+		log.enter("renderContentPanel");
+		
+		this.contentPanel = new FlowPanel();
+		
+		this.studyPropertiesWidget = new StudyPropertiesWidget();
+		contentPanel.add(this.studyPropertiesWidget);
+		
+		this.renderDatasetsSection();
+
+		this.mainPanel.add(contentPanel);
+
+		log.leave();
+	}
 	
 	
 	
 	
 	/**
-	 * @return
+	 * 
 	 */
-	private Panel renderContentPanel() {
-		log.enter("renderContentPanel");
-		
-		FlowPanel contentPanel = new FlowPanel();
-		
-		this.studyPropertiesWidget = new StudyPropertiesWidget();
-		contentPanel.add(this.studyPropertiesWidget);
-		
+	protected void renderDatasetsSection() {
+		log.enter("renderDatasetsSection");
+
 		contentPanel.add(h3("Datasets")); // TODO i18n
 		contentPanel.add(p("The following datasets are associated with this study...")); // TODO I18N
 		
 		this.datasetsWidget = new StudyDatasetsWidget();
 		contentPanel.add(this.datasetsWidget);
-
+		
 		log.leave();
-		return contentPanel;
 	}
-	
-	
-	
-	
+
+
+
+
 	/**
 	 * 
 	 */
@@ -155,22 +181,31 @@ public class ViewStudyWidgetRenderer
 	protected void registerHandlersForChildWidgetEvents() {
 		log.enter("registerHandlersForChildWidgetEvents");
 
-		HandlerRegistration a = this.actionsPanel.addEditStudyActionHandler(new BubbleStudyActionHandler());
-		HandlerRegistration b = this.actionsPanel.addEditStudyQuestionnaireActionHandler(new BubbleStudyActionHandler());
-		HandlerRegistration c = this.actionsPanel.addViewStudyQuestionnaireActionHandler(new BubbleStudyActionHandler());
-		
-		HandlerRegistration d = this.datasetsWidget.addViewDatasetActionHandler(new DatasetActionHandler() {
+		if (this.actionsWidget != null) {
 			
-			public void onAction(DatasetActionEvent e) {
-				// just bubble
-				owner.fireEvent(e);
-			}
-		});
+			HandlerRegistration a = this.actionsWidget.addEditStudyActionHandler(new BubbleStudyActionHandler());
+			HandlerRegistration b = this.actionsWidget.addEditStudyQuestionnaireActionHandler(new BubbleStudyActionHandler());
+			HandlerRegistration c = this.actionsWidget.addViewStudyQuestionnaireActionHandler(new BubbleStudyActionHandler());
+
+			this.childWidgetEventHandlerRegistrations.add(a);
+			this.childWidgetEventHandlerRegistrations.add(b);
+			this.childWidgetEventHandlerRegistrations.add(c);
+
+		}
 		
-		this.childWidgetEventHandlerRegistrations.add(a);
-		this.childWidgetEventHandlerRegistrations.add(b);
-		this.childWidgetEventHandlerRegistrations.add(c);
-		this.childWidgetEventHandlerRegistrations.add(d);
+		if (this.datasetsWidget != null) {
+			
+			HandlerRegistration d = this.datasetsWidget.addViewDatasetActionHandler(new DatasetActionHandler() {
+				
+				public void onAction(DatasetActionEvent e) {
+					// just bubble
+					owner.fireEvent(e);
+				}
+			});
+			
+			this.childWidgetEventHandlerRegistrations.add(d);
+
+		}
 
 		log.leave();
 
@@ -228,12 +263,12 @@ public class ViewStudyWidgetRenderer
 	/**
 	 * @param entry
 	 */
-	private void syncEntryUI(StudyEntry entry) {
-		log.enter("updateInfo");
+	protected void syncEntryUI(StudyEntry entry) {
+		log.enter("syncEntryUI");
 		
 		if (entry != null) {
 			this.studyPropertiesWidget.setEntry(entry);
-			this.datasetsWidget.setEntry(entry);
+			if (this.datasetsWidget != null) this.datasetsWidget.setEntry(entry);
 		}
 		else {
 			this.studyPropertiesWidget.setEntry(null); // TODO review this, rather call reset() ?

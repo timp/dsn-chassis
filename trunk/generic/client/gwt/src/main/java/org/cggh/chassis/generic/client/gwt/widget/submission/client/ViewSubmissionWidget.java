@@ -9,8 +9,14 @@ import org.cggh.chassis.generic.atomext.client.submission.SubmissionQuery;
 import org.cggh.chassis.generic.atomui.client.AtomCrudWidget;
 import org.cggh.chassis.generic.atomui.client.AtomCrudWidgetMemory;
 import org.cggh.chassis.generic.atomui.client.AtomCrudWidgetModel;
+import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.DataFileActionHandler;
+import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.ViewDataFileActionEvent;
+import org.cggh.chassis.generic.client.gwt.widget.study.client.StudyActionHandler;
+import org.cggh.chassis.generic.client.gwt.widget.study.client.ViewStudyActionEvent;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
+
+import com.google.gwt.event.shared.HandlerRegistration;
 
 /**
  * @author aliman
@@ -69,7 +75,7 @@ public class ViewSubmissionWidget
 	protected ViewSubmissionWidgetRenderer createRenderer() {
 		log.enter("createRenderer");
 
-		ViewSubmissionWidgetRenderer renderer = new ViewSubmissionWidgetRenderer();
+		ViewSubmissionWidgetRenderer renderer = new ViewSubmissionWidgetRenderer(this);
 		
 		log.leave();
 		return renderer;
@@ -107,6 +113,21 @@ public class ViewSubmissionWidget
 		this.controller.retrieveExpandedEntry(id);
 
 	}
+
+
+	
+	
+	public HandlerRegistration addViewStudyActionHandler(StudyActionHandler h) {
+		return this.addHandler(h, ViewStudyActionEvent.TYPE);
+	}
+
+
+
+	public HandlerRegistration addViewDataFileActionHandler(DataFileActionHandler h) {
+		return this.addHandler(h, ViewDataFileActionEvent.TYPE);
+	}
+
+
 
 
 	

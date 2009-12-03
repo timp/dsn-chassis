@@ -11,7 +11,7 @@ import org.cggh.chassis.generic.atomui.client.AtomEntryChangeHandler;
 import org.cggh.chassis.generic.client.gwt.common.client.CommonStyles;
 import org.cggh.chassis.generic.client.gwt.widget.study.client.StudyActionEvent;
 import org.cggh.chassis.generic.client.gwt.widget.study.client.StudyActionHandler;
-import org.cggh.chassis.generic.client.gwt.widget.study.client.StudyActionsPanel;
+import org.cggh.chassis.generic.client.gwt.widget.study.client.StudyActionsWidget;
 import org.cggh.chassis.generic.client.gwt.widget.study.client.StudyPropertiesWidget;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
@@ -45,10 +45,15 @@ public class ViewStudyQuestionnaireWidgetRenderer
 	
 	// UI fields
 	private StudyPropertiesWidget studyPropertiesWidget;
-	private StudyActionsPanel actionsPanel;
+	private StudyActionsWidget actionsWidget;
 	private ViewStudyQuestionnaireWidget owner;
 	private FlowPanel questionnaireContainer;
 	private XQuestionnaire questionnaire;
+
+
+
+
+	private FlowPanel contentPanel;
 
 	
 	
@@ -74,23 +79,13 @@ public class ViewStudyQuestionnaireWidgetRenderer
 	protected void renderMainPanel() {
 		log.enter("renderMainPanel");
 
-		log.debug("render content panel");
+		this.renderMainHeading();
 		
-		Panel contentPanel = this.renderContentPanel();
-
-		log.debug("render actions panel");
-
-		this.actionsPanel = new StudyActionsPanel();
+		this.renderContentPanel();
 		
-		log.debug("render main panel");
-
-		this.mainPanel.add(h2("View Study Questionnaire")); // TODO i18n
-
-		this.mainPanel.addStyleName(CommonStyles.MAINWITHACTIONS);
-		this.mainPanel.add(contentPanel);
-		this.mainPanel.add(this.actionsPanel);
+		this.renderActionsWidget();
 		
-		this.actionsPanel.getViewQuestionnaireAction().setVisible(false); // must go here, after actions panel has been added
+		this.setMainPanelStyle();
 
 		log.leave();
 	}
@@ -99,29 +94,68 @@ public class ViewStudyQuestionnaireWidgetRenderer
 	
 	
 	
+	protected void setMainPanelStyle() {
+		this.mainPanel.addStyleName(CommonStyles.MAINWITHACTIONS);
+
+	}
+
+
+
+
+	protected void renderActionsWidget() {
+		this.actionsWidget = new StudyActionsWidget();
+		this.mainPanel.add(this.actionsWidget);
+		this.actionsWidget.getViewQuestionnaireAction().setVisible(false); // must go here, after actions panel has been added
+	}
+
+
+
+
+	protected void renderMainHeading() {
+		this.mainPanel.add(h2("View Study Questionnaire")); // TODO i18n
+	}
+
+
+
+
 	/**
 	 * @return
 	 */
-	private Panel renderContentPanel() {
+	protected void renderContentPanel() {
 		log.enter("renderContentPanel");
 		
-		FlowPanel contentPanel = new FlowPanel();
+		this.contentPanel = new FlowPanel();
 		
-		this.studyPropertiesWidget = new StudyPropertiesWidget();
-		contentPanel.add(this.studyPropertiesWidget);
+		this.renderStudyPropertiesWidget();
 		
 		contentPanel.add(h3("Study Questionnaire")); // TODO i18n
 		
 		this.questionnaireContainer = new FlowPanel();
 		contentPanel.add(this.questionnaireContainer);
 
+		this.mainPanel.add(contentPanel);
+
 		log.leave();
-		return contentPanel;
 	}
 	
 	
 	
 	
+	/**
+	 * 
+	 */
+	protected void renderStudyPropertiesWidget() {
+		log.enter("renderStudyPropertiesWidget");
+
+		this.studyPropertiesWidget = new StudyPropertiesWidget();
+		contentPanel.add(this.studyPropertiesWidget);
+		
+		log.leave();
+	}
+
+
+
+
 	/**
 	 * 
 	 */
@@ -157,15 +191,19 @@ public class ViewStudyQuestionnaireWidgetRenderer
 	protected void registerHandlersForChildWidgetEvents() {
 		log.enter("registerHandlersForChildWidgetEvents");
 
-		HandlerRegistration a = this.actionsPanel.addEditStudyActionHandler(new BubbleStudyActionHandler());
-		HandlerRegistration b = this.actionsPanel.addViewStudyActionHandler(new BubbleStudyActionHandler());
-		HandlerRegistration c = this.actionsPanel.addEditStudyQuestionnaireActionHandler(new BubbleStudyActionHandler());
-		HandlerRegistration d = this.actionsPanel.addViewStudyQuestionnaireActionHandler(new BubbleStudyActionHandler());
-		
-		this.childWidgetEventHandlerRegistrations.add(a);
-		this.childWidgetEventHandlerRegistrations.add(b);
-		this.childWidgetEventHandlerRegistrations.add(c);
-		this.childWidgetEventHandlerRegistrations.add(d);
+		if (this.actionsWidget != null ) {
+			
+			HandlerRegistration a = this.actionsWidget.addEditStudyActionHandler(new BubbleStudyActionHandler());
+			HandlerRegistration b = this.actionsWidget.addViewStudyActionHandler(new BubbleStudyActionHandler());
+			HandlerRegistration c = this.actionsWidget.addEditStudyQuestionnaireActionHandler(new BubbleStudyActionHandler());
+			HandlerRegistration d = this.actionsWidget.addViewStudyQuestionnaireActionHandler(new BubbleStudyActionHandler());
+			
+			this.childWidgetEventHandlerRegistrations.add(a);
+			this.childWidgetEventHandlerRegistrations.add(b);
+			this.childWidgetEventHandlerRegistrations.add(c);
+			this.childWidgetEventHandlerRegistrations.add(d);
+
+		}
 
 		log.leave();
 
@@ -227,11 +265,12 @@ public class ViewStudyQuestionnaireWidgetRenderer
 		log.enter("updateInfo");
 		
 		if (entry != null) {
-			this.studyPropertiesWidget.setEntry(entry);
+			
+			if (this.studyPropertiesWidget != null)	this.studyPropertiesWidget.setEntry(entry);
 			if (this.questionnaire != null) this.questionnaire.init(entry.getStudy().getElement(), this.model.getReadOnly());
 		}
 		else {
-			this.studyPropertiesWidget.setEntry(null); // TODO review this, rather call reset() ?
+			if (this.studyPropertiesWidget != null)	this.studyPropertiesWidget.setEntry(null); // TODO review this, rather call reset() ?
 			if (this.questionnaire != null) this.questionnaire.init();
 		}
 		
