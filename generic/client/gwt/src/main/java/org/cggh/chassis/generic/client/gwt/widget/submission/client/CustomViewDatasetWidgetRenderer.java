@@ -4,7 +4,7 @@
 package org.cggh.chassis.generic.client.gwt.widget.submission.client;
 
 
-import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.DatasetDataSharingWidget;
+import org.cggh.chassis.generic.client.gwt.common.client.CommonStyles;
 import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.ViewDatasetWidget;
 import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.ViewDatasetWidgetRenderer;
 import static org.cggh.chassis.generic.widget.client.HtmlElements.*;
@@ -36,6 +36,25 @@ public class CustomViewDatasetWidgetRenderer extends ViewDatasetWidgetRenderer {
 		// do nothing
 	}
 	
+	
+	
+	@Override
+	protected void renderActionsWidget() {
+		// do nothing
+	}
+	
+	
+	
+	
+	@Override
+	protected void setMainPanelStyle() {
+		// do nothing
+	}
+
+
+
+
+
 	
 	
 	@Override
