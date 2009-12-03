@@ -22,24 +22,24 @@ declare option exist:serialize "method=xml media-type=application/xml indent=yes
 
 (: declare functions :)
 
-declare function local:expand-study( $entry as element() ) as element() {
-	let $id := $entry/atom:id
-	return 
-	<atom:entry>
-	{
-		$id,
-		$entry/atom:published,
-		$entry/atom:updated,
-		$entry/atom:title,
-		$entry/atom:summary,
-		$entry/atom:category,
-		$entry/atom:author,
-		$entry/atom:link[@rel = 'edit'],
-        chassis:expand-rev-links($entry, "chassis.study", "chassis.dataset", "/db/datasets"),
-		$entry/atom:content
-	}
-	</atom:entry>
+
+
+declare function local:expand-study(
+    $entry as element(atom:entry)
+    ) as element(atom:entry) 
+{
+
+    let $spec :=
+        <spec>
+            <expand-reverse rel="chassis.dataset" rev="chassis.study" collection="/db/datasets"/>
+        </spec>
+        
+    return chassis:recursive-expand-entry($entry, $spec)
+    
 };
+
+
+
 
 
 

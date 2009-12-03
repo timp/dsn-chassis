@@ -22,26 +22,26 @@ declare option exist:serialize "method=xml media-type=application/xml indent=yes
 (: function declarations :)
 
 
-declare function local:expand-dataset( $entry as element(atom:entry) ) as element(atom:entry) {
-	let $id := $entry/atom:id
-	return 
-	<atom:entry>
-	{
-		$id,
-		$entry/atom:published,
-		$entry/atom:updated,
-		$entry/atom:title,
-		$entry/atom:summary,
-		$entry/atom:category,
-		$entry/atom:author,
-		$entry/atom:link[@rel = 'edit'],
-		chassis:expand-links($entry, "chassis.study", "/db/studies"),
-		chassis:expand-links($entry, "chassis.datafile", "/db/datafiles"),
-        chassis:expand-rev-links($entry, "chassis.dataset", "chassis.submission", "/db/submissions")
-	}
-	</atom:entry>
-};
 
+declare function local:expand-dataset(
+    $entry as element(atom:entry)
+    ) as element(atom:entry) 
+{
+
+    let $spec :=
+        <spec>
+            <expand rel="chassis.study" collection="/db/studies"/>
+            <expand rel="chassis.datafile" collection="/db/datafiles">
+                <spec>
+                    <expand rel="chassis.revision" collection="/db/media"/>
+                </spec>
+            </expand>
+            <expand-reverse rel="chassis.submission" rev="chassis.dataset" collection="/db/submissions"/>
+        </spec>
+        
+    return chassis:recursive-expand-entry($entry, $spec)
+    
+};
 
 
 (: find collection :) 
