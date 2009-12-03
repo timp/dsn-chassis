@@ -171,7 +171,7 @@ public class XSelect1Minimal extends XSelectBase {
 
 				if (readOnly) {
 					
-					String text = (value.equals("")) ? value : labels.get(value);
+					String text = (value == null || value.equals("")) ? value : labels.get(value);
 					readOnlyLabel.setText(text);
 					
 				}
