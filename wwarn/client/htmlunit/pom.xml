@@ -2,7 +2,7 @@
   <parent>
     <groupId>org.cggh.chassis</groupId>
     <artifactId>chassis-parent</artifactId>
-    <version>0.1-alpha-5-SNAPSHOT</version>
+    <version>0.1-alpha-5</version>
   </parent>
   <artifactId>chassis-wwarn-client-htmlunit</artifactId>
   <packaging>jar</packaging>
