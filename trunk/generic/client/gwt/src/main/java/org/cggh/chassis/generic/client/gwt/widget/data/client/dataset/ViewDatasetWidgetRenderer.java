@@ -63,28 +63,43 @@ public class ViewDatasetWidgetRenderer
 	protected void renderMainPanel() {
 		log.enter("renderMainPanel");
 
-		log.debug("render content panel");
-		
-		this.renderContentPanel();
-		
-		log.debug("render actions panel");
-
-		this.actionsWidget = new DatasetActionsWidget();
-		
-		log.debug("render main panel");
-
 		this.renderMainHeading();
 
-		this.mainPanel.addStyleName(CommonStyles.MAINWITHACTIONS);
-		this.mainPanel.add(this.contentPanel);
-		this.mainPanel.add(this.actionsWidget);
-
+		this.renderContentPanel();
+		
+		this.renderActionsWidget();
+		
+		this.setMainPanelStyle();
+		
 		log.leave();
 	}
 
 	
 	
 	
+	/**
+	 * 
+	 */
+	protected void setMainPanelStyle() {
+		this.mainPanel.addStyleName(CommonStyles.MAINWITHACTIONS);
+	}
+
+
+
+
+
+	/**
+	 * 
+	 */
+	protected void renderActionsWidget() {
+		this.actionsWidget = new DatasetActionsWidget();
+		this.mainPanel.add(this.actionsWidget);
+	}
+
+
+
+
+
 	protected void renderMainHeading() {
 		this.mainPanel.add(h2("View Dataset")); // TODO i18n
 	}
@@ -94,7 +109,7 @@ public class ViewDatasetWidgetRenderer
 	/**
 	 * @return
 	 */
-	private Panel renderContentPanel() {
+	private void renderContentPanel() {
 		log.enter("renderContentPanel");
 		
 		this.contentPanel = new FlowPanel();
@@ -116,8 +131,9 @@ public class ViewDatasetWidgetRenderer
 		
 		this.renderDataSharingSection();
 
+		this.mainPanel.add(this.contentPanel);
+
 		log.leave();
-		return contentPanel;
 	}
 	
 	
@@ -189,16 +205,22 @@ public class ViewDatasetWidgetRenderer
 	protected void registerHandlersForChildWidgetEvents() {
 		log.enter("registerHandlersForChildWidgetEvents");
 
-		HandlerRegistration a = this.actionsWidget.addEditDatasetActionHandler(new DatasetActionHandler() {
-			
-			public void onAction(DatasetActionEvent e) {
+		if (this.actionsWidget != null) {
+
+			HandlerRegistration a = this.actionsWidget.addEditDatasetActionHandler(new DatasetActionHandler() {
 				
-				// augment event and bubble
-				e.setEntry(model.getEntry());
-				owner.fireEvent(e);
-				
-			}
-		});
+				public void onAction(DatasetActionEvent e) {
+					
+					// augment event and bubble
+					e.setEntry(model.getEntry());
+					owner.fireEvent(e);
+					
+				}
+			});
+
+			this.childWidgetEventHandlerRegistrations.add(a);
+
+		}
 		
 		HandlerRegistration b = this.studiesWidget.addViewStudyActionHandler(new StudyActionHandler() {
 			
@@ -208,6 +230,8 @@ public class ViewDatasetWidgetRenderer
 			}
 		});
 		
+		this.childWidgetEventHandlerRegistrations.add(b);
+
 		HandlerRegistration c = this.dataFilesWidget.addViewDataFileActionHandler(new DataFileActionHandler() {
 			
 			public void onAction(DataFileActionEvent e) {
@@ -216,8 +240,6 @@ public class ViewDatasetWidgetRenderer
 			}
 		});
 		
-		this.childWidgetEventHandlerRegistrations.add(a);
-		this.childWidgetEventHandlerRegistrations.add(b);
 		this.childWidgetEventHandlerRegistrations.add(c);
 
 		if (this.dataSharingWidget != null) {

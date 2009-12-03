@@ -51,7 +51,7 @@ public class ViewSubmissionsPendingReviewWidgetRenderer extends
 	@Override
 	protected void renderMainPanel() {
 
-		this.mainPanel.add(h2("View Submissions Pending Review"));
+		this.mainPanel.add(h2("Submissions Pending Review"));
 		
 		this.mainPanel.add(p("The following submissions have not been reviewed by a gatekeeper..."));
 		
