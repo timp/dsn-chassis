@@ -19,14 +19,14 @@ import com.google.gwt.user.client.ui.Widget;
  * @author aliman
  *
  */
-public class StudyActionsPanel extends ChassisWidget {
+public class StudyActionsWidget extends ChassisWidget {
 
 
 
 	
 
 	// utility fields
-	private Log log = LogFactory.getLog(StudyActionsPanel.class);
+	private Log log = LogFactory.getLog(StudyActionsWidget.class);
 	
 	
 	

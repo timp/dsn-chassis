@@ -19,7 +19,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author aliman
  *
  */
-public class DataFileActionsPanel extends ChassisWidget {
+public class DataFileActionsWidget extends ChassisWidget {
 
 	
 	
@@ -61,7 +61,7 @@ public class DataFileActionsPanel extends ChassisWidget {
 	 * 
 	 */
 	private void ensureLog() {
-		if (log == null) log = LogFactory.getLog(DataFileActionsPanel.class);
+		if (log == null) log = LogFactory.getLog(DataFileActionsWidget.class);
 	}
 
 

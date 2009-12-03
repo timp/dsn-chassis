@@ -12,13 +12,18 @@ import org.cggh.chassis.generic.atomui.client.AtomEntryChangeEvent;
 import org.cggh.chassis.generic.atomui.client.AtomEntryChangeHandler;
 import org.cggh.chassis.generic.client.gwt.common.client.CommonStyles;
 import org.cggh.chassis.generic.client.gwt.common.client.RenderUtils;
+import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.DataFileActionEvent;
+import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.DataFileActionHandler;
 import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.ViewDatasetWidget;
+import org.cggh.chassis.generic.client.gwt.widget.study.client.StudyActionEvent;
+import org.cggh.chassis.generic.client.gwt.widget.study.client.StudyActionHandler;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetRenderer;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.FlowPanel;
 
@@ -38,6 +43,7 @@ public class ViewSubmissionWidgetRenderer extends
 	
 	
 	private Log log = LogFactory.getLog(ViewSubmissionWidgetRenderer.class);
+	private ViewSubmissionWidget owner;
 	
 	
 	
@@ -46,6 +52,15 @@ public class ViewSubmissionWidgetRenderer extends
 	private FlowPanel acceptanceReviewContainer;
 	private ViewDatasetWidget viewDatasetWidget;
 
+
+
+
+	
+	
+	
+	public ViewSubmissionWidgetRenderer(ViewSubmissionWidget owner) {
+		this.owner = owner;
+	}
 	
 	
 	
@@ -92,6 +107,34 @@ public class ViewSubmissionWidgetRenderer extends
 		
 	}
 
+	
+	
+	
+	@Override
+	public void registerHandlersForChildWidgetEvents() {
+		super.registerHandlersForChildWidgetEvents();
+		
+		HandlerRegistration a = this.viewDatasetWidget.addViewDataFileActionHandler(new DataFileActionHandler() {
+			
+			public void onAction(DataFileActionEvent e) {
+				// just bubble
+				owner.fireEvent(e);
+			}
+		});
+		
+		this.childWidgetEventHandlerRegistrations.add(a);
+		
+		HandlerRegistration b = this.viewDatasetWidget.addViewStudyActionHandler(new StudyActionHandler() {
+			
+			public void onAction(StudyActionEvent e) {
+				// just bubble
+				owner.fireEvent(e);
+			}
+		});
+
+		this.childWidgetEventHandlerRegistrations.add(b);
+
+	}
 
 
 	
@@ -118,6 +161,8 @@ public class ViewSubmissionWidgetRenderer extends
 	 */
 	private void syncAcceptanceReviewSection(SubmissionEntry entry) {
 		log.enter("syncAcceptanceReviewSection");
+		
+		this.acceptanceReviewContainer.clear();
 		
 		List<ReviewLink> reviewLinks = entry.getReviewLinks();
 		

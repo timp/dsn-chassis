@@ -3,6 +3,12 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.submission.client;
 
+import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.DataFileActionEvent;
+import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.DataFileActionHandler;
+import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.ViewDataFileWidget;
+import org.cggh.chassis.generic.client.gwt.widget.study.client.StudyActionEvent;
+import org.cggh.chassis.generic.client.gwt.widget.study.client.StudyActionHandler;
+import org.cggh.chassis.generic.client.gwt.widget.study.client.ViewStudyWidget;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.MenuEvent;
@@ -31,9 +37,10 @@ public class SubmissionManagementWidget
 	
 	
 	// UI fields
-	ViewSubmissionsPendingReviewWidget vsprwWidget;
+	ViewSubmissionsPendingReviewWidget vsprWidget;
 	ViewSubmissionWidget viewSubmissionWidget;
-	
+	ViewDataFileWidget viewDataFileWidget;
+	ViewStudyWidget viewStudyWidget;
 	
 	
 	public SubmissionManagementWidget() {
@@ -48,11 +55,15 @@ public class SubmissionManagementWidget
 	protected void renderMainChildren() {
 		log.enter("renderMainChildren");
 		
-		this.vsprwWidget = new ViewSubmissionsPendingReviewWidget();
+		this.vsprWidget = new ViewSubmissionsPendingReviewWidget();
 		this.viewSubmissionWidget = new ViewSubmissionWidget();
+		this.viewDataFileWidget = new CustomViewDataFileWidget();
+		this.viewStudyWidget = new CustomViewStudyWidget();
 		
-		this.mainChildren.add(this.vsprwWidget);
+		this.mainChildren.add(this.vsprWidget);
 		this.mainChildren.add(this.viewSubmissionWidget);
+		this.mainChildren.add(this.viewDataFileWidget);
+		this.mainChildren.add(this.viewStudyWidget);
 		
 		log.leave();
 	}
@@ -64,7 +75,7 @@ public class SubmissionManagementWidget
 	@Override
 	protected void registerHandlersForChildWidgetEvents() {
 
-		HandlerRegistration a = this.vsprwWidget.addViewSubmissionActionHandler(new SubmissionActionHandler() {
+		HandlerRegistration a = this.vsprWidget.addViewSubmissionActionHandler(new SubmissionActionHandler() {
 			
 			public void onAction(SubmissionActionEvent e) {
 
@@ -76,6 +87,30 @@ public class SubmissionManagementWidget
 		
 		this.childWidgetEventHandlerRegistrations.add(a);
 		
+		HandlerRegistration b = this.viewSubmissionWidget.addViewDataFileActionHandler(new DataFileActionHandler() {
+			
+			public void onAction(DataFileActionEvent e) {
+				
+				viewDataFileWidget.viewEntry(e.getEntry().getId());
+				setActiveChild(viewDataFileWidget);
+
+			}
+		});
+
+		this.childWidgetEventHandlerRegistrations.add(b);
+		
+		HandlerRegistration c = this.viewSubmissionWidget.addViewStudyActionHandler(new StudyActionHandler() {
+			
+			public void onAction(StudyActionEvent e) {
+
+				viewStudyWidget.viewEntry(e.getEntry().getId());
+				setActiveChild(viewStudyWidget);
+				
+			}
+		});
+
+		this.childWidgetEventHandlerRegistrations.add(c);
+
 	}
 
 	
@@ -89,7 +124,7 @@ public class SubmissionManagementWidget
 		Command viewSubmissionsPendingReviewCommand = new Command() { 
 			public void execute() { 
 
-				setActiveChild(vsprwWidget);
+				setActiveChild(vsprWidget);
 				fireEvent(new MenuEvent());
 				
 			} 

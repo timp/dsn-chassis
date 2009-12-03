@@ -52,9 +52,6 @@ public class ViewStudyWidget
 	
 	
 	
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.widget.client.DelegatingWidget#createRenderer()
-	 */
 	@Override
 	protected ViewStudyWidgetRenderer createRenderer() {
 		return new ViewStudyWidgetRenderer(this);
