@@ -99,7 +99,7 @@ http://code.google.com/p/dsn-chassis/issues/list
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>3.8.1</version>
+      <version>3.8.2</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -238,5 +238,15 @@ http://code.google.com/p/dsn-chassis/issues/list
       </plugin>
     </plugins>
   </reporting>
+  
+ <distributionManagement>
+   <!-- use the following if you're not using a snapshot version. -->
+   <repository>
+     <id>repo</id>
+     <name>cggh</name>
+     <url>file://localhost/var/lib/hudson/maven2</url>
+   </repository>
+ </distributionManagement>
+  
 </project>
 

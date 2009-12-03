@@ -12,6 +12,7 @@
   <modules>
     <module>gwt</module>
     <module>gwt-test</module>
+    <module>htmlunit</module>
   </modules>
 </project>
 
