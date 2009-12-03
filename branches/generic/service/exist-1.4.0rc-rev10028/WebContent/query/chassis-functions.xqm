@@ -187,24 +187,30 @@ declare function chassis:expand-rev-links(
  : Recursively expand links in an entry given a specification of the 
  : desired expansion, e.g., 
  :
- : <expand rel="chassis.dataset" collection="/db/datasets">
- :    <expand rel="chassis.study" collection="/db/studies"/>
- :    <expand rel="chassis.datafile" collection="/db/datafiles"/>
- : </expand>
+        <spec>
+            <expand rel="chassis.study" collection="/db/studies"/>
+            <expand rel="chassis.datafile" collection="/db/datafiles">
+                <spec>
+                    <expand rel="chassis.revision" collection="/db/media"/>
+                </spec>
+            </expand>
+            <expand-reverse rel="chassis.submission" rev="chassis.dataset" collection="/db/submissions"/>
+        </spec>
  :
  :)
 declare function chassis:recursive-expand-entry( 
     $entry as element(atom:entry), 
-    $expansions as element(expand)* 
-    ) as element(atom:link)* {
+    $spec as element(spec)? 
+    ) as element(atom:entry) {
     
     <atom:entry>
     {
         for $element in $entry/*
         return 
             if (local-name($element) = "link" and namespace-uri($element) = "http://www.w3.org/2005/Atom") 
-                then chassis:recursive-expand-link($element, $expansions)
-            else $element
+                then chassis:recursive-expand-link($element, $spec/expand)
+            else $element ,
+        chassis:recursive-expand-reverse-links($entry, $spec/expand-reverse)
     }    
     </atom:entry>
     
@@ -214,7 +220,10 @@ declare function chassis:recursive-expand-entry(
 
 
 
-declare function chassis:recursive-expand-link( $link as element(atom:link), $expansions as element(expand)* ) as element(atom:link) {
+declare function chassis:recursive-expand-link( 
+    $link as element(atom:link), 
+    $expansions as element(expand)* 
+    ) as element(atom:link) {
 
     let $rel := $link/@rel
     let $href := $link/@href
@@ -228,12 +237,39 @@ declare function chassis:recursive-expand-link( $link as element(atom:link), $ex
             return
                 <atom:link rel="{$rel}" href="{$href}">
                 {
-                    chassis:recursive-expand-entry($object, $expand/expand)
+                    chassis:recursive-expand-entry($object, $expand/spec)
                 }
                 </atom:link>
         
         else $link
 
+};
+
+
+
+
+
+declare function chassis:recursive-expand-reverse-links(
+    $object as element(atom:entry),
+    $expansions as element(expand-reverse)*
+    ) as element(atom:link)* {
+    
+    for $expand in $expansions
+    let $rel := $expand/@rel
+    let $rev := $expand/@rev
+    let $collection := $expand/@collection
+    return
+    
+        for $subject in chassis:link-subjects($object, $rev, $collection)
+        let $href := chassis:entry-uri($subject)
+        return
+            
+            <atom:link rel="{$rel}" href="{$href}">
+            {
+                chassis:recursive-expand-entry($subject, $expand/spec)
+            }
+            </atom:link>
+    
 };
 
 
