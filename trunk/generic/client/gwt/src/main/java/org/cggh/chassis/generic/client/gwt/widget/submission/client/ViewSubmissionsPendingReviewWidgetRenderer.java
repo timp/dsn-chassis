@@ -26,8 +26,8 @@ import static org.cggh.chassis.generic.widget.client.HtmlElements.*;
  * @author aliman
  *
  */
-public class ViewSubmissionsPendingReviewWidgetRenderer extends
-		AsyncWidgetRenderer<ViewSubmissionsPendingReviewWidgetModel> {
+public class ViewSubmissionsPendingReviewWidgetRenderer 
+     extends AsyncWidgetRenderer<ViewSubmissionsPendingReviewWidgetModel> {
 
 	
 	
