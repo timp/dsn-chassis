@@ -3,7 +3,7 @@
   <parent>
     <groupId>org.cggh.chassis</groupId>
     <artifactId>chassis-parent</artifactId>
-    <version>0.1-alpha-3</version>
+    <version>0.1-alpha-6-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>chassis-generic-service-exist</artifactId>
@@ -11,6 +11,11 @@
   <name>googlecode_dsn-chassis_generic_service_exist</name>
   
   <dependencies>
+    <dependency>
+     <groupId>org.cggh.chassis</groupId>
+     <artifactId>chassis-generic-lib-java</artifactId>
+     <version>${project.version}</version>
+    </dependency> 
   </dependencies>
   
   <build>
