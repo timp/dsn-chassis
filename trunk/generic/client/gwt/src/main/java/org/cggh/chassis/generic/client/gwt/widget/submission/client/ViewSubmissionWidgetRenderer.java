@@ -168,7 +168,7 @@ public class ViewSubmissionWidgetRenderer extends
 		
 		if (reviewLinks.size() > 0) {
 			
-			// TODO
+			// TODO show who did accepting and when, with review summary
 			
 		}
 		else {

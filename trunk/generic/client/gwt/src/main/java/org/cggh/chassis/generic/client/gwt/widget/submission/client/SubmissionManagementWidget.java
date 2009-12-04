@@ -111,6 +111,12 @@ public class SubmissionManagementWidget
 
 		this.childWidgetEventHandlerRegistrations.add(c);
 
+		// TODO register handler for review submission action events from view submission widget
+		
+		// TODO register handler for cancel event from review submission widget
+		
+		// TODO register handler for create review success event from review submission widget
+
 	}
 
 	

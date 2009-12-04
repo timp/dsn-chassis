@@ -89,9 +89,9 @@ public class ShareDatasetWidgetModel extends AsyncWidgetModel {
 	
 	public static final Status STATUS_RETRIEVE_DATASET_PENDING = new RetrieveDatasetPendingStatus();
 	
-	public static final Status STATUS_CREATE_SUBMISSION_PENDING = new CreateSubmissionPendingStatus();
-
 	public static class RetrieveDatasetPendingStatus extends AsyncRequestPendingStatus {}
+
+	public static final Status STATUS_CREATE_SUBMISSION_PENDING = new CreateSubmissionPendingStatus();
 
 	public static class CreateSubmissionPendingStatus extends AsyncRequestPendingStatus {}
 
