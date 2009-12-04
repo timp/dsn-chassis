@@ -12,15 +12,14 @@ import com.google.gwt.xml.client.Element;
  * @author aliman
  *
  */
+//TODO Consider refactor to extend ElementWrapperImpl directly
+
 public class StudyImpl 
 	extends HasModulesImpl 
 	implements Study {
 
 	
 	
-	/**
-	 * @param e
-	 */
 	protected StudyImpl(Element e) {
 		super(e);
 	}
