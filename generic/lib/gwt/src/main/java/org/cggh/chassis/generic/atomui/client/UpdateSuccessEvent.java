@@ -10,6 +10,7 @@ import org.cggh.chassis.generic.atom.client.AtomEntry;
  * @author aliman
  *
  */
+@SuppressWarnings("unchecked")
 public class UpdateSuccessEvent
 	<E extends AtomEntry>
 	extends EventWithAtomEntry<UpdateSuccessHandler, E> {
