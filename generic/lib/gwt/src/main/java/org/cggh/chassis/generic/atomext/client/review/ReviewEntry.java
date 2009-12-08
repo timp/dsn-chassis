@@ -10,5 +10,9 @@ import org.cggh.chassis.generic.atom.client.AtomEntry;
  *
  */
 public interface ReviewEntry extends AtomEntry {
+	
+	public void setSubmissionLink(String submissionEntryUrl);
+	
+	public Review getReview();
 
 }
