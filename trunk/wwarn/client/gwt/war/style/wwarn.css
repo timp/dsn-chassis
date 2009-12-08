@@ -100,5 +100,8 @@ div.gwt-MenuBar-vertical .gwt-MenuItem-selected {
 	background-color: #eef;	
 }
 
+.debug { 
+	border: 1px solid red;
+}
 
 
