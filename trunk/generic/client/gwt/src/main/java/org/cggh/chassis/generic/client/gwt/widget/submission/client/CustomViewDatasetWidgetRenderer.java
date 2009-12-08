@@ -4,7 +4,6 @@
 package org.cggh.chassis.generic.client.gwt.widget.submission.client;
 
 
-import org.cggh.chassis.generic.client.gwt.common.client.CommonStyles;
 import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.ViewDatasetWidget;
 import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.ViewDatasetWidgetRenderer;
 import static org.cggh.chassis.generic.widget.client.HtmlElements.*;
