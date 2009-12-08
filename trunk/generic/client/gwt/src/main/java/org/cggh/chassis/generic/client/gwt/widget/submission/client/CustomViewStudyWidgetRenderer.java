@@ -8,8 +8,6 @@ import org.cggh.chassis.generic.client.gwt.widget.study.client.ViewStudyWidget;
 import org.cggh.chassis.generic.client.gwt.widget.study.client.ViewStudyWidgetRenderer;
 import org.cggh.chassis.generic.client.gwt.widget.study.client.sq.ViewStudyQuestionnaireWidget;
 
-import static org.cggh.chassis.generic.widget.client.HtmlElements.*;
-
 
 
 
