@@ -3,12 +3,6 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.submission.client;
 
-import static org.cggh.chassis.generic.widget.client.HtmlElements.h3;
-import static org.cggh.chassis.generic.widget.client.HtmlElements.p;
-
-import org.cggh.chassis.generic.client.gwt.common.client.CommonStyles;
-import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.DataFileActionsWidget;
-import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.DataFileDatasetsWidget;
 import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.ViewDataFileWidget;
 import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.ViewDataFileWidgetRenderer;
 
