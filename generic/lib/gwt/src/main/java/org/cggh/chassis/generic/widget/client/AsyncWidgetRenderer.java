@@ -142,7 +142,7 @@ public abstract class AsyncWidgetRenderer
 	 * @param after
 	 */
 	protected void syncPanelVisibility(Status status) {
-		log.enter("updatePanelVisibility");
+		log.enter("syncPanelVisibility");
 		
 		if (status == null || status instanceof InitialStatus) {
 			
