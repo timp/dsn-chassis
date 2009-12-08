@@ -87,23 +87,23 @@ public class ShareDatasetWidgetModel extends AsyncWidgetModel {
 	
 	
 	
-	public static final Status STATUS_RETRIEVE_DATASET_PENDING = new RetrieveDatasetPendingStatus();
-	
 	public static class RetrieveDatasetPendingStatus extends AsyncRequestPendingStatus {}
+	public static final Status STATUS_RETRIEVE_DATASET_PENDING = new RetrieveDatasetPendingStatus();
 
+	
+	public static class CreateSubmissionPendingStatus extends AsyncRequestPendingStatus {}
 	public static final Status STATUS_CREATE_SUBMISSION_PENDING = new CreateSubmissionPendingStatus();
 
-	public static class CreateSubmissionPendingStatus extends AsyncRequestPendingStatus {}
 
 	
-	
-	protected static final Status STATUS_DATASET_RETRIEVED = new DatasetRetrievedStatus();
 	
 	public static class DatasetRetrievedStatus extends ReadyStatus {}
+	protected static final Status STATUS_DATASET_RETRIEVED = new DatasetRetrievedStatus();
+	
 
+	public static class DatasetSharedStatus extends ReadyStatus {}
 	protected static final Status STATUS_DATASET_SHARED = new DatasetSharedStatus();
 	
-	public static class DatasetSharedStatus extends ReadyStatus {}
 
 	
 }
