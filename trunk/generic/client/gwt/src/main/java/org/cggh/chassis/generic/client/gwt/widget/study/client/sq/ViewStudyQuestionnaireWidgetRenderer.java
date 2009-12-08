@@ -21,7 +21,6 @@ import static org.cggh.chassis.generic.widget.client.HtmlElements.*;
 
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.Panel;
 
 
 
