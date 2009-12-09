@@ -20,6 +20,7 @@ public class Chassis {
 		public static final String REVISION = "chassis.revision";
 		public static final String DATAFILE = "chassis.datafile";
 		public static final String DATASET = "chassis.dataset";
+		public static final String REVIEW = "chassis.review";
 		
 	}
 
@@ -30,6 +31,7 @@ public class Chassis {
 		public static final String SUBMISSION = "submission";
 		public static final String STARTYEAR = "startYear";
 		public static final String ENDYEAR = "endYear";
+		public static final String REVIEW = "review";
 
 	}
 	
@@ -40,6 +42,7 @@ public class Chassis {
 		public static final String DATAFILE = "DataFile";
 		public static final String MEDIARESOURCE = "MediaResource";
 		public static final String DATASET = "Dataset";
+		public static final String REVIEW = "Review";
 
 	}
 	
