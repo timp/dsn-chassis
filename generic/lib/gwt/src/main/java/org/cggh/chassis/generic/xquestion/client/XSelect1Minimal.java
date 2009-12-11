@@ -136,7 +136,7 @@ public class XSelect1Minimal extends XSelectBase {
 				String itemValue = it.next();
 				String itemLabel = labels.get(itemValue);
 				
-				log.debug("adding list item for item label: "+itemLabel+"; value: "+itemValue);
+				//log.debug("adding list item for item label: "+itemLabel+"; value: "+itemValue);
 				
 				box.addItem(itemLabel, itemValue);
 				
