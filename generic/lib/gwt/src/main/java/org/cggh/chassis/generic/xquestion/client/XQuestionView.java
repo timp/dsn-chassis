@@ -88,6 +88,7 @@ public class XQuestionView extends XQSViewBase {
 
 
 	private void constructCanvas() {
+		log.enter("constructCanvas");
 
 		if (vertical) {
 			this.canvas = new FlowPanel();			
@@ -96,13 +97,15 @@ public class XQuestionView extends XQSViewBase {
 			this.canvas = new FlowPanel();
 		}
 		
+		// TODO Consider if this should be in else below
 		this.canvas.addStyleName(STYLENAME);
 		
 		String classAttr = definition.getAttribute(XQS.ATTR_CLASS);
 		if (classAttr != null) {
 			this.canvas.addStyleName(classAttr);
-		}
-				
+		} 
+		
+        log.leave();				
 	}
 
 
@@ -138,6 +141,8 @@ public class XQuestionView extends XQSViewBase {
 		}
 		
 		refresh();
+		
+		log.leave();
 
 	}
 
