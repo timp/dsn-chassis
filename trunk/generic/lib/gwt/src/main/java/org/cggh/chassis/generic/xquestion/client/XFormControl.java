@@ -97,9 +97,6 @@ public abstract class XFormControl extends Composite {
 	
 	
 	
-	/**
-	 * 
-	 */
 	protected void constructHint() {
 
 		String hintContent = XML.getElementSimpleContentByTagName(definition, XQS.ELEMENT_HINT);
@@ -138,8 +135,9 @@ public abstract class XFormControl extends Composite {
 				return new XInputString(definition, model, readOnly); // TODO anything special?
 			}
 			else {
-				// TODO
-				return null;
+				
+				// TODO Review fail hard 
+				throw new XQSException("Unrecognised input model element type :" + definition.getTagName());
 			}
 			
 		}
@@ -179,8 +177,8 @@ public abstract class XFormControl extends Composite {
 				definition.getAttribute(XQS.ATTR_APPEARANCE).equals(XQS.APPEARANCE_COMPACT) 
 			) {
 
-			// TODO
-			return null;			
+			// TODO implement
+			throw new XQSException("Unimplemented attribute :" + definition.getAttribute(XQS.ATTR_APPEARANCE));
 
 		}
 
@@ -198,8 +196,8 @@ public abstract class XFormControl extends Composite {
 				definition.getAttribute(XQS.ATTR_APPEARANCE).equals(XQS.APPEARANCE_MINIMAL) 
 			) {
 
-			// TODO
-			return null;			
+			// TODO implement
+			throw new XQSException("Unimplemented attribute :" + definition.getAttribute(XQS.ATTR_APPEARANCE));
 
 		}
 
@@ -208,14 +206,15 @@ public abstract class XFormControl extends Composite {
 				definition.getAttribute(XQS.ATTR_APPEARANCE).equals(XQS.APPEARANCE_COMPACT) 
 			) {
 
-			// TODO
-			return null;			
+			// TODO implement
+			throw new XQSException("Unimplemented attribute :" + definition.getAttribute(XQS.ATTR_APPEARANCE));
 
 		}
 		
 		else {
 			
-			return null;
+			// TODO Review fail hard 
+			throw new XQSException("Unrecognised model tag name :" + definition.getTagName());
 			
 		}
 
