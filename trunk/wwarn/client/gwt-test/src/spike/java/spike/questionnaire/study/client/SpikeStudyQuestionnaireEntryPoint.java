@@ -19,6 +19,11 @@ import com.google.gwt.user.client.ui.RootPanel;
 /**
  * @author aliman
  *
+ *
+ * Try opening http://localhost:8080/chassis-wwarn-client-gwt-test/spike/questionnaire/study/
+ * typically viewed using hosted mode browser and local tomcat server.
+ * 
+ * 
  */
 public class SpikeStudyQuestionnaireEntryPoint implements EntryPoint {
 
