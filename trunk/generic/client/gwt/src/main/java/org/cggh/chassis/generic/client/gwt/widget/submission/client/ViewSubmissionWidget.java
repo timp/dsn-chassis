@@ -23,7 +23,12 @@ import com.google.gwt.event.shared.HandlerRegistration;
  *
  */
 public class ViewSubmissionWidget 
-	extends AtomCrudWidget<SubmissionEntry, SubmissionFeed, SubmissionQuery, AtomCrudWidgetModel<SubmissionEntry>, ViewSubmissionWidgetRenderer, ViewSubmissionWidgetController> 
+	extends AtomCrudWidget<SubmissionEntry, 
+							SubmissionFeed, 
+							SubmissionQuery, 
+							AtomCrudWidgetModel<SubmissionEntry>, 
+							ViewSubmissionWidgetRenderer, 
+							ViewSubmissionWidgetController> 
 {
 
 	
@@ -128,6 +133,9 @@ public class ViewSubmissionWidget
 	}
 
 
+    public HandlerRegistration addReviewSubmissionActionHandler(SubmissionActionHandler h) { 
+		return this.addHandler(h, ReviewSubmissionActionEvent.TYPE);    	
+    }
 
 
 	
