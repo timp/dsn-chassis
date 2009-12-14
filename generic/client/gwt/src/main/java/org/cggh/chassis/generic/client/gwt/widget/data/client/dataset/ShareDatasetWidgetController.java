@@ -141,7 +141,7 @@ public class ShareDatasetWidgetController {
 				model.setSubmissionEntry(in);
 				
 				log.leave();
-				return null;
+				return in;
 			}
 			
 		});
