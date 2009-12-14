@@ -3,6 +3,8 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.submission.client;
 
+import org.cggh.chassis.generic.atomext.client.review.ReviewEntry;
+import org.cggh.chassis.generic.atomui.client.CreateSuccessEvent;
 import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.DataFileActionEvent;
 import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.DataFileActionHandler;
 import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.ViewDataFileWidget;
@@ -11,11 +13,13 @@ import org.cggh.chassis.generic.client.gwt.widget.study.client.StudyActionHandle
 import org.cggh.chassis.generic.client.gwt.widget.study.client.ViewStudyWidget;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
+import org.cggh.chassis.generic.widget.client.CancelEvent;
+import org.cggh.chassis.generic.widget.client.CancelHandler;
 import org.cggh.chassis.generic.widget.client.MenuEvent;
 import org.cggh.chassis.generic.widget.client.MultiWidget;
 
-import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.Command;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -41,6 +45,7 @@ public class SubmissionManagementWidget
 	ViewSubmissionWidget viewSubmissionWidget;
 	ViewDataFileWidget viewDataFileWidget;
 	ViewStudyWidget viewStudyWidget;
+	ReviewSubmissionWidget reviewSubmissionWidget;
 	
 	
 	public SubmissionManagementWidget() {
@@ -59,11 +64,13 @@ public class SubmissionManagementWidget
 		this.viewSubmissionWidget = new ViewSubmissionWidget();
 		this.viewDataFileWidget = new CustomViewDataFileWidget();
 		this.viewStudyWidget = new CustomViewStudyWidget();
+		this.reviewSubmissionWidget = new ReviewSubmissionWidget();
 		
 		this.mainChildren.add(this.vsprWidget);
 		this.mainChildren.add(this.viewSubmissionWidget);
 		this.mainChildren.add(this.viewDataFileWidget);
 		this.mainChildren.add(this.viewStudyWidget);
+		this.mainChildren.add(this.reviewSubmissionWidget);
 		
 		log.leave();
 	}
@@ -75,7 +82,9 @@ public class SubmissionManagementWidget
 	@Override
 	protected void registerHandlersForChildWidgetEvents() {
 
-		HandlerRegistration a = this.vsprWidget.addViewSubmissionActionHandler(new SubmissionActionHandler() {
+		
+		this.childWidgetEventHandlerRegistrations.add(
+				this.vsprWidget.addViewSubmissionActionHandler(new SubmissionActionHandler() {
 			
 			public void onAction(SubmissionActionEvent e) {
 
@@ -83,11 +92,12 @@ public class SubmissionManagementWidget
 				setActiveChild(viewSubmissionWidget);
 				
 			}
-		});
+		}));
+
 		
-		this.childWidgetEventHandlerRegistrations.add(a);
-		
-		HandlerRegistration b = this.viewSubmissionWidget.addViewDataFileActionHandler(new DataFileActionHandler() {
+
+		this.childWidgetEventHandlerRegistrations.add(
+				this.viewSubmissionWidget.addViewDataFileActionHandler(new DataFileActionHandler() {
 			
 			public void onAction(DataFileActionEvent e) {
 				
@@ -95,11 +105,12 @@ public class SubmissionManagementWidget
 				setActiveChild(viewDataFileWidget);
 
 			}
-		});
+		}));
 
-		this.childWidgetEventHandlerRegistrations.add(b);
 		
-		HandlerRegistration c = this.viewSubmissionWidget.addViewStudyActionHandler(new StudyActionHandler() {
+
+		this.childWidgetEventHandlerRegistrations.add(
+				this.viewSubmissionWidget.addViewStudyActionHandler(new StudyActionHandler() {
 			
 			public void onAction(StudyActionEvent e) {
 
@@ -107,17 +118,44 @@ public class SubmissionManagementWidget
 				setActiveChild(viewStudyWidget);
 				
 			}
-		});
+		}));
 
-		this.childWidgetEventHandlerRegistrations.add(c);
 
-		// TODO register handler for review submission action events from view submission widget
+		this.childWidgetEventHandlerRegistrations.add(
+				this.viewSubmissionWidget.addReviewSubmissionActionHandler(new SubmissionActionHandler() {
+			
+			public void onAction(SubmissionActionEvent e) {
+
+				viewStudyWidget.viewEntry(e.getEntry().getId());
+				setActiveChild(reviewSubmissionWidget);
+				
+			}
+		}));
 		
-		// TODO register handler for cancel event from review submission widget
+		
+		this.childWidgetEventHandlerRegistrations.add(
+				this.reviewSubmissionWidget.addCancelHandler(new CancelHandler() {
+
+			public void onCancel(CancelEvent e) {
+				log.enter("anonymous cancel");
+				History.back();
+				log.leave();
+			}
+		}));
+		
 		
 		// TODO register handler for create review success event from review submission widget
+        this.childWidgetEventHandlerRegistrations.add(
+        		this.reviewSubmissionWidget.addCreateReviewSuccessHandler(
+        				new CreateReviewSuccessHandler() {
 
-	}
+					public void onCreateSuccess(
+							CreateSuccessEvent<ReviewEntry> e) {
+						// TODO Auto-generated method stub
+						
+					} }));
+
+}
 
 	
 	
