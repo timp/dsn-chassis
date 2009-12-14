@@ -305,6 +305,7 @@ public class Deferred<T> {
     			}
 
             } catch (Throwable err) {
+            	// TODO Review working
             	log.warn("caught throwable from callback function: "+err.getLocalizedMessage(), err);
             	fired = ERROR;
             	res = err;
