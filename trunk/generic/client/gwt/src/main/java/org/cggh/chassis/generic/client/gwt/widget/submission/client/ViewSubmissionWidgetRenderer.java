@@ -11,7 +11,6 @@ import org.cggh.chassis.generic.atomui.client.AtomCrudWidgetModel;
 import org.cggh.chassis.generic.atomui.client.AtomEntryChangeEvent;
 import org.cggh.chassis.generic.atomui.client.AtomEntryChangeHandler;
 import org.cggh.chassis.generic.client.gwt.common.client.CommonStyles;
-import org.cggh.chassis.generic.client.gwt.common.client.RenderUtils;
 import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.DataFileActionEvent;
 import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.DataFileActionHandler;
 import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.ViewDatasetWidget;
@@ -21,10 +20,7 @@ import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetRenderer;
 
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.FlowPanel;
 
 import static org.cggh.chassis.generic.widget.client.HtmlElements.*;
@@ -42,6 +38,21 @@ public class ViewSubmissionWidgetRenderer extends
 	
 	
 	
+	public class ReviewSubmissionActionHandler implements
+			SubmissionActionHandler {
+
+		public void onAction(SubmissionActionEvent e) {
+
+			// augment event and bubble
+			e.setEntry(model.getEntry());
+			owner.fireEvent(e);
+
+		}
+
+	}
+
+
+
 	private Log log = LogFactory.getLog(ViewSubmissionWidgetRenderer.class);
 	private ViewSubmissionWidget owner;
 	
@@ -49,6 +60,7 @@ public class ViewSubmissionWidgetRenderer extends
 	
 	// UI fields
 	private SubmissionPropertiesWidget submissionPropertiesWidget;
+	private SubmissionActionsWidget actionsWidget;
 	private FlowPanel acceptanceReviewContainer;
 	private ViewDatasetWidget viewDatasetWidget;
 
@@ -89,10 +101,18 @@ public class ViewSubmissionWidgetRenderer extends
 		
 		this.mainPanel.addStyleName(CommonStyles.MAINWITHACTIONS);
 
+		this.renderActionsWidget();
 		log.leave();
 	}
 	
-	
+	protected void renderActionsWidget() {
+		this.actionsWidget = new SubmissionActionsWidget();
+		this.mainPanel.add(this.actionsWidget);
+		
+		//TODO que?
+		//this.actionsWidget.getViewAction().setVisible(false); // has to go here, after added to panel
+	}
+
 	
 	@Override
 	public void registerHandlersForModelChanges() {
@@ -112,6 +132,7 @@ public class ViewSubmissionWidgetRenderer extends
 	
 	@Override
 	public void registerHandlersForChildWidgetEvents() {
+		log.enter("registerHandlersForChildWidgetEvents");
 		super.registerHandlersForChildWidgetEvents();
 		
 		HandlerRegistration a = this.viewDatasetWidget.addViewDataFileActionHandler(new DataFileActionHandler() {
@@ -133,7 +154,14 @@ public class ViewSubmissionWidgetRenderer extends
 		});
 
 		this.childWidgetEventHandlerRegistrations.add(b);
-
+		
+		if (this.actionsWidget != null ) {
+			
+			HandlerRegistration aa = this.actionsWidget.addReviewSubmissionActionHandler(new ReviewSubmissionActionHandler());
+			this.childWidgetEventHandlerRegistrations.add(aa);
+		}
+		
+        log.leave();
 	}
 
 
@@ -157,14 +185,15 @@ public class ViewSubmissionWidgetRenderer extends
 
 
 	/**
-	 * @param entry
+	 * @param submissionEntry
 	 */
-	private void syncAcceptanceReviewSection(SubmissionEntry entry) {
+	private void syncAcceptanceReviewSection(final SubmissionEntry submissionEntry) {
 		log.enter("syncAcceptanceReviewSection");
+		
 		
 		this.acceptanceReviewContainer.clear();
 		
-		List<ReviewLink> reviewLinks = entry.getReviewLinks();
+		List<ReviewLink> reviewLinks = submissionEntry.getReviewLinks();
 		
 		if (reviewLinks.size() > 0) {
 			
@@ -175,6 +204,7 @@ public class ViewSubmissionWidgetRenderer extends
 
 			this.acceptanceReviewContainer.add(p("This submission is pending review."));
 			
+			/*
 			Anchor reviewSubmissionAction = RenderUtils.renderActionAnchor("review this submission...");
 			
 			reviewSubmissionAction.addClickHandler(new ClickHandler() {
@@ -182,15 +212,16 @@ public class ViewSubmissionWidgetRenderer extends
 				public void onClick(ClickEvent arg0) {
 					log.enter("onClick");
 					
-					// TODO fire new review submission action event
-					
+					ViewSubmissionActionEvent e = new ViewSubmissionActionEvent();
+					e.setEntry(submissionEntry);
+					owner.fireEvent(e);
 					log.leave();
 					
 				}
 			});
 			
 			this.acceptanceReviewContainer.add(reviewSubmissionAction);
-			
+			*/
 		}
 
 		
