@@ -23,6 +23,7 @@ declare function local:expand-submission( $submissionEntry as element(atom:entry
                     <expand rel="chassis.datafile" collection="/db/datafiles"/>
                 </spec>
             </expand>
+            (: TODO add reverse link to reviews :)
         </spec>
 
     return chassis:recursive-expand-entry($submissionEntry, $spec)
