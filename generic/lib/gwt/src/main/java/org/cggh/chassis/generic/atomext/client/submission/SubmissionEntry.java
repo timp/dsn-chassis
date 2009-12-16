@@ -28,5 +28,8 @@ public interface SubmissionEntry extends AtomEntry {
 
 	public List<ReviewLink> getReviewLinks();
 	
+    /** Submissions currently only get one review */
+	public ReviewLink getReviewLink();
+	
 
 }
