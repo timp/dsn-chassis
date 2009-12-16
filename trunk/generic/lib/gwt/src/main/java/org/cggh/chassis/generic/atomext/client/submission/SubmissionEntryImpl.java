@@ -74,20 +74,20 @@ public class SubmissionEntryImpl
 	 */
 	public DatasetLink getDatasetLink() {
 
-		List<AtomLink> links = this.getLinks();
-		
-		List<DatasetLink> datasetLinks = new ArrayList<DatasetLink>();
-		
-		for (AtomLink link : links) {
+		AtomLink datasetLink = null;
+		for (AtomLink link : this.getLinks()) {
 			if (link.getRel() != null && link.getRel().equals(Chassis.Rel.DATASET)) {
-				datasetLinks.add(new DatasetLinkImpl(link.getElement()));
+				if (datasetLink != null)
+					throw new NotSingularException("Submission (" + getEditLink().getHref() + ") has more than one Dataset" );
+				else
+					datasetLink = link;
 			}
-		}
-
-		// TODO throw error if more than one
-		// TODO throw error if no links found
 			
-		return datasetLinks.get(0);
+		}
+		if(datasetLink == null)
+			throw new MissingLinkIntegrityException(this, DatasetLinkImpl.class);
+			
+		return new DatasetLinkImpl(datasetLink.getElement());
 	}
 
 
