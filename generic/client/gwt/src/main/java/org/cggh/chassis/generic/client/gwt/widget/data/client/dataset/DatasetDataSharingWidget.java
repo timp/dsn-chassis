@@ -4,6 +4,7 @@
 package org.cggh.chassis.generic.client.gwt.widget.data.client.dataset;
 
 import org.cggh.chassis.generic.atomext.client.dataset.DatasetEntry;
+import org.cggh.chassis.generic.atomext.client.review.ReviewLink;
 import org.cggh.chassis.generic.atomext.client.submission.SubmissionEntry;
 import org.cggh.chassis.generic.atomext.client.submission.SubmissionLink;
 import org.cggh.chassis.generic.client.gwt.common.client.RenderUtils;
@@ -86,9 +87,9 @@ public class DatasetDataSharingWidget extends ChassisWidget {
 		
 			log.debug("has dataset been shared before? look for submission link...");
 			
-			SubmissionLink link = this.entry.getSubmissionLink();
+			SubmissionLink submissionLink = this.entry.getSubmissionLink();
 			
-			if (link == null) {
+			if (submissionLink == null) {
 				
 				log.debug("no submission link found, dataset has not been shared");
 				
@@ -100,8 +101,24 @@ public class DatasetDataSharingWidget extends ChassisWidget {
 				log.debug("found submission link, dataset is shared");
 				
 				this.syncShared();
+				log.debug("has dataset been reviewed? look for review link...");
+				
+				ReviewLink reviewLink = submissionLink.getEntry().getReviewLink();
+				
+				
+				if (reviewLink != null) {
+					
+					log.debug("no review link found, dataset has not been reviewed");
+					
+					add(p("This dataset has been shared with "+Configuration.getNetworkName()+ 
+							" by " + strong(RenderUtils.renderAtomAuthorsAsCommaDelimitedEmailString(
+									reviewLink.getEntry().getAuthors())) +
+							" on " + strong(reviewLink.getEntry().getPublished()) + ".")); // TODO i18n
+					
+				}
 				
 			}
+			
 			
 		}
 		else {
@@ -109,6 +126,10 @@ public class DatasetDataSharingWidget extends ChassisWidget {
 			log.debug("entry is null, not syncing anything");
 			
 		}
+		
+		// TODO Add Gatekeeper review
+		// TODO Add Curator assignment
+		
 		
 		log.leave();
 	}
@@ -154,7 +175,8 @@ public class DatasetDataSharingWidget extends ChassisWidget {
 		String author = RenderUtils.renderAtomAuthorsAsCommaDelimitedEmailString(se.getAuthors());
 		String created = se.getPublished();
 		
-		add(p("This dataset was shared with "+Configuration.getNetworkName()+" by <strong>"+author+"</strong> on <strong>"+created+"</strong>."));
+		add(p("This dataset was shared with "+Configuration.getNetworkName()+
+				" by <strong>"+author+"</strong> on <strong>"+created+"</strong>."));
 		
 		log.leave();
 	}
