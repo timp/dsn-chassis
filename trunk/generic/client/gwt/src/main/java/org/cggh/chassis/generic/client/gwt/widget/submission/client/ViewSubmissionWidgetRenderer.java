@@ -185,8 +185,9 @@ public class ViewSubmissionWidgetRenderer extends
 		this.submissionPropertiesWidget.setEntry(entry);
 		
 		this.syncAcceptanceReviewSection(entry);
-		
-		this.viewDatasetWidget.setEntry(entry.getDatasetLink().getEntry());
+
+		if (entry != null) // all submissions must have a dataset so no need to check dataset not null
+			this.viewDatasetWidget.setEntry(entry.getDatasetLink().getEntry());
 		
 		log.leave();
 	}
@@ -201,10 +202,12 @@ public class ViewSubmissionWidgetRenderer extends
 		
 		
 		this.acceptanceReviewContainer.clear();
+		List<ReviewLink> reviewLinks = null;
 		
-		List<ReviewLink> reviewLinks = submissionEntry.getReviewLinks();
-		
-		if (reviewLinks.size() > 0) {
+		if (submissionEntry != null) { 
+			reviewLinks = submissionEntry.getReviewLinks();
+		}
+		if (reviewLinks != null && reviewLinks.size() > 0) {
 			// TODO show who did accepting and when, with review summary
 			
 			String[] headers = {
