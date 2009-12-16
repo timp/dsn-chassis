@@ -10,6 +10,8 @@ import org.cggh.chassis.generic.atomext.client.dataset.DatasetEntry;
 import org.cggh.chassis.generic.atomext.client.submission.SubmissionEntry;
 import org.cggh.chassis.generic.atomext.client.submission.SubmissionFeed;
 import org.cggh.chassis.generic.client.gwt.common.client.RenderUtils;
+import org.cggh.chassis.generic.log.client.Log;
+import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetRenderer;
 
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -28,6 +30,8 @@ import static org.cggh.chassis.generic.widget.client.HtmlElements.*;
  */
 public class ViewSubmissionsPendingReviewWidgetRenderer 
      extends AsyncWidgetRenderer<ViewSubmissionsPendingReviewWidgetModel> {
+
+	Log log = LogFactory.getLog(ViewSubmissionsPendingReviewWidgetRenderer.class);
 
 	
 	
@@ -134,13 +138,15 @@ public class ViewSubmissionsPendingReviewWidgetRenderer
 		Widget submissionDate = new Label(submissionEntry.getPublished());
 		
 		Anchor viewAction = RenderUtils.renderActionAsAnchor("view", new ClickHandler() {
-			
 			public void onClick(ClickEvent arg0) {
+				log.enter("renderRow.renderActionAsAnchor.ClickHandler");
 
 				ViewSubmissionActionEvent e = new ViewSubmissionActionEvent();
+				log.debug("Submissionentry:" + submissionEntry.getId());
 				e.setEntry(submissionEntry);
 				owner.fireEvent(e);
 				
+				log.leave();
 			}
 		});
 		
