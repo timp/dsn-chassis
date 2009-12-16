@@ -115,7 +115,7 @@ public class SubmissionEntryImpl
 				reviewLinks.add(new ReviewLinkImpl(link.getElement()));
 			} else
 				log.debug("Ignoring " + link.getRel());
-		log.debug("Found " + reviewLinks.size() + " review links");
+		log.debug("Found " + reviewLinks.size() + " review links in " + getEditLink().getHref());
         log.leave();
 		return reviewLinks;
 	}
