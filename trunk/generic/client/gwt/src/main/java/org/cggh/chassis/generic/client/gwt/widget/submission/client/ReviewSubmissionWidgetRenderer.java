@@ -12,6 +12,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.TextArea;
 
 import static org.cggh.chassis.generic.widget.client.HtmlElements.*;
 
@@ -27,12 +28,13 @@ public class ReviewSubmissionWidgetRenderer
 	private ReviewSubmissionWidgetController controller;
 
 	private SubmissionPropertiesWidget submissionPropertiesWidget; 
+	private TextArea commentTextArea;
 	private Button acceptButton;
 	private Button cancelButton;
 
 	private FlowPanel reviewCommentPanel;
-	
-	
+
+
 	public ReviewSubmissionWidgetRenderer(ReviewSubmissionWidget owner) {
 		super();
 		this.owner = owner;
@@ -42,18 +44,22 @@ public class ReviewSubmissionWidgetRenderer
 	@Override
 	protected void renderMainPanel() {
 		log.enter("renderMainPanel");
-		this.mainPanel.add(h2("Review submission"));
+		this.mainPanel.add(h2("Review submission")); //TODO i18n
 		this.submissionPropertiesWidget = new SubmissionPropertiesWidget();
 		this.mainPanel.add(this.submissionPropertiesWidget);
 
 		
 		this.reviewCommentPanel = new FlowPanel();
-		this.reviewCommentPanel.add(h3("Review"));
+		this.reviewCommentPanel.add(h3("Review")); //TODO i18n
 		
-        FlowPanel buttonsPanel = new FlowPanel();
+		this.commentTextArea = new TextArea();
+		this.reviewCommentPanel.add(this.commentTextArea);
+
 		
-		this.acceptButton = new Button("Accept Submission into "+Configuration.getNetworkName());
-		this.cancelButton = new Button("Cancel");
+		FlowPanel buttonsPanel = new FlowPanel();
+		
+		this.acceptButton = new Button("Accept Submission into "+Configuration.getNetworkName()); //TODO i18n
+		this.cancelButton = new Button("Cancel"); //TODO i18n
 		
 		buttonsPanel.add(acceptButton);
 		buttonsPanel.add(cancelButton);
@@ -68,6 +74,26 @@ public class ReviewSubmissionWidgetRenderer
 		log.leave();
 	}
 
+	
+	
+	@Override
+	public void registerHandlersForModelChanges() {
+		super.registerHandlersForModelChanges();
+		
+		this.model.addChangeHandler(new SubmissionEntryChangeHandler() {
+				public void onChange(SubmissionEntryChangeEvent e) {
+					log.enter("SubmissionEntryChangeEvent.onChange");
+
+					
+					if (e.getAfter() != null)
+						submissionPropertiesWidget.setEntry(e.getAfter());
+					
+					
+					log.leave();
+				}
+
+			}, SubmissionEntryChangeEvent.TYPE);
+	}
 
 
 	@Override
@@ -77,9 +103,13 @@ public class ReviewSubmissionWidgetRenderer
 		this.acceptButton.addClickHandler(new ClickHandler() {
 			
 			public void onClick(ClickEvent arg0) {
-				// TODO get comment
-				controller.acceptSubmission("TODO get Comment");
+				log.enter("clickHandler.onClick");
 				
+				
+				controller.acceptSubmission(commentTextArea.getText());
+			
+				
+				log.leave();
 			}
 			
 		});
@@ -93,7 +123,7 @@ public class ReviewSubmissionWidgetRenderer
 		});
 		
 		/*
-		 * We only have one action, and we are in it. 
+		 * We only have one action 
 		 * 
 		for (HasClickHandlers action : this.viewDatasetActions) {
 		
@@ -112,9 +142,17 @@ public class ReviewSubmissionWidgetRenderer
 
 	@Override
 	protected void syncUI() {
+		log.enter("syncUI");
+
 		super.syncUI();
+		
 		this.submissionPropertiesWidget.setEntry(this.model.getSubmissionEntry());
+		
+		this.commentTextArea.setValue("");
+
 		synchUIWithStatus(this.model.getStatus());
+		
+		log.leave();
 	}
 
 
@@ -152,6 +190,8 @@ public class ReviewSubmissionWidgetRenderer
 		else if (status instanceof ReviewSubmissionWidgetModel.ReviewCreatedStatus) {
 			
 			this.reviewCommentPanel.setVisible(false);
+
+			log.debug("Review created");
 			// TODO Set created panel status
 			
 		}
