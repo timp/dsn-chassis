@@ -11,8 +11,12 @@ import org.cggh.chassis.generic.atom.client.AtomEntryImpl;
 import org.cggh.chassis.generic.atom.client.AtomLink;
 import org.cggh.chassis.generic.atomext.client.dataset.DatasetLink;
 import org.cggh.chassis.generic.atomext.client.dataset.DatasetLinkImpl;
+import org.cggh.chassis.generic.atomext.client.review.NotSingularException;
 import org.cggh.chassis.generic.atomext.client.review.ReviewLink;
+import org.cggh.chassis.generic.atomext.client.review.ReviewLinkImpl;
 import org.cggh.chassis.generic.atomext.shared.Chassis;
+import org.cggh.chassis.generic.log.client.LogFactory;
+import org.cggh.chassis.generic.log.client.Log;
 
 import com.google.gwt.xml.client.Element;
 
@@ -24,6 +28,7 @@ public class SubmissionEntryImpl
 	extends AtomEntryImpl 
 	implements SubmissionEntry {
 	
+	private Log log = LogFactory.getLog(SubmissionEntryImpl.class);
 	
 	
 	
@@ -103,11 +108,32 @@ public class SubmissionEntryImpl
 	 * @see org.cggh.chassis.generic.atomext.client.submission.SubmissionEntry#getReviewLinks()
 	 */
 	public List<ReviewLink> getReviewLinks() {
+		log.enter("getReviewLinks");
 		List<ReviewLink> reviewLinks = new ArrayList<ReviewLink>();
-		// TODO Auto-generated method stub
+		for (AtomLink link : getLinks())
+			if (link.getRel() != null && link.getRel().equals(Chassis.Rel.REVIEW)) {
+				reviewLinks.add(new ReviewLinkImpl(link.getElement()));
+			} else
+				log.debug("Ignoring " + link.getRel());
+		log.debug("Found " + reviewLinks.size() + " review links");
+        log.leave();
 		return reviewLinks;
 	}
 
-		
+
+	
+	public ReviewLink getReviewLink() {
+		ReviewLink reviewLink = null;
+		for (ReviewLink l : getReviewLinks() )
+			if (reviewLink != null)
+				throw new NotSingularException("Submission (" + getEditLink().getHref() + ") has more than one Review" );
+			else
+				reviewLink = l;
+		return reviewLink;
+	}
+
+
+
+
 
 }
