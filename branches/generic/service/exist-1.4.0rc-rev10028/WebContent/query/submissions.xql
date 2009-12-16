@@ -60,6 +60,7 @@ let $submissions := collection("/db/submissions")
 (: fish out request params :)
 let $param-authoremail := request:get-parameter("authoremail","")
 let $param-acceptancereview := request:get-parameter("acceptancereview", "")
+let $param-id := request:get-parameter("id","")
 
 
 
@@ -77,7 +78,13 @@ return
 		
 		(: filter by author email, if request parameter is given :)
 		($param-authoremail != "" and $e/atom:author/atom:email = $param-authoremail) or ($param-authoremail = "")
+		
+		and
+		
+		(: filter by ID, if request parameter is given :)
 
+		( ($param-id != "" and $e/atom:id = $param-id) or ($param-id = "") )
+		
 		(: order by most recently updated :)
 		order by $e/atom:published descending
 		
