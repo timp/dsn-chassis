@@ -57,9 +57,9 @@ public class ViewSubmissionWidgetController
 	public AtomService<SubmissionEntry, SubmissionFeed> createAtomService() {
 		log.enter("createAtomService");
 		
-		String baseUrl = Configuration.getSubmissionCollectionUrl();
 		
-		SubmissionPersistenceService service = new SubmissionPersistenceService(baseUrl);
+		SubmissionPersistenceService service = new SubmissionPersistenceService(Configuration.getSubmissionCollectionUrl());
+
 		
 		log.leave();
 		return service;
