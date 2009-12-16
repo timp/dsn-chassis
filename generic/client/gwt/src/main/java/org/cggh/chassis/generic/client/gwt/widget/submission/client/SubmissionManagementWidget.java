@@ -123,15 +123,17 @@ public class SubmissionManagementWidget
 
 		this.childWidgetEventHandlerRegistrations.add(
 				this.viewSubmissionWidget.addReviewSubmissionActionHandler(new SubmissionActionHandler() {
-			
-			public void onAction(SubmissionActionEvent e) {
+					
+					public void onAction(SubmissionActionEvent e) {
 
-				viewStudyWidget.viewEntry(e.getEntry().getId());
-				setActiveChild(reviewSubmissionWidget);
+						// TODO tell reviewSubmissionWidget to retrieve the right submission entry
+						
+						reviewSubmissionWidget.retrieveSubmissionEntry(e.getEntry().getId());
+						setActiveChild(reviewSubmissionWidget);
+						
+					}
+				}));
 				
-			}
-		}));
-		
 		
 		this.childWidgetEventHandlerRegistrations.add(
 				this.reviewSubmissionWidget.addCancelHandler(new CancelHandler() {
@@ -144,18 +146,19 @@ public class SubmissionManagementWidget
 		}));
 		
 		
-		// TODO register handler for create review success event from review submission widget
         this.childWidgetEventHandlerRegistrations.add(
         		this.reviewSubmissionWidget.addCreateReviewSuccessHandler(
         				new CreateReviewSuccessHandler() {
 
 					public void onCreateSuccess(
 							CreateSuccessEvent<ReviewEntry> e) {
-						// TODO Auto-generated method stub
+
+						viewSubmissionWidget.viewEntry(e.getEntry().getId());
+						setActiveChild(viewSubmissionWidget);
 						
 					} }));
 
-}
+	}
 
 	
 	
