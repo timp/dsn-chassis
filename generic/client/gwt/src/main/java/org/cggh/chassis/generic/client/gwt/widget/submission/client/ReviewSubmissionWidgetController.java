@@ -6,16 +6,27 @@ package org.cggh.chassis.generic.client.gwt.widget.submission.client;
 
 import org.cggh.chassis.generic.async.client.Deferred;
 import org.cggh.chassis.generic.async.client.Function;
+import org.cggh.chassis.generic.atom.client.AtomAuthor;
+import org.cggh.chassis.generic.atom.client.AtomEntry;
+import org.cggh.chassis.generic.atom.client.AtomService;
+import org.cggh.chassis.generic.atomext.client.review.ReviewEntry;
+import org.cggh.chassis.generic.atomext.client.review.ReviewFactory;
+import org.cggh.chassis.generic.atomext.client.review.ReviewPersistenceService;
 import org.cggh.chassis.generic.atomext.client.submission.SubmissionEntry;
+import org.cggh.chassis.generic.atomext.client.submission.SubmissionFeed;
+import org.cggh.chassis.generic.atomext.client.submission.SubmissionPersistenceService;
 import org.cggh.chassis.generic.atomext.client.submission.SubmissionQuery;
 import org.cggh.chassis.generic.atomext.client.submission.SubmissionQueryService;
+import org.cggh.chassis.generic.atomui.client.UpdateEntryCallback;
+import org.cggh.chassis.generic.client.gwt.common.client.ChassisUser;
 import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
 import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.ShareDatasetWidgetModel;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.AsyncErrback;
 
-public class ReviewSubmissionWidgetController {
+public class ReviewSubmissionWidgetController 
+	{
 	
 	private Log log = LogFactory.getLog(ReviewSubmissionWidgetController.class);
 
@@ -31,7 +42,7 @@ public class ReviewSubmissionWidgetController {
 		this.model = model;
 	}
 
-	public Deferred<SubmissionEntry> retreiveSubmissionEntry(String id) { 
+	public Deferred<SubmissionEntry> retrieveSubmissionEntry(String id) { 
 		log.enter("retreiveSubmissionEntry");
 		log.debug("store submission entry id to use as mnemonic");
 		
@@ -78,9 +89,63 @@ public class ReviewSubmissionWidgetController {
 		return deferredEntry;
 	}
 
+	
 	public void acceptSubmission(String comment) { 
-		log.enter("");
-		this.model.setSubmissionStatus("accepted");
+		log.enter("acceptSubmission");
+		log.debug("Comment:" + comment);
+		
+		SubmissionEntry submissionentry = this.model.getSubmissionEntry();
+		ReviewFactory reviewFactory = new ReviewFactory();
+		ReviewEntry reviewEntry = reviewFactory.createEntry();
+		AtomAuthor author = reviewFactory.createAuthor();
+		author.setEmail(ChassisUser.getCurrentUserEmail());
+		reviewEntry.addAuthor(author);
+		reviewEntry.setSummary(comment);
+		
+		reviewEntry.setSubmissionLink(submissionentry.getEditLink().getHref());
+
+		ReviewPersistenceService reviewService = new ReviewPersistenceService(Configuration.getReviewCollectionUrl());
+		
+		this.model.setStatus(ReviewSubmissionWidgetModel.STATUS_CREATE_REVIEW_PENDING);
+		
+		Deferred<ReviewEntry> deferredReviewEntry = reviewService.postEntry("", reviewEntry);
+		
+		deferredReviewEntry.addCallback(new Function<ReviewEntry, ReviewEntry>() { 
+			public ReviewEntry apply(ReviewEntry in) { 
+				log.enter("acceptSubmission[anon callback]");
+				
+				model.setStatus(ReviewSubmissionWidgetModel.STATUS_REVIEW_CREATED);
+				
+				log.debug("Add link " + in.getEditLink() + " to " + model.getSubmissionEntry().getId()); 
+ 
+				log.debug("Before have " + model.getSubmissionEntry().getLinks().size() + " links");
+
+				model.getSubmissionEntry().addLink(in.getEditLink());
+				
+				log.debug("Now have " + model.getSubmissionEntry().getLinks().size() + " links");
+				log.debug("Link:" + model.getSubmissionEntry().getEditLink().getHref());
+				
+				CreateReviewSuccessEvent createReviewSuccessEvent  = new CreateReviewSuccessEvent();
+				createReviewSuccessEvent.setEntry(in);
+				
+
+				
+				owner.fireEvent(createReviewSuccessEvent);
+				
+				
+				log.leave();
+				
+				return in;
+			}
+		});
+		
+		deferredReviewEntry.addErrback(new AsyncErrback(owner, model));
+		
 		log.leave();
 	}
+	
+	
+	
+	
+	
 }
