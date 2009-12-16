@@ -3,14 +3,17 @@
  */
 package org.cggh.chassis.generic.client.gwt.widget.submission.client;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.cggh.chassis.generic.atomext.client.review.ReviewEntry;
 import org.cggh.chassis.generic.atomext.client.review.ReviewLink;
 import org.cggh.chassis.generic.atomext.client.submission.SubmissionEntry;
 import org.cggh.chassis.generic.atomui.client.AtomCrudWidgetModel;
 import org.cggh.chassis.generic.atomui.client.AtomEntryChangeEvent;
 import org.cggh.chassis.generic.atomui.client.AtomEntryChangeHandler;
 import org.cggh.chassis.generic.client.gwt.common.client.CommonStyles;
+import org.cggh.chassis.generic.client.gwt.common.client.RenderUtils;
 import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.DataFileActionEvent;
 import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.DataFileActionHandler;
 import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.ViewDatasetWidget;
@@ -20,8 +23,14 @@ import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetRenderer;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.Widget;
 
 import static org.cggh.chassis.generic.widget.client.HtmlElements.*;
 
@@ -196,32 +205,48 @@ public class ViewSubmissionWidgetRenderer extends
 		List<ReviewLink> reviewLinks = submissionEntry.getReviewLinks();
 		
 		if (reviewLinks.size() > 0) {
-			
 			// TODO show who did accepting and when, with review summary
+			
+			String[] headers = {
+					"Reviewer",
+					"Date",
+					"Summary",
+					"Submission"
+			};
+			Widget[] headerRow = RenderUtils.renderLabels(headers);
+			List<Widget[]> rows = new ArrayList<Widget[]>();
+			rows.add(headerRow);
+			
+			
+			for (ReviewLink link : reviewLinks) { 
+				
+				Widget[] row = this.renderReviewAsRow(link.getEntry());
+				rows.add(row);
+					
+			}
+			FlexTable table = RenderUtils.renderResultsTable(rows);
+			this.acceptanceReviewContainer.add(table);
 			
 		}
 		else {
 
 			this.acceptanceReviewContainer.add(p("This submission is pending review."));
 			
-			/*
 			Anchor reviewSubmissionAction = RenderUtils.renderActionAnchor("review this submission...");
 			
 			reviewSubmissionAction.addClickHandler(new ClickHandler() {
 				
 				public void onClick(ClickEvent arg0) {
 					log.enter("onClick");
-					
-					ViewSubmissionActionEvent e = new ViewSubmissionActionEvent();
+					ReviewSubmissionActionEvent e = new ReviewSubmissionActionEvent();
 					e.setEntry(submissionEntry);
 					owner.fireEvent(e);
 					log.leave();
-					
 				}
-			});
+			}
+			);
 			
 			this.acceptanceReviewContainer.add(reviewSubmissionAction);
-			*/
 		}
 
 		
@@ -229,6 +254,17 @@ public class ViewSubmissionWidgetRenderer extends
 	}
 
 	
-	
+	protected Widget[] renderReviewAsRow(final ReviewEntry entry) {
+
+		Widget[] row = {
+				RenderUtils.renderAtomAuthorsAsLabel(entry, false),
+				em(entry.getPublished()),	
+				new Label(RenderUtils.truncate(entry.getSummary(), 50)),	
+				em(entry.getSubmissionLink().getHref())	
+		};
+		
+		return row;
+	}
+
 	
 }
