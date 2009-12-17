@@ -110,6 +110,7 @@ public class DatasetDataSharingWidget extends ChassisWidget {
 					
 					log.debug("review link found, dataset has been reviewed");
 					
+					// TODO Review - perhaps accepted for curation within ??
 					add(pWidget("This dataset was accepted into  "+Configuration.getNetworkName()+ 
 							" by " + strong(RenderUtils.renderAtomAuthorsAsCommaDelimitedEmailString(
 									reviewLink.getEntry().getAuthors())) +
