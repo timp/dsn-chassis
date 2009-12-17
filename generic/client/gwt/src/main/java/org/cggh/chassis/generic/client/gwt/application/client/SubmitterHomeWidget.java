@@ -37,9 +37,9 @@ public class SubmitterHomeWidget
 	@Override
 	protected void renderUI() {
 		// TODO Auto-generated method stub
-		this.add(h2("Submitter Home"));
+		this.add(h2Widget("Submitter Home"));
 		
-		this.add(p("TODO"));
+		this.add(pWidget("TODO"));
 		
 	}
 

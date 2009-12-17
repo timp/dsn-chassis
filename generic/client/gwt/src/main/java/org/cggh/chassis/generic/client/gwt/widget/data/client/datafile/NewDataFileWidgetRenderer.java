@@ -66,8 +66,8 @@ public class NewDataFileWidgetRenderer
 	public void renderMainPanel() {
 		log.enter("renderMainPanel");
 		
-		this.mainPanel.add(h2("New Data File")); // TODO i18n
-		this.mainPanel.add(p("Use the form below to create a new data file.")); // TODO i18n
+		this.mainPanel.add(h2Widget("New Data File")); // TODO i18n
+		this.mainPanel.add(pWidget("Use the form below to create a new data file.")); // TODO i18n
 		
 		this.form = new NewDataFileForm();
 		this.mainPanel.add(this.form);

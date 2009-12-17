@@ -70,7 +70,7 @@ public class StudyFormRenderer extends BaseFormRenderer<StudyEntry, StudyFeed> {
 
 		// modules question
 		
-		this.canvas.add(h3("Modules")); // TODO i18n
+		this.canvas.add(h3Widget("Modules")); // TODO i18n
 
 		FlowPanel modulesQuestion = new FlowPanel();
 		modulesQuestion.addStyleName(CommonStyles.QUESTION);

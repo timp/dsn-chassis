@@ -61,9 +61,9 @@ public class NewDatasetWidgetRenderer
 	protected void renderMainPanel() {
 		log.enter("renderMainPanel");
 		
-		this.mainPanel.add(h2("New Dataset")); // TODO i18n
+		this.mainPanel.add(h2Widget("New Dataset")); // TODO i18n
 
-		this.mainPanel.add(p("Use the form below to create a new dataset.")); // TODO i18n
+		this.mainPanel.add(pWidget("Use the form below to create a new dataset.")); // TODO i18n
 		
 		this.form = new DatasetForm();
 		this.mainPanel.add(this.form);

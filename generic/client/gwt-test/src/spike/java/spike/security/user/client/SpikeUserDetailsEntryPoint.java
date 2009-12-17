@@ -49,7 +49,7 @@ public class SpikeUserDetailsEntryPoint implements EntryPoint {
 			public void onSuccess(UserDetailsTO user) {
 				root.clear();
 				root.add(new HTML("<p>Authenticated user: <strong>"+user.getId()+"</strong></p>"));
-				root.add(p("Roles:"));
+				root.add(pWidget("Roles:"));
 				String content = "<ul>";
 				for (String role : user.getRoles()) {
 					content += "<li>"+role+"</li>";

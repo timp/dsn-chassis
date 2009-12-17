@@ -94,17 +94,17 @@ public class AdminCollectionsWidget extends ChassisWidget {
 		
 		this.collectionWidgets = new ArrayList<AdminCollectionWidget>();
 		
-		this.add(h3("Data &amp; Metadata Collections"));
+		this.add(h3Widget("Data &amp; Metadata Collections"));
 		
-		this.add(p("The table below displays the status of the data &amp; metadata collections used by this installation..."));
+		this.add(pWidget("The table below displays the status of the data &amp; metadata collections used by this installation..."));
 		
 		this.tableContainer = new FlowPanel();
 		this.add(this.tableContainer);
 		
-		this.add(p("Clicking the 'refresh' button causes a GET request to be sent to the collection URL. A status of 200 OK indicates that the collection exists. A status of 404 Not Found indicates that the collection does not yet exist, and needs to be created."));
-		this.add(p("Clicking the 'refresh all' button is the same as clicking all of the 'refresh' buttons."));
-		this.add(p("Clicking the 'create' button causes a POST request to be sent to the collection URL which will create a collection at that location. If the operation is successful, a 204 No Content response is sent."));
-		this.add(p("Clicking the 'create all' button is the same as clicking all of the 'create' buttons. Note that if you try to create a collection that already exists, you will received a 401 Unauthorized response."));
+		this.add(pWidget("Clicking the 'refresh' button causes a GET request to be sent to the collection URL. A status of 200 OK indicates that the collection exists. A status of 404 Not Found indicates that the collection does not yet exist, and needs to be created."));
+		this.add(pWidget("Clicking the 'refresh all' button is the same as clicking all of the 'refresh' buttons."));
+		this.add(pWidget("Clicking the 'create' button causes a POST request to be sent to the collection URL which will create a collection at that location. If the operation is successful, a 204 No Content response is sent."));
+		this.add(pWidget("Clicking the 'create all' button is the same as clicking all of the 'create' buttons. Note that if you try to create a collection that already exists, you will received a 401 Unauthorized response."));
 		this.refreshAllButton = new Button();
 		this.refreshAllButton.setText("refresh all");
 
@@ -169,10 +169,10 @@ public class AdminCollectionsWidget extends ChassisWidget {
 		List<Widget[]> rows = new ArrayList<Widget[]>();
 		
 		Widget[] headerRow = {
-			strong("Collection Title"),
-			strong("URL"),
-			strong("Status"),
-			strong("Actions"),
+			strongWidget("Collection Title"),
+			strongWidget("URL"),
+			strongWidget("Status"),
+			strongWidget("Actions"),
 		};
 		
 		rows.add(headerRow);

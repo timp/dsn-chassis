@@ -44,10 +44,10 @@ public class DatasetStudiesWidget extends ChassisWidget {
 	
 	// UI variables
 	private Widget[] headerRow = { 
-		strong("Title"),
-		strong("Summary"),
-		strong("Owners"),
-		strong("Actions")
+		strongWidget("Title"),
+		strongWidget("Summary"),
+		strongWidget("Owners"),
+		strongWidget("Actions")
 	};
 
 
@@ -120,7 +120,7 @@ public class DatasetStudiesWidget extends ChassisWidget {
 		actionsPanel.add(viewAction);
 
 		Widget[] row = { 
-			strong(""+entry.getTitle()+""),
+			strongWidget(""+entry.getTitle()+""),
 			new HTML(RenderUtils.truncate(entry.getSummary(), 30)), // TODO consider refactor
 			new HTML(RenderUtils.renderAtomAuthorsAsCommaDelimitedEmailString(entry.getAuthors())), // TODO consider refactor
 			actionsPanel

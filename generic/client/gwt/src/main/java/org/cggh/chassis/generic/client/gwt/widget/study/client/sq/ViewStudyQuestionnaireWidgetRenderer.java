@@ -111,7 +111,7 @@ public class ViewStudyQuestionnaireWidgetRenderer
 
 
 	protected void renderMainHeading() {
-		this.mainPanel.add(h2("View Study Questionnaire")); // TODO i18n
+		this.mainPanel.add(h2Widget("View Study Questionnaire")); // TODO i18n
 	}
 
 
@@ -127,7 +127,7 @@ public class ViewStudyQuestionnaireWidgetRenderer
 		
 		this.renderStudyPropertiesWidget();
 		
-		contentPanel.add(h3("Study Questionnaire")); // TODO i18n
+		contentPanel.add(h3Widget("Study Questionnaire")); // TODO i18n
 		
 		this.questionnaireContainer = new FlowPanel();
 		contentPanel.add(this.questionnaireContainer);

@@ -64,8 +64,8 @@ public class EditDataFileWidgetRenderer
 	protected void renderMainPanel() {
 		log.enter("renderMainPanel");
 
-		this.mainPanel.add(h2("Edit Data File")); // TODO i18n
-		this.mainPanel.add(p("Use the form below to edit the title and/or summary of the data file.")); // TODO i18n
+		this.mainPanel.add(h2Widget("Edit Data File")); // TODO i18n
+		this.mainPanel.add(pWidget("Use the form below to edit the title and/or summary of the data file.")); // TODO i18n
 		
 		this.form = new EditDataFileForm();
 		this.mainPanel.add(this.form);

@@ -72,8 +72,8 @@ public class EditDatasetWidgetRenderer
 	@Override
 	protected void renderMainPanel() {
 
-		this.mainPanel.add(h2("Edit Dataset")); // TODO i18n
-		this.mainPanel.add(p("Use the form below to make changes to the dataset.")); // TODO i18n
+		this.mainPanel.add(h2Widget("Edit Dataset")); // TODO i18n
+		this.mainPanel.add(pWidget("Use the form below to make changes to the dataset.")); // TODO i18n
 		
 		this.form = new DatasetForm();
 		this.mainPanel.add(this.form);

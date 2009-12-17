@@ -37,9 +37,9 @@ public class GatekeeperHomeWidget
 	@Override
 	protected void renderUI() {
 		// TODO Auto-generated method stub
-		this.add(h2("Gatekeeper Home"));
+		this.add(h2Widget("Gatekeeper Home"));
 		
-		this.add(p("TODO"));
+		this.add(pWidget("TODO"));
 		
 	}
 

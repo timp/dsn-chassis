@@ -59,9 +59,9 @@ public class NewStudyWidgetRenderer extends
 	@Override
 	protected void renderMainPanel() {
 
-		this.mainPanel.add(h2("New Study")); // TODO i18n
+		this.mainPanel.add(h2Widget("New Study")); // TODO i18n
 
-		this.mainPanel.add(p("Use the form below to create a new study.")); // TODO i18n
+		this.mainPanel.add(pWidget("Use the form below to create a new study.")); // TODO i18n
 		
 		this.form = new StudyForm();
 		this.mainPanel.add(this.form);

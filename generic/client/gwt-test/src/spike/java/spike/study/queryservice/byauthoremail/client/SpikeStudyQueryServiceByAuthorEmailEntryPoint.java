@@ -48,7 +48,7 @@ public class SpikeStudyQueryServiceByAuthorEmailEntryPoint implements EntryPoint
 	public void onModuleLoad() {
 		log.enter("onModuleLoad");
 		
-		root.add(h1("Spike Study Query Service - by Author Email"));
+		root.add(h1Widget("Spike Study Query Service - by Author Email"));
 		
 		factory = new StudyFactory();
 		studyPersistenceService = new StudyPersistenceService();
@@ -62,7 +62,7 @@ public class SpikeStudyQueryServiceByAuthorEmailEntryPoint implements EntryPoint
 			public Deferred<StudyEntry> apply(StudyEntry first) {
 				log.enter("apply [first callback]");
 				
-				root.add(p("first study created"));
+				root.add(pWidget("first study created"));
 				log.debug("first study created, now create second");
 				Deferred<StudyEntry> def = createSecondStudy();
 
@@ -79,7 +79,7 @@ public class SpikeStudyQueryServiceByAuthorEmailEntryPoint implements EntryPoint
 			public Deferred<StudyEntry> apply(StudyEntry second) {
 				log.enter("apply [second callback]");
 
-				root.add(p("second study created"));
+				root.add(pWidget("second study created"));
 				log.debug("second study created, now create third");
 				Deferred<StudyEntry> def = createThirdStudy();
 
@@ -98,7 +98,7 @@ public class SpikeStudyQueryServiceByAuthorEmailEntryPoint implements EntryPoint
 			public Deferred<StudyFeed> apply(StudyEntry second) {
 				log.enter("apply [third callback]");
 
-				root.add(p("third study created"));
+				root.add(pWidget("third study created"));
 				log.debug("all studies created, now try query");
 				Deferred<StudyFeed> def = queryStudiesByAuthorEmail();
 				
@@ -117,7 +117,7 @@ public class SpikeStudyQueryServiceByAuthorEmailEntryPoint implements EntryPoint
 			public StudyFeed apply(StudyFeed results) {
 				log.enter("apply [fourth callback]");
 
-				root.add(p("query results received"));
+				root.add(pWidget("query results received"));
 				log.debug("study query success, check results");
 				checkQueryResults(results);
 				
@@ -247,15 +247,15 @@ public class SpikeStudyQueryServiceByAuthorEmailEntryPoint implements EntryPoint
 		
 		for (StudyEntry entry : results.getEntries()) {
 			log.debug("found entry: "+entry.getTitle() + " ["+entry.getId()+"]");
-			root.add(p("found entry: "+entry.getTitle() + " ["+entry.getId()+"]"));
+			root.add(pWidget("found entry: "+entry.getTitle() + " ["+entry.getId()+"]"));
 			boolean alice = false;
 			for (AtomAuthor author : entry.getAuthors()) {
 				if ("alice@example.com".equals(author.getEmail())) {
 					alice = true;
 				}
 			}
-			if (alice) root.add(p("found alice"));
-			else root.add(p("did not find alice"));
+			if (alice) root.add(pWidget("found alice"));
+			else root.add(pWidget("did not find alice"));
 		}
 		
 		log.leave();

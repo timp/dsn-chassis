@@ -58,14 +58,14 @@ public class CustomViewDatasetWidgetRenderer extends ViewDatasetWidgetRenderer {
 	
 	@Override
 	protected void renderStudiesSubHeading() {
-		this.contentPanel.add(h4("Studies")); // TODO i18n
+		this.contentPanel.add(h4Widget("Studies")); // TODO i18n
 	}
 	
 	
 	
 	@Override
 	protected void renderDataFilesSubHeading() {
-		this.contentPanel.add(h4("Data Files")); // TODO i18n
+		this.contentPanel.add(h4Widget("Data Files")); // TODO i18n
 	}
 
 

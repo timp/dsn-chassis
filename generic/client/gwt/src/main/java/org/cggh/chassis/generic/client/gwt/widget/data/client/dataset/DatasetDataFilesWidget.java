@@ -40,10 +40,10 @@ public class DatasetDataFilesWidget extends ChassisWidget {
 	
 	// UI variables
 	private Widget[] headerRow = { 
-		strong("Title"),
-		strong("Summary"),
-		strong("Owners"),
-		strong("Actions")
+		strongWidget("Title"),
+		strongWidget("Summary"),
+		strongWidget("Owners"),
+		strongWidget("Actions")
 	};
 
 

@@ -72,11 +72,11 @@ public class DatasetFormRenderer
 	public void renderUI() {
 		super.renderUI();
 		
-		this.canvas.add(h3("Studies")); // TODO i18n
+		this.canvas.add(h3Widget("Studies")); // TODO i18n
 		this.studiesQuestionPanel = new FlowPanel();
 		this.canvas.add(this.studiesQuestionPanel);
 
-		this.canvas.add(h3("Data Files")); // TODO i18n
+		this.canvas.add(h3Widget("Data Files")); // TODO i18n
 		this.dataFilesQuestionPanel = new FlowPanel();
 		this.canvas.add(this.dataFilesQuestionPanel);
 
