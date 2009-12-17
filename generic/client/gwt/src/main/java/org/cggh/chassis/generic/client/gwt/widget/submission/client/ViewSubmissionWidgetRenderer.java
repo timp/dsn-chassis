@@ -115,19 +115,12 @@ public class ViewSubmissionWidgetRenderer extends
 	}
 	
 	protected void renderActionsWidget() {
+		log.enter("renderActionsWidget");
 		this.actionsWidget = new SubmissionActionsWidget();
 
 		this.mainPanel.add(this.actionsWidget);		
 
-		// has to go here, after widget added to panel
-		if (model.getEntry().getReviewLink() == null) { 
-			this.actionsWidget.getReviewSubmissionAction().setVisible(true); 
-			this.actionsWidget.getAssignCuratorAction().setVisible(false);
-		} else { 
-			this.actionsWidget.getReviewSubmissionAction().setVisible(false); 
-			this.actionsWidget.getAssignCuratorAction().setVisible(true);
-			
-		}
+		log.leave();
 	}
 
 	
@@ -197,6 +190,14 @@ public class ViewSubmissionWidgetRenderer extends
 		if (entry != null) // all submissions must have a dataset so no need to check dataset not null
 			this.viewDatasetWidget.setEntry(entry.getDatasetLink().getEntry());
 		
+		if (model != null && model.getEntry() != null && model.getEntry().getReviewLink() != null) { 
+			this.actionsWidget.getReviewSubmissionAction().setVisible(false); 
+			this.actionsWidget.getAssignCuratorAction().setVisible(true);
+		} else { 
+			this.actionsWidget.getReviewSubmissionAction().setVisible(true); 
+			this.actionsWidget.getAssignCuratorAction().setVisible(false);
+			
+		}
 		log.leave();
 	}
 
