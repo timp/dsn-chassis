@@ -116,6 +116,9 @@ public class SubmissionEntryImpl
 			} else
 				log.debug("Ignoring " + link.getRel());
 		log.debug("Found " + reviewLinks.size() + " review links in " + getEditLink().getHref());
+		if (reviewLinks.size() > 1)
+			throw new NotSingularException("Submission (" + getEditLink().getHref() + ")" + 
+					" has more than one Review: " + reviewLinks.size());
         log.leave();
 		return reviewLinks;
 	}
