@@ -266,7 +266,7 @@ public class RenderUtils {
 		if (authors != null) {
 			content = "<ul>";
 			for (AtomAuthor author : authors) {
-				content += "<li>" + author.getEmail() + "</li>";
+				content += li(author.getEmail());
 			}
 			content += "</ul>";
 		}
