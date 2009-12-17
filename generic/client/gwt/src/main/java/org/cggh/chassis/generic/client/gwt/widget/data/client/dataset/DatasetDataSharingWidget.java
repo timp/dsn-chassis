@@ -143,7 +143,9 @@ public class DatasetDataSharingWidget extends ChassisWidget {
 	private void syncNotShared() {
 		log.enter("syncNotShared");
 		
-		add(pWidget("This dataset has <strong>not</strong> been shared with "+Configuration.getNetworkName()+".")); // TODO i18n
+		add(pWidget("This dataset has " + 
+				strong("not") + 
+				" been shared with "+Configuration.getNetworkName()+".")); // TODO i18n
 		
 		Anchor shareDatasetAction = RenderUtils.renderActionAnchor("share this dataset with "+Configuration.getNetworkName()+"...");
 
@@ -176,7 +178,7 @@ public class DatasetDataSharingWidget extends ChassisWidget {
 		String created = se.getPublished();
 		
 		add(pWidget("This dataset was shared with "+Configuration.getNetworkName()+
-				" by <strong>"+author+"</strong> on <strong>"+created+"</strong>."));
+				" by "+strong(author)+" on "+strong(created)+"."));
 		
 		log.leave();
 	}
