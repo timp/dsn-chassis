@@ -7,17 +7,12 @@ package org.cggh.chassis.generic.client.gwt.widget.submission.client;
 import org.cggh.chassis.generic.async.client.Deferred;
 import org.cggh.chassis.generic.async.client.Function;
 import org.cggh.chassis.generic.atom.client.AtomAuthor;
-import org.cggh.chassis.generic.atom.client.AtomEntry;
-import org.cggh.chassis.generic.atom.client.AtomService;
 import org.cggh.chassis.generic.atomext.client.review.ReviewEntry;
 import org.cggh.chassis.generic.atomext.client.review.ReviewFactory;
 import org.cggh.chassis.generic.atomext.client.review.ReviewPersistenceService;
 import org.cggh.chassis.generic.atomext.client.submission.SubmissionEntry;
-import org.cggh.chassis.generic.atomext.client.submission.SubmissionFeed;
-import org.cggh.chassis.generic.atomext.client.submission.SubmissionPersistenceService;
 import org.cggh.chassis.generic.atomext.client.submission.SubmissionQuery;
 import org.cggh.chassis.generic.atomext.client.submission.SubmissionQueryService;
-import org.cggh.chassis.generic.atomui.client.UpdateEntryCallback;
 import org.cggh.chassis.generic.client.gwt.common.client.ChassisUser;
 import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
 import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.ShareDatasetWidgetModel;
@@ -50,9 +45,9 @@ public class ReviewSubmissionWidgetController
 		
 		log.debug("set status to retrieve submission pending");
 		
-		this.model.setStatus(ShareDatasetWidgetModel.STATUS_RETRIEVE_DATASET_PENDING);
+		this.model.setStatus(ReviewSubmissionWidgetModel.STATUS_RETRIEVE_SUBMISSION_PENDING);
 		
-		log.debug("now retrieve expanded dataset");
+		log.debug("now retrieve expanded submission");
 		
 		SubmissionQueryService service = new SubmissionQueryService(Configuration.getSubmissionQueryServiceUrl());
 		SubmissionQuery query = new SubmissionQuery();
