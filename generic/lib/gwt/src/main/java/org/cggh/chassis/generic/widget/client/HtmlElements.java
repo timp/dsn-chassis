@@ -69,4 +69,7 @@ public class HtmlElements {
 	}
 	
 
+	public static String li(String listItemContent) { 
+		return "<li>"+listItemContent+"</li>";
+	}
 }
