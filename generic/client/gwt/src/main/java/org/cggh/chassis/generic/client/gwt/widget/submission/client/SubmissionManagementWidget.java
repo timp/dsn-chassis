@@ -126,9 +126,8 @@ public class SubmissionManagementWidget
 					
 					public void onAction(SubmissionActionEvent e) {
 
-						// TODO tell reviewSubmissionWidget to retrieve the right submission entry
-						
 						reviewSubmissionWidget.retrieveSubmissionEntry(e.getEntry().getId());
+
 						setActiveChild(reviewSubmissionWidget);
 						
 					}
