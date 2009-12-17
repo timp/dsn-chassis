@@ -200,21 +200,20 @@ public class ViewSubmissionWidgetRenderer extends
 	private void syncAcceptanceReviewSection(final SubmissionEntry submissionEntry) {
 		log.enter("syncAcceptanceReviewSection");
 		
-		
 		this.acceptanceReviewContainer.clear();
 		List<ReviewLink> reviewLinks = null;
 		
 		if (submissionEntry != null) { 
 			reviewLinks = submissionEntry.getReviewLinks();
-		}
+			log.debug("Reviews found: " + reviewLinks.size());
+		} else
+			log.debug("Submission null");
 		if (reviewLinks != null && reviewLinks.size() > 0) {
-			// TODO show who did accepting and when, with review summary
 			
 			String[] headers = {
 					"Reviewer",
 					"Date",
-					"Summary",
-					"Submission"
+					"Summary"
 			};
 			Widget[] headerRow = RenderUtils.renderLabels(headers);
 			List<Widget[]> rows = new ArrayList<Widget[]>();
@@ -223,8 +222,7 @@ public class ViewSubmissionWidgetRenderer extends
 			
 			for (ReviewLink link : reviewLinks) { 
 				
-				Widget[] row = this.renderReviewAsRow(link.getEntry());
-				rows.add(row);
+				rows.add(renderReviewAsRow(link.getEntry()));
 					
 			}
 			FlexTable table = RenderUtils.renderResultsTable(rows);
@@ -262,8 +260,7 @@ public class ViewSubmissionWidgetRenderer extends
 		Widget[] row = {
 				RenderUtils.renderAtomAuthorsAsLabel(entry, false),
 				emWidget(entry.getPublished()),	
-				new Label(RenderUtils.truncate(entry.getSummary(), 50)),	
-				emWidget(entry.getSubmissionLink().getHref())	
+				new Label(RenderUtils.truncate(entry.getSummary(), 50))
 		};
 		
 		return row;
