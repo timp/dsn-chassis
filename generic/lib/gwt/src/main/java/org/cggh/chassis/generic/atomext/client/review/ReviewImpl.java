@@ -23,11 +23,16 @@ public class ReviewImpl
 
 	public void setOutcome(String outcome) {
 		
+		// TODO store this value in the wrapped XML, not in a field of the object
+		
 		this.outcome = outcome;
 		
 	}
 
 	public String getOutcome() {
+		
+		// TODO retrieve this value from the wrapped XML
+		
 		return outcome;
 	}
 
