@@ -20,7 +20,7 @@ import com.google.gwt.user.client.ui.Widget;
 public class SubmissionActionsWidget extends ChassisWidget {
 
     private Log log = LogFactory.getLog(SubmissionActionsWidget.class);
-	private Anchor reviewSubmissionAction;
+	private Anchor reviewSubmissionAction, assignCuratorAction;
 
 	@Override
 	protected void renderUI() {
@@ -29,9 +29,11 @@ public class SubmissionActionsWidget extends ChassisWidget {
 		this.clear();
 		
 		this.reviewSubmissionAction =  RenderUtils.renderActionAnchor("review submission"); // TODO i18n
+		this.assignCuratorAction =  RenderUtils.renderActionAnchor("assign curator"); // TODO i18n
 		
 		Widget[] actions = { 
-				this.reviewSubmissionAction
+				this.reviewSubmissionAction,
+				this.assignCuratorAction
 		};
 		FlowPanel actionsPanel = RenderUtils.renderActionsPanel(actions);
 
@@ -78,6 +80,18 @@ public class SubmissionActionsWidget extends ChassisWidget {
 		HandlerRegistration hr = this.addHandler(reviewSubmissionActionHandler, ReviewSubmissionActionEvent.TYPE);
 		log.leave();
 		return hr;
+	}
+
+
+
+	public Anchor getReviewSubmissionAction() {
+		return reviewSubmissionAction;
+	}
+
+
+
+	public Anchor getAssignCuratorAction() {
+		return assignCuratorAction;
 	}
 
 
