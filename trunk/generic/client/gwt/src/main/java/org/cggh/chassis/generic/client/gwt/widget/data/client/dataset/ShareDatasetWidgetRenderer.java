@@ -75,7 +75,7 @@ public class ShareDatasetWidgetRenderer
 	protected void renderMainPanel() {
 		log.enter("renderMainPanel");
 
-		this.mainPanel.add(h2("Share Dataset"));
+		this.mainPanel.add(h2Widget("Share Dataset"));
 		
 		this.datasetPropertiesWidget = new DatasetPropertiesWidget();
 		
@@ -113,9 +113,9 @@ public class ShareDatasetWidgetRenderer
 		
 		FlowPanel panel = this.dataSharingAgreementPanel;
 		
-		panel.add(h3("Data-Sharing Agreement"));
+		panel.add(h3Widget("Data-Sharing Agreement"));
 
-		panel.add(p("Please review the data-sharing agreement below. If you are happy with the terms of the agreement, please click the \"accept\" button.")); // TODO i18n and review text
+		panel.add(pWidget("Please review the data-sharing agreement below. If you are happy with the terms of the agreement, please click the \"accept\" button.")); // TODO i18n and review text
 
 		log.debug("data-sharing agreement url: "+Configuration.getDataSharingAgreementUrl());
 		
@@ -147,11 +147,11 @@ public class ShareDatasetWidgetRenderer
 
 		FlowPanel panel = this.datasetSharedSuccessPanel;
 		
-		panel.add(h3("Dataset Shared"));
+		panel.add(h3Widget("Dataset Shared"));
 		
-		panel.add(p("Your dataset has been successfully shared with "+Configuration.getNetworkName()));
+		panel.add(pWidget("Your dataset has been successfully shared with "+Configuration.getNetworkName()));
 		
-		panel.add(p("TODO what happens next..."));
+		panel.add(pWidget("TODO what happens next..."));
 		
 		Anchor viewDatasetAction = RenderUtils.renderActionAnchor("back to view dataset...");
 
@@ -172,9 +172,9 @@ public class ShareDatasetWidgetRenderer
 		
 		FlowPanel panel = this.datasetAlreadySharedPanel;
 		
-		panel.add(h3("Dataset Shared"));
+		panel.add(h3Widget("Dataset Shared"));
 		
-		panel.add(p("This dataset has already been shared with "+Configuration.getNetworkName()+"."));
+		panel.add(pWidget("This dataset has already been shared with "+Configuration.getNetworkName()+"."));
 
 		Anchor viewDatasetAction = RenderUtils.renderActionAnchor("back to view dataset...");
 

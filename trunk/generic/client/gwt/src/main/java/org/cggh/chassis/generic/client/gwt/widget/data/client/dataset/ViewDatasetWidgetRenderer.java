@@ -100,7 +100,7 @@ public class ViewDatasetWidgetRenderer
 
 
 	protected void renderMainHeading() {
-		this.mainPanel.add(h2("View Dataset")); // TODO i18n
+		this.mainPanel.add(h2Widget("View Dataset")); // TODO i18n
 	}
 	
 	
@@ -117,13 +117,13 @@ public class ViewDatasetWidgetRenderer
 		contentPanel.add(this.datasetPropertiesWidget);
 		
 		this.renderStudiesSubHeading();
-		contentPanel.add(p("This dataset is associated with the following studies...")); // TODO I18N
+		contentPanel.add(pWidget("This dataset is associated with the following studies...")); // TODO I18N
 		
 		this.studiesWidget = new DatasetStudiesWidget();
 		contentPanel.add(this.studiesWidget);
 
 		this.renderDataFilesSubHeading();
-		contentPanel.add(p("This dataset includes the following data files...")); // TODO I18N
+		contentPanel.add(pWidget("This dataset includes the following data files...")); // TODO I18N
 		
 		this.dataFilesWidget = new DatasetDataFilesWidget();
 		contentPanel.add(this.dataFilesWidget);
@@ -140,7 +140,7 @@ public class ViewDatasetWidgetRenderer
 	
 	protected void renderDataSharingSection() {
 
-		contentPanel.add(h3("Data Sharing")); // TODO i18n
+		contentPanel.add(h3Widget("Data Sharing")); // TODO i18n
 		
 		this.dataSharingWidget = new DatasetDataSharingWidget();
 		contentPanel.add(this.dataSharingWidget);
@@ -152,7 +152,7 @@ public class ViewDatasetWidgetRenderer
 
 
 	protected void renderDataFilesSubHeading() {
-		this.contentPanel.add(h3("Data Files")); // TODO i18n
+		this.contentPanel.add(h3Widget("Data Files")); // TODO i18n
 	}
 
 
@@ -160,7 +160,7 @@ public class ViewDatasetWidgetRenderer
 
 
 	protected void renderStudiesSubHeading() {
-		this.contentPanel.add(h3("Studies")); // TODO i18n
+		this.contentPanel.add(h3Widget("Studies")); // TODO i18n
 	}
 
 

@@ -62,8 +62,8 @@ public class EditStudyWidgetRenderer
 	@Override
 	protected void renderMainPanel() {
 
-		this.mainPanel.add(h2("Edit Study")); // TODO i18n
-		this.mainPanel.add(p("Use the form below to make changes to the study.")); // TODO i18n
+		this.mainPanel.add(h2Widget("Edit Study")); // TODO i18n
+		this.mainPanel.add(pWidget("Use the form below to make changes to the study.")); // TODO i18n
 		
 		this.form = new StudyForm();
 		this.mainPanel.add(this.form);

@@ -117,7 +117,7 @@ public class SpikeStudyQuestionnaireEntryPoint implements EntryPoint {
 		
 		final RootPanel qp = RootPanel.get("questionnaire");
 		
-		qp.add(p("Loading questionnaire..."));
+		qp.add(pWidget("Loading questionnaire..."));
 
 		String url = JsConfiguration.getStudyQuestionnaireUrl();
 		

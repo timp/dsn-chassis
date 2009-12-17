@@ -213,7 +213,7 @@ public class MultiSelectRenderer
 		db.setText("add item");
 		db.setWidget(content);
 		
-		content.add(p("Please select one..."));
+		content.add(pWidget("Please select one..."));
 		
 		final ListBox lb = new ListBox();
 		for (Entry<String,String> entry : this.selectModel.getItems().entrySet()) {

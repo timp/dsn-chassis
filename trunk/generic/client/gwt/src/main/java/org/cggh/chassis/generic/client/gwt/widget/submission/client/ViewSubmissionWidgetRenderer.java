@@ -92,16 +92,16 @@ public class ViewSubmissionWidgetRenderer extends
 	protected void renderMainPanel() {
 		log.enter("renderMainPanel");
 		
-		this.mainPanel.add(h2("View Submission"));
+		this.mainPanel.add(h2Widget("View Submission"));
 		
 		this.submissionPropertiesWidget = new SubmissionPropertiesWidget();
 		this.mainPanel.add(this.submissionPropertiesWidget);
 
-		this.mainPanel.add(h3("Acceptance Review"));
+		this.mainPanel.add(h3Widget("Acceptance Review"));
 		this.acceptanceReviewContainer = new FlowPanel();
 		this.mainPanel.add(this.acceptanceReviewContainer);
 		
-		this.mainPanel.add(h3("Submitted Dataset"));
+		this.mainPanel.add(h3Widget("Submitted Dataset"));
 		this.viewDatasetWidget = new CustomViewDatasetWidget();
 		this.mainPanel.add(this.viewDatasetWidget);
 		
@@ -233,7 +233,7 @@ public class ViewSubmissionWidgetRenderer extends
 		}
 		else {
 
-			this.acceptanceReviewContainer.add(p("This submission is pending review."));
+			this.acceptanceReviewContainer.add(pWidget("This submission is pending review."));
 			
 			Anchor reviewSubmissionAction = RenderUtils.renderActionAnchor("review this submission...");
 			
@@ -261,9 +261,9 @@ public class ViewSubmissionWidgetRenderer extends
 
 		Widget[] row = {
 				RenderUtils.renderAtomAuthorsAsLabel(entry, false),
-				em(entry.getPublished()),	
+				emWidget(entry.getPublished()),	
 				new Label(RenderUtils.truncate(entry.getSummary(), 50)),	
-				em(entry.getSubmissionLink().getHref())	
+				emWidget(entry.getSubmissionLink().getHref())	
 		};
 		
 		return row;

@@ -63,9 +63,9 @@ public class MyStudiesWidgetRenderer
 	protected void renderMainPanel() {
 		log.enter("renderMainPanel");
 
-		this.mainPanel.add(h2("My Studies")); // TODO i18n
+		this.mainPanel.add(h2Widget("My Studies")); // TODO i18n
 
-		this.mainPanel.add(p("The table below lists all of the studies that you own...")); // TODO i18n
+		this.mainPanel.add(pWidget("The table below lists all of the studies that you own...")); // TODO i18n
 
 		this.resultsTableContainer = new FlowPanel();
 		this.mainPanel.add(this.resultsTableContainer);

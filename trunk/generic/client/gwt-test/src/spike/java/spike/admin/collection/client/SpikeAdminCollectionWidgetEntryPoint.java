@@ -31,7 +31,7 @@ public class SpikeAdminCollectionWidgetEntryPoint implements EntryPoint {
 
 		RootPanel root = RootPanel.get();
 		
-		root.add(h1("Spike Admin Collection Widget"));
+		root.add(h1Widget("Spike Admin Collection Widget"));
 
 		Button refreshAllButton = new Button();
 		refreshAllButton.setText("refresh all");
@@ -63,17 +63,17 @@ public class SpikeAdminCollectionWidgetEntryPoint implements EntryPoint {
 
 		root.add(buttonsPanel);
 
-		root.add(h2("Studies"));
+		root.add(h2Widget("Studies"));
 		
 		studies = new AdminCollectionWidget("Studies", JsConfiguration.getStudyCollectionUrl());
 		root.add(studies);
 		
-		root.add(h2("Submissions"));
+		root.add(h2Widget("Submissions"));
 		
 		submissions = new AdminCollectionWidget("Submissions", JsConfiguration.getSubmissionCollectionUrl());
 		root.add(submissions);
 
-		root.add(h2("Data Files"));
+		root.add(h2Widget("Data Files"));
 		
 		datafiles = new AdminCollectionWidget("Data Files", JsConfiguration.getDataFileCollectionUrl());
 		root.add(datafiles);

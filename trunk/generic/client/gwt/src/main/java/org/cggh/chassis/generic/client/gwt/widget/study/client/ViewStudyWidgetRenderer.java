@@ -75,7 +75,7 @@ public class ViewStudyWidgetRenderer
 	protected void renderMainPanel() {
 		log.enter("renderMainPanel");
 
-		this.mainPanel.add(h2("View Study")); // TODO i18n
+		this.mainPanel.add(h2Widget("View Study")); // TODO i18n
 
 		this.renderContentPanel();
 
@@ -133,8 +133,8 @@ public class ViewStudyWidgetRenderer
 	protected void renderDatasetsSection() {
 		log.enter("renderDatasetsSection");
 
-		contentPanel.add(h3("Datasets")); // TODO i18n
-		contentPanel.add(p("The following datasets are associated with this study...")); // TODO I18N
+		contentPanel.add(h3Widget("Datasets")); // TODO i18n
+		contentPanel.add(pWidget("The following datasets are associated with this study...")); // TODO I18N
 		
 		this.datasetsWidget = new StudyDatasetsWidget();
 		contentPanel.add(this.datasetsWidget);

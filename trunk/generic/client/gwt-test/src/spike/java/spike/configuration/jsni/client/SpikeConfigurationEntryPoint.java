@@ -25,12 +25,12 @@ public class SpikeConfigurationEntryPoint implements EntryPoint {
 
 		RootPanel root = RootPanel.get("gwtcontent");
 
-		root.add(p("userDetailsServiceEndpointURL: "+JsConfiguration.getUserDetailsServiceEndpointUrl()+""));
-		root.add(p("studyCollectionUrl: "+JsConfiguration.getStudyCollectionUrl()+""));
-		root.add(p("submissionCollectionUrl: "+JsConfiguration.getSubmissionCollectionUrl()+""));
+		root.add(pWidget("userDetailsServiceEndpointURL: "+JsConfiguration.getUserDetailsServiceEndpointUrl()+""));
+		root.add(pWidget("studyCollectionUrl: "+JsConfiguration.getStudyCollectionUrl()+""));
+		root.add(pWidget("submissionCollectionUrl: "+JsConfiguration.getSubmissionCollectionUrl()+""));
 		
 		JsArray<Module> modules = JsConfiguration.getModules();
-		root.add(h2("Modules"));
+		root.add(h2Widget("Modules"));
 		String content = "<ul>";
 		for (int i=0; i<modules.length(); i++) {
 			Module module = modules.get(i);

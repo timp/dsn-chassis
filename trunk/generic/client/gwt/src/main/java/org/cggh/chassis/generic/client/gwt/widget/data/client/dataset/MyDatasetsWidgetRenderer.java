@@ -56,9 +56,9 @@ public class MyDatasetsWidgetRenderer
 	protected void renderMainPanel() {
 		log.enter("renderMainPanel");
 
-		this.mainPanel.add(h2("My Datasets")); // TODO i18n
+		this.mainPanel.add(h2Widget("My Datasets")); // TODO i18n
 
-		this.mainPanel.add(p("The table below lists all of the datasets that you own...")); // TODO i18n
+		this.mainPanel.add(pWidget("The table below lists all of the datasets that you own...")); // TODO i18n
 
 		this.resultsTableContainer = new FlowPanel();
 		this.mainPanel.add(this.resultsTableContainer);
@@ -172,7 +172,7 @@ public class MyDatasetsWidgetRenderer
 		});
 		
 		Widget[] row = {
-				strong(""+entry.getTitle()+""),	
+				strongWidget(""+entry.getTitle()+""),	
 				new Label(RenderUtils.truncate(entry.getSummary(), 20)),	
 				RenderUtils.renderAtomAuthorsAsLabel(entry, false),	
 				viewAction

@@ -55,7 +55,7 @@ public class ViewDataFileWidgetRenderer
 	protected void renderMainPanel() {
 		log.enter("renderMainPanel");
 
-		this.mainPanel.add(h2("View Data File")); // TODO i18n
+		this.mainPanel.add(h2Widget("View Data File")); // TODO i18n
 
 		this.renderContentPanel();
 
@@ -100,8 +100,8 @@ public class ViewDataFileWidgetRenderer
 		this.dataFilePropertiesWidget = new DataFilePropertiesWidget();
 		contentPanel.add(this.dataFilePropertiesWidget);
 		
-		contentPanel.add(h3("Revisions")); // TODO i18n
-		contentPanel.add(p("This data file has the following revisions...")); // TODO i18n
+		contentPanel.add(h3Widget("Revisions")); // TODO i18n
+		contentPanel.add(pWidget("This data file has the following revisions...")); // TODO i18n
 		
 		this.revisionsWidget = new DataFileRevisionsWidget();
 		contentPanel.add(this.revisionsWidget);
@@ -119,8 +119,8 @@ public class ViewDataFileWidgetRenderer
 	protected void renderDatasetsSection() {
 		log.enter("renderDatasetsSection");
 
-		contentPanel.add(h3("Datasets")); // TODO i18n
-		contentPanel.add(p("This data file is included in the following datasets...")); // TODO i18n
+		contentPanel.add(h3Widget("Datasets")); // TODO i18n
+		contentPanel.add(pWidget("This data file is included in the following datasets...")); // TODO i18n
 		
 		this.datasetsWidget = new DataFileDatasetsWidget();
 		contentPanel.add(this.datasetsWidget);

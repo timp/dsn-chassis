@@ -44,13 +44,13 @@ public class ReviewSubmissionWidgetRenderer
 	@Override
 	protected void renderMainPanel() {
 		log.enter("renderMainPanel");
-		this.mainPanel.add(h2("Review submission")); //TODO i18n
+		this.mainPanel.add(h2Widget("Review submission")); //TODO i18n
 		this.submissionPropertiesWidget = new SubmissionPropertiesWidget();
 		this.mainPanel.add(this.submissionPropertiesWidget);
 
 		
 		this.reviewCommentPanel = new FlowPanel();
-		this.reviewCommentPanel.add(h3("Review")); //TODO i18n
+		this.reviewCommentPanel.add(h3Widget("Review")); //TODO i18n
 		
 		this.commentTextArea = new TextArea();
 		this.reviewCommentPanel.add(this.commentTextArea);

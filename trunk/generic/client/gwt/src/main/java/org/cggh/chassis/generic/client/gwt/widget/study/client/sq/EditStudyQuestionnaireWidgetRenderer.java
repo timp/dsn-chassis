@@ -95,7 +95,7 @@ public class EditStudyQuestionnaireWidgetRenderer
 		
 		log.debug("render main panel");
 
-		this.mainPanel.add(h2("Edit Study Questionnaire")); // TODO i18n
+		this.mainPanel.add(h2Widget("Edit Study Questionnaire")); // TODO i18n
 
 		this.mainPanel.add(contentPanel);
 
@@ -117,7 +117,7 @@ public class EditStudyQuestionnaireWidgetRenderer
 		this.studyPropertiesWidget = new StudyPropertiesWidget();
 		contentPanel.add(this.studyPropertiesWidget);
 		
-		contentPanel.add(h3("Study Questionnaire")); // TODO i18n
+		contentPanel.add(h3Widget("Study Questionnaire")); // TODO i18n
 
 		this.renderButtonsPanels();
 		

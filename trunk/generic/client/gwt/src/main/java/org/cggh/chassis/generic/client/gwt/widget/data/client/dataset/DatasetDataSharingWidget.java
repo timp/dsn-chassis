@@ -110,10 +110,10 @@ public class DatasetDataSharingWidget extends ChassisWidget {
 					
 					log.debug("no review link found, dataset has not been reviewed");
 					
-					add(p("This dataset has been shared with "+Configuration.getNetworkName()+ 
-							" by " + strong(RenderUtils.renderAtomAuthorsAsCommaDelimitedEmailString(
+					add(pWidget("This dataset has been shared with "+Configuration.getNetworkName()+ 
+							" by " + strongWidget(RenderUtils.renderAtomAuthorsAsCommaDelimitedEmailString(
 									reviewLink.getEntry().getAuthors())) +
-							" on " + strong(reviewLink.getEntry().getPublished()) + ".")); // TODO i18n
+							" on " + strongWidget(reviewLink.getEntry().getPublished()) + ".")); // TODO i18n
 					
 				}
 				
@@ -143,7 +143,7 @@ public class DatasetDataSharingWidget extends ChassisWidget {
 	private void syncNotShared() {
 		log.enter("syncNotShared");
 		
-		add(p("This dataset has <strong>not</strong> been shared with "+Configuration.getNetworkName()+".")); // TODO i18n
+		add(pWidget("This dataset has <strong>not</strong> been shared with "+Configuration.getNetworkName()+".")); // TODO i18n
 		
 		Anchor shareDatasetAction = RenderUtils.renderActionAnchor("share this dataset with "+Configuration.getNetworkName()+"...");
 
@@ -175,7 +175,7 @@ public class DatasetDataSharingWidget extends ChassisWidget {
 		String author = RenderUtils.renderAtomAuthorsAsCommaDelimitedEmailString(se.getAuthors());
 		String created = se.getPublished();
 		
-		add(p("This dataset was shared with "+Configuration.getNetworkName()+
+		add(pWidget("This dataset was shared with "+Configuration.getNetworkName()+
 				" by <strong>"+author+"</strong> on <strong>"+created+"</strong>."));
 		
 		log.leave();

@@ -425,7 +425,7 @@ public class RenderUtils {
 	public static FlowPanel renderActionsPanel(Widget[] actions) {
 		FlowPanel out = new FlowPanel();
 		out.addStyleName(CommonStyles.ACTIONS);
-		out.add(h3("Actions")); // TODO use I18N resources
+		out.add(h3Widget("Actions")); // TODO use I18N resources
 		for (Widget w : actions) {
 			out.add(w);
 		}

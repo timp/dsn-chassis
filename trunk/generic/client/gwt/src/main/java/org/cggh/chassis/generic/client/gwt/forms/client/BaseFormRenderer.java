@@ -66,7 +66,7 @@ public abstract class BaseFormRenderer
 		
 		this.canvas.clear();
 		
-		this.canvas.add(h3(""+resources.get(Resources.HEADINGTITLEANDSUMMARY)+""));
+		this.canvas.add(h3Widget(""+resources.get(Resources.HEADINGTITLEANDSUMMARY)+""));
 		this.renderTitleQuestion();
 		this.canvas.add(this.titleQuestionPanel);
 		this.renderSummaryQuestion();

@@ -62,8 +62,8 @@ public class UploadDataFileRevisionWidgetRenderer
 	protected void renderMainPanel() {
 		log.enter("renderMainPanel");
 		
-		this.mainPanel.add(h2("Upload Data File Revision")); // TODO i18n
-		this.mainPanel.add(p("Use the form below upload a new revision of a data file.")); // TODO i18n
+		this.mainPanel.add(h2Widget("Upload Data File Revision")); // TODO i18n
+		this.mainPanel.add(pWidget("Use the form below upload a new revision of a data file.")); // TODO i18n
 
 		this.form = new UploadDataFileRevisionForm();
 		this.mainPanel.add(this.form);

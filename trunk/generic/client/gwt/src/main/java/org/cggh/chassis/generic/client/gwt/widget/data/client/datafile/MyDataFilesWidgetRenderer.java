@@ -54,9 +54,9 @@ public class MyDataFilesWidgetRenderer
 	protected void renderMainPanel() {
 		log.enter("renderMainPanel");
 		
-		this.mainPanel.add(h2("My Data Files")); // TODO i18n
+		this.mainPanel.add(h2Widget("My Data Files")); // TODO i18n
 
-		this.mainPanel.add(p("The table below lists all of the data files that you own...")); // TODO i18n
+		this.mainPanel.add(pWidget("The table below lists all of the data files that you own...")); // TODO i18n
 
 		this.resultsTableContainer = new FlowPanel();
 		this.mainPanel.add(this.resultsTableContainer);
@@ -166,7 +166,7 @@ public class MyDataFilesWidgetRenderer
 		});
 		
 		Widget[] row = {
-				strong(entry.getTitle()),	
+				strongWidget(entry.getTitle()),	
 				new Label(RenderUtils.truncate(entry.getSummary(), 20)),	
 				RenderUtils.renderAtomAuthorsAsLabel(entry, false),	
 				viewAction
