@@ -119,6 +119,15 @@ public class ViewSubmissionWidget
 
 	}
 
+	
+	
+	
+	@Override
+	public void refresh() {
+		
+		this.viewEntry(this.model.getEntry().getId());
+		
+	}
 
 	
 	
