@@ -116,10 +116,18 @@ public class ViewSubmissionWidgetRenderer extends
 	
 	protected void renderActionsWidget() {
 		this.actionsWidget = new SubmissionActionsWidget();
-		this.mainPanel.add(this.actionsWidget);
-		
-		//TODO que?
-		//this.actionsWidget.getViewAction().setVisible(false); // has to go here, after added to panel
+
+		this.mainPanel.add(this.actionsWidget);		
+
+		// has to go here, after widget added to panel
+		if (model.getEntry().getReviewLink() == null) { 
+			this.actionsWidget.getReviewSubmissionAction().setVisible(true); 
+			this.actionsWidget.getAssignCuratorAction().setVisible(false);
+		} else { 
+			this.actionsWidget.getReviewSubmissionAction().setVisible(false); 
+			this.actionsWidget.getAssignCuratorAction().setVisible(true);
+			
+		}
 	}
 
 	
