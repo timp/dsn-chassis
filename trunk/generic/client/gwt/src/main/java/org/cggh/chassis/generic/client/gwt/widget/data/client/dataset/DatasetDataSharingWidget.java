@@ -108,12 +108,12 @@ public class DatasetDataSharingWidget extends ChassisWidget {
 				
 				if (reviewLink != null) {
 					
-					log.debug("no review link found, dataset has not been reviewed");
+					log.debug("review link found, dataset has been reviewed");
 					
-					add(pWidget("This dataset has been shared with "+Configuration.getNetworkName()+ 
-							" by " + strongWidget(RenderUtils.renderAtomAuthorsAsCommaDelimitedEmailString(
+					add(pWidget("This dataset was accepted into  "+Configuration.getNetworkName()+ 
+							" by " + strong(RenderUtils.renderAtomAuthorsAsCommaDelimitedEmailString(
 									reviewLink.getEntry().getAuthors())) +
-							" on " + strongWidget(reviewLink.getEntry().getPublished()) + ".")); // TODO i18n
+							" on " + strong(reviewLink.getEntry().getPublished()) + ".")); // TODO i18n
 					
 				}
 				
@@ -178,7 +178,8 @@ public class DatasetDataSharingWidget extends ChassisWidget {
 		String created = se.getPublished();
 		
 		add(pWidget("This dataset was shared with "+Configuration.getNetworkName()+
-				" by "+strong(author)+" on "+strong(created)+"."));
+				" by "+strong(author)+
+				" on "+strong(created)+"."));
 		
 		log.leave();
 	}
