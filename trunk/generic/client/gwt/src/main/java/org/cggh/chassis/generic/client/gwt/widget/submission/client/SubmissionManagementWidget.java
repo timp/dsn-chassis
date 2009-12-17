@@ -152,7 +152,9 @@ public class SubmissionManagementWidget
 					public void onCreateSuccess(
 							CreateSuccessEvent<ReviewEntry> e) {
 
-						viewSubmissionWidget.viewEntry(e.getEntry().getId());
+//						viewSubmissionWidget.viewEntry(e.getEntry().getId()); // N.B. this is wrong, asking the view submission widget to view a review entry
+
+						viewSubmissionWidget.refresh();
 						setActiveChild(viewSubmissionWidget);
 						
 					} }));
