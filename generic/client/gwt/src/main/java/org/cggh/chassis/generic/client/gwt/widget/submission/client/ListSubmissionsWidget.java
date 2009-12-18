@@ -22,7 +22,6 @@ public class ListSubmissionsWidget
 	
 	Log log = LogFactory.getLog(ListSubmissionsWidget.class);
 	private ListSubmissionsWidgetController controller;
-	private ListSubmissionsWidgetModel model;
 	
 	
 	
@@ -31,24 +30,11 @@ public class ListSubmissionsWidget
 	 */
 	@Override
 	protected ListSubmissionsWidgetModel createModel() {
-		if (log == null) log = LogFactory.getLog(ListSubmissionsWidget.class);
-		log.enter("createModel");
-		if (model == null) { 
-			model = new ListSubmissionsWidgetModel();
-			log.debug("Creating model");
-		}
-		log.leave();
-		return model;
+		return new ListSubmissionsWidgetModel();
 	}
 	
 	
-	// TODO Refactor - model is potentially created through two paths
-	// however need to avoid overwriting model
 	protected ListSubmissionsWidgetModel getModel() {
-		log.enter("getModel");
-		if (model == null) 
-			model = createModel(); 
-		log.leave();
 		return model;
 	}
 
@@ -83,10 +69,8 @@ public class ListSubmissionsWidget
 	
 	@Override
 	public void refresh() {
-		//TODO consider refactor
-		if (this.model != null)
-			// delegate to controller
-			this.controller.refreshSubmissions();
+		// delegate to controller
+		this.controller.refreshSubmissions();
 		
 	}
 	
