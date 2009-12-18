@@ -177,45 +177,8 @@ I put these after the method override filter declaration.
 
 N.B. this filter is not required in a production environment, because browsers other than GWT hosted mode browser do not truncate responses with content type application/atom+xml, at least not that we've found so far. The other thing to note is that the filter is based on an HTTP buffering filter, and hence buffers all responses before sending them - this is likely to cause memory bottlenecks in a production setting.
 
-*4. Create a script to create Atom collections.*
 
-The following Python script is put in the file *bin/python/CreateCollections.py* within the project.
-
-{{{
-import httplib
-
-# configuration parameters
-
-host = "localhost:8080"
-contextpath = "/chassis-generic-service-exist/atom/edit"
-
-# define function to create a collection
-
-def createcollection(name, path):
-    print "creating collection, name: "+name+"; path: "+path+"..."
-    path = contextpath + "/" + path
-    content = u"<feed xmlns=\"http://www.w3.org/2005/Atom\"><title>"+name+"</title></feed>"
-    headers = { "Content-Type": "application/atom+xml", "Content-Length": len(content) }
-    conn = httplib.HTTPConnection(host)
-    conn.request("POST", path, content, headers)
-    response = conn.getresponse()
-    if response.status == 204:
-        print "[OK]"
-    else:
-        print "[ERROR]"
-        print response.status, response.reason
-        print response.msg
-        data = response.read()
-        print data
-    conn.close()
-
-# create collections
-
-createcollection("Studies", "studies")
-createcollection("Submissions", "submissions")
-}}}
-
-*5. Spring security integration.*
+*4. Spring security integration.*
 
 Copy the following JARs to the *WEB-INF/lib* folder:
 
@@ -358,84 +321,9 @@ Also, modify the declaration for the !AtomServlet, adding some initialisation pa
     </servlet>
 }}}
 
-Finally, modify the *CreateCollections.py* script to use basic authentication, as follows.
+*5. Custom query services*
 
-{{{
-import httplib
-import base64
-
-# configuration parameters
-
-host = "localhost:8080"
-contextpath = "/chassis-generic-service-exist/atom/edit"
-username = "foo"
-password = "bar"
-
-# define function to create a collection
-# N.B. this only works with http basic authentication
-
-def createcollection(name, path):
-    print "creating collection, name: "+name+"; path: "+path+"..."
-    path = contextpath + "/" + path
-    content = u"<feed xmlns=\"http://www.w3.org/2005/Atom\"><title>"+name+"</title></feed>"
-    authorizationheader = base64.encodestring('%s:%s' % (username, password))[:-1]
-    headers = { "Content-Type": "application/atom+xml", "Content-Length": len(content), "Authorization": "Basic %s" %     authorizationheader }
-    conn = httplib.HTTPConnection(host)
-    conn.request("POST", path, content, headers)
-    response = conn.getresponse()
-    if response.status == 204:
-        print "[OK]"
-    else:
-        print "[ERROR]"
-        print response.status, response.reason
-        print response.msg
-        data = response.read()
-        print data
-    conn.close()
-
-# create collections
-
-createcollection("Studies", "studies")
-createcollection("Submissions", "submissions")
-}}}
-
-N.B. this script will only work in the development environment where http basic authentication is used. In the production environment for Chassis/WWARN we'll have to build an admin console into the GWT client.
-
-*6. Custom query services*
-
-Add the following XQuery script to the *WebContent/query* folder as an initial implementation of the Study Query Service.
-
-{{{
-(: namespace declarations :)
-declare namespace atom = "http://www.w3.org/2005/Atom" ;
-
-(: serialization options :)
-declare option exist:serialize "method=xml media-type=application/xml indent=yes" ;
-
-(: find studies colletion :) 
-let $studies := collection("/db/studies")
-
-(: fish out request params :)
-let $authoremail := request:get-parameter("authoremail","")
-
-(: return an Atom feed document :)
-return 
-<atom:feed>
-	<atom:title>Query Results</atom:title>
-	{
-		(: for all Atom entries within the collection :)
-		for $e in ($studies//atom:entry)
-		
-		(: filter by author email, if request parameter is given :)
-		where ($authoremail != "" and $e/atom:author/atom:email = $authoremail) or ($authoremail = "")
-
-		(: order by most recently updated :)
-		order by $e/atom:updated descending
-		
-		return $e
-	}
-</atom:feed>
-}}}
+Add XQuery scripts to the *WebContent/query* folder as needed.
 
 *TODO*
 
@@ -451,11 +339,8 @@ From within the *Servers* view, start the *Tomcat v6.0 Server at localhost*.
 
 *2. Create atom collections.*
 
-To bootstrap the study and submission Atom collections, with the service running, run the *CreateCollections.py* Python script from the local machine.
+To bootstrap the Atom collections, log in to the Chassis client as an administrator, and use the Collections Admin screen to create all collections.
 
-To check this has worked, browse to the following URLs using Firefox - you should see empty feeds, titled "Studies" and "Submissions" respectively.
-
-  * http://localhost:8080/chassis-generic-service-exist/atom/edit/studies
-  * http://localhost:8080/chassis-generic-service-exist/atom/edit/submissions
+To check this has worked, browse to any of the collection URLs using Firefox - you should see empty Atom feeds.
 
   
