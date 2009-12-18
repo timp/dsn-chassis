@@ -18,36 +18,36 @@ import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
  * @author aliman
  *
  */
-public class ViewSubmissionsPendingReviewWidgetController {
+public class ListSubmissionsWidgetController {
 
 	
 	
 	
-	private ViewSubmissionsPendingReviewWidgetModel model;
-	private ViewSubmissionsPendingReviewWidget owner;
+	private ListSubmissionsWidgetModel model;
+	private ListSubmissionsWidget owner;
 	
 	
 	
 	
-	private Log log = LogFactory.getLog(ViewSubmissionsPendingReviewWidgetController.class);
+	private Log log = LogFactory.getLog(ListSubmissionsWidgetController.class);
 	
 	
 	
 	
-	public ViewSubmissionsPendingReviewWidgetController(
-			ViewSubmissionsPendingReviewWidget owner,
-			ViewSubmissionsPendingReviewWidgetModel model
+	public ListSubmissionsWidgetController(
+			ListSubmissionsWidget owner,
+			ListSubmissionsWidgetModel model
 	) {
 			
 		this.owner = owner;
 		this.model = model;
-		
 	}
 	
 	
 	
 	public void refreshSubmissions() {
 		log.enter("refreshSubmissions");
+		if (model != null) {
 		
 		log.debug("set async pending status on model");
 		
@@ -65,13 +65,13 @@ public class ViewSubmissionsPendingReviewWidgetController {
 		log.debug("add callbacks");
 		deferredResults.addCallback(new RefreshSubmissionsCallback());
 		deferredResults.addErrback(new AsyncErrback(this.owner, this.model));
-		
+		}		
 		log.leave();
 	}
 	
 	
 	
-	
+
 	/**
 	 * @author aliman
 	 *
