@@ -36,7 +36,11 @@ declare function local:expand-dataset(
                     <expand rel="chassis.revision" collection="/db/media"/>
                 </spec>
             </expand>
-            <expand-reverse rel="chassis.submission" rev="chassis.dataset" collection="/db/submissions"/>
+            <expand-reverse rel="chassis.submission" rev="chassis.dataset" collection="/db/submissions">
+                <spec>
+                    <expand-reverse rel="chassis.review" rev="chassis.submission" collection="/db/reviews"/>
+                </spec>
+            </expand-reverse>
         </spec>
         
     return chassis:recursive-expand-entry($entry, $spec)
