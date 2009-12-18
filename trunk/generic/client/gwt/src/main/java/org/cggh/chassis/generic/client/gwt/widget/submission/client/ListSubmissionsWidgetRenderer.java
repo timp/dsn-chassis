@@ -28,21 +28,21 @@ import static org.cggh.chassis.generic.widget.client.HtmlElements.*;
  * @author aliman
  *
  */
-public class ViewSubmissionsPendingReviewWidgetRenderer 
-     extends AsyncWidgetRenderer<ViewSubmissionsPendingReviewWidgetModel> {
+public class ListSubmissionsWidgetRenderer 
+     extends AsyncWidgetRenderer<ListSubmissionsWidgetModel> {
 
-	Log log = LogFactory.getLog(ViewSubmissionsPendingReviewWidgetRenderer.class);
+	Log log = LogFactory.getLog(ListSubmissionsWidgetRenderer.class);
 
 	
 	
 	
 	private FlowPanel resultsTableContainer;
-	private ViewSubmissionsPendingReviewWidget owner;
+	private ListSubmissionsWidget owner;
 
 
 	
 	
-	public ViewSubmissionsPendingReviewWidgetRenderer(ViewSubmissionsPendingReviewWidget owner) {
+	public ListSubmissionsWidgetRenderer(ListSubmissionsWidget owner) {
 		this.owner = owner;
 	}
 	
@@ -54,10 +54,6 @@ public class ViewSubmissionsPendingReviewWidgetRenderer
 	 */
 	@Override
 	protected void renderMainPanel() {
-
-		this.mainPanel.add(h2Widget("Submissions Pending Review"));
-		
-		this.mainPanel.add(pWidget("The following submissions have not been reviewed by a gatekeeper..."));
 		
 		this.resultsTableContainer = new FlowPanel();
 		this.mainPanel.add(this.resultsTableContainer);
@@ -91,6 +87,17 @@ public class ViewSubmissionsPendingReviewWidgetRenderer
 	protected void syncUIWithSubmissionFeed(SubmissionFeed feed) {
 		
 		this.resultsTableContainer.clear();
+
+		if (model.getFilterByReviewExistance() == null) { 
+			this.resultsTableContainer.add(h2Widget("All Submissions"));
+		} else if (model.getFilterByReviewExistance().booleanValue()) { 
+			this.resultsTableContainer.add(h2Widget("Submissions which have an Acceptance Review"));
+			this.resultsTableContainer.add(pWidget("The following submissions have been reviewed by a gatekeeper..."));			
+		} else { 
+			this.resultsTableContainer.add(h2Widget("Submissions Pending Review"));
+			this.resultsTableContainer.add(pWidget("The following submissions have not been reviewed by a gatekeeper..."));			
+		}
+
 		
 		if (feed != null) {
 			
@@ -108,9 +115,20 @@ public class ViewSubmissionsPendingReviewWidgetRenderer
 			rows.add(headerRow);
 			
 			for (SubmissionEntry entry : feed.getEntries()) {
-				
-				Widget[] row = this.renderRow(entry);
-				rows.add(row);
+				boolean include = false;
+				if (model.getFilterByReviewExistance() == null) {
+					include = true;
+				} else if (model.getFilterByReviewExistance().booleanValue()) { 
+					if (entry.getReviewLink() != null)
+						include = true;
+				} else { 
+					if (entry.getReviewLink() == null)
+						include = true;					
+				}
+				if (include) { 
+					Widget[] row = this.renderRow(entry);
+					rows.add(row);
+				}
 				
 			}
 			

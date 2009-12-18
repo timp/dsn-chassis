@@ -41,7 +41,7 @@ public class SubmissionManagementWidget
 	
 	
 	// UI fields
-	ViewSubmissionsPendingReviewWidget vsprWidget;
+	ListSubmissionsWidget listSubmissionsWidget;
 	ViewSubmissionWidget viewSubmissionWidget;
 	ViewDataFileWidget viewDataFileWidget;
 	ViewStudyWidget viewStudyWidget;
@@ -60,13 +60,13 @@ public class SubmissionManagementWidget
 	protected void renderMainChildren() {
 		log.enter("renderMainChildren");
 		
-		this.vsprWidget = new ViewSubmissionsPendingReviewWidget();
+		this.listSubmissionsWidget = new ListSubmissionsWidget();
 		this.viewSubmissionWidget = new ViewSubmissionWidget();
 		this.viewDataFileWidget = new CustomViewDataFileWidget();
 		this.viewStudyWidget = new CustomViewStudyWidget();
 		this.reviewSubmissionWidget = new ReviewSubmissionWidget();
 		
-		this.mainChildren.add(this.vsprWidget);
+		this.mainChildren.add(this.listSubmissionsWidget);
 		this.mainChildren.add(this.viewSubmissionWidget);
 		this.mainChildren.add(this.viewDataFileWidget);
 		this.mainChildren.add(this.viewStudyWidget);
@@ -84,7 +84,7 @@ public class SubmissionManagementWidget
 
 		
 		this.childWidgetEventHandlerRegistrations.add(
-				this.vsprWidget.addViewSubmissionActionHandler(new SubmissionActionHandler() {
+				this.listSubmissionsWidget.addViewSubmissionActionHandler(new SubmissionActionHandler() {
 			
 			public void onAction(SubmissionActionEvent e) {
 
@@ -167,33 +167,42 @@ public class SubmissionManagementWidget
 	protected void renderMenuBar() {
 		log.enter("renderMenuBar");
 		
-		Command viewSubmissionsPendingReviewCommand = new Command() { 
-			public void execute() { 
-
-				setActiveChild(vsprWidget);
-				fireEvent(new MenuEvent());
-				
-			} 
-		};
-
-		MenuItem viewSubmissionsPendingReviewMenuItem = new MenuItem("submissions pending review", viewSubmissionsPendingReviewCommand );
-		this.menu.addItem(viewSubmissionsPendingReviewMenuItem);
+		this.menu.addItem(new MenuItem("submissions pending review", 
+				listSubmissionsFilteredByExistanceOfReviewCommand(Boolean.FALSE) ));
+		
+		this.menu.addItem(new MenuItem("reviewed submissions ", 
+				listSubmissionsFilteredByExistanceOfReviewCommand(Boolean.TRUE) ));
+		
+		this.menu.addItem(new MenuItem("all submissions", 
+				listSubmissionsFilteredByExistanceOfReviewCommand(null) ));
 		
 		log.leave();
 	}
 
-
+    /**
+     * @param exists three valued: may be null
+     * @return Command configured to include appropriate records
+     */
+    private Command listSubmissionsFilteredByExistanceOfReviewCommand(final Boolean exists) { 
+    	return new Command() { 
+			public void execute() { 
+            	listSubmissionsWidget.getModel().setFilterByReviewExistance(exists);
+				setActiveChild(listSubmissionsWidget);
+				fireEvent(new MenuEvent());
+				
+			} 
+		};
+    }
 	
 	
 	@Override
 	protected void setActiveChild(Widget child, boolean memorise) {
 		super.setActiveChild(child, memorise);
-		
-		if (child instanceof ViewSubmissionsPendingReviewWidget) {
-			ViewSubmissionsPendingReviewWidget w = (ViewSubmissionsPendingReviewWidget) child;
+
+		if (child instanceof ListSubmissionsWidget) {
+			ListSubmissionsWidget w = (ListSubmissionsWidget) child;
 			w.refresh();
 		}
-		
 	}
 
 
