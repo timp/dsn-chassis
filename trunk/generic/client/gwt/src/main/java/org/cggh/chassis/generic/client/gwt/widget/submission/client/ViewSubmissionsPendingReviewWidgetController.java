@@ -57,8 +57,6 @@ public class ViewSubmissionsPendingReviewWidgetController {
 		
 		SubmissionQuery query = new SubmissionQuery();
 		
-		query.setAcceptanceReviewStatus(SubmissionQuery.ACCEPTANCEREVIEWSTATUS_PENDING);
-		
 		log.debug("execute service query");
 		
 		SubmissionQueryService service = new SubmissionQueryService(Configuration.getSubmissionQueryServiceUrl());
