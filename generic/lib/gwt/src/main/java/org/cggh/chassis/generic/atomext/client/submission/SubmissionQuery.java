@@ -10,27 +10,5 @@ import org.cggh.chassis.generic.atom.client.AtomQuery;
  *
  */
 public class SubmissionQuery extends AtomQuery {
-
-	
-	
-	
-	public static final String ACCEPTANCEREVIEWSTATUS_PENDING = "pending";
-
-	public static final String ACCEPTANCEREVIEWSTATUS_ACCEPTED = "accepted";
-
-	
-	
-	public static final String PARAM_ACCEPTANCEREVIEW = "acceptancereview";
-	
-	
-	
-	/**
-	 * @param acceptancereviewstatusPending
-	 */
-	public void setAcceptanceReviewStatus(String status) {
-		this.set(PARAM_ACCEPTANCEREVIEW, status);
-	}
-
-	
 	
 }
