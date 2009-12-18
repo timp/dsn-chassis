@@ -59,7 +59,6 @@ let $submissions := collection("/db/submissions")
 
 (: fish out request params :)
 let $param-authoremail := request:get-parameter("authoremail","")
-let $param-acceptancereview := request:get-parameter("acceptancereview", "")
 let $param-id := request:get-parameter("id","")
 
 
