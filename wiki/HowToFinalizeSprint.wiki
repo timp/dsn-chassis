@@ -45,4 +45,4 @@ A non-SNAPSHOT build should not depend upon any SNAPSHOT artifacts.
 
 Beta versions imply no guarantee that the API will not change. 
 
-All the artifacts inherit their version fro a single parent pom to enable easy maintenance of the above mechanism. 
+All the artifacts inherit their version from a single parent pom to enable easy maintenance of the above mechanism. 
