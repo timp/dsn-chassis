@@ -15,7 +15,6 @@ import org.cggh.chassis.generic.atomext.client.submission.SubmissionQuery;
 import org.cggh.chassis.generic.atomext.client.submission.SubmissionQueryService;
 import org.cggh.chassis.generic.client.gwt.common.client.ChassisUser;
 import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
-import org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.ShareDatasetWidgetModel;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.AsyncErrback;
