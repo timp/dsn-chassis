@@ -7,7 +7,7 @@
 ----
 == Introduction ==
 
-Fractal UI is a architectural pattern for developing pure client-side (i.e., in-browser) applications, with supporting libraries for GWT. The design goals for Fractal UI are:
+Fractal UI is an architectural pattern for developing pure client-side (i.e., in-browser) applications, with supporting libraries for GWT. The design goals for Fractal UI are:
 
   * to enable an application to be developed in small, bite-size pieces, that are not overly complex or mind-bendingly hard to understand
   * to enable an application to grow in complexity without becoming difficult to maintain, test or debug
@@ -419,4 +419,3 @@ To enable state keys from an arbitrary hierarchy of nested components to be seri
 To respond to history events, each component extending `FractalUIComponent` must also implement the `syncState()` method. This method should attempt to reconstruct the state of the application by accessing the data contained in the state key, which will have been automatically populated from the updated history token. The method should also return a deferred value, and callback the deferred when it is ready for the history event to be propagated to its children. This gives each component a chance to rearrange it's children before a history event is propagated down the hierarchy.
 
 The class [http://code.google.com/p/dsn-chassis/source/browse/trunk/gwt/lib/src/org/cggh/chassis/gwt/lib/ui/fractal/client/FractalUIHistoryManager.java FractalUIHistoryManager] is used to listen to history events. An instance of this class must be given a reference to the component that sits at the top of the nested component hierarchy. Any history events will be passed to this top component, which will automatically extract its state key and synchronise its state (via the `syncState()` method) before the event will be automatically propagated down the hierarchy to any nested components.
-
