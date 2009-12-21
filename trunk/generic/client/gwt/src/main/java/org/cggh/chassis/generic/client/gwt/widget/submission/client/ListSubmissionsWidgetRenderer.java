@@ -4,8 +4,10 @@
 package org.cggh.chassis.generic.client.gwt.widget.submission.client;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
+import org.cggh.chassis.generic.atom.client.AtomAuthor;
 import org.cggh.chassis.generic.atomext.client.dataset.DatasetEntry;
 import org.cggh.chassis.generic.atomext.client.submission.SubmissionEntry;
 import org.cggh.chassis.generic.atomext.client.submission.SubmissionFeed;
@@ -19,6 +21,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -71,7 +74,9 @@ public class ListSubmissionsWidgetRenderer
 			
 			public void onChange(SubmissionFeedChangeEvent e) {
 				
-				syncUIWithSubmissionFeed(e.getAfter());
+				resultsTableContainer.clear();
+				if (e.getAfter() != null)
+					syncUIWithSubmissionFeed(e.getAfter());
 				
 			}
 		});
@@ -81,72 +86,82 @@ public class ListSubmissionsWidgetRenderer
 
 
 
-	/**
-	 * @param after
-	 */
+	
 	protected void syncUIWithSubmissionFeed(SubmissionFeed feed) {
 		
-		this.resultsTableContainer.clear();
-
+		String[] headers;
+		
 		if (model.getFilterByReviewExistance() == null) { 
 			this.resultsTableContainer.add(h2Widget("All Submissions"));
+			String[] allHeaders = {
+					"Dataset Title",
+					"Dataset Summary",
+					"Submitter",
+					"Submission Date",
+					"Reviewer",
+					"Review Date",
+					// TODO add curator					
+//					"Curator",
+					"Actions"
+			};
+			headers = allHeaders;
 		} else if (model.getFilterByReviewExistance().booleanValue()) { 
 			this.resultsTableContainer.add(h2Widget("Submissions which have an Acceptance Review"));
 			this.resultsTableContainer.add(pWidget("The following submissions have been reviewed by a gatekeeper..."));			
+			String[] acceptedHeaders = {
+					"Dataset Title",
+					"Dataset Summary",
+					"Submitter",
+					"Submission Date",
+					"Reviewer",
+					"Review Date",
+					// TODO add curator					
+//					"Curator",
+					"Actions"
+			};
+			headers = acceptedHeaders;
 		} else { 
 			this.resultsTableContainer.add(h2Widget("Submissions Pending Review"));
-			this.resultsTableContainer.add(pWidget("The following submissions have not been reviewed by a gatekeeper..."));			
-		}
-
-		
-		if (feed != null) {
-			
-			String[] headers = {
+			this.resultsTableContainer.add(pWidget("The following submissions have not been reviewed by a gatekeeper..."));
+			String[] pendingHeaders = {
 					"Dataset Title",
 					"Dataset Summary",
 					"Submitter",
 					"Submission Date",
 					"Actions"
 			};
+			headers = pendingHeaders;
+		}
+
+   		
 			
-			Widget[] headerRow = RenderUtils.renderLabels(headers);
+		Widget[] headerRow = RenderUtils.renderLabels(headers);
 			
-			List<Widget[]> rows = new ArrayList<Widget[]>();
-			rows.add(headerRow);
+		List<Widget[]> rows = new ArrayList<Widget[]>();
+		rows.add(headerRow);
 			
-			for (SubmissionEntry entry : feed.getEntries()) {
-				boolean include = false;
-				if (model.getFilterByReviewExistance() == null) {
-					include = true;
-				} else if (model.getFilterByReviewExistance().booleanValue()) { 
-					if (entry.getReviewLink() != null)
-						include = true;
-				} else { 
-					if (entry.getReviewLink() == null)
-						include = true;					
-				}
-				if (include) { 
-					Widget[] row = this.renderRow(entry);
-					rows.add(row);
-				}
-				
+		for (SubmissionEntry entry : feed.getEntries()) {
+			if (model.getFilterByReviewExistance() == null) {
+				rows.add(this.renderRow(entry));
+			} else if (model.getFilterByReviewExistance().booleanValue()) { 
+				if (entry.getReviewLink() != null)
+					rows.add(this.renderRow(entry));
+			} else { 
+				if (entry.getReviewLink() == null)
+					rows.add(this.renderRow(entry));
 			}
 			
-			FlexTable table = RenderUtils.renderResultsTable(rows);
-			this.resultsTableContainer.add(table);
-			
 		}
+			
+		FlexTable table = RenderUtils.renderResultsTable(rows);
+		this.resultsTableContainer.add(table);
+			
 		
 	}
 
 
 
-
-	/**
-	 * @param entry
-	 * @return
-	 */
-	private Widget[] renderRow(final SubmissionEntry submissionEntry) {
+	protected Widget[] renderRow(final SubmissionEntry submissionEntry) {
 
 		DatasetEntry datasetEntry = submissionEntry.getDatasetLink().getEntry();
 		
@@ -154,6 +169,8 @@ public class ListSubmissionsWidgetRenderer
 		Widget datasetSummary = new Label(RenderUtils.truncate(datasetEntry.getSummary(), 40));
 		Widget submitter = RenderUtils.renderAtomAuthorsAsLabel(submissionEntry.getAuthors(), false);
 		Widget submissionDate = new Label(submissionEntry.getPublished());
+		
+		
 		
 		Anchor viewAction = RenderUtils.renderActionAsAnchor("view", new ClickHandler() {
 			public void onClick(ClickEvent arg0) {
@@ -168,13 +185,37 @@ public class ListSubmissionsWidgetRenderer
 			}
 		});
 		
-		Widget[] row = {
-			datasetTitle,
-			datasetSummary,
-			submitter,
-			submissionDate,
-			viewAction
-		};
+		Widget[] row;
+		if (model.getFilterByReviewExistance() != null && !model.getFilterByReviewExistance().booleanValue()) { 
+			Widget[] pendingRow = {
+				datasetTitle,
+				datasetSummary,
+				submitter,
+				submissionDate,
+				viewAction
+			};
+			row = pendingRow;
+		} else { 
+			Widget reviewers, reviewDate;
+			if(submissionEntry.getReviewLink() != null) { 
+				reviewers = RenderUtils.renderAtomAuthorsAsLabel(submissionEntry.getReviewLink().getEntry().getAuthors(), false);
+				reviewDate = new Label(submissionEntry.getReviewLink().getEntry().getPublished());
+			} else { 
+				reviewers = RenderUtils.renderAtomAuthorsAsLabel((Collection<AtomAuthor>)null, false);
+				reviewDate = new InlineLabel("");
+			}
+			Widget[] allRow = {
+				datasetTitle,
+				datasetSummary,
+				submitter,
+				submissionDate,
+				reviewers,
+				reviewDate,
+				viewAction
+			};
+			row = allRow;
+		}
+		
 		
 		return row;
 	}
