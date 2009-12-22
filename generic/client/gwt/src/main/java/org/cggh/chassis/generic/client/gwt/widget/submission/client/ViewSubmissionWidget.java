@@ -146,6 +146,11 @@ public class ViewSubmissionWidget
 		return this.addHandler(h, ReviewSubmissionActionEvent.TYPE);    	
     }
 
+	public HandlerRegistration addAssignCuratorActionHandler(SubmissionActionHandler h) {
+		return this.addHandler(h, AssignCuratorActionEvent.TYPE);
+	}
+
+
 
 	
 	
