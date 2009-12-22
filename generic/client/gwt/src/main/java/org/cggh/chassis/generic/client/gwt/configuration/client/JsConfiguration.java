@@ -116,7 +116,9 @@ public class JsConfiguration {
 		return $wnd.CHASSIS.dataSharingAgreementUrl;
 	}-*/;
 
-
+	public static native String getUserQueryServiceUrl() /*-{
+		return $wnd.CHASSIS.userQueryServiceUrl;
+	}-*/;
 	
 	
 }

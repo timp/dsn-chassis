@@ -74,5 +74,12 @@ public class ChassisRole implements Comparable<ChassisRole> {
 		
 		return roles;
 	}
+
+	/**
+	 * @return
+	 */
+	public String getAuthority() {
+		return Configuration.getUserChassisRolesPrefix() + this.permissionSuffix;
+	}
 	
 }

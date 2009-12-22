@@ -11,8 +11,10 @@ import static org.cggh.chassis.generic.widget.client.HtmlElements.*;
  * @author aliman
  *
  */
-public class AssignCuratorWidgetRenderer 
-	extends AsyncWidgetRenderer<AssignCuratorWidgetModel> {
+public class SelectCuratorWidgetRenderer 
+	extends AsyncWidgetRenderer<SelectCuratorWidgetModel> {
+
+	private SelectCuratorWidgetController controller;
 
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.widget.client.AsyncWidgetRenderer#renderMainPanel()
@@ -21,7 +23,14 @@ public class AssignCuratorWidgetRenderer
 	protected void renderMainPanel() {
 		// TODO Auto-generated method stub
 
-		this.canvas.add(pWidget("Please select a curator from the list below..."));
+		this.mainPanel.add(pWidget("Please select a curator from the list below..."));
+	}
+
+	/**
+	 * @param controller
+	 */
+	public void setController(SelectCuratorWidgetController controller) {
+		this.controller = controller;
 	}
 
 }

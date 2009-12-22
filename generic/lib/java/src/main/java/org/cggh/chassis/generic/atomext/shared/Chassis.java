@@ -43,6 +43,7 @@ public class Chassis {
 		public static final String MEDIARESOURCE = "MediaResource";
 		public static final String DATASET = "Dataset";
 		public static final String REVIEW = "Review";
+		public static final String USER = "User";
 
 	}
 	
