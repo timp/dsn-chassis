@@ -10,6 +10,7 @@ public class ReviewSubmissionWidgetModel
 	
 	
 	private SubmissionEntry submissionEntry;
+	private String submissionEntryId;
 
 	
 	
@@ -29,6 +30,7 @@ public class ReviewSubmissionWidgetModel
 	
 	
 	public void setSubmissionEntryId(String id) {
+		this.submissionEntryId = id;
 		// N.B. we do not fire events, because not used in UI, only used for memory
 	}
 	
@@ -50,6 +52,23 @@ public class ReviewSubmissionWidgetModel
 	
 	public static class SubmissionRetrievedStatus extends ReadyStatus {}
 	public static final Status STATUS_SUBMISSION_RETRIEVED = new SubmissionRetrievedStatus();
+
+
+
+
+	public HandlerRegistration addSubmissionEntryChangeHandler(SubmissionEntryChangeHandler h) {
+		return this.addChangeHandler(h, SubmissionEntryChangeEvent.TYPE);
+	}
+
+
+
+	/**
+	 * @return
+	 */
+	public String getSubmissionEntryId() {
+		return this.submissionEntryId;
+	}
+
 
 	
 

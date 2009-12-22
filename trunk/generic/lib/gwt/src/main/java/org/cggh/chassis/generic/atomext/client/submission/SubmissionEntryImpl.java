@@ -7,6 +7,7 @@ package org.cggh.chassis.generic.atomext.client.submission;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.cggh.chassis.generic.atom.client.Atom;
 import org.cggh.chassis.generic.atom.client.AtomEntryImpl;
 import org.cggh.chassis.generic.atom.client.AtomLink;
 import org.cggh.chassis.generic.atomext.client.dataset.DatasetLink;
@@ -17,6 +18,7 @@ import org.cggh.chassis.generic.atomext.client.review.ReviewLinkImpl;
 import org.cggh.chassis.generic.atomext.shared.Chassis;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.log.client.Log;
+import org.cggh.chassis.generic.xml.client.XMLNS;
 
 import com.google.gwt.xml.client.Element;
 
@@ -93,12 +95,19 @@ public class SubmissionEntryImpl
 
 
 
-	/* (non-Javadoc)
-	 * @see org.cggh.chassis.generic.atomext.client.submission.SubmissionEntry#getCurator()
+	/* TODO fix to use Curator interface 
 	 */
-	public Curator getCurator() {
-		// TODO
-		return null;
+	public String getCurator() {
+		
+		String curator = null;
+		
+		Element curatorElement = XMLNS.getFirstChildByTagNameNS(element, Chassis.Element.CURATOR, Chassis.NSURI);
+		
+		if (curatorElement != null) {
+			curator = XMLNS.getFirstChildSimpleContentByTagNameNS(curatorElement, Atom.ELEMENT_EMAIL, Atom.NSURI);
+		}
+		
+		return curator;
 	}
 
 
@@ -133,6 +142,25 @@ public class SubmissionEntryImpl
 			else
 				reviewLink = l;
 		return reviewLink;
+	}
+
+
+
+
+	/* (non-Javadoc)
+	 * @see org.cggh.chassis.generic.atomext.client.submission.SubmissionEntry#setCurator(java.lang.String)
+	 */
+	public void setCurator(String curatorEmail) {
+
+		// TODO consider refactor with AtomPerson
+		
+		XMLNS.removeChildrenByTagNameNS(element, Chassis.Element.CURATOR, Chassis.NSURI);
+		
+		Element curatorElement = XMLNS.createElementNS(Chassis.Element.CURATOR, Chassis.PREFIX, Chassis.NSURI);
+		XMLNS.setSingleChildSimpleContentByTagNameNS(curatorElement, Atom.ELEMENT_EMAIL, Atom.PREFIX, Atom.NSURI, curatorEmail);
+		
+		element.appendChild(curatorElement);
+		
 	}
 
 

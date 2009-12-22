@@ -106,8 +106,8 @@ public class ListSubmissionsWidgetRenderer
 			};
 			headers = allHeaders;
 		} else if (model.getFilterByReviewExistance().booleanValue()) { 
-			this.resultsTableContainer.add(h2Widget("Submissions which have an Acceptance Review"));
-			this.resultsTableContainer.add(pWidget("The following submissions have been reviewed by a gatekeeper..."));			
+			this.resultsTableContainer.add(h2Widget("Accepted Submissions"));
+			this.resultsTableContainer.add(pWidget("The following submissions have been reviewed by a gatekeeper and accepted..."));			
 			String[] acceptedHeaders = {
 					"Dataset Title",
 					"Dataset Summary",

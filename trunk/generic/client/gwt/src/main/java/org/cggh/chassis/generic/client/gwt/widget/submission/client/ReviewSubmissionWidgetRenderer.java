@@ -1,6 +1,6 @@
 package org.cggh.chassis.generic.client.gwt.widget.submission.client;
 
-import org.cggh.chassis.generic.client.gwt.configuration.client.Configuration;
+import org.cggh.chassis.generic.atomext.client.submission.SubmissionEntry;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
@@ -10,6 +10,7 @@ import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.Status;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.TextArea;
@@ -32,7 +33,7 @@ public class ReviewSubmissionWidgetRenderer
 	private Button acceptButton;
 	private Button cancelButton;
 
-	private FlowPanel reviewCommentPanel;
+	private FlowPanel reviewPanel;
 
 
 	public ReviewSubmissionWidgetRenderer(ReviewSubmissionWidget owner) {
@@ -44,32 +45,35 @@ public class ReviewSubmissionWidgetRenderer
 	@Override
 	protected void renderMainPanel() {
 		log.enter("renderMainPanel");
-		this.mainPanel.add(h2Widget("Review submission")); //TODO i18n
+		
+		this.mainPanel.add(h2Widget("Review Submission")); //TODO i18n
 		this.submissionPropertiesWidget = new SubmissionPropertiesWidget();
 		this.mainPanel.add(this.submissionPropertiesWidget);
 
 		
-		this.reviewCommentPanel = new FlowPanel();
-		this.reviewCommentPanel.add(h3Widget("Review")); //TODO i18n
+		this.reviewPanel = new FlowPanel();
+		this.reviewPanel.add(h3Widget("Acceptance Review")); //TODO i18n
 		
-		this.commentTextArea = new TextArea();
-		this.reviewCommentPanel.add(this.commentTextArea);
-
+		this.reviewPanel.add(pWidget("Click the \"Accept Submission\" button below to assert that the submission meets all acceptance criteria and will be curated."));
+		this.reviewPanel.add(pWidget("Click the \"Cancel\" button if you do not wish to accept the submission at this time."));
 		
 		FlowPanel buttonsPanel = new FlowPanel();
 		
-		this.acceptButton = new Button("Accept Submission into "+Configuration.getNetworkName()); //TODO i18n
+		this.acceptButton = new Button("Accept Submission"); //TODO i18n
 		this.cancelButton = new Button("Cancel"); //TODO i18n
 		
 		buttonsPanel.add(acceptButton);
 		buttonsPanel.add(cancelButton);
 		buttonsPanel.setVisible(true);
 		
-		this.reviewCommentPanel.add(buttonsPanel);
+		this.reviewPanel.add(buttonsPanel);
 
+		this.reviewPanel.add(pWidget("Use the text area below to enter any comments about the submission. (N.B., these comments will only be saved if the submission is accepted.)"));
 		
+		this.commentTextArea = new TextArea();
+		this.reviewPanel.add(this.commentTextArea);
 
-		this.mainPanel.add(this.reviewCommentPanel);
+		this.mainPanel.add(this.reviewPanel);
 		
 		log.leave();
 	}
@@ -80,62 +84,47 @@ public class ReviewSubmissionWidgetRenderer
 	public void registerHandlersForModelChanges() {
 		super.registerHandlersForModelChanges();
 		
-		this.model.addChangeHandler(new SubmissionEntryChangeHandler() {
-				public void onChange(SubmissionEntryChangeEvent e) {
-					log.enter("SubmissionEntryChangeEvent.onChange");
+		HandlerRegistration b = this.model.addSubmissionEntryChangeHandler(new SubmissionEntryChangeHandler() {
+			public void onChange(SubmissionEntryChangeEvent e) {
 
-					
-					if (e.getAfter() != null)
-						submissionPropertiesWidget.setEntry(e.getAfter());
-					
-					
-					log.leave();
-				}
+				syncUIWithSubmissionEntry(e.getAfter());
+				
+			}
+		});
 
-			}, SubmissionEntryChangeEvent.TYPE);
+		this.modelChangeHandlerRegistrations.add(b);
 	}
 
 
+	
+	
 	@Override
 	public void registerHandlersForChildWidgetEvents() {
 		super.registerHandlersForChildWidgetEvents();
 		
-		this.acceptButton.addClickHandler(new ClickHandler() {
+		HandlerRegistration a = this.acceptButton.addClickHandler(new ClickHandler() {
 			
 			public void onClick(ClickEvent arg0) {
 				log.enter("clickHandler.onClick");
 				
-				
 				controller.acceptSubmission(commentTextArea.getText());
 			
-				
 				log.leave();
 			}
 			
 		});
 		
-		this.cancelButton.addClickHandler(new ClickHandler() {
+		this.childWidgetEventHandlerRegistrations.add(a);
+		
+		HandlerRegistration b = this.cancelButton.addClickHandler(new ClickHandler() {
 			
 			public void onClick(ClickEvent arg0) {
 				owner.fireEvent(new CancelEvent());
 			}
 			
 		});
-		
-		/*
-		 * We only have one action 
-		 * 
-		for (HasClickHandlers action : this.viewDatasetActions) {
-		
-			action.addClickHandler(new ClickHandler() {
-				
-				public void onClick(ClickEvent arg0) {
-					owner.fireViewDatasetActionEvent();
-				}
-				
-			});
-		}
-		*/
+
+		this.childWidgetEventHandlerRegistrations.add(b);
 		
 	}
 	
@@ -146,23 +135,38 @@ public class ReviewSubmissionWidgetRenderer
 
 		super.syncUI();
 		
-		this.submissionPropertiesWidget.setEntry(this.model.getSubmissionEntry());
+		this.syncUIWithSubmissionEntry(this.model.getSubmissionEntry());
 		
 		this.commentTextArea.setValue("");
 
-		synchUIWithStatus(this.model.getStatus());
+		syncUIWithStatus(this.model.getStatus());
+		
+		log.leave();
+	}
+
+	
+	
+	/**
+	 * @param entry
+	 */
+	protected void syncUIWithSubmissionEntry(SubmissionEntry entry) {
+		log.enter("syncUIWithSubmissionEntry");
+
+		submissionPropertiesWidget.setEntry(entry);
 		
 		log.leave();
 	}
 
 
-	private void synchUIWithStatus(Status status) {
+
+
+	private void syncUIWithStatus(Status status) {
 		log.enter("syncUIWithStatus");
 		
 		if (status instanceof AsyncWidgetModel.InitialStatus) {
 			
 			log.debug("initial");
-			this.reviewCommentPanel.setVisible(true);
+			this.reviewPanel.setVisible(true);
 			
 		}
 		else if (status instanceof ReviewSubmissionWidgetModel.SubmissionRetrievedStatus) {
@@ -175,21 +179,21 @@ public class ReviewSubmissionWidgetRenderer
 
 				log.debug("already reviewed");
 				
-				this.reviewCommentPanel.setVisible(false);
+				this.reviewPanel.setVisible(false);
 				
 			}
 			else {
 			
 				log.debug("not yet reviewed");
 				
-				this.reviewCommentPanel.setVisible(true);
+				this.reviewPanel.setVisible(true);
 				
 			}
 			
 		}
 		else if (status instanceof ReviewSubmissionWidgetModel.ReviewCreatedStatus) {
 			
-			this.reviewCommentPanel.setVisible(false);
+			this.reviewPanel.setVisible(false);
 
 			log.debug("Review created");
 			// TODO Set created panel status

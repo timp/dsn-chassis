@@ -24,12 +24,17 @@ public interface SubmissionEntry extends AtomEntry {
 
 	public DatasetLink getDatasetLink();
 
-	public Curator getCurator();
+	public String getCurator();
 
 	public List<ReviewLink> getReviewLinks();
 	
     /** Submissions currently only get one review */
 	public ReviewLink getReviewLink();
+
+	/**
+	 * @param curatorEmail
+	 */
+	public void setCurator(String curatorEmail);
 	
 
 }

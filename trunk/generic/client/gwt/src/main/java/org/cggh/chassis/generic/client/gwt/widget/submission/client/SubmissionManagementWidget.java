@@ -4,7 +4,9 @@
 package org.cggh.chassis.generic.client.gwt.widget.submission.client;
 
 import org.cggh.chassis.generic.atomext.client.review.ReviewEntry;
+import org.cggh.chassis.generic.atomext.client.submission.SubmissionEntry;
 import org.cggh.chassis.generic.atomui.client.CreateSuccessEvent;
+import org.cggh.chassis.generic.atomui.client.UpdateSuccessEvent;
 import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.DataFileActionEvent;
 import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.DataFileActionHandler;
 import org.cggh.chassis.generic.client.gwt.widget.data.client.datafile.ViewDataFileWidget;
@@ -70,19 +72,15 @@ public class SubmissionManagementWidget
 		this.viewDataFileWidget = new CustomViewDataFileWidget();
 		this.viewStudyWidget = new CustomViewStudyWidget();
 		this.reviewSubmissionWidget = new ReviewSubmissionWidget();
+		this.selectCuratorWidget = new SelectCuratorWidget();
 		
 		this.mainChildren.add(this.listSubmissionsWidget);
 		this.mainChildren.add(this.viewSubmissionWidget);
 		this.mainChildren.add(this.viewDataFileWidget);
 		this.mainChildren.add(this.viewStudyWidget);
 		this.mainChildren.add(this.reviewSubmissionWidget);
+		this.mainChildren.add(this.selectCuratorWidget);
 		
-		this.selectCuratorWidget = new SelectCuratorWidget();
-		
-		this.selectCuratorDialog = new DialogBox();
-		this.selectCuratorDialog.setText("Assign Curator"); // TODO  i18n
-		this.selectCuratorDialog.setWidget(this.selectCuratorWidget);
-
 		log.leave();
 	}
 
@@ -163,7 +161,7 @@ public class SubmissionManagementWidget
 					public void onCreateSuccess(
 							CreateSuccessEvent<ReviewEntry> e) {
 						
-						viewSubmissionWidget.refresh();
+						viewSubmissionWidget.refresh(); // TODO this causes null pointer exceptions
 						setActiveChild(viewSubmissionWidget);
 						
 					} }));
@@ -176,19 +174,30 @@ public class SubmissionManagementWidget
 
 			public void onAction(SubmissionActionEvent e) {
 
-				selectCuratorWidget.reset();
-				selectCuratorWidget.setSubmissionEntry(e.getEntry());
-				selectCuratorWidget.refreshCurators();
-				selectCuratorDialog.center();
+				selectCuratorWidget.retrieveSubmissionEntry(e.getEntry().getEditLink().getHref());
+				setActiveChild(selectCuratorWidget);
 				
 			}
         	
         };
         
         HandlerRegistration a = this.viewSubmissionWidget.addAssignCuratorActionHandler(assignCuratorActionHandler);
-        
         this.childWidgetEventHandlerRegistrations.add(a);
+        
+        
+        UpdateSubmissionSuccessHandler assignCuratorSuccessHandler = new UpdateSubmissionSuccessHandler() {
+			
+			public void onUpdateSuccess(UpdateSuccessEvent<SubmissionEntry> e) {
 
+				viewSubmissionWidget.refresh(); // TODO this causes null pointer exceptions
+				setActiveChild(viewSubmissionWidget);
+				
+			}
+			
+		};
+		
+		HandlerRegistration b = this.selectCuratorWidget.addUpdateSubmissionSuccessHandler(assignCuratorSuccessHandler);
+		this.childWidgetEventHandlerRegistrations.add(b);
 	}
 
 	
@@ -202,7 +211,7 @@ public class SubmissionManagementWidget
 		this.menu.addItem(new MenuItem("submissions pending review", 
 				listSubmissionsFilteredByExistanceOfReviewCommand(Boolean.FALSE) ));
 		
-		this.menu.addItem(new MenuItem("reviewed submissions ", 
+		this.menu.addItem(new MenuItem("accepted submissions ", 
 				listSubmissionsFilteredByExistanceOfReviewCommand(Boolean.TRUE) ));
 		
 		this.menu.addItem(new MenuItem("all submissions", 
