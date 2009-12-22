@@ -47,7 +47,7 @@ public class ViewSubmissionWidgetRenderer extends
 	
 	
 	
-	public class ReviewSubmissionActionHandler implements
+	public class BubbleSubmissionEventHandler implements
 			SubmissionActionHandler {
 
 		public void onAction(SubmissionActionEvent e) {
@@ -167,8 +167,11 @@ public class ViewSubmissionWidgetRenderer extends
 		
 		if (this.actionsWidget != null ) {
 			
-			HandlerRegistration aa = this.actionsWidget.addReviewSubmissionActionHandler(new ReviewSubmissionActionHandler());
+			HandlerRegistration aa = this.actionsWidget.addReviewSubmissionActionHandler(new BubbleSubmissionEventHandler());
 			this.childWidgetEventHandlerRegistrations.add(aa);
+			
+			HandlerRegistration ab = this.actionsWidget.addAssignCuratorActionHandler(new BubbleSubmissionEventHandler());
+			this.childWidgetEventHandlerRegistrations.add(ab);
 		}
 		
         log.leave();

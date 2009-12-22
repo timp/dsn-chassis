@@ -1,7 +1,6 @@
 package org.cggh.chassis.generic.client.gwt.widget.submission.client;
 
 import org.cggh.chassis.generic.client.gwt.common.client.RenderUtils;
-import org.cggh.chassis.generic.client.gwt.widget.submission.client.ViewSubmissionWidgetRenderer.ReviewSubmissionActionHandler;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.ChassisWidget;
@@ -19,7 +18,7 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class SubmissionActionsWidget extends ChassisWidget {
 
-    private Log log = LogFactory.getLog(SubmissionActionsWidget.class);
+	private Log log = LogFactory.getLog(SubmissionActionsWidget.class);
 	private Anchor reviewSubmissionAction, assignCuratorAction;
 
 	@Override
@@ -35,6 +34,7 @@ public class SubmissionActionsWidget extends ChassisWidget {
 				this.reviewSubmissionAction,
 				this.assignCuratorAction
 		};
+		
 		FlowPanel actionsPanel = RenderUtils.renderActionsPanel(actions);
 
 		this.add(actionsPanel);
@@ -52,6 +52,10 @@ public class SubmissionActionsWidget extends ChassisWidget {
 
 		// store registrations so we can remove handlers later if necessary
 		this.childWidgetEventHandlerRegistrations.add(a);
+		
+		HandlerRegistration b = this.assignCuratorAction.addClickHandler(new AssignCuratorClickHandler());
+		
+		this.childWidgetEventHandlerRegistrations.add(b);
 		
 		log.leave();
 	}
@@ -71,15 +75,51 @@ public class SubmissionActionsWidget extends ChassisWidget {
 
 	}
 
+    
+    
+    
+	private class AssignCuratorClickHandler implements ClickHandler {
+
+		private Log log = LogFactory.getLog(AssignCuratorClickHandler.class);
+
+		public void onClick(ClickEvent arg0) {
+			log.enter("onClick");
+			
+			log.debug("map click event to assign curator action event and fire");
+			fireEvent(new AssignCuratorActionEvent());
+			
+			log.leave();
+		}
+
+	}
+
+
+
+
 
 
 
 	public HandlerRegistration addReviewSubmissionActionHandler(
-			ReviewSubmissionActionHandler reviewSubmissionActionHandler) {
+			SubmissionActionHandler h) {
+		
 		log.enter("addReviewSubmissionActionHandler");
-		HandlerRegistration hr = this.addHandler(reviewSubmissionActionHandler, ReviewSubmissionActionEvent.TYPE);
+
+		HandlerRegistration hr = this.addHandler(h, ReviewSubmissionActionEvent.TYPE);
+
 		log.leave();
 		return hr;
+	}
+	
+	
+	
+	public HandlerRegistration addAssignCuratorActionHandler(
+		SubmissionActionHandler h
+	) {
+		
+		HandlerRegistration hr = this.addHandler(h, AssignCuratorActionEvent.TYPE);
+		
+		return hr;
+		
 	}
 
 

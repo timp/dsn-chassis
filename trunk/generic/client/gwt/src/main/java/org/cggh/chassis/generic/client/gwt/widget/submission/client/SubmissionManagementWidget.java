@@ -18,8 +18,10 @@ import org.cggh.chassis.generic.widget.client.CancelHandler;
 import org.cggh.chassis.generic.widget.client.MenuEvent;
 import org.cggh.chassis.generic.widget.client.MultiWidget;
 
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -47,6 +49,9 @@ public class SubmissionManagementWidget
 	ViewStudyWidget viewStudyWidget;
 	ReviewSubmissionWidget reviewSubmissionWidget;
 	
+	DialogBox assignCuratorDialog;
+	AssignCuratorWidget assignCuratorWidget;
+	
 	
 	public SubmissionManagementWidget() {
 		super(false, true);
@@ -72,6 +77,12 @@ public class SubmissionManagementWidget
 		this.mainChildren.add(this.viewStudyWidget);
 		this.mainChildren.add(this.reviewSubmissionWidget);
 		
+		this.assignCuratorWidget = new AssignCuratorWidget();
+		
+		this.assignCuratorDialog = new DialogBox();
+		this.assignCuratorDialog.setText("Assign Curator"); // TODO  i18n
+		this.assignCuratorDialog.setWidget(this.assignCuratorWidget);
+
 		log.leave();
 	}
 
@@ -156,6 +167,24 @@ public class SubmissionManagementWidget
 						setActiveChild(viewSubmissionWidget);
 						
 					} }));
+  
+        
+        
+        
+        
+        SubmissionActionHandler assignCuratorActionHandler = new SubmissionActionHandler() {
+
+			public void onAction(SubmissionActionEvent e) {
+
+				assignCuratorDialog.center();
+				
+			}
+        	
+        };
+        
+        HandlerRegistration a = this.viewSubmissionWidget.addAssignCuratorActionHandler(assignCuratorActionHandler);
+        
+        this.childWidgetEventHandlerRegistrations.add(a);
 
 	}
 
