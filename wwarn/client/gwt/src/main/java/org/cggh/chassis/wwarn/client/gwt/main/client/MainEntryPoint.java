@@ -33,7 +33,7 @@ public class MainEntryPoint implements EntryPoint {
 //		LogFactory.show("org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.DatasetDataSharingWidget");
 //		LogFactory.show("org.cggh.chassis.generic.client.gwt.widget.data.client.dataset.ShareDatasetWidget*");
 //		LogFactory.show("org.cggh.chassis.generic.client.gwt.widget.study.*");
-		LogFactory.show("org.cggh.chassis.generic.client.gwt.widget.submission.*");
+		LogFactory.show("org.cggh.chassis.generic.client.gwt.widget.submission.client.SelectCuratorWidget*");
 	}
 
 

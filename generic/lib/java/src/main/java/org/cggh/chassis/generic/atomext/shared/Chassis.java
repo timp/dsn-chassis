@@ -32,6 +32,7 @@ public class Chassis {
 		public static final String STARTYEAR = "startYear";
 		public static final String ENDYEAR = "endYear";
 		public static final String REVIEW = "review";
+		public static final String CURATOR = "curator";
 
 	}
 	

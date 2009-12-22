@@ -105,8 +105,8 @@ public class SubmissionPropertiesWidget extends ChassisWidget {
 	/**
 	 * @param object
 	 */
-	private void syncCurator(Curator curator) {
-		String email = (curator != null) ? curator.getEmail() : "no curator has been assigned";
+	private void syncCurator(String curator) {
+		String email = (curator != null) ? curator : "no curator has been assigned";
 		this.curatorLabel.setText(email);
 	}
 

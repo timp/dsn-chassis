@@ -9,6 +9,7 @@ import java.util.List;
 import org.cggh.chassis.generic.async.client.Function;
 import org.cggh.chassis.generic.async.client.Functional;
 import org.cggh.chassis.generic.xml.client.ElementWrapperImpl;
+import org.cggh.chassis.generic.xml.client.XML;
 import org.cggh.chassis.generic.xml.client.XMLNS;
 
 import com.google.gwt.xml.client.Element;
@@ -388,6 +389,15 @@ public class AtomEntryImpl extends ElementWrapperImpl implements AtomEntry {
 	 */
 	private void addLinkBefore(Element e, AtomLink link) {
 		this.getElement().insertBefore(link.getElement(), e);
+	}
+
+
+
+
+	public void clearInlineLinks() {
+		for (AtomLink link : this.getLinks()) {
+			XML.removeAllChildElements(link.getElement());
+		}
 	}
 
 

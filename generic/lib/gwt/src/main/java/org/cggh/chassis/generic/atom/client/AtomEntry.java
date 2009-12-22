@@ -27,7 +27,8 @@ public interface AtomEntry extends ElementWrapper {
 	public void setLinks(List<AtomLink> links); // N.B. implementations will need to prevent removal of edit and edit-media links
 	public void addLink(AtomLink link);
 	public void removeLink(AtomLink link); // N.B. implementations will need to prevent removal of edit and edit-media links
-
+	public void clearInlineLinks();
+	
 	// read-write
 	
 	public String getTitle();

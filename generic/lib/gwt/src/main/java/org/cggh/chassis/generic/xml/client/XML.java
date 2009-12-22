@@ -320,6 +320,15 @@ public class XML {
 			parent.removeChild(child);
 		}
 	}
+	
+	
+	
+	public static void removeAllChildElements(Element parent) {
+		List<Element> children = XML.elements(parent.getChildNodes());
+		for (Element child : children) {
+			parent.removeChild(child);
+		}
+	}
 
 	
 	

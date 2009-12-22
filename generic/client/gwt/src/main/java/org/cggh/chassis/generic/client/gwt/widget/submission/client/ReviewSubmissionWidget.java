@@ -57,13 +57,14 @@ public class ReviewSubmissionWidget
 
 		@Override
 		public String createMnemonic() {
-			log.enter("createMnemonic");
-			// TODO Review whether this can be null
-			log.leave();
-			if (model.getSubmissionEntry() != null)
-				return model.getSubmissionEntry().getId();
-			else 
-				return null;
+//			log.enter("createMnemonic");
+//			// TODO Review whether this can be null
+//			log.leave();
+//			if (model.getSubmissionEntry() != null)
+//				return model.getSubmissionEntry().getId();
+//			else 
+//				return null;
+			return model.getSubmissionEntryId();
 		}
 
 		@Override
