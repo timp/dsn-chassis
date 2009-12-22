@@ -49,8 +49,8 @@ public class SubmissionManagementWidget
 	ViewStudyWidget viewStudyWidget;
 	ReviewSubmissionWidget reviewSubmissionWidget;
 	
-	DialogBox assignCuratorDialog;
-	AssignCuratorWidget assignCuratorWidget;
+	DialogBox selectCuratorDialog;
+	SelectCuratorWidget selectCuratorWidget;
 	
 	
 	public SubmissionManagementWidget() {
@@ -77,11 +77,11 @@ public class SubmissionManagementWidget
 		this.mainChildren.add(this.viewStudyWidget);
 		this.mainChildren.add(this.reviewSubmissionWidget);
 		
-		this.assignCuratorWidget = new AssignCuratorWidget();
+		this.selectCuratorWidget = new SelectCuratorWidget();
 		
-		this.assignCuratorDialog = new DialogBox();
-		this.assignCuratorDialog.setText("Assign Curator"); // TODO  i18n
-		this.assignCuratorDialog.setWidget(this.assignCuratorWidget);
+		this.selectCuratorDialog = new DialogBox();
+		this.selectCuratorDialog.setText("Assign Curator"); // TODO  i18n
+		this.selectCuratorDialog.setWidget(this.selectCuratorWidget);
 
 		log.leave();
 	}
@@ -176,7 +176,10 @@ public class SubmissionManagementWidget
 
 			public void onAction(SubmissionActionEvent e) {
 
-				assignCuratorDialog.center();
+				selectCuratorWidget.reset();
+				selectCuratorWidget.setSubmissionEntry(e.getEntry());
+				selectCuratorWidget.refreshCurators();
+				selectCuratorDialog.center();
 				
 			}
         	

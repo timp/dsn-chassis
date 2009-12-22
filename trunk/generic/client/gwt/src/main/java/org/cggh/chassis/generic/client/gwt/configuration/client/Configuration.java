@@ -53,6 +53,10 @@ public class Configuration {
 		return (useUnitTestConfiguration) ? testUserDetailsServiceEndpointUrl : JsConfiguration.getUserDetailsServiceEndpointUrl();
 	}
 	
+	public static String getUserQueryServiceUrl() {
+		return JsConfiguration.getUserQueryServiceUrl();
+	}
+	
 	public static String getUserChassisRolesPrefix() {
 		return (useUnitTestConfiguration) ? testUserChassisRolesPrefix : JsConfiguration.getUserChassisRolesPrefix();
 	}

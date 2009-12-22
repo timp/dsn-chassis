@@ -37,8 +37,8 @@ public class ReviewSubmissionWidgetModel
         return this.addChangeHandler(h, SubmissionEntryChangeEvent.TYPE);		
 	}
 	
-	public static class RetreiveSubmissionPendingStatus extends AsyncRequestPendingStatus {}
-	public static final Status STATUS_RETRIEVE_SUBMISSION_PENDING = new RetreiveSubmissionPendingStatus();
+	public static class RetrieveSubmissionPendingStatus extends AsyncRequestPendingStatus {}
+	public static final Status STATUS_RETRIEVE_SUBMISSION_PENDING = new RetrieveSubmissionPendingStatus();
 	
 	public static class CreateReviewPendingStatus extends AsyncRequestPendingStatus {}
 	public static final Status STATUS_CREATE_REVIEW_PENDING = new CreateReviewPendingStatus();

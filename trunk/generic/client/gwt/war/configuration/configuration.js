@@ -10,6 +10,7 @@ CHASSIS.existService = "/chassis-generic-service-exist";
 CHASSIS.uploadService = "/chassis-generic-service-upload";
 
 CHASSIS.userDetailsServiceEndpointUrl = CHASSIS.userService + "/gwtrpc/userdetails";
+CHASSIS.userQueryServiceUrl = CHASSIS.userService + "/users";
 
 CHASSIS.studyCollectionUrl = CHASSIS.existService + "/atom/edit/studies";
 CHASSIS.studyQueryServiceUrl = CHASSIS.existService + "/query/studies.xql";
