@@ -54,7 +54,8 @@ public class ReviewSubmissionWidgetRenderer
 		this.reviewPanel = new FlowPanel();
 		this.reviewPanel.add(h3Widget("Acceptance Review")); //TODO i18n
 		
-		this.reviewPanel.add(pWidget("Click the \"Accept Submission\" button below to assert that the submission meets all acceptance criteria and will be curated."));
+		this.reviewPanel.add(pWidget("Click the \"Accept Submission\" button below to assert that the submission " + 
+				"meets all acceptance criteria and will be curated."));
 		this.reviewPanel.add(pWidget("Click the \"Cancel\" button if you do not wish to accept the submission at this time."));
 		
 		FlowPanel buttonsPanel = new FlowPanel();
@@ -68,7 +69,8 @@ public class ReviewSubmissionWidgetRenderer
 		
 		this.reviewPanel.add(buttonsPanel);
 
-		this.reviewPanel.add(pWidget("Use the text area below to enter any comments about the submission. (N.B., these comments will only be saved if the submission is accepted.)"));
+		this.reviewPanel.add(pWidget("Use the text area below to enter any comments about the submission." + 
+				" (N.B., these comments will only be saved if the submission is accepted.)"));
 		
 		this.commentTextArea = new TextArea();
 		this.reviewPanel.add(this.commentTextArea);
