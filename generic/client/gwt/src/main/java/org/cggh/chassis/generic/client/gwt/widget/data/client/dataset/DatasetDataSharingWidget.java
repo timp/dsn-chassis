@@ -117,6 +117,7 @@ public class DatasetDataSharingWidget extends ChassisWidget {
 							" on " + strong(reviewLink.getEntry().getPublished()) + ".")); // TODO i18n
 					
 				}
+				// TODO Add Curator assignment
 				
 			}
 			
@@ -128,8 +129,6 @@ public class DatasetDataSharingWidget extends ChassisWidget {
 			
 		}
 		
-		// TODO Add Gatekeeper review
-		// TODO Add Curator assignment
 		
 		
 		log.leave();
