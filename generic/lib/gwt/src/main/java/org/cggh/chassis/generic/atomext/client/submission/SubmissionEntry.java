@@ -26,6 +26,9 @@ public interface SubmissionEntry extends AtomEntry {
 
 	public String getCurator();
 
+	/**
+	 * @return a possibly empty list
+	 */
 	public List<ReviewLink> getReviewLinks();
 	
     /** Submissions currently only get one review */
