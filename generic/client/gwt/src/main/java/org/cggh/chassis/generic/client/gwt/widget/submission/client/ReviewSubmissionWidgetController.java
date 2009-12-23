@@ -69,6 +69,8 @@ public class ReviewSubmissionWidgetController
 				
 				model.setStatus(ReviewSubmissionWidgetModel.STATUS_SUBMISSION_RETRIEVED);
 				
+				log.debug("Model status - " + model.getStatus().getClass());
+				
 				log.leave();
 				return in;
 			}
