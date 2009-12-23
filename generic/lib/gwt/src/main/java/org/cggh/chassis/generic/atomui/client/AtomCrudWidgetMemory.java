@@ -23,7 +23,8 @@ public class AtomCrudWidgetMemory<E extends AtomEntry, F extends AtomFeed<E>> ex
 	private AtomCrudWidgetController<E, F, ?> controller;
 
 	
-	
+	private static String RETRIEVEEXPANDED_MNEMONIC_URL_ABREVIATION = "re";
+	private static String RETRIEVE_MNEMONIC_URL_ABREVIATION = "r";
 	
 	
 	/**
@@ -53,10 +54,10 @@ public class AtomCrudWidgetMemory<E extends AtomEntry, F extends AtomFeed<E>> ex
 		AtomCrudRequest r = model.getLastRequest();
 		
 		if (r.getRequestType() == AtomCrudRequest.RequestType.RETRIEVEEXPANDED) {
-			mnemonic += "re;id=" + r.getEntryId();
+			mnemonic += RETRIEVEEXPANDED_MNEMONIC_URL_ABREVIATION + ";id=" + r.getEntryId();
 		}
 		if (r.getRequestType() == AtomCrudRequest.RequestType.RETRIEVE) {
-			mnemonic += "r;url=" + r.getEntryUrl();
+			mnemonic += RETRIEVE_MNEMONIC_URL_ABREVIATION + ";url=" + r.getEntryUrl();
 		}
 		
 		log.debug("mnemonic: "+mnemonic);
