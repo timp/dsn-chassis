@@ -69,6 +69,7 @@ public class ReviewSubmissionWidget
 
 		@Override
 		public Deferred<WidgetMemory> remember(String mnemonic) {
+			log.enter("remember");
 			Deferred<SubmissionEntry> deferredEntry = controller.retrieveSubmissionEntry(mnemonic);
 			Deferred<WidgetMemory> deferredSelf = deferredEntry.adapt(new Function<SubmissionEntry, WidgetMemory>() {
 
@@ -77,6 +78,7 @@ public class ReviewSubmissionWidget
 				} 
 				
 			});
+			log.leave();
 			return deferredSelf;
 		}
 
