@@ -176,6 +176,8 @@ public class ShareDatasetWidgetRenderer
 		
 		panel.add(pWidget("This dataset has already been shared with "+Configuration.getNetworkName()+"."));
 
+
+		// TODO Not sure this actually does anything
 		Anchor viewDatasetAction = RenderUtils.renderActionAnchor("back to view dataset...");
 
 		panel.add(viewDatasetAction);
