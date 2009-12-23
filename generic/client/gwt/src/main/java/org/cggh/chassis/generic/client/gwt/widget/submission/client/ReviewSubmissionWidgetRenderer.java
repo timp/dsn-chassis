@@ -1,16 +1,20 @@
 package org.cggh.chassis.generic.client.gwt.widget.submission.client;
 
 import org.cggh.chassis.generic.atomext.client.submission.SubmissionEntry;
+import org.cggh.chassis.generic.client.gwt.common.client.RenderUtils;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetRenderer;
 import org.cggh.chassis.generic.widget.client.CancelEvent;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.Status;
+import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.StatusChangeEvent;
+import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.StatusChangeHandler;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.TextArea;
@@ -34,6 +38,7 @@ public class ReviewSubmissionWidgetRenderer
 	private Button cancelButton;
 
 	private FlowPanel reviewPanel;
+	private FlowPanel reviewedPanel;
 
 
 	public ReviewSubmissionWidgetRenderer(ReviewSubmissionWidget owner) {
@@ -77,6 +82,15 @@ public class ReviewSubmissionWidgetRenderer
 
 		this.mainPanel.add(this.reviewPanel);
 		
+		this.reviewedPanel = new FlowPanel();
+		this.reviewedPanel.add(h3Widget("Reviewed"));
+		this.reviewedPanel.add(pWidget("This submission has been reviewed.")); // TODO i18n
+
+		// TODO Review ... this action actually does nothing, cf ShareDatasetWidgetRenderer.renderDatasetAlreadySharedPanel
+		//Anchor viewSubmissionAction = RenderUtils.renderActionAnchor("back to view submission..."); // TODO i18n
+		//this.reviewedPanel.add(viewSubmissionAction);
+		this.mainPanel.add(this.reviewedPanel);
+		
 		log.leave();
 	}
 
@@ -95,6 +109,15 @@ public class ReviewSubmissionWidgetRenderer
 		});
 
 		this.modelChangeHandlerRegistrations.add(b);
+		
+		this.model.addStatusChangeHandler(new StatusChangeHandler() {
+			
+			public void onStatusChanged(StatusChangeEvent e) {
+				syncUIWithStatus(e.getAfter());
+			}
+			
+		});
+
 	}
 
 
@@ -139,9 +162,6 @@ public class ReviewSubmissionWidgetRenderer
 		
 		this.syncUIWithSubmissionEntry(this.model.getSubmissionEntry());
 		
-		this.commentTextArea.setValue("");
-
-		syncUIWithStatus(this.model.getStatus());
 		
 		log.leave();
 	}
@@ -155,6 +175,9 @@ public class ReviewSubmissionWidgetRenderer
 		log.enter("syncUIWithSubmissionEntry");
 
 		submissionPropertiesWidget.setEntry(entry);
+		this.commentTextArea.setValue("");
+
+		syncUIWithStatus(this.model.getStatus());
 		
 		log.leave();
 	}
@@ -168,20 +191,22 @@ public class ReviewSubmissionWidgetRenderer
 		if (status instanceof AsyncWidgetModel.InitialStatus) {
 			
 			log.debug("initial");
-			this.reviewPanel.setVisible(true);
+			this.reviewPanel.setVisible(false);
+			this.reviewedPanel.setVisible(false);
 			
 		}
 		else if (status instanceof ReviewSubmissionWidgetModel.SubmissionRetrievedStatus) {
 
 			log.debug("has submission already been reviewed?");
 			
-			boolean alreadyReviewed = (this.model.getSubmissionEntry().getReviewLinks() != null);
+			boolean alreadyReviewed = (this.model.getSubmissionEntry().getReviewLink() != null);
 			
 			if (alreadyReviewed) {
 
 				log.debug("already reviewed");
 				
 				this.reviewPanel.setVisible(false);
+				this.reviewedPanel.setVisible(true);
 				
 			}
 			else {
@@ -189,6 +214,7 @@ public class ReviewSubmissionWidgetRenderer
 				log.debug("not yet reviewed");
 				
 				this.reviewPanel.setVisible(true);
+				this.reviewedPanel.setVisible(false);
 				
 			}
 			
@@ -196,12 +222,21 @@ public class ReviewSubmissionWidgetRenderer
 		else if (status instanceof ReviewSubmissionWidgetModel.ReviewCreatedStatus) {
 			
 			this.reviewPanel.setVisible(false);
+			this.reviewedPanel.setVisible(true);
 
 			log.debug("Review created");
-			// TODO Set created panel status
+			
+		}
+		else if (status instanceof ReviewSubmissionWidgetModel.RetrieveSubmissionPendingStatus) {
+			
+			this.reviewPanel.setVisible(false);
+			this.reviewedPanel.setVisible(true);
+
+			log.debug("RetrieveSubmissionPendingStatus");
 			
 		}
 		else { 
+			// TODO fail hard
 			log.debug("Uncatered for status " + status.getClass().getName() );
 		}
 		log.leave();
