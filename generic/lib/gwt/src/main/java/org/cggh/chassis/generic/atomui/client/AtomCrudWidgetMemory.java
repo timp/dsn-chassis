@@ -81,14 +81,14 @@ public class AtomCrudWidgetMemory<E extends AtomEntry, F extends AtomFeed<E>> ex
 
 		Deferred<E> deferredEntry;
 		
-		if (mnemonic.startsWith("re;")) {
+		if (mnemonic.startsWith(RETRIEVEEXPANDED_MNEMONIC_URL_ABREVIATION +";")) {
 
 			String id = mnemonic.substring(6);
 			log.debug("id="+id);
 			deferredEntry = controller.retrieveExpandedEntry(id);
 
 		}
-		else if (mnemonic.startsWith("r;")) {
+		else if (mnemonic.startsWith(RETRIEVE_MNEMONIC_URL_ABREVIATION +";")) {
 
 			String url = mnemonic.substring(6);
 			log.debug("url="+url);
