@@ -58,9 +58,11 @@ public class SelectCuratorWidget
 
 	
 	public void retrieveSubmissionEntry(String entryUrl) {
+		log.enter("retrieveSubmissionEntry");
 		
 		this.controller.retrieveSubmissionEntry(entryUrl);
 
+		log.leave();
 	}
 	
 	
