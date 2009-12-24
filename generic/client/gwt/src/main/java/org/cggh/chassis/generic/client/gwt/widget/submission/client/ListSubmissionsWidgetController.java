@@ -40,8 +40,7 @@ public class ListSubmissionsWidgetController {
 
 			this.model.setStatus(AsyncWidgetModel.STATUS_ASYNC_REQUEST_PENDING);
 
-			log
-					.debug("set up async request for submissions pending acceptance review");
+			log.debug("set up async request for submissions pending acceptance review");
 
 			SubmissionQuery query = new SubmissionQuery();
 
@@ -53,8 +52,7 @@ public class ListSubmissionsWidgetController {
 
 			log.debug("add callbacks");
 			deferredResults.addCallback(new RefreshSubmissionsCallback());
-			deferredResults
-					.addErrback(new AsyncErrback(this.owner, this.model));
+			deferredResults.addErrback(new AsyncErrback(this.owner, this.model));
 		}
 		log.leave();
 	}
