@@ -6,7 +6,6 @@ package org.cggh.chassis.generic.client.gwt.widget.submission.client;
 import java.util.List;
 
 import org.cggh.chassis.generic.atom.client.AtomAuthor;
-import org.cggh.chassis.generic.atomext.client.submission.Curator;
 import org.cggh.chassis.generic.atomext.client.submission.SubmissionEntry;
 import org.cggh.chassis.generic.client.gwt.common.client.CommonStyles;
 import org.cggh.chassis.generic.client.gwt.common.client.RenderUtils;
