@@ -3,7 +3,7 @@
   <parent>
     <groupId>org.cggh.chassis</groupId>
     <artifactId>chassis-parent</artifactId>
-    <version>0.1-alpha-6-SNAPSHOT</version>
+    <version>0.1-alpha-6</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>chassis-generic-service-exist</artifactId>
@@ -75,7 +75,7 @@
                     <properties>
                         <cargo.tomcat.manager.url>http://localhost:8080/manager</cargo.tomcat.manager.url>
                         <cargo.remote.username>admin</cargo.remote.username>
-                        <cargo.remote.password></cargo.remote.password>
+                        <cargo.remote.password />
                     </properties>
                 </configuration>
                 <deployer>
