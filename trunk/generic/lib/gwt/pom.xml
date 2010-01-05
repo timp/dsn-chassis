@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.cggh.chassis</groupId>
     <artifactId>chassis-parent</artifactId>
-    <version>0.1-alpha-6</version>
+    <version>0.1-alpha-7-SNAPSHOT</version>
   </parent>
   <artifactId>chassis-generic-lib-gwt</artifactId>
   <packaging>jar</packaging>
