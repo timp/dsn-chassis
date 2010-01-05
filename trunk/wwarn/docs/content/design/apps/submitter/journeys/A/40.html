@@ -17,11 +17,16 @@
   <p>Files uploaded so far...</p>
   <p>
     <table style="width: 600px; text-align: left" border="1">
-      <tr><th>File Name</th><th>Type</th><th>Summary</th><th>Uploaded</th></tr>
-      <tr><td>TODO</td></tr>
+      <tr><th>File Name</th><th>Type</th><th>Summary</th><th>Uploaded</th><th>Actions</th></tr>
+      <tr><td>my-data.xls</td><td>Data File</td><td>Lots of great data</td><td>2009-12-01T12:01</td><td><a href="40.html">delete</a></td></tr>
     </table>
-  </p>  
-  <h3>Upload a File</h3>
+  </p>
+  <form action="50.html">
+	  <p>
+		<input style="font-size:130%" type="submit" value="Proceed"/>	  
+	  </p>
+  </form>  
+  <h3>Upload Another File</h3>
   <form action="40.html">
     <p>Please select the file to upload from your computer...</p>
     <p><input type="file"/></p>
@@ -36,6 +41,7 @@
         <option>Other</option>
       </select>
     </p>
+    <p><input type="submit" value="Upload File"></input></p>
   </form>
 </body>
 </html>
