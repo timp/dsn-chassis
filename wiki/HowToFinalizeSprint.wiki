@@ -30,13 +30,15 @@ The artifact id is made up of the following elements
   * File type 
 
 = Release Procedure = 
-This is delegated to Maven: 
+This is delegated to Maven, accept teh Maven generated defaults: 
 <pre>
 mvn release:prepare
 mvn release:perform
 </pre>
 
 = Notes = 
+
+The maven plugin ensures that there are no uncommitted changes.
 
 A non-SNAPSHOT build should not depend upon any SNAPSHOT artifacts.
 
