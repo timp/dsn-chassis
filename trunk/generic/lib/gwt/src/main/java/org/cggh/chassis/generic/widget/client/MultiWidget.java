@@ -10,19 +10,13 @@ import java.util.Set;
 import org.cggh.chassis.generic.async.client.Deferred;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
-import org.cggh.chassis.generic.widget.client.CancelEvent;
-import org.cggh.chassis.generic.widget.client.CancelHandler;
 import org.cggh.chassis.generic.widget.client.ChassisWidget;
-import org.cggh.chassis.generic.widget.client.ErrorEvent;
-import org.cggh.chassis.generic.widget.client.ErrorHandler;
 import org.cggh.chassis.generic.widget.client.HasMenuEventHandlers;
 import org.cggh.chassis.generic.widget.client.MenuEvent;
 import org.cggh.chassis.generic.widget.client.MenuEventHandler;
 import org.cggh.chassis.generic.widget.client.WidgetMemory;
 
 import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.user.client.History;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.Widget;
@@ -31,7 +25,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author aliman
  *
  */
-public abstract class MultiWidget 
+public class MultiWidget 
 	extends ChassisWidget 
 	implements HasMenuEventHandlers {
 
@@ -57,6 +51,7 @@ public abstract class MultiWidget
 
 	// state fields
 	protected Widget activeChild;
+	protected Widget defaultChild;
 	protected Set<Widget> mainChildren;
 	
 	
@@ -115,7 +110,7 @@ public abstract class MultiWidget
 	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#renderUI()
 	 */
 	@Override
-	protected void renderUI() {
+	public void renderUI() {
 		log.enter("renderUI");
 		
 		this.menu = new MenuBar(this.verticalMenu);
@@ -143,16 +138,18 @@ public abstract class MultiWidget
 	
 	
 	
-
-	protected abstract void renderMainChildren();
+	/**
+	 * Override this method to render main children.
+	 */
+	public void renderMainChildren() {}
 
 
 
 
 	/**
-	 * 
+	 * Override this method to render a menu bar.
 	 */
-	protected abstract void renderMenuBar();
+	public void renderMenuBar() {}
 
 
 	
@@ -162,7 +159,7 @@ public abstract class MultiWidget
 	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#bindUI()
 	 */
 	@Override
-	protected void bindUI() {
+	public void bindUI() {
 		log.enter("bindUI");
 		
 		this.registerHandlersForChildWidgetEvents();
@@ -245,7 +242,7 @@ public abstract class MultiWidget
 	 * @see org.cggh.chassis.generic.widget.client.ChassisWidget#syncUI()
 	 */
 	@Override
-	protected void syncUI() {
+	public void syncUI() {
 		log.enter("syncUI");
 		
 		for (Widget w : this.mainChildren) {
@@ -312,12 +309,21 @@ public abstract class MultiWidget
 			
 			Deferred<WidgetMemory> def = new Deferred<WidgetMemory>();
 			
-			for (Widget w : mainChildren) {
-				if (w instanceof ChassisWidget) {
-					ChassisWidget cw = (ChassisWidget) w;
-					if (this.createMnemonic(cw).equals(mnemonic)) {
-						log.debug("found matching child, setting active child: "+cw.getName());
-						setActiveChild(w, false);
+			if (mnemonic == null || mnemonic.equals("")) {
+				log.debug("mnemonic is empty, setting default child active");
+				if (defaultChild != null) {
+					setActiveChild(defaultChild, false);
+				}
+			}
+			else {
+				log.debug("searching for child matching mnemonic");
+				for (Widget w : mainChildren) {
+					if (w instanceof ChassisWidget) {
+						ChassisWidget cw = (ChassisWidget) w;
+						if (this.createMnemonic(cw).equals(mnemonic)) {
+							log.debug("found matching child, setting active child: "+cw.getName());
+							setActiveChild(w, false);
+						}
 					}
 				}
 			}
@@ -333,50 +339,6 @@ public abstract class MultiWidget
 
 
 	
-
-	/**
-	 * @author aliman
-	 *
-	 */
-	public class CommonErrorHandler implements ErrorHandler {
-		private Log log = LogFactory.getLog(CommonErrorHandler.class);
-
-		/* (non-Javadoc)
-		 * @see org.cggh.chassis.generic.widget.client.ErrorHandler#onError(org.cggh.chassis.generic.widget.client.ErrorEvent)
-		 */
-		public void onError(ErrorEvent e) {
-			log.enter("onError");
-
-			Window.alert("an unexpected error has occurred");
-			log.error("an unexpected error has occurred", e.getException());
-
-			log.leave();
-		}
-
-	}
-	
-	
-	
-	
-	/**
-	 * @author aliman
-	 *
-	 */
-	public class CommonCancelHandler implements CancelHandler {
-		private Log log = LogFactory.getLog(CommonCancelHandler.class);
-			
-		public void onCancel(CancelEvent e) {
-			log.enter("onCancel");
-			
-			History.back();
-			
-			log.leave();
-		}
-
-	}
-
-
-
 
 	public HandlerRegistration addMenuEventHandler(MenuEventHandler h) {
 		return this.addHandler(h, MenuEvent.TYPE);

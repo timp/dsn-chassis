@@ -123,6 +123,7 @@ public abstract class WidgetMemory {
 	
 	
 	private void remember(final Stack<String> mnemonics) {
+		log.enter("remember(Stack<String>)");
 		
 		if (!mnemonics.empty()) {
 
@@ -148,6 +149,7 @@ public abstract class WidgetMemory {
 
 		}
 		
+		log.leave();
 	}
 	
 	
@@ -175,8 +177,13 @@ public abstract class WidgetMemory {
 		public void onValueChange(ValueChangeEvent<String> event) {
 			log.enter("onValueChange");
 			
-			Stack<String> mnemonics = parseHistoryToken(event.getValue());
+			String token = event.getValue();
 			
+			log.debug("history token: ["+token+"]");
+			
+			Stack<String> mnemonics = parseHistoryToken(token);
+			
+			log.debug("call remember on top widget with mnemonics stack ["+mnemonics.size()+"]");
 			this.top.remember(mnemonics);
 			
 			log.leave();
@@ -195,10 +202,15 @@ public abstract class WidgetMemory {
 		
 		Stack<String> mnemonics = new Stack<String>();
 
-		String[] tokens = historyToken.split(delimiter);
+		String[] tokens = historyToken.split(delimiter); // TODO deal with browser-specific behaviour here for historyToken that is empty string
 		
 		for (int i=tokens.length-1; i>=0; i--) { // go backwards, Stack is FILO
 			mnemonics.push(tokens[i]);
+		}
+		
+		// hack for now
+		if (mnemonics.size() == 0) {
+			mnemonics.push(""); // workaround different behaviours for historyToken that is empty string
 		}
 		
 		return mnemonics;
