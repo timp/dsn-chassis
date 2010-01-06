@@ -47,7 +47,7 @@ public class SubmitterPerspective
 	 * @see org.cggh.chassis.generic.client.gwt.application.client.NewPerspectiveBase#renderMainChildren()
 	 */
 	@Override
-	protected void renderMainChildren() {
+	public void renderMainChildren() {
 
 		this.submitterHomeWidget = new SubmitterHomeWidget();
 		this.studyManagementWidget = new StudyManagementWidget();
@@ -70,7 +70,7 @@ public class SubmitterPerspective
 	 * 
 	 */
 	@Override
-	protected void renderMenuBar() {
+	public void renderMenuBar() {
 		log.enter("renderMenuBar");
 		
 		this.menu.addItem("home", new Command() {

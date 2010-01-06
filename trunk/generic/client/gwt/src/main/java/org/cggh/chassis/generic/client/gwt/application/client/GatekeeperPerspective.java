@@ -25,7 +25,7 @@ public class GatekeeperPerspective extends PerspectiveBase {
 	
 	
 	@Override
-	protected void renderMainChildren() {
+	public void renderMainChildren() {
 
 		this.gatekeeperHomeWidget = new GatekeeperHomeWidget();
 		this.submissionManagementWidget = new SubmissionManagementWidget();
@@ -42,7 +42,7 @@ public class GatekeeperPerspective extends PerspectiveBase {
 	
 	
 	@Override
-	protected void renderMenuBar() {
+	public void renderMenuBar() {
 
 		this.menu.addItem("home", new Command() {
 			public void execute() {

@@ -64,7 +64,7 @@ public class SubmissionManagementWidget
 	
 
 	@Override
-	protected void renderMainChildren() {
+	public void renderMainChildren() {
 		log.enter("renderMainChildren");
 		
 		this.listSubmissionsWidget = new ListSubmissionsWidget();
@@ -205,7 +205,7 @@ public class SubmissionManagementWidget
 	
 	
 	@Override
-	protected void renderMenuBar() {
+	public void renderMenuBar() {
 		log.enter("renderMenuBar");
 		
 		this.menu.addItem(new MenuItem("submissions pending review", 

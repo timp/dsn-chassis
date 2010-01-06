@@ -22,7 +22,7 @@ public class AdministratorPerspective extends PerspectiveBase {
 	
 	
 	@Override
-	protected void renderMainChildren() {
+	public void renderMainChildren() {
 
 		this.administratorHomeWidget = new AdministratorHomeWidget();
 		
@@ -37,7 +37,7 @@ public class AdministratorPerspective extends PerspectiveBase {
 	
 	
 	@Override
-	protected void renderMenuBar() {
+	public void renderMenuBar() {
 
 		this.menu.addItem("home", new Command() {
 			public void execute() {

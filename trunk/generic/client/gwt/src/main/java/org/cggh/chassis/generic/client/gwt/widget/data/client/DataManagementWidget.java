@@ -31,6 +31,8 @@ import org.cggh.chassis.generic.client.gwt.widget.study.client.StudyActionHandle
 import org.cggh.chassis.generic.client.gwt.widget.study.client.ViewStudyActionEvent;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
+import org.cggh.chassis.generic.widget.client.SimpleCancelHandler;
+import org.cggh.chassis.generic.widget.client.SimpleErrorHandler;
 import org.cggh.chassis.generic.widget.client.MenuEvent;
 import org.cggh.chassis.generic.widget.client.MultiWidget;
 
@@ -76,7 +78,7 @@ public class DataManagementWidget
 
 
 	@Override
-	protected void renderMainChildren() {
+	public void renderMainChildren() {
 		log.enter("renderMainChildren");
 		
 		this.newDataFileWidget = new NewDataFileWidget();
@@ -111,7 +113,7 @@ public class DataManagementWidget
 
 
 	@Override
-	protected void renderMenuBar() {
+	public void renderMenuBar() {
 		log.enter("renderMenuBar");
 		
 		Command newDataFileMenuCommand = new Command() {
@@ -191,7 +193,7 @@ public class DataManagementWidget
 	private void registerHandlersForNewDataFileWidgetEvents() {
 		log.enter("registerHandlersForNewDataFileWidgetEvents");
 		
-		HandlerRegistration a = this.newDataFileWidget.addCancelHandler(new CommonCancelHandler());
+		HandlerRegistration a = this.newDataFileWidget.addCancelHandler(new SimpleCancelHandler());
 
 		HandlerRegistration b = this.newDataFileWidget.addCreateSuccessHandler(new CreateSuccessHandler<DataFileEntry>() {
 			
@@ -206,7 +208,7 @@ public class DataManagementWidget
 			
 		});
 		
-		HandlerRegistration c = this.newDataFileWidget.addErrorHandler(new CommonErrorHandler());
+		HandlerRegistration c = this.newDataFileWidget.addErrorHandler(new SimpleErrorHandler());
 		
 		this.childWidgetEventHandlerRegistrations.add(a);
 		this.childWidgetEventHandlerRegistrations.add(b);
@@ -287,7 +289,7 @@ public class DataManagementWidget
 			}
 		});
 
-		HandlerRegistration b = this.uploadDataFileRevisionWidget.addCancelHandler(new CommonCancelHandler());
+		HandlerRegistration b = this.uploadDataFileRevisionWidget.addCancelHandler(new SimpleCancelHandler());
 		
 		this.childWidgetEventHandlerRegistrations.add(a);
 		this.childWidgetEventHandlerRegistrations.add(b);
@@ -333,7 +335,7 @@ public class DataManagementWidget
 	private void registerHandlersForEditDataFileWidgetEvents() {
 		log.enter("registerHandlersForEditDataFileWidgetEvents");
 		
-		HandlerRegistration a = this.editDataFileWidget.addCancelHandler(new CommonCancelHandler());
+		HandlerRegistration a = this.editDataFileWidget.addCancelHandler(new SimpleCancelHandler());
 
 		HandlerRegistration b = this.editDataFileWidget.addUpdateSuccessHandler(new UpdateSuccessHandler<DataFileEntry>() {
 			
@@ -348,7 +350,7 @@ public class DataManagementWidget
 			
 		});
 		
-		HandlerRegistration c = this.editDataFileWidget.addErrorHandler(new CommonErrorHandler());
+		HandlerRegistration c = this.editDataFileWidget.addErrorHandler(new SimpleErrorHandler());
 		
 		this.childWidgetEventHandlerRegistrations.add(a);
 		this.childWidgetEventHandlerRegistrations.add(b);
@@ -366,9 +368,9 @@ public class DataManagementWidget
 	private void registerHandlersForNewDatasetWidgetEvents() {
 		log.enter("registerHandlersForNewDatasetWidgetEvents");
 		
-		HandlerRegistration a = this.newDatasetWidget.addCancelHandler(new CommonCancelHandler());
+		HandlerRegistration a = this.newDatasetWidget.addCancelHandler(new SimpleCancelHandler());
 		
-		HandlerRegistration b = this.newDatasetWidget.addErrorHandler(new CommonErrorHandler());
+		HandlerRegistration b = this.newDatasetWidget.addErrorHandler(new SimpleErrorHandler());
 		
 		HandlerRegistration c = this.newDatasetWidget.addCreateSuccessHandler(new CreateSuccessHandler<DatasetEntry>() {
 			
@@ -480,7 +482,7 @@ public class DataManagementWidget
 	private void registerHandlersForEditDatasetWidgetEvents() {
 		log.enter("registerHandlersForEditDatasetWidgetEvents");
 		
-		HandlerRegistration a = this.editDatasetWidget.addCancelHandler(new CommonCancelHandler());
+		HandlerRegistration a = this.editDatasetWidget.addCancelHandler(new SimpleCancelHandler());
 
 		HandlerRegistration b = this.editDatasetWidget.addUpdateSuccessHandler(new UpdateSuccessHandler<DatasetEntry>() {
 			
@@ -495,7 +497,7 @@ public class DataManagementWidget
 			
 		});
 		
-		HandlerRegistration c = this.editDatasetWidget.addErrorHandler(new CommonErrorHandler());
+		HandlerRegistration c = this.editDatasetWidget.addErrorHandler(new SimpleErrorHandler());
 		
 		this.childWidgetEventHandlerRegistrations.add(a);
 		this.childWidgetEventHandlerRegistrations.add(b);
@@ -525,7 +527,7 @@ public class DataManagementWidget
 
 		});
 		
-		HandlerRegistration b = this.shareDatasetWidget.addCancelHandler(new CommonCancelHandler());
+		HandlerRegistration b = this.shareDatasetWidget.addCancelHandler(new SimpleCancelHandler());
 
 		this.childWidgetEventHandlerRegistrations.add(a);
 		this.childWidgetEventHandlerRegistrations.add(b);
