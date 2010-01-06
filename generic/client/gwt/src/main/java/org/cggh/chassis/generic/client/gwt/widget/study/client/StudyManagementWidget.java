@@ -63,7 +63,7 @@ public class StudyManagementWidget
 	
 
 	@Override
-	protected void renderMainChildren() {
+	public void renderMainChildren() {
 		log.enter("renderMainChildren");
 		
 		// create child widgets
@@ -230,7 +230,7 @@ public class StudyManagementWidget
 	
 	
 	@Override
-	protected void renderMenuBar() {
+	public void renderMenuBar() {
 		log.enter("renderMenuBar");
 		
 		log.debug("construct new study menu item");
