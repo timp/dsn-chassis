@@ -1,28 +1,21 @@
-package org.cggh.chassis.wwarn.ui.submitter.client;
+package org.cggh.chassis.wwarn.ui.administrator.client;
 
 import org.cggh.chassis.generic.log.client.AllenSauerLog;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
-import org.cggh.chassis.generic.widget.client.WidgetMemory;
-import org.cggh.chassis.generic.widget.client.WidgetMemory.HistoryManager;
-
+//import org.cggh.chassis.generic.widget.client.WidgetMemory;
+//import org.cggh.chassis.generic.widget.client.WidgetMemory.HistoryManager;
+//
+//import com.google.gwt.user.client.History;
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.ui.RootPanel;
 
-
-
-/**
- * The entry point for the submitter application.
- * 
- * @author aliman
- */
-public class SubmitterApplicationEntryPoint implements EntryPoint {
+public class AdministratorApplicationEntryPoint implements EntryPoint {
 
 	
 	
 	
-	private Log log = LogFactory.getLog(SubmitterApplicationEntryPoint.class);
+	private Log log = LogFactory.getLog(AdministratorApplicationEntryPoint.class);
 	
 	
 	
@@ -47,15 +40,16 @@ public class SubmitterApplicationEntryPoint implements EntryPoint {
 		loadingPanel.setVisible(false);
 		
 		log.debug("instantiate main application widget");
-		SubmitterApplicationWidget widget = new SubmitterApplicationWidget();
+		AdministratorHomeWidget widget = new AdministratorHomeWidget();
 		RootPanel.get("content").add(widget);
+		widget.refresh();
 		
-		log.debug("setup history manager");
-		HistoryManager hm = new WidgetMemory.HistoryManager(widget.getMemory());
-		History.addValueChangeHandler(hm);
-		
-		log.debug("fire current history state");
-		History.fireCurrentHistoryState();
+//		log.debug("setup history manager");
+//		HistoryManager hm = new WidgetMemory.HistoryManager(widget.getMemory());
+//		History.addValueChangeHandler(hm);
+//		
+//		log.debug("fire current history state");
+//		History.fireCurrentHistoryState();
 				
 		log.leave();
 	}
@@ -63,4 +57,5 @@ public class SubmitterApplicationEntryPoint implements EntryPoint {
 	
 	
 	
+
 }

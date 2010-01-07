@@ -50,6 +50,7 @@
         +-->
             
     <intercept-url pattern="/submitter/**" access="ROLE_CHASSIS_SUBMITTER" />
+    <intercept-url pattern="/administrator/**" access="ROLE_CHASSIS_ADMINISTRATOR" />
 
   </http>
   

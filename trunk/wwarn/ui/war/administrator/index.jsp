@@ -13,11 +13,15 @@ UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentic
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>WWARN - Submitter // <jsp:expression>user.getUsername()</jsp:expression></title>
+<title>WWARN - Administrator // <jsp:expression>user.getUsername()</jsp:expression></title>
 <link rel="stylesheet" type="text/css" href="../style/common.css"/>
 <script type="text/javascript" language="javascript">
 var config = {
-	"user.email" : "<jsp:expression>user.getUsername()</jsp:expression>"
+	"user.email" : "<jsp:expression>user.getUsername()</jsp:expression>",
+	"collection.studies.url" : "/chassis-generic-service-exist/atom/edit/studies",
+	"collection.media.url" : "/chassis-generic-service-exist/atom/edit/media",
+	"collection.submissions.url" : "/chassis-generic-service-exist/atom/edit/submissions",
+	"collection.reviews.url" : "/chassis-generic-service-exist/atom/edit/reviews"
 };
 </script>
 </head>
@@ -48,7 +52,7 @@ var config = {
 
 	</div>
 
-	<script type="text/javascript" language="javascript" src="../org.cggh.chassis.wwarn.ui.submitter.Submitter/org.cggh.chassis.wwarn.ui.submitter.Submitter.nocache.js">
+	<script type="text/javascript" language="javascript" src="../org.cggh.chassis.wwarn.ui.administrator.Administrator/org.cggh.chassis.wwarn.ui.administrator.Administrator.nocache.js">
 		<!-- bootstrap script -->
 	</script>
 
