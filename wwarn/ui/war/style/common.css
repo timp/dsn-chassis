@@ -3,6 +3,8 @@
 body {
 	margin: 0;
 	padding: 0;
+	font-size: 12pt;
+	font-family: sans-serif;
 }
 
 h1, h2, h3, h4, h5 {
@@ -21,13 +23,17 @@ h2 {
 	font-weight: normal;
 }
 
+h3 {
+	font-size: 100%;
+	font-weight: normal;
+}
+
 a {
 	text-decoration: underline;
 	cursor: pointer;
 }
 
 #holdall {
-	font-size: 12pt;
 }
 
 #user {
@@ -68,3 +74,41 @@ a.mainNavigation {
 	text-decoration: underline;
 	font-weight: bold;
 }
+
+.resultsTable {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+	border-left: 1px solid #BBBBBB;
+	border-right: 1px solid #BBBBBB;
+	border-top: 1px solid #BBBBBB;
+}
+
+.resultsTable td {
+	border-bottom: 1px solid #BBBBBB;
+	padding: 0;
+	margin: 0;
+	vertical-align: top;
+}
+
+.resultsTable .firstCell {
+	font-weight: bold;
+}
+
+.resultsTable .firstRow {
+	font-size: 80%;
+	text-align: left;
+	font-weight: bold;
+	background-color: #E5ECF9;	
+	color: #0000CC;
+}
+
+.resultsTable .even {
+}
+
+.resultsTable .odd {
+}
+
+.resultsTable .widget {
+	padding: .3em;
+}
+
