@@ -1,0 +1,139 @@
+= Design Notes for the WWARN UI Submitter Application =
+
+This page has notes on the design for the submitter application in the wwarn/ui project.
+
+== User-Interface Design ==
+
+The user-interface design (static mockup) starts from:
+
+  * http://dsn-chassis.googlecode.com/svn/trunk/wwarn/docs/content/design/apps/submitter/journeys/
+  
+[http://dsn-chassis.googlecode.com/svn/trunk/wwarn/docs/content/design/apps/submitter/journeys/A/10.html Journey A] is the submitter first time submitting data, assuming no studies previously created.
+
+[http://dsn-chassis.googlecode.com/svn/trunk/wwarn/docs/content/design/apps/submitter/journeys/B/10.html Journey B] is the submitter second time submitting data, assuming submitting to a study previously created.
+
+== Client Application Architecture ==
+
+=== Widget Hierarchy ===
+
+  * !SubmitterApplicationWidget
+    * !SubmitterHomeWidget
+    * !SelectStudyWidget
+    * !UploadFilesWidget
+    * !SubmitWidget
+    * !AddInformationWidget
+    
+=== Widget Events ===
+
+|| *Source* || *Event* ||
+|| !SubmitterHomeWidget || !SubmitDataNavigationEvent ||
+|| !SelectStudyWidget || !ProceedActionEvent ||
+|| !SelectStudyWidget || !CancelActionEvent ||
+|| !UploadFilesWidget || !StepBackNavigationEvent ||
+|| !UploadFilesWidget || !ProceedActionEvent ||
+|| !UploadFilesWidget || !CancelActionEvent ||
+|| !SubmitWidget || !StepBackNavigationEvent ||
+|| !SubmitWidget || !ProceedActionEvent ||
+|| !SubmitWidget || !CancelActionEvent ||
+|| !AddInformationWidget || !SubmitterHomeNavigationEvent ||
+
+== Service API ==
+
+=== chassis-generic-service-exist/atom/edit/studies - Studies Collection ===
+
+Partial Atom Protocol...
+
+  * POST Content-Type: application/atom+xml;type=entry -- create new study entries
+
+=== chassis-generic-service-exist/atom/edit/studies?id=... - Study Entries ===
+
+Partial Atom Protocol...
+
+  * GET -- retrieve an existing study entry
+  * PUT Content-Type: application/atom+xml;type=entry -- update existing study entries
+
+=== chassis-generic-service-exist/query.studies.xql - Studies Query Service ===
+
+  * GET -- return an Atom feed document containing all study entries in studies collection where the authenticated user is an owner of the study
+
+=== chassis-generic-service-exist/atom/edit/submissions - Submissions Collection ===
+
+Partial Atom Protocol...
+
+  * POST Content-Type: application/atom+xml;type=entry -- create new submission entries
+
+=== chassis-generic-service-exist/query/submissions.xql - Submissions Query Service ===
+
+  * GET -- return an Atom feed document containing all submission entries in the submissions collection where the authenticated user is an owner of the submission
+  
+=== chassis-generic-service-exist/atom/edit/media - Media Collection ===
+
+Partial Atom Protocol...
+
+  * POST Content-Type: */* -- create new media entries
+
+=== chassis-generic-service-exist/atom/edit/media/resource... - Media Entries ===
+
+Partial Atom Protocol...
+
+  * GET -- retrieve an existing media entry
+
+=== chassis-generic-service-exist/atom/edit/media?id=... - Media-Link Entries ===
+
+Partial Atom Protocol...
+
+  * GET -- retrieve an existing media-link entry
+  * PUT Content-Type: application/atom+xml;type=entry -- update existing media-link entries
+
+=== chassis-generic-service-exist/query/media.xql - Media Query Service ===
+
+  * GET -- return an Atom feed document containing all media-link entries in the media collection where the authenticated user is an owner of the entry
+
+== Animation ==
+
+Below the behaviour of the application, in terms of the events communicated between widgets in the client application, and in terms of the service calls (HTTP requests) made, is animated against the user-interface design (static mockup).
+
+----
+*Screen*
+
+A/10.html
+
+*User-Action*
+
+User navigates to the screen.
+
+*Behaviour*
+
+The !SubmitterHomeWidget makes a GET request to submissions query service URL to retrieve a feed of all submissions for the current user. It then uses the feed to generate a count of submissions, files and studies, and renders.
+
+----
+*Screen*
+
+A/10.html -> A/20.html
+
+*User-Action*
+
+User clicks "submit data" link.
+
+*Behaviour*
+
+The !SubmitterHomeWidget fires a !SubmitDataNavigationEvent, which is handled by the !SubmitterApplicationWidget, passing control of the screen to the !SelectStudyWidget. The !SubmitterApplicationWidget also tells the !SelectStudyWidget to refresh itself.
+
+The !SelectStudyWidget makes a GET request to the studies query service URL, to retrieve a feed of all study entries owned by the user, then renders. In this case, the feed is empty, so only the *Create Study* section is rendered.
+
+----
+*Screen*
+
+A/20.html
+
+*User-Action*
+
+User clicks "create study and proceed".
+
+*Behaviour*
+
+The !SelectStudyWidget constructs a new Atom entry document, populating it with the title, summary, submitter emails and modules, then sends the Atom entry document as the body of a POST request to the studies collection URL.
+
+If the response to this request is successful (201 Created), the !SelectStudyWidget fires a !ProceedActionEvent, which is handled by the !SubmittedApplicationWidget, which passes control of the screen to the !UploadFilesWidget.
+
+
