@@ -28,6 +28,8 @@ Install the [http://code.google.com/eclipse/docs/getting_started.html Google Plu
 
 You'll need the plugin and the web toolkit SDK. Detailed instructions are [http://code.google.com/eclipse/docs/install-eclipse-3.5.html here].
 
+Note that all Chassis GWT projects are currently using GWT SDK 1.7.1. The latest version of the Google Eclipse plugin will give you GWT SDK 2.0. You may need to manually install the 1.7.1 SDK somehow - you're on your own there for the moment.
+
 If you previously installed the Eclipse IDE for Java EE bundle (which includes WST), all required dependencies should already be present. If you didn't, you may need to [http://code.google.com/eclipse/docs/faq.html#wstinstallerror install some dependencies]. 
 
 == Install SVN Plugin (Subversive) for Eclipse ==
