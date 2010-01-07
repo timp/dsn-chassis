@@ -66,7 +66,7 @@ Check out projects from the following SVN locations:
   * /trunk/wwarn/client/gwt-test
   * /trunk/generic/service/user
   * /trunk/generic/service/upload
-  * /branches/generic/service/exist-1.4.0rc-rev10028
+  * /trunk/generic/service/exist
 
 (If you browse to the location in the SVN repositories view, then right click on the location, you can do "Check Out" from there.)
 
