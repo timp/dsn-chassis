@@ -100,7 +100,10 @@ Partial Atom Protocol...
 
 Below the behaviour of the application, in terms of the events communicated between widgets in the client application, and in terms of the service calls (HTTP requests) made, is animated against the user-interface design (static mockup).
 
-----
+=== Journey A ===
+
+==== -> A10 ====
+
 *Screen*
 
 A/10.html
@@ -113,10 +116,7 @@ User navigates to the screen.
 
 The !SubmitterHomeWidget makes a GET request to the Submissions Query Service URL to retrieve a feed of all submissions for the current user. It then uses the feed to generate a count of submissions, files and studies, and renders.
 
-----
-*Screen*
-
-A/10.html -> A/20.html
+==== A10 -> A20 ====
 
 *User-Action*
 
@@ -126,12 +126,9 @@ User clicks "submit data" link.
 
 The !SubmitterHomeWidget fires a !SubmitDataNavigationEvent, which is handled by the !SubmitterApplicationWidget. The !SubmitterApplicationWidget tells the !SelectStudyWidget to refresh itself, then passes control of the screen to the !SelectStudyWidget. 
 
-When told to refresh itself, the !SelectStudyWidget makes a GET request to the Studies Query Service URL, to retrieve a feed of all study entries owned by the user. In this case, the feed is empty (no studies created yet), so only the *Create Study* section is rendered.
+When told to refresh itself, the !SelectStudyWidget makes a GET request to the Studies Query Service URL, to retrieve a feed of all study entries owned by the user. In this case, the feed is empty (no studies created yet), so only the "Create Study" section is rendered.
 
-----
-*Screen*
-
-A/20.html -> A/30.html
+==== A20 -> A30 ====
 
 *User-Action*
 
@@ -145,10 +142,7 @@ If the response to this request is successful (201 Created), the !SelectStudyWid
 
 When told to refresh itself, the !UploadFilesWidget makes a GET request to the Media Query Service URL, with the query parameter "submitted=no". In this case, no files have been previously uploaded, so the returned feed is empty, and only the "Upload a File" section is rendered.
 
-----
-*Screen*
-
-A/30.html -> A/40.html
+==== A30 -> A40 ====
 
 *User-Action*
 
@@ -160,10 +154,7 @@ The "Upload File" button causes the HTML form to be submitted to the File Upload
 
 When the !UploadFilesWidget receives a successful response from the File Upload Form Submission Handler servlet, it then refreshes itself. The first part of the refresh involves making a GET request to the Media Query Service URL, with the query parameter "submitted=no". In this case, the returned feed is now not empty, but contains a single entry, so the table of files uploaded so far is rendered, in addition to the "Upload a File" section.
 
-----
-*Screen*
-
-A/40.html -> A/50.html
+==== A40 -> A50 ====
 
 *User-Action*
 
@@ -175,4 +166,4 @@ The !UploadFilesWidget instantiates a !ProceedActionEvent, stores the ID of the 
 
 When told to refresh itself, the !SubmitWidget makes a GET request to the Media Query Service URL, with the query parameter "submitted=no". It uses the returned feed to render the table of files to be submitted.
 
-TODO how does the !SubmitWidget get the study title?
+TODO how does the !UploadFilesWidget or the !SubmitWidget get the study title? Can they be passed it as part of the proceed action event, or do they need to do a GET on the study url?
