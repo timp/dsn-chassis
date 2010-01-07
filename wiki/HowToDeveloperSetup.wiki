@@ -2,7 +2,7 @@
 
 = Introduction =
 
-This page is a guide to setting up the standard development environment used by the Chassis team. Examples are given for Linux (Ubuntu Jaunty), but can be adapted for Windows.
+This page is a guide to setting up the standard development environment used by the Chassis team. Examples are given for Linux (Ubuntu 9.04 Jaunty), but can be adapted for Windows.
 
 == Install Java 1.5 ==
 
@@ -17,10 +17,8 @@ sudo apt-get install sun-java5-jdk
 == Install Eclipse IDE for Java EE Developers ==
 
 Visit [http://www.eclipse.org/downloads/ eclipse.org downloads] and download the Eclipse IDE for Java EE Developers, based on *Eclipse 3.5 (Galileo)*, for your platform. Install it at your preferred location. 
-_or_
-{{{
-sudo apt-get install eclipse
-}}}
+
+If you're running Ubuntu 9.10, [https://help.ubuntu.com/community/EclipseIDE you can alternatively install Eclipse 3.5 via the synaptic package manager]. However, if you do so, you will also need to install all other plugins present in the Eclipse IDE for Java EE bundle, in particular WST.
 
 == Install the Google Plugin for Eclipse ==
 
@@ -28,8 +26,9 @@ Install the [http://code.google.com/eclipse/docs/getting_started.html Google Plu
 
   * http://dl.google.com/eclipse/plugin/3.5
 
-You'll need the plugin and the web toolkit SDK.
-Note that you may need to manually install the Eclipse WST, see http://code.google.com/eclipse/docs/faq.html#wstinstallerror
+You'll need the plugin and the web toolkit SDK. Detailed instructions are [http://code.google.com/eclipse/docs/install-eclipse-3.5.html here].
+
+If you previously installed the Eclipse IDE for Java EE bundle (which includes WST), all required dependencies should already be present. If you didn't, you may need to [http://code.google.com/eclipse/docs/faq.html#wstinstallerror install some dependencies]. 
 
 == Install SVN Plugin (Subversive) for Eclipse ==
 
@@ -49,6 +48,40 @@ From there, select "SVNKit 1.2.2 Implementation (Optional)" and continue through
 
 First, ask one of the [http://dsn-chassis.googlecode.com Chassis project] owners to be added as a project committer.
 
+=== Command Line Checkout ===
+
+I (Al) prefer to first check out the entire trunk to a single location, then import projects into Eclipse. This sub-section describes that process. You can alternatively use Eclipse to check out each project one at a time, which is described in the next sub-section.
+
+From the command line, do
+
+{{{
+user@local:~$ mkdir chassis-svn
+user@local:~$ cd chassis-svn
+user@local:~/chassis-svn$ svn checkout https://dsn-chassis.googlecode.com/svn/trunk ./trunk
+}}}
+
+The first time you do this, you will be prompted for your Google Code user name and password (if you don't know your googlecode.com password, visit http://code.google.com/hosting/settings).
+
+Next, fire up Eclipse, switch to perspective "SVN Repository Exploring", click on the "New Repository Location" button, set the URL as:
+
+  * https://dsn-chassis.googlecode.com/svn
+
+...and enter your Google Code user name and password again.
+
+Then, switch back to the Java EE perspective, and do...
+
+  * File > Import
+  * General > Existing Projects into Workspace
+  * Next
+  * Select root directory: /home/user/chassis-src/trunk (or wherever you checked it out to)
+  * You can leave all the projects selected, or select only the ones you want
+  * *Do not* check "Copy projects into workspace"
+  * Finish
+
+=== Eclipse Project Checkout ===
+
+If you have already done the command-line checkout described above, skip to the next section.
+
 Switch to perspective "SVN Repository Exploring", click on the "New Repository Location" button, set the URL as:
 
   * https://dsn-chassis.googlecode.com/svn
@@ -67,6 +100,7 @@ Check out projects from the following SVN locations:
   * /trunk/generic/service/user
   * /trunk/generic/service/upload
   * /trunk/generic/service/exist
+  * /trunk/wwarn/ui
 
 (If you browse to the location in the SVN repositories view, then right click on the location, you can do "Check Out" from there.)
 
@@ -74,7 +108,7 @@ Check out projects from the following SVN locations:
 
 Install the latest release of Apache Tomcat 6.0.x.
 
-On Ubuntu, you can install Tomcat via the software repositories. However, because the Tomcat directories get split across multiple locations in the file system, Eclipse WTP gets confused and cannot recognise the installation. There are workarounds, but it may be easier just to install manually at a location of your choice. E.g. ...
+On Ubuntu, you can install Tomcat via the software repositories. However, because the Tomcat directories get split across multiple locations in the file system, Eclipse WST gets confused and cannot recognise the installation. There are workarounds, but it may be easier just to install manually at a location of your choice. E.g. ...
 
 {{{
 $ wget http://mirror.fubra.com/ftp.apache.org/tomcat/tomcat-6/v6.0.20/bin/apache-tomcat-6.0.20.tar.gz
@@ -82,7 +116,6 @@ $ gunzip apache-tomcat-6.0.20.tar.gz
 $ tar -xvf apache-tomcat-6.0.20.tar
 $ sudo mv apache-tomcat-6.0.20 /opt
 }}}
-
 
 Next, add Tomcat v6.0 as a Runtime Environment in Eclipse. In Eclipse, do...
 
@@ -98,25 +131,17 @@ Finally, in the Servers view in Eclipse, right click the empty space, and do...
   * Select the server type: Tomcat v6.0 Server
   * Server runtime environment: Apache Tomcat v6.0
   * Click Next
-  * Add all Chassis projects, except for the generic_lib_gwt project
+  * Add the Chassis projects you want to run
   * Finish
 
-Note if any of this fails try the following before repeating: 
- * Ensure the eclipse user owns the tomcat6 installation
- * Close eclipse
- * rm org.eclipse.wst.server.core.prefs 
- * rm org.eclipse.jst.server.tomcat.core.prefs
+Note if any of this fails, doing the following may (or may not) help before before repeating: 
 
-
+  * Ensure the eclipse user owns the tomcat6 installation
+  * Close eclipse
+  * rm org.eclipse.wst.server.core.prefs 
+  * rm org.eclipse.jst.server.tomcat.core.prefs
 
 You should now be able to start the server from within the Servers view, and browse to http://localhost:8080/chassis-generic-service-exist/ ... you should see the eXist home page.
-
-If using ubuntu 9.10 you may need to extract old libstdc++.so.5 from jaunty ia32-libs 
-as per http://blog.dalejefferson.com/2009/09/gwt-on-64bit-ubuntu-karmic-910.html
-
-On ubunto 9.10 32 bit install from http://packages.ubuntu.com/jaunty/i386/libstdc++5/download
-
-
 
 == Compiling the Chassis Generic Client GWT Modules ==
 
@@ -144,7 +169,7 @@ You must use a 32-bit Java runtime to run GWT Hosted Mode.
 
 To work around, install a 32-bit JRE, and modify the run configuration to use the 32-bit JRE you installed. See also: http://code.google.com/p/google-web-toolkit/issues/detail?id=134#c39 
 
-On Ubuntu, I installed a 32 bit JVM by doing...
+On Ubuntu 9.04, you can install a 32 bit JVM by doing...
 
 {{{
 $ sudo apt-get install ia32-sun-java6-bin 
@@ -152,9 +177,13 @@ $ sudo apt-get install ia32-sun-java6-bin
 
 Once you have a run configuration, you'll need to edit it to launch without the embedded server. Go to "Run" -> "Run Configurations", find the run configuration you previously created, which is under "Web Application", then uncheck the "Run built-in server" box.
 
-You might also want to enter a sensible URL in the GWT tab, something like http://localhost:8080/chassis-generic-client-gwt/spike/
+You might also want to enter a sensible URL in the GWT tab, something like http://localhost:8080/chassis-generic-client-gwt/
 
 Note also that, when not using the embedded server, you will need to compile each application you want to run in hosted mode *at least once* prior to running it in hosted mode - this is so that the relevant bits of GWT magic get copied to the right directories, especially the hosted.html file.
 
+If using ubuntu 9.10 you may need to extract old libstdc++.so.5 from jaunty ia32-libs 
+as per http://blog.dalejefferson.com/2009/09/gwt-on-64bit-ubuntu-karmic-910.html
 
- 
+On ubunto 9.10 32 bit install from http://packages.ubuntu.com/jaunty/i386/libstdc++5/download
+
+
