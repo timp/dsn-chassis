@@ -2,6 +2,8 @@
 
 This page has notes on the design for the submitter application in the wwarn/ui project.
 
+<wiki:toc/>
+
 == User-Interface Design ==
 
 The user-interface design (static mockup) starts from:
