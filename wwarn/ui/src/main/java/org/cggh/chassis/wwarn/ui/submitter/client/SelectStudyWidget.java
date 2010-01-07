@@ -40,7 +40,7 @@ public class SelectStudyWidget extends ChassisWidget {
 	
 		this.content = new HTMLPanel(this.template);
 		
-		this.content.add(new HTML("Submit Data - Select Study"), this.titleId); // TODO i18n
+		this.content.add(new HTML("Submitter - Submit Data"), this.titleId); // TODO i18n
 		
 		this.content.add(new HTML("<span class=\"currentStep\">1. Select Study</span> &gt; 2. Upload Files &gt; 3. Submit &gt; 4. Add Information"), this.subTitleId); // TODO i18n
 
