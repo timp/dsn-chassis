@@ -41,7 +41,7 @@ public class SubmitterHomeWidget extends ChassisWidget {
 	
 		this.content = new HTMLPanel(this.template);
 		
-		this.content.add(new HTML("Submit Data - Home"), this.titleId); // TODO i18n
+		this.content.add(new HTML("Submitter - Home"), this.titleId); // TODO i18n
 		
 		this.content.add(new HTML("Welcome to the WWARN data submission home page."), this.welcomeParaId); // TODO i18n
 		

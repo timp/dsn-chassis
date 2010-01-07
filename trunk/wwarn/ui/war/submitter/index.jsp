@@ -14,7 +14,7 @@ String username = user.getUsername();
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>WWARN - Submit Data // <jsp:expression>username</jsp:expression></title>
+<title>WWARN - Submitter // <jsp:expression>username</jsp:expression></title>
 <link rel="stylesheet" type="text/css" href="style.css"/>
 <script type="text/javascript" language="javascript">
 var config = {};

@@ -40,7 +40,7 @@ public class UploadFilesWidget extends ChassisWidget {
 	
 		this.content = new HTMLPanel(this.template);
 		
-		this.content.add(new HTML("Submit Data - Upload Files"), this.titleId); // TODO i18n
+		this.content.add(new HTML("Submitter - Submit Data"), this.titleId); // TODO i18n
 		
 		this.content.add(new HTML("1. Select Study &gt; <span class=\"currentStep\">2. Upload Files</span> &gt; 3. Submit &gt; 4. Add Information"), this.subTitleId); // TODO i18n
 
