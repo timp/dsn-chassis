@@ -36,7 +36,8 @@ http://code.google.com/p/dsn-chassis/issues/list
   </ciManagement>
 
   <properties>
-    <gwtVersion>1.7.1</gwtVersion>
+    <gwtVersion>2.0.0</gwtVersion>
+    <gwtPluginVersion>1.2</gwtPluginVersion>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
