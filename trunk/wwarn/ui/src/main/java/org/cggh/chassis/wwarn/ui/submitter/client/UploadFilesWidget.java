@@ -1,5 +1,7 @@
 package org.cggh.chassis.wwarn.ui.submitter.client;
 
+import org.cggh.chassis.generic.log.client.Log;
+import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.ChassisWidget;
 
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -11,6 +13,11 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 
 public class UploadFilesWidget extends ChassisWidget {
 
+	
+	
+	
+	private Log log = LogFactory.getLog(UploadFilesWidget.class);
+	
 	
 	
 	
@@ -30,8 +37,14 @@ public class UploadFilesWidget extends ChassisWidget {
 	
 	
 
+	// UI fields
 	private HTMLPanel content;
 	private Button proceedButton;
+	
+	
+	
+	// state fields
+	private String selectedStudyId;
 
 	
 	
@@ -44,7 +57,7 @@ public class UploadFilesWidget extends ChassisWidget {
 		
 		this.content.add(new HTML("1. Select Study &gt; <span class=\"currentStep\">2. Upload Files</span> &gt; 3. Submit &gt; 4. Add Information"), this.subTitleId); // TODO i18n
 
-		this.proceedButton = new Button("Proceed"); // TODO i18n
+		this.proceedButton = new Button("Proceed &gt;&gt;"); // TODO i18n
 		this.content.add(this.proceedButton, this.actionsParaId);
 		
 		// TODO
@@ -79,6 +92,44 @@ public class UploadFilesWidget extends ChassisWidget {
 	
 	
 	
+	
+	public void setSelectedStudy(String id) {
+		this.selectedStudyId = id;
+	}
+	
+	
+	
+	@Override
+	public void refresh() {
+		this.refreshSelectedStudy();
+		this.refreshUploadedFiles();
+	}
+
+
+
+
+	/**
+	 * 
+	 */
+	private void refreshUploadedFiles() {
+		log.enter("refreshUploadedFiles");
+		// TODO Auto-generated method stub
+		
+		log.leave();
+	}
+
+
+
+
+	/**
+	 * 
+	 */
+	private void refreshSelectedStudy() {
+		log.enter("refreshSelectedStudy");
+		// TODO Auto-generated method stub
+		
+		log.leave();
+	}
 	
 	
 
