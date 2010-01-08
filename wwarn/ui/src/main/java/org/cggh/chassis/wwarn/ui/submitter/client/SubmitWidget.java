@@ -44,7 +44,7 @@ public class SubmitWidget extends ChassisWidget {
 		
 		this.content.add(new HTML("1. Select Study &gt; 2. Upload Files &gt; <span class=\"currentStep\">3. Submit</span> &gt; 4. Add Information"), this.subTitleId); // TODO i18n
 
-		this.proceedButton = new Button("Proceed"); // TODO i18n
+		this.proceedButton = new Button("Proceed &gt;&gt;"); // TODO i18n
 		this.content.add(this.proceedButton, this.actionsParaId);
 		
 		// TODO

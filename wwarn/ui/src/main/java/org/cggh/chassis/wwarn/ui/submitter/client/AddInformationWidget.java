@@ -45,7 +45,7 @@ public class AddInformationWidget extends ChassisWidget {
 		this.content.add(new HTML("1. Select Study &gt; 2. Upload Files &gt; 3. Submit &gt; <span class=\"currentStep\">4. Add Information</span>"), this.subTitleId); // TODO i18n
 
 		this.homeLink = new Anchor();
-		this.homeLink.setText("submitter home"); // TODO i18n
+		this.homeLink.setText("<<< submitter home"); // TODO i18n
 		this.content.add(this.homeLink, this.navigationParaId);
 		
 		// TODO
