@@ -36,7 +36,9 @@ mvn release:prepare
 mvn release:perform
 </pre>
 This will create one artefact per project. Upload to 
-[http://code.google.com/p/dsn-chassis/downloads/list]
+[http://code.google.com/p/dsn-chassis/downloads/list] and tag as featured.
+Tag previous featured dowbnloads as deprecated. 
+
 = Notes = 
 
 The maven plugin ensures that there are no uncommitted changes.
