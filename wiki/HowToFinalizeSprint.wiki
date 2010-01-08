@@ -8,7 +8,7 @@ changed to the defined version number.
 
 = Version Examples =
 
-Examples of release versions
+An example release version number sequence
 
   * chassis-generic-client-gwt-0.1-alpha-1.war 
   * chassis-generic-client-gwt-0.1-alpha-2.war 
@@ -30,12 +30,13 @@ The artifact id is made up of the following elements
   * File type 
 
 = Release Procedure = 
-This is delegated to Maven, accept teh Maven generated defaults: 
+This is delegated to Maven, accept the Maven generated defaults: 
 <pre>
 mvn release:prepare
 mvn release:perform
 </pre>
-
+This will create one artefact per project. Upload to 
+[http://code.google.com/p/dsn-chassis/downloads/list]
 = Notes = 
 
 The maven plugin ensures that there are no uncommitted changes.
