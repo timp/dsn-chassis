@@ -1,6 +1,7 @@
 package org.cggh.chassis.wwarn.ui.administrator.client;
 
 import org.cggh.chassis.generic.widget.client.ChassisWidget;
+import org.cggh.chassis.wwarn.ui.common.client.Config;
 
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -10,10 +11,10 @@ public class AdministratorHomeWidget extends ChassisWidget {
 	
 	
 	private String[][] collections = {
-			{ "Studies", Config.get("collection.studies.url") },	
-			{ "Media", Config.get("collection.media.url") },
-			{ "Submissions", Config.get("collection.submissions.url") },
-			{ "Reviews", Config.get("collection.reviews.url") }
+			{ "Studies", Config.get(Config.COLLECTION_STUDIES_URL) },	
+			{ "Media", Config.get(Config.COLLECTION_MEDIA_URL) },
+			{ "Submissions", Config.get(Config.COLLECTION_SUBMISSIONS_URL) },
+			{ "Reviews", Config.get(Config.COLLECTION_REVIEWS_URL) }
 	};
 
 	

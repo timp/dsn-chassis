@@ -21,7 +21,10 @@ var config = {
 	"collection.studies.url" : "/chassis-generic-service-exist/atom/edit/studies",
 	"collection.media.url" : "/chassis-generic-service-exist/atom/edit/media",
 	"collection.submissions.url" : "/chassis-generic-service-exist/atom/edit/submissions",
-	"collection.reviews.url" : "/chassis-generic-service-exist/atom/edit/reviews"
+	"collection.reviews.url" : "/chassis-generic-service-exist/atom/edit/reviews",
+	"query.submissions.url" : "/chassis-generic-service-exist/query/submissions.xql",
+	"query.studies.url" : "/chassis-generic-service-exist/query/studies.xql",
+	"query.media.url" : "/chassis-generic-service-exist/query/media.xql"
 };
 </script>
 </head>
