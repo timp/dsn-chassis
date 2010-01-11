@@ -111,14 +111,23 @@ public class GWTTestXMLNS extends GWTTestCase {
 		
 		List<Element> elements;
 		
-		// try with namespace
-		elements = XMLNS.getElementsByTagNameNS(ancestor, "bar", "http://example.com/xmlns");
-		assertEquals(1, elements.size());
+		Element barElement = (Element) ancestor.getFirstChild();
+		assertEquals("bar", barElement.getTagName());
+		assertNull(barElement.getPrefix());
+		assertEquals("http://example.com/xmlns", barElement.getNamespaceURI());
+		
+		NodeList bars = ancestor.getElementsByTagName("bar");
+		assertEquals(1, bars.getLength()); // TODO this test fails here when run in HtmlUnit browser
 		
 		// try without namespace
 		elements = XMLNS.getElementsByTagNameNS(ancestor, "bar", null);
 		assertEquals(0, elements.size());
-			
+		
+		// try with namespace
+		elements = XMLNS.getElementsByTagNameNS(ancestor, "bar", "http://example.com/xmlns");
+		assertEquals(1, elements.size());  
+
+		
 	}
 
 
