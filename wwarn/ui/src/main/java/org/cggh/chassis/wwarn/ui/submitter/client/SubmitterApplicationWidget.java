@@ -60,6 +60,8 @@ public class SubmitterApplicationWidget extends MultiWidget {
 		HandlerRegistration b = this.selectStudyWidget.addProceedActionHandler(new ProceedActionHandler() {
 			
 			public void onAction(ProceedActionEvent e) {
+				uploadFilesWidget.setSelectedStudy("abc"); // TODO get this from somewhere
+				uploadFilesWidget.refresh();
 				setActiveChild(uploadFilesWidget);				
 			}
 			
@@ -77,6 +79,16 @@ public class SubmitterApplicationWidget extends MultiWidget {
 		
 		this.childWidgetEventHandlerRegistrations.add(c);
 		
+		HandlerRegistration c1 = this.uploadFilesWidget.addStepBackNavigationHandler(new StepBackNavigationHandler() {
+			
+			public void onNavigation(StepBackNavigationEvent e) {
+				setActiveChild(selectStudyWidget);
+			}
+
+		});
+
+		this.childWidgetEventHandlerRegistrations.add(c1);
+
 		HandlerRegistration d = this.submitWidget.addProceedActionHandler(new ProceedActionHandler() {
 			
 			public void onAction(ProceedActionEvent e) {

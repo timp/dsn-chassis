@@ -14,6 +14,7 @@ import org.cggh.chassis.generic.widget.client.WidgetMemory;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -31,6 +32,7 @@ public class UploadFilesWidget extends ChassisWidget {
 	private String titleId = HTMLPanel.createUniqueId();
 	private String subTitleId = HTMLPanel.createUniqueId();
 	private String viewStudyWidgetContainerId = HTMLPanel.createUniqueId();
+	private String stepBackLinkParaId = HTMLPanel.createUniqueId();
 	private String actionsParaId = HTMLPanel.createUniqueId();
 	
 	
@@ -40,6 +42,7 @@ public class UploadFilesWidget extends ChassisWidget {
 		"<h1 id=\""+titleId+"\"></h1>" +
 		"<h2 id=\""+subTitleId+"\"></h2>" +
 		"<p>Selected study: <span id=\""+viewStudyWidgetContainerId+"\"></span></p>" +
+		"<p id=\""+stepBackLinkParaId+"\"></p>" +
 		"<p>TODO</p>" +
 		"<p id=\""+actionsParaId+"\"></p>";
 	
@@ -50,6 +53,7 @@ public class UploadFilesWidget extends ChassisWidget {
 	private HTMLPanel content;
 	private Button proceedButton;
 	private ViewStudyWidget viewStudyWidget;
+	private Anchor stepBackLink;
 	
 	
 	
@@ -81,7 +85,11 @@ public class UploadFilesWidget extends ChassisWidget {
 		this.viewStudyWidget = new ViewStudyWidget();
 		this.content.add(this.viewStudyWidget, this.viewStudyWidgetContainerId);
 		
-		this.proceedButton = new Button("Proceed &gt;&gt;"); // TODO i18n
+		this.stepBackLink = new Anchor();
+		this.stepBackLink.setText("< back to select study");
+		this.content.add(this.stepBackLink, this.stepBackLinkParaId);
+		
+		this.proceedButton = new Button("Proceed &gt;"); // TODO i18n
 		this.content.add(this.proceedButton, this.actionsParaId);
 		
 		// TODO
@@ -101,9 +109,21 @@ public class UploadFilesWidget extends ChassisWidget {
 				ProceedActionEvent e = new ProceedActionEvent();
 				fireEvent(e);
 			}
+			
 		});
 		
 		this.childWidgetEventHandlerRegistrations.add(a);
+		
+		HandlerRegistration b = this.stepBackLink.addClickHandler(new ClickHandler() {
+			
+			public void onClick(ClickEvent arg0) {
+				StepBackNavigationEvent e = new StepBackNavigationEvent();
+				fireEvent(e);
+			}
+			
+		});
+
+		this.childWidgetEventHandlerRegistrations.add(b);
 
 	}
 	
@@ -112,6 +132,13 @@ public class UploadFilesWidget extends ChassisWidget {
 	
 	public HandlerRegistration addProceedActionHandler(ProceedActionHandler h) {
 		return this.addHandler(h, ProceedActionEvent.TYPE);
+	}
+	
+	
+	
+	
+	public HandlerRegistration addStepBackNavigationHandler(StepBackNavigationHandler h) {
+		return this.addHandler(h, StepBackNavigationEvent.TYPE);
 	}
 	
 	
@@ -192,7 +219,9 @@ public class UploadFilesWidget extends ChassisWidget {
 			
 			Map<String, String> map = new HashMap<String, String>();
 			
-			// TODO Auto-generated method stub
+			if (selectedStudyId != null) {
+				map.put(KEY_STUDYID, selectedStudyId);
+			}
 			
 			log.leave();
 			return map;
