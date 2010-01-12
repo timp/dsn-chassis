@@ -703,7 +703,7 @@
 
     <mime-mapping>
         <extension>xml</extension>
-        <mime-type>text/xml</mime-type>
+        <mime-type>application/xml</mime-type>
     </mime-mapping>
 
     <mime-mapping>
