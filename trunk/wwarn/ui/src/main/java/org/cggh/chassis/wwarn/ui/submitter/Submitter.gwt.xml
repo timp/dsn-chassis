@@ -31,7 +31,12 @@
   <!--+
       | Chassis GWT lib dependencies 
       +-->
-	<inherits name="org.cggh.chassis.generic.widget.Widget" />
+    <inherits name="org.cggh.chassis.generic.miniatom.MiniAtom" />
+    <inherits name="org.cggh.chassis.generic.widget.Widget" />
+
+
+    <!-- other dependencies -->
+    <inherits name="org.cggh.chassis.wwarn.ui.common.Common" />
 
 
 
