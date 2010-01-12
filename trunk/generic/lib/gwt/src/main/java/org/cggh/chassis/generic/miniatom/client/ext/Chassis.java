@@ -34,5 +34,9 @@ public class Chassis {
 	public static final String REL_ORIGINSTUDY = "http://www.cggh.org/2010/chassis/terms/originStudy";
 	
 		
+	
+	public static final String QUERYPARAM_ID = "id";
+	
+	
 
 }

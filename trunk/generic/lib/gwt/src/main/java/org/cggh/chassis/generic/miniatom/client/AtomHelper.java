@@ -289,6 +289,21 @@ public class AtomHelper {
 	public static void setContent(Element parent, Element content) {
 		setContent(parent, content, "application/xml");
 	}
+
+
+
+	public static List<Element> getEntries(Element parent) {
+		return XMLNS.getChildrenByTagNameNS(parent, Atom.ELEMENT_ENTRY, Atom.NSURI);
+	}
+	
+	
+	
+	
+	public static Element getFirstEntry(Element parent) {
+		List<Element> entries = getEntries(parent);
+		if (entries.size() > 0) return entries.get(0);
+		else return null;
+	}
 	
 	
 	

@@ -23,7 +23,7 @@ public abstract class WidgetMemory {
 	
 
 	
-	private static final String delimiter = "/";
+	public static final String PATH_DELIMITER = "/";
 
 	
 	
@@ -89,8 +89,8 @@ public abstract class WidgetMemory {
 			return ""; // is this sensible?
 		}
 		
-		if (mnemonic.indexOf(delimiter) >= 0) {
-			throw new Error("mnemonic must not contain character '"+delimiter+"'");
+		if (mnemonic.indexOf(PATH_DELIMITER) >= 0) {
+			throw new Error("mnemonic must not contain character '"+PATH_DELIMITER+"'");
 		}
 		
 		StringBuffer b = new StringBuffer();
@@ -100,7 +100,7 @@ public abstract class WidgetMemory {
 		if (this.child != null) {
 			String rest = this.child.createHistoryToken();
 			if (rest != null && !rest.equals("")) {
-				b.append(delimiter);
+				b.append(PATH_DELIMITER);
 				b.append(rest);
 			}
 		}
@@ -202,7 +202,7 @@ public abstract class WidgetMemory {
 		
 		Stack<String> mnemonics = new Stack<String>();
 
-		String[] tokens = historyToken.split(delimiter); // TODO deal with browser-specific behaviour here for historyToken that is empty string
+		String[] tokens = historyToken.split(PATH_DELIMITER); // TODO deal with browser-specific behaviour here for historyToken that is empty string
 		
 		for (int i=tokens.length-1; i>=0; i--) { // go backwards, Stack is FILO
 			mnemonics.push(tokens[i]);

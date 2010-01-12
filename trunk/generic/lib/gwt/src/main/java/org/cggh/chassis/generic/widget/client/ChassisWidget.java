@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+import org.cggh.chassis.generic.async.client.Deferred;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 
@@ -449,7 +450,29 @@ public abstract class ChassisWidget
 	/**
 	 * Refresh any data loaded asynchronously
 	 */
-	public void refresh() {}
+	public void refresh() {
+		
+		// default implementation, do nothing
+		
+	}
+	
+	
+	
+	
+	/**
+	 * Refresh any data loaded asynchronously, calling back with self when complete.
+	 * 
+	 * @return
+	 */
+	public Deferred<ChassisWidget> refreshAndCallback() {
+	
+		// default implementation, do nothing and call back immediately
+		Deferred<ChassisWidget> d = new Deferred<ChassisWidget>();
+		d.callback(this);
+		
+		return d;
+
+	}
 
 
 
