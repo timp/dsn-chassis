@@ -8,128 +8,72 @@ import org.cggh.chassis.generic.async.client.Function;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.ChassisWidget;
+import org.cggh.chassis.generic.widget.client.DelegatingWidget;
 import org.cggh.chassis.generic.widget.client.MapMemory;
 import org.cggh.chassis.generic.widget.client.WidgetMemory;
 
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.user.client.ui.Anchor;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.HTMLPanel;
 
-public class UploadFilesWidget extends ChassisWidget {
+
+
+
+
+public class UploadFilesWidget extends DelegatingWidget<UploadFilesWidgetModel, UploadFilesWidgetRenderer> {
 
 	
 	
 	
 	private Log log = LogFactory.getLog(UploadFilesWidget.class);
+	private UploadFilesWidgetController controller;
 	
 	
 	
 	
-	private String titleId = HTMLPanel.createUniqueId();
-	private String subTitleId = HTMLPanel.createUniqueId();
-	private String viewStudyWidgetContainerId = HTMLPanel.createUniqueId();
-	private String stepBackLinkParaId = HTMLPanel.createUniqueId();
-	private String actionsParaId = HTMLPanel.createUniqueId();
-	
-	
-	
-	
-	private String template = 
-		"<h1 id=\""+titleId+"\"></h1>" +
-		"<h2 id=\""+subTitleId+"\"></h2>" +
-		"<p>Selected study: <span id=\""+viewStudyWidgetContainerId+"\"></span></p>" +
-		"<p id=\""+stepBackLinkParaId+"\"></p>" +
-		"<p>TODO</p>" +
-		"<p id=\""+actionsParaId+"\"></p>";
-	
-	
-	
+	@Override
+	protected UploadFilesWidgetModel createModel() {
+		return new UploadFilesWidgetModel();
+	}
 
-	// UI fields
-	private HTMLPanel content;
-	private Button proceedButton;
-	private ViewStudyWidget viewStudyWidget;
-	private Anchor stepBackLink;
-	
-	
-	
-	// state fields
-	private String selectedStudyId;
 
+
+
+	@Override
+	protected UploadFilesWidgetRenderer createRenderer() {
+		return new UploadFilesWidgetRenderer(this);
+	}
+	
 	
 	
 	
 	public UploadFilesWidget() {
 		super();
-		
+		this.controller = new UploadFilesWidgetController(this, this.model);
 		this.memory = new Memory();
-		
+	}
+	
+	
+	
+	
+	public void setSelectedStudy(String id) {
+		this.model.setSelectedStudyId(id);
 	}
 	
 	
 	
 	
 	@Override
-	public void renderUI() {
-	
-		this.content = new HTMLPanel(this.template);
+	public Deferred<ChassisWidget> refreshAndCallback() {
+		log.enter("refreshAndCallback");
 		
-		this.content.add(new HTML("Submitter - Submit Data"), this.titleId); // TODO i18n
+		// delegate to controller
+		Deferred<ChassisWidget> deferredSelf = this.controller.refreshAndCallback();
 		
-		this.content.add(new HTML("1. Select Study &gt; <span class=\"currentStep\">2. Upload Files</span> &gt; 3. Submit &gt; 4. Add Information"), this.subTitleId); // TODO i18n
-
-		this.viewStudyWidget = new ViewStudyWidget();
-		this.content.add(this.viewStudyWidget, this.viewStudyWidgetContainerId);
-		
-		this.stepBackLink = new Anchor();
-		this.stepBackLink.setText("< back to select study");
-		this.content.add(this.stepBackLink, this.stepBackLinkParaId);
-		
-		this.proceedButton = new Button("Proceed &gt;"); // TODO i18n
-		this.content.add(this.proceedButton, this.actionsParaId);
-		
-		// TODO
-		
-		this.add(this.content);
+		return deferredSelf;
 	}
-	
-	
-	
-	
-	@Override
-	public void bindUI() {
-		
-		HandlerRegistration a = this.proceedButton.addClickHandler(new ClickHandler() {
-			
-			public void onClick(ClickEvent arg0) {
-				ProceedActionEvent e = new ProceedActionEvent();
-				fireEvent(e);
-			}
-			
-		});
-		
-		this.childWidgetEventHandlerRegistrations.add(a);
-		
-		HandlerRegistration b = this.stepBackLink.addClickHandler(new ClickHandler() {
-			
-			public void onClick(ClickEvent arg0) {
-				StepBackNavigationEvent e = new StepBackNavigationEvent();
-				fireEvent(e);
-			}
-			
-		});
 
-		this.childWidgetEventHandlerRegistrations.add(b);
 
-	}
-	
-	
-	
-	
+
+
 	public HandlerRegistration addProceedActionHandler(ProceedActionHandler h) {
 		return this.addHandler(h, ProceedActionEvent.TYPE);
 	}
@@ -141,63 +85,6 @@ public class UploadFilesWidget extends ChassisWidget {
 		return this.addHandler(h, StepBackNavigationEvent.TYPE);
 	}
 	
-	
-	
-	
-	public void setSelectedStudy(String id) {
-		this.selectedStudyId = id;
-	}
-	
-	
-	
-	@Override
-	public void refresh() {
-		this.refreshSelectedStudy();
-		this.refreshUploadedFiles();
-	}
-	
-	
-	
-	
-	@Override
-	public Deferred<ChassisWidget> refreshAndCallback() {
-		log.enter("refreshAndCallback");
-
-		Deferred<ViewStudyWidget> d1 = this.refreshSelectedStudy();
-
-		// TODO refresh files
-
-		Deferred<ChassisWidget> deferredSelf = d1.adapt(new Function<ViewStudyWidget, ChassisWidget>() {
-
-			public ChassisWidget apply(ViewStudyWidget in) {
-				return UploadFilesWidget.this;
-			}
-			
-		});
-		
-		log.leave();
-		return deferredSelf;
-	}
-
-
-
-
-	/**
-	 * 
-	 */
-	private void refreshUploadedFiles() {
-		log.enter("refreshUploadedFiles");
-		// TODO Auto-generated method stub
-		
-		log.leave();
-	}
-
-
-
-
-	private Deferred<ViewStudyWidget> refreshSelectedStudy() {
-		return this.viewStudyWidget.retrieveStudy(this.selectedStudyId);
-	}
 	
 	
 	
@@ -218,6 +105,8 @@ public class UploadFilesWidget extends ChassisWidget {
 			log.enter("createMnemonicMap");
 			
 			Map<String, String> map = new HashMap<String, String>();
+			
+			String selectedStudyId = model.getSelectedStudyId();
 			
 			if (selectedStudyId != null) {
 				map.put(KEY_STUDYID, selectedStudyId);
@@ -274,6 +163,9 @@ public class UploadFilesWidget extends ChassisWidget {
 		
 		
 	}
-	
+
+
+
+
 
 }
