@@ -2,11 +2,50 @@
 
 = Deferred =
 
+The chassis deferred class is a direct port of the Deferred class in the [http://mochikit.com/doc/html/MochiKit/Async.html MochiKit async library]. The Overview section and the [http://mochikit.com/doc/html/MochiKit/Async.html#fn-deferred Deferred function documentation] will tell you almost all you need to know. The only things added after porting the code from JavaScript to Java were generics so you can get a bit of type safety (but not too much!) and the adapt() method.
+
 == Callback Chains ==
 
-Note that there is no limit to the number of callback functions you can add to a Deferred object. 
+Note that there is no limit to the number of callback functions you can add to a Deferred object. Each callback you add is added to the callback chain for that Deferred. When the value becomes available, it is passed to the first callback in the chain. The return value from that callback is then passed to the next callback in the chain, and so on until the end of the chain.
 
-TODO
+E.g. ...
+
+{{{
+Deferred<Foo> deferredFoo = doAsyncFoo();
+deferredFoo.addCallback(new Function<Foo, Bar>() {
+    public Bar apply(Foo foo) {
+        Bar bar = foo2bar(foo);
+        return bar;
+    }
+});
+deferredFoo.addCallback(new Function<Bar, Baz>() {
+    public Baz apply(Bar bar) {
+        Baz baz = bar2baz(bar);
+        return baz;
+    }
+};
+// and so on ...
+}}}
+
+Most often, a callback will simply return the input value. This makes that value available to any other callbacks that are added.
+
+E.g. ...
+
+{{{
+Deferred<Foo> deferredFoo = doAsyncFoo();
+deferredFoo.addCallback(new Function<Foo, Foo>() {
+    public Foo apply(Foo foo) {
+
+        doSomethingWithFoo(foo);
+
+        // return foo in case any other callbacks are interested
+        return foo;
+    }
+});
+
+... this means you can handle the result of the async operation in one place, but also pass the deferred object to other parts of your application if they also need to handle the result of the async operation.
+
+Returning null from a callback is generally not polite, unless you specifically want to prevent any further callbacks from being added to a deferred object.
 
 == Chaining Async Operations ==
 
@@ -49,4 +88,4 @@ chain.addCallback(new Function<Bar, Bar>() {
 
 Note that, in the second way, you make use of the fact that, if a callback function returns a Deferred object, then the callbacks will be automatically chained for you, such that then next callback in the chain is only called after the Deferred value returned by the previous callback becomes available, and is called back with that value, and not with the Deferred. 
 
-I.e., the implementation of the Deferred class specifically looks out for callbacks returning something Deferred, and handle it in a special way, not in the normal way of simply passing the return value from the first callback as the input to the next callback in the chain.
+I.e., the implementation of the Deferred class specifically looks out for callbacks returning an instance of Deferred, and handles it in a special way, not in the normal way of simply passing the return value from the first callback as the input to the next callback in the chain.
