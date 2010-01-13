@@ -2,7 +2,7 @@
 
 = Deferred =
 
-The chassis deferred class is a direct port of the Deferred class in the [http://mochikit.com/doc/html/MochiKit/Async.html MochiKit async library]. The Overview section and the [http://mochikit.com/doc/html/MochiKit/Async.html#fn-deferred Deferred function documentation] will tell you almost all you need to know. The only things added after porting the code from JavaScript to Java were generics so you can get a bit of type safety (but not too much!) and the adapt() method.
+The chassis deferred class is a direct port of the Deferred class in the [http://mochikit.com/doc/html/MochiKit/Async.html MochiKit async library]. The Overview section and the [http://mochikit.com/doc/html/MochiKit/Async.html#fn-deferred Deferred function documentation] will tell you almost all you need to know. The only things added after porting the code from !JavaScript to Java were generics so you can get a bit of type safety (but not too much!) and the adapt() method.
 
 == Callback Chains ==
 
@@ -27,7 +27,9 @@ deferredFoo.addCallback(new Function<Bar, Baz>() {
 // and so on ...
 }}}
 
-Most often, a callback will simply return the input value. This makes that value available to any other callbacks that are added.
+Note that there is no generic type constraint on the function passed as an argument to addCallback() ... you can add a function with any type signiature you want. It is up to you to make sure that the input and output types make sense for the callback chain you want to use. If the input and output types in a callback chain are not compatible, then an error will be passed to the next errback function in the chain.
+
+Most often, a callback will simply return the input value. This makes that value available to any other callbacks that are added
 
 E.g. ...
 
@@ -42,6 +44,7 @@ deferredFoo.addCallback(new Function<Foo, Foo>() {
         return foo;
     }
 });
+}}}
 
 ... this means you can handle the result of the async operation in one place, but also pass the deferred object to other parts of your application if they also need to handle the result of the async operation.
 
