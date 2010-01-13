@@ -50,6 +50,49 @@ deferredFoo.addCallback(new Function<Foo, Foo>() {
 
 Returning null from a callback is generally not polite, unless you specifically want to prevent any further callbacks from being added to a deferred object.
 
+== Callbacks and Errbacks ==
+
+It's worth reading the [http://mochikit.com/doc/html/MochiKit/Async.html#fn-deferred Deferred function documentation] carefully. If you do, you'll discover if you start with ...
+
+{{{
+Deferred<Foo> deferredFoo = doAsyncFoo();
+Function<Foo, Foo> callback = new Function<Foo, Foo>() {
+    public Foo apply(Foo foo) {
+        doSomething(foo);
+        return foo;
+    }
+};
+Function<Throwable, Throwable> errback = new Function<Throwable, Throwable>() {
+    public Throwable apply(Throwable in) {
+        handleError(in);
+        return in;
+    }
+};
+}}}
+
+... that doing ...
+
+{{{
+deferredFoo.addCallbacks(callback, errback);
+}}}
+
+... is different from doing ...
+
+{{{
+deferredFoo.addCallback(callback);
+deferredFoo.addErrback(errback);
+}}}
+
+If `deferredFoo.errback(anException)` is called, both cases will behave the same - the `errback` function is called.
+
+The difference will arise if the `callback` function itself throws an exception during execution. If it does, in the second case, the exception will be passed to the `errback` function. In the first case, the exception *will not* be passed to the `errback` function.
+
+Usually, I use the second pattern, and write the `errback` function to cope with either an exception passed via a call to errback() on the deferred, or an exception thrown from the callback.
+
+If you use the first pattern, make sure you're callback function does its own error handling. If it doesn't, and throws an exception, then the deferred object will catch that for you, and pass it on to any subsequent errbacks you add, but will otherwise sit there silently in an error state.
+
+If you suspect this is the case, enable logging for the async module - any exceptions are logged.
+
 == Chaining Async Operations ==
 
 If you have two async operations to perform, and they have to happen in sequence, then you can do one of two things.
