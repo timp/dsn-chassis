@@ -2,7 +2,7 @@
 
 = Deferred =
 
-The chassis deferred class is a direct port of the Deferred class in the [http://mochikit.com/doc/html/MochiKit/Async.html MochiKit async library]. The Overview section and the [http://mochikit.com/doc/html/MochiKit/Async.html#fn-deferred Deferred function documentation] will tell you almost all you need to know. The only things added after porting the code from !JavaScript to Java were generics so you can get a bit of type safety (but not too much!) and the adapt() method.
+The chassis deferred class is a direct port of the Deferred class in the [http://mochikit.com/doc/html/MochiKit/Async.html MochiKit async library] - the Overview section of the [http://mochikit.com/doc/html/MochiKit/Async.html MochiKit Async docs] and the [http://mochikit.com/doc/html/MochiKit/Async.html#fn-deferred Deferred function documentation] will tell you almost all you need to know. The only things added after porting the code from !JavaScript to Java were generics so you can get a bit of type safety (but not too much!) and the adapt() method.
 
 == Callback Chains ==
 
