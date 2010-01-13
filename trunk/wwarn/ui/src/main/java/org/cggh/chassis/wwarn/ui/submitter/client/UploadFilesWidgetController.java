@@ -144,6 +144,7 @@ public class UploadFilesWidgetController {
 			
 			if (studyEntryElement != null) {
 
+				// we have a study, so lets try retrieving the list of files uploaded so far
 				deferredFilesFeedDoc = retrieveFiles();
 				
 			}
@@ -156,6 +157,7 @@ public class UploadFilesWidgetController {
 
 			}
 			
+			// return the deferred feed of files uploaded, for chaining of callbacks
 			return deferredFilesFeedDoc;
 		}
 		

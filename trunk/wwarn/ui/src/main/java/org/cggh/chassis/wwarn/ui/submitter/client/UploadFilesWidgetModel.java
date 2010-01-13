@@ -48,6 +48,8 @@ public class UploadFilesWidgetModel extends AsyncWidgetModel {
 	public void init() {
 		super.init();
 		this.selectedStudyId = null;
+		this.studyEntryElement = null;
+		this.uploadFeedDoc = null;
 	}
 
 
