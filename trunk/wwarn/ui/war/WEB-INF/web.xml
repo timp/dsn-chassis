@@ -32,4 +32,21 @@
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
   
+  <servlet>
+    <description>submitter upload file form submit handler</description>
+    <display-name>SubmitterUploadFileFormSubmitHandler</display-name>
+    <servlet-name>SubmitterUploadFileFormSubmitHandler</servlet-name>
+    <servlet-class>org.cggh.chassis.wwarn.ui.submitter.server.UploadFileFormSubmitHandler</servlet-class>
+    <init-param>
+      <description>the URL of the Atom collection where the uploaded file content (i.e., media) will be POSTed</description>
+      <param-name>collection.media.url</param-name>
+      <param-value>http://localhost:8080/chassis-generic-service-exist/atom/edit/media</param-value>
+    </init-param>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>SubmitterUploadFileFormSubmitHandler</servlet-name>
+    <url-pattern>/submitter/upload</url-pattern>
+  </servlet-mapping>
+  
 </web-app>

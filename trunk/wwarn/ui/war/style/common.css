@@ -5,7 +5,7 @@ body {
 	font-family: sans-serif;
 }
 
-h1, h2, h3, h4, h5 {
+h1, h2, h3 {
 	border-top: 1px solid #3366CC;
 	background-color: #E5ECF9;
 	padding: .1em .1em .3em .1em;
@@ -26,9 +26,19 @@ h3 {
 	font-weight: normal;
 }
 
+h4 {
+	font-size: 100%;
+	font-weight: bold;
+}
+
 a {
 	text-decoration: underline;
 	cursor: pointer;
+}
+
+textarea {
+	width: 60em;
+	height: 10em;
 }
 
 #holdall {
@@ -118,3 +128,7 @@ a.mainNavigation {
     display: inline;
 }
 
+.action {
+	font-size: 110%;
+	margin: 0 .2em 0 0;	
+}

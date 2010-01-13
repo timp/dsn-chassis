@@ -7,6 +7,7 @@ import org.cggh.chassis.generic.async.client.Deferred;
 import org.cggh.chassis.generic.async.client.Function;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
+import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 import org.cggh.chassis.generic.widget.client.ChassisWidget;
 import org.cggh.chassis.generic.widget.client.DelegatingWidget;
 import org.cggh.chassis.generic.widget.client.MapMemory;
@@ -48,6 +49,7 @@ public class UploadFilesWidget extends DelegatingWidget<UploadFilesWidgetModel, 
 	public UploadFilesWidget() {
 		super();
 		this.controller = new UploadFilesWidgetController(this, this.model);
+		this.renderer.setController(this.controller);
 		this.memory = new Memory();
 	}
 	
@@ -58,6 +60,13 @@ public class UploadFilesWidget extends DelegatingWidget<UploadFilesWidgetModel, 
 		this.model.setSelectedStudyId(id);
 	}
 	
+	
+	
+	
+	@Override
+	public void refresh() {
+		refreshAndCallback();
+	}
 	
 	
 	
@@ -127,6 +136,8 @@ public class UploadFilesWidget extends DelegatingWidget<UploadFilesWidgetModel, 
 			log.enter("remember");
 			
 			Deferred<WidgetMemory> deferredMemory;
+			
+			model.setStatus(AsyncWidgetModel.STATUS_INITIAL);
 			
 			String studyId = mnemonic.get(KEY_STUDYID);
 			

@@ -13,7 +13,7 @@ public class Config {
 	public static final String QUERY_STUDIES_URL = "query.studies.url";
 	public static final String QUERY_SUBMISSIONS_URL = "query.submissions.url";
 	public static final String QUERY_MEDIA_URL = "query.media.url";
-	
+	public static final String FORMHANDLER_FILEUPLOAD_URL = "formhandler.fileupload.url";
 	
 	
 	

@@ -6,17 +6,22 @@ package org.cggh.chassis.wwarn.ui.submitter.client;
 import org.cggh.chassis.generic.async.client.Deferred;
 import org.cggh.chassis.generic.async.client.Function;
 import org.cggh.chassis.generic.async.client.QueryParams;
+import org.cggh.chassis.generic.atomext.client.datafile.DataFileEntry;
+import org.cggh.chassis.generic.atomext.client.datafile.DataFileFactory;
+import org.cggh.chassis.generic.atomui.client.CreateSuccessEvent;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.miniatom.client.Atom;
 import org.cggh.chassis.generic.miniatom.client.AtomHelper;
 import org.cggh.chassis.generic.miniatom.client.ext.Chassis;
+import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 import org.cggh.chassis.generic.widget.client.ChassisWidget;
 import org.cggh.chassis.generic.widget.client.ErrorEvent;
 import org.cggh.chassis.wwarn.ui.common.client.Config;
 
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;
+import com.google.gwt.xml.client.XMLParser;
 
 /**
  * @author aliman
@@ -169,7 +174,7 @@ public class UploadFilesWidgetController {
 	private Deferred<Document> retrieveFiles() {
 		log.enter("retrieveFiles");
 		
-		model.setStatus(UploadFilesWidgetModel.STATUS_FILE_UPLOAD_PENDING);
+		model.setStatus(UploadFilesWidgetModel.STATUS_RETRIEVE_UPLOADED_FILES_PENDING);
 
 		QueryParams qp = new QueryParams();
 		qp.put(Chassis.QUERYPARAM_SUBMITTED, Chassis.QUERYPARAMVALUE_NO);
@@ -186,18 +191,108 @@ public class UploadFilesWidgetController {
 
 
 
-
 	private class RetrieveFilesCallback implements Function<Document, Document> {
 
 		public Document apply(Document uploadFeedDoc) {
 
 			model.setUploadFeedDoc(uploadFeedDoc);
-			model.setStatus(UploadFilesWidgetModel.STATUS_READY_FOR_INTERACTION);
+
+			if (uploadFeedDoc != null) {
+				
+				model.setStatus(UploadFilesWidgetModel.STATUS_READY_FOR_INTERACTION);
+
+			}
 			
 			return uploadFeedDoc;
 			
 		}
 		
+	}
+
+
+
+
+	public void submitUploadFileForm(UploadFileForm form) {
+
+		model.setStatus(UploadFilesWidgetModel.STATUS_FILE_UPLOAD_PENDING);
+		form.submit();
+		
+	}
+
+
+
+
+	public void handleUploadFileFormSubmitComplete(String results) {
+		log.enter("handleUploadFileFormSubmitComplete");
+		
+		log.debug(results);
+		
+		try {
+			
+			if (results.startsWith("<!--") && results.endsWith("-->")) {
+				
+				String contents = results.substring(4, results.length()-3);
+
+				log.debug("attempting to parse: "+contents);
+				XMLParser.parse(contents);
+				
+				log.debug("parse success, assume we can go ahead and refresh files");
+				refreshFiles();
+				
+			}
+			else {
+				
+				model.setStatus(AsyncWidgetModel.STATUS_ERROR);
+				owner.fireEvent(new ErrorEvent("could not parse results: "+results));
+
+			}
+			
+		} catch (Throwable t) {
+			
+			log.error("caught trying to parse submit results: "+t.getLocalizedMessage(), t);
+			model.setStatus(AsyncWidgetModel.STATUS_ERROR);
+			owner.fireEvent(new ErrorEvent(t));
+			
+		}
+
+		
+		log.leave();
+	}
+
+
+
+
+	private void refreshFiles() {
+		
+		Deferred<Document> deferredFeed = retrieveFiles();
+		
+		deferredFeed.addCallback(new RetrieveFilesCallback());
+		
+		deferredFeed.addErrback(new Function<Throwable, Throwable>() {
+
+			public Throwable apply(Throwable in) {
+				log.error("error during refresh", in);
+				model.setStatus(UploadFilesWidgetModel.STATUS_ERROR);
+				owner.fireEvent(new ErrorEvent(in));
+				return in;
+			}
+			
+		});
+		
+	}
+	
+	
+	
+
+	public void proceed() {
+		owner.fireEvent(new ProceedActionEvent());
+	}
+
+
+
+
+	public void stepBack() {
+		owner.fireEvent(new StepBackNavigationEvent());
 	}
 
 	
