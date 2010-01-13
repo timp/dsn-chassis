@@ -1,5 +1,7 @@
 #summary documentation of the Fractal UI MVC pattern and supporting GWT library.
 
+*This page is now deprecated, and the FractalUI package has become the chassis widget framework, see DocWidget. The content below is maintained for historical interest.*
+
 = Fractal UI =
 
 <wiki:toc/>
