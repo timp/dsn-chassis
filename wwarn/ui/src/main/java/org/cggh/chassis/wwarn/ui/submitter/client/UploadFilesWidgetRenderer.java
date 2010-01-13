@@ -6,7 +6,10 @@ package org.cggh.chassis.wwarn.ui.submitter.client;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.cggh.chassis.generic.log.client.Log;
+import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.miniatom.client.AtomHelper;
+import org.cggh.chassis.generic.miniatom.client.ext.Chassis;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 import org.cggh.chassis.generic.widget.client.ChassisWidgetRenderer;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.ErrorStatus;
@@ -25,6 +28,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
@@ -32,7 +36,9 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteEvent;
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;
 
@@ -44,6 +50,8 @@ public class UploadFilesWidgetRenderer extends ChassisWidgetRenderer<UploadFiles
 
 	
 	
+	private Log log = LogFactory.getLog(UploadFilesWidgetRenderer.class);
+	
 	
 	@UiTemplate("UploadFilesWidget.ui.xml")
 	interface MyUiBinder extends UiBinder<HTMLPanel, UploadFilesWidgetRenderer> {}
@@ -51,28 +59,35 @@ public class UploadFilesWidgetRenderer extends ChassisWidgetRenderer<UploadFiles
 
 	
 	
-	@UiField HTMLPanel studyPanel;
+	@UiField Panel studyPanel;
 	@UiField Label studyNotSelectedLabel;
 	@UiField Label studyPendingLabel;
 	@UiField Label studyNotFoundLabel;
 	@UiField Label studyTitleLabel;
 	@UiField Anchor stepBackLink;
-	@UiField HTMLPanel mainInteractionPanel;
+	@UiField Panel mainInteractionPanel;
 	@UiField Label filesUploadedLabel;
 	@UiField Label filesPendingLabel;
 	@UiField Label noFilesUploadedLabel;
-	@UiField FlowPanel filesTableContainer;
-	@UiField FlowPanel mainActionsPanel;
+	@UiField Panel filesTableContainer;
+	@UiField Panel mainActionsPanel;
 	@UiField Button cancelSubmissionButton;
 	@UiField Button proceedButton;
 	@UiField Label uploadAFileTitleLabel;
 	@UiField Label uploadAnotherFileTitleLabel;
-	@UiField HTMLPanel errorPanel;
+	@UiField Panel errorPanel;
+	@UiField UploadFileForm uploadFileForm;
+	@UiField Button uploadButton;
+	@UiField Button cancelSubmissionButton2;
+	@UiField Panel uploadFormPanel;
+	@UiField Panel uploadPendingPanel;
+	
 
 
 
 
 	private UploadFilesWidget owner;
+	private UploadFilesWidgetController controller;
 	
 	
 	
@@ -85,11 +100,9 @@ public class UploadFilesWidgetRenderer extends ChassisWidgetRenderer<UploadFiles
 	
 	
 	@Override
-	protected void renderUI() {
-
-		this.canvas.clear();
-		this.canvas.add(uiBinder.createAndBindUi(this));
-		
+	public void setCanvas(Panel canvas) {
+		super.setCanvas(canvas);
+		canvas.add(uiBinder.createAndBindUi(this));
 	}
 	
 	
@@ -126,89 +139,179 @@ public class UploadFilesWidgetRenderer extends ChassisWidgetRenderer<UploadFiles
 	 * @param status
 	 */
 	protected void syncUIWithStatus(Status status) {
+		log.enter("syncUIWithStatus");
+		
+		log.debug("status: "+status);
+		
+		syncStudyPanelWithStatus(status);
+		syncMainInteractionPanelWithStatus(status);
+		syncErrorPanelWithStatus(status);
 		
 		if (status instanceof AsyncWidgetModel.InitialStatus) {
 
-			studyNotSelectedLabel.setVisible(true);
-			studyPendingLabel.setVisible(false);
-			studyNotFoundLabel.setVisible(false);
-			studyTitleLabel.setVisible(false);
-			
-			studyPanel.setVisible(true);
-			mainInteractionPanel.setVisible(false);
-			errorPanel.setVisible(false);
+			filesUploadedLabel.setVisible(false);
+			filesPendingLabel.setVisible(false);
+			noFilesUploadedLabel.setVisible(false);
+			uploadPendingPanel.setVisible(false);
+
 		}
 		
 		else if (status instanceof UploadFilesWidgetModel.RetrieveStudyPendingStatus) {
-
-			studyNotSelectedLabel.setVisible(false);
-			studyPendingLabel.setVisible(true);
-			studyNotFoundLabel.setVisible(false);
-			studyTitleLabel.setVisible(false);
-			
-			studyPanel.setVisible(true);
-			mainInteractionPanel.setVisible(false);
-			errorPanel.setVisible(false);
 
 		}
 		
 		else if (status instanceof UploadFilesWidgetModel.StudyNotFoundStatus) {
 
-			studyNotSelectedLabel.setVisible(false);
-			studyPendingLabel.setVisible(false);
-			studyNotFoundLabel.setVisible(true);
-			studyTitleLabel.setVisible(false);
-			
-			studyPanel.setVisible(true);
-			mainInteractionPanel.setVisible(false);
-			errorPanel.setVisible(false);
-
 		}
 
 		else if (status instanceof UploadFilesWidgetModel.RetrieveUploadedFilesPendingStatus) {
 
-			studyNotSelectedLabel.setVisible(false);
-			studyPendingLabel.setVisible(false);
-			studyNotFoundLabel.setVisible(false);
-			studyTitleLabel.setVisible(true);
 			
 			filesUploadedLabel.setVisible(true);
 			filesPendingLabel.setVisible(true);
 			noFilesUploadedLabel.setVisible(false);
-			
-			studyPanel.setVisible(true);
-			mainInteractionPanel.setVisible(true);
-			errorPanel.setVisible(false);
 
 		}
 		
 		else if (status instanceof UploadFilesWidgetModel.ReadyForInteractionStatus) {
 
+			filesPendingLabel.setVisible(false);
+			uploadPendingPanel.setVisible(false);
+			uploadFormPanel.setVisible(true);
+			
+		}
+		
+		else if (status instanceof UploadFilesWidgetModel.FileUploadPendingStatus) {
+
+			uploadFormPanel.setVisible(false);
+			uploadPendingPanel.setVisible(true);
+
+		}
+		
+		else if (status instanceof ErrorStatus) {
+			
+		}
+
+		log.leave();
+	}
+
+	
+	
+
+	private void syncErrorPanelWithStatus(Status status) {
+
+		if (status instanceof ErrorStatus) {
+			
+			errorPanel.setVisible(true);
+			
+		}
+		else {
+
+			errorPanel.setVisible(false);
+
+		}
+		
+	}
+
+
+
+
+	private void syncMainInteractionPanelWithStatus(Status status) {
+		// TODO Auto-generated method stub
+		
+		if (
+				status instanceof UploadFilesWidgetModel.RetrieveUploadedFilesPendingStatus || 
+				status instanceof UploadFilesWidgetModel.ReadyForInteractionStatus || 
+				status instanceof UploadFilesWidgetModel.FileUploadPendingStatus 
+				
+		) {
+
+			mainInteractionPanel.setVisible(true);
+
+		}
+		else {
+
+			mainInteractionPanel.setVisible(false);
+
+		}
+		
+		
+	}
+
+
+
+
+	private void syncStudyPanelWithStatus(Status status) {
+		
+		if (status instanceof AsyncWidgetModel.InitialStatus) {
+
+			studyPanel.setVisible(true);
+			studyNotSelectedLabel.setVisible(true);
+			studyPendingLabel.setVisible(false);
+			studyNotFoundLabel.setVisible(false);
+			studyTitleLabel.setVisible(false);
+
+		}
+		
+		else if (status instanceof UploadFilesWidgetModel.RetrieveStudyPendingStatus) {
+
+			studyPanel.setVisible(true);
+			studyNotSelectedLabel.setVisible(false);
+			studyPendingLabel.setVisible(true);
+			studyNotFoundLabel.setVisible(false);
+			studyTitleLabel.setVisible(false);
+
+		}
+		
+		else if (status instanceof UploadFilesWidgetModel.StudyNotFoundStatus) {
+
+			studyPanel.setVisible(true);
+			studyNotSelectedLabel.setVisible(false);
+			studyPendingLabel.setVisible(false);
+			studyNotFoundLabel.setVisible(true);
+			studyTitleLabel.setVisible(false);
+
+		}
+
+		else if (status instanceof UploadFilesWidgetModel.RetrieveUploadedFilesPendingStatus) {
+
+			studyPanel.setVisible(true);
+			studyNotSelectedLabel.setVisible(false);
+			studyPendingLabel.setVisible(false);
+			studyNotFoundLabel.setVisible(false);
+			studyTitleLabel.setVisible(true);
+
+		}
+		
+		else if (status instanceof UploadFilesWidgetModel.ReadyForInteractionStatus) {
+
+			studyPanel.setVisible(true);
 			studyNotSelectedLabel.setVisible(false);
 			studyPendingLabel.setVisible(false);
 			studyNotFoundLabel.setVisible(false);
 			studyTitleLabel.setVisible(true);
 			
-			filesPendingLabel.setVisible(false);
-			
+		}
+		
+		else if (status instanceof UploadFilesWidgetModel.FileUploadPendingStatus) {
+
 			studyPanel.setVisible(true);
-			mainInteractionPanel.setVisible(true);
-			errorPanel.setVisible(false);
+			studyNotSelectedLabel.setVisible(false);
+			studyPendingLabel.setVisible(false);
+			studyNotFoundLabel.setVisible(false);
+			studyTitleLabel.setVisible(true);
 
 		}
 		
 		else if (status instanceof ErrorStatus) {
 			
 			studyPanel.setVisible(false);
-			mainInteractionPanel.setVisible(false);
-			errorPanel.setVisible(true);
 			
 		}
-
 	}
 
-	
-	
+
+
 
 	protected void syncUIWithStudyEntryElement(Element studyEntryElement) {
 		String studyTitle = "";
@@ -262,21 +365,29 @@ public class UploadFilesWidgetRenderer extends ChassisWidgetRenderer<UploadFiles
 		List<Widget[]> rows = new ArrayList<Widget[]>();
 
 		Widget[] headerRow = {
-			new InlineLabel("File Name"),	
-			new InlineLabel("Type"),	
-			new InlineLabel("Summary"),	
-			new InlineLabel("Uploaded"),	
-			new InlineLabel("Actions")	
+			new InlineLabel("File Name"), // TODO i18n
+			new InlineLabel("Type"),  // TODO i18n
+			new InlineLabel("Summary"), // TODO i18n
+			new InlineLabel("Uploaded"),  // TODO i18n
+			new InlineLabel("Actions") // TODO i18n
 		};
 		rows.add(headerRow);
 		
 		for (Element entry : entries) {
 			
+			String title = AtomHelper.getTitle(entry);
+			
+			Element categoryElement = AtomHelper.getFirstCategory(entry, Chassis.SCHEME_FILETYPES);
+			String type = getTypeLabel(categoryElement);
+			
+			String summary = AtomHelper.getSummary(entry);
+			String created = AtomHelper.getPublished(entry);
+			
 			Widget[] row = {
-				new InlineLabel("TODO"),	
-				new InlineLabel("TODO"),	
-				new InlineLabel("TODO"),	
-				new InlineLabel("TODO"),	
+				new InlineLabel(title),	
+				new InlineLabel(type),	
+				new InlineLabel(summary),	
+				new InlineLabel(created),	
 				new InlineLabel("TODO")	
 			};
 			rows.add(row);
@@ -286,6 +397,33 @@ public class UploadFilesWidgetRenderer extends ChassisWidgetRenderer<UploadFiles
 		return RenderUtils.renderResultsTable(rows);
 	}
 
+	
+	
+	private static String getTypeLabel(Element categoryElement) {
+
+		String term = AtomHelper.getTermAttr(categoryElement);
+
+		if (term == null) {
+			return "";
+		}
+		else if (term.equals(Chassis.TERM_DATAFILE)) {
+			return "Data File"; // TODO i18n
+		}
+		else if (term.equals(Chassis.TERM_DATADICTIONARY)) {
+			return "Data Dictionary"; // TODO i18n
+		}
+		else if (term.equals(Chassis.TERM_PROTOCOL)) {
+			return "Protocol"; // TODO i18n
+		}
+		else if (term.equals(Chassis.TERM_OTHER)) {
+			String labelAttrValue = AtomHelper.getLabelAttr(categoryElement);
+			return (labelAttrValue != null) ? labelAttrValue : "";
+		}
+		else {
+			return "";
+		}
+
+	}
 
 
 
@@ -301,7 +439,7 @@ public class UploadFilesWidgetRenderer extends ChassisWidgetRenderer<UploadFiles
 
 	@UiHandler("stepBackLink")
 	void handleStepBackLinkClick(ClickEvent e) {
-		this.owner.fireEvent(new StepBackNavigationEvent());
+		controller.stepBack();
 	}
 	
 	
@@ -309,12 +447,30 @@ public class UploadFilesWidgetRenderer extends ChassisWidgetRenderer<UploadFiles
 	
 	@UiHandler("proceedButton")
 	void handleProceedButtonClick(ClickEvent e) {
-		this.owner.fireEvent(new ProceedActionEvent());
+		controller.proceed();
 	}
 	
 	
 	
 	
+	@UiHandler("uploadButton")
+	void handleUploadFormSubmitButtonClick(ClickEvent e) {
+		controller.submitUploadFileForm(uploadFileForm);
+	}
+	
+	
+	
+	@UiHandler("uploadFileForm")
+	void handleFileUploadFormSubmitComplete(SubmitCompleteEvent e) {
+		controller.handleUploadFileFormSubmitComplete(e.getResults());
+	}
+
+
+
+
+	public void setController(UploadFilesWidgetController controller) {
+		this.controller = controller;
+	}
 
 	
 	
