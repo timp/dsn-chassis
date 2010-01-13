@@ -1,0 +1,52 @@
+#summary documentation for the chassis async gwt library
+
+= Deferred =
+
+== Callback Chains ==
+
+Note that there is no limit to the number of callback functions you can add to a Deferred object. 
+
+TODO
+
+== Chaining Async Operations ==
+
+If you have two async operations to perform, and they have to happen in sequence, then you can do one of two things.
+
+Either ...
+
+{{{
+Deferred<Foo> deferredFoo = doAsyncFoo();
+deferredFoo.addCallback(new Function<Foo, Foo>() {
+    public Foo apply(Foo foo) {
+        Deferred<Bar> deferredBar = doAsyncBar(foo);
+        deferredBar.addCallback(new Function<Bar, Bar>() {
+            public Bar apply(Bar bar) {
+                // do something with bar, now you've got it
+                return bar;
+            }
+        });
+        return foo;
+    }
+});
+}}}
+
+... or ...
+
+{{{
+Deferred<Foo> chain = doAsyncFoo();
+chain.addCallback(new Function<Foo, Deferred<Bar>>() {
+    public Deferred<Bar> apply(Foo foo) {
+        return doAsyncBar(foo);
+    }
+});
+chain.addCallback(new Function<Bar, Bar>() {
+    public Bar apply(Bar bar) {
+        // do something with bar, now you've got it
+        return bar;
+    }
+});
+}}}
+
+Note that, in the second way, you make use of the fact that, if a callback function returns a Deferred object, then the callbacks will be automatically chained for you, such that then next callback in the chain is only called after the Deferred value returned by the previous callback becomes available, and is called back with that value, and not with the Deferred. 
+
+I.e., the implementation of the Deferred class specifically looks out for callbacks returning something Deferred, and handle it in a special way, not in the normal way of simply passing the return value from the first callback as the input to the next callback in the chain.
