@@ -12,7 +12,6 @@ import org.cggh.chassis.wwarn.ui.submitter.client.ViewStudyWidgetModel.EntryChan
 import org.cggh.chassis.wwarn.ui.submitter.client.ViewStudyWidgetModel.EntryChangeHandler;
 
 import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.xml.client.Element;
 
 /**
