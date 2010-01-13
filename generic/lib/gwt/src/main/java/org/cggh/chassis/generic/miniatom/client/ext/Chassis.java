@@ -36,6 +36,8 @@ public class Chassis {
 		
 	
 	public static final String QUERYPARAM_ID = "id";
+	public static final String QUERYPARAM_SUBMITTED = "submitted";
+	public static final String QUERYPARAMVALUE_NO = "no";
 	
 	
 
