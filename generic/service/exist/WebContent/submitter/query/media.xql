@@ -39,19 +39,36 @@ declare function local:output-entry(
 };
 
 
+
+declare function local:submitted(
+    $entry as element(atom:entry)
+    ) as xs:boolean 
+{
+    
+    let $url := concat(request:get-context-path(), "/atom/edit/media", $entry/atom:link[@rel="edit"]/@href)
+    let $submission := collection("/db/submissions")//atom:entry[atom:link[@rel="http://www.cggh.org/2010/chassis/terms/submissionPart" and @href=$url]]
+    return count($submission) > 0
+    
+};
+
+
 let $username := request:get-attribute("username")
+let $param-submitted := request:get-parameter("submitted", "")
 
 
 (: return an Atom feed document :)
 return
 	<atom:feed>
-		<context-path>{request:get-context-path()}</context-path>
-		<user-name>{$username}</user-name>
+	    <debug>
+	        param-submitted: {$param-submitted}
+	        submitted
+	    </debug>
 		<atom:title>Query Results</atom:title>
 		{
 			(: for all Atom entries within the collection :)
 			for $e in collection("/db/media")//atom:entry
 			where ( $e/atom:author/atom:email = $username ) 
+			and ( ( $param-submitted = "yes" and local:submitted($e) ) or ( $param-submitted = "no" and not(local:submitted($e)) ) or ( $param-submitted != "no" and $param-submitted != "yes" ) )
 			order by $e/atom:published
 			return local:output-entry($e)
 		}
