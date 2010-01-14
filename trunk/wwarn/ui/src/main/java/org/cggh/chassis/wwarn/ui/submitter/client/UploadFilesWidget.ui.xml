@@ -98,7 +98,7 @@
         
         <g:HTMLPanel ui:field="errorPanel">
         	<p>
-        		<ui:msg>there has been an unexpected error</ui:msg>
+        		<ui:msg>There has been an unexpected error: </ui:msg>
         	</p>
         </g:HTMLPanel>
         
