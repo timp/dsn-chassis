@@ -220,6 +220,13 @@ public class AtomHelper {
 	
 	
 	
+	public static Element getFirstCategory(Element parent, String scheme) {
+		List<Element> categories = getCategories(parent, scheme);
+		return (categories.size() > 0) ? categories.get(0) : null;
+	}
+	
+	
+	
 	public static void addCategory(Element parent, String scheme, String term, String label) {
 		Element categoryElement = XMLNS.createElementNS(Atom.ELEMENT_CATEGORY, Atom.PREFIX, Atom.NSURI);
 		if (scheme != null)

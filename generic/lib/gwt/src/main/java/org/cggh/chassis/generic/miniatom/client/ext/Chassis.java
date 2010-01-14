@@ -27,6 +27,7 @@ public class Chassis {
 	public static final String TERM_DATAFILE = "http://www.cggh.org/2010/chassis/terms/DataFile";
 	public static final String TERM_DATADICTIONARY = "http://www.cggh.org/2010/chassis/terms/DataDictionary";
 	public static final String TERM_PROTOCOL = "http://www.cggh.org/2010/chassis/terms/Protocol";
+	public static final String TERM_OTHER = "http://www.cggh.org/2010/chassis/terms/Other";
 
 	
 	
