@@ -33,6 +33,9 @@ public class UploadFilesWidgetModel extends AsyncWidgetModel {
 	
 	public static class FileUploadPendingStatus extends AsyncRequestPendingStatus {}
 	public static final FileUploadPendingStatus STATUS_FILE_UPLOAD_PENDING = new FileUploadPendingStatus();
+
+	public static class FileDeletePendingStatus extends AsyncRequestPendingStatus {}
+	public static final FileDeletePendingStatus STATUS_FILE_DELETE_PENDING = new FileDeletePendingStatus();
 	
 	
 	
