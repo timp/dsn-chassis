@@ -23,8 +23,9 @@ var config = {
 	"collection.submissions.url" : "/chassis-generic-service-exist/atom/edit/submissions",
 	"collection.reviews.url" : "/chassis-generic-service-exist/atom/edit/reviews",
 	"query.submissions.url" : "/chassis-generic-service-exist/query/submissions.xql",
-	"query.studies.url" : "/chassis-generic-service-exist/query/studies.xql",
-	"query.media.url" : "/chassis-generic-service-exist/query/media.xql"
+	"query.studies.url" : "/chassis-generic-service-exist/mock/query/studies.xql_id=abc_oneresult.xml",
+	"query.media.url" : "/chassis-generic-service-exist/submitter/query/media.xql",
+	"formhandler.fileupload.url" : "/chassis-wwarn-ui/submitter/upload"
 };
 </script>
 </head>

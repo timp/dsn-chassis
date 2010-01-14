@@ -28,11 +28,9 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
-import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
@@ -170,18 +168,32 @@ public class UploadFilesWidgetRenderer extends ChassisWidgetRenderer<UploadFiles
 			filesUploadedLabel.setVisible(true);
 			filesPendingLabel.setVisible(true);
 			noFilesUploadedLabel.setVisible(false);
+			
+			filesTableContainer.setVisible(false);
+			
+			mainActionsPanel.setVisible(false);
+
+			uploadFormPanel.setVisible(false);
+			uploadPendingPanel.setVisible(false);
 
 		}
 		
 		else if (status instanceof UploadFilesWidgetModel.ReadyForInteractionStatus) {
 
 			filesPendingLabel.setVisible(false);
+
+			filesTableContainer.setVisible(true);
+
+			mainActionsPanel.setVisible(true);
+
 			uploadPendingPanel.setVisible(false);
 			uploadFormPanel.setVisible(true);
 			
 		}
 		
 		else if (status instanceof UploadFilesWidgetModel.FileUploadPendingStatus) {
+
+			mainActionsPanel.setVisible(false);
 
 			uploadFormPanel.setVisible(false);
 			uploadPendingPanel.setVisible(true);
