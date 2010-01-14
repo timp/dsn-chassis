@@ -31,6 +31,8 @@
   <!--+
       | Chassis GWT lib dependencies 
       +-->
+    <!-- FIXME Do not use AtomExtensions -->
+    <inherits name="org.cggh.chassis.generic.atomext.AtomExtensions" />
     <inherits name="org.cggh.chassis.generic.miniatom.MiniAtom" />
     <inherits name="org.cggh.chassis.generic.widget.Widget" />
 
