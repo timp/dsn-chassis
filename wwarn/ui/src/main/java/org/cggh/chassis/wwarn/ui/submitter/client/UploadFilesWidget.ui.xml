@@ -51,6 +51,8 @@
             	<g:Label ui:field="noFilesUploadedLabel">
 	            	<ui:msg>You have not uploaded any files yet.</ui:msg>
             	</g:Label>
+            </p>
+            <p>
             	<g:Label ui:field="filesPendingLabel">
             		<ui:msg>pending... (retrieving uploads)</ui:msg>
             	</g:Label>
@@ -64,15 +66,15 @@
            			<ui:msg>Proceed</ui:msg> &gt;
            		</g:Button>
            	</g:FlowPanel>
-           	<h3>
-           		<g:InlineLabel ui:field="uploadAFileTitleLabel">
-	           		<ui:msg>Upload a File</ui:msg>
-           		</g:InlineLabel>
-           		<g:InlineLabel ui:field="uploadAnotherFileTitleLabel">
-	           		<ui:msg>Upload Another File</ui:msg>
-           		</g:InlineLabel>
-           	</h3>
            	<g:HTMLPanel ui:field="uploadFormPanel">
+	           	<h3>
+	           		<g:InlineLabel ui:field="uploadAFileTitleLabel">
+		           		<ui:msg>Upload a File</ui:msg>
+	           		</g:InlineLabel>
+	           		<g:InlineLabel ui:field="uploadAnotherFileTitleLabel">
+		           		<ui:msg>Upload Another File</ui:msg>
+	           		</g:InlineLabel>
+	           	</h3>
 	           	<local:UploadFileForm ui:field="uploadFileForm"/>
 	           	<g:FlowPanel ui:field="uploadActionsPanel">
 	           		<g:Button ui:field="cancelSubmissionButton2" stylePrimaryName="action">
