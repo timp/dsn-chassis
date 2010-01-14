@@ -26,6 +26,7 @@ public class DeleteEntryCallback extends HttpCallbackBase implements RequestCall
 		super(result);
 		this.result = result;
 		this.expectedStatusCodes.add(204);
+		this.expectedStatusCodes.add(1223); // workaround for ie7 quirk, see https://prototype.lighthouseapp.com/projects/8886/tickets/129-ie-mangles-http-response-status-code-204-to-1223
 	}
 
 	/* (non-Javadoc)
