@@ -1,86 +1,85 @@
+/**
+ * 
+ */
 package org.cggh.chassis.wwarn.ui.submitter.client;
 
-import org.cggh.chassis.generic.widget.client.ChassisWidget;
+import org.cggh.chassis.generic.async.client.Deferred;
+import org.cggh.chassis.generic.log.client.Log;
+import org.cggh.chassis.generic.log.client.LogFactory;
+import org.cggh.chassis.generic.widget.client.DelegatingWidget;
 
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.user.client.ui.Anchor;
-import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.xml.client.Document;
 
-public class SubmitterHomeWidget extends ChassisWidget {
+
+/**
+ * @author lee
+ *
+ */
+public class SubmitterHomeWidget 
+	extends DelegatingWidget<SubmitterHomeWidgetModel, SubmitterHomeWidgetRenderer> {
+
+	// Give this widget (owner) its log.
+	private static final Log log = LogFactory.getLog(SubmitterHomeWidget.class);
+
+	// Give this widget its undefined controller.
+	private SubmitterHomeWidgetController controller;
+	
+	// Allow this widget to create its model.
+	@Override
+	protected SubmitterHomeWidgetModel createModel() {
+		return new SubmitterHomeWidgetModel();
+	}
+
+	// Allow this widget to create its renderer.
+	@Override
+	protected SubmitterHomeWidgetRenderer createRenderer() {
+		return new SubmitterHomeWidgetRenderer(this);
+	}
 
 	
-	
-	private String titleId = HTMLPanel.createUniqueId();
-	private String welcomeParaId = HTMLPanel.createUniqueId();
-	private String progressParaId = HTMLPanel.createUniqueId();
-	private String submitDataListItemId = HTMLPanel.createUniqueId();
-	
-	
-	
-	
-	private String template = 
-		"<h1 id=\""+titleId+"\"></h1>" +
-		"<p id=\""+welcomeParaId+"\"></p>" +
-		"<p id=\""+progressParaId+"\"></p>" +
-		"<ul><li id=\""+submitDataListItemId+"\"></li></ul>";
-	
-	
-	
+	// Allow this widget to construct itself.
+	public SubmitterHomeWidget() {
+		
+		// Call the constructors of all super classes to initialise them.
+		// Java does this automatically if omitted?
+		super();
+		
+		// Give this widget its controller, which needs this widget's model.
+		this.controller = new SubmitterHomeWidgetController(this, this.model);
 
-	private HTMLPanel content;
-	private Anchor submitDataLink;
-	
-	
-	
+
+	}
 	
 	@Override
-	public void renderUI() {
-	
-		this.content = new HTMLPanel(this.template);
-		
-		this.content.add(new HTML("Submitter - Home"), this.titleId); // TODO i18n
-		
-		this.content.add(new HTML("Welcome to the WWARN data submission home page."), this.welcomeParaId); // TODO i18n
-		
-		this.content.add(new HTML("TODO progress"), this.progressParaId); // TODO
-		
-		this.submitDataLink = new Anchor();
-		this.submitDataLink.setText("Submit Data"); // TODO i18n
-		this.submitDataLink.addStyleName("mainNavigation");
-		this.content.add(this.submitDataLink, this.submitDataListItemId);
-		
-		this.add(this.content);
-				
+	public void refresh() {
+		retrieveSubmissions();
 	}
 	
 	
+	// Allow this widget to retrieve and refresh stuff, via its controller.
+	public Deferred<Document> retrieveSubmissions() {
 	
-	
-	@Override
-	public void bindUI() {
-	
-		HandlerRegistration a = this.submitDataLink.addClickHandler(new ClickHandler() {
-			
-			public void onClick(ClickEvent arg0) {
-				fireEvent(new SubmitDataNavigationEvent());
-			}
-			
-		});
+		log.enter("retrieveSubmissions");
 		
-		this.childWidgetEventHandlerRegistrations.add(a);
+		// Retrieve the submissions as a deferred document from the controller.
+		Deferred<Document> deferredDocument = this.controller.retrieveSubmissions();
+		
+		log.leave();
+		
+		// Return the deferred document to ...
+		return deferredDocument;
+		
 		
 	}
+		
 	
 	
+	// Define methods for handler registration, supplied SomeHandler and returning this.addHandler(SomeHandler, SomeEvent.TYPE).
 
-	
 	public HandlerRegistration addSubmitDataNavigationHandler(SubmitDataNavigationHandler h) {
 		return this.addHandler(h, SubmitDataNavigationEvent.TYPE);
 	}
 	
-	
-	
+
 }

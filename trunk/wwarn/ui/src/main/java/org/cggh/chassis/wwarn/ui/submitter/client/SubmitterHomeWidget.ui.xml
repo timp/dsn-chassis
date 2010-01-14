@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder 
+    xmlns:ui="urn:ui:com.google.gwt.uibinder"
+    xmlns:g="urn:import:com.google.gwt.user.client.ui"
+    ui:generateFormat="com.google.gwt.i18n.rebind.format.PropertiesFormat"
+    ui:generateKeys="com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator"
+    ui:generateLocales="default">
+
+  <ui:style>
+    .inline { 
+    	display: inline; 
+    	margin: 0;
+    	padding: 0;
+    }
+    .number { 
+    	font-weight: bold;
+    }
+  </ui:style>
+
+    
+    <g:HTMLPanel>
+        
+        <h1>
+            <ui:msg>Submit Data</ui:msg> - <ui:msg>Home</ui:msg>
+        </h1>
+        
+        <p><ui:msg>Welcome to the WWARN data submission home page.</ui:msg></p>
+        
+        <g:HTMLPanel ui:field="mainPanel">
+            <p>
+            	<g:Label ui:field="submissionsPendingLabel">
+            		<ui:msg>pending...</ui:msg>
+            	</g:Label>
+
+            	<g:Label styleName='{style.inline}' ui:field="submissionsCountPrefixLabel"><ui:msg>You have made&nbsp;</ui:msg></g:Label>
+            	<g:Label styleName='{style.inline} {style.number}' ui:field="submissionsCountLabel"></g:Label>
+            	<g:Label styleName='{style.inline}' ui:field="submissionsCountIsZeroSuffixLabel">&nbsp;submissions.&nbsp;</g:Label>
+            	<g:Label styleName='{style.inline}' ui:field="submissionsCountIsOneSuffixLabel">&nbsp;submission</g:Label>
+            	<g:Label styleName='{style.inline}' ui:field="submissionsCountIsManySuffixLabel">&nbsp;submissions</g:Label>
+            	<g:Label styleName='{style.inline}' ui:field="filesCountPrefixLabel"><ui:msg>&nbsp;containing a total of&nbsp;</ui:msg></g:Label>
+            	<g:Label styleName='{style.inline} {style.number}' ui:field="filesCountLabel"></g:Label>
+            	<g:Label styleName='{style.inline}' ui:field="filesCountIsZeroSuffixLabel">&nbsp;files</g:Label>
+            	<g:Label styleName='{style.inline}' ui:field="filesCountIsOneSuffixLabel">&nbsp;file</g:Label>
+            	<g:Label styleName='{style.inline}' ui:field="filesCountIsManySuffixLabel">&nbsp;files</g:Label>
+            	<g:Label styleName='{style.inline}' ui:field="studiesCountPrefixLabel"><ui:msg>&nbsp;from&nbsp;</ui:msg></g:Label>
+            	<g:Label styleName='{style.inline} {style.number}' ui:field="studiesCountLabel"></g:Label>
+            	<g:Label styleName='{style.inline}' ui:field="studiesCountIsZeroSuffixLabel">&nbsp;studies.&nbsp;</g:Label>
+            	<g:Label styleName='{style.inline}' ui:field="studiesCountIsOneSuffixLabel">&nbsp;study.&nbsp;</g:Label>
+            	<g:Label styleName='{style.inline}' ui:field="studiesCountIsManySuffixLabel">&nbsp;studies.&nbsp;</g:Label>
+
+            	<ul>
+            		<li><g:Anchor ui:field="submitDataLink">Submit Data</g:Anchor></li>
+            	</ul>
+            </p>
+        </g:HTMLPanel>
+        
+        <g:HTMLPanel ui:field="errorPanel">
+        	<p>
+        		<ui:msg>There has been an unexpected error.</ui:msg>
+        	</p>
+        </g:HTMLPanel>
+        
+    </g:HTMLPanel>
+    
+</ui:UiBinder>
