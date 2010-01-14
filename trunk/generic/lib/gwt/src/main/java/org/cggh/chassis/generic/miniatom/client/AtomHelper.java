@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.cggh.chassis.generic.xml.client.XMLNS;
 
+import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;
 
 /**
@@ -87,6 +88,12 @@ public class AtomHelper {
 		else {
 			return links.get(0);
 		}
+	}
+	
+	
+	
+	public static String getEditLinkHrefAttr(Element parent) {
+		return getHrefAttr(getEditLink(parent));
 	}
 	
 	
@@ -310,6 +317,12 @@ public class AtomHelper {
 		List<Element> entries = getEntries(parent);
 		if (entries.size() > 0) return entries.get(0);
 		else return null;
+	}
+
+
+
+	public static Document createEntryDoc() {
+		return XMLNS.createDocumentNS(Atom.ELEMENT_ENTRY, Atom.PREFIX, Atom.NSURI);
 	}
 	
 	
