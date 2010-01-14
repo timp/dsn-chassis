@@ -37,6 +37,7 @@ public class SubmitterApplicationWidget extends MultiWidget {
 		this.mainChildren.add(this.addInformationWidget);
 		
 		this.defaultChild = this.submitterHomeWidget;
+		this.submitterHomeWidget.refresh();
 
 	}
 
@@ -101,6 +102,8 @@ public class SubmitterApplicationWidget extends MultiWidget {
 		HandlerRegistration e = this.addInformationWidget.addHomeNavigationEventHandler(new HomeNavigationHandler() {
 			
 			public void onNavigation(HomeNavigationEvent e) {
+				
+				submitterHomeWidget.refresh();
 				setActiveChild(submitterHomeWidget);
 			}
 			
