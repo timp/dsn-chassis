@@ -251,7 +251,7 @@
         | N.B. this is needed for development only - remove this in production
         +-->
 
-<!-- 
+ 
     <filter>
       <filter-name>ContentTypeOverrideFilter</filter-name>
       <filter-class>org.cggh.chassis.generic.http.ContentTypeOverrideFilter</filter-class>
@@ -265,7 +265,6 @@
       <filter-name>ContentTypeOverrideFilter</filter-name>
       <servlet-name>AtomServlet</servlet-name>
     </filter-mapping>
--->
 
     <!--+
         | Authorization Override Filter
