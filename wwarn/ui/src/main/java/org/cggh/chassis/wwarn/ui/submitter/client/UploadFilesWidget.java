@@ -40,7 +40,7 @@ public class UploadFilesWidget extends DelegatingWidget<UploadFilesWidgetModel, 
 
 	@Override
 	protected UploadFilesWidgetRenderer createRenderer() {
-		return new UploadFilesWidgetRenderer(this);
+		return new UploadFilesWidgetRenderer();
 	}
 	
 	

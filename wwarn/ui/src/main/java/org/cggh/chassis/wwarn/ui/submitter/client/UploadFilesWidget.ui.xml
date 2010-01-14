@@ -56,6 +56,9 @@
             	<g:Label ui:field="filesPendingLabel">
             		<ui:msg>pending... (retrieving uploads)</ui:msg>
             	</g:Label>
+            	<g:Label ui:field="fileDeletePendingLabel">
+            		<ui:msg>pending... (deleting file)</ui:msg>
+            	</g:Label>
             </p>
            	<g:FlowPanel ui:field="filesTableContainer"/>
            	<g:FlowPanel ui:field="mainActionsPanel">

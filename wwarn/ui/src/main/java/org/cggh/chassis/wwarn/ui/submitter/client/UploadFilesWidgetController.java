@@ -6,9 +6,6 @@ package org.cggh.chassis.wwarn.ui.submitter.client;
 import org.cggh.chassis.generic.async.client.Deferred;
 import org.cggh.chassis.generic.async.client.Function;
 import org.cggh.chassis.generic.async.client.QueryParams;
-import org.cggh.chassis.generic.atomext.client.datafile.DataFileEntry;
-import org.cggh.chassis.generic.atomext.client.datafile.DataFileFactory;
-import org.cggh.chassis.generic.atomui.client.CreateSuccessEvent;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.miniatom.client.Atom;
@@ -32,6 +29,7 @@ public class UploadFilesWidgetController {
 	
 	
 	
+
 	private Log log = LogFactory.getLog(UploadFilesWidgetController.class);
 	private UploadFilesWidget owner;
 	private UploadFilesWidgetModel model;
@@ -76,17 +74,9 @@ public class UploadFilesWidgetController {
 			chain.addCallback(new RetrieveFilesCallback());
 			
 			// handle errors
-			chain.addErrback(new Function<Throwable, Throwable>() {
-
-				public Throwable apply(Throwable in) {
-					log.error("error during refresh", in);
-					model.setStatus(UploadFilesWidgetModel.STATUS_ERROR);
-					owner.fireEvent(new ErrorEvent(in));
-					return in;
-				}
-			});
+			chain.addErrback(new DefaultErrback());
 			
-			// finally callback with owner
+			// finally callback with owner, in any case
 			chain.addBoth(new Function() {
 
 				public Object apply(Object in) {
@@ -265,19 +255,8 @@ public class UploadFilesWidgetController {
 	private void refreshFiles() {
 		
 		Deferred<Document> deferredFeed = retrieveFiles();
-		
 		deferredFeed.addCallback(new RetrieveFilesCallback());
-		
-		deferredFeed.addErrback(new Function<Throwable, Throwable>() {
-
-			public Throwable apply(Throwable in) {
-				log.error("error during refresh", in);
-				model.setStatus(UploadFilesWidgetModel.STATUS_ERROR);
-				owner.fireEvent(new ErrorEvent(in));
-				return in;
-			}
-			
-		});
+		deferredFeed.addErrback(new DefaultErrback());
 		
 	}
 	
@@ -295,6 +274,57 @@ public class UploadFilesWidgetController {
 		owner.fireEvent(new StepBackNavigationEvent());
 	}
 
+
+
+
+	/**
+	 * @param url
+	 */
+	public void deleteFile(String url) {
+		log.enter("deleteFile");
+		
+		model.setStatus(UploadFilesWidgetModel.STATUS_FILE_DELETE_PENDING);
+		
+		Deferred<Void> deferredResult = Atom.deleteEntry(url);
+		
+		deferredResult.addCallback(new DeleteFileCallback());
+		deferredResult.addErrback(new DefaultErrback());
+		
+		log.leave();
+	}
+
+	
+
+	/**
+	 * @author aliman
+	 *
+	 */
+	class DeleteFileCallback implements Function<Void, Void> {
+
+		/* (non-Javadoc)
+		 * @see org.cggh.chassis.generic.async.client.Function#apply(java.lang.Object)
+		 */
+		public Void apply(Void in) {
+			refreshFiles();
+			return null;
+		}
+
+	}
+
 	
 	
+	
+	class DefaultErrback implements Function<Throwable, Throwable> {
+
+		public Throwable apply(Throwable in) {
+			log.error("unexpected error", in);
+			model.setStatus(UploadFilesWidgetModel.STATUS_ERROR);
+			owner.fireEvent(new ErrorEvent(in));
+			return in;
+		}
+		
+	}
+
+
+
 }

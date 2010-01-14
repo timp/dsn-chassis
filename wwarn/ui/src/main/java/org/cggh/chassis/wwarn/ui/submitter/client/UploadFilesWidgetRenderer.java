@@ -24,6 +24,7 @@ import org.cggh.chassis.wwarn.ui.submitter.client.UploadFilesWidgetModel.UploadF
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -31,8 +32,8 @@ import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.Widget;
@@ -66,6 +67,7 @@ public class UploadFilesWidgetRenderer extends ChassisWidgetRenderer<UploadFiles
 	@UiField Panel mainInteractionPanel;
 	@UiField Label filesUploadedLabel;
 	@UiField Label filesPendingLabel;
+	@UiField Label fileDeletePendingLabel;
 	@UiField Label noFilesUploadedLabel;
 	@UiField Panel filesTableContainer;
 	@UiField Panel mainActionsPanel;
@@ -84,14 +86,12 @@ public class UploadFilesWidgetRenderer extends ChassisWidgetRenderer<UploadFiles
 
 
 
-	private UploadFilesWidget owner;
 	private UploadFilesWidgetController controller;
 	
 	
 	
 	
-	public UploadFilesWidgetRenderer(UploadFilesWidget owner) {
-		this.owner = owner;
+	public UploadFilesWidgetRenderer() {
 	}
 	
 	
@@ -149,6 +149,7 @@ public class UploadFilesWidgetRenderer extends ChassisWidgetRenderer<UploadFiles
 
 			filesUploadedLabel.setVisible(false);
 			filesPendingLabel.setVisible(false);
+			fileDeletePendingLabel.setVisible(false);
 			noFilesUploadedLabel.setVisible(false);
 			uploadPendingPanel.setVisible(false);
 
@@ -168,6 +169,7 @@ public class UploadFilesWidgetRenderer extends ChassisWidgetRenderer<UploadFiles
 			filesUploadedLabel.setVisible(true);
 			filesPendingLabel.setVisible(true);
 			noFilesUploadedLabel.setVisible(false);
+			fileDeletePendingLabel.setVisible(false);
 			
 			filesTableContainer.setVisible(false);
 			
@@ -181,10 +183,11 @@ public class UploadFilesWidgetRenderer extends ChassisWidgetRenderer<UploadFiles
 		else if (status instanceof UploadFilesWidgetModel.ReadyForInteractionStatus) {
 
 			filesPendingLabel.setVisible(false);
+			fileDeletePendingLabel.setVisible(false);
 
 			filesTableContainer.setVisible(true);
 
-			mainActionsPanel.setVisible(true);
+//			mainActionsPanel.setVisible(true);
 
 			uploadPendingPanel.setVisible(false);
 			uploadFormPanel.setVisible(true);
@@ -199,7 +202,16 @@ public class UploadFilesWidgetRenderer extends ChassisWidgetRenderer<UploadFiles
 			uploadPendingPanel.setVisible(true);
 
 		}
-		
+
+		else if (status instanceof UploadFilesWidgetModel.FileDeletePendingStatus) {
+
+			mainActionsPanel.setVisible(false);
+			filesTableContainer.setVisible(false);
+			uploadFormPanel.setVisible(false);
+			fileDeletePendingLabel.setVisible(true);
+
+		}
+
 		else if (status instanceof ErrorStatus) {
 			
 		}
@@ -372,22 +384,23 @@ public class UploadFilesWidgetRenderer extends ChassisWidgetRenderer<UploadFiles
 
 
 
-	private static FlexTable renderUploadsTable(List<Element> entries) {
+	private FlexTable renderUploadsTable(List<Element> entries) {
 		
 		List<Widget[]> rows = new ArrayList<Widget[]>();
 
 		Widget[] headerRow = {
-			new InlineLabel("File Name"), // TODO i18n
-			new InlineLabel("Type"),  // TODO i18n
-			new InlineLabel("Summary"), // TODO i18n
-			new InlineLabel("Uploaded"),  // TODO i18n
-			new InlineLabel("Actions") // TODO i18n
+			new Label("File Name"), // TODO i18n
+			new Label("Type"),  // TODO i18n
+			new Label("Summary"), // TODO i18n
+			new Label("Uploaded"),  // TODO i18n
+			new Label("Actions") // TODO i18n
 		};
 		rows.add(headerRow);
 		
 		for (Element entry : entries) {
 			
 			String title = AtomHelper.getTitle(entry);
+			final String url = AtomHelper.getHrefAttr(AtomHelper.getEditLink(entry));
 			
 			Element categoryElement = AtomHelper.getFirstCategory(entry, Chassis.SCHEME_FILETYPES);
 			String type = getTypeLabel(categoryElement);
@@ -395,12 +408,24 @@ public class UploadFilesWidgetRenderer extends ChassisWidgetRenderer<UploadFiles
 			String summary = AtomHelper.getSummary(entry);
 			String created = AtomHelper.getPublished(entry);
 			
+			Button deleteButton = new Button("delete"); // TODO i18n
+			deleteButton.addClickHandler(new ClickHandler() {
+				
+				public void onClick(ClickEvent arg0) {
+					controller.deleteFile(url);
+				}
+
+			});
+			
+			FlowPanel actionsPanel = new FlowPanel();
+			actionsPanel.add(deleteButton);
+			
 			Widget[] row = {
-				new InlineLabel(title),	
-				new InlineLabel(type),	
-				new InlineLabel(summary),	
-				new InlineLabel(created),	
-				new InlineLabel("TODO")	
+				new Label(title),	
+				new Label(type),	
+				new Label(summary),	
+				new Label(created),	
+				actionsPanel	
 			};
 			rows.add(row);
 			
