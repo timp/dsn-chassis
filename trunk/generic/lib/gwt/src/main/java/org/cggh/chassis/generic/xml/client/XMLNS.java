@@ -137,26 +137,52 @@ public class XMLNS {
 	 */
 	public static Element createElementNS(String localName, String prefix, String namespaceUri) {
 		
-		if (prefix == null) prefix = ""; // normalise
-		if (namespaceUri == null) namespaceUri = ""; // normalise
+//		if (prefix == null) prefix = ""; // normalise
+//		if (namespaceUri == null) namespaceUri = ""; // normalise
+//		
+//		boolean hasPrefix = !prefix.equals("");
+//		
+//		String tagName = hasPrefix ? prefix + ":" +localName : localName;
+//		
+//		String xmlnsAttribute = "xmlns";
+//		if (hasPrefix) xmlnsAttribute += ":" +prefix;
+//		xmlnsAttribute += "=\"" + namespaceUri + "\"";
+//
+//		String template = "<" + tagName + " " + xmlnsAttribute + " />";
+//		
+//		Element e = XMLParser.parse(template).getDocumentElement();
 		
-		boolean hasPrefix = !prefix.equals("");
-		
-		String tagName = hasPrefix ? prefix + ":" +localName : localName;
-		
-		String xmlnsAttribute = "xmlns";
-		if (hasPrefix) xmlnsAttribute += ":" +prefix;
-		xmlnsAttribute += "=\"" + namespaceUri + "\"";
-
-		String template = "<" + tagName + " " + xmlnsAttribute + " />";
-		
-		Element e = XMLParser.parse(template).getDocumentElement();
+		Element e = createDocumentNS(localName, prefix, namespaceUri).getDocumentElement();
 		
 		// return clone to work around chrome wrong document error
 		// see http://code.google.com/p/google-web-toolkit/issues/detail?id=4074
 		Element clone = (Element) e.cloneNode(true);
 		
 		return clone;
+	}
+	
+	
+	
+	
+	public static Document createDocumentNS(String rootElementLocalName, String rootElementPrefix, String rootElementNamespaceUri) {
+		
+		if (rootElementPrefix == null) rootElementPrefix = ""; // normalise
+		if (rootElementNamespaceUri == null) rootElementNamespaceUri = ""; // normalise
+		
+		boolean hasPrefix = !rootElementPrefix.equals("");
+		
+		String tagName = hasPrefix ? rootElementPrefix + ":" +rootElementLocalName : rootElementLocalName;
+		
+		String xmlnsAttribute = "xmlns";
+		if (hasPrefix) xmlnsAttribute += ":" +rootElementPrefix;
+		xmlnsAttribute += "=\"" + rootElementNamespaceUri + "\"";
+
+		String template = "<" + tagName + " " + xmlnsAttribute + " />";
+		
+		Document d = XMLParser.parse(template);
+		
+		return d;
+		
 	}
 
 
