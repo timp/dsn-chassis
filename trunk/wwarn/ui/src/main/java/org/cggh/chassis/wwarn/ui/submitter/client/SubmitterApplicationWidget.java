@@ -61,7 +61,9 @@ public class SubmitterApplicationWidget extends MultiWidget {
 		HandlerRegistration b = this.selectStudyWidget.addProceedActionHandler(new ProceedActionHandler() {
 			
 			public void onAction(ProceedActionEvent e) {
-				uploadFilesWidget.setSelectedStudy("abc"); // TODO get this from somewhere
+//				String selectedStudyId = selectStudyWidget.getSelectedStudyId();
+				String selectedStudyId = "abc";
+				uploadFilesWidget.setSelectedStudy(selectedStudyId); 
 				uploadFilesWidget.refresh();
 				setActiveChild(uploadFilesWidget);				
 			}
@@ -73,6 +75,9 @@ public class SubmitterApplicationWidget extends MultiWidget {
 		HandlerRegistration c = this.uploadFilesWidget.addProceedActionHandler(new ProceedActionHandler() {
 			
 			public void onAction(ProceedActionEvent e) {
+				String selectedStudyId = uploadFilesWidget.getSelectedStudyId();
+				submitWidget.setSelectedStudy(selectedStudyId);
+				submitWidget.refresh();
 				setActiveChild(submitWidget);				
 			}
 			
@@ -98,6 +103,32 @@ public class SubmitterApplicationWidget extends MultiWidget {
 		});
 		
 		this.childWidgetEventHandlerRegistrations.add(d);
+
+		HandlerRegistration d1 = this.submitWidget.addStepBackNavigationHandler(new StepBackNavigationHandler() {
+			
+			public void onNavigation(StepBackNavigationEvent e) {
+				String selectedStudyId = submitWidget.getSelectedStudyId();
+				uploadFilesWidget.setSelectedStudy(selectedStudyId);
+				uploadFilesWidget.refresh();
+				setActiveChild(uploadFilesWidget);
+			}
+
+		});
+
+		this.childWidgetEventHandlerRegistrations.add(d1);
+
+		HandlerRegistration d2 = this.submitWidget.addBackToStartNavigationHandler(new BackToStartNavigationHandler() {
+			
+			public void onNavigation(BackToStartNavigationEvent e) {
+				String selectedStudyId = submitWidget.getSelectedStudyId();
+//				selectStudyWidget.setSelectedStudy(selectedStudyId);
+				selectStudyWidget.refresh();
+				setActiveChild(selectStudyWidget);
+			}
+
+		});
+
+		this.childWidgetEventHandlerRegistrations.add(d2);
 
 		HandlerRegistration e = this.addInformationWidget.addHomeNavigationEventHandler(new HomeNavigationHandler() {
 			
