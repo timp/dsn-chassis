@@ -13,7 +13,7 @@
   <dependencies>
     <dependency>
      <groupId>org.cggh.chassis</groupId>
-     <artifactId>chassis-generic-client-gwt</artifactId>
+     <artifactId>chassis-generic-lib-gwt</artifactId>
      <version>${project.version}</version>
     </dependency>
   </dependencies>
