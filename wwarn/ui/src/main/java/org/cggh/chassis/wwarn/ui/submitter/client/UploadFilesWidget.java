@@ -62,6 +62,11 @@ public class UploadFilesWidget extends DelegatingWidget<UploadFilesWidgetModel, 
 	
 	
 	
+	public String getSelectedStudyId() {
+		return this.model.getSelectedStudyId();
+	}
+	
+	
 	
 	@Override
 	public void refresh() {

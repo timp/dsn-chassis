@@ -3,6 +3,8 @@
  */
 package org.cggh.chassis.wwarn.ui.submitter.client;
 
+import java.util.List;
+
 import org.cggh.chassis.generic.async.client.Deferred;
 import org.cggh.chassis.generic.async.client.Function;
 import org.cggh.chassis.generic.async.client.QueryParams;
@@ -11,54 +13,35 @@ import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.miniatom.client.Atom;
 import org.cggh.chassis.generic.miniatom.client.AtomHelper;
 import org.cggh.chassis.generic.miniatom.client.ext.Chassis;
-import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 import org.cggh.chassis.generic.widget.client.ChassisWidget;
 import org.cggh.chassis.generic.widget.client.ErrorEvent;
 import org.cggh.chassis.wwarn.ui.common.client.Config;
 
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;
-import com.google.gwt.xml.client.XMLParser;
 
 /**
  * @author aliman
  *
  */
-public class UploadFilesWidgetController {
+public class SubmitWidgetController {
 
 	
 	
-	
+	private Log log = LogFactory.getLog(SubmitWidgetController.class);
+	private SubmitWidget owner;
+	private SubmitWidgetModel model;
 
-	private Log log = LogFactory.getLog(UploadFilesWidgetController.class);
-	private UploadFilesWidget owner;
-	private UploadFilesWidgetModel model;
 	
 	
-	
-	
-	/**
-	 * @param owner
-	 * @param model
-	 */
-	public UploadFilesWidgetController(
-			UploadFilesWidget owner,
-			UploadFilesWidgetModel model) {
-		
+	public SubmitWidgetController(SubmitWidget owner, SubmitWidgetModel model) {
 		this.owner = owner;
 		this.model = model;
-
 	}
-
-
-
-
-	/**
-	 * @return
-	 */
-	@SuppressWarnings("unchecked")
+	
+	
+	
 	public Deferred<ChassisWidget> refreshAndCallback() {
-		log.enter("refreshAndCallback");
 		
 		final Deferred<ChassisWidget> deferredOwner = new Deferred<ChassisWidget>();
 		
@@ -89,20 +72,23 @@ public class UploadFilesWidgetController {
 		}
 		
 		else {
+			
+			// nothing to refresh, callback immediately
 			deferredOwner.callback(owner);
-		}
+			
+		}	
 		
-		log.leave();
 		return deferredOwner;
+		
 	}
-
-
-
-
+	
+	
+	
+	
 	private Deferred<Element> retrieveStudy() {
 		log.enter("retrieveStudy");
 		
-		model.setStatus(UploadFilesWidgetModel.STATUS_RETRIEVE_STUDY_PENDING);
+		model.setStatus(SubmitWidgetModel.STATUS_RETRIEVE_STUDY_PENDING);
 		
 		QueryParams qp = new QueryParams();
 		qp.put(Chassis.QUERYPARAM_ID, model.getSelectedStudyId());
@@ -146,7 +132,7 @@ public class UploadFilesWidgetController {
 			
 			else {
 				
-				model.setStatus(UploadFilesWidgetModel.STATUS_STUDY_NOT_FOUND);
+				model.setStatus(SubmitWidgetModel.STATUS_STUDY_NOT_FOUND);
 				deferredFilesFeedDoc = new Deferred<Document>();
 				deferredFilesFeedDoc.callback(null);
 
@@ -164,7 +150,7 @@ public class UploadFilesWidgetController {
 	private Deferred<Document> retrieveFiles() {
 		log.enter("retrieveFiles");
 		
-		model.setStatus(UploadFilesWidgetModel.STATUS_RETRIEVE_UPLOADED_FILES_PENDING);
+		model.setStatus(SubmitWidgetModel.STATUS_RETRIEVE_UPLOADED_FILES_PENDING);
 
 		QueryParams qp = new QueryParams();
 		qp.put(Chassis.QUERYPARAM_SUBMITTED, Chassis.QUERYPARAMVALUE_NO);
@@ -189,7 +175,7 @@ public class UploadFilesWidgetController {
 
 			if (uploadFeedDoc != null) {
 				
-				model.setStatus(UploadFilesWidgetModel.STATUS_READY_FOR_INTERACTION);
+				model.setStatus(SubmitWidgetModel.STATUS_READY_FOR_INTERACTION);
 
 			}
 			
@@ -201,72 +187,68 @@ public class UploadFilesWidgetController {
 
 
 
-
-	public void submitUploadFileForm(UploadFileForm form) {
-
-		model.setStatus(UploadFilesWidgetModel.STATUS_FILE_UPLOAD_PENDING);
-		form.submit();
+	
+	public void proceed() {
+		
+		Deferred<Document> deferredSubmissionEntryDoc = postSubmission();
+		deferredSubmissionEntryDoc.addCallback(new PostSubmissionCallback());
+		deferredSubmissionEntryDoc.addErrback(new DefaultErrback());
 		
 	}
+	
+	
+	
+	
+	private Deferred<Document> postSubmission() {
 
-
-
-
-	public void handleUploadFileFormSubmitComplete(String results) {
-		log.enter("handleUploadFileFormSubmitComplete");
+		List<Element> files = AtomHelper.getEntries(model.getFilesFeedDoc().getDocumentElement());
 		
-		log.debug(results);
+		assert files.size() > 0;
 		
-		try {
+		model.setStatus(SubmitWidgetModel.STATUS_SUBMISSION_PENDING);
+		
+		Document submissionEntryDoc = AtomHelper.createEntryDoc();
+		Element submissionEntryElement = submissionEntryDoc.getDocumentElement();
+		
+		// populate submission entry 
+		
+		// author email
+		String email = Config.get(Config.USER_EMAIL);
+		AtomHelper.addAuthor(submissionEntryElement, email);
+		
+		// study origin link
+		String studyUrl = AtomHelper.getEditLinkHrefAttr(model.getStudyEntryElement());
+		AtomHelper.addLink(submissionEntryElement, Chassis.REL_ORIGINSTUDY, studyUrl);
+		
+		// file links
+		for (Element fileEntryElement : AtomHelper.getEntries(model.getFilesFeedDoc().getDocumentElement())) {
 			
-			if (results.startsWith("<!--") && results.endsWith("-->")) {
-				
-				String contents = results.substring(4, results.length()-3);
-
-				log.debug("attempting to parse: "+contents);
-				XMLParser.parse(contents);
-				
-				log.debug("parse success, assume we can go ahead and refresh files");
-				refreshFiles();
-				
-			}
-			else {
-				
-				model.setStatus(AsyncWidgetModel.STATUS_ERROR);
-				owner.fireEvent(new ErrorEvent("could not parse results: "+results));
-
-			}
-			
-		} catch (Throwable t) {
-			
-			log.error("caught trying to parse submit results: "+t.getLocalizedMessage(), t);
-			model.setStatus(AsyncWidgetModel.STATUS_ERROR);
-			owner.fireEvent(new ErrorEvent(t));
+			String fileUrl = AtomHelper.getEditLinkHrefAttr(fileEntryElement);
+			AtomHelper.addLink(submissionEntryElement, Chassis.REL_SUBMISSIONPART, fileUrl);
 			
 		}
-
 		
-		log.leave();
+		String submissionsCollectionUrl = Config.get(Config.COLLECTION_SUBMISSIONS_URL);
+		
+		return Atom.postEntry(submissionsCollectionUrl, submissionEntryDoc);
 	}
 
-
-
-
-	private void refreshFiles() {
-		
-		Deferred<Document> deferredFeed = retrieveFiles();
-		deferredFeed.addCallback(new RetrieveFilesCallback());
-		deferredFeed.addErrback(new DefaultErrback());
-		
-	}
 	
 	
 	
+	private class PostSubmissionCallback implements Function<Document, Document> {
 
-	public void proceed() {
-		owner.fireEvent(new ProceedActionEvent());
+		/* (non-Javadoc)
+		 * @see org.cggh.chassis.generic.async.client.Function#apply(java.lang.Object)
+		 */
+		public Document apply(Document submissionEntryDoc) {
+			model.setSubmissionId(AtomHelper.getId(submissionEntryDoc.getDocumentElement()));
+			model.setStatus(SubmitWidgetModel.STATUS_READY_FOR_INTERACTION);
+			owner.fireEvent(new ProceedActionEvent());
+			return submissionEntryDoc;
+		}
+		
 	}
-
 
 
 
@@ -275,43 +257,6 @@ public class UploadFilesWidgetController {
 	}
 
 
-
-
-	/**
-	 * @param url
-	 */
-	public void deleteFile(String url) {
-		log.enter("deleteFile");
-		
-		model.setStatus(UploadFilesWidgetModel.STATUS_FILE_DELETE_PENDING);
-		
-		Deferred<Void> deferredResult = Atom.deleteEntry(url);
-		
-		deferredResult.addCallback(new DeleteFileCallback());
-		deferredResult.addErrback(new DefaultErrback());
-		
-		log.leave();
-	}
-
-	
-
-	/**
-	 * @author aliman
-	 *
-	 */
-	private class DeleteFileCallback implements Function<Void, Void> {
-
-		/* (non-Javadoc)
-		 * @see org.cggh.chassis.generic.async.client.Function#apply(java.lang.Object)
-		 */
-		public Void apply(Void in) {
-			refreshFiles();
-			return null;
-		}
-
-	}
-
-	
 	
 	
 	private class DefaultErrback implements Function<Throwable, Throwable> {
@@ -327,4 +272,15 @@ public class UploadFilesWidgetController {
 
 
 
+
+	/**
+	 * 
+	 */
+	public void backToStart() {
+		owner.fireEvent(new BackToStartNavigationEvent());
+	}
+
+
+
+	
 }
