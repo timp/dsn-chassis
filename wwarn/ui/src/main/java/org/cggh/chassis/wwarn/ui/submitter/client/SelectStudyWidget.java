@@ -1,60 +1,52 @@
 package org.cggh.chassis.wwarn.ui.submitter.client;
 
-import org.cggh.chassis.generic.widget.client.ChassisWidget;
+import java.util.Map;
 
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
+import org.cggh.chassis.generic.async.client.Deferred;
+import org.cggh.chassis.generic.log.client.Log;
+import org.cggh.chassis.generic.log.client.LogFactory;
+import org.cggh.chassis.generic.widget.client.DelegatingWidget;
+import org.cggh.chassis.generic.widget.client.WidgetMemory;
+
 import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.HTMLPanel;
 
-public class SelectStudyWidget extends ChassisWidget {
+/**
+ * When told to refresh itself, the SelectStudyWidget makes a GET request to the Studies Query Service URL, 
+ * to retrieve a feed of all study entries owned by the user. 
+ * 
+ * Depending upon whether the feed is empty (no studies created yet) or not the widget is rendered differently.
+ * 
+ * @author timp
+ * @since 13/01/10
+ *
+ */
+public class SelectStudyWidget 
+		extends DelegatingWidget<SelectStudyWidgetModel, SelectStudyWidgetRenderer> {
 
-	
-	
-	
-	private String titleId = HTMLPanel.createUniqueId();
-	private String subTitleId = HTMLPanel.createUniqueId();
-	private String actionsParaId = HTMLPanel.createUniqueId();
-	
-	
-	
-	
-	private String template = 
-		"<h1 id=\""+titleId+"\"></h1>" +
-		"<h2 id=\""+subTitleId+"\"></h2>" +
-		"<p>TODO</p>" +
-		"<p id=\""+actionsParaId+"\"></p>";
-	
-	
-	
 
-	private HTMLPanel content;
-	private Button proceedButton;
 
+	private Log log = LogFactory.getLog(SelectStudyWidget.class);
 	
+	
+	
+	private Map<String,String> studyLinksToTitles;
+
+
+
+	private SelectStudyWidgetController controller;
+
 	
 	@Override
-	public void renderUI() {
-	
-		this.content = new HTMLPanel(this.template);
-		
-		this.content.add(new HTML("Submitter - Submit Data"), this.titleId); // TODO i18n
-		
-		this.content.add(new HTML("<span class=\"currentStep\">1. Select Study</span> &gt; 2. Upload Files &gt; 3. Submit &gt; 4. Add Information"), this.subTitleId); // TODO i18n
-
-		this.proceedButton = new Button("Proceed &gt;&gt;"); // TODO i18n
-		this.content.add(this.proceedButton, this.actionsParaId);
-		
-		// TODO
-		
-		this.add(this.content);
+	public void init() { 
+		super.init(); // instantiates model and renederer
+		this.controller = new SelectStudyWidgetController(this, this.model);
+		this.memory = new Memory();		 
 	}
 	
-	
-	
-	
+	public String getSelectedStudyId() { 
+		return model.getSelectedStudyId();
+	}
+/*
 	@Override
 	public void bindUI() {
 		
@@ -69,16 +61,58 @@ public class SelectStudyWidget extends ChassisWidget {
 		this.childWidgetEventHandlerRegistrations.add(a);
 
 	}
-	
+	*/
 	
 	
 	
 	public HandlerRegistration addProceedActionHandler(ProceedActionHandler h) {
 		return this.addHandler(h, ProceedActionEvent.TYPE);
 	}
+
+
+
+	@Override
+	protected SelectStudyWidgetModel createModel() {
+		return new SelectStudyWidgetModel();
+	}
+
+
+
+	@Override
+	protected SelectStudyWidgetRenderer createRenderer() {
+		return new SelectStudyWidgetRenderer(this);
+	}
+
+
+
 	
-	
-	
-	
+	private class Memory extends WidgetMemory {
+
+		/* (non-Javadoc)
+		 * @see org.cggh.chassis.generic.widget.client.WidgetMemory#createMnemonic()
+		 */
+		@Override
+		public String createMnemonic() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		/* (non-Javadoc)
+		 * @see org.cggh.chassis.generic.widget.client.WidgetMemory#remember(java.lang.String)
+		 */
+		@Override
+		public Deferred<WidgetMemory> remember(String mnemonic) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+	}
+
+
+
+
+	public  SelectStudyWidgetRenderer getRenderer() {
+		return renderer;
+	}
 	
 }
