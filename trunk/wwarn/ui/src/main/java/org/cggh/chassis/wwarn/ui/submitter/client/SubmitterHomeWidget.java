@@ -19,33 +19,25 @@ import com.google.gwt.xml.client.Document;
 public class SubmitterHomeWidget 
 	extends DelegatingWidget<SubmitterHomeWidgetModel, SubmitterHomeWidgetRenderer> {
 
-	// Give this widget (owner) its log.
 	private static final Log log = LogFactory.getLog(SubmitterHomeWidget.class);
 
-	// Give this widget its undefined controller.
 	private SubmitterHomeWidgetController controller;
 	
-	// Allow this widget to create its model.
 	@Override
 	protected SubmitterHomeWidgetModel createModel() {
 		return new SubmitterHomeWidgetModel();
 	}
 
-	// Allow this widget to create its renderer.
 	@Override
 	protected SubmitterHomeWidgetRenderer createRenderer() {
 		return new SubmitterHomeWidgetRenderer(this);
 	}
 
-	
-	// Allow this widget to construct itself.
-	public SubmitterHomeWidget() {
+	// Using init() rather than constructor because reset() uses init().
+	public void init() {
 		
-		// Call the constructors of all super classes to initialise them.
-		// Java does this automatically if omitted?
-		super();
+		super.init();
 		
-		// Give this widget its controller, which needs this widget's model.
 		this.controller = new SubmitterHomeWidgetController(this, this.model);
 
 
@@ -57,17 +49,14 @@ public class SubmitterHomeWidget
 	}
 	
 	
-	// Allow this widget to retrieve and refresh stuff, via its controller.
 	public Deferred<Document> retrieveSubmissions() {
 	
 		log.enter("retrieveSubmissions");
 		
-		// Retrieve the submissions as a deferred document from the controller.
 		Deferred<Document> deferredDocument = this.controller.retrieveSubmissions();
 		
 		log.leave();
 		
-		// Return the deferred document to ...
 		return deferredDocument;
 		
 		
@@ -75,8 +64,6 @@ public class SubmitterHomeWidget
 		
 	
 	
-	// Define methods for handler registration, supplied SomeHandler and returning this.addHandler(SomeHandler, SomeEvent.TYPE).
-
 	public HandlerRegistration addSubmitDataNavigationHandler(SubmitDataNavigationHandler h) {
 		return this.addHandler(h, SubmitDataNavigationEvent.TYPE);
 	}
