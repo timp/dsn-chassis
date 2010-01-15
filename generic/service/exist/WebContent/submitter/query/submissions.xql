@@ -24,14 +24,8 @@ declare function local:output-entry(
 	return
 		<atom:entry>
 			{
-				$entry/atom:id,
-				$entry/atom:published
-			}
-			<atom:link rel="edit" href="{$href}" type="application/atom+xml"/>
-			{
 				$entry/atom:link		
 			}
-			<atom:content src="{$src}" type="{$type}"/>
 		</atom:entry>
 };
 
@@ -50,16 +44,11 @@ declare function local:submitted(
 
 
 let $username := request:get-attribute("username")
-let $param-submitted := request:get-parameter("submitted", "")
 
 
 (: return an Atom feed document :)
 return
 	<atom:feed>
-	    <debug>
-	        param-submitted: {$param-submitted}
-	        submitted
-	    </debug>
 		<atom:title>Query Results</atom:title>
 		{
 			(: for all Atom entries within the collection :)
