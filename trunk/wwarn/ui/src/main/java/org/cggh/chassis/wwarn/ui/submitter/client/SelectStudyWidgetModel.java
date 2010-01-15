@@ -14,19 +14,11 @@ public class SelectStudyWidgetModel extends AsyncWidgetModel {
 	public static class RetrieveFeedPendingStatus extends AsyncRequestPendingStatus {}
 	public static final RetrieveFeedPendingStatus STATUS_RETRIEVE_STUDIES_PENDING = new RetrieveFeedPendingStatus();
 	
-/*
-	public static class NoEntriesfoundStatus extends ReadyStatus {}
-	public static final NoEntriesfoundStatus NO_ENTRIES_FOUND = new NoEntriesfoundStatus();
-	
-	public static class ReadyForInputStatus extends ReadyStatus {} 
-	public static final ReadyForInputStatus STATUS_READY_FOR_INPUT = new ReadyForInputStatus();
-*/
-
-
 	public static class StudiesRetrievedStatus extends ReadyStatus {}
 	public static final StudiesRetrievedStatus STATUS_STUDIES_RETRIEVED = new StudiesRetrievedStatus();
 
-
+	public static class CreateEntryPendingStatus extends AsyncRequestPendingStatus {}
+	public static final CreateEntryPendingStatus STATUS_CREATE_STUDY_PENDING = new CreateEntryPendingStatus();
 	
 	private String selectedStudyId;
 

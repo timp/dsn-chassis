@@ -36,8 +36,10 @@ public class SelectStudyWidgetRenderer extends ChassisWidgetRenderer<SelectStudy
 	@UiField HTMLPanel pendingPanel;
     @UiField FlowPanel selectExistingStudyPanel;
 	@UiField HTMLPanel createStudyInteractionPanel;
-	@UiField Button cancelSubmissionButton;
-	@UiField Button proceedButton;
+	@UiField Button cancelSubmissionButtonOne; //TODO handle cancel
+	@UiField Button cancelSubmissionButton;    // TODO Handle cancel
+	@UiField Button proceedWithSelectedButton;
+	@UiField Button createAndProceedButton;
 
 
 	private SelectStudyWidget owner;
@@ -82,6 +84,8 @@ public class SelectStudyWidgetRenderer extends ChassisWidgetRenderer<SelectStudy
 			if(model.getStudyCount().equals(new Integer(0))) { 
 				selectExistingStudyPanel.setVisible(false);
 			}
+		} else if (status instanceof SelectStudyWidgetModel.CreateEntryPendingStatus) {
+			// TODO 
 		} else { 
 			pendingPanel.setVisible(false);
 			error("Unexpected status: " + status);
@@ -89,8 +93,13 @@ public class SelectStudyWidgetRenderer extends ChassisWidgetRenderer<SelectStudy
 		
 	}
 	
-	@UiHandler("proceedButton")
-	void handleProceedButtonClick(ClickEvent e) {
+	@UiHandler("proceedWithSelectedButton")
+	void handleProceedWithSelectedButtonClick(ClickEvent e) {
+		this.owner.fireEvent(new ProceedActionEvent());
+	}
+	
+	@UiHandler("createAndProceedButton")
+	void handleCreateAndProceedButtonClick(ClickEvent e) {
 		this.owner.fireEvent(new ProceedActionEvent());
 	}
 	
