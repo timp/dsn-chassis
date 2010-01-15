@@ -30,11 +30,19 @@
         </p>
         </g:HTMLPanel>
         <g:FlowPanel ui:field="selectExistingStudyPanel">
+				<g:Label><ui:msg>Please select a study from the list below...</ui:msg></g:Label>
+                <g:FlowPanel ui:field="studySelect"></g:FlowPanel>
+           		<g:Button ui:field="cancelSubmissionButtonOne">
+           			<ui:msg>Cancel Submission</ui:msg>
+           		</g:Button>
+           		<g:Button ui:field="proceedWithSelectedButton">
+           			<ui:msg>Proceed &gt;&gt;&gt;</ui:msg> &gt;
+           		</g:Button>
         	<g:Label><ui:msg>... or </ui:msg></g:Label>
         </g:FlowPanel>
         <g:HTMLPanel ui:field="createStudyInteractionPanel">
         <p>
-<ui:msg>use the form below to create a new study...</ui:msg>
+			<ui:msg>use the form below to create a new study...</ui:msg>
         </p>
 		<h3><ui:msg>Create a Study</ui:msg></h3>
 
@@ -76,7 +84,7 @@
            		<g:Button ui:field="cancelSubmissionButton">
            			<ui:msg>Cancel Submission</ui:msg>
            		</g:Button>
-           		<g:Button ui:field="proceedButton">
+           		<g:Button ui:field="createAndProceedButton">
            			<ui:msg>Create Study and Proceed &gt;&gt;&gt;</ui:msg> &gt;
            		</g:Button>
            	</g:FlowPanel>
