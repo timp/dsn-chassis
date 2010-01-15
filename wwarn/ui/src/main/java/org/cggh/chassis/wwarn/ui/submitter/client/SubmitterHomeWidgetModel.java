@@ -22,15 +22,15 @@ public class SubmitterHomeWidgetModel extends AsyncWidgetModel {
 
 	private Log log = LogFactory.getLog(SubmitterHomeWidgetModel.class);
 	
-	private Document submissions;
+	private Document submissionFeed;
 
 	public void setSubmissions(Document submissionsFeedDoc) {
 		
 		log.enter("setSubmissions");
 
-		SubmissionsChangeEvent e = new SubmissionsChangeEvent(this.submissions, submissionsFeedDoc);
+		SubmissionsChangeEvent e = new SubmissionsChangeEvent(this.submissionFeed, submissionsFeedDoc);
 		
-		this.submissions = submissionsFeedDoc;
+		this.submissionFeed = submissionsFeedDoc;
 		
 		this.fireChangeEvent(e);
 		
@@ -38,7 +38,7 @@ public class SubmitterHomeWidgetModel extends AsyncWidgetModel {
 	}
 
 	public Document getSubmissions() {
-		return this.submissions;
+		return this.submissionFeed;
 	}
 
 	public static class SubmissionsChangeEvent extends ModelChangeEvent<Document, SubmissionsChangeHandler> {
