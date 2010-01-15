@@ -44,6 +44,7 @@ public class ViewStudyWidget extends DelegatingWidget<ViewStudyWidgetModel, View
 	
 	
 	
+    // TODO Delete me ?
 	public Deferred<ViewStudyWidget> retrieveStudy(String studyId) {
 		log.enter("retrieveStudy");
 		
