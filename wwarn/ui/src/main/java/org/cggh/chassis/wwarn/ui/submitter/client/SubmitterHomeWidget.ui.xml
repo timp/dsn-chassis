@@ -8,11 +8,6 @@
     ui:generateLocales="default">
 
   <ui:style>
-    .inline { 
-    	display: inline; 
-    	margin: 0;
-    	padding: 0;
-    }
     .number { 
     	font-weight: bold;
     }
@@ -33,21 +28,21 @@
             		<ui:msg>pending...</ui:msg>
             	</g:Label>
 
-            	<g:Label styleName='{style.inline}' ui:field="submissionsCountPrefixLabel"><ui:msg>You have made&nbsp;</ui:msg></g:Label>
-            	<g:Label styleName='{style.inline} {style.number}' ui:field="submissionsCountLabel"></g:Label>
-            	<g:Label styleName='{style.inline}' ui:field="submissionsCountIsZeroSuffixLabel">&nbsp;submissions.&nbsp;</g:Label>
-            	<g:Label styleName='{style.inline}' ui:field="submissionsCountIsOneSuffixLabel">&nbsp;submission</g:Label>
-            	<g:Label styleName='{style.inline}' ui:field="submissionsCountIsManySuffixLabel">&nbsp;submissions</g:Label>
-            	<g:Label styleName='{style.inline}' ui:field="filesCountPrefixLabel"><ui:msg>&nbsp;containing a total of&nbsp;</ui:msg></g:Label>
-            	<g:Label styleName='{style.inline} {style.number}' ui:field="filesCountLabel"></g:Label>
-            	<g:Label styleName='{style.inline}' ui:field="filesCountIsZeroSuffixLabel">&nbsp;files</g:Label>
-            	<g:Label styleName='{style.inline}' ui:field="filesCountIsOneSuffixLabel">&nbsp;file</g:Label>
-            	<g:Label styleName='{style.inline}' ui:field="filesCountIsManySuffixLabel">&nbsp;files</g:Label>
-            	<g:Label styleName='{style.inline}' ui:field="studiesCountPrefixLabel"><ui:msg>&nbsp;from&nbsp;</ui:msg></g:Label>
-            	<g:Label styleName='{style.inline} {style.number}' ui:field="studiesCountLabel"></g:Label>
-            	<g:Label styleName='{style.inline}' ui:field="studiesCountIsZeroSuffixLabel">&nbsp;studies.&nbsp;</g:Label>
-            	<g:Label styleName='{style.inline}' ui:field="studiesCountIsOneSuffixLabel">&nbsp;study.&nbsp;</g:Label>
-            	<g:Label styleName='{style.inline}' ui:field="studiesCountIsManySuffixLabel">&nbsp;studies.&nbsp;</g:Label>
+            	<g:InlineLabel ui:field="submissionsCountPrefixLabel"><ui:msg>You have made&nbsp;</ui:msg></g:InlineLabel>
+            	<g:InlineLabel styleName='{style.number}' ui:field="submissionsCountLabel"></g:InlineLabel>
+            	<g:InlineLabel ui:field="submissionsCountIsZeroSuffixLabel"><ui:msg>&nbsp;submissions.&nbsp;</ui:msg></g:InlineLabel>
+            	<g:InlineLabel ui:field="submissionsCountIsOneSuffixLabel"><ui:msg>&nbsp;submission</ui:msg></g:InlineLabel>
+            	<g:InlineLabel ui:field="submissionsCountIsManySuffixLabel"><ui:msg>&nbsp;submissions</ui:msg></g:InlineLabel>
+            	<g:InlineLabel ui:field="filesCountPrefixLabel"><ui:msg>&nbsp;containing a total of&nbsp;</ui:msg></g:InlineLabel>
+            	<g:InlineLabel styleName='{style.number}' ui:field="filesCountLabel"></g:InlineLabel>
+            	<g:InlineLabel ui:field="filesCountIsZeroSuffixLabel"><ui:msg>&nbsp;files</ui:msg></g:InlineLabel>
+            	<g:InlineLabel ui:field="filesCountIsOneSuffixLabel"><ui:msg>&nbsp;file</ui:msg></g:InlineLabel>
+            	<g:InlineLabel ui:field="filesCountIsManySuffixLabel"><ui:msg>&nbsp;files</ui:msg></g:InlineLabel>
+            	<g:InlineLabel ui:field="studiesCountPrefixLabel"><ui:msg>&nbsp;from&nbsp;</ui:msg></g:InlineLabel>
+            	<g:InlineLabel styleName='{style.number}' ui:field="studiesCountLabel"></g:InlineLabel>
+            	<g:InlineLabel ui:field="studiesCountIsZeroSuffixLabel"><ui:msg>&nbsp;studies.&nbsp;</ui:msg></g:InlineLabel>
+            	<g:InlineLabel ui:field="studiesCountIsOneSuffixLabel"><ui:msg>&nbsp;study.&nbsp;</ui:msg></g:InlineLabel>
+            	<g:InlineLabel ui:field="studiesCountIsManySuffixLabel"><ui:msg>&nbsp;studies.&nbsp;</ui:msg></g:InlineLabel>
 
             	<ul>
             		<li><g:Anchor ui:field="submitDataLink">Submit Data</g:Anchor></li>
