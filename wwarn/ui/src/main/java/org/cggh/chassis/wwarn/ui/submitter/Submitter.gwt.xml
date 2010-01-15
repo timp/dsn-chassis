@@ -35,7 +35,8 @@
     <inherits name="org.cggh.chassis.generic.atomext.AtomExtensions" />
     <inherits name="org.cggh.chassis.generic.miniatom.MiniAtom" />
     <inherits name="org.cggh.chassis.generic.widget.Widget" />
-
+    <inherits name="org.cggh.chassis.generic.xquestion.XQuestion" />
+  
 
     <!-- other dependencies -->
     <inherits name="org.cggh.chassis.wwarn.ui.common.Common" />

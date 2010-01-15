@@ -1,74 +1,58 @@
 package org.cggh.chassis.wwarn.ui.submitter.client;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.cggh.chassis.generic.async.client.Deferred;
+import org.cggh.chassis.generic.async.client.Function;
+import org.cggh.chassis.generic.log.client.Log;
+import org.cggh.chassis.generic.log.client.LogFactory;
+import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 import org.cggh.chassis.generic.widget.client.ChassisWidget;
+import org.cggh.chassis.generic.widget.client.DelegatingWidget;
+import org.cggh.chassis.generic.widget.client.MapMemory;
+import org.cggh.chassis.generic.widget.client.WidgetMemory;
 
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.user.client.ui.Anchor;
-import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.HTMLPanel;
 
-public class AddInformationWidget extends ChassisWidget {
+
+
+
+
+public class AddInformationWidget extends DelegatingWidget<AddInformationWidgetModel, AddInformationWidgetRenderer> {
 
 	
 	
-	
-	private String titleId = HTMLPanel.createUniqueId();
-	private String subTitleId = HTMLPanel.createUniqueId();
-	private String navigationParaId = HTMLPanel.createUniqueId();
-	
-	
-	
-	
-	private String template = 
-		"<h1 id=\""+titleId+"\"></h1>" +
-		"<h2 id=\""+subTitleId+"\"></h2>" +
-		"<p>TODO</p>" +
-		"<p id=\""+navigationParaId+"\"></p>";
-	
-	
-	
+	private AddInformationWidgetController controller;
+	private AddInformationWidgetView view;
 
-	private HTMLPanel content;
-	private Anchor homeLink;
+
+
+
+	@Override
+	protected AddInformationWidgetModel createModel() {
+		return new AddInformationWidgetModel();
+	}
+
 
 	
 	
 	@Override
-	public void renderUI() {
-	
-		this.content = new HTMLPanel(this.template);
-		
-		this.content.add(new HTML("Submitter - Submit Data"), this.titleId); // TODO i18n
-		
-		this.content.add(new HTML("1. Select Study &gt; 2. Upload Files &gt; 3. Submit &gt; <span class=\"currentStep\">4. Add Information</span>"), this.subTitleId); // TODO i18n
-
-		this.homeLink = new Anchor();
-		this.homeLink.setText("<<< submitter home"); // TODO i18n
-		this.content.add(this.homeLink, this.navigationParaId);
-		
-		// TODO
-		
-		this.add(this.content);
+	protected AddInformationWidgetRenderer createRenderer() {
+		return new AddInformationWidgetRenderer();
 	}
 	
 	
 	
-	
 	@Override
-	public void bindUI() {
+	public void init() {
+		super.init();
 		
-		HandlerRegistration a = this.homeLink.addClickHandler(new ClickHandler() {
-			
-			public void onClick(ClickEvent arg0) {
-				fireEvent(new HomeNavigationEvent());
-			}
-			
-		});
+		controller = new AddInformationWidgetController(this, model);
+		view = new AddInformationWidgetView(controller);
+		renderer.setView(view);
+		memory = new Memory();
 		
-		this.childWidgetEventHandlerRegistrations.add(a);
-
 	}
 	
 	
@@ -77,9 +61,103 @@ public class AddInformationWidget extends ChassisWidget {
 	public HandlerRegistration addHomeNavigationEventHandler(HomeNavigationHandler h) {
 		return this.addHandler(h, HomeNavigationEvent.TYPE);
 	}
+
+	
+	
+	public void setSubmission(String id) {
+		model.setSubmissionId(id);
+	}
 	
 	
 	
+	@Override
+	public Deferred<ChassisWidget> refreshAndCallback() {
+		return controller.refreshAndCallback();
+	}
 	
+	
+	
+
+	private class Memory extends MapMemory {
+
+		
+		private Log log = LogFactory.getLog(Memory.class);
+		
+		private static final String KEY_SUBMISSIONID = "submissionid";
+		
+		
+		
+		/* (non-Javadoc)
+		 * @see org.cggh.chassis.generic.widget.client.MapMemory#createMnemonicMap()
+		 */
+		@Override
+		public Map<String, String> createMnemonicMap() {
+			log.enter("createMnemonicMap");
+			
+			Map<String, String> map = new HashMap<String, String>();
+			
+			String submissionId = model.getSubmissionId();
+			
+			if (submissionId != null) {
+				map.put(KEY_SUBMISSIONID, submissionId);
+			}
+			
+			log.leave();
+			return map;
+		}
+
+		
+		
+		
+		/* (non-Javadoc)
+		 * @see org.cggh.chassis.generic.widget.client.MapMemory#remember(java.util.Map)
+		 */
+		@Override
+		public Deferred<WidgetMemory> remember(Map<String, String> mnemonic) {
+			log.enter("remember");
+			
+			Deferred<WidgetMemory> deferredMemory;
+			
+			model.setStatus(AsyncWidgetModel.STATUS_INITIAL);
+			
+			String submissionId = mnemonic.get(KEY_SUBMISSIONID);
+			
+			log.debug("found submissionId: "+submissionId);
+			
+			if (submissionId != null) {
+				
+				log.debug("set selected submission id");
+				setSubmission(submissionId);
+				
+				log.debug("refresh and call back");
+				deferredMemory = refreshAndCallback().adapt(new Function<ChassisWidget, WidgetMemory>() {
+
+					public WidgetMemory apply(ChassisWidget in) {
+						return Memory.this;
+					}
+					
+				});
+			}
+			
+			else {
+				
+				log.debug("call back immediately");
+				deferredMemory = new Deferred<WidgetMemory>();
+				deferredMemory.callback(this);
+				
+			}
+			
+			log.leave();
+			return deferredMemory;
+		}
+		
+		
+		
+		
+	}
+
+
+
+
 
 }
