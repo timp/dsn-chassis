@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder 
+    xmlns:ui="urn:ui:com.google.gwt.uibinder"
+    xmlns:g="urn:import:com.google.gwt.user.client.ui"
+    xmlns:local="urn:import:org.cggh.chassis.wwarn.ui.submitter.client"
+    ui:generateFormat="com.google.gwt.i18n.rebind.format.PropertiesFormat"
+    ui:generateKeys="com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator"
+    ui:generateLocales="default">
+    
+    <g:HTMLPanel>
+        
+        <g:HTMLPanel ui:field="titlePanel">
+        
+	        <h1>
+	            <ui:msg>Submitter</ui:msg> - <ui:msg>Submit Data</ui:msg>
+	        </h1>
+	        
+	        <h2>
+	            1. <ui:msg>Select Study</ui:msg> &gt;
+	            2. <ui:msg>Upload Files</ui:msg> &gt;
+	            3. <ui:msg>Submit</ui:msg> &gt;
+	            <span class="currentStep">4. <ui:msg>Add Information</ui:msg></span>
+	        </h2>
+
+        </g:HTMLPanel>
+        
+        <g:HTMLPanel ui:field="mainContentPanel">
+        
+            <p>
+                <ui:msg>Selected study:</ui:msg> 
+                <strong><g:InlineLabel ui:field="studyTitleLabel"/></strong>
+            </p>
+            
+            <p>
+                <ui:msg>Links: </ui:msg>
+                <g:Anchor ui:field="submitterHomeLink">
+                    <ui:msg>submitter home</ui:msg>
+                </g:Anchor>
+            </p>
+            
+            <g:SimplePanel ui:field="studyQuestionnaireContainer"/>
+
+        </g:HTMLPanel>
+
+
+        
+    </g:HTMLPanel>
+    
+</ui:UiBinder>
