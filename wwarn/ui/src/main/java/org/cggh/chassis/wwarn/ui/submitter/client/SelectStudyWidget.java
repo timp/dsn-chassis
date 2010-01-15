@@ -43,6 +43,18 @@ public class SelectStudyWidget
 		this.memory = new Memory();		 
 	}
 	
+	@Override
+	protected SelectStudyWidgetModel createModel() {
+		return new SelectStudyWidgetModel();
+	}
+
+
+
+	@Override
+	protected SelectStudyWidgetRenderer createRenderer() {
+		return new SelectStudyWidgetRenderer(this);
+	}
+
 	public String getSelectedStudyId() { 
 		return model.getSelectedStudyId();
 	}
@@ -65,27 +77,30 @@ public class SelectStudyWidget
 	
 	
 	
+	@Override
+	public void refresh() {
+		this.controller.retrieveStudies();
+	}
+
+	
+	
 	public HandlerRegistration addProceedActionHandler(ProceedActionHandler h) {
 		return this.addHandler(h, ProceedActionEvent.TYPE);
 	}
 
 
 
-	@Override
-	protected SelectStudyWidgetModel createModel() {
-		return new SelectStudyWidgetModel();
-	}
-
-
-
-	@Override
-	protected SelectStudyWidgetRenderer createRenderer() {
-		return new SelectStudyWidgetRenderer(this);
-	}
 
 
 
 	
+
+
+
+
+
+
+
 	private class Memory extends WidgetMemory {
 
 		/* (non-Javadoc)

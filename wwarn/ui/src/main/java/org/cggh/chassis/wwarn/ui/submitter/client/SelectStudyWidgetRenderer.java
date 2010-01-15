@@ -73,10 +73,17 @@ public class SelectStudyWidgetRenderer extends ChassisWidgetRenderer<SelectStudy
 	}
 
 	protected void syncUIWithStatus(Status status) {
-		error("Called");
+		//System.err.println(status);
 		if (status instanceof AsyncWidgetModel.InitialStatus) {
 			pendingPanel.setVisible(true);
+		} else if (status instanceof SelectStudyWidgetModel.RetrieveFeedPendingStatus) {
+		} else if (status instanceof SelectStudyWidgetModel.StudiesRetrievedStatus) {
+			pendingPanel.setVisible(false);
+			if(model.getStudyCount().equals(new Integer(0))) { 
+				selectExistingStudyPanel.setVisible(false);
+			}
 		} else { 
+			pendingPanel.setVisible(false);
 			error("Unexpected status: " + status);
 		}
 		
