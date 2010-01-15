@@ -60,7 +60,7 @@ public class SubmitWidgetController {
 			chain.addErrback(new DefaultErrback());
 			
 			// finally callback with owner, in any case
-			chain.addBoth(new Function() {
+			chain.addBoth(new Function<Object, Object>() {
 
 				public Object apply(Object in) {
 					deferredOwner.callback(owner);
