@@ -62,7 +62,8 @@ public class UploadFilesWidgetController {
 		
 		final Deferred<ChassisWidget> deferredOwner = new Deferred<ChassisWidget>();
 		
-		if (model.getSelectedStudyId() != null) {
+//		if (model.getSelectedStudyId() != null) {
+		if (model.selectedStudyId.get() != null) {
 			
 			// kick off the retrieve study 
 			Deferred<Element> chain = retrieveStudy();
@@ -105,7 +106,8 @@ public class UploadFilesWidgetController {
 		model.setStatus(UploadFilesWidgetModel.STATUS_RETRIEVE_STUDY_PENDING);
 		
 		QueryParams qp = new QueryParams();
-		qp.put(Chassis.QUERYPARAM_ID, model.getSelectedStudyId());
+//		qp.put(Chassis.QUERYPARAM_ID, model.getSelectedStudyId());
+		qp.put(Chassis.QUERYPARAM_ID, model.selectedStudyId.get());
 		
 		String url = Config.get(Config.QUERY_STUDIES_URL) + qp.toUrlQueryString();
 		log.debug("url: "+url);
@@ -133,7 +135,8 @@ public class UploadFilesWidgetController {
 
 		public Deferred<Document> apply(Element studyEntryElement) {
 			
-			model.setStudyEntryElement(studyEntryElement);
+//			model.setStudyEntryElement(studyEntryElement);
+			model.studyEntryElement.set(studyEntryElement);
 			
 			Deferred<Document> deferredFilesFeedDoc;
 			
@@ -185,7 +188,8 @@ public class UploadFilesWidgetController {
 
 		public Document apply(Document uploadFeedDoc) {
 
-			model.setUploadFeedDoc(uploadFeedDoc);
+//			model.setUploadFeedDoc(uploadFeedDoc);
+			model.uploadFeedDoc.set(uploadFeedDoc);
 
 			if (uploadFeedDoc != null) {
 				

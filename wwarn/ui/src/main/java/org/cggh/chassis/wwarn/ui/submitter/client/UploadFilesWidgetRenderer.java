@@ -12,15 +12,17 @@ import org.cggh.chassis.generic.miniatom.client.AtomHelper;
 import org.cggh.chassis.generic.miniatom.client.ext.Chassis;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 import org.cggh.chassis.generic.widget.client.ChassisWidgetRenderer;
+import org.cggh.chassis.generic.widget.client.PropertyChangeEvent;
+import org.cggh.chassis.generic.widget.client.PropertyChangeHandler;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.ErrorStatus;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.Status;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.StatusChangeEvent;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.StatusChangeHandler;
 import org.cggh.chassis.wwarn.ui.common.client.RenderUtils;
-import org.cggh.chassis.wwarn.ui.submitter.client.UploadFilesWidgetModel.StudyEntryChangeEvent;
-import org.cggh.chassis.wwarn.ui.submitter.client.UploadFilesWidgetModel.StudyEntryChangeHandler;
-import org.cggh.chassis.wwarn.ui.submitter.client.UploadFilesWidgetModel.UploadFeedChangeEvent;
-import org.cggh.chassis.wwarn.ui.submitter.client.UploadFilesWidgetModel.UploadFeedChangeHandler;
+//import org.cggh.chassis.wwarn.ui.submitter.client.UploadFilesWidgetModel.StudyEntryChangeEvent;
+//import org.cggh.chassis.wwarn.ui.submitter.client.UploadFilesWidgetModel.StudyEntryChangeHandler;
+//import org.cggh.chassis.wwarn.ui.submitter.client.UploadFilesWidgetModel.UploadFeedChangeEvent;
+//import org.cggh.chassis.wwarn.ui.submitter.client.UploadFilesWidgetModel.UploadFeedChangeHandler;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -115,14 +117,26 @@ public class UploadFilesWidgetRenderer extends ChassisWidgetRenderer<UploadFiles
 			}
 		});
 		
-		model.addStudyEntryChangeHandler(new StudyEntryChangeHandler() {
-			public void onChange(StudyEntryChangeEvent e) {
+//		model.addStudyEntryChangeHandler(new StudyEntryChangeHandler() {
+//			public void onChange(StudyEntryChangeEvent e) {
+//				syncUIWithStudyEntryElement(e.getAfter());
+//			}
+//		});
+		
+		model.studyEntryElement.addChangeHandler(new PropertyChangeHandler<Element>() {
+			public void onChange(PropertyChangeEvent<Element> e) {
 				syncUIWithStudyEntryElement(e.getAfter());
 			}
 		});
 		
-		model.addUploadFeedChangeHandler(new UploadFeedChangeHandler() {
-			public void onChange(UploadFeedChangeEvent e) {
+//		model.addUploadFeedChangeHandler(new UploadFeedChangeHandler() {
+//			public void onChange(UploadFeedChangeEvent e) {
+//				syncUIWithUploadFeedDoc(e.getAfter());
+//			}
+//		});
+		
+		model.uploadFeedDoc.addChangeHandler(new PropertyChangeHandler<Document>() {
+			public void onChange(PropertyChangeEvent<Document> e) {
 				syncUIWithUploadFeedDoc(e.getAfter());
 			}
 		});
@@ -467,8 +481,10 @@ public class UploadFilesWidgetRenderer extends ChassisWidgetRenderer<UploadFiles
 	@Override
 	protected void syncUI() {
 		syncUIWithStatus(model.getStatus());
-		syncUIWithStudyEntryElement(model.getStudyEntryElement());
-		syncUIWithUploadFeedDoc(model.getUploadFeedDoc());
+//		syncUIWithStudyEntryElement(model.getStudyEntryElement());
+		syncUIWithStudyEntryElement(model.studyEntryElement.get());
+//		syncUIWithUploadFeedDoc(model.getUploadFeedDoc());
+		syncUIWithUploadFeedDoc(model.uploadFeedDoc.get());
 	}
 	
 	
