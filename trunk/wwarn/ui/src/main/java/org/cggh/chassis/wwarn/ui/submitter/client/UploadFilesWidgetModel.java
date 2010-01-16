@@ -6,6 +6,7 @@ package org.cggh.chassis.wwarn.ui.submitter.client;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 import org.cggh.chassis.generic.widget.client.ModelChangeEvent;
 import org.cggh.chassis.generic.widget.client.ModelChangeHandler;
+import org.cggh.chassis.generic.widget.client.Property;
 
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.xml.client.Document;
@@ -40,9 +41,12 @@ public class UploadFilesWidgetModel extends AsyncWidgetModel {
 	
 	
 	
-	private String selectedStudyId;
-	private Element studyEntryElement;
-	private Document uploadFeedDoc;
+	public final Property<String> selectedStudyId = new Property<String>();
+	public final Property<Element> studyEntryElement = new Property<Element>();
+	public final Property<Document> uploadFeedDoc = new Property<Document>();
+	
+
+	
 	
 	
 	
@@ -50,131 +54,12 @@ public class UploadFilesWidgetModel extends AsyncWidgetModel {
 	@Override
 	public void init() {
 		super.init();
-		this.selectedStudyId = null;
-		this.studyEntryElement = null;
-		this.uploadFeedDoc = null;
+		selectedStudyId.set(null);
+		studyEntryElement.set(null);
+		uploadFeedDoc.set(null);
 	}
 
 
 
 
-	public void setSelectedStudyId(String selectedStudyId) {
-		this.selectedStudyId = selectedStudyId;
-	}
-
-
-
-
-	public String getSelectedStudyId() {
-		return selectedStudyId;
-	}
-
-
-
-
-	public void setStudyEntryElement(Element studyEntryElement) {
-		StudyEntryChangeEvent e = new StudyEntryChangeEvent(this.studyEntryElement, studyEntryElement);
-		this.studyEntryElement = studyEntryElement;
-		this.fireChangeEvent(e);
-	}
-
-
-
-
-	public Element getStudyEntryElement() {
-		return studyEntryElement;
-	}
-
-
-
-
-	public void setUploadFeedDoc(Document uploadFeedDoc) {
-		UploadFeedChangeEvent e = new UploadFeedChangeEvent(this.uploadFeedDoc, uploadFeedDoc);
-		this.uploadFeedDoc = uploadFeedDoc;
-		this.fireChangeEvent(e);
-	}
-
-
-
-
-	public Document getUploadFeedDoc() {
-		return uploadFeedDoc;
-	}
-	
-	
-	
-	
-	public HandlerRegistration addStudyEntryChangeHandler(StudyEntryChangeHandler h) {
-		return this.addChangeHandler(h, StudyEntryChangeEvent.TYPE);
-	}
-	
-	
-	
-	
-	public static class StudyEntryChangeEvent extends ModelChangeEvent<Element, StudyEntryChangeHandler> {
-
-		public static final Type<StudyEntryChangeHandler> TYPE = new Type<StudyEntryChangeHandler>();
-		
-		public StudyEntryChangeEvent(Element before, Element after) {
-			super(before, after);
-		}
-
-		@Override
-		protected void dispatch(StudyEntryChangeHandler h) {
-			h.onChange(this);
-		}
-
-		@Override
-		public com.google.gwt.event.shared.GwtEvent.Type<StudyEntryChangeHandler> getAssociatedType() {
-			return TYPE;
-		}
-		
-	}
-	
-	
-	
-	public interface StudyEntryChangeHandler extends ModelChangeHandler {
-		
-		public void onChange(StudyEntryChangeEvent e);
-		
-	}
-
-	
-	
-	
-	public HandlerRegistration addUploadFeedChangeHandler(UploadFeedChangeHandler h) {
-		return this.addChangeHandler(h, UploadFeedChangeEvent.TYPE);
-	}
-	
-	
-	
-	
-	public static class UploadFeedChangeEvent extends ModelChangeEvent<Document, UploadFeedChangeHandler> {
-
-		public static final Type<UploadFeedChangeHandler> TYPE = new Type<UploadFeedChangeHandler>();
-		
-		public UploadFeedChangeEvent(Document before, Document after) {
-			super(before, after);
-		}
-
-		@Override
-		protected void dispatch(UploadFeedChangeHandler h) {
-			h.onChange(this);
-		}
-
-		@Override
-		public com.google.gwt.event.shared.GwtEvent.Type<UploadFeedChangeHandler> getAssociatedType() {
-			return TYPE;
-		}
-		
-	}
-	
-	
-	
-	public interface UploadFeedChangeHandler extends ModelChangeHandler {
-		
-		public void onChange(UploadFeedChangeEvent e);
-		
-	}
-	
 }

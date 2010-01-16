@@ -57,13 +57,19 @@ public class UploadFilesWidget extends DelegatingWidget<UploadFilesWidgetModel, 
 	
 	
 	public void setSelectedStudy(String id) {
-		this.model.setSelectedStudyId(id);
+		
+//		this.model.setSelectedStudyId(id);
+		model.selectedStudyId.set(id);
+		
 	}
 	
 	
 	
 	public String getSelectedStudyId() {
-		return this.model.getSelectedStudyId();
+
+//		return this.model.getSelectedStudyId();
+		return model.selectedStudyId.get();
+		
 	}
 	
 	
@@ -120,7 +126,8 @@ public class UploadFilesWidget extends DelegatingWidget<UploadFilesWidgetModel, 
 			
 			Map<String, String> map = new HashMap<String, String>();
 			
-			String selectedStudyId = model.getSelectedStudyId();
+//			String selectedStudyId = model.getSelectedStudyId();
+			String selectedStudyId = model.selectedStudyId.get();
 			
 			if (selectedStudyId != null) {
 				map.put(KEY_STUDYID, selectedStudyId);
