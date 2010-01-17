@@ -1,5 +1,8 @@
 package org.cggh.chassis.wwarn.ui.submitter.client;
 
+import java.util.List;
+
+import org.cggh.chassis.generic.miniatom.client.AtomHelper;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 import org.cggh.chassis.generic.widget.client.ChassisWidgetRenderer;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.Status;
@@ -16,6 +19,8 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.xml.client.Element;
 
 /**
  * @author timp
@@ -35,6 +40,7 @@ public class SelectStudyWidgetRenderer extends ChassisWidgetRenderer<SelectStudy
 	@UiField FlowPanel errorPanel;
 	@UiField HTMLPanel pendingPanel;
     @UiField FlowPanel selectExistingStudyPanel;
+    @UiField ListBox studySelect;
 	@UiField HTMLPanel createStudyInteractionPanel;
 	@UiField Button cancelSubmissionButtonOne; //TODO handle cancel
 	@UiField Button cancelSubmissionButton;    // TODO Handle cancel
@@ -80,6 +86,7 @@ public class SelectStudyWidgetRenderer extends ChassisWidgetRenderer<SelectStudy
 			pendingPanel.setVisible(true);
 		} else if (status instanceof SelectStudyWidgetModel.RetrieveFeedPendingStatus) {
 		} else if (status instanceof SelectStudyWidgetModel.StudiesRetrievedStatus) {
+			syncUiWithFeed();
 			pendingPanel.setVisible(false);
 			if(model.getStudyCount().equals(new Integer(0))) { 
 				selectExistingStudyPanel.setVisible(false);
@@ -91,6 +98,13 @@ public class SelectStudyWidgetRenderer extends ChassisWidgetRenderer<SelectStudy
 			error("Unexpected status: " + status);
 		}
 		
+	}
+	
+	void syncUiWithFeed() { 
+		List<Element>  studyEntries = AtomHelper.getEntries(model.getStudyFeed().getDocumentElement());
+		for (Element element : studyEntries) {
+			studySelect.addItem(AtomHelper.getTitle(element), AtomHelper.getId(element));
+		}
 	}
 	
 	@UiHandler("proceedWithSelectedButton")
