@@ -40,4 +40,8 @@ public class SelectStudyWidgetModel extends AsyncWidgetModel {
 		else 
 			return AtomHelper.getEntries(studyFeed.getDocumentElement()).size();
 	}
+
+	public void setSelectedStudy(String selectedStudyIdIn) {
+		selectedStudyId = selectedStudyIdIn;
+	}
 }

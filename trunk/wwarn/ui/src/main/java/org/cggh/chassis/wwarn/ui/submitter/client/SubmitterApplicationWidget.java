@@ -135,7 +135,7 @@ public class SubmitterApplicationWidget extends MultiWidget {
 			
 			public void onNavigation(BackToStartNavigationEvent e) {
 				String selectedStudyId = submitWidget.getSelectedStudyId();
-//				selectStudyWidget.setSelectedStudy(selectedStudyId);
+				selectStudyWidget.setSelectedStudy(selectedStudyId);
 				selectStudyWidget.refresh();
 				setActiveChild(selectStudyWidget);
 			}
