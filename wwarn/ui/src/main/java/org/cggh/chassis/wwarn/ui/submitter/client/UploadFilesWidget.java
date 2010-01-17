@@ -11,6 +11,7 @@ import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 import org.cggh.chassis.generic.widget.client.ChassisWidget;
 import org.cggh.chassis.generic.widget.client.DelegatingWidget;
 import org.cggh.chassis.generic.widget.client.MapMemory;
+import org.cggh.chassis.generic.widget.client.WidgetEventChannel;
 import org.cggh.chassis.generic.widget.client.WidgetMemory;
 
 import com.google.gwt.event.shared.HandlerRegistration;
@@ -92,11 +93,13 @@ public class UploadFilesWidget extends DelegatingWidget<UploadFilesWidgetModel, 
 	}
 
 
+	
+	public final WidgetEventChannel proceed = new WidgetEventChannel(this);
 
 
-	public HandlerRegistration addProceedActionHandler(ProceedActionHandler h) {
-		return this.addHandler(h, ProceedActionEvent.TYPE);
-	}
+//	public HandlerRegistration addProceedActionHandler(ProceedActionHandler h) {
+//		return this.addHandler(h, ProceedActionEvent.TYPE);
+//	}
 	
 	
 	

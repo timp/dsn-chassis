@@ -41,6 +41,8 @@ public class SubmitWidgetModel extends AsyncWidgetModel {
 	
 	// state fields
 	private String selectedStudyId;
+	
+	
 	private Element studyEntryElement;
 	private Document filesFeedDoc;
 	private boolean agreementAccepted;

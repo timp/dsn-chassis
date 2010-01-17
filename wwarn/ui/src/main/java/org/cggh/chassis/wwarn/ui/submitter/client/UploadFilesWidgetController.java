@@ -268,7 +268,8 @@ public class UploadFilesWidgetController {
 	
 
 	public void proceed() {
-		owner.fireEvent(new ProceedActionEvent());
+//		owner.fireEvent(new ProceedActionEvent());
+		owner.proceed.fireEvent();
 	}
 
 
