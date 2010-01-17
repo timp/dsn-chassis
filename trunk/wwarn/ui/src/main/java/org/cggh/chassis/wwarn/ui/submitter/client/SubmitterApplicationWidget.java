@@ -1,6 +1,8 @@
 package org.cggh.chassis.wwarn.ui.submitter.client;
 
 import org.cggh.chassis.generic.widget.client.MultiWidget;
+import org.cggh.chassis.generic.widget.client.WidgetEvent;
+import org.cggh.chassis.generic.widget.client.WidgetEventHandler;
 
 import com.google.gwt.event.shared.HandlerRegistration;
 
@@ -73,9 +75,20 @@ public class SubmitterApplicationWidget extends MultiWidget {
 		
 		this.childWidgetEventHandlerRegistrations.add(b);
 		
-		HandlerRegistration c = this.uploadFilesWidget.addProceedActionHandler(new ProceedActionHandler() {
+//		HandlerRegistration c = this.uploadFilesWidget.addProceedActionHandler(new ProceedActionHandler() {
+//			
+//			public void onAction(ProceedActionEvent e) {
+//				String selectedStudyId = uploadFilesWidget.getSelectedStudyId();
+//				submitWidget.setSelectedStudy(selectedStudyId);
+//				submitWidget.refresh();
+//				setActiveChild(submitWidget);				
+//			}
+//			
+//		});
+		
+		HandlerRegistration c = uploadFilesWidget.proceed.addHandler(new WidgetEventHandler() {
 			
-			public void onAction(ProceedActionEvent e) {
+			public void onEvent(WidgetEvent e) {
 				String selectedStudyId = uploadFilesWidget.getSelectedStudyId();
 				submitWidget.setSelectedStudy(selectedStudyId);
 				submitWidget.refresh();

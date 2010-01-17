@@ -13,7 +13,21 @@ public class Property<T> {
 	}
 	
 	public void set(T value) {
-		this.value = value;
+		T before = this.value;
+		T after = value;
+		if ( ( before == null && after != null ) ||
+			 ( before != null && after == null ) ||
+			 !before.equals(after) ) {
+			
+			// value has changed, set and fire event
+			this.value = value;
+			PropertyChangeEvent<T> e = new PropertyChangeEvent<T>(this, before, after);
+			handlerManager.fireEvent(e);
+			
+		}
+		else {
+			// no change, do nothing
+		}
 	}
 	
 	public HandlerRegistration addChangeHandler(PropertyChangeHandler<T> h) {
