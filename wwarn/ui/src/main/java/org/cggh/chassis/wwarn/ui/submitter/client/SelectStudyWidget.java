@@ -129,5 +129,10 @@ public class SelectStudyWidget
 	public  SelectStudyWidgetRenderer getRenderer() {
 		return renderer;
 	}
+
+	public void setSelectedStudy(String selectedStudyId) {
+		model.setSelectedStudy(selectedStudyId);
+		
+	}
 	
 }
