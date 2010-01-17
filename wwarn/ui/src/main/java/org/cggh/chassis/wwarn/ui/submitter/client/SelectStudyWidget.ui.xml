@@ -31,7 +31,9 @@
         </g:HTMLPanel>
         <g:FlowPanel ui:field="selectExistingStudyPanel">
 				<g:Label><ui:msg>Please select a study from the list below...</ui:msg></g:Label>
-                <g:FlowPanel ui:field="studySelect"></g:FlowPanel>
+				<g:FlowPanel>
+				<g:ListBox ui:field="studySelect" visibleItemCount='1'/>
+				</g:FlowPanel>
            		<g:Button ui:field="cancelSubmissionButtonOne">
            			<ui:msg>Cancel Submission</ui:msg>
            		</g:Button>

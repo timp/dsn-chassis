@@ -24,6 +24,10 @@ public class SelectStudyWidgetModel extends AsyncWidgetModel {
 
 	private Document studyFeed;
 	
+	public Document getStudyFeed() {
+		return studyFeed;
+	}
+
 	/** return nullable id to next widget */
 	public String getSelectedStudyId() {
 		return selectedStudyId;
