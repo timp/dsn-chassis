@@ -1,24 +1,14 @@
 package org.cggh.chassis.wwarn.ui.submitter.client;
 
-import java.util.HashMap;
-import java.util.Map;
 
 import org.cggh.chassis.generic.async.client.Deferred;
 import org.cggh.chassis.generic.async.client.Function;
-import org.cggh.chassis.generic.atomext.client.study.StudyEntry;
-import org.cggh.chassis.generic.atomext.client.study.StudyFeed;
-import org.cggh.chassis.generic.atomext.client.study.StudyQuery;
-import org.cggh.chassis.generic.atomext.client.study.StudyQueryService;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.miniatom.client.Atom;
-import org.cggh.chassis.generic.widget.client.AsyncErrback;
-import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
-import org.cggh.chassis.generic.widget.client.ChassisWidget;
 import org.cggh.chassis.generic.widget.client.ErrorEvent;
 import org.cggh.chassis.wwarn.ui.common.client.Config;
 
-import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.xml.client.Document;
 
 /**
@@ -32,8 +22,6 @@ public class SelectStudyWidgetController {
 
 	private SelectStudyWidget owner;
 	private SelectStudyWidgetModel model;
-
-	private Map<String, String>  studyLinksToTitles;
 
 
 	public SelectStudyWidgetController(SelectStudyWidget owner,
