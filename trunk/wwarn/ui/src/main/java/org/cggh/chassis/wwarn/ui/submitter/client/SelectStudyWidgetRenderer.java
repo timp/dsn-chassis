@@ -117,9 +117,8 @@ public class SelectStudyWidgetRenderer extends ChassisWidgetRenderer<SelectStudy
 		String value = studySelect.getValue(studySelect.getSelectedIndex());
 		
 		this.owner.getModel().setSelectedStudy(value);
-		if (this.owner.getModel().isValid()) { 
-			proceedWithSelectedButton.setEnabled(true);
-		}
+		System.err.println("Set to " + value +  "==" + this.model.getSelectedStudyId() + " so " + this.owner.getModel().isValid());
+		proceedWithSelectedButton.setEnabled(this.owner.getModel().isValid());
 	}
 
 	@UiHandler("proceedWithSelectedButton")
@@ -144,8 +143,6 @@ public class SelectStudyWidgetRenderer extends ChassisWidgetRenderer<SelectStudy
 		ChangeHandler studySelectedChangeHandler = new ChangeHandler() {
 
 			public void onChange(ChangeEvent event) {
-				System.err.println("Change:" + event + " from " + proceedWithSelectedButton.isEnabled() + " to " + !proceedWithSelectedButton.isEnabled());
-				proceedWithSelectedButton.setEnabled(!proceedWithSelectedButton.isEnabled());
 			}
 
 		};
