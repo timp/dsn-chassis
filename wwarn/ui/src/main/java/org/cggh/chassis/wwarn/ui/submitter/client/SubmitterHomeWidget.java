@@ -71,7 +71,7 @@ public class SubmitterHomeWidget
 	
 	
 	
-	public WidgetEventChannel submitDataNavigationEventChannel = new WidgetEventChannel(this);
+	public final WidgetEventChannel submitDataNavigationEventChannel = new WidgetEventChannel(this);
 	
 	
 	
