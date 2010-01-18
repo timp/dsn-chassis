@@ -1,18 +1,24 @@
 package org.cggh.chassis.wwarn.ui.submitter.client;
 
 import org.cggh.chassis.generic.async.client.Deferred;
+import org.cggh.chassis.generic.async.client.Function;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
+import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
+import org.cggh.chassis.generic.widget.client.ChassisWidget;
 import org.cggh.chassis.generic.widget.client.DelegatingWidget;
+import org.cggh.chassis.generic.widget.client.WidgetEventChannel;
 import org.cggh.chassis.generic.widget.client.WidgetMemory;
-
-import com.google.gwt.event.shared.HandlerRegistration;
 
 /**
  * When told to refresh itself, the SelectStudyWidget makes a GET request to the Studies Query Service URL, 
  * to retrieve a feed of all study entries owned by the user. 
  * 
- * Depending upon whether the feed is empty (no studies created yet) or not the widget is rendered differently.
+ * If the feed is empty (no studies created yet) 
+ *   only the create optioon is displayed
+ * else 
+ *   the option to select a previously created study is displayed
+ * 
  * 
  * @author timp
  * @since 13/01/10
@@ -34,6 +40,7 @@ public class SelectStudyWidget
 	public void init() { 
 		super.init(); // instantiates model and renederer
 		this.controller = new SelectStudyWidgetController(this, this.model);
+		this.renderer.setController(this.controller);
 		this.memory = new Memory();		 
 	}
 	
@@ -42,33 +49,33 @@ public class SelectStudyWidget
 		return new SelectStudyWidgetModel();
 	}
 
+	public SelectStudyWidgetModel getModel() {
+		return model;
+	}
 
-
+	
 	@Override
 	protected SelectStudyWidgetRenderer createRenderer() {
 		return new SelectStudyWidgetRenderer(this);
 	}
 
+	public  SelectStudyWidgetRenderer getRenderer() {
+		return renderer;
+	}
+
+
+	
+	
+	
+	
 	public String getSelectedStudyId() { 
 		return model.getSelectedStudyId();
 	}
-/*
-	@Override
-	public void bindUI() {
-		
-		HandlerRegistration a = this.proceedButton.addClickHandler(new ClickHandler() {
-			
-			public void onClick(ClickEvent arg0) {
-				ProceedActionEvent e = new ProceedActionEvent();
-				fireEvent(e);
-			}
-		});
-		
-		this.childWidgetEventHandlerRegistrations.add(a);
-
+	public void setSelectedStudy(String selectedStudyId) {
+		model.setSelectedStudy(selectedStudyId);
 	}
-	*/
-	
+
+
 	
 	
 	@Override
@@ -76,12 +83,9 @@ public class SelectStudyWidget
 		this.controller.retrieveStudies();
 	}
 
+	public final WidgetEventChannel proceed = new WidgetEventChannel(this);
 	
 	
-	public HandlerRegistration addProceedActionHandler(ProceedActionHandler h) {
-		return this.addHandler(h, ProceedActionEvent.TYPE);
-	}
-
 
 
 
@@ -102,8 +106,7 @@ public class SelectStudyWidget
 		 */
 		@Override
 		public String createMnemonic() {
-			// TODO Auto-generated method stub
-			return null;
+			return model.getSelectedStudyId();
 		}
 
 		/* (non-Javadoc)
@@ -111,26 +114,46 @@ public class SelectStudyWidget
 		 */
 		@Override
 		public Deferred<WidgetMemory> remember(String mnemonic) {
-			// TODO Auto-generated method stub
-			return null;
+			log.enter("remember");
+			
+			Deferred<WidgetMemory> deferredMemory;
+			
+			model.setStatus(AsyncWidgetModel.STATUS_INITIAL);
+			
+			String studyId = mnemonic;
+			
+			log.debug("found studyId: "+studyId);
+			
+			if (studyId != null) {
+				
+				log.debug("set selected study id");
+				setSelectedStudy(studyId);
+				
+				log.debug("refresh and call back");
+				deferredMemory = refreshAndCallback().adapt(new Function<ChassisWidget, WidgetMemory>() {
+
+					public WidgetMemory apply(ChassisWidget in) {
+						return Memory.this;
+					}
+					
+				});
+			}
+			
+			else {
+				
+				log.debug("call back immediately");
+				deferredMemory = new Deferred<WidgetMemory>();
+				deferredMemory.callback(this);
+				
+			}
+			
+			log.leave();
+			return deferredMemory;
 		}
 
 	}
 
 
 
-
-	public  SelectStudyWidgetRenderer getRenderer() {
-		return renderer;
-	}
-
-	public void setSelectedStudy(String selectedStudyId) {
-		model.setSelectedStudy(selectedStudyId);
-		
-	}
-
-	public SelectStudyWidgetModel getModel() {
-		return model;
-	}
 	
 }

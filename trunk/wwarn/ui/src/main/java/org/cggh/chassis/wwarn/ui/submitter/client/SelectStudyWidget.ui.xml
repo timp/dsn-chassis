@@ -50,16 +50,16 @@
 
     <h4><ui:msg>Title</ui:msg></h4>
     <p><ui:msg>Please provide a title for the study...</ui:msg></p>
-    <input type="text" ui:field="studyTitle" style="width: 600px"></input>
+    <g:TextBox ui:field="studyTitle" ></g:TextBox>
     <p><ui:msg>E.g., <i>TODO Study Foo</i></ui:msg></p>
     <h4><ui:msg>Summary</ui:msg></h4>
     <p><ui:msg>Please provide a short description of the study....</ui:msg></p>
 
-    <textarea rows="4" cols="40" style="width: 600px" ui:field="studySummary" ></textarea>
+    <g:TextArea visibleLines="4" ui:field="studySummary" ></g:TextArea>
     <p><ui:msg>E.g., <i>TODO This study looked at ... This study found ...</i></ui:msg></p>
     <h4><ui:msg>Submitters</ui:msg></h4>
     <p><ui:msg>Please enter an email address for each person who can submit data for this study...</ui:msg></p>
-    <textarea rows="2" cols="40" style="width: 600px"></textarea>
+    <g:TextArea visibleLines="2" ui:field="otherSubmitters"></g:TextArea>
     <p><ui:msg>Separate each email address with a space, e.g., <i>bob@example.org fred@bloggs.com</i></ui:msg></p>
 
     <p><ui:msg>(You will automatically be included in the list of submitters for this study.)</ui:msg></p>
