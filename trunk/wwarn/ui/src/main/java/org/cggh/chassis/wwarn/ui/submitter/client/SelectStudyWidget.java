@@ -15,7 +15,7 @@ import org.cggh.chassis.generic.widget.client.WidgetMemory;
  * to retrieve a feed of all study entries owned by the user. 
  * 
  * If the feed is empty (no studies created yet) 
- *   only the create optioon is displayed
+ *   only the create option is displayed
  * else 
  *   the option to select a previously created study is displayed
  * 
