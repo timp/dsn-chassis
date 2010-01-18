@@ -333,6 +333,7 @@ public class SubmitterHomeWidgetRenderer extends ChassisWidgetRenderer<Submitter
 	
 	@UiHandler("submitDataLink")
 	void handleSubmitDataLinkClick(ClickEvent e) {
-		this.owner.fireEvent(new SubmitDataNavigationEvent());
+//		this.owner.fireEvent(new SubmitDataNavigationEvent());
+		owner.submitDataNavigationEventChannel.fireEvent();
 	}	
 }
