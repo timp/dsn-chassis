@@ -3,6 +3,7 @@
  */
 package org.cggh.chassis.wwarn.ui.submitter.client;
 
+import java.util.HashSet;
 import java.util.List;
 
 import org.cggh.chassis.generic.log.client.Log;
@@ -16,8 +17,6 @@ import org.cggh.chassis.generic.widget.client.PropertyChangeHandler;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.Status;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.StatusChangeEvent;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.StatusChangeHandler;
-//import org.cggh.chassis.wwarn.ui.submitter.client.SubmitterHomeWidgetModel.SubmissionsChangeEvent;
-//import org.cggh.chassis.wwarn.ui.submitter.client.SubmitterHomeWidgetModel.SubmissionsChangeHandler;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -53,16 +52,17 @@ public class SubmitterHomeWidgetRenderer extends ChassisWidgetRenderer<Submitter
 	private static MyUiBinder uiBinder = GWT.create(MyUiBinder.class);
 	
 	@UiField HTMLPanel errorPanel;
-	
+	@UiField HTMLPanel pendingPanel;
 	@UiField HTMLPanel mainPanel;
-	@UiField Label submissionsPendingLabel;
-	@UiField Anchor submitDataLink;
-	
+
+	@UiField Label countingSubmissionsErrorLabel;	
 	@UiField Label submissionsCountPrefixLabel;
 	@UiField Label submissionsCountLabel;
 	@UiField Label submissionsCountIsZeroSuffixLabel;
 	@UiField Label submissionsCountIsOneSuffixLabel;
 	@UiField Label submissionsCountIsManySuffixLabel;
+	@UiField Label countingFilesErrorLabel;
+	@UiField Label countingStudiesErrorLabel;	
 	@UiField Label filesCountPrefixLabel;
 	@UiField Label filesCountLabel;
 	@UiField Label filesCountIsZeroSuffixLabel;
@@ -73,6 +73,7 @@ public class SubmitterHomeWidgetRenderer extends ChassisWidgetRenderer<Submitter
 	@UiField Label studiesCountIsZeroSuffixLabel;
 	@UiField Label studiesCountIsOneSuffixLabel;
 	@UiField Label studiesCountIsManySuffixLabel;
+	@UiField Anchor submitDataLink;
 	
 	@Override
 	protected void renderUI() {
@@ -88,7 +89,6 @@ public class SubmitterHomeWidgetRenderer extends ChassisWidgetRenderer<Submitter
 	@Override
 	protected void syncUI() {
 		syncUIWithStatus(model.getStatus());
-//		syncUIWithSubmissions(model.getSubmissions());
 		syncUIWithSubmissions(model.submissionFeed.get());
 	}	
 	
@@ -96,55 +96,39 @@ public class SubmitterHomeWidgetRenderer extends ChassisWidgetRenderer<Submitter
 	private void syncUIWithStatus(Status status) {
 
 		log.enter("syncUIWithStatus");
+
+		// Hide everything at this UI level (top level) first, then show as required.
+		
+		errorPanel.setVisible(false);	
+		mainPanel.setVisible(false);		
+		pendingPanel.setVisible(false);	
 		
 		if (status instanceof AsyncWidgetModel.InitialStatus) {
 
-			errorPanel.setVisible(false);
-			
-			mainPanel.setVisible(false);
-			
+			// Everything off, hidden.
 		}
 		
 		else if (status instanceof SubmitterHomeWidgetModel.RetrieveSubmissionsPendingStatus) {
 
-			
-			errorPanel.setVisible(false);
-			
-			mainPanel.setVisible(true);
-			
-			// In the main panel.
-			submissionsPendingLabel.setVisible(true);
-			
-			
+			pendingPanel.setVisible(true);
+
 		}
 
 		else if (status instanceof SubmitterHomeWidgetModel.SubmissionsNotFoundStatus) {
 
-			errorPanel.setVisible(false);
-			
-			mainPanel.setVisible(true);
-			
-			// In the main panel.
-			submissionsPendingLabel.setVisible(false);
-				
+			//mainPanel.setVisible(true);
 			
 		}			
 		
 		else if (status instanceof SubmitterHomeWidgetModel.SubmissionsRetrievedStatus) {
 
-			errorPanel.setVisible(false);
-			
 			mainPanel.setVisible(true);
-				
-			// In the main panel.
-			submissionsPendingLabel.setVisible(false);
+			
 		}		
 		
 		else if (status instanceof AsyncWidgetModel.ErrorStatus) {
 
 			errorPanel.setVisible(true);
-			
-			mainPanel.setVisible(false);
 			
 			log.error("Error status given on asynchronous call. Maybe a bad submissions query URL.");
 			
@@ -153,8 +137,6 @@ public class SubmitterHomeWidgetRenderer extends ChassisWidgetRenderer<Submitter
 		else {
 
 			errorPanel.setVisible(true);
-
-			mainPanel.setVisible(false);
 			
 			log.error("Unhandled status.");
 			
@@ -167,132 +149,77 @@ public class SubmitterHomeWidgetRenderer extends ChassisWidgetRenderer<Submitter
 	private void syncUIWithSubmissions(Document submissions) {
 		
 		log.enter("syncUIWithSubmissions");
+
+		// Hide everything in this UI scope (the main panel) first, then show as required.
+		
+		// In the main panel.
+		countingSubmissionsErrorLabel.setVisible(false);	
+		submissionsCountPrefixLabel.setVisible(false);
+		submissionsCountLabel.setVisible(false);
+		submissionsCountIsZeroSuffixLabel.setVisible(false);
+		submissionsCountIsOneSuffixLabel.setVisible(false);
+		submissionsCountIsManySuffixLabel.setVisible(false);
+		countingFilesErrorLabel.setVisible(false);
+		countingStudiesErrorLabel.setVisible(false);		
+		filesCountPrefixLabel.setVisible(false);
+		filesCountLabel.setVisible(false);
+		filesCountIsZeroSuffixLabel.setVisible(false);
+		filesCountIsOneSuffixLabel.setVisible(false);
+		filesCountIsManySuffixLabel.setVisible(false);
+		studiesCountPrefixLabel.setVisible(false);
+		studiesCountLabel.setVisible(false);
+		studiesCountIsZeroSuffixLabel.setVisible(false);
+		studiesCountIsOneSuffixLabel.setVisible(false);
+		studiesCountIsManySuffixLabel.setVisible(false);
+		
+		// Always show the submit data link
+		submitDataLink.setVisible(true);
 		
 		if (submissions != null) {
 			
 			
 			List<Element> submissionEntries = AtomHelper.getEntries(submissions.getDocumentElement());
 			
-			submissionsCountLabel.setText(Integer.toString(submissionEntries.size()));
-			submissionsCountPrefixLabel.setVisible(true);
-			submissionsCountLabel.setVisible(true);
+			submissionsCountLabel.setText(Integer.toString(submissionEntries.size()));			
 			
 			if (submissionEntries.size() == 0) {
-				
+
+				submissionsCountPrefixLabel.setVisible(true);
+				submissionsCountLabel.setVisible(true);				
 				submissionsCountIsZeroSuffixLabel.setVisible(true);
-				submissionsCountIsOneSuffixLabel.setVisible(false);
-				submissionsCountIsManySuffixLabel.setVisible(false);
-				filesCountPrefixLabel.setVisible(false);
-				filesCountLabel.setVisible(false);
-				filesCountIsZeroSuffixLabel.setVisible(false);
-				filesCountIsOneSuffixLabel.setVisible(false);
-				filesCountIsManySuffixLabel.setVisible(false);
-				studiesCountPrefixLabel.setVisible(false);
-				studiesCountLabel.setVisible(false);
-				studiesCountIsZeroSuffixLabel.setVisible(false);
-				studiesCountIsOneSuffixLabel.setVisible(false);
-				studiesCountIsManySuffixLabel.setVisible(false);
+				
 			}
 			
 			else {
 				
-				submissionsCountIsZeroSuffixLabel.setVisible(false);
-				
 				if (submissionEntries.size() == 1) {
-					
+
+					submissionsCountPrefixLabel.setVisible(true);
+					submissionsCountLabel.setVisible(true);					
 					submissionsCountIsOneSuffixLabel.setVisible(true);
-					submissionsCountIsManySuffixLabel.setVisible(false);
-					
+
+					countFilesAndStudies(submissionEntries);
 				}
 				
 				else if (submissionEntries.size() > 1) {
-					
-					submissionsCountIsOneSuffixLabel.setVisible(false);
+
+					submissionsCountPrefixLabel.setVisible(true);
+					submissionsCountLabel.setVisible(true);					
 					submissionsCountIsManySuffixLabel.setVisible(true);
 					
+					countFilesAndStudies(submissionEntries);
 				}
 				
 				else {
+					
+					countingSubmissionsErrorLabel.setVisible(true);
 					
 					log.error("Unexpected submissionEntries size: " + Integer.toString(submissionEntries.size()));
 				}
 				
 				// TODO: Resolve inter-label spacing issue in Firefox 3.5.7.
-				
-				// Count the files and studies.
-				int filesCount = 0;
-				int studiesCount = 0;
-				for (Element submissionEntry : submissionEntries) {
 
-					List<Element> fileLinks = AtomHelper.getLinks(submissionEntry, Chassis.REL_SUBMISSIONPART);
-					List<Element> studyLinks = AtomHelper.getLinks(submissionEntry, Chassis.REL_ORIGINSTUDY);
-					
-					filesCount += fileLinks.size();
-					studiesCount += studyLinks.size();
-					
-				}
-
-				filesCountLabel.setText(Integer.toString(filesCount));
-				filesCountPrefixLabel.setVisible(true);
-				filesCountLabel.setVisible(true);				
 				
-				if (filesCount == 0) {
-					
-					filesCountIsZeroSuffixLabel.setVisible(true);
-					filesCountIsOneSuffixLabel.setVisible(false);
-					filesCountIsManySuffixLabel.setVisible(false);
-				}
-				
-				else if (filesCount ==  1) {
-					
-					filesCountIsZeroSuffixLabel.setVisible(false);
-					filesCountIsOneSuffixLabel.setVisible(true);
-					filesCountIsManySuffixLabel.setVisible(false);	
-					
-				}
-				
-				else if (filesCount >  1) {
-					
-					filesCountIsZeroSuffixLabel.setVisible(false);
-					filesCountIsOneSuffixLabel.setVisible(false);
-					filesCountIsManySuffixLabel.setVisible(true);
-				}
-				
-				else {
-					
-					log.error("Unexpected filesCount: " + Integer.toString(filesCount));
-				}
-
-				studiesCountLabel.setText(Integer.toString(studiesCount));				
-				studiesCountPrefixLabel.setVisible(true);
-				studiesCountLabel.setVisible(true);				
-				
-				if (studiesCount == 0) {
-					
-					studiesCountIsZeroSuffixLabel.setVisible(true);
-					studiesCountIsOneSuffixLabel.setVisible(false);
-					studiesCountIsManySuffixLabel.setVisible(false);
-				}
-				
-				else if (studiesCount ==  1) {
-					
-					studiesCountIsZeroSuffixLabel.setVisible(false);
-					studiesCountIsOneSuffixLabel.setVisible(true);
-					studiesCountIsManySuffixLabel.setVisible(false);	
-					
-				}
-				
-				else if (studiesCount >  1) {
-					
-					studiesCountIsZeroSuffixLabel.setVisible(false);
-					studiesCountIsOneSuffixLabel.setVisible(false);
-					studiesCountIsManySuffixLabel.setVisible(true);
-				}
-				
-				else {
-					
-					log.error("Unexpected studiesCount: " + Integer.toString(studiesCount));
-				}				
 				
 			}
 
@@ -302,6 +229,99 @@ public class SubmitterHomeWidgetRenderer extends ChassisWidgetRenderer<Submitter
 		
 	}
 
+
+	private void countFilesAndStudies(List<Element> submissionEntries) {
+		
+		// Determine the number of unique files and studies in all the submissions for this user. 
+		// Each unique file or study will have a unique href attribute value.
+		HashSet<String> fileHrefs = new HashSet<String>();
+		HashSet<String> studyHrefs = new HashSet<String>();
+		
+		for (Element submissionEntry : submissionEntries) {
+
+			List<Element> fileLinks = AtomHelper.getLinks(submissionEntry, Chassis.REL_SUBMISSIONPART);
+			List<Element> studyLinks = AtomHelper.getLinks(submissionEntry, Chassis.REL_ORIGINSTUDY);
+			
+			for (Element link : fileLinks) {
+				String hrefAttrValue = AtomHelper.getHrefAttr(link);
+				fileHrefs.add(hrefAttrValue);
+			}
+			
+			for (Element link : studyLinks) {
+				String hrefAttrValue = AtomHelper.getHrefAttr(link);
+				studyHrefs.add(hrefAttrValue);
+			}					
+			
+		}
+		
+		int filesCount = fileHrefs.size();
+		int studiesCount = studyHrefs.size();				
+
+		filesCountLabel.setText(Integer.toString(filesCount));
+
+		
+		if (filesCount == 0) {
+			
+			filesCountPrefixLabel.setVisible(true);
+			filesCountLabel.setVisible(true);	
+			filesCountIsZeroSuffixLabel.setVisible(true);
+		}
+		
+		else if (filesCount ==  1) {
+			
+			filesCountPrefixLabel.setVisible(true);
+			filesCountLabel.setVisible(true);	
+			filesCountIsOneSuffixLabel.setVisible(true);	
+			
+		}
+		
+		else if (filesCount >  1) {
+			
+			filesCountPrefixLabel.setVisible(true);
+			filesCountLabel.setVisible(true);	
+			filesCountIsManySuffixLabel.setVisible(true);
+		}
+		
+		else {
+			
+			countingFilesErrorLabel.setVisible(true);					
+			
+			log.error("Unexpected filesCount: " + Integer.toString(filesCount));
+			
+		}
+
+		studiesCountLabel.setText(Integer.toString(studiesCount));				
+
+		
+		if (studiesCount == 0) {
+			
+			studiesCountPrefixLabel.setVisible(true);
+			studiesCountLabel.setVisible(true);	
+			studiesCountIsZeroSuffixLabel.setVisible(true);
+		}
+		
+		else if (studiesCount ==  1) {
+			
+			studiesCountPrefixLabel.setVisible(true);
+			studiesCountLabel.setVisible(true);	
+			studiesCountIsOneSuffixLabel.setVisible(true);	
+			
+		}
+		
+		else if (studiesCount >  1) {
+			
+			studiesCountPrefixLabel.setVisible(true);
+			studiesCountLabel.setVisible(true);	
+			studiesCountIsManySuffixLabel.setVisible(true);
+		}
+		
+		else {
+			
+			countingStudiesErrorLabel.setVisible(true);
+			
+			log.error("Unexpected studiesCount: " + Integer.toString(studiesCount));
+		}
+	}
 
 	
 	
@@ -313,12 +333,6 @@ public class SubmitterHomeWidgetRenderer extends ChassisWidgetRenderer<Submitter
 				syncUIWithStatus(e.getAfter());
 			}
 		});
-		
-//		model.addSubmissionsChangeHandler(new SubmissionsChangeHandler() {
-//			public void onChange(SubmissionsChangeEvent e) {
-//				syncUIWithSubmissions(e.getAfter());
-//			}
-//		});
 		
 		model.submissionFeed.addChangeHandler(new PropertyChangeHandler<Document>() {
 			public void onChange(PropertyChangeEvent<Document> e) {
@@ -333,7 +347,6 @@ public class SubmitterHomeWidgetRenderer extends ChassisWidgetRenderer<Submitter
 	
 	@UiHandler("submitDataLink")
 	void handleSubmitDataLinkClick(ClickEvent e) {
-//		this.owner.fireEvent(new SubmitDataNavigationEvent());
 		owner.submitDataNavigationEventChannel.fireEvent();
 	}	
 }
