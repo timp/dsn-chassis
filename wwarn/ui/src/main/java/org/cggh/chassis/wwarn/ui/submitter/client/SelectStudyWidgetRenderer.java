@@ -22,6 +22,8 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.TextArea;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.xml.client.Element;
 
 /**
@@ -45,15 +47,24 @@ public class SelectStudyWidgetRenderer extends ChassisWidgetRenderer<SelectStudy
     @UiField ListBox studySelect;
 	@UiField HTMLPanel createStudyInteractionPanel;
 	@UiField Button cancelSubmissionButtonOne; //TODO handle cancel
-	@UiField Button cancelSubmissionButton;    // TODO Handle cancel
+	@UiField Button cancelSubmissionButton;    //TODO Handle cancel
 	@UiField Button proceedWithSelectedButton;
+	
 	@UiField Button createAndProceedButton;
+	@UiField TextBox studyTitle;
+	@UiField TextArea studySummary;
+	@UiField TextArea otherSubmitters;
 
 
 	private SelectStudyWidget owner;
+	private SelectStudyWidgetController controller;
 
 	public SelectStudyWidgetRenderer(SelectStudyWidget owner) {
 		this.owner = owner;
+	}
+
+	public void setController(SelectStudyWidgetController controller) {
+		this.controller = controller;
 	}
 
 	@Override
@@ -96,9 +107,12 @@ public class SelectStudyWidgetRenderer extends ChassisWidgetRenderer<SelectStudy
 				selectExistingStudyPanel.setVisible(false);
 			}
 		} else if (status instanceof SelectStudyWidgetModel.CreateEntryPendingStatus) {
-			// TODO 
+			// Nothing todo
+		} else if (status instanceof SelectStudyWidgetModel.StudyCreatedStatus) {
+			// Nothing todo
+		} else if (status instanceof AsyncWidgetModel.ErrorStatus) {
+			error("Error status: " + status);
 		} else { 
-			pendingPanel.setVisible(false);
 			error("Unexpected status: " + status);
 		}
 		
@@ -113,9 +127,11 @@ public class SelectStudyWidgetRenderer extends ChassisWidgetRenderer<SelectStudy
 	}
 	
 	@UiHandler("studySelect")
-	void handleStudySelection(ClickEvent e) { 
-		String value = studySelect.getValue(studySelect.getSelectedIndex());
-		
+	void handleStudySelection(ClickEvent e) {
+		String value = null;
+		if (studySelect != null ) {
+			value = studySelect.getValue(studySelect.getSelectedIndex());
+		}
 		this.owner.getModel().setSelectedStudy(value);
 		System.err.println("Set to " + value +  "==" + this.model.getSelectedStudyId() + " so " + this.owner.getModel().isValid());
 		proceedWithSelectedButton.setEnabled(this.owner.getModel().isValid());
@@ -123,12 +139,12 @@ public class SelectStudyWidgetRenderer extends ChassisWidgetRenderer<SelectStudy
 
 	@UiHandler("proceedWithSelectedButton")
 	void handleProceedWithSelectedButtonClick(ClickEvent e) {
-		this.owner.fireEvent(new ProceedActionEvent());
+		controller.proceed();
 	}
 	
 	@UiHandler("createAndProceedButton")
 	void handleCreateAndProceedButtonClick(ClickEvent e) {
-		this.owner.fireEvent(new ProceedActionEvent());
+		controller.createStudyAndProceed(studyTitle.getValue(), studySummary.getValue());
 	}
 	
 	public void error(String err) {

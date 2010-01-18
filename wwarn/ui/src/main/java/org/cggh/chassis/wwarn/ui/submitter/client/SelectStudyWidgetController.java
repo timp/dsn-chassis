@@ -6,10 +6,12 @@ import org.cggh.chassis.generic.async.client.Function;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.miniatom.client.Atom;
+import org.cggh.chassis.generic.miniatom.client.AtomHelper;
 import org.cggh.chassis.generic.widget.client.ErrorEvent;
 import org.cggh.chassis.wwarn.ui.common.client.Config;
 
 import com.google.gwt.xml.client.Document;
+import com.google.gwt.xml.client.Element;
 
 /**
  * @author timp
@@ -29,110 +31,13 @@ public class SelectStudyWidgetController {
 		this.owner = owner;
 		this.model = model;
 	}
-	/*
-	public Deferred<ChassisWidget> refreshAndCallBack() { 
-		Deferred<Map<String,String>> deferredStudyLinksToTitles = loadItems(true);
-		
-		
-		deferredStudyLinksToTitles.addCallback(new Function<Map<String,String>, Map<String,String>>() {
-
-			public Map<String,String> apply(Map<String,String> in) {
-				log.enter("[anon callback] :: apply");
-				
-				model.setStatus(AsyncWidgetModel.STATUS_READY);
-				
-				log.debug("items retrieved, rendering select");
-				if (studyLinksToTitles.isEmpty()) { 
-					// TODO
-				} else { 
-					String listId = HTMLPanel.createUniqueId(); 
-					String listHtml = ("<ul id=\"" +listId+"\">");
-					for (String link : in.keySet()) {
-						listHtml += ("<li><a href=\"" + link + "\">" + in.get(link) + "</a></li>");
-					}
-					listHtml += "</ul>";
-					
-					//content.add(new HTML(listHtml), outputId);
-					
-				}
-				
-				log.leave();
-				return in;
-			}
-			
-		});
-		
-		deferredStudyLinksToTitles.addErrback(new AsyncErrback(owner, model) { 
-			public Throwable apply(Throwable t) {
-				owner.getRenderer().error(t.getMessage()); 
-				return super.apply(t);
-			} 
-		});
-		return null;
-		
-	}
-	*/
-	
 	
 	
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.widget.client.MultiSelectModel#loadItems(boolean)
 	 */
 	
-	/*
-	public Deferred<Map<String, String>> loadItems(boolean forceRefresh) {
-		log.enter("loadItems");
-		Deferred<Map<String,String>> deferredItems;
-		if (this.studyLinksToTitles == null || forceRefresh) {
-			log.debug("loading items");
-			deferredItems = getMapOfStudyLinksToTitlesForCurrentUser();
-			deferredItems.addCallback(new Function<Map<String,String>, Map<String,String>>() {
 
-				public Map<String, String> apply(Map<String, String> in) {
-					studyLinksToTitles = in;
-					return in;
-				}
-				
-			});
-		}
-		else {
-			log.debug("callback immediately with existing items");
-			deferredItems = new Deferred<Map<String,String>>();
-			deferredItems.callback(this.studyLinksToTitles);
-		}
-		log.leave();
-		return deferredItems;
-	}
-	*/
-
-
-/*	
-	public static Deferred<Map<String,String>> getMapOfStudyLinksToTitlesForCurrentUser() {
-		
-		StudyQueryService service = new StudyQueryService(Config.get(Config.QUERY_STUDIES_URL));
-		StudyQuery query = new StudyQuery();
-		query.setAuthorEmail( Config.get(Config.USER_EMAIL) );
-		Deferred<StudyFeed> deferredFeed = service.query(query);
-		
-		Deferred<Map<String,String>> deferredMap = deferredFeed.adapt(new Function<StudyFeed, Map<String,String>>() {
-
-			public Map<String, String> apply(StudyFeed in) {
-				Map<String,String> studyLinks = new HashMap<String,String>();
-				for (StudyEntry e : in.getEntries()) {
-					String title = e.getTitle();
-//					String link = Configuration.getStudyCollectionUrl() + e.getEditLink().getHref();
-					String link = e.getEditLink().getHref(); // TODO fix for aboslute URIs
-					studyLinks.put(link, title);
-				}
-				return studyLinks;
-			}
-			
-		});
-		return deferredMap;
-		
-	}
-	
-	*/
 
 	public void retrieveStudies() {
 		// Set the model's status to pending.
@@ -149,8 +54,9 @@ public class SelectStudyWidgetController {
 		
 	}
 	
-	
-	
+	public void proceed() { 
+		owner.proceed.fireEvent();		
+	}
 	
 	private class RetrieveStudiesCallback implements Function<Document, Document> {
 
@@ -175,4 +81,45 @@ public class SelectStudyWidgetController {
 		}
        
 	}
+
+
+	private Deferred<Document> createStudy(String studyTitle, String studySummary) {
+		Document studyEntryDoc = AtomHelper.createEntryDoc();
+		Element studyEntryElement = studyEntryDoc.getDocumentElement();
+		AtomHelper.addAuthor(studyEntryElement, Config.USER_EMAIL);
+		
+		AtomHelper.setTitle(studyEntryElement, studyTitle);
+		AtomHelper.setSummary(studyEntryElement, studySummary);
+		
+		// TODO parse otherSubmitters and add to authors.
+		// TODO set content 
+		
+		return Atom.postEntry(Config.get(Config.COLLECTION_STUDIES_URL), studyEntryDoc);
+	}
+
+
+	public void createStudyAndProceed(String studyTitle, String studySummary) {
+		Deferred<Document> deferredStudyEntrydoc = createStudy(studyTitle, studySummary);
+		deferredStudyEntrydoc.addCallback(new Function<Document, Document>() {
+			public Document apply(Document in) {
+				model.setSelectedStudy(AtomHelper.getId(in.getDocumentElement()));
+				model.setStatus(SelectStudyWidgetModel.STATUS_STUDY_CREATED);
+				owner.proceed.fireEvent();
+				return in;
+		}
+		});
+		deferredStudyEntrydoc.addErrback(new DefaultErrback());
+	}
+	
+	private class DefaultErrback implements Function<Throwable, Throwable> {
+
+		public Throwable apply(Throwable in) {
+			log.error("unexpected error", in);
+			model.setStatus(UploadFilesWidgetModel.STATUS_ERROR);
+			owner.fireEvent(new ErrorEvent(in));
+			return in;
+		}
+		
+	}
+
 }

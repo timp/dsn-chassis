@@ -12,6 +12,7 @@ import com.google.gwt.xml.client.Document;
  *
  */
 public class SelectStudyWidgetModel extends AsyncWidgetModel {
+	
 	public static class RetrieveFeedPendingStatus extends AsyncRequestPendingStatus {}
 	public static final RetrieveFeedPendingStatus STATUS_RETRIEVE_STUDIES_PENDING = new RetrieveFeedPendingStatus();
 	
@@ -21,7 +22,8 @@ public class SelectStudyWidgetModel extends AsyncWidgetModel {
 	public static class CreateEntryPendingStatus extends AsyncRequestPendingStatus {}
 	public static final CreateEntryPendingStatus STATUS_CREATE_STUDY_PENDING = new CreateEntryPendingStatus();
 	
-	
+	public static class StudyCreatedStatus extends ReadyStatus {}
+	public static final StudyCreatedStatus STATUS_STUDY_CREATED = new StudyCreatedStatus();
 
 	public final ObservableProperty<Document> studyFeed = new ObservableProperty<Document>();
 	
