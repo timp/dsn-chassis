@@ -17,7 +17,7 @@ public class Property<T> {
 		T after = value;
 		if ( ( before == null && after != null ) ||
 			 ( before != null && after == null ) ||
-			 !before.equals(after) ) {
+			 ( before != null && after != null && !before.equals(after) ) ) {
 			
 			// value has changed, set and fire event
 			this.value = value;
