@@ -7,6 +7,7 @@ import org.cggh.chassis.generic.async.client.Deferred;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.DelegatingWidget;
+import org.cggh.chassis.generic.widget.client.WidgetEventChannel;
 
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.xml.client.Document;
@@ -64,9 +65,15 @@ public class SubmitterHomeWidget
 		
 	
 	
-	public HandlerRegistration addSubmitDataNavigationHandler(SubmitDataNavigationHandler h) {
-		return this.addHandler(h, SubmitDataNavigationEvent.TYPE);
-	}
+//	public HandlerRegistration addSubmitDataNavigationHandler(SubmitDataNavigationHandler h) {
+//		return this.addHandler(h, SubmitDataNavigationEvent.TYPE);
+//	}
+	
+	
+	
+	public WidgetEventChannel submitDataNavigationEventChannel = new WidgetEventChannel(this);
+	
+	
 	
 
 }
