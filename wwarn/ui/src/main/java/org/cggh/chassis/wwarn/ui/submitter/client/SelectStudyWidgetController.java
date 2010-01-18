@@ -86,7 +86,7 @@ public class SelectStudyWidgetController {
 	private Deferred<Document> createStudy(String studyTitle, String studySummary) {
 		Document studyEntryDoc = AtomHelper.createEntryDoc();
 		Element studyEntryElement = studyEntryDoc.getDocumentElement();
-		AtomHelper.addAuthor(studyEntryElement, Config.USER_EMAIL);
+		AtomHelper.addAuthor(studyEntryElement, Config.get(Config.USER_EMAIL));
 		
 		AtomHelper.setTitle(studyEntryElement, studyTitle);
 		AtomHelper.setSummary(studyEntryElement, studySummary);
