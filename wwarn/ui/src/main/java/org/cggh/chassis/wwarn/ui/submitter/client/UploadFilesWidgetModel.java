@@ -6,7 +6,7 @@ package org.cggh.chassis.wwarn.ui.submitter.client;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 import org.cggh.chassis.generic.widget.client.ModelChangeEvent;
 import org.cggh.chassis.generic.widget.client.ModelChangeHandler;
-import org.cggh.chassis.generic.widget.client.Property;
+import org.cggh.chassis.generic.widget.client.ObservableProperty;
 
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.xml.client.Document;
@@ -41,9 +41,9 @@ public class UploadFilesWidgetModel extends AsyncWidgetModel {
 	
 	
 	
-	public final Property<String> selectedStudyId = new Property<String>();
-	public final Property<Element> studyEntryElement = new Property<Element>();
-	public final Property<Document> uploadFeedDoc = new Property<Document>();
+	public final ObservableProperty<String> selectedStudyId = new ObservableProperty<String>();
+	public final ObservableProperty<Element> studyEntryElement = new ObservableProperty<Element>();
+	public final ObservableProperty<Document> uploadFeedDoc = new ObservableProperty<Document>();
 	
 
 	

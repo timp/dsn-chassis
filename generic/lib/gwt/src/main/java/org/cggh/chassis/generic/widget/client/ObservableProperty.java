@@ -3,7 +3,7 @@ package org.cggh.chassis.generic.widget.client;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.event.shared.HandlerRegistration;
 
-public class Property<T> {
+public class ObservableProperty<T> {
 
 	private T value;
 	private HandlerManager handlerManager = new HandlerManager(this);

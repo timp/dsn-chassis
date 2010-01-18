@@ -71,6 +71,14 @@ public class AddInformationWidget extends DelegatingWidget<AddInformationWidgetM
 	
 	
 	@Override
+	public void refresh() {
+		refreshAndCallback();
+	}
+	
+	
+	
+	
+	@Override
 	public Deferred<ChassisWidget> refreshAndCallback() {
 		return controller.refreshAndCallback();
 	}
