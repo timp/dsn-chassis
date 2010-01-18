@@ -13,11 +13,11 @@ import com.google.gwt.event.shared.GwtEvent;
 public class PropertyChangeEvent<T> extends GwtEvent<PropertyChangeHandler> {
 
 	private T before, after;
-	private Property<T> property;
+	private ObservableProperty<T> property;
 
 	public static final Type<PropertyChangeHandler> TYPE = new Type<PropertyChangeHandler>();
 	
-	public PropertyChangeEvent(Property<T> property, T before, T after) {
+	public PropertyChangeEvent(ObservableProperty<T> property, T before, T after) {
 		this.property = property;
 		this.before = before;
 		this.after = after;
@@ -31,7 +31,7 @@ public class PropertyChangeEvent<T> extends GwtEvent<PropertyChangeHandler> {
 		return after;
 	}
 	
-	public Property<T> getProperty() {
+	public ObservableProperty<T> getProperty() {
 		return property;
 	}
 

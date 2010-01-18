@@ -74,7 +74,8 @@ public class SubmitterHomeWidgetController {
 		public Document apply(Document submissionsFeedDoc) {
 			
 			// Give the model its submissions feed document.
-			model.setSubmissions(submissionsFeedDoc);
+//			model.setSubmissions(submissionsFeedDoc);
+			model.submissionFeed.set(submissionsFeedDoc);
 			
 			// Update the model's status.
 			model.setStatus(SubmitterHomeWidgetModel.STATUS_SUBMISSIONS_RETRIEVED);

@@ -11,11 +11,13 @@ import org.cggh.chassis.generic.miniatom.client.AtomHelper;
 import org.cggh.chassis.generic.miniatom.client.ext.Chassis;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 import org.cggh.chassis.generic.widget.client.ChassisWidgetRenderer;
+import org.cggh.chassis.generic.widget.client.PropertyChangeEvent;
+import org.cggh.chassis.generic.widget.client.PropertyChangeHandler;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.Status;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.StatusChangeEvent;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.StatusChangeHandler;
-import org.cggh.chassis.wwarn.ui.submitter.client.SubmitterHomeWidgetModel.SubmissionsChangeEvent;
-import org.cggh.chassis.wwarn.ui.submitter.client.SubmitterHomeWidgetModel.SubmissionsChangeHandler;
+//import org.cggh.chassis.wwarn.ui.submitter.client.SubmitterHomeWidgetModel.SubmissionsChangeEvent;
+//import org.cggh.chassis.wwarn.ui.submitter.client.SubmitterHomeWidgetModel.SubmissionsChangeHandler;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -86,7 +88,8 @@ public class SubmitterHomeWidgetRenderer extends ChassisWidgetRenderer<Submitter
 	@Override
 	protected void syncUI() {
 		syncUIWithStatus(model.getStatus());
-		syncUIWithSubmissions(model.getSubmissions());
+//		syncUIWithSubmissions(model.getSubmissions());
+		syncUIWithSubmissions(model.submissionFeed.get());
 	}	
 	
 
@@ -311,8 +314,14 @@ public class SubmitterHomeWidgetRenderer extends ChassisWidgetRenderer<Submitter
 			}
 		});
 		
-		model.addSubmissionsChangeHandler(new SubmissionsChangeHandler() {
-			public void onChange(SubmissionsChangeEvent e) {
+//		model.addSubmissionsChangeHandler(new SubmissionsChangeHandler() {
+//			public void onChange(SubmissionsChangeEvent e) {
+//				syncUIWithSubmissions(e.getAfter());
+//			}
+//		});
+		
+		model.submissionFeed.addChangeHandler(new PropertyChangeHandler<Document>() {
+			public void onChange(PropertyChangeEvent<Document> e) {
 				syncUIWithSubmissions(e.getAfter());
 			}
 		});
