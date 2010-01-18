@@ -68,18 +68,28 @@ public class SubmitterApplicationWidget extends MultiWidget {
 		
 		this.childWidgetEventHandlerRegistrations.add(a);
 		
-		HandlerRegistration b = this.selectStudyWidget.addProceedActionHandler(new ProceedActionHandler() {
-			
-			public void onAction(ProceedActionEvent e) {
+//		HandlerRegistration b = this.selectStudyWidget.addProceedActionHandler(new ProceedActionHandler() {
+//			
+//			public void onAction(ProceedActionEvent e) {
 //				String selectedStudyId = selectStudyWidget.getSelectedStudyId();
-				String selectedStudyId = "abc";
+//				uploadFilesWidget.setSelectedStudy(selectedStudyId); 
+//				uploadFilesWidget.refresh();
+//				setActiveChild(uploadFilesWidget);				
+//			}
+//			
+//		});
+		
+		HandlerRegistration b = selectStudyWidget.proceed.addHandler(new WidgetEventHandler() {
+			
+			public void onEvent(WidgetEvent e) {
+				String selectedStudyId = selectStudyWidget.getSelectedStudyId();
 				uploadFilesWidget.setSelectedStudy(selectedStudyId); 
 				uploadFilesWidget.refresh();
 				setActiveChild(uploadFilesWidget);				
+				
 			}
-			
 		});
-		
+
 		this.childWidgetEventHandlerRegistrations.add(b);
 		
 //		HandlerRegistration c = this.uploadFilesWidget.addProceedActionHandler(new ProceedActionHandler() {
