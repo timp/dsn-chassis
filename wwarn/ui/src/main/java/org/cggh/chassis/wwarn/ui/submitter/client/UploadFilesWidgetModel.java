@@ -47,17 +47,13 @@ public class UploadFilesWidgetModel extends AsyncWidgetModel {
 	
 
 	
-	
-	
-	
-	
-	@Override
-	public void init() {
-		super.init();
+	public UploadFilesWidgetModel() {
 		selectedStudyId.set(null);
 		studyEntryElement.set(null);
 		uploadFeedDoc.set(null);
 	}
+	
+	
 
 
 
