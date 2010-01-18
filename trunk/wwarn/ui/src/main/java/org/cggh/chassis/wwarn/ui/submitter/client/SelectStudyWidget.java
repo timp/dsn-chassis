@@ -1,7 +1,5 @@
 package org.cggh.chassis.wwarn.ui.submitter.client;
 
-import java.util.Map;
-
 import org.cggh.chassis.generic.async.client.Deferred;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
@@ -29,10 +27,6 @@ public class SelectStudyWidget
 	
 	
 	
-	private Map<String,String> studyLinksToTitles;
-
-
-
 	private SelectStudyWidgetController controller;
 
 	
@@ -133,6 +127,10 @@ public class SelectStudyWidget
 	public void setSelectedStudy(String selectedStudyId) {
 		model.setSelectedStudy(selectedStudyId);
 		
+	}
+
+	public SelectStudyWidgetModel getModel() {
+		return model;
 	}
 	
 }

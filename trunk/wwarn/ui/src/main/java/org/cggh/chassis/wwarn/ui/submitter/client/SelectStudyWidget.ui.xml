@@ -34,10 +34,10 @@
 				<g:FlowPanel>
 				<g:ListBox ui:field="studySelect" visibleItemCount='1'/>
 				</g:FlowPanel>
-           		<g:Button ui:field="cancelSubmissionButtonOne">
+           		<g:Button ui:field="cancelSubmissionButtonOne" stylePrimaryName="action">
            			<ui:msg>Cancel Submission</ui:msg>
            		</g:Button>
-           		<g:Button ui:field="proceedWithSelectedButton">
+           		<g:Button ui:field="proceedWithSelectedButton" stylePrimaryName="action">
            			<ui:msg>Proceed &gt;&gt;&gt;</ui:msg> &gt;
            		</g:Button>
         	<g:Label><ui:msg>... or </ui:msg></g:Label>

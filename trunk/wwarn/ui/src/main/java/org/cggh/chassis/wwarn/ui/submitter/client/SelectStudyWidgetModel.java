@@ -2,6 +2,7 @@ package org.cggh.chassis.wwarn.ui.submitter.client;
 
 import org.cggh.chassis.generic.miniatom.client.AtomHelper;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
+import org.cggh.chassis.generic.widget.client.ObservableProperty;
 
 import com.google.gwt.xml.client.Document;
 
@@ -20,21 +21,23 @@ public class SelectStudyWidgetModel extends AsyncWidgetModel {
 	public static class CreateEntryPendingStatus extends AsyncRequestPendingStatus {}
 	public static final CreateEntryPendingStatus STATUS_CREATE_STUDY_PENDING = new CreateEntryPendingStatus();
 	
-	private String selectedStudyId;
+	
 
-	private Document studyFeed;
+	public final ObservableProperty<Document> studyFeed = new ObservableProperty<Document>();
+	
+	public final ObservableProperty<String> selectedStudyId  = new ObservableProperty<String>();
 	
 	public Document getStudyFeed() {
-		return studyFeed;
+		return studyFeed.get();
 	}
 
 	/** return nullable id to next widget */
 	public String getSelectedStudyId() {
-		return selectedStudyId;
+		return selectedStudyId.get();
 	}
 
 	public void setStudyFeed(Document in) {
-		this.studyFeed = in;
+		this.studyFeed.set(in);
 	}
 	
 	public Integer getStudyCount() { 
@@ -42,10 +45,19 @@ public class SelectStudyWidgetModel extends AsyncWidgetModel {
 		if (studyFeed == null) 
 			return count;
 		else 
-			return AtomHelper.getEntries(studyFeed.getDocumentElement()).size();
+			return AtomHelper.getEntries(studyFeed.get().getDocumentElement()).size();
 	}
 
 	public void setSelectedStudy(String selectedStudyIdIn) {
-		selectedStudyId = selectedStudyIdIn;
+		if (selectedStudyIdIn != null && selectedStudyIdIn.equals(""))
+			selectedStudyId.set(null);
+		else
+			selectedStudyId.set(selectedStudyIdIn);
+	}
+
+	public boolean isValid() {
+		if (selectedStudyId.get() != null)
+			return true;
+		return false;
 	}
 }

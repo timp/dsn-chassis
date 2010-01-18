@@ -10,6 +10,8 @@ import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.StatusChangeEvent
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.StatusChangeHandler;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -78,12 +80,14 @@ public class SelectStudyWidgetRenderer extends ChassisWidgetRenderer<SelectStudy
 	protected void syncUI() {
 		super.syncUI();
 		errorPanel.setVisible(false);
+		proceedWithSelectedButton.setEnabled(false);
 	}
 
 	protected void syncUIWithStatus(Status status) {
 		//System.err.println(status);
 		if (status instanceof AsyncWidgetModel.InitialStatus) {
 			pendingPanel.setVisible(true);
+			proceedWithSelectedButton.setEnabled(false);
 		} else if (status instanceof SelectStudyWidgetModel.RetrieveFeedPendingStatus) {
 		} else if (status instanceof SelectStudyWidgetModel.StudiesRetrievedStatus) {
 			syncUiWithFeed();
@@ -102,11 +106,22 @@ public class SelectStudyWidgetRenderer extends ChassisWidgetRenderer<SelectStudy
 	
 	void syncUiWithFeed() { 
 		List<Element>  studyEntries = AtomHelper.getEntries(model.getStudyFeed().getDocumentElement());
+		studySelect.addItem("Please select an existing Study", null);
 		for (Element element : studyEntries) {
 			studySelect.addItem(AtomHelper.getTitle(element), AtomHelper.getId(element));
 		}
 	}
 	
+	@UiHandler("studySelect")
+	void handleStudySelection(ClickEvent e) { 
+		String value = studySelect.getValue(studySelect.getSelectedIndex());
+		
+		this.owner.getModel().setSelectedStudy(value);
+		if (this.owner.getModel().isValid()) { 
+			proceedWithSelectedButton.setEnabled(true);
+		}
+	}
+
 	@UiHandler("proceedWithSelectedButton")
 	void handleProceedWithSelectedButtonClick(ClickEvent e) {
 		this.owner.fireEvent(new ProceedActionEvent());
@@ -122,6 +137,21 @@ public class SelectStudyWidgetRenderer extends ChassisWidgetRenderer<SelectStudy
 		pendingPanel.setVisible(false);
 		errorPanel.add(new HTML(err));
 		errorPanel.setVisible(true);
+	}
+	@Override
+	public void registerHandlersForChildWidgetEvents() {
+		
+		ChangeHandler studySelectedChangeHandler = new ChangeHandler() {
+
+			public void onChange(ChangeEvent event) {
+				System.err.println("Change:" + event + " from " + proceedWithSelectedButton.isEnabled() + " to " + !proceedWithSelectedButton.isEnabled());
+				proceedWithSelectedButton.setEnabled(!proceedWithSelectedButton.isEnabled());
+			}
+
+		};
+		
+		studySelect.addChangeHandler(studySelectedChangeHandler);
+		
 	}
 
 }
