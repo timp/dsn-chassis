@@ -84,10 +84,10 @@
 
 
            	<g:FlowPanel ui:field="mainActionsPanel">
-           		<g:Button ui:field="cancelSubmissionButton">
+           		<g:Button ui:field="cancelSubmissionButton" stylePrimaryName="action">
            			<ui:msg>Cancel Submission</ui:msg>
            		</g:Button>
-           		<g:Button ui:field="createAndProceedButton">
+           		<g:Button ui:field="createAndProceedButton" stylePrimaryName="action">
            			<ui:msg>Create Study and Proceed &gt;&gt;&gt;</ui:msg> &gt;
            		</g:Button>
            	</g:FlowPanel>
