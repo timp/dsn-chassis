@@ -172,8 +172,9 @@ public class XQuestion extends Composite {
 			}
 			
 		}
-
+		
 		this.view.init(data, readOnly);
+
 	}
 	
 	

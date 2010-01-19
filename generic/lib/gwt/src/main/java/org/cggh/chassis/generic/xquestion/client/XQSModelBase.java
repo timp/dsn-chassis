@@ -3,6 +3,11 @@
  */
 package org.cggh.chassis.generic.xquestion.client;
 
+import java.util.List;
+import java.util.Set;
+
+import org.cggh.chassis.generic.log.client.Log;
+import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.xml.client.XML;
 import org.cggh.chassis.generic.xml.client.XMLNS;
 
@@ -17,8 +22,13 @@ public abstract class XQSModelBase {
 	
 	
 	
+	private Log log = LogFactory.getLog(XQSModelBase.class);
+
+	
+	
 	protected Element definition;
 	protected Element element;
+	protected List<Element> relevant;
 	protected String defaultPrefix;
 	protected String defaultNamespaceUri;
 	protected String elementName;
@@ -64,6 +74,8 @@ public abstract class XQSModelBase {
 			}
 			
 		}
+		
+		this.relevant = XML.getElementsByTagName(definition, XQS.ELEMENT_RELEVANT);
 		
 		if (this.parentQuestionnaire != null) {
 			this.defaultPrefix = parentQuestionnaire.getDefaultPrefix();
@@ -185,6 +197,66 @@ public abstract class XQSModelBase {
 		return this.elementType;
 	}
 
+
+	/**
+	 * @return
+	 */
+	public boolean isRelevant() {
+		log.enter("isRelevant");
+		
+		if (this.relevant.size() == 0) {
+			log.debug("no relevant clauses found, relevant by default");
+			return true; // relevant by default
+		}
+		
+		for (Element relevant : this.relevant) {
+			log.debug("relevant clauses found, testing relevance");
+			if (isRelevant(relevant)) return true; // return true if any tests are true
+		}
+		
+		log.leave();
+		return false;
+	}
+
+
+
+	/**
+	 * @param relevant
+	 * @return
+	 */
+	private boolean isRelevant(Element relevant) {
+		log.enter("isRelevant");
+		
+		String path = relevant.getAttribute(XQS.ATTR_PATH);
+		String comparator = relevant.getAttribute(XQS.ATTR_COMPARATOR);
+		String value = relevant.getAttribute(XQS.ATTR_VALUE);
+		
+		log.debug("path: "+path);
+		log.debug("comparator: "+comparator);
+		log.debug("value: "+value);
+		
+		Set<Element> elements = XML.getElementsBySimplePath(this.element, path);
+		log.debug("found "+elements.size()+" elements for path");
+		
+		if (comparator.equals(XQS.COMPARATOR_EQUALS)) {
+			
+			log.debug("comparing for equality");
+			for (Element e : elements) {
+				String content = XML.firstChildNodeValueOrNullIfNoChildren(e);
+				log.debug("testing content: "+content);
+				if (content != null && content.equals(value)) {
+					log.debug("found match");
+					return true;
+				}
+				else {
+					log.debug("no match");
+				}
+			}
+		}
+		
+		log.leave();
+		return false;
+	}
 
 
 

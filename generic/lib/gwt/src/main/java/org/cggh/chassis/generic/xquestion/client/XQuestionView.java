@@ -30,7 +30,6 @@ public class XQuestionView extends XQSViewBase {
 	static final String STYLENAME_REPEATABLEBUTTONPANEL = "repeatableButtonPanel";
 	private Log log = LogFactory.getLog(this.getClass());
 	private XFormControl formControl;
-	private XQuestionModel model;
 	private boolean repeatable = false;
 	private XQuestion owner;
 	private List<Element> viewElements = new ArrayList<Element>();
@@ -251,7 +250,7 @@ public class XQuestionView extends XQSViewBase {
 			throw new XQuestionFormatException("bad view definition, found more than one form control");
 		}
 		
-		this.formControl = XFormControl.create(formControlDefinition, this.model, this.owner, readOnly);
+		this.formControl = XFormControl.create(formControlDefinition, (XQuestionModel) this.model, this.owner, readOnly);
 		
 		if (this.formControl != null) {
 			

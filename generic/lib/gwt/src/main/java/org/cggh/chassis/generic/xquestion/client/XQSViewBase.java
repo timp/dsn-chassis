@@ -30,6 +30,7 @@ public abstract class XQSViewBase {
 	
 	protected Panel canvas;
 	protected Element definition;
+	protected XQSModelBase model;
 	protected List<Widget> widgets = new ArrayList<Widget>();
 	
 	
@@ -123,8 +124,10 @@ public abstract class XQSViewBase {
 	 */
 	protected void refresh() {
 		this.canvas.clear();
-		for (Widget w : widgets) {
-			this.canvas.add(w);
+		if (model.isRelevant()) {
+			for (Widget w : widgets) {
+				this.canvas.add(w);
+			}
 		}
 	}
 
