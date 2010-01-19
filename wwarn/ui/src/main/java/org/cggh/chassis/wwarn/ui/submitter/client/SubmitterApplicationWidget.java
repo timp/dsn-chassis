@@ -56,81 +56,52 @@ public class SubmitterApplicationWidget extends MultiWidget {
 	public void registerHandlersForChildWidgetEvents() {
 		super.registerHandlersForChildWidgetEvents();
 		
-//		HandlerRegistration a = this.submitterHomeWidget.addSubmitDataNavigationHandler(new SubmitDataNavigationHandler() {
-//			
-//			public void onNavigation(SubmitDataNavigationEvent e) {
-//				selectStudyWidget.refresh();
-//				setActiveChild(selectStudyWidget);
-//			}
-//			
-//		});
-
 		HandlerRegistration a = submitterHomeWidget.submitDataNavigationEventChannel.addHandler(new WidgetEventHandler() {
 			public void onEvent(WidgetEvent e) {
 				selectStudyWidget.refresh();
 				setActiveChild(selectStudyWidget);
 			}
 		});
-		
 		this.childWidgetEventHandlerRegistrations.add(a);
 		
-//		HandlerRegistration b = this.selectStudyWidget.addProceedActionHandler(new ProceedActionHandler() {
-//			
-//			public void onAction(ProceedActionEvent e) {
-//				String selectedStudyId = selectStudyWidget.getSelectedStudyId();
-//				uploadFilesWidget.setSelectedStudy(selectedStudyId); 
-//				uploadFilesWidget.refresh();
-//				setActiveChild(uploadFilesWidget);				
-//			}
-//			
-//		});
 		
 		HandlerRegistration b = selectStudyWidget.proceed.addHandler(new WidgetEventHandler() {
-			
 			public void onEvent(WidgetEvent e) {
 				String selectedStudyId = selectStudyWidget.getSelectedStudyId();
 				uploadFilesWidget.setSelectedStudy(selectedStudyId); 
 				uploadFilesWidget.refresh();
 				setActiveChild(uploadFilesWidget);				
-				
 			}
 		});
-
 		this.childWidgetEventHandlerRegistrations.add(b);
 		
-//		HandlerRegistration c = this.uploadFilesWidget.addProceedActionHandler(new ProceedActionHandler() {
-//			
-//			public void onAction(ProceedActionEvent e) {
-//				String selectedStudyId = uploadFilesWidget.getSelectedStudyId();
-//				submitWidget.setSelectedStudy(selectedStudyId);
-//				submitWidget.refresh();
-//				setActiveChild(submitWidget);				
-//			}
-//			
-//		});
+		HandlerRegistration b1 = selectStudyWidget.cancel.addHandler(new WidgetEventHandler() {
+			public void onEvent(WidgetEvent e) {
+				uploadFilesWidget.setSelectedStudy(null); 
+				setActiveChild(submitterHomeWidget);				
+			}
+		});
+		this.childWidgetEventHandlerRegistrations.add(b1);
+		
+		
 		
 		HandlerRegistration c = uploadFilesWidget.proceed.addHandler(new WidgetEventHandler() {
-			
 			public void onEvent(WidgetEvent e) {
 				String selectedStudyId = uploadFilesWidget.getSelectedStudyId();
 				submitWidget.setSelectedStudy(selectedStudyId);
 				submitWidget.refresh();
 				setActiveChild(submitWidget);				
 			}
-			
 		});
-		
 		this.childWidgetEventHandlerRegistrations.add(c);
 		
+		
 		HandlerRegistration c1 = this.uploadFilesWidget.addStepBackNavigationHandler(new StepBackNavigationHandler() {
-			
 			public void onNavigation(StepBackNavigationEvent e) {
 				selectStudyWidget.refresh();
 				setActiveChild(selectStudyWidget);
 			}
-
 		});
-
 		this.childWidgetEventHandlerRegistrations.add(c1);
 
 		HandlerRegistration d = this.submitWidget.addProceedActionHandler(new ProceedActionHandler() {
