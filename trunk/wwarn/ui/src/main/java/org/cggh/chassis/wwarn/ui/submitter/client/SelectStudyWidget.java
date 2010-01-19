@@ -106,7 +106,7 @@ public class SelectStudyWidget
 		 */
 		@Override
 		public String createMnemonic() {
-			return model.getSelectedStudyId();
+			return "studyId=" + model.getSelectedStudyId();
 		}
 
 		/* (non-Javadoc)
@@ -125,14 +125,15 @@ public class SelectStudyWidget
 			log.debug("found studyId: "+studyId);
 			
 			if (studyId != null) {
-				
-				log.debug("set selected study id");
+				studyId = studyId.substring(8);
+				log.debug("set selected study id to:" + studyId);
 				setSelectedStudy(studyId);
 				
 				log.debug("refresh and call back");
 				deferredMemory = refreshAndCallback().adapt(new Function<ChassisWidget, WidgetMemory>() {
 
 					public WidgetMemory apply(ChassisWidget in) {
+						refresh();
 						return Memory.this;
 					}
 					
