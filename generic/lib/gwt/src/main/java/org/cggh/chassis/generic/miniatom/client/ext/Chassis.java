@@ -41,5 +41,19 @@ public class Chassis {
 	public static final String QUERYPARAMVALUE_NO = "no";
 	
 	
-
+    public static enum Module { 
+    	CLINICAL     ("clinical", "Clinical"), 
+    	MOLECULAR    ("molecular", "Molecular"), 
+    	INVITRO      ("invitro", "<i>in vitro</i>"),
+    	PHARMACOLOGY ("pharmacology", "Pharmacology")
+    	;
+    	private String name;
+    	private String htmlDisplay;
+    	private Module(String name, String htmlDisplay) {
+    		this.name = name;
+    		this.htmlDisplay = htmlDisplay;    		
+    	}
+    	public String toString(){ return htmlDisplay;}
+    	public String getName() {return name;}
+    }
 }
