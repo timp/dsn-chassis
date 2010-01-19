@@ -38,7 +38,7 @@ Within each phase, there may also be minor milestones, such as first, second or 
 
 In the [http://code.google.com/p/dsn-chassis/issues/list issues list], labels are used to indicate the scope of a story or defect. The template:
 
-  * [product]-[version number]-[phase]-[release]
+  * `[product]-[version number]-[phase]-[release]`
 
 is used, e.g. `WWARN-1.0-ALPHA-3` denotes the third alpha release of the WWARN product version 1.0.
 
