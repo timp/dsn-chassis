@@ -4,7 +4,14 @@
 package org.cggh.chassis.generic.xml.client;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
+import org.cggh.chassis.generic.log.client.Log;
+import org.cggh.chassis.generic.log.client.LogFactory;
+
+
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;
 import com.google.gwt.xml.client.Node;
@@ -18,6 +25,9 @@ import com.google.gwt.xml.client.NodeList;
  */
 public class XML {
 
+	
+	
+	private static Log log = LogFactory.getLog(XML.class);
 
 	
 	public static String getLocalName(Element e) {
@@ -497,8 +507,154 @@ public class XML {
 	}
 
 
+	
+	
+	public static List<Element> getChildrenByTagName(Element parent, String tagName) {
+		List<Element> children = new ArrayList<Element>();
+		for (Element child : XML.elements(parent.getChildNodes())) {
+			if (child.getTagName().equals(tagName)) {
+				children.add(child);
+			}
+		}
+		return children;
+	}
 
 
+	
+	
+	public static Element getFirstChildByTagName(Element parent, String tagName) {
+		List<Element> children = getChildrenByTagName(parent, tagName);
+		return children.size() > 0 ? children.get(0) : null;
+	}
+
+
+	
+	
+	public static void getElementsBySimplePathSegment(Element in, String pathSegment, Set<Element> out) {
+		log.enter("getElementsBySimplePathSegment");
+
+		log.debug("context element tagName:" + in.getTagName());
+		log.debug("path segment: "+pathSegment);
+		
+		if (pathSegment == null) {
+			// TODO
+		}
+		else if (pathSegment.equals("")) {
+			// TODO
+		}
+		else if (pathSegment.equals("..")) {
+			Node parent = in.getParentNode();
+			if (parent != null && parent instanceof Element) {
+				out.add((Element)parent);
+			}
+		}
+		else if (pathSegment.equals("*")) {
+			out.addAll(XML.elements(in.getChildNodes()));
+		}
+		else {
+			out.addAll(XML.getChildrenByTagName(in, pathSegment));
+		}
+		
+		log.debug("output set size: "+out.size());
+		
+		log.leave();
+	}
+	
+	
+	
+	public static void getElementsBySimplePathSegment(Set<Element> in, String pathSegment, Set<Element> out) {
+		for (Element e : in) {
+			getElementsBySimplePathSegment(e, pathSegment, out);
+		}
+	}
+	
+	
+	
+	public static Set<Element> getElementsBySimplePathSegment(Set<Element> in, String pathSegment) {
+		Set<Element> out = new HashSet<Element>();
+		getElementsBySimplePathSegment(in, pathSegment, out);
+		return out;
+	}
+	
+	
+	
+	public static Set<Element> getElementsBySimplePath(Element context, String simplePath) {
+		log.enter("getElementsBySimplePath(Element, String)");
+
+		Set<Element> out;
+		
+		if (simplePath.startsWith("/")) {
+
+			out = getElementsBySimplePath(context.getOwnerDocument(), simplePath);
+
+		}
+		else {
+			
+			Set<Element> results = new HashSet<Element>();
+			results.add(context);
+			
+			String[] segments = simplePath.split("/");
+			
+			for (String segment : segments) {
+				
+				log.debug("applying path segment: "+segment);
+				
+				results = getElementsBySimplePathSegment(results, segment);
+				
+				log.debug("found "+results.size()+" results");
+			}
+			
+			out = results;
+
+		}
+		
+		log.leave();
+		return out;
+	}
+	
+	
+	
+	public static Set<Element> getElementsBySimplePath(Document context, String simplePath) {
+		log.enter("getElementsBySimplePath(Document, String)");
+		
+		Set<Element> results = new HashSet<Element>();
+		
+		if (simplePath.startsWith("/")) {
+			simplePath = simplePath.substring(1); // chop of leading slash to avoid empty first segment
+		}
+		
+		log.debug("path:"+simplePath);
+		
+		String[] segments = simplePath.split("/");
+		
+		for (int i=0; i<segments.length; i++) {
+			String segment = segments[i];
+			log.debug("i: "+i+"; segment: "+segment);
+			if (i == 0) {
+				// handle initial segment in a special way, matching root element
+				if (segment == null) {
+					// TODO
+				}
+				else if (segment.equals("")) {
+					// TODO
+				}
+				else if (segment.equals("*")) {
+					results.add(context.getDocumentElement());
+				}
+				else {
+					Element root = context.getDocumentElement();
+					if (root.getTagName().equals(segment)) {
+						results.add(root);
+					}
+				}
+			}
+			else results = getElementsBySimplePathSegment(results, segment);
+		}
+		
+		log.leave();
+		return results;
+	}
+	
 
 
 }
