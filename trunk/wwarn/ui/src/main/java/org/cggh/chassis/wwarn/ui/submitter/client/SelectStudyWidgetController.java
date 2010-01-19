@@ -2,6 +2,7 @@ package org.cggh.chassis.wwarn.ui.submitter.client;
 
 
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.cggh.chassis.generic.async.client.Deferred;
@@ -89,9 +90,8 @@ public class SelectStudyWidgetController {
 
 
 	private Deferred<Document> createStudy(String studyTitle, 
-			String studySummary, String otherSubmitters) {
+			String studySummary, String otherSubmitters, ArrayList<String> modules) {
 		
-		// TODO check if we should be using ChassisHelper.createStudy
 		Document studyEntryDoc = AtomHelper.createEntryDoc();
 		Element studyEntryElement = studyEntryDoc.getDocumentElement();
 		AtomHelper.addAuthor(studyEntryElement, Config.get(Config.USER_EMAIL));
@@ -104,18 +104,16 @@ public class SelectStudyWidgetController {
 		for (int i = 0; i < emails.length; i++) { 
 			AtomHelper.addAuthor(studyEntryElement, emails[i]);
 		}
-		// TODO get modules 
-		String[] modules = new String[] {"clinical", "invitro"};
 		Element studyElement = ChassisHelper.createStudy();
-		ChassisHelper.setModules(studyElement, Arrays.asList(modules));
+		ChassisHelper.setModules(studyElement, modules);
 		studyEntryElement.appendChild(studyElement); 
 		
 		return Atom.postEntry(Config.get(Config.COLLECTION_STUDIES_URL), studyEntryDoc);
 	}
 
 
-	public void createStudyAndProceed(String studyTitle, String studySummary, String otherSubmitters) {
-		Deferred<Document> deferredStudyEntrydoc = createStudy(studyTitle, studySummary, otherSubmitters);
+	public void createStudyAndProceed(String studyTitle, String studySummary, String otherSubmitters, ArrayList<String> modules) {
+		Deferred<Document> deferredStudyEntrydoc = createStudy(studyTitle, studySummary, otherSubmitters, modules);
 		deferredStudyEntrydoc.addCallback(new Function<Document, Document>() {
 			public Document apply(Document in) {
 				model.setSelectedStudy(AtomHelper.getId(in.getDocumentElement()));
