@@ -1,5 +1,7 @@
 package org.cggh.chassis.wwarn.ui.submitter.client;
 
+import org.cggh.chassis.generic.log.client.Log;
+import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.MultiWidget;
 import org.cggh.chassis.generic.widget.client.WidgetEvent;
 import org.cggh.chassis.generic.widget.client.WidgetEventHandler;
@@ -9,7 +11,7 @@ import com.google.gwt.event.shared.HandlerRegistration;
 public class SubmitterApplicationWidget extends MultiWidget {
 
 	
-	
+	private Log log = LogFactory.getLog(SubmitterApplicationWidget.class);
 	
 	private SubmitterHomeWidget submitterHomeWidget;
 	private SelectStudyWidget selectStudyWidget;
@@ -22,11 +24,13 @@ public class SubmitterApplicationWidget extends MultiWidget {
 	
 	@Override
 	public void renderMainChildren() {
+		log.enter("renderMainChildren");
 		
 		this.submitterHomeWidget = new SubmitterHomeWidget();
 		this.mainChildren.add(this.submitterHomeWidget);
 
 		this.selectStudyWidget = new SelectStudyWidget();
+		this.selectStudyWidget.refresh();
 		this.mainChildren.add(this.selectStudyWidget);
 		
 		this.uploadFilesWidget = new UploadFilesWidget();
@@ -40,6 +44,8 @@ public class SubmitterApplicationWidget extends MultiWidget {
 		
 		this.defaultChild = this.submitterHomeWidget;
 		this.submitterHomeWidget.refresh();
+
+		log.leave();
 
 	}
 
@@ -119,6 +125,7 @@ public class SubmitterApplicationWidget extends MultiWidget {
 		HandlerRegistration c1 = this.uploadFilesWidget.addStepBackNavigationHandler(new StepBackNavigationHandler() {
 			
 			public void onNavigation(StepBackNavigationEvent e) {
+				selectStudyWidget.refresh();
 				setActiveChild(selectStudyWidget);
 			}
 
