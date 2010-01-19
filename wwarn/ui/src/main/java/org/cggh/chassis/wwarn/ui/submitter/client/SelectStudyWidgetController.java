@@ -66,6 +66,10 @@ public class SelectStudyWidgetController {
 		owner.getMemory().memorise();
 		owner.proceed.fireEvent();		
 	}
+	public void stepBack() {
+		model.setSelectedStudy(null);
+		owner.cancel.fireEvent();
+	}
 	
 	private class RetrieveStudiesCallback implements Function<Document, Document> {
 
