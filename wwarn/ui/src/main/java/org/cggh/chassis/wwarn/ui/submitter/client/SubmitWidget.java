@@ -193,4 +193,20 @@ public class SubmitWidget extends DelegatingWidget<SubmitWidgetModel, SubmitWidg
 
 
 
+	/**
+	 * @return
+	 */
+	public String getSubmissionId() {
+		log.enter("getSubmissionId");
+		
+		String submissionId = model.getSubmissionId();
+		
+		log.leave();
+		return submissionId;
+	}
+
+
+
+
+
 }

@@ -170,6 +170,7 @@
 				<question id="startDate">
 					<model>
 						<element name="startDate" type="date" />
+						<relevant path="/entry/content/study/module" comparator="eq" value="in vitro"/>
 					</model>
 					<view>
 						<input>
@@ -182,6 +183,7 @@
 				<question id="endDate">
 					<model>
 						<element name="endDate" type="date" />
+						<relevant path="../../module" comparator="eq" value="Molecular"/>
 					</model>
 					<view>
 						<input>
