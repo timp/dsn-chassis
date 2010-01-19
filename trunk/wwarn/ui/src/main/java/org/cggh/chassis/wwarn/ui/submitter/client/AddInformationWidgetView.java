@@ -77,4 +77,18 @@ public class AddInformationWidgetView {
 
 
 
+	/**
+	 * @param questionnaire
+	 */
+	public void setQuestionnaire(XQuestionnaire questionnaire) {
+		log.enter("setQuestionnaire");
+		
+		studyQuestionnaireContainer.setWidget(questionnaire);
+
+		log.leave();
+	}
+
+
+
+
 }

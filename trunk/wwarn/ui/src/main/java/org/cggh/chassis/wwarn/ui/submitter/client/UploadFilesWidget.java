@@ -89,6 +89,7 @@ public class UploadFilesWidget extends DelegatingWidget<UploadFilesWidgetModel, 
 		// delegate to controller
 		Deferred<ChassisWidget> deferredSelf = this.controller.refreshAndCallback();
 		
+		log.leave();
 		return deferredSelf;
 	}
 

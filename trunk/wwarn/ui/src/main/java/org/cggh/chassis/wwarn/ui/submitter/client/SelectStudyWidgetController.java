@@ -105,7 +105,14 @@ public class SelectStudyWidgetController {
 		Element studyElement = ChassisHelper.createStudy();
 		
 		ChassisHelper.setModules(studyElement, modules);
-		studyEntryElement.appendChild(studyElement); 
+		
+		// this line puts the chassis:study element as a direct child of the
+		// atom:entry element...
+//		studyEntryElement.appendChild(studyElement); 
+
+		// instead, we want to put the chassis:study element as a child of
+		// a atom:content element, which is a child of the atom:entry element...
+		AtomHelper.setContent(studyEntryElement, studyElement);
 		
 		return Atom.postEntry(Config.get(Config.COLLECTION_STUDIES_URL), studyEntryDoc);
 	}
@@ -117,6 +124,7 @@ public class SelectStudyWidgetController {
 			public Document apply(Document in) {
 				model.setSelectedStudy(AtomHelper.getId(in.getDocumentElement()));
 				model.setStatus(SelectStudyWidgetModel.STATUS_STUDY_CREATED);
+				owner.getMemory().memorise();
 				owner.proceed.fireEvent();
 				return in;
 		}

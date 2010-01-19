@@ -39,7 +39,7 @@
 	        <g:HTMLPanel ui:field="backToSelectStudyPanel">
 	        	<p>
 	                <g:Anchor ui:field="backToSelectStudyLink">
-	                    &lt;&lt;&lt; <ui:msg>back to select study</ui:msg>
+	                    &lt;&lt; <ui:msg>back to select study</ui:msg>
 	                </g:Anchor>
 	        	</p>
 	        </g:HTMLPanel>
