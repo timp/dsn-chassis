@@ -173,7 +173,10 @@ public class AddInformationWidgetController {
 		
 		model.setStatus(AddInformationWidgetModel.STATUS_RETRIEVE_QUESTIONNAIRE_PENDING);
 		
-		Deferred<XQuestionnaire> deferredQuestionnaire = XQuestionnaire.load(Config.get(Config.QUESTIONNAIRE_STUDY_URL));
+		String url = Config.get(Config.QUESTIONNAIRE_STUDY_URL);
+		log.debug("url: "+url);
+		
+		Deferred<XQuestionnaire> deferredQuestionnaire = XQuestionnaire.load(url);
 		
 		log.leave();
 		return deferredQuestionnaire;
@@ -186,8 +189,8 @@ public class AddInformationWidgetController {
 
 		public XQuestionnaire apply(XQuestionnaire questionnaire) {
 			
-			// here we break the MVC cycle...
-			view.studyQuestionnaireContainer.setWidget(questionnaire);
+			// here we break the MVC cycle, by manipulating the view directly...
+			view.setQuestionnaire(questionnaire);
 			
 			Element studyElement = ChassisHelper.getStudy(AtomHelper.getContent(model.getStudyEntryElement()));
 			questionnaire.init(studyElement);

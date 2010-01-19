@@ -77,6 +77,14 @@ public class SelectStudyWidget
 
 
 	
+	@Override
+	public Deferred<ChassisWidget> refreshAndCallback() {
+		// TODO
+		return null;
+	}
+	
+	
+	
 	
 	@Override
 	public void refresh() {
@@ -116,7 +124,7 @@ public class SelectStudyWidget
 		public Deferred<WidgetMemory> remember(String mnemonic) {
 			log.enter("remember");
 			
-			Deferred<WidgetMemory> deferredMemory;
+			final Deferred<WidgetMemory> deferredMemory;
 			
 			model.setStatus(AsyncWidgetModel.STATUS_INITIAL);
 			
@@ -130,14 +138,17 @@ public class SelectStudyWidget
 				setSelectedStudy(studyId);
 				
 				log.debug("refresh and call back");
-				deferredMemory = refreshAndCallback().adapt(new Function<ChassisWidget, WidgetMemory>() {
+				Deferred<ChassisWidget> deferredWidget = refreshAndCallback();
+				
+				deferredMemory = deferredWidget.adapt(new Function<ChassisWidget, WidgetMemory>() {
 
 					public WidgetMemory apply(ChassisWidget in) {
-						refresh();
+//						refresh();
 						return Memory.this;
 					}
 					
 				});
+
 			}
 			
 			else {
