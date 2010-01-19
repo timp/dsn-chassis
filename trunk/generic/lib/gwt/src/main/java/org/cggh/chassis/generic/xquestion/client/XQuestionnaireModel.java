@@ -5,6 +5,8 @@ package org.cggh.chassis.generic.xquestion.client;
 
 
 
+import org.cggh.chassis.generic.xml.client.XML;
+
 import com.google.gwt.xml.client.Element;
 
 /**
@@ -44,7 +46,9 @@ public class XQuestionnaireModel extends XQSModelBase {
 	 * @param model
 	 */
 	public void addChild(XQSModelBase child) {
-		this.element.appendChild(child.getElement());
+		if ( !XML.elements(element.getChildNodes()).contains(child.getElement()) ) {
+			this.element.appendChild(child.getElement());
+		}
 	}
 
 
@@ -57,7 +61,9 @@ public class XQuestionnaireModel extends XQSModelBase {
 	 */
 	public void addChild(XQuestionModel child, XQuestionModel previousSibling) {
 		if (previousSibling != null) {
-			this.element.insertBefore(child.getElement(), previousSibling.getElement().getNextSibling());
+			if ( !XML.elements(element.getChildNodes()).contains(child.getElement()) ) {
+				this.element.insertBefore(child.getElement(), previousSibling.getElement().getNextSibling());
+			}
 		}
 		else {
 			this.addChild(child);

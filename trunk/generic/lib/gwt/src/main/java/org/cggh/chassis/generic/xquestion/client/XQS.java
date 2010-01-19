@@ -54,6 +54,11 @@ public class XQS {
 	public static final String TYPE_DATE = "date";
 	public static final String TYPE_GYEAR = "gYear";
 	public static final String READONLY_HIDE = "hide";
+	public static final String ELEMENT_RELEVANT = "relevant";
+	public static final String ATTR_PATH = "path";
+	public static final String ATTR_COMPARATOR = "comparator";
+	public static final String ATTR_VALUE = "value";
+	public static final String COMPARATOR_EQUALS = "eq";
 
 
 }

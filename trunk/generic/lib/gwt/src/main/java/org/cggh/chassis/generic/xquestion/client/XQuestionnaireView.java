@@ -43,6 +43,7 @@ public class XQuestionnaireView extends XQSViewBase {
 
 		this.definition = definition;
 		this.owner = owner;
+		this.model = owner.getModel();
 		this.canvas = new FlowPanel();
 		this.canvas.addStyleName(STYLENAME);
 		this.repeatable = owner.isRepeatable();
