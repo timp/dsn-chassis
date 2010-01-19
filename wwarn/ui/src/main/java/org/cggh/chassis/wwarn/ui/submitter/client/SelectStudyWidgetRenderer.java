@@ -1,8 +1,10 @@
 package org.cggh.chassis.wwarn.ui.submitter.client;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.cggh.chassis.generic.miniatom.client.AtomHelper;
+import org.cggh.chassis.generic.miniatom.client.ext.Chassis.Module;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 import org.cggh.chassis.generic.widget.client.ChassisWidgetRenderer;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.Status;
@@ -150,9 +152,21 @@ public class SelectStudyWidgetRenderer extends ChassisWidgetRenderer<SelectStudy
 	
 	@UiHandler("createAndProceedButton")
 	void handleCreateAndProceedButtonClick(ClickEvent e) {
+		ArrayList<String> modules = new ArrayList<String>();
+		if (clinical.getValue())
+			modules.add(Module.CLINICAL.toString());
+		if (molecular.getValue())
+			modules.add(Module.MOLECULAR.toString());
+		if (invitro.getValue())
+			modules.add(Module.INVITRO.toString());
+		if (pharmacology.getValue())
+			modules.add(Module.PHARMACOLOGY.toString());
 		controller.createStudyAndProceed(studyTitle.getValue(), 
-				studySummary.getValue(), otherSubmitters.getValue());
+				studySummary.getValue(), otherSubmitters.getValue(), modules);
 	}
+	
+	
+	
 	
 	public void error(String err) {
 		createStudyInteractionPanel.setVisible(false);
