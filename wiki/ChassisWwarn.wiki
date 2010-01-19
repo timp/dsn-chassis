@@ -1,42 +1,15 @@
 #summary home page for the Chassis/WWARN product.
 
 ----
-= Public Releases =
+= Release Schedule =
 
-== Chassis/WWARN 0.1 Release (limited functionality public release, WHO data upload only) ==
+== Chassis/WWARN 1.0 Release (first public release) ==
 
-Due: Nov 2009
-
-Status: pending
-
-Scope: TBD
-
-== Chassis/WWARN 1.0 Release (first public release, any data) ==
-
-Due: Jan 2010
+Due: March 2010
 
 Status: pending
 
-Scope: see [http://dsn-chassis.googlecode.com/svn/tags/wwarn/docs/draft-6/content/requirements/1.0/index.html Chassis/WWARN 1.0 User Requirements Specification Draft 6]
-
-----
-= Milestones =
-
-== Envisioning ==
-
-Due: 11 Aug 2009
-
-Status: complete
-
-Scope: see ChassisWwarnEnvisioning
-
-== First development iteration (0.1-alpha-1) ==
-
-Due: 28 Aug 2009
-
-Status: pending
-
-Scope: see ChassisWwarnIterationOne
+[http://code.google.com/p/dsn-chassis/issues/list?can=2&q=label:wwarn-1.0&sort=milestone&colspec=ID%20Type%20Status%20Priority%20Milestone%20Owner%20Summary Scope] 
 
 ----
 = Meeting Notes =
