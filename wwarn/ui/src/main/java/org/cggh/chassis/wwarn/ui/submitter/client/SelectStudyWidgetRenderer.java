@@ -3,6 +3,8 @@ package org.cggh.chassis.wwarn.ui.submitter.client;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.cggh.chassis.generic.log.client.Log;
+import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.miniatom.client.AtomHelper;
 import org.cggh.chassis.generic.miniatom.client.ext.Chassis.Module;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
@@ -35,6 +37,8 @@ import com.google.gwt.xml.client.Element;
  */
 public class SelectStudyWidgetRenderer extends ChassisWidgetRenderer<SelectStudyWidgetModel> {
 
+	private Log log = LogFactory.getLog(SelectStudyWidgetRenderer.class);
+	
 	@UiTemplate("SelectStudyWidget.ui.xml")
 	interface SelectStudyWidgetRendererUiBinder extends
 			UiBinder<HTMLPanel, SelectStudyWidgetRenderer> {
@@ -103,7 +107,7 @@ public class SelectStudyWidgetRenderer extends ChassisWidgetRenderer<SelectStudy
 	}
 
 	protected void syncUIWithStatus(Status status) {
-		//System.err.println(status);
+		log.enter("syncUIWithStatus");
 		if (status instanceof AsyncWidgetModel.InitialStatus) {
 			pendingPanel.setVisible(true);
 			proceedWithSelectedButton.setEnabled(false);
@@ -123,32 +127,40 @@ public class SelectStudyWidgetRenderer extends ChassisWidgetRenderer<SelectStudy
 		} else { 
 			error("Unexpected status: " + status);
 		}
-		
+		log.leave();
 	}
 	
-	void syncUiWithFeed() { 
+	/** Clear and re-initialise, setting selected id. */
+	void syncUiWithFeed() {
+		log.enter("syncUiWithFeed");
 		List<Element>  studyEntries = AtomHelper.getEntries(model.getStudyFeed().getDocumentElement());
+		studySelect.clear();
 		studySelect.addItem("Please select an existing Study", null);
 		int index = 1, selectedIndex = 0;
 		for (Element element : studyEntries) {
 			String id = AtomHelper.getId(element);
+			log.debug("id:"+id);
 			studySelect.addItem(AtomHelper.getTitle(element), id);
-			if(model.getSelectedStudyId() != null && model.getSelectedStudyId().equals(id)) { 
+			if(model.getSelectedStudyId() != null && model.getSelectedStudyId().equals(id)) {
 				selectedIndex = index;
+				log.debug("hit");
 			}
 			index++;
 		}
+		log.debug("selectedIndex" + selectedIndex);
 		studySelect.setItemSelected(selectedIndex, true);
 		proceedWithSelectedButton.setEnabled(this.owner.getModel().isValid());
+		log.leave();
 	}
 	
 	@UiHandler("studySelect")
 	void handleStudySelection(ClickEvent e) {
 		String value = null;
-		if (studySelect != null ) {
+		if (studySelect.getSelectedIndex() != -1 ) {
 			value = studySelect.getValue(studySelect.getSelectedIndex());
 		}
 		this.owner.getModel().setSelectedStudy(value);
+		this.owner.getMemory().memorise();
 		proceedWithSelectedButton.setEnabled(this.owner.getModel().isValid());
 	}
 
@@ -175,12 +187,6 @@ public class SelectStudyWidgetRenderer extends ChassisWidgetRenderer<SelectStudy
 	
 	
 	
-	public void error(String err) {
-		createStudyInteractionPanel.setVisible(false);
-		pendingPanel.setVisible(false);
-		errorPanel.add(new HTML(err));
-		errorPanel.setVisible(true);
-	}
 	@Override
 	public void registerHandlersForChildWidgetEvents() {
 		
@@ -195,4 +201,12 @@ public class SelectStudyWidgetRenderer extends ChassisWidgetRenderer<SelectStudy
 		
 	}
 
+	public void error(String err) {
+		createStudyInteractionPanel.setVisible(false);
+		pendingPanel.setVisible(false);
+		errorPanel.add(new HTML(err));
+		errorPanel.setVisible(true);
+	}
+	
+	
 }
