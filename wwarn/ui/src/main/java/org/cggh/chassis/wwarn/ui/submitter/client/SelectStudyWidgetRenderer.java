@@ -161,13 +161,13 @@ public class SelectStudyWidgetRenderer extends ChassisWidgetRenderer<SelectStudy
 	void handleCreateAndProceedButtonClick(ClickEvent e) {
 		ArrayList<String> modules = new ArrayList<String>();
 		if (clinical.getValue())
-			modules.add(Module.CLINICAL.toString());
+			modules.add(Module.CLINICAL.getName());
 		if (molecular.getValue())
-			modules.add(Module.MOLECULAR.toString());
+			modules.add(Module.MOLECULAR.getName());
 		if (invitro.getValue())
-			modules.add(Module.INVITRO.toString());
+			modules.add(Module.INVITRO.getName());
 		if (pharmacology.getValue())
-			modules.add(Module.PHARMACOLOGY.toString());
+			modules.add(Module.PHARMACOLOGY.getName());
 		controller.createStudyAndProceed(studyTitle.getValue(), 
 				studySummary.getValue(), otherSubmitters.getValue(), modules);
 	}
