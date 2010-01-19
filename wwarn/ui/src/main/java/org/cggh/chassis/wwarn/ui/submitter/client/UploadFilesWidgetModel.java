@@ -4,11 +4,8 @@
 package org.cggh.chassis.wwarn.ui.submitter.client;
 
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
-import org.cggh.chassis.generic.widget.client.ModelChangeEvent;
-import org.cggh.chassis.generic.widget.client.ModelChangeHandler;
 import org.cggh.chassis.generic.widget.client.ObservableProperty;
 
-import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;
 
