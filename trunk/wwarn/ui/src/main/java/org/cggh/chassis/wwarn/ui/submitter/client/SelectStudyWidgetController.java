@@ -3,7 +3,6 @@ package org.cggh.chassis.wwarn.ui.submitter.client;
 
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import org.cggh.chassis.generic.async.client.Deferred;
 import org.cggh.chassis.generic.async.client.Function;
