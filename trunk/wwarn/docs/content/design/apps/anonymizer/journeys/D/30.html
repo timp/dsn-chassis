@@ -1,0 +1,81 @@
+<html>
+
+	<body>
+	
+		<div style="text-align: right;">
+		alice@example.org<br/>
+		<a href="#">logout</a>
+		</div>
+		
+		<a href="10.html">Home</a> &gt; <a href="20.html">Unsafe Files without Anonymized Versions</a> &gt; Upload Anonymized Version
+	
+		<h1>Upload Anonymized Version</h1>
+		
+		<form action="#">
+		
+		<p>The following file has been selected:
+		</p>
+		
+		<table style="border: 0; text-align: left;">
+			<tr>
+				<th>File name</th><th style="padding-left: 10px;">Submission date</th><th style="padding-left: 10px;">Assertion date</th>
+			</tr>
+			<tr>
+				<td>fileName.doc</td><td style="padding-left: 10px;">2010-12-12 16:00</td><td style="padding-left: 10px;">2010-12-14 16:00</td>
+			</tr>
+		</table>
+		
+		<!-- This link is only available if there are other files available. -->
+		
+		<p>
+			&laquo;&nbsp;<a href="20.html">Select a Different File</a>
+		</p>
+		
+		<h2>Upload an Anonymized Version of the File</h2>
+		
+		<h3>File</h3>
+		
+		<p>Please select the file to upload from your computer.</p>
+		
+		<input type="file" />
+		
+		<h3>Summary</h3>
+		
+		<p>Please provide a short description of the file.</p>
+		
+		<textarea rows="2" cols="40" style="width: 600px;"></textarea>
+		<p>E.g., <i>This data file contains clinical data from ... TODO example</i></p>
+
+		<h3>File Type</h3>
+		<p>Please select the type of file you are uploading.</p>
+		<p>
+
+		  <select>
+			<option>Data File - the file contains original data</option>
+			<option>Data Dictionary - the file contains definitions of fields/variables used in other data files</option>
+			<option>Protocol - the file contains a description of a protocol used in the study</option>
+			<option>Other</option>
+		  </select>
+		</p>
+
+		<p style="color: red; font-weight: bold;">Note: This action cannot be undone. If you make a mistake, please contact the Systems Administrator.
+		</p>
+
+		
+		<p>
+			<button onclick="document.location.href='20.html'">&laquo; Cancel Upload</button> <button onclick="document.location.href='40.html'">Upload File &raquo;</button> &rarr;
+		</p>
+		
+		</form>
+
+		<p>Other Navigation:
+			<ul>
+				<li><a href="20.html">List Unsafe Files</a></li>
+				<li><a href="10.html">Return to the Home Page</a></li>
+			</ul>
+		</p>
+	
+	</body>
+
+
+</html>

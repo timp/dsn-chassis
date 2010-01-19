@@ -1,0 +1,44 @@
+<html>
+
+	<body>
+	
+		<div style="text-align: right;">
+		alice@example.org<br/>
+		<a href="#">logout</a>
+		</div>
+		
+		<a href="10.html">Home</a> &gt; Unsafe Files without Anonymized Versions
+	
+		<h1>Unsafe Files without Anonymized Versions</h1>
+		
+		<form action="#">
+		
+		<!-- No links on file names because I think download is an action, not a navigation, 
+		and according to our Style-guide rules, actions should be buttons (unsafe) and not links (safe). -->
+		
+		<!-- Luxury item: Ability to sort by columns by clicking on the column header links, 
+		which toggles the order of each column between ascending, descending, and off. -->
+		
+		<table style="text-align: left;">
+			<tr>
+				<th><a href="#">File name</a></th><th style="padding-left: 10px;"><a href="#">Submission date</a></th><th style="padding-left: 10px;">&or; <a href="#">Assertion date</a></th>
+			</tr>
+			<tr>
+				<td>fileName.doc</td><td style="padding-left: 10px;">2010-12-12 16:00</td><td style="padding-left: 10px;">2010-12-14 16:00</td><td><button onclick="document.location.href='30.html'">&uArr; Upload Anonymized Version</button> &rarr;</td>
+			</tr>
+			<tr>
+				<td>fileName2.doc</td><td style="padding-left: 10px;">2010-12-12 16:02</td><td style="padding-left: 10px;">2010-12-14 16:02</td><td><button>&uArr; Upload Anonymized Version</button></td>
+			</tr>
+		</table>
+		
+		</form>
+		<p>Other Navigation:
+			<ul>
+				<li><a href="10.html">Return to the Home Page</a></li>
+			</ul>
+		</p>
+	
+	</body>
+
+
+</html>
