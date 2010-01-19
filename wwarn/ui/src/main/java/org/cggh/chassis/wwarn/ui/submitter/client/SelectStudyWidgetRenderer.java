@@ -46,7 +46,7 @@ public class SelectStudyWidgetRenderer extends ChassisWidgetRenderer<SelectStudy
 	@UiField FlowPanel mainActionsPanel;
 	@UiField FlowPanel errorPanel;
 	@UiField HTMLPanel pendingPanel;
-    @UiField FlowPanel selectExistingStudyPanel;
+    @UiField HTMLPanel selectExistingStudyPanel;
     @UiField ListBox studySelect;
 	@UiField HTMLPanel createStudyInteractionPanel;
 	@UiField Button cancelSubmissionButtonOne; //TODO handle cancel
