@@ -42,18 +42,15 @@ public class Chassis {
 	
 	
     public static enum Module { 
-    	CLINICAL     ("clinical", "Clinical"), 
-    	MOLECULAR    ("molecular", "Molecular"), 
-    	INVITRO      ("invitro", "<i>in vitro</i>"),
-    	PHARMACOLOGY ("pharmacology", "Pharmacology")
+    	CLINICAL     ("clinical"), 
+    	MOLECULAR    ("molecular"), 
+    	INVITRO      ("invitro"),
+    	PHARMACOLOGY ("pharmacology")
     	;
     	private String name;
-    	private String htmlDisplay;
-    	private Module(String name, String htmlDisplay) {
+    	private Module(String name) {
     		this.name = name;
-    		this.htmlDisplay = htmlDisplay;    		
     	}
-    	public String toString(){ return htmlDisplay;}
     	public String getName() {return name;}
     }
 }
