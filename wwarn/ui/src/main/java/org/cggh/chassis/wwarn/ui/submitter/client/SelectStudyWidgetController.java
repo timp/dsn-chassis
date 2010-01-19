@@ -98,12 +98,12 @@ public class SelectStudyWidgetController {
 		AtomHelper.setTitle(studyEntryElement, studyTitle);
 		AtomHelper.setSummary(studyEntryElement, studySummary);
 		
-		// parse otherSubmitters and add to authors.
 		String[] emails = RenderUtils.extractEmails(otherSubmitters);
 		for (int i = 0; i < emails.length; i++) { 
 			AtomHelper.addAuthor(studyEntryElement, emails[i]);
 		}
 		Element studyElement = ChassisHelper.createStudy();
+		
 		ChassisHelper.setModules(studyElement, modules);
 		studyEntryElement.appendChild(studyElement); 
 		

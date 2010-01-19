@@ -129,9 +129,17 @@ public class SelectStudyWidgetRenderer extends ChassisWidgetRenderer<SelectStudy
 	void syncUiWithFeed() { 
 		List<Element>  studyEntries = AtomHelper.getEntries(model.getStudyFeed().getDocumentElement());
 		studySelect.addItem("Please select an existing Study", null);
+		int index = 1, selectedIndex = 0;
 		for (Element element : studyEntries) {
-			studySelect.addItem(AtomHelper.getTitle(element), AtomHelper.getId(element));
+			String id = AtomHelper.getId(element);
+			studySelect.addItem(AtomHelper.getTitle(element), id);
+			if(model.getSelectedStudyId() != null && model.getSelectedStudyId().equals(id)) { 
+				selectedIndex = index;
+			}
+			index++;
 		}
+		studySelect.setItemSelected(selectedIndex, true);
+		proceedWithSelectedButton.setEnabled(this.owner.getModel().isValid());
 	}
 	
 	@UiHandler("studySelect")
@@ -141,7 +149,6 @@ public class SelectStudyWidgetRenderer extends ChassisWidgetRenderer<SelectStudy
 			value = studySelect.getValue(studySelect.getSelectedIndex());
 		}
 		this.owner.getModel().setSelectedStudy(value);
-		System.err.println("Set to " + value +  "==" + this.model.getSelectedStudyId() + " so " + this.owner.getModel().isValid());
 		proceedWithSelectedButton.setEnabled(this.owner.getModel().isValid());
 	}
 
