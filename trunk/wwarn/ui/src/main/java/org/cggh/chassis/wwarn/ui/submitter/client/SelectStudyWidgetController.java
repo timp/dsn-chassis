@@ -11,6 +11,7 @@ import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.miniatom.client.Atom;
 import org.cggh.chassis.generic.miniatom.client.AtomHelper;
 import org.cggh.chassis.generic.miniatom.client.ext.ChassisHelper;
+import org.cggh.chassis.generic.widget.client.ChassisWidget;
 import org.cggh.chassis.generic.widget.client.ErrorEvent;
 import org.cggh.chassis.wwarn.ui.common.client.Config;
 import org.cggh.chassis.wwarn.ui.common.client.RenderUtils;
@@ -44,7 +45,8 @@ public class SelectStudyWidgetController {
 	
 
 
-	public void retrieveStudies() {
+	public Deferred<Document> retrieveStudies() {
+		log.enter("retrieveStudies");
 		// Set the model's status to pending.
 		model.setStatus(SelectStudyWidgetModel.STATUS_RETRIEVE_STUDIES_PENDING);
 		
@@ -56,10 +58,12 @@ public class SelectStudyWidgetController {
 		deferredStudyFeedDoc.addCallback(new RetrieveStudiesCallback());
 		deferredStudyFeedDoc.addErrback(new RetrieveStudiesErrback());
 		
-		
+		log.leave();
+		return deferredStudyFeedDoc;
 	}
 	
 	public void proceed() { 
+		owner.getMemory().memorise();
 		owner.proceed.fireEvent();		
 	}
 	
@@ -141,6 +145,32 @@ public class SelectStudyWidgetController {
 			return in;
 		}
 		
+	}
+
+
+	public Deferred<ChassisWidget> refreshAndCallback() {
+		log.enter("refreshAndCallback");
+		
+		final Deferred<ChassisWidget> deferredOwner = new Deferred<ChassisWidget>();
+		
+		Deferred<Document> feed = retrieveStudies();
+			
+		// handle errors
+		feed.addErrback(new DefaultErrback());
+			
+		// finally callback with owner, regardless of error
+		feed.addBoth(new Function<Object, Object>() {
+
+			public Object apply(Object in) {
+				deferredOwner.callback(owner);
+				return in;
+			}
+				
+		});
+			
+		
+		log.leave();
+		return deferredOwner;
 	}
 
 }
