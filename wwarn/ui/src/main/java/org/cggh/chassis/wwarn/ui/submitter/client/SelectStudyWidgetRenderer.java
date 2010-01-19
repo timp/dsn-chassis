@@ -18,6 +18,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -50,10 +51,15 @@ public class SelectStudyWidgetRenderer extends ChassisWidgetRenderer<SelectStudy
 	@UiField Button cancelSubmissionButton;    //TODO Handle cancel
 	@UiField Button proceedWithSelectedButton;
 	
-	@UiField Button createAndProceedButton;
 	@UiField TextBox studyTitle;
 	@UiField TextArea studySummary;
 	@UiField TextArea otherSubmitters;
+	@UiField CheckBox clinical;
+	@UiField CheckBox molecular;
+	@UiField CheckBox invitro;
+	@UiField CheckBox pharmacology;
+	
+	@UiField Button createAndProceedButton;
 
 
 	private SelectStudyWidget owner;
@@ -144,7 +150,8 @@ public class SelectStudyWidgetRenderer extends ChassisWidgetRenderer<SelectStudy
 	
 	@UiHandler("createAndProceedButton")
 	void handleCreateAndProceedButtonClick(ClickEvent e) {
-		controller.createStudyAndProceed(studyTitle.getValue(), studySummary.getValue());
+		controller.createStudyAndProceed(studyTitle.getValue(), 
+				studySummary.getValue(), otherSubmitters.getValue());
 	}
 	
 	public void error(String err) {

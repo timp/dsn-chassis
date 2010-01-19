@@ -67,20 +67,21 @@
     <p><ui:msg>Please select the WWARN modules for which this study has data...</ui:msg></p>
     <table style="border: none">
       <tr>
-        <td><input type="checkbox"></input></td><td><ui:msg>Clinical</ui:msg></td>
+        <td><g:CheckBox ui:field="clinical"></g:CheckBox></td><td><ui:msg>Clinical</ui:msg></td>
       </tr>
       <tr>
-        <td><input type="checkbox"></input></td><td><ui:msg>Molecular</ui:msg></td>
+        <td><g:CheckBox ui:field="molecular"></g:CheckBox></td><td><ui:msg>Molecular</ui:msg></td>
       </tr>
       <tr>
-        <td><input type="checkbox"></input></td><td><ui:msg><i>in vitro</i></ui:msg></td>
+        <td><g:CheckBox ui:field="invitro"></g:CheckBox></td><td><ui:msg><i>in vitro</i></ui:msg></td>
       </tr>
       <tr>
-        <td><input type="checkbox"></input></td><td><ui:msg>Pharmacology</ui:msg></td>
+        <td><g:CheckBox ui:field="pharmacology"></g:CheckBox></td><td><ui:msg>Pharmacology</ui:msg></td>
 
       </tr>
     </table>
-    
+        
+
 
            	<g:FlowPanel ui:field="mainActionsPanel">
            		<g:Button ui:field="cancelSubmissionButton">
