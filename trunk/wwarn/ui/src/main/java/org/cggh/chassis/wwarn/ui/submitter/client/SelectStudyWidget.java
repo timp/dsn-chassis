@@ -99,6 +99,7 @@ public class SelectStudyWidget
 	
 
 	public final WidgetEventChannel proceed = new WidgetEventChannel(this);
+	public final WidgetEventChannel cancel  = new WidgetEventChannel(this);
 	
 	
 

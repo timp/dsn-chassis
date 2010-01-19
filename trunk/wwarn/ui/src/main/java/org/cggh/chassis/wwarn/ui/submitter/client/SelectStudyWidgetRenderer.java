@@ -119,9 +119,9 @@ public class SelectStudyWidgetRenderer extends ChassisWidgetRenderer<SelectStudy
 				selectExistingStudyPanel.setVisible(false);
 			}
 		} else if (status instanceof SelectStudyWidgetModel.CreateEntryPendingStatus) {
-			// Nothing todo
+			// Nothing to do
 		} else if (status instanceof SelectStudyWidgetModel.StudyCreatedStatus) {
-			// Nothing todo
+			// Nothing to do
 		} else if (status instanceof AsyncWidgetModel.ErrorStatus) {
 			error("Error status: " + status);
 		} else { 
@@ -167,6 +167,15 @@ public class SelectStudyWidgetRenderer extends ChassisWidgetRenderer<SelectStudy
 	@UiHandler("proceedWithSelectedButton")
 	void handleProceedWithSelectedButtonClick(ClickEvent e) {
 		controller.proceed();
+	}
+
+	@UiHandler("cancelSubmissionButton")
+	void handleCancelSubmissionButtonClick(ClickEvent e) { 
+		controller.stepBack();
+	}
+	@UiHandler("cancelSubmissionButtonOne")
+	void handleCancelSubmissionButtonOneClick(ClickEvent e) { 
+		controller.stepBack();		
 	}
 	
 	@UiHandler("createAndProceedButton")
