@@ -40,6 +40,15 @@ public class RenderUtils {
 		
 		return out;
 	}
+
+	public static String[] extractEmails(String messilyDelimitedEmailString) {
+		messilyDelimitedEmailString = messilyDelimitedEmailString.replaceAll("\n", " ");
+		messilyDelimitedEmailString = messilyDelimitedEmailString.replaceAll(",", " ");
+		messilyDelimitedEmailString = messilyDelimitedEmailString.replaceAll(" +", " ");
+		messilyDelimitedEmailString = messilyDelimitedEmailString.trim();
+		messilyDelimitedEmailString = messilyDelimitedEmailString.replaceAll(" ", "|");
+		return messilyDelimitedEmailString.split("\\|");
+	}
 	
 	
 	

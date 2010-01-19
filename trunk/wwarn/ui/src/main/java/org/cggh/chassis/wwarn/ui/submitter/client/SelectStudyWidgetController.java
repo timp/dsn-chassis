@@ -1,14 +1,19 @@
 package org.cggh.chassis.wwarn.ui.submitter.client;
 
 
+
+import java.util.Arrays;
+
 import org.cggh.chassis.generic.async.client.Deferred;
 import org.cggh.chassis.generic.async.client.Function;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.miniatom.client.Atom;
 import org.cggh.chassis.generic.miniatom.client.AtomHelper;
+import org.cggh.chassis.generic.miniatom.client.ext.ChassisHelper;
 import org.cggh.chassis.generic.widget.client.ErrorEvent;
 import org.cggh.chassis.wwarn.ui.common.client.Config;
+import org.cggh.chassis.wwarn.ui.common.client.RenderUtils;
 
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;
@@ -83,7 +88,10 @@ public class SelectStudyWidgetController {
 	}
 
 
-	private Deferred<Document> createStudy(String studyTitle, String studySummary) {
+	private Deferred<Document> createStudy(String studyTitle, 
+			String studySummary, String otherSubmitters) {
+		
+		// TODO check if we should be using ChassisHelper.createStudy
 		Document studyEntryDoc = AtomHelper.createEntryDoc();
 		Element studyEntryElement = studyEntryDoc.getDocumentElement();
 		AtomHelper.addAuthor(studyEntryElement, Config.get(Config.USER_EMAIL));
@@ -91,15 +99,23 @@ public class SelectStudyWidgetController {
 		AtomHelper.setTitle(studyEntryElement, studyTitle);
 		AtomHelper.setSummary(studyEntryElement, studySummary);
 		
-		// TODO parse otherSubmitters and add to authors.
-		// TODO set content 
+		// parse otherSubmitters and add to authors.
+		String[] emails = RenderUtils.extractEmails(otherSubmitters);
+		for (int i = 0; i < emails.length; i++) { 
+			AtomHelper.addAuthor(studyEntryElement, emails[i]);
+		}
+		// TODO get modules 
+		String[] modules = new String[] {"clinical", "invitro"};
+		Element studyElement = ChassisHelper.createStudy();
+		ChassisHelper.setModules(studyElement, Arrays.asList(modules));
+		studyEntryElement.appendChild(studyElement); 
 		
 		return Atom.postEntry(Config.get(Config.COLLECTION_STUDIES_URL), studyEntryDoc);
 	}
 
 
-	public void createStudyAndProceed(String studyTitle, String studySummary) {
-		Deferred<Document> deferredStudyEntrydoc = createStudy(studyTitle, studySummary);
+	public void createStudyAndProceed(String studyTitle, String studySummary, String otherSubmitters) {
+		Deferred<Document> deferredStudyEntrydoc = createStudy(studyTitle, studySummary, otherSubmitters);
 		deferredStudyEntrydoc.addCallback(new Function<Document, Document>() {
 			public Document apply(Document in) {
 				model.setSelectedStudy(AtomHelper.getId(in.getDocumentElement()));
