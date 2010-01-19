@@ -1,5 +1,8 @@
 package org.cggh.chassis.wwarn.ui.submitter.client;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.cggh.chassis.generic.async.client.Deferred;
 import org.cggh.chassis.generic.async.client.Function;
 import org.cggh.chassis.generic.log.client.Log;
@@ -7,6 +10,7 @@ import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 import org.cggh.chassis.generic.widget.client.ChassisWidget;
 import org.cggh.chassis.generic.widget.client.DelegatingWidget;
+import org.cggh.chassis.generic.widget.client.MapMemory;
 import org.cggh.chassis.generic.widget.client.WidgetEventChannel;
 import org.cggh.chassis.generic.widget.client.WidgetMemory;
 
@@ -78,18 +82,21 @@ public class SelectStudyWidget
 
 	
 	@Override
-	public Deferred<ChassisWidget> refreshAndCallback() {
-		// TODO
-		return null;
-	}
-	
-	
-	
-	
-	@Override
 	public void refresh() {
-		this.controller.retrieveStudies();
+		log.enter("refresh");
+		refreshAndCallback();
+		log.leave();
 	}
+	@Override
+	public Deferred<ChassisWidget> refreshAndCallback() {
+		log.enter("refershAndCallback");
+		Deferred<ChassisWidget> deferredSelf = this.controller.refreshAndCallback();
+		log.leave();
+		return deferredSelf;
+	}
+	
+	
+	
 
 	public final WidgetEventChannel proceed = new WidgetEventChannel(this);
 	
@@ -107,43 +114,47 @@ public class SelectStudyWidget
 
 
 
-	private class Memory extends WidgetMemory {
+	private class Memory extends MapMemory {
 
-		/* (non-Javadoc)
-		 * @see org.cggh.chassis.generic.widget.client.WidgetMemory#createMnemonic()
-		 */
+		private static final String KEY_STUDYID = "studyid";
+
+
 		@Override
-		public String createMnemonic() {
-			return "studyId=" + model.getSelectedStudyId();
+		public Map<String, String> createMnemonicMap() {
+			log.enter("createMnemonicMap");
+			
+			Map<String, String> map = new HashMap<String, String>();
+			
+			String selectedStudyId = model.selectedStudyId.get();
+			
+			if (selectedStudyId != null) {
+				map.put(KEY_STUDYID, selectedStudyId);
+			}
+			
+			log.leave();
+			return map;
 		}
 
-		/* (non-Javadoc)
-		 * @see org.cggh.chassis.generic.widget.client.WidgetMemory#remember(java.lang.String)
-		 */
 		@Override
-		public Deferred<WidgetMemory> remember(String mnemonic) {
+		public Deferred<WidgetMemory> remember(Map<String, String> mnemonic) {
 			log.enter("remember");
 			
 			final Deferred<WidgetMemory> deferredMemory;
 			
 			model.setStatus(AsyncWidgetModel.STATUS_INITIAL);
 			
-			String studyId = mnemonic;
+			String studyId = mnemonic.get(KEY_STUDYID);
 			
 			log.debug("found studyId: "+studyId);
 			
 			if (studyId != null) {
-				studyId = studyId.substring(8);
+				
 				log.debug("set selected study id to:" + studyId);
 				setSelectedStudy(studyId);
 				
-				log.debug("refresh and call back");
-				Deferred<ChassisWidget> deferredWidget = refreshAndCallback();
-				
-				deferredMemory = deferredWidget.adapt(new Function<ChassisWidget, WidgetMemory>() {
+				deferredMemory = refreshAndCallback().adapt(new Function<ChassisWidget, WidgetMemory>() {
 
 					public WidgetMemory apply(ChassisWidget in) {
-//						refresh();
 						return Memory.this;
 					}
 					
