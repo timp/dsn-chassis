@@ -123,11 +123,15 @@ public abstract class XQSViewBase {
 	 * 
 	 */
 	protected void refresh() {
-		this.canvas.clear();
+		canvas.clear();
 		if (model.isRelevant()) {
+			canvas.setVisible(true);
 			for (Widget w : widgets) {
-				this.canvas.add(w);
+				canvas.add(w);
 			}
+		}
+		else {
+			canvas.setVisible(false);
 		}
 	}
 

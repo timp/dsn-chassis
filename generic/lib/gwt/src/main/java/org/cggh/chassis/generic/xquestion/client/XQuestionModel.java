@@ -27,6 +27,10 @@ public class XQuestionModel extends XQSModelBase {
 	
 	
 	private Set<String> values = new HashSet<String>();
+
+
+
+	private XQuestion owner;
 	
 	
 	
@@ -34,8 +38,9 @@ public class XQuestionModel extends XQSModelBase {
 	 * @param parentQuestionnaire 
 	 * @param e
 	 */
-	public XQuestionModel(Element definition, XQuestionnaire parentQuestionnaire) {
+	public XQuestionModel(XQuestion owner, Element definition, XQuestionnaire parentQuestionnaire) {
 		super(definition, parentQuestionnaire);
+		this.owner = owner;
 	}
 
 	
@@ -52,9 +57,14 @@ public class XQuestionModel extends XQSModelBase {
 		log.enter("setValue");
 		
 		if (this.element != null) {
+			
 			log.debug("found element, setting simple content: "+value);
 			XML.setSimpleContent(element, value);
 			parseMultiValues();
+			
+			XValueChangeEvent e = new XValueChangeEvent();
+			owner.getEventBus().fireEvent(e);
+
 		}
 	
 		log.leave();

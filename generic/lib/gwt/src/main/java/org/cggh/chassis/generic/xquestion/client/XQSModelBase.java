@@ -261,5 +261,10 @@ public abstract class XQSModelBase {
 
 
 
+	public boolean hasConditionalRelevance() {
+		return relevant.size() > 0;
+	}
 
+	
+	
 }
