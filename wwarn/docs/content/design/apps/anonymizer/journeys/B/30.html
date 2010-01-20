@@ -22,14 +22,15 @@
 		
 		<table style="border: 0; text-align: left;">
 			<tr>
-				<th>File name</th><th style="padding-left: 10px;">Submission date</th>
+				<th style="text-decoration: underline">File name</th><th style="padding-left: 10px; text-decoration: underline;">Submission date</th>
 			</tr>
 			<tr>
 				<td>fileName.doc</td><td style="padding-left: 10px;">2010-12-12 16:00</td>
 			</tr>
 		</table>
 		
-		<!-- Perhaps something like this might be required: "If this file does not download automatically, <a>click here</a>." -->
+		<p>If the file does not start to download automatically, please <a href="#" onclick="document.getElementById('mockDialogueBox').style.visibility='visible';">click here to start the download</a>.
+		</p>
 		
 		<!-- This link is only available if there are other files available. -->
 		<p>
@@ -42,12 +43,33 @@
 		</p>
 		
 
-		<p>Other Navigation:
+		<p>Other Links:
 			<ul>
 				<li><a href="20.html">List Unchecked Files</a></li>
 				<li><a href="10.html">Return to the Home Page</a></li>
 			</ul>
 		</p>
+		
+		<div id="mockDialogueBox" style="position: absolute; top: 100px; left: 200px; border: 2px solid black; background-color: lightgrey; padding: 10px; width: 200px;">
+		
+			<p style="text-align: center;">Downloading...
+			</p>
+			
+			 <p style="text-align: center;">fileName.doc (34 KB)
+			 </p>
+
+			<p style="text-align: center; background-color: white; border: 1px solid darkgrey; height: 20px; width: 200px;">
+				<span style="float: left; background-color: green; height: 20px; width: 42px;">&nbsp;</span>
+				<span style="margin-right: 42px;">21%</span>
+			</p>
+
+			<p style="text-align: center;">
+				<button onclick="document.getElementById('mockDialogueBox').style.visibility='hidden'">Save</button> <button onclick="document.getElementById('mockDialogueBox').style.visibility='hidden'">Cancel</button>
+			</p>
+		
+		</div>
+		
+			
 		
 	</body>
 
