@@ -10,6 +10,7 @@ import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.xml.client.XML;
 
+import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.xml.client.Element;
 
@@ -29,6 +30,7 @@ public class XQuestion extends Composite {
 	private boolean repeatable = false;
 	private XQuestion previousSibling;
 	private String id;
+	private HandlerManager eventBus;
 
 	
 	
@@ -109,11 +111,15 @@ public class XQuestion extends Composite {
 
 	}
 
+	
+	
+	public HandlerManager getEventBus() {
+		return eventBus;
+	}
 
+	
+	
 
-	/**
-	 * 
-	 */
 	public void init() {
 		
 		this.init(false);
@@ -128,6 +134,8 @@ public class XQuestion extends Composite {
 		// TODO move this to model.init() ?
 		if (this.parentQuestionnaire != null) {
 			
+			eventBus = parentQuestionnaire.getEventBus();
+			
 			if (this.previousSibling != null) {
 				this.parentQuestionnaire.getModel().addChild(this.model, this.previousSibling.getModel());
 			}
@@ -135,6 +143,9 @@ public class XQuestion extends Composite {
 				this.parentQuestionnaire.getModel().addChild(this.model);				
 			}
 			
+		}
+		else {
+			eventBus = new HandlerManager(this);
 		}
 
 		this.view.init(readOnly);
@@ -164,6 +175,8 @@ public class XQuestion extends Composite {
 		// TODO move this to model.init() ?
 		if (this.parentQuestionnaire != null) {
 			
+			eventBus = parentQuestionnaire.getEventBus();
+			
 			if (this.previousSibling != null) {
 				this.parentQuestionnaire.getModel().addChild(this.model, this.previousSibling.getModel());
 			}
@@ -171,6 +184,9 @@ public class XQuestion extends Composite {
 				this.parentQuestionnaire.getModel().addChild(this.model);				
 			}
 			
+		}
+		else {
+			eventBus = new HandlerManager(this);
 		}
 		
 		this.view.init(data, readOnly);
@@ -195,7 +211,7 @@ public class XQuestion extends Composite {
 			throw new XQuestionFormatException("bad question definition, found more than one model");
 		}
 
-		this.model = new XQuestionModel(modelDef, this.parentQuestionnaire);
+		this.model = new XQuestionModel(this, modelDef, this.parentQuestionnaire);
 		
 	}
 

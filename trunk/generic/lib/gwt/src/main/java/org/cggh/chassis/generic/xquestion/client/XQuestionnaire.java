@@ -15,6 +15,7 @@ import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.xml.client.XML;
 
+import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.Response;
@@ -42,6 +43,7 @@ public class XQuestionnaire extends Composite {
 	private String defaultNamespaceUri;
 	private boolean repeatable;
 	private XQuestionnaire previousSibling;
+	private HandlerManager eventBus;
 
 	
 	
@@ -176,6 +178,12 @@ public class XQuestionnaire extends Composite {
 	
 	
 	
+	public HandlerManager getEventBus() {
+		return eventBus;
+	}
+	
+	
+	
 	public void init() {
 		this.init(false);
 	}
@@ -185,21 +193,28 @@ public class XQuestionnaire extends Composite {
 	public void init(boolean readOnly) {
 		log.enter("init( "+readOnly+" )");
 		
-		this.model.init();
+		model.init();
 
 		// TODO move this to model.init() ?
-		if (this.parentQuestionnaire != null) {
+		if (parentQuestionnaire != null) {
 			
-			if (this.previousSibling != null) {
-				this.parentQuestionnaire.getModel().addChild(this.model, this.previousSibling.getModel());
+			eventBus = parentQuestionnaire.getEventBus();
+			
+			if (previousSibling != null) {
+				parentQuestionnaire.getModel().addChild(model, previousSibling.getModel());
 			}
 			else {
-				this.parentQuestionnaire.getModel().addChild(this.model);				
+				parentQuestionnaire.getModel().addChild(model);				
 			}
 
 		}
+		else {
+			
+			eventBus = new HandlerManager(this);
+			
+		}
 
-		this.view.init(readOnly);
+		view.init(readOnly);
 		
 		log.leave();
 	}
@@ -225,6 +240,8 @@ public class XQuestionnaire extends Composite {
 		// TODO move this to model.init() ?
 		if (this.parentQuestionnaire != null) {
 			
+			eventBus = parentQuestionnaire.getEventBus();
+
 			if (this.previousSibling != null) {
 				this.parentQuestionnaire.getModel().addChild(this.model, this.previousSibling.getModel());
 			}
@@ -233,7 +250,11 @@ public class XQuestionnaire extends Composite {
 			}
 
 		}
-
+		else {
+			
+			eventBus = new HandlerManager(this);
+			
+		}
 
 		this.view.init(data, readOnly);
 	}

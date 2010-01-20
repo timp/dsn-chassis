@@ -87,6 +87,16 @@ public class XQuestionnaireView extends XQSViewBase {
 
 		}
 		
+		if (!readOnly && model.hasConditionalRelevance()) {
+			owner.getEventBus().addHandler(XValueChangeEvent.TYPE, new XValueChangeHandler() {
+
+				public void onChange(XValueChangeEvent e) {
+					refresh();
+				}
+				
+			});
+		}
+		
 		if (this.repeatable && !readOnly) {
 			initRepeatable();
 		}
@@ -128,7 +138,18 @@ public class XQuestionnaireView extends XQSViewBase {
 			}
 
 		}
+
+		if (!readOnly && model.hasConditionalRelevance()) {
+			owner.getEventBus().addHandler(XValueChangeEvent.TYPE, new XValueChangeHandler() {
+
+				public void onChange(XValueChangeEvent e) {
+					refresh();
+				}
+				
+			});
+		}
 		
+
 		if (this.repeatable && !readOnly) {
 			initRepeatable();
 		}
