@@ -16,7 +16,7 @@ Status: pending
 
 == Main Phases ==
 
-Each release goes through three main phases of development: *alpha*, *beta* and *finalisation*.
+Each new version of the software goes through three main phases of development: *alpha*, *beta* and *finalisation*.
 
 During the *alpha* phase, working prototypes are developed and deployed for internal review. Prototypes are not feature complete, and the scope for the release is still open to change.
 
