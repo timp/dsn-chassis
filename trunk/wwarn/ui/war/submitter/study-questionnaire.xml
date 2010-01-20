@@ -2686,6 +2686,7 @@
 								<question id="wwarn-molecular-inclusionExclusionCriteriaB-sourceOther">
 									<model>
 										<element name="inclusionSourceOther"/>
+										<relevant comparator="eq" value="other" path="../sampleSource"/>
 									</model>
 									<view>
 										<input>
