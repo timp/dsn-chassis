@@ -18,13 +18,13 @@ Status: pending
 
 Each new version of the software goes through three main phases of development: *alpha*, *beta* and *finalisation*.
 
-During the *alpha* phase, working prototypes are developed and deployed for internal review. Prototypes are not feature complete, and the scope for the release is still open to change.
+During the *alpha* phase, working prototypes are developed and deployed for internal review. Prototypes are not feature complete, and the scope for the new version is still open to change.
 
-The alpha phase ends when the software is deemed to be feature complete for the release. Development then enters the beta phase.
+The alpha phase ends when the software is deemed to be feature complete for that version. Development then enters the beta phase.
 
-The *beta* phase consists of system testing, which includes looking for and fixing bugs, and performance and load testing. The beta phase ends when the software is considered fit for final release. No further changes are made to the software for that release.
+The *beta* phase consists of system testing, which includes looking for and fixing bugs, and performance and load testing. The beta phase ends when the software is considered fit for final release. No further changes are made to the software for that version.
 
-During the *finalisation* phase, the final version of the software for that release is then deployed to a production environment, and the system goes live.
+During the *finalisation* phase, the software is then deployed to a production environment, and the system goes live.
 
 Important milestones are:
 
@@ -32,7 +32,7 @@ Important milestones are:
   * first beta release (first feature-complete prototype)
   * final release (software is feature-complete and tested, and deployed in production)
 
-Within each phase, there may also be minor milestones, such as first, second or third alpha releases, and first, second or third beta releases. I.e., there may be any number of releases during alpha and beta phases.
+Within each phase, there may also be minor milestones, such as first, second or third alpha releases; first, second or third beta releases, etc. I.e., there may be any number of releases during alpha and beta phases.
 
 === Label/Tagging Conventions ===
 
