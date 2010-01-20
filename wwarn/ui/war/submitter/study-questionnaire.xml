@@ -10,147 +10,6 @@
 
 	<view>
 
-		<html>
-
-			<p>
-				<strong>
-					<em>Jump to section:</em>
-				</strong>
-			</p>
-			<ul>
-				<li>
-					<a href="#general">
-						<strong>General Questions</strong>
-					</a>
-					<ul>
-						<li>
-							<a href="#startend">Study Start and End</a>
-						</li>
-						<li>
-							<a href="#pi">Principal Investigator(s)</a>
-						</li>
-						<li>
-							<a href="#pathogens">Pathogen Species</a>
-						</li>
-						<li>
-							<a href="#sites">Study Site(s)</a>
-						</li>
-						<li>
-							<a href="#pubs">Publications</a>
-						</li>
-					</ul>
-				</li>
-				<li>
-					<a href="#clinical">
-						<strong>WWARN Clinical Module Questions</strong>
-					</a>
-					<ul>
-						<li>
-							<a href="#wwarn-clinical-publication">Publication</a>
-						</li>
-						<!--  
-						<li>
-							<a href="#wwarn-clinical-inclusionExclusionCriteria">Inclusion/Exclusion Criteria</a>
-						</li>
-						 -->
-						<li>
-							<a href="#wwarn-clinical-treatments">Treatments</a>
-						</li>
-						<li>
-							<a href="#wwarn-clinical-followup">Followup</a>
-						</li>
-						<li>
-							<a href="#wwarn-clinical-microscopy">Microscopy</a>
-						</li>
-						<li>
-							<a href="#wwarn-clinical-recrudescenceAndReinfection">Recrudescence and Reinfection</a>
-						</li>
-					</ul>
-				</li>
-				<li>
-					<a href="#pharmacology">
-						<strong>WWARN Pharmacology Module Questions</strong>
-					</a>
-					<ul>
-						<li>
-							<a href="#wwarn-pharmacology-sample">Sample</a>
-						</li>
-						<li>
-							<a href="#wwarn-pharmacology-analytes">Analytes</a>
-						</li>
-						<li>
-							<a href="#wwarn-pharmacology-analysisModel">PK Data Analysis Model</a>
-						</li>
-						<li>
-							<a href="#wwarn-pharmacology-inclusionExclusionCriteria">Inclusion/Exclusion Criteria</a>
-						</li>
-						<li>
-							<a href="#wwarn-pharmacology-drugs">Drugs</a>
-						</li>
-						<li>
-							<a href="#wwarn-pharmacology-treatmentRegimens">Treatment Regimens</a>
-						</li>
-					</ul>
-				</li>
-				<li>
-					<a href="#invitro">
-						<strong>
-							WWARN
-							<em>in vitro</em>
-							Module Questions
-						</strong>
-					</a>
-					<ul>
-						<li>
-							<a href="#wwarn-invitro-studyCharacteristics">Study Characteristics</a>
-						</li>
-						<li>
-							<a href="#wwarn-invitro-sites">Sites</a>
-						</li>
-						<li>
-							<a href="#wwarn-invitro-culture">Culture for Drug Susceptibility Measure</a>
-						</li>
-						<li>
-							<a href="#wwarn-invitro-medium">Medium for Drug Susceptibility Measure</a>
-						</li>
-						<li>
-							<a href="#wwarn-invitro-susceptibility">Determination of Drug Susceptibility</a>
-						</li>
-						<li>
-							<a href="#wwarn-invitro-drug">Drugs Stock Solutions</a>
-						</li>
-						<li>
-							<a href="#wwarn-invitro-plates">Batch of Plates</a>
-						</li>
-					</ul>
-				</li>
-				<li>
-					<a href="#molecular">
-						<strong>WWARN Molecular Module Questions</strong>
-					</a>
-					<ul>
-						<li>
-							<a href="#wwarn-molecular-inclusionExclusionCriteria">Inclusion/Exclusion Criteria</a>
-						</li>
-						<li>
-							<a href="#wwarn-molecular-sampleType">Sample Type</a>
-						</li>
-						<li>
-							<a href="#wwarn-molecular-resistanceMarkers">Resistance Markers</a>
-						</li>
-						<li>
-							<a href="#wwarn-molecular-mixedResistanceAlleles">Mixed Resistance Alleles</a>
-						</li>
-						<li>
-							<a href="#wwarn-molecular-additionalGenotypicInformation">Additional Genotypic Information
-							</a>
-						</li>
-					</ul>
-				</li>
-			</ul>
-
-		</html>
-
 		<questionnaire id="general">
 
 			<model>
@@ -170,7 +29,6 @@
 				<question id="startDate">
 					<model>
 						<element name="startDate" type="date" />
-						<relevant path="../../module" comparator="eq" value="molecular"/>
 					</model>
 					<view>
 						<input>
@@ -183,7 +41,6 @@
 				<question id="endDate">
 					<model>
 						<element name="endDate" type="date" />
-						<relevant path="../../module" comparator="eq" value="molecular"/>
 					</model>
 					<view>
 						<input>
@@ -496,6 +353,7 @@
 
 			<model>
 				<element name="clinical" />
+				<relevant path="../module" comparator="eq" value="clinical"/>
 			</model>
 
 			<view class="xquestionnaire-transparent">
@@ -815,6 +673,7 @@
 
 			<model>
 				<element name="pharmacology" />
+				<relevant path="../module" comparator="eq" value="pharmacology"/>
 			</model>
 
 			<view class="xquestionnaire-transparent">
@@ -1464,6 +1323,7 @@
 
 			<model>
 				<element name="invitro"/>
+				<relevant path="../module" comparator="eq" value="invitro"/>
 			</model>
 
 			<view class="xquestionnaire-transparent">
@@ -2616,6 +2476,7 @@
 
 			<model>
 				<element name="molecular"/>
+				<relevant path="../module" comparator="eq" value="molecular"/>
 			</model>
 
 			<view class="xquestionnaire-transparent">
