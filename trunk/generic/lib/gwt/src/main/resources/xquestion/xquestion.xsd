@@ -32,6 +32,7 @@
   <xs:complexType name="QuestionnaireModelType">
     <xs:sequence>
       <xs:element ref="element" maxOccurs="1" />
+      <xs:element ref="relevant" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
   </xs:complexType>
 
@@ -71,6 +72,7 @@
   <xs:complexType name="QuestionModelType">
     <xs:sequence>
       <xs:element ref="element" maxOccurs="1" />
+      <xs:element ref="relevant" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
   </xs:complexType>
 
@@ -118,6 +120,21 @@
       <xs:attribute name="namespaceUri" type="xs:anyURI" use="optional"/>
       <xs:attribute name="type" type="xs:NCName" use="optional" default="string"/>
     </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="relevant">
+  	<xs:complexType>
+  		<xs:attribute name="path" type="xs:string" use="required"/>
+  		<xs:attribute name="comparator" use="required">
+  			<xs:simpleType>
+  				<xs:restriction base="xs:string">
+  					<xs:enumeration value="eq"/>
+  					<xs:enumeration value="gt"/>
+  				</xs:restriction>
+  			</xs:simpleType>
+  		</xs:attribute>
+  		<xs:attribute name="value" type="xs:string" use="required"/>
+  	</xs:complexType>
   </xs:element>
   
   <xs:element name="html" type="htmlType"/>

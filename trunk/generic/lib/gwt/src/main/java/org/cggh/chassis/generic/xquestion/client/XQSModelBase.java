@@ -243,9 +243,10 @@ public abstract class XQSModelBase {
 			log.debug("comparing for equality");
 			for (Element e : elements) {
 				String content = XML.firstChildNodeValueOrNullIfNoChildren(e);
-				log.debug("testing content: "+content);
+				log.debug("comparing content ["+content+"] with value ["+value+"]");
 				if (content != null && content.equals(value)) {
 					log.debug("found match");
+					log.leave();
 					return true;
 				}
 				else {
