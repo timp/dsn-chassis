@@ -66,6 +66,7 @@
             </goals>
             <configuration>
 	      <module>org.cggh.chassis.wwarn.ui.submitter.Submitter</module>
+	      <module>org.cggh.chassis.wwarn.ui.administrator.Administrator</module>
             </configuration>
           </execution>
         </executions>
