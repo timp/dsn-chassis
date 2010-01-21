@@ -14,7 +14,8 @@
             ui:field="q1"
             modelName="foo"
             modelNamespaceUri="http://example.com/ns"
-            modelPrefix="ex">
+            modelPrefix="ex"
+            relevant="../module eq 'foo' or ../module/bar eq 'spong'">
             <p>This is question 1.</p>
             <x:Input type="string"/>
             <p>What do you think?</p>
