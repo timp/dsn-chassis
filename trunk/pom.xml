@@ -49,6 +49,20 @@ http://code.google.com/p/dsn-chassis/issues/list
     <developerConnection>scm:svn:https://dsn-chassis.googlecode.com/svn/tags/chassis-parent-0.1-alpha-3</developerConnection>
   </scm>
   
+  <mailingLists>
+    <mailingList>
+      <name>dsn-chassis</name>
+      <archive>
+http://groups.google.com/group/dsn-chassis
+      </archive>
+    </mailingList>
+    <mailingList>
+      <name>dsn-chassis-svn</name>
+      <archive>
+http://groups.google.com/group/dsn-chassis-svn
+      </archive>
+    </mailingList>
+  </mailingLists>
   
   <developers>
     <developer>
@@ -64,8 +78,8 @@ http://code.google.com/p/dsn-chassis/issues/list
       <timezone>0</timezone>
     </developer>
     <developer>
-      <name>Krisna Rao</name>
-      <id>Krisna.Rao@well.ox.ac.uk</id>
+      <name>Lee Hart</name>
+      <id>l33h4r7</id>
       <roles>
         <role>Committer</role>
       </roles>
@@ -83,6 +97,18 @@ http://code.google.com/p/dsn-chassis/issues/list
       </roles>
       <timezone>0</timezone>
       <url>http://pizey.net/~timp</url>
+      <organization>
+        CGGH
+      </organization>
+      <organizationUrl>http://www.cggh.org/</organizationUrl>
+    </developer>
+    <developer>
+      <name>Krisna Rao</name>
+      <id>Krisna.Rao</id>
+      <roles>
+        <role>Committer</role>
+      </roles>
+      <timezone>0</timezone>
       <organization>
         CGGH
       </organization>
