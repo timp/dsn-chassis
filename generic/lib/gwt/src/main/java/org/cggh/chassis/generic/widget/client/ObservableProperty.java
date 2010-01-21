@@ -30,6 +30,10 @@ public class ObservableProperty<T> {
 		}
 	}
 	
+	public boolean isNull() {
+		return value == null;
+	}
+	
 	public HandlerRegistration addChangeHandler(PropertyChangeHandler<T> h) {
 		return handlerManager.addHandler(PropertyChangeEvent.TYPE, h);
 	}
