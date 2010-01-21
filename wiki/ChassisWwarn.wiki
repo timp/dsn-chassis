@@ -11,7 +11,7 @@ Due: March 2010
 
 === Milestone 1.0-alpha-1 ===
 
-Scope: [http://code.google.com/p/dsn-chassis/issues/list?can=1&q=label%3Awwarn-1.0-alpha-1&colspec=ID+Type+Status+Priority+Milestone+Owner+Summary&cells=tiles All] [http://code.google.com/p/dsn-chassis/issues/list?can=1&q=label%3Awwarn-1.0-alpha-1+status%3Astarted&colspec=ID+Type+Status+Priority+Milestone+Owner+Summary&cells=tiles Started] [http://code.google.com/p/dsn-chassis/issues/list?can=1&q=label%3Awwarn-1.0-alpha-1+status%3Afixed&colspec=ID+Type+Status+Priority+Milestone+Owner+Summary&cells=tiles Fixed (complete)]
+Scope: [http://code.google.com/p/dsn-chassis/issues/list?can=1&q=label%3Awwarn-1.0-alpha-1&colspec=ID+Type+Status+Priority+Milestone+Owner+Summary&cells=tiles All] | [http://code.google.com/p/dsn-chassis/issues/list?can=1&q=label%3Awwarn-1.0-alpha-1+status%3Astarted&colspec=ID+Type+Status+Priority+Milestone+Owner+Summary&cells=tiles Started] | [http://code.google.com/p/dsn-chassis/issues/list?can=1&q=label%3Awwarn-1.0-alpha-1+status%3Afixed&colspec=ID+Type+Status+Priority+Milestone+Owner+Summary&cells=tiles | Fixed]
 
 ----
 = Development Process =
