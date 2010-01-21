@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.0.0//EN" "http://google-web-toolkit.googlecode.com/svn/tags/2.0.0/distro-source/core/src/gwt-module.dtd">
+<module>
+	<inherits name="com.google.gwt.user.User" />
+
+    <!--+
+        | logging configuration 
+        +-->
+    
+    <!-- For development a default of `DEBUG` is recommended -->
+    <inherits name="com.allen_sauer.gwt.log.gwt-log-DEBUG" />
+    
+    <!-- for production -->
+    <!--  <inherits name="com.allen_sauer.gwt.log.gwt-log-OFF" />-->
+    
+    <set-property name="log_GWTLogger" value="DISABLED" />
+    <set-property name="log_SystemLogger" value="ENABLED" />
+    <set-property name="log_ConsoleLogger" value="DISABLED" />
+    <set-property name="log_DivLogger" value="DISABLED" />
+    <set-property name="log_FirebugLogger" value="DISABLED" />
+    <set-property name="log_RemoteLogger" value="DISABLED" />
+    <set-property name="log_WindowLogger" value="DISABLED" />
+    
+    <inherits name="org.cggh.chassis.generic.log.Log"/>
+    <inherits name="org.cggh.chassis.generic.xml.XML"/>
+    
+
+    <source path="client" />
+	<entry-point class="spike.xfui.client.TestUiEntryPoint" />
+    
+</module>

@@ -1,0 +1,187 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style>
+		/* Add CSS here. See the GWT docs on UI Binder for more details */
+		.important {
+			font-weight: bold;
+		}
+	</ui:style>
+	<g:HTMLPanel ui:field="bodyPanel">
+		<!--
+			Add GWT widgets here. Enter < and hit Ctrl-Space to auto-complete
+			widget names. The ui:field attribute binds an element to a field in
+			the owner class. See the GWT docs on UI Binder for more details.
+		-->
+		<h1>
+			<ui:msg>Submitter</ui:msg>
+			-
+			<ui:msg>Submit Data</ui:msg>
+			-
+			<ui:msg>Select Study</ui:msg>
+		</h1>
+		<h2>
+			<span class="currentStep">
+				1.
+				<ui:msg>Select Study</ui:msg>
+			</span>
+			&gt;
+			2.
+			<ui:msg>Upload Files</ui:msg>
+			&gt;
+			3.
+			<ui:msg>Submit</ui:msg>
+			&gt;
+			4.
+			<ui:msg>Add Information</ui:msg>
+		</h2>
+		<g:HTMLPanel ui:field="pendingPanel">
+			<p>
+				<g:Label ui:field="pendingLabel">
+					<ui:msg>pending...</ui:msg>
+				</g:Label>
+			</p>
+		</g:HTMLPanel>
+		<g:HTMLPanel ui:field="selectExistingStudyPanel">
+			<p>
+			<g:Label>
+				<ui:msg>Please select a study from the list below...</ui:msg>
+			</g:Label>
+			</p>
+			<p>
+			<g:FlowPanel>
+				<g:ListBox ui:field="studySelect" visibleItemCount='1' />
+			</g:FlowPanel>
+			</p>
+			<g:Button ui:field="cancelSubmissionButtonOne"
+				stylePrimaryName="action">
+				<ui:msg>Cancel Submission</ui:msg>
+			</g:Button>
+			<g:Button ui:field="proceedWithSelectedButton"
+				stylePrimaryName="action">
+				<ui:msg>Proceed &gt;</ui:msg>
+			</g:Button>
+			<p>
+			<g:Label>
+				<ui:msg>... or use the form below to create a new study...</ui:msg>
+			</g:Label>
+			</p>
+		</g:HTMLPanel>
+		<g:HTMLPanel ui:field="createStudyInteractionPanel">
+			<h3>
+				<ui:msg>Create a Study</ui:msg>
+			</h3>
+
+			<h4>
+				<ui:msg>Title</ui:msg>
+			</h4>
+			<p>
+				<ui:msg>Please provide a title for the study...</ui:msg>
+			</p>
+			<g:TextBox ui:field="studyTitle"></g:TextBox>
+			<p>
+				<ui:msg>
+					E.g.,
+					<i>TODO Study Foo</i>
+				</ui:msg>
+			</p>
+			<h4>
+				<ui:msg>Summary</ui:msg>
+			</h4>
+			<p>
+				<ui:msg>Please provide a short description of the study....</ui:msg>
+			</p>
+
+			<g:TextArea visibleLines="4" ui:field="studySummary"></g:TextArea>
+			<p>
+				<ui:msg>
+					E.g.,
+					<i>TODO This study looked at ... This study found ...</i>
+				</ui:msg>
+			</p>
+			<h4>
+				<ui:msg>Submitters</ui:msg>
+			</h4>
+			<p>
+				<ui:msg>Please enter an email address for each person who can submit
+					data for this study...</ui:msg>
+			</p>
+			<g:TextArea visibleLines="2" ui:field="otherSubmitters"></g:TextArea>
+			<p>
+				<ui:msg>
+					Separate each email address with a space, e.g.,
+					<i>bob@example.org fred@bloggs.com</i>
+				</ui:msg>
+			</p>
+
+			<p>
+				<ui:msg>(You will automatically be included in the list of
+					submitters for this study.)</ui:msg>
+			</p>
+			<h4>
+				<ui:msg>Modules</ui:msg>
+			</h4>
+			<p>
+				<ui:msg>Please select the WWARN modules for which this study has
+					data...</ui:msg>
+			</p>
+			<table style="border: none">
+				<tr>
+					<td>
+						<g:CheckBox ui:field="clinical"></g:CheckBox>
+					</td>
+					<td>
+						<ui:msg>Clinical</ui:msg>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<g:CheckBox ui:field="molecular"></g:CheckBox>
+					</td>
+					<td>
+						<ui:msg>Molecular</ui:msg>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<g:CheckBox ui:field="invitro"></g:CheckBox>
+					</td>
+					<td>
+						<ui:msg>
+							<i>in vitro</i>
+						</ui:msg>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<g:CheckBox ui:field="pharmacology"></g:CheckBox>
+					</td>
+					<td>
+						<ui:msg>Pharmacology</ui:msg>
+					</td>
+
+				</tr>
+			</table>
+
+            <p></p>
+
+			<g:FlowPanel ui:field="mainActionsPanel">
+				<g:Button ui:field="cancelSubmissionButton"
+					stylePrimaryName="action">
+					<ui:msg>Cancel Submission</ui:msg>
+				</g:Button>
+				<g:Button ui:field="createAndProceedButton"
+					stylePrimaryName="action">
+					<ui:msg>Create Study and Proceed &gt;</ui:msg>
+				</g:Button>
+			</g:FlowPanel>
+		</g:HTMLPanel>
+
+
+		<g:FlowPanel ui:field="errorPanel">
+			<g:Label>
+				<ui:msg>There has been an unexpected error:</ui:msg>
+			</g:Label>
+		</g:FlowPanel>
+	</g:HTMLPanel>
+</ui:UiBinder> 
