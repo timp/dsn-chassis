@@ -15,18 +15,18 @@ public class TestUi extends Composite {
 	private static TestUiUiBinder uiBinder = GWT.create(TestUiUiBinder.class);
 
 	interface TestUiUiBinder extends UiBinder<Widget, TestUi> {}
+	
+	@UiField Question q1;
+	@UiField Button q1b;
 
-	@UiField
-	Button button;
-
-	public TestUi(String firstName) {
+	public TestUi() {
 		initWidget(uiBinder.createAndBindUi(this));
-		button.setText(firstName);
+		q1.bind();
 	}
 
-	@UiHandler("button")
-	void onClick(ClickEvent e) {
-		Window.alert("Hello!");
+	@UiHandler("q1b")
+	public void onClick(ClickEvent e) {
+		Window.alert(q1.getModel().toString());
 	}
 
 }

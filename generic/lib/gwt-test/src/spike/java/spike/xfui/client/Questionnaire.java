@@ -1,35 +1,29 @@
+/**
+ * 
+ */
 package spike.xfui.client;
 
-import java.util.Iterator;
+import com.google.gwt.user.client.ui.HTMLPanel;
 
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.HasWidgets;
-import com.google.gwt.user.client.ui.Widget;
+/**
+ * @author aliman
+ *
+ */
+public class Questionnaire extends HTMLPanel {
 
-public class Questionnaire extends Composite implements HasWidgets {
-
-	private FlowPanel canvas;
-
-	public Questionnaire() {
-		canvas = new FlowPanel();
-		initWidget(canvas);
+	/**
+	 * @param tag
+	 * @param html
+	 */
+	public Questionnaire(String tag, String html) {
+		super(tag, html);
 	}
 
-	public void add(Widget arg0) {
-		canvas.add(arg0);
+	/**
+	 * @param html
+	 */
+	public Questionnaire(String html) {
+		super(html);
 	}
 
-	public void clear() {
-		canvas.clear();
-	}
-
-	public Iterator<Widget> iterator() {
-		return canvas.iterator();
-	}
-
-	public boolean remove(Widget arg0) {
-		return canvas.remove(arg0);
-	}
-	
 }

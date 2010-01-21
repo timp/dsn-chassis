@@ -9,10 +9,17 @@
 		}
 	</ui:style>
 	<g:HTMLPanel>
-		Hello,
-		<g:Button styleName="{style.important}" ui:field="button" />
+        <hr/>
+        <x:Question 
+            ui:field="q1"
+            modelName="foo"
+            modelNamespaceUri="http://example.com/ns"
+            modelPrefix="ex">
+            <p>This is question 1.</p>
+            <x:Input type="string"/>
+            <p>What do you think?</p>
+        </x:Question>
+        <g:Button ui:field="q1b">get model</g:Button>
+        <hr/>
 	</g:HTMLPanel>
-	<x:Questionnaire>
-		<g:Label>This is a questionnaire.</g:Label>
-	</x:Questionnaire>
 </ui:UiBinder> 
