@@ -4,8 +4,11 @@
 package org.cggh.chassis.generic.xml.client;
 
 
+import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
@@ -108,6 +111,63 @@ public class GWTTestXML extends GWTTestCase {
 	
 	
 	
+//	public void testBrowsersAllowElementsInHashSets() {
+//		
+//		String xml = "<foo/>";
+//		Document d = XMLParser.parse(xml);
+//		Element e = d.getDocumentElement();
+//		
+//		Set<Element> s = new HashSet<Element>();
+//		s.add(e); // ie7 throws exception here
+//		
+//	}
+	
+	
+	
+	public void testBrowsersAllowElementsInTreeSets_1() {
+		
+		String xml = "<foo/>";
+		Document d = XMLParser.parse(xml);
+		Element e = d.getDocumentElement();
+		
+		Set<Element> t = new TreeSet<Element>();
+		t.add(e);
+		
+	}
+	
+	
+	
+//	public void testBrowsersAllowElementsInTreeSets_2() {
+//		
+//		String xml = "<foo><bar/><bar/></foo>";
+//		Document d = XMLParser.parse(xml);
+//		List<Element> l = XML.getElementsByTagName(d, "bar");
+//		
+//		Set<Element> t = new TreeSet<Element>(l); // throws in ff3 and ie7
+//		
+//	}
+	
+	
+	
+	public void testBrowsersAllowElementsInTreeSets_3() {
+		
+		String xml = "<foo><bar/><bar/></foo>";
+		Document d = XMLParser.parse(xml);
+		List<Element> l = XML.getElementsByTagName(d, "bar");
+		
+		Comparator<Element> c = new Comparator<Element>() {
+			public int compare(Element arg0, Element arg1) {
+				return 0;
+			}
+		};
+		
+		Set<Element> t = new TreeSet<Element>(c); 
+		t.addAll(l);
+		
+	}
+	
+	
+	
 	public void testGetElementsBySimplePath_1() {
 		log.enter("testGetElementsBySimplePath_1");
 		
@@ -130,65 +190,85 @@ public class GWTTestXML extends GWTTestCase {
 		Set<Element> results; 
 		
 		results = XML.getElementsBySimplePath(d, "foo");
+		log.debug(Integer.toString(results.size()));
 		assertEquals(1, results.size());
 		
 		results = XML.getElementsBySimplePath(d, "bar");
+		log.debug(Integer.toString(results.size()));
 		assertEquals(0, results.size());
 
 		results = XML.getElementsBySimplePath(d, "/foo");
+		log.debug(Integer.toString(results.size()));
 		assertEquals(1, results.size());
 		
 		results = XML.getElementsBySimplePath(d, "/bar");
+		log.debug(Integer.toString(results.size()));
 		assertEquals(0, results.size());
 
 		results = XML.getElementsBySimplePath(e, "/foo");
+		log.debug(Integer.toString(results.size()));
 		assertEquals(1, results.size());
 		
 		results = XML.getElementsBySimplePath(e, "/bar");
+		log.debug(Integer.toString(results.size()));
 		assertEquals(0, results.size());
 
 		results = XML.getElementsBySimplePath(e, "bar");
+		log.debug(Integer.toString(results.size()));
 		assertEquals(1, results.size());
 
 		results = XML.getElementsBySimplePath(e, "baz");
+		log.debug(Integer.toString(results.size()));
 		assertEquals(2, results.size());
 
 		results = XML.getElementsBySimplePath(e, "*");
+		log.debug(Integer.toString(results.size()));
 		assertEquals(3, results.size());
 
 		results = XML.getElementsBySimplePath(e, "quux");
+		log.debug(Integer.toString(results.size()));
 		assertEquals(0, results.size());
 
 		results = XML.getElementsBySimplePath(e, "bar/quux");
+		log.debug(Integer.toString(results.size()));
 		assertEquals(1, results.size());
 
 		results = XML.getElementsBySimplePath(e, "baz/quux");
+		log.debug(Integer.toString(results.size()));
 		assertEquals(2, results.size());
 
 		results = XML.getElementsBySimplePath(e, "*/quux");
+		log.debug(Integer.toString(results.size()));
 		assertEquals(3, results.size());
 
 		results = XML.getElementsBySimplePath(e, "bar/*");
+		log.debug(Integer.toString(results.size()));
 		assertEquals(2, results.size());
 
 		results = XML.getElementsBySimplePath(e, "*/*");
+		log.debug(Integer.toString(results.size()));
 		assertEquals(4, results.size());
 
 		results = XML.getElementsBySimplePath(e, "bar/../baz");
+		log.debug(Integer.toString(results.size()));
 		assertEquals(2, results.size());
 
 		results = XML.getElementsBySimplePath(e, "*/*/..");
+		log.debug(Integer.toString(results.size()));
 		assertEquals(2, results.size());
 
 		results = XML.getElementsBySimplePath(e, "*/*/../quux");
+		log.debug(Integer.toString(results.size()));
 		assertEquals(3, results.size());
 
 		Element f = XML.getChildrenByTagName(e, "bar").get(0);
 		
 		results = XML.getElementsBySimplePath(f, "/foo");
+		log.debug(Integer.toString(results.size()));
 		assertEquals(1, results.size());
 		
 		results = XML.getElementsBySimplePath(f, "/bar");
+		log.debug(Integer.toString(results.size()));
 		assertEquals(0, results.size());
 
 		log.leave();
