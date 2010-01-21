@@ -4,9 +4,11 @@
 package org.cggh.chassis.generic.xml.client;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
@@ -442,7 +444,7 @@ public class XML {
 	
 	
 	public static Set<Element> getElementsBySimplePathSegment(Set<Element> in, String pathSegment) {
-		Set<Element> out = new HashSet<Element>();
+		Set<Element> out = createSet();
 		getElementsBySimplePathSegment(in, pathSegment, out);
 		return out;
 	}
@@ -461,7 +463,7 @@ public class XML {
 		}
 		else {
 			
-			Set<Element> results = new HashSet<Element>();
+			Set<Element> results = createSet();
 			results.add(context);
 			
 			String[] segments = simplePath.split("/");
@@ -488,7 +490,7 @@ public class XML {
 	public static Set<Element> getElementsBySimplePath(Document context, String simplePath) {
 		log.enter("getElementsBySimplePath(Document, String)");
 		
-		Set<Element> results = new HashSet<Element>();
+		Set<Element> results = createSet();
 		
 		if (simplePath.startsWith("/")) {
 			simplePath = simplePath.substring(1); // chop of leading slash to avoid empty first segment
@@ -526,6 +528,24 @@ public class XML {
 		return results;
 	}
 	
+	
+	
+	public static Set<Element> createSet() {
+
+		Comparator<Element> c = new Comparator<Element>() {
+			public int compare(Element arg0, Element arg1) {
+				if (arg0.equals(arg1))
+					return 0;
+				else
+					return 1;
+			}
+		};
+		
+		Set<Element> t = new TreeSet<Element>(c); 
+
+		return t;
+		
+	}
 
 
 }
