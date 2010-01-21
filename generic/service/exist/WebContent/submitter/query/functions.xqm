@@ -55,7 +55,7 @@ declare function chassis:media() as element(atom:entry)*
             $entry/atom:title,
             $entry/atom:summary,
             $entry/atom:author,
-            $entry/atom:link[@rel!="edit"],
+            $entry/atom:link[@rel!="edit" and @rel!="edit-media"],
             $entry/atom:category        
         }
             <atom:link rel="edit" href="{$absolute-uri}"/>
