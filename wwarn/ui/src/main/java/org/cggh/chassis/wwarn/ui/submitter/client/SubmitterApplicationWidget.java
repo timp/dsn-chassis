@@ -58,6 +58,7 @@ public class SubmitterApplicationWidget extends MultiWidget {
 		
 		HandlerRegistration a = submitterHomeWidget.submitDataNavigationEventChannel.addHandler(new WidgetEventHandler() {
 			public void onEvent(WidgetEvent e) {
+				selectStudyWidget.setSelectedStudy(null);
 				selectStudyWidget.refresh();
 				setActiveChild(selectStudyWidget);
 			}
