@@ -14,12 +14,7 @@ import net.sourceforge.jwebunit.exception.TestingEngineResponseException;
  */
 public class LocalhostSmokeTestCase extends WebTestCase {
 
-	public void testTomcatRunning() throws Exception {
-		beginAt("/");
-		assertTitleEquals("Apache Tomcat");
-	}
-
-	public void testChassisRunning() throws Exception {
+	public void testGenericRunning() throws Exception {
 		try {
 			beginAt("/chassis-generic-client-gwt/");
 		} catch (TestingEngineResponseException e) {
@@ -35,6 +30,39 @@ public class LocalhostSmokeTestCase extends WebTestCase {
 		assertEquals("Chassis/*", startPage.getTitleText());
 	}
 
+	public void testWarnRunning() throws Exception {
+		try {
+			beginAt("/chassis-wwarn-client-gwt/");
+		} catch (TestingEngineResponseException e) {
+			assertEquals(401, e.getHttpStatusCode());
+		}
+		final DefaultCredentialsProvider credentialsProvider = new DefaultCredentialsProvider();
+		credentialsProvider.addCredentials("alice@example.org", "bar");
+
+		WebClient webClient = new WebClient();
+		webClient.setCredentialsProvider(credentialsProvider);
+		final HtmlPage startPage = webClient
+				.getPage(url("/chassis-wwarn-client-gwt/"));
+		assertEquals("Chassis/WWARN", startPage.getTitleText());
+	}
+	
+	public void testUiRunning() throws Exception {
+		try {
+			beginAt("/chassis-wwarn-ui/submitter/index.jsp");
+		} catch (TestingEngineResponseException e) {
+			assertEquals(401, e.getHttpStatusCode());
+		}
+		final DefaultCredentialsProvider credentialsProvider = new DefaultCredentialsProvider();
+		credentialsProvider.addCredentials("alice@example.org", "bar");
+
+		WebClient webClient = new WebClient();
+		webClient.setCredentialsProvider(credentialsProvider);
+		final HtmlPage startPage = webClient
+				.getPage(url("/chassis-wwarn-client-gwt/"));
+		assertEquals("Chassis/WWARN", startPage.getTitleText());
+	}
+	
+	
 	public void beginAt(String url) {
 		super.beginAt(url(url));
 	}
