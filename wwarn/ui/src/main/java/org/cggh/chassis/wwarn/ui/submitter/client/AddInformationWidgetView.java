@@ -14,6 +14,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
@@ -46,10 +47,27 @@ public class AddInformationWidgetView {
 	
 	@UiField Panel titlePanel;
 	@UiField Panel mainContentPanel;
+	@UiField Panel retrieveSubmissionPendingPanel;
 	@UiField SimplePanel studyQuestionnaireContainer;
 	
 	@UiField Label studyTitleLabel;
-	@UiField Anchor submitterHomeLink;
+	@UiField Label submissionId;
+	@UiField Label submissionDate;
+	
+	@UiField Anchor submitterHomeLink1;
+	@UiField Anchor submitterHomeLink2;
+	@UiField Button saveChangesButton1;
+	@UiField Button saveChangesButton2;
+
+	@UiField Panel filesTableContainer;
+	
+	@UiField Panel retrieveStudyPendingPanel;
+	@UiField Panel saveStudyPendingPanel;
+	@UiField Panel studyQuestionnairePanel;
+
+
+
+	private XQuestionnaire studyQuestionnaire;
 	
 	
 	
@@ -65,8 +83,8 @@ public class AddInformationWidgetView {
 
 
 
-	@UiHandler("submitterHomeLink")
-	void onSubmitterHomeLinkClick(ClickEvent e) {
+	@UiHandler("submitterHomeLink1")
+	void onSubmitterHomeLink1Click(ClickEvent e) {
 		log.enter("onSubmitterHomeLinkClick");
 		
 		controller.navigateToSubmitterHome();
@@ -74,6 +92,30 @@ public class AddInformationWidgetView {
 		log.leave();
 	}
 
+
+	
+	@UiHandler("submitterHomeLink2")
+	void onSubmitterHomeLink2Click(ClickEvent e) {
+		log.enter("onSubmitterHomeLinkClick");
+		
+		controller.navigateToSubmitterHome();
+		
+		log.leave();
+	}
+	
+	
+	
+	@UiHandler("saveChangesButton1")
+	void onSaveChangesButton1Click(ClickEvent e) {
+		controller.saveStudy();
+	}
+
+
+
+	@UiHandler("saveChangesButton2")
+	void onSaveChangesButton2Click(ClickEvent e) {
+		controller.saveStudy();
+	}
 
 
 
@@ -83,11 +125,18 @@ public class AddInformationWidgetView {
 	public void setQuestionnaire(XQuestionnaire questionnaire) {
 		log.enter("setQuestionnaire");
 		
+		studyQuestionnaire = questionnaire;
+		studyQuestionnaireContainer.clear();
 		studyQuestionnaireContainer.setWidget(questionnaire);
 
 		log.leave();
 	}
 
+	
+	
+	public XQuestionnaire getQuestionnaire() {
+		return studyQuestionnaire;
+	}
 
 
 

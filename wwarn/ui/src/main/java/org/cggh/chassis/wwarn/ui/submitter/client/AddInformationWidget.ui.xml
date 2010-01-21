@@ -17,30 +17,93 @@
 	        </h1>
 	        
 	        <h2>
-	            1. <ui:msg>Select Study</ui:msg> &gt;
-	            2. <ui:msg>Upload Files</ui:msg> &gt;
-	            3. <ui:msg>Submit</ui:msg> &gt;
+	            1. <ui:msg>Select Study</ui:msg> &rarr;
+	            2. <ui:msg>Upload Files</ui:msg> &rarr;
+	            3. <ui:msg>Submit</ui:msg> &rarr;
 	            <span class="currentStep">4. <ui:msg>Add Information</ui:msg></span>
 	        </h2>
 
         </g:HTMLPanel>
         
+        <g:HTMLPanel ui:field="retrieveSubmissionPendingPanel">
+            <p>
+                <ui:msg>pending... (retrieving submission details)</ui:msg>
+            </p>
+        </g:HTMLPanel>
+        
         <g:HTMLPanel ui:field="mainContentPanel">
         
             <p>
-                <ui:msg>Selected study:</ui:msg> 
-                <strong><g:InlineLabel ui:field="studyTitleLabel"/></strong>
+                <ui:msg>Submission ID</ui:msg>
+                <strong><g:InlineLabel ui:field="submissionId"/></strong>
+                <ui:msg>received on</ui:msg>
+                <strong><g:InlineLabel ui:field="submissionDate"/></strong>.
             </p>
             
             <p>
-                <ui:msg>Links: </ui:msg>
-                <g:Anchor ui:field="submitterHomeLink">
-                    <ui:msg>submitter home</ui:msg>
-                </g:Anchor>
+                <ui:msg>Thank you for submitting your files to WWARN.</ui:msg>
+                <ui:msg>TODO what happens next, e.g., you will be contacted by a curator...</ui:msg>
             </p>
             
-            <g:SimplePanel ui:field="studyQuestionnaireContainer"/>
+            <p>
+                <ui:msg>Please look at the study questionnaire below and fill in as much information as you can.</ui:msg>
+                <ui:msg>TODO explain why important, e.g., by providing this information you enable WWARN's curators to reliably bring together and compare data from different studies...</ui:msg>
+            </p>
+        
+            <p>
+                <ui:msg>Files submitted...</ui:msg>
+            </p>
+            
+            <g:FlowPanel ui:field="filesTableContainer"/>
 
+            <h2>
+                <ui:msg>Study Questionnaire</ui:msg>
+            </h2>
+            
+            <g:HTMLPanel ui:field="saveStudyPendingPanel">
+                <p>
+                    <ui:msg>pending... (saving changes)</ui:msg>
+                </p>
+            </g:HTMLPanel>
+
+            <g:HTMLPanel ui:field="retrieveStudyPendingPanel">
+                <p>
+                    <ui:msg>pending... (retrieving study information)</ui:msg>
+                </p>
+            </g:HTMLPanel>
+            
+            <g:HTMLPanel ui:field="studyQuestionnairePanel">
+            
+	            <p>
+	                <ui:msg>Study:</ui:msg> 
+	                <strong><g:InlineLabel ui:field="studyTitleLabel"/></strong>
+	            </p>
+	            
+	            <p>
+	                <g:Button ui:field="saveChangesButton1">
+	                    <ui:msg>Save Changes</ui:msg>
+	                </g:Button>
+	                <ui:msg>Links: </ui:msg>
+	                <g:Anchor ui:field="submitterHomeLink1">
+	                    <ui:msg>submitter home</ui:msg>
+	                </g:Anchor>
+	            </p>
+	            
+	            <g:SimplePanel ui:field="studyQuestionnaireContainer"/>
+	
+	            <p>
+	                <g:Button ui:field="saveChangesButton2">
+	                    <ui:msg>Save Changes</ui:msg>
+	                </g:Button>
+	                <ui:msg>Links: </ui:msg>
+	                <g:Anchor ui:field="submitterHomeLink2">
+	                    <ui:msg>submitter home</ui:msg>
+	                </g:Anchor>
+	            </p>
+	            
+            </g:HTMLPanel>
+            
+            
         </g:HTMLPanel>
 
 
