@@ -17,21 +17,19 @@
 			<ui:msg>Submitter</ui:msg>
 			-
 			<ui:msg>Submit Data</ui:msg>
-			-
-			<ui:msg>Select Study</ui:msg>
 		</h1>
 		<h2>
 			<span class="currentStep">
 				1.
 				<ui:msg>Select Study</ui:msg>
 			</span>
-			&gt;
+			&rarr;
 			2.
 			<ui:msg>Upload Files</ui:msg>
-			&gt;
+			&rarr;
 			3.
 			<ui:msg>Submit</ui:msg>
-			&gt;
+			&rarr;
 			4.
 			<ui:msg>Add Information</ui:msg>
 		</h2>

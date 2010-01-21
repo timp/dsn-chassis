@@ -13,7 +13,6 @@ import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.miniatom.client.Atom;
 import org.cggh.chassis.generic.miniatom.client.AtomHelper;
 import org.cggh.chassis.generic.miniatom.client.ext.Chassis;
-import org.cggh.chassis.generic.miniatom.client.ext.ChassisHelper;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 import org.cggh.chassis.generic.widget.client.ChassisWidget;
 import org.cggh.chassis.generic.widget.client.ErrorEvent;
@@ -56,13 +55,15 @@ public class AddInformationWidgetController {
 		
 		final Deferred<ChassisWidget> deferredOwner = new Deferred<ChassisWidget>();
 		
-		if (model.getSubmissionId() != null) {
+		if (model.submissionId.get() != null) {
 			
 			Deferred<Element> chain = retrieveSubmission();
 			
 			chain.addCallback(new RetrieveSubmissionCallback());
 			
 			chain.addCallback(new RetrieveQuestionnaireCallback());
+			
+			chain.addCallback(retrieveStudyCallback);
 
 			// handle errors
 			chain.addErrback(new DefaultErrback());
@@ -92,9 +93,9 @@ public class AddInformationWidgetController {
 	private Deferred<Element> retrieveSubmission() {
 		log.enter("retrieveSubmission");
 		
-		String submissionId = model.getSubmissionId();
+		String submissionId = model.submissionId.get();
 		
-		model.setStatus(AddInformationWidgetModel.STATUS_RETRIEVE_SUBMISSION_PENDING);
+		model.status.set(AddInformationWidgetModel.STATUS_RETRIEVE_SUBMISSION_PENDING);
 		
 		QueryParams qp = new QueryParams();
 		qp.put(Chassis.QUERYPARAM_ID, submissionId);
@@ -125,7 +126,7 @@ public class AddInformationWidgetController {
 
 		public Deferred<XQuestionnaire> apply(Element submissionEntryElement) {
 			
-			model.setSubmissionEntryElement(submissionEntryElement);
+			model.submissionEntryElement.set(submissionEntryElement);
 			
 			Deferred<XQuestionnaire> deferredQuestionnaire;
 			
@@ -135,7 +136,10 @@ public class AddInformationWidgetController {
 				assert studyLinks.size() == 1;
 				
 				Element studyEntryElement = AtomHelper.getFirstEntry(studyLinks.get(0));
-				model.setStudyEntryElement(studyEntryElement);
+				String url = AtomHelper.getEditLinkHrefAttr(studyEntryElement);
+				model.studyUrl.set(url);
+
+//				model.studyEntryElement.set(studyEntryElement);
 				
 				// we have a submission, so lets try retrieving the study questionnaire
 				deferredQuestionnaire = retrieveQuestionnaire();
@@ -144,7 +148,7 @@ public class AddInformationWidgetController {
 			
 			else {
 				
-				model.setStatus(AddInformationWidgetModel.STATUS_SUBMISSION_NOT_FOUND);
+				model.status.set(AddInformationWidgetModel.STATUS_SUBMISSION_NOT_FOUND);
 				deferredQuestionnaire = new Deferred<XQuestionnaire>();
 				deferredQuestionnaire.callback(null);
 
@@ -171,33 +175,47 @@ public class AddInformationWidgetController {
 	public Deferred<XQuestionnaire> retrieveQuestionnaire() {
 		log.enter("retrieveQuestionnaire");
 		
-		model.setStatus(AddInformationWidgetModel.STATUS_RETRIEVE_QUESTIONNAIRE_PENDING);
+		Deferred<XQuestionnaire> d;
 		
-		String url = Config.get(Config.QUESTIONNAIRE_STUDY_URL);
-		log.debug("url: "+url);
+		if (view.getQuestionnaire() == null) {
+			log.debug("retrieving questionnaire");
+			
+			model.status.set(AddInformationWidgetModel.STATUS_RETRIEVE_QUESTIONNAIRE_PENDING);
+			
+			String url = Config.get(Config.QUESTIONNAIRE_STUDY_URL);
+			log.debug("url: "+url);
+
+			d = XQuestionnaire.load(url);
+		}
+		else {
+			log.debug("questionnaire already retrieved");
+			d = new Deferred<XQuestionnaire>();
+			d.callback(view.getQuestionnaire()); // TODO this is an ugly hack
+		}
 		
-		Deferred<XQuestionnaire> deferredQuestionnaire = XQuestionnaire.load(url);
 		
 		log.leave();
-		return deferredQuestionnaire;
+		return d;
 	}
 
 	
 	
 	
-	private class RetrieveQuestionnaireCallback implements Function<XQuestionnaire, XQuestionnaire> {
+	private class RetrieveQuestionnaireCallback implements Function<XQuestionnaire, Deferred<Element>> {
 
-		public XQuestionnaire apply(XQuestionnaire questionnaire) {
+		public Deferred<Element> apply(XQuestionnaire questionnaire) {
 			
-			// here we break the MVC cycle, by manipulating the view directly...
-			view.setQuestionnaire(questionnaire);
+			if (view.getQuestionnaire() == null) {
+				
+				// TODO ugly hack to make sure we don't reset the questionnaire unnecessarily
+				log.debug("setting questionnaire on view");
+				view.setQuestionnaire(questionnaire);
+				
+			}
 			
-			Element studyElement = ChassisHelper.getStudy(AtomHelper.getContent(model.getStudyEntryElement()));
-			questionnaire.init(studyElement);
-			
-			model.setStatus(AddInformationWidgetModel.STATUS_READY_FOR_INTERACTION);
+			return retrieveStudy();
 
-			return questionnaire;
+			
 		}
 		
 	}
@@ -209,7 +227,7 @@ public class AddInformationWidgetController {
 
 		public Throwable apply(Throwable in) {
 			log.error("unexpected error", in);
-			model.setStatus(AsyncWidgetModel.STATUS_ERROR);
+			model.status.set(AsyncWidgetModel.STATUS_ERROR);
 			owner.fireEvent(new ErrorEvent(in));
 			return in;
 		}
@@ -222,6 +240,85 @@ public class AddInformationWidgetController {
 		this.view = view;
 	}
 
+
+
+	/**
+	 * @return
+	 */
+	public Deferred<Element> retrieveStudy() {
+		log.enter("retrieveStudy");
+		
+		model.status.set(AddInformationWidgetModel.STATUS_RETRIEVE_STUDY_PENDING);
+		
+		Deferred<Element> d;
+		
+		if (!model.studyUrl.isNull()) {
+			
+			d = Atom.getEntry(model.studyUrl.get()).adapt(new Function<Document, Element>() {
+
+				public Element apply(Document in) {
+					return in.getDocumentElement();
+				}
+				
+			});
+			
+		}
+		else {
+			d = new Deferred<Element>();
+			d.callback(null);
+		}
+		
+		log.leave();
+		return d;
+	}
+	
+	
+	
+	public final Function<Element, Element> retrieveStudyCallback = new Function<Element, Element>() {
+		
+		public Element apply(Element in) {
+			log.enter("apply");
+			
+			model.studyEntryElement.set(in);
+			model.status.set(AddInformationWidgetModel.STATUS_READY_FOR_INTERACTION);
+			
+			log.leave();
+			return in;
+		}
+	};
+
+
+
+	/**
+	 * 
+	 */
+	public void saveStudy() {
+		log.enter("saveStudy");
+		
+		model.status.set(AddInformationWidgetModel.STATUS_SAVE_STUDY_PENDING);
+		
+		Deferred<Document> d = Atom.putEntry(model.studyUrl.get(), model.studyEntryElement.get().getOwnerDocument());
+
+		d.addCallback(saveStudyCallback);
+		d.addErrback(new DefaultErrback());
+		
+		log.leave();
+	}
+
+	
+	
+	protected final Function<Document, Document> saveStudyCallback = new Function<Document, Document>() {
+		
+		public Document apply(Document in) {
+			log.enter("apply");
+			
+			model.studyEntryElement.set(in.getDocumentElement());
+			model.status.set(AddInformationWidgetModel.STATUS_READY_FOR_INTERACTION);
+			
+			log.leave();
+			return in;
+		}
+	};
 
 
 

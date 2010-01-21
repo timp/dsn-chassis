@@ -117,23 +117,11 @@ public class UploadFilesWidgetRenderer extends ChassisWidgetRenderer<UploadFiles
 			}
 		});
 		
-//		model.addStudyEntryChangeHandler(new StudyEntryChangeHandler() {
-//			public void onChange(StudyEntryChangeEvent e) {
-//				syncUIWithStudyEntryElement(e.getAfter());
-//			}
-//		});
-		
 		model.studyEntryElement.addChangeHandler(new PropertyChangeHandler<Element>() {
 			public void onChange(PropertyChangeEvent<Element> e) {
 				syncUIWithStudyEntryElement(e.getAfter());
 			}
 		});
-		
-//		model.addUploadFeedChangeHandler(new UploadFeedChangeHandler() {
-//			public void onChange(UploadFeedChangeEvent e) {
-//				syncUIWithUploadFeedDoc(e.getAfter());
-//			}
-//		});
 		
 		model.uploadFeedDoc.addChangeHandler(new PropertyChangeHandler<Document>() {
 			public void onChange(PropertyChangeEvent<Document> e) {

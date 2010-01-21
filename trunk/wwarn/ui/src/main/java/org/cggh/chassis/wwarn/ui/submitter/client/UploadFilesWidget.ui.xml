@@ -15,9 +15,9 @@
         </h1>
         
         <h2>
-            1. <ui:msg>Select Study</ui:msg> &gt;
-            <span class="currentStep">2. <ui:msg>Upload Files</ui:msg></span> &gt;
-            3. <ui:msg>Submit</ui:msg> &gt;
+            1. <ui:msg>Select Study</ui:msg> &rarr;
+            <span class="currentStep">2. <ui:msg>Upload Files</ui:msg></span> &rarr;
+            3. <ui:msg>Submit</ui:msg> &rarr;
             4. <ui:msg>Add Information</ui:msg>
         </h2>
         

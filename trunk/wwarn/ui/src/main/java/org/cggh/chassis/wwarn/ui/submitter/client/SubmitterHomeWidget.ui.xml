@@ -20,7 +20,7 @@
     <g:HTMLPanel>
         
         <h1>
-            <ui:msg>Submit Data</ui:msg> - <ui:msg>Home</ui:msg>
+            <ui:msg>Submitter</ui:msg> - <ui:msg>Home</ui:msg>
         </h1>
         
         <p><ui:msg>Welcome to the WWARN data submission home page.</ui:msg></p>

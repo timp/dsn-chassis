@@ -65,7 +65,7 @@ public class AddInformationWidget extends DelegatingWidget<AddInformationWidgetM
 	
 	
 	public void setSubmission(String id) {
-		model.setSubmissionId(id);
+		model.submissionId.set(id);
 	}
 	
 	
@@ -104,7 +104,7 @@ public class AddInformationWidget extends DelegatingWidget<AddInformationWidgetM
 			
 			Map<String, String> map = new HashMap<String, String>();
 			
-			String submissionId = model.getSubmissionId();
+			String submissionId = model.submissionId.get();
 			
 			if (submissionId != null) {
 				map.put(KEY_SUBMISSIONID, submissionId);
@@ -126,7 +126,7 @@ public class AddInformationWidget extends DelegatingWidget<AddInformationWidgetM
 			
 			Deferred<WidgetMemory> deferredMemory;
 			
-			model.setStatus(AsyncWidgetModel.STATUS_INITIAL);
+			model.status.set(AsyncWidgetModel.STATUS_INITIAL);
 			
 			String submissionId = mnemonic.get(KEY_SUBMISSIONID);
 			
