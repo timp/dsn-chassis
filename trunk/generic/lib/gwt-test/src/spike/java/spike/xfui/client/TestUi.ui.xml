@@ -1,0 +1,18 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder 
+	xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui"
+	xmlns:x="urn:import:spike.xfui.client">
+	<ui:style>
+		.important {
+			font-weight: bold;
+		}
+	</ui:style>
+	<g:HTMLPanel>
+		Hello,
+		<g:Button styleName="{style.important}" ui:field="button" />
+	</g:HTMLPanel>
+	<x:Questionnaire>
+		<g:Label>This is a questionnaire.</g:Label>
+	</x:Questionnaire>
+</ui:UiBinder> 
