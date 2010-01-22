@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <parent>
+    <groupId>org.cggh.chassis</groupId>
+    <artifactId>chassis-parent</artifactId>
+    <version>1.0-alpha-1</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>chassis-generic-lib-java</artifactId>
+  <packaging>jar</packaging>
+  <name>googlecode_dsn-chassis_generic_lib_java</name>
+  
+  <dependencies>
+    <dependency>
+     <groupId>org.springframework</groupId>
+     <artifactId>spring</artifactId>
+     <version>2.5.6.SEC01</version>
+     <scope>runtime</scope>
+    </dependency> 
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-core</artifactId>
+      <version>2.0.5.RELEASE</version>
+    </dependency> 
+    <dependency>
+      <groupId>com.google.gwt</groupId>
+      <artifactId>gwt-servlet</artifactId>
+      <version>${gwtVersion}</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+     <groupId>javax.servlet</groupId>
+     <artifactId>servlet-api</artifactId>
+     <version>2.4</version>
+     <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+      <version>1.2.12</version>
+      <scope>compile</scope>
+    </dependency>    
+    <dependency>
+      <groupId>commons-logging</groupId>
+      <artifactId>commons-logging</artifactId>
+      <version>1.1.1</version>
+      <scope>compile</scope>
+    </dependency>    
+  </dependencies>
+  
+  <build>
+    <resources>
+     <resource>
+      <directory>src/main/java</directory>
+      <includes>
+        <include>**/*.java</include>
+        <include>**/*.xml</include>
+      </includes>
+     </resource>
+     <resource>
+      <directory>src/main/resources</directory>
+      <includes>
+        <include>**/*.xml</include>
+      </includes>
+     </resource>
+    </resources>
+  </build>
+  
+</project>

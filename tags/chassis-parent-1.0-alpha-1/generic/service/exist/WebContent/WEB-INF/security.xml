@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans 
+  xmlns:beans="http://www.springframework.org/schema/beans"
+  xmlns="http://www.springframework.org/schema/security"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+              http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-2.0.4.xsd">  
+
+
+
+  <!--+
+      | 
+      | Security requires an authentication provider.
+      | For the development environment, we'll import a definition of a simple
+      | authentication provider from the classpath.
+      | (This file can be found in the generic/lib/java project.)
+      |
+      +-->
+   
+  <beans:import resource="classpath:/dev/configuration/spring/authentication-provider.xml"/>
+
+
+
+  <!--+
+      |
+      | Begin definition of HTTP authentication and authorisation rules. 
+      |
+      +-->
+        
+  <http 
+    auto-config="false" 
+    realm="chassis-development-realm" 
+    create-session="never"> <!-- N.B. never create sessions, this messes with eXist authentication -->
+  
+  
+    <!--+
+        |
+        | HTTP authentication mechanisms.
+        | For the development environment, use HTTP basic.
+        |
+        + -->
+        
+    <http-basic/>
+
+
+    <!--+
+        |
+        | Begin HTTP authorisation rules for this Web application.
+        |
+        +-->
+        
+    
+     
+     
+	<!-- allow... -->
+	
+    <intercept-url 
+      pattern="/mock/**" 
+      access="ROLE_CHASSIS_SUBMITTER, ROLE_CHASSIS_ADMINISTRATOR"/>
+    
+    <intercept-url 
+      pattern="/submitter/**" 
+      access="ROLE_CHASSIS_SUBMITTER, ROLE_CHASSIS_ADMINISTRATOR"/>
+
+    <intercept-url 
+      pattern="/atom/edit/**" 
+      access="ROLE_CHASSIS_SUBMITTER, ROLE_CHASSIS_ADMINISTRATOR"/>
+    
+    <intercept-url 
+      pattern="/**" 
+      access="ROLE_CHASSIS_ADMINISTRATOR"/>
+    
+    
+    
+
+  </http>
+  
+  
+
+</beans:beans>

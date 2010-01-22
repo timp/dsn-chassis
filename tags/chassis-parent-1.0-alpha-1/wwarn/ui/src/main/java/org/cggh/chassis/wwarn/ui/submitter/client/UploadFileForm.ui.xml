@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder 
+    xmlns:ui="urn:ui:com.google.gwt.uibinder"
+    xmlns:g="urn:import:com.google.gwt.user.client.ui"
+    ui:generateFormat="com.google.gwt.i18n.rebind.format.PropertiesFormat"
+    ui:generateKeys="com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator"
+    ui:generateLocales="default">
+    
+    <g:HTMLPanel>
+        
+        <g:FormPanel ui:field="formPanel">
+        
+        	<g:HTMLPanel>
+        	
+	        	<h4>
+	        		<ui:msg>File</ui:msg>
+	        	</h4>
+	        	
+	        	<p>
+	        		<ui:msg>Please select the file to upload from your computer...</ui:msg>
+	        	</p>
+	        	
+	        	<p>
+	        		<g:FileUpload ui:field="fileInput"/>
+	  			</p>
+	  			      	
+	        	<h4>
+	        		<ui:msg>Summary</ui:msg>
+	        	</h4>
+	        	
+	        	<p>
+	        		<ui:msg>Please provide a short description of the file...</ui:msg>
+	        	</p>
+	        	
+	        	<p>
+	    	    	<g:TextArea ui:field="summaryInput"/>
+		    	</p>
+		    	    	
+	        	<p>
+	        		<em><ui:msg>E.g., this file contains clinical data from ... TODO good example</ui:msg></em>
+	        	</p>
+	        	
+	        	<h4>
+	        		<ui:msg>File Type</ui:msg>
+	        	</h4>
+	        	
+	        	<p>
+	        		<ui:msg>Please select the type of file you are uploading...</ui:msg>
+	        	</p>
+	        	
+	        	<p>
+		        	<g:ListBox ui:field="typeInput" visibleItemCount='1'/>
+				</p>
+				
+				<g:HTMLPanel ui:field="otherTypePanel">
+					<p>
+						<ui:msg>Other:</ui:msg>
+						<g:TextBox ui:field="otherTypeInput"/>
+					</p>
+				</g:HTMLPanel>
+
+        	</g:HTMLPanel>
+        	
+        </g:FormPanel>
+    
+    </g:HTMLPanel>
+    
+</ui:UiBinder>
