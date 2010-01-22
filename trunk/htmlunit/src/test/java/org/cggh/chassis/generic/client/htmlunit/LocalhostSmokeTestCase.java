@@ -48,7 +48,7 @@ public class LocalhostSmokeTestCase extends WebTestCase {
 	
 	public void testUiRunning() throws Exception {
 		try {
-			beginAt("/chassis-wwarn-ui/submitter/index.jsp");
+			beginAt("/chassis-wwarn-ui/administrator");
 		} catch (TestingEngineResponseException e) {
 			assertEquals(401, e.getHttpStatusCode());
 		}
@@ -57,9 +57,15 @@ public class LocalhostSmokeTestCase extends WebTestCase {
 
 		WebClient webClient = new WebClient();
 		webClient.setCredentialsProvider(credentialsProvider);
-		final HtmlPage startPage = webClient
-				.getPage(url("/chassis-wwarn-client-gwt/"));
-		assertEquals("Chassis/WWARN", startPage.getTitleText());
+		final HtmlPage administratorPage = webClient.getPage(url("/chassis-wwarn-ui/administrator"));
+		assertEquals("WWARN - Administrator // alice@example.org", administratorPage.getTitleText());
+		
+		
+		
+		final HtmlPage startPage = webClient.getPage(url("/chassis-wwarn-ui/submitter/index.jsp"));
+		assertEquals("WWARN - Submitter // alice@example.org", startPage.getTitleText());
+		
+		
 	}
 	
 	
