@@ -16,6 +16,18 @@
       <artifactId>chassis-generic-lib-gwt</artifactId>
       <version>${project.version}</version>
     </dependency>
+    
+    
+    <dependency>
+      <groupId>com.google.gwt</groupId>
+      <artifactId>gwt-user</artifactId>
+      <version>${gwtVersion}</version>
+      <!-- This is a bit of a hack: 
+      we need this to perform a gwt-compile 
+      but we do not want to include in war -->
+      <scope>provided</scope>
+    </dependency>
+    
     <dependency>
       <groupId>org.cggh.chassis</groupId>
       <artifactId>chassis-generic-client-gwt</artifactId>
@@ -51,6 +63,13 @@
       <version>1.2.1</version>
     </dependency> 
     
+    <dependency>
+     <groupId>javax.servlet</groupId>
+     <artifactId>servlet-api</artifactId>
+     <version>2.4</version>
+     <scope>provided</scope>
+    </dependency>
+
   </dependencies>
   
   <build>
@@ -65,6 +84,7 @@
               <goal>compile</goal>
             </goals>
             <configuration>
+              <gwtVersion>${gwtVersion}</gwtVersion>
 	      <module>org.cggh.chassis.wwarn.ui.submitter.Submitter</module>
 	      <module>org.cggh.chassis.wwarn.ui.administrator.Administrator</module>
             </configuration>

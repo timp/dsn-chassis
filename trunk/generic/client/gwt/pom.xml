@@ -16,6 +16,18 @@
      <artifactId>chassis-generic-lib-gwt</artifactId>
      <version>${project.version}</version>
     </dependency> 
+    
+    
+    <!-- This appears not to be transitively inheritted --> 
+    <dependency>
+      <groupId>com.google.gwt</groupId>
+      <artifactId>gwt-user</artifactId>
+      <version>${gwtVersion}</version>
+      <!-- This is a bit of a hack: 
+      we need this to perform a gwt-compile 
+      but we do not want to include in war -->
+      <scope>provided</scope>
+    </dependency>
   </dependencies>
   
   <build>
@@ -43,6 +55,7 @@
                See http://code.google.com/support/bin/answer.py?hl=en&answer=71442
 	       Does not seem to be necessary #superstitiousCode
               -->
+              <gwtVersion>${gwtVersion}</gwtVersion>
               <extraJvmArgs>-Xmx1024m -Xss1024k -Djava.awt.headless=true</extraJvmArgs>
 	      <module>org.cggh.chassis.generic.client.gwt.main.Main</module>
             </configuration>
