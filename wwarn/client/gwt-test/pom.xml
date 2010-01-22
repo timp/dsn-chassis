@@ -94,6 +94,7 @@
             <goal>test</goal>
             </goals>
             <configuration>
+              <gwtVersion>${gwtVersion}</gwtVersion>
               <excludes>**/legacy/**/*</excludes>
 	      <includes>**/GWTTest*.java</includes>
             </configuration>
