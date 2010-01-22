@@ -1,9 +1,9 @@
-function org_cggh_chassis_wwarn_ui_submitter_Submitter(){
+function spike_questionnaire_study_SpikeStudyQuestionnaire(){
   var $wnd_0 = window, $doc_0 = document, $stats = $wnd_0.__gwtStatsEvent?function(a){
     return $wnd_0.__gwtStatsEvent(a);
   }
   :null, $sessionId_0 = $wnd_0.__gwtStatsSessionId?$wnd_0.__gwtStatsSessionId:null, scriptsDone, loadDone, bodyDone, base = '', metaProps = {}, values = [], providers = [], answers = [], onLoadErrorFunc, propertyErrorFunc;
-  $stats && $stats({moduleName:'org.cggh.chassis.wwarn.ui.submitter.Submitter', sessionId:$sessionId_0, subSystem:'startup', evtGroup:'bootstrap', millis:(new Date).getTime(), type:'begin'});
+  $stats && $stats({moduleName:'spike.questionnaire.study.SpikeStudyQuestionnaire', sessionId:$sessionId_0, subSystem:'startup', evtGroup:'bootstrap', millis:(new Date).getTime(), type:'begin'});
   if (!$wnd_0.__gwt_stylesLoaded) {
     $wnd_0.__gwt_stylesLoaded = {};
   }
@@ -27,7 +27,7 @@ function org_cggh_chassis_wwarn_ui_submitter_Submitter(){
 
   function maybeStartModule(){
     if (scriptsDone && loadDone) {
-      var iframe = $doc_0.getElementById('org.cggh.chassis.wwarn.ui.submitter.Submitter');
+      var iframe = $doc_0.getElementById('spike.questionnaire.study.SpikeStudyQuestionnaire');
       var frameWnd = iframe.contentWindow;
       if (isHostedMode()) {
         frameWnd.__gwt_getProperty = function(name_0){
@@ -35,14 +35,14 @@ function org_cggh_chassis_wwarn_ui_submitter_Submitter(){
         }
         ;
       }
-      org_cggh_chassis_wwarn_ui_submitter_Submitter = null;
-      frameWnd.gwtOnLoad(onLoadErrorFunc, 'org.cggh.chassis.wwarn.ui.submitter.Submitter', base);
-      $stats && $stats({moduleName:'org.cggh.chassis.wwarn.ui.submitter.Submitter', sessionId:$sessionId_0, subSystem:'startup', evtGroup:'moduleStartup', millis:(new Date).getTime(), type:'end'});
+      spike_questionnaire_study_SpikeStudyQuestionnaire = null;
+      frameWnd.gwtOnLoad(onLoadErrorFunc, 'spike.questionnaire.study.SpikeStudyQuestionnaire', base);
+      $stats && $stats({moduleName:'spike.questionnaire.study.SpikeStudyQuestionnaire', sessionId:$sessionId_0, subSystem:'startup', evtGroup:'moduleStartup', millis:(new Date).getTime(), type:'end'});
     }
   }
 
   function computeScriptBase(){
-    var thisScript, markerId = '__gwt_marker_org.cggh.chassis.wwarn.ui.submitter.Submitter', markerScript;
+    var thisScript, markerId = '__gwt_marker_spike.questionnaire.study.SpikeStudyQuestionnaire', markerScript;
     $doc_0.write('<script id="' + markerId + '"><\/script>');
     markerScript = $doc_0.getElementById(markerId);
     thisScript = markerScript && markerScript.previousSibling;
@@ -162,11 +162,11 @@ function org_cggh_chassis_wwarn_ui_submitter_Submitter(){
       frameInjected = true;
       var iframe = $doc_0.createElement('iframe');
       iframe.src = "javascript:''";
-      iframe.id = 'org.cggh.chassis.wwarn.ui.submitter.Submitter';
+      iframe.id = 'spike.questionnaire.study.SpikeStudyQuestionnaire';
       iframe.style.cssText = 'position:absolute;width:0;height:0;border:none';
       iframe.tabIndex = -1;
       $doc_0.body.appendChild(iframe);
-      $stats && $stats({moduleName:'org.cggh.chassis.wwarn.ui.submitter.Submitter', sessionId:$sessionId_0, subSystem:'startup', evtGroup:'moduleStartup', millis:(new Date).getTime(), type:'moduleRequested'});
+      $stats && $stats({moduleName:'spike.questionnaire.study.SpikeStudyQuestionnaire', sessionId:$sessionId_0, subSystem:'startup', evtGroup:'moduleStartup', millis:(new Date).getTime(), type:'moduleRequested'});
       iframe.contentWindow.location.replace(base + initialHtml);
     }
   }
@@ -209,16 +209,16 @@ function org_cggh_chassis_wwarn_ui_submitter_Submitter(){
   }
   ;
   values['user.agent'] = {gecko:0, gecko1_8:1, ie6:2, ie8:3, opera:4, safari:5};
-  org_cggh_chassis_wwarn_ui_submitter_Submitter.onScriptLoad = function(){
+  spike_questionnaire_study_SpikeStudyQuestionnaire.onScriptLoad = function(){
     if (frameInjected) {
       loadDone = true;
       maybeStartModule();
     }
   }
   ;
-  org_cggh_chassis_wwarn_ui_submitter_Submitter.onInjectionDone = function(){
+  spike_questionnaire_study_SpikeStudyQuestionnaire.onInjectionDone = function(){
     scriptsDone = true;
-    $stats && $stats({moduleName:'org.cggh.chassis.wwarn.ui.submitter.Submitter', sessionId:$sessionId_0, subSystem:'startup', evtGroup:'loadExternalRefs', millis:(new Date).getTime(), type:'end'});
+    $stats && $stats({moduleName:'spike.questionnaire.study.SpikeStudyQuestionnaire', sessionId:$sessionId_0, subSystem:'startup', evtGroup:'loadExternalRefs', millis:(new Date).getTime(), type:'end'});
     maybeStartModule();
   }
   ;
@@ -226,23 +226,23 @@ function org_cggh_chassis_wwarn_ui_submitter_Submitter(){
   var strongName;
   var initialHtml;
   if (isHostedMode()) {
-    if ($wnd_0.external && ($wnd_0.external.initModule && $wnd_0.external.initModule('org.cggh.chassis.wwarn.ui.submitter.Submitter'))) {
+    if ($wnd_0.external && ($wnd_0.external.initModule && $wnd_0.external.initModule('spike.questionnaire.study.SpikeStudyQuestionnaire'))) {
       $wnd_0.location.reload();
       return;
     }
-    initialHtml = 'hosted.html?org_cggh_chassis_wwarn_ui_submitter_Submitter';
+    initialHtml = 'hosted.html?spike_questionnaire_study_SpikeStudyQuestionnaire';
     strongName = '';
   }
   processMetas();
-  $stats && $stats({moduleName:'org.cggh.chassis.wwarn.ui.submitter.Submitter', sessionId:$sessionId_0, subSystem:'startup', evtGroup:'bootstrap', millis:(new Date).getTime(), type:'selectingPermutation'});
+  $stats && $stats({moduleName:'spike.questionnaire.study.SpikeStudyQuestionnaire', sessionId:$sessionId_0, subSystem:'startup', evtGroup:'bootstrap', millis:(new Date).getTime(), type:'selectingPermutation'});
   if (!isHostedMode()) {
     try {
-      unflattenKeylistIntoAnswers(['opera'], '07B2B989868D2E2F05E6420FADB33AAA');
-      unflattenKeylistIntoAnswers(['ie6'], '23EEED42279166B959F02F6CCFD935C5');
-      unflattenKeylistIntoAnswers(['ie8'], '329EFFB6BBCCDF63F77F7169B9B250B7');
-      unflattenKeylistIntoAnswers(['safari'], 'AF244629B2E90B3CB90A652AB183DC9F');
-      unflattenKeylistIntoAnswers(['gecko'], 'C2B5F46CE01107F66943DDEAD1C35291');
-      unflattenKeylistIntoAnswers(['gecko1_8'], 'D336A715DE9F33DCF1D57E3291407897');
+      unflattenKeylistIntoAnswers(['gecko1_8'], '01A38399B76D2E522A09728309CC2C1B');
+      unflattenKeylistIntoAnswers(['gecko'], '493975DF73523286022D82D37B34D53E');
+      unflattenKeylistIntoAnswers(['ie8'], '538B0FA29C6C01A081F05C075422D173');
+      unflattenKeylistIntoAnswers(['safari'], '72FE234D223AEF725C59AA231719CF86');
+      unflattenKeylistIntoAnswers(['ie6'], '99C41BA58D7458429DFED426BD0D666B');
+      unflattenKeylistIntoAnswers(['opera'], 'CB162BC0C8BDDE3328FE36A6DDE6EC1F');
       strongName = answers[computePropValue('user.agent')];
       initialHtml = strongName + '.cache.html';
     }
@@ -254,11 +254,11 @@ function org_cggh_chassis_wwarn_ui_submitter_Submitter(){
   function onBodyDone(){
     if (!bodyDone) {
       bodyDone = true;
-      if (!__gwt_stylesLoaded['gwt/standard/standard.css']) {
+      if (!__gwt_stylesLoaded['gwt/chrome/chrome.css']) {
         var l = $doc_0.createElement('link');
-        __gwt_stylesLoaded['gwt/standard/standard.css'] = l;
+        __gwt_stylesLoaded['gwt/chrome/chrome.css'] = l;
         l.setAttribute('rel', 'stylesheet');
-        l.setAttribute('href', base + 'gwt/standard/standard.css');
+        l.setAttribute('href', base + 'gwt/chrome/chrome.css');
         $doc_0.getElementsByTagName('head')[0].appendChild(l);
       }
       maybeStartModule();
@@ -285,9 +285,9 @@ function org_cggh_chassis_wwarn_ui_submitter_Submitter(){
     }
   }
   , 50);
-  $stats && $stats({moduleName:'org.cggh.chassis.wwarn.ui.submitter.Submitter', sessionId:$sessionId_0, subSystem:'startup', evtGroup:'bootstrap', millis:(new Date).getTime(), type:'end'});
-  $stats && $stats({moduleName:'org.cggh.chassis.wwarn.ui.submitter.Submitter', sessionId:$sessionId_0, subSystem:'startup', evtGroup:'loadExternalRefs', millis:(new Date).getTime(), type:'begin'});
-  $doc_0.write('<script defer="defer">org_cggh_chassis_wwarn_ui_submitter_Submitter.onInjectionDone(\'org.cggh.chassis.wwarn.ui.submitter.Submitter\')<\/script>');
+  $stats && $stats({moduleName:'spike.questionnaire.study.SpikeStudyQuestionnaire', sessionId:$sessionId_0, subSystem:'startup', evtGroup:'bootstrap', millis:(new Date).getTime(), type:'end'});
+  $stats && $stats({moduleName:'spike.questionnaire.study.SpikeStudyQuestionnaire', sessionId:$sessionId_0, subSystem:'startup', evtGroup:'loadExternalRefs', millis:(new Date).getTime(), type:'begin'});
+  $doc_0.write('<script defer="defer">spike_questionnaire_study_SpikeStudyQuestionnaire.onInjectionDone(\'spike.questionnaire.study.SpikeStudyQuestionnaire\')<\/script>');
 }
 
-org_cggh_chassis_wwarn_ui_submitter_Submitter();
+spike_questionnaire_study_SpikeStudyQuestionnaire();
