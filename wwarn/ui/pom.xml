@@ -85,8 +85,10 @@
             </goals>
             <configuration>
               <gwtVersion>${gwtVersion}</gwtVersion>
-	      <module>org.cggh.chassis.wwarn.ui.submitter.Submitter</module>
-	      <module>org.cggh.chassis.wwarn.ui.administrator.Administrator</module>
+              <modules>
+                <module>org.cggh.chassis.wwarn.ui.administrator.Administrator</module>
+                <module>org.cggh.chassis.wwarn.ui.submitter.Submitter</module>
+              </modules>
             </configuration>
           </execution>
         </executions>

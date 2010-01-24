@@ -42,7 +42,7 @@ public class SelectStudyWidget
 	
 	@Override
 	public void init() { 
-		super.init(); // instantiates model and renederer
+		super.init(); // instantiates model and renderer
 		this.controller = new SelectStudyWidgetController(this, this.model);
 		this.renderer.setController(this.controller);
 		this.memory = new Memory();		 

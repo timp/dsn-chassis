@@ -53,8 +53,8 @@ public class SelectStudyWidgetRenderer extends ChassisWidgetRenderer<SelectStudy
     @UiField HTMLPanel selectExistingStudyPanel;
     @UiField ListBox studySelect;
 	@UiField HTMLPanel createStudyInteractionPanel;
-	@UiField Button cancelSubmissionButtonOne; //TODO handle cancel
-	@UiField Button cancelSubmissionButton;    //TODO Handle cancel
+	@UiField Button cancelSubmissionButtonOne; 
+	@UiField Button cancelSubmissionButton;    
 	@UiField Button proceedWithSelectedButton;
 	
 	@UiField TextBox studyTitle;
