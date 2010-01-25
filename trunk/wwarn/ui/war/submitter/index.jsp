@@ -32,10 +32,26 @@ var config = {
     "questionnaire.study.url"    : "/chassis-wwarn-ui/submitter/study-questionnaire.xml"
 };
 </script>
+<style>
+#jsWarning {
+  clear: left;
+  color: maroon;
+  border: inset 2px maroon;
+  margin: 2em;
+  font-size: x-large;
+}
+</style>
 </head>
 <body>
+<noscript>
+    <div id='jsWarning' class='jsWarning'>
+    Your browser has JavaScript disabled, 
+    the site will not perform as intended 
+    until you enable JavaScript. 
+    </div>
+</noscript>
 
-	<div id="holdall">
+	<div id="holdall" style="visibility:hidden">
 		
 		<div id="user">
 			<!-- user div -->
@@ -59,7 +75,9 @@ var config = {
 		</div>
 
 	</div>
-
+	<script type="text/javascript" language="javascript">
+		document.getElementById("holdall").style.visibility = "visible";
+	</script>
 	<script type="text/javascript" language="javascript" src="../org.cggh.chassis.wwarn.ui.submitter.Submitter/org.cggh.chassis.wwarn.ui.submitter.Submitter.nocache.js">
 		<!-- bootstrap script -->
 	</script>
