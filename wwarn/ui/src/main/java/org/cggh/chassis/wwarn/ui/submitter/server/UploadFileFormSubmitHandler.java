@@ -44,9 +44,8 @@ import org.springframework.security.userdetails.UserDetails;
 public class UploadFileFormSubmitHandler extends HttpServlet {
 	
 	
-	
-	
-	
+	private static final long serialVersionUID = 7564286884231124635L;
+
 	private String mediaCollectionUrl;
 	private Abdera abdera = new Abdera();
     private Log log = LogFactory.getLog(UploadFileFormSubmitHandler.class);
@@ -172,6 +171,10 @@ public class UploadFileFormSubmitHandler extends HttpServlet {
 
 			    	mediaEntry = postMediaResource(request, stream, contentType);
 			        
+			    } else { 
+			    	
+			    	log.info("Unexpected file field " + fieldName);
+
 			    }
 		        
 		    }
