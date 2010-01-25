@@ -166,9 +166,15 @@ public class UploadFileFormSubmitHandler extends HttpServlet {
 		        
 			    if (UploadFileForm.FIELD_FILE.equals(fieldName)) {
 			    	
+			    	//ClamAntiVirusScanner clamScanner = new ClamAntiVirusScanner();
+			    	//if (!clamScanner.performScan(stream))  {
+			    	//	System.err.println("The file " + item.getName() + " appears to contain a virus.");
+			    	//	throw new ContainsVirusException("The file " + item.getName() + " appears to contain a virus.");
+			        //}
 			        // process the input stream
 			    	fields.put(UploadFileForm.FIELD_FILENAME, item.getName()); // TODO what happens if this field set as form data?
 
+			    	// TODO is the virus scanner consuming the stream?
 			    	mediaEntry = postMediaResource(request, stream, contentType);
 			        
 			    } else { 
