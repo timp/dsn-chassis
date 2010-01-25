@@ -10,7 +10,7 @@
   <packaging>pom</packaging>
   <name>CGGH WWARN Chassis</name>
   <modules>
-    <module>client</module>
+    <!--module>client</module -->
     <module>ui</module>
   </modules>
 </project>

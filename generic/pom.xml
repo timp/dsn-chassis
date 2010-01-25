@@ -11,7 +11,7 @@
   <name>CGGH Generic Chassis</name>
   <modules>
     <module>lib</module>
-    <module>client</module>
+    <!-- module>client</module -->
     <module>service</module>
   </modules>
 </project>
