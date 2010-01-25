@@ -20,7 +20,7 @@
 	            1. <ui:msg>Select Study</ui:msg> &rarr;
 	            2. <ui:msg>Upload Files</ui:msg> &rarr;
 	            3. <ui:msg>Submit</ui:msg> &rarr;
-	            <span class="currentStep">4. <ui:msg>Add Information</ui:msg></span>
+	            <span class="currentStep">4. <ui:msg>Study Questionnaire</ui:msg></span>
 	        </h2>
 
         </g:HTMLPanel>

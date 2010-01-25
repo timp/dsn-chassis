@@ -18,7 +18,7 @@
             1. <ui:msg>Select Study</ui:msg> &rarr;
             2. <ui:msg>Upload Files</ui:msg> &rarr;
             <span class="currentStep">3. <ui:msg>Submit</ui:msg></span> &rarr;
-            4. <ui:msg>Add Information</ui:msg>
+            4. <ui:msg>Study Questionnaire</ui:msg>
         </h2>
         
         <g:HTMLPanel ui:field="studyPanel">

@@ -31,7 +31,7 @@
 			<ui:msg>Submit</ui:msg>
 			&rarr;
 			4.
-			<ui:msg>Add Information</ui:msg>
+			<ui:msg>Study Questionnaire</ui:msg>
 		</h2>
 		<g:HTMLPanel ui:field="pendingPanel">
 			<p>
