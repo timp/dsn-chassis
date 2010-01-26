@@ -1,5 +1,6 @@
 package org.cggh.chassis.wwarn.ui.submitter.server;
 
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -14,26 +15,26 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+
 /**
- * Will connect to a ClamAV Server and request a scan.
- * See http://www.clamav.net/
+ * Will connect to a ClamAV Server and request a scan. See
+ * http://www.clamav.net/
  * 
  * Install ClamAV on Debian:
  * 
  * apt-get install clamav clamav-daemon clamav-docs libclamunrar6
  * 
+ * NOTE: libclamunrar6 is in Debian Karmnic but not Debian jaunty.
+ * 
  * Configuration:
  * 
  * dpkg-reconfigure clamav-base
  * 
- * Non-default choices:
- *    Enable tcp sockets 
- *    Only listen to 127.0.0.1
- *    Do not scan mail 
+ * Non-default choices: Enable tcp sockets Only listen to 127.0.0.1 Do not scan
+ * mail
  * 
- * Based upon code from net.taldius.clamav.impl.NetworkScanner;
- * copyright 2007 Jean-François POUX, jfp@jsmtpd.org
- * See http://dev.taldius.net/libclamav/
+ * Based upon code from net.taldius.clamav.impl.NetworkScanner; copyright 2007
+ * Jean-François POUX, jfp@jsmtpd.org See http://dev.taldius.net/libclamav/
  * 
  * @author Jean-Francois POUX, jfp@taldius.net
  * @author timp
@@ -45,54 +46,64 @@ public class ClamAntiVirusScanner {
 	private static final byte[] INIT_COMMAND = { 'S', 'T', 'R', 'E', 'A', 'M', '\n' };
 
 	private int connectionTimeout = 1;
+
 	private String clamdHost = "localhost";
+
 	private int clamdPort = 3310; // the default
-	int timeout = 1; // 1 second is pretty short, but it is local 
+
+	int timeout = 1; // 1 second is pretty short, but it is local
 
 	private static Log log = LogFactory.getLog(ClamAntiVirusScanner.class);
+
 	private Socket protocolSocket = null;
+
 	private Socket dataSocket = null;
+
 	private String message = "";
+
 	int dataPort = -1;
 
 	public ClamAntiVirusScanner() {
 	}
+
 	public ClamAntiVirusScanner(String clamdHost) {
 		this.clamdHost = clamdHost;
 	}
-	public ClamAntiVirusScanner(String clamdHost, int clamdPort, int connectionTimeout) {
+
+	public ClamAntiVirusScanner(String clamdHost, int clamdPort,
+			int connectionTimeout) {
 		this.clamdHost = clamdHost;
 		this.clamdPort = clamdPort;
 		this.connectionTimeout = connectionTimeout;
 	}
 
-
 	/**
 	 * Will block until scan is performed.
 	 */
-	public InputStream performScan(InputStream inputStream) throws ScannerException {
-		
+	public InputStream performScan(InputStream inputStream)
+			throws ScannerException {
+
 		message = "";
 
 		try {
 			File f = null;
 
-	        f = File.createTempFile("wwarnVirusScanner_"
-	                    + System.currentTimeMillis(), ".tmp");
+			f = File.createTempFile("wwarnVirusScanner_"
+					+ System.currentTimeMillis(), ".tmp");
 
-	        copyStreamToFile(inputStream, f);
-	        f.deleteOnExit();
-	         
-	        FileInputStream inputStreamToScan = new FileInputStream(f);
+			copyStreamToFile(inputStream, f);
+			f.deleteOnExit();   // TODO Are we happy with this?
+
+			FileInputStream inputStreamToScan = new FileInputStream(f);
 
 			openProtocolChannel();
 			requestScan(inputStreamToScan);
-			
 
 			// clamd writes this if the stream
 			// we sent does not contains viruses.
-			if (!message.equals("stream: OK")) 
-				throw new ContainsVirusException("Virus found in " + f.getPath() + "(" + message + ")");
+			if (!message.equals("stream: OK"))
+				throw new ContainsVirusException("Virus found in "
+						+ f.getPath() + "(" + message + ")");
 
 			return new FileInputStream(f);
 		} catch (ScannerException e) {
@@ -139,12 +150,12 @@ public class ClamAntiVirusScanner {
 		}
 		try {
 			dataSocket.connect(sockaddrData);
-			
+
 			// Write the content to the data stream
-			IOUtils.copy(inputStream, dataSocket.getOutputStream()); 
+			IOUtils.copy(inputStream, dataSocket.getOutputStream());
 
 			// let clamd know it's the end of the stream.
-			dataSocket.close(); 
+			dataSocket.close();
 			inputStream.close();
 		} catch (IOException e) {
 			throw new ScannerException(
@@ -183,7 +194,7 @@ public class ClamAntiVirusScanner {
 			// First, try to connect to the clam daemon
 			protocolSocket.connect(sockaddr);
 			// Write the initialisation command
-			protocolSocket.getOutputStream().write(INIT_COMMAND); 
+			protocolSocket.getOutputStream().write(INIT_COMMAND);
 
 			// Now, read byte per byte until we find a LF.
 			byte[] received = new byte[1];
@@ -209,12 +220,12 @@ public class ClamAntiVirusScanner {
 			} catch (NumberFormatException e) {
 				throw new ScannerException(
 						"Could not understand the server port to connect to in response: "
-								+ serverResponse);
+						+ serverResponse);
 			}
 		} else {
 			throw new ScannerException(
 					"Could not find data port, server's response is "
-							+ serverResponse);
+					+ serverResponse);
 		}
 	}
 
@@ -222,28 +233,22 @@ public class ClamAntiVirusScanner {
 		return message;
 	}
 
-    public static synchronized void copyStreamToFile(InputStream input, File destination) throws IOException
-    {
-        if (destination.exists() && !destination.canWrite())
-        {
-            throw new IOException("Destination file does not exist or is not writeable");
-        }
+	public static synchronized void copyStreamToFile(InputStream input,
+			File destination) throws IOException {
+		if (destination.exists() && !destination.canWrite()) {
+			throw new IOException(
+					"Destination file does not exist or is not writeable");
+		}
 
-        try
-        {
-            FileOutputStream output = new FileOutputStream(destination);
-            try
-            {
-                IOUtils.copy(input, output);
-            }
-            finally
-            {
-                IOUtils.closeQuietly(output);
-            }
-        }
-        finally
-        {
-            IOUtils.closeQuietly(input);
-        }
-    }
+		try {
+			FileOutputStream output = new FileOutputStream(destination);
+			try {
+				IOUtils.copy(input, output);
+			} finally {
+				IOUtils.closeQuietly(output);
+			}
+		} finally {
+			IOUtils.closeQuietly(input);
+		}
+	}
 }
