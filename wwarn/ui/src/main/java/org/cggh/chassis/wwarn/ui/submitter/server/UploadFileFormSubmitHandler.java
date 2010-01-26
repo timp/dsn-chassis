@@ -131,10 +131,9 @@ public class UploadFileFormSubmitHandler extends HttpServlet {
 	 * @throws IOException 
 	 * @throws FileUploadException 
 	 */
-	private Entry parseRequestAndStreamMedia(
-		Map<String, String> fields,
-		HttpServletRequest request) 
-		throws FileUploadException, IOException {
+	private Entry parseRequestAndStreamMedia(Map<String, String> fields,
+											 HttpServletRequest request) 
+			throws FileUploadException, IOException {
 		
 		Entry mediaEntry = null;
 		
@@ -166,15 +165,18 @@ public class UploadFileFormSubmitHandler extends HttpServlet {
 		        
 			    if (UploadFileForm.FIELD_FILE.equals(fieldName)) {
 			    	
-			    	//ClamAntiVirusScanner clamScanner = new ClamAntiVirusScanner();
-			    	//if (!clamScanner.performScan(stream))  {
-			    	//	System.err.println("The file " + item.getName() + " appears to contain a virus.");
-			    	//	throw new ContainsVirusException("The file " + item.getName() + " appears to contain a virus.");
-			        //}
+				    log.debug("File field " + fieldName + " with file name " + item.getName() + ", content type " + contentType + " detected.");
+			    	ClamAntiVirusScanner clamScanner = new ClamAntiVirusScanner();
+			    	try { 
+			    	  stream = clamScanner.performScan(stream);
+			    	} catch (ContainsVirusException e) { 			       
+			    		System.err.println("The file " + item.getName() + " appears to contain a virus.");
+			    		throw new ContainsVirusException("The file " + item.getName() + " appears to contain a virus.", e);
+			        }
 			        // process the input stream
-			    	fields.put(UploadFileForm.FIELD_FILENAME, item.getName()); // TODO what happens if this field set as form data?
+			    	// TODO what happens if this field set as form data?
+			    	fields.put(UploadFileForm.FIELD_FILENAME, item.getName()); 
 
-			    	// TODO is the virus scanner consuming the stream?
 			    	mediaEntry = postMediaResource(request, stream, contentType);
 			        
 			    } else { 
