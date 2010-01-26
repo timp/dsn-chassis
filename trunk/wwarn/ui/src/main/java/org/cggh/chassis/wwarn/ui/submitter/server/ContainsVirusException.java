@@ -1,6 +1,6 @@
 package org.cggh.chassis.wwarn.ui.submitter.server;
 
-public class ContainsVirusException extends RuntimeException {
+public class ContainsVirusException extends Exception {
 
 	private static final long serialVersionUID = 431170477888774174L;
 

@@ -16,6 +16,7 @@ import com.google.gwt.xml.client.Element;
  */
 public class UploadFilesWidgetModel extends AsyncWidgetModel {
 
+	private String errorMessage = "";
 	
 	public static class RetrieveStudyPendingStatus extends AsyncRequestPendingStatus {}
 	public static final RetrieveStudyPendingStatus STATUS_RETRIEVE_STUDY_PENDING = new RetrieveStudyPendingStatus();
@@ -48,6 +49,16 @@ public class UploadFilesWidgetModel extends AsyncWidgetModel {
 		selectedStudyId.set(null);
 		studyEntryElement.set(null);
 		uploadFeedDoc.set(null);
+	}
+
+
+
+	public void setErrorMessage(String message) {
+		this.errorMessage  = message;
+	}
+	
+	public String getErrorMessage() {
+		return this.errorMessage;
 	}
 	
 	

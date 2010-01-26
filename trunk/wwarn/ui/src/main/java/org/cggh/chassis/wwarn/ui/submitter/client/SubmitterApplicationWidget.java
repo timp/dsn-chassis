@@ -2,11 +2,14 @@ package org.cggh.chassis.wwarn.ui.submitter.client;
 
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
+import org.cggh.chassis.generic.widget.client.ErrorEvent;
+import org.cggh.chassis.generic.widget.client.ErrorHandler;
 import org.cggh.chassis.generic.widget.client.MultiWidget;
 import org.cggh.chassis.generic.widget.client.WidgetEvent;
 import org.cggh.chassis.generic.widget.client.WidgetEventHandler;
 
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.user.client.Window;
 
 public class SubmitterApplicationWidget extends MultiWidget {
 
@@ -105,6 +108,20 @@ public class SubmitterApplicationWidget extends MultiWidget {
 		});
 		this.childWidgetEventHandlerRegistrations.add(c1);
 
+
+		
+		HandlerRegistration cError = this.uploadFilesWidget.addErrorHandler(new ErrorHandler(){
+
+			public void onError(ErrorEvent e) {
+				uploadFilesWidget.getModel().setErrorMessage(e.getMessage());
+				uploadFilesWidget.getModel().setStatus(UploadFilesWidgetModel.STATUS_ERROR);
+				Window.alert(e.getMessage());
+			}});
+		
+		this.childWidgetEventHandlerRegistrations.add(cError);
+		
+		
+		
 		HandlerRegistration d = this.submitWidget.addProceedActionHandler(new ProceedActionHandler() {
 			
 			public void onAction(ProceedActionEvent e) {

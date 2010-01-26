@@ -233,11 +233,13 @@ public class UploadFilesWidgetController {
 				log.debug("parse success, assume we can go ahead and refresh files");
 				refreshFiles();
 				
-			}
-			else {
+			} else if (results.startsWith("A virus has been detected")) {
+				model.setStatus(AsyncWidgetModel.STATUS_ERROR);
+				owner.fireEvent(new ErrorEvent(results));
+			} else {
 				
 				model.setStatus(AsyncWidgetModel.STATUS_ERROR);
-				owner.fireEvent(new ErrorEvent("could not parse results: "+results));
+				owner.fireEvent(new ErrorEvent("Could not parse results: "+results));
 
 			}
 			

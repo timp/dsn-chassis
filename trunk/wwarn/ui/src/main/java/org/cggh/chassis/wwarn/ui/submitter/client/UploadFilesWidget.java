@@ -29,8 +29,6 @@ public class UploadFilesWidget extends DelegatingWidget<UploadFilesWidgetModel, 
 	private UploadFilesWidgetController controller;
 	
 	
-	
-	
 	@Override
 	protected UploadFilesWidgetModel createModel() {
 		return new UploadFilesWidgetModel();
@@ -75,6 +73,7 @@ public class UploadFilesWidget extends DelegatingWidget<UploadFilesWidgetModel, 
 	
 	
 	
+
 	@Override
 	public void refresh() {
 		refreshAndCallback();
@@ -101,7 +100,6 @@ public class UploadFilesWidget extends DelegatingWidget<UploadFilesWidgetModel, 
 //	public HandlerRegistration addProceedActionHandler(ProceedActionHandler h) {
 //		return this.addHandler(h, ProceedActionEvent.TYPE);
 //	}
-	
 	
 	
 	
@@ -190,6 +188,19 @@ public class UploadFilesWidget extends DelegatingWidget<UploadFilesWidgetModel, 
 		
 		
 	}
+
+
+
+
+
+	public UploadFilesWidgetModel getModel() {
+		return model;
+	}
+
+
+
+
+
 
 
 

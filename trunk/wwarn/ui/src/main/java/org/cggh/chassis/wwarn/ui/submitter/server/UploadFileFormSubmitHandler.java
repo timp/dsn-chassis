@@ -110,11 +110,14 @@ public class UploadFileFormSubmitHandler extends HttpServlet {
 			// assume if we reach here, can return success
 			respondWithEntry(response, mediaEntry);
 
-		}
-		catch (Throwable t) {
+		} catch (ContainsVirusException e) {
+			sendError(response, "A virus has been detected: " + e.getMessage(), 
+					HttpServletResponse.SC_BAD_REQUEST);			
+		} catch (Throwable t) {
 
 			t.printStackTrace();
-			sendError(response, "the server encountered an internal error which prevented it from completing the request", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			sendError(response, "the server encountered an internal error which prevented it from completing the request", 
+					HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 
 		}
 		
@@ -124,16 +127,9 @@ public class UploadFileFormSubmitHandler extends HttpServlet {
 	
 	
 
-	/**
-	 * @param fields
-	 * @param request
-	 * @return
-	 * @throws IOException 
-	 * @throws FileUploadException 
-	 */
 	private Entry parseRequestAndStreamMedia(Map<String, String> fields,
 											 HttpServletRequest request) 
-			throws FileUploadException, IOException {
+			throws FileUploadException, IOException, ContainsVirusException {
 		
 		Entry mediaEntry = null;
 		
