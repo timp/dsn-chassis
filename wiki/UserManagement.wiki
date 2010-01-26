@@ -94,3 +94,61 @@ http://www.atlassian.com/software/crowd/
   * free? no
 
 Lack of support for self-registration rules this out. [http://jira.atlassian.com/browse/CWD-410?subTaskView=unresolved It has been discussed], but afaik not implemented.
+
+== CoSign ==
+
+http://weblogin.org/
+
+CoSign is a SSO solution similar to webauth, afaik it is designed to integrate with existing user directories, so has no support for self-registration, storing user data etc., out of the box.
+
+== Shibboleth ==
+
+As CoSign, an SSO solution, again no out-of-the-box package to enable user registration etc.
+
+== JanRain OPX:ASP ==
+
+http://www.janrain.com/products/opxasp
+
+  * self-registration possible? yes
+  * verify email address? yes
+  * (re)captcha? yes
+  * single sign-on? yes
+  * management of user roles? not sure
+  * wwarn branding possible? yes
+  * manage user profile data? yes
+  * customise user profile data? yes
+  * integration with spring security? yes (authentication at least)
+  * username/password recovery? yes
+  * open-source? no (although key libraries are)
+  * free? no
+
+Note that this is a SAAS offering, i.e., a hosted service.
+
+The key question here is whether user roles can be managed, and whether this can be integrated with spring security (or other access control solution). Otherwise, looks great.
+
+The user self-registration process is probably very similar to that provided by [https://www.myopenid.com/signup myopenid.com], which is hosted by janrain.
+
+== Community ID ==
+
+http://source.keyboard-monkeys.org/projects/show/communityid
+
+  * self-registration possible? yes
+  * verify email address? yes
+  * (re)captcha? yes
+  * single sign-on? yes
+  * management of user roles? no
+  * wwarn branding possible? yes
+  * manage user profile data? yes
+  * customise user profile data? not trivial
+  * integration with spring security? yes (authentication at least)
+  * username/password recovery? yes
+  * open-source? yes
+  * free? yes
+  
+A simple, straightforward system with the necessary self-registration features. However, there is no support for managing custom user roles.
+
+I couldn't get the email sending configuration to work, and there's no documentation on that part of the configuration, but that may just be my lack of experience configuring mail sending on a linux (ubuntu) machine.
+
+Also, when I increased the logging level in the config.php, the initial home page then fails silently with 500. I couldn't figure out how to get any error reporting out of the application.
+
+
