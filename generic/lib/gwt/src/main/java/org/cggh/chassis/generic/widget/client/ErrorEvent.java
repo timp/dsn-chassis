@@ -19,6 +19,7 @@ public class ErrorEvent extends GwtEvent<ErrorHandler> {
 	
 	public ErrorEvent(Throwable t) {
 		this.exception = t;
+		this.message = t.getMessage();
 	}
 	
 	/**
