@@ -35,6 +35,7 @@ import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
@@ -77,7 +78,7 @@ public class UploadFilesWidgetRenderer extends ChassisWidgetRenderer<UploadFiles
 	@UiField Button proceedButton;
 	@UiField Label uploadAFileTitleLabel;
 	@UiField Label uploadAnotherFileTitleLabel;
-	@UiField Panel errorPanel;
+	@UiField FlowPanel errorPanel;
 	@UiField UploadFileForm uploadFileForm;
 	@UiField Button uploadButton;
 	@UiField Button cancelSubmissionButton2;
@@ -332,7 +333,9 @@ public class UploadFilesWidgetRenderer extends ChassisWidgetRenderer<UploadFiles
 		else if (status instanceof ErrorStatus) {
 			
 			studyPanel.setVisible(false);
-			
+			errorPanel.add(new HTML(model.getErrorMessage()));
+			errorPanel.setVisible(true);
+		
 		}
 	}
 
@@ -513,7 +516,6 @@ public class UploadFilesWidgetRenderer extends ChassisWidgetRenderer<UploadFiles
 		this.controller = controller;
 	}
 
-	
 	
 	
 }

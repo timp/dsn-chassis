@@ -81,7 +81,7 @@ public class ClamAntiVirusScanner {
 	 * Will block until scan is performed.
 	 */
 	public InputStream performScan(InputStream inputStream)
-			throws ScannerException {
+			throws ScannerException, ContainsVirusException {
 
 		message = "";
 
@@ -102,8 +102,7 @@ public class ClamAntiVirusScanner {
 			// clamd writes this if the stream
 			// we sent does not contains viruses.
 			if (!message.equals("stream: OK"))
-				throw new ContainsVirusException("Virus found in "
-						+ f.getPath() + "(" + message + ")");
+				throw new ContainsVirusException("Virus found in " + f.getPath() + "(" + message + ")");
 
 			return new FileInputStream(f);
 		} catch (ScannerException e) {
