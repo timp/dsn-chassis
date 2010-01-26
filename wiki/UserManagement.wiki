@@ -1,0 +1,33 @@
+#summary notes on systems supporting various aspects of user management, including user self-registration, authentication, and access-management
+
+= Requirements =
+
+WWARN needs site visitors who are potential data submitters to be able to register as a new user (i.e., create a user account), then log in (authenticate) and proceed to the submitter home page and begin submitting data.
+
+The registration process must present as few delays or obstacles to the potential submitter as possible, so as not to put the busy submitter off.
+
+The self-registration and login process must be exclusively WWARN-branded.
+
+The self-registration process will need to capture some information about the user. Exactly what TBD, but will probably include institution/affiliation and contact details.
+
+The registration process should verify the user's email address, so that WWARN has a verified means of contact, and also so that the email address can be used as part of verifying the user's identity (e.g., as a WHO employee).
+
+Once authenticated, the user should only have to sign-in once across any part of the wwarn.org website, which could involve spanning multiple web applications potentially hosted in separate servlet containers on separate servers.
+
+The self-registered user will be able to submit data by default, but it must be possible to revoke that right for spam/junk/bogus submitters.
+
+The self-registration system must not be vulnerable to robots.
+
+= Survey of Existing Solutions =
+
+== CGGH Network Database / Webauth ==
+
+The CGGH network database and webauth system supports single-sign-on and management of user roles. 
+
+There is existing code to enable user self-registration, which involves the user providing an email address, and then the system sending a temporary password to that email address, which the user can then use to log in once, but must change that password on first log in. 
+
+The system also allows the user to record some basic profile information, which includes ... ? It may not be straightforward to extend the system to capture other user information.
+
+There is not (re)captcha support, but adding that shouldn't be too much work. 
+
+David B reckons setting up a separate clone of the CGGH network user database and webauth system dedicated to WWARN should take less than a week of work. A clone of the system would enable all registration, login pages etc. to be wwarn-branded.
