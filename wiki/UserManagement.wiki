@@ -113,7 +113,7 @@ http://www.janrain.com/products/opxasp
   * verify email address? yes
   * (re)captcha? yes
   * single sign-on? yes
-  * management of user roles? not sure
+  * management of user roles? TODO
   * wwarn branding possible? yes
   * manage user profile data? yes
   * customise user profile data? yes
@@ -151,4 +151,27 @@ I couldn't get the email sending configuration to work, and there's no documenta
 
 Also, when I increased the logging level in the config.php, the initial home page then fails silently with 500. I couldn't figure out how to get any error reporting out of the application.
 
+== OpenASelect ==
 
+http://www.openaselect.org/trac/openaselect/
+
+Not at all obvious how to set up and configure. Have given up for the moment.
+
+== Drupal ==
+
+Can you use drupal's user management features as the central point in a authentication/authorisation setup? 
+
+  * self-registration possible? yes
+  * verify email address? yes
+  * (re)captcha? yes (via captcha module)
+  * single sign-on? kind of (via openid_provider module)
+  * management of user roles? yes
+  * wwarn branding possible? yes
+  * manage user profile data? TODO (surely)
+  * customise user profile data? TODO (surely)
+  * integration with spring security? yes for authentication, TODO for roles (probably doable with the right SQL)
+  * username/password recovery? yes
+  * open-source? yes
+  * free? yes
+  
+The basic problem here is that you can create a drupal account, and the log in using your username and password, but if you visit a spring protected webapp configured for openid authentication, you have to log in there too. You only have to put in your openid url at the protected webapp, but your logged-in state is specific to that webapp. I.e., you could log out of drupal but still be logged in to the protected webapp. Or you could log out of the webapp but still be logged in to drupal. Not ideal.
