@@ -14,6 +14,8 @@ The registration process should verify the user's email address, so that WWARN h
 
 Once authenticated, the user should only have to sign-in once across any part of the wwarn.org website, which could involve spanning multiple web applications potentially hosted in separate servlet containers on separate servers.
 
+If a user forgets their username/password, there must be a means of recovering either.
+
 The self-registered user will be able to submit data by default, but it must be possible to revoke that right for spam/junk/bogus submitters.
 
 The self-registration system must not be vulnerable to robots.
@@ -30,4 +32,48 @@ The system also allows the user to record some basic profile information, which 
 
 There is not (re)captcha support, but adding that shouldn't be too much work. 
 
+There is a web user-interface for administrators to add/remove roles for users.
+
 David B reckons setting up a separate clone of the CGGH network user database and webauth system dedicated to WWARN should take less than a week of work. A clone of the system would enable all registration, login pages etc. to be wwarn-branded.
+
+  * self-registration possible? yes
+  * verify email address? yes
+  * (re)captcha? no
+  * single sign-on? yes
+  * management of user roles? yes
+  * wwarn branding possible? yes
+  * manage user profile data? yes
+  * customise user profile data? yes, but not trivial
+  * integration with spring security? yes
+  * username/password recovery? yes
+  * open-source? yes
+  * free? yes
+
+Potential vulnerabilities/issues...
+
+The email verification process is potentially insecure as a temporary password is emailed to the user (standard sites will send a generated account confirmation URL).
+
+Any user can trigger a new temporary password to be sent to any other user simply by entering that user's email address. I.e., one user could cause another user's account to become temporarily inactive, if they knew that user's email address.
+
+== OpenSSO ==
+
+https://opensso.dev.java.net/
+
+  * self-registration possible? yes
+  * verify email address? no
+  * (re)captcha? no
+  * single sign-on? yes
+  * management of user roles? yes
+  * wwarn branding possible? yes
+  * manage user profile data? yes
+  * customise user profile data? yes
+  * integration with spring security? yes
+  * username/password recovery? yes
+  * open-source? yes
+  * free? not sure... (you can download for free, but license terms aren't obvious)
+
+Potential vulnerabilities/issues...
+
+You can enable support for self-registration via the "membership" module, however the email address entered by the user is not verified. Recovery of password is done via setting a security question. Lack of support for email verification seems a killer for OpenSSO.
+
+== Atlassian Crowd ==
