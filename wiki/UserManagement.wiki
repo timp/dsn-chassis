@@ -77,3 +77,20 @@ Potential vulnerabilities/issues...
 You can enable support for self-registration via the "membership" module, however the email address entered by the user is not verified. Recovery of password is done via setting a security question. Lack of support for email verification seems a killer for OpenSSO.
 
 == Atlassian Crowd ==
+
+http://www.atlassian.com/software/crowd/
+
+  * self-registration possible? no
+  * verify email address? not sure
+  * (re)captcha? not sure
+  * single sign-on? yes
+  * management of user roles? yes
+  * wwarn branding possible? yes
+  * manage user profile data? yes
+  * customise user profile data? not sure
+  * integration with spring security? yes
+  * username/password recovery? not sure
+  * open-source? not sure
+  * free? no
+
+Lack of support for self-registration rules this out. [http://jira.atlassian.com/browse/CWD-410?subTaskView=unresolved It has been discussed], but afaik not implemented.
