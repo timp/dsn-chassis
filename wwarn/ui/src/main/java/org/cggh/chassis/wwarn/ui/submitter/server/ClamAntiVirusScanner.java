@@ -30,8 +30,12 @@ import org.apache.commons.logging.LogFactory;
  * 
  * dpkg-reconfigure clamav-base
  * 
- * Non-default choices: Enable tcp sockets Only listen to 127.0.0.1 Do not scan
- * mail
+ * Non-default choices: 
+ * <ul>
+ * <li>Enable tcp sockets</li>
+ * <li>Only listen to 127.0.0.1</li>
+ * <li>Do not scan mail</li>
+ * </ul>
  * 
  * Based upon code from net.taldius.clamav.impl.NetworkScanner; copyright 2007
  * Jean-François POUX, jfp@jsmtpd.org See http://dev.taldius.net/libclamav/
