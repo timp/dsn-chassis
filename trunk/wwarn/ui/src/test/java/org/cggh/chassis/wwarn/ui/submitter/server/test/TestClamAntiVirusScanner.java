@@ -6,6 +6,7 @@ import java.net.ConnectException;
 import java.net.Socket;
 
 import org.cggh.chassis.wwarn.ui.submitter.server.ClamAntiVirusScanner;
+import org.cggh.chassis.wwarn.ui.submitter.server.ContainsVirusException;
 import org.cggh.chassis.wwarn.ui.submitter.server.ScannerException;
 
 import junit.framework.TestCase;
@@ -22,9 +23,8 @@ import junit.framework.TestCase;
 public class TestClamAntiVirusScanner extends TestCase {
 
 	String host = "127.0.0.1";
-	//int port = 3310;  // the default
-	int port = 9998;
-	int timeout = 1; // 1 second is pretty short 
+	int port = 3310;  // the default
+	int timeout = 1;  // 1 second is pretty short 
 	
 	public void testSuccess () throws Exception {
 		try { 
@@ -33,7 +33,7 @@ public class TestClamAntiVirusScanner extends TestCase {
 			ClamAntiVirusScanner scanner = new ClamAntiVirusScanner (host, port, timeout);
 			InputStream inputStream = getClass().getResourceAsStream("/log4j.properties");
 			assertNotNull(inputStream);
-			assertTrue(scanner.performScan(inputStream));
+			scanner.performScan(inputStream);
 			assertEquals("stream: OK", scanner.getMessage());
 		} catch (ConnectException e){ 
 			System.err.println("clamd not running - test not run");
@@ -47,8 +47,26 @@ public class TestClamAntiVirusScanner extends TestCase {
 			ClamAntiVirusScanner scanner = new ClamAntiVirusScanner (host, port, timeout);
 			InputStream inputStream = getClass().getResourceAsStream("/eicar.com.txt");
 			assertNotNull(inputStream);
-			assertFalse(scanner.performScan(inputStream));
+			try { 
+				scanner.performScan(inputStream);
+				fail("Should have bombed");
+			} catch (ContainsVirusException e) {}
 			assertEquals("stream: Eicar-Test-Signature FOUND", scanner.getMessage());
+		} catch (ConnectException e){ 
+			System.err.println("clamd not running - test not run");
+		}
+	}
+	
+	/** As the stream is re-created it should be possible to test it twice */
+	public void testNonVirusTwice () throws Exception {
+		try { 
+			new Socket(host, port);
+			
+			ClamAntiVirusScanner scanner = new ClamAntiVirusScanner (host, port, timeout);
+			InputStream inputStream = getClass().getResourceAsStream("/log4j.properties");
+			assertNotNull(inputStream);
+			scanner.performScan(scanner.performScan(inputStream));
+			assertEquals("stream: OK", scanner.getMessage());
 		} catch (ConnectException e){ 
 			System.err.println("clamd not running - test not run");
 		}
@@ -60,7 +78,7 @@ public class TestClamAntiVirusScanner extends TestCase {
 		InputStream inputStream = getClass().getResourceAsStream("/log4j.properties");
 		assertNotNull(inputStream);
 		try { 
-			assertTrue(scanner.performScan(inputStream));
+			scanner.performScan(inputStream);
 			fail("Should have bombed");
 		} catch (ScannerException e) { 
 			assertEquals("Connection refused", e.getCause().getMessage());
@@ -71,7 +89,7 @@ public class TestClamAntiVirusScanner extends TestCase {
 		InputStream inputStream = getClass().getResourceAsStream("/log4j.properties");
 		assertNotNull(inputStream);
 		try { 
-			assertTrue(scanner.performScan(inputStream));
+			scanner.performScan(inputStream);
 			fail("Should have bombed");
 		} catch (ScannerException e) { 
 			assertEquals("Connection refused", e.getCause().getMessage());

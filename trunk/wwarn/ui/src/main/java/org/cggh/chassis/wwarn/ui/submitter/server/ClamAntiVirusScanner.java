@@ -1,5 +1,8 @@
 package org.cggh.chassis.wwarn.ui.submitter.server;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.InetSocketAddress;
@@ -18,9 +21,15 @@ import org.apache.commons.logging.LogFactory;
  * Install ClamAV on Debian:
  * 
  * apt-get install clamav clamav-daemon clamav-docs libclamunrar6
+ * 
+ * Configuration:
+ * 
  * dpkg-reconfigure clamav-base
  * 
- * Ensure you enable tcp sockets. 
+ * Non-default choices:
+ *    Enable tcp sockets 
+ *    Only listen to 127.0.0.1
+ *    Do not scan mail 
  * 
  * Based upon code from net.taldius.clamav.impl.NetworkScanner;
  * copyright 2007 Jean-François POUX, jfp@jsmtpd.org
@@ -61,22 +70,39 @@ public class ClamAntiVirusScanner {
 	/**
 	 * Will block until scan is performed.
 	 */
-	public boolean performScan(InputStream inputStream) throws ScannerException {
+	public InputStream performScan(InputStream inputStream) throws ScannerException {
+		
+		message = "";
+
 		try {
+			File f = null;
+
+	        f = File.createTempFile("wwarnVirusScanner_"
+	                    + System.currentTimeMillis(), ".tmp");
+
+	        copyStreamToFile(inputStream, f);
+	        f.deleteOnExit();
+	         
+	        FileInputStream inputStreamToScan = new FileInputStream(f);
+
 			openProtocolChannel();
-			requestScan(inputStream);
+			requestScan(inputStreamToScan);
+			
 
-			if (message.equals("stream: OK")) // clamd writes this if the stream
-				// we sent does not contains
-				// viruses.
-				return true;
-			else
-				return false;
+			// clamd writes this if the stream
+			// we sent does not contains viruses.
+			if (!message.equals("stream: OK")) 
+				throw new ContainsVirusException("Virus found in " + f.getPath() + "(" + message + ")");
 
+			return new FileInputStream(f);
 		} catch (ScannerException e) {
 			if (log.isDebugEnabled())
 				log.debug(e);
 			throw e;
+		} catch (IOException e) {
+			if (log.isDebugEnabled())
+				log.debug(e);
+			throw new ScannerException("Problem with temporary files:", e);
 		} finally {
 			closeChannels();
 		}
@@ -196,4 +222,28 @@ public class ClamAntiVirusScanner {
 		return message;
 	}
 
+    public static synchronized void copyStreamToFile(InputStream input, File destination) throws IOException
+    {
+        if (destination.exists() && !destination.canWrite())
+        {
+            throw new IOException("Destination file does not exist or is not writeable");
+        }
+
+        try
+        {
+            FileOutputStream output = new FileOutputStream(destination);
+            try
+            {
+                IOUtils.copy(input, output);
+            }
+            finally
+            {
+                IOUtils.closeQuietly(output);
+            }
+        }
+        finally
+        {
+            IOUtils.closeQuietly(input);
+        }
+    }
 }

@@ -8,5 +8,9 @@ public class ContainsVirusException extends RuntimeException {
 		super(message);
 	}
 
+	public ContainsVirusException(String message, Exception e) {
+		super(message, e);
+	}
+
 
 }
