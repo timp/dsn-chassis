@@ -454,7 +454,6 @@ public class SubmitWidgetRenderer extends ChassisWidgetRenderer<SubmitWidgetMode
 		for (Element entry : entries) {
 			
 			String title = AtomHelper.getTitle(entry);
-			final String url = AtomHelper.getHrefAttr(AtomHelper.getEditLink(entry));
 			
 			Element categoryElement = AtomHelper.getFirstCategory(entry, Chassis.SCHEME_FILETYPES);
 			String type = getTypeLabel(categoryElement);
