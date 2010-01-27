@@ -111,11 +111,11 @@
         </g:HTMLPanel>
         
         <g:HTMLPanel ui:field="errorPanel">
-        	<p>
-        		<ui:msg>there has been an unexpected error</ui:msg>
-        	</p>
+			<g:Label>
+        		<ui:msg>There has been an unexpected error: </ui:msg>
+			</g:Label>
+			<g:FlowPanel ui:field="errorMessage"></g:FlowPanel>
         </g:HTMLPanel>
-        
     </g:HTMLPanel>
     
 </ui:UiBinder>

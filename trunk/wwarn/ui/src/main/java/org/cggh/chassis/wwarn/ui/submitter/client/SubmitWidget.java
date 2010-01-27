@@ -208,5 +208,12 @@ public class SubmitWidget extends DelegatingWidget<SubmitWidgetModel, SubmitWidg
 
 
 
+	public SubmitWidgetModel getModel() {
+		return model;
+	}
+
+
+
+
 
 }

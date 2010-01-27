@@ -159,6 +159,16 @@ public class SubmitterApplicationWidget extends MultiWidget {
 
 		});
 
+		HandlerRegistration dError = this.submitWidget.addErrorHandler(new ErrorHandler(){
+
+			public void onError(ErrorEvent e) {
+				submitWidget.getModel().setErrorMessage(e.getMessage());
+				submitWidget.getModel().setStatus(UploadFilesWidgetModel.STATUS_ERROR);
+				Window.alert(e.getMessage());
+			}});
+		
+		this.childWidgetEventHandlerRegistrations.add(dError);
+
 		this.childWidgetEventHandlerRegistrations.add(d2);
 
 		HandlerRegistration e = this.addInformationWidget.addHomeNavigationEventHandler(new HomeNavigationHandler() {
