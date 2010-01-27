@@ -77,7 +77,8 @@ public class UploadFilesWidgetRenderer extends ChassisWidgetRenderer<UploadFiles
 	@UiField Button proceedButton;
 	@UiField Label uploadAFileTitleLabel;
 	@UiField Label uploadAnotherFileTitleLabel;
-	@UiField FlowPanel errorPanel;
+	@UiField HTMLPanel errorPanel;
+	@UiField FlowPanel errorMessage;
 	@UiField UploadFileForm uploadFileForm;
 	@UiField Button uploadButton;
 	@UiField Panel uploadFormPanel;
@@ -331,7 +332,8 @@ public class UploadFilesWidgetRenderer extends ChassisWidgetRenderer<UploadFiles
 		else if (status instanceof ErrorStatus) {
 			
 			studyPanel.setVisible(false);
-			errorPanel.add(new HTML(model.getErrorMessage()));
+			errorMessage.clear();
+			errorMessage.add(new HTML(model.getErrorMessage()));
 			errorPanel.setVisible(true);
 		
 		}
