@@ -14,6 +14,31 @@ import net.sourceforge.jwebunit.exception.TestingEngineResponseException;
  */
 public class LocalhostSmokeTestCase extends WebTestCase {
 
+	public void testUiRunning() throws Exception {
+		try {
+			beginAt("/chassis-wwarn-ui/administrator");
+		} catch (TestingEngineResponseException e) {
+			assertEquals(401, e.getHttpStatusCode());
+		}
+		final DefaultCredentialsProvider credentialsProvider = new DefaultCredentialsProvider();
+		credentialsProvider.addCredentials("alice@example.org", "bar");
+
+		WebClient webClient = new WebClient();
+		webClient.setCredentialsProvider(credentialsProvider);
+		final HtmlPage administratorPage = webClient.getPage(url("/chassis-wwarn-ui/administrator"));
+		assertEquals("WWARN - Administrator // alice@example.org", administratorPage.getTitleText());
+		System.err.println(administratorPage.asXml());
+		
+		final HtmlPage startPage = webClient.getPage(url("/chassis-wwarn-ui/submitter/index.jsp"));
+		assertEquals("WWARN - Submitter // alice@example.org", startPage.getTitleText());
+		System.err.println(startPage.asXml());
+		getTestContext().setAuthorization("alice@example.org","bar");
+		// TODO authorization not working 
+		//gotoPage("/chassis-wwarn-ui/submitter/index.jsp");
+		
+	}
+	
+	
 	public void testGenericRunning() throws Exception {
 		try {
 			beginAt("/chassis-generic-client-gwt/");
@@ -46,31 +71,11 @@ public class LocalhostSmokeTestCase extends WebTestCase {
 		assertEquals("Chassis/WWARN", startPage.getTitleText());
 	}
 	
-	public void testUiRunning() throws Exception {
-		try {
-			beginAt("/chassis-wwarn-ui/administrator");
-		} catch (TestingEngineResponseException e) {
-			assertEquals(401, e.getHttpStatusCode());
-		}
-		final DefaultCredentialsProvider credentialsProvider = new DefaultCredentialsProvider();
-		credentialsProvider.addCredentials("alice@example.org", "bar");
-
-		WebClient webClient = new WebClient();
-		webClient.setCredentialsProvider(credentialsProvider);
-		final HtmlPage administratorPage = webClient.getPage(url("/chassis-wwarn-ui/administrator"));
-		assertEquals("WWARN - Administrator // alice@example.org", administratorPage.getTitleText());
-		
-		
-		
-		final HtmlPage startPage = webClient.getPage(url("/chassis-wwarn-ui/submitter/index.jsp"));
-		assertEquals("WWARN - Submitter // alice@example.org", startPage.getTitleText());
-		
-		
-	}
-	
-	
 	public void beginAt(String url) {
 		super.beginAt(url(url));
+	}
+	public void gotoPage(String url) {
+		super.gotoPage(url(url));
 	}
 
 	private String url(String url) {
