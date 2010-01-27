@@ -238,9 +238,10 @@ http://groups.google.com/group/dsn-chassis-svn
         <artifactId>taglist-maven-plugin</artifactId>
         <configuration>
          <tags>
-          <tag>@todo</tag>
           <tag>FIXME</tag>
+          <tag>TODO</tag>
           <tag>@deprecated</tag>
+          <tag>@SuppressWarnings</tag>
           <tag>NOTE</tag>
           <tag>HACK</tag>
          </tags>
