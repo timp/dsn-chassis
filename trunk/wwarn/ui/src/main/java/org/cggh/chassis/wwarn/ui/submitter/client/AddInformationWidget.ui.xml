@@ -32,34 +32,18 @@
         </g:HTMLPanel>
         
         <g:HTMLPanel ui:field="mainContentPanel">
-        
-            <p>
-                <ui:msg>Submission ID</ui:msg>
-                <strong><g:InlineLabel ui:field="submissionId"/></strong>
-                <ui:msg>received on</ui:msg>
-                <strong><g:InlineLabel ui:field="submissionDate"/></strong>.
-            </p>
-            
-            <p>
-                <ui:msg>Thank you for submitting your files to WWARN.</ui:msg>
-                <ui:msg>TODO what happens next, e.g., you will be contacted by a curator...</ui:msg>
-            </p>
-            
-            <p>
-                <ui:msg>Please look at the study questionnaire below and fill in as much information as you can.</ui:msg>
-                <ui:msg>TODO explain why important, e.g., by providing this information you enable WWARN's curators to reliably bring together and compare data from different studies...</ui:msg>
-            </p>
-        
-            <p>
-                <ui:msg>Files submitted...</ui:msg>
-            </p>
-            
-            <g:FlowPanel ui:field="filesTableContainer"/>
 
-            <h2>
-                <ui:msg>Study Questionnaire</ui:msg>
-            </h2>
+            <p>
+                <ui:msg>The following files have now been received and submitted for the study:</ui:msg>
+            </p>
             
+            <g:FlowPanel ui:field="filesTableContainer"/>            
+
+
+            <p>
+               <ui:msg>Please answer the following questions relating to the study, amending information if necessary:</ui:msg>
+            </p>      
+           
             <g:HTMLPanel ui:field="saveStudyPendingPanel">
                 <p>
                     <ui:msg>pending... (saving changes)</ui:msg>
@@ -78,6 +62,7 @@
 	                <ui:msg>Study:</ui:msg> 
 	                <strong><g:InlineLabel ui:field="studyTitleLabel"/></strong>
 	            </p>
+
 	            
 	            <p>
 	                <g:Button ui:field="saveChangesButton1">
