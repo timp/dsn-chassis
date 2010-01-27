@@ -47,7 +47,10 @@ public class SubmitWidgetModel extends AsyncWidgetModel {
 	private Document filesFeedDoc;
 	private boolean agreementAccepted;
 	private String submissionId;
-	
+
+	private String errorMessage;
+
+
 	
 	
 	
@@ -145,6 +148,14 @@ public class SubmitWidgetModel extends AsyncWidgetModel {
 	}
 
 
+	public String getErrorMessage() {
+		return errorMessage;
+	}
+
+
+	public void setErrorMessage(String message) {
+		this.errorMessage = message;
+	}
 
 	
 	public HandlerRegistration addStudyEntryChangeHandler(StudyEntryChangeHandler h) {
@@ -256,5 +267,9 @@ public class SubmitWidgetModel extends AsyncWidgetModel {
 		public void onChange(AgreementAcceptedChangeEvent e);
 		
 	}
+
+
+
+
 
 }

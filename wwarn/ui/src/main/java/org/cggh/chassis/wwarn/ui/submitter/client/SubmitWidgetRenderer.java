@@ -35,6 +35,7 @@ import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
@@ -92,6 +93,7 @@ public class SubmitWidgetRenderer extends ChassisWidgetRenderer<SubmitWidgetMode
 	@UiField Panel submissionPendingPanel;
 	
 	@UiField Panel errorPanel;
+	@UiField Panel errorMessage;
 	
 
 
@@ -285,6 +287,9 @@ public class SubmitWidgetRenderer extends ChassisWidgetRenderer<SubmitWidgetMode
 
 		if (status instanceof ErrorStatus) {
 			
+			studyPanel.setVisible(false);
+			errorMessage.clear();
+			errorMessage.add(new HTML(model.getErrorMessage()));
 			errorPanel.setVisible(true);
 			
 		}

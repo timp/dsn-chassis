@@ -103,6 +103,7 @@ public class SelectStudyWidgetRenderer extends ChassisWidgetRenderer<SelectStudy
 			pendingPanel.setVisible(true);
 			proceedWithSelectedButton.setEnabled(false);
 		} else if (status instanceof SelectStudyWidgetModel.RetrieveFeedPendingStatus) {
+			// Pending willl still be visible
 		} else if (status instanceof SelectStudyWidgetModel.StudiesRetrievedStatus) {
 			syncUiWithFeed();
 			pendingPanel.setVisible(false);
