@@ -227,25 +227,22 @@ public class UploadFilesWidgetController {
 				
 				String contents = results.substring(4, results.length()-3);
 
-				log.debug("attempting to parse: "+contents);
+				log.debug("Attempting to parse: "+contents);
 				XMLParser.parse(contents);
 				
-				log.debug("parse success, assume we can go ahead and refresh files");
+				log.debug("Parse success, assume we can go ahead and refresh files");
 				refreshFiles();
 				
-			} else if (results.startsWith("A virus has been detected")) {
-				model.setStatus(AsyncWidgetModel.STATUS_ERROR);
-				owner.fireEvent(new ErrorEvent(results));
 			} else {
 				
 				model.setStatus(AsyncWidgetModel.STATUS_ERROR);
-				owner.fireEvent(new ErrorEvent("Could not parse results: "+results));
+				owner.fireEvent(new ErrorEvent(results));
 
 			}
 			
 		} catch (Throwable t) {
 			
-			log.error("caught trying to parse submit results: "+t.getLocalizedMessage(), t);
+			log.error("Caught trying to parse submit results: "+t.getLocalizedMessage(), t);
 			model.setStatus(AsyncWidgetModel.STATUS_ERROR);
 			owner.fireEvent(new ErrorEvent(t));
 			

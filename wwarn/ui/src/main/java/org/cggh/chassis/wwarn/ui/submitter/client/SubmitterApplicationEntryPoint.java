@@ -25,8 +25,6 @@ public class SubmitterApplicationEntryPoint implements EntryPoint {
 	private Log log = LogFactory.getLog(SubmitterApplicationEntryPoint.class);
 	
 	
-	// Some developers do not have ClamAV installed 
-	public static boolean DEVELOPMENT_INSTALLATION = false;
 	
 	
 	static {

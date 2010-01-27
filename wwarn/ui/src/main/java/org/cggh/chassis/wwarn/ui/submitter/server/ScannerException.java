@@ -3,7 +3,7 @@ package org.cggh.chassis.wwarn.ui.submitter.server;
  * @author timp
  * @since 25-Jan-2010
  */ 
-public class ScannerException extends RuntimeException {
+public class ScannerException extends Exception {
 
 	private static final long serialVersionUID = -3414255013789644207L;
 
