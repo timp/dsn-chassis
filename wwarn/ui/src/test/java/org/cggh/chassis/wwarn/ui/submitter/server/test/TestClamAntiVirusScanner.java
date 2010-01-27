@@ -44,7 +44,7 @@ public class TestClamAntiVirusScanner extends TestCase {
 		try { 
 			new Socket(host, port);
 			
-			ClamAntiVirusScanner scanner = new ClamAntiVirusScanner (host, port, timeout);
+			ClamAntiVirusScanner scanner = new ClamAntiVirusScanner (host);
 			InputStream inputStream = getClass().getResourceAsStream("/eicar.com.txt");
 			assertNotNull(inputStream);
 			try { 
@@ -62,7 +62,7 @@ public class TestClamAntiVirusScanner extends TestCase {
 		try { 
 			new Socket(host, port);
 			
-			ClamAntiVirusScanner scanner = new ClamAntiVirusScanner (host, port, timeout);
+			ClamAntiVirusScanner scanner = new ClamAntiVirusScanner ();
 			InputStream inputStream = getClass().getResourceAsStream("/log4j.properties");
 			assertNotNull(inputStream);
 			scanner.performScan(scanner.performScan(inputStream));
@@ -82,6 +82,7 @@ public class TestClamAntiVirusScanner extends TestCase {
 			fail("Should have bombed");
 		} catch (ScannerException e) { 
 			assertEquals("Connection refused", e.getCause().getMessage());
+			e.printStackTrace();
 		}
 	}
 	public void testBadPortScanner () throws Exception { 
