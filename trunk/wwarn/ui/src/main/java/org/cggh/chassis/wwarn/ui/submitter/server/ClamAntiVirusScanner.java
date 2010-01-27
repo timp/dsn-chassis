@@ -95,8 +95,18 @@ public class ClamAntiVirusScanner {
 			f = File.createTempFile("wwarnVirusScanner_"
 					+ System.currentTimeMillis(), ".tmp");
 
-			copyStreamToFile(inputStream, f);
-			f.deleteOnExit();   // TODO Are we happy with this?
+			try {
+				FileOutputStream output = new FileOutputStream(f);
+				try {
+					IOUtils.copy(inputStream, output);
+				} finally {
+					IOUtils.closeQuietly(output);
+				}
+			} finally {
+				IOUtils.closeQuietly(inputStream);
+			}
+			
+			f.deleteOnExit();
 
 			FileInputStream inputStreamToScan = new FileInputStream(f);
 
@@ -109,34 +119,23 @@ public class ClamAntiVirusScanner {
 				throw new ContainsVirusException("Virus found in " + f.getPath() + "(" + message + ")");
 
 			return new FileInputStream(f);
-		} catch (ScannerException e) {
-			if (log.isDebugEnabled())
-				log.debug(e);
-			throw e;
 		} catch (IOException e) {
-			if (log.isDebugEnabled())
-				log.debug(e);
+			log.debug(e);
 			throw new ScannerException("Problem with temporary files:", e);
 		} finally {
-			closeChannels();
-		}
-	}
-
-	private void closeChannels() {
-		if (protocolSocket != null) {
-			try {
-				protocolSocket.close();
-			} catch (IOException e) {
-				if (log.isDebugEnabled())
+			if (protocolSocket != null) {
+				try {
+					protocolSocket.close();
+				} catch (IOException e) {
 					log.debug("Error closing protocol channel", e);
+				}
 			}
-		}
-		if (dataSocket != null) {
-			try {
-				dataSocket.close();
-			} catch (IOException e) {
-				if (log.isDebugEnabled())
+			if (dataSocket != null) {
+				try {
+					dataSocket.close();
+				} catch (IOException e) {
 					log.debug("Error closing data channel", e);
+				}
 			}
 		}
 	}
@@ -177,8 +176,7 @@ public class ClamAntiVirusScanner {
 				break;
 			message += new String(received);
 		}
-		if (log.isDebugEnabled())
-			log.debug("response: " + message);
+		log.debug("response: " + message);
 	}
 
 	private void openProtocolChannel() throws ScannerException {
@@ -190,7 +188,7 @@ public class ClamAntiVirusScanner {
 			protocolSocket.setSoTimeout(connectionTimeout * 1000);
 		} catch (SocketException e) {
 			throw new ScannerException(
-					"Could not set timeout parameter to configurationSocket", e);
+					"Could not set timeout parameter on configurationSocket", e);
 		}
 
 		try {
@@ -211,8 +209,7 @@ public class ClamAntiVirusScanner {
 			throw new ScannerException(
 					"Error while requesting protocol channel", e);
 		}
-		if (log.isDebugEnabled())
-			log.debug("Channel request response: " + serverResponse);
+		log.debug("Channel request response: " + serverResponse);
 
 		// In the response value, there's an integer.
 		// It's the TCP port that the clamd server has allocated for us for the
@@ -222,36 +219,22 @@ public class ClamAntiVirusScanner {
 				dataPort = Integer.parseInt(serverResponse.split(" ")[1]);
 			} catch (NumberFormatException e) {
 				throw new ScannerException(
-						"Could not understand the server port to connect to in response: "
+						"Could not parse the server data port number to connect to, the server's response is: "
 						+ serverResponse);
 			}
 		} else {
 			throw new ScannerException(
-					"Could not find data port, server's response is "
+					"Could not parse the server data port number to connect to, the server's response is: "
 					+ serverResponse);
 		}
 	}
+
 
 	public String getMessage() {
 		return message;
 	}
 
-	public static synchronized void copyStreamToFile(InputStream input,
-			File destination) throws IOException {
-		if (destination.exists() && !destination.canWrite()) {
-			throw new IOException(
-					"Destination file does not exist or is not writeable");
-		}
 
-		try {
-			FileOutputStream output = new FileOutputStream(destination);
-			try {
-				IOUtils.copy(input, output);
-			} finally {
-				IOUtils.closeQuietly(output);
-			}
-		} finally {
-			IOUtils.closeQuietly(input);
-		}
-	}
+	
+	
 }
