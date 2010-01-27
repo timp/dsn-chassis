@@ -45,11 +45,12 @@ public class SelectStudyWidgetRenderer extends ChassisWidgetRenderer<SelectStudy
 
 	@UiField HTMLPanel bodyPanel;
 	@UiField FlowPanel mainActionsPanel;
-	@UiField FlowPanel errorPanel;
 	@UiField HTMLPanel pendingPanel;
     @UiField HTMLPanel selectExistingStudyPanel;
     @UiField ListBox studySelect;
 	@UiField HTMLPanel createStudyInteractionPanel;
+	@UiField HTMLPanel errorPanel;
+	@UiField FlowPanel errorMessage;
 	@UiField Button proceedWithSelectedButton;
 	
 	@UiField TextBox studyTitle;
@@ -185,7 +186,10 @@ public class SelectStudyWidgetRenderer extends ChassisWidgetRenderer<SelectStudy
 	public void error(String err) {
 		createStudyInteractionPanel.setVisible(false);
 		pendingPanel.setVisible(false);
-		errorPanel.add(new HTML(err));
+
+		errorMessage.clear();
+		errorMessage.add(new HTML(err));
+
 		errorPanel.setVisible(true);
 	}
 	
