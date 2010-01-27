@@ -172,11 +172,12 @@
            	
         </g:HTMLPanel>
         
-        <g:FlowPanel ui:field="errorPanel">
+        <g:HTMLPanel ui:field="errorPanel">
 			<g:Label>
         		<ui:msg>There has been an unexpected error: </ui:msg>
 			</g:Label>
-        </g:FlowPanel>
+			<g:FlowPanel ui:field="errorMessage"></g:FlowPanel>
+        </g:HTMLPanel>
         
     </g:HTMLPanel>
     
