@@ -51,8 +51,6 @@ public class AddInformationWidgetView {
 	@UiField SimplePanel studyQuestionnaireContainer;
 	
 	@UiField Label studyTitleLabel;
-	@UiField Label submissionId;
-	@UiField Label submissionDate;
 	
 	@UiField Anchor submitterHomeLink1;
 	@UiField Anchor submitterHomeLink2;

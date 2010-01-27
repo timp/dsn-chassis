@@ -7,6 +7,25 @@
     ui:generateFormat="com.google.gwt.i18n.rebind.format.PropertiesFormat"
     ui:generateKeys="com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator"
     ui:generateLocales="default">
+
+	<ui:style>
+	
+		ul li {
+			
+			padding-bottom: 5px;
+				
+		}
+		
+		ul ol {
+			padding-top: 5px;
+		}
+		
+		.fileTypeName {
+			font-weight: bold;
+			font-style: italic;
+		}
+
+	</ui:style>
     
     <g:HTMLPanel>
         
@@ -43,6 +62,8 @@
             </p>        
         </g:HTMLPanel>
         
+  
+        
         <g:HTMLPanel ui:field="mainInteractionPanel">
             <p>
             	<g:Label ui:field="filesUploadedLabel">
@@ -62,13 +83,58 @@
             </p>
            	<g:FlowPanel ui:field="filesTableContainer"/>
            	<g:FlowPanel ui:field="mainActionsPanel">
-           		<g:Button ui:field="cancelSubmissionButton" stylePrimaryName="action">
-           			<ui:msg>Cancel Submission</ui:msg>
-           		</g:Button>
            		<g:Button ui:field="proceedButton" stylePrimaryName="action">
            			<ui:msg>Proceed</ui:msg> &gt;
            		</g:Button>
            	</g:FlowPanel>
+           	
+      <g:HTMLPanel>
+
+			<h3><ui:msg>What type of files are required?</ui:msg>
+            	</h3>
+
+        
+				<ul>
+					<li>
+						<ui:msg>Ideally, we would like the following three types of file, although any type is permitted:</ui:msg>
+
+						<ol>
+							<li>
+								<ui:msg>
+									<span class="{style.fileTypeName}">a data file</span>
+									&ndash; containing the original data
+								</ui:msg>
+							</li>
+							<li>
+								<ui:msg>
+									<span class="{style.fileTypeName}">a data dictionary</span>
+									&ndash; containing definitions of fields and variables used in
+									other files
+								</ui:msg>
+							</li>
+							<li>
+								<ui:msg>
+									<span class="{style.fileTypeName}">a protocol</span>
+									&ndash; containing a description of the protocol used in the
+									study
+								</ui:msg>
+							</li>
+						</ol>
+
+					</li>
+					<li>
+						<ui:msg>Files can be submitted for a study in any order, although
+							a new submission will need to be made each time.
+         	</ui:msg>
+					</li>
+
+
+
+				</ul>
+        
+        </g:HTMLPanel>           	
+           	
+           	
            	<g:HTMLPanel ui:field="uploadFormPanel">
 	           	<h3>
 	           		<g:InlineLabel ui:field="uploadAFileTitleLabel">
@@ -78,11 +144,21 @@
 		           		<ui:msg>Upload Another File</ui:msg>
 	           		</g:InlineLabel>
 	           	</h3>
+	           	
+	           	<p>
+	           	<ui:msg>
+	           	Please note that large files will take a while to upload. 
+	           	</ui:msg>
+	           	</p>
+	           		
+	           	<p>
+	           	<ui:msg>
+	           	If you have a particularly large file or a slow connection speed, then we advise that you compress your file before uploading it, by using a file compression utility, which will usually reduce the file size and therefore increase the upload speed. 
+	           	</ui:msg>
+	           	</p>
+	           	
 	           	<local:UploadFileForm ui:field="uploadFileForm"/>
 	           	<g:FlowPanel ui:field="uploadActionsPanel">
-	           		<g:Button ui:field="cancelSubmissionButton2" stylePrimaryName="action">
-	           			<ui:msg>Cancel Submission</ui:msg>
-	           		</g:Button>
 	           		<g:Button ui:field="uploadButton" stylePrimaryName="action">
 	           			<ui:msg>Upload File</ui:msg>
 	           		</g:Button>

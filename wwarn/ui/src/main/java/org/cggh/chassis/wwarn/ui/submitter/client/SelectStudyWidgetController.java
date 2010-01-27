@@ -2,7 +2,6 @@ package org.cggh.chassis.wwarn.ui.submitter.client;
 
 
 
-import java.util.ArrayList;
 
 import org.cggh.chassis.generic.async.client.Deferred;
 import org.cggh.chassis.generic.async.client.Function;
@@ -97,22 +96,19 @@ public class SelectStudyWidgetController {
 
 
 	private Deferred<Document> createStudy(String studyTitle, 
-			String studySummary, String otherSubmitters, ArrayList<String> modules) {
+			String otherSubmitters) {
 		
 		Document studyEntryDoc = AtomHelper.createEntryDoc();
 		Element studyEntryElement = studyEntryDoc.getDocumentElement();
 		AtomHelper.addAuthor(studyEntryElement, Config.get(Config.USER_EMAIL));
 		
 		AtomHelper.setTitle(studyEntryElement, studyTitle);
-		AtomHelper.setSummary(studyEntryElement, studySummary);
 		
 		String[] emails = RenderUtils.extractEmails(otherSubmitters);
 		for (int i = 0; i < emails.length; i++) { 
 			AtomHelper.addAuthor(studyEntryElement, emails[i]);
 		}
 		Element studyElement = ChassisHelper.createStudy();
-		
-		ChassisHelper.setModules(studyElement, modules);
 		
 		// this line puts the chassis:study element as a direct child of the
 		// atom:entry element...
@@ -126,8 +122,8 @@ public class SelectStudyWidgetController {
 	}
 
 
-	public void createStudyAndProceed(String studyTitle, String studySummary, String otherSubmitters, ArrayList<String> modules) {
-		Deferred<Document> deferredStudyEntrydoc = createStudy(studyTitle, studySummary, otherSubmitters, modules);
+	public void createStudyAndProceed(String studyTitle, String otherSubmitters) {
+		Deferred<Document> deferredStudyEntrydoc = createStudy(studyTitle, otherSubmitters);
 		deferredStudyEntrydoc.addCallback(new Function<Document, Document>() {
 			public Document apply(Document in) {
 				model.setSelectedStudy(AtomHelper.getId(in.getDocumentElement()));

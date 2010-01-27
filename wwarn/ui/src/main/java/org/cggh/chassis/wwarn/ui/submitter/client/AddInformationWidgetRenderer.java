@@ -21,11 +21,7 @@ import org.cggh.chassis.wwarn.ui.submitter.client.AddInformationWidgetModel.Retr
 import org.cggh.chassis.wwarn.ui.submitter.client.AddInformationWidgetModel.RetrieveSubmissionPendingStatus;
 import org.cggh.chassis.wwarn.ui.submitter.client.AddInformationWidgetModel.SaveStudyPendingStatus;
 
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
-import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.xml.client.Element;
@@ -161,12 +157,6 @@ public class AddInformationWidgetRenderer extends
 	 */
 	protected void syncUIWithSubmissionEntryElement(Element submissionEntry) {
 		log.enter("syncUIWithSubmissionEntryElement");
-		
-		String submissionId = AtomHelper.getId(submissionEntry);
-		view.submissionId.setText(submissionId); 
-		
-		String date = AtomHelper.getPublished(submissionEntry);
-		view.submissionDate.setText(date);
 		
 		List<Element> submissionPartLinks = AtomHelper.getLinks(submissionEntry, Chassis.REL_SUBMISSIONPART);
 		List<Element> fileEntries = new ArrayList<Element>();

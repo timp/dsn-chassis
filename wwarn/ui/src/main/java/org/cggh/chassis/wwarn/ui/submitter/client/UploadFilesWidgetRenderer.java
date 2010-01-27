@@ -74,14 +74,12 @@ public class UploadFilesWidgetRenderer extends ChassisWidgetRenderer<UploadFiles
 	@UiField Label noFilesUploadedLabel;
 	@UiField Panel filesTableContainer;
 	@UiField Panel mainActionsPanel;
-	@UiField Button cancelSubmissionButton;
 	@UiField Button proceedButton;
 	@UiField Label uploadAFileTitleLabel;
 	@UiField Label uploadAnotherFileTitleLabel;
 	@UiField FlowPanel errorPanel;
 	@UiField UploadFileForm uploadFileForm;
 	@UiField Button uploadButton;
-	@UiField Button cancelSubmissionButton2;
 	@UiField Panel uploadFormPanel;
 	@UiField Panel uploadPendingPanel;
 	

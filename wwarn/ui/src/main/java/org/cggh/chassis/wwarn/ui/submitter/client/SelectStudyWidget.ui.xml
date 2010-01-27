@@ -1,11 +1,27 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	
 	<ui:style>
 		/* Add CSS here. See the GWT docs on UI Binder for more details */
-		.important {
-			font-weight: bold;
+
+		.requiredFieldMarker {
+			color: #FF0000;
+			font-weight: normal;
 		}
+		.optionalFieldMarker {
+			font-weight: normal;
+		}
+		.emphasize {
+			font-weight: bold;	
+		}
+		.exampleText {
+			font-style: italic;	
+		}
+		.studyTitleTextBox {
+			width: 784px;
+		}
+		
 	</ui:style>
 	<g:HTMLPanel ui:field="bodyPanel">
 		<!--
@@ -51,10 +67,6 @@
 				<g:ListBox ui:field="studySelect" visibleItemCount='1' />
 			</g:FlowPanel>
 			</p>
-			<g:Button ui:field="cancelSubmissionButtonOne"
-				stylePrimaryName="action">
-				<ui:msg>Cancel Submission</ui:msg>
-			</g:Button>
 			<g:Button ui:field="proceedWithSelectedButton"
 				stylePrimaryName="action">
 				<ui:msg>Proceed &gt;</ui:msg>
@@ -69,14 +81,21 @@
 			<h3>
 				<ui:msg>Create a Study</ui:msg>
 			</h3>
+			
+			<p>
+				<ui:msg>Fields marked with an asterisk (<span class="{style.requiredFieldMarker}">*</span>) are compulsory.
+				</ui:msg>
+			</p>
 
 			<h4>
 				<ui:msg>Title</ui:msg>
+				
+				<span class="{style.requiredFieldMarker}"><ui:msg>*</ui:msg></span>
 			</h4>
 			<p>
 				<ui:msg>Please provide a title for the study...</ui:msg>
 			</p>
-			<g:TextBox ui:field="studyTitle"></g:TextBox>
+			<g:TextBox ui:field="studyTitle" styleName="{style.studyTitleTextBox}"></g:TextBox>
 			<p>
 				<ui:msg>
 					E.g.,
@@ -84,90 +103,44 @@
 				</ui:msg>
 			</p>
 			<h4>
-				<ui:msg>Summary</ui:msg>
-			</h4>
-			<p>
-				<ui:msg>Please provide a short description of the study....</ui:msg>
-			</p>
-
-			<g:TextArea visibleLines="4" ui:field="studySummary"></g:TextArea>
-			<p>
-				<ui:msg>
-					E.g.,
-					<i>TODO This study looked at ... This study found ...</i>
-				</ui:msg>
-			</p>
-			<h4>
 				<ui:msg>Submitters</ui:msg>
+				
+				<span class="{style.requiredFieldMarker}"><ui:msg>*</ui:msg></span>
 			</h4>
+			
 			<p>
-				<ui:msg>Please enter an email address for each person who can submit
-					data for this study...</ui:msg>
+				<ui:msg>Please provide the email address of each person allowed to submit files for this study. </ui:msg>
 			</p>
+			
+			      <g:DisclosurePanel animationEnabled='true'>
+        <g:header>
+          <ui:msg>How does this function?</ui:msg>
+        </g:header>
+
+
+          <g:HTMLPanel>
+					<ul>
+						<li><ui:msg>Each email address should be the same email address that the submitter would use to log into this system. </ui:msg></li>
+						<li><ui:msg>This prevents unwanted submissions for this study. </ui:msg></li>
+						<li><ui:msg>You will be allowed to submit files for this study automatically, so you will not need to add your own email address here. </ui:msg></li>
+						<li><ui:msg>This process will <span class="{style.emphasize}">not</span> register users automatically, nor will it send any notification to the email addresses.</ui:msg></li>
+						<li><ui:msg>Submitters will still need to register themselves using the relevant email address listed here and they will also still need to be informed that they can submit files for this study.</ui:msg></li>
+					</ul>
+					
+          </g:HTMLPanel>
+      </g:DisclosurePanel>
+
 			<g:TextArea visibleLines="2" ui:field="otherSubmitters"></g:TextArea>
 			<p>
 				<ui:msg>
-					Separate each email address with a space, e.g.,
-					<i>bob@example.org fred@bloggs.com</i>
+					Please separate each email address with a space, for example:
+					<span class="{style.exampleText}">bob@example.org fred@bloggs.com</span>
 				</ui:msg>
 			</p>
-
-			<p>
-				<ui:msg>(You will automatically be included in the list of
-					submitters for this study.)</ui:msg>
-			</p>
-			<h4>
-				<ui:msg>Modules</ui:msg>
-			</h4>
-			<p>
-				<ui:msg>Please select the WWARN modules for which this study has
-					data...</ui:msg>
-			</p>
-			<table style="border: none">
-				<tr>
-					<td>
-						<g:CheckBox ui:field="clinical"></g:CheckBox>
-					</td>
-					<td>
-						<ui:msg>Clinical</ui:msg>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<g:CheckBox ui:field="molecular"></g:CheckBox>
-					</td>
-					<td>
-						<ui:msg>Molecular</ui:msg>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<g:CheckBox ui:field="invitro"></g:CheckBox>
-					</td>
-					<td>
-						<ui:msg>
-							<i>in vitro</i>
-						</ui:msg>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<g:CheckBox ui:field="pharmacology"></g:CheckBox>
-					</td>
-					<td>
-						<ui:msg>Pharmacology</ui:msg>
-					</td>
-
-				</tr>
-			</table>
 
             <p></p>
 
 			<g:FlowPanel ui:field="mainActionsPanel">
-				<g:Button ui:field="cancelSubmissionButton"
-					stylePrimaryName="action">
-					<ui:msg>Cancel Submission</ui:msg>
-				</g:Button>
 				<g:Button ui:field="createAndProceedButton"
 					stylePrimaryName="action">
 					<ui:msg>Create Study and Proceed &gt;</ui:msg>

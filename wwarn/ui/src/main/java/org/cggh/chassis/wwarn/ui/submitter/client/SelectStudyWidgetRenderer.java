@@ -1,12 +1,10 @@
 package org.cggh.chassis.wwarn.ui.submitter.client;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.miniatom.client.AtomHelper;
-import org.cggh.chassis.generic.miniatom.client.ext.Chassis.Module;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 import org.cggh.chassis.generic.widget.client.ChassisWidgetRenderer;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.Status;
@@ -22,7 +20,6 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -53,17 +50,10 @@ public class SelectStudyWidgetRenderer extends ChassisWidgetRenderer<SelectStudy
     @UiField HTMLPanel selectExistingStudyPanel;
     @UiField ListBox studySelect;
 	@UiField HTMLPanel createStudyInteractionPanel;
-	@UiField Button cancelSubmissionButtonOne; 
-	@UiField Button cancelSubmissionButton;    
 	@UiField Button proceedWithSelectedButton;
 	
 	@UiField TextBox studyTitle;
-	@UiField TextArea studySummary;
 	@UiField TextArea otherSubmitters;
-	@UiField CheckBox clinical;
-	@UiField CheckBox molecular;
-	@UiField CheckBox invitro;
-	@UiField CheckBox pharmacology;
 	
 	@UiField Button createAndProceedButton;
 
@@ -168,29 +158,11 @@ public class SelectStudyWidgetRenderer extends ChassisWidgetRenderer<SelectStudy
 	void handleProceedWithSelectedButtonClick(ClickEvent e) {
 		controller.proceed();
 	}
-
-	@UiHandler("cancelSubmissionButton")
-	void handleCancelSubmissionButtonClick(ClickEvent e) { 
-		controller.stepBack();
-	}
-	@UiHandler("cancelSubmissionButtonOne")
-	void handleCancelSubmissionButtonOneClick(ClickEvent e) { 
-		controller.stepBack();		
-	}
 	
 	@UiHandler("createAndProceedButton")
 	void handleCreateAndProceedButtonClick(ClickEvent e) {
-		ArrayList<String> modules = new ArrayList<String>();
-		if (clinical.getValue())
-			modules.add(Module.CLINICAL.getName());
-		if (molecular.getValue())
-			modules.add(Module.MOLECULAR.getName());
-		if (invitro.getValue())
-			modules.add(Module.INVITRO.getName());
-		if (pharmacology.getValue())
-			modules.add(Module.PHARMACOLOGY.getName());
 		controller.createStudyAndProceed(studyTitle.getValue(), 
-				studySummary.getValue(), otherSubmitters.getValue(), modules);
+				otherSubmitters.getValue());
 	}
 	
 	

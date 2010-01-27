@@ -34,20 +34,23 @@ var config = {
 </script>
 <style>
 #jsWarning {
-  clear: left;
   color: maroon;
-  border: inset 2px maroon;
-  margin: 2em;
+  border: solid 2px maroon;
+  margin: 10px;
   font-size: x-large;
+  text-align: center;
+  padding: 5px;
+  font-family: Verdana, Arial, sans-serif;
 }
 </style>
 </head>
 <body>
 <noscript>
-    <div id='jsWarning' class='jsWarning'>
-    Your browser has JavaScript disabled, 
-    the site will not perform as intended 
-    until you enable JavaScript. 
+    <div id="jsWarning">
+    <!-- TODO: Style to look more like the js-enabled website, inc. logo, etc. -->
+    <!-- TODO: i18n -->
+    <p>JavaScript is currently disabled in this browser.</p> 
+    <p>This website requires JavaScript to be enabled.</p>  
     </div>
 </noscript>
 
@@ -63,6 +66,7 @@ var config = {
 		</div>
 		
 		<div id="apploading">
+			<!-- TODO: i18n -->
 			<p>Please wait while the application loads...</p>
 		</div>
 
