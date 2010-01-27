@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.ConnectException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketAddress;
@@ -205,6 +206,10 @@ public class ClamAntiVirusScanner {
 					break;
 				serverResponse += new String(received);
 			}
+			
+		} catch (ConnectException e) {
+			throw new ClamAntiVirusNotRunningException(
+					"Cannot connect to ClamAV service", e);
 		} catch (IOException e) {
 			throw new ScannerException(
 					"Error while requesting protocol channel", e);

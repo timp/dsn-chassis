@@ -31,6 +31,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.cggh.chassis.generic.miniatom.client.ext.Chassis;
 import org.cggh.chassis.wwarn.ui.common.client.Config;
+import org.cggh.chassis.wwarn.ui.submitter.client.SubmitterApplicationEntryPoint;
 import org.cggh.chassis.wwarn.ui.submitter.client.UploadFileForm;
 import org.springframework.security.context.SecurityContextHolder;
 import org.springframework.security.userdetails.UserDetails;
@@ -165,6 +166,9 @@ public class UploadFileFormSubmitHandler extends HttpServlet {
 			    	ClamAntiVirusScanner clamScanner = new ClamAntiVirusScanner();
 			    	try { 
 			    	  stream = clamScanner.performScan(stream);
+			    	} catch (ClamAntiVirusNotRunningException e) {
+			    		if (!SubmitterApplicationEntryPoint.DEVELOPMENT_INSTALLATION)
+			    			throw e;
 			    	} catch (ContainsVirusException e) { 			       
 			    		System.err.println("The file " + item.getName() + " appears to contain a virus.");
 			    		throw new ContainsVirusException("The file " + item.getName() + " appears to contain a virus.", e);
