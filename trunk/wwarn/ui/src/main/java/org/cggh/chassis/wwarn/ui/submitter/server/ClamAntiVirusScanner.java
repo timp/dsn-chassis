@@ -50,6 +50,9 @@ public class ClamAntiVirusScanner {
 
 	private static final byte[] INIT_COMMAND = { 'S', 'T', 'R', 'E', 'A', 'M', '\n' };
 
+	// Some developers do not have ClamAV installed 
+	public static boolean DEVELOPMENT_INSTALLATION = false;
+
 	private int connectionTimeout = 1;
 
 	private String clamdHost = "localhost";
@@ -91,6 +94,12 @@ public class ClamAntiVirusScanner {
 		message = "";
 
 		try {
+			
+			// check if clamd running before consuming stream 
+			openProtocolChannel();
+
+			
+			
 			File f = null;
 
 			f = File.createTempFile("wwarnVirusScanner_"
@@ -111,7 +120,6 @@ public class ClamAntiVirusScanner {
 
 			FileInputStream inputStreamToScan = new FileInputStream(f);
 
-			openProtocolChannel();
 			requestScan(inputStreamToScan);
 
 			// clamd writes this if the stream
@@ -119,6 +127,7 @@ public class ClamAntiVirusScanner {
 			if (!message.equals("stream: OK"))
 				throw new ContainsVirusException("Virus found in " + f.getPath() + "(" + message + ")");
 
+			// Recreate the stream we consumed 
 			return new FileInputStream(f);
 		} catch (IOException e) {
 			log.debug(e);

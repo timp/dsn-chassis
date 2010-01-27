@@ -31,7 +31,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.cggh.chassis.generic.miniatom.client.ext.Chassis;
 import org.cggh.chassis.wwarn.ui.common.client.Config;
-import org.cggh.chassis.wwarn.ui.submitter.client.SubmitterApplicationEntryPoint;
 import org.cggh.chassis.wwarn.ui.submitter.client.UploadFileForm;
 import org.springframework.security.context.SecurityContextHolder;
 import org.springframework.security.userdetails.UserDetails;
@@ -92,7 +91,7 @@ public class UploadFileFormSubmitHandler extends HttpServlet {
 		// guard condition 
 		if (!isMultipart) {
 
-			sendError(response, "only multipart content is supported", HttpServletResponse.SC_BAD_REQUEST);
+			sendError(response, "Only multipart content is supported.", HttpServletResponse.SC_BAD_REQUEST);
 			return;
 			
 		}
@@ -116,10 +115,10 @@ public class UploadFileFormSubmitHandler extends HttpServlet {
 					HttpServletResponse.SC_BAD_REQUEST);			
 		} catch (Throwable t) {
 
-			t.printStackTrace();
-			sendError(response, "the server encountered an internal error which prevented it from completing the request", 
+			sendError(response, "The server encountered an internal error which prevented it from completing the request: " + t.getMessage(), 
 					HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 
+			t.printStackTrace();
 		}
 		
 		
@@ -130,7 +129,7 @@ public class UploadFileFormSubmitHandler extends HttpServlet {
 
 	private Entry parseRequestAndStreamMedia(Map<String, String> fields,
 											 HttpServletRequest request) 
-			throws FileUploadException, IOException, ContainsVirusException {
+			throws FileUploadException, IOException, ScannerException {
 		
 		Entry mediaEntry = null;
 		
@@ -167,10 +166,12 @@ public class UploadFileFormSubmitHandler extends HttpServlet {
 			    	try { 
 			    	  stream = clamScanner.performScan(stream);
 			    	} catch (ClamAntiVirusNotRunningException e) {
-			    		if (!SubmitterApplicationEntryPoint.DEVELOPMENT_INSTALLATION)
+
+			    		// TODO It might be better to succeed but email administrator
+			    		
+			    		if (!ClamAntiVirusScanner.DEVELOPMENT_INSTALLATION)
 			    			throw e;
 			    	} catch (ContainsVirusException e) { 			       
-			    		System.err.println("The file " + item.getName() + " appears to contain a virus.");
 			    		throw new ContainsVirusException("The file " + item.getName() + " appears to contain a virus.", e);
 			        }
 			        // process the input stream
