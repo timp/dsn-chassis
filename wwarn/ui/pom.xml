@@ -8,7 +8,7 @@
   <modelVersion>4.0.0</modelVersion>
   <artifactId>chassis-wwarn-ui</artifactId>
   <packaging>war</packaging>
-  <name>googlecode_dsn-chassis_wwarn_ui</name>
+  <name>WWARN UI</name>
   
   <dependencies>
     <dependency>
