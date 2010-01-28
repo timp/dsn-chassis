@@ -9,6 +9,10 @@
   <artifactId>chassis-generic-lib-gwt</artifactId>
   <packaging>jar</packaging>
   <name>googlecode_dsn-chassis_generic_lib_gwt</name>
+  <name>lib_gwt</name>
+  <description>
+  Generic, GWT code for the Chassis Data Sharing Network.
+  </description>
   
   <dependencies>
     <dependency>

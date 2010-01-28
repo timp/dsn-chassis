@@ -13,7 +13,7 @@
   </modules>
 
   <description>
-CGGH Data Sharing Network Chassis
+CGGH Chassis Data Sharing Network.
   </description>
   <url>http://code.google.com/p/dsn-chassis/</url>
 
@@ -241,7 +241,7 @@ http://groups.google.com/group/dsn-chassis-svn
           <tag>FIXME</tag>
           <tag>TODO</tag>
           <tag>@deprecated</tag>
-          <tag>@SuppressWarnings</tag>
+          <tag>@SuppressWarnings("unchecked")</tag>
           <tag>NOTE</tag>
           <tag>HACK</tag>
          </tags>
