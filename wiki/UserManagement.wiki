@@ -159,19 +159,23 @@ Not at all obvious how to set up and configure. Have given up for the moment.
 
 == Drupal ==
 
-Can you use drupal's user management features as the central point in a authentication/authorisation setup? 
+Can you use drupal's user management features as the central point in a authentication/authorisation/user management setup? 
 
   * self-registration possible? yes
   * verify email address? yes
   * (re)captcha? yes (via captcha module)
-  * single sign-on? kind of (via openid_provider module)
+  * single sign-on? maybe... (openid? cas? ...)
   * management of user roles? yes
   * wwarn branding possible? yes
   * manage user profile data? TODO (surely)
   * customise user profile data? TODO (surely)
-  * integration with spring security? yes for authentication, TODO for roles (probably doable with the right SQL)
+  * integration with spring security? TODO authentication, TODO for roles (probably doable with the right SQL)
   * username/password recovery? yes
   * open-source? yes
   * free? yes
   
-The basic problem here is that you can create a drupal account, and the log in using your username and password, but if you visit a spring protected webapp configured for openid authentication, you have to log in there too. You only have to put in your openid url at the protected webapp, but your logged-in state is specific to that webapp. I.e., you could log out of drupal but still be logged in to the protected webapp. Or you could log out of the webapp but still be logged in to drupal. Not ideal.
+I investigated the use of openid here, using a drupal module that enables your drupal installation to act as an openid provider, then using your drupal openid to log in to java webapps (via spring security configured for authentication using openid). The basic problem here is that you can create a drupal account, and the log in using your username and password, but if you visit a spring protected webapp configured for openid authentication, you have to log in there too. You only have to put in your openid url at the protected webapp, but your logged-in state is specific to that webapp. I.e., you could log out of drupal but still be logged in to the protected webapp. Or you could log out of the webapp but still be logged in to drupal. Not ideal.
+
+Another option might be integration with CAS, ... i.e., use CAS for authentication and SSO, but then use the Drupal user database as the repository of users, groups/roles and passwords... ? This would enable use of drupal as UI for user (self-)registration, and management of user roles, but get single sign-on across drupal and arbitrary java webapps... TODO can this work?
+
+An interesting aside here is that there is a mod_auth_mysql module for apache, which enables use of a mysql database as a repository of user and group information. So it might be possible to use apache config directives to limit access to portions of a url space based on group-membership data from a mysql (e.g., drupal) database... ?
