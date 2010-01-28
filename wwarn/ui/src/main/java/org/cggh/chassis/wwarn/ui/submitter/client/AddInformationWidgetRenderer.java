@@ -183,7 +183,7 @@ public class AddInformationWidgetRenderer extends
 		Widget[] headerRow = {
 			new Label("File Name"), // TODO i18n
 			new Label("Type"),  // TODO i18n
-			new Label("Summary"), // TODO i18n
+			new Label("Size"), // TODO i18n
 			new Label("Uploaded")  // TODO i18n
 		};
 		rows.add(headerRow);
@@ -195,13 +195,13 @@ public class AddInformationWidgetRenderer extends
 			Element categoryElement = AtomHelper.getFirstCategory(entry, Chassis.SCHEME_FILETYPES);
 			String type = getTypeLabel(categoryElement);
 			
-			String summary = AtomHelper.getSummary(entry);
+			String fileSizeAsString = AtomHelper.getMediaResourceSizeAsString(entry);
 			String created = AtomHelper.getPublished(entry);
 			
 			Widget[] row = {
 				new Label(title),	
 				new Label(type),	
-				new Label(summary),	
+				new Label(fileSizeAsString),	
 				new Label(created)
 			};
 			rows.add(row);
