@@ -280,6 +280,10 @@ http://groups.google.com/group/dsn-chassis-svn
      <name>cggh</name>
      <url>file://localhost/var/lib/hudson/maven2</url>
    </repository>
+    <site>
+      <id>local</id>
+      <url>file://localhost/var/www/chassis/</url>
+    </site>
  </distributionManagement>
   
 </project>
