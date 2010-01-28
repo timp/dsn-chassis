@@ -103,7 +103,7 @@ public class SelectStudyWidgetRenderer extends ChassisWidgetRenderer<SelectStudy
 			pendingPanel.setVisible(true);
 			proceedWithSelectedButton.setEnabled(false);
 		} else if (status instanceof SelectStudyWidgetModel.RetrieveFeedPendingStatus) {
-			// Pending willl still be visible
+			// Pending will still be visible
 		} else if (status instanceof SelectStudyWidgetModel.StudiesRetrievedStatus) {
 			syncUiWithFeed();
 			pendingPanel.setVisible(false);
@@ -141,12 +141,12 @@ public class SelectStudyWidgetRenderer extends ChassisWidgetRenderer<SelectStudy
 		}
 		log.debug("selectedIndex" + selectedIndex);
 		studySelect.setItemSelected(selectedIndex, true);
-		proceedWithSelectedButton.setEnabled(this.owner.getModel().isValid());
+		proceedWithSelectedButton.setEnabled(model.isValid());
 		log.leave();
 	}
 	
 	@UiHandler("studySelect")
-	void handleStudySelection(ClickEvent e) {
+	void handleStudySelection(ChangeEvent e) {
 		String value = null;
 		if (studySelect.getSelectedIndex() != -1 ) {
 			value = studySelect.getValue(studySelect.getSelectedIndex());
