@@ -1,4 +1,5 @@
 <?xml version="1.0"?><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.cggh.chassis</groupId>
     <artifactId>chassis-parent</artifactId>
@@ -6,11 +7,10 @@
   </parent>
   <artifactId>chassis-htmlunit</artifactId>
   <packaging>jar</packaging>
-  <name>googlecode_dsn-chassis_htmlunit</name>
+  <name>Smoke Tests</name>
   
-  <modelVersion>4.0.0</modelVersion>
   <description>
-  Smoke tests. 
+  Smoke tests for the Chassis Data Sharing Network. 
   </description>
   
   <dependencies>
