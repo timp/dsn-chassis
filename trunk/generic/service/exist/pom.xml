@@ -8,7 +8,6 @@
   <modelVersion>4.0.0</modelVersion>
   <artifactId>chassis-generic-service-exist</artifactId>
   <packaging>war</packaging>
-  <name>googlecode_dsn-chassis_generic_service_exist</name>
   <name>eXist</name>
   <description>
   The eXist data service for the Chassis Data Sharing Network.
