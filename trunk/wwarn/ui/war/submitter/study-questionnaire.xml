@@ -22,6 +22,38 @@
 					<h3>General Questions</h3>
 				</html>
 
+
+				<html>
+					<h4 id="modulesHeading">Module(s)</h4>
+				</html>
+
+				<question id="module">
+					<model>
+						<element name="module" />
+					</model>
+					<view>
+						<select appearance="full">
+							<label>Please select the WWARN modules for which this study has data...</label>
+							<item>
+								<label>Clinical</label>
+								<value>clinical</value>
+							</item>
+							<item>
+								<label>Molecular</label>
+								<value>molecular</value>
+							</item>
+							<item>
+								<label>in vitro</label>
+								<value>invitro</value>
+							</item>
+							<item>
+								<label>Pharmacology</label>
+								<value>pharmacology</value>
+							</item>
+						</select>
+					</view>
+				</question>
+
 				<html>
 					<h4 id="startend">Study Start and End</h4>
 				</html>

@@ -24,6 +24,11 @@
 			font-weight: bold;
 			font-style: italic;
 		}
+		
+		.warning {
+			font-weight: bold;
+			color: #FF0000;	
+		}
 
 	</ui:style>
     
@@ -82,6 +87,20 @@
             	</g:Label>
             </p>
            	<g:FlowPanel ui:field="filesTableContainer"/>
+           	
+           	<g:HTMLPanel ui:field="uploadPendingPanel">
+           		<p>
+           			<ui:msg>pending... (uploading file)</ui:msg>
+           		</p>
+           		<p>
+           			<ui:msg>Please note that large files will take a while to upload, particularly on slow connections. </ui:msg>
+           		</p>
+           		<p class="{style.warning}">
+           			<!-- TODO: Reason why? -->
+           			<ui:msg>Please do not close this browser while the file is being uploaded. </ui:msg>
+           		</p>
+           	</g:HTMLPanel>
+           	
            	<g:FlowPanel ui:field="mainActionsPanel">
            		<g:Button ui:field="proceedButton" stylePrimaryName="action">
            			<ui:msg>Proceed</ui:msg> &gt;
@@ -164,12 +183,7 @@
 	           		</g:Button>
 	           	</g:FlowPanel>
            	</g:HTMLPanel>
-           	<g:HTMLPanel ui:field="uploadPendingPanel">
-           		<p>
-           			<ui:msg>pending... (uploading file)</ui:msg>
-           		</p>
-           	</g:HTMLPanel>
-           	
+
         </g:HTMLPanel>
         
         <g:HTMLPanel ui:field="errorPanel">

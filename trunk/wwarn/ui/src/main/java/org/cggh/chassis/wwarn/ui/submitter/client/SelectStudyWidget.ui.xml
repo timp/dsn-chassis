@@ -21,6 +21,9 @@
 		.studyTitleTextBox {
 			width: 784px;
 		}
+		.otherSubmittersTextBox {
+			width: 784px;
+		}
 		
 	</ui:style>
 	<g:HTMLPanel ui:field="bodyPanel">
@@ -130,7 +133,7 @@
           </g:HTMLPanel>
       </g:DisclosurePanel>
 
-			<g:TextArea visibleLines="2" ui:field="otherSubmitters"></g:TextArea>
+			<g:TextArea visibleLines="2" ui:field="otherSubmitters" styleName="{style.otherSubmittersTextBox}"></g:TextArea>
 			<p>
 				<ui:msg>
 					Please separate each email address with a space, for example:

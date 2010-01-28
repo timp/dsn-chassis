@@ -41,7 +41,7 @@
 
 
             <p>
-               <ui:msg>Please answer the following questions relating to the study, amending information if necessary:</ui:msg>
+               <ui:msg>Please answer the following questions relating to the study, amending the information if necessary:</ui:msg>
             </p>      
            
             <g:HTMLPanel ui:field="saveStudyPendingPanel">
