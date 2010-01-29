@@ -143,6 +143,7 @@ public class XQuestionView extends XQSViewBase {
 			owner.getEventBus().addHandler(XValueChangeEvent.TYPE, new XValueChangeHandler() {
 
 				public void onChange(XValueChangeEvent e) {
+					log.debug("onChange - refreshing");
 					refresh();
 				}
 				
