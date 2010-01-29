@@ -25,6 +25,8 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.xml.client.Document;
@@ -52,6 +54,7 @@ public class SubmitterHomeWidgetRenderer extends ChassisWidgetRenderer<Submitter
 	private static MyUiBinder uiBinder = GWT.create(MyUiBinder.class);
 	
 	@UiField HTMLPanel errorPanel;
+	@UiField FlowPanel errorMessage;
 	@UiField HTMLPanel pendingPanel;
 	@UiField HTMLPanel mainPanel;
 
@@ -128,17 +131,14 @@ public class SubmitterHomeWidgetRenderer extends ChassisWidgetRenderer<Submitter
 		
 		else if (status instanceof AsyncWidgetModel.ErrorStatus) {
 
-			errorPanel.setVisible(true);
 			
-			log.error("Error status given on asynchronous call. Maybe a bad submissions query URL.");
+			error("Error status given on asynchronous call. Maybe a bad submissions query URL.");
 			
 		}			
 		
 		else {
 
-			errorPanel.setVisible(true);
-			
-			log.error("Unhandled status.");
+			error("Unhandled status:" + status);
 			
 		}
 		
@@ -146,6 +146,15 @@ public class SubmitterHomeWidgetRenderer extends ChassisWidgetRenderer<Submitter
 	}
 
 
+	public void error(String err) {
+		mainPanel.setVisible(false);
+		pendingPanel.setVisible(false);
+
+		errorMessage.clear();
+		errorMessage.add(new HTML(err));
+
+		errorPanel.setVisible(true);
+	}
 	private void syncUIWithSubmissions(Document submissions) {
 		
 		log.enter("syncUIWithSubmissions");
