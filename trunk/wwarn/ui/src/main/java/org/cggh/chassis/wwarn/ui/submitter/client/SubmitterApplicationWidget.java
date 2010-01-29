@@ -125,8 +125,7 @@ public class SubmitterApplicationWidget extends MultiWidget {
 		HandlerRegistration d = this.submitWidget.addProceedActionHandler(new ProceedActionHandler() {
 			
 			public void onAction(ProceedActionEvent e) {
-				String submissionId = submitWidget.getSubmissionId(); // TODO
-//				String submissionId = "abc"; // TODO
+				String submissionId = submitWidget.getSubmissionId();
 				addInformationWidget.setSubmission(submissionId);
 				addInformationWidget.refresh();
 				setActiveChild(addInformationWidget);
