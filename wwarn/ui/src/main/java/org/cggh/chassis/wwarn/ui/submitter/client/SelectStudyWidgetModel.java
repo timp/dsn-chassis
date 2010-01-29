@@ -28,6 +28,8 @@ public class SelectStudyWidgetModel extends AsyncWidgetModel {
 	public final ObservableProperty<Document> studyFeed = new ObservableProperty<Document>();
 	
 	public final ObservableProperty<String> selectedStudyId  = new ObservableProperty<String>();
+
+	private String message;
 	
 	public Document getStudyFeed() {
 		return studyFeed.get();
@@ -61,5 +63,12 @@ public class SelectStudyWidgetModel extends AsyncWidgetModel {
 		if (selectedStudyId.get() != null)
 			return true;
 		return false;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+	public void setMessage(String message) {
+		this.message = message;
 	}
 }
