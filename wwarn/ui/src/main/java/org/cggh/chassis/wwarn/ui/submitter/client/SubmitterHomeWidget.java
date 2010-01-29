@@ -28,6 +28,11 @@ public class SubmitterHomeWidget
 		return new SubmitterHomeWidgetModel();
 	}
 
+	public SubmitterHomeWidgetModel getModel() {
+		return model;
+	}
+	
+
 	@Override
 	protected SubmitterHomeWidgetRenderer createRenderer() {
 		return new SubmitterHomeWidgetRenderer(this);
@@ -65,7 +70,7 @@ public class SubmitterHomeWidget
 	
 	
 	public final WidgetEventChannel submitDataNavigationEventChannel = new WidgetEventChannel(this);
-	
+
 	
 	
 
