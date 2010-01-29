@@ -32,7 +32,7 @@ import com.google.gwt.xml.client.Element;
  * @author timp
  * @since 13 Jan 2010
  */
-public class SelectStudyWidgetRenderer extends ChassisWidgetRenderer<SelectStudyWidgetModel> {
+public class SelectStudyWidgetRenderer extends ChassisWidgetRenderer<SelectStudyWidgetModel>  {
 
 	private Log log = LogFactory.getLog(SelectStudyWidgetRenderer.class);
 	
@@ -115,7 +115,7 @@ public class SelectStudyWidgetRenderer extends ChassisWidgetRenderer<SelectStudy
 		} else if (status instanceof SelectStudyWidgetModel.StudyCreatedStatus) {
 			// Nothing to do
 		} else if (status instanceof AsyncWidgetModel.ErrorStatus) {
-			error("Error status: " + status);
+			error("Error status: " + status + " " + model.getMessage());
 		} else { 
 			error("Unexpected status: " + status);
 		}
