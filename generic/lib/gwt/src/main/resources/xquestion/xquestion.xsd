@@ -130,6 +130,7 @@
   				<xs:restriction base="xs:string">
   					<xs:enumeration value="eq"/>
   					<xs:enumeration value="gt"/>
+  					<xs:enumeration value="contains"/>
   				</xs:restriction>
   			</xs:simpleType>
   		</xs:attribute>
