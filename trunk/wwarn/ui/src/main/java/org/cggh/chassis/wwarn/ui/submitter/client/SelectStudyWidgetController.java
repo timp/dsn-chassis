@@ -85,10 +85,9 @@ public class SelectStudyWidgetController {
 			Function<Throwable, Throwable> {
 
 		public Throwable apply(Throwable in) {
-			log.error("unexpected error", in);
+			log.error("Unexpected error", in);
 			model.setStatus(SelectStudyWidgetModel.STATUS_ERROR);
 			owner.fireEvent(new ErrorEvent(in));
-			owner.getRenderer().error(in.getMessage());
 			return in;
 		}
        
