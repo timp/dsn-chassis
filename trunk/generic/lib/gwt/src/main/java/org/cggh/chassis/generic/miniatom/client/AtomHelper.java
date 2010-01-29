@@ -53,18 +53,15 @@ public class AtomHelper {
 		return XMLNS.getFirstChildSimpleContentByTagNameNS(parent, Atom.ELEMENT_SUMMARY, Atom.NSURI);
 	}
 	
-
-	public static String getMediaResourceSizeAsString(Element entry) {
-		// TODO return the file size with the appropriate units, e.g. 10 bytes, 10 KB or 10 MB, etc..  
-		return "10 KB";
-	}
-		
-	
 	public static void setSummary(Element parent, String summary) {
 		XMLNS.setSingleChildSimpleContentByTagNameNS(parent, Atom.ELEMENT_SUMMARY, Atom.PREFIX, Atom.NSURI, summary);
 	}
 
-	
+	public static String getMediaResourceSize(Element parent) {
+		// Return the file size with appropriate units, e.g. 10 bytes, 10 KB or 10 MB, etc.  
+		return XMLNS.getFirstChildSimpleContentByTagNameNS(parent, Atom.ELEMENT_SIZE, Atom.NSURI);
+	}
+
 	
 	public static List<Element> getLinks(Element parent) {
 		return XMLNS.getChildrenByTagNameNS(parent, Atom.ELEMENT_LINK, Atom.NSURI);

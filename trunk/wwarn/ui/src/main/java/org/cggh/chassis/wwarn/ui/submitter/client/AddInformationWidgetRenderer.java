@@ -195,7 +195,7 @@ public class AddInformationWidgetRenderer extends
 			Element categoryElement = AtomHelper.getFirstCategory(entry, Chassis.SCHEME_FILETYPES);
 			String type = getTypeLabel(categoryElement);
 			
-			String fileSizeAsString = AtomHelper.getMediaResourceSizeAsString(entry);
+			String fileSizeAsString = AtomHelper.getMediaResourceSize(entry);
 			String created = AtomHelper.getPublished(entry);
 			
 			Widget[] row = {

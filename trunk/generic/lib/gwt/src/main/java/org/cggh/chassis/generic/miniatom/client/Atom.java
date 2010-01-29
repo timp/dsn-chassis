@@ -32,6 +32,7 @@ public class Atom {
 	public static final String ELEMENT_ENTRY = "entry";
 	public static final String ELEMENT_TITLE = "title";
 	public static final String ELEMENT_SUMMARY = "summary";
+	public static final String ELEMENT_SIZE = "size";
 	public static final String ELEMENT_ID = "id";
 	public static final String ELEMENT_PUBLISHED = "published";
 	public static final String ELEMENT_UPDATED = "updated";

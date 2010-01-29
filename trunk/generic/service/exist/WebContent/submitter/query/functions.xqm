@@ -46,6 +46,8 @@ declare function chassis:media() as element(atom:entry)*
     let $absolute-uri := concat(request:get-context-path(), "/atom/edit/media", $entry/atom:link[@rel="edit"]/@href)
     let $absolute-content-src := concat(request:get-context-path(), "/atom/edit/media/", $entry/atom:content/@src)
     let $content-type := $entry/atom:content/@type
+    let $resource := xs:string($entry/atom:content/@src)
+    let $size := xmldb:size("/db/media", $resource)
     return 
         <atom:entry>
         {
@@ -58,6 +60,25 @@ declare function chassis:media() as element(atom:entry)*
             $entry/atom:link[@rel!="edit" and @rel!="edit-media"],
             $entry/atom:category        
         }
+            <atom:size>                
+            {
+                if ($size < 1024) then (
+                	concat(xs:string(round($size)), " bytes")
+                )
+                else if ($size < 1048576) then (
+                	concat(xs:string(round($size div 1024)), " KB")
+                )
+                else if ($size < 1073741824) then (
+                	concat(xs:string(round($size div 1048576)), " MB")
+                )
+                else if ($size < 1099511627776) then (
+                	concat(xs:string(round($size div 1073741824)), " GB")
+                )
+                else (
+                	concat(xs:string(round($size div 1099511627776)), " TB")
+                )
+            }
+            </atom:size>
             <atom:link rel="edit" href="{$absolute-uri}"/>
             <atom:link rel="self" href="{$absolute-uri}"/>
             <atom:content src="{$absolute-content-src}" type="{$content-type}"/>
