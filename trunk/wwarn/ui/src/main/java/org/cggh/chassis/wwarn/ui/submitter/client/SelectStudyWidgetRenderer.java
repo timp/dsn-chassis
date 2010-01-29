@@ -147,6 +147,7 @@ public class SelectStudyWidgetRenderer extends ChassisWidgetRenderer<SelectStudy
 	
 	@UiHandler("studySelect")
 	void handleStudySelection(ChangeEvent e) {
+		log.enter("handleStudySelection");
 		String value = null;
 		if (studySelect.getSelectedIndex() != -1 ) {
 			value = studySelect.getValue(studySelect.getSelectedIndex());
@@ -154,6 +155,7 @@ public class SelectStudyWidgetRenderer extends ChassisWidgetRenderer<SelectStudy
 		this.owner.getModel().setSelectedStudy(value);
 		this.owner.getMemory().memorise();
 		proceedWithSelectedButton.setEnabled(this.owner.getModel().isValid());
+		log.leave();
 	}
 
 	@UiHandler("proceedWithSelectedButton")
