@@ -410,7 +410,7 @@ public class UploadFilesWidgetRenderer extends ChassisWidgetRenderer<UploadFiles
 			Element categoryElement = AtomHelper.getFirstCategory(entry, Chassis.SCHEME_FILETYPES);
 			String type = getTypeLabel(categoryElement);
 			
-			String fileSizeAsString = AtomHelper.getMediaResourceSizeAsString(entry);
+			String fileSizeAsString = AtomHelper.getMediaResourceSize(entry);
 			String created = AtomHelper.getPublished(entry);
 			
 			Button deleteButton = new Button("delete"); // TODO i18n
