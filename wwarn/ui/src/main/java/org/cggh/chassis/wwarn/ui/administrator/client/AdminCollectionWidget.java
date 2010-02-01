@@ -56,8 +56,8 @@ public class AdminCollectionWidget extends Composite {
 	/**
 	 * @return
 	 */
-	public Widget getUrlLabel() {
-		return this.renderer.urlLabel;
+	public Widget getUrlAnchor() {
+		return this.renderer.urlAnchor;
 	}
 
 	/**

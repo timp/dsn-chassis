@@ -5,6 +5,7 @@ package org.cggh.chassis.wwarn.ui.administrator.client;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -22,7 +23,7 @@ public class AdminCollectionWidgetRenderer implements AdminCollectionWidgetModel
 	
 	private Grid canvas;
 	Label titleLabel;
-	Label urlLabel;
+	Anchor urlAnchor;
 	Label statusTextLabel;
 	HorizontalPanel actionsPanel;
 	Label statusCodeLabel;
@@ -52,8 +53,8 @@ public class AdminCollectionWidgetRenderer implements AdminCollectionWidgetModel
 		this.titleLabel = new Label();
 		this.canvas.setWidget(1, 0, this.titleLabel);
 		
-		this.urlLabel = new Label();
-		this.canvas.setWidget(1, 1, this.urlLabel);
+        this.urlAnchor = new Anchor();
+		this.canvas.setWidget(1, 1, this.urlAnchor);
 		
 		this.statusCodeLabel = new Label();
 		this.canvas.setWidget(1, 2, this.statusCodeLabel);
@@ -172,9 +173,8 @@ public class AdminCollectionWidgetRenderer implements AdminCollectionWidgetModel
 	 * @see org.cggh.chassis.generic.client.gwt.widget.admin.collection.client.AdminCollectionWidgetModelListener#onUrlChanged(java.lang.String, java.lang.String)
 	 */
 	public void onUrlChanged(String before, String url) {
-		
-		this.urlLabel.setText(url);
-
+        this.urlAnchor.setText(url);
+        this.urlAnchor.setHref(url);
 	}
 
 
