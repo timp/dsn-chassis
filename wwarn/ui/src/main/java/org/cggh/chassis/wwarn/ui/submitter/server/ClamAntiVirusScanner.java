@@ -53,13 +53,11 @@ public class ClamAntiVirusScanner {
 	// Some developers do not have ClamAV installed 
 	public static boolean DEVELOPMENT_INSTALLATION = false;
 
-	private int connectionTimeout = 1;
+	private int connectionTimeout = 23; // pretty short, but it is local
 
 	private String clamdHost = "localhost";
 
 	private int clamdPort = 3310; // the default
-
-	int timeout = 1; // 1 second is pretty short, but it is local
 
 	private static Log log = LogFactory.getLog(ClamAntiVirusScanner.class);
 
@@ -179,8 +177,9 @@ public class ClamAntiVirusScanner {
 			try {
 				protocolSocket.getInputStream().read(received);
 			} catch (IOException e) {
+				e.printStackTrace();
 				throw new ScannerException(
-						"Error while waiting for clamd response", e);
+						"Error while waiting for clamd response:" + e.getMessage(), e);
 			}
 			if (received[0] == '\n')
 				break;
