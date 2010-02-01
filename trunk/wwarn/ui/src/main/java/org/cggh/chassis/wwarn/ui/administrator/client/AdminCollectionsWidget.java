@@ -188,7 +188,7 @@ public class AdminCollectionsWidget extends ChassisWidget {
 			statusPanel.add(w.getStatusTextLabel());
 			Widget[] row = {
 				w.getTitleLabel(),
-				w.getUrlLabel(),
+				w.getUrlAnchor(),
 				statusPanel,
 				w.getActionsPanel()
 			};
