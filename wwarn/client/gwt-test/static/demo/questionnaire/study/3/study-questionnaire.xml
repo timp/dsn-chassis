@@ -385,7 +385,6 @@
 
 			<model>
 				<element name="clinical" />
-				<relevant path="../general/module" comparator="contains" value="clinical"/>
 			</model>
 
 			<view class="xquestionnaire-transparent">
@@ -705,7 +704,6 @@
 
 			<model>
 				<element name="pharmacology" />
-				<relevant path="../general/module" comparator="contains" value="pharmacology"/>
 			</model>
 
 			<view class="xquestionnaire-transparent">
@@ -1355,7 +1353,6 @@
 
 			<model>
 				<element name="invitro"/>
-				<relevant path="../general/module" comparator="contains" value="invitro"/>
 			</model>
 
 			<view class="xquestionnaire-transparent">
@@ -2508,7 +2505,6 @@
 
 			<model>
 				<element name="molecular"/>
-				<relevant path="../general/module" comparator="contains" value="molecular"/>
 			</model>
 
 			<view class="xquestionnaire-transparent">
@@ -2718,7 +2714,6 @@
 								<question id="wwarn-molecular-inclusionExclusionCriteriaB-sourceOther">
 									<model>
 										<element name="inclusionSourceOther"/>
-										<relevant comparator="eq" value="other" path="../sampleSource"/>
 									</model>
 									<view>
 										<input>
