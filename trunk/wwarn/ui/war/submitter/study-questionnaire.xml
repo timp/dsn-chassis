@@ -385,7 +385,7 @@
 
 			<model>
 				<element name="clinical" />
-				<relevant path="../module" comparator="eq" value="clinical"/>
+				<relevant path="../general/module" comparator="contains" value="clinical"/>
 			</model>
 
 			<view class="xquestionnaire-transparent">
@@ -705,7 +705,7 @@
 
 			<model>
 				<element name="pharmacology" />
-				<relevant path="../module" comparator="eq" value="pharmacology"/>
+				<relevant path="../general/module" comparator="contains" value="pharmacology"/>
 			</model>
 
 			<view class="xquestionnaire-transparent">
@@ -1355,7 +1355,7 @@
 
 			<model>
 				<element name="invitro"/>
-				<relevant path="../module" comparator="eq" value="invitro"/>
+				<relevant path="../general/module" comparator="contains" value="invitro"/>
 			</model>
 
 			<view class="xquestionnaire-transparent">
@@ -2508,7 +2508,7 @@
 
 			<model>
 				<element name="molecular"/>
-				<relevant path="../module" comparator="eq" value="molecular"/>
+				<relevant path="../general/module" comparator="contains" value="molecular"/>
 			</model>
 
 			<view class="xquestionnaire-transparent">

@@ -59,6 +59,7 @@ public class XQS {
 	public static final String ATTR_COMPARATOR = "comparator";
 	public static final String ATTR_VALUE = "value";
 	public static final String COMPARATOR_EQUALS = "eq";
+	public static final String COMPARATOR_CONTAINS = "contains";
 
 
 }
