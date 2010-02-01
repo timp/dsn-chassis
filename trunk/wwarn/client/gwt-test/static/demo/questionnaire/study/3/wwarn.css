@@ -9,10 +9,10 @@ input, textarea {
 #holdall {
 	margin: 0.5em;
 	background-color: transparent;
-	background-image: url("../assets/images/wwarn-logo.gif");
+	background-image: url("http://www.wwarn.org/images/logo.gif");
 	background-position: top left;
 	background-repeat: no-repeat;
-	padding-top: 3em;
+	padding-top: 5em;
 }
 
 #title {
