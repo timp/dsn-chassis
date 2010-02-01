@@ -92,14 +92,25 @@
         <version>${gwtPluginVersion}</version>
         <executions>
           <execution>
+	    <id>clean</id>
+            <phase>clean</phase>
+	    <goals>
+              <goal>clean</goal>
+            </goals>
+          </execution>
+          <execution>
+	    <id>compile</id>
+            <phase>compile</phase>
             <goals>
               <goal>compile</goal>
             </goals>
-            <configuration>
-              <gwtVersion>${gwtVersion}</gwtVersion>
-            </configuration>
           </execution>
         </executions>
+        <configuration>
+          <gwtVersion>${gwtVersion}</gwtVersion>
+	  <generateDirectory></generateDirectory>
+          <warSourceDirectory>${basedir}/war</warSourceDirectory>
+        </configuration>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
