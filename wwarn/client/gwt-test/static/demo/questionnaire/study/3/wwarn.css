@@ -22,7 +22,7 @@ input, textarea {
 
 #footer {
 	color: white;
-	background-image: url("../assets/images/bg-blue-stripes.gif");
+	background-image: url("http://www.wwarn.org/images/bg-blue-stripes.gif");
 	background-position: bottom;
 	padding: 0.3em 0.3em 0.3em 0.3em;
 	border: none;
@@ -30,7 +30,7 @@ input, textarea {
 
 div.gwt-MenuBar-horizontal {
 	background-color: transparent;
-	background-image: url("../assets/images/bg-blue-stripes.gif");
+	background-image: url("http://www.wwarn.org/images/bg-blue-stripes.gif");
 	background-position: bottom;
 	background-repeat: repeat;
 }
@@ -41,7 +41,7 @@ div.gwt-MenuBar-horizontal .gwt-MenuItem {
 
 div.gwt-MenuBar-horizontal .gwt-MenuItem-selected {
 	background-color: transparent;
-	background-image: url("../assets/images/bg-blue-w-stripes.gif");
+	background-image: url("http://www.wwarn.org/images/bg-blue-w-stripes.gif");
 	background-position: bottom;
 	background-repeat: repeat;
 	color: black;
@@ -71,7 +71,7 @@ div.gwt-MenuBar-vertical .gwt-MenuItem-selected {
 	background-color: #eef;
 	/*
 	background-color: transparent;
-	background-image: url("../assets/images/bg-blue-w-stripes.gif");
+	background-image: url("http://www.wwarn.org/images/bg-blue-w-stripes.gif");
 	background-position: bottom;
 	background-repeat: repeat;
 	*/
@@ -86,7 +86,7 @@ div.gwt-MenuBar-vertical .gwt-MenuItem-selected {
 .chassis-actions h3 {
 /*	padding: 0.2em;
 	background-color: transparent;
-	background-image: url("../assets/images/bg-blue-stripes.gif");
+	background-image: url("http://www.wwarn.org/images/bg-blue-stripes.gif");
 	background-position: bottom;
 	background-repeat: repeat;
 	color: white;*/
