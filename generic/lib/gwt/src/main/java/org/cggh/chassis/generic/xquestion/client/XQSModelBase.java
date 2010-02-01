@@ -254,6 +254,36 @@ public abstract class XQSModelBase {
 				}
 			}
 		}
+		else if (comparator.equals(XQS.COMPARATOR_CONTAINS)) {
+			
+			log.debug("comparing for containment");
+			for (Element e : elements) {
+				String content = XML.firstChildNodeValueOrNullIfNoChildren(e);
+				log.debug("comparing content ["+content+"] with value ["+value+"]");
+				
+				if (content != null) {
+					
+					// TODO: Centralise the space delimiter for values. Where is it used to join content values? May be XQuestionModel serialiseMultiValues().
+					String[] contentValues = content.split(" ");
+					
+					for (int i = 0; i < contentValues.length; i++) {
+						
+						if (contentValues[i].equals(value)) {
+							log.debug("found containment");
+							log.leave();
+							return true;
+						
+						}
+					}
+					
+					log.debug("no match");
+				}
+				else {
+					log.debug("no match");
+				}
+			}
+			
+		}
 		
 		log.leave();
 		return false;
