@@ -220,7 +220,7 @@
 								<select1 appearance="minimal">
 									<label>Country?</label>
 									<items
-										src="/chassis-wwarn-ui/submitter/countries.en.xml" />
+										src="countries.en.xml" />
 								</select1>
 							</view>
 						</question>
