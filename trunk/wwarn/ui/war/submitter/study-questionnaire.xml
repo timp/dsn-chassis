@@ -618,13 +618,14 @@
  									  	</select1>
 	 								  </view>
  									</question>
- 								<question id="wwarn-clinical-followup-haemoglobinRecordingHbType">
+									<question id="wwarn-clinical-followup-haemoglobinRecordingHbType">
 		 						 	 <model>
  								  		<element name="haemoglobinRecordingHbType"/>
+										<relevant path="../haemoglobinRecordingType" comparator="eq" value="hb"/>
  									  </model>
  									  <view>
  									  	<select1 appearance="minimal">
- 											<label>&#160;&#160;&#160;&#160;&#160;If "hb" selected above, hb recording type? </label>
+ 											<label>hb recording type? </label>
  											<item>
  												<label>(please select)</label>
  												<value></value>
@@ -1026,11 +1027,12 @@
 								id="wwarn-pharmacology-inclusionExclusionCriteria-excludeIfPriorAntimalarialsTime">
 							<model>
 								<element name="excludeIfPriorAntimalarialsTime"/>
+								<relevant path="excludeIfPriorAntimalarials" comparator="eq" value="yes"/>
 							</model>
 							<view>
 							<!--  TODO NB in Clinical a further option is to exclude on basis of test for anti-malarial drug -->
 								<input>
-									<label>If "yes" selected above, over what time (weeks)?</label>
+									<label>Over what time (weeks)?</label>
 								</input>
 							</view>
 						</question>
@@ -1282,6 +1284,7 @@
 									<view>
 										<select1 appearance="minimal">
 											<label>Allocation?</label>
+											<!--  TODO implement countgt comparator -->
 											<item>
 												<label>(please select if more than 1 treatment regimen)</label>
 												<value></value>
@@ -1588,22 +1591,10 @@
 							</view>
 						</question>
 
-						<html readOnly="hide">
-							<p>
-								<em>If the system is a CO
-									<sub>2</sub>
-									incubator or incubation chamber, please also provide the levels of CO
-									<sub>2</sub>
-									and O
-									<sub>2</sub>
-									below. If not, please skip to the healthy erythrocytes source.
-								</em>
-							</p>
-						</html>
-
 						<question id="wwarn-invitro-culture-co2">
 							<model>
 								<element name="co2"/>
+								<relevant path="../incubatorSystem" comparator="eq" value="co2incubator"/>
 							</model>
 							<view>
 								<inlinehtml>CO<sub>2</sub>?
@@ -1618,6 +1609,7 @@
 						<question id="wwarn-invitro-culture-o2">
 							<model>
 								<element name="o2"/>
+								<relevant path="../incubatorSystem" comparator="eq" value="co2incubator"/>
 							</model>
 							<view>
 								<inlinehtml>O<sub>2</sub>?
@@ -1831,7 +1823,7 @@
 							<view>
 								<question id="wwarn-invitro-medium-hypoxantine-added">
 									<model>
-										<element name="added"/>
+										<element name="hypoxantine-added"/>
 									</model>
 									<view>
 										<select1 appearance="minimal">
@@ -1853,11 +1845,12 @@
 								</question>
 								<question id="wwarn-invitro-medium-hypoxantine-finalConcentration">
 									<model>
-										<element name="finalConcentration"/>
+										<element name="hypoxantine-finalConcentration"/>
+										<relevant path="../hypoxantine-added" comparator="eq" value="yes"/>
 									</model>
 									<view>
 										<input>
-											<label>If yes, final concentration (g/L)?</label>
+											<label>Final Hypoxantine concentration (g/L)?</label>
 										</input>
 									</view>
 								</question>
@@ -1875,7 +1868,7 @@
 							<view>
 								<question id="wwarn-invitro-medium-oroticAcid-added">
 									<model>
-										<element name="added"/>
+										<element name="oroticAcid-added"/>
 									</model>
 									<view>
 										<select1 appearance="minimal">
@@ -1897,11 +1890,12 @@
 								</question>
 								<question id="wwarn-invitro-medium-oroticAcid-finalConcentration">
 									<model>
-										<element name="finalConcentration"/>
+										<element name="oroticAcid-finalConcentration"/>
+										<relevant path="../oroticAcid-added" comparator="eq" value="yes"/>
 									</model>
 									<view>
 										<input>
-											<label>If yes, final concentration (g/L)?</label>
+											<label>Final concentration orotic acid (g/L)?</label>
 										</input>
 									</view>
 								</question>
@@ -1919,7 +1913,7 @@
 							<view>
 								<question id="wwarn-invitro-medium-glucose-added">
 									<model>
-										<element name="added"/>
+										<element name="glucose-added"/>
 									</model>
 									<view>
 										<select1 appearance="minimal">
@@ -1941,7 +1935,8 @@
 								</question>
 								<question id="wwarn-invitro-medium-glucose-finalConcentration">
 									<model>
-										<element name="finalConcentration"/>
+										<element name="glucose-finalConcentration"/>
+										<relevant path="../glucose-added" comparator="eq" value="yes"/>
 									</model>
 									<view>
 										<input>
@@ -1971,7 +1966,7 @@
 							<view>
 								<question id="wwarn-invitro-medium-antiBiotic-name">
 									<model>
-										<element name="name"/>
+										<element name="antiBiotic-name"/>
 									</model>
 									<view>
 										<input>
@@ -1981,7 +1976,7 @@
 								</question>
 								<question id="wwarn-invitro-medium-antiBiotic-finalConcentration">
 									<model>
-										<element name="finalConcentration"/>
+										<element name="antiBiotic-finalConcentration"/>
 									</model>
 									<view>
 										<input>
@@ -2227,6 +2222,7 @@
 							</model>
 							<view>
 								<select1 appearance="minimal">
+								<!--  TODO Check do they mean drug here? -->
 									<label>Were stock solutions provided by WWARN?</label>
 									<item>
 										<label>(please select yes or no)</label>
@@ -2247,10 +2243,11 @@
 						<question id="wwarn-invitro-drug-provider">
 							<model>
 								<element name="provider"/>
+								<relevant path="../providedByWwarn" comparator="eq" value="no"/>
 							</model>
 							<view>
 								<input>
-									<label>If not provided by WWARN, who provided the drug?</label>
+									<label>Who provided the drug?</label>
 								</input>
 							</view>
 						</question>
@@ -2292,7 +2289,7 @@
 
 						<question id="wwarn-invitro-plates-batches">
 							<model>
-								<element name="batches"/>
+								<element name="plates-batches"/>
 							</model>
 							<view>
 								<select1 appearance="minimal">
@@ -2313,17 +2310,10 @@
 							</view>
 						</question>
 
-						<html readOnly="hide">
-							<p>
-								<em>If extemporaneous, please enter the preparation date below then skip to the end of
-									the section.
-								</em>
-							</p>
-						</html>
-
 						<question id="wwarn-invitro-plates-preparationDate">
 							<model>
 								<element name="preparationDate" type="date"/>
+								<relevant path="../plates-batches" comparator="eq" value="extemporaneous"/>
 							</model>
 							<view>
 								<input>
@@ -2332,15 +2322,10 @@
 							</view>
 						</question>
 
-						<html readOnly="hide">
-							<p>
-								<em>If plates are prepared in batches, please enter the information below.</em>
-							</p>
-						</html>
-
 						<question id="wwarn-invitro-plates-clone3D7ProvidedByWwarn">
 							<model>
 								<element name="clone3D7ProvidedByWwarn"/>
+								<relevant path="../plates-batches" comparator="eq" value="batches"/>
 							</model>
 							<view>
 								<select1 appearance="minimal">
@@ -2364,6 +2349,7 @@
 						<question id="wwarn-invitro-plates-cloneProvider">
 							<model>
 								<element name="cloneProvider"/>
+								<relevant path="../clone3D7ProvidedByWwarn" comparator="eq" value="no"/>
 							</model>
 							<view>
 								<input>
@@ -2526,6 +2512,7 @@
 
 					<model>
 						<element name="inclusionExclusionCriteriaA"/>
+						<relevant path="../general/module" comparator="contains" value="clinical"/>
 					</model>
 					<!-- A. If “Clinical” Box was selected along with “Molecular” Box at the beginning of SSQ:	-->
 
@@ -2667,6 +2654,7 @@
 
 					<model>
 						<element name="inclusionExclusionCriteriaB"/>
+						<!--  TODO create excludes comparator -->
 					</model>
 					<view>
 
@@ -2718,11 +2706,11 @@
 								<question id="wwarn-molecular-inclusionExclusionCriteriaB-sourceOther">
 									<model>
 										<element name="inclusionSourceOther"/>
-										<relevant comparator="eq" value="other" path="../sampleSource"/>
+										<relevant path="../sampleSource" comparator="eq" value="other" />
 									</model>
 									<view>
 										<input>
-											<label>&#160;&#160;&#160;&#160;&#160;If "other" selected above, other sample source?</label>
+											<label>Other sample source?</label>
 										</input>
 									</view>
 								</question>
@@ -2820,10 +2808,11 @@
 								<question id="wwarn-molecular-inclusionExclusionCriteria-excludeIfPriorAntimalarialsTime">
 									<model>
 										<element name="excludeIfPriorAntimalarialsTime"/>
+										<relevant path="../excludeIfPriorAntimalarials" comparator="eq" value="yes" />
 									</model>
 									<view>
 										<input>
-											<label>&#160;&#160;&#160;&#160;&#160;If "yes" above, over what time (weeks)?</label>
+											<label>Over what time (weeks)?</label>
 										</input>
 									</view>
 								</question>
@@ -2858,10 +2847,11 @@
 						<question id="wwarn-molecular-inclusionExclusionCriteria-molecularMarkersOfResistance-other">
 							<model>
 								<element name="molecularMarkersOfResistanceOther"/>
+								<relevant path="../molecularMarkersOfResistance" comparator="eq" value="yes" />
 							</model>
 							<view>
 								<input>
-									<label>&#160;&#160;&#160;&#160;&#160;If "other" selected above, other sample selection method?</label>
+									<label>Other sample selection method?</label>
 								</input>
 							</view>
 						</question>
@@ -2883,7 +2873,7 @@
 					<view>
 						<question id="wwarn-molecular-sampleType-type">
 							<model>
-								<element name="type"/>
+								<element name="sampleType-type"/>
 							</model>
 							<view>
 								<select1 appearance="minimal">
@@ -2918,12 +2908,13 @@
 						<question id="wwarn-molecular-sampleType-type-wholeBloodSource">
 							<model>
 								<element name="wholeBloodSource"/>
+								<relevant path="../sampleType-type" comparator="eq" value="wholeBlood" />
 							</model>
 							<view>
 								<select1 appearance="minimal">
 									<label>Whole blood source?</label>
 									<item>
-										<label>(select if whole blood)</label>
+										<label>(Please select)</label>
 										<value></value>
 									</item>
 									<item>
@@ -2944,10 +2935,11 @@
 						<question id="wwarn-molecular-sampleType-type-dateIsolated">
 							<model>
 								<element name="dateIsolated" type="date"/>
+								<relevant path="../sampleType-type" comparator="eq" value="cultureAdaptedParasite" />
 							</model>
 							<view>
 								<input>
-									<label>If culture-adapted parasite, when were samples isolated from patients?</label>
+									<label>When were samples isolated from patients?</label>
 								</input>
 							</view>
 						</question>
@@ -2970,7 +2962,7 @@
 							<view>
 								<question id="wwarn-molecular-marker">
 									<model>
-										<element name="marker"/>
+										<element name="molecular-marker"/>
 									</model>
 									<view>
 										<select>
@@ -3096,7 +3088,6 @@
 												<label>pfnhe MS-4760</label>
 												<value>pfnheMS-4760</value>
 											</item>
-<!--  TODO Other (give a fill in option) ??? Should this be a separate drop down ??? --> 
 
 <!--  P. vivax -->
 											<item>
@@ -3165,16 +3156,23 @@
 												<label>pvdhps 585</label>
 												<value>pvdhps585</value>
 											</item>
+											
+											<item>
+												<label>Other</label>
+												<value>other</value>
+											</item>
+											
 										</select>
 									</view>
 								</question>
 								<question id="wwarn-molecular-markerOther">
 									<model>
-										<element name="markerOther"/>
+										<element name="molecular-markerOther"/>
+										<relevant path="../molecular-marker" comparator="eq" value="other" />
 									</model>
 									<view>
 										<input>
-											<label>&#160;&#160;&#160;&#160;&#160;If "other" selected above, other molecular marker?</label>
+											<label>Other molecular marker?</label>
 										</input>
 									</view>
 								</question>
@@ -3189,7 +3187,7 @@
 							<view>
 								<question id="wwarn-molecular-genotypingMethod">
 									<model>
-										<element name="genotypingMethod"/>
+										<element name="molecular-genotypingMethod"/>
 									</model>
 									<view>
 										<select1 appearance="minimal">
@@ -3244,10 +3242,11 @@
 								<question id="wwarn-molecular-genotypingMethodOther">
 									<model>
 										<element name="genotypingMethodOther"/>
+										<relevant path="../molecular-genotypingMethod" comparator="eq" value="other" />
 									</model>
 									<view>
 										<input>
-											<label>&#160;&#160;&#160;&#160;&#160;If "other" selected above, other genotyping method?</label>
+											<label>Other genotyping method?</label>
 										</input>
 									</view>
 								</question>
@@ -3304,10 +3303,11 @@
 						<question id="wwarn-molecular-mixedResistanceAllelesDesignation">
 							<model>
 								<element name="mixedResistanceAllelesDesignation"/>
+								<relevant path="../mixedResistanceAllelesInclusion" comparator="eq" value="included" />
 							</model>
 							<view>
 								<select>
-									<label>If included, how were mixed genotype resistance loci designated in the data set?</label>
+									<label>How were mixed genotype resistance loci designated in the data set?</label>
 									<item>
 										<label>Designated as mixed (listed as ‘mixed’ or both alleles reported: e.g. ‘K/T’)</label>
 										<value>mixed</value>										
@@ -3363,10 +3363,11 @@
 								<question id="wwarn-molecular-additionalGenotypicInformation-accessionNumbers">
 									<model>
 										<element name="accessionNumbers"/>
+										<relevant path="../additionalGenotypicInformationWholeGenomesSequenced" comparator="eq" value="yes" />
 									</model>
 									<view>
 										<input>
-											<label>&#160;&#160;&#160;&#160;&#160;If "yes" entered above, accession numbers?</label>
+											<label>Accession numbers?</label>
 										</input>
 									</view>
 								</question>
@@ -3402,10 +3403,11 @@
 								<question id="wwarn-molecular-additionalGenotypicInformation-resistanceLocus-name">
 									<model>
 										<element name="resistanceLocusName"/>
+										<relevant path="../resistanceLocusSequenced" comparator="eq" value="yes" />
 									</model>
 									<view>
 										<input>
-											<label>&#160;&#160;&#160;&#160;&#160;If "yes" entered above, name of locus?</label>
+											<label>Name of locus?</label>
 										</input>
 									</view>
 								</question>
@@ -3420,12 +3422,35 @@
 						</questionnaire>
 						<questionnaire id="wwarn-molecular-additionalGenotypicInformation-otherLocus" repeatable="yes">
 							<model>
-								<element name="resistanceLocus"/>
+								<element name="otherLocus"/>
 							</model>
 							<view>
+								<question id="wwarn-molecular-additionalGenotypicInformation-otherLocus-sequenced">
+									<model>
+										<element name="otherLocusSequenced"/>
+									</model>
+									<view>
+										<select1 appearance="minimal">
+											<label>Other locus sequenced?</label>
+											<item>
+												<label>(please select yes or no)</label>
+												<value></value>
+											</item>
+											<item>
+												<label>yes</label>
+												<value>yes</value>
+											</item>
+											<item>
+												<label>no</label>
+												<value>no</value>
+											</item>
+										</select1>
+									</view>
+								</question>
 								<question id="wwarn-molecular-additionalGenotypicInformation-otherLocus-type">
 									<model>
 										<element name="otherLocusType"/>
+										<relevant path="../otherLocusSequenced" comparator="eq" value="yes" />
 									</model>
 									<view>
 										<select1 appearance="minimal">
@@ -3448,10 +3473,11 @@
 								<question id="wwarn-molecular-additionalGenotypicInformation-otherLocus-name">
 									<model>
 										<element name="otherLocusName"/>
+										<relevant path="../otherLocusSequenced" comparator="eq" value="yes" />
 									</model>
 									<view>
 										<input>
-											<label>&#160;&#160;&#160;&#160;&#160;If "yes" selected above, name of locus?</label>
+											<label>Name of locus?</label>
 										</input>
 									</view>
 								</question>
