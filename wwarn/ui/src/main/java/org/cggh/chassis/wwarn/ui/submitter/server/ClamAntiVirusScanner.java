@@ -53,11 +53,16 @@ public class ClamAntiVirusScanner {
 	// Some developers do not have ClamAV installed 
 	public static boolean DEVELOPMENT_INSTALLATION = false;
 
-	private int connectionTimeout = 23; // pretty short, but it is local
+    // We give the server commands on the protocol socket
+	// and write data on the data socket
+	// but they both need to be open for as long as it takes 
+	// to scan a big file - a minute and a half to be safe
+	private int protocolSocketTimeout = 90; 
+	private int dataSocketTimeout = 90; 
 
 	private String clamdHost = "localhost";
 
-	private int clamdPort = 3310; // the default
+	private int clamdPort = 3310; // the default port number
 
 	private static Log log = LogFactory.getLog(ClamAntiVirusScanner.class);
 
@@ -70,6 +75,7 @@ public class ClamAntiVirusScanner {
 	int dataPort = -1;
 
 	public ClamAntiVirusScanner() {
+		// Take defaults 
 	}
 
 	public ClamAntiVirusScanner(String clamdHost) {
@@ -77,10 +83,11 @@ public class ClamAntiVirusScanner {
 	}
 
 	public ClamAntiVirusScanner(String clamdHost, int clamdPort,
-			int connectionTimeout) {
+			int dataSocketTimeout) {
 		this.clamdHost = clamdHost;
 		this.clamdPort = clamdPort;
-		this.connectionTimeout = connectionTimeout;
+		this.protocolSocketTimeout = dataSocketTimeout;
+		this.dataSocketTimeout = dataSocketTimeout;
 	}
 
 	/**
@@ -153,7 +160,7 @@ public class ClamAntiVirusScanner {
 		dataSocket = new Socket();
 		SocketAddress sockaddrData = new InetSocketAddress(clamdHost, dataPort);
 		try {
-			dataSocket.setSoTimeout(connectionTimeout * 1000);
+			dataSocket.setSoTimeout(dataSocketTimeout * 1000);
 		} catch (SocketException e) {
 			throw new ScannerException(
 					"Could not set timeout parameter to dataSocket", e);
@@ -194,10 +201,10 @@ public class ClamAntiVirusScanner {
 		protocolSocket = new Socket();
 		SocketAddress sockaddr = new InetSocketAddress(clamdHost, clamdPort);
 		try {
-			protocolSocket.setSoTimeout(connectionTimeout * 1000);
+			protocolSocket.setSoTimeout(protocolSocketTimeout * 1000);
 		} catch (SocketException e) {
 			throw new ScannerException(
-					"Could not set timeout parameter on configurationSocket", e);
+					"Could not set timeout parameter on protocolSocket", e);
 		}
 
 		try {
