@@ -40,6 +40,7 @@ Tag previous featured dowbnloads as deprecated.
 <pre>
 mvn release:perform
 </pre>
+This will set the version to the SNAPSHOT being aimed for in the next sprint.
 
 = Notes = 
 
