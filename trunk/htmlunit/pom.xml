@@ -3,7 +3,7 @@
   <parent>
     <groupId>org.cggh.chassis</groupId>
     <artifactId>chassis-parent</artifactId>
-    <version>1.0-alpha-2-SNAPSHOT</version>
+    <version>1.0-alpha-2</version>
   </parent>
   <artifactId>chassis-htmlunit</artifactId>
   <packaging>jar</packaging>
