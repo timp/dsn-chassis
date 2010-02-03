@@ -33,11 +33,13 @@ The artifact id is made up of the following elements
 This is delegated to Maven, accept the Maven generated defaults: 
 <pre>
 mvn release:prepare
-mvn release:perform
 </pre>
 This will create one artefact per project. Upload to 
 [http://code.google.com/p/dsn-chassis/downloads/list] and tag as featured.
 Tag previous featured dowbnloads as deprecated. 
+<pre>
+mvn release:perform
+</pre>
 
 = Notes = 
 
