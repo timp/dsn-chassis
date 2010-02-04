@@ -46,7 +46,7 @@ At the final step the submitter is asked to fill out the study questionnaire, pr
 
 *Storage of Uploaded Files*
 
-All reasonable measures will be taken to ensure that the servers on which the uploaded files are stored are secured, and that no unauthorised parties may gain access to the files. This will include limiting access to the servers to authorised systems administrators using public key authentication, and encrypting all communication to and from these secured servers.
+All reasonable measures will be taken to ensure that the servers on which the uploaded files are stored are secured, and that no unauthorised parties may gain access to the files. This will include limiting access to the servers to authorised systems administrators using public key authentication, and encrypting all potentially sensitive communication to and from these secured servers.
 
 *Curation of Submitted Data Files*
 
