@@ -133,13 +133,13 @@ public class SubmitterHomeWidgetRenderer extends ChassisWidgetRenderer<Submitter
 
 			
 			error("Error status given on asynchronous call. Maybe a bad submissions query URL.");
-			
+			errorPanel.setVisible(true);
 		}			
 		
 		else {
 
 			error("Unhandled status:" + status);
-			
+			errorPanel.setVisible(true);
 		}
 		
 		log.leave();
@@ -147,13 +147,9 @@ public class SubmitterHomeWidgetRenderer extends ChassisWidgetRenderer<Submitter
 
 
 	public void error(String err) {
-		mainPanel.setVisible(false);
-		pendingPanel.setVisible(false);
-
 		errorMessage.clear();
 		errorMessage.add(new HTML(err));
-
-		errorPanel.setVisible(true);
+		
 	}
 	private void syncUIWithSubmissions(Document submissions) {
 		

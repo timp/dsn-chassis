@@ -147,7 +147,7 @@ public class UploadFilesWidgetRenderer extends ChassisWidgetRenderer<UploadFiles
 		syncMainInteractionPanelWithStatus(status);
 		syncErrorPanelWithStatus(status);
 
-		// Hide everything first, then show as required.
+		// Hide everything (that is made visible here) first, then show as required.
 		filesUploadedLabel.setVisible(false);
 		filesPendingLabel.setVisible(false);		
 		filesTableContainer.setVisible(false);
@@ -202,7 +202,7 @@ public class UploadFilesWidgetRenderer extends ChassisWidgetRenderer<UploadFiles
 
 	private void syncErrorPanelWithStatus(Status status) {
 
-		// Hide everything first, then show as required.
+		// Hide everything (that is made visible here) first, then show as required.
 		errorPanel.setVisible(false);
 		
 		if (status instanceof ErrorStatus) {
@@ -218,7 +218,7 @@ public class UploadFilesWidgetRenderer extends ChassisWidgetRenderer<UploadFiles
 
 	private void syncMainInteractionPanelWithStatus(Status status) {
 
-		// Hide everything first, then show as required.
+		// Hide everything (that is made visible here) first, then show as required.
 		mainInteractionPanel.setVisible(false);
 		
 		if (
@@ -240,7 +240,7 @@ public class UploadFilesWidgetRenderer extends ChassisWidgetRenderer<UploadFiles
 
 	private void syncStudyPanelWithStatus(Status status) {
 		
-		// Hide everything first, then show as required.
+		// Hide everything (that is made visible here) first, then show as required.
 		studyPanel.setVisible(false);
 		studyNotSelectedLabel.setVisible(false);		
 		studyPendingLabel.setVisible(false);
@@ -310,7 +310,7 @@ public class UploadFilesWidgetRenderer extends ChassisWidgetRenderer<UploadFiles
 
 		filesTableContainer.clear();
 		
-		// Hide everything first, then show as required.
+		// Hide everything (that is made visible here) first, then show as required.
 		noFilesUploadedLabel.setVisible(false);
 		filesUploadedLabel.setVisible(false);
 		filesTableContainer.setVisible(false);

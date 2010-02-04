@@ -7,6 +7,8 @@ import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.miniatom.client.AtomHelper;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 import org.cggh.chassis.generic.widget.client.ChassisWidgetRenderer;
+import org.cggh.chassis.generic.widget.client.PropertyChangeEvent;
+import org.cggh.chassis.generic.widget.client.PropertyChangeHandler;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.Status;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.StatusChangeEvent;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.StatusChangeHandler;
@@ -26,6 +28,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;
 
 /**
@@ -87,74 +90,131 @@ public class SelectStudyWidgetRenderer extends ChassisWidgetRenderer<SelectStudy
 			}
 		});
 		
-				
+		model.studyFeed.addChangeHandler(new PropertyChangeHandler<Document>() {
+			public void onChange(PropertyChangeEvent<Document> e) {
+				syncUiWithStudyFeedDoc(e.getAfter());
+			}
+		});
 	}
 
 	@Override
 	protected void syncUI() {
-		super.syncUI();
-		errorPanel.setVisible(false);
-		proceedWithSelectedButton.setEnabled(false);
+		syncUIWithStatus(model.getStatus());
+		syncUiWithStudyFeedDoc(model.getStudyFeedDoc());
 	}
 
 	protected void syncUIWithStatus(Status status) {
-		log.enter("syncUIWithStatus");
+
+		log.enter("syncUIWithStatus");		
+		
+		// Hide everything (that is made visible here) first, then show as required.
+		pendingPanel.setVisible(false);
+		errorPanel.setVisible(false);
+		
 		if (status instanceof AsyncWidgetModel.InitialStatus) {
+			
+		}
+		else if (status instanceof SelectStudyWidgetModel.RetrieveFeedPendingStatus) {
+			
 			pendingPanel.setVisible(true);
-			proceedWithSelectedButton.setEnabled(false);
-		} else if (status instanceof SelectStudyWidgetModel.RetrieveFeedPendingStatus) {
-			// Pending will still be visible
-		} else if (status instanceof SelectStudyWidgetModel.StudiesRetrievedStatus) {
-			syncUiWithFeed();
-			pendingPanel.setVisible(false);
-			if(model.getStudyCount().equals(new Integer(0))) { 
-				selectExistingStudyPanel.setVisible(false);
-			}
-		} else if (status instanceof SelectStudyWidgetModel.CreateEntryPendingStatus) {
-			// Nothing to do
-		} else if (status instanceof SelectStudyWidgetModel.StudyCreatedStatus) {
-			// Nothing to do
-		} else if (status instanceof AsyncWidgetModel.ErrorStatus) {
+		} 
+		else if (status instanceof SelectStudyWidgetModel.StudiesRetrievedStatus) {
+			
+			
+		}
+		else if (status instanceof SelectStudyWidgetModel.CreateEntryPendingStatus) {
+			
+			pendingPanel.setVisible(true);
+		}
+		else if (status instanceof SelectStudyWidgetModel.StudyCreatedStatus) {
+			
+			
+		}
+		else if (status instanceof AsyncWidgetModel.ErrorStatus) {
+			
 			error("Error status: " + status + " " + model.getMessage());
-		} else { 
+			errorPanel.setVisible(true);
+		}
+		else { 
 			error("Unexpected status: " + status);
+			errorPanel.setVisible(true);
 		}
 		log.leave();
 	}
 	
-	/** Clear and re-initialise, setting selected id. */
-	void syncUiWithFeed() {
-		log.enter("syncUiWithFeed");
-		List<Element>  studyEntries = AtomHelper.getEntries(model.getStudyFeed().getDocumentElement());
+	/** Clear and re-initialise, setting selected id. 
+	 * @param studyFeedDoc */
+	void syncUiWithStudyFeedDoc(Document studyFeedDoc) {
+		
+		log.enter("syncUiWithStudyFeedDoc");
+		
+		// Turn everything off (that is made visible/enabled here) first, then show/enable as required.
+		selectExistingStudyPanel.setVisible(false);
+		proceedWithSelectedButton.setEnabled(false);
+		
 		studySelect.clear();
-		studySelect.addItem("Please select an existing Study", null);
-		int index = 1, selectedIndex = 0;
-		for (Element element : studyEntries) {
-			String id = AtomHelper.getId(element);
-			log.debug("id:"+id);
-			studySelect.addItem(AtomHelper.getTitle(element), id);
-			if(model.getSelectedStudyId() != null && model.getSelectedStudyId().equals(id)) {
-				selectedIndex = index;
-				log.debug("hit");
+		
+		if (studyFeedDoc != null) {
+			
+			List<Element>  studyEntries = AtomHelper.getEntries(studyFeedDoc.getDocumentElement());
+			
+			if (!studyEntries.isEmpty()) {
+				
+				studySelect.addItem("Please select an existing Study", null);
+				
+				int index = 1, selectedIndex = 0;
+				
+				for (Element element : studyEntries) {
+					
+					String id = AtomHelper.getId(element);
+					
+					log.debug("id:"+id);
+					
+					studySelect.addItem(AtomHelper.getTitle(element), id);
+					
+					if(model.getSelectedStudyId() != null && model.getSelectedStudyId().equals(id)) {
+						
+						selectedIndex = index;
+						
+						// Automatic selection.
+						// Note that the manual selection event is handled by handleStudySelection()
+						log.debug("Enabling the proceed button because a study was selected previously.");
+						proceedWithSelectedButton.setEnabled(true);
+					}
+					index++;
+				}
+				
+				log.debug("selectedIndex" + selectedIndex);
+				
+				studySelect.setItemSelected(selectedIndex, true);
+				selectExistingStudyPanel.setVisible(true);
+				
 			}
-			index++;
 		}
-		log.debug("selectedIndex" + selectedIndex);
-		studySelect.setItemSelected(selectedIndex, true);
-		proceedWithSelectedButton.setEnabled(model.isValid());
+		
 		log.leave();
 	}
 	
 	@UiHandler("studySelect")
 	void handleStudySelection(ChangeEvent e) {
+		
 		log.enter("handleStudySelection");
-		String value = null;
-		if (studySelect.getSelectedIndex() != -1 ) {
-			value = studySelect.getValue(studySelect.getSelectedIndex());
+		
+		proceedWithSelectedButton.setEnabled(false);
+		
+		if (studySelect.getSelectedIndex() != -1 && studySelect.getSelectedIndex() != 0) {
+			
+			this.owner.getModel().setSelectedStudy(studySelect.getValue(studySelect.getSelectedIndex()));
+			this.owner.getMemory().memorise();
+			
+			if (this.owner.getModel().isSelectedStudyIdNotNull()) {
+				
+				log.debug("Enabling the proceed button because the user has selected a study.");
+				proceedWithSelectedButton.setEnabled(true);
+			}
 		}
-		this.owner.getModel().setSelectedStudy(value);
-		this.owner.getMemory().memorise();
-		proceedWithSelectedButton.setEnabled(this.owner.getModel().isValid());
+
+
 		log.leave();
 	}
 
@@ -187,13 +247,9 @@ public class SelectStudyWidgetRenderer extends ChassisWidgetRenderer<SelectStudy
 	}
 
 	public void error(String err) {
-		createStudyInteractionPanel.setVisible(false);
-		pendingPanel.setVisible(false);
 
 		errorMessage.clear();
 		errorMessage.add(new HTML(err));
-
-		errorPanel.setVisible(true);
 	}
 	
 	
