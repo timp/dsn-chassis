@@ -926,6 +926,10 @@
 						<select1 appearance="minimal">
 							<label>Type?</label>
 							<item>
+								<label>(please select one)</label>
+								<value></value>
+							</item>
+							<item>
 								<label>compartmental model</label>
 								<value>compartmentalmodel</value>
 							</item>
