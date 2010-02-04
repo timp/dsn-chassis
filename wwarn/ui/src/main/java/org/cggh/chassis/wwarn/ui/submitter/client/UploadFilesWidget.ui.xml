@@ -109,7 +109,7 @@
            	
       <g:HTMLPanel>
 
-			<h3><ui:msg>What type of files are required?</ui:msg>
+			<h3><ui:msg>What types of file are required?</ui:msg>
             	</h3>
 
         

@@ -142,20 +142,18 @@ public class UploadFilesWidgetRenderer extends ChassisWidgetRenderer<UploadFiles
 		log.enter("syncUIWithStatus");
 		
 		log.debug("status: "+status);
-		
-		// Hide everything first, then show as required.
-		filesUploadedLabel.setVisible(false);
-		filesPendingLabel.setVisible(false);
-		fileDeletePendingLabel.setVisible(false);
-		noFilesUploadedLabel.setVisible(false);
-		uploadPendingPanel.setVisible(false);		
-		filesTableContainer.setVisible(false);
-		mainActionsPanel.setVisible(false);
-		uploadFormPanel.setVisible(false);			
-		
+
 		syncStudyPanelWithStatus(status);
 		syncMainInteractionPanelWithStatus(status);
 		syncErrorPanelWithStatus(status);
+
+		// Hide everything first, then show as required.
+		filesUploadedLabel.setVisible(false);
+		filesPendingLabel.setVisible(false);		
+		filesTableContainer.setVisible(false);
+		uploadFormPanel.setVisible(false);				
+		uploadPendingPanel.setVisible(false);
+		fileDeletePendingLabel.setVisible(false);		
 		
 		if (status instanceof AsyncWidgetModel.InitialStatus) {
 			
@@ -244,11 +242,11 @@ public class UploadFilesWidgetRenderer extends ChassisWidgetRenderer<UploadFiles
 		
 		// Hide everything first, then show as required.
 		studyPanel.setVisible(false);
-		studyNotSelectedLabel.setVisible(false);
+		studyNotSelectedLabel.setVisible(false);		
 		studyPendingLabel.setVisible(false);
 		studyNotFoundLabel.setVisible(false);
 		studyTitleLabel.setVisible(false);
-		errorPanel.setVisible(false);		
+		errorPanel.setVisible(false);
 		
 		if (status instanceof AsyncWidgetModel.InitialStatus) {
 
