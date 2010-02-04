@@ -15,6 +15,10 @@ Due: March 2010
 
 [http://code.google.com/p/dsn-chassis/issues/list?can=1&q=milestone%3Awwarn-1.0-alpha-2&colspec=ID+Type+Status+Priority+Milestone+Owner+Effort+Summary&cells=tiles Scope] 
 
+=== Milestone 1.0-alpha-3 ===
+
+[http://code.google.com/p/dsn-chassis/issues/list?can=1&q=milestone%3Awwarn-1.0-alpha-3&colspec=ID+Type+Status+Priority+Milestone+Owner+Effort+Summary&cells=tiles Scope] 
+
 ----
 = Development Process =
 
