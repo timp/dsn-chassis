@@ -1,0 +1,31 @@
+#summary some notes on issues relevant to data protection
+
+= Workflow =
+
+I've assumed that, as a bare minimum, the following will apply.
+
+== Submitter Self-Registration ==
+
+We antipate the following people will be submitting data to WWARN:
+
+  * researchers from scientific and/or academic institutions
+  * members of public health organisations such as WHO or national malaria control programs
+  * ...?
+
+A potential data submitter will first create a new user account on the wwarn.org web site. This account creation process is also known here as self-registration.
+
+Self-registration will involve filling in a form on a web page, and
+providing at least their first and last name, their chosen user name, a valid email
+address, and the name of an instution or organisation with which they are affiliated.
+
+Additional information may also be collected via the self-registration form, however,
+the nature of this information is yet to be decided by WWARN. Some
+information will probably be required by the communications team, for example,
+additional contact details.
+
+Once the user has submitted the self-registration form, an email will be
+automatically sent to the address they provided. This email address will contain a
+URL which they can visit to activate their new user account. When they visit the
+activation URL in their web browser, the new user will be asked to provide a
+password, which they can subsequently use to authenticate themselves (i.e., log in)
+to secure areas of the wwarn.org site.
