@@ -31,7 +31,7 @@ public class SelectStudyWidgetModel extends AsyncWidgetModel {
 
 	private String message;
 	
-	public Document getStudyFeed() {
+	public Document getStudyFeedDoc() {
 		return studyFeed.get();
 	}
 
@@ -59,7 +59,7 @@ public class SelectStudyWidgetModel extends AsyncWidgetModel {
 			selectedStudyId.set(selectedStudyIdIn);
 	}
 
-	public boolean isValid() {
+	public boolean isSelectedStudyIdNotNull() {
 		if (selectedStudyId.get() != null)
 			return true;
 		return false;
