@@ -119,7 +119,7 @@ public class SubmitterHomeWidgetRenderer extends ChassisWidgetRenderer<Submitter
 
 		else if (status instanceof SubmitterHomeWidgetModel.SubmissionsNotFoundStatus) {
 
-			//mainPanel.setVisible(true);
+			// Everything off, hidden.
 			
 		}			
 		
