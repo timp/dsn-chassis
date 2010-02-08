@@ -176,7 +176,7 @@ public class ClamAntiVirusScanner {
 			inputStream.close();
 		} catch (IOException e) {
 			throw new ScannerException(
-					"Error while initializing clamd data channel", e);
+					"Error while initializing clamd data channel: " + e.getMessage(), e);
 		}
 
 		// Wait for the response on the chat stream.
@@ -186,7 +186,7 @@ public class ClamAntiVirusScanner {
 			} catch (IOException e) {
 				e.printStackTrace();
 				throw new ScannerException(
-						"Error while waiting for clamd response:" + e.getMessage(), e);
+						"Error while waiting for clamd response: " + e.getMessage(), e);
 			}
 			if (received[0] == '\n')
 				break;
