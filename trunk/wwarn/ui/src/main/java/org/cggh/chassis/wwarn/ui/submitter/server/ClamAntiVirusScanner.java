@@ -100,10 +100,6 @@ public class ClamAntiVirusScanner {
 
 		try {
 			
-			// check if clamd running before consuming stream 
-			openProtocolChannel();
-
-			
 			
 			File f = null;
 
@@ -122,6 +118,8 @@ public class ClamAntiVirusScanner {
 			}
 			
 			f.deleteOnExit();
+
+			openProtocolChannel();
 
 			FileInputStream inputStreamToScan = new FileInputStream(f);
 
