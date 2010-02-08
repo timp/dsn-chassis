@@ -139,12 +139,14 @@ public class UploadFilesWidgetRenderer extends ChassisWidgetRenderer<UploadFiles
 	 * @param status
 	 */
 	protected void syncUIWithStatus(Status status) {
+		
 		log.enter("syncUIWithStatus");
 		
-		log.debug("status: "+status);
+		log.debug("status: " + status);
 
 		syncStudyPanelWithStatus(status);
 		syncMainInteractionPanelWithStatus(status);
+		syncUploadFileFormWithStatus(status);
 		syncErrorPanelWithStatus(status);
 
 		// Hide everything (that is made visible here) first, then show as required.
@@ -200,6 +202,10 @@ public class UploadFilesWidgetRenderer extends ChassisWidgetRenderer<UploadFiles
 	
 	
 
+
+
+
+
 	private void syncErrorPanelWithStatus(Status status) {
 
 		// Hide everything (that is made visible here) first, then show as required.
@@ -247,35 +253,57 @@ public class UploadFilesWidgetRenderer extends ChassisWidgetRenderer<UploadFiles
 		studyNotFoundLabel.setVisible(false);
 		studyTitleLabel.setVisible(false);
 		errorPanel.setVisible(false);
+		// The visibility of the "No Files Uploaded" message needs to be controlled based on status as well as the UploadFeedDoc, 
+		// but status has the override, so it goes here.
+		noFilesUploadedLabel.setVisible(false);
+		
+		Document uploadFeedDoc = model.uploadFeedDoc.get();
+		
+		Boolean hasNoFilesUploaded = false;
+		
+		if (uploadFeedDoc != null) {
+			
+			List<Element> entries = AtomHelper.getEntries(uploadFeedDoc.getDocumentElement());
+			
+			if (entries.size() == 0) {
+				hasNoFilesUploaded = true;
+			}
+
+		}	
 		
 		if (status instanceof AsyncWidgetModel.InitialStatus) {
 
 			studyPanel.setVisible(true);
 			studyNotSelectedLabel.setVisible(true);
+			
 		}
 		
 		else if (status instanceof UploadFilesWidgetModel.RetrieveStudyPendingStatus) {
 
 			studyPanel.setVisible(true);
 			studyPendingLabel.setVisible(true);
+			
 		}
 		
 		else if (status instanceof UploadFilesWidgetModel.StudyNotFoundStatus) {
 
 			studyPanel.setVisible(true);
 			studyNotFoundLabel.setVisible(true);
+			
 		}
 
 		else if (status instanceof UploadFilesWidgetModel.RetrieveUploadedFilesPendingStatus) {
 
 			studyPanel.setVisible(true);
 			studyTitleLabel.setVisible(true);
+			
 		}
 		
 		else if (status instanceof UploadFilesWidgetModel.ReadyForInteractionStatus) {
 
 			studyPanel.setVisible(true);
 			studyTitleLabel.setVisible(true);
+			noFilesUploadedLabel.setVisible(hasNoFilesUploaded);
 		}
 		
 		else if (status instanceof UploadFilesWidgetModel.FileUploadPendingStatus) {
@@ -293,13 +321,60 @@ public class UploadFilesWidgetRenderer extends ChassisWidgetRenderer<UploadFiles
 	}
 
 
+	private void syncUploadFileFormWithStatus(Status status) {
+		
+		// Hide everything (that is made visible here) first, then show as required.
+		uploadFileForm.setVisible(false);
+
+		if (status instanceof AsyncWidgetModel.InitialStatus) {
+
+
+		}
+		
+		else if (status instanceof UploadFilesWidgetModel.RetrieveStudyPendingStatus) {
+
+			
+		}
+		
+		else if (status instanceof UploadFilesWidgetModel.StudyNotFoundStatus) {
+
+			
+		}
+
+		else if (status instanceof UploadFilesWidgetModel.RetrieveUploadedFilesPendingStatus) {
+
+			
+		}
+		
+		else if (status instanceof UploadFilesWidgetModel.ReadyForInteractionStatus) {
+
+			uploadFileForm.setVisible(true);
+			uploadFileForm.summaryInput.setText(null);
+		}
+		
+		else if (status instanceof UploadFilesWidgetModel.FileUploadPendingStatus) {
+
+		}
+		
+		else if (status instanceof ErrorStatus) {
+			
+			errorMessage.clear();
+			errorMessage.add(new HTML(model.getErrorMessage()));
+			errorPanel.setVisible(true);
+		}
+		
+	}
 
 
 	protected void syncUIWithStudyEntryElement(Element studyEntryElement) {
+		
 		String studyTitle = "";
+		
 		if (studyEntryElement != null) {
+			
 			studyTitle = AtomHelper.getTitle(studyEntryElement);
 		}
+		
 		studyTitleLabel.setText(studyTitle);
 	}
 

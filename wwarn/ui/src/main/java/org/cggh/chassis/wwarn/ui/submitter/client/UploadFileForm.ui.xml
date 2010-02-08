@@ -75,7 +75,7 @@
 	        	</p>
 	        	
 	        	<p>
-	    	    	<g:TextArea ui:field="summaryInput"/>
+	    	    	<g:TextArea ui:field="summaryInput" />
 		    	</p>
 		    	    	
 	        	<p>
