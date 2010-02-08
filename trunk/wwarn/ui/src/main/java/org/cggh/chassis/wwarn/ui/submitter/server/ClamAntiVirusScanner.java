@@ -123,7 +123,7 @@ public class ClamAntiVirusScanner {
 
 			FileInputStream inputStreamToScan = new FileInputStream(f);
 
-			requestScan(inputStreamToScan);
+			performScanAndClose(inputStreamToScan);
 
 			// clamd writes this if the stream
 			// we sent does not contains viruses.
@@ -153,7 +153,7 @@ public class ClamAntiVirusScanner {
 		}
 	}
 
-	private void requestScan(InputStream inputStream) throws ScannerException {
+	private void performScanAndClose(InputStream inputStream) throws ScannerException {
 		byte[] received = new byte[1];
 		dataSocket = new Socket();
 		SocketAddress sockaddrData = new InetSocketAddress(clamdHost, dataPort);
