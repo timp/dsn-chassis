@@ -115,17 +115,18 @@ public class SubmitWidgetRenderer extends ChassisWidgetRenderer<SubmitWidgetMode
 		super.setCanvas(canvas);
 		canvas.add(uiBinder.createAndBindUi(this));
 	}
-	
-	
-	
-	
+
 	@Override
 	public void renderUI() {
+
+		log.enter("renderUI");		
 		
 		notAcceptedButton.setValue(true);
 		acceptedButton.setValue(false);
 		
 		proceedButton.setEnabled(false);
+		
+		log.leave();
 		
 	}
 	
@@ -210,22 +211,28 @@ public class SubmitWidgetRenderer extends ChassisWidgetRenderer<SubmitWidgetMode
 	 * @param status
 	 */
 	protected void syncUIWithStatus(Status status) {
+		
 		log.enter("syncUIWithStatus");
 		
-		log.debug("status: "+status);
-		
-		// TODO
+		log.debug("status: " + status);
 		
 		syncStudyPanelWithStatus(status);
-		syncMainInteractionPanelWithStatus(status);
+		syncMainActionsPanelWithStatus(status);
 		syncErrorPanelWithStatus(status);
+
+		// Hide everything (that is made visible here) first, then show as required.		
+		studyPanel.setVisible(false);
+		filesUploadedLabel.setVisible(false);
+		filesPendingLabel.setVisible(false);
+		filesPanel.setVisible(false);
+		filesTableContainer.setVisible(false);
+		submissionPendingPanel.setVisible(false);
+		submissionPanel.setVisible(false);
+		mainActionsPanel.setVisible(false);
+		
 		
 		if (status instanceof AsyncWidgetModel.InitialStatus) {
 
-			filesUploadedLabel.setVisible(false);
-			filesPendingLabel.setVisible(false);
-			noFilesUploadedLabel.setVisible(false);
-			submissionPendingPanel.setVisible(false);
 
 		}
 		
@@ -239,35 +246,24 @@ public class SubmitWidgetRenderer extends ChassisWidgetRenderer<SubmitWidgetMode
 
 		else if (status instanceof SubmitWidgetModel.RetrieveUploadedFilesPendingStatus) {
 
-			
 			filesUploadedLabel.setVisible(true);
 			filesPendingLabel.setVisible(true);
-			noFilesUploadedLabel.setVisible(false);
-			
-			filesTableContainer.setVisible(false);
-			
-			mainActionsPanel.setVisible(false);
-
+			mainInteractionPanel.setVisible(true);
 
 		}
 		
 		else if (status instanceof SubmitWidgetModel.ReadyForInteractionStatus) {
 
-//			submissionPanel.setVisible(true);
+			studyPanel.setVisible(true);
+			filesUploadedLabel.setVisible(true);
 			filesPanel.setVisible(true);
 			filesTableContainer.setVisible(true);
-			studyPanel.setVisible(true);
-
-			filesPendingLabel.setVisible(false);
-			submissionPendingPanel.setVisible(false);
-			
+			submissionPanel.setVisible(true);
+			mainActionsPanel.setVisible(true);
+	
 		}
 		
 		else if (status instanceof SubmitWidgetModel.SubmissionPendingStatus) {
-
-			submissionPanel.setVisible(false);
-			filesPanel.setVisible(false);
-			studyPanel.setVisible(false);
 
 			submissionPendingPanel.setVisible(true);
 
@@ -304,24 +300,28 @@ public class SubmitWidgetRenderer extends ChassisWidgetRenderer<SubmitWidgetMode
 
 
 
-	private void syncMainInteractionPanelWithStatus(Status status) {
-		// TODO Auto-generated method stub
-		
-		if (
-				status instanceof SubmitWidgetModel.RetrieveUploadedFilesPendingStatus || 
-				status instanceof SubmitWidgetModel.ReadyForInteractionStatus 
-				
-		) {
+	private void syncMainActionsPanelWithStatus(Status status) {
 
-			mainInteractionPanel.setVisible(true);
+		log.enter("syncMainActionsPanelWithStatus");
+		
+		// Turn everything (that is turned on here) off to start with.
+		mainActionsPanel.setVisible(false);
+		notAcceptedButton.setEnabled(false);
+		acceptedButton.setEnabled(false);
+		proceedButton.setEnabled(false);
+		
+		if (status instanceof SubmitWidgetModel.ReadyForInteractionStatus) {
+
+			notAcceptedButton.setValue(true);
+			acceptedButton.setValue(false);
+			notAcceptedButton.setEnabled(true);
+			acceptedButton.setEnabled(true);	
+			mainActionsPanel.setVisible(true);
+			
 
 		}
-		else {
-
-			mainInteractionPanel.setVisible(false);
-
-		}
 		
+		log.leave();
 		
 	}
 

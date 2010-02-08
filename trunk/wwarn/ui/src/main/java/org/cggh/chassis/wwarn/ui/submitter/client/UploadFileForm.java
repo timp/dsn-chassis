@@ -1,5 +1,7 @@
 package org.cggh.chassis.wwarn.ui.submitter.client;
 
+import org.cggh.chassis.generic.log.client.Log;
+import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.miniatom.client.ext.Chassis;
 import org.cggh.chassis.generic.widget.client.ChassisWidget;
 import org.cggh.chassis.wwarn.ui.common.client.Config;
@@ -21,7 +23,7 @@ import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteHandler;
 
 public class UploadFileForm extends ChassisWidget {
 
-	
+	private Log log = LogFactory.getLog(UploadFileForm.class);
 	
 	
 	public static final String FIELD_FILE = "file";
@@ -67,15 +69,19 @@ public class UploadFileForm extends ChassisWidget {
 
 	private void renderFormPanel() {
 
+		log.enter("renderFormPanel");
+		
 		formPanel.setAction(Config.get(Config.FORMHANDLER_FILEUPLOAD_URL));
 		formPanel.setEncoding(FormPanel.ENCODING_MULTIPART);
 		formPanel.setMethod(FormPanel.METHOD_POST);
-
+		
 		fileInput.setName(FIELD_FILE);
 		summaryInput.setName(FIELD_SUMMARY);
 		typeInput.setName(FIELD_TYPE);
 		otherTypeInput.setName(FIELD_OTHERTYPE);
 		
+		
+		log.leave();
 	}
 
 
@@ -103,6 +109,8 @@ public class UploadFileForm extends ChassisWidget {
 	@Override
 	protected void syncUI() {
 
+		log.enter("syncUI");
+		
 		String value = typeInput.getValue(typeInput.getSelectedIndex());
 		
 		if (value != null && value.equals(Chassis.TERM_OTHER)) {
@@ -112,6 +120,8 @@ public class UploadFileForm extends ChassisWidget {
 			otherTypePanel.setVisible(false);
 		}
 		
+		
+		log.leave();
 	}
 
 	
