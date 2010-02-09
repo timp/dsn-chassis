@@ -42,6 +42,8 @@ mvn release:perform
 </pre>
 This will set the version to the SNAPSHOT being aimed for in the next sprint.
 
+
+
 = Notes = 
 
 The maven plugin ensures that there are no uncommitted changes.
