@@ -30,7 +30,7 @@ Title, Summary, Author list, Date published, Date Last updated.
 
 = Access levels =
 
-The Access level is defined as one of <font color="blue">null</font>, 
+The Access level is defined as one of <font color="blue">Null</font>, 
 <font color="red">Create</font>, <font color="green">Read</font>, <font color="red">Update</font> or <font color="red">Delete</font>.
 
 || || Surfer || Submitter || Anonimiser || Curator || Administrator ||
@@ -45,5 +45,18 @@ The Access level is defined as one of <font color="blue">null</font>,
 = Chassis Collection Query Filters =
 
 All of the above Entries are aggregated into Collections (Atom Feeds). 
-The raw collections can only be viewed by *Administrators*; all other feeds 
-are filtered by the current user and her roles.
+The raw collections can only be accessed by *Administrators*; all other feeds 
+are filtered by the current user and her roles, except the Studies collection, 
+which can be read by all.
+Studies are the only Entries for which the there is a difference between the query results for a Read or a Modify action.
+
+Modify means any of Create, Update or Delete, as specified for that user in table above. 
+
+
+|| || Surfer || Submitter || Anonimiser || Curator || Administrator ||
+|| Read Study || <font color="green">Null</font> || <font color="red">CRU</font> ||<font color="green">R</font> ||<font color="green">R</font>|| <font color="red">RUD</font> ||
+|| Modify Study || <font color="green">Null</font> || <font color="red">CRU</font> ||<font color="green">R</font> ||<font color="green">R</font>|| <font color="red">RUD</font> ||
+|| Submission || <font color="blue">Null</font> || <font color="red">CR</font> ||<font color="green">R</font> ||<font color="green">R</font>|| <font color="red">RUD</font> ||
+|| Media || <font color="blue">Null</font> || <font color="red">CR</font> ||<font color="red">CR</font> ||<font color="red">CR</font>|| <font color="red">RUD</font> ||
+|| Resource || <font color="blue">Null</font> || <font color="red">CR</font> ||<font color="red">CR</font> ||<font color="red">CR</font>|| <font color="red">RUD</font> ||
+|| Review || <font color="blue">Null</font> || <font color="blue">Null</font> ||<font color="red">CR</font> ||<font color="red">CR</font>|| <font color="red">RUD</font> ||
