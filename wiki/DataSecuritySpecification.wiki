@@ -27,11 +27,11 @@ Title, Summary, Author list, Date published, Date Last updated.
 || Resource || Download dlink ||
 || Review || ||
 
-= Chassis Collection Queries =
 
-All of the above Entries are aggregated into Collections (Atom Feeds). 
-The raw collections can only be viewed by *Administrators*; all other feeds 
-are filtered by the current user and her roles.
+= Access levels =
+
+The Access level is defined as one of <font color="blue">null</font>, 
+<font color="red">Create</font>, <font color="green">Read</font>, <font color="red">Update</font> or <font color="red">Delete</font>.
 
 || || Surfer || Submitter || Anonimiser || Curator || Administrator ||
 || Study || <font color="green">R</font> || <font color="red">CRU</font> ||<font color="green">R</font> ||<font color="green">R</font>|| <font color="red">RUD</font> ||
@@ -39,3 +39,11 @@ are filtered by the current user and her roles.
 || Media || <font color="blue">Null</font> || <font color="red">CR</font> ||<font color="red">CR</font> ||<font color="red">CR</font>|| <font color="red">RUD</font> ||
 || Resource || <font color="blue">Null</font> || <font color="red">CR</font> ||<font color="red">CR</font> ||<font color="red">CR</font>|| <font color="red">RUD</font> ||
 || Review || <font color="blue">Null</font> || <font color="blue">Null</font> ||<font color="red">CR</font> ||<font color="red">CR</font>|| <font color="red">RUD</font> ||
+
+
+
+= Chassis Collection Query Filters =
+
+All of the above Entries are aggregated into Collections (Atom Feeds). 
+The raw collections can only be viewed by *Administrators*; all other feeds 
+are filtered by the current user and her roles.
