@@ -8,8 +8,20 @@ the WWARN system must be secured so that only allowed data accesses are possible
 
 = User Roles =
 
-|| *Role* || Capabilities || *Description* ||
+|| *Role* || *Capabilities* || *Description* ||
 || Administrator || Deletion of files, data and users || Super user ||
 || Submitter || Creation of data, upload of files || Default role for registered users||
 || Curator || Download of files, upload of transformed files  || Allocated to a study||
 || Anonimiser || Minimisation of identifying data ||A specialist Curator who reduces identifying data||
+
+= Chassis Atom Entries = 
+
+All Chassis Atom Entries have the following fields: 
+Title, Summary, Author list, Date published, Date Last updated. 
+
+|| *Name* || *Additional Fields* ||
+|| Study || ||
+|| Submission || Study Link||
+|| Media || Resource link ||
+|| Resource || Download dlink ||
+|| Review || ||
