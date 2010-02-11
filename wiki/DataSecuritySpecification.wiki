@@ -5,6 +5,9 @@
 As detailed in [http://code.google.com/p/dsn-chassis/issues/detail?id=60 Issue 61] 
 the WWARN system must be secured so that only allowed data accesses are possible.
 
+This document describes in natural language the allowed data accesses and 
+methods of implementing the required restrictions. 
+
 
 = User Roles =
 
@@ -20,12 +23,11 @@ the WWARN system must be secured so that only allowed data accesses are possible
 All Chassis Atom Entries have the following fields: 
 Title, Summary, Author list, Date published, Date Last updated. 
 
-|| *Name* || *Additional Fields* ||
-|| Study || ||
-|| Submission || Study Link||
-|| Media || Resource link ||
-|| Resource || Download dlink ||
-|| Review || ||
+|| *Name* || *Additional Fields* || *Links*||
+|| Study || Module || Edit || 
+|| Submission || <font color="blue">Null</font> || Study, Media+ ||
+|| Media || Resource link || Edit ||
+|| Review || Reviewed || Submission, Media+||
 
 
 = Access levels =
