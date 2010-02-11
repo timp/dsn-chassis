@@ -33,14 +33,10 @@ All of the above Entries are aggregated into Collections (Atom Feeds).
 The raw collections can only be viewed by *Administrators*; all other feeds 
 are filtered by the current user and her roles.
 
-|| || Surfer || Submitter | Anonimiser || Curator || Administrator ||
-|| Study || <font color="green">R</font> || <font color="red">CRU</font> ||<font color="green">R</font> ||<font color="green">R</font>|| <font color="red">CRUD</font>
-|| Submission || Surfer || Blocked ||
-|| Submission || Submitter || Token in Submission.Authors ||
-|| Submission || Anonimiser || None ||
-|| Submission || Curator || None ||
-|| Media || Resource link ||
-|| Resource || Download link ||
-|| Review || ||
-
+|| || Surfer || Submitter || Anonimiser || Curator || Administrator ||
+|| Study || <font color="green">R</font> || <font color="red">CRU</font> ||<font color="green">R</font> ||<font color="green">R</font>|| <font color="red">CRUD</font> ||
+|| Submission || <font color="green">R</font> || <font color="red">CRU</font> ||<font color="green">R</font> ||<font color="green">R</font>|| <font color="red">CRUD</font> ||
+|| Media || <font color="green">R</font> || <font color="red">CRU</font> ||<font color="green">R</font> ||<font color="green">R</font>|| <font color="red">CRUD</font> ||
+|| Resource || <font color="green">R</font> || <font color="red">CRU</font> ||<font color="green">R</font> ||<font color="green">R</font>|| <font color="red">CRUD</font> ||
+|| Review || <font color="green">R</font> || <font color="red">CRU</font> ||<font color="green">R</font> ||<font color="green">R</font>|| <font color="red">CRUD</font> ||
 
