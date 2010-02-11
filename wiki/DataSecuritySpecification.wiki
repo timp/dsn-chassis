@@ -1,0 +1,13 @@
+#summary Ensuring data only accessible to appropriate users.
+
+= Introduction =
+
+As detailed in Issue 61 http://code.google.com/p/dsn-chassis/issues/detail?id=60
+
+
+= Details =
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
