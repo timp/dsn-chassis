@@ -2,7 +2,7 @@
 
 = Introduction =
 
-As detailed in Issue 61 http://code.google.com/p/dsn-chassis/issues/detail?id=60
+As detailed in [http://code.google.com/p/dsn-chassis/issues/detail?id=60 Issue 61]
 
 
 = Details =
