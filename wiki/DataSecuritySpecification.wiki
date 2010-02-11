@@ -9,10 +9,11 @@ the WWARN system must be secured so that only allowed data accesses are possible
 = User Roles =
 
 || *Role* || *Capabilities* || *Description* ||
-|| Administrator || Deletion of files, data and users || Super user ||
+|| Surfer || None || Anonymous web user ||
 || Submitter || Creation of data, upload of files || Default role for registered users||
-|| Curator || Download of files, upload of transformed files  || Allocated to a study||
 || Anonimiser || Minimisation of identifying data ||A specialist Curator who reduces identifying data||
+|| Curator || Download of files, upload of transformed files  || Allocated to a study||
+|| Administrator || Deletion of files, data and users || Super user ||
 
 = Chassis Atom Entries = 
 
@@ -25,3 +26,21 @@ Title, Summary, Author list, Date published, Date Last updated.
 || Media || Resource link ||
 || Resource || Download dlink ||
 || Review || ||
+
+= Chassis Collection Queries =
+
+All of the above Entries are aggregated into Collections (Atom Feeds). 
+The raw collections can only be viewed by *Administrators*; all other feeds 
+are filtered by the current user and her roles.
+
+|| || Surfer || Submitter | Anonimiser || Curator || Administrator ||
+|| Study || <font color="green">R</font> || <font color="red">CRU</font> ||<font color="green">R</font> ||<font color="green">R</font>|| <font color="red">CRUD</font>
+|| Submission || Surfer || Blocked ||
+|| Submission || Submitter || Token in Submission.Authors ||
+|| Submission || Anonimiser || None ||
+|| Submission || Curator || None ||
+|| Media || Resource link ||
+|| Resource || Download link ||
+|| Review || ||
+
+
