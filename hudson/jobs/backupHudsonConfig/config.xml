@@ -34,10 +34,18 @@ svn propset svn:ignore -F myignores jobs/* &amp;&amp; rm myignores
 # Remove anything from SVN that no longer exists in Hudson.
 svn status | grep &apos;\!&apos; | awk &apos;{print $2;}&apos; | xargs -r svn rm
 # And finally, check in of course, showing status before and after for logging.
-svn st &amp;&amp; svn ci --non-interactive --username=mrhudson -m &quot;automated commit of Hudson configuration&quot; &amp;&amp; svn st
+svn st 
+svn ci --non-interactive -m &quot;automated commit of Hudson configuration&quot; 
+svn st
 </command>
     </hudson.tasks.Shell>
   </builders>
-  <publishers/>
+  <publishers>
+    <hudson.tasks.Mailer>
+      <recipients></recipients>
+      <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
+      <sendToIndividuals>false</sendToIndividuals>
+    </hudson.tasks.Mailer>
+  </publishers>
   <buildWrappers/>
 </project>
