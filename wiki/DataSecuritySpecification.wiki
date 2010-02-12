@@ -18,6 +18,8 @@ methods of implementing the required restrictions.
 || Curator || Download of files, upload of transformed files  || Allocated to a study||
 || Administrator || Deletion of files, data and users || Super user ||
 
+<br />
+
 = Chassis Atom Entries = 
 
 All Chassis Atom Entries have the following fields: 
@@ -29,6 +31,7 @@ Title, Summary, Author list, Date published, Date Last updated.
 || Media || Resource link || Edit ||
 || Review || Reviewed || Submission, Media+||
 
+<br />
 
 = Access levels =
 
@@ -43,7 +46,7 @@ The Access level is defined as one of <font color="blue">Null</font>,
 || Review || <font color="blue">Null</font> || <font color="blue">Null</font> ||<font color="red">CR</font> ||<font color="red">CR</font>|| <font color="red">RUD</font> ||
 
 
-
+<br />
 = Chassis Collection Query Filters =
 
 All of the above Entries are aggregated into Collections (Atom Feeds). 
