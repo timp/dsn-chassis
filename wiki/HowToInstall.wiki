@@ -107,16 +107,16 @@ CHASSIS.studyFeedURL = "/chassis/service/exist/atom/edit/studies";
 
 NOTE: libclamunrar6 is in Debian Karmic but not Debian Jaunty.
  
-= Configuration of ClamAV =
+== Configuration of ClamAV ==
  
 <pre>
  dpkg-reconfigure clamav-base
 </pre>
  
 Non-default choices: 
-* Enable tcp sockets 
-* Only listen to 127.0.0.1 
-* Do not scan mail
+  * Enable tcp sockets 
+  * Only listen to 127.0.0.1 
+  * Do not scan mail
 
 = Security Configuration =
 
