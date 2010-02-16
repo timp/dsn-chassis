@@ -1,4 +1,4 @@
-#summary how to install Chassis
+#summary How to install Chassis
 
 *TODO this is out of date*
 
