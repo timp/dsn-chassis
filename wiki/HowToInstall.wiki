@@ -99,6 +99,25 @@ CHASSIS.userDetailsServiceEndpointURL = "/chassis/service/user/gwtrpc/userdetail
 CHASSIS.studyFeedURL = "/chassis/service/exist/atom/edit/studies";
 }}}
 
+= Installation of ClamAV = 
+
+<pre>
+ apt-get install clamav clamav-daemon clamav-docs libclamunrar6
+</pre>
+
+NOTE: libclamunrar6 is in Debian Karmic but not Debian Jaunty.
+ 
+= Configuration of ClamAV =
+ 
+<pre>
+ dpkg-reconfigure clamav-base
+</pre>
+ 
+Non-default choices: 
+* Enable tcp sockets 
+* Only listen to 127.0.0.1 
+* Do not scan mail
+
 = Security Configuration =
 
 Chassis uses [http://static.springsource.org/spring-security/site/ Spring Security 2.0.x] to integrate with various authentication and authorisation mechanisms.
