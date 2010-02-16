@@ -1,4 +1,4 @@
-#summary instructions for finishing up a sprint by svn tagging, building and packaging the Chassis projects
+#summary (superseded) instructions for finishing up a sprint by svn tagging, building and packaging the Chassis projects
 
 = Introduction =
 
