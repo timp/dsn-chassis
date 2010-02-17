@@ -25,11 +25,12 @@ methods of implementing the required restrictions.
 All Chassis Atom Entries have the following fields: 
 Title, Summary, Author list, Date published, Date Last updated. 
 
-|| *Name* || *Additional Fields* || *Links*||
-|| Study || Module || Edit || 
-|| Submission || <font color="blue">Null</font> || Study, Media+ ||
-|| Media || Resource link || Edit ||
-|| Review || Reviewed || Submission, Media+||
+|| *Name* || * Used Atom fields * || *Additional Fields* || *Links*||
+|| Study || Title, Summary, Author list, Date published, Date Last updated.  || Module || Edit || 
+|| Submission || Title, Summary, Author list, Date published, Date Last updated. || <font color="blue">Null</font> || Study, Media+ ||
+|| Media || Title, Summary, Author list, Date published, Date Last updated. || Resource link || Edit ||
+|| Review || Title, Summary, Author list, Date published, Date Last updated. || Type, Outcome || Media+ (in)||
+|| Derivation ||Title, Summary, Author list, Date published, Date Last updated. || <font color="blue">Null</font> ||  Media+ (in), Media+ (out)||
 
 <br />
 
