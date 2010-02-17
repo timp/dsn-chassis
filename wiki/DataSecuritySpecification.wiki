@@ -28,7 +28,7 @@ Id, Title, Summary, Author list, Date published, Date last updated.
 || *Name* || *Additional Fields* || *Links*||
 || Study || Module || Edit || 
 || Submission  || <font color="blue">Null</font> || Study, Media+ ||
-|| Media  || Resource link || Edit ||
+|| Media  || <font color="blue">Null</font> || Edit, Content.src ||
 || Review || Type, Outcome || Media+ (in)||
 || Derivation || <font color="blue">Null</font> ||  Media+ (in), Media+ (out)||
 
