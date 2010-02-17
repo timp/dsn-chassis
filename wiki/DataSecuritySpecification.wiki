@@ -1,4 +1,4 @@
-#summary Ensuring data only accessible to appropriate users.
+#summary Ensuring data is only accessible to appropriate users.
 
 = Introduction =
 
