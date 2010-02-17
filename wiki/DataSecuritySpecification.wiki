@@ -9,6 +9,12 @@ This document describes in natural language the allowed data accesses and
 methods of implementing the required restrictions. 
 
 
+
+The access controls are of three types, which can be illustrated as stories: 
+ * Role based access to entities: Submitters cannot review submissions
+ * Only Atom content-types may be updated: No one may modify a file
+ * Field matching restrictions: Submitters may only alter the studies they have submitted
+
 = User Roles =
 
 || *Role* || *Capabilities* || *Description* ||
