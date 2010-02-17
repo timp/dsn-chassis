@@ -14,8 +14,8 @@ methods of implementing the required restrictions.
 || *Role* || *Capabilities* || *Description* ||
 || Surfer || None || Anonymous web user ||
 || Submitter || Creation of data, upload of files || Default role for registered users||
-|| Anonimiser || Minimisation of identifying data ||A specialist Curator who reduces identifying data||
-|| Curator || Download of files, upload of transformed files  || Allocated to a study||
+|| Anonymizer || Download of files, Upload of transformed files ||A specialist Curator who reduces identifying data||
+|| Curator || Download of files, Upload of transformed files  || Allowed to modify all files||
 || Administrator || Deletion of files, data and users || Super user ||
 
 <br />
