@@ -23,14 +23,14 @@ methods of implementing the required restrictions.
 = Chassis Atom Entries = 
 
 All Chassis Atom Entries have the following fields: 
-Title, Summary, Author list, Date published, Date Last updated. 
+Id, Title, Summary, Author list, Date published, Date Last updated. 
 
-|| *Name* || * Used Atom fields * || *Additional Fields* || *Links*||
-|| Study || Title, Summary, Author list, Date published, Date Last updated.  || Module || Edit || 
-|| Submission || Title, Summary, Author list, Date published, Date Last updated. || <font color="blue">Null</font> || Study, Media+ ||
-|| Media || Title, Summary, Author list, Date published, Date Last updated. || Resource link || Edit ||
-|| Review || Title, Summary, Author list, Date published, Date Last updated. || Type, Outcome || Media+ (in)||
-|| Derivation ||Title, Summary, Author list, Date published, Date Last updated. || <font color="blue">Null</font> ||  Media+ (in), Media+ (out)||
+|| *Name* || *Additional Fields* || *Links*||
+|| Study || Module || Edit || 
+|| Submission  || <font color="blue">Null</font> || Study, Media+ ||
+|| Media  || Resource link || Edit ||
+|| Review || Type, Outcome || Media+ (in)||
+|| Derivation || <font color="blue">Null</font> ||  Media+ (in), Media+ (out)||
 
 <br />
 
@@ -59,10 +59,12 @@ Studies are the only Entries for which the there is a difference between the que
 Modify means any of Create, Update or Delete, as specified for that user in table above. 
 
 
-|| || Surfer || Submitter || Anonimiser || Curator || Administrator ||
+|| || Surfer || Submitter || Anonymizer || Curator || Administrator ||
 || Read Study || <font color="green">Null</font> || <font color="red">CRU</font> ||<font color="green">R</font> ||<font color="green">R</font>|| <font color="red">RUD</font> ||
 || Modify Study || <font color="green">Null</font> || <font color="red">CRU</font> ||<font color="green">R</font> ||<font color="green">R</font>|| <font color="red">RUD</font> ||
 || Submission || <font color="blue">Null</font> || <font color="red">CR</font> ||<font color="green">R</font> ||<font color="green">R</font>|| <font color="red">RUD</font> ||
 || Media || <font color="blue">Null</font> || <font color="red">CR</font> ||<font color="red">CR</font> ||<font color="red">CR</font>|| <font color="red">RUD</font> ||
 || Resource || <font color="blue">Null</font> || <font color="red">CR</font> ||<font color="red">CR</font> ||<font color="red">CR</font>|| <font color="red">RUD</font> ||
 || Review || <font color="blue">Null</font> || <font color="blue">Null</font> ||<font color="red">CR</font> ||<font color="red">CR</font>|| <font color="red">RUD</font> ||
+
+
