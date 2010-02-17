@@ -1,5 +1,5 @@
-= eXist Setup =
 #summary Eclipse setup fro eXist
+= eXist Setup =
 
 This page contains notes on setting up an Eclipse Dynamic Web Project for the Chassis generic services based the Atom Protocol, based on a distribution of the eXist XML database.
 
