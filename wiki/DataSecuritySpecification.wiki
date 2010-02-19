@@ -17,7 +17,11 @@ The access controls are of three types, which can be illustrated as stories:
 
 = Role based access = 
 
-User authentication is provided by the 
+Access control is composed of two elements: authentication and authorisation. 
+Authentication determines the identity of the user, authorisation determines what the user may do. 
+
+For safety and ease of comprehension actions must be explicitly allowed, otherwise they are disallowed. 
+
 == User Roles ==
 
 || *Role* || *Capabilities* || *Description* ||
