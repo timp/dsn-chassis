@@ -63,14 +63,14 @@ The underlying data store (eXist) distinguishes between files which it is concer
 
 The content type of an Atom PUT request can be determined either from the request content-type property or as a hack by matching the url pattern. 
 
-We need to disallow the PUT requests to with Content-Type not equal to 
-<tt>application/atom+xml</tt>.
+We only allow PUT requests with Content-Type equal to <tt>application/atom+xml</tt>.
 
 
 
 = Field Matching Restrictions  = 
 
-The only field level restriction that w
+The only field level restriction that we currently require is the ability to ensure that the the current authenticated user is a member of the author list for the entity. 
+
 
 
 ==References ==
