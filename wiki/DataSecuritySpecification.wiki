@@ -15,7 +15,10 @@ The access controls are of three types, which can be illustrated as stories:
  * Only Atom content-types may be updated: No one may modify a file
  * Field matching restrictions: Submitters may only alter the studies they have submitted
 
-= User Roles =
+= Role based access = 
+
+User authentication is provided by the 
+== User Roles ==
 
 || *Role* || *Capabilities* || *Description* ||
 || Surfer || None || Anonymous web user ||
@@ -72,3 +75,8 @@ Modify means any of Create, Update or Delete, as specified for that user in tabl
 || Media || <font color="blue">Null</font> || <font color="red">CR</font> ||<font color="red">CR</font> ||<font color="red">CR</font>|| <font color="red">RUD</font> ||
 || Review || <font color="blue">Null</font> || <font color="blue">Null</font> ||<font color="red">CR</font> ||<font color="red">CR</font>|| <font color="red">RUD</font> ||
 || Derivation || <font color="blue">Null</font> || <font color="blue">Null</font> ||<font color="red">CR</font> ||<font color="red">CR</font>|| <font color="red">RUD</font> ||
+
+
+
+==References ==
+[http://stackoverflow.com/questions/1322135/spring-security-authorization-without-authentication Spring authorization without authentication]
