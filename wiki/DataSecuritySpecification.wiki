@@ -73,6 +73,14 @@ The only field level restriction that we currently require is the ability to ens
 
 
 
+
+= Access Rules = 
+
+We can cast the rules so far into a rule format which defines the data access operations we allow: 
+
+* allow ( submitter , create member , studies )
+
+
 ==References ==
  # [http://stackoverflow.com/questions/1322135/spring-security-authorization-without-authentication Spring authorization without authentication]
  # [http://exist.sourceforge.net/atompub.html Exist: Atom Protocol Support]
