@@ -82,14 +82,18 @@ We need to ensure that uploaded files cannot be modified.
 Derivations take as input an uploaded file and output a new uploaded file. 
 If a single file is uploaded twice it will still be known as two separate files within Chassis.
 
-The underlying data store (eXist) distinguishes between files which it is concerned with by the files type: it is only interested in files with a content type of <tt>application/atom+xml</tt> (see [http://exist.sourceforge.net/atompub.html 2 ])
+The underlying data store (eXist) distinguishes between files which it is concerned with by the file's type: it is only interested in files with a content type of <tt>application/atom+xml</tt> (see [http://exist.sourceforge.net/atompub.html 2 ])
 
 The content type of an Atom PUT request can be determined either from the request content-type property or as a hack by matching the url pattern. 
 
+We need to disallow the PUT requests to with Content-Type not equal to 
+<tt>application/atom+xml</tt>.
 
 
 
 = Field Matching Restrictions  = 
+
+
 
 
 ==References ==
