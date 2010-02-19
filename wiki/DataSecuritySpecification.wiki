@@ -286,6 +286,28 @@ The rules above can be translated into concrete Http methods and requests.
  * allow ( administrator, DELETE, /atom/edit/resources?id= )
 
 
+= Implementation Strategies =
+
+The rules above are of the following shapes
+ 
+ * allow( role, GET, atom entity url)
+ * allow( role, GET, atom collection url)
+ * allow( role, POST, atom collection url)
+ * allow( role, DELETE, atom entity url)
+
+
+ * allow( role, GET, query entity url)
+ * allow( role, GET, query collection url)
+
+which can all be accomodated with the standard spring security declarations 
+<pre>
+   &gt;intercept-url
+     pattern="/atom/edit/studies"
+     method="POST"
+     access="ROLE_SUBMITTER"/&lt;
+</pre>
+
+
 ==References ==
  # [http://stackoverflow.com/questions/1322135/spring-security-authorization-without-authentication Spring authorization without authentication]
  # [http://exist.sourceforge.net/atompub.html Exist: Atom Protocol Support]
