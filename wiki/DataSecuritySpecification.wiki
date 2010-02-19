@@ -12,7 +12,7 @@ methods of implementing the required restrictions.
 
 The access controls are of three types, which can be illustrated as stories: 
  * Role based access to entities: Submitters cannot review submissions
- * Content Type restrictions : Only Atom content-types may be updated, no one may modify an uploaded file
+ * Content Type restrictions : Only meta data may be updated, no one may modify an uploaded file
  * Field matching restrictions: Submitters may only alter the studies they have submitted
 
 = Role based access = 
