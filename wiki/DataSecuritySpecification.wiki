@@ -48,25 +48,6 @@ The Access level is defined as one of <font color="blue">Null</font>,
 
 
 <br />
-= Chassis Collection Query Filters =
-
-All of the above Entries are aggregated into Collections (Atom Feeds). 
-The raw collections can only be accessed by *Administrators*.
-
-All other access to the collections is through queries which 
-are filtered by the current user and her roles.
-
-
-Modify means any of Create, Update or Delete, as specified for that user in table above. 
-
-
-|| || Surfer || Submitter || Anonymizer || Curator || Administrator ||
-|| Study || <font color="blue">Null</font> || <font color="red">CRU</font> ||<font color="green">R</font> ||<font color="green">R</font>|| <font color="red">RUD</font> ||
-|| Submission || <font color="blue">Null</font> || <font color="red">CR</font> ||<font color="green">R</font> ||<font color="green">R</font>|| <font color="red">RUD</font> ||
-|| Media || <font color="blue">Null</font> || <font color="red">CR</font> ||<font color="red">CR</font> ||<font color="red">CR</font>|| <font color="red">RUD</font> ||
-|| Review || <font color="blue">Null</font> || <font color="blue">Null</font> ||<font color="red">CR</font> ||<font color="red">CR</font>|| <font color="red">RUD</font> ||
-|| Derivation || <font color="blue">Null</font> || <font color="blue">Null</font> ||<font color="red">CR</font> ||<font color="red">CR</font>|| <font color="red">RUD</font> ||
-
 = Content Type Restrictions =
 
 We need to ensure that uploaded files cannot be modified. 
@@ -105,5 +86,29 @@ Id, Title, Summary, Author list, Date published, Date last updated.
 || Media  || <font color="blue">None</font> || Edit, Content.src ||
 || Review || Type, Outcome || Media+ (in)||
 || Derivation || <font color="blue">None</font> ||  Media+ (in), Media+ (out)||
+
+<br />
+
+
+= Chassis Collection Query Filters =
+
+All of the above Entries are aggregated into Collections (Atom Feeds). 
+The raw collections can only be accessed by *Administrators*.
+
+All other access to the collections is through queries which 
+are filtered by the current user and her roles.
+
+
+Modify means any of Create, Update or Delete, as specified for that user in table above. 
+
+
+|| || Surfer || Submitter || Anonymizer || Curator || Administrator ||
+|| Study || <font color="blue">Null</font> || <font color="red">CRU</font> ||<font color="green">R</font> ||<font color="green">R</font>|| <font color="red">RUD</font> ||
+|| Submission || <font color="blue">Null</font> || <font color="red">CR</font> ||<font color="green">R</font> ||<font color="green">R</font>|| <font color="red">RUD</font> ||
+|| Media || <font color="blue">Null</font> || <font color="red">CR</font> ||<font color="red">CR</font> ||<font color="red">CR</font>|| <font color="red">RUD</font> ||
+|| Review || <font color="blue">Null</font> || <font color="blue">Null</font> ||<font color="red">CR</font> ||<font color="red">CR</font>|| <font color="red">RUD</font> ||
+|| Derivation || <font color="blue">Null</font> || <font color="blue">Null</font> ||<font color="red">CR</font> ||<font color="red">CR</font>|| <font color="red">RUD</font> ||
+
+
 
 <br />
