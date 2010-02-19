@@ -80,16 +80,23 @@
 					+-->
 				<bean class="org.jasig.cas.authentication.handler.support.HttpBasedServiceCredentialsAuthenticationHandler"
 					p:httpClient-ref="httpClient" />
-				<!--
-					| This is the authentication handler declaration that every CAS deployer will need to change before deploying CAS 
-					| into production.  The default SimpleTestUsernamePasswordAuthenticationHandler authenticates UsernamePasswordCredentials
-					| where the username equals the password.  You will need to replace this with an AuthenticationHandler that implements your
-					| local authentication strategy.  You might accomplish this by coding a new such handler and declaring
-					| edu.someschool.its.cas.MySpecialHandler here, or you might use one of the handlers provided in the adaptors modules.
+				
+				<!--+
+					| This is the authentication handler that authenticates the user against a drupal6 database.
 					+-->
-				<bean
-					class="org.jasig.cas.authentication.handler.support.SimpleTestUsernamePasswordAuthenticationHandler" />
-			</list>
+				<bean class="org.jasig.cas.adaptors.jdbc.SearchModeSearchDatabaseAuthenticationHandler">
+					<property name="tableUsers"><value>users</value></property>
+					<property name="fieldUser"><value>name</value></property>
+					<property name="fieldPassword"><value>pass</value></property>
+					<property name="dataSource" ref="drupal6"/>
+					<property name="passwordEncoder">
+						<bean class="org.jasig.cas.authentication.handler.DefaultPasswordEncoder">
+							<constructor-arg index="0" value="MD5" />
+						</bean>
+					</property>
+				</bean>  
+				
+				</list>
 		</property>
 	</bean>
 
@@ -136,4 +143,14 @@
 	<bean
 		id="serviceRegistryDao"
 		class="org.jasig.cas.services.InMemoryServiceRegistryDaoImpl" />
+	
+	
+	<!-- Data source definition -->
+	<bean id="drupal6" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="${drupal.dbdriver}"/>
+		<property name="url" value="${drupal.dburl}"/>
+		<property name="username" value="${drupal.dbuser}"/>
+		<property name="password" value="${drupal.dbpass}"/>
+	</bean>   
+	
 </beans>
