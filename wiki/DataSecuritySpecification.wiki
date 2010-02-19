@@ -103,17 +103,4 @@ The raw collections can only be accessed by *Administrators*.
 All other access to the collections is through queries which 
 are filtered by the current user and her roles.
 
-
-Modify means any of Create, Update or Delete, as specified for that user in table above. 
-
-
-|| || Surfer || Submitter || Anonymizer || Curator || Administrator ||
-|| Study || <font color="blue">Null</font> || <font color="red">CRU</font> ||<font color="green">R</font> ||<font color="green">R</font>|| <font color="red">RUD</font> ||
-|| Submission || <font color="blue">Null</font> || <font color="red">CR</font> ||<font color="green">R</font> ||<font color="green">R</font>|| <font color="red">RUD</font> ||
-|| Review || <font color="blue">Null</font> || <font color="blue">Null</font> ||<font color="red">CR</font> ||<font color="red">CR</font>|| <font color="red">RUD</font> ||
-|| Derivation || <font color="blue">Null</font> || <font color="blue">Null</font> ||<font color="red">CR</font> ||<font color="red">CR</font>|| <font color="red">RUD</font> ||
-|| Media || <font color="blue">Null</font> || <font color="red">CR</font> ||<font color="red">CR</font> ||<font color="red">CR</font>|| <font color="red">RUD</font> ||
-
-
-
 <br />
