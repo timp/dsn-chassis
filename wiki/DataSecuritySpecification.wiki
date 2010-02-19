@@ -301,10 +301,10 @@ The rules above are of the following shapes
 
 which can all be accomodated with the standard spring security declarations 
 <pre>
-   &gt;intercept-url
+   {{{<}}}intercept-url
      pattern="/atom/edit/studies"
      method="POST"
-     access="ROLE_SUBMITTER"/&lt;
+     access="ROLE_SUBMITTER"/ {{{>}}}
 </pre>
 
 
