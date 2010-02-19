@@ -34,10 +34,16 @@ For safety and ease of comprehension actions must be explicitly allowed, otherwi
 <br />
 
 
-= Access levels =
+= Data Operations  =
 
-The Access level is defined as one of <font color="blue">Null</font>, 
-<font color="green">Read</font>, <font color="red">Create</font>, <font color="red">Update</font> or <font color="red">Delete</font>.
+
+The Data Operations we are concerned with are 
+<font color="green">Read</font>, <font color="red">Create</font>, <font color="red">Update</font> or <font color="red">Delete</font> on individual, specified, 
+entities (collection members). 
+
+In addition a user may <font color="green">List</font> a collection or selection from it. 
+
+
 
 || || Surfer || Submitter || Anonimiser || Curator || Administrator ||
 || Study || <font color="blue">Null</font> || <font color="red">CRU</font> ||<font color="green">R</font> ||<font color="green">R</font>|| <font color="red">RUD</font> ||
