@@ -43,7 +43,7 @@ entities (collection members).
 
 In addition a user may <font color="green">List</font> a collection or selection from it. 
 
-|| || Surfer || Submitter || Anonimiser || Curator || Administrator ||
+|| || Surfer || Submitter || Anonymizer || Curator || Administrator ||
 || Study || <font color="blue">Null</font> || <font color="green">RL</font><font color="red">CU</font> ||<font color="green">RL</font> ||<font color="green">RL</font>|| <font color="green">RL</font><font color="red">UD</font> ||
 || Submission || <font color="blue">Null</font> || <font color="green">RL</font><font color="red">C</font> ||<font color="green">RL</font> ||<font color="green">RL</font>|| <font color="green">RL</font><font color="red">UD</font> ||
 || Review || <font color="blue">Null</font> || <font color="blue">Null</font> ||<font color="green">RL</font><font color="red">C</font> ||<font color="green">RL</font><font color="red">C</font>|| <font color="green">RL</font><font color="red">UD</font> ||
@@ -76,9 +76,111 @@ The only field level restriction that we currently require is the ability to ens
 
 = Access Rules = 
 
-We can cast the rules so far into a rule format which defines the data access operations we allow: 
+We can cast the rules into a rule format which defines the data access operations we allow. We do not need to consider what we disallow, as *everything that is not permitted is forbidden*. 
+These rules take the form of a triple of Role, Access Operation and collection.
+Note that the query and retrieve operations are filtered by whether the entry author list contains the user's id. 
 
-* allow ( submitter , create member , studies )
+ * allow ( submitter, retrieve member, studies )
+ * allow ( submitter, query members, studies )
+ * allow ( submitter, create member, studies )
+ * allow ( submitter, update member, studies )
+
+ * allow ( anonymizer, retrieve member, studies )
+ * allow ( anonymizer, query members, studies )
+
+ * allow ( curator, retrieve member, studies )
+ * allow ( curator, query members, studies )
+
+ * allow ( administrator, retrieve member, studies )
+ * allow ( administrator, query members, studies )
+ * allow ( administrator, create member, studies )
+ * allow ( administrator, delete member, studies )
+
+
+
+ * allow ( submitter, retrieve member, submission )
+ * allow ( submitter, query members, submission )
+ * allow ( submitter, create member, submission )
+ * allow ( submitter, update member, submission )
+
+ * allow ( anonymizer, retrieve member, submission )
+ * allow ( anonymizer, query members, submission )
+
+ * allow ( curator, retrieve member, submission )
+ * allow ( curator, query members, submission )
+
+ * allow ( administrator, retrieve member, submission )
+ * allow ( administrator, query members, submission )
+ * allow ( administrator, create member, submission )
+ * allow ( administrator, delete member, submission )
+
+
+
+
+ * allow ( anonymizer, retrieve member, review )
+ * allow ( anonymizer, query members, review )
+ * allow ( anonymizer, create members, review )
+
+ * allow ( curator, retrieve member, review )
+ * allow ( curator, query members, review )
+ * allow ( curator, create members, review )
+
+ * allow ( administrator, retrieve member, review )
+ * allow ( administrator, query members, review )
+ * allow ( administrator, create member, review )
+ * allow ( administrator, delete member, review )
+
+
+
+
+ * allow ( anonymizer, retrieve member, derivation )
+ * allow ( anonymizer, query members, derivation )
+ * allow ( anonymizer, create members, derivation )
+
+ * allow ( curator, retrieve member, derivation )
+ * allow ( curator, query members, derivation )
+ * allow ( curator, create members, derivation )
+
+ * allow ( administrator, retrieve member, derivation )
+ * allow ( administrator, query members, derivation )
+ * allow ( administrator, create member, derivation )
+ * allow ( administrator, delete member, derivation )
+
+
+
+ * allow ( submitter, retrieve member, Media )
+ * allow ( submitter, query members, Media )
+ * allow ( submitter, create member, Media )
+
+ * allow ( anonymizer, retrieve member, Media )
+ * allow ( anonymizer, query members, Media )
+
+ * allow ( curator, retrieve member, Media )
+ * allow ( curator, query members, Media )
+
+ * allow ( administrator, retrieve member, Media )
+ * allow ( administrator, query members, Media )
+ * allow ( administrator, create member, Media )
+ * allow ( administrator, delete member, Media )
+
+
+
+ * allow ( submitter, retrieve member, Resource )
+ * allow ( submitter, query members, Resource )
+ * allow ( submitter, create member, Resource )
+
+ * allow ( anonymizer, retrieve member, Resource )
+ * allow ( anonymizer, query members, Resource )
+
+ * allow ( curator, retrieve member, Resource )
+ * allow ( curator, query members, Resource )
+
+ * allow ( administrator, retrieve member, Resource )
+ * allow ( administrator, query members, Resource )
+ * allow ( administrator, create member, Resource )
+ * allow ( administrator, delete member, Resource )
+
+
 
 
 ==References ==
