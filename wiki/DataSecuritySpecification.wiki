@@ -48,7 +48,7 @@ In addition a user may <font color="green">List</font> a collection or selection
 || || Surfer || Submitter || Anonimiser || Curator || Administrator ||
 || Study || <font color="blue">Null</font> || <font color="green">RL</font><font color="red">CU</font> ||<font color="green">RL</font> ||<font color="green">RL</font>|| <font color="green">RL</font><font color="red">UD</font> ||
 || Submission || <font color="blue">Null</font> || <font color="green">RL</font><font color="red">C</font> ||<font color="green">RL</font> ||<font color="green">RL</font>|| <font color="green">RL</font><font color="red">UD</font> ||
-|| Media || <font color="blue">Null</font> || <font color="green">RL</font><font color="red">C</font> ||<font color="green">RL</font><font color="red">R</font> ||<font color="green">RL</font><font color="red">C</font>|| <font color="green">RL</font><font color="red">UD</font> ||
+|| Media || <font color="blue">Null</font> || <font color="green">RL</font><font color="red">C</font> ||<font color="green">RL</font><font color="red">C</font> ||<font color="green">RL</font><font color="red">C</font>|| <font color="green">RL</font><font color="red">UD</font> ||
 || Resource || <font color="blue">Null</font> || <font color="green">RL</font><font color="red">C</font> ||<font color="green">RL</font><font color="red">C</font> ||<font color="green">RL</font><font color="red">C</font>|| <font color="green">RL</font><font color="red">UD</font> ||
 || Review || <font color="blue">Null</font> || <font color="blue">Null</font> ||<font color="green">RL</font><font color="red">C</font> ||<font color="green">RL</font><font color="red">C</font>|| <font color="green">RL</font><font color="red">UD</font> ||
 
