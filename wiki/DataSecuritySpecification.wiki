@@ -33,19 +33,6 @@ For safety and ease of comprehension actions must be explicitly allowed, otherwi
 
 <br />
 
-= Chassis Atom Entries = 
-
-All Chassis Atom Entries have the following fields: 
-Id, Title, Summary, Author list, Date published, Date last updated. 
-
-|| *Name* || *Additional Fields* || *Links*||
-|| Study || Module || Edit || 
-|| Submission  || <font color="blue">None</font> || Study, Media+ ||
-|| Media  || <font color="blue">None</font> || Edit, Content.src ||
-|| Review || Type, Outcome || Media+ (in)||
-|| Derivation || <font color="blue">None</font> ||  Media+ (in), Media+ (out)||
-
-<br />
 
 = Access levels =
 
@@ -97,9 +84,26 @@ We need to disallow the PUT requests to with Content-Type not equal to
 
 = Field Matching Restrictions  = 
 
-
+The only field level restriction that w
 
 
 ==References ==
  # [http://stackoverflow.com/questions/1322135/spring-security-authorization-without-authentication Spring authorization without authentication]
  # [http://exist.sourceforge.net/atompub.html Exist: Atom Protocol Support]
+
+
+
+= Appendix = 
+== Chassis Atom Entries = =
+
+All Chassis Atom Entries have the following fields: 
+Id, Title, Summary, Author list, Date published, Date last updated. 
+
+|| *Name* || *Additional Fields* || *Links*||
+|| Study || Module || Edit || 
+|| Submission  || <font color="blue">None</font> || Study, Media+ ||
+|| Media  || <font color="blue">None</font> || Edit, Content.src ||
+|| Review || Type, Outcome || Media+ (in)||
+|| Derivation || <font color="blue">None</font> ||  Media+ (in), Media+ (out)||
+
+<br />
