@@ -12,7 +12,7 @@ methods of implementing the required restrictions.
 
 The access controls are of three types, which can be illustrated as stories: 
  * Role based access to entities: Submitters cannot review submissions
- * Only Atom content-types may be updated: No one may modify a file
+ * Content Type restrictions : Only Atom content-types may be updated, no one may modify an uploaded file
  * Field matching restrictions: Submitters may only alter the studies they have submitted
 
 = Role based access = 
@@ -76,6 +76,20 @@ Modify means any of Create, Update or Delete, as specified for that user in tabl
 || Review || <font color="blue">Null</font> || <font color="blue">Null</font> ||<font color="red">CR</font> ||<font color="red">CR</font>|| <font color="red">RUD</font> ||
 || Derivation || <font color="blue">Null</font> || <font color="blue">Null</font> ||<font color="red">CR</font> ||<font color="red">CR</font>|| <font color="red">RUD</font> ||
 
+= Content Type Restrictions =
+
+We need to ensure that uploaded files cannot be modified. 
+Derivations take as input an uploaded file and output a new uploaded file. 
+If a single file is uploaded twice it will still be known as two separate files within Chassis.
+
+The underlying data store (eXist) distinguishes between files which it is concerned with by the files type: it is only interested in files with a content type of <tt>application/xml-atom</tt>
+
+The content type of an Atom PUT request can be determined either from the request content-type property or as a hack by matching the url pattern. 
+
+
+
+
+= Field Matching Restrictions  = 
 
 
 ==References ==
