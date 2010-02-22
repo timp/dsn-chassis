@@ -5,7 +5,8 @@
 
 
 	<inherits name="com.google.gwt.user.User" />
-
+	<!--  Required for ensureDebugId to work  -->
+	<inherits name="com.google.gwt.user.Debug"/>
 
 
   <!--+
