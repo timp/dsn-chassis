@@ -89,7 +89,7 @@
   
   <filter-mapping>
     <filter-name>SpringSecuritySetUserNameAttributeFilter</filter-name>
-    <url-pattern>/*</url-pattern>
+    <servlet-name>XQueryServlet</servlet-name>
   </filter-mapping>
   
 
