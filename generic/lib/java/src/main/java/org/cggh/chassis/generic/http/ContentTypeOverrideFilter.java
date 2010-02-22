@@ -12,6 +12,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
+ * Enable content type to be changed from "application/atom+xml" to "application/xml",
+ * to work around a bug in GWT 1.7 hosted mode browser, where content was truncated
+ * if contentType was "application/atom+xml". Not removed as "application/xml" is
+ * rendered nicely by Firefox.
+ *
  * @author aliman
  *
  */
