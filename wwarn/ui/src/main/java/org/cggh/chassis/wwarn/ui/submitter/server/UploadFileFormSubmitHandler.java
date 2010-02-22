@@ -162,6 +162,7 @@ public class UploadFileFormSubmitHandler extends HttpServlet {
 			    if (UploadFileForm.FIELD_FILE.equals(fieldName)) {
 			    	
 				    log.debug("File field " + fieldName + " with file name " + item.getName() + ", content type " + contentType + " detected.");
+
 				    ClamAntiVirusScanner clamScanner = new ClamAntiVirusScanner();
 			    	try { 
 			    	  stream = clamScanner.performScan(stream);
@@ -174,7 +175,8 @@ public class UploadFileFormSubmitHandler extends HttpServlet {
 			    	} catch (ContainsVirusException e) { 			       
 			    		throw new ContainsVirusException("The file " + item.getName() + " appears to contain a virus.", e);
 			        }
-			        // process the input stream
+
+				    // process the input stream
 			    	// TODO what happens if this field set as form data?
 			    	fields.put(UploadFileForm.FIELD_FILENAME, item.getName()); 
 
