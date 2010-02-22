@@ -100,7 +100,8 @@ public class ClamAntiVirusScanner {
 
 		try {
 			
-			
+			openProtocolChannel();
+
 			File f = null;
 
 			f = File.createTempFile("wwarnVirusScanner_"
@@ -118,8 +119,6 @@ public class ClamAntiVirusScanner {
 			}
 			
 			f.deleteOnExit();
-
-			openProtocolChannel();
 
 			FileInputStream inputStreamToScan = new FileInputStream(f);
 
