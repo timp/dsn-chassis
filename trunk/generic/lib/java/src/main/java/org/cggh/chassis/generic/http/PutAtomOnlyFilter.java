@@ -22,7 +22,7 @@ public class PutAtomOnlyFilter extends HttpFilter {
 	public void doHttpFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
 
         if (request.getMethod().equals("PUT"))   // HttpServlet.METHOD_PUT is private !!
-            if (!request.getContentType().equals("application/atom+xml"))
+            if (!request.getContentType().startsWith("application/atom+xml"))
                 response.sendError(HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE, "Only Atom entries may be updated");
 
 	}
