@@ -162,7 +162,7 @@ public class UploadFileFormSubmitHandler extends HttpServlet {
 			    if (UploadFileForm.FIELD_FILE.equals(fieldName)) {
 			    	
 				    log.debug("File field " + fieldName + " with file name " + item.getName() + ", content type " + contentType + " detected.");
-			    	ClamAntiVirusScanner clamScanner = new ClamAntiVirusScanner();
+				    ClamAntiVirusScanner clamScanner = new ClamAntiVirusScanner();
 			    	try { 
 			    	  stream = clamScanner.performScan(stream);
 			    	} catch (ClamAntiVirusNotRunningException e) {
@@ -266,7 +266,14 @@ public class UploadFileFormSubmitHandler extends HttpServlet {
 		Cookie[] cookies = request.getCookies();
 		if (cookies != null) {
 			for (Cookie cookie : cookies) {
-				client.addCookie(cookie.getDomain(), cookie.getName(), cookie.getValue(), cookie.getPath(), cookie.getMaxAge(), cookie.getSecure());
+				String domain = cookie.getDomain();
+				String name = cookie.getName();
+				String value = cookie.getValue();
+				String path = cookie.getPath();
+				int maxAge = cookie.getMaxAge();
+				boolean secure = cookie.getSecure();
+				log.info("forwarding cookie, domain: "+domain+", name: "+name+", value: "+value+", path: "+path+", maxAge: "+maxAge+", secure: "+secure);
+				client.addCookie(domain, name, value, path, maxAge, secure);
 			}
 		}
 
