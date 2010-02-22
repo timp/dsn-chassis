@@ -312,8 +312,7 @@ which can all be accomodated with the standard spring security declarations
 public void doHttpFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
 
   if (request.getMethod().equals("PUT"))
-    if (!(request.getContentType().equals("application/xml") ||
-          request.getContentType().equals("application/atom+xml")))
+    if (!request.getContentType().equals("application/atom+xml"))
       response.sendError(HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE, 
                          "Only Atom entries may be updated");
 }
