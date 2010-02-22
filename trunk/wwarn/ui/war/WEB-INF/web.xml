@@ -1,22 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
 
-  <display-name>googlecode_dsn-chassis_wwarn_ui</display-name>
+  <display-name>Chassis/WWARN</display-name>
 
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
-    <welcome-file>index.htm</welcome-file>
     <welcome-file>index.jsp</welcome-file>
-    <welcome-file>default.html</welcome-file>
-    <welcome-file>default.htm</welcome-file>
-    <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
 
+
+  <!--+
+      | Spring Security Configuration
+      | *****************************
+      | 
+      +-->
+  
   <context-param>
     <param-name>contextConfigLocation</param-name>
+
+    <!-- security configuration for the development environment -->    
     <param-value>
-      WEB-INF/security.xml
+      WEB-INF/security-development.xml
     </param-value>
+
+    <!-- security configuration for the production environment, using CAS and Drupal -->
+<!--
+    <param-value>
+      WEB-INF/security-cas-drupal.xml
+    </param-value>
+-->
+    
   </context-param>
   
   <filter>
@@ -32,6 +45,42 @@
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
   
+
+  <!--+
+      | Embedded eXist Configuration
+      | ****************************
+      | 
+      +-->
+  
+  <!-- 
+    Initialize Log4j using a servlet.
+    Only needed when eXist is deployed as a .war file in e.g. Tomcat.
+  -->
+  <servlet>
+    <servlet-name>log4j-init</servlet-name>
+    <servlet-class>org.exist.http.servlets.Log4jInit</servlet-class>
+    
+    <init-param>
+      <param-name>log4j-init-file</param-name>
+      <param-value>WEB-INF/log4j.xml</param-value>
+    </init-param>
+    
+    <init-param>
+      <param-name>log4j-log-dir</param-name>
+      <param-value>WEB-INF/logs</param-value>
+    </init-param>
+    
+    <load-on-startup>1</load-on-startup>
+  </servlet>  
+
+  
+  
+  <!--+
+      | UI Applications Configuration
+      | *****************************
+      | 
+      +-->
+  
   <servlet>
     <description>submitter upload file form submit handler</description>
     <display-name>SubmitterUploadFileFormSubmitHandler</display-name>
@@ -40,7 +89,7 @@
     <init-param>
       <description>the URL of the Atom collection where the uploaded file content (i.e., media) will be POSTed</description>
       <param-name>collection.media.url</param-name>
-      <param-value>http://localhost:8080/chassis-generic-service-exist/atom/edit/media</param-value>
+      <param-value>http://localhost:8080/chassis-wwarn-ui/atom/edit/media</param-value>
     </init-param>
   </servlet>
 
@@ -48,5 +97,6 @@
     <servlet-name>SubmitterUploadFileFormSubmitHandler</servlet-name>
     <url-pattern>/submitter/upload</url-pattern>
   </servlet-mapping>
-  
+
+
 </web-app>
