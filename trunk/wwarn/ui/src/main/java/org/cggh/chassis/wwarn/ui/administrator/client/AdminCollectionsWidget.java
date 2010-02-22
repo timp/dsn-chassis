@@ -105,6 +105,7 @@ public class AdminCollectionsWidget extends ChassisWidget {
 
 		this.createAllButton = new Button();
 		this.createAllButton.setText("create all");
+		this.createAllButton.ensureDebugId("createAllButton");
 
 		FlowPanel buttonsPanel = new FlowPanel();
 		buttonsPanel.add(refreshAllButton);
