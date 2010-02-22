@@ -7,6 +7,26 @@
     <welcome-file>index.html</welcome-file>
     <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>
+  
+  
+  <!--+
+    |
+    | HTTP Method Override Filter
+    | ***************************
+    |
+    | (N.B. put this before spring security, so security is applied to value of
+    | method override if given)
+    |
+    +-->
+  
+  <filter>
+    <filter-name>HttpMethodOverrideFilter</filter-name>
+    <filter-class>org.cggh.chassis.generic.http.HttpMethodOverrideFilter</filter-class>
+    <init-param>
+      <param-name>allowedOverrides</param-name>
+      <param-value>PUT DELETE</param-value>
+    </init-param>
+  </filter>
 
 
   <!--+
