@@ -45,7 +45,7 @@ public class ContentTypeOverrideFilter extends HttpFilter {
 	public void doHttpFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain)
 			throws IOException, ServletException {
 
-        BufferedHttpResponseWrapper responseWrapper = new BufferedHttpResponseWrapper((HttpServletResponse) res);
+        BufferedHttpResponseWrapper responseWrapper = new BufferedHttpResponseWrapper(res);
         chain.doFilter(req, responseWrapper);
         
         byte[] data = responseWrapper.getBuffer();
