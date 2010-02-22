@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
 
+
   <display-name>Chassis/WWARN</display-name>
+
 
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
@@ -10,15 +12,16 @@
   
   
   <!--+
-    |
-    | HTTP Method Override Filter
-    | ***************************
-    |
-    | (N.B. put this before spring security, so security is applied to value of
-    | method override if given)
-    |
-    +-->
+      |
+      | HTTP Method Override Filter
+      | ***************************
+      |
+      | (N.B. put this before spring security, so security is applied to value of
+      | method override if given)
+      |
+      +-->
   
+
   <filter>
     <filter-name>HttpMethodOverrideFilter</filter-name>
     <filter-class>org.cggh.chassis.generic.http.HttpMethodOverrideFilter</filter-class>
@@ -28,6 +31,12 @@
     </init-param>
   </filter>
 
+
+  <filter-mapping>
+    <filter-name>HttpMethodOverrideFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  
 
   <!--+
       | Spring Security Configuration
@@ -52,18 +61,36 @@
     
   </context-param>
   
+  
   <filter>
     <filter-name>springSecurityFilterChain</filter-name>
     <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
   </filter>
+
+  
   <filter-mapping>
     <filter-name>springSecurityFilterChain</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
   
+  
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
+  
+  
+  <!-- store username in request attribute so it can be accessed easily in xqueries -->
+  
+  <filter>
+    <filter-name>SpringSecuritySetUserNameAttributeFilter</filter-name>
+    <filter-class>org.cggh.chassis.generic.http.SpringSecuritySetUserNameAttributeFilter</filter-class>
+  </filter>
+  
+  
+  <filter-mapping>
+    <filter-name>SpringSecuritySetUserNameAttributeFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
   
 
   <!--+
@@ -93,6 +120,111 @@
     <load-on-startup>1</load-on-startup>
   </servlet>  
 
+
+  <!-- Atom Atom Publishing Protocol -->
+  
+  <servlet>
+    <servlet-name>AtomServlet</servlet-name>
+    <servlet-class>org.exist.atom.http.AtomServlet</servlet-class>
+    <init-param>
+      <param-name>use-default-user</param-name>
+      <param-value>true</param-value>
+    </init-param>
+    <init-param>
+      <param-name>user</param-name>
+      <param-value>admin</param-value>
+    </init-param>
+    <init-param>
+      <param-name>password</param-name>
+      <param-value></param-value>
+    </init-param>
+  </servlet>
+
+
+  <servlet-mapping>
+    <servlet-name>AtomServlet</servlet-name>
+    <url-pattern>/atom/*</url-pattern>
+  </servlet-mapping>
+  
+  
+  <!-- XQuery (not for database stored queries) -->
+    
+  <servlet>
+    <servlet-name>XQueryServlet</servlet-name>
+    <servlet-class>org.exist.http.servlets.XQueryServlet</servlet-class>
+    
+    <init-param>
+      <param-name>uri</param-name>
+      <param-value>xmldb:exist:///db</param-value>
+    </init-param>
+    
+    <init-param>
+      <param-name>form-encoding</param-name>
+      <param-value>UTF-8</param-value>
+    </init-param>
+    
+    <init-param>
+      <param-name>container-encoding</param-name>
+      <param-value>UTF-8</param-value>
+    </init-param>
+    
+    <init-param>
+      <param-name>encoding</param-name>
+      <param-value>UTF-8</param-value>
+    </init-param>
+  </servlet>
+  
+  
+  <servlet-mapping>
+    <servlet-name>XQueryServlet</servlet-name>
+    <url-pattern>*.xql</url-pattern>
+  </servlet-mapping>
+  
+  
+  <!--+
+      | HTTP Content Type Override Filter, for Atom Services 
+      | needed to work around bug in GWT hosted mode browser
+      | see http://code.google.com/p/google-web-toolkit/issues/detail?id=4095
+      | N.B. this is needed for development only - remove this in production
+      +-->
+  
+  
+  <filter>
+    <filter-name>ContentTypeOverrideFilter</filter-name>
+    <filter-class>org.cggh.chassis.generic.http.ContentTypeOverrideFilter</filter-class>
+    <init-param>
+      <param-name>contentType</param-name>
+      <param-value>application/xml</param-value>
+    </init-param>
+  </filter>
+  
+  <filter-mapping>
+    <filter-name>ContentTypeOverrideFilter</filter-name>
+    <servlet-name>AtomServlet</servlet-name>
+  </filter-mapping>
+  
+  <!--+
+      | Authorization Override Filter
+      | used to strip Authorization header 
+      | so eXist AtomServlet doesn't get confused by Spring Security
+      | if configured to use HTTP basic or digest authentication
+      +-->
+  
+  <filter>
+    <filter-name>AuthorizationOverrideFilter</filter-name>
+    <filter-class>org.cggh.chassis.generic.http.RequestHeaderOverrideFilter</filter-class>
+    <init-param>
+      <param-name>headerName</param-name>
+      <param-value>Authorization</param-value>
+    </init-param>
+  </filter>
+  
+  <filter-mapping>
+    <filter-name>AuthorizationOverrideFilter</filter-name>
+    <servlet-name>AtomServlet</servlet-name>
+  </filter-mapping>
+  
+  
   
   
   <!--+

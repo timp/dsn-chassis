@@ -19,16 +19,16 @@ UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentic
 <script type="text/javascript" language="javascript">
 var config = {
 	"user.email" : "<jsp:expression>user.getUsername()</jsp:expression>",
-	"collection.studies.url"     : "/chassis-generic-service-exist/atom/edit/studies",
-	"collection.media.url"       : "/chassis-generic-service-exist/atom/edit/media",
-	"collection.submissions.url" : "/chassis-generic-service-exist/atom/edit/submissions",
-	"collection.reviews.url"     : "/chassis-generic-service-exist/atom/edit/reviews",
-	"query.submissions.url"      : "/chassis-generic-service-exist/submitter/query/submissions.xql",
-	"query.studies.url"          : "/chassis-generic-service-exist/submitter/query/studies.xql",
-	//"query.studies.url" : "/chassis-generic-service-exist/mock/query/studies.xql_id=abc_oneresult.xml",
-	"query.media.url"            : "/chassis-generic-service-exist/submitter/query/media.xql",
-	"formhandler.fileupload.url" : "/chassis-wwarn-ui/submitter/upload",
-    "questionnaire.study.url"    : "/chassis-wwarn-ui/submitter/study-questionnaire.xml"
+	"collection.studies.url"     : "<jsp:expression>request.getContextPath()</jsp:expression>/atom/edit/studies",
+	"collection.media.url"       : "<jsp:expression>request.getContextPath()</jsp:expression>/atom/edit/media",
+	"collection.submissions.url" : "<jsp:expression>request.getContextPath()</jsp:expression>/atom/edit/submissions",
+	"collection.reviews.url"     : "<jsp:expression>request.getContextPath()</jsp:expression>/atom/edit/reviews",
+	"query.submissions.url"      : "<jsp:expression>request.getContextPath()</jsp:expression>/submitter/query/submissions.xql",
+	"query.studies.url"          : "<jsp:expression>request.getContextPath()</jsp:expression>/submitter/query/studies.xql",
+	//"query.studies.url" : "<jsp:expression>request.getContextPath()</jsp:expression>/mock/query/studies.xql_id=abc_oneresult.xml",
+	"query.media.url"            : "<jsp:expression>request.getContextPath()</jsp:expression>/submitter/query/media.xql",
+	"formhandler.fileupload.url" : "<jsp:expression>request.getContextPath()</jsp:expression>/submitter/upload",
+    "questionnaire.study.url"    : "<jsp:expression>request.getContextPath()</jsp:expression>/submitter/study-questionnaire.xml"
 };
 </script>
 <style>
