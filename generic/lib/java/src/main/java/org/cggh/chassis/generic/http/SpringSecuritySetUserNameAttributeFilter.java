@@ -27,8 +27,10 @@ public class SpringSecuritySetUserNameAttributeFilter extends HttpFilter {
 	public void doHttpFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
 		log.debug("request inbound");
 
-		UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		request.setAttribute("username", user.getUsername());
+		String name = SecurityContextHolder.getContext().getAuthentication().getName();
+		log.debug("found username: "+name);
+		
+		request.setAttribute("username", name);
 		chain.doFilter(request, response);
 
 		log.debug("response outbound");
