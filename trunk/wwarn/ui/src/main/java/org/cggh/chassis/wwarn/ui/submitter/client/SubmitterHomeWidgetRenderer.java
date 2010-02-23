@@ -222,8 +222,6 @@ public class SubmitterHomeWidgetRenderer extends ChassisWidgetRenderer<Submitter
 					log.error("Unexpected submissionEntries size: " + Integer.toString(submissionEntries.size()));
 				}
 				
-				// TODO: Resolve inter-label spacing issue in Firefox 3.5.7.
-
 				
 				
 			}
