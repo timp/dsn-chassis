@@ -10,6 +10,7 @@ public class Config {
 	public static final String COLLECTION_MEDIA_URL = "collection.media.url";
 	public static final String COLLECTION_SUBMISSIONS_URL = "collection.submissions.url";
 	public static final String COLLECTION_REVIEWS_URL = "collection.reviews.url";
+	public static final String COLLECTION_DERIVATIONS_URL = "collection.derivations.url";
 	public static final String QUERY_STUDIES_URL = "query.studies.url";
 	public static final String QUERY_SUBMISSIONS_URL = "query.submissions.url";
 	public static final String QUERY_MEDIA_URL = "query.media.url";

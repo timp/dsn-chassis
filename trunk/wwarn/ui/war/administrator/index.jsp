@@ -21,7 +21,8 @@ var config = {
 	"collection.studies.url" : "<jsp:expression>request.getContextPath()</jsp:expression>/atom/edit/studies",
 	"collection.media.url" : "<jsp:expression>request.getContextPath()</jsp:expression>/atom/edit/media",
 	"collection.submissions.url" : "<jsp:expression>request.getContextPath()</jsp:expression>/atom/edit/submissions",
-	"collection.reviews.url" : "<jsp:expression>request.getContextPath()</jsp:expression>/atom/edit/reviews"
+	"collection.reviews.url" : "<jsp:expression>request.getContextPath()</jsp:expression>/atom/edit/reviews",
+	"collection.derivations.url" : "<jsp:expression>request.getContextPath()</jsp:expression>/atom/edit/derivations"
 };
 </script>
 </head>
