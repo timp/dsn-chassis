@@ -8,7 +8,7 @@
 
   <authentication-provider>
     <user-service>
-      <user name="alice@example.org" password="bar" authorities="ROLE_CHASSIS_ADMINISTRATOR, ROLE_CHASSIS_SUBMITTER, ROLE_CHASSIS_CURATOR, ROLE_CHASSIS_GATEKEEPER, ROLE_CHASSIS_COORDINATOR" />
+      <user name="alice@example.org" password="bar" authorities="ROLE_CHASSIS_ADMINISTRATOR, ROLE_CHASSIS_SUBMITTER, ROLE_CHASSIS_CURATOR, ROLE_CHASSIS_GATEKEEPER, ROLE_CHASSIS_COORDINATOR, ROLE_CHASSIS_ANONYMIZER" />
       <user name="bob@example.org" password="bar" authorities="ROLE_CHASSIS_GATEKEEPER" />
       <user name="jane@example.org" password="bar" authorities="ROLE_CHASSIS_SUBMITTER" />
     </user-service>
