@@ -14,7 +14,8 @@ public class AdministratorHomeWidget extends ChassisWidget {
 			{ "Studies", Config.get(Config.COLLECTION_STUDIES_URL) },	
 			{ "Media", Config.get(Config.COLLECTION_MEDIA_URL) },
 			{ "Submissions", Config.get(Config.COLLECTION_SUBMISSIONS_URL) },
-			{ "Reviews", Config.get(Config.COLLECTION_REVIEWS_URL) }
+			{ "Reviews", Config.get(Config.COLLECTION_REVIEWS_URL) },
+			{ "Derivations", Config.get(Config.COLLECTION_DERIVATIONS_URL) },
 	};
 
 	
