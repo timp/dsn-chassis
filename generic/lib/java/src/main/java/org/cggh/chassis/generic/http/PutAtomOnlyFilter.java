@@ -18,11 +18,11 @@ public class PutAtomOnlyFilter extends HttpFilter {
 
 	@Override
 	public void doHttpFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
-
-        if (request.getMethod().equals("PUT"))
-            if (!request.getContentType().startsWith("application/atom+xml"))
-                response.sendError(HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE, "Only Atom entries may be updated");
-
-	}
+System.err.println("Called PutAtomOnlyFilter with " + request.getMethod());
+        if (request.getMethod().equals("PUT") && !request.getContentType().startsWith("application/atom+xml"))
+          response.sendError(HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE, "Only Atom entries may be updated");
+        else 
+          chain.doFilter(request, response);
+     }
 }
 
