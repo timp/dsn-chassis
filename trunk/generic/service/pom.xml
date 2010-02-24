@@ -9,9 +9,10 @@
   <artifactId>chassis-generic-service</artifactId>
   <packaging>pom</packaging>
   <name>CGGH Generic Chassis Services</name>
+  <description>Old services</description>
   <modules>
-    <module>exist</module>
     <!--
+    <module>exist</module>
     <module>upload</module>
     <module>user</module>
     -->
