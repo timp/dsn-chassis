@@ -156,7 +156,7 @@
   </servlet>
 
 
-  <!-- Atom Atom Publishing Protocol -->
+  <!-- Atom Publishing Protocol -->
   
   <servlet>
     <servlet-name>AtomServlet</servlet-name>
@@ -216,6 +216,26 @@
   </servlet-mapping>
   
   
+  <!--+
+      |
+      |  Put Atom Only Filter
+      | *********************
+      |
+      +-->
+  
+
+  <filter>
+    <filter-name>PutAtomOnlyFilter</filter-name>
+    <filter-class>org.cggh.chassis.generic.http.PutAtomOnlyFilter</filter-class>
+  </filter>
+
+
+  <filter-mapping>
+    <filter-name>PutAtomOnlyFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  
+
   <!--+
       | HTTP Content Type Override Filter, for Atom Services 
       | needed to work around bug in GWT hosted mode browser
