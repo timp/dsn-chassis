@@ -1,6 +1,6 @@
 <projectDescription>
-  <name>chassis-generic-client-htmlunit</name>
-  <comment>Smoke test.</comment>
+  <name>chassis-htmlunit</name>
+  <comment>Smoke tests for the Chassis Data Sharing Network.</comment>
   <projects/>
   <buildSpec>
     <buildCommand>
