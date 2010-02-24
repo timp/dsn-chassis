@@ -47,6 +47,21 @@ declare function local:has-not-been-reviewed( $entry as element(atom:entry) ) as
 };
 
 
+declare function local:submission-published( $entry as element(atom:entry) )
+{
+		let $submission-published :=
+			for $submission in cf:submissions()
+	        where 
+	            $submission/atom:link[@rel="http://www.cggh.org/2010/chassis/terms/submissionPart"]/@href = $entry/atom:link[@rel="self"]/@href
+	            
+	        return 
+	            $submission/atom:published
+		            
+		return
+			$submission-published
+			
+};
+
 <atom:feed>
     <atom:title>Query Results</atom:title>
     {
@@ -54,6 +69,19 @@ declare function local:has-not-been-reviewed( $entry as element(atom:entry) ) as
         for $entry in cf:submitted-media()
         where local:has-not-been-reviewed($entry)
         order by $entry/atom:published
-        return $entry
+        return
+			<atom:entry>
+			{
+				$entry/atom:id,
+				local:submission-published($entry),
+				$entry/atom:updated,
+				$entry/atom:title,
+				$entry/atom:summary,
+				$entry/atom:author,
+				$entry/atom:category,
+				$entry/atom:link,
+				$entry/atom:content
+			}
+			</atom:entry>
     }
 </atom:feed>

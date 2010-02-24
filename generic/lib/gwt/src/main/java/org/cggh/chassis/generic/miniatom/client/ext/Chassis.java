@@ -38,11 +38,7 @@ public class Chassis {
 	
 	public static final String QUERYPARAM_ID = "id";
 	public static final String QUERYPARAM_SUBMITTED = "submitted";
-	public static final String QUERYPARAM_REVIEWED = "reviewed";
-	public static final String QUERYPARAM_CLEANED = "cleaned";
-	public static final String QUERYPARAM_REVIEWOUTCOME = "reviewOutcome";
 	public static final String QUERYPARAMVALUE_NO = "no";
-	public static final String QUERYPARAMVALUE_FAIL = "fail";
 	
 	
     public static enum Module { 
