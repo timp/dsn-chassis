@@ -5,11 +5,9 @@ package org.cggh.chassis.wwarn.ui.anonymizer.client;
 
 import org.cggh.chassis.generic.async.client.Deferred;
 import org.cggh.chassis.generic.async.client.Function;
-import org.cggh.chassis.generic.async.client.QueryParams;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.miniatom.client.Atom;
-import org.cggh.chassis.generic.miniatom.client.ext.Chassis;
 import org.cggh.chassis.generic.widget.client.ErrorEvent;
 import org.cggh.chassis.wwarn.ui.common.client.Config;
 
@@ -48,11 +46,8 @@ public class FilesToReviewWidgetController {
 		
 		log.debug("setting status to 'async request pending'...");		
 		model.setStatus(FilesToReviewWidgetModel.STATUS_RETRIEVE_FILES_TO_REVIEW_PENDING);
-
-		QueryParams qp = new QueryParams();
-		qp.put(Chassis.QUERYPARAM_REVIEWED, Chassis.QUERYPARAMVALUE_NO);		
 		
-		String url = Config.get(Config.QUERY_MEDIA_URL) + qp.toUrlQueryString();
+		String url = Config.get(Config.QUERY_FILESTOREVIEW_URL);
 		log.debug("getting URL: " + url);
 		
 		log.debug("getting feed from URL...");

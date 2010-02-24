@@ -23,7 +23,8 @@ var config = {
 	"collection.media.url"       : "<jsp:expression>request.getContextPath()</jsp:expression>/atom/edit/media",
 	"collection.submissions.url" : "<jsp:expression>request.getContextPath()</jsp:expression>/atom/edit/submissions",
 	"collection.reviews.url"     : "<jsp:expression>request.getContextPath()</jsp:expression>/atom/edit/reviews",
-	"query.media.url"            : "<jsp:expression>request.getContextPath()</jsp:expression>/anonymizer/query/media.xql"
+	"query.filestoreview.url"    : "<jsp:expression>request.getContextPath()</jsp:expression>/anonymizer/query/filestoreview.xql",
+	"query.filestoclean.url"     : "<jsp:expression>request.getContextPath()</jsp:expression>/anonymizer/query/filestoclean.xql"
 };
 </script>
 <style>
