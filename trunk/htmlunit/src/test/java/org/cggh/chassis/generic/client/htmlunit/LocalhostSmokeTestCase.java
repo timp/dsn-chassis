@@ -1,49 +1,38 @@
 package org.cggh.chassis.generic.client.htmlunit;
 
-/*
+import junit.framework.TestCase;
+
 import com.gargoylesoftware.htmlunit.DefaultCredentialsProvider;
-import com.gargoylesoftware.htmlunit.WebClient;
-import com.gargoylesoftware.htmlunit.html.HtmlPage;
-*/
-import com.gargoylesoftware.htmlunit.DefaultCredentialsProvider;
+import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.gargoylesoftware.htmlunit.xml.XmlPage;
-
-import net.sourceforge.jwebunit.exception.TestingEngineResponseException;
-import net.sourceforge.jwebunit.htmlunit.HtmlUnitTestingEngineImpl;
-import net.sourceforge.jwebunit.junit.WebTestCase;
-import net.sourceforge.jwebunit.util.TestingEngineRegistry;
 
 /**
  * @author Tim.Pizey
  * @since 01 December 2009
  * 
  */
-public class LocalhostSmokeTestCase extends WebTestCase {
+public class LocalhostSmokeTestCase extends TestCase {
 	
-	@Override
+	WebClient webClient = null;
+	
 	protected void setUp() throws Exception {
 		super.setUp();
-		getTester().setTestingEngineKey(TestingEngineRegistry.TESTING_ENGINE_HTMLUNIT);
+		webClient = new WebClient();
 	}
 
 	protected void setAuthorization(String username, String password) { 
 		final DefaultCredentialsProvider credentialsProvider = new DefaultCredentialsProvider();
 		credentialsProvider.addCredentials(username, password);
-		getTestContext().setAuthorization(username, password);
 		getWebClient().setCredentialsProvider(credentialsProvider);
 	}
 	
 	WebClient getWebClient() { 
-		return ((HtmlUnitTestingEngineImpl)getTestingEngine()).
-		  getWebClient();
+		return webClient;
 	}
-	public void beginAt(String url) {
-		super.beginAt(url(url));
-	}
-	public void gotoPage(String url) {
-		super.gotoPage(url(url));
+	public void gotoPage(String url) throws Exception {
+		webClient.getPage(url(url));
 	}
 	
 	public HtmlPage getPage(String url) throws Exception { 
@@ -61,14 +50,14 @@ public class LocalhostSmokeTestCase extends WebTestCase {
     public void testAuthorisation() throws Exception {
 		String collectionUrl =  "/chassis-wwarn-ui/atom/edit/studies";
 		try {
-			beginAt(collectionUrl);
-		} catch (TestingEngineResponseException e) {
-			if (e.getHttpStatusCode() == 401)
+			gotoPage(collectionUrl);
+		} catch (FailingHttpStatusCodeException e) {
+			if (e.getStatusCode() == 401)
 				setAuthorization("alice@example.org", "bar");
 			else
-				fail("Unexpected status " + e.getHttpStatusCode());
+				fail("Unexpected status " + e.getStatusCode());
 		}
-		beginAt(collectionUrl);
+		gotoPage(collectionUrl);
 		XmlPage feed = getXmlPage(collectionUrl);
 		assertNull(feed.getNamespaceURI());
 		assertNull(feed.getLocalName());
