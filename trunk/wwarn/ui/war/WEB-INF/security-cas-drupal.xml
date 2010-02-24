@@ -2,6 +2,7 @@
 <beans 
     xmlns="http://www.springframework.org/schema/beans"
     xmlns:sec="http://www.springframework.org/schema/security"
+    xmlns:p="http://www.springframework.org/schema/p"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
     http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-2.0.4.xsd">  
@@ -14,6 +15,9 @@
         |
         +-->
     
+    
+    <bean id="propertyPlaceholderConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
+        p:location="/WEB-INF/security-cas-drupal.properties" />
     
     
     <!-- FIRST SET UP THE SPRING SECURITY FILTER CHAIN AND HTTP SECURITY RULES -->
@@ -30,10 +34,8 @@
             pattern="/administrator/**"
             access="ROLE_CHASSIS_ADMINISTRATOR"/>
         
-        <!-- TODO set logout URL -->
-        
         <sec:logout 
-            logout-success-url="http://localhost:8080/cas/logout" 
+            logout-success-url="${cas.url}/logout" 
             invalidate-session="true"/>
         
     </sec:http>
@@ -46,11 +48,9 @@
         id="casProcessingFilterEntryPoint" 
         class="org.springframework.security.ui.cas.CasProcessingFilterEntryPoint">
     
-        <!-- TODO set login URL -->
-        
         <property 
             name="loginUrl" 
-            value="http://localhost:8080/cas/login"/>
+            value="${cas.url}/login"/>
         
         <property 
             name="serviceProperties" 
@@ -66,11 +66,9 @@
         id="serviceProperties" 
         class="org.springframework.security.ui.cas.ServiceProperties">
         
-        <!-- TODO set URL -->
-        
         <property 
             name="service" 
-            value="http://localhost:8080/chassis-wwarn-ui/j_spring_cas_security_check"/>
+            value="${chassis.url}/j_spring_cas_security_check"/>
         
         <property 
             name="sendRenew" 
@@ -125,9 +123,9 @@
         
         <property name="ticketValidator">
             
-            <!-- TODO set URL -->
+            <!-- set URL -->
             <bean class="org.jasig.cas.client.validation.Cas20ServiceTicketValidator">
-                <constructor-arg index="0" value="http://localhost:8080/cas" />
+                <constructor-arg index="0" value="${cas.url}" />
             </bean>
             
         </property>
@@ -161,14 +159,13 @@
     <!-- Data source definition -->
     <bean id="drupal6" class="org.apache.commons.dbcp.BasicDataSource">
         <property name="driverClassName">
-            <value>com.mysql.jdbc.Driver</value>
+            <value>${drupal.dbdriver}</value>
         </property>
         <property name="url">
-            <value>jdbc:mysql://localhost:3306/drupal6</value>
+            <value>${drupal.dburl}</value>
         </property>
-        <!-- TODO set username and password -->
-        <property name="username"><value>username</value></property>
-        <property name="password"><value>secret</value></property>
+        <property name="username"><value>${drupal.dbuser}</value></property>
+        <property name="password"><value>${drupal.dbpass}</value></property>
     </bean>       
     
     <!-- Log failed authentication attempts to commons-logging -->
