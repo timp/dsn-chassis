@@ -53,7 +53,7 @@ public class AtomAuthorisationTestCase extends TestCase {
 		"</atom:entry>" + 
 		"\n";
     protected String url(String url) {
-		return "http://localhost:8082" + url;
+		return "http://localhost:8080" + url;
 	}
 	
 	
