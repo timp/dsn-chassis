@@ -17,6 +17,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import junit.framework.TestCase;
 
 import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.codec.binary.StringUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -24,6 +25,9 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
 /**
+ * Test that exist behaves as expected and that our restriction to disallow 
+ * puts to non-atom entries is in place. 
+ * 
  * @author Tim.Pizey
  * @since 2010/02/22
  * 
@@ -52,14 +56,19 @@ public class AtomAuthorisationTestCase extends TestCase {
 		"<atom:title>An Atomic Entry</atom:title>" + 
 		"</atom:entry>" + 
 		"\n";
-    protected String url(String url) {
-		return "http://localhost:8080" + url;
+	
+	private final static String ALICE = "alice@example.org";
+	private final static String PASSWORD = "bar";
+	
+	
+    protected String url(String relativeUrl) {
+		return "http://localhost:8080" + relativeUrl;
 	}
 	
-	
+	/** Currently collections may be deleted, so need to be re-created. */  
 	protected static void ensureCollectionAccessible(String url) throws Exception { 
 		HttpURLConnection connection = getConnection(url);
-		authorize(connection, "alice@example.org", "bar");
+		authorize(connection, ALICE, PASSWORD);
 		connection.setRequestMethod("GET");
 		connection.connect();
 		int getStatus = connection.getResponseCode();
@@ -73,12 +82,12 @@ public class AtomAuthorisationTestCase extends TestCase {
 
 	}
 	
-	
+	/** Just asserts that Atom protocol holds: you are not allowed to PUT to collections. */
 	public void testCannotPutToCollections() throws Exception {
 		for (String collection : collections) {
 			ensureCollectionAccessible(url(collection));
 			HttpURLConnection connection = getConnection(url(collection));
-			authorize(connection, "alice@example.org", "bar");
+			authorize(connection, ALICE, PASSWORD);
 			connection.setRequestMethod("PUT");
 			connection.setDoOutput(true);
 			connection.setRequestProperty("Content-Type", "application/atom+xml");
@@ -104,13 +113,11 @@ public class AtomAuthorisationTestCase extends TestCase {
 	private void createAndModify(String contentType, int expectedStatus, String content) 
 			throws Exception, ProtocolException, UnsupportedEncodingException, IOException {
 		for (String collection : collections) {
-			System.err.println("--- Storing document against " + collection
-					+ " - should work ---");
-
+			
 			ensureCollectionAccessible(url(collection));
 
 			HttpURLConnection postConnection = getConnection(url(collection));
-			authorize(postConnection, "alice@example.org", "bar");
+			authorize(postConnection, ALICE, PASSWORD);
 			postConnection.setRequestMethod("POST");
 			postConnection.setDoOutput(true);
 			postConnection.setRequestProperty("Content-Type", contentType);
@@ -133,10 +140,9 @@ public class AtomAuthorisationTestCase extends TestCase {
 				page += line;
 			System.out.println(page);
 			in.close();
-			System.err.println("--- Putting document against " + entryUrl
-					+ " - should work ---");
+			
 			HttpURLConnection putConnection = getConnection(url(entryUrl));
-			authorize(putConnection, "alice@example.org", "bar");
+			authorize(putConnection, ALICE, PASSWORD);
 			putConnection.setRequestMethod("PUT");
 			putConnection.setDoOutput(true);
 			putConnection.setRequestProperty("Content-Type", contentType);
@@ -151,7 +157,7 @@ public class AtomAuthorisationTestCase extends TestCase {
 			System.err.println("--- Putting document against " + editMediaLink
 					+ " - should work ---");
 			HttpURLConnection putMediaConnection = getConnection(url(editMediaLink));
-			authorize(putMediaConnection, "alice@example.org", "bar");
+			authorize(putMediaConnection, ALICE, PASSWORD);
 			putMediaConnection.setRequestMethod("PUT");
 			putMediaConnection.setDoOutput(true);
 			putMediaConnection.setRequestProperty("Content-Type", contentType);
@@ -172,8 +178,9 @@ public class AtomAuthorisationTestCase extends TestCase {
 
 	private static void authorize(HttpURLConnection connection, String username,
 			String password) {
-		String encodedAuthorisationValue = new Base64().encodeToString(
-				(username + ":" + password).getBytes()).replaceAll("\n", "");
+		String encodedAuthorisationValue = 
+			StringUtils.newStringUtf8(
+					new Base64().encode((username + ":" + password).getBytes())).replaceAll("\n", "");
 		// System.err.println(":"+ encodedAuthorisationValue + ":");
 		connection.setRequestProperty("Authorization", "Basic "
 				+ encodedAuthorisationValue);
@@ -196,13 +203,6 @@ public class AtomAuthorisationTestCase extends TestCase {
         return connection.getResponseCode();
 	}	
 
-
-	public void testCanPutToAtom() throws Exception {
-
-	}
-
-	public void testPutFailAgainstCollection() {
-	}
 
 	String getMediaEditLink(String atomEntry) throws Exception { 
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
