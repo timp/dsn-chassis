@@ -9,7 +9,6 @@
   <modules>
     <module>wwarn</module>
     <module>generic</module>
-    <module>htmlunit</module>
   </modules>
 
   <description>
