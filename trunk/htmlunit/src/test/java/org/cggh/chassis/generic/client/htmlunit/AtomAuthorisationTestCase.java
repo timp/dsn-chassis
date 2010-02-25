@@ -67,9 +67,9 @@ public class AtomAuthorisationTestCase extends TestCase {
 		if (getStatus == 404) {
 			int createStatus = createCollection(url, ATOM_FEED); 
 			if (createStatus != 204)
-				fail("Unexpected response code " + createStatus);
+				fail("Unexpected response code " + createStatus + " for " + url);
 		} else if (getStatus != 200)
-			fail("Unexpected response code " + getStatus);
+			fail("Unexpected response code " + getStatus + " for " + url);
 
 	}
 	
