@@ -15,6 +15,36 @@ public class TestAtomServer extends TestCase {
 	
 	
 	private static final String SERVER_URL = "http://localhost:8081/atomserver/atomserver/";
+	private static final String TEST_COLLECTION_URL = SERVER_URL + "test";
+	
+	
+	
+	public void setUp() {
+	
+		// create a test collection to post entries to
+		
+		try {
+			
+			PutMethod put = new PutMethod(TEST_COLLECTION_URL);
+
+			RequestEntity entity = new StringRequestEntity(
+					"<atom:feed xmlns:atom=\"http://www.w3.org/2005/Atom\"><atom:title>Test Collection</atom:title></atom:feed>",
+					"application/atom+xml;type=feed",
+					"utf-8");
+			
+			put.setRequestEntity(entity);
+			
+			HttpClient client = new HttpClient();
+			
+			int result = client.executeMethod(put);
+			assertTrue((result == 200 || result == 200));
+
+		}
+		catch (Throwable t) {
+			t.printStackTrace();
+		}
+		
+	}
 	
 	
 	
@@ -151,6 +181,37 @@ public class TestAtomServer extends TestCase {
 	
 	
 	
+	public void testPostEntry() {
+		
+		try {
+
+			// try to post an entry to the test collection
+			
+			PostMethod post = new PostMethod(TEST_COLLECTION_URL);
+			
+			RequestEntity entity = new StringRequestEntity(
+					"<atom:entry xmlns:atom=\"http://www.w3.org/2005/Atom\"><atom:title>Test Entry</atom:title></atom:entry>",
+					"application/atom+xml;type=entry",
+					"utf-8");
+			
+			post.setRequestEntity(entity);
+			
+			HttpClient client = new HttpClient();
+
+			int result = client.executeMethod(post);
+			
+			assertEquals(201, result);
+
+			Header location = post.getResponseHeader("Location");
+			assertNotNull(location);
+			
+		}
+		catch (Throwable t) {
+			t.printStackTrace();
+			fail();
+		}
+		
+	}
 	
 
 
