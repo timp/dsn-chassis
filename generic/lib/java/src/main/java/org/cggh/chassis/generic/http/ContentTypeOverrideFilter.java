@@ -42,24 +42,17 @@ public class ContentTypeOverrideFilter extends HttpFilter {
 	 * @see org.cggh.chassis.generic.http.HttpFilter#doHttpFilter(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, javax.servlet.FilterChain)
 	 */
 	@Override
-	public void doHttpFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain)
+	public void doHttpFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 
-        BufferedHttpResponseWrapper responseWrapper = new BufferedHttpResponseWrapper(res);
-        chain.doFilter(req, responseWrapper);
+        chain.doFilter(request, response);
         
-        byte[] data = responseWrapper.getBuffer();
-
-        if (res.getContentType() != null && res.getContentType().startsWith("application/atom+xml")) {
+        if (response.getContentType() != null && response.getContentType().startsWith("application/atom+xml")) {
         	// only override application/atom+xml ... so we don't confuse media resource downloads
-        	res.setContentType(contentType); 
+        	response.setContentType(contentType); 
 
             // TODO make this more generic, i.e., configurable
         }
-
-        res.setContentLength(data.length);
-        res.getOutputStream().write(data);
-        res.flushBuffer();
 
 	}
 
