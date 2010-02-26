@@ -18,23 +18,22 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class BufferedHttpFilter extends HttpFilter {
 	
-	private byte[] content; 
+	protected byte[] content; 
 
 	/* (non-Javadoc)
 	 * @see org.cggh.chassis.generic.http.HttpFilter#doHttpFilter(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, javax.servlet.FilterChain)
 	 */
 	@Override
-	public void doHttpFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain)
+	public void doHttpFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 
-        BufferedHttpResponseWrapper responseWrapper = new BufferedHttpResponseWrapper((HttpServletResponse) res);
-        chain.doFilter(req, responseWrapper);
+        BufferedHttpResponseWrapper responseWrapper = new BufferedHttpResponseWrapper((HttpServletResponse) response);
+        chain.doFilter(request, responseWrapper);
         
         content = responseWrapper.getBuffer();
-        res.setContentLength(content.length);
-        res.getOutputStream().write(content);
-        res.flushBuffer();
-		
+        response.setContentLength(content.length);
+        response.getOutputStream().write(content);
+        response.flushBuffer();
 	} 
 	
 	protected byte [] getContent() { 
