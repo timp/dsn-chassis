@@ -11,6 +11,7 @@ import java.net.HttpURLConnection;
 import java.net.ProtocolException;
 import java.net.URL;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
@@ -54,6 +55,9 @@ public class AtomAuthorisationTestCase extends TestCase {
 		"<?xml version='1.0' encoding='UTF-8'?>" + 
 		"<atom:entry xmlns:atom=\"http://www.w3.org/2005/Atom\">" + 
 		"<atom:title>An Atomic Entry</atom:title>" + 
+        "<atom:author>" + 
+        "<atom:email>alice@example.org</atom:email>" +
+        "</atom:author>" + 
 		"</atom:entry>" + 
 		"\n";
 	
@@ -62,7 +66,7 @@ public class AtomAuthorisationTestCase extends TestCase {
 	
 	
     protected String url(String relativeUrl) {
-		return "http://localhost:8080" + relativeUrl;
+		return "http://localhost:8081" + relativeUrl;
 	}
 	
 	/** Currently collections may be deleted, so need to be re-created. */  
@@ -109,6 +113,29 @@ public class AtomAuthorisationTestCase extends TestCase {
 		createAndModify("text/plain", HttpURLConnection.HTTP_UNSUPPORTED_TYPE, "This is not atom speak\n");
 	}
 
+	public void testBobCannotGetEntityCreatedByAlice() throws Exception { 
+		for (String collection : collections) {
+			Tuple t = createEntry(collection,"application/atom+xml", ATOM_ENTRY);
+			assertEquals(HttpServletResponse.SC_UNAUTHORIZED, 
+					requestResourceAs(t.getUrl(),"application/atom+xml","bob@example.org", "bar"));
+		}
+	}
+	public void testAliceCanGetEntityCreatedByAlice() throws Exception { 
+		for (String collection : collections) {
+			Tuple t = createEntry(collection,"application/atom+xml", ATOM_ENTRY);
+			assertEquals(HttpServletResponse.SC_OK, 
+					requestResourceAs(t.getUrl(),"application/atom+xml",ALICE, PASSWORD));
+		}
+	}
+
+	private int requestResourceAs(String entryUrl, String contentType, String user, String password) throws Exception {
+		HttpURLConnection connection = getConnection(url(entryUrl));
+		authorize(connection, user, password);
+		connection.setRequestMethod("GET");
+		connection.setRequestProperty("Content-Type", contentType);
+		connection.connect();
+		return connection.getResponseCode();
+	}
 
 	private void createAndModify(String contentType, int expectedStatus, String content) 
 			throws Exception, ProtocolException, UnsupportedEncodingException, IOException {
@@ -116,31 +143,11 @@ public class AtomAuthorisationTestCase extends TestCase {
 			
 			ensureCollectionAccessible(url(collection));
 
-			HttpURLConnection postConnection = getConnection(url(collection));
-			authorize(postConnection, ALICE, PASSWORD);
-			postConnection.setRequestMethod("POST");
-			postConnection.setDoOutput(true);
-			postConnection.setRequestProperty("Content-Type", contentType);
-			Writer writer = new OutputStreamWriter(postConnection
-					.getOutputStream(), "UTF-8");
-			writer.write(content);
-			writer.close();
-			postConnection.connect();
-			int postStatus = postConnection.getResponseCode();
-			assertEquals("Server returned response code for " + collection,
-					HttpURLConnection.HTTP_CREATED, postStatus);
+            Tuple t = createEntry(collection,contentType, content);
+            String entryUrl = t.url;
+    		System.out.println(t.url);
+    		System.out.println(t.content);
 
-			String entryUrl = atomEditUrlFragment + postConnection.getHeaderField("Location");
-			assertNotNull("No location returned from POST to collection "
-					+ collection, entryUrl);
-
-			BufferedReader in = new BufferedReader(new InputStreamReader(postConnection.getInputStream()));
-			String line, page = "";
-			while ((line = in.readLine()) != null) 
-				page += line;
-			System.out.println(page);
-			in.close();
-			
 			HttpURLConnection putConnection = getConnection(url(entryUrl));
 			authorize(putConnection, ALICE, PASSWORD);
 			putConnection.setRequestMethod("PUT");
@@ -152,8 +159,8 @@ public class AtomAuthorisationTestCase extends TestCase {
 			putConnection.connect();
 			assertEquals("Server returned response code for " + entryUrl,
 						expectedStatus, putConnection.getResponseCode());
-
-			String editMediaLink = collection + "/" + getMediaEditLink(page);
+			
+			String editMediaLink = collection + "/" + getMediaEditLink(t.content);
 			System.err.println("--- Putting document against " + editMediaLink
 					+ " - should work ---");
 			HttpURLConnection putMediaConnection = getConnection(url(editMediaLink));
@@ -170,6 +177,33 @@ public class AtomAuthorisationTestCase extends TestCase {
 		}
 	}
 
+	private Tuple createEntry(String collection, String contentType, String content) throws Exception { 
+		HttpURLConnection postConnection = getConnection(url(collection));
+		authorize(postConnection, ALICE, PASSWORD);
+		postConnection.setRequestMethod("POST");
+		postConnection.setDoOutput(true);
+		postConnection.setRequestProperty("Content-Type", contentType);
+		Writer writer = new OutputStreamWriter(postConnection
+				.getOutputStream(), "UTF-8");
+		writer.write(content);
+		writer.close();
+		postConnection.connect();
+		int postStatus = postConnection.getResponseCode();
+		assertEquals("Server returned response code for " + collection,
+				HttpURLConnection.HTTP_CREATED, postStatus);
+
+		String entryUrl = atomEditUrlFragment + postConnection.getHeaderField("Location");
+		assertNotNull("No location returned from POST to collection "
+				+ collection, entryUrl);
+		BufferedReader in = new BufferedReader(new InputStreamReader(postConnection.getInputStream()));
+		String line;
+		String responsePage = "";
+		while ((line = in.readLine()) != null) 
+			responsePage += line;
+		in.close();
+		System.out.println(responsePage);
+		return new Tuple(entryUrl, responsePage);
+	}
 	protected static HttpURLConnection getConnection(String url) throws Exception {
 		HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
 		connection.addRequestProperty("Accept", "text/plain *; q=.2, */*; q=.2");
@@ -226,4 +260,19 @@ public class AtomAuthorisationTestCase extends TestCase {
 		throw new RuntimeException("No edit-media link ");
 	}
 
+	
+	class Tuple {
+		String url;
+		String content;
+		Tuple(String url, String content) { 
+			this.url = url;
+			this.content = content;
+		}
+		public String getUrl() {
+			return url;
+		}
+		public String getContent() {
+			return content;
+		}		
+	}
 }
