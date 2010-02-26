@@ -66,7 +66,7 @@ public class AtomAuthorisationTestCase extends TestCase {
 	
 	
     protected String url(String relativeUrl) {
-		return "http://localhost:8081" + relativeUrl;
+		return "http://localhost:8080" + relativeUrl;
 	}
 	
 	/** Currently collections may be deleted, so need to be re-created. */  
