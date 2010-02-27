@@ -29,6 +29,10 @@ public class BufferedHttpResponseWrapper extends HttpServletResponseWrapper {
 		return this.bufferedServletOut.getBuffer( );
 	}
 	
+	public String getContent() { 
+		return new String(this.bufferedServletOut.getBuffer( )); 
+	}
+	
 	public PrintWriter getWriter( ) throws IOException {
 		if (this.outputStream != null) {
 		    throw new IllegalStateException(
