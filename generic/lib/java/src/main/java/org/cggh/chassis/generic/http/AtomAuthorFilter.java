@@ -5,8 +5,11 @@ package org.cggh.chassis.generic.http;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -29,7 +32,7 @@ import org.xml.sax.SAXException;
  * @author timp
  * @since 26 Feb 2010
  */
-public class AtomAuthorFilter extends HttpFilter {
+public final class AtomAuthorFilter extends HttpFilter {
     enum HttpMethod { 
     	HEAD(),
     	GET(),
@@ -46,56 +49,94 @@ public class AtomAuthorFilter extends HttpFilter {
 	public void doHttpFilter(HttpServletRequest request,
 			HttpServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-        BufferedHttpResponseWrapper responseWrapper = new BufferedHttpResponseWrapper((HttpServletResponse) response);
-        chain.doFilter(request, responseWrapper);
-        
-        byte[] content = responseWrapper.getBuffer();
-		
-
-		System.err.println("Content:" + new String(content));
-
-        
-        if (request.getContentType() != null && request.getContentType().startsWith("application/atom+xml")) {
-    		switch (HttpMethod.valueOf(request.getMethod())) {
+        if (request.getContentType() != null && 
+        		request.getContentType().startsWith("application/atom+xml")) {
+            
+            switch (HttpMethod.valueOf(request.getMethod())) {
     		case GET:
-            	
-            	if (content != null) { 
-            		List<String> authors = getAuthors(new String(content));
-            		if (!authors.contains(getUser(request))) {
-            		      System.err.println("AtomAuthorFilter Committed:" + response.isCommitted());
-            			//response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            			//response.sendRedirect("Http://google.com");
-            			response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "You may only interact with your own stuff");
+                BufferedHttpResponseWrapper responseWrapper = new BufferedHttpResponseWrapper((HttpServletResponse) response);
+    	        chain.doFilter(request, responseWrapper);
+            	if (responseWrapper.getContent() != null && 
+            			responseWrapper.getContent().startsWith("<atom:entry")) {
+            		String user = getUser(request);
+            		if (user == null){
+            			response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "No user found");
+            			return;            			
+            		}
+            		
+            		List<String> authors = getAuthors(responseWrapper.getContent());
+            		if (!authors.contains(user)) {
+              			response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "You may only interact with your own stuff");
             			return;
             		}
-            	} else 
-            		System.err.println("Content null");
-		
+            	} 
+                response.setContentLength(responseWrapper.getBuffer().length);
+                response.getOutputStream().write(responseWrapper.getBuffer());
+                response.flushBuffer();		
     			break;
     		case PUT:
-		
+    			if (mayPut(request))
+    				chain.doFilter(request, response);
+    			else {
+        			response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "You may only update an item of which you are the author");
+        			return;
+    			}
     			break;
     		case POST:
+    	        chain.doFilter(request, response);
 		
     			break;
     		case DELETE:
+    	        chain.doFilter(request, response);
 		
     			break;
     		default:
+    			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Unexpected value of request method: " + request.getMethod());
     			throw new RuntimeException("Unexpected value of request method: " + request.getMethod());
     		}
-        }
-        System.err.println("AtomAuthorFilter2 Committed:" + response.isCommitted());
-        response.setContentLength(content.length);
-        response.getOutputStream().write(content);
-        response.flushBuffer();
-        System.err.println("AtomAuthorFilter3 Committed:" + response.isCommitted());
+        } else
+	        chain.doFilter(request, response);
 	}
 
+	private static boolean mayPut(HttpServletRequest request ) throws IOException {
+		    String url = getUrl(request);
+			HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
+			connection.setRequestMethod("GET");
+			connection.setRequestProperty("Content-Type", request.getContentType());
+			String authorization = request.getHeader("Authorization");
+			if (authorization != null)
+				connection.setRequestProperty("Authorization", authorization);
+			connection.connect();
+			if (connection.getResponseCode() == HttpServletResponse.SC_OK)
+				return true;
+			if (connection.getResponseCode() == HttpServletResponse.SC_NOT_FOUND)
+				return true;
+			return false;
+	 }
+
+	 @SuppressWarnings("unchecked")
+	private static String getUrl(HttpServletRequest request) {
+		StringBuffer urlBuffer = request.getRequestURL();
+		Map <String, String[]>parameters = request.getParameterMap(); 
+		if (!parameters.isEmpty()) {
+		  urlBuffer.append('?');
+		  for (String parameterName : parameters.keySet()) {
+			  urlBuffer.append(parameterName);
+			  urlBuffer.append('=');
+			  String[] values = parameters.get(parameterName);
+			  for (int i = 0; i < values.length; i++){
+				  if(i >0)
+					  urlBuffer.append(',');
+				  urlBuffer.append(values[i]);
+			  }
+		  }
+		}
+		String url = urlBuffer.toString();
+		return url;
+	}
 	
-	List<String> getAuthors(String atomEntry) { 
+	private static List<String> getAuthors(String atomEntry) { 
 		ArrayList<String> authors = new ArrayList<String>();
-		System.err.println("Extracting authors from " + atomEntry);
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder db;
 		try {
@@ -131,9 +172,18 @@ public class AtomAuthorFilter extends HttpFilter {
 		return authors;
 	}
 
-	String getUser(HttpServletRequest request) {
-		return  new String(new Base64().decode(
-				request.getHeader("Authorization").replace("Basic ","").getBytes())).split(":")[0];
+	private static String getUser(HttpServletRequest request) {
+		String basicType = "Basic ";
+		String authorizationHeader = request.getHeader("Authorization");
+		if (authorizationHeader != null) {
+			if (authorizationHeader.indexOf(basicType) < 0 )
+				throw new IllegalArgumentException("Authorization not '" + basicType + 
+						"':" + authorizationHeader);
+			String user =   new String(new Base64().decode(
+					authorizationHeader.replace("Basic ","").getBytes())).split(":")[0];
+			return user;
+		} else 
+			return null;
 	}
 
 }
