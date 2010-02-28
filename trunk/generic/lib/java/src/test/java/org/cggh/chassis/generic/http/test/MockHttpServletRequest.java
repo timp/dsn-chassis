@@ -135,7 +135,14 @@ public class MockHttpServletRequest implements HttpServletRequest {
     }
 
     public StringBuffer getRequestURL() {
-        return null;
+    	StringBuffer sb = new StringBuffer();
+    	sb.append(getScheme());
+    	sb.append("://");
+    	sb.append(getRemoteHost());
+    	sb.append(getContextPath());
+    	sb.append(getRequestURI());
+    	// TODO add params
+        return sb;
     }
 
     public String getServletPath() {
@@ -211,6 +218,7 @@ public class MockHttpServletRequest implements HttpServletRequest {
     	this.content = content;
     }
     public ServletInputStream getInputStream() throws IOException {
+		System.err.println("getInputStream");    	
         return new MockServletInputStream(content);
     }
 
@@ -270,7 +278,7 @@ public class MockHttpServletRequest implements HttpServletRequest {
     }
 
     public String getRemoteHost() {
-        return null;
+        return "localhost";
     }
 
     public void setAttribute(String arg0, Object arg1) {
