@@ -56,9 +56,10 @@ public final class AtomAuthorFilter extends HttpFilter {
     		case GET:
                 BufferedHttpResponseWrapper responseWrapper = new BufferedHttpResponseWrapper((HttpServletResponse) response);
     	        chain.doFilter(request, responseWrapper);
-            	if (responseWrapper.getContent() != null && 
-            			responseWrapper.getContent().startsWith("<atom:entry")) {
+        		System.err.println("get:" + responseWrapper.getContent());
+            	if (responseWrapper.getContent().startsWith("<atom:entry")) {
             		String user = getUser(request);
+            		System.err.println("user"+user);
             		if (user == null){
             			response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "No user found");
             			return;            			
