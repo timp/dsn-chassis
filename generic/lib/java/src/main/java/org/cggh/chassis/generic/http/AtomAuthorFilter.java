@@ -67,7 +67,8 @@ public final class AtomAuthorFilter extends HttpFilter {
             		
             		List<String> authors = getAuthors(responseWrapper.getContent());
             		if (!authors.contains(user)) {
-              			response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "You may only interact with your own stuff");
+              			response.sendError(HttpServletResponse.SC_UNAUTHORIZED, 
+              					"You may only interact with your own stuff");
             			return;
             		}
             	} 
@@ -79,7 +80,8 @@ public final class AtomAuthorFilter extends HttpFilter {
     			if (mayPut(request))
     				chain.doFilter(request, response);
     			else {
-        			response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "You may only update an item of which you are the author");
+        			response.sendError(HttpServletResponse.SC_UNAUTHORIZED, 
+        					"You may only update an item of which you are the author");
         			return;
     			}
     			break;
@@ -88,11 +90,21 @@ public final class AtomAuthorFilter extends HttpFilter {
 		
     			break;
     		case DELETE:
+    			if (getStatus(request) == HttpServletResponse.SC_UNAUTHORIZED) {
+        			response.sendError(HttpServletResponse.SC_UNAUTHORIZED, 
+        					"You may only delete an item of which you are the author");
+        			return;
+    			} else 
+    				chain.doFilter(request, response);
+		
+    			break;
+    		case HEAD:
     	        chain.doFilter(request, response);
 		
     			break;
     		default:
-    			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Unexpected value of request method: " + request.getMethod());
+    			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, 
+    					"Unexpected value of request method: " + request.getMethod());
     			throw new RuntimeException("Unexpected value of request method: " + request.getMethod());
     		}
         } else
@@ -100,20 +112,29 @@ public final class AtomAuthorFilter extends HttpFilter {
 	}
 
 	private static boolean mayPut(HttpServletRequest request ) throws IOException {
-		    String url = getUrl(request);
-			HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
-			connection.setRequestMethod("GET");
-			connection.setRequestProperty("Content-Type", request.getContentType());
-			String authorization = request.getHeader("Authorization");
-			if (authorization != null)
-				connection.setRequestProperty("Authorization", authorization);
-			connection.connect();
-			if (connection.getResponseCode() == HttpServletResponse.SC_OK)
-				return true;
-			if (connection.getResponseCode() == HttpServletResponse.SC_NOT_FOUND)
-				return true;
+		switch (getStatus(request)) {
+		case HttpServletResponse.SC_OK:
+			return true;				
+		case HttpServletResponse.SC_NOT_FOUND:
+			return true;				
+		default:
 			return false;
-	 }
+		}
+	}
+
+	private static int getStatus(HttpServletRequest request ) throws IOException {
+	    String url = getUrl(request);
+		HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
+		connection.setRequestMethod("GET");
+		if (request.getContentType() != null)
+			connection.setRequestProperty("Content-Type", request.getContentType());
+		String authorization = request.getHeader("Authorization");
+		if (authorization != null)
+			connection.setRequestProperty("Authorization", authorization);
+		connection.connect();
+		System.err.println(url +":"+ connection.getResponseCode());
+		return connection.getResponseCode();
+	}
 
 	 @SuppressWarnings("unchecked")
 	private static String getUrl(HttpServletRequest request) {
@@ -151,7 +172,7 @@ public final class AtomAuthorFilter extends HttpFilter {
 		try {
 			doc = db.parse(inStream);
 		} catch (SAXException e) {
-			throw new RuntimeException(e);
+			throw new RuntimeException("Malformed XML", e);
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
