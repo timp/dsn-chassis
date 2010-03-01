@@ -30,12 +30,12 @@ import javax.servlet.http.HttpSession;
  */
 public class MockHttpServletRequest implements HttpServletRequest {
 
-    Map<String,String> parameters = new HashMap<String,String>();
+    Map<String,String[]> parameters = new HashMap<String,String[]>();
     
     /**
      * @param map the parameters
      */
-    public void setParameters(Map<String,String> map) {
+    public void setParameters(Map<String,String[]> map) {
         parameters = map;
     }
     
@@ -141,7 +141,19 @@ public class MockHttpServletRequest implements HttpServletRequest {
     	sb.append(getRemoteHost());
     	sb.append(getContextPath());
     	sb.append(getRequestURI());
-    	// TODO add params
+    	if (!getParameterMap().isEmpty()) {
+  		  sb.append('?');
+		  for (String parameterName : parameters.keySet()) {
+			  sb.append(parameterName);
+			  sb.append('=');
+			  String[] values = parameters.get(parameterName);
+			  for (int i = 0; i < values.length; i++){
+				  if(i >0)
+					  sb.append(',');
+				  sb.append(values[i]);
+			  }
+		  }    		
+    	}
         return sb;
     }
 
@@ -226,12 +238,12 @@ public class MockHttpServletRequest implements HttpServletRequest {
      * Set a parameter.
      */
     public void setParameter(String name, String value) { 
-      parameters.put(name, value);
+      parameters.put(name, new String[] {value});
     }
-    public String getParameter(String arg0) {
-      if (parameters.get(arg0) == null)
+    public String getParameter(String name) {
+      if (parameters.get(name) == null)
         return null;
-      return (String)parameters.get(arg0);
+      return  parameters.get(name)[0];
     }
 
     public Enumeration<String> getParameterNames() {
@@ -239,10 +251,10 @@ public class MockHttpServletRequest implements HttpServletRequest {
     }
 
     public String[] getParameterValues(String key) {
-      return new String[] {(String)parameters.get(key)} ;
+      return parameters.get(key) ;
     }
 
-    public Map<String,String> getParameterMap() {
+    public Map<String,String[]> getParameterMap() {
         return parameters;
     }
 
@@ -262,7 +274,7 @@ public class MockHttpServletRequest implements HttpServletRequest {
     }
 
     public String getServerName() {
-        return "localhost";
+        return "www.google.com";
     }
 
     public int getServerPort() {
@@ -278,7 +290,7 @@ public class MockHttpServletRequest implements HttpServletRequest {
     }
 
     public String getRemoteHost() {
-        return "localhost";
+        return "www.google.com";
     }
 
     public void setAttribute(String arg0, Object arg1) {
