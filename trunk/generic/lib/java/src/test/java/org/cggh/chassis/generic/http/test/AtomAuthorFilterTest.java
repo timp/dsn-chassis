@@ -83,6 +83,13 @@ public class AtomAuthorFilterTest extends TestCase {
 		chain.setReturnFlag("Not atom, OK");
         request.setMethod(getMethod());
 		request.setContentType("application/atom+xml");
+		// 200
+		//http://maps.google.com/maps/feeds/maps/216878860856967875806/full/00047d1c763a30ff4db1d
+		request.setContextPath("/maps");
+		request.setRequestURI("/feeds/maps/216878860856967875806/full/00047d1c763a30ff4db1d");
+		request.resetParameters();
+		request.setServerName("maps.google.com");
+		assertEquals("http://maps.google.com/maps/feeds/maps/216878860856967875806/full/00047d1c763a30ff4db1d", request.getRequestURL().toString());
 		it.doHttpFilter(request, response, chain);
 		assertEquals(200,response.getStatus());
 	}
@@ -90,6 +97,17 @@ public class AtomAuthorFilterTest extends TestCase {
 		chain.setReturnFlag("Atom Entry, OK");
         request.setMethod(getMethod());
 		request.setContentType("application/atom+xml");
+		request.setContextPath("/maps");
+		//http://maps.google.com/maps/feeds/maps/104684776855932063951/full
+		//request.setRequestURI("/feeds/maps/userID/full");
+
+		// 403
+		//http://maps.google.com/maps/feeds/maps/216878860856967875807/full		
+		request.setRequestURI("/feeds/maps/216878860856967875807/full");
+		request.resetParameters();
+		request.setServerName("maps.google.com");
+		assertEquals("http://maps.google.com/maps/feeds/maps/216878860856967875807/full", request.getRequestURL().toString());
+
 		it.doHttpFilter(request, response, chain);
 		assertEquals(401, response.getStatus());
 	}
@@ -104,6 +122,13 @@ public class AtomAuthorFilterTest extends TestCase {
 		// System.err.println(":"+ encodedAuthorisationValue + ":");
 		request.setHeader("Authorization", "Basic "
 				+ encodedAuthorisationValue);
+		// 200
+		//http://maps.google.com/maps/feeds/maps/216878860856967875806/full/00047d1c763a30ff4db1d
+		request.setContextPath("/maps");
+		request.setRequestURI("/feeds/maps/216878860856967875806/full/00047d1c763a30ff4db1d");
+		request.resetParameters();
+		request.setServerName("maps.google.com");
+		assertEquals("http://maps.google.com/maps/feeds/maps/216878860856967875806/full/00047d1c763a30ff4db1d", request.getRequestURL().toString());
 		it.doHttpFilter(request, response, chain);
 		assertEquals(401, response.getStatus());
 	}
@@ -117,6 +142,12 @@ public class AtomAuthorFilterTest extends TestCase {
 					new Base64().encode((ALICE + ":" + PASSWORD).getBytes())).replaceAll("\n", "");
 		request.setHeader("Authorization", "Basic "
 				+ encodedAuthorisationValue);
+		// 200
+		//http://maps.google.com/maps/feeds/maps/216878860856967875806/full/00047d1c763a30ff4db1d
+		request.setContextPath("/maps");
+		request.setRequestURI("/feeds/maps/216878860856967875806/full/00047d1c763a30ff4db1d");
+		request.resetParameters();
+		request.setServerName("maps.google.com");
 		it.doHttpFilter(request, response, chain);
 		assertEquals(200, response.getStatus());
 	}
@@ -130,6 +161,12 @@ public class AtomAuthorFilterTest extends TestCase {
 					new Base64().encode((ALICE + ":" + PASSWORD).getBytes())).replaceAll("\n", "");
 		request.setHeader("Authorization", "Broken "
 				+ encodedAuthorisationValue);
+		// 200
+		//http://maps.google.com/maps/feeds/maps/216878860856967875806/full/00047d1c763a30ff4db1d
+		request.setContextPath("/maps");
+		request.setRequestURI("/feeds/maps/216878860856967875806/full/00047d1c763a30ff4db1d");
+		request.resetParameters();
+		request.setServerName("maps.google.com");
 		try { 
 			it.doHttpFilter(request, response, chain);
 			fail("Should have bombed");
@@ -148,6 +185,12 @@ public class AtomAuthorFilterTest extends TestCase {
 					new Base64().encode((ALICE + ":" + PASSWORD).getBytes())).replaceAll("\n", "");
 		request.setHeader("Authorization", "Basic "
 				+ encodedAuthorisationValue);
+		// 200
+		//http://maps.google.com/maps/feeds/maps/216878860856967875806/full/00047d1c763a30ff4db1d
+		request.setContextPath("/maps");
+		request.setRequestURI("/feeds/maps/216878860856967875806/full/00047d1c763a30ff4db1d");
+		request.resetParameters();
+		request.setServerName("maps.google.com");
 		try { 
 			it.doHttpFilter(request, response, chain);
 			fail("Should have bombed");
@@ -166,6 +209,12 @@ public class AtomAuthorFilterTest extends TestCase {
 					new Base64().encode((ALICE + ":" + PASSWORD).getBytes())).replaceAll("\n", "");
 		request.setHeader("Authorization", "Basic "
 				+ encodedAuthorisationValue);
+		// 200
+		//http://maps.google.com/maps/feeds/maps/216878860856967875806/full/00047d1c763a30ff4db1d
+		request.setContextPath("/maps");
+		request.setRequestURI("/feeds/maps/216878860856967875806/full/00047d1c763a30ff4db1d");
+		request.resetParameters();
+		request.setServerName("maps.google.com");
 		try { 
 			it.doHttpFilter(request, response, chain);
 			fail("Should have bombed");
@@ -184,6 +233,12 @@ public class AtomAuthorFilterTest extends TestCase {
 					new Base64().encode((ALICE + ":" + PASSWORD).getBytes())).replaceAll("\n", "");
 		request.setHeader("Authorization", "Basic "
 				+ encodedAuthorisationValue);
+		// 200
+		//http://maps.google.com/maps/feeds/maps/216878860856967875806/full/00047d1c763a30ff4db1d
+		request.setContextPath("/maps");
+		request.setRequestURI("/feeds/maps/216878860856967875806/full/00047d1c763a30ff4db1d");
+		request.resetParameters();
+		request.setServerName("maps.google.com");
 		try { 
 			it.doHttpFilter(request, response, chain);
 			fail("Should have bombed");
@@ -202,6 +257,12 @@ public class AtomAuthorFilterTest extends TestCase {
 					new Base64().encode((ALICE + ":" + PASSWORD).getBytes())).replaceAll("\n", "");
 		request.setHeader("Authorization", "Basic "
 				+ encodedAuthorisationValue);
+		// 200
+		//http://maps.google.com/maps/feeds/maps/216878860856967875806/full/00047d1c763a30ff4db1d
+		request.setContextPath("/maps");
+		request.setRequestURI("/feeds/maps/216878860856967875806/full/00047d1c763a30ff4db1d");
+		request.resetParameters();
+		request.setServerName("maps.google.com");
 		try { 
 			it.doHttpFilter(request, response, chain);
 			fail("Should have bombed");
@@ -225,6 +286,12 @@ public class AtomAuthorFilterTest extends TestCase {
 					new Base64().encode(("lice@example.org:" + PASSWORD).getBytes())).replaceAll("\n", "");
 		request.setHeader("Authorization", "Basic "
 				+ encodedAuthorisationValue);
+		// 200
+		//http://maps.google.com/maps/feeds/maps/216878860856967875806/full/00047d1c763a30ff4db1d
+		request.setContextPath("/maps");
+		request.setRequestURI("/feeds/maps/216878860856967875806/full/00047d1c763a30ff4db1d");
+		request.resetParameters();
+		request.setServerName("maps.google.com");
 		it.doHttpFilter(request, response, chain);
 		assertEquals(401, response.getStatus());
 	}
@@ -239,6 +306,14 @@ public class AtomAuthorFilterTest extends TestCase {
 					new Base64().encode(("alice@example.org:" + PASSWORD).getBytes())).replaceAll("\n", "");
 		request.setHeader("Authorization", "Basic "
 				+ encodedAuthorisationValue);
+		//500
+		//http://maps.google.com/maps/feeds/maps/default/full
+		request.setContextPath("/maps");
+		request.setRequestURI("/feeds/maps/default/full");
+		request.resetParameters();
+		request.setServerName("maps.google.com");
+		assertEquals("http://maps.google.com/maps/feeds/maps/default/full", request.getRequestURL().toString());
+
 		it.doHttpFilter(request, response, chain);
 		assertEquals(500, response.getStatus());
 	}
