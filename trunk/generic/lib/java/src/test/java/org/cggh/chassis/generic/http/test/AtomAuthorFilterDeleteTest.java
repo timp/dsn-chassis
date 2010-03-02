@@ -87,4 +87,5 @@ public class AtomAuthorFilterDeleteTest extends AtomAuthorFilterTest {
 		assertEquals(401, response.getStatus());
 	}
 	
+	
 }
