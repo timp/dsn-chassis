@@ -9,28 +9,29 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.HashMap;
 import java.util.StringTokenizer;
 
 /**
  * @author timp
  * 
  */
-public class TestServer {
+public class TestServer implements Runnable {
 	static ServerSocket serverSocket;
     static boolean run = true;
-    static String root = "src/test/java/org/cggh/chassis/generic/http/test";
+    static String root = "src/test/java";
+	public static int PORT = 8089;
     
 	public static void main(String args[]) throws Exception {
-		int port;
-		try {
-			port = Integer.parseInt(args[0]);
-		} catch (Exception e) {
-			port = 1500;
-		}
-		run(port);
+		new TestServer().run();
 	}
-	public static void run(int port) throws Exception {
-		serverSocket = new ServerSocket(port);
+	public void run() {
+		try {
+				if (serverSocket == null)
+					serverSocket = new ServerSocket(PORT);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 		System.out.println("TestServer running on port "
 					+ serverSocket.getLocalPort());
 
@@ -44,13 +45,23 @@ public class TestServer {
 			System.out.println("New connection accepted "
 					+ socket.getInetAddress() + ":" + socket.getPort());
 	
-			HttpRequestHandler request = new HttpRequestHandler(socket);
+			HttpRequestHandler request;
+			try {
+				request = new HttpRequestHandler(socket);
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
 			Thread thread = new Thread(request);
 			thread.start();
 		}
+		System.out.println("bye");
 	}
 	public static void stop() throws Exception { 
 		run = false;
+		if (TestServer.serverSocket != null)
+			TestServer.serverSocket.close();
+		if (serverSocket != null)
+			serverSocket.close();
 	}
 }
 
@@ -63,7 +74,7 @@ class HttpRequestHandler implements Runnable {
 	OutputStream output;
 	BufferedReader br;
 
-	public HttpRequestHandler(Socket socket) throws Exception {
+	public HttpRequestHandler(Socket socket) throws IOException {
 		this.socket = socket;
 		this.input = socket.getInputStream();
 		this.output = socket.getOutputStream();
@@ -81,11 +92,14 @@ class HttpRequestHandler implements Runnable {
 	private void processRequest() throws Exception {
 		while (true) {
 
+			HashMap<String, String> parameters = new HashMap<String, String>();
+
 			String headerLine = br.readLine();
 			if (headerLine.equals(CRLF) || headerLine.equals(""))
 				break;
 
-			StringTokenizer s = new StringTokenizer(headerLine);
+			System.err.println(headerLine);
+			StringTokenizer s = new StringTokenizer(headerLine, " \t\n\r\f?=&", false);
 			String temp = s.nextToken();
 
 			if (temp.equals("GET")) {
@@ -95,9 +109,24 @@ class HttpRequestHandler implements Runnable {
 
 				String fileName = s.nextToken();
 				if (fileName.equals("/STOP")) {
-					TestServer.stop();
+					TestServer.run = false;
 					fileExists = false;
 				} else {
+					System.err.println("filename:" + fileName);
+					int pairCount = 0;
+					String token = s.nextToken();
+					String name = "";
+					while (!token.equals("HTTP/1.1")) {
+						if (pairCount == 0 ){ 
+							name = token;
+							pairCount = 1;
+						} else { 
+							pairCount = 0;
+							parameters.put(name, token);
+							System.err.println("Putting " + name + ":" + token);
+						}
+						token = s.nextToken();
+					}
 					fileName = TestServer.root + fileName;
 					try {
 						fis = new FileInputStream(fileName);
@@ -111,19 +140,19 @@ class HttpRequestHandler implements Runnable {
 				String pageBody = null;
 				String contentLengthLine = "error";
 				if (fileExists) {
-					statusLine = "HTTP/1.0 200 OK" + CRLF;
-					contentTypeLine = "Content-type: " + contentType(fileName)
-							+ CRLF;
+					statusLine = statusLine(parameters, "200" , "OK");
+					contentTypeLine = "Content-type: " + contentType(fileName) + CRLF;
 					contentLengthLine = "Content-Length: "
 						+ (new Integer(fis.available())).toString() + CRLF;
 				} else {
 					if (TestServer.run) { 
-						statusLine = "HTTP/1.0 404 Not Found" + CRLF;
+						statusLine = statusLine(parameters, "404" , "Not Found");
 						contentTypeLine = "Content-type: text/html";
 						pageBody = "<HTML>"
-								+ "<HEAD><TITLE>404 Not Found</TITLE></HEAD>"
-								+ "<BODY>404 Not Found"
-								+ "<br>usage:http://yourHostName:port/"
+								+ "<HEAD><TITLE>" + statusLine(parameters, "404" , "Not Found") + "</TITLE></HEAD>"
+								+ "<BODY>" 
+								+ statusLine(parameters, "404" , "Not Found") 
+								+ "<br/>usage:http://yourHostName:port/"
 								+ "fileName.html</BODY></HTML>";
 						contentLengthLine = "Content-Length: "
 							+ (new Integer(pageBody.length())).toString() + CRLF;
@@ -159,10 +188,26 @@ class HttpRequestHandler implements Runnable {
 		output.close();
 		br.close();
 		socket.close();
-		if (!TestServer.run) {
-			TestServer.serverSocket.close();
-		}
 	}
+	private String statusLine(HashMap<String, String> parameters,
+			String status, String message) {
+		return "HTTP/1.0 " + status(parameters, status) + " " + message(parameters, message) + CRLF;
+	}
+
+	private String status(HashMap<String, String> parameters, String defaultValue) {
+		if(parameters.containsKey("status"))
+			return parameters.get("status");
+		else 
+			return defaultValue;
+	}
+	private String message(HashMap<String, String> parameters, String defaultValue) {
+		if(parameters.containsKey("message"))
+			return parameters.get("message");
+		else 
+			return defaultValue;
+	}
+
+
 	private void output(String line) throws IOException { 
 		output.write(line.getBytes());
 		System.out.println(line);

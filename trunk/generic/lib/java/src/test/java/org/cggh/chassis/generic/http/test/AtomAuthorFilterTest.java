@@ -23,6 +23,7 @@ public class AtomAuthorFilterTest extends TestCase {
 	MockHttpServletResponse response = null;
 	MockFilterChain chain = null;
 
+	static Thread serverThread = null;
 	
 	protected final static String ALICE = "alice@example.org";
 	protected final static String PASSWORD = "bar";
@@ -35,14 +36,20 @@ public class AtomAuthorFilterTest extends TestCase {
 	}
 	protected void setUp() throws Exception {
 		super.setUp();
+		if (serverThread == null) { 
+			serverThread = new Thread(new TestServer());
+			serverThread.start();
+		}
 		it = new AtomAuthorFilter();
 		request = new MockHttpServletRequest();
 		response = new MockHttpServletResponse();
 		chain = new MockFilterChain();
-		request.setRequestURI("/atom/edit/studies");
+		request.setContextPath("/org/cggh/chassis/generic/http/test");
+		request.setRequestURI("/entry.atom");
 		Map<String, String[]> params = new HashMap<String, String[]>();
-		params.put("id", new String[]{"jhgjhgjh"});
+		params.put("id", new String[]{"study1"});
 		request.setParameters(params);
+		request.setPort(8089);
 	}
 
 	protected void tearDown() throws Exception {
@@ -52,19 +59,29 @@ public class AtomAuthorFilterTest extends TestCase {
 	protected String getMethod() { 
 		return "GET";
 	}
-	/**
-	 * Test method for {@link org.cggh.chassis.generic.http.AtomAuthorFilter#doHttpFilter(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, javax.servlet.FilterChain)}.
-	 */
+	
+	
 	public void testDoHttpFilter_notFound() throws Exception {
         request.setMethod(getMethod());
-		request.setParameters(null);
+		request.resetParameters();
 		chain.setReturnFlag("Nothing, 404");
+		request.setRequestURI("/notfound.atom");
+		it.doHttpFilter(request, response, chain);
+		assertEquals(404,response.getStatus());
+	}
+	public void testDoHttpFilter_notFound_atomContentType() throws Exception {
+        request.setMethod(getMethod());
+		request.resetParameters();
+		chain.setReturnFlag("Nothing, 404");
+		request.setRequestURI("/notfound.atom");
+		request.setContentType("application/atom+xml");
 		it.doHttpFilter(request, response, chain);
 		assertEquals(404,response.getStatus());
 	}
 	public void testDoHttpFilter_emptyFound_nullContentType() throws Exception {
 		chain.setReturnFlag("Nothing, OK");
-        request.setMethod(getMethod());		
+        request.setMethod(getMethod());
+        request.setContentType(null);
 		it.doHttpFilter(request, response, chain);
 		assertEquals(200,response.getStatus());
 	}
@@ -83,37 +100,21 @@ public class AtomAuthorFilterTest extends TestCase {
 		chain.setReturnFlag("Not atom, OK");
         request.setMethod(getMethod());
 		request.setContentType("application/atom+xml");
-		// 200
-		//http://maps.google.com/maps/feeds/maps/216878860856967875806/full/00047d1c763a30ff4db1d
-		request.setContextPath("/maps");
-		request.setRequestURI("/feeds/maps/216878860856967875806/full/00047d1c763a30ff4db1d");
-		request.resetParameters();
-		request.setServerName("maps.google.com");
-		assertEquals("http://maps.google.com/maps/feeds/maps/216878860856967875806/full/00047d1c763a30ff4db1d", request.getRequestURL().toString());
+		request.setRequestURI("/notAtom.txt");
 		it.doHttpFilter(request, response, chain);
-		assertEquals(200,response.getStatus());
+		assertEquals(unlessDelete(200),response.getStatus());
 	}
 	public void testDoHttpFilter_atomFound_atomContentType() throws Exception {
 		chain.setReturnFlag("Atom Entry, OK");
         request.setMethod(getMethod());
 		request.setContentType("application/atom+xml");
-		request.setContextPath("/maps");
-		//http://maps.google.com/maps/feeds/maps/104684776855932063951/full
-		//request.setRequestURI("/feeds/maps/userID/full");
-
-		// 403
-		//http://maps.google.com/maps/feeds/maps/216878860856967875807/full		
-		request.setRequestURI("/feeds/maps/216878860856967875807/full");
-		request.resetParameters();
-		request.setServerName("maps.google.com");
-		assertEquals("http://maps.google.com/maps/feeds/maps/216878860856967875807/full", request.getRequestURL().toString());
-
+		
 		it.doHttpFilter(request, response, chain);
 		assertEquals(401, response.getStatus());
 	}
 	public void testDoHttpFilter_atomFound_atomContentType_bob() throws Exception {
 		response = new MockHttpServletResponse();
-		chain.setReturnFlag("Atom Entry, OK");
+		chain.setReturnFlag("Atom Entry, OK");		
         request.setMethod(getMethod());
 		request.setContentType("application/atom+xml");
 		String encodedAuthorisationValue = 
@@ -122,13 +123,6 @@ public class AtomAuthorFilterTest extends TestCase {
 		// System.err.println(":"+ encodedAuthorisationValue + ":");
 		request.setHeader("Authorization", "Basic "
 				+ encodedAuthorisationValue);
-		// 200
-		//http://maps.google.com/maps/feeds/maps/216878860856967875806/full/00047d1c763a30ff4db1d
-		request.setContextPath("/maps");
-		request.setRequestURI("/feeds/maps/216878860856967875806/full/00047d1c763a30ff4db1d");
-		request.resetParameters();
-		request.setServerName("maps.google.com");
-		assertEquals("http://maps.google.com/maps/feeds/maps/216878860856967875806/full/00047d1c763a30ff4db1d", request.getRequestURL().toString());
 		it.doHttpFilter(request, response, chain);
 		assertEquals(401, response.getStatus());
 	}
@@ -142,14 +136,13 @@ public class AtomAuthorFilterTest extends TestCase {
 					new Base64().encode((ALICE + ":" + PASSWORD).getBytes())).replaceAll("\n", "");
 		request.setHeader("Authorization", "Basic "
 				+ encodedAuthorisationValue);
-		// 200
-		//http://maps.google.com/maps/feeds/maps/216878860856967875806/full/00047d1c763a30ff4db1d
-		request.setContextPath("/maps");
-		request.setRequestURI("/feeds/maps/216878860856967875806/full/00047d1c763a30ff4db1d");
-		request.resetParameters();
-		request.setServerName("maps.google.com");
 		it.doHttpFilter(request, response, chain);
-		assertEquals(200, response.getStatus());
+		assertEquals(unlessDelete(200), response.getStatus());
+	}
+	private int unlessDelete(int i) {
+		if (getMethod().equals("DELETE"))
+			return 401;
+		return i;
 	}
 	public void testDoHttpFilter_atomFound_atomContentType_alice_BrokenAuth() throws Exception {
 		response = new MockHttpServletResponse();
@@ -161,12 +154,6 @@ public class AtomAuthorFilterTest extends TestCase {
 					new Base64().encode((ALICE + ":" + PASSWORD).getBytes())).replaceAll("\n", "");
 		request.setHeader("Authorization", "Broken "
 				+ encodedAuthorisationValue);
-		// 200
-		//http://maps.google.com/maps/feeds/maps/216878860856967875806/full/00047d1c763a30ff4db1d
-		request.setContextPath("/maps");
-		request.setRequestURI("/feeds/maps/216878860856967875806/full/00047d1c763a30ff4db1d");
-		request.resetParameters();
-		request.setServerName("maps.google.com");
 		try { 
 			it.doHttpFilter(request, response, chain);
 			fail("Should have bombed");
@@ -185,12 +172,7 @@ public class AtomAuthorFilterTest extends TestCase {
 					new Base64().encode((ALICE + ":" + PASSWORD).getBytes())).replaceAll("\n", "");
 		request.setHeader("Authorization", "Basic "
 				+ encodedAuthorisationValue);
-		// 200
-		//http://maps.google.com/maps/feeds/maps/216878860856967875806/full/00047d1c763a30ff4db1d
-		request.setContextPath("/maps");
-		request.setRequestURI("/feeds/maps/216878860856967875806/full/00047d1c763a30ff4db1d");
-		request.resetParameters();
-		request.setServerName("maps.google.com");
+		request.setRequestURI("/malformed.atom");
 		try { 
 			it.doHttpFilter(request, response, chain);
 			fail("Should have bombed");
@@ -209,12 +191,7 @@ public class AtomAuthorFilterTest extends TestCase {
 					new Base64().encode((ALICE + ":" + PASSWORD).getBytes())).replaceAll("\n", "");
 		request.setHeader("Authorization", "Basic "
 				+ encodedAuthorisationValue);
-		// 200
-		//http://maps.google.com/maps/feeds/maps/216878860856967875806/full/00047d1c763a30ff4db1d
-		request.setContextPath("/maps");
-		request.setRequestURI("/feeds/maps/216878860856967875806/full/00047d1c763a30ff4db1d");
-		request.resetParameters();
-		request.setServerName("maps.google.com");
+		request.setRequestURI("/noAuthor.atom");
 		try { 
 			it.doHttpFilter(request, response, chain);
 			fail("Should have bombed");
@@ -233,12 +210,7 @@ public class AtomAuthorFilterTest extends TestCase {
 					new Base64().encode((ALICE + ":" + PASSWORD).getBytes())).replaceAll("\n", "");
 		request.setHeader("Authorization", "Basic "
 				+ encodedAuthorisationValue);
-		// 200
-		//http://maps.google.com/maps/feeds/maps/216878860856967875806/full/00047d1c763a30ff4db1d
-		request.setContextPath("/maps");
-		request.setRequestURI("/feeds/maps/216878860856967875806/full/00047d1c763a30ff4db1d");
-		request.resetParameters();
-		request.setServerName("maps.google.com");
+		request.setRequestURI("/noEmail.atom");
 		try { 
 			it.doHttpFilter(request, response, chain);
 			fail("Should have bombed");
@@ -257,12 +229,7 @@ public class AtomAuthorFilterTest extends TestCase {
 					new Base64().encode((ALICE + ":" + PASSWORD).getBytes())).replaceAll("\n", "");
 		request.setHeader("Authorization", "Basic "
 				+ encodedAuthorisationValue);
-		// 200
-		//http://maps.google.com/maps/feeds/maps/216878860856967875806/full/00047d1c763a30ff4db1d
-		request.setContextPath("/maps");
-		request.setRequestURI("/feeds/maps/216878860856967875806/full/00047d1c763a30ff4db1d");
-		request.resetParameters();
-		request.setServerName("maps.google.com");
+		request.setRequestURI("/twoAuthors.atom");
 		try { 
 			it.doHttpFilter(request, response, chain);
 			fail("Should have bombed");
@@ -286,12 +253,6 @@ public class AtomAuthorFilterTest extends TestCase {
 					new Base64().encode(("lice@example.org:" + PASSWORD).getBytes())).replaceAll("\n", "");
 		request.setHeader("Authorization", "Basic "
 				+ encodedAuthorisationValue);
-		// 200
-		//http://maps.google.com/maps/feeds/maps/216878860856967875806/full/00047d1c763a30ff4db1d
-		request.setContextPath("/maps");
-		request.setRequestURI("/feeds/maps/216878860856967875806/full/00047d1c763a30ff4db1d");
-		request.resetParameters();
-		request.setServerName("maps.google.com");
 		it.doHttpFilter(request, response, chain);
 		assertEquals(401, response.getStatus());
 	}
@@ -306,16 +267,9 @@ public class AtomAuthorFilterTest extends TestCase {
 					new Base64().encode(("alice@example.org:" + PASSWORD).getBytes())).replaceAll("\n", "");
 		request.setHeader("Authorization", "Basic "
 				+ encodedAuthorisationValue);
-		//500
-		//http://maps.google.com/maps/feeds/maps/default/full
-		request.setContextPath("/maps");
-		request.setRequestURI("/feeds/maps/default/full");
-		request.resetParameters();
-		request.setServerName("maps.google.com");
-		assertEquals("http://maps.google.com/maps/feeds/maps/default/full", request.getRequestURL().toString());
 
 		it.doHttpFilter(request, response, chain);
-		assertEquals(500, response.getStatus());
+		assertEquals(unlessDelete(500), response.getStatus());
 	}
 
 
