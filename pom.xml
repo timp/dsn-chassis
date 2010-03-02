@@ -208,6 +208,10 @@ http://groups.google.com/group/dsn-chassis-svn
          </reports>
         </reportSet>
        </reportSets>
+        <configuration> 
+          <dependencyLocationsEnabled>false</dependencyLocationsEnabled> 
+	  <dependencyDetailsEnabled>false</dependencyDetailsEnabled>
+        </configuration>       
       </plugin>
       <plugin>
        <groupId>org.apache.maven.plugins</groupId>
