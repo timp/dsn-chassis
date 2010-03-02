@@ -49,7 +49,39 @@ as item()*
 		
 		then ap:do-post-feed( $request-path-info , $request-data )
 
-		else ap:do-bad-request( $request-path-info , "Unknown operation." )
+		else if (
+			$request-method = $http:method-post and 
+			starts-with( $request-content-type, $ap:atom-mimetype ) and
+			local-name( $request-data ) = $af:entry and 
+			namespace-uri( $request-data ) = $af:nsuri
+		)
+		
+		then ap:do-post-entry( $request-path-info , $request-data )
+		
+		else if (
+			$request-method = $http:method-put and 
+			starts-with( $request-content-type, $ap:atom-mimetype ) and
+			local-name( $request-data ) = $af:entry and 
+			namespace-uri( $request-data ) = $af:nsuri
+		)
+		
+		then ap:do-put-entry( $request-path-info , $request-data )
+
+		else if (
+			$request-method = $http:method-post and 
+			not( starts-with( $request-content-type, $ap:atom-mimetype ) )
+		)
+		
+		then ap:do-post-media( $request-path-info , $request-data , $request-content-type )
+
+		else if (
+			$request-method = $http:method-put and 
+			not( starts-with( $request-content-type, $ap:atom-mimetype ) )
+		)
+		
+		then ap:do-put-media( $request-path-info , $request-data , $request-content-type )
+
+		else ap:do-bad-request( $request-path-info , "Unknown operation." , $request-data )
 
 };
 
@@ -135,16 +167,192 @@ declare function ap:do-post-feed(
 		
 		else
 		
-			ap:do-bad-request( $request-path-info , "A collection already exists at the given location." )
+			ap:do-bad-request( $request-path-info , "A collection already exists at the given location." , $request-data )
 	
 };
 
 
 
 
+declare function ap:do-post-entry(
+	$request-path-info as xs:string ,
+	$request-data as element(atom:entry)
+) as item()*
+{
+
+	(: 
+	 : First we need to know whether an atom collection exists at the 
+	 : request path.
+	 :)
+	 
+	let $collection-available := adb:collection-available( $request-path-info )
+	
+	return 
+	
+		if ( not( $collection-available ) ) 
+
+		then ap:do-not-found( $request-path-info )
+		
+		else
+		
+			let $entry-doc-db-path := adb:create-member( $request-path-info , $request-data )
+		
+			let $entry-doc := doc( $entry-doc-db-path )
+		            
+			let $header-content-type := response:set-header( $http:header-content-type , $ap:atom-mimetype )
+			
+		    let $status-code := response:set-status-code( $http:status-success-created )
+		        
+		    let $location := $entry-doc/atom:entry/atom:link[@rel="self"]/@href
+		        	
+			let $header-location := response:set-header( $http:header-location, $location )
+					    
+			return $entry-doc
+			
+};
+
+
+
+
+declare function ap:do-put-entry(
+	$request-path-info as xs:string ,
+	$request-data as element(atom:entry)
+) as item()*
+{
+
+	(: 
+	 : First we need to know whether an atom collection exists at the 
+	 : request path.
+	 :)
+	 
+	let $member-available := adb:member-available( $request-path-info )
+	
+	return 
+	
+		if ( not( $member-available ) ) 
+
+		then ap:do-not-found( $request-path-info )
+		
+		else
+		
+			let $entry-doc-db-path := adb:update-member( $request-path-info , $request-data )
+		
+			let $entry-doc := doc( $entry-doc-db-path )
+		            
+			let $header-content-type := response:set-header( $http:header-content-type , $ap:atom-mimetype )
+			
+		    let $status-code := response:set-status-code( $http:status-success-ok )
+		        
+			return $entry-doc
+
+};
+
+
+
+declare function ap:do-post-media(
+	$request-path-info as xs:string ,
+	$request-data as xs:base64Binary ,
+	$request-content-type
+) as item()*
+{
+
+	(: 
+	 : First we need to know whether an atom collection exists at the 
+	 : request path.
+	 :)
+	 
+	let $collection-available := adb:collection-available( $request-path-info )
+	
+	return 
+	
+		if ( not( $collection-available ) ) 
+
+		then ap:do-not-found( $request-path-info )
+		
+		else
+		
+			let $media-link-doc-db-path := adb:create-media-resource( $request-path-info , $request-data , $request-content-type )
+			
+			let $media-link-doc := doc( $media-link-doc-db-path )
+		            
+			let $header-content-type := response:set-header( $http:header-content-type , $ap:atom-mimetype )
+			
+		    let $status-code := response:set-status-code( $http:status-success-created )
+		        
+		    let $location := $media-link-doc/atom:entry/atom:link[@rel="self"]/@href
+		        	
+			let $header-location := response:set-header( $http:header-location, $location )
+					    
+			return $media-link-doc
+			
+};
+
+
+
+
+
+declare function ap:do-put-media(
+	$request-path-info as xs:string ,
+	$request-data as xs:base64Binary ,
+	$request-content-type
+) as item()*
+{
+
+	(: 
+	 : First we need to know whether a media resource exists at the 
+	 : request path.
+	 :)
+	 
+	let $found := adb:media-resource-available( $request-path-info )
+	
+	return 
+	
+		if ( not( $found ) ) 
+
+		then ap:do-not-found( $request-path-info )
+		
+		else
+		
+			let $media-doc-db-path := adb:update-media-resource( $request-path-info , $request-data , $request-content-type )
+			
+			let $media-doc := util:binary-doc( $media-doc-db-path )
+			
+		    let $status-code := response:set-status-code( $http:status-success-ok )
+		    
+		    let $header-content-type := response:set-header( $http:header-content-type , $request-content-type )
+		    
+			return $media-doc
+
+};
+
+
+
+
+declare function ap:do-not-found(
+	$request-path-info
+) as item()?
+{
+
+    let $status-code := response:set-status-code( $http:status-client-error-not-found )
+	let $header-content-type := response:set-header( $http:header-content-type , "application/xml" )
+	let $response := 
+	
+		<response>
+			<message>The server has not found anything matching the Request-URI.</message>
+			<path-info>{$request-path-info}</path-info>
+			<service-url>{$config:service-url}</service-url>
+		</response>
+
+	return response
+		
+};
+
+
+
 declare function ap:do-bad-request(
 	$request-path-info ,
-	$message as xs:string
+	$message as xs:string ,
+	$request-data
 ) as item()?
 {
 
@@ -154,8 +362,20 @@ declare function ap:do-bad-request(
 	
 		<response>
 			<message>{$message} The request could not be understood by the server due to malformed syntax. The client SHOULD NOT repeat the request without modifications.</message>
-			<path-info>{$request-path-info}</path-info>
 			<service-url>{$config:service-url}</service-url>
+			<method>{request:get-method()}</method>
+			<path-info>{$request-path-info}</path-info>
+			<headers>
+			{
+				for $header-name in request:get-header-names()
+				return
+					element  { lower-case( $header-name ) } 
+					{
+						request:get-header( $header-name )						
+					}
+			}
+			</headers>
+			<data>{$request-data}</data>
 		</response>
 			
 	return $response
