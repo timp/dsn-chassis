@@ -4,7 +4,6 @@
 	<comment></comment>
 	<projects>
 		<project>googlecode_dsn-chassis_generic_lib_java</project>
-		<project>eXist-1.5dev</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

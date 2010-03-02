@@ -48,15 +48,15 @@
     <param-name>contextConfigLocation</param-name>
 
     <!-- security configuration for the development environment -->    
-<!--
     <param-value>
       WEB-INF/security-development.xml
     </param-value>
--->
     <!-- security configuration for the production environment, using CAS and Drupal -->
+<!--
     <param-value>
       WEB-INF/security-cas-drupal.xml
     </param-value>
+-->
    
   </context-param>
   
