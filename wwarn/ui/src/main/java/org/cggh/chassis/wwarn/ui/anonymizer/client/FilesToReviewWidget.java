@@ -10,7 +10,6 @@ import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.DelegatingWidget;
 import org.cggh.chassis.generic.widget.client.WidgetEventChannel;
 
-import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;
 
@@ -80,10 +79,7 @@ public class FilesToReviewWidget
 	}	
 
 	public final WidgetEventChannel reviewFileNavigationEventChannel = new WidgetEventChannel(this);
-		
-	public HandlerRegistration addReviewFileNavigationHandler(ReviewFileNavigationHandler h) {
-		return this.addHandler(h, ReviewFileNavigationEvent.TYPE);
-	}
+
 	
 	public Element getFileToBeReviewedEntryElement() { 
 		return model.getFileToBeReviewedEntryElement();

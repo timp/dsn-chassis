@@ -27,18 +27,14 @@ declare function local:has-not-been-reviewed( $entry as element(atom:entry) ) as
         where 
         
             $review//chassis:review/@type = "http://www.cggh.org/2010/chassis/terms/PersonalDataReview"
-        
+
             and
-        
-            $review/atom:link[@rel="http://www.cggh.org/2010/chassis/terms/reviewSubject"]/@href = $entry/atom:link[@rel="self"]/@href
             
+            $review//atom:link[@rel="http://www.cggh.org/2010/chassis/terms/reviewSubject"]/@href = $entry/atom:link[@rel="self"]/@href
+            
+        
         return 
             $review
-
-(:
-            let $absolute-uri := concat(request:get-context-path(), "/atom/edit/reviews", $review/atom:link[@rel="http://www.cggh.org/2010/chassis/terms/reviewSubject"]/@href)
-             "/chassis-wwarn-ui/atom/edit/media?id=urn:uuid:6fb5d54d-06fd-4618-aaf4-0883433fcbbb"
-:)
 
 (:
     let $reviews := 

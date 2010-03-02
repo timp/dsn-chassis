@@ -203,9 +203,16 @@ public class FilesToReviewWidgetRenderer extends ChassisWidgetRenderer<FilesToRe
 					controller.selectFileToBeReviewedEntryElement(fileToBeReviewedEntryElement);
 					
 					log.debug("Firing reviewFile event...");
-					owner.reviewFileNavigationEventChannel.fireEvent();
+					
+					//TODO: Create event and add data to it.
+					ReviewFileNavigationEvent e2 = new ReviewFileNavigationEvent();
+					
+					e2.setFileToBeReviewedEntryElement(fileToBeReviewedEntryElement);
+					
+					owner.reviewFileNavigationEventChannel.fireEvent(e2);
 					
 					log.leave();
+					
 				}
 
 			});

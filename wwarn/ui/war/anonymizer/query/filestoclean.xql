@@ -22,7 +22,7 @@ declare function local:has-failed-review( $entry as element(atom:entry) ) as xs:
         where 
             $review//chassis:review/@type = "http://www.cggh.org/2010/chassis/terms/PersonalDataReview"
             and
-            $review/atom:link[@rel="http://www.cggh.org/2010/chassis/terms/reviewSubject"]/@href = $entry/atom:link[@rel="self"]/@href
+            $review//atom:link[@rel="http://www.cggh.org/2010/chassis/terms/reviewSubject"]/@href = $entry/atom:link[@rel="self"]/@href
             and
             $review//chassis:outcome = "fail"
         return $review

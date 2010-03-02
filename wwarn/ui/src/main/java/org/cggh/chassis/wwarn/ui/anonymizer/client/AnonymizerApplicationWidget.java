@@ -14,10 +14,7 @@ import com.google.gwt.event.shared.HandlerRegistration;
 public class AnonymizerApplicationWidget extends MultiWidget {
 
 	private Log log = LogFactory.getLog(AnonymizerApplicationWidget.class);
-	
-	//TODO: Move these into the home widget when events are wired up.
-	private FilesToReviewWidget filesToReviewWidget;
-	private FilesToCleanWidget filesToCleanWidget;
+
 	
 	private AnonymizerHomeWidget anonymizerHomeWidget;
 	private ReviewFileWidget reviewFileWidget;
@@ -31,22 +28,18 @@ public class AnonymizerApplicationWidget extends MultiWidget {
 		this.anonymizerHomeWidget = new AnonymizerHomeWidget();
 		this.mainChildren.add(this.anonymizerHomeWidget);
 		
-		//TODO: Move these into the home widget when events are wired up. 
-		this.filesToReviewWidget = new FilesToReviewWidget();
-		this.filesToCleanWidget = new FilesToCleanWidget();
-		this.mainChildren.add(this.filesToReviewWidget);		
-		this.mainChildren.add(this.filesToCleanWidget);		
-		
 		this.reviewFileWidget = new ReviewFileWidget();
 		this.mainChildren.add(this.reviewFileWidget);	
+		// TODO: Add this when the CleanFileWidget is ready.
 		//this.cleanFileWidget = new CleanFileWidget();
 		//this.mainChildren.add(this.cleanFileWidget);	
+
+		this.defaultChild = this.anonymizerHomeWidget;
 		
-		//TODO: Switch this over to the home widget when events are wired up. 
-		this.defaultChild = this.filesToReviewWidget;
-		this.anonymizerHomeWidget.refresh();
-		this.filesToReviewWidget.refresh();
-		this.filesToCleanWidget.refresh();
+		// Shouldn't refresh here, due to the sequence of events
+		// this would cause try to render the HomeWidget before its children have been built
+//		this.anonymizerHomeWidget.refresh();
+
 		
 		log.leave();
 
@@ -56,27 +49,37 @@ public class AnonymizerApplicationWidget extends MultiWidget {
 	public void registerHandlersForChildWidgetEvents() {
 		super.registerHandlersForChildWidgetEvents();	
 		
-		//TODO: Switch this over to the home widget when events are wired up. 
-		HandlerRegistration a = filesToReviewWidget.reviewFileNavigationEventChannel.addHandler(new WidgetEventHandler() {
+
+		HandlerRegistration a = this.anonymizerHomeWidget.reviewFileNavigationEventChannel.addHandler(new WidgetEventHandler() {
 			public void onEvent(WidgetEvent e) {
 				
-				log.debug("Setting fileToBeReviewed...");
+				log.enter("onEvent");
 				
-				reviewFileWidget.setFileToBeReviewedEntryElement(filesToReviewWidget.getFileToBeReviewedEntryElement());
+				if (e instanceof ReviewFileNavigationEvent) {
+					
+					log.debug("Setting fileToBeReviewed...");
+					
+					reviewFileWidget.setFileToBeReviewedEntryElement(((ReviewFileNavigationEvent) e).getFileToBeReviewedEntryElement());
+					
+					reviewFileWidget.refresh();
+					setActiveChild(reviewFileWidget);
 				
-				reviewFileWidget.refresh();
-				setActiveChild(reviewFileWidget);
+				} else {
+					
+					log.debug(" event not an instanceof ReviewFileNavigationEvent");
+				}
+				
+				log.leave();
+	
 			}
 		});
 		this.childWidgetEventHandlerRegistrations.add(a);		
 
-		
-		
 		HandlerRegistration d2 = this.reviewFileWidget.addBackToStartNavigationHandler(new BackToStartNavigationHandler() {
 			
 			public void onNavigation(BackToStartNavigationEvent e) {
-				filesToReviewWidget.refresh();
-				setActiveChild(filesToReviewWidget);
+				anonymizerHomeWidget.refresh();
+				setActiveChild(anonymizerHomeWidget);
 			}
 
 		});		
@@ -84,5 +87,11 @@ public class AnonymizerApplicationWidget extends MultiWidget {
 		
 	}
 	
+	
+	
+	@Override
+	public void refresh() {
+		this.anonymizerHomeWidget.refresh();
+	}
 	
 }
