@@ -2,28 +2,38 @@ package org.cggh.chassis.wwarn.ui.anonymizer.client;
 
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
+import org.cggh.chassis.generic.widget.client.WidgetEvent;
 
-import com.google.gwt.event.shared.GwtEvent;
+import com.google.gwt.xml.client.Element;
 
-public class ReviewFileNavigationEvent extends GwtEvent<ReviewFileNavigationHandler> {
+public class ReviewFileNavigationEvent extends WidgetEvent {
 
-	private static final Log log = LogFactory.getLog(ReviewFileNavigationEvent.class);		
+	private static final Log log = LogFactory.getLog(ReviewFileNavigationEvent.class);	
 	
-	public static final Type<ReviewFileNavigationHandler> TYPE = new Type<ReviewFileNavigationHandler>();
-	
-	@Override
-	protected void dispatch(ReviewFileNavigationHandler h) {
+	private Element fileToBeReviewedEntryElement;
+
+
+	public void setFileToBeReviewedEntryElement(Element fileToBeReviewedEntryElement) {
+
+		log.enter("setFileToBeReviewedEntryElement");		
 		
-		log.enter("dispatch");
+		log.debug("Setting file to be reviewed....");
 		
-		h.onNavigation(this);
+		this.fileToBeReviewedEntryElement = fileToBeReviewedEntryElement;
 		
 		log.leave();
 	}
+	
+	public Element getFileToBeReviewedEntryElement() {
 
-	@Override
-	public com.google.gwt.event.shared.GwtEvent.Type<ReviewFileNavigationHandler> getAssociatedType() {
-		return TYPE;
+		log.enter("getFileToBeReviewedEntryElement");		
+		
+		log.debug("Getting file to be reviewed....");
+
+		log.leave();
+		
+		return this.fileToBeReviewedEntryElement;
+
 	}
-
+	
 }

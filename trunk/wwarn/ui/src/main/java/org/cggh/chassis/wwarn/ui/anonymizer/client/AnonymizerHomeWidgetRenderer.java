@@ -8,11 +8,14 @@ import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 import org.cggh.chassis.generic.widget.client.ChassisWidgetRenderer;
+import org.cggh.chassis.generic.widget.client.WidgetEvent;
+import org.cggh.chassis.generic.widget.client.WidgetEventHandler;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.Status;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.StatusChangeEvent;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.StatusChangeHandler;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiTemplate;
@@ -108,6 +111,24 @@ public class AnonymizerHomeWidgetRenderer extends ChassisWidgetRenderer<Anonymiz
 				syncUIWithStatus(e.getAfter());
 			}
 		});
+
+	}
+
+	
+	
+	
+	@Override
+	public void registerHandlersForChildWidgetEvents() {
+		super.registerHandlersForChildWidgetEvents();	
+		
+		//TODO: Switch this over to the home widget when events are wired up. 
+		HandlerRegistration a = filesToReviewWidgetUiField.reviewFileNavigationEventChannel.addHandler(new WidgetEventHandler() {
+			public void onEvent(WidgetEvent e) {
+				// just bubble
+				owner.reviewFileNavigationEventChannel.fireEvent(e);
+			}
+		});
+		this.childWidgetEventHandlerRegistrations.add(a);		
 
 	}
 

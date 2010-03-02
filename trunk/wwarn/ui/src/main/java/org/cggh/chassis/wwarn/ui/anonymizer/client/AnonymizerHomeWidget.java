@@ -49,7 +49,12 @@ public class AnonymizerHomeWidget
 		
 		log.enter("refresh");
 
+		assert (this.renderer != null);
+		assert (this.renderer.filesToReviewWidgetUiField != null);
+		assert (this.renderer.filesToCleanWidgetUiField != null);
 		
+		this.renderer.filesToReviewWidgetUiField.refresh();
+		this.renderer.filesToCleanWidgetUiField.refresh();
 		
 		log.leave();
 	}

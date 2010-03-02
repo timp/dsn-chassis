@@ -47,6 +47,7 @@ public class AnonymizerApplicationEntryPoint implements EntryPoint {
 		log.debug("instantiate main application widget");
 		AnonymizerApplicationWidget widget = new AnonymizerApplicationWidget();
 		RootPanel.get("content").add(widget);
+		widget.refresh();
 		
 		log.debug("setup history manager");
 		HistoryManager hm = new WidgetMemory.HistoryManager(widget.getMemory());

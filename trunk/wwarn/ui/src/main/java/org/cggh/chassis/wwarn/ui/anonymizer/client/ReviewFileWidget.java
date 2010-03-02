@@ -119,10 +119,17 @@ public class ReviewFileWidget
 			
 			Element fileToBeReviewed = model.fileToBeReviewedEntryElement.get();
 			
-			String fileToBeReviewedID = AtomHelper.getId(fileToBeReviewed);
+			String fileToBeReviewedID = null;
 			
-			if (fileToBeReviewedID != null) {
-				map.put(KEY_MEDIAID, fileToBeReviewedID);
+			if (fileToBeReviewed != null) { 
+				
+				fileToBeReviewedID = AtomHelper.getId(fileToBeReviewed);
+			
+				if (fileToBeReviewedID != null) {
+					
+					map.put(KEY_MEDIAID, fileToBeReviewedID);
+				}
+				
 			}
 			
 			log.leave();

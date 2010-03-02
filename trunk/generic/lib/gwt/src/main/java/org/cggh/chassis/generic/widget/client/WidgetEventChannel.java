@@ -25,4 +25,8 @@ public class WidgetEventChannel {
 		handlerManager.fireEvent(e);
 	}
 	
+	public void fireEvent(WidgetEvent e) {
+		handlerManager.fireEvent(e);
+	}
+	
 }
