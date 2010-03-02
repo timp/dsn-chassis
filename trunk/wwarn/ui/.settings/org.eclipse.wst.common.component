@@ -8,9 +8,6 @@
 <dependent-module archiveName="googlecode_dsn-chassis_generic_lib_java.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/googlecode_dsn-chassis_generic_lib_java/googlecode_dsn-chassis_generic_lib_java">
 <dependency-type>uses</dependency-type>
 </dependent-module>
-        <dependent-module archiveName="eXist-1.5dev.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/eXist-1.5dev/eXist-1.5dev">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
 <property name="context-root" value="chassis-wwarn-ui"/>
 <property name="java-output-path"/>
 </wb-module>
