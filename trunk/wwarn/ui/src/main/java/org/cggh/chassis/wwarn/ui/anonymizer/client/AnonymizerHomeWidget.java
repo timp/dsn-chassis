@@ -9,6 +9,7 @@ import org.cggh.chassis.generic.widget.client.DelegatingWidget;
 import org.cggh.chassis.generic.widget.client.WidgetEventChannel;
 
 
+
 /**
  * @author lee
  *
@@ -18,7 +19,6 @@ public class AnonymizerHomeWidget
 
 	private static final Log log = LogFactory.getLog(AnonymizerHomeWidget.class);
 
-	
 	private AnonymizerHomeWidgetController controller;
 	
 	@Override
@@ -41,15 +41,14 @@ public class AnonymizerHomeWidget
 		super.init();
 		
 		this.setController(new AnonymizerHomeWidgetController(this, this.model));
-
-
+		
 	}
 	
 	@Override
 	public void refresh() {
 		
 		log.enter("refresh");
-		
+
 		
 		
 		log.leave();
@@ -62,8 +61,7 @@ public class AnonymizerHomeWidget
 	public AnonymizerHomeWidgetController getController() {
 		return controller;
 	}
-		
-	public final WidgetEventChannel reviewFileNavigationEventChannel = new WidgetEventChannel(this);		
-		
 
+	public final WidgetEventChannel reviewFileNavigationEventChannel = new WidgetEventChannel(this);		
+	
 }

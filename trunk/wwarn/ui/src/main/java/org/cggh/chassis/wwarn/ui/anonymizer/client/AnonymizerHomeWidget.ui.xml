@@ -46,12 +46,12 @@
 		</g:HTMLPanel>
 		<div class="{style.column}">
 
-			<local:FilesToReviewWidget ui:field="filesToReviewWidget"/>
+			<local:FilesToReviewWidget ui:field="filesToReviewWidgetUiField"/>
 			
 		</div>
 		<div class="{style.column} {style.lastColumn}">
 
-			<local:FilesToCleanWidget ui:field="filesToCleanWidget"/>
+			<local:FilesToCleanWidget ui:field="filesToCleanWidgetUiField"/>
 			
 		</div>
 		<div class="endRow"></div>

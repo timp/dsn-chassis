@@ -15,7 +15,9 @@ import module namespace cf = "http://www.cggh.org/2009/chassis/xquery-functions"
 declare option exist:serialize "method=xml media-type=application/xml indent=yes" ;
 
 
-
+(: 
+	TODO: The media and review link hrefs need to match. May need to modify the createReview method in the ReviewFileWidget 
+:)
 
 declare function local:has-not-been-reviewed( $entry as element(atom:entry) ) as xs:boolean
 {
@@ -32,6 +34,11 @@ declare function local:has-not-been-reviewed( $entry as element(atom:entry) ) as
             
         return 
             $review
+
+(:
+            let $absolute-uri := concat(request:get-context-path(), "/atom/edit/reviews", $review/atom:link[@rel="http://www.cggh.org/2010/chassis/terms/reviewSubject"]/@href)
+             "/chassis-wwarn-ui/atom/edit/media?id=urn:uuid:6fb5d54d-06fd-4618-aaf4-0883433fcbbb"
+:)
 
 (:
     let $reviews := 
@@ -62,12 +69,15 @@ declare function local:submission-published( $entry as element(atom:entry) )
 			
 };
 
+let $param-id := request:get-parameter("id", "")
+
+return
 <atom:feed>
     <atom:title>Query Results</atom:title>
     {
         (: for $entry in collection("/db/media")//atom:entry :)
         for $entry in cf:submitted-media()
-        where local:has-not-been-reviewed($entry)
+        where local:has-not-been-reviewed($entry) and ($param-id = "" or ($param-id != "" and $param-id = $entry/atom:id))
         order by $entry/atom:published
         return
 			<atom:entry>

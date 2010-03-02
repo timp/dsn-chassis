@@ -12,6 +12,7 @@ import org.cggh.chassis.generic.widget.client.ErrorEvent;
 import org.cggh.chassis.wwarn.ui.common.client.Config;
 
 import com.google.gwt.xml.client.Document;
+import com.google.gwt.xml.client.Element;
 
 
 
@@ -75,6 +76,15 @@ public class FilesToReviewWidgetController {
 
 	}
 
+	public void selectFileToBeReviewedEntryElement(Element fileToBeReviewedEntryElement) {
+		
+		log.enter("selectFileToBeReviewedEntryElement");
+		
+		model.setFileToBeReviewedEntryElement(fileToBeReviewedEntryElement);
+		
+		log.leave();
+	}	
+	
 	
 	private class DefaultErrback implements Function<Throwable, Throwable> {
 
@@ -86,19 +96,7 @@ public class FilesToReviewWidgetController {
 		}
 		
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 
 
 }
