@@ -147,6 +147,8 @@ public class MockHttpServletRequest implements HttpServletRequest {
     	sb.append(getScheme());
     	sb.append("://");
     	sb.append(getServerName());
+    	if (getServerPort() != 80)
+    		sb.append(":" + new Integer(getServerPort()).toString());
     	sb.append(getContextPath());
     	sb.append(getRequestURI());
     	if (!getParameterMap().isEmpty()) {
@@ -281,7 +283,7 @@ public class MockHttpServletRequest implements HttpServletRequest {
         return scheme;
     }
 
-    String serverName = "www.google.com";
+    String serverName = "localhost";
     public String getServerName() {
         return serverName;
     }
@@ -289,8 +291,12 @@ public class MockHttpServletRequest implements HttpServletRequest {
     	this.serverName = serverName;
     }
 
+    int port = 80;
     public int getServerPort() {
-        return 80;
+        return port;
+    }
+    public void setPort(int port) { 
+    	this.port = port;
     }
 
     public BufferedReader getReader() throws IOException {
