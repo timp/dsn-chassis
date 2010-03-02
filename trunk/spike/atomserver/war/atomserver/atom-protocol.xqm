@@ -39,13 +39,18 @@ as item()*
 		) 
 		
 		then ap:do-put-feed( $request-path-info , $request-data )
+		
+		else if (
+			$request-method = $http:method-post and 
+			starts-with( $request-content-type, $ap:atom-mimetype ) and
+			local-name( $request-data ) = $af:feed and 
+			namespace-uri( $request-data ) = $af:nsuri
+		)
+		
+		then ap:do-post-feed( $request-path-info , $request-data )
 
-		else
+		else ap:do-bad-request( $request-path-info , "Unknown operation." )
 
-			<debug>
-				<path-info>{$request-path-info}</path-info>
-				<service-url>{$config:service-url}</service-url>
-			</debug>
 };
 
 
@@ -88,3 +93,72 @@ declare function ap:do-put-feed(
 	return $feed-doc
 	
 };
+
+
+
+
+declare function ap:do-post-feed(
+	$request-path-info as xs:string ,
+	$request-data as element(atom:feed)
+) as item()*
+{
+
+	(: 
+	 : We need to know whether an atom collection already exists at the 
+	 : request path, in which case the request will be treated as an error,
+	 : or whether no atom collection exists at the request path, in which case
+	 : the request will create a new atom collection and initialise the atom
+	 : feed document with the given feed metadata.
+	 :)
+	 
+	let $create := not( adb:collection-available( $request-path-info ) )
+	
+	return 
+	
+		if ( $create ) 
+
+		then
+		
+			let $feed-doc-db-path := adb:create-collection( $request-path-info , $request-data )
+		
+			let $feed-doc := doc( $feed-doc-db-path )
+		            
+			let $header-content-type := response:set-header( $http:header-content-type , $ap:atom-mimetype )
+			
+		    let $status-code := response:set-status-code( $http:status-success-no-content )
+		        
+		    let $location := $feed-doc/atom:feed/atom:link[@rel="self"]/@href
+		        	
+			let $header-location := response:set-header( $http:header-location, $location )
+		    
+			return ()
+		
+		else
+		
+			ap:do-bad-request( $request-path-info , "A collection already exists at the given location." )
+	
+};
+
+
+
+
+declare function ap:do-bad-request(
+	$request-path-info ,
+	$message as xs:string
+) as item()?
+{
+
+    let $status-code := response:set-status-code( $http:status-client-error-bad-request )
+	let $header-content-type := response:set-header( $http:header-content-type , "application/xml" )
+	let $response := 
+	
+		<response>
+			<message>{$message} The request could not be understood by the server due to malformed syntax. The client SHOULD NOT repeat the request without modifications.</message>
+			<path-info>{$request-path-info}</path-info>
+			<service-url>{$config:service-url}</service-url>
+		</response>
+			
+	return $response
+    
+};
+
