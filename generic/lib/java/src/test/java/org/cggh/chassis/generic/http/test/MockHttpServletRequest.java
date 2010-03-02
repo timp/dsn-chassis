@@ -38,6 +38,9 @@ public class MockHttpServletRequest implements HttpServletRequest {
     public void setParameters(Map<String,String[]> map) {
         parameters = map;
     }
+    public void resetParameters() { 
+    	parameters = new HashMap<String,String[]>(); 
+    }
     
     public String getAuthType() {
         return null;
@@ -99,8 +102,13 @@ public class MockHttpServletRequest implements HttpServletRequest {
         return null;
     }
 
+
+    String contextPath = "";
+    public void setContextPath(String contextPath) {
+		this.contextPath = contextPath;
+	}
     public String getContextPath() {
-        return "/servletContext"; 
+        return contextPath; 
     }
 
     public String getQueryString() {
@@ -138,7 +146,7 @@ public class MockHttpServletRequest implements HttpServletRequest {
     	StringBuffer sb = new StringBuffer();
     	sb.append(getScheme());
     	sb.append("://");
-    	sb.append(getRemoteHost());
+    	sb.append(getServerName());
     	sb.append(getContextPath());
     	sb.append(getRequestURI());
     	if (!getParameterMap().isEmpty()) {
@@ -273,8 +281,12 @@ public class MockHttpServletRequest implements HttpServletRequest {
         return scheme;
     }
 
+    String serverName = "www.google.com";
     public String getServerName() {
-        return "www.google.com";
+        return serverName;
+    }
+    public void setServerName(String serverName) { 
+    	this.serverName = serverName;
     }
 
     public int getServerPort() {
@@ -290,7 +302,7 @@ public class MockHttpServletRequest implements HttpServletRequest {
     }
 
     public String getRemoteHost() {
-        return "www.google.com";
+        return null;
     }
 
     public void setAttribute(String arg0, Object arg1) {
@@ -351,5 +363,7 @@ public class MockHttpServletRequest implements HttpServletRequest {
                                  " Do you really want to start now?");
       
     }
+
+
     
 }

@@ -3,7 +3,9 @@
  */
 package org.cggh.chassis.generic.http;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -77,13 +79,42 @@ public final class AtomAuthorFilter extends HttpFilter {
                 response.flushBuffer();		
     			break;
     		case PUT:
-    			if (mayPut(request))
-    				chain.doFilter(request, response);
-    			else {
-        			response.sendError(HttpServletResponse.SC_UNAUTHORIZED, 
+        		String user = getUser(request);
+        		System.err.println("put user:"+user);
+        		
+        	    String url = getUrl(request);
+        	    System.err.println(url);
+        		HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
+        		connection.setRequestMethod("GET");
+        		if (request.getContentType() != null)
+        			connection.setRequestProperty("Content-Type", request.getContentType());
+        		String authorization = request.getHeader("Authorization");
+        		if (authorization != null)
+        			connection.setRequestProperty("Authorization", authorization);
+        		connection.connect();
+
+        		if (connection.getResponseCode() == HttpServletResponse.SC_OK) { 
+        			String content = getContent(connection);
+                	if (content.startsWith("<atom:entry")) {
+                		if (user == null){
+                			response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "No user found");
+                			return;            			
+                		}
+                		List<String> authors = getAuthors(content);
+                		if (!authors.contains(user)) {
+                			response.sendError(HttpServletResponse.SC_UNAUTHORIZED, 
+                				"You may only update an item of which you are the author");
+                			return;
+                		}
+                	}
+        	        chain.doFilter(request, response);
+        		} else  { 
+        			System.err.println(connection.getResponseCode() + ":You may only update an item of which you are the author");
+        			response.sendError(connection.getResponseCode(), 
         					"You may only update an item of which you are the author");
         			return;
     			}
+        			
     			break;
     		case POST:
     	        chain.doFilter(request, response);
@@ -111,15 +142,14 @@ public final class AtomAuthorFilter extends HttpFilter {
 	        chain.doFilter(request, response);
 	}
 
-	private static boolean mayPut(HttpServletRequest request ) throws IOException {
-		switch (getStatus(request)) {
-		case HttpServletResponse.SC_OK:
-			return true;				
-		case HttpServletResponse.SC_NOT_FOUND:
-			return true;				
-		default:
-			return false;
-		}
+	private String getContent(HttpURLConnection connection) throws IOException {
+		BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+		String line;
+		String content = "";
+		while ((line = in.readLine()) != null) 
+			content += line;
+		in.close();
+		return content;
 	}
 
 	private static int getStatus(HttpServletRequest request ) throws IOException {
