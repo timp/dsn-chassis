@@ -76,7 +76,7 @@ public class AtomAuthorFilterTest extends TestCase {
 		request.setRequestURI("/notfound.atom");
 		request.setContentType("application/atom+xml");
 		it.doHttpFilter(request, response, chain);
-		assertEquals(404,response.getStatus());
+		assertEquals(unlessDelete(404),response.getStatus());
 	}
 	public void testDoHttpFilter_emptyFound_nullContentType() throws Exception {
 		chain.setReturnFlag("Nothing, OK");
