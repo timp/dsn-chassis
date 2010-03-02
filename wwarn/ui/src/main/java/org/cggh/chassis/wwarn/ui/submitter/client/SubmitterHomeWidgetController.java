@@ -41,8 +41,6 @@ public class SubmitterHomeWidgetController {
 	}
 
 
-	// Allow this controller to retrieve and refresh stuff.
-
 	public Deferred<Document> retrieveSubmissions() {
 		
 		log.enter("retrieveSubmissions");

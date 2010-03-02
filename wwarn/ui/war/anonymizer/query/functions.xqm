@@ -143,5 +143,4 @@ declare function cf:submitted-media() as element(atom:entry)*
     return $entry
 };
 
-
     

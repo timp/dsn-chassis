@@ -43,8 +43,8 @@ public class AnonymizerHomeWidgetRenderer extends ChassisWidgetRenderer<Anonymiz
 	
 	@UiField HTMLPanel errorPanel;
 		@UiField Label errorLabel; // in errorPanel
-	@UiField FilesToReviewWidget filesToReviewWidget;
-	@UiField FilesToCleanWidget filesToCleanWidget;
+	@UiField FilesToReviewWidget filesToReviewWidgetUiField;
+	@UiField FilesToCleanWidget filesToCleanWidgetUiField;
 	
 	@Override
 	protected void renderUI() {
@@ -71,13 +71,14 @@ public class AnonymizerHomeWidgetRenderer extends ChassisWidgetRenderer<Anonymiz
 
 		// Hide everything at this UI level (top level) first, then show as required.
 		errorPanel.setVisible(false);
-		filesToReviewWidget.setVisible(false);
-		filesToCleanWidget.setVisible(false);
+		filesToReviewWidgetUiField.setVisible(false);
+		filesToCleanWidgetUiField.setVisible(false);
 		
 		if (status instanceof AsyncWidgetModel.InitialStatus) {
 
-			filesToReviewWidget.setVisible(true);
-			filesToCleanWidget.setVisible(true);
+			filesToReviewWidgetUiField.setVisible(true);
+			filesToCleanWidgetUiField.setVisible(true);
+			
 		}
 		
 		
@@ -111,6 +112,7 @@ public class AnonymizerHomeWidgetRenderer extends ChassisWidgetRenderer<Anonymiz
 	}
 
 
+	
 	public void setOwner(AnonymizerHomeWidget owner) {
 		this.owner = owner;
 	}
@@ -119,5 +121,7 @@ public class AnonymizerHomeWidgetRenderer extends ChassisWidgetRenderer<Anonymiz
 	public AnonymizerHomeWidget getOwner() {
 		return owner;
 	}
+	
+
 	
 }

@@ -3,13 +3,16 @@
  */
 package org.cggh.chassis.wwarn.ui.anonymizer.client;
 
+
 import org.cggh.chassis.generic.async.client.Deferred;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.DelegatingWidget;
 import org.cggh.chassis.generic.widget.client.WidgetEventChannel;
 
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.xml.client.Document;
+import com.google.gwt.xml.client.Element;
 
 
 /**
@@ -44,9 +47,11 @@ public class FilesToReviewWidget
 		
 		super.init();
 		
-		this.controller = new FilesToReviewWidgetController(this, this.model);
+		this.controller = new FilesToReviewWidgetController(this, this.model);	
 		
-		retrieveFilesToReview();
+		this.renderer.setController(this.controller);
+		
+		// In order to ready the widget's view, call a refresh before presenting.
 
 		log.leave();
 	}
@@ -74,7 +79,14 @@ public class FilesToReviewWidget
 		
 	}	
 
-	public final WidgetEventChannel reviewFileNavigationEventChannel = new WidgetEventChannel(this);		
+	public final WidgetEventChannel reviewFileNavigationEventChannel = new WidgetEventChannel(this);
+		
+	public HandlerRegistration addReviewFileNavigationHandler(ReviewFileNavigationHandler h) {
+		return this.addHandler(h, ReviewFileNavigationEvent.TYPE);
+	}
 	
-
+	public Element getFileToBeReviewedEntryElement() { 
+		return model.getFileToBeReviewedEntryElement();
+	}
+	
 }

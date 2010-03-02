@@ -46,10 +46,13 @@ public class FilesToReviewWidgetRenderer extends ChassisWidgetRenderer<FilesToRe
 	
 	private FilesToReviewWidget owner;
 	
+	private FilesToReviewWidgetController controller;
+	
 	public FilesToReviewWidgetRenderer(FilesToReviewWidget owner) {
 		
-		this.owner = owner;
+		this.setOwner(owner);
 	}
+
 	
 	
 	@UiTemplate("FilesToReviewWidget.ui.xml")
@@ -168,6 +171,8 @@ public class FilesToReviewWidgetRenderer extends ChassisWidgetRenderer<FilesToRe
 	
 	private FlexTable renderFilesToReviewTable(List<Element> entries) {
 
+		log.enter("renderFilesToReviewTable");
+		
 		List<Widget[]> rows = new ArrayList<Widget[]>();
 
 		Widget[] headerRow = {
@@ -182,14 +187,25 @@ public class FilesToReviewWidgetRenderer extends ChassisWidgetRenderer<FilesToRe
 			String fileName = AtomHelper.getTitle(entry);
 			
 			String submittedDate = AtomHelper.getPublished(entry);
-			
-			// TODO: Provide a review link. 
+
+			final Element fileToBeReviewedEntryElement = entry;
 			
 			Anchor reviewLink = new Anchor("review"); // TODO i18n
+			
 			reviewLink.addClickHandler(new ClickHandler() {
 				
 				public void onClick(ClickEvent e) {
-					handleReviewFileLinkClick(e);
+					
+					log.enter("onClick");
+					
+					//TODO: Communicate the entry to the ReviewFileWidget (via the model, or event?)
+					
+					controller.selectFileToBeReviewedEntryElement(fileToBeReviewedEntryElement);
+					
+					log.debug("Firing reviewFile event...");
+					owner.reviewFileNavigationEventChannel.fireEvent();
+					
+					log.leave();
 				}
 
 			});
@@ -202,6 +218,8 @@ public class FilesToReviewWidgetRenderer extends ChassisWidgetRenderer<FilesToRe
 			rows.add(row);
 			
 		}
+		
+		log.leave();
 		
 		return RenderUtils.renderResultsTable(rows);
 	}
@@ -225,10 +243,20 @@ public class FilesToReviewWidgetRenderer extends ChassisWidgetRenderer<FilesToRe
 		
 	}
 
-	// TODO: Wire the handler up to the reviewFile link. 
-	void handleReviewFileLinkClick(ClickEvent e) {
-		owner.reviewFileNavigationEventChannel.fireEvent();
+	public void setOwner(FilesToReviewWidget owner) {
+		this.owner = owner;
 	}
+
+	public FilesToReviewWidget getOwner() {
+		return owner;
+	}
+
+
+	public void setController(FilesToReviewWidgetController controller) {
+		this.controller = controller;
+		
+	}
+
 
 	
 }

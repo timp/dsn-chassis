@@ -7,6 +7,7 @@ import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 import org.cggh.chassis.generic.widget.client.ObservableProperty;
 
 import com.google.gwt.xml.client.Document;
+import com.google.gwt.xml.client.Element;
 
 
 /**
@@ -17,10 +18,14 @@ public class FilesToReviewWidgetModel extends AsyncWidgetModel {
 
 	
 	public final ObservableProperty<Document> filesToReviewFeedDoc = new ObservableProperty<Document>();
+	
+	public final ObservableProperty<Element> fileToBeReviewedEntryElement = new ObservableProperty<Element>();
+	
 	private String errorMessage;
 
 	public FilesToReviewWidgetModel() {
 		filesToReviewFeedDoc.set(null);
+		fileToBeReviewedEntryElement.set(null);
 	}
 
 	@Override
@@ -42,6 +47,18 @@ public class FilesToReviewWidgetModel extends AsyncWidgetModel {
 	
 	public String getErrorMessage() {
 		return errorMessage;
+	}
+
+	public void setFileToBeReviewedEntryElement(Element fileToBeReviewedEntryElement) {
+		
+		this.fileToBeReviewedEntryElement.set(fileToBeReviewedEntryElement);
+		
+	}
+	
+	public Element getFileToBeReviewedEntryElement() {
+		
+		return this.fileToBeReviewedEntryElement.get();
+
 	}
 
 }

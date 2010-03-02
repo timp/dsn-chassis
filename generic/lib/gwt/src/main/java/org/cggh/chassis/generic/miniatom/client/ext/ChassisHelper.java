@@ -47,7 +47,16 @@ public class ChassisHelper {
 	public static void setModules(Element parent, List<String> modules) {
 		XMLNS.setElementsSimpleContentsByTagNameNS(parent, Chassis.ELEMENT_MODULE, Chassis.PREFIX, Chassis.NSURI, modules);
 	}
-	
-	
+
+ 
+	public static void setOutcome(Element parent, String outcome) {
+		XMLNS.setSingleChildSimpleContentByTagNameNS(parent, Chassis.ELEMENT_OUTCOME, Chassis.PREFIX, Chassis.NSURI, outcome);
+	}
+
+
+	public static Element createReview() {
+		return XMLNS.createElementNS(Chassis.ELEMENT_REVIEW, Chassis.PREFIX, Chassis.NSURI);
+	}
+
 	
 }

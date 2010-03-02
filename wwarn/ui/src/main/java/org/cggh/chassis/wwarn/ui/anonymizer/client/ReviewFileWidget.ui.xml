@@ -10,6 +10,11 @@
 
 	<ui:style>
 	
+		.error {
+			color: red;
+			font-weight: bold;	
+		}
+	
 		.fileListHeading {
 			margin-top: 0px;
 		}
@@ -18,20 +23,70 @@
 			text-align: center;
 		}
 
+		.requiredFieldMarker {
+			color: #FF0000;
+			font-weight: normal;
+		}
+		.optionalFieldMarker {
+			font-weight: normal;
+		}
+
 	</ui:style>
 	<g:HTMLPanel>
 	
 		<g:HTMLPanel ui:field="errorPanel">
 			<p>
-				<g:Label ui:field="errorLabel" />
+				<g:Label ui:field="errorLabel" styleName='{style.error}' />
 			</p>
 		</g:HTMLPanel>
 		<g:HTMLPanel ui:field="pendingPanel">
 			<p>
-				<ui:msg>pending...</ui:msg>
+				<ui:msg>Searching for specified file...</ui:msg>
 			</p>
 		</g:HTMLPanel>
-		<p>Hello</p>
+		<g:HTMLPanel ui:field="reviewFilePanel">
+		
+			<g:FlowPanel ui:field="fileToBeReviewedTableContainer"/>
+			
+			<p>
+                <g:Anchor ui:field="backHomeLink">
+                    &lt; <ui:msg>back to the home page</ui:msg>
+                </g:Anchor>
+			</p>
+			
+			<p>
+				<ui:msg>Fields marked with an asterisk (<span class="{style.requiredFieldMarker}">*</span>) are compulsory.
+				</ui:msg>
+			</p>
+			<h4>
+				<ui:msg>Does this file contain personal data that should be removed before curation?</ui:msg>
+				
+				<span class="{style.requiredFieldMarker}">*</span>
+			</h4>
+       		<p>
+       			<g:RadioButton ui:field="fileCanProceedToCurationButton" name="personalDataReview" text="pass"/> <ui:msg>file can proceed to curation</ui:msg> <br/>
+       			<g:RadioButton ui:field="fileShouldBeClearedBeforeCurationButton" name="personalDataReview" text="fail"/> <ui:msg>file should be cleared before curation</ui:msg>
+       		</p>
+        	<h4>
+        		<ui:msg>Review Notes</ui:msg>
+        		
+        		<span class="{style.optionalFieldMarker}"><ui:msg>(optional)</ui:msg></span>
+        	</h4>
+        	<p>
+    	    	<g:TextArea ui:field="reviewNotesInput" />
+	    	</p>
+        	<p>
+        		<em><ui:msg>E.g., TODO good example</ui:msg></em>
+        	</p>
+           	<g:FlowPanel ui:field="reviewFileActionsPanel">
+           		<g:Button ui:field="reviewFileButton" stylePrimaryName="action">
+           			<ui:msg>OK</ui:msg>
+           		</g:Button>
+           		<g:Button ui:field="cancelReviewFileButton" stylePrimaryName="action">
+           			<ui:msg>Cancel</ui:msg>
+           		</g:Button>
+           	</g:FlowPanel>
+		</g:HTMLPanel>
 		
 	</g:HTMLPanel>
 
