@@ -13,8 +13,10 @@ import java.util.HashMap;
 import java.util.StringTokenizer;
 
 /**
- * @author timp
+ * Adapted from http://www.java2s.com/Code/Java/Tiny-Application/HttpServer.htm
  * 
+ * @author timp
+ * @since 2010/03/01
  */
 public class TestServer implements Runnable {
 	static ServerSocket serverSocket;
