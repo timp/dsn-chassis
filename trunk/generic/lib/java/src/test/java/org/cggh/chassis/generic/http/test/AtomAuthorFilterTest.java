@@ -139,6 +139,23 @@ public class AtomAuthorFilterTest extends TestCase {
 		it.doHttpFilter(request, response, chain);
 		assertEquals(unlessDelete(200), response.getStatus());
 	}
+	public void testDoHttpFilter_atomFound_atomContentType_alice_HEAD() throws Exception {
+		response = new MockHttpServletResponse();
+		chain.setReturnFlag("Atom Entry, OK");
+        request.setMethod("HEAD");
+		request.setContentType("application/atom+xml");
+		String encodedAuthorisationValue = 
+			StringUtils.newStringUtf8(
+					new Base64().encode((ALICE + ":" + PASSWORD).getBytes())).replaceAll("\n", "");
+		request.setHeader("Authorization", "Basic "
+				+ encodedAuthorisationValue);
+		try { 
+			it.doHttpFilter(request, response, chain);
+			fail("Should have bombed");
+		} catch (RuntimeException e) { 
+			assertTrue(e.getMessage().startsWith("Unexpected value of request method"));
+		}
+	}
 	private int unlessDelete(int i) {
 		if (getMethod().equals("DELETE"))
 			return 401;
