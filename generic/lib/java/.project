@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
 	<name>googlecode_dsn-chassis_generic_lib_java</name>
-	<comment></comment>
+	<comment>Generic, server-side, java code for the Chassis Data Sharing Network.</comment>
 	<projects>
 	</projects>
 	<buildSpec>
