@@ -15,6 +15,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.apache.commons.httpclient.Header;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
+import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.InputStreamRequestEntity;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.PutMethod;
@@ -747,7 +748,7 @@ public class TestProtocol extends TestCase {
 
 		}
 		
-		// setup a new POST request
+		// setup a new PUT request
 		
 		PutMethod method = new PutMethod(mediaLocation);
 
@@ -793,6 +794,213 @@ public class TestProtocol extends TestCase {
 		assertTrue(responseContentType.trim().startsWith("text/plain"));
 
 	}
+	
+	
+	
+	public void testGetFeed() {
+
+		// we need to create an atom collection first, to use as the target
+		// for an attempt to create a new member
+		
+		String collectionUri = SERVER_URI + Double.toString(Math.random());
+		
+		doPutFeedToCreateCollection(collectionUri);
+
+		// now try GET to collection URI
+		
+		GetMethod method = new GetMethod(collectionUri);
+
+		HttpClient client = new HttpClient();
+		
+		int result = -1;
+		
+		try {
+
+			// make the HTTP request now
+			result = client.executeMethod(method);
+
+		} catch (HttpException e) {
+
+			e.printStackTrace();
+			fail(e.getLocalizedMessage());
+
+		} catch (IOException e) {
+
+			e.printStackTrace();
+			fail(e.getLocalizedMessage());
+
+		}
+		
+		// expect the status code is 200 OK
+		
+		assertEquals(200, result);
+
+		// expect no Location header 
+
+		Header locationHeader = method.getResponseHeader("Location");
+		assertNull(locationHeader);
+		
+		// expect Content-Type header 
+		
+		String responseContentType = method.getResponseHeader("Content-Type").getValue();
+		assertNotNull(responseContentType);
+		assertTrue(responseContentType.trim().startsWith("application/atom+xml"));
+
+	}
+	
+	
+	
+	
+	public void testGetEntry() {
+
+		// we need to create an atom collection first, to use as the target
+		// for an attempt to create a new member
+		
+		String collectionUri = SERVER_URI + Double.toString(Math.random());
+		
+		doPutFeedToCreateCollection(collectionUri);
+
+		// now create a new member by POSTing and atom entry document to the
+		// collection URI
+		
+		String location = doPostEntryToCreateMember(collectionUri);
+
+		// now try GET to member URI
+		
+		GetMethod method = new GetMethod(location);
+
+		HttpClient client = new HttpClient();
+		
+		int result = -1;
+		
+		try {
+
+			// make the HTTP request now
+			result = client.executeMethod(method);
+
+		} catch (HttpException e) {
+
+			e.printStackTrace();
+			fail(e.getLocalizedMessage());
+
+		} catch (IOException e) {
+
+			e.printStackTrace();
+			fail(e.getLocalizedMessage());
+
+		}
+		
+		// expect the status code is 200 OK
+		
+		assertEquals(200, result);
+
+		// expect no Location header 
+
+		Header locationHeader = method.getResponseHeader("Location");
+		assertNull(locationHeader);
+		
+		// expect Content-Type header 
+		
+		String responseContentType = method.getResponseHeader("Content-Type").getValue();
+		assertNotNull(responseContentType);
+		assertTrue(responseContentType.trim().startsWith("application/atom+xml"));
+
+
+	}
+	
+	
+	
+	public void testGetMedia() {
+
+		// we need to create an atom collection first, to use as the target
+		// for an attempt to create a new member
+		
+		String collectionUri = SERVER_URI + Double.toString(Math.random());
+		
+		doPutFeedToCreateCollection(collectionUri);
+
+		// the request body - a plain text document
+
+		String media = "This is a test.";
+		ByteArrayInputStream content = null;
+
+		try {
+			
+			content = new ByteArrayInputStream(media.getBytes("utf-8"));
+
+		} catch (UnsupportedEncodingException e1) {
+
+			e1.printStackTrace();
+			fail(e1.getLocalizedMessage());
+
+		}
+		
+		String contentType = "text/plain;charset=utf-8";
+		
+		// now create a new media resource by POSTing media to the collection URI
+		
+		Document mediaLinkDoc = doPostMediaToCreateMediaResource(collectionUri, content, contentType);
+
+		assertNotNull(mediaLinkDoc);
+		
+		NodeList links = mediaLinkDoc.getElementsByTagNameNS("http://www.w3.org/2005/Atom", "link");
+		
+		assertEquals(3, links.getLength());
+
+		String mediaLocation = null;
+		
+		for (int i=0; i<links.getLength(); i++) {
+			Element e = (Element) links.item(i);
+			String rel = e.getAttribute("rel");
+			if (rel.equals("edit-media")) {
+				mediaLocation = e.getAttribute("href");
+			}
+		}
+		
+		assertNotNull(mediaLocation);
+		
+		// now try get on media location
+		
+		GetMethod method = new GetMethod(mediaLocation);
+
+		HttpClient client = new HttpClient();
+		
+		int result = -1;
+		
+		try {
+
+			// make the HTTP request now
+			result = client.executeMethod(method);
+
+		} catch (HttpException e) {
+
+			e.printStackTrace();
+			fail(e.getLocalizedMessage());
+
+		} catch (IOException e) {
+
+			e.printStackTrace();
+			fail(e.getLocalizedMessage());
+
+		}
+		
+		// expect the status code is 200 OK
+		
+		assertEquals(200, result);
+
+		// expect no Location header 
+
+		Header locationHeader = method.getResponseHeader("Location");
+		assertNull(locationHeader);
+		
+		// expect Content-Type header 
+		
+		String responseContentType = method.getResponseHeader("Content-Type").getValue();
+		assertNotNull(responseContentType);
+		assertTrue(responseContentType.trim().startsWith("text/plain"));
+
+	}
+	
 }
 
 
