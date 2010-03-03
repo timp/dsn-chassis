@@ -1,6 +1,8 @@
 package org.cggh.chassis.generic.http.test;
 
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -9,50 +11,10 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
 
 public class MockFilterChain implements FilterChain {
-	private final static String ATOM_ENTRY = 	
-		"<atom:entry xmlns:atom=\"http://www.w3.org/2005/Atom\">" + 
-		"<atom:title>An Atomic Entry</atom:title>" + 
-        "<atom:author>" + 
-        "<atom:email>alice@example.org</atom:email>" +
-        "</atom:author>" + 
-		"</atom:entry>" + 
-		"\n";
-	private final static String ATOM_FEED = 	
-		"<atom:feed xmlns:atom=\"http://www.w3.org/2005/Atom\">" + 
-		"<id>urn:uuid:887e181c-987a-4424-a5b0-8086e716fb9e</id>" +
-		"<updated>2010-03-02T23:47:12+00:00</updated>" +
-		"<atom:title>An Atomic Feed</atom:title>" + 
-		"<link href=\"#\" rel=\"edit\" type=\"application/atom+xml\"/>" +
-		"<link href=\"#\" rel=\"self\" type=\"application/atom+xml\"/>" +
-		"</atom:feed>" + 
-		"\n";
-	private final static String BAD_ATOM_ENTRY_NOAUTHOR = 	
-		"<atom:entry xmlns:atom=\"http://www.w3.org/2005/Atom\">" + 
-		"<atom:title>An Atomic Entry</atom:title>" + 
-		"</atom:entry>" + 
-		"\n";
-	private final static String BAD_ATOM_ENTRY_NOEMAIL = 	
-		"<atom:entry xmlns:atom=\"http://www.w3.org/2005/Atom\">" + 
-		"<atom:title>An Atomic Entry</atom:title>" + 
-        "<atom:author>" + 
-        "</atom:author>" + 
-		"</atom:entry>" + 
-		"\n";
-	private final static String BAD_ATOM_ENTRY_MALFORMED = 	
-		"<atom:entry xmlns:atom=\"http://www.w3.org/2005/Atom\">" + 
-		"<atom:title>An Atomic Entry</atom:title>" + 
-		"\n";
-	private final static String BAD_ATOM_ENTRY_TWOAUTHORS = 	
-		"<atom:entry xmlns:atom=\"http://www.w3.org/2005/Atom\">" + 
-		"<atom:title>An Atomic Entry</atom:title>" + 
-        "<atom:author>" + 
-        "<atom:email>alice@example.org</atom:email>" +
-        "</atom:author>" + 
-        "<atom:author>" + 
-        "<atom:email>alice@example.org</atom:email>" +
-        "</atom:author>" + 
-		"</atom:entry>" + 
-		"\n";
+	
+	private final static String ROOT = "src/test/java/org/cggh/chassis/generic/http/test/";
+	
+	
 	String returnFlag ="Nothing, 404";
 	
 	public void doFilter(ServletRequest request, ServletResponse response)
@@ -65,28 +27,28 @@ public class MockFilterChain implements FilterChain {
 		} else if (returnFlag.equals("Nothing, 200")) { 
 			httpResponse.setStatus(200);
 		} else if (returnFlag.equals("Not atom, 200")) {
-			httpResponse.getOutputStream().print("Not atom content");
+			sendFile(httpResponse.getOutputStream(),"notAtom.txt");
 			httpResponse.setStatus(200);
 		} else if (returnFlag.equals("Atom Entry, 200")) {
-			httpResponse.getOutputStream().print(ATOM_ENTRY);
+			sendFile(httpResponse.getOutputStream(), "entry.atom");
 			httpResponse.setStatus(200);
 		} else if (returnFlag.equals("Atom Feed, 200")) {
-			httpResponse.getOutputStream().print(ATOM_FEED);
+			sendFile(httpResponse.getOutputStream(), "emptyStudiesFeed.atom");
 			httpResponse.setStatus(200);
 		} else if (returnFlag.equals("Malformed, 200")) {
-			httpResponse.getOutputStream().print(BAD_ATOM_ENTRY_MALFORMED);
+			sendFile(httpResponse.getOutputStream(), "malformed.atom");
 			httpResponse.setStatus(200);
 		} else if (returnFlag.equals("No author, 200")) {
-			httpResponse.getOutputStream().print(BAD_ATOM_ENTRY_NOAUTHOR);
+			sendFile(httpResponse.getOutputStream(), "noAuthor.atom");
 			httpResponse.setStatus(200);
 		} else if (returnFlag.equals("No email, 200")) {
-			httpResponse.getOutputStream().print(BAD_ATOM_ENTRY_NOEMAIL);
+			sendFile(httpResponse.getOutputStream(), "noEmail.atom");
 			httpResponse.setStatus(200);
 		} else if (returnFlag.equals("Two authors, 200")) {
-			httpResponse.getOutputStream().print(BAD_ATOM_ENTRY_TWOAUTHORS);
+			sendFile(httpResponse.getOutputStream(), "twoAuthors.atom");
 			httpResponse.setStatus(200);
 		} else if (returnFlag.equals("Atom Entry, 500")) {
-			httpResponse.getOutputStream().print(ATOM_ENTRY);
+			sendFile(httpResponse.getOutputStream(), "entry.atom");
 			httpResponse.setStatus(500);
 		} else { 
 			throw new RuntimeException("Unconfigued");
@@ -97,4 +59,23 @@ public class MockFilterChain implements FilterChain {
     public void setReturnFlag(String returnFlag) { 
     	this.returnFlag = returnFlag;
     }
+    
+    private void sendFile(OutputStream output, String fileName) throws IOException { 
+		String fileSystemName = ROOT + fileName;
+		FileInputStream fis = new FileInputStream(fileSystemName);
+		sendBytes(fis, output);
+		fis.close();
+    	
+    }
+    
+	private static void sendBytes(FileInputStream fis, OutputStream os)
+			throws IOException {
+		byte[] buffer = new byte[1024];
+		int bytes = 0;
+
+		while ((bytes = fis.read(buffer)) != -1) {
+			os.write(buffer, 0, bytes);
+		}
+	}
+
 }
