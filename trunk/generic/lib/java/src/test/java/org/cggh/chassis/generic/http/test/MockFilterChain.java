@@ -62,27 +62,27 @@ public class MockFilterChain implements FilterChain {
 		
 		if (returnFlag.equals("Nothing, 404")) { 
 			httpResponse.setStatus(404);			
-		} else if (returnFlag.equals("Nothing, OK")) { 
+		} else if (returnFlag.equals("Nothing, 200")) { 
 			httpResponse.setStatus(200);
-		} else if (returnFlag.equals("Not atom, OK")) {
+		} else if (returnFlag.equals("Not atom, 200")) {
 			httpResponse.getOutputStream().print("Not atom content");
 			httpResponse.setStatus(200);
-		} else if (returnFlag.equals("Atom Entry, OK")) {
+		} else if (returnFlag.equals("Atom Entry, 200")) {
 			httpResponse.getOutputStream().print(ATOM_ENTRY);
 			httpResponse.setStatus(200);
-		} else if (returnFlag.equals("Atom Feed, OK")) {
+		} else if (returnFlag.equals("Atom Feed, 200")) {
 			httpResponse.getOutputStream().print(ATOM_FEED);
 			httpResponse.setStatus(200);
-		} else if (returnFlag.equals("Malformed, OK")) {
+		} else if (returnFlag.equals("Malformed, 200")) {
 			httpResponse.getOutputStream().print(BAD_ATOM_ENTRY_MALFORMED);
 			httpResponse.setStatus(200);
-		} else if (returnFlag.equals("No author, OK")) {
+		} else if (returnFlag.equals("No author, 200")) {
 			httpResponse.getOutputStream().print(BAD_ATOM_ENTRY_NOAUTHOR);
 			httpResponse.setStatus(200);
-		} else if (returnFlag.equals("No email, OK")) {
+		} else if (returnFlag.equals("No email, 200")) {
 			httpResponse.getOutputStream().print(BAD_ATOM_ENTRY_NOEMAIL);
 			httpResponse.setStatus(200);
-		} else if (returnFlag.equals("Two authors, OK")) {
+		} else if (returnFlag.equals("Two authors, 200")) {
 			httpResponse.getOutputStream().print(BAD_ATOM_ENTRY_TWOAUTHORS);
 			httpResponse.setStatus(200);
 		} else if (returnFlag.equals("Atom Entry, 500")) {
