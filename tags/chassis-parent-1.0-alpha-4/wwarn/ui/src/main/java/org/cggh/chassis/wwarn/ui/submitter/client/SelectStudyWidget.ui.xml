@@ -1,0 +1,206 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" ui:generateFormat="com.google.gwt.i18n.rebind.format.PropertiesFormat"
+	ui:generateKeys="com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator"
+	ui:generateLocales="default">
+
+	<ui:style>
+		.requiredFieldMarker {
+			color: #FF0000;
+			font-weight: normal;
+		}
+		
+		.optionalFieldMarker {
+			font-weight: normal;
+		}
+		
+		.emphasize {
+			font-weight: bold;
+		}
+		
+		.exampleText {
+			font-style: italic;
+		}
+		
+		.studyTitleTextBox {
+			width: 784px;
+		}
+		
+		.otherSubmittersTextBox {
+			width: 784px;
+		}
+
+		
+	</ui:style>
+	<g:HTMLPanel ui:field="bodyPanel">
+		<!--
+			Add GWT widgets here. Enter < and hit Ctrl-Space to auto-complete
+			widget names. The ui:field attribute binds an element to a field in
+			the owner class. See the GWT docs on UI Binder for more details.
+		-->
+		<h1>
+			<ui:msg>Submitter</ui:msg>
+			-
+			<ui:msg>Submit Data</ui:msg>
+		</h1>
+		<h2>
+			<span class="currentStep">
+				1.
+				<ui:msg>Select Study</ui:msg>
+			</span>
+			&rarr;
+			2.
+			<ui:msg>Upload Files</ui:msg>
+			&rarr;
+			3.
+			<ui:msg>Submit</ui:msg>
+			&rarr;
+			4.
+			<ui:msg>Study Questionnaire</ui:msg>
+		</h2>
+
+		<g:HTMLPanel ui:field="pendingPanel">
+			<p>
+				<g:Label ui:field="pendingLabel">
+					<ui:msg>pending...</ui:msg>
+				</g:Label>
+			</p>
+		</g:HTMLPanel>
+		<g:HTMLPanel ui:field="selectExistingStudyPanel">
+
+			<p>
+				<g:Label>
+					<ui:msg>Please select a study from the list below...</ui:msg>
+				</g:Label>
+
+			</p>
+
+			<p>
+				<g:ListBox ui:field="studySelect" visibleItemCount='1' />
+			</p>
+
+			<p>
+				<g:Button ui:field="proceedWithSelectedButton"
+					stylePrimaryName="action">
+					<ui:msg>Proceed &gt;</ui:msg>
+				</g:Button>
+			</p>
+			
+			<p>
+				<g:Label>
+					<ui:msg>... or use the form below to create a new study...</ui:msg>
+				</g:Label>
+			</p>
+
+		</g:HTMLPanel>
+
+		<g:HTMLPanel ui:field="createStudyInteractionPanel">
+			<h3>
+				<ui:msg>Create a Study</ui:msg>
+			</h3>
+
+			<p>
+				<ui:msg>
+					Fields marked with an asterisk (
+					<span class="{style.requiredFieldMarker}">*</span>
+					) are compulsory.
+				</ui:msg>
+			</p>
+
+			<h4>
+				<ui:msg>Title</ui:msg>
+
+				<span class="{style.requiredFieldMarker}">
+					<ui:msg>*</ui:msg>
+				</span>
+			</h4>
+			<p>
+				<ui:msg>Please provide a title for the study...</ui:msg>
+			</p>
+			<g:TextBox ui:field="studyTitle" styleName="{style.studyTitleTextBox}"></g:TextBox>
+			<p>
+				<ui:msg>
+					E.g.,
+					<i>TODO Study Foo</i>
+				</ui:msg>
+			</p>
+			<h4>
+				<ui:msg>Submitters</ui:msg>
+
+				<span class="{style.requiredFieldMarker}">
+					<ui:msg>*</ui:msg>
+				</span>
+			</h4>
+
+			<p>
+				<ui:msg>Please provide the email address of each person allowed to
+					submit files for this study. </ui:msg>
+			</p>
+
+			<g:DisclosurePanel animationEnabled='true'>
+
+				<g:header>
+					<ui:msg>How does this function?</ui:msg>
+				</g:header>
+
+
+				<g:HTMLPanel>
+					<ul>
+						<li>
+							<ui:msg>Each email address should be the same email address that
+								the submitter would use to log into this system. </ui:msg>
+						</li>
+						<li>
+							<ui:msg>This prevents unwanted submissions for this study. </ui:msg>
+						</li>
+						<li>
+							<ui:msg>You will be allowed to submit files for this study
+								automatically, so you will not need to add your own email
+								address here. </ui:msg>
+						</li>
+						<li>
+							<ui:msg>
+								This process will
+								<span class="{style.emphasize}">not</span>
+								register users automatically, nor will it send any notification
+								to the email addresses.
+							</ui:msg>
+						</li>
+						<li>
+							<ui:msg>Submitters will still need to register themselves using
+								the relevant email address listed here and they will also still
+								need to be informed that they can submit files for this study.</ui:msg>
+						</li>
+					</ul>
+
+				</g:HTMLPanel>
+			</g:DisclosurePanel>
+
+			<g:TextArea visibleLines="2" ui:field="otherSubmitters"
+				styleName="{style.otherSubmittersTextBox}"></g:TextArea>
+			<p>
+				<ui:msg>
+					Please separate each email address with a space, for example:
+					<span class="{style.exampleText}">bob@example.org fred@bloggs.com</span>
+				</ui:msg>
+			</p>
+
+			<p></p>
+
+			<g:FlowPanel ui:field="mainActionsPanel">
+				<g:Button ui:field="createAndProceedButton"
+					stylePrimaryName="action">
+					<ui:msg>Create Study and Proceed &gt;</ui:msg>
+				</g:Button>
+			</g:FlowPanel>
+		</g:HTMLPanel>
+
+
+		<g:HTMLPanel ui:field="errorPanel">
+			<g:Label>
+				<ui:msg>There has been an unexpected error: </ui:msg>
+			</g:Label>
+			<g:FlowPanel ui:field="errorMessage"></g:FlowPanel>
+		</g:HTMLPanel>
+	</g:HTMLPanel>
+</ui:UiBinder> 

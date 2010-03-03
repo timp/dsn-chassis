@@ -1,0 +1,86 @@
+<?xml version="1.0"?><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.cggh.chassis</groupId>
+    <artifactId>chassis-parent</artifactId>
+    <version>1.0-alpha-3-SNAPSHOT</version>
+  </parent>
+  <artifactId>chassis-htmlunit</artifactId>
+  <packaging>jar</packaging>
+  <name>Smoke Tests</name>
+  
+  <description>
+  Smoke tests for the Chassis Data Sharing Network. 
+  </description>
+  
+  <dependencies>
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+      <version>1.2.12</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+     <groupId>net.sourceforge.htmlunit</groupId>
+     <artifactId>htmlunit</artifactId>
+     <version>2.7</version>
+     <scope>test</scope>
+    </dependency>
+    <dependency>
+     <groupId>commons-httpclient</groupId>
+     <artifactId>commons-httpclient</artifactId>
+     <version>3.1</version>
+     <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>commons-codec</groupId>
+      <artifactId>commons-codec</artifactId>
+      <version>1.4</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+   <plugins>
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-jar-plugin</artifactId>
+      <executions>
+        <execution>
+          <goals>
+            <goal>test-jar</goal>
+          </goals>
+        </execution>
+      </executions>
+    </plugin>
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-source-plugin</artifactId>
+      <executions>
+        <execution>
+          <goals>
+            <goal>jar</goal>
+          </goals>
+        </execution>
+      </executions>
+    </plugin>
+    <plugin>
+     <groupId>org.apache.maven.plugins</groupId>
+     <artifactId>maven-surefire-plugin</artifactId>
+     <configuration>
+      <redirectTestOutputToFile>true</redirectTestOutputToFile>
+      <forkMode>once</forkMode>
+      <!-- threadCount>1</threadCount-->
+      <!-- childDelegation>false</childDelegation -->
+      <useFile>true</useFile>
+      <includes>
+       <include>**/*TestCase.java</include>
+       <include>**/*Test.java</include>
+      </includes>
+      <excludes>
+      </excludes>
+     </configuration>
+    </plugin>
+   </plugins>
+  </build>
+</project>

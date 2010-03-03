@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <parent>
+    <groupId>org.cggh.chassis</groupId>
+    <artifactId>chassis-parent</artifactId>
+    <version>1.0-alpha-2-SNAPSHOT</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>chassis-wwarn-client-gwt</artifactId>
+  <packaging>war</packaging>
+  <name>googlecode_dsn-chassis_wwarn_client_gwt</name>
+  
+  <dependencies>
+    <dependency>
+     <groupId>org.cggh.chassis</groupId>
+     <artifactId>chassis-generic-client-gwt</artifactId>
+     <version>${project.version}</version>
+    </dependency> 
+    
+    <dependency>
+      <groupId>com.google.gwt</groupId>
+      <artifactId>gwt-user</artifactId>
+      <version>${gwtVersion}</version>
+      <!-- This is a bit of a hack: 
+      we need this to perform a gwt-compile 
+      but we do not want to include in war -->
+      <scope>provided</scope>
+    </dependency>
+    
+  </dependencies>
+  
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>gwt-maven-plugin</artifactId>
+        <version>${gwtPluginVersion}</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>compile</goal>
+            </goals>
+            <configuration>
+              <gwtVersion>${gwtVersion}</gwtVersion>
+	      <module>org.cggh.chassis.wwarn.client.gwt.main.Main</module>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <configuration>
+          <warSourceDirectory>${basedir}/war</warSourceDirectory>
+          <!-- gwt puts dependencies in /war/WEB-INF/lib (even though some of them are marked provided in maven -->
+          <warSourceExcludes>.gwt-tmp/**,WEB-INF/lib/gwt-user*</warSourceExcludes>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+	<configuration>
+         <resources>
+          <resource>
+           <directory>src/main/java</directory>
+           <includes>
+            <include>**/*.java</include>
+            <include>**/*.xml</include>
+           </includes>
+          </resource>
+         </resources>	
+	</configuration>
+	<executions>
+	 <execution>
+	  <goals>
+	   <goal>jar</goal>
+	  </goals>
+	 </execution>
+	</executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-install-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>install-file</goal>
+            </goals>
+            <configuration>
+             <packaging>jar</packaging>
+             <artifactId>${project.artifactId}</artifactId>
+             <groupId>${project.groupId}</groupId>
+             <version>${project.version}</version>
+             <file>
+               ${project.build.directory}/${project.artifactId}-${project.version}.jar
+             </file>
+           </configuration>
+         </execution>
+       </executions>
+     </plugin>
+     <!-- Standard tomcat:deploy fails due to the vast size of this war -->
+     <plugin>
+       <groupId>org.codehaus.cargo</groupId>
+       <artifactId>cargo-maven2-plugin</artifactId>
+       <configuration>
+         <wait>true</wait>
+         <container>
+           <containerId>tomcat6x</containerId>
+           <type>remote</type>
+         </container>
+         <configuration>
+           <type>runtime</type> 
+           <properties>
+             <cargo.tomcat.manager.url>http://localhost:8080/manager</cargo.tomcat.manager.url>
+             <cargo.remote.username>admin</cargo.remote.username>
+             <cargo.remote.password />
+           </properties>
+         </configuration>
+         <deployer>
+           <type>remote</type>
+           <deployables>
+             <deployable>
+               <groupId>${project.groupId}</groupId>
+               <artifactId>${project.artifactId}</artifactId>
+               <properties>
+                 <context>${project.artifactId}</context>
+               </properties>
+               <type>war</type>
+             </deployable>
+           </deployables>
+         </deployer>
+       </configuration>
+       <executions>
+         <execution>
+           <id>do</id>
+           <phase>pre-integration-test</phase>
+           <goals>
+              <goal>deployer-redeploy</goal>
+           </goals>
+         </execution>
+       </executions>
+     </plugin>
+   </plugins>
+  </build>
+</project>

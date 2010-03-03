@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder 
+    xmlns:ui="urn:ui:com.google.gwt.uibinder"
+    xmlns:g="urn:import:com.google.gwt.user.client.ui"
+    xmlns:local="urn:import:org.cggh.chassis.wwarn.ui.submitter.client"
+    ui:generateFormat="com.google.gwt.i18n.rebind.format.PropertiesFormat"
+    ui:generateKeys="com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator"
+    ui:generateLocales="default">
+
+	<ui:style>
+	
+		ul li {
+			
+			padding-bottom: 5px;
+				
+		}
+		
+		ul ol {
+			padding-top: 5px;
+		}
+		
+		.fileTypeName {
+			font-weight: bold;
+			font-style: italic;
+		}
+		
+		.warning {
+			font-weight: bold;
+			color: #FF0000;	
+		}
+
+	</ui:style>
+    
+    <g:HTMLPanel>
+        
+        <h1>
+            <ui:msg>Submitter</ui:msg> - <ui:msg>Submit Data</ui:msg>
+        </h1>
+        
+        <h2>
+            1. <ui:msg>Select Study</ui:msg> &rarr;
+            <span class="currentStep">2. <ui:msg>Upload Files</ui:msg></span> &rarr;
+            3. <ui:msg>Submit</ui:msg> &rarr;
+            4. <ui:msg>Study Questionnaire</ui:msg>
+        </h2>
+        
+        <g:HTMLPanel ui:field="studyPanel">
+            <p>
+                <ui:msg>Selected study:</ui:msg> 
+               	<g:InlineLabel ui:field="studyNotSelectedLabel">
+               		<ui:msg>no study selected</ui:msg>
+               	</g:InlineLabel>
+               	<g:InlineLabel ui:field="studyPendingLabel">
+               		<ui:msg>pending... (retrieving study)</ui:msg>
+               	</g:InlineLabel>
+               	<g:InlineLabel ui:field="studyNotFoundLabel">
+               		<ui:msg>study not found</ui:msg>
+               	</g:InlineLabel>
+               	<strong><g:InlineLabel ui:field="studyTitleLabel"/></strong>
+               	
+            </p>
+            <p>
+                <g:Anchor ui:field="stepBackLink">
+                    &lt; <ui:msg>back to select study</ui:msg>
+                </g:Anchor>
+            </p>        
+        </g:HTMLPanel>
+        
+  
+        
+        <g:HTMLPanel ui:field="mainInteractionPanel">
+            <p>
+            	<g:Label ui:field="filesUploadedLabel">
+	            	<ui:msg>Files uploaded so far...</ui:msg>
+            	</g:Label>
+            	<g:Label ui:field="noFilesUploadedLabel">
+	            	<ui:msg>You have not uploaded any files yet.</ui:msg>
+            	</g:Label>
+            </p>
+            <p>
+            	<g:Label ui:field="filesPendingLabel">
+            		<ui:msg>pending... (retrieving uploads)</ui:msg>
+            	</g:Label>
+            	<g:Label ui:field="fileDeletePendingLabel">
+            		<ui:msg>pending... (deleting file)</ui:msg>
+            	</g:Label>
+            </p>
+           	<g:FlowPanel ui:field="filesTableContainer"/>
+           	
+           	<g:HTMLPanel ui:field="uploadPendingPanel">
+           		<p>
+           			<ui:msg>pending... (uploading file)</ui:msg>
+           		</p>
+           		<p>
+           			<ui:msg>Please note that large files will take a while to upload, particularly on slow connections. </ui:msg>
+           		</p>
+           		<p class="{style.warning}">
+           			<!-- TODO: Reason why? -->
+           			<ui:msg>Please do not close this browser while the file is being uploaded. </ui:msg>
+           		</p>
+           	</g:HTMLPanel>
+           	
+           	<g:FlowPanel ui:field="mainActionsPanel">
+           		<g:Button ui:field="proceedButton" stylePrimaryName="action">
+           			<ui:msg>Proceed</ui:msg> &gt;
+           		</g:Button>
+           	</g:FlowPanel>
+           	
+      <g:HTMLPanel>
+
+			<h3><ui:msg>What types of file are required?</ui:msg>
+            	</h3>
+
+        
+				<ul>
+					<li>
+						<ui:msg>Ideally, we would like the following three types of file, although any type is permitted:</ui:msg>
+
+						<ol>
+							<li>
+								<ui:msg>
+									<span class="{style.fileTypeName}">a data file</span>
+									&ndash; containing the original data
+								</ui:msg>
+							</li>
+							<li>
+								<ui:msg>
+									<span class="{style.fileTypeName}">a data dictionary</span>
+									&ndash; containing definitions of fields and variables used in
+									other files
+								</ui:msg>
+							</li>
+							<li>
+								<ui:msg>
+									<span class="{style.fileTypeName}">a protocol</span>
+									&ndash; containing a description of the protocol used in the
+									study
+								</ui:msg>
+							</li>
+						</ol>
+
+					</li>
+					<li>
+						<ui:msg>Files can be submitted for a study in any order, although
+							a new submission will need to be made each time.
+         	</ui:msg>
+					</li>
+
+
+
+				</ul>
+        
+        </g:HTMLPanel>           	
+           	
+           	
+           	<g:HTMLPanel ui:field="uploadFormPanel">
+	           	<h3>
+	           		<g:InlineLabel ui:field="uploadAFileTitleLabel">
+		           		<ui:msg>Upload a File</ui:msg>
+	           		</g:InlineLabel>
+	           		<g:InlineLabel ui:field="uploadAnotherFileTitleLabel">
+		           		<ui:msg>Upload Another File</ui:msg>
+	           		</g:InlineLabel>
+	           	</h3>
+	           	
+	           	<p>
+	           	<ui:msg>
+	           	Please note that large files will take a while to upload. 
+	           	</ui:msg>
+	           	</p>
+	           		
+	           	<p>
+	           	<ui:msg>
+	           	If you have a particularly large file or a slow connection speed, then we advise that you compress your file before uploading it, by using a file compression utility, which will usually reduce the file size and therefore increase the upload speed. 
+	           	</ui:msg>
+	           	</p>
+	           	
+	           	<local:UploadFileForm ui:field="uploadFileForm"/>
+	           	<g:FlowPanel ui:field="uploadActionsPanel">
+	           		<g:Button ui:field="uploadButton" stylePrimaryName="action">
+	           			<ui:msg>Upload File</ui:msg>
+	           		</g:Button>
+	           	</g:FlowPanel>
+           	</g:HTMLPanel>
+
+        </g:HTMLPanel>
+        
+        <g:HTMLPanel ui:field="errorPanel">
+			<g:Label>
+        		<ui:msg>There has been an unexpected error: </ui:msg>
+			</g:Label>
+			<g:FlowPanel ui:field="errorMessage"></g:FlowPanel>
+        </g:HTMLPanel>
+        
+    </g:HTMLPanel>
+    
+</ui:UiBinder>
