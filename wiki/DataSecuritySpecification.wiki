@@ -56,7 +56,8 @@ In addition a user may <font color="green">List</font> a collection or selection
 = Content Type Restrictions =
 
 We need to ensure that uploaded files cannot be modified. 
-Derivations take as input an uploaded file and output a new uploaded file. 
+The process of Curation produces a Derivation. 
+Derivations take as input one or more uploaded files and output one or more uploaded files. 
 If a single file is uploaded twice it will still be known as two separate files within Chassis.
 
 The underlying data store (eXist) distinguishes between files which it is concerned with by the file's type: it is only interested in files with a content type of <tt>application/atom+xml</tt> (see [http://exist.sourceforge.net/atompub.html 2 ])
@@ -69,14 +70,14 @@ We only allow PUT requests with Content-Type equal to <tt>application/atom+xml</
 
 = Field Matching Restrictions  = 
 
-The only field level restriction that we currently require is the ability to ensure that the the current authenticated user is a member of the author list for the entity. 
+The only field level restriction that we currently require is the ability to ensure that the current authenticated user is a member of the author list for the entity. 
 
 
 
 
 = Abstract Access Rules = 
 
-We can cast the rules given in teh table above into a format which defines the data access operations we allow. We do not need to consider what we disallow, as *everything that is not permitted is forbidden*. 
+We can cast the rules given in the table above into a format which defines the data access operations we allow. We do not need to consider what we disallow, as *everything that is not permitted is forbidden*. 
 These rules take the form of a triple of Role, Access Operation and collection.
 Note that the query and retrieve operations are filtered by whether the entry author list contains the user's id. 
 
@@ -185,103 +186,102 @@ Note that the query and retrieve operations are filtered by whether the entry au
 
 The rules above can be translated into concrete Http methods and requests. 
 
- * allow ( submitter, GET,  /submitter/query/studies?id= )
+ * allow ( submitter, GET,  /atom/edit/studies?id= )
  * allow ( submitter, GET,  /submitter/query/studies )
  * allow ( submitter, POST, /atom/edit/studies )
- * allow ( submitter, PUT,  /atom/edit/studies )
+ * allow ( submitter, PUT,  /atom/edit/studies?id= )
 
- * allow ( anonymizer, GET, /anonymizer/query/studies?id= )
+ * allow ( anonymizer, GET, /atom/edit/studies?id= )
  * allow ( anonymizer, GET, /anonymizer/query/studies )
 
- * allow ( curator, GET, /curator/query/studies?id= )
+ * allow ( curator, GET, /atom/edit/studies?id= )
  * allow ( curator, GET, /curator/query/studies )
 
  * allow ( administrator, GET,    /atom/edit/studies?id= )
- * allow ( administrator, GET,    /atom/edit/studies )
+ * allow ( administrator, GET,    /administartor/query/studies )
  * allow ( administrator, POST,   /atom/edit/studies )
  * allow ( administrator, DELETE, /atom/edit/studies?id= )
 
 
-
- * allow ( submitter, GET,  /submitter/query/submissions?id= )
+ * allow ( submitter, GET,  /atom/edit/submissions?id= )
  * allow ( submitter, GET,  /submitter/query/submissions )
  * allow ( submitter, POST, /atom/edit/submissions )
  * allow ( submitter, PUT,  /atom/edit/submissions?id= )
 
- * allow ( anonymizer, GET, /anonymizer/query/submissions?id= )
+ * allow ( anonymizer, GET, /atom/edit/submissions?id= )
  * allow ( anonymizer, GET, /anonymizer/query/submissions )
 
- * allow ( curator, GET, /curator/query/submissions?id= )
- * allow ( curator, GET, /curator/query/submissions )
+ * allow ( curator, GET, /atom/edit/submissions?id= )
+ * allow ( curator, GET, /anonymizer/query/submissions )
 
  * allow ( administrator, GET,    /atom/edit/submissions?id= )
- * allow ( administrator, GET,    /atom/edit/submissions )
+ * allow ( administrator, GET,    /administrator/query/submissions )
  * allow ( administrator, POST,   /atom/edit/submissions )
  * allow ( administrator, DELETE, /atom/edit/submissions?id= )
 
 
 
 
- * allow ( anonymizer, GET,  /anonymizer/query/reviews?id= )
+ * allow ( anonymizer, GET,  /atom/edit/reviews?id= )
  * allow ( anonymizer, GET,  /anonymizer/query/reviews )
  * allow ( anonymizer, POST, /atom/edit/reviews )
 
- * allow ( curator, GET,  /curator/query/reviews?id= )
+ * allow ( curator, GET,  /atom/edit/reviews?id= )
  * allow ( curator, GET,  /curator/query/reviews )
  * allow ( curator, POST, /atom/edit/reviews )
 
  * allow ( administrator, GET,    /atom/edit/reviews?id= )
- * allow ( administrator, GET,    /atom/edit/reviews )
+ * allow ( administrator, GET,    /administrator/query/reviews )
  * allow ( administrator, POST,   /atom/edit/reviews )
  * allow ( administrator, DELETE, /atom/edit/reviews?id= )
 
 
 
 
- * allow ( anonymizer, GET,  /anonymizer/query/derivations?id= )
- * allow ( anonymizer, GET,  /anonymizer/query/derivations )
+ * allow ( anonymizer, GET,  /atom/edit/derivations?id= )
+ * allow ( anonymizer, GET,  /anonymiser/query/derivations )
  * allow ( anonymizer, POST, /atom/edit/derivations )
 
- * allow ( curator, GET,  /curator/query/derivations?id= )
+ * allow ( curator, GET,  /atom/edit/derivations?id= )
  * allow ( curator, GET,  /curator/query/derivations )
  * allow ( curator, POST, /atom/edit/derivations )
 
  * allow ( administrator, GET,    /atom/edit/derivations?id= )
- * allow ( administrator, GET,    /atom/edit/derivations )
+ * allow ( administrator, GET,    /administrator/query/derivations )
  * allow ( administrator, POST,   /atom/edit/derivations )
  * allow ( administrator, DELETE, /atom/edit/derivations?id= )
 
 
 
- * allow ( submitter, GET,  /submitter/query/media?id= )
+ * allow ( submitter, GET,  /atom/edit/media?id= )
  * allow ( submitter, GET,  /submitter/query/media )
  * allow ( submitter, POST, /atom/edit/media )
 
- * allow ( anonymizer, GET, /anonymizer/query/media?id= )
+ * allow ( anonymizer, GET, /atom/edit/media?id= )
  * allow ( anonymizer, GET, /anonymizer/query/media )
 
- * allow ( curator, GET, /curator/query/media?id= )
+ * allow ( curator, GET, /atom/edit/media?id= )
  * allow ( curator, GET, /curator/query/media )
 
  * allow ( administrator, GET,    /atom/edit/media?id= )
- * allow ( administrator, GET,    /atom/edit/media )
+ * allow ( administrator, GET,    /administrator/query/media )
  * allow ( administrator, POST,   /atom/edit/media )
  * allow ( administrator, DELETE, /atom/edit/media?id= )
 
 
 
- * allow ( submitter, GET,  /submitter/query/resources?id= )
- * allow ( submitter, GET,  /submitter/query/resources )
+ * allow ( submitter, GET,  /atom/edit/resources?id= )
+ * allow ( submitter, GET,  /administrator/query/resources )
  * allow ( submitter, POST, /atom/edit/resources )
 
- * allow ( anonymizer, GET, /anonymizer/query/resources?id= )
+ * allow ( anonymizer, GET, /atom/edit/resources?id= )
  * allow ( anonymizer, GET, /anonymizer/query/resources )
 
- * allow ( curator, GET, /curator/query/resources?id= )
- * allow ( curator, GET, /curator/query/resources?id= )
+ * allow ( curator, GET, /atom/edit/resources?id= )
+ * allow ( curator, GET, /atom/edit/resources?id= )
 
  * allow ( administrator, GET,    /atom/edit/resources?id= )
- * allow ( administrator, GET,    /atom/edit/resources )
+ * allow ( administrator, GET,    /administrator/query/resources )
  * allow ( administrator, POST,   /atom/edit/resources )
  * allow ( administrator, DELETE, /atom/edit/resources?id= )
 
