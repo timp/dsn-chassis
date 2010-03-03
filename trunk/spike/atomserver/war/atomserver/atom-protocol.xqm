@@ -81,6 +81,31 @@ as item()*
 		
 		then ap:do-put-media( $request-path-info , $request-data , $request-content-type )
 
+		else if (
+			$request-method = $http:method-get and
+			adb:media-resource-available( $request-path-info ) 
+		)
+		
+		then ap:do-get-media( $request-path-info )
+		
+		else if (
+			$request-method = $http:method-get and
+			adb:member-available( $request-path-info ) 
+		)
+		
+		then ap:do-get-entry( $request-path-info )
+		
+		else if (
+			$request-method = $http:method-get and
+			adb:collection-available( $request-path-info ) 
+		)
+		
+		then ap:do-get-feed( $request-path-info )
+
+		else if ( $request-method = $http:method-get )
+		
+		then ap:do-not-found( $request-path-info )
+		
 		else ap:do-bad-request( $request-path-info , "Unknown operation." , $request-data )
 
 };
@@ -322,6 +347,62 @@ declare function ap:do-put-media(
 		    let $header-content-type := response:set-header( $http:header-content-type , $request-content-type )
 		    
 			return $media-doc
+
+};
+
+
+
+
+declare function ap:do-get-entry(
+	$request-path-info
+)
+{
+
+    let $status-code := response:set-status-code( $http:status-success-ok )
+    
+    let $header-content-type := response:set-header( $http:header-content-type , $ap:atom-mimetype )
+    
+    return adb:retrieve-entry( $request-path-info )
+
+};
+
+
+
+
+declare function ap:do-get-media(
+	$request-path-info
+)
+{
+
+    let $status-code := response:set-status-code( $http:status-success-ok )
+    
+    (: media type :)
+    
+    let $mime-type := adb:get-mime-type( $request-path-info )
+    
+    (: TODO title as filename :)
+    
+    (: decoding from base 64 binary :)
+    
+    let $response-stream := response:stream-binary( adb:retrieve-media( $request-path-info ) , $mime-type )
+
+	return ()
+	
+};
+
+
+
+
+declare function ap:do-get-feed(
+	$request-path-info
+)
+{
+
+    let $status-code := response:set-status-code( $http:status-success-ok )
+    
+    let $header-content-type := response:set-header( $http:header-content-type , $ap:atom-mimetype )
+    
+    return adb:retrieve-feed( $request-path-info )
 
 };
 

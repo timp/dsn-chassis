@@ -96,7 +96,7 @@ declare function adb:media-resource-available(
 	 
 	let $member-db-path := adb:request-path-info-to-db-path( $request-path-info )
 		
-	return exists( util:binary-doc( $member-db-path ) )
+	return util:binary-doc-available( $member-db-path ) 
 	
 };
 
@@ -423,6 +423,7 @@ declare function adb:create-media-link-entry(
             <atom:link rel="edit" href="{$edit-uri}"/>
             <atom:link rel="edit-media" href="{$media-uri}"/>
             <atom:content src="{$media-uri}" type="{$media-type}"/>
+            <atom:title type="text">media resource {$id} ({$media-type})</atom:title>
         </atom:entry>  
      
 };
@@ -509,4 +510,115 @@ declare function adb:update-media-resource(
 		let $media-doc-db-path := xmldb:store( $collection-db-path , $media-doc-name , $request-data , $media-type )
 	
 		return $media-doc-db-path
+};
+
+
+
+
+declare function adb:retrieve-feed(
+	$request-path-info as xs:string 
+) as element(atom:feed)
+{
+	
+	if ( not( adb:collection-available( $request-path-info ) ) )
+	
+	then ()
+	
+	else
+	
+		(:
+		 : Map the request path info, e.g., "/foo", to a database collection path,
+		 : e.g., "/db/head/foo".
+		 :)
+		 
+		let $db-collection-path := adb:request-path-info-to-db-path( $request-path-info )
+	
+		(:
+		 : Obtain the database path for the atom feed document in the given database
+		 : collection. Currently, this appends ".feed" to the database collection
+		 : path.
+		 :)
+		 
+		let $feed-doc-db-path := adb:feed-doc-db-path( $db-collection-path )
+		let $feed := doc( $feed-doc-db-path )/atom:feed
+		
+		return
+		
+			<atom:feed>	
+			{
+				$feed/*
+			}
+			{
+				for $child in xmldb:get-child-resources( $db-collection-path )
+				let $is-entry-doc := ( not( ends-with( $child, ".media" ) ) and not( ends-with( $child , ".feed" ) ) )
+				let $entry := if ( $is-entry-doc ) then doc( concat( $db-collection-path , "/" , $child ) )/atom:entry else ()
+				order by $entry/atom:updated descending
+				return $entry
+			}
+			</atom:feed>
+
+};
+
+
+
+
+declare function adb:retrieve-entry(
+	$request-path-info as xs:string 
+) as element(atom:entry)
+{
+
+	if ( not( adb:member-available( $request-path-info ) ) )
+	
+	then ()
+	
+	else
+	
+		(:
+		 : Map the request path info, e.g., "/foo", to a database collection path,
+		 : e.g., "/db/head/foo".
+		 :)
+		 
+		let $entry-doc-db-path := adb:request-path-info-to-db-path( $request-path-info )
+		
+		return doc( $entry-doc-db-path )/atom:entry
+
+};
+
+
+
+
+declare function adb:retrieve-media(
+	$request-path-info as xs:string 
+) as item()*
+{
+
+	if ( not( adb:media-resource-available( $request-path-info ) ) )
+	
+	then ()
+	
+	else
+	
+		(:
+		 : Map the request path info, e.g., "/foo", to a database collection path,
+		 : e.g., "/db/head/foo".
+		 :)
+		 
+		let $media-doc-db-path := adb:request-path-info-to-db-path( $request-path-info )
+		
+		return util:binary-doc( $media-doc-db-path )
+
+};
+
+
+
+
+declare function adb:get-mime-type(
+	$request-path-info as xs:string 
+) as xs:string
+{
+
+	let $media-doc-db-path := adb:request-path-info-to-db-path( $request-path-info )
+
+	return xmldb:get-mime-type( xs:anyURI( $media-doc-db-path ) )
+	
 };
