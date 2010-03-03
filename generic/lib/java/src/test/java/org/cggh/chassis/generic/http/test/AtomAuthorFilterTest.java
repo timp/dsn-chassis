@@ -89,7 +89,7 @@ public class AtomAuthorFilterTest extends TestCase {
 		assertEquals(unlessDelete(404),response.getStatus());
 	}
 	public void testDoHttpFilter_emptyFound_nullContentType() throws Exception {
-		chain.setReturnFlag("Nothing, OK");
+		chain.setReturnFlag("Nothing, 200");
         request.setMethod(getMethod());
         request.setContentType(null);
 		it.doHttpFilter(request, response, chain);
@@ -100,14 +100,14 @@ public class AtomAuthorFilterTest extends TestCase {
 		params.put("id", new String[]{"jhgjhgjh"});
 		params.put("multi", new String[]{"one","two"});
 		request.setParameters(params);
-		chain.setReturnFlag("Nothing, OK");
+		chain.setReturnFlag("Nothing, 200");
         request.setMethod(getMethod());		
 		request.setContentType("unknown");
 		it.doHttpFilter(request, response, chain);
 		assertEquals(200,response.getStatus());
 	}
 	public void testDoHttpFilter_nonAtomFound_atomContentType() throws Exception {
-		chain.setReturnFlag("Not atom, OK");
+		chain.setReturnFlag("Not atom, 200");
         request.setMethod(getMethod());
 		request.setContentType("application/atom+xml");
 		request.setRequestURI("/notAtom.txt");
@@ -115,7 +115,7 @@ public class AtomAuthorFilterTest extends TestCase {
 		assertEquals(unlessPost(unlessDelete(200)),response.getStatus());
 	}
 	public void testDoHttpFilter_atomFound_atomContentType() throws Exception {
-		chain.setReturnFlag("Atom Entry, OK");
+		chain.setReturnFlag("Atom Entry, 200");
         request.setMethod(getMethod());
 		request.setContentType("application/atom+xml");
 		
@@ -124,7 +124,7 @@ public class AtomAuthorFilterTest extends TestCase {
 	}
 	public void testDoHttpFilter_atomFound_atomContentType_bob() throws Exception {
 		response = new MockHttpServletResponse();
-		chain.setReturnFlag("Atom Entry, OK");		
+		chain.setReturnFlag("Atom Entry, 200");		
         request.setMethod(getMethod());
 		request.setContentType("application/atom+xml");
 		String encodedAuthorisationValue = 
@@ -138,7 +138,7 @@ public class AtomAuthorFilterTest extends TestCase {
 	}
 	public void testDoHttpFilter_atomFound_atomContentType_alice() throws Exception {
 		response = new MockHttpServletResponse();
-		chain.setReturnFlag("Atom Entry, OK");
+		chain.setReturnFlag("Atom Entry, 200");
         request.setMethod(getMethod());
 		request.setContentType("application/atom+xml");
 		String encodedAuthorisationValue = 
@@ -151,7 +151,7 @@ public class AtomAuthorFilterTest extends TestCase {
 	}
 	public void testDoHttpFilter_atomFound_atomContentType_alice_HEAD() throws Exception {
 		response = new MockHttpServletResponse();
-		chain.setReturnFlag("Atom Entry, OK");
+		chain.setReturnFlag("Atom Entry, 200");
         request.setMethod("HEAD");
 		request.setContentType("application/atom+xml");
 		String encodedAuthorisationValue = 
@@ -168,7 +168,7 @@ public class AtomAuthorFilterTest extends TestCase {
 	}
 	public void testDoHttpFilter_atomFound_atomContentType_alice_BrokenAuth() throws Exception {
 		response = new MockHttpServletResponse();
-		chain.setReturnFlag("Atom Entry, OK");
+		chain.setReturnFlag("Atom Entry, 200");
         request.setMethod(getMethod());
 		request.setContentType("application/atom+xml");
 		String encodedAuthorisationValue = 
@@ -186,7 +186,7 @@ public class AtomAuthorFilterTest extends TestCase {
 
 	public void testDoHttpFilter_atomFound_atomContentType_alice_badAtomMalformed() throws Exception {
 		response = new MockHttpServletResponse();
-		chain.setReturnFlag("Malformed, OK");
+		chain.setReturnFlag("Malformed, 200");
         request.setMethod(getMethod());
 		request.setContentType("application/atom+xml");
 		String encodedAuthorisationValue = 
@@ -205,7 +205,7 @@ public class AtomAuthorFilterTest extends TestCase {
 
 	public void testDoHttpFilter_atomFound_atomContentType_alice_badAtomNoAuthor() throws Exception {
 		response = new MockHttpServletResponse();
-		chain.setReturnFlag("No author, OK");
+		chain.setReturnFlag("No author, 200");
         request.setMethod(getMethod());
 		request.setContentType("application/atom+xml");
 		String encodedAuthorisationValue = 
@@ -224,7 +224,7 @@ public class AtomAuthorFilterTest extends TestCase {
 
 	public void testDoHttpFilter_atomFound_atomContentType_alice_badAtomNoEmail() throws Exception {
 		response = new MockHttpServletResponse();
-		chain.setReturnFlag("No email, OK");
+		chain.setReturnFlag("No email, 200");
         request.setMethod(getMethod());
 		request.setContentType("application/atom+xml");
 		String encodedAuthorisationValue = 
@@ -243,7 +243,7 @@ public class AtomAuthorFilterTest extends TestCase {
 
 	public void testDoHttpFilter_atomFound_atomContentType_alice_badAtomTwoAuthors() throws Exception {
 		response = new MockHttpServletResponse();
-		chain.setReturnFlag("Two authors, OK");
+		chain.setReturnFlag("Two authors, 200");
         request.setMethod(getMethod());
 		request.setContentType("application/atom+xml");
 		String encodedAuthorisationValue = 
@@ -267,7 +267,7 @@ public class AtomAuthorFilterTest extends TestCase {
      */
 	public void testDoHttpFilter_atomFound_atomContentType_lice() throws Exception {
 		response = new MockHttpServletResponse();
-		chain.setReturnFlag("Atom Entry, OK");
+		chain.setReturnFlag("Atom Entry, 200");
         request.setMethod(getMethod());
 		request.setContentType("application/atom+xml");
 		String encodedAuthorisationValue = 
@@ -296,7 +296,7 @@ public class AtomAuthorFilterTest extends TestCase {
 
 	public void testDoHttpFilter_atomFeedFound_atomContentType_alice() throws Exception {
 		response = new MockHttpServletResponse();
-		chain.setReturnFlag("Atom Feed, OK");
+		chain.setReturnFlag("Atom Feed, 200");
         request.setMethod(getMethod());
 		request.setContentType("application/atom+xml");
 		String encodedAuthorisationValue = 

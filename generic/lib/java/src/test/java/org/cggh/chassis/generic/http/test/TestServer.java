@@ -74,13 +74,13 @@ class HttpRequestHandler implements Runnable {
 	Socket socket;
 	InputStream input;
 	OutputStream output;
-	BufferedReader br;
+	BufferedReader bufferedReader;
 
 	public HttpRequestHandler(Socket socket) throws IOException {
 		this.socket = socket;
 		this.input = socket.getInputStream();
 		this.output = socket.getOutputStream();
-		this.br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+		this.bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 	}
 
 	public void run() {
@@ -96,7 +96,7 @@ class HttpRequestHandler implements Runnable {
 
 			HashMap<String, String> parameters = new HashMap<String, String>();
 
-			String headerLine = br.readLine();
+			String headerLine = bufferedReader.readLine();
 			if (headerLine.equals(CRLF) || headerLine.equals(""))
 				break;
 
@@ -188,7 +188,7 @@ class HttpRequestHandler implements Runnable {
 		}
 
 		output.close();
-		br.close();
+		bufferedReader.close();
 		socket.close();
 	}
 	private String statusLine(HashMap<String, String> parameters,

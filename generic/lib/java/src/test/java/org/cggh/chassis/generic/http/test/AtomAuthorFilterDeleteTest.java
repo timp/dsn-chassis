@@ -15,7 +15,7 @@ public class AtomAuthorFilterDeleteTest extends AtomAuthorFilterTest {
 	
 	public void testDoHttpFilter_atomFound_atomContentType_alice_BrokenAuth() throws Exception {
 		response = new MockHttpServletResponse();
-		chain.setReturnFlag("Atom Entry, OK");
+		chain.setReturnFlag("Atom Entry, 200");
         request.setMethod(getMethod());
 		request.setContentType("application/atom+xml");
 		String encodedAuthorisationValue = 
@@ -29,7 +29,7 @@ public class AtomAuthorFilterDeleteTest extends AtomAuthorFilterTest {
 
 	public void testDoHttpFilter_atomFound_atomContentType_alice_badAtomMalformed() throws Exception {
 		response = new MockHttpServletResponse();
-		chain.setReturnFlag("Malformed, OK");
+		chain.setReturnFlag("Malformed, 200");
         request.setMethod(getMethod());
 		request.setContentType("application/atom+xml");
 		String encodedAuthorisationValue = 
@@ -44,7 +44,7 @@ public class AtomAuthorFilterDeleteTest extends AtomAuthorFilterTest {
 
 	public void testDoHttpFilter_atomFound_atomContentType_alice_badAtomNoAuthor() throws Exception {
 		response = new MockHttpServletResponse();
-		chain.setReturnFlag("No author, OK");
+		chain.setReturnFlag("No author, 200");
         request.setMethod(getMethod());
 		request.setContentType("application/atom+xml");
 		String encodedAuthorisationValue = 
@@ -59,7 +59,7 @@ public class AtomAuthorFilterDeleteTest extends AtomAuthorFilterTest {
 
 	public void testDoHttpFilter_atomFound_atomContentType_alice_badAtomNoEmail() throws Exception {
 		response = new MockHttpServletResponse();
-		chain.setReturnFlag("No email, OK");
+		chain.setReturnFlag("No email, 200");
         request.setMethod(getMethod());
 		request.setContentType("application/atom+xml");
 		String encodedAuthorisationValue = 
@@ -74,7 +74,7 @@ public class AtomAuthorFilterDeleteTest extends AtomAuthorFilterTest {
 
 	public void testDoHttpFilter_atomFound_atomContentType_alice_badAtomTwoAuthors() throws Exception {
 		response = new MockHttpServletResponse();
-		chain.setReturnFlag("Two authors, OK");
+		chain.setReturnFlag("Two authors, 200");
         request.setMethod(getMethod());
 		request.setContentType("application/atom+xml");
 		String encodedAuthorisationValue = 
