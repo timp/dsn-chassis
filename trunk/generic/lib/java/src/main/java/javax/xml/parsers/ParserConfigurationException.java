@@ -27,15 +27,21 @@ package javax.xml.parsers;
 
 /**
  * Indicates a serious configuration error.
- * But not one you are likely to be able to do anything about, so our copy is a RuntimeEXception.
+ * 
+ * NOTE This is a COPY of the Sun provided Exception, modified to make it a 
+ * RuntimeException, which arguably it should always have been.
+ * It also has had serialVersionUID added.
  * 
  *
  * @author <a href="mailto:Jeff.Suttor@Sun.com">Jeff Suttor</a>
+ * 
+ * @author timp
  * 
  */
 
 public class ParserConfigurationException extends RuntimeException {
 
+	/** Added by timp */
 	private static final long serialVersionUID = -3688849216575373917L;
 
 	/**
