@@ -1,7 +1,7 @@
 package org.cggh.chassis.generic.http.test;
 
 
-public class AtomAuthorFilterPostTest extends AtomAuthorFilterTest {
+public class AtomAuthorFilterPostTest extends AtomAuthorFilterDeleteTest {
 
 	public AtomAuthorFilterPostTest(String name) {
 		super(name);
