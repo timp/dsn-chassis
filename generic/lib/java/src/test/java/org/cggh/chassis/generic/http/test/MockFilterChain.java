@@ -17,6 +17,15 @@ public class MockFilterChain implements FilterChain {
         "</atom:author>" + 
 		"</atom:entry>" + 
 		"\n";
+	private final static String ATOM_FEED = 	
+		"<atom:feed xmlns:atom=\"http://www.w3.org/2005/Atom\">" + 
+		"<id>urn:uuid:887e181c-987a-4424-a5b0-8086e716fb9e</id>" +
+		"<updated>2010-03-02T23:47:12+00:00</updated>" +
+		"<atom:title>An Atomic Feed</atom:title>" + 
+		"<link href=\"#\" rel=\"edit\" type=\"application/atom+xml\"/>" +
+		"<link href=\"#\" rel=\"self\" type=\"application/atom+xml\"/>" +
+		"</atom:feed>" + 
+		"\n";
 	private final static String BAD_ATOM_ENTRY_NOAUTHOR = 	
 		"<atom:entry xmlns:atom=\"http://www.w3.org/2005/Atom\">" + 
 		"<atom:title>An Atomic Entry</atom:title>" + 
@@ -60,6 +69,9 @@ public class MockFilterChain implements FilterChain {
 			httpResponse.setStatus(200);
 		} else if (returnFlag.equals("Atom Entry, OK")) {
 			httpResponse.getOutputStream().print(ATOM_ENTRY);
+			httpResponse.setStatus(200);
+		} else if (returnFlag.equals("Atom Feed, OK")) {
+			httpResponse.getOutputStream().print(ATOM_FEED);
 			httpResponse.setStatus(200);
 		} else if (returnFlag.equals("Malformed, OK")) {
 			httpResponse.getOutputStream().print(BAD_ATOM_ENTRY_MALFORMED);

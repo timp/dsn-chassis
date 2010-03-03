@@ -59,6 +59,16 @@ public class AtomAuthorFilterTest extends TestCase {
 	protected String getMethod() { 
 		return "GET";
 	}
+	private int unlessDelete(int i) {
+		if (getMethod().equals("DELETE"))
+			return 401;
+		return i;
+	}
+	protected int unlessPost(int i) {
+		if (getMethod().equals("POST"))
+			return 400;
+		return i;
+	}
 	
 	
 	public void testDoHttpFilter_notFound() throws Exception {
@@ -102,7 +112,7 @@ public class AtomAuthorFilterTest extends TestCase {
 		request.setContentType("application/atom+xml");
 		request.setRequestURI("/notAtom.txt");
 		it.doHttpFilter(request, response, chain);
-		assertEquals(unlessDelete(200),response.getStatus());
+		assertEquals(unlessPost(unlessDelete(200)),response.getStatus());
 	}
 	public void testDoHttpFilter_atomFound_atomContentType() throws Exception {
 		chain.setReturnFlag("Atom Entry, OK");
@@ -110,7 +120,7 @@ public class AtomAuthorFilterTest extends TestCase {
 		request.setContentType("application/atom+xml");
 		
 		it.doHttpFilter(request, response, chain);
-		assertEquals(401, response.getStatus());
+		assertEquals(unlessPost(401), response.getStatus());
 	}
 	public void testDoHttpFilter_atomFound_atomContentType_bob() throws Exception {
 		response = new MockHttpServletResponse();
@@ -124,7 +134,7 @@ public class AtomAuthorFilterTest extends TestCase {
 		request.setHeader("Authorization", "Basic "
 				+ encodedAuthorisationValue);
 		it.doHttpFilter(request, response, chain);
-		assertEquals(401, response.getStatus());
+		assertEquals(unlessPost(401), response.getStatus());
 	}
 	public void testDoHttpFilter_atomFound_atomContentType_alice() throws Exception {
 		response = new MockHttpServletResponse();
@@ -137,7 +147,7 @@ public class AtomAuthorFilterTest extends TestCase {
 		request.setHeader("Authorization", "Basic "
 				+ encodedAuthorisationValue);
 		it.doHttpFilter(request, response, chain);
-		assertEquals(unlessDelete(200), response.getStatus());
+		assertEquals(unlessPost(unlessDelete(200)), response.getStatus());
 	}
 	public void testDoHttpFilter_atomFound_atomContentType_alice_HEAD() throws Exception {
 		response = new MockHttpServletResponse();
@@ -155,11 +165,6 @@ public class AtomAuthorFilterTest extends TestCase {
 		} catch (RuntimeException e) { 
 			assertTrue(e.getMessage().startsWith("Unexpected value of request method"));
 		}
-	}
-	private int unlessDelete(int i) {
-		if (getMethod().equals("DELETE"))
-			return 401;
-		return i;
 	}
 	public void testDoHttpFilter_atomFound_atomContentType_alice_BrokenAuth() throws Exception {
 		response = new MockHttpServletResponse();
@@ -271,7 +276,7 @@ public class AtomAuthorFilterTest extends TestCase {
 		request.setHeader("Authorization", "Basic "
 				+ encodedAuthorisationValue);
 		it.doHttpFilter(request, response, chain);
-		assertEquals(401, response.getStatus());
+		assertEquals(unlessPost(401), response.getStatus());
 	}
 
 	public void testDoHttpFilter_serverError() throws Exception {
@@ -286,8 +291,22 @@ public class AtomAuthorFilterTest extends TestCase {
 				+ encodedAuthorisationValue);
 
 		it.doHttpFilter(request, response, chain);
-		assertEquals(unlessDelete(500), response.getStatus());
+		assertEquals(unlessDelete(unlessPost(500)), response.getStatus());
 	}
 
+	public void testDoHttpFilter_atomFeedFound_atomContentType_alice() throws Exception {
+		response = new MockHttpServletResponse();
+		chain.setReturnFlag("Atom Feed, OK");
+        request.setMethod(getMethod());
+		request.setContentType("application/atom+xml");
+		String encodedAuthorisationValue = 
+			StringUtils.newStringUtf8(
+					new Base64().encode((ALICE + ":" + PASSWORD).getBytes())).replaceAll("\n", "");
+		request.setHeader("Authorization", "Basic "
+				+ encodedAuthorisationValue);
+		request.setRequestURI("/emptyStudiesFeed.atom");
+		it.doHttpFilter(request, response, chain);
+		assertEquals(unlessDelete(200), response.getStatus());
+	}
 
 }
