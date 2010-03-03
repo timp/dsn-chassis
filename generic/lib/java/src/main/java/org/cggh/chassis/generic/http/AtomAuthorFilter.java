@@ -53,11 +53,11 @@ public final class AtomAuthorFilter extends HttpFilter {
 
 			switch (HttpMethod.valueOf(request.getMethod())) {
 			case GET:
-				BufferedHttpResponseWrapper responseWrapper = new BufferedHttpResponseWrapper(
+				BufferedHttpResponseWrapper getResponseWrapper = new BufferedHttpResponseWrapper(
 						(HttpServletResponse) response);
-				chain.doFilter(request, responseWrapper);
-				System.err.println("get:" + responseWrapper.getContent());
-				if (responseWrapper.getContent().startsWith("<atom:entry")) {
+				chain.doFilter(request, getResponseWrapper);
+				System.err.println("get:" + getResponseWrapper.getContent());
+				if (getResponseWrapper.getContent().startsWith("<atom:entry")) {
 					String user = getUser(request);
 					System.err.println("user:" + user);
 					if (user == null) {
@@ -66,7 +66,7 @@ public final class AtomAuthorFilter extends HttpFilter {
 						return;
 					}
 
-					List<String> authors = getAuthors(responseWrapper
+					List<String> authors = getAuthors(getResponseWrapper
 							.getContent());
 					if (!authors.contains(user)) {
 						response.sendError(HttpServletResponse.SC_UNAUTHORIZED,
@@ -74,11 +74,12 @@ public final class AtomAuthorFilter extends HttpFilter {
 						return;
 					}
 				}
-				response.setContentLength(responseWrapper.getBuffer().length);
-				response.getOutputStream().write(responseWrapper.getBuffer());
+				response.setContentLength(getResponseWrapper.getBuffer().length);
+				response.getOutputStream().write(getResponseWrapper.getBuffer());
 				response.flushBuffer();
 				break;
 			case PUT:
+			{
 				String user = getUser(request);
 				System.err.println("put user:" + user);
 
@@ -125,11 +126,40 @@ public final class AtomAuthorFilter extends HttpFilter {
 							.sendError(connection.getResponseCode(),
 									"You may only update an item of which you are the author");
 				}
-
+			}
 				break;
 			case POST:
-				chain.doFilter(request, response);
+			{
+				String url = request.getRequestURL().toString();
+				HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
+				connection.setRequestMethod("GET");
+				connection.setRequestProperty("Content-Type", request.getContentType());
+				String authorization = request.getHeader("Authorization");
+				if (authorization != null)
+					connection.setRequestProperty("Authorization",
+							authorization);
+				connection.connect();
 
+				if (connection.getResponseCode() == HttpServletResponse.SC_OK) {
+					String content = getContent(connection);
+					System.err.println("Got:" + content);
+					if (content.startsWith("<atom:feed")) {
+						chain.doFilter(request, response);
+					} else { 
+						System.err.println(
+								HttpServletResponse.SC_BAD_REQUEST
+							+ ": You may only post to feed URLs");
+						response.sendError(
+								HttpServletResponse.SC_BAD_REQUEST, "You may only post to feed URLs");
+					}
+				} else {
+					System.err.println(
+							connection.getResponseCode()
+							+ ": " + connection.getResponseMessage());
+					response.sendError(
+							connection.getResponseCode(), connection.getResponseMessage());
+				}
+			}
 				break;
 			case DELETE:
 				response.sendError(HttpServletResponse.SC_UNAUTHORIZED,
@@ -159,15 +189,14 @@ public final class AtomAuthorFilter extends HttpFilter {
 		return content;
 	}
 
-	private static List<String> getAuthors(String atomEntry) {
+	private static List<String> getAuthors(String atomEntry) throws IOException {
 		ArrayList<String> authors = new ArrayList<String>();
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder db;
-		try {
-			db = factory.newDocumentBuilder();
-		} catch (ParserConfigurationException e) {
-			throw new RuntimeException(e);
-		}
+		// NOTE we need our own javax.xml.parsers.ParserConfigurationException
+		// to avoid the catch here
+		db = factory.newDocumentBuilder();
+		
 		InputSource inStream = new InputSource();
 		inStream.setCharacterStream(new StringReader(atomEntry));
 		Document doc;
@@ -175,9 +204,7 @@ public final class AtomAuthorFilter extends HttpFilter {
 			doc = db.parse(inStream);
 		} catch (SAXException e) {
 			throw new RuntimeException("Malformed XML", e);
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
+		} 
 
 		doc.getDocumentElement().normalize();
 		NodeList authorNodes = doc.getElementsByTagName("atom:author");
