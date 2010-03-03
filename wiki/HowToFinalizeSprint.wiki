@@ -30,7 +30,9 @@ The artifact id is made up of the following elements
   * File type 
 
 = Release Procedure = 
-This is delegated to Maven, accept the Maven generated defaults: 
+This is delegated to Maven.
+Ensure you have Tomcat running on 8080 before starting.
+Accept the Maven generated defaults: 
 <pre>
 mvn release:prepare
 </pre>
