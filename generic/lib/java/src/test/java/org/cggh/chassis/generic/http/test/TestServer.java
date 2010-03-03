@@ -216,7 +216,7 @@ class HttpRequestHandler implements Runnable {
 	}
 
 	private static void sendBytes(FileInputStream fis, OutputStream os)
-			throws Exception {
+			throws IOException {
 
 		byte[] buffer = new byte[1024];
 		int bytes = 0;
