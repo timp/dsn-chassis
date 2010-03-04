@@ -76,7 +76,6 @@ public class AtomAuthorisationTestCase extends TestCase {
 		connection.setRequestMethod("GET");
 		connection.connect();
 		int getStatus = connection.getResponseCode();
-		System.err.println("Response:" + getStatus);
 		if (getStatus == 404) {
 			int createStatus = createCollection(url, ATOM_FEED); 
 			if (createStatus != 204)
@@ -145,8 +144,6 @@ public class AtomAuthorisationTestCase extends TestCase {
 
             Tuple t = createEntry(collection,contentType, content);
             String entryUrl = t.url;
-    		System.out.println(t.url);
-    		System.out.println(t.content);
 
 			HttpURLConnection putConnection = getConnection(url(entryUrl));
 			authorize(putConnection, ALICE, PASSWORD);
@@ -161,8 +158,6 @@ public class AtomAuthorisationTestCase extends TestCase {
 						expectedStatus, putConnection.getResponseCode());
 			
 			String editMediaLink = collection + "/" + getMediaEditLink(t.content);
-			System.err.println("--- Putting document against " + editMediaLink
-					+ " - should work ---");
 			HttpURLConnection putMediaConnection = getConnection(url(editMediaLink));
 			authorize(putMediaConnection, ALICE, PASSWORD);
 			putMediaConnection.setRequestMethod("PUT");
@@ -201,7 +196,6 @@ public class AtomAuthorisationTestCase extends TestCase {
 		while ((line = in.readLine()) != null) 
 			responsePage += line;
 		in.close();
-		System.out.println(responsePage);
 		return new Tuple(entryUrl, responsePage);
 	}
 	protected static HttpURLConnection getConnection(String url) throws Exception {
@@ -215,7 +209,6 @@ public class AtomAuthorisationTestCase extends TestCase {
 		String encodedAuthorisationValue = 
 			StringUtils.newStringUtf8(
 					new Base64().encode((username + ":" + password).getBytes())).replaceAll("\n", "");
-		// System.err.println(":"+ encodedAuthorisationValue + ":");
 		connection.setRequestProperty("Authorization", "Basic "
 				+ encodedAuthorisationValue);
 	}
@@ -223,6 +216,7 @@ public class AtomAuthorisationTestCase extends TestCase {
 	public static int createCollection(String collectionUrl, String content) throws Exception {
         HttpURLConnection connection = getConnection(collectionUrl);
         
+        authorize(connection, ALICE, PASSWORD);
 		connection.setRequestMethod("POST");
         connection.setDoOutput(true);
 
