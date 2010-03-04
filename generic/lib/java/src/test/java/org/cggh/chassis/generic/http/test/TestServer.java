@@ -116,7 +116,7 @@ class HttpRequestHandler implements Runnable {
 					int pairCount = 0;
 					String token = s.nextToken();
 					String name = "";
-					while (!token.equals("HTTP/1.1")) {
+					while (!(token.equals("HTTP/1.1") && !token.equals("HTTP/1.0"))) {
 						if (pairCount == 0 ){ 
 							name = token;
 							pairCount = 1;
