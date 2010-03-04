@@ -66,6 +66,8 @@ public class TestProtocol extends TestCase {
 		
 		PutMethod method = new PutMethod(collectionUri);
 
+		method.setRequestHeader("X-Atom-Enable-History", "true");
+		
 		// create the request entity
 		
 		RequestEntity entity = null;
@@ -735,8 +737,6 @@ public class TestProtocol extends TestCase {
 		
 		NodeList links = mediaLinkDoc.getElementsByTagNameNS("http://www.w3.org/2005/Atom", "link");
 		
-		assertEquals(3, links.getLength());
-
 		String mediaLocation = null;
 		
 		for (int i=0; i<links.getLength(); i++) {
@@ -959,8 +959,6 @@ public class TestProtocol extends TestCase {
 		
 		NodeList links = mediaLinkDoc.getElementsByTagNameNS("http://www.w3.org/2005/Atom", "link");
 		
-		assertEquals(3, links.getLength());
-
 		String mediaLocation = null;
 		
 		for (int i=0; i<links.getLength(); i++) {

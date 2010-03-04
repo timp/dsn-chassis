@@ -21,13 +21,15 @@ declare variable $ap:param-request-path-info := "request-path-info" ;
 
 
 
+(:
+ : TODO doc me
+ :)
 declare function ap:do-service()
 as item()*
 {
 
 	let $request-path-info := request:get-attribute( $ap:param-request-path-info )
 	let $request-method := request:get-method()
-	let $request-content-type := request:get-header( $http:header-content-type )
 	
 	return
 	
@@ -52,6 +54,9 @@ as item()*
 
 
 
+(:
+ : TODO doc me
+ :)
 declare function ap:do-post(
 	$request-path-info as xs:string 
 ) as item()*
@@ -75,6 +80,10 @@ declare function ap:do-post(
 
 
 
+
+(:
+ : TODO doc me
+ :)
 declare function ap:do-post-atom(
 	$request-path-info as xs:string 
 ) as item()*
@@ -127,7 +136,13 @@ declare function ap:do-post-atom-feed(
 
 		then
 		
-			let $feed-doc-db-path := adb:create-collection( $request-path-info , $request-data )
+			let $enable-history := request:get-header( "X-Atom-Enable-History" )
+			
+			let $enable-history := 
+				if ( $enable-history castable as xs:boolean ) then xs:boolean( $enable-history )
+				else false()
+
+			let $feed-doc-db-path := adb:create-collection( $request-path-info , $request-data , $enable-history )
 		
 			let $feed-doc := doc( $feed-doc-db-path )
 		            
@@ -413,8 +428,18 @@ declare function ap:do-put-atom-feed(
 	 
 	let $create := not( adb:collection-available( $request-path-info ) )
 	
+	(: 
+	 : EXPERIMENTAL: enable versioning depending on request header.
+	 :)
+	 
+	let $enable-history := request:get-header( "X-Atom-Enable-History" )
+	
+	let $enable-history := 
+		if ( $enable-history castable as xs:boolean ) then xs:boolean( $enable-history )
+		else false()
+
 	let $feed-doc-db-path := 
-		if ( $create ) then adb:create-collection( $request-path-info , $request-data )
+		if ( $create ) then adb:create-collection( $request-path-info , $request-data , $enable-history )
 		else adb:update-collection( $request-path-info , $request-data )
 
 	let $feed-doc := doc( $feed-doc-db-path )
@@ -553,11 +578,18 @@ declare function ap:do-get(
 
 
 
+(:
+ : TODO doc me
+ :)
 declare function ap:do-get-entry(
 	$request-path-info
 )
 {
 
+	let $request-header-if-modified-since := request:get-header( $http:header-if-modified-since )
+	
+	(: TODO handle if modified since header :)
+	
     let $status-code := response:set-status-code( $http:status-success-ok )
     
     let $header-content-type := response:set-header( $http:header-content-type , $ap:atom-mimetype )
