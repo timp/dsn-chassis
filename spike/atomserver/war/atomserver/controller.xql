@@ -17,6 +17,14 @@ return
 		    </forward>
 		</dispatch>
 
+	else if ( $module = "history" ) then
+
+		<dispatch xmlns="http://exist.sourceforge.net/NS/exist">
+		    <forward url="/atomserver/history.xql">
+		        <set-attribute name="request-path-info" value="{$request-path-info}"/>
+		    </forward>
+		</dispatch>
+
 	else 
 
 		<ignore xmlns="http://exist.sourceforge.net/NS/exist">

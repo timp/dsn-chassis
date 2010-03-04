@@ -13,7 +13,7 @@ import module namespace af = "http://www.cggh.org/2010/xquery/atom-format" at "a
 import module namespace config = "http://www.cggh.org/2010/xquery/atom-config" at "atom-config.xqm" ;
 
 declare variable $adb:feed-doc-name as xs:string := ".feed" ;
-declare variable $adb:base-collection-path as xs:string := "/db/head" ;
+declare variable $adb:base-collection-path as xs:string := "/db" ;
 
 
 declare function adb:collection-available(
@@ -30,7 +30,7 @@ declare function adb:collection-available(
 	 
 	(:
 	 : Map the request path info, e.g., "/foo", to a database collection path,
-	 : e.g., "/db/head/foo".
+	 : e.g., "/db/foo".
 	 :)
 	 
 	let $db-collection-path := adb:request-path-info-to-db-path( $request-path-info )
@@ -66,7 +66,7 @@ declare function adb:member-available(
 	 
 	(:
 	 : Map the request path info, e.g., "/foo/bar", to a database resource path,
-	 : e.g., "/db/head/foo/bar".
+	 : e.g., "/db/foo/bar".
 	 :)
 	 
 	let $member-db-path := adb:request-path-info-to-db-path( $request-path-info )
@@ -91,7 +91,7 @@ declare function adb:media-resource-available(
 	 
 	(:
 	 : Map the request path info, e.g., "/foo/bar", to a database resource path,
-	 : e.g., "/db/head/foo/bar".
+	 : e.g., "/db/foo/bar".
 	 :)
 	 
 	let $member-db-path := adb:request-path-info-to-db-path( $request-path-info )
@@ -129,7 +129,8 @@ declare function adb:feed-doc-db-path(
 
 declare function adb:create-collection(
 	$request-path-info as xs:string ,
-	$request-data as element(atom:feed)
+	$request-data as element(atom:feed) ,
+	$enable-versioning as xs:boolean
 ) as xs:string
 {
 
@@ -141,12 +142,42 @@ declare function adb:create-collection(
 		
 		(:
 		 : Map the request path info, e.g., "/foo", to a database collection path,
-		 : e.g., "/db/head/foo".
+		 : e.g., "/db/foo".
 		 :)
 		 
 		let $collection-db-path := adb:request-path-info-to-db-path( $request-path-info )
 	
 		let $collection-db-path := utilx:get-or-create-collection( $collection-db-path )
+		
+		let $collection-config :=
+		
+			<collection xmlns="http://exist-db.org/collection-config/1.0">
+			    <triggers>
+				{
+
+					(:
+					 : EXPERIMENTAL: enable versioning support for the new collection.
+					 : TODO make this configurable.
+					 :)
+					 
+					if ( $enable-versioning ) then 
+			        <trigger event="store,remove,update" class="org.exist.versioning.VersioningTrigger">
+			            <parameter name="overwrite" value="yes"/>
+			        </trigger>
+			        else ()
+
+				}
+			    </triggers>
+			</collection>
+			
+		let $config-collection-path := concat( "/db/system/config" , $collection-db-path )
+		let $log := util:log( "debug" , concat( "$config-collection-path: " , $config-collection-path ) )
+		
+		let $config-collection-path := utilx:get-or-create-collection( $config-collection-path )
+		let $log := util:log( "debug" , concat( "$config-collection-path: " , $config-collection-path ) )
+		
+		let $config-resource-path := xmldb:store( $config-collection-path , "collection.xconf" , $collection-config )
+		let $log := util:log( "debug" , concat( "$config-resource-path: " , $config-resource-path ) )
 
 		(:
 		 : Obtain the database path for the atom feed document in the given database
@@ -179,7 +210,7 @@ declare function adb:update-collection(
 		
 		(:
 		 : Map the request path info, e.g., "/foo", to a database collection path,
-		 : e.g., "/db/head/foo".
+		 : e.g., "/db/foo".
 		 :)
 		 
 		let $collection-db-path := adb:request-path-info-to-db-path( $request-path-info )
@@ -221,7 +252,7 @@ declare function adb:create-member(
 	    
 		(:
 		 : Map the request path info, e.g., "/foo", to a database collection path,
-		 : e.g., "/db/head/foo".
+		 : e.g., "/db/foo".
 		 :)
 		 
 		let $collection-db-path := adb:request-path-info-to-db-path( $request-path-info )
@@ -249,7 +280,7 @@ declare function adb:update-member(
 		
 		(:
 		 : Map the request path info, e.g., "/foo/bar", to a database path,
-		 : e.g., "/db/head/foo/bar".
+		 : e.g., "/db/foo/bar".
 		 :)
 		 
 		let $member-db-path := adb:request-path-info-to-db-path( $request-path-info )
@@ -301,7 +332,8 @@ declare function adb:mutable-entry-children(
         not( $namespace-uri = $af:nsuri and $local-name = $af:published ) and
         not( $namespace-uri = $af:nsuri and $local-name = $af:link and $child/@rel = "self" ) and
         not( $namespace-uri = $af:nsuri and $local-name = $af:link and $child/@rel = "edit" ) and
-        not( $namespace-uri = $af:nsuri and $local-name = $af:link and $child/@rel = "edit-media" ) 
+        not( $namespace-uri = $af:nsuri and $local-name = $af:link and $child/@rel = "edit-media" ) and
+        not( $namespace-uri = $af:nsuri and $local-name = $af:link and $child/@rel = "history" )
     return $child
 };
 
@@ -325,8 +357,8 @@ declare function adb:create-feed(
         <atom:feed>
             <atom:id>{$id}</atom:id>
             <atom:updated>{$updated}</atom:updated>
-            <atom:link rel="self" href="{$self-uri}"/>
-            <atom:link rel="edit" href="{$edit-uri}"/>
+            <atom:link rel="self" type="application/atom+xml" href="{$self-uri}"/>
+            <atom:link rel="edit" type="application/atom+xml" href="{$edit-uri}"/>
             {
                 adb:mutable-feed-children($request-data)
             }
@@ -373,11 +405,18 @@ declare function adb:create-entry(
 ) as element(atom:entry)
 {
 
+	(:
+	 : TODO hide history link for entries in collections where history is not
+	 : enabled.
+	 :)
+	 
     let $id := concat( $config:service-url , $request-path-info , "/" , $uuid , ".atom" )
     let $published := current-dateTime()
     let $updated := $published
     let $self-uri := $id
     let $edit-uri := $id
+    
+    let $history-uri := concat( $config:history-service-url , $request-path-info , "/" , $uuid , ".atom" )
     
 	return
 	
@@ -385,8 +424,9 @@ declare function adb:create-entry(
             <atom:id>{$id}</atom:id>
             <atom:published>{$published}</atom:published>
             <atom:updated>{$updated}</atom:updated>
-            <atom:link rel="self" href="{$self-uri}"/>
-            <atom:link rel="edit" href="{$edit-uri}"/>
+            <atom:link rel="self" type="application/atom+xml" href="{$self-uri}"/>
+            <atom:link rel="edit" type="application/atom+xml" href="{$edit-uri}"/>
+            <atom:link rel="history" type="application/atom+xml" href="{$history-uri}"/>
             {
                 adb:mutable-entry-children($request-data)
             }
@@ -406,6 +446,11 @@ declare function adb:create-media-link-entry(
 ) as element(atom:entry)
 {
 
+	(:
+	 : TODO hide history link for entries in collections where history is not
+	 : enabled.
+	 :)
+	 
     let $id := concat( $config:service-url , $request-path-info , "/" , $uuid , ".atom" )
     let $log := util:log( "debug", $id )
     
@@ -414,6 +459,9 @@ declare function adb:create-media-link-entry(
     let $self-uri := $id
     let $edit-uri := $id
     let $media-uri := concat( $config:service-url , $request-path-info , "/" , $uuid , ".media" )
+    
+    let $history-uri := concat( $config:history-service-url , $request-path-info , "/" , $uuid , ".atom" )
+
     let $title :=
     	if ( $media-link-title ) then $media-link-title
     	else concat( "download-" , $uuid , ".media" )
@@ -428,9 +476,10 @@ declare function adb:create-media-link-entry(
             <atom:id>{$id}</atom:id>
             <atom:published>{$published}</atom:published>
             <atom:updated>{$updated}</atom:updated>
-            <atom:link rel="self" href="{$self-uri}"/>
-            <atom:link rel="edit" href="{$edit-uri}"/>
-            <atom:link rel="edit-media" href="{$media-uri}"/>
+            <atom:link rel="self" type="application/atom+xml" href="{$self-uri}"/>
+            <atom:link rel="edit" type="application/atom+xml" href="{$edit-uri}"/>
+            <atom:link rel="edit-media" type="{$media-type}" href="{$media-uri}"/>
+            <atom:link rel="history" type="application/atom+xml" href="{$history-uri}"/>
             <atom:content src="{$media-uri}" type="{$media-type}"/>
             <atom:title type="text">{$title}</atom:title>
             <atom:summary type="text">{$summary}</atom:summary>
@@ -464,6 +513,7 @@ declare function adb:update-entry(
                 $entry/atom:link[@rel="self"] ,
                 $entry/atom:link[@rel="edit"] ,
                 $entry/atom:link[@rel="edit-media"] ,
+                $entry/atom:link[@rel="history"] ,
                 adb:mutable-entry-children($request-data)
             }
         </atom:entry>  
@@ -543,7 +593,7 @@ declare function adb:retrieve-feed(
 	
 		(:
 		 : Map the request path info, e.g., "/foo", to a database collection path,
-		 : e.g., "/db/head/foo".
+		 : e.g., "/db/foo".
 		 :)
 		 
 		let $db-collection-path := adb:request-path-info-to-db-path( $request-path-info )
@@ -590,7 +640,7 @@ declare function adb:retrieve-entry(
 	
 		(:
 		 : Map the request path info, e.g., "/foo", to a database collection path,
-		 : e.g., "/db/head/foo".
+		 : e.g., "/db/foo".
 		 :)
 		 
 		let $entry-doc-db-path := adb:request-path-info-to-db-path( $request-path-info )
@@ -615,7 +665,7 @@ declare function adb:retrieve-media(
 	
 		(:
 		 : Map the request path info, e.g., "/foo", to a database collection path,
-		 : e.g., "/db/head/foo".
+		 : e.g., "/db/foo".
 		 :)
 		 
 		let $media-doc-db-path := adb:request-path-info-to-db-path( $request-path-info )

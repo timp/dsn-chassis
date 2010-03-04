@@ -1,0 +1,329 @@
+xquery version "1.0";
+
+module namespace ah = "http://www.cggh.org/2010/xquery/history-protocol";
+
+declare namespace atom = "http://www.w3.org/2005/Atom" ;
+
+(: see http://tools.ietf.org/html/draft-snell-atompub-revision-00 :)
+declare namespace ar = "http://purl.org/atompub/revision/1.0" ;
+
+import module namespace request = "http://exist-db.org/xquery/request" ;
+import module namespace response = "http://exist-db.org/xquery/response" ;
+import module namespace text = "http://exist-db.org/xquery/text" ;
+import module namespace util = "http://exist-db.org/xquery/util" ;
+import module namespace v="http://exist-db.org/versioning";
+
+import module namespace http = "http://www.cggh.org/2010/xquery/http" at "http.xqm" ;
+import module namespace mime = "http://www.cggh.org/2010/xquery/mime" at "mime-types.xqm" ;
+import module namespace config = "http://www.cggh.org/2010/xquery/atom-config" at "atom-config.xqm" ;
+import module namespace af = "http://www.cggh.org/2010/xquery/atom-format" at "atom-format.xqm" ;
+import module namespace adb = "http://www.cggh.org/2010/xquery/atom-db" at "atom-db.xqm" ;
+import module namespace ap = "http://www.cggh.org/2010/xquery/atom-protocol" at "atom-protocol.xqm" ;
+
+
+
+
+(:
+ : TODO doc me
+ :)
+declare function ah:do-service()
+as item()*
+{
+
+	let $request-path-info := request:get-attribute( $ap:param-request-path-info )
+	let $request-method := request:get-method()
+	
+	return
+	
+		if ( $request-method = $http:method-get )
+		
+		then ah:do-get( $request-path-info )
+		
+		else ah:do-method-not-allowed( $request-path-info )
+
+};
+
+
+
+
+declare function ah:do-get(
+	$request-path-info as xs:string 
+) as item()*
+{
+
+	if ( adb:member-available( $request-path-info ) )
+	
+	then ah:do-get-entry( $request-path-info )
+	
+	else ah:do-not-found( $request-path-info )
+	
+};
+
+
+
+declare function ah:do-get-entry(
+	$request-path-info as xs:string 
+) as item()*
+{
+	let $param-revision := request:get-parameter( "revision" , "" )
+	
+	return
+	
+		if ( $param-revision = "" )
+		
+		then ah:do-get-entry-history( $request-path-info )
+		
+		else if ( $param-revision castable as xs:integer )
+		
+		then ah:do-get-entry-revision( $request-path-info , xs:integer( $param-revision ) )
+		
+		else ah:do-bad-request( $request-path-info , "Revision parameter must be an integer." )
+};
+
+
+
+
+(:
+ : TODO doc me
+ :)
+declare function ah:do-get-entry-history(
+	$request-path-info
+)
+{
+
+    let $entry-doc-path := adb:request-path-info-to-db-path( $request-path-info )
+
+    let $entry-doc := doc( $entry-doc-path )
+    
+    let $status-code := response:set-status-code( $http:status-success-ok )
+    
+    let $header-content-type := response:set-header( $http:header-content-type , $ap:atom-mimetype )
+    
+    return 
+
+		<atom:feed>
+			<atom:title>History</atom:title>
+			{
+
+(:				v:history($entry-doc) , :)
+				
+(:				v:versions($entry-doc) , :)
+				
+				for $i in 1 to v:revisions( $entry-doc )
+				return ah:construct-entry-revision( $request-path-info , $entry-doc , $i )
+				
+			}
+		</atom:feed>
+
+};
+
+
+
+
+declare function ah:do-get-entry-revision(
+	$request-path-info as xs:string ,
+	$revision-number as xs:integer
+)
+{
+
+    let $entry-doc-path := adb:request-path-info-to-db-path( $request-path-info )
+
+    let $entry-doc := doc( $entry-doc-path )
+    
+    let $revisions := v:revisions( $entry-doc )
+    
+    return
+    
+    	if ( $revision-number <= 0 )
+    	
+    	then ah:do-bad-request( $request-path-info , "Revision parameter must be an integer greater than 0." )
+    	
+    	else if ( $revision-number > $revisions )
+    	
+    	then ah:do-not-found( $request-path-info )
+    	
+    	else 
+    	
+		    let $status-code := response:set-status-code( $http:status-success-ok )
+		    
+		    let $header-content-type := response:set-header( $http:header-content-type , $ap:atom-mimetype )
+
+    		return ah:construct-entry-revision( $request-path-info , $entry-doc , $revision-number )
+    
+};
+
+
+
+declare function ah:construct-entry-revision(
+	$request-path-info as xs:string ,
+	$entry-doc as node() ,
+	$revision-number as xs:integer
+) as element(atom:entry)
+{
+
+	let $revision := v:doc( $entry-doc , $revision-number )
+
+	(: 
+	 : The versioning module returns something weird as the result
+	 : of v:doc where the revision number is 1, so let's normalise
+	 : here.
+	 :)
+	 
+	(:
+	 : Also, normal xpath selectors don't work on the initial
+	 : revision, so work around by testing local name.
+	 :)
+	 
+	let $revision := 
+		if ( $revision-number = 1 ) then $revision/*[local-name(.)=$af:entry and namespace-uri(.)=$af:nsuri]
+		else $revision
+		
+	let $when := $revision/*[local-name(.)=$af:updated and namespace-uri(.)=$af:nsuri]
+
+	let $initial :=
+		if ( $revision-number = 1 ) then "yes" else "no"
+	
+	let $this-revision-href :=
+		concat( $config:history-service-url , $request-path-info , "?revision=" , xs:string( $revision-number ) )	
+
+	let $next-revision-href :=
+		if ( $revision-number < v:revisions( $entry-doc ) ) 
+		then concat( $config:history-service-url , $request-path-info , "?revision=" , xs:string( $revision-number + 1 ) )	
+		else ()
+
+	let $previous-revision-href :=
+		if ( $revision-number > 1 ) 
+		then concat( $config:history-service-url , $request-path-info , "?revision=" , xs:string( $revision-number - 1 ) )	
+		else ()
+		
+	let $current-revision-href :=
+		concat( $config:service-url , $request-path-info )
+
+	let $initial-revision-href :=
+		concat( $config:history-service-url , $request-path-info , "?revision=1" )	
+
+	(: N.B. don't need history link because already in entry :)
+	
+	return 
+		<atom:entry>
+			<ar:revision 
+				number="{$revision-number}"
+				when="{$when}"
+				initial="{$initial}">
+			</ar:revision>
+			<atom:link rel="current-revision" type="application/atom+xml" href="{$current-revision-href}"/>
+			<atom:link rel="initial-revision" type="application/atom+xml" href="{$initial-revision-href}"/>
+			<atom:link rel="this-revision" type="application/atom+xml" href="{$this-revision-href}"/>
+		{
+			if ( $next-revision-href ) then
+			<atom:link rel="next-revision" type="application/atom+xml" href="{$next-revision-href}"/> 
+			else () ,
+			if ( $previous-revision-href ) then
+			<atom:link rel="previous-revision" type="application/atom+xml" href="{$previous-revision-href}"/> 
+			else () ,
+			$revision/*
+		}
+		</atom:entry>
+};
+
+
+
+
+declare function ah:do-not-found(
+	$request-path-info
+) as item()?
+{
+
+    let $status-code := response:set-status-code( $http:status-client-error-not-found )
+	let $header-content-type := response:set-header( $http:header-content-type , "application/xml" )
+	let $response := 
+	
+		<response>
+			<message>The server has not found anything matching the Request-URI.</message>
+			<path-info>{$request-path-info}</path-info>
+			<service-url>{$config:service-url}</service-url>
+		</response>
+
+	return $response
+		
+};
+
+
+
+declare function ah:do-bad-request(
+	$request-path-info as xs:string ,
+	$message as xs:string 
+) as item()?
+{
+
+	let $request-data := request:get-data()
+	
+    let $status-code := response:set-status-code( $http:status-client-error-bad-request )
+	let $header-content-type := response:set-header( $http:header-content-type , "application/xml" )
+	let $response := 
+	
+		<response>
+			<message>{$message} The request could not be understood by the server due to malformed syntax. The client SHOULD NOT repeat the request without modifications.</message>
+			<service-url>{$config:service-url}</service-url>
+			<method>{request:get-method()}</method>
+			<path-info>{$request-path-info}</path-info>
+			<headers>
+			{
+				for $header-name in request:get-header-names()
+				return
+					element  { lower-case( $header-name ) } 
+					{
+						request:get-header( $header-name )						
+					}
+			}
+			</headers>
+			<data>{$request-data}</data>
+		</response>
+			
+	return $response
+    
+};
+
+
+
+
+declare function ah:do-method-not-allowed(
+	$request-path-info
+) as item()?
+{
+
+	let $request-data := request:get-data()
+
+	let $status-code := response:set-status-code( $http:status-client-error-method-not-allowed )
+
+	let $header-allow := response:set-header( $http:header-allow , "GET POST PUT" )
+
+	(: 
+	 : TODO DELETE method and different allows depending on resource identified 
+	 :)
+	
+	let $header-content-type := response:set-header( $http:header-content-type , "application/xml" )
+
+	let $response := 
+	
+		<response>
+			<message>The method specified in the Request-Line is not allowed for the resource identified by the Request-URI.</message>
+			<service-url>{$config:service-url}</service-url>
+			<method>{request:get-method()}</method>
+			<path-info>{$request-path-info}</path-info>
+			<headers>
+			{
+				for $header-name in request:get-header-names()
+				return
+					element  { lower-case( $header-name ) } 
+					{
+						request:get-header( $header-name )						
+					}
+			}
+			</headers>
+			<data>{$request-data}</data>
+		</response>
+			
+	return $response
+
+};
