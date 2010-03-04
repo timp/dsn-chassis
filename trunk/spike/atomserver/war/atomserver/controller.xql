@@ -13,7 +13,7 @@ return
 
 		<dispatch xmlns="http://exist.sourceforge.net/NS/exist">
 		    <forward url="/atomserver/edit.xql">
-		        <add-parameter name="request-path-info" value="{$request-path-info}"/>
+		        <set-attribute name="request-path-info" value="{$request-path-info}"/>
 		    </forward>
 		</dispatch>
 

@@ -10,6 +10,7 @@ import module namespace text = "http://exist-db.org/xquery/text" ;
 import module namespace util = "http://exist-db.org/xquery/util" ;
 
 import module namespace http = "http://www.cggh.org/2010/xquery/http" at "http.xqm" ;
+import module namespace mime = "http://www.cggh.org/2010/xquery/mime" at "mime-types.xqm" ;
 import module namespace config = "http://www.cggh.org/2010/xquery/atom-config" at "atom-config.xqm" ;
 import module namespace af = "http://www.cggh.org/2010/xquery/atom-format" at "atom-format.xqm" ;
 import module namespace adb = "http://www.cggh.org/2010/xquery/atom-db" at "atom-db.xqm" ;
@@ -24,62 +25,19 @@ declare function ap:do-service()
 as item()*
 {
 
-	let $request-path-info := request:get-parameter( $ap:param-request-path-info , "" )
+	let $request-path-info := request:get-attribute( $ap:param-request-path-info )
 	let $request-method := request:get-method()
 	let $request-content-type := request:get-header( $http:header-content-type )
-	let $request-data := request:get-data()
-
+	
 	return
+	
+		if ( $request-method = $http:method-post )
 
-		if (
-			$request-method = $http:method-put and 
-			starts-with( $request-content-type, $ap:atom-mimetype ) and
-			local-name( $request-data ) = $af:feed and 
-			namespace-uri( $request-data ) = $af:nsuri
-		) 
+		then ap:do-post( $request-path-info )
 		
-		then ap:do-put-feed( $request-path-info , $request-data )
+		else if ( $request-method = $http:method-put )
 		
-		else if (
-			$request-method = $http:method-post and 
-			starts-with( $request-content-type, $ap:atom-mimetype ) and
-			local-name( $request-data ) = $af:feed and 
-			namespace-uri( $request-data ) = $af:nsuri
-		)
-		
-		then ap:do-post-feed( $request-path-info , $request-data )
-
-		else if (
-			$request-method = $http:method-post and 
-			starts-with( $request-content-type, $ap:atom-mimetype ) and
-			local-name( $request-data ) = $af:entry and 
-			namespace-uri( $request-data ) = $af:nsuri
-		)
-		
-		then ap:do-post-entry( $request-path-info , $request-data )
-		
-		else if (
-			$request-method = $http:method-put and 
-			starts-with( $request-content-type, $ap:atom-mimetype ) and
-			local-name( $request-data ) = $af:entry and 
-			namespace-uri( $request-data ) = $af:nsuri
-		)
-		
-		then ap:do-put-entry( $request-path-info , $request-data )
-
-		else if (
-			$request-method = $http:method-post and 
-			not( starts-with( $request-content-type, $ap:atom-mimetype ) )
-		)
-		
-		then ap:do-post-media( $request-path-info , $request-data , $request-content-type )
-
-		else if (
-			$request-method = $http:method-put and 
-			not( starts-with( $request-content-type, $ap:atom-mimetype ) )
-		)
-		
-		then ap:do-put-media( $request-path-info , $request-data , $request-content-type )
+		then ap:do-put( $request-path-info )
 
 		else if (
 			$request-method = $http:method-get and
@@ -106,14 +64,123 @@ as item()*
 		
 		then ap:do-not-found( $request-path-info )
 		
-		else ap:do-bad-request( $request-path-info , "Unknown operation." , $request-data )
+		else ap:do-bad-request( $request-path-info , "Unknown operation." )
+
+};
+
+
+
+declare function ap:do-post(
+	$request-path-info as xs:string 
+) as item()*
+{
+
+	let $request-content-type := request:get-header( $http:header-content-type )
+
+	return 
+
+		if ( starts-with( $request-content-type, $ap:atom-mimetype ) )
+		
+		then ap:do-post-atom( $request-path-info )
+		
+		else if ( starts-with( $request-content-type, $http:media-type-multipart-form-data ) )
+		
+		then ap:do-post-multipart( $request-path-info )
+		
+		else ap:do-post-media( $request-path-info , $request-content-type )
+
+};
+
+
+
+declare function ap:do-post-atom(
+	$request-path-info as xs:string 
+) as item()*
+{
+
+	let $request-data := request:get-data()
+
+	return
+	
+		if (
+			local-name( $request-data ) = $af:feed and 
+			namespace-uri( $request-data ) = $af:nsuri
+		)
+		
+		then ap:do-post-atom-feed( $request-path-info , $request-data )
+
+		else if (
+			local-name( $request-data ) = $af:entry and 
+			namespace-uri( $request-data ) = $af:nsuri
+		)
+		
+		then ap:do-post-atom-entry( $request-path-info , $request-data )
+		
+		else ap:do-bad-request( $request-path-info , "Request entity must be either atom feed or atom entry." )
 
 };
 
 
 
 
-declare function ap:do-put-feed(
+declare function ap:do-put (
+	$request-path-info as xs:string 
+) as item()*
+{
+
+	let $request-content-type := request:get-header( $http:header-content-type )
+
+	return 
+
+		if ( starts-with( $request-content-type, $ap:atom-mimetype ) )
+		
+		then ap:do-put-atom( $request-path-info )
+
+		(:		
+		else if ( starts-with( $request-content-type, $http:media-type-multipart-form-data ) )
+		
+		then ap:do-put-multipart( $request-path-info )
+		:)
+		
+		else ap:do-put-media( $request-path-info , $request-content-type )
+
+};
+
+
+
+
+declare function ap:do-put-atom(
+	$request-path-info as xs:string 
+) as item()*
+{
+
+	let $request-data := request:get-data()
+
+	return
+	
+		if (
+			local-name( $request-data ) = $af:feed and 
+			namespace-uri( $request-data ) = $af:nsuri
+		)
+		
+		then ap:do-put-atom-feed( $request-path-info , $request-data )
+
+		else if (
+			local-name( $request-data ) = $af:entry and 
+			namespace-uri( $request-data ) = $af:nsuri
+		)
+		
+		then ap:do-put-atom-entry( $request-path-info , $request-data )
+		
+		else ap:do-bad-request( $request-path-info , "Request entity must be either atom feed or atom entry." )
+
+};
+
+
+
+
+
+declare function ap:do-put-atom-feed(
 	$request-path-info as xs:string ,
 	$request-data as element(atom:feed)
 ) as item()*
@@ -154,7 +221,7 @@ declare function ap:do-put-feed(
 
 
 
-declare function ap:do-post-feed(
+declare function ap:do-post-atom-feed(
 	$request-path-info as xs:string ,
 	$request-data as element(atom:feed)
 ) as item()*
@@ -192,14 +259,14 @@ declare function ap:do-post-feed(
 		
 		else
 		
-			ap:do-bad-request( $request-path-info , "A collection already exists at the given location." , $request-data )
+			ap:do-bad-request( $request-path-info , "A collection already exists at the given location." )
 	
 };
 
 
 
 
-declare function ap:do-post-entry(
+declare function ap:do-post-atom-entry(
 	$request-path-info as xs:string ,
 	$request-data as element(atom:entry)
 ) as item()*
@@ -239,7 +306,7 @@ declare function ap:do-post-entry(
 
 
 
-declare function ap:do-put-entry(
+declare function ap:do-put-atom-entry(
 	$request-path-info as xs:string ,
 	$request-data as element(atom:entry)
 ) as item()*
@@ -276,7 +343,6 @@ declare function ap:do-put-entry(
 
 declare function ap:do-post-media(
 	$request-path-info as xs:string ,
-	$request-data as xs:base64Binary ,
 	$request-content-type
 ) as item()*
 {
@@ -296,7 +362,13 @@ declare function ap:do-post-media(
 		
 		else
 		
-			let $media-link-doc-db-path := adb:create-media-resource( $request-path-info , $request-data , $request-content-type )
+			let $request-data := request:get-data()
+			
+			(: check for slug to use as title :)
+			
+			let $request-slug := request:get-header( $http:header-slug )
+			
+			let $media-link-doc-db-path := adb:create-media-resource( $request-path-info , $request-data , $request-content-type , $request-slug )
 			
 			let $media-link-doc := doc( $media-link-doc-db-path )
 		            
@@ -316,9 +388,76 @@ declare function ap:do-post-media(
 
 
 
+declare function ap:do-post-multipart(
+	$request-path-info as xs:string 
+) as item()*
+{
+
+	(: 
+	 : First we need to know whether an atom collection exists at the 
+	 : request path.
+	 :)
+	 
+	let $collection-available := adb:collection-available( $request-path-info )
+	
+	return 
+	
+		if ( not( $collection-available ) ) 
+
+		then ap:do-not-found( $request-path-info )
+		
+		else
+
+			let $request-data := request:get-uploaded-file-data( "media" )
+					
+			(: check for file name to use as title :)
+			
+			let $file-name := request:get-uploaded-file-name( "media" )
+			let $log := util:log( "debug" , $file-name )
+			
+			let $log := util:log( "debug" , "about to create media resource" )
+			
+			(:
+			 : Unfortunately eXist's function library doesn't give us any way
+			 : to retrieve the content type for the uploaded file, so we'll
+			 : work around by using a mapping from file name extensions to
+			 : mime types.
+			 :)
+			 
+			let $extension := text:groups( $file-name , "\.([^.]+)$" )[2]
+			let $log := util:log( "debug" , $extension )
+			 
+			let $media-type := $mime:mappings//mime-mapping[extension=$extension]/mime-type
+			let $log := util:log( "debug" , concat( "mapped extension " , $extension , " to media type " , $media-type ) )
+			
+			let $media-type := if ( empty( $media-type ) ) then "application/octet-stream" else $media-type
+			let $log := util:log( "debug" , $media-type )
+			
+			let $media-link-doc-db-path := adb:create-media-resource( $request-path-info , $request-data , $media-type , $file-name )
+			let $log := util:log( "debug", $media-link-doc-db-path )
+			
+			let $media-link-doc := doc( $media-link-doc-db-path )
+		            
+			let $header-content-type := response:set-header( $http:header-content-type , $ap:atom-mimetype )
+			
+			let $test := response:set-header( "X-Test-Summary" , request:get-parameter( "summary" , "" ) )
+
+		    let $status-code := response:set-status-code( $http:status-success-created )
+		        
+		    let $location := $media-link-doc/atom:entry/atom:link[@rel="self"]/@href
+		        	
+			let $header-location := response:set-header( $http:header-location, $location )
+					    
+			return $media-link-doc
+			
+};
+
+
+
+
+
 declare function ap:do-put-media(
 	$request-path-info as xs:string ,
-	$request-data as xs:base64Binary ,
 	$request-content-type
 ) as item()*
 {
@@ -338,15 +477,34 @@ declare function ap:do-put-media(
 		
 		else
 		
-			let $media-doc-db-path := adb:update-media-resource( $request-path-info , $request-data , $request-content-type )
+			let $request-data := request:get-data()
 			
-			let $media-doc := util:binary-doc( $media-doc-db-path )
+			let $media-doc-db-path := adb:update-media-resource( $request-path-info , $request-data , $request-content-type )
 			
 		    let $status-code := response:set-status-code( $http:status-success-ok )
 		    
-		    let $header-content-type := response:set-header( $http:header-content-type , $request-content-type )
+		    (:
+		     : TODO review whether we really want to echo the file back to client
+		     : or rather return media-link entry, or rather return nothing.
+		     :)
+		     
+		    (: media type :)
 		    
-			return $media-doc
+		    let $mime-type := adb:get-mime-type( $request-path-info )
+		    
+		    (: title as filename :)
+		    
+		    let $media-link := adb:get-media-link( $request-path-info )
+		    let $title := $media-link/atom:title
+		    let $content-disposition :=
+		    	if ( $title ) then response:set-header( $http:header-content-disposition , concat( "attachment; filename=" , $title ) )
+		    	else ()
+		    
+		    (: decoding from base 64 binary :)
+		    
+		    let $response-stream := response:stream-binary( adb:retrieve-media( $request-path-info ) , $mime-type )
+		
+			return ()
 
 };
 
@@ -380,7 +538,13 @@ declare function ap:do-get-media(
     
     let $mime-type := adb:get-mime-type( $request-path-info )
     
-    (: TODO title as filename :)
+    (: title as filename :)
+    
+    let $media-link := adb:get-media-link( $request-path-info )
+    let $title := $media-link/atom:title
+    let $content-disposition :=
+    	if ( $title ) then response:set-header( $http:header-content-disposition , concat( "attachment; filename=" , $title ) )
+    	else ()
     
     (: decoding from base 64 binary :)
     
@@ -424,19 +588,20 @@ declare function ap:do-not-found(
 			<service-url>{$config:service-url}</service-url>
 		</response>
 
-	return response
+	return $response
 		
 };
 
 
 
 declare function ap:do-bad-request(
-	$request-path-info ,
-	$message as xs:string ,
-	$request-data
+	$request-path-info as xs:string ,
+	$message as xs:string 
 ) as item()?
 {
 
+	let $request-data := request:get-data()
+	
     let $status-code := response:set-status-code( $http:status-client-error-bad-request )
 	let $header-content-type := response:set-header( $http:header-content-type , "application/xml" )
 	let $response := 
