@@ -76,11 +76,15 @@ public final class AtomAuthorFilter extends HttpFilter {
 				if (authorization != null)
 					connection.setRequestProperty("Authorization",
 							authorization);
-				connection.connect();
+				try {
+					connection.connect();
+				} catch (IOException e) { 
+					throw new IOException("Could not GET " + url, e);
+				}
 
 				if (connection.getResponseCode() == HttpServletResponse.SC_OK) {
 					String content = getContent(connection);
-					if (content.startsWith("<atom:entry")) {
+					if (isEntry(content)) {
 						if (user == null) {
 							response.sendError(
 									HttpServletResponse.SC_UNAUTHORIZED,
@@ -119,7 +123,12 @@ public final class AtomAuthorFilter extends HttpFilter {
 				if (authorization != null)
 					connection.setRequestProperty("Authorization",
 							authorization);
-				connection.connect();
+				try {
+					connection.connect();
+				} catch (IOException e) { 
+					throw new IOException("Could not GET " + url, e);
+				}
+
 
 				//System.err.println("POST-" + 
 				//		connection.getResponseCode()
@@ -127,7 +136,7 @@ public final class AtomAuthorFilter extends HttpFilter {
 				if (connection.getResponseCode() == HttpServletResponse.SC_OK) {
 					String content = getContent(connection);
 					//System.err.println("Got:" + content);
-					if (content.startsWith("<atom:feed")) {
+					if (isFeed(content)) {
 						chain.doFilter(request, response);
 					} else { 
 						//System.err.println(
@@ -159,6 +168,14 @@ public final class AtomAuthorFilter extends HttpFilter {
 			}
 		} else
 			chain.doFilter(request, response);
+	}
+
+	private boolean isEntry(String content) {
+		return content.startsWith("<atom:entry");
+	}
+
+	private boolean isFeed(String content) {
+		return content.startsWith("<atom:feed");
 	}
 
 	private String getContent(HttpURLConnection connection) throws IOException {
