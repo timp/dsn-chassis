@@ -66,7 +66,7 @@ public class AtomAuthorFilterTest extends TestCase {
 	}
 	protected int unlessPost(int i) {
 		if (getMethod().equals("POST"))
-			return 400;
+			return 200;
 		return i;
 	}
 	
