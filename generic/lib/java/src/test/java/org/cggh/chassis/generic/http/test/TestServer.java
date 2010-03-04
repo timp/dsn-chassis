@@ -29,7 +29,7 @@ public class TestServer implements Runnable {
 	}
 	public void run() {
 		try {
-				if (serverSocket == null)
+			if (serverSocket == null)
 					serverSocket = new ServerSocket(PORT);
 		} catch (IOException e) {
 			throw new RuntimeException(e);
@@ -100,7 +100,6 @@ class HttpRequestHandler implements Runnable {
 			if (headerLine.equals(CRLF) || headerLine.equals(""))
 				break;
 
-			System.err.println(headerLine);
 			StringTokenizer s = new StringTokenizer(headerLine, " \t\n\r\f?=&", false);
 			String temp = s.nextToken();
 
@@ -114,7 +113,6 @@ class HttpRequestHandler implements Runnable {
 					TestServer.run = false;
 					fileExists = false;
 				} else {
-					System.err.println("filename:" + fileName);
 					int pairCount = 0;
 					String token = s.nextToken();
 					String name = "";
@@ -125,7 +123,6 @@ class HttpRequestHandler implements Runnable {
 						} else { 
 							pairCount = 0;
 							parameters.put(name, token);
-							System.err.println("Putting " + name + ":" + token);
 						}
 						token = s.nextToken();
 					}
@@ -136,53 +133,46 @@ class HttpRequestHandler implements Runnable {
 						fileExists = false;
 					}
 				}
-				String serverLine = "Server: Simple Java Http Server";
+				String serverLine = "Server: TestServer";
 				String statusLine = null;
 				String contentTypeLine = null;
 				String pageBody = null;
 				String contentLengthLine = "error";
 				if (fileExists) {
 					statusLine = statusLine(parameters, "200" , "OK");
-					contentTypeLine = "Content-type: " + contentType(fileName) + CRLF;
+					contentTypeLine = "Content-type: " + contentType(fileName);
 					contentLengthLine = "Content-Length: "
-						+ (new Integer(fis.available())).toString() + CRLF;
+						+ (new Integer(fis.available())).toString();
 				} else {
 					if (TestServer.run) { 
 						statusLine = statusLine(parameters, "404" , "Not Found");
 						contentTypeLine = "Content-type: text/html";
-						pageBody = "<HTML>"
-								+ "<HEAD><TITLE>" + statusLine(parameters, "404" , "Not Found") + "</TITLE></HEAD>"
-								+ "<BODY>" 
-								+ statusLine(parameters, "404" , "Not Found") 
-								+ "<br/>usage:http://yourHostName:port/"
-								+ "fileName.html</BODY></HTML>";
+						pageBody = page(statusLine(parameters, "404" , "Not Found"));
 						contentLengthLine = "Content-Length: "
-							+ (new Integer(pageBody.length())).toString() + CRLF;
+							+ (new Integer(pageBody.length())).toString();
 					} else { 
-						statusLine = "HTTP/1.0 200 OK" + CRLF;
+						statusLine = statusLine(parameters, "200" , "OK");
 						contentTypeLine = "Content-type: text/html";
-						pageBody = "<HTML>"
-								+ "<HEAD><TITLE>Shutdown</TITLE></HEAD>"
-								+ "<BODY>Bye then!</BODY></HTML>";						
+						pageBody = page("Bye then!");						
 						contentLengthLine = "Content-Length: "
-							+ (new Integer(pageBody.length())).toString() + CRLF;
+							+ (new Integer(pageBody.length())).toString();
 					}
 				}
 
-				output(statusLine);
-				output(serverLine);
-				output(contentTypeLine);
-				output(contentLengthLine);
+				outputLine(statusLine);
+				outputLine(serverLine);
+				outputLine(contentTypeLine);
+				outputLine(contentLengthLine);
 
 				// Send a blank line to indicate the end of the header lines.
-				output(CRLF);
+				outputLine(CRLF);
 
 				// Send the entity body.
 				if (fileExists) {
 					sendBytes(fis, output);
 					fis.close();
 				} else {
-					output(pageBody);
+					outputLine(pageBody);
 				}
 			}
 		}
@@ -191,9 +181,23 @@ class HttpRequestHandler implements Runnable {
 		bufferedReader.close();
 		socket.close();
 	}
+	private String page(String text) {
+		return 
+		      "<HTML>\n"
+			+ " <HEAD>\n" 
+			+ "  <TITLE>" + text + "</TITLE>\n"
+			+ " </HEAD>\n"
+			+ "<BODY>\n" 
+			+ text 
+			+ "\n<hr/>\n"
+			+ "TestServer running on port " + TestServer.PORT
+			+ "\n</BODY>\n"
+			+ "</HTML>\n";
+	}
+
 	private String statusLine(HashMap<String, String> parameters,
 			String status, String message) {
-		return "HTTP/1.0 " + status(parameters, status) + " " + message(parameters, message) + CRLF;
+		return "HTTP/1.0 " + status(parameters, status) + " " + message(parameters, message);
 	}
 
 	private String status(HashMap<String, String> parameters, String defaultValue) {
@@ -210,8 +214,9 @@ class HttpRequestHandler implements Runnable {
 	}
 
 
-	private void output(String line) throws IOException { 
+	private void outputLine(String line) throws IOException { 
 		output.write(line.getBytes());
+		output.write(CRLF.getBytes());
 		System.out.println(line);
 	}
 
@@ -227,9 +232,10 @@ class HttpRequestHandler implements Runnable {
 	}
 
 	private static String contentType(String fileName) {
-		if (fileName.endsWith(".htm") || fileName.endsWith(".html")
-				|| fileName.endsWith(".txt")) {
+		if (fileName.endsWith(".htm") || fileName.endsWith(".html")) {
 			return "text/html";
+		} else if (fileName.endsWith(".txt")) {
+			return "text/plain";
 		} else if (fileName.endsWith(".atom")) {
 			return "application/atom+xml";
 		} else if (fileName.endsWith(".jpg") || fileName.endsWith(".jpeg")) {
