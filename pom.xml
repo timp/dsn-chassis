@@ -166,7 +166,7 @@ http://groups.google.com/group/dsn-chassis-svn
        <configuration>
          <instrumentation>
            <ignores>
-            <ignore>**Exception</ignore>
+            <ignore>*Exception</ignore>
            </ignores>
            <excludes>
              <exclude>**/*Exception.class</exclude>
