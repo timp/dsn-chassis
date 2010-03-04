@@ -1,6 +1,3 @@
-/**
- * 
- */
 package org.cggh.chassis.generic.http;
 
 import java.io.BufferedReader;
@@ -35,14 +32,6 @@ public final class AtomAuthorFilter extends HttpFilter {
 		HEAD(), GET(), PUT(), POST(), DELETE();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.cggh.chassis.generic.http.HttpFilter#doHttpFilter(javax.servlet.http
-	 * .HttpServletRequest, javax.servlet.http.HttpServletResponse,
-	 * javax.servlet.FilterChain)
-	 */
 	@Override
 	public void doHttpFilter(HttpServletRequest request,
 			HttpServletResponse response, FilterChain chain)
@@ -55,10 +44,8 @@ public final class AtomAuthorFilter extends HttpFilter {
 				BufferedHttpResponseWrapper getResponseWrapper = new BufferedHttpResponseWrapper(
 						(HttpServletResponse) response);
 				chain.doFilter(request, getResponseWrapper);
-				System.err.println("get:" + getResponseWrapper.getContent());
 				if (getResponseWrapper.getContent().startsWith("<atom:entry")) {
 					String user = getUser(request);
-					System.err.println("user:" + user);
 					if (user == null) {
 						response.sendError(HttpServletResponse.SC_UNAUTHORIZED,
 								"No user found");
@@ -80,10 +67,7 @@ public final class AtomAuthorFilter extends HttpFilter {
 			case PUT:
 			{
 				String user = getUser(request);
-				System.err.println("put user:" + user);
-
 				String url = request.getRequestURL().toString();
-				System.err.println(url);
 				HttpURLConnection connection = (HttpURLConnection) new URL(url)
 						.openConnection();
 				connection.setRequestMethod("GET");
@@ -96,7 +80,6 @@ public final class AtomAuthorFilter extends HttpFilter {
 
 				if (connection.getResponseCode() == HttpServletResponse.SC_OK) {
 					String content = getContent(connection);
-					System.err.println(content);
 					if (content.startsWith("<atom:entry")) {
 						if (user == null) {
 							response.sendError(
@@ -104,7 +87,6 @@ public final class AtomAuthorFilter extends HttpFilter {
 									"No user found");
 							return;
 						}
-						System.err.println("User:" + user + ":");
 						List<String> authors = getAuthors(content);
 						if (!authors.contains(user)) {
 							response
@@ -139,22 +121,24 @@ public final class AtomAuthorFilter extends HttpFilter {
 							authorization);
 				connection.connect();
 
+				//System.err.println("POST-" + 
+				//		connection.getResponseCode()
+				//		+ ": " + connection.getResponseMessage());
 				if (connection.getResponseCode() == HttpServletResponse.SC_OK) {
 					String content = getContent(connection);
-					System.err.println("Got:" + content);
+					//System.err.println("Got:" + content);
 					if (content.startsWith("<atom:feed")) {
 						chain.doFilter(request, response);
 					} else { 
-						System.err.println(
-								HttpServletResponse.SC_BAD_REQUEST
-							+ ": You may only post to feed URLs");
+						//System.err.println(
+						//		HttpServletResponse.SC_BAD_REQUEST
+						//	+ ": You may only post to feed URLs");
 						response.sendError(
 								HttpServletResponse.SC_BAD_REQUEST, "You may only post to feed URLs");
 					}
+				} if (connection.getResponseCode() == HttpServletResponse.SC_NOT_FOUND) {
+					chain.doFilter(request, response);					
 				} else {
-					System.err.println(
-							connection.getResponseCode()
-							+ ": " + connection.getResponseMessage());
 					response.sendError(
 							connection.getResponseCode(), connection.getResponseMessage());
 				}
