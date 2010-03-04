@@ -401,12 +401,11 @@ declare function adb:create-media-link-entry(
 	$request-path-info as xs:string ,
     $uuid as xs:string ,
     $media-type as xs:string ,
-    $media-link-title as xs:string
+    $media-link-title as xs:string? ,
+    $media-link-summary as xs:string?
 ) as element(atom:entry)
 {
 
-	(: TODO populate title and summary :)
-	
     let $id := concat( $config:service-url , $request-path-info , "/" , $uuid , ".atom" )
     let $log := util:log( "debug", $id )
     
@@ -418,6 +417,10 @@ declare function adb:create-media-link-entry(
     let $title :=
     	if ( $media-link-title ) then $media-link-title
     	else concat( "download-" , $uuid , ".media" )
+    	
+    let $summary :=
+    	if ( $media-link-summary ) then $media-link-summary
+    	else concat( "media resource (" , $media-type , ")" )
     
 	return
 	
@@ -430,6 +433,7 @@ declare function adb:create-media-link-entry(
             <atom:link rel="edit-media" href="{$media-uri}"/>
             <atom:content src="{$media-uri}" type="{$media-type}"/>
             <atom:title type="text">{$title}</atom:title>
+            <atom:summary type="text">{$summary}</atom:summary>
         </atom:entry>  
      
 };
@@ -471,30 +475,24 @@ declare function adb:create-media-resource(
 	$request-path-info as xs:string , 
 	$request-data as xs:base64Binary , 
 	$request-content-type as xs:string ,
-	$media-link-title as xs:string
+	$media-link-title as xs:string? ,
+	$media-link-summary as xs:string?
 ) as xs:string
 {
 
 	let $media-type := text:groups( $request-content-type , "^([^;]+)" )[2]
-	let $log := util:log( "debug" , $media-type )
 	
 	let $collection-db-path := adb:request-path-info-to-db-path( $request-path-info )
-	let $log := util:log( "debug" , $collection-db-path )
 
     let $uuid := util:uuid()
-	let $log := util:log( "debug" , $uuid )
     
 	let $media-resource-name := concat( $uuid , ".media" )
-	let $log := util:log( "debug" , $media-resource-name )
 
 	let $media-resource-db-path := xmldb:store( $collection-db-path , $media-resource-name , $request-data , $media-type )
-	let $log := util:log( "debug" , $media-resource-db-path )
 	
-    let $media-link-entry := adb:create-media-link-entry( $request-path-info, $uuid , $media-type , $media-link-title )
-    let $log := util:log( "debug" , $media-link-entry )
+    let $media-link-entry := adb:create-media-link-entry( $request-path-info, $uuid , $media-type , $media-link-title , $media-link-summary )
     
     let $media-link-entry-doc-db-path := xmldb:store( $collection-db-path , concat( $uuid , ".atom" ) , $media-link-entry )    
-    let $log := util:log( "debug" , $media-link-entry-doc-db-path )
     
     return $media-link-entry-doc-db-path
 	 
