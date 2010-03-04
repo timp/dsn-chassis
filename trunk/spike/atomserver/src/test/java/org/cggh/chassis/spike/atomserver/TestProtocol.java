@@ -217,7 +217,8 @@ public class TestProtocol extends TestCase {
 			String collectionUri ,
 			InputStream content , 
 			String contentType , 
-			String slug
+			String slug ,
+			String summary
 	) {
 		
 		// setup a new POST request
@@ -226,6 +227,9 @@ public class TestProtocol extends TestCase {
 		
 		if (slug != null)
 			method.setRequestHeader("Slug", slug);
+		
+		if (summary != null)
+			method.setRequestHeader("X-Atom-Summary", summary);
 
 		// create the request entity
 		RequestEntity entity = null;
@@ -668,7 +672,7 @@ public class TestProtocol extends TestCase {
 		
 		// now create a new media resource by POSTing media to the collection URI
 		
-		doPostMediaToCreateMediaResource(collectionUri, content, contentType , "test.txt");
+		doPostMediaToCreateMediaResource(collectionUri, content, contentType , "test.txt", "a test document");
 
 	}
 
@@ -689,7 +693,7 @@ public class TestProtocol extends TestCase {
 		InputStream content = this.getClass().getClassLoader().getResourceAsStream("spreadsheet1.xls");
 		String contentType = "application/vnd.ms-excel";
 		
-		doPostMediaToCreateMediaResource(collectionUri, content, contentType, "spreadsheet1.xls");
+		doPostMediaToCreateMediaResource(collectionUri, content, contentType, "spreadsheet1.xls", "a test spreadsheet");
 
 	}
 
@@ -725,7 +729,7 @@ public class TestProtocol extends TestCase {
 		
 		// now create a new media resource by POSTing media to the collection URI
 		
-		Document mediaLinkDoc = doPostMediaToCreateMediaResource(collectionUri, content, contentType, "test.txt");
+		Document mediaLinkDoc = doPostMediaToCreateMediaResource(collectionUri, content, contentType, "test.txt", "a test document");
 
 		assertNotNull(mediaLinkDoc);
 		
@@ -949,7 +953,7 @@ public class TestProtocol extends TestCase {
 		
 		// now create a new media resource by POSTing media to the collection URI
 		
-		Document mediaLinkDoc = doPostMediaToCreateMediaResource(collectionUri, content, contentType, "test.txt");
+		Document mediaLinkDoc = doPostMediaToCreateMediaResource(collectionUri, content, contentType, "test.txt", "a test document");
 
 		assertNotNull(mediaLinkDoc);
 		
@@ -1014,7 +1018,7 @@ public class TestProtocol extends TestCase {
 	
 	
 	
-	public void testMultipartRequestWithFile() {
+	public void testMultipartRequestWithFileAcceptAtom() {
 		
 		// we need to create an atom collection first, to use as the target
 		// for an attempt to create a new member
@@ -1050,6 +1054,8 @@ public class TestProtocol extends TestCase {
 		
 		post.setRequestEntity(entity);
 		
+		post.setRequestHeader("Accept", "application/atom+xml");
+		
 		HttpClient client = new HttpClient();
 		
 		int result = -1;
@@ -1071,9 +1077,9 @@ public class TestProtocol extends TestCase {
 
 		}
 		
-		// expect the status code is 201 Created
+		// expect the status code is 200 OK
 		
-		assertEquals(201, result);
+		assertEquals(200, result);
 
 		// expect the Location header is set with an absolute URI
 
@@ -1089,6 +1095,91 @@ public class TestProtocol extends TestCase {
 		String responseContentType = post.getResponseHeader("Content-Type").getValue();
 		assertNotNull(responseContentType);
 		assertTrue(responseContentType.trim().startsWith("application/atom+xml"));
+		
+	}
+
+
+
+	public void testMultipartRequestWithFileDefault() {
+		
+		// we need to create an atom collection first, to use as the target
+		// for an attempt to create a new member
+		
+		String collectionUri = SERVER_URI + Double.toString(Math.random());
+		
+		doPutFeedToCreateCollection(collectionUri);
+
+		// now create a new media resource by POSTing media to the collection URI
+		
+		PostMethod post = new PostMethod(collectionUri);
+		
+		File file = new File(this.getClass().getClassLoader().getResource("spreadsheet1.xls").getFile());
+		String contentType = "application/vnd.ms-excel";
+		String filePartName = "media";
+		FilePart fp = null;
+		try {
+			
+			fp = new FilePart(filePartName , "spreadsheet1.xls", file, contentType, null);
+
+		} catch (FileNotFoundException e) {
+
+			e.printStackTrace();
+			fail(e.getLocalizedMessage());
+
+		}
+		
+		StringPart sp = new StringPart("summary", "this is a great spreadsheet");
+		
+		Part[] parts = { fp , sp };
+		
+		MultipartRequestEntity entity = new MultipartRequestEntity(parts, post.getParams());
+		
+		post.setRequestEntity(entity);		
+		
+		HttpClient client = new HttpClient();
+		
+		int result = -1;
+		
+		try {
+
+			// make the HTTP request now
+			result = client.executeMethod(post);
+
+		} catch (HttpException e) {
+
+			e.printStackTrace();
+			fail(e.getLocalizedMessage());
+
+		} catch (IOException e) {
+
+			e.printStackTrace();
+			fail(e.getLocalizedMessage());
+
+		}
+		
+		// expect the status code is 200 OK
+		
+		assertEquals(200, result);
+
+		// expect the Location header is set with an absolute URI
+
+		String responseLocation = post.getResponseHeader("Location").getValue();
+		assertNotNull(responseLocation);
+		
+		assertTrue(responseLocation.startsWith("http://")); 
+		// N.B. we shouldn't assume any more than this, because entry could have
+		// a location anywhere
+		
+		// expect Content-Type header 
+		
+		// without an Accept request header, we expect the response to default
+		// to text/html content, to be compatible with use from GWT clients
+		// and other browser environments where other content types cause
+		// inconsistent behaviour across browsers
+		
+		String responseContentType = post.getResponseHeader("Content-Type").getValue();
+		assertNotNull(responseContentType);
+		assertTrue(responseContentType.trim().startsWith("text/html"));
 		
 	}
 }
