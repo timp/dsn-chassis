@@ -11,6 +11,11 @@
       <user name="alice@example.org" password="bar" authorities="ROLE_CHASSIS_ADMINISTRATOR, ROLE_CHASSIS_SUBMITTER, ROLE_CHASSIS_CURATOR, ROLE_CHASSIS_GATEKEEPER, ROLE_CHASSIS_COORDINATOR, ROLE_CHASSIS_ANONYMIZER" />
       <user name="bob@example.org" password="bar" authorities="ROLE_CHASSIS_GATEKEEPER" />
       <user name="jane@example.org" password="bar" authorities="ROLE_CHASSIS_SUBMITTER" />
+      
+      <user name="administrator@example.org" password="bar" authorities="ROLE_CHASSIS_ADMINISTRATOR" />
+      <user name="submitter@example.org" password="bar" authorities="ROLE_CHASSIS_SUBMITTER" />      
+      <user name="anonymizer@example.org" password="bar" authorities="ROLE_CHASSIS_ANONYMIZER" />
+      <user name="curator@example.org" password="bar" authorities="ROLE_CHASSIS_CURATOR" />      
     </user-service>
   </authentication-provider>
   
