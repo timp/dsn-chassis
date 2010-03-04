@@ -15,4 +15,8 @@ declare variable $http:status-client-error-bad-request as xs:integer 	:= 400 ;
 declare variable $http:status-client-error-not-found as xs:integer 		:= 404 ;
 
 declare variable $http:header-content-type as xs:string 			:= "Content-Type" ;
+declare variable $http:header-content-disposition as xs:string 		:= "Content-Disposition" ;
 declare variable $http:header-location as xs:string 				:= "Location" ;
+declare variable $http:header-slug as xs:string		 				:= "Slug" ;
+
+declare variable $http:media-type-multipart-form-data as xs:string	:= "multipart/form-data" ;
