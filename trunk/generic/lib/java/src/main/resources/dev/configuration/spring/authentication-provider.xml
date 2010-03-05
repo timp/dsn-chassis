@@ -12,10 +12,10 @@
       <user name="bob@example.org" password="bar" authorities="ROLE_CHASSIS_GATEKEEPER" />
       <user name="jane@example.org" password="bar" authorities="ROLE_CHASSIS_SUBMITTER" />
       
-      <user name="administrator@example.org" password="bar" authorities="ROLE_CHASSIS_ADMINISTRATOR" />
       <user name="submitter@example.org" password="bar" authorities="ROLE_CHASSIS_SUBMITTER" />      
       <user name="anonymizer@example.org" password="bar" authorities="ROLE_CHASSIS_ANONYMIZER" />
       <user name="curator@example.org" password="bar" authorities="ROLE_CHASSIS_CURATOR" />      
+      <user name="administrator@example.org" password="bar" authorities="ROLE_CHASSIS_ADMINISTRATOR" />
     </user-service>
   </authentication-provider>
   
