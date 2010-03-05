@@ -44,7 +44,7 @@ public final class AtomAuthorFilter extends HttpFilter {
 				BufferedHttpResponseWrapper getResponseWrapper = new BufferedHttpResponseWrapper(
 						(HttpServletResponse) response);
 				chain.doFilter(request, getResponseWrapper);
-				if (getResponseWrapper.getContent().startsWith("<atom:entry")) {
+				if (isEntry(getResponseWrapper.getContent())) {
 					String user = getUser(request);
 					if (user == null) {
 						response.sendError(HttpServletResponse.SC_UNAUTHORIZED,
@@ -56,7 +56,7 @@ public final class AtomAuthorFilter extends HttpFilter {
 							.getContent());
 					if (!authors.contains(user)) {
 						response.sendError(HttpServletResponse.SC_UNAUTHORIZED,
-								"You may only interact with your own stuff");
+						"You may only update an item of which you are the author");
 						return;
 					}
 				}
@@ -96,7 +96,7 @@ public final class AtomAuthorFilter extends HttpFilter {
 							response
 									.sendError(
 											HttpServletResponse.SC_UNAUTHORIZED,
-											"You may only update an item of which you are the author");
+									"You may only update an item of which you are the author");
 							System.out
 									.println("401: You may only update an item of which you are the author");
 							return;
