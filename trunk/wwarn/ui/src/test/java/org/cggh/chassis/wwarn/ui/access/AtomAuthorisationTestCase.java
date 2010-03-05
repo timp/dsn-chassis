@@ -61,14 +61,19 @@ public class AtomAuthorisationTestCase extends TestCase {
 		"</atom:entry>" + 
 		"\n";
 	
-	private final static String ALICE = "alice@example.org";
-	private final static String PASSWORD = "bar";
+	protected final static String ALICE = "alice@example.org";
+	protected final static String PASSWORD = "bar";
 	
 	
     protected String url(String relativeUrl) {
 		return "http://localhost:8080" + relativeUrl;
 	}
-	
+	protected String relativeUrl(String path) { 
+		return "/" + existServiceContext + path;
+	}
+	protected String contextUrl(String path) { 
+		return url(relativeUrl(path));
+	}
 	/** Currently collections may be deleted, so need to be re-created. */  
 	protected static void ensureCollectionAccessible(String url) throws Exception { 
 		HttpURLConnection connection = getConnection(url);
@@ -115,7 +120,7 @@ public class AtomAuthorisationTestCase extends TestCase {
 	public void testBobCannotGetEntityCreatedByAlice() throws Exception { 
 		for (String collection : collections) {
 			Tuple t = createEntry(collection,"application/atom+xml", ATOM_ENTRY);
-			assertEquals(HttpServletResponse.SC_UNAUTHORIZED, 
+			assertEquals(HttpServletResponse.SC_FORBIDDEN, 
 					requestResourceAs(t.getUrl(),"application/atom+xml","bob@example.org", "bar"));
 		}
 	}
@@ -127,12 +132,13 @@ public class AtomAuthorisationTestCase extends TestCase {
 		}
 	}
 
-	private int requestResourceAs(String entryUrl, String contentType, String user, String password) throws Exception {
+	protected int requestResourceAs(String entryUrl, String contentType, String user, String password) throws Exception {
 		HttpURLConnection connection = getConnection(url(entryUrl));
 		authorize(connection, user, password);
 		connection.setRequestMethod("GET");
 		connection.setRequestProperty("Content-Type", contentType);
 		connection.connect();
+		System.err.println(url(entryUrl)+ ":" + connection.getResponseCode());
 		return connection.getResponseCode();
 	}
 
