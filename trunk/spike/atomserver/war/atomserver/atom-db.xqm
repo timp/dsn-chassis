@@ -3,6 +3,7 @@ xquery version "1.0";
 module namespace adb = "http://www.cggh.org/2010/xquery/atom-db";
 
 declare namespace atom = "http://www.w3.org/2005/Atom" ;
+declare namespace ar = "http://purl.org/atompub/revision/1.0" ;
 
 import module namespace text = "http://exist-db.org/xquery/text" ;
 import module namespace xmldb = "http://exist-db.org/xquery/xmldb" ;
@@ -14,6 +15,7 @@ import module namespace config = "http://www.cggh.org/2010/xquery/atom-config" a
 
 declare variable $adb:feed-doc-name as xs:string := ".feed" ;
 declare variable $adb:base-collection-path as xs:string := "/db" ;
+
 
 
 declare function adb:collection-available(
@@ -71,7 +73,7 @@ declare function adb:member-available(
 	 
 	let $member-db-path := adb:request-path-info-to-db-path( $request-path-info )
 		
-	return exists( doc( $member-db-path ) )
+	return ( not( util:binary-doc-available( $member-db-path ) ) and exists( doc( $member-db-path ) ) )
 	
 };
 
@@ -236,7 +238,8 @@ declare function adb:update-collection(
 
 declare function adb:create-member(
 	$request-path-info as xs:string ,
-	$request-data as element(atom:entry)
+	$request-data as element(atom:entry) ,
+	$comment as xs:string?
 ) as xs:string
 {
 
@@ -248,7 +251,7 @@ declare function adb:create-member(
 		
 	    let $uuid := util:uuid()
 	    
-	    let $entry := adb:create-entry( $request-path-info, $request-data , $uuid )
+	    let $entry := adb:create-entry( $request-path-info, $request-data , $uuid , $comment )
 	    
 		(:
 		 : Map the request path info, e.g., "/foo", to a database collection path,
@@ -268,7 +271,8 @@ declare function adb:create-member(
 
 declare function adb:update-member(
 	$request-path-info as xs:string ,
-	$request-data as element(atom:entry)
+	$request-data as element(atom:entry) ,
+	$comment as xs:string?
 ) as xs:string
 {
 
@@ -285,7 +289,7 @@ declare function adb:update-member(
 		 
 		let $member-db-path := adb:request-path-info-to-db-path( $request-path-info )
 	
-		let $entry := adb:update-entry( doc( $member-db-path )/atom:entry , $request-data )
+		let $entry := adb:update-entry( doc( $member-db-path )/atom:entry , $request-data , $comment )
 
 		let $groups := text:groups( $request-path-info , "^(.*)/([^/]+)$" )
 		
@@ -333,7 +337,8 @@ declare function adb:mutable-entry-children(
         not( $namespace-uri = $af:nsuri and $local-name = $af:link and $child/@rel = "self" ) and
         not( $namespace-uri = $af:nsuri and $local-name = $af:link and $child/@rel = "edit" ) and
         not( $namespace-uri = $af:nsuri and $local-name = $af:link and $child/@rel = "edit-media" ) and
-        not( $namespace-uri = $af:nsuri and $local-name = $af:link and $child/@rel = "history" )
+        not( $namespace-uri = $af:nsuri and $local-name = $af:link and $child/@rel = "history" ) and 
+        not( $namespace-uri = "http://purl.org/atompub/revision/1.0" and $local-name = "comment" )
     return $child
 };
 
@@ -401,7 +406,8 @@ declare function adb:update-feed(
 declare function adb:create-entry(
 	$request-path-info as xs:string ,
     $request-data as element(atom:entry) ,
-    $uuid as xs:string
+    $uuid as xs:string ,
+    $comment as xs:string?
 ) as element(atom:entry)
 {
 
@@ -418,7 +424,25 @@ declare function adb:create-entry(
     
     let $history-uri := concat( $config:history-service-url , $request-path-info , "/" , $uuid , ".atom" )
     
-	return
+    let $comment := if ( empty( $comment ) or $comment = "" ) then "initial revision" else $comment
+    
+    let $user-name := request:get-attribute( $config:user-name-request-attribute-key )
+    
+    let $revision-comment := 
+        <ar:comment>
+            <atom:author>
+                {
+                    if ( $config:user-name-is-email ) then
+                    <atom:email>{$user-name}</atom:email>
+                    else
+                    <atom:name>{$user-name}</atom:name>                    
+                }
+                <atom:updated>{$published}</atom:updated>
+                <atom:summary>{$comment}</atom:summary>
+            </atom:author>
+        </ar:comment>
+        
+    return
 	
         <atom:entry>
             <atom:id>{$id}</atom:id>
@@ -428,6 +452,7 @@ declare function adb:create-entry(
             <atom:link rel="edit" type="application/atom+xml" href="{$edit-uri}"/>
             <atom:link rel="history" type="application/atom+xml" href="{$history-uri}"/>
             {
+                $revision-comment ,
                 adb:mutable-entry-children($request-data)
             }
         </atom:entry>  
@@ -442,7 +467,8 @@ declare function adb:create-media-link-entry(
     $uuid as xs:string ,
     $media-type as xs:string ,
     $media-link-title as xs:string? ,
-    $media-link-summary as xs:string?
+    $media-link-summary as xs:string? ,
+    $comment as xs:string?
 ) as element(atom:entry)
 {
 
@@ -469,6 +495,24 @@ declare function adb:create-media-link-entry(
     let $summary :=
     	if ( $media-link-summary ) then $media-link-summary
     	else concat( "media resource (" , $media-type , ")" )
+    	
+        let $comment := if ( empty( $comment ) or $comment = "" ) then "initial revision" else $comment
+    
+    let $user-name := request:get-attribute( $config:user-name-request-attribute-key )
+    
+    let $revision-comment := 
+        <ar:comment>
+            <atom:author>
+                {
+                    if ( $config:user-name-is-email ) then
+                    <atom:email>{$user-name}</atom:email>
+                    else
+                    <atom:name>{$user-name}</atom:name>                    
+                }
+                <atom:updated>{$published}</atom:updated>
+                <atom:summary>{$comment}</atom:summary>
+            </atom:author>
+        </ar:comment>
     
 	return
 	
@@ -483,6 +527,7 @@ declare function adb:create-media-link-entry(
             <atom:content src="{$media-uri}" type="{$media-type}"/>
             <atom:title type="text">{$title}</atom:title>
             <atom:summary type="text">{$summary}</atom:summary>
+            { $revision-comment }
         </atom:entry>  
      
 };
@@ -492,7 +537,8 @@ declare function adb:create-media-link-entry(
 
 declare function adb:update-entry( 
     $entry as element(atom:entry) ,
-    $request-data as element(atom:entry)
+    $request-data as element(atom:entry) ,
+    $comment as xs:string?
 ) as element(atom:entry) 
 {
 
@@ -501,6 +547,22 @@ declare function adb:update-entry(
     let $updated := current-dateTime()
     let $log := util:log( "debug" , concat( "$updated: " , $updated ) )
 
+    let $user-name := request:get-attribute( $config:user-name-request-attribute-key )
+    
+    let $revision-comment := 
+        <ar:comment>
+            <atom:author>
+                {
+                    if ( $config:user-name-is-email ) then
+                    <atom:email>{$user-name}</atom:email>
+                    else
+                    <atom:name>{$user-name}</atom:name>                    
+                }
+                <atom:updated>{$updated}</atom:updated>
+                <atom:summary>{$comment}</atom:summary>
+            </atom:author>
+        </ar:comment>
+        
     return
     
         <atom:entry>
@@ -514,6 +576,8 @@ declare function adb:update-entry(
                 $entry/atom:link[@rel="edit"] ,
                 $entry/atom:link[@rel="edit-media"] ,
                 $entry/atom:link[@rel="history"] ,
+                $entry/ar:comment ,
+                $revision-comment ,
                 adb:mutable-entry-children($request-data)
             }
         </atom:entry>  
@@ -526,7 +590,8 @@ declare function adb:create-media-resource(
 	$request-data as xs:base64Binary , 
 	$request-content-type as xs:string ,
 	$media-link-title as xs:string? ,
-	$media-link-summary as xs:string?
+	$media-link-summary as xs:string? ,
+	$comment as xs:string?
 ) as xs:string
 {
 
@@ -540,7 +605,7 @@ declare function adb:create-media-resource(
 
 	let $media-resource-db-path := xmldb:store( $collection-db-path , $media-resource-name , $request-data , $media-type )
 	
-    let $media-link-entry := adb:create-media-link-entry( $request-path-info, $uuid , $media-type , $media-link-title , $media-link-summary )
+    let $media-link-entry := adb:create-media-link-entry( $request-path-info, $uuid , $media-type , $media-link-title , $media-link-summary , $comment )
     
     let $media-link-entry-doc-db-path := xmldb:store( $collection-db-path , concat( $uuid , ".atom" ) , $media-link-entry )    
     

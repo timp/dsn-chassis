@@ -165,6 +165,9 @@ declare function ap:do-post-atom-feed(
 
 
 
+(:
+ : TODO doc me
+ :)
 declare function ap:do-post-atom-entry(
 	$request-path-info as xs:string ,
 	$request-data as element(atom:entry)
@@ -186,7 +189,9 @@ declare function ap:do-post-atom-entry(
 		
 		else
 		
-			let $entry-doc-db-path := adb:create-member( $request-path-info , $request-data )
+		    let $comment := request:get-header("X-Atom-Revision-Comment")
+		    
+			let $entry-doc-db-path := adb:create-member( $request-path-info , $request-data , $comment )
 		
 			let $entry-doc := doc( $entry-doc-db-path )
 		            
@@ -236,7 +241,9 @@ declare function ap:do-post-media(
 			
 			let $summary := request:get-header( "X-Atom-Summary" )
 			
-			let $media-link-doc-db-path := adb:create-media-resource( $request-path-info , $request-data , $request-content-type , $slug , $summary )
+		    let $comment := request:get-header("X-Atom-Revision-Comment")
+		    
+			let $media-link-doc-db-path := adb:create-media-resource( $request-path-info , $request-data , $request-content-type , $slug , $summary , $comment )
 			
 			let $media-link-doc := doc( $media-link-doc-db-path )
 		            
@@ -286,6 +293,8 @@ declare function ap:do-post-multipart(
 			
 			let $summary := request:get-parameter( "summary" , "" )
 
+		    let $comment := request:get-header("X-Atom-Revision-Comment")
+		    
 			(:
 			 : Unfortunately eXist's function library doesn't give us any way
 			 : to retrieve the content type for the uploaded file, so we'll
@@ -299,7 +308,7 @@ declare function ap:do-post-multipart(
 			
 			let $media-type := if ( empty( $media-type ) ) then "application/octet-stream" else $media-type
 			
-			let $media-link-doc-db-path := adb:create-media-resource( $request-path-info , $request-data , $media-type , $file-name , $summary )
+			let $media-link-doc-db-path := adb:create-media-resource( $request-path-info , $request-data , $media-type , $file-name , $summary , $comment )
 			
 			let $media-link-doc := doc( $media-link-doc-db-path )
 		            
@@ -463,7 +472,9 @@ declare function ap:do-put-atom-feed(
 
 
 
-
+(:
+ : TODO doc me
+ :)
 declare function ap:do-put-atom-entry(
 	$request-path-info as xs:string ,
 	$request-data as element(atom:entry)
@@ -485,7 +496,9 @@ declare function ap:do-put-atom-entry(
 		
 		else
 		
-			let $entry-doc-db-path := adb:update-member( $request-path-info , $request-data )
+		    let $comment := request:get-header("X-Atom-Revision-Comment")
+		    
+			let $entry-doc-db-path := adb:update-member( $request-path-info , $request-data , $comment )
 		
 			let $entry-doc := doc( $entry-doc-db-path )
 		            
