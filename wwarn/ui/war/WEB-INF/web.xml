@@ -323,6 +323,29 @@
     <servlet-name>SubmitterUploadFileFormSubmitHandler</servlet-name>
     <url-pattern>/submitter/upload</url-pattern>
   </servlet-mapping>
+  
+  
+    <servlet>
+    <description>anonymizer clean file form submit handler</description>
+    <display-name>AnonymizerCleanFileFormSubmitHandler</display-name>
+    <servlet-name>AnonymizerCleanFileFormSubmitHandler</servlet-name>
+    <servlet-class>org.cggh.chassis.wwarn.ui.anonymizer.server.CleanFileFormSubmitHandler</servlet-class>
+    <init-param>
+      <description>the URL of the Atom collection where the uploaded file content (i.e., media) will be POSTed</description>
+      <param-name>collection.media.url</param-name>
+      <param-value>http://localhost:8080/chassis-wwarn-ui/atom/edit/media</param-value>
+    </init-param>
+    <init-param>
+      <description>the URL of the Atom collection where the derivation content will be POSTed</description>
+      <param-name>collection.derivations.url</param-name>
+      <param-value>http://localhost:8080/chassis-wwarn-ui/atom/edit/derivations</param-value>
+    </init-param>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>AnonymizerCleanFileFormSubmitHandler</servlet-name>
+    <url-pattern>/anonymizer/upload</url-pattern>
+  </servlet-mapping>
 
 
 </web-app>

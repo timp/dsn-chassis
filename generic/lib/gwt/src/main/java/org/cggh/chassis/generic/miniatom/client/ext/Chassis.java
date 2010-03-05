@@ -19,6 +19,9 @@ public class Chassis {
 	public static final String ELEMENT_MODULE = "module";
 	public static final String ELEMENT_REVIEW = "review";
 	public static final String ELEMENT_OUTCOME = "outcome";
+	public static final String ELEMENT_SUBMISSIONPUBLISHED = "submission-published";
+	public static final String ELEMENT_REVIEWPUBLISHED = "review-published";
+	public static final String ELEMENT_REVIEWSUMMARY = "review-summary";
 	
 	
 	public static final String SCHEME_FILETYPES = "http://www.cggh.org/2010/chassis/scheme/FileTypes";
@@ -31,11 +34,14 @@ public class Chassis {
 	public static final String TERM_OTHER = "http://www.cggh.org/2010/chassis/terms/Other";
 
 	public static final String TERM_PERSONALDATAREVIEW = "http://www.cggh.org/2010/chassis/terms/PersonalDataReview";
+	public static final String TERM_REMOVEPERSONALDATA = "http://www.cggh.org/2010/chassis/terms/RemovePersonalData";
 	
 	
 	public static final String REL_SUBMISSIONPART = "http://www.cggh.org/2010/chassis/terms/submissionPart";
 	public static final String REL_ORIGINSTUDY = "http://www.cggh.org/2010/chassis/terms/originStudy";
 	public static final String REL_REVIEWSUBJECT = "http://www.cggh.org/2010/chassis/terms/reviewSubject";
+	public static final String REL_DERIVATIONINPUT = "http://www.cggh.org/2010/chassis/terms/derivationInput";
+	public static final String REL_DERIVATIONOUTPUT = "http://www.cggh.org/2010/chassis/terms/derivationOutput";
 	
 		
 	

@@ -46,8 +46,10 @@ public class FilesToCleanWidget
 		
 		this.controller = new FilesToCleanWidgetController(this, this.model);
 		
-		retrieveFilesToClean();
+		this.renderer.setController(this.controller);
 
+		// In order to ready the widget's view, call a refresh before presenting.
+		
 		log.leave();
 	}
 	

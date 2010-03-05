@@ -12,6 +12,7 @@ import java.util.List;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.miniatom.client.AtomHelper;
+import org.cggh.chassis.generic.miniatom.client.ext.ChassisHelper;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 import org.cggh.chassis.generic.widget.client.ChassisWidgetRenderer;
 import org.cggh.chassis.generic.widget.client.PropertyChangeEvent;
@@ -239,7 +240,7 @@ public class ReviewFileWidgetRenderer extends ChassisWidgetRenderer<ReviewFileWi
 		
 		String title = AtomHelper.getTitle(entry);
 
-		String created = AtomHelper.getPublished(entry);
+		String submittedDate = ChassisHelper.getSubmissionPublished(entry);
 		
 		String url = AtomHelper.getContent(entry).getAttribute("src");
 		
@@ -250,7 +251,7 @@ public class ReviewFileWidgetRenderer extends ChassisWidgetRenderer<ReviewFileWi
 		
 		Widget[] row = {
 			new Label(title),
-			new Label(created),	
+			new Label(submittedDate),	
 			downloadLink	
 		};
 		rows.add(row);

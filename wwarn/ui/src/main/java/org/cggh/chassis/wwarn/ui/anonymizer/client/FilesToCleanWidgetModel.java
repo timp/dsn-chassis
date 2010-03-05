@@ -3,10 +3,13 @@
  */
 package org.cggh.chassis.wwarn.ui.anonymizer.client;
 
+import org.cggh.chassis.generic.log.client.Log;
+import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 import org.cggh.chassis.generic.widget.client.ObservableProperty;
 
 import com.google.gwt.xml.client.Document;
+import com.google.gwt.xml.client.Element;
 
 
 /**
@@ -15,10 +18,12 @@ import com.google.gwt.xml.client.Document;
  */
 public class FilesToCleanWidgetModel extends AsyncWidgetModel {
 
+	private static final Log log = LogFactory.getLog(FilesToCleanWidgetModel.class);	
 	
 	public final ObservableProperty<Document> filesToCleanFeedDoc = new ObservableProperty<Document>();
 	private String errorMessage;
 	
+	public final ObservableProperty<Element> fileToBeCleanedEntryElement = new ObservableProperty<Element>();
 	
 
 	public FilesToCleanWidgetModel() {
@@ -46,6 +51,17 @@ public class FilesToCleanWidgetModel extends AsyncWidgetModel {
 	
 	public String getErrorMessage() {
 		return errorMessage;
+	}
+
+
+	public void setFileToBeCleanedEntryElement(Element fileToBeCleanedEntryElement) {
+		
+		log.enter("setFileToBeCleanedEntryElement");
+		
+		this.fileToBeCleanedEntryElement.set(fileToBeCleanedEntryElement);
+		
+		
+		log.leave();
 	}
 
 

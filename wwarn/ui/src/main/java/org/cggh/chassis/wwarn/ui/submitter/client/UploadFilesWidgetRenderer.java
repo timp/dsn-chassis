@@ -348,8 +348,11 @@ public class UploadFilesWidgetRenderer extends ChassisWidgetRenderer<UploadFiles
 		
 		else if (status instanceof UploadFilesWidgetModel.ReadyForInteractionStatus) {
 
+			uploadFileForm.formPanel.reset();
 			uploadFileForm.setVisible(true);
-			uploadFileForm.summaryInput.setText(null);
+			
+			// Resetting the form panel clears the summaryInput and the fileInput.
+			//uploadFileForm.summaryInput.setText(null);
 		}
 		
 		else if (status instanceof UploadFilesWidgetModel.FileUploadPendingStatus) {

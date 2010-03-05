@@ -10,6 +10,7 @@ import java.util.List;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.miniatom.client.AtomHelper;
+import org.cggh.chassis.generic.miniatom.client.ext.ChassisHelper;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 import org.cggh.chassis.generic.widget.client.ChassisWidgetRenderer;
 import org.cggh.chassis.generic.widget.client.PropertyChangeEvent;
@@ -21,9 +22,11 @@ import org.cggh.chassis.wwarn.ui.common.client.RenderUtils;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiTemplate;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -43,6 +46,8 @@ public class FilesToCleanWidgetRenderer extends ChassisWidgetRenderer<FilesToCle
 	private static final Log log = LogFactory.getLog(FilesToCleanWidgetRenderer.class);
 	
 	private FilesToCleanWidget owner;
+
+	private FilesToCleanWidgetController controller;	
 	
 	public FilesToCleanWidgetRenderer(FilesToCleanWidget owner) {
 		
@@ -141,8 +146,8 @@ public class FilesToCleanWidgetRenderer extends ChassisWidgetRenderer<FilesToCle
 			
 			else {
 
-				FlexTable filesToReviewTable = renderFilesToCleanTable(entries);
-				filesToCleanTableContainer.add(filesToReviewTable);				
+				FlexTable filesToCleanTable = renderFilesToCleanTable(entries);
+				filesToCleanTableContainer.add(filesToCleanTable);				
 				
 				filesToCleanTableContainer.setVisible(true);
 
@@ -171,21 +176,43 @@ public class FilesToCleanWidgetRenderer extends ChassisWidgetRenderer<FilesToCle
 			
 			String fileName = AtomHelper.getTitle(entry);
 			
-			String submittedDate = AtomHelper.getPublished(entry);
+			String submittedDate = ChassisHelper.getSubmissionPublished(entry);
 			
 			// TODO: Provide the reviewed date. 
 			
-			String reviewedDate = AtomHelper.getPublished(entry);
+			String reviewedDate = ChassisHelper.getReviewPublished(entry);
 			
-			// TODO: Provide a link to clean. 
+			final Element fileToBeCleanedEntryElement = entry;
 			
-			String reviewLink = "clean";
+			Anchor cleanLink = new Anchor("clean"); // TODO i18n
+			
+			cleanLink.addClickHandler(new ClickHandler() {
+				
+				public void onClick(ClickEvent e) {
+					
+					log.enter("onClick");
+					
+					controller.selectFileToBeCleanedEntryElement(fileToBeCleanedEntryElement);
+					
+					log.debug("Firing cleanFile event...");
+					
+					CleanFileNavigationEvent e2 = new CleanFileNavigationEvent();
+					
+					e2.setFileToBeCleanedEntryElement(fileToBeCleanedEntryElement);
+					
+					owner.cleanFileNavigationEventChannel.fireEvent(e2);
+					
+					log.leave();
+					
+				}
+
+			});
 			
 			Widget[] row = {
 				new Label(fileName),
 				new Label(submittedDate),	
 				new Label(reviewedDate),
-				new Label(reviewLink)	
+				cleanLink	
 			};
 			rows.add(row);
 			
@@ -212,10 +239,20 @@ public class FilesToCleanWidgetRenderer extends ChassisWidgetRenderer<FilesToCle
 		
 	}
 
+	public void setOwner(FilesToCleanWidget owner) {
+		this.owner = owner;
+	}
 
-	// TODO: Wire the handler up to the cleanFile link. 
-	void handleCleanFileLinkClick(ClickEvent e) {
-		owner.cleanFileNavigationEventChannel.fireEvent();
+	public FilesToCleanWidget getOwner() {
+		return owner;
+	}
+	
+
+
+	public void setController(FilesToCleanWidgetController controller) {
+			this.controller = controller;
+	
+
 	}		
 	
 }

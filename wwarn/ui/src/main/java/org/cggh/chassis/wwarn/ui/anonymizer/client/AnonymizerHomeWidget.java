@@ -68,5 +68,5 @@ public class AnonymizerHomeWidget
 	}
 
 	public final WidgetEventChannel reviewFileNavigationEventChannel = new WidgetEventChannel(this);		
-	
+	public final WidgetEventChannel cleanFileNavigationEventChannel = new WidgetEventChannel(this);	
 }

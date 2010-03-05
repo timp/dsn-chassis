@@ -50,20 +50,7 @@ declare function local:has-not-been-reviewed( $entry as element(atom:entry) ) as
 };
 
 
-declare function local:submission-published( $entry as element(atom:entry) )
-{
-		let $submission-published :=
-			for $submission in cf:submissions()
-	        where 
-	            $submission/atom:link[@rel="http://www.cggh.org/2010/chassis/terms/submissionPart"]/@href = $entry/atom:link[@rel="self"]/@href
-	            
-	        return 
-	            $submission/atom:published
-		            
-		return
-			$submission-published
-			
-};
+
 
 let $param-id := request:get-parameter("id", "")
 
@@ -79,14 +66,14 @@ return
 			<atom:entry>
 			{
 				$entry/atom:id,
-				local:submission-published($entry),
-				$entry/atom:updated,
-				$entry/atom:title,
-				$entry/atom:summary,
+				cf:submission-published($entry),
 				$entry/atom:author,
+				$entry/atom:title,
+				$entry/atom:content,
 				$entry/atom:category,
-				$entry/atom:link,
-				$entry/atom:content
+				$entry/atom:summary,
+				$entry/atom:link
+				
 			}
 			</atom:entry>
     }

@@ -58,5 +58,19 @@ public class ChassisHelper {
 		return XMLNS.createElementNS(Chassis.ELEMENT_REVIEW, Chassis.PREFIX, Chassis.NSURI);
 	}
 
+	public static Element createDerivation() {
+		return XMLNS.createElementNS(Chassis.ELEMENT_REVIEW, Chassis.PREFIX, Chassis.NSURI);
+	}
 	
+	public static String getSubmissionPublished(Element parent) {
+		return XMLNS.getFirstChildSimpleContentByTagNameNS(parent, Chassis.ELEMENT_SUBMISSIONPUBLISHED, Chassis.NSURI);
+	}	
+
+	public static String getReviewPublished(Element parent) {
+		return XMLNS.getFirstChildSimpleContentByTagNameNS(parent, Chassis.ELEMENT_REVIEWPUBLISHED, Chassis.NSURI);
+	}	
+	
+	public static String getReviewSummary(Element parent) {
+		return XMLNS.getFirstChildSimpleContentByTagNameNS(parent, Chassis.ELEMENT_REVIEWSUMMARY, Chassis.NSURI);
+	}		
 }

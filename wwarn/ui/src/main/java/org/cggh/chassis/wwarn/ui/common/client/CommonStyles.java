@@ -13,6 +13,8 @@ public class CommonStyles {
 	public static final String RESULTSTABLE_WIDGET = "widget";
 
 	
-	
+	public static final String RESULTITEMTABLE = "resultItemTable";
+	public static final String RESULTITEMTABLE_WIDGET = "widget";
+	public static final String RESULTITEMTABLE_FIRSTCOLUMN = "firstColumn";
 	
 }

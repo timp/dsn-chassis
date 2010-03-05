@@ -10,6 +10,7 @@ import java.util.List;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.miniatom.client.AtomHelper;
+import org.cggh.chassis.generic.miniatom.client.ext.ChassisHelper;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 import org.cggh.chassis.generic.widget.client.ChassisWidgetRenderer;
 import org.cggh.chassis.generic.widget.client.PropertyChangeEvent;
@@ -186,7 +187,7 @@ public class FilesToReviewWidgetRenderer extends ChassisWidgetRenderer<FilesToRe
 			
 			String fileName = AtomHelper.getTitle(entry);
 			
-			String submittedDate = AtomHelper.getPublished(entry);
+			String submittedDate = ChassisHelper.getSubmissionPublished(entry);
 
 			final Element fileToBeReviewedEntryElement = entry;
 			
@@ -198,13 +199,10 @@ public class FilesToReviewWidgetRenderer extends ChassisWidgetRenderer<FilesToRe
 					
 					log.enter("onClick");
 					
-					//TODO: Communicate the entry to the ReviewFileWidget (via the model, or event?)
-					
 					controller.selectFileToBeReviewedEntryElement(fileToBeReviewedEntryElement);
 					
 					log.debug("Firing reviewFile event...");
 					
-					//TODO: Create event and add data to it.
 					ReviewFileNavigationEvent e2 = new ReviewFileNavigationEvent();
 					
 					e2.setFileToBeReviewedEntryElement(fileToBeReviewedEntryElement);

@@ -18,7 +18,7 @@ public class AnonymizerApplicationWidget extends MultiWidget {
 	
 	private AnonymizerHomeWidget anonymizerHomeWidget;
 	private ReviewFileWidget reviewFileWidget;
-	//private CleanFileWidget cleanFileWidget;
+	private CleanFileWidget cleanFileWidget;
 	
 	@Override
 	public void renderMainChildren() {
@@ -30,9 +30,8 @@ public class AnonymizerApplicationWidget extends MultiWidget {
 		
 		this.reviewFileWidget = new ReviewFileWidget();
 		this.mainChildren.add(this.reviewFileWidget);	
-		// TODO: Add this when the CleanFileWidget is ready.
-		//this.cleanFileWidget = new CleanFileWidget();
-		//this.mainChildren.add(this.cleanFileWidget);	
+		this.cleanFileWidget = new CleanFileWidget();
+		this.mainChildren.add(this.cleanFileWidget);	
 
 		this.defaultChild = this.anonymizerHomeWidget;
 		
@@ -84,6 +83,45 @@ public class AnonymizerApplicationWidget extends MultiWidget {
 
 		});		
 		this.childWidgetEventHandlerRegistrations.add(d2);
+
+
+		
+		HandlerRegistration b = this.anonymizerHomeWidget.cleanFileNavigationEventChannel.addHandler(new WidgetEventHandler() {
+			
+			public void onEvent(WidgetEvent e) {
+				
+				log.enter("onEvent");
+				
+				if (e instanceof CleanFileNavigationEvent) {
+					
+					log.debug("Setting cleanToBeReviewed...");
+					
+					cleanFileWidget.setFileToBeCleanedEntryElement(((CleanFileNavigationEvent) e).getFileToBeCleanedEntryElement());
+					
+					cleanFileWidget.refresh();
+					setActiveChild(cleanFileWidget);
+				
+				} else {
+					
+					log.debug(" event not an instanceof CleanFileNavigationEvent");
+				}
+				
+				log.leave();
+	
+			}
+		});
+		this.childWidgetEventHandlerRegistrations.add(b);			
+		
+		HandlerRegistration b2 = this.cleanFileWidget.addBackToStartNavigationHandler(new BackToStartNavigationHandler() {
+			
+			public void onNavigation(BackToStartNavigationEvent e) {
+				anonymizerHomeWidget.refresh();
+				setActiveChild(anonymizerHomeWidget);
+			}
+
+		});		
+		this.childWidgetEventHandlerRegistrations.add(b2);	
+			
 		
 	}
 	
