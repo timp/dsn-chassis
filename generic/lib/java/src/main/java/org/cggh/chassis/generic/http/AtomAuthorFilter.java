@@ -47,7 +47,7 @@ public final class AtomAuthorFilter extends HttpFilter {
 				if (isEntry(getResponseWrapper.getContent())) {
 					String user = getUser(request);
 					if (user == null) {
-						response.sendError(HttpServletResponse.SC_UNAUTHORIZED,
+						response.sendError(HttpServletResponse.SC_FORBIDDEN,
 								"No user found");
 						return;
 					}
@@ -55,7 +55,7 @@ public final class AtomAuthorFilter extends HttpFilter {
 					List<String> authors = getAuthors(getResponseWrapper
 							.getContent());
 					if (!authors.contains(user)) {
-						response.sendError(HttpServletResponse.SC_UNAUTHORIZED,
+						response.sendError(HttpServletResponse.SC_FORBIDDEN,
 						"You may only update an item of which you are the author");
 						return;
 					}
@@ -87,7 +87,7 @@ public final class AtomAuthorFilter extends HttpFilter {
 					if (isEntry(content)) {
 						if (user == null) {
 							response.sendError(
-									HttpServletResponse.SC_UNAUTHORIZED,
+									HttpServletResponse.SC_FORBIDDEN,
 									"No user found");
 							return;
 						}
@@ -95,7 +95,7 @@ public final class AtomAuthorFilter extends HttpFilter {
 						if (!authors.contains(user)) {
 							response
 									.sendError(
-											HttpServletResponse.SC_UNAUTHORIZED,
+											HttpServletResponse.SC_FORBIDDEN,
 									"You may only update an item of which you are the author");
 							System.out
 									.println("401: You may only update an item of which you are the author");
@@ -154,7 +154,7 @@ public final class AtomAuthorFilter extends HttpFilter {
 			}
 				break;
 			case DELETE:
-				response.sendError(HttpServletResponse.SC_UNAUTHORIZED,
+				response.sendError(HttpServletResponse.SC_FORBIDDEN,
 						"You may not use this system to delete.");
 				break;
 			default:
