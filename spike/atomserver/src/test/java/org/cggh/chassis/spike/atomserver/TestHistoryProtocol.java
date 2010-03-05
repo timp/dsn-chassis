@@ -379,10 +379,9 @@ public class TestHistoryProtocol extends TestCase {
 		assertEquals(1, feedNodes.getLength());
 		
 		// check number of entries
-		// N.B. expect 0 because history is not triggered until second revision
 
 		NodeList entryNodes = historyFeedDoc.getElementsByTagNameNS("http://www.w3.org/2005/Atom", "entry");
-		assertEquals(0, entryNodes.getLength());
+		assertEquals(1, entryNodes.getLength());
 
 	}
 

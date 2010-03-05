@@ -13,6 +13,7 @@ import module namespace text = "http://exist-db.org/xquery/text" ;
 import module namespace util = "http://exist-db.org/xquery/util" ;
 import module namespace v="http://exist-db.org/versioning" ;
 
+import module namespace utilx = "http://www.cggh.org/2010/xquery/util" at "util.xqm" ;
 import module namespace http = "http://www.cggh.org/2010/xquery/http" at "http.xqm" ;
 import module namespace mime = "http://www.cggh.org/2010/xquery/mime" at "mime-types.xqm" ;
 import module namespace config = "http://www.cggh.org/2010/xquery/atom-config" at "atom-config.xqm" ;
@@ -20,7 +21,7 @@ import module namespace af = "http://www.cggh.org/2010/xquery/atom-format" at "a
 import module namespace adb = "http://www.cggh.org/2010/xquery/atom-db" at "atom-db.xqm" ;
 import module namespace ap = "http://www.cggh.org/2010/xquery/atom-protocol" at "atom-protocol.xqm" ;
 
-
+declare variable $ah:param-name-revision-index as xs:string := "revision" ;
 
 
 (:
@@ -69,23 +70,24 @@ declare function ah:do-get-entry(
 	$request-path-info as xs:string 
 ) as item()*
 {
+
 	let $log := util:log( "debug" , "== ah:do-get-entry() ==" )
 	let $log := util:log( "debug" , $request-path-info )
 
-    let $param-revision := request:get-parameter( "revision" , "" )
-	let $log := util:log( "debug" , $param-revision )
+    let $revision-index := request:get-parameter( $ah:param-name-revision-index , "" )
+	let $log := util:log( "debug" , $revision-index )
 	
 	return
 	
-		if ( $param-revision = "" )
+		if ( $revision-index = "" )
 		
 		then ah:do-get-entry-history( $request-path-info )
 		
-		else if ( $param-revision castable as xs:integer )
+		else if ( $revision-index castable as xs:integer )
 		
-		then ah:do-get-entry-revision( $request-path-info , xs:integer( $param-revision ) )
+		then ah:do-get-entry-revision( $request-path-info , xs:integer( $revision-index ) )
 		
-		else ah:do-bad-request( $request-path-info , "Revision parameter must be an integer." )
+		else ah:do-bad-request( $request-path-info , "Revision index parameter must be an integer." )
 };
 
 
@@ -132,7 +134,7 @@ declare function ah:do-get-entry-history(
 				
 				$vvers , 
 				
-				for $i in 1 to count( $revisions )
+				for $i in 1 to ( count( $revisions ) + 1 )
 				return ah:construct-entry-revision( $request-path-info , $entry-doc , $i , $revisions )
 				
 			}
@@ -153,15 +155,26 @@ declare function ah:do-get-entry-revision(
 
     let $entry-doc := doc( $entry-doc-path )
 
-    let $revisions := v:revisions( $entry-doc )
+	(: 
+	 : N.B. we need to map from sequential revision index per entry (e.g., 1, 2, 3)
+	 : to eXist's revision numbers (e.g., 6, 21, 27) which are per collection.
+	 :)
+	
+	(: 
+	 : Also note that we will index the base revision at 1, but eXist only returns
+	 : revisions subsequent to the base, so we will have to map revision index 2 to 
+	 : the first eXist revision.
+	 :)
+	
+    let $revision-numbers as xs:integer* := v:revisions( $entry-doc )
 
     return 
     
         if ( $revision-index <= 0 )
         
-        then ah:do-bad-request( $request-path-info , "Revision parameter must be an integer greater than 0." )
+        then ah:do-bad-request( $request-path-info , "Revision index parameter must be an integer equal to or greater than 1." )
         
-        else if ( $revision-index > count($revisions) )
+        else if ( $revision-index > ( count($revision-numbers) + 1 ) )
         
         then ah:do-not-found( $request-path-info )
         
@@ -171,7 +184,7 @@ declare function ah:do-get-entry-revision(
     	    
     	    let $header-content-type := response:set-header( $http:header-content-type , $ap:atom-mimetype )
     
-        	return ah:construct-entry-revision( $request-path-info , $entry-doc , $revision-index , $revisions )
+        	return ah:construct-entry-revision( $request-path-info , $entry-doc , $revision-index , $revision-numbers )
         
 };
 
@@ -181,44 +194,139 @@ declare function ah:construct-entry-revision(
 	$request-path-info as xs:string ,
 	$entry-doc as node() ,
 	$revision-index as xs:integer ,
-	$revisions as xs:integer*
+	$revision-numbers as xs:integer*
 ) as element(atom:entry)
 {
     
-    let $revision-number := $revisions[$revision-index] 
+    (: 
+     : Handle revision index 1 in a special way
+     :)
+     
+    if ( $revision-index = 1 )
     
-	let $revision := v:doc( $entry-doc , $revision-number )
+    then ah:construct-entry-base-revision( $request-path-info , $revision-numbers )
+    
+    else ah:construct-entry-specified-revision( $request-path-info , $entry-doc , $revision-index , $revision-numbers )
+    
+};
 
-	let $when := $revision/atom:updated
 
-	let $initial :=
-		if ( $revision-index = 1 ) then "yes" else "no"
-	
+
+
+declare function ah:construct-entry-base-revision(
+	$request-path-info as xs:string ,
+	$revision-numbers as xs:integer*
+) as element(atom:entry)
+{
+
+    let $log := util:log( "debug" , "== ah:construct-entry-base-revision() ==" )
+
+    (: 
+     : N.B. if no updates on the doc yet, then base revision won't have been
+     : created by eXist versioning module, so we'll just grab the head.
+     :)
+    
+    let $base-revision-db-path := 
+        if ( empty( $revision-numbers) ) 
+        then adb:request-path-info-to-db-path( $request-path-info )
+        else concat( "/db/system/versions" , adb:request-path-info-to-db-path( $request-path-info ) , ".base" )
+        
+    let $log := util:log( "debug" , $base-revision-db-path )
+    
+    let $base-revision-doc := doc( $base-revision-db-path ) 
+        
+    let $log := util:log( "debug" , exists( $base-revision-doc ) )
+    
+    (: 
+     : N.B. we need to copy the root element, perhaps because
+     : documents in the /db/system/versions collection are not
+     : indexed by qname?
+     :)
+     
+    let $revision := utilx:copy( $base-revision-doc/* )
+    
+    let $when := $revision/atom:updated
+
 	let $this-revision-href :=
-		concat( $config:history-service-url , $request-path-info , "?revision=" , xs:string( $revision-index ) )	
+		concat( $config:history-service-url , $request-path-info , "?" , $ah:param-name-revision-index , "=" , xs:string( 1 ) )	
 
 	let $next-revision-href :=
-		if ( $revision-index < count( $revisions ) ) 
-		then concat( $config:history-service-url , $request-path-info , "?revision=" , xs:string( $revision-index + 1 ) )	
+		if ( count( $revision-numbers ) > 0 ) 
+		then concat( $config:history-service-url , $request-path-info , "?" , $ah:param-name-revision-index , "=" , xs:string( 2 ) )	
 		else ()
 
-	let $previous-revision-href :=
-		if ( $revision-index > 2 ) 
-		then concat( $config:history-service-url , $request-path-info , "?revision=" , xs:string( $revision-index - 1 ) )	
-		else ()
-		
 	let $current-revision-href :=
 		concat( $config:service-url , $request-path-info )
 
-	let $initial-revision-href :=
-		concat( $config:history-service-url , $request-path-info , "?revision=" , xs:string( 1 ) )	
+	let $initial-revision-href := $this-revision-href
 
 	(: N.B. don't need history link because already in entry :)
 	
 	return 
 		<atom:entry>
 			<ar:revision 
-				number="{$revision-number}"
+				number="1"
+				when="{$when}"
+				initial="yes">
+			</ar:revision>
+			<atom:link rel="current-revision" type="application/atom+xml" href="{$current-revision-href}"/>
+			<atom:link rel="initial-revision" type="application/atom+xml" href="{$initial-revision-href}"/>
+			<atom:link rel="this-revision" type="application/atom+xml" href="{$this-revision-href}"/>
+		{
+			if ( $next-revision-href ) then
+			<atom:link rel="next-revision" type="application/atom+xml" href="{$next-revision-href}"/> 
+			else () ,
+			$revision/*
+		}
+		</atom:entry>
+    
+};
+
+
+
+
+
+declare function ah:construct-entry-specified-revision(
+	$request-path-info as xs:string ,
+	$entry-doc as node() ,
+	$revision-index as xs:integer ,
+	$revision-numbers as xs:integer*
+) as element(atom:entry)
+{ 
+
+    let $revision-number := $revision-numbers[$revision-index -1] 
+    
+	let $revision := v:doc( $entry-doc , $revision-number )
+
+	let $when := $revision/atom:updated
+
+	let $initial := "no"
+	
+	let $this-revision-href :=
+		concat( $config:history-service-url , $request-path-info , "?" , $ah:param-name-revision-index , "=" , xs:string( $revision-index ) )	
+
+	let $next-revision-href :=
+		if ( $revision-index <= count( $revision-numbers ) ) 
+		then concat( $config:history-service-url , $request-path-info , "?" , $ah:param-name-revision-index , "=" , xs:string( $revision-index + 1 ) )	
+		else ()
+
+	let $previous-revision-href :=
+		if ( $revision-index > 1 ) 
+		then concat( $config:history-service-url , $request-path-info , "?" , $ah:param-name-revision-index , "=" , xs:string( $revision-index - 1 ) )	
+		else ()
+		
+	let $current-revision-href :=
+		concat( $config:service-url , $request-path-info )
+
+	let $initial-revision-href :=
+		concat( $config:history-service-url , $request-path-info , "?" , $ah:param-name-revision-index , "=" , xs:string( 1 ) )	
+
+	(: N.B. don't need history link because already in entry :)
+	
+	return 
+		<atom:entry>
+			<ar:revision 
+				number="{$revision-index}"
 				when="{$when}"
 				initial="{$initial}">
 			</ar:revision>
@@ -236,6 +344,7 @@ declare function ah:construct-entry-revision(
 		}
 		</atom:entry>
 };
+
 
 
 

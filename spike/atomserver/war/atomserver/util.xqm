@@ -35,3 +35,18 @@ declare function utilx:get-or-create-collection(
             return xmldb:create-collection( $target-collection-uri , $new-collection )
 			
 };
+
+
+
+
+(: return a deep copy of  the element and all sub elements :)
+declare function utilx:copy($element as element()) as element() {
+   element {node-name($element)}
+      {$element/@*,
+          for $child in $element/node()
+              return
+               if ($child instance of element())
+                 then utilx:copy($child)
+                 else $child
+      }
+};
