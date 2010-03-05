@@ -49,7 +49,35 @@ declare function local:has-not-been-cleaned( $entry as element(atom:entry) ) as 
 
 };
 
+declare function local:review-published( $entry as element(atom:entry) )
+{
 
+			for $review in collection("/db/reviews")//atom:entry
+	        where 
+	            $review/atom:link[@rel="http://www.cggh.org/2010/chassis/terms/reviewSubject"]/@href = $entry/atom:link[@rel="self"]/@href
+	            
+	        return 
+	            <chassis:review-published>{$review/atom:published/text()}</chassis:review-published>
+
+			
+};
+
+declare function local:review-summary( $entry as element(atom:entry) )
+{
+
+			for $review in collection("/db/reviews")//atom:entry
+	        where 
+	            $review/atom:link[@rel="http://www.cggh.org/2010/chassis/terms/reviewSubject"]/@href = $entry/atom:link[@rel="self"]/@href
+	            
+	        return 
+	            <chassis:review-summary>{$review/atom:summary/text()}</chassis:review-summary>
+
+			
+};
+
+let $param-id := request:get-parameter("id", "")
+
+return
 <atom:feed>
     <atom:title>Query Results</atom:title>
     {
@@ -57,7 +85,23 @@ declare function local:has-not-been-cleaned( $entry as element(atom:entry) ) as 
         for $entry in cf:submitted-media()
         where local:has-failed-review($entry)
         and local:has-not-been-cleaned($entry)
+        and ($param-id = "" or ($param-id != "" and $param-id = $entry/atom:id))
         order by $entry/atom:published
-        return $entry
+        return
+			<atom:entry>
+			{
+				$entry/atom:id,
+				cf:submission-published($entry),
+				local:review-published($entry),
+				$entry/atom:author,
+				$entry/atom:title,
+				$entry/atom:content,
+				$entry/atom:category,
+				$entry/atom:summary,
+				local:review-summary($entry),
+				$entry/atom:link
+				
+			}
+			</atom:entry>
     }
 </atom:feed>

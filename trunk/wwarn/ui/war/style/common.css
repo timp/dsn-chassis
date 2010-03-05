@@ -120,6 +120,34 @@ a.mainNavigation {
 	padding: .3em;
 }
 
+.resultItemTable {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+	border-left: 1px solid #BBBBBB;
+	border-right: 1px solid #BBBBBB;
+	border-top: 1px solid #BBBBBB;
+}
+
+.resultItemTable td {
+	border-bottom: 1px solid #BBBBBB;
+	padding: 0;
+	margin: 0;
+	vertical-align: top;
+}
+
+.resultItemTable .firstColumn {
+	font-size: 80%;
+	text-align: left;
+	font-weight: bold;
+	background-color: #E5ECF9;	
+	color: #0000CC;
+	border-right: 1px solid #BBBBBB;
+}
+
+.resultItemTable .widget {
+	padding: .3em;
+}
+
 .chassis-viewStudyWidget {
     display: inline;
 }

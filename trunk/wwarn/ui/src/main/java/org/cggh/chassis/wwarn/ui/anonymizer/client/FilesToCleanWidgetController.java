@@ -12,6 +12,7 @@ import org.cggh.chassis.generic.widget.client.ErrorEvent;
 import org.cggh.chassis.wwarn.ui.common.client.Config;
 
 import com.google.gwt.xml.client.Document;
+import com.google.gwt.xml.client.Element;
 
 
 
@@ -86,6 +87,16 @@ public class FilesToCleanWidgetController {
 			owner.fireEvent(new ErrorEvent(in));
 			return in;
 		}
+		
+	}
+
+	public void selectFileToBeCleanedEntryElement(Element fileToBeCleanedEntryElement) {
+		
+		log.enter("selectFileToBeCleanedEntryElement");
+		
+		model.setFileToBeCleanedEntryElement(fileToBeCleanedEntryElement);
+		
+		log.leave();
 		
 	}
 

@@ -121,7 +121,6 @@ public class AnonymizerHomeWidgetRenderer extends ChassisWidgetRenderer<Anonymiz
 	public void registerHandlersForChildWidgetEvents() {
 		super.registerHandlersForChildWidgetEvents();	
 		
-		//TODO: Switch this over to the home widget when events are wired up. 
 		HandlerRegistration a = filesToReviewWidgetUiField.reviewFileNavigationEventChannel.addHandler(new WidgetEventHandler() {
 			public void onEvent(WidgetEvent e) {
 				// just bubble
@@ -129,6 +128,14 @@ public class AnonymizerHomeWidgetRenderer extends ChassisWidgetRenderer<Anonymiz
 			}
 		});
 		this.childWidgetEventHandlerRegistrations.add(a);		
+		
+		HandlerRegistration b = filesToCleanWidgetUiField.cleanFileNavigationEventChannel.addHandler(new WidgetEventHandler() {
+			public void onEvent(WidgetEvent e) {
+				// just bubble
+				owner.cleanFileNavigationEventChannel.fireEvent(e);
+			}
+		});
+		this.childWidgetEventHandlerRegistrations.add(b);				
 
 	}
 

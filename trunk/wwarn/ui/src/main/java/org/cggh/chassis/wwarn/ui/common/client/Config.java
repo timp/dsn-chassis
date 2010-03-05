@@ -18,7 +18,7 @@ public class Config {
 	public static final String QUESTIONNAIRE_STUDY_URL = "questionnaire.study.url";
 	public static final String QUERY_FILESTOREVIEW_URL = "query.filestoreview.url";
 	public static final String QUERY_FILESTOCLEAN_URL = "query.filestoclean.url";
-	
+	public static final String FORMHANDLER_ANONYMIZEDFILEUPLOAD_URL = "formhandler.anonymizedfileupload.url";
 	
 	
 	public static native String get(String key) /*-{
