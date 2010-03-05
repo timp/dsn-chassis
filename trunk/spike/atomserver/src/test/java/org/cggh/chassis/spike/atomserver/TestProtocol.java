@@ -62,8 +62,6 @@ public class TestProtocol extends TestCase {
 		
 		PutMethod method = new PutMethod(collectionUri);
 
-		method.setRequestHeader("X-Atom-Enable-History", "true");
-		
 		// create the request entity
 		
 		RequestEntity entity = null;
@@ -573,8 +571,6 @@ public class TestProtocol extends TestCase {
 		
 		PutMethod method = new PutMethod(location);
 		
-		method.setRequestHeader("X-Atom-Revision-Comment", "updated title and summary");
-
 		// create the request entity
 		
 		RequestEntity entity = null;
