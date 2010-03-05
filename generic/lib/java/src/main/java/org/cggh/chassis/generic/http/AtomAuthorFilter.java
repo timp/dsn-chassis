@@ -47,7 +47,7 @@ public final class AtomAuthorFilter extends HttpFilter {
 				if (isEntry(getResponseWrapper.getContent())) {
 					String user = getUser(request);
 					if (user == null) {
-						response.sendError(HttpServletResponse.SC_FORBIDDEN,
+						response.sendError(HttpServletResponse.SC_UNAUTHORIZED,
 								"No user found");
 						return;
 					}
@@ -87,7 +87,7 @@ public final class AtomAuthorFilter extends HttpFilter {
 					if (isEntry(content)) {
 						if (user == null) {
 							response.sendError(
-									HttpServletResponse.SC_FORBIDDEN,
+									HttpServletResponse.SC_UNAUTHORIZED,
 									"No user found");
 							return;
 						}
