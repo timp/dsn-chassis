@@ -307,6 +307,137 @@ which can all be accomodated with the standard spring security declarations
      access="ROLE_SUBMITTER"/ {{{>}}}
 </pre>
 
+Note that there is no need to further protect the query urls as the 
+value of the current user is included in the query: 
+
+ * allow ( GET, /submitter/query/studies, (submitter) )
+ * allow ( GET, /anonymizer/query/studies, (anonymizer) )
+ * allow ( GET, /curator/query/studies, (curator) )
+ * allow ( GET, /administrator/query/studies, (administrator) )
+ 
+ * allow ( GET, /submitter/query/submissions, (submitter) )
+ * allow ( GET, /anonymizer/query/submissions, (anonymizer) )
+ * allow ( GET, /anonymizer/query/submissions, (curator) )
+ * allow ( GET, /administrator/query/submissions, (administrator) )
+ 
+ * allow ( GET, /anonymizer/query/reviews, (anonymizer))
+ * allow ( GET, /curator/query/reviews, (curator) )
+ * allow ( GET, /administrator/query/reviews (administrator) )
+ 
+ * allow ( GET, /anonymiser/query/derivations, (anonymizer) )
+ * allow ( GET, /curator/query/derivations, (curator) )
+ * allow ( GET, /administrator/query/derivations, (administrator) )
+ 
+ * allow ( GET, /submitter/query/media, (submitter) )
+ * allow ( GET, /anonymizer/query/media, (anonymizer) )
+ * allow ( GET, /curator/query/media, (curator) )
+ * allow ( GET, /administrator/query/media, (administrator) )
+
+ * allow ( GET, /anonymizer/query/resources, (anonymizer) )
+ * allow ( GET, /administrator/query/resources, (submitter) )
+ * allow ( GET, /administrator/query/resources, (administrator) )
+ 
+
+Sorting by url 
+ 
+ * allow ( /atom/edit/studies, POST, submitter )
+ * allow ( /atom/edit/studies, POST,  administrator )
+ * allow ( /atom/edit/studies?id=, GET,  submitter )
+ * allow ( /atom/edit/studies?id=, GET,  anonymizer )
+ * allow ( /atom/edit/studies?id=, GET,  curator )
+ * allow ( /atom/edit/studies?id=, GET,  administrator )
+ * allow ( /atom/edit/studies?id=, PUT,  submitter )
+ * allow ( /atom/edit/studies?id=, DELETE, administrator )
+ 
+ * allow ( /atom/edit/submissions, POST, submitter )
+ * allow ( /atom/edit/submissions, POST, administrator )
+ * allow ( /atom/edit/submissions?id=, GET, submitter )
+ * allow ( /atom/edit/submissions?id=, GET, anonymizer )
+ * allow ( /atom/edit/submissions?id=, GET, curator )
+ * allow ( /atom/edit/submissions?id=, GET, administrator,  )
+ * allow ( /atom/edit/submissions?id=, PUT, submitter )
+ * allow ( /atom/edit/submissions?id=, DELETE, administrator )
+ 
+ * allow ( /atom/edit/reviews, POST, anonymizer )
+ * allow ( /atom/edit/reviews, POST, curator )
+ * allow ( /atom/edit/reviews, POST, administrator )
+ * allow ( /atom/edit/reviews?id=, GET, anonymizer )
+ * allow ( /atom/edit/reviews?id=, GET, curator )
+ * allow ( /atom/edit/reviews?id=, GET, administrator )
+ * allow ( /atom/edit/reviews?id=, PUT, anonymizer )
+ * allow ( /atom/edit/reviews?id=, PUT, curator )
+ * allow ( /atom/edit/reviews?id=, PUT, administrator )
+ * allow ( /atom/edit/reviews?id=, DELETE, administrator )
+
+ * allow ( /atom/edit/derivations, POST, curator )
+ * allow ( /atom/edit/derivations, POST, anonymizer )
+ * allow ( /atom/edit/derivations, POST, administrator )
+ * allow ( /atom/edit/derivations?id=, GET, anonymizer )
+ * allow ( /atom/edit/derivations?id=, GET, curator )
+ * allow ( /atom/edit/derivations?id=, GET, administrator )
+ * allow ( /atom/edit/derivations?id=, PUT, anonymizer )
+ * allow ( /atom/edit/derivations?id=, PUT, curator )
+ * allow ( /atom/edit/derivations?id=, PUT, administrator )
+ * allow ( /atom/edit/derivations?id=, DELETE, administrator )
+
+ * allow ( /atom/edit/media, POST, submitter )
+ * allow ( /atom/edit/media, POST, anonymizer )
+ * allow ( /atom/edit/media, POST, curator )
+ * allow ( /atom/edit/media, POST, administrator )
+ * allow ( /atom/edit/media?id=, GET, submitter )
+ * allow ( /atom/edit/media?id=, GET, anonymizer )
+ * allow ( /atom/edit/media?id=, GET, curator )
+ * allow ( /atom/edit/media?id=, GET, administrator )
+ * allow ( /atom/edit/media?id=, PUT, submitter )
+ * allow ( /atom/edit/media?id=, PUT, anonymizer )
+ * allow ( /atom/edit/media?id=, PUT, curator )
+ * allow ( /atom/edit/media?id=, PUT, administrator )
+ * allow ( /atom/edit/media?id=, DELETE, administrator )
+
+ * allow ( /atom/edit/resources, POST, submitter )
+ * allow ( /atom/edit/resources, POST, anonymizer )
+ * allow ( /atom/edit/resources, POST, curator )
+ * allow ( /atom/edit/resources, POST, administrator )
+ * allow ( /atom/edit/resources?id=, GET, submitter )
+ * allow ( /atom/edit/resources?id=, GET, anonymizer )
+ * allow ( /atom/edit/resources?id=, GET, curator )
+ * allow ( /atom/edit/resources?id=, GET, administrator,  )
+ * allow ( /atom/edit/resources?id=, DELETE, administrator )
+
+The access attribute in the Spring configuration file is a list of roles so we can cast the 
+remaining rules into the same form as the Spring configuration:
+
+ * allow ( /atom/edit/studies, POST, ( submitter, administrator )
+ * allow ( /atom/edit/studies?id=, GET, ( submitter, anonymizer, curator, administrator ) )
+ * allow ( /atom/edit/studies?id=, PUT, ( submitter ) )
+ * allow ( /atom/edit/studies?id=, DELETE, administrator )
+ 
+ * allow ( /atom/edit/submissions, POST, ( submitter, administrator ) )
+ * allow ( /atom/edit/submissions?id=, GET, ( submitter, anonymizer, curator, administrator)  )
+ * allow ( /atom/edit/submissions?id=, PUT, ( submitter ) )
+ * allow ( /atom/edit/submissions?id=, DELETE, ( administrator ) )
+ 
+ * allow ( /atom/edit/reviews, POST, (anonymizer, curator, administrator) )
+ * allow ( /atom/edit/reviews?id=, GET, (anonymizer, curator, administrator ) )
+ * allow ( /atom/edit/reviews?id=, PUT, (anonymizer, curator, administrator ) )
+ * allow ( /atom/edit/reviews?id=, DELETE, ( administrator ) )
+
+ * allow ( /atom/edit/derivations, POST, ( curator, anonymizer, administrator ) )
+ * allow ( /atom/edit/derivations?id=, GET, (anonymizer, curator, administrator ) )
+ * allow ( /atom/edit/derivations?id=, PUT, (anonymizer, curator, administrator ) )
+ * allow ( /atom/edit/derivations?id=, DELETE, administrator )
+
+ * allow ( /atom/edit/media, POST, ( submitter, anonymizer, curator, administrator ) )
+ * allow ( /atom/edit/media?id=, GET, (submitter, anonymizer, curator, administrator ) )
+ * allow ( /atom/edit/media?id=, PUT, (submitter, anonymizer, curator, administrator ) )
+ * allow ( /atom/edit/media?id=, DELETE, (administrator) )
+
+ * allow ( /atom/edit/resources, POST, (submitter, anonymizer, curator, administrator ) )
+ * allow ( /atom/edit/resources?id=, GET, (submitter, anonymizer, curator, administrator) )
+ * allow ( /atom/edit/resources?id=, DELETE, ( administrator ) )
+
+ 
+== Allowing update of atom only ==
 
 {{{
 public void doHttpFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
