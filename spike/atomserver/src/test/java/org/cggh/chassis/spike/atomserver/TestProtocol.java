@@ -5,9 +5,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Reader;
-import java.io.StringBufferInputStream;
-import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -29,7 +26,6 @@ import org.apache.commons.httpclient.methods.multipart.Part;
 import org.apache.commons.httpclient.methods.multipart.StringPart;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
@@ -60,7 +56,7 @@ public class TestProtocol extends TestCase {
 	
 	
 	
-	private void doPutFeedToCreateCollection(String collectionUri) {
+	public static void putFeedToCreateCollection(String collectionUri) {
 
 		// setup a new PUT request
 		
@@ -134,7 +130,7 @@ public class TestProtocol extends TestCase {
 	
 	
 	
-	private String doPostEntryToCreateMember(String collectionUri) {
+	public static String postEntryToCreateMember(String collectionUri) {
 		
 		// setup a new POST request
 		
@@ -215,7 +211,7 @@ public class TestProtocol extends TestCase {
 
 	
 	
-	private Document doPostMediaToCreateMediaResource(
+	private Document postMediaToCreateMediaResource(
 			String collectionUri ,
 			InputStream content , 
 			String contentType , 
@@ -338,7 +334,7 @@ public class TestProtocol extends TestCase {
 		
 		String collectionUri = SERVER_URI + Double.toString(Math.random());
 		
-		doPutFeedToCreateCollection(collectionUri);
+		putFeedToCreateCollection(collectionUri);
 
 	}
 	
@@ -357,7 +353,7 @@ public class TestProtocol extends TestCase {
 		
 		String collectionUri = SERVER_URI + Double.toString(Math.random()) + "/" + Double.toString(Math.random());
 
-		doPutFeedToCreateCollection(collectionUri);
+		putFeedToCreateCollection(collectionUri);
 
 	}
 	
@@ -375,7 +371,7 @@ public class TestProtocol extends TestCase {
 		
 		String collectionUri = SERVER_URI + Double.toString(Math.random());
 		
-		doPutFeedToCreateCollection(collectionUri);
+		putFeedToCreateCollection(collectionUri);
 
 		// now try to update feed metadata via a PUT request
 		
@@ -543,12 +539,12 @@ public class TestProtocol extends TestCase {
 		
 		String collectionUri = SERVER_URI + Double.toString(Math.random());
 		
-		doPutFeedToCreateCollection(collectionUri);
+		putFeedToCreateCollection(collectionUri);
 
 		// now create a new member by POSTing and atom entry document to the
 		// collection URI
 		
-		doPostEntryToCreateMember(collectionUri);
+		postEntryToCreateMember(collectionUri);
 		
 	}
 
@@ -566,16 +562,18 @@ public class TestProtocol extends TestCase {
 		
 		String collectionUri = SERVER_URI + Double.toString(Math.random());
 		
-		doPutFeedToCreateCollection(collectionUri);
+		putFeedToCreateCollection(collectionUri);
 
 		// now create a new member by POSTing and atom entry document to the
 		// collection URI
 		
-		String location = doPostEntryToCreateMember(collectionUri);
+		String location = postEntryToCreateMember(collectionUri);
 
 		// now put an updated entry document using a PUT request
 		
 		PutMethod method = new PutMethod(location);
+		
+		method.setRequestHeader("X-Atom-Revision-Comment", "updated title and summary");
 
 		// create the request entity
 		
@@ -652,7 +650,7 @@ public class TestProtocol extends TestCase {
 		
 		String collectionUri = SERVER_URI + Double.toString(Math.random());
 		
-		doPutFeedToCreateCollection(collectionUri);
+		putFeedToCreateCollection(collectionUri);
 
 		// the request body - a plain text document
 
@@ -674,7 +672,7 @@ public class TestProtocol extends TestCase {
 		
 		// now create a new media resource by POSTing media to the collection URI
 		
-		doPostMediaToCreateMediaResource(collectionUri, content, contentType , "test.txt", "a test document");
+		postMediaToCreateMediaResource(collectionUri, content, contentType , "test.txt", "a test document");
 
 	}
 
@@ -688,14 +686,14 @@ public class TestProtocol extends TestCase {
 		
 		String collectionUri = SERVER_URI + Double.toString(Math.random());
 		
-		doPutFeedToCreateCollection(collectionUri);
+		putFeedToCreateCollection(collectionUri);
 
 		// now create a new media resource by POSTing media to the collection URI
 		
 		InputStream content = this.getClass().getClassLoader().getResourceAsStream("spreadsheet1.xls");
 		String contentType = "application/vnd.ms-excel";
 		
-		doPostMediaToCreateMediaResource(collectionUri, content, contentType, "spreadsheet1.xls", "a test spreadsheet");
+		postMediaToCreateMediaResource(collectionUri, content, contentType, "spreadsheet1.xls", "a test spreadsheet");
 
 	}
 
@@ -709,7 +707,7 @@ public class TestProtocol extends TestCase {
 		
 		String collectionUri = SERVER_URI + Double.toString(Math.random());
 		
-		doPutFeedToCreateCollection(collectionUri);
+		putFeedToCreateCollection(collectionUri);
 
 		// the request body - a plain text document
 
@@ -731,7 +729,7 @@ public class TestProtocol extends TestCase {
 		
 		// now create a new media resource by POSTing media to the collection URI
 		
-		Document mediaLinkDoc = doPostMediaToCreateMediaResource(collectionUri, content, contentType, "test.txt", "a test document");
+		Document mediaLinkDoc = postMediaToCreateMediaResource(collectionUri, content, contentType, "test.txt", "a test document");
 
 		assertNotNull(mediaLinkDoc);
 		
@@ -818,7 +816,7 @@ public class TestProtocol extends TestCase {
 		
 		String collectionUri = SERVER_URI + Double.toString(Math.random());
 		
-		doPutFeedToCreateCollection(collectionUri);
+		putFeedToCreateCollection(collectionUri);
 
 		// now try GET to collection URI
 		
@@ -872,12 +870,12 @@ public class TestProtocol extends TestCase {
 		
 		String collectionUri = SERVER_URI + Double.toString(Math.random());
 		
-		doPutFeedToCreateCollection(collectionUri);
+		putFeedToCreateCollection(collectionUri);
 
 		// now create a new member by POSTing and atom entry document to the
 		// collection URI
 		
-		String location = doPostEntryToCreateMember(collectionUri);
+		String location = postEntryToCreateMember(collectionUri);
 
 		// now try GET to member URI
 		
@@ -931,7 +929,7 @@ public class TestProtocol extends TestCase {
 		
 		String collectionUri = SERVER_URI + Double.toString(Math.random());
 		
-		doPutFeedToCreateCollection(collectionUri);
+		putFeedToCreateCollection(collectionUri);
 
 		// the request body - a plain text document
 
@@ -953,7 +951,7 @@ public class TestProtocol extends TestCase {
 		
 		// now create a new media resource by POSTing media to the collection URI
 		
-		Document mediaLinkDoc = doPostMediaToCreateMediaResource(collectionUri, content, contentType, "test.txt", "a test document");
+		Document mediaLinkDoc = postMediaToCreateMediaResource(collectionUri, content, contentType, "test.txt", "a test document");
 
 		assertNotNull(mediaLinkDoc);
 		
@@ -1023,7 +1021,7 @@ public class TestProtocol extends TestCase {
 		
 		String collectionUri = SERVER_URI + Double.toString(Math.random());
 		
-		doPutFeedToCreateCollection(collectionUri);
+		putFeedToCreateCollection(collectionUri);
 
 		// now create a new media resource by POSTing media to the collection URI
 		
@@ -1105,7 +1103,7 @@ public class TestProtocol extends TestCase {
 		
 		String collectionUri = SERVER_URI + Double.toString(Math.random());
 		
-		doPutFeedToCreateCollection(collectionUri);
+		putFeedToCreateCollection(collectionUri);
 
 		// now create a new media resource by POSTing media to the collection URI
 		

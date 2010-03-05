@@ -11,7 +11,7 @@ import module namespace request = "http://exist-db.org/xquery/request" ;
 import module namespace response = "http://exist-db.org/xquery/response" ;
 import module namespace text = "http://exist-db.org/xquery/text" ;
 import module namespace util = "http://exist-db.org/xquery/util" ;
-import module namespace v="http://exist-db.org/versioning";
+import module namespace v="http://exist-db.org/versioning" ;
 
 import module namespace http = "http://www.cggh.org/2010/xquery/http" at "http.xqm" ;
 import module namespace mime = "http://www.cggh.org/2010/xquery/mime" at "mime-types.xqm" ;
@@ -46,6 +46,9 @@ as item()*
 
 
 
+(:
+ : TODO doc me 
+ :)
 declare function ah:do-get(
 	$request-path-info as xs:string 
 ) as item()*
@@ -61,11 +64,16 @@ declare function ah:do-get(
 
 
 
+
 declare function ah:do-get-entry(
 	$request-path-info as xs:string 
 ) as item()*
 {
-	let $param-revision := request:get-parameter( "revision" , "" )
+	let $log := util:log( "debug" , "== ah:do-get-entry() ==" )
+	let $log := util:log( "debug" , $request-path-info )
+
+    let $param-revision := request:get-parameter( "revision" , "" )
+	let $log := util:log( "debug" , $param-revision )
 	
 	return
 	
@@ -87,17 +95,32 @@ declare function ah:do-get-entry(
  : TODO doc me
  :)
 declare function ah:do-get-entry-history(
-	$request-path-info
-)
+	$request-path-info as xs:string
+) as element(atom:feed)
 {
-
+	let $log := util:log( "debug" , "== ah:do-get-entry-history() ==" )
+	let $log := util:log( "debug" , $request-path-info )
+	
     let $entry-doc-path := adb:request-path-info-to-db-path( $request-path-info )
+	let $log := util:log( "debug" , $entry-doc-path )
 
     let $entry-doc := doc( $entry-doc-path )
+    let $log := util:log( "debug" , $entry-doc )
     
     let $status-code := response:set-status-code( $http:status-success-ok )
+    let $log := util:log( "debug" , concat( "status-code: " , $status-code ) )
     
     let $header-content-type := response:set-header( $http:header-content-type , $ap:atom-mimetype )
+    let $log := util:log( "debug" , concat( "header-content-type: " , $header-content-type ) )
+    
+    let $vhist := v:history( $entry-doc )
+    let $log := util:log( "debug" , $vhist )
+    
+    let $vvers := v:versions( $entry-doc )
+    let $log := util:log( "debug" , $vvers )
+    
+    let $revisions := v:revisions( $entry-doc )
+    let $log := util:log( "debug" , $revisions )
     
     return 
 
@@ -105,12 +128,12 @@ declare function ah:do-get-entry-history(
 			<atom:title>History</atom:title>
 			{
 
-(:				v:history($entry-doc) , :)
+				$vhist , 
 				
-(:				v:versions($entry-doc) , :)
+				$vvers , 
 				
-				for $i in 1 to v:revisions( $entry-doc )
-				return ah:construct-entry-revision( $request-path-info , $entry-doc , $i )
+				for $i in 1 to count( $revisions )
+				return ah:construct-entry-revision( $request-path-info , $entry-doc , $i , $revisions )
 				
 			}
 		</atom:feed>
@@ -122,34 +145,34 @@ declare function ah:do-get-entry-history(
 
 declare function ah:do-get-entry-revision(
 	$request-path-info as xs:string ,
-	$revision-number as xs:integer
-)
+	$revision-index as xs:integer 
+) as item()*
 {
 
     let $entry-doc-path := adb:request-path-info-to-db-path( $request-path-info )
 
     let $entry-doc := doc( $entry-doc-path )
-    
-    let $revisions := v:revisions( $entry-doc )
-    
-    return
-    
-    	if ( $revision-number <= 0 )
-    	
-    	then ah:do-bad-request( $request-path-info , "Revision parameter must be an integer greater than 0." )
-    	
-    	else if ( $revision-number > $revisions )
-    	
-    	then ah:do-not-found( $request-path-info )
-    	
-    	else 
-    	
-		    let $status-code := response:set-status-code( $http:status-success-ok )
-		    
-		    let $header-content-type := response:set-header( $http:header-content-type , $ap:atom-mimetype )
 
-    		return ah:construct-entry-revision( $request-path-info , $entry-doc , $revision-number )
+    let $revisions := v:revisions( $entry-doc )
+
+    return 
     
+        if ( $revision-index <= 0 )
+        
+        then ah:do-bad-request( $request-path-info , "Revision parameter must be an integer greater than 0." )
+        
+        else if ( $revision-index > count($revisions) )
+        
+        then ah:do-not-found( $request-path-info )
+        
+        else 
+        
+    	    let $status-code := response:set-status-code( $http:status-success-ok )
+    	    
+    	    let $header-content-type := response:set-header( $http:header-content-type , $ap:atom-mimetype )
+    
+        	return ah:construct-entry-revision( $request-path-info , $entry-doc , $revision-index , $revisions )
+        
 };
 
 
@@ -157,50 +180,38 @@ declare function ah:do-get-entry-revision(
 declare function ah:construct-entry-revision(
 	$request-path-info as xs:string ,
 	$entry-doc as node() ,
-	$revision-number as xs:integer
+	$revision-index as xs:integer ,
+	$revisions as xs:integer*
 ) as element(atom:entry)
 {
-
+    
+    let $revision-number := $revisions[$revision-index] 
+    
 	let $revision := v:doc( $entry-doc , $revision-number )
 
-	(: 
-	 : The versioning module returns something weird as the result
-	 : of v:doc where the revision number is 1, so let's normalise
-	 : here.
-	 :)
-	 
-	(:
-	 : Also, normal xpath selectors don't work on the initial
-	 : revision, so work around by testing local name.
-	 :)
-	 
-	let $revision := 
-		if ( $revision-number = 1 ) then $revision/*[local-name(.)=$af:entry and namespace-uri(.)=$af:nsuri]
-		else $revision
-		
-	let $when := $revision/*[local-name(.)=$af:updated and namespace-uri(.)=$af:nsuri]
+	let $when := $revision/atom:updated
 
 	let $initial :=
-		if ( $revision-number = 1 ) then "yes" else "no"
+		if ( $revision-index = 1 ) then "yes" else "no"
 	
 	let $this-revision-href :=
-		concat( $config:history-service-url , $request-path-info , "?revision=" , xs:string( $revision-number ) )	
+		concat( $config:history-service-url , $request-path-info , "?revision=" , xs:string( $revision-index ) )	
 
 	let $next-revision-href :=
-		if ( $revision-number < v:revisions( $entry-doc ) ) 
-		then concat( $config:history-service-url , $request-path-info , "?revision=" , xs:string( $revision-number + 1 ) )	
+		if ( $revision-index < count( $revisions ) ) 
+		then concat( $config:history-service-url , $request-path-info , "?revision=" , xs:string( $revision-index + 1 ) )	
 		else ()
 
 	let $previous-revision-href :=
-		if ( $revision-number > 1 ) 
-		then concat( $config:history-service-url , $request-path-info , "?revision=" , xs:string( $revision-number - 1 ) )	
+		if ( $revision-index > 2 ) 
+		then concat( $config:history-service-url , $request-path-info , "?revision=" , xs:string( $revision-index - 1 ) )	
 		else ()
 		
 	let $current-revision-href :=
 		concat( $config:service-url , $request-path-info )
 
 	let $initial-revision-href :=
-		concat( $config:history-service-url , $request-path-info , "?revision=1" )	
+		concat( $config:history-service-url , $request-path-info , "?revision=" , xs:string( 1 ) )	
 
 	(: N.B. don't need history link because already in entry :)
 	
