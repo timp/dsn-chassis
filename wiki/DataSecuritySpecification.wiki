@@ -51,6 +51,17 @@ In addition a user may <font color="green">List</font> a collection or selection
 || Media || <font color="blue">Null</font> || <font color="green">RL</font><font color="red">C</font> ||<font color="green">RL</font><font color="red">C</font> ||<font color="green">RL</font><font color="red">C</font>|| <font color="green">RL</font><font color="red">UD</font> ||
 
 
+This space is the Cartesian Product of the three lists: Entities, Roles and Operations.
+As formulated this gives a 5 x 5 x 5 cube: containing 255 nodes. 
+To bring this space down we can ignore the Surfer. We could note that the Anonymizer and Curator roles have exactly the same accesses, however they might diverge at a later date. 
+It is a feature of the Atom specification that an entity and feed url cannot be distinguished, 
+So we are forced to treat treat the Read Entity and List Collection operations as one operation. This reduces our cube to 4 x 4 x 5 : 80 nodes to consider. 
+
+
+
+
+
+
 <br />
 = Content Type Restrictions =
 
