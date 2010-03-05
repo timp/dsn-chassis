@@ -24,7 +24,7 @@ public class AtomAuthorFilterDeleteTest extends AtomAuthorFilterTest {
 		request.setHeader("Authorization", "Broken "
 				+ encodedAuthorisationValue);
 		it.doHttpFilter(request, response, chain);
-		assertEquals(unlessPost(401), response.getStatus());
+		assertEquals(unlessPost(403), response.getStatus());
 	}
 
 	public void testDoHttpFilter_atomFound_atomContentType_alice_badAtomMalformed() throws Exception {
@@ -39,7 +39,7 @@ public class AtomAuthorFilterDeleteTest extends AtomAuthorFilterTest {
 				+ encodedAuthorisationValue);
 		request.setRequestURI("/malformed.atom");
 		it.doHttpFilter(request, response, chain);
-		assertEquals(unlessPost(401), response.getStatus());
+		assertEquals(unlessPost(403), response.getStatus());
 	}
 
 	public void testDoHttpFilter_atomFound_atomContentType_alice_badAtomNoAuthor() throws Exception {
@@ -54,7 +54,7 @@ public class AtomAuthorFilterDeleteTest extends AtomAuthorFilterTest {
 				+ encodedAuthorisationValue);
 		request.setRequestURI("/noAuthor.atom");
 		it.doHttpFilter(request, response, chain);
-		assertEquals(unlessPost(401), response.getStatus());
+		assertEquals(unlessPost(403), response.getStatus());
 	}
 
 	public void testDoHttpFilter_atomFound_atomContentType_alice_badAtomNoEmail() throws Exception {
@@ -69,7 +69,7 @@ public class AtomAuthorFilterDeleteTest extends AtomAuthorFilterTest {
 				+ encodedAuthorisationValue);
 		request.setRequestURI("/noEmail.atom");
 		it.doHttpFilter(request, response, chain);
-		assertEquals(unlessPost(401), response.getStatus());
+		assertEquals(unlessPost(403), response.getStatus());
 	}
 
 	public void testDoHttpFilter_atomFound_atomContentType_alice_badAtomTwoAuthors() throws Exception {
@@ -84,7 +84,7 @@ public class AtomAuthorFilterDeleteTest extends AtomAuthorFilterTest {
 				+ encodedAuthorisationValue);
 		request.setRequestURI("/twoAuthors.atom");
 		it.doHttpFilter(request, response, chain);
-		assertEquals(unlessPost(401), response.getStatus());
+		assertEquals(unlessPost(403), response.getStatus());
 	}
 	
 	

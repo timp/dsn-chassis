@@ -61,7 +61,7 @@ public class AtomAuthorFilterTest extends TestCase {
 	}
 	private int unlessDelete(int i) {
 		if (getMethod().equals("DELETE"))
-			return 401;
+			return 403;
 		return i;
 	}
 	protected int unlessPost(int i) {
@@ -120,7 +120,7 @@ public class AtomAuthorFilterTest extends TestCase {
 		request.setContentType("application/atom+xml");
 		
 		it.doHttpFilter(request, response, chain);
-		assertEquals(unlessPost(401), response.getStatus());
+		assertEquals(unlessDelete(unlessPost(401)), response.getStatus());
 	}
 	public void testDoHttpFilter_atomFound_atomContentType_bob() throws Exception {
 		response = new MockHttpServletResponse();
@@ -134,7 +134,7 @@ public class AtomAuthorFilterTest extends TestCase {
 		request.setHeader("Authorization", "Basic "
 				+ encodedAuthorisationValue);
 		it.doHttpFilter(request, response, chain);
-		assertEquals(unlessPost(401), response.getStatus());
+		assertEquals(unlessPost(403), response.getStatus());
 	}
 	public void testDoHttpFilter_atomFound_atomContentType_alice() throws Exception {
 		response = new MockHttpServletResponse();
@@ -276,7 +276,7 @@ public class AtomAuthorFilterTest extends TestCase {
 		request.setHeader("Authorization", "Basic "
 				+ encodedAuthorisationValue);
 		it.doHttpFilter(request, response, chain);
-		assertEquals(unlessPost(401), response.getStatus());
+		assertEquals(unlessPost(403), response.getStatus());
 	}
 
 	public void testDoHttpFilter_serverError() throws Exception {
