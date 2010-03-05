@@ -49,7 +49,6 @@ In addition a user may <font color="green">List</font> a collection or selection
 || Review || <font color="blue">Null</font> || <font color="blue">Null</font> ||<font color="green">RL</font><font color="red">C</font> ||<font color="green">RL</font><font color="red">C</font>|| <font color="green">RL</font><font color="red">UD</font> ||
 || Derivation || <font color="blue">Null</font> || <font color="blue">Null</font> ||<font color="green">RL</font><font color="red">C</font> ||<font color="green">RL</font><font color="red">C</font>|| <font color="green">RL</font><font color="red">UD</font> ||
 || Media || <font color="blue">Null</font> || <font color="green">RL</font><font color="red">C</font> ||<font color="green">RL</font><font color="red">C</font> ||<font color="green">RL</font><font color="red">C</font>|| <font color="green">RL</font><font color="red">UD</font> ||
-|| Resource || <font color="blue">Null</font> || <font color="green">RL</font><font color="red">C</font> ||<font color="green">RL</font><font color="red">C</font> ||<font color="green">RL</font><font color="red">C</font>|| <font color="green">RL</font><font color="red">UD</font> ||
 
 
 <br />
@@ -96,7 +95,6 @@ Note that the query and retrieve operations are filtered by whether the entry au
  * allow ( administrator, query members, studies )
  * allow ( administrator, update member, studies )
  * allow ( administrator, delete member, studies )
-
 
 
  * allow ( submitter, retrieve member, submission )
@@ -166,22 +164,6 @@ Note that the query and retrieve operations are filtered by whether the entry au
 
 
 
- * allow ( submitter, retrieve member, Resource )
- * allow ( submitter, query members, Resource )
- * allow ( submitter, create member, Resource )
-
- * allow ( anonymizer, retrieve member, Resource )
- * allow ( anonymizer, query members, Resource )
-
- * allow ( curator, retrieve member, Resource )
- * allow ( curator, query members, Resource )
-
- * allow ( administrator, retrieve member, Resource )
- * allow ( administrator, query members, Resource )
- * allow ( administrator, update member, Resource )
- * allow ( administrator, delete member, Resource )
-
-
 = Concrete Access Rules = 
 
 The rules above can be translated into concrete Http methods and requests. 
@@ -232,7 +214,7 @@ The rules above can be translated into concrete Http methods and requests.
 
  * allow ( administrator, GET,    /atom/edit/reviews/id )
  * allow ( administrator, GET,    /administrator/query/reviews )
- * allow ( administrator, PUT, /atom/edit/reviews/id )
+ * allow ( administrator, PUT,    /atom/edit/reviews/id )
  * allow ( administrator, DELETE, /atom/edit/reviews/id )
 
 
@@ -247,7 +229,7 @@ The rules above can be translated into concrete Http methods and requests.
 
  * allow ( administrator, GET,    /atom/edit/derivations/id )
  * allow ( administrator, GET,    /administrator/query/derivations )
- * allow ( administrator, PUT, /atom/edit/derivations/id )
+ * allow ( administrator, PUT,    /atom/edit/derivations/id )
  * allow ( administrator, DELETE, /atom/edit/derivations/id )
 
 
@@ -267,22 +249,6 @@ The rules above can be translated into concrete Http methods and requests.
  * allow ( administrator, PUT, /atom/edit/media/id )
  * allow ( administrator, DELETE, /atom/edit/media/id )
 
-
-
- * allow ( submitter, GET,  /atom/edit/resources/id )
- * allow ( submitter, GET,  /administrator/query/resources )
- * allow ( submitter, POST, /atom/edit/resources )
-
- * allow ( anonymizer, GET, /atom/edit/resources/id )
- * allow ( anonymizer, GET, /anonymizer/query/resources )
-
- * allow ( curator, GET, /atom/edit/resources/id )
- * allow ( curator, GET, /atom/edit/resources/id )
-
- * allow ( administrator, GET,    /atom/edit/resources/id )
- * allow ( administrator, GET,    /administrator/query/resources )
- * allow ( administrator, PUT, /atom/edit/resources/id )
- * allow ( administrator, DELETE, /atom/edit/resources/id )
 
 
 = Implementation Strategies =
@@ -333,108 +299,89 @@ value of the current user is included in the query:
  * allow ( GET, /curator/query/media, (curator) )
  * allow ( GET, /administrator/query/media, (administrator) )
 
- * allow ( GET, /anonymizer/query/resources, (anonymizer) )
- * allow ( GET, /administrator/query/resources, (submitter) )
- * allow ( GET, /administrator/query/resources, (administrator) )
- 
 
-Sorting by url 
+There is no effective method of distinguishing an atom feed url from an entry url.
+Sorting by url gives us: 
  
  * allow ( /atom/edit/studies, POST, submitter )
- * allow ( /atom/edit/studies/id, GET,  submitter )
- * allow ( /atom/edit/studies/id, GET,  anonymizer )
- * allow ( /atom/edit/studies/id, GET,  curator )
- * allow ( /atom/edit/studies/id, GET,  administrator )
- * allow ( /atom/edit/studies/id, PUT,  submitter )
- * allow ( /atom/edit/studies/id, PUT, administrator )
- * allow ( /atom/edit/studies/id, DELETE, administrator )
+ * allow ( /atom/edit/studies, GET,  submitter )
+ * allow ( /atom/edit/studies, GET,  anonymizer )
+ * allow ( /atom/edit/studies, GET,  curator )
+ * allow ( /atom/edit/studies, GET,  administrator )
+ * allow ( /atom/edit/studies, PUT,  submitter )
+ * allow ( /atom/edit/studies, PUT, administrator )
+ * allow ( /atom/edit/studies, DELETE, administrator )
  
  * allow ( /atom/edit/submissions, POST, submitter )
- * allow ( /atom/edit/submissions/id, GET, submitter )
- * allow ( /atom/edit/submissions/id, GET, anonymizer )
- * allow ( /atom/edit/submissions/id, GET, curator )
- * allow ( /atom/edit/submissions/id, GET, administrator,  )
- * allow ( /atom/edit/submissions/id, PUT, submitter )
- * allow ( /atom/edit/submissions/id, PUT, administrator )
- * allow ( /atom/edit/submissions/id, DELETE, administrator )
+ * allow ( /atom/edit/submissions, GET, submitter )
+ * allow ( /atom/edit/submissions, GET, anonymizer )
+ * allow ( /atom/edit/submissions, GET, curator )
+ * allow ( /atom/edit/submissions, GET, administrator,  )
+ * allow ( /atom/edit/submissions, PUT, submitter )
+ * allow ( /atom/edit/submissions, PUT, administrator )
+ * allow ( /atom/edit/submissions, DELETE, administrator )
  
  * allow ( /atom/edit/reviews, POST, anonymizer )
  * allow ( /atom/edit/reviews, POST, curator )
- * allow ( /atom/edit/reviews/id, GET, anonymizer )
- * allow ( /atom/edit/reviews/id, GET, curator )
- * allow ( /atom/edit/reviews/id, GET, administrator )
- * allow ( /atom/edit/reviews/id, PUT, anonymizer )
- * allow ( /atom/edit/reviews/id, PUT, curator )
- * allow ( /atom/edit/reviews/id, PUT, administrator )
- * allow ( /atom/edit/reviews/id, DELETE, administrator )
+ * allow ( /atom/edit/reviews, GET, anonymizer )
+ * allow ( /atom/edit/reviews, GET, curator )
+ * allow ( /atom/edit/reviews, GET, administrator )
+ * allow ( /atom/edit/reviews, PUT, anonymizer )
+ * allow ( /atom/edit/reviews, PUT, curator )
+ * allow ( /atom/edit/reviews, PUT, administrator )
+ * allow ( /atom/edit/reviews, DELETE, administrator )
 
  * allow ( /atom/edit/derivations, POST, curator )
  * allow ( /atom/edit/derivations, POST, anonymizer )
- * allow ( /atom/edit/derivations/id, GET, anonymizer )
- * allow ( /atom/edit/derivations/id, GET, curator )
- * allow ( /atom/edit/derivations/id, GET, administrator )
- * allow ( /atom/edit/derivations/id, PUT, anonymizer )
- * allow ( /atom/edit/derivations/id, PUT, curator )
- * allow ( /atom/edit/derivations/id, PUT, administrator )
- * allow ( /atom/edit/derivations/id, DELETE, administrator )
+ * allow ( /atom/edit/derivations, GET, anonymizer )
+ * allow ( /atom/edit/derivations, GET, curator )
+ * allow ( /atom/edit/derivations, GET, administrator )
+ * allow ( /atom/edit/derivations, PUT, anonymizer )
+ * allow ( /atom/edit/derivations, PUT, curator )
+ * allow ( /atom/edit/derivations, PUT, administrator )
+ * allow ( /atom/edit/derivations, DELETE, administrator )
 
  * allow ( /atom/edit/media, POST, submitter )
  * allow ( /atom/edit/media, POST, anonymizer )
  * allow ( /atom/edit/media, POST, curator )
- * allow ( /atom/edit/media/id, GET, submitter )
- * allow ( /atom/edit/media/id, GET, anonymizer )
- * allow ( /atom/edit/media/id, GET, curator )
- * allow ( /atom/edit/media/id, GET, administrator )
- * allow ( /atom/edit/media/id, PUT, submitter )
- * allow ( /atom/edit/media/id, PUT, anonymizer )
- * allow ( /atom/edit/media/id, PUT, curator )
- * allow ( /atom/edit/media/id, PUT, administrator )
- * allow ( /atom/edit/media/id, DELETE, administrator )
-
- * allow ( /atom/edit/resources, POST, submitter )
- * allow ( /atom/edit/resources, POST, anonymizer )
- * allow ( /atom/edit/resources, POST, curator )
- * allow ( /atom/edit/resources/id, GET, submitter )
- * allow ( /atom/edit/resources/id, GET, anonymizer )
- * allow ( /atom/edit/resources/id, GET, curator )
- * allow ( /atom/edit/resources/id, GET, administrator,  )
- * allow ( /atom/edit/resources/id, PUT, administrator )
- * allow ( /atom/edit/resources/id, DELETE, administrator )
+ * allow ( /atom/edit/media, GET, submitter )
+ * allow ( /atom/edit/media, GET, anonymizer )
+ * allow ( /atom/edit/media, GET, curator )
+ * allow ( /atom/edit/media, GET, administrator )
+ * allow ( /atom/edit/media, PUT, submitter )
+ * allow ( /atom/edit/media, PUT, anonymizer )
+ * allow ( /atom/edit/media, PUT, curator )
+ * allow ( /atom/edit/media, PUT, administrator )
+ * allow ( /atom/edit/media, DELETE, administrator )
 
 The access attribute in the Spring configuration file is a list of roles so we can cast the 
 remaining rules into the same form as the Spring configuration:
 
  * allow ( /atom/edit/studies, POST, ( submitter)
- * allow ( /atom/edit/studies/id, GET, ( submitter, anonymizer, curator, administrator ) )
- * allow ( /atom/edit/studies/id, PUT, ( submitter, administrator ) )
- * allow ( /atom/edit/studies/id, DELETE, (administrator) )
+ * allow ( /atom/edit/studies, GET, ( submitter, anonymizer, curator, administrator ) )
+ * allow ( /atom/edit/studies, PUT, ( submitter, administrator ) )
+ * allow ( /atom/edit/studies, DELETE, (administrator) )
  
  * allow ( /atom/edit/submissions, POST, ( submitter) )
- * allow ( /atom/edit/submissions/id, GET, ( submitter, anonymizer, curator, administrator)  )
- * allow ( /atom/edit/submissions/id, PUT, ( submitter, administrator ) )
- * allow ( /atom/edit/submissions/id, DELETE, ( administrator ) )
+ * allow ( /atom/edit/submissions, GET, ( submitter, anonymizer, curator, administrator)  )
+ * allow ( /atom/edit/submissions, PUT, ( submitter, administrator ) )
+ * allow ( /atom/edit/submissions, DELETE, ( administrator ) )
  
  * allow ( /atom/edit/reviews, POST, (anonymizer, curator) )
- * allow ( /atom/edit/reviews/id, GET, (anonymizer, curator, administrator ) )
- * allow ( /atom/edit/reviews/id, PUT, (anonymizer, curator, administrator ) )
- * allow ( /atom/edit/reviews/id, DELETE, ( administrator ) )
+ * allow ( /atom/edit/reviews, GET, (anonymizer, curator, administrator ) )
+ * allow ( /atom/edit/reviews, PUT, (anonymizer, curator, administrator ) )
+ * allow ( /atom/edit/reviews, DELETE, ( administrator ) )
 
  * allow ( /atom/edit/derivations, POST, ( curator, anonymizer ) )
- * allow ( /atom/edit/derivations/id, GET, (anonymizer, curator, administrator ) )
- * allow ( /atom/edit/derivations/id, PUT, (anonymizer, curator, administrator ) )
- * allow ( /atom/edit/derivations/id, DELETE, administrator )
+ * allow ( /atom/edit/derivations, GET, (anonymizer, curator, administrator ) )
+ * allow ( /atom/edit/derivations, PUT, (anonymizer, curator, administrator ) )
+ * allow ( /atom/edit/derivations, DELETE, administrator )
 
  * allow ( /atom/edit/media, POST, ( submitter, anonymizer, curator ) )
- * allow ( /atom/edit/media/id, GET, (submitter, anonymizer, curator, administrator ) )
- * allow ( /atom/edit/media/id, PUT, (submitter, anonymizer, curator, administrator ) )
- * allow ( /atom/edit/media/id, DELETE, (administrator) )
+ * allow ( /atom/edit/media, GET, (submitter, anonymizer, curator, administrator ) )
+ * allow ( /atom/edit/media, PUT, (submitter, anonymizer, curator, administrator ) )
+ * allow ( /atom/edit/media, DELETE, (administrator) )
 
- * allow ( /atom/edit/resources, POST, (submitter, anonymizer, curator ) )
- * allow ( /atom/edit/resources/id, GET, (submitter, anonymizer, curator, administrator) )
- * allow ( /atom/edit/resources/id, DELETE, ( administrator ) )
-
- 
- 
  
 == Allowing update of atom only ==
 
