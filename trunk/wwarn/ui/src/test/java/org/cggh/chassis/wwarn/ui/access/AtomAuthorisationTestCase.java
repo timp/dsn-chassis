@@ -121,24 +121,28 @@ public class AtomAuthorisationTestCase extends TestCase {
 		for (String collection : collections) {
 			Tuple t = createEntry(collection,"application/atom+xml", ATOM_ENTRY);
 			assertEquals(HttpServletResponse.SC_FORBIDDEN, 
-					requestResourceAs(t.getUrl(),"application/atom+xml","bob@example.org", "bar"));
+					getResourceAs(t.getUrl(),"application/atom+xml","bob@example.org", "bar"));
 		}
 	}
 	public void testAliceCanGetEntityCreatedByAlice() throws Exception { 
 		for (String collection : collections) {
 			Tuple t = createEntry(collection,"application/atom+xml", ATOM_ENTRY);
 			assertEquals(HttpServletResponse.SC_OK, 
-					requestResourceAs(t.getUrl(),"application/atom+xml",ALICE, PASSWORD));
+					getResourceAs(t.getUrl(),"application/atom+xml",ALICE, PASSWORD));
 		}
 	}
 
-	protected int requestResourceAs(String entryUrl, String contentType, String user, String password) throws Exception {
+	
+	protected int getResourceAs(String entryUrl, String contentType, String user, String password) throws Exception {
+		return accessResourceAs("GET", entryUrl, contentType, user, password);
+	}
+	protected int accessResourceAs(String method, String entryUrl, String contentType, String user, String password) throws Exception {
 		HttpURLConnection connection = getConnection(url(entryUrl));
 		authorize(connection, user, password);
-		connection.setRequestMethod("GET");
+		connection.setRequestMethod(method);
 		connection.setRequestProperty("Content-Type", contentType);
 		connection.connect();
-		System.err.println(url(entryUrl)+ ":" + connection.getResponseCode());
+		System.err.println(url(entryUrl)+ ":" + connection.getResponseCode() + "-" + connection.getResponseMessage());
 		return connection.getResponseCode();
 	}
 
