@@ -187,12 +187,19 @@ public class CleanFileFormSubmitHandler extends HttpServlet {
 				
 				// Post the derivation entry
 				
+
+				
 				String derivationType = Chassis.TERM_REMOVEPERSONALDATA;
 				String derivationSummary = formFields.get(CleanFileWidgetRenderer.FIELD_SUMMARY);
-				String derivationInputHref = formFields.get(CleanFileWidgetRenderer.FIELD_FILETOBECLEANED);
+				
+				// TODO: This needs to be done properly. 
+				String derivationInputHref = "?id=" + formFields.get(CleanFileWidgetRenderer.FIELD_FILETOBECLEANED);
+				
 				String derivationOutputHref = mediaCollectionUrl + mediaEntry.getEditLink().getHref().toASCIIString();
 				
 				Entry derivationEntry = postDerivationEntry(abderaClient, requestOptions, derivationType, derivationSummary, derivationInputHref, derivationOutputHref);
+				
+				
 				
 				if (derivationEntry == null) {
 					
@@ -240,15 +247,52 @@ public class CleanFileFormSubmitHandler extends HttpServlet {
 	private Entry postDerivationEntry(AbderaClient abderaClient, RequestOptions requestOptions, String derivationType, String derivationSummary, String derivationInputHref,
 			String derivationOutputHref) throws IOException {
 
-		// TODO: finish this.
-		
+
 		Entry derivationEntryElement = abdera.newEntry();
+
+
+		//TODO: Get user email. From where?
+		derivationEntryElement.addAuthor("user email goes here");
 
 		derivationEntryElement.addLink(Chassis.REL_DERIVATIONINPUT, derivationInputHref);
 		derivationEntryElement.addLink(Chassis.REL_DERIVATIONOUTPUT, derivationOutputHref);
+		
+		
+		//TODO: Create derivation element.
+//		com.google.gwt.xml.client.Element derivationElement = ChassisHelper.createDerivation();
+//		derivationElement.setAttribute("type", Chassis.TERM_REMOVEPERSONALDATA);
 
+		//TODO: Add the derivation element to the entry element. 
+//		AtomHelper.setContent(derivationEntryElement, derivationElement);
+		
+		//TODO: Check that the comment is the same as the summary element.
+//		AtomHelper.setSummary(derivationEntryElement, derivationSummary);
+		derivationEntryElement.addComment(derivationSummary);
+		
+		
+        //return extractEntry(clientResponse);
         
-        return null;
+        // needed? 
+        // otherwise content type application/xml, which exist rejects
+        //requestOptions.setContentType("application/atom+xml; type=entry; charset=UTF-8"); 
+		//ClientResponse clientResponse = abderaClient.post(this.derivationsCollectionUrl, derivationEntry, requestOptions);
+		
+		log.info("posting derivation...");
+		
+		ClientResponse clientResponse = abderaClient.post(this.derivationsCollectionUrl, derivationEntryElement);
+
+		//tmp
+		if (clientResponse.getType() == ResponseType.SUCCESS) {
+			
+			log.info("succeeded");
+			
+		} else {
+			
+			log.info("failed");
+			
+		}
+		
+		return extractEntry(clientResponse);
 		
 	}
 
