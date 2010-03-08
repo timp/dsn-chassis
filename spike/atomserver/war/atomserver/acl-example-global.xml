@@ -1,6 +1,6 @@
 <acl>
     
-    <rules default="deny">
+    <rules>
 
         <!--+
             | Allow administrators to create collections.
