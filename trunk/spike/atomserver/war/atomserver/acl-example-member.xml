@@ -1,6 +1,6 @@
 <acl>
     
-    <rules default="deny">
+    <rules>
 
         <!--+
             | The user "alice@example.org" was the creator of this resource

@@ -38,9 +38,31 @@ declare variable $config:user-name-request-attribute-key as xs:string := "user-n
 declare variable $config:user-roles-request-attribute-key as xs:string := "user-roles" ; 
 
 
+(:
+ : If usernames should be treated as email addresses, set this to true(). (I.e.,
+ : if users are logging in with their email address as their user ID.)
+ :)
 declare variable $config:user-name-is-email as xs:boolean := false() ;
 
+
+(:
+ : The base collection within which to store Atom collections and resources.
+ : All paths will be relative to this base collection path.
+ :)
 declare variable $config:base-collection-path as xs:string := "/db" ;
 
+
+(:
+ : The base collection within which to store access control lists.
+ :)
+declare variable $config:base-acl-collection-path as xs:string := "/db/system/acl" ;
+
+
+(: 
+ : The resource name used to store feed documents in the database.
+ :)
 declare variable $config:feed-doc-name as xs:string := ".feed" ;
 
+
+(: TODO doc me :)
+declare variable $config:default-decision := "deny" ;

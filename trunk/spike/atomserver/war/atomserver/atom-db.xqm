@@ -292,9 +292,9 @@ declare function adb:update-member(
 		
 		let $collection-db-path := adb:request-path-info-to-db-path( $groups[2] )
 		
-		let $entry-uuid := $groups[3]
+		let $entry-resource-name := $groups[3]
 
-		return xmldb:store( $collection-db-path , $entry-uuid , $entry )
+		return xmldb:store( $collection-db-path , $entry-resource-name , $entry )
 
 };
 
