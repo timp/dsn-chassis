@@ -163,18 +163,15 @@ public class UploadFileFormSubmitHandler extends HttpServlet {
 			    	
 				    log.debug("File field " + fieldName + " with file name " + item.getName() + ", content type " + contentType + " detected.");
 
-				    ClamAntiVirusScanner clamScanner = new ClamAntiVirusScanner();
-			    	try { 
-			    	  stream = clamScanner.performScan(stream);
-			    	} catch (ClamAntiVirusNotRunningException e) {
-
-			    		// TODO It might be better to succeed but email administrator
-			    		
-			    		if (!ClamAntiVirusScanner.DEVELOPMENT_INSTALLATION)
-			    			throw e;
-			    	} catch (ContainsVirusException e) { 			       
-			    		throw new ContainsVirusException("The file " + item.getName() + " appears to contain a virus.", e);
-			        }
+		    		if (!ClamAntiVirusScanner.DEVELOPMENT_INSTALLATION) {
+		    			ClamAntiVirusScanner clamScanner = new ClamAntiVirusScanner();
+		    			try { 
+		    				stream = clamScanner.performScan(stream);
+		    				// TODO It might be better to succeed but email administrator
+		    			} catch (ContainsVirusException e) { 			       
+		    				throw new ContainsVirusException("The file " + item.getName() + " appears to contain a virus.", e);
+		    			}
+		    		}
 
 				    // process the input stream
 			    	// TODO what happens if this field set as form data?
