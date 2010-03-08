@@ -54,6 +54,12 @@
     <intercept-url pattern="/curator/**" access="ROLE_CHASSIS_CURATOR" />
     <intercept-url pattern="/administrator/**" access="ROLE_CHASSIS_ADMINISTRATOR" />
 
+    <!--+
+        | Temporarily disable these intercepts because abdera is not forwarding
+        | cookies properly, and so these intercepts cause any request from abdera
+        | to raise a 401 response.
+        +-->
+      
     <!--
 	<intercept-url pattern="/atom/edit/studies" method="POST" access="ROLE_CHASSIS_SUBMITTER" />
 	<intercept-url pattern="/atom/edit/studies/**" method="GET" access="ROLE_CHASSIS_SUBMITTER, ROLE_CHASSIS_ANONYMIZER, ROLE_CHASSIS_CURATOR, ROLE_CHASSIS_ADMINISTRATOR" />
