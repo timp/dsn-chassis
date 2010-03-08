@@ -130,7 +130,7 @@ declare function adb:create-collection(
 	$request-path-info as xs:string ,
 	$request-data as element(atom:feed) ,
 	$enable-versioning as xs:boolean
-) as xs:string
+) as xs:string?
 {
 
 	if ( adb:collection-available( $request-path-info ) )

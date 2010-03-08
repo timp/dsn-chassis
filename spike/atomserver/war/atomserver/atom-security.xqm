@@ -96,7 +96,7 @@ declare function atomsec:retrieve-global-acl() as element(acl)?
     
     return $acl-doc/acl
         
-}
+};
 
 
 
@@ -130,7 +130,7 @@ declare function atomsec:retrieve-collection-acl(
     
         ()
         
-}
+};
 
 
 
@@ -154,7 +154,7 @@ declare function atomsec:retrieve-resource-acl(
     
         ()
         
-}
+};
 
 
 
@@ -162,7 +162,7 @@ declare function atomsec:decide(
     $request-path-info as xs:string ,
     $operation as xs:string ,
     $media-type as xs:string? ,
-    $user as xs:string ,
+    $user as xs:string? ,
     $roles as xs:string*
 ) as xs:string
 {
@@ -224,12 +224,33 @@ declare function atomsec:decide(
 
 
 declare function atomsec:apply-rules( 
-    $acl as element(acl) ,
+    $acl as element(acl)? ,
     $operation as xs:string ,
     $media-type as xs:string? ,
-    $user as xs:string ,
+    $user as xs:string? ,
     $roles as xs:string*
 ) as xs:string?
+{
+
+    let $matching-rules := atomsec:match-rules($acl, $operation, $media-type, $user, $roles)
+    
+    let $decision := 
+        if ( exists( $matching-rules ) ) then local-name( $matching-rules[last()] )
+        else ()
+    
+    return $decision
+    
+};
+
+
+
+declare function atomsec:match-rules( 
+    $acl as element(acl)? ,
+    $operation as xs:string ,
+    $media-type as xs:string? ,
+    $user as xs:string? ,
+    $roles as xs:string*
+) as element()*
 {
 
     let $matching-rules :=
@@ -242,9 +263,10 @@ declare function atomsec:apply-rules(
             
                 $operation = $rule/operation and
             
-                ( exists( $rule/user ) and $rule/user = $user ) and
-                
-                ( exists( $rule/role ) and exists( index-of( $roles , xs:string( $rule/role ) ) ) )
+                ( 
+                    ( exists( $rule/user ) and $rule/user = $user ) or                 
+                    ( exists( $rule/role ) and exists( index-of( $roles , xs:string( $rule/role ) ) ) )
+                )
                 
                 (: TODO match media-range :)
                 
@@ -254,8 +276,10 @@ declare function atomsec:apply-rules(
             
             else ()
             
-    let $final-rule := $matching-rules[last()]
     
-    return local-name( $final-rule )
+    return $matching-rules
     
 };
+
+
+
