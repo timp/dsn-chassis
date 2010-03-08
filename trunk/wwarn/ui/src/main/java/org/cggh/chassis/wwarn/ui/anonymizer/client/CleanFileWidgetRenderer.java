@@ -296,7 +296,9 @@ public class CleanFileWidgetRenderer extends ChassisWidgetRenderer<CleanFileWidg
 		
 		String reviewSummary = ChassisHelper.getReviewSummary(entry);
 		
-		reviewSummary = reviewSummary.replaceAll("\\n", "<br/>");
+		if (reviewSummary != null) {
+			reviewSummary = reviewSummary.replaceAll("\\n", "<br/>");
+		}
 		
 		String url = AtomHelper.getContent(entry).getAttribute("src");
 		
