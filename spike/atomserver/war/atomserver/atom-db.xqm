@@ -13,9 +13,6 @@ import module namespace utilx = "http://www.cggh.org/2010/xquery/util" at "util.
 import module namespace af = "http://www.cggh.org/2010/xquery/atom-format" at "atom-format.xqm" ;
 import module namespace config = "http://www.cggh.org/2010/xquery/atom-config" at "atom-config.xqm" ;
 
-declare variable $adb:feed-doc-name as xs:string := ".feed" ;
-declare variable $adb:base-collection-path as xs:string := "/db" ;
-
 
 
 declare function adb:collection-available(
@@ -109,7 +106,7 @@ declare function adb:request-path-info-to-db-path(
 	$request-path-info as xs:string
 ) as xs:string
 {
-	concat( $adb:base-collection-path , $request-path-info )
+	concat( $config:base-collection-path , $request-path-info )
 };
 
 
@@ -121,8 +118,8 @@ declare function adb:feed-doc-db-path(
 {
 
 	if ( ends-with( $db-collection-path , "/" ) )
-	then concat( $db-collection-path , $adb:feed-doc-name )
-	else concat( $db-collection-path , "/", $adb:feed-doc-name )
+	then concat( $db-collection-path , $config:feed-doc-name )
+	else concat( $db-collection-path , "/", $config:feed-doc-name )
 	
 };
 
@@ -191,7 +188,7 @@ declare function adb:create-collection(
 
 		let $feed := adb:create-feed( $request-path-info , $request-data )
 		
-		return xmldb:store( $collection-db-path , $adb:feed-doc-name , $feed )
+		return xmldb:store( $collection-db-path , $config:feed-doc-name , $feed )
 			
 };
 
@@ -229,7 +226,7 @@ declare function adb:update-collection(
 
 		let $feed := adb:update-feed( doc( $feed-doc-db-path )/atom:feed , $request-data )
 		
-		return xmldb:store( $collection-db-path , $adb:feed-doc-name , $feed )
+		return xmldb:store( $collection-db-path , $config:feed-doc-name , $feed )
 			
 };
 

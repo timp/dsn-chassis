@@ -1,0 +1,47 @@
+<acl>
+    
+    <rules default="deny">
+
+        <!--+
+            | The user "alice@example.org" was the creator of this resource
+            | and is allowed all applicable operations.
+            +-->
+        
+        <allow>
+            <user>alice@example.org</user>
+            <operation>retrieve-member</operation>
+        </allow>
+        
+        <allow>
+            <user>alice@example.org</user>
+            <operation>update-member</operation>
+        </allow>
+        
+        <allow>
+            <user>alice@example.org</user>
+            <operation>delete-member</operation>
+        </allow>
+        
+        <allow>
+            <user>alice@example.org</user>
+            <operation>update-acl</operation>
+        </allow>
+        
+        <!--+
+            | Alice has also granted some permissions to Bob so they can work 
+            | together on the resource.
+            +-->
+        
+        <allow>
+            <user>bob@example.org</user>
+            <operation>retrieve-member</operation>
+        </allow>
+        
+        <allow>
+            <user>bob@example.org</user>
+            <operation>update-member</operation>
+        </allow>
+        
+    </rules>
+
+</acl>
