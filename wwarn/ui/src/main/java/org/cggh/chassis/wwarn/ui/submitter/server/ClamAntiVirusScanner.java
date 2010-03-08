@@ -96,11 +96,13 @@ public class ClamAntiVirusScanner {
 	public InputStream performScan(InputStream inputStream)
 			throws ScannerException, ContainsVirusException {
 
+		if (ClamAntiVirusScanner.DEVELOPMENT_INSTALLATION)
+			return inputStream;
+		
 		message = "";
 
 		try {
 			
-			openProtocolChannel();
 
 			File f = null;
 
@@ -122,6 +124,8 @@ public class ClamAntiVirusScanner {
 
 			FileInputStream inputStreamToScan = new FileInputStream(f);
 
+			openProtocolChannel();
+			
 			performScanAndClose(inputStreamToScan);
 
 			// clamd writes this if the stream
