@@ -145,7 +145,7 @@ public final class AtomAuthorFilter extends HttpFilter {
 						response.sendError(
 								HttpServletResponse.SC_BAD_REQUEST, "You may only post to feed URLs");
 					}
-				} if (connection.getResponseCode() == HttpServletResponse.SC_NOT_FOUND) {
+				} else if (connection.getResponseCode() == HttpServletResponse.SC_NOT_FOUND) {
 					chain.doFilter(request, response);					
 				} else {
 					response.sendError(
