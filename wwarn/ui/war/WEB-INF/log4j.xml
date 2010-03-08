@@ -185,12 +185,27 @@
         <priority value="info"/>
         <appender-ref ref="exist.scheduler"/>
     </category>
+    
+    <!-- 
+         custom logging config for debugging
+    -->
 
+    <category name="org.springframework" additivity="false">
+        <priority value="info"/>
+        <appender-ref ref="console"/>        
+    </category>
+
+    <category name="org.exist" additivity="false">
+        <priority value="info"/>
+        <appender-ref ref="console"/>        
+    </category>
+    
     <!-- Section: ROOT logger -->
     
     <root>
         <priority value="debug"/>
         <appender-ref ref="exist.core"/>
+        <!-- also append to console -->
         <appender-ref ref="console"/>
     </root>
     
