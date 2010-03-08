@@ -1,0 +1,98 @@
+<acl>
+    
+    <rules default="deny">
+        
+        <!--+
+            | == Readers ==
+            |
+            | In this collection, readers are allowed to retrieve Atom members
+            | and media resources.
+            +-->
+        
+        <allow>
+            <role>reader</role>
+            <operation>retrieve-member</operation>
+        </allow>
+        
+        <allow>
+            <role>reader</role>
+            <operation>retrieve-media</operation>
+            <media-range>*/*</media-range>
+        </allow>
+        
+        <!--+
+            | == Authors ==
+            |
+            | In this collection, authors are allowed to create Atom members
+            | and media resources. They are also allowed to retrieve Atom
+            | members and media resources.
+            |
+            | However, they are only allowed to update or delete resources they 
+            | have created. Those permissions will be given in resource ACLs.
+            +-->
+        
+        <allow>
+            <role>author</role>
+            <operation>create-member</operation>
+        </allow>
+        
+        <allow>
+            <role>author</role>
+            <operation>create-media</operation>
+            <media-range>*/*</media-range>
+        </allow>
+        
+        <allow>
+            <role>author</role>
+            <operation>retrieve-member</operation>
+        </allow>
+        
+        <allow>
+            <role>author</role>
+            <operation>retrieve-media</operation>
+            <media-range>*/*</media-range>
+        </allow>
+        
+        <!--+
+            | == Editors ==
+            | 
+            | In this collection, editors can retrieve, update or delete any 
+            | collection members.
+            +-->
+        
+        <allow>
+            <role>editor</role>
+            <operation>retrieve-member</operation>
+        </allow>
+        
+        <allow>
+            <role>editor</role>
+            <operation>retrieve-media</operation>
+            <media-range>*/*</media-range>
+        </allow>
+        
+        <allow>
+            <role>editor</role>
+            <operation>update-member</operation>
+        </allow>
+        
+        <allow>
+            <role>editor</role>
+            <operation>update-media</operation>
+            <media-range>*/*</media-range>
+        </allow>
+        
+        <allow>
+            <role>editor</role>
+            <operation>delete-member</operation>
+        </allow>
+        
+        <allow>
+            <role>editor</role>
+            <operation>delete-media</operation>
+            <media-range>*/*</media-range>
+        </allow>
+        
+    </rules>
+
+</acl>

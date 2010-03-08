@@ -1,0 +1,203 @@
+<acl>
+    
+    <rules default="deny">
+
+        <!--+
+            | Allow administrators to create collections.
+            |
+            | The "create-collection" operation corresponds to an HTTP PUT
+            | request with media type "application/atom+xml" and an Atom
+            | feed document as the request entity, where a collection does not
+            | already exist at the request URI.
+            |
+            | The "create-collection" operation also corresponds to an HTTP POST
+            | request with media type "application/atom+xml" and an Atom feed
+            | document as the request entity.
+            +-->
+        
+        <allow>
+            <role>administrator</role>
+            <operation>create-collection</operation>
+        </allow>
+
+        <!--+
+            | Allow administrators to update collections.
+            | 
+            | The "update-collection" operation corresponds to an HTTP PUT 
+            | request with media type "application/atom+xml" and an Atom feed
+            | document as the request entity, where a collection already exists
+            | at the request URI.
+            |
+            | Note that the "update-collection" operation does not imply update
+            | to any collection members, only update of the collection feed
+            | metadata.
+            +--> 
+        
+        <allow>
+            <role>administrator</role>
+            <operation>update-collection</operation>
+        </allow>
+
+        <!--+
+            | Allow administrators to create Atom collection members.
+            |
+            | The "create-member" operation corresponds to an HTTP POST request
+            | to the URI of an Atom collection, where the media type is
+            | "application/atom+xml" and the request entity is an Atom entry
+            | document.
+            |
+            | This rule, being specified in the global ACL, means that 
+            | administrators will be able to create members of any Atom 
+            | collection.
+            +-->
+        
+        <allow>
+            <role>administrator</role>
+            <operation>create-member</operation>
+        </allow>
+        
+        <!--+
+            | Allow administrators to create media resources.
+            |
+            | The "create-media" operation corresponds to an HTTP POST request
+            | to the URI of an Atom collection, where the media type is not
+            | "application/atom+xml".
+            |
+            | This rule, being specified in the global ACL, means that 
+            | administrators will be able to create media resources within any 
+            | Atom collection.
+            | 
+            | The optional media range restricts the allowed set of operations
+            | to those where the request media type matches the specified media
+            | range. If unspecified, defaults to "*/*".
+            +-->
+        
+        <allow>
+            <role>administrator</role>
+            <operation>create-media</operation>
+            <media-range>*/*</media-range>
+        </allow>
+        
+        <!--+
+            | Allow administrators to retrieve collection members.
+            |
+            | The "retrieve-member" operation corresponds to an HTTP GET request
+            | to the URI of an Atom collection member.
+            |
+            | This rule, being specified in the global ACL, means that 
+            | administrators will be able to retrieve any members of any Atom 
+            | collection.
+            +-->
+        
+        <allow>
+            <role>administrator</role>
+            <operation>retrieve-member</operation>
+        </allow>
+        
+        <!--+
+            | Allow administrators to retrieve media resources.
+            |
+            | The "retrieve-media" operation corresponds to an HTTP GET request
+            | to the URI of a media resource.
+            |
+            | This rule, being specified in the global ACL, means that 
+            | administrators will be able to retrieve media resources from any 
+            | Atom collection.
+            |
+            | The optional media range restricts the allowed set of operations
+            | to those where the resource's media type matches the specified 
+            | media range. If unspecified, defaults to "*/*".
+            +-->
+        
+        <allow>
+            <role>administrator</role>
+            <operation>retrieve-media</operation>
+            <media-range>*/*</media-range>
+        </allow>
+        
+        <!--+
+            | Allow administrators to update Atom collection members.
+            |
+            | The "update-member" operation corresponds to an HTTP PUT request
+            | to the URI of an Atom collection member, where the media type is
+            | "application/atom+xml" and the request entity is an Atom entry
+            | document.
+            |
+            | This rule, being specified in the global ACL, means that 
+            | administrators will be able to update members of any Atom 
+            | collection.
+            +-->
+        
+        <allow>
+            <role>administrator</role>
+            <operation>update-member</operation>
+        </allow>
+        
+        <!--+
+            | Allow administrators to update media resources.
+            |
+            | The "update-media" operation corresponds to an HTTP PUT request
+            | to the URI of a media resource, where the media type is not
+            | "application/atom+xml".
+            |
+            | This rule, being specified in the global ACL, means that 
+            | administrators will be able to update any media resource.
+            |
+            | The optional media range restricts the allowed set of operations
+            | to those where the resource's media type matches the specified 
+            | media range. If unspecified, defaults to "*/*".
+            +-->
+        
+        <allow>
+            <role>administrator</role>
+            <operation>update-media</operation>
+            <media-range>*/*</media-range>
+        </allow>
+        
+        <!--+
+            | Allow administrators to delete Atom collection members.
+            |
+            | The "delete-member" operation corresponds to an HTTP DELETE
+            | request to the URI of an Atom collection member.
+            |
+            | This rule, being specified in the global ACL, means that 
+            | administrators will be able to delete any Atom collection member.
+            +-->
+        
+        <allow>
+            <role>administrator</role>
+            <operation>delete-member</operation>
+        </allow>
+        
+        <!--+
+            | Allow administrators to delete media resources.
+            |
+            | The "delete-media" operation corresponds to an HTTP DELETE request
+            | to the URI of a media resource.
+            |
+            | This rule, being specified in the global ACL, means that 
+            | administrators will be able to delete any media resource.
+            |
+            | The optional media range restricts the allowed set of operations
+            | to those where the resource's media type matches the specified 
+            | media range. If unspecified, defaults to "*/*".
+            +-->
+        
+        <allow>
+            <role>administrator</role>
+            <operation>delete-media</operation>
+            <media-range>*/*</media-range>
+        </allow>
+
+        <!--+
+            | Allow administrators to modify access control lists.
+            +-->
+        
+        <allow>
+            <role>administrator</role>
+            <operation>update-acl</operation>
+        </allow>
+        
+    </rules>
+
+</acl>
