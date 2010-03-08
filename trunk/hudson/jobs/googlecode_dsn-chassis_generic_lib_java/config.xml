@@ -53,23 +53,13 @@
   </reporters>
   <publishers>
     <hudson.tasks.BuildTrigger>
-      <childProjects>googlecode_dsn-chassis_generic_lib_gwt</childProjects>
+      <childProjects>googlecode_dsn-chassis_generic_lib_gwt, googlecode_dsn-chassis_wwarn_ui</childProjects>
       <threshold>
         <name>SUCCESS</name>
         <ordinal>0</ordinal>
         <color>BLUE</color>
       </threshold>
     </hudson.tasks.BuildTrigger>
-    <hudson.plugins.ircbot.IrcPublisher>
-      <targets class="linked-list"/>
-      <strategy class="hudson.plugins.im.NotificationStrategy">ALL</strategy>
-      <notifyOnBuildStart>false</notifyOnBuildStart>
-      <notifySuspects>false</notifySuspects>
-      <notifyCulprits>false</notifyCulprits>
-      <notifyFixers>false</notifyFixers>
-      <notifyUpstreamCommitters>false</notifyUpstreamCommitters>
-      <channels/>
-    </hudson.plugins.ircbot.IrcPublisher>
     <hudson.plugins.twitter.TwitterPublisher/>
   </publishers>
   <buildWrappers/>
