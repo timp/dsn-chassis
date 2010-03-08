@@ -54,6 +54,7 @@
     <intercept-url pattern="/curator/**" access="ROLE_CHASSIS_CURATOR" />
     <intercept-url pattern="/administrator/**" access="ROLE_CHASSIS_ADMINISTRATOR" />
 
+    <!--
 	<intercept-url pattern="/atom/edit/studies" method="POST" access="ROLE_CHASSIS_SUBMITTER" />
 	<intercept-url pattern="/atom/edit/studies/**" method="GET" access="ROLE_CHASSIS_SUBMITTER, ROLE_CHASSIS_ANONYMIZER, ROLE_CHASSIS_CURATOR, ROLE_CHASSIS_ADMINISTRATOR" />
 	<intercept-url pattern="/atom/edit/studies/**" method="PUT" access="ROLE_CHASSIS_SUBMITTER, ROLE_CHASSIS_ADMINISTRATOR" />
@@ -78,7 +79,8 @@
 	<intercept-url pattern="/atom/edit/media/**" method="GET" access="ROLE_CHASSIS_SUBMITTER, ROLE_CHASSIS_ANONYMIZER, ROLE_CHASSIS_CURATOR, ROLE_CHASSIS_ADMINISTRATOR" />
 	<intercept-url pattern="/atom/edit/media/**" method="PUT" access="ROLE_CHASSIS_SUBMITTER, ROLE_CHASSIS_ANONYMIZER, ROLE_CHASSIS_CURATOR, ROLE_CHASSIS_ADMINISTRATOR" />
 	<intercept-url pattern="/atom/edit/media/**" method="DELETE" access="ROLE_CHASSIS_ADMINISTRATOR" />
-
+    -->
+      
   </http>
   
   
