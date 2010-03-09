@@ -137,7 +137,7 @@
     </category>
     
     <category name="org.exist.xmldb" additivity="false">
-        <priority value="debug"/>
+        <priority value="info"/>
         <appender-ref ref="exist.xmldb"/>
     </category>
     

@@ -10,6 +10,9 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.apache.commons.httpclient.Header;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
+import org.apache.commons.httpclient.HttpMethod;
+import org.apache.commons.httpclient.UsernamePasswordCredentials;
+import org.apache.commons.httpclient.auth.BasicScheme;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.PutMethod;
@@ -48,7 +51,23 @@ public class TestHistoryProtocol extends TestCase {
 
 	}
 
+	private static final BasicScheme basic = new BasicScheme();
 	
+	
+	
+	private static void authenticate(HttpMethod method) {
+		try {
+			String authorization = basic.authenticate(new UsernamePasswordCredentials("adam", "test"), method);
+			method.setRequestHeader("Authorization", authorization);
+		} 
+		catch (Throwable t) {
+			t.printStackTrace();
+			fail(t.getLocalizedMessage());
+		}
+	}
+	
+	
+
 	
 	
 	public static void putFeedToCreateCollection(String collectionUri) {
@@ -56,6 +75,7 @@ public class TestHistoryProtocol extends TestCase {
 		// setup a new PUT request
 		
 		PutMethod method = new PutMethod(collectionUri);
+		authenticate(method);
 
 		method.setRequestHeader("X-Atom-Enable-History", "true");
 		
@@ -116,6 +136,7 @@ public class TestHistoryProtocol extends TestCase {
 		// setup a new POST request
 		
 		PostMethod method = new PostMethod(collectionUri);
+		authenticate(method);
 		
 		// add custom headers
 		
@@ -200,6 +221,7 @@ public class TestHistoryProtocol extends TestCase {
 		// setup a new POST request
 		
 		PutMethod method = new PutMethod(uri);
+		authenticate(method);
 		
 		// add custom headers
 		
@@ -319,8 +341,7 @@ public class TestHistoryProtocol extends TestCase {
 		// now try to retrieve history
 		
 		GetMethod get = new GetMethod(historyLocation);
-
-		HttpClient client = new HttpClient();
+		authenticate(get);
 
 		int result = -1;
 		
@@ -446,8 +467,7 @@ public class TestHistoryProtocol extends TestCase {
 		// now try to retrieve history
 		
 		GetMethod get = new GetMethod(historyLocation);
-
-		HttpClient client = new HttpClient();
+		authenticate(get);
 
 		int result = -1;
 		
@@ -584,8 +604,7 @@ public class TestHistoryProtocol extends TestCase {
 		// now try to retrieve history
 		
 		GetMethod get = new GetMethod(historyLocation);
-
-		HttpClient client = new HttpClient();
+		authenticate(get);
 
 		int result = -1;
 		

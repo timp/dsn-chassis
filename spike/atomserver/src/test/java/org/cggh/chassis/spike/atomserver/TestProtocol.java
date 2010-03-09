@@ -11,9 +11,14 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.apache.commons.httpclient.Credentials;
 import org.apache.commons.httpclient.Header;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
+import org.apache.commons.httpclient.HttpMethod;
+import org.apache.commons.httpclient.UsernamePasswordCredentials;
+import org.apache.commons.httpclient.auth.AuthScope;
+import org.apache.commons.httpclient.auth.BasicScheme;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.InputStreamRequestEntity;
 import org.apache.commons.httpclient.methods.PostMethod;
@@ -42,6 +47,27 @@ public class TestProtocol extends TestCase {
 	
 	
 	
+	private static final HttpClient client = new HttpClient();
+	
+
+	
+	
+	private static final BasicScheme basic = new BasicScheme();
+	
+	
+	
+	private static void authenticate(HttpMethod method) {
+		try {
+			String authorization = basic.authenticate(new UsernamePasswordCredentials("adam", "test"), method);
+			method.setRequestHeader("Authorization", authorization);
+		} 
+		catch (Throwable t) {
+			t.printStackTrace();
+			fail(t.getLocalizedMessage());
+		}
+	}
+	
+	
 	protected void setUp() throws Exception {
 		super.setUp();
 	}
@@ -61,6 +87,7 @@ public class TestProtocol extends TestCase {
 		// setup a new PUT request
 		
 		PutMethod method = new PutMethod(collectionUri);
+		authenticate(method);
 
 		// create the request entity
 		
@@ -85,8 +112,6 @@ public class TestProtocol extends TestCase {
 		}
 		
 		method.setRequestEntity(entity);
-		
-		HttpClient client = new HttpClient();
 		
 		int result = -1;
 		
@@ -133,6 +158,7 @@ public class TestProtocol extends TestCase {
 		// setup a new POST request
 		
 		PostMethod method = new PostMethod(collectionUri);
+		authenticate(method);
 
 		// create the request entity
 		
@@ -161,8 +187,6 @@ public class TestProtocol extends TestCase {
 		}
 		
 		method.setRequestEntity(entity);
-		
-		HttpClient client = new HttpClient();
 		
 		int result = -1;
 		
@@ -220,6 +244,7 @@ public class TestProtocol extends TestCase {
 		// setup a new POST request
 		
 		PostMethod method = new PostMethod(collectionUri);
+		authenticate(method);
 		
 		if (slug != null)
 			method.setRequestHeader("Slug", slug);
@@ -241,8 +266,6 @@ public class TestProtocol extends TestCase {
 		}
 		
 		method.setRequestEntity(entity);
-		
-		HttpClient client = new HttpClient();
 		
 		int result = -1;
 		
@@ -376,6 +399,7 @@ public class TestProtocol extends TestCase {
 		// setup a new PUT request
 		
 		PutMethod method = new PutMethod(collectionUri);
+		authenticate(method);
 
 		// create the request entity
 		
@@ -400,8 +424,6 @@ public class TestProtocol extends TestCase {
 		}
 		
 		method.setRequestEntity(entity);
-		
-		HttpClient client = new HttpClient();
 		
 		int result = -1;
 		
@@ -459,6 +481,7 @@ public class TestProtocol extends TestCase {
 		// setup a new POST request
 		
 		PostMethod method = new PostMethod(collectionUri);
+		authenticate(method);
 
 		// create the request entity
 		
@@ -483,8 +506,6 @@ public class TestProtocol extends TestCase {
 		}
 		
 		method.setRequestEntity(entity);
-		
-		HttpClient client = new HttpClient();
 		
 		int result = -1;
 		
@@ -570,6 +591,7 @@ public class TestProtocol extends TestCase {
 		// now put an updated entry document using a PUT request
 		
 		PutMethod method = new PutMethod(location);
+		authenticate(method);
 		
 		// create the request entity
 		
@@ -598,8 +620,6 @@ public class TestProtocol extends TestCase {
 		}
 		
 		method.setRequestEntity(entity);
-		
-		HttpClient client = new HttpClient();
 		
 		int result = -1;
 		
@@ -759,13 +779,12 @@ public class TestProtocol extends TestCase {
 		// setup a new PUT request
 		
 		PutMethod method = new PutMethod(mediaLocation);
+		authenticate(method);
 
 		// create the request entity
 		RequestEntity entity = new InputStreamRequestEntity(content, content.available(), contentType);
 
 		method.setRequestEntity(entity);
-		
-		HttpClient client = new HttpClient();
 		
 		int result = -1;
 		
@@ -817,9 +836,8 @@ public class TestProtocol extends TestCase {
 		// now try GET to collection URI
 		
 		GetMethod method = new GetMethod(collectionUri);
+		authenticate(method);
 
-		HttpClient client = new HttpClient();
-		
 		int result = -1;
 		
 		try {
@@ -876,9 +894,8 @@ public class TestProtocol extends TestCase {
 		// now try GET to member URI
 		
 		GetMethod method = new GetMethod(location);
+		authenticate(method);
 
-		HttpClient client = new HttpClient();
-		
 		int result = -1;
 		
 		try {
@@ -968,9 +985,8 @@ public class TestProtocol extends TestCase {
 		// now try get on media location
 		
 		GetMethod method = new GetMethod(mediaLocation);
+		authenticate(method);
 
-		HttpClient client = new HttpClient();
-		
 		int result = -1;
 		
 		try {
@@ -1022,6 +1038,7 @@ public class TestProtocol extends TestCase {
 		// now create a new media resource by POSTing media to the collection URI
 		
 		PostMethod post = new PostMethod(collectionUri);
+		authenticate(post);
 		
 		File file = new File(this.getClass().getClassLoader().getResource("spreadsheet1.xls").getFile());
 		String contentType = "application/vnd.ms-excel";
@@ -1047,8 +1064,6 @@ public class TestProtocol extends TestCase {
 		post.setRequestEntity(entity);
 		
 		post.setRequestHeader("Accept", "application/atom+xml");
-		
-		HttpClient client = new HttpClient();
 		
 		int result = -1;
 		
@@ -1104,6 +1119,7 @@ public class TestProtocol extends TestCase {
 		// now create a new media resource by POSTing media to the collection URI
 		
 		PostMethod post = new PostMethod(collectionUri);
+		authenticate(post);
 		
 		File file = new File(this.getClass().getClassLoader().getResource("spreadsheet1.xls").getFile());
 		String contentType = "application/vnd.ms-excel";
@@ -1127,8 +1143,6 @@ public class TestProtocol extends TestCase {
 		MultipartRequestEntity entity = new MultipartRequestEntity(parts, post.getParams());
 		
 		post.setRequestEntity(entity);		
-		
-		HttpClient client = new HttpClient();
 		
 		int result = -1;
 		
