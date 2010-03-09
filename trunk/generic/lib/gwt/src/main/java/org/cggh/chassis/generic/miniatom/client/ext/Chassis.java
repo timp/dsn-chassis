@@ -22,6 +22,10 @@ public class Chassis {
 	public static final String ELEMENT_SUBMISSIONPUBLISHED = "submission-published";
 	public static final String ELEMENT_REVIEWPUBLISHED = "review-published";
 	public static final String ELEMENT_REVIEWSUMMARY = "review-summary";
+	public static final String ELEMENT_DERIVATION = "derivation";
+	
+	public static final String ATTRIBUTE_TERM = "term";
+	public static final String ATTRIBUTE_LABEL = "label";
 	
 	
 	public static final String SCHEME_FILETYPES = "http://www.cggh.org/2010/chassis/scheme/FileTypes";

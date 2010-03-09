@@ -51,7 +51,9 @@
 			<g:FormPanel ui:field="cleanFileFormPanel">
 				<g:HTMLPanel>
 				
-					<g:Hidden ui:field="fileToBeCleaned"></g:Hidden>
+					<g:Hidden ui:field="fileToBeCleanedID"></g:Hidden>
+					<g:Hidden ui:field="fileToBeCleanedType"></g:Hidden>
+					<g:Hidden ui:field="fileToBeCleanedOtherType"></g:Hidden>
 				
 					<p>
 						<ui:msg>Fields marked with an asterisk (<span class="{style.requiredFieldMarker}">*</span>) are compulsory.
