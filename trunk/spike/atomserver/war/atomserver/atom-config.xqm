@@ -64,5 +64,16 @@ declare variable $config:base-acl-collection-path as xs:string := "/db/system/ac
 declare variable $config:feed-doc-name as xs:string := ".feed" ;
 
 
-(: TODO doc me :)
+(:
+ : Enable or disable the ACL-based security system.
+ :)
+declare variable $config:enable-security := false() ;
+
+
+(:
+ : The default security decision which will be applied if no ACL rules match 
+ : a request. Either "deny" or "allow".
+ :)
 declare variable $config:default-decision := "deny" ;
+
+

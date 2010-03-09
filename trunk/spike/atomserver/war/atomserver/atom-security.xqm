@@ -13,6 +13,23 @@ import module namespace config = "http://www.cggh.org/2010/xquery/atom-config" a
 
 
 
+declare variable $atomsec:op-create-collection as xs:string     := "create-collection" ;
+declare variable $atomsec:op-update-collection as xs:string     := "update-collection" ;
+declare variable $atomsec:op-create-member as xs:string         := "create-member" ;
+declare variable $atomsec:op-retrieve-member as xs:string       := "retrieve-member" ;
+declare variable $atomsec:op-update-member as xs:string         := "update-member" ;
+declare variable $atomsec:op-delete-member as xs:string         := "delete-member" ;
+declare variable $atomsec:op-create-media as xs:string          := "create-media" ;
+declare variable $atomsec:op-retrieve-media as xs:string        := "retrieve-media" ;
+declare variable $atomsec:op-update-media as xs:string          := "update-media" ;
+declare variable $atomsec:op-delete-media as xs:string          := "delete-media" ;
+declare variable $atomsec:op-update-acl as xs:string            := "update-acl" ;
+
+
+
+declare variable $atomsec:decision-deny as xs:string            := "deny" ;
+declare variable $atomsec:decision-allow as xs:string           := "allow" ;
+
 
 
 declare function atomsec:store-global-acl(
@@ -159,12 +176,26 @@ declare function atomsec:retrieve-resource-acl(
 
 
 
+
 declare function atomsec:decide(
+    $user as xs:string? ,
+    $roles as xs:string* ,
+    $request-path-info as xs:string ,
+    $operation as xs:string
+) as xs:string
+{
+    atomsec:decide( $user , $roles , $request-path-info , $operation , () )
+};
+
+
+
+
+declare function atomsec:decide(
+    $user as xs:string? ,
+    $roles as xs:string* ,
     $request-path-info as xs:string ,
     $operation as xs:string ,
-    $media-type as xs:string? ,
-    $user as xs:string? ,
-    $roles as xs:string*
+    $media-type as xs:string?
 ) as xs:string
 {
 
@@ -216,6 +247,8 @@ declare function atomsec:decide(
         if ( exists( $global-decision ) ) 
         then $global-decision
         else $decision
+    
+    let $log := util:log( "info" , concat( "security decision (" , $decision , ") for user (" , $user , "), roles (" , $roles, "), request-path-info (" , $request-path-info , "), operation(" , $operation , "), media-type (" , $media-type , ")" ) )  
     
     return $decision
     

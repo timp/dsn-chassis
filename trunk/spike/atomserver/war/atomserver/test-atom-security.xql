@@ -76,7 +76,7 @@ declare function local:test-global-acl() as item()*
     let $media-type := ()
     let $user := "alice"
     let $roles := ()
-    let $decision := atomsec:decide( $request-path-info , $operation , $media-type , $user , $roles )
+    let $decision := atomsec:decide( $user , $roles , $request-path-info , $operation , $media-type )
     let $output := ( $output , test:assert-equals( "allow" , $decision , "alice should be allowed to create collections" ) )
     
     (: test deny by user name :)
@@ -86,7 +86,7 @@ declare function local:test-global-acl() as item()*
     let $media-type := ()
     let $user := "bob"
     let $roles := ()
-    let $decision := atomsec:decide( $request-path-info , $operation , $media-type , $user , $roles )
+    let $decision := atomsec:decide( $user , $roles , $request-path-info , $operation , $media-type )
     let $output := ( $output , test:assert-equals( "deny" , $decision , "bob should not be allowed to create collections" ) )
     
     (: test deny by operation :)
@@ -96,7 +96,7 @@ declare function local:test-global-acl() as item()*
     let $media-type := ()
     let $user := "alice"
     let $roles := ()
-    let $decision := atomsec:decide( $request-path-info , $operation , $media-type , $user , $roles )
+    let $decision := atomsec:decide( $user , $roles , $request-path-info , $operation , $media-type )
     let $output := ( $output , test:assert-equals( "deny" , $decision , "alice should not be allowed to create collection members" ) )
     
     (: test allow by role :)
@@ -106,7 +106,7 @@ declare function local:test-global-acl() as item()*
     let $media-type := ()
     let $user := ()
     let $roles := ( "administrator" , "user" )
-    let $decision := atomsec:decide( $request-path-info , $operation , $media-type , $user , $roles )
+    let $decision := atomsec:decide( $user , $roles , $request-path-info , $operation , $media-type )
     let $output := ( $output , test:assert-equals( "allow" , $decision , "administrators should be allowed to create collections" ) )
     
     (: test deny by role :)
@@ -116,7 +116,7 @@ declare function local:test-global-acl() as item()*
     let $media-type := ()
     let $user := ()
     let $roles := ( "user" )
-    let $decision := atomsec:decide( $request-path-info , $operation , $media-type , $user , $roles )
+    let $decision := atomsec:decide( $user , $roles , $request-path-info , $operation , $media-type )
     let $output := ( $output , test:assert-equals( "deny" , $decision , "users should not be allowed to create collections" ) )
     
     return $output
@@ -166,7 +166,7 @@ declare function local:test-collection-acl() as item()*
     let $media-type := ()
     let $user := "alice"
     let $roles := ()
-    let $decision := atomsec:decide( $request-path-info , $operation , $media-type , $user , $roles )
+    let $decision := atomsec:decide( $user , $roles , $request-path-info , $operation , $media-type )
     let $output := ( $output , test:assert-equals( "allow" , $decision , "alice should be allowed to create members of the /test-security collection" ) )
   
     (: test deny by user name :)
@@ -176,7 +176,7 @@ declare function local:test-collection-acl() as item()*
     let $media-type := ()
     let $user := "bob"
     let $roles := ()
-    let $decision := atomsec:decide( $request-path-info , $operation , $media-type , $user , $roles )
+    let $decision := atomsec:decide( $user , $roles , $request-path-info , $operation , $media-type )
     let $output := ( $output , test:assert-equals( "deny" , $decision , "bob should not be allowed to create members of the /test-security collection" ) )
   
     (: test deny by path :)
@@ -186,7 +186,7 @@ declare function local:test-collection-acl() as item()*
     let $media-type := ()
     let $user := "alice"
     let $roles := ()
-    let $decision := atomsec:decide( $request-path-info , $operation , $media-type , $user , $roles )
+    let $decision := atomsec:decide( $user , $roles , $request-path-info , $operation , $media-type )
     let $output := ( $output , test:assert-equals( "deny" , $decision , "alice should not be allowed to create members of the /another collection" ) )
   
     (: test allow by role from collection acl :)
@@ -196,7 +196,7 @@ declare function local:test-collection-acl() as item()*
     let $media-type := ()
     let $user := ()
     let $roles := ( "author" )
-    let $decision := atomsec:decide( $request-path-info , $operation , $media-type , $user , $roles )
+    let $decision := atomsec:decide( $user , $roles , $request-path-info , $operation , $media-type )
     let $output := ( $output , test:assert-equals( "allow" , $decision , "authors should be allowed to create members of the /test-security collection" ) )
   
     (: test deny by role :)
@@ -206,7 +206,7 @@ declare function local:test-collection-acl() as item()*
     let $media-type := ()
     let $user := ()
     let $roles := ( "user" )
-    let $decision := atomsec:decide( $request-path-info , $operation , $media-type , $user , $roles )
+    let $decision := atomsec:decide( $user , $roles , $request-path-info , $operation , $media-type )
     let $output := ( $output , test:assert-equals( "deny" , $decision , "users should not be allowed to create members of the /test-security collection" ) )
   
     (: test allow by role from global acl :)
@@ -216,7 +216,7 @@ declare function local:test-collection-acl() as item()*
     let $media-type := ()
     let $user := ()
     let $roles := ( "administrator" )
-    let $decision := atomsec:decide( $request-path-info , $operation , $media-type , $user , $roles )
+    let $decision := atomsec:decide( $user , $roles , $request-path-info , $operation , $media-type )
     let $output := ( $output , test:assert-equals( "allow" , $decision , "administrators should be allowed to create members of any collection" ) )
   
     return $output
@@ -274,7 +274,7 @@ declare function local:test-resource-acl()
     let $media-type := ()
     let $user := "alice"
     let $roles := ()
-    let $decision := atomsec:decide( $request-path-info , $operation , $media-type , $user , $roles )
+    let $decision := atomsec:decide( $user , $roles , $request-path-info , $operation , $media-type )
     let $output := ( $output , test:assert-equals( "allow" , $decision , "alice should be allowed to update the resource" ) )
     
     (: test deny by user name :)
@@ -284,7 +284,7 @@ declare function local:test-resource-acl()
     let $media-type := ()
     let $user := "bob"
     let $roles := ()
-    let $decision := atomsec:decide( $request-path-info , $operation , $media-type , $user , $roles )
+    let $decision := atomsec:decide( $user , $roles , $request-path-info , $operation , $media-type )
     let $output := ( $output , test:assert-equals( "deny" , $decision , "bob should not be allowed to update the resource" ) )
     
     (: test deny by operation :)
@@ -294,7 +294,7 @@ declare function local:test-resource-acl()
     let $media-type := ()
     let $user := "alice"
     let $roles := ()
-    let $decision := atomsec:decide( $request-path-info , $operation , $media-type , $user , $roles )
+    let $decision := atomsec:decide( $user , $roles , $request-path-info , $operation , $media-type )
     let $output := ( $output , test:assert-equals( "deny" , $decision , "alice should not be allowed to delete the resource" ) )
     
     (: test allow by role from collection acl :)
@@ -304,7 +304,7 @@ declare function local:test-resource-acl()
     let $media-type := ()
     let $user := ()
     let $roles := ( "editor" )
-    let $decision := atomsec:decide( $request-path-info , $operation , $media-type , $user , $roles )
+    let $decision := atomsec:decide( $user , $roles , $request-path-info , $operation , $media-type )
     let $output := ( $output , test:assert-equals( "allow" , $decision , "editors should be allowed to update any member of the collection" ) )
     
     (: test allow by role from global acl :)
@@ -314,7 +314,7 @@ declare function local:test-resource-acl()
     let $media-type := ()
     let $user := ()
     let $roles := ( "administrator" )
-    let $decision := atomsec:decide( $request-path-info , $operation , $media-type , $user , $roles )
+    let $decision := atomsec:decide( $user , $roles , $request-path-info , $operation , $media-type )
     let $output := ( $output , test:assert-equals( "allow" , $decision , "administrators should be allowed to update any member of any collection" ) )
     
     (: test deny by role :)
@@ -324,7 +324,7 @@ declare function local:test-resource-acl()
     let $media-type := ()
     let $user := ()
     let $roles := ( "user" )
-    let $decision := atomsec:decide( $request-path-info , $operation , $media-type , $user , $roles )
+    let $decision := atomsec:decide( $user , $roles , $request-path-info , $operation , $media-type )
     let $output := ( $output , test:assert-equals( "deny" , $decision , "users should not be allowed to update the resource" ) )
     
     (: test deny by operation :)
@@ -334,7 +334,7 @@ declare function local:test-resource-acl()
     let $media-type := ()
     let $user := ()
     let $roles := ( "editor" )
-    let $decision := atomsec:decide( $request-path-info , $operation , $media-type , $user , $roles )
+    let $decision := atomsec:decide( $user , $roles , $request-path-info , $operation , $media-type )
     let $output := ( $output , test:assert-equals( "deny" , $decision , "editors should not be allowed to delete the resource" ) )
     
     (: test deny by operation :)
@@ -344,7 +344,7 @@ declare function local:test-resource-acl()
     let $media-type := ()
     let $user := ()
     let $roles := ( "administrator" )
-    let $decision := atomsec:decide( $request-path-info , $operation , $media-type , $user , $roles )
+    let $decision := atomsec:decide( $user , $roles , $request-path-info , $operation , $media-type )
     let $output := ( $output , test:assert-equals( "deny" , $decision , "administrators should not be allowed to delete the resource" ) )
     
     return $output
@@ -381,7 +381,7 @@ declare function local:test-wildcards() as item()*
     let $media-type := ()
     let $user := "alice"
     let $roles := ()
-    let $decision := atomsec:decide( $request-path-info , $operation , $media-type , $user , $roles )
+    let $decision := atomsec:decide( $user , $roles , $request-path-info , $operation , $media-type )
     let $output := ( $output , test:assert-equals( "allow" , $decision , "any user should be allowed to create collections" ) )
     
     (: test allow by wildcard operation :)
@@ -391,7 +391,7 @@ declare function local:test-wildcards() as item()*
     let $media-type := ()
     let $user := ()
     let $roles := ( "administrator" )
-    let $decision := atomsec:decide( $request-path-info , $operation , $media-type , $user , $roles )
+    let $decision := atomsec:decide( $user , $roles , $request-path-info , $operation , $media-type )
     let $output := ( $output , test:assert-equals( "allow" , $decision , "administrators should be allowed any operation" ) )
     
     return $output
@@ -441,7 +441,7 @@ declare function local:test-media-ranges() as item()*
     let $media-type := "application/xml"
     let $user := "alice"
     let $roles := ()
-    let $decision := atomsec:decide( $request-path-info , $operation , $media-type , $user , $roles )
+    let $decision := atomsec:decide( $user , $roles , $request-path-info , $operation , $media-type )
     let $output := ( $output , test:assert-equals( "allow" , $decision , "alice should be allowed to create media with any media type/subtype" ) )
     
     (: test allow by any media subtype :)
@@ -451,7 +451,7 @@ declare function local:test-media-ranges() as item()*
     let $media-type := "text/plain"
     let $user := "bob"
     let $roles := ()
-    let $decision := atomsec:decide( $request-path-info , $operation , $media-type , $user , $roles )
+    let $decision := atomsec:decide( $user , $roles , $request-path-info , $operation , $media-type )
     let $output := ( $output , test:assert-equals( "allow" , $decision , "bob should be allowed to create media type text with any media subtype" ) )
     
     (: test deny by media type :)
@@ -461,7 +461,7 @@ declare function local:test-media-ranges() as item()*
     let $media-type := "application/xml"
     let $user := "bob"
     let $roles := ()
-    let $decision := atomsec:decide( $request-path-info , $operation , $media-type , $user , $roles )
+    let $decision := atomsec:decide( $user , $roles , $request-path-info , $operation , $media-type )
     let $output := ( $output , test:assert-equals( "deny" , $decision , "bob should only be allowed to create media type text" ) )
     
     (: test allow by media type/subtype :)
@@ -471,7 +471,7 @@ declare function local:test-media-ranges() as item()*
     let $media-type := "application/xml"
     let $user := "jane"
     let $roles := ()
-    let $decision := atomsec:decide( $request-path-info , $operation , $media-type , $user , $roles )
+    let $decision := atomsec:decide( $user , $roles , $request-path-info , $operation , $media-type )
     let $output := ( $output , test:assert-equals( "allow" , $decision , "jane should be allowed to create media type application/xml" ) )
     
     (: test deny by media type/subtype :)
@@ -481,7 +481,7 @@ declare function local:test-media-ranges() as item()*
     let $media-type := "application/foo"
     let $user := "jane"
     let $roles := ()
-    let $decision := atomsec:decide( $request-path-info , $operation , $media-type , $user , $roles )
+    let $decision := atomsec:decide( $user , $roles , $request-path-info , $operation , $media-type )
     let $output := ( $output , test:assert-equals( "deny" , $decision , "jane should only be allowed to create media type application/xml" ) )
     
     (: test deny by media type/subtype :)
@@ -491,7 +491,7 @@ declare function local:test-media-ranges() as item()*
     let $media-type := "foo/xml"
     let $user := "jane"
     let $roles := ()
-    let $decision := atomsec:decide( $request-path-info , $operation , $media-type , $user , $roles )
+    let $decision := atomsec:decide( $user , $roles , $request-path-info , $operation , $media-type )
     let $output := ( $output , test:assert-equals( "deny" , $decision , "jane should only be allowed to create media type application/xml" ) )
     
     (: test deny by media type/subtype :)
@@ -501,7 +501,7 @@ declare function local:test-media-ranges() as item()*
     let $media-type := "foo/bar"
     let $user := "jane"
     let $roles := ()
-    let $decision := atomsec:decide( $request-path-info , $operation , $media-type , $user , $roles )
+    let $decision := atomsec:decide( $user , $roles , $request-path-info , $operation , $media-type )
     let $output := ( $output , test:assert-equals( "deny" , $decision , "jane should only be allowed to create media type application/xml" ) )
     
     (: test media range is ignored if operation does not involve media :)
@@ -510,7 +510,7 @@ declare function local:test-media-ranges() as item()*
     let $media-type := ()
     let $user := "alice"
     let $roles := ()
-    let $decision := atomsec:decide( $request-path-info , $operation , $media-type , $user , $roles )
+    let $decision := atomsec:decide( $user , $roles , $request-path-info , $operation , $media-type )
     let $output := ( $output , test:assert-equals( "allow" , $decision , "media range should be ignored for operations not on media" ) )
     
     return $output
@@ -566,7 +566,7 @@ declare function local:test-inline-groups() as item()*
     let $media-type := ()
     let $user := "richard"
     let $roles := ()
-    let $decision := atomsec:decide( $request-path-info , $operation , $media-type , $user , $roles )
+    let $decision := atomsec:decide( $user , $roles , $request-path-info , $operation , $media-type )
     let $output := ( $output , test:assert-equals( "allow" , $decision , "readers should be allowed to retrieve collection members" ) )
     
     let $request-path-info := $test-member-path
@@ -574,7 +574,7 @@ declare function local:test-inline-groups() as item()*
     let $media-type := ()
     let $user := "rebecca"
     let $roles := ()
-    let $decision := atomsec:decide( $request-path-info , $operation , $media-type , $user , $roles )
+    let $decision := atomsec:decide( $user , $roles , $request-path-info , $operation , $media-type )
     let $output := ( $output , test:assert-equals( "allow" , $decision , "readers should be allowed to retrieve collection members" ) )
     
     let $request-path-info := $test-collection-path
@@ -582,7 +582,7 @@ declare function local:test-inline-groups() as item()*
     let $media-type := ()
     let $user := "richard"
     let $roles := ()
-    let $decision := atomsec:decide( $request-path-info , $operation , $media-type , $user , $roles )
+    let $decision := atomsec:decide( $user , $roles , $request-path-info , $operation , $media-type )
     let $output := ( $output , test:assert-equals( "deny" , $decision , "readers should not be allowed to create collection members" ) )
     
     let $request-path-info := $test-member-path
@@ -590,7 +590,7 @@ declare function local:test-inline-groups() as item()*
     let $media-type := ()
     let $user := "rebecca"
     let $roles := ()
-    let $decision := atomsec:decide( $request-path-info , $operation , $media-type , $user , $roles )
+    let $decision := atomsec:decide( $user , $roles , $request-path-info , $operation , $media-type )
     let $output := ( $output , test:assert-equals( "deny" , $decision , "readers should not be allowed to update collection members" ) )
     
     (: test authors :)
@@ -600,7 +600,7 @@ declare function local:test-inline-groups() as item()*
     let $media-type := ()
     let $user := "alice"
     let $roles := ()
-    let $decision := atomsec:decide( $request-path-info , $operation , $media-type , $user , $roles )
+    let $decision := atomsec:decide( $user , $roles , $request-path-info , $operation , $media-type )
     let $output := ( $output , test:assert-equals( "allow" , $decision , "authors should be allowed to create collection members" ) )
     
     let $request-path-info := $test-member-path
@@ -608,7 +608,7 @@ declare function local:test-inline-groups() as item()*
     let $media-type := ()
     let $user := "arthur"
     let $roles := ()
-    let $decision := atomsec:decide( $request-path-info , $operation , $media-type , $user , $roles )
+    let $decision := atomsec:decide( $user , $roles , $request-path-info , $operation , $media-type )
     let $output := ( $output , test:assert-equals( "deny" , $decision , "authors should not be allowed to update collection members" ) )
     
     (: test editors :)
@@ -618,7 +618,7 @@ declare function local:test-inline-groups() as item()*
     let $media-type := ()
     let $user := "emma"
     let $roles := ()
-    let $decision := atomsec:decide( $request-path-info , $operation , $media-type , $user , $roles )
+    let $decision := atomsec:decide( $user , $roles , $request-path-info , $operation , $media-type )
     let $output := ( $output , test:assert-equals( "allow" , $decision , "editors should be allowed to update collection members" ) )
     
     let $request-path-info := $test-collection-path
@@ -626,7 +626,7 @@ declare function local:test-inline-groups() as item()*
     let $media-type := ()
     let $user := "edward"
     let $roles := ()
-    let $decision := atomsec:decide( $request-path-info , $operation , $media-type , $user , $roles )
+    let $decision := atomsec:decide( $user , $roles , $request-path-info , $operation , $media-type )
     let $output := ( $output , test:assert-equals( "deny" , $decision , "editors should not be allowed to create collection members" ) )
     
     return $output
@@ -691,7 +691,7 @@ declare function local:test-reference-global-groups() as item()*
     let $media-type := ()
     let $user := "richard"
     let $roles := ()
-    let $decision := atomsec:decide( $request-path-info , $operation , $media-type , $user , $roles )
+    let $decision := atomsec:decide( $user , $roles , $request-path-info , $operation , $media-type )
     let $output := ( $output , test:assert-equals( "allow" , $decision , "readers should be allowed to retrieve collection members" ) )
     
     let $request-path-info := $test-member-path
@@ -699,7 +699,7 @@ declare function local:test-reference-global-groups() as item()*
     let $media-type := ()
     let $user := "rebecca"
     let $roles := ()
-    let $decision := atomsec:decide( $request-path-info , $operation , $media-type , $user , $roles )
+    let $decision := atomsec:decide( $user , $roles , $request-path-info , $operation , $media-type )
     let $output := ( $output , test:assert-equals( "allow" , $decision , "readers should be allowed to retrieve collection members" ) )
     
     let $request-path-info := $test-collection-path
@@ -707,7 +707,7 @@ declare function local:test-reference-global-groups() as item()*
     let $media-type := ()
     let $user := "richard"
     let $roles := ()
-    let $decision := atomsec:decide( $request-path-info , $operation , $media-type , $user , $roles )
+    let $decision := atomsec:decide( $user , $roles , $request-path-info , $operation , $media-type )
     let $output := ( $output , test:assert-equals( "deny" , $decision , "readers should not be allowed to create collection members" ) )
     
     let $request-path-info := $test-member-path
@@ -715,7 +715,7 @@ declare function local:test-reference-global-groups() as item()*
     let $media-type := ()
     let $user := "rebecca"
     let $roles := ()
-    let $decision := atomsec:decide( $request-path-info , $operation , $media-type , $user , $roles )
+    let $decision := atomsec:decide( $user , $roles , $request-path-info , $operation , $media-type )
     let $output := ( $output , test:assert-equals( "deny" , $decision , "readers should not be allowed to update collection members" ) )
     
     (: test authors :)
@@ -725,7 +725,7 @@ declare function local:test-reference-global-groups() as item()*
     let $media-type := ()
     let $user := "alice"
     let $roles := ()
-    let $decision := atomsec:decide( $request-path-info , $operation , $media-type , $user , $roles )
+    let $decision := atomsec:decide( $user , $roles , $request-path-info , $operation , $media-type )
     let $output := ( $output , test:assert-equals( "allow" , $decision , "authors should be allowed to create collection members" ) )
     
     let $request-path-info := $test-member-path
@@ -733,7 +733,7 @@ declare function local:test-reference-global-groups() as item()*
     let $media-type := ()
     let $user := "arthur"
     let $roles := ()
-    let $decision := atomsec:decide( $request-path-info , $operation , $media-type , $user , $roles )
+    let $decision := atomsec:decide( $user , $roles , $request-path-info , $operation , $media-type )
     let $output := ( $output , test:assert-equals( "deny" , $decision , "authors should not be allowed to update collection members" ) )
     
     (: test editors :)
@@ -743,7 +743,7 @@ declare function local:test-reference-global-groups() as item()*
     let $media-type := ()
     let $user := "emma"
     let $roles := ()
-    let $decision := atomsec:decide( $request-path-info , $operation , $media-type , $user , $roles )
+    let $decision := atomsec:decide( $user , $roles , $request-path-info , $operation , $media-type )
     let $output := ( $output , test:assert-equals( "allow" , $decision , "editors should be allowed to update collection members" ) )
     
     let $request-path-info := $test-collection-path
@@ -751,7 +751,7 @@ declare function local:test-reference-global-groups() as item()*
     let $media-type := ()
     let $user := "edward"
     let $roles := ()
-    let $decision := atomsec:decide( $request-path-info , $operation , $media-type , $user , $roles )
+    let $decision := atomsec:decide( $user , $roles , $request-path-info , $operation , $media-type )
     let $output := ( $output , test:assert-equals( "deny" , $decision , "editors should not be allowed to create collection members" ) )
     
     return $output
@@ -813,7 +813,7 @@ declare function local:test-reference-collection-groups() as item()*
     let $media-type := ()
     let $user := "richard"
     let $roles := ()
-    let $decision := atomsec:decide( $request-path-info , $operation , $media-type , $user , $roles )
+    let $decision := atomsec:decide( $user , $roles , $request-path-info , $operation , $media-type )
     let $output := ( $output , test:assert-equals( "allow" , $decision , "readers should be allowed to retrieve the resource" ) )
     
     let $request-path-info := $test-member-path
@@ -821,7 +821,7 @@ declare function local:test-reference-collection-groups() as item()*
     let $media-type := ()
     let $user := "rebecca"
     let $roles := ()
-    let $decision := atomsec:decide( $request-path-info , $operation , $media-type , $user , $roles )
+    let $decision := atomsec:decide( $user , $roles , $request-path-info , $operation , $media-type )
     let $output := ( $output , test:assert-equals( "allow" , $decision , "readers should be allowed to retrieve the resource" ) )
     
     let $request-path-info := $test-member-path
@@ -829,7 +829,7 @@ declare function local:test-reference-collection-groups() as item()*
     let $media-type := ()
     let $user := "rebecca"
     let $roles := ()
-    let $decision := atomsec:decide( $request-path-info , $operation , $media-type , $user , $roles )
+    let $decision := atomsec:decide( $user , $roles , $request-path-info , $operation , $media-type )
     let $output := ( $output , test:assert-equals( "deny" , $decision , "readers should not be allowed to update the resource" ) )
     
     (: test editors :)
@@ -839,7 +839,7 @@ declare function local:test-reference-collection-groups() as item()*
     let $media-type := ()
     let $user := "emma"
     let $roles := ()
-    let $decision := atomsec:decide( $request-path-info , $operation , $media-type , $user , $roles )
+    let $decision := atomsec:decide($user , $roles , $request-path-info , $operation , $media-type)
     let $output := ( $output , test:assert-equals( "allow" , $decision , "editors should be allowed to update the resource" ) )
     
     let $request-path-info := $test-collection-path
@@ -847,7 +847,7 @@ declare function local:test-reference-collection-groups() as item()*
     let $media-type := ()
     let $user := "edward"
     let $roles := ()
-    let $decision := atomsec:decide( $request-path-info , $operation , $media-type , $user , $roles )
+    let $decision := atomsec:decide( $user , $roles , $request-path-info , $operation , $media-type )
     let $output := ( $output , test:assert-equals( "deny" , $decision , "editors should not be allowed to delete the resource" ) )
     
     return $output
@@ -909,7 +909,7 @@ declare function local:test-reference-resource-groups() as item()*
     let $media-type := ()
     let $user := "richard"
     let $roles := ()
-    let $decision := atomsec:decide( $request-path-info , $operation , $media-type , $user , $roles )
+    let $decision := atomsec:decide( $user , $roles , $request-path-info , $operation , $media-type )
     let $output := ( $output , test:assert-equals( "allow" , $decision , "readers should be allowed to retrieve the resource" ) )
     
     let $request-path-info := $test-member-path
@@ -917,7 +917,7 @@ declare function local:test-reference-resource-groups() as item()*
     let $media-type := ()
     let $user := "rebecca"
     let $roles := ()
-    let $decision := atomsec:decide( $request-path-info , $operation , $media-type , $user , $roles )
+    let $decision := atomsec:decide( $user , $roles , $request-path-info , $operation , $media-type )
     let $output := ( $output , test:assert-equals( "allow" , $decision , "readers should be allowed to retrieve the resource" ) )
     
     let $request-path-info := $test-member-path
@@ -925,7 +925,7 @@ declare function local:test-reference-resource-groups() as item()*
     let $media-type := ()
     let $user := "rebecca"
     let $roles := ()
-    let $decision := atomsec:decide( $request-path-info , $operation , $media-type , $user , $roles )
+    let $decision := atomsec:decide( $user , $roles , $request-path-info , $operation , $media-type )
     let $output := ( $output , test:assert-equals( "deny" , $decision , "readers should not be allowed to update the resource" ) )
     
     (: test editors :)
@@ -935,7 +935,7 @@ declare function local:test-reference-resource-groups() as item()*
     let $media-type := ()
     let $user := "emma"
     let $roles := ()
-    let $decision := atomsec:decide( $request-path-info , $operation , $media-type , $user , $roles )
+    let $decision := atomsec:decide( $user , $roles , $request-path-info , $operation , $media-type )
     let $output := ( $output , test:assert-equals( "allow" , $decision , "editors should be allowed to update the resource" ) )
     
     let $request-path-info := $test-collection-path
@@ -943,7 +943,7 @@ declare function local:test-reference-resource-groups() as item()*
     let $media-type := ()
     let $user := "edward"
     let $roles := ()
-    let $decision := atomsec:decide( $request-path-info , $operation , $media-type , $user , $roles )
+    let $decision := atomsec:decide( $user , $roles , $request-path-info , $operation , $media-type )
     let $output := ( $output , test:assert-equals( "deny" , $decision , "editors should not be allowed to delete the resource" ) )
     
     return $output
