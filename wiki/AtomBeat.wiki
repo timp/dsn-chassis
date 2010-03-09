@@ -7,8 +7,11 @@ AtomBeat is an [http://www.atomenabled.org/developers/protocol/atom-protocol-spe
 == Features ==
 
   * Standard Atom Protocol operations are supported: create, retrieve, update and delete Atom entries and media resources; retrieve feeds of Atom collection members.
+
   * Extensions to the Atom Protocol for creating Atom collections and for updating collection metadata.
+
   * Optional extensions to the Atom Protocol for versioning of collection members: retrieve feeds of revision history for any given Atom entry; retrieve any previous revision of an Atom entry.
+
   * Optional security system for management of Access Control Lists for Atom collections and collection members; specify fine-grained access control rules for users, groups and roles; easily integrated with external authentication and user role management systems, e.g., via Spring Security.
 
 == eXist already has an Atom Protocol implementation, why do another? ==
@@ -25,6 +28,34 @@ There are a couple of reasons why we've rolled our own Atom Protocol implementat
 
 = TODO =
 
-The following is a rough list of features yet to be implemented...
+In no particular order, the following is a memo list of features yet to be implemented...
 
   * add content-location headers to responses where appropriate
+
+  * change response to update-media (PUT) operation - send 200 with media-link entry and content-location, or 204?
+
+  * make history link appear/disappear depending on whether history is enabled
+
+  * implement security protocol for updating ACLs
+
+  * implement search protocol and feed pagination
+
+  * rebrand as "AtomBeat"
+
+  * implement DELETE
+
+  * update feed date updated 
+
+  * update entry date updated when media updated
+
+  * send etags and implement conditional GET and PUT with if-match and if-none-match
+
+  * tests for security system with atom protocol
+
+  * finish implementing security in atom protocol
+
+  * add list-collection operation to security constants
+  
+  * add hooks for customisable before- and after- functions in atomdb
+
+  * implement history/versioning for media resources
