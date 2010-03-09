@@ -237,7 +237,7 @@ declare function adb:create-member(
 	$request-path-info as xs:string ,
 	$request-data as element(atom:entry) ,
 	$comment as xs:string?
-) as xs:string
+) as xs:string?
 {
 
 	if ( not( adb:collection-available( $request-path-info ) ) )
@@ -255,12 +255,33 @@ declare function adb:create-member(
 		 : e.g., "/db/foo".
 		 :)
 		 
-		let $collection-db-path := adb:request-path-info-to-db-path( $request-path-info )
+(:
+        let $collection-db-path := adb:request-path-info-to-db-path( $request-path-info )
 
 	    let $entry-doc-db-path := xmldb:store( $collection-db-path , concat( $uuid , ".atom" ) , $entry )    
-	    
+:)
+
+        let $entry-doc-db-path := adb:store-member( $request-path-info , concat( $uuid , ".atom" ) , $entry )
+        
 	    return $entry-doc-db-path
 		
+};
+
+
+
+declare function adb:store-member(
+    $collection-path-info as xs:string ,
+    $resource-name as xs:string ,
+    $entry as element(atom:entry)
+) as xs:string?
+{
+
+    let $collection-db-path := adb:request-path-info-to-db-path( $collection-path-info )
+
+    let $entry-doc-db-path := xmldb:store( $collection-db-path , $resource-name , $entry )    
+    
+    return $entry-doc-db-path
+
 };
 
 

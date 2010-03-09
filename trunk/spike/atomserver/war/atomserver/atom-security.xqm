@@ -14,6 +14,7 @@ import module namespace config = "http://www.cggh.org/2010/xquery/atom-config" a
 
 
 
+
 declare function atomsec:store-global-acl(
     $acl as element(acl)
 ) as item()*
@@ -261,14 +262,15 @@ declare function atomsec:match-rules(
         
             if (
             
-                $operation = $rule/operation and
+                atomsec:match-operation($rule , $operation)
             
-                ( 
-                    ( exists( $rule/user ) and $rule/user = $user ) or                 
-                    ( exists( $rule/role ) and exists( index-of( $roles , xs:string( $rule/role ) ) ) )
-                )
+                and ( 
+                    atomsec:match-user( $rule , $user ) or    
+                    atomsec:match-role( $rule , $roles ) or
+                    atomsec:match-group( $rule , $user , $acl )
+                ) 
                 
-                (: TODO match media-range :)
+                and atomsec:match-media-type( $rule , $media-type )
                 
             ) 
             
@@ -281,5 +283,127 @@ declare function atomsec:match-rules(
     
 };
 
+
+
+
+declare function atomsec:match-operation(
+    $rule as element() ,
+    $operation as xs:string
+) as xs:boolean
+{
+    ( xs:string( $rule/operation ) = "*" ) or ( xs:string( $rule/operation ) = $operation  ) 
+};
+
+
+
+
+declare function atomsec:match-user(
+    $rule as element() ,
+    $user as xs:string?
+) as xs:boolean
+{
+    ( xs:string( $rule/user ) = "*" ) or ( xs:string( $rule/user ) = $user  ) 
+};
+
+
+
+
+declare function atomsec:match-role(
+    $rule as element() ,
+    $roles as xs:string*
+) as xs:boolean
+{
+    ( xs:string( $rule/role ) = "*" ) or 
+    ( exists( $rule/role) and exists( index-of( $roles , xs:string( $rule/role ) ) ) )
+};
+
+
+
+
+declare function atomsec:match-group(
+    $rule as element() ,
+    $user as xs:string? ,
+    $acl as element(acl)
+) as xs:boolean
+{
+
+    let $groups :=
+    
+        for $group in $acl/groups/group
+        let $src := $group/@src
+        let $name := $group/@name
+        return
+            if ( exists( $src) ) then atomsec:dereference-group( $name , $src )
+            else $group
+
+    let $groups-for-user := $groups[user=$user]/@name
+    
+    return
+    
+        ( xs:string( $rule/group ) = "*" )
+        or ( exists( $rule/group) and exists( index-of( $groups-for-user , xs:string( $rule/group ) ) ) )
+        
+};
+
+
+
+
+declare function atomsec:dereference-group(
+    $name as xs:string ,
+    $src as xs:string
+) as element(group)?
+{
+    
+    let $acl :=
+        if ( $src = "/" )
+        then atomsec:retrieve-global-acl()
+        else if ( atomdb:collection-available( $src ) )
+        then atomsec:retrieve-collection-acl( $src )
+        else atomsec:retrieve-resource-acl( $src )
+        
+    return $acl/groups/group[@name=$name]  
+    
+};
+
+
+
+
+declare function atomsec:match-media-type(
+    $rule as element() ,
+    $media-type as xs:string*
+) as xs:boolean
+{
+
+    let $operation := $rule/operation
+    let $expected-range := $rule/media-range
+    
+    return
+    
+        (: if operation is not on media, do not attempt to match media type :)
+        if ( not( ends-with( $operation , "-media" ) ) ) then true()
+         
+        (: if no expectation defined, match any media type :)
+        else if ( empty( $expected-range ) ) then true()
+
+        else
+
+            let $expected-groups := text:groups( $expected-range , "^([^/]*)/(.*)$" )
+            let $expected-type := $expected-groups[2]
+            let $expected-subtype := $expected-groups[3]
+        
+            let $actual-groups := 
+                if ( exists( $media-type ) ) then text:groups( $media-type , "^([^/]*)/(.*)$" )
+                else ()
+                
+            let $actual-type := $actual-groups[2]
+            let $actual-subtype := $actual-groups[3]
+            
+            return
+            
+                ( $expected-range = "*/*" )
+                or ( ( $expected-type = $actual-type )  and ( $expected-subtype = "*" ) )
+                or ( ( $expected-type = $actual-type )  and ( $expected-subtype = $actual-subtype ) )
+                    
+};
 
 

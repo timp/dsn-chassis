@@ -1,0 +1,117 @@
+<acl>
+    
+    <groups>
+        
+        <group name="readers">
+            <user>richard</user>
+            <user>rebecca</user>
+        </group>
+        
+        <group name="authors">
+            <user>alice</user>
+            <user>arthur</user>
+        </group>
+        
+        <group name="editors">
+            <user>emma</user>
+            <user>edward</user>
+        </group>
+        
+    </groups>
+    
+    <rules>
+        
+        <!--+
+            | == Readers ==
+            |
+            | In this collection, readers are allowed to retrieve Atom members
+            | and media resources.
+            +-->
+        
+        <allow>
+            <group>readers</group>
+            <operation>retrieve-member</operation>
+        </allow>
+        
+        <allow>
+            <group>readers</group>
+            <operation>retrieve-media</operation>
+            <media-range>*/*</media-range>
+        </allow>
+        
+        <!--+
+            | == Authors ==
+            |
+            | In this collection, authors are allowed to create Atom members
+            | and media resources. They are also allowed to retrieve Atom
+            | members and media resources.
+            |
+            | However, they are only allowed to update or delete resources they 
+            | have created. Those permissions will be given in resource ACLs.
+            +-->
+        
+        <allow>
+            <group>authors</group>
+            <operation>create-member</operation>
+        </allow>
+        
+        <allow>
+            <group>authors</group>
+            <operation>create-media</operation>
+            <media-range>*/*</media-range>
+        </allow>
+        
+        <allow>
+            <group>authors</group>
+            <operation>retrieve-member</operation>
+        </allow>
+        
+        <allow>
+            <group>authors</group>
+            <operation>retrieve-media</operation>
+            <media-range>*/*</media-range>
+        </allow>
+        
+        <!--+
+            | == Editors ==
+            | 
+            | In this collection, editors can retrieve, update or delete any 
+            | collection members.
+            +-->
+        
+        <allow>
+            <group>editors</group>
+            <operation>retrieve-member</operation>
+        </allow>
+        
+        <allow>
+            <group>editors</group>
+            <operation>retrieve-media</operation>
+            <media-range>*/*</media-range>
+        </allow>
+        
+        <allow>
+            <group>editors</group>
+            <operation>update-member</operation>
+        </allow>
+        
+        <allow>
+            <group>editors</group>
+            <operation>update-media</operation>
+            <media-range>*/*</media-range>
+        </allow>
+        
+        <allow>
+            <group>editors</group>
+            <operation>delete-member</operation>
+        </allow>
+        
+        <allow>
+            <group>editors</group>
+            <operation>delete-media</operation>
+            <media-range>*/*</media-range>
+        </allow>
+        
+    </rules>
+
+</acl>
