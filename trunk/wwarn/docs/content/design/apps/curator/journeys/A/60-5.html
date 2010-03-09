@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<title>
-		Curator - Edit Study Questionnaire  // curator@wwarn.org
+		Curator - View Study Revision  // curator@wwarn.org
 		</title>
 		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
 		<link rel="stylesheet" type="text/css" href="../style/common.css"/>
@@ -42,12 +42,58 @@
 
 	<div id="content">
 	
-		<h1>Curator - Edit Study Questionnaire</h1>
+		<h1>Curator - View Study Revision</h1>
+		<h2>Revision Number: 5</h2>
+		<table class="resultsTable" border="0" cellSpacing="0" cellPadding="0">
+			<tbody>
+			<tr class="even">
+				<td class="firstRow">Revision Number:</td>
+				<td>5</td>
+			</tr>
+			<tr class="odd">
+				<td class="firstRow">Date:</td>
+				<td>2009/08/22</td>
+			</tr>
+			<tr class="even">
+				<td class="firstRow">Person:</td>
+				<td>alice@example.org</td>
+			</tr>
+			<tr class="odd">
+				<th class="firstRow">Revisions:</th>
+				<td>
+				<span class="gwt-Label widget"><a href="60-6.html">Next</a></span> | 
+				<span class="gwt-Label widget"><a href="60-4.html">Previous</a></span>
+				</td>
+			</tr>
+			<tr class="even">
+				<th class="firstRow">Actions:</th>
+				<td>
+				<span class="gwt-Label widget"><a href="10.html">List all studies</a></span> | 
+				<span class="gwt-Label widget"><a href="20.html">View study</a></span> | 
+				<span class="gwt-Label widget"><a href="30.html">View study questionnaire</a></span> | 
+				<span class="gwt-Label widget"><a href="40.html">Edit study questionnaire</a></span> | 
+				<span class="gwt-Label widget"><a href="50.html">View study questionnaire history</a></span>
+				</td>
+			</tr>
+			</tbody>
+		</table>
+		<h2>Study</h2>
 		<table class="resultsTable" border="0" cellSpacing="0" cellPadding="0">
 			<tbody>
 			<tr class="even">
 				<th class="firstRow">Title:</th>
 				<td><div class="gwt-Label widget">Uganda-Kampala 2007</div></td>
+			</tr>
+			<tr class="even">
+				<td class="firstRow">Submitters:</td><td colspan='4'>
+					<table>
+						<tbody>
+						<tr>
+							<td>alice@example.org</td>
+							<td>bob@example.org</td>
+						</tr>
+						</tbody>
+					</table>
 			</tr>
 			<tr class="odd">
 				<td class="firstRow">Summary:</td><td colspan='4'>
@@ -59,30 +105,12 @@
 				Plasmodium vivax are more common than infections with Plasmodium falciparum, 
 				and that severe clinical symptoms are very rare.
 
-               The original study was a cohort study with active case detection of 1991 individuals  
-               that were followed for 13 months. 
-               To obtain blood and DNA samples for CP2, 1133 of these individuals were traced 
-               again.
-				
-				</td>
-			</tr>
-			<tr class="even">
-				<th class="firstRow">Actions:</th>
-				<td>
-				<span class="gwt-Label widget"><a href="10.html">List all studies</a></span> | 
-				<span class="gwt-Label widget"><a href="20.html">View study</a></span> | 
-				<span class="gwt-Label widget"><a href="30.html">View study questionnaire</a></span> | 
-				<span class="gwt-Label widget"><a href="50.html">View study questionnaire history</a></span>
 				</td>
 			</tr>
 			</tbody>
 		</table>
-		<h2>Study Questionnaire</h2>
-		<form action="">
-		<input type="submit" class="gwt-Button" tabindex="0" value="Save Changes" />
-		</p>
-		</form>
 		
+	<h2>Study Questionnaire</h2>
 	<div class="gwt-HTML">
 					<h4 id="modulesHeading">Module(s)</h4>
 				</div><div class="xquestion"><table class="xselect-full" cellpadding="0" cellspacing="0"><tbody><tr><td style="vertical-align: top;" align="left"><span class="gwt-InlineLabel">Please select the WWARN modules for which this study has data...</span></td></tr><tr><td style="vertical-align: top;" align="left"><div style="display: none;" class="gwt-Label loading">loading...</div></td></tr><tr><td style="vertical-align: top;" align="left"><table><colgroup><col></colgroup><tbody><tr><td><div class="gwt-Label">Clinical</div></td><td><span class="gwt-CheckBox"><input value="clinical" tabindex="0" id="gwt-uid-109" type="checkbox"><label for="gwt-uid-109"></label></span></td></tr><tr><td><div class="gwt-Label">Molecular</div></td><td><span class="gwt-CheckBox"><input value="molecular" tabindex="0" id="gwt-uid-110" type="checkbox"><label for="gwt-uid-110"></label></span></td></tr><tr><td><div class="gwt-Label">in vitro</div></td><td><span class="gwt-CheckBox"><input value="invitro" tabindex="0" id="gwt-uid-111" type="checkbox"><label for="gwt-uid-111"></label></span></td></tr><tr><td><div class="gwt-Label">Pharmacology</div></td><td><span class="gwt-CheckBox"><input value="pharmacology" tabindex="0" id="gwt-uid-112" type="checkbox"><label for="gwt-uid-112"></label></span></td></tr></tbody></table></td></tr></tbody></table></div><div class="gwt-HTML">
@@ -129,8 +157,9 @@
 								</em>
 							</p>
 						</div>
-						<div class="repeatableButtonPanel"><button title="click to add another" class="gwt-Button" tabindex="0" type="button">+</button></div></div></div><div style="display: none;" class="xquestionnaire xquestionnaire-transparent"></div><div style="display: none;" class="xquestionnaire xquestionnaire-transparent"></div><div style="display: none;" class="xquestionnaire xquestionnaire-transparent"></div><div style="display: none;" class="xquestionnaire xquestionnaire-transparent"></div></div></div> 
-						<p> <button class="gwt-Button" tabindex="0" type="button">Save Changes</button></p>
+						<div class="repeatableButtonPanel">
+						<button title="click to add another" class="gwt-Button" tabindex="0" type="button">+</button></div></div></div><div style="display: none;" class="xquestionnaire xquestionnaire-transparent"></div><div style="display: none;" class="xquestionnaire xquestionnaire-transparent"></div><div style="display: none;" class="xquestionnaire xquestionnaire-transparent"></div><div style="display: none;" class="xquestionnaire xquestionnaire-transparent"></div></div></div> 
+						
 						</div></div></div></div></div></div></div></div></div>
 						<div id="footer"></div></div>
 <script language="javascript" type="text/javascript">
