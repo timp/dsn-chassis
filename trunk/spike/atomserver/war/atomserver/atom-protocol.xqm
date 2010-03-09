@@ -23,7 +23,7 @@ declare variable $ap:param-request-path-info := "request-path-info" ;
 
 
 (:
- : TODO doc me
+ : TODO doc me  
  :)
 declare function ap:do-service()
 as item()*
@@ -874,6 +874,8 @@ declare function ap:send-error(
 					</header>
 			}
 			</headers>
+			<user>{request:get-attribute($config:user-name-request-attribute-key)}</user>
+			<roles>{string-join(request:get-attribute($config:user-roles-request-attribute-key), " ")}</roles>
 		</error>
 			
 	return $response

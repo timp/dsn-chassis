@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans 
+  xmlns:beans="http://www.springframework.org/schema/beans"
+  xmlns="http://www.springframework.org/schema/security"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+              http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-2.0.4.xsd">  
+
+  <http 
+    auto-config="false" 
+    realm="atombeat" 
+    create-session="never">
+  
+    <http-basic/>
+
+    <intercept-url pattern="/atomserver/**" access="ROLE_USER" />
+
+  </http>
+  
+  <authentication-provider>
+    <user-service>
+      <user name="adam" password="test" authorities="ROLE_USER, ROLE_ADMINISTRATOR" />
+      <user name="edwina" password="test" authorities="ROLE_USER, ROLE_EDITOR" />
+      <user name="arthur" password="test" authorities="ROLE_USER, ROLE_AUTHOR" />
+      <user name="rebecca" password="test" authorities="ROLE_USER, ROLE_READER" />
+    </user-service>
+  </authentication-provider>
+
+</beans:beans>

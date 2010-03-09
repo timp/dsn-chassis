@@ -248,7 +248,8 @@ declare function atomsec:decide(
         then $global-decision
         else $decision
     
-    let $log := util:log( "info" , concat( "security decision (" , $decision , ") for user (" , $user , "), roles (" , $roles, "), request-path-info (" , $request-path-info , "), operation(" , $operation , "), media-type (" , $media-type , ")" ) )  
+    let $log-message := concat( "security decision (" , $decision , ") for user (" , $user , "), roles (" , string-join( $roles , " " ) , "), request-path-info (" , $request-path-info , "), operation(" , $operation , "), media-type (" , $media-type , ")" )
+    let $log := util:log( "info" , $log-message )  
     
     return $decision
     

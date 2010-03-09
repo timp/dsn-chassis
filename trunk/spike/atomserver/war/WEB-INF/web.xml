@@ -16,6 +16,81 @@
     <description>eXist Open Source Native XML Database</description>
     <display-name>eXist XML Database</display-name>
 
+
+
+  <!--+
+      |
+      | HTTP Method Override Filter
+      | ***************************
+      |
+      | (N.B. put this before spring security, so security is applied to value of
+      | method override if given)
+      |
+      +-->
+  
+
+  <filter>
+    <filter-name>HttpMethodOverrideFilter</filter-name>
+    <filter-class>org.cggh.chassis.generic.http.HttpMethodOverrideFilter</filter-class>
+    <init-param>
+      <param-name>allowedOverrides</param-name>
+      <param-value>PUT DELETE</param-value>
+    </init-param>
+  </filter>
+
+
+  <filter-mapping>
+    <filter-name>HttpMethodOverrideFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  
+
+  <!--+
+      | Spring Security Configuration
+      | *****************************
+      | 
+      +-->
+  
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>
+      WEB-INF/security-example.xml
+    </param-value>
+  </context-param>
+  
+  
+  <filter>
+    <filter-name>springSecurityFilterChain</filter-name>
+    <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+  </filter>
+
+  
+  <filter-mapping>
+    <filter-name>springSecurityFilterChain</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  
+  
+  <listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+  
+  
+  <!-- store username in request attribute so it can be accessed easily in xqueries -->
+  
+  <filter>
+    <filter-name>SpringSecurityRequestAttributeFilter</filter-name>
+    <filter-class>org.cggh.chassis.generic.http.SpringSecurityRequestAttributeFilter</filter-class>
+  </filter>
+  
+  
+  <filter-mapping>
+    <filter-name>SpringSecurityRequestAttributeFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  
+
+
     <!-- 
         Initialize Log4j using a servlet.
         Only needed when eXist is deployed as a .war file in e.g. Tomcat.
@@ -240,10 +315,6 @@
         <url-pattern>/axis-servlet/AdminServlet</url-pattern>
     </servlet-mapping-->
     
-    <!-- 
-        Finally, we establish the main mapping for Cocoon  
-    -->
-  
     
     <!-- ==================== various MIME type mappings ================== -->
 
