@@ -13,7 +13,8 @@ import module namespace http = "http://www.cggh.org/2010/xquery/http" at "http.x
 import module namespace mime = "http://www.cggh.org/2010/xquery/mime" at "mime-types.xqm" ;
 import module namespace config = "http://www.cggh.org/2010/xquery/atom-config" at "atom-config.xqm" ;
 import module namespace af = "http://www.cggh.org/2010/xquery/atom-format" at "atom-format.xqm" ;
-import module namespace adb = "http://www.cggh.org/2010/xquery/atom-db" at "atom-db.xqm" ;
+import module namespace atomdb = "http://www.cggh.org/2010/xquery/atom-db" at "atom-db.xqm" ;
+import module namespace atomsec = "http://www.cggh.org/2010/xquery/atom-security" at "atom-security.xqm" ;
 
 declare variable $ap:atom-mimetype := "application/atom+xml" ; 
 declare variable $ap:param-request-path-info := "request-path-info" ; 
@@ -120,46 +121,66 @@ declare function ap:do-post-atom-feed(
 ) as item()*
 {
 
-	(: 
-	 : We need to know whether an atom collection already exists at the 
-	 : request path, in which case the request will be treated as an error,
-	 : or whether no atom collection exists at the request path, in which case
-	 : the request will create a new atom collection and initialise the atom
-	 : feed document with the given feed metadata.
-	 :)
-	 
-	let $create := not( adb:collection-available( $request-path-info ) )
-	
-	return 
-	
-		if ( $create ) 
+    (: 
+     : Here we bottom out at the "create-collection" operation, so we need to
+     : apply a security decision.
+     :)
+     
+    let $user := request:get-attribute( $config:user-name-request-attribute-key )
+    let $roles := request:get-attribute( $config:user-roles-request-attribute-key )
+    
+    let $forbidden := 
+        if ( not( $config:enable-security ) ) then false()
+        else ( atomsec:decide( $user , $roles , $request-path-info, $atomsec:op-create-collection ) = $atomsec:decision-deny )
+        
+    return
+    
+        if ( $forbidden ) 
 
-		then
-		
-			let $enable-history := request:get-header( "X-Atom-Enable-History" )
-			
-			let $enable-history := 
-				if ( $enable-history castable as xs:boolean ) then xs:boolean( $enable-history )
-				else false()
+        then ap:do-forbidden( $request-path-info )
 
-			let $feed-doc-db-path := adb:create-collection( $request-path-info , $request-data , $enable-history )
-		
-			let $feed-doc := doc( $feed-doc-db-path )
-		            
-			let $header-content-type := response:set-header( $http:header-content-type , $ap:atom-mimetype )
-			
-		    let $status-code := response:set-status-code( $http:status-success-no-content )
-		        
-		    let $location := $feed-doc/atom:feed/atom:link[@rel="self"]/@href
-		        	
-			let $header-location := response:set-header( $http:header-location, $location )
-		    
-			return ()
-		
-		else
-		
-			ap:do-bad-request( $request-path-info , "A collection already exists at the given location." )
-	
+        else
+    
+        	(: 
+        	 : We need to know whether an atom collection already exists at the 
+        	 : request path, in which case the request will be treated as an error,
+        	 : or whether no atom collection exists at the request path, in which case
+        	 : the request will create a new atom collection and initialise the atom
+        	 : feed document with the given feed metadata.
+        	 :)
+        	 
+        	let $create := not( atomdb:collection-available( $request-path-info ) )
+        	
+        	return 
+        	
+        		if ( $create ) 
+        
+        		then
+        		
+        			let $enable-history := request:get-header( "X-Atom-Enable-History" )
+        			
+        			let $enable-history := 
+        				if ( $enable-history castable as xs:boolean ) then xs:boolean( $enable-history )
+        				else false()
+        
+        			let $feed-doc-db-path := atomdb:create-collection( $request-path-info , $request-data , $enable-history )
+        		
+        			let $feed-doc := doc( $feed-doc-db-path )
+        		            
+        			let $header-content-type := response:set-header( $http:header-content-type , $ap:atom-mimetype )
+        			
+        		    let $status-code := response:set-status-code( $http:status-success-no-content )
+        		        
+        		    let $location := $feed-doc/atom:feed/atom:link[@rel="self"]/@href
+        		        	
+        			let $header-location := response:set-header( $http:header-location, $location )
+        		    
+        			return ()
+        		
+        		else
+        		
+        			ap:do-bad-request( $request-path-info , "A collection already exists at the given location." )
+        	
 };
 
 
@@ -179,7 +200,7 @@ declare function ap:do-post-atom-entry(
 	 : request path.
 	 :)
 	 
-	let $collection-available := adb:collection-available( $request-path-info )
+	let $collection-available := atomdb:collection-available( $request-path-info )
 	
 	return 
 	
@@ -189,22 +210,42 @@ declare function ap:do-post-atom-entry(
 		
 		else
 		
-		    let $comment := request:get-header("X-Atom-Revision-Comment")
-		    
-			let $entry-doc-db-path := adb:create-member( $request-path-info , $request-data , $comment )
-		
-			let $entry-doc := doc( $entry-doc-db-path )
-		            
-			let $header-content-type := response:set-header( $http:header-content-type , $ap:atom-mimetype )
-			
-		    let $status-code := response:set-status-code( $http:status-success-created )
-		        
-		    let $location := $entry-doc/atom:entry/atom:link[@rel="self"]/@href
-		        	
-			let $header-location := response:set-header( $http:header-location, $location )
-					    
-			return $entry-doc
-			
+            (: 
+             : Here we bottom out at the "create-member" operation, so we need to
+             : apply a security decision. 
+             :)
+             
+            let $user := request:get-attribute( $config:user-name-request-attribute-key )
+            let $roles := request:get-attribute( $config:user-roles-request-attribute-key )
+            
+            let $forbidden := 
+                if ( not( $config:enable-security ) ) then false()
+                else ( atomsec:decide( $user , $roles , $request-path-info, $atomsec:op-create-member ) = $atomsec:decision-deny )
+                
+            return
+            
+                if ( $forbidden ) 
+        
+                then ap:do-forbidden( $request-path-info )
+        
+                else
+        
+                    let $comment := request:get-header("X-Atom-Revision-Comment")
+        		    
+        			let $entry-doc-db-path := atomdb:create-member( $request-path-info , $request-data , $comment )
+        		
+        			let $entry-doc := doc( $entry-doc-db-path )
+        		            
+        			let $header-content-type := response:set-header( $http:header-content-type , $ap:atom-mimetype )
+        			
+        		    let $status-code := response:set-status-code( $http:status-success-created )
+        		        
+        		    let $location := $entry-doc/atom:entry/atom:link[@rel="self"]/@href
+        		        	
+        			let $header-location := response:set-header( $http:header-location, $location )
+        					    
+        			return $entry-doc
+        			
 };
 
 
@@ -221,7 +262,7 @@ declare function ap:do-post-media(
 	 : request path.
 	 :)
 	 
-	let $collection-available := adb:collection-available( $request-path-info )
+	let $collection-available := atomdb:collection-available( $request-path-info )
 	
 	return 
 	
@@ -231,32 +272,53 @@ declare function ap:do-post-media(
 		
 		else
 		
-			let $request-data := request:get-data()
-			
-			(: check for slug to use as title :)
-			
-			let $slug := request:get-header( $http:header-slug )
-			
-			(: check for summary :)
-			
-			let $summary := request:get-header( "X-Atom-Summary" )
-			
-		    let $comment := request:get-header("X-Atom-Revision-Comment")
-		    
-			let $media-link-doc-db-path := adb:create-media-resource( $request-path-info , $request-data , $request-content-type , $slug , $summary , $comment )
-			
-			let $media-link-doc := doc( $media-link-doc-db-path )
-		            
-			let $header-content-type := response:set-header( $http:header-content-type , $ap:atom-mimetype )
-			
-		    let $status-code := response:set-status-code( $http:status-success-created )
-		        
-		    let $location := $media-link-doc/atom:entry/atom:link[@rel="self"]/@href
-		        	
-			let $header-location := response:set-header( $http:header-location, $location )
-					    
-			return $media-link-doc
-			
+            (: 
+             : Here we bottom out at the "create-media" operation, so we need to
+             : apply a security decision. 
+             :)
+             
+            let $user := request:get-attribute( $config:user-name-request-attribute-key )
+            let $roles := request:get-attribute( $config:user-roles-request-attribute-key )
+        	let $media-type := text:groups( $request-content-type , "^([^;]+)" )[2]
+	
+            let $forbidden := 
+                if ( not( $config:enable-security ) ) then false()
+                else ( atomsec:decide( $user , $roles , $request-path-info, $atomsec:op-create-media , $media-type ) = $atomsec:decision-deny )
+                
+            return
+            
+                if ( $forbidden ) 
+        
+                then ap:do-forbidden( $request-path-info )
+        
+                else
+        
+                    let $request-data := request:get-data()
+        			
+        			(: check for slug to use as title :)
+        			
+        			let $slug := request:get-header( $http:header-slug )
+        			
+        			(: check for summary :)
+        			
+        			let $summary := request:get-header( "X-Atom-Summary" )
+        			
+        		    let $comment := request:get-header("X-Atom-Revision-Comment")
+        		    
+        			let $media-link-doc-db-path := atomdb:create-media-resource( $request-path-info , $request-data , $media-type , $slug , $summary , $comment )
+        			
+        			let $media-link-doc := doc( $media-link-doc-db-path )
+        		            
+        			let $header-content-type := response:set-header( $http:header-content-type , $ap:atom-mimetype )
+        			
+        		    let $status-code := response:set-status-code( $http:status-success-created )
+        		        
+        		    let $location := $media-link-doc/atom:entry/atom:link[@rel="self"]/@href
+        		        	
+        			let $header-location := response:set-header( $http:header-location, $location )
+        					    
+        			return $media-link-doc
+        			
 };
 
 
@@ -273,7 +335,7 @@ declare function ap:do-post-multipart(
 	 : request path.
 	 :)
 	 
-	let $collection-available := adb:collection-available( $request-path-info )
+	let $collection-available := atomdb:collection-available( $request-path-info )
 	
 	return 
 	
@@ -283,6 +345,8 @@ declare function ap:do-post-multipart(
 		
 		else
 
+            (: TODO bad request if expected form parts are missing :)
+            
 			let $request-data := request:get-uploaded-file-data( "media" )
 					
 			(: check for file name to use as title :)
@@ -308,56 +372,76 @@ declare function ap:do-post-multipart(
 			
 			let $media-type := if ( empty( $media-type ) ) then "application/octet-stream" else $media-type
 			
-			let $media-link-doc-db-path := adb:create-media-resource( $request-path-info , $request-data , $media-type , $file-name , $summary , $comment )
+            (: 
+             : Here we bottom out at the "create-media" operation, so we need to
+             : apply a security decision. 
+             :)
+             
+            let $user := request:get-attribute( $config:user-name-request-attribute-key )
+            let $roles := request:get-attribute( $config:user-roles-request-attribute-key )
+	
+            let $forbidden := 
+                if ( not( $config:enable-security ) ) then false()
+                else ( atomsec:decide( $user , $roles , $request-path-info, $atomsec:op-create-media , $media-type ) = $atomsec:decision-deny )
+                
+            return
+            
+                if ( $forbidden ) 
+        
+                then ap:do-forbidden( $request-path-info )
+        
+                else
 			
-			let $media-link-doc := doc( $media-link-doc-db-path )
-		            
-		    (:
-		     : Although the semantics of 201 Created would be more appropriate 
-		     : to the operation performed, we'll respond with 200 OK because the
-		     : request is most likely to originate from an HTML form submission
-		     : and I don't know how all browsers handle 201 responses.
-		     :)
-		     
-		    let $status-code := response:set-status-code( $http:status-success-ok )
-		        
-		    let $location := $media-link-doc/atom:entry/atom:link[@rel="self"]/@href
-		        	
-			let $header-location := response:set-header( $http:header-location, $location )
-					    
-			let $accept := request:get-header( $http:header-accept )
-			
-			return 
-			
-				(: 
-				 : Do very naive processing of accept header. If header is set
-				 : and is exactly "application/atom+xml" then return the media-
-				 : link entry, otherwise fall back to text/html output to 
-				 : support browser applications programmatically manipulating
-				 : HTML forms.
-				 :)
-				 
-				if ( $accept = "application/atom+xml" )
-				
-				then 
-				
-					let $header-content-type := response:set-header( $http:header-content-type , $ap:atom-mimetype )
-			
-					return $media-link-doc
-			
-				else 
-				
-					let $header-content-type := response:set-header( $http:header-content-type , "text/html" )
-			
-					return 
-					
-						<html>
-							<head>
-								<title>{$http:status-success-ok}</title>
-							</head>
-							<body>{ comment { util:serialize( $media-link-doc/atom:entry , () ) } }</body>
-						</html>
-
+        			let $media-link-doc-db-path := atomdb:create-media-resource( $request-path-info , $request-data , $media-type , $file-name , $summary , $comment )
+        			
+        			let $media-link-doc := doc( $media-link-doc-db-path )
+        		            
+        		    (:
+        		     : Although the semantics of 201 Created would be more appropriate 
+        		     : to the operation performed, we'll respond with 200 OK because the
+        		     : request is most likely to originate from an HTML form submission
+        		     : and I don't know how all browsers handle 201 responses.
+        		     :)
+        		     
+        		    let $status-code := response:set-status-code( $http:status-success-ok )
+        		        
+        		    let $location := $media-link-doc/atom:entry/atom:link[@rel="self"]/@href
+        		        	
+        			let $header-location := response:set-header( $http:header-location, $location )
+        					    
+        			let $accept := request:get-header( $http:header-accept )
+        			
+        			return 
+        			
+        				(: 
+        				 : Do very naive processing of accept header. If header is set
+        				 : and is exactly "application/atom+xml" then return the media-
+        				 : link entry, otherwise fall back to text/html output to 
+        				 : support browser applications programmatically manipulating
+        				 : HTML forms.
+        				 :)
+        				 
+        				if ( $accept = "application/atom+xml" )
+        				
+        				then 
+        				
+        					let $header-content-type := response:set-header( $http:header-content-type , $ap:atom-mimetype )
+        			
+        					return $media-link-doc
+        			
+        				else 
+        				
+        					let $header-content-type := response:set-header( $http:header-content-type , "text/html" )
+        			
+        					return 
+        					
+        						<html>
+        							<head>
+        								<title>{$http:status-success-ok}</title>
+        							</head>
+        							<body>{ comment { util:serialize( $media-link-doc/atom:entry , () ) } }</body>
+        						</html>
+        
 };
 
 
@@ -435,37 +519,61 @@ declare function ap:do-put-atom-feed(
 	 : feed document with the given feed metadata.
 	 :)
 	 
-	let $create := not( adb:collection-available( $request-path-info ) )
+	let $create := not( atomdb:collection-available( $request-path-info ) )
 	
-	(: 
-	 : EXPERIMENTAL: enable versioning depending on request header.
-	 :)
-	 
-	let $enable-history := request:get-header( "X-Atom-Enable-History" )
-	
-	let $enable-history := 
-		if ( $enable-history castable as xs:boolean ) then xs:boolean( $enable-history )
-		else false()
-
-	let $feed-doc-db-path := 
-		if ( $create ) then adb:create-collection( $request-path-info , $request-data , $enable-history )
-		else adb:update-collection( $request-path-info , $request-data )
-
-	let $feed-doc := doc( $feed-doc-db-path )
-            
-	let $header-content-type := response:set-header( $http:header-content-type , $ap:atom-mimetype )
-	
-    let $status-code :=
-        if ( $create ) then response:set-status-code( $http:status-success-created )
-        else response:set-status-code( $http:status-success-ok )	
+    (: 
+     : Here we bottom out at either the "create-collection" operation, or the
+     : "update-collection" operation, so we need to apply a security decision.
+     :)
+     
+    let $operation :=
+        if ( $create ) then $atomsec:op-create-collection
+        else $atomsec:op-update-collection
         
-    let $location := $feed-doc/atom:feed/atom:link[@rel="self"]/@href
-        	
-	let $header-location := 
-	    if ( $create ) then response:set-header( $http:header-location, $location )
-	    else ()
+    let $user := request:get-attribute( $config:user-name-request-attribute-key )
+    let $roles := request:get-attribute( $config:user-roles-request-attribute-key )
     
-	return $feed-doc
+    let $forbidden := 
+        if ( not( $config:enable-security ) ) then false()
+        else ( atomsec:decide( $user , $roles , $request-path-info, $operation ) = $atomsec:decision-deny )
+        
+    return
+    
+        if ( $forbidden ) 
+
+        then ap:do-forbidden( $request-path-info )
+
+        else
+	
+        	(: 
+        	 : EXPERIMENTAL: enable versioning depending on request header.
+        	 :)
+        	 
+        	let $enable-history := request:get-header( "X-Atom-Enable-History" )
+        	
+        	let $enable-history := 
+        		if ( $enable-history castable as xs:boolean ) then xs:boolean( $enable-history )
+        		else false()
+        
+        	let $feed-doc-db-path := 
+        		if ( $create ) then atomdb:create-collection( $request-path-info , $request-data , $enable-history )
+        		else atomdb:update-collection( $request-path-info , $request-data )
+        
+        	let $feed-doc := doc( $feed-doc-db-path )
+                    
+        	let $header-content-type := response:set-header( $http:header-content-type , $ap:atom-mimetype )
+        	
+            let $status-code :=
+                if ( $create ) then response:set-status-code( $http:status-success-created )
+                else response:set-status-code( $http:status-success-ok )	
+                
+            let $location := $feed-doc/atom:feed/atom:link[@rel="self"]/@href
+                	
+        	let $header-location := 
+        	    if ( $create ) then response:set-header( $http:header-location, $location )
+        	    else ()
+            
+        	return $feed-doc
 	
 };
 
@@ -486,7 +594,7 @@ declare function ap:do-put-atom-entry(
 	 : request path.
 	 :)
 	 
-	let $member-available := adb:member-available( $request-path-info )
+	let $member-available := atomdb:member-available( $request-path-info )
 	
 	return 
 	
@@ -496,9 +604,11 @@ declare function ap:do-put-atom-entry(
 		
 		else
 		
+		    (: TODO security decision :)
+		    
 		    let $comment := request:get-header("X-Atom-Revision-Comment")
 		    
-			let $entry-doc-db-path := adb:update-member( $request-path-info , $request-data , $comment )
+			let $entry-doc-db-path := atomdb:update-member( $request-path-info , $request-data , $comment )
 		
 			let $entry-doc := doc( $entry-doc-db-path )
 		            
@@ -523,7 +633,7 @@ declare function ap:do-put-media(
 	 : request path.
 	 :)
 	 
-	let $found := adb:media-resource-available( $request-path-info )
+	let $found := atomdb:media-resource-available( $request-path-info )
 	
 	return 
 	
@@ -533,9 +643,11 @@ declare function ap:do-put-media(
 		
 		else
 		
+		    (: TODO security decision :)
+		    
 			let $request-data := request:get-data()
 			
-			let $media-doc-db-path := adb:update-media-resource( $request-path-info , $request-data , $request-content-type )
+			let $media-doc-db-path := atomdb:update-media-resource( $request-path-info , $request-data , $request-content-type )
 			
 		    let $status-code := response:set-status-code( $http:status-success-ok )
 		    
@@ -546,11 +658,11 @@ declare function ap:do-put-media(
 		     
 		    (: media type :)
 		    
-		    let $mime-type := adb:get-mime-type( $request-path-info )
+		    let $mime-type := atomdb:get-mime-type( $request-path-info )
 		    
 		    (: title as filename :)
 		    
-		    let $media-link := adb:get-media-link( $request-path-info )
+		    let $media-link := atomdb:get-media-link( $request-path-info )
 		    let $title := $media-link/atom:title
 		    let $content-disposition :=
 		    	if ( $title ) then response:set-header( $http:header-content-disposition , concat( "attachment; filename=" , $title ) )
@@ -558,7 +670,7 @@ declare function ap:do-put-media(
 		    
 		    (: decoding from base 64 binary :)
 		    
-		    let $response-stream := response:stream-binary( adb:retrieve-media( $request-path-info ) , $mime-type )
+		    let $response-stream := response:stream-binary( atomdb:retrieve-media( $request-path-info ) , $mime-type )
 		
 			return ()
 
@@ -572,15 +684,15 @@ declare function ap:do-get(
 ) as item()*
 {
 
-	if ( adb:media-resource-available( $request-path-info ) )
+	if ( atomdb:media-resource-available( $request-path-info ) )
 	
 	then ap:do-get-media( $request-path-info )
 	
-	else if ( adb:member-available( $request-path-info ) )
+	else if ( atomdb:member-available( $request-path-info ) )
 	
 	then ap:do-get-entry( $request-path-info )
 	
-	else if ( adb:collection-available( $request-path-info ) )
+	else if ( atomdb:collection-available( $request-path-info ) )
 	
 	then ap:do-get-feed( $request-path-info )
 
@@ -598,16 +710,14 @@ declare function ap:do-get-entry(
 	$request-path-info
 )
 {
-
-	let $request-header-if-modified-since := request:get-header( $http:header-if-modified-since )
-	
-	(: TODO handle if modified since header :)
-	
+    
+    (: TODO security decision :)
+    
     let $status-code := response:set-status-code( $http:status-success-ok )
     
     let $header-content-type := response:set-header( $http:header-content-type , $ap:atom-mimetype )
     
-    return adb:retrieve-entry( $request-path-info )
+    return atomdb:retrieve-entry( $request-path-info )
 
 };
 
@@ -619,15 +729,17 @@ declare function ap:do-get-media(
 )
 {
 
+    (: TODO security decision :)
+
     let $status-code := response:set-status-code( $http:status-success-ok )
     
     (: media type :)
     
-    let $mime-type := adb:get-mime-type( $request-path-info )
+    let $mime-type := atomdb:get-mime-type( $request-path-info )
     
     (: title as filename :)
     
-    let $media-link := adb:get-media-link( $request-path-info )
+    let $media-link := atomdb:get-media-link( $request-path-info )
     let $title := $media-link/atom:title
     let $content-disposition :=
     	if ( $title ) then response:set-header( $http:header-content-disposition , concat( "attachment; filename=" , $title ) )
@@ -635,7 +747,7 @@ declare function ap:do-get-media(
     
     (: decoding from base 64 binary :)
     
-    let $response-stream := response:stream-binary( adb:retrieve-media( $request-path-info ) , $mime-type )
+    let $response-stream := response:stream-binary( atomdb:retrieve-media( $request-path-info ) , $mime-type )
 
 	return ()
 	
@@ -649,11 +761,13 @@ declare function ap:do-get-feed(
 )
 {
 
+    (: TODO security decision :)
+    
     let $status-code := response:set-status-code( $http:status-success-ok )
     
     let $header-content-type := response:set-header( $http:header-content-type , $ap:atom-mimetype )
     
-    return adb:retrieve-feed( $request-path-info )
+    return atomdb:retrieve-feed( $request-path-info )
 
 };
 
@@ -665,18 +779,10 @@ declare function ap:do-not-found(
 ) as item()?
 {
 
-    let $status-code := response:set-status-code( $http:status-client-error-not-found )
-	let $header-content-type := response:set-header( $http:header-content-type , "application/xml" )
-	let $response := 
-	
-		<response>
-			<message>The server has not found anything matching the Request-URI.</message>
-			<path-info>{$request-path-info}</path-info>
-			<service-url>{$config:service-url}</service-url>
-		</response>
+    let $message := "The server has not found anything matching the Request-URI."
+    
+    return ap:send-error( $http:status-client-error-not-found , $message , $request-path-info )
 
-	return $response
-		
 };
 
 
@@ -687,32 +793,10 @@ declare function ap:do-bad-request(
 ) as item()?
 {
 
-	let $request-data := request:get-data()
-	
-    let $status-code := response:set-status-code( $http:status-client-error-bad-request )
-	let $header-content-type := response:set-header( $http:header-content-type , "application/xml" )
-	let $response := 
-	
-		<response>
-			<message>{$message} The request could not be understood by the server due to malformed syntax. The client SHOULD NOT repeat the request without modifications.</message>
-			<service-url>{$config:service-url}</service-url>
-			<method>{request:get-method()}</method>
-			<path-info>{$request-path-info}</path-info>
-			<headers>
-			{
-				for $header-name in request:get-header-names()
-				return
-					element  { lower-case( $header-name ) } 
-					{
-						request:get-header( $header-name )						
-					}
-			}
-			</headers>
-			<data>{$request-data}</data>
-		</response>
-			
-	return $response
-    
+    let $message := concat( $message , " The request could not be understood by the server due to malformed syntax. The client SHOULD NOT repeat the request without modifications." )
+
+    return ap:send-error( $http:status-client-error-bad-request , $message , $request-path-info )
+
 };
 
 
@@ -723,37 +807,74 @@ declare function ap:do-method-not-allowed(
 ) as item()?
 {
 
-	let $request-data := request:get-data()
-
-	let $status-code := response:set-status-code( $http:status-client-error-method-not-allowed )
-
-	let $header-allow := response:set-header( $http:header-allow , "GET POST PUT" )
+    let $message := "The method specified in the Request-Line is not allowed for the resource identified by the Request-URI."
 
 	(: 
 	 : TODO DELETE method and different allows depending on resource identified 
 	 :)
 	
+	let $header-allow := response:set-header( $http:header-allow , "GET POST PUT" )
+
+    return ap:send-error( $http:status-client-error-method-not-allowed , $message , $request-path-info )
+
+};
+
+
+
+
+declare function ap:do-forbidden(
+	$request-path-info
+) as item()?
+{
+
+    let $message := "The server understood the request, but is refusing to fulfill it. Authorization will not help and the request SHOULD NOT be repeated."
+
+    return ap:send-error( $http:status-client-error-forbidden , $message , $request-path-info )
+
+};
+
+
+
+declare function ap:send-error(
+    $status-code as xs:integer , 
+    $message as xs:string? ,
+    $request-path-info as xs:string?
+) as item()*
+{
+
+	let $status-code-set := response:set-status-code( $status-code )
+
 	let $header-content-type := response:set-header( $http:header-content-type , "application/xml" )
 
 	let $response := 
 	
-		<response>
-			<message>The method specified in the Request-Line is not allowed for the resource identified by the Request-URI.</message>
+		<error>
+		    <status>{$status-code}</status>
+			<message>{$message}</message>
 			<service-url>{$config:service-url}</service-url>
 			<method>{request:get-method()}</method>
 			<path-info>{$request-path-info}</path-info>
+			<parameters>
+			{
+				for $parameter-name in request:get-parameter-names()
+				return
+				    <parameter>
+				        <name>{$parameter-name}</name>
+				        <value>{request:get-parameter( $parameter-name , "" )}</value>						
+					</parameter>
+			}
+			</parameters>
 			<headers>
 			{
 				for $header-name in request:get-header-names()
 				return
-					element  { lower-case( $header-name ) } 
-					{
-						request:get-header( $header-name )						
-					}
+				    <header>
+				        <name>{$header-name}</name>
+				        <value>{request:get-header( $header-name )}</value>						
+					</header>
 			}
 			</headers>
-			<data>{$request-data}</data>
-		</response>
+		</error>
 			
 	return $response
 

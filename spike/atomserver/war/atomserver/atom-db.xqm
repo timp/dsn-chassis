@@ -434,6 +434,10 @@ declare function adb:create-entry(
 	 : enabled.
 	 :)
 	 
+	(: 
+	 : TODO add edit-acl link.
+	 :)
+	 
     let $id := concat( $config:service-url , $request-path-info , "/" , $uuid , ".atom" )
     let $published := current-dateTime()
     let $updated := $published
@@ -493,6 +497,10 @@ declare function adb:create-media-link-entry(
 	(:
 	 : TODO hide history link for entries in collections where history is not
 	 : enabled.
+	 :)
+ 	 
+	(: 
+	 : TODO add edit-acl and edit-media-acl links.
 	 :)
 	 
     let $id := concat( $config:service-url , $request-path-info , "/" , $uuid , ".atom" )
@@ -606,15 +614,13 @@ declare function adb:update-entry(
 declare function adb:create-media-resource(
 	$request-path-info as xs:string , 
 	$request-data as xs:base64Binary , 
-	$request-content-type as xs:string ,
+	$media-type as xs:string ,
 	$media-link-title as xs:string? ,
 	$media-link-summary as xs:string? ,
 	$comment as xs:string?
 ) as xs:string
 {
 
-	let $media-type := text:groups( $request-content-type , "^([^;]+)" )[2]
-	
 	let $collection-db-path := adb:request-path-info-to-db-path( $request-path-info )
 
     let $uuid := util:uuid()
@@ -674,6 +680,10 @@ declare function adb:retrieve-feed(
 	
 	else
 	
+	    (: 
+	     : TODO filter entries using ACLs
+	     :)
+	     
 		(:
 		 : Map the request path info, e.g., "/foo", to a database collection path,
 		 : e.g., "/db/foo".

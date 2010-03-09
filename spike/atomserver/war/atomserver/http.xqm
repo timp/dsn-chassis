@@ -12,6 +12,7 @@ declare variable $http:status-success-created as xs:integer 				:= 201 ;
 declare variable $http:status-success-no-content as xs:integer 				:= 204 ;
 
 declare variable $http:status-client-error-bad-request as xs:integer 		:= 400 ;
+declare variable $http:status-client-error-forbidden as xs:integer 			:= 403 ;
 declare variable $http:status-client-error-not-found as xs:integer 			:= 404 ;
 declare variable $http:status-client-error-method-not-allowed as xs:integer := 405 ;
 
