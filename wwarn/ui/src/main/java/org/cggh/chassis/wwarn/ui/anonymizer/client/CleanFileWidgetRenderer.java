@@ -12,6 +12,7 @@ import java.util.List;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.miniatom.client.AtomHelper;
+import org.cggh.chassis.generic.miniatom.client.ext.Chassis;
 import org.cggh.chassis.generic.miniatom.client.ext.ChassisHelper;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 import org.cggh.chassis.generic.widget.client.ChassisWidgetRenderer;
@@ -61,7 +62,9 @@ public class CleanFileWidgetRenderer extends ChassisWidgetRenderer<CleanFileWidg
 	public static final String FIELD_FILE = "file";
 	public static final String FIELD_SUMMARY = "summary";
 	public static final String FIELD_FILENAME = "filename";
-	public static final String FIELD_FILETOBECLEANED = "filetobecleaned";
+	public static final String FIELD_FILETOBECLEANEDID = "filetobecleanedid";
+	public static final String FIELD_FILETOBECLEANEDTYPE = "type";
+	public static final String FIELD_FILETOBECLEANEDOTHERTYPE = "othertype";
 	
 	private CleanFileWidgetController controller;
 	
@@ -79,7 +82,10 @@ public class CleanFileWidgetRenderer extends ChassisWidgetRenderer<CleanFileWidg
 		@UiField Label pendingLabel; // in errorPanel
 	@UiField HTMLPanel cleanFilePanel;
 		
-	@UiField Hidden fileToBeCleaned;
+	@UiField Hidden fileToBeCleanedID;
+	@UiField Hidden fileToBeCleanedType;
+	@UiField Hidden fileToBeCleanedOtherType;
+	
 	@UiField FileUpload fileInput;
 	@UiField FlowPanel fileToBeCleanedTableContainer;
 	
@@ -111,9 +117,12 @@ public class CleanFileWidgetRenderer extends ChassisWidgetRenderer<CleanFileWidg
 		cleanFileFormPanel.setMethod(FormPanel.METHOD_POST);
 		
 		fileInput.setName(FIELD_FILE);
-		cleanNotesInput.setName(FIELD_SUMMARY);
-		fileToBeCleaned.setName(FIELD_FILETOBECLEANED);
 		
+		fileToBeCleanedID.setName(FIELD_FILETOBECLEANEDID);
+		fileToBeCleanedType.setName(FIELD_FILETOBECLEANEDTYPE);
+		fileToBeCleanedOtherType.setName(FIELD_FILETOBECLEANEDOTHERTYPE);
+		
+		cleanNotesInput.setName(FIELD_SUMMARY);
 		
 		log.leave();
 	}	
@@ -231,7 +240,15 @@ public class CleanFileWidgetRenderer extends ChassisWidgetRenderer<CleanFileWidg
 			
 			// There needs to be an ID for the fileToBeCleaned in the form, which gets submitted.
 			log.debug("setting the fileToBeCleaned in the hidden form field...");
-			fileToBeCleaned.setValue(AtomHelper.getId(fileToBeCleanedEntryElement));
+			fileToBeCleanedID.setValue(AtomHelper.getId(fileToBeCleanedEntryElement));
+			
+			// Submitting the type and other type here also saves a get request on the server later.
+			log.debug("setting the fileToBeCleanedType in the hidden form field...");
+			fileToBeCleanedType.setValue(AtomHelper.getCategories(fileToBeCleanedEntryElement).get(0).getAttribute(Chassis.ATTRIBUTE_TERM));
+			
+			log.debug("setting the fileToBeCleanedOtherType in the hidden form field...");
+			fileToBeCleanedOtherType.setValue(AtomHelper.getCategories(fileToBeCleanedEntryElement).get(0).getAttribute(Chassis.ATTRIBUTE_LABEL));
+			
 			
 			log.debug("populating fileToBeCleanedTable....");
 			

@@ -42,6 +42,7 @@ import org.springframework.security.userdetails.UserDetails;
 
 
 
+
 /**
  * Servlet implementation class DataFileUploadServlet
  */
@@ -77,10 +78,9 @@ public class CleanFileFormSubmitHandler extends HttpServlet {
 	public void init(ServletConfig servletConfig) throws ServletException {
 		
 		this.mediaCollectionUrl = servletConfig.getInitParameter(Config.COLLECTION_MEDIA_URL);
-		log.info(Config.COLLECTION_MEDIA_URL + ": " + this.mediaCollectionUrl);
+		log.debug(Config.COLLECTION_MEDIA_URL + ": " + this.mediaCollectionUrl);
 
 		this.derivationsCollectionUrl = servletConfig.getInitParameter(Config.COLLECTION_DERIVATIONS_URL);
-		log.info(Config.COLLECTION_DERIVATIONS_URL + ": " + this.derivationsCollectionUrl);
 
 		// Guarding conditions.
 		if (this.mediaCollectionUrl == null) {
@@ -101,14 +101,12 @@ public class CleanFileFormSubmitHandler extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		// guard condition 
+		// guard condition
 		if (!ServletFileUpload.isMultipartContent(request)) {
 
 			respondWithError(response, "Only multipart content is supported.", HttpServletResponse.SC_BAD_REQUEST);
-			
-			//TODO: Is this required?
-			//return;
-			
+			return;
+
 		}
 
 		try {
@@ -119,9 +117,7 @@ public class CleanFileFormSubmitHandler extends HttpServlet {
 			
 			Map<String,String> formFields = new HashMap<String,String>();
 			
-			AbderaClient abderaClient = createAbderaClient(request);
-			
-			RequestOptions requestOptions = createRequestOptions(request);
+
 			
 			Entry mediaEntry = null;
 			
@@ -142,11 +138,14 @@ public class CleanFileFormSubmitHandler extends HttpServlet {
 					
 					// Assume no virus (since no exception was thrown).
 					
-					// TODO: Is this required?
-					//formFields.put(CleanFileWidgetRenderer.FIELD_FILENAME, fileItemStream.getName()); 
+					// This is needed to provide the file's name in the put request.
+					formFields.put(CleanFileWidgetRenderer.FIELD_FILENAME, fileItemStream.getName()); 
 					
-					mediaEntry = postMediaEntry(abderaClient, requestOptions, fileItemStream);
+					log.debug("posting media entry....");
+					
+					mediaEntry = postMediaEntry(request, fileItemStream);
 
+					log.debug("done posting media entry.");
 					
 					
 				} 
@@ -155,6 +154,10 @@ public class CleanFileFormSubmitHandler extends HttpServlet {
 					InputStream inputStream = fileItemStream.openStream();
 					String fieldValue = Streams.asString(inputStream);
 					
+					//TODO: Why isn't the summary coming through?
+					
+					log.debug("got fieldName: " + fieldName + " with value: " + fieldValue);
+					
 					formFields.put(fieldName, fieldValue);
 					
 				}
@@ -162,10 +165,13 @@ public class CleanFileFormSubmitHandler extends HttpServlet {
 					
 					if (CleanFileWidgetRenderer.FIELD_FILE.equals(fieldName)) {
 						respondWithError(response, "The file field is not a form field.", HttpServletResponse.SC_BAD_REQUEST);
+						return;
 					} else {
 						respondWithError(response, "Unhandled logical path while parsing request.", HttpServletResponse.SC_BAD_REQUEST);
+						return;
 					}
-					break;
+					
+					//break;
 				}
 				
 			}
@@ -179,31 +185,53 @@ public class CleanFileFormSubmitHandler extends HttpServlet {
 				String mediaAuthor = userDetails.getUsername();
 				String mediaTitle = formFields.get(CleanFileWidgetRenderer.FIELD_FILENAME);
 				
+				log.debug("got mediaTitle: " + mediaTitle);
+				
 				// The notes goes in the derivation instead.
 				//String mediaSummary = formFields.get(UploadFileForm.FIELD_SUMMARY);
 				String mediaSummary = null;
 				
-				putMediaEntry(abderaClient, requestOptions, mediaEntry, mediaAuthor, mediaTitle, mediaSummary);
+				// Get the type from the original media entry.
+
+				String mediaTerm = formFields.get(CleanFileWidgetRenderer.FIELD_FILETOBECLEANEDTYPE);
+				String mediaLabel = formFields.get(CleanFileWidgetRenderer.FIELD_FILETOBECLEANEDOTHERTYPE);
 				
-				// Post the derivation entry
+				log.debug("got mediaTerm: " + mediaTerm);
+				log.debug("got mediaLabel: " + mediaLabel);
+				
+				log.debug("putting media entry...");
+				
+				putMediaEntry(request, mediaEntry, mediaAuthor, mediaTitle, mediaSummary, mediaTerm, mediaLabel);
+				
+				log.debug("finished putting media entry.");
 				
 
+
+				
+
+				// Post the derivation entry
+				
 				
 				String derivationType = Chassis.TERM_REMOVEPERSONALDATA;
 				String derivationSummary = formFields.get(CleanFileWidgetRenderer.FIELD_SUMMARY);
 				
-				// TODO: This needs to be done properly. 
-				String derivationInputHref = "?id=" + formFields.get(CleanFileWidgetRenderer.FIELD_FILETOBECLEANED);
+				//TODO: Why isn't the summary coming through?
+				log.debug("got derivationSummary: " + derivationSummary);
+				
+				// TODO: Check this is correct. 
+				String derivationInputHref = mediaCollectionUrl + "?id=" + formFields.get(CleanFileWidgetRenderer.FIELD_FILETOBECLEANEDID);
 				
 				String derivationOutputHref = mediaCollectionUrl + mediaEntry.getEditLink().getHref().toASCIIString();
 				
-				Entry derivationEntry = postDerivationEntry(abderaClient, requestOptions, derivationType, derivationSummary, derivationInputHref, derivationOutputHref);
+				Entry derivationEntry = postDerivationEntry(request, derivationType, derivationSummary, derivationInputHref, derivationOutputHref);
 				
 				
 				
 				if (derivationEntry == null) {
 					
 					respondWithError(response, "Derivation was not created.", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+					return;
+
 					
 				} else {
 					
@@ -219,79 +247,71 @@ public class CleanFileFormSubmitHandler extends HttpServlet {
 					response.flushBuffer();
 				}
 				
+				
 			} else {
 				
+				log.error("mediaEntry was null");
+				
 				respondWithError(response, "Media was not found or created.", HttpServletResponse.SC_BAD_REQUEST);
+				return;
 				
 			}
 			
 			
 
 		} catch (ContainsVirusException e) {
-			respondWithError(response, "A virus has been detected: " + e.getMessage(), 
-					HttpServletResponse.SC_BAD_REQUEST);			
-		} catch (Throwable t) {
+			respondWithError(response, "A virus has been detected: " + e.getMessage(), HttpServletResponse.SC_BAD_REQUEST);
+			return;
 
+		} catch (Throwable t) {
+			
+			
+			
 			respondWithError(response, "The server encountered an internal error which prevented it from completing the request: " + t.getMessage(), 
 					HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 
 			t.printStackTrace();
+			
+			return;
+
 		}
 		
 		
 	}
 	
-	
 
-
-	private Entry postDerivationEntry(AbderaClient abderaClient, RequestOptions requestOptions, String derivationType, String derivationSummary, String derivationInputHref,
+	private Entry postDerivationEntry(HttpServletRequest request, String derivationType, String derivationSummary, String derivationInputHref,
 			String derivationOutputHref) throws IOException {
 
+		AbderaClient abderaClient = createAbderaClient(request);		
+		
+		RequestOptions requestOptions = createRequestOptions(request);
 
 		Entry derivationEntryElement = abdera.newEntry();
+		
+		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		derivationEntryElement.addAuthor(userDetails.getUsername());
 
-
-		//TODO: Get user email. From where?
-		derivationEntryElement.addAuthor("user email goes here");
-
-		derivationEntryElement.addLink(Chassis.REL_DERIVATIONINPUT, derivationInputHref);
-		derivationEntryElement.addLink(Chassis.REL_DERIVATIONOUTPUT, derivationOutputHref);
+		derivationEntryElement.addLink(derivationInputHref, Chassis.REL_DERIVATIONINPUT);
+		derivationEntryElement.addLink(derivationOutputHref, Chassis.REL_DERIVATIONOUTPUT);
 		
 		
 		//TODO: Create derivation element.
-//		com.google.gwt.xml.client.Element derivationElement = ChassisHelper.createDerivation();
-//		derivationElement.setAttribute("type", Chassis.TERM_REMOVEPERSONALDATA);
+
+		//Chassis.TERM_REMOVEPERSONALDATA
+		//Chassis.ELEMENT_DERIVATION, Chassis.PREFIX, Chassis.NSURI
 
 		//TODO: Add the derivation element to the entry element. 
-//		AtomHelper.setContent(derivationEntryElement, derivationElement);
 		
-		//TODO: Check that the comment is the same as the summary element.
-//		AtomHelper.setSummary(derivationEntryElement, derivationSummary);
-		derivationEntryElement.addComment(derivationSummary);
+		log.debug("adding summary: " + derivationSummary);
 		
+		derivationEntryElement.setSummary(derivationSummary);
 		
-        //return extractEntry(clientResponse);
-        
-        // needed? 
-        // otherwise content type application/xml, which exist rejects
-        //requestOptions.setContentType("application/atom+xml; type=entry; charset=UTF-8"); 
-		//ClientResponse clientResponse = abderaClient.post(this.derivationsCollectionUrl, derivationEntry, requestOptions);
+		log.debug("added summary.");
 		
-		log.info("posting derivation...");
-		
-		ClientResponse clientResponse = abderaClient.post(this.derivationsCollectionUrl, derivationEntryElement);
+		log.debug("posting derivation...");
 
-		//tmp
-		if (clientResponse.getType() == ResponseType.SUCCESS) {
-			
-			log.info("succeeded");
-			
-		} else {
-			
-			log.info("failed");
-			
-		}
-		
+		ClientResponse clientResponse = abderaClient.post(this.derivationsCollectionUrl, derivationEntryElement, requestOptions);
 		return extractEntry(clientResponse);
 		
 	}
@@ -299,8 +319,11 @@ public class CleanFileFormSubmitHandler extends HttpServlet {
 
 
 
-	private void putMediaEntry(AbderaClient abderaClient, RequestOptions requestOptions, Entry mediaEntry, String mediaAuthor, String mediaTitle, String mediaSummary) {
+	private void putMediaEntry(HttpServletRequest request, Entry mediaEntry, String mediaAuthor, String mediaTitle, String mediaSummary, String mediaTerm, String mediaLabel) {
 		
+		AbderaClient abderaClient = createAbderaClient(request);
+		
+		RequestOptions requestOptions = createRequestOptions(request);			
 		
 		mediaEntry.addAuthor(null, mediaAuthor, null);
 		
@@ -311,7 +334,26 @@ public class CleanFileFormSubmitHandler extends HttpServlet {
 		if (mediaSummary != null) {
 			mediaEntry.setSummary(mediaSummary);
 		}
+		
+		if (mediaLabel != null) {
+			
+			if (mediaLabel == "") {
+				
+				log.debug("mediaLabel was a blank string");
+				
+			} else {
+			
+				log.debug("mediaLabel was not null nor a blank string");
+			}
+			
+		} else {
+			
+			log.debug("mediaLabel was null");
 
+		}
+		
+		mediaEntry.addCategory(Chassis.SCHEME_FILETYPES, mediaTerm, mediaLabel);
+		
 
 		// handle relative urls
 		String entryUrl = mediaCollectionUrl + mediaEntry.getEditLink().getHref().toASCIIString(); 
@@ -319,15 +361,22 @@ public class CleanFileFormSubmitHandler extends HttpServlet {
 		// needed, otherwise content type application/xml, which exist rejects
 		requestOptions.setContentType("application/atom+xml; type=entry; charset=UTF-8"); 
 
+		log.debug("putting changes to media entry");
+		
 		@SuppressWarnings("unused")
 		ClientResponse clientResponse = abderaClient.put(entryUrl, mediaEntry, requestOptions);
 		
+		log.debug("done putting changes to media entry");
 	}
 
 
 
 
-	private Entry postMediaEntry(AbderaClient abderaClient, RequestOptions requestOptions, FileItemStream fileItemStream) throws IOException {
+	private Entry postMediaEntry(HttpServletRequest request, FileItemStream fileItemStream) throws IOException {
+
+		AbderaClient abderaClient = createAbderaClient(request);
+		
+		RequestOptions requestOptions = createRequestOptions(request);		
 		
 		InputStreamRequestEntity inputStreamRequestEntity = new InputStreamRequestEntity(fileItemStream.openStream(), fileItemStream.getContentType());
 		
@@ -340,6 +389,22 @@ public class CleanFileFormSubmitHandler extends HttpServlet {
 	}
 
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	private void checkFileItemStreamForVirus(FileItemStream fileItemStream) throws FileUploadException, IOException, ScannerException {
 
@@ -448,7 +513,6 @@ public class CleanFileFormSubmitHandler extends HttpServlet {
 		response.setContentType("text/html");
 		response.getWriter().print(content);
 		response.flushBuffer();
-
 	}
 
 
@@ -465,6 +529,7 @@ public class CleanFileFormSubmitHandler extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		respondWithError(response, "only POST requests are allowed", HttpServletResponse.SC_METHOD_NOT_ALLOWED);
+		return;
 	}
 
 	/**
@@ -472,6 +537,7 @@ public class CleanFileFormSubmitHandler extends HttpServlet {
 	 */
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		respondWithError(response, "only POST requests are allowed", HttpServletResponse.SC_METHOD_NOT_ALLOWED);
+		return;
 	}
 
 	/**
@@ -479,6 +545,7 @@ public class CleanFileFormSubmitHandler extends HttpServlet {
 	 */
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		respondWithError(response, "only POST requests are allowed", HttpServletResponse.SC_METHOD_NOT_ALLOWED);
+		return;
 	}
 
 	/**
@@ -486,6 +553,7 @@ public class CleanFileFormSubmitHandler extends HttpServlet {
 	 */
 	protected void doHead(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		respondWithError(response, "only POST requests are allowed", HttpServletResponse.SC_METHOD_NOT_ALLOWED);
+		return;
 	}
 
 	/**
@@ -493,6 +561,7 @@ public class CleanFileFormSubmitHandler extends HttpServlet {
 	 */
 	protected void doOptions(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		respondWithError(response, "only POST requests are allowed", HttpServletResponse.SC_METHOD_NOT_ALLOWED);
+		return;
 	}
 
 	/**
@@ -500,6 +569,7 @@ public class CleanFileFormSubmitHandler extends HttpServlet {
 	 */
 	protected void doTrace(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		respondWithError(response, "only POST requests are allowed", HttpServletResponse.SC_METHOD_NOT_ALLOWED);
+		return;
 	}
 	
 	
