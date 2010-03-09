@@ -94,7 +94,7 @@ a.mainNavigation {
 
 .resultsTable td {
 	border-bottom: 1px solid #BBBBBB;
-	padding: 0;
+	padding: 0.25em;
 	margin: 0;
 	vertical-align: top;
 }
@@ -133,4 +133,8 @@ a.mainNavigation {
 .action {
 	font-size: 110%;
 	margin: 0 .2em 0 0;	
+}
+
+.currentRevision { 
+	border: 1px solid green;
 }
