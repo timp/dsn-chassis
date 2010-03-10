@@ -325,7 +325,7 @@
   </servlet-mapping>
   
   
-    <servlet>
+  <servlet>
     <description>anonymizer clean file form submit handler</description>
     <display-name>AnonymizerCleanFileFormSubmitHandler</display-name>
     <servlet-name>AnonymizerCleanFileFormSubmitHandler</servlet-name>
