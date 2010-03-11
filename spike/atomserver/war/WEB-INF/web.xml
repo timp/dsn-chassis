@@ -157,6 +157,19 @@
             <param-value>true</param-value>
         </init-param>
 
+        <init-param>
+            <param-name>use-default-user</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <init-param>
+            <param-name>user</param-name>
+            <param-value>admin</param-value>
+        </init-param>
+        <init-param>
+            <param-name>password</param-name>
+            <param-value></param-value>
+        </init-param>
+        
         <load-on-startup>2</load-on-startup>
     </servlet>
 
@@ -199,6 +212,7 @@
             <param-name>encoding</param-name>
             <param-value>UTF-8</param-value>
         </init-param>
+        
     </servlet>
 	
     <filter>

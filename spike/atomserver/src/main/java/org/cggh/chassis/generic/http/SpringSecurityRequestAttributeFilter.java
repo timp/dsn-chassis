@@ -4,8 +4,6 @@
 package org.cggh.chassis.generic.http;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -16,6 +14,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.exist.xquery.value.ValueSequence;
 import org.exist.xquery.value.StringValue;
+import org.springframework.security.Authentication;
 import org.springframework.security.GrantedAuthority;
 import org.springframework.security.context.SecurityContextHolder;
 
@@ -25,28 +24,45 @@ import org.springframework.security.context.SecurityContextHolder;
  */
 public class SpringSecurityRequestAttributeFilter extends HttpFilter {
 
+	
+	
+	
 	private Log log = LogFactory.getLog(this.getClass());
+	
+	
+	
+	public static final String USERNAMEREQUESTATTRIBUTEKEY = "user-name";
+	public static final String USERROLESREQUESTATTRIBUTEKEY = "user-roles";
+	
+	
+	
 	
 	@Override
 	public void doHttpFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
 		log.debug("request inbound");
 
-		String name = SecurityContextHolder.getContext().getAuthentication().getName();
-		log.debug("found username: "+name);
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		
-		request.setAttribute("user-name", new StringValue(name));
-		
-		GrantedAuthority[] authorities = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+		if (authentication != null) {
+			
+			String name = authentication.getName();
+			log.debug("found username: "+name);
+			
+			request.setAttribute(USERNAMEREQUESTATTRIBUTEKEY, new StringValue(name));
+			
+			GrantedAuthority[] authorities = authentication.getAuthorities();
 
-		ValueSequence roles = new ValueSequence();
-		
-		for (GrantedAuthority a : authorities) {
-			log.debug("found role: "+a.toString());
-			StringValue s = new StringValue(a.toString());
-			roles.add(s);
+			ValueSequence roles = new ValueSequence();
+			
+			for (GrantedAuthority a : authorities) {
+				log.debug("found role: "+a.toString());
+				StringValue s = new StringValue(a.toString());
+				roles.add(s);
+			}
+
+			request.setAttribute(USERROLESREQUESTATTRIBUTEKEY, roles);
+
 		}
-
-		request.setAttribute("user-roles", roles);
 		
 		chain.doFilter(request, response);
 
