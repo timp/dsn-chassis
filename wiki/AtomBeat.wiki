@@ -59,3 +59,5 @@ In no particular order, the following is a memo list of features yet to be imple
   * add hooks for customisable before- and after- functions in atomdb
 
   * implement history/versioning for media resources
+
+  * fix revision comments - they're in the wrong place!
