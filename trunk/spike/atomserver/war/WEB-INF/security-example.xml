@@ -8,11 +8,16 @@
 
   <http 
     auto-config="false" 
-    realm="atombeat" 
+    realm="atomserver" 
     create-session="never">
   
     <http-basic/>
 
+    <!-- restrict access to administrative scripts -->
+    <intercept-url pattern="/atomserver/admin/**" access="ROLE_ADMINISTRATOR" />
+    
+    <!-- force authentication for all requests to atomserver, but delegate
+    access control decisions to atomserver -->
     <intercept-url pattern="/atomserver/**" access="ROLE_USER" />
 
   </http>

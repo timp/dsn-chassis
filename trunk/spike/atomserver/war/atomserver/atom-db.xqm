@@ -188,7 +188,9 @@ declare function adb:create-collection(
 
 		let $feed := adb:create-feed( $request-path-info , $request-data )
 		
-		return xmldb:store( $collection-db-path , $config:feed-doc-name , $feed )
+		let $feed-doc-db-path := xmldb:store( $collection-db-path , $config:feed-doc-name , $feed )
+		
+		return $feed-doc-db-path
 			
 };
 
