@@ -154,7 +154,7 @@ public class CleanFileWidgetRenderer extends ChassisWidgetRenderer<CleanFileWidg
 		pendingLabel.setVisible(false); //in pendingPanel
 		cleanFilePanel.setVisible(false);
 			fileToBeCleanedTableContainer.setVisible(false); // in cleanFilePanel
-			cleanNotesInput.setEnabled(false); // in cleanFilePanel
+//			cleanNotesInput.setEnabled(false); // in cleanFilePanel
 			cleanFileFormSubmitButton.setEnabled(false); // in cleanFilePanel
 		
 		if (status instanceof AsyncWidgetModel.InitialStatus) {
