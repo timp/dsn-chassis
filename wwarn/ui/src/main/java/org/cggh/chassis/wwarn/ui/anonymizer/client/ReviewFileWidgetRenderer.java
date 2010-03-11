@@ -338,14 +338,6 @@ public class ReviewFileWidgetRenderer extends ChassisWidgetRenderer<ReviewFileWi
 		
 		String reviewSubjectHref = AtomHelper.getEditLinkHrefAttr(model.getFileToBeReviewedEntryElement());
 		
-		//TODO: The reviewSubject href needs to be matchable to the media self href, but what is the right way to do it?
-		
-		// If you try this to remove the prefix, AtomHelper adds the prefix back on when we use addLink.
-		//log.debug("config is: " + Config.get(Config.COLLECTION_MEDIA_URL));
-		//reviewSubjectHref = reviewSubjectHref.replaceFirst(Config.get(Config.COLLECTION_MEDIA_URL), "");
-		
-
-		
 		log.debug("using reviewSubjectHref: " + reviewSubjectHref);
 		
 		String reviewOutcome = "";

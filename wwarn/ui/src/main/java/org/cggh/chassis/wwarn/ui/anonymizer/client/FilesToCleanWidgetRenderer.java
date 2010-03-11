@@ -178,7 +178,6 @@ public class FilesToCleanWidgetRenderer extends ChassisWidgetRenderer<FilesToCle
 			
 			String submittedDate = ChassisHelper.getSubmissionPublished(entry);
 			
-			// TODO: Provide the reviewed date. 
 			
 			String reviewedDate = ChassisHelper.getReviewPublished(entry);
 			

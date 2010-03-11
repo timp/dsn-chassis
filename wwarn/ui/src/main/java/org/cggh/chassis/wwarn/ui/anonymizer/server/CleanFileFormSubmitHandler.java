@@ -13,9 +13,13 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.namespace.QName;
 
 import org.apache.abdera.Abdera;
+import org.apache.abdera.factory.Factory;
+import org.apache.abdera.model.Content;
 import org.apache.abdera.model.Document;
+import org.apache.abdera.model.Element;
 import org.apache.abdera.model.Entry;
 import org.apache.abdera.protocol.Response.ResponseType;
 import org.apache.abdera.protocol.client.AbderaClient;
@@ -54,7 +58,6 @@ public class CleanFileFormSubmitHandler extends HttpServlet {
 	
 	// TODO: Centralise the ClamAntiVirus classes and exceptions, to wwarn.ui.common.server or filter. (see issue 168)
 
-	// TODO: Perhaps make getters and setters for these variables, to centralise the origin of their values.
 	private String mediaCollectionUrl;
 	private String derivationsCollectionUrl;
 	
@@ -154,7 +157,7 @@ public class CleanFileFormSubmitHandler extends HttpServlet {
 					InputStream inputStream = fileItemStream.openStream();
 					String fieldValue = Streams.asString(inputStream);
 					
-					//TODO: Why isn't the summary coming through?
+					//FIXME: Why isn't the summary coming through?
 					
 					log.debug("got fieldName: " + fieldName + " with value: " + fieldValue);
 					
@@ -215,13 +218,13 @@ public class CleanFileFormSubmitHandler extends HttpServlet {
 				String derivationType = Chassis.TERM_REMOVEPERSONALDATA;
 				String derivationSummary = formFields.get(CleanFileWidgetRenderer.FIELD_SUMMARY);
 				
-				//TODO: Why isn't the summary coming through?
+				//FIXME: Why isn't the summary coming through?
 				log.debug("got derivationSummary: " + derivationSummary);
 				
-				// TODO: Check this is correct. 
-				String derivationInputHref = mediaCollectionUrl + "?id=" + formFields.get(CleanFileWidgetRenderer.FIELD_FILETOBECLEANEDID);
+				// FIXME: Resolve this problem. 
+				String derivationInputHref = mediaCollectionUrl.replaceFirst("http://localhost:8080", "") + "?id=" + formFields.get(CleanFileWidgetRenderer.FIELD_FILETOBECLEANEDID);
 				
-				String derivationOutputHref = mediaCollectionUrl + mediaEntry.getEditLink().getHref().toASCIIString();
+				String derivationOutputHref = mediaCollectionUrl.replaceFirst("http://localhost:8080", "") + mediaEntry.getEditLink().getHref().toASCIIString();
 				
 				Entry derivationEntry = postDerivationEntry(request, derivationType, derivationSummary, derivationInputHref, derivationOutputHref);
 				
@@ -295,13 +298,13 @@ public class CleanFileFormSubmitHandler extends HttpServlet {
 		derivationEntryElement.addLink(derivationInputHref, Chassis.REL_DERIVATIONINPUT);
 		derivationEntryElement.addLink(derivationOutputHref, Chassis.REL_DERIVATIONOUTPUT);
 		
+		Factory factory = abdera.getFactory();
+		Entry derivationEntry = factory.newEntry();
+		Content derivationContent = factory.newContent(Content.Type.XML, derivationEntry);
+		Element derivationElement = factory.newElement(new QName(Chassis.NSURI, Chassis.ELEMENT_DERIVATION, Chassis.PREFIX), derivationContent);
+		derivationElement.setAttributeValue("type", Chassis.TERM_REMOVEPERSONALDATA);
 		
-		//TODO: Create derivation element.
-
-		//Chassis.TERM_REMOVEPERSONALDATA
-		//Chassis.ELEMENT_DERIVATION, Chassis.PREFIX, Chassis.NSURI
-
-		//TODO: Add the derivation element to the entry element. 
+		derivationEntryElement.setContent(derivationElement);
 		
 		log.debug("adding summary: " + derivationSummary);
 		
