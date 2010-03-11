@@ -519,6 +519,12 @@ declare function ap:do-put-atom-feed(
 	 : feed document with the given feed metadata.
 	 :)
 	 
+	(:
+	 : TODO this function would probably read more easily if split into 
+	 : separate functions for each operation, create-collection and update-
+	 : collection.
+	 :)
+	 
 	let $create := not( atomdb:collection-available( $request-path-info ) )
 	
     (: 
@@ -558,7 +564,15 @@ declare function ap:do-put-atom-feed(
         	let $feed-doc-db-path := 
         		if ( $create ) then atomdb:create-collection( $request-path-info , $request-data , $enable-history )
         		else atomdb:update-collection( $request-path-info , $request-data )
-        
+        		
+    		(: if we are creating a collection and security is enabled, install 
+    		   default collection ACL :)
+    		
+    		let $collection-acl-installed :=
+    		    if ( $config:enable-security and $create )
+    		    then atomsec:store-collection-acl( $request-path-info , $config:default-collection-acl )
+    		    else ()
+    		
         	let $feed-doc := doc( $feed-doc-db-path )
                     
         	let $header-content-type := response:set-header( $http:header-content-type , $ap:atom-mimetype )
@@ -590,7 +604,7 @@ declare function ap:do-put-atom-entry(
 {
 
 	(: 
-	 : First we need to know whether an atom collection exists at the 
+	 : First we need to know whether an atom entry exists at the 
 	 : request path.
 	 :)
 	 
@@ -604,20 +618,38 @@ declare function ap:do-put-atom-entry(
 		
 		else
 		
-		    (: TODO security decision :)
-		    
-		    let $comment := request:get-header("X-Atom-Revision-Comment")
-		    
-			let $entry-doc-db-path := atomdb:update-member( $request-path-info , $request-data , $comment )
-		
-			let $entry-doc := doc( $entry-doc-db-path )
-		            
-			let $header-content-type := response:set-header( $http:header-content-type , $ap:atom-mimetype )
-			
-		    let $status-code := response:set-status-code( $http:status-success-ok )
-		        
-			return $entry-doc
+		    (: 
+		     : Here we bottom out at the "update-member" operation, so we need
+		     : to apply a security decision.
+		     :)
 
+            let $user := request:get-attribute( $config:user-name-request-attribute-key )
+            let $roles := request:get-attribute( $config:user-roles-request-attribute-key )
+            
+            let $forbidden := 
+                if ( not( $config:enable-security ) ) then false()
+                else ( atomsec:decide( $user , $roles , $request-path-info, $atomsec:op-update-member ) = $atomsec:decision-deny )
+                
+            return
+            
+                if ( $forbidden ) 
+        
+                then ap:do-forbidden( $request-path-info )
+        
+                else
+
+        		    let $comment := request:get-header("X-Atom-Revision-Comment")
+        		    
+        			let $entry-doc-db-path := atomdb:update-member( $request-path-info , $request-data , $comment )
+        		
+        			let $entry-doc := doc( $entry-doc-db-path )
+        		            
+        			let $header-content-type := response:set-header( $http:header-content-type , $ap:atom-mimetype )
+        			
+        		    let $status-code := response:set-status-code( $http:status-success-ok )
+        		        
+        			return $entry-doc
+        
 };
 
 

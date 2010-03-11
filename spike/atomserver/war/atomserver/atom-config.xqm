@@ -67,7 +67,7 @@ declare variable $config:feed-doc-name as xs:string := ".feed" ;
 (:
  : Enable or disable the ACL-based security system.
  :)
-declare variable $config:enable-security := false() ;
+declare variable $config:enable-security := true() ;
 
 
 (:
@@ -77,3 +77,39 @@ declare variable $config:enable-security := false() ;
 declare variable $config:default-decision := "deny" ;
 
 
+(:
+ : A default global ACL, customise for your environment.
+ :)
+declare variable $config:default-global-acl := 
+    <acl>
+        <rules>
+            <allow>
+                <role>ROLE_ADMINISTRATOR</role>
+                <operation>create-collection</operation>
+            </allow>
+            <allow>
+                <role>ROLE_ADMINISTRATOR</role>
+                <operation>update-collection</operation>
+            </allow>
+        </rules>
+    </acl>
+;
+
+
+(:
+ : A default collection ACL, customise for your environment.
+ :)
+declare variable $config:default-collection-acl := 
+    <acl>
+        <rules>
+            <allow>
+                <role>ROLE_AUTHOR</role>
+                <operation>create-member</operation>
+            </allow>
+            <allow>
+                <role>ROLE_EDITOR</role>
+                <operation>update-member</operation>
+            </allow>
+        </rules>
+    </acl>
+;

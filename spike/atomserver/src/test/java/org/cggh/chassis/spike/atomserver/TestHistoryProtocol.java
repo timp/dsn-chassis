@@ -573,6 +573,7 @@ public class TestHistoryProtocol extends TestCase {
 				new Header("X-Atom-Revision-Comment", "second draft")
 		};
 		
+		@SuppressWarnings("unused")
 		Document updatedDoc = putEntry(location, entryDoc, headers2);
 		
 		entryDoc = 
