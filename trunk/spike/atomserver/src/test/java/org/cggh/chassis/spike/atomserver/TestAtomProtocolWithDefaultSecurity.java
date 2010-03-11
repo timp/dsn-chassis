@@ -1,20 +1,10 @@
 package org.cggh.chassis.spike.atomserver;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-
-import org.apache.commons.httpclient.Header;
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpException;
-import org.apache.commons.httpclient.HttpMethod;
-import org.apache.commons.httpclient.UsernamePasswordCredentials;
-import org.apache.commons.httpclient.auth.BasicScheme;
-import org.apache.commons.httpclient.methods.EntityEnclosingMethod;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.PutMethod;
-import org.apache.commons.httpclient.methods.RequestEntity;
-import org.apache.commons.httpclient.methods.StringRequestEntity;
+
+import static org.cggh.chassis.spike.atomserver.AtomTestUtils.*;
 
 import junit.framework.TestCase;
 
@@ -32,17 +22,7 @@ public class TestAtomProtocolWithDefaultSecurity extends TestCase {
 	
 	
 	
-	private static final HttpClient client = new HttpClient();
-	
-
-	
-	
-	private static final BasicScheme basic = new BasicScheme();
-	
-	
-	
-	
-	public TestAtomProtocolWithDefaultSecurity() {
+ 	public TestAtomProtocolWithDefaultSecurity() {
 
 		// need to run install script once for example setup
 		
@@ -56,120 +36,6 @@ public class TestAtomProtocolWithDefaultSecurity extends TestCase {
 			throw new RuntimeException("installation failed: "+result);
 		}
 	
-	}
-	
-	
-	
-	
-	private static void authenticate(HttpMethod method, String user, String pass) {
-		try {
-			String authorization = basic.authenticate(new UsernamePasswordCredentials(user, pass), method);
-			method.setRequestHeader("Authorization", authorization);
-		} 
-		catch (Throwable t) {
-			t.printStackTrace();
-			fail(t.getLocalizedMessage());
-		}
-	}
-	
-	
-	
-	private static int executeMethod(HttpMethod method, String user, String pass) {
-		
-		authenticate(method, user, pass);
-		
-		Integer result = null;
-		
-		try {
-
-			// make the HTTP request now
-			result = client.executeMethod(method);
-
-		} catch (HttpException e) {
-
-			e.printStackTrace();
-			fail(e.getLocalizedMessage());
-
-		} catch (IOException e) {
-
-			e.printStackTrace();
-			fail(e.getLocalizedMessage());
-
-		}
-		
-		assertNotNull(result);
-		
-		return result;
-		
-	}
-	
-	
-	
-	private static void setAtomRequestEntity(EntityEnclosingMethod method, String xml) {
-		
-		RequestEntity entity = null;
-		String contentType = "application/atom+xml";
-		String charSet = "utf-8";
-		
-		try {
-
-			entity = new StringRequestEntity(xml, contentType, charSet);
-
-		} catch (UnsupportedEncodingException e) {
-
-			e.printStackTrace();
-			fail(e.getLocalizedMessage());
-
-		}
-		
-		assertNotNull(entity);
-		
-		method.setRequestEntity(entity);
-
-	}
-	
-	
-	
-	
-	private static String createRandomCollection(String user, String pass) {
-
-		String collectionUri = SERVER_URI + Double.toString(Math.random());
-
-		PutMethod method = new PutMethod(collectionUri);
-
-		String content = "<atom:feed xmlns:atom=\"http://www.w3.org/2005/Atom\"><atom:title>Test Collection</atom:title></atom:feed>";
-		setAtomRequestEntity(method, content);
-		
-		int result = executeMethod(method, user, pass);
-		
-		if (result != 201)
-			return null;
-		
-		return collectionUri;
-
-	}
-	
-	
-	
-	
-	private static String createTestEntry(String user, String pass, String collectionUri) {
-
-		PostMethod method = new PostMethod(collectionUri);
-		
-		String content = "<atom:entry xmlns:atom=\"http://www.w3.org/2005/Atom\"><atom:title>Test Entry</atom:title><atom:summary>this is a test</atom:summary></atom:entry>";
-		setAtomRequestEntity(method, content);
-		
-		int result = executeMethod(method, "arthur", "test");
-
-		if (result != 201)
-			return null;
-		
-		Header locationHeader = method.getResponseHeader("Location");
-		
-		assertNotNull(locationHeader);
-		
-		return locationHeader.getValue();
-
 	}
 	
 	
@@ -218,7 +84,7 @@ public class TestAtomProtocolWithDefaultSecurity extends TestCase {
 		// we expect the default global ACL to allow only users with the
 		// ROLE_ADMINISTRATOR role to update collections
 		
-		String collectionUri = createRandomCollection("adam", "test");
+		String collectionUri = createTestCollection(SERVER_URI, "adam", "test");
 
 		PutMethod method = new PutMethod(collectionUri);
 
@@ -263,7 +129,7 @@ public class TestAtomProtocolWithDefaultSecurity extends TestCase {
 	
 	public void testUserWithoutAdministratorRoleCannotUpdateCollections() {
 		
-		String collectionUri = createRandomCollection("adam", "test");
+		String collectionUri = createTestCollection(SERVER_URI, "adam", "test");
 
 		// we expect the default global ACL to allow only users with the
 		// ROLE_ADMINISTRATOR role to update collections
@@ -289,7 +155,7 @@ public class TestAtomProtocolWithDefaultSecurity extends TestCase {
 	
 	public void testUserWithAuthorRoleCanCreateAtomEntries() {
 		
-		String collectionUri = createRandomCollection("adam", "test");
+		String collectionUri = createTestCollection(SERVER_URI, "adam", "test");
 
 		// we expect the default collection ACL to allow users with the
 		// ROLE_AUTHOR role to create atom entries in any collection
@@ -313,7 +179,7 @@ public class TestAtomProtocolWithDefaultSecurity extends TestCase {
 	
 	public void testUserWithoutAuthorRoleCannotCreateAtomEntries() {
 		
-		String collectionUri = createRandomCollection("adam", "test");
+		String collectionUri = createTestCollection(SERVER_URI, "adam", "test");
 
 		// we expect the default collection ACL to allow only users with the
 		// ROLE_AUTHOR role to create atom entries in any collection
@@ -337,9 +203,9 @@ public class TestAtomProtocolWithDefaultSecurity extends TestCase {
 	
 	public void testUserWithEditorRoleCanUpdateAtomEntries() {
 
-		String collectionUri = createRandomCollection("adam", "test");
+		String collectionUri = createTestCollection(SERVER_URI, "adam", "test");
 		
-		String entryUri = createTestEntry("arthur", "test", collectionUri);
+		String entryUri = createTestEntryAndReturnLocation(collectionUri, "arthur", "test");
 
 		// we expect the default collection ACL to allow only users with the
 		// ROLE_EDITOR role to update any atom entries in any collection
@@ -363,9 +229,9 @@ public class TestAtomProtocolWithDefaultSecurity extends TestCase {
 	
 	public void testUserWithoutEditorRoleCannotUpdateAtomEntries() {
 
-		String collectionUri = createRandomCollection("adam", "test");
+		String collectionUri = createTestCollection(SERVER_URI, "adam", "test");
 		
-		String entryUri = createTestEntry("arthur", "test", collectionUri);
+		String entryUri = createTestEntryAndReturnLocation(collectionUri, "arthur", "test");
 
 		// we expect the default collection ACL to allow only users with the
 		// ROLE_EDITOR role to update any atom entries in any collection

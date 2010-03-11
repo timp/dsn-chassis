@@ -91,6 +91,53 @@ declare variable $config:default-global-acl :=
                 <role>ROLE_ADMINISTRATOR</role>
                 <operation>update-collection</operation>
             </allow>
+            <allow>
+                <role>ROLE_ADMINISTRATOR</role>
+                <operation>list-collection</operation>
+            </allow>
+            <allow>
+                <role>ROLE_ADMINISTRATOR</role>
+                <operation>create-member</operation>
+            </allow>
+            <allow>
+                <role>ROLE_ADMINISTRATOR</role>
+                <operation>retrieve-member</operation>
+            </allow>
+            <allow>
+                <role>ROLE_ADMINISTRATOR</role>
+                <operation>update-member</operation>
+            </allow>
+            <allow>
+                <role>ROLE_ADMINISTRATOR</role>
+                <operation>delete-member</operation>
+            </allow>
+            <allow>
+                <role>ROLE_ADMINISTRATOR</role>
+                <operation>create-media</operation>
+            </allow>
+            <allow>
+                <role>ROLE_ADMINISTRATOR</role>
+                <operation>retrieve-media</operation>
+            </allow>
+            <allow>
+                <role>ROLE_ADMINISTRATOR</role>
+                <operation>update-media</operation>
+            </allow>
+            <allow>
+                <role>ROLE_ADMINISTRATOR</role>
+                <operation>delete-media</operation>
+            </allow>
+            <allow>
+                <role>ROLE_ADMINISTRATOR</role>
+                <operation>update-acl</operation>
+            </allow>
+            <!-- you could also use a wildcard -->
+            <!--
+            <allow>
+                <role>ROLE_ADMINISTRATOR</role>
+                <operation>*</operation>
+            </allow>
+            -->
         </rules>
     </acl>
 ;

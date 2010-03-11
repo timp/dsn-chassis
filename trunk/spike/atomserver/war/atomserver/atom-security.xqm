@@ -15,6 +15,7 @@ import module namespace config = "http://www.cggh.org/2010/xquery/atom-config" a
 
 declare variable $atomsec:op-create-collection as xs:string     := "create-collection" ;
 declare variable $atomsec:op-update-collection as xs:string     := "update-collection" ;
+declare variable $atomsec:op-list-collection as xs:string       := "list-collection" ;
 declare variable $atomsec:op-create-member as xs:string         := "create-member" ;
 declare variable $atomsec:op-retrieve-member as xs:string       := "retrieve-member" ;
 declare variable $atomsec:op-update-member as xs:string         := "update-member" ;
