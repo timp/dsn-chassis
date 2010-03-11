@@ -41,7 +41,7 @@ declare function local:has-not-been-cleaned( $entry as element(atom:entry) ) as 
     let $cleaning-derivations :=
         for $derivation in collection("/db/derivations")//atom:entry
         where $derivation//chassis:derivation/@type = "http://www.cggh.org/2010/chassis/terms/RemovePersonalData"
-        and $derivation/atom:link[@rel="http://www.cggh.org/2010/chassis/terms/derivationInput"]/@href = $entry/atom:link[@rel="self"]/@href
+        and $derivation//atom:link[@rel="http://www.cggh.org/2010/chassis/terms/derivationInput"]/@href = $entry/atom:link[@rel="self"]/@href
         return $derivation
         
     return 

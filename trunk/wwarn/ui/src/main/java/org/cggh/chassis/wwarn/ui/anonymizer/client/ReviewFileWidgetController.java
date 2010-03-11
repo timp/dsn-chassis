@@ -67,8 +67,6 @@ public class ReviewFileWidgetController {
 		deferredReviewEntryDoc.addCallback(new Function<Document, Document>() {
 			public Document apply(Document in) {
 				
-				//TODO: This shouldn't return to the start if there was an error.
-				
 				owner.fireEvent(new BackToStartNavigationEvent());
 				return in;
 		}
