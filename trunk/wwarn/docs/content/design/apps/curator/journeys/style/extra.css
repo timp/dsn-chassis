@@ -103,3 +103,7 @@ padding-top: 7px;
 .curationsHeading {
 	margin-top: 40px;
 }
+
+.currentRevision { 
+  border: 1px solid green;
+}
