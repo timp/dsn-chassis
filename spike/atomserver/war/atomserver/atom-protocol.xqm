@@ -242,7 +242,7 @@ declare function ap:do-post-atom-entry(
 		    		    if ( $config:enable-security )
 		    		    then 
 		    		    	let $user := request:get-attribute( $config:user-name-request-attribute-key )
-		    		    	let $acl := config:default-resource-acl( $user )
+		    		    	let $acl := config:default-resource-acl( $request-path-info , $user )
 		    		    	let $entry-path-info := atomdb:db-path-to-request-path-info( $entry-doc-db-path )
 		    		    	let $acl-db-path := atomsec:store-resource-acl( $entry-path-info , $acl )
 				    		return $acl-db-path
@@ -518,7 +518,9 @@ declare function ap:do-put-atom(
 
 
 
-
+(:
+ : TODO doc me 
+ :)
 declare function ap:do-put-atom-feed(
 	$request-path-info as xs:string ,
 	$request-data as element(atom:feed)
@@ -584,7 +586,9 @@ declare function ap:do-put-atom-feed(
     		
     		let $collection-acl-installed :=
     		    if ( $config:enable-security and $create )
-    		    then atomsec:store-collection-acl( $request-path-info , $config:default-collection-acl )
+    		    then 
+    		        let $acl := config:default-collection-acl( $request-path-info , $user )
+    		        return atomsec:store-collection-acl( $request-path-info , $acl )
     		    else ()
     		
         	let $feed-doc := doc( $feed-doc-db-path )
@@ -807,13 +811,33 @@ declare function ap:do-get-feed(
 )
 {
 
-    (: TODO security decision :)
+    (: 
+     : Here we bottom out at the "list-collection" operation, so we need
+     : to apply a security decision.
+     :)
+
+    let $user := request:get-attribute( $config:user-name-request-attribute-key )
+    let $roles := request:get-attribute( $config:user-roles-request-attribute-key )
     
-    let $status-code := response:set-status-code( $http:status-success-ok )
+    let $forbidden := 
+        if ( not( $config:enable-security ) ) then false()
+        else ( atomsec:decide( $user , $roles , $request-path-info, $atomsec:op-list-collection ) = $atomsec:decision-deny )
+        
+    return
     
-    let $header-content-type := response:set-header( $http:header-content-type , $ap:atom-mimetype )
+        if ( $forbidden ) 
+
+        then ap:do-forbidden( $request-path-info )
+
+        else
     
-    return atomdb:retrieve-feed( $request-path-info )
+            let $status-code := response:set-status-code( $http:status-success-ok )
+            
+            let $header-content-type := response:set-header( $http:header-content-type , $ap:atom-mimetype )
+            
+            (: TODO filter feed by ACLs :)
+            
+            return atomdb:retrieve-feed( $request-path-info )
 
 };
 
