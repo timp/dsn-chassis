@@ -232,7 +232,7 @@ public class AtomTestUtils {
 		PostMethod method = new PostMethod(collectionUri);
 		String content = "<atom:entry xmlns:atom=\"http://www.w3.org/2005/Atom\"><atom:title>Test Entry</atom:title><atom:summary>this is a test</atom:summary></atom:entry>";
 		setAtomRequestEntity(method, content);
-		int result = executeMethod(method, "arthur", "test");
+		int result = executeMethod(method, user, pass);
 
 		if (result != 201)
 			return null;
@@ -250,7 +250,7 @@ public class AtomTestUtils {
 		PostMethod method = new PostMethod(collectionUri);
 		String media = "This is a test.";
 		setTextPlainRequestEntity(method, media);
-		int result = executeMethod(method, "adam", "test");
+		int result = executeMethod(method, user, pass);
 		
 		if (result != 201)
 			return null;
@@ -264,61 +264,39 @@ public class AtomTestUtils {
 	
 	
 	public static String getEditMediaLocation(Document mediaLinkDoc) {
-		
-		NodeList links = mediaLinkDoc.getElementsByTagNameNS("http://www.w3.org/2005/Atom", "link");
-		
-		String mediaLocation = null;
-		
-		for (int i=0; i<links.getLength(); i++) {
-			Element e = (Element) links.item(i);
-			String rel = e.getAttribute("rel");
-			if (rel.equals("edit-media")) {
-				mediaLocation = e.getAttribute("href");
-			}
-		}
-		
-		return mediaLocation;
-
+		return getLinkHref(mediaLinkDoc, "edit-media");
 	}
 	
 	
 	
 	public static String getEditLocation(Document entryDoc) {
-		
-		NodeList links = entryDoc.getElementsByTagNameNS("http://www.w3.org/2005/Atom", "link");
-		
-		String editLocation = null;
-		
-		for (int i=0; i<links.getLength(); i++) {
-			Element e = (Element) links.item(i);
-			String rel = e.getAttribute("rel");
-			if (rel.equals("edit")) {
-				editLocation = e.getAttribute("href");
-			}
-		}
-		
-		return editLocation;
-
+		return getLinkHref(entryDoc, "edit");
 	}
 	
 	
 	
 	public static String getHistoryLocation(Document entryDoc) {
+		return getLinkHref(entryDoc, "history");
+	}
+	
+	
+	
+	public static String getLinkHref(Document doc, String rel) {
 		
-		NodeList links = entryDoc.getElementsByTagNameNS("http://www.w3.org/2005/Atom", "link");
+		NodeList links = doc.getElementsByTagNameNS("http://www.w3.org/2005/Atom", "link");
 		
-		String location = null;
+		String href = null;
 		
 		for (int i=0; i<links.getLength(); i++) {
 			Element e = (Element) links.item(i);
-			String rel = e.getAttribute("rel");
-			if (rel.equals("history")) {
-				location = e.getAttribute("href");
+			String relValue = e.getAttribute("rel");
+			if (relValue.equals(rel)) {
+				href = e.getAttribute("href");
 			}
 		}
 		
-		return location;
-
+		return href;
+		
 	}
 	
 	

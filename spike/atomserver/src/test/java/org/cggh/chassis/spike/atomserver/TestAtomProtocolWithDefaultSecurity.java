@@ -165,10 +165,10 @@ public class TestAtomProtocolWithDefaultSecurity extends TestCase {
 		String content = "<atom:entry xmlns:atom=\"http://www.w3.org/2005/Atom\"><atom:title>Test Entry</atom:title><atom:summary>this is a test</atom:summary></atom:entry>";
 		setAtomRequestEntity(method, content);
 		
-		// we expect the user "arthur" to be defined in the example
+		// we expect the user "austin" to be defined in the example
 		// security config to be assigned the ROLE_AUTHOR role
 		
-		int result = executeMethod(method, "arthur", "test");
+		int result = executeMethod(method, "austin", "test");
 		
 		assertEquals(201, result);
 		
@@ -205,7 +205,7 @@ public class TestAtomProtocolWithDefaultSecurity extends TestCase {
 
 		String collectionUri = createTestCollection(SERVER_URI, "adam", "test");
 		
-		String entryUri = createTestEntryAndReturnLocation(collectionUri, "arthur", "test");
+		String entryUri = createTestEntryAndReturnLocation(collectionUri, "austin", "test");
 
 		// we expect the default collection ACL to allow only users with the
 		// ROLE_EDITOR role to update any atom entries in any collection
@@ -231,7 +231,7 @@ public class TestAtomProtocolWithDefaultSecurity extends TestCase {
 
 		String collectionUri = createTestCollection(SERVER_URI, "adam", "test");
 		
-		String entryUri = createTestEntryAndReturnLocation(collectionUri, "arthur", "test");
+		String entryUri = createTestEntryAndReturnLocation(collectionUri, "austin", "test");
 
 		// we expect the default collection ACL to allow only users with the
 		// ROLE_EDITOR role to update any atom entries in any collection
@@ -245,6 +245,54 @@ public class TestAtomProtocolWithDefaultSecurity extends TestCase {
 		// security config but NOT to be assigned the ROLE_EDITOR role
 		
 		int result = executeMethod(method, "rebecca", "test");
+		
+		assertEquals(403, result);
+
+	}
+	
+	
+	
+	public void testAuthorCanUpdateTheirOwnEntry() {
+
+		String collectionUri = createTestCollection(SERVER_URI, "adam", "test");
+		
+		// we expect "audrey" is assigned the ROLE_AUTHOR so can create entries
+		
+		String entryUri = createTestEntryAndReturnLocation(collectionUri, "audrey", "test");
+
+		PutMethod method = new PutMethod(entryUri);
+
+		String content = "<atom:entry xmlns:atom=\"http://www.w3.org/2005/Atom\"><atom:title>Test Entry - Edited</atom:title><atom:summary>this is a test, edited</atom:summary></atom:entry>";
+		setAtomRequestEntity(method, content);
+		
+		// we expect the default resource ACL to allow users to update entries
+		// they created
+
+		int result = executeMethod(method, "audrey", "test");
+		
+		assertEquals(200, result);
+
+	}
+
+
+
+	public void testAuthorCannotUpdateAnotherAuthorsEntry() {
+
+		String collectionUri = createTestCollection(SERVER_URI, "adam", "test");
+		
+		// we expect "audrey" is assigned the ROLE_AUTHOR so can create entries
+		
+		String entryUri = createTestEntryAndReturnLocation(collectionUri, "audrey", "test");
+
+		PutMethod method = new PutMethod(entryUri);
+
+		String content = "<atom:entry xmlns:atom=\"http://www.w3.org/2005/Atom\"><atom:title>Test Entry - Edited</atom:title><atom:summary>this is a test, edited</atom:summary></atom:entry>";
+		setAtomRequestEntity(method, content);
+		
+		// we expect the default resource ACL to allow users to update entries
+		// they created, but not to allow them to update other authors' entries
+
+		int result = executeMethod(method, "austin", "test");
 		
 		assertEquals(403, result);
 

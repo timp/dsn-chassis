@@ -234,6 +234,20 @@ declare function ap:do-post-atom-entry(
         		    
         			let $entry-doc-db-path := atomdb:create-member( $request-path-info , $request-data , $comment )
         		
+        			let $log := util:log( "debug" , $entry-doc-db-path )
+        			
+		    		(: if security is enabled, install default resource ACL :)
+		    		
+		    		let $resource-acl-installed :=
+		    		    if ( $config:enable-security )
+		    		    then 
+		    		    	let $user := request:get-attribute( $config:user-name-request-attribute-key )
+		    		    	let $acl := config:default-resource-acl( $user )
+		    		    	let $entry-path-info := atomdb:db-path-to-request-path-info( $entry-doc-db-path )
+		    		    	let $acl-db-path := atomsec:store-resource-acl( $entry-path-info , $acl )
+				    		return $acl-db-path
+		    		    else ()
+        			
         			let $entry-doc := doc( $entry-doc-db-path )
         		            
         			let $header-content-type := response:set-header( $http:header-content-type , $ap:atom-mimetype )

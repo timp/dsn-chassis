@@ -534,7 +534,7 @@ declare function local:test-inline-groups() as item()*
                 </group>
                 <group name="authors">
                     <user>alice</user>
-                    <user>arthur</user>
+                    <user>austin</user>
                 </group>
                 <group name="editors">
                     <user>emma</user>
@@ -606,7 +606,7 @@ declare function local:test-inline-groups() as item()*
     let $request-path-info := $test-member-path
     let $operation := "update-member"
     let $media-type := ()
-    let $user := "arthur"
+    let $user := "austin"
     let $roles := ()
     let $decision := atomsec:decide( $user , $roles , $request-path-info , $operation , $media-type )
     let $output := ( $output , test:assert-equals( "deny" , $decision , "authors should not be allowed to update collection members" ) )
@@ -648,7 +648,7 @@ declare function local:test-reference-global-groups() as item()*
                 </group>
                 <group name="authors">
                     <user>alice</user>
-                    <user>arthur</user>
+                    <user>austin</user>
                 </group>
                 <group name="editors">
                     <user>emma</user>
@@ -731,7 +731,7 @@ declare function local:test-reference-global-groups() as item()*
     let $request-path-info := $test-member-path
     let $operation := "update-member"
     let $media-type := ()
-    let $user := "arthur"
+    let $user := "austin"
     let $roles := ()
     let $decision := atomsec:decide( $user , $roles , $request-path-info , $operation , $media-type )
     let $output := ( $output , test:assert-equals( "deny" , $decision , "authors should not be allowed to update collection members" ) )

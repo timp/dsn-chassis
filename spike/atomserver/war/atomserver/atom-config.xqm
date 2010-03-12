@@ -160,3 +160,62 @@ declare variable $config:default-collection-acl :=
         </rules>
     </acl>
 ;
+
+
+(:
+ : A function to generate default resource ACL, customise for your environment.
+ :)
+declare function config:default-resource-acl( $user as xs:string ) as element(acl)
+{
+
+	<acl>
+		<rules>
+            <allow>
+                <user>{$user}</user>
+                <operation>retrieve-member</operation>
+            </allow>
+            <allow>
+                <user>{$user}</user>
+                <operation>update-member</operation>
+            </allow>
+            <allow>
+                <user>{$user}</user>
+                <operation>delete-member</operation>
+            </allow>
+            <allow>
+                <user>{$user}</user>
+                <operation>update-acl</operation>
+            </allow>
+		</rules>
+	</acl>
+
+	(: you could also use groups, which makes it a bit easier to add more owners :)
+		
+	(:
+	<acl>
+		<groups>
+			<group name="owners">
+                <user>{$user}</user>
+			</group>
+		</groups>
+		<rules>
+            <allow>
+                <group>owners</group>
+                <operation>retrieve-member</operation>
+            </allow>
+            <allow>
+                <group>owners</group>
+                <operation>update-member</operation>
+            </allow>
+            <allow>
+                <group>owners</group>
+                <operation>delete-member</operation>
+            </allow>
+            <allow>
+                <group>owners</group>
+                <operation>update-acl</operation>
+            </allow>
+		</rules>
+	</acl>
+	:)
+};

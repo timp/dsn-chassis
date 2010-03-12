@@ -24,10 +24,16 @@
   
   <authentication-provider>
     <user-service>
+    
       <user name="adam" password="test" authorities="ROLE_USER, ROLE_ADMINISTRATOR" />
+
       <user name="edwina" password="test" authorities="ROLE_USER, ROLE_EDITOR" />
-      <user name="arthur" password="test" authorities="ROLE_USER, ROLE_AUTHOR" />
+
+      <user name="austin" password="test" authorities="ROLE_USER, ROLE_AUTHOR" />
+      <user name="audrey" password="test" authorities="ROLE_USER, ROLE_AUTHOR" />
+
       <user name="rebecca" password="test" authorities="ROLE_USER, ROLE_READER" />
+
     </user-service>
   </authentication-provider>
 
