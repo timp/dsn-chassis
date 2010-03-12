@@ -33,7 +33,9 @@
       <user name="audrey" password="test" authorities="ROLE_USER, ROLE_AUTHOR" />
 
       <user name="rebecca" password="test" authorities="ROLE_USER, ROLE_READER" />
-
+      
+      <user name="ursula" password="test" authorities="ROLE_USER" />
+      
     </user-service>
   </authentication-provider>
 

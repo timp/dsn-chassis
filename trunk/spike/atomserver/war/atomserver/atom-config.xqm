@@ -144,9 +144,13 @@ declare variable $config:default-global-acl :=
 
 
 (:
- : A default collection ACL, customise for your environment.
+ : A function to generate default collection ACL, customise for your environment.
  :)
-declare variable $config:default-collection-acl := 
+declare function config:default-collection-acl(
+    $request-path-info as xs:string ,
+    $user as xs:string
+) as element(acl)
+{ 
     <acl>
         <rules>
             <allow>
@@ -157,15 +161,22 @@ declare variable $config:default-collection-acl :=
                 <role>ROLE_EDITOR</role>
                 <operation>update-member</operation>
             </allow>
+            <allow>
+                <role>ROLE_READER</role>
+                <operation>list-collection</operation>
+            </allow>
         </rules>
     </acl>
-;
+};
 
 
 (:
  : A function to generate default resource ACL, customise for your environment.
  :)
-declare function config:default-resource-acl( $user as xs:string ) as element(acl)
+declare function config:default-resource-acl(
+    $request-path-info as xs:string ,
+    $user as xs:string
+) as element(acl)
 {
 
 	<acl>

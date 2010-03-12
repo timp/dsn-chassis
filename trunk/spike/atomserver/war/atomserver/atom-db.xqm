@@ -471,9 +471,9 @@ declare function adb:create-entry(
                     else
                     <atom:name>{$user-name}</atom:name>                    
                 }
-                <atom:updated>{$published}</atom:updated>
-                <atom:summary>{$comment}</atom:summary>
             </atom:author>
+            <atom:updated>{$published}</atom:updated>
+            <atom:summary>{$comment}</atom:summary>
         </ar:comment>
         
     return
@@ -547,9 +547,9 @@ declare function adb:create-media-link-entry(
                     else
                     <atom:name>{$user-name}</atom:name>                    
                 }
-                <atom:updated>{$published}</atom:updated>
-                <atom:summary>{$comment}</atom:summary>
             </atom:author>
+            <atom:updated>{$published}</atom:updated>
+            <atom:summary>{$comment}</atom:summary>
         </ar:comment>
     
 	return
@@ -596,9 +596,9 @@ declare function adb:update-entry(
                     else
                     <atom:name>{$user-name}</atom:name>                    
                 }
-                <atom:updated>{$updated}</atom:updated>
-                <atom:summary>{$comment}</atom:summary>
             </atom:author>
+            <atom:updated>{$updated}</atom:updated>
+            <atom:summary>{$comment}</atom:summary>
         </ar:comment>
         
     return

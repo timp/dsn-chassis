@@ -300,6 +300,38 @@ public class TestAtomProtocolWithDefaultSecurity extends TestCase {
 	
 	
 	
+	public void testUserWithReaderRoleCanListCollections() {
+
+		// setup test
+		String collectionUri = createTestCollection(SERVER_URI, "adam", "test");
+		String entryUri = createTestEntryAndReturnLocation(collectionUri, "audrey", "test");
+		
+		// list collection, expecting user "rebecca" to be in role ROLE_READER
+		GetMethod method = new GetMethod(collectionUri);
+		int result = executeMethod(method, "rebecca", "test");
+		
+		assertEquals(200, result);
+		
+	}
+	
+	
+	
+	public void testUserWithoutReaderRoleCannotListCollections() {
+
+		// setup test
+		String collectionUri = createTestCollection(SERVER_URI, "adam", "test");
+		String entryUri = createTestEntryAndReturnLocation(collectionUri, "audrey", "test");
+		
+		// list collection, expecting user "ursula" not to be in role ROLE_READER
+		GetMethod method = new GetMethod(collectionUri);
+		int result = executeMethod(method, "ursula", "test");
+		
+		assertEquals(403, result);
+		
+	}
+	
+	
+	
 }
 
 
