@@ -153,9 +153,36 @@ declare function config:default-collection-acl(
 { 
     <acl>
         <rules>
+        
+            <!--  
+            Authors can create entries and media, and can list the collection,
+            but can only retrieve resources they have created.
+            -->
+            
             <allow>
                 <role>ROLE_AUTHOR</role>
                 <operation>create-member</operation>
+            </allow>
+            <allow>
+                <role>ROLE_AUTHOR</role>
+                <operation>create-media</operation>
+            </allow>
+            <allow>
+                <role>ROLE_AUTHOR</role>
+                <operation>list-collection</operation>
+            </allow>
+            
+            <!--
+            Editors can list the collection, retrieve and update any member.
+            -->
+            
+            <allow>
+                <role>ROLE_EDITOR</role>
+                <operation>list-collection</operation>
+            </allow>
+            <allow>
+                <role>ROLE_EDITOR</role>
+                <operation>retrieve-member</operation>
             </allow>
             <allow>
                 <role>ROLE_EDITOR</role>
@@ -165,6 +192,31 @@ declare function config:default-collection-acl(
                 <role>ROLE_READER</role>
                 <operation>list-collection</operation>
             </allow>
+            
+            <!--
+            Readers can list the collection and retrieve any member.
+            -->
+            
+            <allow>
+                <role>ROLE_READER</role>
+                <operation>list-collection</operation>
+            </allow>
+            <allow>
+                <role>ROLE_READER</role>
+                <operation>retrieve-member</operation>
+            </allow>
+            
+            <!--
+            Data authors can only create media resources with a specific media
+            type.
+            -->
+            
+            <allow>
+                <role>ROLE_DATA_AUTHOR</role>
+                <operation>create-media</operation>
+                <media-range>application/vnd.ms-excel</media-range>
+            </allow>
+            
         </rules>
     </acl>
 };
@@ -181,6 +233,11 @@ declare function config:default-resource-acl(
 
 	<acl>
 		<rules>
+		
+		    <!-- 
+		    The user who created the resource has full rights.
+		    -->
+		    
             <allow>
                 <user>{$user}</user>
                 <operation>retrieve-member</operation>
@@ -197,6 +254,7 @@ declare function config:default-resource-acl(
                 <user>{$user}</user>
                 <operation>update-acl</operation>
             </allow>
+            
 		</rules>
 	</acl>
 

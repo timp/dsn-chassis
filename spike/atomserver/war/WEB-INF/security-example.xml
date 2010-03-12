@@ -36,6 +36,8 @@
       
       <user name="ursula" password="test" authorities="ROLE_USER" />
       
+      <user name="daniel" password="test" authorities="ROLE_USER, ROLE_DATA_AUTHOR" />
+
     </user-service>
   </authentication-provider>
 

@@ -1,8 +1,12 @@
 package org.cggh.chassis.spike.atomserver;
 
+import java.io.InputStream;
+
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.PutMethod;
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
 
 import static org.cggh.chassis.spike.atomserver.AtomTestUtils.*;
 
@@ -19,6 +23,9 @@ public class TestAtomProtocolWithDefaultSecurity extends TestCase {
 	
 	private static final String SERVER_URI = "http://localhost:8081/atomserver/atomserver/edit/";
 
+	
+	
+	private String testCollectionUri = null;
 	
 	
 	
@@ -43,6 +50,7 @@ public class TestAtomProtocolWithDefaultSecurity extends TestCase {
 	
 	protected void setUp() throws Exception {
 		super.setUp();
+		testCollectionUri = createTestCollection(SERVER_URI, "adam", "test");
 	}
 	
 	
@@ -155,12 +163,10 @@ public class TestAtomProtocolWithDefaultSecurity extends TestCase {
 	
 	public void testUserWithAuthorRoleCanCreateAtomEntries() {
 		
-		String collectionUri = createTestCollection(SERVER_URI, "adam", "test");
-
 		// we expect the default collection ACL to allow users with the
 		// ROLE_AUTHOR role to create atom entries in any collection
 		 
-		PostMethod method = new PostMethod(collectionUri);
+		PostMethod method = new PostMethod(testCollectionUri);
 		
 		String content = "<atom:entry xmlns:atom=\"http://www.w3.org/2005/Atom\"><atom:title>Test Entry</atom:title><atom:summary>this is a test</atom:summary></atom:entry>";
 		setAtomRequestEntity(method, content);
@@ -179,12 +185,10 @@ public class TestAtomProtocolWithDefaultSecurity extends TestCase {
 	
 	public void testUserWithoutAuthorRoleCannotCreateAtomEntries() {
 		
-		String collectionUri = createTestCollection(SERVER_URI, "adam", "test");
-
 		// we expect the default collection ACL to allow only users with the
 		// ROLE_AUTHOR role to create atom entries in any collection
 		 
-		PostMethod method = new PostMethod(collectionUri);
+		PostMethod method = new PostMethod(testCollectionUri);
 		
 		String content = "<atom:entry xmlns:atom=\"http://www.w3.org/2005/Atom\"><atom:title>Test Entry</atom:title><atom:summary>this is a test</atom:summary></atom:entry>";
 		setAtomRequestEntity(method, content);
@@ -203,9 +207,7 @@ public class TestAtomProtocolWithDefaultSecurity extends TestCase {
 	
 	public void testUserWithEditorRoleCanUpdateAtomEntries() {
 
-		String collectionUri = createTestCollection(SERVER_URI, "adam", "test");
-		
-		String entryUri = createTestEntryAndReturnLocation(collectionUri, "austin", "test");
+		String entryUri = createTestEntryAndReturnLocation(testCollectionUri, "austin", "test");
 
 		// we expect the default collection ACL to allow only users with the
 		// ROLE_EDITOR role to update any atom entries in any collection
@@ -229,9 +231,7 @@ public class TestAtomProtocolWithDefaultSecurity extends TestCase {
 	
 	public void testUserWithoutEditorRoleCannotUpdateAtomEntries() {
 
-		String collectionUri = createTestCollection(SERVER_URI, "adam", "test");
-		
-		String entryUri = createTestEntryAndReturnLocation(collectionUri, "austin", "test");
+		String entryUri = createTestEntryAndReturnLocation(testCollectionUri, "austin", "test");
 
 		// we expect the default collection ACL to allow only users with the
 		// ROLE_EDITOR role to update any atom entries in any collection
@@ -254,11 +254,9 @@ public class TestAtomProtocolWithDefaultSecurity extends TestCase {
 	
 	public void testAuthorCanUpdateTheirOwnEntry() {
 
-		String collectionUri = createTestCollection(SERVER_URI, "adam", "test");
-		
 		// we expect "audrey" is assigned the ROLE_AUTHOR so can create entries
 		
-		String entryUri = createTestEntryAndReturnLocation(collectionUri, "audrey", "test");
+		String entryUri = createTestEntryAndReturnLocation(testCollectionUri, "audrey", "test");
 
 		PutMethod method = new PutMethod(entryUri);
 
@@ -278,11 +276,9 @@ public class TestAtomProtocolWithDefaultSecurity extends TestCase {
 
 	public void testAuthorCannotUpdateAnotherAuthorsEntry() {
 
-		String collectionUri = createTestCollection(SERVER_URI, "adam", "test");
-		
 		// we expect "audrey" is assigned the ROLE_AUTHOR so can create entries
 		
-		String entryUri = createTestEntryAndReturnLocation(collectionUri, "audrey", "test");
+		String entryUri = createTestEntryAndReturnLocation(testCollectionUri, "audrey", "test");
 
 		PutMethod method = new PutMethod(entryUri);
 
@@ -303,11 +299,10 @@ public class TestAtomProtocolWithDefaultSecurity extends TestCase {
 	public void testUserWithReaderRoleCanListCollections() {
 
 		// setup test
-		String collectionUri = createTestCollection(SERVER_URI, "adam", "test");
-		String entryUri = createTestEntryAndReturnLocation(collectionUri, "audrey", "test");
+		createTestEntryAndReturnLocation(testCollectionUri, "audrey", "test");
 		
 		// list collection, expecting user "rebecca" to be in role ROLE_READER
-		GetMethod method = new GetMethod(collectionUri);
+		GetMethod method = new GetMethod(testCollectionUri);
 		int result = executeMethod(method, "rebecca", "test");
 		
 		assertEquals(200, result);
@@ -319,11 +314,10 @@ public class TestAtomProtocolWithDefaultSecurity extends TestCase {
 	public void testUserWithoutReaderRoleCannotListCollections() {
 
 		// setup test
-		String collectionUri = createTestCollection(SERVER_URI, "adam", "test");
-		String entryUri = createTestEntryAndReturnLocation(collectionUri, "audrey", "test");
+		createTestEntryAndReturnLocation(testCollectionUri, "audrey", "test");
 		
 		// list collection, expecting user "ursula" not to be in role ROLE_READER
-		GetMethod method = new GetMethod(collectionUri);
+		GetMethod method = new GetMethod(testCollectionUri);
 		int result = executeMethod(method, "ursula", "test");
 		
 		assertEquals(403, result);
@@ -332,6 +326,182 @@ public class TestAtomProtocolWithDefaultSecurity extends TestCase {
 	
 	
 	
+	
+	public void testUserWithReaderRoleCanRetrieveEntry() {
+		
+		// setup test
+		String entryUri = createTestEntryAndReturnLocation(testCollectionUri, "audrey", "test");
+		
+		// retrieve entry, expecting user "rebecca" to be in role ROLE_READER
+		GetMethod method = new GetMethod(entryUri);
+		int result = executeMethod(method, "rebecca", "test");
+		
+		assertEquals(200, result);
+	}
+	
+	
+	
+	public void testUserWithoutReaderRoleCannotRetrieveEntry() {
+		
+		// setup test
+		String entryUri = createTestEntryAndReturnLocation(testCollectionUri, "audrey", "test");
+		
+		// list collection, expecting user "ursula" not to be in role ROLE_READER
+		GetMethod method = new GetMethod(entryUri);
+		int result = executeMethod(method, "ursula", "test");
+		
+		assertEquals(403, result);
+
+	}
+	
+	
+	
+	public void testUserWithAuthorRoleCanCreateMedia() {
+		
+		PostMethod method = new PostMethod(testCollectionUri);
+		String media = "This is a test.";
+		setTextPlainRequestEntity(method, media);
+		int result = executeMethod(method, "audrey", "test");
+		
+		// we expect the user "audrey" to be defined in the example
+		// security config to be assigned the ROLE_AUTHOR role
+		
+		assertEquals(201, result);
+
+	}
+
+
+
+	public void testUserWithoutAuthorRoleCannotCreateMedia() {
+		
+		PostMethod method = new PostMethod(testCollectionUri);
+		String media = "This is a test.";
+		setTextPlainRequestEntity(method, media);
+		int result = executeMethod(method, "rebecca", "test");
+		
+		// we expect the user "rebecca" to be defined in the example
+		// security config to not be assigned the ROLE_AUTHOR role
+		
+		assertEquals(403, result);
+
+	}
+
+
+
+	public void testUserWithDataAuthorRoleCanCreateMediaWithSpecificMediaType() {
+		
+		PostMethod method = new PostMethod(testCollectionUri);
+		InputStream content = this.getClass().getClassLoader().getResourceAsStream("spreadsheet1.xls");
+		String contentType = "application/vnd.ms-excel";
+		setInputStreamRequestEntity(method, content, contentType);
+		int result = executeMethod(method, "daniel", "test");
+		
+		// we expect the user "daniel" to be defined in the example
+		// security config to be assigned the ROLE_DATA_AUTHOR role
+		
+		assertEquals(201, result);
+
+	}
+
+
+
+	public void testUserWithDataAuthorRoleCannotCreateMediaWithSpecificMediaType() {
+		
+		PostMethod method = new PostMethod(testCollectionUri);
+		String media = "This is a test.";
+		setTextPlainRequestEntity(method, media);
+		int result = executeMethod(method, "daniel", "test");
+		
+		// we expect the user "daniel" to be defined in the example
+		// security config to be assigned the ROLE_DATA_AUTHOR role
+		
+		assertEquals(403, result);
+
+	}
+	
+	
+	
+	public void testAuthorsCanRetrieveEntryTheyCreated() {
+		
+		String entryUri = createTestEntryAndReturnLocation(testCollectionUri, "audrey", "test");
+
+		GetMethod method = new GetMethod(entryUri);
+		
+		// we expect the default resource ACL to allow users to retrieve entries
+		// they created
+
+		int result = executeMethod(method, "audrey", "test");
+		
+		assertEquals(200, result);
+
+	}
+
+
+
+	public void testAuthorsCannotRetrieveAnotherAuthorsEntry() {
+		
+		String entryUri = createTestEntryAndReturnLocation(testCollectionUri, "audrey", "test");
+
+		GetMethod method = new GetMethod(entryUri);
+		
+		// we expect the default resource ACL to allow users to retrieve entries
+		// they created, but not to allow them to retrieve other authors' entries
+
+		int result = executeMethod(method, "austin", "test");
+		
+		assertEquals(403, result);
+
+	}
+	
+	
+	
+	public void testAuthorsCanListCollectionButOnlyRetrieveEntriesTheyCreated() {
+
+		createTestEntryAndReturnLocation(testCollectionUri, "audrey", "test");
+		createTestEntryAndReturnLocation(testCollectionUri, "austin", "test");
+		
+		GetMethod method = new GetMethod(testCollectionUri);
+		int result = executeMethod(method, "audrey", "test");
+		
+		assertEquals(200, result);
+
+		Document feedDoc = getResponseBodyAsDocument(method);
+		
+		NodeList entries = feedDoc.getElementsByTagNameNS("http://www.w3.org/2005/Atom", "entry");
+		assertEquals(1, entries.getLength());
+		
+		method = new GetMethod(testCollectionUri);
+		result = executeMethod(method, "austin", "test");
+		
+		assertEquals(200, result);
+
+		feedDoc = getResponseBodyAsDocument(method);
+		
+		entries = feedDoc.getElementsByTagNameNS("http://www.w3.org/2005/Atom", "entry");
+		assertEquals(1, entries.getLength());
+		
+		// but readers should be able to retrieve all entries
+		
+		method = new GetMethod(testCollectionUri);
+		result = executeMethod(method, "rebecca", "test");
+		
+		assertEquals(200, result);
+
+		feedDoc = getResponseBodyAsDocument(method);
+		
+		entries = feedDoc.getElementsByTagNameNS("http://www.w3.org/2005/Atom", "entry");
+		assertEquals(2, entries.getLength());
+		
+	}
+
+
+	
+	// TODO test retrieving and updating media resources and media-link entries
+	
+	// TODO test creating media resources with multipart requests
+	
+	// TODO test creating collections with legacy POST requests
+
 }
 
 

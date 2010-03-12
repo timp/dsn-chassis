@@ -126,12 +126,7 @@ declare function ap:do-post-atom-feed(
      : apply a security decision.
      :)
      
-    let $user := request:get-attribute( $config:user-name-request-attribute-key )
-    let $roles := request:get-attribute( $config:user-roles-request-attribute-key )
-    
-    let $forbidden := 
-        if ( not( $config:enable-security ) ) then false()
-        else ( atomsec:decide( $user , $roles , $request-path-info, $atomsec:op-create-collection ) = $atomsec:decision-deny )
+    let $forbidden := ap:is-operation-forbidden( $request-path-info, $atomsec:op-create-collection )
         
     return
     
@@ -215,12 +210,7 @@ declare function ap:do-post-atom-entry(
              : apply a security decision. 
              :)
              
-            let $user := request:get-attribute( $config:user-name-request-attribute-key )
-            let $roles := request:get-attribute( $config:user-roles-request-attribute-key )
-            
-            let $forbidden := 
-                if ( not( $config:enable-security ) ) then false()
-                else ( atomsec:decide( $user , $roles , $request-path-info, $atomsec:op-create-member ) = $atomsec:decision-deny )
+            let $forbidden := ap:is-operation-forbidden( $request-path-info, $atomsec:op-create-member )
                 
             return
             
@@ -234,37 +224,25 @@ declare function ap:do-post-atom-entry(
         		    
         			let $entry-doc-db-path := atomdb:create-member( $request-path-info , $request-data , $comment )
         		
-        			let $log := util:log( "debug" , $entry-doc-db-path )
-        			
 		    		(: if security is enabled, install default resource ACL :)
-		    		
-		    		let $resource-acl-installed :=
-		    		    if ( $config:enable-security )
-		    		    then 
-		    		    	let $user := request:get-attribute( $config:user-name-request-attribute-key )
-		    		    	let $acl := config:default-resource-acl( $request-path-info , $user )
-		    		    	let $entry-path-info := atomdb:db-path-to-request-path-info( $entry-doc-db-path )
-		    		    	let $acl-db-path := atomsec:store-resource-acl( $entry-path-info , $acl )
-				    		return $acl-db-path
-		    		    else ()
+		    		let $resource-acl-installed := ap:install-resource-acl( $request-path-info , $entry-doc-db-path )
         			
         			let $entry-doc := doc( $entry-doc-db-path )
         		            
-        			let $header-content-type := response:set-header( $http:header-content-type , $ap:atom-mimetype )
-        			
-        		    let $status-code := response:set-status-code( $http:status-success-created )
-        		        
         		    let $location := $entry-doc/atom:entry/atom:link[@rel="self"]/@href
         		        	
         			let $header-location := response:set-header( $http:header-location, $location )
         					    
-        			return $entry-doc
+        			return ap:send-atom( $http:status-success-created , $entry-doc )
         			
 };
 
 
 
 
+(:
+ : TODO doc me
+ :)
 declare function ap:do-post-media(
 	$request-path-info as xs:string ,
 	$request-content-type
@@ -291,13 +269,9 @@ declare function ap:do-post-media(
              : apply a security decision. 
              :)
              
-            let $user := request:get-attribute( $config:user-name-request-attribute-key )
-            let $roles := request:get-attribute( $config:user-roles-request-attribute-key )
         	let $media-type := text:groups( $request-content-type , "^([^;]+)" )[2]
 	
-            let $forbidden := 
-                if ( not( $config:enable-security ) ) then false()
-                else ( atomsec:decide( $user , $roles , $request-path-info, $atomsec:op-create-media , $media-type ) = $atomsec:decision-deny )
+            let $forbidden := ap:is-operation-forbidden( $request-path-info , $atomsec:op-create-media , $media-type )
                 
             return
             
@@ -323,15 +297,11 @@ declare function ap:do-post-media(
         			
         			let $media-link-doc := doc( $media-link-doc-db-path )
         		            
-        			let $header-content-type := response:set-header( $http:header-content-type , $ap:atom-mimetype )
-        			
-        		    let $status-code := response:set-status-code( $http:status-success-created )
-        		        
         		    let $location := $media-link-doc/atom:entry/atom:link[@rel="self"]/@href
         		        	
         			let $header-location := response:set-header( $http:header-location, $location )
         					    
-        			return $media-link-doc
+        			return ap:send-atom( $http:status-success-created , $media-link-doc )
         			
 };
 
@@ -391,12 +361,7 @@ declare function ap:do-post-multipart(
              : apply a security decision. 
              :)
              
-            let $user := request:get-attribute( $config:user-name-request-attribute-key )
-            let $roles := request:get-attribute( $config:user-roles-request-attribute-key )
-	
-            let $forbidden := 
-                if ( not( $config:enable-security ) ) then false()
-                else ( atomsec:decide( $user , $roles , $request-path-info, $atomsec:op-create-media , $media-type ) = $atomsec:decision-deny )
+            let $forbidden := ap:is-operation-forbidden( $request-path-info , $atomsec:op-create-media , $media-type )
                 
             return
             
@@ -552,12 +517,7 @@ declare function ap:do-put-atom-feed(
         if ( $create ) then $atomsec:op-create-collection
         else $atomsec:op-update-collection
         
-    let $user := request:get-attribute( $config:user-name-request-attribute-key )
-    let $roles := request:get-attribute( $config:user-roles-request-attribute-key )
-    
-    let $forbidden := 
-        if ( not( $config:enable-security ) ) then false()
-        else ( atomsec:decide( $user , $roles , $request-path-info, $operation ) = $atomsec:decision-deny )
+    let $forbidden := ap:is-operation-forbidden( $request-path-info , $operation )
         
     return
     
@@ -585,19 +545,15 @@ declare function ap:do-put-atom-feed(
     		   default collection ACL :)
     		
     		let $collection-acl-installed :=
-    		    if ( $config:enable-security and $create )
-    		    then 
-    		        let $acl := config:default-collection-acl( $request-path-info , $user )
-    		        return atomsec:store-collection-acl( $request-path-info , $acl )
+    		    if ( $create )
+    		    then ap:install-collection-acl( $request-path-info )
     		    else ()
     		
         	let $feed-doc := doc( $feed-doc-db-path )
                     
-        	let $header-content-type := response:set-header( $http:header-content-type , $ap:atom-mimetype )
-        	
             let $status-code :=
-                if ( $create ) then response:set-status-code( $http:status-success-created )
-                else response:set-status-code( $http:status-success-ok )	
+                if ( $create ) then $http:status-success-created 
+                else $http:status-success-ok 
                 
             let $location := $feed-doc/atom:feed/atom:link[@rel="self"]/@href
                 	
@@ -605,7 +561,7 @@ declare function ap:do-put-atom-feed(
         	    if ( $create ) then response:set-header( $http:header-location, $location )
         	    else ()
             
-        	return $feed-doc
+        	return ap:send-atom( $status-code , $feed-doc )
 	
 };
 
@@ -640,13 +596,8 @@ declare function ap:do-put-atom-entry(
 		     : Here we bottom out at the "update-member" operation, so we need
 		     : to apply a security decision.
 		     :)
-
-            let $user := request:get-attribute( $config:user-name-request-attribute-key )
-            let $roles := request:get-attribute( $config:user-roles-request-attribute-key )
             
-            let $forbidden := 
-                if ( not( $config:enable-security ) ) then false()
-                else ( atomsec:decide( $user , $roles , $request-path-info, $atomsec:op-update-member ) = $atomsec:decision-deny )
+            let $forbidden := ap:is-operation-forbidden( $request-path-info , $atomsec:op-update-member )
                 
             return
             
@@ -662,11 +613,7 @@ declare function ap:do-put-atom-entry(
         		
         			let $entry-doc := doc( $entry-doc-db-path )
         		            
-        			let $header-content-type := response:set-header( $http:header-content-type , $ap:atom-mimetype )
-        			
-        		    let $status-code := response:set-status-code( $http:status-success-ok )
-        		        
-        			return $entry-doc
+        			return ap:send-atom( $http:status-success-ok , $entry-doc )
         
 };
 
@@ -761,13 +708,20 @@ declare function ap:do-get-entry(
 )
 {
     
-    (: TODO security decision :)
+    (: 
+     : Here we bottom out at the "retrieve-member" operation, so we need
+     : to apply a security decision.
+     :)
+
+    let $forbidden := ap:is-operation-forbidden( $request-path-info , $atomsec:op-retrieve-member )
+        
+    return
     
-    let $status-code := response:set-status-code( $http:status-success-ok )
-    
-    let $header-content-type := response:set-header( $http:header-content-type , $ap:atom-mimetype )
-    
-    return atomdb:retrieve-entry( $request-path-info )
+        if ( $forbidden ) 
+
+        then ap:do-forbidden( $request-path-info )
+
+        else ap:send-atom( $http:status-success-ok , atomdb:retrieve-entry( $request-path-info ) )
 
 };
 
@@ -816,12 +770,7 @@ declare function ap:do-get-feed(
      : to apply a security decision.
      :)
 
-    let $user := request:get-attribute( $config:user-name-request-attribute-key )
-    let $roles := request:get-attribute( $config:user-roles-request-attribute-key )
-    
-    let $forbidden := 
-        if ( not( $config:enable-security ) ) then false()
-        else ( atomsec:decide( $user , $roles , $request-path-info, $atomsec:op-list-collection ) = $atomsec:decision-deny )
+    let $forbidden := ap:is-operation-forbidden( $request-path-info , $atomsec:op-list-collection )
         
     return
     
@@ -829,18 +778,38 @@ declare function ap:do-get-feed(
 
         then ap:do-forbidden( $request-path-info )
 
-        else
+        else 
+            
+            let $feed := atomdb:retrieve-feed( $request-path-info ) 
+            
+            let $feed := ap:filter-feed-by-acls( $feed )
+            
+            return ap:send-atom( $http:status-success-ok , $feed )
     
-            let $status-code := response:set-status-code( $http:status-success-ok )
-            
-            let $header-content-type := response:set-header( $http:header-content-type , $ap:atom-mimetype )
-            
-            (: TODO filter feed by ACLs :)
-            
-            return atomdb:retrieve-feed( $request-path-info )
-
 };
 
+
+
+
+declare function ap:filter-feed-by-acls(
+    $feed as element(atom:feed)
+) as element(atom:feed)
+{
+    if ( not( $config:enable-security ) )
+    then $feed
+    else
+        <atom:feed>
+            {
+                $feed/attribute::* ,
+                $feed/*[ ( local-name(.) != $af:entry ) and ( namespace-uri(.) != $af:nsuri ) ] ,
+                for $entry in $feed/atom:entry
+                let $request-path-info := substring-after( $entry/atom:link[@rel="edit"]/@href , $config:service-url )
+                let $forbidden := ap:is-operation-forbidden( $request-path-info , $atomsec:op-retrieve-member )
+                return 
+                    if ( not( $forbidden ) ) then $entry else ()
+            }
+        </atom:feed>
+};
 
 
 
@@ -893,7 +862,7 @@ declare function ap:do-method-not-allowed(
 
 
 declare function ap:do-forbidden(
-	$request-path-info
+	$request-path-info as xs:string
 ) as item()?
 {
 
@@ -905,6 +874,95 @@ declare function ap:do-forbidden(
 
 
 
+declare function ap:is-operation-forbidden(
+    $request-path-info as xs:string ,
+    $operation as xs:string
+) as xs:boolean
+{
+
+    let $user := request:get-attribute( $config:user-name-request-attribute-key )
+    let $roles := request:get-attribute( $config:user-roles-request-attribute-key )
+    
+    let $forbidden := 
+        if ( not( $config:enable-security ) ) then false()
+        else ( atomsec:decide( $user , $roles , $request-path-info, $operation ) = $atomsec:decision-deny )
+        
+    return $forbidden 
+    
+};
+
+
+
+declare function ap:is-operation-forbidden(
+    $request-path-info as xs:string ,
+    $operation as xs:string ,
+    $media-type as xs:string
+) as xs:boolean
+{
+
+    let $user := request:get-attribute( $config:user-name-request-attribute-key )
+    let $roles := request:get-attribute( $config:user-roles-request-attribute-key )
+    
+    let $forbidden := 
+        if ( not( $config:enable-security ) ) then false()
+        else ( atomsec:decide( $user , $roles , $request-path-info, $operation , $media-type ) = $atomsec:decision-deny )
+        
+    return $forbidden 
+    
+};
+
+
+
+declare function ap:install-resource-acl(
+    $request-path-info as xs:string,
+    $entry-doc-db-path as xs:string
+) as xs:string?
+{
+    if ( $config:enable-security )
+    then 
+        let $user := request:get-attribute( $config:user-name-request-attribute-key )
+        let $acl := config:default-resource-acl( $request-path-info , $user )
+        let $entry-path-info := atomdb:db-path-to-request-path-info( $entry-doc-db-path )
+        let $acl-db-path := atomsec:store-resource-acl( $entry-path-info , $acl )
+    	return $acl-db-path
+    else ()
+};
+
+
+
+
+declare function ap:install-collection-acl( $request-path-info as xs:string ) as xs:string?
+{
+    if ( $config:enable-security )
+    then 
+        let $user := request:get-attribute( $config:user-name-request-attribute-key )
+        let $acl := config:default-collection-acl( $request-path-info , $user )
+        return atomsec:store-collection-acl( $request-path-info , $acl )
+    else ()
+};
+
+
+
+
+declare function ap:send-atom(
+    $status as xs:integer ,
+    $data as item()
+)
+{
+
+    let $status-code := response:set-status-code( $status )
+    
+    let $header-content-type := response:set-header( $http:header-content-type , $ap:atom-mimetype )
+    
+    return $data
+
+};
+
+
+
+(:
+ : TODO doc me
+ :)
 declare function ap:send-error(
     $status-code as xs:integer , 
     $message as xs:string? ,
