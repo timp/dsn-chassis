@@ -111,6 +111,16 @@ declare function adb:request-path-info-to-db-path(
 
 
 
+declare function adb:db-path-to-request-path-info(
+	$db-path as xs:string
+) as xs:string
+{
+	if ( starts-with( $db-path , $config:base-collection-path ) )
+	then substring-after( $db-path , $config:base-collection-path )
+	else ()
+};
+
+
 
 declare function adb:feed-doc-db-path(
 	$db-collection-path as xs:string
