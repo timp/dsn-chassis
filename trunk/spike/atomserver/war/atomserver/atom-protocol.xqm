@@ -220,6 +220,11 @@ declare function ap:do-post-atom-entry(
         
                 else
         
+        			(: EXPERIMENTAL: inject functions before operation :)
+        			let $status := ap:inject-before( $config:before-create-member , 200 , $request-path-info , $request-data )
+        			
+        			let $log := util:log( "debug" , $status )	
+        			
                     let $comment := request:get-header("X-Atom-Revision-Comment")
         		    
         			let $entry-doc-db-path := atomdb:create-member( $request-path-info , $request-data , $comment )
@@ -239,6 +244,42 @@ declare function ap:do-post-atom-entry(
 
 
 
+
+declare function ap:inject-before(
+	$functions as function* ,
+	$status as xs:integer ,
+	$request-path-info as xs:string ,
+	$request-data as item()*
+) as xs:integer
+{
+	if ( empty( $functions ) )
+	
+	(: trivially successful :)
+	then 200
+	
+	else 
+	
+		let $f as function := $functions[1]
+
+		let $log := util:log( "debug" , concat( "calling before function, status passed in: " , $status ) )
+
+		let $result := util:call( $f , $request-path-info , $request-data )
+		
+		let $log := util:log( "debug" , concat( "result: " , $result ) )
+		
+		let $remaining-functions := subsequence( $functions , 2 )
+		
+		return 
+
+			if ( $result >= 200 and $result < 300 and exists( $remaining-functions ) )
+			
+			(: success, carry on calling remaining functions :)
+			then ap:inject-before( $remaining-functions , $result , $request-path-info , $request-data )
+
+			(: bail out :)
+			else $result
+
+};
 
 (:
  : TODO doc me
