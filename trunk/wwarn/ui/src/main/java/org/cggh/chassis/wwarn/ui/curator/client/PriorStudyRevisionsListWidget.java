@@ -8,7 +8,6 @@ import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.DelegatingWidget;
 import org.cggh.chassis.generic.widget.client.WidgetEventChannel;
 
-
 /**
  * @author timp
  *
@@ -20,9 +19,7 @@ public class PriorStudyRevisionsListWidget
 	
 
 	private PriorStudyRevisionsListWidgetController controller;
-		
-	private PriorRevisionRowWidget priorRevisionRowWidget;
-   	
+	
 	@Override
 	protected PriorStudyRevisionsListWidgetModel createModel() {
 		return new PriorStudyRevisionsListWidgetModel();

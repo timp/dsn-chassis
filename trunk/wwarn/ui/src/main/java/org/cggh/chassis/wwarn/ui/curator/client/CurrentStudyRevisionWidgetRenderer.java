@@ -47,12 +47,11 @@ public class CurrentStudyRevisionWidgetRenderer extends
 	private static CurrentStudyRevisionWidgetRendererUiBinder uiBinder = 
 		GWT.create(CurrentStudyRevisionWidgetRendererUiBinder.class);
 
-	//@UiField HTMLPanel bodyPanel;
-	//@UiField FlowPanel mainActionsPanel;
+//	@UiField HTMLPanel bodyPanel;
+//	@UiField FlowPanel mainActionsPanel;
 	@UiField HTMLPanel pendingPanel;
 	@UiField HTMLPanel errorPanel;
 	@UiField FlowPanel errorMessage;
-	
 
 	private CurrentStudyRevisionWidget owner;
 	private CurrentStudyRevisionWidgetController controller;
@@ -75,65 +74,17 @@ public class CurrentStudyRevisionWidgetRenderer extends
 	
 	@Override
 	protected void registerHandlersForModelChanges() {
-		/*
-		model.addStatusChangeHandler(new StatusChangeHandler() {
-			public void onStatusChanged(StatusChangeEvent e) {
-				syncUIWithStatus(e.getAfter());
-			}
-		});
 		
-		model.studyFeed.addChangeHandler(new PropertyChangeHandler<Document>() {
-			public void onChange(PropertyChangeEvent<Document> e) {
-				syncUiWithStudyFeedDoc(e.getAfter());
-			}
-		});
-		*/
 	}
 
 	@Override
 	protected void syncUI() {
-		/*
-		syncUIWithStatus(model.getStatus());
-		syncUiWithStudyFeedDoc(model.getStudyFeedDoc());
-		*/
 	}
 
 	protected void syncUIWithStatus(Status status) {
 
 		log.enter("syncUIWithStatus");		
 		
-		// Hide everything (that is made visible here) first, then show as required.
-		pendingPanel.setVisible(false);
-		errorPanel.setVisible(false);
-		
-		if (status instanceof AsyncWidgetModel.InitialStatus) {
-			
-		}
-		/*
-		else if (status instanceof CurrentStudyRevisionWidgetModel.RetrieveFeedPendingStatus) {
-			pendingPanel.setVisible(true);
-		} 
-		else if (status instanceof CurrentStudyRevisionWidgetModel.StudiesRetrievedStatus) {
-			
-			
-		}
-		else if (status instanceof CurrentStudyRevisionWidgetModel.CreateEntryPendingStatus) {
-			pendingPanel.setVisible(true);
-		}
-		else if (status instanceof CurrentStudyRevisionWidgetModel.StudyCreatedStatus) {
-			
-			
-		}
-		*/
-		else if (status instanceof AsyncWidgetModel.ErrorStatus) {
-			
-			error("Error status: " + status + " " + model.message);
-			errorPanel.setVisible(true);
-		}
-		else { 
-			error("Unexpected status: " + status);
-			errorPanel.setVisible(true);
-		}
 		log.leave();
 	}
 	
@@ -143,27 +94,12 @@ public class CurrentStudyRevisionWidgetRenderer extends
 		
 		log.enter("syncUiWithStudyFeedDoc");
 		
+		// Turn everything off (that is made visible/enabled here) first, then show/enable as required.
 		
 		log.leave();
 	}
 	
 	
-	
-	
-	
-	@Override
-	public void registerHandlersForChildWidgetEvents() {
-		
-		ChangeHandler studySelectedChangeHandler = new ChangeHandler() {
-
-			public void onChange(ChangeEvent event) {
-			}
-
-		};
-		
-		
-	}
-
 	public void error(String err) {
 
 		errorMessage.clear();

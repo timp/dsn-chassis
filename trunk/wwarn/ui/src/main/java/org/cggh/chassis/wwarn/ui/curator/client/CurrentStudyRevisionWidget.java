@@ -19,7 +19,7 @@ public class CurrentStudyRevisionWidget
 	
 
 	private CurrentStudyRevisionWidgetController controller;
-		
+	
 	@Override
 	protected CurrentStudyRevisionWidgetModel createModel() {
 		return new CurrentStudyRevisionWidgetModel();

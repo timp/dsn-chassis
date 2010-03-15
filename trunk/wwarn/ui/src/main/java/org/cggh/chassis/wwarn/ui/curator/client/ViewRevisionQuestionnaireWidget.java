@@ -3,12 +3,10 @@
  */
 package org.cggh.chassis.wwarn.ui.curator.client;
 
-import org.cggh.chassis.generic.async.client.Deferred;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.DelegatingWidget;
 import org.cggh.chassis.generic.widget.client.WidgetEventChannel;
-
 
 /**
  * @author timp
@@ -21,8 +19,7 @@ public class ViewRevisionQuestionnaireWidget
 	
 
 	private ViewRevisionQuestionnaireWidgetController controller;
-		
-   
+	
 	@Override
 	protected ViewRevisionQuestionnaireWidgetModel createModel() {
 		return new ViewRevisionQuestionnaireWidgetModel();

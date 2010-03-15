@@ -1,4 +1,5 @@
 package org.cggh.chassis.wwarn.ui.curator.client;
+
 import com.google.gwt.event.shared.GwtEvent;
 
 public class SaveStudyEvent extends GwtEvent<SaveStudyHandler> {

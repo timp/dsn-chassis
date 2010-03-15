@@ -1,6 +1,8 @@
+/**
+ * 
+ */
 package org.cggh.chassis.wwarn.ui.curator.client;
 
-import org.cggh.chassis.generic.async.client.Deferred;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.DelegatingWidget;
@@ -17,11 +19,9 @@ public class EditStudyQuestionnaireWidget
 	
 
 	private EditStudyQuestionnaireWidgetController controller;
-		
-	private StudySummaryWidget studySummaryWidget;
-	private EditQuestionnaireWidget editQuestionnaireWidget;
-   	
-   	
+		private StudySummaryWidget studySummaryWidget;
+
+
 	@Override
 	protected EditStudyQuestionnaireWidgetModel createModel() {
 		return new EditStudyQuestionnaireWidgetModel();

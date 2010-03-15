@@ -3,13 +3,10 @@
  */
 package org.cggh.chassis.wwarn.ui.curator.client;
 
-import org.cggh.chassis.generic.async.client.Deferred;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.DelegatingWidget;
 import org.cggh.chassis.generic.widget.client.WidgetEventChannel;
-
-import com.google.gwt.xml.client.Document;
 
 /**
  * @author timp
@@ -22,9 +19,9 @@ public class CuratorHomeWidget
 	
 
 	private CuratorHomeWidgetController controller;
-		
-	private ListStudiesWidget listStudiesWidget;
-   
+		private ListStudiesWidget listStudiesWidget;
+
+
 	@Override
 	protected CuratorHomeWidgetModel createModel() {
 		return new CuratorHomeWidgetModel();

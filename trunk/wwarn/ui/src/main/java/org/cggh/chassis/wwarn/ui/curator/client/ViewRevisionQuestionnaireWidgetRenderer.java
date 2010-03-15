@@ -53,7 +53,6 @@ public class ViewRevisionQuestionnaireWidgetRenderer extends
 	@UiField HTMLPanel errorPanel;
 	@UiField FlowPanel errorMessage;
 
-
 	private ViewRevisionQuestionnaireWidget owner;
 	private ViewRevisionQuestionnaireWidgetController controller;
 
@@ -86,22 +85,6 @@ public class ViewRevisionQuestionnaireWidgetRenderer extends
 
 		log.enter("syncUIWithStatus");		
 		
-		// Hide everything (that is made visible here) first, then show as required.
-		pendingPanel.setVisible(false);
-		errorPanel.setVisible(false);
-		
-		if (status instanceof AsyncWidgetModel.InitialStatus) {
-			
-		}
-		else if (status instanceof AsyncWidgetModel.ErrorStatus) {
-			
-			error("Error status: " + status + " " + model.message);
-			errorPanel.setVisible(true);
-		}
-		else { 
-			error("Unexpected status: " + status);
-			errorPanel.setVisible(true);
-		}
 		log.leave();
 	}
 	
@@ -117,20 +100,6 @@ public class ViewRevisionQuestionnaireWidgetRenderer extends
 	}
 	
 	
-	
-	@Override
-	public void registerHandlersForChildWidgetEvents() {
-		
-		ChangeHandler studySelectedChangeHandler = new ChangeHandler() {
-
-			public void onChange(ChangeEvent event) {
-			}
-
-		};
-		
-		
-	}
-
 	public void error(String err) {
 
 		errorMessage.clear();

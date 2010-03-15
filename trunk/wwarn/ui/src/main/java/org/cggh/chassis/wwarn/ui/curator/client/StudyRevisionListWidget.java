@@ -3,13 +3,10 @@
  */
 package org.cggh.chassis.wwarn.ui.curator.client;
 
-import org.cggh.chassis.generic.async.client.Deferred;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.DelegatingWidget;
 import org.cggh.chassis.generic.widget.client.WidgetEventChannel;
-
-import com.google.gwt.xml.client.Document;
 
 /**
  * @author timp
@@ -22,11 +19,7 @@ public class StudyRevisionListWidget
 	
 
 	private StudyRevisionListWidgetController controller;
-		
-	private CurrentStudyRevisionWidget currentStudyRevisionWidget;
-   	
-	private PriorStudyRevisionsListWidget priorStudyRevisionsListWidget;
-   
+	
 	@Override
 	protected StudyRevisionListWidgetModel createModel() {
 		return new StudyRevisionListWidgetModel();
