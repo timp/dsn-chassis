@@ -3,7 +3,6 @@
  */
 package org.cggh.chassis.wwarn.ui.curator.client;
 
-import org.cggh.chassis.generic.async.client.Deferred;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.DelegatingWidget;
@@ -20,8 +19,7 @@ public class StudyRevisionActionsWidget
 	
 
 	private StudyRevisionActionsWidgetController controller;
-		
-   
+	
 	@Override
 	protected StudyRevisionActionsWidgetModel createModel() {
 		return new StudyRevisionActionsWidgetModel();

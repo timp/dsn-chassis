@@ -4,16 +4,21 @@
  */
 package org.cggh.chassis.wwarn.ui.curator.client;
 
+import java.util.List;
 
 import org.cggh.chassis.generic.async.client.Deferred;
 import org.cggh.chassis.generic.async.client.Function;
+import org.cggh.chassis.generic.async.client.QueryParams;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.miniatom.client.Atom;
+import org.cggh.chassis.generic.miniatom.client.AtomHelper;
+import org.cggh.chassis.generic.miniatom.client.ext.Chassis;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 import org.cggh.chassis.generic.widget.client.ChassisWidget;
 import org.cggh.chassis.generic.widget.client.ErrorEvent;
 import org.cggh.chassis.generic.xquestion.client.XQuestionnaire;
+import org.cggh.chassis.wwarn.ui.common.client.Config;
 
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;
@@ -82,118 +87,6 @@ public class StudyActionsWidgetController {
 
 	
 	
-	/**
-	 * @return
-	 */
-	 /*
-	private Deferred<Element> retrieveSubmission() {
-		log.enter("retrieveSubmission");
-		
-		String submissionId = model.submissionId.get();
-		
-		model.status.set(StudyActionsWidgetModel.STATUS_RETRIEVE_SUBMISSION_PENDING);
-		
-		QueryParams qp = new QueryParams();
-		qp.put(Chassis.QUERYPARAM_ID, submissionId);
-		
-		String url = Config.get(Config.QUERY_SUBMISSIONS_URL) + qp.toUrlQueryString();
-		log.debug("url: "+url);
-
-		log.debug("make get feed request");
-		Deferred<Document> deferredResultsFeedDoc = Atom.getFeed(url);
-		
-		Deferred<Element> deferredSubmissionElement = deferredResultsFeedDoc.adapt(new Function<Document, Element>() {
-
-			public Element apply(Document resultsFeedDoc) {
-				Element entryElement = AtomHelper.getFirstEntry(resultsFeedDoc.getDocumentElement());
-				return entryElement;
-			}
-			
-		});
-
-		log.leave();
-		return deferredSubmissionElement;
-	}
-
-	
-
-	private class RetrieveSubmissionCallback implements Function<Element, Deferred<XQuestionnaire>> {
-
-		public Deferred<XQuestionnaire> apply(Element submissionEntryElement) {
-			
-			model.submissionEntryElement.set(submissionEntryElement);
-			
-			Deferred<XQuestionnaire> deferredQuestionnaire;
-			
-			if (submissionEntryElement != null) {
-
-				List<Element> studyLinks = AtomHelper.getLinks(submissionEntryElement, Chassis.REL_ORIGINSTUDY);
-				assert studyLinks.size() == 1;
-				
-				Element studyEntryElement = AtomHelper.getFirstEntry(studyLinks.get(0));
-				String url = AtomHelper.getEditLinkHrefAttr(studyEntryElement);
-				model.studyUrl.set(url);
-
-//				model.studyEntryElement.set(studyEntryElement);
-				
-				// we have a submission, so lets try retrieving the study questionnaire
-				deferredQuestionnaire = retrieveQuestionnaire();
-				
-			}
-			
-			else {
-				
-				model.status.set(StudyActionsWidgetModel.STATUS_SUBMISSION_NOT_FOUND);
-				deferredQuestionnaire = new Deferred<XQuestionnaire>();
-				deferredQuestionnaire.callback(null);
-
-			}
-			
-			// return the deferred questionnaire, for chaining of callbacks
-			return deferredQuestionnaire;
-		}
-
-	}
-*/
-	
-/*	
-	public void navigateToSubmitterHome() {
-		owner.fireEvent(new HomeNavigationEvent());
-	}
-*/
-
-
-	
-	/**
-	 * @return
-	 */
-	public Deferred<XQuestionnaire> retrieveQuestionnaire() {
-		log.enter("retrieveQuestionnaire");
-		
-		Deferred<XQuestionnaire> d = null;
-		
-		
-		
-		log.leave();
-		return d;
-	}
-
-	
-	
-	
-	private class RetrieveQuestionnaireCallback implements Function<XQuestionnaire, Deferred<Element>> {
-
-		public Deferred<Element> apply(XQuestionnaire questionnaire) {
-			
-			
-			return retrieveStudy();
-
-			
-		}
-		
-	}
-		
-		
 		
 
 	private class DefaultErrback implements Function<Throwable, Throwable> {
@@ -206,7 +99,6 @@ public class StudyActionsWidgetController {
 		}
 		
 	}
-
 
 
 
