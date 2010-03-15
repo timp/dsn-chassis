@@ -27,28 +27,23 @@ import com.google.gwt.xml.client.Element;
  * @author timp
  *
  */
-public class CuratorHomeWidgetController {
+public class RevisionSummaryWidgetController {
 
 	
 	
 	
-	private Log log = LogFactory.getLog(CuratorHomeWidgetController.class);
+	private Log log = LogFactory.getLog(RevisionSummaryWidgetController.class);
 	
 	
 	
 	
-	private CuratorHomeWidget owner;
-	private CuratorHomeWidgetModel model;
-
-
-
-
-	private CuratorHomeWidgetView view;
+	private RevisionSummaryWidget owner;
+	private RevisionSummaryWidgetModel model;
 
 
 	
 	
-	public CuratorHomeWidgetController(CuratorHomeWidget owner, CuratorHomeWidgetModel model) {
+	public RevisionSummaryWidgetController(RevisionSummaryWidget owner, RevisionSummaryWidgetModel model) {
 		this.owner = owner;
 		this.model = model;
 	}
@@ -101,7 +96,7 @@ public class CuratorHomeWidgetController {
 		
 		String submissionId = model.submissionId.get();
 		
-		model.status.set(CuratorHomeWidgetModel.STATUS_RETRIEVE_SUBMISSION_PENDING);
+		model.status.set(RevisionSummaryWidgetModel.STATUS_RETRIEVE_SUBMISSION_PENDING);
 		
 		QueryParams qp = new QueryParams();
 		qp.put(Chassis.QUERYPARAM_ID, submissionId);
@@ -153,7 +148,7 @@ public class CuratorHomeWidgetController {
 			
 			else {
 				
-				model.status.set(CuratorHomeWidgetModel.STATUS_SUBMISSION_NOT_FOUND);
+				model.status.set(RevisionSummaryWidgetModel.STATUS_SUBMISSION_NOT_FOUND);
 				deferredQuestionnaire = new Deferred<XQuestionnaire>();
 				deferredQuestionnaire.callback(null);
 
@@ -181,24 +176,7 @@ public class CuratorHomeWidgetController {
 		log.enter("retrieveQuestionnaire");
 		
 		Deferred<XQuestionnaire> d = null;
-		/*
-		if (view.getQuestionnaire() == null) {
-			log.debug("retrieving questionnaire");
-			
-			model.status.set(CuratorHomeWidgetModel.STATUS_RETRIEVE_QUESTIONNAIRE_PENDING);
-			
-			String url = Config.get(Config.QUESTIONNAIRE_STUDY_URL);
-			log.debug("url: "+url);
-
-			d = XQuestionnaire.load(url);
-		}
-		else {
-			log.debug("questionnaire already retrieved");
-			d = new Deferred<XQuestionnaire>();
-			d.callback(view.getQuestionnaire()); // TODO this is an ugly hack
-		}
 		
-		*/
 		log.leave();
 		return d;
 	}
@@ -209,15 +187,7 @@ public class CuratorHomeWidgetController {
 	private class RetrieveQuestionnaireCallback implements Function<XQuestionnaire, Deferred<Element>> {
 
 		public Deferred<Element> apply(XQuestionnaire questionnaire) {
-			/*
-			if (view.getQuestionnaire() == null) {
-				
-				// TODO ugly hack to make sure we don't reset the questionnaire unnecessarily
-				log.debug("setting questionnaire on view");
-				view.setQuestionnaire(questionnaire);
-				
-			}
-			*/
+			
 			return retrieveStudy();
 
 			
@@ -241,19 +211,13 @@ public class CuratorHomeWidgetController {
 
 
 
-	public void setView(CuratorHomeWidgetView view) {
-		this.view = view;
-	}
-
-
-
 	/**
 	 * @return
 	 */
 	public Deferred<Element> retrieveStudy() {
 		log.enter("retrieveStudy");
 		
-		model.status.set(CuratorHomeWidgetModel.STATUS_RETRIEVE_STUDY_PENDING);
+		model.status.set(RevisionSummaryWidgetModel.STATUS_RETRIEVE_STUDY_PENDING);
 		
 		Deferred<Element> d;
 		
@@ -285,7 +249,7 @@ public class CuratorHomeWidgetController {
 			log.enter("apply");
 			
 			model.studyEntryElement.set(in);
-			model.status.set(CuratorHomeWidgetModel.STATUS_READY_FOR_INTERACTION);
+			model.status.set(RevisionSummaryWidgetModel.STATUS_READY_FOR_INTERACTION);
 			
 			log.leave();
 			return in;
@@ -300,7 +264,7 @@ public class CuratorHomeWidgetController {
 	public void saveStudy() {
 		log.enter("saveStudy");
 		
-		model.status.set(CuratorHomeWidgetModel.STATUS_SAVE_STUDY_PENDING);
+		model.status.set(RevisionSummaryWidgetModel.STATUS_SAVE_STUDY_PENDING);
 		
 		Deferred<Document> d = Atom.putEntry(model.studyUrl.get(), model.studyEntryElement.get().getOwnerDocument());
 
@@ -318,7 +282,7 @@ public class CuratorHomeWidgetController {
 			log.enter("apply");
 			
 			model.studyEntryElement.set(in.getDocumentElement());
-			model.status.set(CuratorHomeWidgetModel.STATUS_READY_FOR_INTERACTION);
+			model.status.set(RevisionSummaryWidgetModel.STATUS_READY_FOR_INTERACTION);
 			
 			log.leave();
 			return in;

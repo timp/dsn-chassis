@@ -15,32 +15,31 @@ import com.google.gwt.xml.client.Document;
  * @author timp
  *
  */
-public class ViewStudyWidget 
-	extends DelegatingWidget<ViewStudyWidgetModel, ViewStudyWidgetRenderer> {
+public class StudyRevisionListWidget 
+	extends DelegatingWidget<StudyRevisionListWidgetModel, StudyRevisionListWidgetRenderer> {
 
-	private static final Log log = LogFactory.getLog(ViewStudyWidget.class);
+	private static final Log log = LogFactory.getLog(StudyRevisionListWidget.class);
 	
 
-	private ViewStudyWidgetController controller;
+	private StudyRevisionListWidgetController controller;
 		
-	private StudySummaryWidget studySummaryWidget;
+	private CurrentStudyRevisionWidget currentStudyRevisionWidget;
    	
-	private StudyFilesWidget studyFilesWidget;
-   	
-   	
+	private PriorStudyRevisionsListWidget priorStudyRevisionsListWidget;
+   
 	@Override
-	protected ViewStudyWidgetModel createModel() {
-		return new ViewStudyWidgetModel();
+	protected StudyRevisionListWidgetModel createModel() {
+		return new StudyRevisionListWidgetModel();
 	}
 
-	public ViewStudyWidgetModel getModel() {
+	public StudyRevisionListWidgetModel getModel() {
 		return model;
 	}
 	
 
 	@Override
-	protected ViewStudyWidgetRenderer createRenderer() {
-		return new ViewStudyWidgetRenderer(this);
+	protected StudyRevisionListWidgetRenderer createRenderer() {
+		return new StudyRevisionListWidgetRenderer(this);
 	}
 
 	// Using init() rather than constructor because reset() uses init().
@@ -48,7 +47,7 @@ public class ViewStudyWidget
 		
 		super.init();
 		
-		this.controller = new ViewStudyWidgetController(this, this.model);
+		this.controller = new StudyRevisionListWidgetController(this, this.model);
 
 
 	}

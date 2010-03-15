@@ -15,32 +15,29 @@ import com.google.gwt.xml.client.Document;
  * @author timp
  *
  */
-public class ViewStudyWidget 
-	extends DelegatingWidget<ViewStudyWidgetModel, ViewStudyWidgetRenderer> {
+public class StudySummaryWidget 
+	extends DelegatingWidget<StudySummaryWidgetModel, StudySummaryWidgetRenderer> {
 
-	private static final Log log = LogFactory.getLog(ViewStudyWidget.class);
+	private static final Log log = LogFactory.getLog(StudySummaryWidget.class);
 	
 
-	private ViewStudyWidgetController controller;
+	private StudySummaryWidgetController controller;
 		
-	private StudySummaryWidget studySummaryWidget;
-   	
-	private StudyFilesWidget studyFilesWidget;
-   	
+	private StudyActionsWidget studyActionsWidget;
    	
 	@Override
-	protected ViewStudyWidgetModel createModel() {
-		return new ViewStudyWidgetModel();
+	protected StudySummaryWidgetModel createModel() {
+		return new StudySummaryWidgetModel();
 	}
 
-	public ViewStudyWidgetModel getModel() {
+	public StudySummaryWidgetModel getModel() {
 		return model;
 	}
 	
 
 	@Override
-	protected ViewStudyWidgetRenderer createRenderer() {
-		return new ViewStudyWidgetRenderer(this);
+	protected StudySummaryWidgetRenderer createRenderer() {
+		return new StudySummaryWidgetRenderer(this);
 	}
 
 	// Using init() rather than constructor because reset() uses init().
@@ -48,7 +45,7 @@ public class ViewStudyWidget
 		
 		super.init();
 		
-		this.controller = new ViewStudyWidgetController(this, this.model);
+		this.controller = new StudySummaryWidgetController(this, this.model);
 
 
 	}

@@ -3,44 +3,42 @@
  */
 package org.cggh.chassis.wwarn.ui.curator.client;
 
-import org.cggh.chassis.generic.async.client.Deferred;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.DelegatingWidget;
 import org.cggh.chassis.generic.widget.client.WidgetEventChannel;
 
-import com.google.gwt.xml.client.Document;
 
 /**
  * @author timp
  *
  */
-public class ViewStudyWidget 
-	extends DelegatingWidget<ViewStudyWidgetModel, ViewStudyWidgetRenderer> {
+public class ListStudyRevisionsWidget 
+	extends DelegatingWidget<ListStudyRevisionsWidgetModel, ListStudyRevisionsWidgetRenderer> {
 
-	private static final Log log = LogFactory.getLog(ViewStudyWidget.class);
+	private static final Log log = LogFactory.getLog(ListStudyRevisionsWidget.class);
 	
 
-	private ViewStudyWidgetController controller;
+	private ListStudyRevisionsWidgetController controller;
 		
 	private StudySummaryWidget studySummaryWidget;
    	
-	private StudyFilesWidget studyFilesWidget;
+	private StudyRevisionListWidget studyRevisionListWidget;
    	
-   	
+   
 	@Override
-	protected ViewStudyWidgetModel createModel() {
-		return new ViewStudyWidgetModel();
+	protected ListStudyRevisionsWidgetModel createModel() {
+		return new ListStudyRevisionsWidgetModel();
 	}
 
-	public ViewStudyWidgetModel getModel() {
+	public ListStudyRevisionsWidgetModel getModel() {
 		return model;
 	}
 	
 
 	@Override
-	protected ViewStudyWidgetRenderer createRenderer() {
-		return new ViewStudyWidgetRenderer(this);
+	protected ListStudyRevisionsWidgetRenderer createRenderer() {
+		return new ListStudyRevisionsWidgetRenderer(this);
 	}
 
 	// Using init() rather than constructor because reset() uses init().
@@ -48,7 +46,7 @@ public class ViewStudyWidget
 		
 		super.init();
 		
-		this.controller = new ViewStudyWidgetController(this, this.model);
+		this.controller = new ListStudyRevisionsWidgetController(this, this.model);
 
 
 	}

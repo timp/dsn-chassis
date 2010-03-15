@@ -9,38 +9,32 @@ import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.DelegatingWidget;
 import org.cggh.chassis.generic.widget.client.WidgetEventChannel;
 
-import com.google.gwt.xml.client.Document;
 
 /**
  * @author timp
  *
  */
-public class ViewStudyWidget 
-	extends DelegatingWidget<ViewStudyWidgetModel, ViewStudyWidgetRenderer> {
+public class ViewQuestionaireWidget 
+	extends DelegatingWidget<ViewQuestionaireWidgetModel, ViewQuestionnaireWidgetRenderer> {
 
-	private static final Log log = LogFactory.getLog(ViewStudyWidget.class);
+	private static final Log log = LogFactory.getLog(ViewQuestionaireWidget.class);
 	
 
-	private ViewStudyWidgetController controller;
+	private ViewQuestionaireWidgetController controller;
 		
-	private StudySummaryWidget studySummaryWidget;
-   	
-	private StudyFilesWidget studyFilesWidget;
-   	
-   	
 	@Override
-	protected ViewStudyWidgetModel createModel() {
-		return new ViewStudyWidgetModel();
+	protected ViewQuestionaireWidgetModel createModel() {
+		return new ViewQuestionaireWidgetModel();
 	}
 
-	public ViewStudyWidgetModel getModel() {
+	public ViewQuestionaireWidgetModel getModel() {
 		return model;
 	}
 	
 
 	@Override
-	protected ViewStudyWidgetRenderer createRenderer() {
-		return new ViewStudyWidgetRenderer(this);
+	protected ViewQuestionnaireWidgetRenderer createRenderer() {
+		return new ViewQuestionnaireWidgetRenderer(this);
 	}
 
 	// Using init() rather than constructor because reset() uses init().
@@ -48,7 +42,7 @@ public class ViewStudyWidget
 		
 		super.init();
 		
-		this.controller = new ViewStudyWidgetController(this, this.model);
+		this.controller = new ViewQuestionaireWidgetController(this, this.model);
 
 
 	}

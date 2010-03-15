@@ -13,7 +13,7 @@ import com.google.gwt.xml.client.Element;
  * @author timp
  *
  */
-public class CuratorHomeWidgetModel {
+public class StudyFilesWidgetModel {
 
 	
 	public static class RetrieveQuestionnairePendingStatus extends AsyncRequestPendingStatus {}

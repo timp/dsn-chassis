@@ -1,6 +1,3 @@
-/**
- * 
- */
 package org.cggh.chassis.wwarn.ui.curator.client;
 
 import org.cggh.chassis.generic.async.client.Deferred;
@@ -9,38 +6,35 @@ import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.DelegatingWidget;
 import org.cggh.chassis.generic.widget.client.WidgetEventChannel;
 
-import com.google.gwt.xml.client.Document;
-
 /**
  * @author timp
  *
  */
-public class ViewStudyWidget 
-	extends DelegatingWidget<ViewStudyWidgetModel, ViewStudyWidgetRenderer> {
+public class EditStudyQuestionnaireWidget 
+	extends DelegatingWidget<EditStudyQuestionnaireWidgetModel, EditStudyQuestionnaireWidgetRenderer> {
 
-	private static final Log log = LogFactory.getLog(ViewStudyWidget.class);
+	private static final Log log = LogFactory.getLog(EditStudyQuestionnaireWidget.class);
 	
 
-	private ViewStudyWidgetController controller;
+	private EditStudyQuestionnaireWidgetController controller;
 		
 	private StudySummaryWidget studySummaryWidget;
-   	
-	private StudyFilesWidget studyFilesWidget;
+	private EditQuestionnaireWidget editQuestionnaireWidget;
    	
    	
 	@Override
-	protected ViewStudyWidgetModel createModel() {
-		return new ViewStudyWidgetModel();
+	protected EditStudyQuestionnaireWidgetModel createModel() {
+		return new EditStudyQuestionnaireWidgetModel();
 	}
 
-	public ViewStudyWidgetModel getModel() {
+	public EditStudyQuestionnaireWidgetModel getModel() {
 		return model;
 	}
 	
 
 	@Override
-	protected ViewStudyWidgetRenderer createRenderer() {
-		return new ViewStudyWidgetRenderer(this);
+	protected EditStudyQuestionnaireWidgetRenderer createRenderer() {
+		return new EditStudyQuestionnaireWidgetRenderer(this);
 	}
 
 	// Using init() rather than constructor because reset() uses init().
@@ -48,7 +42,7 @@ public class ViewStudyWidget
 		
 		super.init();
 		
-		this.controller = new ViewStudyWidgetController(this, this.model);
+		this.controller = new EditStudyQuestionnaireWidgetController(this, this.model);
 
 
 	}

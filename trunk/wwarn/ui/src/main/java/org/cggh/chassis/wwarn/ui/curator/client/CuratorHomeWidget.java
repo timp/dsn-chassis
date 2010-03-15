@@ -11,18 +11,20 @@ import org.cggh.chassis.generic.widget.client.WidgetEventChannel;
 
 import com.google.gwt.xml.client.Document;
 
-
 /**
- * @author lee
+ * @author timp
  *
  */
 public class CuratorHomeWidget 
 	extends DelegatingWidget<CuratorHomeWidgetModel, CuratorHomeWidgetRenderer> {
 
 	private static final Log log = LogFactory.getLog(CuratorHomeWidget.class);
+	
 
 	private CuratorHomeWidgetController controller;
-	
+		
+	private ListStudiesWidget listStudiesWidget;
+   
 	@Override
 	protected CuratorHomeWidgetModel createModel() {
 		return new CuratorHomeWidgetModel();
@@ -57,6 +59,8 @@ public class CuratorHomeWidget
 	public final WidgetEventChannel submitDataNavigationEventChannel = new WidgetEventChannel(this);
 
 	
+	
+
 	
 
 }
