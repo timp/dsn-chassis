@@ -27,28 +27,23 @@ import com.google.gwt.xml.client.Element;
  * @author timp
  *
  */
-public class CuratorHomeWidgetController {
+public class CurrentStudyRevisionWidgetController {
 
 	
 	
 	
-	private Log log = LogFactory.getLog(CuratorHomeWidgetController.class);
+	private Log log = LogFactory.getLog(CurrentStudyRevisionWidgetController.class);
 	
 	
 	
 	
-	private CuratorHomeWidget owner;
-	private CuratorHomeWidgetModel model;
-
-
-
-
-	private CuratorHomeWidgetView view;
+	private CurrentStudyRevisionWidget owner;
+	private CurrentStudyRevisionWidgetModel model;
 
 
 	
 	
-	public CuratorHomeWidgetController(CuratorHomeWidget owner, CuratorHomeWidgetModel model) {
+	public CurrentStudyRevisionWidgetController(CurrentStudyRevisionWidget owner, CurrentStudyRevisionWidgetModel model) {
 		this.owner = owner;
 		this.model = model;
 	}
@@ -101,7 +96,7 @@ public class CuratorHomeWidgetController {
 		
 		String submissionId = model.submissionId.get();
 		
-		model.status.set(CuratorHomeWidgetModel.STATUS_RETRIEVE_SUBMISSION_PENDING);
+		model.status.set(CurrentStudyRevisionWidgetModel.STATUS_RETRIEVE_SUBMISSION_PENDING);
 		
 		QueryParams qp = new QueryParams();
 		qp.put(Chassis.QUERYPARAM_ID, submissionId);
@@ -153,7 +148,7 @@ public class CuratorHomeWidgetController {
 			
 			else {
 				
-				model.status.set(CuratorHomeWidgetModel.STATUS_SUBMISSION_NOT_FOUND);
+				model.status.set(CurrentStudyRevisionWidgetModel.STATUS_SUBMISSION_NOT_FOUND);
 				deferredQuestionnaire = new Deferred<XQuestionnaire>();
 				deferredQuestionnaire.callback(null);
 
@@ -185,7 +180,7 @@ public class CuratorHomeWidgetController {
 		if (view.getQuestionnaire() == null) {
 			log.debug("retrieving questionnaire");
 			
-			model.status.set(CuratorHomeWidgetModel.STATUS_RETRIEVE_QUESTIONNAIRE_PENDING);
+			model.status.set(CurrentStudyRevisionWidgetModel.STATUS_RETRIEVE_QUESTIONNAIRE_PENDING);
 			
 			String url = Config.get(Config.QUESTIONNAIRE_STUDY_URL);
 			log.debug("url: "+url);
@@ -197,8 +192,8 @@ public class CuratorHomeWidgetController {
 			d = new Deferred<XQuestionnaire>();
 			d.callback(view.getQuestionnaire()); // TODO this is an ugly hack
 		}
-		
 		*/
+		
 		log.leave();
 		return d;
 	}
@@ -239,12 +234,12 @@ public class CuratorHomeWidgetController {
 		
 	}
 
+/*
 
-
-	public void setView(CuratorHomeWidgetView view) {
+	public void setView(CurrentStudyRevisionWidgetView view) {
 		this.view = view;
 	}
-
+*/
 
 
 	/**
@@ -253,7 +248,7 @@ public class CuratorHomeWidgetController {
 	public Deferred<Element> retrieveStudy() {
 		log.enter("retrieveStudy");
 		
-		model.status.set(CuratorHomeWidgetModel.STATUS_RETRIEVE_STUDY_PENDING);
+		model.status.set(CurrentStudyRevisionWidgetModel.STATUS_RETRIEVE_STUDY_PENDING);
 		
 		Deferred<Element> d;
 		
@@ -285,7 +280,7 @@ public class CuratorHomeWidgetController {
 			log.enter("apply");
 			
 			model.studyEntryElement.set(in);
-			model.status.set(CuratorHomeWidgetModel.STATUS_READY_FOR_INTERACTION);
+			model.status.set(CurrentStudyRevisionWidgetModel.STATUS_READY_FOR_INTERACTION);
 			
 			log.leave();
 			return in;
@@ -300,7 +295,7 @@ public class CuratorHomeWidgetController {
 	public void saveStudy() {
 		log.enter("saveStudy");
 		
-		model.status.set(CuratorHomeWidgetModel.STATUS_SAVE_STUDY_PENDING);
+		model.status.set(CurrentStudyRevisionWidgetModel.STATUS_SAVE_STUDY_PENDING);
 		
 		Deferred<Document> d = Atom.putEntry(model.studyUrl.get(), model.studyEntryElement.get().getOwnerDocument());
 
@@ -318,17 +313,11 @@ public class CuratorHomeWidgetController {
 			log.enter("apply");
 			
 			model.studyEntryElement.set(in.getDocumentElement());
-			model.status.set(CuratorHomeWidgetModel.STATUS_READY_FOR_INTERACTION);
+			model.status.set(CurrentStudyRevisionWidgetModel.STATUS_READY_FOR_INTERACTION);
 			
 			log.leave();
 			return in;
 		}
 	};
-
-
-
-
-
-
 
 }

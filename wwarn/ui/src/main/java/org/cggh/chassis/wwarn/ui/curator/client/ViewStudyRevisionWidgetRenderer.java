@@ -7,11 +7,16 @@ import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.miniatom.client.AtomHelper;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 import org.cggh.chassis.generic.widget.client.ChassisWidgetRenderer;
+import org.cggh.chassis.generic.widget.client.PropertyChangeEvent;
+import org.cggh.chassis.generic.widget.client.PropertyChangeHandler;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.Status;
+import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.StatusChangeEvent;
+import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.StatusChangeHandler;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
+import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -30,32 +35,32 @@ import com.google.gwt.xml.client.Element;
  * @author timp
  * @since 13 Jan 2010
  */
-public class ViewStudyWidgetRenderer extends
-		ChassisWidgetRenderer<ViewStudyWidgetModel> {
+public class ViewStudyRevisionWidgetRenderer extends
+		ChassisWidgetRenderer<ViewStudyRevisionWidgetModel> {
 
-	private Log log = LogFactory.getLog(ViewStudyWidgetRenderer.class);
+	private Log log = LogFactory.getLog(ViewStudyRevisionWidgetRenderer.class);
 	
-	@UiTemplate("ViewStudyWidget.ui.xml")
-	interface ViewStudyWidgetRendererUiBinder extends
-			UiBinder<HTMLPanel, ViewStudyWidgetRenderer> {
+	@UiTemplate("ViewStudyRevisionWidget.ui.xml")
+	interface ViewStudyRevisionWidgetRendererUiBinder extends
+			UiBinder<HTMLPanel, ViewStudyRevisionWidgetRenderer> {
 	}
-	private static ViewStudyWidgetRendererUiBinder uiBinder = 
-		GWT.create(ViewStudyWidgetRendererUiBinder.class);
+	private static ViewStudyRevisionWidgetRendererUiBinder uiBinder = 
+		GWT.create(ViewStudyRevisionWidgetRendererUiBinder.class);
 
+//	@UiField HTMLPanel bodyPanel;
 	@UiField HTMLPanel pendingPanel;
 	@UiField HTMLPanel errorPanel;
 	@UiField FlowPanel errorMessage;
-	
 
 
-	private ViewStudyWidget owner;
-	private ViewStudyWidgetController controller;
+	private ViewStudyRevisionWidget owner;
+	private ViewStudyRevisionWidgetController controller;
 
-	public ViewStudyWidgetRenderer(ViewStudyWidget owner) {
+	public ViewStudyRevisionWidgetRenderer(ViewStudyRevisionWidget owner) {
 		this.owner = owner;
 	}
 
-	public void setController(ViewStudyWidgetController controller) {
+	public void setController(ViewStudyRevisionWidgetController controller) {
 		this.controller = controller;
 	}
 
@@ -70,27 +75,10 @@ public class ViewStudyWidgetRenderer extends
 	@Override
 	protected void registerHandlersForModelChanges() {
 		
-		/*
-		model.addStatusChangeHandler(new StatusChangeHandler() {
-			public void onStatusChanged(StatusChangeEvent e) {
-				syncUIWithStatus(e.getAfter());
-			}
-		});
-		
-		model.studyFeed.addChangeHandler(new PropertyChangeHandler<Document>() {
-			public void onChange(PropertyChangeEvent<Document> e) {
-				syncUiWithStudyFeedDoc(e.getAfter());
-			}
-		});
-		*/
 	}
 
 	@Override
 	protected void syncUI() {
-		/*
-		syncUIWithStatus(model.getStatus());
-		syncUiWithStudyFeedDoc(model.getStudyFeedDoc());
-		*/
 	}
 
 	protected void syncUIWithStatus(Status status) {
@@ -104,23 +92,6 @@ public class ViewStudyWidgetRenderer extends
 		if (status instanceof AsyncWidgetModel.InitialStatus) {
 			
 		}
-		/*
-		
-		else if (status instanceof ViewStudyWidgetModel.RetrieveFeedPendingStatus) {
-			pendingPanel.setVisible(true);
-		} 
-		else if (status instanceof ViewStudyWidgetModel.StudiesRetrievedStatus) {
-			
-			
-		}
-		else if (status instanceof ViewStudyWidgetModel.CreateEntryPendingStatus) {
-			pendingPanel.setVisible(true);
-		}
-		else if (status instanceof ViewStudyWidgetModel.StudyCreatedStatus) {
-			
-			
-		}
-*/
 		else if (status instanceof AsyncWidgetModel.ErrorStatus) {
 			
 			error("Error status: " + status + " " + model.message);
@@ -139,42 +110,6 @@ public class ViewStudyWidgetRenderer extends
 		
 		log.enter("syncUiWithStudyFeedDoc");
 		
-		// Turn everything off (that is made visible/enabled here) first, then show/enable as required.
-		
-		if (studyFeedDoc != null) {
-			
-			List<Element>  studyEntries = AtomHelper.getEntries(studyFeedDoc.getDocumentElement());
-			
-			if (!studyEntries.isEmpty()) {
-				
-				
-				int index = 1, selectedIndex = 0;
-				
-				for (Element element : studyEntries) {
-					
-					String id = AtomHelper.getId(element);
-					
-					log.debug("id:"+id);
-					
-					/*
-					if(model.getSelectedStudyId() != null && model.getSelectedStudyId().equals(id)) {
-						
-						selectedIndex = index;
-						
-						// Automatic selection.
-						// Note that the manual selection event is handled by handleStudySelection()
-						log.debug("Enabling the proceed button because a study was selected previously.");
-						proceedWithSelectedButton.setEnabled(true);
-					}
-					*/
-					index++;
-				}
-				
-				log.debug("selectedIndex" + selectedIndex);
-				
-				
-			}
-		}
 		
 		log.leave();
 	}

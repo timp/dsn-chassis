@@ -1,0 +1,18 @@
+package org.cggh.chassis.wwarn.ui.curator.client;
+import com.google.gwt.event.shared.GwtEvent;
+
+public class SaveStudyEvent extends GwtEvent<SaveStudyHandler> {
+
+	public static final Type<SaveStudyHandler> TYPE = new Type<SaveStudyHandler>();
+	
+	@Override
+	protected void dispatch(SaveStudyHandler h) {
+		h.onNavigation(this);
+	}
+
+	@Override
+	public com.google.gwt.event.shared.GwtEvent.Type<SaveStudyHandler> getAssociatedType() {
+		return TYPE;
+	}
+
+}

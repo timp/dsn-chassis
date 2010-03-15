@@ -1,48 +1,68 @@
 package org.cggh.chassis.wwarn.ui.curator.client;
 
+import java.util.List;
+
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
+import org.cggh.chassis.generic.miniatom.client.AtomHelper;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 import org.cggh.chassis.generic.widget.client.ChassisWidgetRenderer;
+import org.cggh.chassis.generic.widget.client.PropertyChangeEvent;
+import org.cggh.chassis.generic.widget.client.PropertyChangeHandler;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.Status;
+import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.StatusChangeEvent;
+import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.StatusChangeHandler;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ChangeHandler;
+import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.TextArea;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.xml.client.Document;
+import com.google.gwt.xml.client.Element;
 
 /**
  * @author timp
  * @since 13 Jan 2010
  */
-public class CuratorHomeWidgetRenderer extends
-		ChassisWidgetRenderer<CuratorHomeWidgetModel> {
+public class StudySummaryWidgetRenderer extends
+		ChassisWidgetRenderer<StudySummaryWidgetModel> {
 
-	private Log log = LogFactory.getLog(CuratorHomeWidgetRenderer.class);
+	private Log log = LogFactory.getLog(StudySummaryWidgetRenderer.class);
 	
-	@UiTemplate("CuratorHomeWidget.ui.xml")
-	interface CuratorHomeWidgetRendererUiBinder extends
-			UiBinder<HTMLPanel, CuratorHomeWidgetRenderer> {
+	@UiTemplate("StudySummaryWidget.ui.xml")
+	interface StudySummaryWidgetRendererUiBinder extends
+			UiBinder<HTMLPanel, StudySummaryWidgetRenderer> {
 	}
-	private static CuratorHomeWidgetRendererUiBinder uiBinder = 
-		GWT.create(CuratorHomeWidgetRendererUiBinder.class);
+	private static StudySummaryWidgetRendererUiBinder uiBinder = 
+		GWT.create(StudySummaryWidgetRendererUiBinder.class);
+
+//	@UiField HTMLPanel bodyPanel;
+//	@UiField FlowPanel mainActionsPanel;
+	@UiField HTMLPanel pendingPanel;
 
 	@UiField HTMLPanel errorPanel;
 	@UiField FlowPanel errorMessage;
-	@UiField HTMLPanel pendingPanel;
-	@UiField HTMLPanel mainPanel;
-	private CuratorHomeWidget owner;
-	private CuratorHomeWidgetController controller;
+	
 
-	public CuratorHomeWidgetRenderer(CuratorHomeWidget owner) {
+	private StudySummaryWidget owner;
+	private StudySummaryWidgetController controller;
+
+	public StudySummaryWidgetRenderer(StudySummaryWidget owner) {
 		this.owner = owner;
 	}
 
-	public void setController(CuratorHomeWidgetController controller) {
+	public void setController(StudySummaryWidgetController controller) {
 		this.controller = controller;
 	}
 
@@ -91,22 +111,23 @@ public class CuratorHomeWidgetRenderer extends
 			
 		}
 		/*
-		else if (status instanceof CuratorHomeWidgetModel.RetrieveFeedPendingStatus) {
+		else if (status instanceof StudySummaryWidgetModel.RetrieveFeedPendingStatus) {
 			pendingPanel.setVisible(true);
 		} 
-		else if (status instanceof CuratorHomeWidgetModel.StudiesRetrievedStatus) {
+		else if (status instanceof StudySummaryWidgetModel.StudiesRetrievedStatus) {
 			
 			
 		}
-		else if (status instanceof CuratorHomeWidgetModel.CreateEntryPendingStatus) {
+		else if (status instanceof StudySummaryWidgetModel.CreateEntryPendingStatus) {
 			pendingPanel.setVisible(true);
 		}
-		else if (status instanceof CuratorHomeWidgetModel.StudyCreatedStatus) {
+		else if (status instanceof StudySummaryWidgetModel.StudyCreatedStatus) {
 			
 			
 		}
 		*/
 		else if (status instanceof AsyncWidgetModel.ErrorStatus) {
+			
 			error("Error status: " + status + " " + model.message);
 			errorPanel.setVisible(true);
 		}
@@ -122,61 +143,24 @@ public class CuratorHomeWidgetRenderer extends
 	void syncUiWithStudyFeedDoc(Document studyFeedDoc) {
 		
 		log.enter("syncUiWithStudyFeedDoc");
-		/*
 		
 		// Turn everything off (that is made visible/enabled here) first, then show/enable as required.
-		selectExistingStudyPanel.setVisible(false);
-		proceedWithSelectedButton.setEnabled(false);
 		
-		studySelect.clear();
-		
-		if (studyFeedDoc != null) {
-			
-			List<Element>  studyEntries = AtomHelper.getEntries(studyFeedDoc.getDocumentElement());
-			
-			if (!studyEntries.isEmpty()) {
-				
-				studySelect.addItem("Please select an existing Study", null);
-				
-				int index = 1, selectedIndex = 0;
-				
-				for (Element element : studyEntries) {
-					
-					String id = AtomHelper.getId(element);
-					
-					log.debug("id:"+id);
-					
-					studySelect.addItem(AtomHelper.getTitle(element), id);
-					
-					if(model.getSelectedStudyId() != null && model.getSelectedStudyId().equals(id)) {
-						
-						selectedIndex = index;
-						
-						// Automatic selection.
-						// Note that the manual selection event is handled by handleStudySelection()
-						log.debug("Enabling the proceed button because a study was selected previously.");
-						proceedWithSelectedButton.setEnabled(true);
-					}
-					index++;
-				}
-				
-				log.debug("selectedIndex" + selectedIndex);
-				
-				studySelect.setItemSelected(selectedIndex, true);
-				selectExistingStudyPanel.setVisible(true);
-				
-			}
-		}
-		*/
 		log.leave();
 	}
 	
-	
-	
-	
+
 	
 	@Override
 	public void registerHandlersForChildWidgetEvents() {
+		
+		ChangeHandler studySelectedChangeHandler = new ChangeHandler() {
+
+			public void onChange(ChangeEvent event) {
+			}
+
+		};
+		
 		
 	}
 

@@ -1,77 +1,38 @@
-/**
- * 
- */
+
+
 package org.cggh.chassis.wwarn.ui.curator.client;
 
-import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
-import org.cggh.chassis.generic.widget.client.ModelChangeEvent;
-import org.cggh.chassis.generic.widget.client.ModelChangeHandler;
+import org.cggh.chassis.generic.widget.client.ObservableProperty;
+import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.AsyncRequestPendingStatus;
+import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.ReadyStatus;
+import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.Status;
 
-import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.xml.client.Element;
 
 /**
- * @author aliman
+ * @author timp
  *
  */
-public class ViewStudyWidgetModel extends AsyncWidgetModel {
+public class ViewStudyWidgetModel {
 
 	
+	public static class RetrieveQuestionnairePendingStatus extends AsyncRequestPendingStatus {}
+	public static final RetrieveQuestionnairePendingStatus STATUS_RETRIEVE_QUESTIONNAIRE_PENDING = new RetrieveQuestionnairePendingStatus();
 	
-	private Element entryElement = null;
-	
-	
-	
-	public void setEntry(Element entryElement) {
-		EntryChangeEvent e = new EntryChangeEvent(this.entryElement, entryElement);
-		this.entryElement = entryElement;
-		this.fireChangeEvent(e);
-	}
-	
-	
-	
-	public HandlerRegistration addEntryChangeHandler(EntryChangeHandler entryChangeHandler) {
-		return this.addChangeHandler(entryChangeHandler, EntryChangeEvent.TYPE);
-	}
-	
-	
-	
-	
-	public static class EntryChangeEvent extends ModelChangeEvent<Element, EntryChangeHandler> {
+	public static class RetrieveStudyPendingStatus extends AsyncRequestPendingStatus {}
+	public static final RetrieveStudyPendingStatus STATUS_RETRIEVE_STUDY_PENDING = new RetrieveStudyPendingStatus();
 
-		public static final Type<EntryChangeHandler> TYPE = new Type<EntryChangeHandler>();
-		
-		public EntryChangeEvent(Element before, Element after) {
-			super(before, after);
-		}
-
-		@Override
-		protected void dispatch(EntryChangeHandler h) {
-			h.onChange(this);
-		}
-
-		@Override
-		public com.google.gwt.event.shared.GwtEvent.Type<EntryChangeHandler> getAssociatedType() {
-			return TYPE;
-		}
-		
-	}
+	public static class SaveStudyPendingStatus extends AsyncRequestPendingStatus {}
+	public static final SaveStudyPendingStatus STATUS_SAVE_STUDY_PENDING = new SaveStudyPendingStatus();
+	
+	public static class ReadyForInteractionStatus extends ReadyStatus {}
+	public static final ReadyForInteractionStatus STATUS_READY_FOR_INTERACTION = new ReadyForInteractionStatus();
 	
 	
 	
-	public interface EntryChangeHandler extends ModelChangeHandler {
-		
-		public void onChange(EntryChangeEvent e);
-		
-	}
-
-
-
-	/**
-	 * @return
-	 */
-	public Element getEntry() {
-		return this.entryElement;
-	}
 	
+	public final ObservableProperty<String> studyUrl = new ObservableProperty<String>();
+	public final ObservableProperty<Element> studyEntryElement = new ObservableProperty<Element>();
+	public final ObservableProperty<Status> status = new ObservableProperty<Status>();
+	public final ObservableProperty<String> message = new ObservableProperty<String>();
 }
