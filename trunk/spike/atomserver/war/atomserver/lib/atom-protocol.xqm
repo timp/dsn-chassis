@@ -9,16 +9,15 @@ import module namespace response = "http://exist-db.org/xquery/response" ;
 import module namespace text = "http://exist-db.org/xquery/text" ;
 import module namespace util = "http://exist-db.org/xquery/util" ;
 
-import module namespace http = "http://www.cggh.org/2010/xquery/http" at "http.xqm" ;
-import module namespace mime = "http://www.cggh.org/2010/xquery/mime" at "mime-types.xqm" ;
-import module namespace config = "http://www.cggh.org/2010/xquery/atom-config" at "atom-config.xqm" ;
-import module namespace af = "http://www.cggh.org/2010/xquery/atom-format" at "atom-format.xqm" ;
-import module namespace atomdb = "http://www.cggh.org/2010/xquery/atom-db" at "atom-db.xqm" ;
+import module namespace CONSTANT = "http://www.cggh.org/2010/atombeat/xquery/constants" at "constants.xqm" ;
+import module namespace mime = "http://www.cggh.org/2010/atombeat/xquery/mime" at "mime.xqm" ;
+import module namespace atomdb = "http://www.cggh.org/2010/atombeat/xquery/atomdb" at "atomdb.xqm" ;
 import module namespace atomsec = "http://www.cggh.org/2010/xquery/atom-security" at "atom-security.xqm" ;
 
-declare variable $ap:atom-mimetype := "application/atom+xml" ; 
-declare variable $ap:param-request-path-info := "request-path-info" ; 
+import module namespace config = "http://www.cggh.org/2010/atombeat/xquery/config" at "../config/shared.xqm" ;
+import module namespace plugin = "http://www.cggh.org/2010/atombeat/xquery/plugin" at "../config/plugins.xqm" ;
 
+declare variable $ap:param-request-path-info := "request-path-info" ; 
 
 
 
@@ -34,15 +33,15 @@ as item()*
 	
 	return
 	
-		if ( $request-method = $http:method-post )
+		if ( $request-method = $CONSTANT:METHOD-POST )
 
 		then ap:do-post( $request-path-info )
 		
-		else if ( $request-method = $http:method-put )
+		else if ( $request-method = $CONSTANT:METHOD-PUT )
 		
 		then ap:do-put( $request-path-info )
 		
-		else if ( $request-method = $http:method-get )
+		else if ( $request-method = $CONSTANT:METHOD-GET )
 		
 		then ap:do-get( $request-path-info )
 		
@@ -63,15 +62,15 @@ declare function ap:do-post(
 ) as item()*
 {
 
-	let $request-content-type := request:get-header( $http:header-content-type )
+	let $request-content-type := request:get-header( $CONSTANT:HEADER-CONTENT-TYPE )
 
 	return 
 
-		if ( starts-with( $request-content-type, $ap:atom-mimetype ) )
+		if ( starts-with( $request-content-type, $CONSTANT:MEDIA-TYPE-ATOM ) )
 		
 		then ap:do-post-atom( $request-path-info )
 		
-		else if ( starts-with( $request-content-type, $http:media-type-multipart-form-data ) )
+		else if ( starts-with( $request-content-type, $CONSTANT:MEDIA-TYPE-MULTIPART-FORM-DATA ) )
 		
 		then ap:do-post-multipart( $request-path-info )
 		
@@ -95,15 +94,15 @@ declare function ap:do-post-atom(
 	return
 	
 		if (
-			local-name( $request-data ) = $af:feed and 
-			namespace-uri( $request-data ) = $af:nsuri
+			local-name( $request-data ) = $CONSTANT:ATOM-FEED and 
+			namespace-uri( $request-data ) = $CONSTANT:ATOM-NSURI
 		)
 		
 		then ap:do-post-atom-feed( $request-path-info , $request-data )
 
 		else if (
-			local-name( $request-data ) = $af:entry and 
-			namespace-uri( $request-data ) = $af:nsuri
+			local-name( $request-data ) = $CONSTANT:ATOM-ENTRY and 
+			namespace-uri( $request-data ) = $CONSTANT:ATOM-NSURI
 		)
 		
 		then ap:do-post-atom-entry( $request-path-info , $request-data )
@@ -126,7 +125,7 @@ declare function ap:do-post-atom-feed(
      : apply a security decision.
      :)
      
-    let $forbidden := ap:is-operation-forbidden( $request-path-info, $atomsec:op-create-collection )
+    let $forbidden := ap:is-operation-forbidden( $request-path-info, $CONSTANT:OP-CREATE-COLLECTION )
         
     return
     
@@ -150,33 +149,50 @@ declare function ap:do-post-atom-feed(
         	
         		if ( $create ) 
         
-        		then
+        		then ap:apply-op( $CONSTANT:OP-CREATE-COLLECTION , $ap:op-create-collection , $request-path-info , $request-data )
         		
-        			let $enable-history := request:get-header( "X-Atom-Enable-History" )
-        			
-        			let $enable-history := 
-        				if ( $enable-history castable as xs:boolean ) then xs:boolean( $enable-history )
-        				else false()
-        
-        			let $feed-doc-db-path := atomdb:create-collection( $request-path-info , $request-data , $enable-history )
-        		
-        			let $feed-doc := doc( $feed-doc-db-path )
-        		            
-        			let $header-content-type := response:set-header( $http:header-content-type , $ap:atom-mimetype )
-        			
-        		    let $status-code := response:set-status-code( $http:status-success-no-content )
-        		        
-        		    let $location := $feed-doc/atom:feed/atom:link[@rel="self"]/@href
-        		        	
-        			let $header-location := response:set-header( $http:header-location, $location )
-        		    
-        			return ()
-        		
-        		else
-        		
-        			ap:do-bad-request( $request-path-info , "A collection already exists at the given location." )
+        		else ap:do-bad-request( $request-path-info , "A collection already exists at the given location." )
         	
 };
+
+
+
+
+(:
+ : TODO doc me 
+ :)
+declare function ap:op-create-collection(
+	$request-path-info as xs:string ,
+	$request-data as element(atom:feed)
+) as item()*
+{
+
+	let $enable-history := request:get-header( "X-Atom-Enable-History" )
+	
+	let $enable-history := 
+		if ( $enable-history castable as xs:boolean ) then xs:boolean( $enable-history )
+		else false()
+
+	let $feed-doc-db-path := atomdb:create-collection( $request-path-info , $request-data , $enable-history )
+
+	let $feed-doc := doc( $feed-doc-db-path )
+            
+	let $header-content-type := response:set-header( $CONSTANT:HEADER-CONTENT-TYPE , $CONSTANT:MEDIA-TYPE-ATOM )
+	
+    let $location := $feed-doc/atom:feed/atom:link[@rel="self"]/@href
+        	
+	let $header-location := response:set-header( $CONSTANT:HEADER-LOCATION, $location )
+
+	return ( $CONSTANT:STATUS-SUCCESS-CREATED , $feed-doc , $CONSTANT:MEDIA-TYPE-ATOM )
+
+};
+
+
+
+
+declare variable $ap:op-create-collection as function :=
+	util:function( QName( "http://www.cggh.org/2010/xquery/atom-protocol" , "ap:op-create-collection" ) , 2 )
+;
 
 
 
@@ -210,7 +226,7 @@ declare function ap:do-post-atom-entry(
              : apply a security decision. 
              :)
              
-            let $forbidden := ap:is-operation-forbidden( $request-path-info, $atomsec:op-create-member )
+            let $forbidden := ap:is-operation-forbidden( $request-path-info, $CONSTANT:OP-CREATE-MEMBER )
                 
             return
             
@@ -218,68 +234,96 @@ declare function ap:do-post-atom-entry(
         
                 then ap:do-forbidden( $request-path-info )
         
-                else
+                else ap:apply-op( $CONSTANT:OP-CREATE-MEMBER , $ap:op-create-member , $request-path-info , $request-data )
         
-        			(: EXPERIMENTAL: inject functions before operation :)
-        			let $status := ap:inject-before( $config:before-create-member , 200 , $request-path-info , $request-data )
-        			
-        			let $log := util:log( "debug" , $status )	
-        			
-                    let $comment := request:get-header("X-Atom-Revision-Comment")
-        		    
-        			let $entry-doc-db-path := atomdb:create-member( $request-path-info , $request-data , $comment )
-        		
-		    		(: if security is enabled, install default resource ACL :)
-		    		let $resource-acl-installed := ap:install-resource-acl( $request-path-info , $entry-doc-db-path )
-        			
-        			let $entry-doc := doc( $entry-doc-db-path )
-        		            
-        		    let $location := $entry-doc/atom:entry/atom:link[@rel="self"]/@href
-        		        	
-        			let $header-location := response:set-header( $http:header-location, $location )
-        					    
-        			return ap:send-atom( $http:status-success-created , $entry-doc )
-        			
 };
 
 
 
 
-declare function ap:inject-before(
-	$functions as function* ,
-	$status as xs:integer ,
+(:
+ : Main request processing function.
+ :)
+declare function ap:apply-op(
+	$op-name as xs:string ,
+	$op as function ,
 	$request-path-info as xs:string ,
 	$request-data as item()*
-) as xs:integer
+) as item()*
 {
-	if ( empty( $functions ) )
-	
-	(: trivially successful :)
-	then 200
-	
-	else 
-	
-		let $f as function := $functions[1]
 
-		let $log := util:log( "debug" , concat( "calling before function, status passed in: " , $status ) )
+	(: EXPERIMENTAL: call plugin functions before operation :)
+	
+	let $before-advice := ap:apply-before( $plugin:before , $op-name , $request-path-info , $request-data )
+	
+	let $request-data := $before-advice[1]
+	let $status-code := $before-advice[2]
+	
+	return 
+	
+		if ( exists( $status-code ) )
+		
+		then (: bail out :)
+		
+			let $response-data := $before-advice[3]
+			let $response-content-type := $before-advice[4]
+			return ap:send-response( $status-code , $response-data , $response-content-type )
+		
+		else (: carry on as normal :)
+		
+			let $result := util:call( $op , $request-path-info , $request-data )
+			let $response-status := $result[1]
+			let $response-data := $result[2]
+			let $response-content-type := $result[3]
 
-		let $result := util:call( $f , $request-path-info , $request-data )
-		
-		let $log := util:log( "debug" , concat( "result: " , $result ) )
-		
-		let $remaining-functions := subsequence( $functions , 2 )
-		
-		return 
-
-			if ( $result >= 200 and $result < 300 and exists( $remaining-functions ) )
+			(:
+			 : EXPERIMENTAL: call plugin functions after operation 
+			 :)
+			 
+			let $after-advice := ap:apply-after( $plugin:after , $op-name , $request-path-info , $response-data , $response-content-type )
 			
-			(: success, carry on calling remaining functions :)
-			then ap:inject-before( $remaining-functions , $result , $request-path-info , $request-data )
-
-			(: bail out :)
-			else $result
+			let $response-data := $after-advice[1]
+			let $response-content-type := $after-advice[2]
+					    
+			return ap:send-response( $response-status , $response-data , $response-content-type )
 
 };
+
+
+
+
+declare function ap:op-create-member(
+	$request-path-info as xs:string ,
+	$request-data as element(atom:entry)
+) as item()*
+{
+
+    let $comment := request:get-header("X-Atom-Revision-Comment")
+    
+	let $entry-doc-db-path := atomdb:create-member( $request-path-info , $request-data , $comment )
+
+	(: if security is enabled, install default resource ACL :)
+	let $resource-acl-installed := ap:install-resource-acl( $request-path-info , $entry-doc-db-path )
+	
+	let $entry-doc := doc( $entry-doc-db-path )
+            
+    let $location := $entry-doc/atom:entry/atom:link[@rel="self"]/@href
+        	
+	let $header-location := response:set-header( $CONSTANT:HEADER-LOCATION, $location )
+	
+	return ( $CONSTANT:STATUS-SUCCESS-CREATED , $entry-doc , $CONSTANT:MEDIA-TYPE-ATOM )
+		
+};
+
+
+
+
+declare variable $ap:op-create-member as function :=
+	util:function( QName( "http://www.cggh.org/2010/xquery/atom-protocol" , "ap:op-create-member" ) , 2 )
+;
+
+
+
 
 (:
  : TODO doc me
@@ -312,7 +356,7 @@ declare function ap:do-post-media(
              
         	let $media-type := text:groups( $request-content-type , "^([^;]+)" )[2]
 	
-            let $forbidden := ap:is-operation-forbidden( $request-path-info , $atomsec:op-create-media , $media-type )
+            let $forbidden := ap:is-operation-forbidden( $request-path-info , $CONSTANT:OP-CREATE-MEDIA , $media-type )
                 
             return
             
@@ -326,7 +370,7 @@ declare function ap:do-post-media(
         			
         			(: check for slug to use as title :)
         			
-        			let $slug := request:get-header( $http:header-slug )
+        			let $slug := request:get-header( $CONSTANT:HEADER-SLUG )
         			
         			(: check for summary :)
         			
@@ -340,9 +384,9 @@ declare function ap:do-post-media(
         		            
         		    let $location := $media-link-doc/atom:entry/atom:link[@rel="self"]/@href
         		        	
-        			let $header-location := response:set-header( $http:header-location, $location )
+        			let $header-location := response:set-header( $CONSTANT:HEADER-LOCATION, $location )
         					    
-        			return ap:send-atom( $http:status-success-created , $media-link-doc )
+        			return ap:send-atom( $CONSTANT:STATUS-SUCCESS-CREATED , $media-link-doc )
         			
 };
 
@@ -402,7 +446,7 @@ declare function ap:do-post-multipart(
              : apply a security decision. 
              :)
              
-            let $forbidden := ap:is-operation-forbidden( $request-path-info , $atomsec:op-create-media , $media-type )
+            let $forbidden := ap:is-operation-forbidden( $request-path-info , $CONSTANT:OP-CREATE-MEDIA , $media-type )
                 
             return
             
@@ -423,13 +467,13 @@ declare function ap:do-post-multipart(
         		     : and I don't know how all browsers handle 201 responses.
         		     :)
         		     
-        		    let $status-code := response:set-status-code( $http:status-success-ok )
+        		    let $status-code := response:set-status-code( $CONSTANT:STATUS-SUCCESS-OK )
         		        
         		    let $location := $media-link-doc/atom:entry/atom:link[@rel="self"]/@href
         		        	
-        			let $header-location := response:set-header( $http:header-location, $location )
+        			let $header-location := response:set-header( $CONSTANT:HEADER-LOCATION, $location )
         					    
-        			let $accept := request:get-header( $http:header-accept )
+        			let $accept := request:get-header( $CONSTANT:HEADER-ACCEPT )
         			
         			return 
         			
@@ -445,19 +489,19 @@ declare function ap:do-post-multipart(
         				
         				then 
         				
-        					let $header-content-type := response:set-header( $http:header-content-type , $ap:atom-mimetype )
+        					let $header-content-type := response:set-header( $CONSTANT:HEADER-CONTENT-TYPE , $CONSTANT:MEDIA-TYPE-ATOM )
         			
         					return $media-link-doc
         			
         				else 
         				
-        					let $header-content-type := response:set-header( $http:header-content-type , "text/html" )
+        					let $header-content-type := response:set-header( $CONSTANT:HEADER-CONTENT-TYPE , "text/html" )
         			
         					return 
         					
         						<html>
         							<head>
-        								<title>{$http:status-success-ok}</title>
+        								<title>{$CONSTANT:STATUS-SUCCESS-OK}</title>
         							</head>
         							<body>{ comment { util:serialize( $media-link-doc/atom:entry , () ) } }</body>
         						</html>
@@ -473,16 +517,16 @@ declare function ap:do-put (
 ) as item()*
 {
 
-	let $request-content-type := request:get-header( $http:header-content-type )
+	let $request-content-type := request:get-header( $CONSTANT:HEADER-CONTENT-TYPE )
 
 	return 
 
-		if ( starts-with( $request-content-type, $ap:atom-mimetype ) )
+		if ( starts-with( $request-content-type, $CONSTANT:MEDIA-TYPE-ATOM ) )
 		
 		then ap:do-put-atom( $request-path-info )
 
 		(:		
-		else if ( starts-with( $request-content-type, $http:media-type-multipart-form-data ) )
+		else if ( starts-with( $request-content-type, $CONSTANT:MEDIA-TYPE-MULTIPART-FORM-DATA ) )
 		
 		then ap:do-put-multipart( $request-path-info )
 		:)
@@ -504,15 +548,15 @@ declare function ap:do-put-atom(
 	return
 	
 		if (
-			local-name( $request-data ) = $af:feed and 
-			namespace-uri( $request-data ) = $af:nsuri
+			local-name( $request-data ) = $CONSTANT:ATOM-FEED and 
+			namespace-uri( $request-data ) = $CONSTANT:ATOM-NSURI
 		)
 		
 		then ap:do-put-atom-feed( $request-path-info , $request-data )
 
 		else if (
-			local-name( $request-data ) = $af:entry and 
-			namespace-uri( $request-data ) = $af:nsuri
+			local-name( $request-data ) = $CONSTANT:ATOM-ENTRY and 
+			namespace-uri( $request-data ) = $CONSTANT:ATOM-NSURI
 		)
 		
 		then ap:do-put-atom-entry( $request-path-info , $request-data )
@@ -541,22 +585,31 @@ declare function ap:do-put-atom-feed(
 	 : feed document with the given feed metadata.
 	 :)
 	 
-	(:
-	 : TODO this function would probably read more easily if split into 
-	 : separate functions for each operation, create-collection and update-
-	 : collection.
-	 :)
-	 
 	let $create := not( atomdb:collection-available( $request-path-info ) )
+
+	return
 	
+		if ( $create )
+		then ap:do-put-atom-feed-to-create-collection( $request-path-info , $request-data )
+		else ap:do-put-atom-feed-to-update-collection( $request-path-info , $request-data )	
+
+};
+
+
+
+
+declare function ap:do-put-atom-feed-to-create-collection(
+	$request-path-info as xs:string ,
+	$request-data as element(atom:feed)
+) as item()*
+{
+
     (: 
-     : Here we bottom out at either the "create-collection" operation, or the
-     : "update-collection" operation, so we need to apply a security decision.
+     : Here we bottom out at the "create-collection" operation, so we need to 
+     : apply a security decision.
      :)
      
-    let $operation :=
-        if ( $create ) then $atomsec:op-create-collection
-        else $atomsec:op-update-collection
+    let $operation := $CONSTANT:OP-CREATE-COLLECTION
         
     let $forbidden := ap:is-operation-forbidden( $request-path-info , $operation )
         
@@ -578,32 +631,58 @@ declare function ap:do-put-atom-feed(
         		if ( $enable-history castable as xs:boolean ) then xs:boolean( $enable-history )
         		else false()
         
-        	let $feed-doc-db-path := 
-        		if ( $create ) then atomdb:create-collection( $request-path-info , $request-data , $enable-history )
-        		else atomdb:update-collection( $request-path-info , $request-data )
+        	let $feed-doc-db-path := atomdb:create-collection( $request-path-info , $request-data , $enable-history )
         		
     		(: if we are creating a collection and security is enabled, install 
     		   default collection ACL :)
     		
-    		let $collection-acl-installed :=
-    		    if ( $create )
-    		    then ap:install-collection-acl( $request-path-info )
-    		    else ()
+    		let $collection-acl-installed := ap:install-collection-acl( $request-path-info )
     		
         	let $feed-doc := doc( $feed-doc-db-path )
                     
-            let $status-code :=
-                if ( $create ) then $http:status-success-created 
-                else $http:status-success-ok 
+            let $status-code := $CONSTANT:STATUS-SUCCESS-CREATED 
                 
             let $location := $feed-doc/atom:feed/atom:link[@rel="self"]/@href
                 	
-        	let $header-location := 
-        	    if ( $create ) then response:set-header( $http:header-location, $location )
-        	    else ()
+        	let $header-location := response:set-header( $CONSTANT:HEADER-LOCATION, $location )
             
         	return ap:send-atom( $status-code , $feed-doc )
 	
+};
+
+
+
+
+declare function ap:do-put-atom-feed-to-update-collection(
+	$request-path-info as xs:string ,
+	$request-data as element(atom:feed)
+) as item()*
+{
+
+    (: 
+     : Here we bottom out at the "update-collection" operation, so we need to 
+     : apply a security decision.
+     :)
+     
+    let $operation := $CONSTANT:OP-UPDATE-COLLECTION
+        
+    let $forbidden := ap:is-operation-forbidden( $request-path-info , $operation )
+        
+    return
+    
+        if ( $forbidden ) 
+
+        then ap:do-forbidden( $request-path-info )
+
+        else
+	
+        	let $feed-doc-db-path := atomdb:update-collection( $request-path-info , $request-data )
+        		
+        	let $feed-doc := doc( $feed-doc-db-path )
+                    
+            let $status-code := $CONSTANT:STATUS-SUCCESS-OK 
+                
+        	return ap:send-atom( $status-code , $feed-doc )
 };
 
 
@@ -638,7 +717,7 @@ declare function ap:do-put-atom-entry(
 		     : to apply a security decision.
 		     :)
             
-            let $forbidden := ap:is-operation-forbidden( $request-path-info , $atomsec:op-update-member )
+            let $forbidden := ap:is-operation-forbidden( $request-path-info , $CONSTANT:OP-UPDATE-MEMBER )
                 
             return
             
@@ -654,7 +733,7 @@ declare function ap:do-put-atom-entry(
         		
         			let $entry-doc := doc( $entry-doc-db-path )
         		            
-        			return ap:send-atom( $http:status-success-ok , $entry-doc )
+        			return ap:send-atom( $CONSTANT:STATUS-SUCCESS-OK , $entry-doc )
         
 };
 
@@ -687,7 +766,7 @@ declare function ap:do-put-media(
 			
 			let $media-doc-db-path := atomdb:update-media-resource( $request-path-info , $request-data , $request-content-type )
 			
-		    let $status-code := response:set-status-code( $http:status-success-ok )
+		    let $status-code := response:set-status-code( $CONSTANT:STATUS-SUCCESS-OK )
 		    
 		    (:
 		     : TODO review whether we really want to echo the file back to client
@@ -703,7 +782,7 @@ declare function ap:do-put-media(
 		    let $media-link := atomdb:get-media-link( $request-path-info )
 		    let $title := $media-link/atom:title
 		    let $content-disposition :=
-		    	if ( $title ) then response:set-header( $http:header-content-disposition , concat( "attachment; filename=" , $title ) )
+		    	if ( $title ) then response:set-header( $CONSTANT:HEADER-CONTENT-DISPOSITION , concat( "attachment; filename=" , $title ) )
 		    	else ()
 		    
 		    (: decoding from base 64 binary :)
@@ -754,7 +833,7 @@ declare function ap:do-get-entry(
      : to apply a security decision.
      :)
 
-    let $forbidden := ap:is-operation-forbidden( $request-path-info , $atomsec:op-retrieve-member )
+    let $forbidden := ap:is-operation-forbidden( $request-path-info , $CONSTANT:OP-RETRIEVE-MEMBER )
         
     return
     
@@ -762,7 +841,7 @@ declare function ap:do-get-entry(
 
         then ap:do-forbidden( $request-path-info )
 
-        else ap:send-atom( $http:status-success-ok , atomdb:retrieve-entry( $request-path-info ) )
+        else ap:send-atom( $CONSTANT:STATUS-SUCCESS-OK , atomdb:retrieve-entry( $request-path-info ) )
 
 };
 
@@ -776,7 +855,7 @@ declare function ap:do-get-media(
 
     (: TODO security decision :)
 
-    let $status-code := response:set-status-code( $http:status-success-ok )
+    let $status-code := response:set-status-code( $CONSTANT:STATUS-SUCCESS-OK )
     
     (: media type :)
     
@@ -787,7 +866,7 @@ declare function ap:do-get-media(
     let $media-link := atomdb:get-media-link( $request-path-info )
     let $title := $media-link/atom:title
     let $content-disposition :=
-    	if ( $title ) then response:set-header( $http:header-content-disposition , concat( "attachment; filename=" , $title ) )
+    	if ( $title ) then response:set-header( $CONSTANT:HEADER-CONTENT-DISPOSITION , concat( "attachment; filename=" , $title ) )
     	else ()
     
     (: decoding from base 64 binary :)
@@ -811,7 +890,7 @@ declare function ap:do-get-feed(
      : to apply a security decision.
      :)
 
-    let $forbidden := ap:is-operation-forbidden( $request-path-info , $atomsec:op-list-collection )
+    let $forbidden := ap:is-operation-forbidden( $request-path-info , $CONSTANT:OP-LIST-COLLECTION )
         
     return
     
@@ -825,7 +904,7 @@ declare function ap:do-get-feed(
             
             let $feed := ap:filter-feed-by-acls( $feed )
             
-            return ap:send-atom( $http:status-success-ok , $feed )
+            return ap:send-atom( $CONSTANT:STATUS-SUCCESS-OK , $feed )
     
 };
 
@@ -842,10 +921,10 @@ declare function ap:filter-feed-by-acls(
         <atom:feed>
             {
                 $feed/attribute::* ,
-                $feed/*[ ( local-name(.) != $af:entry ) and ( namespace-uri(.) != $af:nsuri ) ] ,
+                $feed/*[ ( local-name(.) != $CONSTANT:ATOM-ENTRY ) and ( namespace-uri(.) != $CONSTANT:ATOM-NSURI ) ] ,
                 for $entry in $feed/atom:entry
                 let $request-path-info := substring-after( $entry/atom:link[@rel="edit"]/@href , $config:service-url )
-                let $forbidden := ap:is-operation-forbidden( $request-path-info , $atomsec:op-retrieve-member )
+                let $forbidden := ap:is-operation-forbidden( $request-path-info , $CONSTANT:OP-RETRIEVE-MEMBER )
                 return 
                     if ( not( $forbidden ) ) then $entry else ()
             }
@@ -861,7 +940,7 @@ declare function ap:do-not-found(
 
     let $message := "The server has not found anything matching the Request-URI."
     
-    return ap:send-error( $http:status-client-error-not-found , $message , $request-path-info )
+    return ap:send-error( $CONSTANT:STATUS-CLIENT-ERROR-NOT-FOUND , $message , $request-path-info )
 
 };
 
@@ -875,7 +954,7 @@ declare function ap:do-bad-request(
 
     let $message := concat( $message , " The request could not be understood by the server due to malformed syntax. The client SHOULD NOT repeat the request without modifications." )
 
-    return ap:send-error( $http:status-client-error-bad-request , $message , $request-path-info )
+    return ap:send-error( $CONSTANT:STATUS-CLIENT-ERROR-BAD-REQUEST , $message , $request-path-info )
 
 };
 
@@ -893,9 +972,9 @@ declare function ap:do-method-not-allowed(
 	 : TODO DELETE method and different allows depending on resource identified 
 	 :)
 	
-	let $header-allow := response:set-header( $http:header-allow , "GET POST PUT" )
+	let $header-allow := response:set-header( $CONSTANT:HEADER-ALLOW , "GET POST PUT" )
 
-    return ap:send-error( $http:status-client-error-method-not-allowed , $message , $request-path-info )
+    return ap:send-error( $CONSTANT:STATUS-CLIENT-ERROR-METHOD-NOT-ALLOWED , $message , $request-path-info )
 
 };
 
@@ -909,7 +988,7 @@ declare function ap:do-forbidden(
 
     let $message := "The server understood the request, but is refusing to fulfill it. Authorization will not help and the request SHOULD NOT be repeated."
 
-    return ap:send-error( $http:status-client-error-forbidden , $message , $request-path-info )
+    return ap:send-error( $CONSTANT:STATUS-CLIENT-ERROR-FORBIDDEN , $message , $request-path-info )
 
 };
 
@@ -988,16 +1067,39 @@ declare function ap:install-collection-acl( $request-path-info as xs:string ) as
 declare function ap:send-atom(
     $status as xs:integer ,
     $data as item()
-)
+) as item()*
 {
 
     let $status-code := response:set-status-code( $status )
     
-    let $header-content-type := response:set-header( $http:header-content-type , $ap:atom-mimetype )
+    let $header-content-type := response:set-header( $CONSTANT:HEADER-CONTENT-TYPE , $CONSTANT:MEDIA-TYPE-ATOM )
     
     return $data
 
 };
+
+
+
+declare function ap:send-response(
+    $status as xs:integer ,
+    $data as item() ,
+    $content-type as xs:string?
+) as item()*
+{
+
+	if ( $status >= 400 and $status < 600 )
+	
+	then (: override to wrap response with useful debugging information :)
+		let $request-path-info := request:get-attribute( $ap:param-request-path-info )
+		return ap:send-error( $status , $data , $request-path-info )
+		
+	else
+	    let $status-code := response:set-status-code( $status )
+	    let $header-content-type := response:set-header( $CONSTANT:HEADER-CONTENT-TYPE , $content-type )
+	    return $data
+
+};
+
 
 
 
@@ -1006,20 +1108,20 @@ declare function ap:send-atom(
  :)
 declare function ap:send-error(
     $status-code as xs:integer , 
-    $message as xs:string? ,
+    $content as item()? ,
     $request-path-info as xs:string?
 ) as item()*
 {
 
 	let $status-code-set := response:set-status-code( $status-code )
 
-	let $header-content-type := response:set-header( $http:header-content-type , "application/xml" )
+	let $header-content-type := response:set-header( $CONSTANT:HEADER-CONTENT-TYPE , $CONSTANT:MEDIA-TYPE-XML )
 
 	let $response := 
 	
 		<error>
 		    <status>{$status-code}</status>
-			<message>{$message}</message>
+			<content>{$content}</content>
 			<service-url>{$config:service-url}</service-url>
 			<method>{request:get-method()}</method>
 			<path-info>{$request-path-info}</path-info>
@@ -1050,3 +1152,89 @@ declare function ap:send-error(
 	return $response
 
 };
+
+
+
+
+(:
+ : Recursively call the sequence of plugin functions.
+ :)
+declare function ap:apply-before(
+	$functions as function* ,
+	$operation as xs:string ,
+	$request-path-info as xs:string ,
+	$request-data as item()*
+) as item()* {
+	
+	(:
+	 : Plugin functions applied during the before phase can have no side-effects,
+	 : in which case they will return the request data unaltered, or they can
+	 : modify the request data, or they can interrupt the processing of the
+	 : request and cause a response to be sent, without calling any subsequent
+	 : plugin functions or carrying out the target operation.
+	 :)
+	 
+	if ( empty( $functions ) )
+	
+	then ( $request-data , () , () )
+	
+	else
+	
+		let $advice := util:call( $functions[1] , $operation , $request-path-info , $request-data )
+		
+		(: what happens next depends on advice :)
+		
+		let $request-data := $advice[1]
+		let $status-code := $advice[2]
+		let $response-data := $advice[3]
+		
+		return
+		
+			if ( exists( $status-code ) )
+			
+			then $advice (: bail out, no further calling of before functions :)
+
+			else ap:apply-before( subsequence( $functions , 2 ) , $operation , $request-path-info , $request-data )
+
+};
+
+
+
+
+(:
+ : Recursively call the sequence of plugin functions.
+ :)
+declare function ap:apply-after(
+	$functions as function* ,
+	$operation as xs:string ,
+	$request-path-info as xs:string ,
+	$response-data as item()* ,
+	$content-type as xs:string?
+) as item()* {
+	
+	if ( empty( $functions ) )
+	
+	then ( $response-data , $content-type )
+	
+	else
+	
+		(:
+		 : The after functions can modify the response data and response content
+		 : type, but cannot alter the status code.
+		 :)
+		 
+		let $advice := util:call( $functions[1] , $operation , $request-path-info , $response-data , $content-type )
+		
+		let $response-data := $advice[1]
+		let $content-type := $advice[2]
+		
+		return
+		
+			ap:apply-after( subsequence( $functions , 2 ) , $operation , $request-path-info , $response-data , $content-type )
+
+};
+
+
+
+
+

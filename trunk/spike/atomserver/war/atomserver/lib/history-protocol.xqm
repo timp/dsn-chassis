@@ -13,13 +13,14 @@ import module namespace text = "http://exist-db.org/xquery/text" ;
 import module namespace util = "http://exist-db.org/xquery/util" ;
 import module namespace v="http://exist-db.org/versioning" ;
 
-import module namespace utilx = "http://www.cggh.org/2010/xquery/util" at "util.xqm" ;
-import module namespace http = "http://www.cggh.org/2010/xquery/http" at "http.xqm" ;
-import module namespace mime = "http://www.cggh.org/2010/xquery/mime" at "mime-types.xqm" ;
-import module namespace config = "http://www.cggh.org/2010/xquery/atom-config" at "atom-config.xqm" ;
-import module namespace af = "http://www.cggh.org/2010/xquery/atom-format" at "atom-format.xqm" ;
-import module namespace adb = "http://www.cggh.org/2010/xquery/atom-db" at "atom-db.xqm" ;
+import module namespace CONSTANT = "http://www.cggh.org/2010/atombeat/xquery/constants" at "constants.xqm" ;
+
+import module namespace xutil = "http://www.cggh.org/2010/atombeat/xquery/xutil" at "xutil.xqm" ;
+import module namespace mime = "http://www.cggh.org/2010/atombeat/xquery/mime" at "mime.xqm" ;
+import module namespace adb = "http://www.cggh.org/2010/atombeat/xquery/atomdb" at "atomdb.xqm" ;
 import module namespace ap = "http://www.cggh.org/2010/xquery/atom-protocol" at "atom-protocol.xqm" ;
+
+import module namespace config = "http://www.cggh.org/2010/atombeat/xquery/config" at "../config/shared.xqm" ;
 
 declare variable $ah:param-name-revision-index as xs:string := "revision" ;
 
@@ -41,7 +42,7 @@ as item()*
 	
 	return
 	
-		if ( $request-method = $http:method-get )
+		if ( $request-method = $CONSTANT:METHOD-GET )
 		
 		then ah:do-get( $request-path-info )
 		
@@ -114,10 +115,10 @@ declare function ah:do-get-entry-history(
     let $entry-doc := doc( $entry-doc-path )
     let $log := util:log( "debug" , $entry-doc )
     
-    let $status-code := response:set-status-code( $http:status-success-ok )
+    let $status-code := response:set-status-code( $CONSTANT:STATUS-SUCCESS-OK )
     let $log := util:log( "debug" , concat( "status-code: " , $status-code ) )
     
-    let $header-content-type := response:set-header( $http:header-content-type , $ap:atom-mimetype )
+    let $header-content-type := response:set-header( $CONSTANT:HEADER-CONTENT-TYPE , $CONSTANT:MEDIA-TYPE-ATOM )
     let $log := util:log( "debug" , concat( "header-content-type: " , $header-content-type ) )
     
     let $vhist := v:history( $entry-doc )
@@ -185,9 +186,9 @@ declare function ah:do-get-entry-revision(
         
         else 
         
-    	    let $status-code := response:set-status-code( $http:status-success-ok )
+    	    let $status-code := response:set-status-code( $CONSTANT:STATUS-SUCCESS-OK )
     	    
-    	    let $header-content-type := response:set-header( $http:header-content-type , $ap:atom-mimetype )
+    	    let $header-content-type := response:set-header( $CONSTANT:HEADER-CONTENT-TYPE , $CONSTANT:MEDIA-TYPE-ATOM )
     
         	return ah:construct-entry-revision( $request-path-info , $entry-doc , $revision-index , $revision-numbers )
         
@@ -248,7 +249,7 @@ declare function ah:construct-entry-base-revision(
      : indexed by qname?
      :)
      
-    let $revision := utilx:copy( $base-revision-doc/* )
+    let $revision := xutil:copy( $base-revision-doc/* )
     
     let $when := $revision/atom:updated
 
@@ -359,8 +360,8 @@ declare function ah:do-not-found(
 ) as item()?
 {
 
-    let $status-code := response:set-status-code( $http:status-client-error-not-found )
-	let $header-content-type := response:set-header( $http:header-content-type , "application/xml" )
+    let $status-code := response:set-status-code( $CONSTANT:STATUS-CLIENT-ERROR-NOT-FOUND )
+	let $header-content-type := response:set-header( $CONSTANT:HEADER-CONTENT-TYPE , $CONSTANT:MEDIA-TYPE-XML )
 	let $response := 
 	
 		<response>
@@ -383,8 +384,8 @@ declare function ah:do-bad-request(
 
 	let $request-data := request:get-data()
 	
-    let $status-code := response:set-status-code( $http:status-client-error-bad-request )
-	let $header-content-type := response:set-header( $http:header-content-type , "application/xml" )
+    let $status-code := response:set-status-code( $CONSTANT:STATUS-CLIENT-ERROR-BAD-REQUEST )
+	let $header-content-type := response:set-header( $CONSTANT:HEADER-CONTENT-TYPE , $CONSTANT:MEDIA-TYPE-XML )
 	let $response := 
 	
 		<response>
@@ -419,15 +420,11 @@ declare function ah:do-method-not-allowed(
 
 	let $request-data := request:get-data()
 
-	let $status-code := response:set-status-code( $http:status-client-error-method-not-allowed )
+	let $status-code := response:set-status-code( $CONSTANT:STATUS-CLIENT-ERROR-METHOD-NOT-ALLOWED )
 
-	let $header-allow := response:set-header( $http:header-allow , "GET POST PUT" )
+	let $header-allow := response:set-header( $CONSTANT:HEADER-ALLOW , "GET" )
 
-	(: 
-	 : TODO DELETE method and different allows depending on resource identified 
-	 :)
-	
-	let $header-content-type := response:set-header( $http:header-content-type , "application/xml" )
+	let $header-content-type := response:set-header( $CONSTANT:HEADER-CONTENT-TYPE , $CONSTANT:MEDIA-TYPE-XML )
 
 	let $response := 
 	

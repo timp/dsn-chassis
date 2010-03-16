@@ -6,12 +6,13 @@ import module namespace text = "http://exist-db.org/xquery/text" ;
 import module namespace xmldb = "http://exist-db.org/xquery/xmldb" ;
 import module namespace util = "http://exist-db.org/xquery/util" ;
 
-import module namespace utilx = "http://www.cggh.org/2010/xquery/util" at "util.xqm" ;
-import module namespace test = "http://www.cggh.org/2010/xquery/test" at "test.xqm" ;
-import module namespace af = "http://www.cggh.org/2010/xquery/atom-format" at "atom-format.xqm" ;
-import module namespace atomdb = "http://www.cggh.org/2010/xquery/atom-db" at "atom-db.xqm" ;
-import module namespace config = "http://www.cggh.org/2010/xquery/atom-config" at "atom-config.xqm" ;
+import module namespace CONSTANT = "http://www.cggh.org/2010/atombeat/xquery/constants" at "constants.xqm" ;
+
+import module namespace xutil = "http://www.cggh.org/2010/atombeat/xquery/xutil" at "xutil.xqm" ;
+import module namespace test = "http://www.cggh.org/2010/atombeat/xquery/test" at "test.xqm" ;
+import module namespace atomdb = "http://www.cggh.org/2010/atombeat/xquery/atomdb" at "atomdb.xqm" ;
 import module namespace atomsec = "http://www.cggh.org/2010/xquery/atom-security" at "atom-security.xqm" ;
+import module namespace config = "http://www.cggh.org/2010/atombeat/xquery/config" at "../config/shared.xqm" ;
 
 
 
@@ -438,7 +439,7 @@ declare function local:test-media-ranges() as item()*
     
     let $request-path-info := "/foo"
     let $operation := "create-media"
-    let $media-type := "application/xml"
+    let $media-type := $CONSTANT:MEDIA-TYPE-XML
     let $user := "alice"
     let $roles := ()
     let $decision := atomsec:decide( $user , $roles , $request-path-info , $operation , $media-type )
@@ -458,7 +459,7 @@ declare function local:test-media-ranges() as item()*
     
     let $request-path-info := "/foo"
     let $operation := "create-media"
-    let $media-type := "application/xml"
+    let $media-type := $CONSTANT:MEDIA-TYPE-XML
     let $user := "bob"
     let $roles := ()
     let $decision := atomsec:decide( $user , $roles , $request-path-info , $operation , $media-type )
@@ -468,7 +469,7 @@ declare function local:test-media-ranges() as item()*
     
     let $request-path-info := "/foo"
     let $operation := "create-media"
-    let $media-type := "application/xml"
+    let $media-type := $CONSTANT:MEDIA-TYPE-XML
     let $user := "jane"
     let $roles := ()
     let $decision := atomsec:decide( $user , $roles , $request-path-info , $operation , $media-type )

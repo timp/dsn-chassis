@@ -1,11 +1,11 @@
 xquery version "1.0";
 
-module namespace utilx = "http://www.cggh.org/2010/xquery/util";
+module namespace xutil = "http://www.cggh.org/2010/atombeat/xquery/xutil";
 
 
 
 
-declare function utilx:get-or-create-collection(
+declare function xutil:get-or-create-collection(
 	$collection-path as xs:string 
 ) as xs:string?
 {
@@ -30,7 +30,7 @@ declare function utilx:get-or-create-collection(
 			let $new-collection := $groups[3]
 			let $log := util:log( "debug" , concat( "$new-collection: " , $new-collection ) )
 
-			let $target-collection-uri := utilx:get-or-create-collection( $target-collection-uri )
+			let $target-collection-uri := xutil:get-or-create-collection( $target-collection-uri )
 			
             return xmldb:create-collection( $target-collection-uri , $new-collection )
 			
@@ -40,13 +40,13 @@ declare function utilx:get-or-create-collection(
 
 
 (: return a deep copy of  the element and all sub elements :)
-declare function utilx:copy($element as element()) as element() {
+declare function xutil:copy($element as element()) as element() {
    element {node-name($element)}
       {$element/@*,
           for $child in $element/node()
               return
                if ($child instance of element())
-                 then utilx:copy($child)
+                 then xutil:copy($child)
                  else $child
       }
 };
