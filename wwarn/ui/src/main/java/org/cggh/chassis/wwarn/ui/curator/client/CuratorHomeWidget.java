@@ -6,21 +6,25 @@ package org.cggh.chassis.wwarn.ui.curator.client;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.DelegatingWidget;
+
+
 import org.cggh.chassis.generic.widget.client.WidgetEventChannel;
 
 /**
+ * BE SURE TO EDIT THE TEMPLATE NOT THE RENDERED RESULT
+ *
+ * DELETE_TO_MANUALLY_EDIT
+ *
  * @author timp
  *
  */
 public class CuratorHomeWidget 
-	extends DelegatingWidget<CuratorHomeWidgetModel, CuratorHomeWidgetRenderer> {
+	 	extends DelegatingWidget<CuratorHomeWidgetModel, CuratorHomeWidgetRenderer> {
 
 	private static final Log log = LogFactory.getLog(CuratorHomeWidget.class);
 	
-
 	private CuratorHomeWidgetController controller;
-		private ListStudiesWidget listStudiesWidget;
-
+	private ListStudiesWidget listStudiesWidget;
 
 	@Override
 	protected CuratorHomeWidgetModel createModel() {
@@ -30,7 +34,6 @@ public class CuratorHomeWidget
 	public CuratorHomeWidgetModel getModel() {
 		return model;
 	}
-	
 
 	@Override
 	protected CuratorHomeWidgetRenderer createRenderer() {
@@ -41,9 +44,7 @@ public class CuratorHomeWidget
 	public void init() {
 		
 		super.init();
-		
-		this.controller = new CuratorHomeWidgetController(this, this.model);
-
+				this.controller = new CuratorHomeWidgetController(this, this.model);
 
 	}
 	

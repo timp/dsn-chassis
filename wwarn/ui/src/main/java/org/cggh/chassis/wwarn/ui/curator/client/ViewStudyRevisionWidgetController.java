@@ -1,53 +1,57 @@
 
-/**
- * 
- */
 package org.cggh.chassis.wwarn.ui.curator.client;
-
-import java.util.List;
 
 import org.cggh.chassis.generic.async.client.Deferred;
 import org.cggh.chassis.generic.async.client.Function;
-import org.cggh.chassis.generic.async.client.QueryParams;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.miniatom.client.Atom;
-import org.cggh.chassis.generic.miniatom.client.AtomHelper;
-import org.cggh.chassis.generic.miniatom.client.ext.Chassis;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 import org.cggh.chassis.generic.widget.client.ChassisWidget;
 import org.cggh.chassis.generic.widget.client.ErrorEvent;
-import org.cggh.chassis.generic.xquestion.client.XQuestionnaire;
 import org.cggh.chassis.wwarn.ui.common.client.Config;
 
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;
 
 /**
+ * BE SURE TO EDIT THE TEMPLATE NOT THE RENDERED RESULT
+ *
+ * DELETE_TO_MANUALLY_EDIT
+ *
  * @author timp
  *
  */
 public class ViewStudyRevisionWidgetController {
-
-	
 	
 	
 	private Log log = LogFactory.getLog(ViewStudyRevisionWidgetController.class);
-	
-	
 	
 	
 	private ViewStudyRevisionWidget owner;
 	private ViewStudyRevisionWidgetModel model;
 
 
-	
-	
-	public ViewStudyRevisionWidgetController(ViewStudyRevisionWidget owner, ViewStudyRevisionWidgetModel model) {
-		this.owner = owner;
-		this.model = model;
-	}
+	private static String STUDY_REVISION_ENTRY_URI = "/atom/history/studies/id.atom?revision=rn";
 
+			
+	public Deferred<Document> retrieveRevision() {
+		log.enter("retrieveRevision");
+		// Set the model's status to pending.
+		//model.setStatus(ViewStudyRevisionWidgetModel.STATUS_RETRIEVE_STUDIES_PENDING);
+		
+		String studyQueryServiceUrl = Config.get(Config.QUERY_STUDIES_URL);
+		
+		Deferred<Document> deferredDoc = Atom.getFeed(studyQueryServiceUrl);
+		
+		// Add a call-back and error-back for the asynchronous feed.
+		deferredDoc.addCallback(new RetrieveRevisionCallback());
+		deferredDoc.addErrback(new DefaultErrback());
+		
+		log.leave();
+		return deferredDoc;
+	}
+	
 	
 	
 	public Deferred<ChassisWidget> refreshAndCallback() {
@@ -102,88 +106,61 @@ public class ViewStudyRevisionWidgetController {
 
 
 
-	/**
-	 * @return
-	 */
-	public Deferred<Element> retrieveStudy() {
-		log.enter("retrieveStudy");
-		
-		model.status.set(ViewStudyRevisionWidgetModel.STATUS_RETRIEVE_STUDY_PENDING);
-		
-		Deferred<Element> d;
-		
-		if (!model.studyUrl.isNull()) {
-			
-			d = Atom.getEntry(model.studyUrl.get()).adapt(new Function<Document, Element>() {
 
-				public Element apply(Document in) {
-					return in.getDocumentElement();
-				}
+	
+	private class RetrieveRevisionCallback implements Function<Element, Deferred<Document>> {
+
+		public Deferred<Document> apply(Element revisionEntryElement) {
+			
+			// model.setRevisionEntryElement(revisionEntryElement);
+			
+			Deferred<Document> deferredFilesFeedDoc = null;
+			
+			if (revisionEntryElement != null) {
+
+				// we have one, so lets try retrieving the list of files uploaded so far
+				// deferredFilesFeedDoc = retrieveFiles();
 				
-			});
+			}
 			
-		}
-		else {
-			d = new Deferred<Element>();
-			d.callback(null);
+			else {
+				
+				//model.setStatus(ViewStudyRevisionWidgetModel.STATUS_STUDY_NOT_FOUND);
+				deferredFilesFeedDoc = new Deferred<Document>();
+				deferredFilesFeedDoc.callback(null);
+
+			}
+			
+			// return the deferred feed of files uploaded, for chaining of callbacks
+			return deferredFilesFeedDoc;
 		}
 		
-		log.leave();
-		return d;
 	}
 	
 	
+        			
+	public void setStudyRevision(String uri) { 
+	  // TODO Generated stub 
+	}
 	
-	public final Function<Element, Element> retrieveStudyCallback = new Function<Element, Element>() {
-		
-		public Element apply(Element in) {
-			log.enter("apply");
-			
-			model.studyEntryElement.set(in);
-			model.status.set(ViewStudyRevisionWidgetModel.STATUS_READY_FOR_INTERACTION);
-			
-			log.leave();
-			return in;
-		}
-	};
+     	 
+	private StudyRevisionActionsWidget studyRevisionActionsWidget;
 
+ 
+	private ViewRevisionQuestionnaireWidget viewRevisionQuestionnaireWidget;
 
+ 
+	private StudyRevisionSummaryWidget studyRevisionSummaryWidget;
 
-	/**
-	 * 
-	 */
-	public void saveStudy() {
-		log.enter("saveStudy");
-		
-		model.status.set(ViewStudyRevisionWidgetModel.STATUS_SAVE_STUDY_PENDING);
-		
-		Deferred<Document> d = Atom.putEntry(model.studyUrl.get(), model.studyEntryElement.get().getOwnerDocument());
-
-		d.addCallback(saveStudyCallback);
-		d.addErrback(new DefaultErrback());
-		
-		log.leave();
+ 
+	
+	
+	public ViewStudyRevisionWidgetController(ViewStudyRevisionWidget owner, ViewStudyRevisionWidgetModel model) {
+		this.owner = owner;
+		this.model = model;
 	}
 
 	
 	
-	protected final Function<Document, Document> saveStudyCallback = new Function<Document, Document>() {
-		
-		public Document apply(Document in) {
-			log.enter("apply");
-			
-			model.studyEntryElement.set(in.getDocumentElement());
-			model.status.set(ViewStudyRevisionWidgetModel.STATUS_READY_FOR_INTERACTION);
-			
-			log.leave();
-			return in;
-		}
-	};
-
-
-
-
-
-
 
 }

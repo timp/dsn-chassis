@@ -32,8 +32,11 @@ import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;
 
 /**
+ * BE SURE TO EDIT THE TEMPLATE NOT THE RENDERED RESULT
+ *
+ * DELETE_TO_MANUALLY_EDIT
+ *
  * @author timp
- * @since 13 Jan 2010
  */
 public class StudyRevisionListWidgetRenderer extends
 		ChassisWidgetRenderer<StudyRevisionListWidgetModel> {
@@ -47,22 +50,17 @@ public class StudyRevisionListWidgetRenderer extends
 	private static StudyRevisionListWidgetRendererUiBinder uiBinder = 
 		GWT.create(StudyRevisionListWidgetRendererUiBinder.class);
 
-//	@UiField HTMLPanel bodyPanel;
-//	@UiField FlowPanel mainActionsPanel;
+	@UiField HTMLPanel mainPanel;
+	@UiField FlowPanel contentPanel;
 	@UiField HTMLPanel pendingPanel;
 	@UiField HTMLPanel errorPanel;
 	@UiField FlowPanel errorMessage;
 
 	private StudyRevisionListWidget owner;
-	private StudyRevisionListWidgetController controller;
-
-	public StudyRevisionListWidgetRenderer(StudyRevisionListWidget owner) {
+  public StudyRevisionListWidgetRenderer(StudyRevisionListWidget owner) {
 		this.owner = owner;
 	}
 
-	public void setController(StudyRevisionListWidgetController controller) {
-		this.controller = controller;
-	}
 
 	@Override
 	protected void renderUI() {

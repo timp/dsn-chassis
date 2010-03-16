@@ -32,8 +32,11 @@ import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;
 
 /**
+ * BE SURE TO EDIT THE TEMPLATE NOT THE RENDERED RESULT
+ *
+ * DELETE_TO_MANUALLY_EDIT
+ *
  * @author timp
- * @since 13 Jan 2010
  */
 public class ViewStudyQuestionnaireWidgetRenderer extends
 		ChassisWidgetRenderer<ViewStudyQuestionnaireWidgetModel> {
@@ -47,22 +50,22 @@ public class ViewStudyQuestionnaireWidgetRenderer extends
 	private static ViewStudyQuestionnaireWidgetRendererUiBinder uiBinder = 
 		GWT.create(ViewStudyQuestionnaireWidgetRendererUiBinder.class);
 
-//	@UiField HTMLPanel bodyPanel;
-//	@UiField FlowPanel mainActionsPanel;
+	@UiField HTMLPanel mainPanel;
+	@UiField FlowPanel contentPanel;
 	@UiField HTMLPanel pendingPanel;
 	@UiField HTMLPanel errorPanel;
 	@UiField FlowPanel errorMessage;
 
 	private ViewStudyQuestionnaireWidget owner;
-	private ViewStudyQuestionnaireWidgetController controller;
-
-	public ViewStudyQuestionnaireWidgetRenderer(ViewStudyQuestionnaireWidget owner) {
+  public ViewStudyQuestionnaireWidgetRenderer(ViewStudyQuestionnaireWidget owner) {
 		this.owner = owner;
 	}
+	private ViewStudyQuestionnaireWidgetController controller;
 
 	public void setController(ViewStudyQuestionnaireWidgetController controller) {
 		this.controller = controller;
 	}
+
 
 	@Override
 	protected void renderUI() {

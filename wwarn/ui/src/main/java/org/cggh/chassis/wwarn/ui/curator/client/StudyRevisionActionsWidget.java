@@ -4,45 +4,30 @@
 package org.cggh.chassis.wwarn.ui.curator.client;
 
 import org.cggh.chassis.generic.log.client.Log;
-import org.cggh.chassis.generic.log.client.LogFactory;
-import org.cggh.chassis.generic.widget.client.DelegatingWidget;
+import org.cggh.chassis.generic.log.client.LogFactory;import org.cggh.chassis.generic.widget.client.ChassisWidget;
+
+
 import org.cggh.chassis.generic.widget.client.WidgetEventChannel;
 
 /**
+ * BE SURE TO EDIT THE TEMPLATE NOT THE RENDERED RESULT
+ *
+ * DELETE_TO_MANUALLY_EDIT
+ *
  * @author timp
  *
  */
 public class StudyRevisionActionsWidget 
-	extends DelegatingWidget<StudyRevisionActionsWidgetModel, StudyRevisionActionsWidgetRenderer> {
+	 	extends ChassisWidget {
 
 	private static final Log log = LogFactory.getLog(StudyRevisionActionsWidget.class);
 	
-
-	private StudyRevisionActionsWidgetController controller;
-	
-	@Override
-	protected StudyRevisionActionsWidgetModel createModel() {
-		return new StudyRevisionActionsWidgetModel();
-	}
-
-	public StudyRevisionActionsWidgetModel getModel() {
-		return model;
-	}
-	
-
-	@Override
-	protected StudyRevisionActionsWidgetRenderer createRenderer() {
-		return new StudyRevisionActionsWidgetRenderer(this);
-	}
 
 	// Using init() rather than constructor because reset() uses init().
 	public void init() {
 		
 		super.init();
 		
-		this.controller = new StudyRevisionActionsWidgetController(this, this.model);
-
-
 	}
 	
 	@Override
