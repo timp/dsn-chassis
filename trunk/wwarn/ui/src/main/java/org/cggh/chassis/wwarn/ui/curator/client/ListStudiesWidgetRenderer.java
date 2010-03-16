@@ -32,8 +32,11 @@ import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;
 
 /**
+ * BE SURE TO EDIT THE TEMPLATE NOT THE RENDERED RESULT
+ *
+ * DELETE_TO_MANUALLY_EDIT
+ *
  * @author timp
- * @since 13 Jan 2010
  */
 public class ListStudiesWidgetRenderer extends
 		ChassisWidgetRenderer<ListStudiesWidgetModel> {
@@ -47,22 +50,17 @@ public class ListStudiesWidgetRenderer extends
 	private static ListStudiesWidgetRendererUiBinder uiBinder = 
 		GWT.create(ListStudiesWidgetRendererUiBinder.class);
 
-//	@UiField HTMLPanel bodyPanel;
-//	@UiField FlowPanel mainActionsPanel;
+	@UiField HTMLPanel mainPanel;
+	@UiField FlowPanel contentPanel;
 	@UiField HTMLPanel pendingPanel;
 	@UiField HTMLPanel errorPanel;
 	@UiField FlowPanel errorMessage;
 
 	private ListStudiesWidget owner;
-	private ListStudiesWidgetController controller;
-
-	public ListStudiesWidgetRenderer(ListStudiesWidget owner) {
+  public ListStudiesWidgetRenderer(ListStudiesWidget owner) {
 		this.owner = owner;
 	}
 
-	public void setController(ListStudiesWidgetController controller) {
-		this.controller = controller;
-	}
 
 	@Override
 	protected void renderUI() {

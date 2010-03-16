@@ -32,8 +32,11 @@ import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;
 
 /**
+ * BE SURE TO EDIT THE TEMPLATE NOT THE RENDERED RESULT
+ *
+ * DELETE_TO_MANUALLY_EDIT
+ *
  * @author timp
- * @since 13 Jan 2010
  */
 public class CuratorHomeWidgetRenderer extends
 		ChassisWidgetRenderer<CuratorHomeWidgetModel> {
@@ -47,22 +50,22 @@ public class CuratorHomeWidgetRenderer extends
 	private static CuratorHomeWidgetRendererUiBinder uiBinder = 
 		GWT.create(CuratorHomeWidgetRendererUiBinder.class);
 
-//	@UiField HTMLPanel bodyPanel;
-//	@UiField FlowPanel mainActionsPanel;
+	@UiField HTMLPanel mainPanel;
+	@UiField FlowPanel contentPanel;
 	@UiField HTMLPanel pendingPanel;
 	@UiField HTMLPanel errorPanel;
 	@UiField FlowPanel errorMessage;
 
 	private CuratorHomeWidget owner;
-	private CuratorHomeWidgetController controller;
-
-	public CuratorHomeWidgetRenderer(CuratorHomeWidget owner) {
+  public CuratorHomeWidgetRenderer(CuratorHomeWidget owner) {
 		this.owner = owner;
 	}
+	private CuratorHomeWidgetController controller;
 
 	public void setController(CuratorHomeWidgetController controller) {
 		this.controller = controller;
 	}
+
 
 	@Override
 	protected void renderUI() {

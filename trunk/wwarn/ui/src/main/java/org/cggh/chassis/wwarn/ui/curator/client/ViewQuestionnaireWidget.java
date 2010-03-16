@@ -6,20 +6,24 @@ package org.cggh.chassis.wwarn.ui.curator.client;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.DelegatingWidget;
+
+
 import org.cggh.chassis.generic.widget.client.WidgetEventChannel;
 
 /**
+ * BE SURE TO EDIT THE TEMPLATE NOT THE RENDERED RESULT
+ *
+ * DELETE_TO_MANUALLY_EDIT
+ *
  * @author timp
  *
  */
 public class ViewQuestionnaireWidget 
-	extends DelegatingWidget<ViewQuestionnaireWidgetModel, ViewQuestionnaireWidgetRenderer> {
+	 	extends DelegatingWidget<ViewQuestionnaireWidgetModel, ViewQuestionnaireWidgetRenderer> {
 
 	private static final Log log = LogFactory.getLog(ViewQuestionnaireWidget.class);
 	
-
 	private ViewQuestionnaireWidgetController controller;
-	
 	@Override
 	protected ViewQuestionnaireWidgetModel createModel() {
 		return new ViewQuestionnaireWidgetModel();
@@ -28,7 +32,6 @@ public class ViewQuestionnaireWidget
 	public ViewQuestionnaireWidgetModel getModel() {
 		return model;
 	}
-	
 
 	@Override
 	protected ViewQuestionnaireWidgetRenderer createRenderer() {
@@ -39,9 +42,7 @@ public class ViewQuestionnaireWidget
 	public void init() {
 		
 		super.init();
-		
-		this.controller = new ViewQuestionnaireWidgetController(this, this.model);
-
+				this.controller = new ViewQuestionnaireWidgetController(this, this.model);
 
 	}
 	

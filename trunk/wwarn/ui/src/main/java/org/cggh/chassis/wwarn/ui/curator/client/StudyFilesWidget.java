@@ -6,20 +6,24 @@ package org.cggh.chassis.wwarn.ui.curator.client;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.DelegatingWidget;
+
+
 import org.cggh.chassis.generic.widget.client.WidgetEventChannel;
 
 /**
+ * BE SURE TO EDIT THE TEMPLATE NOT THE RENDERED RESULT
+ *
+ * DELETE_TO_MANUALLY_EDIT
+ *
  * @author timp
  *
  */
 public class StudyFilesWidget 
-	extends DelegatingWidget<StudyFilesWidgetModel, StudyFilesWidgetRenderer> {
+	 	extends DelegatingWidget<StudyFilesWidgetModel, StudyFilesWidgetRenderer> {
 
 	private static final Log log = LogFactory.getLog(StudyFilesWidget.class);
 	
-
 	private StudyFilesWidgetController controller;
-	
 	@Override
 	protected StudyFilesWidgetModel createModel() {
 		return new StudyFilesWidgetModel();
@@ -28,7 +32,6 @@ public class StudyFilesWidget
 	public StudyFilesWidgetModel getModel() {
 		return model;
 	}
-	
 
 	@Override
 	protected StudyFilesWidgetRenderer createRenderer() {
@@ -39,9 +42,7 @@ public class StudyFilesWidget
 	public void init() {
 		
 		super.init();
-		
-		this.controller = new StudyFilesWidgetController(this, this.model);
-
+				this.controller = new StudyFilesWidgetController(this, this.model);
 
 	}
 	

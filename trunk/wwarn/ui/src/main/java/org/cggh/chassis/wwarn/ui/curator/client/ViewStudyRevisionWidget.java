@@ -6,21 +6,29 @@ package org.cggh.chassis.wwarn.ui.curator.client;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.DelegatingWidget;
+
+
 import org.cggh.chassis.generic.widget.client.WidgetEventChannel;
 
 /**
+ * BE SURE TO EDIT THE TEMPLATE NOT THE RENDERED RESULT
+ *
+ * DELETE_TO_MANUALLY_EDIT
+ *
  * @author timp
  *
  */
 public class ViewStudyRevisionWidget 
-	extends DelegatingWidget<ViewStudyRevisionWidgetModel, ViewStudyRevisionWidgetRenderer> {
+	 	extends DelegatingWidget<ViewStudyRevisionWidgetModel, ViewStudyRevisionWidgetRenderer> {
 
 	private static final Log log = LogFactory.getLog(ViewStudyRevisionWidget.class);
 	
-
 	private ViewStudyRevisionWidgetController controller;
-		private StudySummaryWidget studySummaryWidget;
+	private StudyRevisionActionsWidget studyRevisionActionsWidget;
 
+	private ViewRevisionQuestionnaireWidget viewRevisionQuestionnaireWidget;
+
+	private StudyRevisionSummaryWidget studyRevisionSummaryWidget;
 
 	@Override
 	protected ViewStudyRevisionWidgetModel createModel() {
@@ -30,7 +38,6 @@ public class ViewStudyRevisionWidget
 	public ViewStudyRevisionWidgetModel getModel() {
 		return model;
 	}
-	
 
 	@Override
 	protected ViewStudyRevisionWidgetRenderer createRenderer() {
@@ -41,9 +48,7 @@ public class ViewStudyRevisionWidget
 	public void init() {
 		
 		super.init();
-		
-		this.controller = new ViewStudyRevisionWidgetController(this, this.model);
-
+				this.controller = new ViewStudyRevisionWidgetController(this, this.model);
 
 	}
 	

@@ -5,46 +5,31 @@ package org.cggh.chassis.wwarn.ui.curator.client;
 
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
-import org.cggh.chassis.generic.widget.client.DelegatingWidget;
+import org.cggh.chassis.generic.widget.client.MultiWidget;
+
 import org.cggh.chassis.generic.widget.client.WidgetEventChannel;
 
 /**
+ * BE SURE TO EDIT THE TEMPLATE NOT THE RENDERED RESULT
+ *
+ * DELETE_TO_MANUALLY_EDIT
+ *
  * @author timp
  *
  */
 public class StudySummaryWidget 
-	extends DelegatingWidget<StudySummaryWidgetModel, StudySummaryWidgetRenderer> {
+	 	extends MultiWidget {
 
 	private static final Log log = LogFactory.getLog(StudySummaryWidget.class);
 	
+	private StudyActionsWidget studyActionsWidget;
 
-	private StudySummaryWidgetController controller;
-		private StudyActionsWidget studyActionsWidget;
-
-
-	@Override
-	protected StudySummaryWidgetModel createModel() {
-		return new StudySummaryWidgetModel();
-	}
-
-	public StudySummaryWidgetModel getModel() {
-		return model;
-	}
-	
-
-	@Override
-	protected StudySummaryWidgetRenderer createRenderer() {
-		return new StudySummaryWidgetRenderer(this);
-	}
 
 	// Using init() rather than constructor because reset() uses init().
 	public void init() {
 		
 		super.init();
 		
-		this.controller = new StudySummaryWidgetController(this, this.model);
-
-
 	}
 	
 	@Override

@@ -32,8 +32,11 @@ import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;
 
 /**
+ * BE SURE TO EDIT THE TEMPLATE NOT THE RENDERED RESULT
+ *
+ * DELETE_TO_MANUALLY_EDIT
+ *
  * @author timp
- * @since 13 Jan 2010
  */
 public class RevisionSummaryWidgetRenderer extends
 		ChassisWidgetRenderer<RevisionSummaryWidgetModel> {
@@ -47,22 +50,17 @@ public class RevisionSummaryWidgetRenderer extends
 	private static RevisionSummaryWidgetRendererUiBinder uiBinder = 
 		GWT.create(RevisionSummaryWidgetRendererUiBinder.class);
 
-//	@UiField HTMLPanel bodyPanel;
-//	@UiField FlowPanel mainActionsPanel;
+	@UiField HTMLPanel mainPanel;
+	@UiField FlowPanel contentPanel;
 	@UiField HTMLPanel pendingPanel;
 	@UiField HTMLPanel errorPanel;
 	@UiField FlowPanel errorMessage;
 
 	private RevisionSummaryWidget owner;
-	private RevisionSummaryWidgetController controller;
-
-	public RevisionSummaryWidgetRenderer(RevisionSummaryWidget owner) {
+  public RevisionSummaryWidgetRenderer(RevisionSummaryWidget owner) {
 		this.owner = owner;
 	}
 
-	public void setController(RevisionSummaryWidgetController controller) {
-		this.controller = controller;
-	}
 
 	@Override
 	protected void renderUI() {

@@ -1,53 +1,57 @@
 
-/**
- * 
- */
 package org.cggh.chassis.wwarn.ui.curator.client;
-
-import java.util.List;
 
 import org.cggh.chassis.generic.async.client.Deferred;
 import org.cggh.chassis.generic.async.client.Function;
-import org.cggh.chassis.generic.async.client.QueryParams;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.miniatom.client.Atom;
-import org.cggh.chassis.generic.miniatom.client.AtomHelper;
-import org.cggh.chassis.generic.miniatom.client.ext.Chassis;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 import org.cggh.chassis.generic.widget.client.ChassisWidget;
 import org.cggh.chassis.generic.widget.client.ErrorEvent;
-import org.cggh.chassis.generic.xquestion.client.XQuestionnaire;
 import org.cggh.chassis.wwarn.ui.common.client.Config;
 
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;
 
 /**
+ * BE SURE TO EDIT THE TEMPLATE NOT THE RENDERED RESULT
+ *
+ * DELETE_TO_MANUALLY_EDIT
+ *
  * @author timp
  *
  */
 public class ListStudyRevisionsWidgetController {
-
-	
 	
 	
 	private Log log = LogFactory.getLog(ListStudyRevisionsWidgetController.class);
-	
-	
 	
 	
 	private ListStudyRevisionsWidget owner;
 	private ListStudyRevisionsWidgetModel model;
 
 
-	
-	
-	public ListStudyRevisionsWidgetController(ListStudyRevisionsWidget owner, ListStudyRevisionsWidgetModel model) {
-		this.owner = owner;
-		this.model = model;
-	}
+	private static String STUDY_ENTRY_URI = "/atom/edit/studies/id.atom";
 
+			
+	public Deferred<Document> retrieveStudies() {
+		log.enter("retrieveStudies");
+		// Set the model's status to pending.
+		//model.setStatus(ListStudyRevisionsWidgetModel.STATUS_RETRIEVE_STUDIES_PENDING);
+		
+		String studyQueryServiceUrl = Config.get(Config.QUERY_STUDIES_URL);
+		
+		Deferred<Document> deferredDoc = Atom.getFeed(studyQueryServiceUrl);
+		
+		// Add a call-back and error-back for the asynchronous feed.
+		deferredDoc.addCallback(new RetrieveStudiesCallback());
+		deferredDoc.addErrback(new DefaultErrback());
+		
+		log.leave();
+		return deferredDoc;
+	}
+	
 	
 	
 	public Deferred<ChassisWidget> refreshAndCallback() {
@@ -102,88 +106,53 @@ public class ListStudyRevisionsWidgetController {
 
 
 
-	/**
-	 * @return
-	 */
-	public Deferred<Element> retrieveStudy() {
-		log.enter("retrieveStudy");
-		
-		model.status.set(ListStudyRevisionsWidgetModel.STATUS_RETRIEVE_STUDY_PENDING);
-		
-		Deferred<Element> d;
-		
-		if (!model.studyUrl.isNull()) {
-			
-			d = Atom.getEntry(model.studyUrl.get()).adapt(new Function<Document, Element>() {
 
-				public Element apply(Document in) {
-					return in.getDocumentElement();
-				}
+	
+	private class RetrieveStudiesCallback implements Function<Element, Deferred<Document>> {
+
+		public Deferred<Document> apply(Element studiesEntryElement) {
+			
+			// model.setStudiesEntryElement(studiesEntryElement);
+			
+			Deferred<Document> deferredFilesFeedDoc = null;
+			
+			if (studiesEntryElement != null) {
+
+				// we have one, so lets try retrieving the list of files uploaded so far
+				// deferredFilesFeedDoc = retrieveFiles();
 				
-			});
+			}
 			
-		}
-		else {
-			d = new Deferred<Element>();
-			d.callback(null);
+			else {
+				
+				//model.setStatus(ListStudyRevisionsWidgetModel.STATUS_STUDY_NOT_FOUND);
+				deferredFilesFeedDoc = new Deferred<Document>();
+				deferredFilesFeedDoc.callback(null);
+
+			}
+			
+			// return the deferred feed of files uploaded, for chaining of callbacks
+			return deferredFilesFeedDoc;
 		}
 		
-		log.leave();
-		return d;
 	}
 	
 	
+        
+	private StudySummaryWidget studySummaryWidget;
+
+ 
+	private StudyRevisionListWidget studyRevisionListWidget;
+
+ 
 	
-	public final Function<Element, Element> retrieveStudyCallback = new Function<Element, Element>() {
-		
-		public Element apply(Element in) {
-			log.enter("apply");
-			
-			model.studyEntryElement.set(in);
-			model.status.set(ListStudyRevisionsWidgetModel.STATUS_READY_FOR_INTERACTION);
-			
-			log.leave();
-			return in;
-		}
-	};
-
-
-
-	/**
-	 * 
-	 */
-	public void saveStudy() {
-		log.enter("saveStudy");
-		
-		model.status.set(ListStudyRevisionsWidgetModel.STATUS_SAVE_STUDY_PENDING);
-		
-		Deferred<Document> d = Atom.putEntry(model.studyUrl.get(), model.studyEntryElement.get().getOwnerDocument());
-
-		d.addCallback(saveStudyCallback);
-		d.addErrback(new DefaultErrback());
-		
-		log.leave();
+	
+	public ListStudyRevisionsWidgetController(ListStudyRevisionsWidget owner, ListStudyRevisionsWidgetModel model) {
+		this.owner = owner;
+		this.model = model;
 	}
 
 	
 	
-	protected final Function<Document, Document> saveStudyCallback = new Function<Document, Document>() {
-		
-		public Document apply(Document in) {
-			log.enter("apply");
-			
-			model.studyEntryElement.set(in.getDocumentElement());
-			model.status.set(ListStudyRevisionsWidgetModel.STATUS_READY_FOR_INTERACTION);
-			
-			log.leave();
-			return in;
-		}
-	};
-
-
-
-
-
-
 
 }
