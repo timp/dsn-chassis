@@ -1,6 +1,6 @@
 xquery version "1.0";
 
-module namespace adb = "http://www.cggh.org/2010/xquery/atom-db";
+module namespace atomdb = "http://www.cggh.org/2010/atombeat/xquery/atomdb";
 
 declare namespace atom = "http://www.w3.org/2005/Atom" ;
 declare namespace ar = "http://purl.org/atompub/revision/1.0" ;
@@ -9,13 +9,14 @@ import module namespace text = "http://exist-db.org/xquery/text" ;
 import module namespace xmldb = "http://exist-db.org/xquery/xmldb" ;
 import module namespace util = "http://exist-db.org/xquery/util" ;
 
-import module namespace utilx = "http://www.cggh.org/2010/xquery/util" at "util.xqm" ;
-import module namespace af = "http://www.cggh.org/2010/xquery/atom-format" at "atom-format.xqm" ;
-import module namespace config = "http://www.cggh.org/2010/xquery/atom-config" at "atom-config.xqm" ;
+import module namespace CONSTANT = "http://www.cggh.org/2010/atombeat/xquery/constants" at "constants.xqm" ;
+
+import module namespace xutil = "http://www.cggh.org/2010/atombeat/xquery/xutil" at "xutil.xqm" ;
+import module namespace config = "http://www.cggh.org/2010/atombeat/xquery/config" at "../config/shared.xqm" ;
 
 
 
-declare function adb:collection-available(
+declare function atomdb:collection-available(
 	$request-path-info as xs:string
 ) as xs:boolean
 {
@@ -32,7 +33,7 @@ declare function adb:collection-available(
 	 : e.g., "/db/foo".
 	 :)
 	 
-	let $db-collection-path := adb:request-path-info-to-db-path( $request-path-info )
+	let $db-collection-path := atomdb:request-path-info-to-db-path( $request-path-info )
 
 	(:
 	 : Obtain the database path for the atom feed document in the given database
@@ -40,7 +41,7 @@ declare function adb:collection-available(
 	 : path.
 	 :)
 	 
-	let $feed-doc-db-path := adb:feed-doc-db-path( $db-collection-path )
+	let $feed-doc-db-path := atomdb:feed-doc-db-path( $db-collection-path )
 	
 	let $available := 
 		( xmldb:collection-available( $db-collection-path ) and exists( doc( $feed-doc-db-path ) ) )
@@ -52,7 +53,7 @@ declare function adb:collection-available(
 
 
 
-declare function adb:member-available(
+declare function atomdb:member-available(
 	$request-path-info as xs:string
 ) as xs:boolean
 {
@@ -68,7 +69,7 @@ declare function adb:member-available(
 	 : e.g., "/db/foo/bar".
 	 :)
 	 
-	let $member-db-path := adb:request-path-info-to-db-path( $request-path-info )
+	let $member-db-path := atomdb:request-path-info-to-db-path( $request-path-info )
 		
 	return ( not( util:binary-doc-available( $member-db-path ) ) and exists( doc( $member-db-path ) ) )
 	
@@ -77,7 +78,7 @@ declare function adb:member-available(
 
 
 
-declare function adb:media-resource-available(
+declare function atomdb:media-resource-available(
 	$request-path-info as xs:string
 ) as xs:boolean
 {
@@ -93,7 +94,7 @@ declare function adb:media-resource-available(
 	 : e.g., "/db/foo/bar".
 	 :)
 	 
-	let $member-db-path := adb:request-path-info-to-db-path( $request-path-info )
+	let $member-db-path := atomdb:request-path-info-to-db-path( $request-path-info )
 		
 	return util:binary-doc-available( $member-db-path ) 
 	
@@ -102,7 +103,7 @@ declare function adb:media-resource-available(
 
 
 
-declare function adb:request-path-info-to-db-path( 
+declare function atomdb:request-path-info-to-db-path( 
 	$request-path-info as xs:string
 ) as xs:string
 {
@@ -111,7 +112,7 @@ declare function adb:request-path-info-to-db-path(
 
 
 
-declare function adb:db-path-to-request-path-info(
+declare function atomdb:db-path-to-request-path-info(
 	$db-path as xs:string
 ) as xs:string
 {
@@ -122,7 +123,7 @@ declare function adb:db-path-to-request-path-info(
 
 
 
-declare function adb:feed-doc-db-path(
+declare function atomdb:feed-doc-db-path(
 	$db-collection-path as xs:string
 ) as xs:string
 {
@@ -136,14 +137,14 @@ declare function adb:feed-doc-db-path(
 
 
 
-declare function adb:create-collection(
+declare function atomdb:create-collection(
 	$request-path-info as xs:string ,
 	$request-data as element(atom:feed) ,
 	$enable-versioning as xs:boolean
 ) as xs:string?
 {
 
-	if ( adb:collection-available( $request-path-info ) )
+	if ( atomdb:collection-available( $request-path-info ) )
 	
 	then ()
 	
@@ -154,9 +155,9 @@ declare function adb:create-collection(
 		 : e.g., "/db/foo".
 		 :)
 		 
-		let $collection-db-path := adb:request-path-info-to-db-path( $request-path-info )
+		let $collection-db-path := atomdb:request-path-info-to-db-path( $request-path-info )
 	
-		let $collection-db-path := utilx:get-or-create-collection( $collection-db-path )
+		let $collection-db-path := xutil:get-or-create-collection( $collection-db-path )
 		
 		let $collection-config :=
 		
@@ -182,7 +183,7 @@ declare function adb:create-collection(
 		let $config-collection-path := concat( "/db/system/config" , $collection-db-path )
 		let $log := util:log( "debug" , concat( "$config-collection-path: " , $config-collection-path ) )
 		
-		let $config-collection-path := utilx:get-or-create-collection( $config-collection-path )
+		let $config-collection-path := xutil:get-or-create-collection( $config-collection-path )
 		let $log := util:log( "debug" , concat( "$config-collection-path: " , $config-collection-path ) )
 		
 		let $config-resource-path := xmldb:store( $config-collection-path , "collection.xconf" , $collection-config )
@@ -194,9 +195,9 @@ declare function adb:create-collection(
 		 : path.
 		 :)
 		 
-		let $feed-doc-db-path := adb:feed-doc-db-path( $collection-db-path )
+		let $feed-doc-db-path := atomdb:feed-doc-db-path( $collection-db-path )
 
-		let $feed := adb:create-feed( $request-path-info , $request-data )
+		let $feed := atomdb:create-feed( $request-path-info , $request-data )
 		
 		let $feed-doc-db-path := xmldb:store( $collection-db-path , $config:feed-doc-name , $feed )
 		
@@ -207,13 +208,13 @@ declare function adb:create-collection(
 
 
 
-declare function adb:update-collection(
+declare function atomdb:update-collection(
 	$request-path-info as xs:string ,
 	$request-data as element(atom:feed)
 ) as xs:string
 {
 
-	if ( not( adb:collection-available( $request-path-info ) ) )
+	if ( not( atomdb:collection-available( $request-path-info ) ) )
 	
 	then ()
 	
@@ -224,9 +225,9 @@ declare function adb:update-collection(
 		 : e.g., "/db/foo".
 		 :)
 		 
-		let $collection-db-path := adb:request-path-info-to-db-path( $request-path-info )
+		let $collection-db-path := atomdb:request-path-info-to-db-path( $request-path-info )
 
-		let $collection-db-path := utilx:get-or-create-collection( $collection-db-path )
+		let $collection-db-path := xutil:get-or-create-collection( $collection-db-path )
 
 		(:
 		 : Obtain the database path for the atom feed document in the given database
@@ -234,9 +235,9 @@ declare function adb:update-collection(
 		 : path.
 		 :)
 		 
-		let $feed-doc-db-path := adb:feed-doc-db-path( $collection-db-path )
+		let $feed-doc-db-path := atomdb:feed-doc-db-path( $collection-db-path )
 
-		let $feed := adb:update-feed( doc( $feed-doc-db-path )/atom:feed , $request-data )
+		let $feed := atomdb:update-feed( doc( $feed-doc-db-path )/atom:feed , $request-data )
 		
 		return xmldb:store( $collection-db-path , $config:feed-doc-name , $feed )
 			
@@ -245,14 +246,14 @@ declare function adb:update-collection(
 
 
 
-declare function adb:create-member(
+declare function atomdb:create-member(
 	$request-path-info as xs:string ,
 	$request-data as element(atom:entry) ,
 	$comment as xs:string?
 ) as xs:string?
 {
 
-	if ( not( adb:collection-available( $request-path-info ) ) )
+	if ( not( atomdb:collection-available( $request-path-info ) ) )
 	
 	then ()
 	
@@ -260,7 +261,7 @@ declare function adb:create-member(
 		
 	    let $uuid := util:uuid()
 	    
-	    let $entry := adb:create-entry( $request-path-info, $request-data , $uuid , $comment )
+	    let $entry := atomdb:create-entry( $request-path-info, $request-data , $uuid , $comment )
 	    
 		(:
 		 : Map the request path info, e.g., "/foo", to a database collection path,
@@ -268,12 +269,12 @@ declare function adb:create-member(
 		 :)
 		 
 (:
-        let $collection-db-path := adb:request-path-info-to-db-path( $request-path-info )
+        let $collection-db-path := atomdb:request-path-info-to-db-path( $request-path-info )
 
 	    let $entry-doc-db-path := xmldb:store( $collection-db-path , concat( $uuid , ".atom" ) , $entry )    
 :)
 
-        let $entry-doc-db-path := adb:store-member( $request-path-info , concat( $uuid , ".atom" ) , $entry )
+        let $entry-doc-db-path := atomdb:store-member( $request-path-info , concat( $uuid , ".atom" ) , $entry )
         
 	    return $entry-doc-db-path
 		
@@ -281,14 +282,14 @@ declare function adb:create-member(
 
 
 
-declare function adb:store-member(
+declare function atomdb:store-member(
     $collection-path-info as xs:string ,
     $resource-name as xs:string ,
     $entry as element(atom:entry)
 ) as xs:string?
 {
 
-    let $collection-db-path := adb:request-path-info-to-db-path( $collection-path-info )
+    let $collection-db-path := atomdb:request-path-info-to-db-path( $collection-path-info )
 
     let $entry-doc-db-path := xmldb:store( $collection-db-path , $resource-name , $entry )    
     
@@ -299,14 +300,14 @@ declare function adb:store-member(
 
 
 
-declare function adb:update-member(
+declare function atomdb:update-member(
 	$request-path-info as xs:string ,
 	$request-data as element(atom:entry) ,
 	$comment as xs:string?
 ) as xs:string
 {
 
-	if ( not( adb:member-available( $request-path-info ) ) )
+	if ( not( atomdb:member-available( $request-path-info ) ) )
 	
 	then ()
 	
@@ -317,13 +318,13 @@ declare function adb:update-member(
 		 : e.g., "/db/foo/bar".
 		 :)
 		 
-		let $member-db-path := adb:request-path-info-to-db-path( $request-path-info )
+		let $member-db-path := atomdb:request-path-info-to-db-path( $request-path-info )
 	
-		let $entry := adb:update-entry( doc( $member-db-path )/atom:entry , $request-data , $comment )
+		let $entry := atomdb:update-entry( doc( $member-db-path )/atom:entry , $request-data , $comment )
 
 		let $groups := text:groups( $request-path-info , "^(.*)/([^/]+)$" )
 		
-		let $collection-db-path := adb:request-path-info-to-db-path( $groups[2] )
+		let $collection-db-path := atomdb:request-path-info-to-db-path( $groups[2] )
 		
 		let $entry-resource-name := $groups[3]
 
@@ -334,7 +335,7 @@ declare function adb:update-member(
 
 
 
-declare function adb:mutable-feed-children(
+declare function atomdb:mutable-feed-children(
     $request-data as element(atom:feed)
 ) as element()*
 {
@@ -342,18 +343,18 @@ declare function adb:mutable-feed-children(
     let $namespace-uri := namespace-uri($child)
     let $local-name := local-name($child)
     where
-        not( $namespace-uri = $af:nsuri and $local-name = $af:id ) and
-        not( $namespace-uri = $af:nsuri and $local-name = $af:updated ) and
-        not( $namespace-uri = $af:nsuri and $local-name = $af:link and $child/@rel = "self" ) and
-        not( $namespace-uri = $af:nsuri and $local-name = $af:link and $child/@rel = "edit" ) and
-        not( $namespace-uri = $af:nsuri and $local-name = $af:entry )
+        not( $namespace-uri = $CONSTANT:ATOM-NSURI and $local-name = $CONSTANT:ATOM-ID ) and
+        not( $namespace-uri = $CONSTANT:ATOM-NSURI and $local-name = $CONSTANT:ATOM-UPDATED ) and
+        not( $namespace-uri = $CONSTANT:ATOM-NSURI and $local-name = $CONSTANT:ATOM-LINK and $child/@rel = "self" ) and
+        not( $namespace-uri = $CONSTANT:ATOM-NSURI and $local-name = $CONSTANT:ATOM-LINK and $child/@rel = "edit" ) and
+        not( $namespace-uri = $CONSTANT:ATOM-NSURI and $local-name = $CONSTANT:ATOM-ENTRY )
     return $child
 };
 
 
 
 
-declare function adb:mutable-entry-children(
+declare function atomdb:mutable-entry-children(
     $request-data as element(atom:entry)
 ) as element()*
 {
@@ -361,20 +362,20 @@ declare function adb:mutable-entry-children(
     let $namespace-uri := namespace-uri($child)
     let $local-name := local-name($child)
     where
-        not( $namespace-uri = $af:nsuri and $local-name = $af:id ) and
-        not( $namespace-uri = $af:nsuri and $local-name = $af:updated ) and
-        not( $namespace-uri = $af:nsuri and $local-name = $af:published ) and
-        not( $namespace-uri = $af:nsuri and $local-name = $af:link and $child/@rel = "self" ) and
-        not( $namespace-uri = $af:nsuri and $local-name = $af:link and $child/@rel = "edit" ) and
-        not( $namespace-uri = $af:nsuri and $local-name = $af:link and $child/@rel = "edit-media" ) and
-        not( $namespace-uri = $af:nsuri and $local-name = $af:link and $child/@rel = "history" ) and 
+        not( $namespace-uri = $CONSTANT:ATOM-NSURI and $local-name = $CONSTANT:ATOM-ID ) and
+        not( $namespace-uri = $CONSTANT:ATOM-NSURI and $local-name = $CONSTANT:ATOM-UPDATED ) and
+        not( $namespace-uri = $CONSTANT:ATOM-NSURI and $local-name = $CONSTANT:ATOM-PUBLISHED ) and
+        not( $namespace-uri = $CONSTANT:ATOM-NSURI and $local-name = $CONSTANT:ATOM-LINK and $child/@rel = "self" ) and
+        not( $namespace-uri = $CONSTANT:ATOM-NSURI and $local-name = $CONSTANT:ATOM-LINK and $child/@rel = "edit" ) and
+        not( $namespace-uri = $CONSTANT:ATOM-NSURI and $local-name = $CONSTANT:ATOM-LINK and $child/@rel = "edit-media" ) and
+        not( $namespace-uri = $CONSTANT:ATOM-NSURI and $local-name = $CONSTANT:ATOM-LINK and $child/@rel = "history" ) and 
         not( $namespace-uri = "http://purl.org/atompub/revision/1.0" and $local-name = "comment" )
     return $child
 };
 
 
 
-declare function adb:create-feed( 
+declare function atomdb:create-feed( 
     $request-path-info as xs:string ,
     $request-data as element(atom:feed)
 ) as element(atom:feed) 
@@ -395,7 +396,7 @@ declare function adb:create-feed(
             <atom:link rel="self" type="application/atom+xml" href="{$self-uri}"/>
             <atom:link rel="edit" type="application/atom+xml" href="{$edit-uri}"/>
             {
-                adb:mutable-feed-children($request-data)
+                atomdb:mutable-feed-children($request-data)
             }
         </atom:feed>  
 
@@ -404,7 +405,7 @@ declare function adb:create-feed(
 
 
 
-declare function adb:update-feed( 
+declare function atomdb:update-feed( 
     $feed as element(atom:feed) ,
     $request-data as element(atom:feed)
 ) as element(atom:feed) 
@@ -425,7 +426,7 @@ declare function adb:update-feed(
             {
                 $feed/atom:link[@rel="self"] ,
                 $feed/atom:link[@rel="edit"] ,
-                adb:mutable-feed-children($request-data)
+                atomdb:mutable-feed-children($request-data)
             }
         </atom:feed>  
 };
@@ -433,7 +434,7 @@ declare function adb:update-feed(
 
 
 
-declare function adb:create-entry(
+declare function atomdb:create-entry(
 	$request-path-info as xs:string ,
     $request-data as element(atom:entry) ,
     $uuid as xs:string ,
@@ -487,7 +488,7 @@ declare function adb:create-entry(
             <atom:link rel="history" type="application/atom+xml" href="{$history-uri}"/>
             {
                 $revision-comment ,
-                adb:mutable-entry-children($request-data)
+                atomdb:mutable-entry-children($request-data)
             }
         </atom:entry>  
      
@@ -496,7 +497,7 @@ declare function adb:create-entry(
 
 
 
-declare function adb:create-media-link-entry(
+declare function atomdb:create-media-link-entry(
 	$request-path-info as xs:string ,
     $uuid as xs:string ,
     $media-type as xs:string ,
@@ -573,7 +574,7 @@ declare function adb:create-media-link-entry(
 
 
 
-declare function adb:update-entry( 
+declare function atomdb:update-entry( 
     $entry as element(atom:entry) ,
     $request-data as element(atom:entry) ,
     $comment as xs:string?
@@ -616,14 +617,14 @@ declare function adb:update-entry(
                 $entry/atom:link[@rel="history"] ,
                 $entry/ar:comment ,
                 $revision-comment ,
-                adb:mutable-entry-children($request-data)
+                atomdb:mutable-entry-children($request-data)
             }
         </atom:entry>  
 };
 
 
 
-declare function adb:create-media-resource(
+declare function atomdb:create-media-resource(
 	$request-path-info as xs:string , 
 	$request-data as xs:base64Binary , 
 	$media-type as xs:string ,
@@ -633,7 +634,7 @@ declare function adb:create-media-resource(
 ) as xs:string
 {
 
-	let $collection-db-path := adb:request-path-info-to-db-path( $request-path-info )
+	let $collection-db-path := atomdb:request-path-info-to-db-path( $request-path-info )
 
     let $uuid := util:uuid()
     
@@ -641,7 +642,7 @@ declare function adb:create-media-resource(
 
 	let $media-resource-db-path := xmldb:store( $collection-db-path , $media-resource-name , $request-data , $media-type )
 	
-    let $media-link-entry := adb:create-media-link-entry( $request-path-info, $uuid , $media-type , $media-link-title , $media-link-summary , $comment )
+    let $media-link-entry := atomdb:create-media-link-entry( $request-path-info, $uuid , $media-type , $media-link-title , $media-link-summary , $comment )
     
     let $media-link-entry-doc-db-path := xmldb:store( $collection-db-path , concat( $uuid , ".atom" ) , $media-link-entry )    
     
@@ -652,14 +653,14 @@ declare function adb:create-media-resource(
 
 
 
-declare function adb:update-media-resource(
+declare function atomdb:update-media-resource(
 	$request-path-info as xs:string , 
 	$request-data as xs:base64Binary , 
 	$request-content-type as xs:string
 ) as xs:string
 {
 
-	if ( not( adb:media-resource-available( $request-path-info ) ) )
+	if ( not( atomdb:media-resource-available( $request-path-info ) ) )
 	
 	then ()
 	
@@ -669,7 +670,7 @@ declare function adb:update-media-resource(
 	
 		let $groups := text:groups( $request-path-info , "^(.*)/([^/]+)$" )
 		
-		let $collection-db-path := adb:request-path-info-to-db-path( $groups[2] )
+		let $collection-db-path := atomdb:request-path-info-to-db-path( $groups[2] )
 		
 		let $media-doc-name := $groups[3]
 
@@ -681,12 +682,12 @@ declare function adb:update-media-resource(
 
 
 
-declare function adb:retrieve-feed(
+declare function atomdb:retrieve-feed(
 	$request-path-info as xs:string 
 ) as element(atom:feed)
 {
 	
-	if ( not( adb:collection-available( $request-path-info ) ) )
+	if ( not( atomdb:collection-available( $request-path-info ) ) )
 	
 	then ()
 	
@@ -701,7 +702,7 @@ declare function adb:retrieve-feed(
 		 : e.g., "/db/foo".
 		 :)
 		 
-		let $db-collection-path := adb:request-path-info-to-db-path( $request-path-info )
+		let $db-collection-path := atomdb:request-path-info-to-db-path( $request-path-info )
 	
 		(:
 		 : Obtain the database path for the atom feed document in the given database
@@ -709,7 +710,7 @@ declare function adb:retrieve-feed(
 		 : path.
 		 :)
 		 
-		let $feed-doc-db-path := adb:feed-doc-db-path( $db-collection-path )
+		let $feed-doc-db-path := atomdb:feed-doc-db-path( $db-collection-path )
 		let $feed := doc( $feed-doc-db-path )/atom:feed
 		
 		return
@@ -732,12 +733,12 @@ declare function adb:retrieve-feed(
 
 
 
-declare function adb:retrieve-entry(
+declare function atomdb:retrieve-entry(
 	$request-path-info as xs:string 
 ) as element(atom:entry)
 {
 
-	if ( not( adb:member-available( $request-path-info ) ) )
+	if ( not( atomdb:member-available( $request-path-info ) ) )
 	
 	then ()
 	
@@ -748,7 +749,7 @@ declare function adb:retrieve-entry(
 		 : e.g., "/db/foo".
 		 :)
 		 
-		let $entry-doc-db-path := adb:request-path-info-to-db-path( $request-path-info )
+		let $entry-doc-db-path := atomdb:request-path-info-to-db-path( $request-path-info )
 		
 		return doc( $entry-doc-db-path )/atom:entry
 
@@ -757,12 +758,12 @@ declare function adb:retrieve-entry(
 
 
 
-declare function adb:retrieve-media(
+declare function atomdb:retrieve-media(
 	$request-path-info as xs:string 
 ) as item()*
 {
 
-	if ( not( adb:media-resource-available( $request-path-info ) ) )
+	if ( not( atomdb:media-resource-available( $request-path-info ) ) )
 	
 	then ()
 	
@@ -773,7 +774,7 @@ declare function adb:retrieve-media(
 		 : e.g., "/db/foo".
 		 :)
 		 
-		let $media-doc-db-path := adb:request-path-info-to-db-path( $request-path-info )
+		let $media-doc-db-path := atomdb:request-path-info-to-db-path( $request-path-info )
 		
 		return util:binary-doc( $media-doc-db-path )
 
@@ -782,12 +783,12 @@ declare function adb:retrieve-media(
 
 
 
-declare function adb:get-mime-type(
+declare function atomdb:get-mime-type(
 	$request-path-info as xs:string 
 ) as xs:string
 {
 
-	let $media-doc-db-path := adb:request-path-info-to-db-path( $request-path-info )
+	let $media-doc-db-path := atomdb:request-path-info-to-db-path( $request-path-info )
 
 	return xmldb:get-mime-type( xs:anyURI( $media-doc-db-path ) )
 	
@@ -795,14 +796,14 @@ declare function adb:get-mime-type(
 
 
 
-declare function adb:get-media-link(
+declare function atomdb:get-media-link(
 	$request-path-info as xs:string
 ) as element(atom:entry)
 {
 
 	(: assume path info identifies a media resource :)
 	
-	let $media-doc-db-path := adb:request-path-info-to-db-path( $request-path-info )
+	let $media-doc-db-path := atomdb:request-path-info-to-db-path( $request-path-info )
 	let $media-link-doc-db-path := replace( $media-doc-db-path , "^(.*)\.media$" , "$1.atom" )
 	return doc( $media-link-doc-db-path )/atom:entry
 

@@ -1,10 +1,6 @@
 xquery version "1.0";
 
-module namespace config = "http://www.cggh.org/2010/xquery/atom-config";
-
-
-
-import module namespace example-plugin = "http://www.cggh.org/2010/xquery/atombeat/example-plugin" at "plugins/example-plugin.xqm" ;
+module namespace config = "http://www.cggh.org/2010/atombeat/xquery/config";
 
 
 (:
@@ -293,9 +289,3 @@ declare function config:default-resource-acl(
 	:)
 };
 
-
-
-declare variable $config:before-create-member as function* := (
-	util:function( QName( "http://www.cggh.org/2010/xquery/atombeat/example-plugin" , "example-plugin:before-create-member-1" ) , 2 ) ,
-	util:function( QName( "http://www.cggh.org/2010/xquery/atombeat/example-plugin" , "example-plugin:before-create-member-2" ) , 2 )
-);

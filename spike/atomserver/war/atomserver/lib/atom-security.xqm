@@ -6,27 +6,10 @@ import module namespace text = "http://exist-db.org/xquery/text" ;
 import module namespace xmldb = "http://exist-db.org/xquery/xmldb" ;
 import module namespace util = "http://exist-db.org/xquery/util" ;
 
-import module namespace utilx = "http://www.cggh.org/2010/xquery/util" at "util.xqm" ;
-import module namespace af = "http://www.cggh.org/2010/xquery/atom-format" at "atom-format.xqm" ;
-import module namespace atomdb = "http://www.cggh.org/2010/xquery/atom-db" at "atom-db.xqm" ;
-import module namespace config = "http://www.cggh.org/2010/xquery/atom-config" at "atom-config.xqm" ;
+import module namespace xutil = "http://www.cggh.org/2010/atombeat/xquery/xutil" at "xutil.xqm" ;
+import module namespace atomdb = "http://www.cggh.org/2010/atombeat/xquery/atomdb" at "atomdb.xqm" ;
 
-
-
-declare variable $atomsec:op-create-collection as xs:string     := "create-collection" ;
-declare variable $atomsec:op-update-collection as xs:string     := "update-collection" ;
-declare variable $atomsec:op-list-collection as xs:string       := "list-collection" ;
-declare variable $atomsec:op-create-member as xs:string         := "create-member" ;
-declare variable $atomsec:op-retrieve-member as xs:string       := "retrieve-member" ;
-declare variable $atomsec:op-update-member as xs:string         := "update-member" ;
-declare variable $atomsec:op-delete-member as xs:string         := "delete-member" ;
-declare variable $atomsec:op-create-media as xs:string          := "create-media" ;
-declare variable $atomsec:op-retrieve-media as xs:string        := "retrieve-media" ;
-declare variable $atomsec:op-update-media as xs:string          := "update-media" ;
-declare variable $atomsec:op-delete-media as xs:string          := "delete-media" ;
-declare variable $atomsec:op-update-acl as xs:string            := "update-acl" ;
-
-
+import module namespace config = "http://www.cggh.org/2010/atombeat/xquery/config" at "../config/shared.xqm" ;
 
 declare variable $atomsec:decision-deny as xs:string            := "deny" ;
 declare variable $atomsec:decision-allow as xs:string           := "allow" ;
@@ -38,7 +21,7 @@ declare function atomsec:store-global-acl(
 ) as item()*
 {
     
-    let $base-acl-collection-db-path := utilx:get-or-create-collection( $config:base-acl-collection-path )
+    let $base-acl-collection-db-path := xutil:get-or-create-collection( $config:base-acl-collection-path )
     
     let $global-acl-doc-db-path := xmldb:store( $base-acl-collection-db-path , ".acl" , $acl )
     
@@ -61,7 +44,7 @@ declare function atomsec:store-collection-acl(
 
         let $acl-collection-db-path := concat( $config:base-acl-collection-path , atomdb:request-path-info-to-db-path( $request-path-info ) )
         
-        let $acl-collection-db-path := utilx:get-or-create-collection( $acl-collection-db-path )
+        let $acl-collection-db-path := xutil:get-or-create-collection( $acl-collection-db-path )
         
         let $acl-doc-db-path := xmldb:store( $acl-collection-db-path , ".acl" , $acl )
         
@@ -89,7 +72,7 @@ declare function atomsec:store-resource-acl(
     	
     	let $acl-collection-db-path := concat( $config:base-acl-collection-path , $collection-db-path )
     	
-        let $acl-collection-db-path := utilx:get-or-create-collection( $acl-collection-db-path )
+        let $acl-collection-db-path := xutil:get-or-create-collection( $acl-collection-db-path )
         
     	let $resource-name := $groups[3]
     	

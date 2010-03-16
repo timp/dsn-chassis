@@ -152,9 +152,10 @@ public class TestAtomProtocol extends TestCase {
 	 * the request was successful. We think it is more appropriate to use a PUT
 	 * request with a feed document to create a new atom collection, with a 201
 	 * Created response indicating the result. However we will implement this 
-	 * operation as eXist does for compatibility with clients using the eXist 
-	 * atom servlet. Supporting this operation at all, and if so, the appropriate
-	 * response code, may be reviewed in the near future.
+	 * operation as eXist does, except for using a response code of 201, for 
+	 * compatibility with clients using the eXist atom servlet. Supporting this 
+	 * operation at all, and if so, the appropriate response code, may be 
+	 * reviewed in the near future.
 	 */
 	public void testPostFeedToCreateCollection() {
 		
@@ -167,8 +168,8 @@ public class TestAtomProtocol extends TestCase {
 		setAtomRequestEntity(method, content);
 		int result = executeMethod(method, USER, PASS);
 		
-		// expect the status code is 204 No Content
-		assertEquals(204, result);
+		// expect the status code is 201 No Content
+		assertEquals(201, result);
 
 		// expect the Location header is set with an absolute URI
 		String responseLocation = method.getResponseHeader("Location").getValue();
@@ -177,7 +178,8 @@ public class TestAtomProtocol extends TestCase {
 		
 		// expect no Content-Type header 
 		Header contentTypeHeader = method.getResponseHeader("Content-Type");
-		assertNull(contentTypeHeader);
+		assertNotNull(contentTypeHeader);
+		assertTrue(contentTypeHeader.getValue().startsWith("application/atom+xml"));
 
 	}
 	
