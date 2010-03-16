@@ -19,7 +19,7 @@ public class ViewStudyQuestionnaireWidget
 	
 
 	private ViewStudyQuestionnaireWidgetController controller;
-    private StudySummaryWidget studySummaryWidget;
+		private StudySummaryWidget studySummaryWidget;
 
 
 	@Override

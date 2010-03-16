@@ -10,16 +10,6 @@
 
 	<ui:style>
 	
-		ul li {
-			
-			padding-bottom: 5px;
-				
-		}
-		
-		ul ol {
-			padding-top: 5px;
-		}
-	
 		.error {
 			color: red;
 		}
@@ -28,45 +18,31 @@
 			font-weight: bold;
 		}
 		
-		.fileTypeName {
-			font-weight: bold;
-			font-style: italic;
-		}
-
 	</ui:style>
 
 
-	<g:HTMLPanel>
+	<g:HTMLPanel ui:field="mainPanel" >
 
-		<h1>
-			<ui:msg>Curator</ui:msg>
-			-
-			<ui:msg>Home</ui:msg>
-		</h1>
-
-        <g:HTMLPanel ui:field="errorPanel">
+    <g:HTMLPanel ui:field="errorPanel">
 			<g:Label>
         		<ui:msg>There has been an unexpected error: </ui:msg>
 			</g:Label>
 			<g:FlowPanel ui:field="errorMessage"></g:FlowPanel>
-        </g:HTMLPanel>
+    </g:HTMLPanel>
 
 		<g:HTMLPanel ui:field="pendingPanel">
 			<p>
-				<ui:msg>pending... (counting studies)</ui:msg>
+				<ui:msg>pending... </ui:msg>
 			</p>
 		</g:HTMLPanel>
 
-		<g:HTMLPanel ui:field="mainPanel">
+		<g:HTMLPanel ui:field="contentPanel">
 
-            <h2><ui:msg>Studies</ui:msg></h2>
-<!--  
-			<local:ListStudiesWidget ui:field="listStudiesWidgetUiField"/>
- -->
-        
-
+            <h3><ui:msg>CuratorHome</ui:msg></h3>
 		</g:HTMLPanel>
 
 	</g:HTMLPanel>
 
 </ui:UiBinder>
+
+

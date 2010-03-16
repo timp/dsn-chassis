@@ -19,7 +19,11 @@ public class ListStudyRevisionsWidget
 	
 
 	private ListStudyRevisionsWidgetController controller;
-	
+		private StudySummaryWidget studySummaryWidget;
+
+	private StudyRevisionListWidget studyRevisionListWidget;
+
+
 	@Override
 	protected ListStudyRevisionsWidgetModel createModel() {
 		return new ListStudyRevisionsWidgetModel();
