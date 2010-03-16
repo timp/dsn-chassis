@@ -19,7 +19,9 @@ public class StudySummaryWidget
 	
 
 	private StudySummaryWidgetController controller;
-	
+		private StudyActionsWidget studyActionsWidget;
+
+
 	@Override
 	protected StudySummaryWidgetModel createModel() {
 		return new StudySummaryWidgetModel();
