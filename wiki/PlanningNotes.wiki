@@ -1,0 +1,35 @@
+#summary planning notes
+
+Milestone 1a. WWARN explorer preview version (limited release, by invitation)
+
+  * Task 1: check that for each study, place, year, number of patients, output in acceptable range
+  * Task 2: fix any problems found in task 1 
+  * Task 3: check that outputs are scientifically correct and valid
+  * Task 4: testing for bugs in user-interface
+  * Task 5: performance & load testing
+
+
+Milestone 1b. WWARN explorer preview version (public release)
+
+
+Milestone 2a. Chassis/WWARN submission system limited release (by invitation) 
+
+  * Task 1: final draft of study questionnaire
+
+
+Milestone 2b. Chassis/WWARN submission system public release 
+
+
+Milestone 3. Chassis/WWARN curation system internal prototype
+
+
+Milestone 4. completed trial submission/curation activity with mapper+chassis and sample of existing datasets
+
+
+Milestone 5. Chassis/WWARN curation system production release 
+
+
+Milestone 6. completed re-curation of all existing datasets
+
+
+Milestone 7. WWARN explorer version 1 (integrated with Chassis/WWARN, containing only curated data with audit trail)
