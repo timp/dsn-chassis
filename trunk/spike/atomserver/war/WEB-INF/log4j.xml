@@ -186,6 +186,11 @@
         <appender-ref ref="exist.scheduler"/>
     </category>
 
+    <category name="org.springframework" additivity="false">
+        <priority value="off"/>
+        <appender-ref ref="console"/>
+    </category>
+
     <!-- Section: ROOT logger -->
     
     <root>
