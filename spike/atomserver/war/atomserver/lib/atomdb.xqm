@@ -139,8 +139,7 @@ declare function atomdb:feed-doc-db-path(
 
 declare function atomdb:create-collection(
 	$request-path-info as xs:string ,
-	$request-data as element(atom:feed) ,
-	$enable-versioning as xs:boolean
+	$request-data as element(atom:feed) 
 ) as xs:string?
 {
 
@@ -159,36 +158,6 @@ declare function atomdb:create-collection(
 	
 		let $collection-db-path := xutil:get-or-create-collection( $collection-db-path )
 		
-		let $collection-config :=
-		
-			<collection xmlns="http://exist-db.org/collection-config/1.0">
-			    <triggers>
-				{
-
-					(:
-					 : EXPERIMENTAL: enable versioning support for the new collection.
-					 : TODO make this configurable.
-					 :)
-					 
-					if ( $enable-versioning ) then 
-			        <trigger event="store,remove,update" class="org.exist.versioning.VersioningTrigger">
-			            <parameter name="overwrite" value="yes"/>
-			        </trigger>
-			        else ()
-
-				}
-			    </triggers>
-			</collection>
-			
-		let $config-collection-path := concat( "/db/system/config" , $collection-db-path )
-		let $log := util:log( "debug" , concat( "$config-collection-path: " , $config-collection-path ) )
-		
-		let $config-collection-path := xutil:get-or-create-collection( $config-collection-path )
-		let $log := util:log( "debug" , concat( "$config-collection-path: " , $config-collection-path ) )
-		
-		let $config-resource-path := xmldb:store( $config-collection-path , "collection.xconf" , $collection-config )
-		let $log := util:log( "debug" , concat( "$config-resource-path: " , $config-resource-path ) )
-
 		(:
 		 : Obtain the database path for the atom feed document in the given database
 		 : collection. Currently, this appends ".feed" to the database collection
@@ -248,8 +217,7 @@ declare function atomdb:update-collection(
 
 declare function atomdb:create-member(
 	$request-path-info as xs:string ,
-	$request-data as element(atom:entry) ,
-	$comment as xs:string?
+	$request-data as element(atom:entry) 
 ) as xs:string?
 {
 
@@ -258,22 +226,20 @@ declare function atomdb:create-member(
 	then ()
 	
 	else
-		
+
+		let $log := util:log( "debug" , "atomdb:create-member()" )
+		let $log := util:log( "debug" , $request-data )
+				
 	    let $uuid := util:uuid()
 	    
-	    let $entry := atomdb:create-entry( $request-path-info, $request-data , $uuid , $comment )
+	    let $entry := atomdb:create-entry( $request-path-info, $request-data , $uuid )
+		let $log := util:log( "debug" , $entry )
 	    
 		(:
 		 : Map the request path info, e.g., "/foo", to a database collection path,
 		 : e.g., "/db/foo".
 		 :)
 		 
-(:
-        let $collection-db-path := atomdb:request-path-info-to-db-path( $request-path-info )
-
-	    let $entry-doc-db-path := xmldb:store( $collection-db-path , concat( $uuid , ".atom" ) , $entry )    
-:)
-
         let $entry-doc-db-path := atomdb:store-member( $request-path-info , concat( $uuid , ".atom" ) , $entry )
         
 	    return $entry-doc-db-path
@@ -302,9 +268,8 @@ declare function atomdb:store-member(
 
 declare function atomdb:update-member(
 	$request-path-info as xs:string ,
-	$request-data as element(atom:entry) ,
-	$comment as xs:string?
-) as xs:string
+	$request-data as element(atom:entry) 
+) as item()?
 {
 
 	if ( not( atomdb:member-available( $request-path-info ) ) )
@@ -320,15 +285,24 @@ declare function atomdb:update-member(
 		 
 		let $member-db-path := atomdb:request-path-info-to-db-path( $request-path-info )
 	
-		let $entry := atomdb:update-entry( doc( $member-db-path )/atom:entry , $request-data , $comment )
+		let $entry := atomdb:update-entry( doc( $member-db-path )/atom:entry , $request-data )
 
 		let $groups := text:groups( $request-path-info , "^(.*)/([^/]+)$" )
 		
 		let $collection-db-path := atomdb:request-path-info-to-db-path( $groups[2] )
 		
 		let $entry-resource-name := $groups[3]
+		
+		let $entry-db-path := xmldb:store( $collection-db-path , $entry-resource-name , $entry )
 
-		return xmldb:store( $collection-db-path , $entry-resource-name , $entry )
+		(: 
+		 : N.B. we return the entry here, rather than just the path, because of
+		 : a weird interaction with the versioning module and retrieving a document
+		 : that has been updated but not seeing the update within the same
+		 : query.
+		 :)
+		 
+		return $entry
 
 };
 
@@ -368,8 +342,7 @@ declare function atomdb:mutable-entry-children(
         not( $namespace-uri = $CONSTANT:ATOM-NSURI and $local-name = $CONSTANT:ATOM-LINK and $child/@rel = "self" ) and
         not( $namespace-uri = $CONSTANT:ATOM-NSURI and $local-name = $CONSTANT:ATOM-LINK and $child/@rel = "edit" ) and
         not( $namespace-uri = $CONSTANT:ATOM-NSURI and $local-name = $CONSTANT:ATOM-LINK and $child/@rel = "edit-media" ) and
-        not( $namespace-uri = $CONSTANT:ATOM-NSURI and $local-name = $CONSTANT:ATOM-LINK and $child/@rel = "history" ) and 
-        not( $namespace-uri = "http://purl.org/atompub/revision/1.0" and $local-name = "comment" )
+        not( $namespace-uri = $CONSTANT:ATOM-NSURI and $local-name = $CONSTANT:ATOM-LINK and $child/@rel = "history" )
     return $child
 };
 
@@ -437,16 +410,10 @@ declare function atomdb:update-feed(
 declare function atomdb:create-entry(
 	$request-path-info as xs:string ,
     $request-data as element(atom:entry) ,
-    $uuid as xs:string ,
-    $comment as xs:string?
+    $uuid as xs:string 
 ) as element(atom:entry)
 {
 
-	(:
-	 : TODO hide history link for entries in collections where history is not
-	 : enabled.
-	 :)
-	 
 	(: 
 	 : TODO add edit-acl link.
 	 :)
@@ -457,26 +424,8 @@ declare function atomdb:create-entry(
     let $self-uri := $id
     let $edit-uri := $id
     
-    let $history-uri := concat( $config:history-service-url , $request-path-info , "/" , $uuid , ".atom" )
-    
-    let $comment := if ( empty( $comment ) or $comment = "" ) then "initial revision" else $comment
-    
     let $user-name := request:get-attribute( $config:user-name-request-attribute-key )
     
-    let $revision-comment := 
-        <ar:comment>
-            <atom:author>
-                {
-                    if ( $config:user-name-is-email ) then
-                    <atom:email>{$user-name}</atom:email>
-                    else
-                    <atom:name>{$user-name}</atom:name>                    
-                }
-            </atom:author>
-            <atom:updated>{$published}</atom:updated>
-            <atom:summary>{$comment}</atom:summary>
-        </ar:comment>
-        
     return
 	
         <atom:entry>
@@ -485,9 +434,7 @@ declare function atomdb:create-entry(
             <atom:updated>{$updated}</atom:updated>
             <atom:link rel="self" type="application/atom+xml" href="{$self-uri}"/>
             <atom:link rel="edit" type="application/atom+xml" href="{$edit-uri}"/>
-            <atom:link rel="history" type="application/atom+xml" href="{$history-uri}"/>
             {
-                $revision-comment ,
                 atomdb:mutable-entry-children($request-data)
             }
         </atom:entry>  
@@ -576,8 +523,7 @@ declare function atomdb:create-media-link-entry(
 
 declare function atomdb:update-entry( 
     $entry as element(atom:entry) ,
-    $request-data as element(atom:entry) ,
-    $comment as xs:string?
+    $request-data as element(atom:entry)
 ) as element(atom:entry) 
 {
 
@@ -586,22 +532,6 @@ declare function atomdb:update-entry(
     let $updated := current-dateTime()
     let $log := util:log( "debug" , concat( "$updated: " , $updated ) )
 
-    let $user-name := request:get-attribute( $config:user-name-request-attribute-key )
-    
-    let $revision-comment := 
-        <ar:comment>
-            <atom:author>
-                {
-                    if ( $config:user-name-is-email ) then
-                    <atom:email>{$user-name}</atom:email>
-                    else
-                    <atom:name>{$user-name}</atom:name>                    
-                }
-            </atom:author>
-            <atom:updated>{$updated}</atom:updated>
-            <atom:summary>{$comment}</atom:summary>
-        </ar:comment>
-        
     return
     
         <atom:entry>
@@ -615,8 +545,6 @@ declare function atomdb:update-entry(
                 $entry/atom:link[@rel="edit"] ,
                 $entry/atom:link[@rel="edit-media"] ,
                 $entry/atom:link[@rel="history"] ,
-                $entry/ar:comment ,
-                $revision-comment ,
                 atomdb:mutable-entry-children($request-data)
             }
         </atom:entry>  
@@ -735,7 +663,7 @@ declare function atomdb:retrieve-feed(
 
 declare function atomdb:retrieve-entry(
 	$request-path-info as xs:string 
-) as element(atom:entry)
+) as item()?
 {
 
 	if ( not( atomdb:member-available( $request-path-info ) ) )
@@ -751,7 +679,7 @@ declare function atomdb:retrieve-entry(
 		 
 		let $entry-doc-db-path := atomdb:request-path-info-to-db-path( $request-path-info )
 		
-		return doc( $entry-doc-db-path )/atom:entry
+		return doc( $entry-doc-db-path )
 
 };
 

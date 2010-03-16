@@ -1,6 +1,6 @@
 xquery version "1.0";
 
-module namespace logger-plugin = "http://www.cggh.org/2010/xquery/atombeat/logger-plugin";
+module namespace logger-plugin = "http://www.cggh.org/2010/atombeat/xquery/logger-plugin";
 declare namespace atom = "http://www.w3.org/2005/Atom" ;
 import module namespace util = "http://exist-db.org/xquery/util" ;
 
@@ -10,7 +10,8 @@ import module namespace util = "http://exist-db.org/xquery/util" ;
 declare function logger-plugin:before(
 	$operation as xs:string ,
 	$request-path-info as xs:string ,
-	$request-data as item()*
+	$request-data as item()* ,
+	$request-media-type as xs:string?
 ) as item()*
 {
 	let $message := concat( "before: " , $operation , ", request-path-info: " , $request-path-info ) 

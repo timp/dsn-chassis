@@ -163,17 +163,16 @@ declare function ap:do-post-atom-feed(
  :)
 declare function ap:op-create-collection(
 	$request-path-info as xs:string ,
-	$request-data as element(atom:feed)
+	$request-data as element(atom:feed) ,
+	$request-media-type as xs:string?
 ) as item()*
 {
 
-	let $enable-history := request:get-header( "X-Atom-Enable-History" )
-	
-	let $enable-history := 
-		if ( $enable-history castable as xs:boolean ) then xs:boolean( $enable-history )
-		else false()
+	let $feed-doc-db-path := atomdb:create-collection( $request-path-info , $request-data )
 
-	let $feed-doc-db-path := atomdb:create-collection( $request-path-info , $request-data , $enable-history )
+	(: if security is enabled, install default collection ACL :)
+	
+	let $collection-acl-installed := ap:install-collection-acl( $request-path-info )
 
 	let $feed-doc := doc( $feed-doc-db-path )
             
@@ -191,7 +190,7 @@ declare function ap:op-create-collection(
 
 
 declare variable $ap:op-create-collection as function :=
-	util:function( QName( "http://www.cggh.org/2010/xquery/atom-protocol" , "ap:op-create-collection" ) , 2 )
+	util:function( QName( "http://www.cggh.org/2010/xquery/atom-protocol" , "ap:op-create-collection" ) , 3 )
 ;
 
 
@@ -241,66 +240,22 @@ declare function ap:do-post-atom-entry(
 
 
 
+
+
 (:
- : Main request processing function.
+ : TODO doc me
  :)
-declare function ap:apply-op(
-	$op-name as xs:string ,
-	$op as function ,
-	$request-path-info as xs:string ,
-	$request-data as item()*
-) as item()*
-{
-
-	(: EXPERIMENTAL: call plugin functions before operation :)
-	
-	let $before-advice := ap:apply-before( $plugin:before , $op-name , $request-path-info , $request-data )
-	
-	let $request-data := $before-advice[1]
-	let $status-code := $before-advice[2]
-	
-	return 
-	
-		if ( exists( $status-code ) )
-		
-		then (: bail out :)
-		
-			let $response-data := $before-advice[3]
-			let $response-content-type := $before-advice[4]
-			return ap:send-response( $status-code , $response-data , $response-content-type )
-		
-		else (: carry on as normal :)
-		
-			let $result := util:call( $op , $request-path-info , $request-data )
-			let $response-status := $result[1]
-			let $response-data := $result[2]
-			let $response-content-type := $result[3]
-
-			(:
-			 : EXPERIMENTAL: call plugin functions after operation 
-			 :)
-			 
-			let $after-advice := ap:apply-after( $plugin:after , $op-name , $request-path-info , $response-data , $response-content-type )
-			
-			let $response-data := $after-advice[1]
-			let $response-content-type := $after-advice[2]
-					    
-			return ap:send-response( $response-status , $response-data , $response-content-type )
-
-};
-
-
-
-
 declare function ap:op-create-member(
 	$request-path-info as xs:string ,
-	$request-data as element(atom:entry)
+	$request-data as element(atom:entry) ,
+	$request-media-type as xs:string?
 ) as item()*
 {
 
-    let $comment := request:get-header("X-Atom-Revision-Comment")
-    
-	let $entry-doc-db-path := atomdb:create-member( $request-path-info , $request-data , $comment )
+	let $log := util:log( "debug" , "op-create-member" )
+	let $log := util:log( "debug" , $request-data )
+	
+	let $entry-doc-db-path := atomdb:create-member( $request-path-info , $request-data )
 
 	(: if security is enabled, install default resource ACL :)
 	let $resource-acl-installed := ap:install-resource-acl( $request-path-info , $entry-doc-db-path )
@@ -318,9 +273,13 @@ declare function ap:op-create-member(
 
 
 
+(:
+ : TODO doc me
+ :)
 declare variable $ap:op-create-member as function :=
-	util:function( QName( "http://www.cggh.org/2010/xquery/atom-protocol" , "ap:op-create-member" ) , 2 )
+	util:function( QName( "http://www.cggh.org/2010/xquery/atom-protocol" , "ap:op-create-member" ) , 3 )
 ;
+
 
 
 
@@ -364,36 +323,58 @@ declare function ap:do-post-media(
         
                 then ap:do-forbidden( $request-path-info )
         
-                else
-        
-                    let $request-data := request:get-data()
-        			
-        			(: check for slug to use as title :)
-        			
-        			let $slug := request:get-header( $CONSTANT:HEADER-SLUG )
-        			
-        			(: check for summary :)
-        			
-        			let $summary := request:get-header( "X-Atom-Summary" )
-        			
-        		    let $comment := request:get-header("X-Atom-Revision-Comment")
-        		    
-        			let $media-link-doc-db-path := atomdb:create-media-resource( $request-path-info , $request-data , $media-type , $slug , $summary , $comment )
-        			
-        			let $media-link-doc := doc( $media-link-doc-db-path )
-        		            
-        		    let $location := $media-link-doc/atom:entry/atom:link[@rel="self"]/@href
-        		        	
-        			let $header-location := response:set-header( $CONSTANT:HEADER-LOCATION, $location )
-        					    
-        			return ap:send-atom( $CONSTANT:STATUS-SUCCESS-CREATED , $media-link-doc )
-        			
+                else ap:apply-op( $CONSTANT:OP-CREATE-MEDIA , $ap:op-create-media , $request-path-info , request:get-data() , $media-type )
+                        			
 };
 
 
 
 
+(:
+ : TODO doc me
+ :)
+declare function ap:op-create-media(
+	$request-path-info as xs:string ,
+	$request-data as item()* ,
+	$request-media-type as xs:string
+) as item()*
+{
 
+	(: check for slug to use as title :)
+	
+	let $slug := request:get-header( $CONSTANT:HEADER-SLUG )
+	
+	(: check for summary :)
+	
+	let $summary := request:get-header( "X-Atom-Summary" )
+	
+    let $comment := request:get-header("X-Atom-Revision-Comment")
+    
+	let $media-link-doc-db-path := atomdb:create-media-resource( $request-path-info , $request-data , $request-media-type , $slug , $summary , $comment )
+	
+	let $media-link-doc := doc( $media-link-doc-db-path )
+            
+    let $location := $media-link-doc/atom:entry/atom:link[@rel="self"]/@href
+        	
+	let $header-location := response:set-header( $CONSTANT:HEADER-LOCATION, $location )
+			    
+	return ( $CONSTANT:STATUS-SUCCESS-CREATED , $media-link-doc , $CONSTANT:MEDIA-TYPE-ATOM )
+
+};
+
+
+
+
+declare variable $ap:op-create-media as function :=
+	util:function( QName( "http://www.cggh.org/2010/xquery/atom-protocol" , "ap:op-create-media" ) , 3 )
+;
+
+
+
+
+(:
+ : TODO doc me
+ :)
 declare function ap:do-post-multipart(
 	$request-path-info as xs:string 
 ) as item()*
@@ -414,20 +395,10 @@ declare function ap:do-post-multipart(
 		
 		else
 
-            (: TODO bad request if expected form parts are missing :)
-            
-			let $request-data := request:get-uploaded-file-data( "media" )
-					
 			(: check for file name to use as title :)
 			
 			let $file-name := request:get-uploaded-file-name( "media" )
 			
-			(: check for summary param :)
-			
-			let $summary := request:get-parameter( "summary" , "" )
-
-		    let $comment := request:get-header("X-Atom-Revision-Comment")
-		    
 			(:
 			 : Unfortunately eXist's function library doesn't give us any way
 			 : to retrieve the content type for the uploaded file, so we'll
@@ -440,6 +411,8 @@ declare function ap:do-post-multipart(
 			let $media-type := $mime:mappings//mime-mapping[extension=$extension]/mime-type
 			
 			let $media-type := if ( empty( $media-type ) ) then "application/octet-stream" else $media-type
+			
+			let $request-data := request:get-uploaded-file-data( "media" )
 			
             (: 
              : Here we bottom out at the "create-media" operation, so we need to
@@ -454,64 +427,100 @@ declare function ap:do-post-multipart(
         
                 then ap:do-forbidden( $request-path-info )
         
-                else
-			
-        			let $media-link-doc-db-path := atomdb:create-media-resource( $request-path-info , $request-data , $media-type , $file-name , $summary , $comment )
-        			
-        			let $media-link-doc := doc( $media-link-doc-db-path )
-        		            
-        		    (:
-        		     : Although the semantics of 201 Created would be more appropriate 
-        		     : to the operation performed, we'll respond with 200 OK because the
-        		     : request is most likely to originate from an HTML form submission
-        		     : and I don't know how all browsers handle 201 responses.
-        		     :)
-        		     
-        		    let $status-code := response:set-status-code( $CONSTANT:STATUS-SUCCESS-OK )
-        		        
-        		    let $location := $media-link-doc/atom:entry/atom:link[@rel="self"]/@href
-        		        	
-        			let $header-location := response:set-header( $CONSTANT:HEADER-LOCATION, $location )
-        					    
-        			let $accept := request:get-header( $CONSTANT:HEADER-ACCEPT )
-        			
-        			return 
-        			
-        				(: 
-        				 : Do very naive processing of accept header. If header is set
-        				 : and is exactly "application/atom+xml" then return the media-
-        				 : link entry, otherwise fall back to text/html output to 
-        				 : support browser applications programmatically manipulating
-        				 : HTML forms.
-        				 :)
-        				 
-        				if ( $accept = "application/atom+xml" )
-        				
-        				then 
-        				
-        					let $header-content-type := response:set-header( $CONSTANT:HEADER-CONTENT-TYPE , $CONSTANT:MEDIA-TYPE-ATOM )
-        			
-        					return $media-link-doc
-        			
-        				else 
-        				
-        					let $header-content-type := response:set-header( $CONSTANT:HEADER-CONTENT-TYPE , "text/html" )
-        			
-        					return 
-        					
-        						<html>
-        							<head>
-        								<title>{$CONSTANT:STATUS-SUCCESS-OK}</title>
-        							</head>
-        							<body>{ comment { util:serialize( $media-link-doc/atom:entry , () ) } }</body>
-        						</html>
-        
+                else ap:apply-op( $CONSTANT:OP-CREATE-MEDIA , $ap:op-create-media-from-multipart-form-data , $request-path-info , $request-data , $media-type )
+
 };
 
 
 
 
 
+(: 
+ : TODO doc me 
+ :)
+declare function ap:op-create-media-from-multipart-form-data (
+	$request-path-info as xs:string ,
+	$request-data as item()* ,
+	$request-media-type as xs:string
+) as item()*
+{
+
+    (: TODO bad request if expected form parts are missing :)
+    
+	(: check for file name to use as title :)
+	
+	let $file-name := request:get-uploaded-file-name( "media" )
+
+	(: check for summary param :)
+	
+	let $summary := request:get-parameter( "summary" , "" )
+
+    let $comment := request:get-header("X-Atom-Revision-Comment")
+    
+	let $media-link-doc-db-path := atomdb:create-media-resource( $request-path-info , $request-data , $request-media-type , $file-name , $summary , $comment )
+	
+	let $media-link-doc := doc( $media-link-doc-db-path )
+            
+    let $location := $media-link-doc/atom:entry/atom:link[@rel="self"]/@href
+        	
+	let $header-location := response:set-header( $CONSTANT:HEADER-LOCATION, $location )
+			    
+	let $accept := request:get-header( $CONSTANT:HEADER-ACCEPT )
+	
+	let $response-data :=
+	
+		(: 
+		 : Do very naive processing of accept header. If header is set
+		 : and is exactly "application/atom+xml" then return the media-
+		 : link entry, otherwise fall back to text/html output to 
+		 : support browser applications programmatically manipulating
+		 : HTML forms.
+		 :)
+		 
+		if ( $accept = "application/atom+xml" )
+		
+		then $media-link-doc
+	
+		else 
+		
+			<html>
+				<head>
+					<title>{$CONSTANT:STATUS-SUCCESS-OK}</title>
+				</head>
+				<body>{ comment { util:serialize( $media-link-doc/atom:entry , () ) } }</body>
+			</html>
+				
+	let $response-content-type :=
+
+		if ( $accept = "application/atom+xml" )
+		
+		then $CONSTANT:MEDIA-TYPE-ATOM 
+	
+		else "text/html"
+
+    (:
+     : Although the semantics of 201 Created would be more appropriate 
+     : to the operation performed, we'll respond with 200 OK because the
+     : request is most likely to originate from an HTML form submission
+     : and I don't know how all browsers handle 201 responses.
+     :)
+     
+	return ( $CONSTANT:STATUS-SUCCESS-OK , $response-data , $response-content-type )
+
+};
+
+
+
+
+declare variable $ap:op-create-media-from-multipart-form-data as function :=
+	util:function( QName( "http://www.cggh.org/2010/xquery/atom-protocol" , "ap:op-create-media-from-multipart-form-data" ) , 3 )
+;
+
+
+
+(:
+ : TODO doc me
+ :)
 declare function ap:do-put (
 	$request-path-info as xs:string 
 ) as item()*
@@ -598,6 +607,9 @@ declare function ap:do-put-atom-feed(
 
 
 
+(: 
+ : TODO doc me
+ :)
 declare function ap:do-put-atom-feed-to-create-collection(
 	$request-path-info as xs:string ,
 	$request-data as element(atom:feed)
@@ -619,40 +631,16 @@ declare function ap:do-put-atom-feed-to-create-collection(
 
         then ap:do-forbidden( $request-path-info )
 
-        else
-	
-        	(: 
-        	 : EXPERIMENTAL: enable versioning depending on request header.
-        	 :)
-        	 
-        	let $enable-history := request:get-header( "X-Atom-Enable-History" )
-        	
-        	let $enable-history := 
-        		if ( $enable-history castable as xs:boolean ) then xs:boolean( $enable-history )
-        		else false()
-        
-        	let $feed-doc-db-path := atomdb:create-collection( $request-path-info , $request-data , $enable-history )
+        else ap:apply-op( $CONSTANT:OP-CREATE-COLLECTION , $ap:op-create-collection , $request-path-info , $request-data )
         		
-    		(: if we are creating a collection and security is enabled, install 
-    		   default collection ACL :)
-    		
-    		let $collection-acl-installed := ap:install-collection-acl( $request-path-info )
-    		
-        	let $feed-doc := doc( $feed-doc-db-path )
-                    
-            let $status-code := $CONSTANT:STATUS-SUCCESS-CREATED 
-                
-            let $location := $feed-doc/atom:feed/atom:link[@rel="self"]/@href
-                	
-        	let $header-location := response:set-header( $CONSTANT:HEADER-LOCATION, $location )
-            
-        	return ap:send-atom( $status-code , $feed-doc )
-	
 };
 
 
 
 
+(:
+ : TODO doc me
+ :)
 declare function ap:do-put-atom-feed-to-update-collection(
 	$request-path-info as xs:string ,
 	$request-data as element(atom:feed)
@@ -674,16 +662,38 @@ declare function ap:do-put-atom-feed-to-update-collection(
 
         then ap:do-forbidden( $request-path-info )
 
-        else
-	
-        	let $feed-doc-db-path := atomdb:update-collection( $request-path-info , $request-data )
-        		
-        	let $feed-doc := doc( $feed-doc-db-path )
-                    
-            let $status-code := $CONSTANT:STATUS-SUCCESS-OK 
-                
-        	return ap:send-atom( $status-code , $feed-doc )
+        else ap:apply-op( $CONSTANT:OP-UPDATE-COLLECTION , $ap:op-update-collection , $request-path-info , $request-data )
+
 };
+
+
+
+(:
+ : TODO doc me 
+ :)
+declare function ap:op-update-collection(
+	$request-path-info as xs:string ,
+	$request-data as element(atom:feed) ,
+	$request-media-type as xs:string?
+) as item()*
+{
+
+	let $feed-doc-db-path := atomdb:update-collection( $request-path-info , $request-data )
+		
+	let $feed-doc := doc( $feed-doc-db-path )
+            
+	return ( $CONSTANT:STATUS-SUCCESS-OK , $feed-doc , $CONSTANT:MEDIA-TYPE-ATOM )
+
+};
+
+
+
+
+declare variable $ap:op-update-collection as function :=
+	util:function( QName( "http://www.cggh.org/2010/xquery/atom-protocol" , "ap:op-update-collection" ) , 3 )
+;
+
+
 
 
 
@@ -725,20 +735,49 @@ declare function ap:do-put-atom-entry(
         
                 then ap:do-forbidden( $request-path-info )
         
-                else
-
-        		    let $comment := request:get-header("X-Atom-Revision-Comment")
-        		    
-        			let $entry-doc-db-path := atomdb:update-member( $request-path-info , $request-data , $comment )
-        		
-        			let $entry-doc := doc( $entry-doc-db-path )
-        		            
-        			return ap:send-atom( $CONSTANT:STATUS-SUCCESS-OK , $entry-doc )
+                else ap:apply-op( $CONSTANT:OP-UPDATE-MEMBER , $ap:op-update-member , $request-path-info , $request-data ) 
         
 };
 
 
 
+
+(:
+ : TODO doc me
+ :)
+declare function ap:op-update-member(
+	$request-path-info as xs:string ,
+	$request-data as element(atom:entry) ,
+	$request-media-type as xs:string?
+) as item()*
+{
+    
+	let $entry := atomdb:update-member( $request-path-info , $request-data )
+
+	(: 
+	 : N.B. we return the entry here, rather than trying to retrieve the updated
+	 : entry from the database, because of a weird interaction with the versioning
+	 : module, not seeing updates within the same query.
+	 :)
+	 
+	return ( $CONSTANT:STATUS-SUCCESS-OK , $entry , $CONSTANT:MEDIA-TYPE-ATOM )
+
+};
+
+
+
+
+declare variable $ap:op-update-member as function :=
+	util:function( QName( "http://www.cggh.org/2010/xquery/atom-protocol" , "ap:op-update-member" ) , 3 )
+;
+
+
+
+
+
+(: 
+ : TODO doc me
+ :)
 declare function ap:do-put-media(
 	$request-path-info as xs:string ,
 	$request-content-type
@@ -796,6 +835,9 @@ declare function ap:do-put-media(
 
 
 
+(: 
+ : TODO doc me 
+ :)
 declare function ap:do-get(
 	$request-path-info as xs:string 
 ) as item()*
@@ -841,20 +883,65 @@ declare function ap:do-get-entry(
 
         then ap:do-forbidden( $request-path-info )
 
-        else ap:send-atom( $CONSTANT:STATUS-SUCCESS-OK , atomdb:retrieve-entry( $request-path-info ) )
+        else ap:apply-op( $CONSTANT:OP-RETRIEVE-MEMBER , $ap:op-retrieve-member , $request-path-info , () )
 
 };
 
 
 
 
+(:
+ : TODO doc me
+ :)
+declare function ap:op-retrieve-member(
+	$request-path-info as xs:string ,
+	$request-data as element(atom:entry)? ,
+	$request-media-type as xs:string?
+) as item()*
+{
+
+	let $entry-doc := atomdb:retrieve-entry( $request-path-info )
+
+	return ( $CONSTANT:STATUS-SUCCESS-OK , $entry-doc , $CONSTANT:MEDIA-TYPE-ATOM )
+
+};
+
+
+
+
+declare variable $ap:op-retrieve-member as function :=
+	util:function( QName( "http://www.cggh.org/2010/xquery/atom-protocol" , "ap:op-retrieve-member" ) , 3 )
+;
+
+
+
+
+(:
+ : TODO doc me
+ :)
 declare function ap:do-get-media(
 	$request-path-info
 )
 {
 
+    ap:apply-op( $CONSTANT:OP-RETRIEVE-MEDIA , $ap:op-retrieve-media , $request-path-info , () )
+
+};
+
+
+
+
+declare function ap:op-retrieve-media(
+	$request-path-info as xs:string ,
+	$request-data as item()? ,
+	$request-media-type as xs:string?
+) as item()*
+{
+
     (: TODO security decision :)
 
+	(: set status here, because we have to stream binary :)
+	
     let $status-code := response:set-status-code( $CONSTANT:STATUS-SUCCESS-OK )
     
     (: media type :)
@@ -873,9 +960,18 @@ declare function ap:do-get-media(
     
     let $response-stream := response:stream-binary( atomdb:retrieve-media( $request-path-info ) , $mime-type )
 
-	return ()
+	(: don't return status code, because already set :)
 	
+	return ( () , () , () )
+
 };
+
+
+
+
+declare variable $ap:op-retrieve-media as function :=
+	util:function( QName( "http://www.cggh.org/2010/xquery/atom-protocol" , "ap:op-retrieve-media" ) , 3 )
+;
 
 
 
@@ -898,15 +994,35 @@ declare function ap:do-get-feed(
 
         then ap:do-forbidden( $request-path-info )
 
-        else 
-            
-            let $feed := atomdb:retrieve-feed( $request-path-info ) 
-            
-            let $feed := ap:filter-feed-by-acls( $feed )
-            
-            return ap:send-atom( $CONSTANT:STATUS-SUCCESS-OK , $feed )
+        else ap:apply-op( $CONSTANT:OP-LIST-COLLECTION , $ap:op-list-collection , $request-path-info , () )
     
 };
+
+
+
+
+declare function ap:op-list-collection(
+	$request-path-info as xs:string ,
+	$request-data as item()? ,
+	$request-media-type as xs:string?
+) as item()*
+{
+
+    let $feed := atomdb:retrieve-feed( $request-path-info ) 
+    
+    let $feed := ap:filter-feed-by-acls( $feed )
+    
+	return ( $CONSTANT:STATUS-SUCCESS-OK , $feed , $CONSTANT:MEDIA-TYPE-ATOM )
+
+};
+
+
+
+
+declare variable $ap:op-list-collection as function :=
+	util:function( QName( "http://www.cggh.org/2010/xquery/atom-protocol" , "ap:op-list-collection" ) , 3 )
+;
+
 
 
 
@@ -1081,8 +1197,8 @@ declare function ap:send-atom(
 
 
 declare function ap:send-response(
-    $status as xs:integer ,
-    $data as item() ,
+    $status as xs:integer? ,
+    $data as item()? ,
     $content-type as xs:string?
 ) as item()*
 {
@@ -1094,8 +1210,15 @@ declare function ap:send-response(
 		return ap:send-error( $status , $data , $request-path-info )
 		
 	else
-	    let $status-code := response:set-status-code( $status )
-	    let $header-content-type := response:set-header( $CONSTANT:HEADER-CONTENT-TYPE , $content-type )
+	
+	    let $status-code-set := 
+	    	if ( exists( $status ) ) then response:set-status-code( $status )
+	    	else ()
+
+	    let $header-content-type := 
+	    	if ( exists( $content-type ) ) then response:set-header( $CONSTANT:HEADER-CONTENT-TYPE , $content-type )
+			else ()
+			
 	    return $data
 
 };
@@ -1157,13 +1280,85 @@ declare function ap:send-error(
 
 
 (:
+ : Main request processing function.
+ :)
+declare function ap:apply-op(
+	$op-name as xs:string ,
+	$op as function ,
+	$request-path-info as xs:string ,
+	$request-data as item()*
+) as item()*
+{
+
+	ap:apply-op( $op-name , $op , $request-path-info , $request-data , () )
+	
+};
+
+
+
+
+(:
+ : Main request processing function.
+ :)
+declare function ap:apply-op(
+	$op-name as xs:string ,
+	$op as function ,
+	$request-path-info as xs:string ,
+	$request-data as item()* ,
+	$request-media-type as xs:string?
+) as item()*
+{
+
+	(: EXPERIMENTAL: call plugin functions before main operation :)
+	
+	let $before-advice := ap:apply-before( $plugin:before , $op-name , $request-path-info , $request-data , $request-media-type )
+	
+	let $request-data := $before-advice[1]
+	let $status-code := $before-advice[2]
+	
+	return 
+	 
+		if ( exists( $status-code ) )
+		
+		then (: bail out - plugin has overridden default behaviour :)
+		
+			let $response-data := $before-advice[3]
+			let $response-content-type := $before-advice[4]
+			return ap:send-response( $status-code , $response-data , $response-content-type )
+		
+		else (: carry on as normal :)
+		
+			let $result := util:call( $op , $request-path-info , $request-data , $request-media-type )
+			let $response-status := $result[1]
+			let $response-data := $result[2]
+			let $response-content-type := $result[3]
+
+			(:
+			 : EXPERIMENTAL: call plugin functions after main operation 
+			 :)
+			 
+			let $after-advice := ap:apply-after( $plugin:after , $op-name , $request-path-info , $response-data , $response-content-type )
+			
+			let $response-data := $after-advice[1]
+			let $response-content-type := $after-advice[2]
+					    
+			return ap:send-response( $response-status , $response-data , $response-content-type )
+
+};
+
+
+
+
+
+(:
  : Recursively call the sequence of plugin functions.
  :)
 declare function ap:apply-before(
 	$functions as function* ,
 	$operation as xs:string ,
 	$request-path-info as xs:string ,
-	$request-data as item()*
+	$request-data as item()* ,
+	$request-media-type as xs:string?
 ) as item()* {
 	
 	(:
@@ -1180,7 +1375,7 @@ declare function ap:apply-before(
 	
 	else
 	
-		let $advice := util:call( $functions[1] , $operation , $request-path-info , $request-data )
+		let $advice := util:call( $functions[1] , $operation , $request-path-info , $request-data , $request-media-type )
 		
 		(: what happens next depends on advice :)
 		
@@ -1194,7 +1389,7 @@ declare function ap:apply-before(
 			
 			then $advice (: bail out, no further calling of before functions :)
 
-			else ap:apply-before( subsequence( $functions , 2 ) , $operation , $request-path-info , $request-data )
+			else ap:apply-before( subsequence( $functions , 2 ) , $operation , $request-path-info , $request-data , $request-media-type )
 
 };
 

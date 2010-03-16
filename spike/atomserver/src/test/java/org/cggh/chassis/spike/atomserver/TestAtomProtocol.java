@@ -11,6 +11,7 @@ import org.apache.commons.httpclient.methods.multipart.FilePart;
 import org.apache.commons.httpclient.methods.multipart.Part;
 import org.apache.commons.httpclient.methods.multipart.StringPart;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 import static org.cggh.chassis.spike.atomserver.AtomTestUtils.*;
 
@@ -259,6 +260,73 @@ public class TestAtomProtocol extends TestCase {
 		assertNotNull(responseContentType);
 		assertTrue(responseContentType.trim().startsWith("application/atom+xml"));
 
+	}
+	
+	
+	
+	/**
+	 * Test the standard atom operation to update a member of a collection by
+	 * a PUT request with an atom entry document as the request entity.
+	 */
+	public void testPutEntryToUpdateMemberTwice() {
+
+		// setup test
+		String collectionUri = createTestCollection(SERVER_URI, USER, PASS);
+		String location = createTestEntryAndReturnLocation(collectionUri, USER, PASS);
+
+		// now put an updated entry document using a PUT request
+		PutMethod method = new PutMethod(location);
+		String content = 
+			"<atom:entry xmlns:atom=\"http://www.w3.org/2005/Atom\">" +
+				"<atom:title>Test Member - Updated</atom:title>" +
+				"<atom:summary>This is a summary, updated.</atom:summary>" +
+			"</atom:entry>";
+		setAtomRequestEntity(method, content);
+		int result = executeMethod(method, USER, PASS);
+
+		// expect the status code is 200 OK - we just did an update, no creation
+		assertEquals(200, result);
+
+		// expect no Location header 
+		Header responseLocationHeader = method.getResponseHeader("Location");
+		assertNull(responseLocationHeader);
+		
+		// expect the Content-Type header starts with the Atom media type
+		String responseContentType = method.getResponseHeader("Content-Type").getValue();
+		assertNotNull(responseContentType);
+		assertTrue(responseContentType.trim().startsWith("application/atom+xml"));
+
+		Document d1 = AtomTestUtils.getResponseBodyAsDocument(method);
+		Element title = (Element) d1.getElementsByTagNameNS("http://www.w3.org/2005/Atom", "title").item(0);
+		assertEquals("Test Member - Updated", title.getTextContent());
+		
+		// now put an updated entry document using a PUT request
+		PutMethod method2 = new PutMethod(location);
+		String content2 = 
+			"<atom:entry xmlns:atom=\"http://www.w3.org/2005/Atom\">" +
+				"<atom:title>Test Member - Updated Again</atom:title>" +
+				"<atom:summary>This is a summary, updated again.</atom:summary>" +
+			"</atom:entry>";
+		
+		setAtomRequestEntity(method2, content2);
+		int result2 = executeMethod(method2, USER, PASS);
+
+		// expect the status code is 200 OK - we just did an update, no creation
+		assertEquals(200, result2);
+
+		// expect no Location header 
+		Header responseLocationHeader2 = method2.getResponseHeader("Location");
+		assertNull(responseLocationHeader2);
+		
+		// expect the Content-Type header starts with the Atom media type
+		String responseContentType2 = method2.getResponseHeader("Content-Type").getValue();
+		assertNotNull(responseContentType2);
+		assertTrue(responseContentType2.trim().startsWith("application/atom+xml"));
+
+		Document d2 = AtomTestUtils.getResponseBodyAsDocument(method2);
+		Element title2 = (Element) d2.getElementsByTagNameNS("http://www.w3.org/2005/Atom", "title").item(0);
+		assertEquals("Test Member - Updated Again", title2.getTextContent());
+		
 	}
 	
 	
