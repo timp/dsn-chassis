@@ -26,6 +26,12 @@ public class ViewStudyWidget
 	private ViewStudyWidgetController controller;
 	private StudySummaryWidget studySummaryWidget;
 
+	private ViewStudyMetadataWidget viewStudyMetadataWidget;
+
+	private ListSubmissionsWidget listSubmissionsWidget;
+
+	private ListCurationsWidget listCurationsWidget;
+
 	@Override
 	protected ViewStudyWidgetModel createModel() {
 		return new ViewStudyWidgetModel();
