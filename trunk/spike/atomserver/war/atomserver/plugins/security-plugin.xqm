@@ -45,6 +45,14 @@ declare function sp:before(
 			let $status-code := $CONSTANT:STATUS-CLIENT-ERROR-FORBIDDEN
 		    let $response-data := "The server understood the request, but is refusing to fulfill it. Authorization will not help and the request SHOULD NOT be repeated."
 			let $response-content-type := "text/plain"
+			
+			(: 
+			 : N.B. if request-data is empty, we need a placeholder, otherwise 
+			 : return sequence will be contracted 
+			 :)
+			let $request-data := 
+				if ( empty( $request-data ) ) then "placeholder" else $request-data
+				
 			return ( $request-data , $status-code , $response-data , $response-content-type )
 			
 		else
