@@ -147,6 +147,15 @@ public class ViewStudyWidgetController {
 	private StudySummaryWidget studySummaryWidget;
 
  
+	private ViewStudyMetadataWidget viewStudyMetadataWidget;
+
+ 
+	private ListSubmissionsWidget listSubmissionsWidget;
+
+ 
+	private ListCurationsWidget listCurationsWidget;
+
+ 
 	
 	
 	public ViewStudyWidgetController(ViewStudyWidget owner, ViewStudyWidgetModel model) {
