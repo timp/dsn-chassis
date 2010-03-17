@@ -20,7 +20,7 @@ Milestone: Chassis/WWARN submission system public release (mid April)
 
 Milestone: Chassis/WWARN minimal submitted data access system (including anonymisation support?) - enables curators to get access to submissions
 
----- begin ad hoc updates to data in wwarn explorer preview version ----
+---- begin ad hoc work to update data in wwarn explorer preview version using submissions received -- this continues in parallel to work below developing wwarn explorer version 1 and curation process with audit trail, to give impression that wwarn is accepting data and doing something with it ----
 
 Milestone: Chassis/WWARN curation system prototype version
 
