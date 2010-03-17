@@ -189,8 +189,12 @@ declare function config:default-collection-acl(
                 <operation>update-member</operation>
             </allow>
             <allow>
-                <role>ROLE_READER</role>
-                <operation>list-collection</operation>
+                <role>ROLE_EDITOR</role>
+                <operation>retrieve-media</operation>
+            </allow>
+            <allow>
+                <role>ROLE_EDITOR</role>
+                <operation>update-media</operation>
             </allow>
             
             <!--
@@ -204,6 +208,10 @@ declare function config:default-collection-acl(
             <allow>
                 <role>ROLE_READER</role>
                 <operation>retrieve-member</operation>
+            </allow>
+            <allow>
+                <role>ROLE_READER</role>
+                <operation>retrieve-media</operation>
             </allow>
             
             <!--
@@ -249,6 +257,10 @@ declare function config:default-resource-acl(
             <allow>
                 <user>{$user}</user>
                 <operation>delete-member</operation>
+            </allow>
+            <allow>
+                <user>{$user}</user>
+                <operation>retrieve-media</operation>
             </allow>
             <allow>
                 <user>{$user}</user>

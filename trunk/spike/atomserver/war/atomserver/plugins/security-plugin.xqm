@@ -204,8 +204,9 @@ declare function sp:filter-feed-by-acls(
                 $feed/attribute::* ,
                 $feed/*[ ( local-name(.) != $CONSTANT:ATOM-ENTRY ) and ( namespace-uri(.) != $CONSTANT:ATOM-NSURI ) ] ,
                 for $entry in $feed/atom:entry
-                let $request-path-info := substring-after( $entry/atom:link[@rel="edit"]/@href , $config:service-url )
-                let $forbidden := sp:is-operation-forbidden( $request-path-info , $CONSTANT:OP-RETRIEVE-MEMBER , () )
+                let $entry-path-info := substring-after( $entry/atom:link[@rel="edit"]/@href , $config:service-url )
+                let $log := util:log( "debug" , concat( "checking permission to retrieve member for entry-path-info: " , $entry-path-info ) )
+                let $forbidden := sp:is-operation-forbidden( $CONSTANT:OP-RETRIEVE-MEMBER , $entry-path-info , () )
                 return 
                     if ( not( $forbidden ) ) then $entry else ()
             }

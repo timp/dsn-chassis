@@ -711,36 +711,66 @@ declare function ap:do-put-media(
 		
 		else
 		
+			(: here we bottom out at the "update-media" operation :)
+			
 			let $request-data := request:get-data()
 			
-			let $media-doc-db-path := atomdb:update-media-resource( $request-path-info , $request-data , $request-content-type )
+			return ap:apply-op( $CONSTANT:OP-UPDATE-MEDIA , $ap:op-update-media , $request-path-info , $request-data , $request-content-type )
 			
-		    let $status-code := response:set-status-code( $CONSTANT:STATUS-SUCCESS-OK )
-		    
-		    (:
-		     : TODO review whether we really want to echo the file back to client
-		     : or rather return media-link entry, or rather return nothing.
-		     :)
-		     
-		    (: media type :)
-		    
-		    let $mime-type := atomdb:get-mime-type( $request-path-info )
-		    
-		    (: title as filename :)
-		    
-		    let $media-link := atomdb:get-media-link( $request-path-info )
-		    let $title := $media-link/atom:title
-		    let $content-disposition :=
-		    	if ( $title ) then response:set-header( $CONSTANT:HEADER-CONTENT-DISPOSITION , concat( "attachment; filename=" , $title ) )
-		    	else ()
-		    
-		    (: decoding from base 64 binary :)
-		    
-		    let $response-stream := response:stream-binary( atomdb:retrieve-media( $request-path-info ) , $mime-type )
-		
-			return ()
+};
+
+
+
+
+declare function ap:op-update-media(
+	$request-path-info as xs:string ,
+	$request-data as item()? ,
+	$request-content-type as xs:string?
+) as item()*
+{
+	
+	let $media-doc-db-path := atomdb:update-media-resource( $request-path-info , $request-data , $request-content-type )
+	
+    let $status-code := response:set-status-code( $CONSTANT:STATUS-SUCCESS-OK )
+    
+    (:
+     : TODO review whether we really want to echo the file back to client
+     : or rather return media-link entry (with content-location header), or 
+     : rather return nothing.
+     :)
+     
+    (: media type :)
+    
+    let $mime-type := atomdb:get-mime-type( $request-path-info )
+    
+    (: title as filename :)
+    
+    let $media-link := atomdb:get-media-link( $request-path-info )
+    let $title := $media-link/atom:title
+    let $content-disposition :=
+    	if ( $title ) then response:set-header( $CONSTANT:HEADER-CONTENT-DISPOSITION , concat( "attachment; filename=" , $title ) )
+    	else ()
+    
+    (: decoding from base 64 binary :)
+    
+    let $response-stream := response:stream-binary( atomdb:retrieve-media( $request-path-info ) , $mime-type )
+
+	(: don't return status code, because already set :)
+	(: don't return response data, because streaming binary :)
+	
+	return ( () , () , () )
 
 };
+ 
+
+
+
+declare variable $ap:op-update-media as function :=
+	util:function( QName( "http://www.cggh.org/2010/xquery/atom-protocol" , "ap:op-update-media" ) , 3 )
+;
+
+
+
 
 
 
@@ -903,6 +933,7 @@ declare function ap:op-list-collection(
 	return ( $CONSTANT:STATUS-SUCCESS-OK , $feed , $CONSTANT:MEDIA-TYPE-ATOM )
 
 };
+
 
 
 

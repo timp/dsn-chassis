@@ -13,4 +13,4 @@ let $status-set := response:set-status-code( 200 )
 
 let $response-content-type-set := response:set-header( "Content-Type" , "text/plain" )
 
-return "OK"
+return "OK" 
