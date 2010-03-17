@@ -3,7 +3,6 @@ xquery version "1.0";
 module namespace atomdb = "http://www.cggh.org/2010/atombeat/xquery/atomdb";
 
 declare namespace atom = "http://www.w3.org/2005/Atom" ;
-declare namespace ar = "http://purl.org/atompub/revision/1.0" ;
 
 import module namespace text = "http://exist-db.org/xquery/text" ;
 import module namespace xmldb = "http://exist-db.org/xquery/xmldb" ;
@@ -341,8 +340,7 @@ declare function atomdb:mutable-entry-children(
         not( $namespace-uri = $CONSTANT:ATOM-NSURI and $local-name = $CONSTANT:ATOM-PUBLISHED ) and
         not( $namespace-uri = $CONSTANT:ATOM-NSURI and $local-name = $CONSTANT:ATOM-LINK and $child/@rel = "self" ) and
         not( $namespace-uri = $CONSTANT:ATOM-NSURI and $local-name = $CONSTANT:ATOM-LINK and $child/@rel = "edit" ) and
-        not( $namespace-uri = $CONSTANT:ATOM-NSURI and $local-name = $CONSTANT:ATOM-LINK and $child/@rel = "edit-media" ) and
-        not( $namespace-uri = $CONSTANT:ATOM-NSURI and $local-name = $CONSTANT:ATOM-LINK and $child/@rel = "history" )
+        not( $namespace-uri = $CONSTANT:ATOM-NSURI and $local-name = $CONSTANT:ATOM-LINK and $child/@rel = "edit-media" )
     return $child
 };
 
@@ -449,20 +447,10 @@ declare function atomdb:create-media-link-entry(
     $uuid as xs:string ,
     $media-type as xs:string ,
     $media-link-title as xs:string? ,
-    $media-link-summary as xs:string? ,
-    $comment as xs:string?
+    $media-link-summary as xs:string? 
 ) as element(atom:entry)
 {
 
-	(:
-	 : TODO hide history link for entries in collections where history is not
-	 : enabled.
-	 :)
- 	 
-	(: 
-	 : TODO add edit-acl and edit-media-acl links.
-	 :)
-	 
     let $id := concat( $config:service-url , $request-path-info , "/" , $uuid , ".atom" )
     let $log := util:log( "debug", $id )
     
@@ -472,8 +460,6 @@ declare function atomdb:create-media-link-entry(
     let $edit-uri := $id
     let $media-uri := concat( $config:service-url , $request-path-info , "/" , $uuid , ".media" )
     
-    let $history-uri := concat( $config:history-service-url , $request-path-info , "/" , $uuid , ".atom" )
-
     let $title :=
     	if ( $media-link-title ) then $media-link-title
     	else concat( "download-" , $uuid , ".media" )
@@ -481,25 +467,7 @@ declare function atomdb:create-media-link-entry(
     let $summary :=
     	if ( $media-link-summary ) then $media-link-summary
     	else concat( "media resource (" , $media-type , ")" )
-    	
-        let $comment := if ( empty( $comment ) or $comment = "" ) then "initial revision" else $comment
-    
-    let $user-name := request:get-attribute( $config:user-name-request-attribute-key )
-    
-    let $revision-comment := 
-        <ar:comment>
-            <atom:author>
-                {
-                    if ( $config:user-name-is-email ) then
-                    <atom:email>{$user-name}</atom:email>
-                    else
-                    <atom:name>{$user-name}</atom:name>                    
-                }
-            </atom:author>
-            <atom:updated>{$published}</atom:updated>
-            <atom:summary>{$comment}</atom:summary>
-        </ar:comment>
-    
+    	    
 	return
 	
         <atom:entry>
@@ -509,11 +477,9 @@ declare function atomdb:create-media-link-entry(
             <atom:link rel="self" type="application/atom+xml" href="{$self-uri}"/>
             <atom:link rel="edit" type="application/atom+xml" href="{$edit-uri}"/>
             <atom:link rel="edit-media" type="{$media-type}" href="{$media-uri}"/>
-            <atom:link rel="history" type="application/atom+xml" href="{$history-uri}"/>
             <atom:content src="{$media-uri}" type="{$media-type}"/>
             <atom:title type="text">{$title}</atom:title>
             <atom:summary type="text">{$summary}</atom:summary>
-            { $revision-comment }
         </atom:entry>  
      
 };
@@ -544,7 +510,6 @@ declare function atomdb:update-entry(
                 $entry/atom:link[@rel="self"] ,
                 $entry/atom:link[@rel="edit"] ,
                 $entry/atom:link[@rel="edit-media"] ,
-                $entry/atom:link[@rel="history"] ,
                 atomdb:mutable-entry-children($request-data)
             }
         </atom:entry>  
@@ -557,8 +522,7 @@ declare function atomdb:create-media-resource(
 	$request-data as xs:base64Binary , 
 	$media-type as xs:string ,
 	$media-link-title as xs:string? ,
-	$media-link-summary as xs:string? ,
-	$comment as xs:string?
+	$media-link-summary as xs:string? 
 ) as xs:string
 {
 
@@ -570,7 +534,7 @@ declare function atomdb:create-media-resource(
 
 	let $media-resource-db-path := xmldb:store( $collection-db-path , $media-resource-name , $request-data , $media-type )
 	
-    let $media-link-entry := atomdb:create-media-link-entry( $request-path-info, $uuid , $media-type , $media-link-title , $media-link-summary , $comment )
+    let $media-link-entry := atomdb:create-media-link-entry( $request-path-info, $uuid , $media-type , $media-link-title , $media-link-summary )
     
     let $media-link-entry-doc-db-path := xmldb:store( $collection-db-path , concat( $uuid , ".atom" ) , $media-link-entry )    
     
@@ -621,10 +585,6 @@ declare function atomdb:retrieve-feed(
 	
 	else
 	
-	    (: 
-	     : TODO filter entries using ACLs
-	     :)
-	     
 		(:
 		 : Map the request path info, e.g., "/foo", to a database collection path,
 		 : e.g., "/db/foo".

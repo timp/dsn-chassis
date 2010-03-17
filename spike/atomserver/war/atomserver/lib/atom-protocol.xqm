@@ -12,8 +12,7 @@ import module namespace util = "http://exist-db.org/xquery/util" ;
 import module namespace CONSTANT = "http://www.cggh.org/2010/atombeat/xquery/constants" at "constants.xqm" ;
 import module namespace mime = "http://www.cggh.org/2010/atombeat/xquery/mime" at "mime.xqm" ;
 import module namespace atomdb = "http://www.cggh.org/2010/atombeat/xquery/atomdb" at "atomdb.xqm" ;
-import module namespace atomsec = "http://www.cggh.org/2010/xquery/atom-security" at "atom-security.xqm" ;
-
+ 
 import module namespace config = "http://www.cggh.org/2010/atombeat/xquery/config" at "../config/shared.xqm" ;
 import module namespace plugin = "http://www.cggh.org/2010/atombeat/xquery/plugin" at "../config/plugins.xqm" ;
 
@@ -121,37 +120,26 @@ declare function ap:do-post-atom-feed(
 {
 
     (: 
-     : Here we bottom out at the "create-collection" operation, so we need to
-     : apply a security decision.
+     : Here we bottom out at the "create-collection" operation.
      :)
      
-    let $forbidden := ap:is-operation-forbidden( $request-path-info, $CONSTANT:OP-CREATE-COLLECTION )
-        
-    return
-    
-        if ( $forbidden ) 
+	(: 
+	 : We need to know whether an atom collection already exists at the 
+	 : request path, in which case the request will be treated as an error,
+	 : or whether no atom collection exists at the request path, in which case
+	 : the request will create a new atom collection and initialise the atom
+	 : feed document with the given feed metadata.
+	 :)
+	 
+	let $create := not( atomdb:collection-available( $request-path-info ) )
+	
+	return 
+	
+		if ( $create ) 
 
-        then ap:do-forbidden( $request-path-info )
-
-        else
-    
-        	(: 
-        	 : We need to know whether an atom collection already exists at the 
-        	 : request path, in which case the request will be treated as an error,
-        	 : or whether no atom collection exists at the request path, in which case
-        	 : the request will create a new atom collection and initialise the atom
-        	 : feed document with the given feed metadata.
-        	 :)
-        	 
-        	let $create := not( atomdb:collection-available( $request-path-info ) )
-        	
-        	return 
-        	
-        		if ( $create ) 
-        
-        		then ap:apply-op( $CONSTANT:OP-CREATE-COLLECTION , $ap:op-create-collection , $request-path-info , $request-data )
-        		
-        		else ap:do-bad-request( $request-path-info , "A collection already exists at the given location." )
+		then ap:apply-op( $CONSTANT:OP-CREATE-COLLECTION , $ap:op-create-collection , $request-path-info , $request-data )
+		
+		else ap:do-bad-request( $request-path-info , "A collection already exists at the given location." )
         	
 };
 
@@ -169,10 +157,6 @@ declare function ap:op-create-collection(
 {
 
 	let $feed-doc-db-path := atomdb:create-collection( $request-path-info , $request-data )
-
-	(: if security is enabled, install default collection ACL :)
-	
-	let $collection-acl-installed := ap:install-collection-acl( $request-path-info )
 
 	let $feed-doc := doc( $feed-doc-db-path )
             
@@ -221,19 +205,10 @@ declare function ap:do-post-atom-entry(
 		else
 		
             (: 
-             : Here we bottom out at the "create-member" operation, so we need to
-             : apply a security decision. 
+             : Here we bottom out at the "create-member" operation.
              :)
              
-            let $forbidden := ap:is-operation-forbidden( $request-path-info, $CONSTANT:OP-CREATE-MEMBER )
-                
-            return
-            
-                if ( $forbidden ) 
-        
-                then ap:do-forbidden( $request-path-info )
-        
-                else ap:apply-op( $CONSTANT:OP-CREATE-MEMBER , $ap:op-create-member , $request-path-info , $request-data )
+            ap:apply-op( $CONSTANT:OP-CREATE-MEMBER , $ap:op-create-member , $request-path-info , $request-data )
         
 };
 
@@ -257,16 +232,13 @@ declare function ap:op-create-member(
 	
 	let $entry-doc-db-path := atomdb:create-member( $request-path-info , $request-data )
 
-	(: if security is enabled, install default resource ACL :)
-	let $resource-acl-installed := ap:install-resource-acl( $request-path-info , $entry-doc-db-path )
-	
 	let $entry-doc := doc( $entry-doc-db-path )
             
     let $location := $entry-doc/atom:entry/atom:link[@rel="self"]/@href
         	
 	let $header-location := response:set-header( $CONSTANT:HEADER-LOCATION, $location )
 	
-	return ( $CONSTANT:STATUS-SUCCESS-CREATED , $entry-doc , $CONSTANT:MEDIA-TYPE-ATOM )
+	return ( $CONSTANT:STATUS-SUCCESS-CREATED , $entry-doc/atom:entry , $CONSTANT:MEDIA-TYPE-ATOM )
 		
 };
 
@@ -309,21 +281,12 @@ declare function ap:do-post-media(
 		else
 		
             (: 
-             : Here we bottom out at the "create-media" operation, so we need to
-             : apply a security decision. 
+             : Here we bottom out at the "create-media" operation.
              :)
              
         	let $media-type := text:groups( $request-content-type , "^([^;]+)" )[2]
 	
-            let $forbidden := ap:is-operation-forbidden( $request-path-info , $CONSTANT:OP-CREATE-MEDIA , $media-type )
-                
-            return
-            
-                if ( $forbidden ) 
-        
-                then ap:do-forbidden( $request-path-info )
-        
-                else ap:apply-op( $CONSTANT:OP-CREATE-MEDIA , $ap:op-create-media , $request-path-info , request:get-data() , $media-type )
+            return ap:apply-op( $CONSTANT:OP-CREATE-MEDIA , $ap:op-create-media , $request-path-info , request:get-data() , $media-type )
                         			
 };
 
@@ -348,9 +311,7 @@ declare function ap:op-create-media(
 	
 	let $summary := request:get-header( "X-Atom-Summary" )
 	
-    let $comment := request:get-header("X-Atom-Revision-Comment")
-    
-	let $media-link-doc-db-path := atomdb:create-media-resource( $request-path-info , $request-data , $request-media-type , $slug , $summary , $comment )
+	let $media-link-doc-db-path := atomdb:create-media-resource( $request-path-info , $request-data , $request-media-type , $slug , $summary )
 	
 	let $media-link-doc := doc( $media-link-doc-db-path )
             
@@ -415,19 +376,10 @@ declare function ap:do-post-multipart(
 			let $request-data := request:get-uploaded-file-data( "media" )
 			
             (: 
-             : Here we bottom out at the "create-media" operation, so we need to
-             : apply a security decision. 
+             : Here we bottom out at the "create-media" operation.
              :)
              
-            let $forbidden := ap:is-operation-forbidden( $request-path-info , $CONSTANT:OP-CREATE-MEDIA , $media-type )
-                
-            return
-            
-                if ( $forbidden ) 
-        
-                then ap:do-forbidden( $request-path-info )
-        
-                else ap:apply-op( $CONSTANT:OP-CREATE-MEDIA , $ap:op-create-media-from-multipart-form-data , $request-path-info , $request-data , $media-type )
+            return ap:apply-op( $CONSTANT:OP-CREATE-MEDIA , $ap:op-create-media-from-multipart-form-data , $request-path-info , $request-data , $media-type )
 
 };
 
@@ -455,9 +407,7 @@ declare function ap:op-create-media-from-multipart-form-data (
 	
 	let $summary := request:get-parameter( "summary" , "" )
 
-    let $comment := request:get-header("X-Atom-Revision-Comment")
-    
-	let $media-link-doc-db-path := atomdb:create-media-resource( $request-path-info , $request-data , $request-media-type , $file-name , $summary , $comment )
+	let $media-link-doc-db-path := atomdb:create-media-resource( $request-path-info , $request-data , $request-media-type , $file-name , $summary )
 	
 	let $media-link-doc := doc( $media-link-doc-db-path )
             
@@ -534,12 +484,6 @@ declare function ap:do-put (
 		
 		then ap:do-put-atom( $request-path-info )
 
-		(:		
-		else if ( starts-with( $request-content-type, $CONSTANT:MEDIA-TYPE-MULTIPART-FORM-DATA ) )
-		
-		then ap:do-put-multipart( $request-path-info )
-		:)
-		
 		else ap:do-put-media( $request-path-info , $request-content-type )
 
 };
@@ -617,21 +561,10 @@ declare function ap:do-put-atom-feed-to-create-collection(
 {
 
     (: 
-     : Here we bottom out at the "create-collection" operation, so we need to 
-     : apply a security decision.
+     : Here we bottom out at the "create-collection" operation.
      :)
      
-    let $operation := $CONSTANT:OP-CREATE-COLLECTION
-        
-    let $forbidden := ap:is-operation-forbidden( $request-path-info , $operation )
-        
-    return
-    
-        if ( $forbidden ) 
-
-        then ap:do-forbidden( $request-path-info )
-
-        else ap:apply-op( $CONSTANT:OP-CREATE-COLLECTION , $ap:op-create-collection , $request-path-info , $request-data )
+    ap:apply-op( $CONSTANT:OP-CREATE-COLLECTION , $ap:op-create-collection , $request-path-info , $request-data )
         		
 };
 
@@ -652,17 +585,7 @@ declare function ap:do-put-atom-feed-to-update-collection(
      : apply a security decision.
      :)
      
-    let $operation := $CONSTANT:OP-UPDATE-COLLECTION
-        
-    let $forbidden := ap:is-operation-forbidden( $request-path-info , $operation )
-        
-    return
-    
-        if ( $forbidden ) 
-
-        then ap:do-forbidden( $request-path-info )
-
-        else ap:apply-op( $CONSTANT:OP-UPDATE-COLLECTION , $ap:op-update-collection , $request-path-info , $request-data )
+    ap:apply-op( $CONSTANT:OP-UPDATE-COLLECTION , $ap:op-update-collection , $request-path-info , $request-data )
 
 };
 
@@ -723,19 +646,10 @@ declare function ap:do-put-atom-entry(
 		else
 		
 		    (: 
-		     : Here we bottom out at the "update-member" operation, so we need
-		     : to apply a security decision.
+		     : Here we bottom out at the "update-member" operation.
 		     :)
             
-            let $forbidden := ap:is-operation-forbidden( $request-path-info , $CONSTANT:OP-UPDATE-MEMBER )
-                
-            return
-            
-                if ( $forbidden ) 
-        
-                then ap:do-forbidden( $request-path-info )
-        
-                else ap:apply-op( $CONSTANT:OP-UPDATE-MEMBER , $ap:op-update-member , $request-path-info , $request-data ) 
+            ap:apply-op( $CONSTANT:OP-UPDATE-MEMBER , $ap:op-update-member , $request-path-info , $request-data ) 
         
 };
 
@@ -773,8 +687,6 @@ declare variable $ap:op-update-member as function :=
 
 
 
-
-
 (: 
  : TODO doc me
  :)
@@ -799,8 +711,6 @@ declare function ap:do-put-media(
 		
 		else
 		
-		    (: TODO security decision :)
-		    
 			let $request-data := request:get-data()
 			
 			let $media-doc-db-path := atomdb:update-media-resource( $request-path-info , $request-data , $request-content-type )
@@ -871,19 +781,10 @@ declare function ap:do-get-entry(
 {
     
     (: 
-     : Here we bottom out at the "retrieve-member" operation, so we need
-     : to apply a security decision.
+     : Here we bottom out at the "retrieve-member" operation.
      :)
 
-    let $forbidden := ap:is-operation-forbidden( $request-path-info , $CONSTANT:OP-RETRIEVE-MEMBER )
-        
-    return
-    
-        if ( $forbidden ) 
-
-        then ap:do-forbidden( $request-path-info )
-
-        else ap:apply-op( $CONSTANT:OP-RETRIEVE-MEMBER , $ap:op-retrieve-member , $request-path-info , () )
+    ap:apply-op( $CONSTANT:OP-RETRIEVE-MEMBER , $ap:op-retrieve-member , $request-path-info , () )
 
 };
 
@@ -902,7 +803,7 @@ declare function ap:op-retrieve-member(
 
 	let $entry-doc := atomdb:retrieve-entry( $request-path-info )
 
-	return ( $CONSTANT:STATUS-SUCCESS-OK , $entry-doc , $CONSTANT:MEDIA-TYPE-ATOM )
+	return ( $CONSTANT:STATUS-SUCCESS-OK , $entry-doc/atom:entry , $CONSTANT:MEDIA-TYPE-ATOM )
 
 };
 
@@ -937,8 +838,6 @@ declare function ap:op-retrieve-media(
 	$request-media-type as xs:string?
 ) as item()*
 {
-
-    (: TODO security decision :)
 
 	(: set status here, because we have to stream binary :)
 	
@@ -982,19 +881,10 @@ declare function ap:do-get-feed(
 {
 
     (: 
-     : Here we bottom out at the "list-collection" operation, so we need
-     : to apply a security decision.
+     : Here we bottom out at the "list-collection" operation.
      :)
 
-    let $forbidden := ap:is-operation-forbidden( $request-path-info , $CONSTANT:OP-LIST-COLLECTION )
-        
-    return
-    
-        if ( $forbidden ) 
-
-        then ap:do-forbidden( $request-path-info )
-
-        else ap:apply-op( $CONSTANT:OP-LIST-COLLECTION , $ap:op-list-collection , $request-path-info , () )
+    ap:apply-op( $CONSTANT:OP-LIST-COLLECTION , $ap:op-list-collection , $request-path-info , () )
     
 };
 
@@ -1010,8 +900,6 @@ declare function ap:op-list-collection(
 
     let $feed := atomdb:retrieve-feed( $request-path-info ) 
     
-    let $feed := ap:filter-feed-by-acls( $feed )
-    
 	return ( $CONSTANT:STATUS-SUCCESS-OK , $feed , $CONSTANT:MEDIA-TYPE-ATOM )
 
 };
@@ -1024,28 +912,6 @@ declare variable $ap:op-list-collection as function :=
 ;
 
 
-
-
-
-declare function ap:filter-feed-by-acls(
-    $feed as element(atom:feed)
-) as element(atom:feed)
-{
-    if ( not( $config:enable-security ) )
-    then $feed
-    else
-        <atom:feed>
-            {
-                $feed/attribute::* ,
-                $feed/*[ ( local-name(.) != $CONSTANT:ATOM-ENTRY ) and ( namespace-uri(.) != $CONSTANT:ATOM-NSURI ) ] ,
-                for $entry in $feed/atom:entry
-                let $request-path-info := substring-after( $entry/atom:link[@rel="edit"]/@href , $config:service-url )
-                let $forbidden := ap:is-operation-forbidden( $request-path-info , $CONSTANT:OP-RETRIEVE-MEMBER )
-                return 
-                    if ( not( $forbidden ) ) then $entry else ()
-            }
-        </atom:feed>
-};
 
 
 
@@ -1108,74 +974,6 @@ declare function ap:do-forbidden(
 
 };
 
-
-
-declare function ap:is-operation-forbidden(
-    $request-path-info as xs:string ,
-    $operation as xs:string
-) as xs:boolean
-{
-
-    let $user := request:get-attribute( $config:user-name-request-attribute-key )
-    let $roles := request:get-attribute( $config:user-roles-request-attribute-key )
-    
-    let $forbidden := 
-        if ( not( $config:enable-security ) ) then false()
-        else ( atomsec:decide( $user , $roles , $request-path-info, $operation ) = $atomsec:decision-deny )
-        
-    return $forbidden 
-    
-};
-
-
-
-declare function ap:is-operation-forbidden(
-    $request-path-info as xs:string ,
-    $operation as xs:string ,
-    $media-type as xs:string
-) as xs:boolean
-{
-
-    let $user := request:get-attribute( $config:user-name-request-attribute-key )
-    let $roles := request:get-attribute( $config:user-roles-request-attribute-key )
-    
-    let $forbidden := 
-        if ( not( $config:enable-security ) ) then false()
-        else ( atomsec:decide( $user , $roles , $request-path-info, $operation , $media-type ) = $atomsec:decision-deny )
-        
-    return $forbidden 
-    
-};
-
-
-
-declare function ap:install-resource-acl(
-    $request-path-info as xs:string,
-    $entry-doc-db-path as xs:string
-) as xs:string?
-{
-    if ( $config:enable-security )
-    then 
-        let $user := request:get-attribute( $config:user-name-request-attribute-key )
-        let $acl := config:default-resource-acl( $request-path-info , $user )
-        let $entry-path-info := atomdb:db-path-to-request-path-info( $entry-doc-db-path )
-        let $acl-db-path := atomsec:store-resource-acl( $entry-path-info , $acl )
-    	return $acl-db-path
-    else ()
-};
-
-
-
-
-declare function ap:install-collection-acl( $request-path-info as xs:string ) as xs:string?
-{
-    if ( $config:enable-security )
-    then 
-        let $user := request:get-attribute( $config:user-name-request-attribute-key )
-        let $acl := config:default-collection-acl( $request-path-info , $user )
-        return atomsec:store-collection-acl( $request-path-info , $acl )
-    else ()
-};
 
 
 
@@ -1428,6 +1226,7 @@ declare function ap:apply-after(
 			ap:apply-after( subsequence( $functions , 2 ) , $operation , $request-path-info , $response-data , $content-type )
 
 };
+
 
 
 
