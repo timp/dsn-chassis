@@ -421,6 +421,131 @@ public class TestAtomProtocolWithDefaultSecurity extends TestCase {
 	
 	
 	
+	public void testUserWithReaderRoleCanRetrieveMediaLinkEntry() {
+		
+		// setup test
+		PostMethod method = new PostMethod(testCollectionUri);
+		String media = "This is a test.";
+		setTextPlainRequestEntity(method, media);
+		executeMethod(method, "audrey", "test");
+		String entryUri = method.getResponseHeader("Location").getValue();
+		
+		// retrieve entry, expecting user "rebecca" to be in role ROLE_READER
+		GetMethod method2 = new GetMethod(entryUri);
+		int result = executeMethod(method2, "rebecca", "test");
+		
+		assertEquals(200, result);
+
+	}
+	
+	
+	
+	public void testUserWithoutReaderRoleCannotRetrieveMediaLinkEntry() {
+		
+		// setup test
+		PostMethod method = new PostMethod(testCollectionUri);
+		String media = "This is a test.";
+		setTextPlainRequestEntity(method, media);
+		executeMethod(method, "audrey", "test");
+		String entryUri = method.getResponseHeader("Location").getValue();
+		
+		// retrieve entry, expecting user "rebecca" to be in role ROLE_READER
+		GetMethod method2 = new GetMethod(entryUri);
+		int result = executeMethod(method2, "ursula", "test");
+		
+		assertEquals(403, result);
+
+	}
+	
+	
+	
+	public void testUserWithReaderRoleCanRetrieveMediaResource() {
+		
+		// setup test
+		PostMethod method = new PostMethod(testCollectionUri);
+		String media = "This is a test.";
+		setTextPlainRequestEntity(method, media);
+		executeMethod(method, "audrey", "test");
+		Document doc = AtomTestUtils.getResponseBodyAsDocument(method);
+		String mediaLocation = AtomTestUtils.getEditMediaLocation(doc);
+		
+		// retrieve media resource, expecting user "rebecca" to be in role ROLE_READER
+		GetMethod method2 = new GetMethod(mediaLocation);
+		int result = executeMethod(method2, "rebecca", "test");
+		
+		assertEquals(200, result);
+
+	}
+	
+	
+	
+	public void testUserWithoutReaderRoleCannotRetrieveMediaResource() {
+		
+		// setup test
+		PostMethod method = new PostMethod(testCollectionUri);
+		String media = "This is a test.";
+		setTextPlainRequestEntity(method, media);
+		executeMethod(method, "audrey", "test");
+		Document doc = AtomTestUtils.getResponseBodyAsDocument(method);
+		String mediaLocation = AtomTestUtils.getEditMediaLocation(doc);
+		
+		// retrieve media resource, expecting user "rebecca" to be in role ROLE_READER
+		GetMethod method2 = new GetMethod(mediaLocation);
+		int result = executeMethod(method2, "ursula", "test");
+		
+		assertEquals(403, result);
+
+	}
+	
+	
+	
+	public void testUserWithEditorRoleCanUpdateMediaResources() {
+		
+		// setup test
+		PostMethod method = new PostMethod(testCollectionUri);
+		String media = "This is a test.";
+		setTextPlainRequestEntity(method, media);
+		executeMethod(method, "audrey", "test");
+		Document doc = AtomTestUtils.getResponseBodyAsDocument(method);
+		String mediaLocation = AtomTestUtils.getEditMediaLocation(doc);
+
+		// try to update media resource
+		PutMethod method2 = new PutMethod(mediaLocation);
+		String media2 = "This is a test - updated.";
+		setTextPlainRequestEntity(method2, media2);
+		int result = executeMethod(method2, "edwina", "test");
+		
+		assertEquals(200, result);
+
+	}
+	
+	
+	
+	
+	public void testUserWithoutEditorRoleCannotUpdateMediaResources() {
+		
+		// setup test
+		PostMethod method = new PostMethod(testCollectionUri);
+		String media = "This is a test.";
+		setTextPlainRequestEntity(method, media);
+		executeMethod(method, "audrey", "test");
+		Document doc = AtomTestUtils.getResponseBodyAsDocument(method);
+		String mediaLocation = AtomTestUtils.getEditMediaLocation(doc);
+
+		// try to update media resource
+		PutMethod method2 = new PutMethod(mediaLocation);
+		String media2 = "This is a test - updated.";
+		setTextPlainRequestEntity(method2, media2);
+		int result = executeMethod(method2, "rebecca", "test");
+		
+		assertEquals(403, result);
+
+	}
+	
+	
+	
+	
+
 	public void testAuthorsCanRetrieveEntryTheyCreated() {
 		
 		String entryUri = createTestEntryAndReturnLocation(testCollectionUri, "audrey", "test");
@@ -496,7 +621,51 @@ public class TestAtomProtocolWithDefaultSecurity extends TestCase {
 
 
 	
-	// TODO test retrieving and updating media resources and media-link entries
+	public void testAuthorsCanRetrieveMediaResourceTheyCreated() {
+
+		// setup test
+		PostMethod method = new PostMethod(testCollectionUri);
+		String media = "This is a test.";
+		setTextPlainRequestEntity(method, media);
+		executeMethod(method, "audrey", "test");
+		Document doc = AtomTestUtils.getResponseBodyAsDocument(method);
+		String mediaLocation = AtomTestUtils.getEditMediaLocation(doc);
+
+		// try to retrieve media resource
+		GetMethod method2 = new GetMethod(mediaLocation);
+		int result = executeMethod(method2, "audrey", "test");
+		
+		assertEquals(200, result);
+
+	}
+
+	
+	
+	public void testAuthorsCannotRetrieveAnotherAuthorsMediaResource() {
+
+
+		// setup test
+		PostMethod method = new PostMethod(testCollectionUri);
+		String media = "This is a test.";
+		setTextPlainRequestEntity(method, media);
+		executeMethod(method, "audrey", "test");
+		Document doc = AtomTestUtils.getResponseBodyAsDocument(method);
+		String mediaLocation = AtomTestUtils.getEditMediaLocation(doc);
+
+		// try to retrieve media resource
+		GetMethod method2 = new GetMethod(mediaLocation);
+		int result = executeMethod(method2, "austin", "test");
+		
+		assertEquals(403, result);
+
+	}
+
+	
+	
+	// TODO test retrieving your own media resources
+	// TODO test updating your own media resources
+	
+	// TODO test updating media-link entries
 	
 	// TODO test creating media resources with multipart requests
 	
