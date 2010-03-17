@@ -2,27 +2,46 @@
 
 Milestone: WWARN explorer preview version (limited release, by invitation)
 
+  * Task: final comments and change requests from modules (deadline: midnight 25 March)
   * Task: check that for each study, place, year, number of patients, output in acceptable range
-  * Task: fix any problems found in task 1 
+  * Task: fix any problems found in task above
   * Task: check that outputs are scientifically correct and valid
   * Task: testing for bugs in user-interface
   * Task: performance & load testing
   * Task: modules make final decision on features
 
-Milestone: WWARN explorer preview version (public release)
+Milestone: WWARN explorer preview version (public release) (April 8/9)
 
 Milestone: Chassis/WWARN submission system limited release (by invitation) 
 
   * Task: final draft of study questionnaire
 
-Milestone: Chassis/WWARN submission system public release 
+Milestone: Chassis/WWARN submission system public release (mid April)
 
-Milestone: Chassis/WWARN curation system internal prototype
+Milestone: Chassis/WWARN minimal submitted data access system (including anonymisation support?) - enables curators to get access to submissions
 
-Milestone: completed trial submission/curation activity with mapper+chassis and sample of existing datasets
+Milestone: Chassis/WWARN curation system prototype version
 
-Milestone: Chassis/WWARN curation system production release 
+Milestone: agree WWARN standard file format prototype version
 
-Milestone: completed re-curation of all existing datasets
+  * Task: review and agree wwarn standard data dictionary component for prototype version of format
+
+Milestone: Patrice Mapper prototype version
+
+Milestone: completed trial submission/curation activity with chassis(+mapper?) and sample of existing datasets
+
+--- checkpoint: outcome of trial? ---
+
+Milestone: finalise WWARN standard file format version 1
+
+  * Task: get final agreement on data dictionary
+
+Milestone: Patrice Mapper version 1
+
+Milestone: Chassis/WWARN curation system version 1 (production release) 
+
+Milestone: completed re-submission, curation and analysis of all existing datasets
 
 Milestone: WWARN explorer version 1 (integrated with Chassis/WWARN, containing only curated data with audit trail)
+
+  * Task: agree outputs (graphs, statistics) to go into explorer version 1
