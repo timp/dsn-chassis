@@ -20,6 +20,8 @@ Milestone: Chassis/WWARN submission system public release (mid April)
 
 Milestone: Chassis/WWARN minimal submitted data access system (including anonymisation support?) - enables curators to get access to submissions
 
+---- begin ad hoc updates to data in wwarn explorer preview version ----
+
 Milestone: Chassis/WWARN curation system prototype version
 
 Milestone: agree WWARN standard file format prototype version
@@ -30,7 +32,7 @@ Milestone: Patrice Mapper prototype version
 
 Milestone: completed trial submission/curation activity with chassis(+mapper?) and sample of existing datasets
 
---- checkpoint: outcome of trial? ---
+---- checkpoint: outcome of trial? ----
 
 Milestone: finalise WWARN standard file format version 1
 
@@ -45,3 +47,5 @@ Milestone: completed re-submission, curation and analysis of all existing datase
 Milestone: WWARN explorer version 1 (integrated with Chassis/WWARN, containing only curated data with audit trail)
 
   * Task: agree outputs (graphs, statistics) to go into explorer version 1
+
+---- retire wwarn explorer prototype version, end ad hoc updates to wwarn explorer prototype version ----
