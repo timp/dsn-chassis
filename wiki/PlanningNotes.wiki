@@ -14,7 +14,7 @@ Milestone: WWARN explorer preview version (public release) (April 8/9)
 
 Milestone: Chassis/WWARN submission system limited release (by invitation) 
 
-  * Task: final draft of study questionnaire
+  * Task: final draft of study questionnaire (26 March)
 
 Milestone: Chassis/WWARN submission system public release (mid April)
 
@@ -22,29 +22,33 @@ Milestone: Chassis/WWARN minimal submitted data access system (including anonymi
 
 ---- begin ad hoc work to update data in wwarn explorer preview version using submissions received -- this continues in parallel to work below developing wwarn explorer version 1 and curation process with audit trail, to give impression that wwarn is accepting data and doing something with it ----
 
-Milestone: Chassis/WWARN curation system prototype version
+Milestone: Chassis/WWARN curation system prototype version (deadline: June 1)
 
-Milestone: agree WWARN standard file format prototype version
+Milestone: agree WWARN standard file format prototype version (deadline: March 31)
 
   * Task: review and agree wwarn standard data dictionary component for prototype version of format
 
-Milestone: Patrice Mapper prototype version
+Milestone: Patrice Mapper prototype version (done)
 
-Milestone: completed trial submission/curation activity with chassis(+mapper?) and sample of existing datasets
+  * Task: Patrice walk through with Lesley, Meera, Carole...
+
+Milestone: completed trial submission/curation activity with chassis(+mapper?) and sample of existing datasets (deadline: June 31)
 
 ---- checkpoint: outcome of trial curation activity? ----
 
-Milestone: finalise WWARN standard file format version 1
+(Deadlines for further work depend on outcome of trial curation activity.)
+
+Milestone: finalise WWARN standard file format version 1 (deadline: ASAP)
 
   * Task: get final agreement on data dictionary
 
-Milestone: Patrice Mapper version 1
+Milestone: Patrice Mapper version 1 (deadline: ASAP)
 
-Milestone: Chassis/WWARN curation system version 1 (production release) 
+Milestone: Chassis/WWARN curation system version 1 (production release) (deadline: ASAP)
 
-Milestone: completed re-submission, curation and analysis of all existing datasets
+Milestone: completed re-submission, curation and analysis of all existing datasets (deadline: ASAP)
 
-Milestone: WWARN explorer version 1 (integrated with Chassis/WWARN, containing only curated data with audit trail)
+Milestone: WWARN explorer version 1 (integrated with Chassis/WWARN, containing only curated data with audit trail) (deadline: ASAP)
 
   * Task: agree outputs (graphs, statistics) to go into explorer version 1
 
@@ -54,6 +58,6 @@ WWARN explorer version 1 is minimally sufficient if it has all the same features
 
 I.e., WWARN explorer version 1 is sufficient if it looks pretty much exactly the same as the preview version. All the work we are doing up to version 1 is behind the scenes, on the back-end systems, processes, and of course the data.
 
-Of course, if possible, we MAY add new outputs to the WWARN explorer version 1, but it's *not* a necessity.
+Of course, if possible, we MAY add new outputs to the WWARN explorer version 1 (and will try as hard as we can) but it's *not* a necessity.
 
 WWARN explorer version 1 must be deployed before the end of 2010.
