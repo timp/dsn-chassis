@@ -314,7 +314,7 @@ declare function hp:after-retrieve-member(
 ) as item()*
 {
 
-	let $response-data := hp:append-history-link( $response-data/atom:entry )
+	let $response-data := hp:append-history-link( $response-data )
 
 	return ( $response-data , $content-type )
 };
@@ -329,7 +329,7 @@ declare function hp:after-create-member(
 ) as item()*
 {
 
-	let $response-data := hp:append-history-link( $response-data/atom:entry )
+	let $response-data := hp:append-history-link( $response-data )
 
 	return ( $response-data , $content-type )
 };
