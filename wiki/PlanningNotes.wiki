@@ -1,41 +1,28 @@
 #summary planning notes
 
-Milestone 1a. WWARN explorer preview version (limited release, by invitation)
+Milestone: WWARN explorer preview version (limited release, by invitation)
 
-  * Task 1: check that for each study, place, year, number of patients, output in acceptable range
-  * Task 2: fix any problems found in task 1
-  * Task 3: check that outputs are scientifically correct and valid
-  * Task 4: testing for bugs in user-interface
-  * Task 5: performance & load testing
-  * Task 6: integration with wwarn website
+  * Task: check that for each study, place, year, number of patients, output in acceptable range
+  * Task: fix any problems found in task 1 
+  * Task: check that outputs are scientifically correct and valid
+  * Task: testing for bugs in user-interface
+  * Task: performance & load testing
+  * Task: modules make final decision on features
 
-Milestone 1b. WWARN explorer preview version (public release)
+Milestone: WWARN explorer preview version (public release)
 
-Milestone 1c. WWARN explorer preview version with data updates (parallel activity, periodic data updates to preview version)
+Milestone: Chassis/WWARN submission system limited release (by invitation) 
 
-Milestone 2a. Chassis/WWARN submission system limited release (by invitation) (deadline: mid-april?)
+  * Task: final draft of study questionnaire
 
-  * Task 1: final draft of study questionnaire
+Milestone: Chassis/WWARN submission system public release 
 
-Milestone 2b. Chassis/WWARN submission system public release
+Milestone: Chassis/WWARN curation system internal prototype
 
-Milestone 3. Chassis/WWARN curation system internal prototype
+Milestone: completed trial submission/curation activity with mapper+chassis and sample of existing datasets
 
-Milestone 3b. Agree WWARN curated data format for version 1
+Milestone: Chassis/WWARN curation system production release 
 
-Milestone 4. completed trial submission/curation activity with mapper+chassis and sample of existing datasets
+Milestone: completed re-curation of all existing datasets
 
----- 
-
-successful outcome of trial?
-
-Milestone 5. Chassis/WWARN + Patrice's mapper curation system production release
-
-Milestone 6. completed re-curation of all existing datasets
-
-Milestone 7. agree all outputs (visual and statistical analyses) for explorer version 1 and strategies for generating them (early deadline?)
-
-  * Task: each module defines plan of analysis, and generate some outputs using their own tools to validate the wwarn explorer's outputs
-  * Task: define and lock bare minimum mrequirements for wwarn explorer version 1
-
-Milestone 8. WWARN explorer version 1 (integrated with Chassis/WWARN, containing only curated data with audit trail)
+Milestone: WWARN explorer version 1 (integrated with Chassis/WWARN, containing only curated data with audit trail)
