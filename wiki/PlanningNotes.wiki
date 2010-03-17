@@ -49,3 +49,11 @@ Milestone: WWARN explorer version 1 (integrated with Chassis/WWARN, containing o
   * Task: agree outputs (graphs, statistics) to go into explorer version 1
 
 ---- retire wwarn explorer prototype version, end ad hoc updates to wwarn explorer prototype version ----
+
+WWARN explorer version 1 is minimally sufficient if it has all the same features (i.e., outputs) that are present in the preview release. 
+
+I.e., WWARN explorer version 1 is sufficient if it looks pretty much exactly the same as the preview version. All the work we are doing up to version 1 is behind the scenes, on the back-end systems, processes, and of course the data.
+
+Of course, if possible, we MAY add new outputs to the WWARN explorer version 1, but it's *not* a necessity.
+
+WWARN explorer version 1 must be deployed before the end of 2010.
