@@ -32,7 +32,7 @@ Milestone: Patrice Mapper prototype version
 
 Milestone: completed trial submission/curation activity with chassis(+mapper?) and sample of existing datasets
 
----- checkpoint: outcome of trial? ----
+---- checkpoint: outcome of trial curation activity? ----
 
 Milestone: finalise WWARN standard file format version 1
 
