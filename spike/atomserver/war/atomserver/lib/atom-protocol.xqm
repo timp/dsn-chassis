@@ -1107,33 +1107,42 @@ declare function ap:apply-op(
 ) as item()*
 {
 
-	(: EXPERIMENTAL: call plugin functions before main operation :)
+	let $log := util:log( "debug" , "EXPERIMENTAL: call plugin functions before main operation" )
 	
 	let $before-advice := ap:apply-before( $plugin:before , $op-name , $request-path-info , $request-data , $request-media-type )
-	
+	let $log := util:log( "debug" , count( $before-advice ) )
+	 
 	let $request-data := $before-advice[1]
+	let $log := util:log( "debug" , concat( "$request-data: " , $request-data ) )
+
 	let $status-code := $before-advice[2]
+	let $log := util:log( "debug" , concat( "$status-code: " , $status-code ) )
 	
 	return 
 	 
 		if ( exists( $status-code ) )
 		
-		then (: bail out - plugin has overridden default behaviour :)
+		then 
+		
+			let $log := util:log( "debug" , "bail out - plugin has overridden default behaviour" )
 		
 			let $response-data := $before-advice[3]
 			let $response-content-type := $before-advice[4]
-			return ap:send-response( $status-code , $response-data , $response-content-type )
+			let $log := util:log( "debug" , concat( "$status-code: " , $status-code ) )
+			let $log := util:log( "debug" , concat( "$response-data: " , $response-data ) )
+			let $log := util:log( "debug" , concat( "$response-content-type: " , $response-content-type ) )
+			return ap:send-response( $status-code , $response-data , $response-content-type ) 
+		  
+		else
 		
-		else (: carry on as normal :)
-		
+			let $log := util:log( "debug" , "carry on as normal - execute main operation" )
+
 			let $result := util:call( $op , $request-path-info , $request-data , $request-media-type )
 			let $response-status := $result[1]
 			let $response-data := $result[2]
 			let $response-content-type := $result[3]
 
-			(:
-			 : EXPERIMENTAL: call plugin functions after main operation 
-			 :)
+			let $log := util:log( "debug" , "EXPERIMENTAL: call plugin functions after main operation" ) 
 			 
 			let $after-advice := ap:apply-after( $plugin:after , $op-name , $request-path-info , $response-data , $response-content-type )
 			
