@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.InputStream;
 
 import org.apache.commons.httpclient.Header;
+import org.apache.commons.httpclient.methods.DeleteMethod;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.PutMethod;
@@ -577,8 +578,120 @@ public class TestAtomProtocol extends TestCase {
 		
 	}
 
+	
+	
+	public void testDeleteEntry() {
+		
+		// setup test
+		String collectionUri = createTestCollection(SERVER_URI, USER, PASS);
+
+		// now create a new member by POSTing and atom entry document to the
+		// collection URI
+		PostMethod method = new PostMethod(collectionUri);
+		String content = 
+			"<atom:entry xmlns:atom=\"http://www.w3.org/2005/Atom\">" +
+				"<atom:title>Test Member</atom:title>" +
+				"<atom:summary>This is a summary.</atom:summary>" +
+			"</atom:entry>";
+		setAtomRequestEntity(method, content);
+		int result = executeMethod(method, USER, PASS);
+		assertEquals(201, result);
+
+		String location = method.getResponseHeader("Location").getValue();
+		
+		// check we can GET the entry
+		GetMethod get1 = new GetMethod(location);
+		int get1Result = executeMethod(get1, USER, PASS);
+		assertEquals(get1Result, 200);
+		
+		// now try DELETE the entry
+		DeleteMethod delete = new DeleteMethod(location);
+		int deleteResult = executeMethod(delete, USER, PASS);
+		assertEquals(204, deleteResult);
+		
+		// now try to GET the entry
+		GetMethod get2 = new GetMethod(location);
+		int get2Result = executeMethod(get2, USER, PASS);
+		assertEquals(404, get2Result);
+
+	}
+	
+	
+	
+	public void testDeleteMediaResource() {
+		
+		// setup test
+		String collectionUri = createTestCollection(SERVER_URI, USER, PASS);
+		Document mediaLinkDoc = createTestMediaResourceAndReturnMediaLinkEntry(collectionUri, USER, PASS);
+		String mediaLocation = getEditMediaLocation(mediaLinkDoc);
+		String mediaLinkLocation = AtomTestUtils.getEditLocation(mediaLinkDoc);
+		
+		// now try to get media
+		GetMethod get1 = new GetMethod(mediaLocation);
+		int resultGet1 = executeMethod(get1, USER, PASS);
+		assertEquals(200, resultGet1);
+		
+		// now try to get media link
+		GetMethod get2 = new GetMethod(mediaLinkLocation);
+		int resultGet2 = executeMethod(get2, USER, PASS);
+		assertEquals(200, resultGet2);
+		
+		// now try delete on media location
+		DeleteMethod delete = new DeleteMethod(mediaLocation);
+		int result = executeMethod(delete, USER, PASS);
+		assertEquals(204, result);
+		
+		// now try to get media again
+		GetMethod get3 = new GetMethod(mediaLocation);
+		int resultGet3 = executeMethod(get3, USER, PASS);
+		assertEquals(404, resultGet3);
+		
+		// now try to get media link again
+		GetMethod get4 = new GetMethod(mediaLinkLocation);
+		int resultGet4 = executeMethod(get4, USER, PASS);
+		assertEquals(404, resultGet4);
+
+	}
 
 
+	
+	public void testDeleteMediaLinkEntry() {
+		
+		// setup test
+		String collectionUri = createTestCollection(SERVER_URI, USER, PASS);
+		Document mediaLinkDoc = createTestMediaResourceAndReturnMediaLinkEntry(collectionUri, USER, PASS);
+		String mediaLocation = getEditMediaLocation(mediaLinkDoc);
+		String mediaLinkLocation = AtomTestUtils.getEditLocation(mediaLinkDoc);
+		
+		// now try to get media
+		GetMethod get1 = new GetMethod(mediaLocation);
+		int resultGet1 = executeMethod(get1, USER, PASS);
+		assertEquals(200, resultGet1);
+		
+		// now try to get media link
+		GetMethod get2 = new GetMethod(mediaLinkLocation);
+		int resultGet2 = executeMethod(get2, USER, PASS);
+		assertEquals(200, resultGet2);
+		
+		// now try delete on media link location
+		DeleteMethod delete = new DeleteMethod(mediaLinkLocation);
+		int result = executeMethod(delete, USER, PASS);
+		assertEquals(204, result);
+		
+		// now try to get media again
+		GetMethod get3 = new GetMethod(mediaLocation);
+		int resultGet3 = executeMethod(get3, USER, PASS);
+		assertEquals(404, resultGet3);
+		
+		// now try to get media link again
+		GetMethod get4 = new GetMethod(mediaLinkLocation);
+		int resultGet4 = executeMethod(get4, USER, PASS);
+		assertEquals(404, resultGet4);
+
+	}
+
+
+	
 }
 
 
