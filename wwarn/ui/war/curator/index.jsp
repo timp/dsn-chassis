@@ -15,7 +15,7 @@ UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentic
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>WWARN - Curator Home // <jsp:expression>user.getUsername()</jsp:expression></title>
 <link rel="stylesheet" type="text/css" href="../style/common.css"/>
-<link rel="stylesheet" type="text/css" href="study-questionnaire.css"/>
+<link rel="stylesheet" type="text/css" href="../style/study-questionnaire.css"/>
 <script type="text/javascript" language="javascript">
 var config = {
 	"user.email" : "<jsp:expression>user.getUsername()</jsp:expression>",
