@@ -264,6 +264,10 @@ declare function config:default-resource-acl(
             </allow>
             <allow>
                 <user>{$user}</user>
+                <operation>update-media</operation>
+            </allow>
+            <allow>
+                <user>{$user}</user>
                 <operation>update-acl</operation>
             </allow>
             

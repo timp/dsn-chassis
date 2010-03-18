@@ -84,6 +84,10 @@ declare function sp:after(
 		
 		then sp:after-create-member( $request-path-info , $response-data , $response-content-type )
 
+		else if ( $operation = $CONSTANT:OP-CREATE-MEDIA )
+		
+		then sp:after-create-media( $request-path-info , $response-data , $response-content-type )
+
 		else if ( $operation = $CONSTANT:OP-CREATE-COLLECTION )
 		
 		then sp:after-create-collection( $request-path-info , $response-data , $response-content-type )
@@ -119,6 +123,46 @@ declare function sp:after-create-member(
 	
 	(: if security is enabled, install default resource ACL :)
 	let $resource-acl-installed := sp:install-resource-acl( $request-path-info , $entry-doc-db-path )
+	let $log := util:log( "debug" , concat( "$resource-acl-installed: " , $resource-acl-installed ) )
+
+	return ( $response-data , $response-content-type )
+
+};
+
+
+
+
+declare function sp:after-create-media(
+	$request-path-info as xs:string ,
+	$response-data as item()* ,
+	$response-content-type as xs:string?
+) as item()*
+{
+
+	let $entry-uri := $response-data/atom:link[@rel="edit"]/@href
+	let $log := util:log( "debug" , concat( "$entry-uri: " , $entry-uri ) )
+	
+	let $entry-path-info := substring-after( $entry-uri , $config:service-url )
+	let $log := util:log( "debug" , concat( "$entry-path-info: " , $entry-path-info ) )
+
+	let $entry-doc-db-path := atomdb:request-path-info-to-db-path( $entry-path-info )
+	let $log := util:log( "debug" , concat( "$entry-doc-db-path: " , $entry-doc-db-path ) )
+	
+	(: if security is enabled, install default resource ACL :)
+	let $resource-acl-installed := sp:install-resource-acl( $request-path-info , $entry-doc-db-path )
+	let $log := util:log( "debug" , concat( "$resource-acl-installed: " , $resource-acl-installed ) )
+
+	let $media-uri := $response-data/atom:link[@rel="edit-media"]/@href
+	let $log := util:log( "debug" , concat( "$media-uri: " , $media-uri ) )
+	
+	let $media-path-info := substring-after( $media-uri , $config:service-url )
+	let $log := util:log( "debug" , concat( "$media-path-info: " , $media-path-info ) )
+
+	let $media-resource-db-path := atomdb:request-path-info-to-db-path( $media-path-info )
+	let $log := util:log( "debug" , concat( "$media-resource-db-path: " , $media-resource-db-path ) )
+	
+	(: if security is enabled, install default resource ACL :)
+	let $resource-acl-installed := sp:install-resource-acl( $request-path-info , $media-resource-db-path )
 	let $log := util:log( "debug" , concat( "$resource-acl-installed: " , $resource-acl-installed ) )
 
 	return ( $response-data , $response-content-type )

@@ -1,10 +1,14 @@
 package org.cggh.chassis.spike.atomserver;
 
+import java.io.File;
 import java.io.InputStream;
 
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.PutMethod;
+import org.apache.commons.httpclient.methods.multipart.FilePart;
+import org.apache.commons.httpclient.methods.multipart.Part;
+import org.apache.commons.httpclient.methods.multipart.StringPart;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
@@ -149,6 +153,55 @@ public class TestAtomProtocolWithDefaultSecurity extends TestCase {
 		
 		// we expect the user "rebecca" to be defined in the example
 		// security config but NOT to be assigned the ROLE_ADMINISTRATOR role
+		
+		int result = executeMethod(method, "rebecca", "test");
+		
+		assertEquals(403, result);
+
+	}
+	
+	
+	
+	
+	public void testUserWithAdministratorRoleCanCreateCollectionsViaLegacyPost() {
+		
+		// we expect the default global ACL to allow only users with the
+		// ROLE_ADMINISTRATOR role to create collections
+		
+		String collectionUri = SERVER_URI + Double.toString(Math.random());
+
+		PostMethod method = new PostMethod(collectionUri);
+
+		String content = "<atom:feed xmlns:atom=\"http://www.w3.org/2005/Atom\"><atom:title>Test Collection</atom:title></atom:feed>";
+		setAtomRequestEntity(method, content);
+		
+		// we expect the user "adam" to be defined in the example
+		// security config to be assigned the ROLE_ADMINISTRATOR role
+		
+		int result = executeMethod(method, "adam", "test");
+		
+		assertEquals(201, result);
+
+	}
+	
+	
+	
+	
+
+	public void testUserWithoutAdministratorRoleCannotCreateCollectionsViaLegacyPost() {
+		
+		// we expect the default global ACL to allow only users with the
+		// ROLE_ADMINISTRATOR role to create collections
+		
+		String collectionUri = SERVER_URI + Double.toString(Math.random());
+
+		PostMethod method = new PostMethod(collectionUri);
+
+		String content = "<atom:feed xmlns:atom=\"http://www.w3.org/2005/Atom\"><atom:title>Test Collection</atom:title></atom:feed>";
+		setAtomRequestEntity(method, content);
+		
+		// we expect the user "rebecca" to be defined in the example
+		// security config *not* to be assigned the ROLE_ADMINISTRATOR role
 		
 		int result = executeMethod(method, "rebecca", "test");
 		
@@ -662,14 +715,178 @@ public class TestAtomProtocolWithDefaultSecurity extends TestCase {
 
 	
 	
-	// TODO test retrieving your own media resources
-	// TODO test updating your own media resources
+	public void testAuthorCanUpdateTheirOwnMediaResources() {
+		
+		// setup test
+		PostMethod method = new PostMethod(testCollectionUri);
+		String media = "This is a test.";
+		setTextPlainRequestEntity(method, media);
+		executeMethod(method, "audrey", "test");
+		Document doc = AtomTestUtils.getResponseBodyAsDocument(method);
+		String mediaLocation = AtomTestUtils.getEditMediaLocation(doc);
+
+		// try to update media resource
+		PutMethod method2 = new PutMethod(mediaLocation);
+		String media2 = "This is a test - updated.";
+		setTextPlainRequestEntity(method2, media2);
+		int result = executeMethod(method2, "audrey", "test");
+		
+		assertEquals(200, result);
+
+	}
 	
-	// TODO test updating media-link entries
 	
-	// TODO test creating media resources with multipart requests
 	
-	// TODO test creating collections with legacy POST requests
+	
+	public void testAuthorCannotUpdateAnotherAuthorsMediaResources() {
+		
+		// setup test
+		PostMethod method = new PostMethod(testCollectionUri);
+		String media = "This is a test.";
+		setTextPlainRequestEntity(method, media);
+		executeMethod(method, "audrey", "test");
+		Document doc = AtomTestUtils.getResponseBodyAsDocument(method);
+		String mediaLocation = AtomTestUtils.getEditMediaLocation(doc);
+
+		// try to update media resource
+		PutMethod method2 = new PutMethod(mediaLocation);
+		String media2 = "This is a test - updated.";
+		setTextPlainRequestEntity(method2, media2);
+		int result = executeMethod(method2, "austin", "test");
+		
+		assertEquals(403, result);
+
+	}
+	
+	
+	
+	
+	public void testAuthorCanUpdateTheirOwnMediaLinkEntries() {
+		
+		// setup test
+		PostMethod method = new PostMethod(testCollectionUri);
+		String media = "This is a test.";
+		setTextPlainRequestEntity(method, media);
+		executeMethod(method, "audrey", "test");
+		String location = method.getResponseHeader("Location").getValue();
+		
+		// try to update media link entry
+		PutMethod method2 = new PutMethod(location);
+		String content = "<atom:entry xmlns:atom=\"http://www.w3.org/2005/Atom\"><atom:title>Test Entry - Edited</atom:title><atom:summary>this is a test, edited</atom:summary></atom:entry>";
+		setAtomRequestEntity(method2, content);
+		int result = executeMethod(method2, "audrey", "test");
+
+		// we expect the default resource ACL to allow users to update media
+		// link entries they created
+		
+		assertEquals(200, result);
+
+	}
+	
+	
+	
+	
+	public void testAuthorCannotUpdateAnotherAuthorsMediaLinkEntries() {
+		
+		// setup test
+		PostMethod method = new PostMethod(testCollectionUri);
+		String media = "This is a test.";
+		setTextPlainRequestEntity(method, media);
+		executeMethod(method, "audrey", "test");
+		String location = method.getResponseHeader("Location").getValue();
+		
+		// try to update media link entry
+		PutMethod method2 = new PutMethod(location);
+		String content = "<atom:entry xmlns:atom=\"http://www.w3.org/2005/Atom\"><atom:title>Test Entry - Edited</atom:title><atom:summary>this is a test, edited</atom:summary></atom:entry>";
+		setAtomRequestEntity(method2, content);
+		int result = executeMethod(method2, "austin", "test");
+
+		assertEquals(403, result);
+
+	}
+	
+	
+	
+	
+	public void testUserWithEditorRoleCanUpdateMediaLinkEntries() {
+		
+		// setup test
+		PostMethod method = new PostMethod(testCollectionUri);
+		String media = "This is a test.";
+		setTextPlainRequestEntity(method, media);
+		executeMethod(method, "audrey", "test");
+		String location = method.getResponseHeader("Location").getValue();
+		
+		// try to update media link entry
+		PutMethod method2 = new PutMethod(location);
+		String content = "<atom:entry xmlns:atom=\"http://www.w3.org/2005/Atom\"><atom:title>Test Entry - Edited</atom:title><atom:summary>this is a test, edited</atom:summary></atom:entry>";
+		setAtomRequestEntity(method2, content);
+		int result = executeMethod(method2, "edwina", "test");
+
+		assertEquals(200, result);
+
+	}
+	
+	
+	
+	public void testUserWithoutEditorRoleCannotUpdateMediaLinkEntries() {
+		
+		// setup test
+		PostMethod method = new PostMethod(testCollectionUri);
+		String media = "This is a test.";
+		setTextPlainRequestEntity(method, media);
+		executeMethod(method, "audrey", "test");
+		String location = method.getResponseHeader("Location").getValue();
+		
+		// try to update media link entry
+		PutMethod method2 = new PutMethod(location);
+		String content = "<atom:entry xmlns:atom=\"http://www.w3.org/2005/Atom\"><atom:title>Test Entry - Edited</atom:title><atom:summary>this is a test, edited</atom:summary></atom:entry>";
+		setAtomRequestEntity(method2, content);
+		int result = executeMethod(method2, "rebecca", "test");
+
+		assertEquals(403, result);
+
+	}
+	
+
+	
+	public void testUserWithAuthorRoleCanCreateMediaWithMultipartRequest() {
+		
+		PostMethod method = createMultipartRequest(testCollectionUri);
+		int result = executeMethod(method, "audrey", "test");
+		assertEquals(200, result);
+		
+	}
+	
+	
+	
+	public void testUserWithoutAuthorRoleCannotCreateMediaWithMultipartRequest() {
+		
+		PostMethod method = createMultipartRequest(testCollectionUri);
+		int result = executeMethod(method, "rebecca", "test");
+		assertEquals(403, result);
+		
+	}
+	
+	
+	
+	
+	private PostMethod createMultipartRequest(String collectionUri) {
+		
+		PostMethod post = new PostMethod(collectionUri);
+		File file = new File(this.getClass().getClassLoader().getResource("spreadsheet1.xls").getFile());
+		FilePart fp = createFilePart(file, "spreadsheet1.xls", "application/vnd.ms-excel", "media");
+		StringPart sp = new StringPart("summary", "this is a great spreadsheet");
+		Part[] parts = { fp , sp };
+		setMultipartRequestEntity(post, parts);
+		return post;
+		
+	}
+
+
+
+	
+	// TODO test deleting
 
 }
 

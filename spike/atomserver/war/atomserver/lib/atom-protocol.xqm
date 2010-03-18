@@ -319,7 +319,7 @@ declare function ap:op-create-media(
         	
 	let $header-location := response:set-header( $CONSTANT:HEADER-LOCATION, $location )
 			    
-	return ( $CONSTANT:STATUS-SUCCESS-CREATED , $media-link-doc , $CONSTANT:MEDIA-TYPE-ATOM )
+	return ( $CONSTANT:STATUS-SUCCESS-CREATED , $media-link-doc/atom:entry , $CONSTANT:MEDIA-TYPE-ATOM )
 
 };
 
@@ -429,7 +429,7 @@ declare function ap:op-create-media-from-multipart-form-data (
 		 
 		if ( $accept = "application/atom+xml" )
 		
-		then $media-link-doc
+		then $media-link-doc/atom:entry
 	
 		else 
 		
@@ -761,7 +761,7 @@ declare function ap:op-update-media(
 	return ( () , () , () )
 
 };
- 
+
 
 
 
