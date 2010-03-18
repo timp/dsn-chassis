@@ -22,6 +22,8 @@ Milestone: Chassis/WWARN minimal submitted data access system (including anonymi
 
 ---- begin ad hoc work to update data in wwarn explorer preview version using submissions received -- this continues in parallel to work below developing wwarn explorer version 1 and curation process with audit trail, to give impression that wwarn is accepting data and doing something with it ----
 
+Milestone: Modules nominate which datasets will be submitted and curated and expect to appear in wwarn explorer version 1 (these will be used for trial submission/curation activity).
+
 Milestone: Chassis/WWARN curation system prototype version (deadline: June 1)
 
 Milestone: agree WWARN standard file format prototype version (deadline: March 31)
