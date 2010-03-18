@@ -44,7 +44,9 @@ as item()*
 		
 		then ap:do-get( $request-path-info )
 		
-		(: TODO DELETE method :)
+		else if ( $request-method = $CONSTANT:METHOD-DELETE )
+		
+		then ap:do-delete( $request-path-info )
 		
 		else ap:do-method-not-allowed( $request-path-info )
 
@@ -945,6 +947,120 @@ declare variable $ap:op-list-collection as function :=
 
 
 
+declare function ap:do-delete(
+	$request-path-info as xs:string
+) as item()*
+{
+	(: TODO :)
+	
+	(: 
+	 : We first need to know whether we are deleting a collection, a collection
+	 : member entry, a media-link entry, or a media resource.
+	 :)
+	 
+	if ( atomdb:collection-available( $request-path-info ) )
+	then ap:do-delete-collection( $request-path-info )
+	else if ( atomdb:member-available( $request-path-info ) )
+	then ap:do-delete-member( $request-path-info )
+	else if ( atomdb:media-resource-available( $request-path-info ) )
+	then ap:do-delete-media( $request-path-info )
+	else ap:do-not-found( $request-path-info )
+	
+};
+
+
+
+
+declare function ap:do-delete-collection(
+	$request-path-info as xs:string
+) as item()*
+{
+
+    (: for now, do not support this operation :)
+    ap:do-method-not-allowed( $request-path-info , ( "GET" , "POST" , "PUT" ) )
+    
+};
+
+
+
+
+declare function ap:do-delete-member(
+	$request-path-info as xs:string
+) as item()*
+{
+
+    (: here we bottom out at the "delete-member" operation :)
+	ap:apply-op( $CONSTANT:OP-DELETE-MEMBER , $ap:op-delete-member , $request-path-info , () )
+			
+};
+
+
+
+
+(:
+ : TODO doc me 
+ :)
+declare function ap:op-delete-member(
+	$request-path-info as xs:string ,
+	$request-data as item()? ,
+	$request-media-type as xs:string?
+) as item()*
+{
+
+    let $member-deleted := atomdb:delete-member( $request-path-info ) 
+	return ( $CONSTANT:STATUS-SUCCESS-NO-CONTENT , () , () )
+
+};
+
+
+
+
+declare variable $ap:op-delete-member as function :=
+	util:function( QName( "http://www.cggh.org/2010/xquery/atom-protocol" , "ap:op-delete-member" ) , 3 )
+;
+
+
+
+
+
+declare function ap:do-delete-media(
+	$request-path-info as xs:string
+) as item()*
+{
+
+    (: here we bottom out at the "delete-media" operation :)
+	ap:apply-op( $CONSTANT:OP-DELETE-MEDIA , $ap:op-delete-media , $request-path-info , () )
+
+};
+
+
+
+
+(:
+ : TODO doc me 
+ :)
+declare function ap:op-delete-media(
+	$request-path-info as xs:string ,
+	$request-data as item()? ,
+	$request-media-type as xs:string?
+) as item()*
+{
+
+    let $media-deleted := atomdb:delete-media( $request-path-info ) 
+	return ( $CONSTANT:STATUS-SUCCESS-NO-CONTENT , () , () )
+
+};
+
+
+
+
+declare variable $ap:op-delete-media as function :=
+	util:function( QName( "http://www.cggh.org/2010/xquery/atom-protocol" , "ap:op-delete-media" ) , 3 )
+;
+
+
+
+
 
 declare function ap:do-not-found(
 	$request-path-info
@@ -979,13 +1095,22 @@ declare function ap:do-method-not-allowed(
 ) as item()?
 {
 
+    ap:do-method-not-allowed( $request-path-info , ( "GET" , "POST" , "PUT" ) )
+    
+};
+
+
+
+
+declare function ap:do-method-not-allowed(
+	$request-path-info as xs:string ,
+	$allow as xs:string*
+) as item()?
+{
+
     let $message := "The method specified in the Request-Line is not allowed for the resource identified by the Request-URI."
 
-	(: 
-	 : TODO DELETE method and different allows depending on resource identified 
-	 :)
-	
-	let $header-allow := response:set-header( $CONSTANT:HEADER-ALLOW , "GET POST PUT" )
+	let $header-allow := response:set-header( $CONSTANT:HEADER-ALLOW , string-join( $allow , " " ) )
 
     return ap:send-error( $CONSTANT:STATUS-CLIENT-ERROR-METHOD-NOT-ALLOWED , $message , $request-path-info )
 

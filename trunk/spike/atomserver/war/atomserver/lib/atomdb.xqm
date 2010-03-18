@@ -308,6 +308,56 @@ declare function atomdb:update-member(
 
 
 
+declare function atomdb:delete-member(
+    $request-path-info as xs:string
+) as empty()
+{
+	if ( not( atomdb:member-available( $request-path-info ) ) )
+	
+	then ()
+	
+	else
+	
+		let $groups := text:groups( $request-path-info , "^(.*)/([^/]+)$" )
+		let $collection-db-path := atomdb:request-path-info-to-db-path( $groups[2] )
+		let $entry-resource-name := $groups[3]
+        let $entry-removed := xmldb:remove( $collection-db-path , $entry-resource-name )	    
+
+        (: is member a media-link entry? if so, delete also :)
+        let $media-resource-name := replace( $entry-resource-name , "^(.*)\.atom$" , "$1.media" )
+        let $media-resource-db-path := concat( $collection-db-path , "/" , $media-resource-name )
+        let $media-removed := 
+            if ( util:binary-doc-available( $media-resource-db-path ) )
+            then xmldb:remove( $collection-db-path , $media-resource-name )	   
+            else ()
+        
+        return ()
+};
+
+
+
+declare function atomdb:delete-media(
+    $request-path-info as xs:string
+) as empty()
+{
+	if ( not( atomdb:media-resource-available( $request-path-info ) ) )
+	
+	then ()
+	
+	else
+	
+		let $groups := text:groups( $request-path-info , "^(.*)/([^/]+)$" )
+		let $collection-db-path := atomdb:request-path-info-to-db-path( $groups[2] )
+		let $media-resource-name := $groups[3]
+		let $media-link-resource-name := replace( $media-resource-name , "^(.*)\.media$" , "$1.atom" )
+		let $media-removed := xmldb:remove( $collection-db-path , $media-resource-name )	
+		let $media-link-removed := xmldb:remove( $collection-db-path , $media-link-resource-name )	
+        return ()
+        
+};
+
+
+
 declare function atomdb:mutable-feed-children(
     $request-data as element(atom:feed)
 ) as element()*
