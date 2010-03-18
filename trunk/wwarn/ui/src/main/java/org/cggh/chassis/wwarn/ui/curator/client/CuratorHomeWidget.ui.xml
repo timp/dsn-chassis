@@ -26,24 +26,21 @@
 
 
 	<g:HTMLPanel ui:field="mainPanel" >
-
     <g:HTMLPanel ui:field="errorPanel">
 			<g:Label>
         		<ui:msg>There has been an unexpected error: </ui:msg>
 			</g:Label>
 			<g:FlowPanel ui:field="errorMessage"></g:FlowPanel>
     </g:HTMLPanel>
-
-		<g:HTMLPanel ui:field="pendingPanel">
+	<g:HTMLPanel ui:field="pendingPanel">
 			<p>
 				<ui:msg>pending... </ui:msg>
 			</p>
-		</g:HTMLPanel>
+	</g:HTMLPanel>
 
-		<g:HTMLPanel ui:field="contentPanel">
-
-            <h3><ui:msg>CuratorHome</ui:msg></h3>
-		</g:HTMLPanel>
+	<g:HTMLPanel ui:field="contentPanel">
+           <h3><ui:msg>Curator Home</ui:msg></h3>
+	</g:HTMLPanel>
 
 	</g:HTMLPanel>
 

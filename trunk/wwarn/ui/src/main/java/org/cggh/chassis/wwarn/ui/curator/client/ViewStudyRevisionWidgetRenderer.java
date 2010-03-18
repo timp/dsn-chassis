@@ -51,7 +51,7 @@ public class ViewStudyRevisionWidgetRenderer extends
 		GWT.create(ViewStudyRevisionWidgetRendererUiBinder.class);
 
 	@UiField HTMLPanel mainPanel;
-	@UiField FlowPanel contentPanel;
+	@UiField HTMLPanel contentPanel;
 	@UiField HTMLPanel pendingPanel;
 	@UiField HTMLPanel errorPanel;
 	@UiField FlowPanel errorMessage;

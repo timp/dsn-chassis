@@ -62,6 +62,11 @@ public class ViewStudyWidget
 	
 	public final WidgetEventChannel submitDataNavigationEventChannel = new WidgetEventChannel(this);
 
+	public void setStudy(String studyUri) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 	
 

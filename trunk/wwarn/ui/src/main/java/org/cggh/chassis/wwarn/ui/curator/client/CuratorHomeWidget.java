@@ -54,7 +54,7 @@ public class CuratorHomeWidget
 	
 	
 	
-	public final WidgetEventChannel submitDataNavigationEventChannel = new WidgetEventChannel(this);
+	public final WidgetEventChannel viewStudyNavigationEventChannel = new WidgetEventChannel(this);
 
 	
 	

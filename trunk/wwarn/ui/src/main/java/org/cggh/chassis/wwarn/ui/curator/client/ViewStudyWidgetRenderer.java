@@ -1,35 +1,19 @@
 package org.cggh.chassis.wwarn.ui.curator.client;
 
-import java.util.List;
-
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
-import org.cggh.chassis.generic.miniatom.client.AtomHelper;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 import org.cggh.chassis.generic.widget.client.ChassisWidgetRenderer;
-import org.cggh.chassis.generic.widget.client.PropertyChangeEvent;
-import org.cggh.chassis.generic.widget.client.PropertyChangeHandler;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.Status;
-import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.StatusChangeEvent;
-import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.StatusChangeHandler;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.ChangeEvent;
-import com.google.gwt.event.dom.client.ChangeHandler;
-import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.ListBox;
-import com.google.gwt.user.client.ui.TextArea;
-import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.xml.client.Document;
-import com.google.gwt.xml.client.Element;
 
 /**
  * BE SURE TO EDIT THE TEMPLATE NOT THE RENDERED RESULT
@@ -51,13 +35,14 @@ public class ViewStudyWidgetRenderer extends
 		GWT.create(ViewStudyWidgetRendererUiBinder.class);
 
 	@UiField HTMLPanel mainPanel;
-	@UiField FlowPanel contentPanel;
+	@UiField HTMLPanel contentPanel;
 	@UiField HTMLPanel pendingPanel;
 	@UiField HTMLPanel errorPanel;
 	@UiField FlowPanel errorMessage;
 
 	private ViewStudyWidget owner;
-  public ViewStudyWidgetRenderer(ViewStudyWidget owner) {
+	
+    public ViewStudyWidgetRenderer(ViewStudyWidget owner) {
 		this.owner = owner;
 	}
 	private ViewStudyWidgetController controller;
@@ -87,6 +72,28 @@ public class ViewStudyWidgetRenderer extends
 	protected void syncUIWithStatus(Status status) {
 
 		log.enter("syncUIWithStatus");		
+
+		errorPanel.setVisible(false);	
+		mainPanel.setVisible(false);
+		pendingPanel.setVisible(true);	
+		if (status instanceof AsyncWidgetModel.InitialStatus) {
+
+			// Everything off, hidden.
+		}
+		
+		
+		else if (status instanceof AsyncWidgetModel.ErrorStatus) {
+
+			
+			error("Error status given on asynchronous call.");
+			errorPanel.setVisible(true);
+		}			
+		
+		else {
+
+			error("Unhandled status:" + status);
+			errorPanel.setVisible(true);
+		}
 		
 		log.leave();
 	}

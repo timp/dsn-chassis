@@ -51,7 +51,7 @@ public class UploadCuratedDataFilesWidgetRenderer extends
 		GWT.create(UploadCuratedDataFilesWidgetRendererUiBinder.class);
 
 	@UiField HTMLPanel mainPanel;
-	@UiField FlowPanel contentPanel;
+	@UiField HTMLPanel contentPanel;
 	@UiField HTMLPanel pendingPanel;
 	@UiField HTMLPanel errorPanel;
 	@UiField FlowPanel errorMessage;
