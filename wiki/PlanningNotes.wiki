@@ -34,7 +34,9 @@ Milestone: Patrice Mapper prototype version (done)
 
 Milestone: Modules define data quality checks during curation process (e.g., logical inconsistencies), i.e., tests that a dataset must *pass* in order to be allowed to go into the WWARN explorer
 
-Milestone: completed trial submission/curation activity with chassis(+mapper?) and sample of existing datasets (deadline: June 31)
+Milestone: Modules define plan of analysis
+
+Milestone: completed trial submission/curation and analysis activity with chassis(+mapper?) and sample of existing datasets (deadline: June 31)
 
 ---- checkpoint: outcome of trial curation activity? ----
 
@@ -47,6 +49,8 @@ Milestone: finalise WWARN standard file format version 1 (deadline: ASAP)
 Milestone: Patrice Mapper version 1 (deadline: ASAP)
 
 Milestone: Modules lock down definition of data quality checks version 1
+
+Milestone: Modules lock down plan of analysis & outputs expected in wwarn explorer version 1
 
 Milestone: Chassis/WWARN curation system version 1 (production release) (deadline: ASAP)
 
