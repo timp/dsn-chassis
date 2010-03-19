@@ -36,7 +36,7 @@ public class AnonymizerHomeWidgetRenderer extends ChassisWidgetRenderer<Anonymiz
 	
 	public AnonymizerHomeWidgetRenderer(AnonymizerHomeWidget owner) {
 		
-		this.setOwner(owner);
+		this.owner = owner;
 	}
 	
 	
@@ -45,7 +45,7 @@ public class AnonymizerHomeWidgetRenderer extends ChassisWidgetRenderer<Anonymiz
 	private static MyUiBinder uiBinder = GWT.create(MyUiBinder.class);
 	
 	@UiField HTMLPanel errorPanel;
-		@UiField Label errorLabel; // in errorPanel
+	@UiField Label errorLabel; // in errorPanel
 	@UiField FilesToReviewWidget filesToReviewWidgetUiField;
 	@UiField FilesToCleanWidget filesToCleanWidgetUiField;
 	
@@ -140,15 +140,6 @@ public class AnonymizerHomeWidgetRenderer extends ChassisWidgetRenderer<Anonymiz
 	}
 
 
-	
-	public void setOwner(AnonymizerHomeWidget owner) {
-		this.owner = owner;
-	}
-
-
-	public AnonymizerHomeWidget getOwner() {
-		return owner;
-	}
 	
 
 	
