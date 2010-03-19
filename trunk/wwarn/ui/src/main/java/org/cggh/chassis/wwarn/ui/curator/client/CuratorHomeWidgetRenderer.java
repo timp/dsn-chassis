@@ -18,10 +18,6 @@ import com.google.gwt.xml.client.Document;
 
 
 /**
- * BE SURE TO EDIT THE TEMPLATE NOT THE RENDERED RESULT
- * 
- * DELETE_TO_MANUALLY_EDIT
- * 
  * @author timp
  */
 public class CuratorHomeWidgetRenderer extends
@@ -63,6 +59,7 @@ public class CuratorHomeWidgetRenderer extends
 
 		this.canvas.clear();
 		this.canvas.add(uiBinder.createAndBindUi(this));
+		
 		errorPanel.setVisible(false);	
 		pendingPanel.setVisible(true);	
 		mainPanel.setVisible(true);
@@ -77,6 +74,7 @@ public class CuratorHomeWidgetRenderer extends
 
 	@Override
 	protected void syncUI() {
+		syncUIWithStatus(model.getStatus());
 	}
 
 	protected void syncUIWithStatus(Status status) {
@@ -92,17 +90,18 @@ public class CuratorHomeWidgetRenderer extends
 		}
 		
 		
+		//TODO Widget specific statii
+
 		else if (status instanceof AsyncWidgetModel.ErrorStatus) {
 
 			
-			error("Error status given on asynchronous call. Maybe a bad submissions query URL.");
+			error("Error status given on asynchronous call.");
 			errorPanel.setVisible(true);
 		}			
 		
 		else {
 
 			error("Unhandled status:" + status);
-			errorPanel.setVisible(true);
 		}
 
 		log.leave();
@@ -123,9 +122,10 @@ public class CuratorHomeWidgetRenderer extends
 	}
 
 	public void error(String err) {
-
+        contentPanel.setVisible(false);
 		errorMessage.clear();
 		errorMessage.add(new HTML(err));
+		errorPanel.setVisible(true);
 	}
 
 }
