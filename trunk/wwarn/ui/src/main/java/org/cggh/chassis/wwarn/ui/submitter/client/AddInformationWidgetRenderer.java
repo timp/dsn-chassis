@@ -57,6 +57,7 @@ public class AddInformationWidgetRenderer extends
 		canvas.clear();
 		canvas.add(view.root);
 		
+		//TODO Set to something sensible 
 		view.studyTitleLabel.setText("FOO");
 		
 	}
