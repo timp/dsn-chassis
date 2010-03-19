@@ -157,8 +157,6 @@ public class CleanFileFormSubmitHandler extends HttpServlet {
 					InputStream inputStream = fileItemStream.openStream();
 					String fieldValue = Streams.asString(inputStream);
 					
-					//FIXME: Why isn't the summary coming through?
-					
 					log.debug("got fieldName: " + fieldName + " with value: " + fieldValue);
 					
 					formFields.put(fieldName, fieldValue);
@@ -218,7 +216,6 @@ public class CleanFileFormSubmitHandler extends HttpServlet {
 				String derivationType = Chassis.TERM_REMOVEPERSONALDATA;
 				String derivationSummary = formFields.get(CleanFileWidgetRenderer.FIELD_SUMMARY);
 				
-				//FIXME: Why isn't the summary coming through?
 				log.debug("got derivationSummary: " + derivationSummary);
 				
 				// FIXME: Resolve this problem. 
