@@ -9,6 +9,7 @@ import org.cggh.chassis.generic.log.client.LogFactory;import org.cggh.chassis.ge
 
 import org.cggh.chassis.generic.widget.client.WidgetEventChannel;
 
+
 /**
  * BE SURE TO EDIT THE TEMPLATE NOT THE RENDERED RESULT
  *
@@ -22,6 +23,8 @@ public class StudyRevisionListWidget
 
 	private static final Log log = LogFactory.getLog(StudyRevisionListWidget.class);
 	
+
+
 	private CurrentStudyRevisionWidget currentStudyRevisionWidget;
 
 	private PriorStudyRevisionsListWidget priorStudyRevisionsListWidget;

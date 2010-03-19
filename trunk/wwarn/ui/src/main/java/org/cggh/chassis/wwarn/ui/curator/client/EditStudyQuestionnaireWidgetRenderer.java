@@ -42,7 +42,12 @@ public class EditStudyQuestionnaireWidgetRenderer extends
 		ChassisWidgetRenderer<EditStudyQuestionnaireWidgetModel> {
 
 	private Log log = LogFactory.getLog(EditStudyQuestionnaireWidgetRenderer.class);
-	
+		StudySummaryWidget studySummaryWidget;
+
+	EditQuestionnaireWidget editQuestionnaireWidget;
+
+
+
 	@UiTemplate("EditStudyQuestionnaireWidget.ui.xml")
 	interface EditStudyQuestionnaireWidgetRendererUiBinder extends
 			UiBinder<HTMLPanel, EditStudyQuestionnaireWidgetRenderer> {
@@ -82,12 +87,32 @@ public class EditStudyQuestionnaireWidgetRenderer extends
 
 	@Override
 	protected void syncUI() {
+		syncUIWithStatus(model.getStatus());
 	}
 
 	protected void syncUIWithStatus(Status status) {
 
 		log.enter("syncUIWithStatus");		
 		
+		errorPanel.setVisible(false);	
+		if (status instanceof AsyncWidgetModel.InitialStatus) {
+
+			// Everything off, hidden.
+		}
+		
+		//TODO Widget specific statii
+		
+		else if (status instanceof AsyncWidgetModel.ErrorStatus) {
+
+			
+			error("Error status given on asynchronous call.");
+		}			
+		
+		else {
+
+			error("Unhandled status:" + status);
+		}
+
 		log.leave();
 	}
 	
@@ -104,9 +129,14 @@ public class EditStudyQuestionnaireWidgetRenderer extends
 	
 	
 	public void error(String err) {
-
+		log.enter("error");
+		log.debug("Error:" + err);
+		pendingPanel.setVisible(false);	
+		contentPanel.setVisible(false);
 		errorMessage.clear();
 		errorMessage.add(new HTML(err));
+		errorPanel.setVisible(true);
+		log.leave();
 	}
 	
 	

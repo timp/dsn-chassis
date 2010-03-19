@@ -22,8 +22,4 @@ public class ViewStudyNavigationEvent extends GwtEvent<ViewStudyNavigationHandle
 		return TYPE;
 	}
 
-	public String getStudyUri() {
-		return "FIXME";
-	}
-
 }

@@ -43,6 +43,7 @@ public class StudySummaryWidgetRenderer extends
 
 	private Log log = LogFactory.getLog(StudySummaryWidgetRenderer.class);
 	
+
 	@UiTemplate("StudySummaryWidget.ui.xml")
 	interface StudySummaryWidgetRendererUiBinder extends
 			UiBinder<HTMLPanel, StudySummaryWidgetRenderer> {
@@ -77,12 +78,32 @@ public class StudySummaryWidgetRenderer extends
 
 	@Override
 	protected void syncUI() {
+		syncUIWithStatus(model.getStatus());
 	}
 
 	protected void syncUIWithStatus(Status status) {
 
 		log.enter("syncUIWithStatus");		
 		
+		errorPanel.setVisible(false);	
+		if (status instanceof AsyncWidgetModel.InitialStatus) {
+
+			// Everything off, hidden.
+		}
+		
+		//TODO Widget specific statii
+		
+		else if (status instanceof AsyncWidgetModel.ErrorStatus) {
+
+			
+			error("Error status given on asynchronous call.");
+		}			
+		
+		else {
+
+			error("Unhandled status:" + status);
+		}
+
 		log.leave();
 	}
 	
@@ -99,9 +120,14 @@ public class StudySummaryWidgetRenderer extends
 	
 	
 	public void error(String err) {
-
+		log.enter("error");
+		log.debug("Error:" + err);
+		pendingPanel.setVisible(false);	
+		contentPanel.setVisible(false);
 		errorMessage.clear();
 		errorMessage.add(new HTML(err));
+		errorPanel.setVisible(true);
+		log.leave();
 	}
 	
 	
