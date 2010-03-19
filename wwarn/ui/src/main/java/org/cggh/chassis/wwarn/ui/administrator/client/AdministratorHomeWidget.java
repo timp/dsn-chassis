@@ -34,7 +34,7 @@ public class AdministratorHomeWidget extends ChassisWidget {
 	
 	
 
-	private HTMLPanel content;
+	private HTMLPanel contentPanel;
 	
 	
 	
@@ -47,16 +47,16 @@ public class AdministratorHomeWidget extends ChassisWidget {
 	@Override
 	public void renderUI() {
 	
-		this.content = new HTMLPanel(this.template);
+		this.contentPanel = new HTMLPanel(this.template);
 		
-		this.content.add(new HTML("Administrator - Home"), this.titleId); // TODO i18n
+		this.contentPanel.add(new HTML("Administrator - Home"), this.titleId); // TODO i18n
 		
-		this.content.add(new HTML("Welcome to the Chassis/WWARN administrator home page."), this.welcomeParaId); // TODO i18n
+		this.contentPanel.add(new HTML("Welcome to the Chassis/WWARN administrator home page."), this.welcomeParaId); // TODO i18n
 	
 		this.adminCollectionsWidget = new AdminCollectionsWidget(collections);
-		this.content.add(this.adminCollectionsWidget, this.adminCollectionsDivId);
+		this.contentPanel.add(this.adminCollectionsWidget, this.adminCollectionsDivId);
 		
-		this.add(this.content);
+		this.add(this.contentPanel);
 				
 	}
 	
