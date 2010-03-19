@@ -5,9 +5,12 @@ import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 import org.cggh.chassis.generic.widget.client.ChassisWidgetRenderer;
+import org.cggh.chassis.generic.widget.client.WidgetEvent;
+import org.cggh.chassis.generic.widget.client.WidgetEventHandler;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.Status;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiTemplate;
@@ -41,9 +44,10 @@ public class CuratorHomeWidgetRenderer extends
 	@UiField HTMLPanel pendingPanel;
 
 	@UiField HTMLPanel errorPanel;
-
 	@UiField FlowPanel errorMessage;
 
+	@UiField ListStudiesWidget listStudiesWidgetUiField;
+	
 	private CuratorHomeWidget owner;
 
 	public CuratorHomeWidgetRenderer(CuratorHomeWidget owner) {
@@ -69,10 +73,6 @@ public class CuratorHomeWidgetRenderer extends
 
 	}
 
-	@Override
-	protected void registerHandlersForModelChanges() {
-
-	}
 
 	@Override
 	protected void syncUI() {
@@ -83,11 +83,11 @@ public class CuratorHomeWidgetRenderer extends
 
 		log.enter("syncUIWithStatus");
         log.debug("Status:"+status);
+        
 		errorPanel.setVisible(false);	
 		if (status instanceof AsyncWidgetModel.InitialStatus) {
 
 			pendingPanel.setVisible(true);	
-			// Everything off, hidden.
 		}
 		
 		
@@ -107,20 +107,22 @@ public class CuratorHomeWidgetRenderer extends
 		log.leave();
 	}
 
-	/**
-	 * Clear and re-initialise, setting selected id.
-	 * 
-	 * @param studyFeedDoc
-	 */
-	void syncUiWithStudyFeedDoc(Document studyFeedDoc) {
-
-		log.enter("syncUiWithStudyFeedDoc");
-
-		// Turn everything off (that is made visible/enabled here) first, then
-		// show/enable as required.
-		log.leave();
+	@Override
+	public void registerHandlersForChildWidgetEvents() {
+		super.registerHandlersForChildWidgetEvents();	
+		
+		HandlerRegistration a = listStudiesWidgetUiField.viewStudyNavigationEventChannel.addHandler(new WidgetEventHandler() {
+			public void onEvent(WidgetEvent e) {
+				// just bubble
+				owner.viewStudyNavigationEventChannel.fireEvent(e);
+			}
+		});
+		this.childWidgetEventHandlerRegistrations.add(a);		
+		
 	}
 
+
+	
 	public void error(String err) {
 		log.enter("error");
 		log.debug("Error:" + err);
