@@ -69,10 +69,24 @@ public class CuratorApplicationWidget
 		
 		HandlerRegistration a = curatorHomeWidget.viewStudyNavigationEventChannel.addHandler(new WidgetEventHandler() {
 			public void onEvent(WidgetEvent e) {
-				// FIXME
-				//viewStudyWidget.setStudy(e.getStudyUri());
-				viewStudyWidget.refresh();
-				setActiveChild(viewStudyWidget);
+				
+				log.enter("onEvent");
+
+				if (e instanceof ViewStudyNavigationEvent) {
+					
+					log.debug("Setting fileToBeReviewed...");
+					
+					viewStudyWidget.setStudy(((ViewStudyNavigationEvent) e).getStudy());
+					
+					viewStudyWidget.refresh();
+					setActiveChild(viewStudyWidget);
+				
+				} else {
+					
+					log.debug(" event not an instanceof ViewStudyNavigationEvent");
+				}				
+				
+				log.leave();
 			}
 		});
 		this.childWidgetEventHandlerRegistrations.add(a);

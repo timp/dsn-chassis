@@ -7,37 +7,26 @@
 	ui:generateKeys="com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator"
 	ui:generateLocales="default"
 	>
-<!-- 
-    BE SURE TO EDIT THE TEMPLATE NOT THE RENDERED RESULT
-		
-    DELETE_TO_MANUALLY_EDIT 
--->
+
 	<ui:style>
 	
 		.error {
 			color: red;
 		}
 		
-		.number {
-			font-weight: bold;
-		}
-		
 	</ui:style>
 
 
-	<g:HTMLPanel ui:field="mainPanel" >
+	<g:HTMLPanel>
 
-    <g:HTMLPanel ui:field="errorPanel">
-			<g:Label>
-        		<ui:msg>There has been an unexpected error: </ui:msg>
-			</g:Label>
-			<g:FlowPanel ui:field="errorMessage"></g:FlowPanel>
-    </g:HTMLPanel>
+	    <g:HTMLPanel ui:field="errorPanel">
+				<g:Label ui:field="errorMessages" />
+	    </g:HTMLPanel>
 
 		<g:HTMLPanel ui:field="pendingPanel">
-			<p>
-				<ui:msg>pending... </ui:msg>
-			</p>
+			<g:Label ui:field="pendingMessage">
+        		<ui:msg>Pending...</ui:msg>
+			</g:Label>
 		</g:HTMLPanel>
 
 		<g:HTMLPanel ui:field="contentPanel">

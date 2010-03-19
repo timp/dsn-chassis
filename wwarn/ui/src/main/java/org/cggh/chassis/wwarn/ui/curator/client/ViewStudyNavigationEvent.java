@@ -1,25 +1,40 @@
 package org.cggh.chassis.wwarn.ui.curator.client;
 
-import com.google.gwt.event.shared.GwtEvent;
+import org.cggh.chassis.generic.log.client.Log;
+import org.cggh.chassis.generic.log.client.LogFactory;
+import org.cggh.chassis.generic.widget.client.WidgetEvent;
 
-/**
- * BE SURE TO EDIT THE TEMPLATE NOT THE RENDERED RESULT
- *
- * DELETE_TO_MANUALLY_EDIT
- *
- */
-public class ViewStudyNavigationEvent extends GwtEvent<ViewStudyNavigationHandler> {
+import com.google.gwt.xml.client.Element;
 
-	public static final Type<ViewStudyNavigationHandler> TYPE = new Type<ViewStudyNavigationHandler>();
+public class ViewStudyNavigationEvent extends WidgetEvent {
+
+	private static final Log log = LogFactory.getLog(ViewStudyNavigationEvent.class);	
 	
-	@Override
-	protected void dispatch(ViewStudyNavigationHandler h) {
-		h.onNavigation(this);
+	private Element study;
+
+
+	public void setStudy(Element study) {
+
+		log.enter("setStudy");		
+		
+		log.debug("Setting study....");
+		
+		this.study = study;
+		
+		log.leave();
+	}
+	
+	public Element getStudy() {
+
+		log.enter("getStudy");		
+		
+		log.debug("Getting study....");
+
+		log.leave();
+		
+		return this.study;
+
 	}
 
-	@Override
-	public com.google.gwt.event.shared.GwtEvent.Type<ViewStudyNavigationHandler> getAssociatedType() {
-		return TYPE;
-	}
-
+	
 }
