@@ -122,7 +122,7 @@ public class CuratorHomeWidgetRenderer extends
 		log.enter("error");
 		log.debug("Error:" + err);
 		pendingPanel.setVisible(false);	
-        contentPanel.setVisible(false);
+		contentPanel.setVisible(false);
 		errorMessage.clear();
 		errorMessage.add(new HTML(err));
 		errorPanel.setVisible(true);
