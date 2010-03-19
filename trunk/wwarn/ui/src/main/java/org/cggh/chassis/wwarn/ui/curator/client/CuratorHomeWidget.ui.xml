@@ -37,8 +37,8 @@
 	</g:HTMLPanel>
 
 	<g:HTMLPanel ui:field="contentPanel">
-           <h3><ui:msg>Curator Home</ui:msg></h3>
-			<local:ListStudiesWidget ui:field="listStudiesWidgetUiField"/>
+      <h3><ui:msg>Curator Home</ui:msg></h3>
+	  <local:ListStudiesWidget ui:field="listStudiesWidgetUiField"/>
 
 	</g:HTMLPanel>
 

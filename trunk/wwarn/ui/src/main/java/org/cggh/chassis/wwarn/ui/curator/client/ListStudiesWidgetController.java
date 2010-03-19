@@ -6,6 +6,7 @@ import org.cggh.chassis.generic.async.client.Function;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.miniatom.client.Atom;
+import org.cggh.chassis.generic.miniatom.client.AtomHelper;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 import org.cggh.chassis.generic.widget.client.ChassisWidget;
 import org.cggh.chassis.generic.widget.client.ErrorEvent;
@@ -15,12 +16,7 @@ import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;
 
 /**
- * BE SURE TO EDIT THE TEMPLATE NOT THE RENDERED RESULT
- *
- * DELETE_TO_MANUALLY_EDIT
- *
  * @author timp
- *
  */
 public class ListStudiesWidgetController {
 	
@@ -35,17 +31,23 @@ public class ListStudiesWidgetController {
 	private static String STUDIES_QUERY = "/curator/query/studies.xql";
 
 			
+	public ListStudiesWidgetController(ListStudiesWidget owner, ListStudiesWidgetModel model) {
+		this.owner = owner;
+		this.model = model;
+	}
+
+	
 	public Deferred<Document> retrieveStudies() {
 		log.enter("retrieveStudies");
 		// Set the model's status to pending.
-		//model.setStatus(ListStudiesWidgetModel.STATUS_RETRIEVE_STUDIES_PENDING);
+		model.status.set(ListStudiesWidgetModel.STATUS_RETRIEVE_STUDY_FEED_PENDING);
 		
 		String studyQueryServiceUrl = Config.get(Config.QUERY_STUDIES_URL);
 		
 		Deferred<Document> deferredDoc = Atom.getFeed(studyQueryServiceUrl);
 		
 		// Add a call-back and error-back for the asynchronous feed.
-		deferredDoc.addCallback(new RetrieveStudiesCallback());
+		deferredDoc.addCallback(new RetrieveStudyFeedCallback());
 		deferredDoc.addErrback(new DefaultErrback());
 		
 		log.leave();
@@ -53,40 +55,57 @@ public class ListStudiesWidgetController {
 	}
 	
 	
-	
 	public Deferred<ChassisWidget> refreshAndCallback() {
 		log.enter("refreshAndCallback");
 		
 		final Deferred<ChassisWidget> deferredOwner = new Deferred<ChassisWidget>();
-	/*	
-		if (model.submissionId.get() != null) {
+		
+		Deferred<Element> chain = retrieveStudyFeed();
 			
-			Deferred<Element> chain = retrieveSubmission();
+		chain.addCallback(new RetrieveStudyFeedCallback());
 			
-			chain.addCallback(new RetrieveSubmissionCallback());
-			
-			chain.addCallback(new RetrieveQuestionnaireCallback());
-			
-			chain.addCallback(retrieveStudyCallback);
 
-			// handle errors
-			chain.addErrback(new DefaultErrback());
+		chain.addErrback(new DefaultErrback());
 			
-			// finally callback with owner, in any case
-			chain.addBoth(new Function<Object, Object>() {
+		// finally callback with owner, in any case
+		chain.addBoth(new Function<Object, Object>() {
 
-				public Object apply(Object in) {
-					deferredOwner.callback(owner);
-					return in;
-				}
-				
-			});
+			public Object apply(Object in) {
+				deferredOwner.callback(owner);
+				return in;
+			}
+			
+		});
 
-		}
-		*/
+		
 		log.leave();
 		return deferredOwner;
 		
+	}
+
+	
+	private Deferred<Element> retrieveStudyFeed() {
+		log.enter("retrieveSubmission");
+		
+		model.status.set(ListStudiesWidgetModel.STATUS_RETRIEVE_STUDY_FEED_PENDING);
+		
+		String url = Config.get(Config.QUERY_STUDIES_URL);
+		log.debug("url: "+url);
+
+		log.debug("make get feed request");
+		Deferred<Document> deferredResultsFeedDoc = Atom.getFeed(url);
+		
+		Deferred<Element> deferredFeedElement = deferredResultsFeedDoc.adapt(new Function<Document, Element>() {
+
+			public Element apply(Document resultsFeedDoc) {
+				Element entryElement = AtomHelper.getFirstEntry(resultsFeedDoc.getDocumentElement());
+				return entryElement;
+			}
+			
+		});
+
+		log.leave();
+		return deferredFeedElement;
 	}
 
 	
@@ -105,50 +124,26 @@ public class ListStudiesWidgetController {
 	}
 
 
-
-
 	
-	private class RetrieveStudiesCallback implements Function<Element, Deferred<Document>> {
+	private class RetrieveStudyFeedCallback implements Function<Element, Element> {
 
-		public Deferred<Document> apply(Element studiesEntryElement) {
-			
-			// model.setStudiesEntryElement(studiesEntryElement);
-			
-			Deferred<Document> deferredFilesFeedDoc = null;
-			
-			if (studiesEntryElement != null) {
-
-				// we have one, so lets try retrieving the list of files uploaded so far
-				// deferredFilesFeedDoc = retrieveFiles();
-				
-			}
-			
-			else {
-				
-				//model.setStatus(ListStudiesWidgetModel.STATUS_STUDY_NOT_FOUND);
-				deferredFilesFeedDoc = new Deferred<Document>();
-				deferredFilesFeedDoc.callback(null);
-
-			}
-			
-			// return the deferred feed of files uploaded, for chaining of callbacks
-			return deferredFilesFeedDoc;
+		@Override
+		public Element apply(Element in) {
+			log.debug("Study callback apply");
+			model.status.set(CuratorHomeWidgetModel.STATUS_READY_FOR_INTERACTION);
+			return in;
 		}
-		
+
 	}
+
+
+
 	
 	
         					
   private ViewStudyNavigationEvent viewStudyNavigationEvent;
 	
          	     	   	 
-	
-	
-	public ListStudiesWidgetController(ListStudiesWidget owner, ListStudiesWidgetModel model) {
-		this.owner = owner;
-		this.model = model;
-	}
-
 	
 	
 

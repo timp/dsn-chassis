@@ -12,10 +12,6 @@ import org.cggh.chassis.generic.widget.client.WidgetEventChannel;
 
 
 /**
- * BE SURE TO EDIT THE TEMPLATE NOT THE RENDERED RESULT
- *
- * DELETE_TO_MANUALLY_EDIT
- *
  * @author timp
  *
  */
@@ -45,17 +41,26 @@ public class ListStudiesWidget
 	public void init() {
 		
 		super.init();
-				this.controller = new ListStudiesWidgetController(this, this.model);
+		this.controller = new ListStudiesWidgetController(this, this.model);
+		this.renderer.setController(controller);
 
 	}
 	
 	@Override
 	public void refresh() {
+		log.enter("refresh");
+		
+		this.controller.retrieveStudies();
+		
+		log.leave();
 	}
 	
 	
 	
-	public final WidgetEventChannel submitDataNavigationEventChannel = new WidgetEventChannel(this);
+
+
+
+	public final WidgetEventChannel viewStudyNavigationEventChannel = new WidgetEventChannel(this);
 
 	
 	
