@@ -208,6 +208,8 @@ public class ReviewFileWidgetRenderer extends ChassisWidgetRenderer<ReviewFileWi
 
 			log.debug("getting Entry Element from ID....");
 			
+			//FIXME: This can't be right. It's just setting fileToBeReviewedEntryElement to null.
+			
 			Element fileToBeReviewedEntryElement = null;
 			
 			model.fileToBeReviewedEntryElement.set(fileToBeReviewedEntryElement);

@@ -3,9 +3,12 @@ package org.cggh.chassis.wwarn.ui.curator.client;
 
 import org.cggh.chassis.generic.async.client.Deferred;
 import org.cggh.chassis.generic.async.client.Function;
+import org.cggh.chassis.generic.async.client.QueryParams;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.miniatom.client.Atom;
+import org.cggh.chassis.generic.miniatom.client.AtomHelper;
+import org.cggh.chassis.generic.miniatom.client.ext.Chassis;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 import org.cggh.chassis.generic.widget.client.ChassisWidget;
 import org.cggh.chassis.generic.widget.client.ErrorEvent;
@@ -14,14 +17,6 @@ import org.cggh.chassis.wwarn.ui.common.client.Config;
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;
 
-/**
- * BE SURE TO EDIT THE TEMPLATE NOT THE RENDERED RESULT
- *
- * DELETE_TO_MANUALLY_EDIT
- *
- * @author timp
- *
- */
 public class ViewStudyWidgetController {
 	
 	
@@ -32,42 +27,63 @@ public class ViewStudyWidgetController {
 	private ViewStudyWidgetModel model;
 
 
-	private static String STUDY_ENTRY_URI = "/atom/edit/studies/id.atom";
-
-			
-	public Deferred<Document> retrieveStudy() {
+	public Deferred<Element> retrieveStudy() {
+		
 		log.enter("retrieveStudy");
+		
 		// Set the model's status to pending.
-		//model.setStatus(ViewStudyWidgetModel.STATUS_RETRIEVE_STUDIES_PENDING);
+		model.status.set(ViewStudyWidgetModel.STATUS_RETRIEVE_STUDY_PENDING);
+
+		QueryParams qp = new QueryParams();
+		qp.put(Chassis.QUERYPARAM_ID, model.studyID.get());		
 		
-		String studyQueryServiceUrl = Config.get(Config.QUERY_STUDIES_URL);
+		String studyQueryServiceUrl = Config.get(Config.QUERY_STUDIES_URL) + qp.toUrlQueryString();
 		
+		log.debug("studyQueryServiceUrl: " + studyQueryServiceUrl);
+
+		log.debug("make get feed request");
 		Deferred<Document> deferredDoc = Atom.getFeed(studyQueryServiceUrl);
+		
+		Deferred<Element> deferredStudyElement = deferredDoc.adapt(new Function<Document, Element>() {
+
+			public Element apply(Document resultsFeedDoc) {
+				Element entryElement = AtomHelper.getFirstEntry(resultsFeedDoc.getDocumentElement());
+				return entryElement;
+			}
+			
+		});		
 		
 		// Add a call-back and error-back for the asynchronous feed.
 		deferredDoc.addCallback(new RetrieveStudyCallback());
 		deferredDoc.addErrback(new DefaultErrback());
 		
 		log.leave();
-		return deferredDoc;
+		return deferredStudyElement;
 	}
 	
 	
 	
 	public Deferred<ChassisWidget> refreshAndCallback() {
+		
 		log.enter("refreshAndCallback");
 		
 		final Deferred<ChassisWidget> deferredOwner = new Deferred<ChassisWidget>();
-	/*	
-		if (model.submissionId.get() != null) {
+
+		if (model.studyID.get() != null) {
 			
-			Deferred<Element> chain = retrieveSubmission();
+			log.debug("model.studyID.get() != null");
 			
-			chain.addCallback(new RetrieveSubmissionCallback());
+			Deferred<Element> chain = retrieveStudy();
 			
-			chain.addCallback(new RetrieveQuestionnaireCallback());
+			chain.addCallback(new RetrieveStudyCallback());
 			
-			chain.addCallback(retrieveStudyCallback);
+			
+			
+			//chain.addCallback(new RetrieveSubmissionCallback());
+			
+			//chain.addCallback(new RetrieveQuestionnaireCallback());
+			
+			
 
 			// handle errors
 			chain.addErrback(new DefaultErrback());
@@ -83,7 +99,7 @@ public class ViewStudyWidgetController {
 			});
 
 		}
-		*/
+
 		log.leave();
 		return deferredOwner;
 		
@@ -112,48 +128,33 @@ public class ViewStudyWidgetController {
 
 		public Deferred<Document> apply(Element studyEntryElement) {
 			
-			// model.setStudyEntryElement(studyEntryElement);
+			log.enter("apply");
 			
-			Deferred<Document> deferredFilesFeedDoc = null;
+			model.studyEntryElement.set(studyEntryElement);
 			
 			if (studyEntryElement != null) {
-
-				// we have one, so lets try retrieving the list of files uploaded so far
-				// deferredFilesFeedDoc = retrieveFiles();
 				
+				model.status.set(ViewStudyWidgetModel.STATUS_STUDY_RETRIEVED);
+
+
+			} else {
+			
+				model.status.set(ViewStudyWidgetModel.STATUS_STUDY_NOT_FOUND);
 			}
 			
-			else {
-				
-				//model.setStatus(ViewStudyWidgetModel.STATUS_STUDY_NOT_FOUND);
-				deferredFilesFeedDoc = new Deferred<Document>();
-				deferredFilesFeedDoc.callback(null);
-
-			}
+			log.leave();
 			
-			// return the deferred feed of files uploaded, for chaining of callbacks
-			return deferredFilesFeedDoc;
+			return null;
 		}
 		
 	}
 	
 	
-        			
-	public void setStudyEntry(Element study) { 
-	  // TODO Generated stub 
-	}
-	
      	 
-	private StudySummaryWidget studySummaryWidget;
-
- 
-	private ViewStudyMetadataWidget viewStudyMetadataWidget;
-
- 
-	private ListSubmissionsWidget listSubmissionsWidget;
-
- 
-	private ListCurationsWidget listCurationsWidget;
+//	private StudySummaryWidget studySummaryWidget;
+//	private ViewStudyMetadataWidget viewStudyMetadataWidget;
+//	private ListSubmissionsWidget listSubmissionsWidget;
+//	private ListCurationsWidget listCurationsWidget;
 
  
 	
