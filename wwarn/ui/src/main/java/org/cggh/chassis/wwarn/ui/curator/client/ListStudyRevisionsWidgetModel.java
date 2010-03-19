@@ -38,4 +38,8 @@ public class ListStudyRevisionsWidgetModel {
 	public final ObservableProperty<Element> studyEntryElement = new ObservableProperty<Element>();
 	public final ObservableProperty<Status> status = new ObservableProperty<Status>();
 	public final ObservableProperty<String> message = new ObservableProperty<String>();
+	
+	public Status getStatus() {
+		return status.get();
+	}	
 }

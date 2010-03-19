@@ -6,6 +6,7 @@
 	ui:generateFormat="com.google.gwt.i18n.rebind.format.PropertiesFormat"
 	ui:generateKeys="com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator"
 	ui:generateLocales="default"
+	xmlns:local="urn:import:org.cggh.chassis.wwarn.ui.curator.client"
 	>
 <!-- 
     BE SURE TO EDIT THE TEMPLATE NOT THE RENDERED RESULT
@@ -42,7 +43,8 @@
 
 		<g:HTMLPanel ui:field="contentPanel">
 
-            <h3><ui:msg>EditStudyQuestionnaire</ui:msg></h3>
+            <h3><ui:msg>EditStudyQuestionnaire</ui:msg></h3>			<local:StudySummaryWidget ui:field="studySummaryWidgetUiField"/>
+			<local:EditQuestionnaireWidget ui:field="editQuestionnaireWidgetUiField"/>
 		</g:HTMLPanel>
 
 	</g:HTMLPanel>

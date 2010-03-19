@@ -10,6 +10,7 @@ import org.cggh.chassis.generic.widget.client.DelegatingWidget;
 
 import org.cggh.chassis.generic.widget.client.WidgetEventChannel;
 
+
 /**
  * BE SURE TO EDIT THE TEMPLATE NOT THE RENDERED RESULT
  *
@@ -24,6 +25,8 @@ public class ViewQuestionnaireWidget
 	private static final Log log = LogFactory.getLog(ViewQuestionnaireWidget.class);
 	
 	private ViewQuestionnaireWidgetController controller;
+
+
 	@Override
 	protected ViewQuestionnaireWidgetModel createModel() {
 		return new ViewQuestionnaireWidgetModel();

@@ -10,6 +10,7 @@ import org.cggh.chassis.generic.widget.client.DelegatingWidget;
 
 import org.cggh.chassis.generic.widget.client.WidgetEventChannel;
 
+
 /**
  * BE SURE TO EDIT THE TEMPLATE NOT THE RENDERED RESULT
  *
@@ -24,9 +25,7 @@ public class ListStudyRevisionsWidget
 	private static final Log log = LogFactory.getLog(ListStudyRevisionsWidget.class);
 	
 	private ListStudyRevisionsWidgetController controller;
-	private StudySummaryWidget studySummaryWidget;
 
-	private StudyRevisionListWidget studyRevisionListWidget;
 
 	@Override
 	protected ListStudyRevisionsWidgetModel createModel() {

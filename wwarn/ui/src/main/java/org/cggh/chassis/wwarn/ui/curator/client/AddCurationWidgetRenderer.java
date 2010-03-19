@@ -43,6 +43,7 @@ public class AddCurationWidgetRenderer extends
 
 	private Log log = LogFactory.getLog(AddCurationWidgetRenderer.class);
 	
+
 	@UiTemplate("AddCurationWidget.ui.xml")
 	interface AddCurationWidgetRendererUiBinder extends
 			UiBinder<HTMLPanel, AddCurationWidgetRenderer> {
@@ -51,7 +52,7 @@ public class AddCurationWidgetRenderer extends
 		GWT.create(AddCurationWidgetRendererUiBinder.class);
 
 	@UiField HTMLPanel mainPanel;
-	@UiField FlowPanel contentPanel;
+	@UiField HTMLPanel contentPanel;
 	@UiField HTMLPanel pendingPanel;
 	@UiField HTMLPanel errorPanel;
 	@UiField FlowPanel errorMessage;
@@ -77,12 +78,32 @@ public class AddCurationWidgetRenderer extends
 
 	@Override
 	protected void syncUI() {
+		syncUIWithStatus(model.getStatus());
 	}
 
 	protected void syncUIWithStatus(Status status) {
 
 		log.enter("syncUIWithStatus");		
 		
+		errorPanel.setVisible(false);	
+		if (status instanceof AsyncWidgetModel.InitialStatus) {
+
+			// Everything off, hidden.
+		}
+		
+		//TODO Widget specific statii
+		
+		else if (status instanceof AsyncWidgetModel.ErrorStatus) {
+
+			
+			error("Error status given on asynchronous call.");
+		}			
+		
+		else {
+
+			error("Unhandled status:" + status);
+		}
+
 		log.leave();
 	}
 	
@@ -99,9 +120,14 @@ public class AddCurationWidgetRenderer extends
 	
 	
 	public void error(String err) {
-
+		log.enter("error");
+		log.debug("Error:" + err);
+		pendingPanel.setVisible(false);	
+		contentPanel.setVisible(false);
 		errorMessage.clear();
 		errorMessage.add(new HTML(err));
+		errorPanel.setVisible(true);
+		log.leave();
 	}
 	
 	

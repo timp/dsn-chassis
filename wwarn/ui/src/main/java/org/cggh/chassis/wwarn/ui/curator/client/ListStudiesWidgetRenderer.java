@@ -43,6 +43,7 @@ public class ListStudiesWidgetRenderer extends
 
 	private Log log = LogFactory.getLog(ListStudiesWidgetRenderer.class);
 	
+
 	@UiTemplate("ListStudiesWidget.ui.xml")
 	interface ListStudiesWidgetRendererUiBinder extends
 			UiBinder<HTMLPanel, ListStudiesWidgetRenderer> {
@@ -59,6 +60,11 @@ public class ListStudiesWidgetRenderer extends
 	private ListStudiesWidget owner;
   public ListStudiesWidgetRenderer(ListStudiesWidget owner) {
 		this.owner = owner;
+	}
+	private ListStudiesWidgetController controller;
+
+	public void setController(ListStudiesWidgetController controller) {
+		this.controller = controller;
 	}
 
 
@@ -77,12 +83,32 @@ public class ListStudiesWidgetRenderer extends
 
 	@Override
 	protected void syncUI() {
+		syncUIWithStatus(model.getStatus());
 	}
 
 	protected void syncUIWithStatus(Status status) {
 
 		log.enter("syncUIWithStatus");		
 		
+		errorPanel.setVisible(false);	
+		if (status instanceof AsyncWidgetModel.InitialStatus) {
+
+			// Everything off, hidden.
+		}
+		
+		//TODO Widget specific statii
+		
+		else if (status instanceof AsyncWidgetModel.ErrorStatus) {
+
+			
+			error("Error status given on asynchronous call.");
+		}			
+		
+		else {
+
+			error("Unhandled status:" + status);
+		}
+
 		log.leave();
 	}
 	
@@ -99,9 +125,14 @@ public class ListStudiesWidgetRenderer extends
 	
 	
 	public void error(String err) {
-
+		log.enter("error");
+		log.debug("Error:" + err);
+		pendingPanel.setVisible(false);	
+		contentPanel.setVisible(false);
 		errorMessage.clear();
 		errorMessage.add(new HTML(err));
+		errorPanel.setVisible(true);
+		log.leave();
 	}
 	
 	
