@@ -49,13 +49,13 @@ declare variable $config:user-name-is-email as xs:boolean := false() ;
  : The base collection within which to store Atom collections and resources.
  : All paths will be relative to this base collection path.
  :)
-declare variable $config:base-collection-path as xs:string := "/db" ;
+declare variable $config:base-collection-path as xs:string := "/db/atom" ;
 
 
 (:
  : The base collection within which to store access control lists.
  :)
-declare variable $config:base-acl-collection-path as xs:string := "/db/system/acl" ;
+declare variable $config:base-acl-collection-path as xs:string := "/db/system/atom/acl" ;
 
 
 (: 
@@ -190,11 +190,30 @@ declare function config:default-collection-acl(
             </allow>
             <allow>
                 <role>ROLE_EDITOR</role>
+                <operation>delete-member</operation>
+            </allow>
+
+            <!-- Media editors -->
+            
+            <allow>
+                <role>ROLE_MEDIA_EDITOR</role>
+                <operation>list-collection</operation>
+            </allow>
+            <allow>
+                <role>ROLE_MEDIA_EDITOR</role>
+                <operation>retrieve-member</operation>
+            </allow>
+            <allow>
+                <role>ROLE_MEDIA_EDITOR</role>
                 <operation>retrieve-media</operation>
             </allow>
             <allow>
-                <role>ROLE_EDITOR</role>
+                <role>ROLE_MEDIA_EDITOR</role>
                 <operation>update-media</operation>
+            </allow>
+            <allow>
+                <role>ROLE_MEDIA_EDITOR</role>
+                <operation>delete-media</operation>
             </allow>
             
             <!--

@@ -77,6 +77,30 @@ declare function atomdb:member-available(
 
 
 
+declare function atomdb:media-link-available(
+    $request-path-info as xs:string
+) as xs:boolean
+{
+    let $log := util:log( "debug" , "== atomdb:media-link-available() ==" )
+    
+    return 
+
+        if ( not( atomdb:member-available( $request-path-info ) ) ) 
+        then 
+            let $log := util:log( "debug" , "not a member, returning false" )
+            return false()
+        
+        else
+            let $entry-doc := atomdb:retrieve-entry( $request-path-info )
+            let $log := util:log( "debug" , $entry-doc )
+            let $edit-media-link := $entry-doc/atom:entry/atom:link[@rel="edit-media"]
+            let $log := util:log( "debug" , $edit-media-link )
+            let $available := exists( $edit-media-link )
+            let $log := util:log( "debug" , $available )
+            return $available
+};
+
+
 declare function atomdb:media-resource-available(
 	$request-path-info as xs:string
 ) as xs:boolean
@@ -340,12 +364,17 @@ declare function atomdb:delete-media(
     $request-path-info as xs:string
 ) as empty()
 {
-	if ( not( atomdb:media-resource-available( $request-path-info ) ) )
-	
-	then ()
-	
-	else
-	
+
+    (: 
+     : N.B. this function handles a request-path-info identifying a media resource
+     : OR identifying a media-link entry. The consequences are the same, both
+     : are removed from the database.
+     :)
+     
+    if ( atomdb:media-resource-available( $request-path-info ) )
+    
+    then
+    
 		let $groups := text:groups( $request-path-info , "^(.*)/([^/]+)$" )
 		let $collection-db-path := atomdb:request-path-info-to-db-path( $groups[2] )
 		let $media-resource-name := $groups[3]
@@ -353,6 +382,20 @@ declare function atomdb:delete-media(
 		let $media-removed := xmldb:remove( $collection-db-path , $media-resource-name )	
 		let $media-link-removed := xmldb:remove( $collection-db-path , $media-link-resource-name )	
         return ()
+
+    else if ( atomdb:media-link-available( $request-path-info ) )
+    
+    then
+
+		let $groups := text:groups( $request-path-info , "^(.*)/([^/]+)$" )
+		let $collection-db-path := atomdb:request-path-info-to-db-path( $groups[2] )
+		let $media-link-resource-name := $groups[3]
+		let $media-resource-name := replace( $media-link-resource-name , "^(.*)\.atom$" , "$1.media" )
+		let $media-link-removed := xmldb:remove( $collection-db-path , $media-link-resource-name )	
+		let $media-removed := xmldb:remove( $collection-db-path , $media-resource-name )	
+        return ()
+
+	else ()
         
 };
 

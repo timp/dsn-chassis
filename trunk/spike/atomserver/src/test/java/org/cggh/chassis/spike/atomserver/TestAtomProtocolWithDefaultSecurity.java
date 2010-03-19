@@ -3,6 +3,7 @@ package org.cggh.chassis.spike.atomserver;
 import java.io.File;
 import java.io.InputStream;
 
+import org.apache.commons.httpclient.methods.DeleteMethod;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.PutMethod;
@@ -552,7 +553,7 @@ public class TestAtomProtocolWithDefaultSecurity extends TestCase {
 	
 	
 	
-	public void testUserWithEditorRoleCanUpdateMediaResources() {
+	public void testUserWithMediaEditorRoleCanUpdateMediaResources() {
 		
 		// setup test
 		PostMethod method = new PostMethod(testCollectionUri);
@@ -566,7 +567,7 @@ public class TestAtomProtocolWithDefaultSecurity extends TestCase {
 		PutMethod method2 = new PutMethod(mediaLocation);
 		String media2 = "This is a test - updated.";
 		setTextPlainRequestEntity(method2, media2);
-		int result = executeMethod(method2, "edwina", "test");
+		int result = executeMethod(method2, "melanie", "test");
 		
 		assertEquals(200, result);
 
@@ -575,7 +576,7 @@ public class TestAtomProtocolWithDefaultSecurity extends TestCase {
 	
 	
 	
-	public void testUserWithoutEditorRoleCannotUpdateMediaResources() {
+	public void testUserWithoutMediaEditorRoleCannotUpdateMediaResources() {
 		
 		// setup test
 		PostMethod method = new PostMethod(testCollectionUri);
@@ -886,8 +887,158 @@ public class TestAtomProtocolWithDefaultSecurity extends TestCase {
 
 
 	
-	// TODO test deleting
+	public void testUserWithMediaEditorRoleCanDeleteMediaResource() {
+		
+		// setup test
+		String collectionUri = createTestCollection(SERVER_URI, "adam", "test");
+		Document mediaLinkDoc = createTestMediaResourceAndReturnMediaLinkEntry(collectionUri, "audrey", "test");
+		String mediaLocation = getEditMediaLocation(mediaLinkDoc);
+		String mediaLinkLocation = getEditLocation(mediaLinkDoc);
+		
+		// now try to get media
+		GetMethod get1 = new GetMethod(mediaLocation);
+		int resultGet1 = executeMethod(get1, "rebecca", "test");
+		assertEquals(200, resultGet1);
+		
+		// now try to get media link
+		GetMethod get2 = new GetMethod(mediaLinkLocation);
+		int resultGet2 = executeMethod(get2, "rebecca", "test");
+		assertEquals(200, resultGet2);
+		
+		// now try delete on media location
+		DeleteMethod delete = new DeleteMethod(mediaLocation);
+		int result = executeMethod(delete, "melanie", "test");
+		assertEquals(204, result);
+		
+		// now try to get media again
+		GetMethod get3 = new GetMethod(mediaLocation);
+		int resultGet3 = executeMethod(get3, "rebecca", "test");
+		assertEquals(404, resultGet3);
+		
+		// now try to get media link again
+		GetMethod get4 = new GetMethod(mediaLinkLocation);
+		int resultGet4 = executeMethod(get4, "rebecca", "test");
+		assertEquals(404, resultGet4);
+		
+	}
 
+
+	
+	
+	public void testUserWithoutMediaEditorRoleCannotDeleteMediaResource() {
+
+		// setup test
+		String collectionUri = createTestCollection(SERVER_URI, "adam", "test");
+		Document mediaLinkDoc = createTestMediaResourceAndReturnMediaLinkEntry(collectionUri, "audrey", "test");
+		String mediaLocation = getEditMediaLocation(mediaLinkDoc);
+		String mediaLinkLocation = getEditLocation(mediaLinkDoc);
+		
+		// now try to get media
+		GetMethod get1 = new GetMethod(mediaLocation);
+		int resultGet1 = executeMethod(get1, "rebecca", "test");
+		assertEquals(200, resultGet1);
+		
+		// now try to get media link
+		GetMethod get2 = new GetMethod(mediaLinkLocation);
+		int resultGet2 = executeMethod(get2, "rebecca", "test");
+		assertEquals(200, resultGet2);
+		
+		// now try delete on media location
+		DeleteMethod delete = new DeleteMethod(mediaLocation);
+		int result = executeMethod(delete, "edwina", "test");
+		assertEquals(403, result);
+		
+		// now try to get media again
+		GetMethod get3 = new GetMethod(mediaLocation);
+		int resultGet3 = executeMethod(get3, "rebecca", "test");
+		assertEquals(200, resultGet3);
+		
+		// now try to get media link again
+		GetMethod get4 = new GetMethod(mediaLinkLocation);
+		int resultGet4 = executeMethod(get4, "rebecca", "test");
+		assertEquals(200, resultGet4);
+		
+}
+
+	
+	
+	
+	public void testUserWithMediaEditorRoleCanDeleteMediaResourceViaMediaLinkLocation() {
+
+		// setup test
+		String collectionUri = createTestCollection(SERVER_URI, "adam", "test");
+		Document mediaLinkDoc = createTestMediaResourceAndReturnMediaLinkEntry(collectionUri, "audrey", "test");
+		String mediaLocation = getEditMediaLocation(mediaLinkDoc);
+		String mediaLinkLocation = getEditLocation(mediaLinkDoc);
+		
+		// now try to get media
+		GetMethod get1 = new GetMethod(mediaLocation);
+		int resultGet1 = executeMethod(get1, "rebecca", "test");
+		assertEquals(200, resultGet1);
+		
+		// now try to get media link
+		GetMethod get2 = new GetMethod(mediaLinkLocation);
+		int resultGet2 = executeMethod(get2, "rebecca", "test");
+		assertEquals(200, resultGet2);
+		
+		// now try delete on media location
+		DeleteMethod delete = new DeleteMethod(mediaLinkLocation);
+		int result = executeMethod(delete, "melanie", "test");
+		assertEquals(204, result);
+		
+		// now try to get media again
+		GetMethod get3 = new GetMethod(mediaLocation);
+		int resultGet3 = executeMethod(get3, "rebecca", "test");
+		assertEquals(404, resultGet3);
+		
+		// now try to get media link again
+		GetMethod get4 = new GetMethod(mediaLinkLocation);
+		int resultGet4 = executeMethod(get4, "rebecca", "test");
+		assertEquals(404, resultGet4);
+		
+	}
+
+	
+	
+	
+	public void testUserWithoutMediaEditorRoleCannotDeleteMediaResourceViaMediaLinkLocation() {
+
+		// setup test
+		String collectionUri = createTestCollection(SERVER_URI, "adam", "test");
+		Document mediaLinkDoc = createTestMediaResourceAndReturnMediaLinkEntry(collectionUri, "audrey", "test");
+		String mediaLocation = getEditMediaLocation(mediaLinkDoc);
+		String mediaLinkLocation = getEditLocation(mediaLinkDoc);
+		
+		// now try to get media
+		GetMethod get1 = new GetMethod(mediaLocation);
+		int resultGet1 = executeMethod(get1, "rebecca", "test");
+		assertEquals(200, resultGet1);
+		
+		// now try to get media link
+		GetMethod get2 = new GetMethod(mediaLinkLocation);
+		int resultGet2 = executeMethod(get2, "rebecca", "test");
+		assertEquals(200, resultGet2);
+		
+		// now try delete on media location
+		DeleteMethod delete = new DeleteMethod(mediaLinkLocation);
+		int result = executeMethod(delete, "edwina", "test");
+		assertEquals(403, result);
+		
+		// now try to get media again
+		GetMethod get3 = new GetMethod(mediaLocation);
+		int resultGet3 = executeMethod(get3, "rebecca", "test");
+		assertEquals(200, resultGet3);
+		
+		// now try to get media link again
+		GetMethod get4 = new GetMethod(mediaLinkLocation);
+		int resultGet4 = executeMethod(get4, "rebecca", "test");
+		assertEquals(200, resultGet4);
+		
+	}
+
+
+	
+	
 }
 
 
