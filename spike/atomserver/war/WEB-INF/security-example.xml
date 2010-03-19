@@ -29,6 +29,8 @@
 
       <user name="edwina" password="test" authorities="ROLE_USER, ROLE_EDITOR" />
 
+      <user name="melanie" password="test" authorities="ROLE_USER, ROLE_MEDIA_EDITOR" />
+      
       <user name="austin" password="test" authorities="ROLE_USER, ROLE_AUTHOR" />
       <user name="audrey" password="test" authorities="ROLE_USER, ROLE_AUTHOR" />
 

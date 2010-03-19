@@ -989,10 +989,23 @@ declare function ap:do-delete-member(
 ) as item()*
 {
 
-    (: here we bottom out at the "delete-member" operation :)
-	ap:apply-op( $CONSTANT:OP-DELETE-MEMBER , $ap:op-delete-member , $request-path-info , () )
+    (: 
+     : This is a little bit tricky...
+     :
+     : We need to know if this is a simple atom entry, or if this a media-link
+     : entry. If it is a simple atom entry, then do the obvious, which is to
+     : bottom out at the "delete-member" operation. However, if it is a media-link
+     : entry, we will treat this as a "delete-media" operation, because the
+     : delete on the media-link also causes a delete on the associated media
+     : resource.
+     :)
+     
+    if ( atomdb:media-link-available( $request-path-info ) )
+    then ap:apply-op( $CONSTANT:OP-DELETE-MEDIA , $ap:op-delete-media, $request-path-info, () )
+    else ap:apply-op( $CONSTANT:OP-DELETE-MEMBER , $ap:op-delete-member , $request-path-info , () )
 			
 };
+
 
 
 
@@ -1050,8 +1063,7 @@ declare function ap:op-delete-media(
 	return ( $CONSTANT:STATUS-SUCCESS-NO-CONTENT , () , () )
 
 };
-
-
+ 
 
 
 declare variable $ap:op-delete-media as function :=
