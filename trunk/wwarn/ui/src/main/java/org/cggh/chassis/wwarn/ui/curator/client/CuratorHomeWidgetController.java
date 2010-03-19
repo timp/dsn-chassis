@@ -31,11 +31,6 @@ public class CuratorHomeWidgetController {
 	private CuratorHomeWidgetModel model;
 
 
-	private ListStudiesWidget listStudiesWidget;
-
- 
-	
-	
 	public CuratorHomeWidgetController(CuratorHomeWidget owner, CuratorHomeWidgetModel model) {
 		this.owner = owner;
 		this.model = model;

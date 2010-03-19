@@ -26,6 +26,8 @@ public class CuratorHomeWidgetRenderer extends
 	private Log log = LogFactory.getLog(CuratorHomeWidgetRenderer.class);
 
 
+	ListStudiesWidget listStudiesWidget;
+
 	@UiTemplate("CuratorHomeWidget.ui.xml")
 	interface CuratorHomeWidgetRendererUiBinder extends
 			UiBinder<HTMLPanel, CuratorHomeWidgetRenderer> {
@@ -46,6 +48,7 @@ public class CuratorHomeWidgetRenderer extends
 
 	public CuratorHomeWidgetRenderer(CuratorHomeWidget owner) {
 		this.owner = owner;
+		this.listStudiesWidget = new ListStudiesWidget();
 	}
 
 	private CuratorHomeWidgetController controller;
