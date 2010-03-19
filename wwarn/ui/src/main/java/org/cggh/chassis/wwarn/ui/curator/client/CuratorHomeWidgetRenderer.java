@@ -60,7 +60,6 @@ public class CuratorHomeWidgetRenderer extends
 		this.canvas.clear();
 		this.canvas.add(uiBinder.createAndBindUi(this));
 		
-		errorPanel.setVisible(false);	
 		pendingPanel.setVisible(true);	
 		mainPanel.setVisible(true);
 		pendingPanel.setVisible(false);	
@@ -80,12 +79,11 @@ public class CuratorHomeWidgetRenderer extends
 	protected void syncUIWithStatus(Status status) {
 
 		log.enter("syncUIWithStatus");
-
+        log.debug("Status:"+status);
 		errorPanel.setVisible(false);	
-		mainPanel.setVisible(false);
-		pendingPanel.setVisible(true);	
 		if (status instanceof AsyncWidgetModel.InitialStatus) {
 
+			pendingPanel.setVisible(true);	
 			// Everything off, hidden.
 		}
 		
@@ -96,7 +94,6 @@ public class CuratorHomeWidgetRenderer extends
 
 			
 			error("Error status given on asynchronous call.");
-			errorPanel.setVisible(true);
 		}			
 		
 		else {
@@ -122,10 +119,14 @@ public class CuratorHomeWidgetRenderer extends
 	}
 
 	public void error(String err) {
+		log.enter("error");
+		log.debug("Error:" + err);
+		pendingPanel.setVisible(false);	
         contentPanel.setVisible(false);
 		errorMessage.clear();
 		errorMessage.add(new HTML(err));
 		errorPanel.setVisible(true);
+		log.leave();
 	}
 
 }
