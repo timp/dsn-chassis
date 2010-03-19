@@ -10,10 +10,6 @@ import org.cggh.chassis.generic.widget.client.MultiWidget;
 import org.cggh.chassis.generic.widget.client.WidgetEventChannel;
 
 /**
- * BE SURE TO EDIT THE TEMPLATE NOT THE RENDERED RESULT
- *
- * DELETE_TO_MANUALLY_EDIT
- *
  * @author timp
  *
  */

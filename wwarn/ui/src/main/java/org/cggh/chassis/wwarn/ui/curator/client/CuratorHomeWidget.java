@@ -11,9 +11,6 @@ import org.cggh.chassis.generic.widget.client.DelegatingWidget;
 import org.cggh.chassis.generic.widget.client.WidgetEventChannel;
 
 /**
- * BE SURE TO EDIT THE TEMPLATE NOT THE RENDERED RESULT
- *
- * DELETE_TO_MANUALLY_EDIT
  *
  * @author timp
  *
@@ -24,8 +21,7 @@ public class CuratorHomeWidget
 	private static final Log log = LogFactory.getLog(CuratorHomeWidget.class);
 	
 	private CuratorHomeWidgetController controller;
-	private ListStudiesWidget listStudiesWidget;
-
+	
 	@Override
 	protected CuratorHomeWidgetModel createModel() {
 		return new CuratorHomeWidgetModel();
@@ -37,6 +33,8 @@ public class CuratorHomeWidget
 
 	@Override
 	protected CuratorHomeWidgetRenderer createRenderer() {
+		log.enter("createRenderer");
+		log.leave();
 		return new CuratorHomeWidgetRenderer(this);
 	}
 
@@ -44,12 +42,17 @@ public class CuratorHomeWidget
 	public void init() {
 		
 		super.init();
-				this.controller = new CuratorHomeWidgetController(this, this.model);
+		this.controller = new CuratorHomeWidgetController(this, this.model);
 
 	}
 	
 	@Override
 	public void refresh() {
+		log.enter("refresh");
+		log.debug("renderer" + this.renderer); 
+		log.debug("listStudiesWidget" + this.renderer.listStudiesWidget); 
+		this.renderer.listStudiesWidget.refresh();
+		log.leave();
 	}
 	
 	
