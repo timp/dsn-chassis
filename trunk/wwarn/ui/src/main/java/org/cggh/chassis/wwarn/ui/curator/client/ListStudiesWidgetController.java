@@ -28,7 +28,6 @@ public class ListStudiesWidgetController {
 	private ListStudiesWidgetModel model;
 
 
-	private static String STUDIES_QUERY = "/curator/query/studies.xql";
 
 			
 	public ListStudiesWidgetController(ListStudiesWidget owner, ListStudiesWidgetModel model) {
@@ -42,10 +41,13 @@ public class ListStudiesWidgetController {
 		// Set the model's status to pending.
 		model.status.set(ListStudiesWidgetModel.STATUS_RETRIEVE_STUDY_FEED_PENDING);
 		
+		//"/curator/query/studies.xql";
 		String studyQueryServiceUrl = Config.get(Config.QUERY_STUDIES_URL);
 		
+		log.debug("getFeed");
 		Deferred<Document> deferredDoc = Atom.getFeed(studyQueryServiceUrl);
-		
+		log.debug("gotFeed");
+
 		// Add a call-back and error-back for the asynchronous feed.
 		deferredDoc.addCallback(new RetrieveStudyFeedCallback());
 		deferredDoc.addErrback(new DefaultErrback());
@@ -54,7 +56,7 @@ public class ListStudiesWidgetController {
 		return deferredDoc;
 	}
 	
-	
+	/*
 	public Deferred<ChassisWidget> refreshAndCallback() {
 		log.enter("refreshAndCallback");
 		
@@ -82,8 +84,8 @@ public class ListStudiesWidgetController {
 		return deferredOwner;
 		
 	}
-
-	
+*/
+/*	
 	private Deferred<Element> retrieveStudyFeed() {
 		log.enter("retrieveSubmission");
 		
@@ -110,7 +112,7 @@ public class ListStudiesWidgetController {
 
 	
 	
-		
+*/		
 
 	private class DefaultErrback implements Function<Throwable, Throwable> {
 
@@ -125,12 +127,12 @@ public class ListStudiesWidgetController {
 
 
 	
-	private class RetrieveStudyFeedCallback implements Function<Element, Element> {
+	private class RetrieveStudyFeedCallback implements Function<Document, Document> {
 
 		@Override
-		public Element apply(Element in) {
+		public Document apply(Document in) {
 			log.debug("Study callback apply");
-			model.status.set(CuratorHomeWidgetModel.STATUS_READY_FOR_INTERACTION);
+			model.status.set(ListStudiesWidgetModel.STATUS_READY_FOR_INTERACTION);
 			return in;
 		}
 

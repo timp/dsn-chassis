@@ -17,7 +17,6 @@ import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.xml.client.Document;
 
 
 /**
@@ -86,21 +85,18 @@ public class CuratorHomeWidgetRenderer extends
         
 		errorPanel.setVisible(false);	
 		if (status instanceof AsyncWidgetModel.InitialStatus) {
-
 			pendingPanel.setVisible(true);	
 		}
 		
-		
-		//TODO Widget specific statii
+		else if (status instanceof AsyncWidgetModel.ReadyStatus) {
+			pendingPanel.setVisible(false);	
+		}			
 
 		else if (status instanceof AsyncWidgetModel.ErrorStatus) {
-
-			
 			error("Error status given on asynchronous call.");
 		}			
 		
 		else {
-
 			error("Unhandled status:" + status);
 		}
 
