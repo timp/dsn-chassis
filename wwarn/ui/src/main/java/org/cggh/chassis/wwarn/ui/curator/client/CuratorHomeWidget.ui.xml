@@ -25,14 +25,14 @@
 
     <g:HTMLPanel ui:field="errorPanel" styleName="{style.error}" >
 			<g:Label>
-        		<ui:msg>There has been an unexpected error: </ui:msg>
+        		<ui:msg>CuratorHomeWidget There has been an unexpected error: </ui:msg>
 			</g:Label>
 			<g:FlowPanel ui:field="errorMessage"></g:FlowPanel>
     </g:HTMLPanel>
     
 	<g:HTMLPanel ui:field="pendingPanel">
 			<p>
-				<ui:msg>pending... </ui:msg>
+				<ui:msg>CuratorHomeWidget pending... </ui:msg>
 			</p>
 	</g:HTMLPanel>
 
