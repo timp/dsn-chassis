@@ -5,6 +5,8 @@ import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 import org.cggh.chassis.generic.widget.client.ChassisWidgetRenderer;
+import org.cggh.chassis.generic.widget.client.PropertyChangeEvent;
+import org.cggh.chassis.generic.widget.client.PropertyChangeHandler;
 import org.cggh.chassis.generic.widget.client.WidgetEvent;
 import org.cggh.chassis.generic.widget.client.WidgetEventHandler;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.Status;
@@ -28,7 +30,6 @@ public class CuratorHomeWidgetRenderer extends
 	private Log log = LogFactory.getLog(CuratorHomeWidgetRenderer.class);
 
 
-	ListStudiesWidget listStudiesWidget;
 
 	@UiTemplate("CuratorHomeWidget.ui.xml")
 	interface CuratorHomeWidgetRendererUiBinder extends
@@ -51,13 +52,7 @@ public class CuratorHomeWidgetRenderer extends
 
 	public CuratorHomeWidgetRenderer(CuratorHomeWidget owner) {
 		this.owner = owner;
-		this.listStudiesWidget = new ListStudiesWidget();
-	}
-
-	private CuratorHomeWidgetController controller;
-
-	public void setController(CuratorHomeWidgetController controller) {
-		this.controller = controller;
+		this.listStudiesWidgetUiField = owner.listStudiesWidget;
 	}
 
 	@Override
@@ -67,8 +62,6 @@ public class CuratorHomeWidgetRenderer extends
 		this.canvas.add(uiBinder.createAndBindUi(this));
 		
 		pendingPanel.setVisible(true);	
-		mainPanel.setVisible(true);
-		pendingPanel.setVisible(false);	
 
 	}
 
@@ -76,6 +69,21 @@ public class CuratorHomeWidgetRenderer extends
 	@Override
 	protected void syncUI() {
 		syncUIWithStatus(model.getStatus());
+	}
+	
+	@Override
+	protected void registerHandlersForModelChanges() {
+		super.registerHandlersForModelChanges();
+		model.status.addChangeHandler(new PropertyChangeHandler<Status>() {
+		
+			public void onChange(PropertyChangeEvent<Status> e) {
+				log.enter("onChange");
+			
+				syncUIWithStatus(e.getAfter());
+			
+				log.leave();
+			}
+		});
 	}
 
 	protected void syncUIWithStatus(Status status) {
@@ -88,7 +96,7 @@ public class CuratorHomeWidgetRenderer extends
 			pendingPanel.setVisible(true);	
 		}
 		
-		else if (status instanceof AsyncWidgetModel.ReadyStatus) {
+		else if (status == CuratorHomeWidgetModel.STATUS_READY_FOR_INTERACTION) {
 			pendingPanel.setVisible(false);	
 		}			
 
