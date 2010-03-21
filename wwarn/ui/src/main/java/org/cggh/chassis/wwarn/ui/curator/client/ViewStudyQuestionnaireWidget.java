@@ -27,6 +27,12 @@ public class ViewStudyQuestionnaireWidget
 	private ViewStudyQuestionnaireWidgetController controller;
 
 
+
+	public StudySummaryWidget studySummaryWidget;
+
+
+	public ViewQuestionnaireWidget viewQuestionnaireWidget;
+
 	@Override
 	protected ViewStudyQuestionnaireWidgetModel createModel() {
 		return new ViewStudyQuestionnaireWidgetModel();
@@ -45,18 +51,20 @@ public class ViewStudyQuestionnaireWidget
 	public void init() {
 		
 		super.init();
-				this.controller = new ViewStudyQuestionnaireWidgetController(this, this.model);
+		
+		this.controller = new ViewStudyQuestionnaireWidgetController(this, this.model);
+		this.renderer.setController(controller);
 
 	}
 	
 	@Override
 	public void refresh() {
+		log.enter("refresh");
+		// TODO get data 
+		log.leave();	
 	}
 	
 	
-	
-	public final WidgetEventChannel submitDataNavigationEventChannel = new WidgetEventChannel(this);
-
 	
 	
 

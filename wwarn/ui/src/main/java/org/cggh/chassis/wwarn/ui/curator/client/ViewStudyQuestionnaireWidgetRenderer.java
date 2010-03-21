@@ -61,14 +61,29 @@ public class ViewStudyQuestionnaireWidgetRenderer extends
 	@UiField HTMLPanel errorPanel;
 	@UiField FlowPanel errorMessage;
 
-	private ViewStudyQuestionnaireWidget owner;
-  public ViewStudyQuestionnaireWidgetRenderer(ViewStudyQuestionnaireWidget owner) {
-		this.owner = owner;
-	}
+    @UiField StudySummaryWidget studySummaryWidgetUiField;
+
+
+    @UiField ViewQuestionnaireWidget viewQuestionnaireWidgetUiField;
+
+
+
+
 	private ViewStudyQuestionnaireWidgetController controller;
 
 	public void setController(ViewStudyQuestionnaireWidgetController controller) {
 		this.controller = controller;
+	}
+
+	private ViewStudyQuestionnaireWidget owner;
+	
+    public ViewStudyQuestionnaireWidgetRenderer(ViewStudyQuestionnaireWidget owner) {
+		this.owner = owner;
+        this.studySummaryWidgetUiField = owner.studySummaryWidget;
+
+
+        this.viewQuestionnaireWidgetUiField = owner.viewQuestionnaireWidget;
+
 	}
 
 
@@ -78,6 +93,7 @@ public class ViewStudyQuestionnaireWidgetRenderer extends
 		this.canvas.clear();
 		this.canvas.add(uiBinder.createAndBindUi(this));
 		
+		pendingPanel.setVisible(true);	
 	}
 	
 	@Override
@@ -97,10 +113,15 @@ public class ViewStudyQuestionnaireWidgetRenderer extends
 		errorPanel.setVisible(false);	
 		if (status instanceof AsyncWidgetModel.InitialStatus) {
 
-			// Everything off, hidden.
+			pendingPanel.setVisible(true);	
 		}
 		
 		//TODO Widget specific statii
+		
+		else if (status instanceof AsyncWidgetModel.ReadyStatus) {
+
+			pendingPanel.setVisible(false);	
+		}			
 		
 		else if (status instanceof AsyncWidgetModel.ErrorStatus) {
 
@@ -115,18 +136,6 @@ public class ViewStudyQuestionnaireWidgetRenderer extends
 
 		log.leave();
 	}
-	
-	/** Clear and re-initialise, setting selected id. 
-	 * @param studyFeedDoc */
-	void syncUiWithStudyFeedDoc(Document studyFeedDoc) {
-		
-		log.enter("syncUiWithStudyFeedDoc");
-		
-		// Turn everything off (that is made visible/enabled here) first, then show/enable as required.
-		
-		log.leave();
-	}
-	
 	
 	public void error(String err) {
 		log.enter("error");

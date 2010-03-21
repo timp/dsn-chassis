@@ -1,6 +1,8 @@
 package org.cggh.chassis.wwarn.ui.curator.client;
 
-import com.google.gwt.event.shared.GwtEvent;
+import org.cggh.chassis.generic.log.client.Log;
+import org.cggh.chassis.generic.log.client.LogFactory;
+import org.cggh.chassis.generic.widget.client.WidgetEvent;
 
 /**
  * BE SURE TO EDIT THE TEMPLATE NOT THE RENDERED RESULT
@@ -8,18 +10,8 @@ import com.google.gwt.event.shared.GwtEvent;
  * DELETE_TO_MANUALLY_EDIT
  *
  */
-public class EditStudyQuestionnaireNavigationEvent extends GwtEvent<EditStudyQuestionnaireNavigationHandler> {
+public class EditStudyQuestionnaireNavigationEvent extends WidgetEvent {
 
-	public static final Type<EditStudyQuestionnaireNavigationHandler> TYPE = new Type<EditStudyQuestionnaireNavigationHandler>();
-	
-	@Override
-	protected void dispatch(EditStudyQuestionnaireNavigationHandler h) {
-		h.onNavigation(this);
-	}
-
-	@Override
-	public com.google.gwt.event.shared.GwtEvent.Type<EditStudyQuestionnaireNavigationHandler> getAssociatedType() {
-		return TYPE;
-	}
+	private static final Log log = LogFactory.getLog(EditStudyQuestionnaireNavigationEvent.class);	
 
 }

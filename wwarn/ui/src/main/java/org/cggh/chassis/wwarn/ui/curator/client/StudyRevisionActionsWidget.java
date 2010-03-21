@@ -35,11 +35,29 @@ public class StudyRevisionActionsWidget
 	
 	@Override
 	public void refresh() {
+		log.enter("refresh");
+		// TODO get data 
+		log.leave();	
 	}
 	
 	
-	
-	public final WidgetEventChannel submitDataNavigationEventChannel = new WidgetEventChannel(this);
+	public final WidgetEventChannel listStudiesNavigationEventChannel = new WidgetEventChannel(this);
+
+
+	public final WidgetEventChannel editStudyQuestionnaireNavigationEventChannel = new WidgetEventChannel(this);
+
+
+	public final WidgetEventChannel nextRevisionNavigationEventChannel = new WidgetEventChannel(this);
+
+
+	public final WidgetEventChannel viewStudyQuestionnaireNavigationEventChannel = new WidgetEventChannel(this);
+
+
+	public final WidgetEventChannel previousRevisionNavigationEventChannel = new WidgetEventChannel(this);
+
+
+	public final WidgetEventChannel listStudyRevisionsNavigationEventChannel = new WidgetEventChannel(this);
+
 
 	
 	
