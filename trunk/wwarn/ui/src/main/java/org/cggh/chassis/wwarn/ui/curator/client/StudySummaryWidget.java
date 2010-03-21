@@ -45,6 +45,7 @@ public class StudySummaryWidget
 	@UiField HTMLPanel errorPanel;
 	@UiField FlowPanel errorMessage;
 
+	@UiField FlowPanel tablePanel;
 
 
 	
