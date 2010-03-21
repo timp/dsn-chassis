@@ -29,9 +29,8 @@ public class ViewStudyWidget
 	
 	private ViewStudyWidgetController controller;
 
-	public StudySummaryWidget studySummaryWidget;
 
-//	private StudySummaryWidget studySummaryWidget;
+	private StudySummaryWidget studySummaryWidget;
 //	private ViewStudyMetadataWidget viewStudyMetadataWidget;
 //	private ListSubmissionsWidget listSubmissionsWidget;
 //	private ListCurationsWidget listCurationsWidget;
@@ -80,7 +79,6 @@ public class ViewStudyWidget
 	}
 	
 	/*
-	 * 
 	 * TODO 
 	public HandlerRegistration addListStudiesNavigationHandler(ListStudiesNavigationHandler h) {
 		return this.addHandler(h, ListStudiesNavigationEvent.TYPE);
@@ -88,9 +86,10 @@ public class ViewStudyWidget
 	*/
 	public void setStudy(Element study) {
 		
-		log.debug("Setting study....");
+		log.debug("Setting study...." + study);
 		
 		model.setStudyEntryElement(study);
+		studySummaryWidget.setStudyEntry(study);
 	}
 	
 	public Deferred<Element> retrieveStudy() {
@@ -193,6 +192,12 @@ public class ViewStudyWidget
 			
 		}
 
+	}
+
+
+	public void setStudyID(String studyID) {
+		model.setStudyID(studyID);
+		
 	}	
 
 
