@@ -3,26 +3,12 @@
  */
 package org.cggh.chassis.wwarn.ui.curator.client;
 
-import org.cggh.chassis.generic.async.client.Deferred;
-import org.cggh.chassis.generic.async.client.Function;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 import org.cggh.chassis.generic.widget.client.ChassisWidget;
-import org.cggh.chassis.generic.widget.client.DelegatingWidget;
-import org.cggh.chassis.generic.widget.client.ErrorEvent;
-import org.cggh.chassis.generic.widget.client.MultiWidget;
 import org.cggh.chassis.generic.widget.client.ObservableProperty;
-
-import org.cggh.chassis.generic.widget.client.WidgetEventChannel;
-import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.AsyncRequestPendingStatus;
-import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.ReadyStatus;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.Status;
-import org.cggh.chassis.wwarn.ui.curator.client.StudySummaryWidgetModel.ReadyForInteractionStatus;
-import org.cggh.chassis.wwarn.ui.curator.client.StudySummaryWidgetModel.RetrieveQuestionnairePendingStatus;
-import org.cggh.chassis.wwarn.ui.curator.client.StudySummaryWidgetModel.RetrieveStudyPendingStatus;
-import org.cggh.chassis.wwarn.ui.curator.client.StudySummaryWidgetModel.SaveStudyPendingStatus;
-import org.cggh.chassis.wwarn.ui.curator.client.StudySummaryWidgetRenderer.StudySummaryWidgetRendererUiBinder;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -31,7 +17,6 @@ import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.xml.client.Element;
 
 
@@ -49,7 +34,7 @@ public class StudySummaryWidget
 
 	@UiTemplate("StudySummaryWidget.ui.xml")
 	interface StudySummaryWidgetRendererUiBinder extends
-			UiBinder<HTMLPanel, StudySummaryWidgetRenderer> {
+			UiBinder<HTMLPanel, StudySummaryWidget> {
 	}
 	private static StudySummaryWidgetRendererUiBinder uiBinder = 
 		GWT.create(StudySummaryWidgetRendererUiBinder.class);
