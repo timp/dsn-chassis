@@ -19,7 +19,7 @@ public class ViewStudyNavigationEvent extends WidgetEvent {
 
 		log.enter("setStudy");		
 		
-		log.debug("Setting study....");
+		log.debug("Setting study " + study);
 		
 		this.study = study;
 		
@@ -30,7 +30,7 @@ public class ViewStudyNavigationEvent extends WidgetEvent {
 
 		log.enter("getStudy");		
 		
-		log.debug("Getting study....");
+		log.debug("Getting study " + this.study);
 
 		log.leave();
 		
@@ -42,7 +42,7 @@ public class ViewStudyNavigationEvent extends WidgetEvent {
 
 		log.enter("setStudyId");		
 		
-		log.debug("Setting study id" + id);
+		log.debug("Setting study id " + id);
 		
 		this.studyId = id;
 		
