@@ -57,10 +57,13 @@ public class StudyRevisionListWidgetRenderer extends
 	@UiField HTMLPanel errorPanel;
 	@UiField FlowPanel errorMessage;
 
+
+
+
 	private StudyRevisionListWidget owner;
-  public StudyRevisionListWidgetRenderer(StudyRevisionListWidget owner) {
-		this.owner = owner;
-	}
+	
+    public StudyRevisionListWidgetRenderer(StudyRevisionListWidget owner) {
+		this.owner = owner;	}
 
 
 	@Override
@@ -69,6 +72,7 @@ public class StudyRevisionListWidgetRenderer extends
 		this.canvas.clear();
 		this.canvas.add(uiBinder.createAndBindUi(this));
 		
+		pendingPanel.setVisible(true);	
 	}
 	
 	@Override
@@ -88,10 +92,15 @@ public class StudyRevisionListWidgetRenderer extends
 		errorPanel.setVisible(false);	
 		if (status instanceof AsyncWidgetModel.InitialStatus) {
 
-			// Everything off, hidden.
+			pendingPanel.setVisible(true);	
 		}
 		
 		//TODO Widget specific statii
+		
+		else if (status instanceof AsyncWidgetModel.ReadyStatus) {
+
+			pendingPanel.setVisible(false);	
+		}			
 		
 		else if (status instanceof AsyncWidgetModel.ErrorStatus) {
 
@@ -106,18 +115,6 @@ public class StudyRevisionListWidgetRenderer extends
 
 		log.leave();
 	}
-	
-	/** Clear and re-initialise, setting selected id. 
-	 * @param studyFeedDoc */
-	void syncUiWithStudyFeedDoc(Document studyFeedDoc) {
-		
-		log.enter("syncUiWithStudyFeedDoc");
-		
-		// Turn everything off (that is made visible/enabled here) first, then show/enable as required.
-		
-		log.leave();
-	}
-	
 	
 	public void error(String err) {
 		log.enter("error");

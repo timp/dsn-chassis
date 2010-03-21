@@ -3,6 +3,7 @@
 package org.cggh.chassis.wwarn.ui.curator.client;
 
 import org.cggh.chassis.generic.widget.client.ObservableProperty;
+import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.AsyncRequestPendingStatus;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.ReadyStatus;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.Status;
@@ -38,8 +39,14 @@ public class StudySummaryWidgetModel {
 	public final ObservableProperty<Element> studyEntryElement = new ObservableProperty<Element>();
 	public final ObservableProperty<Status> status = new ObservableProperty<Status>();
 	public final ObservableProperty<String> message = new ObservableProperty<String>();
+
+
+
+
 	
 	public Status getStatus() {
+		if (status.get() == null)
+			status.set(AsyncWidgetModel.STATUS_INITIAL);
 		return status.get();
 	}	
 }

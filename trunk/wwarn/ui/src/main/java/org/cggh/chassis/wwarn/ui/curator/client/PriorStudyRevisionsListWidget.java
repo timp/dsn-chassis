@@ -35,11 +35,14 @@ public class PriorStudyRevisionsListWidget
 	
 	@Override
 	public void refresh() {
+		log.enter("refresh");
+		// TODO get data 
+		log.leave();	
 	}
 	
 	
-	
-	public final WidgetEventChannel submitDataNavigationEventChannel = new WidgetEventChannel(this);
+	public final WidgetEventChannel viewRevisionNavigationEventChannel = new WidgetEventChannel(this);
+
 
 	
 	

@@ -35,11 +35,14 @@ public class EditQuestionnaireWidget
 	
 	@Override
 	public void refresh() {
+		log.enter("refresh");
+		// TODO get data 
+		log.leave();	
 	}
 	
 	
-	
-	public final WidgetEventChannel submitDataNavigationEventChannel = new WidgetEventChannel(this);
+	public final WidgetEventChannel saveStudyEventChannel = new WidgetEventChannel(this);
+
 
 	
 	

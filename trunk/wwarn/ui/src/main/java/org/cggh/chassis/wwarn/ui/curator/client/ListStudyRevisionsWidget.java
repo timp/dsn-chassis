@@ -27,6 +27,12 @@ public class ListStudyRevisionsWidget
 	private ListStudyRevisionsWidgetController controller;
 
 
+
+	public StudySummaryWidget studySummaryWidget;
+
+
+	public StudyRevisionListWidget studyRevisionListWidget;
+
 	@Override
 	protected ListStudyRevisionsWidgetModel createModel() {
 		return new ListStudyRevisionsWidgetModel();
@@ -45,18 +51,20 @@ public class ListStudyRevisionsWidget
 	public void init() {
 		
 		super.init();
-				this.controller = new ListStudyRevisionsWidgetController(this, this.model);
+		
+		this.controller = new ListStudyRevisionsWidgetController(this, this.model);
+		this.renderer.setController(controller);
 
 	}
 	
 	@Override
 	public void refresh() {
+		log.enter("refresh");
+		// TODO get data 
+		log.leave();	
 	}
 	
 	
-	
-	public final WidgetEventChannel submitDataNavigationEventChannel = new WidgetEventChannel(this);
-
 	
 	
 

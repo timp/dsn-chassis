@@ -27,6 +27,12 @@ public class EditStudyQuestionnaireWidget
 	private EditStudyQuestionnaireWidgetController controller;
 
 
+
+	public StudySummaryWidget studySummaryWidget;
+
+
+	public EditQuestionnaireWidget editQuestionnaireWidget;
+
 	@Override
 	protected EditStudyQuestionnaireWidgetModel createModel() {
 		return new EditStudyQuestionnaireWidgetModel();
@@ -45,18 +51,20 @@ public class EditStudyQuestionnaireWidget
 	public void init() {
 		
 		super.init();
-				this.controller = new EditStudyQuestionnaireWidgetController(this, this.model);
+		
+		this.controller = new EditStudyQuestionnaireWidgetController(this, this.model);
+		this.renderer.setController(controller);
 
 	}
 	
 	@Override
 	public void refresh() {
+		log.enter("refresh");
+		// TODO get data 
+		log.leave();	
 	}
 	
 	
-	
-	public final WidgetEventChannel submitDataNavigationEventChannel = new WidgetEventChannel(this);
-
 	
 	
 

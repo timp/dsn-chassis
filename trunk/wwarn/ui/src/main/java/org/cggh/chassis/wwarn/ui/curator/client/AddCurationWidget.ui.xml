@@ -28,22 +28,23 @@
 
 	<g:HTMLPanel ui:field="mainPanel" >
 
-    <g:HTMLPanel ui:field="errorPanel">
+    <g:HTMLPanel ui:field="errorPanel" styleName="{style.error}" >
 			<g:Label>
         		<ui:msg>There has been an unexpected error: </ui:msg>
 			</g:Label>
-			<g:FlowPanel ui:field="errorMessage"></g:FlowPanel>
+			<g:FlowPanel ui:field="errorMessage"  title="AddCuration"></g:FlowPanel>
     </g:HTMLPanel>
 
 		<g:HTMLPanel ui:field="pendingPanel">
-			<p>
+			<p title="AddCuration">
 				<ui:msg>pending... </ui:msg>
 			</p>
 		</g:HTMLPanel>
 
 		<g:HTMLPanel ui:field="contentPanel">
 
-            <h3><ui:msg>AddCuration</ui:msg></h3>			<local:UploadCuratedDataFilesWidget ui:field="uploadCuratedDataFilesWidgetUiField"/>
+            <h3><ui:msg>AddCuration</ui:msg></h3>
+			<local:UploadCuratedDataFilesWidget ui:field="uploadCuratedDataFilesWidgetUiField"/>
 			<local:SelectDerivationFilesWidget ui:field="selectDerivationFilesWidgetUiField"/>
 			<local:CurationSummaryWidget ui:field="curationSummaryWidgetUiField"/>
 		</g:HTMLPanel>

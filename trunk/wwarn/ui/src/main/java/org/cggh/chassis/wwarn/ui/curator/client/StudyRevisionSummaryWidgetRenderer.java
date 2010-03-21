@@ -57,10 +57,18 @@ public class StudyRevisionSummaryWidgetRenderer extends
 	@UiField HTMLPanel errorPanel;
 	@UiField FlowPanel errorMessage;
 
-	private StudyRevisionSummaryWidget owner;
-  public StudyRevisionSummaryWidgetRenderer(StudyRevisionSummaryWidget owner) {
-		this.owner = owner;
+
+
+	private StudyRevisionSummaryWidgetController controller;
+
+	public void setController(StudyRevisionSummaryWidgetController controller) {
+		this.controller = controller;
 	}
+
+	private StudyRevisionSummaryWidget owner;
+	
+    public StudyRevisionSummaryWidgetRenderer(StudyRevisionSummaryWidget owner) {
+		this.owner = owner;	}
 
 
 	@Override
@@ -69,6 +77,7 @@ public class StudyRevisionSummaryWidgetRenderer extends
 		this.canvas.clear();
 		this.canvas.add(uiBinder.createAndBindUi(this));
 		
+		pendingPanel.setVisible(true);	
 	}
 	
 	@Override
@@ -88,10 +97,15 @@ public class StudyRevisionSummaryWidgetRenderer extends
 		errorPanel.setVisible(false);	
 		if (status instanceof AsyncWidgetModel.InitialStatus) {
 
-			// Everything off, hidden.
+			pendingPanel.setVisible(true);	
 		}
 		
 		//TODO Widget specific statii
+		
+		else if (status instanceof AsyncWidgetModel.ReadyStatus) {
+
+			pendingPanel.setVisible(false);	
+		}			
 		
 		else if (status instanceof AsyncWidgetModel.ErrorStatus) {
 
@@ -106,18 +120,6 @@ public class StudyRevisionSummaryWidgetRenderer extends
 
 		log.leave();
 	}
-	
-	/** Clear and re-initialise, setting selected id. 
-	 * @param studyFeedDoc */
-	void syncUiWithStudyFeedDoc(Document studyFeedDoc) {
-		
-		log.enter("syncUiWithStudyFeedDoc");
-		
-		// Turn everything off (that is made visible/enabled here) first, then show/enable as required.
-		
-		log.leave();
-	}
-	
 	
 	public void error(String err) {
 		log.enter("error");

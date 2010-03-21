@@ -63,14 +63,35 @@ public class ViewStudyRevisionWidgetRenderer extends
 	@UiField HTMLPanel errorPanel;
 	@UiField FlowPanel errorMessage;
 
-	private ViewStudyRevisionWidget owner;
-  public ViewStudyRevisionWidgetRenderer(ViewStudyRevisionWidget owner) {
-		this.owner = owner;
-	}
+    @UiField StudyRevisionActionsWidget studyRevisionActionsWidgetUiField;
+
+
+    @UiField ViewRevisionQuestionnaireWidget viewRevisionQuestionnaireWidgetUiField;
+
+
+    @UiField StudyRevisionSummaryWidget studyRevisionSummaryWidgetUiField;
+
+
+
+
 	private ViewStudyRevisionWidgetController controller;
 
 	public void setController(ViewStudyRevisionWidgetController controller) {
 		this.controller = controller;
+	}
+
+	private ViewStudyRevisionWidget owner;
+	
+    public ViewStudyRevisionWidgetRenderer(ViewStudyRevisionWidget owner) {
+		this.owner = owner;
+        this.studyRevisionActionsWidgetUiField = owner.studyRevisionActionsWidget;
+
+
+        this.viewRevisionQuestionnaireWidgetUiField = owner.viewRevisionQuestionnaireWidget;
+
+
+        this.studyRevisionSummaryWidgetUiField = owner.studyRevisionSummaryWidget;
+
 	}
 
 
@@ -80,6 +101,7 @@ public class ViewStudyRevisionWidgetRenderer extends
 		this.canvas.clear();
 		this.canvas.add(uiBinder.createAndBindUi(this));
 		
+		pendingPanel.setVisible(true);	
 	}
 	
 	@Override
@@ -99,10 +121,15 @@ public class ViewStudyRevisionWidgetRenderer extends
 		errorPanel.setVisible(false);	
 		if (status instanceof AsyncWidgetModel.InitialStatus) {
 
-			// Everything off, hidden.
+			pendingPanel.setVisible(true);	
 		}
 		
 		//TODO Widget specific statii
+		
+		else if (status instanceof AsyncWidgetModel.ReadyStatus) {
+
+			pendingPanel.setVisible(false);	
+		}			
 		
 		else if (status instanceof AsyncWidgetModel.ErrorStatus) {
 
@@ -117,18 +144,6 @@ public class ViewStudyRevisionWidgetRenderer extends
 
 		log.leave();
 	}
-	
-	/** Clear and re-initialise, setting selected id. 
-	 * @param studyFeedDoc */
-	void syncUiWithStudyFeedDoc(Document studyFeedDoc) {
-		
-		log.enter("syncUiWithStudyFeedDoc");
-		
-		// Turn everything off (that is made visible/enabled here) first, then show/enable as required.
-		
-		log.leave();
-	}
-	
 	
 	public void error(String err) {
 		log.enter("error");

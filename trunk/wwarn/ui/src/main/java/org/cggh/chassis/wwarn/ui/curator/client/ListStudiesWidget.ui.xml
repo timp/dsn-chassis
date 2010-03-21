@@ -28,22 +28,24 @@
 
 	<g:HTMLPanel ui:field="mainPanel" >
 
-    <g:HTMLPanel ui:field="errorPanel">
+    <g:HTMLPanel ui:field="errorPanel" styleName="{style.error}" >
 			<g:Label>
-        		<ui:msg>ListStudiesWidget There has been an unexpected error: </ui:msg>
+        		<ui:msg>There has been an unexpected error: </ui:msg>
 			</g:Label>
-			<g:FlowPanel ui:field="errorMessage"></g:FlowPanel>
+			<g:FlowPanel ui:field="errorMessage"  title="ListStudies"></g:FlowPanel>
     </g:HTMLPanel>
 
 		<g:HTMLPanel ui:field="pendingPanel">
-			<p title="ListStudiesWidget">
-				<ui:msg>ListStudiesWidget pending... </ui:msg>
+			<p title="ListStudies">
+				<ui:msg>pending... </ui:msg>
 			</p>
 		</g:HTMLPanel>
 
 		<g:HTMLPanel ui:field="contentPanel">
 
-            <h3><ui:msg>ListStudies</ui:msg></h3>		</g:HTMLPanel>
+            <h3><ui:msg>ListStudies</ui:msg></h3>
+            <g:FlowPanel ui:field="tablePanel"></g:FlowPanel>
+		</g:HTMLPanel>
 
 	</g:HTMLPanel>
 

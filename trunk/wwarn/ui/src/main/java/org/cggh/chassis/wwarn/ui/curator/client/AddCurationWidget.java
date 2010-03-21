@@ -25,11 +25,14 @@ public class AddCurationWidget
 	
 
 
-	private UploadCuratedDataFilesWidget uploadCuratedDataFilesWidget;
 
-	private SelectDerivationFilesWidget selectDerivationFilesWidget;
+	public UploadCuratedDataFilesWidget uploadCuratedDataFilesWidget;
 
-	private CurationSummaryWidget curationSummaryWidget;
+
+	public SelectDerivationFilesWidget selectDerivationFilesWidget;
+
+
+	public CurationSummaryWidget curationSummaryWidget;
 
 
 	// Using init() rather than constructor because reset() uses init().
@@ -41,12 +44,12 @@ public class AddCurationWidget
 	
 	@Override
 	public void refresh() {
+		log.enter("refresh");
+		// TODO get data 
+		log.leave();	
 	}
 	
 	
-	
-	public final WidgetEventChannel submitDataNavigationEventChannel = new WidgetEventChannel(this);
-
 	
 	
 

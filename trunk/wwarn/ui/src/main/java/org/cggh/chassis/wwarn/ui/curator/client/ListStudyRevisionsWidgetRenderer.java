@@ -61,14 +61,29 @@ public class ListStudyRevisionsWidgetRenderer extends
 	@UiField HTMLPanel errorPanel;
 	@UiField FlowPanel errorMessage;
 
-	private ListStudyRevisionsWidget owner;
-  public ListStudyRevisionsWidgetRenderer(ListStudyRevisionsWidget owner) {
-		this.owner = owner;
-	}
+    @UiField StudySummaryWidget studySummaryWidgetUiField;
+
+
+    @UiField StudyRevisionListWidget studyRevisionListWidgetUiField;
+
+
+
+
 	private ListStudyRevisionsWidgetController controller;
 
 	public void setController(ListStudyRevisionsWidgetController controller) {
 		this.controller = controller;
+	}
+
+	private ListStudyRevisionsWidget owner;
+	
+    public ListStudyRevisionsWidgetRenderer(ListStudyRevisionsWidget owner) {
+		this.owner = owner;
+        this.studySummaryWidgetUiField = owner.studySummaryWidget;
+
+
+        this.studyRevisionListWidgetUiField = owner.studyRevisionListWidget;
+
 	}
 
 
@@ -78,6 +93,7 @@ public class ListStudyRevisionsWidgetRenderer extends
 		this.canvas.clear();
 		this.canvas.add(uiBinder.createAndBindUi(this));
 		
+		pendingPanel.setVisible(true);	
 	}
 	
 	@Override
@@ -97,10 +113,15 @@ public class ListStudyRevisionsWidgetRenderer extends
 		errorPanel.setVisible(false);	
 		if (status instanceof AsyncWidgetModel.InitialStatus) {
 
-			// Everything off, hidden.
+			pendingPanel.setVisible(true);	
 		}
 		
 		//TODO Widget specific statii
+		
+		else if (status instanceof AsyncWidgetModel.ReadyStatus) {
+
+			pendingPanel.setVisible(false);	
+		}			
 		
 		else if (status instanceof AsyncWidgetModel.ErrorStatus) {
 
@@ -115,18 +136,6 @@ public class ListStudyRevisionsWidgetRenderer extends
 
 		log.leave();
 	}
-	
-	/** Clear and re-initialise, setting selected id. 
-	 * @param studyFeedDoc */
-	void syncUiWithStudyFeedDoc(Document studyFeedDoc) {
-		
-		log.enter("syncUiWithStudyFeedDoc");
-		
-		// Turn everything off (that is made visible/enabled here) first, then show/enable as required.
-		
-		log.leave();
-	}
-	
 	
 	public void error(String err) {
 		log.enter("error");
