@@ -51,7 +51,7 @@ public class ViewStudyNavigationEvent extends WidgetEvent {
 	
 	public String getStudyId() {
 
-		log.enter("getStudyIf");		
+		log.enter("getStudyId");		
 		
 		log.debug("Getting study id " + this.studyId);
 
