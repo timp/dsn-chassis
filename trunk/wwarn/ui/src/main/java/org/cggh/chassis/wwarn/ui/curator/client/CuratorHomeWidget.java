@@ -6,9 +6,12 @@ package org.cggh.chassis.wwarn.ui.curator.client;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.DelegatingWidget;
+import org.cggh.chassis.generic.widget.client.PropertyChangeEvent;
+import org.cggh.chassis.generic.widget.client.PropertyChangeHandler;
 
 
 import org.cggh.chassis.generic.widget.client.WidgetEventChannel;
+import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.Status;
 
 /**
  *
@@ -21,6 +24,8 @@ public class CuratorHomeWidget
 	private static final Log log = LogFactory.getLog(CuratorHomeWidget.class);
 	
 	private CuratorHomeWidgetController controller;
+
+	ListStudiesWidget listStudiesWidget;
 	
 	@Override
 	protected CuratorHomeWidgetModel createModel() {
@@ -43,15 +48,33 @@ public class CuratorHomeWidget
 		
 		super.init();
 		this.controller = new CuratorHomeWidgetController(this, this.model);
-
+		this.listStudiesWidget = new ListStudiesWidget();
 	}
 	
 	@Override
 	public void refresh() {
 		log.enter("refresh");
 		log.debug("renderer" + this.renderer); 
-		log.debug("listStudiesWidget" + this.renderer.listStudiesWidget); 
-		this.renderer.listStudiesWidget.refresh();
+		log.debug("listStudiesWidget" + this.renderer.listStudiesWidgetUiField); 
+		/*
+		this.listStudiesWidget.getModel().status.addChangeHandler(new PropertyChangeHandler<Status>() {
+			
+			public void onChange(PropertyChangeEvent<Status> e) {
+				log.enter("onChange");
+				
+				Status status = e.getAfter();
+				
+				// deal with main content panel visibility
+				if (status instanceof ListStudiesWidgetModel.ReadyForInteractionStatus) {
+					model.status.set(CuratorHomeWidgetModel.STATUS_READY_FOR_INTERACTION);
+					log.debug("set status " + CuratorHomeWidgetModel.STATUS_READY_FOR_INTERACTION);
+				}
+				log.leave();
+			}
+			
+		});
+		*/
+		this.listStudiesWidget.refresh();
 		log.leave();
 	}
 	
@@ -59,7 +82,6 @@ public class CuratorHomeWidget
 	
 	public final WidgetEventChannel viewStudyNavigationEventChannel = new WidgetEventChannel(this);
 
-	
 	
 
 	
