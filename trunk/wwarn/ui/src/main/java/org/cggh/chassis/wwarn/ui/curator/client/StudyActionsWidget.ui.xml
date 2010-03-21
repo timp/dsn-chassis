@@ -44,6 +44,7 @@
 		<g:HTMLPanel ui:field="contentPanel">
 
             <h3><ui:msg>StudyActions</ui:msg></h3>
+            <g:FlowPanel ui:field="tablePanel"></g:FlowPanel>
 		</g:HTMLPanel>
 
 	</g:HTMLPanel>
