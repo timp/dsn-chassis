@@ -101,8 +101,7 @@ public abstract class DelegatingWidget
 		log.enter("bindUI");
 
 		// delegate to renderer
-		if (this.renderer != null) this.renderer.bindUI(this.model);
-		else log.warn("renderer is null");
+		this.renderer.bindUI(this.model);
 
 		log.leave();
 	}
