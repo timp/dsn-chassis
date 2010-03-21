@@ -46,7 +46,7 @@ public class ListStudiesWidgetController {
 		log.debug("gotFeed");
 
 		// Add a call-back and error-back for the asynchronous feed.
-		deferredDoc.addCallback(new RetrieveStudyFeedCallback());
+		deferredDoc.addCallback(new RetrieveStudiesCallback());
 		deferredDoc.addErrback(new DefaultErrback());
 		
 		log.leave();
@@ -67,12 +67,14 @@ public class ListStudiesWidgetController {
 
 
 	
-	private class RetrieveStudyFeedCallback implements Function<Document, Document> {
+	private class RetrieveStudiesCallback implements Function<Document, Document> {
 
 		@Override
 		public Document apply(Document in) {
-			log.debug("Study callback apply");
+			log.debug("RetrieveStudiesCallback.apply setting model status to " + ListStudiesWidgetModel.STATUS_READY_FOR_INTERACTION);
 			model.status.set(ListStudiesWidgetModel.STATUS_READY_FOR_INTERACTION);
+			model.studyFeed.set(in);
+			owner.render();
 			return in;
 		}
 
