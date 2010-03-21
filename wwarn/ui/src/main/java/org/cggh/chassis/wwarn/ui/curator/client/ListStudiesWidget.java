@@ -6,9 +6,12 @@ package org.cggh.chassis.wwarn.ui.curator.client;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.DelegatingWidget;
+import org.cggh.chassis.generic.widget.client.PropertyChangeEvent;
+import org.cggh.chassis.generic.widget.client.PropertyChangeHandler;
 
 
 import org.cggh.chassis.generic.widget.client.WidgetEventChannel;
+import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.Status;
 
 
 /**
@@ -41,26 +44,37 @@ public class ListStudiesWidget
 	public void init() {
 		
 		super.init();
+		
 		this.controller = new ListStudiesWidgetController(this, this.model);
-		this.renderer.setController(controller);
 
 	}
 	
 	@Override
 	public void refresh() {
 		log.enter("refresh");
-		
+/*		
+		getModel().status.addChangeHandler(new PropertyChangeHandler<Status>() {
+			
+			public void onChange(PropertyChangeEvent<Status> e) {
+				log.enter("onChange");
+				
+				Status status = e.getAfter();
+				
+				if (status instanceof ListStudiesWidgetModel.ReadyForInteractionStatus) {
+					renderer.syncUIWithStatus(status);
+				}
+				log.leave();
+			}
+			
+		});
+*/		
 		this.controller.retrieveStudies();
-		
 		log.leave();
 	}
 	
 	
-	
-
-
-
 	public final WidgetEventChannel viewStudyNavigationEventChannel = new WidgetEventChannel(this);
+
 
 	
 	
