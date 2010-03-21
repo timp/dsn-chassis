@@ -10,7 +10,9 @@ public class ViewStudyNavigationEvent extends WidgetEvent {
 
 	private static final Log log = LogFactory.getLog(ViewStudyNavigationEvent.class);	
 	
+	// TODO Decide which mechanism to use
 	private Element study;
+	private String studyId;
 
 
 	public void setStudy(Element study) {
@@ -33,6 +35,29 @@ public class ViewStudyNavigationEvent extends WidgetEvent {
 		log.leave();
 		
 		return this.study;
+
+	}
+
+	public void setStudyId(String id) {
+
+		log.enter("setStudyId");		
+		
+		log.debug("Setting study id" + id);
+		
+		this.studyId = id;
+		
+		log.leave();
+	}
+	
+	public String getStudyId() {
+
+		log.enter("getStudyIf");		
+		
+		log.debug("Getting study id " + this.studyId);
+
+		log.leave();
+		
+		return this.studyId;
 
 	}
 
