@@ -28,7 +28,9 @@ public class ViewStudyWidget
 	private static final Log log = LogFactory.getLog(ViewStudyWidget.class);
 	
 	private ViewStudyWidgetController controller;
-	
+
+	public StudySummaryWidget studySummaryWidget;
+
 //	private StudySummaryWidget studySummaryWidget;
 //	private ViewStudyMetadataWidget viewStudyMetadataWidget;
 //	private ListSubmissionsWidget listSubmissionsWidget;
@@ -77,11 +79,13 @@ public class ViewStudyWidget
 		
 	}
 	
-	
+	/*
+	 * 
+	 * TODO 
 	public HandlerRegistration addListStudiesNavigationHandler(ListStudiesNavigationHandler h) {
 		return this.addHandler(h, ListStudiesNavigationEvent.TYPE);
 	}	
-	
+	*/
 	public void setStudy(Element study) {
 		
 		log.debug("Setting study....");
