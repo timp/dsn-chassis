@@ -35,6 +35,7 @@ public abstract class DelegatingWidget
 		this.model = createModel();
 		this.renderer = createRenderer();
 		
+    // TODO fail hard?
 		if (renderer != null) this.renderer.setCanvas(this.contentBox);
 		else log.error("renderer is null, cannot set canvas", new NullPointerException());
 		
@@ -82,6 +83,7 @@ public abstract class DelegatingWidget
 	protected void renderUI() {
 		log.enter("renderUI");
 
+    // TODO fail hard?
 		// delegate to renderer
 		if (this.renderer != null) this.renderer.renderUI();
 		else log.warn("renderer is null");
@@ -117,6 +119,7 @@ public abstract class DelegatingWidget
 	protected void syncUI() {
 		log.enter("syncUI");
 
+    // TODO fail hard?
 		// delegate to renderer
 		if (this.renderer != null) this.renderer.syncUI();
 		else log.warn("renderer is null");
@@ -135,6 +138,7 @@ public abstract class DelegatingWidget
 	protected void unbindUI() {
 		log.enter("unbindUI");
 
+    // TODO fail hard?
 		// delegate to renderer
 		if (this.renderer != null) this.renderer.unbindUI();
 		else log.warn("renderer is null");
