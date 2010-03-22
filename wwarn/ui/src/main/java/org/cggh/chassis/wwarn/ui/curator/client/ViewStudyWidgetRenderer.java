@@ -7,8 +7,11 @@ import org.cggh.chassis.generic.widget.client.ChassisWidgetRenderer;
 import org.cggh.chassis.generic.widget.client.PropertyChangeEvent;
 import org.cggh.chassis.generic.widget.client.PropertyChangeHandler;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.Status;
+import org.cggh.chassis.wwarn.ui.submitter.client.ViewStudyWidgetModel.EntryChangeEvent;
+import org.cggh.chassis.wwarn.ui.submitter.client.ViewStudyWidgetModel.EntryChangeHandler;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiTemplate;
@@ -64,11 +67,14 @@ public class ViewStudyWidgetRenderer extends
 		
 		model.status.addChangeHandler(syncUIWithStatus);
 
-		model.studyEntryElement.addChangeHandler(new PropertyChangeHandler<Element>() {
+		HandlerRegistration a = model.studyEntryElement.addChangeHandler(new PropertyChangeHandler<Element>() {
 			public void onChange(PropertyChangeEvent<Element> e) {
+				log.enter("onchange(EntryChangeEvent)");
 				syncUIWithStudyEntryElement(e.getAfter());
+				log.leave();
 			}
 		});
+		this.modelChangeHandlerRegistrations.add(a);
 		
 		model.studyID.addChangeHandler(new PropertyChangeHandler<String>() {
 			public void onChange(PropertyChangeEvent<String> e) {
@@ -80,11 +86,9 @@ public class ViewStudyWidgetRenderer extends
 				log.leave();
 				
 			}
-
-
-
 		});			
 		
+
 	}
 
 	@Override
