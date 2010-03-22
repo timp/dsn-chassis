@@ -10,6 +10,7 @@ import org.cggh.chassis.generic.widget.client.WidgetEvent;
 import org.cggh.chassis.generic.widget.client.WidgetEventHandler;
 
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.xml.client.Element;
 
 /**
  *
@@ -72,10 +73,9 @@ public class CuratorApplicationWidget
 
 				if (e instanceof ViewStudyNavigationEvent) {
 					
-					log.debug("Setting fileToBeReviewed...");
-					
-					viewStudyWidget.setStudy(((ViewStudyNavigationEvent) e).getStudy());
-					//viewStudyWidget.setStudyID(((ViewStudyNavigationEvent) e).getStudyId());
+					Element studyElement =  ((ViewStudyNavigationEvent) e).getStudy();
+					log.debug("Setting study to " + studyElement);
+					viewStudyWidget.setStudy(studyElement);
 					
 					viewStudyWidget.refresh();
 					setActiveChild(viewStudyWidget);
