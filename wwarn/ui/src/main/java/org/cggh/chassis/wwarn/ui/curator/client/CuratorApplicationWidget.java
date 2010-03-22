@@ -77,7 +77,6 @@ public class CuratorApplicationWidget
 					log.debug("Setting study to " + studyElement);
 					viewStudyWidget.getModel().studyEntry.set(studyElement);
 					
-					viewStudyWidget.refresh();
 					setActiveChild(viewStudyWidget);
 				
 				} else {
