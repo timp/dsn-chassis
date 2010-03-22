@@ -75,7 +75,7 @@ public class CuratorApplicationWidget
 					
 					Element studyElement =  ((ViewStudyNavigationEvent) e).getStudy();
 					log.debug("Setting study to " + studyElement);
-					viewStudyWidget.setStudy(studyElement);
+					viewStudyWidget.getModel().studyEntry.set(studyElement);
 					
 					viewStudyWidget.refresh();
 					setActiveChild(viewStudyWidget);
