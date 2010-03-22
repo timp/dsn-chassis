@@ -90,8 +90,11 @@ public class CuratorHomeWidgetRenderer extends
 		log.enter("syncUIWithStatus");
         log.debug("Status:"+status);
         
-		errorPanel.setVisible(false);	
-		if (status instanceof AsyncWidgetModel.InitialStatus) {
+		errorPanel.setVisible(false);
+		
+		if (status == null) {
+		}
+		else if (status instanceof AsyncWidgetModel.InitialStatus) {
 			pendingPanel.setVisible(true);	
 		}
 		
