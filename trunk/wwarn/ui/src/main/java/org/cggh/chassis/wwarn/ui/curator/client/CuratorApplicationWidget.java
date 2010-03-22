@@ -66,7 +66,9 @@ public class CuratorApplicationWidget
 	public void registerHandlersForChildWidgetEvents() {
 		super.registerHandlersForChildWidgetEvents();
 		
-		HandlerRegistration a = curatorHomeWidget.viewStudyNavigationEventChannel.addHandler(new WidgetEventHandler() {
+		this.childWidgetEventHandlerRegistrations.add(
+				curatorHomeWidget.viewStudyNavigationEventChannel.addHandler(
+						new WidgetEventHandler() {
 			public void onEvent(WidgetEvent e) {
 				
 				log.enter("onEvent");
@@ -86,8 +88,7 @@ public class CuratorApplicationWidget
 				
 				log.leave();
 			}
-		});
-		this.childWidgetEventHandlerRegistrations.add(a);
+		}));
 
 
 	}
