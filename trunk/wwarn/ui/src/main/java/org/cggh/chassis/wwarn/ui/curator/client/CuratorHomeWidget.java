@@ -16,8 +16,6 @@ public class CuratorHomeWidget
 	private static final Log log = LogFactory.getLog(CuratorHomeWidget.class);
 	
 	private CuratorHomeWidgetController controller;
-
-	ListStudiesWidget listStudiesWidget;
 	
 	@Override
 	protected CuratorHomeWidgetModel createModel() {
