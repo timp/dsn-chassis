@@ -65,18 +65,17 @@ public class ViewStudyWidgetRenderer extends
 	@Override
 	protected void registerHandlersForModelChanges() {
 		
-		model.status.addChangeHandler(syncUIWithStatus);
+		this.modelChangeHandlerRegistrations.add(model.status.addChangeHandler(syncUIWithStatus));
 
-		HandlerRegistration a = model.studyEntry.addChangeHandler(new PropertyChangeHandler<Element>() {
+		this.modelChangeHandlerRegistrations.add(model.studyEntry.addChangeHandler(new PropertyChangeHandler<Element>() {
 			public void onChange(PropertyChangeEvent<Element> e) {
 				log.enter("onchange(studyEntry)");
 				syncUIWithStudyEntryElement(e.getAfter());
 				log.leave();
 			}
-		});
-		this.modelChangeHandlerRegistrations.add(a);
+		}));
 		
-		model.studyID.addChangeHandler(new PropertyChangeHandler<String>() {
+		this.modelChangeHandlerRegistrations.add(model.studyID.addChangeHandler(new PropertyChangeHandler<String>() {
 			public void onChange(PropertyChangeEvent<String> e) {
 				
 				log.enter("onChange(studyID)");
@@ -86,7 +85,7 @@ public class ViewStudyWidgetRenderer extends
 				log.leave();
 				
 			}
-		});			
+		}));			
 		
 
 	}
@@ -159,10 +158,10 @@ public class ViewStudyWidgetRenderer extends
 			log.debug("got study....");
 			
 			model.status.set(ViewStudyWidgetModel.STATUS_STUDY_RETRIEVED);
-			
+			owner.renderer.studySummaryWidgetUiField.studyEntry.set(study);
+			owner.renderer.studySummaryWidgetUiField.studyActionsWidgetUiField.studyEntry.set(study);
 			
 		} else {
-			// This may be a transient error, because a file has not been selected yet, but the widget has loaded.
 			showError("study was null");
 		}
 
