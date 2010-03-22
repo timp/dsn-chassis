@@ -8,6 +8,7 @@ import java.util.List;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.miniatom.client.AtomHelper;
+import org.cggh.chassis.generic.miniatom.client.ext.ChassisHelper;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 import org.cggh.chassis.generic.widget.client.ChassisWidgetRenderer;
 import org.cggh.chassis.generic.widget.client.PropertyChangeEvent;
@@ -70,8 +71,6 @@ public class ListStudiesWidgetRenderer extends
 		this.canvas.add(uiBinder.createAndBindUi(this));
 		errorPanel.setVisible(false);	
 		
-		this.canvas.add(this.tablePanel);
-
 		log.leave();
 	}
 	
@@ -94,7 +93,7 @@ public class ListStudiesWidgetRenderer extends
 		model.status.addChangeHandler(new PropertyChangeHandler<Status>() {
 		
 			public void onChange(PropertyChangeEvent<Status> e) {
-				log.enter("onChange");
+				log.enter("onChange(status)");
 			
 				log.debug("Status " + e.getAfter());
 				syncUIWithStatus(e.getAfter());
@@ -105,9 +104,8 @@ public class ListStudiesWidgetRenderer extends
 		model.studyFeed.addChangeHandler(new PropertyChangeHandler<Document>() {
 			
 			public void onChange(PropertyChangeEvent<Document> e) {
-				log.enter("onChange2");
+				log.enter("onChange(document)");
 				Document document = e.getAfter();
-				log.debug("About to render with document " + document);
 				syncUIWithStudyFeed(document);
 				log.leave();
 			}
@@ -118,9 +116,10 @@ public class ListStudiesWidgetRenderer extends
 
 	private void syncUIWithStudyFeed(Document studyFeed){
 		log.enter("renderTable");
-		log.debug("studyFeed:" + studyFeed);
 		
-		if (studyFeed != null) {
+		if (studyFeed == null) 
+			log.debug("StudyFeed null");
+		else {
 			
 			List<Widget[]> rows = new ArrayList<Widget[]>();
 			
@@ -133,7 +132,8 @@ public class ListStudiesWidgetRenderer extends
 			
 			rows.add(headerRow);
 			
-			for (final String[] entryFields : getFields(studyFeed)) {
+			for (final Element study : AtomHelper.getEntries(studyFeed.getDocumentElement())) { 
+				log.debug(study.toString());
 				Anchor viewStudyLink = new Anchor("view study"); // TODO i18n
 				
 				viewStudyLink.addClickHandler(new ClickHandler() {
@@ -145,7 +145,7 @@ public class ListStudiesWidgetRenderer extends
 						log.debug("Firing event...");
 						
 						ViewStudyNavigationEvent viewStudyNavigationEvent  = new ViewStudyNavigationEvent();
-						viewStudyNavigationEvent.setStudyId(entryFields[3]);
+						viewStudyNavigationEvent.setStudy(study);
 						
 						owner.viewStudyNavigationEventChannel.fireEvent(viewStudyNavigationEvent);
 						
@@ -155,9 +155,9 @@ public class ListStudiesWidgetRenderer extends
 
 				});
 				Widget[] row = {
-						new HTML(entryFields[0]),
-						new HTML(entryFields[1]),
-						new HTML(entryFields[2]),
+						new HTML(ChassisHelper.getTitle(study)),
+						new HTML(RenderUtils.join(ChassisHelper.getModules(study), ", ")),
+						new HTML(RenderUtils.join(ChassisHelper.getAuthorEmails(study), ", ")),
 						viewStudyLink
 				};
 				rows.add(row);
@@ -165,71 +165,11 @@ public class ListStudiesWidgetRenderer extends
 			FlexTable table = RenderUtils.renderResultsTable(rows);
 			this.tablePanel.clear();
 			this.tablePanel.add(table);
-		}
+			pendingPanel.setVisible(false);	
 
+		}
 		
-		pendingPanel.setVisible(false);	
 		log.leave();
-	}
-	
-	// TODO Actually use feed
-	private String[][] getFields(Document studyFeed) {
-		log.enter("getFields");
-		if(studyFeed == null)
-			log.debug("Get fields studyFeed null");
-		else
-			for (Element study : AtomHelper.getEntries(studyFeed.getDocumentElement())) { 
-				log.debug(study.toString());
-			}
-		log.leave();
-		return new String[][]{
-				{
-					"Uganda-Kampala 2006",
-					"Clinical, in Vitro",
-					"alice@example.org, bob@example.org, outcaa@example.org, jane@example.org",
-					"urn:uuid:b4f4ded6-ec33-4df7-b096-f21517393a29" 
-				},{
-					"Uganda-Kampala 2007",
-					"Clinical",
-					"alice@example.org",
-					"urn:uuid:b4f4ded6-ec33-4df7-b096-f21517393a29" 
-				},{
-					"Uganda-Kampala 2008",
-					"Clinical",
-					"alice@example.org",
-					"urn:uuid:b4f4ded6-ec33-4df7-b096-f21517393a29" 
-				},{
-					"Uganda-Kampala 2009",
-					"Clinical",
-					"alice@example.org",
-					"urn:uuid:b4f4ded6-ec33-4df7-b096-f21517393a29" 
-				},{
-					"A Molecular Study 2006",
-					"Molecular",
-					"bob@example.org",
-					"urn:uuid:b4f4ded6-ec33-4df7-b096-f21517393a29" 
-				},{
-					"A Molecular Study in Sri Lanka 2007",
-					"Molecular",
-					"bob@example.org",
-					"urn:uuid:b4f4ded6-ec33-4df7-b096-f21517393a29" 
-				},{
-					"A Molecular Study 2008",
-					"Molecular",
-					"bob@example.org, jon@example.org",
-					"urn:uuid:b4f4ded6-ec33-4df7-b096-f21517393a29" 
-				},{
-					"A Molecular Study in Sri Lanka 2009",
-					"Molecular",
-					"bob@example.org",
-					"urn:uuid:b4f4ded6-ec33-4df7-b096-f21517393a29" 
-				},{
-					"A Study in Sri Lanka 2010",
-					"Pharmacology, Clinical, Molecular, in Vitro",
-					"bob@example.org, outcaa@example.org",
-					"urn:uuid:b4f4ded6-ec33-4df7-b096-f21517393a29" 
-				}
-			};
 	}
 
 
@@ -238,34 +178,27 @@ public class ListStudiesWidgetRenderer extends
 		log.debug("status:" + status);
 		
 		if (status == null) {
+			// nothing to do yet
 		}
 		else if (status instanceof AsyncWidgetModel.InitialStatus) {
 			pendingPanel.setVisible(true);	
 		}
 		else if (status == ListStudiesWidgetModel.STATUS_RETRIEVE_STUDY_FEED_PENDING) {
-
+			// still pending
 		}			
 		else if (status == ListStudiesWidgetModel.STATUS_READY_FOR_INTERACTION) {
-			syncUIWithStudyFeed(model.studyFeed.get());
 			pendingPanel.setVisible(false);	
 		}			
-		
 		else if (status instanceof AsyncWidgetModel.ReadyStatus) {
-
 			pendingPanel.setVisible(false);	
 		}			
-		
 		else if (status instanceof AsyncWidgetModel.ErrorStatus) {
-
-			
 			error("Error status given on asynchronous call.");
 		}			
-		
 		else {
-
 			error("Unhandled status:" + status);
 		}
-
+		
 		log.leave();
 	}
 	
