@@ -1,19 +1,18 @@
-/**
- * 
- */
 package org.cggh.chassis.generic.miniatom.client.ext;
 
 import java.util.List;
 
+import org.cggh.chassis.generic.miniatom.client.AtomHelper;
 import org.cggh.chassis.generic.xml.client.XMLNS;
 
 import com.google.gwt.xml.client.Element;
 
 /**
+ * A helper to extract fields from a Chassis document.
+ * 
  * @author aliman
- *
  */
-public class ChassisHelper {
+public class ChassisHelper extends AtomHelper {
 
 	
 	
