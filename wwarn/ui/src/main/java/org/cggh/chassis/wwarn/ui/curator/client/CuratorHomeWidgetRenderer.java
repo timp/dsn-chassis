@@ -52,7 +52,7 @@ public class CuratorHomeWidgetRenderer extends
 
 	public CuratorHomeWidgetRenderer(CuratorHomeWidget owner) {
 		this.owner = owner;
-		this.listStudiesWidgetUiField = owner.listStudiesWidget;
+//		this.listStudiesWidgetUiField = owner.listStudiesWidget; // 
 	}
 
 	@Override
@@ -68,7 +68,7 @@ public class CuratorHomeWidgetRenderer extends
 
 	@Override
 	protected void syncUI() {
-		syncUIWithStatus(model.getStatus());
+		syncUIWithStatus(model.status.get());
 	}
 	
 	@Override
