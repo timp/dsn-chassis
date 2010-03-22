@@ -90,8 +90,8 @@ public class ViewStudyWidget
 		
 		log.debug("Setting study...." + study);
 		
-		model.setStudyEntryElement(study);
-		renderer.studySummaryWidgetUiField.setStudyEntry(study);
+		model.studyEntryElement.set(study);
+		renderer.studySummaryWidgetUiField.studyEntry.set(study);
 	}
 	
 	public Deferred<Element> retrieveStudy() {
@@ -190,7 +190,7 @@ public class ViewStudyWidget
 
 		private void setStudyID(String studyID) {
 			
-			model.setStudyID(studyID);
+			model.studyID.set(studyID);
 			
 		}
 
@@ -198,8 +198,7 @@ public class ViewStudyWidget
 
 
 	public void setStudyID(String studyID) {
-		model.setStudyID(studyID);
-		
+		model.studyID.set(studyID);
 	}	
 
 
