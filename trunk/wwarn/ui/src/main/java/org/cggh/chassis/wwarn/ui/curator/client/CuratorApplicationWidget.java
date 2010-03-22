@@ -74,10 +74,8 @@ public class CuratorApplicationWidget
 					
 					log.debug("Setting fileToBeReviewed...");
 					
-					// TODO I think we should have an Element here, but the mock only has an id
-					
-					//viewStudyWidget.setStudy(((ViewStudyNavigationEvent) e).getStudy());
-					viewStudyWidget.setStudyID(((ViewStudyNavigationEvent) e).getStudyId());
+					viewStudyWidget.setStudy(((ViewStudyNavigationEvent) e).getStudy());
+					//viewStudyWidget.setStudyID(((ViewStudyNavigationEvent) e).getStudyId());
 					
 					viewStudyWidget.refresh();
 					setActiveChild(viewStudyWidget);
