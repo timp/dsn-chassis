@@ -6,12 +6,8 @@ package org.cggh.chassis.wwarn.ui.curator.client;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.DelegatingWidget;
-import org.cggh.chassis.generic.widget.client.PropertyChangeEvent;
-import org.cggh.chassis.generic.widget.client.PropertyChangeHandler;
-
 
 import org.cggh.chassis.generic.widget.client.WidgetEventChannel;
-import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.Status;
 
 
 /**
@@ -31,9 +27,6 @@ public class ListStudiesWidget
 		return new ListStudiesWidgetModel();
 	}
 
-	public ListStudiesWidgetModel getModel() {
-		return model;
-	}
 
 	@Override
 	protected ListStudiesWidgetRenderer createRenderer() {
