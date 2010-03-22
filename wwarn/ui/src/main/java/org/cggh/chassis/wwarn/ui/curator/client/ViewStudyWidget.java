@@ -30,7 +30,7 @@ public class ViewStudyWidget
 	private ViewStudyWidgetController controller;
 
 
-	private StudySummaryWidget studySummaryWidget;
+//	private StudySummaryWidget studySummaryWidget;
 //	private ViewStudyMetadataWidget viewStudyMetadataWidget;
 //	private ListSubmissionsWidget listSubmissionsWidget;
 //	private ListCurationsWidget listCurationsWidget;
@@ -54,7 +54,6 @@ public class ViewStudyWidget
 		this.controller = new ViewStudyWidgetController(this, this.model);
 		this.renderer.setController(this.controller);
 		this.memory = new Memory();
-		this.studySummaryWidget = new StudySummaryWidget();
 	}		
 	
 	// Using init() rather than constructor because reset() uses init().
@@ -75,7 +74,7 @@ public class ViewStudyWidget
 		
 		log.enter("refresh");
 		
-		studySummaryWidget.refresh();
+		renderer.studySummaryWidgetUiField.refresh();
 		
 		log.leave();		
 		
@@ -92,7 +91,7 @@ public class ViewStudyWidget
 		log.debug("Setting study...." + study);
 		
 		model.setStudyEntryElement(study);
-		studySummaryWidget.setStudyEntry(study);
+		renderer.studySummaryWidgetUiField.setStudyEntry(study);
 	}
 	
 	public Deferred<Element> retrieveStudy() {
