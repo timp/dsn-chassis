@@ -1,7 +1,8 @@
 xquery version "1.0";
 
 import module namespace request="http://exist-db.org/xquery/request";
-import module namespace xdb = "http://exist-db.org/xquery/xmldb";
+import module namespace text="http://exist-db.org/xquery/text";
+import module namespace xmldb = "http://exist-db.org/xquery/xmldb";
 
 let $groups := text:groups( $exist:path , "^/([^/]+)(.*)$" )
 let $module := $groups[2]
@@ -21,6 +22,14 @@ return
 
 		<dispatch xmlns="http://exist.sourceforge.net/NS/exist">
 		    <forward url="/atomserver/history.xql">
+		        <set-attribute name="request-path-info" value="{$request-path-info}"/>
+		    </forward>
+		</dispatch>
+
+	else if ( $module = "acl" ) then
+
+		<dispatch xmlns="http://exist.sourceforge.net/NS/exist">
+		    <forward url="/atomserver/acl.xql">
 		        <set-attribute name="request-path-info" value="{$request-path-info}"/>
 		    </forward>
 		</dispatch>
