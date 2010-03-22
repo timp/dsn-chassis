@@ -1,5 +1,6 @@
 package org.cggh.chassis.wwarn.ui.common.client;
 
+import java.util.Collection;
 import java.util.List;
 
 import com.google.gwt.user.client.ui.FlexTable;
@@ -50,6 +51,21 @@ public class RenderUtils {
 		messilyDelimitedEmailString = messilyDelimitedEmailString.trim();
 		messilyDelimitedEmailString = messilyDelimitedEmailString.replaceAll(" ", "|");
 		return messilyDelimitedEmailString.split("\\|");
+	}
+	
+	
+	public static String join (Collection<?> collection, String separator) {
+		if (separator == null)
+			separator = "";
+	    StringBuilder sb = new StringBuilder();
+	    int count = 0;
+	    for(Object entry : collection) {
+	    	if (count > 0)
+	    		sb.append(separator);
+	    	count++;
+	        sb.append(entry.toString());
+	    }
+	    return sb.toString();
 	}
 	
 	
