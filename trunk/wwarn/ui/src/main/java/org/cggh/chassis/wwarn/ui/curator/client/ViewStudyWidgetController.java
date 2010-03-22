@@ -124,9 +124,9 @@ public class ViewStudyWidgetController {
 
 
 	
-	private class RetrieveStudyCallback implements Function<Element, Deferred<Document>> {
+	private class RetrieveStudyCallback implements Function<Element, Element> {
 
-		public Deferred<Document> apply(Element studyEntryElement) {
+		public Element apply(Element studyEntryElement) {
 			
 			log.enter("apply");
 			
@@ -136,7 +136,6 @@ public class ViewStudyWidgetController {
 				
 				model.status.set(ViewStudyWidgetModel.STATUS_STUDY_RETRIEVED);
 
-
 			} else {
 			
 				model.status.set(ViewStudyWidgetModel.STATUS_STUDY_NOT_FOUND);
@@ -144,7 +143,7 @@ public class ViewStudyWidgetController {
 			
 			log.leave();
 			
-			return null;
+			return studyEntryElement;
 		}
 		
 	}
