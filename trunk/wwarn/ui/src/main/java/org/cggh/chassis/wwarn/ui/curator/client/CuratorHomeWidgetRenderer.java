@@ -52,7 +52,6 @@ public class CuratorHomeWidgetRenderer extends
 
 	public CuratorHomeWidgetRenderer(CuratorHomeWidget owner) {
 		this.owner = owner;
-//		this.listStudiesWidgetUiField = owner.listStudiesWidget; // 
 	}
 
 	@Override
