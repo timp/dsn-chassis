@@ -70,7 +70,6 @@ public class ListStudiesWidgetRenderer extends
 		this.canvas.add(uiBinder.createAndBindUi(this));
 		errorPanel.setVisible(false);	
 		
-		this.tablePanel = new FlowPanel();
 		this.canvas.add(this.tablePanel);
 
 		log.leave();
@@ -79,11 +78,9 @@ public class ListStudiesWidgetRenderer extends
 	@Override
 	protected void syncUI() {
 		log.enter("syncUI");
-		syncUIWithStatus(model.getStatus());
 
-		// Why is this the only place that works
-        renderTable(model.studyFeed.get());
-		
+		syncUIWithStatus(model.status.get());
+        syncUIWithStudyFeed(model.studyFeed.get());
 		
 		log.leave();
 	}
@@ -91,6 +88,8 @@ public class ListStudiesWidgetRenderer extends
 	
 	@Override
 	protected void registerHandlersForModelChanges() {
+		log.enter("registerHandlersForModelChanges");
+		
 		super.registerHandlersForModelChanges();
 		model.status.addChangeHandler(new PropertyChangeHandler<Status>() {
 		
@@ -109,67 +108,71 @@ public class ListStudiesWidgetRenderer extends
 				log.enter("onChange2");
 				Document document = e.getAfter();
 				log.debug("About to render with document " + document);
-				renderTable(document);
+				syncUIWithStudyFeed(document);
 				log.leave();
-				throw new RuntimeException("this is never called, why not?");
 			}
 			
 		});
-		
+		log.leave();
 	}
 
-	private void renderTable(Document studyFeed){
+	private void syncUIWithStudyFeed(Document studyFeed){
 		log.enter("renderTable");
 		log.debug("studyFeed:" + studyFeed);
-		List<Widget[]> rows = new ArrayList<Widget[]>();
 		
-		Widget[] headerRow = {
-			strongWidget("Study Title"), // TODO i18n
-			strongWidget("Modules"),     // TODO i18n
-			strongWidget("Submitters"),  // TODO i18n
-			strongWidget("Actions"),     // TODO i18n
-		};
-		
-		rows.add(headerRow);
-		
-		for (final String[] entryFields : getFields(studyFeed)) {
-			Anchor viewStudyLink = new Anchor("view study"); // TODO i18n
+		if (studyFeed != null) {
 			
-			viewStudyLink.addClickHandler(new ClickHandler() {
-				
-				public void onClick(ClickEvent e) {
-					
-					log.enter("onClick");
-					
-					log.debug("Firing event...");
-					
-					ViewStudyNavigationEvent viewStudyNavigationEvent  = new ViewStudyNavigationEvent();
-					viewStudyNavigationEvent.setStudyId(entryFields[3]);
-					
-					owner.viewStudyNavigationEventChannel.fireEvent(viewStudyNavigationEvent);
-					
-					log.leave();
-					
-				}
-
-			});
-			Widget[] row = {
-					new HTML(entryFields[0]),
-					new HTML(entryFields[1]),
-					new HTML(entryFields[2]),
-					viewStudyLink
+			List<Widget[]> rows = new ArrayList<Widget[]>();
+			
+			Widget[] headerRow = {
+				strongWidget("Study Title"), // TODO i18n
+				strongWidget("Modules"),     // TODO i18n
+				strongWidget("Submitters"),  // TODO i18n
+				strongWidget("Actions"),     // TODO i18n
 			};
-			rows.add(row);
+			
+			rows.add(headerRow);
+			
+			for (final String[] entryFields : getFields(studyFeed)) {
+				Anchor viewStudyLink = new Anchor("view study"); // TODO i18n
+				
+				viewStudyLink.addClickHandler(new ClickHandler() {
+					
+					public void onClick(ClickEvent e) {
+						
+						log.enter("onClick");
+						
+						log.debug("Firing event...");
+						
+						ViewStudyNavigationEvent viewStudyNavigationEvent  = new ViewStudyNavigationEvent();
+						viewStudyNavigationEvent.setStudyId(entryFields[3]);
+						
+						owner.viewStudyNavigationEventChannel.fireEvent(viewStudyNavigationEvent);
+						
+						log.leave();
+						
+					}
+
+				});
+				Widget[] row = {
+						new HTML(entryFields[0]),
+						new HTML(entryFields[1]),
+						new HTML(entryFields[2]),
+						viewStudyLink
+				};
+				rows.add(row);
+			}
+			FlexTable table = RenderUtils.renderResultsTable(rows);
+			this.tablePanel.clear();
+			this.tablePanel.add(table);
 		}
-		FlexTable table = RenderUtils.renderResultsTable(rows);
-		this.tablePanel.clear();
-		this.tablePanel.add(table);
+
 		
 		pendingPanel.setVisible(false);	
 		log.leave();
 	}
 	
-	// TODO Use feed
+	// TODO Actually use feed
 	private String[][] getFields(Document studyFeed) {
 		log.enter("getFields");
 		if(studyFeed == null)
@@ -231,21 +234,19 @@ public class ListStudiesWidgetRenderer extends
 
 
 	protected void syncUIWithStatus(Status status) {
-
-		if (mainPanel == null) {
-			log.debug("Panels instantiated:" + mainPanel);
-			return;
-		}
 		log.enter("syncUIWithStatus");		
 		log.debug("status:" + status);
-		if (status instanceof AsyncWidgetModel.InitialStatus) {
+		
+		if (status == null) {
+		}
+		else if (status instanceof AsyncWidgetModel.InitialStatus) {
 			pendingPanel.setVisible(true);	
 		}
 		else if (status == ListStudiesWidgetModel.STATUS_RETRIEVE_STUDY_FEED_PENDING) {
 
 		}			
 		else if (status == ListStudiesWidgetModel.STATUS_READY_FOR_INTERACTION) {
-			renderTable(model.studyFeed.get());
+			syncUIWithStudyFeed(model.studyFeed.get());
 			pendingPanel.setVisible(false);	
 		}			
 		
