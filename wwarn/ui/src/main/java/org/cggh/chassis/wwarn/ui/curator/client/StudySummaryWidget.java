@@ -10,7 +10,6 @@ import java.util.List;
 
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
-import org.cggh.chassis.generic.miniatom.client.AtomHelper;
 import org.cggh.chassis.generic.miniatom.client.ext.ChassisHelper;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 import org.cggh.chassis.generic.widget.client.ChassisWidget;
@@ -21,18 +20,14 @@ import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.Status;
 import org.cggh.chassis.wwarn.ui.common.client.RenderUtils;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiTemplate;
-import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;
 
 
@@ -151,7 +146,8 @@ public class StudySummaryWidget
 				strongWidget("Study Title"), // TODO i18n
 				strongWidget("Modules"),     // TODO i18n
 				strongWidget("Submitters"),  // TODO i18n
-				strongWidget("Actions"),     // TODO i18n
+				strongWidget("Published"),     // TODO i18n
+				strongWidget("Updated"),     // TODO i18n
 			};
 			
 			rows.add(headerRow);
@@ -160,11 +156,14 @@ public class StudySummaryWidget
 						new HTML(ChassisHelper.getTitle(study)),
 						new HTML(RenderUtils.join(ChassisHelper.getModules(study), ", ")),
 						new HTML(RenderUtils.join(ChassisHelper.getAuthorEmails(study), ", ")),
-						new HTML(RenderUtils.join(ChassisHelper.getAuthorEmails(study), ", ")),
+						new HTML(RenderUtils.timstampAsDate(ChassisHelper.getPublished(study))),
+						new HTML(RenderUtils.timstampAsDate(ChassisHelper.getUpdated(study))),
 			};
 			rows.add(row);
 			
-			FlexTable table = RenderUtils.renderResultsTable(rows);
+			//FlexTable table = RenderUtils.renderResultsTable(rows);
+			FlexTable table = RenderUtils.renderFirstRowHeadingResultsAsFirstColumnHeadingTable(rows);
+			
 			this.tablePanel.clear();
 			this.tablePanel.add(table);
 			pendingPanel.setVisible(false);	
