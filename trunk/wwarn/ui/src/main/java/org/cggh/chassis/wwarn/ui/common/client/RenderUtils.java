@@ -30,8 +30,10 @@ public class RenderUtils {
 				w.addStyleName(CommonStyles.RESULTSTABLE_WIDGET);
 				out.setWidget(r, c, w);
 			}
-			if (r % 2 == 0) out.getRowFormatter().addStyleName(r, CommonStyles.RESULTSTABLE_EVEN);
-			else out.getRowFormatter().addStyleName(r, CommonStyles.RESULTSTABLE_ODD);
+			if (r % 2 == 0) 
+				out.getRowFormatter().addStyleName(r, CommonStyles.RESULTSTABLE_EVEN);
+			else 
+				out.getRowFormatter().addStyleName(r, CommonStyles.RESULTSTABLE_ODD);
 			out.getCellFormatter().addStyleName(r, 0, CommonStyles.RESULTSTABLE_FIRSTCELL);
 		}
 
