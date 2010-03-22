@@ -45,7 +45,9 @@ public class ViewStudyWidgetRenderer extends AsyncWidgetRenderer<ViewStudyWidget
 		HandlerRegistration a = this.model.addEntryChangeHandler(new EntryChangeHandler() {
 			
 			public void onChange(EntryChangeEvent e) {
+				log.enter("onchange(EntryChangeEvent)");
 				syncUIWithEntry(e.getAfter());
+				log.leave();
 			}
 			
 		});
