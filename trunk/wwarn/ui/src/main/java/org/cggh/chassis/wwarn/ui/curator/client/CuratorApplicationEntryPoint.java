@@ -30,7 +30,8 @@ public class CuratorApplicationEntryPoint implements EntryPoint {
 	static {
 		LogFactory.create = AllenSauerLog.create;
 		LogFactory.hide("*");
-		LogFactory.show("org.cggh.chassis.wwarn.ui.curator.*");
+		LogFactory.show("org.cggh.chassis.wwarn.ui.curator.client.*");
+//		LogFactory.show("org.cggh.chassis.wwarn.ui.curator.client.CuratorApplication*");
 //		LogFactory.show("org.cggh.chassis.generic.xml.client.XML");
 //		LogFactory.show("org.cggh.chassis.generic.xquestion.client.XQSModelBase");
 //		LogFactory.show("org.cggh.chassis.generic.widget.client.*");
@@ -51,6 +52,9 @@ public class CuratorApplicationEntryPoint implements EntryPoint {
 		log.debug("instantiate main application widget");
 		CuratorApplicationWidget widget = new CuratorApplicationWidget();
 		RootPanel.get("content").add(widget);
+		
+		log.debug("call refresh");
+		widget.refresh();
 		
 		log.debug("setup history manager");
 		HistoryManager hm = new WidgetMemory.HistoryManager(widget.getMemory());
