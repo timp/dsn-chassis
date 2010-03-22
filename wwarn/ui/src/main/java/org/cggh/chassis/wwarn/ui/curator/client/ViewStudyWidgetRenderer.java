@@ -67,9 +67,9 @@ public class ViewStudyWidgetRenderer extends
 		
 		model.status.addChangeHandler(syncUIWithStatus);
 
-		HandlerRegistration a = model.studyEntryElement.addChangeHandler(new PropertyChangeHandler<Element>() {
+		HandlerRegistration a = model.studyEntry.addChangeHandler(new PropertyChangeHandler<Element>() {
 			public void onChange(PropertyChangeEvent<Element> e) {
-				log.enter("onchange(EntryChangeEvent)");
+				log.enter("onchange(studyEntry)");
 				syncUIWithStudyEntryElement(e.getAfter());
 				log.leave();
 			}
@@ -79,7 +79,7 @@ public class ViewStudyWidgetRenderer extends
 		model.studyID.addChangeHandler(new PropertyChangeHandler<String>() {
 			public void onChange(PropertyChangeEvent<String> e) {
 				
-				log.enter("onChange");
+				log.enter("onChange(studyID)");
 				
 				syncStudyEntryElementWithStudyID(e.getAfter());
 				
@@ -99,7 +99,7 @@ public class ViewStudyWidgetRenderer extends
 			
 			public void onChange(PropertyChangeEvent<Status> e) {
 	
-			log.enter("onChange");		
+			log.enter("onChange<Status>");		
 			
 			Status status = e.getAfter();
 	
@@ -109,11 +109,13 @@ public class ViewStudyWidgetRenderer extends
 			
 			if (status instanceof AsyncWidgetModel.InitialStatus) {
 	
-				syncUIWithStudyEntryElement(model.studyEntryElement.get());
+				syncUIWithStudyEntryElement(model.studyEntry.get());
+				pendingPanel.setVisible(true);	
 			}
 			
 			else if (status instanceof ViewStudyWidgetModel.StudyEntryElementRetrievedStatus) {
 				
+				syncUIWithStudyEntryElement(model.studyEntry.get());
 				contentPanel.setVisible(true);
 				
 			}
@@ -150,7 +152,7 @@ public class ViewStudyWidgetRenderer extends
 	 * @param element */
 	void syncUIWithStudyEntryElement(Element study) {
 		
-		log.enter("syncUiWithStudy");
+		log.enter("syncUIWithStudyEntryElement");
 		
 		if (study != null) {
 
@@ -182,7 +184,7 @@ public class ViewStudyWidgetRenderer extends
 			
 			Element studyEntryElement = null;
 			
-			model.studyEntryElement.set(studyEntryElement);
+			model.studyEntry.set(studyEntryElement);
 			
 		} else {
 
