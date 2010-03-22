@@ -35,15 +35,13 @@ public class ListStudiesWidgetController {
 	
 	public Deferred<Document> retrieveStudies() {
 		log.enter("retrieveStudies");
-		// Set the model's status to pending.
+		
+		log.debug("set the model's status to pending");
 		model.status.set(ListStudiesWidgetModel.STATUS_RETRIEVE_STUDY_FEED_PENDING);
 		
-		//"/curator/query/studies.xql";
+		// expected to be /curator/query/studies.xql
 		String studyQueryServiceUrl = Config.get(Config.QUERY_STUDIES_URL);
-		
-		log.debug("getFeed");
 		Deferred<Document> deferredDoc = Atom.getFeed(studyQueryServiceUrl);
-		log.debug("gotFeed");
 
 		// Add a call-back and error-back for the asynchronous feed.
 		deferredDoc.addCallback(new RetrieveStudiesCallback());
@@ -74,7 +72,6 @@ public class ListStudiesWidgetController {
 			log.debug("RetrieveStudiesCallback.apply setting model status to " + ListStudiesWidgetModel.STATUS_READY_FOR_INTERACTION);
 			model.status.set(ListStudiesWidgetModel.STATUS_READY_FOR_INTERACTION);
 			model.studyFeed.set(in);
-			owner.render();
 			return in;
 		}
 
