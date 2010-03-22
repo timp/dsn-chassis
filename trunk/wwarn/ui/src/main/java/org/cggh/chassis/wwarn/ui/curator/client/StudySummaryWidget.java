@@ -30,14 +30,12 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.xml.client.Element;
 
-
 /**
  * @author timp
  *
  */
 public class StudySummaryWidget 
 	 	extends ChassisWidget {
-
 
 	private static final Log log = LogFactory.getLog(StudySummaryWidget.class);
 	
@@ -55,48 +53,32 @@ public class StudySummaryWidget
 	@UiField FlowPanel errorMessage;
 
 	@UiField FlowPanel tablePanel;
+	@UiField StudyActionsWidget studyActionsWidgetUiField;
 
 
-	
-	
 	public final ObservableProperty<Element> studyEntry = new ObservableProperty<Element>();
 	public final ObservableProperty<Status> status = new ObservableProperty<Status>();
 	public final ObservableProperty<String> message = new ObservableProperty<String>();
 
 
-	private StudyActionsWidget studyActionsWidget;
 
 
 	
-	public StudySummaryWidget() {
-		super();
-		this.studyActionsWidget = new StudyActionsWidget();
+
+	@Override
+	public void refresh() {
+		log.enter("refresh");
+		studyActionsWidgetUiField.refresh(); 
+		log.leave();	
 	}
 
 
-
-
-
-	public Status getStatus() {
-		if (status.get() == null)
-			status.set(AsyncWidgetModel.STATUS_INITIAL);
-		return status.get();
-	}	
-
-
-	
-	public void setStudyEntry(Element studyEntry) { 
-		this.studyEntry.set(studyEntry);
-	}
-	
 	
 	@Override
 	protected void renderUI() {
-
 		this.clear();
 		this.add(uiBinder.createAndBindUi(this));
 		errorPanel.setVisible(false);	
-		
 	}
 
 
@@ -137,7 +119,7 @@ public class StudySummaryWidget
 		log.enter("syncUIWithStudyEntry");
 		
 		if (study == null) 
-			log.debug("StudyFeed null");
+			log.debug("Study null");
 		else {
 			
 			List<Widget[]> rows = new ArrayList<Widget[]>();
@@ -202,14 +184,6 @@ public class StudySummaryWidget
 		log.leave();
 	}
 
-
-
-	@Override
-	public void refresh() {
-		log.enter("refresh");
-		studyActionsWidget.refresh(); 
-		log.leave();	
-	}
 
 
 	public void error(String err) {
