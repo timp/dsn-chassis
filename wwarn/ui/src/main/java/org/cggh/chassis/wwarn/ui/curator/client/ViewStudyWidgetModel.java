@@ -34,14 +34,13 @@ public class ViewStudyWidgetModel {
 	
 	
 	
-	public final ObservableProperty<String> studyUrl = new ObservableProperty<String>();
-	public final ObservableProperty<Element> studyEntryElement = new ObservableProperty<Element>();
-	public final ObservableProperty<Status> status = new ObservableProperty<Status>();
-	public final ObservableProperty<String> message = new ObservableProperty<String>();
+	public final ObservableProperty<Element> studyEntry = new ObservableProperty<Element>();
 	
 	// Needed to re-establish from memory after browser refresh, for example. 
 	public final ObservableProperty<String> studyID = new ObservableProperty<String>();
 		
+	public final ObservableProperty<Status> status = new ObservableProperty<Status>();
+	public final ObservableProperty<String> message = new ObservableProperty<String>();
 	
 	
 }
