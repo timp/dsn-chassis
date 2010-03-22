@@ -164,7 +164,7 @@ public class ViewStudyWidget
 				
 				log.debug("set selected study id to:" + studyID);
 				
-				setStudyID(studyID);
+				model.studyID.set(studyID);
 				
 				deferredMemory = refreshAndCallback().adapt(new Function<ChassisWidget, WidgetMemory>() {
 
@@ -188,18 +188,9 @@ public class ViewStudyWidget
 			return deferredMemory;
 		}
 
-		private void setStudyID(String studyID) {
-			
-			model.studyID.set(studyID);
-			
-		}
 
 	}
 
-
-	public void setStudyID(String studyID) {
-		model.studyID.set(studyID);
-	}	
 
 
 
