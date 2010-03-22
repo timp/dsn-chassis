@@ -21,8 +21,8 @@ import org.cggh.chassis.generic.widget.client.PropertyChangeHandler;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.Status;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.StatusChangeEvent;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.StatusChangeHandler;
-import org.cggh.chassis.wwarn.ui.common.client.CommonStyles;
 import org.cggh.chassis.wwarn.ui.common.client.Config;
+import org.cggh.chassis.wwarn.ui.common.client.RenderUtils;
 
 
 import com.google.gwt.core.client.GWT;
@@ -354,35 +354,9 @@ public class CleanFileWidgetRenderer extends ChassisWidgetRenderer<CleanFileWidg
 		};
 		rows.add(row);
 		
-		return renderResultItemTable(rows);
+		return RenderUtils.renderResultItemTable(rows);
 	}	
 	
-
-	private FlexTable renderResultItemTable(List<Widget[]> rows) {
-		
-		FlexTable out = new FlexTable();
-		out.setCellPadding(0);
-		out.setCellSpacing(0);
-		out.setBorderWidth(0);
-		
-		for (int r=0; r<rows.size(); r++) {
-			
-			Widget[] row = rows.get(r);
-			for (int c=0; c<row.length; c++) {
-				Widget w = row[c];
-				w.addStyleName(CommonStyles.RESULTITEMTABLE_WIDGET);
-				out.setWidget(r, c, w);
-			}
-
-			out.getCellFormatter().addStyleName(r, 0, CommonStyles.RESULTITEMTABLE_FIRSTCOLUMN);
-		}
-
-		out.addStyleName(CommonStyles.RESULTITEMTABLE);
-		
-		
-		return out;
-	}
-
 
 	@Override
 	public void registerHandlersForModelChanges() {
