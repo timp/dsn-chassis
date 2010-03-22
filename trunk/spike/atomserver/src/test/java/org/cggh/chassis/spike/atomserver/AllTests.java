@@ -12,6 +12,7 @@ public class AllTests {
 		suite.addTestSuite(TestAtomProtocol.class);
 		suite.addTestSuite(TestHistoryProtocol.class);
 		suite.addTestSuite(TestAtomProtocolWithDefaultSecurity.class);
+		suite.addTestSuite(TestAclProtocol.class);
 		//$JUnit-END$
 		return suite;
 	}
