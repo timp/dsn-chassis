@@ -79,33 +79,15 @@ public class StudyActionsWidget
 	@Override
 	public void refresh() {
 		log.enter("refresh");
-		syncUI();
+		renderTable();
 		log.leave();	
 	}
 
 
-	@Override
-	protected void renderUI() {
-		log.enter("renderUI");
-
-		this.tablePanel = new FlowPanel();
-		this.add(this.tablePanel);
-		
-
-		log.leave();
-	}
-
-	@Override
-	protected void syncUI() {
-		log.enter("syncUI");
-		renderTable();
-		log.leave();
-	}
 	// TODO make anchors from study 
     private void renderTable() {
     	log.enter("renderTable");
-		this.tablePanel = new FlowPanel();
-		this.add(this.tablePanel);
+    	if (this.tablePanel != null) { 
 		List<Widget[]> rows = new ArrayList<Widget[]>();
 		Widget[] row = {
 				strongWidget("Actions"),                         // TODO i18n
@@ -119,10 +101,11 @@ public class StudyActionsWidget
 			
 		rows.add(row);
 		rows.add(row);
-		
 		FlexTable table = RenderUtils.renderResultsTable(rows);
 		this.tablePanel.clear();
 		this.tablePanel.add(table);
+    	} else 
+    		log.debug("tablePanel null");
 		log.leave();
     }
 
