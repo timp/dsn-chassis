@@ -36,6 +36,8 @@ public class ViewStudyWidgetRenderer extends
 	@UiField Label pendingMessage; // in pendingPanel
 	@UiField HTMLPanel contentPanel;
 
+	@UiField StudySummaryWidget studySummaryWidgetUiField;
+	
 	
 	private ViewStudyWidget owner;
 	
