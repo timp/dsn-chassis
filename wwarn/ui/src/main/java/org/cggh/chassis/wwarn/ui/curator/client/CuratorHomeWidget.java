@@ -48,7 +48,6 @@ public class CuratorHomeWidget
 		
 		super.init();
 		this.controller = new CuratorHomeWidgetController(this, this.model);
-		this.listStudiesWidget = new ListStudiesWidget();
 	}
 	
 	@Override
@@ -74,7 +73,7 @@ public class CuratorHomeWidget
 			
 		});
 		*/
-		this.listStudiesWidget.refresh();
+		renderer.listStudiesWidgetUiField.refresh();
 		log.leave();
 	}
 	
