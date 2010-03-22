@@ -115,7 +115,7 @@ public class ListStudiesWidgetRenderer extends
 	}
 
 	private void syncUIWithStudyFeed(Document studyFeed){
-		log.enter("renderTable");
+		log.enter("syncUIWithStudyFeed");
 		
 		if (studyFeed == null) 
 			log.debug("StudyFeed null");
