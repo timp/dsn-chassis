@@ -52,9 +52,7 @@ public class CuratorApplicationWidget
 		this.viewStudyRevisionWidget = new ViewStudyRevisionWidget();
 		this.mainChildren.add(this.viewStudyRevisionWidget);
 
-		
 		this.defaultChild = this.curatorHomeWidget;
-		this.curatorHomeWidget.refresh();
 
 		log.leave();
 
@@ -98,8 +96,10 @@ public class CuratorApplicationWidget
 	}
 	
 	
-	
-	
+	@Override
+	public void refresh() {
+		this.curatorHomeWidget.refresh();
+	}
 	
 	
 
