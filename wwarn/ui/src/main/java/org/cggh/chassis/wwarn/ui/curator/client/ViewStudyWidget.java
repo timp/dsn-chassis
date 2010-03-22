@@ -80,20 +80,6 @@ public class ViewStudyWidget
 		
 	}
 	
-	/*
-	 * TODO 
-	public HandlerRegistration addListStudiesNavigationHandler(ListStudiesNavigationHandler h) {
-		return this.addHandler(h, ListStudiesNavigationEvent.TYPE);
-	}	
-	*/
-	public void setStudy(Element study) {
-		
-		log.debug("Setting study...." + study);
-		
-		model.studyEntryElement.set(study);
-		renderer.studySummaryWidgetUiField.studyEntry.set(study);
-	}
-	
 	public Deferred<Element> retrieveStudy() {
 		
 		log.enter("retrieveStudy");
@@ -129,7 +115,7 @@ public class ViewStudyWidget
 			
 			Map<String, String> map = new HashMap<String, String>();
 			
-			Element study = model.studyEntryElement.get();
+			Element study = model.studyEntry.get();
 			
 			String studyID = null;
 			
