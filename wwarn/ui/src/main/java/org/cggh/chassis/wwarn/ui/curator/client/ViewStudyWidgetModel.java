@@ -43,16 +43,5 @@ public class ViewStudyWidgetModel {
 	public final ObservableProperty<String> studyID = new ObservableProperty<String>();
 		
 	
-	public void setStudyEntryElement(Element studyEntryElement) {
-		
-		this.studyEntryElement.set(studyEntryElement);
-
-	}
-
-	public void setStudyID(String studyID) {
-
-		this.studyID.set(studyID);
-		
-	}
 	
 }
