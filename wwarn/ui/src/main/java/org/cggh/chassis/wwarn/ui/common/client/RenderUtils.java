@@ -78,8 +78,31 @@ public class RenderUtils {
 		}
 	}
 	
-	
-	
+
+	public static FlexTable renderResultItemTable(List<Widget[]> rows) {
+		
+		FlexTable out = new FlexTable();
+		out.setCellPadding(0);
+		out.setCellSpacing(0);
+		out.setBorderWidth(0);
+		
+		for (int r=0; r<rows.size(); r++) {
+			
+			Widget[] row = rows.get(r);
+			for (int c=0; c<row.length; c++) {
+				Widget w = row[c];
+				w.addStyleName(CommonStyles.RESULTITEMTABLE_WIDGET);
+				out.setWidget(r, c, w);
+			}
+
+			out.getCellFormatter().addStyleName(r, 0, CommonStyles.RESULTITEMTABLE_FIRSTCOLUMN);
+		}
+
+		out.addStyleName(CommonStyles.RESULTITEMTABLE);
+		
+		
+		return out;
+	}
 	
 
 }
