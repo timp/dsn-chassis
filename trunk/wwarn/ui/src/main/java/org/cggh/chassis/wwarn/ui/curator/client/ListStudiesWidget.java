@@ -45,22 +45,6 @@ public class ListStudiesWidget
 	@Override
 	public void refresh() {
 		log.enter("refresh");
-/*		
-		getModel().status.addChangeHandler(new PropertyChangeHandler<Status>() {
-			
-			public void onChange(PropertyChangeEvent<Status> e) {
-				log.enter("onChange");
-				
-				Status status = e.getAfter();
-				
-				if (status instanceof ListStudiesWidgetModel.ReadyForInteractionStatus) {
-					renderer.syncUIWithStatus(status);
-				}
-				log.leave();
-			}
-			
-		});
-*/		
 		this.controller.retrieveStudies();
 		log.leave();
 	}
