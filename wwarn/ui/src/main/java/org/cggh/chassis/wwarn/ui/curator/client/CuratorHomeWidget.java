@@ -42,26 +42,9 @@ public class CuratorHomeWidget
 	@Override
 	public void refresh() {
 		log.enter("refresh");
-		log.debug("renderer" + this.renderer); 
-		log.debug("listStudiesWidget" + this.renderer.listStudiesWidgetUiField); 
-		/*
-		this.listStudiesWidget.getModel().status.addChangeHandler(new PropertyChangeHandler<Status>() {
-			
-			public void onChange(PropertyChangeEvent<Status> e) {
-				log.enter("onChange");
-				
-				Status status = e.getAfter();
-				
-				// deal with main content panel visibility
-				if (status instanceof ListStudiesWidgetModel.ReadyForInteractionStatus) {
-					model.status.set(CuratorHomeWidgetModel.STATUS_READY_FOR_INTERACTION);
-					log.debug("set status " + CuratorHomeWidgetModel.STATUS_READY_FOR_INTERACTION);
-				}
-				log.leave();
-			}
-			
-		});
-		*/
+		log.debug("renderer: " + this.renderer); 
+		//log.debug("listStudiesWidget" + this.renderer.listStudiesWidgetUiField); 
+
 		renderer.listStudiesWidgetUiField.refresh();
 		log.leave();
 	}
