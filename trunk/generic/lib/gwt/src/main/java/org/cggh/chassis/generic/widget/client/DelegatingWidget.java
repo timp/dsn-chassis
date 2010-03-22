@@ -18,7 +18,8 @@ public abstract class DelegatingWidget
 	
 	
 	private Log log;
-	protected R renderer;
+	/* public as UIBinder fields are in renderer */
+	public R renderer;
 	protected M model;
 	
 	
