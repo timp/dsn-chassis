@@ -2,7 +2,6 @@
 
 package org.cggh.chassis.wwarn.ui.curator.client;
 
-import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 import org.cggh.chassis.generic.widget.client.ObservableProperty;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.AsyncRequestPendingStatus;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.ReadyStatus;
@@ -16,30 +15,23 @@ import com.google.gwt.xml.client.Element;
  */
 public class ListStudiesWidgetModel {
 
-	public final ObservableProperty<Document> studyFeed = new ObservableProperty<Document>();
-	public final ObservableProperty<Element> studyFeedElement = new ObservableProperty<Element>(); 
-	
 	public static class RetrieveStudyFeedPendingStatus extends AsyncRequestPendingStatus {}
 	public static final RetrieveStudyFeedPendingStatus STATUS_RETRIEVE_STUDY_FEED_PENDING = new RetrieveStudyFeedPendingStatus();
 
 	public static class ReadyForInteractionStatus extends ReadyStatus {}
 	public static final ReadyForInteractionStatus STATUS_READY_FOR_INTERACTION = new ReadyForInteractionStatus();	
 	
-	public final ObservableProperty<String> studyUrl = new ObservableProperty<String>();
-	public final ObservableProperty<Element> studyEntryElement = new ObservableProperty<Element>();
 	public final ObservableProperty<Status> status = new ObservableProperty<Status>();
 	public final ObservableProperty<String> message = new ObservableProperty<String>();
+	public final ObservableProperty<Document> studyFeed = new ObservableProperty<Document>();
+	public final ObservableProperty<Element> studyFeedElement = new ObservableProperty<Element>(); 
+	
 	
 	
 	public ListStudiesWidgetModel() {
 		studyFeed.set(null);
 		studyFeedElement.set(null);
 	}
-
-
-	public Status getStatus() {
-		if (status.get() == null)
-			status.set(AsyncWidgetModel.STATUS_INITIAL);
-		return status.get();
-	}	
+	
+	
 }
