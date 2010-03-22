@@ -23,6 +23,7 @@ var config = {
 	"collection.media.url"       : "<jsp:expression>request.getContextPath()</jsp:expression>/atom/edit/media",
 	"collection.submissions.url" : "<jsp:expression>request.getContextPath()</jsp:expression>/atom/edit/submissions",
 	"collection.reviews.url"     : "<jsp:expression>request.getContextPath()</jsp:expression>/atom/edit/reviews",
+	"collection.derivations.url" : "<jsp:expression>request.getContextPath()</jsp:expression>/atom/edit/derivations",
 	"query.studies.url"          : "<jsp:expression>request.getContextPath()</jsp:expression>/curator/query/studies.xql",
 	"query.filestoreview.url"    : "<jsp:expression>request.getContextPath()</jsp:expression>/curator/query/filestoreview.xql",
 	"query.filestoclean.url"     : "<jsp:expression>request.getContextPath()</jsp:expression>/curator/query/filestoclean.xql"
