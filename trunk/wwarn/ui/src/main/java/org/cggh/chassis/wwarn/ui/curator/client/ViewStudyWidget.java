@@ -54,6 +54,7 @@ public class ViewStudyWidget
 		this.controller = new ViewStudyWidgetController(this, this.model);
 		this.renderer.setController(this.controller);
 		this.memory = new Memory();
+		this.studySummaryWidget = new StudySummaryWidget();
 	}		
 	
 	// Using init() rather than constructor because reset() uses init().
@@ -64,6 +65,7 @@ public class ViewStudyWidget
 		super.init();
 		
 		this.controller = new ViewStudyWidgetController(this, this.model);
+		
 
 		log.leave();
 	}
@@ -73,6 +75,7 @@ public class ViewStudyWidget
 		
 		log.enter("refresh");
 		
+		studySummaryWidget.refresh();
 		
 		log.leave();		
 		
