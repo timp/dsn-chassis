@@ -55,17 +55,27 @@ public class RenderUtils {
 	
 	
 	public static String join (Collection<?> collection, String separator) {
-		if (separator == null)
-			separator = "";
-	    StringBuilder sb = new StringBuilder();
-	    int count = 0;
-	    for(Object entry : collection) {
-	    	if (count > 0)
-	    		sb.append(separator);
-	    	count++;
-	        sb.append(entry.toString());
-	    }
-	    return sb.toString();
+		
+		if (collection != null) {
+			
+			if (separator == null)
+				separator = "";
+		    StringBuilder sb = new StringBuilder();
+		    int count = 0;
+		    for(Object entry : collection) {
+		    	if (count > 0)
+		    		sb.append(separator);
+		    	count++;
+		    	if (entry != null) {
+		    		sb.append(entry.toString());
+		    	}
+		    }
+		    return sb.toString();
+	    
+		} else {
+		
+			return "";
+		}
 	}
 	
 	
