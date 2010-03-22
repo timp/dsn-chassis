@@ -150,6 +150,14 @@ public class AtomHelper {
 	}
 	
 	
+	public static List<String> getAuthorEmails(Element parent) {
+		List<String> them = new ArrayList<String>();
+		for (Element author : getAuthors(parent)) 
+			them.add(getEmail(author));
+		return them;
+	}
+	
+	
 
 	public static void addAuthor(Element parent, String name, String email, String uri) {
 		Element author = XMLNS.createElementNS(Atom.ELEMENT_AUTHOR, Atom.PREFIX, Atom.NSURI);
