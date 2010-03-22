@@ -56,9 +56,19 @@ public class StudySummaryWidget
 	public final ObservableProperty<String> message = new ObservableProperty<String>();
 
 
+	private StudyActionsWidget studyActionsWidget;
 
 
 	
+	public StudySummaryWidget() {
+		super();
+		this.studyActionsWidget = new StudyActionsWidget();
+	}
+
+
+
+
+
 	public Status getStatus() {
 		if (status.get() == null)
 			status.set(AsyncWidgetModel.STATUS_INITIAL);
@@ -67,7 +77,6 @@ public class StudySummaryWidget
 
 
 
-	public StudyActionsWidget studyActionsWidget;
 
 
 	// Using init() rather than constructor because reset() uses init().
@@ -84,15 +93,6 @@ public class StudySummaryWidget
 	
 	
 	@Override
-	public void render() {
-		super.render();
-		if (studyEntry == null) 
-			return;
-		
-	}
-
-
-	@Override
 	protected void renderUI() {
 		// TODO Auto-generated method stub
 		super.renderUI();
@@ -103,6 +103,13 @@ public class StudySummaryWidget
 	protected void syncUI() {
 		// TODO Auto-generated method stub
 		super.syncUI();
+	}
+
+	@Override
+	public void refresh() {
+		log.enter("refresh");
+		studyActionsWidget.refresh(); 
+		log.leave();	
 	}
 
 
