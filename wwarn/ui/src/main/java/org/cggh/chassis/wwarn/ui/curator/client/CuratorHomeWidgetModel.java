@@ -12,9 +12,5 @@ import com.google.gwt.xml.client.Element;
  */
 public class CuratorHomeWidgetModel {
 
-	public final ObservableProperty<String> studyUrl = new ObservableProperty<String>();
-	public final ObservableProperty<Element> studyEntryElement = new ObservableProperty<Element>();
-	public final ObservableProperty<Status> status = new ObservableProperty<Status>();
-	public final ObservableProperty<String> message = new ObservableProperty<String>();
 
 }
