@@ -127,10 +127,12 @@ public class ViewStudyWidgetController {
 	private class RetrieveStudyCallback implements Function<Element, Element> {
 
 		public Element apply(Element studyEntryElement) {
+			log.enter("apply(StudyEntryElement)");
 			
-			log.enter("apply");
-			
-			model.studyEntryElement.set(studyEntryElement);
+			log.debug("Setting study for model and child widgets");			
+			model.studyEntry.set(studyEntryElement);
+			owner.renderer.studySummaryWidgetUiField.studyEntry.set(studyEntryElement);
+			owner.renderer.studySummaryWidgetUiField.studyActionsWidgetUiField.studyEntry.set(studyEntryElement);
 			
 			if (studyEntryElement != null) {
 				
@@ -142,7 +144,6 @@ public class ViewStudyWidgetController {
 			}
 			
 			log.leave();
-			
 			return studyEntryElement;
 		}
 		
