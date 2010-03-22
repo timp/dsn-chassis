@@ -30,6 +30,13 @@ public class ViewStudyWidget
 
 
 
+	public ViewStudyWidget() {
+		super();
+		this.controller = new ViewStudyWidgetController(this, this.model);
+		this.renderer.setController(this.controller);
+		this.memory = new Memory();
+	}		
+	
 	@Override
 	protected ViewStudyWidgetModel createModel() {
 		return new ViewStudyWidgetModel();
@@ -44,13 +51,6 @@ public class ViewStudyWidget
 		return new ViewStudyWidgetRenderer(this);
 	}
 
-	public ViewStudyWidget() {
-		super();
-		this.controller = new ViewStudyWidgetController(this, this.model);
-		this.renderer.setController(this.controller);
-		this.memory = new Memory();
-	}		
-	
 	// Using init() rather than constructor because reset() uses init().
 	public void init() {
 		
@@ -75,6 +75,7 @@ public class ViewStudyWidget
 		
 	}
 	
+	/*
 	public Deferred<Element> retrieveStudy() {
 		
 		log.enter("retrieveStudy");
@@ -86,6 +87,8 @@ public class ViewStudyWidget
 		return deferredElement;
 		
 	}	
+	*/
+	
 	
 	@Override
 	public Deferred<ChassisWidget> refreshAndCallback() {

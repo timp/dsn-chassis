@@ -131,8 +131,6 @@ public class ViewStudyWidgetController {
 			
 			log.debug("Setting study for model and child widgets");			
 			model.studyEntry.set(studyEntryElement);
-			owner.renderer.studySummaryWidgetUiField.studyEntry.set(studyEntryElement);
-			owner.renderer.studySummaryWidgetUiField.studyActionsWidgetUiField.studyEntry.set(studyEntryElement);
 			
 			if (studyEntryElement != null) {
 				
