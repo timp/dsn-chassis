@@ -1,9 +1,10 @@
 package org.cggh.chassis.wwarn.ui.common.client;
 
+/**
+ * A bridge between the a javascript config map and java.
+ */
 public class Config {
 
-	
-	
 	
 	public static final String USER_EMAIL = "user.email";
 	public static final String COLLECTION_STUDIES_URL = "collection.studies.url";
@@ -21,7 +22,19 @@ public class Config {
 	public static final String FORMHANDLER_ANONYMIZEDFILEUPLOAD_URL = "formhandler.anonymizedfileupload.url";
 	
 	
-	public static native String get(String key) /*-{
+    /**
+     * Get a value from the javascript config object;
+     * @param key
+     * @return value
+     * @throws NullPointerException if not found
+     */
+    public static String get(String key) { 
+    	String it = getNative(key);
+    	if(it == null)
+			throw new NullPointerException("No entry in Config for " + key);
+    	return it;
+    }
+	private static native String getNative(String key) /*-{
 		return $wnd.config[key];
 	}-*/;
 	
