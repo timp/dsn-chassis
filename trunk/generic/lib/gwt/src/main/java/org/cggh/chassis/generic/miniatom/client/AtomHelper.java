@@ -25,14 +25,30 @@ public class AtomHelper {
 	
 	
 	
-	public static String getPublished(Element parent) {
+	private static String getPublished(Element parent) {
 		return XMLNS.getFirstChildSimpleContentByTagNameNS(parent, Atom.ELEMENT_PUBLISHED, Atom.NSURI);
+	}
+	
+	public static String getPublishedAsDate(Element parent) {
+		return timestampAsDate(getPublished(parent));
+	}
+	
+	public static String getPublishedAsTime(Element parent) {
+		return timestampToTheMinute(getPublished(parent));
 	}
 	
 	
 	
-	public static String getUpdated(Element parent) {
+	private static String getUpdated(Element parent) {
 		return XMLNS.getFirstChildSimpleContentByTagNameNS(parent, Atom.ELEMENT_UPDATED, Atom.NSURI);
+	}
+	
+	public static String getUpdatedAsDate(Element parent) {
+		return timestampAsDate(getUpdated(parent));
+	}
+	
+	public static String getUpdatedAsTime(Element parent) {
+		return timestampToTheMinute(getUpdated(parent));
 	}
 	
 	
@@ -336,6 +352,19 @@ public class AtomHelper {
 	}
 
 
+	/** 2010-03-22T20:55:07+00:00 becomes 2010-03-22 */
+	public static String timestampAsDate(String timestamp) { 
+		if (timestamp.length() != 25)
+			throw new RuntimeException("Expecting a timestamp of length 25 eg 2010-03-22T20:55:07+00:00");
+		return timestamp.substring(0,10); 
+	}
+	
+	/** 2010-03-22T20:55:07+00:00 becomes 2010-03-22 20:55 */
+	public static String timestampToTheMinute(String timestamp) { 
+		if (timestamp.length() != 25)
+			throw new RuntimeException("Expecting a timestamp of length 25 eg 2010-03-22T20:55:07+00:00");
+		return timestamp.substring(0,16).replace("T", " "); 
+	}
 
 	
 	
