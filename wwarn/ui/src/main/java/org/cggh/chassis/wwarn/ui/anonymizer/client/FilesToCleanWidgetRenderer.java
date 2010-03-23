@@ -165,10 +165,10 @@ public class FilesToCleanWidgetRenderer extends ChassisWidgetRenderer<FilesToCle
 		List<Widget[]> rows = new ArrayList<Widget[]>();
 
 		Widget[] headerRow = {
-			new Label("File Name"), // TODO i18n
+			new Label("File Name"),       // TODO i18n
 			new Label("Date Submitted"),  // TODO i18n
-			new Label("Date Reviewed"),  // TODO i18n
-			new Label("Actions") // TODO i18n
+			new Label("Date Reviewed"),   // TODO i18n
+			new Label("Actions")          // TODO i18n
 		};
 		rows.add(headerRow);
 		
@@ -176,10 +176,10 @@ public class FilesToCleanWidgetRenderer extends ChassisWidgetRenderer<FilesToCle
 			
 			String fileName = AtomHelper.getTitle(entry);
 			
-			String submittedDate = ChassisHelper.getSubmissionPublished(entry);
+			String submittedDate = ChassisHelper.getSubmissionPublishedAsDate(entry);
 			
 			
-			String reviewedDate = ChassisHelper.getReviewPublished(entry);
+			String reviewedDate = ChassisHelper.getReviewPublishedAsDate(entry);
 			
 			final Element fileToBeCleanedEntryElement = entry;
 			
