@@ -70,7 +70,7 @@ public class ViewStudyWidgetRenderer extends
 				studySummaryWidgetUiField.listStudiesNavigationEventChannel.addHandler(new WidgetEventHandler() {
 			public void onEvent(WidgetEvent e) {
 				log.enter("onEvent");
-				log.debug("fire list studies");
+				log.debug("fire list studies on " + owner.listStudiesNavigationEventChannel);
 				owner.listStudiesNavigationEventChannel.fireEvent(e);
 				log.leave();
 			}
