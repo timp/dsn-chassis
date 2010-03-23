@@ -1,6 +1,3 @@
-/**
- * 
- */
 package org.cggh.chassis.wwarn.ui.curator.client;
 
 import static org.cggh.chassis.generic.widget.client.HtmlElements.strongWidget;
@@ -144,7 +141,7 @@ public class StudySummaryWidget
 				strongWidget("Study Title"), // TODO i18n
 				strongWidget("Modules"),     // TODO i18n
 				strongWidget("Submitters"),  // TODO i18n
-				strongWidget("Published"),     // TODO i18n
+				strongWidget("Published"),   // TODO i18n
 				strongWidget("Updated"),     // TODO i18n
 			};
 			
@@ -154,8 +151,8 @@ public class StudySummaryWidget
 						new HTML(ChassisHelper.getTitle(study)),
 						new HTML(RenderUtils.join(ChassisHelper.getModules(study), ", ")),
 						new HTML(RenderUtils.join(ChassisHelper.getAuthorEmails(study), ", ")),
-						new HTML(RenderUtils.timstampAsDate(ChassisHelper.getPublished(study))),
-						new HTML(RenderUtils.timstampAsDate(ChassisHelper.getUpdated(study))),
+						new HTML(ChassisHelper.getPublishedAsDate(study)),
+						new HTML(ChassisHelper.getUpdatedAsDate(study)),
 			};
 			rows.add(row);
 			
@@ -173,7 +170,6 @@ public class StudySummaryWidget
 
 	protected void syncUIWithStatus(Status status) {
 		log.enter("syncUIWithStatus");		
-		log.debug("status:" + status);
 		
 		if (status == null) {
 			// nothing to do yet
