@@ -82,7 +82,27 @@ public class CuratorApplicationWidget
 				
 				} else {
 					
-					log.debug(" event not an instanceof ViewStudyNavigationEvent");
+					throw new RuntimeException(" event not an instanceof ViewStudyNavigationEvent");
+				}				
+				
+				log.leave();
+			}
+		}));
+
+		this.childWidgetEventHandlerRegistrations.add(
+				viewStudyWidget.listStudiesNavigationEventChannel.addHandler(
+						new WidgetEventHandler() {
+			public void onEvent(WidgetEvent e) {
+				
+				log.enter("onEvent");
+
+				if (e instanceof ListStudiesNavigationEvent) {
+					
+					setActiveChild(curatorHomeWidget);
+				
+				} else {
+					
+					throw new RuntimeException(" event not an instanceof ViewStudyNavigationEvent");
 				}				
 				
 				log.leave();

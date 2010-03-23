@@ -15,6 +15,7 @@ import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 import org.cggh.chassis.generic.widget.client.ChassisWidget;
 import org.cggh.chassis.generic.widget.client.DelegatingWidget;
 import org.cggh.chassis.generic.widget.client.MapMemory;
+import org.cggh.chassis.generic.widget.client.WidgetEventChannel;
 import org.cggh.chassis.generic.widget.client.WidgetMemory;
 
 
@@ -28,6 +29,11 @@ public class ViewStudyWidget
 	
 	private ViewStudyWidgetController controller;
 
+	public final WidgetEventChannel listStudiesNavigationEventChannel = new WidgetEventChannel(this);
+	public final WidgetEventChannel viewStudyNavigationEventChannel = new WidgetEventChannel(this);
+	public final WidgetEventChannel viewStudyQuestionnaireNavigationEventChannel = new WidgetEventChannel(this);
+	public final WidgetEventChannel editStudyQuestionnaireNavigationEventChannel = new WidgetEventChannel(this);
+	public final WidgetEventChannel listStudyRevisionsNavigationEventChannel = new WidgetEventChannel(this);
 
 
 	public ViewStudyWidget() {

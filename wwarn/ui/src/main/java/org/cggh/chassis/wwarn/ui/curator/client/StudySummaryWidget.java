@@ -16,6 +16,9 @@ import org.cggh.chassis.generic.widget.client.ChassisWidget;
 import org.cggh.chassis.generic.widget.client.ObservableProperty;
 import org.cggh.chassis.generic.widget.client.PropertyChangeEvent;
 import org.cggh.chassis.generic.widget.client.PropertyChangeHandler;
+import org.cggh.chassis.generic.widget.client.WidgetEvent;
+import org.cggh.chassis.generic.widget.client.WidgetEventChannel;
+import org.cggh.chassis.generic.widget.client.WidgetEventHandler;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.Status;
 import org.cggh.chassis.wwarn.ui.common.client.RenderUtils;
 
@@ -61,6 +64,11 @@ public class StudySummaryWidget
 	public final ObservableProperty<String> message = new ObservableProperty<String>();
 
 
+	public final WidgetEventChannel viewStudyNavigationEventChannel = new WidgetEventChannel(this);
+	public final WidgetEventChannel editStudyQuestionnaireNavigationEventChannel = new WidgetEventChannel(this);
+	public final WidgetEventChannel listStudyRevisionsNavigationEventChannel = new WidgetEventChannel(this);
+	public final WidgetEventChannel viewStudyQuestionnaireNavigationEventChannel = new WidgetEventChannel(this);
+	public final WidgetEventChannel listStudiesNavigationEventChannel = new WidgetEventChannel(this);
 
 
 	
@@ -80,6 +88,14 @@ public class StudySummaryWidget
 		this.add(uiBinder.createAndBindUi(this));
 		errorPanel.setVisible(false);	
 	}
+
+
+	@Override
+	protected void bindUI() {
+		super.bindUI();
+		registerHandlersForChildWidgetEvents();		
+	}
+
 
 
 	@Override
@@ -183,6 +199,27 @@ public class StudySummaryWidget
 		
 		log.leave();
 	}
+	
+	protected void registerHandlersForChildWidgetEvents() {
+		log.enter("registerHandlersForChildWidgetEvents");
+		this.childWidgetEventHandlerRegistrations.add(
+				studyActionsWidgetUiField.listStudiesNavigationEventChannel.addHandler(new WidgetEventHandler() {
+			public void onEvent(WidgetEvent e) {
+				log.enter("onEvent");
+				listStudiesNavigationEventChannel.fireEvent(e);
+				log.leave();
+			}
+		}));
+		this.childWidgetEventHandlerRegistrations.add(
+				studyActionsWidgetUiField.viewStudyNavigationEventChannel.addHandler(new WidgetEventHandler() {
+			public void onEvent(WidgetEvent e) {
+				viewStudyNavigationEventChannel.fireEvent(e);
+			}
+		}));
+		log.leave();
+	}
+
+
 
 
 
