@@ -450,9 +450,9 @@ public class SubmitWidgetRenderer extends ChassisWidgetRenderer<SubmitWidgetMode
 
 		Widget[] headerRow = {
 			new Label("File Name"), // TODO i18n
-			new Label("Type"),  // TODO i18n
-			new Label("Size"), // TODO i18n
-			new Label("Uploaded")  // TODO i18n
+			new Label("Type"),      // TODO i18n
+			new Label("Size"),      // TODO i18n
+			new Label("Uploaded")   // TODO i18n
 		};
 		rows.add(headerRow);
 		
@@ -464,7 +464,7 @@ public class SubmitWidgetRenderer extends ChassisWidgetRenderer<SubmitWidgetMode
 			String type = getTypeLabel(categoryElement);
 			
 			String fileSizeAsString = AtomHelper.getMediaResourceSize(entry);
-			String created = AtomHelper.getPublished(entry);
+			String created = AtomHelper.getPublishedAsDate(entry);
 			
 			Widget[] row = {
 				new Label(title),	
