@@ -132,18 +132,5 @@ public class RenderUtils {
 		}
 	}
 	
-	/** 2010-03-22T20:55:07+00:00 becomes 2010-03-22 */
-	public static String timstampAsDate(String timestamp) { 
-		if (timestamp.length() != 25)
-			throw new RuntimeException("Expecting a timestamp of length 25 eg 2010-03-22T20:55:07+00:00");
-		return timestamp.substring(0,10); 
-	}
-	
-	/** 2010-03-22T20:55:07+00:00 becomes 2010-03-22 20:55 */
-	public static String timstampToTheMinute(String timestamp) { 
-		if (timestamp.length() != 25)
-			throw new RuntimeException("Expecting a timestamp of length 25 eg 2010-03-22T20:55:07+00:00");
-		return timestamp.substring(0,16).replace("T", " "); 
-	}
 
 }
