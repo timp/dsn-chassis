@@ -187,7 +187,7 @@ public class FilesToReviewWidgetRenderer extends ChassisWidgetRenderer<FilesToRe
 			
 			String fileName = AtomHelper.getTitle(entry);
 			
-			String submittedDate = ChassisHelper.getSubmissionPublished(entry);
+			String submittedDate = ChassisHelper.getSubmissionPublishedAsDate(entry);
 
 			final Element fileToBeReviewedEntryElement = entry;
 			
