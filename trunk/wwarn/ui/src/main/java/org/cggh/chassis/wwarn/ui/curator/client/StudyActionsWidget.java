@@ -138,7 +138,7 @@ public class StudyActionsWidget
 				strongWidget("Study Title"), // TODO i18n
 				strongWidget("Modules"),     // TODO i18n
 				strongWidget("Submitters"),  // TODO i18n
-				strongWidget("Published"),     // TODO i18n
+				strongWidget("Published"),   // TODO i18n
 				strongWidget("Updated"),     // TODO i18n
 			};
 			
@@ -153,7 +153,6 @@ public class StudyActionsWidget
 			};
 			rows.add(row);
 			
-			//FlexTable table = RenderUtils.renderResultsTable(rows);
 			FlexTable table = RenderUtils.renderFirstRowHeadingResultsAsFirstColumnHeadingTable(rows);
 			
 			this.tablePanel.clear();
