@@ -14,6 +14,7 @@ import module namespace CONSTANT = "http://www.cggh.org/2010/atombeat/xquery/con
 import module namespace xutil = "http://www.cggh.org/2010/atombeat/xquery/xutil" at "xutil.xqm" ;
 import module namespace mime = "http://www.cggh.org/2010/atombeat/xquery/mime" at "mime.xqm" ;
 import module namespace atomdb = "http://www.cggh.org/2010/atombeat/xquery/atomdb" at "atomdb.xqm" ;
+import module namespace atomsec = "http://www.cggh.org/2010/atombeat/xquery/atom-security" at "atom-security.xqm" ;
 import module namespace ap = "http://www.cggh.org/2010/xquery/atom-protocol" at "atom-protocol.xqm" ;
 
 import module namespace config = "http://www.cggh.org/2010/atombeat/xquery/config" at "../config/shared.xqm" ;
@@ -51,10 +52,46 @@ declare function acl-protocol:do-get(
 ) as item()*
 {
     
-    "TODO"
+    if ( $request-path-info = "/" )
+    
+    then acl-protocol:do-get-global-acl()
+    
+    else "TODO"
 	
 };
 
 
+
+
+declare function acl-protocol:do-get-global-acl() as item()*
+{
+    (: 
+     : We will only allow retrieval of global ACL if user is allowed
+     : to update the global ACL.
+     :)
+     
+    let $user := request:get-attribute( $config:user-name-request-attribute-key )
+    let $roles := request:get-attribute( $config:user-roles-request-attribute-key )
+    let $allowed as xs:boolean :=
+        ( atomsec:decide( $user , $roles , "/" , $CONSTANT:OP-UPDATE-ACL ) = $atomsec:decision-allow )
+    
+    return
+    
+        if ( not( $allowed ) )
+        
+        then ap:do-forbidden( "/" ) (: TODO factor these utility methods out :)
+        
+        else
+        
+            let $acl := atomsec:retrieve-global-acl()
+            let $response-header-set := response:set-header( "Content-Type" , "application/atom+xml" )
+            return
+                <atom:entry>
+                    <atom:content type="application/vnd.atombeat+xml">
+                        { $acl }
+                    </atom:content>
+                </atom:entry>
+
+};
 
 

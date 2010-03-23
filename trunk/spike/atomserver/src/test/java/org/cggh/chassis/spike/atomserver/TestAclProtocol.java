@@ -4,6 +4,7 @@ package org.cggh.chassis.spike.atomserver;
 
 import static org.cggh.chassis.spike.atomserver.AtomTestUtils.*;
 
+import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -63,15 +64,68 @@ public class TestAclProtocol extends TestCase {
 		GetMethod g = new GetMethod(ACL_URI);
 		int r = executeMethod(g, "adam", "test");
 
-		// verify reponse code
 		assertEquals(200, r);
 		
-		// verify response content type
-		String h = g.getResponseHeader("Content-Type").getValue();
-		assertNotNull(h);
-		assertTrue(h.startsWith("application/atom+xml"));
+		verifyAtomResponse(g);
 		
 		Document d = getResponseBodyAsDocument(g);
+		verifyDocIsAtomEntryWithAclContent(d);
+		
+	}
+	
+	
+	
+	public void testGetGlobalAclDenied() {
+
+		GetMethod g = new GetMethod(ACL_URI);
+		int r = executeMethod(g, "rebecca", "test");
+
+		assertEquals(403, r);
+
+	}
+	
+
+	
+	public void testGetCollectionAcl() {
+
+		// set up test by creating a collection
+		String collectionUri = AtomTestUtils.createTestCollection(SERVER_URI, "adam", "test");
+
+		// retrieve collection feed
+		GetMethod g = new GetMethod(collectionUri);
+		int r = executeMethod(g, "adam", "test");
+		assertEquals(200, r);
+		
+		// look for "edit-acl" link
+		Document d = AtomTestUtils.getResponseBodyAsDocument(g);
+		String aclLocation = AtomTestUtils.getLinkHref(d, "edit-acl");
+		assertNotNull(aclLocation);
+		
+		// make a second get request for the acl
+		GetMethod h = new GetMethod(aclLocation);
+		int s = executeMethod(h, "adam", "test");
+		assertEquals(200, s);
+		verifyAtomResponse(h);
+		Document e = AtomTestUtils.getResponseBodyAsDocument(h);
+		verifyDocIsAtomEntryWithAclContent(e);
+
+	}
+	
+	
+	
+	private static String verifyAtomResponse(HttpMethod m) {
+
+		String h = m.getResponseHeader("Content-Type").getValue();
+		assertNotNull(h);
+		assertTrue(h.startsWith("application/atom+xml"));
+		return h;
+		
+	}
+	
+	
+	
+	
+	private static Element verifyDocIsAtomEntryWithAclContent(Document d) {
 
 		// verify root element is atom entry
 		Element e = d.getDocumentElement();
@@ -83,12 +137,12 @@ public class TestAclProtocol extends TestCase {
 		assertNotNull(c);
 		
 		// verify acl content
-		NodeList n = c.getChildNodes();
-		assertEquals(1, n.getLength());
+		NodeList n = c.getElementsByTagNameNS("", "acl");
 		Element a = (Element) n.item(0);
-		assertEquals("acl", a.getLocalName());
-		assertEquals("", a.getNamespaceURI());
-	
+		assertNotNull(a);
+		
+		return a;
+		
 	}
 	
 	

@@ -682,8 +682,10 @@ declare function atomdb:retrieve-feed(
 		 : Map the request path info, e.g., "/foo", to a database collection path,
 		 : e.g., "/db/foo".
 		 :)
-		 
+		
+		let $log := util:log( "debug" , $request-path-info )
 		let $db-collection-path := atomdb:request-path-info-to-db-path( $request-path-info )
+		let $log := util:log( "debug" , $db-collection-path )
 	
 		(:
 		 : Obtain the database path for the atom feed document in the given database
@@ -692,15 +694,17 @@ declare function atomdb:retrieve-feed(
 		 :)
 		 
 		let $feed-doc-db-path := atomdb:feed-doc-db-path( $db-collection-path )
-		let $feed := doc( $feed-doc-db-path )/atom:feed
+		let $log := util:log( "debug" , $feed-doc-db-path )
+
+        let $feed := doc( $feed-doc-db-path )/atom:feed
+        let $log := util:log( "debug" , $feed )
 		
-		return
+		let $complete-feed :=
 		
 			<atom:feed>	
 			{
-				$feed/*
-			}
-			{
+				for $a in $feed/attribute::* return $a ,
+				for $c in $feed/child::* return $c ,
 				for $child in xmldb:get-child-resources( $db-collection-path )
 				let $is-entry-doc := ( not( ends-with( $child, ".media" ) ) and not( ends-with( $child , ".feed" ) ) )
 				let $entry := if ( $is-entry-doc ) then doc( concat( $db-collection-path , "/" , $child ) )/atom:entry else ()
@@ -708,6 +712,10 @@ declare function atomdb:retrieve-feed(
 				return $entry
 			}
 			</atom:feed>
+
+        let $log := util:log( "debug" , $complete-feed )
+        
+		return $complete-feed
 
 };
 
