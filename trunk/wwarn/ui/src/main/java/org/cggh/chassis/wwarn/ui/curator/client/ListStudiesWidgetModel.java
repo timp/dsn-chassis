@@ -27,11 +27,4 @@ public class ListStudiesWidgetModel {
 	public final ObservableProperty<Element> studyFeedElement = new ObservableProperty<Element>(); 
 	
 	
-	
-	public ListStudiesWidgetModel() {
-		studyFeed.set(null);
-		studyFeedElement.set(null);
-	}
-	
-	
 }
