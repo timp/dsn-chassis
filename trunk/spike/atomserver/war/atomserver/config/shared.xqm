@@ -17,6 +17,9 @@ declare variable $config:service-url as xs:string := "http://localhost:8081/atom
 declare variable $config:history-service-url as xs:string := "http://localhost:8081/atomserver/atomserver/history" ;
  
 
+declare variable $config:acl-service-url as xs:string := "http://localhost:8081/atomserver/atomserver/acl" ;
+
+
 (:
  : The name of the request attribute where the currently authenticated user
  : is stored. N.B. it is assumed that authentication will have been carried out
@@ -49,13 +52,13 @@ declare variable $config:user-name-is-email as xs:boolean := false() ;
  : The base collection within which to store Atom collections and resources.
  : All paths will be relative to this base collection path.
  :)
-declare variable $config:base-collection-path as xs:string := "/db/atom" ;
+declare variable $config:base-collection-path as xs:string := "/db/atom/content" ;
 
 
 (:
  : The base collection within which to store access control lists.
  :)
-declare variable $config:base-acl-collection-path as xs:string := "/db/system/atom/acl" ;
+declare variable $config:base-acl-collection-path as xs:string := "/db/atom/acl" ;
 
 
 (: 
@@ -284,6 +287,10 @@ declare function config:default-resource-acl(
             <allow>
                 <user>{$user}</user>
                 <operation>update-media</operation>
+            </allow>
+            <allow>
+                <user>{$user}</user>
+                <operation>delete-media</operation>
             </allow>
             <allow>
                 <user>{$user}</user>

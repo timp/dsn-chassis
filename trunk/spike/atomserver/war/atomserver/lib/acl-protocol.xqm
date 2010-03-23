@@ -37,7 +37,11 @@ as item()*
 		
 		then acl-protocol:do-get( $request-path-info )
 		
-		else ap:do-method-not-allowed( $request-path-info , ( "GET" ) )
+		else if ( $request-method = $CONSTANT:METHOD-PUT )
+		
+		then acl-protocol:do-put( $request-path-info )
+		
+		else ap:do-method-not-allowed( $request-path-info , ( "GET" , "PUT" ) )
 
 };
 
@@ -56,7 +60,15 @@ declare function acl-protocol:do-get(
     
     then acl-protocol:do-get-global-acl()
     
-    else "TODO"
+    else if ( atomdb:collection-available( $request-path-info ) )
+    
+    then acl-protocol:do-get-collection-acl( $request-path-info )
+    
+    else if ( atomdb:member-available( $request-path-info ) )
+    
+    then acl-protocol:do-get-member-acl( $request-path-info )
+    
+    else ap:do-not-found( $request-path-info )
 	
 };
 
@@ -91,7 +103,264 @@ declare function acl-protocol:do-get-global-acl() as item()*
                         { $acl }
                     </atom:content>
                 </atom:entry>
+                
+            (: TODO add updated date :)   
+            (: TODO add edit link :)
+            (: TODO add self link :)
 
 };
+
+
+
+
+
+declare function acl-protocol:do-get-collection-acl(
+    $request-path-info as xs:string
+) as item()*
+{
+    (: 
+     : We will only allow retrieval of collection ACL if user is allowed
+     : to update the collection ACL.
+     :)
+     
+    let $user := request:get-attribute( $config:user-name-request-attribute-key )
+    let $roles := request:get-attribute( $config:user-roles-request-attribute-key )
+    let $allowed as xs:boolean :=
+        ( atomsec:decide( $user , $roles , $request-path-info , $CONSTANT:OP-UPDATE-ACL ) = $atomsec:decision-allow )
+    
+    return
+    
+        if ( not( $allowed ) )
+        
+        then ap:do-forbidden( $request-path-info ) (: TODO factor these utility methods out :)
+        
+        else
+        
+            let $acl := atomsec:retrieve-collection-acl( $request-path-info )
+            let $response-header-set := response:set-header( "Content-Type" , "application/atom+xml" )
+            return
+                <atom:entry>
+                    <atom:content type="application/vnd.atombeat+xml">
+                        { $acl }
+                    </atom:content>
+                </atom:entry>
+
+            (: TODO add updated date :)   
+            (: TODO add edit link :)
+            (: TODO add self link :)
+
+};
+
+
+
+
+declare function acl-protocol:do-get-member-acl(
+    $request-path-info as xs:string
+) as item()*
+{
+    (: 
+     : We will only allow retrieval of member ACL if user is allowed
+     : to update the member ACL.
+     :)
+     
+    let $user := request:get-attribute( $config:user-name-request-attribute-key )
+    let $roles := request:get-attribute( $config:user-roles-request-attribute-key )
+    let $allowed as xs:boolean :=
+        ( atomsec:decide( $user , $roles , $request-path-info , $CONSTANT:OP-UPDATE-ACL ) = $atomsec:decision-allow )
+    
+    return
+    
+        if ( not( $allowed ) )
+        
+        then ap:do-forbidden( $request-path-info ) (: TODO factor these utility methods out :)
+        
+        else
+        
+            let $acl := atomsec:retrieve-resource-acl( $request-path-info )
+            let $response-header-set := response:set-header( "Content-Type" , "application/atom+xml" )
+            return
+                <atom:entry>
+                    <atom:content type="application/vnd.atombeat+xml">
+                        { $acl }
+                    </atom:content>
+                </atom:entry>
+
+            (: TODO add updated date :)   
+            (: TODO add edit link :)
+            (: TODO add self link :)
+
+};
+
+
+
+
+(:
+ : TODO doc me 
+ :)
+declare function acl-protocol:do-put(
+	$request-path-info as xs:string 
+) as item()*
+{
+    
+    if ( $request-path-info = "/" )
+    
+    then acl-protocol:do-put-global-acl()
+    
+    else if ( atomdb:collection-available( $request-path-info ) )
+    
+    then acl-protocol:do-put-collection-acl( $request-path-info )
+    
+    else if ( atomdb:member-available( $request-path-info ) )
+    
+    then acl-protocol:do-put-member-acl( $request-path-info )
+    
+    else ap:do-not-found( $request-path-info )
+	
+};
+
+
+
+
+
+declare function acl-protocol:do-put-global-acl() as item()*
+{
+     
+    let $user := request:get-attribute( $config:user-name-request-attribute-key )
+    let $roles := request:get-attribute( $config:user-roles-request-attribute-key )
+    let $allowed as xs:boolean :=
+        ( atomsec:decide( $user , $roles , "/" , $CONSTANT:OP-UPDATE-ACL ) = $atomsec:decision-allow )
+    
+    return
+    
+        if ( not( $allowed ) )
+        
+        then ap:do-forbidden( "/" ) (: TODO factor these utility methods out :)
+        
+        else
+        
+            let $acl := request:get-data()/atom:content[@type="application/vnd.atombeat+xml"]/acl
+            return 
+                
+                if ( empty( $acl ) )
+                then ap:do-bad-request( "/" , "Request entity must be Atom entry document with child <atom:content type='application/vnd.atombeat+xml'> with child <acl>." )
+                
+                else
+
+                    let $acl-updated := atomsec:store-global-acl( $acl )
+                    let $acl := atomsec:retrieve-global-acl()
+                    let $response-header-set := response:set-header( "Content-Type" , "application/atom+xml" )
+                    return
+                        <atom:entry>
+                            <atom:content type="application/vnd.atombeat+xml">
+                                { $acl }
+                            </atom:content>
+                        </atom:entry>
+                        
+                    (: TODO add updated date :)   
+                    (: TODO add edit link :)
+                    (: TODO add self link :)
+
+};
+
+ 
+
+
+
+declare function acl-protocol:do-put-collection-acl(
+    $request-path-info as xs:string
+) as item()*
+{
+    (: 
+     : We will only allow retrieval of collection ACL if user is allowed
+     : to update the collection ACL.
+     :)
+     
+    let $user := request:get-attribute( $config:user-name-request-attribute-key )
+    let $roles := request:get-attribute( $config:user-roles-request-attribute-key )
+    let $allowed as xs:boolean :=
+        ( atomsec:decide( $user , $roles , $request-path-info , $CONSTANT:OP-UPDATE-ACL ) = $atomsec:decision-allow )
+    
+    return
+    
+        if ( not( $allowed ) )
+        
+        then ap:do-forbidden( $request-path-info ) (: TODO factor these utility methods out :)
+        
+        else
+        
+            let $acl := request:get-data()/atom:entry/atom:content[@type="application/vnd.atombeat+xml"]/acl
+            return 
+                
+                if ( empty( $acl ) )
+                then ap:do-bad-request( $request-path-info , "Request entity must be Atom entry document with child <atom:content type='application/vnd.atombeat+xml'> with child <acl>." )
+                
+                else
+
+                    let $acl-updated := atomsec:store-collection-acl( $request-path-info , $acl )
+                    let $acl := atomsec:retrieve-collection-acl( $request-path-info )
+                    let $response-header-set := response:set-header( "Content-Type" , "application/atom+xml" )
+                    return
+                        <atom:entry>
+                            <atom:content type="application/vnd.atombeat+xml">
+                                { $acl }
+                            </atom:content>
+                        </atom:entry>
+        
+                    (: TODO add updated date :)   
+                    (: TODO add edit link :)
+                    (: TODO add self link :)
+
+};
+
+
+
+
+declare function acl-protocol:do-put-member-acl(
+    $request-path-info as xs:string
+) as item()*
+{
+    (: 
+     : We will only allow retrieval of member ACL if user is allowed
+     : to update the member ACL.
+     :)
+     
+    let $user := request:get-attribute( $config:user-name-request-attribute-key )
+    let $roles := request:get-attribute( $config:user-roles-request-attribute-key )
+    let $allowed as xs:boolean :=
+        ( atomsec:decide( $user , $roles , $request-path-info , $CONSTANT:OP-UPDATE-ACL ) = $atomsec:decision-allow )
+    
+    return
+    
+        if ( not( $allowed ) )
+        
+        then ap:do-forbidden( $request-path-info ) (: TODO factor these utility methods out :)
+        
+        else
+        
+            let $acl := request:get-data()/atom:entry/atom:content[@type="application/vnd.atombeat+xml"]/acl
+            return 
+                
+                if ( empty( $acl ) )
+                then ap:do-bad-request( $request-path-info , "Request entity must be Atom entry document with child <atom:content type='application/vnd.atombeat+xml'> with child <acl>." )
+                
+                else
+
+                    let $acl-updated := atomsec:store-resource-acl( $request-path-info , $acl )
+                    let $acl := atomsec:retrieve-resource-acl( $request-path-info )
+                    let $response-header-set := response:set-header( "Content-Type" , "application/atom+xml" )
+                    return
+                        <atom:entry>
+                            <atom:content type="application/vnd.atombeat+xml">
+                                { $acl }
+                            </atom:content>
+                        </atom:entry>
+        
+                    (: TODO add updated date :)   
+                    (: TODO add edit link :)
+                    (: TODO add self link :)
+
+};
+
+
 
 

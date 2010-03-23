@@ -95,6 +95,10 @@ declare function sp:after(
 		else if ( $operation = $CONSTANT:OP-LIST-COLLECTION )
 		
 		then sp:after-list-collection( $request-path-info , $response-data , $response-content-type )
+		
+		else if ( $operation = $CONSTANT:OP-RETRIEVE-MEMBER )
+		
+		then sp:after-retrieve-member( $request-path-info , $response-data , $response-content-type )
 
 		else 
 
@@ -124,6 +128,8 @@ declare function sp:after-create-member(
 	(: if security is enabled, install default resource ACL :)
 	let $resource-acl-installed := sp:install-resource-acl( $request-path-info , $entry-doc-db-path )
 	let $log := util:log( "debug" , concat( "$resource-acl-installed: " , $resource-acl-installed ) )
+	
+	(: TODO add edit-acl link :)
 
 	return ( $response-data , $response-content-type )
 
@@ -164,6 +170,9 @@ declare function sp:after-create-media(
 	(: if security is enabled, install default resource ACL :)
 	let $resource-acl-installed := sp:install-resource-acl( $request-path-info , $media-resource-db-path )
 	let $log := util:log( "debug" , concat( "$resource-acl-installed: " , $resource-acl-installed ) )
+	
+	(: TODO add edit-acl link :)
+	(: TODO add edit-media-acl link :)
 
 	return ( $response-data , $response-content-type )
 
@@ -181,6 +190,8 @@ declare function sp:after-create-collection(
 
 	(: if security is enabled, install default collection ACL :)
 	let $collection-acl-installed := sp:install-collection-acl( $request-path-info )
+	
+	(: TODO add edit-acl link :)
 
 	return ( $response-data , $response-content-type )
 
@@ -196,7 +207,42 @@ declare function sp:after-list-collection(
 ) as item()*
 {
 
-	let $response-data := sp:filter-feed-by-acls( $response-data )
+	let $response-data := sp:filter-feed-by-acls( $request-path-info , $response-data )
+
+	return ( $response-data , $response-content-type )
+
+};
+
+
+
+
+declare function sp:after-retrieve-member(
+	$request-path-info as xs:string ,
+	$response-data as item()* ,
+	$response-content-type as xs:string?
+) as item()*
+{
+
+	let $log := util:log( "debug" ,"== sp:after-retrieve-member ==" )
+
+    let $can-update-member-acl := not( sp:is-operation-forbidden( $CONSTANT:OP-UPDATE-ACL , $request-path-info , () ) )
+    let $edit-acl-link :=     
+        if ( $can-update-member-acl )
+        then <atom:link rel="edit-acl" href="{concat( $config:acl-service-url , $request-path-info )}" type="application/atom+xml"/>
+        else ()
+        
+    let $log := util:log( "debug" , concat( "$edit-acl-link: " , $edit-acl-link ) )    
+        
+    let $response-data := 
+        if ( empty( $edit-acl-link ) ) then $response-data
+        else
+            <atom:entry>
+            {
+                $response-data/attribute::* ,
+                $response-data/child::* ,
+                $edit-acl-link
+            }
+            </atom:entry>
 
 	return ( $response-data , $response-content-type )
 
@@ -237,17 +283,24 @@ declare function sp:install-collection-acl( $request-path-info as xs:string ) as
 
 
 declare function sp:filter-feed-by-acls(
+    $request-path-info as xs:string ,
     $feed as element(atom:feed)
 ) as element(atom:feed)
 {
     if ( not( $config:enable-security ) )
     then $feed
     else
+        let $can-update-collection-acl := not( sp:is-operation-forbidden( $CONSTANT:OP-UPDATE-ACL , $request-path-info , () ) )
+        let $edit-acl-link :=     
+            if ( $can-update-collection-acl )
+            then <atom:link rel="edit-acl" href="{concat( $config:acl-service-url , $request-path-info )}" type="application/atom+xml"/>
+            else ()
         let $filtered-feed :=
             <atom:feed>
                 {
                     $feed/attribute::* ,
                     $feed/child::*[ not( local-name(.) = $CONSTANT:ATOM-ENTRY and namespace-uri(.) = $CONSTANT:ATOM-NSURI ) ] ,
+                    $edit-acl-link ,
                     for $entry in $feed/atom:entry
                     let $entry-path-info := substring-after( $entry/atom:link[@rel="edit"]/@href , $config:service-url )
                     let $log := util:log( "debug" , concat( "checking permission to retrieve member for entry-path-info: " , $entry-path-info ) )

@@ -21,6 +21,9 @@ declare function atomsec:store-global-acl(
 ) as item()*
 {
     
+    let $log := util:log( "debug" , "== atomsec:store-global-acl ==" )
+    let $log := util:log( "debug" , $acl )
+    
     let $base-acl-collection-db-path := xutil:get-or-create-collection( $config:base-acl-collection-path )
     
     let $global-acl-doc-db-path := xmldb:store( $base-acl-collection-db-path , ".acl" , $acl )
@@ -183,20 +186,25 @@ declare function atomsec:decide(
 ) as xs:string
 {
 
+    let $log := util:log( "debug" , "== atomsec:decide ==" )
+    
     (: first we need to find the relevant ACLs :)
     
     (: if the request path identifies a atom collection member or media resource
      : then we need to find the resource ACL first :)
      
     let $resource-acl := atomsec:retrieve-resource-acl( $request-path-info )
+    let $log := util:log( "debug" , $resource-acl )
     
     (: we also need the collection ACL :)
     
     let $collection-acl := atomsec:retrieve-collection-acl( $request-path-info )
+    let $log := util:log( "debug" , $collection-acl )
     
     (: we also need the global ACL :)
     
     let $global-acl := atomsec:retrieve-global-acl()
+    let $log := util:log( "debug" , $global-acl )
     
     (: start from default decision :)
     
@@ -206,6 +214,7 @@ declare function atomsec:decide(
      : then global ACL. :)
     
     let $resource-decision := atomsec:apply-rules( $resource-acl , $operation , $media-type , $user , $roles )
+    let $log := util:log( "debug" , concat( "$resource-decision: " , $resource-decision ) )
     
     (: any resource decision overrides default decision :)
     
@@ -215,6 +224,7 @@ declare function atomsec:decide(
         else $decision
         
     let $collection-decision := atomsec:apply-rules( $collection-acl , $operation , $media-type , $user , $roles )   
+    let $log := util:log( "debug" , concat( "$collection-decision: " , $collection-decision ) )
 
     (: any collection decision overrides resource decision :)
     
@@ -224,6 +234,7 @@ declare function atomsec:decide(
         else $decision
         
     let $global-decision := atomsec:apply-rules( $global-acl , $operation , $media-type , $user , $roles )  
+    let $log := util:log( "debug" , concat( "$global-decision: " , $global-decision ) )
     
     (: any global decision overrides resource decision :)
 
@@ -272,9 +283,23 @@ declare function atomsec:match-rules(
 ) as element()*
 {
 
+    let $log := util:log( "debug" , "== atomsec:match-rules ==" )
+    let $log := util:log( "debug" , $acl )
+    
     let $matching-rules :=
     
-        for $rule in $acl/rules/*
+        (: 
+         : TODO there is a workaround here compensating for the fact that
+         : for some reason, the xpath $acl/rules/* doesn't match anything
+         : after an update to the global acl document. Possibly an indexing
+         : issue. N.B. after a recompile of this script the expected matching
+         : behaviour is restored.
+         :)
+         
+(:        for $rule in $acl/rules/* :)
+        for $rule in $acl/*[local-name(.) = "rules"]/* 
+        
+        let $log := util:log( "debug" , $rule )
         
         return
         
@@ -296,6 +321,7 @@ declare function atomsec:match-rules(
             
             else ()
             
+    let $log := util:log( "debug" , $matching-rules )
     
     return $matching-rules
     
