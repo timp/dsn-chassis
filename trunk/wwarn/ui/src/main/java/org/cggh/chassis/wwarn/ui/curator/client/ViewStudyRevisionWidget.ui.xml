@@ -37,7 +37,7 @@
 
 		<g:HTMLPanel ui:field="pendingPanel">
 			<p title="ViewStudyRevision">
-				<ui:msg>pending... </ui:msg>
+				<ui:msg>Pending... </ui:msg>
 			</p>
 		</g:HTMLPanel>
 
