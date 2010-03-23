@@ -7,14 +7,10 @@ import org.cggh.chassis.generic.widget.client.ChassisWidgetRenderer;
 import org.cggh.chassis.generic.widget.client.PropertyChangeEvent;
 import org.cggh.chassis.generic.widget.client.PropertyChangeHandler;
 import org.cggh.chassis.generic.widget.client.WidgetEvent;
-import org.cggh.chassis.generic.widget.client.WidgetEventChannel;
 import org.cggh.chassis.generic.widget.client.WidgetEventHandler;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.Status;
-import org.cggh.chassis.wwarn.ui.submitter.client.ViewStudyWidgetModel.EntryChangeEvent;
-import org.cggh.chassis.wwarn.ui.submitter.client.ViewStudyWidgetModel.EntryChangeHandler;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiTemplate;
@@ -37,7 +33,7 @@ public class ViewStudyWidgetRenderer extends
 		GWT.create(ViewStudyWidgetRendererUiBinder.class);
 
 	@UiField HTMLPanel errorPanel;
-	@UiField FlowPanel errorMessages; // in errorPanel
+	@UiField FlowPanel errorMessage; // in errorPanel
 	@UiField HTMLPanel pendingPanel;
 	@UiField Label pendingMessage; // in pendingPanel
 	@UiField HTMLPanel contentPanel;
@@ -46,14 +42,14 @@ public class ViewStudyWidgetRenderer extends
 	
 	
 	private ViewStudyWidget owner;
-	
+
+	private ViewStudyWidgetController controller;
 
 	
 	public ViewStudyWidgetRenderer(ViewStudyWidget owner) {
 		this.owner = owner;
 	}
-	private ViewStudyWidgetController controller;
-
+	
 	public void setController(ViewStudyWidgetController controller) {
 		this.controller = controller;
 	}
@@ -154,18 +150,18 @@ public class ViewStudyWidgetRenderer extends
 				
 				log.error("StudyEntryElementNotFoundStatus");
 				
-				showError("Could not find the entry corresponding to the study id in memory.");	
+				error("Could not find the entry corresponding to the study id in memory.");	
 			}		
 			
 			else if (status instanceof AsyncWidgetModel.ErrorStatus) {
 	
-				showError("Error status given on asynchronous call.");
+				error("Error status given on asynchronous call.");
 				
 			}			
 			
 			else {
 	
-				showError("Unhandled status:" + status);
+				error("Unhandled status:" + status);
 			}
 			
 			log.leave();
@@ -188,7 +184,7 @@ public class ViewStudyWidgetRenderer extends
 			owner.renderer.studySummaryWidgetUiField.studyActionsWidgetUiField.studyEntry.set(study);
 			
 		} else {
-			showError("study was null");
+			error("study was null");
 		}
 
 		log.leave();
@@ -213,16 +209,22 @@ public class ViewStudyWidgetRenderer extends
 			
 		} else {
 
-			showError("studyID was null");
+			error("studyID was null");
 		}
 	
 		
 		log.leave();
 	}		
 	
-	public void showError(String err) {
-		errorMessages.add(new HTML(err));
+	public void error(String err) {
+		log.enter("error");
+		log.debug("Error:" + err);
+		pendingPanel.setVisible(false);	
+		contentPanel.setVisible(false);
+		errorMessage.clear();
+		errorMessage.add(new HTML(err));
 		errorPanel.setVisible(true);
+		log.leave();
 	}
 	
 	
