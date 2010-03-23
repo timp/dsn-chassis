@@ -6,6 +6,9 @@ import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 import org.cggh.chassis.generic.widget.client.ChassisWidgetRenderer;
 import org.cggh.chassis.generic.widget.client.PropertyChangeEvent;
 import org.cggh.chassis.generic.widget.client.PropertyChangeHandler;
+import org.cggh.chassis.generic.widget.client.WidgetEvent;
+import org.cggh.chassis.generic.widget.client.WidgetEventChannel;
+import org.cggh.chassis.generic.widget.client.WidgetEventHandler;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.Status;
 import org.cggh.chassis.wwarn.ui.submitter.client.ViewStudyWidgetModel.EntryChangeEvent;
 import org.cggh.chassis.wwarn.ui.submitter.client.ViewStudyWidgetModel.EntryChangeHandler;
@@ -44,7 +47,9 @@ public class ViewStudyWidgetRenderer extends
 	
 	private ViewStudyWidget owner;
 	
-    public ViewStudyWidgetRenderer(ViewStudyWidget owner) {
+
+	
+	public ViewStudyWidgetRenderer(ViewStudyWidget owner) {
 		this.owner = owner;
 	}
 	private ViewStudyWidgetController controller;
@@ -62,6 +67,27 @@ public class ViewStudyWidgetRenderer extends
 		
 	}
 	
+	@Override
+	protected void registerHandlersForChildWidgetEvents() {
+		log.enter("registerHandlersForChildWidgetEvents");
+		this.childWidgetEventHandlerRegistrations.add(
+				studySummaryWidgetUiField.listStudiesNavigationEventChannel.addHandler(new WidgetEventHandler() {
+			public void onEvent(WidgetEvent e) {
+				log.enter("onEvent");
+				owner.listStudiesNavigationEventChannel.fireEvent(e);
+				log.leave();
+			}
+		}));
+		this.childWidgetEventHandlerRegistrations.add(
+				studySummaryWidgetUiField.viewStudyNavigationEventChannel.addHandler(new WidgetEventHandler() {
+			public void onEvent(WidgetEvent e) {
+				owner.viewStudyNavigationEventChannel.fireEvent(e);
+			}
+		}));
+		log.leave();
+	}
+
+
 	@Override
 	protected void registerHandlersForModelChanges() {
 		
