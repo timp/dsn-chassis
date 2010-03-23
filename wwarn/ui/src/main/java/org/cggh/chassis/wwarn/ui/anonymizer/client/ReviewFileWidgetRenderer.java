@@ -233,16 +233,16 @@ public class ReviewFileWidgetRenderer extends ChassisWidgetRenderer<ReviewFileWi
 		List<Widget[]> rows = new ArrayList<Widget[]>();
 
 		Widget[] headerRow = {
-			new Label("File Name"), // TODO i18n
+			new Label("File Name"),       // TODO i18n
 			new Label("Date Submitted"),  // TODO i18n
-			new Label("Actions") // TODO i18n
+			new Label("Actions")          // TODO i18n
 		};
 		rows.add(headerRow);
 		
 		
 		String title = AtomHelper.getTitle(entry);
 
-		String submittedDate = ChassisHelper.getSubmissionPublished(entry);
+		String submittedDate = ChassisHelper.getSubmissionPublishedAsDate(entry);
 		
 		String url = AtomHelper.getContent(entry).getAttribute("src");
 		
