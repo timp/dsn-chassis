@@ -137,8 +137,9 @@
     </category>
     
     <category name="org.exist.xmldb" additivity="false">
-        <priority value="info"/>
+        <priority value="off"/>
         <appender-ref ref="exist.xmldb"/>
+        <appender-ref ref="console"/>
     </category>
     
 	<category name="org.exist.http.urlrewrite" additivity="false">

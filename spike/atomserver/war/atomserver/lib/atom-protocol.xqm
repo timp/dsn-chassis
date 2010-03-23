@@ -20,6 +20,7 @@ declare variable $ap:param-request-path-info := "request-path-info" ;
 
 
 
+
 (:
  : TODO doc me  
  :)
@@ -1193,6 +1194,8 @@ declare function ap:send-response(
 
 
 
+
+ 
 (:
  : TODO doc me
  :)
@@ -1212,7 +1215,6 @@ declare function ap:send-error(
 		<error>
 		    <status>{$status-code}</status>
 			<content>{$content}</content>
-			<service-url>{$config:service-url}</service-url>
 			<method>{request:get-method()}</method>
 			<path-info>{$request-path-info}</path-info>
 			<parameters>

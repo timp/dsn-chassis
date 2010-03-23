@@ -33,7 +33,7 @@ declare function local:setup() as empty()
             <atom:title>TEST COLLECTION</atom:title>
         </atom:feed>
     
-    let $collection-db-path := atomdb:create-collection( $test-collection-path, $feed , false() )
+    let $collection-db-path := atomdb:create-collection( $test-collection-path, $feed )
     
     let $entry :=
         <atom:entry>
@@ -952,6 +952,54 @@ declare function local:test-reference-resource-groups() as item()*
 
 
 
+
+declare function local:test-update-global-acl() as item()*
+{
+    let $output := ( "test-update-global-acl..." )
+    
+    let $global-acl :=
+        <acl>
+            <rules>
+                <allow>
+                    <user>alice</user>
+                    <operation>create-collection</operation>
+                </allow>
+                <allow>
+                    <role>administrator</role>
+                    <operation>create-collection</operation>
+                </allow>
+            </rules>
+        </acl>
+        
+    let $global-acl-doc-db-path := atomsec:store-global-acl($global-acl)
+    
+    let $acl := atomsec:retrieve-global-acl()
+    
+    let $output := ( $output , test:assert-equals( 2 , count($acl/rules/*) , "expect 2 rules" ) )
+    
+    let $global-acl :=
+        <acl>
+            <rules>
+                <allow>
+                    <user>alice</user>
+                    <operation>create-collection</operation>
+                </allow>
+            </rules>
+        </acl>
+        
+    let $global-acl-doc-db-path := atomsec:store-global-acl($global-acl)
+    
+    let $acl := atomsec:retrieve-global-acl()
+    
+    let $output := ( $output , test:assert-equals( 1 , count($acl/rules/*) , "expect 1 rule" ) )
+    
+    return $output
+    
+};
+
+
+
+
 declare function local:main() as item()*
 {
 
@@ -965,7 +1013,8 @@ declare function local:main() as item()*
         local:test-inline-groups() ,
         local:test-reference-global-groups() ,
         local:test-reference-collection-groups() ,
-        local:test-reference-resource-groups()
+        local:test-reference-resource-groups() ,
+        local:test-update-global-acl()
     )
     let $response-type := response:set-header( "Content-Type" , "text/plain" )
     return $output
