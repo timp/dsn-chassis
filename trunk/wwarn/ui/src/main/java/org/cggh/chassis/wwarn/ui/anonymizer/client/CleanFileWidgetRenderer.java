@@ -307,9 +307,9 @@ public class CleanFileWidgetRenderer extends ChassisWidgetRenderer<CleanFileWidg
 		
 		String title = AtomHelper.getTitle(entry);
 
-		String submissionPublishedDate = ChassisHelper.getSubmissionPublished(entry);
+		String submissionPublishedDate = ChassisHelper.getSubmissionPublishedAsDate(entry);
 		
-		String reviewPublishedDate = ChassisHelper.getReviewPublished(entry);
+		String reviewPublishedDate = ChassisHelper.getReviewPublishedAsDate(entry);
 		
 		String reviewSummary = ChassisHelper.getReviewSummary(entry);
 		
