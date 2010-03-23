@@ -50,7 +50,7 @@ public class ListStudiesWidget
 	}
 	
 	
-	public final WidgetEventChannel viewStudyNavigationEventChannel = new WidgetEventChannel(this);
+	public final WidgetEventChannel listStudiesViewStudyNavigationEventChannel = new WidgetEventChannel(this);
 
 
 	
