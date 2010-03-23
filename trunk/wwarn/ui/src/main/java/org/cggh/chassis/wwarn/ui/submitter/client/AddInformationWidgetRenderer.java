@@ -197,7 +197,7 @@ public class AddInformationWidgetRenderer extends
 			String type = getTypeLabel(categoryElement);
 			
 			String fileSizeAsString = AtomHelper.getMediaResourceSize(entry);
-			String created = AtomHelper.getPublished(entry);
+			String created = AtomHelper.getPublishedAsDate(entry);
 			
 			Widget[] row = {
 				new Label(title),	
