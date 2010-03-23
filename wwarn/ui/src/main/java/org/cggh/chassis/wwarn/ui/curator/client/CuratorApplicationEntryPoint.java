@@ -53,9 +53,11 @@ public class CuratorApplicationEntryPoint implements EntryPoint {
 		log.debug("instantiate main application widget");
 		CuratorApplicationWidget widget = new CuratorApplicationWidget();
 		RootPanel.get("content").add(widget);
-		
-		log.debug("call refresh");
-		widget.refresh();
+
+		// don't call refresh here, allow widget memory to call refresh
+		// as appropriate to history state
+//		log.debug("call refresh");
+//		widget.refresh();
 		
 		log.debug("setup history manager");
 		HistoryManager hm = new WidgetMemory.HistoryManager(widget.getMemory());

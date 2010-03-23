@@ -9,6 +9,7 @@ import org.cggh.chassis.generic.widget.client.MultiWidget;
 import org.cggh.chassis.generic.widget.client.WidgetEvent;
 import org.cggh.chassis.generic.widget.client.WidgetEventHandler;
 
+import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.xml.client.Element;
 
 /**
@@ -108,6 +109,20 @@ public class CuratorApplicationWidget
 	}
 	
 	
+	
+	@Override
+	public void setActiveChild(Widget child, boolean memorise) {
+		log.enter("setActiveChild");
+		
+		super.setActiveChild(child, memorise);
+		
+		// override to trigger refresh if set as active child
+		if (child == curatorHomeWidget) {
+			curatorHomeWidget.refresh();
+		}
+
+		log.leave();
+	}
 
 	
 
