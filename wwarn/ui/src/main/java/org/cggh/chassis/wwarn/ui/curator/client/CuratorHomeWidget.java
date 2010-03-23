@@ -44,14 +44,22 @@ public class CuratorHomeWidget
 		
 		this.add(uiBinder.createAndBindUi(this));
 		
+
+		log.leave();
+	}
+
+
+	@Override
+	protected void bindUI() {
+		super.bindUI();
 		this.childWidgetEventHandlerRegistrations.add(
 				listStudiesWidgetUiField.viewStudyNavigationEventChannel.addHandler(new WidgetEventHandler() {
 			public void onEvent(WidgetEvent e) {
+				log.enter("onEvent");
 				viewStudyNavigationEventChannel.fireEvent(e);
+				log.leave();
 			}
 		}));
-
-		log.leave();
 	}
 
 
@@ -69,11 +77,6 @@ public class CuratorHomeWidget
 	public final WidgetEventChannel viewStudyNavigationEventChannel = new WidgetEventChannel(this);
 
 	
-
-	public void registerHandlersForChildWidgetEvents() {
-		
-		
-	}
 
 	
 

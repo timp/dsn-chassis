@@ -70,6 +70,7 @@ public class ViewStudyWidgetRenderer extends
 				studySummaryWidgetUiField.listStudiesNavigationEventChannel.addHandler(new WidgetEventHandler() {
 			public void onEvent(WidgetEvent e) {
 				log.enter("onEvent");
+				log.debug("fire list studies");
 				owner.listStudiesNavigationEventChannel.fireEvent(e);
 				log.leave();
 			}
@@ -77,7 +78,10 @@ public class ViewStudyWidgetRenderer extends
 		this.childWidgetEventHandlerRegistrations.add(
 				studySummaryWidgetUiField.viewStudyNavigationEventChannel.addHandler(new WidgetEventHandler() {
 			public void onEvent(WidgetEvent e) {
+				log.enter("onEvent");
+				log.debug("fire view study on " + owner.viewStudyNavigationEventChannel);
 				owner.viewStudyNavigationEventChannel.fireEvent(e);
+				log.leave();
 			}
 		}));
 		log.leave();

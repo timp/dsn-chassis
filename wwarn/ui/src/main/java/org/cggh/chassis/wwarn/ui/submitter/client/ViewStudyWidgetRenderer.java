@@ -11,7 +11,6 @@ import static org.cggh.chassis.generic.widget.client.HtmlElements.*;
 import org.cggh.chassis.wwarn.ui.submitter.client.ViewStudyWidgetModel.EntryChangeEvent;
 import org.cggh.chassis.wwarn.ui.submitter.client.ViewStudyWidgetModel.EntryChangeHandler;
 
-import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.xml.client.Element;
 
 /**
@@ -42,7 +41,8 @@ public class ViewStudyWidgetRenderer extends AsyncWidgetRenderer<ViewStudyWidget
 	public void registerHandlersForModelChanges() {
 		super.registerHandlersForModelChanges();
 		
-		HandlerRegistration a = this.model.addEntryChangeHandler(new EntryChangeHandler() {
+		this.modelChangeHandlerRegistrations.add(
+				this.model.addEntryChangeHandler(new EntryChangeHandler() {
 			
 			public void onChange(EntryChangeEvent e) {
 				log.enter("onchange(EntryChangeEvent)");
@@ -50,9 +50,8 @@ public class ViewStudyWidgetRenderer extends AsyncWidgetRenderer<ViewStudyWidget
 				log.leave();
 			}
 			
-		});
+		}));
 		
-		this.modelChangeHandlerRegistrations.add(a);
 	}
 
 

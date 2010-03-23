@@ -63,8 +63,9 @@ public class CuratorApplicationWidget
 	
 	@Override
 	public void registerHandlersForChildWidgetEvents() {
+		log.enter("registerHandlersForChildWidgetEvents");
 		super.registerHandlersForChildWidgetEvents();
-		
+		log.debug("Adding list studies view study widget navigation event handler");
 		this.childWidgetEventHandlerRegistrations.add(
 				curatorHomeWidget.viewStudyNavigationEventChannel.addHandler(
 						new WidgetEventHandler() {
@@ -72,23 +73,17 @@ public class CuratorApplicationWidget
 				
 				log.enter("onEvent");
 
-				if (e instanceof ViewStudyNavigationEvent) {
+				Element studyElement =  ((ViewStudyNavigationEvent) e).getStudy();
+				log.debug("Setting study to " + studyElement);
+				viewStudyWidget.getModel().studyEntry.set(studyElement);
 					
-					Element studyElement =  ((ViewStudyNavigationEvent) e).getStudy();
-					log.debug("Setting study to " + studyElement);
-					viewStudyWidget.getModel().studyEntry.set(studyElement);
-					
-					setActiveChild(viewStudyWidget);
-				
-				} else {
-					
-					throw new RuntimeException(" event not an instanceof ViewStudyNavigationEvent");
-				}				
+				setActiveChild(viewStudyWidget);
 				
 				log.leave();
 			}
 		}));
 
+		log.debug("Adding view study list studies widget navigation event handler on " + viewStudyWidget.listStudiesNavigationEventChannel);
 		this.childWidgetEventHandlerRegistrations.add(
 				viewStudyWidget.listStudiesNavigationEventChannel.addHandler(
 						new WidgetEventHandler() {
@@ -96,20 +91,14 @@ public class CuratorApplicationWidget
 				
 				log.enter("onEvent");
 
-				if (e instanceof ListStudiesNavigationEvent) {
-					
-					setActiveChild(curatorHomeWidget);
-				
-				} else {
-					
-					throw new RuntimeException(" event not an instanceof ViewStudyNavigationEvent");
-				}				
+				setActiveChild(curatorHomeWidget);
 				
 				log.leave();
 			}
 		}));
 
 
+		log.leave();
 	}
 	
 	

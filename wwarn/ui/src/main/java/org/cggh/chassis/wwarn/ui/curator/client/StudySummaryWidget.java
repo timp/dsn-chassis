@@ -70,6 +70,14 @@ public class StudySummaryWidget
 
 	
 
+	public StudySummaryWidget() {
+		super();
+		log.enter("<constructor>");
+		log.leave();
+	}
+
+
+
 	@Override
 	public void refresh() {
 		log.enter("refresh");
@@ -89,8 +97,28 @@ public class StudySummaryWidget
 
 	@Override
 	protected void bindUI() {
-		super.bindUI();
-		registerHandlersForChildWidgetEvents();		
+		log.enter("bindUI");
+
+		this.childWidgetEventHandlerRegistrations.add(
+				studyActionsWidgetUiField.listStudiesNavigationEventChannel.addHandler(new WidgetEventHandler() {
+			public void onEvent(WidgetEvent e) {
+				log.enter("onEvent");
+				log.debug("fire list studies");
+				listStudiesNavigationEventChannel.fireEvent(e);
+				log.leave();
+			}
+		}));
+		this.childWidgetEventHandlerRegistrations.add(
+				studyActionsWidgetUiField.viewStudyNavigationEventChannel.addHandler(new WidgetEventHandler() {
+			public void onEvent(WidgetEvent e) {
+				log.enter("onEvent");
+				log.debug("fire view study");
+				viewStudyNavigationEventChannel.fireEvent(e);
+				log.leave();
+			}
+		}));
+
+		log.leave();
 	}
 
 
@@ -196,28 +224,6 @@ public class StudySummaryWidget
 		log.leave();
 	}
 	
-	protected void registerHandlersForChildWidgetEvents() {
-		log.enter("registerHandlersForChildWidgetEvents");
-		this.childWidgetEventHandlerRegistrations.add(
-				studyActionsWidgetUiField.listStudiesNavigationEventChannel.addHandler(new WidgetEventHandler() {
-			public void onEvent(WidgetEvent e) {
-				log.enter("onEvent");
-				listStudiesNavigationEventChannel.fireEvent(e);
-				log.leave();
-			}
-		}));
-		this.childWidgetEventHandlerRegistrations.add(
-				studyActionsWidgetUiField.viewStudyNavigationEventChannel.addHandler(new WidgetEventHandler() {
-			public void onEvent(WidgetEvent e) {
-				viewStudyNavigationEventChannel.fireEvent(e);
-			}
-		}));
-		log.leave();
-	}
-
-
-
-
 
 	public void error(String err) {
 		log.enter("error");
