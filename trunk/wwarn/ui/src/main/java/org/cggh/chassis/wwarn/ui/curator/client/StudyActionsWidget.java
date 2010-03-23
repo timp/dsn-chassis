@@ -172,7 +172,7 @@ public class StudyActionsWidget
 				public void onClick(ClickEvent e) {
 					log.enter("onClick");
 					
-					viewStudyNavigationEventChannel.fireEvent(new ListStudiesNavigationEvent());
+					listStudiesNavigationEventChannel.fireEvent(new ListStudiesNavigationEvent());
 					
 					log.leave();
 				}
