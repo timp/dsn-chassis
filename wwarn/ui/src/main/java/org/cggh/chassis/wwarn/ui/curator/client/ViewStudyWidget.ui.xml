@@ -21,7 +21,7 @@
 	<g:HTMLPanel>
 
 	    <g:HTMLPanel ui:field="errorPanel">
-				<g:FlowPanel ui:field="errorMessages" />
+				<g:FlowPanel ui:field="errorMessage" />
 	    </g:HTMLPanel>
 
 		<g:HTMLPanel ui:field="pendingPanel">
