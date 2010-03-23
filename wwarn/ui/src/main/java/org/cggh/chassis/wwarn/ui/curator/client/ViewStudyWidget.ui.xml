@@ -18,10 +18,13 @@
 	</ui:style>
 
 
-	<g:HTMLPanel>
+	<g:HTMLPanel ui:field="mainPanel" >
 
-	    <g:HTMLPanel ui:field="errorPanel">
-				<g:FlowPanel ui:field="errorMessage" />
+	    <g:HTMLPanel ui:field="errorPanel" styleName="{style.error}" >
+			<g:Label>
+        		<ui:msg>There has been an unexpected error: </ui:msg>
+			</g:Label>
+			<g:FlowPanel ui:field="errorMessage" title="ViewStudy"></g:FlowPanel>
 	    </g:HTMLPanel>
 
 		<g:HTMLPanel ui:field="pendingPanel">
