@@ -11,7 +11,7 @@ import module namespace CONSTANT = "http://www.cggh.org/2010/atombeat/xquery/con
 import module namespace xutil = "http://www.cggh.org/2010/atombeat/xquery/xutil" at "xutil.xqm" ;
 import module namespace test = "http://www.cggh.org/2010/atombeat/xquery/test" at "test.xqm" ;
 import module namespace atomdb = "http://www.cggh.org/2010/atombeat/xquery/atomdb" at "atomdb.xqm" ;
-import module namespace atomsec = "http://www.cggh.org/2010/xquery/atom-security" at "atom-security.xqm" ;
+import module namespace atomsec = "http://www.cggh.org/2010/atombeat/xquery/atom-security" at "atom-security.xqm" ;
 import module namespace config = "http://www.cggh.org/2010/atombeat/xquery/config" at "../config/shared.xqm" ;
 
 

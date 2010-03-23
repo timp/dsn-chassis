@@ -441,6 +441,19 @@ public class TestAtomProtocol extends TestCase {
 		String responseContentType = method.getResponseHeader("Content-Type").getValue();
 		assertNotNull(responseContentType);
 		assertTrue(responseContentType.trim().startsWith("application/atom+xml"));
+		
+		// check content
+		Document d = getResponseBodyAsDocument(method);
+		Element id = (Element) d.getElementsByTagNameNS("http://www.w3.org/2005/Atom", "id").item(0);
+		assertNotNull(id);
+		Element title = (Element) d.getElementsByTagNameNS("http://www.w3.org/2005/Atom", "title").item(0);
+		assertNotNull(title);
+		Element updated = (Element) d.getElementsByTagNameNS("http://www.w3.org/2005/Atom", "updated").item(0);
+		assertNotNull(updated);
+		String editLocation = AtomTestUtils.getLinkHref(d, "edit");
+		assertNotNull(editLocation);
+		String selfLocation = AtomTestUtils.getLinkHref(d, "self");
+		assertNotNull(selfLocation);
 
 	}
 	

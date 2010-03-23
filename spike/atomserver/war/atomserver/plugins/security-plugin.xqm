@@ -17,7 +17,7 @@ import module namespace config = "http://www.cggh.org/2010/atombeat/xquery/confi
 import module namespace xutil = "http://www.cggh.org/2010/atombeat/xquery/xutil" at "../lib/xutil.xqm" ;
 import module namespace mime = "http://www.cggh.org/2010/atombeat/xquery/mime" at "../lib/mime.xqm" ;
 import module namespace atomdb = "http://www.cggh.org/2010/atombeat/xquery/atomdb" at "../lib/atomdb.xqm" ;
-import module namespace atomsec = "http://www.cggh.org/2010/xquery/atom-security" at "../lib/atom-security.xqm" ;
+import module namespace atomsec = "http://www.cggh.org/2010/atombeat/xquery/atom-security" at "../lib/atom-security.xqm" ;
 
 
 
@@ -243,18 +243,21 @@ declare function sp:filter-feed-by-acls(
     if ( not( $config:enable-security ) )
     then $feed
     else
-        <atom:feed>
-            {
-                $feed/attribute::* ,
-                $feed/*[ ( local-name(.) != $CONSTANT:ATOM-ENTRY ) and ( namespace-uri(.) != $CONSTANT:ATOM-NSURI ) ] ,
-                for $entry in $feed/atom:entry
-                let $entry-path-info := substring-after( $entry/atom:link[@rel="edit"]/@href , $config:service-url )
-                let $log := util:log( "debug" , concat( "checking permission to retrieve member for entry-path-info: " , $entry-path-info ) )
-                let $forbidden := sp:is-operation-forbidden( $CONSTANT:OP-RETRIEVE-MEMBER , $entry-path-info , () )
-                return 
-                    if ( not( $forbidden ) ) then $entry else ()
-            }
-        </atom:feed>
+        let $filtered-feed :=
+            <atom:feed>
+                {
+                    $feed/attribute::* ,
+                    $feed/child::*[ not( local-name(.) = $CONSTANT:ATOM-ENTRY and namespace-uri(.) = $CONSTANT:ATOM-NSURI ) ] ,
+                    for $entry in $feed/atom:entry
+                    let $entry-path-info := substring-after( $entry/atom:link[@rel="edit"]/@href , $config:service-url )
+                    let $log := util:log( "debug" , concat( "checking permission to retrieve member for entry-path-info: " , $entry-path-info ) )
+                    let $forbidden := sp:is-operation-forbidden( $CONSTANT:OP-RETRIEVE-MEMBER , $entry-path-info , () )
+                    return 
+                        if ( not( $forbidden ) ) then $entry else ()
+                }
+            </atom:feed>
+        let $log := util:log( "debug" , $filtered-feed )
+        return $filtered-feed
 };
 
 

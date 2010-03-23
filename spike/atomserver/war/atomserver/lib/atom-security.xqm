@@ -1,4 +1,4 @@
-module namespace atomsec = "http://www.cggh.org/2010/xquery/atom-security";
+module namespace atomsec = "http://www.cggh.org/2010/atombeat/xquery/atom-security";
 
 declare namespace atom = "http://www.w3.org/2005/Atom" ;
 
