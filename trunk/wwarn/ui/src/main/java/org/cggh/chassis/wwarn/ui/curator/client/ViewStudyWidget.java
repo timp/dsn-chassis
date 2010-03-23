@@ -28,19 +28,23 @@ public class ViewStudyWidget
 	private static final Log log = LogFactory.getLog(ViewStudyWidget.class);
 	
 	private ViewStudyWidgetController controller;
-
-	public final WidgetEventChannel listStudiesNavigationEventChannel = new WidgetEventChannel(this);
-	public final WidgetEventChannel viewStudyNavigationEventChannel = new WidgetEventChannel(this);
-	public final WidgetEventChannel viewStudyQuestionnaireNavigationEventChannel = new WidgetEventChannel(this);
-	public final WidgetEventChannel editStudyQuestionnaireNavigationEventChannel = new WidgetEventChannel(this);
-	public final WidgetEventChannel listStudyRevisionsNavigationEventChannel = new WidgetEventChannel(this);
-
+	
+	public final WidgetEventChannel listStudiesNavigationEventChannel;// = new WidgetEventChannel(this);
+	public final WidgetEventChannel viewStudyNavigationEventChannel;// = new WidgetEventChannel(this);
+	public final WidgetEventChannel viewStudyQuestionnaireNavigationEventChannel;// = new WidgetEventChannel(this);
+	public final WidgetEventChannel editStudyQuestionnaireNavigationEventChannel;// = new WidgetEventChannel(this);
+	public final WidgetEventChannel listStudyRevisionsNavigationEventChannel;// = new WidgetEventChannel(this);
 
 	public ViewStudyWidget() {
 		super();
 		this.controller = new ViewStudyWidgetController(this, this.model);
 		this.renderer.setController(this.controller);
 		this.memory = new Memory();
+		listStudiesNavigationEventChannel = new WidgetEventChannel(this);
+		viewStudyNavigationEventChannel = new WidgetEventChannel(this);
+		viewStudyQuestionnaireNavigationEventChannel = new WidgetEventChannel(this);
+		editStudyQuestionnaireNavigationEventChannel = new WidgetEventChannel(this);
+		listStudyRevisionsNavigationEventChannel = new WidgetEventChannel(this);
 	}		
 	
 	@Override
