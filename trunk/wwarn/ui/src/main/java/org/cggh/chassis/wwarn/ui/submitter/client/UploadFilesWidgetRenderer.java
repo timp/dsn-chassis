@@ -428,10 +428,10 @@ public class UploadFilesWidgetRenderer extends ChassisWidgetRenderer<UploadFiles
 
 		Widget[] headerRow = {
 			new Label("File Name"), // TODO i18n
-			new Label("Type"),  // TODO i18n
-			new Label("Size"), // TODO i18n
+			new Label("Type"),      // TODO i18n
+			new Label("Size"),      // TODO i18n
 			new Label("Uploaded"),  // TODO i18n
-			new Label("Actions") // TODO i18n
+			new Label("Actions")    // TODO i18n
 		};
 		rows.add(headerRow);
 		
@@ -444,7 +444,7 @@ public class UploadFilesWidgetRenderer extends ChassisWidgetRenderer<UploadFiles
 			String type = getTypeLabel(categoryElement);
 			
 			String fileSizeAsString = AtomHelper.getMediaResourceSize(entry);
-			String created = AtomHelper.getPublished(entry);
+			String created = AtomHelper.getPublishedAsDate(entry);
 			
 			Button deleteButton = new Button("delete"); // TODO i18n
 			deleteButton.addClickHandler(new ClickHandler() {
