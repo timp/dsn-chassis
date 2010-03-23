@@ -148,8 +148,8 @@ public class StudyActionsWidget
 						new HTML(ChassisHelper.getTitle(study)),
 						new HTML(RenderUtils.join(ChassisHelper.getModules(study), ", ")),
 						new HTML(RenderUtils.join(ChassisHelper.getAuthorEmails(study), ", ")),
-						new HTML(RenderUtils.timstampAsDate(ChassisHelper.getPublished(study))),
-						new HTML(RenderUtils.timstampAsDate(ChassisHelper.getUpdated(study))),
+						new HTML(ChassisHelper.getPublishedAsDate(study)),
+						new HTML(ChassisHelper.getUpdatedAsDate(study)),
 			};
 			rows.add(row);
 			
