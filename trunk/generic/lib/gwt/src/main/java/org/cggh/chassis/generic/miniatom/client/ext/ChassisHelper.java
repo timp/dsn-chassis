@@ -57,12 +57,18 @@ public class ChassisHelper extends AtomHelper {
 		return XMLNS.createElementNS(Chassis.ELEMENT_REVIEW, Chassis.PREFIX, Chassis.NSURI);
 	}
 	
-	public static String getSubmissionPublished(Element parent) {
+	private static String getSubmissionPublished(Element parent) {
 		return XMLNS.getFirstChildSimpleContentByTagNameNS(parent, Chassis.ELEMENT_SUBMISSIONPUBLISHED, Chassis.NSURI);
 	}	
+	public static String getSubmissionPublishedAsDate(Element parent) {
+		return timestampAsDate(getSubmissionPublished(parent));
+	}	
 
-	public static String getReviewPublished(Element parent) {
+	private static String getReviewPublished(Element parent) {
 		return XMLNS.getFirstChildSimpleContentByTagNameNS(parent, Chassis.ELEMENT_REVIEWPUBLISHED, Chassis.NSURI);
+	}	
+	public static String getReviewPublishedAsDate(Element parent) {
+		return timestampAsDate(getReviewPublished(parent));
 	}	
 	
 	public static String getReviewSummary(Element parent) {
