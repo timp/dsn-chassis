@@ -85,9 +85,9 @@ public class CuratorApplicationWidget
 		}));
 
 		log.debug("Adding view study list studies widget navigation event handler on " + 
-				viewStudyWidget.viewStudyListStudiesNavigationEventChannel);
+				viewStudyWidget.studyActionsListStudiesNavigationEventChannel);
 		this.childWidgetEventHandlerRegistrations.add(
-				viewStudyWidget.viewStudyListStudiesNavigationEventChannel.addHandler(
+				viewStudyWidget.studyActionsListStudiesNavigationEventChannel.addHandler(
 						new WidgetEventHandler() {
 			public void onEvent(WidgetEvent e) {
 				

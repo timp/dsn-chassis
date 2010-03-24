@@ -28,19 +28,14 @@ public class ViewStudyWidget
 	private static final Log log = LogFactory.getLog(ViewStudyWidget.class);
 	
 
-	public final WidgetEventChannel studySummaryViewStudyNavigationEventChannel = new WidgetEventChannel(this);
-	public final WidgetEventChannel studySummaryEditStudyQuestionnaireNavigationEventChannel = new WidgetEventChannel(this);
-	public final WidgetEventChannel studySummaryListStudyRevisionsNavigationEventChannel = new WidgetEventChannel(this);
-	public final WidgetEventChannel studySummaryViewStudyQuestionnaireNavigationEventChannel = new WidgetEventChannel(this);
-	public final WidgetEventChannel studySummaryListStudiesNavigationEventChannel = new WidgetEventChannel(this);
+	public final WidgetEventChannel studyActionsViewStudyNavigationEventChannel = new WidgetEventChannel(this);
+	public final WidgetEventChannel studyActionsEditStudyQuestionnaireNavigationEventChannel = new WidgetEventChannel(this);
+	public final WidgetEventChannel studyActionsListStudyRevisionsNavigationEventChannel = new WidgetEventChannel(this);
+	public final WidgetEventChannel studyActionsViewStudyQuestionnaireNavigationEventChannel = new WidgetEventChannel(this);
+	public final WidgetEventChannel studyActionsListStudiesNavigationEventChannel = new WidgetEventChannel(this);
 	
 	private ViewStudyWidgetController controller;
 
-	public final WidgetEventChannel viewStudyViewStudyNavigationEventChannel = new WidgetEventChannel(this);
-	public final WidgetEventChannel viewStudyEditStudyQuestionnaireNavigationEventChannel = new WidgetEventChannel(this);
-	public final WidgetEventChannel viewStudyListStudyRevisionsNavigationEventChannel = new WidgetEventChannel(this);
-	public final WidgetEventChannel viewStudyViewStudyQuestionnaireNavigationEventChannel = new WidgetEventChannel(this);
-	public final WidgetEventChannel viewStudyListStudiesNavigationEventChannel = new WidgetEventChannel(this);
 
 
 
