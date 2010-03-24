@@ -169,20 +169,20 @@ public class ViewStudyWidgetRenderer extends
 	protected void registerHandlersForChildWidgetEvents() {
 		log.enter("registerHandlersForChildWidgetEvents");
 		this.childWidgetEventHandlerRegistrations.add(
-				studySummaryWidgetUiField.studySummaryListStudiesNavigationEventChannel.addHandler(new WidgetEventHandler() {
+				studySummaryWidgetUiField.studyActionsListStudiesNavigationEventChannel.addHandler(new WidgetEventHandler() {
 			public void onEvent(WidgetEvent e) {
 				log.enter("onEvent");
-				log.debug("fire list studies on " + owner.studySummaryListStudiesNavigationEventChannel);
-				owner.studySummaryListStudiesNavigationEventChannel.fireEvent(e);
+				log.debug("fire list studies on " + owner.studyActionsListStudiesNavigationEventChannel);
+				owner.studyActionsListStudiesNavigationEventChannel.fireEvent(e);
 				log.leave();
 			}
 		}));
 		this.childWidgetEventHandlerRegistrations.add(
-				studySummaryWidgetUiField.studySummaryViewStudyNavigationEventChannel.addHandler(new WidgetEventHandler() {
+				studySummaryWidgetUiField.studyActionsViewStudyNavigationEventChannel.addHandler(new WidgetEventHandler() {
 			public void onEvent(WidgetEvent e) {
 				log.enter("onEvent");
-				log.debug("fire view study on " + owner.studySummaryViewStudyNavigationEventChannel);
-				owner.studySummaryViewStudyNavigationEventChannel.fireEvent(e);
+				log.debug("fire view study on " + owner.studyActionsViewStudyNavigationEventChannel);
+				owner.studyActionsViewStudyNavigationEventChannel.fireEvent(e);
 				log.leave();
 			}
 		}));

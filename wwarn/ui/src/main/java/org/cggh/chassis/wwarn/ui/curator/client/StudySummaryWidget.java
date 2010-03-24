@@ -79,11 +79,6 @@ public class StudySummaryWidget
 	public final WidgetEventChannel studyActionsViewStudyQuestionnaireNavigationEventChannel = new WidgetEventChannel(this);
 	public final WidgetEventChannel studyActionsListStudiesNavigationEventChannel = new WidgetEventChannel(this);
 	
-	public final WidgetEventChannel studySummaryViewStudyNavigationEventChannel = new WidgetEventChannel(this);
-	public final WidgetEventChannel studySummaryEditStudyQuestionnaireNavigationEventChannel = new WidgetEventChannel(this);
-	public final WidgetEventChannel studySummaryListStudyRevisionsNavigationEventChannel = new WidgetEventChannel(this);
-	public final WidgetEventChannel studySummaryViewStudyQuestionnaireNavigationEventChannel = new WidgetEventChannel(this);
-	public final WidgetEventChannel studySummaryListStudiesNavigationEventChannel = new WidgetEventChannel(this);
 
 
 	
@@ -107,7 +102,7 @@ public class StudySummaryWidget
 		this.childWidgetEventHandlerRegistrations.add(
 				studyActionsWidgetUiField.studyActionsViewStudyNavigationEventChannel.addHandler(new WidgetEventHandler() {
 			public void onEvent(WidgetEvent e) {
-				log.enter("onEvent(studyActions)");
+				log.enter("onEvent(studyActionsViewStudy)");
 				studyActionsViewStudyNavigationEventChannel.fireEvent(e);
 				log.leave();
 			}
@@ -115,7 +110,7 @@ public class StudySummaryWidget
 		this.childWidgetEventHandlerRegistrations.add(
 				studyActionsWidgetUiField.studyActionsEditStudyQuestionnaireNavigationEventChannel.addHandler(new WidgetEventHandler() {
 			public void onEvent(WidgetEvent e) {
-				log.enter("onEvent(studyActions)");
+				log.enter("onEvent(studyActionsEditStudy)");
 				studyActionsEditStudyQuestionnaireNavigationEventChannel.fireEvent(e);
 				log.leave();
 			}
@@ -123,7 +118,7 @@ public class StudySummaryWidget
 		this.childWidgetEventHandlerRegistrations.add(
 				studyActionsWidgetUiField.studyActionsListStudyRevisionsNavigationEventChannel.addHandler(new WidgetEventHandler() {
 			public void onEvent(WidgetEvent e) {
-				log.enter("onEvent(studyActions)");
+				log.enter("onEvent(studyActionsListStudyRevisions)");
 				studyActionsListStudyRevisionsNavigationEventChannel.fireEvent(e);
 				log.leave();
 			}
@@ -131,7 +126,7 @@ public class StudySummaryWidget
 		this.childWidgetEventHandlerRegistrations.add(
 				studyActionsWidgetUiField.studyActionsViewStudyQuestionnaireNavigationEventChannel.addHandler(new WidgetEventHandler() {
 			public void onEvent(WidgetEvent e) {
-				log.enter("onEvent(studyActions)");
+				log.enter("onEvent(studyActionsViewStudyQuestionnaire)");
 				studyActionsViewStudyQuestionnaireNavigationEventChannel.fireEvent(e);
 				log.leave();
 			}
@@ -139,7 +134,7 @@ public class StudySummaryWidget
 		this.childWidgetEventHandlerRegistrations.add(
 				studyActionsWidgetUiField.studyActionsListStudiesNavigationEventChannel.addHandler(new WidgetEventHandler() {
 			public void onEvent(WidgetEvent e) {
-				log.enter("onEvent(studyActions)");
+				log.enter("onEvent(studyActionsListStudies)");
 				studyActionsListStudiesNavigationEventChannel.fireEvent(e);
 				log.leave();
 			}
