@@ -1,7 +1,10 @@
 package org.cggh.chassis.wwarn.ui.curator.client;
 
+import java.util.List;
+
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
+import org.cggh.chassis.generic.miniatom.client.AtomHelper;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 import org.cggh.chassis.generic.widget.client.ChassisWidgetRenderer;
 import org.cggh.chassis.generic.widget.client.PropertyChangeEvent;
@@ -9,22 +12,41 @@ import org.cggh.chassis.generic.widget.client.PropertyChangeHandler;
 import org.cggh.chassis.generic.widget.client.WidgetEvent;
 import org.cggh.chassis.generic.widget.client.WidgetEventHandler;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.Status;
+import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.StatusChangeEvent;
+import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.StatusChangeHandler;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ChangeHandler;
+import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
-import com.google.gwt.xml.client.Element;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.TextArea;
+import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.xml.client.Document;
+import com.google.gwt.xml.client.Element;
 
 public class ViewStudyWidgetRenderer extends
 		ChassisWidgetRenderer<ViewStudyWidgetModel> {
 
 	private Log log = LogFactory.getLog(ViewStudyWidgetRenderer.class);
-	
+		StudySummaryWidget studySummaryWidget;
+
+	ViewStudyMetadataWidget viewStudyMetadataWidget;
+
+	ListSubmissionsWidget listSubmissionsWidget;
+
+	ListCurationsWidget listCurationsWidget;
+
+
+
 	@UiTemplate("ViewStudyWidget.ui.xml")
 	interface ViewStudyWidgetRendererUiBinder extends
 			UiBinder<HTMLPanel, ViewStudyWidgetRenderer> {
@@ -32,24 +54,31 @@ public class ViewStudyWidgetRenderer extends
 	private static ViewStudyWidgetRendererUiBinder uiBinder = 
 		GWT.create(ViewStudyWidgetRendererUiBinder.class);
 
-	@UiField HTMLPanel errorPanel;
-	@UiField FlowPanel errorMessage; // in errorPanel
-	@UiField HTMLPanel pendingPanel;
-	@UiField Label pendingMessage; // in pendingPanel
+	@UiField HTMLPanel mainPanel;
 	@UiField HTMLPanel contentPanel;
+	@UiField HTMLPanel pendingPanel;
+	@UiField HTMLPanel errorPanel;
+	@UiField FlowPanel errorMessage;
 
 	@UiField StudySummaryWidget studySummaryWidgetUiField;
-	
-	
+
+
+	@UiField ViewStudyMetadataWidget viewStudyMetadataWidgetUiField;
+	@UiField ListSubmissionsWidget listSubmissionsWidgetUiField;
+	@UiField ListCurationsWidget listCurationsWidgetUiField;
+
+
+
+
+
 	private ViewStudyWidget owner;
-
-	private ViewStudyWidgetController controller;
-
 	
-	public ViewStudyWidgetRenderer(ViewStudyWidget owner) {
+    public ViewStudyWidgetRenderer(ViewStudyWidget owner) {
 		this.owner = owner;
 	}
-	
+    
+	private ViewStudyWidgetController controller;
+
 	public void setController(ViewStudyWidgetController controller) {
 		this.controller = controller;
 	}
@@ -61,31 +90,50 @@ public class ViewStudyWidgetRenderer extends
 		this.canvas.clear();
 		this.canvas.add(uiBinder.createAndBindUi(this));
 		
+		pendingPanel.setVisible(true);	
 	}
 	
+
 	@Override
-	protected void registerHandlersForChildWidgetEvents() {
-		log.enter("registerHandlersForChildWidgetEvents");
-		this.childWidgetEventHandlerRegistrations.add(
-				studySummaryWidgetUiField.listStudiesNavigationEventChannel.addHandler(new WidgetEventHandler() {
-			public void onEvent(WidgetEvent e) {
-				log.enter("onEvent");
-				log.debug("fire list studies on " + owner.listStudiesNavigationEventChannel);
-				owner.listStudiesNavigationEventChannel.fireEvent(e);
-				log.leave();
-			}
-		}));
-		this.childWidgetEventHandlerRegistrations.add(
-				studySummaryWidgetUiField.viewStudyNavigationEventChannel.addHandler(new WidgetEventHandler() {
-			public void onEvent(WidgetEvent e) {
-				log.enter("onEvent");
-				log.debug("fire view study on " + owner.viewStudyNavigationEventChannel);
-				owner.viewStudyNavigationEventChannel.fireEvent(e);
-				log.leave();
-			}
-		}));
+	protected void syncUI() {
+		syncUIWithStatus(model.status.get());
+	}
+
+	protected void syncUIWithStatus(Status status) {
+
+		log.enter("syncUIWithStatus");		
+		
+		errorPanel.setVisible(false);	
+		if (status == null) {
+		// null before being set
+		log.debug("Called with null status");
+		}
+		else if (status instanceof AsyncWidgetModel.InitialStatus) {
+
+			pendingPanel.setVisible(true);	
+		}
+		
+		//TODO Widget specific statii
+		
+		else if (status instanceof AsyncWidgetModel.ReadyStatus) {
+
+			pendingPanel.setVisible(false);	
+		}			
+		
+		else if (status instanceof AsyncWidgetModel.ErrorStatus) {
+
+			
+			error("Error status given on asynchronous call.");
+		}			
+		
+		else {
+
+			error("Unhandled status:" + status);
+		}
+
 		log.leave();
 	}
+	
 
 
 	@Override
@@ -116,10 +164,30 @@ public class ViewStudyWidgetRenderer extends
 
 	}
 
-	@Override
-	protected void syncUI() {
-	}
 
+	@Override
+	protected void registerHandlersForChildWidgetEvents() {
+		log.enter("registerHandlersForChildWidgetEvents");
+		this.childWidgetEventHandlerRegistrations.add(
+				studySummaryWidgetUiField.studySummaryListStudiesNavigationEventChannel.addHandler(new WidgetEventHandler() {
+			public void onEvent(WidgetEvent e) {
+				log.enter("onEvent");
+				log.debug("fire list studies on " + owner.studySummaryListStudiesNavigationEventChannel);
+				owner.studySummaryListStudiesNavigationEventChannel.fireEvent(e);
+				log.leave();
+			}
+		}));
+		this.childWidgetEventHandlerRegistrations.add(
+				studySummaryWidgetUiField.studySummaryViewStudyNavigationEventChannel.addHandler(new WidgetEventHandler() {
+			public void onEvent(WidgetEvent e) {
+				log.enter("onEvent");
+				log.debug("fire view study on " + owner.studySummaryViewStudyNavigationEventChannel);
+				owner.studySummaryViewStudyNavigationEventChannel.fireEvent(e);
+				log.leave();
+			}
+		}));
+		log.leave();
+	}
 	protected final PropertyChangeHandler<Status> syncUIWithStatus = new PropertyChangeHandler<Status>() {
 			
 			public void onChange(PropertyChangeEvent<Status> e) {
@@ -219,7 +287,7 @@ public class ViewStudyWidgetRenderer extends
 		
 		log.leave();
 	}		
-	
+
 	public void error(String err) {
 		log.enter("error");
 		log.debug("Error:" + err);
