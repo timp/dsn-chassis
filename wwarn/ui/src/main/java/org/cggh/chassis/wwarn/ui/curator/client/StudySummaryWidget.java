@@ -9,6 +9,9 @@ import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.miniatom.client.ext.ChassisHelper;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
+import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.Status;
+import com.google.gwt.xml.client.Element;
+
 import org.cggh.chassis.generic.widget.client.ChassisWidget;
 import org.cggh.chassis.generic.widget.client.ObservableProperty;
 import org.cggh.chassis.generic.widget.client.PropertyChangeEvent;
@@ -30,6 +33,10 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.xml.client.Element;
 
+
+import org.cggh.chassis.generic.widget.client.WidgetEventChannel;
+
+
 /**
  * @author timp
  *
@@ -39,6 +46,10 @@ public class StudySummaryWidget
 
 	private static final Log log = LogFactory.getLog(StudySummaryWidget.class);
 	
+
+
+
+
 	@UiTemplate("StudySummaryWidget.ui.xml")
 	interface StudySummaryWidgetRendererUiBinder extends
 			UiBinder<HTMLPanel, StudySummaryWidget> {
@@ -52,74 +63,90 @@ public class StudySummaryWidget
 	@UiField HTMLPanel errorPanel;
 	@UiField FlowPanel errorMessage;
 
-	@UiField FlowPanel tablePanel;
-	@UiField StudyActionsWidget studyActionsWidgetUiField;
+	@UiField FlowPanel studySummaryPanel;
+	
+    @UiField StudyActionsWidget studyActionsWidgetUiField;
 
 
 	public final ObservableProperty<Element> studyEntry = new ObservableProperty<Element>();
+
 	public final ObservableProperty<Status> status = new ObservableProperty<Status>();
 	public final ObservableProperty<String> message = new ObservableProperty<String>();
 
-
-	public final WidgetEventChannel viewStudyNavigationEventChannel = new WidgetEventChannel(this);
-	public final WidgetEventChannel editStudyQuestionnaireNavigationEventChannel = new WidgetEventChannel(this);
-	public final WidgetEventChannel listStudyRevisionsNavigationEventChannel = new WidgetEventChannel(this);
-	public final WidgetEventChannel viewStudyQuestionnaireNavigationEventChannel = new WidgetEventChannel(this);
-	public final WidgetEventChannel listStudiesNavigationEventChannel = new WidgetEventChannel(this);
-
-
+	public final WidgetEventChannel studyActionsViewStudyNavigationEventChannel = new WidgetEventChannel(this);
+	public final WidgetEventChannel studyActionsEditStudyQuestionnaireNavigationEventChannel = new WidgetEventChannel(this);
+	public final WidgetEventChannel studyActionsListStudyRevisionsNavigationEventChannel = new WidgetEventChannel(this);
+	public final WidgetEventChannel studyActionsViewStudyQuestionnaireNavigationEventChannel = new WidgetEventChannel(this);
+	public final WidgetEventChannel studyActionsListStudiesNavigationEventChannel = new WidgetEventChannel(this);
 	
-
-	public StudySummaryWidget() {
-		super();
-		log.enter("<constructor>");
-		log.leave();
-	}
-
-
-
-	@Override
-	public void refresh() {
-		log.enter("refresh");
-		studyActionsWidgetUiField.refresh(); 
-		log.leave();	
-	}
+	public final WidgetEventChannel studySummaryViewStudyNavigationEventChannel = new WidgetEventChannel(this);
+	public final WidgetEventChannel studySummaryEditStudyQuestionnaireNavigationEventChannel = new WidgetEventChannel(this);
+	public final WidgetEventChannel studySummaryListStudyRevisionsNavigationEventChannel = new WidgetEventChannel(this);
+	public final WidgetEventChannel studySummaryViewStudyQuestionnaireNavigationEventChannel = new WidgetEventChannel(this);
+	public final WidgetEventChannel studySummaryListStudiesNavigationEventChannel = new WidgetEventChannel(this);
 
 
 	
 	@Override
 	protected void renderUI() {
+
+		log.enter("renderUI");
+		
 		this.clear();
 		this.add(uiBinder.createAndBindUi(this));
 		errorPanel.setVisible(false);	
+		
+
+		log.leave();
 	}
 
 
 	@Override
 	protected void bindUI() {
-		log.enter("bindUI");
-
+		super.bindUI();
 		this.childWidgetEventHandlerRegistrations.add(
-				studyActionsWidgetUiField.listStudiesNavigationEventChannel.addHandler(new WidgetEventHandler() {
+				studyActionsWidgetUiField.studyActionsViewStudyNavigationEventChannel.addHandler(new WidgetEventHandler() {
 			public void onEvent(WidgetEvent e) {
-				log.enter("onEvent");
-				log.debug("fire list studies");
-				listStudiesNavigationEventChannel.fireEvent(e);
+				log.enter("onEvent(studyActions)");
+				studyActionsViewStudyNavigationEventChannel.fireEvent(e);
 				log.leave();
 			}
 		}));
 		this.childWidgetEventHandlerRegistrations.add(
-				studyActionsWidgetUiField.viewStudyNavigationEventChannel.addHandler(new WidgetEventHandler() {
+				studyActionsWidgetUiField.studyActionsEditStudyQuestionnaireNavigationEventChannel.addHandler(new WidgetEventHandler() {
 			public void onEvent(WidgetEvent e) {
-				log.enter("onEvent");
-				log.debug("fire view study");
-				viewStudyNavigationEventChannel.fireEvent(e);
+				log.enter("onEvent(studyActions)");
+				studyActionsEditStudyQuestionnaireNavigationEventChannel.fireEvent(e);
 				log.leave();
 			}
 		}));
+		this.childWidgetEventHandlerRegistrations.add(
+				studyActionsWidgetUiField.studyActionsListStudyRevisionsNavigationEventChannel.addHandler(new WidgetEventHandler() {
+			public void onEvent(WidgetEvent e) {
+				log.enter("onEvent(studyActions)");
+				studyActionsListStudyRevisionsNavigationEventChannel.fireEvent(e);
+				log.leave();
+			}
+		}));
+		this.childWidgetEventHandlerRegistrations.add(
+				studyActionsWidgetUiField.studyActionsViewStudyQuestionnaireNavigationEventChannel.addHandler(new WidgetEventHandler() {
+			public void onEvent(WidgetEvent e) {
+				log.enter("onEvent(studyActions)");
+				studyActionsViewStudyQuestionnaireNavigationEventChannel.fireEvent(e);
+				log.leave();
+			}
+		}));
+		this.childWidgetEventHandlerRegistrations.add(
+				studyActionsWidgetUiField.studyActionsListStudiesNavigationEventChannel.addHandler(new WidgetEventHandler() {
+			public void onEvent(WidgetEvent e) {
+				log.enter("onEvent(studyActions)");
+				studyActionsListStudiesNavigationEventChannel.fireEvent(e);
+				log.leave();
+			}
+		}));
+		
+}
 
-		log.leave();
-	}
 
 
 
@@ -129,7 +156,7 @@ public class StudySummaryWidget
         syncUIWithStudyEntry(studyEntry.get());
         registerHandlersForModelChanges();
     }
-
+    
 	protected void registerHandlersForModelChanges() {
 		log.enter("registerHandlersForModelChanges");
 		
@@ -187,17 +214,27 @@ public class StudySummaryWidget
 			//FlexTable table = RenderUtils.renderResultsTable(rows);
 			FlexTable table = RenderUtils.renderFirstRowHeadingResultsAsFirstColumnHeadingTable(rows);
 			
-			this.tablePanel.clear();
-			this.tablePanel.add(table);
+			this.studySummaryPanel.clear();
+			this.studySummaryPanel.add(table);
 			pendingPanel.setVisible(false);	
-
 		}
-		
-		log.leave();
 	}
+	@Override
+	public void refresh() {
+		log.enter("refresh");
+		
+		// TODO refresh this
 
-	protected void syncUIWithStatus(Status status) {
+		studyActionsWidgetUiField.refresh();
+
+		log.leave();	
+	}
+	
+	
+	
+    protected void syncUIWithStatus(Status status) {
 		log.enter("syncUIWithStatus");		
+		log.debug("status:" + status);
 		
 		if (status == null) {
 			// nothing to do yet
@@ -235,5 +272,6 @@ public class StudySummaryWidget
 		errorPanel.setVisible(true);
 		log.leave();
 	}
+	
 
 }
