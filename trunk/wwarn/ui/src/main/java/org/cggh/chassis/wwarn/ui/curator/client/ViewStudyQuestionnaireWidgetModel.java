@@ -40,9 +40,4 @@ public class ViewStudyQuestionnaireWidgetModel {
 	public final ObservableProperty<Status> status = new ObservableProperty<Status>();
 	public final ObservableProperty<String> message = new ObservableProperty<String>();
 	
-	public Status getStatus() {
-		if (status.get() == null)
-			status.set(AsyncWidgetModel.STATUS_INITIAL);
-		return status.get();
-	}	
 }

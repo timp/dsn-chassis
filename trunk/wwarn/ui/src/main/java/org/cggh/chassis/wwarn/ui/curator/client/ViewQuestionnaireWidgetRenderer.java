@@ -59,17 +59,21 @@ public class ViewQuestionnaireWidgetRenderer extends
 
 
 
-	private ViewQuestionnaireWidgetController controller;
-
-	public void setController(ViewQuestionnaireWidgetController controller) {
-		this.controller = controller;
-	}
 
 	private ViewQuestionnaireWidget owner;
 	
     public ViewQuestionnaireWidgetRenderer(ViewQuestionnaireWidget owner) {
 		this.owner = owner;	}
+		private ViewQuestionnaireWidgetController controller;
 
+	public void setController(ViewQuestionnaireWidgetController controller) {
+		this.controller = controller;
+	}
+
+	@Override
+	protected void registerHandlersForModelChanges() {
+		
+	}
 
 	@Override
 	protected void renderUI() {
@@ -80,14 +84,10 @@ public class ViewQuestionnaireWidgetRenderer extends
 		pendingPanel.setVisible(true);	
 	}
 	
-	@Override
-	protected void registerHandlersForModelChanges() {
-		
-	}
 
 	@Override
 	protected void syncUI() {
-		syncUIWithStatus(model.getStatus());
+		syncUIWithStatus(model.status.get());
 	}
 
 	protected void syncUIWithStatus(Status status) {
@@ -95,7 +95,11 @@ public class ViewQuestionnaireWidgetRenderer extends
 		log.enter("syncUIWithStatus");		
 		
 		errorPanel.setVisible(false);	
-		if (status instanceof AsyncWidgetModel.InitialStatus) {
+		if (status == null) {
+		// null before being set
+		log.debug("Called with null status");
+		}
+		else if (status instanceof AsyncWidgetModel.InitialStatus) {
 
 			pendingPanel.setVisible(true);	
 		}

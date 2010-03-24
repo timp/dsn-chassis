@@ -1,12 +1,14 @@
-/**
- * 
- */
 package org.cggh.chassis.wwarn.ui.curator.client;
 
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.DelegatingWidget;
+import org.cggh.chassis.generic.widget.client.ObservableProperty;
 
+
+import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
+import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.Status;
+import com.google.gwt.xml.client.Element;
 
 import org.cggh.chassis.generic.widget.client.WidgetEventChannel;
 
@@ -25,6 +27,8 @@ public class ViewQuestionnaireWidget
 	private static final Log log = LogFactory.getLog(ViewQuestionnaireWidget.class);
 	
 	private ViewQuestionnaireWidgetController controller;
+	public final ObservableProperty<Status> status = new ObservableProperty<Status>();
+	public final ObservableProperty<String> message = new ObservableProperty<String>();
 
 
 	@Override
@@ -40,12 +44,12 @@ public class ViewQuestionnaireWidget
 	protected ViewQuestionnaireWidgetRenderer createRenderer() {
 		return new ViewQuestionnaireWidgetRenderer(this);
 	}
-
 	// Using init() rather than constructor because reset() uses init().
 	public void init() {
 		
 		super.init();
 		
+
 		this.controller = new ViewQuestionnaireWidgetController(this, this.model);
 		this.renderer.setController(controller);
 
@@ -54,14 +58,11 @@ public class ViewQuestionnaireWidget
 	@Override
 	public void refresh() {
 		log.enter("refresh");
-		// TODO get data 
+		
+		// TODO refresh this
 		log.leave();	
 	}
 	
 	
 	
-	
-
-	
-
 }
