@@ -28,7 +28,7 @@ public class TestAtomProtocol extends TestCase {
 	
 	
 	
-	private static final String SERVER_URI = "http://localhost:8081/atomserver/atomserver/edit/";
+	private static final String SERVER_URI = "http://localhost:8081/atomserver/atomserver/content/";
 	private static final String USER = "adam"; // should be allowed all operations
 	private static final String PASS = "test";
 

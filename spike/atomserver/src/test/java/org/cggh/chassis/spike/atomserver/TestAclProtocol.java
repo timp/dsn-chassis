@@ -22,7 +22,7 @@ public class TestAclProtocol extends TestCase {
 	
 	
 	
-	private static final String SERVER_URI = "http://localhost:8081/atomserver/atomserver/edit/";
+	private static final String SERVER_URI = "http://localhost:8081/atomserver/atomserver/content/";
 	private static final String ACL_URI = "http://localhost:8081/atomserver/atomserver/acl/";
 
 	
@@ -243,7 +243,7 @@ public class TestAclProtocol extends TestCase {
 		String content = 
 			"<atom:entry xmlns:atom=\"http://www.w3.org/2005/Atom\">" +
 			"<atom:content type=\"application/vnd.atombeat+xml\">" +
-			"<acl xmlns=\"\"></acl>" +
+			"<acl xmlns=\"\"><rules/></acl>" +
 			"</atom:content>" +
 			"</atom:entry>";
 		
@@ -269,7 +269,7 @@ public class TestAclProtocol extends TestCase {
 		String content = 
 			"<atom:entry xmlns:atom=\"http://www.w3.org/2005/Atom\">" +
 			"<atom:content type=\"application/vnd.atombeat+xml\">" +
-			"<acl xmlns=\"\"></acl>" +
+			"<acl xmlns=\"\"><rules/></acl>" +
 			"</atom:content>" +
 			"</atom:entry>";
 		
@@ -286,13 +286,17 @@ public class TestAclProtocol extends TestCase {
 
 		// set up test by creating a collection
 		String collectionUri = createTestCollection(SERVER_URI, "adam", "test");
-
-		// retrieve collection feed
-		GetMethod g = new GetMethod(collectionUri);
-		int r = executeMethod(g, "rebecca", "test");
-		assertEquals(200, r);
+ 
+		// try to retrieve collection feed as rebecca (reader) to check allowed
+		GetMethod f = new GetMethod(collectionUri);
+		int q = executeMethod(f, "rebecca", "test");
+		assertEquals(200, q);
 		
-		// look for "edit-acl" link
+
+		// retrieve collection feed as adam (administrator) to get edit-acl link
+		GetMethod g = new GetMethod(collectionUri);
+		int r = executeMethod(g, "adam", "test");
+		assertEquals(200, r);
 		Document d = getResponseBodyAsDocument(g);
 		String aclLocation = getLinkHref(d, "edit-acl");
 		assertNotNull(aclLocation);
@@ -302,7 +306,7 @@ public class TestAclProtocol extends TestCase {
 		String content = 
 			"<atom:entry xmlns:atom=\"http://www.w3.org/2005/Atom\">" +
 			"<atom:content type=\"application/vnd.atombeat+xml\">" +
-			"<acl xmlns=\"\"></acl>" +
+			"<acl xmlns=\"\"><rules/></acl>" +
 			"</atom:content>" +
 			"</atom:entry>";
 		setAtomRequestEntity(p, content);
@@ -312,7 +316,7 @@ public class TestAclProtocol extends TestCase {
 		Document e = getResponseBodyAsDocument(p);
 		verifyDocIsAtomEntryWithAclContent(e);
 
-		// retrieve collection feed again
+		// try to retrieve collection feed again as rebecca to check forbidden
 		GetMethod h = new GetMethod(collectionUri);
 		int t = executeMethod(h, "rebecca", "test");
 		assertEquals(403, t);
@@ -320,6 +324,143 @@ public class TestAclProtocol extends TestCase {
 	}
 	
 	
+	
+	public void testUpdateCollectionAclDenied() {
+
+		// set up test by creating a collection
+		String collectionUri = createTestCollection(SERVER_URI, "adam", "test");
+ 
+		// retrieve collection feed as adam (administrator) to get edit-acl link
+		GetMethod g = new GetMethod(collectionUri);
+		int r = executeMethod(g, "adam", "test");
+		assertEquals(200, r);
+		Document d = getResponseBodyAsDocument(g);
+		String aclLocation = getLinkHref(d, "edit-acl");
+		assertNotNull(aclLocation);
+		
+		// try to update the acl
+		PutMethod p = new PutMethod(aclLocation);
+		String content = 
+			"<atom:entry xmlns:atom=\"http://www.w3.org/2005/Atom\">" +
+			"<atom:content type=\"application/vnd.atombeat+xml\">" +
+			"<acl xmlns=\"\"><rules/></acl>" +
+			"</atom:content>" +
+			"</atom:entry>";
+		setAtomRequestEntity(p, content);
+		int s = executeMethod(p, "rebecca", "test");
+		assertEquals(403, s);
+		
+	}
+	
+	
+	
+	public void testBadAclRequest() {
+
+		// set up test by creating a collection
+		String collectionUri = createTestCollection(SERVER_URI, "adam", "test");
+ 
+		// retrieve collection feed as adam (administrator) to get edit-acl link
+		GetMethod g = new GetMethod(collectionUri);
+		int r = executeMethod(g, "adam", "test");
+		assertEquals(200, r);
+		Document d = getResponseBodyAsDocument(g);
+		String aclLocation = getLinkHref(d, "edit-acl");
+		assertNotNull(aclLocation);
+		
+		// try to update the acl with bad content - missing rules
+		PutMethod p = new PutMethod(aclLocation);
+		String content = 
+			"<atom:entry xmlns:atom=\"http://www.w3.org/2005/Atom\">" +
+			"<atom:content type=\"application/vnd.atombeat+xml\">" +
+			"<acl xmlns=\"\"></acl>" +
+			"</atom:content>" +
+			"</atom:entry>";
+		setAtomRequestEntity(p, content);
+		int s = executeMethod(p, "adam", "test");
+		assertEquals(400, s);
+
+	}
+	
+	
+	
+	
+	public void testUpdateMemberAcl() {
+
+		// set up test by creating a collection
+		String collectionUri = createTestCollection(SERVER_URI, "adam", "test");
+		String memberUri = createTestEntryAndReturnLocation(collectionUri, "audrey", "test");
+
+		// retrieve member entry
+		GetMethod g = new GetMethod(memberUri);
+		int r = executeMethod(g, "audrey", "test");
+		assertEquals(200, r);
+		
+		// look for "edit-acl" link
+		Document d = getResponseBodyAsDocument(g);
+		String aclLocation = getLinkHref(d, "edit-acl");
+		assertNotNull(aclLocation);
+		
+		// try to update the acl
+		PutMethod p = new PutMethod(aclLocation);
+		String content = 
+			"<atom:entry xmlns:atom=\"http://www.w3.org/2005/Atom\">" +
+			"<atom:content type=\"application/vnd.atombeat+xml\">" +
+			"<acl xmlns=\"\"><rules/></acl>" +
+			"</atom:content>" +
+			"</atom:entry>";
+		setAtomRequestEntity(p, content);
+		int s = executeMethod(p, "audrey", "test");
+		assertEquals(200, s);
+
+		// try retrieve member entry again
+		GetMethod h = new GetMethod(memberUri);
+		int t = executeMethod(h, "audrey", "test");
+		assertEquals(403, t);
+
+	}
+	
+	
+	
+
+	public void testUpdateMemberAclDenied() {
+
+		// set up test by creating a collection
+		String collectionUri = createTestCollection(SERVER_URI, "adam", "test");
+		String memberUri = createTestEntryAndReturnLocation(collectionUri, "audrey", "test");
+
+		// retrieve member entry
+		GetMethod g = new GetMethod(memberUri);
+		int r = executeMethod(g, "audrey", "test");
+		assertEquals(200, r);
+		
+		// look for "edit-acl" link
+		Document d = getResponseBodyAsDocument(g);
+		String aclLocation = getLinkHref(d, "edit-acl");
+		assertNotNull(aclLocation);
+		
+		// try to update the acl
+		PutMethod p = new PutMethod(aclLocation);
+		String content = 
+			"<atom:entry xmlns:atom=\"http://www.w3.org/2005/Atom\">" +
+			"<atom:content type=\"application/vnd.atombeat+xml\">" +
+			"<acl xmlns=\"\"><rules/></acl>" +
+			"</atom:content>" +
+			"</atom:entry>";
+		setAtomRequestEntity(p, content);
+		int s = executeMethod(p, "rebecca", "test");
+		assertEquals(403, s);
+
+		// try retrieve member entry again
+		GetMethod h = new GetMethod(memberUri);
+		int t = executeMethod(h, "audrey", "test");
+		assertEquals(200, t);
+
+	}
+	
+	
+	
+
+
 	
 	// TODO get and put media acls
 	

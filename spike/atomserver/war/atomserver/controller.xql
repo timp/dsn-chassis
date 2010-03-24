@@ -10,10 +10,10 @@ let $request-path-info := $groups[3]
 
 return
 
-	if ( $module = "edit" ) then
+	if ( $module = "content" ) then
 
 		<dispatch xmlns="http://exist.sourceforge.net/NS/exist">
-		    <forward url="/atomserver/edit.xql">
+		    <forward url="/atomserver/content.xql">
 		        <set-attribute name="request-path-info" value="{$request-path-info}"/>
 		    </forward>
 		</dispatch>
