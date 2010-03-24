@@ -271,35 +271,6 @@ public class CleanFileWidgetRenderer extends ChassisWidgetRenderer<CleanFileWidg
 		log.leave();
 	}
 
-	protected void syncFileToBeCleanedEntryElementWithFileToBeCleanedID(String fileToBeCleanedID) {
-		
-		log.enter("syncUIWithFileToBeCleanedEntryElement");
-
-		errorPanel.setVisible(false);
-		errorLabel.setVisible(false); // in errorPanel		
-		
-		
-		if (fileToBeCleanedID != null) {
-
-			log.debug("getting Entry Element from ID....");
-			
-			Element fileToBeCleanedEntryElement = null;
-			
-			model.fileToBeCleanedEntryElement.set(fileToBeCleanedEntryElement);
-			
-		} else {
-
-			errorLabel.setText("fileToBeCleanedID was null");
-			errorLabel.setVisible(true);
-		}
-
-		// An error may have occurred in a different syncUI process.
-		if (!errorLabel.equals("")) {
-			errorPanel.setVisible(true);
-		}		
-		
-		log.leave();
-	}	
 	
 	private FlexTable renderFileToBeCleanedTable(Element entry) {
 		
@@ -373,17 +344,7 @@ public class CleanFileWidgetRenderer extends ChassisWidgetRenderer<CleanFileWidg
 			}
 		});
 		
-		model.fileToBeCleanedID.addChangeHandler(new PropertyChangeHandler<String>() {
-			public void onChange(PropertyChangeEvent<String> e) {
-				
-				log.enter("onChange");
-				
-				syncFileToBeCleanedEntryElementWithFileToBeCleanedID(e.getAfter());
-				
-				log.leave();
-				
-			}
-		});	
+
 		
 		
 		
