@@ -73,7 +73,7 @@ public class CleanFileWidgetController {
 
 	public Deferred<Element> retrieveFileToBeCleanedEntryElement() {
 		
-		log.enter("retrieveFileToBeCleaned");
+		log.enter("retrieveFileToBeCleanedEntryElement");
 		
 		model.setStatus(CleanFileWidgetModel.STATUS_RETRIEVE_FILE_TO_BE_CLEANED_PENDING);
 		

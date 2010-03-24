@@ -196,37 +196,6 @@ public class ReviewFileWidgetRenderer extends ChassisWidgetRenderer<ReviewFileWi
 		log.leave();
 	}
 
-	protected void syncFileToBeReviewedEntryElementWithFileToBeReviewedID(String fileToBeReviewedID) {
-		
-		log.enter("syncUIWithFileToBeReviewedEntryElement");
-
-		errorPanel.setVisible(false);
-		errorLabel.setVisible(false); // in errorPanel		
-		
-		
-		if (fileToBeReviewedID != null) {
-
-			log.debug("getting Entry Element from ID....");
-			
-			//FIXME: This can't be right. It's just setting fileToBeReviewedEntryElement to null.
-			
-			Element fileToBeReviewedEntryElement = null;
-			
-			model.fileToBeReviewedEntryElement.set(fileToBeReviewedEntryElement);
-			
-		} else {
-
-			errorLabel.setText("fileToBeReviewedID was null");
-			errorLabel.setVisible(true);
-		}
-
-		// An error may have occurred in a different syncUI process.
-		if (!errorLabel.equals("")) {
-			errorPanel.setVisible(true);
-		}		
-		
-		log.leave();
-	}	
 	
 	private FlexTable renderFileToBeReviewedTable(Element entry) {
 		
@@ -276,20 +245,7 @@ public class ReviewFileWidgetRenderer extends ChassisWidgetRenderer<ReviewFileWi
 				syncUIWithFileToBeReviewedEntryElement(e.getAfter());
 			}
 		});
-		
-		model.fileToBeReviewedID.addChangeHandler(new PropertyChangeHandler<String>() {
-			public void onChange(PropertyChangeEvent<String> e) {
-				
-				log.enter("onChange");
-				
-				syncFileToBeReviewedEntryElementWithFileToBeReviewedID(e.getAfter());
-				
-				log.leave();
-				
-			}
 
-
-		});	
 	}
 
 	@Override

@@ -1,6 +1,3 @@
-/**
- * 
- */
 package org.cggh.chassis.wwarn.ui.anonymizer.client;
 
 
@@ -46,8 +43,6 @@ public class FilesToCleanWidgetRenderer extends ChassisWidgetRenderer<FilesToCle
 	private static final Log log = LogFactory.getLog(FilesToCleanWidgetRenderer.class);
 	
 	private FilesToCleanWidget owner;
-
-	private FilesToCleanWidgetController controller;	
 	
 	public FilesToCleanWidgetRenderer(FilesToCleanWidget owner) {
 		
@@ -191,8 +186,6 @@ public class FilesToCleanWidgetRenderer extends ChassisWidgetRenderer<FilesToCle
 					
 					log.enter("onClick");
 					
-					controller.selectFileToBeCleanedEntryElement(fileToBeCleanedEntryElement);
-					
 					log.debug("Firing cleanFile event...");
 					
 					CleanFileNavigationEvent e2 = new CleanFileNavigationEvent();
@@ -246,12 +239,5 @@ public class FilesToCleanWidgetRenderer extends ChassisWidgetRenderer<FilesToCle
 		return owner;
 	}
 	
-
-
-	public void setController(FilesToCleanWidgetController controller) {
-			this.controller = controller;
-	
-
-	}		
 	
 }

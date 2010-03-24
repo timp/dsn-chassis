@@ -73,6 +73,7 @@ public class AtomHelper {
 		XMLNS.setSingleChildSimpleContentByTagNameNS(parent, Atom.ELEMENT_SUMMARY, Atom.PREFIX, Atom.NSURI, summary);
 	}
 
+	// TODO: This shouldn't be Atom (not part of the standard).
 	public static String getMediaResourceSize(Element parent) {
 		// Return the file size with appropriate units, e.g. 10 bytes, 10 KB or 10 MB, etc.  
 		return XMLNS.getFirstChildSimpleContentByTagNameNS(parent, Atom.ELEMENT_SIZE, Atom.NSURI);
