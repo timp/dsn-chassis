@@ -1,6 +1,3 @@
-/**
- * 
- */
 package org.cggh.chassis.wwarn.ui.curator.client;
 
 import java.util.HashMap;
@@ -11,15 +8,18 @@ import org.cggh.chassis.generic.async.client.Function;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.miniatom.client.AtomHelper;
-import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 import org.cggh.chassis.generic.widget.client.ChassisWidget;
 import org.cggh.chassis.generic.widget.client.DelegatingWidget;
 import org.cggh.chassis.generic.widget.client.MapMemory;
-import org.cggh.chassis.generic.widget.client.WidgetEventChannel;
+import org.cggh.chassis.generic.widget.client.ObservableProperty;
 import org.cggh.chassis.generic.widget.client.WidgetMemory;
 
 
+import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
+import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.Status;
 import com.google.gwt.xml.client.Element;
+
+import org.cggh.chassis.generic.widget.client.WidgetEventChannel;
 
 
 public class ViewStudyWidget 
@@ -27,21 +27,39 @@ public class ViewStudyWidget
 
 	private static final Log log = LogFactory.getLog(ViewStudyWidget.class);
 	
-	private ViewStudyWidgetController controller;
-	
-	public final WidgetEventChannel listStudiesNavigationEventChannel = new WidgetEventChannel(this);
-	public final WidgetEventChannel viewStudyNavigationEventChannel = new WidgetEventChannel(this);
-	public final WidgetEventChannel viewStudyQuestionnaireNavigationEventChannel = new WidgetEventChannel(this);
-	public final WidgetEventChannel editStudyQuestionnaireNavigationEventChannel = new WidgetEventChannel(this);
-	public final WidgetEventChannel listStudyRevisionsNavigationEventChannel = new WidgetEventChannel(this);
 
-	public ViewStudyWidget() {
-		super();
-		this.controller = new ViewStudyWidgetController(this, this.model);
-		this.renderer.setController(this.controller);
-		this.memory = new Memory();
-	}		
+	public final WidgetEventChannel studySummaryViewStudyNavigationEventChannel = new WidgetEventChannel(this);
+	public final WidgetEventChannel studySummaryEditStudyQuestionnaireNavigationEventChannel = new WidgetEventChannel(this);
+	public final WidgetEventChannel studySummaryListStudyRevisionsNavigationEventChannel = new WidgetEventChannel(this);
+	public final WidgetEventChannel studySummaryViewStudyQuestionnaireNavigationEventChannel = new WidgetEventChannel(this);
+	public final WidgetEventChannel studySummaryListStudiesNavigationEventChannel = new WidgetEventChannel(this);
 	
+	private ViewStudyWidgetController controller;
+
+	public final WidgetEventChannel viewStudyViewStudyNavigationEventChannel = new WidgetEventChannel(this);
+	public final WidgetEventChannel viewStudyEditStudyQuestionnaireNavigationEventChannel = new WidgetEventChannel(this);
+	public final WidgetEventChannel viewStudyListStudyRevisionsNavigationEventChannel = new WidgetEventChannel(this);
+	public final WidgetEventChannel viewStudyViewStudyQuestionnaireNavigationEventChannel = new WidgetEventChannel(this);
+	public final WidgetEventChannel viewStudyListStudiesNavigationEventChannel = new WidgetEventChannel(this);
+
+
+
+
+	// public so as to be available to renderer 
+	public StudySummaryWidget studySummaryWidget;
+
+
+	// public so as to be available to renderer 
+	public ViewStudyMetadataWidget viewStudyMetadataWidget;
+
+
+	// public so as to be available to renderer 
+	public ListSubmissionsWidget listSubmissionsWidget;
+
+
+	// public so as to be available to renderer 
+	public ListCurationsWidget listCurationsWidget;
+
 	@Override
 	protected ViewStudyWidgetModel createModel() {
 		return new ViewStudyWidgetModel();
@@ -55,7 +73,6 @@ public class ViewStudyWidget
 	protected ViewStudyWidgetRenderer createRenderer() {
 		return new ViewStudyWidgetRenderer(this);
 	}
-
 	// Using init() rather than constructor because reset() uses init().
 	public void init() {
 		
@@ -63,38 +80,25 @@ public class ViewStudyWidget
 		
 		super.init();
 		
+
 		this.controller = new ViewStudyWidgetController(this, this.model);
-		
+		this.renderer.setController(controller);
+		this.memory = new Memory();
 
 		log.leave();
 	}
 	
 	@Override
 	public void refresh() {
-		
 		log.enter("refresh");
 		
+		// TODO refresh this
 		renderer.studySummaryWidgetUiField.refresh();
 		
-		log.leave();		
-		
+		log.leave();	
 	}
 	
-	/*
-	public Deferred<Element> retrieveStudy() {
-		
-		log.enter("retrieveStudy");
-		
-		Deferred<Element> deferredElement = this.controller.retrieveStudy();
-		
-		log.leave();
-		
-		return deferredElement;
-		
-	}	
-	*/
-	
-	
+
 	@Override
 	public Deferred<ChassisWidget> refreshAndCallback() {
 		
@@ -185,7 +189,6 @@ public class ViewStudyWidget
 
 	
 	
-
 	
-
+	
 }
