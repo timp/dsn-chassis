@@ -1,6 +1,3 @@
-/**
- * 
- */
 package org.cggh.chassis.wwarn.ui.curator.client;
 
 import static org.cggh.chassis.generic.widget.client.HtmlElements.emWidget;
@@ -12,6 +9,9 @@ import java.util.List;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;import org.cggh.chassis.generic.miniatom.client.ext.ChassisHelper;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
+import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.Status;
+import com.google.gwt.xml.client.Element;
+
 import org.cggh.chassis.generic.widget.client.ChassisWidget;
 import org.cggh.chassis.generic.widget.client.ObservableProperty;
 import org.cggh.chassis.generic.widget.client.PropertyChangeEvent;
@@ -36,6 +36,10 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.xml.client.Element;
 
+
+import org.cggh.chassis.generic.widget.client.WidgetEventChannel;
+
+
 /**
  * @author timp
  *
@@ -59,37 +63,48 @@ public class StudyActionsWidget
 	@UiField HTMLPanel errorPanel;
 	@UiField FlowPanel errorMessage;
 
-	@UiField FlowPanel tablePanel;
-
-
+	@UiField FlowPanel studyActionsPanel;
+	
 	public final ObservableProperty<Element> studyEntry = new ObservableProperty<Element>();
+
 	public final ObservableProperty<Status> status = new ObservableProperty<Status>();
 	public final ObservableProperty<String> message = new ObservableProperty<String>();
-	
-	
-	public final WidgetEventChannel viewStudyNavigationEventChannel = new WidgetEventChannel(this);
-	public final WidgetEventChannel editStudyQuestionnaireNavigationEventChannel = new WidgetEventChannel(this);
-	public final WidgetEventChannel listStudyRevisionsNavigationEventChannel = new WidgetEventChannel(this);
-	public final WidgetEventChannel viewStudyQuestionnaireNavigationEventChannel = new WidgetEventChannel(this);
-	public final WidgetEventChannel listStudiesNavigationEventChannel = new WidgetEventChannel(this);
+
+	public final WidgetEventChannel studyActionsViewStudyNavigationEventChannel = new WidgetEventChannel(this);
+	public final WidgetEventChannel studyActionsEditStudyQuestionnaireNavigationEventChannel = new WidgetEventChannel(this);
+	public final WidgetEventChannel studyActionsListStudyRevisionsNavigationEventChannel = new WidgetEventChannel(this);
+	public final WidgetEventChannel studyActionsViewStudyQuestionnaireNavigationEventChannel = new WidgetEventChannel(this);
+	public final WidgetEventChannel studyActionsListStudiesNavigationEventChannel = new WidgetEventChannel(this);
 
 
-	
 	@Override
 	public void refresh() {
 		log.enter("refresh");
+		
+		// TODO refresh this
 		log.leave();	
 	}
-
-
+	
+	
 	@Override
 	protected void renderUI() {
 
+		log.enter("renderUI");
+		
 		this.clear();
 		this.add(uiBinder.createAndBindUi(this));
 		errorPanel.setVisible(false);	
 		
+
+		log.leave();
 	}
+
+
+	@Override
+	protected void bindUI() {
+		super.bindUI();
+		
+}
 
 
 	@Override
@@ -155,13 +170,13 @@ public class StudyActionsWidget
 			
 			FlexTable table = RenderUtils.renderFirstRowHeadingResultsAsFirstColumnHeadingTable(rows);
 			
-			this.tablePanel.clear();
-			this.tablePanel.add(table);
+			this.studyActionsPanel.clear();
+			this.studyActionsPanel.add(table);
 			pendingPanel.setVisible(false);	
 
 		}
 		
-    	if (this.tablePanel != null) { 
+    	if (this.studyActionsPanel != null) { 
     		List<Widget[]> rows = new ArrayList<Widget[]>();
     		
 			Anchor listAllStudies = new Anchor("List all studies"); // TODO i18n
@@ -171,7 +186,7 @@ public class StudyActionsWidget
 				public void onClick(ClickEvent e) {
 					log.enter("onClick");
 					
-					listStudiesNavigationEventChannel.fireEvent(new ListStudiesNavigationEvent());
+					studyActionsListStudiesNavigationEventChannel.fireEvent(new ListStudiesNavigationEvent());
 					
 					log.leave();
 				}
@@ -189,7 +204,7 @@ public class StudyActionsWidget
 					ViewStudyNavigationEvent viewStudyNavigationEvent  = new ViewStudyNavigationEvent();
 					viewStudyNavigationEvent.setStudy(study);
 					
-					viewStudyNavigationEventChannel.fireEvent(viewStudyNavigationEvent);
+					studyActionsViewStudyNavigationEventChannel.fireEvent(viewStudyNavigationEvent);
 					
 					log.leave();
 					
@@ -210,8 +225,8 @@ public class StudyActionsWidget
     		rows.add(row);
     		rows.add(row);
     		FlexTable table = RenderUtils.renderResultsTable(rows);
-    		this.tablePanel.clear();
-    		this.tablePanel.add(table);
+    		this.studyActionsPanel.clear();
+    		this.studyActionsPanel.add(table);
         	} else 
         		log.debug("tablePanel null");
 		log.leave();
@@ -245,6 +260,7 @@ public class StudyActionsWidget
 		
 		log.leave();
 	}
+	
 
 	public void error(String err) {
 		log.enter("error");
@@ -256,5 +272,6 @@ public class StudyActionsWidget
 		errorPanel.setVisible(true);
 		log.leave();
 	}
+	
 
 }
