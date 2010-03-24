@@ -149,7 +149,6 @@ declare function ap:do-post-atom-feed(
 
 
 
-
 (:
  : TODO doc me 
  :)
@@ -162,15 +161,15 @@ declare function ap:op-create-collection(
 
 	let $feed-doc-db-path := atomdb:create-collection( $request-path-info , $request-data )
 
-	let $feed-doc := doc( $feed-doc-db-path )
+	let $feed := doc( $feed-doc-db-path )/atom:feed
             
 	let $header-content-type := response:set-header( $CONSTANT:HEADER-CONTENT-TYPE , $CONSTANT:MEDIA-TYPE-ATOM )
 	
-    let $location := $feed-doc/atom:feed/atom:link[@rel="self"]/@href
+    let $location := $feed/atom:link[@rel="self"]/@href
         	
 	let $header-location := response:set-header( $CONSTANT:HEADER-LOCATION, $location )
 
-	return ( $CONSTANT:STATUS-SUCCESS-CREATED , $feed-doc , $CONSTANT:MEDIA-TYPE-ATOM )
+	return ( $CONSTANT:STATUS-SUCCESS-CREATED , $feed , $CONSTANT:MEDIA-TYPE-ATOM )
 
 };
 

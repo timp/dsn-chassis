@@ -68,6 +68,10 @@ declare function acl-protocol:do-get(
     
     then acl-protocol:do-get-member-acl( $request-path-info )
     
+    else if ( atomdb:media-resource-available( $request-path-info ) )
+    
+    then acl-protocol:do-get-media-acl( $request-path-info )
+    
     else ap:do-not-found( $request-path-info )
 	
 };
@@ -82,10 +86,7 @@ declare function acl-protocol:do-get-global-acl() as item()*
      : to update the global ACL.
      :)
      
-    let $user := request:get-attribute( $config:user-name-request-attribute-key )
-    let $roles := request:get-attribute( $config:user-roles-request-attribute-key )
-    let $allowed as xs:boolean :=
-        ( atomsec:decide( $user , $roles , "/" , $CONSTANT:OP-UPDATE-ACL ) = $atomsec:decision-allow )
+    let $allowed := acl-protocol:is-update-acl-allowed( "/" )
     
     return
     
@@ -96,17 +97,7 @@ declare function acl-protocol:do-get-global-acl() as item()*
         else
         
             let $acl := atomsec:retrieve-global-acl()
-            let $response-header-set := response:set-header( "Content-Type" , "application/atom+xml" )
-            return
-                <atom:entry>
-                    <atom:content type="application/vnd.atombeat+xml">
-                        { $acl }
-                    </atom:content>
-                </atom:entry>
-                
-            (: TODO add updated date :)   
-            (: TODO add edit link :)
-            (: TODO add self link :)
+            return acl-protocol:send-acl( $acl )
 
 };
 
@@ -123,10 +114,7 @@ declare function acl-protocol:do-get-collection-acl(
      : to update the collection ACL.
      :)
      
-    let $user := request:get-attribute( $config:user-name-request-attribute-key )
-    let $roles := request:get-attribute( $config:user-roles-request-attribute-key )
-    let $allowed as xs:boolean :=
-        ( atomsec:decide( $user , $roles , $request-path-info , $CONSTANT:OP-UPDATE-ACL ) = $atomsec:decision-allow )
+    let $allowed := acl-protocol:is-update-acl-allowed( $request-path-info )
     
     return
     
@@ -137,17 +125,7 @@ declare function acl-protocol:do-get-collection-acl(
         else
         
             let $acl := atomsec:retrieve-collection-acl( $request-path-info )
-            let $response-header-set := response:set-header( "Content-Type" , "application/atom+xml" )
-            return
-                <atom:entry>
-                    <atom:content type="application/vnd.atombeat+xml">
-                        { $acl }
-                    </atom:content>
-                </atom:entry>
-
-            (: TODO add updated date :)   
-            (: TODO add edit link :)
-            (: TODO add self link :)
+            return acl-protocol:send-acl( $acl )
 
 };
 
@@ -163,10 +141,7 @@ declare function acl-protocol:do-get-member-acl(
      : to update the member ACL.
      :)
      
-    let $user := request:get-attribute( $config:user-name-request-attribute-key )
-    let $roles := request:get-attribute( $config:user-roles-request-attribute-key )
-    let $allowed as xs:boolean :=
-        ( atomsec:decide( $user , $roles , $request-path-info , $CONSTANT:OP-UPDATE-ACL ) = $atomsec:decision-allow )
+    let $allowed := acl-protocol:is-update-acl-allowed( $request-path-info )
     
     return
     
@@ -177,17 +152,34 @@ declare function acl-protocol:do-get-member-acl(
         else
         
             let $acl := atomsec:retrieve-resource-acl( $request-path-info )
-            let $response-header-set := response:set-header( "Content-Type" , "application/atom+xml" )
-            return
-                <atom:entry>
-                    <atom:content type="application/vnd.atombeat+xml">
-                        { $acl }
-                    </atom:content>
-                </atom:entry>
+            return acl-protocol:send-acl( $acl )
 
-            (: TODO add updated date :)   
-            (: TODO add edit link :)
-            (: TODO add self link :)
+};
+
+
+
+
+declare function acl-protocol:do-get-media-acl(
+    $request-path-info as xs:string
+) as item()*
+{
+    (: 
+     : We will only allow retrieval of media ACL if user is allowed
+     : to update the media resource ACL.
+     :)
+     
+    let $allowed := acl-protocol:is-update-acl-allowed( $request-path-info )
+    
+    return
+    
+        if ( not( $allowed ) )
+        
+        then ap:do-forbidden( $request-path-info ) (: TODO factor these utility methods out :)
+        
+        else
+        
+            let $acl := atomsec:retrieve-resource-acl( $request-path-info )
+            return acl-protocol:send-acl( $acl )
 
 };
 
@@ -214,6 +206,10 @@ declare function acl-protocol:do-put(
     
     then acl-protocol:do-put-member-acl( $request-path-info )
     
+    else if ( atomdb:media-resource-available( $request-path-info ) )
+    
+    then acl-protocol:do-put-media-acl( $request-path-info )
+    
     else ap:do-not-found( $request-path-info )
 	
 };
@@ -222,13 +218,11 @@ declare function acl-protocol:do-put(
 
 
 
+
 declare function acl-protocol:do-put-global-acl() as item()*
 {
-     
-    let $user := request:get-attribute( $config:user-name-request-attribute-key )
-    let $roles := request:get-attribute( $config:user-roles-request-attribute-key )
-    let $allowed as xs:boolean :=
-        ( atomsec:decide( $user , $roles , "/" , $CONSTANT:OP-UPDATE-ACL ) = $atomsec:decision-allow )
+    
+    let $allowed := acl-protocol:is-update-acl-allowed( "/" )
     
     return
     
@@ -243,23 +237,13 @@ declare function acl-protocol:do-put-global-acl() as item()*
             return 
                 
                 if ( empty( $acl ) )
-                then ap:do-bad-request( "/" , "Request entity must be Atom entry document with child <atom:content type='application/vnd.atombeat+xml'> with child <acl> with child <rules>." )
+                then acl-protocol:do-bad-acl( "/" )
                 
                 else
 
                     let $acl-updated := atomsec:store-global-acl( $acl )
                     let $acl := atomsec:retrieve-global-acl()
-                    let $response-header-set := response:set-header( "Content-Type" , "application/atom+xml" )
-                    return
-                        <atom:entry>
-                            <atom:content type="application/vnd.atombeat+xml">
-                                { $acl }
-                            </atom:content>
-                        </atom:entry>
-                        
-                    (: TODO add updated date :)   
-                    (: TODO add edit link :)
-                    (: TODO add self link :)
+                    return acl-protocol:send-acl( $acl )
 
 };
 
@@ -276,10 +260,7 @@ declare function acl-protocol:do-put-collection-acl(
      : to update the collection ACL.
      :)
      
-    let $user := request:get-attribute( $config:user-name-request-attribute-key )
-    let $roles := request:get-attribute( $config:user-roles-request-attribute-key )
-    let $allowed as xs:boolean :=
-        ( atomsec:decide( $user , $roles , $request-path-info , $CONSTANT:OP-UPDATE-ACL ) = $atomsec:decision-allow )
+    let $allowed := acl-protocol:is-update-acl-allowed( $request-path-info )
     
     return
     
@@ -294,23 +275,13 @@ declare function acl-protocol:do-put-collection-acl(
             return 
                 
                 if ( empty( $acl ) )
-                then ap:do-bad-request( $request-path-info , "Request entity must be Atom entry document with child <atom:content type='application/vnd.atombeat+xml'> with child <acl> with child <rules>." )
+                then acl-protocol:do-bad-acl( $request-path-info )
                 
                 else
 
                     let $acl-updated := atomsec:store-collection-acl( $request-path-info , $acl )
                     let $acl := atomsec:retrieve-collection-acl( $request-path-info )
-                    let $response-header-set := response:set-header( "Content-Type" , "application/atom+xml" )
-                    return
-                        <atom:entry>
-                            <atom:content type="application/vnd.atombeat+xml">
-                                { $acl }
-                            </atom:content>
-                        </atom:entry>
-        
-                    (: TODO add updated date :)   
-                    (: TODO add edit link :)
-                    (: TODO add self link :)
+                    return acl-protocol:send-acl( $acl )
 
 };
 
@@ -326,10 +297,7 @@ declare function acl-protocol:do-put-member-acl(
      : to update the member ACL.
      :)
      
-    let $user := request:get-attribute( $config:user-name-request-attribute-key )
-    let $roles := request:get-attribute( $config:user-roles-request-attribute-key )
-    let $allowed as xs:boolean :=
-        ( atomsec:decide( $user , $roles , $request-path-info , $CONSTANT:OP-UPDATE-ACL ) = $atomsec:decision-allow )
+    let $allowed := acl-protocol:is-update-acl-allowed( $request-path-info )
     
     return
     
@@ -344,23 +312,64 @@ declare function acl-protocol:do-put-member-acl(
             return 
                  
                 if ( empty( $acl ) )
-                then ap:do-bad-request( $request-path-info , "Request entity must be Atom entry document with child <atom:content type='application/vnd.atombeat+xml'> with child <acl> with child <rules>." )
+                then acl-protocol:do-bad-acl( $request-path-info )
                 
                 else
 
                     let $acl-updated := atomsec:store-resource-acl( $request-path-info , $acl )
                     let $acl := atomsec:retrieve-resource-acl( $request-path-info )
-                    let $response-header-set := response:set-header( "Content-Type" , "application/atom+xml" )
-                    return
-                        <atom:entry>
-                            <atom:content type="application/vnd.atombeat+xml">
-                                { $acl }
-                            </atom:content>
-                        </atom:entry>
+                    return acl-protocol:send-acl( $acl )
+
+};
+
+
+
+declare function acl-protocol:do-put-media-acl(
+    $request-path-info as xs:string
+) as item()*
+{
+    (: 
+     : We will only allow retrieval of media ACL if user is allowed
+     : to update the media ACL.
+     :)
+     
+    let $allowed := acl-protocol:is-update-acl-allowed( $request-path-info )
+    
+    return
+    
+        if ( not( $allowed ) )
         
-                    (: TODO add updated date :)   
-                    (: TODO add edit link :)
-                    (: TODO add self link :)
+        then ap:do-forbidden( $request-path-info ) (: TODO factor these utility methods out :)
+        
+        else
+        
+            let $acl := acl-protocol:get-acl-from-request-data()
+
+            return 
+                 
+                if ( empty( $acl ) )
+                then acl-protocol:do-bad-acl( $request-path-info )
+                
+                else
+
+                    let $acl-updated := atomsec:store-resource-acl( $request-path-info , $acl )
+                    let $acl := atomsec:retrieve-resource-acl( $request-path-info )
+                    return acl-protocol:send-acl( $acl )
+
+};
+
+
+
+declare function acl-protocol:is-update-acl-allowed(
+    $request-path-info as xs:string
+) as xs:boolean 
+{
+
+    let $user := request:get-attribute( $config:user-name-request-attribute-key )
+    let $roles := request:get-attribute( $config:user-roles-request-attribute-key )
+    let $allowed as xs:boolean :=
+        ( atomsec:decide( $user , $roles , $request-path-info , $CONSTANT:OP-UPDATE-ACL ) = $atomsec:decision-allow )
+    return $allowed
 
 };
 
@@ -374,4 +383,35 @@ declare function acl-protocol:get-acl-from-request-data(
     let $acl := $request-data/atom:content[@type="application/vnd.atombeat+xml"]/acl[exists(rules)]
     return $acl
 };
+
+
+
+
+declare function acl-protocol:send-acl(
+    $acl as element(acl)
+) as item()*
+{
+    let $response-header-set := response:set-header( "Content-Type" , "application/atom+xml" )
+    return
+        <atom:entry>
+            <atom:content type="application/vnd.atombeat+xml">
+                { $acl }
+            </atom:content>
+        </atom:entry>
+
+    (: TODO add updated date :)   
+    (: TODO add edit link :)
+    (: TODO add self link :)
+};
+
+
+
+declare function acl-protocol:do-bad-acl(
+    $request-path-info as xs:string
+) as item()*
+{
+    let $message := "Request entity must match atom:entry/atom:content[@type='application/vnd.atombeat+xml']/acl/rules."
+    return ap:do-bad-request( $request-path-info , $message )
+};
+
 

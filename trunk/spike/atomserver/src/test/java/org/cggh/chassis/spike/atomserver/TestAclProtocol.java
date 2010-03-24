@@ -175,7 +175,7 @@ public class TestAclProtocol extends TestCase {
 		String aclLocation = getLinkHref(d, "edit-acl");
 		assertNotNull(aclLocation);
 		
-		// make a second get request for the acl
+		// make a get request for the acl
 		GetMethod h = new GetMethod(aclLocation);
 		int s = executeMethod(h, "adam", "test");
 		assertEquals(200, s);
@@ -224,13 +224,79 @@ public class TestAclProtocol extends TestCase {
 		String aclLocation = getLinkHref(d, "edit-acl");
 		assertNotNull(aclLocation);
 		
-		// make a second get request for the acl
+		// make a get request for the acl
+		GetMethod h = new GetMethod(aclLocation);
+		int s = executeMethod(h, "rebecca", "test");
+		assertEquals(403, s);
+
+	}
+
+	
+	
+	public void testGetMediaAcl() {
+
+		// set up test by creating a collection
+		String collectionUri = createTestCollection(SERVER_URI, "adam", "test");
+		Document d = createTestMediaResourceAndReturnMediaLinkEntry(collectionUri, "audrey", "test");
+
+		// look for "edit-acl" link
+		String aclLocation = getLinkHref(d, "edit-media-acl");
+		assertNotNull(aclLocation);
+		
+		// make a get request for the acl
+		GetMethod h = new GetMethod(aclLocation);
+		int s = executeMethod(h, "audrey", "test");
+		assertEquals(200, s);
+		verifyAtomResponse(h);
+		Document e = getResponseBodyAsDocument(h);
+		verifyDocIsAtomEntryWithAclContent(e);
+
+	}
+	
+	
+	
+
+	public void testGetMediaAclDenied() {
+
+		// set up test by creating a collection
+		String collectionUri = createTestCollection(SERVER_URI, "adam", "test");
+		Document d = createTestMediaResourceAndReturnMediaLinkEntry(collectionUri, "audrey", "test");
+
+		// look for "edit-acl" link
+		String aclLocation = getLinkHref(d, "edit-media-acl");
+		assertNotNull(aclLocation);
+		
+		// make a get request for the acl
 		GetMethod h = new GetMethod(aclLocation);
 		int s = executeMethod(h, "rebecca", "test");
 		assertEquals(403, s);
 
 	}
 	
+	
+	
+
+	public void testGetMediaAclNoEditMediaAclLink() {
+
+		// set up test by creating a collection
+		String collectionUri = createTestCollection(SERVER_URI, "adam", "test");
+		Document d = createTestMediaResourceAndReturnMediaLinkEntry(collectionUri, "audrey", "test");
+		String location = getEditLocation(d);
+		
+		// retrieve media link as rebecca
+		GetMethod g = new GetMethod(location);
+		int s = executeMethod(g, "rebecca", "test");
+		assertEquals(200, s);
+		Document e = getResponseBodyAsDocument(g);
+		String mediaAclLocation = getLinkHref(e, "edit-media-acl");
+		assertNull(mediaAclLocation);
+		
+	}
+	
+	
+	
+
+
 	
 	
 	public void testUpdateGlobalAcl() {
@@ -459,10 +525,81 @@ public class TestAclProtocol extends TestCase {
 	
 	
 	
+	public void testUpdateMediaAcl() {
 
+		// set up test by creating a collection
+		String collectionUri = createTestCollection(SERVER_URI, "adam", "test");
+		Document d = createTestMediaResourceAndReturnMediaLinkEntry(collectionUri, "audrey", "test");
+		String mediaLocation = getEditMediaLocation(d);
+		
+		// retrieve media resource
+		GetMethod g = new GetMethod(mediaLocation);
+		int r = executeMethod(g, "audrey", "test");
+		assertEquals(200, r);
 
+		// look for "edit-acl" link
+		String aclLocation = getLinkHref(d, "edit-media-acl");
+		assertNotNull(aclLocation);
+		
+		// try to update the acl
+		PutMethod p = new PutMethod(aclLocation);
+		String content = 
+			"<atom:entry xmlns:atom=\"http://www.w3.org/2005/Atom\">" +
+			"<atom:content type=\"application/vnd.atombeat+xml\">" +
+			"<acl xmlns=\"\"><rules/></acl>" +
+			"</atom:content>" +
+			"</atom:entry>";
+		setAtomRequestEntity(p, content);
+		int t = executeMethod(p, "audrey", "test");
+		assertEquals(200, t);
+
+		// try retrieve media resource again
+		GetMethod i = new GetMethod(mediaLocation);
+		int u = executeMethod(i, "audrey", "test");
+		assertEquals(403, u);
+
+	}
 	
-	// TODO get and put media acls
+	
+	
+
+	public void testUpdateMediaAclDenied() {
+
+		// set up test by creating a collection
+		String collectionUri = createTestCollection(SERVER_URI, "adam", "test");
+		Document d = createTestMediaResourceAndReturnMediaLinkEntry(collectionUri, "audrey", "test");
+		String mediaLocation = getEditMediaLocation(d);
+		
+		// retrieve media resource
+		GetMethod g = new GetMethod(mediaLocation);
+		int r = executeMethod(g, "audrey", "test");
+		assertEquals(200, r);
+
+		// look for "edit-acl" link
+		String aclLocation = getLinkHref(d, "edit-media-acl");
+		assertNotNull(aclLocation);
+		
+		// try to update the acl
+		PutMethod p = new PutMethod(aclLocation);
+		String content = 
+			"<atom:entry xmlns:atom=\"http://www.w3.org/2005/Atom\">" +
+			"<atom:content type=\"application/vnd.atombeat+xml\">" +
+			"<acl xmlns=\"\"><rules/></acl>" +
+			"</atom:content>" +
+			"</atom:entry>";
+		setAtomRequestEntity(p, content);
+		int t = executeMethod(p, "rebecca", "test");
+		assertEquals(403, t);
+
+		// try retrieve media resource again
+		GetMethod i = new GetMethod(mediaLocation);
+		int u = executeMethod(i, "audrey", "test");
+		assertEquals(200, u);
+
+	}
+	
+	
+	
 	
 	private static String verifyAtomResponse(HttpMethod m) {
 
@@ -497,6 +634,10 @@ public class TestAclProtocol extends TestCase {
 	}
 	
 	
+	
+	
+	// TODO test that edit-acl and edit-media acl links are provided after
+	// retrieve, create and update operations, as appropriate
 	
 }
 
