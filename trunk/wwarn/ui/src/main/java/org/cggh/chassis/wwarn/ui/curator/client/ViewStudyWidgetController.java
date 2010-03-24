@@ -3,12 +3,9 @@ package org.cggh.chassis.wwarn.ui.curator.client;
 
 import org.cggh.chassis.generic.async.client.Deferred;
 import org.cggh.chassis.generic.async.client.Function;
-import org.cggh.chassis.generic.async.client.QueryParams;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.miniatom.client.Atom;
-import org.cggh.chassis.generic.miniatom.client.AtomHelper;
-import org.cggh.chassis.generic.miniatom.client.ext.Chassis;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 import org.cggh.chassis.generic.widget.client.ChassisWidget;
 import org.cggh.chassis.generic.widget.client.ErrorEvent;
@@ -17,6 +14,14 @@ import org.cggh.chassis.wwarn.ui.common.client.Config;
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;
 
+/**
+ * BE SURE TO EDIT THE TEMPLATE NOT THE RENDERED RESULT
+ *
+ * DELETE_TO_MANUALLY_EDIT
+ *
+ * @author timp
+ *
+ */
 public class ViewStudyWidgetController {
 	
 	
@@ -27,63 +32,42 @@ public class ViewStudyWidgetController {
 	private ViewStudyWidgetModel model;
 
 
-	public Deferred<Element> retrieveStudy() {
-		
-		log.enter("retrieveStudy");
-		
-		// Set the model's status to pending.
-		model.status.set(ViewStudyWidgetModel.STATUS_RETRIEVE_STUDY_PENDING);
+	private static String STUDY_ENTRY_URI = "/atom/edit/studies/id.atom";
 
-		QueryParams qp = new QueryParams();
-		qp.put(Chassis.QUERYPARAM_ID, model.studyID.get());		
-		
-		String studyQueryServiceUrl = Config.get(Config.QUERY_STUDIES_URL) + qp.toUrlQueryString();
-		
-		log.debug("studyQueryServiceUrl: " + studyQueryServiceUrl);
-
-		log.debug("make get feed request");
-		Deferred<Document> deferredDoc = Atom.getFeed(studyQueryServiceUrl);
-		
-		Deferred<Element> deferredStudyElement = deferredDoc.adapt(new Function<Document, Element>() {
-
-			public Element apply(Document resultsFeedDoc) {
-				Element entryElement = AtomHelper.getFirstEntry(resultsFeedDoc.getDocumentElement());
-				return entryElement;
-			}
 			
-		});		
+	public Deferred<Document> retrieveStudy() {
+		log.enter("retrieveStudy");
+		// Set the model's status to pending.
+		//model.setStatus(ViewStudyWidgetModel.STATUS_RETRIEVE_STUDIES_PENDING);
+		
+		String studyQueryServiceUrl = Config.get(Config.QUERY_STUDIES_URL);
+		
+		Deferred<Document> deferredDoc = Atom.getFeed(studyQueryServiceUrl);
 		
 		// Add a call-back and error-back for the asynchronous feed.
 		deferredDoc.addCallback(new RetrieveStudyCallback());
 		deferredDoc.addErrback(new DefaultErrback());
 		
 		log.leave();
-		return deferredStudyElement;
+		return deferredDoc;
 	}
 	
 	
 	
 	public Deferred<ChassisWidget> refreshAndCallback() {
-		
 		log.enter("refreshAndCallback");
 		
 		final Deferred<ChassisWidget> deferredOwner = new Deferred<ChassisWidget>();
-
-		if (model.studyID.get() != null) {
+	/*	
+		if (model.submissionId.get() != null) {
 			
-			log.debug("model.studyID.get() != null");
+			Deferred<Element> chain = retrieveSubmission();
 			
-			Deferred<Element> chain = retrieveStudy();
+			chain.addCallback(new RetrieveSubmissionCallback());
 			
-			chain.addCallback(new RetrieveStudyCallback());
+			chain.addCallback(new RetrieveQuestionnaireCallback());
 			
-			
-			
-			//chain.addCallback(new RetrieveSubmissionCallback());
-			
-			//chain.addCallback(new RetrieveQuestionnaireCallback());
-			
-			
+			chain.addCallback(retrieveStudyCallback);
 
 			// handle errors
 			chain.addErrback(new DefaultErrback());
@@ -99,7 +83,7 @@ public class ViewStudyWidgetController {
 			});
 
 		}
-
+		*/
 		log.leave();
 		return deferredOwner;
 		
@@ -124,35 +108,54 @@ public class ViewStudyWidgetController {
 
 
 	
-	private class RetrieveStudyCallback implements Function<Element, Element> {
+	private class RetrieveStudyCallback implements Function<Element, Deferred<Document>> {
 
-		public Element apply(Element studyEntryElement) {
-			log.enter("apply(StudyEntryElement)");
+		public Deferred<Document> apply(Element studyEntryElement) {
 			
-			log.debug("Setting study for model and child widgets");			
-			model.studyEntry.set(studyEntryElement);
+			// model.setStudyEntryElement(studyEntryElement);
+			
+			Deferred<Document> deferredFilesFeedDoc = null;
 			
 			if (studyEntryElement != null) {
-				
-				model.status.set(ViewStudyWidgetModel.STATUS_STUDY_RETRIEVED);
 
-			} else {
-			
-				model.status.set(ViewStudyWidgetModel.STATUS_STUDY_NOT_FOUND);
+				// we have one, so lets try retrieving the list of files uploaded so far
+				// deferredFilesFeedDoc = retrieveFiles();
+				
 			}
 			
-			log.leave();
-			return studyEntryElement;
+			else {
+				
+				//model.setStatus(ViewStudyWidgetModel.STATUS_STUDY_NOT_FOUND);
+				deferredFilesFeedDoc = new Deferred<Document>();
+				deferredFilesFeedDoc.callback(null);
+
+			}
+			
+			// return the deferred feed of files uploaded, for chaining of callbacks
+			return deferredFilesFeedDoc;
 		}
 		
 	}
 	
 	
-     	 
-//	private StudySummaryWidget studySummaryWidget;
-//	private ViewStudyMetadataWidget viewStudyMetadataWidget;
-//	private ListSubmissionsWidget listSubmissionsWidget;
-//	private ListCurationsWidget listCurationsWidget;
+        			
+	public void setStudyEntry(Element study) { 
+	  // TODO Generated stub 
+	}
+	
+     	 	//eeek property/3 
+	     	     	   	 	//eeek property/2 
+	     	     	   	 
+	private StudySummaryWidget studySummaryWidget;
+
+ 
+	private ViewStudyMetadataWidget viewStudyMetadataWidget;
+
+ 
+	private ListSubmissionsWidget listSubmissionsWidget;
+
+ 
+	private ListCurationsWidget listCurationsWidget;
 
  
 	

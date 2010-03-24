@@ -6,12 +6,8 @@ import org.cggh.chassis.generic.widget.client.DelegatingWidget;
 import org.cggh.chassis.generic.widget.client.ObservableProperty;
 
 
-import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.Status;
 import com.google.gwt.xml.client.Element;
-
-import org.cggh.chassis.generic.widget.client.WidgetEventChannel;
-
 
 /**
  * BE SURE TO EDIT THE TEMPLATE NOT THE RENDERED RESULT
@@ -29,6 +25,7 @@ public class ViewQuestionnaireWidget
 	private ViewQuestionnaireWidgetController controller;
 	public final ObservableProperty<Status> status = new ObservableProperty<Status>();
 	public final ObservableProperty<String> message = new ObservableProperty<String>();
+
 
 
 	@Override

@@ -6,12 +6,10 @@ import org.cggh.chassis.generic.widget.client.DelegatingWidget;
 import org.cggh.chassis.generic.widget.client.ObservableProperty;
 
 
-import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.Status;
 import com.google.gwt.xml.client.Element;
 
 import org.cggh.chassis.generic.widget.client.WidgetEventChannel;
-
 
 /**
  * BE SURE TO EDIT THE TEMPLATE NOT THE RENDERED RESULT
@@ -26,45 +24,15 @@ public class ViewStudyRevisionWidget
 
 	private static final Log log = LogFactory.getLog(ViewStudyRevisionWidget.class);
 	
-
-	public final WidgetEventChannel studyRevisionActionsListStudiesNavigationEventChannel = new WidgetEventChannel(this);
-	
-
-	public final WidgetEventChannel studyRevisionActionsEditStudyQuestionnaireNavigationEventChannel = new WidgetEventChannel(this);
-	
-
-	public final WidgetEventChannel studyRevisionActionsNextRevisionNavigationEventChannel = new WidgetEventChannel(this);
-	
-
-	public final WidgetEventChannel studyRevisionActionsViewStudyQuestionnaireNavigationEventChannel = new WidgetEventChannel(this);
-	
-
-	public final WidgetEventChannel studyRevisionActionsPreviousRevisionNavigationEventChannel = new WidgetEventChannel(this);
-	
-
-	public final WidgetEventChannel studyRevisionActionsListStudyRevisionsNavigationEventChannel = new WidgetEventChannel(this);
-	
 	private ViewStudyRevisionWidgetController controller;
 	public final ObservableProperty<Status> status = new ObservableProperty<Status>();
 	public final ObservableProperty<String> message = new ObservableProperty<String>();
-
-	public final WidgetEventChannel viewStudyRevisionListStudiesNavigationEventChannel = new WidgetEventChannel(this);
-
-
-	public final WidgetEventChannel viewStudyRevisionEditStudyQuestionnaireNavigationEventChannel = new WidgetEventChannel(this);
-
-
-	public final WidgetEventChannel viewStudyRevisionNextRevisionNavigationEventChannel = new WidgetEventChannel(this);
-
-
-	public final WidgetEventChannel viewStudyRevisionViewStudyQuestionnaireNavigationEventChannel = new WidgetEventChannel(this);
-
-
-	public final WidgetEventChannel viewStudyRevisionPreviousRevisionNavigationEventChannel = new WidgetEventChannel(this);
-
-
-	public final WidgetEventChannel viewStudyRevisionListStudyRevisionsNavigationEventChannel = new WidgetEventChannel(this);
-
+	public final WidgetEventChannel studyRevisionActionsListStudiesNavigationEventChannel = new WidgetEventChannel(this);
+	public final WidgetEventChannel studyRevisionActionsEditStudyQuestionnaireNavigationEventChannel = new WidgetEventChannel(this);
+	public final WidgetEventChannel studyRevisionActionsNextRevisionNavigationEventChannel = new WidgetEventChannel(this);
+	public final WidgetEventChannel studyRevisionActionsViewStudyQuestionnaireNavigationEventChannel = new WidgetEventChannel(this);
+	public final WidgetEventChannel studyRevisionActionsPreviousRevisionNavigationEventChannel = new WidgetEventChannel(this);
+	public final WidgetEventChannel studyRevisionActionsListStudyRevisionsNavigationEventChannel = new WidgetEventChannel(this);
 
 
 
@@ -78,6 +46,7 @@ public class ViewStudyRevisionWidget
 
 	// public so as to be available to renderer 
 	public StudyRevisionSummaryWidget studyRevisionSummaryWidget;
+
 
 	@Override
 	protected ViewStudyRevisionWidgetModel createModel() {
