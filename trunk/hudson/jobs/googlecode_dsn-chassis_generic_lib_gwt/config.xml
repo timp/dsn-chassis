@@ -52,25 +52,15 @@
     </hudson.maven.reporters.MavenMailer>
   </reporters>
   <publishers>
-    <hudson.plugins.ircbot.IrcPublisher>
-      <targets class="linked-list"/>
-      <strategy class="hudson.plugins.im.NotificationStrategy">ALL</strategy>
-      <notifyOnBuildStart>false</notifyOnBuildStart>
-      <notifySuspects>false</notifySuspects>
-      <notifyCulprits>false</notifyCulprits>
-      <notifyFixers>false</notifyFixers>
-      <notifyUpstreamCommitters>false</notifyUpstreamCommitters>
-      <channels/>
-    </hudson.plugins.ircbot.IrcPublisher>
-    <hudson.plugins.twitter.TwitterPublisher/>
     <hudson.tasks.BuildTrigger>
-      <childProjects>googlecode_dsn-chassis_generic_lib_gwt-test, googlecode_dsn-chassis_generic_client_gwt, googlecode_dsn-chassis_htmlunit, googlecode_dsn-chassis_wwarn_ui</childProjects>
+      <childProjects>googlecode_dsn-chassis_generic_lib_gwt-test, googlecode_dsn-chassis_generic_client_gwt, googlecode_dsn-chassis_wwarn_ui</childProjects>
       <threshold>
         <name>SUCCESS</name>
         <ordinal>0</ordinal>
         <color>BLUE</color>
       </threshold>
     </hudson.tasks.BuildTrigger>
+    <hudson.plugins.twitter.TwitterPublisher/>
   </publishers>
   <buildWrappers/>
 </maven2-moduleset>
