@@ -2,12 +2,11 @@ package org.cggh.chassis.wwarn.ui.curator.client;
 
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
-import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.Status;
-import com.google.gwt.xml.client.Element;
-
-import org.cggh.chassis.generic.widget.client.ChassisWidget;
 import org.cggh.chassis.generic.widget.client.ObservableProperty;
+
+import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
+import org.cggh.chassis.generic.widget.client.ChassisWidget;
 import org.cggh.chassis.generic.widget.client.WidgetEvent;
 import org.cggh.chassis.generic.widget.client.WidgetEventHandler;
 
@@ -19,9 +18,9 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 
+import com.google.gwt.xml.client.Element;
 
 import org.cggh.chassis.generic.widget.client.WidgetEventChannel;
-
 
 /**
  * BE SURE TO EDIT THE TEMPLATE NOT THE RENDERED RESULT
@@ -71,30 +70,17 @@ public class StudyRevisionActionsWidget
 	protected void bindUI() {
 		super.bindUI();
 		
-}
-
+	}
 
 
 	public final ObservableProperty<Status> status = new ObservableProperty<Status>();
 	public final ObservableProperty<String> message = new ObservableProperty<String>();
-
 	public final WidgetEventChannel studyRevisionActionsListStudiesNavigationEventChannel = new WidgetEventChannel(this);
-
-
 	public final WidgetEventChannel studyRevisionActionsEditStudyQuestionnaireNavigationEventChannel = new WidgetEventChannel(this);
-
-
 	public final WidgetEventChannel studyRevisionActionsNextRevisionNavigationEventChannel = new WidgetEventChannel(this);
-
-
 	public final WidgetEventChannel studyRevisionActionsViewStudyQuestionnaireNavigationEventChannel = new WidgetEventChannel(this);
-
-
 	public final WidgetEventChannel studyRevisionActionsPreviousRevisionNavigationEventChannel = new WidgetEventChannel(this);
-
-
 	public final WidgetEventChannel studyRevisionActionsListStudyRevisionsNavigationEventChannel = new WidgetEventChannel(this);
-
 
 
 	
@@ -128,24 +114,26 @@ public class StudyRevisionActionsWidget
 			pendingPanel.setVisible(false);	
 		}			
 		else if (status instanceof AsyncWidgetModel.ErrorStatus) {
-			error("Error status given on asynchronous call.");
+			message.set("Error status given on asynchronous call.");
 		}			
 		else {
-			error("Unhandled status:" + status);
+			message.set("Unhandled status:" + status);
 		}
 		
 		log.leave();
 	}
 	
+	protected void syncUIWithMessage(String message) {
+		log.enter("syncUIWithMessage");
 
-	public void error(String err) {
-		log.enter("error");
-		log.debug("Error:" + err);
-		pendingPanel.setVisible(false);	
-		contentPanel.setVisible(false);
-		errorMessage.clear();
-		errorMessage.add(new HTML(err));
-		errorPanel.setVisible(true);
+		if (message != null) {
+			pendingPanel.setVisible(false);	
+			contentPanel.setVisible(false);
+			errorMessage.clear();
+			errorMessage.add(new HTML(message));
+			errorPanel.setVisible(true);
+		}
+
 		log.leave();
 	}
 	

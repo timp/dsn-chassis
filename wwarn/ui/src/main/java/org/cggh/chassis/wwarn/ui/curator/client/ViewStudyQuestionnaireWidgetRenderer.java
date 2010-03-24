@@ -6,12 +6,14 @@ import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.miniatom.client.AtomHelper;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
-import org.cggh.chassis.generic.widget.client.ChassisWidgetRenderer;
-import org.cggh.chassis.generic.widget.client.PropertyChangeEvent;
-import org.cggh.chassis.generic.widget.client.PropertyChangeHandler;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.Status;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.StatusChangeEvent;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.StatusChangeHandler;
+import org.cggh.chassis.generic.widget.client.ChassisWidgetRenderer;
+import org.cggh.chassis.generic.widget.client.PropertyChangeEvent;
+import org.cggh.chassis.generic.widget.client.PropertyChangeHandler;
+import org.cggh.chassis.generic.widget.client.WidgetEvent;
+import org.cggh.chassis.generic.widget.client.WidgetEventHandler;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ChangeEvent;
@@ -61,35 +63,101 @@ public class ViewStudyQuestionnaireWidgetRenderer extends
 	@UiField HTMLPanel errorPanel;
 	@UiField FlowPanel errorMessage;
 
-    @UiField StudySummaryWidget studySummaryWidgetUiField;
+	@UiField StudySummaryWidget studySummaryWidgetUiField;
 
-
-    @UiField ViewQuestionnaireWidget viewQuestionnaireWidgetUiField;
-
+	@UiField ViewQuestionnaireWidget viewQuestionnaireWidgetUiField;
 
 
 
 
 	private ViewStudyQuestionnaireWidget owner;
 	
-    public ViewStudyQuestionnaireWidgetRenderer(ViewStudyQuestionnaireWidget owner) {
+	public ViewStudyQuestionnaireWidgetRenderer(ViewStudyQuestionnaireWidget owner) {
 		this.owner = owner;
         this.studySummaryWidgetUiField = owner.studySummaryWidget;
 
-
         this.viewQuestionnaireWidgetUiField = owner.viewQuestionnaireWidget;
-
 	}
-		private ViewStudyQuestionnaireWidgetController controller;
+
+	private ViewStudyQuestionnaireWidgetController controller;
 
 	public void setController(ViewStudyQuestionnaireWidgetController controller) {
 		this.controller = controller;
 	}
 
+
+
 	@Override
 	protected void registerHandlersForModelChanges() {
 		
+		this.modelChangeHandlerRegistrations.add(model.status.addChangeHandler(new PropertyChangeHandler<Status>() {
+			public void onChange(PropertyChangeEvent<Status> e) {
+				log.enter("onChange<Status>");		
+				syncUIWithStatus(e.getAfter());
+				log.leave();
+			}
+		}));
+
+		this.modelChangeHandlerRegistrations.add(model.message.addChangeHandler(new PropertyChangeHandler<String>() {
+			public void onChange(PropertyChangeEvent<String> e) {
+				log.enter("onChange<String>");		
+				syncUIWithMessage(e.getAfter());
+				log.leave();
+			}
+		}));
+
+
 	}
+	
+	
+	@Override
+	protected void registerHandlersForChildWidgetEvents() {
+		log.enter("registerHandlersForChildWidgetEvents");
+				this.childWidgetEventHandlerRegistrations.add(
+				studySummaryWidgetUiField.studyActionsViewStudyNavigationEventChannel.addHandler(new WidgetEventHandler() {
+			public void onEvent(WidgetEvent e) {
+				log.enter("onEvent(studySummaryWidgetUiField.studyActionsViewStudyNavigation)");
+				owner.studyActionsViewStudyNavigationEventChannel.fireEvent(e);
+				log.leave();
+			}
+		}));
+ 		this.childWidgetEventHandlerRegistrations.add(
+				studySummaryWidgetUiField.studyActionsEditStudyQuestionnaireNavigationEventChannel.addHandler(new WidgetEventHandler() {
+			public void onEvent(WidgetEvent e) {
+				log.enter("onEvent(studySummaryWidgetUiField.studyActionsEditStudyQuestionnaireNavigation)");
+				owner.studyActionsEditStudyQuestionnaireNavigationEventChannel.fireEvent(e);
+				log.leave();
+			}
+		}));
+ 		this.childWidgetEventHandlerRegistrations.add(
+				studySummaryWidgetUiField.studyActionsListStudyRevisionsNavigationEventChannel.addHandler(new WidgetEventHandler() {
+			public void onEvent(WidgetEvent e) {
+				log.enter("onEvent(studySummaryWidgetUiField.studyActionsListStudyRevisionsNavigation)");
+				owner.studyActionsListStudyRevisionsNavigationEventChannel.fireEvent(e);
+				log.leave();
+			}
+		}));
+ 		this.childWidgetEventHandlerRegistrations.add(
+				studySummaryWidgetUiField.studyActionsViewStudyQuestionnaireNavigationEventChannel.addHandler(new WidgetEventHandler() {
+			public void onEvent(WidgetEvent e) {
+				log.enter("onEvent(studySummaryWidgetUiField.studyActionsViewStudyQuestionnaireNavigation)");
+				owner.studyActionsViewStudyQuestionnaireNavigationEventChannel.fireEvent(e);
+				log.leave();
+			}
+		}));
+ 		this.childWidgetEventHandlerRegistrations.add(
+				studySummaryWidgetUiField.studyActionsListStudiesNavigationEventChannel.addHandler(new WidgetEventHandler() {
+			public void onEvent(WidgetEvent e) {
+				log.enter("onEvent(studySummaryWidgetUiField.studyActionsListStudiesNavigation)");
+				owner.studyActionsListStudiesNavigationEventChannel.fireEvent(e);
+				log.leave();
+			}
+		}));
+ 		
+		log.leave();
+	}
+
+
 
 	@Override
 	protected void renderUI() {
@@ -102,56 +170,53 @@ public class ViewStudyQuestionnaireWidgetRenderer extends
 	
 
 	@Override
-	protected void syncUI() {
-		syncUIWithStatus(model.status.get());
+	protected void bindUI(ViewStudyQuestionnaireWidgetModel model) {
+		super.bindUI(model);
+		errorPanel.setVisible(false);	
 	}
 
-	protected void syncUIWithStatus(Status status) {
 
+	protected void syncUIWithStatus(Status status) {
 		log.enter("syncUIWithStatus");		
 		
 		errorPanel.setVisible(false);	
 		if (status == null) {
-		// null before being set
-		log.debug("Called with null status");
+			// null before being set
+			log.debug("Called with null status");
 		}
 		else if (status instanceof AsyncWidgetModel.InitialStatus) {
-
 			pendingPanel.setVisible(true);	
 		}
 		
 		//TODO Widget specific statii
 		
 		else if (status instanceof AsyncWidgetModel.ReadyStatus) {
-
 			pendingPanel.setVisible(false);	
 		}			
-		
 		else if (status instanceof AsyncWidgetModel.ErrorStatus) {
-
-			
-			error("Error status given on asynchronous call.");
+			model.message.set("Error status given on asynchronous call.");
 		}			
-		
 		else {
-
-			error("Unhandled status:" + status);
+			model.message.set("Unhandled status:" + status);
 		}
 
 		log.leave();
 	}
-	
-	public void error(String err) {
-		log.enter("error");
-		log.debug("Error:" + err);
-		pendingPanel.setVisible(false);	
-		contentPanel.setVisible(false);
-		errorMessage.clear();
-		errorMessage.add(new HTML(err));
-		errorPanel.setVisible(true);
+
+	protected void syncUIWithMessage(String message) {
+		log.enter("syncUIWithMessage");
+
+		if (message != null) {
+			pendingPanel.setVisible(false);	
+			contentPanel.setVisible(false);
+			errorMessage.clear();
+			errorMessage.add(new HTML(message));
+			errorPanel.setVisible(true);
+		}
+
 		log.leave();
 	}
-	
-	
+
+
 }
 

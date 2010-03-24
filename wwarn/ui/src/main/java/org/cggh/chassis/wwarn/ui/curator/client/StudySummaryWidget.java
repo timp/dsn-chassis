@@ -1,5 +1,4 @@
 package org.cggh.chassis.wwarn.ui.curator.client;
-
 import static org.cggh.chassis.generic.widget.client.HtmlElements.strongWidget;
 
 import java.util.ArrayList;
@@ -35,6 +34,7 @@ import com.google.gwt.xml.client.Element;
 
 
 import org.cggh.chassis.generic.widget.client.WidgetEventChannel;
+
 
 
 /**
@@ -78,10 +78,7 @@ public class StudySummaryWidget
 	public final WidgetEventChannel studyActionsListStudyRevisionsNavigationEventChannel = new WidgetEventChannel(this);
 	public final WidgetEventChannel studyActionsViewStudyQuestionnaireNavigationEventChannel = new WidgetEventChannel(this);
 	public final WidgetEventChannel studyActionsListStudiesNavigationEventChannel = new WidgetEventChannel(this);
-	
 
-
-	
 	@Override
 	protected void renderUI() {
 
@@ -102,48 +99,45 @@ public class StudySummaryWidget
 		this.childWidgetEventHandlerRegistrations.add(
 				studyActionsWidgetUiField.studyActionsViewStudyNavigationEventChannel.addHandler(new WidgetEventHandler() {
 			public void onEvent(WidgetEvent e) {
-				log.enter("onEvent(studyActionsViewStudy)");
+				log.enter("onEvent(StudyActionsViewStudyNavigation)");
 				studyActionsViewStudyNavigationEventChannel.fireEvent(e);
 				log.leave();
 			}
 		}));
-		this.childWidgetEventHandlerRegistrations.add(
+ 		this.childWidgetEventHandlerRegistrations.add(
 				studyActionsWidgetUiField.studyActionsEditStudyQuestionnaireNavigationEventChannel.addHandler(new WidgetEventHandler() {
 			public void onEvent(WidgetEvent e) {
-				log.enter("onEvent(studyActionsEditStudy)");
+				log.enter("onEvent(StudyActionsEditStudyQuestionnaireNavigation)");
 				studyActionsEditStudyQuestionnaireNavigationEventChannel.fireEvent(e);
 				log.leave();
 			}
 		}));
-		this.childWidgetEventHandlerRegistrations.add(
+ 		this.childWidgetEventHandlerRegistrations.add(
 				studyActionsWidgetUiField.studyActionsListStudyRevisionsNavigationEventChannel.addHandler(new WidgetEventHandler() {
 			public void onEvent(WidgetEvent e) {
-				log.enter("onEvent(studyActionsListStudyRevisions)");
+				log.enter("onEvent(StudyActionsListStudyRevisionsNavigation)");
 				studyActionsListStudyRevisionsNavigationEventChannel.fireEvent(e);
 				log.leave();
 			}
 		}));
-		this.childWidgetEventHandlerRegistrations.add(
+ 		this.childWidgetEventHandlerRegistrations.add(
 				studyActionsWidgetUiField.studyActionsViewStudyQuestionnaireNavigationEventChannel.addHandler(new WidgetEventHandler() {
 			public void onEvent(WidgetEvent e) {
-				log.enter("onEvent(studyActionsViewStudyQuestionnaire)");
+				log.enter("onEvent(StudyActionsViewStudyQuestionnaireNavigation)");
 				studyActionsViewStudyQuestionnaireNavigationEventChannel.fireEvent(e);
 				log.leave();
 			}
 		}));
-		this.childWidgetEventHandlerRegistrations.add(
+ 		this.childWidgetEventHandlerRegistrations.add(
 				studyActionsWidgetUiField.studyActionsListStudiesNavigationEventChannel.addHandler(new WidgetEventHandler() {
 			public void onEvent(WidgetEvent e) {
-				log.enter("onEvent(studyActionsListStudies)");
+				log.enter("onEvent(StudyActionsListStudiesNavigation)");
 				studyActionsListStudiesNavigationEventChannel.fireEvent(e);
 				log.leave();
 			}
 		}));
-		
-}
-
-
-
+ 		
+	}
 
 	@Override
 	protected void syncUI() {
@@ -151,7 +145,8 @@ public class StudySummaryWidget
         syncUIWithStudyEntry(studyEntry.get());
         registerHandlersForModelChanges();
     }
-    
+
+
 	protected void registerHandlersForModelChanges() {
 		log.enter("registerHandlersForModelChanges");
 		
@@ -178,10 +173,27 @@ public class StudySummaryWidget
 		log.leave();
 	}
 
-	private void syncUIWithStudyEntry(Element study){
+
+
+	
+	@Override
+	public void refresh() {
+		log.enter("refresh");
+		
+		// TODO refresh this
+
+		studyActionsWidgetUiField.refresh();
+
+		log.leave();	
+	}
+	
+	
+	
+	
+	private void syncUIWithStudyEntry(Element studyEntry){
 		log.enter("syncUIWithStudyEntry");
 		
-		if (study == null) 
+		if (studyEntry == null) 
 			log.debug("Study null");
 		else {
 			
@@ -198,11 +210,11 @@ public class StudySummaryWidget
 			rows.add(headerRow);
 			
 			Widget[] row = {
-						new HTML(ChassisHelper.getTitle(study)),
-						new HTML(RenderUtils.join(ChassisHelper.getModules(study), ", ")),
-						new HTML(RenderUtils.join(ChassisHelper.getAuthorEmails(study), ", ")),
-						new HTML(ChassisHelper.getPublishedAsDate(study)),
-						new HTML(ChassisHelper.getUpdatedAsDate(study)),
+						new HTML(ChassisHelper.getTitle(studyEntry)),
+						new HTML(RenderUtils.join(ChassisHelper.getModules(studyEntry), ", ")),
+						new HTML(RenderUtils.join(ChassisHelper.getAuthorEmails(studyEntry), ", ")),
+						new HTML(ChassisHelper.getPublishedAsDate(studyEntry)),
+						new HTML(ChassisHelper.getUpdatedAsDate(studyEntry)),
 			};
 			rows.add(row);
 			
@@ -214,20 +226,8 @@ public class StudySummaryWidget
 			pendingPanel.setVisible(false);	
 		}
 	}
-	@Override
-	public void refresh() {
-		log.enter("refresh");
-		
-		// TODO refresh this
 
-		studyActionsWidgetUiField.refresh();
-
-		log.leave();	
-	}
-	
-	
-	
-    protected void syncUIWithStatus(Status status) {
+	protected void syncUIWithStatus(Status status) {
 		log.enter("syncUIWithStatus");		
 		log.debug("status:" + status);
 		
@@ -247,26 +247,28 @@ public class StudySummaryWidget
 			pendingPanel.setVisible(false);	
 		}			
 		else if (status instanceof AsyncWidgetModel.ErrorStatus) {
-			error("Error status given on asynchronous call.");
+			message.set("Error status given on asynchronous call.");
 		}			
 		else {
-			error("Unhandled status:" + status);
+			message.set("Unhandled status:" + status);
 		}
 		
 		log.leave();
 	}
-	
 
-	public void error(String err) {
-		log.enter("error");
-		log.debug("Error:" + err);
-		pendingPanel.setVisible(false);	
-		contentPanel.setVisible(false);
-		errorMessage.clear();
-		errorMessage.add(new HTML(err));
-		errorPanel.setVisible(true);
+	protected void syncUIWithMessage(String message) {
+		log.enter("syncUIWithMessage");
+
+		if (message != null) {
+			pendingPanel.setVisible(false);	
+			contentPanel.setVisible(false);
+			errorMessage.clear();
+			errorMessage.add(new HTML(message));
+			errorPanel.setVisible(true);
+		}
+
 		log.leave();
 	}
-	
+		
 
 }

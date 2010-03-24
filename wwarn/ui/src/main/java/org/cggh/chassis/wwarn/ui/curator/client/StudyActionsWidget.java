@@ -77,15 +77,7 @@ public class StudyActionsWidget
 	public final WidgetEventChannel studyActionsListStudiesNavigationEventChannel = new WidgetEventChannel(this);
 
 
-	@Override
-	public void refresh() {
-		log.enter("refresh");
-		
-		// TODO refresh this
-		log.leave();	
-	}
-	
-	
+
 	@Override
 	protected void renderUI() {
 
@@ -104,7 +96,7 @@ public class StudyActionsWidget
 	protected void bindUI() {
 		super.bindUI();
 		
-}
+	}
 
 
 	@Override
@@ -140,6 +132,15 @@ public class StudyActionsWidget
 		log.leave();
 	}
 
+	
+	@Override
+	public void refresh() {
+		log.enter("refresh");
+		
+		// TODO refresh this
+		log.leave();	
+	}
+	
 	private void syncUIWithStudyEntry(final Element study){
 		log.enter("syncUIWithStudyEntry");
 		
@@ -245,33 +246,32 @@ public class StudyActionsWidget
 		else if (status == ListStudiesWidgetModel.STATUS_RETRIEVE_STUDY_FEED_PENDING) {
 			// still pending
 		}			
-		else if (status == ListStudiesWidgetModel.STATUS_READY_FOR_INTERACTION) {
-			pendingPanel.setVisible(false);	
-		}			
 		else if (status instanceof AsyncWidgetModel.ReadyStatus) {
 			pendingPanel.setVisible(false);	
 		}			
 		else if (status instanceof AsyncWidgetModel.ErrorStatus) {
-			error("Error status given on asynchronous call.");
+			message.set("Error status given on asynchronous call.");
 		}			
 		else {
-			error("Unhandled status:" + status);
+			message.set("Unhandled status:" + status);
 		}
 		
 		log.leave();
 	}
 	
+	protected void syncUIWithMessage(String message) {
+		log.enter("syncUIWithMessage");
 
-	public void error(String err) {
-		log.enter("error");
-		log.debug("Error:" + err);
-		pendingPanel.setVisible(false);	
-		contentPanel.setVisible(false);
-		errorMessage.clear();
-		errorMessage.add(new HTML(err));
-		errorPanel.setVisible(true);
+		if (message != null) {
+			pendingPanel.setVisible(false);	
+			contentPanel.setVisible(false);
+			errorMessage.clear();
+			errorMessage.add(new HTML(message));
+			errorPanel.setVisible(true);
+		}
+
 		log.leave();
 	}
-	
+		
 
 }

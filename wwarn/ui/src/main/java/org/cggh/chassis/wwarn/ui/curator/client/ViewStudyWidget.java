@@ -21,22 +21,25 @@ import com.google.gwt.xml.client.Element;
 
 import org.cggh.chassis.generic.widget.client.WidgetEventChannel;
 
-
 public class ViewStudyWidget 
 	 	extends DelegatingWidget<ViewStudyWidgetModel, ViewStudyWidgetRenderer> {
 
 	private static final Log log = LogFactory.getLog(ViewStudyWidget.class);
 	
+	private ViewStudyWidgetController controller;
 
+	public final ObservableProperty<Element> studyEntry = new ObservableProperty<Element>();
+
+
+	public final ObservableProperty<String> studyUrl = new ObservableProperty<String>();
+
+	public final ObservableProperty<Status> status = new ObservableProperty<Status>();
+	public final ObservableProperty<String> message = new ObservableProperty<String>();
 	public final WidgetEventChannel studyActionsViewStudyNavigationEventChannel = new WidgetEventChannel(this);
 	public final WidgetEventChannel studyActionsEditStudyQuestionnaireNavigationEventChannel = new WidgetEventChannel(this);
 	public final WidgetEventChannel studyActionsListStudyRevisionsNavigationEventChannel = new WidgetEventChannel(this);
 	public final WidgetEventChannel studyActionsViewStudyQuestionnaireNavigationEventChannel = new WidgetEventChannel(this);
 	public final WidgetEventChannel studyActionsListStudiesNavigationEventChannel = new WidgetEventChannel(this);
-	
-	private ViewStudyWidgetController controller;
-
-
 
 
 
@@ -55,6 +58,7 @@ public class ViewStudyWidget
 	// public so as to be available to renderer 
 	public ListCurationsWidget listCurationsWidget;
 
+
 	@Override
 	protected ViewStudyWidgetModel createModel() {
 		return new ViewStudyWidgetModel();
@@ -71,8 +75,6 @@ public class ViewStudyWidget
 	// Using init() rather than constructor because reset() uses init().
 	public void init() {
 		
-		log.enter("init");
-		
 		super.init();
 		
 
@@ -80,7 +82,6 @@ public class ViewStudyWidget
 		this.renderer.setController(controller);
 		this.memory = new Memory();
 
-		log.leave();
 	}
 	
 	@Override
