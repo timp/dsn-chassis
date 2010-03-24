@@ -7,7 +7,7 @@ module namespace config = "http://www.cggh.org/2010/atombeat/xquery/config";
  : The base URL for the Atom service. This URL will be prepended to all edit
  : and self link href values.
  :)
-declare variable $config:service-url as xs:string := "http://localhost:8081/atomserver/atomserver/edit" ;
+declare variable $config:service-url as xs:string := "http://localhost:8081/atomserver/atomserver/content" ;
 
 
 (:

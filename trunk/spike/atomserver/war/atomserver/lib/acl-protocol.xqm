@@ -238,11 +238,12 @@ declare function acl-protocol:do-put-global-acl() as item()*
         
         else
         
-            let $acl := request:get-data()/atom:content[@type="application/vnd.atombeat+xml"]/acl
+            let $acl := acl-protocol:get-acl-from-request-data()
+
             return 
                 
                 if ( empty( $acl ) )
-                then ap:do-bad-request( "/" , "Request entity must be Atom entry document with child <atom:content type='application/vnd.atombeat+xml'> with child <acl>." )
+                then ap:do-bad-request( "/" , "Request entity must be Atom entry document with child <atom:content type='application/vnd.atombeat+xml'> with child <acl> with child <rules>." )
                 
                 else
 
@@ -288,11 +289,12 @@ declare function acl-protocol:do-put-collection-acl(
         
         else
         
-            let $acl := request:get-data()/atom:entry/atom:content[@type="application/vnd.atombeat+xml"]/acl
+            let $acl := acl-protocol:get-acl-from-request-data()
+
             return 
                 
                 if ( empty( $acl ) )
-                then ap:do-bad-request( $request-path-info , "Request entity must be Atom entry document with child <atom:content type='application/vnd.atombeat+xml'> with child <acl>." )
+                then ap:do-bad-request( $request-path-info , "Request entity must be Atom entry document with child <atom:content type='application/vnd.atombeat+xml'> with child <acl> with child <rules>." )
                 
                 else
 
@@ -337,11 +339,12 @@ declare function acl-protocol:do-put-member-acl(
         
         else
         
-            let $acl := request:get-data()/atom:entry/atom:content[@type="application/vnd.atombeat+xml"]/acl
+            let $acl := acl-protocol:get-acl-from-request-data()
+
             return 
-                
+                 
                 if ( empty( $acl ) )
-                then ap:do-bad-request( $request-path-info , "Request entity must be Atom entry document with child <atom:content type='application/vnd.atombeat+xml'> with child <acl>." )
+                then ap:do-bad-request( $request-path-info , "Request entity must be Atom entry document with child <atom:content type='application/vnd.atombeat+xml'> with child <acl> with child <rules>." )
                 
                 else
 
@@ -363,4 +366,12 @@ declare function acl-protocol:do-put-member-acl(
 
 
 
+
+declare function acl-protocol:get-acl-from-request-data(
+) as element(acl)?
+{
+    let $request-data := request:get-data()
+    let $acl := $request-data/atom:content[@type="application/vnd.atombeat+xml"]/acl[exists(rules)]
+    return $acl
+};
 

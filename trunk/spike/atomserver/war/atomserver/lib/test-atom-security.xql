@@ -978,6 +978,15 @@ declare function local:test-update-global-acl() as item()*
     let $output := ( $output , test:assert-equals( 2 , count($acl/rules/*) , "expect 2 rules" ) )
     
     let $global-acl :=
+        <acl/>
+        
+    let $global-acl-doc-db-path := atomsec:store-global-acl($global-acl)
+    
+    let $acl := atomsec:retrieve-global-acl()
+    
+    let $output := ( $output , test:assert-equals( 0 , count($acl/rules/*) , "expect 0 rules" ) )
+    
+    let $global-acl :=
         <acl>
             <rules>
                 <allow>
