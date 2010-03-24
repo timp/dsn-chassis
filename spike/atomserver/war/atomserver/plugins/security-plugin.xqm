@@ -100,6 +100,10 @@ declare function sp:after(
 		
 		then sp:after-retrieve-member( $request-path-info , $response-data , $response-content-type )
 
+		else if ( $operation = $CONSTANT:OP-UPDATE-MEMBER )
+		
+		then sp:after-update-member( $request-path-info , $response-data , $response-content-type )
+
 		else 
 
 			(: pass response data and content type through, we don't want to modify response :)
@@ -129,7 +133,22 @@ declare function sp:after-create-member(
 	let $resource-acl-installed := sp:install-resource-acl( $request-path-info , $entry-doc-db-path )
 	let $log := util:log( "debug" , concat( "$resource-acl-installed: " , $resource-acl-installed ) )
 	
-	(: TODO add edit-acl link :)
+    let $response-data := sp:append-edit-acl-links( $request-path-info , $response-data )
+
+	return ( $response-data , $response-content-type )
+
+};
+
+
+
+declare function sp:after-update-member(
+	$request-path-info as xs:string ,
+	$response-data as item()* ,
+	$response-content-type as xs:string?
+) as item()*
+{
+
+    let $response-data := sp:append-edit-acl-links( $request-path-info , $response-data )
 
 	return ( $response-data , $response-content-type )
 
@@ -171,8 +190,11 @@ declare function sp:after-create-media(
 	let $resource-acl-installed := sp:install-resource-acl( $request-path-info , $media-resource-db-path )
 	let $log := util:log( "debug" , concat( "$resource-acl-installed: " , $resource-acl-installed ) )
 	
-	(: TODO add edit-acl link :)
-	(: TODO add edit-media-acl link :)
+	(: need to workaround html response for create media with multipart request :)
+    let $response-data := 
+        if ( starts-with( $response-content-type , $CONSTANT:MEDIA-TYPE-ATOM ) )
+        then sp:append-edit-acl-links( $entry-path-info , $response-data )
+        else $response-data
 
 	return ( $response-data , $response-content-type )
 
@@ -191,7 +213,8 @@ declare function sp:after-create-collection(
 	(: if security is enabled, install default collection ACL :)
 	let $collection-acl-installed := sp:install-collection-acl( $request-path-info )
 	
-	(: TODO add edit-acl link :)
+	(: no filtering necessary because no members yet, but adds edit-acl link :)
+	let $response-data := sp:filter-feed-by-acls( $request-path-info , $response-data )
 
 	return ( $response-data , $response-content-type )
 
@@ -225,27 +248,57 @@ declare function sp:after-retrieve-member(
 
 	let $log := util:log( "debug" ,"== sp:after-retrieve-member ==" )
 
+    let $response-data := sp:append-edit-acl-links( $request-path-info , $response-data )
+
+	return ( $response-data , $response-content-type )
+
+};
+
+
+
+
+declare function sp:append-edit-acl-links(
+    $request-path-info as xs:string ,
+    $response-data as element(atom:entry)
+) as element(atom:entry)
+{
+
     let $can-update-member-acl := not( sp:is-operation-forbidden( $CONSTANT:OP-UPDATE-ACL , $request-path-info , () ) )
+    
     let $edit-acl-link :=     
         if ( $can-update-member-acl )
         then <atom:link rel="edit-acl" href="{concat( $config:acl-service-url , $request-path-info )}" type="application/atom+xml"/>
         else ()
         
-    let $log := util:log( "debug" , concat( "$edit-acl-link: " , $edit-acl-link ) )    
+    let $log := util:log( "debug" , concat( "$edit-acl-link: " , $edit-acl-link ) )
+    
+    let $edit-media-acl-link :=
+        if ( atomdb:media-link-available( $request-path-info ) )
+        then
+            let $media-path-info := substring-after( $response-data/atom:link[@rel="edit-media"]/@href , $config:service-url )
+            let $can-update-media-acl := not( sp:is-operation-forbidden( $CONSTANT:OP-UPDATE-ACL , $media-path-info , () ) )
+            return 
+                if ( $can-update-media-acl )
+                then 
+                    let $edit-media-acl-href := concat( $config:acl-service-url , $media-path-info )
+                    return <atom:link rel="edit-media-acl" href="{$edit-media-acl-href}" type="application/atom+xml"/>
+                else ()                
+        else ()
         
     let $response-data := 
-        if ( empty( $edit-acl-link ) ) then $response-data
+        if ( empty( $edit-acl-link ) and empty( $edit-media-acl-link ) ) then $response-data
         else
             <atom:entry>
             {
                 $response-data/attribute::* ,
                 $response-data/child::* ,
-                $edit-acl-link
+                $edit-acl-link ,
+                $edit-media-acl-link
             }
             </atom:entry>
-
-	return ( $response-data , $response-content-type )
-
+            
+    return $response-data
+    
 };
 
 
@@ -306,7 +359,7 @@ declare function sp:filter-feed-by-acls(
                     let $log := util:log( "debug" , concat( "checking permission to retrieve member for entry-path-info: " , $entry-path-info ) )
                     let $forbidden := sp:is-operation-forbidden( $CONSTANT:OP-RETRIEVE-MEMBER , $entry-path-info , () )
                     return 
-                        if ( not( $forbidden ) ) then $entry else ()
+                        if ( not( $forbidden ) ) then sp:append-edit-acl-links( $entry-path-info , $entry ) else ()
                 }
             </atom:feed>
         let $log := util:log( "debug" , $filtered-feed )
