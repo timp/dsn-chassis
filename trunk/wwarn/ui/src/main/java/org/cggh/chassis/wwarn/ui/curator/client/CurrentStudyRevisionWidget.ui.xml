@@ -22,7 +22,9 @@
 		.number {
 			font-weight: bold;
 		}
-		
+		.widget {
+			border: 1px solid teal;
+		}
 	</ui:style>
 
 
@@ -43,7 +45,9 @@
 
 		<g:HTMLPanel ui:field="contentPanel">
 
-            <h3><ui:msg>CurrentStudyRevision</ui:msg></h3>
+            <div id="CurrentStudyRevision" title="CurrentStudyRevision" class="widget">
+            	<g:FlowPanel ui:field="currentStudyRevisionPanel"></g:FlowPanel>
+			</div>
 		</g:HTMLPanel>
 
 	</g:HTMLPanel>

@@ -8,6 +8,11 @@
 	ui:generateLocales="default"
 	xmlns:local="urn:import:org.cggh.chassis.wwarn.ui.curator.client"
 	>
+<!-- 
+    BE SURE TO EDIT THE TEMPLATE NOT THE RENDERED RESULT
+		
+    DELETE_TO_MANUALLY_EDIT 
+-->
 	<ui:style>
 	
 		.error {
@@ -17,20 +22,36 @@
 		.number {
 			font-weight: bold;
 		}
-		
+		.widget {
+			border: 1px solid teal;
+		}
 	</ui:style>
 
 
-  <g:HTMLPanel ui:field="mainPanel" >
+	<g:HTMLPanel ui:field="mainPanel" >
 
-	<g:HTMLPanel ui:field="contentPanel">
-      <h1><ui:msg>Curator Home</ui:msg></h1>
-      
-	  <local:ListStudiesWidget ui:field="listStudiesWidgetUiField"/>
+    <g:HTMLPanel ui:field="errorPanel" styleName="{style.error}" >
+			<g:Label>
+        		<ui:msg>There has been an unexpected error: </ui:msg>
+			</g:Label>
+			<g:FlowPanel ui:field="errorMessage"  title="CuratorHome"></g:FlowPanel>
+    </g:HTMLPanel>
+
+		<g:HTMLPanel ui:field="pendingPanel">
+			<p title="CuratorHome">
+				<ui:msg>pending... </ui:msg>
+			</p>
+		</g:HTMLPanel>
+
+		<g:HTMLPanel ui:field="contentPanel">
+
+            <div id="CuratorHome" title="CuratorHome" class="widget">
+            	<g:FlowPanel ui:field="curatorHomePanel"></g:FlowPanel>
+				<local:ListStudiesWidget ui:field="listStudiesWidgetUiField"/>
+			</div>
+		</g:HTMLPanel>
 
 	</g:HTMLPanel>
-
-  </g:HTMLPanel>
 
 </ui:UiBinder>
 
