@@ -3,12 +3,12 @@
 package org.cggh.chassis.wwarn.ui.curator.client;
 
 import org.cggh.chassis.generic.widget.client.ObservableProperty;
+import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.AsyncRequestPendingStatus;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.ReadyStatus;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.Status;
 
 import com.google.gwt.xml.client.Element;
-
 
 public class ViewStudyWidgetModel {
 
@@ -34,6 +34,7 @@ public class ViewStudyWidgetModel {
 	
 	
 	
+	public final ObservableProperty<String> studyUrl = new ObservableProperty<String>();
 	public final ObservableProperty<Element> studyEntry = new ObservableProperty<Element>();
 	
 	// Needed to re-establish from memory after browser refresh, for example. 
