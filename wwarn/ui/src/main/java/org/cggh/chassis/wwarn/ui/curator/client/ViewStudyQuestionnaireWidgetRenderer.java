@@ -74,9 +74,6 @@ public class ViewStudyQuestionnaireWidgetRenderer extends
 	
 	public ViewStudyQuestionnaireWidgetRenderer(ViewStudyQuestionnaireWidget owner) {
 		this.owner = owner;
-        this.studySummaryWidgetUiField = owner.studySummaryWidget;
-
-        this.viewQuestionnaireWidgetUiField = owner.viewQuestionnaireWidget;
 	}
 
 	private ViewStudyQuestionnaireWidgetController controller;
@@ -102,6 +99,24 @@ public class ViewStudyQuestionnaireWidgetRenderer extends
 			public void onChange(PropertyChangeEvent<String> e) {
 				log.enter("onChange<String>");		
 				syncUIWithMessage(e.getAfter());
+				log.leave();
+			}
+		}));
+
+	
+		this.modelChangeHandlerRegistrations.add(model.studyEntry.addChangeHandler(new PropertyChangeHandler<Element>() {
+			public void onChange(PropertyChangeEvent<Element> e) {
+				log.enter("onchange(studyEntry)");
+				syncUIWithStudyEntry(e.getAfter());
+				log.leave();
+			}
+		}));
+
+	
+		this.modelChangeHandlerRegistrations.add(model.studyUrl.addChangeHandler(new PropertyChangeHandler<String>() {
+			public void onChange(PropertyChangeEvent<String> e) {
+				log.enter("onchange(studyUrl)");
+				syncUIWithStudyUrl(e.getAfter());
 				log.leave();
 			}
 		}));
@@ -175,9 +190,14 @@ public class ViewStudyQuestionnaireWidgetRenderer extends
 		errorPanel.setVisible(false);	
 	}
 
+	@Override
+	protected void syncUI() {
+		syncUIWithStatus(model.status.get());
+	}
 
 	protected void syncUIWithStatus(Status status) {
 		log.enter("syncUIWithStatus");		
+		log.debug("status:");
 		
 		errorPanel.setVisible(false);	
 		if (status == null) {
@@ -214,6 +234,56 @@ public class ViewStudyQuestionnaireWidgetRenderer extends
 			errorPanel.setVisible(true);
 		}
 
+		log.leave();
+	}
+
+	
+	protected void syncUIWithStudyEntry(Element studyEntry) {
+		log.enter("syncUIWithStudyEntry");
+		// TODO needs to be a method in an extension
+		if (studyEntry != null) {
+
+			log.debug("got study...." + studyEntry);
+			
+			model.status.set(ViewStudyWidgetModel.STATUS_READY_FOR_INTERACTION);
+			studySummaryWidgetUiField.studyEntry.set(studyEntry);
+			studySummaryWidgetUiField.studyActionsWidgetUiField.studyEntry.set(studyEntry);
+			
+		} else {
+			model.message.set("study was null");
+		}
+		log.leave();
+	}
+
+	protected void syncStudyEntryElementWithStudyID(String studyID) {
+		
+		log.enter("syncStudyEntryElementWithStudyID");
+
+		errorPanel.setVisible(false);	
+		
+		
+		if (studyID != null) {
+
+			log.debug("getting Entry Element from ID....");
+			
+			//FIXME: This can't be right. It's just setting studyEntryElement to null.
+			
+			Element studyEntryElement = null;
+			
+			model.studyEntry.set(studyEntryElement);
+			
+		} else {
+
+			model.message.set("studyID was null");
+		}
+	
+		
+		log.leave();
+	}		
+	
+	protected void syncUIWithStudyUrl(String studyUrl) {
+		log.enter("syncUIWithStudyUrl");
+		// TODO needs to be a method in an extension
 		log.leave();
 	}
 
