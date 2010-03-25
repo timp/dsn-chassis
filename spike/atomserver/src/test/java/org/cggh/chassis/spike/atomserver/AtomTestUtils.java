@@ -6,6 +6,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -283,19 +285,34 @@ public class AtomTestUtils {
 	
 	public static String getLinkHref(Document doc, String rel) {
 		
+		String href = null;
+		
+		List<Element> links = getLinks(doc, rel);
+		if (links.size() > 0) {
+			href = links.get(0).getAttribute("href");
+		}
+		
+		return href;
+		
+	}
+	
+	
+	
+	public static List<Element> getLinks(Document doc, String rel) {
+		
 		NodeList links = doc.getElementsByTagNameNS("http://www.w3.org/2005/Atom", "link");
 		
-		String href = null;
+		List<Element> els = new ArrayList<Element>();
 		
 		for (int i=0; i<links.getLength(); i++) {
 			Element e = (Element) links.item(i);
 			String relValue = e.getAttribute("rel");
 			if (relValue.equals(rel)) {
-				href = e.getAttribute("href");
+				els.add(e);
 			}
 		}
 		
-		return href;
+		return els;
 		
 	}
 	

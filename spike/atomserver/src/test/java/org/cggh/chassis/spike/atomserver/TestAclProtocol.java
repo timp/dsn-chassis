@@ -4,8 +4,11 @@ package org.cggh.chassis.spike.atomserver;
 
 import static org.cggh.chassis.spike.atomserver.AtomTestUtils.*;
 
+import java.util.List;
+
 import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.methods.GetMethod;
+import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.PutMethod;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -600,6 +603,104 @@ public class TestAclProtocol extends TestCase {
 	
 	
 	
+	
+	public void testCannotOverrideAclLinksOnCreateCollection() {
+		
+		String collectionUri = SERVER_URI + Double.toString(Math.random());
+		PutMethod method = new PutMethod(collectionUri);
+		String content = 
+			"<atom:feed xmlns:atom=\"http://www.w3.org/2005/Atom\">" +
+				"<atom:title>Test Collection</atom:title>" +
+				"<atom:link rel=\"edit-acl\" href=\"http://foo.bar/spong\"/>" +
+			"</atom:feed>";
+		setAtomRequestEntity(method, content);
+		int result = executeMethod(method, "adam", "test");
+
+		// expect the status code is 201 CREATED
+		assertEquals(201, result);
+		
+		Document d = getResponseBodyAsDocument(method);
+		List<Element> links = getLinks(d, "edit-acl");
+		assertEquals(1, links.size());
+
+	}
+	
+	
+	public void testCannotOverrideAclLinksOnUpdateCollection() {
+		
+		// setup test
+		String collectionUri = createTestCollection(SERVER_URI, "adam", "test");
+		
+		// now try to update feed metadata via a PUT request
+		PutMethod method = new PutMethod(collectionUri);
+		String content = 
+			"<atom:feed xmlns:atom=\"http://www.w3.org/2005/Atom\">" +
+				"<atom:title>Test Collection</atom:title>" +
+				"<atom:link rel=\"edit-acl\" href=\"http://foo.bar/spong\"/>" +
+			"</atom:feed>";
+		setAtomRequestEntity(method, content);
+		int result = executeMethod(method, "adam", "test");
+		
+		// expect the status code is 200 OK - we just did an update, no creation
+		assertEquals(200, result);
+		
+		Document d = getResponseBodyAsDocument(method);
+		List<Element> links = getLinks(d, "edit-acl");
+		assertEquals(1, links.size());
+
+	}
+	
+	
+	public void testCannotOverrideAclLinksOnCreateMember() {
+
+		// setup test
+		String collectionUri = createTestCollection(SERVER_URI, "adam", "test");
+
+		// now create a new member by POSTing and atom entry document to the
+		// collection URI
+		PostMethod method = new PostMethod(collectionUri);
+		String content = 
+			"<atom:entry xmlns:atom=\"http://www.w3.org/2005/Atom\">" +
+				"<atom:title>Test Member</atom:title>" +
+				"<atom:summary>This is a summary.</atom:summary>" +
+				"<atom:link rel=\"edit-acl\" href=\"http://foo.bar/spong\"/>" +
+			"</atom:entry>";
+		setAtomRequestEntity(method, content);
+		int result = executeMethod(method, "adam", "test");
+		
+		// expect the status code is 201 Created
+		assertEquals(201, result);
+
+		Document d = getResponseBodyAsDocument(method);
+		List<Element> links = getLinks(d, "edit-acl");
+		assertEquals(1, links.size());
+	}
+	
+	
+	public void testCannotOverrideAclLinksOnUpdateMember() {
+		
+		// setup test
+		String collectionUri = createTestCollection(SERVER_URI, "adam", "test");
+		String location = createTestEntryAndReturnLocation(collectionUri, "adam", "test");
+
+		// now put an updated entry document using a PUT request
+		PutMethod method = new PutMethod(location);
+		String content = 
+			"<atom:entry xmlns:atom=\"http://www.w3.org/2005/Atom\">" +
+				"<atom:title>Test Member - Updated</atom:title>" +
+				"<atom:summary>This is a summary, updated.</atom:summary>" +
+				"<atom:link rel=\"edit-acl\" href=\"http://foo.bar/spong\"/>" +
+			"</atom:entry>";
+		setAtomRequestEntity(method, content);
+		int result = executeMethod(method, "adam", "test");
+
+		// expect the status code is 200 OK - we just did an update, no creation
+		assertEquals(200, result);
+
+		Document d = getResponseBodyAsDocument(method);
+		List<Element> links = getLinks(d, "edit-acl");
+		assertEquals(1, links.size());
+	}
 	
 	private static String verifyAtomResponse(HttpMethod m) {
 
