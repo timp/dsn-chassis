@@ -8,13 +8,23 @@
 	ui:generateLocales="default"
 	xmlns:local="urn:import:org.cggh.chassis.wwarn.ui.curator.client"
 	>
-
+<!-- 
+    BE SURE TO EDIT THE TEMPLATE NOT THE RENDERED RESULT
+		
+    DELETE_TO_MANUALLY_EDIT 
+-->
 	<ui:style>
 	
 		.error {
 			color: red;
 		}
-
+		
+		.number {
+			font-weight: bold;
+		}
+		.widget {
+			border: 1px solid teal;
+		}
 	</ui:style>
 
 
@@ -35,8 +45,9 @@
 
 		<g:HTMLPanel ui:field="contentPanel">
 
-            <h3><ui:msg>ListStudies</ui:msg></h3>
-            <g:FlowPanel ui:field="tablePanel"></g:FlowPanel>
+            <div id="ListStudies" title="ListStudies" class="widget">
+            	<g:FlowPanel ui:field="listStudiesPanel"></g:FlowPanel>
+			</div>
 		</g:HTMLPanel>
 
 	</g:HTMLPanel>
