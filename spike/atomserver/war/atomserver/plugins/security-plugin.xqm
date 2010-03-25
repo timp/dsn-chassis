@@ -40,27 +40,18 @@ declare function sp:before(
 	
 		if ( $forbidden )
 		
-		then (: override request processing :)
+		then 
 		
-			let $status-code := $CONSTANT:STATUS-CLIENT-ERROR-FORBIDDEN
+			let $status-code := $CONSTANT:STATUS-CLIENT-ERROR-FORBIDDEN (: override request processing :)
 		    let $response-data := "The server understood the request, but is refusing to fulfill it. Authorization will not help and the request SHOULD NOT be repeated."
 			let $response-content-type := "text/plain"
 			
-			(: 
-			 : N.B. if request-data is empty, we need a placeholder, otherwise 
-			 : return sequence will be contracted 
-			 :)
-			let $request-data := 
-				if ( empty( $request-data ) ) then "placeholder" else $request-data
-				
-			return ( $request-data , $status-code , $response-data , $response-content-type )
+			return ( $status-code , $response-data , $response-content-type )
 			
 		else
 		
-			let $status-code := () (: leave empty because we don't want to interrupt request processing :)
-			let $response-data := ()
-			let $response-content-type := ()
-			return ( $request-data , $status-code , $response-data , $response-content-type )
+			let $status-code := 0 (: we don't want to interrupt request processing :)
+			return ( $status-code , $request-data )
 
 };
 
