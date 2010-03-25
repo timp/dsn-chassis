@@ -24,7 +24,7 @@ public class ViewStudyNavigationEvent extends WidgetEvent {
 	public Element getStudy() {
 		log.enter("getStudy");		
 		
-		log.debug("Getting study " + this.study);
+		log.debug("Returning study " + this.study);
 
 		log.leave();
 		
