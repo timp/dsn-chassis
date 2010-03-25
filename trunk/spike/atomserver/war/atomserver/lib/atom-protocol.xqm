@@ -594,6 +594,7 @@ declare function ap:do-put-atom-feed-to-update-collection(
 
 
 
+
 (:
  : TODO doc me 
  :)
@@ -606,9 +607,9 @@ declare function ap:op-update-collection(
 
 	let $feed-doc-db-path := atomdb:update-collection( $request-path-info , $request-data )
 		
-	let $feed-doc := doc( $feed-doc-db-path )
+	let $feed := doc( $feed-doc-db-path )/atom:feed
             
-	return ( $CONSTANT:STATUS-SUCCESS-OK , $feed-doc , $CONSTANT:MEDIA-TYPE-ATOM )
+	return ( $CONSTANT:STATUS-SUCCESS-OK , $feed , $CONSTANT:MEDIA-TYPE-ATOM )
 
 };
 
@@ -618,7 +619,6 @@ declare function ap:op-update-collection(
 declare variable $ap:op-update-collection as function :=
 	util:function( QName( "http://www.cggh.org/2010/xquery/atom-protocol" , "ap:op-update-collection" ) , 3 )
 ;
-
 
 
 

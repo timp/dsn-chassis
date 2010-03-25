@@ -48,11 +48,54 @@ declare function sp:before(
 			
 			return ( $status-code , $response-data , $response-content-type )
 			
+        else if ( 
+            $operation = $CONSTANT:OP-CREATE-MEMBER 
+            or $operation = $CONSTANT:OP-UPDATE-MEMBER 
+            or $operation = $CONSTANT:OP-CREATE-COLLECTION 
+            or $operation = $CONSTANT:OP-UPDATE-COLLECTION
+        )
+        
+        then 
+        
+            let $request-data := sp:strip-acl-links( $request-data )
+			let $status-code := 0 (: we don't want to interrupt request processing :)
+			return ( $status-code , $request-data )
+			
 		else
 		
 			let $status-code := 0 (: we don't want to interrupt request processing :)
 			return ( $status-code , $request-data )
 
+};
+
+
+
+
+declare function sp:strip-acl-links(
+    $request-data as element()
+) as element()
+{
+    let $log := util:log( "debug" , "== sp:strip-acl-links ==" )
+    let $log := util:log( "debug" , $request-data )
+    let $request-data :=
+        element { node-name( $request-data ) }
+        {
+            $request-data/attribute::* ,
+            for $child in $request-data/child::*
+            let $ln := local-name( $child )
+            let $ns := namespace-uri( $child )
+            let $rel := $child/@rel
+            where (
+                not(
+                    $ln = $CONSTANT:ATOM-LINK
+                    and $ns = $CONSTANT:ATOM-NSURI 
+                    and ( $rel = "edit-acl" or $rel = "edit-media-acl" )
+                )
+            )
+            return $child
+        }
+    let $log := util:log( "debug" , $request-data )
+    return $request-data
 };
 
 
@@ -82,6 +125,10 @@ declare function sp:after(
 		else if ( $operation = $CONSTANT:OP-CREATE-COLLECTION )
 		
 		then sp:after-create-collection( $request-path-info , $response-data , $response-content-type )
+
+		else if ( $operation = $CONSTANT:OP-UPDATE-COLLECTION )
+		
+		then sp:after-update-collection( $request-path-info , $response-data , $response-content-type )
 
 		else if ( $operation = $CONSTANT:OP-LIST-COLLECTION )
 		
@@ -205,6 +252,22 @@ declare function sp:after-create-collection(
 	let $collection-acl-installed := sp:install-collection-acl( $request-path-info )
 	
 	(: no filtering necessary because no members yet, but adds edit-acl link :)
+	let $response-data := sp:filter-feed-by-acls( $request-path-info , $response-data )
+
+	return ( $response-data , $response-content-type )
+
+};
+
+
+
+
+declare function sp:after-update-collection(
+	$request-path-info as xs:string ,
+	$response-data as item()* ,
+	$response-content-type as xs:string?
+) as item()*
+{
+
 	let $response-data := sp:filter-feed-by-acls( $request-path-info , $response-data )
 
 	return ( $response-data , $response-content-type )
