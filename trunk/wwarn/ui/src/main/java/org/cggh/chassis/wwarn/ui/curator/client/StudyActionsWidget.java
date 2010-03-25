@@ -70,11 +70,11 @@ public class StudyActionsWidget
 	public final ObservableProperty<Status> status = new ObservableProperty<Status>();
 	public final ObservableProperty<String> message = new ObservableProperty<String>();
 
+	public final WidgetEventChannel studyActionsListStudiesNavigationEventChannel = new WidgetEventChannel(this);
 	public final WidgetEventChannel studyActionsViewStudyNavigationEventChannel = new WidgetEventChannel(this);
+	public final WidgetEventChannel studyActionsViewStudyQuestionnaireNavigationEventChannel = new WidgetEventChannel(this);
 	public final WidgetEventChannel studyActionsEditStudyQuestionnaireNavigationEventChannel = new WidgetEventChannel(this);
 	public final WidgetEventChannel studyActionsListStudyRevisionsNavigationEventChannel = new WidgetEventChannel(this);
-	public final WidgetEventChannel studyActionsViewStudyQuestionnaireNavigationEventChannel = new WidgetEventChannel(this);
-	public final WidgetEventChannel studyActionsListStudiesNavigationEventChannel = new WidgetEventChannel(this);
 
 
 
@@ -141,45 +141,15 @@ public class StudyActionsWidget
 		log.leave();	
 	}
 	
-	private void syncUIWithStudyEntry(final Element study){
+	private void syncUIWithStudyEntry(final Element studyEntry){
 		log.enter("syncUIWithStudyEntry");
 		
-		if (study == null) 
+		if (studyEntry == null) 
 			log.debug("Study null");
 		else {
 			
 			List<Widget[]> rows = new ArrayList<Widget[]>();
-			
-			Widget[] headerRow = {
-				strongWidget("Study Title"), // TODO i18n
-				strongWidget("Modules"),     // TODO i18n
-				strongWidget("Submitters"),  // TODO i18n
-				strongWidget("Published"),   // TODO i18n
-				strongWidget("Updated"),     // TODO i18n
-			};
-			
-			rows.add(headerRow);
-			
-			Widget[] row = {
-						new HTML(ChassisHelper.getTitle(study)),
-						new HTML(RenderUtils.join(ChassisHelper.getModules(study), ", ")),
-						new HTML(RenderUtils.join(ChassisHelper.getAuthorEmails(study), ", ")),
-						new HTML(ChassisHelper.getPublishedAsDate(study)),
-						new HTML(ChassisHelper.getUpdatedAsDate(study)),
-			};
-			rows.add(row);
-			
-			FlexTable table = RenderUtils.renderFirstRowHeadingResultsAsFirstColumnHeadingTable(rows);
-			
-			this.studyActionsPanel.clear();
-			this.studyActionsPanel.add(table);
-			pendingPanel.setVisible(false);	
 
-		}
-		
-    	if (this.studyActionsPanel != null) { 
-    		List<Widget[]> rows = new ArrayList<Widget[]>();
-    		
 			Anchor listAllStudies = new Anchor("List all studies"); // TODO i18n
 			
 			listAllStudies.addClickHandler(new ClickHandler() {
@@ -203,7 +173,7 @@ public class StudyActionsWidget
 					log.enter("onClick");
 					
 					ViewStudyNavigationEvent viewStudyNavigationEvent  = new ViewStudyNavigationEvent();
-					viewStudyNavigationEvent.setStudy(study);
+					viewStudyNavigationEvent.setStudy(studyEntry);
 					
 					studyActionsViewStudyNavigationEventChannel.fireEvent(viewStudyNavigationEvent);
 					
@@ -213,14 +183,91 @@ public class StudyActionsWidget
 
 			});
 
-    		Widget[] row = {
+			// TODO Add to metatdata
+			Anchor uploadCuratedDataFiles = new Anchor("Upload curated data files"); // TODO i18n
+			
+			uploadCuratedDataFiles.addClickHandler(new ClickHandler() {
+				
+				public void onClick(ClickEvent e) {
+					
+					log.enter("onClick");
+					
+					ViewStudyNavigationEvent viewStudyNavigationEvent  = new ViewStudyNavigationEvent();
+					viewStudyNavigationEvent.setStudy(studyEntry);
+					
+					studyActionsViewStudyNavigationEventChannel.fireEvent(viewStudyNavigationEvent);
+					
+					log.leave();
+					
+				}
+
+			});
+			
+			Anchor viewStudyQuestionnaire = new Anchor("View study questionnaire"); // TODO i18n
+			
+			viewStudyQuestionnaire.addClickHandler(new ClickHandler() {
+				
+				public void onClick(ClickEvent e) {
+					
+					log.enter("onClick");
+					
+					ViewStudyQuestionnaireNavigationEvent viewStudyQuestionnaireNavigationEvent  = new ViewStudyQuestionnaireNavigationEvent();
+					viewStudyQuestionnaireNavigationEvent.setStudy(studyEntry);
+					
+					studyActionsViewStudyQuestionnaireNavigationEventChannel.fireEvent(viewStudyQuestionnaireNavigationEvent);
+					
+					log.leave();
+					
+				}
+
+			});
+			
+			Anchor editStudyQuestionnaire = new Anchor("Edit study questionnaire"); // TODO i18n
+			
+			editStudyQuestionnaire.addClickHandler(new ClickHandler() {
+				
+				public void onClick(ClickEvent e) {
+					
+					log.enter("onClick");
+					
+					EditStudyQuestionnaireNavigationEvent editStudyQuestionnaireNavigationEvent  = new EditStudyQuestionnaireNavigationEvent();
+					editStudyQuestionnaireNavigationEvent.setStudy(studyEntry);
+					
+					studyActionsEditStudyQuestionnaireNavigationEventChannel.fireEvent(editStudyQuestionnaireNavigationEvent);
+					
+					log.leave();
+					
+				}
+
+			});
+			
+			Anchor listStudyRevisions = new Anchor("List study revisions"); // TODO i18n
+			
+			listStudyRevisions.addClickHandler(new ClickHandler() {
+				
+				public void onClick(ClickEvent e) {
+					
+					log.enter("onClick");
+					
+					ListStudyRevisionsNavigationEvent listStudyRevisionsNavigationEvent  = new ListStudyRevisionsNavigationEvent();
+					listStudyRevisionsNavigationEvent.setStudy(studyEntry);
+					
+					studyActionsListStudyRevisionsNavigationEventChannel.fireEvent(listStudyRevisionsNavigationEvent);
+					
+					log.leave();
+					
+				}
+
+			});
+
+			Widget[] row = {
     				strongWidget("Actions"),                         // TODO i18n
     				listAllStudies, 
     				viewStudy,
-    				emWidget("Upload curated data files "),          // TODO i18n
-    				emWidget("View study questionnaire"),            // TODO i18n
-    				emWidget("Edit study questionnaire"),            // TODO i18n
-    				emWidget("View study questionnaire history"),    // TODO i18n
+    				uploadCuratedDataFiles,
+    				viewStudyQuestionnaire,
+    				editStudyQuestionnaire,
+    				listStudyRevisions,
     			};
     			
     		rows.add(row);
@@ -228,8 +275,9 @@ public class StudyActionsWidget
     		FlexTable table = RenderUtils.renderResultsTable(rows);
     		this.studyActionsPanel.clear();
     		this.studyActionsPanel.add(table);
-        	} else 
-        		log.debug("tablePanel null");
+    		
+    		pendingPanel.setVisible(false);
+		}
 		log.leave();
 	}
 

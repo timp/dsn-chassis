@@ -84,6 +84,7 @@ public class CuratorApplicationWidget
 			}
 		}));
 
+		// View Study 
 		log.debug("Adding view study list studies widget navigation event handler on " + 
 				viewStudyWidget.studyActionsListStudiesNavigationEventChannel);
 		this.childWidgetEventHandlerRegistrations.add(
@@ -94,6 +95,82 @@ public class CuratorApplicationWidget
 				log.enter("onEvent");
 
 				setActiveChild(curatorHomeWidget);
+				
+				log.leave();
+			}
+		}));
+
+		log.debug("Adding view study view study widget navigation event handler on " + 
+				viewStudyWidget.studyActionsViewStudyNavigationEventChannel);
+		this.childWidgetEventHandlerRegistrations.add(
+				viewStudyWidget.studyActionsViewStudyNavigationEventChannel.addHandler(
+						new WidgetEventHandler() {
+			public void onEvent(WidgetEvent e) {
+				
+				log.enter("onEvent");
+
+				Element studyElement =  ((ViewStudyNavigationEvent) e).getStudy();
+				log.debug("Setting study to " + studyElement);
+				editStudyQuestionnaireWidget.getModel().studyEntry.set(studyElement);
+					
+				setActiveChild(viewStudyWidget);
+				
+				log.leave();
+			}
+		}));
+
+		log.debug("Adding view study view study questionnaire widget navigation event handler on " + 
+				viewStudyWidget.studyActionsViewStudyQuestionnaireNavigationEventChannel);
+		this.childWidgetEventHandlerRegistrations.add(
+				viewStudyWidget.studyActionsViewStudyQuestionnaireNavigationEventChannel.addHandler(
+						new WidgetEventHandler() {
+			public void onEvent(WidgetEvent e) {
+				
+				log.enter("onEvent(viewStudyWidget.studyActionsViewStudyQuestionnaireNavigationEventChannel)");
+
+				Element studyElement =  ((ViewStudyQuestionnaireNavigationEvent) e).getStudy();
+				log.debug("Setting study to " + studyElement);
+				viewStudyQuestionnaireWidget.getModel().studyEntry.set(studyElement);
+					
+				setActiveChild(viewStudyQuestionnaireWidget);
+				
+				log.leave();
+			}
+		}));
+
+		log.debug("Adding view study edit study widget navigation event handler on " + 
+				viewStudyWidget.studyActionsEditStudyQuestionnaireNavigationEventChannel);
+		this.childWidgetEventHandlerRegistrations.add(
+				viewStudyWidget.studyActionsEditStudyQuestionnaireNavigationEventChannel.addHandler(
+						new WidgetEventHandler() {
+			public void onEvent(WidgetEvent e) {
+				
+				log.enter("onEvent(viewStudyWidget.studyActionsEditStudyQuestionnaireNavigationEventChannel)");
+
+				Element studyElement =  ((EditStudyQuestionnaireNavigationEvent) e).getStudy();
+				log.debug("Setting study to " + studyElement);
+				editStudyQuestionnaireWidget.getModel().studyEntry.set(studyElement);
+					
+				setActiveChild(editStudyQuestionnaireWidget);
+				
+				log.leave();
+			}
+		}));
+
+		log.debug("Adding list study revisions study widget navigation event handler on " + 
+				viewStudyWidget.studyActionsListStudyRevisionsNavigationEventChannel);
+		this.childWidgetEventHandlerRegistrations.add(
+				viewStudyWidget.studyActionsListStudyRevisionsNavigationEventChannel.addHandler(
+						new WidgetEventHandler() {
+			public void onEvent(WidgetEvent e) {
+				
+				log.enter("onEvent(viewStudyWidget.studyActionsListStudyRevisionsNavigationEventChannel)");
+
+				Element studyElement =  ((ListStudyRevisionsNavigationEvent) e).getStudy();
+				log.debug("Setting study to " + studyElement);
+				listStudyRevisionsWidget.getModel().studyEntry.set(studyElement);
+					
+				setActiveChild(listStudyRevisionsWidget);
 				
 				log.leave();
 			}
