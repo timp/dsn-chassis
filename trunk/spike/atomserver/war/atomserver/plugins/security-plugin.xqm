@@ -413,7 +413,13 @@ declare function sp:filter-feed-by-acls(
                     let $log := util:log( "debug" , concat( "checking permission to retrieve member for entry-path-info: " , $entry-path-info ) )
                     let $forbidden := sp:is-operation-forbidden( $CONSTANT:OP-RETRIEVE-MEMBER , $entry-path-info , () )
                     return 
-                        if ( not( $forbidden ) ) then sp:append-edit-acl-links( $entry-path-info , $entry ) else ()
+                        if ( not( $forbidden ) ) 
+                        then 
+                            let $can-update-acl := sp:is-operation-forbidden( $CONSTANT:OP-UPDATE-ACL , $entry-path-info , () )
+                            return
+                                if ( $can-update-acl ) then sp:append-edit-acl-links( $entry-path-info , $entry ) 
+                                else $entry
+                        else ()
                 }
             </atom:feed>
         let $log := util:log( "debug" , $filtered-feed )
