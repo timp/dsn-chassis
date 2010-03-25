@@ -19,7 +19,7 @@ import module namespace ap = "http://www.cggh.org/2010/xquery/atom-protocol" at 
 
 import module namespace config = "http://www.cggh.org/2010/atombeat/xquery/config" at "../config/shared.xqm" ;
  
-
+ 
 
 
 (:
