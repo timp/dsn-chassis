@@ -14,7 +14,6 @@ public class ViewStudyNavigationEvent extends WidgetEvent {
 
 
 	public void setStudy(Element study) {
-
 		log.enter("setStudy");		
 		
 		this.study = study;
@@ -23,7 +22,6 @@ public class ViewStudyNavigationEvent extends WidgetEvent {
 	}
 	
 	public Element getStudy() {
-
 		log.enter("getStudy");		
 		
 		log.debug("Getting study " + this.study);
@@ -31,7 +29,6 @@ public class ViewStudyNavigationEvent extends WidgetEvent {
 		log.leave();
 		
 		return this.study;
-
 	}
 	
 }
