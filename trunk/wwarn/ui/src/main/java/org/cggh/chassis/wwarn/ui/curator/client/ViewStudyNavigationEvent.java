@@ -10,8 +10,9 @@ public class ViewStudyNavigationEvent extends WidgetEvent {
 
 	private static final Log log = LogFactory.getLog(ViewStudyNavigationEvent.class);	
 	
+	// TODO: depreciate the study element in favour of the studyUrl
 	private Element study;
-
+	private String studyUrl;
 
 	public void setStudy(Element study) {
 		log.enter("setStudy");		
@@ -30,5 +31,29 @@ public class ViewStudyNavigationEvent extends WidgetEvent {
 		
 		return this.study;
 	}
+
+
+
+
+	public void setStudyUrl(String studyUrl) {
+
+		log.enter("setStudyUrl");		
+		
+		this.studyUrl = studyUrl;
+		
+		log.leave();
+	}
+	
+	public String getStudyUrl() {
+
+		log.enter("getStudyUrl");		
+		
+		log.debug("Getting study url " + this.studyUrl);
+
+		log.leave();
+		
+		return this.studyUrl;
+
+	}	
 	
 }
