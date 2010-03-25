@@ -53,11 +53,8 @@ declare function hp:before(
 		
 		else
 	
-			let $status-code := () (: leave empty because we don't want to interrupt request processing :)
-			let $response-data := ()
-			let $content-type := ()
-			
-			return ( $request-data , $status-code , $response-data , $content-type )
+			let $status-code := 0 (: we don't want to interrupt request processing :)
+			return ( $status-code , $request-data )
 };
 
 
@@ -109,11 +106,8 @@ declare function hp:before-create-collection(
 
 		else ()		
 	
-	let $status-code := () (: leave empty because we don't want to interrupt request processing :)
-	let $response-data := ()
-	let $content-type := ()
-	
-	return ( $request-data , $status-code , $response-data , $content-type )
+	let $status-code := 0 (: we don't want to interrupt request processing :)
+	return ( $status-code , $request-data )
 
 };
 
@@ -186,11 +180,8 @@ declare function hp:before-create-member(
 
 	let $log := util:log( "debug" , $request-data )
 	
-	let $status-code := () (: leave empty because we don't want to interrupt request processing :)
-	let $response-data := ()
-	let $content-type := ()
-	
-	return ( $request-data , $status-code , $response-data , $content-type )
+	let $status-code := 0 (: we don't want to interrupt request processing :)
+	return ( $status-code , $request-data )
 
 };
 
@@ -258,11 +249,8 @@ declare function hp:before-update-member(
 
 	let $log := util:log( "debug" , $request-data )
 	
-	let $status-code := () (: leave empty because we don't want to interrupt request processing :)
-	let $response-data := ()
-	let $content-type := ()
-	
-	return ( $request-data , $status-code , $response-data , $content-type )
+	let $status-code := 0 (: we don't want to interrupt request processing :)
+	return ( $status-code , $request-data )
 
 };
 

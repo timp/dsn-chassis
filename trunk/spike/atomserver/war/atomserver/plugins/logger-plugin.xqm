@@ -17,11 +17,9 @@ declare function logger-plugin:before(
 	let $message := concat( "before: " , $operation , ", request-path-info: " , $request-path-info ) 
 	let $log := util:log( "info" , $message )
 	
-	let $status-code := () (: leave empty because we don't want to interrupt request processing :)
-	let $response-data := ()
-	let $content-type := ()
+	let $status-code := 0 (: we don't want to interrupt request processing :)
+	return ( $status-code , $request-data )
 	
-	return ( $request-data , $status-code , $response-data , $content-type )
 };
 
 

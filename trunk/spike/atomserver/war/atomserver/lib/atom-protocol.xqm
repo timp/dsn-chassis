@@ -1282,23 +1282,19 @@ declare function ap:apply-op(
 	
 	let $before-advice := ap:apply-before( $plugin:before , $op-name , $request-path-info , $request-data , $request-media-type )
 	let $log := util:log( "debug" , count( $before-advice ) )
-	 
-	let $request-data := $before-advice[1]
-	let $log := util:log( "debug" , concat( "$request-data: " , $request-data ) )
-
-	let $status-code := $before-advice[2]
-	let $log := util:log( "debug" , concat( "$status-code: " , $status-code ) )
+	
+	let $status-code as xs:integer := $before-advice[1]
 	
 	return 
 	 
-		if ( exists( $status-code ) )
+		if ( $status-code > 0 ) (: interrupt request processing :)
 		
 		then 
 		
 			let $log := util:log( "debug" , "bail out - plugin has overridden default behaviour" )
 		
-			let $response-data := $before-advice[3]
-			let $response-content-type := $before-advice[4]
+			let $response-data := $before-advice[2]
+			let $response-content-type := $before-advice[3]
 			let $log := util:log( "debug" , concat( "$status-code: " , $status-code ) )
 			let $log := util:log( "debug" , concat( "$response-data: " , $response-data ) )
 			let $log := util:log( "debug" , concat( "$response-content-type: " , $response-content-type ) )
@@ -1307,6 +1303,8 @@ declare function ap:apply-op(
 		else
 		
 			let $log := util:log( "debug" , "carry on as normal - execute main operation" )
+			
+			let $request-data := $before-advice[2] (: request data may have been modified by plugins :)
 
 			let $result := util:call( $op , $request-path-info , $request-data , $request-media-type )
 			let $response-status := $result[1]
@@ -1349,7 +1347,7 @@ declare function ap:apply-before(
 	 
 	if ( empty( $functions ) )
 	
-	then ( $request-data , () , () )
+	then ( 0 , $request-data )
 	
 	else
 	
@@ -1357,17 +1355,20 @@ declare function ap:apply-before(
 		
 		(: what happens next depends on advice :)
 		
-		let $request-data := $advice[1]
-		let $status-code := $advice[2]
-		let $response-data := $advice[3]
+		let $status-code as xs:integer := $advice[1]
 		
 		return
 		
-			if ( exists( $status-code ) )
+			if ( $status-code > 0 )
 			
 			then $advice (: bail out, no further calling of before functions :)
 
-			else ap:apply-before( subsequence( $functions , 2 ) , $operation , $request-path-info , $request-data , $request-media-type )
+			else 
+			
+			    let $request-data := $advice[2]
+			    
+			    (: recursively call until before functions are exhausted :)
+			    return ap:apply-before( subsequence( $functions , 2 ) , $operation , $request-path-info , $request-data , $request-media-type )
 
 };
 
