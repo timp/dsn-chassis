@@ -1,6 +1,6 @@
 xquery version "1.0";
 
-module namespace ah = "http://www.cggh.org/2010/xquery/history-protocol";
+module namespace ah = "http://www.cggh.org/2010/atombeat/xquery/history-protocol";
 
 declare namespace atom = "http://www.w3.org/2005/Atom" ;
 
@@ -17,7 +17,7 @@ import module namespace CONSTANT = "http://www.cggh.org/2010/atombeat/xquery/con
 
 import module namespace xutil = "http://www.cggh.org/2010/atombeat/xquery/xutil" at "xutil.xqm" ;
 import module namespace mime = "http://www.cggh.org/2010/atombeat/xquery/mime" at "mime.xqm" ;
-import module namespace adb = "http://www.cggh.org/2010/atombeat/xquery/atomdb" at "atomdb.xqm" ;
+import module namespace atomdb = "http://www.cggh.org/2010/atombeat/xquery/atomdb" at "atomdb.xqm" ;
 import module namespace ap = "http://www.cggh.org/2010/xquery/atom-protocol" at "atom-protocol.xqm" ;
 
 import module namespace config = "http://www.cggh.org/2010/atombeat/xquery/config" at "../config/shared.xqm" ;
@@ -46,7 +46,7 @@ as item()*
 		
 		then ah:do-get( $request-path-info )
 		
-		else ah:do-method-not-allowed( $request-path-info )
+		else ap:do-method-not-allowed( $request-path-info , ( "GET" ) )
 
 };
 
@@ -61,11 +61,11 @@ declare function ah:do-get(
 ) as item()*
 {
 
-	if ( adb:member-available( $request-path-info ) )
+	if ( atomdb:member-available( $request-path-info ) )
 	
 	then ah:do-get-entry( $request-path-info )
 	
-	else ah:do-not-found( $request-path-info )
+	else ap:do-not-found( $request-path-info )
 	
 };
 
@@ -93,7 +93,7 @@ declare function ah:do-get-entry(
 		
 		then ah:do-get-entry-revision( $request-path-info , xs:integer( $revision-index ) )
 		
-		else ah:do-bad-request( $request-path-info , "Revision index parameter must be an integer." )
+		else ap:do-bad-request( $request-path-info , "Revision index parameter must be an integer." )
 };
 
 
@@ -109,7 +109,7 @@ declare function ah:do-get-entry-history(
 	let $log := util:log( "debug" , "== ah:do-get-entry-history() ==" )
 	let $log := util:log( "debug" , $request-path-info )
 	
-    let $entry-doc-path := adb:request-path-info-to-db-path( $request-path-info )
+    let $entry-doc-path := atomdb:request-path-info-to-db-path( $request-path-info )
 	let $log := util:log( "debug" , $entry-doc-path )
 
     let $entry-doc := doc( $entry-doc-path )
@@ -157,7 +157,7 @@ declare function ah:do-get-entry-revision(
 ) as item()*
 {
 
-    let $entry-doc-path := adb:request-path-info-to-db-path( $request-path-info )
+    let $entry-doc-path := atomdb:request-path-info-to-db-path( $request-path-info )
 
     let $entry-doc := doc( $entry-doc-path )
 
@@ -178,11 +178,11 @@ declare function ah:do-get-entry-revision(
     
         if ( $revision-index <= 0 )
         
-        then ah:do-bad-request( $request-path-info , "Revision index parameter must be an integer equal to or greater than 1." )
+        then ap:do-bad-request( $request-path-info , "Revision index parameter must be an integer equal to or greater than 1." )
         
         else if ( $revision-index > ( count($revision-numbers) + 1 ) )
         
-        then ah:do-not-found( $request-path-info )
+        then ap:do-not-found( $request-path-info )
         
         else 
         
@@ -234,8 +234,8 @@ declare function ah:construct-entry-base-revision(
     
     let $base-revision-db-path := 
         if ( empty( $revision-numbers) ) 
-        then adb:request-path-info-to-db-path( $request-path-info )
-        else concat( "/db/system/versions" , adb:request-path-info-to-db-path( $request-path-info ) , ".base" )
+        then atomdb:request-path-info-to-db-path( $request-path-info )
+        else concat( "/db/system/versions" , atomdb:request-path-info-to-db-path( $request-path-info ) , ".base" )
         
     let $log := util:log( "debug" , $base-revision-db-path )
     
@@ -355,97 +355,3 @@ declare function ah:construct-entry-specified-revision(
 
 
 
-declare function ah:do-not-found(
-	$request-path-info
-) as item()?
-{
-
-    let $status-code := response:set-status-code( $CONSTANT:STATUS-CLIENT-ERROR-NOT-FOUND )
-	let $header-content-type := response:set-header( $CONSTANT:HEADER-CONTENT-TYPE , $CONSTANT:MEDIA-TYPE-XML )
-	let $response := 
-	
-		<response>
-			<message>The server has not found anything matching the Request-URI.</message>
-			<path-info>{$request-path-info}</path-info>
-			<service-url>{$config:service-url}</service-url>
-		</response>
-
-	return $response
-		
-};
-
-
-
-declare function ah:do-bad-request(
-	$request-path-info as xs:string ,
-	$message as xs:string 
-) as item()?
-{
-
-	let $request-data := request:get-data()
-	
-    let $status-code := response:set-status-code( $CONSTANT:STATUS-CLIENT-ERROR-BAD-REQUEST )
-	let $header-content-type := response:set-header( $CONSTANT:HEADER-CONTENT-TYPE , $CONSTANT:MEDIA-TYPE-XML )
-	let $response := 
-	
-		<response>
-			<message>{$message} The request could not be understood by the server due to malformed syntax. The client SHOULD NOT repeat the request without modifications.</message>
-			<service-url>{$config:service-url}</service-url>
-			<method>{request:get-method()}</method>
-			<path-info>{$request-path-info}</path-info>
-			<headers>
-			{
-				for $header-name in request:get-header-names()
-				return
-					element  { lower-case( $header-name ) } 
-					{
-						request:get-header( $header-name )						
-					}
-			}
-			</headers>
-			<data>{$request-data}</data>
-		</response>
-			
-	return $response
-    
-};
-
-
-
-
-declare function ah:do-method-not-allowed(
-	$request-path-info
-) as item()?
-{
-
-	let $request-data := request:get-data()
-
-	let $status-code := response:set-status-code( $CONSTANT:STATUS-CLIENT-ERROR-METHOD-NOT-ALLOWED )
-
-	let $header-allow := response:set-header( $CONSTANT:HEADER-ALLOW , "GET" )
-
-	let $header-content-type := response:set-header( $CONSTANT:HEADER-CONTENT-TYPE , $CONSTANT:MEDIA-TYPE-XML )
-
-	let $response := 
-	
-		<response>
-			<message>The method specified in the Request-Line is not allowed for the resource identified by the Request-URI.</message>
-			<service-url>{$config:service-url}</service-url>
-			<method>{request:get-method()}</method>
-			<path-info>{$request-path-info}</path-info>
-			<headers>
-			{
-				for $header-name in request:get-header-names()
-				return
-					element  { lower-case( $header-name ) } 
-					{
-						request:get-header( $header-name )						
-					}
-			}
-			</headers>
-			<data>{$request-data}</data>
-		</response>
-			
-	return $response
-
-};
