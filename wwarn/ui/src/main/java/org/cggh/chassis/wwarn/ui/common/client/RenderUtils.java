@@ -66,16 +66,16 @@ public class RenderUtils {
 		return out;
 	}
 	
-	public static FlexTable renderFirstRowHeadingResultsAsFirstColumnHeadingTable(List<Widget[]> rows) {
+	public static FlexTable renderFirstRowHeadingResultsAsFirstColumnHeadingTable(List<List<Widget>> rows) {
 		
 		int  fieldCount = -1;
 		for (int i = 0; i < rows.size(); i++) {
 			
-			Widget[] row = rows.get(i);
+			List<Widget> row = rows.get(i);
 			if (fieldCount != -1)
-				if (row.length != fieldCount)
-					throw new RuntimeException("Current row length ("+row.length+") different to previous ("+fieldCount+")");
-			fieldCount = row.length;
+				if (row.size() != fieldCount)
+					throw new RuntimeException("Current row length ("+row.size()+") different to previous ("+fieldCount+")");
+			fieldCount = row.size();
 		}
 
 		FlexTable table = new FlexTable();
@@ -87,8 +87,8 @@ public class RenderUtils {
 		for (int field = 0; field < fieldCount; field++) {
 			
 			for (int i = 0; i < rows.size(); i++) {
-				Widget[] row = rows.get(i);
-				Widget cellValue = row[field];
+				List<Widget> row = rows.get(i);
+				Widget cellValue = row.get(field);
 				if(i != 0)
 					cellValue.addStyleName(CommonStyles.RESULTITEMTABLE_WIDGET);
 				table.setWidget(field, i, cellValue);
