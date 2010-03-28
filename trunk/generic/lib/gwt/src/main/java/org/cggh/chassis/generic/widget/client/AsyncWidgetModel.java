@@ -88,11 +88,15 @@ public class AsyncWidgetModel extends ChassisWidgetModel {
 	
 	public static final ReadyStatus STATUS_READY = new ReadyStatus();
 
-	public static class ErrorStatus extends Status {}
-	
-	public static final ErrorStatus STATUS_ERROR = new ErrorStatus();
+  public static class ErrorStatus extends Status {}
+  
+  public static final ErrorStatus STATUS_ERROR = new ErrorStatus();
 
-	
+  public static class NotFoundStatus extends Status {}
+  
+  public static final NotFoundStatus STATUS_NOT_FOUND = new NotFoundStatus();
+
+		
 	
 	
 	
