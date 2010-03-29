@@ -16,16 +16,16 @@ public class RenderUtils {
 	 * 
 	 * @return a flex table
 	 */
-	public static FlexTable renderResultsTable(List<Widget[]> in) {
+	public static FlexTable renderResultsTable(List<List <Widget>> in) {
 		FlexTable out = new FlexTable();
 		out.setCellPadding(0);
 		out.setCellSpacing(0);
 		out.setBorderWidth(0);
 		
 		for (int r=0; r<in.size(); r++) {
-			Widget[] row = in.get(r);
-			for (int c=0; c<row.length; c++) {
-				Widget w = row[c];
+			List<Widget> row = in.get(r);
+			for (int c=0; c<row.size(); c++) {
+				Widget w = row.get(c);
 				w.addStyleName(CommonStyles.RESULTSTABLE_WIDGET);
 				out.setWidget(r, c, w);
 			}
@@ -42,7 +42,7 @@ public class RenderUtils {
 		return out;
 	}
 	
-	public static FlexTable renderResultItemTable(List<Widget[]> rows) {
+	public static FlexTable renderResultItemTable(List<List<Widget>> rows) {
 		
 		FlexTable out = new FlexTable();
 		out.setCellPadding(0);
@@ -51,9 +51,9 @@ public class RenderUtils {
 		
 		for (int r = 0; r < rows.size(); r++) {
 			
-			Widget[] row = rows.get(r);
-			for (int c=0; c<row.length; c++) {
-				Widget w = row[c];
+			List<Widget> row = rows.get(r);
+			for (int c=0; c<row.size(); c++) {
+				Widget w = row.get(c);
 				w.addStyleName(CommonStyles.RESULTITEMTABLE_WIDGET);
 				out.setWidget(r, c, w);
 			}
