@@ -199,13 +199,13 @@ public class ReviewFileWidgetRenderer extends ChassisWidgetRenderer<ReviewFileWi
 	
 	private FlexTable renderFileToBeReviewedTable(Element entry) {
 		
-		List<Widget[]> rows = new ArrayList<Widget[]>();
+		List<List<Widget>> rows = new ArrayList<List<Widget>>();
 
-		Widget[] headerRow = {
-			new Label("File Name"),       // TODO i18n
-			new Label("Date Submitted"),  // TODO i18n
-			new Label("Actions")          // TODO i18n
-		};
+		List<Widget> headerRow = new ArrayList<Widget>();
+		headerRow.add(new Label("File Name"));       // i18n
+		headerRow.add(new Label("Date Submitted"));  //  i18n
+		headerRow.add(new Label("Actions"));         //  i18n
+		
 		rows.add(headerRow);
 		
 		
@@ -215,16 +215,16 @@ public class ReviewFileWidgetRenderer extends ChassisWidgetRenderer<ReviewFileWi
 		
 		String url = AtomHelper.getContent(entry).getAttribute("src");
 		
-		Anchor downloadLink = new Anchor("download"); // TODO i18n
+		Anchor downloadLink = new Anchor("download"); // i18n
 		
 		downloadLink.setHref(url);
 		downloadLink.setTarget("_blank");
 		
-		Widget[] row = {
-			new Label(title),
-			new Label(submittedDate),	
-			downloadLink	
-		};
+		List<Widget> row = new ArrayList<Widget>();
+		row.add(new Label(title));
+		row.add(new Label(submittedDate));	
+		row.add(downloadLink);
+		
 		rows.add(row);
 		
 		return RenderUtils.renderResultsTable(rows);
