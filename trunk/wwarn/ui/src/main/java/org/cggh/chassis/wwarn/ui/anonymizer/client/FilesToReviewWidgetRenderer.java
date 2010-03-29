@@ -174,13 +174,13 @@ public class FilesToReviewWidgetRenderer extends ChassisWidgetRenderer<FilesToRe
 
 		log.enter("renderFilesToReviewTable");
 		
-		List<Widget[]> rows = new ArrayList<Widget[]>();
+		List<List<Widget>> rows = new ArrayList<List<Widget>>();
 
-		Widget[] headerRow = {
-			new Label("File Name"), // TODO i18n
-			new Label("Date Submitted"),  // TODO i18n
-			new Label("Actions") // TODO i18n
-		};
+		List<Widget> headerRow = new ArrayList<Widget>();
+		headerRow.add(new Label("File Name")); // i18n
+		headerRow.add(new Label("Date Submitted"));  // i18n
+		headerRow.add(new Label("Actions")); // i18n
+		
 		rows.add(headerRow);
 		
 		for (Element entry : entries) {
@@ -215,11 +215,11 @@ public class FilesToReviewWidgetRenderer extends ChassisWidgetRenderer<FilesToRe
 
 			});
 			
-			Widget[] row = {
-				new Label(fileName),
-				new Label(submittedDate),	
-				reviewLink	
-			};
+			List<Widget> row = new ArrayList<Widget>();
+			row.add(new Label(fileName));
+			row.add(new Label(submittedDate));	
+			row.add(reviewLink);	
+			
 			rows.add(row);
 			
 		}
