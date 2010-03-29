@@ -274,7 +274,7 @@ public class CleanFileWidgetRenderer extends ChassisWidgetRenderer<CleanFileWidg
 	
 	private FlexTable renderFileToBeCleanedTable(Element entry) {
 		
-		List<Widget[]> rows = new ArrayList<Widget[]>();
+		List<List<Widget>> rows = new ArrayList<List<Widget>>();
 		
 		String title = AtomHelper.getTitle(entry);
 
@@ -290,39 +290,40 @@ public class CleanFileWidgetRenderer extends ChassisWidgetRenderer<CleanFileWidg
 		
 		String url = AtomHelper.getContent(entry).getAttribute("src");
 		
-		Anchor downloadLink = new Anchor("download"); // TODO i18n
+		Anchor downloadLink = new Anchor("download"); // i18n
 		
 		downloadLink.setHref(url);
 		downloadLink.setTarget("_blank");
 
-		Widget[] fileNameRow = {
-				new Label("File Name:"), // TODO i18n
-				new Label(title)
-			};
+
+		List<Widget> fileNameRow = new ArrayList<Widget>();
+		fileNameRow.add(new Label("File Name:")); // i18n
+		fileNameRow.add(new Label(title));
+		
 		rows.add(fileNameRow);
 		
-		Widget[] submissionDateRow = {
-				new Label("Submission Date:"), // TODO i18n
-				new Label(submissionPublishedDate)
-			};
+		List<Widget> submissionDateRow = new ArrayList<Widget>();
+		submissionDateRow.add(new Label("Submission Date:")); // i18n
+		submissionDateRow.add(new Label(submissionPublishedDate)); //i18n
+		
 		rows.add(submissionDateRow);
 		
-		Widget[] reviewDateRow = {
-				new Label("Review Date:"), // TODO i18n
-				new Label(reviewPublishedDate)
-			};
+		List<Widget> reviewDateRow = new ArrayList<Widget>();
+		reviewDateRow.add(new Label("Review Date:")); // i18n
+		reviewDateRow.add(new Label(reviewPublishedDate));
+		
 		rows.add(reviewDateRow);	
 		
-		Widget[] reviewNotesRow = {
-				new Label("Review Notes:"), // TODO i18n
-				new HTML(reviewSummary)
-			};
+		List<Widget>  reviewNotesRow = new ArrayList<Widget>();
+		reviewNotesRow.add(new Label("Review Notes:")); // i18n
+		reviewNotesRow.add(new HTML(reviewSummary));
+		
 		rows.add(reviewNotesRow);	
 		
-		Widget[] row = {
-			new Label("Actions:"), // TODO i18n
-			downloadLink	
-		};
+		List<Widget> row = new ArrayList<Widget>();
+		row.add(new Label("Actions:")); // i18n
+		row.add(downloadLink);	
+		
 		rows.add(row);
 		
 		return RenderUtils.renderResultItemTable(rows);
