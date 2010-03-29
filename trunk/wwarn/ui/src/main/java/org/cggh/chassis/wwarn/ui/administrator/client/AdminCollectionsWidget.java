@@ -168,14 +168,13 @@ public class AdminCollectionsWidget extends ChassisWidget {
 	protected void syncUI() {
 		log.enter("syncUI");
 
-		List<Widget[]> rows = new ArrayList<Widget[]>();
+		List<List<Widget>> rows = new ArrayList<List<Widget>>();
 		
-		Widget[] headerRow = {
-			strongWidget("Collection Title"),
-			strongWidget("URL"),
-			strongWidget("Status"),
-			strongWidget("Actions"),
-		};
+		List<Widget> headerRow = new ArrayList<Widget>();
+		headerRow.add(strongWidget("Collection Title")); //i18n
+		headerRow.add(strongWidget("URL")); // i18n
+		headerRow.add(strongWidget("Status")); // i18n
+		headerRow.add(strongWidget("Actions")); //i18n
 		
 		rows.add(headerRow);
 
@@ -187,12 +186,12 @@ public class AdminCollectionsWidget extends ChassisWidget {
 			FlowPanel statusPanel = new FlowPanel();
 			statusPanel.add(w.getStatusCodeLabel());
 			statusPanel.add(w.getStatusTextLabel());
-			Widget[] row = {
-				w.getTitleLabel(),
-				w.getUrlAnchor(),
-				statusPanel,
-				w.getActionsPanel()
-			};
+			List<Widget> row = new ArrayList<Widget>();
+			row.add(w.getTitleLabel());
+			row.add(w.getUrlAnchor());
+			row.add(statusPanel);
+			row.add(w.getActionsPanel());
+			
 			rows.add(row);
 		}
 		
