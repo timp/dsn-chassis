@@ -185,7 +185,7 @@ public class AddInformationWidgetRenderer extends
 		headerRow.add(new Label("File Name")); // i18n
 		headerRow.add(new Label("Type"));  // i18n
 		headerRow.add(new Label("Size")); // i18n
-		headerRow.add(new Label("Uploaded"));  // TODO i18n
+		headerRow.add(new Label("Uploaded"));  // i18n
 		
 		rows.add(headerRow);
 		
