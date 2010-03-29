@@ -179,14 +179,14 @@ public class AddInformationWidgetRenderer extends
 	
 	private FlexTable renderUploadsTable(List<Element> entries) {
 		
-		List<Widget[]> rows = new ArrayList<Widget[]>();
+		List<List<Widget>> rows = new ArrayList<List<Widget>>();
 
-		Widget[] headerRow = {
-			new Label("File Name"), // TODO i18n
-			new Label("Type"),  // TODO i18n
-			new Label("Size"), // TODO i18n
-			new Label("Uploaded")  // TODO i18n
-		};
+		List<Widget> headerRow = new ArrayList<Widget>();
+		headerRow.add(new Label("File Name")); // i18n
+		headerRow.add(new Label("Type"));  // i18n
+		headerRow.add(new Label("Size")); // i18n
+		headerRow.add(new Label("Uploaded"));  // TODO i18n
+		
 		rows.add(headerRow);
 		
 		for (Element entry : entries) {
@@ -199,12 +199,11 @@ public class AddInformationWidgetRenderer extends
 			String fileSizeAsString = AtomHelper.getMediaResourceSize(entry);
 			String created = AtomHelper.getPublishedAsTime(entry);
 			
-			Widget[] row = {
-				new Label(title),	
-				new Label(type),	
-				new Label(fileSizeAsString),	
-				new Label(created)
-			};
+			List<Widget> row = new ArrayList<Widget>();
+			row.add(new Label(title));	
+			row.add(new Label(type));	
+			row.add(new Label(fileSizeAsString));	
+			row.add(new Label(created));
 			rows.add(row);
 			
 		}
