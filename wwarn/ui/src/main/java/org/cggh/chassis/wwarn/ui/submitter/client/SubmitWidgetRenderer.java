@@ -198,6 +198,7 @@ public class SubmitWidgetRenderer extends ChassisWidgetRenderer<SubmitWidgetMode
 	 */
 	protected void syncUIWithAgreementAccepted(Boolean after) {
 		log.enter("syncUIWithAgreementAccepted");
+		
 		// TODO Auto-generated method stub
 		
 		log.leave();
@@ -446,14 +447,14 @@ public class SubmitWidgetRenderer extends ChassisWidgetRenderer<SubmitWidgetMode
 
 	private FlexTable renderUploadsTable(List<Element> entries) {
 		
-		List<Widget[]> rows = new ArrayList<Widget[]>();
+		List<List<Widget>> rows = new ArrayList<List<Widget>>();
 
-		Widget[] headerRow = {
-			new Label("File Name"), // TODO i18n
-			new Label("Type"),      // TODO i18n
-			new Label("Size"),      // TODO i18n
-			new Label("Uploaded")   // TODO i18n
-		};
+		List<Widget> headerRow = new ArrayList<Widget>();
+		headerRow.add(new Label("File Name")); // i18n
+		headerRow.add(new Label("Type"));      // i18n
+		headerRow.add(new Label("Size"));      // i18n
+		headerRow.add(new Label("Uploaded"));   // i18n
+		
 		rows.add(headerRow);
 		
 		for (Element entry : entries) {
@@ -466,12 +467,12 @@ public class SubmitWidgetRenderer extends ChassisWidgetRenderer<SubmitWidgetMode
 			String fileSizeAsString = AtomHelper.getMediaResourceSize(entry);
 			String created = AtomHelper.getPublishedAsDate(entry);
 			
-			Widget[] row = {
-				new Label(title),	
-				new Label(type),	
-				new Label(fileSizeAsString),	
-				new Label(created)
-			};
+			List<Widget> row = new ArrayList<Widget>();
+			row.add(new Label(title));	
+			row.add(new Label(type));
+			row.add(new Label(fileSizeAsString));	
+			row.add(new Label(created));
+			
 			rows.add(row);
 			
 		}
@@ -489,13 +490,13 @@ public class SubmitWidgetRenderer extends ChassisWidgetRenderer<SubmitWidgetMode
 			return "";
 		}
 		else if (term.equals(Chassis.TERM_DATAFILE)) {
-			return "Data File"; // TODO i18n
+			return "Data File"; // i18n
 		}
 		else if (term.equals(Chassis.TERM_DATADICTIONARY)) {
-			return "Data Dictionary"; // TODO i18n
+			return "Data Dictionary"; // i18n
 		}
 		else if (term.equals(Chassis.TERM_PROTOCOL)) {
-			return "Protocol"; // TODO i18n
+			return "Protocol"; // i18n
 		}
 		else if (term.equals(Chassis.TERM_OTHER)) {
 			String labelAttrValue = AtomHelper.getLabelAttr(categoryElement);
