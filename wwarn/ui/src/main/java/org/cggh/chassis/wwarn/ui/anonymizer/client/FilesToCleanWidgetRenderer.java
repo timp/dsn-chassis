@@ -157,14 +157,14 @@ public class FilesToCleanWidgetRenderer extends ChassisWidgetRenderer<FilesToCle
 	
 	private FlexTable renderFilesToCleanTable(List<Element> entries) {
 
-		List<Widget[]> rows = new ArrayList<Widget[]>();
+		List<List<Widget>> rows = new ArrayList<List<Widget>>();
 
-		Widget[] headerRow = {
-			new Label("File Name"),       // TODO i18n
-			new Label("Date Submitted"),  // TODO i18n
-			new Label("Date Reviewed"),   // TODO i18n
-			new Label("Actions")          // TODO i18n
-		};
+		List<Widget> headerRow = new ArrayList<Widget>();
+		headerRow.add(new Label("File Name"));       // i18n
+		headerRow.add(new Label("Date Submitted"));  // i18n
+		headerRow.add(new Label("Date Reviewed"));   // i18n
+		headerRow.add(new Label("Actions"));         // i18n
+		
 		rows.add(headerRow);
 		
 		for (Element entry : entries) {
@@ -178,7 +178,7 @@ public class FilesToCleanWidgetRenderer extends ChassisWidgetRenderer<FilesToCle
 			
 			final Element fileToBeCleanedEntryElement = entry;
 			
-			Anchor cleanLink = new Anchor("clean"); // TODO i18n
+			Anchor cleanLink = new Anchor("clean"); // i18n
 			
 			cleanLink.addClickHandler(new ClickHandler() {
 				
@@ -200,12 +200,13 @@ public class FilesToCleanWidgetRenderer extends ChassisWidgetRenderer<FilesToCle
 
 			});
 			
-			Widget[] row = {
-				new Label(fileName),
-				new Label(submittedDate),	
-				new Label(reviewedDate),
-				cleanLink	
-			};
+			List<Widget> row = new ArrayList<Widget>();
+
+			row.add(new Label(fileName));
+			row.add(new Label(submittedDate));
+			row.add(new Label(reviewedDate));
+			row.add(cleanLink);	
+			
 			rows.add(row);
 			
 		}
