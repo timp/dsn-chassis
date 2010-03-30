@@ -137,7 +137,7 @@ public class CleanFileFormSubmitHandler extends HttpServlet {
 				if (CleanFileWidgetRenderer.FIELD_FILE.equals(fieldName) && !fileItemStream.isFormField()) {
 					
 					// Check the file stream for viruses, which will throw an exception if found.
-					checkFileItemStreamForVirus(fileItemStream);
+					InputStream in = checkFileItemStreamForVirus(fileItemStream);
 					
 					// Assume no virus (since no exception was thrown).
 					
@@ -146,7 +146,7 @@ public class CleanFileFormSubmitHandler extends HttpServlet {
 					
 					log.debug("posting media entry....");
 					
-					mediaEntry = postMediaEntry(request, fileItemStream);
+					mediaEntry = postMediaEntry(request, in, fileItemStream.getContentType());
 
 					log.debug("done posting media entry.");
 					
@@ -372,13 +372,13 @@ public class CleanFileFormSubmitHandler extends HttpServlet {
 
 
 
-	private Entry postMediaEntry(HttpServletRequest request, FileItemStream fileItemStream) throws IOException {
+	private Entry postMediaEntry(HttpServletRequest request, InputStream in, String contentType) throws IOException {
 
 		AbderaClient abderaClient = createAbderaClient(request);
 		
 		RequestOptions requestOptions = createRequestOptions(request);		
 		
-		InputStreamRequestEntity inputStreamRequestEntity = new InputStreamRequestEntity(fileItemStream.openStream(), fileItemStream.getContentType());
+		InputStreamRequestEntity inputStreamRequestEntity = new InputStreamRequestEntity(in, contentType);
 		
 		ClientResponse clientResponse = abderaClient.post(this.mediaCollectionUrl, inputStreamRequestEntity, requestOptions);
 		
@@ -406,15 +406,16 @@ public class CleanFileFormSubmitHandler extends HttpServlet {
 	
 	
 
-	private void checkFileItemStreamForVirus(FileItemStream fileItemStream) throws FileUploadException, IOException, ScannerException {
+	private InputStream checkFileItemStreamForVirus(FileItemStream fileItemStream) throws FileUploadException, IOException, ScannerException {
 
 	    InputStream inputStream = fileItemStream.openStream();		
 		
 	    ClamAntiVirusScanner clamScanner = new ClamAntiVirusScanner();
+	    
     	try { 
     		
-    		@SuppressWarnings("unused")
 			InputStream recreatedInputStream = clamScanner.performScan(inputStream);
+    		return recreatedInputStream;
     		
     	} catch (ClamAntiVirusNotRunningException e) {
 
@@ -427,6 +428,8 @@ public class CleanFileFormSubmitHandler extends HttpServlet {
     	} catch (ContainsVirusException e) { 			       
     		throw new ContainsVirusException("The file " + fileItemStream.getName() + " appears to contain a virus.", e);
         }
+    	
+    	return null;
     	
 	}
 
