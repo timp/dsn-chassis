@@ -37,12 +37,6 @@
 			<g:FlowPanel ui:field="errorMessage"  title="ListSubmissions"></g:FlowPanel>
     </g:HTMLPanel>
 
-		<g:HTMLPanel ui:field="pendingPanel">
-			<p title="ListSubmissions">
-				<ui:msg>pending... </ui:msg>
-			</p>
-		</g:HTMLPanel>
-
 		<g:HTMLPanel ui:field="contentPanel">
 
             <div id="ListSubmissions" title="ListSubmissions" class="widget">

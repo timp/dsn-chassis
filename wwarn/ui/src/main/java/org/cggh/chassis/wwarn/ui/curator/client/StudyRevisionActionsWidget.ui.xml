@@ -37,12 +37,6 @@
 			<g:FlowPanel ui:field="errorMessage"  title="StudyRevisionActions"></g:FlowPanel>
     </g:HTMLPanel>
 
-		<g:HTMLPanel ui:field="pendingPanel">
-			<p title="StudyRevisionActions">
-				<ui:msg>pending... </ui:msg>
-			</p>
-		</g:HTMLPanel>
-
 		<g:HTMLPanel ui:field="contentPanel">
 
             <div id="StudyRevisionActions" title="StudyRevisionActions" class="widget">

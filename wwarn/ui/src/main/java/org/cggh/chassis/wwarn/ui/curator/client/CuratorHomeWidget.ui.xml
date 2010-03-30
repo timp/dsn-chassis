@@ -37,12 +37,6 @@
 			<g:FlowPanel ui:field="errorMessage"  title="CuratorHome"></g:FlowPanel>
     </g:HTMLPanel>
 
-		<g:HTMLPanel ui:field="pendingPanel">
-			<p title="CuratorHome">
-				<ui:msg>pending... </ui:msg>
-			</p>
-		</g:HTMLPanel>
-
 		<g:HTMLPanel ui:field="contentPanel">
 
             <div id="CuratorHome" title="CuratorHome" class="widget">
