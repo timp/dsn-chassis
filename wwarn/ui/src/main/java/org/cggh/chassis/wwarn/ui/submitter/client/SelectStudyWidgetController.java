@@ -49,7 +49,7 @@ public class SelectStudyWidgetController {
 		// Set the model's status to pending.
 		model.setStatus(SelectStudyWidgetModel.STATUS_RETRIEVE_STUDIES_PENDING);
 		
-		String studyQueryServiceUrl = Config.get(Config.QUERY_STUDIES_URL);
+		String studyQueryServiceUrl = Config.get(Config.COLLECTION_STUDIES_URL);
 		
 		Deferred<Document> deferredStudyFeedDoc = Atom.getFeed(studyQueryServiceUrl);
 		

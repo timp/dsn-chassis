@@ -90,26 +90,36 @@ public class SubmitWidgetController {
 		
 		model.setStatus(SubmitWidgetModel.STATUS_RETRIEVE_STUDY_PENDING);
 		
-		QueryParams qp = new QueryParams();
-		qp.put(Chassis.QUERYPARAM_ID, model.getSelectedStudyId());
+		// assume id is really url
+		Deferred<Document> deferredEntryDoc = Atom.getEntry(model.getSelectedStudyId());
 		
-		String url = Config.get(Config.QUERY_STUDIES_URL) + qp.toUrlQueryString();
-		log.debug("url: "+url);
-
-		log.debug("make get feed request");
-		Deferred<Document> deferredResultsFeedDoc = Atom.getFeed(url);
-		
-		Deferred<Element> deferredStudyElement = deferredResultsFeedDoc.adapt(new Function<Document, Element>() {
-
-			public Element apply(Document resultsFeedDoc) {
-				Element entryElement = AtomHelper.getFirstEntry(resultsFeedDoc.getDocumentElement());
-				return entryElement;
+		Deferred<Element> deferredEntryElement = deferredEntryDoc.adapt(new Function<Document, Element>() {
+			@Override
+			public Element apply(Document in) {
+				return in.getDocumentElement();
 			}
-			
 		});
+
+//		QueryParams qp = new QueryParams();
+//		qp.put(Chassis.QUERYPARAM_ID, model.getSelectedStudyId());
+//		
+//		String url = Config.get(Config.QUERY_STUDIES_URL) + qp.toUrlQueryString();
+//		log.debug("url: "+url);
+//
+//		log.debug("make get feed request");
+//		Deferred<Document> deferredResultsFeedDoc = Atom.getFeed(url);
+//		
+//		Deferred<Element> deferredStudyElement = deferredResultsFeedDoc.adapt(new Function<Document, Element>() {
+//
+//			public Element apply(Document resultsFeedDoc) {
+//				Element entryElement = AtomHelper.getFirstEntry(resultsFeedDoc.getDocumentElement());
+//				return entryElement;
+//			}
+//			
+//		});
 		
 		log.leave();
-		return deferredStudyElement;
+		return deferredEntryElement;
 	}
 	
 	

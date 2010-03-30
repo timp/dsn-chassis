@@ -7,17 +7,17 @@ module namespace config = "http://www.cggh.org/2010/atombeat/xquery/config";
  : The base URL for the Atom service. This URL will be prepended to all edit
  : and self link href values.
  :)
-declare variable $config:service-url as xs:string := "http://localhost:8081/atombeat/atombeat/content" ;
+declare variable $config:service-url as xs:string := "http://localhost:8080/chassis-wwarn-ui/atombeat/content" ;
 
 
 (:
  : The base URL for the History service. This URL will be prepended to all 
  : history link href values.
  :)
-declare variable $config:history-service-url as xs:string := "http://localhost:8081/atombeat/atombeat/history" ;
+declare variable $config:history-service-url as xs:string := "http://localhost:8080/chassis-wwarn-ui/atombeat/history" ;
  
 
-declare variable $config:acl-service-url as xs:string := "http://localhost:8081/atombeat/atombeat/acl" ;
+declare variable $config:acl-service-url as xs:string := "http://localhost:8080/chassis-wwarn-ui/atombeat/acl" ;
 
 
 (:
@@ -87,60 +87,9 @@ declare variable $config:default-global-acl :=
     <acl>
         <rules>
             <allow>
-                <role>ROLE_ADMINISTRATOR</role>
-                <operation>create-collection</operation>
-            </allow>
-            <allow>
-                <role>ROLE_ADMINISTRATOR</role>
-                <operation>update-collection</operation>
-            </allow>
-            <allow>
-                <role>ROLE_ADMINISTRATOR</role>
-                <operation>list-collection</operation>
-            </allow>
-            <allow>
-                <role>ROLE_ADMINISTRATOR</role>
-                <operation>create-member</operation>
-            </allow>
-            <allow>
-                <role>ROLE_ADMINISTRATOR</role>
-                <operation>retrieve-member</operation>
-            </allow>
-            <allow>
-                <role>ROLE_ADMINISTRATOR</role>
-                <operation>update-member</operation>
-            </allow>
-            <allow>
-                <role>ROLE_ADMINISTRATOR</role>
-                <operation>delete-member</operation>
-            </allow>
-            <allow>
-                <role>ROLE_ADMINISTRATOR</role>
-                <operation>create-media</operation>
-            </allow>
-            <allow>
-                <role>ROLE_ADMINISTRATOR</role>
-                <operation>retrieve-media</operation>
-            </allow>
-            <allow>
-                <role>ROLE_ADMINISTRATOR</role>
-                <operation>update-media</operation>
-            </allow>
-            <allow>
-                <role>ROLE_ADMINISTRATOR</role>
-                <operation>delete-media</operation>
-            </allow>
-            <allow>
-                <role>ROLE_ADMINISTRATOR</role>
-                <operation>update-acl</operation>
-            </allow>
-            <!-- you could also use a wildcard -->
-            <!--
-            <allow>
-                <role>ROLE_ADMINISTRATOR</role>
+                <role>ROLE_CHASSIS_ADMINISTRATOR</role>
                 <operation>*</operation>
             </allow>
-            -->
         </rules>
     </acl>
 ;
@@ -154,101 +103,64 @@ declare function config:default-collection-acl(
     $user as xs:string
 ) as element(acl)
 { 
-    <acl>
-        <rules>
-        
-            <!--  
-            Authors can create entries and media, and can list the collection,
-            but can only retrieve resources they have created.
-            -->
-            
-            <allow>
-                <role>ROLE_AUTHOR</role>
-                <operation>create-member</operation>
-            </allow>
-            <allow>
-                <role>ROLE_AUTHOR</role>
-                <operation>create-media</operation>
-            </allow>
-            <allow>
-                <role>ROLE_AUTHOR</role>
-                <operation>list-collection</operation>
-            </allow>
-            
-            <!--
-            Editors can list the collection, retrieve and update any member.
-            -->
-            
-            <allow>
-                <role>ROLE_EDITOR</role>
-                <operation>list-collection</operation>
-            </allow>
-            <allow>
-                <role>ROLE_EDITOR</role>
-                <operation>retrieve-member</operation>
-            </allow>
-            <allow>
-                <role>ROLE_EDITOR</role>
-                <operation>update-member</operation>
-            </allow>
-            <allow>
-                <role>ROLE_EDITOR</role>
-                <operation>delete-member</operation>
-            </allow>
+    if ( $request-path-info = "/studies" )
 
-            <!-- Media editors -->
-            
-            <allow>
-                <role>ROLE_MEDIA_EDITOR</role>
-                <operation>list-collection</operation>
-            </allow>
-            <allow>
-                <role>ROLE_MEDIA_EDITOR</role>
-                <operation>retrieve-member</operation>
-            </allow>
-            <allow>
-                <role>ROLE_MEDIA_EDITOR</role>
-                <operation>retrieve-media</operation>
-            </allow>
-            <allow>
-                <role>ROLE_MEDIA_EDITOR</role>
-                <operation>update-media</operation>
-            </allow>
-            <allow>
-                <role>ROLE_MEDIA_EDITOR</role>
-                <operation>delete-media</operation>
-            </allow>
-            
-            <!--
-            Readers can list the collection and retrieve any member.
-            -->
-            
-            <allow>
-                <role>ROLE_READER</role>
-                <operation>list-collection</operation>
-            </allow>
-            <allow>
-                <role>ROLE_READER</role>
-                <operation>retrieve-member</operation>
-            </allow>
-            <allow>
-                <role>ROLE_READER</role>
-                <operation>retrieve-media</operation>
-            </allow>
-            
-            <!--
-            Data authors can only create media resources with a specific media
-            type.
-            -->
-            
-            <allow>
-                <role>ROLE_DATA_AUTHOR</role>
-                <operation>create-media</operation>
-                <media-range>application/vnd.ms-excel</media-range>
-            </allow>
-            
-        </rules>
-    </acl>
+    then
+
+        <acl>
+            <rules>
+                <allow>
+                    <role>ROLE_CHASSIS_SUBMITTER</role>
+                    <operation>create-member</operation>
+                </allow>
+                <allow>
+                    <role>ROLE_CHASSIS_SUBMITTER</role>
+                    <operation>list-collection</operation>
+                </allow>
+            </rules>
+        </acl>
+        
+    else if ( $request-path-info = "/media" )
+
+    then 
+        
+        <acl>
+            <rules>
+                <allow>
+                    <role>ROLE_CHASSIS_SUBMITTER</role>
+                    <operation>create-media</operation>
+                </allow>
+                <allow>
+                    <role>ROLE_CHASSIS_SUBMITTER</role>
+                    <operation>list-collection</operation>
+                </allow>
+            </rules>
+        </acl>
+
+    else if ( $request-path-info = "/submissions" )
+
+    then 
+        
+        <acl>
+            <rules>
+                <allow>
+                    <role>ROLE_CHASSIS_SUBMITTER</role>
+                    <operation>create-member</operation>
+                </allow>
+                <allow>
+                    <role>ROLE_CHASSIS_SUBMITTER</role>
+                    <operation>list-collection</operation>
+                </allow>
+            </rules>
+        </acl>
+        
+    else
+
+        (: TODO other collections :)
+        <acl>
+            <rules>
+            </rules>
+        </acl>
 };
 
 
@@ -261,73 +173,92 @@ declare function config:default-resource-acl(
 ) as element(acl)
 {
 
-	<acl>
-		<rules>
-		
-		    <!-- 
-		    The user who created the resource has full rights.
-		    -->
-		    
-            <allow>
-                <user>{$user}</user>
-                <operation>retrieve-member</operation>
-            </allow>
-            <allow>
-                <user>{$user}</user>
-                <operation>update-member</operation>
-            </allow>
-            <allow>
-                <user>{$user}</user>
-                <operation>delete-member</operation>
-            </allow>
-            <allow>
-                <user>{$user}</user>
-                <operation>retrieve-media</operation>
-            </allow>
-            <allow>
-                <user>{$user}</user>
-                <operation>update-media</operation>
-            </allow>
-            <allow>
-                <user>{$user}</user>
-                <operation>delete-media</operation>
-            </allow>
-            <allow>
-                <user>{$user}</user>
-                <operation>update-acl</operation>
-            </allow>
-            
-		</rules>
-	</acl>
+    if ( starts-with( $request-path-info , "/studies" ) )
+    
+    then
 
-	(: you could also use groups, which makes it a bit easier to add more owners :)
-		
-	(:
-	<acl>
-		<groups>
-			<group name="owners">
-                <user>{$user}</user>
-			</group>
-		</groups>
-		<rules>
-            <allow>
-                <group>owners</group>
-                <operation>retrieve-member</operation>
-            </allow>
-            <allow>
-                <group>owners</group>
-                <operation>update-member</operation>
-            </allow>
-            <allow>
-                <group>owners</group>
-                <operation>delete-member</operation>
-            </allow>
-            <allow>
-                <group>owners</group>
-                <operation>update-acl</operation>
-            </allow>
-		</rules>
-	</acl>
-	:)
+    	<acl>
+    		<groups>
+    			<group name="owners">
+                    <user>{$user}</user>
+    			</group>
+    		</groups>
+    		<rules>
+                <allow>
+                    <group>owners</group>
+                    <operation>retrieve-member</operation>
+                </allow>
+                <allow>
+                    <group>owners</group>
+                    <operation>update-member</operation>
+                </allow>
+                <allow>
+                    <group>owners</group>
+                    <operation>update-acl</operation>
+                </allow>
+    		</rules>
+    	</acl>
+    	
+    else if ( starts-with( $request-path-info , "/media" ) )
+    
+    then
+
+    	<acl>
+    		<groups>
+    			<group name="owners">
+                    <user>{$user}</user>
+    			</group>
+    		</groups>
+    		<rules>
+                <allow>
+                    <group>owners</group>
+                    <operation>retrieve-member</operation>
+                </allow>
+                <allow>
+                    <group>owners</group>
+                    <operation>update-member</operation>
+                </allow>
+                <allow>
+                    <group>owners</group>
+                    <operation>retrieve-media</operation>
+                </allow>
+                <allow>
+                    <group>owners</group>
+                    <operation>update-acl</operation>
+                </allow>
+    		</rules>
+    	</acl>
+
+    else if ( starts-with( $request-path-info , "/submissions" ) )
+    
+    then
+
+    	<acl>
+    		<groups>
+    			<group name="owners">
+                    <user>{$user}</user>
+    			</group>
+    		</groups>
+    		<rules>
+                <allow>
+                    <group>owners</group>
+                    <operation>retrieve-member</operation>
+                </allow>
+                <allow>
+                    <group>owners</group>
+                    <operation>update-acl</operation>
+                </allow>
+    		</rules>
+    	</acl>
+
+    else
+
+        (: TODO other collections :)
+        <acl>
+            <rules>
+            </rules>
+        </acl>
+    
+
 };
 

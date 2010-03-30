@@ -243,9 +243,9 @@ public class UploadFileFormSubmitHandler extends HttpServlet {
 
 		}
 
-		String entryUrl = mediaCollectionUrl + mediaEntry.getEditLink().getHref().toASCIIString(); // handle relative urls
+		String entryUrl = mediaEntry.getEditLink().getHref().toASCIIString(); 
 
-		options.setContentType("application/atom+xml; type=entry; charset=UTF-8"); // needed, otherwise content type application/xml, which exist rejects
+		options.setContentType("application/atom+xml; type=entry; charset=UTF-8"); 
 
 		ClientResponse res = client.put(entryUrl, mediaEntry, options);
 
@@ -266,9 +266,11 @@ public class UploadFileFormSubmitHandler extends HttpServlet {
 		if (cookies != null) {
 			for (Cookie cookie : cookies) {
 				String domain = cookie.getDomain();
+				if (domain == null) domain = request.getLocalName();
 				String name = cookie.getName();
 				String value = cookie.getValue();
 				String path = cookie.getPath();
+				if (path == null) path = "/"; 
 				int maxAge = cookie.getMaxAge();
 				boolean secure = cookie.getSecure();
 				log.info("forwarding cookie, domain: "+domain+", name: "+name+", value: "+value+", path: "+path+", maxAge: "+maxAge+", secure: "+secure);

@@ -330,7 +330,7 @@
     <init-param>
       <description>the URL of the Atom collection where the uploaded file content (i.e., media) will be POSTed</description>
       <param-name>collection.media.url</param-name>
-      <param-value>http://localhost:8081/chassis-wwarn-ui/atombeat/content/media</param-value>
+      <param-value>http://localhost:8080/chassis-wwarn-ui/atombeat/content/media</param-value>
     </init-param>
   </servlet>
 
@@ -348,12 +348,12 @@
     <init-param>
       <description>the URL of the Atom collection where the uploaded file content (i.e., media) will be POSTed</description>
       <param-name>collection.media.url</param-name>
-      <param-value>http://localhost:8081/chassis-wwarn-ui/atombeat/content/media</param-value>
+      <param-value>http://localhost:8080/chassis-wwarn-ui/atombeat/content/media</param-value>
     </init-param>
     <init-param>
       <description>the URL of the Atom collection where the derivation content will be POSTed</description>
       <param-name>collection.derivations.url</param-name>
-      <param-value>http://localhost:8081/chassis-wwarn-ui/atombeat/content/derivations</param-value>
+      <param-value>http://localhost:8080/chassis-wwarn-ui/atombeat/content/derivations</param-value>
     </init-param>
   </servlet>
 
