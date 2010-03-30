@@ -14,6 +14,7 @@ import org.cggh.chassis.generic.widget.client.MapMemory;
 import org.cggh.chassis.generic.widget.client.WidgetMemory;
 
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.http.client.URL;
 
 
 
@@ -116,7 +117,7 @@ public class SubmitWidget extends DelegatingWidget<SubmitWidgetModel, SubmitWidg
 
 		
 		
-		private static final String KEY_STUDYID = "studyid";
+		private static final String KEY_STUDY = "study";
 		
 		
 		
@@ -132,7 +133,7 @@ public class SubmitWidget extends DelegatingWidget<SubmitWidgetModel, SubmitWidg
 			String selectedStudyId = model.getSelectedStudyId();
 			
 			if (selectedStudyId != null) {
-				map.put(KEY_STUDYID, selectedStudyId);
+				map.put(KEY_STUDY, URL.encodeComponent(selectedStudyId));
 			}
 
 			log.leave();
@@ -153,14 +154,14 @@ public class SubmitWidget extends DelegatingWidget<SubmitWidgetModel, SubmitWidg
 			
 			model.setStatus(AsyncWidgetModel.STATUS_INITIAL);
 			
-			String studyId = mnemonic.get(KEY_STUDYID);
+			String studyId = mnemonic.get(KEY_STUDY);
 			
 			log.debug("found studyId: "+studyId);
 			
 			if (studyId != null) {
 				
 				log.debug("set selected study id");
-				setSelectedStudy(studyId);
+				setSelectedStudy(URL.decodeComponent(studyId));
 				
 				log.debug("refresh and call back");
 				deferredMemory = refreshAndCallback().adapt(new Function<ChassisWidget, WidgetMemory>() {

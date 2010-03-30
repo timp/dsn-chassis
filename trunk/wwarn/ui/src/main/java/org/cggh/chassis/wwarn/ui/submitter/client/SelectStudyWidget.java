@@ -14,6 +14,8 @@ import org.cggh.chassis.generic.widget.client.MapMemory;
 import org.cggh.chassis.generic.widget.client.WidgetEventChannel;
 import org.cggh.chassis.generic.widget.client.WidgetMemory;
 
+import com.google.gwt.http.client.URL;
+
 /**
  * When told to refresh itself, the SelectStudyWidget makes a GET request to the Studies Query Service URL, 
  * to retrieve a feed of all study entries owned by the user. 
@@ -117,7 +119,7 @@ public class SelectStudyWidget
 
 	private class Memory extends MapMemory {
 
-		private static final String KEY_STUDYID = "studyid";
+		private static final String KEY_STUDY = "study";
 
 
 		@Override
@@ -129,7 +131,7 @@ public class SelectStudyWidget
 			String selectedStudyId = model.selectedStudyId.get();
 			
 			if (selectedStudyId != null) {
-				map.put(KEY_STUDYID, selectedStudyId);
+				map.put(KEY_STUDY, URL.encodeComponent(selectedStudyId));
 			}
 			
 			log.leave();
@@ -144,14 +146,14 @@ public class SelectStudyWidget
 			
 			model.setStatus(AsyncWidgetModel.STATUS_INITIAL);
 			
-			String studyId = mnemonic.get(KEY_STUDYID);
+			String studyId = mnemonic.get(KEY_STUDY);
 			
 			log.debug("found studyId: "+studyId);
 			
 			if (studyId != null) {
 				
 				log.debug("set selected study id to:" + studyId);
-				setSelectedStudy(studyId);
+				setSelectedStudy(URL.decodeComponent(studyId));
 				
 				deferredMemory = refreshAndCallback().adapt(new Function<ChassisWidget, WidgetMemory>() {
 
