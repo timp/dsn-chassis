@@ -43,12 +43,10 @@ public class ViewQuestionnaireWidget
 	}
 	// Using init() rather than constructor because reset() uses init().
 	public void init() {
-		
 		super.init();
-		
+	
 
 		this.controller = new ViewQuestionnaireWidgetController(this, this.model);
-		this.renderer.setController(controller);
 
 	}
 	

@@ -43,7 +43,7 @@ public class RevisionSummaryWidget
 
 	@UiField HTMLPanel mainPanel;
 	@UiField HTMLPanel contentPanel;
-	@UiField HTMLPanel pendingPanel;
+
 	@UiField HTMLPanel errorPanel;
 	@UiField FlowPanel errorMessage;
 
@@ -86,40 +86,10 @@ public class RevisionSummaryWidget
 	
 	
 	
-    protected void syncUIWithStatus(Status status) {
-		log.enter("syncUIWithStatus");		
-		log.debug("status:" + status);
-		
-		if (status == null) {
-			// nothing to do yet
-		}
-		else if (status instanceof AsyncWidgetModel.InitialStatus) {
-			pendingPanel.setVisible(true);	
-		}
-		else if (status == ListStudiesWidgetModel.STATUS_RETRIEVE_STUDY_FEED_PENDING) {
-			// still pending
-		}			
-		else if (status == ListStudiesWidgetModel.STATUS_READY_FOR_INTERACTION) {
-			pendingPanel.setVisible(false);	
-		}			
-		else if (status instanceof AsyncWidgetModel.ReadyStatus) {
-			pendingPanel.setVisible(false);	
-		}			
-		else if (status instanceof AsyncWidgetModel.ErrorStatus) {
-			message.set("Error status given on asynchronous call.");
-		}			
-		else {
-			message.set("Unhandled status:" + status);
-		}
-		
-		log.leave();
-	}
-	
 	protected void syncUIWithMessage(String message) {
 		log.enter("syncUIWithMessage");
 
 		if (message != null) {
-			pendingPanel.setVisible(false);	
 			contentPanel.setVisible(false);
 			errorMessage.clear();
 			errorMessage.add(new HTML(message));

@@ -39,9 +39,6 @@ public class StudySummaryWidget
 	 	extends ChassisWidget {
 
 	private static final Log log = LogFactory.getLog(StudySummaryWidget.class);
-	
-
-
 
 
 	@UiTemplate("StudySummaryWidget.ui.xml")
@@ -53,7 +50,7 @@ public class StudySummaryWidget
 
 	@UiField HTMLPanel mainPanel;
 	@UiField HTMLPanel contentPanel;
-	@UiField HTMLPanel pendingPanel;
+
 	@UiField HTMLPanel errorPanel;
 	@UiField FlowPanel errorMessage;
 
@@ -62,21 +59,35 @@ public class StudySummaryWidget
     @UiField StudyActionsWidget studyActionsWidgetUiField;
 
 
+	public final ObservableProperty<String> studyUrl = new ObservableProperty<String>();
+
 	public final ObservableProperty<Element> studyEntry = new ObservableProperty<Element>();
 
-	public final ObservableProperty<Status> status = new ObservableProperty<Status>();
+
 	public final ObservableProperty<String> message = new ObservableProperty<String>();
 
 	public final WidgetEventChannel studyActionsListStudiesNavigationEventChannel = new WidgetEventChannel(this);
 	public final WidgetEventChannel studyActionsViewStudyNavigationEventChannel = new WidgetEventChannel(this);
-	public final WidgetEventChannel studyActionsUploadDataFilesWizardNavigationEventChannel = new WidgetEventChannel(this);
 	public final WidgetEventChannel studyActionsViewStudyQuestionnaireNavigationEventChannel = new WidgetEventChannel(this);
-	public final WidgetEventChannel studyActionsEditStudyQuestionnaireNavigationEventChannel = new WidgetEventChannel(this);
 	public final WidgetEventChannel studyActionsListStudyRevisionsNavigationEventChannel = new WidgetEventChannel(this);
+	public final WidgetEventChannel studyActionsEditStudyQuestionnaireNavigationEventChannel = new WidgetEventChannel(this);
+	public final WidgetEventChannel studyActionsUploadDataFilesWizardNavigationEventChannel = new WidgetEventChannel(this);
+
+
+
+	
+	@Override
+	public void refresh() {
+		log.enter("refresh");
+		
+		studyActionsWidgetUiField.refresh();
+
+		log.leave();	
+	}
+	
 
 	@Override
 	protected void renderUI() {
-
 		log.enter("renderUI");
 		
 		this.clear();
@@ -92,26 +103,18 @@ public class StudySummaryWidget
 	protected void bindUI() {
 		super.bindUI();
 		this.childWidgetEventHandlerRegistrations.add(
+				studyActionsWidgetUiField.studyActionsListStudiesNavigationEventChannel.addHandler(new WidgetEventHandler<WidgetEvent>() {
+			public void onEvent(WidgetEvent e) {
+				log.enter("onEvent(StudyActionsListStudiesNavigation)");
+				studyActionsListStudiesNavigationEventChannel.fireEvent(e);
+				log.leave();
+			}
+		}));
+ 		this.childWidgetEventHandlerRegistrations.add(
 				studyActionsWidgetUiField.studyActionsViewStudyNavigationEventChannel.addHandler(new WidgetEventHandler<WidgetEvent>() {
 			public void onEvent(WidgetEvent e) {
 				log.enter("onEvent(StudyActionsViewStudyNavigation)");
 				studyActionsViewStudyNavigationEventChannel.fireEvent(e);
-				log.leave();
-			}
-		}));
- 		this.childWidgetEventHandlerRegistrations.add(
-				studyActionsWidgetUiField.studyActionsEditStudyQuestionnaireNavigationEventChannel.addHandler(new WidgetEventHandler<WidgetEvent>() {
-			public void onEvent(WidgetEvent e) {
-				log.enter("onEvent(StudyActionsEditStudyQuestionnaireNavigation)");
-				studyActionsEditStudyQuestionnaireNavigationEventChannel.fireEvent(e);
-				log.leave();
-			}
-		}));
- 		this.childWidgetEventHandlerRegistrations.add(
-				studyActionsWidgetUiField.studyActionsListStudyRevisionsNavigationEventChannel.addHandler(new WidgetEventHandler<WidgetEvent>() {
-			public void onEvent(WidgetEvent e) {
-				log.enter("onEvent(StudyActionsListStudyRevisionsNavigation)");
-				studyActionsListStudyRevisionsNavigationEventChannel.fireEvent(e);
 				log.leave();
 			}
 		}));
@@ -124,63 +127,78 @@ public class StudySummaryWidget
 			}
 		}));
  		this.childWidgetEventHandlerRegistrations.add(
-				studyActionsWidgetUiField.studyActionsListStudiesNavigationEventChannel.addHandler(new WidgetEventHandler<WidgetEvent>() {
+				studyActionsWidgetUiField.studyActionsListStudyRevisionsNavigationEventChannel.addHandler(new WidgetEventHandler<WidgetEvent>() {
 			public void onEvent(WidgetEvent e) {
-				log.enter("onEvent(StudyActionsListStudiesNavigation)");
-				studyActionsListStudiesNavigationEventChannel.fireEvent(e);
+				log.enter("onEvent(StudyActionsListStudyRevisionsNavigation)");
+				studyActionsListStudyRevisionsNavigationEventChannel.fireEvent(e);
 				log.leave();
 			}
 		}));
- 		
+ 		this.childWidgetEventHandlerRegistrations.add(
+				studyActionsWidgetUiField.studyActionsEditStudyQuestionnaireNavigationEventChannel.addHandler(new WidgetEventHandler<WidgetEvent>() {
+			public void onEvent(WidgetEvent e) {
+				log.enter("onEvent(StudyActionsEditStudyQuestionnaireNavigation)");
+				studyActionsEditStudyQuestionnaireNavigationEventChannel.fireEvent(e);
+				log.leave();
+			}
+		}));
+ 		this.childWidgetEventHandlerRegistrations.add(
+				studyActionsWidgetUiField.studyActionsUploadDataFilesWizardNavigationEventChannel.addHandler(new WidgetEventHandler<WidgetEvent>() {
+			public void onEvent(WidgetEvent e) {
+				log.enter("onEvent(StudyActionsUploadDataFilesWizardNavigation)");
+				studyActionsUploadDataFilesWizardNavigationEventChannel.fireEvent(e);
+				log.leave();
+			}
+		}));
+ 
+
+	// Model changes
+
+	
+		message.addChangeHandler(new PropertyChangeHandler<String>() {
+			public void onChange(PropertyChangeEvent<String> e) {
+				log.enter("onChange<String>");		
+				syncUIWithMessage(e.getAfter());
+				log.leave();
+			}
+		});
+
+	
+	
+		studyEntry.addChangeHandler(new PropertyChangeHandler<Element>() {
+			public void onChange(PropertyChangeEvent<Element> e) {
+				log.enter("onchange(studyEntry)");
+				syncUIWithStudyEntry(e.getAfter());
+				log.leave();
+			}
+		});
+
+
+	
 	}
 
 	@Override
 	protected void syncUI() {
-		syncUIWithStatus(status.get());
         syncUIWithStudyEntry(studyEntry.get());
-        registerHandlersForModelChanges();
     }
 
-
-	protected void registerHandlersForModelChanges() {
-		log.enter("registerHandlersForModelChanges");
-		
-		status.addChangeHandler(new PropertyChangeHandler<Status>() {
-		
-			public void onChange(PropertyChangeEvent<Status> e) {
-				log.enter("onChange(status)");
-			
-				log.debug("Status " + e.getAfter());
-				syncUIWithStatus(e.getAfter());
-			
-				log.leave();
-			}
-		});
-		studyEntry.addChangeHandler(new PropertyChangeHandler<Element>() {
-			
-			public void onChange(PropertyChangeEvent<Element> e) {
-				log.enter("onChange(Element)");
-				syncUIWithStudyEntry(e.getAfter());
-				log.leave();
-			}
-			
-		});
-		log.leave();
-	}
 
 
 
 	
-	@Override
-	public void refresh() {
-		log.enter("refresh");
-		
-		// TODO refresh this
+	protected void syncUIWithMessage(String message) {
+		log.enter("syncUIWithMessage");
 
-		studyActionsWidgetUiField.refresh();
+		if (message != null) {
+			contentPanel.setVisible(false);
+			errorMessage.clear();
+			errorMessage.add(new HTML(message));
+			errorPanel.setVisible(true);
+		}
 
-		log.leave();	
+		log.leave();
 	}
+		
 	
 	
 	
@@ -217,52 +235,9 @@ public class StudySummaryWidget
 			
 			this.studySummaryPanel.clear();
 			this.studySummaryPanel.add(table);
-			pendingPanel.setVisible(false);	
 		}
 	}
 
-	protected void syncUIWithStatus(Status status) {
-		log.enter("syncUIWithStatus");		
-		log.debug("status:" + status);
-		
-		if (status == null) {
-			// nothing to do yet
-		}
-		else if (status instanceof AsyncWidgetModel.InitialStatus) {
-			pendingPanel.setVisible(true);	
-		}
-		else if (status == ListStudiesWidgetModel.STATUS_RETRIEVE_STUDY_FEED_PENDING) {
-			// still pending
-		}			
-		else if (status == ListStudiesWidgetModel.STATUS_READY_FOR_INTERACTION) {
-			pendingPanel.setVisible(false);	
-		}			
-		else if (status instanceof AsyncWidgetModel.ReadyStatus) {
-			pendingPanel.setVisible(false);	
-		}			
-		else if (status instanceof AsyncWidgetModel.ErrorStatus) {
-			message.set("Error status given on asynchronous call.");
-		}			
-		else {
-			message.set("Unhandled status:" + status);
-		}
-		
-		log.leave();
-	}
 
-	protected void syncUIWithMessage(String message) {
-		log.enter("syncUIWithMessage");
-
-		if (message != null) {
-			pendingPanel.setVisible(false);	
-			contentPanel.setVisible(false);
-			errorMessage.clear();
-			errorMessage.add(new HTML(message));
-			errorPanel.setVisible(true);
-		}
-
-		log.leave();
-	}
-		
 
 }

@@ -31,8 +31,11 @@ public class ViewStudyQuestionnaireWidgetController {
 	private ViewStudyQuestionnaireWidget owner;
 	private ViewStudyQuestionnaireWidgetModel model;
 
+	public ViewStudyQuestionnaireWidgetController(ViewStudyQuestionnaireWidget owner, ViewStudyQuestionnaireWidgetModel model) {
+		this.owner = owner;
+		this.model = model;
+	}
 
-	private static String STUDY_ENTRY_URI = "/atom/edit/studies/id.atom";
 
 			
 	public Deferred<Document> retrieveStudy() {
@@ -139,20 +142,8 @@ public class ViewStudyQuestionnaireWidgetController {
 	
 	
         
-	private StudySummaryWidget studySummaryWidget;
-
- 
-	private ViewQuestionnaireWidget viewQuestionnaireWidget;
-
- 
 	
-	
-	public ViewStudyQuestionnaireWidgetController(ViewStudyQuestionnaireWidget owner, ViewStudyQuestionnaireWidgetModel model) {
-		this.owner = owner;
-		this.model = model;
-	}
 
-	
 	
 
 }
