@@ -15,10 +15,10 @@ import org.cggh.chassis.generic.widget.client.MultiWidget;
  * @author timp
  *
  */
-public class AddCurationWidget 
+public class UploadDataFilesWizardWidget 
 	 	extends MultiWidget {
 
-	private static final Log log = LogFactory.getLog(AddCurationWidget.class);
+	private static final Log log = LogFactory.getLog(UploadDataFilesWizardWidget.class);
 	
 	public final ObservableProperty<Status> status = new ObservableProperty<Status>();
 	public final ObservableProperty<String> message = new ObservableProperty<String>();

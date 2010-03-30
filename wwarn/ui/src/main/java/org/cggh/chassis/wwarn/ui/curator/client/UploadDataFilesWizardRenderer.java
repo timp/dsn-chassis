@@ -40,15 +40,15 @@ import com.google.gwt.xml.client.Element;
  *
  * @author timp
  */
-public class AddCurationWidgetRenderer extends
-		ChassisWidgetRenderer<AddCurationWidgetModel> {
+public class UploadDataFilesWizardRenderer extends
+		ChassisWidgetRenderer<UploadDataFilesWizardWidgetModel> {
 
-	private Log log = LogFactory.getLog(AddCurationWidgetRenderer.class);
+	private Log log = LogFactory.getLog(UploadDataFilesWizardRenderer.class);
 	
 
 	@UiTemplate("AddCurationWidget.ui.xml")
 	interface AddCurationWidgetRendererUiBinder extends
-			UiBinder<HTMLPanel, AddCurationWidgetRenderer> {
+			UiBinder<HTMLPanel, UploadDataFilesWizardRenderer> {
 	}
 	private static AddCurationWidgetRendererUiBinder uiBinder = 
 		GWT.create(AddCurationWidgetRendererUiBinder.class);
@@ -62,9 +62,9 @@ public class AddCurationWidgetRenderer extends
 
 
 
-	private AddCurationWidget owner;
+	private UploadDataFilesWizardWidget owner;
 	
-	public AddCurationWidgetRenderer(AddCurationWidget owner) {
+	public UploadDataFilesWizardRenderer(UploadDataFilesWizardWidget owner) {
 		this.owner = owner;	}
 
 
@@ -113,7 +113,7 @@ public class AddCurationWidgetRenderer extends
 	
 
 	@Override
-	protected void bindUI(AddCurationWidgetModel model) {
+	protected void bindUI(UploadDataFilesWizardWidgetModel model) {
 		super.bindUI(model);
 		errorPanel.setVisible(false);	
 	}

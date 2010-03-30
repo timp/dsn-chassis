@@ -17,7 +17,7 @@ import com.google.gwt.xml.client.Element;
  *
  * @author timp
  */
-public class AddCurationWidgetModel {
+public class UploadDataFilesWizardWidgetModel {
 
 	
 	public static class RetrieveQuestionnairePendingStatus extends AsyncRequestPendingStatus {}
