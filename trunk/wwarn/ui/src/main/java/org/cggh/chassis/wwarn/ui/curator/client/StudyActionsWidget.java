@@ -174,19 +174,18 @@ public class StudyActionsWidget
 
 			});
 
-			// TODO Add to metadata
-			Anchor uploadCuratedDataFiles = new Anchor("Upload curated data files"); // i18n
+			Anchor uploadDataFilesWizard = new Anchor("Upload curated data files"); // i18n
 			
-			uploadCuratedDataFiles.addClickHandler(new ClickHandler() {
+			uploadDataFilesWizard.addClickHandler(new ClickHandler() {
 				
 				public void onClick(ClickEvent e) {
 					
 					log.enter("onClick");
 					
-					ViewStudyNavigationEvent viewStudyNavigationEvent  = new ViewStudyNavigationEvent();
-					viewStudyNavigationEvent.setStudy(studyEntry);
+					UploadDataFilesWizardNavigationEvent uploadDataFilesWizardNavigationEvent  = new UploadDataFilesWizardNavigationEvent();
+					uploadDataFilesWizardNavigationEvent.setStudy(studyEntry);
 					
-					studyActionsViewStudyNavigationEventChannel.fireEvent(viewStudyNavigationEvent);
+					studyActionsViewStudyNavigationEventChannel.fireEvent(uploadDataFilesWizardNavigationEvent);
 					
 					log.leave();
 					
@@ -255,7 +254,7 @@ public class StudyActionsWidget
 			row.add(strongWidget("Actions")); // i18n
 			row.add(listAllStudies);
 			row.add(viewStudy);
-			row.add(uploadCuratedDataFiles);
+			row.add(uploadDataFilesWizard);
 			row.add(viewStudyQuestionnaire);
 			row.add(editStudyQuestionnaire);
     		row.add(listStudyRevisions);
