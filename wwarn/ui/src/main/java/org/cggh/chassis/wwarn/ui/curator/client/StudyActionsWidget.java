@@ -62,6 +62,7 @@ public class StudyActionsWidget
 	public final ObservableProperty<String> message = new ObservableProperty<String>();
 
 	public final WidgetEventChannel studyActionsListStudiesNavigationEventChannel = new WidgetEventChannel(this);
+	public final WidgetEventChannel studyActionsUploadDataFilesWizardNavigationEventChannel = new WidgetEventChannel(this);
 	public final WidgetEventChannel studyActionsViewStudyNavigationEventChannel = new WidgetEventChannel(this);
 	public final WidgetEventChannel studyActionsViewStudyQuestionnaireNavigationEventChannel = new WidgetEventChannel(this);
 	public final WidgetEventChannel studyActionsEditStudyQuestionnaireNavigationEventChannel = new WidgetEventChannel(this);
@@ -185,7 +186,7 @@ public class StudyActionsWidget
 					UploadDataFilesWizardNavigationEvent uploadDataFilesWizardNavigationEvent  = new UploadDataFilesWizardNavigationEvent();
 					uploadDataFilesWizardNavigationEvent.setStudy(studyEntry);
 					
-					studyActionsViewStudyNavigationEventChannel.fireEvent(uploadDataFilesWizardNavigationEvent);
+					studyActionsUploadDataFilesWizardNavigationEventChannel.fireEvent(uploadDataFilesWizardNavigationEvent);
 					
 					log.leave();
 					
