@@ -1,36 +1,22 @@
 package org.cggh.chassis.wwarn.ui.curator.client;
 
-import java.util.List;
-
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
-import org.cggh.chassis.generic.miniatom.client.AtomHelper;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
-import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.Status;
-import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.StatusChangeEvent;
-import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.StatusChangeHandler;
 import org.cggh.chassis.generic.widget.client.ChassisWidgetRenderer;
 import org.cggh.chassis.generic.widget.client.PropertyChangeEvent;
 import org.cggh.chassis.generic.widget.client.PropertyChangeHandler;
 import org.cggh.chassis.generic.widget.client.WidgetEvent;
 import org.cggh.chassis.generic.widget.client.WidgetEventHandler;
+import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.Status;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.ChangeEvent;
-import com.google.gwt.event.dom.client.ChangeHandler;
-import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.ListBox;
-import com.google.gwt.user.client.ui.TextArea;
-import com.google.gwt.user.client.ui.TextBox;
-import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;
 
 /**
@@ -136,32 +122,33 @@ public class ViewStudyWidgetRenderer extends
 	@Override
 	protected void registerHandlersForChildWidgetEvents() {
 		log.enter("registerHandlersForChildWidgetEvents");
-				this.childWidgetEventHandlerRegistrations.add(
-				studySummaryWidgetUiField.studyActionsViewStudyNavigationEventChannel.addHandler(new WidgetEventHandler() {
+		
+ 		this.childWidgetEventHandlerRegistrations.add(
+				studySummaryWidgetUiField.studyActionsListStudiesNavigationEventChannel.addHandler(new WidgetEventHandler<WidgetEvent>() {
+			public void onEvent(WidgetEvent e) {
+				log.enter("onEvent(studySummaryWidgetUiField.studyActionsListStudiesNavigation)");
+				owner.studyActionsListStudiesNavigationEventChannel.fireEvent(e);
+				log.leave();
+			}
+		}));
+		this.childWidgetEventHandlerRegistrations.add(
+				studySummaryWidgetUiField.studyActionsViewStudyNavigationEventChannel.addHandler(new WidgetEventHandler<WidgetEvent>() {
 			public void onEvent(WidgetEvent e) {
 				log.enter("onEvent(studySummaryWidgetUiField.studyActionsViewStudyNavigation)");
 				owner.studyActionsViewStudyNavigationEventChannel.fireEvent(e);
 				log.leave();
 			}
 		}));
- 		this.childWidgetEventHandlerRegistrations.add(
-				studySummaryWidgetUiField.studyActionsEditStudyQuestionnaireNavigationEventChannel.addHandler(new WidgetEventHandler() {
+		this.childWidgetEventHandlerRegistrations.add(
+				studySummaryWidgetUiField.studyActionsUploadDataFilesWizardNavigationEventChannel.addHandler(new WidgetEventHandler<WidgetEvent>() {
 			public void onEvent(WidgetEvent e) {
-				log.enter("onEvent(studySummaryWidgetUiField.studyActionsEditStudyQuestionnaireNavigation)");
-				owner.studyActionsEditStudyQuestionnaireNavigationEventChannel.fireEvent(e);
+				log.enter("onEvent(studySummaryWidgetUiField.studyActionsUploadDataFilesWizardNavigationEventChannel)");
+				owner.studyActionsUploadDataFilesWizardNavigationEventChannel.fireEvent(e);
 				log.leave();
 			}
 		}));
  		this.childWidgetEventHandlerRegistrations.add(
-				studySummaryWidgetUiField.studyActionsListStudyRevisionsNavigationEventChannel.addHandler(new WidgetEventHandler() {
-			public void onEvent(WidgetEvent e) {
-				log.enter("onEvent(studySummaryWidgetUiField.studyActionsListStudyRevisionsNavigation)");
-				owner.studyActionsListStudyRevisionsNavigationEventChannel.fireEvent(e);
-				log.leave();
-			}
-		}));
- 		this.childWidgetEventHandlerRegistrations.add(
-				studySummaryWidgetUiField.studyActionsViewStudyQuestionnaireNavigationEventChannel.addHandler(new WidgetEventHandler() {
+				studySummaryWidgetUiField.studyActionsViewStudyQuestionnaireNavigationEventChannel.addHandler(new WidgetEventHandler<WidgetEvent>() {
 			public void onEvent(WidgetEvent e) {
 				log.enter("onEvent(studySummaryWidgetUiField.studyActionsViewStudyQuestionnaireNavigation)");
 				owner.studyActionsViewStudyQuestionnaireNavigationEventChannel.fireEvent(e);
@@ -169,10 +156,18 @@ public class ViewStudyWidgetRenderer extends
 			}
 		}));
  		this.childWidgetEventHandlerRegistrations.add(
-				studySummaryWidgetUiField.studyActionsListStudiesNavigationEventChannel.addHandler(new WidgetEventHandler() {
+				studySummaryWidgetUiField.studyActionsEditStudyQuestionnaireNavigationEventChannel.addHandler(new WidgetEventHandler<WidgetEvent>() {
 			public void onEvent(WidgetEvent e) {
-				log.enter("onEvent(studySummaryWidgetUiField.studyActionsListStudiesNavigation)");
-				owner.studyActionsListStudiesNavigationEventChannel.fireEvent(e);
+				log.enter("onEvent(studySummaryWidgetUiField.studyActionsEditStudyQuestionnaireNavigation)");
+				owner.studyActionsEditStudyQuestionnaireNavigationEventChannel.fireEvent(e);
+				log.leave();
+			}
+		}));
+ 		this.childWidgetEventHandlerRegistrations.add(
+				studySummaryWidgetUiField.studyActionsListStudyRevisionsNavigationEventChannel.addHandler(new WidgetEventHandler<WidgetEvent>() {
+			public void onEvent(WidgetEvent e) {
+				log.enter("onEvent(studySummaryWidgetUiField.studyActionsListStudyRevisionsNavigation)");
+				owner.studyActionsListStudyRevisionsNavigationEventChannel.fireEvent(e);
 				log.leave();
 			}
 		}));
