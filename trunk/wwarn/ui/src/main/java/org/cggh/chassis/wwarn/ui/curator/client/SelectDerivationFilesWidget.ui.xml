@@ -37,12 +37,6 @@
 			<g:FlowPanel ui:field="errorMessage"  title="SelectDerivationFiles"></g:FlowPanel>
     </g:HTMLPanel>
 
-		<g:HTMLPanel ui:field="pendingPanel">
-			<p title="SelectDerivationFiles">
-				<ui:msg>pending... </ui:msg>
-			</p>
-		</g:HTMLPanel>
-
 		<g:HTMLPanel ui:field="contentPanel">
 
             <div id="SelectDerivationFiles" title="SelectDerivationFiles" class="widget">

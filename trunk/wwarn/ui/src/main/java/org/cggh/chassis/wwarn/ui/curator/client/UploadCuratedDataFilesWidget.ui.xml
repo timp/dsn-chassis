@@ -37,12 +37,6 @@
 			<g:FlowPanel ui:field="errorMessage"  title="UploadCuratedDataFiles"></g:FlowPanel>
     </g:HTMLPanel>
 
-		<g:HTMLPanel ui:field="pendingPanel">
-			<p title="UploadCuratedDataFiles">
-				<ui:msg>pending... </ui:msg>
-			</p>
-		</g:HTMLPanel>
-
 		<g:HTMLPanel ui:field="contentPanel">
 
             <div id="UploadCuratedDataFiles" title="UploadCuratedDataFiles" class="widget">

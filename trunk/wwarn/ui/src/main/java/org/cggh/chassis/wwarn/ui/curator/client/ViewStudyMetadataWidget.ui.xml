@@ -37,12 +37,6 @@
 			<g:FlowPanel ui:field="errorMessage"  title="ViewStudyMetadata"></g:FlowPanel>
     </g:HTMLPanel>
 
-		<g:HTMLPanel ui:field="pendingPanel">
-			<p title="ViewStudyMetadata">
-				<ui:msg>pending... </ui:msg>
-			</p>
-		</g:HTMLPanel>
-
 		<g:HTMLPanel ui:field="contentPanel">
 
             <div id="ViewStudyMetadata" title="ViewStudyMetadata" class="widget">
