@@ -5,8 +5,6 @@ declare namespace exist = "http://exist.sourceforge.net/NS/exist" ;
 declare namespace request = "http://exist-db.org/xquery/request" ;
 declare namespace atom = "http://www.w3.org/2005/Atom" ;
 
-import module namespace chassis = "http://www.cggh.org/2009/chassis/xquery-functions" at "functions.xqm" ;
-
 (: serialization options :)
 
 declare option exist:serialize "method=xml media-type=application/xml indent=yes" ;
@@ -28,7 +26,7 @@ declare function local:output-entry(
 			    return 
 			        <atom:link rel="{$link/@rel}" href="{$link/@href}">
 			            {
-			                for $study in chassis:studies()
+			                for $study in collection("/db/atom/content/studies")//atom:entry
 			                where $study/atom:link[@rel="self"]/@href = $link/@href
 			                return $study
 			            }
@@ -38,7 +36,7 @@ declare function local:output-entry(
                 return 
                     <atom:link rel="{$link/@rel}" href="{$link/@href}">
                         {
-                            for $media in chassis:media()
+                            for $media in collection("/db/atom/content/media")//atom:entry
                             where $media/atom:link[@rel="self"]/@href = $link/@href
                             return $media
                         }
@@ -49,7 +47,7 @@ declare function local:output-entry(
 
 
 
-let $username := request:get-attribute("username")
+let $username := request:get-attribute("user-name")
 let $param-id := request:get-parameter("id", "")
 
 
@@ -58,7 +56,7 @@ return
 	<atom:feed>
 		<atom:title>Query Results</atom:title>
 		{
-			for $e in chassis:submissions()
+			for $e in collection("/db/atom/content/submissions")//atom:entry
 			where ( $e/atom:author/atom:email = $username ) 
 			and ( ($param-id != "" and $param-id = $e/atom:id) or $param-id = "" )
 			order by $e/atom:published
