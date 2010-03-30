@@ -53,7 +53,7 @@ public class ListStudiesWidgetRenderer extends
 	@UiField HTMLPanel errorPanel;
 	@UiField FlowPanel errorMessage;
 
-	@UiField FlowPanel tablePanel;
+	@UiField FlowPanel listStudiesPanel;
 	
 	
 	private ListStudiesWidget owner;
@@ -121,20 +121,21 @@ public class ListStudiesWidgetRenderer extends
 			log.debug("StudyFeed null");
 		else {
 			
-			List<Widget[]> rows = new ArrayList<Widget[]>();
+			List<List<Widget>> rows = new ArrayList<List<Widget>>();
 			
-			Widget[] headerRow = {
-				strongWidget("Study Title"), // TODO i18n
-				strongWidget("Modules"),     // TODO i18n
-				strongWidget("Submitters"),  // TODO i18n
-				strongWidget("Actions"),     // TODO i18n
-			};
+			List<Widget> headerRow = new ArrayList<Widget>();
+			headerRow.add(strongWidget("Study Title")); // i18n
+			
+			headerRow.add(strongWidget("Modules"));     // i18n
+			headerRow.add(strongWidget("Submitters"));  // i18n
+			headerRow.add(strongWidget("Actions"));     // i18n
+			
 			
 			rows.add(headerRow);
 			
 			for (final Element study : AtomHelper.getEntries(studyFeed.getDocumentElement())) { 
 				log.debug(study.toString());
-				Anchor viewStudyLink = new Anchor("view study"); // TODO i18n
+				Anchor viewStudyLink = new Anchor("view study"); // i18n
 				
 				viewStudyLink.addClickHandler(new ClickHandler() {
 					
@@ -154,17 +155,17 @@ public class ListStudiesWidgetRenderer extends
 					}
 
 				});
-				Widget[] row = {
-						new HTML(ChassisHelper.getTitle(study)),
-						new HTML(RenderUtils.join(ChassisHelper.getModules(study), ", ")),
-						new HTML(RenderUtils.join(ChassisHelper.getAuthorEmails(study), ", ")),
-						viewStudyLink
-				};
+				List<Widget> row = new ArrayList<Widget>();
+				row.add(new HTML(ChassisHelper.getTitle(study)));
+				row.add(new HTML(RenderUtils.join(ChassisHelper.getModules(study), ", ")));
+				row.add(new HTML(RenderUtils.join(ChassisHelper.getAuthorEmails(study), ", ")));
+				row.add(viewStudyLink);
+				
 				rows.add(row);
 			}
 			FlexTable table = RenderUtils.renderResultsTable(rows);
-			this.tablePanel.clear();
-			this.tablePanel.add(table);
+			this.listStudiesPanel.clear();
+			this.listStudiesPanel.add(table);
 			pendingPanel.setVisible(false);	
 
 		}
