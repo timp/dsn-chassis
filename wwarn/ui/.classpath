@@ -13,6 +13,6 @@
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/googlecode_dsn-chassis_generic_lib_gwt"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/3"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/googlecode_dsn-chassis_generic_lib_java"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/googlecode_dsn-chassis_generic_lib_java"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>
