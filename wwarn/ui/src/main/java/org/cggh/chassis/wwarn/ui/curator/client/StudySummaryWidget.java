@@ -8,9 +8,6 @@ import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.miniatom.client.ext.ChassisHelper;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
-import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.Status;
-import com.google.gwt.xml.client.Element;
-
 import org.cggh.chassis.generic.widget.client.ChassisWidget;
 import org.cggh.chassis.generic.widget.client.ObservableProperty;
 import org.cggh.chassis.generic.widget.client.PropertyChangeEvent;
@@ -31,9 +28,6 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.xml.client.Element;
-
-
-import org.cggh.chassis.generic.widget.client.WidgetEventChannel;
 
 
 
@@ -97,7 +91,7 @@ public class StudySummaryWidget
 	protected void bindUI() {
 		super.bindUI();
 		this.childWidgetEventHandlerRegistrations.add(
-				studyActionsWidgetUiField.studyActionsViewStudyNavigationEventChannel.addHandler(new WidgetEventHandler() {
+				studyActionsWidgetUiField.studyActionsViewStudyNavigationEventChannel.addHandler(new WidgetEventHandler<WidgetEvent>() {
 			public void onEvent(WidgetEvent e) {
 				log.enter("onEvent(StudyActionsViewStudyNavigation)");
 				studyActionsViewStudyNavigationEventChannel.fireEvent(e);
@@ -105,7 +99,7 @@ public class StudySummaryWidget
 			}
 		}));
  		this.childWidgetEventHandlerRegistrations.add(
-				studyActionsWidgetUiField.studyActionsEditStudyQuestionnaireNavigationEventChannel.addHandler(new WidgetEventHandler() {
+				studyActionsWidgetUiField.studyActionsEditStudyQuestionnaireNavigationEventChannel.addHandler(new WidgetEventHandler<WidgetEvent>() {
 			public void onEvent(WidgetEvent e) {
 				log.enter("onEvent(StudyActionsEditStudyQuestionnaireNavigation)");
 				studyActionsEditStudyQuestionnaireNavigationEventChannel.fireEvent(e);
@@ -113,7 +107,7 @@ public class StudySummaryWidget
 			}
 		}));
  		this.childWidgetEventHandlerRegistrations.add(
-				studyActionsWidgetUiField.studyActionsListStudyRevisionsNavigationEventChannel.addHandler(new WidgetEventHandler() {
+				studyActionsWidgetUiField.studyActionsListStudyRevisionsNavigationEventChannel.addHandler(new WidgetEventHandler<WidgetEvent>() {
 			public void onEvent(WidgetEvent e) {
 				log.enter("onEvent(StudyActionsListStudyRevisionsNavigation)");
 				studyActionsListStudyRevisionsNavigationEventChannel.fireEvent(e);
@@ -121,7 +115,7 @@ public class StudySummaryWidget
 			}
 		}));
  		this.childWidgetEventHandlerRegistrations.add(
-				studyActionsWidgetUiField.studyActionsViewStudyQuestionnaireNavigationEventChannel.addHandler(new WidgetEventHandler() {
+				studyActionsWidgetUiField.studyActionsViewStudyQuestionnaireNavigationEventChannel.addHandler(new WidgetEventHandler<WidgetEvent>() {
 			public void onEvent(WidgetEvent e) {
 				log.enter("onEvent(StudyActionsViewStudyQuestionnaireNavigation)");
 				studyActionsViewStudyQuestionnaireNavigationEventChannel.fireEvent(e);
@@ -129,7 +123,7 @@ public class StudySummaryWidget
 			}
 		}));
  		this.childWidgetEventHandlerRegistrations.add(
-				studyActionsWidgetUiField.studyActionsListStudiesNavigationEventChannel.addHandler(new WidgetEventHandler() {
+				studyActionsWidgetUiField.studyActionsListStudiesNavigationEventChannel.addHandler(new WidgetEventHandler<WidgetEvent>() {
 			public void onEvent(WidgetEvent e) {
 				log.enter("onEvent(StudyActionsListStudiesNavigation)");
 				studyActionsListStudiesNavigationEventChannel.fireEvent(e);
@@ -197,25 +191,24 @@ public class StudySummaryWidget
 			log.debug("Study null");
 		else {
 			
-			List<Widget[]> rows = new ArrayList<Widget[]>();
+			List<List<Widget>> rows = new ArrayList<List<Widget>>();
 			
-			Widget[] headerRow = {
-				strongWidget("Study Title"), // TODO i18n
-				strongWidget("Modules"),     // TODO i18n
-				strongWidget("Submitters"),  // TODO i18n
-				strongWidget("Published"),   // TODO i18n
-				strongWidget("Updated"),     // TODO i18n
-			};
+			List<Widget> headerRow = new ArrayList<Widget>();
+			headerRow.add(strongWidget("Study Title")); // i18n
+			headerRow.add(strongWidget("Modules"));     // i18n
+			headerRow.add(strongWidget("Submitters"));  // i18n
+			headerRow.add(strongWidget("Published"));   // i18n
+			headerRow.add(strongWidget("Updated"));     // i18n
 			
 			rows.add(headerRow);
 			
-			Widget[] row = {
-						new HTML(ChassisHelper.getTitle(studyEntry)),
-						new HTML(RenderUtils.join(ChassisHelper.getModules(studyEntry), ", ")),
-						new HTML(RenderUtils.join(ChassisHelper.getAuthorEmails(studyEntry), ", ")),
-						new HTML(ChassisHelper.getPublishedAsDate(studyEntry)),
-						new HTML(ChassisHelper.getUpdatedAsDate(studyEntry)),
-			};
+			List<Widget> row = new ArrayList<Widget>();
+			row.add(new HTML(ChassisHelper.getTitle(studyEntry)));
+			row.add(new HTML(RenderUtils.join(ChassisHelper.getModules(studyEntry), ", ")));
+			row.add(new HTML(RenderUtils.join(ChassisHelper.getAuthorEmails(studyEntry), ", ")));
+			row.add(new HTML(ChassisHelper.getPublishedAsDate(studyEntry)));
+			row.add(new HTML(ChassisHelper.getUpdatedAsDate(studyEntry)));
+			
 			rows.add(row);
 			
 			//FlexTable table = RenderUtils.renderResultsTable(rows);
