@@ -81,14 +81,14 @@
   <!-- store username in request attribute so it can be accessed easily in xqueries -->
   
   <filter>
-    <filter-name>SpringSecuritySetUserNameAttributeFilter</filter-name>
-    <filter-class>org.cggh.chassis.generic.http.SpringSecuritySetUserNameAttributeFilter</filter-class>
+    <filter-name>SpringSecuritySetUserRequestAttributesFilter</filter-name>
+    <filter-class>org.cggh.chassis.wwarn.ui.http.SpringSecuritySetUserRequestAttributesFilter</filter-class>
   </filter>
   
   
   <filter-mapping>
-    <filter-name>SpringSecuritySetUserNameAttributeFilter</filter-name>
-    <servlet-name>XQueryServlet</servlet-name>
+    <filter-name>SpringSecuritySetUserRequestAttributesFilter</filter-name>
+    <url-pattern>/*</url-pattern>
   </filter-mapping>
   
 
@@ -176,10 +176,28 @@
   </servlet>
 
 
-  <servlet-mapping>
-    <servlet-name>AtomServlet</servlet-name>
-    <url-pattern>/atom/*</url-pattern>
-  </servlet-mapping>
+  <filter>
+    <filter-name>XQueryURLRewrite</filter-name>
+    <filter-class>org.exist.http.urlrewrite.XQueryURLRewrite</filter-class>
+    
+    <!-- Defines the location of the controller-config.xml file, which defines
+      the root mappings. -->
+    <init-param>
+      <param-name>config</param-name>
+      <param-value>WEB-INF/controller-config.xml</param-value>
+    </init-param>
+    
+    <!-- This could also be stored inside the db: -->
+    <!--init-param>
+      <param-name>config</param-name>
+      <param-value>xmldb:exist:///db/controller-config.xml</param-value>
+      </init-param-->
+  </filter>
+  
+  <filter-mapping>
+    <filter-name>XQueryURLRewrite</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
   
   
   <!-- XQuery (not for database stored queries) -->
@@ -210,11 +228,6 @@
   </servlet>
   
   
-  <servlet-mapping>
-    <servlet-name>XQueryServlet</servlet-name>
-    <url-pattern>*.xql</url-pattern>
-  </servlet-mapping>
-  
   
   <!--+
       |
@@ -223,7 +236,7 @@
       |
       +-->
   
-
+  <!--
   <filter>
     <filter-name>PutAtomOnlyFilter</filter-name>
     <filter-class>org.cggh.chassis.generic.http.PutAtomOnlyFilter</filter-class>
@@ -234,7 +247,7 @@
     <filter-name>PutAtomOnlyFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
-  
+  -->
 
   <!--+
       |
@@ -243,6 +256,7 @@
       |
       +-->
   
+  <!--
   <filter>
     <filter-name>AtomAuthorFilter</filter-name>
     <filter-class>org.cggh.chassis.generic.http.AtomAuthorFilter</filter-class>
@@ -253,7 +267,7 @@
     <filter-name>AtomAuthorFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
-  
+  -->
  
   <!--+
       | HTTP Content Type Override Filter, for Atom Services 
@@ -262,7 +276,7 @@
       | N.B. this is needed for development only - remove this in production
       +-->
   
-  
+  <!--
   <filter>
     <filter-name>ContentTypeOverrideFilter</filter-name>
     <filter-class>org.cggh.chassis.generic.http.ContentTypeOverrideFilter</filter-class>
@@ -276,6 +290,7 @@
     <filter-name>ContentTypeOverrideFilter</filter-name>
     <servlet-name>AtomServlet</servlet-name>
   </filter-mapping>
+  -->
   
   <!--+
       | Authorization Override Filter
@@ -283,7 +298,7 @@
       | so eXist AtomServlet doesn't get confused by Spring Security
       | if configured to use HTTP basic or digest authentication
       +-->
-  
+  <!--
   <filter>
     <filter-name>AuthorizationOverrideFilter</filter-name>
     <filter-class>org.cggh.chassis.generic.http.RequestHeaderOverrideFilter</filter-class>
@@ -297,7 +312,7 @@
     <filter-name>AuthorizationOverrideFilter</filter-name>
     <servlet-name>AtomServlet</servlet-name>
   </filter-mapping>
-  
+  -->
   
   
   
@@ -315,7 +330,7 @@
     <init-param>
       <description>the URL of the Atom collection where the uploaded file content (i.e., media) will be POSTed</description>
       <param-name>collection.media.url</param-name>
-      <param-value>http://localhost:8080/chassis-wwarn-ui/atom/edit/media</param-value>
+      <param-value>http://localhost:8081/chassis-wwarn-ui/atombeat/content/media</param-value>
     </init-param>
   </servlet>
 
@@ -333,12 +348,12 @@
     <init-param>
       <description>the URL of the Atom collection where the uploaded file content (i.e., media) will be POSTed</description>
       <param-name>collection.media.url</param-name>
-      <param-value>http://localhost:8080/chassis-wwarn-ui/atom/edit/media</param-value>
+      <param-value>http://localhost:8081/chassis-wwarn-ui/atombeat/content/media</param-value>
     </init-param>
     <init-param>
       <description>the URL of the Atom collection where the derivation content will be POSTed</description>
       <param-name>collection.derivations.url</param-name>
-      <param-value>http://localhost:8080/chassis-wwarn-ui/atom/edit/derivations</param-value>
+      <param-value>http://localhost:8081/chassis-wwarn-ui/atombeat/content/derivations</param-value>
     </init-param>
   </servlet>
 

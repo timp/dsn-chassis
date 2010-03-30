@@ -196,7 +196,7 @@
     </category>
 
     <category name="org.exist" additivity="false">
-        <priority value="info"/>
+        <priority value="debug"/>
         <appender-ref ref="console"/>        
     </category>
     
