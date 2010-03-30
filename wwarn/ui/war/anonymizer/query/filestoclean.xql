@@ -18,7 +18,7 @@ declare option exist:serialize "method=xml media-type=application/xml indent=yes
 declare function local:has-failed-review( $entry as element(atom:entry) ) as xs:boolean
 {
     let $failed-reviews :=
-        for $review in collection("/db/reviews")//atom:entry
+        for $review in collection("/db/atom/content/reviews")//atom:entry
         where 
             $review//chassis:review/@type = "http://www.cggh.org/2010/chassis/terms/PersonalDataReview"
             and
@@ -39,7 +39,7 @@ declare function local:has-not-been-cleaned( $entry as element(atom:entry) ) as 
         and the input is the media entry in question :)
         
     let $cleaning-derivations :=
-        for $derivation in collection("/db/derivations")//atom:entry
+        for $derivation in collection("/db/atom/content/derivations")//atom:entry
         where $derivation//chassis:derivation/@type = "http://www.cggh.org/2010/chassis/terms/RemovePersonalData"
         and $derivation//atom:link[@rel="http://www.cggh.org/2010/chassis/terms/derivationInput"]/@href = $entry/atom:link[@rel="self"]/@href
         return $derivation
@@ -52,7 +52,7 @@ declare function local:has-not-been-cleaned( $entry as element(atom:entry) ) as 
 declare function local:review-published( $entry as element(atom:entry) )
 {
 
-			for $review in collection("/db/reviews")//atom:entry
+			for $review in collection("/db/atom/content/reviews")//atom:entry
 	        where 
 	            $review/atom:link[@rel="http://www.cggh.org/2010/chassis/terms/reviewSubject"]/@href = $entry/atom:link[@rel="self"]/@href
 	            
@@ -65,7 +65,7 @@ declare function local:review-published( $entry as element(atom:entry) )
 declare function local:review-summary( $entry as element(atom:entry) )
 {
 
-			for $review in collection("/db/reviews")//atom:entry
+			for $review in collection("/db/atom/content/reviews")//atom:entry
 	        where 
 	            $review/atom:link[@rel="http://www.cggh.org/2010/chassis/terms/reviewSubject"]/@href = $entry/atom:link[@rel="self"]/@href
 	            

@@ -219,9 +219,9 @@ public class CleanFileFormSubmitHandler extends HttpServlet {
 				log.debug("got derivationSummary: " + derivationSummary);
 				
 				// FIXME: Resolve this problem. 
-				String derivationInputHref = mediaCollectionUrl.replaceFirst("http://localhost:8080", "") + "?id=" + formFields.get(CleanFileWidgetRenderer.FIELD_FILETOBECLEANEDID);
+				String derivationInputHref = formFields.get(CleanFileWidgetRenderer.FIELD_FILETOBECLEANEDID); // assume id is really url
 				
-				String derivationOutputHref = mediaCollectionUrl.replaceFirst("http://localhost:8080", "") + mediaEntry.getEditLink().getHref().toASCIIString();
+				String derivationOutputHref = mediaEntry.getEditLink().getHref().toASCIIString();
 				
 				Entry derivationEntry = postDerivationEntry(request, derivationType, derivationSummary, derivationInputHref, derivationOutputHref);
 				

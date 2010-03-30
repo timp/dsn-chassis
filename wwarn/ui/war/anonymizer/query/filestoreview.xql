@@ -23,7 +23,7 @@ declare function local:has-not-been-reviewed( $entry as element(atom:entry) ) as
 {
 
     let $reviews := 
-        for $review in collection("/db/reviews")
+        for $review in collection("/db/atom/content/reviews")
         where 
         
             $review//chassis:review/@type = "http://www.cggh.org/2010/chassis/terms/PersonalDataReview"
@@ -38,7 +38,7 @@ declare function local:has-not-been-reviewed( $entry as element(atom:entry) ) as
 
 (:
     let $reviews := 
-        for $review in cf:link-subjects("/db/reviews", "http://www.cggh.org/2010/chassis/terms/reviewSubject", $entry)
+        for $review in cf:link-subjects("/db/atom/content/reviews", "http://www.cggh.org/2010/chassis/terms/reviewSubject", $entry)
         where $review//chassis:review/@type = "http://www.cggh.org/2010/chassis/terms/PersonalDataReview"
         return $review
 :)
@@ -58,7 +58,7 @@ return
 <atom:feed>
     <atom:title>Query Results</atom:title>
     {
-        (: for $entry in collection("/db/media")//atom:entry :)
+        (: for $entry in collection("/db/atom/content/media")//atom:entry :)
         for $entry in cf:submitted-media()
         where local:has-not-been-reviewed($entry) and ($param-id = "" or ($param-id != "" and $param-id = $entry/atom:id))
         order by $entry/atom:published
