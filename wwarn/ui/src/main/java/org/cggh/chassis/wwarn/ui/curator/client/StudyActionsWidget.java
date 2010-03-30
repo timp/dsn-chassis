@@ -1,23 +1,17 @@
 package org.cggh.chassis.wwarn.ui.curator.client;
 
-import static org.cggh.chassis.generic.widget.client.HtmlElements.emWidget;
 import static org.cggh.chassis.generic.widget.client.HtmlElements.strongWidget;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.cggh.chassis.generic.log.client.Log;
-import org.cggh.chassis.generic.log.client.LogFactory;import org.cggh.chassis.generic.miniatom.client.ext.ChassisHelper;
+import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
-import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.Status;
-import com.google.gwt.xml.client.Element;
-
 import org.cggh.chassis.generic.widget.client.ChassisWidget;
 import org.cggh.chassis.generic.widget.client.ObservableProperty;
 import org.cggh.chassis.generic.widget.client.PropertyChangeEvent;
 import org.cggh.chassis.generic.widget.client.PropertyChangeHandler;
-
-
 import org.cggh.chassis.generic.widget.client.WidgetEventChannel;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.Status;
 import org.cggh.chassis.wwarn.ui.common.client.RenderUtils;
@@ -35,9 +29,6 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.xml.client.Element;
-
-
-import org.cggh.chassis.generic.widget.client.WidgetEventChannel;
 
 
 /**
@@ -148,9 +139,9 @@ public class StudyActionsWidget
 			log.debug("Study null");
 		else {
 			
-			List<Widget[]> rows = new ArrayList<Widget[]>();
+			List<List<Widget>> rows = new ArrayList<List<Widget>>();
 
-			Anchor listAllStudies = new Anchor("List all studies"); // TODO i18n
+			Anchor listAllStudies = new Anchor("List all studies"); // i18n
 			
 			listAllStudies.addClickHandler(new ClickHandler() {
 				
@@ -164,7 +155,7 @@ public class StudyActionsWidget
 
 			});
 
-			Anchor viewStudy = new Anchor("View study"); // TODO i18n
+			Anchor viewStudy = new Anchor("View study"); // i18n
 			
 			viewStudy.addClickHandler(new ClickHandler() {
 				
@@ -183,8 +174,8 @@ public class StudyActionsWidget
 
 			});
 
-			// TODO Add to metatdata
-			Anchor uploadCuratedDataFiles = new Anchor("Upload curated data files"); // TODO i18n
+			// TODO Add to metadata
+			Anchor uploadCuratedDataFiles = new Anchor("Upload curated data files"); // i18n
 			
 			uploadCuratedDataFiles.addClickHandler(new ClickHandler() {
 				
@@ -203,7 +194,7 @@ public class StudyActionsWidget
 
 			});
 			
-			Anchor viewStudyQuestionnaire = new Anchor("View study questionnaire"); // TODO i18n
+			Anchor viewStudyQuestionnaire = new Anchor("View study questionnaire"); // i18n
 			
 			viewStudyQuestionnaire.addClickHandler(new ClickHandler() {
 				
@@ -222,7 +213,7 @@ public class StudyActionsWidget
 
 			});
 			
-			Anchor editStudyQuestionnaire = new Anchor("Edit study questionnaire"); // TODO i18n
+			Anchor editStudyQuestionnaire = new Anchor("Edit study questionnaire"); // i18n
 			
 			editStudyQuestionnaire.addClickHandler(new ClickHandler() {
 				
@@ -241,7 +232,7 @@ public class StudyActionsWidget
 
 			});
 			
-			Anchor listStudyRevisions = new Anchor("List study revisions"); // TODO i18n
+			Anchor listStudyRevisions = new Anchor("List study revisions"); // i18n
 			
 			listStudyRevisions.addClickHandler(new ClickHandler() {
 				
@@ -260,18 +251,17 @@ public class StudyActionsWidget
 
 			});
 
-			Widget[] row = {
-    				strongWidget("Actions"),                         // TODO i18n
-    				listAllStudies, 
-    				viewStudy,
-    				uploadCuratedDataFiles,
-    				viewStudyQuestionnaire,
-    				editStudyQuestionnaire,
-    				listStudyRevisions,
-    			};
+			List<Widget> row = new ArrayList<Widget>();
+			row.add(strongWidget("Actions")); // i18n
+			row.add(listAllStudies);
+			row.add(viewStudy);
+			row.add(uploadCuratedDataFiles);
+			row.add(viewStudyQuestionnaire);
+			row.add(editStudyQuestionnaire);
+    		row.add(listStudyRevisions);
     			
     		rows.add(row);
-    		rows.add(row);
+    		
     		FlexTable table = RenderUtils.renderResultsTable(rows);
     		this.studyActionsPanel.clear();
     		this.studyActionsPanel.add(table);
