@@ -19,11 +19,12 @@ UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentic
 <script type="text/javascript" language="javascript">
 var config = {
 	"user.email" : "<jsp:expression>user.getUsername()</jsp:expression>",
-	"collection.studies.url"     : "<jsp:expression>request.getContextPath()</jsp:expression>/atom/edit/studies",
-	"collection.media.url"       : "<jsp:expression>request.getContextPath()</jsp:expression>/atom/edit/media",
-	"collection.submissions.url" : "<jsp:expression>request.getContextPath()</jsp:expression>/atom/edit/submissions",
-	"collection.reviews.url"     : "<jsp:expression>request.getContextPath()</jsp:expression>/atom/edit/reviews",
-	"collection.derivations.url" : "<jsp:expression>request.getContextPath()</jsp:expression>/atom/edit/derivations",
+	"collection.studies.url"     : "<jsp:expression>request.getContextPath()</jsp:expression>/atombeat/content/studies",
+	"collection.media.url"       : "<jsp:expression>request.getContextPath()</jsp:expression>/atombeat/content/media",
+	"collection.submissions.url" : "<jsp:expression>request.getContextPath()</jsp:expression>/atombeat/content/submissions",
+	"collection.reviews.url"     : "<jsp:expression>request.getContextPath()</jsp:expression>/atombeat/content/reviews",
+	"collection.derivations.url" : "<jsp:expression>request.getContextPath()</jsp:expression>/atombeat/content/derivations",
+	// TODO get with the atombeat
 	"query.filestoreview.url"    : "<jsp:expression>request.getContextPath()</jsp:expression>/curator/query/filestoreview.xql",
 	"query.filestoclean.url"     : "<jsp:expression>request.getContextPath()</jsp:expression>/curator/query/filestoclean.xql"
 };
