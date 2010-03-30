@@ -40,7 +40,7 @@ public class ListStudiesWidgetController {
 		model.status.set(ListStudiesWidgetModel.STATUS_RETRIEVE_STUDY_FEED_PENDING);
 		
 		// expected to be /curator/query/studies.xql
-		String studyQueryServiceUrl = Config.get(Config.QUERY_STUDIES_URL);
+		String studyQueryServiceUrl = Config.get(Config.COLLECTION_STUDIES_URL);
 		Deferred<Document> deferredDoc = Atom.getFeed(studyQueryServiceUrl);
 
 		// Add a call-back and error-back for the asynchronous feed.
@@ -57,6 +57,7 @@ public class ListStudiesWidgetController {
 		public Throwable apply(Throwable in) {
 			log.error("unexpected error", in);
 			model.status.set(AsyncWidgetModel.STATUS_ERROR);
+			model.message.set(in.getMessage());
 			owner.fireEvent(new ErrorEvent(in));
 			return in;
 		}

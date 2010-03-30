@@ -32,6 +32,8 @@ public class ViewQuestionnaireWidgetModel {
 	public static class ReadyForInteractionStatus extends ReadyStatus {}
 	public static final ReadyForInteractionStatus STATUS_READY_FOR_INTERACTION = new ReadyForInteractionStatus();
 
+	public final ObservableProperty<Element> studyEntry = new ObservableProperty<Element>();
+
 	public final ObservableProperty<Status> status = new ObservableProperty<Status>();
 	public final ObservableProperty<String> message = new ObservableProperty<String>();
 	

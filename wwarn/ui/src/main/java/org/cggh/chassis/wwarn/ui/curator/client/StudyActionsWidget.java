@@ -50,7 +50,7 @@ public class StudyActionsWidget
 
 	@UiField HTMLPanel mainPanel;
 	@UiField HTMLPanel contentPanel;
-	@UiField HTMLPanel pendingPanel;
+
 	@UiField HTMLPanel errorPanel;
 	@UiField FlowPanel errorMessage;
 
@@ -58,7 +58,6 @@ public class StudyActionsWidget
 	
 	public final ObservableProperty<Element> studyEntry = new ObservableProperty<Element>();
 
-	public final ObservableProperty<Status> status = new ObservableProperty<Status>();
 	public final ObservableProperty<String> message = new ObservableProperty<String>();
 
 	public final WidgetEventChannel studyActionsListStudiesNavigationEventChannel = new WidgetEventChannel(this);
@@ -93,7 +92,6 @@ public class StudyActionsWidget
 
 	@Override
 	protected void syncUI() {
-		syncUIWithStatus(status.get());
         syncUIWithStudyEntry(studyEntry.get());
         registerHandlersForModelChanges();
     }
@@ -101,17 +99,6 @@ public class StudyActionsWidget
 	protected void registerHandlersForModelChanges() {
 		log.enter("registerHandlersForModelChanges");
 		
-		status.addChangeHandler(new PropertyChangeHandler<Status>() {
-		
-			public void onChange(PropertyChangeEvent<Status> e) {
-				log.enter("onChange(status)");
-			
-				log.debug("Status " + e.getAfter());
-				syncUIWithStatus(e.getAfter());
-			
-				log.leave();
-			}
-		});
 		studyEntry.addChangeHandler(new PropertyChangeHandler<Element>() {
 			
 			public void onChange(PropertyChangeEvent<Element> e) {
@@ -266,42 +253,15 @@ public class StudyActionsWidget
     		this.studyActionsPanel.clear();
     		this.studyActionsPanel.add(table);
     		
-    		pendingPanel.setVisible(false);
 		}
 		log.leave();
 	}
 
-	protected void syncUIWithStatus(Status status) {
-		log.enter("syncUIWithStatus");		
-		log.debug("status:" + status);
-		
-		if (status == null) {
-			// nothing to do yet
-		}
-		else if (status instanceof AsyncWidgetModel.InitialStatus) {
-			pendingPanel.setVisible(true);	
-		}
-		else if (status == ListStudiesWidgetModel.STATUS_RETRIEVE_STUDY_FEED_PENDING) {
-			// still pending
-		}			
-		else if (status instanceof AsyncWidgetModel.ReadyStatus) {
-			pendingPanel.setVisible(false);	
-		}			
-		else if (status instanceof AsyncWidgetModel.ErrorStatus) {
-			message.set("Error status given on asynchronous call.");
-		}			
-		else {
-			message.set("Unhandled status:" + status);
-		}
-		
-		log.leave();
-	}
 	
 	protected void syncUIWithMessage(String message) {
 		log.enter("syncUIWithMessage");
 
 		if (message != null) {
-			pendingPanel.setVisible(false);	
 			contentPanel.setVisible(false);
 			errorMessage.clear();
 			errorMessage.add(new HTML(message));
