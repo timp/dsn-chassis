@@ -17,6 +17,7 @@ import org.cggh.chassis.wwarn.ui.anonymizer.client.BackToStartNavigationEvent;
 import org.cggh.chassis.wwarn.ui.anonymizer.client.BackToStartNavigationHandler;
 
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.http.client.URL;
 import com.google.gwt.xml.client.Element;
 
 
@@ -108,7 +109,7 @@ public class ReviewFileWidget
 	
 	private class Memory extends MapMemory {
 
-		private static final String KEY_MEDIAID = "mediaid";
+		private static final String KEY_MEDIA = "media";
 
 
 		@Override
@@ -127,7 +128,7 @@ public class ReviewFileWidget
 			
 				if (fileToBeReviewedID != null) {
 					
-					map.put(KEY_MEDIAID, fileToBeReviewedID);
+					map.put(KEY_MEDIA, URL.encodeComponent(fileToBeReviewedID));
 				}
 				
 			}
@@ -144,7 +145,7 @@ public class ReviewFileWidget
 			
 			model.setStatus(AsyncWidgetModel.STATUS_INITIAL);
 			
-			String fileToBeReviewedID = mnemonic.get(KEY_MEDIAID);
+			String fileToBeReviewedID = mnemonic.get(KEY_MEDIA);
 			
 			log.debug("found mediaId: " + fileToBeReviewedID);
 			
@@ -152,7 +153,7 @@ public class ReviewFileWidget
 				
 				log.debug("set selected media id to:" + fileToBeReviewedID);
 				
-				setFileToBeReviewedID(fileToBeReviewedID);
+				setFileToBeReviewedID(URL.decodeComponent(fileToBeReviewedID));
 				
 				deferredMemory = refreshAndCallback().adapt(new Function<ChassisWidget, WidgetMemory>() {
 
