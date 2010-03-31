@@ -43,9 +43,9 @@ public abstract class MapMemory extends WidgetMemory {
 		for (String key : map.keySet()) {
 			
 			log.debug("validate key: "+key);
-			assert !key.contains(WidgetMemory.PATH_DELIMITER);
-			assert !key.contains(PARAM_DELIMITER);
-			assert !key.contains(KEYVALUE_DELIMITER);
+			assert !key.contains(WidgetMemory.PATH_DELIMITER) : key + " contains " + WidgetMemory.PATH_DELIMITER;
+			assert !key.contains(PARAM_DELIMITER) : key + " contains " + PARAM_DELIMITER;
+			assert !key.contains(KEYVALUE_DELIMITER) : key + " contains " + KEYVALUE_DELIMITER;
 
 			log.debug("key is valid, appending to mnemonic");
 			mnemonic += key;
@@ -55,9 +55,9 @@ public abstract class MapMemory extends WidgetMemory {
 			if (value != null) {
 				
 				log.debug("validate value: "+value);
-				assert !value.contains(WidgetMemory.PATH_DELIMITER);
-				assert !value.contains(PARAM_DELIMITER);
-				assert !value.contains(KEYVALUE_DELIMITER);
+				assert !value.contains(WidgetMemory.PATH_DELIMITER) : value + " contains " + WidgetMemory.PATH_DELIMITER;
+				assert !value.contains(PARAM_DELIMITER) : value + " contains " + PARAM_DELIMITER;
+				assert !value.contains(KEYVALUE_DELIMITER) : value + " contains " + KEYVALUE_DELIMITER;
 			
 				log.debug("value is valid, appending to mnemonic");
 				mnemonic += KEYVALUE_DELIMITER + value;
