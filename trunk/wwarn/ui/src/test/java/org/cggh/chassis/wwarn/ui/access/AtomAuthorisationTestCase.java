@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.net.HttpURLConnection;
@@ -12,18 +11,11 @@ import java.net.ProtocolException;
 import java.net.URL;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 
 import junit.framework.TestCase;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.StringUtils;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
 
 /**
  * Test that exist behaves as expected and that our restriction to disallow 
@@ -35,15 +27,14 @@ import org.xml.sax.InputSource;
  */
 public class AtomAuthorisationTestCase extends TestCase {
 
-	static String existServiceContext = "chassis-wwarn-ui";
-	static String atomEditUrlFragment = "/" + existServiceContext
-			+ "/atom";
+	static String serviceContext = "chassis-wwarn-ui";
+	static String atomEditUrlFragment = "/" + serviceContext + "/atombeat";
 	static String[] collections = { 
-		    atomEditUrlFragment + "/edit/studies",
-			atomEditUrlFragment + "/edit/submissions",
-			atomEditUrlFragment + "/edit/reviews",
-			atomEditUrlFragment + "/edit/derivations",
-			atomEditUrlFragment + "/edit/media" };
+		    atomEditUrlFragment + "/content/studies",
+			atomEditUrlFragment + "/content/submissions",
+			atomEditUrlFragment + "/content/reviews",
+			atomEditUrlFragment + "/content/derivations",
+			atomEditUrlFragment + "/content/media" };
 
 	private final static String ATOM_FEED = 
 		"<?xml version='1.0' encoding='UTF-8'?>" +
@@ -69,11 +60,12 @@ public class AtomAuthorisationTestCase extends TestCase {
 		return "http://localhost:8080" + relativeUrl;
 	}
 	protected String relativeUrl(String path) { 
-		return "/" + existServiceContext + path;
+		return "/" + serviceContext + path;
 	}
 	protected String contextUrl(String path) { 
 		return url(relativeUrl(path));
 	}
+	
 	/** Currently collections may be deleted, so need to be re-created. */  
 	protected static void ensureCollectionAccessible(String url) throws Exception { 
 		HttpURLConnection connection = getConnection(url);
@@ -105,18 +97,15 @@ public class AtomAuthorisationTestCase extends TestCase {
 			writer.close();
 			connection.connect();
 			int status = connection.getResponseCode();
+			
 			assertEquals(collection + " response " + status, HttpURLConnection.HTTP_BAD_REQUEST, status);
 		}
 	}
 
-	public void testCanPutToAtomEntries() throws Exception {
+	public void testCanCreateAndModifyAtomEntries() throws Exception {
 		createAndModify("application/atom+xml", HttpURLConnection.HTTP_OK, ATOM_ENTRY);
 	}
-	public void testCannotPutToNonAtomEntries() throws Exception {
-		createAndModify("text/html", HttpURLConnection.HTTP_UNSUPPORTED_TYPE, ATOM_ENTRY);
-		createAndModify("text/plain", HttpURLConnection.HTTP_UNSUPPORTED_TYPE, "This is not atom speak\n");
-	}
-
+	
 	public void testBobCannotGetEntityCreatedByAlice() throws Exception { 
 		for (String collection : collections) {
 			Tuple t = createEntry(collection,"application/atom+xml", ATOM_ENTRY);
@@ -137,7 +126,7 @@ public class AtomAuthorisationTestCase extends TestCase {
 		return accessResourceAs("GET", entryUrl, contentType, user, password);
 	}
 	protected int accessResourceAs(String method, String entryUrl, String contentType, String user, String password) throws Exception {
-		HttpURLConnection connection = getConnection(url(entryUrl));
+		HttpURLConnection connection = getConnection(entryUrl);
 		authorize(connection, user, password);
 		connection.setRequestMethod(method);
 		connection.setRequestProperty("Content-Type", contentType);
@@ -154,8 +143,10 @@ public class AtomAuthorisationTestCase extends TestCase {
 
             Tuple t = createEntry(collection,contentType, content);
             String entryUrl = t.url;
-
-			HttpURLConnection putConnection = getConnection(url(entryUrl));
+            
+            System.err.println("Created:" + entryUrl);
+            
+			HttpURLConnection putConnection = getConnection(entryUrl);
 			authorize(putConnection, ALICE, PASSWORD);
 			putConnection.setRequestMethod("PUT");
 			putConnection.setDoOutput(true);
@@ -164,21 +155,10 @@ public class AtomAuthorisationTestCase extends TestCase {
 			putWriter.write(content);
 			putWriter.close();
 			putConnection.connect();
+			
 			assertEquals("Server returned response code for " + entryUrl,
 						expectedStatus, putConnection.getResponseCode());
 			
-			String editMediaLink = collection + "/" + getMediaEditLink(t.content);
-			HttpURLConnection putMediaConnection = getConnection(url(editMediaLink));
-			authorize(putMediaConnection, ALICE, PASSWORD);
-			putMediaConnection.setRequestMethod("PUT");
-			putMediaConnection.setDoOutput(true);
-			putMediaConnection.setRequestProperty("Content-Type", contentType);
-			Writer putMediaWriter = new OutputStreamWriter(putMediaConnection.getOutputStream(), "UTF-8");
-			putMediaWriter.write(content);
-			putMediaWriter.close();
-			putMediaConnection.connect();
-			assertEquals("Response code for " + editMediaLink,
-						expectedStatus, putMediaConnection.getResponseCode());
 		}
 	}
 
@@ -197,7 +177,7 @@ public class AtomAuthorisationTestCase extends TestCase {
 		assertEquals("Server returned response code for " + collection,
 				HttpURLConnection.HTTP_CREATED, postStatus);
 
-		String entryUrl = atomEditUrlFragment + postConnection.getHeaderField("Location");
+		String entryUrl =  postConnection.getHeaderField("Location");
 		assertNotNull("No location returned from POST to collection "
 				+ collection, entryUrl);
 		BufferedReader in = new BufferedReader(new InputStreamReader(postConnection.getInputStream()));
@@ -241,28 +221,6 @@ public class AtomAuthorisationTestCase extends TestCase {
         return connection.getResponseCode();
 	}	
 
-
-	String getMediaEditLink(String atomEntry) throws Exception { 
-		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-		DocumentBuilder db = factory.newDocumentBuilder();
-		InputSource inStream = new InputSource();
-		inStream.setCharacterStream(new StringReader(atomEntry));
-		Document doc = db.parse(inStream);
-
-		doc.getDocumentElement().normalize();
-		NodeList linkNodes = doc.getElementsByTagName("link");
-		for (int s = 0; s < linkNodes.getLength(); s++) {
-			Node linkNode = linkNodes.item(s);
-			Element linkElement = (Element)linkNode;
-			if (linkElement.getAttribute("edit-media") != null) { 
-				String href = linkElement.getAttribute("href");
-				if (href == null)
-					throw new RuntimeException("No edit-media link href value found");
-				return href;
-			}
-		}
-		throw new RuntimeException("No edit-media link ");
-	}
 
 	
 	class Tuple {
