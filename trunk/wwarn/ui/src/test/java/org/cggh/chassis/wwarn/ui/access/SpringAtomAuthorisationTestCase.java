@@ -25,30 +25,30 @@ public class SpringAtomAuthorisationTestCase extends AtomAuthorisationTestCase {
     <intercept-url pattern="/curator/**" access="ROLE_CHASSIS_CURATOR" />
     <intercept-url pattern="/administrator/**" access="ROLE_CHASSIS_ADMINISTRATOR" />
 
-	<intercept-url pattern="/atom/edit/studies" method="POST" access="ROLE_CHASSIS_SUBMITTER" />
-	<intercept-url pattern="/atom/edit/studies/**" method="GET" access="ROLE_CHASSIS_SUBMITTER, ROLE_CHASSIS_ANONYMIZER, ROLE_CHASSIS_CURATOR, ROLE_CHASSIS_ADMINISTRATOR" />
-	<intercept-url pattern="/atom/edit/studies/**" method="PUT" access="ROLE_CHASSIS_SUBMITTER, ROLE_CHASSIS_ADMINISTRATOR" />
-	<intercept-url pattern="/atom/edit/studies/**" method="DELETE" access="ROLE_CHASSIS_ADMINISTRATOR" />
+	<intercept-url pattern="/atombeat/content/studies" method="POST" access="ROLE_CHASSIS_SUBMITTER" />
+	<intercept-url pattern="/atombeat/content/studies/**" method="GET" access="ROLE_CHASSIS_SUBMITTER, ROLE_CHASSIS_ANONYMIZER, ROLE_CHASSIS_CURATOR, ROLE_CHASSIS_ADMINISTRATOR" />
+	<intercept-url pattern="/atombeat/content/studies/**" method="PUT" access="ROLE_CHASSIS_SUBMITTER, ROLE_CHASSIS_ADMINISTRATOR" />
+	<intercept-url pattern="/atombeat/content/studies/**" method="DELETE" access="ROLE_CHASSIS_ADMINISTRATOR" />
 
-	<intercept-url pattern="/atom/edit/submissions" method="POST" access="ROLE_CHASSIS_SUBMITTER" />
-	<intercept-url pattern="/atom/edit/submissions/**" method="GET" access="ROLE_CHASSIS_SUBMITTER, ROLE_CHASSIS_ANONYMIZER, ROLE_CHASSIS_CURATOR, ROLE_CHASSIS_ADMINISTRATOR" />
-	<intercept-url pattern="/atom/edit/submissions/**" method="PUT" access="ROLE_CHASSIS_SUBMITTER, ROLE_CHASSIS_ADMINISTRATOR" />
-	<intercept-url pattern="/atom/edit/submissions/**" method="DELETE" access="ROLE_CHASSIS_ADMINISTRATOR" />
+	<intercept-url pattern="/atombeat/content/submissions" method="POST" access="ROLE_CHASSIS_SUBMITTER" />
+	<intercept-url pattern="/atombeat/content/submissions/**" method="GET" access="ROLE_CHASSIS_SUBMITTER, ROLE_CHASSIS_ANONYMIZER, ROLE_CHASSIS_CURATOR, ROLE_CHASSIS_ADMINISTRATOR" />
+	<intercept-url pattern="/atombeat/content/submissions/**" method="PUT" access="ROLE_CHASSIS_SUBMITTER, ROLE_CHASSIS_ADMINISTRATOR" />
+	<intercept-url pattern="/atombeat/content/submissions/**" method="DELETE" access="ROLE_CHASSIS_ADMINISTRATOR" />
 
-	<intercept-url pattern="/atom/edit/reviews" method="POST" access="ROLE_CHASSIS_ANONYMIZER, ROLE_CHASSIS_CURATOR" />
-	<intercept-url pattern="/atom/edit/reviews/**" method="GET" access="ROLE_CHASSIS_ANONYMIZER, ROLE_CHASSIS_CURATOR, ROLE_CHASSIS_ADMINISTRATOR" />
-	<intercept-url pattern="/atom/edit/reviews/**" method="PUT" access="ROLE_CHASSIS_ANONYMIZER, ROLE_CHASSIS_CURATOR, ROLE_CHASSIS_ADMINISTRATOR" />
-	<intercept-url pattern="/atom/edit/reviews/**" method="DELETE" access="ROLE_CHASSIS_ADMINISTRATOR" />
+	<intercept-url pattern="/atombeat/content/reviews" method="POST" access="ROLE_CHASSIS_ANONYMIZER, ROLE_CHASSIS_CURATOR" />
+	<intercept-url pattern="/atombeat/content/reviews/**" method="GET" access="ROLE_CHASSIS_ANONYMIZER, ROLE_CHASSIS_CURATOR, ROLE_CHASSIS_ADMINISTRATOR" />
+	<intercept-url pattern="/atombeat/content/reviews/**" method="PUT" access="ROLE_CHASSIS_ANONYMIZER, ROLE_CHASSIS_CURATOR, ROLE_CHASSIS_ADMINISTRATOR" />
+	<intercept-url pattern="/atombeat/content/reviews/**" method="DELETE" access="ROLE_CHASSIS_ADMINISTRATOR" />
 
-	<intercept-url pattern="/atom/edit/derivations" method="POST" access="ROLE_CHASSIS_CURATOR, ROLE_CHASSIS_ANONYMIZER" />
-	<intercept-url pattern="/atom/edit/derivations/**" method="GET" access="ROLE_CHASSIS_ANONYMIZER, ROLE_CHASSIS_CURATOR, ROLE_CHASSIS_ADMINISTRATOR" />
-	<intercept-url pattern="/atom/edit/derivations/**" method="PUT" access="ROLE_CHASSIS_ANONYMIZER, ROLE_CHASSIS_CURATOR, ROLE_CHASSIS_ADMINISTRATOR" />
-	<intercept-url pattern="/atom/edit/derivations/**" method="DELETE" access="ROLE_CHASSIS_ADMINISTRATOR" />
+	<intercept-url pattern="/atombeat/content/derivations" method="POST" access="ROLE_CHASSIS_CURATOR, ROLE_CHASSIS_ANONYMIZER" />
+	<intercept-url pattern="/atombeat/content/derivations/**" method="GET" access="ROLE_CHASSIS_ANONYMIZER, ROLE_CHASSIS_CURATOR, ROLE_CHASSIS_ADMINISTRATOR" />
+	<intercept-url pattern="/atombeat/content/derivations/**" method="PUT" access="ROLE_CHASSIS_ANONYMIZER, ROLE_CHASSIS_CURATOR, ROLE_CHASSIS_ADMINISTRATOR" />
+	<intercept-url pattern="/atombeat/content/derivations/**" method="DELETE" access="ROLE_CHASSIS_ADMINISTRATOR" />
 
-	<intercept-url pattern="/atom/edit/media" method="POST" access="ROLE_CHASSIS_SUBMITTER, ROLE_CHASSIS_ANONYMIZER, ROLE_CHASSIS_CURATOR" />
-	<intercept-url pattern="/atom/edit/media/**" method="GET" access="ROLE_CHASSIS_SUBMITTER, ROLE_CHASSIS_ANONYMIZER, ROLE_CHASSIS_CURATOR, ROLE_CHASSIS_ADMINISTRATOR" />
-	<intercept-url pattern="/atom/edit/media/**" method="PUT" access="ROLE_CHASSIS_SUBMITTER, ROLE_CHASSIS_ANONYMIZER, ROLE_CHASSIS_CURATOR, ROLE_CHASSIS_ADMINISTRATOR" />
-	<intercept-url pattern="/atom/edit/media/**" method="DELETE" access="ROLE_CHASSIS_ADMINISTRATOR" />
+	<intercept-url pattern="/atombeat/content/media" method="POST" access="ROLE_CHASSIS_SUBMITTER, ROLE_CHASSIS_ANONYMIZER, ROLE_CHASSIS_CURATOR" />
+	<intercept-url pattern="/atombeat/content/media/**" method="GET" access="ROLE_CHASSIS_SUBMITTER, ROLE_CHASSIS_ANONYMIZER, ROLE_CHASSIS_CURATOR, ROLE_CHASSIS_ADMINISTRATOR" />
+	<intercept-url pattern="/atombeat/content/media/**" method="PUT" access="ROLE_CHASSIS_SUBMITTER, ROLE_CHASSIS_ANONYMIZER, ROLE_CHASSIS_CURATOR, ROLE_CHASSIS_ADMINISTRATOR" />
+	<intercept-url pattern="/atombeat/content/media/**" method="DELETE" access="ROLE_CHASSIS_ADMINISTRATOR" />
 
 */
 	public SpringAtomAuthorisationTestCase() {
@@ -57,7 +57,7 @@ public class SpringAtomAuthorisationTestCase extends AtomAuthorisationTestCase {
    	public void testHome() throws Exception { 
    		for (String dir : homeDirs)
    			assertEquals(dir, HttpServletResponse.SC_OK, 
-   					getResourceAs(relativeUrl("/"+dir),"text/html", ALICE, PASSWORD));
+   					getResourceAs(url(relativeUrl("/"+dir)),"text/html", ALICE, PASSWORD));
    	}
    	
    	public void testOnlyOwnHome() throws Exception { 
@@ -65,10 +65,10 @@ public class SpringAtomAuthorisationTestCase extends AtomAuthorisationTestCase {
    			for (String user : users) {
    				if (user.indexOf(dir) != -1) 
    	   				assertEquals(dir + "/" + user, HttpServletResponse.SC_OK, 
-   	   						getResourceAs(relativeUrl("/"+dir),"text/html", user, PASSWORD));
+   	   						getResourceAs(url(relativeUrl("/"+dir)),"text/html", user, PASSWORD));
    				else
    	   				assertEquals(dir + "/" + user, HttpServletResponse.SC_FORBIDDEN,
-   	   						getResourceAs(relativeUrl("/"+dir),"text/html", user, PASSWORD));
+   	   						getResourceAs(url(relativeUrl("/"+dir)),"text/html", user, PASSWORD));
    					
    			}
    	}
@@ -76,20 +76,20 @@ public class SpringAtomAuthorisationTestCase extends AtomAuthorisationTestCase {
    	public void testGet() throws Exception { 
 		for (String user : users) {
 				assertEquals(user, HttpServletResponse.SC_OK, 
-   						getResourceAs(relativeUrl("/atom/edit/studies"),"application/atom+xml", user, PASSWORD));
+   						getResourceAs(url(relativeUrl("/atombeat/content/studies")),"application/atom+xml", user, PASSWORD));
 				assertEquals(user, HttpServletResponse.SC_OK, 
-   						getResourceAs(relativeUrl("/atom/edit/submissions"),"application/atom+xml", user, PASSWORD));
+   						getResourceAs(url(relativeUrl("/atombeat/content/submissions")),"application/atom+xml", user, PASSWORD));
 				if (user.contains("submitter")) {
 					assertEquals(user, HttpServletResponse.SC_FORBIDDEN, 
-	   						getResourceAs(relativeUrl("/atom/edit/reviews"),"application/atom+xml", user, PASSWORD));
+	   						getResourceAs(url(relativeUrl("/atombeat/content/reviews")),"application/atom+xml", user, PASSWORD));
 					assertEquals(user, HttpServletResponse.SC_FORBIDDEN, 
-	   						getResourceAs(relativeUrl("/atom/edit/derivations"),"application/atom+xml", user, PASSWORD));
+	   						getResourceAs(url(relativeUrl("/atombeat/content/derivations")),"application/atom+xml", user, PASSWORD));
 				} else {
 					assertEquals(user, HttpServletResponse.SC_OK, 
-	   						getResourceAs(relativeUrl("/atom/edit/derivations"),"application/atom+xml", user, PASSWORD));
+	   						getResourceAs(url(relativeUrl("/atombeat/content/derivations")),"application/atom+xml", user, PASSWORD));
 				}
 				assertEquals(user, HttpServletResponse.SC_OK, 
-   						getResourceAs(relativeUrl("/atom/edit/media"),"application/atom+xml", user, PASSWORD));
+   						getResourceAs(url(relativeUrl("/atombeat/content/media")),"application/atom+xml", user, PASSWORD));
 		}
    	}
 
@@ -98,15 +98,15 @@ public class SpringAtomAuthorisationTestCase extends AtomAuthorisationTestCase {
 		for (String user : users) {
  			int expected = HttpServletResponse.SC_FORBIDDEN;
 			assertEquals(user, expected, 
-  						accessResourceAs("DELETE", relativeUrl("/atom/edit/studies"),"application/atom+xml", user, PASSWORD));
+  						accessResourceAs("DELETE", relativeUrl("/atombeat/content/studies"),"application/atom+xml", user, PASSWORD));
 			assertEquals(user, expected, 
-   						accessResourceAs("DELETE", relativeUrl("/atom/edit/submissions"),"application/atom+xml", user, PASSWORD));
+   						accessResourceAs("DELETE", relativeUrl("/atombeat/content/submissions"),"application/atom+xml", user, PASSWORD));
 			assertEquals(user, expected, 
-   						accessResourceAs("DELETE", relativeUrl("/atom/edit/reviews"),"application/atom+xml", user, PASSWORD));
+   						accessResourceAs("DELETE", relativeUrl("/atombeat/content/reviews"),"application/atom+xml", user, PASSWORD));
 			assertEquals(user, expected, 
-   						accessResourceAs("DELETE", relativeUrl("/atom/edit/derivations"),"application/atom+xml", user, PASSWORD));
+   						accessResourceAs("DELETE", relativeUrl("/atombeat/content/derivations"),"application/atom+xml", user, PASSWORD));
 			assertEquals(user, expected, 
-   						accessResourceAs("DELETE", relativeUrl("/atom/edit/media"),"application/atom+xml", user, PASSWORD));
+   						accessResourceAs("DELETE", relativeUrl("/atombeat/content/media"),"application/atom+xml", user, PASSWORD));
 		}
    	}
    	
@@ -118,22 +118,22 @@ public class SpringAtomAuthorisationTestCase extends AtomAuthorisationTestCase {
 				expected = HttpServletResponse.SC_BAD_REQUEST;
 			}
 			assertEquals(user, expected, 
-  						accessResourceAs("PUT", relativeUrl("/atom/edit/studies"),"application/atom+xml", user, PASSWORD));
+  						accessResourceAs("PUT", relativeUrl("/atombeat/content/studies"),"application/atom+xml", user, PASSWORD));
 
 			assertEquals(user, expected, 
-   						accessResourceAs("PUT", relativeUrl("/atom/edit/submissions"),"application/atom+xml", user, PASSWORD));
+   						accessResourceAs("PUT", relativeUrl("/atombeat/content/submissions"),"application/atom+xml", user, PASSWORD));
 			if (user.contains("anonymizer") || user.contains("curator")) {
 				expected = HttpServletResponse.SC_BAD_REQUEST;
 			}
 			assertEquals(user, expected, 
-						accessResourceAs("PUT", relativeUrl("/atom/edit/media"),"application/atom+xml", user, PASSWORD));
+						accessResourceAs("PUT", relativeUrl("/atombeat/content/media"),"application/atom+xml", user, PASSWORD));
 			if (user.contains("submitter")) {
 				expected = HttpServletResponse.SC_FORBIDDEN;
 			}
 			assertEquals(user, expected, 
-   						accessResourceAs("PUT", relativeUrl("/atom/edit/reviews"),"application/atom+xml", user, PASSWORD));
+   						accessResourceAs("PUT", relativeUrl("/atombeat/content/reviews"),"application/atom+xml", user, PASSWORD));
 			assertEquals(user, expected, 
-   						accessResourceAs("PUT", relativeUrl("/atom/edit/derivations"),"application/atom+xml", user, PASSWORD));
+   						accessResourceAs("PUT", relativeUrl("/atombeat/content/derivations"),"application/atom+xml", user, PASSWORD));
 		}
    	}
    	
@@ -145,22 +145,22 @@ public class SpringAtomAuthorisationTestCase extends AtomAuthorisationTestCase {
 				expected = HttpServletResponse.SC_FORBIDDEN;
 			}
 			assertEquals(user, expected, 
-  						accessResourceAs("POST", relativeUrl("/atom/edit/studies"),"application/atom+xml", user, PASSWORD));
+  						accessResourceAs("POST", relativeUrl("/atombeat/content/studies"),"application/atom+xml", user, PASSWORD));
 
 			assertEquals(user, expected, 
-   						accessResourceAs("POST", relativeUrl("/atom/edit/submissions"),"application/atom+xml", user, PASSWORD));
+   						accessResourceAs("POST", relativeUrl("/atombeat/content/submissions"),"application/atom+xml", user, PASSWORD));
 			if (user.contains("anonymizer") || user.contains("curator")) {
 				expected = 500;
 			}
 			assertEquals(user, expected, 
-						accessResourceAs("POST", relativeUrl("/atom/edit/media"),"application/atom+xml", user, PASSWORD));
+						accessResourceAs("POST", relativeUrl("/atombeat/content/media"),"application/atom+xml", user, PASSWORD));
 			if (user.contains("submitter")) {
 				expected = HttpServletResponse.SC_FORBIDDEN;
 			}
 			assertEquals(user, expected, 
-   						accessResourceAs("POST", relativeUrl("/atom/edit/reviews"),"application/atom+xml", user, PASSWORD));
+   						accessResourceAs("POST", relativeUrl("/atombeat/content/reviews"),"application/atom+xml", user, PASSWORD));
 			assertEquals(user, expected, 
-   						accessResourceAs("POST", relativeUrl("/atom/edit/derivations"),"application/atom+xml", user, PASSWORD));
+   						accessResourceAs("POST", relativeUrl("/atombeat/content/derivations"),"application/atom+xml", user, PASSWORD));
 		}
    	}
    	
