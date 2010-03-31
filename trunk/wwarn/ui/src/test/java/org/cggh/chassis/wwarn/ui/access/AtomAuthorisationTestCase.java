@@ -134,7 +134,6 @@ public class AtomAuthorisationTestCase extends TestCase {
 		connection.setRequestMethod(method);
 		connection.setRequestProperty("Content-Type", contentType);
 		connection.connect();
-		System.err.println(url(entryUrl)+ ":" + connection.getResponseCode() + "-" + connection.getResponseMessage());
 		return connection.getResponseCode();
 	}
 
