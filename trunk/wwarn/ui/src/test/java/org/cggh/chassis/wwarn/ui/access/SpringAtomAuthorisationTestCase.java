@@ -57,7 +57,7 @@ public class SpringAtomAuthorisationTestCase extends AtomAuthorisationTestCase {
    	public void testHome() throws Exception { 
    		for (String dir : homeDirs)
    			assertEquals(dir, HttpServletResponse.SC_OK, 
-   					getResourceAs(url(relativeUrl("/"+dir)),"text/html", ALICE, PASSWORD));
+   					getResourceAs("/"+dir,"text/html", ALICE, PASSWORD));
    	}
    	
    	public void testOnlyOwnHome() throws Exception { 
@@ -65,10 +65,10 @@ public class SpringAtomAuthorisationTestCase extends AtomAuthorisationTestCase {
    			for (String user : users) {
    				if (user.indexOf(dir) != -1) 
    	   				assertEquals(dir + "/" + user, HttpServletResponse.SC_OK, 
-   	   						getResourceAs(url(relativeUrl("/"+dir)),"text/html", user, PASSWORD));
+   	   						getResourceAs("/"+dir,"text/html", user, PASSWORD));
    				else
    	   				assertEquals(dir + "/" + user, HttpServletResponse.SC_FORBIDDEN,
-   	   						getResourceAs(url(relativeUrl("/"+dir)),"text/html", user, PASSWORD));
+   	   						getResourceAs("/"+dir,"text/html", user, PASSWORD));
    					
    			}
    	}
@@ -76,20 +76,20 @@ public class SpringAtomAuthorisationTestCase extends AtomAuthorisationTestCase {
    	public void testGet() throws Exception { 
 		for (String user : users) {
 				assertEquals(user, HttpServletResponse.SC_OK, 
-   						getResourceAs(url(relativeUrl("/atombeat/content/studies")),"application/atom+xml", user, PASSWORD));
+   						getResourceAs("/atombeat/content/studies","application/atom+xml", user, PASSWORD));
 				assertEquals(user, HttpServletResponse.SC_OK, 
-   						getResourceAs(url(relativeUrl("/atombeat/content/submissions")),"application/atom+xml", user, PASSWORD));
+   						getResourceAs("/atombeat/content/submissions","application/atom+xml", user, PASSWORD));
 				if (user.contains("submitter")) {
 					assertEquals(user, HttpServletResponse.SC_FORBIDDEN, 
-	   						getResourceAs(url(relativeUrl("/atombeat/content/reviews")),"application/atom+xml", user, PASSWORD));
+	   						getResourceAs("/atombeat/content/reviews","application/atom+xml", user, PASSWORD));
 					assertEquals(user, HttpServletResponse.SC_FORBIDDEN, 
-	   						getResourceAs(url(relativeUrl("/atombeat/content/derivations")),"application/atom+xml", user, PASSWORD));
+	   						getResourceAs("/atombeat/content/derivations","application/atom+xml", user, PASSWORD));
 				} else {
 					assertEquals(user, HttpServletResponse.SC_OK, 
-	   						getResourceAs(url(relativeUrl("/atombeat/content/derivations")),"application/atom+xml", user, PASSWORD));
+	   						getResourceAs("/atombeat/content/derivations","application/atom+xml", user, PASSWORD));
 				}
 				assertEquals(user, HttpServletResponse.SC_OK, 
-   						getResourceAs(url(relativeUrl("/atombeat/content/media")),"application/atom+xml", user, PASSWORD));
+   						getResourceAs("/atombeat/content/media","application/atom+xml", user, PASSWORD));
 		}
    	}
 
@@ -98,15 +98,15 @@ public class SpringAtomAuthorisationTestCase extends AtomAuthorisationTestCase {
 		for (String user : users) {
  			int expected = HttpServletResponse.SC_FORBIDDEN;
 			assertEquals(user, expected, 
-  						accessResourceAs("DELETE", relativeUrl("/atombeat/content/studies"),"application/atom+xml", user, PASSWORD));
+  						accessResourceAs("DELETE", "/atombeat/content/studies","application/atom+xml", user, PASSWORD));
 			assertEquals(user, expected, 
-   						accessResourceAs("DELETE", relativeUrl("/atombeat/content/submissions"),"application/atom+xml", user, PASSWORD));
+   						accessResourceAs("DELETE", "/atombeat/content/submissions","application/atom+xml", user, PASSWORD));
 			assertEquals(user, expected, 
-   						accessResourceAs("DELETE", relativeUrl("/atombeat/content/reviews"),"application/atom+xml", user, PASSWORD));
+   						accessResourceAs("DELETE", "/atombeat/content/reviews","application/atom+xml", user, PASSWORD));
 			assertEquals(user, expected, 
-   						accessResourceAs("DELETE", relativeUrl("/atombeat/content/derivations"),"application/atom+xml", user, PASSWORD));
+   						accessResourceAs("DELETE", "/atombeat/content/derivations","application/atom+xml", user, PASSWORD));
 			assertEquals(user, expected, 
-   						accessResourceAs("DELETE", relativeUrl("/atombeat/content/media"),"application/atom+xml", user, PASSWORD));
+   						accessResourceAs("DELETE", "/atombeat/content/media","application/atom+xml", user, PASSWORD));
 		}
    	}
    	
@@ -118,22 +118,22 @@ public class SpringAtomAuthorisationTestCase extends AtomAuthorisationTestCase {
 				expected = HttpServletResponse.SC_BAD_REQUEST;
 			}
 			assertEquals(user, expected, 
-  						accessResourceAs("PUT", relativeUrl("/atombeat/content/studies"),"application/atom+xml", user, PASSWORD));
+  						accessResourceAs("PUT", "/atombeat/content/studies", "application/atom+xml", user, PASSWORD));
 
 			assertEquals(user, expected, 
-   						accessResourceAs("PUT", relativeUrl("/atombeat/content/submissions"),"application/atom+xml", user, PASSWORD));
+   						accessResourceAs("PUT", "/atombeat/content/submissions", "application/atom+xml", user, PASSWORD));
 			if (user.contains("anonymizer") || user.contains("curator")) {
 				expected = HttpServletResponse.SC_BAD_REQUEST;
 			}
 			assertEquals(user, expected, 
-						accessResourceAs("PUT", relativeUrl("/atombeat/content/media"),"application/atom+xml", user, PASSWORD));
+						accessResourceAs("PUT", "/atombeat/content/media", "application/atom+xml", user, PASSWORD));
 			if (user.contains("submitter")) {
 				expected = HttpServletResponse.SC_FORBIDDEN;
 			}
 			assertEquals(user, expected, 
-   						accessResourceAs("PUT", relativeUrl("/atombeat/content/reviews"),"application/atom+xml", user, PASSWORD));
+   						accessResourceAs("PUT", "/atombeat/content/reviews", "application/atom+xml", user, PASSWORD));
 			assertEquals(user, expected, 
-   						accessResourceAs("PUT", relativeUrl("/atombeat/content/derivations"),"application/atom+xml", user, PASSWORD));
+   						accessResourceAs("PUT", "/atombeat/content/derivations", "application/atom+xml", user, PASSWORD));
 		}
    	}
    	
@@ -145,22 +145,22 @@ public class SpringAtomAuthorisationTestCase extends AtomAuthorisationTestCase {
 				expected = HttpServletResponse.SC_FORBIDDEN;
 			}
 			assertEquals(user, expected, 
-  						accessResourceAs("POST", relativeUrl("/atombeat/content/studies"),"application/atom+xml", user, PASSWORD));
+  						accessResourceAs("POST", "/atombeat/content/studies", "application/atom+xml", user, PASSWORD));
 
 			assertEquals(user, expected, 
-   						accessResourceAs("POST", relativeUrl("/atombeat/content/submissions"),"application/atom+xml", user, PASSWORD));
+   						accessResourceAs("POST", "/atombeat/content/submissions", "application/atom+xml", user, PASSWORD));
 			if (user.contains("anonymizer") || user.contains("curator")) {
 				expected = 500;
 			}
 			assertEquals(user, expected, 
-						accessResourceAs("POST", relativeUrl("/atombeat/content/media"),"application/atom+xml", user, PASSWORD));
+						accessResourceAs("POST", "/atombeat/content/media", "application/atom+xml", user, PASSWORD));
 			if (user.contains("submitter")) {
 				expected = HttpServletResponse.SC_FORBIDDEN;
 			}
 			assertEquals(user, expected, 
-   						accessResourceAs("POST", relativeUrl("/atombeat/content/reviews"),"application/atom+xml", user, PASSWORD));
+   						accessResourceAs("POST", "/atombeat/content/reviews", "application/atom+xml", user, PASSWORD));
 			assertEquals(user, expected, 
-   						accessResourceAs("POST", relativeUrl("/atombeat/content/derivations"),"application/atom+xml", user, PASSWORD));
+   						accessResourceAs("POST", "/atombeat/content/derivations", "application/atom+xml", user, PASSWORD));
 		}
    	}
    	
