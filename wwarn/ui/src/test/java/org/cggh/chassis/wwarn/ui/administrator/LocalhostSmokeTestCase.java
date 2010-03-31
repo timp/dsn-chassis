@@ -48,7 +48,7 @@ public class LocalhostSmokeTestCase extends TestCase {
 	}
 
     public void testAuthorisation() throws Exception {
-		String collectionUrl =  "/chassis-wwarn-ui/atom/edit/studies";
+		String collectionUrl =  "/chassis-wwarn-ui/atombeat/content/studies";
 		try {
 			gotoPage(collectionUrl);
 		} catch (FailingHttpStatusCodeException e) {
