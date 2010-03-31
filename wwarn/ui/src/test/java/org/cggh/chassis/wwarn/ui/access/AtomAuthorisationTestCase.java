@@ -98,7 +98,7 @@ public class AtomAuthorisationTestCase extends TestCase {
 			connection.connect();
 			int status = connection.getResponseCode();
 			
-			assertEquals(collection + " response " + status, HttpURLConnection.HTTP_BAD_REQUEST, status);
+			assertEquals(collection, HttpURLConnection.HTTP_BAD_REQUEST, status);
 		}
 	}
 
@@ -109,6 +109,7 @@ public class AtomAuthorisationTestCase extends TestCase {
 	public void testBobCannotGetEntityCreatedByAlice() throws Exception { 
 		for (String collection : collections) {
 			Tuple t = createEntry(collection,"application/atom+xml", ATOM_ENTRY);
+			System.err.println(t.getUrl());
 			assertEquals(HttpServletResponse.SC_FORBIDDEN, 
 					getResourceAs(t.getUrl(),"application/atom+xml","bob@example.org", "bar"));
 		}
@@ -126,6 +127,8 @@ public class AtomAuthorisationTestCase extends TestCase {
 		return accessResourceAs("GET", entryUrl, contentType, user, password);
 	}
 	protected int accessResourceAs(String method, String entryUrl, String contentType, String user, String password) throws Exception {
+		if (!entryUrl.startsWith("http"))
+			entryUrl = url(relativeUrl(entryUrl));
 		HttpURLConnection connection = getConnection(entryUrl);
 		authorize(connection, user, password);
 		connection.setRequestMethod(method);
@@ -178,6 +181,7 @@ public class AtomAuthorisationTestCase extends TestCase {
 				HttpURLConnection.HTTP_CREATED, postStatus);
 
 		String entryUrl =  postConnection.getHeaderField("Location");
+		System.err.println("createEntry: " + entryUrl);
 		assertNotNull("No location returned from POST to collection "
 				+ collection, entryUrl);
 		BufferedReader in = new BufferedReader(new InputStreamReader(postConnection.getInputStream()));
