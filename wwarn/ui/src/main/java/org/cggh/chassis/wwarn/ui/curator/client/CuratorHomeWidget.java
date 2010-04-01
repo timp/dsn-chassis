@@ -102,7 +102,6 @@ public class CuratorHomeWidget
 		// Model changes
 
 
-	
 		message.addChangeHandler(new PropertyChangeHandler<String>() {
 			public void onChange(PropertyChangeEvent<String> e) {
 				log.enter("onChange<String>");		
