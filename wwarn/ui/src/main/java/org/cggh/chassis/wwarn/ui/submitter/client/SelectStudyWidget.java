@@ -119,7 +119,7 @@ public class SelectStudyWidget
 
 	private class Memory extends MapMemory {
 
-		private static final String KEY_STUDY = "study";
+		private static final String KEY = "study";
 
 
 		@Override
@@ -131,7 +131,7 @@ public class SelectStudyWidget
 			String selectedStudyId = model.selectedStudyId.get();
 			
 			if (selectedStudyId != null) {
-				map.put(KEY_STUDY, URL.encodeComponent(selectedStudyId));
+				map.put(KEY, URL.encodeComponent(selectedStudyId));
 			}
 			
 			log.leave();
@@ -146,7 +146,7 @@ public class SelectStudyWidget
 			
 			model.setStatus(AsyncWidgetModel.STATUS_INITIAL);
 			
-			String studyId = mnemonic.get(KEY_STUDY);
+			String studyId = mnemonic.get(KEY);
 			
 			log.debug("found studyId: "+studyId);
 			
