@@ -25,6 +25,8 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 
 
+import com.google.gwt.xml.client.Element;
+
 /**
  * BE SURE TO EDIT THE TEMPLATE NOT THE RENDERED RESULT
  *
@@ -59,6 +61,8 @@ public class StudyRevisionListWidget
 
     @UiField PriorStudyRevisionsListWidget priorStudyRevisionsListWidgetUiField;
 
+
+	public final ObservableProperty<Element> studyEntry = new ObservableProperty<Element>();
 
 
 	public final ObservableProperty<String> message = new ObservableProperty<String>();
@@ -133,6 +137,15 @@ public class StudyRevisionListWidget
 			}
 		});
 
+	
+		studyEntry.addChangeHandler(new PropertyChangeHandler<Element>() {
+			public void onChange(PropertyChangeEvent<Element> e) {
+				log.enter("onchange(studyEntry)");
+				syncUIWithStudyEntry(e.getAfter());
+				log.leave();
+			}
+		});
+
 
 	
 	}
@@ -155,5 +168,12 @@ public class StudyRevisionListWidget
 
 		log.leave();
 	}
-	
+		
+	protected void syncUIWithStudyEntry(Element studyEntry) {
+		log.enter("syncUIWithStudyEntry");
+		// TODO needs to be a method in an extension
+		log.leave();
+	}
+
+
 }
