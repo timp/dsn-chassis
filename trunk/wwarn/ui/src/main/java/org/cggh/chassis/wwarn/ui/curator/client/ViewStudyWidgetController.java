@@ -100,21 +100,6 @@ public class ViewStudyWidgetController {
 	
 	
 		
-
-	private class DefaultErrback implements Function<Throwable, Throwable> {
-
-		public Throwable apply(Throwable in) {
-			log.error("unexpected error", in);
-			model.status.set(AsyncWidgetModel.STATUS_ERROR);
-			owner.fireEvent(new ErrorEvent(in));
-			return in;
-		}
-		
-	}
-
-
-
-
 	
 	private class RetrieveStudyEntryCallback implements Function<Element, Element> {
 
@@ -142,8 +127,30 @@ public class ViewStudyWidgetController {
 		
 	}
 	
+
+
+	private class DefaultErrback implements Function<Throwable, Throwable> {
+
+		public Throwable apply(Throwable in) {
+			log.error("unexpected error", in);
+			model.status.set(AsyncWidgetModel.STATUS_ERROR);
+
+			// TODO Do we want stack trace?
+			// TODO Should we be getting the message from ErrorEvent ?
+		    //StringWriter sw = new StringWriter();
+		    //PrintWriter pw = new PrintWriter(sw);
+		    //in.printStackTrace(pw);
+			//model.message.set(in.getMessage() +
+			//	"------\r\n" + sw.toString() + "------\r\n");
+
+			model.message.set(in.getMessage());
+			owner.fireEvent(new ErrorEvent(in));
+			return in;
+		}
+		
+	}
 	
-        			
+
 	
 	
 
