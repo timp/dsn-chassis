@@ -41,7 +41,6 @@ public class ListStudiesWidgetController {
 
 
     					
-        //private ViewStudyNavigationEvent viewStudyNavigationEvent;
 	
        	            
 			
