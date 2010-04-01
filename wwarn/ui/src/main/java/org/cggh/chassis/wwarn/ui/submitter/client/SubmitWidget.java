@@ -117,7 +117,7 @@ public class SubmitWidget extends DelegatingWidget<SubmitWidgetModel, SubmitWidg
 
 		
 		
-		private static final String KEY_STUDY = "study";
+		private static final String KEY = "study";
 		
 		
 		
@@ -133,7 +133,7 @@ public class SubmitWidget extends DelegatingWidget<SubmitWidgetModel, SubmitWidg
 			String selectedStudyId = model.getSelectedStudyId();
 			
 			if (selectedStudyId != null) {
-				map.put(KEY_STUDY, URL.encodeComponent(selectedStudyId));
+				map.put(KEY, URL.encodeComponent(selectedStudyId));
 			}
 
 			log.leave();
@@ -154,7 +154,7 @@ public class SubmitWidget extends DelegatingWidget<SubmitWidgetModel, SubmitWidg
 			
 			model.setStatus(AsyncWidgetModel.STATUS_INITIAL);
 			
-			String studyId = mnemonic.get(KEY_STUDY);
+			String studyId = mnemonic.get(KEY);
 			
 			log.debug("found studyId: "+studyId);
 			
