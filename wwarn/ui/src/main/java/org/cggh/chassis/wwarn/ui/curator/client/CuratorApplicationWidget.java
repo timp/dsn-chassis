@@ -80,26 +80,20 @@ public class CuratorApplicationWidget
 		this.viewStudyWidget = new ViewStudyWidget();
 		this.mainChildren.add(this.viewStudyWidget);
 
-
 		this.viewStudyQuestionnaireWidget = new ViewStudyQuestionnaireWidget();
 		this.mainChildren.add(this.viewStudyQuestionnaireWidget);
-
 
 		this.editStudyQuestionnaireWidget = new EditStudyQuestionnaireWidget();
 		this.mainChildren.add(this.editStudyQuestionnaireWidget);
 
-
 		this.listStudyRevisionsWidget = new ListStudyRevisionsWidget();
 		this.mainChildren.add(this.listStudyRevisionsWidget);
-
 
 		this.viewStudyRevisionWidget = new ViewStudyRevisionWidget();
 		this.mainChildren.add(this.viewStudyRevisionWidget);
 
-
 		this.uploadDataFilesWizardWidget = new UploadDataFilesWizardWidget();
 		this.mainChildren.add(this.uploadDataFilesWizardWidget);
-
 
 		log.leave();
 
