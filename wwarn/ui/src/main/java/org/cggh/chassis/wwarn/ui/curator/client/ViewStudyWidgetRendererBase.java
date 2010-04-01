@@ -221,7 +221,7 @@ public abstract class ViewStudyWidgetRendererBase extends
 
 		syncUIWithStatus(model.status.get());
 
-		//syncUIWithStudyEntry(model.studyEntry.get());
+		syncUIWithStudyEntry(model.studyEntry.get());
 
 		log.leave();
 	}
@@ -236,13 +236,21 @@ public abstract class ViewStudyWidgetRendererBase extends
 
 
 			studySummaryWidgetUiField.studyEntry.set(studyEntry);
+ 
 
+			viewStudyMetadataWidgetUiField.studyEntry.set(studyEntry);
+ 
 
+			listSubmissionsWidgetUiField.studyEntry.set(studyEntry);
+ 
+
+			listCurationsWidgetUiField.studyEntry.set(studyEntry);
+ 
 			this.viewStudyPanel.clear();
 			this.viewStudyPanel.add(renderStudyEntry(studyEntry));
 			pendingPanel.setVisible(false);
 
-		}
+ 		}
 		
 		log.leave();
 	}
@@ -250,6 +258,7 @@ public abstract class ViewStudyWidgetRendererBase extends
   /* Override this in a separate class, as the Base class can be regenerated. */
 	abstract Widget renderStudyEntry(Element studyEntry);
 
+	
 
 	protected void syncUIWithStatus(Status status) {
 		log.enter("syncUIWithStatus");		
@@ -257,7 +266,6 @@ public abstract class ViewStudyWidgetRendererBase extends
 		errorPanel.setVisible(false);	
 		pendingPanel.setVisible(true);	
 		contentPanel.setVisible(true);
-		
 		if (status == null) {
 			// null before being set
 			log.debug("Called with null status");
