@@ -70,12 +70,6 @@ public class ViewStudyWidgetRenderer extends
 		this.owner = owner;
 	}
 
-	private ViewStudyWidgetController controller;
-
-	public void setController(ViewStudyWidgetController controller) {
-		this.controller = controller;
-	}
-
 
 
 	@Override
@@ -107,14 +101,6 @@ public class ViewStudyWidgetRenderer extends
 		}));
 
 	
-		this.modelChangeHandlerRegistrations.add(model.studyUrl.addChangeHandler(new PropertyChangeHandler<String>() {
-			public void onChange(PropertyChangeEvent<String> e) {
-				log.enter("onchange(studyUrl)");
-				syncUIWithStudyUrl(e.getAfter());
-				log.leave();
-			}
-		}));
-
 
 	}
 	
@@ -199,22 +185,27 @@ public class ViewStudyWidgetRenderer extends
 	}
 
 	protected void syncUIWithStatus(Status status) {
-		log.enter("syncUIWithStatus");		
-		log.debug("status:");
+		log.enter("syncUIWithStatus");	
+		
+		if (status != null)
+			log.debug("status: "+status.getClass().getName());
 		
 		errorPanel.setVisible(false);	
+		contentPanel.setVisible(false);
+		pendingPanel.setVisible(true);
+
 		if (status == null) {
 			// null before being set
 			log.debug("Called with null status");
 		}
 		else if (status instanceof AsyncWidgetModel.InitialStatus) {
-			pendingPanel.setVisible(true);	
 		}
-		
-		//TODO Widget specific statii
-		
+		else if (status instanceof AsyncWidgetModel.NotFoundStatus) {
+			model.message.set("Not found. url " + model.studyUrl.get());
+		}			
 		else if (status instanceof AsyncWidgetModel.ReadyStatus) {
-			pendingPanel.setVisible(false);	
+			pendingPanel.setVisible(false);
+			contentPanel.setVisible(true);
 		}			
 		else if (status instanceof AsyncWidgetModel.ErrorStatus) {
 			model.message.set("Error status given on asynchronous call.");
@@ -243,14 +234,14 @@ public class ViewStudyWidgetRenderer extends
 	
 	protected void syncUIWithStudyEntry(Element studyEntry) {
 		log.enter("syncUIWithStudyEntry");
-		// TODO needs to be a method in an extension
+		
 		if (studyEntry != null) {
 
 			log.debug("got study...." + studyEntry);
 			
-			model.status.set(ViewStudyWidgetModel.STATUS_READY_FOR_INTERACTION);
 			studySummaryWidgetUiField.studyEntry.set(studyEntry);
 			studySummaryWidgetUiField.studyActionsWidgetUiField.studyEntry.set(studyEntry);
+			model.status.set(ViewStudyWidgetModel.STATUS_READY_FOR_INTERACTION);
 			
 		} else {
 			model.message.set("study was null");
@@ -258,37 +249,6 @@ public class ViewStudyWidgetRenderer extends
 		log.leave();
 	}
 
-	protected void syncStudyEntryElementWithStudyID(String studyID) {
-		
-		log.enter("syncStudyEntryElementWithStudyID");
-
-		errorPanel.setVisible(false);	
-		
-		
-		if (studyID != null) {
-
-			log.debug("getting Entry Element from ID....");
-			
-			//FIXME: This can't be right. It's just setting studyEntryElement to null.
-			
-			Element studyEntryElement = null;
-			
-			model.studyEntry.set(studyEntryElement);
-			
-		} else {
-
-			model.message.set("studyID was null");
-		}
-	
-		
-		log.leave();
-	}		
-	
-	protected void syncUIWithStudyUrl(String studyUrl) {
-		log.enter("syncUIWithStudyUrl");
-		// TODO needs to be a method in an extension
-		log.leave();
-	}
 
 
 }
