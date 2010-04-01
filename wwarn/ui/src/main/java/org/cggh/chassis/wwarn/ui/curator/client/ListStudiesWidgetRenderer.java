@@ -31,6 +31,8 @@ import com.google.gwt.user.client.ui.Widget;
 
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;
+
+
 /**
  * @author timp
  */
@@ -90,7 +92,7 @@ public class ListStudiesWidgetRenderer extends
 			}
 		}));
 
-	
+
 		this.modelChangeHandlerRegistrations.add(
 				model.studyFeed.addChangeHandler(new PropertyChangeHandler<Document>() {
 			public void onChange(PropertyChangeEvent<Document> e) {
@@ -103,14 +105,13 @@ public class ListStudiesWidgetRenderer extends
 		log.leave();
 	}
 	
+
 	@Override
 	protected void renderUI() {
-		log.enter("renderUI");
 
 		this.canvas.clear();
 		this.canvas.add(uiBinder.createAndBindUi(this));
-		
-		log.leave();
+
 	}
 	
 
@@ -131,10 +132,9 @@ public class ListStudiesWidgetRenderer extends
 
 		syncUIWithStudyFeed(model.studyFeed.get());
 
-		
+
 		log.leave();
 	}
-	
 	
 	protected void syncUIWithStudyFeed(Document studyFeed) {
 		log.enter("syncUIWithStudyFeed");
@@ -156,53 +156,55 @@ public class ListStudiesWidgetRenderer extends
 	
 	private FlexTable renderStudyFeed(Document studyFeed) {
 		log.enter("renderStudyFeed");
-		
-			
-			List<List<Widget>> rows = new ArrayList<List<Widget>>();
-		
-			ArrayList<Widget> headerRow = new ArrayList<Widget>();
-			headerRow.add(strongWidget("Study Title")); // i18n
-			
-			headerRow.add(strongWidget("Modules"));     // i18n
-			headerRow.add(strongWidget("Submitters"));  // i18n
-			headerRow.add(strongWidget("Actions"));     // i18n
-			
-			
-			rows.add(headerRow);
-			
-			for (final Element study : AtomHelper.getEntries(studyFeed.getDocumentElement())) { 
-				log.debug(study.toString());
-				Anchor viewStudyLink = new Anchor("view study"); // i18n
-				
-				viewStudyLink.addClickHandler(new ClickHandler() {
-					
-					public void onClick(ClickEvent e) {
-						
-						log.enter("onClick");
-						
-						log.debug("Firing event...");
-						
-						ViewStudyNavigationEvent viewStudyNavigationEvent  = new ViewStudyNavigationEvent();
-						viewStudyNavigationEvent.setStudyEntry(study);
-						
-						owner.listStudiesViewStudyNavigationEventChannel.fireEvent(viewStudyNavigationEvent);
-						
-						log.leave();
-						
-					}
 
-				});
-				List<Widget> row = new ArrayList<Widget>();
-				row.add(new HTML(ChassisHelper.getTitle(study)));
-				row.add(new HTML(RenderUtils.join(ChassisHelper.getModules(study), ", ")));
-				row.add(new HTML(RenderUtils.join(ChassisHelper.getAuthorEmails(study), ", ")));
-				row.add(viewStudyLink);
-				
-				rows.add(row);
-			}
+		List<List<Widget>> rows = new ArrayList<List<Widget>>();
 		
+		ArrayList<Widget> headerRow = new ArrayList<Widget>();
+		headerRow.add(strongWidget("Study Title"));		// i18n
+		headerRow.add(strongWidget("Modules"));     // i18n
+		headerRow.add(strongWidget("Submitters"));  // i18n
+		headerRow.add(strongWidget("Actions"));     // i18n
+
+		rows.add(headerRow);
+
+		for (final Element entry : AtomHelper.getEntries(studyFeed.getDocumentElement())) { 
+
+			ArrayList<Widget> row = new ArrayList<Widget>();
+
+			row.add(new HTML(ChassisHelper.getTitle(entry)));
+			row.add(new HTML(RenderUtils.join(ChassisHelper.getModules(entry), ", ")));
+			row.add(new HTML(RenderUtils.join(ChassisHelper.getAuthorEmails(entry), ", ")));
+
+			Anchor viewStudyNavigationLink = new Anchor("view study"); // i18n
+				
+			viewStudyNavigationLink.addClickHandler(new ClickHandler() {
+					
+				public void onClick(ClickEvent e) {
+						
+					log.enter("onClick");
+
+					log.debug("Firing event...");
+
+					ViewStudyNavigationEvent viewStudyNavigationEvent  = new ViewStudyNavigationEvent();
+					viewStudyNavigationEvent.setStudyEntry(entry);
+
+					owner.listStudiesViewStudyNavigationEventChannel.fireEvent(viewStudyNavigationEvent);
+						
+					log.leave();
+						
+				}
+
+			});
+
+			row.add(viewStudyNavigationLink);
+
+			rows.add(row);
+		}
+
+		FlexTable t = RenderUtils.renderResultsTable(rows);
+
 		log.leave();
-		return  RenderUtils.renderResultsTable(rows);
+		return t;
 	}
 
 
