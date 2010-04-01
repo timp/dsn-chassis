@@ -44,10 +44,10 @@
 		</g:HTMLPanel>
 
 		<g:HTMLPanel ui:field="contentPanel">
-
+			<h1>Curator - Edit Study Questionnaire</h1>
             <div id="EditStudyQuestionnaire" title="EditStudyQuestionnaire" class="widget">
-            	<g:FlowPanel ui:field="editStudyQuestionnairePanel"></g:FlowPanel>
 				<local:StudySummaryWidget ui:field="studySummaryWidgetUiField"/>
+            	<g:FlowPanel ui:field="editStudyQuestionnairePanel"></g:FlowPanel>
 				<local:EditQuestionnaireWidget ui:field="editQuestionnaireWidgetUiField"/>
 			</div>
 		</g:HTMLPanel>

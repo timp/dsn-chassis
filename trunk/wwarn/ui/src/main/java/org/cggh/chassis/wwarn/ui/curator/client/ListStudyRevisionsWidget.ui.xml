@@ -44,7 +44,7 @@
 		</g:HTMLPanel>
 
 		<g:HTMLPanel ui:field="contentPanel">
-
+		<h1>Curator - List Study Revisions</h1>
             <div id="ListStudyRevisions" title="ListStudyRevisions" class="widget">
 				<local:StudySummaryWidget ui:field="studySummaryWidgetUiField"/>
             	<g:FlowPanel ui:field="listStudyRevisionsPanel"></g:FlowPanel>
