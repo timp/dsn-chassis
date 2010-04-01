@@ -7,11 +7,15 @@ import java.util.List;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.miniatom.client.ext.ChassisHelper;
-import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.cggh.chassis.generic.widget.client.ChassisWidget;
 import org.cggh.chassis.generic.widget.client.ObservableProperty;
 import org.cggh.chassis.generic.widget.client.PropertyChangeEvent;
 import org.cggh.chassis.generic.widget.client.PropertyChangeHandler;
+
 import org.cggh.chassis.generic.widget.client.WidgetEvent;
 import org.cggh.chassis.generic.widget.client.WidgetEventChannel;
 import org.cggh.chassis.generic.widget.client.WidgetEventHandler;
@@ -30,8 +34,13 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.xml.client.Element;
 
 
+import com.google.gwt.xml.client.Element;
 
 /**
+ * BE SURE TO EDIT THE TEMPLATE NOT THE RENDERED RESULT
+ *
+ * DELETE_TO_MANUALLY_EDIT
+ *
  * @author timp
  *
  */
@@ -102,6 +111,10 @@ public class StudySummaryWidget
 	@Override
 	protected void bindUI() {
 		super.bindUI();
+
+		// Much the same as registerHandlersForChildWidgetEvents in ChassisWidgetRenderer
+		// StudyActions events
+
 		this.childWidgetEventHandlerRegistrations.add(
 				studyActionsWidgetUiField.studyActionsListStudiesNavigationEventChannel.addHandler(new WidgetEventHandler<WidgetEvent>() {
 			public void onEvent(WidgetEvent e) {
@@ -152,9 +165,9 @@ public class StudySummaryWidget
 		}));
  
 
-	// Model changes
+		// Model changes
 
-	
+
 		message.addChangeHandler(new PropertyChangeHandler<String>() {
 			public void onChange(PropertyChangeEvent<String> e) {
 				log.enter("onChange<String>");		
@@ -164,6 +177,14 @@ public class StudySummaryWidget
 		});
 
 	
+		studyUrl.addChangeHandler(new PropertyChangeHandler<String>() {
+			public void onChange(PropertyChangeEvent<String> e) {
+				log.enter("onchange(studyUrl)");
+				syncUIWithStudyUrl(e.getAfter());
+				log.leave();
+			}
+		});
+
 	
 		studyEntry.addChangeHandler(new PropertyChangeHandler<Element>() {
 			public void onChange(PropertyChangeEvent<Element> e) {
@@ -177,13 +198,10 @@ public class StudySummaryWidget
 	
 	}
 
-	@Override
-	protected void syncUI() {
-        syncUIWithStudyEntry(studyEntry.get());
-    }
 
 
-
+	
+	
 
 	
 	protected void syncUIWithMessage(String message) {
@@ -199,10 +217,14 @@ public class StudySummaryWidget
 		log.leave();
 	}
 		
+	protected void syncUIWithStudyUrl(String studyUrl) {
+		log.enter("syncUIWithStudyUrl");
+		// TODO needs to be a method in an extension
+		log.leave();
+	}
+
 	
-	
-	
-	
+		// TODO needs to be a method in an extension
 	private void syncUIWithStudyEntry(Element studyEntry){
 		log.enter("syncUIWithStudyEntry");
 		
@@ -237,7 +259,6 @@ public class StudySummaryWidget
 			this.studySummaryPanel.add(table);
 		}
 	}
-
 
 
 }
