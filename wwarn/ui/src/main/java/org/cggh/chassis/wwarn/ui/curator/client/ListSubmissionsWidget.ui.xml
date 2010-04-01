@@ -40,7 +40,6 @@
 		<g:HTMLPanel ui:field="contentPanel">
 
             <div id="ListSubmissions" title="ListSubmissions" class="widget">
-            <h2>Submissions</h2>
             	<g:FlowPanel ui:field="listSubmissionsPanel"></g:FlowPanel>
 			</div>
 		</g:HTMLPanel>
