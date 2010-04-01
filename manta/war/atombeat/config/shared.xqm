@@ -45,7 +45,7 @@ declare variable $config:user-roles-request-attribute-key as xs:string := "user-
  : If usernames should be treated as email addresses, set this to true(). (I.e.,
  : if users are logging in with their email address as their user ID.)
  :)
-declare variable $config:user-name-is-email as xs:boolean := false() ;
+declare variable $config:user-name-is-email as xs:boolean := true() ;
 
 
 (:
@@ -81,179 +81,58 @@ declare variable $config:default-decision := "deny" ;
 
 
 (:
- : A default global ACL, customise for your environment.
+ : The global ACL.
  :)
 declare variable $config:default-global-acl := 
     <acl>
         <rules>
             <allow>
-                <role>ROLE_ADMINISTRATOR</role>
-                <operation>create-collection</operation>
-            </allow>
-            <allow>
-                <role>ROLE_ADMINISTRATOR</role>
-                <operation>update-collection</operation>
-            </allow>
-            <allow>
-                <role>ROLE_ADMINISTRATOR</role>
-                <operation>list-collection</operation>
-            </allow>
-            <allow>
-                <role>ROLE_ADMINISTRATOR</role>
-                <operation>create-member</operation>
-            </allow>
-            <allow>
-                <role>ROLE_ADMINISTRATOR</role>
-                <operation>retrieve-member</operation>
-            </allow>
-            <allow>
-                <role>ROLE_ADMINISTRATOR</role>
-                <operation>update-member</operation>
-            </allow>
-            <allow>
-                <role>ROLE_ADMINISTRATOR</role>
-                <operation>delete-member</operation>
-            </allow>
-            <allow>
-                <role>ROLE_ADMINISTRATOR</role>
-                <operation>create-media</operation>
-            </allow>
-            <allow>
-                <role>ROLE_ADMINISTRATOR</role>
-                <operation>retrieve-media</operation>
-            </allow>
-            <allow>
-                <role>ROLE_ADMINISTRATOR</role>
-                <operation>update-media</operation>
-            </allow>
-            <allow>
-                <role>ROLE_ADMINISTRATOR</role>
-                <operation>delete-media</operation>
-            </allow>
-            <allow>
-                <role>ROLE_ADMINISTRATOR</role>
-                <operation>update-acl</operation>
-            </allow>
-            <!-- you could also use a wildcard -->
-            <!--
-            <allow>
-                <role>ROLE_ADMINISTRATOR</role>
+                <role>ROLE_CHASSIS_ADMINISTRATOR</role>
                 <operation>*</operation>
             </allow>
-            -->
         </rules>
     </acl>
 ;
 
 
 (:
- : A function to generate default collection ACL, customise for your environment.
+ : The default collection ACLs.
  :)
 declare function config:default-collection-acl(
     $request-path-info as xs:string ,
-    $user as xs:string
+    $user as xs:string?
 ) as element(acl)
 { 
-    <acl>
-        <rules>
-        
-            <!--  
-            Authors can create entries and media, and can list the collection,
-            but can only retrieve resources they have created.
-            -->
-            
-            <allow>
-                <role>ROLE_AUTHOR</role>
-                <operation>create-member</operation>
-            </allow>
-            <allow>
-                <role>ROLE_AUTHOR</role>
-                <operation>create-media</operation>
-            </allow>
-            <allow>
-                <role>ROLE_AUTHOR</role>
-                <operation>list-collection</operation>
-            </allow>
-            
-            <!--
-            Editors can list the collection, retrieve and update any member.
-            -->
-            
-            <allow>
-                <role>ROLE_EDITOR</role>
-                <operation>list-collection</operation>
-            </allow>
-            <allow>
-                <role>ROLE_EDITOR</role>
-                <operation>retrieve-member</operation>
-            </allow>
-            <allow>
-                <role>ROLE_EDITOR</role>
-                <operation>update-member</operation>
-            </allow>
-            <allow>
-                <role>ROLE_EDITOR</role>
-                <operation>delete-member</operation>
-            </allow>
+    if ( $request-path-info = "/studies" )
 
-            <!-- Media editors -->
-            
-            <allow>
-                <role>ROLE_MEDIA_EDITOR</role>
-                <operation>list-collection</operation>
-            </allow>
-            <allow>
-                <role>ROLE_MEDIA_EDITOR</role>
-                <operation>retrieve-member</operation>
-            </allow>
-            <allow>
-                <role>ROLE_MEDIA_EDITOR</role>
-                <operation>retrieve-media</operation>
-            </allow>
-            <allow>
-                <role>ROLE_MEDIA_EDITOR</role>
-                <operation>update-media</operation>
-            </allow>
-            <allow>
-                <role>ROLE_MEDIA_EDITOR</role>
-                <operation>delete-media</operation>
-            </allow>
-            
-            <!--
-            Readers can list the collection and retrieve any member.
-            -->
-            
-            <allow>
-                <role>ROLE_READER</role>
-                <operation>list-collection</operation>
-            </allow>
-            <allow>
-                <role>ROLE_READER</role>
-                <operation>retrieve-member</operation>
-            </allow>
-            <allow>
-                <role>ROLE_READER</role>
-                <operation>retrieve-media</operation>
-            </allow>
-            
-            <!--
-            Data authors can only create media resources with a specific media
-            type.
-            -->
-            
-            <allow>
-                <role>ROLE_DATA_AUTHOR</role>
-                <operation>create-media</operation>
-                <media-range>application/vnd.ms-excel</media-range>
-            </allow>
-            
-        </rules>
-    </acl>
+    then
+
+        <acl>
+            <rules>
+                <!-- submitters can create studies and can list the collection -->
+                <allow>
+                    <role>ROLE_CHASSIS_SUBMITTER</role>
+                    <operation>create-member</operation>
+                </allow>
+                <allow>
+                    <role>ROLE_CHASSIS_SUBMITTER</role>
+                    <operation>list-collection</operation>
+                </allow>
+            </rules>
+        </acl>
+        
+    else
+
+        (: TODO other collections :)
+        <acl>
+            <rules>
+            </rules>
+        </acl>
 };
 
 
 (:
- : A function to generate default resource ACL, customise for your environment.
+ : The default resource ACLs.
  :)
 declare function config:default-resource-acl(
     $request-path-info as xs:string ,
@@ -261,73 +140,52 @@ declare function config:default-resource-acl(
 ) as element(acl)
 {
 
-	<acl>
-		<rules>
-		
-		    <!-- 
-		    The user who created the resource has full rights.
-		    -->
-		    
-            <allow>
-                <user>{$user}</user>
-                <operation>retrieve-member</operation>
-            </allow>
-            <allow>
-                <user>{$user}</user>
-                <operation>update-member</operation>
-            </allow>
-            <allow>
-                <user>{$user}</user>
-                <operation>delete-member</operation>
-            </allow>
-            <allow>
-                <user>{$user}</user>
-                <operation>retrieve-media</operation>
-            </allow>
-            <allow>
-                <user>{$user}</user>
-                <operation>update-media</operation>
-            </allow>
-            <allow>
-                <user>{$user}</user>
-                <operation>delete-media</operation>
-            </allow>
-            <allow>
-                <user>{$user}</user>
-                <operation>update-acl</operation>
-            </allow>
-            
-		</rules>
-	</acl>
+    if ( starts-with( $request-path-info , "/studies" ) )
+    
+    then
 
-	(: you could also use groups, which makes it a bit easier to add more owners :)
-		
-	(:
-	<acl>
-		<groups>
-			<group name="owners">
-                <user>{$user}</user>
-			</group>
-		</groups>
-		<rules>
-            <allow>
-                <group>owners</group>
-                <operation>retrieve-member</operation>
-            </allow>
-            <allow>
-                <group>owners</group>
-                <operation>update-member</operation>
-            </allow>
-            <allow>
-                <group>owners</group>
-                <operation>delete-member</operation>
-            </allow>
-            <allow>
-                <group>owners</group>
-                <operation>update-acl</operation>
-            </allow>
-		</rules>
-	</acl>
-	:)
+    	<acl>
+    		<groups>
+    			<group name="owners">
+                    <user>{$user}</user><!-- creating user is automatically an owner -->
+    			</group>
+    			<group name="submitters">
+    			</group>
+    		</groups>
+    		<rules>
+    		    <!-- owners can retrieve, update and change sharing -->
+                <allow>
+                    <group>owners</group>
+                    <operation>retrieve-member</operation>
+                </allow>
+                <allow>
+                    <group>owners</group>
+                    <operation>update-member</operation>
+                </allow>
+                <allow>
+                    <group>owners</group>
+                    <operation>update-acl</operation>
+                </allow>
+                <!-- submitters can retrieve and update, but cannot change sharing -->
+                <allow>
+                    <group>submitters</group>
+                    <operation>retrieve-member</operation>
+                </allow>
+                <allow>
+                    <group>submitters</group>
+                    <operation>update-member</operation>
+                </allow>
+    		</rules>
+    	</acl>
+    	
+    else
+
+        (: TODO other collections :)
+        <acl>
+            <rules>
+            </rules>
+        </acl>
+    
+
 };
 
