@@ -12,9 +12,18 @@ import org.cggh.chassis.generic.widget.client.ErrorEvent;
 import org.cggh.chassis.wwarn.ui.common.client.Config;
 
 import com.google.gwt.xml.client.Document;
+import com.google.gwt.xml.client.Element;
 
 /**
+ * BE SURE TO EDIT THE TEMPLATE NOT THE RENDERED RESULT
+ *
+ * DELETE_TO_MANUALLY_EDIT
+ *
+ *
+ * 
+ *
  * @author timp
+ *
  */
 public class ListStudiesWidgetController {
 	
@@ -30,6 +39,9 @@ public class ListStudiesWidgetController {
 		this.model = model;
 	}
 
+
+    					
+        //private ViewStudyNavigationEvent viewStudyNavigationEvent;
 	
        	            
 			
@@ -63,8 +75,8 @@ public class ListStudiesWidgetController {
 		}
 
 	}
-
-
+	
+	
 	public Deferred<ChassisWidget> refreshAndCallback() {
 		log.enter("refreshAndCallback");
 		
@@ -116,8 +128,9 @@ public class ListStudiesWidgetController {
 		}
 		
 	}
+	
 
-
+	
 	
 
 }
