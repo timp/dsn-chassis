@@ -93,7 +93,6 @@ public class ViewStudyWidget
 
 	@Override
 	public Deferred<ChassisWidget> refreshAndCallback() {
-		
 		log.enter("refreshAndCallback");
 		
 		Deferred<ChassisWidget> deferredSelf = this.controller.refreshAndCallback();
@@ -145,12 +144,13 @@ public class ViewStudyWidget
 			
 			if (url != null) {
 				
-				log.debug("set url to:" + url);
+				log.debug("set url to :" + url);
 				model.studyUrl.set(url);
 				
 				deferredMemory = refreshAndCallback().adapt(new Function<ChassisWidget, WidgetMemory>() {
 
 					public WidgetMemory apply(ChassisWidget in) {
+						log.debug("call back returning this memory");
 						return Memory.this;
 					}
 					

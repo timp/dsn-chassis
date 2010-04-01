@@ -9,15 +9,11 @@ import org.cggh.chassis.generic.miniatom.client.Atom;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 import org.cggh.chassis.generic.widget.client.ChassisWidget;
 import org.cggh.chassis.generic.widget.client.ErrorEvent;
-import org.cggh.chassis.wwarn.ui.common.client.Config;
 
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;
 
 /**
- * BE SURE TO EDIT THE TEMPLATE NOT THE RENDERED RESULT
- *
- * DELETE_TO_MANUALLY_EDIT
  *
  * @author timp
  *
@@ -31,25 +27,42 @@ public class ViewStudyWidgetController {
 	private ViewStudyWidget owner;
 	private ViewStudyWidgetModel model;
 
+	public ViewStudyWidgetController(ViewStudyWidget owner, ViewStudyWidgetModel model) {
+		this.owner = owner;
+		this.model = model;
+	}
 
-	private static String STUDY_ENTRY_URI = "/atom/edit/studies/id.atom";
-
+	public Deferred<Element> retrieveStudyEntry() {
+		log.enter("retrieveStudyEntry");
+		
+		model.status.set(AsyncWidgetModel.STATUS_ASYNC_REQUEST_PENDING);
+		
+		Deferred<Element> deferredElement;
+		
+		log.debug("model.StudyUrl"+ model.studyUrl.get());
+		if (!model.studyUrl.isNull()) {
 			
-	public Deferred<Document> retrieveStudy() {
-		log.enter("retrieveStudy");
-		// Set the model's status to pending.
-		//model.setStatus(ViewStudyWidgetModel.STATUS_RETRIEVE_STUDIES_PENDING);
-		
-		String studyQueryServiceUrl = Config.get(Config.QUERY_STUDIES_URL);
-		
-		Deferred<Document> deferredDoc = Atom.getFeed(studyQueryServiceUrl);
+			deferredElement = Atom.getEntry(model.studyUrl.get()).adapt(new Function<Document, Element>() {
+
+				public Element apply(Document in) {
+					log.debug("retrieveStudyEntry.apply returning " + in.getDocumentElement());
+					return in.getDocumentElement();
+				}
+				
+			});
+			
+		}
+		else {
+			deferredElement = new Deferred<Element>();
+			deferredElement.callback(null);
+		}
 		
 		// Add a call-back and error-back for the asynchronous feed.
-		deferredDoc.addCallback(new RetrieveStudyCallback());
-		deferredDoc.addErrback(new DefaultErrback());
+		deferredElement.addCallback(new RetrieveStudyEntryCallback());
+		deferredElement.addErrback(new DefaultErrback());
 		
 		log.leave();
-		return deferredDoc;
+		return deferredElement;
 	}
 	
 	
@@ -58,17 +71,12 @@ public class ViewStudyWidgetController {
 		log.enter("refreshAndCallback");
 		
 		final Deferred<ChassisWidget> deferredOwner = new Deferred<ChassisWidget>();
-	/*	
-		if (model.submissionId.get() != null) {
+		
+		if (model.studyUrl.get() != null) {
+			Deferred<Element> chain = retrieveStudyEntry();
 			
-			Deferred<Element> chain = retrieveSubmission();
+			chain.addCallback(new RetrieveStudyEntryCallback());
 			
-			chain.addCallback(new RetrieveSubmissionCallback());
-			
-			chain.addCallback(new RetrieveQuestionnaireCallback());
-			
-			chain.addCallback(retrieveStudyCallback);
-
 			// handle errors
 			chain.addErrback(new DefaultErrback());
 			
@@ -83,7 +91,7 @@ public class ViewStudyWidgetController {
 			});
 
 		}
-		*/
+		
 		log.leave();
 		return deferredOwner;
 		
@@ -108,63 +116,34 @@ public class ViewStudyWidgetController {
 
 
 	
-	private class RetrieveStudyCallback implements Function<Element, Deferred<Document>> {
+	private class RetrieveStudyEntryCallback implements Function<Element, Element> {
 
-		public Deferred<Document> apply(Element studyEntryElement) {
-			
-			// model.setStudyEntryElement(studyEntryElement);
-			
-			Deferred<Document> deferredFilesFeedDoc = null;
+		public Element apply(Element studyEntryElement) {
+			log.enter("apply");
+
 			
 			if (studyEntryElement != null) {
 
-				// we have one, so lets try retrieving the list of files uploaded so far
-				// deferredFilesFeedDoc = retrieveFiles();
+				model.studyEntry.set(studyEntryElement);
+				// we have one
+				log.debug("RetrieveStudyEntryCallback.apply not null");
 				
 			}
 			
 			else {
 				
-				//model.setStatus(ViewStudyWidgetModel.STATUS_STUDY_NOT_FOUND);
-				deferredFilesFeedDoc = new Deferred<Document>();
-				deferredFilesFeedDoc.callback(null);
+				log.debug("RetrieveStudyEntryCallback.apply null");
 
 			}
 			
-			// return the deferred feed of files uploaded, for chaining of callbacks
-			return deferredFilesFeedDoc;
+			log.leave();
+			return studyEntryElement;
 		}
 		
 	}
 	
 	
         			
-	public void setStudyEntry(Element study) { 
-	  // TODO Generated stub 
-	}
-	
-     	 	//eeek property/3 
-	     	     	   	 	//eeek property/2 
-	     	     	   	 
-	private StudySummaryWidget studySummaryWidget;
-
- 
-	private ViewStudyMetadataWidget viewStudyMetadataWidget;
-
- 
-	private ListSubmissionsWidget listSubmissionsWidget;
-
- 
-	private ListCurationsWidget listCurationsWidget;
-
- 
-	
-	
-	public ViewStudyWidgetController(ViewStudyWidget owner, ViewStudyWidgetModel model) {
-		this.owner = owner;
-		this.model = model;
-	}
-
 	
 	
 
