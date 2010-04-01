@@ -40,6 +40,7 @@
 		<g:HTMLPanel ui:field="contentPanel">
 
             <div id="StudyRevisionList" title="StudyRevisionList" class="widget">
+			<h2>Study Revisions</h2>
             	<g:FlowPanel ui:field="studyRevisionListPanel"></g:FlowPanel>
 				<local:CurrentStudyRevisionWidget ui:field="currentStudyRevisionWidgetUiField"/>
 				<local:PriorStudyRevisionsListWidget ui:field="priorStudyRevisionsListWidgetUiField"/>
