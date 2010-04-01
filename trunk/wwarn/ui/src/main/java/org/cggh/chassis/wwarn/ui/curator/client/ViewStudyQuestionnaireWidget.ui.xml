@@ -46,8 +46,9 @@
 		<g:HTMLPanel ui:field="contentPanel">
 
             <div id="ViewStudyQuestionnaire" title="ViewStudyQuestionnaire" class="widget">
-            	<g:FlowPanel ui:field="viewStudyQuestionnairePanel"></g:FlowPanel>
+            <h1>Curator - View Study Questionnaire</h1>
 				<local:StudySummaryWidget ui:field="studySummaryWidgetUiField"/>
+            	<g:FlowPanel ui:field="viewStudyQuestionnairePanel"></g:FlowPanel>
 				<local:ViewQuestionnaireWidget ui:field="viewQuestionnaireWidgetUiField"/>
 			</div>
 		</g:HTMLPanel>
