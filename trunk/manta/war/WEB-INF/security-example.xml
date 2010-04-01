@@ -6,6 +6,8 @@
   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
               http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-2.0.4.xsd">  
 
+
+
   <http 
     auto-config="false" 
     realm="atombeat" 
@@ -13,34 +15,31 @@
   
     <http-basic/>
 
-    <!-- restrict access to administrative scripts -->
-    <intercept-url pattern="/atombeat/admin/**" access="ROLE_ADMINISTRATOR" />
+    <!-- restrict access to libraries and administrative scripts -->
+    <intercept-url pattern="/atombeat/admin/**" access="ROLE_CHASSIS_ADMINISTRATOR" />
+    <intercept-url pattern="/atombeat/config/**" access="ROLE_CHASSIS_ADMINISTRATOR" />
+    <intercept-url pattern="/atombeat/lib/**" access="ROLE_CHASSIS_ADMINISTRATOR" />
+    <intercept-url pattern="/atombeat/plugins/**" access="ROLE_CHASSIS_ADMINISTRATOR" />
     
     <!-- force authentication for all requests to atombeat, but delegate
     access control decisions to atombeat -->
-    <intercept-url pattern="/atombeat/**" access="ROLE_USER" />
+    <intercept-url pattern="/atombeat/**" access="ROLE_CHASSIS_USER" />
 
   </http>
+  
+  
   
   <authentication-provider>
     <user-service>
     
-      <user name="adam" password="test" authorities="ROLE_USER, ROLE_ADMINISTRATOR" />
-
-      <user name="edwina" password="test" authorities="ROLE_USER, ROLE_EDITOR" />
-
-      <user name="melanie" password="test" authorities="ROLE_USER, ROLE_MEDIA_EDITOR" />
+      <user name="adam@example.org" password="bar" authorities="ROLE_CHASSIS_USER, ROLE_CHASSIS_ADMINISTRATOR" />
       
-      <user name="austin" password="test" authorities="ROLE_USER, ROLE_AUTHOR" />
-      <user name="audrey" password="test" authorities="ROLE_USER, ROLE_AUTHOR" />
-
-      <user name="rebecca" password="test" authorities="ROLE_USER, ROLE_READER" />
+      <user name="suki@example.org" password="bar" authorities="ROLE_CHASSIS_USER, ROLE_CHASSIS_SUBMITTER" />
+      <user name="sunil@example.org" password="bar" authorities="ROLE_CHASSIS_USER, ROLE_CHASSIS_SUBMITTER" />
       
-      <user name="ursula" password="test" authorities="ROLE_USER" />
-      
-      <user name="daniel" password="test" authorities="ROLE_USER, ROLE_DATA_AUTHOR" />
-
     </user-service>
   </authentication-provider>
+
+
 
 </beans:beans>
