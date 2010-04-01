@@ -993,16 +993,6 @@ public class CuratorApplicationWidget
 	
 
 	
-	
-	@Override
-	public void refresh() {
-		log.enter("refresh");
-		
-		((ChassisWidget)this.activeChild).refresh();
-
-		log.leave();	
-	}
-	
 	@Override
 	public void setActiveChild(Widget child, boolean memorise) {
 		log.enter("setActiveChild");
