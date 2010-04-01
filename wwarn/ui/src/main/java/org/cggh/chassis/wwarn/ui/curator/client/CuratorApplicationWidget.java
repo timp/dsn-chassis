@@ -119,13 +119,13 @@ public class CuratorApplicationWidget
 				String studyUrl =  e.getStudyUrl();
 				log.debug("Setting studyUrl to " + studyUrl);
 
-				viewStudyWidget.getModel().studyUrl.set(studyUrl);
+				viewStudyWidget.setStudyUrl(studyUrl);
 				
 				
 				Element studyEntry =  e.getStudyEntry();
 				log.debug("Setting studyEntry to " + studyEntry);
 
-				viewStudyWidget.getModel().studyEntry.set(studyEntry);
+				viewStudyWidget.setStudyEntry(studyEntry);
 				
 
 				setActiveChild(viewStudyWidget);
@@ -165,13 +165,13 @@ public class CuratorApplicationWidget
 				String studyUrl =  e.getStudyUrl();
 				log.debug("Setting studyUrl to " + studyUrl);
 
-				viewStudyWidget.getModel().studyUrl.set(studyUrl);
+				viewStudyWidget.setStudyUrl(studyUrl);
 				
 				
 				Element studyEntry =  e.getStudyEntry();
 				log.debug("Setting studyEntry to " + studyEntry);
 
-				viewStudyWidget.getModel().studyEntry.set(studyEntry);
+				viewStudyWidget.setStudyEntry(studyEntry);
 				
 
 				setActiveChild(viewStudyWidget);
@@ -323,13 +323,13 @@ public class CuratorApplicationWidget
 				String studyUrl =  e.getStudyUrl();
 				log.debug("Setting studyUrl to " + studyUrl);
 
-				viewStudyWidget.getModel().studyUrl.set(studyUrl);
+				viewStudyWidget.setStudyUrl(studyUrl);
 				
 				
 				Element studyEntry =  e.getStudyEntry();
 				log.debug("Setting studyEntry to " + studyEntry);
 
-				viewStudyWidget.getModel().studyEntry.set(studyEntry);
+				viewStudyWidget.setStudyEntry(studyEntry);
 				
 
 				setActiveChild(viewStudyWidget);
@@ -483,13 +483,13 @@ public class CuratorApplicationWidget
 				String studyUrl =  e.getStudyUrl();
 				log.debug("Setting studyUrl to " + studyUrl);
 
-				viewStudyWidget.getModel().studyUrl.set(studyUrl);
+				viewStudyWidget.setStudyUrl(studyUrl);
 				
 				
 				Element studyEntry =  e.getStudyEntry();
 				log.debug("Setting studyEntry to " + studyEntry);
 
-				viewStudyWidget.getModel().studyEntry.set(studyEntry);
+				viewStudyWidget.setStudyEntry(studyEntry);
 				
 
 				setActiveChild(viewStudyWidget);
@@ -642,13 +642,13 @@ public class CuratorApplicationWidget
 				String studyUrl =  e.getStudyUrl();
 				log.debug("Setting studyUrl to " + studyUrl);
 
-				viewStudyWidget.getModel().studyUrl.set(studyUrl);
+				viewStudyWidget.setStudyUrl(studyUrl);
 				
 				
 				Element studyEntry =  e.getStudyEntry();
 				log.debug("Setting studyEntry to " + studyEntry);
 
-				viewStudyWidget.getModel().studyEntry.set(studyEntry);
+				viewStudyWidget.setStudyEntry(studyEntry);
 				
 
 				setActiveChild(viewStudyWidget);
@@ -784,13 +784,13 @@ public class CuratorApplicationWidget
 				String studyUrl =  e.getStudyUrl();
 				log.debug("Setting studyUrl to " + studyUrl);
 
-				viewStudyWidget.getModel().studyUrl.set(studyUrl);
+				viewStudyWidget.setStudyUrl(studyUrl);
 				
 				
 				Element studyEntry =  e.getStudyEntry();
 				log.debug("Setting studyEntry to " + studyEntry);
 
-				viewStudyWidget.getModel().studyEntry.set(studyEntry);
+				viewStudyWidget.setStudyEntry(studyEntry);
 				
 
 				setActiveChild(viewStudyWidget);
