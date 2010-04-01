@@ -45,10 +45,11 @@ public class ListStudiesWidgetRenderer extends
 		List<List<Widget>> rows = new ArrayList<List<Widget>>();
 		
 		ArrayList<Widget> headerRow = new ArrayList<Widget>();
-		headerRow.add(strongWidget("Title"));		// i18n
-		headerRow.add(strongWidget("Authors"));  	// i18n
+		headerRow.add(strongWidget("Study Title"));		// i18n
+		headerRow.add(strongWidget("Modules"));  		// i18n
+		headerRow.add(strongWidget("Submitters"));  	// i18n
 		
-		headerRow.add(strongWidget("ViewStudyNavigation"));     // i18n
+		headerRow.add(strongWidget("Actions"));     	// i18n
 		rows.add(headerRow);
 
 		for (final Element entry : AtomHelper.getEntries(studyFeed.getDocumentElement())) { 
@@ -56,9 +57,10 @@ public class ListStudiesWidgetRenderer extends
 			ArrayList<Widget> row = new ArrayList<Widget>();
 
 			row.add(new HTML(ChassisHelper.getTitle(entry)));
+			row.add(new HTML(RenderUtils.join(ChassisHelper.getModules(entry), ", ")));
 			row.add(new HTML(RenderUtils.join(ChassisHelper.getAuthorEmails(entry), ", ")));
-		
-			Anchor viewStudyNavigationLink = new Anchor("ViewStudyNavigation"); // i18n
+
+			Anchor viewStudyNavigationLink = new Anchor("view study"); // i18n
 			
 			viewStudyNavigationLink.addClickHandler(new ClickHandler() {
 				
