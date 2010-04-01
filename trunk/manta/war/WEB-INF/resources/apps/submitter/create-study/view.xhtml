@@ -11,19 +11,19 @@
 
   The full text of the license is available at http://www.gnu.org/copyleft/lesser.html
   -->
-<xhtml:html 
+<html 
 	xmlns:xforms="http://www.w3.org/2002/xforms"
     xmlns:f="http://orbeon.org/oxf/xml/formatting" 
-    xmlns:xhtml="http://www.w3.org/1999/xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
     xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:ev="http://www.w3.org/2001/xml-events"
     xmlns:atom="http://www.w.org/2005/Atom">
 
-    <xhtml:head>
+    <head>
     
-        <xhtml:title>WWARN Data Management - Submitter - Create Study</xhtml:title>
-        <xhtml:link rel="stylesheet" type="text/css" href="/apps/submitter/common/style.css"></xhtml:link>
+        <title>WWARN Data Management - Submitter - Create Study</title>
+        <link rel="stylesheet" type="text/css" href="/apps/submitter/common/style.css"></link>
         
         <xforms:model>
         
@@ -55,6 +55,9 @@
        				<xforms:bind nodeset="publications" relevant="../published = true()">
        					<xforms:bind nodeset="publication">
        						<xforms:bind nodeset="title" required="true()"/>
+       						<xforms:bind nodeset="first-author" required="true()"/>
+       						<xforms:bind nodeset="year" required="true()" type="xs:gYear"/>
+       						<xforms:bind nodeset="journal" required="true()"/>
        					</xforms:bind>
        				</xforms:bind>
        			</xforms:bind>
@@ -71,8 +74,53 @@
        			</publication>
        		</xforms:instance>
        		
+       		<xforms:instance id="acl">
+       			<acl xmlns="">
+       				<groups>
+       					<group name="owners">
+       						<user></user>
+       					</group>
+       					<group name="submitters">
+       					</group>
+   					</groups>
+		    		<rules>
+		    		    <!-- owners can retrieve, update and change sharing -->
+		                <allow>
+		                    <group>owners</group>
+		                    <operation>retrieve-member</operation>
+		                </allow>
+		                <allow>
+		                    <group>owners</group>
+		                    <operation>update-member</operation>
+		                </allow>
+		                <allow>
+		                    <group>owners</group>
+		                    <operation>update-acl</operation>
+		                </allow>
+		                <!-- submitters can retrieve and update, but cannot change sharing -->
+		                <allow>
+		                    <group>submitters</group>
+		                    <operation>retrieve-member</operation>
+		                </allow>
+		                <allow>
+		                    <group>submitters</group>
+		                    <operation>update-member</operation>
+		                </allow>
+		    		</rules>
+   				</acl>
+       		</xforms:instance>
+       		
+       		<xforms:instance id="user-template">
+       			<user xmlns="">
+       			</user>
+  			</xforms:instance>
+       		
+       		<xforms:bind nodeset="instance('acl')/groups/group[@name='owners']">
+                <xforms:bind nodeset="user[1]" readonly="true()"/>
+            </xforms:bind>
+       		
        		<xforms:instance id="control-instance">
-                <control-instance>
+                <control-instance xmlns="">
                     <back/>
                     <finish readonly="false"/>
                 </control-instance>
@@ -82,31 +130,61 @@
                 <xforms:bind nodeset="back" readonly="true()"/>
                 <xforms:bind nodeset="finish" readonly="@readonly = 'false'"/>
             </xforms:bind>
-        	
+            
+            <xforms:instance id="current-user">
+            	<user xmlns="">
+       				<name/>
+       				<roles/>
+            	</user>
+           	</xforms:instance>
+           	
+           <xforms:action 
+           		ev:event="xforms-model-construct-done">
+           		<xforms:setvalue ref="instance('current-user')/name" value="xxforms:get-remote-user()"/>
+           </xforms:action>
+
+           <xforms:action 
+           		ev:event="xforms-model-construct-done">
+           		<xforms:setvalue ref="instance('acl')/groups/group[@name='owners']/user" value="xxforms:get-remote-user()"/>
+           </xforms:action>
+
+           <xforms:action 
+           		ev:event="xforms-model-construct-done">
+                <xforms:insert 
+                	nodeset="instance('current-user')/roles" 
+                	at="1" 
+                	position="before" 
+                	origin="xxforms:get-request-attribute('user-roles-xml')"/>
+           </xforms:action>
+
         </xforms:model>
         
-        <xhtml:style type="text/css">
+        <style type="text/css">
             .wizard-td { background-color: #fce5b6; font-size: 16pt }
-        </xhtml:style>
+            .repeat-table { background-color: #fce5b6 }
+            .repeat-table .add-td { width: 33em }
+            .repeat-table .form-td { width: 33em; background: white; padding: .5em }
+        </style>
         
-    </xhtml:head>
+    </head>
     
-    <xhtml:body>
+    <body>
     
-    	<xhtml:h1>Submitter - Create Study</xhtml:h1>
-    	<xhtml:div id="home-nav"><xhtml:a href="../">submitter home</xhtml:a></xhtml:div>
+    	<h1>Submitter - Create Study</h1>
+    	
+    	<div id="home-nav"><xforms:output ref="instance('current-user')/name"/> | <a href="../">submitter home</a></div>
     	
     	<xforms:switch>
     		
     		<xforms:case id="title" selected="true">
     		
-	            <xhtml:table cellpadding="3">
-	                <xhtml:tr>
-	                    <xhtml:td rowspan="3" class="wizard-td">1</xhtml:td>
-	                    <xhtml:td colspan="1"><b>Step 1 of 4 - Study Title</b></xhtml:td>
-	                </xhtml:tr>
-	                <xhtml:tr>
-	                    <xhtml:td>
+	            <table cellpadding="3">
+	                <tr>
+	                    <td rowspan="3" class="wizard-td">1</td>
+	                    <td colspan="1"><b>Step 1 of 4 - Study Title</b></td>
+	                </tr>
+	                <tr>
+	                    <td>
 	                    
 	                        <xforms:input ref="instance('entry')/atom:title">
 	                            <xforms:label class="fixed-width">Title:</xforms:label>
@@ -114,10 +192,10 @@
 	                            <xforms:toggle ev:event="DOMActivate" case="publications"/>
 	                        </xforms:input>
 	                        
-	                    </xhtml:td>
-	                </xhtml:tr>
-	                <xhtml:tr>
-	                    <xhtml:td>
+	                    </td>
+	                </tr>
+	                <tr>
+	                    <td>
 	                        <xforms:trigger ref="instance('control-instance')/back">
 	                            <xforms:label>&lt; Previous</xforms:label>
 	                        </xforms:trigger>
@@ -125,45 +203,101 @@
 	                            <xforms:label>Next ></xforms:label>
 	                            <xforms:toggle ev:event="DOMActivate" case="publications"/>
 	                        </xforms:trigger>
-	                    </xhtml:td>
-	                </xhtml:tr>
-	            </xhtml:table>
+	                    </td>
+	                </tr>
+	            </table>
            		<fr:xforms-inspector xmlns:fr="http://orbeon.org/oxf/xml/form-runner"/>           
            
     		</xforms:case>
 
     		<xforms:case id="publications">
-	            <xhtml:table cellpadding="3">
-	                <xhtml:tr>
-	                    <xhtml:td rowspan="3" class="wizard-td">2</xhtml:td>
-	                    <xhtml:td colspan="1"><b>Step 2 of 4 - Publications</b></xhtml:td>
-	                </xhtml:tr>
-	                <xhtml:tr>
-	                    <xhtml:td>
+    		
+	            <table cellpadding="3">
+	                <tr>
+	                    <td rowspan="3" class="wizard-td">2</td>
+	                    <td colspan="1"><b>Step 2 of 4 - Publications</b></td>
+	                </tr>
+	                <tr>
+	                    <td>
 	                    
 	                    	<xforms:group ref="instance('entry')/atom:content/study">
 	                    	
-								<xhtml:p>
+								<p>
 									<xforms:input ref="published">
 										<xforms:label class="fixed-width">Has the study been published?</xforms:label>
 									</xforms:input>									
-								</xhtml:p>
+								</p>
 								
 								<xforms:group ref="publications">
 								
-									<table>
+									<table class="repeat-table">
 										<tr>
-											<td>TODO add one button</td>
-											<td>TODO add one link</td>
+											<td>
+							                    <xforms:trigger appearance="minimal">
+							                        <xforms:label><img src="/apps/submitter/common/add.gif"/></xforms:label>
+							                        <xforms:insert 
+							                        	ev:event="DOMActivate" 
+							                        	context="instance('entry')/atom:content/study/publications" 
+							                        	nodeset="publication" 
+							                        	at="1" 
+							                        	position="before" 
+							                        	origin="instance('publication-template')"/>
+							                    </xforms:trigger>
+											</td>
+											<td class="add-td">
+							                    <xforms:trigger appearance="minimal">
+							                        <xforms:label>Add One</xforms:label>
+							                        <xforms:insert 
+							                        	ev:event="DOMActivate" 
+							                        	context="instance('entry')/atom:content/study/publications" 
+							                        	nodeset="publication" 
+							                        	at="1" 
+							                        	position="before" 
+							                        	origin="instance('publication-template')"/>
+							                    </xforms:trigger>
+											</td>
 										</tr>
 										<xforms:repeat nodeset="publication" id="publication-repeat">
 											<tr>
-												<td>TODO remove me</td>
 												<td>
+							                        <xforms:trigger appearance="minimal">
+							                            <xforms:delete 
+							                            	ev:event="DOMActivate" 
+								                        	context="instance('entry')/atom:content/study/publications" 
+								                        	nodeset="publication" 
+							                            	at="index('publication-repeat')"/>
+							                            <xforms:label><img src="/apps/submitter/common/remove.gif"/></xforms:label>
+							                        </xforms:trigger>
+												</td>
+												<td class="form-td">
 													<xforms:input ref="title">
-														<xforms:label>Title:</xforms:label>
+														<xforms:label class="fixed-width">Title:</xforms:label>
 														<xforms:alert>The title is required.</xforms:alert>
 													</xforms:input>
+													<br/>
+													<xforms:input ref="first-author">
+														<xforms:label class="fixed-width">First author:</xforms:label>
+														<xforms:alert>The first author is required.</xforms:alert>
+													</xforms:input>
+													<br/>
+													<xforms:input ref="year">
+														<xforms:label class="fixed-width">Year:</xforms:label>
+														<xforms:alert>The year is required and must be a four digit number.</xforms:alert>
+													</xforms:input>
+													<br/>
+													<xforms:input ref="journal">
+														<xforms:label class="fixed-width">Journal:</xforms:label>
+														<xforms:alert>The journal is required.</xforms:alert>
+													</xforms:input>
+													<br/>
+													<xforms:input ref="url">
+														<xforms:label class="fixed-width">Web link:</xforms:label>
+													</xforms:input>
+													<br/>
+													<xforms:input ref="doi">
+														<xforms:label class="fixed-width">DOI:</xforms:label>
+													</xforms:input>
+													<br/>
 												</td>
 											</tr>
 										</xforms:repeat>
@@ -174,38 +308,133 @@
 
 	                    	</xforms:group>
 							
-	                    </xhtml:td>
-	                </xhtml:tr>
-	                <xhtml:tr>
-	                    <xhtml:td>
+	                    </td>
+	                </tr>
+	                <tr>
+	                    <td>
 	                        <xforms:trigger>
 	                            <xforms:label>&lt; Previous</xforms:label>
 	                            <xforms:toggle ev:event="DOMActivate" case="title"/>
 	                        </xforms:trigger>
 	                        <xforms:trigger>
 	                            <xforms:label>Next ></xforms:label>
-	                            <xforms:toggle ev:event="DOMActivate" case="sharing"/>
+	                            <xforms:toggle ev:event="DOMActivate" case="permissions"/>
 	                        </xforms:trigger>
-	                    </xhtml:td>
-	                </xhtml:tr>
-	            </xhtml:table>
+	                    </td>
+	                </tr>
+	            </table>
 	            
 				<fr:xforms-inspector xmlns:fr="http://orbeon.org/oxf/xml/form-runner"/>           
     		</xforms:case>
 
-    		<xforms:case id="sharing">
-	            <xhtml:table cellpadding="3">
-	                <xhtml:tr>
-	                    <xhtml:td rowspan="3" class="wizard-td">3</xhtml:td>
-	                    <xhtml:td colspan="1"><b>Step 3 of 4 - Sharing</b></xhtml:td>
-	                </xhtml:tr>
-	                <xhtml:tr>
-	                    <xhtml:td>
-							<xhtml:p>TODO</xhtml:p>
-	                    </xhtml:td>
-	                </xhtml:tr>
-	                <xhtml:tr>
-	                    <xhtml:td>
+    		<xforms:case id="permissions">
+	            <table cellpadding="3">
+	                <tr>
+	                    <td rowspan="3" class="wizard-td">3</td>
+	                    <td colspan="1"><b>Step 3 of 4 - Permissions</b></td>
+	                </tr>
+	                <tr>
+	                    <td>
+	                    	<h2>Owners</h2>
+							<table class="repeat-table">
+								<tr>
+									<td>
+					                    <xforms:trigger appearance="minimal">
+					                        <xforms:label><img src="/apps/submitter/common/add.gif"/></xforms:label>
+					                        <xforms:insert 
+					                        	ev:event="DOMActivate" 
+					                        	context="instance('acl')/groups/group[@name='owners']" 
+					                        	nodeset="user" 
+					                        	at="1" 
+					                        	position="after" 
+					                        	origin="instance('user-template')"/>
+					                    </xforms:trigger>
+									</td>
+									<td class="add-td">
+					                    <xforms:trigger appearance="minimal">
+					                        <xforms:label>Add One</xforms:label>
+					                        <xforms:insert 
+					                        	ev:event="DOMActivate" 
+					                        	context="instance('acl')/groups/group[@name='owners']" 
+					                        	nodeset="user" 
+					                        	at="1" 
+					                        	position="after" 
+					                        	origin="instance('user-template')"/>
+					                    </xforms:trigger>
+									</td>
+								</tr>
+								<xforms:repeat nodeset="instance('acl')/groups/group[@name='owners']/user" id="owner-repeat">
+									<tr>
+										<td>
+					                        <xforms:trigger appearance="minimal">
+					                            <xforms:delete 
+					                            	ev:event="DOMActivate" 
+						                        	context="instance('acl')/groups/group[@name='owners']" 
+						                        	nodeset="user" 
+					                            	at="index('owner-repeat')"/>
+					                            <xforms:label><img src="/apps/submitter/common/remove.gif"/></xforms:label>
+					                        </xforms:trigger>
+										</td>
+										<td class="form-td">
+											<xforms:input ref=".">
+												<xforms:label class="fixed-width">Email address:</xforms:label>
+											</xforms:input>
+										</td>
+									</tr>
+								</xforms:repeat>
+							</table>
+	                    	<h2>Submitters</h2>
+							<table class="repeat-table">
+								<tr>
+									<td>
+					                    <xforms:trigger appearance="minimal">
+					                        <xforms:label><img src="/apps/submitter/common/add.gif"/></xforms:label>
+					                        <xforms:insert 
+					                        	ev:event="DOMActivate" 
+					                        	context="instance('acl')/groups/group[@name='submitters']" 
+					                        	nodeset="user" 
+					                        	at="1" 
+					                        	position="after" 
+					                        	origin="instance('user-template')"/>
+					                    </xforms:trigger>
+									</td>
+									<td class="add-td">
+					                    <xforms:trigger appearance="minimal">
+					                        <xforms:label>Add One</xforms:label>
+					                        <xforms:insert 
+					                        	ev:event="DOMActivate" 
+					                        	context="instance('acl')/groups/group[@name='submitters']" 
+					                        	nodeset="user" 
+					                        	at="1" 
+					                        	position="after" 
+					                        	origin="instance('user-template')"/>
+					                    </xforms:trigger>
+									</td>
+								</tr>
+								<xforms:repeat nodeset="instance('acl')/groups/group[@name='submitters']/user" id="submitter-repeat">
+									<tr>
+										<td>
+					                        <xforms:trigger appearance="minimal">
+					                            <xforms:delete 
+					                            	ev:event="DOMActivate" 
+						                        	context="instance('acl')/groups/group[@name='submitters']" 
+						                        	nodeset="user" 
+					                            	at="index('submitter-repeat')"/>
+					                            <xforms:label><img src="/apps/submitter/common/remove.gif"/></xforms:label>
+					                        </xforms:trigger>
+										</td>
+										<td class="form-td">
+											<xforms:input ref=".">
+												<xforms:label class="fixed-width">Email address:</xforms:label>
+											</xforms:input>
+										</td>
+									</tr>
+								</xforms:repeat>
+							</table>
+	                    </td>
+	                </tr>
+	                <tr>
+	                    <td>
 	                        <xforms:trigger>
 	                            <xforms:label>&lt; Previous</xforms:label>
 	                            <xforms:toggle ev:event="DOMActivate" case="publications"/>
@@ -214,34 +443,35 @@
 	                            <xforms:label>Next ></xforms:label>
 	                            <xforms:toggle ev:event="DOMActivate" case="confirm"/>
 	                        </xforms:trigger>
-	                    </xhtml:td>
-	                </xhtml:tr>
-	            </xhtml:table>
+	                    </td>
+	                </tr>
+	            </table>
+				<fr:xforms-inspector xmlns:fr="http://orbeon.org/oxf/xml/form-runner"/>           
     		</xforms:case>
 
     		<xforms:case id="confirm">
-	            <xhtml:table cellpadding="3">
-	                <xhtml:tr>
-	                    <xhtml:td rowspan="3" class="wizard-td">4</xhtml:td>
-	                    <xhtml:td colspan="1"><b>Step 4 of 4 - Confirm</b></xhtml:td>
-	                </xhtml:tr>
-	                <xhtml:tr>
-	                    <xhtml:td>
-							<xhtml:p>TODO</xhtml:p>
-	                    </xhtml:td>
-	                </xhtml:tr>
-	                <xhtml:tr>
-	                    <xhtml:td>
+	            <table cellpadding="3">
+	                <tr>
+	                    <td rowspan="3" class="wizard-td">4</td>
+	                    <td colspan="1"><b>Step 4 of 4 - Confirm</b></td>
+	                </tr>
+	                <tr>
+	                    <td>
+							<p>TODO</p>
+	                    </td>
+	                </tr>
+	                <tr>
+	                    <td>
 	                        <xforms:trigger>
 	                            <xforms:label>&lt; Previous</xforms:label>
-	                            <xforms:toggle ev:event="DOMActivate" case="sharing"/>
+	                            <xforms:toggle ev:event="DOMActivate" case="permissions"/>
 	                        </xforms:trigger>
 	                        <xforms:trigger>
 	                            <xforms:label>Confirm</xforms:label>
 	                        </xforms:trigger>
-	                    </xhtml:td>
-	                </xhtml:tr>
-	            </xhtml:table>
+	                    </td>
+	                </tr>
+	            </table>
     		</xforms:case>
 
     	</xforms:switch>
@@ -250,7 +480,7 @@
 
 	
 
-    </xhtml:body>
+    </body>
     
-</xhtml:html>
+</html>
 

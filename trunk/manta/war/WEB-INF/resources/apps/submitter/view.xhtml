@@ -11,16 +11,48 @@
 
   The full text of the license is available at http://www.gnu.org/copyleft/lesser.html
   -->
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://orbeon.org/oxf/xml/formatting">
+<html 
+	xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:f="http://orbeon.org/oxf/xml/formatting" 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:atom="http://www.w.org/2005/Atom">
     <head>
         <title>WWARN Data Management - Submitter - Home</title>
         <link rel="stylesheet" type="text/css" href="/apps/submitter/common/style.css"></link>
         <style type="text/css"></style>
+        <xforms:model>
+            
+            <xforms:instance id="current-user">
+            	<user xmlns="">
+       				<name/>
+       				<roles/>
+            	</user>
+           	</xforms:instance>
+           	
+           <xforms:action 
+           		ev:event="xforms-model-construct-done">
+           		<xforms:setvalue ref="instance('current-user')/name" value="xxforms:get-remote-user()"/>
+           </xforms:action>
+
+           <xforms:action 
+           		ev:event="xforms-model-construct-done">
+                <xforms:insert 
+                	nodeset="instance('current-user')/roles" 
+                	at="1" 
+                	position="before" 
+                	origin="xxforms:get-request-attribute('user-roles-xml')"/>
+           </xforms:action>
+
+        </xforms:model>
     </head>
     <body>
     	<h1>Submitter - Home</h1>
+    	<div id="home-nav"><xforms:output ref="instance('current-user')/name"/></div>
     	<ul>
-    		<li><a href="create-study/">create study</a></li>
+    		<li><a href="create-study/">Create Study</a></li>
     	</ul>
     </body>
 </html>
