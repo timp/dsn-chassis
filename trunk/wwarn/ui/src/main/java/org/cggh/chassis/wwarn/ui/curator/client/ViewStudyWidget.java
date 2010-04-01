@@ -21,6 +21,8 @@ import com.google.gwt.xml.client.Element;
 
 import org.cggh.chassis.generic.widget.client.WidgetEventChannel;
 
+import com.google.gwt.http.client.URL;
+
 public class ViewStudyWidget 
 	 	extends DelegatingWidget<ViewStudyWidgetModel, ViewStudyWidgetRenderer> {
 
@@ -45,20 +47,6 @@ public class ViewStudyWidget
 
 	
 
-	// public so as to be available to renderer 
-	public StudySummaryWidget studySummaryWidget;
-
-
-	// public so as to be available to renderer 
-	public ViewStudyMetadataWidget viewStudyMetadataWidget;
-
-
-	// public so as to be available to renderer 
-	public ListSubmissionsWidget listSubmissionsWidget;
-
-
-	// public so as to be available to renderer 
-	public ListCurationsWidget listCurationsWidget;
 
 
 	@Override
@@ -74,6 +62,7 @@ public class ViewStudyWidget
 	protected ViewStudyWidgetRenderer createRenderer() {
 		return new ViewStudyWidgetRenderer(this);
 	}
+	
 	// Using init() rather than constructor because reset() uses init().
 	public void init() {
 		
@@ -81,7 +70,7 @@ public class ViewStudyWidget
 		
 
 		this.controller = new ViewStudyWidgetController(this, this.model);
-		this.renderer.setController(controller);
+
 		this.memory = new Memory();
 
 	}
@@ -90,7 +79,12 @@ public class ViewStudyWidget
 	public void refresh() {
 		log.enter("refresh");
 		
-		// TODO refresh this
+		//this.controller.retrieveStudyUrl();
+
+
+		//this.controller.retrieveStudyEntry();
+
+
 		renderer.studySummaryWidgetUiField.refresh();
 		
 		log.leave();	
@@ -111,7 +105,7 @@ public class ViewStudyWidget
 	
 	private class Memory extends MapMemory {
 
-		private static final String KEY_STUDYID = "studyid";
+		private static final String KEY = "studyUrl";
 
 
 		@Override
@@ -119,18 +113,17 @@ public class ViewStudyWidget
 			log.enter("createMnemonicMap");
 			
 			Map<String, String> map = new HashMap<String, String>();
+
+			Element studyEntry = model.studyEntry.get();
 			
-			Element study = model.studyEntry.get();
+			String url = null;
 			
-			String studyID = null;
-			
-			if (study != null) { 
+			if (studyEntry != null) { 
 				
-				studyID = AtomHelper.getId(study);
+				url = AtomHelper.getEditLinkHrefAttr(studyEntry);
 			
-				if (studyID != null) {
-					
-					map.put(KEY_STUDYID, studyID);
+				if (url != null) {					
+					map.put(KEY, URL.encodeComponent(url));
 				}
 				
 			}
@@ -147,15 +140,13 @@ public class ViewStudyWidget
 			
 			model.status.set(AsyncWidgetModel.STATUS_INITIAL);
 			
-			String studyID = mnemonic.get(KEY_STUDYID);
+			String url = URL.decodeComponent(mnemonic.get(KEY));
+			log.debug("found url: " + url);
 			
-			log.debug("found studyId: " + studyID);
-			
-			if (studyID != null) {
+			if (url != null) {
 				
-				log.debug("set selected study id to:" + studyID);
-				
-				model.studyID.set(studyID);
+				log.debug("set url to:" + url);
+				model.studyUrl.set(url);
 				
 				deferredMemory = refreshAndCallback().adapt(new Function<ChassisWidget, WidgetMemory>() {
 
