@@ -998,27 +998,7 @@ public class CuratorApplicationWidget
 	public void refresh() {
 		log.enter("refresh");
 		
-		((ChassisWidget)this.defaultChild).refresh();
-
-		// curatorHomeWidget.refresh();
-
-
-		// viewStudyWidget.refresh();
-
-
-		// viewStudyQuestionnaireWidget.refresh();
-
-
-		// editStudyQuestionnaireWidget.refresh();
-
-
-		// listStudyRevisionsWidget.refresh();
-
-
-		// viewStudyRevisionWidget.refresh();
-
-
-		// uploadDataFilesWizardWidget.refresh();
+		((ChassisWidget)this.activeChild).refresh();
 
 		log.leave();	
 	}
@@ -1029,8 +1009,8 @@ public class CuratorApplicationWidget
 		
 		super.setActiveChild(child, memorise);
 		
-		// override to trigger refresh if set as active child
-		if (child == this.defaultChild && child instanceof ChassisWidget) {
+		// Most widgets will refresh themselves, but the HomeWidget will not 
+		if (child == curatorHomeWidget) {
 			((ChassisWidget)child).refresh();
 		}
 
