@@ -1,12 +1,16 @@
 package org.cggh.chassis.wwarn.ui.curator.client;
-
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
+
 import org.cggh.chassis.generic.widget.client.WidgetEvent;
 
 import com.google.gwt.xml.client.Element;
 
+
 /**
+ * Generated event ViewStudyQuestionnaireNavigation from StudyRevisionActions to 
+ * ViewStudyQuestionnaire.
+ *
  * BE SURE TO EDIT THE TEMPLATE NOT THE RENDERED RESULT
  *
  * DELETE_TO_MANUALLY_EDIT
@@ -16,24 +20,47 @@ public class ViewStudyQuestionnaireNavigationEvent extends WidgetEvent {
 
 	private static final Log log = LogFactory.getLog(ViewStudyQuestionnaireNavigationEvent.class);	
 
-	private Element study;
-	
-	public void setStudy(Element study) {
-		log.enter("setStudy");		
+	private String studyUrl;
+
+
+	public void setStudyUrl(String studyUrl) {
+		log.enter("setStudyUrl");		
 		
-		this.study = study;
+		this.studyUrl = studyUrl;
 		
 		log.leave();
 	}
 	
-	public Element getStudy() {
-		log.enter("getStudy");		
+	public String getStudyUrl() {
+		log.enter("getStudyUrl");		
 		
-		log.debug("Getting study " + this.study);
+		log.debug("Returning studyUrl " + this.studyUrl);
 
 		log.leave();
 		
-		return this.study;
+		return this.studyUrl;
 	}
+
+	private Element studyEntry;
+
+
+	public void setStudyEntry(Element studyEntry) {
+		log.enter("setStudyEntry");		
+		
+		this.studyEntry = studyEntry;
+		
+		log.leave();
+	}
+	
+	public Element getStudyEntry() {
+		log.enter("getStudyEntry");		
+		
+		log.debug("Returning studyEntry " + this.studyEntry);
+
+		log.leave();
+		
+		return this.studyEntry;
+	}
+
 
 }
