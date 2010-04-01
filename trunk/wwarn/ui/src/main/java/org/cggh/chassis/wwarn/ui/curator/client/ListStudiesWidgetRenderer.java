@@ -47,83 +47,120 @@ public class ListStudiesWidgetRenderer extends
 	private static ListStudiesWidgetRendererUiBinder uiBinder = 
 		GWT.create(ListStudiesWidgetRendererUiBinder.class);
 
+
 	@UiField HTMLPanel mainPanel;
 	@UiField HTMLPanel contentPanel;
 	@UiField HTMLPanel pendingPanel;
+
 	@UiField HTMLPanel errorPanel;
 	@UiField FlowPanel errorMessage;
 
 	@UiField FlowPanel listStudiesPanel;
 	
-	
+
+
+
 	private ListStudiesWidget owner;
 	
-    public ListStudiesWidgetRenderer(ListStudiesWidget owner) {
+	public ListStudiesWidgetRenderer(ListStudiesWidget owner) {
 		this.owner = owner;
 	}
 
 
+
+	@Override
+	protected void registerHandlersForModelChanges() {
+		log.enter("registerHandlersForModelChanges");
+
+		this.modelChangeHandlerRegistrations.add(
+				model.status.addChangeHandler(new PropertyChangeHandler<Status>() {
+			public void onChange(PropertyChangeEvent<Status> e) {
+				log.enter("onChange<Status>");		
+				syncUIWithStatus(e.getAfter());
+				log.leave();
+			}
+		}));
+
+		this.modelChangeHandlerRegistrations.add(
+				model.message.addChangeHandler(new PropertyChangeHandler<String>() {
+			public void onChange(PropertyChangeEvent<String> e) {
+				log.enter("onChange<String>");		
+				syncUIWithMessage(e.getAfter());
+				log.leave();
+			}
+		}));
+
+	
+		this.modelChangeHandlerRegistrations.add(
+				model.studyFeed.addChangeHandler(new PropertyChangeHandler<Document>() {
+			public void onChange(PropertyChangeEvent<Document> e) {
+				log.enter("onchange(studyFeed)");
+				syncUIWithStudyFeed(e.getAfter());
+				log.leave();
+			}
+		}));
+
+		log.leave();
+	}
+	
 	@Override
 	protected void renderUI() {
 		log.enter("renderUI");
 
 		this.canvas.clear();
 		this.canvas.add(uiBinder.createAndBindUi(this));
-		errorPanel.setVisible(false);	
 		
 		log.leave();
 	}
 	
+
+	@Override
+	protected void bindUI(ListStudiesWidgetModel model) {
+		super.bindUI(model);
+
+		this.pendingPanel.setVisible(true);	
+		this.errorPanel.setVisible(false);	
+		this.contentPanel.setVisible(true);
+	}
+
+
 	@Override
 	protected void syncUI() {
 		log.enter("syncUI");
-
 		syncUIWithStatus(model.status.get());
-        syncUIWithStudyFeed(model.studyFeed.get());
+
+		syncUIWithStudyFeed(model.studyFeed.get());
+
 		
 		log.leave();
 	}
 	
 	
-	@Override
-	protected void registerHandlersForModelChanges() {
-		log.enter("registerHandlersForModelChanges");
+	protected void syncUIWithStudyFeed(Document studyFeed) {
+		log.enter("syncUIWithStudyFeed");
+		// TODO make abstract 
+		if (studyFeed == null) 
+			log.debug("studyFeed null");
+		else {
+			log.debug("studyFeed :"+studyFeed);
+
+			this.listStudiesPanel.clear();
+			this.listStudiesPanel.add(renderStudyFeed(studyFeed));
+			pendingPanel.setVisible(false);
+
+		}
 		
-		super.registerHandlersForModelChanges();
-		model.status.addChangeHandler(new PropertyChangeHandler<Status>() {
-		
-			public void onChange(PropertyChangeEvent<Status> e) {
-				log.enter("onChange(status)");
-			
-				log.debug("Status " + e.getAfter());
-				syncUIWithStatus(e.getAfter());
-			
-				log.leave();
-			}
-		});
-		model.studyFeed.addChangeHandler(new PropertyChangeHandler<Document>() {
-			
-			public void onChange(PropertyChangeEvent<Document> e) {
-				log.enter("onChange(document)");
-				Document document = e.getAfter();
-				syncUIWithStudyFeed(document);
-				log.leave();
-			}
-			
-		});
 		log.leave();
 	}
 
-	private void syncUIWithStudyFeed(Document studyFeed){
-		log.enter("syncUIWithStudyFeed");
+	
+	private FlexTable renderStudyFeed(Document studyFeed) {
+		log.enter("renderStudyFeed");
 		
-		if (studyFeed == null) 
-			log.debug("StudyFeed null");
-		else {
 			
 			List<List<Widget>> rows = new ArrayList<List<Widget>>();
-			
-			List<Widget> headerRow = new ArrayList<Widget>();
+		
+			ArrayList<Widget> headerRow = new ArrayList<Widget>();
 			headerRow.add(strongWidget("Study Title")); // i18n
 			
 			headerRow.add(strongWidget("Modules"));     // i18n
@@ -163,14 +200,9 @@ public class ListStudiesWidgetRenderer extends
 				
 				rows.add(row);
 			}
-			FlexTable table = RenderUtils.renderResultsTable(rows);
-			this.listStudiesPanel.clear();
-			this.listStudiesPanel.add(table);
-			pendingPanel.setVisible(false);	
-
-		}
 		
 		log.leave();
+		return  RenderUtils.renderResultsTable(rows);
 	}
 
 
@@ -178,41 +210,51 @@ public class ListStudiesWidgetRenderer extends
 		log.enter("syncUIWithStatus");		
 		log.debug("status:" + status);
 		
+		errorPanel.setVisible(false);	
 		if (status == null) {
-			// nothing to do yet
+			// null before being set
+			log.debug("Called with null status");
 		}
 		else if (status instanceof AsyncWidgetModel.InitialStatus) {
 			pendingPanel.setVisible(true);	
+			contentPanel.setVisible(false);
 		}
-		else if (status == ListStudiesWidgetModel.STATUS_RETRIEVE_STUDY_FEED_PENDING) {
-			// still pending
-		}			
-		else if (status == ListStudiesWidgetModel.STATUS_READY_FOR_INTERACTION) {
-			pendingPanel.setVisible(false);	
-		}			
+		else if (status instanceof AsyncWidgetModel.AsyncRequestPendingStatus) {
+			pendingPanel.setVisible(true);	
+			contentPanel.setVisible(false);
+		}
 		else if (status instanceof AsyncWidgetModel.ReadyStatus) {
 			pendingPanel.setVisible(false);	
+			contentPanel.setVisible(true);
 		}			
 		else if (status instanceof AsyncWidgetModel.ErrorStatus) {
-			error("Error status given on asynchronous call.");
+			pendingPanel.setVisible(false);	
+			contentPanel.setVisible(false);
+			model.message.set("Error status given on asynchronous call.");
 		}			
 		else {
-			error("Unhandled status:" + status);
+			pendingPanel.setVisible(false);	
+			contentPanel.setVisible(false);
+			model.message.set("Unhandled status:" + status);
 		}
-		
+
 		log.leave();
 	}
-	
-	
-	
-	public void error(String err) {
-		log.enter("error");
-		log.debug("Error:" + err);
-		pendingPanel.setVisible(false);	
-		contentPanel.setVisible(false);
-		errorMessage.clear();
-		errorMessage.add(new HTML(err));
-		errorPanel.setVisible(true);
+
+
+
+	protected void syncUIWithMessage(String message) {
+		log.enter("syncUIWithMessage");
+
+		if (message != null) {
+			log.debug("Setting message to :" + message + ":");
+			pendingPanel.setVisible(false);	
+			contentPanel.setVisible(false);
+			errorMessage.clear();
+			errorMessage.add(new HTML(message));
+			errorPanel.setVisible(true);
+		}
+
 		log.leave();
 	}
 	
