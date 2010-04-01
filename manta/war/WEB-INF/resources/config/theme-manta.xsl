@@ -19,7 +19,8 @@
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
-    xmlns:version="java:org.orbeon.oxf.common.Version">
+    xmlns:version="java:org.orbeon.oxf.common.Version"
+    xmlns:xxforms="http://orbeon.org/oxf/xml/xforms">
 
     <!-- Orbeon Forms version -->
     <xsl:variable name="orbeon-forms-version" select="version:getVersion()" as="xs:string"/>
