@@ -49,6 +49,7 @@
             <h1>Curator - View Study</h1>
 				<local:StudySummaryWidget ui:field="studySummaryWidgetUiField"/>
             	<g:FlowPanel ui:field="viewStudyPanel"></g:FlowPanel>
+            	<h3>The submissions and curation events for this study are shown below.</h3>
 				<local:ViewStudyMetadataWidget ui:field="viewStudyMetadataWidgetUiField"/>
 				<local:ListSubmissionsWidget ui:field="listSubmissionsWidgetUiField"/>
 				<local:ListCurationsWidget ui:field="listCurationsWidgetUiField"/>
