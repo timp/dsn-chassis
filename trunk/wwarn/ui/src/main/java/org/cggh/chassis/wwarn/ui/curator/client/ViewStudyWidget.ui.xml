@@ -47,8 +47,8 @@
 
             <div id="ViewStudy" title="ViewStudy" class="widget">
             <h1>Curator - View Study</h1>
-            	<g:FlowPanel ui:field="viewStudyPanel"></g:FlowPanel>
 				<local:StudySummaryWidget ui:field="studySummaryWidgetUiField"/>
+            	<g:FlowPanel ui:field="viewStudyPanel"></g:FlowPanel>
 				<local:ViewStudyMetadataWidget ui:field="viewStudyMetadataWidgetUiField"/>
 				<local:ListSubmissionsWidget ui:field="listSubmissionsWidgetUiField"/>
 				<local:ListCurationsWidget ui:field="listCurationsWidgetUiField"/>
