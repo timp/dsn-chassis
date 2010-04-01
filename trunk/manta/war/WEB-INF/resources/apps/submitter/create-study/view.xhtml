@@ -1,0 +1,173 @@
+<!--
+  Copyright (C) 2010 University of Oxford.
+  
+  This program is free software; you can redistribute it and/or modify it under the terms of the
+  GNU Lesser General Public License as published by the Free Software Foundation; either version
+  2.1 of the License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Lesser General Public License for more details.
+
+  The full text of the license is available at http://www.gnu.org/copyleft/lesser.html
+  -->
+<xhtml:html 
+	xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:f="http://orbeon.org/oxf/xml/formatting" 
+    xmlns:xhtml="http://www.w3.org/1999/xhtml"
+    xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:atom="http://www.w.org/2005/Atom">
+
+    <xhtml:head>
+    
+        <xhtml:title>WWARN Data Management - Submitter - Create Study</xhtml:title>
+        <xhtml:link rel="stylesheet" type="text/css" href="/apps/submitter/common/style.css"></xhtml:link>
+        
+        <xforms:model>
+        
+        	<xforms:instance id="entry">
+       			<atom:entry>
+       				<atom:title type="text"></atom:title>
+       			</atom:entry>
+       		</xforms:instance>
+       		
+       		<xforms:instance id="control-instance">
+                <control-instance>
+                    <back/>
+                    <finish readonly="false"/>
+                </control-instance>
+            </xforms:instance>
+        	
+            <xforms:bind nodeset="instance('control-instance')">
+                <xforms:bind nodeset="back" readonly="true()"/>
+                <xforms:bind nodeset="finish" readonly="@readonly = 'false'"/>
+            </xforms:bind>
+        	
+        </xforms:model>
+        
+        <xhtml:style type="text/css">
+            .wizard-td { background-color: #fce5b6; font-size: 16pt }
+        </xhtml:style>
+        
+    </xhtml:head>
+    
+    <xhtml:body>
+    
+    	<xhtml:h1>Submitter - Create Study</xhtml:h1>
+    	<xhtml:div id="home-nav"><xhtml:a href="../">submitter home</xhtml:a></xhtml:div>
+    	
+    	<xforms:switch>
+    		
+    		<xforms:case id="title" selected="true">
+	            <xhtml:table cellpadding="3">
+	                <xhtml:tr>
+	                    <xhtml:td rowspan="3" class="wizard-td">1</xhtml:td>
+	                    <xhtml:td colspan="1"><b>Step 1 of 4 - Study Title</b></xhtml:td>
+	                </xhtml:tr>
+	                <xhtml:tr>
+	                    <xhtml:td>
+	                        <xforms:input ref="instance('entry')/atom:title">
+	                            <xforms:label class="fixed-width">Title:</xforms:label>
+	                            <xforms:toggle ev:event="DOMActivate" case="publications"/>
+	                        </xforms:input>
+	                    </xhtml:td>
+	                </xhtml:tr>
+	                <xhtml:tr>
+	                    <xhtml:td>
+	                        <xforms:trigger ref="instance('control-instance')/back">
+	                            <xforms:label>&lt; Previous</xforms:label>
+	                        </xforms:trigger>
+	                        <xforms:trigger>
+	                            <xforms:label>Next ></xforms:label>
+	                            <xforms:toggle ev:event="DOMActivate" case="publications"/>
+	                        </xforms:trigger>
+	                    </xhtml:td>
+	                </xhtml:tr>
+	            </xhtml:table>
+    		</xforms:case>
+
+    		<xforms:case id="publications">
+	            <xhtml:table cellpadding="3">
+	                <xhtml:tr>
+	                    <xhtml:td rowspan="3" class="wizard-td">2</xhtml:td>
+	                    <xhtml:td colspan="1"><b>Step 2 of 4 - Publications</b></xhtml:td>
+	                </xhtml:tr>
+	                <xhtml:tr>
+	                    <xhtml:td>
+							<xhtml:p>TODO</xhtml:p>
+	                    </xhtml:td>
+	                </xhtml:tr>
+	                <xhtml:tr>
+	                    <xhtml:td>
+	                        <xforms:trigger>
+	                            <xforms:label>&lt; Previous</xforms:label>
+	                            <xforms:toggle ev:event="DOMActivate" case="title"/>
+	                        </xforms:trigger>
+	                        <xforms:trigger>
+	                            <xforms:label>Next ></xforms:label>
+	                            <xforms:toggle ev:event="DOMActivate" case="sharing"/>
+	                        </xforms:trigger>
+	                    </xhtml:td>
+	                </xhtml:tr>
+	            </xhtml:table>
+    		</xforms:case>
+
+    		<xforms:case id="sharing">
+	            <xhtml:table cellpadding="3">
+	                <xhtml:tr>
+	                    <xhtml:td rowspan="3" class="wizard-td">3</xhtml:td>
+	                    <xhtml:td colspan="1"><b>Step 3 of 4 - Sharing</b></xhtml:td>
+	                </xhtml:tr>
+	                <xhtml:tr>
+	                    <xhtml:td>
+							<xhtml:p>TODO</xhtml:p>
+	                    </xhtml:td>
+	                </xhtml:tr>
+	                <xhtml:tr>
+	                    <xhtml:td>
+	                        <xforms:trigger>
+	                            <xforms:label>&lt; Previous</xforms:label>
+	                            <xforms:toggle ev:event="DOMActivate" case="publications"/>
+	                        </xforms:trigger>
+	                        <xforms:trigger>
+	                            <xforms:label>Next ></xforms:label>
+	                            <xforms:toggle ev:event="DOMActivate" case="confirm"/>
+	                        </xforms:trigger>
+	                    </xhtml:td>
+	                </xhtml:tr>
+	            </xhtml:table>
+    		</xforms:case>
+
+    		<xforms:case id="confirm">
+	            <xhtml:table cellpadding="3">
+	                <xhtml:tr>
+	                    <xhtml:td rowspan="3" class="wizard-td">4</xhtml:td>
+	                    <xhtml:td colspan="1"><b>Step 4 of 4 - Confirm</b></xhtml:td>
+	                </xhtml:tr>
+	                <xhtml:tr>
+	                    <xhtml:td>
+							<xhtml:p>TODO</xhtml:p>
+	                    </xhtml:td>
+	                </xhtml:tr>
+	                <xhtml:tr>
+	                    <xhtml:td>
+	                        <xforms:trigger>
+	                            <xforms:label>&lt; Previous</xforms:label>
+	                            <xforms:toggle ev:event="DOMActivate" case="sharing"/>
+	                        </xforms:trigger>
+	                        <xforms:trigger>
+	                            <xforms:label>Confirm</xforms:label>
+	                        </xforms:trigger>
+	                    </xhtml:td>
+	                </xhtml:tr>
+	            </xhtml:table>
+    		</xforms:case>
+
+    	</xforms:switch>
+
+    </xhtml:body>
+    
+</xhtml:html>
+
