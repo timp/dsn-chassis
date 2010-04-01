@@ -193,13 +193,13 @@ public class CuratorApplicationWidget
 				String studyUrl =  e.getStudyUrl();
 				log.debug("Setting studyUrl to " + studyUrl);
 
-				viewStudyQuestionnaireWidget.getModel().studyUrl.set(studyUrl);
+				viewStudyQuestionnaireWidget.setStudyUrl(studyUrl);
 				
 				
 				Element studyEntry =  e.getStudyEntry();
 				log.debug("Setting studyEntry to " + studyEntry);
 
-				viewStudyQuestionnaireWidget.getModel().studyEntry.set(studyEntry);
+				viewStudyQuestionnaireWidget.setStudyEntry(studyEntry);
 				
 
 				setActiveChild(viewStudyQuestionnaireWidget);
@@ -221,13 +221,13 @@ public class CuratorApplicationWidget
 				String studyUrl =  e.getStudyUrl();
 				log.debug("Setting studyUrl to " + studyUrl);
 
-				listStudyRevisionsWidget.getModel().studyUrl.set(studyUrl);
+				listStudyRevisionsWidget.setStudyUrl(studyUrl);
 				
 				
 				Element studyEntry =  e.getStudyEntry();
 				log.debug("Setting studyEntry to " + studyEntry);
 
-				listStudyRevisionsWidget.getModel().studyEntry.set(studyEntry);
+				listStudyRevisionsWidget.setStudyEntry(studyEntry);
 				
 
 				setActiveChild(listStudyRevisionsWidget);
@@ -249,13 +249,13 @@ public class CuratorApplicationWidget
 				String studyUrl =  e.getStudyUrl();
 				log.debug("Setting studyUrl to " + studyUrl);
 
-				editStudyQuestionnaireWidget.getModel().studyUrl.set(studyUrl);
+				editStudyQuestionnaireWidget.setStudyUrl(studyUrl);
 				
 				
 				Element studyEntry =  e.getStudyEntry();
 				log.debug("Setting studyEntry to " + studyEntry);
 
-				editStudyQuestionnaireWidget.getModel().studyEntry.set(studyEntry);
+				editStudyQuestionnaireWidget.setStudyEntry(studyEntry);
 				
 
 				setActiveChild(editStudyQuestionnaireWidget);
@@ -351,13 +351,13 @@ public class CuratorApplicationWidget
 				String studyUrl =  e.getStudyUrl();
 				log.debug("Setting studyUrl to " + studyUrl);
 
-				viewStudyQuestionnaireWidget.getModel().studyUrl.set(studyUrl);
+				viewStudyQuestionnaireWidget.setStudyUrl(studyUrl);
 				
 				
 				Element studyEntry =  e.getStudyEntry();
 				log.debug("Setting studyEntry to " + studyEntry);
 
-				viewStudyQuestionnaireWidget.getModel().studyEntry.set(studyEntry);
+				viewStudyQuestionnaireWidget.setStudyEntry(studyEntry);
 				
 
 				setActiveChild(viewStudyQuestionnaireWidget);
@@ -379,13 +379,13 @@ public class CuratorApplicationWidget
 				String studyUrl =  e.getStudyUrl();
 				log.debug("Setting studyUrl to " + studyUrl);
 
-				listStudyRevisionsWidget.getModel().studyUrl.set(studyUrl);
+				listStudyRevisionsWidget.setStudyUrl(studyUrl);
 				
 				
 				Element studyEntry =  e.getStudyEntry();
 				log.debug("Setting studyEntry to " + studyEntry);
 
-				listStudyRevisionsWidget.getModel().studyEntry.set(studyEntry);
+				listStudyRevisionsWidget.setStudyEntry(studyEntry);
 				
 
 				setActiveChild(listStudyRevisionsWidget);
@@ -407,13 +407,13 @@ public class CuratorApplicationWidget
 				String studyUrl =  e.getStudyUrl();
 				log.debug("Setting studyUrl to " + studyUrl);
 
-				editStudyQuestionnaireWidget.getModel().studyUrl.set(studyUrl);
+				editStudyQuestionnaireWidget.setStudyUrl(studyUrl);
 				
 				
 				Element studyEntry =  e.getStudyEntry();
 				log.debug("Setting studyEntry to " + studyEntry);
 
-				editStudyQuestionnaireWidget.getModel().studyEntry.set(studyEntry);
+				editStudyQuestionnaireWidget.setStudyEntry(studyEntry);
 				
 
 				setActiveChild(editStudyQuestionnaireWidget);
@@ -422,8 +422,6 @@ public class CuratorApplicationWidget
 			}
 		}));
 
-		/*
-		 * TODO Unify with generated
 
 		log.debug("Adding ViewStudyQuestionnaire>StudyActions>UploadDataFilesWizardNavigation event handler");
 		this.childWidgetEventHandlerRegistrations.add(
@@ -452,7 +450,7 @@ public class CuratorApplicationWidget
 			}
 		}));
 
-*/
+
 
 		// EditStudyQuestionnaire events
 		log.debug("Adding EditStudyQuestionnaire>StudyActions>ListStudiesNavigation event handler");
@@ -511,13 +509,13 @@ public class CuratorApplicationWidget
 				String studyUrl =  e.getStudyUrl();
 				log.debug("Setting studyUrl to " + studyUrl);
 
-				viewStudyQuestionnaireWidget.getModel().studyUrl.set(studyUrl);
+				viewStudyQuestionnaireWidget.setStudyUrl(studyUrl);
 				
 				
 				Element studyEntry =  e.getStudyEntry();
 				log.debug("Setting studyEntry to " + studyEntry);
 
-				viewStudyQuestionnaireWidget.getModel().studyEntry.set(studyEntry);
+				viewStudyQuestionnaireWidget.setStudyEntry(studyEntry);
 				
 
 				setActiveChild(viewStudyQuestionnaireWidget);
@@ -539,13 +537,13 @@ public class CuratorApplicationWidget
 				String studyUrl =  e.getStudyUrl();
 				log.debug("Setting studyUrl to " + studyUrl);
 
-				listStudyRevisionsWidget.getModel().studyUrl.set(studyUrl);
+				listStudyRevisionsWidget.setStudyUrl(studyUrl);
 				
 				
 				Element studyEntry =  e.getStudyEntry();
 				log.debug("Setting studyEntry to " + studyEntry);
 
-				listStudyRevisionsWidget.getModel().studyEntry.set(studyEntry);
+				listStudyRevisionsWidget.setStudyEntry(studyEntry);
 				
 
 				setActiveChild(listStudyRevisionsWidget);
@@ -567,13 +565,13 @@ public class CuratorApplicationWidget
 				String studyUrl =  e.getStudyUrl();
 				log.debug("Setting studyUrl to " + studyUrl);
 
-				editStudyQuestionnaireWidget.getModel().studyUrl.set(studyUrl);
+				editStudyQuestionnaireWidget.setStudyUrl(studyUrl);
 				
 				
 				Element studyEntry =  e.getStudyEntry();
 				log.debug("Setting studyEntry to " + studyEntry);
 
-				editStudyQuestionnaireWidget.getModel().studyEntry.set(studyEntry);
+				editStudyQuestionnaireWidget.setStudyEntry(studyEntry);
 				
 
 				setActiveChild(editStudyQuestionnaireWidget);
@@ -582,8 +580,7 @@ public class CuratorApplicationWidget
 			}
 		}));
 
-/*
- * TODO Unify with generated
+
 		log.debug("Adding EditStudyQuestionnaire>StudyActions>UploadDataFilesWizardNavigation event handler");
 		this.childWidgetEventHandlerRegistrations.add(
 				editStudyQuestionnaireWidget.studyActionsUploadDataFilesWizardNavigationEventChannel.addHandler(
@@ -611,7 +608,7 @@ public class CuratorApplicationWidget
 			}
 		}));
 
-*/
+
 
 		// ListStudyRevisions events
 		log.debug("Adding ListStudyRevisions>StudyActions>ListStudiesNavigation event handler");
@@ -670,13 +667,13 @@ public class CuratorApplicationWidget
 				String studyUrl =  e.getStudyUrl();
 				log.debug("Setting studyUrl to " + studyUrl);
 
-				viewStudyQuestionnaireWidget.getModel().studyUrl.set(studyUrl);
+				viewStudyQuestionnaireWidget.setStudyUrl(studyUrl);
 				
 				
 				Element studyEntry =  e.getStudyEntry();
 				log.debug("Setting studyEntry to " + studyEntry);
 
-				viewStudyQuestionnaireWidget.getModel().studyEntry.set(studyEntry);
+				viewStudyQuestionnaireWidget.setStudyEntry(studyEntry);
 				
 
 				setActiveChild(viewStudyQuestionnaireWidget);
@@ -698,13 +695,13 @@ public class CuratorApplicationWidget
 				String studyUrl =  e.getStudyUrl();
 				log.debug("Setting studyUrl to " + studyUrl);
 
-				listStudyRevisionsWidget.getModel().studyUrl.set(studyUrl);
+				listStudyRevisionsWidget.setStudyUrl(studyUrl);
 				
 				
 				Element studyEntry =  e.getStudyEntry();
 				log.debug("Setting studyEntry to " + studyEntry);
 
-				listStudyRevisionsWidget.getModel().studyEntry.set(studyEntry);
+				listStudyRevisionsWidget.setStudyEntry(studyEntry);
 				
 
 				setActiveChild(listStudyRevisionsWidget);
@@ -726,13 +723,13 @@ public class CuratorApplicationWidget
 				String studyUrl =  e.getStudyUrl();
 				log.debug("Setting studyUrl to " + studyUrl);
 
-				editStudyQuestionnaireWidget.getModel().studyUrl.set(studyUrl);
+				editStudyQuestionnaireWidget.setStudyUrl(studyUrl);
 				
 				
 				Element studyEntry =  e.getStudyEntry();
 				log.debug("Setting studyEntry to " + studyEntry);
 
-				editStudyQuestionnaireWidget.getModel().studyEntry.set(studyEntry);
+				editStudyQuestionnaireWidget.setStudyEntry(studyEntry);
 				
 
 				setActiveChild(editStudyQuestionnaireWidget);
@@ -741,8 +738,6 @@ public class CuratorApplicationWidget
 			}
 		}));
 
-		/*
-		 * TODO Unify with generated
 
 		log.debug("Adding ListStudyRevisions>StudyActions>UploadDataFilesWizardNavigation event handler");
 		this.childWidgetEventHandlerRegistrations.add(
@@ -771,7 +766,7 @@ public class CuratorApplicationWidget
 			}
 		}));
 
-*/
+
 		log.debug("Adding ListStudyRevisions>CurrentStudyRevision>ViewCurrentStudyNavigation event handler");
 		this.childWidgetEventHandlerRegistrations.add(
 				listStudyRevisionsWidget.currentStudyRevisionViewCurrentStudyNavigationEventChannel.addHandler(
@@ -812,13 +807,13 @@ public class CuratorApplicationWidget
 				String studyUrl =  e.getStudyUrl();
 				log.debug("Setting studyUrl to " + studyUrl);
 
-				viewStudyRevisionWidget.getModel().studyUrl.set(studyUrl);
+				viewStudyRevisionWidget.setStudyUrl(studyUrl);
 				
 				
 				Element studyEntry =  e.getStudyEntry();
 				log.debug("Setting studyEntry to " + studyEntry);
 
-				viewStudyRevisionWidget.getModel().studyEntry.set(studyEntry);
+				viewStudyRevisionWidget.setStudyEntry(studyEntry);
 				
 
 				setActiveChild(viewStudyRevisionWidget);
@@ -842,13 +837,13 @@ public class CuratorApplicationWidget
 				String studyUrl =  e.getStudyUrl();
 				log.debug("Setting studyUrl to " + studyUrl);
 
-				viewStudyQuestionnaireWidget.getModel().studyUrl.set(studyUrl);
+				viewStudyQuestionnaireWidget.setStudyUrl(studyUrl);
 				
 				
 				Element studyEntry =  e.getStudyEntry();
 				log.debug("Setting studyEntry to " + studyEntry);
 
-				viewStudyQuestionnaireWidget.getModel().studyEntry.set(studyEntry);
+				viewStudyQuestionnaireWidget.setStudyEntry(studyEntry);
 				
 
 				setActiveChild(viewStudyQuestionnaireWidget);
@@ -886,13 +881,13 @@ public class CuratorApplicationWidget
 				String studyUrl =  e.getStudyUrl();
 				log.debug("Setting studyUrl to " + studyUrl);
 
-				editStudyQuestionnaireWidget.getModel().studyUrl.set(studyUrl);
+				editStudyQuestionnaireWidget.setStudyUrl(studyUrl);
 				
 				
 				Element studyEntry =  e.getStudyEntry();
 				log.debug("Setting studyEntry to " + studyEntry);
 
-				editStudyQuestionnaireWidget.getModel().studyEntry.set(studyEntry);
+				editStudyQuestionnaireWidget.setStudyEntry(studyEntry);
 				
 
 				setActiveChild(editStudyQuestionnaireWidget);
@@ -914,13 +909,13 @@ public class CuratorApplicationWidget
 				String studyUrl =  e.getStudyUrl();
 				log.debug("Setting studyUrl to " + studyUrl);
 
-				listStudyRevisionsWidget.getModel().studyUrl.set(studyUrl);
+				listStudyRevisionsWidget.setStudyUrl(studyUrl);
 				
 				
 				Element studyEntry =  e.getStudyEntry();
 				log.debug("Setting studyEntry to " + studyEntry);
 
-				listStudyRevisionsWidget.getModel().studyEntry.set(studyEntry);
+				listStudyRevisionsWidget.setStudyEntry(studyEntry);
 				
 
 				setActiveChild(listStudyRevisionsWidget);
@@ -942,13 +937,13 @@ public class CuratorApplicationWidget
 				String studyUrl =  e.getStudyUrl();
 				log.debug("Setting studyUrl to " + studyUrl);
 
-				viewStudyRevisionWidget.getModel().studyUrl.set(studyUrl);
+				viewStudyRevisionWidget.setStudyUrl(studyUrl);
 				
 				
 				Element studyEntry =  e.getStudyEntry();
 				log.debug("Setting studyEntry to " + studyEntry);
 
-				viewStudyRevisionWidget.getModel().studyEntry.set(studyEntry);
+				viewStudyRevisionWidget.setStudyEntry(studyEntry);
 				
 
 				setActiveChild(viewStudyRevisionWidget);
@@ -970,13 +965,13 @@ public class CuratorApplicationWidget
 				String studyUrl =  e.getStudyUrl();
 				log.debug("Setting studyUrl to " + studyUrl);
 
-				viewStudyRevisionWidget.getModel().studyUrl.set(studyUrl);
+				viewStudyRevisionWidget.setStudyUrl(studyUrl);
 				
 				
 				Element studyEntry =  e.getStudyEntry();
 				log.debug("Setting studyEntry to " + studyEntry);
 
-				viewStudyRevisionWidget.getModel().studyEntry.set(studyEntry);
+				viewStudyRevisionWidget.setStudyEntry(studyEntry);
 				
 
 				setActiveChild(viewStudyRevisionWidget);
@@ -990,19 +985,21 @@ public class CuratorApplicationWidget
 		// UploadDataFilesWizard events
 		log.leave();
 	}
-	
 
-	
+
+
 	@Override
 	public void setActiveChild(Widget child, boolean memorise) {
 		log.enter("setActiveChild");
 		
 		super.setActiveChild(child, memorise);
 		
+		// FIXME 
 		// Most widgets will refresh themselves, but the HomeWidget will not 
 		if (child == curatorHomeWidget) {
 			((ChassisWidget)child).refresh();
 		}
+
 
 		log.leave();
 	}

@@ -8,6 +8,9 @@ import org.cggh.chassis.generic.async.client.Function;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.miniatom.client.AtomHelper;
+
+import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
+import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.Status;
 import org.cggh.chassis.generic.widget.client.ChassisWidget;
 import org.cggh.chassis.generic.widget.client.DelegatingWidget;
 import org.cggh.chassis.generic.widget.client.MapMemory;
@@ -15,37 +18,49 @@ import org.cggh.chassis.generic.widget.client.ObservableProperty;
 import org.cggh.chassis.generic.widget.client.WidgetMemory;
 
 
-import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
-import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.Status;
-import com.google.gwt.xml.client.Element;
 
+import org.cggh.chassis.generic.widget.client.WidgetEvent;
+import org.cggh.chassis.generic.widget.client.WidgetEventHandler;
 import org.cggh.chassis.generic.widget.client.WidgetEventChannel;
+
+
+
+import com.google.gwt.xml.client.Document;
+
+import com.google.gwt.xml.client.Element;
 
 import com.google.gwt.http.client.URL;
 
+/**
+ * BE SURE TO EDIT THE TEMPLATE NOT THE RENDERED RESULT
+ *
+ * DELETE_TO_MANUALLY_EDIT
+ *
+ * @author timp
+ *
+ */
 public class ViewStudyWidget 
-	 	extends DelegatingWidget<ViewStudyWidgetModel, ViewStudyWidgetRenderer> {
+		extends DelegatingWidget<ViewStudyWidgetModel, ViewStudyWidgetRenderer> {
 
 	private static final Log log = LogFactory.getLog(ViewStudyWidget.class);
 	
+
 	private ViewStudyWidgetController controller;
-
-	public final ObservableProperty<Element> studyEntry = new ObservableProperty<Element>();
-
 
 	public final ObservableProperty<String> studyUrl = new ObservableProperty<String>();
 
+	public final ObservableProperty<Element> studyEntry = new ObservableProperty<Element>();
 	public final ObservableProperty<Status> status = new ObservableProperty<Status>();
+
 	public final ObservableProperty<String> message = new ObservableProperty<String>();
-	
+
 	public final WidgetEventChannel studyActionsListStudiesNavigationEventChannel = new WidgetEventChannel(this);
 	public final WidgetEventChannel studyActionsViewStudyNavigationEventChannel = new WidgetEventChannel(this);
-	public final WidgetEventChannel studyActionsUploadDataFilesWizardNavigationEventChannel = new WidgetEventChannel(this);
 	public final WidgetEventChannel studyActionsViewStudyQuestionnaireNavigationEventChannel = new WidgetEventChannel(this);
-	public final WidgetEventChannel studyActionsEditStudyQuestionnaireNavigationEventChannel = new WidgetEventChannel(this);
 	public final WidgetEventChannel studyActionsListStudyRevisionsNavigationEventChannel = new WidgetEventChannel(this);
+	public final WidgetEventChannel studyActionsEditStudyQuestionnaireNavigationEventChannel = new WidgetEventChannel(this);
+	public final WidgetEventChannel studyActionsUploadDataFilesWizardNavigationEventChannel = new WidgetEventChannel(this);
 
-	
 
 
 

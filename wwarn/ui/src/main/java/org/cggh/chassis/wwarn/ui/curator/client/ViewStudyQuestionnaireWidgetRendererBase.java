@@ -54,26 +54,22 @@ import com.google.gwt.xml.client.Element;
  *
  * @author timp
  */
-public abstract class ViewStudyWidgetRendererBase extends
-		ChassisWidgetRenderer<ViewStudyWidgetModel> {
+public abstract class ViewStudyQuestionnaireWidgetRendererBase extends
+		ChassisWidgetRenderer<ViewStudyQuestionnaireWidgetModel> {
 
-	private Log log = LogFactory.getLog(ViewStudyWidgetRenderer.class);
+	private Log log = LogFactory.getLog(ViewStudyQuestionnaireWidgetRenderer.class);
 		StudySummaryWidget studySummaryWidget;
 
-	ViewStudyMetadataWidget viewStudyMetadataWidget;
-
-	ListSubmissionsWidget listSubmissionsWidget;
-
-	ListCurationsWidget listCurationsWidget;
+	ViewQuestionnaireWidget viewQuestionnaireWidget;
 
 
 
-	@UiTemplate("ViewStudyWidget.ui.xml")
-	interface ViewStudyWidgetRendererUiBinder extends
-			UiBinder<HTMLPanel, ViewStudyWidgetRendererBase> {
+	@UiTemplate("ViewStudyQuestionnaireWidget.ui.xml")
+	interface ViewStudyQuestionnaireWidgetRendererUiBinder extends
+			UiBinder<HTMLPanel, ViewStudyQuestionnaireWidgetRendererBase> {
 	}
-	private static ViewStudyWidgetRendererUiBinder uiBinder = 
-		GWT.create(ViewStudyWidgetRendererUiBinder.class);
+	private static ViewStudyQuestionnaireWidgetRendererUiBinder uiBinder = 
+		GWT.create(ViewStudyQuestionnaireWidgetRendererUiBinder.class);
 
 
 	@UiField HTMLPanel mainPanel;
@@ -83,22 +79,18 @@ public abstract class ViewStudyWidgetRendererBase extends
 	@UiField HTMLPanel errorPanel;
 	@UiField FlowPanel errorMessage;
 
-	@UiField FlowPanel viewStudyPanel;
+	@UiField FlowPanel viewStudyQuestionnairePanel;
 	
 	@UiField StudySummaryWidget studySummaryWidgetUiField;
 
-	@UiField ViewStudyMetadataWidget viewStudyMetadataWidgetUiField;
-
-	@UiField ListSubmissionsWidget listSubmissionsWidgetUiField;
-
-	@UiField ListCurationsWidget listCurationsWidgetUiField;
+	@UiField ViewQuestionnaireWidget viewQuestionnaireWidgetUiField;
 
 
 
 
-	protected ViewStudyWidget owner;
+	protected ViewStudyQuestionnaireWidget owner;
 	
-	public ViewStudyWidgetRendererBase() {
+	public ViewStudyQuestionnaireWidgetRendererBase() {
 		super();
 	}
 
@@ -206,7 +198,7 @@ public abstract class ViewStudyWidgetRendererBase extends
 	
 
 	@Override
-	protected void bindUI(ViewStudyWidgetModel model) {
+	protected void bindUI(ViewStudyQuestionnaireWidgetModel model) {
 		super.bindUI(model);
 
 		this.pendingPanel.setVisible(true);	
@@ -221,7 +213,7 @@ public abstract class ViewStudyWidgetRendererBase extends
 
 		syncUIWithStatus(model.status.get());
 
-		//syncUIWithStudyEntry(model.studyEntry.get());
+		syncUIWithStudyEntry(model.studyEntry.get());
 
 		log.leave();
 	}
@@ -235,11 +227,12 @@ public abstract class ViewStudyWidgetRendererBase extends
 			log.debug("studyEntry :"+studyEntry);
 
 
-			studySummaryWidgetUiField.studyEntry.set(studyEntry);
+		studySummaryWidgetUiField.studyEntry.set(studyEntry);
 
 
-			this.viewStudyPanel.clear();
-			this.viewStudyPanel.add(renderStudyEntry(studyEntry));
+		viewQuestionnaireWidgetUiField.studyEntry.set(studyEntry);
+			this.viewStudyQuestionnairePanel.clear();
+			this.viewStudyQuestionnairePanel.add(renderStudyEntry(studyEntry));
 			pendingPanel.setVisible(false);
 
 		}
@@ -255,9 +248,8 @@ public abstract class ViewStudyWidgetRendererBase extends
 		log.enter("syncUIWithStatus");		
 		
 		errorPanel.setVisible(false);	
-		pendingPanel.setVisible(true);	
-		contentPanel.setVisible(true);
-		
+			pendingPanel.setVisible(true);	
+			contentPanel.setVisible(false);
 		if (status == null) {
 			// null before being set
 			log.debug("Called with null status");
@@ -270,7 +262,7 @@ public abstract class ViewStudyWidgetRendererBase extends
 			model.message.set("Not found. url " + model.studyUrl.get());
 		}			
 		else if (status instanceof AsyncWidgetModel.ReadyStatus) {
-			pendingPanel.setVisible(false);
+			pendingPanel.setVisible(false);	
 			contentPanel.setVisible(true);
 		}			
 		else if (status instanceof AsyncWidgetModel.ErrorStatus) {

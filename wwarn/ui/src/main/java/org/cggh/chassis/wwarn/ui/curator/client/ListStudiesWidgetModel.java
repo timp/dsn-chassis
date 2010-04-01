@@ -9,8 +9,6 @@ import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.Status;
 
 import com.google.gwt.xml.client.Document;
 
-import com.google.gwt.xml.client.Element;
-
 /**
  * BE SURE TO EDIT THE TEMPLATE NOT THE RENDERED RESULT
  *

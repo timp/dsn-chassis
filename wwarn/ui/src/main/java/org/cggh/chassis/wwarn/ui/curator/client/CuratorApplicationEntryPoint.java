@@ -30,9 +30,9 @@ public class CuratorApplicationEntryPoint implements EntryPoint {
 	static {
 		LogFactory.create = AllenSauerLog.create;
 		LogFactory.hide("*");
-		LogFactory.show("org.cggh.chassis.wwarn.ui.curator.client.ViewStudyWidget");
-		LogFactory.show("org.cggh.chassis.wwarn.ui.curator.client.ViewStudyWidgetController");
-		LogFactory.show("org.cggh.chassis.wwarn.ui.curator.client.ViewStudyWidgetRenderer");
+		LogFactory.show("org.cggh.chassis.wwarn.ui.curator.client.*");
+//		LogFactory.show("org.cggh.chassis.wwarn.ui.curator.client.ViewStudyWidgetController");
+//		LogFactory.show("org.cggh.chassis.wwarn.ui.curator.client.ViewStudyWidgetRenderer");
 //		LogFactory.show("org.cggh.chassis.generic.widget.client.*");
 //		LogFactory.show("org.cggh.chassis.wwarn.ui.curator.client.CuratorApplication*");
 //		LogFactory.show("org.cggh.chassis.generic.xml.client.XML");

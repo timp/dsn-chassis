@@ -51,10 +51,8 @@ public class UploadDataFilesWizardWidget
 		this.selectDerivationFilesWidget = new SelectDerivationFilesWidget();
 		this.mainChildren.add(this.selectDerivationFilesWidget);
 
-
 		this.curationSummaryWidget = new CurationSummaryWidget();
 		this.mainChildren.add(this.curationSummaryWidget);
-
 
 		log.leave();
 
@@ -74,37 +72,21 @@ public class UploadDataFilesWizardWidget
 		// CurationSummary events
 		log.leave();
 	}
-	
-
-	
-	
-	@Override
-	public void refresh() {
-		log.enter("refresh");
-		
-		((ChassisWidget)this.defaultChild).refresh();
-
-		// uploadCuratedDataFilesWidget.refresh();
 
 
-		// selectDerivationFilesWidget.refresh();
 
-
-		// curationSummaryWidget.refresh();
-
-		log.leave();	
-	}
-	
 	@Override
 	public void setActiveChild(Widget child, boolean memorise) {
 		log.enter("setActiveChild");
 		
 		super.setActiveChild(child, memorise);
 		
-		// override to trigger refresh if set as active child
-		if (child == this.defaultChild && child instanceof ChassisWidget) {
+		// FIXME 
+		// Most widgets will refresh themselves, but the HomeWidget will not 
+		//if (child == curatorHomeWidget) {
 			((ChassisWidget)child).refresh();
-		}
+		//}
+
 
 		log.leave();
 	}

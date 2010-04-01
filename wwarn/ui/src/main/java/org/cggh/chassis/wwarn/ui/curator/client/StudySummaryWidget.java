@@ -201,7 +201,12 @@ public class StudySummaryWidget
 
 
 	
-	
+	@Override
+	protected void syncUI() {
+		log.enter("syncUI");
+        syncUIWithStudyEntry(studyEntry.get());
+		log.leave();
+    }
 
 	
 	protected void syncUIWithMessage(String message) {
@@ -231,6 +236,7 @@ public class StudySummaryWidget
 		if (studyEntry == null) 
 			log.debug("Study null");
 		else {
+			studyActionsWidgetUiField.studyEntry.set(studyEntry);
 			
 			List<List<Widget>> rows = new ArrayList<List<Widget>>();
 			
@@ -244,11 +250,15 @@ public class StudySummaryWidget
 			rows.add(headerRow);
 			
 			List<Widget> row = new ArrayList<Widget>();
-			row.add(new HTML(ChassisHelper.getTitle(studyEntry)));
-			row.add(new HTML(RenderUtils.join(ChassisHelper.getModules(studyEntry), ", ")));
-			row.add(new HTML(RenderUtils.join(ChassisHelper.getAuthorEmails(studyEntry), ", ")));
-			row.add(new HTML(ChassisHelper.getPublishedAsDate(studyEntry)));
-			row.add(new HTML(ChassisHelper.getUpdatedAsDate(studyEntry)));
+			
+			{ 
+				Element entry = studyEntry;
+				row.add(new HTML(ChassisHelper.getTitle(entry)));
+				row.add(new HTML(RenderUtils.join(ChassisHelper.getModules(entry), ", ")));
+				row.add(new HTML(RenderUtils.join(ChassisHelper.getAuthorEmails(entry), ", ")));
+				row.add(new HTML(ChassisHelper.getPublishedAsDate(entry)));
+				row.add(new HTML(ChassisHelper.getUpdatedAsDate(entry)));
+			}
 			
 			rows.add(row);
 			

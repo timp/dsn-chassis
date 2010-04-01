@@ -7,8 +7,6 @@ import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.AsyncRequestPendi
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.ReadyStatus;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.Status;
 
-import com.google.gwt.xml.client.Document;
-
 import com.google.gwt.xml.client.Element;
 
 /**

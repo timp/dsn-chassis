@@ -17,7 +17,10 @@ import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
+
+
 import com.google.gwt.xml.client.Element;
+ 
 
 /**
  * BE SURE TO EDIT THE TEMPLATE NOT THE RENDERED RESULT
@@ -36,14 +39,19 @@ public class ViewStudyWidgetRenderer extends
 	}
 
 
-	FlexTable renderStudyEntry(Element studyEntry) {
+	Widget renderStudyEntry(Element studyEntry) {
 		log.enter("renderStudyEntry");
 		List<List<Widget>> rows = new ArrayList<List<Widget>>();
 		
 		ArrayList<Widget> headerRow = new ArrayList<Widget>();
-		headerRow.add(strongWidget("Title"));		// i18n
-		headerRow.add(strongWidget("Authors"));  	// i18n
+		headerRow.add(strongWidget("Study Title")); // i18n
+		headerRow.add(strongWidget("Modules"));     // i18n
+		headerRow.add(strongWidget("Submitters"));  // i18n
+		headerRow.add(strongWidget("Published"));   // i18n
+		headerRow.add(strongWidget("Updated"));     // i18n
+
 		rows.add(headerRow);
+		
 		{ 
 			Element entry = studyEntry;
 
@@ -51,14 +59,16 @@ public class ViewStudyWidgetRenderer extends
 			ArrayList<Widget> row = new ArrayList<Widget>();
 
 			row.add(new HTML(ChassisHelper.getTitle(entry)));
+			row.add(new HTML(RenderUtils.join(ChassisHelper.getModules(entry), ", ")));
 			row.add(new HTML(RenderUtils.join(ChassisHelper.getAuthorEmails(entry), ", ")));
+			row.add(new HTML(ChassisHelper.getPublishedAsDate(entry)));
+			row.add(new HTML(ChassisHelper.getUpdatedAsDate(entry)));
 
 			rows.add(row);
 		} 
 		FlexTable t = RenderUtils.renderFirstRowHeadingResultsAsFirstColumnHeadingTable(rows);
-
 		log.leave();
-		return t;
+		return strongWidget("View Study");
 	}
 
 }
