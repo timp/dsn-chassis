@@ -53,21 +53,30 @@ public class ViewStudyWidget
 	protected ViewStudyWidgetModel createModel() {
 		return new ViewStudyWidgetModel();
 	}
-
-	public ViewStudyWidgetModel getModel() {
-		return model;
+	public String getStudyUrl() { 
+		return model.studyUrl.get();
+	} 
+	public void setStudyUrl(String studyUrl) {
+		model.studyUrl.set(studyUrl);
 	}
+	
+	public Element getStudyEntry() { 
+		return model.studyEntry.get();
+	} 
+	public void setStudyEntry(Element studyEntry) {
+		model.studyEntry.set(studyEntry);
+	}
+	
 
 	@Override
 	protected ViewStudyWidgetRenderer createRenderer() {
 		return new ViewStudyWidgetRenderer(this);
 	}
-	
+
 	// Using init() rather than constructor because reset() uses init().
 	public void init() {
-		
+
 		super.init();
-		
 
 		this.controller = new ViewStudyWidgetController(this, this.model);
 
