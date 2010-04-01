@@ -54,26 +54,22 @@ import com.google.gwt.xml.client.Element;
  *
  * @author timp
  */
-public abstract class ViewStudyWidgetRendererBase extends
-		ChassisWidgetRenderer<ViewStudyWidgetModel> {
+public abstract class ListStudyRevisionsWidgetRendererBase extends
+		ChassisWidgetRenderer<ListStudyRevisionsWidgetModel> {
 
-	private Log log = LogFactory.getLog(ViewStudyWidgetRenderer.class);
+	private Log log = LogFactory.getLog(ListStudyRevisionsWidgetRenderer.class);
 		StudySummaryWidget studySummaryWidget;
 
-	ViewStudyMetadataWidget viewStudyMetadataWidget;
-
-	ListSubmissionsWidget listSubmissionsWidget;
-
-	ListCurationsWidget listCurationsWidget;
+	StudyRevisionListWidget studyRevisionListWidget;
 
 
 
-	@UiTemplate("ViewStudyWidget.ui.xml")
-	interface ViewStudyWidgetRendererUiBinder extends
-			UiBinder<HTMLPanel, ViewStudyWidgetRendererBase> {
+	@UiTemplate("ListStudyRevisionsWidget.ui.xml")
+	interface ListStudyRevisionsWidgetRendererUiBinder extends
+			UiBinder<HTMLPanel, ListStudyRevisionsWidgetRendererBase> {
 	}
-	private static ViewStudyWidgetRendererUiBinder uiBinder = 
-		GWT.create(ViewStudyWidgetRendererUiBinder.class);
+	private static ListStudyRevisionsWidgetRendererUiBinder uiBinder = 
+		GWT.create(ListStudyRevisionsWidgetRendererUiBinder.class);
 
 
 	@UiField HTMLPanel mainPanel;
@@ -83,22 +79,18 @@ public abstract class ViewStudyWidgetRendererBase extends
 	@UiField HTMLPanel errorPanel;
 	@UiField FlowPanel errorMessage;
 
-	@UiField FlowPanel viewStudyPanel;
+	@UiField FlowPanel listStudyRevisionsPanel;
 	
 	@UiField StudySummaryWidget studySummaryWidgetUiField;
 
-	@UiField ViewStudyMetadataWidget viewStudyMetadataWidgetUiField;
-
-	@UiField ListSubmissionsWidget listSubmissionsWidgetUiField;
-
-	@UiField ListCurationsWidget listCurationsWidgetUiField;
+	@UiField StudyRevisionListWidget studyRevisionListWidgetUiField;
 
 
 
 
-	protected ViewStudyWidget owner;
+	protected ListStudyRevisionsWidget owner;
 	
-	public ViewStudyWidgetRendererBase() {
+	public ListStudyRevisionsWidgetRendererBase() {
 		super();
 	}
 
@@ -190,6 +182,22 @@ public abstract class ViewStudyWidgetRendererBase extends
 				log.leave();
 			}
 		}));
+ 		this.childWidgetEventHandlerRegistrations.add(
+				studyRevisionListWidgetUiField.currentStudyRevisionViewCurrentStudyNavigationEventChannel.addHandler(new WidgetEventHandler<WidgetEvent>() {
+			public void onEvent(WidgetEvent e) {
+				log.enter("onEvent(studyRevisionListWidgetUiField.currentStudyRevisionViewCurrentStudyNavigation)");
+				owner.currentStudyRevisionViewCurrentStudyNavigationEventChannel.fireEvent(e);
+				log.leave();
+			}
+		}));
+ 		this.childWidgetEventHandlerRegistrations.add(
+				studyRevisionListWidgetUiField.priorStudyRevisionsListViewRevisionNavigationEventChannel.addHandler(new WidgetEventHandler<WidgetEvent>() {
+			public void onEvent(WidgetEvent e) {
+				log.enter("onEvent(studyRevisionListWidgetUiField.priorStudyRevisionsListViewRevisionNavigation)");
+				owner.priorStudyRevisionsListViewRevisionNavigationEventChannel.fireEvent(e);
+				log.leave();
+			}
+		}));
  
 		log.leave();
 	}
@@ -206,7 +214,7 @@ public abstract class ViewStudyWidgetRendererBase extends
 	
 
 	@Override
-	protected void bindUI(ViewStudyWidgetModel model) {
+	protected void bindUI(ListStudyRevisionsWidgetModel model) {
 		super.bindUI(model);
 
 		this.pendingPanel.setVisible(true);	
@@ -221,7 +229,7 @@ public abstract class ViewStudyWidgetRendererBase extends
 
 		syncUIWithStatus(model.status.get());
 
-		//syncUIWithStudyEntry(model.studyEntry.get());
+		syncUIWithStudyEntry(model.studyEntry.get());
 
 		log.leave();
 	}
@@ -238,8 +246,8 @@ public abstract class ViewStudyWidgetRendererBase extends
 			studySummaryWidgetUiField.studyEntry.set(studyEntry);
 
 
-			this.viewStudyPanel.clear();
-			this.viewStudyPanel.add(renderStudyEntry(studyEntry));
+			this.listStudyRevisionsPanel.clear();
+			this.listStudyRevisionsPanel.add(renderStudyEntry(studyEntry));
 			pendingPanel.setVisible(false);
 
 		}
@@ -255,9 +263,8 @@ public abstract class ViewStudyWidgetRendererBase extends
 		log.enter("syncUIWithStatus");		
 		
 		errorPanel.setVisible(false);	
-		pendingPanel.setVisible(true);	
-		contentPanel.setVisible(true);
-		
+			pendingPanel.setVisible(true);	
+			contentPanel.setVisible(false);
 		if (status == null) {
 			// null before being set
 			log.debug("Called with null status");
@@ -270,7 +277,7 @@ public abstract class ViewStudyWidgetRendererBase extends
 			model.message.set("Not found. url " + model.studyUrl.get());
 		}			
 		else if (status instanceof AsyncWidgetModel.ReadyStatus) {
-			pendingPanel.setVisible(false);
+			pendingPanel.setVisible(false);	
 			contentPanel.setVisible(true);
 		}			
 		else if (status instanceof AsyncWidgetModel.ErrorStatus) {

@@ -19,6 +19,9 @@ import com.google.gwt.xml.client.Element;
  *
  * DELETE_TO_MANUALLY_EDIT
  *
+ *
+ * 
+ *
  * @author timp
  *
  */
@@ -31,44 +34,60 @@ public class ViewStudyRevisionWidgetController {
 	private ViewStudyRevisionWidget owner;
 	private ViewStudyRevisionWidgetModel model;
 
+	public ViewStudyRevisionWidgetController(ViewStudyRevisionWidget owner, ViewStudyRevisionWidgetModel model) {
+		this.owner = owner;
+		this.model = model;
+	}
 
-	private static String STUDY_REVISION_ENTRY_URI = "/atom/history/studies/id.atom?revision=rn";
 
-			
-	public Deferred<Document> retrieveRevision() {
-		log.enter("retrieveRevision");
-		// Set the model's status to pending.
-		//model.setStatus(ViewStudyRevisionWidgetModel.STATUS_RETRIEVE_STUDIES_PENDING);
-		
-		String studyQueryServiceUrl = Config.get(Config.QUERY_STUDIES_URL);
-		
-		Deferred<Document> deferredDoc = Atom.getFeed(studyQueryServiceUrl);
-		
-		// Add a call-back and error-back for the asynchronous feed.
-		deferredDoc.addCallback(new RetrieveRevisionCallback());
-		deferredDoc.addErrback(new DefaultErrback());
+    			
+	
+      					
+        //private ViewRevisionNavigationEvent viewRevisionNavigationEvent;
+	
+       	  					
+        //private NextRevisionNavigationEvent nextRevisionNavigationEvent;
+	
+       	  					
+        //private PreviousRevisionNavigationEvent previousRevisionNavigationEvent;
+	
+       	            
+
+
+	public Deferred<Document> retrieveStudyUrl() {
+		log.enter("retrieveStudyUrl");
 		
 		log.leave();
-		return deferredDoc;
+		return null;
+	}
+	
+	private class RetrieveStudyUrlCallback implements Function<Deferred<Document>,String> {
+
+		public String apply(Deferred<Document> studyUrlFeed) {
+			
+			return null;
+		}
+		
 	}
 	
 	
+	
+	
+	
+
+                	            
 	
 	public Deferred<ChassisWidget> refreshAndCallback() {
 		log.enter("refreshAndCallback");
 		
 		final Deferred<ChassisWidget> deferredOwner = new Deferred<ChassisWidget>();
-	/*	
-		if (model.submissionId.get() != null) {
-			
-			Deferred<Element> chain = retrieveSubmission();
-			
-			chain.addCallback(new RetrieveSubmissionCallback());
-			
-			chain.addCallback(new RetrieveQuestionnaireCallback());
-			
-			chain.addCallback(retrieveStudyCallback);
 
+			
+		if (model.studyUrl.get() != null) {
+			Deferred<Element> chain = retrieveStudyEntry();
+			
+			chain.addCallback(new RetrieveStudyEntryCallback());
+			
 			// handle errors
 			chain.addErrback(new DefaultErrback());
 			
@@ -83,82 +102,102 @@ public class ViewStudyRevisionWidgetController {
 			});
 
 		}
-		*/
+
 		log.leave();
 		return deferredOwner;
 		
 	}
 
-	
-	
+	public Deferred<Element> retrieveStudyEntry() {
+		log.enter("retrieveStudyEntry");
 		
+		model.status.set(AsyncWidgetModel.STATUS_ASYNC_REQUEST_PENDING);
+		
+		Deferred<Element> deferredElement;
+		log.debug("model.StudyUrl"+ model.studyUrl.get());
+		if (!model.studyUrl.isNull()) {
+			
+			deferredElement = Atom.getEntry(model.studyUrl.get()).adapt(new Function<Document, Element>() {
 
-	private class DefaultErrback implements Function<Throwable, Throwable> {
-
-		public Throwable apply(Throwable in) {
-			log.error("unexpected error", in);
-			model.status.set(AsyncWidgetModel.STATUS_ERROR);
-			owner.fireEvent(new ErrorEvent(in));
-			return in;
+				public Element apply(Document in) {
+					log.debug("retrieveStudyEntry.apply returning " + in.getDocumentElement());
+					return in.getDocumentElement();
+				}
+				
+			});
+			
+		}
+		else {
+			deferredElement = new Deferred<Element>();
+			deferredElement.callback(null);
 		}
 		
+		// Add a call-back and error-back for the asynchronous feed.
+		deferredElement.addCallback(new RetrieveStudyEntryCallback());
+		deferredElement.addErrback(new DefaultErrback());
+		
+		log.leave();
+		return deferredElement;
 	}
 
-
-
-
 	
-	private class RetrieveRevisionCallback implements Function<Element, Deferred<Document>> {
+	private class RetrieveStudyEntryCallback implements Function<Element,Element> {
 
-		public Deferred<Document> apply(Element revisionEntryElement) {
-			
-			// model.setRevisionEntryElement(revisionEntryElement);
-			
-			Deferred<Document> deferredFilesFeedDoc = null;
-			
-			if (revisionEntryElement != null) {
+		@Override
+		public Element apply(Element studyEntryElement) {
+			if (studyEntryElement != null) {
 
-				// we have one, so lets try retrieving the list of files uploaded so far
-				// deferredFilesFeedDoc = retrieveFiles();
+				model.studyEntry.set(studyEntryElement);
+				// we have one
+				log.debug("RetrieveStudyEntryCallback.apply not null");
 				
 			}
 			
 			else {
 				
-				//model.setStatus(ViewStudyRevisionWidgetModel.STATUS_STUDY_NOT_FOUND);
-				deferredFilesFeedDoc = new Deferred<Document>();
-				deferredFilesFeedDoc.callback(null);
+				log.debug("RetrieveStudyEntryCallback.apply null");
 
 			}
 			
-			// return the deferred feed of files uploaded, for chaining of callbacks
-			return deferredFilesFeedDoc;
+			log.leave();
+			return studyEntryElement;
+		}
+
+	}
+
+	
+	
+	
+
+                	  
+
+ 
+
+ 
+
+ 
+	
+	private class DefaultErrback implements Function<Throwable, Throwable> {
+
+		public Throwable apply(Throwable in) {
+			log.error("unexpected error", in);
+			model.status.set(AsyncWidgetModel.STATUS_ERROR);
+
+			// TODO Do we want stack trace?
+			// TODO Should we be getting the message from ErrorEvent ?
+		    //StringWriter sw = new StringWriter();
+		    //PrintWriter pw = new PrintWriter(sw);
+		    //in.printStackTrace(pw);
+			//model.message.set(in.getMessage() +
+			//	"------\r\n" + sw.toString() + "------\r\n");
+
+			model.message.set(in.getMessage());
+			owner.fireEvent(new ErrorEvent(in));
+			return in;
 		}
 		
 	}
 	
-	
-        			
-	public void setStudyRevision(String uri) { 
-	  // TODO Generated stub 
-	}
-	
-     	 
-	private StudyRevisionActionsWidget studyRevisionActionsWidget;
-
- 
-	private ViewRevisionQuestionnaireWidget viewRevisionQuestionnaireWidget;
-
- 
-	private StudyRevisionSummaryWidget studyRevisionSummaryWidget;
-
- 
-	
-	
-	public ViewStudyRevisionWidgetController(ViewStudyRevisionWidget owner, ViewStudyRevisionWidgetModel model) {
-		this.owner = owner;
-		this.model = model;
-	}
 
 	
 	

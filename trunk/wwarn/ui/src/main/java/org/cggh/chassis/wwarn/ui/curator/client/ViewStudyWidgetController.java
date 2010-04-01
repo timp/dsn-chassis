@@ -9,11 +9,18 @@ import org.cggh.chassis.generic.miniatom.client.Atom;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 import org.cggh.chassis.generic.widget.client.ChassisWidget;
 import org.cggh.chassis.generic.widget.client.ErrorEvent;
+import org.cggh.chassis.wwarn.ui.common.client.Config;
 
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;
 
 /**
+ * BE SURE TO EDIT THE TEMPLATE NOT THE RENDERED RESULT
+ *
+ * DELETE_TO_MANUALLY_EDIT
+ *
+ *
+ * 
  *
  * @author timp
  *
@@ -32,13 +39,13 @@ public class ViewStudyWidgetController {
 		this.model = model;
 	}
 
+
 	public Deferred<Element> retrieveStudyEntry() {
 		log.enter("retrieveStudyEntry");
 		
 		model.status.set(AsyncWidgetModel.STATUS_ASYNC_REQUEST_PENDING);
 		
 		Deferred<Element> deferredElement;
-		
 		log.debug("model.StudyUrl"+ model.studyUrl.get());
 		if (!model.studyUrl.isNull()) {
 			
@@ -64,14 +71,20 @@ public class ViewStudyWidgetController {
 		log.leave();
 		return deferredElement;
 	}
+
+
 	
 	
+	
+
+                	            
 	
 	public Deferred<ChassisWidget> refreshAndCallback() {
 		log.enter("refreshAndCallback");
 		
 		final Deferred<ChassisWidget> deferredOwner = new Deferred<ChassisWidget>();
-		
+
+			
 		if (model.studyUrl.get() != null) {
 			Deferred<Element> chain = retrieveStudyEntry();
 			
@@ -91,18 +104,16 @@ public class ViewStudyWidgetController {
 			});
 
 		}
-		
+
 		log.leave();
 		return deferredOwner;
 		
 	}
 
 	
-	
-		
-	
-	private class RetrieveStudyEntryCallback implements Function<Element, Element> {
+	private class RetrieveStudyEntryCallback implements Function<Element,Element> {
 
+		@Override
 		public Element apply(Element studyEntryElement) {
 			log.enter("apply");
 

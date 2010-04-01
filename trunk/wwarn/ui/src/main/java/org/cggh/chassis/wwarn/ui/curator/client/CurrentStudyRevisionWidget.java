@@ -2,13 +2,19 @@ package org.cggh.chassis.wwarn.ui.curator.client;
 
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
-import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.Status;
-import org.cggh.chassis.generic.widget.client.ObservableProperty;
+import org.cggh.chassis.generic.miniatom.client.ext.ChassisHelper;
 
-import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.cggh.chassis.generic.widget.client.ChassisWidget;
+import org.cggh.chassis.generic.widget.client.ObservableProperty;
+import org.cggh.chassis.generic.widget.client.PropertyChangeEvent;
+import org.cggh.chassis.generic.widget.client.PropertyChangeHandler;
+
 import org.cggh.chassis.generic.widget.client.WidgetEvent;
 import org.cggh.chassis.generic.widget.client.WidgetEventHandler;
+import org.cggh.chassis.generic.widget.client.WidgetEventChannel;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -18,9 +24,8 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 
-import com.google.gwt.xml.client.Element;
 
-import org.cggh.chassis.generic.widget.client.WidgetEventChannel;
+import com.google.gwt.xml.client.Element;
 
 /**
  * BE SURE TO EDIT THE TEMPLATE NOT THE RENDERED RESULT
@@ -34,7 +39,7 @@ public class CurrentStudyRevisionWidget
 	 	extends ChassisWidget {
 
 	private static final Log log = LogFactory.getLog(CurrentStudyRevisionWidget.class);
-	
+
 
 	@UiTemplate("CurrentStudyRevisionWidget.ui.xml")
 	interface CurrentStudyRevisionWidgetRendererUiBinder extends
@@ -45,15 +50,33 @@ public class CurrentStudyRevisionWidget
 
 	@UiField HTMLPanel mainPanel;
 	@UiField HTMLPanel contentPanel;
+
 	@UiField HTMLPanel errorPanel;
 	@UiField FlowPanel errorMessage;
 
 	@UiField FlowPanel currentStudyRevisionPanel;
 	
+	public final ObservableProperty<String> studyUrl = new ObservableProperty<String>();
+
+	public final ObservableProperty<Element> studyEntry = new ObservableProperty<Element>();
+
+
+	public final ObservableProperty<String> message = new ObservableProperty<String>();
+
+	public final WidgetEventChannel currentStudyRevisionViewCurrentStudyNavigationEventChannel = new WidgetEventChannel(this);
+
+
+
+	
+	@Override
+	public void refresh() {
+		log.enter("refresh");
+				log.leave();	
+	}
+	
 
 	@Override
 	protected void renderUI() {
-
 		log.enter("renderUI");
 		
 		this.clear();
@@ -68,25 +91,48 @@ public class CurrentStudyRevisionWidget
 	@Override
 	protected void bindUI() {
 		super.bindUI();
-		
+
+		// Much the same as registerHandlersForChildWidgetEvents in ChassisWidgetRenderer
+
+
+		// Model changes
+
+
+		message.addChangeHandler(new PropertyChangeHandler<String>() {
+			public void onChange(PropertyChangeEvent<String> e) {
+				log.enter("onChange<String>");		
+				syncUIWithMessage(e.getAfter());
+				log.leave();
+			}
+		});
+
+	
+		studyUrl.addChangeHandler(new PropertyChangeHandler<String>() {
+			public void onChange(PropertyChangeEvent<String> e) {
+				log.enter("onchange(studyUrl)");
+				syncUIWithStudyUrl(e.getAfter());
+				log.leave();
+			}
+		});
+
+	
+		studyEntry.addChangeHandler(new PropertyChangeHandler<Element>() {
+			public void onChange(PropertyChangeEvent<Element> e) {
+				log.enter("onchange(studyEntry)");
+				syncUIWithStudyEntry(e.getAfter());
+				log.leave();
+			}
+		});
+
+
+	
 	}
 
 
-	public final ObservableProperty<Status> status = new ObservableProperty<Status>();
-	public final ObservableProperty<String> message = new ObservableProperty<String>();
-	public final WidgetEventChannel currentStudyRevisionViewCurrentStudyNavigationEventChannel = new WidgetEventChannel(this);
-
 
 	
-	@Override
-	public void refresh() {
-		log.enter("refresh");
-		
-		// TODO refresh this
-		log.leave();	
-	}
 	
-	
+
 	
 	protected void syncUIWithMessage(String message) {
 		log.enter("syncUIWithMessage");
@@ -100,6 +146,19 @@ public class CurrentStudyRevisionWidget
 
 		log.leave();
 	}
+		
+	protected void syncUIWithStudyUrl(String studyUrl) {
+		log.enter("syncUIWithStudyUrl");
+		// TODO needs to be a method in an extension
+		log.leave();
+	}
+
 	
+	protected void syncUIWithStudyEntry(Element studyEntry) {
+		log.enter("syncUIWithStudyEntry");
+		// TODO needs to be a method in an extension
+		log.leave();
+	}
+
 
 }
