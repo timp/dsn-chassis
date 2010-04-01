@@ -99,12 +99,6 @@ public class PriorStudyRevisionsListWidget
 		else if (status instanceof AsyncWidgetModel.InitialStatus) {
 			pendingPanel.setVisible(true);	
 		}
-		else if (status == ListStudiesWidgetModel.STATUS_RETRIEVE_STUDY_FEED_PENDING) {
-			// still pending
-		}			
-		else if (status == ListStudiesWidgetModel.STATUS_READY_FOR_INTERACTION) {
-			pendingPanel.setVisible(false);	
-		}			
 		else if (status instanceof AsyncWidgetModel.ReadyStatus) {
 			pendingPanel.setVisible(false);	
 		}			
