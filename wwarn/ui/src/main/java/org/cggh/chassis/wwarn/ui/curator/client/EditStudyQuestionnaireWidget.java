@@ -103,9 +103,6 @@ public class EditStudyQuestionnaireWidget
 	public void refresh() {
 		log.enter("refresh");
 		
-		this.controller.retrieveStudyUrl();
-
-
 		this.controller.retrieveStudyEntry();
 
 

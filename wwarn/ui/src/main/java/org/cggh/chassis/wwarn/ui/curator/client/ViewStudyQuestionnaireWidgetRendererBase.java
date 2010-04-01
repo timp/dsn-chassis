@@ -227,15 +227,16 @@ public abstract class ViewStudyQuestionnaireWidgetRendererBase extends
 			log.debug("studyEntry :"+studyEntry);
 
 
-		studySummaryWidgetUiField.studyEntry.set(studyEntry);
+			studySummaryWidgetUiField.studyEntry.set(studyEntry);
+ 
 
-
-		viewQuestionnaireWidgetUiField.studyEntry.set(studyEntry);
+			viewQuestionnaireWidgetUiField.studyEntry.set(studyEntry);
+ 
 			this.viewStudyQuestionnairePanel.clear();
 			this.viewStudyQuestionnairePanel.add(renderStudyEntry(studyEntry));
 			pendingPanel.setVisible(false);
 
-		}
+ 		}
 		
 		log.leave();
 	}
@@ -243,13 +244,14 @@ public abstract class ViewStudyQuestionnaireWidgetRendererBase extends
   /* Override this in a separate class, as the Base class can be regenerated. */
 	abstract Widget renderStudyEntry(Element studyEntry);
 
+	
 
 	protected void syncUIWithStatus(Status status) {
 		log.enter("syncUIWithStatus");		
 		
 		errorPanel.setVisible(false);	
-			pendingPanel.setVisible(true);	
-			contentPanel.setVisible(false);
+		pendingPanel.setVisible(true);	
+		contentPanel.setVisible(true);
 		if (status == null) {
 			// null before being set
 			log.debug("Called with null status");
@@ -262,7 +264,7 @@ public abstract class ViewStudyQuestionnaireWidgetRendererBase extends
 			model.message.set("Not found. url " + model.studyUrl.get());
 		}			
 		else if (status instanceof AsyncWidgetModel.ReadyStatus) {
-			pendingPanel.setVisible(false);	
+			pendingPanel.setVisible(false);
 			contentPanel.setVisible(true);
 		}			
 		else if (status instanceof AsyncWidgetModel.ErrorStatus) {

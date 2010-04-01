@@ -9,7 +9,6 @@ import org.cggh.chassis.generic.miniatom.client.Atom;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 import org.cggh.chassis.generic.widget.client.ChassisWidget;
 import org.cggh.chassis.generic.widget.client.ErrorEvent;
-import org.cggh.chassis.wwarn.ui.common.client.Config;
 
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;
@@ -43,34 +42,13 @@ public class ViewStudyRevisionWidgetController {
     			
 	
       					
-        //private ViewRevisionNavigationEvent viewRevisionNavigationEvent;
 	
        	  					
-        //private NextRevisionNavigationEvent nextRevisionNavigationEvent;
 	
        	  					
-        //private PreviousRevisionNavigationEvent previousRevisionNavigationEvent;
 	
        	            
 
-
-	public Deferred<Document> retrieveStudyUrl() {
-		log.enter("retrieveStudyUrl");
-		
-		log.leave();
-		return null;
-	}
-	
-	private class RetrieveStudyUrlCallback implements Function<Deferred<Document>,String> {
-
-		public String apply(Deferred<Document> studyUrlFeed) {
-			
-			return null;
-		}
-		
-	}
-	
-	
 	
 	
 	
@@ -145,6 +123,7 @@ public class ViewStudyRevisionWidgetController {
 
 		@Override
 		public Element apply(Element studyEntryElement) {
+			log.enter("apply<studyEntryElement>");
 			if (studyEntryElement != null) {
 
 				model.studyEntry.set(studyEntryElement);

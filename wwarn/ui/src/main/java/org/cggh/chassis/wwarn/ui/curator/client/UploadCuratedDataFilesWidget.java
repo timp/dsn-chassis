@@ -20,6 +20,8 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 
 
+import com.google.gwt.xml.client.Element;
+
 /**
  * BE SURE TO EDIT THE TEMPLATE NOT THE RENDERED RESULT
  *
@@ -49,6 +51,8 @@ public class UploadCuratedDataFilesWidget
 
 	@UiField FlowPanel uploadCuratedDataFilesPanel;
 	
+	public final ObservableProperty<Element> studyEntry = new ObservableProperty<Element>();
+
 
 	public final ObservableProperty<String> message = new ObservableProperty<String>();
 
@@ -92,6 +96,15 @@ public class UploadCuratedDataFilesWidget
 			}
 		});
 
+	
+		studyEntry.addChangeHandler(new PropertyChangeHandler<Element>() {
+			public void onChange(PropertyChangeEvent<Element> e) {
+				log.enter("onchange(studyEntry)");
+				syncUIWithStudyEntry(e.getAfter());
+				log.leave();
+			}
+		});
+
 
 	
 	}
@@ -114,5 +127,12 @@ public class UploadCuratedDataFilesWidget
 
 		log.leave();
 	}
-	
+		
+	protected void syncUIWithStudyEntry(Element studyEntry) {
+		log.enter("syncUIWithStudyEntry");
+		// TODO needs to be a method in an extension
+		log.leave();
+	}
+
+
 }
