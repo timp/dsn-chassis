@@ -30,11 +30,11 @@
 
 	<g:HTMLPanel ui:field="mainPanel" >
 
-    <g:HTMLPanel ui:field="errorPanel" styleName="{style.error}" >
+    <g:HTMLPanel ui:field="errorPanel" >
 			<g:Label>
         		<ui:msg>There has been an unexpected error: </ui:msg>
 			</g:Label>
-			<g:FlowPanel ui:field="errorMessage"  title="CurrentStudyRevision"></g:FlowPanel>
+			<g:FlowPanel ui:field="errorMessage"  title="CurrentStudyRevision" styleName="{style.error}" ></g:FlowPanel>
     </g:HTMLPanel>
 
 		<g:HTMLPanel ui:field="contentPanel">
