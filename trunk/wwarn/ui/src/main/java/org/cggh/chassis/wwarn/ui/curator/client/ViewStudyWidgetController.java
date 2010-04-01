@@ -9,7 +9,6 @@ import org.cggh.chassis.generic.miniatom.client.Atom;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 import org.cggh.chassis.generic.widget.client.ChassisWidget;
 import org.cggh.chassis.generic.widget.client.ErrorEvent;
-import org.cggh.chassis.wwarn.ui.common.client.Config;
 
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;
@@ -40,38 +39,17 @@ public class ViewStudyWidgetController {
 	}
 
 
-	public Deferred<Element> retrieveStudyEntry() {
-		log.enter("retrieveStudyEntry");
-		
-		model.status.set(AsyncWidgetModel.STATUS_ASYNC_REQUEST_PENDING);
-		
-		Deferred<Element> deferredElement;
-		log.debug("model.StudyUrl"+ model.studyUrl.get());
-		if (!model.studyUrl.isNull()) {
-			
-			deferredElement = Atom.getEntry(model.studyUrl.get()).adapt(new Function<Document, Element>() {
-
-				public Element apply(Document in) {
-					log.debug("retrieveStudyEntry.apply returning " + in.getDocumentElement());
-					return in.getDocumentElement();
-				}
-				
-			});
-			
-		}
-		else {
-			deferredElement = new Deferred<Element>();
-			deferredElement.callback(null);
-		}
-		
-		// Add a call-back and error-back for the asynchronous feed.
-		deferredElement.addCallback(new RetrieveStudyEntryCallback());
-		deferredElement.addErrback(new DefaultErrback());
-		
-		log.leave();
-		return deferredElement;
-	}
-
+    			
+	
+      			
+	
+      					
+	
+       	  					
+	
+       	  					
+	
+       	            
 
 	
 	
@@ -110,14 +88,44 @@ public class ViewStudyWidgetController {
 		
 	}
 
+	public Deferred<Element> retrieveStudyEntry() {
+		log.enter("retrieveStudyEntry");
+		
+		model.status.set(AsyncWidgetModel.STATUS_ASYNC_REQUEST_PENDING);
+		
+		Deferred<Element> deferredElement;
+		log.debug("model.StudyUrl"+ model.studyUrl.get());
+		if (!model.studyUrl.isNull()) {
+			
+			deferredElement = Atom.getEntry(model.studyUrl.get()).adapt(new Function<Document, Element>() {
+
+				public Element apply(Document in) {
+					log.debug("retrieveStudyEntry.apply returning " + in.getDocumentElement());
+					return in.getDocumentElement();
+				}
+				
+			});
+			
+		}
+		else {
+			deferredElement = new Deferred<Element>();
+			deferredElement.callback(null);
+		}
+		
+		// Add a call-back and error-back for the asynchronous feed.
+		deferredElement.addCallback(new RetrieveStudyEntryCallback());
+		deferredElement.addErrback(new DefaultErrback());
+		
+		log.leave();
+		return deferredElement;
+	}
+
 	
 	private class RetrieveStudyEntryCallback implements Function<Element,Element> {
 
 		@Override
 		public Element apply(Element studyEntryElement) {
-			log.enter("apply");
-
-			
+			log.enter("apply<studyEntryElement>");
 			if (studyEntryElement != null) {
 
 				model.studyEntry.set(studyEntryElement);
@@ -135,11 +143,23 @@ public class ViewStudyWidgetController {
 			log.leave();
 			return studyEntryElement;
 		}
-		
+
 	}
+
+	
+	
 	
 
+                	  
 
+ 
+
+ 
+
+ 
+
+ 
+	
 	private class DefaultErrback implements Function<Throwable, Throwable> {
 
 		public Throwable apply(Throwable in) {
