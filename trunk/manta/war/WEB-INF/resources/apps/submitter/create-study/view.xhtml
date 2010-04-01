@@ -30,7 +30,45 @@
         	<xforms:instance id="entry">
        			<atom:entry>
        				<atom:title type="text"></atom:title>
+       				<atom:content type="application/vnd.chassis-manta+xml">
+       					<study xmlns="">
+       						<published>false</published>
+       						<publications>
+				       			<publication>
+				       				<title></title>
+				       				<first-author></first-author>
+				       				<year></year>
+				       				<journal></journal>
+				       				<url></url>
+				       				<doi></doi>
+				       			</publication>
+       						</publications>
+       					</study>
+       				</atom:content>
        			</atom:entry>
+       		</xforms:instance>
+       		
+       		<xforms:bind nodeset="instance('entry')">
+       			<xforms:bind nodeset="atom:title" required="true()"/>
+       			<xforms:bind nodeset="atom:content/study">
+       				<xforms:bind nodeset="published" type="xforms:boolean"/>
+       				<xforms:bind nodeset="publications" relevant="../published = true()">
+       					<xforms:bind nodeset="publication">
+       						<xforms:bind nodeset="title" required="true()"/>
+       					</xforms:bind>
+       				</xforms:bind>
+       			</xforms:bind>
+       		</xforms:bind>
+       		
+       		<xforms:instance id="publication-template">
+       			<publication xmlns="">
+       				<title></title>
+       				<first-author></first-author>
+       				<year></year>
+       				<journal></journal>
+       				<url></url>
+       				<doi></doi>
+       			</publication>
        		</xforms:instance>
        		
        		<xforms:instance id="control-instance">
@@ -61,6 +99,7 @@
     	<xforms:switch>
     		
     		<xforms:case id="title" selected="true">
+    		
 	            <xhtml:table cellpadding="3">
 	                <xhtml:tr>
 	                    <xhtml:td rowspan="3" class="wizard-td">1</xhtml:td>
@@ -68,10 +107,13 @@
 	                </xhtml:tr>
 	                <xhtml:tr>
 	                    <xhtml:td>
+	                    
 	                        <xforms:input ref="instance('entry')/atom:title">
 	                            <xforms:label class="fixed-width">Title:</xforms:label>
+	                            <xforms:alert>The title is required.</xforms:alert>
 	                            <xforms:toggle ev:event="DOMActivate" case="publications"/>
 	                        </xforms:input>
+	                        
 	                    </xhtml:td>
 	                </xhtml:tr>
 	                <xhtml:tr>
@@ -86,6 +128,8 @@
 	                    </xhtml:td>
 	                </xhtml:tr>
 	            </xhtml:table>
+           		<fr:xforms-inspector xmlns:fr="http://orbeon.org/oxf/xml/form-runner"/>           
+           
     		</xforms:case>
 
     		<xforms:case id="publications">
@@ -96,7 +140,40 @@
 	                </xhtml:tr>
 	                <xhtml:tr>
 	                    <xhtml:td>
-							<xhtml:p>TODO</xhtml:p>
+	                    
+	                    	<xforms:group ref="instance('entry')/atom:content/study">
+	                    	
+								<xhtml:p>
+									<xforms:input ref="published">
+										<xforms:label class="fixed-width">Has the study been published?</xforms:label>
+									</xforms:input>									
+								</xhtml:p>
+								
+								<xforms:group ref="publications">
+								
+									<table>
+										<tr>
+											<td>TODO add one button</td>
+											<td>TODO add one link</td>
+										</tr>
+										<xforms:repeat nodeset="publication" id="publication-repeat">
+											<tr>
+												<td>TODO remove me</td>
+												<td>
+													<xforms:input ref="title">
+														<xforms:label>Title:</xforms:label>
+														<xforms:alert>The title is required.</xforms:alert>
+													</xforms:input>
+												</td>
+											</tr>
+										</xforms:repeat>
+									</table>
+								
+								</xforms:group>
+								
+
+	                    	</xforms:group>
+							
 	                    </xhtml:td>
 	                </xhtml:tr>
 	                <xhtml:tr>
@@ -112,6 +189,8 @@
 	                    </xhtml:td>
 	                </xhtml:tr>
 	            </xhtml:table>
+	            
+				<fr:xforms-inspector xmlns:fr="http://orbeon.org/oxf/xml/form-runner"/>           
     		</xforms:case>
 
     		<xforms:case id="sharing">
@@ -166,6 +245,10 @@
     		</xforms:case>
 
     	</xforms:switch>
+    	
+
+
+	
 
     </xhtml:body>
     
