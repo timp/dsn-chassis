@@ -85,6 +85,10 @@ public class CuratorHomeWidget
 	@Override
 	protected void bindUI() {
 		super.bindUI();
+
+		// Much the same as registerHandlersForChildWidgetEvents in ChassisWidgetRenderer
+		// ListStudies events
+
 		this.childWidgetEventHandlerRegistrations.add(
 				listStudiesWidgetUiField.listStudiesViewStudyNavigationEventChannel.addHandler(new WidgetEventHandler<WidgetEvent>() {
 			public void onEvent(WidgetEvent e) {
@@ -95,7 +99,8 @@ public class CuratorHomeWidget
 		}));
  
 
-	// Model changes
+		// Model changes
+
 
 	
 		message.addChangeHandler(new PropertyChangeHandler<String>() {

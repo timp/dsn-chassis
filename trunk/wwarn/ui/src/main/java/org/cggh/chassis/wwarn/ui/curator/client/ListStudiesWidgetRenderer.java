@@ -146,7 +146,7 @@ public class ListStudiesWidgetRenderer extends
 						log.debug("Firing event...");
 						
 						ViewStudyNavigationEvent viewStudyNavigationEvent  = new ViewStudyNavigationEvent();
-						viewStudyNavigationEvent.setStudy(study);
+						viewStudyNavigationEvent.setStudyEntry(study);
 						
 						owner.listStudiesViewStudyNavigationEventChannel.fireEvent(viewStudyNavigationEvent);
 						

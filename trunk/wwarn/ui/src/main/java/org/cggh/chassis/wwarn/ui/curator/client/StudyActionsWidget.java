@@ -152,7 +152,7 @@ public class StudyActionsWidget
 					log.enter("onClick");
 					
 					ViewStudyNavigationEvent viewStudyNavigationEvent  = new ViewStudyNavigationEvent();
-					viewStudyNavigationEvent.setStudy(studyEntry);
+					viewStudyNavigationEvent.setStudyEntry(studyEntry);
 					
 					studyActionsViewStudyNavigationEventChannel.fireEvent(viewStudyNavigationEvent);
 					
@@ -171,7 +171,7 @@ public class StudyActionsWidget
 					log.enter("onClick");
 					
 					UploadDataFilesWizardNavigationEvent uploadDataFilesWizardNavigationEvent  = new UploadDataFilesWizardNavigationEvent();
-					uploadDataFilesWizardNavigationEvent.setStudy(studyEntry);
+					uploadDataFilesWizardNavigationEvent.setStudyEntry(studyEntry);
 					
 					studyActionsUploadDataFilesWizardNavigationEventChannel.fireEvent(uploadDataFilesWizardNavigationEvent);
 					
@@ -190,7 +190,7 @@ public class StudyActionsWidget
 					log.enter("onClick");
 					
 					ViewStudyQuestionnaireNavigationEvent viewStudyQuestionnaireNavigationEvent  = new ViewStudyQuestionnaireNavigationEvent();
-					viewStudyQuestionnaireNavigationEvent.setStudy(studyEntry);
+					viewStudyQuestionnaireNavigationEvent.setStudyEntry(studyEntry);
 					
 					studyActionsViewStudyQuestionnaireNavigationEventChannel.fireEvent(viewStudyQuestionnaireNavigationEvent);
 					
@@ -209,7 +209,7 @@ public class StudyActionsWidget
 					log.enter("onClick");
 					
 					EditStudyQuestionnaireNavigationEvent editStudyQuestionnaireNavigationEvent  = new EditStudyQuestionnaireNavigationEvent();
-					editStudyQuestionnaireNavigationEvent.setStudy(studyEntry);
+					editStudyQuestionnaireNavigationEvent.setStudyEntry(studyEntry);
 					
 					studyActionsEditStudyQuestionnaireNavigationEventChannel.fireEvent(editStudyQuestionnaireNavigationEvent);
 					
@@ -228,7 +228,7 @@ public class StudyActionsWidget
 					log.enter("onClick");
 					
 					ListStudyRevisionsNavigationEvent listStudyRevisionsNavigationEvent  = new ListStudyRevisionsNavigationEvent();
-					listStudyRevisionsNavigationEvent.setStudy(studyEntry);
+					listStudyRevisionsNavigationEvent.setStudyEntry(studyEntry);
 					
 					studyActionsListStudyRevisionsNavigationEventChannel.fireEvent(listStudyRevisionsNavigationEvent);
 					

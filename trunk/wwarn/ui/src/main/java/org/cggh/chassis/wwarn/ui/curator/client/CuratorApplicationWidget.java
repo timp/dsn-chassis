@@ -74,7 +74,7 @@ public class CuratorApplicationWidget
 				
 				log.enter("onEvent");
 
-				Element studyElement =  ((ViewStudyNavigationEvent) e).getStudy();
+				Element studyElement =  ((ViewStudyNavigationEvent) e).getStudyEntry();
 				log.debug("Setting study to " + studyElement);
 				viewStudyWidget.getModel().studyEntry.set(studyElement);
 					
@@ -109,7 +109,7 @@ public class CuratorApplicationWidget
 				
 				log.enter("onEvent");
 
-				Element studyElement =  ((ViewStudyNavigationEvent) e).getStudy();
+				Element studyElement =  ((ViewStudyNavigationEvent) e).getStudyEntry();
 				log.debug("Setting study to " + studyElement);
 				editStudyQuestionnaireWidget.getModel().studyEntry.set(studyElement);
 					
@@ -128,7 +128,7 @@ public class CuratorApplicationWidget
 				
 				log.enter("onEvent(viewStudyWidget.studyActionsViewStudyQuestionnaireNavigationEventChannel)");
 
-				Element studyElement =  ((ViewStudyQuestionnaireNavigationEvent) e).getStudy();
+				Element studyElement =  ((ViewStudyQuestionnaireNavigationEvent) e).getStudyEntry();
 				log.debug("Setting study to " + studyElement);
 				viewStudyQuestionnaireWidget.getModel().studyEntry.set(studyElement);
 					
@@ -147,7 +147,7 @@ public class CuratorApplicationWidget
 				
 				log.enter("onEvent(viewStudyWidget.studyActionsEditStudyQuestionnaireNavigationEventChannel)");
 
-				Element studyElement =  ((EditStudyQuestionnaireNavigationEvent) e).getStudy();
+				Element studyElement =  ((EditStudyQuestionnaireNavigationEvent) e).getStudyEntry();
 				log.debug("Setting study to " + studyElement);
 				editStudyQuestionnaireWidget.getModel().studyEntry.set(studyElement);
 					
@@ -166,7 +166,7 @@ public class CuratorApplicationWidget
 				
 				log.enter("onEvent(viewStudyWidget.studyActionsListStudyRevisionsNavigationEventChannel)");
 
-				Element studyElement =  ((ListStudyRevisionsNavigationEvent) e).getStudy();
+				Element studyElement =  ((ListStudyRevisionsNavigationEvent) e).getStudyEntry();
 				log.debug("Setting study to " + studyElement);
 				listStudyRevisionsWidget.getModel().studyEntry.set(studyElement);
 					
