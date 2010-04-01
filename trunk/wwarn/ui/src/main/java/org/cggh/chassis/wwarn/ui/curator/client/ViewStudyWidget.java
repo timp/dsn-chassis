@@ -88,20 +88,27 @@ public class ViewStudyWidget
 	public void refresh() {
 		log.enter("refresh");
 		
-		//this.controller.retrieveStudyUrl();
-
-
-		//this.controller.retrieveStudyEntry();
+		this.controller.retrieveStudyEntry();
 
 
 		renderer.studySummaryWidgetUiField.refresh();
-		
-		log.leave();	
+
+
+		renderer.viewStudyMetadataWidgetUiField.refresh();
+
+
+		renderer.listSubmissionsWidgetUiField.refresh();
+
+
+		renderer.listCurationsWidgetUiField.refresh();
+
+		log.leave();
 	}
 	
 
 	@Override
 	public Deferred<ChassisWidget> refreshAndCallback() {
+		
 		log.enter("refreshAndCallback");
 		
 		Deferred<ChassisWidget> deferredSelf = this.controller.refreshAndCallback();
@@ -140,6 +147,7 @@ public class ViewStudyWidget
 			return map;
 		}
 
+		
 		@Override
 		public Deferred<WidgetMemory> remember(Map<String, String> mnemonic) {
 			log.enter("remember");
@@ -153,7 +161,8 @@ public class ViewStudyWidget
 			
 			if (url != null) {
 				
-				log.debug("set url to :" + url);
+				log.debug("set url to:" + url);
+
 				model.studyUrl.set(url);
 				
 				deferredMemory = refreshAndCallback().adapt(new Function<ChassisWidget, WidgetMemory>() {
@@ -183,10 +192,5 @@ public class ViewStudyWidget
 	}
 
 
-
-
-	
-	
-	
 	
 }
