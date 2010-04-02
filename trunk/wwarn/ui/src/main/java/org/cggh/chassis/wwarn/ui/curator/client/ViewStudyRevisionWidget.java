@@ -105,7 +105,6 @@ public class ViewStudyRevisionWidget
 		
 		this.controller.retrieveStudyEntry();
 
-
 		renderer.studyRevisionActionsWidgetUiField.refresh();
 
 
