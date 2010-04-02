@@ -81,11 +81,11 @@ public class UploadDataFilesWizardWidget
 		
 		super.setActiveChild(child, memorise);
 		
-		// FIXME 
-		// Most widgets will refresh themselves, but the HomeWidget will not 
-		//if (child == curatorHomeWidget) {
+		// Most widgets will refresh themselves, but the this.uploadCuratedDataFilesWidget will not 
+		if (child == this.uploadCuratedDataFilesWidget) {
 			((ChassisWidget)child).refresh();
-		//}
+		}
+
 
 
 		log.leave();
