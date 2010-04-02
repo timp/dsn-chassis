@@ -105,7 +105,6 @@ public class EditStudyQuestionnaireWidget
 		
 		this.controller.retrieveStudyEntry();
 
-
 		renderer.studySummaryWidgetUiField.refresh();
 
 
