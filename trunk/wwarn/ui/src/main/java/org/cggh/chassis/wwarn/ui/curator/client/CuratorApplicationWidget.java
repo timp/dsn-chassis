@@ -994,11 +994,11 @@ public class CuratorApplicationWidget
 		
 		super.setActiveChild(child, memorise);
 		
-		// FIXME 
-		// Most widgets will refresh themselves, but the HomeWidget will not 
-		if (child == curatorHomeWidget) {
+		// Most widgets will refresh themselves, but the this.curatorHomeWidget will not 
+		if (child == this.curatorHomeWidget) {
 			((ChassisWidget)child).refresh();
 		}
+
 
 
 		log.leave();
