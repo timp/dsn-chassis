@@ -24,10 +24,7 @@ import com.google.gwt.xml.client.Element;
 
 
 /**
- * BE SURE TO EDIT THE TEMPLATE NOT THE RENDERED RESULT
- *
- * DELETE_TO_MANUALLY_EDIT
- *
+ * Manually editted renderer.
  * @author timp
  */
 public class ListStudiesWidgetRenderer extends
