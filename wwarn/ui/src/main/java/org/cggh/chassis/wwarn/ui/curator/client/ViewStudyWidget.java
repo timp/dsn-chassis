@@ -105,7 +105,6 @@ public class ViewStudyWidget
 		
 		this.controller.retrieveStudyEntry();
 
-
 		renderer.studySummaryWidgetUiField.refresh();
 
 
