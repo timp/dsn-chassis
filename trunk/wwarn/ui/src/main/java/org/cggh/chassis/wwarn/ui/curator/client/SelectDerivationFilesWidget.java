@@ -21,10 +21,6 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 
 
 /**
- * BE SURE TO EDIT THE TEMPLATE NOT THE RENDERED RESULT
- *
- * DELETE_TO_MANUALLY_EDIT
- *
  * @author timp
  *
  */
@@ -99,6 +95,14 @@ public class SelectDerivationFilesWidget
 
 
 	
+	@Override
+	protected void syncUI() {
+		log.enter("syncUI");
+		errorPanel.setVisible(true);	
+		contentPanel.setVisible(true);
+		log.leave();
+    }
+
 	
 
 	

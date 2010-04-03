@@ -1,5 +1,7 @@
 package org.cggh.chassis.wwarn.ui.curator.client;
 
+import static org.cggh.chassis.generic.widget.client.HtmlElements.strongWidget;
+
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.miniatom.client.ext.ChassisHelper;
@@ -23,9 +25,6 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.xml.client.Element;
 
 /**
- * BE SURE TO EDIT THE TEMPLATE NOT THE RENDERED RESULT
- *
- * DELETE_TO_MANUALLY_EDIT
  *
  * @author timp
  *
@@ -112,7 +111,15 @@ public class CurationSummaryWidget
 
 
 	
-	
+	@Override
+	protected void syncUI() {
+		log.enter("syncUI");
+        syncUIWithStudyEntry(studyEntry.get());
+		errorPanel.setVisible(true);	
+		contentPanel.setVisible(true);
+		log.leave();
+    }
+
 
 	
 	protected void syncUIWithMessage(String message) {
@@ -130,7 +137,7 @@ public class CurationSummaryWidget
 		
 	protected void syncUIWithStudyEntry(Element studyEntry) {
 		log.enter("syncUIWithStudyEntry");
-		// TODO needs to be a method in an extension
+		this.curationSummaryPanel.add(strongWidget("syncUIWithStudyEntry"));
 		log.leave();
 	}
 
