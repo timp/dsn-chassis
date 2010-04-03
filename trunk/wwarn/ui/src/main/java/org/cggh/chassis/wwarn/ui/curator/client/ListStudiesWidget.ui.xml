@@ -9,9 +9,7 @@
 	xmlns:local="urn:import:org.cggh.chassis.wwarn.ui.curator.client"
 	>
 <!-- 
-    BE SURE TO EDIT THE TEMPLATE NOT THE RENDERED RESULT
-		
-    DELETE_TO_MANUALLY_EDIT 
+Manually editted
 -->
 	<ui:style>
 	
@@ -46,7 +44,7 @@
 		<g:HTMLPanel ui:field="contentPanel">
 
             <div id="ListStudies" title="ListStudies" class="widget">
-            	<h2>ListStudies</h2>
+            	<h2>List Studies</h2>
             	<g:FlowPanel ui:field="listStudiesPanel"></g:FlowPanel>
 			</div>
 		</g:HTMLPanel>
