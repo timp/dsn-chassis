@@ -40,6 +40,7 @@
 		<g:HTMLPanel ui:field="contentPanel">
 
             <div id="SelectDerivationFiles" title="SelectDerivationFiles" class="widget">
+            	<h2>SelectDerivationFiles</h2>
             	<g:FlowPanel ui:field="selectDerivationFilesPanel"></g:FlowPanel>
 			</div>
 		</g:HTMLPanel>
