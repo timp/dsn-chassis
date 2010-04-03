@@ -46,6 +46,7 @@
 		<g:HTMLPanel ui:field="contentPanel">
 
             <div id="PriorStudyRevisionsList" title="PriorStudyRevisionsList" class="widget">
+            	<h2>PriorStudyRevisionsList</h2>
             	<g:FlowPanel ui:field="priorStudyRevisionsListPanel"></g:FlowPanel>
 			</div>
 		</g:HTMLPanel>

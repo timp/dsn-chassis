@@ -64,15 +64,11 @@ public class UploadDataFilesWizardWidget
 		log.enter("registerHandlersForChildWidgetEvents");
 		super.registerHandlersForChildWidgetEvents();
 		
-
-		// UploadCuratedDataFiles events
-
-		// SelectDerivationFiles events
-
-		// CurationSummary events
+		//NoUploadCuratedDataFiles events 
+		//NoSelectDerivationFiles events 
+		//NoCurationSummary events 
 		log.leave();
 	}
-
 
 
 	@Override
@@ -81,12 +77,10 @@ public class UploadDataFilesWizardWidget
 		
 		super.setActiveChild(child, memorise);
 		
-		// Most widgets will refresh themselves, but the this.uploadCuratedDataFilesWidget will not 
+		// Most widgets will refresh themselves, but the uploadCuratedDataFilesWidget will not 
 		if (child == this.uploadCuratedDataFilesWidget) {
 			((ChassisWidget)child).refresh();
 		}
-
-
 
 		log.leave();
 	}

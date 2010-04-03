@@ -46,6 +46,7 @@
 		<g:HTMLPanel ui:field="contentPanel">
 
             <div id="ViewStudyRevision" title="ViewStudyRevision" class="widget">
+            	<h2>ViewStudyRevision</h2>
             	<g:FlowPanel ui:field="viewStudyRevisionPanel"></g:FlowPanel>
 				<local:StudyRevisionActionsWidget ui:field="studyRevisionActionsWidgetUiField"/>
 				<local:ViewRevisionQuestionnaireWidget ui:field="viewRevisionQuestionnaireWidgetUiField"/>
