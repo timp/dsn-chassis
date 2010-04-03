@@ -105,8 +105,7 @@ public class CuratorApplicationWidget
 		log.enter("registerHandlersForChildWidgetEvents");
 		super.registerHandlersForChildWidgetEvents();
 		
-
-		// CuratorHome events
+		//CuratorHome events 
 		log.debug("Adding CuratorHome>ListStudies>ViewStudyNavigation event handler");
 		this.childWidgetEventHandlerRegistrations.add(
 				curatorHomeWidget.listStudiesViewStudyNavigationEventChannel.addHandler(
@@ -135,8 +134,7 @@ public class CuratorApplicationWidget
 		}));
 
 
-
-		// ViewStudy events
+		//ViewStudy events 
 		log.debug("Adding ViewStudy>StudyActions>ListStudiesNavigation event handler");
 		this.childWidgetEventHandlerRegistrations.add(
 				viewStudyWidget.studyActionsListStudiesNavigationEventChannel.addHandler(
@@ -293,8 +291,7 @@ public class CuratorApplicationWidget
 		}));
 
 
-
-		// ViewStudyQuestionnaire events
+		//ViewStudyQuestionnaire events 
 		log.debug("Adding ViewStudyQuestionnaire>StudyActions>ListStudiesNavigation event handler");
 		this.childWidgetEventHandlerRegistrations.add(
 				viewStudyQuestionnaireWidget.studyActionsListStudiesNavigationEventChannel.addHandler(
@@ -451,8 +448,7 @@ public class CuratorApplicationWidget
 		}));
 
 
-
-		// EditStudyQuestionnaire events
+		//EditStudyQuestionnaire events 
 		log.debug("Adding EditStudyQuestionnaire>StudyActions>ListStudiesNavigation event handler");
 		this.childWidgetEventHandlerRegistrations.add(
 				editStudyQuestionnaireWidget.studyActionsListStudiesNavigationEventChannel.addHandler(
@@ -609,8 +605,7 @@ public class CuratorApplicationWidget
 		}));
 
 
-
-		// ListStudyRevisions events
+		//ListStudyRevisions events 
 		log.debug("Adding ListStudyRevisions>StudyActions>ListStudiesNavigation event handler");
 		this.childWidgetEventHandlerRegistrations.add(
 				listStudyRevisionsWidget.studyActionsListStudiesNavigationEventChannel.addHandler(
@@ -823,8 +818,7 @@ public class CuratorApplicationWidget
 		}));
 
 
-
-		// ViewStudyRevision events
+		//ViewStudyRevision events 
 		log.debug("Adding ViewStudyRevision>StudyRevisionActions>ViewStudyQuestionnaireNavigation event handler");
 		this.childWidgetEventHandlerRegistrations.add(
 				viewStudyRevisionWidget.studyRevisionActionsViewStudyQuestionnaireNavigationEventChannel.addHandler(
@@ -981,11 +975,9 @@ public class CuratorApplicationWidget
 		}));
 
 
-
-		// UploadDataFilesWizard events
+		//NoUploadDataFilesWizard events 
 		log.leave();
 	}
-
 
 
 	@Override
@@ -994,12 +986,10 @@ public class CuratorApplicationWidget
 		
 		super.setActiveChild(child, memorise);
 		
-		// Most widgets will refresh themselves, but the this.curatorHomeWidget will not 
+		// Most widgets will refresh themselves, but the curatorHomeWidget will not 
 		if (child == this.curatorHomeWidget) {
 			((ChassisWidget)child).refresh();
 		}
-
-
 
 		log.leave();
 	}
