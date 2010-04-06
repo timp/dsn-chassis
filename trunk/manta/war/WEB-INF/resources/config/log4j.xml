@@ -126,6 +126,14 @@
         <priority value="warn"/>
     </category>
 
+    <category name="org.quartz">
+        <priority value="info"/>
+    </category>
+    
+    <category name="org.springframework">
+        <priority value="info"/>
+    </category>
+    
     <!-- You decide here which one of the loggers listed above you want to use. -->
     <root>
         <priority value="debug"/>
