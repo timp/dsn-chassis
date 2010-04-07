@@ -17,6 +17,9 @@
   
   <page path-info="/submitter/create-study/" view="create-study/view.xhtml"/>
   
+  <page path-info="/submitter/submit-files/" view="submit-files/view.xhtml"/>
+  <page path-info="/submitter/submit-files/submit" model="submit-files/submit.xpl"/>
+  
   <epilogue url="oxf:/config/epilogue.xpl"/>
 
 </config>
