@@ -18,12 +18,17 @@
     xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:ev="http://www.w3.org/2001/xml-events"
-    xmlns:atom="http://www.w.org/2005/Atom">
+    xmlns:atom="http://www.w3.org/2005/Atom"
+    xmlns:fr="http://orbeon.org/oxf/xml/form-runner">
     <head>
         <title>WWARN Data Management - Submitter - Home</title>
         <link rel="stylesheet" type="text/css" href="/apps/submitter/common/style.css"></link>
         <style type="text/css"></style>
         <xforms:model>
+        
+        	<xforms:instance id="retrieve-studies">
+        		<params/>
+        	</xforms:instance>
             
             <xforms:instance id="current-user">
             	<user xmlns="">
@@ -32,29 +37,98 @@
             	</user>
            	</xforms:instance>
            	
-           <xforms:action 
+			<xforms:action 
            		ev:event="xforms-model-construct-done">
            		<xforms:setvalue ref="instance('current-user')/name" value="xxforms:get-remote-user()"/>
-           </xforms:action>
+			</xforms:action>
 
-           <xforms:action 
-           		ev:event="xforms-model-construct-done">
-                <xforms:insert 
-                	nodeset="instance('current-user')/roles" 
-                	at="1" 
-                	position="before" 
-                	origin="xxforms:get-request-attribute('user-roles-xml')"/>
-           </xforms:action>
+			<xforms:action 
+				ev:event="xforms-model-construct-done">
+			    <xforms:insert 
+		    	 	nodeset="instance('current-user')/roles" 
+			     	at="1" 
+			     	position="before" 
+			     	origin="xxforms:get-request-attribute('user-roles-xml')"/>
+			</xforms:action>
 
+			<xforms:instance id="study-feed">
+				<atom:feed/>
+			</xforms:instance>
+			
+			<xforms:submission 
+				id="retrieve-study-feed-submission"
+				action="http://localhost:8081/manta/atombeat/content/studies"
+				method="get"
+				replace="instance"
+				instance="study-feed">
+                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<output value="event('response-status-code')"/>) while retrieving studies!</xforms:message>
+			
+			</xforms:submission>
+			
+			<xforms:send ev:event="xforms-model-construct-done" submission="retrieve-study-feed-submission"/>
+			
+			<xforms:instance id="control">
+				<control xmlns="">
+					<submit-files/>
+					<cannot-submit-files/>
+				</control>
+			</xforms:instance>
+			
+			<xforms:bind nodeset="instance('control')">
+				<xforms:bind nodeset="submit-files" relevant="count(instance('study-feed')/atom:entry) > 0"/>
+				<xforms:bind nodeset="cannot-submit-files" relevant="count(instance('study-feed')/atom:entry) = 0"/>
+			</xforms:bind>
+			
         </xforms:model>
     </head>
     <body>
     	<h1>Submitter - Home</h1>
     	<div id="home-nav"><xforms:output ref="instance('current-user')/name"/></div>
     	<div id="content">
+    		<p>Welcome to the WWARN submitter home page.</p>
+    		<h2>Actions</h2>
 	    	<ul>
-	    		<li><a href="create-study/">Create Study</a></li>
+	    		<li><a class="action" href="create-study/">Create Study</a></li>
+	    		<xforms:group ref="instance('control')/submit-files">
+		    		<li><a class="action" href="TODO">Submit Files</a></li>
+	    		</xforms:group>
+	    		<xforms:group ref="instance('control')/cannot-submit-files">
+		    		<li><span class="locked-action">Submit Files</span> (you have to create a study before you can submit files)</li>
+	    		</xforms:group>
 	    	</ul>
+	    	<h2>Studies</h2>
+	    	
+	    	<fr:datatable paginated="true" rowsPerPage="10">
+	    		<thead>
+	    			<tr>
+	    				<th>Code</th>
+	    				<th>Title</th>
+	    				<th>Created</th>
+	    				<th>Updated</th>
+	    				<th>Actions</th>
+	    			</tr>
+	    		</thead>
+	    		<tbody>
+	    			<xforms:repeat nodeset="instance('study-feed')/atom:entry">
+	    				<tr>
+	    					<td>
+	    						<xforms:output ref="replace( atom:id/text() , '^.*/([^/^.]+)\.atom$', '$1' )"/>
+	    					</td>
+	    					<td>
+	    						<xforms:output ref="atom:title"/>
+	    					</td>
+	    					<td>
+	    						<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[M01]/[D01]/[Y]')"/>
+	    					</td>
+	    					<td>
+	    						<xforms:output ref="atom:updated" xxforms:format="format-dateTime(., '[M01]/[D01]/[Y]')"/>
+	    					</td>
+	    					<td><a href="TODO">View</a> <br/> <a href="TODO">Submit Files</a> <br/> <a href="TODO">Questionnaire</a></td>
+	    				</tr>
+	    			</xforms:repeat>
+	    		</tbody>
+	    	
+	    	</fr:datatable>
     	</div>
     </body>
 </html>

@@ -272,10 +272,31 @@
                 replace="instance" 
                 instance="entry"
                 mediatype="application/atom+xml">
-                
-                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<output value="event('xxforms:type')"/>) while saving!</xforms:message>
+                <xforms:send ev:event="xforms-submit-done" submission="update-acl-submission"/>
+                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<output value="event('error-type')"/>) while saving!</xforms:message>
             </xforms:submission>
+            
+            
 
+            <!--+
+            	|
+            	| Submission to update the ACL after study is created. 
+            	|
+            	+-->
+            	
+            <xforms:submission 
+            	id="update-acl-submission" 
+            	ref="instance('acl')"
+                action="{instance('entry')/atom:link[@rel='edit-acl']/@href}"
+                method="put" 
+                replace="instance" 
+                instance="acl"
+                mediatype="application/atom+xml">
+                <xforms:toggle ev:event="xforms-submit-done" case="success"/>
+                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<output value="event('error-type')"/>) while saving!</xforms:message>
+            </xforms:submission>
+            
+            
 
         </xforms:model>
 
@@ -302,7 +323,7 @@
 			|
 			+-->       		
     	
-    	<div id="home-nav"><xforms:output ref="instance('current-user')/name"/> | <a href="../">submitter home</a></div>
+    	<div id="home-nav"><xforms:output ref="instance('current-user')/name"/> | <a href="../">Submitter Home</a></div>
     	
     	
     	
@@ -722,6 +743,36 @@
 		                </tr>
 		            </table>
 	    		</xforms:case>
+	    		
+				<!--+
+					|
+					| Success Case
+					| ************
+					|
+					+-->       		
+			       		
+	    		<xforms:case id="success">
+	    		
+	    			<h2>Success</h2>
+	    			
+	    			<p>Your study has been successfully created.</p>
+					
+					<p>
+                    <xforms:output ref="instance('entry')/atom:title">
+                    	<xforms:label class="fixed-width">Study title:</xforms:label>
+                    </xforms:output>
+                    </p>
+                    <p>
+                    <xforms:output ref="replace( instance('entry')/atom:id/text() , '^.*/([^/^.]+)\.atom$', '$1')">
+                    	<xforms:label class="fixed-width">Unique study code:</xforms:label>
+                    </xforms:output>
+                    </p>
+                    
+                    <p>Links: <a href="../">Submitter Home</a> | <a href="../TODO">Study Questionnaire</a> | <a href="../TODO">Submit Files</a></p>
+                    
+	    			
+	    		</xforms:case>
+	    		
 	
 	    	</xforms:switch>
 	    	
