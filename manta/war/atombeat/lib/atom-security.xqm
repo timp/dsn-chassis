@@ -375,22 +375,36 @@ declare function atomsec:match-group(
 ) as xs:boolean
 {
 
-    let $groups :=
+    let $log := util:log( "debug" , "== atomsec:match-group() ==" )
+    let $log := util:log( "debug" , $rule )
     
-        for $group in $acl/groups/group
-        let $src := $group/@src
-        let $name := $group/@name
-        return
-            if ( exists( $src) ) then atomsec:dereference-group( $name , $src )
-            else $group
-
-    let $groups-for-user := $groups[user=$user]/@name
+    let $group := $rule/group
+    let $log := util:log( "debug" , concat( "found group in rule: " , $group ) ) 
     
-    return
+    return 
     
-        ( xs:string( $rule/group ) = "*" )
-        or ( exists( $rule/group) and exists( index-of( $groups-for-user , xs:string( $rule/group ) ) ) )
+        if ( empty( $group ) ) then false()
         
+        else if ( xs:string( $group ) = "*" ) then true()
+        
+        else
+    
+            let $groups :=
+            
+                for $group in $acl/groups/group
+                let $src := $group/@src
+                let $name := $group/@name
+                return
+                    if ( exists( $src) ) then atomsec:dereference-group( $name , $src )
+                    else $group
+        
+            let $groups-for-user := $groups[user=$user]/@name
+            
+            let $group-has-user := exists( index-of( $groups-for-user , xs:string( $group ) ) )
+            let $log := util:log( "debug" , concat( "$group-has-user: " , $group-has-user ) )
+            
+            return $group-has-user
+    
 };
 
 
