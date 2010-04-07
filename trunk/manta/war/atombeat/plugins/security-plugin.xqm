@@ -317,11 +317,14 @@ declare function sp:append-edit-acl-links(
 ) as element(atom:entry)
 {
 
-    let $can-update-member-acl := not( sp:is-operation-forbidden( $CONSTANT:OP-UPDATE-ACL , $request-path-info , () ) )
+    (: N.B. cannot use request-path-info to check if update-acl allowed, because request-path-info might be a collection URI if the operation was create-member :)
+    
+    let $entry-path-info := substring-after( $response-data/atom:link[@rel="self"]/@href , $config:service-url )
+    let $can-update-member-acl := not( sp:is-operation-forbidden( $CONSTANT:OP-UPDATE-ACL , $entry-path-info , () ) )
     
     let $edit-acl-link :=     
         if ( $can-update-member-acl )
-        then <atom:link rel="edit-acl" href="{concat( $config:acl-service-url , $request-path-info )}" type="application/atom+xml"/>
+        then <atom:link rel="edit-acl" href="{concat( $config:acl-service-url , $entry-path-info )}" type="application/atom+xml"/>
         else ()
         
     let $log := util:log( "debug" , concat( "$edit-acl-link: " , $edit-acl-link ) )
