@@ -2,6 +2,9 @@ xquery version "1.0";
 
 module namespace config = "http://www.cggh.org/2010/atombeat/xquery/config";
 
+import module namespace util = "http://exist-db.org/xquery/util" ;
+
+import module namespace xutil = "http://www.cggh.org/2010/atombeat/xquery/xutil" at "../lib/xutil.xqm" ;
 
 (:
  : The base URL for the Atom service. This URL will be prepended to all edit
@@ -65,6 +68,16 @@ declare variable $config:base-acl-collection-path as xs:string := "/db/atom/acl"
  : The resource name used to store feed documents in the database.
  :)
 declare variable $config:feed-doc-name as xs:string := ".feed" ;
+
+
+declare function config:generate-identifier(
+    $collection-path-info as xs:string
+) as xs:string
+{
+    if ( $collection-path-info = "/studies" )
+    then upper-case( xutil:random-alphanumeric( 4 ) )
+    else util:uuid()
+};
 
 
 (:
