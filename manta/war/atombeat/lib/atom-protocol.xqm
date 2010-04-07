@@ -16,9 +16,9 @@ import module namespace atomdb = "http://www.cggh.org/2010/atombeat/xquery/atomd
 import module namespace config = "http://www.cggh.org/2010/atombeat/xquery/config" at "../config/shared.xqm" ;
 import module namespace plugin = "http://www.cggh.org/2010/atombeat/xquery/plugin" at "../config/plugins.xqm" ;
 
-declare variable $ap:param-request-path-info := "request-path-info" ; 
+declare variable $ap:param-request-path-info := "request-path-info" ;
 
- 
+
 
 
 (:
