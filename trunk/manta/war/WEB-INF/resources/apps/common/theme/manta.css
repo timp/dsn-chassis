@@ -5,7 +5,7 @@
 }
 
 #hd {
-    height: 50px;
+    height: 60px;
 }
 
 #hd h1 {
@@ -29,7 +29,7 @@
 #ft p {
     font-size: 90%;
     padding: 0;
-    margin: 0;    
+    margin: 0.2em 0 0 0;    
 }
 
 #bd {
@@ -37,7 +37,11 @@
 }
 
 #bd h1 {
-    margin: 0;
+    margin: 0 0 0 0;
     padding: 0;
     border-bottom: 2px solid black;
+}
+
+#content {
+    margin-top: 0.71em;
 }
