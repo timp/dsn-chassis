@@ -90,8 +90,8 @@
                 <xforms:bind nodeset="back" readonly="true()"/>
                 <xforms:bind nodeset="finish" readonly="@readonly = 'false'"/>
                 <xforms:bind nodeset="next-upload" readonly="instance('form-data')/study = ''"/>
-                <xforms:bind nodeset="next-confirm" readonly="count(instance('form-data')//file) = 0 or instance('form-data')//file/location = ''"/>
-                <xforms:bind nodeset="upload-files" relevant="count(instance('form-data')//file[location = '']) > 0"/>
+                <xforms:bind nodeset="next-confirm" readonly="count(instance('form-data')//file) = 0 or instance('form-data')//file/upload = ''"/>
+                <xforms:bind nodeset="upload-files" relevant="count(instance('form-data')//file[upload = '']) > 0"/>
                 <xforms:bind nodeset="confirm" readonly="instance('form-data')/accept-terms != true()"/>
             </xforms:bind>
 
@@ -130,9 +130,9 @@
 					<study></study>
 					<files>
 						<file>
-							<location xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:anyURI" filename="" mediatype="" size=""/>
-							<type/>
-							<other-type/>
+							<upload xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:anyURI" filename="" mediatype="" size=""/>
+							<term/>
+							<other-term/>
 						</file>
 					</files>
 					<accept-terms>false</accept-terms>
@@ -144,18 +144,21 @@
 				<xforms:bind nodeset="accept-terms" type="xforms:boolean"/>	
 				<xforms:bind nodeset="files">
 					<xforms:bind nodeset="file">
-						<!-- <xforms:bind nodeset="type" required="true()"/> -->
-						<xforms:bind nodeset="other-type" relevant="../type = 'other'"/>
+						<!-- <xforms:bind nodeset="term" required="true()"/> -->
+						<xforms:bind nodeset="other-term" relevant="../term = 'http://www.cggh.org/2010/chassis/terms/Other'"/>
 					</xforms:bind>
 				</xforms:bind>	
 			</xforms:bind>
 			
 			<xforms:instance id="file-template">
-				<file xmlns="" filename="" mediatype="" size="">
-					<location xsi:type="xs:anyURI" xmlns:xs="http://www.w3.org/2001/XMLSchema"/>
-					<type/>
+				<file xmlns="">
+					<upload xsi:type="xs:anyURI" xmlns:xs="http://www.w3.org/2001/XMLSchema" filename="" mediatype="" size=""/>
+					<term/>
+					<other-term/>
 				</file>
 			</xforms:instance>
+			
+			<xforms:instance id="file-terms" src="/apps/common/constants/file-terms.xml"/>
 
             <!-- background upload submission -->
             <xforms:submission id="background-submission" ref="instance('form-data')/files" method="post" replace="none" resource="test:"/>
@@ -194,7 +197,7 @@
 			|
 			+-->       		
     	
-    	<div id="home-nav"><xforms:output ref="instance('current-user')/name"/> | <a href="../">Submitter Home</a></div>
+    	<div id="home-nav"><xforms:output value="instance('current-user')/name"/> | <a href="../">Submitter Home</a></div>
     	
     	
     	
@@ -308,9 +311,6 @@
 							                        	origin="instance('file-template')"/>
 							                    </xforms:trigger>
 											</td>
-											<td>
-												File Type
-											</td>
 										</tr>
 										<xforms:repeat nodeset="file" id="file-repeat">
 											<tr>
@@ -326,50 +326,34 @@
 												</td>
 												<td class="form-td">
 							                        <!-- Upload field -->
-							                        <xforms:upload ref="location" xxforms:size="60">
+							                        <xforms:upload ref="upload" xxforms:size="60">
 							                            <xforms:filename ref="@filename"/>
 							                            <xforms:mediatype ref="@mediatype"/>
 							                            <xxforms:size ref="@size"/>
 							                        </xforms:upload>
 							                        <br/>
 							                        <!-- Download link -->
-							                        <xforms:output ref="location" appearance="xxforms:download">
+							                        <xforms:output value="upload" appearance="xxforms:download">
 							                            <xforms:filename ref="@filename"/>
 							                            <xforms:mediatype ref="@mediatype"/>
 							                            <xforms:label>Download</xforms:label>
 							                        </xforms:output>
-												</td>
-												<td class="form-td">
-													<xforms:select1 ref="type" appearance="minimal">
+							                        <br/>
+													<xforms:select1 ref="term" appearance="minimal">
 														<xforms:alert>A file type must be selected.</xforms:alert>
 														<xforms:item>
 															<xforms:value></xforms:value>
 															<xforms:label>select a file type...</xforms:label>
 														</xforms:item>
-														<xforms:item>
-															<xforms:value>data</xforms:value>
-															<xforms:label>Data File</xforms:label>
-														</xforms:item>
-														<xforms:item>
-															<xforms:value>dictionary</xforms:value>
-															<xforms:label>Data Dictionary</xforms:label>
-														</xforms:item>
-														<xforms:item>
-															<xforms:value>protocol</xforms:value>
-															<xforms:label>Protocol</xforms:label>
-														</xforms:item>
-														<xforms:item>
-															<xforms:value>paper</xforms:value>
-															<xforms:label>Paper</xforms:label>
-														</xforms:item>
-														<xforms:item>
-															<xforms:value>other</xforms:value>
-															<xforms:label>Other</xforms:label>
-														</xforms:item>
+							                        	<xforms:itemset nodeset="instance('file-terms')/term">
+							                        		<xforms:label ref="label"/>
+							                        		<xforms:value ref="value"/>
+							                        	</xforms:itemset>
 													</xforms:select1>
-													<xforms:input ref="other-type">
+													<xforms:input ref="other-term">
 														<xforms:label>Other type: </xforms:label>
 													</xforms:input>
+							                        
 												</td>
 											</tr>
 										</xforms:repeat>
@@ -420,22 +404,22 @@
 		                    	<h2>Study</h2>
 		                    	<p>
 		                    		<strong>
-		                    		<xforms:output ref="replace( instance('form-data')/study/text() , '^.*/([^/^.]+)\.atom$', '$1')"/>
-		                    		(<xforms:output ref="instance('study-feed')/atom:entry[atom:id = instance('form-data')/study]/atom:title"/>)
+		                    		<xforms:output value="replace( instance('form-data')/study/text() , '^.*/([^/^.]+)\.atom$', '$1')"/>
+		                    		(<xforms:output value="instance('study-feed')/atom:entry[atom:id = instance('form-data')/study]/atom:title"/>)
 		                    		</strong>
 		                    	</p>
 		                    	<h2>Files</h2>
 								<xforms:group ref="instance('form-data')/files">
 								
 									<table class="repeat-table">
-										<xforms:repeat nodeset="file">
+										<xforms:repeat nodeset="file" id="output-file-repeat">
 											<tr>
 												<td class="form-td">
-							                        <xforms:output ref="./location/@filename"/>
-							                        (<xforms:output ref="type"/>)
+							                        <xforms:output value="./upload/@filename"/>
+							                        (<xforms:output value="instance('file-terms')/term[value=xxforms:context('output-file-repeat')/term]/label"/>)
 							                        <br/>
 							                        <!-- Download link -->
-							                        <xforms:output ref="location" appearance="xxforms:download">
+							                        <xforms:output value="upload" appearance="xxforms:download">
 							                            <xforms:filename ref="@filename"/>
 							                            <xforms:mediatype ref="@mediatype"/>
 							                            <xforms:label>Download</xforms:label>
