@@ -69,14 +69,14 @@
 			
 			<xforms:instance id="control">
 				<control xmlns="">
-					<submit-files/>
-					<cannot-submit-files/>
+					<has-studies/>
+					<has-no-studies/>
 				</control>
 			</xforms:instance>
 			
 			<xforms:bind nodeset="instance('control')">
-				<xforms:bind nodeset="submit-files" relevant="count(instance('study-feed')/atom:entry) > 0"/>
-				<xforms:bind nodeset="cannot-submit-files" relevant="count(instance('study-feed')/atom:entry) = 0"/>
+				<xforms:bind nodeset="has-studies" relevant="count(instance('study-feed')/atom:entry) > 0"/>
+				<xforms:bind nodeset="has-no-studies" relevant="count(instance('study-feed')/atom:entry) = 0"/>
 			</xforms:bind>
 			
         </xforms:model>
@@ -89,46 +89,51 @@
     		<h2>Actions</h2>
 	    	<ul>
 	    		<li><a class="action" href="create-study/">Create Study</a></li>
-	    		<xforms:group ref="instance('control')/submit-files">
-		    		<li><a class="action" href="submit-files/">Submit Files</a></li>
-	    		</xforms:group>
-	    		<xforms:group ref="instance('control')/cannot-submit-files">
+	    		<xforms:group ref="instance('control')/has-no-studies">
 		    		<li><span class="locked-action">Submit Files</span> (you have to create a study before you can submit files)</li>
+	    		</xforms:group>
+	    		<xforms:group ref="instance('control')/has-studies">
+		    		<li><a class="action" href="submit-files/">Submit Files</a></li>
 	    		</xforms:group>
 	    	</ul>
 	    	<h2>Studies</h2>
 	    	
-	    	<fr:datatable paginated="true" rowsPerPage="10">
-	    		<thead>
-	    			<tr>
-	    				<th>Code</th>
-	    				<th>Title</th>
-	    				<th>Created</th>
-	    				<th>Updated</th>
-	    				<th>Actions</th>
-	    			</tr>
-	    		</thead>
-	    		<tbody>
-	    			<xforms:repeat nodeset="instance('study-feed')/atom:entry">
-	    				<tr>
-	    					<td>
-	    						<xforms:output ref="replace( atom:id/text() , '^.*/([^/^.]+)\.atom$', '$1' )"/>
-	    					</td>
-	    					<td>
-	    						<xforms:output ref="atom:title"/>
-	    					</td>
-	    					<td>
-	    						<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[M01]/[D01]/[Y]')"/>
-	    					</td>
-	    					<td>
-	    						<xforms:output ref="atom:updated" xxforms:format="format-dateTime(., '[M01]/[D01]/[Y]')"/>
-	    					</td>
-	    					<td><a href="TODO">View</a> <br/> <a href="TODO">Submit Files</a> <br/> <a href="TODO">Questionnaire</a></td>
-	    				</tr>
-	    			</xforms:repeat>
-	    		</tbody>
-	    	
-	    	</fr:datatable>
+    		<xforms:group ref="instance('control')/has-no-studies">
+	    		<p>Please <a href="create-study/">create a study</a>.</p>
+    		</xforms:group>
+
+    		<xforms:group ref="instance('control')/has-studies">
+		    	<fr:datatable paginated="true" rowsPerPage="10">
+		    		<thead>
+		    			<tr>
+		    				<th>Code</th>
+		    				<th>Title</th>
+		    				<th>Created</th>
+		    				<th>Updated</th>
+		    				<th>Actions</th>
+		    			</tr>
+		    		</thead>
+		    		<tbody>
+		    			<xforms:repeat nodeset="instance('study-feed')/atom:entry">
+		    				<tr>
+		    					<td>
+		    						<xforms:output ref="replace( atom:id/text() , '^.*/([^/^.]+)\.atom$', '$1' )"/>
+		    					</td>
+		    					<td>
+		    						<xforms:output ref="atom:title"/>
+		    					</td>
+		    					<td>
+		    						<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[M01]/[D01]/[Y]')"/>
+		    					</td>
+		    					<td>
+		    						<xforms:output ref="atom:updated" xxforms:format="format-dateTime(., '[M01]/[D01]/[Y]')"/>
+		    					</td>
+		    					<td><a href="TODO">View</a> <br/> <a href="TODO">Submit Files</a> <br/> <a href="TODO">Questionnaire</a></td>
+		    				</tr>
+		    			</xforms:repeat>
+		    		</tbody>
+		    	</fr:datatable>
+    		</xforms:group>
     	</div>
     </body>
 </html>
