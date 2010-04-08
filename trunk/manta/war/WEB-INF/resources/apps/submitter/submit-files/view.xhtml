@@ -90,8 +90,8 @@
                 <xforms:bind nodeset="back" readonly="true()"/>
                 <xforms:bind nodeset="finish" readonly="@readonly = 'false'"/>
                 <xforms:bind nodeset="next-upload" readonly="instance('form-data')/study = ''"/>
-                <xforms:bind nodeset="next-confirm" readonly="count(instance('form-data')//file) = 0 or instance('form-data')//file/upload = ''"/>
-                <xforms:bind nodeset="upload-files" relevant="count(instance('form-data')//file[upload = '']) > 0"/>
+                <xforms:bind nodeset="next-confirm" readonly="count(instance('form-data')//upload) = 0 or instance('form-data')//upload = ''"/>
+                <xforms:bind nodeset="upload-files" relevant="count(instance('form-data')//upload[. = '']) > 0"/>
                 <xforms:bind nodeset="confirm" readonly="instance('form-data')/accept-terms != true()"/>
             </xforms:bind>
 
@@ -128,47 +128,50 @@
 			<xforms:instance id="form-data">
 				<data xmlns="">
 					<study/>
-					<target-collection/>
-					<files>
-						<file>
-							<upload xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:anyURI" filename="" mediatype="" size=""/>
-							<term/>
-							<other-term/>
-						</file>
-					</files>
+					<uploads target="">
+						<upload
+							filename=""
+							mediatype=""
+							size=""
+							typeterm=""
+							typelabel=""
+							xsi:type="xs:anyURI"></upload>
+					</uploads>
 					<accept-terms>false</accept-terms>
 				</data>
 			</xforms:instance>
 			
 			<xforms:bind nodeset="instance('form-data')">
 				<xforms:bind nodeset="study" required="true()"/>	
-				<xforms:bind nodeset="target-collection" calculate="instance('study-feed')/atom:entry[atom:id=instance('form-data')/study]/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/submittedMedia']/@href"/>	
 				<xforms:bind nodeset="accept-terms" type="xforms:boolean"/>	
-				<xforms:bind nodeset="files">
-					<xforms:bind nodeset="file">
-						<!-- <xforms:bind nodeset="term" required="true()"/> -->
-						<xforms:bind nodeset="other-term" relevant="../term = 'http://www.cggh.org/2010/chassis/terms/Other'"/>
+				<xforms:bind nodeset="uploads">
+					<xforms:bind nodeset="@target" calculate="instance('study-feed')/atom:entry[atom:id=instance('form-data')/study]/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/submittedMedia']/@href"/>	
+					<xforms:bind nodeset="upload">
+						<xforms:bind nodeset="@typelabel" relevant="../@typeterm='http://www.cggh.org/2010/chassis/terms/Other'"/>
 					</xforms:bind>
-				</xforms:bind>	
+				</xforms:bind>
 			</xforms:bind>
 			
-			<xforms:instance id="file-template">
-				<file xmlns="">
-					<upload xsi:type="xs:anyURI" xmlns:xs="http://www.w3.org/2001/XMLSchema" filename="" mediatype="" size=""/>
-					<term/>
-					<other-term/>
-				</file>
+			<xforms:instance id="upload-template">
+				<upload
+					xmlns=""
+					filename=""
+					mediatype=""
+					size=""
+					typeterm=""
+					typelabel=""
+					xsi:type="xs:anyURI"></upload>
 			</xforms:instance>
 			
 			<xforms:instance id="file-terms" src="/apps/common/constants/file-terms.xml"/>
 
             <!-- background upload submission -->
-            <xforms:submission id="background-submission" ref="instance('form-data')/files" method="post" replace="none" resource="test:"/>
+            <xforms:submission id="background-submission" ref="instance('form-data')/uploads" method="post" replace="none" resource="test:"/>
 
 			<!-- final submission -->
 			<xforms:submission 
 				id="final-submission" 
-				ref="instance('form-data')" 
+				ref="instance('form-data')/uploads" 
 				method="post" 
 				action="http://localhost:8081/manta/util/store-uploads"
 				replace="instance"
@@ -287,7 +290,7 @@
 		                </tr>
 		                <tr>
 		                    <td>
-								<xforms:group ref="instance('form-data')/files">
+								<xforms:group ref="instance('form-data')/uploads">
 								
 									<table class="repeat-table">
 										<tr>
@@ -296,11 +299,11 @@
 							                        <xforms:label><img src="/apps/submitter/common/add.gif"/></xforms:label>
 							                        <xforms:insert 
 							                        	ev:event="DOMActivate" 
-							                        	context="instance('form-data')/files" 
-							                        	nodeset="file" 
+							                        	context="instance('form-data')/uploads" 
+							                        	nodeset="upload" 
 							                        	at="1" 
 							                        	position="before" 
-							                        	origin="instance('file-template')"/>
+							                        	origin="instance('upload-template')"/>
 							                    </xforms:trigger>
 											</td>
 											<td class="add-td">
@@ -308,42 +311,42 @@
 							                        <xforms:label>Add a File</xforms:label>
 							                        <xforms:insert 
 							                        	ev:event="DOMActivate" 
-							                        	context="instance('form-data')/files" 
-							                        	nodeset="file" 
+							                        	context="instance('form-data')/uploads" 
+							                        	nodeset="upload" 
 							                        	at="1" 
 							                        	position="before" 
-							                        	origin="instance('file-template')"/>
+							                        	origin="instance('upload-template')"/>
 							                    </xforms:trigger>
 											</td>
 										</tr>
-										<xforms:repeat nodeset="file" id="file-repeat">
+										<xforms:repeat nodeset="upload" id="upload-repeat">
 											<tr>
 												<td>
 							                        <xforms:trigger appearance="minimal">
 							                            <xforms:delete 
 							                            	ev:event="DOMActivate" 
-								                        	context="instance('form-data')/files" 
-								                        	nodeset="file" 
-							                            	at="index('file-repeat')"/>
+								                        	context="instance('form-data')/uploads" 
+								                        	nodeset="upload" 
+							                            	at="index('upload-repeat')"/>
 							                            <xforms:label><img src="/apps/submitter/common/remove.gif"/></xforms:label>
 							                        </xforms:trigger>
 												</td>
 												<td class="form-td">
 							                        <!-- Upload field -->
-							                        <xforms:upload ref="upload" xxforms:size="60">
+							                        <xforms:upload ref="." xxforms:size="60">
 							                            <xforms:filename ref="@filename"/>
 							                            <xforms:mediatype ref="@mediatype"/>
 							                            <xxforms:size ref="@size"/>
 							                        </xforms:upload>
 							                        <br/>
 							                        <!-- Download link -->
-							                        <xforms:output value="upload" appearance="xxforms:download">
+							                        <xforms:output value="." appearance="xxforms:download">
 							                            <xforms:filename ref="@filename"/>
 							                            <xforms:mediatype ref="@mediatype"/>
 							                            <xforms:label>Download</xforms:label>
 							                        </xforms:output>
 							                        <br/>
-													<xforms:select1 ref="term" appearance="minimal">
+													<xforms:select1 ref="@typeterm" appearance="minimal">
 														<xforms:alert>A file type must be selected.</xforms:alert>
 														<xforms:item>
 															<xforms:value></xforms:value>
@@ -354,7 +357,7 @@
 							                        		<xforms:value ref="value"/>
 							                        	</xforms:itemset>
 													</xforms:select1>
-													<xforms:input ref="other-term">
+													<xforms:input ref="@typelabel">
 														<xforms:label>Other type: </xforms:label>
 													</xforms:input>
 							                        
@@ -413,17 +416,17 @@
 		                    		</strong>
 		                    	</p>
 		                    	<h2>Files</h2>
-								<xforms:group ref="instance('form-data')/files">
+								<xforms:group ref="instance('form-data')/uploads">
 								
 									<table class="repeat-table">
-										<xforms:repeat nodeset="file" id="output-file-repeat">
+										<xforms:repeat nodeset="upload" id="output-upload-repeat">
 											<tr>
 												<td class="form-td">
-							                        <xforms:output value="./upload/@filename"/>
-							                        (<xforms:output value="instance('file-terms')/term[value=xxforms:context('output-file-repeat')/term]/label"/>)
+							                        <xforms:output value="@filename"/>
+							                        (<xforms:output value="instance('file-terms')/term[value=xxforms:context('output-upload-repeat')/@typeterm]/label"/>)
 							                        <br/>
 							                        <!-- Download link -->
-							                        <xforms:output value="upload" appearance="xxforms:download">
+							                        <xforms:output value="." appearance="xxforms:download">
 							                            <xforms:filename ref="@filename"/>
 							                            <xforms:mediatype ref="@mediatype"/>
 							                            <xforms:label>Download</xforms:label>
@@ -472,9 +475,8 @@
 			    		<thead>
 			    			<tr>
 			    				<th>Code</th>
-			    				<th>Title</th>
-			    				<th>Created</th>
-			    				<th>Updated</th>
+			    				<th>Original File Name</th>
+			    				<th>Submitted</th>
 			    				<th>Actions</th>
 			    			</tr>
 			    		</thead>
@@ -490,10 +492,7 @@
 			    					<td>
 			    						<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[M01]/[D01]/[Y]')"/>
 			    					</td>
-			    					<td>
-			    						<xforms:output ref="atom:updated" xxforms:format="format-dateTime(., '[M01]/[D01]/[Y]')"/>
-			    					</td>
-			    					<td><a href="TODO">Download</a></td>
+			    					<td><a href="{atom:content/@src}">Download</a></td>
 			    				</tr>
 			    			</xforms:repeat>
 			    		</tbody>
