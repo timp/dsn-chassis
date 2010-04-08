@@ -6,9 +6,9 @@
     
     
     
-    <display-name>AtomBeat Server</display-name>
+    <display-name>Chassis Manta</display-name>
     
-    <description>An Atom Protocol server and web application based on eXist and Orbeon.</description>
+    <description>Data management server for WWARN.</description>
     
     
     
@@ -83,6 +83,23 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
     
+    
+    
+    <!--+
+        |
+        | Custom servlets
+        | ***************
+        +-->
+    
+    <servlet>
+        <servlet-name>StoreUploadsServlet</servlet-name>
+        <servlet-class>org.cggh.chassis.manta.http.servlet.StoreUploadsServlet</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>StoreUploadsServlet</servlet-name>
+        <url-pattern>/util/store-uploads</url-pattern>
+    </servlet-mapping>
     
     
     <!--+

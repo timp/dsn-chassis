@@ -127,7 +127,8 @@
 				
 			<xforms:instance id="form-data">
 				<data xmlns="">
-					<study></study>
+					<study/>
+					<target-collection/>
 					<files>
 						<file>
 							<upload xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:anyURI" filename="" mediatype="" size=""/>
@@ -141,6 +142,7 @@
 			
 			<xforms:bind nodeset="instance('form-data')">
 				<xforms:bind nodeset="study" required="true()"/>	
+				<xforms:bind nodeset="target-collection" calculate="instance('study-feed')/atom:entry[atom:id=instance('form-data')/study]/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/submittedMedia']/@href"/>	
 				<xforms:bind nodeset="accept-terms" type="xforms:boolean"/>	
 				<xforms:bind nodeset="files">
 					<xforms:bind nodeset="file">
@@ -168,9 +170,11 @@
 				id="final-submission" 
 				ref="instance('form-data')" 
 				method="post" 
-				action="http://localhost:8081/manta/submitter/submit-files/submit"
+				action="http://localhost:8081/manta/util/store-uploads"
 				replace="instance"
-				instance="confirmation"/>
+				instance="confirmation">
+                <xforms:toggle ev:event="xforms-submit-done" case="success"/>
+			</xforms:submission>
 				
 			<xforms:instance id="confirmation">
 				<atom:feed/>
@@ -462,7 +466,38 @@
 	    		
 	    			<h2>Success</h2>
 	    			
-					<p>TODO</p>
+					<p>The following files have been successfully submitted.</p>
+
+			    	<fr:datatable paginated="false">
+			    		<thead>
+			    			<tr>
+			    				<th>Code</th>
+			    				<th>Title</th>
+			    				<th>Created</th>
+			    				<th>Updated</th>
+			    				<th>Actions</th>
+			    			</tr>
+			    		</thead>
+			    		<tbody>
+			    			<xforms:repeat nodeset="instance('confirmation')/atom:entry">
+			    				<tr>
+			    					<td>
+			    						<xforms:output ref="replace( atom:id/text() , '^.*/([^/^.]+)\.atom$', '$1' )"/>
+			    					</td>
+			    					<td>
+			    						<xforms:output ref="atom:title"/>
+			    					</td>
+			    					<td>
+			    						<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[M01]/[D01]/[Y]')"/>
+			    					</td>
+			    					<td>
+			    						<xforms:output ref="atom:updated" xxforms:format="format-dateTime(., '[M01]/[D01]/[Y]')"/>
+			    					</td>
+			    					<td><a href="TODO">Download</a></td>
+			    				</tr>
+			    			</xforms:repeat>
+			    		</tbody>
+			    	</fr:datatable>
 					                    
                     <p>Links: <a href="../">Submitter Home</a> | TODO</p>
                     

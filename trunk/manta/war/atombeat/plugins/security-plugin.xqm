@@ -10,7 +10,7 @@ import module namespace response = "http://exist-db.org/xquery/response" ;
 import module namespace text = "http://exist-db.org/xquery/text" ;
 import module namespace util = "http://exist-db.org/xquery/util" ;
 
-import module namespace CONSTANT = "http://www.cggh.org/2010/atombeat/xquery/constants" at "constants.xqm" ;
+import module namespace CONSTANT = "http://www.cggh.org/2010/atombeat/xquery/constants" at "../lib/constants.xqm" ;
 
 import module namespace config = "http://www.cggh.org/2010/atombeat/xquery/config" at "../config/shared.xqm" ;
 
@@ -18,6 +18,16 @@ import module namespace xutil = "http://www.cggh.org/2010/atombeat/xquery/xutil"
 import module namespace mime = "http://www.cggh.org/2010/atombeat/xquery/mime" at "../lib/mime.xqm" ;
 import module namespace atomdb = "http://www.cggh.org/2010/atombeat/xquery/atomdb" at "../lib/atomdb.xqm" ;
 import module namespace atomsec = "http://www.cggh.org/2010/atombeat/xquery/atom-security" at "../lib/atom-security.xqm" ;
+
+
+
+
+declare function local:debug(
+    $message as item()*
+) as empty()
+{
+    util:log-app( "debug" , "org.atombeat.xquery.plugin.security" , $message )
+};
 
 
 
@@ -31,8 +41,8 @@ declare function sp:before(
 ) as item()*
 {
 	
-	let $message := concat( "security plugin, before: " , $operation , ", request-path-info: " , $request-path-info ) 
-	let $log := util:log( "debug" , $message )
+	let $message := ( "security plugin, before: " , $operation , ", request-path-info: " , $request-path-info ) 
+	let $log := local:debug( $message )
 
 	let $forbidden := sp:is-operation-forbidden( $operation , $request-path-info , $request-media-type )
 	
@@ -75,8 +85,8 @@ declare function sp:strip-acl-links(
     $request-data as element()
 ) as element()
 {
-    let $log := util:log( "debug" , "== sp:strip-acl-links ==" )
-    let $log := util:log( "debug" , $request-data )
+    let $log := local:debug( "== sp:strip-acl-links ==" )
+    let $log := local:debug( $request-data )
     let $request-data :=
         element { node-name( $request-data ) }
         {
@@ -94,7 +104,7 @@ declare function sp:strip-acl-links(
             )
             return $child
         }
-    let $log := util:log( "debug" , $request-data )
+    let $log := local:debug( $request-data )
     return $request-data
 };
 
@@ -109,8 +119,8 @@ declare function sp:after(
 ) as item()*
 {
 
-	let $message := concat( "security plugin, after: " , $operation , ", request-path-info: " , $request-path-info ) 
-	let $log := util:log( "debug" , $message )
+	let $message := ( "security plugin, after: " , $operation , ", request-path-info: " , $request-path-info ) 
+	let $log := local:debug( $message )
 
 	return
 		
@@ -159,17 +169,17 @@ declare function sp:after-create-member(
 {
 
 	let $entry-uri := $response-data/atom:link[@rel="edit"]/@href
-	let $log := util:log( "debug" , concat( "$entry-uri: " , $entry-uri ) )
+	let $log := local:debug( concat( "$entry-uri: " , $entry-uri ) )
 	
 	let $entry-path-info := substring-after( $entry-uri , $config:service-url )
-	let $log := util:log( "debug" , concat( "$entry-path-info: " , $entry-path-info ) )
+	let $log := local:debug( concat( "$entry-path-info: " , $entry-path-info ) )
 
 	let $entry-doc-db-path := atomdb:request-path-info-to-db-path( $entry-path-info )
-	let $log := util:log( "debug" , concat( "$entry-doc-db-path: " , $entry-doc-db-path ) )
+	let $log := local:debug( concat( "$entry-doc-db-path: " , $entry-doc-db-path ) )
 	
 	(: if security is enabled, install default resource ACL :)
 	let $resource-acl-installed := sp:install-resource-acl( $request-path-info , $entry-doc-db-path )
-	let $log := util:log( "debug" , concat( "$resource-acl-installed: " , $resource-acl-installed ) )
+	let $log := local:debug( concat( "$resource-acl-installed: " , $resource-acl-installed ) )
 	
     let $response-data := sp:append-edit-acl-links( $request-path-info , $response-data )
 
@@ -203,30 +213,30 @@ declare function sp:after-create-media(
 {
 
 	let $entry-uri := $response-data/atom:link[@rel="edit"]/@href
-	let $log := util:log( "debug" , concat( "$entry-uri: " , $entry-uri ) )
+	let $log := local:debug( concat( "$entry-uri: " , $entry-uri ) )
 	
 	let $entry-path-info := substring-after( $entry-uri , $config:service-url )
-	let $log := util:log( "debug" , concat( "$entry-path-info: " , $entry-path-info ) )
+	let $log := local:debug( concat( "$entry-path-info: " , $entry-path-info ) )
 
 	let $entry-doc-db-path := atomdb:request-path-info-to-db-path( $entry-path-info )
-	let $log := util:log( "debug" , concat( "$entry-doc-db-path: " , $entry-doc-db-path ) )
+	let $log := local:debug( concat( "$entry-doc-db-path: " , $entry-doc-db-path ) )
 	
 	(: if security is enabled, install default resource ACL :)
 	let $resource-acl-installed := sp:install-resource-acl( $request-path-info , $entry-doc-db-path )
-	let $log := util:log( "debug" , concat( "$resource-acl-installed: " , $resource-acl-installed ) )
+	let $log := local:debug( concat( "$resource-acl-installed: " , $resource-acl-installed ) )
 
 	let $media-uri := $response-data/atom:link[@rel="edit-media"]/@href
-	let $log := util:log( "debug" , concat( "$media-uri: " , $media-uri ) )
+	let $log := local:debug( concat( "$media-uri: " , $media-uri ) )
 	
 	let $media-path-info := substring-after( $media-uri , $config:service-url )
-	let $log := util:log( "debug" , concat( "$media-path-info: " , $media-path-info ) )
+	let $log := local:debug( concat( "$media-path-info: " , $media-path-info ) )
 
 	let $media-resource-db-path := atomdb:request-path-info-to-db-path( $media-path-info )
-	let $log := util:log( "debug" , concat( "$media-resource-db-path: " , $media-resource-db-path ) )
+	let $log := local:debug( concat( "$media-resource-db-path: " , $media-resource-db-path ) )
 	
 	(: if security is enabled, install default resource ACL :)
 	let $resource-acl-installed := sp:install-resource-acl( $request-path-info , $media-resource-db-path )
-	let $log := util:log( "debug" , concat( "$resource-acl-installed: " , $resource-acl-installed ) )
+	let $log := local:debug( concat( "$resource-acl-installed: " , $resource-acl-installed ) )
 	
 	(: need to workaround html response for create media with multipart request :)
     let $response-data := 
@@ -300,7 +310,7 @@ declare function sp:after-retrieve-member(
 ) as item()*
 {
 
-	let $log := util:log( "debug" ,"== sp:after-retrieve-member ==" )
+	let $log := local:debug("== sp:after-retrieve-member ==" )
 
     let $response-data := sp:append-edit-acl-links( $request-path-info , $response-data )
 
@@ -327,7 +337,7 @@ declare function sp:append-edit-acl-links(
         then <atom:link rel="edit-acl" href="{concat( $config:acl-service-url , $entry-path-info )}" type="application/atom+xml"/>
         else ()
         
-    let $log := util:log( "debug" , concat( "$edit-acl-link: " , $edit-acl-link ) )
+    let $log := local:debug( concat( "$edit-acl-link: " , $edit-acl-link ) )
     
     let $edit-media-acl-link :=
         if ( atomdb:media-link-available( $request-path-info ) )
@@ -413,7 +423,7 @@ declare function sp:filter-feed-by-acls(
                     $edit-acl-link ,
                     for $entry in $feed/atom:entry
                     let $entry-path-info := substring-after( $entry/atom:link[@rel="edit"]/@href , $config:service-url )
-                    let $log := util:log( "debug" , concat( "checking permission to retrieve member for entry-path-info: " , $entry-path-info ) )
+                    let $log := local:debug( concat( "checking permission to retrieve member for entry-path-info: " , $entry-path-info ) )
                     let $forbidden := sp:is-operation-forbidden( $CONSTANT:OP-RETRIEVE-MEMBER , $entry-path-info , () )
                     return 
                         if ( not( $forbidden ) ) 
@@ -425,7 +435,7 @@ declare function sp:filter-feed-by-acls(
                         else ()
                 }
             </atom:feed>
-        let $log := util:log( "debug" , $filtered-feed )
+        let $log := local:debug( $filtered-feed )
         return $filtered-feed
 };
 
