@@ -24,11 +24,17 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import org.apache.abdera.Abdera;
+import org.apache.abdera.model.Document;
+import org.apache.abdera.model.Entry;
+import org.apache.abdera.protocol.client.AbderaClient;
+import org.apache.abdera.protocol.client.ClientResponse;
+import org.apache.abdera.protocol.client.RequestOptions;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.InputStreamRequestEntity;
 import org.apache.commons.httpclient.methods.PostMethod;
+import org.apache.commons.httpclient.methods.PutMethod;
 import org.apache.commons.httpclient.methods.RequestEntity;
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -40,6 +46,10 @@ public class StoreUploadsServlet extends HttpServlet {
 	 * 
 	 */
 	private static final long serialVersionUID = -227666119754951587L;
+	private Abdera abdera = new Abdera();
+	
+	
+	
 	private static final DocumentBuilderFactory factory;
 	private static DocumentBuilder builder;
 	
@@ -69,53 +79,47 @@ public class StoreUploadsServlet extends HttpServlet {
 	}
 	
 	@Override
-	public void doPost(HttpServletRequest req, HttpServletResponse res) {
+	public void doPost(HttpServletRequest request, HttpServletResponse res) {
 		
 		try {
 			
-			Document reqd = builder.parse(req.getInputStream());
+			org.w3c.dom.Document requestDocument = builder.parse(request.getInputStream());
 			
 			// get target collection uri
-
-			NodeList tcnl = reqd.getElementsByTagName("target-collection");
-			
-			// guard condition
-			if (tcnl.getLength() != 1) {
-				throw new BadRequestException("Exactly one target-collection element must be present.");
-			}
-			
-			String tcu = ((Element)tcnl.item(0)).getTextContent();
+			Element requestDocumentElement = requestDocument.getDocumentElement();
+			String targetCollectionUri = requestDocumentElement.getAttribute("target");
 			
 			// process uploads
+			NodeList uploadNodeList = requestDocument.getElementsByTagName("upload");
 			
-			NodeList fnl = reqd.getElementsByTagName("file");
-			List<Document> resdl = new ArrayList<Document>();
+			List<org.w3c.dom.Document> responseDocumentsList = new ArrayList<org.w3c.dom.Document>();
 			
-			for (int i=0; i<fnl.getLength(); i++) {
+			for (int i=0; i<uploadNodeList.getLength(); i++) {
 				
-				Element fe = (Element) fnl.item(i);
-				Document resd = storeUpload(req, fe, tcu);
-				resdl.add(resd);
+				Element uploadElement = (Element) uploadNodeList.item(i);
+				org.w3c.dom.Document responseDocument = storeUpload(request, uploadElement, targetCollectionUri);
+				responseDocumentsList.add(responseDocument);
 				
 			}
 			
 			// aggregate responses into a single document
 
-			Document agd = builder.newDocument();
-			Element root = agd.createElementNS("http://www.w3.org/2005/Atom", "feed");
-			agd.appendChild(root);
-			for (Document resd : resdl) {
-				Element de = resd.getDocumentElement();
-				Node imported = agd.importNode(de, true);
-				root.appendChild(imported);
+			org.w3c.dom.Document aggregatedResponseDocument = builder.newDocument();
+			Element aggregatedResponseDocumentRoot = aggregatedResponseDocument.createElementNS("http://www.w3.org/2005/Atom", "feed");
+			aggregatedResponseDocument.appendChild(aggregatedResponseDocumentRoot);
+			
+			for (org.w3c.dom.Document responseDocument : responseDocumentsList) {
+				Element documentElement = responseDocument.getDocumentElement();
+				Node importedDocumentElement = aggregatedResponseDocument.importNode(documentElement, true);
+				aggregatedResponseDocumentRoot.appendChild(importedDocumentElement);
 			}
 			
 			// return aggregated document
-			res.setContentType("application/xml");
+			res.setContentType("application/atom+xml");
 			res.setStatus(200);
 
 			// Prepare the DOM document for writing 
-			Source source = new DOMSource(agd); 
+			Source source = new DOMSource(aggregatedResponseDocument); 
 			
 			// Prepare the output  
 			Result result = new StreamResult(res.getOutputStream()); 
@@ -149,40 +153,50 @@ public class StoreUploadsServlet extends HttpServlet {
 
 	}
 
-	private Document storeUpload(HttpServletRequest req, Element fileElement, String targetCollectionUri) throws BadRequestException {
+	private org.w3c.dom.Document storeUpload(HttpServletRequest req, Element ue, String targetCollectionUri) throws BadRequestException {
 		
-		// get upload element
-		NodeList unl = fileElement.getElementsByTagName("upload");
-		
-		if (unl.getLength() != 1) {
-			throw new BadRequestException("File elements must have exactly one upload child element.");
-		}
-
-		Element ue = (Element) unl.item(0);
+		org.w3c.dom.Document returnDocument = null;
 		
 		String fileName = ue.getAttribute("filename");
 		String mediaType = ue.getAttribute("mediatype");
-		
+		String typeTerm = ue.getAttribute("typeterm");
+		String typeLabel = ue.getAttribute("typelabel");
+				
 		try {
 			
 			URL tempFileUrl = new URL(ue.getTextContent());
-			InputStream is = tempFileUrl.openStream();
+			InputStream uploadInputStream = tempFileUrl.openStream();
 			
-			PostMethod method = new PostMethod(targetCollectionUri);
-			RequestEntity entity = new InputStreamRequestEntity(is, is.available(), mediaType);
-			method.setRequestEntity(entity);
-			
-			// forward headers
-			method.setRequestHeader("Cookie", req.getHeader("Cookie"));
-			method.setRequestHeader("Authorization", req.getHeader("Authorization"));
+			AbderaClient atomClient = new AbderaClient();
+			RequestOptions requestOptions = createRequestOptions(req);
+            
+            if (fileName != null) {
+            	requestOptions.setHeader("Slug", fileName);
+            }
 
-			HttpClient client = new HttpClient();
-			int result = client.executeMethod(method);
-			
-			// whatever the result, parse response as document
-			Document d = builder.parse(method.getResponseBodyAsStream());
-			return d;
+            InputStreamRequestEntity uploadEntity = new InputStreamRequestEntity(uploadInputStream, mediaType);
+            
+            ClientResponse response = atomClient.post(targetCollectionUri, uploadEntity, requestOptions);
+            
+            if (response.getStatus() == 201) {
+            	
+    			// if success, assume atom, try to append type category and put back
+            	Document<Entry> mediaLinkEntryDocument = response.getDocument(abdera.getParser());
+            	Entry mediaLinkEntry = mediaLinkEntryDocument.getRoot();
+            	mediaLinkEntry.addCategory("http://www.cggh.org/2010/chassis/scheme/FileTypes", typeTerm, typeLabel);
+            	String editLocation = mediaLinkEntry.getEditLink().getHref().toASCIIString();
+            	
+            	response = atomClient.put(editLocation, mediaLinkEntryDocument, createRequestOptions(req));
+        		returnDocument = builder.parse(response.getInputStream());
+            }
+            
+            else {
 
+            	// error document
+            	returnDocument = builder.parse(response.getInputStream());
+            	
+            }
+            			
 		} catch (MalformedURLException e) {
 
 			// TODO Auto-generated catch block
@@ -198,7 +212,7 @@ public class StoreUploadsServlet extends HttpServlet {
 			e.printStackTrace();
 		} 
 		
-		return null;
+		return returnDocument;
 	}
 
 	private void sendBadRequest(String message, HttpServletResponse res) {
@@ -211,4 +225,20 @@ public class StoreUploadsServlet extends HttpServlet {
 		}
 	}
 
+	
+	
+	private RequestOptions createRequestOptions(HttpServletRequest req) {
+		RequestOptions requestOptions = new RequestOptions();
+        String authorizationHeader = req.getHeader("Authorization");
+        if (authorizationHeader != null) {
+	        requestOptions.setAuthorization(authorizationHeader);
+        }
+        String cookieHeader = req.getHeader("Cookie");
+        if (cookieHeader != null) {
+        	requestOptions.setHeader("Cookie", cookieHeader);
+        }
+        return requestOptions;
+	}
+	
+	
 }
