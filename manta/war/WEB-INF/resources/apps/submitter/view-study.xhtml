@@ -21,7 +21,7 @@
     xmlns:atom="http://www.w3.org/2005/Atom"
     xmlns:fr="http://orbeon.org/oxf/xml/form-runner">
     <head>
-        <title>WWARN Data Management - Submitter - View Study</title>
+        <title>WWARN Data Management - Submitter - Study <xforms:output value="instance('util')/code"/></title>
         <link rel="stylesheet" type="text/css" href="/apps/submitter/common/style.css"></link>
         <style type="text/css"></style>
         <xforms:model>
@@ -94,7 +94,7 @@
         </xforms:model>
     </head>
     <body>
-    	<h1>Submitter - View Study - <xforms:output value="instance('util')/code"/></h1>
+    	<h1>Submitter - Study <xforms:output value="instance('util')/code"/></h1>
 
     	<div id="home-nav">Links: <a href="home">Submitter Home</a> | <xforms:output value="instance('current-user')/name"/></div>
     	
@@ -104,6 +104,8 @@
 	    		<p><xforms:output value="atom:title"><xforms:label class="fixed-width">Title:</xforms:label></xforms:output></p>
 	    		<p><xforms:output value="instance('util')/code"><xforms:label class="fixed-width">Code:</xforms:label></xforms:output></p>
     		</xforms:group>
+    		
+	    	<p>Links: <a href="submit-files?study={instance('study')/atom:link[@rel='edit']/@href}">Submit Files</a> | <a href="study-questionnaire?study={instance('study')/atom:link[@rel='edit']/@href}">Study Questionnaire</a></p>
     		
     		<h2>Submitted Files</h2>
     		
@@ -134,8 +136,6 @@
 	    		</tbody>
 	    	</fr:datatable>
 	    	
-	    	<p>Links: <a href="submit-files?study={instance('study')/atom:link[@rel='edit']/@href}">Submit Files</a> | <a href="study-questionnaire?study={atom:link[@rel='edit']/@href}">Study Questionnaire</a></p>
-    		
     	</div>
     </body>
 </html>

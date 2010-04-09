@@ -34,13 +34,21 @@ return
 		    </forward>
 		</dispatch>
 
-	else if ( $module = "expansion" ) then
+    else if ( $module = "expansion" ) then
 
-		<dispatch xmlns="http://exist.sourceforge.net/NS/exist">
-		    <forward url="/atombeat/expansion.xql">
-		        <set-attribute name="request-path-info" value="{$request-path-info}"/>
-		    </forward>
-		</dispatch>
+        <dispatch xmlns="http://exist.sourceforge.net/NS/exist">
+            <forward url="/atombeat/expansion.xql">
+                <set-attribute name="request-path-info" value="{$request-path-info}"/>
+            </forward>
+        </dispatch>
+
+    else if ( $module = "spike" ) then
+
+        <dispatch xmlns="http://exist.sourceforge.net/NS/exist">
+            <forward url="/atombeat/spike.xql">
+                <set-attribute name="request-path-info" value="{$request-path-info}"/>
+            </forward>
+        </dispatch>
 
 	else 
 

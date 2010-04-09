@@ -15,6 +15,30 @@ import module namespace config = "http://www.cggh.org/2010/atombeat/xquery/confi
 
 
 
+declare variable $atomdb:logger-name := "org.atombeat.xquery.lib.atomdb" ;
+
+
+
+declare function local:debug(
+    $message as item()*
+) as empty()
+{
+    util:log-app( "debug" , $atomdb:logger-name , $message )
+};
+
+
+
+
+declare function local:info(
+    $message as item()*
+) as empty()
+{
+    util:log-app( "info" , $atomdb:logger-name , $message )
+};
+
+
+
+
 declare function atomdb:collection-available(
 	$request-path-info as xs:string
 ) as xs:boolean
@@ -322,7 +346,7 @@ declare function atomdb:update-member(
 		 
 		let $member-db-path := atomdb:request-path-info-to-db-path( $request-path-info )
 	
-		let $entry := atomdb:update-entry( doc( $member-db-path )/atom:entry , $request-data )
+		let $entry := atomdb:update-entry( doc( $member-db-path )/* , $request-data )
 
 		let $groups := text:groups( $request-path-info , "^(.*)/([^/]+)$" )
 		
@@ -750,8 +774,12 @@ declare function atomdb:retrieve-entry(
 		 :)
 		 
 		let $entry-doc-db-path := atomdb:request-path-info-to-db-path( $request-path-info )
+		let $log := local:debug( concat( "entry-doc-db-path: " , $entry-doc-db-path ) )
 		
-		return doc( $entry-doc-db-path )
+		let $entry-doc := doc( $entry-doc-db-path )
+		let $log := local:debug( $entry-doc )
+		
+		return $entry-doc
 
 };
 

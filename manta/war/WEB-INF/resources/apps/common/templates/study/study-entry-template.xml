@@ -6,26 +6,9 @@
             <publications/>
             <start/>
             <end/>
-            <principal-investigators>
-                <person>
-                    <name/>
-                    <email/>
-                    <url/>
-                    <organisation/>
-                </person>
-            </principal-investigators>
+            <principal-investigators/>
             <pathogens/>
-            <sites>
-                <site>
-                    <country/>
-                    <region/>
-                    <district/>
-                    <locality/>
-                    <lat/>
-                    <long/>
-                    <code/>
-                </site>
-            </sites>
+            <sites/>
             <modules/>
         </study>
     </atom:content>
