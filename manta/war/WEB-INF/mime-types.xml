@@ -220,6 +220,12 @@
         <description>JPEG image</description>
         <extensions>.jpg,.jpeg</extensions>
     </mime-type>
+    <!--
+    <mime-type name="image/pjpeg" type="binary">
+        <description>JPEG image</description>
+        <extensions>.jpg,.jpeg</extensions>
+    </mime-type>
+    -->
     <mime-type name="image/x-portable-bitmap" type="binary">
         <description>PBM Bitmap Format</description>
         <extensions>.pbm</extensions>
