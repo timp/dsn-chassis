@@ -151,9 +151,9 @@ public class GetData extends BasicFunction {
 					
 					MimeType mimeType = MimeTable.getInstance().getContentType(contentType);
 					
-					// we will take a more conservative position and assume that
-					// if the mime type is not present in the table, it is a
-					// binary resource, and should be encoded as base 64
+					// this code will only encode the request data if the mimeType
+					// is present in the mime table, and the mimeType is stated
+					// as binary...
 					
 //					if(mimeType != null)
 //					{
@@ -163,6 +163,11 @@ public class GetData extends BasicFunction {
 //							return new Base64Binary(bufRequestData);
 //						}
 //					}
+					
+					// this code takes a more conservative position and assumes that
+					// if the mime type is not present in the table, the request
+					// data should be treated as binary, and should be encoded as 
+					// base 64...
 					
 					if (mimeType == null || !mimeType.isXMLType()) {
 						return new Base64Binary(bufRequestData);

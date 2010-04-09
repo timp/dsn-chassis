@@ -135,10 +135,16 @@ public class XMLDBStore extends XMLDBAbstractCollectionManipulator {
 			docName = new AnyURIValue(docName).toXmldbURI().toString();
 		
         String mimeType = MimeType.XML_TYPE.getName();
-        
-        // we will take a more conservative position and assume that any 
-        // unknown media types are binary by default
+
+        // this code assumes that if the type of the resource (xml/binary) cannot be 
+        // determined from either the provided mimeType argument, or from the 
+        // resource name extension, via lookups in the mime table, then the 
+        // resource is an XML document...
 //		boolean binary = false;
+
+        // this code takes a more conservative position and assumes that if neither
+        // the media type argument nor the resource name extension can be found
+        // in the mime table, then the resource is binary...
 		boolean binary = true;
 		
 		if(getSignature().getArgumentCount() == 4) {
