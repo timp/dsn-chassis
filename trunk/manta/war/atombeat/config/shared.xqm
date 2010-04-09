@@ -76,6 +76,8 @@ declare function config:generate-identifier(
 {
     if ( $collection-path-info = "/studies" )
     then upper-case( xutil:random-alphanumeric( 4 ) )
+    else if ( matches( $collection-path-info , "^/studies/[^/]+/media" ) )
+    then upper-case( xutil:random-alphanumeric( 6 ) )
     else util:uuid()
 };
 

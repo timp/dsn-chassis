@@ -30,6 +30,10 @@
         
         <xforms:model>
 
+        	<xforms:instance id="empty">
+        		<params/>
+        	</xforms:instance>
+            
 
        		
 			<!--+
@@ -183,6 +187,10 @@
 				<atom:feed/>
 			</xforms:instance>
 			
+			<xforms:action ev:event="xforms-model-construct-done">
+           		<xforms:setvalue ref="instance('form-data')/study" value="xxforms:get-request-parameter('study')"/>
+			</xforms:action>
+			
         </xforms:model>
 
 
@@ -204,7 +212,7 @@
 			|
 			+-->       		
     	
-    	<div id="home-nav"><xforms:output value="instance('current-user')/name"/> | <a href="../">Submitter Home</a></div>
+    	<div id="home-nav">Links: <a href="home">Submitter Home</a> | <xforms:output value="instance('current-user')/name"/></div>
     	
     	
     	
@@ -498,7 +506,7 @@
 			    		</tbody>
 			    	</fr:datatable>
 					                    
-                    <p>Links: <a href="../">Submitter Home</a> | TODO</p>
+                    <p>Links: <a href="home">Submitter Home</a> | TODO</p>
                     
 	    			
 	    		</xforms:case>

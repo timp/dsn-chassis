@@ -62,7 +62,6 @@
 				replace="instance"
 				instance="study-feed">
                 <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<output value="event('response-status-code')"/>) while retrieving studies!</xforms:message>
-			
 			</xforms:submission>
 			
 			<xforms:send ev:event="xforms-model-construct-done" submission="retrieve-study-feed-submission"/>
@@ -88,18 +87,18 @@
     		<p>Welcome to the WWARN submitter home page.</p>
     		<h2>Actions</h2>
 	    	<ul>
-	    		<li><a class="action" href="create-study/">Create Study</a></li>
+	    		<li><a class="action" href="create-study">Create Study</a></li>
 	    		<xforms:group ref="instance('control')/has-no-studies">
 		    		<li><span class="locked-action">Submit Files</span> (you have to create a study before you can submit files)</li>
 	    		</xforms:group>
 	    		<xforms:group ref="instance('control')/has-studies">
-		    		<li><a class="action" href="submit-files/">Submit Files</a></li>
+		    		<li><a class="action" href="submit-files">Submit Files</a></li>
 	    		</xforms:group>
 	    	</ul>
 	    	<h2>Studies</h2>
 	    	
     		<xforms:group ref="instance('control')/has-no-studies">
-	    		<p>Please <a href="create-study/">create a study</a>.</p>
+	    		<p>Please <a href="create-study">create a study</a>.</p>
     		</xforms:group>
 
     		<xforms:group ref="instance('control')/has-studies">
@@ -128,7 +127,7 @@
 		    					<td>
 		    						<xforms:output ref="atom:updated" xxforms:format="format-dateTime(., '[M01]/[D01]/[Y]')"/>
 		    					</td>
-		    					<td><a href="TODO">View</a> <br/> <a href="TODO">Submit Files</a> <br/> <a href="TODO">Questionnaire</a></td>
+		    					<td><a href="view-study?study={atom:link[@rel='edit']/@href}">View</a> <br/> <a href="submit-files?study={atom:link[@rel='edit']/@href}">Submit Files</a> <br/> <a href="study-questionnaire?study={atom:link[@rel='edit']/@href}">Questionnaire</a></td>
 		    				</tr>
 		    			</xforms:repeat>
 		    		</tbody>

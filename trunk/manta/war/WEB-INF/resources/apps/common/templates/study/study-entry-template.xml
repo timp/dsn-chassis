@@ -1,0 +1,32 @@
+<atom:entry
+    xmlns:atom="http://www.w3.org/2005/Atom">
+    <atom:title type="text"></atom:title>
+    <atom:content type="application/vnd.chassis-manta+xml">
+        <study xmlns="">
+            <publications/>
+            <start/>
+            <end/>
+            <principal-investigators>
+                <person>
+                    <name/>
+                    <email/>
+                    <url/>
+                    <organisation/>
+                </person>
+            </principal-investigators>
+            <pathogens/>
+            <sites>
+                <site>
+                    <country/>
+                    <region/>
+                    <district/>
+                    <locality/>
+                    <lat/>
+                    <long/>
+                    <code/>
+                </site>
+            </sites>
+            <modules/>
+        </study>
+    </atom:content>
+</atom:entry>
