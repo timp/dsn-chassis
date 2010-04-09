@@ -82,7 +82,7 @@ declare function xutil:enable-versioning(
 	let $config-collection-path := xutil:get-or-create-collection( $config-collection-path )
 	let $log := util:log( "debug" , concat( "$config-collection-path: " , $config-collection-path ) )
 	
-	let $config-resource-path := xmldb:store( $config-collection-path , "collection.xconf" , $collection-config )
+	let $config-resource-path := xmldb:store( $config-collection-path , "collection.xconf" , $collection-config , "application/xml" )
 	let $log := util:log( "debug" , concat( "$config-resource-path: " , $config-resource-path ) )
 	
 	return $config-resource-path

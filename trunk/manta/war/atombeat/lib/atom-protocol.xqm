@@ -334,7 +334,7 @@ declare function ap:op-create-media(
 	
 	let $slug := request:get-header( $CONSTANT:HEADER-SLUG )
 	
-	(: check for summary :)
+	(: check for summary :) 
 	
 	let $summary := request:get-header( "X-Atom-Summary" )
 	

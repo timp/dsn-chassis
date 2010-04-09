@@ -135,7 +135,12 @@ public class XMLDBStore extends XMLDBAbstractCollectionManipulator {
 			docName = new AnyURIValue(docName).toXmldbURI().toString();
 		
         String mimeType = MimeType.XML_TYPE.getName();
-		boolean binary = false;
+        
+        // we will take a more conservative position and assume that any 
+        // unknown media types are binary by default
+//		boolean binary = false;
+		boolean binary = true;
+		
 		if(getSignature().getArgumentCount() == 4) {
 		    mimeType = args[3].getStringValue();
 		    MimeType mime = MimeTable.getInstance().getContentType(mimeType);

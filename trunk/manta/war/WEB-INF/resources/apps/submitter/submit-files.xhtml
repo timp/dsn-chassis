@@ -255,7 +255,7 @@
 		                        		<xforms:value/>
 		                        	</xforms:item>	
 		                        	<xforms:itemset nodeset="instance('study-feed')/atom:entry">
-		                        		<xforms:label ref="atom:title"/>
+		                        		<xforms:label ref="concat( atom:title , ' (' , replace( atom:id/text() , '^.*/([^/^.]+)\.atom$', '$1') , ')' )"/>
 		                        		<xforms:value ref="atom:id"/>
 		                        	</xforms:itemset>
 	                        	</xforms:select1>
