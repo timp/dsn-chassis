@@ -1,0 +1,132 @@
+<!--
+  Copyright (C) 2010 University of Oxford.
+  
+  This program is free software; you can redistribute it and/or modify it under the terms of the
+  GNU Lesser General Public License as published by the Free Software Foundation; either version
+  2.1 of the License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Lesser General Public License for more details.
+
+  The full text of the license is available at http://www.gnu.org/copyleft/lesser.html
+  -->
+<html 
+	xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:f="http://orbeon.org/oxf/xml/formatting" 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:atom="http://www.w3.org/2005/Atom"
+    xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
+    xmlns:xi="http://www.w3.org/2001/XInclude">
+    <head>
+        <title>WWARN Data Management - Submitter - View Study</title>
+        <link rel="stylesheet" type="text/css" href="/apps/submitter/common/style.css"></link>
+        <style type="text/css"></style>
+        <xforms:model>
+        
+        	<xforms:instance id="empty">
+        		<params/>
+        	</xforms:instance>
+            
+            <xforms:instance id="current-user">
+            	<user xmlns="">
+       				<name/>
+       				<roles/>
+            	</user>
+           	</xforms:instance>
+           	
+			<xforms:action 
+           		ev:event="xforms-model-construct-done">
+           		<xforms:setvalue ref="instance('current-user')/name" value="xxforms:get-remote-user()"/>
+			</xforms:action>
+
+			<xforms:action 
+				ev:event="xforms-model-construct-done">
+			    <xforms:insert 
+		    	 	nodeset="instance('current-user')/roles" 
+			     	at="1" 
+			     	position="before" 
+			     	origin="xxforms:get-request-attribute('user-roles-xml')"/>
+			</xforms:action>
+			
+        	<xforms:instance id="study" src="/apps/common/templates/study/study-entry-template.xml"/>
+			
+       		<xforms:bind nodeset="instance('study')">
+       		
+				<xi:include href="/apps/common/includes/study/publications-xforms-bindings.xml"/>
+				       			
+       		</xforms:bind>
+       	
+       		<xforms:instance id="publication-template" src="/apps/common/templates/study/publication-template.xml"/>
+
+			<xforms:instance id="util">
+				<util xmlns="">
+					<code/>
+				</util>
+			</xforms:instance>
+			
+			<xforms:bind nodeset="instance('util')">
+				<xforms:bind nodeset="code" calculate="replace( instance('study')/atom:id/text() , '^.*/([^/^.]+)\.atom$', '$1')"/>
+			</xforms:bind>
+			
+			<xforms:submission 
+				id="get-study-submission"
+				action="{xxforms:get-request-parameter('study')}"
+				method="get"
+				replace="instance"
+				instance="study"
+				ref="instance('empty')">
+                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<output value="event('response-status-code')"/>) while retrieving the study.</xforms:message>
+			</xforms:submission>
+
+			<xforms:send ev:event="xforms-model-construct-done" submission="get-study-submission"/>
+
+        </xforms:model>
+    </head>
+    <body>
+    	<h1>Submitter - Study Questionnaire - <xforms:output value="instance('util')/code"/></h1>
+
+    	<div id="home-nav">Links: <a href="home">Submitter Home</a> | <xforms:output value="instance('current-user')/name"/></div>
+    	
+    	<div id="content">
+    	
+    		<xforms:group ref="instance('study')">
+
+	    		<p><xforms:output value="atom:title"><xforms:label class="fixed-width">Study title:</xforms:label></xforms:output></p>
+	    		<p><xforms:output value="instance('util')/code"><xforms:label class="fixed-width">Code:</xforms:label></xforms:output></p>
+    		
+		    	<p>Links: <a href="view-study?study={instance('study')/atom:link[@rel='edit']/@href}">View Study</a></p>
+    		
+				<xforms:group ref="atom:content/study">
+				
+		    		<h2>General Questions</h2>
+		    	
+		    		<h3>Publications</h3>
+		    		
+					<xi:include href="/apps/common/includes/study/publications-xforms-input.xml"/>
+					
+					<h3>Study Start and End</h3>
+
+					<p>
+						<xforms:input ref="start">
+							<xforms:label>Start: </xforms:label>
+						</xforms:input>
+					</p>				
+					
+					<p>
+						<xforms:input ref="end">
+							<xforms:label>End: </xforms:label>
+						</xforms:input>
+					</p>	
+										
+				</xforms:group>			
+
+			</xforms:group>  	
+	    	
+    	</div>
+    </body>
+</html>
+

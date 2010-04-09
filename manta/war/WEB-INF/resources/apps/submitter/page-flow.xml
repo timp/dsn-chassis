@@ -13,12 +13,19 @@
   -->
 <config xmlns="http://www.orbeon.com/oxf/controller">
 
-  <page path-info="/submitter/" view="view.xhtml"/>
+  <page id="root" path-info="/submitter/">
+    <action><result page="home"/></action>
+  </page>
+
+  <page id="home" path-info="/submitter/home" view="home.xhtml"/>
   
-  <page path-info="/submitter/create-study/" view="create-study/view.xhtml"/>
+  <page path-info="/submitter/create-study" view="create-study.xhtml"/>
   
-  <page path-info="/submitter/submit-files/" view="submit-files/view.xhtml"/>
-  <!--<page path-info="/submitter/submit-files/submit" model="submit-files/submit.xpl"/>-->
+  <page path-info="/submitter/submit-files" view="submit-files.xhtml"/>
+  
+  <page path-info="/submitter/view-study" view="view-study.xhtml"/>
+  
+  <page path-info="/submitter/study-questionnaire" view="study-questionnaire.xhtml"/>
   
   <epilogue url="oxf:/config/epilogue.xpl"/>
 

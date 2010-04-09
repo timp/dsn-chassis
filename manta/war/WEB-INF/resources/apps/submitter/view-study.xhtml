@@ -1,0 +1,142 @@
+<!--
+  Copyright (C) 2010 University of Oxford.
+  
+  This program is free software; you can redistribute it and/or modify it under the terms of the
+  GNU Lesser General Public License as published by the Free Software Foundation; either version
+  2.1 of the License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Lesser General Public License for more details.
+
+  The full text of the license is available at http://www.gnu.org/copyleft/lesser.html
+  -->
+<html 
+	xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:f="http://orbeon.org/oxf/xml/formatting" 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:atom="http://www.w3.org/2005/Atom"
+    xmlns:fr="http://orbeon.org/oxf/xml/form-runner">
+    <head>
+        <title>WWARN Data Management - Submitter - View Study</title>
+        <link rel="stylesheet" type="text/css" href="/apps/submitter/common/style.css"></link>
+        <style type="text/css"></style>
+        <xforms:model>
+        
+        	<xforms:instance id="empty">
+        		<params/>
+        	</xforms:instance>
+            
+            <xforms:instance id="current-user">
+            	<user xmlns="">
+       				<name/>
+       				<roles/>
+            	</user>
+           	</xforms:instance>
+           	
+			<xforms:action 
+           		ev:event="xforms-model-construct-done">
+           		<xforms:setvalue ref="instance('current-user')/name" value="xxforms:get-remote-user()"/>
+			</xforms:action>
+
+			<xforms:action 
+				ev:event="xforms-model-construct-done">
+			    <xforms:insert 
+		    	 	nodeset="instance('current-user')/roles" 
+			     	at="1" 
+			     	position="before" 
+			     	origin="xxforms:get-request-attribute('user-roles-xml')"/>
+			</xforms:action>
+			
+			<xforms:instance id="study">
+				<atom:entry/>
+			</xforms:instance>
+			
+			<xforms:instance id="submitted-media">
+				<atom:feed/>
+			</xforms:instance>
+			
+			<xforms:instance id="util">
+				<util xmlns="">
+					<code/>
+				</util>
+			</xforms:instance>
+			
+			<xforms:bind nodeset="instance('util')">
+				<xforms:bind nodeset="code" calculate="replace( instance('study')/atom:id/text() , '^.*/([^/^.]+)\.atom$', '$1')"/>
+			</xforms:bind>
+			
+			<xforms:submission 
+				id="get-study-submission"
+				action="{xxforms:get-request-parameter('study')}"
+				method="get"
+				replace="instance"
+				instance="study"
+				ref="instance('empty')">
+                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<output value="event('response-status-code')"/>) while retrieving the study.</xforms:message>
+				<xforms:send ev:event="xforms-submit-done" submission="get-submitted-media"/>
+			</xforms:submission>
+
+			<xforms:submission
+				id="get-submitted-media"
+				action="{instance('study')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/submittedMedia']/@href}"
+				method="get"
+				replace="instance"
+				instance="submitted-media">
+                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<output value="event('response-status-code')"/>) while retrieving the submitted media.</xforms:message>
+			</xforms:submission>
+
+			<xforms:send ev:event="xforms-model-construct-done" submission="get-study-submission"/>
+
+        </xforms:model>
+    </head>
+    <body>
+    	<h1>Submitter - View Study - <xforms:output value="instance('util')/code"/></h1>
+
+    	<div id="home-nav">Links: <a href="home">Submitter Home</a> | <xforms:output value="instance('current-user')/name"/></div>
+    	
+    	<div id="content">
+    	
+    		<xforms:group ref="instance('study')">
+	    		<p><xforms:output value="atom:title"><xforms:label class="fixed-width">Title:</xforms:label></xforms:output></p>
+	    		<p><xforms:output value="instance('util')/code"><xforms:label class="fixed-width">Code:</xforms:label></xforms:output></p>
+    		</xforms:group>
+    		
+    		<h2>Submitted Files</h2>
+    		
+	    	<fr:datatable paginated="false">
+	    		<thead>
+	    			<tr>
+	    				<th>Code</th>
+	    				<th>Original File Name</th>
+	    				<th>Submitted</th>
+	    				<th>Actions</th>
+	    			</tr>
+	    		</thead>
+	    		<tbody>
+	    			<xforms:repeat nodeset="instance('submitted-media')/atom:entry">
+	    				<tr>
+	    					<td>
+	    						<xforms:output ref="replace( atom:id/text() , '^.*/([^/^.]+)\.atom$', '$1' )"/>
+	    					</td>
+	    					<td>
+	    						<xforms:output ref="atom:title"/>
+	    					</td>
+	    					<td>
+	    						<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[M01]/[D01]/[Y]')"/>
+	    					</td>
+	    					<td><a href="{atom:content/@src}">Download</a></td>
+	    				</tr>
+	    			</xforms:repeat>
+	    		</tbody>
+	    	</fr:datatable>
+	    	
+	    	<p>Links: <a href="submit-files?study={instance('study')/atom:link[@rel='edit']/@href}">Submit Files</a> | <a href="study-questionnaire?study={atom:link[@rel='edit']/@href}">Study Questionnaire</a></p>
+    		
+    	</div>
+    </body>
+</html>
+

@@ -18,7 +18,8 @@
     xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:ev="http://www.w3.org/2001/xml-events"
-    xmlns:atom="http://www.w3.org/2005/Atom">
+    xmlns:atom="http://www.w3.org/2005/Atom"
+    xmlns:xi="http://www.w3.org/2001/XInclude">
 
     <head>
     
@@ -36,26 +37,7 @@
         		|
         		+-->
         		
-        	<xforms:instance id="entry">
-       			<atom:entry>
-       				<atom:title type="text"></atom:title>
-       				<atom:content type="application/vnd.chassis-manta+xml">
-       					<study xmlns="">
-       						<published>false</published>
-       						<publications>
-				       			<publication>
-				       				<title></title>
-				       				<first-author></first-author>
-				       				<year></year>
-				       				<journal></journal>
-				       				<url></url>
-				       				<doi></doi>
-				       			</publication>
-       						</publications>
-       					</study>
-       				</atom:content>
-       			</atom:entry>
-       		</xforms:instance>
+        	<xforms:instance id="entry" src="/apps/common/templates/study/study-entry-template.xml"/>
        		
        		
        		
@@ -70,28 +52,8 @@
        			<!-- the title is required -->
        			<xforms:bind nodeset="atom:title" required="true()"/>
        			
-       			<xforms:bind nodeset="atom:content/study">
-       			
-       				<!-- whether or not it is published is a boolean input (generates a checkbox) -->
-       				<xforms:bind nodeset="published" type="xforms:boolean"/>
-       				
-       				<!-- publications are only relevant if study is published -->
-       				<xforms:bind nodeset="publications" relevant="../published = true()">
-       				
-       					<xforms:bind nodeset="publication">
-       					
-       						<!-- publication title, first author, year and journal are required -->
-       						<xforms:bind nodeset="title" required="true()"/>
-       						<xforms:bind nodeset="first-author" required="true()"/>
-       						<xforms:bind nodeset="year" required="true()" type="xs:gYear"/>
-       						<xforms:bind nodeset="journal" required="true()"/>
-       						
-       					</xforms:bind>
-       					
-       				</xforms:bind>
-       				
-       			</xforms:bind>
-       			
+				<xi:include href="/apps/common/includes/study/publications-xforms-bindings.xml"/>
+				       			
        		</xforms:bind>
        	
        		
@@ -102,16 +64,7 @@
         		|
         		+-->
        		
-       		<xforms:instance id="publication-template">
-       			<publication xmlns="">
-       				<title></title>
-       				<first-author></first-author>
-       				<year></year>
-       				<journal></journal>
-       				<url></url>
-       				<doi></doi>
-       			</publication>
-       		</xforms:instance>
+       		<xforms:instance id="publication-template" src="/apps/common/templates/study/publication-template.xml"/>
        		
 
 
@@ -319,7 +272,7 @@
 			|
 			+-->       		
     	
-    	<div id="home-nav"><xforms:output ref="instance('current-user')/name"/> | <a href="../">Submitter Home</a></div>
+    	<div id="home-nav">Links: <a href="home">Submitter Home</a> | <xforms:output ref="instance('current-user')/name"/></div>
     	
     	
     	
@@ -396,91 +349,9 @@
 		                    
 		                    	<xforms:group ref="instance('entry')/atom:content/study">
 		                    	
-									<p>
-										<xforms:input ref="published">
-											<xforms:label class="fixed-width">Has the study been published?</xforms:label>
-										</xforms:input>									
-									</p>
-									
-									<xforms:group ref="publications">
-									
-										<table class="repeat-table">
-											<tr>
-												<td>
-								                    <xforms:trigger appearance="minimal">
-								                        <xforms:label><img src="/apps/submitter/common/add.gif"/></xforms:label>
-								                        <xforms:insert 
-								                        	ev:event="DOMActivate" 
-								                        	context="instance('entry')/atom:content/study/publications" 
-								                        	nodeset="publication" 
-								                        	at="1" 
-								                        	position="before" 
-								                        	origin="instance('publication-template')"/>
-								                    </xforms:trigger>
-												</td>
-												<td class="add-td">
-								                    <xforms:trigger appearance="minimal">
-								                        <xforms:label>Add a Publication</xforms:label>
-								                        <xforms:insert 
-								                        	ev:event="DOMActivate" 
-								                        	context="instance('entry')/atom:content/study/publications" 
-								                        	nodeset="publication" 
-								                        	at="1" 
-								                        	position="before" 
-								                        	origin="instance('publication-template')"/>
-								                    </xforms:trigger>
-												</td>
-											</tr>
-											<xforms:repeat nodeset="publication" id="publication-repeat">
-												<tr>
-													<td>
-								                        <xforms:trigger appearance="minimal">
-								                            <xforms:delete 
-								                            	ev:event="DOMActivate" 
-									                        	context="instance('entry')/atom:content/study/publications" 
-									                        	nodeset="publication" 
-								                            	at="index('publication-repeat')"/>
-								                            <xforms:label><img src="/apps/submitter/common/remove.gif"/></xforms:label>
-								                        </xforms:trigger>
-													</td>
-													<td class="form-td">
-														<xforms:input ref="title">
-															<xforms:label class="fixed-width">Title:</xforms:label>
-															<xforms:alert>The title is required.</xforms:alert>
-														</xforms:input>
-														<br/>
-														<xforms:input ref="first-author">
-															<xforms:label class="fixed-width">First author:</xforms:label>
-															<xforms:alert>The first author is required.</xforms:alert>
-														</xforms:input>
-														<br/>
-														<xforms:input ref="year">
-															<xforms:label class="fixed-width">Year:</xforms:label>
-															<xforms:alert>The year is required and must be a four digit number.</xforms:alert>
-														</xforms:input>
-														<br/>
-														<xforms:input ref="journal">
-															<xforms:label class="fixed-width">Journal:</xforms:label>
-															<xforms:alert>The journal is required.</xforms:alert>
-														</xforms:input>
-														<br/>
-														<xforms:input ref="url">
-															<xforms:label class="fixed-width">Web link:</xforms:label>
-														</xforms:input>
-														<br/>
-														<xforms:input ref="doi">
-															<xforms:label class="fixed-width">DOI:</xforms:label>
-														</xforms:input>
-														<br/>
-													</td>
-												</tr>
-											</xforms:repeat>
-										</table>
-									
-									</xforms:group>
-									
-		                    	</xforms:group>
-								
+									<xi:include href="/apps/common/includes/study/publications-xforms-input.xml"/>
+				
+								</xforms:group>								
 		                    </td>
 		                </tr>
 		                <tr>
@@ -654,12 +525,6 @@
 		                        
 		                    	<xforms:group ref="instance('entry')/atom:content/study">
 		                    	
-									<p>
-										<xforms:output ref="published">
-											<xforms:label class="fixed-width">Published?</xforms:label>
-										</xforms:output>									
-									</p>
-									
 									<xforms:group ref="publications">
 									
 										<table class="repeat-table">
@@ -764,7 +629,7 @@
                     </xforms:output>
                     </p>
                     
-                    <p>Links: <a href="../">Submitter Home</a> | <a href="../TODO">Study Questionnaire</a> | <a href="../TODO">Submit Files</a></p>
+                    <p>Links: <a href="home">Submitter Home</a> | <a href="submit-files?study={instance('entry')/atom:link[@rel='edit']/@href}">Submit Files</a> | <a href="study-questionnaire?study={atom:link[@rel='edit']/@href}">Study Questionnaire</a> </p>
                     
 	    			
 	    		</xforms:case>
