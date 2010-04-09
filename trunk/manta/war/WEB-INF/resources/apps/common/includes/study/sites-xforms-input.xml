@@ -1,0 +1,96 @@
+<div	
+    xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:f="http://orbeon.org/oxf/xml/formatting" 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:atom="http://www.w3.org/2005/Atom"
+    xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
+    xmlns:xi="http://www.w3.org/2001/XInclude">
+    
+    <xforms:group ref="sites">
+        
+        <table class="repeat-table">
+            <tr>
+                <td>
+                    <xforms:trigger appearance="minimal">
+                        <xforms:label><img src="/apps/submitter/common/add.gif"/></xforms:label>
+                        <xforms:insert 
+                            ev:event="DOMActivate" 
+                            context="." 
+                            nodeset="site" 
+                            at="1" 
+                            position="before" 
+                            origin="instance('site-template')"/>
+                    </xforms:trigger>
+                </td>
+                <td class="add-td">
+                    <xforms:trigger appearance="minimal">
+                        <xforms:label>Add a Site</xforms:label>
+                        <xforms:insert 
+                            ev:event="DOMActivate" 
+                            context="." 
+                            nodeset="site" 
+                            at="1" 
+                            position="before" 
+                            origin="instance('site-template')"/>
+                    </xforms:trigger>
+                </td>
+            </tr>
+            <xforms:repeat nodeset="site" id="site-repeat">
+                <tr>
+                    <td>
+                        <xforms:trigger appearance="minimal">
+                            <xforms:delete 
+                                ev:event="DOMActivate" 
+                                context="." 
+                                nodeset="." 
+                                at="index('site-repeat')"/>
+                            <xforms:label><img src="/apps/submitter/common/remove.gif"/></xforms:label>
+                        </xforms:trigger>
+                    </td>
+                    <td class="form-td">
+                        <xforms:select1 ref="country">
+                            <xforms:label/>
+                            <xforms:itemset nodeset="instance('countries-items')/country">
+                                <xforms:label ref="label"/>
+                                <xforms:value ref="value"/>
+                            </xforms:itemset>
+                        </xforms:select1>
+                        <br/>
+                        <xforms:group ref="instance('countries-items')/country[value/text()=xxforms:context('site-repeat')/country/text()]/regions">
+                            <xforms:select1 ref="xxforms:context('site-repeat')/region">
+                                <xforms:label class="fixed-width">Region: </xforms:label>
+                                <xforms:itemset nodeset="instance('countries-items')/country[value/text()=xxforms:context('site-repeat')/country/text()]//region">
+                                    <xforms:label ref="label"/>
+                                    <xforms:value ref="value"/>
+                                </xforms:itemset>
+                            </xforms:select1>
+                            <br/>
+                        </xforms:group>
+                        <xforms:group ref="instance('countries-items')/country[value/text()=xxforms:context('site-repeat')/country/text() and empty(regions)]">
+                            <xforms:input ref="xxforms:context('site-repeat')/region">
+                                <xforms:label class="fixed-width">Region: </xforms:label>
+                            </xforms:input>
+                            <br/>
+                        </xforms:group>
+                        <xforms:input ref="district">
+                            <xforms:label class="fixed-width">District: </xforms:label>
+                        </xforms:input>
+                        <br/>
+                        <xforms:input ref="locality">
+                            <xforms:label class="fixed-width">Locality: </xforms:label>
+                        </xforms:input>
+                        <br/>
+                        <xforms:input ref="user-code">
+                            <xforms:label class="fixed-width">Your site code:</xforms:label>
+                        </xforms:input>
+                    </td>
+                </tr>
+            </xforms:repeat>
+        </table>
+        
+    </xforms:group>
+
+</div>

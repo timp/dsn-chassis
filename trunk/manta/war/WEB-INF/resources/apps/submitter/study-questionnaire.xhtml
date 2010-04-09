@@ -26,14 +26,8 @@
         <link rel="stylesheet" type="text/css" href="/apps/submitter/common/style.css"></link>
         <style type="text/css"></style>
 
-       	<xi:include href="/apps/common/includes/current-user-xforms-model.xml"/>
-            
         <xforms:model id="main-model">
         
-        	<xforms:instance id="empty">
-        		<params/>
-        	</xforms:instance>
-        	
         	<xforms:instance id="study" src="/apps/common/templates/study/study-entry-template.xml"/>
 			
        		<xforms:bind nodeset="instance('study')">
@@ -44,6 +38,11 @@
        	
        		<xforms:instance id="publication-template" src="/apps/common/templates/study/publication-template.xml"/>
        		<xforms:instance id="person-template" src="/apps/common/templates/study/person-template.xml"/>
+       		<xforms:instance id="pathogens-items" src="/apps/common/constants/pathogens.xml"/>
+       		<xforms:instance id="site-template" src="/apps/common/templates/study/site-template.xml"/>
+       		<xforms:instance id="countries-items" src="/apps/common/constants/countries.xml"/>
+       		<xforms:instance id="modules-items" src="/apps/common/constants/modules.xml"/>
+       		
 
 			<xforms:instance id="util">
 				<util xmlns="">
@@ -76,10 +75,19 @@
 				ref="instance('study')"
 				mediatype="application/atom+xml">
                 <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<output value="event('response-status-code')"/>) while saving the study.</xforms:message>
-                <xforms:message ev:event="xforms-submit-done" level="modal">Thank you, your changes have been saved.</xforms:message>
+                <xforms:message ev:event="xforms-submit-done" level="modal">Your changes have been saved, thank you.</xforms:message>
 			</xforms:submission>
 
+        	<xforms:instance id="empty">
+        		<params/>
+        	</xforms:instance>
+        	
+
         </xforms:model>
+        
+       	<xi:include href="/apps/common/includes/current-user-xforms-model.xml"/>
+            
+        
     </head>
     <body>
     	<h1>Submitter - Study <xforms:output model="main-model" value="instance('util')/code"/> - Questionnaire</h1>
@@ -126,8 +134,35 @@
 										
 					<xi:include href="/apps/common/includes/study/principal-investigators-xforms-input.xml"/>
 					
-										
-				</xforms:group>			
+					<h3>Pathogen Species</h3>
+					
+					<p>
+						<xforms:select ref="pathogens" appearance="full">
+							<xforms:label/>
+							<xforms:itemset nodeset="instance('pathogens-items')/pathogen">
+								<xforms:label ref="label"/>
+								<xforms:value ref="value"/>
+							</xforms:itemset>
+						</xforms:select>
+					</p>
+					
+					<h3>Study Site(s)</h3>
+
+					<xi:include href="/apps/common/includes/study/sites-xforms-input.xml"/>
+					
+					<h3>Study Type (WWARN Modules)</h3>
+
+					<p>
+						<xforms:select ref="modules" appearance="full">
+							<xforms:label/>
+							<xforms:itemset nodeset="instance('modules-items')/module">
+								<xforms:label ref="label"/>
+								<xforms:value ref="value"/>
+							</xforms:itemset>
+						</xforms:select>
+					</p>
+
+ 				</xforms:group>			
 
 			</xforms:group>  	
 	    	
