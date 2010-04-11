@@ -11,9 +11,7 @@ import com.google.gwt.xml.client.Element;
  * Generated event EditStudyQuestionnaireNavigation from StudyRevisionActions to 
  * EditStudyQuestionnaire.
  *
- * BE SURE TO EDIT THE TEMPLATE NOT THE RENDERED RESULT
- *
- * DELETE_TO_MANUALLY_EDIT
+ * Generated, delete file to regenerate.
  *
  */
 public class EditStudyQuestionnaireNavigationEvent extends WidgetEvent {
