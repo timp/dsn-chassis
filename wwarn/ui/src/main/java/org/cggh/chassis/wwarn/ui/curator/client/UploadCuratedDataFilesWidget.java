@@ -69,6 +69,7 @@ public class UploadCuratedDataFilesWidget
 	public void refresh() {
 		log.enter("refresh");
 		syncUIWithStudyEntry(studyEntry.get());
+		this.setVisible(true);
 		log.leave();	
 	}
 	
@@ -117,7 +118,7 @@ public class UploadCuratedDataFilesWidget
 	protected void syncUI() {
 		log.enter("syncUI");
         syncUIWithStudyEntry(studyEntry.get());
-		errorPanel.setVisible(true);	
+		errorPanel.setVisible(false);	
 		contentPanel.setVisible(true);
 		log.leave();
     }
@@ -139,6 +140,7 @@ public class UploadCuratedDataFilesWidget
 	protected void syncUIWithStudyEntry(Element studyEntry) {
 		log.enter("syncUIWithStudyEntry");
 		// TODO needs to be a method in an extension
+		this.uploadCuratedDataFilesPanel.clear();
 		this.uploadCuratedDataFilesPanel.add(strongWidget("syncUIWithStudyEntry"));
 		log.leave();
 	}
