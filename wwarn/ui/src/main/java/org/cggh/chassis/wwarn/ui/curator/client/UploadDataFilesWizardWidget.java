@@ -74,7 +74,9 @@ public class UploadDataFilesWizardWidget
 
 	@Override
 	public void refresh() {
+		log.enter("refresh");
 		this.uploadCuratedDataFilesWidget.refresh();
+		log.leave();
 	}
 
 
