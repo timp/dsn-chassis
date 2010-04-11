@@ -990,6 +990,10 @@ public class CuratorApplicationWidget
 		if (child == this.curatorHomeWidget) {
 			((ChassisWidget)child).refresh();
 		}
+		// nor will a multiwidget
+		if (child == this.uploadDataFilesWizardWidget) {
+			((ChassisWidget)child).refresh();
+		}
 
 		log.leave();
 	}
