@@ -11,9 +11,8 @@ import com.google.gwt.xml.client.Element;
  * Generated event UploadDataFilesWizardNavigation from StudyActions to 
  * UploadDataFilesWizard.
  *
- * BE SURE TO EDIT THE TEMPLATE NOT THE RENDERED RESULT
+ * Generated, delete file to regenerate.
  *
- * DELETE_TO_MANUALLY_EDIT
  *
  */
 public class UploadDataFilesWizardNavigationEvent extends WidgetEvent {

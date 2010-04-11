@@ -11,9 +11,8 @@ import com.google.gwt.xml.client.Element;
  * Generated event ListStudyRevisionsNavigation from StudyRevisionActions to 
  * ListStudyRevisions.
  *
- * BE SURE TO EDIT THE TEMPLATE NOT THE RENDERED RESULT
+ * Generated, delete file to regenerate.
  *
- * DELETE_TO_MANUALLY_EDIT
  *
  */
 public class ListStudyRevisionsNavigationEvent extends WidgetEvent {
