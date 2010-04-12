@@ -1,5 +1,7 @@
 package org.cggh.chassis.wwarn.ui.curator.client;
 
+import static org.cggh.chassis.generic.widget.client.HtmlElements.strongWidget;
+
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.miniatom.client.ext.ChassisHelper;
@@ -71,6 +73,7 @@ public class CuratorHomeWidget
 		
 		listStudiesWidgetUiField.refresh();
 
+
 		log.leave();	
 	}
 	
@@ -81,7 +84,6 @@ public class CuratorHomeWidget
 		
 		this.clear();
 		this.add(uiBinder.createAndBindUi(this));
-		errorPanel.setVisible(false);	
 		
 
 		log.leave();
@@ -126,6 +128,21 @@ public class CuratorHomeWidget
 	
 
 	
+
+	@Override
+	protected void syncUI() {
+		log.enter("syncUI");
+		
+		errorPanel.setVisible(false);	
+		contentPanel.setVisible(true);
+		this.setVisible(true);
+
+		log.leave();
+    }
+
+
+
+
 	protected void syncUIWithMessage(String message) {
 		log.enter("syncUIWithMessage");
 
