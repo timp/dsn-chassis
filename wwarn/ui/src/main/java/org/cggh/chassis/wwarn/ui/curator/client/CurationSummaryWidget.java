@@ -25,6 +25,9 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.xml.client.Element;
 
 /**
+ * BE SURE TO EDIT THE TEMPLATE NOT THE RENDERED RESULT
+ *
+ * DELETE_TO_MANUALLY_EDIT
  *
  * @author timp
  *
@@ -62,7 +65,10 @@ public class CurationSummaryWidget
 	@Override
 	public void refresh() {
 		log.enter("refresh");
-				log.leave();	
+		
+		syncUIWithStudyEntry(studyEntry.get());
+
+		log.leave();	
 	}
 	
 
@@ -72,7 +78,6 @@ public class CurationSummaryWidget
 		
 		this.clear();
 		this.add(uiBinder.createAndBindUi(this));
-		errorPanel.setVisible(false);	
 		
 
 		log.leave();
@@ -111,17 +116,23 @@ public class CurationSummaryWidget
 
 
 	
+	
+
+	
+
 	@Override
 	protected void syncUI() {
 		log.enter("syncUI");
-        syncUIWithStudyEntry(studyEntry.get());
-		errorPanel.setVisible(true);	
+		syncUIWithStudyEntry(studyEntry.get());
+		errorPanel.setVisible(false);	
 		contentPanel.setVisible(true);
+		this.setVisible(true);
 		log.leave();
     }
 
 
-	
+
+
 	protected void syncUIWithMessage(String message) {
 		log.enter("syncUIWithMessage");
 
@@ -137,6 +148,8 @@ public class CurationSummaryWidget
 		
 	protected void syncUIWithStudyEntry(Element studyEntry) {
 		log.enter("syncUIWithStudyEntry");
+		// TODO needs to be a method in an extension
+		this.curationSummaryPanel.clear();
 		this.curationSummaryPanel.add(strongWidget("syncUIWithStudyEntry"));
 		log.leave();
 	}
