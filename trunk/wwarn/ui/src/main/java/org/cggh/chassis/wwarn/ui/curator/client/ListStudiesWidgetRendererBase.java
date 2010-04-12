@@ -189,9 +189,6 @@ public abstract class ListStudiesWidgetRendererBase extends
 		}
 		else if (status instanceof AsyncWidgetModel.AsyncRequestPendingStatus) {
 		}
-		else if (status instanceof AsyncWidgetModel.NotFoundStatus) {
-			model.message.set("Not found."); // TODO Fix message to include model.studyUrl.get()
-		}			
 		else if (status instanceof AsyncWidgetModel.ReadyStatus) {
 			pendingPanel.setVisible(false);
 			contentPanel.setVisible(true);
