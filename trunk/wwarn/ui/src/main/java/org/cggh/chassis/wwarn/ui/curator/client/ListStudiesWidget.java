@@ -88,7 +88,7 @@ public class ListStudiesWidget
 	@Override
 	public void refresh() {
 		log.enter("refresh");
-		
+
 		this.controller.retrieveStudyFeed();
 
 		log.leave();
