@@ -1,5 +1,7 @@
 package org.cggh.chassis.wwarn.ui.curator.client;
 
+import static org.cggh.chassis.generic.widget.client.HtmlElements.strongWidget;
+
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.miniatom.client.ext.ChassisHelper;
@@ -77,7 +79,8 @@ public class PriorStudyRevisionsListWidget
 	@Override
 	public void refresh() {
 		log.enter("refresh");
-				log.leave();	
+		
+		log.leave();	
 	}
 	
 
@@ -87,7 +90,6 @@ public class PriorStudyRevisionsListWidget
 		
 		this.clear();
 		this.add(uiBinder.createAndBindUi(this));
-		errorPanel.setVisible(false);	
 		
 
 		log.leave();

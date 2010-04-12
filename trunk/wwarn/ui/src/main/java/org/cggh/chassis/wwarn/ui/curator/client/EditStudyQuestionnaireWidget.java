@@ -102,13 +102,14 @@ public class EditStudyQuestionnaireWidget
 	@Override
 	public void refresh() {
 		log.enter("refresh");
-		
+
 		this.controller.retrieveStudyEntry();
 
 		renderer.studySummaryWidgetUiField.refresh();
 
 
 		renderer.editQuestionnaireWidgetUiField.refresh();
+
 
 		log.leave();
 	}

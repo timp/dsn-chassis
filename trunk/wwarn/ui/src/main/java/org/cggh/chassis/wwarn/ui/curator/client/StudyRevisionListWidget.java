@@ -1,5 +1,7 @@
 package org.cggh.chassis.wwarn.ui.curator.client;
 
+import static org.cggh.chassis.generic.widget.client.HtmlElements.strongWidget;
+
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
 import org.cggh.chassis.generic.miniatom.client.ext.ChassisHelper;
@@ -82,6 +84,9 @@ public class StudyRevisionListWidget
 
 		priorStudyRevisionsListWidgetUiField.refresh();
 
+
+		syncUIWithStudyEntry(studyEntry.get());
+
 		log.leave();	
 	}
 	
@@ -92,7 +97,6 @@ public class StudyRevisionListWidget
 		
 		this.clear();
 		this.add(uiBinder.createAndBindUi(this));
-		errorPanel.setVisible(false);	
 		
 
 		log.leave();
@@ -156,6 +160,20 @@ public class StudyRevisionListWidget
 	
 
 	
+
+	@Override
+	protected void syncUI() {
+		log.enter("syncUI");
+		syncUIWithStudyEntry(studyEntry.get());
+		errorPanel.setVisible(false);	
+		contentPanel.setVisible(true);
+		this.setVisible(true);
+		log.leave();
+    }
+
+
+
+
 	protected void syncUIWithMessage(String message) {
 		log.enter("syncUIWithMessage");
 
@@ -172,6 +190,8 @@ public class StudyRevisionListWidget
 	protected void syncUIWithStudyEntry(Element studyEntry) {
 		log.enter("syncUIWithStudyEntry");
 		// TODO needs to be a method in an extension
+		this.studyRevisionListPanel.clear();
+		this.studyRevisionListPanel.add(strongWidget("syncUIWithStudyEntry"));
 		log.leave();
 	}
 
