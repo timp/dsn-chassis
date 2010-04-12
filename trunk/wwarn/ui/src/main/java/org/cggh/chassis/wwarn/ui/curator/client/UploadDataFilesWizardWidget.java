@@ -16,17 +16,17 @@ import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 import org.cggh.chassis.generic.widget.client.ChassisWidget;
 import org.cggh.chassis.generic.widget.client.MapMemory;
 import org.cggh.chassis.generic.widget.client.MultiWidget;
+import org.cggh.chassis.generic.widget.client.WidgetMemory;
 import org.cggh.chassis.generic.widget.client.ObservableProperty;
-import org.cggh.chassis.generic.widget.client.PropertyChangeEvent;
-import org.cggh.chassis.generic.widget.client.PropertyChangeHandler;
 import org.cggh.chassis.generic.widget.client.WidgetEventChannel;
 import org.cggh.chassis.generic.widget.client.WidgetEventHandler;
-import org.cggh.chassis.generic.widget.client.WidgetMemory;
 import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.Status;
 
 /**
- * Manual refresh.
- * 
+ * BE SURE TO EDIT THE TEMPLATE NOT THE RENDERED RESULT
+ *
+ * DELETE_TO_MANUALLY_EDIT
+ *
  * @author timp
  *
  */
@@ -41,35 +41,20 @@ public class UploadDataFilesWizardWidget
 
 
 	public final ObservableProperty<Status> status = new ObservableProperty<Status>();
-	public final ObservableProperty<String> studyUrl = new ObservableProperty<String>();
 
+	public final ObservableProperty<String> studyUrl = new ObservableProperty<String>();
 
 	public final ObservableProperty<Element> studyEntry = new ObservableProperty<Element>();
 
 
+	// UploadCuratedDataFiles
+	public final WidgetEventChannel uploadCuratedDataFilesUploadCuratedDataFilesProceedFromStep1EventChannel = new WidgetEventChannel(this);
 
-	
-	
-	@Override
-	public void bindUI() {
-		super.bindUI();
-		studyUrl.addChangeHandler(new PropertyChangeHandler<String>() {
-			public void onChange(PropertyChangeEvent<String> e) {
-				log.enter("onchange(studyUrl)");
-				log.leave();
-			}
-		});
-		studyEntry.addChangeHandler(new PropertyChangeHandler<Element>() {
-			public void onChange(PropertyChangeEvent<Element> e) {
-				log.enter("onchange(studyEntry)");
-				uploadCuratedDataFilesWidget.studyEntry.set(e.getAfter());
-				// TODO Does it need one?
-				//selectDerivationFilesWidget.studyEntry.set(e.getAfter());
-				curationSummaryWidget.studyEntry.set(e.getAfter());
-				log.leave();
-			}
-		});
-	}
+	// SelectDerivationFiles
+	public final WidgetEventChannel selectDerivationFilesSelectDerivationFilesProceedFromStep2EventChannel = new WidgetEventChannel(this);
+
+	// CurationSummary
+
 
 
 	@Override
@@ -79,14 +64,13 @@ public class UploadDataFilesWizardWidget
 		log.leave();
 	}
 
-
 	@Override
 	public void init() {
 		super.init();
 		this.memory = new Memory();
 	}
 
-
+	
 	@Override
 	public void renderMainChildren() {
 		log.enter("renderMainChildren");
@@ -113,11 +97,53 @@ public class UploadDataFilesWizardWidget
 		log.enter("registerHandlersForChildWidgetEvents");
 		super.registerHandlersForChildWidgetEvents();
 		
-		//NoUploadCuratedDataFiles events 
-		//NoSelectDerivationFiles events 
-		//NoCurationSummary events 
+
+		// UploadCuratedDataFiles events 
+		log.debug("Adding UploadCuratedDataFiles>UploadCuratedDataFiles>ProceedFromStep1 event handler");
+		this.childWidgetEventHandlerRegistrations.add(
+				uploadCuratedDataFilesWidget.uploadCuratedDataFilesProceedFromStep1EventChannel.addHandler(
+						new WidgetEventHandler<ProceedFromStep1Event>() {
+			@Override
+			public void onEvent(ProceedFromStep1Event e) {
+				
+				log.enter("onEvent(ProceedFromStep1Event)");
+
+				setActiveChild(selectDerivationFilesWidget);
+				
+				log.leave();
+			}
+		}));
+
+
+
+		// SelectDerivationFiles events 
+		log.debug("Adding SelectDerivationFiles>SelectDerivationFiles>ProceedFromStep2 event handler");
+		this.childWidgetEventHandlerRegistrations.add(
+				selectDerivationFilesWidget.selectDerivationFilesProceedFromStep2EventChannel.addHandler(
+						new WidgetEventHandler<ProceedFromStep2Event>() {
+			@Override
+			public void onEvent(ProceedFromStep2Event e) {
+				
+				log.enter("onEvent(ProceedFromStep2Event)");
+				
+				Element studyEntry =  e.getStudyEntry();
+				log.debug("Setting studyEntry to " + studyEntry);
+
+				curationSummaryWidget.studyEntry.set(studyEntry);
+				
+
+				setActiveChild(curationSummaryWidget);
+				
+				log.leave();
+			}
+		}));
+
+
+
+		// CurationSummary events 
 		log.leave();
 	}
+
 
 
 	@Override
@@ -126,11 +152,17 @@ public class UploadDataFilesWizardWidget
 		
 		super.setActiveChild(child, memorise);
 		
-		// Most widgets will refresh themselves, but the uploadCuratedDataFilesWidget will not 
+		// FIXME 
+		// Only Delegating widgets refresh themselves
 		if (child == this.uploadCuratedDataFilesWidget) {
 			((ChassisWidget)child).refresh();
 		}
-
+		if (child == this.selectDerivationFilesWidget) {
+			((ChassisWidget)child).refresh();
+		}
+		if (child == this.curationSummaryWidget) {
+			((ChassisWidget)child).refresh();
+		}
 		log.leave();
 	}
 
@@ -147,13 +179,13 @@ public class UploadDataFilesWizardWidget
 			
 			Map<String, String> map = new HashMap<String, String>();
 
-			Element entry = studyEntry.get();
+			Element studyEntryElement = studyEntry.get();
 			
 			String url = null;
 			
-			if (entry != null) { 
+			if (studyEntryElement != null) { 
 				
-				url = AtomHelper.getEditLinkHrefAttr(entry);
+				url = AtomHelper.getEditLinkHrefAttr(studyEntryElement);
 			
 				if (url != null) {					
 					map.put(KEY, URL.encodeComponent(url));
@@ -208,6 +240,7 @@ public class UploadDataFilesWizardWidget
 
 
 	}
+
 
 	
 }
