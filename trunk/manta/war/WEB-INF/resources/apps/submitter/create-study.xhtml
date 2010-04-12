@@ -19,14 +19,15 @@
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:ev="http://www.w3.org/2001/xml-events"
     xmlns:atom="http://www.w3.org/2005/Atom"
-    xmlns:xi="http://www.w3.org/2001/XInclude">
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:manta="http://www.cggh.org/2010/chassis/manta/xmlns">
 
     <head>
     
         <title>WWARN Data Management - Submitter - Create Study</title>
         <link rel="stylesheet" type="text/css" href="/apps/submitter/common/style.css"></link>
         
-        <xforms:model>
+        <xforms:model id="mod-main">
         
         
         
@@ -37,7 +38,7 @@
         		|
         		+-->
         		
-        	<xforms:instance id="entry" src="/apps/common/templates/study/study-entry-template.xml"/>
+        	<xforms:instance id="ins-entry" src="/apps/common/templates/study/study-entry-template.xml"/>
        		
        		
        		
@@ -47,7 +48,7 @@
         		|
         		+-->
 
-       		<xforms:bind nodeset="instance('entry')">
+       		<xforms:bind nodeset="instance('ins-entry')">
        		
        			<!-- the title is required -->
        			<xforms:bind nodeset="atom:title" required="true()"/>
@@ -64,7 +65,7 @@
         		|
         		+-->
        		
-       		<xforms:instance id="publication-template" src="/apps/common/templates/study/publication-template.xml"/>
+       		<xforms:instance id="ins-publication-template" src="/apps/common/templates/study/publication-template.xml"/>
        		
 
 
@@ -74,7 +75,7 @@
         		|
         		+-->
 
-       		<xforms:instance id="acl">
+       		<xforms:instance id="ins-acl">
        			<atom:entry>
        				<atom:content type="application/vnd.atombeat+xml">
 		       			<acl xmlns="">
@@ -122,7 +123,7 @@
 				|
 				+-->       		
 
-       		<xforms:instance id="user-template">
+       		<xforms:instance id="ins-user-template">
        			<user xmlns=""></user>
   			</xforms:instance>
 
@@ -135,7 +136,7 @@
 				|
 				+-->       		
 			       		
-       		<xforms:bind nodeset="instance('acl')//groups/group[@name='owners']">
+       		<xforms:bind nodeset="instance('ins-acl')//groups/group[@name='owners']">
                 <xforms:bind nodeset="user[1]" readonly="true()"/>
             </xforms:bind>
             
@@ -147,57 +148,18 @@
 				|
 				+-->       		
 			       		
-       		<xforms:instance id="control-instance">
-                <control-instance xmlns="">
+       		<xforms:instance id="ins-control">
+                <ins-control xmlns="">
                     <back/>
-                    <finish readonly="false"/>
-                </control-instance>
+                </ins-control>
             </xforms:instance>
         	
-            <xforms:bind nodeset="instance('control-instance')">
+            <xforms:bind nodeset="instance('ins-control')">
                 <xforms:bind nodeset="back" readonly="true()"/>
-                <xforms:bind nodeset="finish" readonly="@readonly = 'false'"/>
             </xforms:bind>
 
 
             
-			<!--+
-				|
-				| Instance to hold attributes of currently authenticated user.
-				|
-				+-->       		
-			       		
-            <xforms:instance id="current-user">
-            	<user xmlns="">
-       				<name/>
-       				<roles/>
-            	</user>
-           	</xforms:instance>
-           	
-
-
-			<!--+
-				|
-				| Actions to populate attributes of current user on page construction.
-				|
-				+-->       		
-			       		
-           <xforms:action 
-           		ev:event="xforms-model-construct-done">
-           		<xforms:setvalue ref="instance('current-user')/name" value="xxforms:get-remote-user()"/>
-           </xforms:action>
-
-           <xforms:action 
-           		ev:event="xforms-model-construct-done">
-                <xforms:insert 
-                	nodeset="instance('current-user')/roles" 
-                	at="1" 
-                	position="before" 
-                	origin="xxforms:get-request-attribute('user-roles-xml')"/>
-           </xforms:action>
-
-
-
 			<!--+
 				|
 				| Action to set current user as first owner in ACL document by default.
@@ -206,7 +168,7 @@
 			       		
            <xforms:action 
            		ev:event="xforms-model-construct-done">
-           		<xforms:setvalue ref="instance('acl')//groups/group[@name='owners']/user" value="xxforms:get-remote-user()"/>
+           		<xforms:setvalue ref="instance('ins-acl')//groups/group[@name='owners']/user" value="xxforms:get-remote-user()"/>
            </xforms:action>
 
 
@@ -218,14 +180,14 @@
             	+-->
             	
             <xforms:submission 
-            	id="create-study-submission" 
-            	ref="instance('entry')"
+            	id="sub-post-study-entry" 
+            	ref="instance('ins-entry')"
                 action="http://localhost:8081/manta/atombeat/content/studies"
                 method="post" 
                 replace="instance" 
-                instance="entry"
+                instance="ins-entry"
                 mediatype="application/atom+xml">
-                <xforms:send ev:event="xforms-submit-done" submission="update-acl-submission"/>
+                <xforms:send ev:event="xforms-submit-done" submission="sub-put-acl"/>
                 <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<output value="event('error-type')"/>) while saving!</xforms:message>
             </xforms:submission>
             
@@ -238,12 +200,12 @@
             	+-->
             	
             <xforms:submission 
-            	id="update-acl-submission" 
-            	ref="instance('acl')"
-                action="{instance('entry')/atom:link[@rel='edit-acl']/@href}"
+            	id="sub-put-acl" 
+            	ref="instance('ins-acl')"
+                action="{instance('ins-entry')/atom:link[@rel='edit-acl']/@href}"
                 method="put" 
                 replace="instance" 
-                instance="acl"
+                instance="ins-acl"
                 mediatype="application/atom+xml">
                 <xforms:toggle ev:event="xforms-submit-done" case="success"/>
                 <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<output value="event('error-type')"/>) while saving!</xforms:message>
@@ -253,6 +215,8 @@
 
         </xforms:model>
 
+       	<xi:include href="/apps/common/includes/current-user-xforms-model.xml"/>
+            
 
         
         <style type="text/css">
@@ -272,7 +236,7 @@
 			|
 			+-->       		
     	
-    	<div id="home-nav">Links: <a href="home">Submitter Home</a> | <xforms:output ref="instance('current-user')/name"/></div>
+    	<div id="home-nav">Links: <a href="home">Submitter Home</a> | <xforms:output model="mod-current-user" ref="instance('current-user')/name"/></div>
     	
     	
     	
@@ -305,7 +269,7 @@
 		                <tr>
 		                    <td>
 		                    
-		                        <xforms:input ref="instance('entry')/atom:title">
+		                        <xforms:input ref="instance('ins-entry')/atom:title">
 		                            <xforms:label class="fixed-width">Title:</xforms:label>
 		                            <xforms:alert>The title is required.</xforms:alert>
 		                            <xforms:toggle ev:event="DOMActivate" case="publications"/>
@@ -315,7 +279,7 @@
 		                </tr>
 		                <tr>
 		                    <td>
-		                        <xforms:trigger ref="instance('control-instance')/back">
+		                        <xforms:trigger ref="instance('ins-control')/back">
 		                            <xforms:label>&lt; Previous</xforms:label>
 		                        </xforms:trigger>
 		                        <xforms:trigger>
@@ -347,7 +311,7 @@
 		                <tr>
 		                    <td>
 		                    
-		                    	<xforms:group ref="instance('entry')/atom:content/study">
+		                    	<xforms:group ref="instance('ins-entry')/atom:content/study">
 		                    	
 									<xi:include href="/apps/common/includes/study/publications-xforms-input.xml"/>
 				
@@ -395,11 +359,11 @@
 						                        <xforms:label><img src="/apps/submitter/common/add.gif"/></xforms:label>
 						                        <xforms:insert 
 						                        	ev:event="DOMActivate" 
-						                        	context="instance('acl')//groups/group[@name='owners']" 
+						                        	context="instance('ins-acl')//groups/group[@name='owners']" 
 						                        	nodeset="user" 
 						                        	at="1" 
 						                        	position="after" 
-						                        	origin="instance('user-template')"/>
+						                        	origin="instance('ins-user-template')"/>
 						                    </xforms:trigger>
 										</td>
 										<td class="add-td">
@@ -407,21 +371,21 @@
 						                        <xforms:label>Add an Owner</xforms:label>
 						                        <xforms:insert 
 						                        	ev:event="DOMActivate" 
-						                        	context="instance('acl')//groups/group[@name='owners']" 
+						                        	context="instance('ins-acl')//groups/group[@name='owners']" 
 						                        	nodeset="user" 
 						                        	at="1" 
 						                        	position="after" 
-						                        	origin="instance('user-template')"/>
+						                        	origin="instance('ins-user-template')"/>
 						                    </xforms:trigger>
 										</td>
 									</tr>
-									<xforms:repeat nodeset="instance('acl')//groups/group[@name='owners']/user" id="owner-repeat">
+									<xforms:repeat nodeset="instance('ins-acl')//groups/group[@name='owners']/user" id="owner-repeat">
 										<tr>
 											<td>
 						                        <xforms:trigger ref="." appearance="minimal">
 						                            <xforms:delete 
 						                            	ev:event="DOMActivate" 
-							                        	context="instance('acl')//groups/group[@name='owners']" 
+							                        	context="instance('ins-acl')//groups/group[@name='owners']" 
 							                        	nodeset="user" 
 						                            	at="index('owner-repeat')"/>
 						                            <xforms:label><img src="/apps/submitter/common/remove.gif"/></xforms:label>
@@ -443,11 +407,11 @@
 						                        <xforms:label><img src="/apps/submitter/common/add.gif"/></xforms:label>
 						                        <xforms:insert 
 						                        	ev:event="DOMActivate" 
-						                        	context="instance('acl')//groups/group[@name='submitters']" 
+						                        	context="instance('ins-acl')//groups/group[@name='submitters']" 
 						                        	nodeset="user" 
 						                        	at="1" 
 						                        	position="after" 
-						                        	origin="instance('user-template')"/>
+						                        	origin="instance('ins-user-template')"/>
 						                    </xforms:trigger>
 										</td>
 										<td class="add-td">
@@ -455,21 +419,21 @@
 						                        <xforms:label>Add a Submitter</xforms:label>
 						                        <xforms:insert 
 						                        	ev:event="DOMActivate" 
-						                        	context="instance('acl')//groups/group[@name='submitters']" 
+						                        	context="instance('ins-acl')//groups/group[@name='submitters']" 
 						                        	nodeset="user" 
 						                        	at="1" 
 						                        	position="after" 
-						                        	origin="instance('user-template')"/>
+						                        	origin="instance('ins-user-template')"/>
 						                    </xforms:trigger>
 										</td>
 									</tr>
-									<xforms:repeat nodeset="instance('acl')//groups/group[@name='submitters']/user" id="submitter-repeat">
+									<xforms:repeat nodeset="instance('ins-acl')//groups/group[@name='submitters']/user" id="submitter-repeat">
 										<tr>
 											<td>
 						                        <xforms:trigger appearance="minimal">
 						                            <xforms:delete 
 						                            	ev:event="DOMActivate" 
-							                        	context="instance('acl')//groups/group[@name='submitters']" 
+							                        	context="instance('ins-acl')//groups/group[@name='submitters']" 
 							                        	nodeset="user" 
 						                            	at="index('submitter-repeat')"/>
 						                            <xforms:label><img src="/apps/submitter/common/remove.gif"/></xforms:label>
@@ -519,11 +483,11 @@
 		                <tr>
 		                    <td>
 		                    	<h2>Study Title</h2>
-		                        <strong><xforms:output ref="instance('entry')/atom:title"/></strong>
+		                        <strong><xforms:output value="instance('ins-entry')/atom:title"/></strong>
 		                        
 		                        <h2>Publications</h2>
 		                        
-		                    	<xforms:group ref="instance('entry')/atom:content/study">
+		                    	<xforms:group ref="instance('ins-entry')/atom:content/study">
 		                    	
 									<xforms:group ref="publications">
 									
@@ -531,27 +495,27 @@
 											<xforms:repeat nodeset="publication">
 												<tr>
 													<td class="form-td">
-														<xforms:output ref="title">
+														<xforms:output value="title">
 															<xforms:label class="fixed-width">Title:</xforms:label>
 														</xforms:output>
 														<br/>
-														<xforms:output ref="first-author">
+														<xforms:output value="first-author">
 															<xforms:label class="fixed-width">First author:</xforms:label>
 														</xforms:output>
 														<br/>
-														<xforms:output ref="year">
+														<xforms:output value="year">
 															<xforms:label class="fixed-width">Year:</xforms:label>
 														</xforms:output>
 														<br/>
-														<xforms:output ref="journal">
+														<xforms:output value="journal">
 															<xforms:label class="fixed-width">Journal:</xforms:label>
 														</xforms:output>
 														<br/>
-														<xforms:output ref="url">
+														<xforms:output value="url">
 															<xforms:label class="fixed-width">Web link:</xforms:label>
 														</xforms:output>
 														<br/>
-														<xforms:output ref="doi">
+														<xforms:output value="doi">
 															<xforms:label class="fixed-width">DOI:</xforms:label>
 														</xforms:output>
 														<br/>
@@ -568,10 +532,10 @@
 		                    	
 		                    	<h3>Owners</h3>
 								<table class="repeat-table">
-									<xforms:repeat nodeset="instance('acl')//groups/group[@name='owners']/user">
+									<xforms:repeat nodeset="instance('ins-acl')//groups/group[@name='owners']/user">
 										<tr>
 											<td class="form-td">
-												<xforms:output ref=".">
+												<xforms:output value=".">
 												</xforms:output>
 											</td>
 										</tr>
@@ -579,10 +543,10 @@
 								</table>
 		                    	<h3>Submitters</h3>
 								<table class="repeat-table">
-									<xforms:repeat nodeset="instance('acl')//groups/group[@name='submitters']/user">
+									<xforms:repeat nodeset="instance('ins-acl')//groups/group[@name='submitters']/user">
 										<tr>
 											<td class="form-td">
-												<xforms:output ref=".">
+												<xforms:output value=".">
 												</xforms:output>
 											</td>
 										</tr>
@@ -597,7 +561,7 @@
 		                            <xforms:label>&lt; Previous</xforms:label>
 		                            <xforms:toggle ev:event="DOMActivate" case="permissions"/>
 		                        </xforms:trigger>
-			                    <xforms:submit submission="create-study-submission">
+			                    <xforms:submit submission="sub-post-study-entry">
 			                        <xforms:label>Confirm</xforms:label>
 			                    </xforms:submit>
 		                    </td>
@@ -619,17 +583,17 @@
 	    			<p>Your study has been successfully created.</p>
 					
 					<p>
-                    <xforms:output ref="instance('entry')/atom:title">
+                    <xforms:output value="instance('ins-entry')/atom:title">
                     	<xforms:label class="fixed-width">Study title:</xforms:label>
                     </xforms:output>
                     </p>
                     <p>
-                    <xforms:output ref="replace( instance('entry')/atom:id/text() , '^.*/([^/^.]+)\.atom$', '$1')">
+                    <xforms:output value="instance('ins-entry')/manta:id">
                     	<xforms:label class="fixed-width">Unique study code:</xforms:label>
                     </xforms:output>
                     </p>
                     
-                    <p>Links: <a href="home">Submitter Home</a> | <a href="submit-files?study={instance('entry')/atom:link[@rel='edit']/@href}">Submit Files</a> | <a href="study-questionnaire?study={atom:link[@rel='edit']/@href}">Study Questionnaire</a> </p>
+                    <p>Links: <a href="home">Submitter Home</a> | <a href="submit-files?study={instance('ins-entry')/atom:link[@rel='edit']/@href}">Submit Files</a> | <a href="study-questionnaire?study={atom:link[@rel='edit']/@href}">Study Questionnaire</a> </p>
                     
 	    			
 	    		</xforms:case>
