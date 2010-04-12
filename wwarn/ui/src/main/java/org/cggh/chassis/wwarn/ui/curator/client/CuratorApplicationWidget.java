@@ -1,13 +1,24 @@
 package org.cggh.chassis.wwarn.ui.curator.client;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import com.google.gwt.http.client.URL;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.xml.client.Element;
 
+import org.cggh.chassis.generic.async.client.Deferred;
+import org.cggh.chassis.generic.async.client.Function;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
+import org.cggh.chassis.generic.miniatom.client.AtomHelper;
+import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 import org.cggh.chassis.generic.widget.client.ChassisWidget;
-import org.cggh.chassis.generic.widget.client.MultiWidget;import org.cggh.chassis.generic.widget.client.WidgetEventChannel;
+import org.cggh.chassis.generic.widget.client.MapMemory;
+import org.cggh.chassis.generic.widget.client.MultiWidget;
+import org.cggh.chassis.generic.widget.client.WidgetMemory;import org.cggh.chassis.generic.widget.client.WidgetEventChannel;
 import org.cggh.chassis.generic.widget.client.WidgetEventHandler;
+import org.cggh.chassis.generic.widget.client.AsyncWidgetModel.Status;
 
 /**
  * BE SURE TO EDIT THE TEMPLATE NOT THE RENDERED RESULT
@@ -31,25 +42,35 @@ public class CuratorApplicationWidget
 	private UploadDataFilesWizardWidget uploadDataFilesWizardWidget;
 
 
+
+	// CuratorHome
 	public final WidgetEventChannel curatorHomeListStudiesViewStudyNavigationEventChannel = new WidgetEventChannel(this);
+
+	// ViewStudy
 	public final WidgetEventChannel viewStudyStudyActionsListStudiesNavigationEventChannel = new WidgetEventChannel(this);
 	public final WidgetEventChannel viewStudyStudyActionsViewStudyNavigationEventChannel = new WidgetEventChannel(this);
 	public final WidgetEventChannel viewStudyStudyActionsViewStudyQuestionnaireNavigationEventChannel = new WidgetEventChannel(this);
 	public final WidgetEventChannel viewStudyStudyActionsListStudyRevisionsNavigationEventChannel = new WidgetEventChannel(this);
 	public final WidgetEventChannel viewStudyStudyActionsEditStudyQuestionnaireNavigationEventChannel = new WidgetEventChannel(this);
 	public final WidgetEventChannel viewStudyStudyActionsUploadDataFilesWizardNavigationEventChannel = new WidgetEventChannel(this);
+
+	// ViewStudyQuestionnaire
 	public final WidgetEventChannel viewStudyQuestionnaireStudyActionsListStudiesNavigationEventChannel = new WidgetEventChannel(this);
 	public final WidgetEventChannel viewStudyQuestionnaireStudyActionsViewStudyNavigationEventChannel = new WidgetEventChannel(this);
 	public final WidgetEventChannel viewStudyQuestionnaireStudyActionsViewStudyQuestionnaireNavigationEventChannel = new WidgetEventChannel(this);
 	public final WidgetEventChannel viewStudyQuestionnaireStudyActionsListStudyRevisionsNavigationEventChannel = new WidgetEventChannel(this);
 	public final WidgetEventChannel viewStudyQuestionnaireStudyActionsEditStudyQuestionnaireNavigationEventChannel = new WidgetEventChannel(this);
 	public final WidgetEventChannel viewStudyQuestionnaireStudyActionsUploadDataFilesWizardNavigationEventChannel = new WidgetEventChannel(this);
+
+	// EditStudyQuestionnaire
 	public final WidgetEventChannel editStudyQuestionnaireStudyActionsListStudiesNavigationEventChannel = new WidgetEventChannel(this);
 	public final WidgetEventChannel editStudyQuestionnaireStudyActionsViewStudyNavigationEventChannel = new WidgetEventChannel(this);
 	public final WidgetEventChannel editStudyQuestionnaireStudyActionsViewStudyQuestionnaireNavigationEventChannel = new WidgetEventChannel(this);
 	public final WidgetEventChannel editStudyQuestionnaireStudyActionsListStudyRevisionsNavigationEventChannel = new WidgetEventChannel(this);
 	public final WidgetEventChannel editStudyQuestionnaireStudyActionsEditStudyQuestionnaireNavigationEventChannel = new WidgetEventChannel(this);
 	public final WidgetEventChannel editStudyQuestionnaireStudyActionsUploadDataFilesWizardNavigationEventChannel = new WidgetEventChannel(this);
+
+	// ListStudyRevisions
 	public final WidgetEventChannel listStudyRevisionsStudyActionsListStudiesNavigationEventChannel = new WidgetEventChannel(this);
 	public final WidgetEventChannel listStudyRevisionsStudyActionsViewStudyNavigationEventChannel = new WidgetEventChannel(this);
 	public final WidgetEventChannel listStudyRevisionsStudyActionsViewStudyQuestionnaireNavigationEventChannel = new WidgetEventChannel(this);
@@ -58,6 +79,8 @@ public class CuratorApplicationWidget
 	public final WidgetEventChannel listStudyRevisionsStudyActionsUploadDataFilesWizardNavigationEventChannel = new WidgetEventChannel(this);
 	public final WidgetEventChannel listStudyRevisionsCurrentStudyRevisionViewCurrentStudyNavigationEventChannel = new WidgetEventChannel(this);
 	public final WidgetEventChannel listStudyRevisionsPriorStudyRevisionsListViewRevisionNavigationEventChannel = new WidgetEventChannel(this);
+
+	// ViewStudyRevision
 	public final WidgetEventChannel viewStudyRevisionStudyRevisionActionsViewStudyQuestionnaireNavigationEventChannel = new WidgetEventChannel(this);
 	public final WidgetEventChannel viewStudyRevisionStudyRevisionActionsListStudiesNavigationEventChannel = new WidgetEventChannel(this);
 	public final WidgetEventChannel viewStudyRevisionStudyRevisionActionsEditStudyQuestionnaireNavigationEventChannel = new WidgetEventChannel(this);
@@ -65,6 +88,23 @@ public class CuratorApplicationWidget
 	public final WidgetEventChannel viewStudyRevisionStudyRevisionActionsNextRevisionNavigationEventChannel = new WidgetEventChannel(this);
 	public final WidgetEventChannel viewStudyRevisionStudyRevisionActionsPreviousRevisionNavigationEventChannel = new WidgetEventChannel(this);
 
+	// UploadDataFilesWizard
+	public final WidgetEventChannel uploadDataFilesWizardUploadCuratedDataFilesProceedFromStep1EventChannel = new WidgetEventChannel(this);
+	public final WidgetEventChannel uploadDataFilesWizardSelectDerivationFilesProceedFromStep2EventChannel = new WidgetEventChannel(this);
+
+
+
+	@Override
+	public void refresh() {
+		log.enter("refresh");
+		this.curatorHomeWidget.refresh();
+		log.leave();
+	}
+
+	@Override
+	public void init() {
+		super.init();
+	}
 
 	
 	@Override
@@ -105,7 +145,8 @@ public class CuratorApplicationWidget
 		log.enter("registerHandlersForChildWidgetEvents");
 		super.registerHandlersForChildWidgetEvents();
 		
-		//CuratorHome events 
+
+		// CuratorHome events 
 		log.debug("Adding CuratorHome>ListStudies>ViewStudyNavigation event handler");
 		this.childWidgetEventHandlerRegistrations.add(
 				curatorHomeWidget.listStudiesViewStudyNavigationEventChannel.addHandler(
@@ -134,7 +175,8 @@ public class CuratorApplicationWidget
 		}));
 
 
-		//ViewStudy events 
+
+		// ViewStudy events 
 		log.debug("Adding ViewStudy>StudyActions>ListStudiesNavigation event handler");
 		this.childWidgetEventHandlerRegistrations.add(
 				viewStudyWidget.studyActionsListStudiesNavigationEventChannel.addHandler(
@@ -291,7 +333,8 @@ public class CuratorApplicationWidget
 		}));
 
 
-		//ViewStudyQuestionnaire events 
+
+		// ViewStudyQuestionnaire events 
 		log.debug("Adding ViewStudyQuestionnaire>StudyActions>ListStudiesNavigation event handler");
 		this.childWidgetEventHandlerRegistrations.add(
 				viewStudyQuestionnaireWidget.studyActionsListStudiesNavigationEventChannel.addHandler(
@@ -448,7 +491,8 @@ public class CuratorApplicationWidget
 		}));
 
 
-		//EditStudyQuestionnaire events 
+
+		// EditStudyQuestionnaire events 
 		log.debug("Adding EditStudyQuestionnaire>StudyActions>ListStudiesNavigation event handler");
 		this.childWidgetEventHandlerRegistrations.add(
 				editStudyQuestionnaireWidget.studyActionsListStudiesNavigationEventChannel.addHandler(
@@ -605,7 +649,8 @@ public class CuratorApplicationWidget
 		}));
 
 
-		//ListStudyRevisions events 
+
+		// ListStudyRevisions events 
 		log.debug("Adding ListStudyRevisions>StudyActions>ListStudiesNavigation event handler");
 		this.childWidgetEventHandlerRegistrations.add(
 				listStudyRevisionsWidget.studyActionsListStudiesNavigationEventChannel.addHandler(
@@ -818,7 +863,8 @@ public class CuratorApplicationWidget
 		}));
 
 
-		//ViewStudyRevision events 
+
+		// ViewStudyRevision events 
 		log.debug("Adding ViewStudyRevision>StudyRevisionActions>ViewStudyQuestionnaireNavigation event handler");
 		this.childWidgetEventHandlerRegistrations.add(
 				viewStudyRevisionWidget.studyRevisionActionsViewStudyQuestionnaireNavigationEventChannel.addHandler(
@@ -975,9 +1021,9 @@ public class CuratorApplicationWidget
 		}));
 
 
-		//NoUploadDataFilesWizard events 
 		log.leave();
 	}
+
 
 
 	@Override
@@ -986,18 +1032,18 @@ public class CuratorApplicationWidget
 		
 		super.setActiveChild(child, memorise);
 		
-		// Most widgets will refresh themselves, but the curatorHomeWidget will not 
+		// FIXME 
+		// Only Delegating widgets refresh themselves
 		if (child == this.curatorHomeWidget) {
 			((ChassisWidget)child).refresh();
 		}
-		// nor will a multiwidget
 		if (child == this.uploadDataFilesWizardWidget) {
 			((ChassisWidget)child).refresh();
 		}
-
 		log.leave();
 	}
 
 	
+
 	
 }
