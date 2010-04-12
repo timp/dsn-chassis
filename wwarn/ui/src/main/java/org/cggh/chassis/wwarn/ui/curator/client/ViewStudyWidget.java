@@ -102,7 +102,7 @@ public class ViewStudyWidget
 	@Override
 	public void refresh() {
 		log.enter("refresh");
-		
+
 		this.controller.retrieveStudyEntry();
 
 		renderer.studySummaryWidgetUiField.refresh();
@@ -115,6 +115,7 @@ public class ViewStudyWidget
 
 
 		renderer.listCurationsWidgetUiField.refresh();
+
 
 		log.leave();
 	}
