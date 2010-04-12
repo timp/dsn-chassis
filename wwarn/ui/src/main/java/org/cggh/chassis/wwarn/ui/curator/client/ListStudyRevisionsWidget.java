@@ -104,13 +104,14 @@ public class ListStudyRevisionsWidget
 	@Override
 	public void refresh() {
 		log.enter("refresh");
-		
+
 		this.controller.retrieveStudyEntry();
 
 		renderer.studySummaryWidgetUiField.refresh();
 
 
 		renderer.studyRevisionListWidgetUiField.refresh();
+
 
 		log.leave();
 	}

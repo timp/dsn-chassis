@@ -11,8 +11,9 @@ import com.google.gwt.xml.client.Element;
  * Generated event ViewStudyNavigation from ListStudies to 
  * ViewStudy.
  *
- * Generated, delete file to regenerate.
+ * BE SURE TO EDIT THE TEMPLATE NOT THE RENDERED RESULT
  *
+ * DELETE_TO_MANUALLY_EDIT
  *
  */
 public class ViewStudyNavigationEvent extends WidgetEvent {

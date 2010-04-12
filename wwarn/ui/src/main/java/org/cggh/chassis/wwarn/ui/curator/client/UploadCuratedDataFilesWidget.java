@@ -2,21 +2,21 @@ package org.cggh.chassis.wwarn.ui.curator.client;
 
 import static org.cggh.chassis.generic.widget.client.HtmlElements.strongWidget;
 
-import org.cggh.chassis.generic.async.client.Deferred;
-import org.cggh.chassis.generic.async.client.Function;
 import org.cggh.chassis.generic.log.client.Log;
 import org.cggh.chassis.generic.log.client.LogFactory;
-import org.cggh.chassis.generic.miniatom.client.Atom;
 import org.cggh.chassis.generic.miniatom.client.ext.ChassisHelper;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.cggh.chassis.generic.widget.client.AsyncWidgetModel;
 import org.cggh.chassis.generic.widget.client.ChassisWidget;
 import org.cggh.chassis.generic.widget.client.ObservableProperty;
 import org.cggh.chassis.generic.widget.client.PropertyChangeEvent;
 import org.cggh.chassis.generic.widget.client.PropertyChangeHandler;
+
+import org.cggh.chassis.generic.widget.client.WidgetEvent;
+import org.cggh.chassis.generic.widget.client.WidgetEventHandler;
+import org.cggh.chassis.generic.widget.client.WidgetEventChannel;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -27,10 +27,12 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 
 
-import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;
 
 /**
+ * BE SURE TO EDIT THE TEMPLATE NOT THE RENDERED RESULT
+ *
+ * DELETE_TO_MANUALLY_EDIT
  *
  * @author timp
  *
@@ -61,6 +63,7 @@ public class UploadCuratedDataFilesWidget
 
 	public final ObservableProperty<String> message = new ObservableProperty<String>();
 
+	public final WidgetEventChannel uploadCuratedDataFilesProceedFromStep1EventChannel = new WidgetEventChannel(this);
 
 
 
@@ -68,6 +71,7 @@ public class UploadCuratedDataFilesWidget
 	@Override
 	public void refresh() {
 		log.enter("refresh");
+		
 		syncUIWithStudyEntry(studyEntry.get());
 		this.setVisible(true);
 		log.leave();	
@@ -80,6 +84,7 @@ public class UploadCuratedDataFilesWidget
 		
 		this.clear();
 		this.add(uiBinder.createAndBindUi(this));
+		
 
 		log.leave();
 	}
@@ -88,6 +93,8 @@ public class UploadCuratedDataFilesWidget
 	@Override
 	protected void bindUI() {
 		super.bindUI();
+
+		// Much the same as registerHandlersForChildWidgetEvents in ChassisWidgetRenderer
 
 
 		// Model changes
@@ -114,14 +121,24 @@ public class UploadCuratedDataFilesWidget
 	
 	}
 
+
+
+	
+	
+
+	
+
 	@Override
 	protected void syncUI() {
 		log.enter("syncUI");
-        syncUIWithStudyEntry(studyEntry.get());
+		syncUIWithStudyEntry(studyEntry.get());
 		errorPanel.setVisible(false);	
 		contentPanel.setVisible(true);
+		this.setVisible(true);
 		log.leave();
     }
+
+
 
 
 	protected void syncUIWithMessage(String message) {
@@ -144,5 +161,6 @@ public class UploadCuratedDataFilesWidget
 		this.uploadCuratedDataFilesPanel.add(strongWidget("syncUIWithStudyEntry"));
 		log.leave();
 	}
+
 
 }
