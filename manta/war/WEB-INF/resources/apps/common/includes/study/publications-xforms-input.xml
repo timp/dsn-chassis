@@ -22,7 +22,7 @@
                             nodeset="publication" 
                             at="1" 
                             position="before" 
-                            origin="instance('publication-template')"/>
+                            origin="instance('ins-publication-template')"/>
                     </xforms:trigger>
                 </td>
                 <td class="add-td">
@@ -34,7 +34,7 @@
                             nodeset="publication" 
                             at="1" 
                             position="before" 
-                            origin="instance('publication-template')"/>
+                            origin="instance('ins-publication-template')"/>
                     </xforms:trigger>
                 </td>
             </tr>

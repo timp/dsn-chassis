@@ -30,7 +30,7 @@
         		<params/>
         	</xforms:instance>
             
-            <xforms:instance id="current-user">
+            <xforms:instance id="ins-current-user">
             	<user xmlns="">
        				<name/>
        				<roles/>
@@ -39,13 +39,13 @@
            	
 			<xforms:action 
            		ev:event="xforms-model-construct-done">
-           		<xforms:setvalue ref="instance('current-user')/name" value="xxforms:get-remote-user()"/>
+           		<xforms:setvalue ref="instance('ins-current-user')/name" value="xxforms:get-remote-user()"/>
 			</xforms:action>
 
 			<xforms:action 
 				ev:event="xforms-model-construct-done">
 			    <xforms:insert 
-		    	 	nodeset="instance('current-user')/roles" 
+		    	 	nodeset="instance('ins-current-user')/roles" 
 			     	at="1" 
 			     	position="before" 
 			     	origin="xxforms:get-request-attribute('user-roles-xml')"/>
@@ -96,7 +96,7 @@
     <body>
     	<h1>Submitter - Study <xforms:output value="instance('util')/code"/></h1>
 
-    	<div id="home-nav">Links: <a href="home">Submitter Home</a> | <xforms:output value="instance('current-user')/name"/></div>
+    	<div id="home-nav">Links: <a href="home">Submitter Home</a> | <xforms:output value="instance('ins-current-user')/name"/></div>
     	
     	<div id="content">
     	
