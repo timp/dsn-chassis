@@ -26,6 +26,7 @@
     <head>
         <title>WWARN Data Management - Submitter - Study <xforms:output value="instance('ins-study-entry')/manta:id"/></title>
         <link rel="stylesheet" type="text/css" href="/apps/submitter/common/style.css"></link>
+        <link rel="stylesheet" type="text/css" href="/ops/yui/tabview/assets/skins/sam/tabview.css"></link>
         <style type="text/css"></style>
         
         <xforms:model id="mod-main">
@@ -39,7 +40,7 @@
 			</xforms:instance>
 			
 			<xforms:submission 
-				id="sub-get-study-feed"
+				id="sub-get-study-entry"
 				action="{xxforms:get-request-parameter('study')}"
 				method="get"
 				replace="instance"
@@ -47,6 +48,10 @@
 				ref="instance('ins-noparams')">
                 <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('response-status-code')"/>) while retrieving the study.</xforms:message>
 				<xforms:send ev:event="xforms-submit-done" submission="sub-get-submitted-media-feed"/>
+				
+				<!-- copy result across to study questionnaire model -->
+				<xforms:insert ev:event="xforms-submit-done" nodeset="xxforms:instance('ins-sq-study-entry')" origin="instance('ins-study-entry')"/>
+				
 			</xforms:submission>
 
 			<xforms:submission
@@ -58,14 +63,15 @@
                 <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('response-status-code')"/>) while retrieving the submitted media.</xforms:message>
 			</xforms:submission>
 
-			<xforms:send ev:event="xforms-model-construct-done" submission="sub-get-study-feed"/>
+			<xforms:send ev:event="xforms-model-construct-done" submission="sub-get-study-entry"/>
 
         	<xforms:instance id="ins-noparams">
-        		<params/>
+        		<params xmlns=""/>
         	</xforms:instance>
             
         </xforms:model>
         
+		<xi:include href="/apps/common/includes/study/questionnaire-xforms-model.xml"/>
        	<xi:include href="/apps/common/includes/current-user-xforms-model.xml"/>
         
     </head>
@@ -73,45 +79,56 @@
     	<h1>Submitter - Study <xforms:output value="instance('ins-study-entry')/manta:id"/></h1>
 
     	<div id="home-nav">Links: <a href="home">Submitter Home</a> | <xforms:output model="mod-current-user" value="instance('ins-current-user')/name"/></div>
+
+		<h2 class="subtitle"><xforms:output value="instance('ins-study-entry')/atom:title"/></h2>
     	
     	<div id="content">
     	
-    		<xforms:group ref="instance('ins-study-entry')">
-	    		<p><xforms:output value="atom:title"><xforms:label class="fixed-width">Title:</xforms:label></xforms:output></p>
-	    		<p><xforms:output value="manta:id"><xforms:label class="fixed-width">Code:</xforms:label></xforms:output></p>
-    		</xforms:group>
+    		<div class="yui-navset yui-navset-top">
+    			<ul class="yui-nav">
+    				<li class="selected">
+    					<a href="TODO">
+    						<em>Info</em>
+   						</a>
+    				</li>
+    				<li>
+    					<a href="TODO">
+	    					<em>Files</em>
+    					</a>
+   					</li>
+    				<li>
+    					<a href="TODO">
+	    					<em>Questionnaire</em>
+    					</a>
+   					</li>
+    			</ul>
+    			<div class="yui-content">
+    				<xforms:group ref="instance('ins-study-entry')">
+
+	    				<p>
+							<xforms:output ref="atom:title">
+								<xforms:label class="fixed-width">Title:</xforms:label>
+							</xforms:output>	    					
+	    				</p>	
+    				
+	    				<p>
+							<xforms:output ref="manta:id">
+								<xforms:label class="fixed-width">Unique study code:</xforms:label>
+							</xforms:output>	    					
+	    				</p>	
+	    				
+	    				<p>
+							<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[M01]/[D01]/[Y]')">
+								<xforms:label class="fixed-width">Created:</xforms:label>
+							</xforms:output>	    					
+	    				</p>	
+    				
+	    				
+    				
+    				</xforms:group>
+    			</div>
+    		</div>
     		
-	    	<p>Links: <a href="submit-files?study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">Submit Files</a> | <a href="study-questionnaire?study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">Study Questionnaire</a></p>
-    		
-    		<h2>Submitted Files</h2>
-    		
-	    	<fr:datatable paginated="false">
-	    		<thead>
-	    			<tr>
-	    				<th>Code</th>
-	    				<th>Original File Name</th>
-	    				<th>Submitted</th>
-	    				<th>Actions</th>
-	    			</tr>
-	    		</thead>
-	    		<tbody>
-	    			<xforms:repeat nodeset="instance('ins-submitted-media-feed')/atom:entry">
-	    				<tr>
-	    					<td>
-	    						<xforms:output ref="manta:id"/>
-	    					</td>
-	    					<td>
-	    						<xforms:output ref="atom:title"/>
-	    					</td>
-	    					<td>
-	    						<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[M01]/[D01]/[Y]')"/>
-	    					</td>
-	    					<td><a href="{atom:content/@src}">Download</a></td>
-	    				</tr>
-	    			</xforms:repeat>
-	    		</tbody>
-	    	</fr:datatable>
-	    	
     	</div>
     </body>
 </html>

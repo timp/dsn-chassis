@@ -23,9 +23,12 @@
   
   <page path-info="/submitter/submit-files" view="submit-files.xhtml"/>
   
-  <page path-info="/submitter/view-study" view="view-study.xhtml"/>
-  
+  <page path-info="/submitter/study-summary" view="study-summary.xhtml"/>
+  <page path-info="/submitter/study-files" view="study-files.xhtml"/>
   <page path-info="/submitter/study-questionnaire" view="study-questionnaire.xhtml"/>
+  <page path-info="/submitter/study-publications" view="study-publications.xhtml"/>
+  <page path-info="/submitter/study-permissions" view="study-permissions.xhtml"/>
+  
   
   <epilogue url="oxf:/config/epilogue.xpl"/>
 
