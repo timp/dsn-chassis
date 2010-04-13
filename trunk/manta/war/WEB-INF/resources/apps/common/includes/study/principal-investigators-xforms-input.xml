@@ -22,7 +22,7 @@
                             nodeset="person" 
                             at="1" 
                             position="before" 
-                            origin="instance('person-template')"/>
+                            origin="instance('ins-person-template')"/>
                     </xforms:trigger>
                 </td>
                 <td class="add-td">
@@ -34,7 +34,7 @@
                             nodeset="person" 
                             at="1" 
                             position="before" 
-                            origin="instance('person-template')"/>
+                            origin="instance('ins-person-template')"/>
                     </xforms:trigger>
                 </td>
             </tr>

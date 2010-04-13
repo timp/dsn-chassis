@@ -22,7 +22,7 @@
                             nodeset="site" 
                             at="1" 
                             position="before" 
-                            origin="instance('site-template')"/>
+                            origin="instance('ins-site-template')"/>
                     </xforms:trigger>
                 </td>
                 <td class="add-td">
@@ -34,11 +34,11 @@
                             nodeset="site" 
                             at="1" 
                             position="before" 
-                            origin="instance('site-template')"/>
+                            origin="instance('ins-site-template')"/>
                     </xforms:trigger>
                 </td>
             </tr>
-            <xforms:repeat nodeset="site" id="site-repeat">
+            <xforms:repeat nodeset="site" id="rep-site">
                 <tr>
                     <td>
                         <xforms:trigger appearance="minimal">
@@ -46,46 +46,59 @@
                                 ev:event="DOMActivate" 
                                 context="." 
                                 nodeset="." 
-                                at="index('site-repeat')"/>
+                                at="index('rep-site')"/>
                             <xforms:label><img src="/apps/submitter/common/remove.gif"/></xforms:label>
                         </xforms:trigger>
                     </td>
                     <td class="form-td">
                         <xforms:select1 ref="country">
                             <xforms:label/>
-                            <xforms:itemset nodeset="instance('countries-items')/country">
+                            <xforms:itemset nodeset="instance('ins-countries-items')/country">
                                 <xforms:label ref="label"/>
                                 <xforms:value ref="value"/>
                             </xforms:itemset>
                         </xforms:select1>
                         <br/>
-                        <xforms:group ref="instance('countries-items')/country[value/text()=xxforms:context('site-repeat')/country/text()]/regions">
-                            <xforms:select1 ref="xxforms:context('site-repeat')/region">
+                        
+                        <!-- if the country has regions, use a select1 -->
+                        <xforms:group ref="
+                            .[country/text() = instance('ins-countries-items')/country[exists(regions)]/value/text()]">
+
+                            <xforms:select1 ref="region">
                                 <xforms:label class="fixed-width">Region: </xforms:label>
-                                <xforms:itemset nodeset="instance('countries-items')/country[value/text()=xxforms:context('site-repeat')/country/text()]//region">
+                                <xforms:itemset nodeset="instance('ins-countries-items')/country[value/text()=xxforms:context('rep-site')/country/text()]//region">
                                     <xforms:label ref="label"/>
                                     <xforms:value ref="value"/>
                                 </xforms:itemset>
                             </xforms:select1>
-                            <br/>
+
                         </xforms:group>
-                        <xforms:group ref="instance('countries-items')/country[value/text()=xxforms:context('site-repeat')/country/text() and empty(regions)]">
-                            <xforms:input ref="xxforms:context('site-repeat')/region">
+                        
+                        <!-- if the country has no regions, use an input -->
+                        <xforms:group ref="
+                            .[empty(country/text()) or country/text() = instance('ins-countries-items')/country[empty(regions)]/value/text()]">
+                            <xforms:input ref="region">
                                 <xforms:label class="fixed-width">Region: </xforms:label>
                             </xforms:input>
-                            <br/>
+
                         </xforms:group>
+
+                        <br/>
+                        
                         <xforms:input ref="district">
                             <xforms:label class="fixed-width">District: </xforms:label>
                         </xforms:input>
                         <br/>
+                        
                         <xforms:input ref="locality">
                             <xforms:label class="fixed-width">Locality: </xforms:label>
                         </xforms:input>
                         <br/>
+                        
                         <xforms:input ref="user-code">
                             <xforms:label class="fixed-width">Your site code:</xforms:label>
                         </xforms:input>
+                        
                     </td>
                 </tr>
             </xforms:repeat>

@@ -25,7 +25,7 @@
     
     <head>
     
-        <title>WWARN Data Management - Submitter - Study <xforms:output model="mod-main" value="instance('util')/code"/> - Questionnaire</title>
+        <title>WWARN Data Management - Submitter - Study <xforms:output model="mod-main" value="instance('ins-study-entry')/manta:id"/> - Questionnaire</title>
         <link rel="stylesheet" type="text/css" href="/apps/submitter/common/style.css"></link>
         <style type="text/css"></style>
 
@@ -40,35 +40,34 @@
        		</xforms:bind>
        	
        		<xforms:instance id="ins-publication-template" src="/apps/common/templates/study/publication-template.xml"/>
-       		<!-- TODO finish normalising ids -->
-       		<xforms:instance id="person-template" src="/apps/common/templates/study/person-template.xml"/>
-       		<xforms:instance id="pathogens-items" src="/apps/common/constants/pathogens.xml"/>
-       		<xforms:instance id="site-template" src="/apps/common/templates/study/site-template.xml"/>
-       		<xforms:instance id="countries-items" src="/apps/common/constants/countries.xml"/>
-       		<xforms:instance id="modules-items" src="/apps/common/constants/modules.xml"/>
+       		<xforms:instance id="ins-person-template" src="/apps/common/templates/study/person-template.xml"/>
+       		<xforms:instance id="ins-pathogens-items" src="/apps/common/constants/pathogens.xml"/>
+       		<xforms:instance id="ins-site-template" src="/apps/common/templates/study/site-template.xml"/>
+       		<xforms:instance id="ins-countries-items" src="/apps/common/constants/countries.xml"/>
+       		<xforms:instance id="ins-modules-items" src="/apps/common/constants/modules.xml"/>
        		
 
 			<xforms:submission 
 				id="sub-get-study-entry"
-				action="{xxforms:get-request-parameter('study')}"
+				resource="{xxforms:get-request-parameter('study')}"
 				method="get"
 				replace="instance"
 				instance="ins-study-entry"
 				ref="instance('ins-noparams')">
-                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<output value="event('response-status-code')"/>) while retrieving the study.</xforms:message>
+                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('response-status-code')"/>) while retrieving the study.</xforms:message>
 			</xforms:submission>
 
 			<xforms:send ev:event="xforms-model-construct-done" submission="sub-get-study-entry"/>
 			
 			<xforms:submission
 				id="sub-put-study-entry"
-				action="{instance('ins-study-entry')/atom:link[@rel='edit']/@href}"
+				resource="{instance('ins-study-entry')/atom:link[@rel='edit']/@href}"
 				method="put"
 				replace="instance"
 				instance="ins-study-entry"
 				ref="instance('ins-study-entry')"
 				mediatype="application/atom+xml">
-                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<output value="event('response-status-code')"/>) while saving the study.</xforms:message>
+                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('response-status-code')"/>) while saving the study.</xforms:message>
                 <xforms:message ev:event="xforms-submit-done" level="modal">Your changes have been saved, thank you.</xforms:message>
 			</xforms:submission>
 
@@ -102,6 +101,7 @@
     					<xforms:label>Save Changes</xforms:label>
     				</xforms:submit>
     			</p>
+    			
 				<xforms:group ref="atom:content/study">
 				
 		    		<h2>General Questions</h2>
@@ -133,7 +133,7 @@
 					<p>
 						<xforms:select ref="pathogens" appearance="full">
 							<xforms:label/>
-							<xforms:itemset nodeset="instance('pathogens-items')/pathogen">
+							<xforms:itemset nodeset="instance('ins-pathogens-items')/pathogen">
 								<xforms:label ref="label"/>
 								<xforms:value ref="value"/>
 							</xforms:itemset>
@@ -149,7 +149,7 @@
 					<p>
 						<xforms:select ref="modules" appearance="full">
 							<xforms:label/>
-							<xforms:itemset nodeset="instance('modules-items')/module">
+							<xforms:itemset nodeset="instance('ins-modules-items')/module">
 								<xforms:label ref="label"/>
 								<xforms:value ref="value"/>
 							</xforms:itemset>
