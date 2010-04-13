@@ -50,8 +50,9 @@
             <xforms:bind nodeset="instance('ins-control')">
                 <xforms:bind nodeset="back" readonly="true()"/>
                 <xforms:bind nodeset="next-upload" readonly="instance('ins-form-data')/study = ''"/>
-                <xforms:bind nodeset="next-confirm" readonly="count(instance('ins-form-data')//upload) = 0 or instance('ins-form-data')//upload = ''"/>
-                <xforms:bind nodeset="upload-files" relevant="count(instance('ins-form-data')//upload[. = '']) > 0"/>
+                <xforms:bind nodeset="next-confirm" readonly="empty(instance('ins-form-data')//upload) or exists(instance('ins-form-data')//upload[empty(text())])"/>
+                
+                <!-- <xforms:bind nodeset="upload-files" relevant="exists(instance('ins-form-data')//upload[empty(text())])"/> -->
                 <xforms:bind nodeset="confirm" readonly="instance('ins-form-data')/accept-terms != true()"/>
             </xforms:bind>
 
@@ -108,6 +109,7 @@
 				<xforms:bind nodeset="uploads">
 					<xforms:bind nodeset="@target" calculate="instance('ins-study-feed')/atom:entry[atom:id=instance('ins-form-data')/study]/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/submittedMedia']/@href"/>	
 					<xforms:bind nodeset="upload">
+						<xforms:bind nodeset="@typeterm" relevant="not(empty(../text()))" required="true()"/>
 						<xforms:bind nodeset="@typelabel" relevant="../@typeterm='http://www.cggh.org/2010/chassis/terms/Other'"/>
 					</xforms:bind>
 				</xforms:bind>
@@ -142,6 +144,8 @@
 				action="http://localhost:8081/manta/util/store-uploads"
 				replace="instance"
 				instance="ins-confirmation">
+				<!-- TODO proper error handling -->
+                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>).</xforms:message>
                 <xforms:toggle ev:event="xforms-submit-done" case="success"/>
 			</xforms:submission>
 				
@@ -222,14 +226,11 @@
 		                        		<xforms:value/>
 		                        	</xforms:item>	
 		                        	<xforms:itemset nodeset="instance('ins-study-feed')/atom:entry">
-		                        		<xforms:label ref="concat( atom:title , ' (' , manta:id , ')' )"/>
+		                        		<xforms:label ref="concat( manta:id , ' - ' , atom:title )"/>
 		                        		<xforms:value ref="atom:link[@rel='self']/@href"/>
 		                        	</xforms:itemset>
 	                        	</xforms:select1>
 		                        
-		                        <p>
-		                        	
-		                        </p>
 		                    </td>
 		                </tr>
 		                <tr>
@@ -384,12 +385,14 @@
 		                <tr>
 		                    <td>
 		                    	<h2>Study</h2>
-		                    	<p>
-		                    		<strong>
-		                    		<xforms:output value="replace( instance('ins-form-data')/study/text() , '^.*/([^/^.]+)\.atom$', '$1')"/>
-		                    		(<xforms:output value="instance('ins-study-feed')/atom:entry[atom:id = instance('ins-form-data')/study]/atom:title"/>)
-		                    		</strong>
-		                    	</p>
+		                    	<xforms:group ref="instance('ins-study-feed')/atom:entry[atom:link[@rel='self']/@href = instance('ins-form-data')/study]">
+			                    	<p>
+			                    		<strong>
+			                    		<xforms:output value="manta:id"/> -
+			                    		<xforms:output value="atom:title"/>
+			                    		</strong>
+			                    	</p>
+		                    	</xforms:group>
 		                    	<h2>Files</h2>
 								<xforms:group ref="instance('ins-form-data')/uploads">
 								
@@ -459,7 +462,7 @@
 			    			<xforms:repeat nodeset="instance('ins-confirmation')/atom:entry">
 			    				<tr>
 			    					<td>
-			    						<xforms:output ref="replace( atom:id/text() , '^.*/([^/^.]+)\.atom$', '$1' )"/>
+			    						<xforms:output ref="manta:id"/>
 			    					</td>
 			    					<td>
 			    						<xforms:output ref="atom:title"/>

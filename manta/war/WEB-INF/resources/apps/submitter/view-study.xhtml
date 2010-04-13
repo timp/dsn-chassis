@@ -19,93 +19,69 @@
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:ev="http://www.w3.org/2001/xml-events"
     xmlns:atom="http://www.w3.org/2005/Atom"
-    xmlns:fr="http://orbeon.org/oxf/xml/form-runner">
+    xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:manta="http://www.cggh.org/2010/chassis/manta/xmlns">
+    
     <head>
-        <title>WWARN Data Management - Submitter - Study <xforms:output value="instance('util')/code"/></title>
+        <title>WWARN Data Management - Submitter - Study <xforms:output value="instance('ins-study-entry')/manta:id"/></title>
         <link rel="stylesheet" type="text/css" href="/apps/submitter/common/style.css"></link>
         <style type="text/css"></style>
-        <xforms:model>
         
-        	<xforms:instance id="empty">
-        		<params/>
-        	</xforms:instance>
-            
-            <xforms:instance id="ins-current-user">
-            	<user xmlns="">
-       				<name/>
-       				<roles/>
-            	</user>
-           	</xforms:instance>
-           	
-			<xforms:action 
-           		ev:event="xforms-model-construct-done">
-           		<xforms:setvalue ref="instance('ins-current-user')/name" value="xxforms:get-remote-user()"/>
-			</xforms:action>
-
-			<xforms:action 
-				ev:event="xforms-model-construct-done">
-			    <xforms:insert 
-		    	 	nodeset="instance('ins-current-user')/roles" 
-			     	at="1" 
-			     	position="before" 
-			     	origin="xxforms:get-request-attribute('user-roles-xml')"/>
-			</xforms:action>
-			
-			<xforms:instance id="study">
+        <xforms:model id="mod-main">
+        
+			<xforms:instance id="ins-study-entry">
 				<atom:entry/>
 			</xforms:instance>
 			
-			<xforms:instance id="submitted-media">
+			<xforms:instance id="ins-submitted-media-feed">
 				<atom:feed/>
 			</xforms:instance>
 			
-			<xforms:instance id="util">
-				<util xmlns="">
-					<code/>
-				</util>
-			</xforms:instance>
-			
-			<xforms:bind nodeset="instance('util')">
-				<xforms:bind nodeset="code" calculate="replace( instance('study')/atom:id/text() , '^.*/([^/^.]+)\.atom$', '$1')"/>
-			</xforms:bind>
-			
 			<xforms:submission 
-				id="get-study-submission"
+				id="sub-get-study-feed"
 				action="{xxforms:get-request-parameter('study')}"
 				method="get"
 				replace="instance"
-				instance="study"
-				ref="instance('empty')">
-                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<output value="event('response-status-code')"/>) while retrieving the study.</xforms:message>
-				<xforms:send ev:event="xforms-submit-done" submission="get-submitted-media"/>
+				instance="ins-study-entry"
+				ref="instance('ins-noparams')">
+                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('response-status-code')"/>) while retrieving the study.</xforms:message>
+				<xforms:send ev:event="xforms-submit-done" submission="sub-get-submitted-media-feed"/>
 			</xforms:submission>
 
 			<xforms:submission
-				id="get-submitted-media"
-				action="{instance('study')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/submittedMedia']/@href}"
+				id="sub-get-submitted-media-feed"
+				action="{instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/submittedMedia']/@href}"
 				method="get"
 				replace="instance"
-				instance="submitted-media">
-                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<output value="event('response-status-code')"/>) while retrieving the submitted media.</xforms:message>
+				instance="ins-submitted-media-feed">
+                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('response-status-code')"/>) while retrieving the submitted media.</xforms:message>
 			</xforms:submission>
 
-			<xforms:send ev:event="xforms-model-construct-done" submission="get-study-submission"/>
+			<xforms:send ev:event="xforms-model-construct-done" submission="sub-get-study-feed"/>
 
+        	<xforms:instance id="ins-noparams">
+        		<params/>
+        	</xforms:instance>
+            
         </xforms:model>
+        
+       	<xi:include href="/apps/common/includes/current-user-xforms-model.xml"/>
+        
     </head>
     <body>
-    	<h1>Submitter - Study <xforms:output value="instance('util')/code"/></h1>
+    	<h1>Submitter - Study <xforms:output value="instance('ins-study-entry')/manta:id"/></h1>
 
-    	<div id="home-nav">Links: <a href="home">Submitter Home</a> | <xforms:output value="instance('ins-current-user')/name"/></div>
+    	<div id="home-nav">Links: <a href="home">Submitter Home</a> | <xforms:output model="mod-current-user" value="instance('ins-current-user')/name"/></div>
     	
     	<div id="content">
     	
-    		<xforms:group ref="instance('study')">
+    		<xforms:group ref="instance('ins-study-entry')">
 	    		<p><xforms:output value="atom:title"><xforms:label class="fixed-width">Title:</xforms:label></xforms:output></p>
-	    		<p><xforms:output value="instance('util')/code"><xforms:label class="fixed-width">Code:</xforms:label></xforms:output></p>
+	    		<p><xforms:output value="manta:id"><xforms:label class="fixed-width">Code:</xforms:label></xforms:output></p>
     		</xforms:group>
     		
-	    	<p>Links: <a href="submit-files?study={instance('study')/atom:link[@rel='edit']/@href}">Submit Files</a> | <a href="study-questionnaire?study={instance('study')/atom:link[@rel='edit']/@href}">Study Questionnaire</a></p>
+	    	<p>Links: <a href="submit-files?study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">Submit Files</a> | <a href="study-questionnaire?study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">Study Questionnaire</a></p>
     		
     		<h2>Submitted Files</h2>
     		
@@ -119,10 +95,10 @@
 	    			</tr>
 	    		</thead>
 	    		<tbody>
-	    			<xforms:repeat nodeset="instance('submitted-media')/atom:entry">
+	    			<xforms:repeat nodeset="instance('ins-submitted-media-feed')/atom:entry">
 	    				<tr>
 	    					<td>
-	    						<xforms:output ref="replace( atom:id/text() , '^.*/([^/^.]+)\.atom$', '$1' )"/>
+	    						<xforms:output ref="manta:id"/>
 	    					</td>
 	    					<td>
 	    						<xforms:output ref="atom:title"/>
