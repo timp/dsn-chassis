@@ -61,24 +61,51 @@
                             <xforms:alert>The first author is required.</xforms:alert>
                         </xforms:input>
                         <br/>
-                        <xforms:input ref="year">
-                            <xforms:label class="fixed-width">Year:</xforms:label>
-                            <xforms:alert>The year is required and must be a four digit number.</xforms:alert>
-                        </xforms:input>
-                        <br/>
-                        <xforms:input ref="journal">
-                            <xforms:label class="fixed-width">Journal:</xforms:label>
-                            <xforms:alert>The journal is required.</xforms:alert>
-                        </xforms:input>
-                        <br/>
-                        <xforms:input ref="url">
-                            <xforms:label class="fixed-width">Web link:</xforms:label>
-                        </xforms:input>
-                        <br/>
-                        <xforms:input ref="doi">
-                            <xforms:label class="fixed-width">DOI:</xforms:label>
-                        </xforms:input>
-                        <br/>
+                        <xforms:select1 ref="status" appearance="minimal">
+                            <xforms:label class="fixed-width">Status:</xforms:label>
+                            <xforms:alert>Please select a publication status.</xforms:alert>
+                            <xforms:item>
+                                <xforms:label>select publication status...</xforms:label>
+                                <xforms:value></xforms:value>
+                            </xforms:item>
+                            <xforms:item>
+                                <xforms:label>Published</xforms:label>
+                                <xforms:value>published</xforms:value>
+                            </xforms:item>
+                            <xforms:item>
+                                <xforms:label>In progress</xforms:label>
+                                <xforms:value>inprogress</xforms:value>
+                            </xforms:item>
+                            <xforms:item>
+                                <xforms:label>Unpublished</xforms:label>
+                                <xforms:value>unpublished</xforms:value>
+                            </xforms:item>
+                        </xforms:select1>
+                        <xforms:group ref=".[status='published']">
+                            <br/>
+                            <xforms:input ref="year">
+                                <xforms:label class="fixed-width">Year:</xforms:label>
+                                <xforms:alert>The year is required and must be a four digit number.</xforms:alert>
+                            </xforms:input>
+                            <br/>
+                            <xforms:input ref="journal">
+                                <xforms:label class="fixed-width">Journal:</xforms:label>
+                                <xforms:alert>The journal is required.</xforms:alert>
+                            </xforms:input>
+                            <br/>
+                            <xforms:input ref="url">
+                                <xforms:label class="fixed-width">Web link:</xforms:label>
+                            </xforms:input>
+                            <br/>
+                            <xforms:input ref="doi">
+                                <xforms:label class="fixed-width">DOI:</xforms:label>
+                            </xforms:input>
+                            <br/>
+                            <xforms:input ref="pubmed-id">
+                                <xforms:label class="fixed-width">PubMed ID:</xforms:label>
+                            </xforms:input>
+                            <br/>
+                        </xforms:group>
                     </td>
                 </tr>
             </xforms:repeat>

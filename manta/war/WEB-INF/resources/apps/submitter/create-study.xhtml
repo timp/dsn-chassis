@@ -127,6 +127,7 @@
        			<user xmlns=""></user>
   			</xforms:instance>
 
+       		<xforms:instance id="ins-person-template" src="/apps/common/templates/study/person-template.xml"/>
 			
 			
 			<!--+
@@ -264,7 +265,7 @@
 		            <table cellpadding="3">
 		                <tr>
 		                    <td rowspan="3" class="wizard-td">1</td>
-		                    <td colspan="1"><b>Step 1 of 4 - Study Title</b></td>
+		                    <td colspan="1"><b>Step 1 of 5 - Study Title</b></td>
 		                </tr>
 		                <tr>
 		                    <td>
@@ -284,7 +285,7 @@
 		                        </xforms:trigger>
 		                        <xforms:trigger>
 		                            <xforms:label>Next ></xforms:label>
-		                            <xforms:toggle ev:event="DOMActivate" case="publications"/>
+		                            <xforms:toggle ev:event="DOMActivate" case="acknowledgements"/>
 		                        </xforms:trigger>
 		                    </td>
 		                </tr>
@@ -296,7 +297,51 @@
 
 				<!--+
 					|
-					| Step 2 - Publications
+					| Step 3 - Acknowledgements
+					| *************************
+					|
+					+-->       		
+			       		
+	    		<xforms:case id="acknowledgements">
+	    		
+		            <table cellpadding="3">
+		                <tr>
+		                    <td rowspan="3" class="wizard-td">2</td>
+		                    <td colspan="1"><b>Step 2 of 5 - Acknowledgements</b></td>
+		                </tr>
+		                <tr>
+		                    <td>
+		                    
+			    				<xforms:group ref="instance('ins-study-entry')/atom:content/study">
+			
+			    					<xi:include href="/apps/common/includes/study/acknowledgements-xforms-input.xml"/>
+			    					
+			    				</xforms:group>
+
+		                    </td>
+		                </tr>
+		                <tr>
+		                    <td>
+		                        <xforms:trigger>
+		                            <xforms:label>&lt; Previous</xforms:label>
+		                            <xforms:toggle ev:event="DOMActivate" case="title"/>
+		                        </xforms:trigger>
+		                        <xforms:trigger>
+		                            <xforms:label>Next ></xforms:label>
+		                            <xforms:toggle ev:event="DOMActivate" case="publications"/>
+		                        </xforms:trigger>
+		                    </td>
+		                </tr>
+		            </table>
+		            
+	    		</xforms:case>
+
+
+
+
+				<!--+
+					|
+					| Step 3 - Publications
 					| *********************
 					|
 					+-->       		
@@ -305,8 +350,8 @@
 	    		
 		            <table cellpadding="3">
 		                <tr>
-		                    <td rowspan="3" class="wizard-td">2</td>
-		                    <td colspan="1"><b>Step 2 of 4 - Publications</b></td>
+		                    <td rowspan="3" class="wizard-td">3</td>
+		                    <td colspan="1"><b>Step 3 of 5 - Publications</b></td>
 		                </tr>
 		                <tr>
 		                    <td>
@@ -322,7 +367,7 @@
 		                    <td>
 		                        <xforms:trigger>
 		                            <xforms:label>&lt; Previous</xforms:label>
-		                            <xforms:toggle ev:event="DOMActivate" case="title"/>
+		                            <xforms:toggle ev:event="DOMActivate" case="acknowledgements"/>
 		                        </xforms:trigger>
 		                        <xforms:trigger>
 		                            <xforms:label>Next ></xforms:label>
@@ -338,7 +383,7 @@
 
 				<!--+
 					|
-					| Step 3 - Permissions
+					| Step 4 - Permissions
 					| ********************
 					|
 					+-->       		
@@ -346,8 +391,8 @@
 	    		<xforms:case id="permissions">
 		            <table cellpadding="3">
 		                <tr>
-		                    <td rowspan="3" class="wizard-td">3</td>
-		                    <td colspan="1"><b>Step 3 of 4 - Permissions</b></td>
+		                    <td rowspan="3" class="wizard-td">4</td>
+		                    <td colspan="1"><b>Step 4 of 5 - Permissions</b></td>
 		                </tr>
 		                <tr>
 		                    <td>
@@ -475,7 +520,7 @@
 
 				<!--+
 					|
-					| Step 4 - Confirm
+					| Step 5 - Confirm
 					| ****************
 					|
 					+-->       		
@@ -483,13 +528,32 @@
 	    		<xforms:case id="confirm">
 		            <table cellpadding="3">
 		                <tr>
-		                    <td rowspan="3" class="wizard-td">4</td>
-		                    <td colspan="1"><b>Step 4 of 4 - Review and Confirm</b></td>
+		                    <td rowspan="3" class="wizard-td">5</td>
+		                    <td colspan="1"><b>Step 5 of 5 - Review and Confirm</b></td>
 		                </tr>
 		                <tr>
 		                    <td>
 		                    	<h2>Study Title</h2>
 		                        <strong><xforms:output value="instance('ins-study-entry')/atom:title"/></strong>
+		                        
+		                        <h2>Acknowledgements</h2>
+		                        
+		                    	<xforms:group ref="instance('ins-study-entry')/atom:content/study/acknowledgements">
+		                    	
+									<table class="repeat-table">
+										<xforms:repeat nodeset="person">
+											<tr>
+												<td class="form-td">
+													<xforms:output value="given-name"/>
+													<xforms:output value="family-name"/>
+													- <xforms:output value="email"/>
+													- <xforms:output value="organisation"/>
+												</td>
+											</tr>
+										</xforms:repeat>
+									</table>
+									
+								</xforms:group>		                        
 		                        
 		                        <h2>Publications</h2>
 		                        

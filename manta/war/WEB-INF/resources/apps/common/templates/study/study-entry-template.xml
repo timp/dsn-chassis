@@ -4,9 +4,9 @@
     <atom:content type="application/vnd.chassis-manta+xml">
         <study xmlns="">
             <publications/>
+            <acknowledgements/>
             <start/>
             <end/>
-            <principal-investigators/>
             <pathogens/>
             <sites/>
             <modules/>

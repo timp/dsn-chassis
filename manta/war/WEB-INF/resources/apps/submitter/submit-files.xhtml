@@ -134,7 +134,8 @@
             	ref="instance('ins-form-data')/uploads" 
             	method="post" 
             	replace="none" 
-            	resource="test:"/>
+            	resource="test:"
+            	validate="false"/>
 
 			<!-- final submission -->
 			<xforms:submission 
@@ -313,6 +314,7 @@
 							                            <xforms:filename ref="@filename"/>
 							                            <xforms:mediatype ref="@mediatype"/>
 							                            <xxforms:size ref="@size"/>
+							                            <xforms:send ev:event="xforms-select" submission="sub-background-upload"/>
 							                        </xforms:upload>
 							                        <br/>
 							                        <!-- Download link -->
@@ -342,12 +344,6 @@
 										</xforms:repeat>
 									</table>
 									
-									<p>
-							            <xforms:submit submission="sub-background-upload" ref="instance('ins-control')/upload-files">
-							                <xforms:label>Upload Files</xforms:label>
-							            </xforms:submit>									
-									</p>
-								
 								</xforms:group>
 		                    </td>
 		                </tr>

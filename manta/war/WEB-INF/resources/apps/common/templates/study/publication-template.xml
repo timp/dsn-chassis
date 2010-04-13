@@ -1,8 +1,10 @@
 <publication xmlns="">
     <title/>
+    <status/>
     <first-author/>
     <year/>
     <journal/>
     <url/>
     <doi/>
+    <pubmed-id/>
 </publication>

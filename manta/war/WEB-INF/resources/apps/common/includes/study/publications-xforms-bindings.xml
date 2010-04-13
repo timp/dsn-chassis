@@ -9,8 +9,12 @@
             <!-- publication title, first author, year and journal are required -->
             <xforms:bind nodeset="title" required="true()"/>
             <xforms:bind nodeset="first-author" required="true()"/>
-            <xforms:bind nodeset="year" required="true()" type="xs:gYear"/>
-            <xforms:bind nodeset="journal" required="true()"/>
+            <xforms:bind nodeset="status" required="true()"/>
+            <xforms:bind nodeset="year"/>
+            <xforms:bind nodeset="journal"/>
+            <xforms:bind nodeset="url"/>
+            <xforms:bind nodeset="doi"/>
+            <xforms:bind nodeset="pubmed-id"/>
             
         </xforms:bind>
         
