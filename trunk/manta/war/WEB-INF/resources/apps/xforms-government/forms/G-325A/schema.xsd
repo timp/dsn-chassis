@@ -100,7 +100,7 @@
             <xs:element name="last-five-years">
                 <xs:complexType>
                     <xs:sequence>
-                        <xs:element name="residence" type="current-residence"/>
+                        <xs:element name="current-residence" type="residence"/>
                         <xs:sequence minOccurs="0" maxOccurs="5">
                             <xs:element name="residence" type="residence"/>
                         </xs:sequence>
@@ -144,7 +144,7 @@
             <xs:element name="last-five-years">
                 <xs:complexType>
                     <xs:sequence>
-                        <xs:element name="employment" type="current-employment"/>
+                        <xs:element name="current-employment" type="employment"/>
                         <xs:sequence minOccurs="0" maxOccurs="4">
                             <xs:element name="employment" type="employment"/>
                         </xs:sequence>
