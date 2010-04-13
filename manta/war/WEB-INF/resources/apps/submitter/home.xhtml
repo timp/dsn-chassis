@@ -41,13 +41,13 @@
 			
 			<xforms:submission 
 				id="sub-retrieve-study-feed"
-				resource="http://localhost:8081/manta/atombeat/content/studies"
+				resource="/atombeat/content/studies"
 				method="get"
 				ref="instance('ins-noparams')"
 				replace="instance"
 				instance="ins-study-feed">
 				<!-- TODO error handling -->
-                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<output value="event('response-status-code')"/>) while retrieving studies!</xforms:message>
+                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('response-status-code')"/>) while retrieving studies.</xforms:message>
 			</xforms:submission>
 			
 			<xforms:send 

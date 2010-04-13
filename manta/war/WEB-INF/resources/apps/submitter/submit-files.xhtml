@@ -21,82 +21,38 @@
     xmlns:ev="http://www.w3.org/2001/xml-events"
     xmlns:atom="http://www.w3.org/2005/Atom"
     xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
-	>
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:manta="http://www.cggh.org/2010/chassis/manta/xmlns">
 
     <head>
     
         <title>WWARN Data Management - Submitter - Submit Files</title>
         <link rel="stylesheet" type="text/css" href="/apps/submitter/common/style.css"></link>
         
-        <xforms:model>
-
-        	<xforms:instance id="empty">
-        		<params/>
-        	</xforms:instance>
-            
-
-       		
-			<!--+
-				|
-				| Instance to hold attributes of currently authenticated user.
-				|
-				+-->       		
-			       		
-            <xforms:instance id="ins-current-user">
-            	<user xmlns="">
-       				<name/>
-       				<roles/>
-            	</user>
-           	</xforms:instance>
-           	
-
+        <xforms:model id="mod-main">
 
 			<!--+
 				|
-				| Actions to populate attributes of current user on page construction.
+				| Control instance.
 				|
 				+-->       		
 			       		
-           <xforms:action 
-           		ev:event="xforms-model-construct-done">
-           		<xforms:setvalue ref="instance('ins-current-user')/name" value="xxforms:get-remote-user()"/>
-           </xforms:action>
-
-           <xforms:action 
-           		ev:event="xforms-model-construct-done">
-                <xforms:insert 
-                	nodeset="instance('ins-current-user')/roles" 
-                	at="1" 
-                	position="before" 
-                	origin="xxforms:get-request-attribute('user-roles-xml')"/>
-           </xforms:action>
-
-
-
-			<!--+
-				|
-				| Control instance to allow disabling of previous button at first step.
-				|
-				+-->       		
-			       		
-       		<xforms:instance id="control-instance">
-                <control-instance xmlns="">
+       		<xforms:instance id="ins-control">
+                <control xmlns="">
                     <back/>
-                    <finish readonly="false"/>
                     <next-upload/>
                     <upload-files/>
                     <next-confirm/>
                     <confirm/>
-                </control-instance>
+                </control>
             </xforms:instance>
         	
-            <xforms:bind nodeset="instance('control-instance')">
+            <xforms:bind nodeset="instance('ins-control')">
                 <xforms:bind nodeset="back" readonly="true()"/>
-                <xforms:bind nodeset="finish" readonly="@readonly = 'false'"/>
-                <xforms:bind nodeset="next-upload" readonly="instance('form-data')/study = ''"/>
-                <xforms:bind nodeset="next-confirm" readonly="count(instance('form-data')//upload) = 0 or instance('form-data')//upload = ''"/>
-                <xforms:bind nodeset="upload-files" relevant="count(instance('form-data')//upload[. = '']) > 0"/>
-                <xforms:bind nodeset="confirm" readonly="instance('form-data')/accept-terms != true()"/>
+                <xforms:bind nodeset="next-upload" readonly="instance('ins-form-data')/study = ''"/>
+                <xforms:bind nodeset="next-confirm" readonly="count(instance('ins-form-data')//upload) = 0 or instance('ins-form-data')//upload = ''"/>
+                <xforms:bind nodeset="upload-files" relevant="count(instance('ins-form-data')//upload[. = '']) > 0"/>
+                <xforms:bind nodeset="confirm" readonly="instance('ins-form-data')/accept-terms != true()"/>
             </xforms:bind>
 
 
@@ -107,21 +63,22 @@
 				|
 				+-->       		
 			       		
-			<xforms:instance id="study-feed">
+			<xforms:instance id="ins-study-feed">
 				<atom:feed/>
 			</xforms:instance>
 			
 			<xforms:submission 
-				id="retrieve-study-feed-submission"
-				action="http://localhost:8081/manta/atombeat/content/studies"
+				id="sub-get-study-feed"
+				resource="http://localhost:8081/manta/atombeat/content/studies"
 				method="get"
+				ref="instance('ins-noparams')"
 				replace="instance"
-				instance="study-feed">
-                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<output value="event('response-status-code')"/>) while retrieving studies!</xforms:message>
-			
+				instance="ins-study-feed">
+				<!-- TODO error handling -->
+                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('response-status-code')"/>) while retrieving studies!</xforms:message>
 			</xforms:submission>
 
-			<xforms:send ev:event="xforms-model-construct-done" submission="retrieve-study-feed-submission"/>
+			<xforms:send ev:event="xforms-model-construct-done" submission="sub-get-study-feed"/>
 
 
 
@@ -129,7 +86,7 @@
 				| Instance to store form data.
 				+ -->
 				
-			<xforms:instance id="form-data">
+			<xforms:instance id="ins-form-data">
 				<data xmlns="">
 					<study/>
 					<uploads target="">
@@ -145,18 +102,18 @@
 				</data>
 			</xforms:instance>
 			
-			<xforms:bind nodeset="instance('form-data')">
+			<xforms:bind nodeset="instance('ins-form-data')">
 				<xforms:bind nodeset="study" required="true()"/>	
 				<xforms:bind nodeset="accept-terms" type="xforms:boolean"/>	
 				<xforms:bind nodeset="uploads">
-					<xforms:bind nodeset="@target" calculate="instance('study-feed')/atom:entry[atom:id=instance('form-data')/study]/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/submittedMedia']/@href"/>	
+					<xforms:bind nodeset="@target" calculate="instance('ins-study-feed')/atom:entry[atom:id=instance('ins-form-data')/study]/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/submittedMedia']/@href"/>	
 					<xforms:bind nodeset="upload">
 						<xforms:bind nodeset="@typelabel" relevant="../@typeterm='http://www.cggh.org/2010/chassis/terms/Other'"/>
 					</xforms:bind>
 				</xforms:bind>
 			</xforms:bind>
 			
-			<xforms:instance id="upload-template">
+			<xforms:instance id="ins-upload-template">
 				<upload
 					xmlns=""
 					filename=""
@@ -167,32 +124,42 @@
 					xsi:type="xs:anyURI"></upload>
 			</xforms:instance>
 			
-			<xforms:instance id="file-terms" src="/apps/common/constants/file-terms.xml"/>
+			<xforms:instance id="ins-file-terms" src="/apps/common/constants/file-terms.xml"/>
 
             <!-- background upload submission -->
-            <xforms:submission id="background-submission" ref="instance('form-data')/uploads" method="post" replace="none" resource="test:"/>
+            <xforms:submission 
+            	id="sub-background-upload" 
+            	ref="instance('ins-form-data')/uploads" 
+            	method="post" 
+            	replace="none" 
+            	resource="test:"/>
 
 			<!-- final submission -->
 			<xforms:submission 
-				id="final-submission" 
-				ref="instance('form-data')/uploads" 
+				id="sub-confirm" 
+				ref="instance('ins-form-data')/uploads" 
 				method="post" 
 				action="http://localhost:8081/manta/util/store-uploads"
 				replace="instance"
-				instance="confirmation">
+				instance="ins-confirmation">
                 <xforms:toggle ev:event="xforms-submit-done" case="success"/>
 			</xforms:submission>
 				
-			<xforms:instance id="confirmation">
+			<xforms:instance id="ins-confirmation">
 				<atom:feed/>
 			</xforms:instance>
 			
 			<xforms:action ev:event="xforms-model-construct-done">
-           		<xforms:setvalue ref="instance('form-data')/study" value="xxforms:get-request-parameter('study')"/>
+           		<xforms:setvalue ref="instance('ins-form-data')/study" value="xxforms:get-request-parameter('study')"/>
 			</xforms:action>
 			
+        	<xforms:instance id="ins-noparams">
+        		<params/>
+        	</xforms:instance>
+            
         </xforms:model>
 
+       	<xi:include href="/apps/common/includes/current-user-xforms-model.xml"/>
 
         
         <style type="text/css">
@@ -212,7 +179,7 @@
 			|
 			+-->       		
     	
-    	<div id="home-nav">Links: <a href="home">Submitter Home</a> | <xforms:output value="instance('ins-current-user')/name"/></div>
+    	<div id="home-nav">Links: <a href="home">Submitter Home</a> | <xforms:output model="mod-current-user" value="instance('ins-current-user')/name"/></div>
     	
     	
     	
@@ -247,16 +214,16 @@
 		                    
 		                        <xforms:select1
 		                        	appearance="minimal"
-		                        	ref="instance('form-data')/study">
+		                        	ref="instance('ins-form-data')/study">
 		                        	<xforms:label/>
 		                        	<xforms:alert>A study must be selected.</xforms:alert>
 		                        	<xforms:item>
 		                        		<xforms:label>select a study...</xforms:label>
 		                        		<xforms:value/>
 		                        	</xforms:item>	
-		                        	<xforms:itemset nodeset="instance('study-feed')/atom:entry">
-		                        		<xforms:label ref="concat( atom:title , ' (' , replace( atom:id/text() , '^.*/([^/^.]+)\.atom$', '$1') , ')' )"/>
-		                        		<xforms:value ref="atom:id"/>
+		                        	<xforms:itemset nodeset="instance('ins-study-feed')/atom:entry">
+		                        		<xforms:label ref="concat( atom:title , ' (' , manta:id , ')' )"/>
+		                        		<xforms:value ref="atom:link[@rel='self']/@href"/>
 		                        	</xforms:itemset>
 	                        	</xforms:select1>
 		                        
@@ -267,10 +234,10 @@
 		                </tr>
 		                <tr>
 		                    <td>
-		                        <xforms:trigger ref="instance('control-instance')/back">
+		                        <xforms:trigger ref="instance('ins-control')/back">
 		                            <xforms:label>&lt; Previous</xforms:label>
 		                        </xforms:trigger>
-		                        <xforms:trigger ref="instance('control-instance')/next-upload">
+		                        <xforms:trigger ref="instance('ins-control')/next-upload">
 		                            <xforms:label>Next ></xforms:label>
 		                            <xforms:toggle ev:event="DOMActivate" case="upload"/>
 		                        </xforms:trigger>
@@ -298,7 +265,7 @@
 		                </tr>
 		                <tr>
 		                    <td>
-								<xforms:group ref="instance('form-data')/uploads">
+								<xforms:group ref="instance('ins-form-data')/uploads">
 								
 									<table class="repeat-table">
 										<tr>
@@ -307,11 +274,11 @@
 							                        <xforms:label><img src="/apps/submitter/common/add.gif"/></xforms:label>
 							                        <xforms:insert 
 							                        	ev:event="DOMActivate" 
-							                        	context="instance('form-data')/uploads" 
+							                        	context="instance('ins-form-data')/uploads" 
 							                        	nodeset="upload" 
 							                        	at="1" 
 							                        	position="before" 
-							                        	origin="instance('upload-template')"/>
+							                        	origin="instance('ins-upload-template')"/>
 							                    </xforms:trigger>
 											</td>
 											<td class="add-td">
@@ -319,11 +286,11 @@
 							                        <xforms:label>Add a File</xforms:label>
 							                        <xforms:insert 
 							                        	ev:event="DOMActivate" 
-							                        	context="instance('form-data')/uploads" 
+							                        	context="instance('ins-form-data')/uploads" 
 							                        	nodeset="upload" 
 							                        	at="1" 
 							                        	position="before" 
-							                        	origin="instance('upload-template')"/>
+							                        	origin="instance('ins-upload-template')"/>
 							                    </xforms:trigger>
 											</td>
 										</tr>
@@ -333,7 +300,7 @@
 							                        <xforms:trigger appearance="minimal">
 							                            <xforms:delete 
 							                            	ev:event="DOMActivate" 
-								                        	context="instance('form-data')/uploads" 
+								                        	context="instance('ins-form-data')/uploads" 
 								                        	nodeset="upload" 
 							                            	at="index('upload-repeat')"/>
 							                            <xforms:label><img src="/apps/submitter/common/remove.gif"/></xforms:label>
@@ -360,7 +327,7 @@
 															<xforms:value></xforms:value>
 															<xforms:label>select a file type...</xforms:label>
 														</xforms:item>
-							                        	<xforms:itemset nodeset="instance('file-terms')/term">
+							                        	<xforms:itemset nodeset="instance('ins-file-terms')/term">
 							                        		<xforms:label ref="label"/>
 							                        		<xforms:value ref="value"/>
 							                        	</xforms:itemset>
@@ -375,7 +342,7 @@
 									</table>
 									
 									<p>
-							            <xforms:submit submission="background-submission" ref="instance('control-instance')/upload-files">
+							            <xforms:submit submission="sub-background-upload" ref="instance('ins-control')/upload-files">
 							                <xforms:label>Upload Files</xforms:label>
 							            </xforms:submit>									
 									</p>
@@ -389,7 +356,7 @@
 		                            <xforms:label>&lt; Previous</xforms:label>
 		                            <xforms:toggle ev:event="DOMActivate" case="study"/>
 		                        </xforms:trigger>
-		                        <xforms:trigger ref="instance('control-instance')/next-confirm">
+		                        <xforms:trigger ref="instance('ins-control')/next-confirm">
 		                            <xforms:label>Next ></xforms:label>
 		                            <xforms:toggle ev:event="DOMActivate" case="confirm"/>
 		                        </xforms:trigger>
@@ -419,19 +386,19 @@
 		                    	<h2>Study</h2>
 		                    	<p>
 		                    		<strong>
-		                    		<xforms:output value="replace( instance('form-data')/study/text() , '^.*/([^/^.]+)\.atom$', '$1')"/>
-		                    		(<xforms:output value="instance('study-feed')/atom:entry[atom:id = instance('form-data')/study]/atom:title"/>)
+		                    		<xforms:output value="replace( instance('ins-form-data')/study/text() , '^.*/([^/^.]+)\.atom$', '$1')"/>
+		                    		(<xforms:output value="instance('ins-study-feed')/atom:entry[atom:id = instance('ins-form-data')/study]/atom:title"/>)
 		                    		</strong>
 		                    	</p>
 		                    	<h2>Files</h2>
-								<xforms:group ref="instance('form-data')/uploads">
+								<xforms:group ref="instance('ins-form-data')/uploads">
 								
 									<table class="repeat-table">
 										<xforms:repeat nodeset="upload" id="output-upload-repeat">
 											<tr>
 												<td class="form-td">
 							                        <xforms:output value="@filename"/>
-							                        (<xforms:output value="instance('file-terms')/term[value=xxforms:context('output-upload-repeat')/@typeterm]/label"/>)
+							                        (<xforms:output value="instance('ins-file-terms')/term[value=xxforms:context('output-upload-repeat')/@typeterm]/label"/>)
 							                        <br/>
 							                        <!-- Download link -->
 							                        <xforms:output value="." appearance="xxforms:download">
@@ -445,7 +412,7 @@
 									</table>
 								</xforms:group>
 								<h2>Terms of Submission</h2>
-		                    	<xforms:input ref="instance('form-data')/accept-terms">
+		                    	<xforms:input ref="instance('ins-form-data')/accept-terms">
 		                    		<xforms:label>I have read and understood the <a href="TODO">terms of submission</a>:</xforms:label>
 		                    	</xforms:input>
 		                    </td>
@@ -456,7 +423,7 @@
 		                            <xforms:label>&lt; Previous</xforms:label>
 		                            <xforms:toggle ev:event="DOMActivate" case="upload"/>
 		                        </xforms:trigger>
-			                    <xforms:submit submission="final-submission" ref="instance('control-instance')/confirm">
+			                    <xforms:submit submission="sub-confirm" ref="instance('ins-control')/confirm">
 			                        <xforms:label>Confirm</xforms:label>
 			                    </xforms:submit>
 		                    </td>
@@ -489,7 +456,7 @@
 			    			</tr>
 			    		</thead>
 			    		<tbody>
-			    			<xforms:repeat nodeset="instance('confirmation')/atom:entry">
+			    			<xforms:repeat nodeset="instance('ins-confirmation')/atom:entry">
 			    				<tr>
 			    					<td>
 			    						<xforms:output ref="replace( atom:id/text() , '^.*/([^/^.]+)\.atom$', '$1' )"/>
