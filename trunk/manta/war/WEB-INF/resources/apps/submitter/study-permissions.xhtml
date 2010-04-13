@@ -1,0 +1,279 @@
+<!--
+  Copyright (C) 2010 University of Oxford.
+  
+  This program is free software; you can redistribute it and/or modify it under the terms of the
+  GNU Lesser General Public License as published by the Free Software Foundation; either version
+  2.1 of the License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Lesser General Public License for more details.
+
+  The full text of the license is available at http://www.gnu.org/copyleft/lesser.html
+  -->
+<html 
+	xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:f="http://orbeon.org/oxf/xml/formatting" 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:atom="http://www.w3.org/2005/Atom"
+    xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:manta="http://www.cggh.org/2010/chassis/manta/xmlns">
+    
+    <head>
+        <title>WWARN Data Management - Submitter - Study <xforms:output value="instance('ins-study-entry')/manta:id"/> - Permissions</title>
+        <link rel="stylesheet" type="text/css" href="/apps/submitter/common/style.css"></link>
+        <link rel="stylesheet" type="text/css" href="/ops/yui/tabview/assets/skins/sam/tabview.css"></link>
+        <style type="text/css"></style>
+        
+        <xforms:model id="mod-main">
+        
+			<xforms:instance id="ins-study-entry">
+				<atom:entry/>
+			</xforms:instance>
+			
+			<xforms:instance id="ins-acl">
+				<atom:entry/>
+			</xforms:instance>
+			
+			<xforms:submission 
+				id="sub-get-study-entry"
+				action="{xxforms:get-request-parameter('study')}"
+				method="get"
+				replace="instance"
+				instance="ins-study-entry"
+				ref="instance('ins-noparams')">
+                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the study.</xforms:message>
+				<xforms:send ev:event="xforms-submit-done" submission="sub-get-acl"/>
+			</xforms:submission>
+
+			<xforms:submission 
+				id="sub-get-acl"
+				action="{instance('ins-study-entry')/atom:link[@rel='edit-acl']/@href}"
+				method="get"
+				replace="instance"
+				instance="ins-acl"
+				ref="instance('ins-noparams')">
+                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the study.</xforms:message>
+			</xforms:submission>
+
+			<xforms:submission 
+				id="sub-put-acl"
+				action="{instance('ins-study-entry')/atom:link[@rel='edit-acl']/@href}"
+				method="put"
+				replace="instance"
+				instance="ins-acl"
+				ref="instance('ins-acl')"
+				mediatype="application/atom+xml">
+		        <xforms:message ev:event="xforms-submit-done" level="modal">Your changes have been saved, thank you.</xforms:message>
+                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the study.</xforms:message>
+			</xforms:submission>
+
+			<xforms:send ev:event="xforms-model-construct-done" submission="sub-get-study-entry"/>
+
+        	<xforms:instance id="ins-noparams">
+        		<params xmlns=""/>
+        	</xforms:instance>
+        	
+        	<!--+
+				|
+				| Binding for the ACL document to ensure that the current user cannot
+				| remove themselves as owner.
+				|
+				+-->       		
+			       		
+       		<xforms:bind nodeset="instance('ins-acl')//groups/group">
+                <xforms:bind nodeset="user[text()=xxforms:get-remote-user()]" readonly="true()"/>
+            </xforms:bind>
+            
+            
+			<!--+
+				|
+				| Template instance for additional users.
+				|
+				+-->       		
+
+       		<xforms:instance id="ins-user-template">
+       			<user xmlns=""></user>
+  			</xforms:instance>
+
+			
+			
+       		
+        	
+            
+        </xforms:model>
+        
+       	<xi:include href="/apps/common/includes/current-user-xforms-model.xml"/>
+        
+    </head>
+    <body>
+    	<h1><a href="home">Submitter</a> - Study <xforms:output value="instance('ins-study-entry')/manta:id"/></h1>
+
+    	<div id="home-nav"><a href="home">Submitter Home</a> | <xforms:output model="mod-current-user" value="instance('ins-current-user')/name"/></div>
+
+		<h2 class="subtitle"><xforms:output value="instance('ins-study-entry')/atom:title"/></h2>
+    	
+    	<p>Actions: 
+    		<a href="submit-files?study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">Submit Files</a> |
+    		<a href="study-questionnaire?study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">Edit Study Questionnaire</a>
+   		</p>
+
+    	<div id="content">
+    	
+    		<div class="yui-navset yui-navset-top">
+    			<ul class="yui-nav">
+    				<li>
+    					<a href="study-summary?study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
+    						<em>Summary</em>
+   						</a>
+    				</li>
+    				<li>
+    					<a href="study-files?study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
+	    					<em>Files</em>
+    					</a>
+   					</li>
+    				<li>
+    					<a href="study-questionnaire?study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
+	    					<em>Questionnaire</em>
+    					</a>
+   					</li>
+    				<li>
+    					<a href="study-publications?study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
+	    					<em>Publications</em>
+    					</a>
+   					</li>
+    				<li class="selected">
+    					<a href="study-permissions?study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
+	    					<em>Permissions</em>
+    					</a>
+   					</li>
+    				<li>
+    					<a href="study-acknowledgements?study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
+	    					<em>Acknowledgements</em>
+    					</a>
+   					</li>
+    			</ul>
+    			
+    			<div class="yui-content">
+
+			        <p>
+			            <xforms:submit submission="sub-put-acl">
+			                <xforms:label>Save Changes</xforms:label>
+			            </xforms:submit>
+			        </p>
+			        
+                   	<h2>Owners</h2>
+                   	<xforms:group ref="instance('ins-acl')//groups/group[@name='owners']">
+						<table class="repeat-table">
+							<tr>
+								<td>
+				                    <xforms:trigger appearance="minimal">
+				                        <xforms:label><img src="/apps/submitter/common/add.gif"/></xforms:label>
+				                        <xforms:insert 
+				                        	ev:event="DOMActivate" 
+				                        	context="." 
+				                        	nodeset="user" 
+				                        	at="1" 
+				                        	position="after" 
+				                        	origin="instance('ins-user-template')"/>
+				                    </xforms:trigger>
+								</td>
+								<td class="add-td">
+				                    <xforms:trigger appearance="minimal">
+				                        <xforms:label>Add an Owner</xforms:label>
+				                        <xforms:insert 
+				                        	ev:event="DOMActivate" 
+				                        	context="." 
+				                        	nodeset="user" 
+				                        	at="1" 
+				                        	position="after" 
+				                        	origin="instance('ins-user-template')"/>
+				                    </xforms:trigger>
+								</td>
+							</tr>
+							<xforms:repeat nodeset="user" id="rep-owner">
+								<tr>
+									<td>
+				                        <xforms:trigger ref="." appearance="minimal">
+				                            <xforms:delete 
+				                            	ev:event="DOMActivate" 
+					                        	context="." 
+					                        	nodeset="." 
+				                            	at="index('rep-owner')"/>
+				                            <xforms:label><img src="/apps/submitter/common/remove.gif"/></xforms:label>
+				                        </xforms:trigger>
+									</td>
+									<td class="form-td">
+										<xforms:input ref=".">
+											<xforms:label class="fixed-width">Email address:</xforms:label>
+										</xforms:input>
+									</td>
+								</tr>
+							</xforms:repeat>
+						</table>
+                   	</xforms:group>
+
+                   	<h2>Submitters</h2>
+		                    	
+                   	<xforms:group ref="instance('ins-acl')//groups/group[@name='submitters']">
+						<table class="repeat-table">
+							<tr>
+								<td>
+				                    <xforms:trigger appearance="minimal">
+				                        <xforms:label><img src="/apps/submitter/common/add.gif"/></xforms:label>
+				                        <xforms:insert 
+				                        	ev:event="DOMActivate" 
+				                        	context="." 
+				                        	nodeset="user" 
+				                        	at="1" 
+				                        	position="after" 
+				                        	origin="instance('ins-user-template')"/>
+				                    </xforms:trigger>
+								</td>
+								<td class="add-td">
+				                    <xforms:trigger appearance="minimal">
+				                        <xforms:label>Add a Submitter</xforms:label>
+				                        <xforms:insert 
+				                        	ev:event="DOMActivate" 
+				                        	context="." 
+				                        	nodeset="user" 
+				                        	at="1" 
+				                        	position="after" 
+				                        	origin="instance('ins-user-template')"/>
+				                    </xforms:trigger>
+								</td>
+							</tr>
+							<xforms:repeat nodeset="user" id="rep-submitter">
+								<tr>
+									<td>
+				                        <xforms:trigger appearance="minimal">
+				                            <xforms:delete 
+				                            	ev:event="DOMActivate" 
+					                        	context="." 
+					                        	nodeset="." 
+				                            	at="index('rep-submitter')"/>
+				                            <xforms:label><img src="/apps/submitter/common/remove.gif"/></xforms:label>
+				                        </xforms:trigger>
+									</td>
+									<td class="form-td">
+										<xforms:input ref=".">
+											<xforms:label class="fixed-width">Email address:</xforms:label>
+										</xforms:input>
+									</td>
+								</tr>
+							</xforms:repeat>
+						</table>
+                   	</xforms:group>
+
+    			</div>
+    			
+    		</div>
+    		
+    	</div>
+    </body>
+</html>
+

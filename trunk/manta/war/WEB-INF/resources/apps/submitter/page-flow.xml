@@ -28,6 +28,7 @@
   <page path-info="/submitter/study-questionnaire" view="study-questionnaire.xhtml"/>
   <page path-info="/submitter/study-publications" view="study-publications.xhtml"/>
   <page path-info="/submitter/study-permissions" view="study-permissions.xhtml"/>
+  <page path-info="/submitter/study-acknowledgements" view="study-acknowledgements.xhtml"/>
   
   
   <epilogue url="oxf:/config/epilogue.xpl"/>

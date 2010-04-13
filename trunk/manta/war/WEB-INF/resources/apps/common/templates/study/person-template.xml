@@ -1,4 +1,6 @@
 <person xmlns="">
+    <given-name/>
+    <family-name/>
     <name/>
     <email/>
     <url/>
