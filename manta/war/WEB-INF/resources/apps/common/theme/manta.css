@@ -67,3 +67,7 @@
 .repeat-table { background-color: #fce5b6 }
 .repeat-table .add-td { width: 33em }
 .repeat-table .form-td { width: 33em; background: white; padding: .5em }
+
+h2.subtitle {
+    margin-top: 0;
+}

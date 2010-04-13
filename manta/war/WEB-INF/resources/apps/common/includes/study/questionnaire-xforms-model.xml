@@ -1,0 +1,37 @@
+<xforms:model
+    xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:f="http://orbeon.org/oxf/xml/formatting" 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:atom="http://www.w3.org/2005/Atom"
+    xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    id="mod-study-questionnaire">
+    
+    <xforms:instance id="ins-sq-study-entry">
+        <atom:entry/>
+    </xforms:instance>  
+    
+    <xforms:instance id="ins-publication-template" src="/apps/common/templates/study/publication-template.xml"/>
+    <xforms:instance id="ins-person-template" src="/apps/common/templates/study/person-template.xml"/>
+    <xforms:instance id="ins-site-template" src="/apps/common/templates/study/site-template.xml"/>
+
+    <xforms:instance id="ins-pathogens-items" src="/apps/common/constants/pathogens.xml"/>
+    <xforms:instance id="ins-countries-items" src="/apps/common/constants/countries.xml"/>
+    <xforms:instance id="ins-modules-items" src="/apps/common/constants/modules.xml"/>
+    
+    <xforms:submission
+        id="sub-put-study-entry"
+        resource="{instance('ins-sq-study-entry')/atom:link[@rel='edit']/@href}"
+        method="put"
+        replace="instance"
+        instance="ins-sq-study-entry"
+        ref="instance('ins-sq-study-entry')"
+        mediatype="application/atom+xml">
+        <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while saving the study.</xforms:message>
+        <xforms:message ev:event="xforms-submit-done" level="modal">Your changes have been saved, thank you.</xforms:message>
+    </xforms:submission>
+    
+</xforms:model>

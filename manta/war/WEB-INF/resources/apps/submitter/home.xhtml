@@ -62,7 +62,7 @@
     
     <body>
     
-    	<h1>Submitter - Home</h1>
+    	<h1><a href="home">Submitter</a> - Home</h1>
     	
     	<div id="home-nav"><xforms:output model="mod-current-user" ref="instance('ins-current-user')/name"/></div>
     	
@@ -107,10 +107,10 @@
 		    			<xforms:repeat id="rep-study-entry" nodeset="instance('ins-study-feed')/atom:entry">
 		    				<tr>
 		    					<td>
-		    						<xforms:output ref="manta:id"/>
+		    						<a href="study-summary?study={atom:link[@rel='edit']/@href}"><xforms:output value="manta:id"/></a>
 		    					</td>
 		    					<td>
-		    						<xforms:output ref="atom:title"/>
+		    						<a href="study-summary?study={atom:link[@rel='edit']/@href}"><xforms:output value="atom:title"/></a>
 		    					</td>
 		    					<td>
 		    						<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[M01]/[D01]/[Y]')"/>
@@ -118,7 +118,7 @@
 		    					<td>
 		    						<xforms:output ref="atom:updated" xxforms:format="format-dateTime(., '[M01]/[D01]/[Y]')"/>
 		    					</td>
-		    					<td><a href="view-study?study={atom:link[@rel='edit']/@href}">View</a> <br/> <a href="submit-files?study={atom:link[@rel='edit']/@href}">Submit Files</a> <br/> <a href="study-questionnaire?study={atom:link[@rel='edit']/@href}">Questionnaire</a></td>
+		    					<td><a href="study-summary?study={atom:link[@rel='edit']/@href}">View</a></td>
 		    				</tr>
 		    			</xforms:repeat>
 		    		</tbody>
