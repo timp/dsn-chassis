@@ -72,68 +72,36 @@
                         </xforms:input>
                         <br/>
                         
-                        <xforms:trigger appearance="minimal" ref="../person[position()>1 and . is xxforms:context('person-repeat')]">
+                        <xforms:trigger appearance="minimal" ref=".[preceding-sibling::*]">
                             <xforms:label>Move Up</xforms:label>
-                            <xforms:insert 
-                                ev:event="DOMActivate" 
-                                context=".." 
-                                nodeset="person" 
-                                at="index('person-repeat')-1" 
-                                position="before" 
-                                origin="xxforms:context('person-repeat')"/>
-                            <xforms:delete
-                                ev:event="DOMActivate"
-                                context=".."
-                                nodeset="person"
-                                at="index('person-repeat')+2"/>
+                            <xforms:action ev:event="DOMActivate">
+                                <xforms:insert origin="context()" nodeset="preceding-sibling::*[1]" position="before"/>
+                                <xforms:delete nodeset="."/>
+                            </xforms:action>
                         </xforms:trigger>
                         
-                        <xforms:trigger appearance="minimal" ref="../person[position()>1 and . is xxforms:context('person-repeat')]">
+                        <xforms:trigger appearance="minimal" ref=".[preceding-sibling::*]">
                             <xforms:label><img src="/apps/fr/style/up.gif"/></xforms:label>
-                            <xforms:insert 
-                                ev:event="DOMActivate" 
-                                context=".." 
-                                nodeset="person" 
-                                at="index('person-repeat')-1" 
-                                position="before" 
-                                origin="xxforms:context('person-repeat')"/>
-                            <xforms:delete
-                                ev:event="DOMActivate"
-                                context=".."
-                                nodeset="person"
-                                at="index('person-repeat')+2"/>
+                            <xforms:action ev:event="DOMActivate">
+                                <xforms:insert origin="context()" nodeset="preceding-sibling::*[1]" position="before"/>
+                                <xforms:delete nodeset="."/>
+                            </xforms:action>
                         </xforms:trigger>
                         
-                        <xforms:trigger appearance="minimal" ref="../person[not(position()=last()) and . is xxforms:context('person-repeat')]">
+                        <xforms:trigger appearance="minimal" ref=".[following-sibling::*]">
                             <xforms:label>Move Down</xforms:label>
-                            <xforms:insert 
-                                ev:event="DOMActivate" 
-                                context=".." 
-                                nodeset="person" 
-                                at="index('person-repeat')+1" 
-                                position="after" 
-                                origin="xxforms:context('person-repeat')"/>
-                            <xforms:delete
-                                ev:event="DOMActivate"
-                                context=".."
-                                nodeset="person"
-                                at="index('person-repeat')-2"/>
+                            <xforms:action ev:event="DOMActivate">
+                                <xforms:insert origin="context()" nodeset="following-sibling::*[1]"/>
+                                <xforms:delete nodeset="."/>
+                            </xforms:action>
                         </xforms:trigger>
                         
-                        <xforms:trigger appearance="minimal" ref="../person[not(position()=last()) and . is xxforms:context('person-repeat')]">
+                        <xforms:trigger appearance="minimal" ref=".[following-sibling::*]">
                             <xforms:label><img src="/apps/fr/style/down.gif"/></xforms:label>
-                            <xforms:insert 
-                                ev:event="DOMActivate" 
-                                context=".." 
-                                nodeset="person" 
-                                at="index('person-repeat')+1" 
-                                position="after" 
-                                origin="xxforms:context('person-repeat')"/>
-                            <xforms:delete
-                                ev:event="DOMActivate"
-                                context=".."
-                                nodeset="person"
-                                at="index('person-repeat')-2"/>
+                            <xforms:action ev:event="DOMActivate">
+                                <xforms:insert origin="context()" nodeset="following-sibling::*[1]"/>
+                                <xforms:delete nodeset="."/>
+                            </xforms:action>
                         </xforms:trigger>
                         
                     </td>
