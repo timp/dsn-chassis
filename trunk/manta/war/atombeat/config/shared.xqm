@@ -75,9 +75,19 @@ declare function config:generate-identifier(
 ) as xs:string
 {
     if ( $collection-path-info = "/studies" )
-    then upper-case( xutil:random-alphanumeric( 4 ) )
+    
+(:    then upper-case( xutil:random-alphanumeric( 4 ) ) :)
+
+    (: this avoids confusion between numbers 0, 1 and letters i, l, o, v, w :)
+    
+    then upper-case( xutil:random-alphanumeric( 5 , 21 , "0123456789abcdefghijk" , "abcdefghjkmnpqrstuxyz" ) )
+    
     else if ( matches( $collection-path-info , "^/studies/[^/]+/media" ) )
-    then upper-case( xutil:random-alphanumeric( 6 ) )
+    
+(:    then upper-case( xutil:random-alphanumeric( 6 ) ) :)
+
+    then upper-case( xutil:random-alphanumeric( 7 , 21 , "0123456789abcdefghijk" , "abcdefghjkmnpqrstuxyz" ) )
+
     else util:uuid()
 };
 
