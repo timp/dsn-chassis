@@ -121,4 +121,31 @@ declare function xutil:random-alphanumeric(
 
 
 
+declare function xutil:random-alphanumeric(
+    $num-chars as xs:integer ,
+    $radix as xs:integer ,
+    $map as xs:string ,
+    $trans as xs:string 
+) as xs:string
+{
+(:
+    let $num-chars := 4
+    let $radix := 21
+    let $map := "0123456789abcdefghijklmnopqrstuvwxyz"
+    let $trans := "abcdefghjkmnpqrstuxyz"
+:)  
+    let $rnd := math:random()
+    let $multiplier := math:pow( xs:double( $radix ) , xs:double( $num-chars ) )
+    let $rnd := $rnd * $multiplier
+    let $rnd := double:long-value( $rnd )
+    let $rnd := long:to-string( $rnd , $radix )
+    let $rnd := xutil:lpad ( $rnd , $num-chars , "0" ) 
+    let $rnd := translate( $rnd , $map , $trans )
+    
+    return $rnd
+         
+};
+
+
+
 

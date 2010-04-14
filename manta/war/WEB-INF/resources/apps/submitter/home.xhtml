@@ -47,7 +47,9 @@
 				replace="instance"
 				instance="ins-study-feed">
 				<!-- TODO error handling -->
-                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('response-status-code')"/>) while retrieving studies.</xforms:message>
+                <xforms:message ev:event="xforms-submit-error" level="modal">
+                	<p>An error occurred (<xforms:output value="event('error-type')"/>) while retrieving studies.</p>
+               	</xforms:message>
 			</xforms:submission>
 			
 			<xforms:send 
@@ -106,7 +108,7 @@
 		    		<tbody>
 		    			<xforms:repeat id="rep-study-entry" nodeset="instance('ins-study-feed')/atom:entry">
 		    				<tr>
-		    					<td style="font-family: times">
+		    					<td>
 		    						<a href="study-summary?study={atom:link[@rel='edit']/@href}"><xforms:output value="manta:id"/></a>
 		    					</td>
 		    					<td>
