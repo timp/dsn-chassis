@@ -42,7 +42,7 @@
 				replace="instance"
 				instance="ins-study-entry"
 				ref="instance('ins-noparams')">
-                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('response-status-code')"/>) while retrieving the study.</xforms:message>
+                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the study.</xforms:message>
 			</xforms:submission>
 
 			<xforms:send ev:event="xforms-model-construct-done" submission="sub-get-study-entry"/>
