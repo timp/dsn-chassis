@@ -28,6 +28,7 @@
     
         <title>WWARN Data Management - Submitter - Submit Files</title>
         <link rel="stylesheet" type="text/css" href="/apps/submitter/common/style.css"></link>
+        <link rel="stylesheet" type="text/css" href="/ops/yui/tabview/assets/skins/sam/tabview.css"></link>
         
         <xforms:model id="mod-main">
 
@@ -39,7 +40,6 @@
 			       		
        		<xforms:instance id="ins-control">
                 <control xmlns="">
-                    <back/>
                     <next-upload/>
                     <upload-files/>
                     <next-confirm/>
@@ -48,7 +48,6 @@
             </xforms:instance>
         	
             <xforms:bind nodeset="instance('ins-control')">
-                <xforms:bind nodeset="back" readonly="true()"/>
                 <xforms:bind nodeset="next-upload" readonly="instance('ins-form-data')/study = ''"/>
                 <xforms:bind nodeset="next-confirm" readonly="empty(instance('ins-form-data')//upload) or exists(instance('ins-form-data')//upload[empty(text())])"/>
                 
@@ -142,13 +141,30 @@
 				id="sub-confirm" 
 				ref="instance('ins-form-data')/uploads" 
 				method="post" 
-				action="http://localhost:8081/manta/util/store-uploads"
+				resource="/util/store-uploads"
 				replace="instance"
 				instance="ins-confirmation">
 				<!-- TODO proper error handling -->
                 <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>).</xforms:message>
                 <xforms:toggle ev:event="xforms-submit-done" case="success"/>
+                <xforms:send ev:event="xforms-submit-done" submission="sub-get-study-entry"/>
 			</xforms:submission>
+			
+			<xforms:submission
+				id="sub-get-study-entry"
+				ref="instance('ins-noparams')"
+				method="get"
+				resource="{instance('ins-form-data')/study}"
+				replace="instance"
+				instance="ins-study-entry">
+				<!-- copy data across to study questionnaire model -->	
+				<xforms:insert ev:event="xforms-submit-done" nodeset="xxforms:instance('ins-sq-study-entry')" origin="instance('ins-study-entry')"/>
+                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>).</xforms:message>
+			</xforms:submission>
+			
+			<xforms:instance id="ins-study-entry">
+				<atom:entry/>
+			</xforms:instance>
 				
 			<xforms:instance id="ins-confirmation">
 				<atom:feed/>
@@ -164,6 +180,7 @@
             
         </xforms:model>
 
+       	<xi:include href="/apps/common/includes/study/questionnaire-xforms-model.xml"/>
        	<xi:include href="/apps/common/includes/current-user-xforms-model.xml"/>
 
         
@@ -174,7 +191,7 @@
     
     <body>
     
-    	<h1>Submitter - Submit Files</h1>
+    	<h1><a href="home">Submitter</a> - Submit Files</h1>
 
 
 
@@ -184,7 +201,7 @@
 			|
 			+-->       		
     	
-    	<div id="home-nav">Links: <a href="home">Submitter Home</a> | <xforms:output model="mod-current-user" value="instance('ins-current-user')/name"/></div>
+    	<div id="home-nav"><a href="home">Submitter Home</a> | <xforms:output model="mod-current-user" value="instance('ins-current-user')/name"/></div>
     	
     	
     	
@@ -236,9 +253,6 @@
 		                </tr>
 		                <tr>
 		                    <td>
-		                        <xforms:trigger ref="instance('ins-control')/back">
-		                            <xforms:label>&lt; Previous</xforms:label>
-		                        </xforms:trigger>
 		                        <xforms:trigger ref="instance('ins-control')/next-upload">
 		                            <xforms:label>Next ></xforms:label>
 		                            <xforms:toggle ev:event="DOMActivate" case="upload"/>
@@ -412,7 +426,7 @@
 								</xforms:group>
 								<h2>Terms of Submission</h2>
 		                    	<xforms:input ref="instance('ins-form-data')/accept-terms">
-		                    		<xforms:label>I have read and understood the <a href="TODO">terms of submission</a>:</xforms:label>
+		                    		<xforms:label>I have read, understood and accept the <strong><a href="TODO">terms of submission</a></strong>: </xforms:label>
 		                    	</xforms:input>
 		                    </td>
 		                </tr>
@@ -443,7 +457,17 @@
 	    		
 	    			<h2>Success</h2>
 	    			
-					<p>The following files have been successfully submitted.</p>
+	    			<xforms:group ref="instance('ins-study-feed')/atom:entry[atom:link[@rel='edit']/@href = instance('ins-form-data')/study]">
+						<p>
+							Thank you for submitting the following files for 
+							<strong>
+								<a href="study-files?study={atom:link[@rel='edit']/@href}">
+									Study 
+									<xforms:output value="manta:id"/>
+									- 	
+									<xforms:output value="atom:title"/></a></strong>.
+						</p>
+	    			</xforms:group>
 
 			    	<fr:datatable paginated="false">
 			    		<thead>
@@ -472,8 +496,30 @@
 			    		</tbody>
 			    	</fr:datatable>
 					                    
-                    <p>Links: <a href="home">Submitter Home</a> | TODO</p>
+	    			<xforms:group ref="instance('ins-study-feed')/atom:entry[atom:link[@rel='edit']/@href = instance('ins-form-data')/study]">
+						<p>Links: 
+							<a href="home">Submitter Home</a> | 
+							<a href="study-files?study={atom:link[@rel='edit']/@href}">Study <xforms:output value="manta:id"/></a> | 
+							<a href="submit-files?study={atom:link[@rel='edit']/@href}">Submit More Files</a> | 
+							<a href="create-study">Create a Study</a>
+						</p>
+	                    <hr/>
+	                    <h2>Study Questionnaire</h2>
+						<p>Please review the <strong><a href="study-questionnaire?study={atom:link[@rel='edit']/@href}">study questionnaire</a></strong> below and check that the information for your study is correct.</p> 
+						<p>If you'd rather review to the <strong><a href="study-questionnaire?study={atom:link[@rel='edit']/@href}">study questionnaire</a></strong> later, that's fine, you can visit the study questionnaire at any time by clicking on your study from the submitter home page.
+						</p>
+					</xforms:group>
                     
+
+		    		<div class="yui-navset yui-navset-top">
+		    		
+		    			<div class="yui-content">
+		
+					       	<xi:include href="/apps/common/includes/study/questionnaire-xforms-input.xml"/>
+		
+		    			</div>
+		    			
+		    		</div>
 	    			
 	    		</xforms:case>
 	    		

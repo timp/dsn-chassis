@@ -26,6 +26,7 @@
     
         <title>WWARN Data Management - Submitter - Create Study</title>
         <link rel="stylesheet" type="text/css" href="/apps/submitter/common/style.css"></link>
+        <link rel="stylesheet" type="text/css" href="/ops/yui/tabview/assets/skins/sam/tabview.css"></link>
         
         <xforms:model id="mod-main">
         
@@ -151,15 +152,9 @@
 			       		
        		<xforms:instance id="ins-control">
                 <ins-control xmlns="">
-                    <back/>
                 </ins-control>
             </xforms:instance>
         	
-            <xforms:bind nodeset="instance('ins-control')">
-                <xforms:bind nodeset="back" readonly="true()"/>
-            </xforms:bind>
-
-
             
 			<!--+
 				|
@@ -170,6 +165,20 @@
            <xforms:action 
            		ev:event="xforms-model-construct-done">
            		<xforms:setvalue ref="instance('ins-acl')//groups/group[@name='owners']/user" value="xxforms:get-remote-user()"/>
+           </xforms:action>
+           
+           
+           <xforms:action ev:event="xforms-model-construct-done">
+				<xforms:insert 
+					context="instance('ins-study-entry')/atom:content/study/acknowledgements" 
+					nodeset="person"
+					at="1"
+					position="after"
+					origin="instance('ins-person-template')"
+					/>
+				<xforms:setvalue 
+					ref="instance('ins-study-entry')/atom:content/study/acknowledgements/person[1]/email"
+					value="xxforms:get-remote-user()"/>
            </xforms:action>
 
 
@@ -209,6 +218,8 @@
                 instance="ins-acl"
                 mediatype="application/atom+xml">
                 <xforms:toggle ev:event="xforms-submit-done" case="success"/>
+				<!-- copy data across to study questionnaire model -->	
+				<xforms:insert ev:event="xforms-submit-done" nodeset="xxforms:instance('ins-sq-study-entry')" origin="instance('ins-study-entry')"/>
                 <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while saving.</xforms:message>
             </xforms:submission>
             
@@ -216,6 +227,7 @@
 
         </xforms:model>
 
+       	<xi:include href="/apps/common/includes/study/questionnaire-xforms-model.xml"/>
        	<xi:include href="/apps/common/includes/current-user-xforms-model.xml"/>
             
 
@@ -227,7 +239,7 @@
     
     <body>
     
-    	<h1>Submitter - Create Study</h1>
+    	<h1><a href="home">Submitter</a> - Create Study</h1>
 
 
 
@@ -237,7 +249,7 @@
 			|
 			+-->       		
     	
-    	<div id="home-nav">Links: <a href="home">Submitter Home</a> | <xforms:output model="mod-current-user" ref="instance('ins-current-user')/name"/></div>
+    	<div id="home-nav"><a href="home">Submitter Home</a> | <xforms:output model="mod-current-user" ref="instance('ins-current-user')/name"/></div>
     	
     	
     	
@@ -280,9 +292,6 @@
 		                </tr>
 		                <tr>
 		                    <td>
-		                        <xforms:trigger ref="instance('ins-control')/back">
-		                            <xforms:label>&lt; Previous</xforms:label>
-		                        </xforms:trigger>
 		                        <xforms:trigger>
 		                            <xforms:label>Next ></xforms:label>
 		                            <xforms:toggle ev:event="DOMActivate" case="acknowledgements"/>
@@ -290,6 +299,10 @@
 		                    </td>
 		                </tr>
 		            </table>
+                    <xforms:trigger appearance="minimal">
+                        <xforms:label>skip to end >></xforms:label>
+                        <xforms:toggle ev:event="DOMActivate" case="confirm"/>
+                    </xforms:trigger>
 	
 	    		</xforms:case>
 
@@ -333,6 +346,10 @@
 		                    </td>
 		                </tr>
 		            </table>
+                    <xforms:trigger appearance="minimal">
+                        <xforms:label>skip to end >></xforms:label>
+                        <xforms:toggle ev:event="DOMActivate" case="confirm"/>
+                    </xforms:trigger>
 		            
 	    		</xforms:case>
 
@@ -376,6 +393,10 @@
 		                    </td>
 		                </tr>
 		            </table>
+                    <xforms:trigger appearance="minimal">
+                        <xforms:label>skip to end >></xforms:label>
+                        <xforms:toggle ev:event="DOMActivate" case="confirm"/>
+                    </xforms:trigger>
 		            
 	    		</xforms:case>
 
@@ -513,6 +534,10 @@
 		                    </td>
 		                </tr>
 		            </table>
+                    <xforms:trigger appearance="minimal">
+                        <xforms:label>skip to end >></xforms:label>
+                        <xforms:toggle ev:event="DOMActivate" case="confirm"/>
+                    </xforms:trigger>
 
 	    		</xforms:case>
 	
@@ -533,10 +558,27 @@
 		                </tr>
 		                <tr>
 		                    <td>
-		                    	<h2>Study Title</h2>
+		                    	<h2>Study Title
+		                    		<span class="mini-action">
+				                        <xforms:trigger appearance="minimal">
+				                        	<xforms:label>[edit]</xforms:label>
+				                            <xforms:toggle ev:event="DOMActivate" case="title"/>
+			                            </xforms:trigger>
+		                            </span>
+		                    	</h2>
 		                        <strong><xforms:output value="instance('ins-study-entry')/atom:title"/></strong>
+		                        <xforms:group ref="instance('ins-study-entry')/atom:title[empty(text())]">
+		                        	(empty)
+		                        </xforms:group>
 		                        
-		                        <h2>Acknowledgements</h2>
+		                        <h2>Acknowledgements
+		                    		<span class="mini-action">
+				                        <xforms:trigger appearance="minimal">
+				                        	<xforms:label>[edit]</xforms:label>
+				                            <xforms:toggle ev:event="DOMActivate" case="acknowledgements"/>
+			                            </xforms:trigger>
+		                            </span>
+		                        </h2>
 		                        
 		                    	<xforms:group ref="instance('ins-study-entry')/atom:content/study/acknowledgements">
 		                    	
@@ -554,8 +596,20 @@
 									</table>
 									
 								</xforms:group>		                        
+
+		                    	<xforms:group ref="instance('ins-study-entry')/atom:content/study/acknowledgements[empty(person)]">
+									no acknowledgements									
+								</xforms:group>		                        
 		                        
-		                        <h2>Publications</h2>
+		                        <h2>
+		                        	Publications
+		                    		<span class="mini-action">
+				                        <xforms:trigger appearance="minimal">
+				                        	<xforms:label>[edit]</xforms:label>
+				                            <xforms:toggle ev:event="DOMActivate" case="publications"/>
+			                            </xforms:trigger>
+		                            </span>
+		                        </h2>
 		                        
 		                    	<xforms:group ref="instance('ins-study-entry')/atom:content/study">
 		                    	
@@ -596,9 +650,21 @@
 									
 									</xforms:group>
 									
+									<xforms:group ref="publications[empty(publication)]">
+									no publications
+									</xforms:group>
+
 		                    	</xforms:group>
-		                    	
-		                    	<h2>Permissions</h2>
+
+		                    	<h2>
+			                    	Permissions 
+			                    	<span class="mini-action">
+				                        <xforms:trigger appearance="minimal">
+				                        	<xforms:label>[edit]</xforms:label>
+				                            <xforms:toggle ev:event="DOMActivate" case="permissions"/>
+			                            </xforms:trigger>
+		                            </span>
+		                    	</h2>
 		                    	
 		                    	<h3>Owners</h3>
 								<table class="repeat-table">
@@ -622,6 +688,9 @@
 										</tr>
 									</xforms:repeat>
 								</table>
+								<xforms:group ref="instance('ins-acl')//groups/group[@name='submitters' and empty(user)]">
+								no submitters
+								</xforms:group>
 
 		                    </td>
 		                </tr>
@@ -650,21 +719,26 @@
 	    		
 	    			<h2>Success</h2>
 	    			
-	    			<p>Your study has been successfully created.</p>
-					
-					<p>
-                    <xforms:output value="instance('ins-study-entry')/atom:title">
-                    	<xforms:label class="fixed-width">Study title:</xforms:label>
-                    </xforms:output>
-                    </p>
-                    <p>
-                    <xforms:output value="instance('ins-study-entry')/manta:id">
-                    	<xforms:label class="fixed-width">Unique study code:</xforms:label>
-                    </xforms:output>
-                    </p>
-                    
-                    <p>Links: <a href="home">Submitter Home</a> | <a href="submit-files?study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">Submit Files</a> | <a href="study-questionnaire?study={atom:link[@rel='edit']/@href}">Study Questionnaire</a> </p>
-                    
+	    			<p>Thank you for registering your study - <strong><a href="study-summary?study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}"><xforms:output value="instance('ins-study-entry')/atom:title"/></a></strong>.</p>
+	    			<p>Your study has been assigned the unique study code <strong><a href="study-summary?study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}"><xforms:output value="instance('ins-study-entry')/manta:id"/></a></strong>.</p>
+                    <p>You can now <strong><a href="submit-files?study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">submit files</a></strong> containing data, dictionaries, protocols or publications.</p>
+                    <p>You can also <strong><a href="study-summary?study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">review and modify</a></strong> any of the information you have provided for your study at any time.</p>
+					<p>Links: <a href="home">Submitter Home</a> | <a href="study-summary?study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">Study <xforms:output value="instance('ins-study-entry')/manta:id"/></a> | <a href="submit-files?study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">Submit Files</a> | <a href="create-study">Create Another Study</a></p>
+                    <hr/>
+                    <h2>Study Questionnaire</h2>
+					<p>In order to successfully curate data submitted from your study, we need to capture some further information about your study. Please review the <strong><a href="study-questionnaire?study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">study questionnaire</a></strong> below and fill out as much information as you can.</p> 
+					<p>If you'd rather <strong><a href="submit-files?study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">submit files now</a></strong> and return to the <strong><a href="study-questionnaire?study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">study questionnaire</a></strong> later, that's fine, you can visit the study questionnaire at any time by clicking on your study from the submitter home page.
+					</p>
+
+		    		<div class="yui-navset yui-navset-top">
+		    		
+		    			<div class="yui-content">
+		
+					       	<xi:include href="/apps/common/includes/study/questionnaire-xforms-input.xml"/>
+		
+		    			</div>
+		    			
+		    		</div>
 	    			
 	    		</xforms:case>
 	    		

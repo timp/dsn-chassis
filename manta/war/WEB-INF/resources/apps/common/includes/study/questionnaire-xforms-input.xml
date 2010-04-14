@@ -156,6 +156,12 @@
             </xforms:select>
         </p>
         
+        <p>
+            <xforms:submit submission="sub-put-study-entry">
+                <xforms:label>Save Changes</xforms:label>
+            </xforms:submit>
+        </p>
+        
         
     </xforms:group>
 
