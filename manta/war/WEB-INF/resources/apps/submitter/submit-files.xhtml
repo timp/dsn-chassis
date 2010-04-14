@@ -495,8 +495,20 @@
 			    			</xforms:repeat>
 			    		</tbody>
 			    	</fr:datatable>
-					                    
+			    	
 	    			<xforms:group ref="instance('ins-study-feed')/atom:entry[atom:link[@rel='edit']/@href = instance('ins-form-data')/study]">
+
+				    	<h3>What Next?</h3>
+				    	
+				    	<ul>
+				    		<li>Your files will be reviewed by a curator and transformed into a standardised format.</li>
+				    		<li>You can check the progress of your files on the 
+				    		<strong><a href="study-files?study={atom:link[@rel='edit']/@href}">
+				    		Study 
+							<xforms:output value="manta:id"/>
+							</a></strong> page.</li>
+				    	</ul> 
+
 						<p>Links: 
 							<a href="home">Submitter Home</a> | 
 							<a href="study-files?study={atom:link[@rel='edit']/@href}">Study <xforms:output value="manta:id"/></a> | 
@@ -506,7 +518,7 @@
 	                    <hr/>
 	                    <h2>Study Questionnaire</h2>
 						<p>Please review the <strong><a href="study-questionnaire?study={atom:link[@rel='edit']/@href}">study questionnaire</a></strong> below and check that the information for your study is correct.</p> 
-						<p>If you'd rather review to the <strong><a href="study-questionnaire?study={atom:link[@rel='edit']/@href}">study questionnaire</a></strong> later, that's fine, you can visit the study questionnaire at any time by clicking on your study from the submitter home page.
+						<p>If you'd rather review the <strong><a href="study-questionnaire?study={atom:link[@rel='edit']/@href}">study questionnaire</a></strong> later, that's fine, you can visit the study questionnaire at any time by clicking on your study from the submitter home page.
 						</p>
 					</xforms:group>
                     
