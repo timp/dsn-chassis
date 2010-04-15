@@ -42,14 +42,6 @@ return
             </forward>
         </dispatch>
 
-    else if ( $module = "spike" ) then
-
-        <dispatch xmlns="http://exist.sourceforge.net/NS/exist">
-            <forward url="/atombeat/spike.xql">
-                <set-attribute name="request-path-info" value="{$request-path-info}"/>
-            </forward>
-        </dispatch>
-
 	else 
 
 		<ignore xmlns="http://exist.sourceforge.net/NS/exist">
