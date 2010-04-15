@@ -69,9 +69,11 @@
                 
                 <xhtml:div id="holdall">
                 
+                	<!-- 
                 	<xhtml:div id="hd">
                 		<xhtml:h1>WWARN Data Management</xhtml:h1>
                 	</xhtml:div>
+                	-->
 
                 	<xhtml:div id="bd">
 

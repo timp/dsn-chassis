@@ -71,19 +71,19 @@
         
     </head>
     <body>
-    	<h1><a href="home">Submitter</a> - Study <xforms:output value="instance('ins-study-entry')/manta:id"/></h1>
-
-    	<div id="home-nav"><a href="home">Submitter Home</a> | <xforms:output model="mod-current-user" value="instance('ins-current-user')/name"/></div>
-    	
-		<h2 class="subtitle"><xforms:output value="instance('ins-study-entry')/atom:title"/></h2>
-    	
-    	<p>Actions: 
-    		<a class="action" href="submit-files?study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">Submit Files</a> |
-    		<a class="action" href="study-questionnaire?study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">Edit Study Questionnaire</a>
-   		</p>
+       	<span id="home-nav"><a href="TODO">log out</a> | <xforms:output model="mod-current-user" ref="instance('ins-current-user')/name"/></span>
 
     	<div id="content">
-    	
+	    
+	    	<h1><a href="home">Submitter</a> - Study <xforms:output value="instance('ins-study-entry')/manta:id"/></h1>
+	
+			<h2 class="subtitle"><xforms:output value="instance('ins-study-entry')/atom:title"/></h2>
+	    	
+	    	<p>Actions: 
+	    		<a class="action" href="submit-files?study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">Submit Files</a> |
+	    		<a class="action" href="study-questionnaire?study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">Edit Study Questionnaire</a>
+	   		</p>
+
     		<div class="yui-navset yui-navset-top">
     			<ul class="yui-nav">
     				<li>
@@ -119,6 +119,11 @@
     			</ul>
     			<div class="yui-content">
     			
+				   	<div class="help">
+				   		<h2>Help</h2>
+				   		<p>TODO</p>
+				   	</div>
+				   	
     				<p>Actions: <a href="submit-files?study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">Submit Files</a></p>
     			
     				<h2>Submitted Files</h2>
