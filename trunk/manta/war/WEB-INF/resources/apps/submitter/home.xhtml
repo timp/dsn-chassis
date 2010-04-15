@@ -64,23 +64,26 @@
     
     <body>
     
-    	<h1><a href="home">Submitter</a> - Home</h1>
-    	
-    	<div id="home-nav"><xforms:output model="mod-current-user" ref="instance('ins-current-user')/name"/></div>
-    	
+    	<span id="home-nav"><a href="TODO">log out</a> | <xforms:output model="mod-current-user" ref="instance('ins-current-user')/name"/></span>
+
     	<div id="content">
     	
+	    	<h1>
+	    		<a href="home">Submitter</a> - Home
+	   		</h1>
+	    	
+		   	<div class="help">
+		   		<h2>Help</h2>
+		   		<p>TODO</p>
+		   	</div>
+		   	
     		<p>Welcome to the WWARN submitter home page.</p>
     		
     		<h2>Actions</h2>
     		
 	    	<ul>
 	    	
-	    		<li><a class="action" href="create-study">Create Study</a></li>
-	    		
-	    		<xforms:group ref="instance('ins-study-feed')[count(atom:entry)=0]">
-		    		<li><span class="locked-action">Submit Files</span> (you have to create a study before you can submit files)</li>
-	    		</xforms:group>
+	    		<li><a class="action" href="create-study">Create a Study</a></li>
 	    		
 	    		<xforms:group ref="instance('ins-study-feed')[count(atom:entry)>0]">
 		    		<li><a class="action" href="submit-files">Submit Files</a></li>
@@ -88,13 +91,10 @@
 	    		
 	    	</ul>
 	    	
-	    	<h2>Studies</h2>
-	    	
-    		<xforms:group ref="instance('ins-study-feed')[count(atom:entry)=0]">
-	    		<p>Please <a href="create-study">create a study</a>.</p>
-    		</xforms:group>
-
     		<xforms:group ref="instance('ins-study-feed')[count(atom:entry)>0]">
+
+		    	<h2>Studies</h2>
+	    	
 		    	<fr:datatable paginated="false">
 		    		<thead>
 		    			<tr>
