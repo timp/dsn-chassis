@@ -61,7 +61,7 @@
 
 #bd h1 {
     margin: 0 0 0 0;
-    padding: 0;
+    padding: 0 0 0.2em 0;
     border-bottom: 4px solid black;
     font-size: 150%;
 }
@@ -135,7 +135,7 @@
 .repeat-table .form-td { width: 33em; background: white; padding: .5em }
 
 h2.subtitle {
-    margin-top: 0;
+    margin-top: 0.2em;
 }
 
 .mini-action {
