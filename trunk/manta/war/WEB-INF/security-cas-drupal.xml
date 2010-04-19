@@ -143,18 +143,18 @@
         <property
             name="usersByUsernameQuery"
             value="
-            SELECT users.name as username , users.pass as password , users.status as enabled 
+            SELECT users.mail as username , users.pass as password , users.status as enabled 
             FROM users 
             WHERE users.name = ?            
             "/>
         <property 
             name="authoritiesByUsernameQuery" 
             value="
-            SELECT users.name AS username, role.name AS authority
+            SELECT users.mail AS username, role.name AS authority
             FROM users, users_roles, role
             WHERE users.uid = users_roles.uid
             AND users_roles.rid = role.rid
-            AND users.name = ?
+            AND users.mail = ?
             "/>
     </bean>
     
