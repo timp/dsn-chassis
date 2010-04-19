@@ -75,7 +75,7 @@
 			
 			<xforms:submission 
 				id="sub-get-study-feed"
-				resource="http://localhost:8081/manta/atombeat/content/studies"
+				resource="/atombeat/content/studies"
 				method="get"
 				ref="instance('ins-noparams')"
 				replace="instance"
@@ -148,7 +148,7 @@
 				id="sub-confirm" 
 				ref="instance('ins-form-data')/uploads" 
 				method="post" 
-				action="http://localhost:8081/manta/util/store-uploads"
+				resource="/util/store-uploads"
 				replace="instance"
 				instance="ins-confirmation">
 				<!-- TODO proper error handling -->
