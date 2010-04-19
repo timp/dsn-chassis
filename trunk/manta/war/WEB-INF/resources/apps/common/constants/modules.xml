@@ -7,7 +7,7 @@
     </module>
     <module>
         <label>Molecular</label>
-        <value>Molecular</value>
+        <value>molecular</value>
     </module>
     <module>
         <label><xhtml:em>in vitro</xhtml:em></label> <!-- doesn't look like xhtml works here -->

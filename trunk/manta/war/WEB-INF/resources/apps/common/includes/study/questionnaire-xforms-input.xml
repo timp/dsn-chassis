@@ -24,12 +24,14 @@
         <p>
             <xforms:input ref="start">
                 <xforms:label>Start: </xforms:label>
+                <xforms:alert>The date is not valid.</xforms:alert>
             </xforms:input>
         </p>				
         
         <p>
             <xforms:input ref="end">
                 <xforms:label>End: </xforms:label>
+                <xforms:alert>The date is not valid.</xforms:alert>
             </xforms:input>
         </p>	
         
@@ -162,6 +164,37 @@
             </xforms:submit>
         </p>
         
+        <xforms:group ref="clinical">
+        
+	        <h2>Clinical Questions</h2>
+	        
+	        <p>TODO</p>
+
+        </xforms:group>
+        
+        <xforms:group ref="molecular">
+        
+	        <h2>Molecular Questions</h2>
+	        
+	        <p>TODO</p>
+
+        </xforms:group>
+        
+        <xforms:group ref="in-vitro">
+        
+	        <h2>In Vitro Questions</h2>
+	        
+	        <p>TODO</p>
+
+        </xforms:group>
+        
+        <xforms:group ref="pharmacology">
+        
+	        <h2>Pharmacology Questions</h2>
+	        
+	        <p>TODO</p>
+
+        </xforms:group>
         
     </xforms:group>
 
