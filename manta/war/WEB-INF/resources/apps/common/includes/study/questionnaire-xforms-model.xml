@@ -10,7 +10,7 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     id="mod-study-questionnaire">
     
-    <xforms:instance id="ins-sq-study-entry">
+    <xforms:instance id="ins-sq-study-entry" src="/apps/common/templates/study/study-entry-template.xml">
         <atom:entry/>
     </xforms:instance>  
     
@@ -18,6 +18,10 @@
     	<xforms:bind nodeset="atom:content/study">
     		<xforms:bind nodeset="start" type="xs:date"/>
     		<xforms:bind nodeset="end" type="xs:date"/>
+			<xforms:bind nodeset="clinical" relevant="contains(../modules, 'clinical')"/>
+			<xforms:bind nodeset="molecular" relevant="contains(../modules, 'molecular')"/>
+			<xforms:bind nodeset="in-vitro" relevant="contains(../modules, 'invitro')"/>
+			<xforms:bind nodeset="pharmacology" relevant="contains(../modules, 'pharmacology')"/>
     	</xforms:bind>
     </xforms:bind>
     
@@ -34,7 +38,9 @@
         replace="instance"
         instance="ins-sq-study-entry"
         ref="instance('ins-sq-study-entry')"
-        mediatype="application/atom+xml">
+        mediatype="application/atom+xml"
+        relevant="false"
+        validate="false">
         <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while saving the study.</xforms:message>
         <xforms:message ev:event="xforms-submit-done" level="modal">Your changes have been saved, thank you.</xforms:message>
     </xforms:submission>

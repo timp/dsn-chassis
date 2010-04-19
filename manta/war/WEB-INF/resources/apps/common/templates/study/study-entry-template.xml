@@ -10,6 +10,18 @@
             <pathogens/>
             <sites/>
             <modules/>
+            <clinical>
+            
+            </clinical>
+            <molecular>
+            
+            </molecular>
+            <in-vitro>
+            	
+            </in-vitro>
+            <pharmacology>
+            
+            </pharmacology>
         </study>
     </atom:content>
 </atom:entry>
