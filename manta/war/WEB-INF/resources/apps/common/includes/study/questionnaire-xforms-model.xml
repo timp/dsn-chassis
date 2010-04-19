@@ -14,6 +14,13 @@
         <atom:entry/>
     </xforms:instance>  
     
+    <xforms:bind nodeset="instance('ins-sq-study-entry')">
+    	<xforms:bind nodeset="atom:content/study">
+    		<xforms:bind nodeset="start" type="xs:date"/>
+    		<xforms:bind nodeset="end" type="xs:date"/>
+    	</xforms:bind>
+    </xforms:bind>
+    
     <xforms:instance id="ins-site-template" src="/apps/common/templates/study/site-template.xml"/>
 
     <xforms:instance id="ins-pathogens-items" src="/apps/common/constants/pathogens.xml"/>
