@@ -182,10 +182,9 @@
         
         <xforms:group ref="in-vitro">
         
-	        <h2>In Vitro Questions</h2>
+	        <h2><i>in vitro</i> Module Questions</h2>
 	        
 	        <p>TODO</p>
-
         </xforms:group>
         
         <xforms:group ref="pharmacology">
