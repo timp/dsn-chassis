@@ -36,7 +36,7 @@ declare function local:content() as item()*
 {
     <html>
         <head>
-            <title>Chassis/WWARN Installation</title>
+            <title>Chassis/Manta Installation</title>
             <style type="text/css">
             
                 th {{
@@ -64,7 +64,7 @@ declare function local:content() as item()*
             </style>
         </head>
         <body>
-            <h1>Chassis/WWARN Installation</h1>
+            <h1>Chassis/Manta Installation</h1>
             <h2>Atom Collections</h2>
                 <table>
                     <tr>
