@@ -1,3 +1,7 @@
+<!--  
+A closed list of types of sample incubator, 
+used in the in-vitro section of the questionnaire.   
+-->
 <incubatorSystems xmlns="">
     <incubatorSystem>
 		<label>CO2 incubator</label>
