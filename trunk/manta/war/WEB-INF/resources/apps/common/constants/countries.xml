@@ -1,3 +1,4 @@
+<!--  A closed list of countries -->
 <countries xmlns="">
   <country>
     <label>select a country...</label>
