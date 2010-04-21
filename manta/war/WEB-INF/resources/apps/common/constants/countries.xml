@@ -1,1029 +1,1029 @@
 <countries xmlns="">
   <country>
-    <label lang="en">select a country...</label>
+    <label>select a country...</label>
     <value></value>
   </country>
   <country>
-    <label lang="en">AFGHANISTAN</label>
+    <label>AFGHANISTAN</label>
     <value>AF</value>
   </country>
   <country>
-    <label lang="en">ÅLAND ISLANDS</label>
+    <label>ÅLAND ISLANDS</label>
     <value>AX</value>
   </country>
   <country>
-    <label lang="en">ALBANIA  </label>
+    <label>ALBANIA  </label>
     <value>AL</value>
   </country>
   <country>
-    <label lang="en">ALGERIA</label>
+    <label>ALGERIA</label>
     <value>DZ</value>
   </country>
   <country>
-    <label lang="en">AMERICAN SAMOA</label>
+    <label>AMERICAN SAMOA</label>
     <value>AS</value>
   </country>
   <country>
-    <label lang="en">ANDORRA</label>
+    <label>ANDORRA</label>
     <value>AD</value>
   </country>
   <country>
-    <label lang="en">ANGOLA</label>
+    <label>ANGOLA</label>
     <value>AO</value>
   </country>
   <country>
-    <label lang="en">ANGUILLA</label>
+    <label>ANGUILLA</label>
     <value>AI</value>
   </country>
   <country>
-    <label lang="en">ANTARCTICA</label>
+    <label>ANTARCTICA</label>
     <value>AQ</value>
   </country>
   <country>
-    <label lang="en">ANTIGUA AND BARBUDA</label>
+    <label>ANTIGUA AND BARBUDA</label>
     <value>AG</value>
   </country>
   <country>
-    <label lang="en">ARGENTINA</label>
+    <label>ARGENTINA</label>
     <value>AR</value>
   </country>
   <country>
-    <label lang="en">ARMENIA</label>
+    <label>ARMENIA</label>
     <value>AM</value>
   </country>
   <country>
-    <label lang="en">ARUBA</label>
+    <label>ARUBA</label>
     <value>AW</value>
   </country>
   <country>
-    <label lang="en">AUSTRALIA</label>
+    <label>AUSTRALIA</label>
     <value>AU</value>
   </country>
   <country>
-    <label lang="en">AUSTRIA</label>
+    <label>AUSTRIA</label>
     <value>AT</value>
   </country>
   <country>
-    <label lang="en">AZERBAIJAN</label>
+    <label>AZERBAIJAN</label>
     <value>AZ</value>
   </country>
   <country>
-    <label lang="en">BAHAMAS</label>
+    <label>BAHAMAS</label>
     <value>BS</value>
   </country>
   <country>
-    <label lang="en">BAHRAIN</label>
+    <label>BAHRAIN</label>
     <value>BH</value>
   </country>
   <country>
-    <label lang="en">BANGLADESH</label>
+    <label>BANGLADESH</label>
     <value>BD</value>
   </country>
   <country>
-    <label lang="en">BARBADOS</label>
+    <label>BARBADOS</label>
     <value>BB</value>
   </country>
   <country>
-    <label lang="en">BELARUS</label>
+    <label>BELARUS</label>
     <value>BY</value>
   </country>
   <country>
-    <label lang="en">BELGIUM</label>
+    <label>BELGIUM</label>
     <value>BE</value>
   </country>
   <country>
-    <label lang="en">BELIZE</label>
+    <label>BELIZE</label>
     <value>BZ</value>
   </country>
   <country>
-    <label lang="en">BENIN</label>
+    <label>BENIN</label>
     <value>BJ</value>
   </country>
   <country>
-    <label lang="en">BERMUDA</label>
+    <label>BERMUDA</label>
     <value>BM</value>
   </country>
   <country>
-    <label lang="en">BHUTAN</label>
+    <label>BHUTAN</label>
     <value>BT</value>
   </country>
   <country>
-    <label lang="en">BOLIVIA, PLURINATIONAL STATE OF</label>
+    <label>BOLIVIA, PLURINATIONAL STATE OF</label>
     <value>BO</value>
   </country>
   <country>
-    <label lang="en">BOSNIA AND HERZEGOVINA</label>
+    <label>BOSNIA AND HERZEGOVINA</label>
     <value>BA</value>
   </country>
   <country>
-    <label lang="en">BOTSWANA</label>
+    <label>BOTSWANA</label>
     <value>BW</value>
   </country>
   <country>
-    <label lang="en">BOUVET ISLAND</label>
+    <label>BOUVET ISLAND</label>
     <value>BV</value>
   </country>
   <country>
-    <label lang="en">BRAZIL</label>
+    <label>BRAZIL</label>
     <value>BR</value>
   </country>
   <country>
-    <label lang="en">BRITISH INDIAN OCEAN TERRITORY</label>
+    <label>BRITISH INDIAN OCEAN TERRITORY</label>
     <value>IO</value>
   </country>
   <country>
-    <label lang="en">BRUNEI DARUSSALAM</label>
+    <label>BRUNEI DARUSSALAM</label>
     <value>BN</value>
   </country>
   <country>
-    <label lang="en">BULGARIA</label>
+    <label>BULGARIA</label>
     <value>BG</value>
   </country>
   <country>
-    <label lang="en">BURKINA FASO</label>
+    <label>BURKINA FASO</label>
     <value>BF</value>
   </country>
   <country>
-    <label lang="en">BURUNDI</label>
+    <label>BURUNDI</label>
     <value>BI</value>
   </country>
   <country>
-    <label lang="en">CAMBODIA</label>
+    <label>CAMBODIA</label>
     <value>KH</value>
   </country>
   <country>
-    <label lang="en">CAMEROON</label>
+    <label>CAMEROON</label>
     <value>CM</value>
   </country>
   <country>
-    <label lang="en">CANADA</label>
+    <label>CANADA</label>
     <value>CA</value>
   </country>
   <country>
-    <label lang="en">CAPE VERDE</label>
+    <label>CAPE VERDE</label>
     <value>CV</value>
   </country>
   <country>
-    <label lang="en">CAYMAN ISLANDS</label>
+    <label>CAYMAN ISLANDS</label>
     <value>KY</value>
   </country>
   <country>
-    <label lang="en">CENTRAL AFRICAN REPUBLIC</label>
+    <label>CENTRAL AFRICAN REPUBLIC</label>
     <value>CF</value>
   </country>
   <country>
-    <label lang="en">CHAD</label>
+    <label>CHAD</label>
     <value>TD</value>
   </country>
   <country>
-    <label lang="en">CHILE</label>
+    <label>CHILE</label>
     <value>CL</value>
   </country>
   <country>
-    <label lang="en">CHINA</label>
+    <label>CHINA</label>
     <value>CN</value>
   </country>
   <country>
-    <label lang="en">CHRISTMAS ISLAND</label>
+    <label>CHRISTMAS ISLAND</label>
     <value>CX</value>
   </country>
   <country>
-    <label lang="en">COCOS (KEELING) ISLANDS</label>
+    <label>COCOS (KEELING) ISLANDS</label>
     <value>CC</value>
   </country>
   <country>
-    <label lang="en">COLOMBIA</label>
+    <label>COLOMBIA</label>
     <value>CO</value>
   </country>
   <country>
-    <label lang="en">COMOROS</label>
+    <label>COMOROS</label>
     <value>KM</value>
   </country>
   <country>
-    <label lang="en">CONGO</label>
+    <label>CONGO</label>
     <value>CG</value>
   </country>
   <country>
-    <label lang="en">CONGO, THE DEMOCRATIC REPUBLIC OF THE</label>
+    <label>CONGO, THE DEMOCRATIC REPUBLIC OF THE</label>
     <value>CD</value>
   </country>
   <country>
-    <label lang="en">COOK ISLANDS</label>
+    <label>COOK ISLANDS</label>
     <value>CK</value>
   </country>
   <country>
-    <label lang="en">COSTA RICA</label>
+    <label>COSTA RICA</label>
     <value>CR</value>
   </country>
   <country>
-    <label lang="en">CÔTE D'IVOIRE</label>
+    <label>CÔTE D'IVOIRE</label>
     <value>CI</value>
   </country>
   <country>
-    <label lang="en">CROATIA</label>
+    <label>CROATIA</label>
     <value>HR</value>
   </country>
   <country>
-    <label lang="en">CUBA</label>
+    <label>CUBA</label>
     <value>CU</value>
   </country>
   <country>
-    <label lang="en">CYPRUS</label>
+    <label>CYPRUS</label>
     <value>CY</value>
   </country>
   <country>
-    <label lang="en">CZECH REPUBLIC</label>
+    <label>CZECH REPUBLIC</label>
     <value>CZ</value>
   </country>
   <country>
-    <label lang="en">DENMARK</label>
+    <label>DENMARK</label>
     <value>DK</value>
   </country>
   <country>
-    <label lang="en">DJIBOUTI</label>
+    <label>DJIBOUTI</label>
     <value>DJ</value>
   </country>
   <country>
-    <label lang="en">DOMINICA</label>
+    <label>DOMINICA</label>
     <value>DM</value>
   </country>
   <country>
-    <label lang="en">DOMINICAN REPUBLIC</label>
+    <label>DOMINICAN REPUBLIC</label>
     <value>DO</value>
   </country>
   <country>
-    <label lang="en">ECUADOR</label>
+    <label>ECUADOR</label>
     <value>EC</value>
   </country>
   <country>
-    <label lang="en">EGYPT</label>
+    <label>EGYPT</label>
     <value>EG</value>
   </country>
   <country>
-    <label lang="en">EL SALVADOR</label>
+    <label>EL SALVADOR</label>
     <value>SV</value>
   </country>
   <country>
-    <label lang="en">EQUATORIAL GUINEA</label>
+    <label>EQUATORIAL GUINEA</label>
     <value>GQ</value>
   </country>
   <country>
-    <label lang="en">ERITREA</label>
+    <label>ERITREA</label>
     <value>ER</value>
   </country>
   <country>
-    <label lang="en">ESTONIA</label>
+    <label>ESTONIA</label>
     <value>EE</value>
   </country>
   <country>
-    <label lang="en">ETHIOPIA</label>
+    <label>ETHIOPIA</label>
     <value>ET</value>
   </country>
   <country>
-    <label lang="en">FALKLAND ISLANDS (MALVINAS)</label>
+    <label>FALKLAND ISLANDS (MALVINAS)</label>
     <value>FK</value>
   </country>
   <country>
-    <label lang="en">FAROE ISLANDS</label>
+    <label>FAROE ISLANDS</label>
     <value>FO</value>
   </country>
   <country>
-    <label lang="en">FIJI</label>
+    <label>FIJI</label>
     <value>FJ</value>
   </country>
   <country>
-    <label lang="en">FINLAND</label>
+    <label>FINLAND</label>
     <value>FI</value>
   </country>
   <country>
-    <label lang="en">FRANCE</label>
+    <label>FRANCE</label>
     <value>FR</value>
   </country>
   <country>
-    <label lang="en">FRENCH GUIANA</label>
+    <label>FRENCH GUIANA</label>
     <value>GF</value>
   </country>
   <country>
-    <label lang="en">FRENCH POLYNESIA</label>
+    <label>FRENCH POLYNESIA</label>
     <value>PF</value>
   </country>
   <country>
-    <label lang="en">FRENCH SOUTHERN TERRITORIES</label>
+    <label>FRENCH SOUTHERN TERRITORIES</label>
     <value>TF</value>
   </country>
   <country>
-    <label lang="en">GABON</label>
+    <label>GABON</label>
     <value>GA</value>
   </country>
   <country>
-    <label lang="en">GAMBIA</label>
+    <label>GAMBIA</label>
     <value>GM</value>
   </country>
   <country>
-    <label lang="en">GEORGIA</label>
+    <label>GEORGIA</label>
     <value>GE</value>
   </country>
   <country>
-    <label lang="en">GERMANY</label>
+    <label>GERMANY</label>
     <value>DE</value>
   </country>
   <country>
-    <label lang="en">GHANA</label>
+    <label>GHANA</label>
     <value>GH</value>
   </country>
   <country>
-    <label lang="en">GIBRALTAR</label>
+    <label>GIBRALTAR</label>
     <value>GI</value>
   </country>
   <country>
-    <label lang="en">GREECE</label>
+    <label>GREECE</label>
     <value>GR</value>
   </country>
   <country>
-    <label lang="en">GREENLAND</label>
+    <label>GREENLAND</label>
     <value>GL</value>
   </country>
   <country>
-    <label lang="en">GRENADA</label>
+    <label>GRENADA</label>
     <value>GD</value>
   </country>
   <country>
-    <label lang="en">GUADELOUPE</label>
+    <label>GUADELOUPE</label>
     <value>GP</value>
   </country>
   <country>
-    <label lang="en">GUAM</label>
+    <label>GUAM</label>
     <value>GU</value>
   </country>
   <country>
-    <label lang="en">GUATEMALA</label>
+    <label>GUATEMALA</label>
     <value>GT</value>
   </country>
   <country>
-    <label lang="en">GUERNSEY</label>
+    <label>GUERNSEY</label>
     <value>GG</value>
   </country>
   <country>
-    <label lang="en">GUINEA</label>
+    <label>GUINEA</label>
     <value>GN</value>
   </country>
   <country>
-    <label lang="en">GUINEA-BISSAU</label>
+    <label>GUINEA-BISSAU</label>
     <value>GW</value>
   </country>
   <country>
-    <label lang="en">GUYANA</label>
+    <label>GUYANA</label>
     <value>GY</value>
   </country>
   <country>
-    <label lang="en">HAITI</label>
+    <label>HAITI</label>
     <value>HT</value>
   </country>
   <country>
-    <label lang="en">HEARD ISLAND AND MCDONALD ISLANDS</label>
+    <label>HEARD ISLAND AND MCDONALD ISLANDS</label>
     <value>HM</value>
   </country>
   <country>
-    <label lang="en">HOLY (VATICAN CITY STATE)</label>
+    <label>HOLY (VATICAN CITY STATE)</label>
     <value>VA</value>
   </country>
   <country>
-    <label lang="en">HONDURAS</label>
+    <label>HONDURAS</label>
     <value>HN</value>
   </country>
   <country>
-    <label lang="en">HONG KONG</label>
+    <label>HONG KONG</label>
     <value>HK</value>
   </country>
   <country>
-    <label lang="en">HUNGARY</label>
+    <label>HUNGARY</label>
     <value>HU</value>
   </country>
   <country>
-    <label lang="en">ICELAND</label>
+    <label>ICELAND</label>
     <value>IS</value>
   </country>
   <country>
-    <label lang="en">INDIA</label>
+    <label>INDIA</label>
     <value>IN</value>
   </country>
   <country>
-    <label lang="en">INDONESIA</label>
+    <label>INDONESIA</label>
     <value>ID</value>
   </country>
   <country>
-    <label lang="en">IRAN, ISLAMIC REPUBLIC OF</label>
+    <label>IRAN, ISLAMIC REPUBLIC OF</label>
     <value>IR</value>
   </country>
   <country>
-    <label lang="en">IRAQ</label>
+    <label>IRAQ</label>
     <value>IQ</value>
   </country>
   <country>
-    <label lang="en">IRELAND</label>
+    <label>IRELAND</label>
     <value>IE</value>
   </country>
   <country>
-    <label lang="en">ISLE OF MAN</label>
+    <label>ISLE OF MAN</label>
     <value>IM</value>
   </country>
   <country>
-    <label lang="en">ISRAEL</label>
+    <label>ISRAEL</label>
     <value>IL</value>
   </country>
   <country>
-    <label lang="en">ITALY</label>
+    <label>ITALY</label>
     <value>IT</value>
   </country>
   <country>
-    <label lang="en">JAMAICA</label>
+    <label>JAMAICA</label>
     <value>JM</value>
   </country>
   <country>
-    <label lang="en">JAPAN</label>
+    <label>JAPAN</label>
     <value>JP</value>
   </country>
   <country>
-    <label lang="en">JERSEY</label>
+    <label>JERSEY</label>
     <value>JE</value>
   </country>
   <country>
-    <label lang="en">JORDAN</label>
+    <label>JORDAN</label>
     <value>JO</value>
   </country>
   <country>
-    <label lang="en">KAZAKHSTAN</label>
+    <label>KAZAKHSTAN</label>
     <value>KZ</value>
   </country>
   <country>
-    <label lang="en">KENYA</label>
+    <label>KENYA</label>
     <value>KE</value>
     <!-- http://en.wikipedia.org/wiki/ISO_3166-2:KE -->
     <regions>
       <region>
-        <label lang="en">select a region...</label>
+        <label>select a region...</label>
         <value/>
       </region>      
       <region>
-        <label lang="en">Nairobi Municipality</label>
+        <label>Nairobi Municipality</label>
         <value>KE-110</value>
       </region>
       <region>
-        <label lang="en">Central</label>
+        <label>Central</label>
         <value>KE-200</value>
       </region>
       <region>
-        <label lang="en">Coast</label>
+        <label>Coast</label>
         <value>KE-300</value>
       </region>
       <region>
-        <label lang="en">Eastern</label>
+        <label>Eastern</label>
         <value>KE-400</value>
       </region>
       <region>
-        <label lang="en">North-Eastern</label>
+        <label>North-Eastern</label>
         <value>KE-500</value>
       </region>
       <region>
-        <label lang="en">Nyanza</label>
+        <label>Nyanza</label>
         <value>KE-600</value>
       </region>
       <region>
-        <label lang="en">Rift Valley</label>
+        <label>Rift Valley</label>
         <value>KE-700</value>
       </region>
       <region>
-        <label lang="en">Western</label>
+        <label>Western</label>
         <value>KE-800</value>
       </region>
     </regions>
   </country>
   <country>
-    <label lang="en">KIRIBATI</label>
+    <label>KIRIBATI</label>
     <value>KI</value>
   </country>
   <country>
-    <label lang="en">KOREA, DEMOCRATIC PEOPLE'S REPUBLIC OF</label>
+    <label>KOREA, DEMOCRATIC PEOPLE'S REPUBLIC OF</label>
     <value>KP</value>
   </country>
   <country>
-    <label lang="en">KOREA, REPUBLIC OF</label>
+    <label>KOREA, REPUBLIC OF</label>
     <value>KR</value>
   </country>
   <country>
-    <label lang="en">KUWAIT</label>
+    <label>KUWAIT</label>
     <value>KW</value>
   </country>
   <country>
-    <label lang="en">KYRGYZSTAN</label>
+    <label>KYRGYZSTAN</label>
     <value>KG</value>
   </country>
   <country>
-    <label lang="en">LAO PEOPLE'S DEMOCRATIC REPUBLIC</label>
+    <label>LAO PEOPLE'S DEMOCRATIC REPUBLIC</label>
     <value>LA</value>
   </country>
   <country>
-    <label lang="en">LATVIA</label>
+    <label>LATVIA</label>
     <value>LV</value>
   </country>
   <country>
-    <label lang="en">LEBANON</label>
+    <label>LEBANON</label>
     <value>LB</value>
   </country>
   <country>
-    <label lang="en">LESOTHO</label>
+    <label>LESOTHO</label>
     <value>LS</value>
   </country>
   <country>
-    <label lang="en">LIBERIA</label>
+    <label>LIBERIA</label>
     <value>LR</value>
   </country>
   <country>
-    <label lang="en">LIBYAN ARAB JAMAHIRIYA</label>
+    <label>LIBYAN ARAB JAMAHIRIYA</label>
     <value>LY</value>
   </country>
   <country>
-    <label lang="en">LIECHTENSTEIN</label>
+    <label>LIECHTENSTEIN</label>
     <value>LI</value>
   </country>
   <country>
-    <label lang="en">LITHUANIA</label>
+    <label>LITHUANIA</label>
     <value>LT</value>
   </country>
   <country>
-    <label lang="en">LUXEMBOURG</label>
+    <label>LUXEMBOURG</label>
     <value>LU</value>
   </country>
   <country>
-    <label lang="en">MACAO</label>
+    <label>MACAO</label>
     <value>MO</value>
   </country>
   <country>
-    <label lang="en">MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF</label>
+    <label>MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF</label>
     <value>MK</value>
   </country>
   <country>
-    <label lang="en">MADAGASCAR</label>
+    <label>MADAGASCAR</label>
     <value>MG</value>
   </country>
   <country>
-    <label lang="en">MALAWI</label>
+    <label>MALAWI</label>
     <value>MW</value>
   </country>
   <country>
-    <label lang="en">MALAYSIA</label>
+    <label>MALAYSIA</label>
     <value>MY</value>
   </country>
   <country>
-    <label lang="en">MALDIVES</label>
+    <label>MALDIVES</label>
     <value>MV</value>
   </country>
   <country>
-    <label lang="en">MALI</label>
+    <label>MALI</label>
     <value>ML</value>
   </country>
   <country>
-    <label lang="en">MALTA</label>
+    <label>MALTA</label>
     <value>MT</value>
   </country>
   <country>
-    <label lang="en">MARSHALL ISLANDS</label>
+    <label>MARSHALL ISLANDS</label>
     <value>MH</value>
   </country>
   <country>
-    <label lang="en">MARTINIQUE</label>
+    <label>MARTINIQUE</label>
     <value>MQ</value>
   </country>
   <country>
-    <label lang="en">MAURITANIA</label>
+    <label>MAURITANIA</label>
     <value>MR</value>
   </country>
   <country>
-    <label lang="en">MAURITIUS</label>
+    <label>MAURITIUS</label>
     <value>MU</value>
   </country>
   <country>
-    <label lang="en">MAYOTTE</label>
+    <label>MAYOTTE</label>
     <value>YT</value>
   </country>
   <country>
-    <label lang="en">MEXICO</label>
+    <label>MEXICO</label>
     <value>MX</value>
   </country>
   <country>
-    <label lang="en">MICRONESIA, FEDERATED STATES OF</label>
+    <label>MICRONESIA, FEDERATED STATES OF</label>
     <value>FM</value>
   </country>
   <country>
-    <label lang="en">MOLDOVA, REPUBLIC OF</label>
+    <label>MOLDOVA, REPUBLIC OF</label>
     <value>MD</value>
   </country>
   <country>
-    <label lang="en">MONACO</label>
+    <label>MONACO</label>
     <value>MC</value>
   </country>
   <country>
-    <label lang="en">MONGOLIA</label>
+    <label>MONGOLIA</label>
     <value>MN</value>
   </country>
   <country>
-    <label lang="en">MONTENEGRO</label>
+    <label>MONTENEGRO</label>
     <value>ME</value>
   </country>
   <country>
-    <label lang="en">MONTSERRAT</label>
+    <label>MONTSERRAT</label>
     <value>MS</value>
   </country>
   <country>
-    <label lang="en">MOROCCO</label>
+    <label>MOROCCO</label>
     <value>MA</value>
   </country>
   <country>
-    <label lang="en">MOZAMBIQUE</label>
+    <label>MOZAMBIQUE</label>
     <value>MZ</value>
   </country>
   <country>
-    <label lang="en">MYANMAR</label>
+    <label>MYANMAR</label>
     <value>MM</value>
   </country>
   <country>
-    <label lang="en">NAMIBIA</label>
+    <label>NAMIBIA</label>
     <value>NA</value>
   </country>
   <country>
-    <label lang="en">NAURU</label>
+    <label>NAURU</label>
     <value>NR</value>
   </country>
   <country>
-    <label lang="en">NEPAL</label>
+    <label>NEPAL</label>
     <value>NP</value>
   </country>
   <country>
-    <label lang="en">NETHERLANDS</label>
+    <label>NETHERLANDS</label>
     <value>NL</value>
   </country>
   <country>
-    <label lang="en">NETHERLANDS ANTILLES</label>
+    <label>NETHERLANDS ANTILLES</label>
     <value>AN</value>
   </country>
   <country>
-    <label lang="en">NEW CALEDONIA</label>
+    <label>NEW CALEDONIA</label>
     <value>NC</value>
   </country>
   <country>
-    <label lang="en">NEW ZEALAND</label>
+    <label>NEW ZEALAND</label>
     <value>NZ</value>
   </country>
   <country>
-    <label lang="en">NICARAGUA</label>
+    <label>NICARAGUA</label>
     <value>NI</value>
   </country>
   <country>
-    <label lang="en">NIGER</label>
+    <label>NIGER</label>
     <value>NE</value>
   </country>
   <country>
-    <label lang="en">NIGERIA</label>
+    <label>NIGERIA</label>
     <value>NG</value>
   </country>
   <country>
-    <label lang="en">NIUE</label>
+    <label>NIUE</label>
     <value>NU</value>
   </country>
   <country>
-    <label lang="en">NORFOLK ISLAND</label>
+    <label>NORFOLK ISLAND</label>
     <value>NF</value>
   </country>
   <country>
-    <label lang="en">NORTHERN MARIANA ISLANDS</label>
+    <label>NORTHERN MARIANA ISLANDS</label>
     <value>MP</value>
   </country>
   <country>
-    <label lang="en">NORWAY</label>
+    <label>NORWAY</label>
     <value>NO</value>
   </country>
   <country>
-    <label lang="en">OMAN</label>
+    <label>OMAN</label>
     <value>OM</value>
   </country>
   <country>
-    <label lang="en">PAKISTAN</label>
+    <label>PAKISTAN</label>
     <value>PK</value>
   </country>
   <country>
-    <label lang="en">PALAU</label>
+    <label>PALAU</label>
     <value>PW</value>
   </country>
   <country>
-    <label lang="en">PALESTINIAN TERRITORY, OCCUPIED</label>
+    <label>PALESTINIAN TERRITORY, OCCUPIED</label>
     <value>PS</value>
   </country>
   <country>
-    <label lang="en">PANAMA</label>
+    <label>PANAMA</label>
     <value>PA</value>
   </country>
   <country>
-    <label lang="en">PAPUA NEW GUINEA</label>
+    <label>PAPUA NEW GUINEA</label>
     <value>PG</value>
   </country>
   <country>
-    <label lang="en">PARAGUAY</label>
+    <label>PARAGUAY</label>
     <value>PY</value>
   </country>
   <country>
-    <label lang="en">PERU</label>
+    <label>PERU</label>
     <value>PE</value>
   </country>
   <country>
-    <label lang="en">PHILIPPINES</label>
+    <label>PHILIPPINES</label>
     <value>PH</value>
   </country>
   <country>
-    <label lang="en">PITCAIRN</label>
+    <label>PITCAIRN</label>
     <value>PN</value>
   </country>
   <country>
-    <label lang="en">POLAND</label>
+    <label>POLAND</label>
     <value>PL</value>
   </country>
   <country>
-    <label lang="en">PORTUGAL</label>
+    <label>PORTUGAL</label>
     <value>PT</value>
   </country>
   <country>
-    <label lang="en">PUERTO RICO</label>
+    <label>PUERTO RICO</label>
     <value>PR</value>
   </country>
   <country>
-    <label lang="en">QATAR</label>
+    <label>QATAR</label>
     <value>QA</value>
   </country>
   <country>
-    <label lang="en">RÉUNION</label>
+    <label>RÉUNION</label>
     <value>RE</value>
   </country>
   <country>
-    <label lang="en">ROMANIA</label>
+    <label>ROMANIA</label>
     <value>RO</value>
   </country>
   <country>
-    <label lang="en">RUSSIAN FEDERATION</label>
+    <label>RUSSIAN FEDERATION</label>
     <value>RU</value>
   </country>
   <country>
-    <label lang="en">RWANDA</label>
+    <label>RWANDA</label>
     <value>RW</value>
   </country>
   <country>
-    <label lang="en">SAINT BARTHÉLEMY</label>
+    <label>SAINT BARTHÉLEMY</label>
     <value>BL</value>
   </country>
   <country>
-    <label lang="en">SAINT HELENA</label>
+    <label>SAINT HELENA</label>
     <value>SH</value>
   </country>
   <country>
-    <label lang="en">SAINT KITTS AND NEVIS</label>
+    <label>SAINT KITTS AND NEVIS</label>
     <value>KN</value>
   </country>
   <country>
-    <label lang="en">SAINT LUCIA</label>
+    <label>SAINT LUCIA</label>
     <value>LC</value>
   </country>
   <country>
-    <label lang="en">SAINT MARTIN</label>
+    <label>SAINT MARTIN</label>
     <value>MF</value>
   </country>
   <country>
-    <label lang="en">SAINT PIERRE AND MIQUELON</label>
+    <label>SAINT PIERRE AND MIQUELON</label>
     <value>PM</value>
   </country>
   <country>
-    <label lang="en">SAINT VINCENT AND THE GRENADINES</label>
+    <label>SAINT VINCENT AND THE GRENADINES</label>
     <value>VC</value>
   </country>
   <country>
-    <label lang="en">SAMOA</label>
+    <label>SAMOA</label>
     <value>WS</value>
   </country>
   <country>
-    <label lang="en">SAN MARINO</label>
+    <label>SAN MARINO</label>
     <value>SM</value>
   </country>
   <country>
-    <label lang="en">SAO TOME AND PRINCIPE</label>
+    <label>SAO TOME AND PRINCIPE</label>
     <value>ST</value>
   </country>
   <country>
-    <label lang="en">SAUDI ARABIA</label>
+    <label>SAUDI ARABIA</label>
     <value>SA</value>
   </country>
   <country>
-    <label lang="en">SENEGAL</label>
+    <label>SENEGAL</label>
     <value>SN</value>
   </country>
   <country>
-    <label lang="en">SERBIA</label>
+    <label>SERBIA</label>
     <value>RS</value>
   </country>
   <country>
-    <label lang="en">SEYCHELLES</label>
+    <label>SEYCHELLES</label>
     <value>SC</value>
   </country>
   <country>
-    <label lang="en">SIERRA LEONE</label>
+    <label>SIERRA LEONE</label>
     <value>SL</value>
   </country>
   <country>
-    <label lang="en">SINGAPORE</label>
+    <label>SINGAPORE</label>
     <value>SG</value>
   </country>
   <country>
-    <label lang="en">SLOVAKIA</label>
+    <label>SLOVAKIA</label>
     <value>SK</value>
   </country>
   <country>
-    <label lang="en">SLOVENIA</label>
+    <label>SLOVENIA</label>
     <value>SI</value>
   </country>
   <country>
-    <label lang="en">SOLOMON ISLANDS</label>
+    <label>SOLOMON ISLANDS</label>
     <value>SB</value>
   </country>
   <country>
-    <label lang="en">SOMALIA</label>
+    <label>SOMALIA</label>
     <value>SO</value>
   </country>
   <country>
-    <label lang="en">SOUTH AFRICA</label>
+    <label>SOUTH AFRICA</label>
     <value>ZA</value>
   </country>
   <country>
-    <label lang="en">SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS</label>
+    <label>SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS</label>
     <value>GS</value>
   </country>
   <country>
-    <label lang="en">SPAIN</label>
+    <label>SPAIN</label>
     <value>ES</value>
   </country>
   <country>
-    <label lang="en">SRI LANKA</label>
+    <label>SRI LANKA</label>
     <value>LK</value>
   </country>
   <country>
-    <label lang="en">SUDAN</label>
+    <label>SUDAN</label>
     <value>SD</value>
   </country>
   <country>
-    <label lang="en">SURINAME</label>
+    <label>SURINAME</label>
     <value>SR</value>
   </country>
   <country>
-    <label lang="en">SVALBARD AND JAN MAYEN</label>
+    <label>SVALBARD AND JAN MAYEN</label>
     <value>SJ</value>
   </country>
   <country>
-    <label lang="en">SWAZILAND</label>
+    <label>SWAZILAND</label>
     <value>SZ</value>
   </country>
   <country>
-    <label lang="en">SWEDEN</label>
+    <label>SWEDEN</label>
     <value>SE</value>
   </country>
   <country>
-    <label lang="en">SWITZERLAND</label>
+    <label>SWITZERLAND</label>
     <value>CH</value>
   </country>
   <country>
-    <label lang="en">SYRIAN ARAB REPUBLIC</label>
+    <label>SYRIAN ARAB REPUBLIC</label>
     <value>SY</value>
   </country>
   <country>
-    <label lang="en">TAIWAN, PROVINCE OF CHINA</label>
+    <label>TAIWAN, PROVINCE OF CHINA</label>
     <value>TW</value>
   </country>
   <country>
-    <label lang="en">TAJIKISTAN</label>
+    <label>TAJIKISTAN</label>
     <value>TJ</value>
   </country>
   <country>
-    <label lang="en">TANZANIA, UNITED REPUBLIC OF</label>
+    <label>TANZANIA, UNITED REPUBLIC OF</label>
     <value>TZ</value>
   </country>
   <country>
-    <label lang="en">THAILAND</label>
+    <label>THAILAND</label>
     <value>TH</value>
   </country>
   <country>
-    <label lang="en">TIMOR-LESTE</label>
+    <label>TIMOR-LESTE</label>
     <value>TL</value>
   </country>
   <country>
-    <label lang="en">TOGO</label>
+    <label>TOGO</label>
     <value>TG</value>
   </country>
   <country>
-    <label lang="en">TOKELAU</label>
+    <label>TOKELAU</label>
     <value>TK</value>
   </country>
   <country>
-    <label lang="en">TONGA</label>
+    <label>TONGA</label>
     <value>TO</value>
   </country>
   <country>
-    <label lang="en">TRINIDAD AND TOBAGO</label>
+    <label>TRINIDAD AND TOBAGO</label>
     <value>TT</value>
   </country>
   <country>
-    <label lang="en">TUNISIA</label>
+    <label>TUNISIA</label>
     <value>TN</value>
   </country>
   <country>
-    <label lang="en">TURKEY</label>
+    <label>TURKEY</label>
     <value>TR</value>
   </country>
   <country>
-    <label lang="en">TURKMENISTAN</label>
+    <label>TURKMENISTAN</label>
     <value>TM</value>
   </country>
   <country>
-    <label lang="en">TURKS AND CAICOS ISLANDS</label>
+    <label>TURKS AND CAICOS ISLANDS</label>
     <value>TC</value>
   </country>
   <country>
-    <label lang="en">TUVALU</label>
+    <label>TUVALU</label>
     <value>TV</value>
   </country>
   <country>
-    <label lang="en">UGANDA</label>
+    <label>UGANDA</label>
     <value>UG</value>
   </country>
   <country>
-    <label lang="en">UKRAINE</label>
+    <label>UKRAINE</label>
     <value>UA</value>
   </country>
   <country>
-    <label lang="en">UNITED ARAB EMIRATES</label>
+    <label>UNITED ARAB EMIRATES</label>
     <value>AE</value>
   </country>
   <country>
-    <label lang="en">UNITED KINGDOM</label>
+    <label>UNITED KINGDOM</label>
     <value>GB</value>
   </country>
   <country>
-    <label lang="en">UNITED STATES</label>
+    <label>UNITED STATES</label>
     <value>US</value>
   </country>
   <country>
-    <label lang="en">UNITED STATES MINOR OUTLYING ISLANDS</label>
+    <label>UNITED STATES MINOR OUTLYING ISLANDS</label>
     <value>UM</value>
   </country>
   <country>
-    <label lang="en">URUGUAY</label>
+    <label>URUGUAY</label>
     <value>UY</value>
   </country>
   <country>
-    <label lang="en">UZBEKISTAN</label>
+    <label>UZBEKISTAN</label>
     <value>UZ</value>
   </country>
   <country>
-    <label lang="en">VANUATU</label>
+    <label>VANUATU</label>
     <value>VU</value>
   </country>
   <country>
-    <label lang="en">VENEZUELA, BOLIVARIAN REPUBLIC OF</label>
+    <label>VENEZUELA, BOLIVARIAN REPUBLIC OF</label>
     <value>VE</value>
   </country>
   <country>
-    <label lang="en">VIET NAM</label>
+    <label>VIET NAM</label>
     <value>VN</value>
   </country>
   <country>
-    <label lang="en">VIRGIN ISLANDS, BRITISH</label>
+    <label>VIRGIN ISLANDS, BRITISH</label>
     <value>VG</value>
   </country>
   <country>
-    <label lang="en">VIRGIN ISLANDS, U.S.</label>
+    <label>VIRGIN ISLANDS, U.S.</label>
     <value>VI</value>
   </country>
   <country>
-    <label lang="en">WALLIS AND FUTUNA</label>
+    <label>WALLIS AND FUTUNA</label>
     <value>WF</value>
   </country>
   <country>
-    <label lang="en">WESTERN SAHARA</label>
+    <label>WESTERN SAHARA</label>
     <value>EH</value>
   </country>
   <country>
-    <label lang="en">YEMEN</label>
+    <label>YEMEN</label>
     <value>YE</value>
   </country>
   <country>
-    <label lang="en">ZAMBIA</label>
+    <label>ZAMBIA</label>
     <value>ZM</value>
   </country>
   <country>
-    <label lang="en">ZIMBABWE</label>
+    <label>ZIMBABWE</label>
     <value>ZW</value>
   </country>
 </countries>
