@@ -8,28 +8,47 @@
     xmlns:atom="http://www.w3.org/2005/Atom"
     xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
     xmlns:xi="http://www.w3.org/2001/XInclude"
-    id="mod-study-questionnaire">
+	xxforms:readonly-appearance="static"
+    id="mod-study-questionnaire"
+    >
     
     <xforms:instance id="ins-sq-study-entry" src="/apps/common/templates/study/study-entry-template.xml">
         <atom:entry/>
-    </xforms:instance>  
-    
+    </xforms:instance>
+     
+    <!--  
+	<xforms:bind nodeset="instance('ins-sq-study-entry')" readonly="true()"/>
+     -->
+     
+     
     <xforms:bind nodeset="instance('ins-sq-study-entry')">
     	<xforms:bind nodeset="atom:content/study">
-    		<xforms:bind nodeset="start" type="xs:date"/>
-    		<xforms:bind nodeset="end" type="xs:date"/>
-			<xforms:bind nodeset="clinical" relevant="contains(../modules, 'clinical')"/>
-			<xforms:bind nodeset="molecular" relevant="contains(../modules, 'molecular')"/>
-			<xforms:bind nodeset="in-vitro" relevant="contains(../modules, 'invitro')"/>
-			<xforms:bind nodeset="pharmacology" relevant="contains(../modules, 'pharmacology')"/>
+    		<xforms:bind nodeset="start" type="xs:date" />
+    		<xforms:bind nodeset="end" type="xs:date" />
+    		<xforms:bind nodeset="sites" />
+			<xforms:bind nodeset="clinical" relevant="contains(../modules, 'clinical')" />
+			<xforms:bind nodeset="molecular" relevant="contains(../modules, 'molecular')" />
+			<xforms:bind nodeset="in-vitro" relevant="contains(../modules, 'invitro')">
+				<xforms:bind nodeset="invitro-culture">
+					<xforms:bind nodeset="invitro-culture-incubatorSystem" />
+					<xforms:bind nodeset="invitro-culture-co2" relevant="contains(../invitro-culture-incubatorSystem, 'co2incubator')"  />
+					<xforms:bind nodeset="invitro-culture-healthyErythrocytesSource" />
+					<xforms:bind nodeset="hematocrit"/>
+					<xforms:bind nodeset="invitro-culture-bloodGroup"/>
+				</xforms:bind>
+			</xforms:bind>
+			<xforms:bind nodeset="pharmacology" relevant="contains(../modules, 'pharmacology')" />
     	</xforms:bind>
     </xforms:bind>
     
     <xforms:instance id="ins-site-template" src="/apps/common/templates/study/site-template.xml"/>
 
-    <xforms:instance id="ins-pathogens-items" src="/apps/common/constants/pathogens.xml"/>
-    <xforms:instance id="ins-countries-items" src="/apps/common/constants/countries.xml"/>
-    <xforms:instance id="ins-modules-items" src="/apps/common/constants/modules.xml"/>
+    <xforms:instance id="ins-pathogen-items" src="/apps/common/constants/pathogens.xml"/>
+    <xforms:instance id="ins-country-items" src="/apps/common/constants/countries.xml"/>
+    <xforms:instance id="ins-module-items" src="/apps/common/constants/modules.xml"/>
+    <xforms:instance id="ins-incubatorSystem-items" src="/apps/common/constants/incubatorSystems.xml"/>
+    <xforms:instance id="ins-healthyErythrocytesSource-items" src="/apps/common/constants/healthyErythrocytesSources.xml"/>
+    <xforms:instance id="ins-bloodGroup-items" src="/apps/common/constants/bloodGroups.xml"/>
     
     <xforms:submission
         id="sub-put-study-entry"
