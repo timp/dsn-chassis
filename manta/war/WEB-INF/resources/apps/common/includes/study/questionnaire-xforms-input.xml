@@ -1,200 +1,267 @@
-<div	
-    xmlns:xforms="http://www.w3.org/2002/xforms"
-    xmlns:f="http://orbeon.org/oxf/xml/formatting" 
-    xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
-    xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    xmlns:ev="http://www.w3.org/2001/xml-events"
-    xmlns:atom="http://www.w3.org/2005/Atom"
-    xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
-    xmlns:xi="http://www.w3.org/2001/XInclude">
+<div xmlns:xforms="http://www.w3.org/2002/xforms" xmlns:f="http://orbeon.org/oxf/xml/formatting"
+	xmlns="http://www.w3.org/1999/xhtml" xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events"
+	xmlns:atom="http://www.w3.org/2005/Atom" xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
+	xmlns:xi="http://www.w3.org/2001/XInclude">
 
-    <xforms:group model="mod-study-questionnaire" ref="instance('ins-sq-study-entry')/atom:content/study">
-        
-        <p>
-            <xforms:submit submission="sub-put-study-entry">
-                <xforms:label>Save Changes</xforms:label>
-            </xforms:submit>
-        </p>
-        
-        <h2>General Questions</h2>
-        
-        <h3>Study Start and End</h3>
-        
-        <p>
-            <xforms:input ref="start">
-                <xforms:label>Start: </xforms:label>
-                <xforms:alert>The date is not valid.</xforms:alert>
-            </xforms:input>
-        </p>				
-        
-        <p>
-            <xforms:input ref="end">
-                <xforms:label>End: </xforms:label>
-                <xforms:alert>The date is not valid.</xforms:alert>
-            </xforms:input>
-        </p>	
-        
-        <h3>Pathogen Species</h3>
-        
-        <p>
-            <xforms:select ref="pathogens" appearance="full">
-                <xforms:label/>
-                <xforms:itemset model="mod-study-questionnaire" nodeset="instance('ins-pathogens-items')/pathogen">
-                    <xforms:label ref="label"/>
-                    <xforms:value ref="value"/>
-                </xforms:itemset>
-            </xforms:select>
-        </p>
-        
-        <h3>Study Site(s)</h3>
-        
-        <xforms:group ref="sites">
-            
-            <table class="repeat-table">
-                <tr>
-                    <td>
-                        <xforms:trigger appearance="minimal">
-                            <xforms:label><img src="/apps/submitter/common/add.gif"/></xforms:label>
-                            <xforms:insert 
-                                ev:event="DOMActivate" 
-                                context="." 
-                                nodeset="site" 
-                                at="1" 
-                                position="before" 
-                                origin="instance('ins-site-template')"/>
-                        </xforms:trigger>
-                    </td>
-                    <td class="add-td">
-                        <xforms:trigger appearance="minimal">
-                            <xforms:label>Add a Site</xforms:label>
-                            <xforms:insert 
-                                ev:event="DOMActivate" 
-                                context="." 
-                                nodeset="site" 
-                                at="1" 
-                                position="before" 
-                                origin="instance('ins-site-template')"/>
-                        </xforms:trigger>
-                    </td>
-                </tr>
-                <xforms:repeat nodeset="site" id="rep-site">
-                    <tr>
-                        <td>
-                            <xforms:trigger appearance="minimal">
-                                <xforms:delete 
-                                    ev:event="DOMActivate" 
-                                    context="." 
-                                    nodeset="." 
-                                    at="index('rep-site')"/>
-                                <xforms:label><img src="/apps/submitter/common/remove.gif"/></xforms:label>
-                            </xforms:trigger>
-                        </td>
-                        <td class="form-td">
-                            <xforms:select1 ref="country">
-                                <xforms:label/>
-                                <xforms:itemset nodeset="instance('ins-countries-items')/country">
-                                    <xforms:label ref="label"/>
-                                    <xforms:value ref="value"/>
-                                </xforms:itemset>
-                            </xforms:select1>
-                            <br/>
-                            
-                            <!-- if the country has regions, use a select1 -->
-                            <xforms:group ref="
+	<xforms:group model="mod-study-questionnaire"
+		ref="instance('ins-sq-study-entry')/atom:content/study">
+
+		<p>
+			<xforms:submit submission="sub-put-study-entry">
+				<xforms:label>Save Changes</xforms:label>
+			</xforms:submit>
+		</p>
+
+		<h2>General Questions</h2>
+
+		<h3>Study Start and End</h3>
+
+		<p>
+			<xforms:input ref="start">
+				<xforms:label>Start: </xforms:label>
+				<xforms:alert>The date is not valid.</xforms:alert>
+			</xforms:input>
+		</p>
+
+		<p>
+			<xforms:input ref="end">
+				<xforms:label>End: </xforms:label>
+				<xforms:alert>The date is not valid.</xforms:alert>
+			</xforms:input>
+		</p>
+
+		<h3>Pathogen Species</h3>
+
+		<p>
+			<xforms:select ref="pathogens" appearance="full">
+				<xforms:label />
+				<xforms:itemset model="mod-study-questionnaire"
+					nodeset="instance('ins-pathogen-items')/pathogen">
+					<xforms:label ref="label" />
+					<xforms:value ref="value" />
+				</xforms:itemset>
+			</xforms:select>
+		</p>
+
+		<h3>Study Site(s)</h3>
+
+		<xforms:group ref="sites">
+
+			<table class="repeat-table">
+				<tr>
+					<td>
+						<xforms:trigger appearance="minimal">
+							<xforms:label>
+								<img src="/apps/submitter/common/add.gif" />
+							</xforms:label>
+							<xforms:insert ev:event="DOMActivate" context="."
+								nodeset="site" at="1" position="before" origin="instance('ins-site-template')" />
+						</xforms:trigger>
+					</td>
+					<td class="add-td">
+						<xforms:trigger appearance="minimal">
+							<xforms:label>Add a Site</xforms:label>
+							<xforms:insert ev:event="DOMActivate" context="."
+								nodeset="site" at="1" position="before" origin="instance('ins-site-template')" />
+						</xforms:trigger>
+					</td>
+				</tr>
+				<xforms:repeat nodeset="site" id="rep-site">
+					<tr>
+						<td>
+							<xforms:trigger appearance="minimal">
+								<xforms:delete ev:event="DOMActivate" context="."
+									nodeset="." at="index('rep-site')" />
+								<xforms:label>
+									<img src="/apps/submitter/common/remove.gif" />
+								</xforms:label>
+							</xforms:trigger>
+						</td>
+						<td class="form-td">
+							<xforms:select1 ref="country">
+								<xforms:label />
+								<xforms:itemset nodeset="instance('ins-country-items')/country">
+									<xforms:label ref="label" />
+									<xforms:value ref="value" />
+								</xforms:itemset>
+							</xforms:select1>
+							<br />
+
+							<!-- if the country has regions, use a select1 -->
+							<xforms:group
+								ref="
                                 .[country/text() = instance('ins-countries-items')/country[exists(regions)]/value/text()]">
-                                
-                                <xforms:select1 ref="region">
-                                    <xforms:label class="fixed-width">Region: </xforms:label>
-                                    <xforms:itemset nodeset="instance('ins-countries-items')/country[value/text()=xxforms:context('rep-site')/country/text()]//region">
-                                        <xforms:label ref="label"/>
-                                        <xforms:value ref="value"/>
-                                    </xforms:itemset>
-                                </xforms:select1>
-                                
-                            </xforms:group>
-                            
-                            <!-- if the country has no regions, use an input -->
-                            <xforms:group ref="
+
+								<xforms:select1 ref="region">
+									<xforms:label class="fixed-width">Region: </xforms:label>
+									<xforms:itemset
+										nodeset="instance('ins-countries-items')/country[value/text()=xxforms:context('rep-site')/country/text()]//region">
+										<xforms:label ref="label" />
+										<xforms:value ref="value" />
+									</xforms:itemset>
+								</xforms:select1>
+
+							</xforms:group>
+
+							<!-- if the country has no regions, use an input -->
+							<xforms:group
+								ref="
                                 .[empty(country/text()) or country/text() = instance('ins-countries-items')/country[empty(regions)]/value/text()]">
-                                <xforms:input ref="region">
-                                    <xforms:label class="fixed-width">Region: </xforms:label>
-                                </xforms:input>
-                                
-                            </xforms:group>
-                            
-                            <br/>
-                            
-                            <xforms:input ref="district">
-                                <xforms:label class="fixed-width">District: </xforms:label>
-                            </xforms:input>
-                            <br/>
-                            
-                            <xforms:input ref="locality">
-                                <xforms:label class="fixed-width">Locality: </xforms:label>
-                            </xforms:input>
-                            <br/>
-                            
-                            <xforms:input ref="user-code">
-                                <xforms:label class="fixed-width">Your site code:</xforms:label>
-                            </xforms:input>
-                            
-                        </td>
-                    </tr>
-                </xforms:repeat>
-            </table>
-            
-        </xforms:group>
-        
-        <h3>Study Type (WWARN Modules)</h3>
-        
-        <p>
-            <xforms:select ref="modules" appearance="full">
-                <xforms:label/>
-                <xforms:itemset model="mod-study-questionnaire" nodeset="instance('ins-modules-items')/module">
-                    <xforms:label ref="label"/>
-                    <xforms:value ref="value"/>
-                </xforms:itemset>
-            </xforms:select>
-        </p>
-        
-        <p>
-            <xforms:submit submission="sub-put-study-entry">
-                <xforms:label>Save Changes</xforms:label>
-            </xforms:submit>
-        </p>
-        
-        <xforms:group ref="clinical">
-        
-	        <h2>Clinical Questions</h2>
-	        
-	        <p>TODO</p>
+								<xforms:input ref="region">
+									<xforms:label class="fixed-width">Region: </xforms:label>
+								</xforms:input>
 
-        </xforms:group>
-        
-        <xforms:group ref="molecular">
-        
-	        <h2>Molecular Questions</h2>
-	        
-	        <p>TODO</p>
+							</xforms:group>
 
-        </xforms:group>
-        
-        <xforms:group ref="in-vitro">
-        
-	        <h2><i>in vitro</i> Module Questions</h2>
-	        
-	        <p>TODO</p>
-        </xforms:group>
-        
-        <xforms:group ref="pharmacology">
-        
-	        <h2>Pharmacology Questions</h2>
-	        
-	        <p>TODO</p>
+							<br />
 
-        </xforms:group>
-        
-    </xforms:group>
+							<xforms:input ref="district">
+								<xforms:label class="fixed-width">District: </xforms:label>
+							</xforms:input>
+							<br />
+
+							<xforms:input ref="locality">
+								<xforms:label class="fixed-width">Locality: </xforms:label>
+							</xforms:input>
+							<br />
+
+							<xforms:input ref="user-code">
+								<xforms:label class="fixed-width">Your site code:</xforms:label>
+							</xforms:input>
+
+						</td>
+					</tr>
+				</xforms:repeat>
+			</table>
+
+		</xforms:group>
+
+		<h3>Study Type (WWARN Modules)</h3>
+
+		<p>
+			<xforms:select ref="modules" appearance="full">
+				<xforms:label />
+				<xforms:itemset model="mod-study-questionnaire"
+					nodeset="instance('ins-module-items')/module">
+					<xforms:label ref="label" />
+					<xforms:value ref="value" />
+				</xforms:itemset>
+			</xforms:select>
+		</p>
+
+		<p>
+			<xforms:submit submission="sub-put-study-entry">
+				<xforms:label>Save Changes</xforms:label>
+			</xforms:submit>
+		</p>
+
+		<xforms:group ref="clinical">
+
+			<h2>Clinical Questions</h2>
+
+			<p>TODO</p>
+
+		</xforms:group>
+
+		<xforms:group ref="molecular">
+
+			<h2>Molecular Questions</h2>
+
+			<p>TODO</p>
+
+		</xforms:group>
+
+		<xforms:group ref="in-vitro">
+
+			<h2>
+				<i>in vitro</i>
+				Module Questions
+			</h2>
+
+			<!--+
+			|
+			| BEGIN IN VITRO CULTURE NESTED QUESTIONNAIRE
+			|
+			+-->
+			<xforms:group ref="invitro-culture">
+				<h4>Culture for Drug Susceptibility Measure</h4>
+
+				<xforms:select1 ref="invitro-culture-incubatorSystem"
+					appearance="minimal">
+					<xforms:label>Incubator system?</xforms:label>
+					<xforms:itemset model="mod-study-questionnaire"
+						nodeset="instance('ins-incubatorSystem-items')/incubatorSystem">
+						<xforms:label ref="label" />
+						<xforms:value ref="value" />
+					</xforms:itemset>
+				</xforms:select1>
+
+				<xforms:input model="mod-study-questionnaire" ref="invitro-culture-co2">
+					<xforms:label class="inline">
+						CO
+						<sub>2</sub>
+						?
+					</xforms:label>
+					<xforms:hint>
+						<p>
+							<em>Temperature should be 37&#176;C.</em>
+							<em>Don't forget to monitor the incubator system.</em>
+						</p>
+					</xforms:hint>
+				</xforms:input>
+				<p>
+					<xforms:select1 ref="invitro-culture-healthyErythrocytesSource"
+						appearance="minimal">
+						<xforms:label>Healthy erythrocytes source?</xforms:label>
+						<xforms:hint>
+							<em>Healthy erythrocytes have to be deleucocyted.</em>
+						</xforms:hint>
+						<xforms:alert>please select a value</xforms:alert>
+						<xforms:itemset model="mod-study-questionnaire"
+							nodeset="instance('ins-healthyErythrocytesSource-items')/healthyErythrocytesSource">
+							<xforms:label ref="label" />
+							<xforms:value ref="value" />
+						</xforms:itemset>
+					</xforms:select1>
+				</p>
+				<p>
+					<xforms:input ref="invitro-culture-hematocrit">
+						<xforms:label>Hematocrit? (%)</xforms:label>
+					</xforms:input>
+
+				</p>
+				<p>
+					<xforms:select1 ref="invitro-culture-bloodGroup"
+						appearance="minimal">
+						<xforms:label>Blood group?</xforms:label>
+						<xforms:itemset model="mod-study-questionnaire"
+							nodeset="instance('ins-bloodGroup-items')/bloodGroup">
+							<xforms:label ref="label" />
+							<xforms:value ref="value" />
+						</xforms:itemset>
+					</xforms:select1>
+					<xforms:alert>please select a value</xforms:alert>
+				</p>
+			</xforms:group>
+
+			<!--
+				+ | | BEGIN IN VITRO MEDIUM NESTED QUESTIONNAIRE | +
+			-->
+
+			<xforms:group ref="invitro-medium">
+				<h4 id="invitro-medium">Medium for Drug Susceptibility Measure</h4>
+			</xforms:group>
+		</xforms:group>
+
+		<xforms:group ref="pharmacology">
+
+			<h2>Pharmacology Questions</h2>
+
+			<p>TODO</p>
+
+		</xforms:group>
+
+	</xforms:group>
 
 </div>
