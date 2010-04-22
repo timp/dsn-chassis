@@ -11,16 +11,21 @@
             <sites/>
             <modules/>
             <clinical>
-            
             </clinical>
             <molecular>
-            
             </molecular>
             <in-vitro>
-            	
+            	<invitro-culture>
+            		<invitro-culture-incubatorSystem></invitro-culture-incubatorSystem>
+            		<invitro-culture-co2/>
+            		<invitro-culture-healthyErythrocytesSource/>
+					<invitro-culture-hematocrit/>
+					<invitro-culture-bloodGroup/>
+            	</invitro-culture>
+            	<invitro-medium>
+            	</invitro-medium>
             </in-vitro>
             <pharmacology>
-            
             </pharmacology>
         </study>
     </atom:content>
