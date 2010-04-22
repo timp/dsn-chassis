@@ -4,3 +4,5 @@ Each file contains the values which an element may take.
 
 A note as to whether the value set may be extended should be placed in a comment. 
 The open sets will include a term such as 'Other' and will be housed in file with a name ending in '-terms'.
+
+All label values are in English, these will need to be duplicated in other languages. 
