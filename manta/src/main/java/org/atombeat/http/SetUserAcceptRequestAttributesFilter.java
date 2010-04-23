@@ -12,27 +12,27 @@ import org.apache.commons.logging.LogFactory;
 import org.atombeat.http.HttpFilter;
 
 /**
+ * Set the language and country explicitly, as the raw headers give a list, 
+ * which we do not wish to process within XQL.
+ *  
  * @author timp
- *
  */
 public class SetUserAcceptRequestAttributesFilter extends HttpFilter {
 
 	
-	
-	
 	private Log log = LogFactory.getLog(this.getClass());
-	
-	
 	
 	public static final String USERLANGUAGE_REQUEST_ATTRIBUTE_KEY     = "user-language";
 	public static final String USER_COUNTRY_REQUEST_ATTRIBUTE_KEY     = "user-country";
 	
-	
-	
-	/*
+	/**
+	 * Add the preferred language and country as separate attributes, 
+	 * defaulted to the server settings.
+	 *  
 	 * See:
 	 *  Accept: http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html
 	 *  Language: http://www.rfc-editor.org/rfc/rfc3282.txt
+	 *  
 	 * eg:
 	 * Accept-Language: da, en-gb;q=0.8, en;q=0.7
 	 *  would mean: 
@@ -49,14 +49,12 @@ public class SetUserAcceptRequestAttributesFilter extends HttpFilter {
 			throws IOException, ServletException {
 		log.debug("request inbound");
 
-		System.err.println(request.getLocale() + "," + request.getLocale().getCountry());
+		request.setAttribute(USERLANGUAGE_REQUEST_ATTRIBUTE_KEY, request.getLocale().getLanguage());
+		request.setAttribute(USER_COUNTRY_REQUEST_ATTRIBUTE_KEY, request.getLocale().getCountry());
 		
 		chain.doFilter(request, response);
 
 		log.debug("response outbound");
 	}
-
-
-
 
 }
