@@ -55,6 +55,9 @@
 			<xforms:send 
 				ev:event="xforms-model-construct-done" 
 				submission="sub-retrieve-study-feed"/>
+				
+    		<xforms:bind nodeset="instance('ins-study-feed')/atom:entry/atom:published" type="xs:dateTime" />
+    		<xforms:bind nodeset="instance('ins-study-feed')/atom:entry/atom:updated" type="xs:dateTime" />
 			
         </xforms:model>
 
@@ -64,7 +67,11 @@
     
     <body>
     
-    	<span id="home-nav"><a href="TODO">log out</a> | <xforms:output model="mod-current-user" ref="instance('ins-current-user')/name"/></span>
+    	<span id="home-nav"><a href="TODO">log out</a> | 
+    		<xforms:output model="mod-current-user" ref="instance('ins-current-user')/name"/>
+    		(In:<xforms:output model="mod-current-user" ref="instance('ins-current-user')/language"/>) - 
+    		(From:<xforms:output model="mod-current-user" ref="instance('ins-current-user')/country"/>)
+    	</span>
 
     	<div id="content">
     	
@@ -115,10 +122,15 @@
 		    						<a href="study-summary?study={atom:link[@rel='edit']/@href}"><xforms:output value="atom:title"/></a>
 		    					</td>
 		    					<td>
-		    						<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[M01]/[D01]/[Y]')"/>
+		    						<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[D01]/[M01]/[Y]')">
+		    						<xforms:alert >Not a DateTime</xforms:alert>
+		    						</xforms:output>
 		    					</td>
 		    					<td>
-		    						<xforms:output ref="atom:updated" xxforms:format="format-dateTime(., '[M01]/[D01]/[Y]')"/>
+		    						<xforms:output ref="atom:updated" xxforms:format="format-dateTime(., '[D01]/[M01]/[Y]')">
+		    						<xforms:alert >Not a DateTime</xforms:alert>
+		    						</xforms:output>
+		    						
 		    					</td>
 		    					<td><a href="study-summary?study={atom:link[@rel='edit']/@href}">View</a></td>
 		    				</tr>
