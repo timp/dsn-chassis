@@ -23,6 +23,9 @@
 					<invitro-culture-bloodGroup/>
             	</invitro-culture>
             	<invitro-medium>
+            		<invitro-medium-medium/>
+            		<invitro-medium-preparation/>
+            		<invitro-medium-serumFinalConcentration/>
             	</invitro-medium>
             </in-vitro>
             <pharmacology>
