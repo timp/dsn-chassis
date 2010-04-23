@@ -15,6 +15,8 @@ import org.atombeat.http.HttpFilter;
  * Set the language and country explicitly, as the raw headers give a list, 
  * which we do not wish to process within XQL.
  *  
+ *  Note that we need to wrap value in xml tags for Orbeon's sake. 
+ *  
  * @author timp
  */
 public class SetUserAcceptRequestAttributesFilter extends HttpFilter {
@@ -49,9 +51,9 @@ public class SetUserAcceptRequestAttributesFilter extends HttpFilter {
 			throws IOException, ServletException {
 		log.debug("request inbound");
 
-		request.setAttribute(USERLANGUAGE_REQUEST_ATTRIBUTE_KEY, request.getLocale().getLanguage());
-		request.setAttribute(USER_COUNTRY_REQUEST_ATTRIBUTE_KEY, request.getLocale().getCountry());
-		
+		request.setAttribute(USERLANGUAGE_REQUEST_ATTRIBUTE_KEY, "<language>" + request.getLocale().getLanguage() + "</language>");
+		request.setAttribute(USER_COUNTRY_REQUEST_ATTRIBUTE_KEY, "<country>" + request.getLocale().getCountry() + "</country>");
+
 		chain.doFilter(request, response);
 
 		log.debug("response outbound");
