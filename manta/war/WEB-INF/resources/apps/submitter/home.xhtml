@@ -118,12 +118,14 @@
 		    						<a href="study-summary?study={atom:link[@rel='edit']/@href}"><xforms:output value="atom:title"/></a>
 		    					</td>
 		    					<td>
-		    						<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[D01]/[M01]/[Y]')">
+		    						<xforms:output ref="atom:published" 
+		    							xxforms:format="if (instance('ins-current-user')/country = 'US') then  format-dateTime(., '[M01]/[D01]/[Y]') else format-dateTime(., '[D01]/[M01]/[Y]')">
 		    						<xforms:alert >Not a DateTime</xforms:alert>
 		    						</xforms:output>
 		    					</td>
 		    					<td>
-		    						<xforms:output ref="atom:updated" xxforms:format="format-dateTime(., '[D01]/[M01]/[Y]')">
+		    						<xforms:output ref="atom:updated" 
+		    							xxforms:format="if (instance('ins-current-user')/country = 'US') then  format-dateTime(., '[M01]/[D01]/[Y]') else format-dateTime(., '[D01]/[M01]/[Y]')">
 		    						<xforms:alert >Not a DateTime</xforms:alert>
 		    						</xforms:output>
 		    						
