@@ -251,6 +251,21 @@
 
 			<xforms:group ref="invitro-medium">
 				<h4 id="invitro-medium">Medium for Drug Susceptibility Measure</h4>
+				<xforms:select1 ref="invitro-medium-medium"
+					appearance="minimal">
+					<xforms:label>Medium?</xforms:label>
+					<xforms:alert>please select a value</xforms:alert>
+					<xforms:itemset model="mod-study-questionnaire"
+						nodeset="instance('ins-medium-items')/medium">
+						<xforms:label ref="label" />
+						<xforms:value ref="value" />
+					</xforms:itemset>
+					<xforms:hint>
+						<em>Storage temperature: 6 months at -20&#176;C and 1 week at
+							+4&#176;C after using.</em>
+					</xforms:hint>
+				</xforms:select1>
+
 			</xforms:group>
 		</xforms:group>
 
