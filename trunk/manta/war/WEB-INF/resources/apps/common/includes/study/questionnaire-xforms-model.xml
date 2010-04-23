@@ -36,6 +36,12 @@
 					<xforms:bind nodeset="hematocrit"/>
 					<xforms:bind nodeset="invitro-culture-bloodGroup"/>
 				</xforms:bind>
+				<xforms:bind nodeset="invitro-medium">
+					<xforms:bind nodeset="invitro-medium-medium" />
+					<xforms:bind nodeset="invitro-medium-preparation" />
+					<xforms:bind nodeset="invitro-medium-serum"/>
+					<xforms:bind nodeset="invitro-medium-serumFinalConcentration"/>
+				</xforms:bind>
 			</xforms:bind>
 			<xforms:bind nodeset="pharmacology" relevant="contains(../modules, 'pharmacology')" />
     	</xforms:bind>
@@ -49,6 +55,7 @@
     <xforms:instance id="ins-incubatorSystem-items" src="/apps/common/constants/incubatorSystems.xml"/>
     <xforms:instance id="ins-healthyErythrocytesSource-items" src="/apps/common/constants/healthyErythrocytesSources.xml"/>
     <xforms:instance id="ins-bloodGroup-items" src="/apps/common/constants/bloodGroups.xml"/>
+    <xforms:instance id="ins-medium-items" src="/apps/common/constants/medium-terms.xml"/>
     
     <xforms:submission
         id="sub-put-study-entry"
