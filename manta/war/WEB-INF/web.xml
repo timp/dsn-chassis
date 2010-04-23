@@ -39,6 +39,7 @@
     </filter-mapping>
     
     
+    
     <!--+
         | Spring Security Configuration
         | *****************************
@@ -247,6 +248,27 @@
         <dispatcher>FORWARD</dispatcher>
     </filter-mapping>
     
+
+    <!--+
+        |
+        | Add Attributes filter
+        | *********************
+        |
+        +-->
+    
+    
+    <filter>
+        <filter-name>SetUserAcceptRequestAttributesFilter</filter-name>
+        <filter-class>org.atombeat.http.SetUserAcceptRequestAttributesFilter</filter-class>
+    </filter>
+    
+    
+    <filter-mapping>
+        <filter-name>SetUserAcceptRequestAttributesFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    
+
     <!--Set context listener-->
     <listener>
         <listener-class>org.orbeon.oxf.webapp.OrbeonServletContextListenerDelegate</listener-class>
