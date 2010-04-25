@@ -11,10 +11,89 @@
             <sites/>
             <modules/>
             <clinical>
+            	<clinical-treatments>
+	            	<clinical-treatments-regimen>
+    	        		<clinical-treatments-regimen-name/>
+    	        		<clinical-treatments-regimen-supervised/>
+    	        		<clinical-treatments-regimen-url/>
+    	        		<clinical-treatments-regimenAllocation/>
+    	        		<clinical-treatments-blinding/>
+    	        	</clinical-treatments-regimen>
+            	</clinical-treatments>
+            	<clinical-followup>
+            		<clinical-followup-duration/>
+            		<clinical-followup-feverMeasurement/>
+            		<clinical-followup-haemoglobinRecording>
+            			<clinical-followup-haemoglobinRecording-type/>
+            			<clinical-followup-haemoglobinRecording-type-hb/>
+            		</clinical-followup-haemoglobinRecording>
+            	</clinical-followup>
+            	<clinical-microscopy>
+            		<clinical-microscopy-film/>
+            	</clinical-microscopy>
+            	<clinical-recrudescenceAndReinfection/>
             </clinical>
-            <molecular>
-            </molecular>
+            <pharmacology>
+            	<pharmacology-sample>
+             		<pharmacology-sample-matrix/>
+             		<pharmacology-sample-volume/>
+             		<pharmacology-sample-storageTemperature/>
+             		<pharmacology-sample-storageDuration/>
+             		<pharmacology-sample-storageHandling/>
+             		<pharmacology-sample-preparation/>
+             		<pharmacology-sample-samplingTimes/>
+             	</pharmacology-sample>
+             	<pharmacology-analytes>
+					<pharmacology-analytes-totalDrug/>
+					<pharmacology-analytes-freeDrug/>
+					<pharmacology-analytes-metabolite1/>
+					<pharmacology-analytes-metabolite2/>
+				</pharmacology-analytes>
+				<pharmacology-analysisModel/>
+				<pharmacology-inclusionExclusionCriteria>
+						<pharmacology-inclusionExclusionCriteria-minAge/>
+						<pharmacology-inclusionExclusionCriteria-maxAge/>
+						<pharmacology-inclusionExclusionCriteria-minParasitaemia/>
+						<pharmacology-inclusionExclusionCriteria-maxParasitaemia/>
+						<pharmacology-inclusionExclusionCriteria-excludeIfPriorAntimalarials/>
+						<pharmacology-inclusionExclusionCriteria-excludeIfPriorAntimalarialsTime/>
+				</pharmacology-inclusionExclusionCriteria>
+
+				<pharmacology-drugs>
+					<pharmacology-drug>
+						<pharmacology-drug-name/>
+						<pharmacology-drug-manufacturer/>
+						<pharmacology-drug-numberOfDoses/>
+						<pharmacology-drug-daysOfTreatment/>
+						<pharmacology-drug-dosingByAgeOrWeight/>
+						<pharmacology-drug-batchNumber/>
+						<pharmacology-drug-expirationDate/>
+						<pharmacology-drug-assayCapacity/>
+						<pharmacology-drug-assayCapacity-assayMethodReference/>
+						<pharmacology-assayCapacity-assayMethodDescription/>
+					</pharmacology-drug>
+				</pharmacology-drugs>
+				<pharmacology-treatmentRegimens>
+						<pharmacology-treatmentRegimen>
+								<pharmacology-treatmentRegimens-name/>
+								<pharmacology-treatmentRegimens-supervised/>
+								<pharmacology-treatmentRegimens-allocation/>
+								<pharmacology-treatmentRegimens-blinding/>
+						</pharmacology-treatmentRegimen>
+				</pharmacology-treatmentRegimens>
+
+            </pharmacology>
             <in-vitro>
+				<invitro-inclusionCriteria/>
+				<invitro-sites>
+					<invitro-site>
+						<invitro-site-code/>
+						<invitro-site-delay/>
+						<invitro-site-anticoagulant/>
+						<invitro-site-transportAndStorageTemperature/>
+					</invitro-site>
+				</invitro-sites>
+				<invitro-analysisSite/>
             	<invitro-culture>
             		<invitro-culture-incubatorSystem></invitro-culture-incubatorSystem>
             		<invitro-culture-co2/>
@@ -25,11 +104,127 @@
             	<invitro-medium>
             		<invitro-medium-medium/>
             		<invitro-medium-preparation/>
-            		<invitro-medium-serumFinalConcentration/>
+					<invitro-medium-serum>
+            			<invitro-medium-serum-FinalConcentration/>
+					</invitro-medium-serum>
+
+						<invitro-medium-NaHCO3>
+								<invitro-medium-hypoxantine-added/>
+								<invitro-medium-NaHCO3-finalConcentration/>
+						</invitro-medium-NaHCO3>
+						<invitro-medium-hypoxantine>
+								<invitro-medium-hypoxantine-added/>
+								<invitro-medium-hypoxantine-finalConcentration/>
+						</invitro-medium-hypoxantine>
+
+						<invitro-medium-oroticAcid>
+								<invitro-medium-oroticAcid-added/>
+								<invitro-medium-oroticAcid-finalConcentration/>
+						</invitro-medium-oroticAcid>
+						<invitro-medium-glucose>
+								<invitro-medium-glucose-added/>
+								<invitro-medium-glucose-finalConcentration/>
+						</invitro-medium-glucose>
+
+						<invitro-medium-antiBiotics>
+							<invitro-medium-antiBiotic>
+								<invitro-medium-antiBiotic-name/>
+								<invitro-medium-antiBiotic-finalConcentration/>
+							</invitro-medium-antiBiotic>
+						</invitro-medium-antiBiotics>
             	</invitro-medium>
+				<invitro-susceptibility>
+						<invitro-susceptibility-timeOfIncubation/>
+						<invitro-susceptibility-methodUsed/>
+				</invitro-susceptibility>
+				<invitro-drugs>
+					<invitro-drug>
+						<invitro-drug-molecule/>
+						<invitro-drug-solvent/>
+						<invitro-drug-solventFinalConcentration/>
+						<invitro-drug-providedByWwarn/>
+						<invitro-drug-provider/>
+					</invitro-drug>
+				</invitro-drugs>
+
+				<invitro-plates>
+						<invitro-plates-batches/>
+						<invitro-plates-preparationDate/>
+						<invitro-plates-clone3D7ProvidedByWwarn/>
+						<invitro-plates-cloneProvider/>
+						<invitro-plates-numberOfBatches/>
+						<invitro-plates-batches-includedInRawData/>
+						<invitro-batches-batches>
+							<invitro-batches-batch>
+								<invitro-batches-batch-preparationDate/>
+								<invitro-batches-batch-parasitaemia3D7/>
+								<invitro-batches-batch-ringForms/>
+								<invitro-batches-batches/>
+							</invitro-batches-batch>
+						</invitro-batches-batches>
+				</invitro-plates>
+
             </in-vitro>
-            <pharmacology>
-            </pharmacology>
+            <molecular>
+
+
+				<molecular-inclusionExclusionCriteria-A>
+						<molecular-inclusion-day0/>
+						<molecular-inclusion-treatmentFailure/>
+						<molecular-inclusionExclusionCriteria-dayN>
+								<molecular-inclusion-dayN-day/>
+								<molecular-inclusion-dayN/>
+						</molecular-inclusionExclusionCriteria-dayN>
+				</molecular-inclusionExclusionCriteria-A>
+				<molecular-inclusionExclusionCriteria-B>
+						<molecular-inclusionExclusionCriteriaB-source/>
+						<molecular-inclusionExclusionCriteriaB-sampleSource/>
+						<molecular-inclusionExclusionCriteriaB-malariaStatus/>
+
+						<molecular-inclusionExclusionCriteria-minAge/>
+						<molecular-inclusionExclusionCriteria-maxAge/>
+						<molecular-inclusionExclusionCriteria-priorAntimalarials>
+								<molecular-inclusionExclusionCriteria-excludeIfPriorAntimalarialsTime/>
+						</molecular-inclusionExclusionCriteria-priorAntimalarials>
+						<molecular-inclusionExclusionCriteria-molecularMarkersOfResistance/>
+						<molecular-inclusionExclusionCriteria-molecularMarkersOfResistance-other/>
+				</molecular-inclusionExclusionCriteria-B>
+				<molecular-sampleType>
+						<molecular-sampleType-type/>
+						<molecular-sampleType-type-wholeBloodSource/>
+						<molecular-sampleType-type-dateIsolated/>
+				</molecular-sampleType>
+				<molecular-resistanceMarkers>
+					<molecular-resistanceMarker>
+						<molecularMarkerOpen>
+								<molecular-marker/>
+								<molecular-markerOther/>
+						</molecularMarkerOpen>
+						<molecular-genotypingMethod>
+								<molecular-genotypingMethod/>
+								<molecular-genotypingMethodOther/>
+						</molecular-genotypingMethod>
+					</molecular-resistanceMarker>
+				</molecular-resistanceMarkers>
+				<molecular-mixedResistanceAlleles>
+						<molecular-mixedResistanceAllelesInclusion/>
+				</molecular-mixedResistanceAlleles>
+				<molecular-additionalGenotypicInformation/>
+				<molecular-additionalGenotypicInformation-wholeGenomesSequenced-block>
+						<molecular-additionalGenotypicInformation-wholeGenomesSequenced/>
+						<molecular-additionalGenotypicInformation-accessionNumbers/>
+						<molecular-additionalGenotypicInformation-resistanceLocus>
+								<molecular-additionalGenotypicInformation-resistanceLocus-sequenced/>
+								<molecular-additionalGenotypicInformation-resistanceLocus-name/>
+						</molecular-additionalGenotypicInformation-resistanceLocus>
+						<molecular-additionalGenotypicInformation-otherLocus>
+								<molecular-additionalGenotypicInformation-otherLocus-sequenced/>
+								<molecular-additionalGenotypicInformation-otherLocus-type/>
+								<molecular-additionalGenotypicInformation-otherLocus-name/>
+						</molecular-additionalGenotypicInformation-otherLocus>
+				</molecular-additionalGenotypicInformation-wholeGenomesSequenced-block>
+				<molecular-additionalGenotypicInformation/>
+            </molecular>
         </study>
     </atom:content>
 </atom:entry>
