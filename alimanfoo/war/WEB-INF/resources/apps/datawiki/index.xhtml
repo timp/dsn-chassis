@@ -24,6 +24,22 @@
         
         <xforms:model id="mod-main">
         
+        	<xforms:instance id="ins-login">
+        		<login xmlns="">
+        			<user/>
+        			<roles/>
+        		</login>
+        	</xforms:instance>
+        	
+        	<xforms:action ev:event="xforms-model-construct-done">
+        		<xforms:setvalue ref="instance('ins-login')/user" value="xxforms:get-remote-user()"/>
+		        <xforms:insert 
+		            nodeset="instance('ins-login')/roles" 
+		            at="1" 
+		            position="before" 
+		            origin="xxforms:get-request-attribute('user-roles-xml')"/>
+        	</xforms:action>
+
         	<xforms:instance id="ins-feed">
         		<atom:feed/>
         	</xforms:instance>
@@ -131,7 +147,9 @@
     
     <body>
     
-    	<h1>DataWiki</h1>
+		<p><a href="./">DataWiki</a> - <strong><xforms:output ref="instance('ins-login')/user"/></strong></p>
+    	
+    	<hr/>
     	
     	<p>
     		<xforms:input ref="instance('ins-entry-template')/atom:title">
@@ -139,11 +157,11 @@
     			<xforms:send ev:event="DOMActivate" submission="sub-post-entry"/>
     		</xforms:input>
     		<xforms:submit submission="sub-post-entry">
-    			<xforms:label><img src="/apps/fr/style/new.gif"/> New Entry</xforms:label>
+    			<xforms:label><img src="/apps/fr/style/new.gif"/> New Table</xforms:label>
     		</xforms:submit>
     	</p>
 
-		<h2>Entries</h2>
+		<h2>My Tables</h2>
 		
 		<xforms:group ref="instance('ins-feed')">
   			
@@ -191,6 +209,9 @@
 								<a href="schema?entry={atom:link[@rel='edit']/@href}">Schema</a> | 
 								<a href="history?entry={atom:link[@rel='edit']/@href}">History</a> |
 								<a href="revisions?entry={atom:link[@rel='edit']/@href}">Revisions</a>
+			   					<xforms:group ref="atom:link[@rel='edit-acl']">
+									| <a href="permissions?entry={../atom:link[@rel='edit']/@href}">Permissions</a>
+			   					</xforms:group>
 							</td>   						
    						</tr>
    					</xforms:repeat>

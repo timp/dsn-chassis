@@ -25,6 +25,22 @@
         
         <xforms:model id="mod-main">
 
+        	<xforms:instance id="ins-login">
+        		<login xmlns="">
+        			<user/>
+        			<roles/>
+        		</login>
+        	</xforms:instance>
+        	
+        	<xforms:action ev:event="xforms-model-construct-done">
+        		<xforms:setvalue ref="instance('ins-login')/user" value="xxforms:get-remote-user()"/>
+		        <xforms:insert 
+		            nodeset="instance('ins-login')/roles" 
+		            at="1" 
+		            position="before" 
+		            origin="xxforms:get-request-attribute('user-roles-xml')"/>
+        	</xforms:action>
+
 			<xforms:submission 
 				id="sub-get-entry"
 				resource="{xxforms:get-request-parameter('entry')}"
@@ -88,7 +104,8 @@
     
     	<xforms:group ref="instance('ins-entry')">
 	
-			<p><a href="./">DataWiki</a></p>
+			<p><a href="./">DataWiki</a> - <strong><xforms:output ref="instance('ins-login')/user"/></strong></p>
+			<hr/>
 			
 			<h1><xforms:output ref="atom:title"/></h1>  
 			
@@ -121,11 +138,13 @@
 	    					<em>Revisions</em>
     					</a>
    					</li>
-    				<li>
-    					<a href="permissions?entry={atom:link[@rel='edit']/@href}">
-	    					<em>Permissions</em>
-    					</a>
-   					</li>
+   					<xforms:group ref="atom:link[@rel='edit-acl']">
+	    				<li>
+	    					<a href="permissions?entry={../atom:link[@rel='edit']/@href}">
+		    					<em>Permissions</em>
+	    					</a>
+	   					</li>
+   					</xforms:group>
     			</ul>
     			
     			<div class="yui-content">

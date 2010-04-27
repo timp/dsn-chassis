@@ -24,6 +24,22 @@
         
         <xforms:model id="mod-main">
         
+        	<xforms:instance id="ins-login">
+        		<login xmlns="">
+        			<user/>
+        			<roles/>
+        		</login>
+        	</xforms:instance>
+        	
+        	<xforms:action ev:event="xforms-model-construct-done">
+        		<xforms:setvalue ref="instance('ins-login')/user" value="xxforms:get-remote-user()"/>
+		        <xforms:insert 
+		            nodeset="instance('ins-login')/roles" 
+		            at="1" 
+		            position="before" 
+		            origin="xxforms:get-request-attribute('user-roles-xml')"/>
+        	</xforms:action>
+
 			<xforms:submission 
 				id="sub-get-entry"
 				resource="{xxforms:get-request-parameter('entry')}"
@@ -56,6 +72,12 @@
             	<xforms:bind nodeset="pattern" relevant="../datatype = 'string' and empty(../enumeration/item)"/>
             	<xforms:bind nodeset="enumeration" relevant="../datatype != 'boolean' and ( empty(../pattern/text()) or ../pattern/text() = '') "/>
 
+            </xforms:bind>
+            
+            <xforms:bind nodeset="instance('ins-entry')/atom:content/table/thead/constraints">
+            	<xforms:bind nodeset="constraint">
+            		<xforms:bind nodeset="translated" calculate="replace( ../expression , '\{([^}]+)\}', 'td[index-of( ../../../thead/tr/th , ../../../thead/tr/th[label=&quot;$1&quot;] )]' )"/>
+            	</xforms:bind>
             </xforms:bind>
             
             <xforms:bind nodeset="instance('ins-th-template')">
@@ -102,6 +124,15 @@
            		<item xmlns=""/>
            	</xforms:instance>
            	
+           	<xforms:instance id="ins-constraint-template">
+				<constraint xmlns="">
+					<description/>
+					<expression/>
+					<translated/>
+				</constraint>
+           	</xforms:instance>
+           	
+           	
            	<!-- initialise row template depending on number of headers -->
            	<xforms:action ev:event="xforms-model-construct-done" xxforms:iterate="instance('ins-entry')/atom:content/table/thead/tr/th">
            		<xforms:insert context="instance('ins-row-template')" nodeset="td" origin="instance('ins-cell-template')"/> 
@@ -144,7 +175,10 @@
         <style type="text/css">
 .xforms-repeat-selected-item-1 {
 	background-color: inherit;
-}        
+}      
+.expression input {
+	width: 50em;
+}   
         </style>
 
     </head>
@@ -153,7 +187,8 @@
 
     	<xforms:group ref="instance('ins-entry')">
 	
-			<p><a href="./">DataWiki</a></p>
+			<p><a href="./">DataWiki</a> - <strong><xforms:output ref="instance('ins-login')/user"/></strong></p>
+			<hr/>
 			
 			<h1><xforms:output ref="atom:title"/></h1>  
 			
@@ -186,11 +221,13 @@
 	    					<em>Revisions</em>
     					</a>
    					</li>
-    				<li>
-    					<a href="permissions?entry={atom:link[@rel='edit']/@href}">
-	    					<em>Permissions</em>
-    					</a>
-   					</li>
+   					<xforms:group ref="atom:link[@rel='edit-acl']">
+	    				<li>
+	    					<a href="permissions?entry={../atom:link[@rel='edit']/@href}">
+		    					<em>Permissions</em>
+	    					</a>
+	   					</li>
+   					</xforms:group>
     			</ul>
     			
     			<div class="yui-content">
@@ -208,7 +245,7 @@
     			
 					<xforms:group ref="atom:content/table">
 					
-	    				<h3>Add a Column</h3>
+	    				<h2>Add a Column</h2>
 
 						<xforms:group ref="instance('ins-th-template')">
 						
@@ -400,10 +437,10 @@
 		                    </xforms:trigger>
 						</p>
 						<hr/>
-						
+						<h2>Edit Columns</h2>
 						<xforms:repeat nodeset="thead/tr/th" id="rep-th">
 						
-							<h2><xforms:output ref="label"/></h2>
+							<h3><xforms:output ref="label"/></h3>
 							
 							<p>
 								<xforms:input ref="label">
@@ -620,6 +657,97 @@
 						
 					</xforms:group>
 
+    				<hr/>
+    				
+    				<h2>Advanced Options</h2>
+    				
+    				<h3>Multi-Column Constraints</h3>
+  				
+					<xforms:group ref="instance('ins-entry')/atom:content/table/thead/constraints">
+					
+						<div class="yui-dt">
+							<div class="yui-dt-hd">
+								<table class="yui-dt-table">
+									<thead>
+										<tr>
+											<th>
+												<div class="yui-dt-liner">
+								                    <xforms:trigger appearance="minimal">
+								                        <xforms:label><img src="/apps/fr/style/add.gif"/></xforms:label>
+								                        <xforms:insert 
+								                            ev:event="DOMActivate" 
+								                            context="." 
+								                            nodeset="constraint" 
+								                            at="1" 
+								                            position="before" 
+								                            origin="instance('ins-constraint-template')"/>
+								                    </xforms:trigger>
+												</div>
+											</th>
+											<th>
+												<div class="yui-dt-liner">
+								                    <xforms:trigger appearance="minimal">
+								                        <xforms:label>Add a Constraint</xforms:label>
+								                        <xforms:insert 
+								                            ev:event="DOMActivate" 
+								                            context="." 
+								                            nodeset="constraint" 
+								                            at="1" 
+								                            position="before" 
+								                            origin="instance('ins-constraint-template')"/>
+								                    </xforms:trigger>
+												</div>
+											</th>
+										</tr>
+									</thead>
+									<tbody class="yui-dt-data">
+										<xforms:repeat 
+											nodeset="constraint" 
+											id="rep-entry-constraint">
+											<tr class="
+												{if ( position() = 1 ) then 'yui-dt-first' else '' }
+												{if ( position() mod 2 = 0 ) then 'yui-dt-even' else 'yui-dt-odd' }">
+												<td>
+													<div class="yui-dt-liner">
+									                    <xforms:trigger appearance="minimal">
+									                        <xforms:label><img src="/apps/fr/style/add.gif"/></xforms:label>
+									                        <xforms:insert 
+									                            ev:event="DOMActivate" 
+									                            context="." 
+									                            nodeset="." 
+									                            at="position()" 
+									                            position="after" 
+									                            origin="instance('ins-constraint-template')"/>
+									                    </xforms:trigger>
+									                    <xforms:trigger appearance="minimal">
+								                            <xforms:delete 
+								                                ev:event="DOMActivate" 
+								                                context="." 
+								                                nodeset="." 
+								                                at="index('rep-entry-constraint')"/>
+								                            <xforms:label><img src="/apps/fr/style/delete.gif"/></xforms:label>
+							                            </xforms:trigger>
+													</div>
+												</td>
+												<td>
+													<div class="yui-dt-liner">
+														<xforms:input ref="description" class="expression">
+															<xforms:label class="fixed-width">Description: </xforms:label>
+														</xforms:input>
+														<br/>
+														<xforms:input ref="expression" class="expression">
+															<xforms:label class="fixed-width">Expression: </xforms:label>
+														</xforms:input>
+													</div>
+												</td>
+											</tr>
+										</xforms:repeat>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</xforms:group>    				
+  				
     				<hr/>
 
     				<p>
