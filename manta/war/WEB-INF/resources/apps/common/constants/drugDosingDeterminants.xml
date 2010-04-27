@@ -1,0 +1,11 @@
+<!--  Closed list of possible drug dosage determinants -->
+<drugDosingDeterminants>
+	<drugDosingDeterminant>
+		<label>age</label>
+		<value>age</value>
+	</drugDosingDeterminant>
+	<drugDosingDeterminant>
+		<label>weight</label>
+		<value>weight</value>
+	</drugDosingDeterminant>
+</drugDosingDeterminants>

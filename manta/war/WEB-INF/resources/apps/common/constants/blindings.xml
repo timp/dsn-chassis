@@ -1,0 +1,16 @@
+<!--  A closed list blinding techniques -->
+<!-- Required in Clinical Treatments -->
+<blindings xmlns="">
+ 	<blinding>
+		<label>open label</label>
+ 		<value>openlabel</value>
+ 	</blinding>
+ 	<blinding>
+		<label>single</label>
+ 		<value>single</value>
+ 	</blinding>
+ 	<blinding>
+		<label>double</label>
+ 		<value>double</value>
+ 	</blinding>
+</blindings>

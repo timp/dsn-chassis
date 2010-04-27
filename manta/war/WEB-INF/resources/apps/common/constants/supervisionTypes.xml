@@ -1,0 +1,17 @@
+<!--  A closed list of Regimen supervision types -->
+<!-- Required in Clinical Treatments -->
+<supervisionTypes xmlns="">
+	<supervisionType>
+		<label>full</label>
+		<value>full</value>
+	</supervisionType>
+	<supervisionType>
+		<label>partial</label>
+		<value>partial</value>
+	</supervisionType>
+	<supervisionType>
+		<label>none</label>
+		<value>none</value>
+	</supervisionType>
+</supervisionTypes>
+ 				

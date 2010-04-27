@@ -1,0 +1,15 @@
+<!--  A closed list of actions upon Mixed Resistance alleles. -->				
+<allelesInclusionActions xmlns="">
+	<allelesInclusion>
+		<label>excluded from dataset</label>
+		<value>excluded</value>
+	</allelesInclusion>
+	<allelesInclusion>
+		<label>included in dataset </label>
+		<value>included</value>
+	</allelesInclusion>
+	<allelesInclusion>
+		<label>not identified</label>
+		<value>notIdentified</value>
+	</allelesInclusion>
+</allelesInclusionActions>
