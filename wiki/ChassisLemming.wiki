@@ -6,6 +6,10 @@
 
 Not all of these are necessarily a good idea. In no particular order...
 
+
+(I imagine this page might soon become a monster. Shift to issue tracker? LH)
+
+
 === Editing; Validation; Constraints ===
 
   * duplicate a row, i.e., create a new row by copying an existing row
@@ -26,7 +30,8 @@ Not all of these are necessarily a good idea. In no particular order...
 
   * add other datatypes, e.g., URI, email, float, double, boolean, password, timestamp, date, blob/file, ...
 
-  * add a reference datatype: reference to a row in another table
+  * add a reference datatype: reference to a column
+
   * ...
 
 === Import/Export ===
@@ -56,6 +61,19 @@ Not all of these are necessarily a good idea. In no particular order...
   * export a diff or change set between two specified revisions
 
   * revert to specified version
+
+==== Support for data dependency? ====
+
+  # Joe imports Table A1 and defines Managed List B1 (used by Table A1).
+  # Sue uses Table A1 to make View C1.
+  # Fred uses View C1 for Analysis X1 or import into System Y1.
+  # Bob updates Managed List B1, creating Managed List B2.
+  # Joe corrects bad data in Table A1, creating Table A2.
+  # Analysis X1 and System Y1 are still using View C1, based on Table A1 and Managed List B1. (Perhaps this could be a reference signature on the export?)
+  # To update System Y1, Bob might need to wait for Sue to create View C2.
+
+Perhaps a policy to never Move, Remove, Rename or Change *any* data resource and only allow Addition or Derivation, that might help to maintain a kind of referential integrity for "wild" resources and allow provenance tracking.
+
 
 === Controlled Value Lists; Referencing Tables ===
 
