@@ -70,7 +70,7 @@ Not all of these are necessarily a good idea. In no particular order...
   # Bob updates Managed List B1, creating Managed List B2.
   # Joe corrects bad data in Table A1, creating Table A2.
   # Analysis X1 and System Y1 are still using View C1, based on Table A1 and Managed List B1. (Perhaps this could be a reference signature on the export?)
-  # To update System Y1, Bob might need to wait for Sue to create View C2.
+  # To update System Y1, Fred might need to wait for Sue to create View C2.
 
 Perhaps a policy to never Move, Remove, Rename or Change *any* data resource and only allow Addition or Derivation, that might help to maintain a kind of referential integrity for "wild" resources and allow provenance tracking.
 
