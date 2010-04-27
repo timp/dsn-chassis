@@ -16,7 +16,7 @@ Not all of these are necessarily a good idea. In no particular order...
  
   * constrain a column to contain unique values (i.e., no duplicates)
 
-  * express logical constraints across multiple colums, e.g., admission date must be before birth date
+  * express logical constraints across multiple colums, e.g., birth date must be before admission date
 
   * get specific validation error messages, e.g., "not a valid integer", instead of nonspecific "the data are not valid"
 
