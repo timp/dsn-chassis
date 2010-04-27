@@ -77,6 +77,7 @@
                 	</xhtml:div>
 
                 	<xhtml:div id="ft">
+                		<xhtml:hr/>
                 		<xhtml:p><img src="/lemming/apps/shared/images/lemming-32.png"/><a href="http://code.google.com/p/dsn-chassis/wiki/ChassisLemming">Chassis Lemming - geronimo!</a></xhtml:p>
                 	</xhtml:div>
 

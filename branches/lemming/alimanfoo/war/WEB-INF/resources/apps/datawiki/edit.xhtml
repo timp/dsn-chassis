@@ -24,6 +24,22 @@
         
         <xforms:model id="mod-main">
         
+        	<xforms:instance id="ins-login">
+        		<login xmlns="">
+        			<user/>
+        			<roles/>
+        		</login>
+        	</xforms:instance>
+        	
+        	<xforms:action ev:event="xforms-model-construct-done">
+        		<xforms:setvalue ref="instance('ins-login')/user" value="xxforms:get-remote-user()"/>
+		        <xforms:insert 
+		            nodeset="instance('ins-login')/roles" 
+		            at="1" 
+		            position="before" 
+		            origin="xxforms:get-request-attribute('user-roles-xml')"/>
+        	</xforms:action>
+
 			<xforms:submission 
 				id="sub-get-entry"
 				resource="{xxforms:get-request-parameter('entry')}"
@@ -49,6 +65,12 @@
             <xforms:instance id="ins-entry">
             	<atom:entry/>
             </xforms:instance>
+
+            <xforms:bind nodeset="instance('ins-entry')/atom:content/table/thead/constraints">
+            	<xforms:bind nodeset="constraint">
+            		<xforms:bind nodeset="translated" calculate="replace( ../expression , '\{([^}]+)\}', 'td[index-of( ../../../thead/tr/th , ../../../thead/tr/th[label=&quot;$1&quot;] )]' )"/>
+            	</xforms:bind>
+            </xforms:bind>
             
             <xforms:bind nodeset="instance('ins-entry')/atom:content/table/tbody/tr">
             
@@ -307,7 +329,8 @@
 
     	<xforms:group ref="instance('ins-entry')">
 	
-			<p><a href="./">DataWiki</a></p>
+			<p><a href="./">DataWiki</a> - <strong><xforms:output ref="instance('ins-login')/user"/></strong></p>
+			<hr/>
 			
 			<h1><xforms:output ref="atom:title"/></h1>  
 			
@@ -340,11 +363,13 @@
 	    					<em>Revisions</em>
     					</a>
    					</li>
-    				<li>
-    					<a href="permissions?entry={atom:link[@rel='edit']/@href}">
-	    					<em>Permissions</em>
-    					</a>
-   					</li>
+   					<xforms:group ref="atom:link[@rel='edit-acl']">
+	    				<li>
+	    					<a href="permissions?entry={../atom:link[@rel='edit']/@href}">
+		    					<em>Permissions</em>
+	    					</a>
+	   					</li>
+   					</xforms:group>
     			</ul>
     			
     			<div class="yui-content">
@@ -442,6 +467,11 @@
 													</div>
 												</th>
 											</xforms:repeat>
+											<th>
+												<div class="yui-dt-liner">
+													Constraints
+												</div>											
+											</th>
 										</tr>
 									</thead>
 									<tbody class="yui-dt-data">
@@ -527,6 +557,32 @@
 														</div>
 													</td>
 												</xforms:repeat>
+												<td>
+													<div class="yui-dt-liner">
+														<xforms:repeat nodeset="instance('ins-entry')/atom:content/table/thead/constraints/constraint">
+															<p>
+																<xforms:output ref="description">
+																	<xforms:label class="fixed-width">Description: </xforms:label>
+																</xforms:output>
+																<br/>
+<!--																<xforms:output ref="expression">-->
+<!--																	<xforms:label class="fixed-width">Expression: </xforms:label>-->
+<!--																</xforms:output>-->
+<!--																<br/>-->
+<!--																<xforms:output ref="translated">-->
+<!--																	<xforms:label class="fixed-width">Translated: </xforms:label>-->
+<!--																</xforms:output>-->
+<!--																<br/>-->
+																<xxforms:variable name="trans" select="translated"/>
+																<xforms:group ref="xxforms:context('rep-row')">
+																	<xforms:output value="xxforms:evaluate($trans)">
+																		<xforms:label class="fixed-width">Valid: </xforms:label>
+																	</xforms:output>
+																</xforms:group>
+															</p>
+														</xforms:repeat>
+													</div>
+												</td>
 											</tr>
 										</xforms:repeat>
 									</tbody>

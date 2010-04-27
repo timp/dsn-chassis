@@ -7,6 +7,13 @@
 	<atom:content type="application/vnd.atombeat-datawiki+xml">
 		<table xmlns="">
 			<thead>
+				<constraints>
+					<constraint>
+						<description>males must be over 25, females must be over 27</description>
+						<expression>( {Gender} = 'M' and xs:integer({Age}) gt 25 ) or ( {Gender} = 'F' and xs:integer({Age}) gt 27 )</expression>
+						<translated/>
+					</constraint>
+				</constraints>
 				<tr>
 					<th>
 						<label>Name</label>
@@ -19,7 +26,7 @@
 						<enumeration/>
 					</th>
 					<th>
-						<label>Age (years)</label>
+						<label>Age</label>
 						<datatype>integer</datatype>
 						<required>true</required>
 						<default/>
@@ -77,7 +84,7 @@
 			<tbody>
 				<tr>
 					<td>Alice</td>
-					<td>31</td>
+					<td>26</td>
 					<td>F</td>
 					<td>false</td>
 					<td></td>
@@ -85,7 +92,7 @@
 				</tr>
 				<tr>
 					<td>Bob</td>
-					<td>28</td>
+					<td>24</td>
 					<td>M</td>
 					<td>true</td>
 					<td>OX3 0QX</td>
