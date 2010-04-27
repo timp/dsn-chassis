@@ -20,7 +20,7 @@ Not all of these are necessarily a good idea. In no particular order...
  
   * constrain a column to contain unique values (i.e., no duplicates)
 
-  * express logical constraints across multiple colums, e.g., birth date must be before admission date --done in alimanfoo branch using pseudo-xpath expression
+  * express logical constraints across multiple colums, e.g., birth date must be before admission date *--done in alimanfoo branch using pseudo-xpath expression*
 
   * get specific validation error messages, e.g., "not a valid integer", instead of nonspecific "the data are not valid"
 
@@ -85,7 +85,7 @@ Perhaps a policy to never Move, Remove, Rename or Change *any* data resource and
 
 === Permissions & Authorization ===
 
-  * provide permissions management utility for tables --done in alimanfoo branch, implemented simple three-level model of permissions for each table, admins, editors and viewers 
+  * provide permissions management utility for tables *--done in alimanfoo branch, implemented simple three-level model of permissions for each table, admins, editors and viewers*
 
 === Viewing; Searching and Query ===
 
