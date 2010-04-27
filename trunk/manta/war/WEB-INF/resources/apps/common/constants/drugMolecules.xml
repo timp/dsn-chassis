@@ -1,0 +1,35 @@
+<!--  Closed list of anti-malarial drugs  -->
+<drugMolecules>
+	<drugMolecule>
+		<label>dihydro-artemisinine</label>
+		<value>dihydro-artemisinine</value>
+	</drugMolecule>
+	<drugMolecule>
+		<label>chloroquine</label>
+		<value>chloroquine</value>
+	</drugMolecule>
+	<drugMolecule>
+		<label>lumefantrine</label>
+		<value>lumefantrine</value>
+	</drugMolecule>
+	<drugMolecule>
+		<label>mefloquine</label>
+		<value>mefloquine</value>
+	</drugMolecule>
+	<drugMolecule>
+		<label>monodesethylamodiaquine</label>
+		<value>monodesethylamodiaquine</value>
+	</drugMolecule>
+	<drugMolecule>
+		<label>pyronaridine</label>
+		<value>pyronaridine</value>
+	</drugMolecule>
+	<drugMolecule>
+		<label>quinine</label>
+		<value>quinine</value>
+	</drugMolecule>
+	<drugMolecule>
+		<label>piperaquine</label>
+		<value>piperaquine</value>
+	</drugMolecule>
+</drugMolecules>

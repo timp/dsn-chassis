@@ -1,0 +1,24 @@
+<!--  A closed list of malaria statuses -->
+<!--  used in inclusion/exclusion criteria -->
+<malariaStatuses>
+	<inclusionMalariaStatus>
+		<label>symptomatic only</label>
+		<value>symptomatic</value>
+	</inclusionMalariaStatus>
+	<inclusionMalariaStatus>
+		<label>asymptomatic only</label>
+		<value>asymptomatic</value>
+	</inclusionMalariaStatus>
+	<inclusionMalariaStatus>
+		<label>symptomatic and asymptomatic</label>
+		<value>symptomaticAndAsymptomatic</value>
+	</inclusionMalariaStatus>
+	<inclusionMalariaStatus>
+		<label>symptomatic status not assessed</label>
+		<value>symptomaticStatusNotAssessed</value>
+	</inclusionMalariaStatus>
+	<inclusionMalariaStatus>
+		<label>not applicable</label>
+		<value>notApplicable</value>
+	</inclusionMalariaStatus>
+</malariaStatuses>

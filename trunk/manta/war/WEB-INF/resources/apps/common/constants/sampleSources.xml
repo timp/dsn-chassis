@@ -1,0 +1,29 @@
+<!--  A closed list of sample sources -->
+<!--  used in inclusion/exclusion criteria -->
+<sampleSources>
+	<sampleSource>
+		<label>outpatient visit</label>
+		<value>outpatient</value>
+	</sampleSource>
+	<sampleSource>
+		<label>inpatient visit</label>
+		<value>inpatient</value>
+	</sampleSource>
+	<sampleSource>
+		<label>longitudinal study</label>
+		<value>longitudinalStudy</value>
+	</sampleSource>
+	<sampleSource>
+		<label>community survey</label>
+		<value>communitySurvey</value>
+	</sampleSource>
+	<sampleSource>
+		<label>mosquito bloodmeal analysis</label>
+		<value>mosquitoBloodmeal</value>
+	</sampleSource>
+	<sampleSource>
+		<label>other</label>
+		<value>other</value>
+	</sampleSource>
+</sampleSources>
+

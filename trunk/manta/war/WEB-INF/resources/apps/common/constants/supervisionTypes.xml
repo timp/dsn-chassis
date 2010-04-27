@@ -1,5 +1,6 @@
 <!--  A closed list of Regimen supervision types -->
 <!-- Required in Clinical Treatments -->
+<!--  Required in pharmacology-treatmentRegimens-supervised -->
 <supervisionTypes xmlns="">
 	<supervisionType>
 		<label>full</label>
