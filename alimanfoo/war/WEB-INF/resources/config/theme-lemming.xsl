@@ -59,8 +59,7 @@
                 <xhtml:meta name="generator" content="Orbeon Forms {$orbeon-forms-version}"/>
                 
                 <!-- Favicon -->
-                <xhtml:link rel="shortcut icon" href="/ops/images/orbeon-icon-16.ico"/>
-                <xhtml:link rel="icon" href="/ops/images/orbeon-icon-16.png" type="image/png"/>
+                <xhtml:link rel="icon" href="/apps/shared/images/lemming-16.png" type="image/png"/>
                 
             </xhtml:head>
             
@@ -78,7 +77,7 @@
                 	</xhtml:div>
 
                 	<xhtml:div id="ft">
-                		<xhtml:p><a href="http://code.google.com/p/dsn-chassis/wiki/ChassisLemming">Chassis Lemming - geronimo!</a></xhtml:p>
+                		<xhtml:p><img src="/lemming/apps/shared/images/lemming-32.png"/><a href="http://code.google.com/p/dsn-chassis/wiki/ChassisLemming">Chassis Lemming - geronimo!</a></xhtml:p>
                 	</xhtml:div>
 
                 </xhtml:div>
