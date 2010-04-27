@@ -1,0 +1,16 @@
+<!--  Open list of mechanisms for choosing whether to genotype molecular markers of resistance for a sample -->
+<molecularMarkersOfResistanceGenotypingRegimens>
+	<molecularMarkersOfResistanceRegimen>
+		<label>all genotyped</label>
+		<value>allgenotyped</value>
+	</molecularMarkersOfResistanceRegimen>
+	<molecularMarkersOfResistanceRegimen>
+		<label>random subset genotyped</label>
+		<value>randomgenotyped</value>
+	</molecularMarkersOfResistanceRegimen>
+	<molecularMarkersOfResistanceRegimen>
+		<label>other</label>
+		<value>other</value>
+	</molecularMarkersOfResistanceRegimen>
+</molecularMarkersOfResistanceGenotypingRegimens>
+

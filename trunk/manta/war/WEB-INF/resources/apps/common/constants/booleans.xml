@@ -1,0 +1,10 @@
+<booleans xmlns="">
+	<boolean>
+		<label>yes</label>
+		<value>yes</value>
+	</boolean>
+	<boolean>
+		<label>no</label>
+		<value>no</value>
+	</boolean>
+</booleans>
