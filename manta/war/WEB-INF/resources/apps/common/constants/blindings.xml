@@ -1,5 +1,6 @@
 <!--  A closed list blinding techniques -->
 <!-- Required in Clinical Treatments -->
+<!--  pharmacology-treatmentRegimens-blinding -->
 <blindings xmlns="">
  	<blinding>
 		<label>open label</label>

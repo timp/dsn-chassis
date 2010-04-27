@@ -1,0 +1,10 @@
+<!-- A closed list of locus types -->
+<!-- molecular-additionalGenotypicInformation-otherLocus-type -->				
+<locusTypes xmlns="">
+	<locusType>
+		<value>micro-satellite</value>
+	</locusType>
+	<locusType>
+		<value>SNP</value>
+	</locusType>
+</locusTypes>

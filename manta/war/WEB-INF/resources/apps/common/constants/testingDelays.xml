@@ -1,0 +1,19 @@
+<!--  Delays between sampling and testing -->
+<testingDelays>
+	<delay>
+		<label>less than 12 hours</label>
+		<value>lt12h</value>
+	</delay>
+	<delay>
+		<label>12-48 hours</label>
+		<value>12-48h</value>
+	</delay>
+	<delay>
+		<label>48-72 hours</label>
+		<value>48-72h</value>
+	</delay>
+	<delay>
+		<label>greater than 72 hours</label>
+		<value>gt72h</value>
+	</delay>
+</testingDelays>

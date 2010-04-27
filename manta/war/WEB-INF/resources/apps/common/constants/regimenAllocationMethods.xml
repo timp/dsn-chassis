@@ -1,5 +1,6 @@
 <!--  A closed list of regimen allocation methods -->
 <!-- Required in Clinical Treatments -->
+<!--  pharmacology-treatmentRegimens-allocation -->
 <regimenAllocationMethods xmlns="">
 	<regimenAllocationMethod>
 		<label>randomised (proportion)</label>
