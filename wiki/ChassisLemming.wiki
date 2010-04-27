@@ -85,7 +85,7 @@ Perhaps a policy to never Move, Remove, Rename or Change *any* data resource and
 
 === Permissions & Authorization ===
 
-  * provide permissions management utility for tables
+  * provide permissions management utility for tables --done in alimanfoo branch, implemented simple three-level model of permissions for each table, admins, editors and viewers 
 
 === Viewing; Searching and Query ===
 
