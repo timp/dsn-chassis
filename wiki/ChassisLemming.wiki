@@ -117,11 +117,15 @@ Perhaps a policy to never Move, Remove, Rename or Change *any* data resource and
 
   * grouping of two or more tables into database/dataset/...
 
+  * maybe "links" in nested "folders", e.g. Folder A contains a link to Table B, and Folder C contains Folder D, which also contains a link to Table B, and Table E.
+
 === Misc ===
  
   * defining pivot tables
 
   * performing simple statistical tests
 
+  * inspirations from Google Fusion Tables, http://tables.googlelabs.com/Home
+  ** simple charts and maps, http://tables.googlelabs.com/public/tour/tour1.html
+
 ...
-  * 
