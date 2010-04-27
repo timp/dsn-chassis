@@ -30,6 +30,7 @@
 				method="get"
 				replace="instance"
 				instance="ins-entry">
+                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>).</xforms:message>
 			</xforms:submission>        
 
 			<xforms:submission 
@@ -337,6 +338,11 @@
     				<li>
     					<a href="revisions?entry={atom:link[@rel='edit']/@href}">
 	    					<em>Revisions</em>
+    					</a>
+   					</li>
+    				<li>
+    					<a href="permissions?entry={atom:link[@rel='edit']/@href}">
+	    					<em>Permissions</em>
     					</a>
    					</li>
     			</ul>
