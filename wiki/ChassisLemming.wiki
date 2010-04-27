@@ -24,7 +24,9 @@ Not all of these are necessarily a good idea. In no particular order...
 
   * constrain decimal precision
 
-  * add other datatypes, e.g., URI, email, float, double, ...?
+  * add other datatypes, e.g., URI, email, float, double, boolean, password, timestamp, date, blob/file, ...
+
+  * add a reference datatype: reference to a column
 
   * ...
 
