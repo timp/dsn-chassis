@@ -28,7 +28,11 @@
         		<atom:feed/>
         	</xforms:instance>
         	
-            <xforms:instance id="ins-entry" src="/apps/datawiki/template-entry.xml"/>
+            <xforms:instance id="ins-entry-template" src="/apps/datawiki/template-entry.xml"/>
+            
+            <xforms:instance id="ins-entry">
+            	<atom:entry/>
+            </xforms:instance>
             
       		<xforms:submission 
       			id="sub-get-feed"
@@ -36,6 +40,7 @@
       			resource="/atombeat/content/datawiki"
       			replace="instance"
       			instance="ins-feed">
+                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>).</xforms:message>
       		</xforms:submission>
       		
       		<xforms:send ev:event="xforms-model-construct-done" submission="sub-get-feed"/>
@@ -44,12 +49,76 @@
       			id="sub-post-entry"
       			method="post"
       			resource="/atombeat/content/datawiki"
-      			ref="instance('ins-entry')"
+      			ref="instance('ins-entry-template')"
       			mediatype="application/atom+xml"
+      			replace="instance"
+      			instance="ins-entry">
+      			<xforms:send ev:event="xforms-submit-done" submission="sub-put-acl"/>	
+                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>).</xforms:message>
+      		</xforms:submission>
+      		
+      		<xforms:instance id="ins-acl">
+      			<atom:entry>
+      				<atom:content type="application/vnd.atombeat+xml">
+		       			<acl xmlns="">
+		       				<groups>
+		       					<group name="admins">
+		       						<user></user>
+		       					</group>
+		       					<group name="editors">
+		       					</group>
+		       					<group name="viewers">
+		       					</group>
+		   					</groups>
+				    		<rules>
+				    		    <!-- admins can retrieve, update and change sharing -->
+				                <allow>
+				                    <group>admins</group>
+				                    <operation>retrieve-member</operation>
+				                </allow>
+				                <allow>
+				                    <group>admins</group>
+				                    <operation>update-member</operation>
+				                </allow>
+				                <allow>
+				                    <group>admins</group>
+				                    <operation>update-acl</operation>
+				                </allow>
+				                <!-- editors can retrieve and update, but cannot change sharing -->
+				                <allow>
+				                    <group>editors</group>
+				                    <operation>retrieve-member</operation>
+				                </allow>
+				                <allow>
+				                    <group>editors</group>
+				                    <operation>update-member</operation>
+				                </allow>
+				                <!-- viewers can retrieve only -->
+				                <allow>
+				                    <group>viewers</group>
+				                    <operation>retrieve-member</operation>
+				                </allow>
+				    		</rules>
+		   				</acl>
+      				</atom:content>
+      			</atom:entry>
+      		</xforms:instance>
+      		
+      		<xforms:submission
+      			id="sub-put-acl"
+      			method="put"
+      			resource="{instance('ins-entry')/atom:link[@rel='edit-acl']/@href}"
+      			mediatype="application/atom+xml"
+      			ref="instance('ins-acl')"
       			replace="none">
       			<xforms:send ev:event="xforms-submit-done" submission="sub-get-feed"/>	
-      		</xforms:submission>
-            
+                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) updating ACL.</xforms:message>
+   			</xforms:submission>
+   			
+   			<xforms:action ev:event="xforms-model-construct-done">
+   				<xforms:setvalue ref="instance('ins-acl')//group[@name='admins']/user" value="xxforms:get-remote-user()"/>
+   			</xforms:action>
+
         </xforms:model>
         
         <style type="text/css">
@@ -65,7 +134,7 @@
     	<h1>DataWiki</h1>
     	
     	<p>
-    		<xforms:input ref="instance('ins-entry')/atom:title">
+    		<xforms:input ref="instance('ins-entry-template')/atom:title">
     			<xforms:label>Title: </xforms:label>
     			<xforms:send ev:event="DOMActivate" submission="sub-post-entry"/>
     		</xforms:input>
