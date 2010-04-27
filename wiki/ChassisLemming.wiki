@@ -26,8 +26,7 @@ Not all of these are necessarily a good idea. In no particular order...
 
   * add other datatypes, e.g., URI, email, float, double, boolean, password, timestamp, date, blob/file, ...
 
-  * add a reference datatype: reference to a column
-
+  * add a reference datatype: reference to a row in another table
   * ...
 
 === Import/Export ===
