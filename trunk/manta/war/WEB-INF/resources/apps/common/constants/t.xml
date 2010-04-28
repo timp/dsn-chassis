@@ -1,0 +1,844 @@
+<modules>
+	<module>
+		<value>clinical</value>
+	</module>
+	<module>
+		<value>molecular</value>
+	</module>
+	<module>
+		<value>invitro</value>
+	</module>
+	<module>
+		<value>pharmacology</value>
+	</module>
+</modules>
+
+
+<pathogens>
+	<pathogen>
+		<value>plasmodiumfalciparum</value>
+	</pathogen>
+	<pathogen>
+		<value>plasmodiumvivax</value>
+	</pathogen>
+	<pathogen>
+		<value>plasmodiumovale</value>
+	</pathogen>
+	<pathogen>
+		<value>plasmodiummalariae</value>
+	</pathogen>
+	<pathogen>
+		<value>plasmodiumknowlesi</value>
+	</pathogen>
+</pathogens>
+
+
+	<!--  A closed list of Regimen supervision types -->
+	<!-- Required in Clinical Treatments -->
+<supervisionTypes>
+	<supervisionType>
+		<value>full</value>
+	</supervisionType>
+	<supervisionType>
+		<value>partial</value>
+	</supervisionType>
+	<supervisionType>
+		<value>none</value>
+	</supervisionType>
+</supervisionTypes>
+
+	<!--  A closed list of regimen allocation methods -->
+	<!-- Required in Clinical Treatments -->
+<regimenAllocationMethods>
+	<regimenAllocationMethod>
+		<value>randomised</value>
+	</regimenAllocationMethod>
+	<regimenAllocationMethod>
+		<value>semirandomised</value>
+	</regimenAllocationMethod>
+</regimenAllocationMethods>
+
+	<!--  A closed list blinding techniques -->
+	<!-- Required in Clinical Treatments -->
+<blindings>
+	<blinding>
+		<value>openlabel</value>
+	</blinding>
+	<blinding>
+		<value>single</value>
+	</blinding>
+	<blinding>
+		<value>double</value>
+	</blinding>
+</blindings>
+
+	<!--  A closed list of Fever Measurement methods -->
+	<!-- Required in Clinical Followup -->
+<feverMeasurementMethods>
+	<feverMeasurementMethod>
+		<value>axial</value>
+	</feverMeasurementMethod>
+	<feverMeasurementMethod>
+		<value>oral</value>
+	</feverMeasurementMethod>
+	<feverMeasurementMethod>
+		<value>rectal</value>
+	</feverMeasurementMethod>
+	<feverMeasurementMethod>
+		<value>tympanic</value>
+	</feverMeasurementMethod>
+</feverMeasurementMethods>
+
+<!--  See  clinical-followup-haemoglobinRecordingType --> 
+<haemoglobinRecordingTypes>
+	<haemoglobinRecordingType>
+		<label>hb</label>
+		<value>hb</value>
+	</haemoglobinRecordingType>
+	<haemoglobinRecordingType>
+		<label>hct</label>
+		<value>hct</value>
+	</haemoglobinRecordingType>
+</haemoglobinRecordingTypes>
+
+<!--  An open list of heamoglobin recording Hb types -->
+<haemoglobinRecordingHbTypes>
+	<haemoglobinRecordingHbType>
+		<label>qbc</label>
+		<value>qbc</value>
+	</haemoglobinRecordingHbType>
+	<haemoglobinRecordingHbType>
+		<label>haemaccue</label>
+		<value>haemaccue</value>
+	</haemoglobinRecordingHbType>
+	<haemoglobinRecordingHbType>
+		<label>other</label>
+		<value>other</value>
+	</haemoglobinRecordingHbType>
+</haemoglobinRecordingHbTypes>
+
+<!--  A closed list of microscopy file types -->
+<microscopyFilmTypes>
+	<filmType>
+		<label>thick</label>
+		<value>thick</value>
+	</filmType>
+	<filmType>
+		<label>thin</label>
+		<value>thin</value>
+	</filmType>
+</microscopyFilmTypes>
+
+<!-- Closed list of sample matix types -->
+<sampleMatrixTypes>
+	<matrix>
+		<label>whole blood capillary blood</label>
+		<value>wholebloodcapillaryblood</value>
+	</matrix>
+	<matrix>
+		<label>blood spots</label>
+		<value>bloodspots</value>
+	</matrix>
+	<matrix>
+		<label>serum</label>
+		<value>serum</value>
+	</matrix>
+	<matrix>
+		<label>plasma</label>
+		<value>plasma</value>
+	</matrix>
+	<matrix>
+		<label>free fraction plasma</label>
+		<value>freefractionplasma</value>
+	</matrix>
+</sampleMatrixTypes>
+
+<!--  A closed list of analysis models -->
+<analysisModels>
+	<analysisModel>
+		<label>compartmental model</label>
+		<value>compartmentalmodel</value>
+	</analysisModel>
+	<analysisModel>
+		<label>non-compartmental model</label>
+		<value>noncompartmentalmodel</value>
+	</analysisModel>
+	<analysisModel>
+		<label>population model</label>
+		<value>populationmodel</value>
+	</analysisModel>
+</analysisModels>
+
+<!--  Closed list of possible drug dosage determinants -->
+<drugDosingDeterminants>
+	<drugDosingDeterminant>
+		<label>age</label>
+		<value>age</value>
+	</drugDosingDeterminant>
+	<drugDosingDeterminant>
+		<label>weight</label>
+		<value>weight</value>
+	</drugDosingDeterminant>
+</drugDosingDeterminants>
+
+<!--  Closed list of supervision types -->
+<supervisionTypes xmlns="">
+	<supervisionType>
+		<label>full</label>
+		<value>full</value>
+	</supervisionType>
+	<supervisionType>
+		<label>partial</label>
+		<value>partial</value>
+	</supervisionType>
+	<supervisionType>
+		<label>none</label>
+		<value>none</value>
+	</supervisionType>
+</supervisionTypes>
+
+<!--  A closed list of regimen allocation methods -->
+<!-- Required in Clinical Treatments -->
+<!--  pharmacology-treatmentRegimens-allocation -->
+<regimenAllocationMethods xmlns="">
+	<regimenAllocationMethod>
+		<label>randomised (proportion)</label>
+		<value>randomised</value>
+ 	</regimenAllocationMethod>
+ 	<regimenAllocationMethod>
+		<label>semi-randomised</label>
+ 		<value>semirandomised</value>
+ 	</regimenAllocationMethod>
+</regimenAllocationMethods>
+ 		
+
+<!--  A closed list blinding techniques -->
+<!-- Required in Clinical Treatments -->
+<!--  pharmacology-treatmentRegimens-blinding -->
+<blindings xmlns="">
+ 	<blinding>
+		<label>open label</label>
+ 		<value>openlabel</value>
+ 	</blinding>
+ 	<blinding>
+		<label>single</label>
+ 		<value>single</value>
+ 	</blinding>
+ 	<blinding>
+		<label>double</label>
+ 		<value>double</value>
+ 	</blinding>
+</blindings>
+
+<!--  Delays between sampling and testing -->
+<testingDelays>
+	<delay>
+		<label>less than 12 hours</label>
+		<value>lt12h</value>
+	</delay>
+	<delay>
+		<label>12-48 hours</label>
+		<value>12-48h</value>
+	</delay>
+	<delay>
+		<label>48-72 hours</label>
+		<value>48-72h</value>
+	</delay>
+	<delay>
+		<label>greater than 72 hours</label>
+		<value>gt72h</value>
+	</delay>
+</testingDelays>
+
+<!--  A closed list of anti-coagulants -->
+<anticoagulants>
+	<anticoagulant>
+		<label>ACD</label>
+		<value>ACD</value>
+	</anticoagulant>
+	<anticoagulant>
+		<label>EDTA</label>
+		<value>EDTA</value>
+	</anticoagulant>
+	<anticoagulant>
+		<label>heparin</label>
+		<value>heparin</value>
+	</anticoagulant>
+</anticoagulants>
+
+<!-- Closed list of temperatures that samples have been transported and stored at -->
+<transportAndStorageTemperatures>
+	<transportAndStorageTemperature>
+		<label>+4&#176;C</label>
+		<value>+4C</value>
+	</transportAndStorageTemperature>
+	<transportAndStorageTemperature>
+		<label>-20&#176;C</label>
+		<value>-20C</value>
+	</transportAndStorageTemperature>
+	<transportAndStorageTemperature>
+		<label>ambient</label>
+		<value>ambient</value>
+	</transportAndStorageTemperature>
+</transportAndStorageTemperatures>
+
+<!--  
+A closed list of types of sample incubator, 
+used in the in-vitro section of the questionnaire.   
+-->
+<incubatorSystems xmlns="">
+    <incubatorSystem>
+		<label>CO2 incubator</label>
+		<value>co2incubator</value>
+    </incubatorSystem>
+    <incubatorSystem>
+		<label>incubation chamber</label>
+		<value>incubationchamber</value>
+    </incubatorSystem>
+    <incubatorSystem>
+		<label>candle jar</label>
+		<value>candlejar</value>
+    </incubatorSystem>
+</incubatorSystems>
+
+
+<!-- TODO check  -->
+<mediumPreparations>
+	<preparation>
+		<label>extemporaneous</label>
+		<value>extemporaneous</value>
+	</preparation>
+	<preparation>
+		<label>aliquots</label>
+		<value>aliquots</value>
+	</preparation>
+</mediumPreparations>
+
+<!--  A closed list of serum types (or should that be sera?) -->
+<serums>
+	<serum>
+		<label>human serum</label>
+		<value>humanserum</value>
+	</serum>
+	<serum>
+		<label>Albumax</label>
+		<value>Albumax</value>
+	</serum>
+	<serum>
+		<label>patient serum</label>
+		<value>patientserum</value>
+	</serum>
+</serums>
+
+<!--  Closed list of incubation times  -->
+<incubationTimes>
+	<incubationTime>
+		<label>42 hours</label>
+		<value>42h</value>
+	</incubationTime>
+	<incubationTime>
+		<label>48 hours</label>
+		<value>48h</value>
+	</incubationTime>
+	<incubationTime>
+		<label>72 hours</label>
+		<value>72h</value>
+	</incubationTime>
+</incubationTimes>
+
+<!--  Closed list of susceptability methods -->
+<susceptibilityMethods>
+	<susceptibilityMethod>
+		<label>isotopic</label>
+		<value>isotopic</value>
+	</susceptibilityMethod>
+	<susceptibilityMethod>
+		<label>HRP2 ELISA</label>
+		<value>HRP2ELISA</value>
+	</susceptibilityMethod>
+	<susceptibilityMethod>
+		<label>pLDH ELISA</label>
+		<value>pLDHELISA</value>
+	</susceptibilityMethod>
+	<susceptibilityMethod>
+		<label>SYBRg</label>
+		<value>SYBRg</value>
+	</susceptibilityMethod>
+</susceptibilityMethods>
+
+<!--  Closed list of anti-malarial drugs  -->
+<drugMolecules>
+	<drugMolecule>
+		<label>dihydro-artemisinine</label>
+		<value>dihydro-artemisinine</value>
+	</drugMolecule>
+	<drugMolecule>
+		<label>chloroquine</label>
+		<value>chloroquine</value>
+	</drugMolecule>
+	<drugMolecule>
+		<label>lumefantrine</label>
+		<value>lumefantrine</value>
+	</drugMolecule>
+	<drugMolecule>
+		<label>mefloquine</label>
+		<value>mefloquine</value>
+	</drugMolecule>
+	<drugMolecule>
+		<label>monodesethylamodiaquine</label>
+		<value>monodesethylamodiaquine</value>
+	</drugMolecule>
+	<drugMolecule>
+		<label>pyronaridine</label>
+		<value>pyronaridine</value>
+	</drugMolecule>
+	<drugMolecule>
+		<label>quinine</label>
+		<value>quinine</value>
+	</drugMolecule>
+	<drugMolecule>
+		<label>piperaquine</label>
+		<value>piperaquine</value>
+	</drugMolecule>
+</drugMolecules>
+
+<!--  Closed list of drug solvents  -->
+<drugSolvents>
+	<drugSolvent>
+		<label>methanol</label>
+		<value>methanol</value>
+	</drugSolvent>
+	<drugSolvent>
+		<label>RPMI</label>
+		<value>RPMI</value>
+	</drugSolvent>
+	<drugSolvent>
+		<label>distilled water</label>
+		<value>distilled water</value>
+	</drugSolvent>
+	<drugSolvent>
+		<label>DMSO</label>
+		<value>DMSO</value>
+	</drugSolvent>
+</drugSolvents>
+
+<!--  Closed list of plate batching options  -->
+<plateBatches>
+	<plateBatch>
+		<label>extemporaneous</label>
+		<value>extemporaneous</value>
+	</plateBatch>
+	<plateBatch>
+		<label>batches</label>
+		<value>batches</value>
+	</plateBatch>
+</plateBatches>
+
+<!--  Closed list of batch options -->
+<numberOfBatches>
+	<numberOfBatches>
+		<label>one batch</label>
+		<value>onebatch</value>
+	</numberOfBatches>
+	<numberOfBatches>
+		<label>several batches</label>
+		<value>severalbatches</value>
+	</numberOfBatches>
+</numberOfBatches>
+
+
+<!--  A closed list of sample sources -->
+<!--  used in inclusion/exclusion criteria -->
+<sampleSources>
+	<sampleSource>
+		<label>outpatient visit</label>
+		<value>outpatient</value>
+	</sampleSource>
+	<sampleSource>
+		<label>inpatient visit</label>
+		<value>inpatient</value>
+	</sampleSource>
+	<sampleSource>
+		<label>longitudinal study</label>
+		<value>longitudinalStudy</value>
+	</sampleSource>
+	<sampleSource>
+		<label>community survey</label>
+		<value>communitySurvey</value>
+	</sampleSource>
+	<sampleSource>
+		<label>mosquito bloodmeal analysis</label>
+		<value>mosquitoBloodmeal</value>
+	</sampleSource>
+	<sampleSource>
+		<label>other</label>
+		<value>other</value>
+	</sampleSource>
+</sampleSources>
+
+<!--  A closed list of malaria statuses -->
+<!--  used in inclusion/exclusion criteria -->
+<malariaStatuses>
+	<inclusionMalariaStatus>
+		<label>symptomatic only</label>
+		<value>symptomatic</value>
+	</inclusionMalariaStatus>
+	<inclusionMalariaStatus>
+		<label>asymptomatic only</label>
+		<value>asymptomatic</value>
+	</inclusionMalariaStatus>
+	<inclusionMalariaStatus>
+		<label>symptomatic and asymptomatic</label>
+		<value>symptomaticAndAsymptomatic</value>
+	</inclusionMalariaStatus>
+	<inclusionMalariaStatus>
+		<label>symptomatic status not assessed</label>
+		<value>symptomaticStatusNotAssessed</value>
+	</inclusionMalariaStatus>
+	<inclusionMalariaStatus>
+		<label>not applicable</label>
+		<value>notApplicable</value>
+	</inclusionMalariaStatus>
+</malariaStatuses>
+
+<!--  Open list of mechanisms for choosing whether to genotype molecular markers of resistance for a sample -->
+<molecularMarkersOfResistanceGenotypingRegimens>
+	<molecularMarkersOfResistanceRegimen>
+		<label>all genotyped</label>
+		<value>allgenotyped</value>
+	</molecularMarkersOfResistanceRegimen>
+	<molecularMarkersOfResistanceRegimen>
+		<label>random subset genotyped</label>
+		<value>randomgenotyped</value>
+	</molecularMarkersOfResistanceRegimen>
+	<molecularMarkersOfResistanceRegimen>
+		<label>other</label>
+		<value>other</value>
+	</molecularMarkersOfResistanceRegimen>
+</molecularMarkersOfResistanceGenotypingRegimens>
+
+<!--  A closed list of blood sample types  -->
+<sampleTypes>
+	<sampleType>
+		<label>finger prick on filter paper</label>
+		<value>filterPaper</value>
+	</sampleType>
+	<sampleType>
+		<label>whole blood</label>
+		<value>wholeBlood</value>
+	</sampleType>
+	<sampleType>
+		<label>mosquito bloodmeal</label>
+		<value>mosquitoBloodMeal</value>
+	</sampleType>
+	<sampleType>
+		<label>culture-adapted parasite</label>
+		<value>cultureAdaptedParasite</value>
+	</sampleType>
+	<sampleType>
+		<label>ex-vivo parasite</label>
+		<value>exVivoParasite</value>
+	</sampleType>
+</sampleTypes>
+
+<!-- A closed list of possible sources  -->
+<wholeBloodSources>
+	<wholeBloodSource>
+		<label>peripheral</label>
+		<value>peripheral</value>
+	</wholeBloodSource>
+	<wholeBloodSource>
+		<label>placental</label>
+		<value>placental</value>
+	</wholeBloodSource>
+	<wholeBloodSource>
+		<label>cord</label>
+		<value>cord</value>
+	</wholeBloodSource>
+</wholeBloodSources>
+
+<!-- An open list of molecular markers -->
+<molecularMarkers>
+	<!-- P. falciparum -->
+	<molecularMarker>
+		<label>pfcrt 72</label>
+		<value>pfcrt72</value>
+	</molecularMarker>
+	<molecularMarker>
+		<label>pfcrt 73</label>
+		<value>pfcrt73</value>
+	</molecularMarker>
+	<molecularMarker>
+		<label>pfcrt 74</label>
+		<value>pfcrt74</value>
+	</molecularMarker>
+	<molecularMarker>
+		<label>pfcrt 75</label>
+		<value>pfcrt75</value>
+	</molecularMarker>
+	<molecularMarker>
+		<label>pfcrt 76</label>
+		<value>pfcrt76</value>
+	</molecularMarker>
+	<molecularMarker>
+		<label>pfcrt 152</label>
+		<value>pfcrt152</value>
+	</molecularMarker>
+	<molecularMarker>
+		<label>pfcrt 163</label>
+		<value>pfcrt163</value>
+	</molecularMarker>
+	<molecularMarker>
+		<label>pfcrt 220</label>
+		<value>pfcrt220</value>
+	</molecularMarker>
+	<molecularMarker>
+		<label>pfmdr1 86</label>
+		<value>pfmdr186</value>
+	</molecularMarker>
+	<molecularMarker>
+		<label>pfmdr1 184</label>
+		<value>pfmdr1184</value>
+	</molecularMarker>
+	<molecularMarker>
+		<label>pfmdr1 1034</label>
+		<value>pfmdr11034</value>
+	</molecularMarker>
+	<molecularMarker>
+		<label>pfmdr1 1042</label>
+		<value>pfmdr11042</value>
+	</molecularMarker>
+	<molecularMarker>
+		<label>pfmdr1 1246</label>
+		<value>pfmdr11246</value>
+	</molecularMarker>
+	<molecularMarker>
+		<label>pfmdr1 copy number</label>
+		<value>pfmdr1CopyNumber</value>
+	</molecularMarker>
+	<molecularMarker>
+		<label>dhfr 50</label>
+		<value>dhfr50</value>
+	</molecularMarker>
+	<molecularMarker>
+		<label>dhfr 51</label>
+		<value>dhfr51</value>
+	</molecularMarker>
+	<molecularMarker>
+		<label>dhfr 59</label>
+		<value>dhfr59</value>
+	</molecularMarker>
+	<molecularMarker>
+		<label>dhfr 108</label>
+		<value>dhfr108</value>
+	</molecularMarker>
+	<molecularMarker>
+		<label>dhfr 164</label>
+		<value>dhfr164</value>
+	</molecularMarker>
+	<molecularMarker>
+		<label>dhps 436</label>
+		<value>dhps436</value>
+	</molecularMarker>
+	<molecularMarker>
+		<label>dhps 437</label>
+		<value>dhps437</value>
+	</molecularMarker>
+	<molecularMarker>
+		<label>dhps 540</label>
+		<value>dhps540</value>
+	</molecularMarker>
+	<molecularMarker>
+		<label>dhps 581</label>
+		<value>dhps581</value>
+	</molecularMarker>
+	<molecularMarker>
+		<label>dhps 613</label>
+		<value>dhps613</value>
+	</molecularMarker>
+	<molecularMarker>
+		<label>gch1 copy number</label>
+		<value>gch1CopyNumber</value>
+	</molecularMarker>
+	<molecularMarker>
+		<label>PfATPase6 623</label>
+		<value>PfATPase6-623</value>
+	</molecularMarker>
+	<molecularMarker>
+		<label>PfATPase6 769</label>
+		<value>PfATPase6-769</value>
+	</molecularMarker>
+	<molecularMarker>
+		<label>pfmrp 191</label>
+		<value>pfmrp191</value>
+	</molecularMarker>
+	<molecularMarker>
+		<label>pfmrp 437</label>
+		<value>pfmrp437</value>
+	</molecularMarker>
+	<molecularMarker>
+		<label>pfnhe MS-4760</label>
+		<value>pfnheMS-4760</value>
+	</molecularMarker>
+
+	<!--  P. vivax -->
+	<molecularMarker>
+		<label>pvmdr1 976</label>
+		<value>pvmdr1-976</value>
+	</molecularMarker>
+	<molecularMarker>
+		<label>pvmdr1 1076</label>
+		<value>pvmdr1-1076</value>
+	</molecularMarker>
+	<molecularMarker>
+		<label>pvmdr1 copy number</label>
+		<value>pvmdr1CopyNumber</value>
+	</molecularMarker>
+	<molecularMarker>
+		<label>pvcrt-o K10 insertion</label>
+		<value>pvcrt-oK10Insertion</value>
+	</molecularMarker>
+	<molecularMarker>
+		<label>pvcrt-o 43</label>
+		<value>pvcrt-o43</value>
+	</molecularMarker>
+	<molecularMarker>
+		<label>pvdhfr 57</label>
+		<value>pvdhfr57</value>
+	</molecularMarker>
+	<molecularMarker>
+		<label>pvdhfr 58</label>
+		<value>pvdhfr58</value>
+	</molecularMarker>
+	<molecularMarker>
+		<label>pvdhfr 61</label>
+		<value>pvdhfr61</value>
+	</molecularMarker>
+	<molecularMarker>
+		<label>pvdhfr 117</label>
+		<value>pvdhfr117</value>
+	</molecularMarker>
+	<molecularMarker>
+		<label>pvdhfr 173</label>
+		<value>pvdhfr173</value>
+	</molecularMarker>
+
+	<!--  TODO Verify  -->
+	<molecularMarker>
+		<label>pvdhfr repeat region variants</label>
+		<value>pvdhfrRepeatRegionVariants</value>
+	</molecularMarker>
+	<molecularMarker>
+		<label>pvdhps 382</label>
+		<value>pvdhps382</value>
+	</molecularMarker>
+	<molecularMarker>
+		<label>pvdhps 383</label>
+		<value>pvdhps383</value>
+	</molecularMarker>
+	<molecularMarker>
+		<label>pvdhps 512</label>
+		<value>pvdhps512</value>
+	</molecularMarker>
+	<molecularMarker>
+		<label>pvdhps 553</label>
+		<value>pvdhps553</value>
+	</molecularMarker>
+	<molecularMarker>
+		<label>pvdhps 585</label>
+		<value>pvdhps585</value>
+	</molecularMarker>
+
+	<molecularMarker>
+		<label>Other</label>
+		<value>other</value>
+	</molecularMarker>
+
+</molecularMarkers>
+
+	<!--  An open list of genotyping methods -->
+<genotypingMethods>
+	<genotypingMethod>
+		<label>PCR-RFLP</label>
+		<value>PCR-RFLP</value>
+	</genotypingMethod>
+	<genotypingMethod>
+		<label>mutation-specific PCR</label>
+		<value>mutationSpecificPCR</value>
+	</genotypingMethod>
+	<genotypingMethod>
+		<label>pyrosequencing</label>
+		<value>pyrosequencing</value>
+	</genotypingMethod>
+	<genotypingMethod>
+		<label>DNA sequencing</label>
+		<value>DNAsequencing</value>
+	</genotypingMethod>
+	<genotypingMethod>
+		<label>SSOP dot blot probe hybridization</label>
+		<value>SSOP dot blot probe hybridization</value>
+	</genotypingMethod>
+	<genotypingMethod>
+		<label>SSOP-ELISA</label>
+		<value>SSOP-ELISA</value>
+	</genotypingMethod>
+	<genotypingMethod>
+		<label>molecular beacon</label>
+		<value>molecularBeacon</value>
+	</genotypingMethod>
+	<genotypingMethod>
+		<label>microarray/DNA chip</label>
+		<value>microarray</value>
+	</genotypingMethod>
+	<genotypingMethod>
+		<label>real-time PCR</label>
+		<value>realTimePCR</value>
+	</genotypingMethod>
+	<genotypingMethod>
+		<label>other</label>
+		<value>other</value>
+	</genotypingMethod>
+</genotypingMethods>
+
+	<!--  A closed list of actions upon Mixed Resistance alleles. -->
+<allelesInclusionActions>
+	<allelesInclusion>
+		<label>excluded from dataset</label>
+		<value>excluded</value>
+	</allelesInclusion>
+	<allelesInclusion>
+		<label>included in dataset </label>
+		<value>included</value>
+	</allelesInclusion>
+	<allelesInclusion>
+		<label>not identified</label>
+		<value>notIdentified</value>
+	</allelesInclusion>
+</allelesInclusionActions>
+
+	<!--  A closed list of resistance allele types -->
+	<!--  See molecular-mixedResistanceAllelesDesignation -->
+<resistanceAllelesDesignations>
+	<resistanceAllelesDesignation>
+		<label>Designated as mixed (listed as ‘mixed’ or both alleles
+			reported: e.g. ‘K/T’)</label>
+		<value>mixed</value>
+	</resistanceAllelesDesignation>
+	<resistanceAllelesDesignation>
+		<label>Designated as mutant (only mutant allele is reported)</label>
+		<value>mutant</value>
+	</resistanceAllelesDesignation>
+</resistanceAllelesDesignations>
+
+
+	<!-- A closed list of locus types -->
+	<!-- molecular-additionalGenotypicInformation-otherLocus-type -->
+<locusTypes>
+	<locusType>
+		<value>micro-satellite</value>
+	</locusType>
+	<locusType>
+		<value>SNP</value>
+	</locusType>
+</locusTypes>
+				
