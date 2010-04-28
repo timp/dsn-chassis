@@ -57,10 +57,10 @@
 						<xforms:bind nodeset="invitro-medium-glucose-finalConcentration" 
 									relevant="contains(../invitro-medium-glucose-added,'yes')"/>
 					</xforms:bind>
-					<xforms:bind nodeset="invitro-medium-antiBiotics">
-						<xforms:bind nodeset="invitro-medium-antiBiotic">
-							<xforms:bind ref="invitro-medium-antiBiotic-name" />
-							<xforms:bind ref="invitro-medium-antiBiotic-finalConcentration" />						
+					<xforms:bind nodeset="antiBiotics">
+						<xforms:bind nodeset="antiBiotic">
+							<xforms:bind ref="antiBioticName" />
+							<xforms:bind ref="antiBioticFinalConcentration" />						
 						</xforms:bind>
 					</xforms:bind>
 				</xforms:bind>
@@ -83,7 +83,12 @@
     <xforms:instance id="ins-medium-items" src="/apps/common/constants/medium-terms.xml"/>
     <xforms:instance id="ins-mediumPreparation-items" src="/apps/common/constants/mediumPreparations.xml"/>
     <xforms:instance id="ins-serum-items" src="/apps/common/constants/serums.xml"/>
-	<xforms:instance id="ins-antiBiotic"><antiBiotic><name/><finalConcentration></finalConcentration></antiBiotic></xforms:instance>
+	<xforms:instance id="ins-antiBiotic">
+		<antiBiotic xmlns="">
+			<antiBioticName/>
+			<antiBioticFinalConcentration/>
+		</antiBiotic>
+	</xforms:instance>
 
     
     <xforms:submission
