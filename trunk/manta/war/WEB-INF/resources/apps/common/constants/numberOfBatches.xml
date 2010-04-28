@@ -1,5 +1,5 @@
 <!--  Closed list of batch options -->
-<numberOfBatches>
+<numberOfBatches xmlns="">
 	<numberOfBatches>
 		<label>one batch</label>
 		<value>onebatch</value>

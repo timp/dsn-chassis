@@ -1,5 +1,5 @@
 <!--  See  clinical-followup-haemoglobinRecordingType --> 
-<haemoglobinRecordingTypes>
+<haemoglobinRecordingTypes xmlns="">
 	<haemoglobinRecordingType>
 		<label>hb</label>
 		<value>hb</value>

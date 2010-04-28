@@ -1,0 +1,15 @@
+<!--  Nullable boolean -->
+<booleanTerms xmlns="">
+	<booleanTerm>
+		<label>unspecified</label>
+		<value></value>
+	</booleanTerm>
+	<booleanTerm>
+		<label>yes</label>
+		<value>yes</value>
+	</booleanTerm>
+	<booleanTerm>
+		<label>no</label>
+		<value>no</value>
+	</booleanTerm>
+</booleanTerms>

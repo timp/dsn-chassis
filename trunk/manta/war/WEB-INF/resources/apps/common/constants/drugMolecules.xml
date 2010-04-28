@@ -1,5 +1,5 @@
 <!--  Closed list of anti-malarial drugs  -->
-<drugMolecules>
+<drugMolecules xmlns="">
 	<drugMolecule>
 		<label>dihydro-artemisinine</label>
 		<value>dihydro-artemisinine</value>
