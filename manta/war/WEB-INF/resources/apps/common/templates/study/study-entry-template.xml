@@ -104,34 +104,28 @@
             	<invitro-medium>
             		<invitro-medium-medium/>
             		<invitro-medium-preparation/>
-					<invitro-medium-serum>
-            			<invitro-medium-serum-FinalConcentration/>
-					</invitro-medium-serum>
+					<invitro-medium-serum/>
+            		<invitro-medium-serum-finalConcentration/>
+					<invitro-medium-NaHCO3-finalConcentration/>
+					<invitro-medium-hypoxantine>
+						<invitro-medium-hypoxantine-added/>
+						<invitro-medium-hypoxantine-finalConcentration/>
+					</invitro-medium-hypoxantine>
+					<invitro-medium-oroticAcid>
+						<invitro-medium-oroticAcid-added/>
+						<invitro-medium-oroticAcid-finalConcentration/>
+					</invitro-medium-oroticAcid>
+					<invitro-medium-glucose>
+						<invitro-medium-glucose-added/>
+						<invitro-medium-glucose-finalConcentration/>
+					</invitro-medium-glucose>
 
-						<invitro-medium-NaHCO3>
-								<invitro-medium-hypoxantine-added/>
-								<invitro-medium-NaHCO3-finalConcentration/>
-						</invitro-medium-NaHCO3>
-						<invitro-medium-hypoxantine>
-								<invitro-medium-hypoxantine-added/>
-								<invitro-medium-hypoxantine-finalConcentration/>
-						</invitro-medium-hypoxantine>
-
-						<invitro-medium-oroticAcid>
-								<invitro-medium-oroticAcid-added/>
-								<invitro-medium-oroticAcid-finalConcentration/>
-						</invitro-medium-oroticAcid>
-						<invitro-medium-glucose>
-								<invitro-medium-glucose-added/>
-								<invitro-medium-glucose-finalConcentration/>
-						</invitro-medium-glucose>
-
-						<invitro-medium-antiBiotics>
-							<invitro-medium-antiBiotic>
-								<invitro-medium-antiBiotic-name/>
-								<invitro-medium-antiBiotic-finalConcentration/>
-							</invitro-medium-antiBiotic>
-						</invitro-medium-antiBiotics>
+					<invitro-medium-antiBiotics>
+						<invitro-medium-antiBiotic>
+							<invitro-medium-antiBiotic-name/>
+							<invitro-medium-antiBiotic-finalConcentration/>
+						</invitro-medium-antiBiotic>
+					</invitro-medium-antiBiotics>
             	</invitro-medium>
 				<invitro-susceptibility>
 						<invitro-susceptibility-timeOfIncubation/>
