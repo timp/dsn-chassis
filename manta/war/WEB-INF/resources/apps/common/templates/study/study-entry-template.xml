@@ -120,12 +120,12 @@
 						<invitro-medium-glucose-finalConcentration/>
 					</invitro-medium-glucose>
 
-					<invitro-medium-antiBiotics>
-						<invitro-medium-antiBiotic>
-							<invitro-medium-antiBiotic-name/>
-							<invitro-medium-antiBiotic-finalConcentration/>
-						</invitro-medium-antiBiotic>
-					</invitro-medium-antiBiotics>
+					<antiBiotics>
+						<antiBiotic>
+							<antiBioticName/>
+							<antiBioticFinalConcentration/>
+						</antiBiotic>
+					</antiBiotics>
             	</invitro-medium>
 				<invitro-susceptibility>
 						<invitro-susceptibility-timeOfIncubation/>
