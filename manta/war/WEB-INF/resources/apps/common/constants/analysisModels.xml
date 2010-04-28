@@ -1,5 +1,5 @@
 <!--  A closed list of analysis models -->
-<analysisModels>
+<analysisModels xmlns="">
 	<analysisModel>
 		<label>compartmental model</label>
 		<value>compartmentalmodel</value>
