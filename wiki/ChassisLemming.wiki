@@ -7,7 +7,7 @@
 Not all of these are necessarily a good idea. In no particular order...
 
 
-(I imagine this page might soon become a monster. Shift to issue tracker? LH)
+(I imagine this page might soon become a monster!)
 
 
 === Editing; Validation; Constraints ===
@@ -126,6 +126,7 @@ Perhaps a policy to never Move, Remove, Rename or Change *any* data resource and
   * performing simple statistical tests
 
   * inspirations from Google Fusion Tables, http://tables.googlelabs.com/Home
-  ** simple charts and maps, http://tables.googlelabs.com/public/tour/tour1.html
+  * simple charts and maps, visualizations, http://tables.googlelabs.com/public/tour/tour1.html
+  * also performs basic merge, http://tables.googlelabs.com/DataSource?dsrcid=130641
 
 ...
