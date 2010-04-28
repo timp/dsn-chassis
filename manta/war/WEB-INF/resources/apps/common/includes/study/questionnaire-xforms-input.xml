@@ -374,7 +374,11 @@
 						</xforms:group>
 					</p>
 				</xforms:group>
-				<xforms:group ref="invitro-medium-antiBiotics">
+				
+				
+				
+				
+				<xforms:group ref="antiBiotics">
 					<table class="repeat-table">
 						<tr>
 							<td>
@@ -383,8 +387,8 @@
 										<img src="/apps/submitter/common/add.gif" />
 									</xforms:label>
 									<xforms:insert ev:event="DOMActivate" context="."
-										nodeset="invitro-medium-antiBiotic" 
-										at="index('invitro-medium-antiBiotic-rep')" 
+										nodeset="antiBiotic" 
+										at="1" 
 										position="before"
 										origin="instance('ins-antiBiotic')" />
 								</xforms:trigger>
@@ -393,19 +397,19 @@
 								<xforms:trigger appearance="minimal">
 									<xforms:label>Add an Antibiotic</xforms:label>
 									<xforms:insert ev:event="DOMActivate" context="."
-										nodeset="invitro-medium-antiBiotic" 
-										at="index('invitro-medium-antiBiotic-rep')" 
+										nodeset="antiBiotic" 
+										at="1" 
 										position="before"
 										origin="instance('ins-antiBiotic')" />
 								</xforms:trigger>
 							</td>
 						</tr>
-						<xforms:repeat nodeset="invitro-medium-antiBiotic" id="invitro-medium-antiBiotic-rep">
+						<xforms:repeat nodeset="antiBiotic" id="antiBiotic-rep">
 							<tr>
 								<td>
 									<xforms:trigger appearance="minimal">
 										<xforms:delete ev:event="DOMActivate" context="."
-											nodeset="." at="index('invitro-medium-antiBiotic-rep')" />
+											nodeset="." at="index('antiBiotic-rep')" />
 										<xforms:label>
 											<img src="/apps/submitter/common/remove.gif" />
 										</xforms:label>
@@ -413,13 +417,13 @@
 								</td>
 								<td>
 									<p>
-										<xforms:group ref="invitro-medium-antiBiotic-name">
+										<xforms:group ref="antiBioticName">
 											<xforms:label>Name of antibiotic?</xforms:label>
 											<input />
 										</xforms:group>
 									</p>
 									<p>
-										<xforms:group ref="invitro-medium-antiBiotic-finalConcentration">
+										<xforms:group ref="antiBioticFinalConcentration">
 											<xforms:label>Final concentration (g/L)?</xforms:label>
 											<input />
 										</xforms:group>
