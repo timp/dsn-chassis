@@ -39,8 +39,30 @@
 				<xforms:bind nodeset="invitro-medium">
 					<xforms:bind nodeset="invitro-medium-medium" />
 					<xforms:bind nodeset="invitro-medium-preparation" />
-					<xforms:bind nodeset="invitro-medium-serum"/>
-					<xforms:bind nodeset="invitro-medium-serumFinalConcentration"/>
+					<xforms:bind nodeset="invitro-medium-serum" />
+					<xforms:bind nodeset="invitro-medium-serum-finalConcentration" />
+					<xforms:bind nodeset="invitro-medium-NaHCO3-finalConcentration" />
+					<xforms:bind nodeset="invitro-medium-hypoxantine">
+						<xforms:bind nodeset="invitro-medium-hypoxantine-added"/>
+						<xforms:bind nodeset="invitro-medium-hypoxantine-finalConcentration" 
+									relevant="contains(../invitro-medium-hypoxantine-added,'yes')"/>
+					</xforms:bind>
+					<xforms:bind nodeset="invitro-medium-oroticAcid">
+						<xforms:bind nodeset="invitro-medium-oroticAcid-added"/>
+						<xforms:bind nodeset="invitro-medium-oroticAcid-finalConcentration" 
+									relevant="contains(../invitro-medium-oroticAcid-added,'yes')"/>
+					</xforms:bind>
+					<xforms:bind nodeset="invitro-medium-glucose">
+						<xforms:bind nodeset="invitro-medium-glucose-added"/>
+						<xforms:bind nodeset="invitro-medium-glucose-finalConcentration" 
+									relevant="contains(../invitro-medium-glucose-added,'yes')"/>
+					</xforms:bind>
+					<xforms:bind nodeset="invitro-medium-antiBiotics">
+						<xforms:bind nodeset="invitro-medium-antiBiotic">
+							<xforms:bind ref="invitro-medium-antiBiotic-name" />
+							<xforms:bind ref="invitro-medium-antiBiotic-finalConcentration" />						
+						</xforms:bind>
+					</xforms:bind>
 				</xforms:bind>
 			</xforms:bind>
 			<xforms:bind nodeset="pharmacology" relevant="contains(../modules, 'pharmacology')" />
@@ -49,6 +71,9 @@
     
     <xforms:instance id="ins-site-template" src="/apps/common/templates/study/site-template.xml"/>
 
+    <xforms:instance id="ins-boolean-nullable" src="/apps/common/constants/nullable-booleans.xml"/>
+    <xforms:instance id="ins-boolean-not-nullable" src="/apps/common/constants/booleans.xml"/>
+
     <xforms:instance id="ins-pathogen-items" src="/apps/common/constants/pathogens.xml"/>
     <xforms:instance id="ins-country-items" src="/apps/common/constants/countries.xml"/>
     <xforms:instance id="ins-module-items" src="/apps/common/constants/modules.xml"/>
@@ -56,6 +81,10 @@
     <xforms:instance id="ins-healthyErythrocytesSource-items" src="/apps/common/constants/healthyErythrocytesSources.xml"/>
     <xforms:instance id="ins-bloodGroup-items" src="/apps/common/constants/bloodGroups.xml"/>
     <xforms:instance id="ins-medium-items" src="/apps/common/constants/medium-terms.xml"/>
+    <xforms:instance id="ins-mediumPreparation-items" src="/apps/common/constants/mediumPreparations.xml"/>
+    <xforms:instance id="ins-serum-items" src="/apps/common/constants/serums.xml"/>
+	<xforms:instance id="ins-antiBiotic"><antiBiotic><name/><finalConcentration></finalConcentration></antiBiotic></xforms:instance>
+
     
     <xforms:submission
         id="sub-put-study-entry"
@@ -67,7 +96,8 @@
         mediatype="application/atom+xml"
         relevant="false"
         validate="false">
-        <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while saving the study.</xforms:message>
+        <xforms:message ev:event="xforms-submit-error" 
+        	level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while saving the study.</xforms:message>
         <xforms:message ev:event="xforms-submit-done" level="modal">Your changes have been saved, thank you.</xforms:message>
     </xforms:submission>
     

@@ -251,20 +251,185 @@
 
 			<xforms:group ref="invitro-medium">
 				<h4 id="invitro-medium">Medium for Drug Susceptibility Measure</h4>
-				<xforms:select1 ref="invitro-medium-medium"
-					appearance="minimal">
-					<xforms:label>Medium?</xforms:label>
-					<xforms:alert>please select a value</xforms:alert>
-					<xforms:itemset model="mod-study-questionnaire"
-						nodeset="instance('ins-medium-items')/medium">
-						<xforms:label ref="label" />
-						<xforms:value ref="value" />
-					</xforms:itemset>
-					<xforms:hint>
-						<em>Storage temperature: 6 months at -20&#176;C and 1 week at
-							+4&#176;C after using.</em>
-					</xforms:hint>
-				</xforms:select1>
+				<p>
+					<xforms:select1 ref="invitro-medium-medium"
+						appearance="minimal">
+						<xforms:label>Medium?</xforms:label>
+						<xforms:alert>please select a value</xforms:alert>
+						<xforms:itemset model="mod-study-questionnaire"
+							nodeset="instance('ins-medium-items')/medium">
+							<xforms:label ref="label" />
+							<xforms:value ref="value" />
+						</xforms:itemset>
+						<xforms:hint>
+							<em>Storage temperature: 6 months at -20&#176;C and 1 week at
+								+4&#176;C after using.</em>
+						</xforms:hint>
+					</xforms:select1>
+				</p>
+				<p>
+					<xforms:select1 ref="invitro-medium-preparation"
+						appearance="minimal">
+						<xforms:label>Preparation?</xforms:label>
+						<xforms:alert>please select a value</xforms:alert>
+						<xforms:itemset model="mod-study-questionnaire"
+							nodeset="instance('ins-mediumPreparation-items')/mediumPreparation">
+							<xforms:label ref="label" />
+							<xforms:value ref="value" />
+						</xforms:itemset>
+					</xforms:select1>
+				</p>
+				<p>
+					<xforms:select1 ref="invitro-medium-serum"
+						appearance="minimal">
+						<xforms:label>Serum?</xforms:label>
+						<xforms:alert>please select a value</xforms:alert>
+						<xforms:itemset model="mod-study-questionnaire"
+							nodeset="instance('ins-serum-items')/serum">
+							<xforms:label ref="label" />
+							<xforms:value ref="value" />
+						</xforms:itemset>
+					</xforms:select1>
+				</p>
+
+				<p>
+					<xforms:input ref="invitro-medium-serum-finalConcentration">
+						<xforms:label>Serum final concentration (g/L)? </xforms:label>
+					</xforms:input>
+				</p>
+				<p>
+					<xforms:input ref="invitro-medium-NaHCO3-finalConcentration">
+						<xforms:label>
+							Final concentration of NaHCO
+							<sub>3</sub>
+							?
+						</xforms:label>
+					</xforms:input>
+				</p>
+
+				<xforms:group ref="invitro-medium-hypoxantine">
+					<h5>Hypoxantine</h5>
+					<p>
+						<xforms:select1 ref="invitro-medium-hypoxantine-added"
+							appearance="minimal">
+							<xforms:label>Do you add Hypoxantine?</xforms:label>
+							<xforms:alert>please select a value</xforms:alert>
+							<xforms:itemset model="mod-study-questionnaire"
+								nodeset="instance('ins-boolean-nullable')/booleanTerm">
+								<xforms:label ref="label" />
+								<xforms:value ref="value" />
+							</xforms:itemset>
+						</xforms:select1>
+					</p>
+					<p>
+						<xforms:group ref="invitro-medium-hypoxantine-finalConcentration">
+							<label>Final Hypoxantine concentration (g/L)?</label>
+							<input />
+						</xforms:group>
+					</p>
+				</xforms:group>
+
+
+				<xforms:group ref="invitro-medium-oroticAcid">
+					<h5>Orotic Acid</h5>
+					<p>
+						<xforms:select1 ref="invitro-medium-oroticAcid-added"
+							appearance="minimal">
+							<xforms:label>Do you add Orotic Acid?</xforms:label>
+							<xforms:alert>please select a value</xforms:alert>
+							<xforms:itemset model="mod-study-questionnaire"
+								nodeset="instance('ins-boolean-nullable')/booleanTerm">
+								<xforms:label ref="label" />
+								<xforms:value ref="value" />
+							</xforms:itemset>
+						</xforms:select1>
+					</p>
+					<p>
+						<xforms:group ref="invitro-medium-oroticAcid-finalConcentration">
+							<xforms:label>Final Orotic Acid concentration (g/L)?
+							</xforms:label>
+							<input />
+						</xforms:group>
+					</p>
+				</xforms:group>
+
+				<xforms:group ref="invitro-medium-glucose">
+					<h5>Glucose</h5>
+					<p>
+						<xforms:select1 ref="invitro-medium-glucose-added"
+							appearance="minimal">
+							<xforms:label>Do you add glucose?</xforms:label>
+							<xforms:alert>please select a value</xforms:alert>
+							<xforms:itemset model="mod-study-questionnaire"
+								nodeset="instance('ins-boolean-nullable')/booleanTerm">
+								<xforms:label ref="label" />
+								<xforms:value ref="value" />
+							</xforms:itemset>
+						</xforms:select1>
+					</p>
+					<p>
+						<xforms:group ref="invitro-medium-glucose-finalConcentration">
+							<label>Final glucose concentration (g/L)?</label>
+							<input />
+						</xforms:group>
+					</p>
+				</xforms:group>
+				<xforms:group ref="invitro-medium-antiBiotics">
+					<table class="repeat-table">
+						<tr>
+							<td>
+								<xforms:trigger appearance="minimal">
+									<xforms:label>
+										<img src="/apps/submitter/common/add.gif" />
+									</xforms:label>
+									<xforms:insert ev:event="DOMActivate" context="."
+										nodeset="invitro-medium-antiBiotic" 
+										at="index('invitro-medium-antiBiotic-rep')" 
+										position="before"
+										origin="instance('ins-antiBiotic')" />
+								</xforms:trigger>
+							</td>
+							<td class="add-td">
+								<xforms:trigger appearance="minimal">
+									<xforms:label>Add an Antibiotic</xforms:label>
+									<xforms:insert ev:event="DOMActivate" context="."
+										nodeset="invitro-medium-antiBiotic" 
+										at="index('invitro-medium-antiBiotic-rep')" 
+										position="before"
+										origin="instance('ins-antiBiotic')" />
+								</xforms:trigger>
+							</td>
+						</tr>
+						<xforms:repeat nodeset="invitro-medium-antiBiotic" id="invitro-medium-antiBiotic-rep">
+							<tr>
+								<td>
+									<xforms:trigger appearance="minimal">
+										<xforms:delete ev:event="DOMActivate" context="."
+											nodeset="." at="index('invitro-medium-antiBiotic-rep')" />
+										<xforms:label>
+											<img src="/apps/submitter/common/remove.gif" />
+										</xforms:label>
+									</xforms:trigger>
+								</td>
+								<td>
+									<p>
+										<xforms:group ref="invitro-medium-antiBiotic-name">
+											<xforms:label>Name of antibiotic?</xforms:label>
+											<input />
+										</xforms:group>
+									</p>
+									<p>
+										<xforms:group ref="invitro-medium-antiBiotic-finalConcentration">
+											<xforms:label>Final concentration (g/L)?</xforms:label>
+											<input />
+										</xforms:group>
+									</p>
+								</td>
+							</tr>
+						</xforms:repeat>
+					</table>
+
+				</xforms:group>
 
 			</xforms:group>
 		</xforms:group>
