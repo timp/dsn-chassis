@@ -21,6 +21,8 @@
     <page path-info="/datawiki/revisions" view="revisions.xhtml"/>
     <page path-info="/datawiki/permissions" view="permissions.xhtml"/>
 
+    <page path-info="/datawiki/merge/conflicts" view="merge/conflicts.xhtml"/>
+
     <epilogue url="oxf:/config/epilogue.xpl"/>
 
 </config>
