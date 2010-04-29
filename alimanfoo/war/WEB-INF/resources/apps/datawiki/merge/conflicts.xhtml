@@ -97,7 +97,9 @@
 			Source 2: <xforms:output ref="instance('ins-source-2')/atom:title"/> <br/>
 		</p>  	
    	
-   		<h2>Imported Without Merge (Source 1)</h2>
+   		<h2>Imported Without Merge</h2>
+   		
+   		<h3>Source 1</h3>
     	
 		<xxforms:variable name="source-1-join-column-label" select="instance('ins-merge-spec')/joins/join/col[source='1']/label"/>
 		<xxforms:variable name="source-2-join-column-label" select="instance('ins-merge-spec')/joins/join/col[source='2']/label"/>
@@ -188,8 +190,8 @@
 			</div>
 		</div>
     	
-   		<h2>Imported Without Merge (Source 2)</h2>
-    	
+		<h3>Source 2</h3>
+		    	
 		<xxforms:variable name="source-2-join-column-label" select="instance('ins-merge-spec')/joins/join/col[source='2']/label"/>
 		<xxforms:variable name="source-1-join-column-label" select="instance('ins-merge-spec')/joins/join/col[source='1']/label"/>
 		<xxforms:variable name="source-2-join-column-index" select="
