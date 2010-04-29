@@ -1,0 +1,283 @@
+<!--
+    Copyright (C) 2010 University of Oxford
+
+    This program is free software; you can redistribute it and/or modify it under the terms of the
+    GNU Lesser General Public License as published by the Free Software Foundation; either version
+    2.1 of the License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+    without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+    See the GNU Lesser General Public License for more details.
+
+    The full text of the license is available at http://www.gnu.org/copyleft/lesser.html
+-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xforms="http://www.w3.org/2002/xforms"
+      xmlns:xs="http://www.w3.org/2001/XMLSchema"
+      xmlns:ev="http://www.w3.org/2001/xml-events"
+      xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
+      xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
+      xmlns:atom="http://www.w3.org/2005/Atom">
+      
+    <head>
+        <title>DataWiki - <xforms:output ref="instance('ins-entry')/atom:title"/></title>
+        
+        <xforms:model id="mod-main">
+        
+        	<xforms:instance id="ins-login">
+        		<login xmlns="">
+        			<user/>
+        			<roles/>
+        		</login>
+        	</xforms:instance>
+        	
+        	<xforms:action ev:event="xforms-model-construct-done">
+        		<xforms:setvalue ref="instance('ins-login')/user" value="xxforms:get-remote-user()"/>
+		        <xforms:insert 
+		            nodeset="instance('ins-login')/roles" 
+		            at="1" 
+		            position="before" 
+		            origin="xxforms:get-request-attribute('user-roles-xml')"/>
+        	</xforms:action>
+        	
+        	<xforms:instance id="ins-merge-spec" src="/apps/datawiki/merge/spike/example-merge-spec.xml"/>
+        	
+        	<xforms:instance id="ins-source-1">
+        		<atom:entry/>
+        	</xforms:instance>
+
+        	<xforms:instance id="ins-source-2">
+        		<atom:entry/>
+        	</xforms:instance>
+
+			<xforms:submission 
+				id="sub-get-source-1"
+				resource="{instance('ins-merge-spec')/sources/source[1]}"
+				method="get"
+				replace="instance"
+				instance="ins-source-1">
+                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>).</xforms:message>
+			</xforms:submission>        
+
+			<xforms:submission 
+				id="sub-get-source-2"
+				resource="{instance('ins-merge-spec')/sources/source[2]}"
+				method="get"
+				replace="instance"
+				instance="ins-source-2">
+                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>).</xforms:message>
+			</xforms:submission>        
+
+			<xforms:send ev:event="xforms-model-construct-done" submission="sub-get-source-1"/>
+			<xforms:send ev:event="xforms-model-construct-done" submission="sub-get-source-2"/>
+            
+        </xforms:model>
+        
+        <link rel="stylesheet" type="text/css" href="/ops/yui/tabview/assets/skins/sam/tabview.css"></link>
+        <link rel="stylesheet" type="text/css" href="/ops/yui/datatable/assets/skins/sam/datatable.css"></link>
+
+        <style type="text/css">
+            .xforms-repeat-selected-item-1 { background: transparent }
+            .xforms-repeat-selected-item-2 { background: transparent }
+        </style>
+
+    </head>
+    
+    <body>
+
+		<p><a href="./">DataWiki</a> - <strong><xforms:output ref="instance('ins-login')/user"/></strong></p>
+		<hr/>
+		
+		<h1>Merge - Resolve Conflicts</h1>  
+		
+		<h2>Sources</h2>
+
+		<p>
+			Source 1: <xforms:output ref="instance('ins-source-1')/atom:title"/> <br/>
+			Source 2: <xforms:output ref="instance('ins-source-2')/atom:title"/> <br/>
+		</p>  	
+   	
+   		<h2>Imported Without Merge (Source 1)</h2>
+    	
+		<xxforms:variable name="source-1-join-column-label" select="instance('ins-merge-spec')/joins/join/col[source='1']/label"/>
+		<xxforms:variable name="source-2-join-column-label" select="instance('ins-merge-spec')/joins/join/col[source='2']/label"/>
+		<xxforms:variable name="source-1-join-column-index" select="
+			for $p in instance('ins-source-1')//thead/tr/th/position() return
+				for $label in instance('ins-source-1')//thead/tr/th[$p]/label return 
+					if ( $label/text() = $source-1-join-column-label/text() ) then $p else ()
+		"/>
+		<xxforms:variable name="source-2-join-column-index" select="
+			for $p in instance('ins-source-2')//thead/tr/th/position() return
+				for $label in instance('ins-source-2')//thead/tr/th[$p]/label return 
+					if ( $label/text() = $source-2-join-column-label/text() ) then $p else ()
+		"/>
+
+		<div class="yui-dt">
+			<div class="yui-dt-hd">
+				<table class="yui-dt-table">
+					<thead>
+						<tr>
+							<th>
+								<div class="yui-dt-liner">
+									<xforms:output value="instance('ins-merge-spec')/joins/join/rename"/>
+								</div>
+							</th>
+							<xforms:repeat nodeset="instance('ins-merge-spec')/merges/merge">
+								<th>
+									<div class="yui-dt-liner">
+										<xforms:output value="rename"/>
+									</div>
+								</th>
+							</xforms:repeat>
+							<xforms:repeat nodeset="instance('ins-merge-spec')/copy/col">
+								<th>
+									<div class="yui-dt-liner">
+										<xforms:output value="rename"/>
+									</div>
+								</th>
+							</xforms:repeat>
+						</tr>
+					</thead>
+					<tbody class="yui-dt-data">
+						<xforms:repeat 
+							nodeset="
+								instance('ins-source-1')//tbody/tr
+									[ empty( index-of( instance('ins-source-2')//tbody/tr/td[$source-2-join-column-index] , td[$source-1-join-column-index] ) ) ]" 
+							id="rep-row-import-source-1">
+							<tr class="
+								{if ( position() = 1 ) then 'yui-dt-first' else '' }
+								{if ( position() mod 2 = 0 ) then 'yui-dt-even' else 'yui-dt-odd' }">
+								<td>
+									<div class="yui-dt-liner">
+										<xforms:output ref="td[$source-1-join-column-index]"/>
+									</div>
+								</td>
+								<xforms:repeat nodeset="instance('ins-merge-spec')/merges/merge">
+									<xxforms:variable name="source-1-column-label" select="col[source='1']/label"/>
+									<xxforms:variable name="source-1-column-index" select="
+										for $p in instance('ins-source-1')//thead/tr/th/position() return
+											for $label in instance('ins-source-1')//thead/tr/th[$p]/label return 
+												if ( $label/text() = $source-1-column-label/text() ) then $p else ()
+									"/>
+									<td>
+										<div class="yui-dt-liner">
+											<xforms:output value="xxforms:context('rep-row-import-source-1')/td[$source-1-column-index]"/>
+										</div>
+									</td>
+								</xforms:repeat>
+								<xforms:repeat nodeset="instance('ins-merge-spec')/copy/col">
+									<td>
+										<div class="yui-dt-liner">
+											<xforms:group ref=".[source='1']">
+												<xxforms:variable name="source-1-column-label" select="label"/>
+												<xxforms:variable name="source-1-column-index" select="
+													for $p in instance('ins-source-1')//thead/tr/th/position() return
+														for $label in instance('ins-source-1')//thead/tr/th[$p]/label return 
+															if ( $label/text() = $source-1-column-label/text() ) then $p else ()
+												"/>
+												<xforms:output value="xxforms:context('rep-row-import-source-1')/td[$source-1-column-index]"/>
+											</xforms:group>
+											<xforms:group ref=".[source='2']"><!-- leave blank --></xforms:group>
+										</div>
+									</td>
+								</xforms:repeat>
+							</tr>
+						</xforms:repeat>
+					</tbody>
+				</table>
+			</div>
+		</div>
+    	
+   		<h2>Imported Without Merge (Source 2)</h2>
+    	
+		<xxforms:variable name="source-2-join-column-label" select="instance('ins-merge-spec')/joins/join/col[source='2']/label"/>
+		<xxforms:variable name="source-1-join-column-label" select="instance('ins-merge-spec')/joins/join/col[source='1']/label"/>
+		<xxforms:variable name="source-2-join-column-index" select="
+			for $p in instance('ins-source-2')//thead/tr/th/position() return
+				for $label in instance('ins-source-2')//thead/tr/th[$p]/label return 
+					if ( $label/text() = $source-2-join-column-label/text() ) then $p else ()
+		"/>
+		<xxforms:variable name="source-1-join-column-index" select="
+			for $p in instance('ins-source-1')//thead/tr/th/position() return
+				for $label in instance('ins-source-1')//thead/tr/th[$p]/label return 
+					if ( $label/text() = $source-1-join-column-label/text() ) then $p else ()
+		"/>
+
+		<div class="yui-dt">
+			<div class="yui-dt-hd">
+				<table class="yui-dt-table">
+					<thead>
+						<tr>
+							<th>
+								<div class="yui-dt-liner">
+									<xforms:output value="instance('ins-merge-spec')/joins/join/rename"/>
+								</div>
+							</th>
+							<xforms:repeat nodeset="instance('ins-merge-spec')/merges/merge">
+								<th>
+									<div class="yui-dt-liner">
+										<xforms:output value="rename"/>
+									</div>
+								</th>
+							</xforms:repeat>
+							<xforms:repeat nodeset="instance('ins-merge-spec')/copy/col">
+								<th>
+									<div class="yui-dt-liner">
+										<xforms:output value="rename"/>
+									</div>
+								</th>
+							</xforms:repeat>
+						</tr>
+					</thead>
+					<tbody class="yui-dt-data">
+						<xforms:repeat 
+							nodeset="
+								instance('ins-source-2')//tbody/tr
+									[ empty( index-of( instance('ins-source-1')//tbody/tr/td[$source-1-join-column-index] , td[$source-2-join-column-index] ) ) ]" 
+							id="rep-row-import-source-2">
+							<tr class="
+								{if ( position() = 1 ) then 'yui-dt-first' else '' }
+								{if ( position() mod 2 = 0 ) then 'yui-dt-even' else 'yui-dt-odd' }">
+								<td>
+									<div class="yui-dt-liner">
+										<xforms:output ref="td[$source-2-join-column-index]"/>
+									</div>
+								</td>
+								<xforms:repeat nodeset="instance('ins-merge-spec')/merges/merge">
+									<xxforms:variable name="source-2-column-label" select="col[source='2']/label"/>
+									<xxforms:variable name="source-2-column-index" select="
+										for $p in instance('ins-source-2')//thead/tr/th/position() return
+											for $label in instance('ins-source-2')//thead/tr/th[$p]/label return 
+												if ( $label/text() = $source-2-column-label/text() ) then $p else ()
+									"/>
+									<td>
+										<div class="yui-dt-liner">
+											<xforms:output value="xxforms:context('rep-row-import-source-2')/td[$source-2-column-index]"/>
+										</div>
+									</td>
+								</xforms:repeat>
+								<xforms:repeat nodeset="instance('ins-merge-spec')/copy/col">
+									<td>
+										<div class="yui-dt-liner">
+											<xforms:group ref=".[source='2']">
+												<xxforms:variable name="source-2-column-label" select="label"/>
+												<xxforms:variable name="source-2-column-index" select="
+													for $p in instance('ins-source-2')//thead/tr/th/position() return
+														for $label in instance('ins-source-2')//thead/tr/th[$p]/label return 
+															if ( $label/text() = $source-2-column-label/text() ) then $p else ()
+												"/>
+												<xforms:output value="xxforms:context('rep-row-import-source-2')/td[$source-2-column-index]"/>
+											</xforms:group>
+											<xforms:group ref=".[source='1']"><!-- leave blank --></xforms:group>
+										</div>
+									</td>
+								</xforms:repeat>
+							</tr>
+						</xforms:repeat>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+    </body>
+</html>
