@@ -40,17 +40,21 @@
 					<xforms:bind nodeset="invitro-medium-medium" />
 					<xforms:bind nodeset="invitro-medium-preparation" />
 					<xforms:bind nodeset="invitro-medium-serum" />
-					<xforms:bind nodeset="invitro-medium-serum-finalConcentration" />
-					<xforms:bind nodeset="invitro-medium-NaHCO3-finalConcentration" />
+					<xforms:bind nodeset="invitro-medium-serum-finalConcentration" 
+									type="xs:integer"/>
+					<xforms:bind nodeset="invitro-medium-NaHCO3-finalConcentration" 
+								type="xs:integer"/>
 					<xforms:bind nodeset="invitro-medium-hypoxantine">
 						<xforms:bind nodeset="invitro-medium-hypoxantine-added"/>
 						<xforms:bind nodeset="invitro-medium-hypoxantine-finalConcentration" 
-									relevant="contains(../invitro-medium-hypoxantine-added,'yes')"/>
+									relevant="contains(../invitro-medium-hypoxantine-added,'yes')"
+									type="xs:integer"/>
 					</xforms:bind>
 					<xforms:bind nodeset="invitro-medium-oroticAcid">
 						<xforms:bind nodeset="invitro-medium-oroticAcid-added"/>
 						<xforms:bind nodeset="invitro-medium-oroticAcid-finalConcentration" 
-									relevant="contains(../invitro-medium-oroticAcid-added,'yes')"/>
+									relevant="contains(../invitro-medium-oroticAcid-added,'yes')"
+									type="xs:integer"/>
 					</xforms:bind>
 					<xforms:bind nodeset="invitro-medium-glucose">
 						<xforms:bind nodeset="invitro-medium-glucose-added"/>
@@ -60,7 +64,8 @@
 					<xforms:bind nodeset="antiBiotics">
 						<xforms:bind nodeset="antiBiotic">
 							<xforms:bind ref="antiBioticName" />
-							<xforms:bind ref="antiBioticFinalConcentration" />						
+							<xforms:bind ref="antiBioticFinalConcentration" 
+									type="xs:integer"/>
 						</xforms:bind>
 					</xforms:bind>
 				</xforms:bind>
