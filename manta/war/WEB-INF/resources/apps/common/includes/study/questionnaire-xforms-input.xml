@@ -295,15 +295,13 @@
 				<p>
 					<xforms:input ref="invitro-medium-serum-finalConcentration">
 						<xforms:label>Serum final concentration (g/L)? </xforms:label>
+						<xforms:alert>Not a valid integer.</xforms:alert>
 					</xforms:input>
 				</p>
 				<p>
 					<xforms:input ref="invitro-medium-NaHCO3-finalConcentration">
-						<xforms:label>
-							Final concentration of NaHCO
-							<sub>3</sub>
-							?
-						</xforms:label>
+						<xforms:label>Final concentration of NaHCO<sub>3</sub> ?</xforms:label>
+						<xforms:alert>Not a valid integer.</xforms:alert>
 					</xforms:input>
 				</p>
 
@@ -322,10 +320,10 @@
 						</xforms:select1>
 					</p>
 					<p>
-						<xforms:group ref="invitro-medium-hypoxantine-finalConcentration">
+						<xforms:input ref="invitro-medium-hypoxantine-finalConcentration">
 							<label>Final Hypoxantine concentration (g/L)?</label>
-							<input />
-						</xforms:group>
+							<xforms:alert>Not a valid integer.</xforms:alert>
+						</xforms:input>
 					</p>
 				</xforms:group>
 
@@ -345,11 +343,10 @@
 						</xforms:select1>
 					</p>
 					<p>
-						<xforms:group ref="invitro-medium-oroticAcid-finalConcentration">
-							<xforms:label>Final Orotic Acid concentration (g/L)?
-							</xforms:label>
-							<input />
-						</xforms:group>
+						<xforms:input ref="invitro-medium-oroticAcid-finalConcentration">
+							<xforms:label>Final Orotic Acid concentration (g/L)?</xforms:label>
+							<xforms:alert>Not a valid integer.</xforms:alert>
+						</xforms:input>
 					</p>
 				</xforms:group>
 
@@ -368,10 +365,10 @@
 						</xforms:select1>
 					</p>
 					<p>
-						<xforms:group ref="invitro-medium-glucose-finalConcentration">
+						<xforms:input ref="invitro-medium-glucose-finalConcentration">
 							<label>Final glucose concentration (g/L)?</label>
-							<input />
-						</xforms:group>
+							<xforms:alert>Not a valid integer.</xforms:alert>
+						</xforms:input>
 					</p>
 				</xforms:group>
 				
@@ -417,16 +414,16 @@
 								</td>
 								<td>
 									<p>
-										<xforms:group ref="antiBioticName">
+										<xforms:group ref="antiBioticName-g">
 											<xforms:label>Name of antibiotic?</xforms:label>
-											<input />
+											<xforms:input ref="antiBioticName"/>
 										</xforms:group>
 									</p>
 									<p>
-										<xforms:group ref="antiBioticFinalConcentration">
+										<xforms:input ref="antiBioticFinalConcentration">
 											<xforms:label>Final concentration (g/L)?</xforms:label>
-											<input />
-										</xforms:group>
+											<xforms:alert>Not a valid integer.</xforms:alert>
+										</xforms:input>
 									</p>
 								</td>
 							</tr>
