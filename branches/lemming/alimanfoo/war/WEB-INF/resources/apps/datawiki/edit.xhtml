@@ -467,11 +467,13 @@
 													</div>
 												</th>
 											</xforms:repeat>
-											<th>
-												<div class="yui-dt-liner">
-													Constraints
-												</div>											
-											</th>
+											<xforms:group ref="instance('ins-entry')/atom:content/table/thead/constraints/constraint">
+												<th>
+													<div class="yui-dt-liner">
+														Constraints
+													</div>											
+												</th>
+											</xforms:group>
 										</tr>
 									</thead>
 									<tbody class="yui-dt-data">
@@ -557,32 +559,34 @@
 														</div>
 													</td>
 												</xforms:repeat>
-												<td>
-													<div class="yui-dt-liner">
-														<xforms:repeat nodeset="instance('ins-entry')/atom:content/table/thead/constraints/constraint">
-															<p>
-																<xforms:output ref="description">
-																	<xforms:label class="fixed-width">Description: </xforms:label>
-																</xforms:output>
-																<br/>
-<!--																<xforms:output ref="expression">-->
-<!--																	<xforms:label class="fixed-width">Expression: </xforms:label>-->
-<!--																</xforms:output>-->
-<!--																<br/>-->
-<!--																<xforms:output ref="translated">-->
-<!--																	<xforms:label class="fixed-width">Translated: </xforms:label>-->
-<!--																</xforms:output>-->
-<!--																<br/>-->
-																<xxforms:variable name="trans" select="translated"/>
-																<xforms:group ref="xxforms:context('rep-row')">
-																	<xforms:output value="xxforms:evaluate($trans)">
-																		<xforms:label class="fixed-width">Valid: </xforms:label>
+												<xforms:group ref="instance('ins-entry')/atom:content/table/thead/constraints/constraint">
+													<td>
+														<div class="yui-dt-liner">
+															<xforms:repeat nodeset=".">
+																<p>
+																	<xforms:output ref="description">
+																		<xforms:label class="fixed-width">Description: </xforms:label>
 																	</xforms:output>
-																</xforms:group>
-															</p>
-														</xforms:repeat>
-													</div>
-												</td>
+																	<br/>
+	<!--																<xforms:output ref="expression">-->
+	<!--																	<xforms:label class="fixed-width">Expression: </xforms:label>-->
+	<!--																</xforms:output>-->
+	<!--																<br/>-->
+	<!--																<xforms:output ref="translated">-->
+	<!--																	<xforms:label class="fixed-width">Translated: </xforms:label>-->
+	<!--																</xforms:output>-->
+	<!--																<br/>-->
+																	<xxforms:variable name="trans" select="translated"/>
+																	<xforms:group ref="xxforms:context('rep-row')">
+																		<xforms:output value="xxforms:evaluate($trans)">
+																			<xforms:label class="fixed-width">Valid: </xforms:label>
+																		</xforms:output>
+																	</xforms:group>
+																</p>
+															</xforms:repeat>
+														</div>
+													</td>
+												</xforms:group>
 											</tr>
 										</xforms:repeat>
 									</tbody>
