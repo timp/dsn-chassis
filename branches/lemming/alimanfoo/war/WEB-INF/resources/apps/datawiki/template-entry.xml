@@ -4,7 +4,7 @@
 	<atom:summary type="xhtml">
 		<div xmlns="http://www.w3.org/1999/xhtml"/>
 	</atom:summary>
-	<atom:content type="application/vnd.atombeat-datawiki+xml">
+	<atom:content type="application/vnd.chassis-datawiki+xml">
 		<table xmlns="">
 			<thead>
 				<constraints>
