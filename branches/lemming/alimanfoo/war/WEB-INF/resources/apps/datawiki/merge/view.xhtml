@@ -48,7 +48,7 @@
 				instance="ins-entry">
 			</xforms:submission>        
 
-<!--			<xforms:send ev:event="xforms-model-construct-done" submission="sub-get-entry"/>-->
+			<xforms:send ev:event="xforms-model-construct-done" submission="sub-get-entry"/>
 			
             <xforms:instance id="ins-entry" src="/apps/datawiki/merge/spike/example-merge-entry.xml"/>
             
@@ -139,8 +139,8 @@
     				</p>
     				<h3>Sources</h3>
     				<p>
-    					<xforms:output ref=".//design/sources/source[1]"><xforms:label>[1] </xforms:label></xforms:output><br/>
-    					<xforms:output ref=".//design/sources/source[2]"><xforms:label>[2] </xforms:label></xforms:output>
+    					<xforms:output ref=".//design/source[1]"><xforms:label>[1] </xforms:label></xforms:output><br/>
+    					<xforms:output ref=".//design/source[2]"><xforms:label>[2] </xforms:label></xforms:output>
     				</p>
     				
     				<hr/>
@@ -170,7 +170,9 @@
 												<td>
 													<div class="yui-dt-liner">
 														<xforms:output ref="decision"/>
-														<xforms:group ref=".[empty(decision/text()) and source[1] != source[2]]">
+														<xforms:group ref=".[
+															empty(decision/text()) and exists(source[1]/text()) and exists(source[2]/text()) and source[1] != source[2]
+														]">
 															<div class="unresolved-conflict">
 																<xforms:output ref="source[1]">
 																	<xforms:label>[1] </xforms:label>

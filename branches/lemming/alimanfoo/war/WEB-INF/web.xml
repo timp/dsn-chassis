@@ -534,5 +534,10 @@
         <url-pattern>/atombeat/*</url-pattern>
     </filter-mapping>
     
+    <filter-mapping>
+        <filter-name>XQueryURLRewrite</filter-name>
+        <url-pattern>/query/*</url-pattern>
+    </filter-mapping>
+    
     
 </web-app>

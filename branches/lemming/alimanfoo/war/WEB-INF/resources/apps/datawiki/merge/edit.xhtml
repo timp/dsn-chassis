@@ -48,7 +48,33 @@
 				instance="ins-entry">
 			</xforms:submission>        
 
-<!--			<xforms:send ev:event="xforms-model-construct-done" submission="sub-get-entry"/>-->
+            <xforms:submission
+            	id="sub-put-entry"
+            	resource="{instance('ins-entry')/atom:link[@rel='edit']/@href}"
+            	ref="instance('ins-entry')"
+            	method="put"
+            	mediatype="application/atom+xml"
+            	replace="instance"
+            	instance="ins-entry"
+            	validate="false">
+                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while saving changes.</xforms:message>
+		        <xforms:message ev:event="xforms-submit-done" level="modal">
+		        	Your changes have been saved. Thank you.
+	        	</xforms:message>
+           	</xforms:submission>
+
+			<xforms:submission 
+				id="sub-refresh-entry"
+				resource="{instance('ins-entry')/atom:link[@rel='edit']/@href}"
+				method="get"
+				replace="instance"
+				instance="ins-entry"
+				validate="false">
+                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while reloading data.</xforms:message>
+		        <xforms:message ev:event="xforms-submit-done" level="modal">The data have been restored to the last saved version.</xforms:message>
+			</xforms:submission>        
+
+			<xforms:send ev:event="xforms-model-construct-done" submission="sub-get-entry"/>
 			
             <xforms:instance id="ins-entry" src="/apps/datawiki/merge/spike/example-merge-entry.xml"/>
             
@@ -175,14 +201,24 @@ td, th {
     			<div class="yui-content">
     			
     				<p>
+    					<xforms:submit submission="sub-put-entry">
+    						<xforms:label><img src="/apps/fr/style/save.gif"/> Save Changes</xforms:label>
+   						</xforms:submit>
+    					<xforms:submit submission="sub-refresh-entry">
+    						<xforms:label><img src="/apps/fr/style/trash.gif"/> Discard Changes</xforms:label>
+   						</xforms:submit>
+    				</p>
+    			
+    				<hr/>
+    				<p>
     					<xforms:output value="count(.//table/tbody//td[( empty(decision/text()) or decision = '') and source[1]/text() != source[2]/text()])">
     						<xforms:label>Unresolved conflicts: </xforms:label>
     					</xforms:output>
     				</p>
     				<h3>Sources</h3>
     				<p>
-    					<xforms:output ref=".//design/sources/source[1]"><xforms:label>[1] </xforms:label></xforms:output><br/>
-    					<xforms:output ref=".//design/sources/source[2]"><xforms:label>[2] </xforms:label></xforms:output>
+    					<xforms:output ref=".//design/source[1]"><xforms:label>[1] </xforms:label></xforms:output><br/>
+    					<xforms:output ref=".//design/source[2]"><xforms:label>[2] </xforms:label></xforms:output>
     				</p>
     				
     				<hr/>
@@ -424,7 +460,20 @@ td, th {
 						</div>
 					
     				</xforms:group>
+    				
+    				<hr/>
+    			
 
+    				<p>
+    					<xforms:submit submission="sub-put-entry">
+    						<xforms:label><img src="/apps/fr/style/save.gif"/> Save Changes</xforms:label>
+   						</xforms:submit>
+    					<xforms:submit submission="sub-refresh-entry">
+    						<xforms:label><img src="/apps/fr/style/trash.gif"/> Discard Changes</xforms:label>
+   						</xforms:submit>
+    				</p>
+    			
+	
     			</div>
     			
    			</div>

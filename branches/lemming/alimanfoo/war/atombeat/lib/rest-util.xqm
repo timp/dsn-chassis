@@ -2,6 +2,11 @@ xquery version "1.0";
 
 module namespace rest = "http://atombeat.org/xquery/rest-util";
 
+import module namespace CONSTANT = "http://atombeat.org/xquery/constants" at "../../atombeat/lib/constants.xqm" ;
+import module namespace config = "http://atombeat.org/xquery/config" at "../config/shared.xqm" ;
+
+
+
 
 declare function rest:do-not-found(
     $request-path-info
