@@ -127,36 +127,30 @@
 						</antiBiotic>
 					</antiBiotics>
             	</invitro-medium>
-				<invitro-susceptibility>
-						<invitro-susceptibility-timeOfIncubation/>
-						<invitro-susceptibility-methodUsed/>
-				</invitro-susceptibility>
-				<invitro-drugs>
-					<invitro-drug>
-						<invitro-drug-molecule/>
-						<invitro-drug-solvent/>
-						<invitro-drug-solventFinalConcentration/>
-						<invitro-drug-providedByWwarn/>
-						<invitro-drug-provider/>
-					</invitro-drug>
-				</invitro-drugs>
+				<susceptibility>
+						<timeOfIncubation/>
+						<susceptibilityMethod/>
+				</susceptibility>
+				<drugs>
+					<drug>
+						<molecule/>
+						<solvent/>
+						<solventFinalConcentration/>
+						<providedByWwarn/>
+						<provider/>
+					</drug>
+				</drugs>
 
-				<invitro-plates>
-						<invitro-plates-batches/>
-						<invitro-plates-preparationDate/>
-						<invitro-plates-clone3D7ProvidedByWwarn/>
-						<invitro-plates-cloneProvider/>
-						<invitro-plates-numberOfBatches/>
-						<invitro-plates-batches-includedInRawData/>
-						<invitro-batches-batches>
-							<invitro-batches-batch>
-								<invitro-batches-batch-preparationDate/>
-								<invitro-batches-batch-parasitaemia3D7/>
-								<invitro-batches-batch-ringForms/>
-								<invitro-batches-batches/>
-							</invitro-batches-batch>
-						</invitro-batches-batches>
-				</invitro-plates>
+				<plateBatches>
+					<batch>
+						<clone3D7ProvidedByWwarn/>
+						<cloneProvider/>
+						<batchesIncludedInRawData/>
+						<preparationDate/>
+						<parasitaemia3D7/>
+						<ringForms/>
+					</batch>
+				</plateBatches>
 
             </in-vitro>
             <molecular>
