@@ -44,6 +44,19 @@
 			</xforms:select>
 		</p>
 
+		<h3>Study Type (WWARN Modules)</h3>
+
+		<p>
+			<xforms:select ref="modules" appearance="full">
+				<xforms:label />
+				<xforms:itemset model="mod-study-questionnaire"
+					nodeset="instance('ins-module-items')/module">
+					<xforms:label ref="label" />
+					<xforms:value ref="value" />
+				</xforms:itemset>
+			</xforms:select>
+		</p>
+
 		<h3>Study Site(s)</h3>
 
 		<xforms:group ref="sites">
@@ -129,7 +142,42 @@
 							<xforms:input ref="user-code">
 								<xforms:label class="fixed-width">Your site code:</xforms:label>
 							</xforms:input>
+							<br />
 
+							<xforms:select1 appearance="minimal" ref="testingDelay">
+								<xforms:label class="fixed-width">Sampling/testing delay:</xforms:label>
+								<xforms:itemset model="mod-study-questionnaire"
+												nodeset="instance('ins-testingDelay-items')/testingDelay">
+									<xforms:label ref="label" />
+									<xforms:value ref="value" />
+								</xforms:itemset>
+								<xforms:alert>please select a value</xforms:alert>
+							</xforms:select1>
+							<br />
+
+							<xforms:select1 appearance="minimal" ref="anticoagulant">
+								<xforms:label class="fixed-width">Anticoagulant:</xforms:label>
+								<xforms:itemset model="mod-study-questionnaire"
+												nodeset="instance('ins-anticoagulant-items')/anticoagulant">
+									<xforms:label ref="label" />
+									<xforms:value ref="value" />
+								</xforms:itemset>
+								<xforms:alert>please select a value</xforms:alert>
+							</xforms:select1>
+							
+							<br />
+
+							<xforms:select1 appearance="minimal" ref="transportAndStorageTemperature">
+								<xforms:label class="fixed-width">Transport/storage temperature:</xforms:label>
+								<xforms:itemset model="mod-study-questionnaire"
+												nodeset="instance('ins-transportAndStorageTemperature-items')/transportAndStorageTemperature">
+									<xforms:label ref="label" />
+									<xforms:value ref="value" />
+								</xforms:itemset>
+								<xforms:alert>please select a value</xforms:alert>
+							</xforms:select1>
+							
+							
 						</td>
 					</tr>
 				</xforms:repeat>
@@ -137,18 +185,6 @@
 
 		</xforms:group>
 
-		<h3>Study Type (WWARN Modules)</h3>
-
-		<p>
-			<xforms:select ref="modules" appearance="full">
-				<xforms:label />
-				<xforms:itemset model="mod-study-questionnaire"
-					nodeset="instance('ins-module-items')/module">
-					<xforms:label ref="label" />
-					<xforms:value ref="value" />
-				</xforms:itemset>
-			</xforms:select>
-		</p>
 
 		<p>
 			<xforms:submit submission="sub-put-study-entry">
@@ -249,6 +285,16 @@
 				+ | | BEGIN IN VITRO MEDIUM NESTED QUESTIONNAIRE | +
 			-->
 
+			<xforms:group ref="sites">
+				<table class="repeat-table">
+					<xforms:repeat nodeset="site" id="invitro-site-rep">
+						<tr>
+							<td>
+							</td>
+						</tr>
+					</xforms:repeat>
+				</table>
+			</xforms:group>
 			<xforms:group ref="invitro-medium">
 				<h4 id="invitro-medium">Medium for Drug Susceptibility Measure</h4>
 				<p>
@@ -414,10 +460,10 @@
 								</td>
 								<td>
 									<p>
-										<xforms:group ref="antiBioticName-g">
+										<xforms:input ref="antiBioticName">
 											<xforms:label>Name of antibiotic?</xforms:label>
-											<xforms:input ref="antiBioticName"/>
-										</xforms:group>
+											<xforms:alert>Required field</xforms:alert>
+										</xforms:input>
 									</p>
 									<p>
 										<xforms:input ref="antiBioticFinalConcentration">
