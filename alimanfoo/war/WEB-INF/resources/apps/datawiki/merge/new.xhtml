@@ -56,7 +56,7 @@
       		<xforms:submission
       			id="sub-post-preview"
       			method="post"
-      			resource="/query/datawiki/merge.xql"
+      			resource="/query/datawiki/merge"
       			ref="instance('ins-merge-entry')"
       			replace="instance"
       			instance="ins-merge-entry"
@@ -89,7 +89,7 @@
 					<col>
 						<label></label>
 					</col>
-					<rename></rename>
+					<label></label>
 					<datatype></datatype>
 					<required>false</required>
 				</merge>
@@ -118,7 +118,7 @@
 									<col>
 										<label></label>
 									</col>
-									<rename></rename>
+									<label></label>
 									<datatype></datatype>
 									<required>true</required>
 								</join>
@@ -448,6 +448,7 @@
 	    	<p>
 	    		<xforms:select1 ref="join/col[1]/label">
 	    			<xforms:label>[1] </xforms:label>
+	    			<xforms:setvalue ev:event="xforms-value-changed" ref="../../label" value="../col[1]/label"/>
 	   				<xforms:item>
 	   					<xforms:label>select column...</xforms:label>
 	   					<xforms:value/>
@@ -472,7 +473,7 @@
 	    	</p>
 	    	
 	    	<p>
-	    		<xforms:input ref="join/rename">
+	    		<xforms:input ref="join/label">
 	    			<xforms:label>Rename to: </xforms:label>
 	    		</xforms:input>
 	    	
@@ -566,6 +567,7 @@
 										    		<xforms:select1 ref="col[1]/label">
 										    			<xforms:label>[1] </xforms:label>
 										    			<xforms:alert>Select a column from source 1.</xforms:alert>
+										    			<xforms:setvalue ev:event="xforms-value-changed" ref="../../label" value="../col[1]/label"/>
 										   				<xforms:item>
 										   					<xforms:label>select column...</xforms:label>
 										   					<xforms:value/>
@@ -591,7 +593,7 @@
 										    	</p>
 										    	
 										    	<p>
-										    		<xforms:input ref="rename">
+										    		<xforms:input ref="label">
 										    			<xforms:label>Rename to: </xforms:label>
 										    		</xforms:input>
 										    	
@@ -712,6 +714,7 @@
 										    		<xforms:select1 ref="label">
 										    			<xforms:label class="fixed-width">Column: </xforms:label>
 										    			<xforms:alert>Select a column to copy.</xforms:alert>
+										    			<xforms:setvalue ev:event="xforms-value-changed" ref="../rename" value="../label"/>
 										   				<xforms:item>
 										   					<xforms:label>select column...</xforms:label>
 										   					<xforms:value/>
@@ -749,7 +752,7 @@
 				<xforms:label>Calculate Preview</xforms:label>
 			</xforms:submit>
     		<xforms:submit submission="sub-post-entry">
-    			<xforms:label><img src="/apps/fr/style/new.gif"/> Create Merge</xforms:label>
+    			<xforms:label><img src="/apps/fr/style/new.gif"/> Save Merge</xforms:label>
     		</xforms:submit>
 		</p>			
 
