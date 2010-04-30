@@ -215,6 +215,14 @@
 				Module Questions
 			</h2>
 
+			<xforms:input ref="invitro-analysisSite">
+					<xforms:label>Where did the analysis take place?</xforms:label>
+				<xforms:hint>
+					<em>Enter a site code, or laboratory name and address if the analysis did not take place at
+						any of the previously entered sites.
+					</em>
+				</xforms:hint>
+			</xforms:input>
 			<!--+
 			|
 			| BEGIN IN VITRO CULTURE NESTED QUESTIONNAIRE
@@ -479,6 +487,161 @@
 				</xforms:group>
 
 			</xforms:group>
+		<!--+
+		|
+		| BEGIN IN VITRO SUSCEPTIBILITY NESTED QUESTIONNAIRE
+		|
+		+-->
+
+				<h4 id="invitro-susceptibility">Determination of Drug Susceptibility</h4>
+
+				<xforms:group ref="susceptibility">
+					<xforms:select1 appearance="minimal" ref="timeOfIncubation">
+						<label>Time of incubation?</label>
+						<xforms:alert>please select a value</xforms:alert>
+						<xforms:itemset model="mod-study-questionnaire"
+										nodeset="instance('ins-incubationTime-items')/incubationtime">
+							<xforms:label ref="label" />
+							<xforms:value ref="value" />
+						</xforms:itemset>
+						<xforms:hint>
+							<em>If this is different for each sample, please include this information in your
+								raw data.
+							</em>
+						</xforms:hint>
+					</xforms:select1>
+					<xforms:select1 appearance="minimal" ref="susceptibilityMethod">
+						<label>Method used?</label>
+						<xforms:alert>please select a value</xforms:alert>
+						<xforms:hint>
+							<em>If this is different for each sample, please include this information in your
+								raw data.
+							</em>
+						</xforms:hint>
+					</xforms:select1>
+				</xforms:group>
+
+				<!--+
+		|
+		| END IN VITRO SUSCEPTIBILITY NESTED QUESTIONNAIRE
+		|
+		+-->
+
+
+				<!--+
+				|
+				| BEGIN IN VITRO DRUG STOCK SOLUTIONS NESTED QUESTIONNAIRE
+				|
+				+-->
+
+				<h4 id="invitro-drug">Drug Stock Solutions</h4>
+
+				<p>
+				<em>Please complete the section below for each drug stock solution used.</em>
+				</p>
+
+				<xforms:group ref="drug" repeatable="yes">
+
+						<xforms:select1 appearance="minimal" ref="invitro-drug-molecule">
+							<label>Molecule?</label>
+							<xforms:alert>please select a value</xforms:alert>
+						</xforms:select1>
+				<br/>			
+
+						<xforms:select1 appearance="minimal" ref="solvent">
+							<label>Solvent of stock solution?</label>
+							<xforms:alert>please select a value</xforms:alert>
+						</xforms:select1>
+				<br/>			
+							
+						<xforms:input ref="solventFinalConcentration">
+							<label>Solvent final concentration (g/L)?</label>
+						</xforms:input>
+							
+						<p>
+							<em>Storage temperature and shelf lives for each solution will be determined and
+								indicated.
+							</em>
+						</p>
+
+				<br/>			
+						<xforms:select1 appearance="minimal" ref="providedByWwarn">
+						<!--  TODO Check do they mean drug here? -->
+							<label>Were stock solutions provided by WWARN?</label>
+						</xforms:select1>
+							
+				<br/>			
+						<xforms:input ref="provider">
+									<xforms:label>Who provided the drug?</xforms:label>
+						</xforms:input>
+
+
+				</xforms:group>
+
+				<!--+
+				|
+				| END IN VITRO DRUG STOCK SOLUTIONS NESTED QUESTIONNAIRE
+				|
+				+-->
+
+
+				<!--+
+				|
+				| BEGIN IN VITRO PLATES NESTED QUESTIONNAIRE
+				|
+				+-->
+
+				<h4 id="invitro-plates">Batch of Plates</h4>
+
+				<xforms:group ref="invitro-plates">
+
+
+					<xforms:input ref="cloneProvider">
+						<xforms:label>who provided the clone?</xforms:label>
+					</xforms:input>
+					<br/>			
+							
+					<xforms:select1 appearance="minimal" ref="includedInRawData">
+						<label>Are your batch preparation dates and 3D7 information included with the raw data?</label>
+					</xforms:select1>
+					
+					<xforms:group ref="notIncludedBatchDataHint">		
+					<p>
+						<em>If batch preparation dates and 3D7 information are
+							<strong>not</strong>
+							included with the raw data, please complete the section below for each batch.
+							</em>
+					</p>
+					</xforms:group>
+
+					<xforms:input ref="preparationDate">
+							<xforms:label>Preparation date?</xforms:label>
+					</xforms:input>
+					<br/>			
+
+					<xforms:select1 appearance="minimal" ref="clone3D7ProvidedByWwarn">
+						<xforms:label>3D7 provided by WWARN?</xforms:label>
+					</xforms:select1>
+					<br/>			
+							
+									
+					<xforms:input ref="parasitaemia3D7">
+						<xforms:label>3D7 parasitaemia (%)?</xforms:label>
+					</xforms:input>
+									
+					<xforms:input ref="invitro-batches-batch-ringForms">
+						<xforms:label>Ring forms after synchronisation (%)?</xforms:label>
+					</xforms:input>
+
+			</xforms:group>
+
+			<!--+
+			|
+			| END IN VITRO PLATES NESTED QUESTIONNAIRE
+			|
+			+-->
+
+			
 		</xforms:group>
 
 		<xforms:group ref="pharmacology">

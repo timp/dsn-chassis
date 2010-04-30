@@ -35,7 +35,7 @@
 			<xforms:bind nodeset="clinical" relevant="contains(../modules, 'clinical')" />
 			<xforms:bind nodeset="molecular" relevant="contains(../modules, 'molecular')" />
 			<xforms:bind nodeset="in-vitro" relevant="contains(../modules, 'invitro')">
-				
+				<xforms:bind nodeset="invitro-analysisSite"/>
 				<xforms:bind nodeset="invitro-culture">
 					<xforms:bind nodeset="invitro-culture-incubatorSystem" />
 					<xforms:bind nodeset="invitro-culture-co2" relevant="contains(../invitro-culture-incubatorSystem, 'co2incubator')"  />
@@ -78,6 +78,33 @@
 								required="true()"/>
 						</xforms:bind>
 					</xforms:bind>
+					<xforms:bind nodeset="susceptibility">
+						<xforms:bind nodeset="timeOfIncubation"/>
+						<xforms:bind nodeset="susceptibilityMethod"/>
+					</xforms:bind>
+					<xforms:bind nodeset="drugs">
+						<xforms:bind nodeset="drug"/>
+						<xforms:bind nodeset="molecule"/>
+						<xforms:bind nodeset="solvent"/>
+						<xforms:bind nodeset="solventFinalConcentration"/>
+						<xforms:bind nodeset="providedByWwarn" type="xs:boolean"/>
+						<xforms:bind nodeset="provider" relevant="contains(../providedByWarn, 'no')"/>
+					</xforms:bind>
+					<xforms:bind nodeset="preparationDate"  relevant="contains(../plates-batches,'extemporaneous)"/>
+							
+					<xforms:bind nodeset="plateBatches">
+						<xforms:bind nodeset="batch">
+							<xforms:bind nodeset="clone3D7ProvidedByWwarn"/>
+							<xforms:bind nodeset="cloneProvider"  relevant="contains(../clone3D7ProvidedByWwarn, 'no')"/>
+							<xforms:bind nodeset="batchesIncludedInRawData" type="xs:boolean"/>
+							<xforms:bind nodeset="notIncludedBatchDataHint" relevant="contains(../batchesIncludedInRawData, 'no')" />
+							<xforms:bind nodeset="preparationDate" type="xs:date" relevant="contains(../batchesIncludedInRawData, 'no')" />
+							
+							<xforms:bind nodeset="parasitaemia3D7" relevant="contains(../batchesIncludedInRawData, 'no')"/>
+							<xforms:bind nodeset="ringForms"/>
+						</xforms:bind>
+					</xforms:bind>
+					
 				</xforms:bind>
 			</xforms:bind>
 			<xforms:bind nodeset="pharmacology" relevant="contains(../modules, 'pharmacology')" />
@@ -101,6 +128,8 @@
     <xforms:instance id="ins-testingDelay-items"   src="/apps/common/constants/testingDelays.xml"/>
     <xforms:instance id="ins-anticoagulant-items"  src="/apps/common/constants/anticoagulants.xml"/>
     <xforms:instance id="ins-transportAndStorageTemperature-items"  src="/apps/common/constants/transportAndStorageTemperatures.xml"/>
+    <xforms:instance id="ins-incubationTime-items"  src="/apps/common/constants/incubationTimes.xml"/>
+    <xforms:instance id="ins-susceptibilityMethod-items"  src="/apps/common/constants/susceptibilityMethods.xml"/>
     
 	<xforms:instance id="ins-antiBiotic">
 		<antiBiotic xmlns="">
