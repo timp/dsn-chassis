@@ -593,12 +593,19 @@
 
 				<h4 id="invitro-plates">Batch of Plates</h4>
 
-				<xforms:group ref="invitro-plates">
+				<xforms:group ref="plateBatches">
+				<xforms:group ref="batch">
 
+				<br/>			
+					<xforms:select1 appearance="minimal" ref="clone3D7ProvidedByWwarn">
+						<xforms:label>Were clones provided by WWARN?</xforms:label>
+					</xforms:select1>
+				<br/>			
 
 					<xforms:input ref="cloneProvider">
-						<xforms:label>who provided the clone?</xforms:label>
+						<xforms:label>Who provided the clone?</xforms:label>
 					</xforms:input>
+
 					<br/>			
 							
 					<xforms:select1 appearance="minimal" ref="includedInRawData">
@@ -628,11 +635,13 @@
 					<xforms:input ref="parasitaemia3D7">
 						<xforms:label>3D7 parasitaemia (%)?</xforms:label>
 					</xforms:input>
+					<br/>			
 									
-					<xforms:input ref="invitro-batches-batch-ringForms">
+					<xforms:input ref="ringForms">
 						<xforms:label>Ring forms after synchronisation (%)?</xforms:label>
 					</xforms:input>
 
+			</xforms:group>
 			</xforms:group>
 
 			<!--+
