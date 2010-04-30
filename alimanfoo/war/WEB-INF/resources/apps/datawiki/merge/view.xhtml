@@ -17,11 +17,10 @@
       xmlns:ev="http://www.w3.org/2001/xml-events"
       xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
       xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
-      xmlns:atom="http://www.w3.org/2005/Atom"
-      xmlns:ar="http://purl.org/atompub/revision/1.0">
+      xmlns:atom="http://www.w3.org/2005/Atom">
       
     <head>
-        <title>DataWiki - <xforms:output ref="instance('ins-entry')/atom:title"/></title>
+        <title>DataWiki > Merge > <xforms:output ref="instance('ins-entry')/atom:title"/> > View</title>
         
         <xforms:model id="mod-main">
 
@@ -47,39 +46,16 @@
 				method="get"
 				replace="instance"
 				instance="ins-entry">
-				<xforms:send ev:event="xforms-submit-done" submission="sub-get-history-feed"/>
 			</xforms:submission>        
 
-			<xforms:send ev:event="xforms-model-construct-done" submission="sub-get-entry"/>
+<!--			<xforms:send ev:event="xforms-model-construct-done" submission="sub-get-entry"/>-->
 			
-            <xforms:instance id="ins-entry">
-            	<atom:entry/>
-            </xforms:instance>
-            
-            <xforms:submission
-            	id="sub-get-history-feed"
-            	resource="{instance('ins-entry')/atom:link[@rel='history']/@href}"
-            	method="get"
-            	replace="instance"
-            	instance="ins-history-feed">
-           	</xforms:submission>
-           	
-           	<xforms:instance id="ins-history-feed">
-           		<atom:feed/>
-           	</xforms:instance>
-           	
-           	<xforms:bind nodeset="instance('ins-history-feed')">
-  				<xforms:bind nodeset="atom:entry">
-  					<xforms:bind nodeset="ar:revision">
-  						<xforms:bind nodeset="@number" type="xs:integer"/>
-  						<xforms:bind nodeset="@when" type="xs:date"/>
-  					</xforms:bind>
-  				</xforms:bind>         	
-           	</xforms:bind>
+            <xforms:instance id="ins-entry" src="/apps/datawiki/merge/spike/example-merge-entry.xml"/>
             
         </xforms:model>
         
         <link rel="stylesheet" type="text/css" href="/ops/yui/tabview/assets/skins/sam/tabview.css"></link>
+        <link rel="stylesheet" type="text/css" href="/ops/yui/datatable/assets/skins/sam/datatable.css"></link>
         <style type="text/css">
 .yui-skin-sam tr.yui-dt-selected td, .yui-skin-sam tr.yui-dt-selected td.yui-dt-asc, .yui-skin-sam tr.yui-dt-selected td.yui-dt-desc {
 	background-color:inherit;
@@ -96,6 +72,13 @@
 .yui-skin-sam .yui-dt-scrollable table {
 	border: 1px solid #7F7F7F;
 }
+.unresolved-conflict {
+	background-color: #faa;
+	padding: .1em .2em .1em .2em;
+	margin-top: .2em;
+} 
+.xforms-repeat-selected-item-1 { background: transparent }
+.xforms-repeat-selected-item-2 { background: transparent }
         </style>
 
     </head>
@@ -104,16 +87,16 @@
     
     	<xforms:group ref="instance('ins-entry')">
 	
-			<p><a href="./">DataWiki</a> - <strong><xforms:output ref="instance('ins-login')/user"/></strong></p>
+			<p><a href="../">DataWiki</a> - <strong><xforms:output ref="instance('ins-login')/user"/></strong></p>
 			<hr/>
 			
-			<h1><xforms:output ref="atom:title"/></h1>  
+			<h1>Merge - <xforms:output ref="atom:title"/></h1>  
 			
 			<p></p>  	
     	
     		<div class="yui-navset yui-navset-top">
     			<ul class="yui-nav">
-    				<li>
+    				<li class="selected">
     					<a href="view?entry={atom:link[@rel='edit']/@href}">
 	    					<em>View</em>
     					</a>
@@ -124,11 +107,11 @@
     					</a>
    					</li>
     				<li>
-    					<a href="schema?entry={atom:link[@rel='edit']/@href}">
-	    					<em>Schema</em>
+    					<a href="design?entry={atom:link[@rel='edit']/@href}">
+	    					<em>Design</em>
     					</a>
    					</li>
-    				<li class="selected">
+    				<li>
     					<a href="history?entry={atom:link[@rel='edit']/@href}">
 	    					<em>History</em>
     					</a>
@@ -149,50 +132,67 @@
     			
     			<div class="yui-content">
     			
-  					
-  					<xforms:group ref="instance('ins-history-feed')">
-  					
-			   			<fr:datatable 
-			   				paginated="true" 
-			   				sortAndPaginationMode="internal" 
-			   				rowsPerPage="10"
-			   				maxNbPagesToDisplay="9"
-			   				scrollable="both">
-			   			
-			   				<thead>
-			   					<tr>
-									<th fr:sortable="true" fr:resizeable="true">
-										Rev
-									</th>	    						
-									<th fr:sortable="true" fr:resizeable="true">
-										By
-									</th>	    						
-									<th fr:sortable="true" fr:resizeable="true">
-										Date
-									</th>	    						
-			   					</tr>
-			   				</thead>
-			   				
-			   				<tbody>
-			   					<xforms:repeat nodeset="atom:entry">
-			   						<tr>
-										<td>
-											<a href="revisions?entry={atom:link[@rel='edit']/@href}&amp;rev={ar:revision/@number}"><xforms:output value="ar:revision/@number"/></a>
-										</td>	    						
-										<td>
-											<xforms:output value="concat( ar:comment/atom:author/atom:name , ' ' , ar:comment/atom:author/atom:email )"/>
-										</td>	    						
-										<td>
-											<xforms:output ref="ar:revision/@when" xxforms:format="format-dateTime(., '[D01]/[M01]/[Y] - [h01]:[m01]:[s01]')"/>
-										</td>	    						
-			   						</tr>
-			   					</xforms:repeat>
-			   				</tbody>
-			   				
-			   			</fr:datatable>
+    				<p>
+    					<xforms:output value="count(.//table/tbody//td[empty(decision/text()) and source[1]/text() != source[2]/text()])">
+    						<xforms:label>Unresolved conflicts: </xforms:label>
+    					</xforms:output>
+    				</p>
+    				<h3>Sources</h3>
+    				<p>
+    					<xforms:output ref=".//design/sources/source[1]"><xforms:label>[1] </xforms:label></xforms:output><br/>
+    					<xforms:output ref=".//design/sources/source[2]"><xforms:label>[2] </xforms:label></xforms:output>
+    				</p>
+    				
+    				<hr/>
+    				
+					<xforms:group ref=".//table">
+					
+						<div class="yui-dt">
+							<div class="yui-dt-hd">
+								<table class="yui-dt-table">
+									<thead>
+					   					<tr>
+					   						<xforms:repeat nodeset="thead/tr/th">
+												<th fr:sortable="true" fr:resizeable="true">
+													<div class="yui-dt-liner">
+														<xforms:output value="label"/>
+													</div>
+												</th>	    						
+					   						</xforms:repeat>
+					   					</tr>
+									</thead>
+									<tbody class="yui-dt-data">
+				   					<xforms:repeat nodeset="tbody/tr">
+				   						<tr class="
+												{if ( position() = 1 ) then 'yui-dt-first' else '' }
+												{if ( position() mod 2 = 0 ) then 'yui-dt-even' else 'yui-dt-odd' }">
+				    						<xforms:repeat nodeset="td">
+												<td>
+													<div class="yui-dt-liner">
+														<xforms:output ref="decision"/>
+														<xforms:group ref=".[empty(decision/text()) and source[1] != source[2]]">
+															<div class="unresolved-conflict">
+																<xforms:output ref="source[1]">
+																	<xforms:label>[1] </xforms:label>
+																</xforms:output>
+																<br/>
+																<xforms:output ref="source[2]">
+																	<xforms:label>[2] </xforms:label>
+																</xforms:output>
+															</div>
+														</xforms:group>
+													</div>
+												</td>	    						
+				    						</xforms:repeat>
+				   						</tr>
+				   					</xforms:repeat>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					
+    				</xforms:group>
 
-  					</xforms:group>
-				
     			</div>
     			
    			</div>
