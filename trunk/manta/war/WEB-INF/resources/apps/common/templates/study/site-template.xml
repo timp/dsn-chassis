@@ -4,4 +4,7 @@
     <district/>
     <locality/>
     <user-code/>
+    <testingDelay/>
+    <anticoagulant/>
+    <transportAndStorageTemperature/>
 </site>
