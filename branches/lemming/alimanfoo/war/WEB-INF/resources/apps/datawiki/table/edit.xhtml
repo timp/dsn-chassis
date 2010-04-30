@@ -20,7 +20,7 @@
       xmlns:atom="http://www.w3.org/2005/Atom">
       
     <head>
-        <title>DataWiki - <xforms:output ref="instance('ins-entry')/atom:title"/></title>
+        <title>DataWiki > Table > <xforms:output ref="instance('ins-entry')/atom:title"/> > Edit</title>
         
         <xforms:model id="mod-main">
         
@@ -77,8 +77,8 @@
             	<xforms:bind nodeset="td">
 					
 					<!--+
-						| N.B. These bindings assume that any changes to the schema will not happen dynamically. 
-						| If changes to the schema were made dynamically, the bindings would required a model 
+						| N.B. These bindings assume that any changes to the design will not happen dynamically. 
+						| If changes to the design were made dynamically, the bindings would required a model 
 						| rebuild before being correct. 
 						+-->
 
@@ -329,10 +329,10 @@
 
     	<xforms:group ref="instance('ins-entry')">
 	
-			<p><a href="./">DataWiki</a> - <strong><xforms:output ref="instance('ins-login')/user"/></strong></p>
+			<p><a href="../">DataWiki</a> - <strong><xforms:output ref="instance('ins-login')/user"/></strong></p>
 			<hr/>
 			
-			<h1><xforms:output ref="atom:title"/></h1>  
+			<h1>Table - <xforms:output ref="atom:title"/></h1>  
 			
 			<p></p>  	
     	
@@ -349,8 +349,8 @@
     					</a>
    					</li>
     				<li>
-    					<a href="schema?entry={atom:link[@rel='edit']/@href}">
-	    					<em>Schema</em>
+    					<a href="design?entry={atom:link[@rel='edit']/@href}">
+	    					<em>Design</em>
     					</a>
    					</li>
     				<li>

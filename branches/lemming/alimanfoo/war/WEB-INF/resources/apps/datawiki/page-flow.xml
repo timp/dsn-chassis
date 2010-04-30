@@ -14,14 +14,22 @@
 <config xmlns="http://www.orbeon.com/oxf/controller">
 
     <page path-info="/datawiki/" view="index.xhtml"/>
-    <page path-info="/datawiki/view" view="view.xhtml"/>
-    <page path-info="/datawiki/edit" view="edit.xhtml"/>
-    <page path-info="/datawiki/schema" view="schema.xhtml"/>
-    <page path-info="/datawiki/history" view="history.xhtml"/>
-    <page path-info="/datawiki/revisions" view="revisions.xhtml"/>
-    <page path-info="/datawiki/permissions" view="permissions.xhtml"/>
+    
+    <page path-info="/datawiki/table/view" view="table/view.xhtml"/>
+    <page path-info="/datawiki/table/edit" view="table/edit.xhtml"/>
+    <page path-info="/datawiki/table/design" view="table/design.xhtml"/>
+    <page path-info="/datawiki/table/history" view="table/history.xhtml"/>
+    <page path-info="/datawiki/table/revisions" view="table/revisions.xhtml"/>
+    <page path-info="/datawiki/table/permissions" view="table/permissions.xhtml"/>
 
-    <page path-info="/datawiki/merge/conflicts" view="merge/conflicts.xhtml"/>
+    <page path-info="/datawiki/merge/new" view="merge/new.xhtml"/>
+    <page path-info="/datawiki/merge/view" view="merge/view.xhtml"/>
+    <page path-info="/datawiki/merge/edit" view="merge/edit.xhtml"/>
+    <page path-info="/datawiki/merge/design" view="merge/design.xhtml"/>
+    <page path-info="/datawiki/merge/history" view="merge/history.xhtml"/>
+    <page path-info="/datawiki/merge/revisions" view="merge/revisions.xhtml"/>
+    <page path-info="/datawiki/merge/permissions" view="merge/permissions.xhtml"/>
+
 
     <epilogue url="oxf:/config/epilogue.xpl"/>
 

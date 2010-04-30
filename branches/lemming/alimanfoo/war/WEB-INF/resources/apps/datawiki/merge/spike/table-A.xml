@@ -22,6 +22,8 @@
 						<required>true</required>
 						<default />
 						<pattern />
+						<min bound="inclusive" />
+						<max bound="inclusive" />
 						<enumeration />
 					</th>
 					<th>
@@ -30,6 +32,8 @@
 						<required>false</required>
 						<default />
 						<pattern />
+						<min bound="inclusive" />
+						<max bound="inclusive" />
 						<enumeration />
 					</th>
 					<th>
@@ -37,6 +41,9 @@
 						<datatype>string</datatype>
 						<required>false</required>
 						<default />
+						<pattern />
+						<min bound="inclusive" />
+						<max bound="inclusive" />
 						<enumeration>
 							<item>F</item>
 							<item>M</item>
@@ -48,10 +55,12 @@
 						<datatype>string</datatype>
 						<required>false</required>
 						<default />
+						<pattern />
+						<min bound="inclusive" />
+						<max bound="inclusive" />
 						<enumeration>
-							<item>X</item>
-							<item>Y</item>
-							<item>Z</item>
+							<item>Yaruba</item>
+							<item>Fulani</item>
 						</enumeration>
 					</th>
 				</tr>
@@ -61,25 +70,25 @@
 					<td>1</td>
 					<td>2000</td>
 					<td>M</td>
-					<td>Y</td>
+					<td>Yaruba</td>
 				</tr>
 				<tr>
 					<td>2</td>
 					<td>2001</td>
 					<td>F</td>
-					<td>X</td>
+					<td>Fulani</td>
 				</tr>
 				<tr>
 					<td>3</td>
 					<td>2002</td>
 					<td>F</td>
-					<td>Z</td>
+					<td>Fulani</td>
 				</tr>
 				<tr>
 					<td>5</td>
 					<td>2009</td>
 					<td>M</td>
-					<td>Y</td>
+					<td>Yaruba</td>
 				</tr>
 			</tbody>
 		</table>

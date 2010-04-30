@@ -14,13 +14,13 @@ import module namespace ap = "http://atombeat.org/xquery/atom-protocol" at "../l
 declare variable $collection-spec :=
     <spec>
         <collection>
-            <title>Foo</title>
-            <path-info>/foo</path-info>
+            <title>DataWiki</title>
+            <path-info>/datawiki/tables</path-info>
             <enable-history>true</enable-history>
         </collection>   
         <collection>
             <title>DataWiki</title>
-            <path-info>/datawiki</path-info>
+            <path-info>/datawiki/merges</path-info>
             <enable-history>true</enable-history>
         </collection>   
     </spec>
