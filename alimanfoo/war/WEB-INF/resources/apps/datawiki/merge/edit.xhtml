@@ -338,7 +338,27 @@ td, th {
 													
 												</div>
 											</td>
-				    						<xforms:repeat nodeset="td">
+											<td>
+												<xforms:group ref="td[1]">
+													<div class="yui-dt-liner">
+														<xforms:output value="decision"/>
+														<div class="no-conflict">
+															<span class="{if ( source[1] = decision ) then 'chosen' else 'not-chosen'}">
+																<xforms:output ref="source[1]">
+																	<xforms:label>[1] </xforms:label>
+																</xforms:output>
+															</span>
+															<br/>
+															<span class="{if ( source[2] = decision ) then 'chosen' else 'not-chosen'}">
+																<xforms:output ref="source[2]">
+																	<xforms:label>[2] </xforms:label>
+																</xforms:output>
+															</span>
+														</div>
+													</div>
+												</xforms:group>
+											</td>
+				    						<xforms:repeat nodeset="td[position() gt 1]">
 												<td>
 													<div class="yui-dt-liner">
 														<xforms:output value="decision"/>
