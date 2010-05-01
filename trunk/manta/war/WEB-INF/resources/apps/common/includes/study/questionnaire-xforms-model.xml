@@ -1,157 +1,175 @@
-<xforms:model
-    xmlns:xforms="http://www.w3.org/2002/xforms"
-    xmlns:f="http://orbeon.org/oxf/xml/formatting" 
-    xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
-    xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    xmlns:ev="http://www.w3.org/2001/xml-events"
-    xmlns:atom="http://www.w3.org/2005/Atom"
-    xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
-    xmlns:xi="http://www.w3.org/2001/XInclude"
-	xxforms:readonly-appearance="static"
-    id="mod-study-questionnaire"
-    >
-    
-    <xforms:instance id="ins-sq-study-entry" src="/apps/common/templates/study/study-entry-template.xml">
-        <atom:entry/>
-    </xforms:instance>
-     
-    <!--  
-	<xforms:bind nodeset="instance('ins-sq-study-entry')" readonly="true()"/>
-     -->
-     
-     
-    <xforms:bind nodeset="instance('ins-sq-study-entry')">
-    	<xforms:bind nodeset="atom:content/study">
-    		<xforms:bind nodeset="start" type="xs:date" />
-    		<xforms:bind nodeset="end" type="xs:date" />
-    		<xforms:bind nodeset="sites">
-    			<xforms:bind nodeset="site">
-    				<xforms:bind nodeset="testingDelay"  relevant="contains(../../../modules, 'invitro')" />
-    				<xforms:bind nodeset="anticoagulant" relevant="contains(../../../modules, 'invitro')" />
-    				<xforms:bind nodeset="transportAndStorageTemperature" relevant="contains(../../../modules, 'invitro')" />
-    			</xforms:bind>
-    		</xforms:bind>
-			<xforms:bind nodeset="clinical" relevant="contains(../modules, 'clinical')" />
-			<xforms:bind nodeset="molecular" relevant="contains(../modules, 'molecular')" />
-			<xforms:bind nodeset="in-vitro" relevant="contains(../modules, 'invitro')">
-				<xforms:bind nodeset="invitro-analysisSite"/>
-				<xforms:bind nodeset="invitro-culture">
-					<xforms:bind nodeset="invitro-culture-incubatorSystem" />
-					<xforms:bind nodeset="invitro-culture-co2" relevant="contains(../invitro-culture-incubatorSystem, 'co2incubator')"  />
-					<xforms:bind nodeset="invitro-culture-healthyErythrocytesSource" />
-					<xforms:bind nodeset="hematocrit"/>
-					<xforms:bind nodeset="invitro-culture-bloodGroup"/>
+<xforms:model xmlns:xforms="http://www.w3.org/2002/xforms"
+	xmlns:f="http://orbeon.org/oxf/xml/formatting" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:xxforms="http://orbeon.org/oxf/xml/xforms" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:fr="http://orbeon.org/oxf/xml/form-runner" xmlns:xi="http://www.w3.org/2001/XInclude"
+	xxforms:readonly-appearance="static" id="mod-study-questionnaire">
+
+	<xforms:instance id="ins-sq-study-entry"
+		src="/apps/common/templates/study/study-entry-template.xml">
+		<atom:entry />
+	</xforms:instance>
+
+	<!--
+		<xforms:bind nodeset="instance('ins-sq-study-entry')"
+		readonly="true()"/>
+	-->
+
+
+	<xforms:bind nodeset="instance('ins-sq-study-entry')">
+		<xforms:bind nodeset="atom:content/study">
+			<xforms:bind nodeset="start" type="xs:date" />
+			<xforms:bind nodeset="end" type="xs:date" />
+			<xforms:bind nodeset="sites">
+				<xforms:bind nodeset="site">
+					<xforms:bind nodeset="testingDelay"
+						relevant="contains(../../../modules, 'invitro')" />
+					<xforms:bind nodeset="anticoagulant"
+						relevant="contains(../../../modules, 'invitro')" />
+					<xforms:bind nodeset="transportAndStorageTemperature"
+						relevant="contains(../../../modules, 'invitro')" />
 				</xforms:bind>
-				<xforms:bind nodeset="invitro-medium">
-					<xforms:bind nodeset="invitro-medium-medium" />
-					<xforms:bind nodeset="invitro-medium-preparation" />
-					<xforms:bind nodeset="invitro-medium-serum" />
-					<xforms:bind nodeset="invitro-medium-serum-finalConcentration" 
-									type="xs:integer"/>
-					<xforms:bind nodeset="invitro-medium-NaHCO3-finalConcentration" 
-								type="xs:integer"/>
-					<xforms:bind nodeset="invitro-medium-hypoxantine">
-						<xforms:bind nodeset="invitro-medium-hypoxantine-added"/>
-						<xforms:bind nodeset="invitro-medium-hypoxantine-finalConcentration" 
-									relevant="contains(../invitro-medium-hypoxantine-added,'yes')"
-									type="xs:integer"/>
+			</xforms:bind>
+			<xforms:bind nodeset="clinical" relevant="contains(../modules, 'clinical')">
+			</xforms:bind>
+			<xforms:bind nodeset="molecular" relevant="contains(../modules, 'molecular')">
+			</xforms:bind>
+			<xforms:bind nodeset="invitro" relevant="contains(../modules, 'invitro')">
+				<xforms:bind nodeset="analysisSite" />
+				<xforms:bind nodeset="culture">
+					<xforms:bind nodeset="incubatorSystem" />
+					<xforms:bind nodeset="co2"
+						relevant="contains(../incubatorSystem, 'co2incubator')" />
+					<xforms:bind nodeset="healthyErythrocytesSource" />
+					<xforms:bind nodeset="hematocrit" />
+					<xforms:bind nodeset="bloodGroup" />
+				</xforms:bind>
+				<xforms:bind nodeset="medium">
+					<xforms:bind nodeset="medium" />
+					<xforms:bind nodeset="preparation" />
+					<xforms:bind nodeset="serum" />
+					<xforms:bind nodeset="serum-finalConcentration" type="xs:integer" />
+					<xforms:bind nodeset="NaHCO3-finalConcentration" type="xs:integer" />
+					<xforms:bind nodeset="hypoxantine">
+						<xforms:bind nodeset="hypoxantine-added" />
+						<xforms:bind nodeset="hypoxantine-finalConcentration"
+							relevant="contains(../hypoxantine-added,'yes')" type="xs:integer" />
 					</xforms:bind>
-					<xforms:bind nodeset="invitro-medium-oroticAcid">
-						<xforms:bind nodeset="invitro-medium-oroticAcid-added"/>
-						<xforms:bind nodeset="invitro-medium-oroticAcid-finalConcentration" 
-									relevant="contains(../invitro-medium-oroticAcid-added,'yes')"
-									type="xs:integer"/>
+					<xforms:bind nodeset="oroticAcid">
+						<xforms:bind nodeset="oroticAcid-added" />
+						<xforms:bind nodeset="oroticAcid-finalConcentration"
+							relevant="contains(../oroticAcid-added,'yes')" type="xs:integer" />
 					</xforms:bind>
-					<xforms:bind nodeset="invitro-medium-glucose">
-						<xforms:bind nodeset="invitro-medium-glucose-added"/>
-						<xforms:bind nodeset="invitro-medium-glucose-finalConcentration" 
-									relevant="contains(../invitro-medium-glucose-added,'yes')"/>
+					<xforms:bind nodeset="glucose">
+						<xforms:bind nodeset="glucose-added" />
+						<xforms:bind nodeset="glucose-finalConcentration"
+							relevant="contains(../glucose-added,'yes')" />
 					</xforms:bind>
 					<xforms:bind nodeset="antiBiotics">
 						<xforms:bind nodeset="antiBiotic">
-							<xforms:bind ref="antiBioticName" 
-								required="true()"/>
-							<xforms:bind ref="antiBioticFinalConcentration" 
-								type="xs:integer"/>
-							<xforms:bind ref="antiBioticFinalConcentration" 
-								required="true()"/>
+							<xforms:bind ref="antiBioticName" required="true()" />
+							<xforms:bind ref="antiBioticFinalConcentration" type="xs:integer" />
+							<xforms:bind ref="antiBioticFinalConcentration"
+								required="true()" />
 						</xforms:bind>
 					</xforms:bind>
 					<xforms:bind nodeset="susceptibility">
-						<xforms:bind nodeset="timeOfIncubation"/>
-						<xforms:bind nodeset="susceptibilityMethod"/>
+						<xforms:bind nodeset="timeOfIncubation" />
+						<xforms:bind nodeset="susceptibilityMethod" />
 					</xforms:bind>
-					<xforms:bind nodeset="drugs">
-						<xforms:bind nodeset="drug"/>
-						<xforms:bind nodeset="molecule"/>
-						<xforms:bind nodeset="solvent"/>
-						<xforms:bind nodeset="solventFinalConcentration"/>
-						<xforms:bind nodeset="providedByWwarn" type="xs:boolean"/>
-						<xforms:bind nodeset="provider" relevant="contains(../providedByWarn, 'no')"/>
-					</xforms:bind>
-					<xforms:bind nodeset="preparationDate"  relevant="contains(../plates-batches,'extemporaneous)"/>
-							
-					<xforms:bind nodeset="plateBatches">
-						<xforms:bind nodeset="batch">
-							<xforms:bind nodeset="clone3D7ProvidedByWwarn"/>
-							<xforms:bind nodeset="cloneProvider"  relevant="contains(../clone3D7ProvidedByWwarn, 'no')"/>
-							<xforms:bind nodeset="batchesIncludedInRawData" type="xs:boolean"/>
-							<xforms:bind nodeset="notIncludedBatchDataHint" relevant="contains(../batchesIncludedInRawData, 'no')" />
-							<xforms:bind nodeset="preparationDate" type="xs:date" relevant="contains(../batchesIncludedInRawData, 'no')" />
-							
-							<xforms:bind nodeset="parasitaemia3D7" relevant="contains(../batchesIncludedInRawData, 'no')"/>
-							<xforms:bind nodeset="ringForms"/>
-						</xforms:bind>
-					</xforms:bind>
-					
 				</xforms:bind>
+				<xforms:bind nodeset="drugs">
+					<xforms:bind nodeset="drug">
+						<xforms:bind nodeset="molecule" />
+						<xforms:bind nodeset="solvent" />
+						<xforms:bind nodeset="solventFinalConcentration" />
+						<xforms:bind nodeset="providedByWwarn" />
+						<xforms:bind nodeset="provider"
+							relevant="contains(../providedByWwarn, 'no')" />
+					</xforms:bind>
+				</xforms:bind>
+				<xforms:bind nodeset="plateBatches">
+					<xforms:bind nodeset="batch">
+						<xforms:bind nodeset="clone3D7ProvidedByWwarn" type="xs:boolean" />
+						<xforms:bind nodeset="clone3D7Provider"
+							relevant="contains(../clone3D7ProvidedByWwarn, 'no')" />
+						<xforms:bind nodeset="batchesIncludedInRawData" type="xs:boolean" />
+						<xforms:bind nodeset="notIncludedBatchDataHint"
+							relevant="contains(../batchesIncludedInRawData, 'no')" />
+						<xforms:bind nodeset="preparationDate" type="xs:date"
+							relevant="contains(../batchesIncludedInRawData, 'no')" />
+						<xforms:bind nodeset="parasitaemia3D7"
+							relevant="contains(../batchesIncludedInRawData, 'no')" />
+						<xforms:bind nodeset="ringForms" />
+					</xforms:bind>
+				</xforms:bind>
+
 			</xforms:bind>
-			<xforms:bind nodeset="pharmacology" relevant="contains(../modules, 'pharmacology')" />
-    	</xforms:bind>
-    </xforms:bind>
-    
-    <xforms:instance id="ins-site-template"        src="/apps/common/templates/study/site-template.xml"/>
+			<xforms:bind nodeset="pharmacology"
+				relevant="contains(../modules, 'pharmacology')" />
+		</xforms:bind>
+	</xforms:bind>
 
-    <xforms:instance id="ins-boolean-nullable"     src="/apps/common/constants/nullable-booleans.xml"/>
-    <xforms:instance id="ins-boolean-not-nullable" src="/apps/common/constants/booleans.xml"/>
+	<xforms:instance id="ins-site-template"
+		src="/apps/common/templates/study/site-template.xml" />
 
-    <xforms:instance id="ins-pathogen-items"       src="/apps/common/constants/pathogens.xml"/>
-    <xforms:instance id="ins-country-items"        src="/apps/common/constants/countries.xml"/>
-    <xforms:instance id="ins-module-items"         src="/apps/common/constants/modules.xml"/>
-    <xforms:instance id="ins-incubatorSystem-items" src="/apps/common/constants/incubatorSystems.xml"/>
-    <xforms:instance id="ins-healthyErythrocytesSource-items" src="/apps/common/constants/healthyErythrocytesSources.xml"/>
-    <xforms:instance id="ins-bloodGroup-items"     src="/apps/common/constants/bloodGroups.xml"/>
-    <xforms:instance id="ins-medium-items"         src="/apps/common/constants/medium-terms.xml"/>
-    <xforms:instance id="ins-mediumPreparation-items" src="/apps/common/constants/mediumPreparations.xml"/>
-    <xforms:instance id="ins-serum-items"          src="/apps/common/constants/serums.xml"/>
-    <xforms:instance id="ins-testingDelay-items"   src="/apps/common/constants/testingDelays.xml"/>
-    <xforms:instance id="ins-anticoagulant-items"  src="/apps/common/constants/anticoagulants.xml"/>
-    <xforms:instance id="ins-transportAndStorageTemperature-items"  src="/apps/common/constants/transportAndStorageTemperatures.xml"/>
-    <xforms:instance id="ins-incubationTime-items"  src="/apps/common/constants/incubationTimes.xml"/>
-    <xforms:instance id="ins-susceptibilityMethod-items"  src="/apps/common/constants/susceptibilityMethods.xml"/>
-    
+	<xforms:instance id="ins-boolean-nullable"
+		src="/apps/common/constants/nullable-booleans.xml" />
+	<xforms:instance id="ins-boolean-not-nullable"
+		src="/apps/common/constants/booleans.xml" />
+
+	<xforms:instance id="ins-pathogen-items"
+		src="/apps/common/constants/pathogens.xml" />
+	<xforms:instance id="ins-country-items"
+		src="/apps/common/constants/countries.xml" />
+	<xforms:instance id="ins-module-items"
+		src="/apps/common/constants/modules.xml" />
+	<xforms:instance id="ins-incubatorSystem-items"
+		src="/apps/common/constants/incubatorSystems.xml" />
+	<xforms:instance id="ins-healthyErythrocytesSource-items"
+		src="/apps/common/constants/healthyErythrocytesSources.xml" />
+	<xforms:instance id="ins-bloodGroup-items"
+		src="/apps/common/constants/bloodGroups.xml" />
+	<xforms:instance id="ins-medium-items"
+		src="/apps/common/constants/medium-terms.xml" />
+	<xforms:instance id="ins-mediumPreparation-items"
+		src="/apps/common/constants/mediumPreparations.xml" />
+	<xforms:instance id="ins-serum-items" src="/apps/common/constants/serums.xml" />
+	<xforms:instance id="ins-testingDelay-items"
+		src="/apps/common/constants/testingDelays.xml" />
+	<xforms:instance id="ins-anticoagulant-items"
+		src="/apps/common/constants/anticoagulants.xml" />
+	<xforms:instance id="ins-transportAndStorageTemperature-items"
+		src="/apps/common/constants/transportAndStorageTemperatures.xml" />
+	<xforms:instance id="ins-incubationTime-items"
+		src="/apps/common/constants/incubationTimes.xml" />
+	<xforms:instance id="ins-susceptibilityMethod-items"
+		src="/apps/common/constants/susceptibilityMethods.xml" />
+	<xforms:instance id="ins-drugMolecule-items"
+		src="/apps/common/constants/drugMolecules.xml" />
+	<xforms:instance id="ins-drugSolvent-items"
+		src="/apps/common/constants/drugSolvents.xml" />
+
 	<xforms:instance id="ins-antiBiotic">
 		<antiBiotic xmlns="">
-			<antiBioticName/>
-			<antiBioticFinalConcentration/>
+			<antiBioticName />
+			<antiBioticFinalConcentration />
 		</antiBiotic>
 	</xforms:instance>
 
-    
-    <xforms:submission
-        id="sub-put-study-entry"
-        resource="{instance('ins-sq-study-entry')/atom:link[@rel='edit']/@href}"
-        method="put"
-        replace="instance"
-        instance="ins-sq-study-entry"
-        ref="instance('ins-sq-study-entry')"
-        mediatype="application/atom+xml"
-        relevant="false"
-        validate="false">
-        <xforms:message ev:event="xforms-submit-error" 
-        	level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while saving the study.</xforms:message>
-        <xforms:message ev:event="xforms-submit-done" level="modal">Your changes have been saved, thank you.</xforms:message>
-    </xforms:submission>
-    
+
+	<xforms:submission id="sub-put-study-entry"
+		resource="{instance('ins-sq-study-entry')/atom:link[@rel='edit']/@href}"
+		method="put" replace="instance" instance="ins-sq-study-entry"
+		ref="instance('ins-sq-study-entry')" mediatype="application/atom+xml"
+		relevant="false" validate="false">
+		<xforms:message ev:event="xforms-submit-error" level="modal">
+			An error occurred (
+			<xforms:output value="event('error-type')" />
+			) while saving the study.
+		</xforms:message>
+		<xforms:message ev:event="xforms-submit-done" level="modal">Your
+			changes have been saved, thank you.</xforms:message>
+	</xforms:submission>
+
 </xforms:model>
