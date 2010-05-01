@@ -1,5 +1,5 @@
 <!--  Closed list of drug solvents  -->
-<drugSolvents>
+<drugSolvents xmlns="">
 	<drugSolvent>
 		<label>methanol</label>
 		<value>methanol</value>
