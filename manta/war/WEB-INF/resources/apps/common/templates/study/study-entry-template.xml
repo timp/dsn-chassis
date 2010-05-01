@@ -112,12 +112,7 @@
 						<glucose-finalConcentration/>
 					</glucose>
 
-					<antiBiotics>
-						<antiBiotic>
-							<antiBioticName/>
-							<antiBioticFinalConcentration/>
-						</antiBiotic>
-					</antiBiotics>
+					<antiBiotics/>
             	</medium>
 				<susceptibility>
 						<timeOfIncubation/>
