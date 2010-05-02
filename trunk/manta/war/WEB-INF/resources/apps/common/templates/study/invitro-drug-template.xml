@@ -1,0 +1,7 @@
+<drug xmlns="">
+	<molecule/>
+	<solvent/>
+	<solventFinalConcentration/>
+	<providedByWwarn/>
+	<provider/>
+</drug>

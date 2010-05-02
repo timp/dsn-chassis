@@ -157,6 +157,11 @@
 		</antiBiotic>
 	</xforms:instance>
 
+	<xforms:instance id="ins-invitro-drug-template"
+		src="/apps/common/templates/study/invitro-drug-template.xml" />
+
+	<xforms:instance id="ins-invitro-batch-template"
+		src="/apps/common/templates/study/invitro-batch-template.xml" />
 
 	<xforms:submission id="sub-put-study-entry"
 		resource="{instance('ins-sq-study-entry')/atom:link[@rel='edit']/@href}"
