@@ -620,7 +620,7 @@
 				+ | | BEGIN IN VITRO PLATES NESTED QUESTIONNAIRE | +
 			-->
 
-			<h4 id="plates">Batch of Plates</h4>
+			<h4 id="plates">Batches of Plates</h4>
 
 			<xforms:group ref="plateBatches">
 				<table class="repeat-table">
