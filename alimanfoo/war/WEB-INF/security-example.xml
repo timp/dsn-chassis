@@ -8,7 +8,7 @@
 
   <http 
     auto-config="false" 
-    realm="atombeat" 
+    realm="chassis-lemming" 
     create-session="never">
   
     <http-basic/>
