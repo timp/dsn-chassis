@@ -10,7 +10,7 @@
 
   <http 
     auto-config="false" 
-    realm="atombeat" 
+    realm="chassis-manta" 
     create-session="never">
   
     <http-basic/>
