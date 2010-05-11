@@ -1,0 +1,13 @@
+<config xmlns="http://www.orbeon.com/oxf/controller">
+
+	<page path-info="/contributor/" view="home.xhtml"/>
+	
+	<page path-info="/contributor/register-study" view="register-study.xhtml"/>
+
+	<page id="not-found" path-info="/contributor/page-not-found" view="page-not-found.xhtml"/>
+	
+	<epilogue url="oxf:/config/epilogue.xpl"/>
+	
+	<not-found-handler page="not-found"/>
+	
+</config>
