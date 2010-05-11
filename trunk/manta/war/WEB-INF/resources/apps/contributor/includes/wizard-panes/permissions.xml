@@ -1,0 +1,21 @@
+<div 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:xforms="http://www.w3.org/2002/xforms" 
+xmlns:ev="http://www.w3.org/2001/xml-events" 
+>
+
+	<h2>Permissions</h2>
+	
+	<xforms:trigger>
+		<xforms:label>&lt; Back</xforms:label>
+		<xforms:toggle ev:event="DOMActivate" case="study-terms"/>
+	</xforms:trigger>	
+	<xforms:trigger>
+		<xforms:label>Save As Draft</xforms:label>
+	</xforms:trigger>
+	<xforms:trigger>
+		<xforms:label>Next &gt;</xforms:label>
+		<xforms:toggle ev:event="DOMActivate" case="acknowledgements"/>
+	</xforms:trigger>
+	
+</div>

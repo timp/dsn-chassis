@@ -1,0 +1,14 @@
+<div 
+xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:xforms="http://www.w3.org/2002/xforms" 
+xmlns:ev="http://www.w3.org/2001/xml-events" 
+>
+
+	<h2>Study Terms</h2>
+	
+	<xforms:trigger>
+		<xforms:label>Next &gt;</xforms:label>
+		<xforms:toggle ev:event="DOMActivate" case="permissions"/>
+	</xforms:trigger>
+	
+</div>

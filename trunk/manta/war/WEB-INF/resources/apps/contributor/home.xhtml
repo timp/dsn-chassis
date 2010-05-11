@@ -1,0 +1,91 @@
+<html 
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:xforms="http://www.w3.org/2002/xforms" 
+	xmlns:atom="http://www.w3.org/2005/Atom" 
+	xmlns:ev="http://www.w3.org/2001/xml-events">
+    
+    <head>
+    
+        <title>Contributor Home</title>
+        
+		<xforms:model>
+		
+			<!-- Get drafts -->
+			
+			<xforms:instance id="drafts">
+				<atom:feed/>
+			</xforms:instance>
+			
+			<xforms:submission 
+				id="get-drafts"
+				resource="/atombeat/content/drafts"
+				method="get"
+				replace="instance"
+				instance="drafts">
+				
+				<!-- TODO error handling -->
+				
+				<xforms:message ev:event="xforms-submit-error" level="modal">
+					<p>An error occurred (<xforms:output value="event('error-type')"/>) while retrieving drafts.</p>
+				</xforms:message>
+				
+			</xforms:submission>
+			
+			<xforms:send 
+				ev:event="xforms-model-construct-done" 
+				submission="get-drafts"/>
+			
+			<!-- Get studies -->
+			
+			<xforms:instance id="studies">
+				<atom:feed/>
+			</xforms:instance>
+			
+			<xforms:submission 
+				id="get-studies"
+				resource="/atombeat/content/studies"
+				method="get"
+				replace="instance"
+				instance="studies">
+				
+				<!-- TODO error handling -->
+				
+				<xforms:message ev:event="xforms-submit-error" level="modal">
+					<p>An error occurred (<xforms:output value="event('error-type')"/>) while retrieving studies.</p>
+				</xforms:message>
+				
+			</xforms:submission>
+			
+			<xforms:send 
+				ev:event="xforms-model-construct-done" 
+				submission="get-studies"/>					
+		
+		</xforms:model>
+
+    </head>
+    
+    <body>
+
+		<h1>Contributor Home</h1>
+
+    	<p><a href="register-study">Register Study</a></p>
+    	
+    	<xforms:group ref="instance('drafts')[count(atom:entry)>0]">
+	    	<h2>Unfinished Drafts</h2>
+	    	<table>
+	    		<tr><th>Draft</th></tr>
+	    		<tr><td></td><td><a href="">continue</a></td></tr>
+	    	</table>
+    	</xforms:group>
+    	
+    	<xforms:group ref="instance('studies')[count(atom:entry)>0]">
+	    	<h2>My Studies</h2>
+	    	<table>
+	    		<tr><th>Study</th></tr>
+	    		<tr><td></td><td><a href="">view</a></td></tr>
+	    	</table>
+    	</xforms:group>
+    	
+    </body>
+</html>
+
