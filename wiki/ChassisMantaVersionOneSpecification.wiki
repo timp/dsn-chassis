@@ -19,11 +19,36 @@ Note that this version is supposed to be a minimal first version for development
 
 == First-Time Contributor ==
 
-_A contributor comes to the WWARN website and contributes some data for the first time._
+*_A contributor comes to the WWARN website and contributes some data for the first time._*
 
-http://farm4.static.flickr.com/3416/4597898637_3dd8b0b899_d.jpg
+== Contributor Returns to Submit More Files ==
 
+*_A contributor comes back to the WWARN website to contribute some more data for a study they previously registered._*
 
+== Contributor Returns to Modify Study Info, Permissions, Acknowledgments, or Publications ==
 
+*_A contributor comes back to the WWARN website to modify the study questionnaire, permissions, acknowledgments or publications for a study they previously registered._*
+
+== Contributor Loses Internet Connection ==
+
+*_A contributor loses internet connection part-way through registering a new study._*
+
+== Contributor Breaks During Study Registration ==
+
+*_A contributor decides to break off part-way through registering a new study and resume later._*
+
+== One Study, Multiple Contributors ==
+
+*_A contributor registers a study, then asks a colleague to submit the files for that study._*
+
+== Submit Multiple Studies with Similar Study Info ==
+
+*_A contributor registers multiple studies, each of which has very similar answers for the study questionnaire._*
+
+== Proxy Contribution ==
+
+*_A contributor gives a member of WWARN a USB stick containing data files and asks them to submit them on their behalf._*
+
+ 
 ----
 = Postponed Functionality (Can Live Without in This Version) =
