@@ -1,5 +1,5 @@
 <!--  A closed list of anti-coagulants -->
-<anticoagulants>
+<anticoagulants  xmlns="">
 	<anticoagulant>
 		<label>ACD</label>
 		<value>ACD</value>
