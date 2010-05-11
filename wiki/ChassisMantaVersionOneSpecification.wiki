@@ -19,7 +19,9 @@ Note that this version is supposed to be a minimal first version for development
 
 == First-Time Contributor ==
 
-''A contributor comes to the WWARN website and contributes some data for the first time.''
+_A contributor comes to the WWARN website and contributes some data for the first time._
+
+http://farm4.static.flickr.com/3416/4597898637_3dd8b0b899_d.jpg
 
 
 
