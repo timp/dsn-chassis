@@ -1,0 +1,27 @@
+#summary this page is a specification of the Chassis Manta system version 1.0
+
+= Introduction =
+
+This document is a specification of the first production version of the web-based system for contribution (submission) of data to WWARN, codename Chassis Manta Version 1.0.
+
+Note that this version is supposed to be a minimal first version for development and release as soon as possible. 
+
+----
+= Roles =
+
+  * Contributor
+  * Personal Data Reviewer
+  * Personal Data Cleaner
+  * Curator 
+
+----
+= Required Functionality (*Must* Be Implemented) =
+
+== First-Time Contributor ==
+
+''A contributor comes to the WWARN website and contributes some data for the first time.''
+
+
+
+----
+= Postponed Functionality (Can Live Without in This Version) =
