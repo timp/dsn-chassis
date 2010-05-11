@@ -94,8 +94,13 @@
 							</xforms:trigger>
 						</td>
 						<td class="form-td">
-							<xforms:select1 ref="country">
+							<xforms:select1 ref="country" required="true()" >
+								<xforms:alert>Please select a Country value</xforms:alert>
 								<xforms:label />
+		                        	<xforms:item>
+		                        		<xforms:label>(please select one)</xforms:label>
+		                        		<xforms:value/>
+		                        	</xforms:item>	
 								<xforms:itemset nodeset="instance('ins-country-items')/country">
 									<xforms:label ref="label" />
 									<xforms:value ref="value" />
