@@ -3,7 +3,7 @@
     <region/>
     <district/>
     <locality/>
-    <user-code/>
+    <siteCode/>
     <testingDelay/>
     <anticoagulant/>
     <transportAndStorageTemperature/>
