@@ -141,7 +141,7 @@
 							</xforms:input>
 							<br />
 
-							<xforms:input ref="user-code">
+							<xforms:input ref="siteCode">
 								<xforms:label class="fixed-width">Your site code:</xforms:label>
 							</xforms:input>
 							<br />
