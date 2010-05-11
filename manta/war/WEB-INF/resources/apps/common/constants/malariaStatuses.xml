@@ -1,6 +1,6 @@
 <!--  A closed list of malaria statuses -->
 <!--  used in inclusion/exclusion criteria -->
-<malariaStatuses>
+<malariaStatuses xmlns="">
 	<inclusionMalariaStatus>
 		<label>symptomatic only</label>
 		<value>symptomatic</value>

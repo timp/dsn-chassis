@@ -1,5 +1,5 @@
 <!-- TODO check  -->
-<mediumPreparations>
+<mediumPreparations xmlns="">
 	<mediumPreparation>
 		<label>extemporaneous</label>
 		<value>extemporaneous</value>

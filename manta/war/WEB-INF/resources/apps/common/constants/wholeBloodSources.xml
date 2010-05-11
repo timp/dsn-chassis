@@ -1,5 +1,5 @@
 <!-- A closed list of possible sources  -->
-<wholeBloodSources>
+<wholeBloodSources xmlns="">
 	<wholeBloodSource>
 		<label>peripheral</label>
 		<value>peripheral</value>

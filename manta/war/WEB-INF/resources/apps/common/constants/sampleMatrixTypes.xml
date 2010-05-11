@@ -1,5 +1,5 @@
 <!-- Closed list of sample matix types -->
-<sampleMatrixTypes>
+<sampleMatrixTypes xmlns="">
 	<matrix>
 		<label>whole blood capillary blood</label>
 		<value>wholebloodcapillaryblood</value>
