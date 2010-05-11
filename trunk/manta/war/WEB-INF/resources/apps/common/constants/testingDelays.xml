@@ -1,5 +1,5 @@
 <!--  Delays between sampling and testing -->
-<testingDelays>
+<testingDelays xmlns="">
 	<testingDelay>
 		<label>less than 12 hours</label>
 		<value>lt12h</value>

@@ -1,5 +1,5 @@
 <!-- Closed list of temperatures that samples have been transported and stored at -->
-<transportAndStorageTemperatures>
+<transportAndStorageTemperatures xmlns="">
 	<transportAndStorageTemperature>
 		<label>+4&#176;C</label>
 		<value>+4C</value>

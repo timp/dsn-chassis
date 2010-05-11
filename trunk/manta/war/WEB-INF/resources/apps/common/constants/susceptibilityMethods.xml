@@ -1,5 +1,5 @@
 <!--  Closed list of susceptability methods -->
-<susceptibilityMethods>
+<susceptibilityMethods xmlns="">
 	<susceptibilityMethod>
 		<label>isotopic</label>
 		<value>isotopic</value>

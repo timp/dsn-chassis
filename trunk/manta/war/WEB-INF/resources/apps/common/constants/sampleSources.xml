@@ -1,6 +1,6 @@
 <!--  A closed list of sample sources -->
 <!--  used in inclusion/exclusion criteria -->
-<sampleSources>
+<sampleSources xmlns="">
 	<sampleSource>
 		<label>outpatient visit</label>
 		<value>outpatient</value>

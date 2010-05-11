@@ -1,5 +1,5 @@
 <!--  A closed list of microscopy file types -->
-<microscopyFilmTypes>
+<microscopyFilmTypes xmlns="">
 	<filmType>
 		<label>thick</label>
 		<value>thick</value>

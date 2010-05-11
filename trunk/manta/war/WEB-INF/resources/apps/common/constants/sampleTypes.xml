@@ -1,5 +1,5 @@
 <!--  A closed list of blood sample types  -->
-<sampleTypes>
+<sampleTypes xmlns="">
 	<sampleType>
 		<label>finger prick on filter paper</label>
 		<value>filterPaper</value>

@@ -1,5 +1,5 @@
 <!--  A closed list of serum types (or should that be sera?) -->
-<serums>
+<serums xmlns="">
 	<serum>
 		<label>human serum</label>
 		<value>humanserum</value>

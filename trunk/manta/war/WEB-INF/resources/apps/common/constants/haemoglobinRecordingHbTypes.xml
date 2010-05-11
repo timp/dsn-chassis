@@ -1,5 +1,5 @@
 <!--  An open list of heamoglobin recording Hb types -->
-<haemoglobinRecordingHbTypes>
+<haemoglobinRecordingHbTypes xmlns="">
 	<haemoglobinRecordingHbType>
 		<label>qbc</label>
 		<value>qbc</value>
