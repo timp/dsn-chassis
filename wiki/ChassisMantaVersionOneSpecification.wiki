@@ -49,6 +49,51 @@ Note that this version is supposed to be a minimal first version for development
 
 *_A contributor gives a member of WWARN a USB stick containing data files and asks them to submit them on their behalf._*
 
+== Personal Data Review ==
+
+*_All submitted files must be reviewed to see if they contain personal data that should be removed prior to allowing WWARN curators to download the file._*
  
+== Personal Data Removal ==
+
+*_If a submitted file is found to contain personal data that should be removed prior to curation, an personal data cleaner can download the file, and upload another file with the personal data removed._*
+
+== Contributor Cannot Download Submitted Files Unless Reviewed for Personal Data
+
+*_A contributor should not be allowed to download any submitted files for a study unless the file has been reviewed and found not contain personal data that needs to be removed._*
+
+== Curator Find Registered Studies ==
+
+*_A curator looks up a list of all registered studies, to find a study to begin work on._*
+
+== Curator Downloads Submitted Files ==
+
+*_A curator chooses a study to work on, then looks up the the list of submitted files for that study, and downloads a file to begin working on._*
+
+== Curator Cannot Download Submitted Files Unless Reviewed for Personal Data
+
+*_A curator should not be allowed to download any submitted files for a study unless the file has been reviewed and found not contain personal data that needs to be removed._*
+
+== Curator Downloads Files With Personal Data Removed ==
+
+*_A curator downloads a file that was uploaded by the personal data cleaner for a given study._*
+
+== Curator Modifies Study Info ==
+
+*_A curator fills out some information in the study questionnaire for a given study._*
+
+== Curator Looks Up Contributor Contact Details ==
+
+*_A curator looks up contact details for a contributor to ask them something about a study._*
+
+== Curator Looks Up Study Permissions, Acknowledgments or Publications ==
+
+*_A curator looks up the permissions, acknowledgements or publications for a study they are working on._* 
+
+
+
 ----
 = Postponed Functionality (Can Live Without in This Version) =
+
+  * emails to acknowledgments
+  * how does curator know who is primary point of contact in multi-contributor study?
+  * curator uploads curated files
