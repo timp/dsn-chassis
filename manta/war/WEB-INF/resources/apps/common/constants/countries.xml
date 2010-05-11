@@ -1,10 +1,6 @@
 <!--  A closed list of countries -->
 <countries xmlns="">
   <country>
-    <label>select a country...</label>
-    <value></value>
-  </country>
-  <country>
     <label>AFGHANISTAN</label>
     <value>AF</value>
   </country>
