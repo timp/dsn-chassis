@@ -1,9 +1,14 @@
 <xforms:model xmlns:xforms="http://www.w3.org/2002/xforms"
-	xmlns:f="http://orbeon.org/oxf/xml/formatting" xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:xxforms="http://orbeon.org/oxf/xml/xforms" xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:atom="http://www.w3.org/2005/Atom"
-	xmlns:fr="http://orbeon.org/oxf/xml/form-runner" xmlns:xi="http://www.w3.org/2001/XInclude"
-	xxforms:readonly-appearance="static" id="mod-study-questionnaire">
+	xmlns:f="http://orbeon.org/oxf/xml/formatting" 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:xxforms="http://orbeon.org/oxf/xml/xforms" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:ev="http://www.w3.org/2001/xml-events" 
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:fr="http://orbeon.org/oxf/xml/form-runner" 
+	xmlns:xi="http://www.w3.org/2001/XInclude"
+	xxforms:readonly-appearance="static" 
+	id="mod-study-questionnaire">
 
 	<xforms:instance id="ins-sq-study-entry"
 		src="/apps/common/templates/study/study-entry-template.xml">
@@ -22,6 +27,7 @@
 			<xforms:bind nodeset="end" type="xs:date" />
 			<xforms:bind nodeset="sites">
 				<xforms:bind nodeset="site">
+					<xforms:bind nodeset="siteCode"/>
 					<xforms:bind nodeset="testingDelay"
 						relevant="contains(../../../modules, 'invitro')" />
 					<xforms:bind nodeset="anticoagulant"
