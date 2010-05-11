@@ -27,6 +27,7 @@
 			<xforms:bind nodeset="end" type="xs:date" />
 			<xforms:bind nodeset="sites">
 				<xforms:bind nodeset="site">
+					<xforms:bind nodeset="country" required="true()"/>
 					<xforms:bind nodeset="siteCode"/>
 					<xforms:bind nodeset="testingDelay"
 						relevant="contains(../../../modules, 'invitro')" />
