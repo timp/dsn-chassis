@@ -1,5 +1,5 @@
 <!--  Closed list of possible drug dosage determinants -->
-<drugDosingDeterminants>
+<drugDosingDeterminants xmlns="">
 	<drugDosingDeterminant>
 		<label>age</label>
 		<value>age</value>
