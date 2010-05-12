@@ -9,10 +9,10 @@ Note that this version is supposed to be a minimal first version for development
 ----
 = Roles =
 
-  * Contributor
-  * Personal Data Reviewer
-  * Personal Data Cleaner
-  * Curator 
+  * Contributor - can register studies and submit files
+  * Personal Data Reviewer - checks all submitted files for personal data that should be removed
+  * Personal Data Cleaner - as personal data reviewer, but can also upload files that are derived from submitted files but with personal data removed 
+  * Curator - works on submitted data
 
 ----
 = Required Functionality (*Must* Be Implemented) =
@@ -20,6 +20,34 @@ Note that this version is supposed to be a minimal first version for development
 == First-Time Contributor ==
 
 *_A contributor comes to the WWARN website and contributes some data for the first time._*
+
+The user first comes to the wwarn.org home page.
+
+http://farm2.static.flickr.com/1049/4598897630_48912ce01b_d.jpg
+
+On the home page is a link to the "contribute" section of the web site. The user navigates to the "contribute" page of the web site.
+
+http://farm2.static.flickr.com/1061/4598279859_f9403def64_d.jpg
+
+On this page, amongst other general information about contributing to WWARN, is a link to the user registration page. The user navigates to the user registration page of the web site.
+
+http://farm4.static.flickr.com/3334/4598280915_be20c64462_d.jpg
+
+Once they have filled in the user registration form and clicked "confirm", an email is sent to them containing a temporary password and a link to the login page. The user navigates to the login page and logs in.
+
+http://farm2.static.flickr.com/1184/4598898654_1dd9ba167d_d.jpg
+
+Note that all new users will automatically be given the _contributor_ role, i.e., once the user has registered, they can immediately begin contributing data.
+
+Once the user is logged in, they navigate to their contributor home page, which is part of Chassis. The page contains a link to register a new study, and list of the user's registered studies, which in this case will be empty.
+
+http://farm5.static.flickr.com/4051/4598899534_8891692438_d.jpg
+
+The user clicks the "register study" link to begin the study registration wizard.
+
+<a href="http://www.flickr.com/photos/londonbonsaipurple/4598281599/" title="IMAG0027 by londonbonsaipurple, on Flickr"><img src="http://farm5.static.flickr.com/4025/4598281599_68f5bfe5eb.jpg" width="500" height="299" alt="IMAG0027" /></a>
+
+TODO
 
 == Contributor Returns to Submit More Files ==
 
