@@ -15,7 +15,7 @@ You can click on any of the images below to navigate to a larger version of the 
 
   * Contributor - can register studies and submit files
   * Personal Data Reviewer - checks all submitted files for personal data that should be removed
-  * Personal Data Cleaner - as personal data reviewer, but can also upload files that are derived from submitted files but with personal data removed 
+  * Personal Data Remover - as personal data reviewer, but can also upload files that are derived from submitted files but with personal data removed 
   * Curator - works on submitted data
 
 ----
@@ -228,43 +228,110 @@ Patrice can then log in and act as a contributor with permissions on Bill's stud
 == Personal Data Review ==
 
 *_All submitted files must be reviewed to see if they contain personal data that should be removed prior to allowing WWARN curators to download the file._*
+
+A person or persons is nominated by WWARN to act as personal data reviewer for submitted files. WWARN notifies informatics of who this person is, and informatics will add that person to the list of people authorised to access the personal data pages in Chassis.
+
+The personal data reviewer can then log in...
+
+<a href="http://www.flickr.com/photos/londonbonsaipurple/4598898654/" title="IMAG0024 by londonbonsaipurple, on Flickr"><img src="http://farm2.static.flickr.com/1184/4598898654_1dd9ba167d.jpg" width="500" height="299" alt="IMAG0024" /></a>
+
+...and navigate to the personal data home page...
+
+<a href="http://www.flickr.com/photos/londonbonsaipurple/4598906816/" title="IMAG0042 by londonbonsaipurple, on Flickr"><img src="http://farm5.static.flickr.com/4006/4598906816_10c25e1f48_b.jpg" width="1024" height="613" alt="IMAG0042" /></a>
  
+This page shows a list of newly submitted files that need to be reviewed. The user selects one of the files to review.
+
+<a href="http://www.flickr.com/photos/londonbonsaipurple/4598907032/" title="IMAG0043 by londonbonsaipurple, on Flickr"><img src="http://farm5.static.flickr.com/4033/4598907032_c8b812d476_b.jpg" width="1024" height="613" alt="IMAG0043" /></a>
+
+The user then downloads the file, inspects it, and either selects "file contains personal data that needs to be removed" or "file can proceed to curation", and clicks "submit review".
+
 == Personal Data Removal ==
 
 *_If a submitted file is found to contain personal data that should be removed prior to curation, an personal data cleaner can download the file, and upload another file with the personal data removed._*
+
+A person or persons is nominated by WWARN to act as personal data *remover* for submitted files. WWARN notifies informatics of who this person is, and informatics will add that person to the list of people authorised to access the personal data pages in Chassis.
+
+The personal data remover can then log in...
+
+<a href="http://www.flickr.com/photos/londonbonsaipurple/4598898654/" title="IMAG0024 by londonbonsaipurple, on Flickr"><img src="http://farm2.static.flickr.com/1184/4598898654_1dd9ba167d.jpg" width="500" height="299" alt="IMAG0024" /></a>
+
+...and navigate to the personal data home page...
+
+<a href="http://www.flickr.com/photos/londonbonsaipurple/4598906816/" title="IMAG0042 by londonbonsaipurple, on Flickr"><img src="http://farm5.static.flickr.com/4006/4598906816_10c25e1f48_b.jpg" width="1024" height="613" alt="IMAG0042" /></a>
+ 
+This page shows a list of newly submitted files that need to be reviewed. The page also shows a list of files that have been reviewed and found to contain personal data that needs to be removed prior to curation. The user selects one of these files with personal data.
+
+<a href="http://www.flickr.com/photos/londonbonsaipurple/4598289207/" title="IMAG0044 by londonbonsaipurple, on Flickr"><img src="http://farm4.static.flickr.com/3222/4598289207_720686f8d6_b.jpg" width="1024" height="613" alt="IMAG0044" /></a>
+
+The user can then download the original file, and upload a new file with personal data removed.
 
 == Contributor Cannot Download Submitted Files Unless Reviewed for Personal Data
 
 *_A contributor should not be allowed to download any submitted files for a study unless the file has been reviewed and found not contain personal data that needs to be removed._*
 
+In the "files" tab in the study dashboard, for submitted files, the "download" link will not be present unless the file has been reviewed for personal data and approved.
+
+<a href="http://www.flickr.com/photos/londonbonsaipurple/4598286581/" title="IMAG0038 by londonbonsaipurple, on Flickr"><img src="http://farm2.static.flickr.com/1417/4598286581_08b4abf056_b.jpg" width="1024" height="613" alt="IMAG0038" /></a>
+
 == Curator Find Registered Studies ==
 
 *_A curator looks up a list of all registered studies, to find a study to begin work on._*
+
+A person or persons is nominated by WWARN to act as curator. WWARN notifies informatics of who this person is, and informatics will add that person to the list of people authorised to access the curator pages in Chassis.
+
+The curator can then log in...
+
+<a href="http://www.flickr.com/photos/londonbonsaipurple/4598898654/" title="IMAG0024 by londonbonsaipurple, on Flickr"><img src="http://farm2.static.flickr.com/1184/4598898654_1dd9ba167d.jpg" width="500" height="299" alt="IMAG0024" /></a>
+
+...and go to the curator home page...
+
+<a href="http://www.flickr.com/photos/londonbonsaipurple/4598907716/" title="IMAG0045 by londonbonsaipurple, on Flickr"><img src="http://farm5.static.flickr.com/4015/4598907716_6849141a2d_b.jpg" width="1024" height="613" alt="IMAG0045" /></a>
+
+...which will have a list of *all* registered studies.
 
 == Curator Downloads Submitted Files ==
 
 *_A curator chooses a study to work on, then looks up the the list of submitted files for that study, and downloads a file to begin working on._*
 
+A curator logs in and goes to the curator home page...
+
+<a href="http://www.flickr.com/photos/londonbonsaipurple/4598907716/" title="IMAG0045 by londonbonsaipurple, on Flickr"><img src="http://farm5.static.flickr.com/4015/4598907716_6849141a2d_b.jpg" width="1024" height="613" alt="IMAG0045" /></a>
+
+...then chooses a study to work on. The curator clicks on the chosen study, which takes the curator to the study dashboard for that study...
+
+<a href="http://www.flickr.com/photos/londonbonsaipurple/4598907994/" title="IMAG0046 by londonbonsaipurple, on Flickr"><img src="http://farm2.static.flickr.com/1275/4598907994_f3874aab7b_b.jpg" width="1024" height="613" alt="IMAG0046" /></a>
+
+The study dashboard for the curator is similar to the study dashboard for the contributor, except that the permissions, acknowledgments and publications tabs are read-only (i.e., the curator cannot make changes), and the files tab does not have an upload form (i.e., the curator cannot submit files).
+
 == Curator Cannot Download Submitted Files Unless Reviewed for Personal Data
 
 *_A curator should not be allowed to download any submitted files for a study unless the file has been reviewed and found not contain personal data that needs to be removed._*
+
+As for the submitter, in the "files" tab in the curator's study dashboard, for submitted files, the "download" link will not be present unless the file has been reviewed for personal data and approved.
 
 == Curator Downloads Files With Personal Data Removed ==
 
 *_A curator downloads a file that was uploaded by the personal data cleaner for a given study._*
 
+In the "files" tab in the curator's study dashboard, the curator can see a list of files submitted by the contributors, and can also see a separate list of files uploaded by the personal data remover, if there are any such files.
+
 == Curator Modifies Study Info ==
 
 *_A curator fills out some information in the study questionnaire for a given study._*
 
-== Curator Looks Up Contributor Contact Details ==
+A curator logs in and goes to the curator home page...
 
-*_A curator looks up contact details for a contributor to ask them something about a study._*
+<a href="http://www.flickr.com/photos/londonbonsaipurple/4598907716/" title="IMAG0045 by londonbonsaipurple, on Flickr"><img src="http://farm5.static.flickr.com/4015/4598907716_6849141a2d_b.jpg" width="1024" height="613" alt="IMAG0045" /></a>
 
-== Curator Looks Up Study Permissions, Acknowledgments or Publications ==
+...then chooses a study to work on. The curator clicks on the chosen study, which takes the curator to the study dashboard for that study...
 
-*_A curator looks up the permissions, acknowledgements or publications for a study they are working on._* 
+<a href="http://www.flickr.com/photos/londonbonsaipurple/4598907994/" title="IMAG0046 by londonbonsaipurple, on Flickr"><img src="http://farm2.static.flickr.com/1275/4598907994_f3874aab7b_b.jpg" width="1024" height="613" alt="IMAG0046" /></a>
 
+The curator clicks on the "study info" tab, which is the same as the "study info" tab in the contributor's study dashboard...
+
+<a href="http://www.flickr.com/photos/londonbonsaipurple/4598287155/" title="IMAG0039 by londonbonsaipurple, on Flickr"><img src="http://farm5.static.flickr.com/4033/4598287155_b3f384d87a_b.jpg" width="1024" height="613" alt="IMAG0039" /></a>
+
+I.e., the curator can make changes and save them.
 
 
 ----
