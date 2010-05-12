@@ -123,9 +123,39 @@ The same applies to the acknowledgments and publications tabs.
 
 *_A contributor loses internet connection part-way through registering a new study._*
 
+A contributor begins the study registration process, and gets to step 5.
+
+<a href="http://www.flickr.com/photos/londonbonsaipurple/4598901534/" title="IMAG0031 by londonbonsaipurple, on Flickr"><img src="http://farm2.static.flickr.com/1249/4598901534_790438f3de.jpg" width="500" height="299" alt="IMAG0031" /></a>
+
+While the user is filling out the form, their internet connection fails. The user then clicks "next", but nothing happens, because the connection is down.
+
+When the connection returns, the user visits the contributor home page.
+
+<a href="http://www.flickr.com/photos/londonbonsaipurple/4598288001/" title="IMAG0041 by londonbonsaipurple, on Flickr"><img src="http://farm2.static.flickr.com/1167/4598288001_ef63aab8f0_b.jpg" width="1024" height="613" alt="IMAG0041" /></a>
+
+On the home page will be a list of "unfinished drafts" which were automatically saved while the user was filling out the wizard. 
+
+The user clicks on the draft they were working on when their connection failed, and is returned to step 5 in the wizard, with all previous steps containing the information they entered before the connection failed.
+
+Note that a draft will be automatically saved each time the user clicks "next" or "previous". So in this case, the user will not have lost information from steps 1-4, but will have lost information from step 5. 
+
 == Contributor Breaks During Study Registration ==
 
 *_A contributor decides to break off part-way through registering a new study and resume later._*
+
+A contributor begins registering a new study, and gets to step 3.
+
+<a href="http://www.flickr.com/photos/londonbonsaipurple/4598282391/" title="IMAG0029 by londonbonsaipurple, on Flickr"><img src="http://farm5.static.flickr.com/4064/4598282391_4eef2c79bf_b.jpg" width="1024" height="613" alt="IMAG0029" /></a>
+
+On this page (and on all other steps in the wizard), below the "next" and "previous" buttons, is a "save as draft" button. The user clicks this button, then shuts down their computer to go and do some other work.
+
+The user returns later to finish the study registration process. The user goes to the contributor home page.
+
+<a href="http://www.flickr.com/photos/londonbonsaipurple/4598288001/" title="IMAG0041 by londonbonsaipurple, on Flickr"><img src="http://farm2.static.flickr.com/1167/4598288001_ef63aab8f0_b.jpg" width="1024" height="613" alt="IMAG0041" /></a>
+
+On the home page will be a list of "unfinished drafts" which were saved when the user clicked the "save as draft" button. 
+
+The user clicks on the draft they were working on previously, and is returned to step 3 in the wizard, with all steps containing the information as it was when they clicked "save as draft".
 
 == One Study, Multiple Contributors ==
 
