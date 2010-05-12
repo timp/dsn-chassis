@@ -77,7 +77,31 @@ The confirmation page contains the study questionnaire. Here the user can edit t
 
 == Contributor Returns to Submit More Files ==
 
-*_A contributor comes back to the WWARN website to contribute some more data for a study they previously registered._*
+*_A contributor comes back to the WWARN website to contribute some more files for a study they previously registered._*
+
+The user comes back to the wwarn.org web site home page.
+
+<a href="http://www.flickr.com/photos/londonbonsaipurple/4598284709/" title="IMAG0034 by londonbonsaipurple, on Flickr"><img src="http://farm5.static.flickr.com/4047/4598284709_8accae460e.jpg" width="500" height="299" alt="IMAG0034" /></a>
+
+The web site home page has a direct link to the contributor home page within Chassis. The user clicks this link, but access requires log in.
+
+<a href="http://www.flickr.com/photos/londonbonsaipurple/4598898654/" title="IMAG0024 by londonbonsaipurple, on Flickr"><img src="http://farm2.static.flickr.com/1184/4598898654_1dd9ba167d.jpg" width="500" height="299" alt="IMAG0024" /></a>
+
+Once logged in, the user is taken to the contributor home page, which shows a list of studies previously registered.
+
+<a href="http://www.flickr.com/photos/londonbonsaipurple/4598285509/" title="IMAG0036 by londonbonsaipurple, on Flickr"><img src="http://farm2.static.flickr.com/1183/4598285509_f8af5bd83b.jpg" width="500" height="299" alt="IMAG0036" /></a>
+
+The user clicks on the study they want to submit more files for. The user is taken to the "study dashboard" for that study.
+
+<a href="http://www.flickr.com/photos/londonbonsaipurple/4598286043/" title="IMAG0037 by londonbonsaipurple, on Flickr"><img src="http://farm4.static.flickr.com/3394/4598286043_3d34c0d50e_b.jpg" width="1024" height="613" alt="IMAG0037" /></a>
+
+The study dashboard has several tabs: summary, permissions, acknowledgments, files, publications, and study info.
+
+The user clicks on the "files" tab.
+
+<a href="http://www.flickr.com/photos/londonbonsaipurple/4598286581/" title="IMAG0038 by londonbonsaipurple, on Flickr"><img src="http://farm2.static.flickr.com/1417/4598286581_08b4abf056_b.jpg" width="1024" height="613" alt="IMAG0038" /></a>
+
+The "files" tab has a form for submitting more files. Below that is a list of files already submitted. The user selects a file to upload in the form, then clicks "confirm". The file is then uploaded, and the page is refreshed, to show the newly submitted file in the list of submitted files.
 
 == Contributor Returns to Modify Study Info, Permissions, Acknowledgments, or Publications ==
 
