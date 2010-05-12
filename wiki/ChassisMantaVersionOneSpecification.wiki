@@ -107,6 +107,18 @@ The "files" tab has a form for submitting more files. Below that is a list of fi
 
 *_A contributor comes back to the WWARN website to modify the study questionnaire, permissions, acknowledgments or publications for a study they previously registered._*
 
+As above, but the user clicks on one of the other tabs in the study dashboard, e.g., "study info". 
+
+<a href="http://www.flickr.com/photos/londonbonsaipurple/4598287155/" title="IMAG0039 by londonbonsaipurple, on Flickr"><img src="http://farm5.static.flickr.com/4033/4598287155_b3f384d87a_b.jpg" width="1024" height="613" alt="IMAG0039" /></a>
+
+The study info tab contains the study questionnaire. The user can edit the study questionnaire, then click "save changes", which will save their changes in the Chassis database, and will leave the user on the same page to continue editing.
+
+Similarly, the user could click on the "permissions" tab, make changes, and save them.
+
+<a href="http://www.flickr.com/photos/londonbonsaipurple/4598905874/" title="IMAG0040 by londonbonsaipurple, on Flickr"><img src="http://farm4.static.flickr.com/3299/4598905874_a17b279b57_b.jpg" width="1024" height="613" alt="IMAG0040" /></a>
+
+The same applies to the acknowledgments and publications tabs.
+ 
 == Contributor Loses Internet Connection ==
 
 *_A contributor loses internet connection part-way through registering a new study._*
