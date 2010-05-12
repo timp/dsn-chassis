@@ -28,7 +28,7 @@
 			<xforms:bind nodeset="sites">
 				<xforms:bind nodeset="site">
 					<xforms:bind nodeset="country" required="true()"/>
-					<xforms:bind nodeset="siteCode"/>
+					<xforms:bind nodeset="siteCode" />
 					<xforms:bind nodeset="testingDelay"
 						relevant="contains(../../../modules, 'invitro')" />
 					<xforms:bind nodeset="anticoagulant"
@@ -60,24 +60,26 @@
 					<xforms:bind nodeset="hypoxantine">
 						<xforms:bind nodeset="hypoxantine-added" />
 						<xforms:bind nodeset="hypoxantine-finalConcentration"
-							relevant="contains(../hypoxantine-added,'yes')" type="xs:integer" />
+							relevant="contains(../hypoxantine-added,'yes')" 
+							type="xs:integer" required="true()"/>
 					</xforms:bind>
 					<xforms:bind nodeset="oroticAcid">
 						<xforms:bind nodeset="oroticAcid-added" />
 						<xforms:bind nodeset="oroticAcid-finalConcentration"
-							relevant="contains(../oroticAcid-added,'yes')" type="xs:integer" />
+							relevant="contains(../oroticAcid-added,'yes')" 
+							type="xs:integer" required="true()"/>
 					</xforms:bind>
 					<xforms:bind nodeset="glucose">
 						<xforms:bind nodeset="glucose-added" />
 						<xforms:bind nodeset="glucose-finalConcentration"
-							relevant="contains(../glucose-added,'yes')" />
+							relevant="contains(../glucose-added,'yes')" 
+							type="xs:integer" required="true()"/>
 					</xforms:bind>
 					<xforms:bind nodeset="antiBiotics">
 						<xforms:bind nodeset="antiBiotic">
 							<xforms:bind ref="antiBioticName" required="true()" />
-							<xforms:bind ref="antiBioticFinalConcentration" type="xs:integer" />
 							<xforms:bind ref="antiBioticFinalConcentration"
-								required="true()" />
+								type="xs:integer" required="true()" />
 						</xforms:bind>
 					</xforms:bind>
 					<xforms:bind nodeset="susceptibility">
@@ -87,20 +89,22 @@
 				</xforms:bind>
 				<xforms:bind nodeset="drugs">
 					<xforms:bind nodeset="drug">
-						<xforms:bind nodeset="molecule" />
-						<xforms:bind nodeset="solvent" />
-						<xforms:bind nodeset="solventFinalConcentration" />
-						<xforms:bind nodeset="providedByWwarn" />
+						<xforms:bind nodeset="molecule" required="true()"/>
+						<xforms:bind nodeset="solvent" required="true()"/>
+						<xforms:bind nodeset="solventFinalConcentration"
+								type="xs:integer" />
+						
+						<xforms:bind nodeset="providedByWwarn" required="true()" />
 						<xforms:bind nodeset="provider"
 							relevant="contains(../providedByWwarn, 'no')" />
 					</xforms:bind>
 				</xforms:bind>
 				<xforms:bind nodeset="plateBatches">
 					<xforms:bind nodeset="batch">
-						<xforms:bind nodeset="clone3D7ProvidedByWwarn" type="xs:boolean" />
+						<xforms:bind nodeset="clone3D7ProvidedByWwarn" type="xs:boolean" required="true()"/>
 						<xforms:bind nodeset="clone3D7Provider"
-							relevant="contains(../clone3D7ProvidedByWwarn, 'no')" />
-						<xforms:bind nodeset="batchesIncludedInRawData" type="xs:boolean" />
+							relevant="contains(../clone3D7ProvidedByWwarn, 'no')"  required="true()"/>
+						<xforms:bind nodeset="batchesIncludedInRawData" type="xs:boolean" required="true()"/>
 						<xforms:bind nodeset="notIncludedBatchDataHint"
 							relevant="contains(../batchesIncludedInRawData, 'no')" />
 						<xforms:bind nodeset="preparationDate" type="xs:date"
@@ -120,9 +124,7 @@
 	<xforms:instance id="ins-site-template"
 		src="/apps/common/templates/study/site-template.xml" />
 
-	<xforms:instance id="ins-boolean-nullable"
-		src="/apps/common/constants/nullable-booleans.xml" />
-	<xforms:instance id="ins-boolean-not-nullable"
+	<xforms:instance id="ins-boolean-items"
 		src="/apps/common/constants/booleans.xml" />
 
 	<xforms:instance id="ins-pathogen-items"

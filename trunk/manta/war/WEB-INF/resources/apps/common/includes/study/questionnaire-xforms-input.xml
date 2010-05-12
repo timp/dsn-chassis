@@ -35,14 +35,14 @@
 		<p>
 			<xforms:input ref="start">
 				<xforms:label class="fixed-width">Start: </xforms:label>
-				<xforms:alert>The date is not valid.</xforms:alert>
+				<xforms:alert>A valid date is required.</xforms:alert>
 			</xforms:input>
 		</p>
 
 		<p>
 			<xforms:input ref="end">
 				<xforms:label class="fixed-width">End: </xforms:label>
-				<xforms:alert>The date is not valid.</xforms:alert>
+				<xforms:alert>A valid date is required.</xforms:alert>
 			</xforms:input>
 		</p>
 
@@ -97,21 +97,20 @@
 							<xforms:select1 ref="country" required="true()" >
 								<xforms:alert>Please select a Country value</xforms:alert>
 								<xforms:label />
-		                        	<xforms:item>
-		                        		<xforms:label>(please select one)</xforms:label>
-		                        		<xforms:value/>
-		                        	</xforms:item>	
+	                        	<xforms:item>
+	                        		<xforms:label>please select</xforms:label>
+	                        		<xforms:value/>
+	                        	</xforms:item>	
 								<xforms:itemset nodeset="instance('ins-country-items')/country">
 									<xforms:label ref="label" />
 									<xforms:value ref="value" />
 								</xforms:itemset>
 							</xforms:select1>
 							<br />
-
+<!--  FIXME when did this break?? -->
 							<!-- if the country has regions, use a select1 -->
 							<xforms:group
-								ref="
-                                .[country/text() = instance('ins-countries-items')/country[exists(regions)]/value/text()]">
+								ref=".[country/text() = instance('ins-countries-items')/country[exists(regions)]/value/text()]">
 
 								<xforms:select1 ref="region">
 									<xforms:label class="fixed-width">Region: </xforms:label>
@@ -126,8 +125,7 @@
 
 							<!-- if the country has no regions, use an input -->
 							<xforms:group
-								ref="
-                                .[empty(country/text()) or country/text() = instance('ins-countries-items')/country[empty(regions)]/value/text()]">
+								ref=".[empty(country/text()) or country/text() = instance('ins-countries-items')/country[empty(regions)]/value/text()]">
 								<xforms:input ref="region">
 									<xforms:label class="fixed-width">Region: </xforms:label>
 								</xforms:input>
@@ -152,39 +150,46 @@
 							<br />
 
 							<xforms:select1 appearance="minimal" ref="testingDelay">
-								<xforms:label class="fixed-width">Sampling/testing delay:
-								</xforms:label>
+								<xforms:label class="fixed-width">Sampling/testing delay:</xforms:label>
+	                        	<xforms:item>
+	                        		<xforms:label><!-- Nullable --></xforms:label>
+	                        		<xforms:value/>
+	                        	</xforms:item>	
 								<xforms:itemset model="mod-study-questionnaire"
 									nodeset="instance('ins-testingDelay-items')/testingDelay">
 									<xforms:label ref="label" />
 									<xforms:value ref="value" />
 								</xforms:itemset>
-								<xforms:alert>please select a value</xforms:alert>
 							</xforms:select1>
 							<br />
 
 							<xforms:select1 appearance="minimal" ref="anticoagulant">
 								<xforms:label class="fixed-width">Anticoagulant:</xforms:label>
+	                        	<xforms:item>
+	                        		<xforms:label><!-- Nullable --></xforms:label>
+	                        		<xforms:value/>
+	                        	</xforms:item>	
 								<xforms:itemset model="mod-study-questionnaire"
 									nodeset="instance('ins-anticoagulant-items')/anticoagulant">
 									<xforms:label ref="label" />
 									<xforms:value ref="value" />
 								</xforms:itemset>
-								<xforms:alert>please select a value</xforms:alert>
 							</xforms:select1>
 
 							<br />
 
 							<xforms:select1 appearance="minimal"
 								ref="transportAndStorageTemperature">
-								<xforms:label class="fixed-width">Transport/storage temperature:
-								</xforms:label>
+								<xforms:label class="fixed-width">Transport/storage temperature:</xforms:label>
+	                        	<xforms:item>
+	                        		<xforms:label><!-- Nullable --></xforms:label>
+	                        		<xforms:value/>
+	                        	</xforms:item>	
 								<xforms:itemset model="mod-study-questionnaire"
 									nodeset="instance('ins-transportAndStorageTemperature-items')/transportAndStorageTemperature">
 									<xforms:label ref="label" />
 									<xforms:value ref="value" />
 								</xforms:itemset>
-								<xforms:alert>please select a value</xforms:alert>
 							</xforms:select1>
 
 
@@ -243,7 +248,11 @@
 				<h4>Culture for Drug Susceptibility Measure</h4>
 
 				<xforms:select1 ref="incubatorSystem" appearance="minimal">
-					<xforms:label>Incubator system?</xforms:label>
+					<xforms:label>Incubator system</xforms:label>
+                   	<xforms:item>
+                   		<xforms:label><!-- Nullable --></xforms:label>
+                   		<xforms:value/>
+                   	</xforms:item>	
 					<xforms:itemset model="mod-study-questionnaire"
 						nodeset="instance('ins-incubatorSystem-items')/incubatorSystem">
 						<xforms:label ref="label" />
@@ -256,6 +265,7 @@
 						CO
 						<sub>2</sub>
 						?
+						<font color="red">FIXME</font>
 					</xforms:label>
 					<xforms:hint>
 						<p>
@@ -267,11 +277,14 @@
 				<p>
 					<xforms:select1 ref="healthyErythrocytesSource"
 						appearance="minimal">
-						<xforms:label>Healthy erythrocytes source?</xforms:label>
+						<xforms:label>Healthy erythrocyte source</xforms:label>
 						<xforms:hint>
 							<em>Healthy erythrocytes have to be deleucocyted.</em>
 						</xforms:hint>
-						<xforms:alert>please select a value</xforms:alert>
+                       	<xforms:item>
+                       		<xforms:label><!-- Nullable --></xforms:label>
+                       		<xforms:value/>
+                       	</xforms:item>	
 						<xforms:itemset model="mod-study-questionnaire"
 							nodeset="instance('ins-healthyErythrocytesSource-items')/healthyErythrocytesSource">
 							<xforms:label ref="label" />
@@ -281,20 +294,23 @@
 				</p>
 				<p>
 					<xforms:input ref="hematocrit">
-						<xforms:label>Hematocrit? (%)</xforms:label>
+						<xforms:label>Hematocrit (%)</xforms:label>
 					</xforms:input>
 
 				</p>
 				<p>
 					<xforms:select1 ref="bloodGroup" appearance="minimal">
-						<xforms:label>Blood group?</xforms:label>
+						<xforms:label>Blood group</xforms:label>
+                       	<xforms:item>
+                       		<xforms:label><!-- Nullable --></xforms:label>
+                       		<xforms:value/>
+                       	</xforms:item>	
 						<xforms:itemset model="mod-study-questionnaire"
 							nodeset="instance('ins-bloodGroup-items')/bloodGroup">
 							<xforms:label ref="label" />
 							<xforms:value ref="value" />
 						</xforms:itemset>
 					</xforms:select1>
-					<xforms:alert>please select a value</xforms:alert>
 				</p>
 			</xforms:group>
 
@@ -306,8 +322,11 @@
 				<h4>Medium for Drug Susceptibility Measure</h4>
 				<p>
 					<xforms:select1 ref="medium" appearance="minimal">
-						<xforms:label>Medium?</xforms:label>
-						<xforms:alert>please select a value</xforms:alert>
+						<xforms:label>Medium</xforms:label>
+                       	<xforms:item>
+                       		<xforms:label><!-- Nullable --></xforms:label>
+                       		<xforms:value/>
+                       	</xforms:item>	
 						<xforms:itemset model="mod-study-questionnaire"
 							nodeset="instance('ins-medium-items')/medium">
 							<xforms:label ref="label" />
@@ -315,12 +334,15 @@
 						</xforms:itemset>
 					</xforms:select1>
 					<em>Storage temperature: 6 months at -20&#176;C and 1 week at
-						+4&#176;C after using.</em>
+						+4&#176;C after using.<font color="red">FIXME</font></em>
 				</p>
 				<p>
 					<xforms:select1 ref="preparation" appearance="minimal">
-						<xforms:label>Preparation?</xforms:label>
-						<xforms:alert>please select a value</xforms:alert>
+						<xforms:label>Preparation</xforms:label>
+                       	<xforms:item>
+                       		<xforms:label><!-- Nullable --></xforms:label>
+                       		<xforms:value/>
+                       	</xforms:item>	
 						<xforms:itemset model="mod-study-questionnaire"
 							nodeset="instance('ins-mediumPreparation-items')/mediumPreparation">
 							<xforms:label ref="label" />
@@ -330,8 +352,11 @@
 				</p>
 				<p>
 					<xforms:select1 ref="serum" appearance="minimal">
-						<xforms:label>Serum?</xforms:label>
-						<xforms:alert>please select a value</xforms:alert>
+						<xforms:label>Serum</xforms:label>
+                       	<xforms:item>
+                       		<xforms:label><!-- Nullable --></xforms:label>
+                       		<xforms:value/>
+                       	</xforms:item>	
 						<xforms:itemset model="mod-study-questionnaire"
 							nodeset="instance('ins-serum-items')/serum">
 							<xforms:label ref="label" />
@@ -342,8 +367,8 @@
 
 				<p>
 					<xforms:input ref="serum-finalConcentration">
-						<xforms:label>Serum final concentration (g/L)? </xforms:label>
-						<xforms:alert>Not a valid integer.</xforms:alert>
+						<xforms:label>Serum final concentration (g/L) </xforms:label>
+						<xforms:alert>Please enter an integer value for concentration</xforms:alert>
 					</xforms:input>
 				</p>
 				<p>
@@ -351,9 +376,8 @@
 						<xforms:label>
 							Final concentration of NaHCO
 							<sub>3</sub>
-							?
 						</xforms:label>
-						<xforms:alert>Not a valid integer.</xforms:alert>
+						<xforms:alert>Please enter an integer value for concentration</xforms:alert>
 					</xforms:input>
 				</p>
 
@@ -362,9 +386,9 @@
 					<p>
 						<xforms:select1 ref="hypoxantine-added" appearance="minimal">
 							<xforms:label>Do you add Hypoxantine?</xforms:label>
-							<xforms:alert>please select a value</xforms:alert>
+							<xforms:alert>Please select a value</xforms:alert>
 							<xforms:itemset model="mod-study-questionnaire"
-								nodeset="instance('ins-boolean-nullable')/booleanTerm">
+								nodeset="instance('ins-boolean-items')/boolean">
 								<xforms:label ref="label" />
 								<xforms:value ref="value" />
 							</xforms:itemset>
@@ -372,9 +396,9 @@
 					</p>
 					<p>
 						<xforms:input ref="hypoxantine-finalConcentration">
-							<xforms:label>Final Hypoxantine concentration (g/L)?
+							<xforms:label>Final Hypoxantine concentration (g/L)
 							</xforms:label>
-							<xforms:alert>Not a valid integer.</xforms:alert>
+						<xforms:alert>Please enter an integer value for concentration</xforms:alert>
 						</xforms:input>
 					</p>
 				</xforms:group>
@@ -385,9 +409,9 @@
 					<p>
 						<xforms:select1 ref="oroticAcid-added" appearance="minimal">
 							<xforms:label>Do you add Orotic Acid?</xforms:label>
-							<xforms:alert>please select a value</xforms:alert>
+							<xforms:alert>Please select a value</xforms:alert>
 							<xforms:itemset model="mod-study-questionnaire"
-								nodeset="instance('ins-boolean-nullable')/booleanTerm">
+								nodeset="instance('ins-boolean-items')/boolean">
 								<xforms:label ref="label" />
 								<xforms:value ref="value" />
 							</xforms:itemset>
@@ -395,9 +419,9 @@
 					</p>
 					<p>
 						<xforms:input ref="oroticAcid-finalConcentration">
-							<xforms:label>Final Orotic Acid concentration (g/L)?
+							<xforms:label>Final Orotic Acid concentration (g/L)
 							</xforms:label>
-							<xforms:alert>Not a valid integer.</xforms:alert>
+							<xforms:alert>Please enter an integer value for concentration</xforms:alert>
 						</xforms:input>
 					</p>
 				</xforms:group>
@@ -407,9 +431,9 @@
 					<p>
 						<xforms:select1 ref="glucose-added" appearance="minimal">
 							<xforms:label>Do you add glucose?</xforms:label>
-							<xforms:alert>please select a value</xforms:alert>
+							<xforms:alert>Please select a value</xforms:alert>
 							<xforms:itemset model="mod-study-questionnaire"
-								nodeset="instance('ins-boolean-nullable')/booleanTerm">
+								nodeset="instance('ins-boolean-items')/boolean">
 								<xforms:label ref="label" />
 								<xforms:value ref="value" />
 							</xforms:itemset>
@@ -417,8 +441,8 @@
 					</p>
 					<p>
 						<xforms:input ref="glucose-finalConcentration">
-							<xforms:label>Final glucose concentration (g/L)?</xforms:label>
-							<xforms:alert>Not a valid integer.</xforms:alert>
+							<xforms:label>Final glucose concentration (g/L)</xforms:label>
+							<xforms:alert>Please enter an integer value for concentration</xforms:alert>
 						</xforms:input>
 					</p>
 				</xforms:group>
@@ -464,14 +488,14 @@
 								<td>
 									<p>
 										<xforms:input ref="antiBioticName">
-											<xforms:label>Name of antibiotic?</xforms:label>
+											<xforms:label>Name of antibiotic</xforms:label>
 											<xforms:alert>Required field</xforms:alert>
 										</xforms:input>
 									</p>
 									<p>
 										<xforms:input ref="antiBioticFinalConcentration">
-											<xforms:label>Final concentration (g/L)?</xforms:label>
-											<xforms:alert>Not a valid integer.</xforms:alert>
+											<xforms:label>Final concentration (g/L)</xforms:label>
+											<xforms:alert>Please enter an integer value for concentration</xforms:alert>
 										</xforms:input>
 									</p>
 								</td>
@@ -488,13 +512,16 @@
 			<xforms:group ref="susceptibility">
 				<h4>Determination of Drug Susceptibility</h4>
 				<p>
-					<em>If this is different for each sample, please include this
-						information in your raw data.
+					<em>
+					If this	information is different for each sample, please include it in your raw data.
 					</em>
 				</p>
 				<xforms:select1 appearance="minimal" ref="timeOfIncubation">
-					<xforms:label class="fixed-width">Time of incubation?</xforms:label>
-					<xforms:alert>please select a value</xforms:alert>
+					<xforms:label class="fixed-width">Time of incubation</xforms:label>
+                  	<xforms:item>
+                   		<xforms:label><!-- Nullable --></xforms:label>
+                   		<xforms:value/>
+                   	</xforms:item>	
 					<xforms:itemset model="mod-study-questionnaire"
 						nodeset="instance('ins-incubationTime-items')/incubationTime">
 						<xforms:label ref="label" />
@@ -503,13 +530,16 @@
 				</xforms:select1>
 				<br />
 				<p>
-					<em>If this is different for each sample, please include this
-						information in your raw data.
+					<em>
+					If this	information is different for each sample, please include it in your raw data.
 					</em>
 				</p>
 				<xforms:select1 appearance="minimal" ref="susceptibilityMethod">
-					<xforms:label class="fixed-width">Method used?</xforms:label>
-					<xforms:alert>please select a value</xforms:alert>
+					<xforms:label class="fixed-width">Method used</xforms:label>
+                  	<xforms:item>
+                   		<xforms:label><!-- Nullable --></xforms:label>
+                   		<xforms:value/>
+                   	</xforms:item>	
 					<xforms:itemset model="mod-study-questionnaire"
 						nodeset="instance('ins-susceptibilityMethod-items')/susceptibilityMethod">
 						<xforms:label ref="label" />
@@ -569,38 +599,52 @@
 							</td>
 							<td>
 								<xforms:select1 appearance="minimal" ref="molecule">
-									<xforms:label class="fixed-width">Molecule?</xforms:label>
+									<xforms:label class="fixed-width">Molecule</xforms:label>
+				                  	<xforms:item>
+                				   		<xforms:label>please select</xforms:label>
+                   						<xforms:value/>
+                   					</xforms:item>	
 									<xforms:itemset model="mod-study-questionnaire"
 										nodeset="instance('ins-drugMolecule-items')/drugMolecule">
 										<xforms:label ref="label" />
 										<xforms:value ref="value" />
 									</xforms:itemset>
-									<xforms:alert>please select a value</xforms:alert>
+									<xforms:alert>Please select a drug molecule</xforms:alert>
 								</xforms:select1>
 								<br />
 
 								<xforms:select1 appearance="minimal" ref="solvent">
-									<xforms:label class="fixed-width">Solvent of stock solution?
+									<xforms:label class="fixed-width">Stock solution solvent
 									</xforms:label>
-									<xforms:alert>please select a value</xforms:alert>
+				                  	<xforms:item>
+                				   		<xforms:label>please select</xforms:label>
+                   						<xforms:value/>
+                   					</xforms:item>	
 									<xforms:itemset model="mod-study-questionnaire"
 										nodeset="instance('ins-drugSolvent-items')/drugSolvent">
 										<xforms:label ref="label" />
 										<xforms:value ref="value" />
 									</xforms:itemset>
+									<xforms:alert>Please select a value</xforms:alert>
 								</xforms:select1>
 								<br />
 
 								<xforms:input ref="solventFinalConcentration">
-									<xforms:label>Solvent final concentration (g/L)?</xforms:label>
+									<xforms:label>Solvent final concentration (g/L)</xforms:label>
+									<xforms:alert>Please enter an integer value for concentration</xforms:alert>
 								</xforms:input>
 
 								<br />
 								<xforms:select1 appearance="minimal" ref="providedByWwarn">
 									<xforms:label>Were stock solutions provided by WWARN?
 									</xforms:label>
+									<xforms:alert>Please answer yes or no</xforms:alert>
+	                        		<xforms:item>
+	                        			<xforms:label>please select</xforms:label>
+	                        			<xforms:value/>
+	                        		</xforms:item>	
 									<xforms:itemset model="mod-study-questionnaire"
-										nodeset="instance('ins-boolean-nullable')/booleanTerm">
+													nodeset="instance('ins-boolean-items')/boolean">
 										<xforms:label ref="label" />
 										<xforms:value ref="value" />
 									</xforms:itemset>
@@ -665,10 +709,14 @@
 							</td>
 							<td>
 					<xforms:select1 appearance="minimal" ref="clone3D7ProvidedByWwarn">
-						<xforms:label class="fixed-width">Were 3D7 provided by WWARN?
-						</xforms:label>
+						<xforms:label class="fixed-width">Were 3D7 provided by WWARN?</xforms:label>
+						<xforms:alert>Please answer yes or no</xforms:alert>
+	                    <xforms:item>
+	                    	<xforms:label>please select</xforms:label>
+	                    	<xforms:value/>
+	                    </xforms:item>	
 						<xforms:itemset model="mod-study-questionnaire"
-							nodeset="instance('ins-boolean-nullable')/booleanTerm">
+										nodeset="instance('ins-boolean-items')/boolean">
 							<xforms:label ref="label" />
 							<xforms:value ref="value" />
 						</xforms:itemset>
@@ -686,8 +734,13 @@
 						ref="batchesIncludedInRawData">
 						<xforms:label>Are your batch preparation dates and 3D7 information
 							included with the raw data?</xforms:label>
+						<xforms:alert>Please answer yes or no</xforms:alert>
+                   		<xforms:item>
+                   			<xforms:label>please select</xforms:label>
+                   			<xforms:value/>
+                   		</xforms:item>	
 						<xforms:itemset model="mod-study-questionnaire"
-							nodeset="instance('ins-boolean-nullable')/booleanTerm">
+								nodeset="instance('ins-boolean-items')/boolean">
 							<xforms:label ref="label" />
 							<xforms:value ref="value" />
 						</xforms:itemset>
@@ -706,20 +759,20 @@
 
 					<br />
 					<xforms:input ref="preparationDate">
-						<xforms:label class="fixed-width">Preparation date?</xforms:label>
+						<xforms:label class="fixed-width">Preparation date</xforms:label>
 					</xforms:input>
 					<br />
 
 
 					<xforms:input ref="parasitaemia3D7">
-						<xforms:label class="fixed-width">3D7 parasitaemia (%)?
+						<xforms:label class="fixed-width">3D7 parasitaemia (%)
 						</xforms:label>
 					</xforms:input>
 					<br />
 
 					<xforms:input ref="ringForms">
 						<xforms:label class="fixed-width">Ring forms after synchronisation
-							(%)?</xforms:label>
+							(%)</xforms:label>
 					</xforms:input>
 
 							</td>
