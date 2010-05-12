@@ -6,6 +6,8 @@ This document is a specification of the first production version of the web-base
 
 Note that this version is supposed to be a minimal first version for development and release as soon as possible. 
 
+You can click on any of the images below to navigate to a larger version of the image.
+
 ----
 = Roles =
 
@@ -23,31 +25,55 @@ Note that this version is supposed to be a minimal first version for development
 
 The user first comes to the wwarn.org home page.
 
-http://farm2.static.flickr.com/1049/4598897630_48912ce01b_d.jpg
+<a href="http://www.flickr.com/photos/londonbonsaipurple/4598897630/" title="IMAG0022 by londonbonsaipurple, on Flickr"><img src="http://farm2.static.flickr.com/1049/4598897630_48912ce01b.jpg" width="500" height="299" alt="IMAG0022" /></a>
 
 On the home page is a link to the "contribute" section of the web site. The user navigates to the "contribute" page of the web site.
 
-http://farm2.static.flickr.com/1061/4598279859_f9403def64_d.jpg
+<a href="http://www.flickr.com/photos/londonbonsaipurple/4598279859/" title="IMAG0023 by londonbonsaipurple, on Flickr"><img src="http://farm2.static.flickr.com/1061/4598279859_f9403def64.jpg" width="500" height="299" alt="IMAG0023" /></a>
 
 On this page, amongst other general information about contributing to WWARN, is a link to the user registration page. The user navigates to the user registration page of the web site.
 
-http://farm4.static.flickr.com/3334/4598280915_be20c64462_d.jpg
+<a href="http://www.flickr.com/photos/londonbonsaipurple/4598280915/" title="IMAG0025 by londonbonsaipurple, on Flickr"><img src="http://farm4.static.flickr.com/3334/4598280915_be20c64462.jpg" width="500" height="299" alt="IMAG0025" /></a>
 
 Once they have filled in the user registration form and clicked "confirm", an email is sent to them containing a temporary password and a link to the login page. The user navigates to the login page and logs in.
 
-http://farm2.static.flickr.com/1184/4598898654_1dd9ba167d_d.jpg
+<a href="http://www.flickr.com/photos/londonbonsaipurple/4598898654/" title="IMAG0024 by londonbonsaipurple, on Flickr"><img src="http://farm2.static.flickr.com/1184/4598898654_1dd9ba167d.jpg" width="500" height="299" alt="IMAG0024" /></a>
 
 Note that all new users will automatically be given the _contributor_ role, i.e., once the user has registered, they can immediately begin contributing data.
 
 Once the user is logged in, they navigate to their contributor home page, which is part of Chassis. The page contains a link to register a new study, and list of the user's registered studies, which in this case will be empty.
 
-http://farm5.static.flickr.com/4051/4598899534_8891692438_d.jpg
+<a href="http://www.flickr.com/photos/londonbonsaipurple/4598899534/" title="IMAG0026 by londonbonsaipurple, on Flickr"><img src="http://farm5.static.flickr.com/4051/4598899534_8891692438.jpg" width="500" height="299" alt="IMAG0026" /></a>
 
 The user clicks the "register study" link to begin the study registration wizard.
 
 <a href="http://www.flickr.com/photos/londonbonsaipurple/4598281599/" title="IMAG0027 by londonbonsaipurple, on Flickr"><img src="http://farm5.static.flickr.com/4025/4598281599_68f5bfe5eb.jpg" width="500" height="299" alt="IMAG0027" /></a>
 
-TODO
+The user enters a title for the study, reads the terms of submission, clicks accept, then clicks "next".
+
+<a href="http://www.flickr.com/photos/londonbonsaipurple/4598281975/" title="IMAG0028 by londonbonsaipurple, on Flickr"><img src="http://farm2.static.flickr.com/1071/4598281975_6a4bcca952.jpg" width="500" height="299" alt="IMAG0028" /></a>
+
+The user enters the email address of anyone else who they want to be able to access the study and modify it or submit new files, then clicks "next".
+
+<a href="http://www.flickr.com/photos/londonbonsaipurple/4598282391/" title="IMAG0029 by londonbonsaipurple, on Flickr"><img src="http://farm5.static.flickr.com/4064/4598282391_4eef2c79bf.jpg" width="500" height="299" alt="IMAG0029" /></a>
+
+The user enters details of the people who should be acknowledged for the study, and clicks "next".
+
+<a href="http://www.flickr.com/photos/londonbonsaipurple/4598282747/" title="IMAG0030 by londonbonsaipurple, on Flickr"><img src="http://farm2.static.flickr.com/1319/4598282747_ba7d2d8c07.jpg" width="500" height="299" alt="IMAG0030" /></a>
+
+The user uploads files they want to submit, and clicks "next".
+
+<a href="http://www.flickr.com/photos/londonbonsaipurple/4598901534/" title="IMAG0031 by londonbonsaipurple, on Flickr"><img src="http://farm2.static.flickr.com/1249/4598901534_790438f3de.jpg" width="500" height="299" alt="IMAG0031" /></a>
+
+The user selects whether the study is published or not. If published, the user enters a web link for each publication, then clicks "next".
+
+<a href="http://www.flickr.com/photos/londonbonsaipurple/4598901994/" title="IMAG0032 by londonbonsaipurple, on Flickr"><img src="http://farm5.static.flickr.com/4017/4598901994_7d5f5b8aab.jpg" width="500" height="299" alt="IMAG0032" /></a>
+
+The user reviews all of the information they have entered in the previous steps. If they are happy with the information, they click "confirm". The study is then permanently registered in the Chassis database, and the user is taken to a confirmation page.
+
+<a href="http://www.flickr.com/photos/londonbonsaipurple/4598284233/" title="IMAG0033 by londonbonsaipurple, on Flickr"><img src="http://farm2.static.flickr.com/1049/4598284233_63404c0d3a.jpg" width="500" height="299" alt="IMAG0033" /></a>
+
+The confirmation page contains the study questionnaire. Here the user can edit the study questionnaire. If the user clicks "save changes" the modifications they have made to the study questionnaire will be saved, and they will remain on the confirmation page to make more modifications if they want.
 
 == Contributor Returns to Submit More Files ==
 
