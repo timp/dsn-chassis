@@ -1,5 +1,7 @@
 #summary this page is a specification of the Chassis Manta system version 1.0
 
+<wiki:toc/>
+
 = Introduction =
 
 This document is a specification of the first production version of the web-based system for contribution (submission) of data to WWARN, codename Chassis Manta Version 1.0.
