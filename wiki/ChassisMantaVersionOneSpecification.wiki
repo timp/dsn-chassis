@@ -303,7 +303,7 @@ A curator logs in and goes to the curator home page...
 
 The study dashboard for the curator is similar to the study dashboard for the contributor, except that the permissions, acknowledgments and publications tabs are read-only (i.e., the curator cannot make changes), and the files tab does not have an upload form (i.e., the curator cannot submit files).
 
-== Curator Cannot Download Submitted Files Unless Reviewed for Personal Data ==
+== Curator Cannot Download Submitted Files Unless Reviewed for PD ==
 
 *_A curator should not be allowed to download any submitted files for a study unless the file has been reviewed and found not contain personal data that needs to be removed._*
 
