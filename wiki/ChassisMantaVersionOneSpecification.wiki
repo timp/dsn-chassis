@@ -163,13 +163,67 @@ The user clicks on the draft they were working on previously, and is returned to
 
 *_A contributor registers a study, then asks a colleague to submit the files for that study._*
 
+Bill registers a study, adding Ben's email address in the permissions step.
+
+<a href="http://www.flickr.com/photos/londonbonsaipurple/4598281975/" title="IMAG0028 by londonbonsaipurple, on Flickr"><img src="http://farm2.static.flickr.com/1071/4598281975_6a4bcca952.jpg" width="500" height="299" alt="IMAG0028" /></a>
+
+Ben then logs in and goes to the contributor home page.
+
+<a href="http://www.flickr.com/photos/londonbonsaipurple/4598285509/" title="IMAG0036 by londonbonsaipurple, on Flickr"><img src="http://farm2.static.flickr.com/1183/4598285509_f8af5bd83b_b.jpg" width="1024" height="613" alt="IMAG0036" /></a>
+
+Ben will see a list of studies for which he has permissions, which will include the study that Bill registered.
+
 == Submit Multiple Studies with Similar Study Info ==
 
 *_A contributor registers multiple studies, each of which has very similar answers for the study questionnaire._*
 
+The "study info" tab in the study dashboard will include a control which allows the user to select a different study, then copy all the answers from that study's questionnaire to the current study's questionnaire.
+
+<a href="http://www.flickr.com/photos/londonbonsaipurple/4598287155/" title="IMAG0039 by londonbonsaipurple, on Flickr"><img src="http://farm5.static.flickr.com/4033/4598287155_b3f384d87a_b.jpg" width="1024" height="613" alt="IMAG0039" /></a>
+
+Note that copying the answers from another study will replace any answers previously entered for the current study, however, the changes will not be made permanent until the user clicks "save changes".
+
 == Proxy Contribution ==
 
 *_A contributor gives a member of WWARN a USB stick containing data files and asks them to submit them on their behalf._*
+
+We propose to build no special interface for this. This could be done with the pages above, for example, as follows.
+
+A researcher, Bill, meets Patrice and gives him some data on a USB stick. 
+
+Patrice goes to the user registration page, and fills out Bill's details.
+
+<a href="http://www.flickr.com/photos/londonbonsaipurple/4598280915/" title="IMAG0025 by londonbonsaipurple, on Flickr"><img src="http://farm4.static.flickr.com/3334/4598280915_be20c64462_b.jpg" width="1024" height="613" alt="IMAG0025" /></a>
+
+Patrice then clicks "confirm", which sends a confirmation email to Bill. Patrice then sits with Bill in front of a computer and helps Bill to log in ...
+
+<a href="http://www.flickr.com/photos/londonbonsaipurple/4598898654/" title="IMAG0024 by londonbonsaipurple, on Flickr"><img src="http://farm2.static.flickr.com/1184/4598898654_1dd9ba167d.jpg" width="500" height="299" alt="IMAG0024" /></a>
+
+...begin the study registration wizard...
+
+<a href="http://www.flickr.com/photos/londonbonsaipurple/4598899534/" title="IMAG0026 by londonbonsaipurple, on Flickr"><img src="http://farm5.static.flickr.com/4051/4598899534_8891692438.jpg" width="500" height="299" alt="IMAG0026" /></a>
+
+...fill in step 1...
+
+<a href="http://www.flickr.com/photos/londonbonsaipurple/4598281599/" title="IMAG0027 by londonbonsaipurple, on Flickr"><img src="http://farm5.static.flickr.com/4025/4598281599_68f5bfe5eb.jpg" width="500" height="299" alt="IMAG0027" /></a>
+
+...and fill in step 2, giving Patrice permissions...
+
+<a href="http://www.flickr.com/photos/londonbonsaipurple/4598281975/" title="IMAG0028 by londonbonsaipurple, on Flickr"><img src="http://farm2.static.flickr.com/1071/4598281975_6a4bcca952.jpg" width="500" height="299" alt="IMAG0028" /></a>
+
+...then skipping to the end...
+
+<a href="http://www.flickr.com/photos/londonbonsaipurple/4598901994/" title="IMAG0032 by londonbonsaipurple, on Flickr"><img src="http://farm5.static.flickr.com/4017/4598901994_7d5f5b8aab.jpg" width="500" height="299" alt="IMAG0032" /></a>
+
+...and clicking "confirm".
+
+Patrice can then log in and act as a contributor with permissions on Bill's study, going to the contributor home page...
+
+<a href="http://www.flickr.com/photos/londonbonsaipurple/4598285509/" title="IMAG0036 by londonbonsaipurple, on Flickr"><img src="http://farm2.static.flickr.com/1183/4598285509_f8af5bd83b.jpg" width="500" height="299" alt="IMAG0036" /></a>
+
+...selecting Bill's study, navigating to the "files" tab on the study dashboard, uploading the files Bill gave him, and adding any other information...
+
+<a href="http://www.flickr.com/photos/londonbonsaipurple/4598286581/" title="IMAG0038 by londonbonsaipurple, on Flickr"><img src="http://farm2.static.flickr.com/1417/4598286581_08b4abf056_b.jpg" width="1024" height="613" alt="IMAG0038" /></a>
 
 == Personal Data Review ==
 
