@@ -141,25 +141,45 @@
       			mediatype="application/atom+xml"
       			ref="instance('ins-acl')"
       			replace="none">
-      			<xforms:send ev:event="xforms-submit-done" submission="sub-get-table-feed"/>	
+<!--      			<xforms:send ev:event="xforms-submit-done" submission="sub-get-table-feed"/>	-->
+      			<xforms:send ev:event="xforms-submit-done" submission="sub-get-table-view-page"/>	
                 <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) updating ACL.</xforms:message>
    			</xforms:submission>
+   			
+   			<xforms:instance id="ins-get-table-view-params">
+   				<params xmlns="">
+   					<entry/>
+   				</params>
+   			</xforms:instance>
+   			
+   			<xforms:bind 
+   				ref="instance('ins-get-table-view-params')/entry" 
+   				calculate="instance('ins-table-entry')/atom:link[@rel='edit']/@href"/>
+   			
+   			<xforms:submission
+   				id="sub-get-table-view-page"
+   				method="get"
+   				resource="/datawiki/table/view"
+   				ref="instance('ins-get-table-view-params')"
+   				replace="all">
+			</xforms:submission>
    			
    			<xforms:action ev:event="xforms-model-construct-done">
    				<xforms:setvalue ref="instance('ins-acl')//group[@name='admins']/user" value="xxforms:get-remote-user()"/>
    			</xforms:action>
 
-			<xforms:instance id="ins-new-merge">
-				<sources xmlns="">
-					<source></source>
-					<source></source>
-				</sources>
-			</xforms:instance>
+			<xforms:instance id="ins-noparams">
+				<params xmlns=""/>
+			</xforms:instance>		
 			
-			<xforms:bind nodeset="instance('ins-new-merge')">
-				<xforms:bind nodeset="source[2]" constraint="if (exists(./text())) then ( . != ../source[1] ) else true()"/>
-			</xforms:bind>
-			
+			<xforms:submission
+				id="sub-get-new-merge"
+				method="get"
+				resource="/datawiki/merge/new"
+				ref="instance('ins-noparams')"
+				replace="all">
+			</xforms:submission>	
+
         </xforms:model>
         
         <style type="text/css">
@@ -236,7 +256,9 @@
 		<h2>Merges</h2>
 		
     	<p>
-    		<a href="merge/new">New Merge</a>
+    		<xforms:submit submission="sub-get-new-merge">
+    			<xforms:label><img src="/apps/fr/style/new.gif"/> New Merge</xforms:label>
+    		</xforms:submit>
     	</p>
 
 		<xforms:group ref="instance('ins-merge-feed')">
