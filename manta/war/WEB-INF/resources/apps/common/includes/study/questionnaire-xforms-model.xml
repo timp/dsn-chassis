@@ -46,8 +46,31 @@
 						relevant="contains(../../../modules, 'invitro')" />
 				</xforms:bind>
 			</xforms:bind>
-			<xforms:bind nodeset="clinical" relevant="contains(../modules, 'clinical')">
+			<xforms:bind nodeset="transmissionIntensity" relevant="contains(../modules, 'clinical')" >
+				<xforms:bind nodeset="annualParasitologicalIncidence" />
+				<xforms:bind nodeset="annualParasitologicalIncidenceYear" type="ctype:recentYear" />
+				<xforms:bind nodeset="parasitePrevalence" />
+				<xforms:bind nodeset="parasitePrevalenceYear" type="ctype:recentYear" />
+				<xforms:bind nodeset="transmissionIntensityAgeFrom" type="ctype:age" />
+				<xforms:bind nodeset="transmissionIntensityAgeTo"  type="ctype:age" />
+				<xforms:bind nodeset="entomologicalInoculationRate" type="xs:integer" />
+				<xforms:bind nodeset="entomologicalInoculationRateYear" type="ctype:recentYear" />
+				<xforms:bind nodeset="seasonalTransmission" type="xs:boolean" />				
+				<xforms:bind nodeset="transmissionMonths" relevant="contains(../seasonalTransmission, 'yes')" />			
 			</xforms:bind>
+			<xforms:bind nodeset="inclusionExclusionCriteria">
+				<xforms:bind nodeset="maxAge" type="ctype:age"/>
+				<xforms:bind nodeset="minAge" type="ctype:age"/>
+				<xforms:bind nodeset="minParasitaemia" type="xs:integer" />
+				<xforms:bind nodeset="maxParasitaemia" type="xs:integer" />
+				<xforms:bind nodeset="excludeIfPriorAntimalarials" type="xs:boolean" />
+				<xforms:bind nodeset="priorAntimalarials" type="xs:string" relevant="contains(../excludeIfPriorAntimalarials, 'yes')"/>
+				<xforms:bind nodeset="priorAntimalarialsDetermination" type="xs:string" relevant="contains(../excludeIfPriorAntimalarials, 'yes')"/>
+				<xforms:bind nodeset="priorAntimalarialsHistoryWeeks" relevant="contains(../priorAntimalarialsDetermination,'history')" />
+			</xforms:bind>
+		
+			
+			<xforms:bind nodeset="clinical" relevant="contains(../modules, 'clinical')" />
 			<xforms:bind nodeset="molecular" relevant="contains(../modules, 'molecular')">
 			</xforms:bind>
 			<xforms:bind nodeset="invitro" relevant="contains(../modules, 'invitro')">
@@ -142,10 +165,14 @@
 
 	<xforms:instance id="ins-pathogen-items"
 		src="/apps/common/constants/pathogens.xml" />
+	<xforms:instance id="ins-month-items"
+		src="/apps/common/constants/months.xml" />
 	<xforms:instance id="ins-country-items"
 		src="/apps/common/constants/countries.xml" />
 	<xforms:instance id="ins-module-items"
 		src="/apps/common/constants/modules.xml" />
+	<xforms:instance id="ins-priorAntimalarialsDetermination-items"
+		src="/apps/common/constants/priorAntimalarialsDeterminations.xml" />
 	<xforms:instance id="ins-incubatorSystem-items"
 		src="/apps/common/constants/incubatorSystems.xml" />
 	<xforms:instance id="ins-healthyErythrocytesSource-items"

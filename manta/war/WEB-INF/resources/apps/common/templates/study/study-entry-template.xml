@@ -9,6 +9,7 @@
             <end/>
             <pathogens/>
 			<sites/>
+            <modules/>
 			<transmissionIntensity>
 				<annualParasitologicalIncidence/>
 				<annualParasitologicalIncidenceYear />
@@ -22,7 +23,16 @@
 				<transmissionMonths/>			
 			</transmissionIntensity>
 			
-            <modules/>
+			<inclusionExclusionCriteria>
+				<maxAge />
+				<minAge />
+				<minParasitaemia />
+				<maxParasitaemia />
+				<excludeIfPriorAntimalarials />
+				<priorAntimalarials />
+				<priorAntimalarialsDetermination />
+				<priorAntimalarialsHistoryWeeks/>
+			</inclusionExclusionCriteria>
             <clinical>
             	<treatments>
 	            	<regimen>

@@ -222,6 +222,145 @@
 			</table>
 
 		</xforms:group>
+		<xforms:group ref="transmissionIntensity">
+			<h3>Transmission Intensity</h3>
+		
+		
+		
+			<xforms:input ref="annualParasitologicalIncidence" class="fourWide">
+				<xforms:label class="fixed-width" >Annual Parasitological Incidence (API)</xforms:label>
+			</xforms:input>
+			<xforms:input ref="annualParasitologicalIncidenceYear" class="fourWide" >
+				<xforms:label>in year </xforms:label>
+				<xforms:alert>
+					<xforms:output 
+							value="concat('Please enter a recent year for the ', name(), ' field ')"/>
+				</xforms:alert>
+			</xforms:input>
+			<br/>
+			<xforms:input ref="parasitePrevalence"  class="fourWide">
+				<xforms:label class="fixed-width">Parasite Prevalence</xforms:label>
+			</xforms:input>
+			<xforms:input ref="parasitePrevalenceYear" class="fourWide" >
+				<xforms:label>in year </xforms:label>
+				<xforms:alert>
+					<xforms:output 
+							value="concat('Please enter a recent year for the ', name(), ' field ')"/>
+				</xforms:alert>
+			</xforms:input>
+			<br/>
+			<xforms:input ref="transmissionIntensityAgeFrom" class="fourWide">
+				<xforms:label class="fixed-width">API derived from age </xforms:label>
+				<xforms:alert>
+					<xforms:output 
+							value="concat('Please enter an age in years for the ', name(), ' field ')"/>
+				</xforms:alert>
+			</xforms:input>
+	
+			<xforms:input ref="transmissionIntensityAgeTo"  class="fourWide">
+				<xforms:label>to </xforms:label>
+				<xforms:alert>
+					<xforms:output 
+							value="concat('Please enter an age in years for the ', name(), ' field ')"/>
+				</xforms:alert>
+			</xforms:input>
+			<br/>
+			<xforms:input ref="entomologicalInoculationRate" class="fourWide">
+				<xforms:label class="fixed-width">Entomological Inoculation Rate (EIR)</xforms:label>
+				<xforms:hint>Infective bites per person per year (ib/p/year) </xforms:hint>	
+			</xforms:input>
+			<xforms:input ref="entomologicalInoculationRateYear" width="4" class="fourWide" >
+				<xforms:label>in year </xforms:label>
+				<xforms:alert>
+					<xforms:output 
+							value="concat('Please enter a recent year for the ', name(), ' field ')"/>
+				</xforms:alert>
+			</xforms:input>
+			<br/>
+			<xforms:select1 ref="seasonalTransmission" appearance="minimal">
+				<xforms:label class="fixed-width">Is transmission seasonal?</xforms:label>
+				<xforms:itemset model="mod-study-questionnaire"
+						nodeset="instance('ins-boolean-items')/boolean">
+						<xforms:label ref="label" />
+						<xforms:value ref="value" />
+					</xforms:itemset>
+			</xforms:select1>
+			
+			<xforms:select ref="transmissionMonths" appearance="compact">
+				<xforms:label >Select months</xforms:label>
+				<xforms:itemset model="mod-study-questionnaire"
+					nodeset="instance('ins-month-items')/month">
+					<xforms:label ref="label" />
+					<xforms:value ref="value" />
+				</xforms:itemset>
+			</xforms:select>
+
+		</xforms:group>
+		
+		<xforms:group ref="inclusionExclusionCriteria">
+			<h3 id="inclusionExclusionCriteria">Inclusion/Exclusion Criteria</h3>
+
+			<xforms:input ref="minAge" class="fourWide">
+				<xforms:label class="fixed-wdith">Age min </xforms:label>
+				<xforms:alert>
+					<xforms:output 
+							value="concat('Please enter an age in years for the ', name(), ' field ')"/>
+				</xforms:alert>
+			</xforms:input>
+			<xforms:input ref="maxAge" class="fourWide">
+				<xforms:label>max </xforms:label>
+				<xforms:alert>
+					<xforms:output 
+							value="concat('Please enter an age in years for the ', name(), ' field ')"/>
+				</xforms:alert>
+			</xforms:input>
+<br/>
+			<xforms:input ref="minParasitaemia"  class="fourWide">
+				<xforms:label class="fixed-width" >Parasitaemia min</xforms:label>
+				<xforms:hint>Asexual parasites/µL</xforms:hint>
+			</xforms:input>
+
+			<xforms:input ref="maxParasitaemia"  class="fourWide">
+				<xforms:label >max </xforms:label>
+				<xforms:hint>Asexual parasites/µL</xforms:hint>
+			</xforms:input>
+<br/>
+			<xforms:select1 ref="excludeIfPriorAntimalarials" appearance="minimal">
+				<xforms:label class="fixed-width">Exclude if prior anti-malarials?</xforms:label>
+				<xforms:itemset model="mod-study-questionnaire"
+						nodeset="instance('ins-boolean-items')/boolean">
+						<xforms:label ref="label" />
+						<xforms:value ref="value" />
+					</xforms:itemset>
+			</xforms:select1>
+<br/>
+			<xforms:select1 ref="priorAntimalarials" appearance="minimal">
+				<xforms:label class="fixed-width">Prior anti-malarials</xforms:label>
+				<xforms:item>
+					<xforms:label>Any</xforms:label>
+					<xforms:value>any</xforms:value>
+				</xforms:item>
+				<xforms:itemset model="mod-study-questionnaire"
+						nodeset="instance('ins-drugMolecule-items')/drugMolecule">
+						<xforms:label ref="label" />
+						<xforms:value ref="value" />
+					</xforms:itemset>
+			</xforms:select1>
+<br/>
+			<xforms:select1 ref="priorAntimalarialsDetermination" appearance="minimal">
+				<xforms:label class="fixed-width">How were prior treatments determined?</xforms:label>
+				<xforms:itemset model="mod-study-questionnaire"
+						nodeset="instance('ins-priorAntimalarialsDetermination-items')/priorAntimalarialsDetermination">
+						<xforms:label ref="label" />
+						<xforms:value ref="value" />
+					</xforms:itemset>
+			</xforms:select1>
+			
+			<xforms:input ref="priorAntimalarialsHistoryWeeks">
+				<xforms:label>Number of weeks </xforms:label>
+			</xforms:input>
+
+		</xforms:group>
 
 
 		<p>
