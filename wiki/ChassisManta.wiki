@@ -1,4 +1,4 @@
-#summary about Chassis Manta
+#summary Chassis Manta is a data submission system and repository under development for the WWARN project
 
 = Release Schedule =
 
