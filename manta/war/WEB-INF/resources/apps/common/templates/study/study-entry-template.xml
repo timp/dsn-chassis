@@ -9,6 +9,19 @@
             <end/>
             <pathogens/>
 			<sites/>
+			<transmissionIntensity>
+				<annualParasitologicalIncidence/>
+				<annualParasitologicalIncidenceYear />
+				<parasitePrevalence />
+				<parasitePrevalenceYear />
+				<transmissionIntensityAgeFrom />
+				<transmissionIntensityAgeTo />
+				<entomologicalInoculationRate />
+				<entomologicalInoculationRateYear />
+				<seasonalTransmission />
+				<transmissionMonths/>			
+			</transmissionIntensity>
+			
             <modules/>
             <clinical>
             	<treatments>
