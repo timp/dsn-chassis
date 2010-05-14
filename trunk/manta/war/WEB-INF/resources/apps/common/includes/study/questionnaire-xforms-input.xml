@@ -1,8 +1,14 @@
-<div xmlns:xforms="http://www.w3.org/2002/xforms" xmlns:f="http://orbeon.org/oxf/xml/formatting"
-	xmlns="http://www.w3.org/1999/xhtml" xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
-	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events"
-	xmlns:atom="http://www.w3.org/2005/Atom" xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
-	xmlns:xi="http://www.w3.org/2001/XInclude">
+<div xmlns:xforms="http://www.w3.org/2002/xforms" 
+	xmlns:f="http://orbeon.org/oxf/xml/formatting"
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	xmlns:ev="http://www.w3.org/2001/xml-events"
+	xmlns:atom="http://www.w3.org/2005/Atom" 
+	xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
+	xmlns:ctype="http://www.cggh.org/chassis-types"
+	xmlns:xi="http://www.w3.org/2001/XInclude"
+	>
 
 	<xforms:group model="mod-study-questionnaire"
 		ref="instance('ins-sq-study-entry')/atom:content/study">
@@ -107,25 +113,26 @@
 								</xforms:itemset>
 							</xforms:select1>
 							<br />
-<!--  FIXME when did this break?? -->
 							<!-- if the country has regions, use a select1 -->
 							<xforms:group
-								ref=".[country/text() = instance('ins-countries-items')/country[exists(regions)]/value/text()]">
+								ref=".[country/text() = instance('ins-country-items')/country[exists(regions)]/value/text()]">
 
 								<xforms:select1 ref="region">
 									<xforms:label class="fixed-width">Region: </xforms:label>
 									<xforms:itemset
-										nodeset="instance('ins-countries-items')/country[value/text()=xxforms:context('rep-site')/country/text()]//region">
+										nodeset="instance('ins-country-items')/country[value/text()=xxforms:context('rep-site')/country/text()]//region">
 										<xforms:label ref="label" />
 										<xforms:value ref="value" />
 									</xforms:itemset>
 								</xforms:select1>
 
 							</xforms:group>
+							
+							<!--  TODO Add percentage validation?? -->
 
 							<!-- if the country has no regions, use an input -->
 							<xforms:group
-								ref=".[empty(country/text()) or country/text() = instance('ins-countries-items')/country[empty(regions)]/value/text()]">
+								ref=".[empty(country/text()) or country/text() = instance('ins-country-items')/country[empty(regions)]/value/text()]">
 								<xforms:input ref="region">
 									<xforms:label class="fixed-width">Region: </xforms:label>
 								</xforms:input>
@@ -193,6 +200,22 @@
 							</xforms:select1>
 
 
+							<br />
+							<xforms:input ref="latitude">
+								<xforms:label class="fixed-width">Latitude:</xforms:label>
+								<xforms:alert>
+									<xforms:output 
+										value="concat('Please enter a coordinate value between -180  and 180 for the ', name(), ' field ')"/>
+								</xforms:alert>
+							</xforms:input>
+							<br />
+							<xforms:input ref="longitude">
+								<xforms:label class="fixed-width">Longtude:</xforms:label>
+								<xforms:alert>
+									<xforms:output 
+										value="concat('Please enter a coordinate value between -180 and 180 for the ', name(), ' field ')"/>
+								</xforms:alert>
+							</xforms:input>
 						</td>
 					</tr>
 				</xforms:repeat>
@@ -259,7 +282,6 @@
 						<xforms:value ref="value" />
 					</xforms:itemset>
 				</xforms:select1>
-
 				<xforms:input model="mod-study-questionnaire" ref="co2">
 					<xforms:label>
 						CO
@@ -295,6 +317,10 @@
 				<p>
 					<xforms:input ref="hematocrit">
 						<xforms:label>Hematocrit (%)</xforms:label>
+						<xforms:alert>
+							<xforms:output 
+								value="concat('Please enter an integer value between 0 and 100 for the ', name(), ' field ')"/>
+						</xforms:alert>
 					</xforms:input>
 
 				</p>
@@ -368,16 +394,21 @@
 				<p>
 					<xforms:input ref="serum-finalConcentration">
 						<xforms:label>Serum final concentration (g/L) </xforms:label>
-						<xforms:alert>Please enter an integer value for concentration</xforms:alert>
+						<xforms:alert>
+							<xforms:output 
+								value="concat('Please enter an integer value for the ', name(), ' field ')"/>
+						</xforms:alert>
 					</xforms:input>
 				</p>
 				<p>
 					<xforms:input ref="NaHCO3-finalConcentration">
 						<xforms:label>
-							Final concentration of NaHCO
-							<sub>3</sub>
+							NaHCO<sub>3</sub> final concentration (g/L)
 						</xforms:label>
-						<xforms:alert>Please enter an integer value for concentration</xforms:alert>
+						<xforms:alert>
+							<xforms:output 
+							value="concat('Please enter an integer value for the ', name(), ' field ')"/>
+						</xforms:alert>
 					</xforms:input>
 				</p>
 
@@ -398,7 +429,10 @@
 						<xforms:input ref="hypoxantine-finalConcentration">
 							<xforms:label>Final Hypoxantine concentration (g/L)
 							</xforms:label>
-						<xforms:alert>Please enter an integer value for concentration</xforms:alert>
+							<xforms:alert>
+								<xforms:output 
+									value="concat('Please enter an integer value for the ', name(), ' field ')"/>
+							</xforms:alert>
 						</xforms:input>
 					</p>
 				</xforms:group>
@@ -421,7 +455,10 @@
 						<xforms:input ref="oroticAcid-finalConcentration">
 							<xforms:label>Final Orotic Acid concentration (g/L)
 							</xforms:label>
-							<xforms:alert>Please enter an integer value for concentration</xforms:alert>
+						<xforms:alert>
+							<xforms:output 
+								value="concat('Please enter an integer value for the ', name(), ' field ')"/>
+						</xforms:alert>
 						</xforms:input>
 					</p>
 				</xforms:group>
@@ -431,7 +468,6 @@
 					<p>
 						<xforms:select1 ref="glucose-added" appearance="minimal">
 							<xforms:label>Do you add glucose?</xforms:label>
-							<xforms:alert>Please select a value</xforms:alert>
 							<xforms:itemset model="mod-study-questionnaire"
 								nodeset="instance('ins-boolean-items')/boolean">
 								<xforms:label ref="label" />
@@ -442,7 +478,10 @@
 					<p>
 						<xforms:input ref="glucose-finalConcentration">
 							<xforms:label>Final glucose concentration (g/L)</xforms:label>
-							<xforms:alert>Please enter an integer value for concentration</xforms:alert>
+							<xforms:alert>
+								<xforms:output 
+									value="concat('Please enter an integer value for the ', name(), ' field ')"/>
+							</xforms:alert>
 						</xforms:input>
 					</p>
 				</xforms:group>
@@ -494,8 +533,11 @@
 									</p>
 									<p>
 										<xforms:input ref="antiBioticFinalConcentration">
-											<xforms:label>Final concentration (g/L)</xforms:label>
-											<xforms:alert>Please enter an integer value for concentration</xforms:alert>
+											<xforms:label>AntiBiotic final concentration (g/L)</xforms:label>
+											<xforms:alert>
+												<xforms:output 
+													value="concat('Please enter an integer value for the ', name(), ' field ')"/>
+											</xforms:alert>
 										</xforms:input>
 									</p>
 								</td>
@@ -631,7 +673,10 @@
 
 								<xforms:input ref="solventFinalConcentration">
 									<xforms:label>Solvent final concentration (g/L)</xforms:label>
-									<xforms:alert>Please enter an integer value for concentration</xforms:alert>
+									<xforms:alert>
+										<xforms:output 
+											value="concat('Please enter an integer value for the ', name(), ' field ')"/>
+									</xforms:alert>
 								</xforms:input>
 
 								<br />
