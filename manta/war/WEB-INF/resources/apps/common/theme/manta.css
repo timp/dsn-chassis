@@ -145,3 +145,8 @@ h2.subtitle {
 ul {
     padding-left: 2em;
 }
+
+
+.year .xforms-input-input {
+	width: 4em;
+}
