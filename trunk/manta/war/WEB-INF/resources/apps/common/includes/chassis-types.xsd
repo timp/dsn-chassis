@@ -18,5 +18,18 @@
       <xs:maxInclusive value="180"/>
     </xs:restriction>
    </xs:simpleType>
+   <xs:simpleType name="age">
+    <xs:restriction base="xs:integer">
+      <xs:minInclusive value="0"/>
+      <xs:maxInclusive value="125"/>
+    </xs:restriction>
+   </xs:simpleType>
+   <xs:simpleType name="recentYear">
+    <xs:restriction base="xs:integer">
+      <xs:minInclusive value="1920"/>
+      <!--FIXME  Break in 2021 ?? -->
+      <xs:maxInclusive value="2020"/>
+    </xs:restriction>
+   </xs:simpleType>
 </xs:schema>
 
