@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+ xmlns:xs="http://www.w3.org/2001/XMLSchema"
+ xmlns:ctype="http://www.cggh.org/chassis-types"
+ targetNamespace="http://www.cggh.org/chassis-types"
+ elementFormDefault="qualified" 
+ attributeFormDefault="unqualified"
+ >
+   <xs:simpleType name="percentage">
+    <xs:restriction base="xs:integer">
+      <xs:minInclusive value="0"/>
+      <xs:maxInclusive value="100"/>
+    </xs:restriction>
+   </xs:simpleType>
+   <xs:simpleType name="coordinate">
+    <xs:restriction base="xs:double">
+      <xs:minInclusive value="-180"/>
+      <xs:maxInclusive value="180"/>
+    </xs:restriction>
+   </xs:simpleType>
+</xs:schema>
+

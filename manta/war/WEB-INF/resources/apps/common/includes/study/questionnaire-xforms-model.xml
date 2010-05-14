@@ -7,8 +7,12 @@
 	xmlns:atom="http://www.w3.org/2005/Atom"
 	xmlns:fr="http://orbeon.org/oxf/xml/form-runner" 
 	xmlns:xi="http://www.w3.org/2001/XInclude"
+	xmlns:ctype="http://www.cggh.org/chassis-types"
 	xxforms:readonly-appearance="static" 
-	id="mod-study-questionnaire">
+	id="mod-study-questionnaire"
+	schema="../chassis-types.xsd"
+	>
+
 
 	<xforms:instance id="ins-sq-study-entry"
 		src="/apps/common/templates/study/study-entry-template.xml">
@@ -28,7 +32,12 @@
 			<xforms:bind nodeset="sites">
 				<xforms:bind nodeset="site">
 					<xforms:bind nodeset="country" required="true()"/>
-					<xforms:bind nodeset="siteCode" />
+
+					<xforms:bind nodeset="latitude" 
+									type="ctype:coordinate" />
+					<xforms:bind nodeset="longitude" 
+									type="ctype:coordinate" />
+					
 					<xforms:bind nodeset="testingDelay"
 						relevant="contains(../../../modules, 'invitro')" />
 					<xforms:bind nodeset="anticoagulant"
@@ -48,7 +57,7 @@
 					<xforms:bind nodeset="co2"
 						relevant="contains(../incubatorSystem, 'co2incubator')" />
 					<xforms:bind nodeset="healthyErythrocytesSource" />
-					<xforms:bind nodeset="hematocrit" />
+					<xforms:bind nodeset="hematocrit" type="ctype:percentage"/>
 					<xforms:bind nodeset="bloodGroup" />
 				</xforms:bind>
 				<xforms:bind nodeset="medium">
@@ -61,25 +70,29 @@
 						<xforms:bind nodeset="hypoxantine-added" />
 						<xforms:bind nodeset="hypoxantine-finalConcentration"
 							relevant="contains(../hypoxantine-added,'yes')" 
-							type="xs:integer" required="true()"/>
+							type="xs:integer"
+							required="true()"/>
 					</xforms:bind>
 					<xforms:bind nodeset="oroticAcid">
 						<xforms:bind nodeset="oroticAcid-added" />
 						<xforms:bind nodeset="oroticAcid-finalConcentration"
 							relevant="contains(../oroticAcid-added,'yes')" 
-							type="xs:integer" required="true()"/>
+							type="xs:integer"
+							required="true()"/>
 					</xforms:bind>
 					<xforms:bind nodeset="glucose">
 						<xforms:bind nodeset="glucose-added" />
 						<xforms:bind nodeset="glucose-finalConcentration"
 							relevant="contains(../glucose-added,'yes')" 
-							type="xs:integer" required="true()"/>
+							type="xs:integer"
+							required="true()"/>
 					</xforms:bind>
 					<xforms:bind nodeset="antiBiotics">
 						<xforms:bind nodeset="antiBiotic">
 							<xforms:bind ref="antiBioticName" required="true()" />
 							<xforms:bind ref="antiBioticFinalConcentration"
-								type="xs:integer" required="true()" />
+								type="xs:integer"
+								required="true()" />
 						</xforms:bind>
 					</xforms:bind>
 					<xforms:bind nodeset="susceptibility">
