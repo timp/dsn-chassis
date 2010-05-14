@@ -146,6 +146,24 @@ declare function config:default-collection-acl(
             </rules>
         </acl>
         
+    else if ( $request-path-info = "/drafts" )
+
+    then
+
+        <acl>
+            <rules>
+                <!-- submitters can create drafts and can list the collection -->
+                <allow>
+                    <role>ROLE_CHASSIS_SUBMITTER</role>
+                    <operation>create-member</operation>
+                </allow>
+                <allow>
+                    <role>ROLE_CHASSIS_SUBMITTER</role>
+                    <operation>list-collection</operation>
+                </allow>
+            </rules>
+        </acl>
+        
     else
 
         (: TODO other collections :)
@@ -199,6 +217,27 @@ declare function config:default-resource-acl(
                 <allow>
                     <group>submitters</group>
                     <operation>update-member</operation>
+                </allow>
+    		</rules>
+    	</acl>
+    	
+    else if ( starts-with( $request-path-info , "/drafts" ) )
+
+    then
+
+    	<acl>
+    		<rules>
+                <allow>
+                    <user>{$user}</user>
+                    <operation>retrieve-member</operation>
+                </allow>
+                <allow>
+                    <user>{$user}</user>
+                    <operation>update-member</operation>
+                </allow>
+                <allow>
+                    <user>{$user}</user>
+                    <operation>delete-member</operation>
                 </allow>
     		</rules>
     	</acl>

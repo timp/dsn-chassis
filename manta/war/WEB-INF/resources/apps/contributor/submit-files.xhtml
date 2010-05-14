@@ -1,0 +1,560 @@
+<!--
+  Copyright (C) 2010 University of Oxford.
+  
+  This program is free software; you can redistribute it and/or modify it under the terms of the
+  GNU Lesser General Public License as published by the Free Software Foundation; either version
+  2.1 of the License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Lesser General Public License for more details.
+
+  The full text of the license is available at http://www.gnu.org/copyleft/lesser.html
+  -->
+<html 
+	xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:f="http://orbeon.org/oxf/xml/formatting" 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:atom="http://www.w3.org/2005/Atom"
+    xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:manta="http://www.cggh.org/2010/chassis/manta/xmlns">
+
+    <head>
+    
+        <title>Manta Data Management - Submitter - Submit Files</title>
+        <link rel="stylesheet" type="text/css" href="/apps/submitter/common/style.css"></link>
+        <link rel="stylesheet" type="text/css" href="/ops/yui/tabview/assets/skins/sam/tabview.css"></link>
+        
+        <xforms:model id="mod-main">
+
+			<!--+
+				|
+				| Control instance.
+				|
+				+-->       		
+			       		
+       		<xforms:instance id="ins-control">
+                <control xmlns="">
+                    <next-upload/>
+                    <upload-files/>
+                    <next-confirm/>
+                    <confirm/>
+                </control>
+            </xforms:instance>
+        	
+            <xforms:bind nodeset="instance('ins-control')">
+                <xforms:bind nodeset="next-upload" readonly="instance('ins-form-data')/study = ''"/>
+                <xforms:bind nodeset="next-confirm" readonly="empty(instance('ins-form-data')//upload) or exists(instance('ins-form-data')//upload[empty(text())])"/>
+                
+                <!-- <xforms:bind nodeset="upload-files" relevant="exists(instance('ins-form-data')//upload[empty(text())])"/> -->
+                <xforms:bind nodeset="confirm" readonly="instance('ins-form-data')/accept-terms != true()"/>
+            </xforms:bind>
+
+
+
+			<!--+
+				|
+				| Instance and submission to retrieve and store list of studies.
+				|
+				+-->       		
+			       		
+			<xforms:instance id="ins-study-feed">
+				<atom:feed/>
+			</xforms:instance>
+			
+			<xforms:submission 
+				id="sub-get-study-feed"
+				resource="/atombeat/content/studies"
+				method="get"
+				ref="instance('ins-noparams')"
+				replace="instance"
+				instance="ins-study-feed">
+				<!-- TODO error handling -->
+                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving studies!</xforms:message>
+			</xforms:submission>
+
+			<xforms:send ev:event="xforms-model-construct-done" submission="sub-get-study-feed"/>
+
+
+
+			<!--+
+				| Instance to store form data.
+				+ -->
+				
+			<xforms:instance id="ins-form-data">
+				<data xmlns="">
+					<study/>
+					<uploads target="">
+						<upload
+							filename=""
+							mediatype=""
+							size=""
+							typeterm=""
+							typelabel=""
+							xsi:type="xs:anyURI"></upload>
+					</uploads>
+					<accept-terms>false</accept-terms>
+				</data>
+			</xforms:instance>
+			
+			<xforms:bind nodeset="instance('ins-form-data')">
+				<xforms:bind nodeset="study" required="true()"/>	
+				<xforms:bind nodeset="accept-terms" type="xforms:boolean"/>	
+				<xforms:bind nodeset="uploads">
+					<xforms:bind nodeset="@target" calculate="instance('ins-study-feed')/atom:entry[atom:id=instance('ins-form-data')/study]/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/submittedMedia']/@href"/>	
+					<xforms:bind nodeset="upload">
+						<xforms:bind nodeset="@typeterm" relevant="not(empty(../text()))" required="true()"/>
+						<xforms:bind nodeset="@typelabel" relevant="../@typeterm='http://www.cggh.org/2010/chassis/terms/Other'"/>
+					</xforms:bind>
+				</xforms:bind>
+			</xforms:bind>
+			
+			<xforms:instance id="ins-upload-template">
+				<upload
+					xmlns=""
+					filename=""
+					mediatype=""
+					size=""
+					typeterm=""
+					typelabel=""
+					xsi:type="xs:anyURI"></upload>
+			</xforms:instance>
+			
+			<xforms:instance id="ins-file-terms" src="/apps/common/constants/file-terms.xml"/>
+
+            <!-- background upload submission -->
+            <xforms:submission 
+            	id="sub-background-upload" 
+            	ref="instance('ins-form-data')/uploads" 
+            	method="post" 
+            	replace="none" 
+            	resource="test:"
+            	validate="false"/>
+
+			<!-- final submission -->
+			<xforms:submission 
+				id="sub-confirm" 
+				ref="instance('ins-form-data')/uploads" 
+				method="post" 
+				resource="/util/store-uploads"
+				replace="instance"
+				instance="ins-confirmation">
+				<!-- TODO proper error handling -->
+                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>).</xforms:message>
+                <xforms:toggle ev:event="xforms-submit-done" case="success"/>
+                <xforms:send ev:event="xforms-submit-done" submission="sub-get-study-entry"/>
+			</xforms:submission>
+			
+			<xforms:submission
+				id="sub-get-study-entry"
+				ref="instance('ins-noparams')"
+				method="get"
+				resource="{instance('ins-form-data')/study}"
+				replace="instance"
+				instance="ins-study-entry">
+				<!-- copy data across to study questionnaire model -->	
+				<xforms:insert ev:event="xforms-submit-done" nodeset="xxforms:instance('ins-sq-study-entry')" origin="instance('ins-study-entry')"/>
+                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>).</xforms:message>
+			</xforms:submission>
+			
+			<xforms:instance id="ins-study-entry">
+				<atom:entry/>
+			</xforms:instance>
+				
+			<xforms:instance id="ins-confirmation">
+				<atom:feed/>
+			</xforms:instance>
+			
+			<xforms:action ev:event="xforms-model-construct-done">
+           		<xforms:setvalue ref="instance('ins-form-data')/study" value="xxforms:get-request-parameter('study')"/>
+			</xforms:action>
+			
+        	<xforms:instance id="ins-noparams">
+        		<params/>
+        	</xforms:instance>
+            
+        </xforms:model>
+
+       	<xi:include href="/apps/common/includes/study/questionnaire-xforms-model.xml"/>
+       	<xi:include href="/apps/common/includes/current-user-xforms-model.xml"/>
+
+        
+        <style type="text/css">
+        </style>
+        
+    </head>
+    
+    <body>
+    
+
+
+		<xi:include href="/apps/common/includes/current-user-actions.xml"/>
+    	
+    	
+    	
+		<!--+
+			|
+			| Main page content.
+			|
+			+-->       		
+			       		
+    	<div id="content">
+    	
+	    	<h1><a href="home">Submitter</a> - Submit Files</h1>
+
+	    	<xforms:switch>
+	    		
+
+
+				<!--+
+					|
+					| Step 1 - Select Study
+					| *********************
+					|
+					+-->       		
+			       		
+	    		<xforms:case id="study" selected="true">
+	    		
+				   	<div class="help">
+				   		<h2>Help</h2>
+				   		<p>TODO</p>
+				   	</div>
+				   	
+		            <table cellpadding="3" class="wizard">
+		                <tr>
+		                    <td rowspan="3" class="wizard-td">1</td>
+		                    <td colspan="1"><b>Step 1 of 3 - Select Study</b></td>
+		                </tr>
+		                <tr>
+		                    <td>
+		                    
+		                        <xforms:select1
+		                        	appearance="minimal"
+		                        	ref="instance('ins-form-data')/study">
+		                        	<xforms:label/>
+		                        	<xforms:alert>A study must be selected.</xforms:alert>
+		                        	<xforms:item>
+		                        		<xforms:label>select a study...</xforms:label>
+		                        		<xforms:value/>
+		                        	</xforms:item>	
+		                        	<xforms:itemset nodeset="instance('ins-study-feed')/atom:entry">
+		                        		<xforms:label ref="concat( manta:id , ' - ' , atom:title )"/>
+		                        		<xforms:value ref="atom:link[@rel='self']/@href"/>
+		                        	</xforms:itemset>
+	                        	</xforms:select1>
+		                        
+		                    </td>
+		                </tr>
+		                <tr>
+		                    <td>
+		                        <xforms:trigger ref="instance('ins-control')/next-upload">
+		                            <xforms:label>Next ></xforms:label>
+		                            <xforms:toggle ev:event="DOMActivate" case="upload"/>
+		                        </xforms:trigger>
+		                    </td>
+		                </tr>
+		            </table>
+	
+	    		</xforms:case>
+
+
+
+				<!--+
+					|
+					| Step 2 - Upload Files
+					| *********************
+					|
+					+-->       		
+			       		
+	    		<xforms:case id="upload">
+
+				   	<div class="help">
+				   		<h2>Help</h2>
+				   		<p>TODO</p>
+				   	</div>
+				   	
+		            <table cellpadding="3" class="wizard">
+		                <tr>
+		                    <td rowspan="3" class="wizard-td">2</td>
+		                    <td colspan="1"><b>Step 2 of 3 - Upload Files</b></td>
+		                </tr>
+		                <tr>
+		                    <td>
+								<xforms:group ref="instance('ins-form-data')/uploads">
+								
+									<table class="repeat-table">
+										<tr>
+											<td>
+							                    <xforms:trigger appearance="minimal">
+							                        <xforms:label><img src="/apps/submitter/common/add.gif"/></xforms:label>
+							                        <xforms:insert 
+							                        	ev:event="DOMActivate" 
+							                        	context="instance('ins-form-data')/uploads" 
+							                        	nodeset="upload" 
+							                        	at="1" 
+							                        	position="before" 
+							                        	origin="instance('ins-upload-template')"/>
+							                    </xforms:trigger>
+											</td>
+											<td class="add-td">
+							                    <xforms:trigger appearance="minimal">
+							                        <xforms:label>Add a File</xforms:label>
+							                        <xforms:insert 
+							                        	ev:event="DOMActivate" 
+							                        	context="instance('ins-form-data')/uploads" 
+							                        	nodeset="upload" 
+							                        	at="1" 
+							                        	position="before" 
+							                        	origin="instance('ins-upload-template')"/>
+							                    </xforms:trigger>
+											</td>
+										</tr>
+										<xforms:repeat nodeset="upload" id="upload-repeat">
+											<tr>
+												<td>
+							                        <xforms:trigger appearance="minimal">
+							                            <xforms:delete 
+							                            	ev:event="DOMActivate" 
+								                        	context="instance('ins-form-data')/uploads" 
+								                        	nodeset="upload" 
+							                            	at="index('upload-repeat')"/>
+							                            <xforms:label><img src="/apps/submitter/common/remove.gif"/></xforms:label>
+							                        </xforms:trigger>
+												</td>
+												<td class="form-td">
+							                        <!-- Upload field -->
+							                        <xforms:upload ref="." xxforms:size="60">
+							                            <xforms:filename ref="@filename"/>
+							                            <xforms:mediatype ref="@mediatype"/>
+							                            <xxforms:size ref="@size"/>
+							                            <xforms:send ev:event="xforms-select" submission="sub-background-upload"/>
+							                        </xforms:upload>
+							                        <br/>
+							                        <!-- Download link -->
+							                        <xforms:output value="." appearance="xxforms:download">
+							                            <xforms:filename ref="@filename"/>
+							                            <xforms:mediatype ref="@mediatype"/>
+							                            <xforms:label>Download</xforms:label>
+							                        </xforms:output>
+							                        <br/>
+													<xforms:select1 ref="@typeterm" appearance="minimal">
+														<xforms:alert>A file type must be selected.</xforms:alert>
+														<xforms:item>
+															<xforms:value></xforms:value>
+															<xforms:label>select a file type...</xforms:label>
+														</xforms:item>
+							                        	<xforms:itemset nodeset="instance('ins-file-terms')/term">
+							                        		<xforms:label ref="label"/>
+							                        		<xforms:value ref="value"/>
+							                        	</xforms:itemset>
+													</xforms:select1>
+													<xforms:input ref="@typelabel">
+														<xforms:label>Other type: </xforms:label>
+													</xforms:input>
+							                        
+												</td>
+											</tr>
+										</xforms:repeat>
+									</table>
+									
+								</xforms:group>
+		                    </td>
+		                </tr>
+		                <tr>
+		                    <td>
+		                        <xforms:trigger>
+		                            <xforms:label>&lt; Previous</xforms:label>
+		                            <xforms:toggle ev:event="DOMActivate" case="study"/>
+		                        </xforms:trigger>
+		                        <xforms:trigger ref="instance('ins-control')/next-confirm">
+		                            <xforms:label>Next ></xforms:label>
+		                            <xforms:toggle ev:event="DOMActivate" case="confirm"/>
+		                        </xforms:trigger>
+		                    </td>
+		                </tr>
+		            </table>
+		            
+	    		</xforms:case>
+
+
+
+				<!--+
+					|
+					| Step 3 - Confirm
+					| ****************
+					|
+					+-->       		
+			       		
+	    		<xforms:case id="confirm">
+
+				   	<div class="help">
+				   		<h2>Help</h2>
+				   		<p>TODO</p>
+				   	</div>
+				   	
+		            <table cellpadding="3" class="wizard">
+		                <tr>
+		                    <td rowspan="3" class="wizard-td">3</td>
+		                    <td colspan="1"><b>Step 3 of 3 - Review and Confirm</b></td>
+		                </tr>
+		                <tr>
+		                    <td>
+		                    	<h2>Study</h2>
+		                    	<xforms:group ref="instance('ins-study-feed')/atom:entry[atom:link[@rel='self']/@href = instance('ins-form-data')/study]">
+			                    	<p>
+			                    		<strong>
+			                    		<xforms:output value="manta:id"/> -
+			                    		<xforms:output value="atom:title"/>
+			                    		</strong>
+			                    	</p>
+		                    	</xforms:group>
+		                    	<h2>Files</h2>
+								<xforms:group ref="instance('ins-form-data')/uploads">
+								
+									<table class="repeat-table">
+										<xforms:repeat nodeset="upload" id="output-upload-repeat">
+											<tr>
+												<td class="form-td">
+							                        <xforms:output value="@filename"/>
+							                        (<xforms:output value="instance('ins-file-terms')/term[value=xxforms:context('output-upload-repeat')/@typeterm]/label"/>)
+							                        <br/>
+							                        <!-- Download link -->
+							                        <xforms:output value="." appearance="xxforms:download">
+							                            <xforms:filename ref="@filename"/>
+							                            <xforms:mediatype ref="@mediatype"/>
+							                            <xforms:label>Download</xforms:label>
+							                        </xforms:output>
+												</td>
+											</tr>
+										</xforms:repeat>
+									</table>
+								</xforms:group>
+								<h2>Terms of Submission</h2>
+		                    	<xforms:input ref="instance('ins-form-data')/accept-terms">
+		                    		<xforms:label>I have read, understood and accept the <strong><a href="TODO">terms of submission</a></strong>: </xforms:label>
+		                    	</xforms:input>
+		                    </td>
+		                </tr>
+		                <tr>
+		                    <td>
+		                        <xforms:trigger>
+		                            <xforms:label>&lt; Previous</xforms:label>
+		                            <xforms:toggle ev:event="DOMActivate" case="upload"/>
+		                        </xforms:trigger>
+			                    <xforms:submit submission="sub-confirm" ref="instance('ins-control')/confirm">
+			                        <xforms:label>Confirm</xforms:label>
+			                    </xforms:submit>
+		                    </td>
+		                </tr>
+		            </table>
+	    		</xforms:case>
+	    		
+	    		
+	    		
+				<!--+
+					|
+					| Success Case
+					| ************
+					|
+					+-->       		
+			       		
+	    		<xforms:case id="success">
+	    		
+				   	<div class="help">
+				   		<h2>Help</h2>
+		    			<xforms:group ref="instance('ins-study-feed')/atom:entry[atom:link[@rel='edit']/@href = instance('ins-form-data')/study]">
+				    		<p>You can check the progress of your files at any time by clicking on your unique study code - 
+				    		<strong><a href="study-files?study={atom:link[@rel='edit']/@href}"><xforms:output value="manta:id"/></a></strong>.</p>
+							<p>Other links: 
+								<a href="home">Submitter Home</a> | 
+								<a href="study-files?study={atom:link[@rel='edit']/@href}">Study <xforms:output value="manta:id"/></a> | 
+								<a href="submit-files?study={atom:link[@rel='edit']/@href}">Submit More Files</a> | 
+								<a href="create-study">Create a Study</a>
+							</p>
+						</xforms:group>
+				   	</div>
+				   	
+	    			<h2>Success</h2>
+	    			
+	    			<xforms:group ref="instance('ins-study-feed')/atom:entry[atom:link[@rel='edit']/@href = instance('ins-form-data')/study]">
+						<p>
+							Thank you for submitting the following files for 
+							<strong>
+								<a href="study-files?study={atom:link[@rel='edit']/@href}">
+									Study 
+									<xforms:output value="manta:id"/>
+									- 	
+									<xforms:output value="atom:title"/></a></strong>.
+						</p>
+	    			</xforms:group>
+
+			    	<fr:datatable paginated="false">
+			    		<thead>
+			    			<tr>
+			    				<th>Code</th>
+			    				<th>Original File Name</th>
+			    				<th>Submitted</th>
+			    				<th>Actions</th>
+			    			</tr>
+			    		</thead>
+			    		<tbody>
+			    			<xforms:repeat nodeset="instance('ins-confirmation')/atom:entry">
+			    				<tr>
+			    					<td>
+			    						<xforms:output ref="manta:id"/>
+			    					</td>
+			    					<td>
+			    						<xforms:output ref="atom:title"/>
+			    					</td>
+			    					<td>
+			    						<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[M01]/[D01]/[Y]')"/>
+			    					</td>
+			    					<td><a href="{atom:content/@src}">Download</a></td>
+			    				</tr>
+			    			</xforms:repeat>
+			    		</tbody>
+			    	</fr:datatable>
+			    	
+	    			<xforms:group ref="instance('ins-study-feed')/atom:entry[atom:link[@rel='edit']/@href = instance('ins-form-data')/study]">
+
+				    	<h3>What Next?</h3>
+				    	
+				    	<ul>
+				    		<li>Your files will be reviewed by a curator and transformed into a standardised format.</li>
+				    	</ul> 
+
+						<p>Please also review the <strong><a href="study-questionnaire?study={atom:link[@rel='edit']/@href}">study questionnaire</a></strong> below and check that the information for your study is correct.</p> 
+
+	                    <hr/>
+	                    <h2>Study Questionnaire</h2>
+						<p>If you'd rather review the <strong><a href="study-questionnaire?study={atom:link[@rel='edit']/@href}">study questionnaire</a></strong> later, that's fine, you can visit the study questionnaire at any time by clicking on your unique study code - <strong><a href="study-questionnaire?study={atom:link[@rel='edit']/@href}"><xforms:output value="manta:id"/></a></strong>.
+						</p>
+					</xforms:group>
+                    
+
+		    		<div class="yui-navset yui-navset-top">
+		    		
+		    			<div class="yui-content">
+		
+					       	<xi:include href="/apps/common/includes/study/questionnaire-xforms-input.xml"/>
+		
+		    			</div>
+		    			
+		    		</div>
+	    			
+	    		</xforms:case>
+	    		
+	
+	    	</xforms:switch>
+	    	
+		</div>
+
+    </body>
+    
+</html>
+

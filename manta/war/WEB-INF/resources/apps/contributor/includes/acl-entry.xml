@@ -1,0 +1,26 @@
+<atom:entry xmlns:atom="http://www.w3.org/2005/Atom">
+	<atom:content type="application/vnd.atombeat+xml">
+			<acl xmlns="">
+				<groups>
+					<group name="administrators">
+						<user></user>
+					</group>
+			</groups>
+			<rules>
+			    <!-- administrators can retrieve, update and change sharing -->
+	            <allow>
+	                <group>administrators</group>
+	                <operation>retrieve-member</operation>
+	            </allow>
+	            <allow>
+	                <group>administrators</group>
+	                <operation>update-member</operation>
+	            </allow>
+	            <allow>
+	                <group>administrators</group>
+	                <operation>update-acl</operation>
+	            </allow>
+			</rules>
+		</acl>
+	</atom:content>
+</atom:entry>

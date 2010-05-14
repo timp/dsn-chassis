@@ -1,0 +1,152 @@
+<div 
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:xforms="http://www.w3.org/2002/xforms" 
+	xmlns:ev="http://www.w3.org/2001/xml-events">
+
+	<h2>(6) Review</h2>
+
+
+ 	<table>
+          <tr>
+              <td>
+              	<h2>1. Study Terms
+              		<span class="mini-action">
+                    <xforms:trigger appearance="minimal">
+                    	<xforms:label>[edit]</xforms:label>
+                        <xforms:toggle ev:event="DOMActivate" case="title"/>
+                       </xforms:trigger>
+                      </span>
+              	</h2>
+                  <strong><xforms:output value="instance('ins-study-entry')/atom:title"/></strong>
+                  <xforms:group ref="instance('ins-study-entry')/atom:title[empty(text())]">
+                  	(empty)
+                  </xforms:group>
+                  
+                  <h2>2. Acknowledgements
+              		<span class="mini-action">
+                    <xforms:trigger appearance="minimal">
+                    	<xforms:label>[edit]</xforms:label>
+                        <xforms:toggle ev:event="DOMActivate" case="acknowledgements"/>
+                       </xforms:trigger>
+                      </span>
+                  </h2>
+                  
+              	<xforms:group ref="instance('ins-study-entry')/atom:content/study/acknowledgements">
+              	
+	<table class="repeat-table">
+		<xforms:repeat nodeset="person">
+			<tr>
+				<td class="form-td">
+					<xforms:output value="given-name"/>
+					<xforms:output value="family-name"/>
+					- <xforms:output value="email"/>
+					- <xforms:output value="organisation"/>
+				</td>
+			</tr>
+		</xforms:repeat>
+	</table>
+	
+</xforms:group>		                        
+
+              	<xforms:group ref="instance('ins-study-entry')/atom:content/study/acknowledgements[empty(person)]">
+	no acknowledgements									
+</xforms:group>		                        
+                  
+                  <h2>
+                  	3. Publications
+              		<span class="mini-action">
+                    <xforms:trigger appearance="minimal">
+                    	<xforms:label>[edit]</xforms:label>
+                        <xforms:toggle ev:event="DOMActivate" case="publications"/>
+                       </xforms:trigger>
+                      </span>
+                  </h2>
+                  
+              	<xforms:group ref="instance('ins-study-entry')/atom:content/study">
+              	
+	<xforms:group ref="publications">
+	
+		<table class="repeat-table">
+			<xforms:repeat nodeset="publication">
+				<tr>
+					<td class="form-td">
+						<xforms:output value="title">
+							<xforms:label class="fixed-width">Title:</xforms:label>
+						</xforms:output>
+						<br/>
+						<xforms:output value="first-author">
+							<xforms:label class="fixed-width">First author:</xforms:label>
+						</xforms:output>
+						<br/>
+						<xforms:output value="year">
+							<xforms:label class="fixed-width">Year:</xforms:label>
+						</xforms:output>
+						<br/>
+						<xforms:output value="journal">
+							<xforms:label class="fixed-width">Journal:</xforms:label>
+						</xforms:output>
+						<br/>
+						<xforms:output value="url">
+							<xforms:label class="fixed-width">Web link:</xforms:label>
+						</xforms:output>
+						<br/>
+						<xforms:output value="doi">
+							<xforms:label class="fixed-width">DOI:</xforms:label>
+						</xforms:output>
+						<br/>
+					</td>
+				</tr>
+			</xforms:repeat>
+		</table>
+	
+	</xforms:group>
+	
+	<xforms:group ref="publications[empty(publication)]">
+	no publications
+	</xforms:group>
+
+              	</xforms:group>
+
+              	<h2>
+               	4. Permissions 
+               	<span class="mini-action">
+                    <xforms:trigger appearance="minimal">
+                    	<xforms:label>[edit]</xforms:label>
+                        <xforms:toggle ev:event="DOMActivate" case="permissions"/>
+                       </xforms:trigger>
+                      </span>
+              	</h2>
+              	
+              	<h3>Administrators</h3>
+<table class="repeat-table">
+	<xforms:repeat nodeset="instance('ins-acl')//groups/group[@name='owners']/user">
+		<tr>
+			<td class="form-td">
+				<xforms:output value=".">
+				</xforms:output>
+			</td>
+		</tr>
+	</xforms:repeat>
+</table>
+
+				<xforms:group ref="instance('ins-acl')//groups/group[@name='submitters' and empty(user)]">
+				no submitters
+				</xforms:group>
+
+              </td>
+          </tr>
+      </table>
+
+
+	<p>
+		<xforms:trigger>
+			<xforms:label>Confirm</xforms:label>
+			<xforms:action ev:event="DOMActivate">
+				<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane" value="'confirmation'"/>
+			</xforms:action>
+		</xforms:trigger>
+
+	</p>
+
+
+</div>

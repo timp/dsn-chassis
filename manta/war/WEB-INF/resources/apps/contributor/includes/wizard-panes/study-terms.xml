@@ -1,0 +1,52 @@
+<div 
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:xforms="http://www.w3.org/2002/xforms" 
+	xmlns:ev="http://www.w3.org/2001/xml-events"
+	xmlns:xxforms="http://orbeon.org/oxf/xml/xforms">
+	
+	<h2>(1) Study Terms</h2>
+
+	<p>
+		<xforms:input ref="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:title">
+			<xforms:label>Study Title:</xforms:label>
+			<xforms:alert>The title is required.</xforms:alert>
+		</xforms:input>
+	</p>
+	
+	<p>
+		<xforms:textarea ref="instance('ins-draft-entry')/atom:content/draft/terms">
+			<xforms:label>Terms of Submission:</xforms:label>
+		</xforms:textarea>
+	</p>
+	
+	<p>
+		<xforms:select ref="instance('ins-draft-entry')/atom:content/draft/agreement-to-terms" appearance="full">
+               
+			<xforms:item ref="instance('ins-draft-entry')/atom:content/draft/agreement-to-terms">
+				<xforms:label>I accept the terms of submission:</xforms:label>
+				<xforms:value>agreed</xforms:value>
+			</xforms:item>
+			
+			<xforms:alert>Agreement to the terms of submission is required.</xforms:alert>
+		
+		</xforms:select>	
+	</p>
+
+	<p>
+		<xforms:trigger>
+			<xforms:label>Next &gt;</xforms:label>
+			<xforms:action ev:event="DOMActivate">
+			
+				<!-- Copy the study title to the draft entry title. -->
+				<xforms:setvalue ref="instance('ins-draft-entry')/atom:title" value="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:title"/>
+				
+				<xforms:send ev:event="DOMActivate" submission="sub-put-draft-entry" />
+
+
+			</xforms:action>
+		</xforms:trigger>
+	</p>
+	
+
+
+</div>

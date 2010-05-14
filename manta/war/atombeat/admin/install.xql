@@ -17,7 +17,12 @@ declare variable $collection-spec :=
             <title>Studies</title>
             <path-info>/studies</path-info>
             <enable-history>true</enable-history>
-        </collection>   
+        </collection>
+        <collection>
+            <title>Drafts</title>
+            <path-info>/drafts</path-info>
+            <enable-history>false</enable-history>
+        </collection>
     </spec>
 ;
 
