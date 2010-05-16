@@ -370,10 +370,52 @@
 		</p>
 
 		<xforms:group ref="clinical">
-
 			<h2>Clinical Questions</h2>
 
-			<p>TODO</p>
+				<h3 >Treatments</h3>
+ 				
+ 				<xforms:group ref="treatment">
+ 						<h5>Treatment regimens</h5>
+ 						<xforms:group ref="regimens" repeatable="yes">
+	 						<xforms:group ref="regimen">
+ 								<xforms:input ref="regimenName">
+									<xforms:label>Regimen name</xforms:label>
+ 								</xforms:input>
+ 								<br/>
+								<xforms:select1 ref="regimenSupervision" appearance="minimal">
+									<xforms:label class="fixed-width">Supervision</xforms:label>
+									<xforms:itemset model="mod-study-questionnaire"
+											nodeset="instance('ins-supervisionType-items')/supervisionType">
+										<xforms:label ref="label" />
+										<xforms:value ref="value" />
+									</xforms:itemset>
+								</xforms:select1>
+ 								<br/>
+ 								<xforms:input ref="regimenUrl">
+									<xforms:label>Regimen description url</xforms:label>
+								</xforms:input>
+	 						</xforms:group>
+ 						</xforms:group>
+						<br/>
+						<xforms:select1 appearance="minimal" ref="regimenAllocationMethod">
+							<xforms:label>Regimen allocation</xforms:label>
+							<xforms:itemset model="mod-study-questionnaire"
+									nodeset="instance('ins-regimenAllocationMethod-items')/regimenAllocationMethod">
+								<xforms:label ref="label" />
+								<xforms:value ref="value" />
+							</xforms:itemset>
+						</xforms:select1>
+ 							
+						<br/>
+						<xforms:select1 appearance="minimal" ref="blinding">
+							<xforms:label>Blinding</xforms:label>
+							<xforms:itemset model="mod-study-questionnaire"
+									nodeset="instance('ins-blinding-items')/blinding">
+								<xforms:label ref="label" />
+								<xforms:value ref="value" />
+							</xforms:itemset>
+						</xforms:select1>
+ 				</xforms:group>			
 
 		</xforms:group>
 

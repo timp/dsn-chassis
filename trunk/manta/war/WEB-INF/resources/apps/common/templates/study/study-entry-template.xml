@@ -34,15 +34,17 @@
 				<priorAntimalarialsHistoryWeeks/>
 			</inclusionExclusionCriteria>
             <clinical>
-            	<treatments>
-	            	<regimen>
-    	        		<regimen-name/>
-    	        		<regimen-supervised/>
-    	        		<regimen-url/>
-    	        		<regimenAllocation/>
-    	        		<blinding/>
-    	        	</regimen>
-            	</treatments>
+            	<treatment>
+	            	<regimens>
+	            		<regimen>
+    	        			<regimenName/>
+    	        			<regimenSupervision/>
+    	        			<regimenUrl/>
+    	        		</regimen>
+   	        		</regimens>
+   	        		<regimenAllocationMethod/>
+   	        		<blinding/>
+            	</treatment>
             	<followup>
             		<duration/>
             		<feverMeasurement/>

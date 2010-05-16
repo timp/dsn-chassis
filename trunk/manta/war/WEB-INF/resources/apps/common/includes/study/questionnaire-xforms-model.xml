@@ -70,7 +70,20 @@
 			</xforms:bind>
 		
 			
-			<xforms:bind nodeset="clinical" relevant="contains(../modules, 'clinical')" />
+			<xforms:bind nodeset="clinical" relevant="contains(../modules, 'clinical')" >
+				<xforms:bind nodeset="treatment">
+					<xforms:bind nodeset="regimens">
+						<xforms:bind nodeset="regimen">
+							<xforms:bind nodeset="regimenName"/>
+							<xforms:bind nodeset="regimenSupervision"/>
+							<xforms:bind nodeset="regimenUrl"/>
+						</xforms:bind>
+					</xforms:bind>
+					<xforms:bind nodeset="regimenAllocationMethod" relevant="contains(regimen, 'count gt 1 FIXME')"/>
+					<xforms:bind nodeset="blinding"/>
+				</xforms:bind>
+			</xforms:bind>
+			
 			<xforms:bind nodeset="molecular" relevant="contains(../modules, 'molecular')">
 			</xforms:bind>
 			<xforms:bind nodeset="invitro" relevant="contains(../modules, 'invitro')">
@@ -173,6 +186,15 @@
 		src="/apps/common/constants/modules.xml" />
 	<xforms:instance id="ins-priorAntimalarialsDetermination-items"
 		src="/apps/common/constants/priorAntimalarialsDeterminations.xml" />
+				
+	<xforms:instance id="ins-supervisionType-items"
+		src="/apps/common/constants/supervisionTypes.xml" />
+	<xforms:instance id="ins-regimenAllocationMethod-items"
+		src="/apps/common/constants/regimenAllocationMethods.xml" />
+	<xforms:instance id="ins-blinding-items"
+		src="/apps/common/constants/blindings.xml" />
+
+
 	<xforms:instance id="ins-incubatorSystem-items"
 		src="/apps/common/constants/incubatorSystems.xml" />
 	<xforms:instance id="ins-healthyErythrocytesSource-items"
