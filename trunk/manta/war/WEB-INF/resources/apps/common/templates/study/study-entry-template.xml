@@ -49,9 +49,9 @@
 									<batchNumber/>
 									<expiryDate/>
 									<drugStorage />
-									<drugDosingDeterminant/>
 								</drug>
 							</drugs>
+							<drugDosingDeterminant/>
     	        		</regimen>
    	        		</regimens>
    	        		<regimenAllocation>
