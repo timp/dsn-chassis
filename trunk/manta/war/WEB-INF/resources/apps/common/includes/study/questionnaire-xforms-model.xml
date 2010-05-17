@@ -76,11 +76,26 @@
 						<xforms:bind nodeset="regimen">
 							<xforms:bind nodeset="regimenName"/>
 							<xforms:bind nodeset="regimenSupervision"/>
-							<xforms:bind nodeset="regimenUrl"/>
+							<xforms:bind nodeset="regimenUrl" type="ctype:nullableHttpUrl" />
+							<xforms:bind nodeset="drugs">
+								<xforms:bind nodeset="drug">
+									<xforms:bind nodeset="name" />
+									<xforms:bind nodeset="administrationRoute" />
+									<!--  formulation not convinced  -->
+									<xforms:bind nodeset="manufacturer" />
+									<xforms:bind nodeset="batchNumber" />
+									<xforms:bind nodeset="expiryDate" type="xs:date" />
+									<xforms:bind nodeset="medicineStorage" />
+									<xforms:bind nodeset="drugDosingDeterminant"/>
+								</xforms:bind>
+							</xforms:bind>
 						</xforms:bind>
 					</xforms:bind>
-					<xforms:bind nodeset="regimenAllocationMethod" relevant="contains(regimen, 'count gt 1 FIXME')"/>
-					<xforms:bind nodeset="blinding"/>
+					<xforms:bind nodeset="regimenAllocation"  relevant="count(../regimens/regimen)>1" >
+						<xforms:bind nodeset="regimenAllocationMethod"/>					
+						<xforms:bind nodeset="randomisationProportion" relevant="contains(../regimenAllocationMethod,'randomised')" />
+						<xforms:bind nodeset="blinding"/>
+					</xforms:bind>
 				</xforms:bind>
 			</xforms:bind>
 			
@@ -186,6 +201,8 @@
 		src="/apps/common/constants/modules.xml" />
 	<xforms:instance id="ins-priorAntimalarialsDetermination-items"
 		src="/apps/common/constants/priorAntimalarialsDeterminations.xml" />
+	<xforms:instance id="ins-administrationRoute-items"
+		src="/apps/common/constants/administrationRoutes.xml" />
 				
 	<xforms:instance id="ins-supervisionType-items"
 		src="/apps/common/constants/supervisionTypes.xml" />
@@ -193,6 +210,10 @@
 		src="/apps/common/constants/regimenAllocationMethods.xml" />
 	<xforms:instance id="ins-blinding-items"
 		src="/apps/common/constants/blindings.xml" />
+	<xforms:instance id="ins-drugStorage-items"
+		src="/apps/common/constants/drugStorages.xml" />
+	<xforms:instance id="ins-drugDosingDeterminant-items"
+		src="/apps/common/constants/drugDosingDeterminants.xml" />
 
 
 	<xforms:instance id="ins-incubatorSystem-items"
@@ -221,6 +242,28 @@
 	<xforms:instance id="ins-drugSolvent-items"
 		src="/apps/common/constants/drugSolvents.xml" />
 
+	<xforms:instance id="ins-regimen">
+		<regimen xmlns="">
+			<regimenName />
+   			<regimenSupervision/>
+   			<regimenUrl/>
+   			<drugs/>
+		</regimen>
+	</xforms:instance>
+	
+	<xforms:instance id="ins-drug">
+		<drug xmlns="">
+			<name/>
+			<administrationRoute/>
+			<!--  formulation not convinced  -->
+			<manufacturer/>
+			<batchNumber/>
+			<expirationDate/>
+			<drugStorage />
+			<drugDosingDeterminant/>
+		</drug>
+	</xforms:instance>
+	
 	<xforms:instance id="ins-antiBiotic">
 		<antiBiotic xmlns="">
 			<antiBioticName />

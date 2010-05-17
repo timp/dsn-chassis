@@ -2,13 +2,13 @@
 <!-- Required in Clinical Treatments -->
 <!--  pharmacology-treatmentRegimens-allocation -->
 <regimenAllocationMethods xmlns="">
-	<regimenAllocationMethod>
-		<label>randomised (proportion)</label>
-		<value>randomised</value>
- 	</regimenAllocationMethod>
  	<regimenAllocationMethod>
 		<label>semi-randomised</label>
  		<value>semirandomised</value>
+ 	</regimenAllocationMethod>
+	<regimenAllocationMethod>
+		<label>randomised (proportion)</label>
+		<value>randomised</value>
  	</regimenAllocationMethod>
 </regimenAllocationMethods>
  		

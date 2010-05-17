@@ -31,5 +31,10 @@
       <xs:maxInclusive value="2020"/>
     </xs:restriction>
    </xs:simpleType>
+   <xs:simpleType name="nullableHttpUrl">
+    <xs:restriction base="xs:anyURI">
+    	<xs:pattern value="|http://[a-zA-Z0-9./]+"/>
+    </xs:restriction>
+   </xs:simpleType>
 </xs:schema>
 
