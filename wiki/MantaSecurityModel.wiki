@@ -57,7 +57,7 @@ By convention, each study is associated with a group of users called "administra
 
 A study administrator can retrieve and update the study, and can update the study's permissions.
 
-E.g., ACL for member /studies/ABCDE ...
+E.g., ACL for member /studies/ABCDE.atom ...
 
 {{{
 <acl>
