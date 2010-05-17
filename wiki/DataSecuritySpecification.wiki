@@ -1,7 +1,8 @@
 #summary Ensuring data is only accessible to appropriate users.
 
-*This page is deprecated and replaced by MantaSecurityModel.*
+*This page is deprecated and replaced by MantaSecurityModel. This page is maintained for historical value and reference.*
 
+----
 = Introduction =
 
 As detailed in [http://code.google.com/p/dsn-chassis/issues/detail/id60 Issue 61] 
