@@ -456,20 +456,28 @@
 														</xforms:select1>
 <br />
 
-									<xforms:input ref="manufacturer">
-										<xforms:label class="fixed-width">Manufacturer</xforms:label>
-										<xforms:hint>The manufacturer of the drug</xforms:hint>
-									</xforms:input>
-									<xforms:input ref="batchNumber">
-										<xforms:label class="fixed-width">Batch Number</xforms:label>
-										<xforms:hint>The manufacturer of the drug</xforms:hint>
-									</xforms:input>
-									<xforms:input ref="expiryDate">
-										<xforms:label class="fixed-width">Expiry Date</xforms:label>
-										<xforms:hint>The date the drug expires</xforms:hint>
-									</xforms:input>
-														
-														
+														<xforms:input ref="manufacturer">
+															<xforms:label class="fixed-width">Manufacturer</xforms:label>
+															<xforms:hint>The manufacturer of the drug</xforms:hint>
+														</xforms:input>
+														<xforms:input ref="batchNumber">
+															<xforms:label class="fixed-width">Batch Number</xforms:label>
+															<xforms:hint>The manufacturer of the drug</xforms:hint>
+														</xforms:input>
+														<xforms:input ref="expiryDate">
+															<xforms:label class="fixed-width">Expiry Date</xforms:label>
+															<xforms:hint>The date the drug expires</xforms:hint>
+														</xforms:input>
+														<br/>
+														<xforms:select1 ref="drugStorage"
+															appearance="minimal">
+															<xforms:label class="fixed-width">Drug storage</xforms:label>
+															<xforms:itemset model="mod-study-questionnaire"
+																nodeset="instance('ins-drugStorage-items')/drugStorage">
+																<xforms:label ref="label" />
+																<xforms:value ref="value" />
+															</xforms:itemset>
+														</xforms:select1>
 													</td>
 												</tr>
 											</xforms:repeat>
@@ -500,12 +508,16 @@
 										
 									</xforms:group>
 
-
-
-
-
-
-
+	
+									<xforms:select1 ref="drugDosingDeterminant"
+											appearance="minimal">
+										<xforms:label class="fixed-width">Drug dosing determinant</xforms:label>
+										<xforms:itemset model="mod-study-questionnaire"
+												nodeset="instance('ins-drugDosingDeterminant-items')/drugDosingDeterminant">
+											<xforms:label ref="label" />
+											<xforms:value ref="value" />
+										</xforms:itemset>
+									</xforms:select1>
 
 								</td>
 							</tr>

@@ -85,10 +85,10 @@
 									<xforms:bind nodeset="manufacturer" />
 									<xforms:bind nodeset="batchNumber" />
 									<xforms:bind nodeset="expiryDate" type="xs:date" />
-									<xforms:bind nodeset="medicineStorage" />
-									<xforms:bind nodeset="drugDosingDeterminant"/>
+									<xforms:bind nodeset="drugStorage" />
 								</xforms:bind>
 							</xforms:bind>
+							<xforms:bind nodeset="drugDosingDeterminant"/>
 						</xforms:bind>
 					</xforms:bind>
 					<xforms:bind nodeset="regimenAllocation"  relevant="count(../regimens/regimen)>1" >
@@ -248,6 +248,7 @@
    			<regimenSupervision/>
    			<regimenUrl/>
    			<drugs/>
+			<drugDosingDeterminant/>
 		</regimen>
 	</xforms:instance>
 	
@@ -260,7 +261,6 @@
 			<batchNumber/>
 			<expirationDate/>
 			<drugStorage />
-			<drugDosingDeterminant/>
 		</drug>
 	</xforms:instance>
 	
