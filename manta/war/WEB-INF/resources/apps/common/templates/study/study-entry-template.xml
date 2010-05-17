@@ -40,10 +40,25 @@
     	        			<regimenName/>
     	        			<regimenSupervision/>
     	        			<regimenUrl/>
+							<drugs>
+								<drug>
+									<name/>
+									<administrationRoute/>
+									<!--  formulation not convinced  -->
+									<manufacturer/>
+									<batchNumber/>
+									<expiryDate/>
+									<drugStorage />
+									<drugDosingDeterminant/>
+								</drug>
+							</drugs>
     	        		</regimen>
    	        		</regimens>
-   	        		<regimenAllocationMethod/>
-   	        		<blinding/>
+   	        		<regimenAllocation>
+	   	        		<regimenAllocationMethod/>
+   		        		<blinding/>
+   		        		<randomisationProportion/>
+   	        		</regimenAllocation>
             	</treatment>
             	<followup>
             		<duration/>
@@ -86,15 +101,15 @@
 
 				<drugs>
 					<drug>
-						<drug-name/>
-						<drug-manufacturer/>
-						<drug-numberOfDoses/>
-						<drug-daysOfTreatment/>
-						<drug-dosingByAgeOrWeight/>
-						<drug-batchNumber/>
-						<drug-expirationDate/>
-						<drug-assayCapacity/>
-						<drug-assayCapacity-assayMethodReference/>
+						<name/>
+						<manufacturer/>
+						<numberOfDoses/>
+						<daysOfTreatment/>
+						<dosingByAgeOrWeight/>
+						<batchNumber/>
+						<expirationDate/>
+						<assayCapacity/>
+						<assayCapacity-assayMethodReference/>
 						<assayCapacity-assayMethodDescription/>
 					</drug>
 				</drugs>
@@ -191,7 +206,7 @@
 				<mixedResistanceAlleles>
 						<mixedResistanceAllelesInclusion/>
 				</mixedResistanceAlleles>
-				<additionalGenotypicInformation/>
+				<additionalGenotypicInformation>
 				<additionalGenotypicInformation-wholeGenomesSequenced-block>
 						<additionalGenotypicInformation-wholeGenomesSequenced/>
 						<additionalGenotypicInformation-accessionNumbers/>
@@ -205,7 +220,7 @@
 								<additionalGenotypicInformation-otherLocus-name/>
 						</additionalGenotypicInformation-otherLocus>
 				</additionalGenotypicInformation-wholeGenomesSequenced-block>
-				<additionalGenotypicInformation/>
+				</additionalGenotypicInformation>
             </molecular>
         </study>
     </atom:content>

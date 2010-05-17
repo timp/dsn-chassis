@@ -1,14 +1,8 @@
-<div xmlns:xforms="http://www.w3.org/2002/xforms" 
-	xmlns:f="http://orbeon.org/oxf/xml/formatting"
-	xmlns="http://www.w3.org/1999/xhtml" 
-	xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
-	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
-	xmlns:ev="http://www.w3.org/2001/xml-events"
-	xmlns:atom="http://www.w3.org/2005/Atom" 
-	xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
-	xmlns:ctype="http://www.cggh.org/chassis-types"
-	xmlns:xi="http://www.w3.org/2001/XInclude"
-	>
+<div xmlns:xforms="http://www.w3.org/2002/xforms" xmlns:f="http://orbeon.org/oxf/xml/formatting"
+	xmlns="http://www.w3.org/1999/xhtml" xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events"
+	xmlns:atom="http://www.w3.org/2005/Atom" xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
+	xmlns:ctype="http://www.cggh.org/chassis-types" xmlns:xi="http://www.w3.org/2001/XInclude">
 
 	<xforms:group model="mod-study-questionnaire"
 		ref="instance('ins-sq-study-entry')/atom:content/study">
@@ -20,13 +14,14 @@
 		</p>
 
 		<h2>General Questions</h2>
- 
+
 		<h3>Study Type (WWARN Modules)</h3>
 
 		<p>
 			<xforms:select ref="modules" appearance="full">
 				<xforms:label>
-				Please select the WWARN modules for which this study has data.<br/>
+					Please select the WWARN modules for which this study has data.
+					<br />
 				</xforms:label>
 				<xforms:itemset model="mod-study-questionnaire"
 					nodeset="instance('ins-module-items')/module">
@@ -65,29 +60,10 @@
 			</xforms:select>
 		</p>
 
-		<h3>Study Site(s)</h3>
 
 		<xforms:group ref="sites">
-
+			<h3>Study Site(s)</h3>
 			<table class="repeat-table">
-				<tr>
-					<td>
-						<xforms:trigger appearance="minimal">
-							<xforms:label>
-								<img src="/apps/submitter/common/add.gif" />
-							</xforms:label>
-							<xforms:insert ev:event="DOMActivate" context="."
-								nodeset="site" at="1" position="before" origin="instance('ins-site-template')" />
-						</xforms:trigger>
-					</td>
-					<td class="add-td">
-						<xforms:trigger appearance="minimal">
-							<xforms:label>Add a Site</xforms:label>
-							<xforms:insert ev:event="DOMActivate" context="."
-								nodeset="site" at="1" position="before" origin="instance('ins-site-template')" />
-						</xforms:trigger>
-					</td>
-				</tr>
 				<xforms:repeat nodeset="site" id="rep-site">
 					<tr>
 						<td>
@@ -100,13 +76,13 @@
 							</xforms:trigger>
 						</td>
 						<td class="form-td">
-							<xforms:select1 ref="country" required="true()" >
+							<xforms:select1 ref="country" required="true()">
 								<xforms:alert>Please select a Country value</xforms:alert>
 								<xforms:label />
-	                        	<xforms:item>
-	                        		<xforms:label>please select</xforms:label>
-	                        		<xforms:value/>
-	                        	</xforms:item>	
+								<xforms:item>
+									<xforms:label>please select</xforms:label>
+									<xforms:value />
+								</xforms:item>
 								<xforms:itemset nodeset="instance('ins-country-items')/country">
 									<xforms:label ref="label" />
 									<xforms:value ref="value" />
@@ -127,7 +103,7 @@
 								</xforms:select1>
 
 							</xforms:group>
-							
+
 							<!--  TODO Add percentage validation?? -->
 
 							<!-- if the country has no regions, use an input -->
@@ -157,11 +133,13 @@
 							<br />
 
 							<xforms:select1 appearance="minimal" ref="testingDelay">
-								<xforms:label class="fixed-width">Sampling/testing delay:</xforms:label>
-	                        	<xforms:item>
-	                        		<xforms:label><!-- Nullable --></xforms:label>
-	                        		<xforms:value/>
-	                        	</xforms:item>	
+								<xforms:label class="fixed-width">Sampling/testing delay:
+								</xforms:label>
+								<xforms:item>
+									<xforms:label><!-- Nullable -->
+									</xforms:label>
+									<xforms:value />
+								</xforms:item>
 								<xforms:itemset model="mod-study-questionnaire"
 									nodeset="instance('ins-testingDelay-items')/testingDelay">
 									<xforms:label ref="label" />
@@ -172,10 +150,11 @@
 
 							<xforms:select1 appearance="minimal" ref="anticoagulant">
 								<xforms:label class="fixed-width">Anticoagulant:</xforms:label>
-	                        	<xforms:item>
-	                        		<xforms:label><!-- Nullable --></xforms:label>
-	                        		<xforms:value/>
-	                        	</xforms:item>	
+								<xforms:item>
+									<xforms:label><!-- Nullable -->
+									</xforms:label>
+									<xforms:value />
+								</xforms:item>
 								<xforms:itemset model="mod-study-questionnaire"
 									nodeset="instance('ins-anticoagulant-items')/anticoagulant">
 									<xforms:label ref="label" />
@@ -187,11 +166,13 @@
 
 							<xforms:select1 appearance="minimal"
 								ref="transportAndStorageTemperature">
-								<xforms:label class="fixed-width">Transport/storage temperature:</xforms:label>
-	                        	<xforms:item>
-	                        		<xforms:label><!-- Nullable --></xforms:label>
-	                        		<xforms:value/>
-	                        	</xforms:item>	
+								<xforms:label class="fixed-width">Transport/storage temperature:
+								</xforms:label>
+								<xforms:item>
+									<xforms:label><!-- Nullable -->
+									</xforms:label>
+									<xforms:value />
+								</xforms:item>
 								<xforms:itemset model="mod-study-questionnaire"
 									nodeset="instance('ins-transportAndStorageTemperature-items')/transportAndStorageTemperature">
 									<xforms:label ref="label" />
@@ -204,90 +185,118 @@
 							<xforms:input ref="latitude">
 								<xforms:label class="fixed-width">Latitude:</xforms:label>
 								<xforms:alert>
-									<xforms:output 
-										value="concat('Please enter a coordinate value between -180  and 180 for the ', name(), ' field ')"/>
+									<xforms:output
+										value="concat('Please enter a coordinate value between -180  and 180 for the ', name(), ' field ')" />
 								</xforms:alert>
 							</xforms:input>
 							<br />
 							<xforms:input ref="longitude">
 								<xforms:label class="fixed-width">Longtude:</xforms:label>
 								<xforms:alert>
-									<xforms:output 
-										value="concat('Please enter a coordinate value between -180 and 180 for the ', name(), ' field ')"/>
+									<xforms:output
+										value="concat('Please enter a coordinate value between -180 and 180 for the ', name(), ' field ')" />
 								</xforms:alert>
 							</xforms:input>
 						</td>
 					</tr>
 				</xforms:repeat>
+				<tr>
+					<td>
+						<xforms:trigger appearance="minimal">
+							<xforms:label>
+								<img src="/apps/submitter/common/add.gif" />
+							</xforms:label>
+							<xforms:insert ev:event="DOMActivate" context="."
+								nodeset="site" at="count(../site)" position="after"
+								origin="instance('ins-site-template')" />
+						</xforms:trigger>
+					</td>
+					<td class="add-td">
+						<xforms:trigger appearance="minimal">
+							<xforms:label>Add a Site</xforms:label>
+							<xforms:insert ev:event="DOMActivate" context="."
+								nodeset="site" at="count(../site)" position="after"
+								origin="instance('ins-site-template')" />
+						</xforms:trigger>
+					</td>
+				</tr>
 			</table>
-
 		</xforms:group>
+
 		<xforms:group ref="transmissionIntensity">
 			<h3>Transmission Intensity</h3>
-		
-		
-		
-			<xforms:input ref="annualParasitologicalIncidence" class="fourWide">
-				<xforms:label class="fixed-width" >Annual Parasitological Incidence (API)</xforms:label>
+
+
+
+			<xforms:input ref="annualParasitologicalIncidence"
+				class="fourWide">
+				<xforms:label class="fixed-width">Annual
+					Parasitological Incidence
+					(API)</xforms:label>
 			</xforms:input>
-			<xforms:input ref="annualParasitologicalIncidenceYear" class="fourWide" >
+			<xforms:input ref="annualParasitologicalIncidenceYear"
+				class="fourWide">
 				<xforms:label>in year </xforms:label>
 				<xforms:alert>
-					<xforms:output 
-							value="concat('Please enter a recent year for the ', name(), ' field ')"/>
+					<xforms:output
+						value="concat('Please enter a recent year for the ', name(), ' field ')" />
 				</xforms:alert>
 			</xforms:input>
-			<br/>
-			<xforms:input ref="parasitePrevalence"  class="fourWide">
+			<br />
+			<xforms:input ref="parasitePrevalence" class="fourWide">
 				<xforms:label class="fixed-width">Parasite Prevalence</xforms:label>
 			</xforms:input>
-			<xforms:input ref="parasitePrevalenceYear" class="fourWide" >
+			<xforms:input ref="parasitePrevalenceYear" class="fourWide">
 				<xforms:label>in year </xforms:label>
 				<xforms:alert>
-					<xforms:output 
-							value="concat('Please enter a recent year for the ', name(), ' field ')"/>
+					<xforms:output
+						value="concat('Please enter a recent year for the ', name(), ' field ')" />
 				</xforms:alert>
 			</xforms:input>
-			<br/>
+			<br />
 			<xforms:input ref="transmissionIntensityAgeFrom" class="fourWide">
 				<xforms:label class="fixed-width">API derived from age </xforms:label>
 				<xforms:alert>
-					<xforms:output 
-							value="concat('Please enter an age in years for the ', name(), ' field ')"/>
+					<xforms:output
+						value="concat('Please enter an age in years for the ', name(), ' field ')" />
 				</xforms:alert>
 			</xforms:input>
-	
-			<xforms:input ref="transmissionIntensityAgeTo"  class="fourWide">
+
+			<xforms:input ref="transmissionIntensityAgeTo" class="fourWide">
 				<xforms:label>to </xforms:label>
 				<xforms:alert>
-					<xforms:output 
-							value="concat('Please enter an age in years for the ', name(), ' field ')"/>
+					<xforms:output
+						value="concat('Please enter an age in years for the ', name(), ' field ')" />
 				</xforms:alert>
 			</xforms:input>
-			<br/>
+			<br />
 			<xforms:input ref="entomologicalInoculationRate" class="fourWide">
-				<xforms:label class="fixed-width">Entomological Inoculation Rate (EIR)</xforms:label>
-				<xforms:hint>Infective bites per person per year (ib/p/year) </xforms:hint>	
+				<xforms:label class="fixed-width">Entomological Inoculation Rate
+					(EIR)</xforms:label>
+				<xforms:hint>Infective bites per person per year (ib/p/year)
+				</xforms:hint>
 			</xforms:input>
-			<xforms:input ref="entomologicalInoculationRateYear" width="4" class="fourWide" >
+			<xforms:input ref="entomologicalInoculationRateYear"
+				width="4" class="fourWide">
 				<xforms:label>in year </xforms:label>
 				<xforms:alert>
-					<xforms:output 
-							value="concat('Please enter a recent year for the ', name(), ' field ')"/>
+					<xforms:output
+						value="concat('Please enter a recent year for the ', name(), ' field ')" />
 				</xforms:alert>
 			</xforms:input>
-			<br/>
+			<br />
 			<xforms:select1 ref="seasonalTransmission" appearance="minimal">
-				<xforms:label class="fixed-width">Is transmission seasonal?</xforms:label>
+				<xforms:label class="fixed-width">Is transmission seasonal?
+				</xforms:label>
 				<xforms:itemset model="mod-study-questionnaire"
-						nodeset="instance('ins-boolean-items')/boolean">
-						<xforms:label ref="label" />
-						<xforms:value ref="value" />
-					</xforms:itemset>
+					nodeset="instance('ins-boolean-items')/boolean">
+					<xforms:label ref="label" />
+					<xforms:value ref="value" />
+				</xforms:itemset>
 			</xforms:select1>
-			
+
 			<xforms:select ref="transmissionMonths" appearance="compact">
-				<xforms:label >Select months</xforms:label>
+				<xforms:label>Select months</xforms:label>
 				<xforms:itemset model="mod-study-questionnaire"
 					nodeset="instance('ins-month-items')/month">
 					<xforms:label ref="label" />
@@ -296,44 +305,47 @@
 			</xforms:select>
 
 		</xforms:group>
-		
+
 		<xforms:group ref="inclusionExclusionCriteria">
 			<h3 id="inclusionExclusionCriteria">Inclusion/Exclusion Criteria</h3>
 
 			<xforms:input ref="minAge" class="fourWide">
 				<xforms:label class="fixed-wdith">Age min </xforms:label>
 				<xforms:alert>
-					<xforms:output 
-							value="concat('Please enter an age in years for the ', name(), ' field ')"/>
+					<xforms:output
+						value="concat('Please enter an age in years for the ', name(), ' field ')" />
 				</xforms:alert>
 			</xforms:input>
 			<xforms:input ref="maxAge" class="fourWide">
 				<xforms:label>max </xforms:label>
 				<xforms:alert>
-					<xforms:output 
-							value="concat('Please enter an age in years for the ', name(), ' field ')"/>
+					<xforms:output
+						value="concat('Please enter an age in years for the ', name(), ' field ')" />
 				</xforms:alert>
 			</xforms:input>
-<br/>
-			<xforms:input ref="minParasitaemia"  class="fourWide">
-				<xforms:label class="fixed-width" >Parasitaemia min</xforms:label>
+			<br />
+			<xforms:input ref="minParasitaemia" class="fourWide">
+				<xforms:label class="fixed-width">Parasitaemia min
+				</xforms:label>
 				<xforms:hint>Asexual parasites/µL</xforms:hint>
 			</xforms:input>
 
-			<xforms:input ref="maxParasitaemia"  class="fourWide">
-				<xforms:label >max </xforms:label>
+			<xforms:input ref="maxParasitaemia" class="fourWide">
+				<xforms:label>max </xforms:label>
 				<xforms:hint>Asexual parasites/µL</xforms:hint>
 			</xforms:input>
-<br/>
-			<xforms:select1 ref="excludeIfPriorAntimalarials" appearance="minimal">
-				<xforms:label class="fixed-width">Exclude if prior anti-malarials?</xforms:label>
+			<br />
+			<xforms:select1 ref="excludeIfPriorAntimalarials"
+				appearance="minimal">
+				<xforms:label class="fixed-width">Exclude if prior anti-malarials?
+				</xforms:label>
 				<xforms:itemset model="mod-study-questionnaire"
-						nodeset="instance('ins-boolean-items')/boolean">
-						<xforms:label ref="label" />
-						<xforms:value ref="value" />
-					</xforms:itemset>
+					nodeset="instance('ins-boolean-items')/boolean">
+					<xforms:label ref="label" />
+					<xforms:value ref="value" />
+				</xforms:itemset>
 			</xforms:select1>
-<br/>
+			<br />
 			<xforms:select1 ref="priorAntimalarials" appearance="minimal">
 				<xforms:label class="fixed-width">Prior anti-malarials</xforms:label>
 				<xforms:item>
@@ -341,21 +353,23 @@
 					<xforms:value>any</xforms:value>
 				</xforms:item>
 				<xforms:itemset model="mod-study-questionnaire"
-						nodeset="instance('ins-drugMolecule-items')/drugMolecule">
-						<xforms:label ref="label" />
-						<xforms:value ref="value" />
-					</xforms:itemset>
+					nodeset="instance('ins-drugMolecule-items')/drugMolecule">
+					<xforms:label ref="label" />
+					<xforms:value ref="value" />
+				</xforms:itemset>
 			</xforms:select1>
-<br/>
-			<xforms:select1 ref="priorAntimalarialsDetermination" appearance="minimal">
-				<xforms:label class="fixed-width">How were prior treatments determined?</xforms:label>
+			<br />
+			<xforms:select1 ref="priorAntimalarialsDetermination"
+				appearance="minimal">
+				<xforms:label class="fixed-width">How were prior treatments
+					determined?</xforms:label>
 				<xforms:itemset model="mod-study-questionnaire"
-						nodeset="instance('ins-priorAntimalarialsDetermination-items')/priorAntimalarialsDetermination">
-						<xforms:label ref="label" />
-						<xforms:value ref="value" />
-					</xforms:itemset>
+					nodeset="instance('ins-priorAntimalarialsDetermination-items')/priorAntimalarialsDetermination">
+					<xforms:label ref="label" />
+					<xforms:value ref="value" />
+				</xforms:itemset>
 			</xforms:select1>
-			
+
 			<xforms:input ref="priorAntimalarialsHistoryWeeks">
 				<xforms:label>Number of weeks </xforms:label>
 			</xforms:input>
@@ -372,51 +386,191 @@
 		<xforms:group ref="clinical">
 			<h2>Clinical Questions</h2>
 
-				<h3 >Treatments</h3>
- 				
- 				<xforms:group ref="treatment">
- 						<h5>Treatment regimens</h5>
- 						<xforms:group ref="regimens" repeatable="yes">
-	 						<xforms:group ref="regimen">
- 								<xforms:input ref="regimenName">
-									<xforms:label>Regimen name</xforms:label>
- 								</xforms:input>
- 								<br/>
-								<xforms:select1 ref="regimenSupervision" appearance="minimal">
-									<xforms:label class="fixed-width">Supervision</xforms:label>
-									<xforms:itemset model="mod-study-questionnaire"
+			<h3>Treatments</h3>
+			<xforms:group ref="treatment">
+				<xforms:group ref="regimens">
+					<h5>Regimen</h5>
+					<table class="repeat-table">
+						<xforms:repeat nodeset="regimen" id="rep-regimen">
+							<tr>
+								<td>
+									<xforms:trigger appearance="minimal">
+										<xforms:delete ev:event="DOMActivate" context="."
+											nodeset="." at="index('rep-regimen')" />
+										<xforms:label>
+											<img src="/apps/submitter/common/remove.gif" />
+										</xforms:label>
+									</xforms:trigger>
+								</td>
+								<td class="form-td">
+									<xforms:input ref="regimenName">
+										<xforms:label class="fixed-width">Regimen name</xforms:label>
+									</xforms:input>
+									<br />
+									<xforms:select1 ref="regimenSupervision"
+										appearance="minimal">
+										<xforms:label class="fixed-width">Supervision</xforms:label>
+										<xforms:itemset model="mod-study-questionnaire"
 											nodeset="instance('ins-supervisionType-items')/supervisionType">
-										<xforms:label ref="label" />
-										<xforms:value ref="value" />
-									</xforms:itemset>
-								</xforms:select1>
- 								<br/>
- 								<xforms:input ref="regimenUrl">
-									<xforms:label>Regimen description url</xforms:label>
-								</xforms:input>
-	 						</xforms:group>
- 						</xforms:group>
-						<br/>
-						<xforms:select1 appearance="minimal" ref="regimenAllocationMethod">
-							<xforms:label>Regimen allocation</xforms:label>
-							<xforms:itemset model="mod-study-questionnaire"
-									nodeset="instance('ins-regimenAllocationMethod-items')/regimenAllocationMethod">
-								<xforms:label ref="label" />
-								<xforms:value ref="value" />
-							</xforms:itemset>
-						</xforms:select1>
- 							
-						<br/>
-						<xforms:select1 appearance="minimal" ref="blinding">
-							<xforms:label>Blinding</xforms:label>
-							<xforms:itemset model="mod-study-questionnaire"
-									nodeset="instance('ins-blinding-items')/blinding">
-								<xforms:label ref="label" />
-								<xforms:value ref="value" />
-							</xforms:itemset>
-						</xforms:select1>
- 				</xforms:group>			
+											<xforms:label ref="label" />
+											<xforms:value ref="value" />
+										</xforms:itemset>
+									</xforms:select1>
+									<br />
+									<xforms:input ref="regimenUrl">
+										<xforms:label class="fixed-width">Description Url
+										</xforms:label>
+										<xforms:hint>A URL of a page which describes the regimen
+										</xforms:hint>
+										<xforms:alert>Please enter a valid URL</xforms:alert>
+									</xforms:input>
 
+			
+									<xforms:group ref="drugs">
+										<h5>Drugs</h5>
+										<table class="repeat-table">
+											<xforms:repeat nodeset="drug" id="rep-drug">
+												<tr>
+													<td>
+														<xforms:trigger appearance="minimal">
+															<xforms:delete ev:event="DOMActivate" context="."
+																nodeset="." at="index('rep-drug')" />
+															<xforms:label>
+																<img src="/apps/submitter/common/remove.gif" />
+															</xforms:label>
+														</xforms:trigger>
+													</td>
+													<td class="form-td">
+														<xforms:input ref="name">
+															<xforms:label class="fixed-width">Drug name</xforms:label>
+														</xforms:input>
+														<br />
+														<xforms:select1 ref="administrationRoute"
+															appearance="minimal">
+															<xforms:label class="fixed-width">Administration Route</xforms:label>
+															<xforms:itemset model="mod-study-questionnaire"
+																nodeset="instance('ins-administrationRoute-items')/administrationRoute">
+																<xforms:label ref="label" />
+																<xforms:value ref="value" />
+															</xforms:itemset>
+														</xforms:select1>
+<br />
+
+									<xforms:input ref="manufacturer">
+										<xforms:label class="fixed-width">Manufacturer</xforms:label>
+										<xforms:hint>The manufacturer of the drug</xforms:hint>
+									</xforms:input>
+									<xforms:input ref="batchNumber">
+										<xforms:label class="fixed-width">Batch Number</xforms:label>
+										<xforms:hint>The manufacturer of the drug</xforms:hint>
+									</xforms:input>
+									<xforms:input ref="expiryDate">
+										<xforms:label class="fixed-width">Expiry Date</xforms:label>
+										<xforms:hint>The date the drug expires</xforms:hint>
+									</xforms:input>
+														
+														
+													</td>
+												</tr>
+											</xforms:repeat>
+											<tr>
+												<td>
+													<xforms:trigger appearance="minimal">
+														<xforms:label>
+															<img src="/apps/submitter/common/add.gif" />
+														</xforms:label>
+														<xforms:insert ev:event="DOMActivate" context="."
+															nodeset="drug" 
+															at="count(../drug)" position="after"
+															origin="instance('ins-drug')" />
+													</xforms:trigger>
+												</td>
+												<td class="add-td">
+													<xforms:trigger appearance="minimal">
+														<xforms:label>Add a Drug</xforms:label>
+														<xforms:insert ev:event="DOMActivate" context="."
+															nodeset="drug" 
+															at="count(../drug)" position="after"
+															origin="instance('ins-drug')" />
+													</xforms:trigger>
+												</td>
+											</tr>
+										</table>
+										
+										
+									</xforms:group>
+
+
+
+
+
+
+
+
+								</td>
+							</tr>
+						</xforms:repeat>
+						<tr>
+							<td>
+								<xforms:trigger appearance="minimal">
+									<xforms:label>
+										<img src="/apps/submitter/common/add.gif" />
+									</xforms:label>
+									<xforms:insert ev:event="DOMActivate" context="."
+										nodeset="regimen" 
+										at="count(../regimen)" position="after"
+										origin="instance('ins-regimen')" />
+								</xforms:trigger>
+							</td>
+							<td class="add-td">
+								<xforms:trigger appearance="minimal">
+									<xforms:label>Add a Regimen</xforms:label>
+									<xforms:insert ev:event="DOMActivate" context="."
+										nodeset="regimen" 
+										at="count(../regimen)" position="after"
+										origin="instance('ins-regimen')" />
+								</xforms:trigger>
+							</td>
+						</tr>
+					</table>
+					
+					
+				</xforms:group>
+				
+				
+				
+				<xforms:group ref="regimenAllocation">
+				
+					<xforms:select1 appearance="minimal" ref="regimenAllocationMethod">
+						<xforms:label class="fixed-width">
+							Regimen allocation</xforms:label>
+						<xforms:itemset model="mod-study-questionnaire"
+								nodeset="instance('ins-regimenAllocationMethod-items')/regimenAllocationMethod">
+							<xforms:label ref="label" />
+							<xforms:value ref="value" />
+						</xforms:itemset>
+					</xforms:select1>
+					
+					<xforms:input ref="randomisationProportion">
+						<xforms:label class="fixed-width">
+					<br />
+						Proportion</xforms:label>
+					</xforms:input>
+					<br />
+						
+
+					<xforms:select1 appearance="minimal" ref="blinding">
+						<xforms:label class="fixed-width">
+						Blinding</xforms:label>
+						<xforms:itemset model="mod-study-questionnaire"
+							nodeset="instance('ins-blinding-items')/blinding">
+							<xforms:label ref="label" />
+							<xforms:value ref="value" />
+						</xforms:itemset>
+					</xforms:select1>
+				</xforms:group>
+
+			</xforms:group>
 		</xforms:group>
 
 		<xforms:group ref="molecular">
@@ -453,10 +607,11 @@
 
 				<xforms:select1 ref="incubatorSystem" appearance="minimal">
 					<xforms:label>Incubator system</xforms:label>
-                   	<xforms:item>
-                   		<xforms:label><!-- Nullable --></xforms:label>
-                   		<xforms:value/>
-                   	</xforms:item>	
+					<xforms:item>
+						<xforms:label><!-- Nullable -->
+						</xforms:label>
+						<xforms:value />
+					</xforms:item>
 					<xforms:itemset model="mod-study-questionnaire"
 						nodeset="instance('ins-incubatorSystem-items')/incubatorSystem">
 						<xforms:label ref="label" />
@@ -484,10 +639,11 @@
 						<xforms:hint>
 							<em>Healthy erythrocytes have to be deleucocyted.</em>
 						</xforms:hint>
-                       	<xforms:item>
-                       		<xforms:label><!-- Nullable --></xforms:label>
-                       		<xforms:value/>
-                       	</xforms:item>	
+						<xforms:item>
+							<xforms:label><!-- Nullable -->
+							</xforms:label>
+							<xforms:value />
+						</xforms:item>
 						<xforms:itemset model="mod-study-questionnaire"
 							nodeset="instance('ins-healthyErythrocytesSource-items')/healthyErythrocytesSource">
 							<xforms:label ref="label" />
@@ -499,8 +655,8 @@
 					<xforms:input ref="hematocrit">
 						<xforms:label>Hematocrit (%)</xforms:label>
 						<xforms:alert>
-							<xforms:output 
-								value="concat('Please enter an integer value between 0 and 100 for the ', name(), ' field ')"/>
+							<xforms:output
+								value="concat('Please enter an integer value between 0 and 100 for the ', name(), ' field ')" />
 						</xforms:alert>
 					</xforms:input>
 
@@ -508,10 +664,11 @@
 				<p>
 					<xforms:select1 ref="bloodGroup" appearance="minimal">
 						<xforms:label>Blood group</xforms:label>
-                       	<xforms:item>
-                       		<xforms:label><!-- Nullable --></xforms:label>
-                       		<xforms:value/>
-                       	</xforms:item>	
+						<xforms:item>
+							<xforms:label><!-- Nullable -->
+							</xforms:label>
+							<xforms:value />
+						</xforms:item>
 						<xforms:itemset model="mod-study-questionnaire"
 							nodeset="instance('ins-bloodGroup-items')/bloodGroup">
 							<xforms:label ref="label" />
@@ -530,26 +687,31 @@
 				<p>
 					<xforms:select1 ref="medium" appearance="minimal">
 						<xforms:label>Medium</xforms:label>
-                       	<xforms:item>
-                       		<xforms:label><!-- Nullable --></xforms:label>
-                       		<xforms:value/>
-                       	</xforms:item>	
+						<xforms:item>
+							<xforms:label><!-- Nullable -->
+							</xforms:label>
+							<xforms:value />
+						</xforms:item>
 						<xforms:itemset model="mod-study-questionnaire"
 							nodeset="instance('ins-medium-items')/medium">
 							<xforms:label ref="label" />
 							<xforms:value ref="value" />
 						</xforms:itemset>
 					</xforms:select1>
-					<em>Storage temperature: 6 months at -20&#176;C and 1 week at
-						+4&#176;C after using.<font color="red">FIXME</font></em>
+					<em>
+						Storage temperature: 6 months at -20&#176;C and 1 week at
+						+4&#176;C after using.
+						<font color="red">FIXME</font>
+					</em>
 				</p>
 				<p>
 					<xforms:select1 ref="preparation" appearance="minimal">
 						<xforms:label>Preparation</xforms:label>
-                       	<xforms:item>
-                       		<xforms:label><!-- Nullable --></xforms:label>
-                       		<xforms:value/>
-                       	</xforms:item>	
+						<xforms:item>
+							<xforms:label><!-- Nullable -->
+							</xforms:label>
+							<xforms:value />
+						</xforms:item>
 						<xforms:itemset model="mod-study-questionnaire"
 							nodeset="instance('ins-mediumPreparation-items')/mediumPreparation">
 							<xforms:label ref="label" />
@@ -560,10 +722,11 @@
 				<p>
 					<xforms:select1 ref="serum" appearance="minimal">
 						<xforms:label>Serum</xforms:label>
-                       	<xforms:item>
-                       		<xforms:label><!-- Nullable --></xforms:label>
-                       		<xforms:value/>
-                       	</xforms:item>	
+						<xforms:item>
+							<xforms:label><!-- Nullable -->
+							</xforms:label>
+							<xforms:value />
+						</xforms:item>
 						<xforms:itemset model="mod-study-questionnaire"
 							nodeset="instance('ins-serum-items')/serum">
 							<xforms:label ref="label" />
@@ -576,19 +739,21 @@
 					<xforms:input ref="serum-finalConcentration">
 						<xforms:label>Serum final concentration (g/L) </xforms:label>
 						<xforms:alert>
-							<xforms:output 
-								value="concat('Please enter an integer value for the ', name(), ' field ')"/>
+							<xforms:output
+								value="concat('Please enter an integer value for the ', name(), ' field ')" />
 						</xforms:alert>
 					</xforms:input>
 				</p>
 				<p>
 					<xforms:input ref="NaHCO3-finalConcentration">
 						<xforms:label>
-							NaHCO<sub>3</sub> final concentration (g/L)
+							NaHCO
+							<sub>3</sub>
+							final concentration (g/L)
 						</xforms:label>
 						<xforms:alert>
-							<xforms:output 
-							value="concat('Please enter an integer value for the ', name(), ' field ')"/>
+							<xforms:output
+								value="concat('Please enter an integer value for the ', name(), ' field ')" />
 						</xforms:alert>
 					</xforms:input>
 				</p>
@@ -611,8 +776,8 @@
 							<xforms:label>Final Hypoxantine concentration (g/L)
 							</xforms:label>
 							<xforms:alert>
-								<xforms:output 
-									value="concat('Please enter an integer value for the ', name(), ' field ')"/>
+								<xforms:output
+									value="concat('Please enter an integer value for the ', name(), ' field ')" />
 							</xforms:alert>
 						</xforms:input>
 					</p>
@@ -636,10 +801,10 @@
 						<xforms:input ref="oroticAcid-finalConcentration">
 							<xforms:label>Final Orotic Acid concentration (g/L)
 							</xforms:label>
-						<xforms:alert>
-							<xforms:output 
-								value="concat('Please enter an integer value for the ', name(), ' field ')"/>
-						</xforms:alert>
+							<xforms:alert>
+								<xforms:output
+									value="concat('Please enter an integer value for the ', name(), ' field ')" />
+							</xforms:alert>
 						</xforms:input>
 					</p>
 				</xforms:group>
@@ -660,8 +825,8 @@
 						<xforms:input ref="glucose-finalConcentration">
 							<xforms:label>Final glucose concentration (g/L)</xforms:label>
 							<xforms:alert>
-								<xforms:output 
-									value="concat('Please enter an integer value for the ', name(), ' field ')"/>
+								<xforms:output
+									value="concat('Please enter an integer value for the ', name(), ' field ')" />
 							</xforms:alert>
 						</xforms:input>
 					</p>
@@ -670,30 +835,11 @@
 
 				<xforms:group ref="antiBiotics">
 					<p>
-						If you use antibiotics, please fill in the section below for each
+						If you use antibiotics, please fill in the section below for
+						each
 						antibiotic you use. 
 					</p>
 					<table class="repeat-table">
-						<tr>
-							<td>
-								<xforms:trigger appearance="minimal">
-									<xforms:label>
-										<img src="/apps/submitter/common/add.gif" />
-									</xforms:label>
-									<xforms:insert ev:event="DOMActivate" context="."
-										nodeset="antiBiotic" at="1" position="before"
-										origin="instance('ins-antiBiotic')" />
-								</xforms:trigger>
-							</td>
-							<td class="add-td">
-								<xforms:trigger appearance="minimal">
-									<xforms:label>Add an Antibiotic</xforms:label>
-									<xforms:insert ev:event="DOMActivate" context="."
-										nodeset="antiBiotic" at="1" position="before"
-										origin="instance('ins-antiBiotic')" />
-								</xforms:trigger>
-							</td>
-						</tr>
 						<xforms:repeat nodeset="antiBiotic" id="antiBiotic-rep">
 							<tr>
 								<td>
@@ -714,16 +860,38 @@
 									</p>
 									<p>
 										<xforms:input ref="antiBioticFinalConcentration">
-											<xforms:label>AntiBiotic final concentration (g/L)</xforms:label>
+											<xforms:label>AntiBiotic final concentration (g/L)
+											</xforms:label>
 											<xforms:alert>
-												<xforms:output 
-													value="concat('Please enter an integer value for the ', name(), ' field ')"/>
+												<xforms:output
+													value="concat('Please enter an integer value for the ', name(), ' field ')" />
 											</xforms:alert>
 										</xforms:input>
 									</p>
 								</td>
 							</tr>
 						</xforms:repeat>
+						<tr>
+							<td>
+								<xforms:trigger appearance="minimal">
+									<xforms:label>
+										<img src="/apps/submitter/common/add.gif" />
+									</xforms:label>
+									<xforms:insert ev:event="DOMActivate" context="."
+										nodeset="antiBiotic" 
+										at="count(../antiBiotic)" position="after"
+										origin="instance('ins-antiBiotic')" />
+								</xforms:trigger>
+							</td>
+							<td class="add-td">
+								<xforms:trigger appearance="minimal">
+									<xforms:label>Add an Antibiotic</xforms:label>
+									<xforms:insert ev:event="DOMActivate" context="."
+										at="count(../antiBiotic)" position="after" 
+										origin="instance('ins-antiBiotic')" />
+								</xforms:trigger>
+							</td>
+						</tr>
 					</table>
 				</xforms:group>
 			</xforms:group>
@@ -736,15 +904,18 @@
 				<h4>Determination of Drug Susceptibility</h4>
 				<p>
 					<em>
-					If this	information is different for each sample, please include it in your raw data.
+						If this information is different for each sample, please
+						include it
+						in your raw data.
 					</em>
 				</p>
 				<xforms:select1 appearance="minimal" ref="timeOfIncubation">
 					<xforms:label class="fixed-width">Time of incubation</xforms:label>
-                  	<xforms:item>
-                   		<xforms:label><!-- Nullable --></xforms:label>
-                   		<xforms:value/>
-                   	</xforms:item>	
+					<xforms:item>
+						<xforms:label><!-- Nullable -->
+						</xforms:label>
+						<xforms:value />
+					</xforms:item>
 					<xforms:itemset model="mod-study-questionnaire"
 						nodeset="instance('ins-incubationTime-items')/incubationTime">
 						<xforms:label ref="label" />
@@ -754,15 +925,18 @@
 				<br />
 				<p>
 					<em>
-					If this	information is different for each sample, please include it in your raw data.
+						If this information is different for each sample, please
+						include it
+						in your raw data.
 					</em>
 				</p>
 				<xforms:select1 appearance="minimal" ref="susceptibilityMethod">
 					<xforms:label class="fixed-width">Method used</xforms:label>
-                  	<xforms:item>
-                   		<xforms:label><!-- Nullable --></xforms:label>
-                   		<xforms:value/>
-                   	</xforms:item>	
+					<xforms:item>
+						<xforms:label><!-- Nullable -->
+						</xforms:label>
+						<xforms:value />
+					</xforms:item>
 					<xforms:itemset model="mod-study-questionnaire"
 						nodeset="instance('ins-susceptibilityMethod-items')/susceptibilityMethod">
 						<xforms:label ref="label" />
@@ -789,26 +963,6 @@
 				</p>
 
 				<table class="repeat-table">
-					<tr>
-						<td>
-							<xforms:trigger appearance="minimal">
-								<xforms:label>
-									<img src="/apps/submitter/common/add.gif" />
-								</xforms:label>
-								<xforms:insert ev:event="DOMActivate" context="."
-									nodeset="drug" at="1" position="before"
-									origin="instance('ins-invitro-drug-template')" />
-							</xforms:trigger>
-						</td>
-						<td class="add-td">
-							<xforms:trigger appearance="minimal">
-								<xforms:label>Add a Drug</xforms:label>
-								<xforms:insert ev:event="DOMActivate" context="."
-									nodeset="drug" at="1" position="before"
-									origin="instance('ins-invitro-drug-template')" />
-							</xforms:trigger>
-						</td>
-					</tr>
 					<xforms:repeat nodeset="drug" id="drug-rep">
 						<tr>
 							<td>
@@ -823,10 +977,10 @@
 							<td>
 								<xforms:select1 appearance="minimal" ref="molecule">
 									<xforms:label class="fixed-width">Molecule</xforms:label>
-				                  	<xforms:item>
-                				   		<xforms:label>please select</xforms:label>
-                   						<xforms:value/>
-                   					</xforms:item>	
+									<xforms:item>
+										<xforms:label>please select</xforms:label>
+										<xforms:value />
+									</xforms:item>
 									<xforms:itemset model="mod-study-questionnaire"
 										nodeset="instance('ins-drugMolecule-items')/drugMolecule">
 										<xforms:label ref="label" />
@@ -839,10 +993,10 @@
 								<xforms:select1 appearance="minimal" ref="solvent">
 									<xforms:label class="fixed-width">Stock solution solvent
 									</xforms:label>
-				                  	<xforms:item>
-                				   		<xforms:label>please select</xforms:label>
-                   						<xforms:value/>
-                   					</xforms:item>	
+									<xforms:item>
+										<xforms:label>please select</xforms:label>
+										<xforms:value />
+									</xforms:item>
 									<xforms:itemset model="mod-study-questionnaire"
 										nodeset="instance('ins-drugSolvent-items')/drugSolvent">
 										<xforms:label ref="label" />
@@ -855,8 +1009,8 @@
 								<xforms:input ref="solventFinalConcentration">
 									<xforms:label>Solvent final concentration (g/L)</xforms:label>
 									<xforms:alert>
-										<xforms:output 
-											value="concat('Please enter an integer value for the ', name(), ' field ')"/>
+										<xforms:output
+											value="concat('Please enter an integer value for the ', name(), ' field ')" />
 									</xforms:alert>
 								</xforms:input>
 
@@ -865,12 +1019,12 @@
 									<xforms:label>Were stock solutions provided by WWARN?
 									</xforms:label>
 									<xforms:alert>Please answer yes or no</xforms:alert>
-	                        		<xforms:item>
-	                        			<xforms:label>please select</xforms:label>
-	                        			<xforms:value/>
-	                        		</xforms:item>	
+									<xforms:item>
+										<xforms:label>please select</xforms:label>
+										<xforms:value />
+									</xforms:item>
 									<xforms:itemset model="mod-study-questionnaire"
-													nodeset="instance('ins-boolean-items')/boolean">
+										nodeset="instance('ins-boolean-items')/boolean">
 										<xforms:label ref="label" />
 										<xforms:value ref="value" />
 									</xforms:itemset>
@@ -885,6 +1039,26 @@
 							</td>
 						</tr>
 					</xforms:repeat>
+					<tr>
+						<td>
+							<xforms:trigger appearance="minimal">
+								<xforms:label>
+									<img src="/apps/submitter/common/add.gif" />
+								</xforms:label>
+								<xforms:insert ev:event="DOMActivate" context="."
+									nodeset="drug" at="count(../drug)" position="after"
+									origin="instance('ins-invitro-drug-template')" />
+							</xforms:trigger>
+						</td>
+						<td class="add-td">
+							<xforms:trigger appearance="minimal">
+								<xforms:label>Add a Drug</xforms:label>
+								<xforms:insert ev:event="DOMActivate" context="."
+									nodeset="drug" at="count(../drug)" position="after"
+									origin="instance('ins-invitro-drug-template')" />
+							</xforms:trigger>
+						</td>
+					</tr>
 				</table>
 			</xforms:group>
 
@@ -901,27 +1075,7 @@
 
 			<xforms:group ref="plateBatches">
 				<table class="repeat-table">
-					<tr>
-						<td>
-							<xforms:trigger appearance="minimal">
-								<xforms:label>
-									<img src="/apps/submitter/common/add.gif" />
-								</xforms:label>
-								<xforms:insert ev:event="DOMActivate" context="."
-									nodeset="batch" at="1" position="before"
-									origin="instance('ins-invitro-batch-template')" />
-							</xforms:trigger>
-						</td>
-						<td class="add-td">
-							<xforms:trigger appearance="minimal">
-								<xforms:label>Add a Batch</xforms:label>
-								<xforms:insert ev:event="DOMActivate" context="."
-									nodeset="batch" at="1" position="before"
-									origin="instance('ins-invitro-batch-template')" />
-							</xforms:trigger>
-						</td>
-					</tr>
-				<xforms:repeat nodeset="batch" id="batch-rep">
+					<xforms:repeat nodeset="batch" id="batch-rep">
 						<tr>
 							<td>
 
@@ -934,76 +1088,101 @@
 								</xforms:trigger>
 							</td>
 							<td>
-					<xforms:select1 appearance="minimal" ref="clone3D7ProvidedByWwarn">
-						<xforms:label class="fixed-width">Were 3D7 provided by WWARN?</xforms:label>
-						<xforms:alert>Please answer yes or no</xforms:alert>
-	                    <xforms:item>
-	                    	<xforms:label>please select</xforms:label>
-	                    	<xforms:value/>
-	                    </xforms:item>	
-						<xforms:itemset model="mod-study-questionnaire"
+								<xforms:select1 appearance="minimal"
+									ref="clone3D7ProvidedByWwarn">
+									<xforms:label class="fixed-width">Were 3D7 provided by WWARN?
+									</xforms:label>
+									<xforms:alert>Please answer yes or no</xforms:alert>
+									<xforms:item>
+										<xforms:label>please select</xforms:label>
+										<xforms:value />
+									</xforms:item>
+									<xforms:itemset model="mod-study-questionnaire"
 										nodeset="instance('ins-boolean-items')/boolean">
-							<xforms:label ref="label" />
-							<xforms:value ref="value" />
-						</xforms:itemset>
-					</xforms:select1>
+										<xforms:label ref="label" />
+										<xforms:value ref="value" />
+									</xforms:itemset>
+								</xforms:select1>
 
-					<br />
+								<br />
 
-					<xforms:input ref="clone3D7Provider">
-						<xforms:label>Who provided the clone?</xforms:label>
-					</xforms:input>
+								<xforms:input ref="clone3D7Provider">
+									<xforms:label>Who provided the clone?</xforms:label>
+								</xforms:input>
 
-					<br />
+								<br />
 
-					<xforms:select1 appearance="minimal"
-						ref="batchesIncludedInRawData">
-						<xforms:label>Are your batch preparation dates and 3D7 information
-							included with the raw data?</xforms:label>
-						<xforms:alert>Please answer yes or no</xforms:alert>
-                   		<xforms:item>
-                   			<xforms:label>please select</xforms:label>
-                   			<xforms:value/>
-                   		</xforms:item>	
-						<xforms:itemset model="mod-study-questionnaire"
-								nodeset="instance('ins-boolean-items')/boolean">
-							<xforms:label ref="label" />
-							<xforms:value ref="value" />
-						</xforms:itemset>
-					</xforms:select1>
+								<xforms:select1 appearance="minimal"
+									ref="batchesIncludedInRawData">
+									<xforms:label>Are your batch preparation dates and 3D7
+										information
+										included with the raw data?</xforms:label>
+									<xforms:alert>Please answer yes or no</xforms:alert>
+									<xforms:item>
+										<xforms:label>please select</xforms:label>
+										<xforms:value />
+									</xforms:item>
+									<xforms:itemset model="mod-study-questionnaire"
+										nodeset="instance('ins-boolean-items')/boolean">
+										<xforms:label ref="label" />
+										<xforms:value ref="value" />
+									</xforms:itemset>
+								</xforms:select1>
 
-					<xforms:group ref="notIncludedBatchDataHint">
-						<p>
-							<em>
-								If batch preparation dates and 3D7 information are
-								<strong>not</strong>
-								included with the raw data, please complete the section below
-								for each batch.
-							</em>
-						</p>
-					</xforms:group>
+								<xforms:group ref="notIncludedBatchDataHint">
+									<p>
+										<em>
+											If batch preparation dates and 3D7 information are
+											<strong>not</strong>
+											included with the raw data, please complete the section below
+											for each batch.
+										</em>
+									</p>
+								</xforms:group>
 
-					<br />
-					<xforms:input ref="preparationDate">
-						<xforms:label class="fixed-width">Preparation date</xforms:label>
-					</xforms:input>
-					<br />
+								<br />
+								<xforms:input ref="preparationDate">
+									<xforms:label class="fixed-width">Preparation date
+									</xforms:label>
+								</xforms:input>
+								<br />
 
 
-					<xforms:input ref="parasitaemia3D7">
-						<xforms:label class="fixed-width">3D7 parasitaemia (%)
-						</xforms:label>
-					</xforms:input>
-					<br />
+								<xforms:input ref="parasitaemia3D7">
+									<xforms:label class="fixed-width">3D7 parasitaemia (%)
+									</xforms:label>
+								</xforms:input>
+								<br />
 
-					<xforms:input ref="ringForms">
-						<xforms:label class="fixed-width">Ring forms after synchronisation
-							(%)</xforms:label>
-					</xforms:input>
+								<xforms:input ref="ringForms">
+									<xforms:label class="fixed-width">Ring forms after
+										synchronisation
+										(%)</xforms:label>
+								</xforms:input>
 
 							</td>
 						</tr>
 					</xforms:repeat>
+					<tr>
+						<td>
+							<xforms:trigger appearance="minimal">
+								<xforms:label>
+									<img src="/apps/submitter/common/add.gif" />
+								</xforms:label>
+								<xforms:insert ev:event="DOMActivate" context="."
+									nodeset="batch" at="count(../batch)" position="after"
+									origin="instance('ins-invitro-batch-template')" />
+							</xforms:trigger>
+						</td>
+						<td class="add-td">
+							<xforms:trigger appearance="minimal">
+								<xforms:label>Add a Batch</xforms:label>
+								<xforms:insert ev:event="DOMActivate" context="."
+									nodeset="batch" at="count(../batch)" position="after"
+									origin="instance('ins-invitro-batch-template')" />
+							</xforms:trigger>
+						</td>
+					</tr>
 				</table>
 			</xforms:group>
 
@@ -1025,5 +1204,10 @@
 		</xforms:group>
 
 	</xforms:group>
+		<p>
+			<xforms:submit submission="sub-put-study-entry">
+				<xforms:label>Save Changes</xforms:label>
+			</xforms:submit>
+		</p>
 
 </div>
