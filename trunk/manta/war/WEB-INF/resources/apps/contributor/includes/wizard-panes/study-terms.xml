@@ -32,28 +32,51 @@
 		</xforms:select>	
 	</p>
 
-	<p>
-		<xforms:trigger>
-			<xforms:label>Next &gt;</xforms:label>
-			<xforms:action ev:event="DOMActivate">
-			
-				<!-- Copy the study title to the draft entry title. -->
-				<xforms:setvalue ref="instance('ins-draft-entry')/atom:title" value="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:title"/>
-
+	<xforms:group ref="not(instance('ins-draft-entry')/atom:link[@rel='edit'])">
+		<p>
+			<xforms:trigger>
+				<xforms:label>Next (post) &gt;</xforms:label>
+				<xforms:action ev:event="DOMActivate">
 				
-				<!-- Tell the wizard to set the current pane to the permissions pane. -->
-				<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane" value="'permissions'"/>
-
-				<!-- Tell the wizard (via submission mechanism) to return to this pane if it fails. -->
-				<xforms:setvalue ref="instance('ins-control')/fallback-wizard-pane" value="'study-terms'"/>
-				
-				<!-- Try to save the draft. -->
-				<xforms:send submission="sub-put-draft-entry" />
-
-			</xforms:action>
-		</xforms:trigger>
-	</p>
+					<!-- Copy the study title to the draft entry title. -->
+					<xforms:setvalue ref="instance('ins-draft-entry')/atom:title" value="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:title"/>
 	
+					<!-- Tell the wizard (via submission mechanism) to return to this pane if it fails. -->
+					<xforms:setvalue ref="instance('ins-control')/fallback-wizard-pane" value="'study-terms'"/>	
+					
+					<!-- Tell the wizard to set the current pane to the permissions pane. -->
+					<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane" value="'permissions'"/>
+	
+					<!-- Try to post the draft. (Different to the other Next buttons.)  -->
+					<xforms:send submission="sub-post-draft-entry" />
+	
+				</xforms:action>
+			</xforms:trigger>
+		</p>
+	</xforms:group>
+	<xforms:group ref="instance('ins-draft-entry')/atom:link[@rel='edit']">
+		<p>
+			<xforms:trigger>
+				<xforms:label>Next (put) &gt;</xforms:label>
+				<xforms:action ev:event="DOMActivate">
+				
+					<!-- Copy the study title to the draft entry title. -->
+					<xforms:setvalue ref="instance('ins-draft-entry')/atom:title" value="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:title"/>
+	
+					
+					<!-- Tell the wizard to set the current pane to the permissions pane. -->
+					<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane" value="'permissions'"/>
+	
+					<!-- Tell the wizard (via submission mechanism) to return to this pane if it fails. -->
+					<xforms:setvalue ref="instance('ins-control')/fallback-wizard-pane" value="'study-terms'"/>
+					
+					<!-- Try to save the draft. -->
+					<xforms:send submission="sub-put-draft-entry" />
+	
+				</xforms:action>
+			</xforms:trigger>
+		</p>
+	</xforms:group>
 
 
 </div>
