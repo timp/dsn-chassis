@@ -5,7 +5,11 @@
 		<value>age</value>
 	</drugDosingDeterminant>
 	<drugDosingDeterminant>
-		<label>weight</label>
+		<label>weight group</label>
+		<value>weightGroup</value>
+	</drugDosingDeterminant>
+	<drugDosingDeterminant>
+		<label>mg/kg</label>
 		<value>weight</value>
 	</drugDosingDeterminant>
 </drugDosingDeterminants>

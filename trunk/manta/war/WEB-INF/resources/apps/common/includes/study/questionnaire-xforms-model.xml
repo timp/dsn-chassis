@@ -89,6 +89,9 @@
 								</xforms:bind>
 							</xforms:bind>
 							<xforms:bind nodeset="drugDosingDeterminant"/>
+							<xforms:bind nodeset="feeding"/>
+							<xforms:bind nodeset="fatPerMeal" relevant="contains(../feeding, 'highFat')"/>
+							<xforms:bind nodeset="feedingOther" relevant="contains(../feeding, 'other')"/>
 						</xforms:bind>
 					</xforms:bind>
 					<xforms:bind nodeset="regimenAllocation"  relevant="count(../regimens/regimen)>1" >
@@ -214,6 +217,8 @@
 		src="/apps/common/constants/drugStorages.xml" />
 	<xforms:instance id="ins-drugDosingDeterminant-items"
 		src="/apps/common/constants/drugDosingDeterminants.xml" />
+	<xforms:instance id="ins-feeding-items"
+		src="/apps/common/constants/feedings.xml" />
 
 
 	<xforms:instance id="ins-incubatorSystem-items"
@@ -249,6 +254,9 @@
    			<regimenUrl/>
    			<drugs/>
 			<drugDosingDeterminant/>
+			<feeding/>
+			<fatPerMeal/>
+			<feedingOther/>
 		</regimen>
 	</xforms:instance>
 	
@@ -259,7 +267,7 @@
 			<!--  formulation not convinced  -->
 			<manufacturer/>
 			<batchNumber/>
-			<expirationDate/>
+			<expiryDate/>
 			<drugStorage />
 		</drug>
 	</xforms:instance>

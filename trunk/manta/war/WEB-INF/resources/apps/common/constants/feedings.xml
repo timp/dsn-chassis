@@ -1,0 +1,14 @@
+<feedings xmlns="">
+	<feeding>
+		<label>Starving</label>
+		<value>starving</value>
+	</feeding>
+	<feeding>
+		<label>With a meal</label>
+		<value>meal</value>
+	</feeding>
+	<feeding>
+		<label>High fat meal</label>
+		<value>highFat</value>
+	</feeding>
+</feedings>
