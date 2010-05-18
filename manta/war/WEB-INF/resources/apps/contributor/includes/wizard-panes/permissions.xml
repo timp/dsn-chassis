@@ -45,7 +45,7 @@
 	                  </xforms:trigger>
 				</td>
 				<td>
-	                  <xforms:trigger>
+	                  <xforms:trigger appearance="minimal">
 	                      <xforms:label>Add an Administrator</xforms:label>
 	                      <xforms:insert 
 	                      	ev:event="DOMActivate" 
@@ -73,23 +73,19 @@
 		</xforms:trigger>
 
 		<xforms:trigger>
+			<xforms:label>Save As Draft</xforms:label>
+			<xforms:action ev:event="DOMActivate">
+				<xforms:setvalue ref="instance('ins-control')/fallback-wizard-pane" value="'permissions'"/>
+				<xforms:send submission="sub-put-draft-entry"/>
+			</xforms:action>
+		</xforms:trigger>
+
+		<xforms:trigger>
 			<xforms:label>Next &gt;</xforms:label>
 			<xforms:action ev:event="DOMActivate">
 				<xforms:setvalue ref="instance('ins-control')/fallback-wizard-pane" value="'permissions'"/>
 				<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane" value="'acknowledgements'"/>
 				<xforms:send submission="sub-put-draft-entry" />
-			</xforms:action>
-		</xforms:trigger>
-
-	</p>
-
-	<p>
-
-		<xforms:trigger>
-			<xforms:label>Save As Draft</xforms:label>
-			<xforms:action ev:event="DOMActivate">
-				<xforms:setvalue ref="instance('ins-control')/fallback-wizard-pane" value="'permissions'"/>
-				<xforms:send submission="sub-put-draft-entry"/>
 			</xforms:action>
 		</xforms:trigger>
 
