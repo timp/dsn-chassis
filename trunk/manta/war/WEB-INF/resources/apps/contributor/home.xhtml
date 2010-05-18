@@ -57,6 +57,11 @@
 				<atom:feed/>
 			</xforms:instance>
 			
+			
+			<xforms:bind nodeset="instance('ins-study-feed')/atom:entry/atom:published" type="xs:dateTime" />
+    		<xforms:bind nodeset="instance('ins-study-feed')/atom:entry/atom:updated" type="xs:dateTime" />
+
+			
 			<xforms:submission 
 				id="sub-retrieve-study-feed"
 				resource="/atombeat/content/studies"
@@ -73,8 +78,7 @@
 				ev:event="xforms-model-construct-done" 
 				submission="sub-retrieve-study-feed"/>
 				
-    		<xforms:bind nodeset="instance('ins-study-feed')/atom:entry/atom:published" type="xs:dateTime" />
-    		<xforms:bind nodeset="instance('ins-study-feed')/atom:entry/atom:updated" type="xs:dateTime" />
+    		
 			
         </xforms:model>
 
@@ -144,6 +148,11 @@
 		    	</fr:datatable>
     		</xforms:group>
     		
+    		<xforms:group ref="instance('ins-draft-feed')[count(atom:entry)>0]">
+
+		    	<h2>My Drafts</h2>
+	    	
+    		</xforms:group>    		
     	
     </body>
 </html>

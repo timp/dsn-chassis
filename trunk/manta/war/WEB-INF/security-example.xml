@@ -26,9 +26,9 @@
     <intercept-url pattern="/atombeat/**" access="ROLE_CHASSIS_USER" />
 
 	<!-- TODO: take this out when Tim no longer needs it, when contributor has stable path to SSQ. -->
-    <intercept-url pattern="/submitter/**" access="ROLE_CHASSIS_SUBMITTER" />
+    <intercept-url pattern="/submitter/**" access="ROLE_CHASSIS_CONTRIBUTOR" />
     
-    <intercept-url pattern="/contributor/**" access="ROLE_CHASSIS_SUBMITTER" />
+    <intercept-url pattern="/contributor/**" access="ROLE_CHASSIS_CONTRIBUTOR" />
 
   </http>
   
@@ -39,8 +39,8 @@
     
       <user name="adam@example.org" password="bar" authorities="ROLE_CHASSIS_USER, ROLE_CHASSIS_ADMINISTRATOR" />
       
-      <user name="suki@example.org" password="bar" authorities="ROLE_CHASSIS_USER, ROLE_CHASSIS_SUBMITTER" />
-      <user name="sunil@example.org" password="bar" authorities="ROLE_CHASSIS_USER, ROLE_CHASSIS_SUBMITTER" />
+      <user name="suki@example.org" password="bar" authorities="ROLE_CHASSIS_USER, ROLE_CHASSIS_CONTRIBUTOR" />
+      <user name="sunil@example.org" password="bar" authorities="ROLE_CHASSIS_USER, ROLE_CHASSIS_CONTRIBUTOR" />
       
     </user-service>
   </authentication-provider>
