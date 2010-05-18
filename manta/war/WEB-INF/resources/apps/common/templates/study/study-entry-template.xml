@@ -52,6 +52,9 @@
 								</drug>
 							</drugs>
 							<drugDosingDeterminant/>
+							<feeding/>
+							<fatPerMeal/>
+							<feedingOther/>
     	        		</regimen>
    	        		</regimens>
    	        		<regimenAllocation>
