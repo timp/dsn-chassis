@@ -37,9 +37,9 @@
         <sec:intercept-url pattern="/atombeat/**" access="ROLE_CHASSIS_USER" />
         
         <!-- TODO: take this out when Tim no longer needs it, when contributor has stable path to SSQ. -->
-        <sec:intercept-url pattern="/submitter/**" access="ROLE_CHASSIS_SUBMITTER" />
+        <sec:intercept-url pattern="/submitter/**" access="ROLE_CHASSIS_CONTRIBUTOR" />
         
-        <sec:intercept-url pattern="/contributor/**" access="ROLE_CHASSIS_SUBMITTER" />
+        <sec:intercept-url pattern="/contributor/**" access="ROLE_CHASSIS_CONTRIBUTOR" />
                 
         <sec:logout 
             logout-success-url="${cas.url}/logout" 

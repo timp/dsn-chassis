@@ -134,13 +134,13 @@ declare function config:default-collection-acl(
 
         <acl>
             <rules>
-                <!-- submitters can create studies and can list the collection -->
+                <!-- contributors can create studies and can list the collection -->
                 <allow>
-                    <role>ROLE_CHASSIS_SUBMITTER</role>
+                    <role>ROLE_CHASSIS_CONTRIBUTOR</role>
                     <operation>create-member</operation>
                 </allow>
                 <allow>
-                    <role>ROLE_CHASSIS_SUBMITTER</role>
+                    <role>ROLE_CHASSIS_CONTRIBUTOR</role>
                     <operation>list-collection</operation>
                 </allow>
             </rules>
@@ -152,13 +152,13 @@ declare function config:default-collection-acl(
 
         <acl>
             <rules>
-                <!-- submitters can create drafts and can list the collection -->
+                <!-- contributors can create drafts and can list the collection -->
                 <allow>
-                    <role>ROLE_CHASSIS_SUBMITTER</role>
+                    <role>ROLE_CHASSIS_CONTRIBUTOR</role>
                     <operation>create-member</operation>
                 </allow>
                 <allow>
-                    <role>ROLE_CHASSIS_SUBMITTER</role>
+                    <role>ROLE_CHASSIS_CONTRIBUTOR</role>
                     <operation>list-collection</operation>
                 </allow>
             </rules>
@@ -189,34 +189,23 @@ declare function config:default-resource-acl(
 
     	<acl>
     		<groups>
-    			<group name="owners">
-                    <user>{$user}</user><!-- creating user is automatically an owner -->
-    			</group>
-    			<group name="submitters">
+    			<group name="administrators">
+                    <user>{$user}</user><!-- creating user is automatically an administrator -->
     			</group>
     		</groups>
     		<rules>
-    		    <!-- owners can retrieve, update and change sharing -->
+    		    <!-- administrators can retrieve, update and change sharing -->
                 <allow>
-                    <group>owners</group>
+                    <group>administrators</group>
                     <operation>retrieve-member</operation>
                 </allow>
                 <allow>
-                    <group>owners</group>
+                    <group>administrators</group>
                     <operation>update-member</operation>
                 </allow>
                 <allow>
-                    <group>owners</group>
+                    <group>administrators</group>
                     <operation>update-acl</operation>
-                </allow>
-                <!-- submitters can retrieve and update, but cannot change sharing -->
-                <allow>
-                    <group>submitters</group>
-                    <operation>retrieve-member</operation>
-                </allow>
-                <allow>
-                    <group>submitters</group>
-                    <operation>update-member</operation>
                 </allow>
     		</rules>
     	</acl>
