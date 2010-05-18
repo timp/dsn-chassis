@@ -21,16 +21,8 @@
   
   <page path-info="/contributor/register-study" view="register-study.xhtml"/>
   
-  <page path-info="/contributor/submit-files" view="submit-files.xhtml"/>
-  
-  <page path-info="/contributor/study-summary" view="study-summary.xhtml"/>
-  <page path-info="/contributor/study-files" view="study-files.xhtml"/>
-  <page path-info="/contributor/study-questionnaire" view="study-questionnaire.xhtml"/>
-  <page path-info="/contributor/study-publications" view="study-publications.xhtml"/>
-  <page path-info="/contributor/study-permissions" view="study-permissions.xhtml"/>
-  <page path-info="/contributor/study-acknowledgements" view="study-acknowledgements.xhtml"/>
-  
-  
+  <page path-info="/contributor/terms" view="includes/terms.xhtml"/>
+
   <epilogue url="oxf:/config/epilogue.xpl"/>
 
 </config>
