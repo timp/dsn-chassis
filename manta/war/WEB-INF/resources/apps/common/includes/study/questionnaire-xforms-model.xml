@@ -103,6 +103,20 @@
 			</xforms:bind>
 			
 			<xforms:bind nodeset="molecular" relevant="contains(../modules, 'molecular')">
+				<xforms:bind nodeset="resistanceMarkers">
+					<xforms:bind nodeset="molecularMarkerFalciparumOpen" relevant="contains(../../../pathogens, 'pfalciparum')">
+							<xforms:bind nodeset="molecularMarkerFalciparum"/>
+							<xforms:bind nodeset="molecularMarkerFalciparumOther" relevant="contains(../molecularMarkerFalciparum, 'other')"/>
+					</xforms:bind>
+					<xforms:bind nodeset="molecularMarkerVivaxOpen" relevant="contains(../../../pathogens, 'pvivax')">
+							<xforms:bind nodeset="molecularMarkerVivax"/>
+							<xforms:bind nodeset="molecularMarkerVivaxOther"      relevant="contains(../molecularMarkerVivax, 'other')"/>
+					</xforms:bind>
+					<xforms:bind nodeset="genotypingMethod">
+							<xforms:bind nodeset="genotypingMethod"/>
+							<xforms:bind nodeset="genotypingMethodOther"/>
+					</xforms:bind>
+				</xforms:bind>
 			</xforms:bind>
 			<xforms:bind nodeset="invitro" relevant="contains(../modules, 'invitro')">
 				<xforms:bind nodeset="analysisSite" />
@@ -246,6 +260,11 @@
 		src="/apps/common/constants/drugMolecules.xml" />
 	<xforms:instance id="ins-drugSolvent-items"
 		src="/apps/common/constants/drugSolvents.xml" />
+
+	<xforms:instance id="ins-molecularMarkerFalciparum-items"
+		src="/apps/common/constants/molecularMarkersFalciparum.xml" />
+	<xforms:instance id="ins-molecularMarkerVivax-items"
+		src="/apps/common/constants/molecularMarkersVivax.xml" />
 
 	<xforms:instance id="ins-regimen">
 		<regimen xmlns="">

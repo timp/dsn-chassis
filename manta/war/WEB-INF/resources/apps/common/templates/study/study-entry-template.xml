@@ -195,16 +195,18 @@
 						<sampleType-type-dateIsolated/>
 				</sampleType>
 				<resistanceMarkers>
-					<resistanceMarker>
-						<molecularMarkerOpen>
-								<marker/>
-								<markerOther/>
-						</molecularMarkerOpen>
-						<genotypingMethod>
-								<genotypingMethod/>
-								<genotypingMethodOther/>
-						</genotypingMethod>
-					</resistanceMarker>
+					<molecularMarkerFalciparumOpen>
+							<molecularMarkerFalciparum/>
+							<molecularMarkerFalciparumOther/>
+					</molecularMarkerFalciparumOpen>
+					<molecularMarkerVivaxOpen>
+							<molecularMarkerVivax/>
+							<molecularMarkerVivaxOther/>
+					</molecularMarkerVivaxOpen>
+					<genotypingMethod>
+							<genotypingMethod/>
+							<genotypingMethodOther/>
+					</genotypingMethod>
 				</resistanceMarkers>
 				<mixedResistanceAlleles>
 						<mixedResistanceAllelesInclusion/>
