@@ -1,8 +1,7 @@
 <person xmlns="">
-    <given-name/>
+    <first-name/>
+    <middle-name/>
     <family-name/>
-    <name/>
-    <email/>
-    <url/>
-    <organisation/>
+    <email-address/>
+    <institution/>
 </person>

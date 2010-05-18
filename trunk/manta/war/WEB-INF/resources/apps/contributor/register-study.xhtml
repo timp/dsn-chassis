@@ -20,13 +20,14 @@
     xmlns:ev="http://www.w3.org/2001/xml-events"
     xmlns:atom="http://www.w3.org/2005/Atom"
     xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:manta="http://www.cggh.org/2010/chassis/manta/xmlns">
+    xmlns:manta="http://www.cggh.org/2010/chassis/manta/xmlns"
+    xmlns:xxi="http://orbeon.org/oxf/xml/xinclude">
 
     <head>
     
         <title>Register Study</title>
         
-        <xforms:model id="mod-main">
+        <xforms:model>
 
         	<!-- xincludes don't parse within instance sources. -->
         	<!--   <xforms:instance id="ins-draft-entry" src="/apps/contributor/includes/model-instances/draft-entry.xml"/> -->
@@ -39,18 +40,18 @@
        				<atom:content type="application/vnd.chassis-manta+xml">
 			        	<draft xmlns="">
 							<wizard-pane>study-terms</wizard-pane>
-							<terms>terms go here</terms>
 							<agreement-to-terms/>
 							<study-entry-container>
-								<xi:include href="/apps/common/templates/study/study-entry-template.xml"/>
+								<!-- tmp, need to clean the original -->
+								<xi:include href="/apps/common/templates/study/clean-study-entry-template.xml" xxi:omit-xml-base="true"/>
 							</study-entry-container>
 							<acl-entry-container>
-								<xi:include href="/apps/contributor/includes/acl-entry.xml"/>
+								<xi:include href="/apps/contributor/includes/acl-entry.xml" xxi:omit-xml-base="true"/>
 							</acl-entry-container>
 						</draft>
         			</atom:content>
        			</atom:entry>
-  			</xforms:instance>	        
+  			</xforms:instance>	   
 
 			<!-- additional model for adding a new acknowledgement (used to add the current user and add more in the acknowledgement pane) -->
 			<xforms:instance id="ins-person-template" src="/apps/common/templates/study/person-template.xml"/>
@@ -93,7 +94,7 @@
 
 			<!-- This prevents the first user (current user) from removing themselves as an administrator from the ACL in the draft. -->
 			<xforms:bind nodeset="instance('ins-draft-entry')/atom:content/draft/acl-entry-container/atom:entry/atom:content/acl/groups/group[@name='administrators']">
-                <xforms:bind nodeset="user[1]" readonly="true()"/>
+                <xforms:bind nodeset="user[1]" readonly="true()" />
             </xforms:bind>
 
 
@@ -148,10 +149,14 @@
                 <!-- If there is an error, then make a new draft. -->
                 <xforms:send ev:event="xforms-submit-error" submission="sub-post-draft-entry"/>
                 
+                <!-- If we have the draft, then set the fallback wizard pane. -->
+                <xforms:setvalue ev:event="xforms-submit-done" ref="instance('ins-control')/fallback-wizard-pane" value="instance('ins-draft-entry')/atom:content/draft/wizard-pane" />
+                
 			</xforms:submission>  
 			
 
 			<!-- This creates a new draft (based on a template) and stores it in the draft-entry instance. -->
+			<!-- If successful, it reloads the page with the appropriate URL (for book-marking). -->
             <xforms:submission 
             	id="sub-post-draft-entry" 
             	ref="instance('ins-draft-entry-template')"
@@ -161,8 +166,22 @@
                 instance="ins-draft-entry"
                 mediatype="application/atom+xml">
                 <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while creating a new draft.</xforms:message>
+                
+                <!-- If there was no error, then reload with the draft reference in the URL. -->
+                <xforms:load ev:event="xforms-submit-done" resource="register-study?draft={instance('ins-draft-entry')/atom:link[@rel='self']/@href}"/>
+                
             </xforms:submission>
+
+            
            
+           <!-- This keeps application state variables, such as where to go after hitting next (saves having a different submission (success response) for each button) -->
+           <!-- It shouldn't be saved in the draft-entry. -->
+           <!-- Thought about providing a default fallback pane, but it should really be specified in context during the application and a default would mask an error. -->
+       		<xforms:instance id="ins-control">
+                <ins-control xmlns="">
+                	<fallback-wizard-pane />
+                </ins-control>
+            </xforms:instance>           
 			
 			<!-- get this working, then we can test get-draft-entry -->
 			<!-- why is there an error saving the draft? -->
@@ -174,7 +193,7 @@
                 replace="instance" 
                 instance="ins-draft-entry"
                 mediatype="application/atom+xml"> 
-                <xforms:setvalue ev:event="xforms-submit-done" ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane" value="'permissions'"/>
+                <xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane" value="instance('ins-control')/fallback-wizard-pane"/>
                 <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while saving the draft.</xforms:message>
             </xforms:submission>
 
@@ -201,7 +220,10 @@
 		 -->
 
 	    	<h1>Register Study</h1>
-	    	
+
+			<xforms:group id="draft-saved-message">
+				<p>TODO: The draft has been saved.</p>
+			</xforms:group>	
 	    	
 	    	<xforms:group ref="instance('ins-draft-entry')/atom:content/draft[wizard-pane='study-terms']">
 	    		<xi:include href="/apps/contributor/includes/wizard-panes/study-terms.xml"/>
