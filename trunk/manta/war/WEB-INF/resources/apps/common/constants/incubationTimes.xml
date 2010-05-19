@@ -1,6 +1,10 @@
 <!--  Closed list of incubation times  -->
 <incubationTimes xmlns="">
 	<incubationTime>
+		<label>24 hours</label>
+		<value>24h</value>
+	</incubationTime>
+	<incubationTime>
 		<label>42 hours</label>
 		<value>42h</value>
 	</incubationTime>
