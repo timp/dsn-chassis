@@ -17,38 +17,49 @@ Curators can list the collection, and can retrieve and update any member.
 E.g., ACL for /studies collection ...
 
 {{{
-<acl>
-	<rules>
-		<allow>
-			<role>ROLE_CHASSIS_CONTRIBUTOR</role>
-			<operation>list-collection</operation>
-		</allow>
-		<allow>
-			<role>ROLE_CHASSIS_CONTRIBUTOR</role>
-			<operation>create-member</operation>
-		</allow>
-		<allow>
-			<role>ROLE_CHASSIS_PERSONAL_DATA_REVIEWER</role>
-			<operation>list-collection</operation>
-		</allow>
-		<allow>
-			<role>ROLE_CHASSIS_PERSONAL_DATA_REVIEWER</role>
-			<operation>retrieve-member</operation>
-		</allow>
-		<allow>
-			<role>ROLE_CHASSIS_CURATOR</role>
-			<operation>list-collection</operation>
-		</allow>
-		<allow>
-			<role>ROLE_CHASSIS_CURATOR</role>
-			<operation>retrieve-member</operation>
-		</allow>
-		<allow>
-			<role>ROLE_CHASSIS_CURATOR</role>
-			<operation>update-member</operation>
-		</allow>
-	</rules>
-</acl>
+<atombeat:security-descriptor xmlns:atombeat="http://atombeat.org/xmlns">
+	<atombeat:acl>
+
+		<atombeat:ace>
+			<atombeat:type>ALLOW</atombeat:type>
+			<atombeat:recipient type="role">ROLE_CHASSIS_CONTRIBUTOR</atombeat:recipient>
+			<atombeat:permission>LIST_COLLECTION</atombeat:permission>
+		</atombeat:ace>
+		<atombeat:ace>
+			<atombeat:type>ALLOW</atombeat:type>
+			<atombeat:recipient type="role">ROLE_CHASSIS_CONTRIBUTOR</atombeat:recipient>
+			<atombeat:permission>CREATE_MEMBER</atombeat:permission>
+		</atombeat:ace>
+
+		<atombeat:ace>
+			<atombeat:type>ALLOW</atombeat:type>
+			<atombeat:recipient type="role">ROLE_CHASSIS_PERSONAL_DATA_REVIEWER</atombeat:recipient>
+			<atombeat:permission>LIST_COLLECTION</atombeat:permission>
+		</atombeat:ace>
+		<atombeat:ace>
+			<atombeat:type>ALLOW</atombeat:type>
+			<atombeat:recipient type="role">ROLE_CHASSIS_PERSONAL_DATA_REVIEWER</atombeat:recipient>
+			<atombeat:permission>RETRIEVE_MEMBER</atombeat:permission>
+		</atombeat:ace>
+
+		<atombeat:ace>
+			<atombeat:type>ALLOW</atombeat:type>
+			<atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+			<atombeat:permission>LIST_COLLECTION</atombeat:permission>
+		</atombeat:ace>
+		<atombeat:ace>
+			<atombeat:type>ALLOW</atombeat:type>
+			<atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+			<atombeat:permission>RETRIEVE_MEMBER</atombeat:permission>
+		</atombeat:ace>
+		<atombeat:ace>
+			<atombeat:type>ALLOW</atombeat:type>
+			<atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+			<atombeat:permission>UPDATE_MEMBER</atombeat:permission>
+		</atombeat:ace>
+
+	</atombeat:acl>
+</atombeat:security-descriptor>
 }}}
 
 == Members of the /studies Collection ==
@@ -60,34 +71,44 @@ A study administrator can retrieve and update the study, and can update the stud
 E.g., ACL for member /studies/ABCDE.atom ...
 
 {{{
-<acl>
-	<groups>
-		<group name="administrators">
-			<user>suki@example.org</user>
-		</group>
-	</groups>
-	<rules>
-		<allow>
-			<group>administrators</group>
-			<operation>retrieve-member</operation>
-		</allow>
-		<allow>
-			<group>administrators</group>
-			<operation>update-member</operation>
-		</allow>
-		<allow>
-			<group>administrators</group>
-			<operation>update-acl</operation>
-		</allow>
-	</rules>
-</acl>
+<atombeat:security-descriptor xmlns:atombeat="http://atombeat.org/xmlns">
+	<atombeat:groups>
+		<atombeat:group id="GROUP_STUDY_ADMINISTRATORS">
+			<atombeat:member>suki@example.org</atombeat:member>
+		</atombeat:group>
+	</atombeat:groups>
+	<atombeat:acl>
+		<atombeat:ace>
+			<atombeat:type>ALLOW</atombeat:type>
+			<atombeat:recipient type="group">GROUP_STUDY_ADMINISTRATORS</atombeat:recipient>
+			<atombeat:permission>RETRIEVE_MEMBER</atombeat:permission>
+		</atombeat:ace>
+		<atombeat:ace>
+			<atombeat:type>ALLOW</atombeat:type>
+			<atombeat:recipient type="group">GROUP_STUDY_ADMINISTRATORS</atombeat:recipient>
+			<atombeat:permission>UPDATE_MEMBER</atombeat:permission>
+		</atombeat:ace>
+		<atombeat:ace>
+			<atombeat:type>ALLOW</atombeat:type>
+			<atombeat:recipient type="group">GROUP_STUDY_ADMINISTRATORS</atombeat:recipient>
+			<atombeat:permission>RETRIEVE_ACL</atombeat:permission>
+		</atombeat:ace>
+		<atombeat:ace>
+			<atombeat:type>ALLOW</atombeat:type>
+			<atombeat:recipient type="group">GROUP_STUDY_ADMINISTRATORS</atombeat:recipient>
+			<atombeat:permission>UPDATE_ACL</atombeat:permission>
+		</atombeat:ace>
+	</atombeat:acl>
+</atombeat:security-descriptor>
 }}}
 
 == Submitted Media Collections, e.g., /media/ABCDE/submitted ==
 
 Each study is linked to a submitted media collection. E.g., the study at /studies/ABCDE.atom is linked to its submitted media collection at /media/ABCDE/submitted.
 
-Personal data reviewers can retrieve any member or media resource.
+Personal data reviewers can list the collection, and can retrieve any member or media resource.
+
+Personal data reviewers can list the collection, and can retrieve any member.
 
 Other permissions on a submitted media collection are defined with reference to the associated study's administrators group.
 
@@ -96,41 +117,62 @@ The study's administrators can create media resources in the study's submitted m
 E.g., default ACL for /media/ABCDE/submitted collection ...
 
 {{{
-<acl>
-	<groups>
-		<group name="administrators" src="/studies/ABCDE.atom"/>
-	</groups>
-	<rules>
-		<allow>
-			<group>administrators</group>
-			<operation>list-collection</operation>
-		</allow>
-		<allow>
-			<group>administrators</group>
-			<operation>create-media</operation>
-		</allow>
-		<allow>
-			<group>administrators</group>
-			<operation>retrieve-member</operation>
-		</allow>
-		<allow>
-			<group>administrators</group>
-			<operation>update-member</operation>
-		</allow>
-		<allow>
-			<role>ROLE_CHASSIS_PERSONAL_DATA_REVIEWER</role>
-			<operation>list-collection</operation>
-		</allow>
-		<allow>
-			<role>ROLE_CHASSIS_PERSONAL_DATA_REVIEWER</role>
-			<operation>retrieve-member</operation>
-		</allow>
-		<allow>
-			<role>ROLE_CHASSIS_PERSONAL_DATA_REVIEWER</role>
-			<operation>retrieve-media</operation>
-		</allow>
-	</rules>
-</acl>
+<atombeat:security-descriptor xmlns:atombeat="http://atombeat.org/xmlns">
+	<atombeat:groups>
+		<atombeat:group id="GROUP_STUDY_ADMINISTRATORS" src="http://example.org/chassis/atombeat/content/studies/ABCDE.atom"/>
+	</atombeat:groups>
+	<atombeat:acl>
+
+		<atombeat:ace>
+			<atombeat:type>ALLOW</atombeat:type>
+			<atombeat:recipient type="group">GROUP_STUDY_ADMINISTRATORS</atombeat:recipient>
+			<atombeat:permission>LIST_COLLECTION</atombeat:permission>
+		</atombeat:ace>
+		<atombeat:ace>
+			<atombeat:type>ALLOW</atombeat:type>
+			<atombeat:recipient type="group">GROUP_STUDY_ADMINISTRATORS</atombeat:recipient>
+			<atombeat:permission>CREATE_MEDIA</atombeat:permission>
+		</atombeat:ace>
+		<atombeat:ace>
+			<atombeat:type>ALLOW</atombeat:type>
+			<atombeat:recipient type="group">GROUP_STUDY_ADMINISTRATORS</atombeat:recipient>
+			<atombeat:permission>RETRIEVE_MEMBER</atombeat:permission>
+		</atombeat:ace>
+		<atombeat:ace>
+			<atombeat:type>ALLOW</atombeat:type>
+			<atombeat:recipient type="group">GROUP_STUDY_ADMINISTRATORS</atombeat:recipient>
+			<atombeat:permission>UPDATE_MEMBER</atombeat:permission>
+		</atombeat:ace>
+
+		<atombeat:ace>
+			<atombeat:type>ALLOW</atombeat:type>
+			<atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+			<atombeat:permission>LIST_COLLECTION</atombeat:permission>
+		</atombeat:ace>
+		<atombeat:ace>
+			<atombeat:type>ALLOW</atombeat:type>
+			<atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+			<atombeat:permission>RETRIEVE_MEMBER</atombeat:permission>
+		</atombeat:ace>
+
+		<atombeat:ace>
+			<atombeat:type>ALLOW</atombeat:type>
+			<atombeat:recipient type="role">ROLE_CHASSIS_PERSONAL_DATA_REVIEWER</atombeat:recipient>
+			<atombeat:permission>LIST_COLLECTION</atombeat:permission>
+		</atombeat:ace>
+		<atombeat:ace>
+			<atombeat:type>ALLOW</atombeat:type>
+			<atombeat:recipient type="role">ROLE_CHASSIS_PERSONAL_DATA_REVIEWER</atombeat:recipient>
+			<atombeat:permission>RETRIEVE_MEMBER</atombeat:permission>
+		</atombeat:ace>
+		<atombeat:ace>
+			<atombeat:type>ALLOW</atombeat:type>
+			<atombeat:recipient type="role">ROLE_CHASSIS_PERSONAL_DATA_REVIEWER</atombeat:recipient>
+			<atombeat:permission>RETRIEVE_MEDIA</atombeat:permission>
+		</atombeat:ace>
+
+	</atombeat:acl>
+</atombeat:security-descriptor>
 }}}
 
 == Media Resources in a Submitted Media Collection ==
@@ -146,41 +188,59 @@ Study administrators will be allowed to retrieve a media resource if passed by a
 E.g., default ACL for media resource /media/ABCDE/submitted/XYZ.media (before personal data review) ...
 
 {{{
-<acl>
-	<groups>
-		<group name="administrators" src="/studies/ABCDE.atom"/>
-	</groups>
-	<rules>
-		<allow>
-			<role>ROLE_CHASSIS_PERSONAL_DATA_REVIEWER</role>
-			<operation>update-acl</operation>
-		</allow>
-	</rules>
-</acl>
+<atombeat:security-descriptor xmlns:atombeat="http://atombeat.org/xmlns">
+	<atombeat:groups>
+		<atombeat:group id="GROUP_STUDY_ADMINISTRATORS" src="http://example.org/chassis/atombeat/content/studies/ABCDE.atom"/>
+	</atombeat:groups>
+	<atombeat:acl>
+		<atombeat:ace>
+			<atombeat:type>ALLOW</atombeat:type>
+			<atombeat:recipient type="role">ROLE_CHASSIS_PERSONAL_DATA_REVIEWER</atombeat:recipient>
+			<atombeat:permission>RETRIEVE_ACL</atombeat:permission>
+		</atombeat:ace>
+		<atombeat:ace>
+			<atombeat:type>ALLOW</atombeat:type>
+			<atombeat:recipient type="role">ROLE_CHASSIS_PERSONAL_DATA_REVIEWER</atombeat:recipient>
+			<atombeat:permission>UPDATE_ACL</atombeat:permission>
+		</atombeat:ace>
+	</atombeat:acl>
+</atombeat:security-descriptor>
 }}}
 
 E.g., ACL for media resource /media/ABCDE/submitted/XYZ.media after passed by personal data reviewer ...
 
 {{{
-<acl>
-	<groups>
-		<group name="administrators" src="/studies/ABCDE.atom"/>
-	</groups>
-	<rules>
-		<allow>
-			<role>ROLE_CHASSIS_PERSONAL_DATA_REVIEWER</role>
-			<operation>update-acl</operation>
-		</allow>
-		<allow>
-			<group>administrators</group>
-			<operation>retrieve-media</operation>
-		</allow>
-		<allow>
-			<role>ROLE_CHASSIS_CURATOR</role>
-			<operation>retrieve-media</operation>
-		</allow>
-	</rules>
-</acl>
+<atombeat:security-descriptor xmlns:atombeat="http://atombeat.org/xmlns">
+	<atombeat:groups>
+		<atombeat:group id="GROUP_STUDY_ADMINISTRATORS" src="http://example.org/chassis/atombeat/content/studies/ABCDE.atom"/>
+	</atombeat:groups>
+	<atombeat:acl>
+
+		<atombeat:ace>
+			<atombeat:type>ALLOW</atombeat:type>
+			<atombeat:recipient type="role">ROLE_CHASSIS_PERSONAL_DATA_REVIEWER</atombeat:recipient>
+			<atombeat:permission>RETRIEVE_ACL</atombeat:permission>
+		</atombeat:ace>
+		<atombeat:ace>
+			<atombeat:type>ALLOW</atombeat:type>
+			<atombeat:recipient type="role">ROLE_CHASSIS_PERSONAL_DATA_REVIEWER</atombeat:recipient>
+			<atombeat:permission>UPDATE_ACL</atombeat:permission>
+		</atombeat:ace>
+
+		<atombeat:ace>
+			<atombeat:type>ALLOW</atombeat:type>
+			<atombeat:recipient type="group">GROUP_STUDY_ADMINISTRATORS</atombeat:recipient>
+			<atombeat:permission>RETRIEVE_MEDIA</atombeat:permission>
+		</atombeat:ace>
+
+		<atombeat:ace>
+			<atombeat:type>ALLOW</atombeat:type>
+			<atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+			<atombeat:permission>RETRIEVE_MEDIA</atombeat:permission>
+		</atombeat:ace>
+
+	</atombeat:acl>
+</atombeat:security-descriptor>
 }}}
 
 I.e., when a personal data reviewer passes a submitted media resource, they must also update the ACL for that media resource to allow curators the study's administrators and the study's administrators to retrieve the media resource.
@@ -196,30 +256,35 @@ Curators can list the collection and retrieve any member.
 E.g., ACL for the /reviews/personal-data collection ...
 
 {{{
-<acl>
-	<rules>
-		<allow>
-			<role>ROLE_CHASSIS_PERSONAL_DATA_REVIEWER</role>
-			<operation>create-member</operation>
-		</allow>
-		<allow>
-			<role>ROLE_CHASSIS_PERSONAL_DATA_REVIEWER</role>
-			<operation>list-collection</operation>
-		</allow>
-		<allow>
-			<role>ROLE_CHASSIS_PERSONAL_DATA_REVIEWER</role>
-			<operation>retrieve-member</operation>
-		</allow>
-		<allow>
-			<role>ROLE_CHASSIS_CURATOR</role>
-			<operation>list-collection</operation>
-		</allow>
-		<allow>
-			<role>ROLE_CHASSIS_CURATOR</role>
-			<operation>retrieve-member</operation>
-		</allow>
-	</rules>
-</acl>
+<atombeat:security-descriptor xmlns:atombeat="http://atombeat.org/xmlns">
+	<atombeat:acl>
+		<atombeat:ace>
+			<atombeat:type>ALLOW</atombeat:type>
+			<atombeat:recipient type="role">ROLE_CHASSIS_PERSONAL_DATA_REVIEWER</atombeat:recipient>
+			<atombeat:permission>CREATE_MEMBER</atombeat:permission>
+		</atombeat:ace>
+		<atombeat:ace>
+			<atombeat:type>ALLOW</atombeat:type>
+			<atombeat:recipient type="role">ROLE_CHASSIS_PERSONAL_DATA_REVIEWER</atombeat:recipient>
+			<atombeat:permission>LIST_COLLECTION</atombeat:permission>
+		</atombeat:ace>
+		<atombeat:ace>
+			<atombeat:type>ALLOW</atombeat:type>
+			<atombeat:recipient type="role">ROLE_CHASSIS_PERSONAL_DATA_REVIEWER</atombeat:recipient>
+			<atombeat:permission>RETRIEVE_MEMBER</atombeat:permission>
+		</atombeat:ace>
+		<atombeat:ace>
+			<atombeat:type>ALLOW</atombeat:type>
+			<atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+			<atombeat:permission>LIST_COLLECTION</atombeat:permission>
+		</atombeat:ace>
+		<atombeat:ace>
+			<atombeat:type>ALLOW</atombeat:type>
+			<atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+			<atombeat:permission>RETRIEVE_MEMBER</atombeat:permission>
+		</atombeat:ace>
+	</atombeat:acl>
+</atombeat:security-descriptor>
 }}}
 
 == Members of the /reviews/personal-data Collection ==
@@ -229,17 +294,21 @@ A study administrator can retrieve a review if the review is of a submitted medi
 E.g., default ACL for member /reviews/personal-data/WWW.atom which reviews a submitted media resource from the study at /studies/ABCDE.atom ...
 
 {{{
-<acl>
-	<groups>
-		<group name="administrators" src="/studies/ABCDE.atom"/>
-	</groups>
-	<rules>
-		<allow>
-			<group>administrators</group>
-			<operation>retrieve-member</operation>
-		</allow>
-	</rules>
-</acl>
+<atombeat:security-descriptor xmlns:atombeat="http://atombeat.org/xmlns">
+
+	<atombeat:groups>
+		<atombeat:group id="GROUP_STUDY_ADMINISTRATORS" src="http://example.org/chassis/atombeat/content/studies/ABCDE.atom"/>
+	</atombeat:groups>
+
+	<atombeat:acl>
+		<atombeat:ace>
+			<atombeat:type>ALLOW</atombeat:type>
+			<atombeat:recipient type="group">GROUP_STUDY_ADMINISTRATORS</atombeat:recipient>
+			<atombeat:permission>RETRIEVE_MEMBER</atombeat:permission>
+		</atombeat:ace>
+	</atombeat:acl>
+
+</atombeat:security-descriptor>
 }}}
 
 TODO how does a contributor navigate from a submitted media resource to a personal data review about that media resource? Do we need to add a custom link relation to the media-link entry for the media resource? If so, then we need to add behaviour to the manta atombeat plugin.
@@ -257,45 +326,56 @@ The study administrators can list the collection and retrieve members and media 
 E.g., default ACL for the curated media collection at /media/ABCDE/curated ...
 
 {{{
-<acl>
-	<groups>
-		<group name="administrators" src="/studies/ABCDE.atom"/>
-	</groups>
-	<rules>
-		<allow>
-			<role>ROLE_CHASSIS_CURATOR</role>
-			<operation>create-media</operation>
-		</allow>
-		<allow>
-			<role>ROLE_CHASSIS_CURATOR</role>
-			<operation>list-collection</operation>
-		</allow>
-		<allow>
-			<role>ROLE_CHASSIS_CURATOR</role>
-			<operation>retrieve-member</operation>
-		</allow>
-		<allow>
-			<role>ROLE_CHASSIS_CURATOR</role>
-			<operation>update-member</operation>
-		</allow>
-		<allow>
-			<role>ROLE_CHASSIS_CURATOR</role>
-			<operation>retrieve-media</operation>
-		</allow>
-		<allow>
-			<group>administrators</group>
-			<operation>list-collection</operation>
-		</allow>
-		<allow>
-			<group>administrators</group>
-			<operation>retrieve-member</operation>
-		</allow>
-		<allow>
-			<group>administrators</group>
-			<operation>retrieve-media</operation>
-		</allow>
-	</rules>
-</acl>
+<atombeat:security-descriptor xmlns:atombeat="http://atombeat.org/xmlns">
+	<atombeat:groups>
+		<atombeat:group id="GROUP_STUDY_ADMINISTRATORS" src="http://example.org/chassis/atombeat/content/studies/ABCDE.atom"/>
+	</atombeat:groups>
+	<atombeat:acl>
+
+		<atombeat:ace>
+			<atombeat:type>ALLOW</atombeat:type>
+			<atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+			<atombeat:permission>CREATE_MEDIA</atombeat:permission>
+		</atombeat:ace>
+		<atombeat:ace>
+			<atombeat:type>ALLOW</atombeat:type>
+			<atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+			<atombeat:permission>LIST_COLLECTION</atombeat:permission>
+		</atombeat:ace>
+		<atombeat:ace>
+			<atombeat:type>ALLOW</atombeat:type>
+			<atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+			<atombeat:permission>RETRIEVE_MEMBER</atombeat:permission>
+		</atombeat:ace>
+		<atombeat:ace>
+			<atombeat:type>ALLOW</atombeat:type>
+			<atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+			<atombeat:permission>UPDATE_MEMBER</atombeat:permission>
+		</atombeat:ace>
+		<atombeat:ace>
+			<atombeat:type>ALLOW</atombeat:type>
+			<atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+			<atombeat:permission>RETRIEVE_MEDIA</atombeat:permission>
+		</atombeat:ace>
+
+		<atombeat:ace>
+			<atombeat:type>ALLOW</atombeat:type>
+			<atombeat:recipient type="group">GROUP_STUDY_ADMINISTRATORS</atombeat:recipient>
+			<atombeat:permission>LIST_COLLECTION</atombeat:permission>
+		</atombeat:ace>
+		<atombeat:ace>
+			<atombeat:type>ALLOW</atombeat:type>
+			<atombeat:recipient type="group">GROUP_STUDY_ADMINISTRATORS</atombeat:recipient>
+			<atombeat:permission>RETRIEVE_MEMBER</atombeat:permission>
+		</atombeat:ace>
+		<atombeat:ace>
+			<atombeat:type>ALLOW</atombeat:type>
+			<atombeat:recipient type="group">GROUP_STUDY_ADMINISTRATORS</atombeat:recipient>
+			<atombeat:permission>RETRIEVE_MEDIA</atombeat:permission>
+		</atombeat:ace>
+
+	</atombeat:acl>
+</atombeat:security-descriptor>
 }}}
 
 == Members of Curated Media Collections ==
@@ -315,31 +395,41 @@ The study administrators can list the collection and retrieve members.
 E.g., default ACL for the derivations collection at /derivations/ABCDE ...
 
 {{{
-<acl>
-	<groups>
-		<group name="administrators" src="/studies/ABCDE.atom"/>
-	</groups>
-	<rules>
-		<allow>
-			<role>ROLE_CHASSIS_CURATOR</role>
-			<operation>create-member</operation>
-		</allow>
-		<allow>
-			<role>ROLE_CHASSIS_CURATOR</role>
-			<operation>list-collection</operation>
-		</allow>
-		<allow>
-			<role>ROLE_CHASSIS_CURATOR</role>
-			<operation>retrieve-member</operation>
-		</allow>
-		<allow>
-			<group>administrators</group>
-			<operation>list-collection</operation>
-		</allow>
-		<allow>
-			<group>administrators</group>
-			<operation>retrieve-member</operation>
-		</allow>
-	</rules>
-</acl>
+<atombeat:security-descriptor xmlns:atombeat="http://atombeat.org/xmlns">
+	<atombeat:groups>
+		<atombeat:group id="GROUP_STUDY_ADMINISTRATORS" src="http://example.org/chassis/atombeat/content/studies/ABCDE.atom"/>
+	</atombeat:groups>
+	<atombeat:acl>
+
+		<atombeat:ace>
+			<atombeat:type>ALLOW</atombeat:type>
+			<atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+			<atombeat:permission>CREATE_MEMBER</atombeat:permission>
+		</atombeat:ace>
+		<atombeat:ace>
+			<atombeat:type>ALLOW</atombeat:type>
+			<atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+			<atombeat:permission>LIST_COLLECTION</atombeat:permission>
+		</atombeat:ace>
+		<atombeat:ace>
+			<atombeat:type>ALLOW</atombeat:type>
+			<atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+			<atombeat:permission>RETRIEVE_MEMBER</atombeat:permission>
+		</atombeat:ace>
+
+		<atombeat:ace>
+			<atombeat:type>ALLOW</atombeat:type>
+			<atombeat:recipient type="group">GROUP_STUDY_ADMINISTRATORS</atombeat:recipient>
+			<atombeat:permission>LIST_COLLECTION</atombeat:permission>
+		</atombeat:ace>
+		<atombeat:ace>
+			<atombeat:type>ALLOW</atombeat:type>
+			<atombeat:recipient type="group">GROUP_STUDY_ADMINISTRATORS</atombeat:recipient>
+			<atombeat:permission>RETRIEVE_MEMBER</atombeat:permission>
+		</atombeat:ace>
+
+	</atombeat:acl>
+</atombeat:security-descriptor>
 }}}
+
+TODO how does user navigate from a curated media resource to its derivation?
