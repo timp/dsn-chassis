@@ -181,6 +181,7 @@ E.g., default ACL for /media/ABCDE/submitted collection ...
 			<atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
 			<atombeat:permission>LIST_COLLECTION</atombeat:permission>
 		</atombeat:ace>
+
 		<atombeat:ace>
 			<atombeat:type>ALLOW</atombeat:type>
 			<atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
