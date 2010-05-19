@@ -91,7 +91,32 @@
 									<xforms:bind nodeset="batchNumber" />
 									<xforms:bind nodeset="expiryDate" type="xs:date" />
 									<xforms:bind nodeset="drugStorage" />
-									<xforms:bind nodeset="drugDosingDeterminant" />
+									<xforms:bind nodeset="drugDosingDeterminant"
+										required="true()" />
+									<xforms:bind nodeset="ageDosing"
+										relevant="contains(../drugDosingDeterminant, 'age')">
+										<xforms:bind nodeset="ageDosingSchedule">
+											<xforms:bind nodeset="ageFrom" type="ctype:age" />
+											<xforms:bind nodeset="ageTo" type="ctype:age" />
+											<xforms:bind nodeset="dose" />
+											<xforms:bind nodeset="doseUnit" />
+										</xforms:bind>
+									</xforms:bind>
+									<xforms:bind nodeset="wGroupDosing"
+										relevant="contains(../drugDosingDeterminant, 'wGroup')">
+										<xforms:bind nodeset="wGroupDosingSchedule">
+											<xforms:bind nodeset="weightFrom" />
+											<xforms:bind nodeset="weightTo" />
+											<xforms:bind nodeset="dose" />
+											<xforms:bind nodeset="doseUnit" />
+										</xforms:bind>
+									</xforms:bind>
+									<xforms:bind nodeset="weightDosing"
+										relevant="contains(../drugDosingDeterminant, 'weight')">
+										<xforms:bind nodeset="weightDosingSchedule">
+											<xforms:bind nodeset="dose" />
+										</xforms:bind>
+									</xforms:bind>
 									<xforms:bind nodeset="feeding" />
 									<xforms:bind nodeset="fatPerMeal"
 										relevant="contains(../feeding, 'highFat')" />
@@ -286,18 +311,40 @@
 	<xforms:instance id="ins-drug">
 		<drug xmlns="">
 			<name />
-			<activeIngredients>
-				<activeIngredient>
-					<activeIngredientName />
-					<activeIngredientMgPerDose />
-				</activeIngredient>
-			</activeIngredients>
+			<activeIngredients />
 			<administrationRoute />
 			<manufacturer />
 			<batchNumber />
 			<expiryDate />
 			<drugStorage />
 			<drugDosingDeterminant />
+			<ageDosing>
+				<ageDosingSchedule>
+					<day />
+					<hour />
+					<ageFrom />
+					<ageTo />
+					<dose />
+					<doseUnit />
+				</ageDosingSchedule>
+			</ageDosing>
+			<wGroupDosing>
+				<wGroupDosingSchedule>
+					<day />
+					<hour />
+					<wGroupFrom />
+					<wGroupTo />
+					<dose />
+					<doseUnit />
+				</wGroupDosingSchedule>
+			</wGroupDosing>
+			<weightDosing>
+				<weightDosingSchedule>
+					<day />
+					<hour />
+					<dose />
+				</weightDosingSchedule>
+			</weightDosing>
 			<feeding />
 			<fatPerMeal />
 			<feedingOther />
@@ -305,6 +352,36 @@
 			<comments />
 		</drug>
 	</xforms:instance>
+
+	<xforms:instance id="ins-ageDosingSchedule">
+		<ageDosingSchedule xmlns="">
+			<day />
+			<hour />
+			<ageFrom />
+			<ageTo />
+			<dose />
+			<doseUnit />
+		</ageDosingSchedule>
+	</xforms:instance>
+
+<xforms:instance id="ins-wGroupDosingSchedule">
+				<wGroupDosingSchedule xmlns="">
+					<day />
+					<hour />
+					<wGroupFrom />
+					<wGroupTo />
+					<dose />
+					<doseUnit />
+				</wGroupDosingSchedule>
+</xforms:instance>
+
+<xforms:instance id="ins-weightDosingSchedule">
+				<weightDosingSchedule xmlns="">
+					<day />
+					<hour />
+					<dose />
+				</weightDosingSchedule>
+</xforms:instance>
 	<xforms:instance id="ins-activeIngredient">
 		<activeIngredient xmlns="">
 			<activeIngredientName />
