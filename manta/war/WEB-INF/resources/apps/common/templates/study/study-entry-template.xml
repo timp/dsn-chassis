@@ -10,18 +10,6 @@
             <pathogens/>
 			<sites/>
             <modules/>
-			<transmissionIntensity>
-				<annualParasitologicalIncidence/>
-				<annualParasitologicalIncidenceYear />
-				<parasitePrevalence />
-				<parasitePrevalenceYear />
-				<transmissionIntensityAgeFrom />
-				<transmissionIntensityAgeTo />
-				<entomologicalInoculationRate />
-				<entomologicalInoculationRateYear />
-				<seasonalTransmission />
-				<transmissionMonths/>			
-			</transmissionIntensity>
 			
 			<inclusionExclusionCriteria>
 				<maxAge />

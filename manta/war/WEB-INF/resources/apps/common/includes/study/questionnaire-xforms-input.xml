@@ -197,32 +197,8 @@
 										value="concat('Please enter a coordinate value between -180 and 180 for the ', name(), ' field ')" />
 								</xforms:alert>
 							</xforms:input>
-						</td>
-					</tr>
-				</xforms:repeat>
-				<tr>
-					<td class="action-td">
-						<xforms:trigger appearance="minimal">
-							<xforms:label>
-								<img src="/apps/submitter/common/add.gif" />
-							</xforms:label>
-							<xforms:insert ev:event="DOMActivate" context="."
-								nodeset="site" at="count(../site)" position="after"
-								origin="instance('ins-site-template')" />
-						</xforms:trigger>
-					</td>
-					<td class="add-td">
-						<xforms:trigger appearance="minimal">
-							<xforms:label>Add a Site</xforms:label>
-							<xforms:insert ev:event="DOMActivate" context="."
-								nodeset="site" at="count(../site)" position="after"
-								origin="instance('ins-site-template')" />
-						</xforms:trigger>
-					</td>
-				</tr>
-			</table>
-		</xforms:group>
-
+							
+							
 		<xforms:group ref="transmissionIntensity">
 			<h3>Transmission Intensity</h3>
 
@@ -305,6 +281,33 @@
 			</xforms:select>
 
 		</xforms:group>
+							
+						</td>
+					</tr>
+				</xforms:repeat>
+				<tr>
+					<td class="action-td">
+						<xforms:trigger appearance="minimal">
+							<xforms:label>
+								<img src="/apps/submitter/common/add.gif" />
+							</xforms:label>
+							<xforms:insert ev:event="DOMActivate" context="."
+								nodeset="site" at="count(../site)" position="after"
+								origin="instance('ins-site-template')" />
+						</xforms:trigger>
+					</td>
+					<td class="add-td">
+						<xforms:trigger appearance="minimal">
+							<xforms:label>Add a Site</xforms:label>
+							<xforms:insert ev:event="DOMActivate" context="."
+								nodeset="site" at="count(../site)" position="after"
+								origin="instance('ins-site-template')" />
+						</xforms:trigger>
+					</td>
+				</tr>
+			</table>
+		</xforms:group>
+
 
 		<xforms:group ref="inclusionExclusionCriteria">
 			<h3 id="inclusionExclusionCriteria">Inclusion/Exclusion Criteria</h3>
