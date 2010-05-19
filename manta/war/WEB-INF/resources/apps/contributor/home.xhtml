@@ -94,8 +94,26 @@
     
 	    	<h1>Contributor Home</h1>
 
-	    	<p><a href="register-study">Register Study</a>
-	    	</p>
+	    	<ul>
+	    		<li><a href="register-study">Register Study</a></li>
+	    	</ul>
+
+
+    		<xforms:group ref="instance('ins-draft-feed')[count(atom:entry)>0]">
+
+		    	<h2>Unfinished Drafts</h2>
+
+					<ul>
+	    				<xforms:repeat nodeset="xxforms:sort(instance('ins-draft-feed')/atom:entry, atom:published, 'text', 'ascending')">
+	    					<li><a href="register-study?draft={atom:link[@rel='edit']/@href}"><xforms:output value="atom:title"/> (<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')" />)</a>
+	    					</li>
+	    				</xforms:repeat>
+	    			</ul>
+		    			
+    		</xforms:group>    		
+
+
+
 	    	
     		<xforms:group ref="instance('ins-study-feed')[count(atom:entry)=0]">
 
@@ -109,18 +127,18 @@
 
 		    	<h2>My Studies</h2>
 	    	
-		    	<fr:datatable paginated="false">
+		    	<fr:datatable>
 		    		<thead>
 		    			<tr>
-		    				<th>Code</th>
-		    				<th>Title</th>
-		    				<th>Created</th>
-		    				<th>Updated</th>
+		    				<th fr:sortable="true" fr:resizeable="true">Code</th>
+		    				<th fr:sortable="true" fr:resizeable="true">Title</th>
+		    				<th fr:sortable="true" fr:resizeable="true">Created</th>
+		    				<th fr:sortable="true" fr:resizeable="true">Admins</th>
 		    				<th>Actions</th>
 		    			</tr>
 		    		</thead>
 		    		<tbody>
-		    			<xforms:repeat id="rep-study-entry" nodeset="instance('ins-study-feed')/atom:entry">
+		    			<xforms:repeat nodeset="instance('ins-study-feed')/atom:entry">
 		    				<tr>
 		    					<td>
 		    						<a href="study-summary?study={atom:link[@rel='edit']/@href}"><xforms:output value="manta:id"/></a>
@@ -129,30 +147,21 @@
 		    						<a href="study-summary?study={atom:link[@rel='edit']/@href}"><xforms:output value="atom:title"/></a>
 		    					</td>
 		    					<td>
-		    						<xforms:output ref="atom:published" 
-		    							xxforms:format="if (instance('ins-current-user')/country = 'US') then  format-dateTime(., '[M01]/[D01]/[Y]') else format-dateTime(., '[D01]/[M01]/[Y]')">
-		    						<xforms:alert >Not a DateTime</xforms:alert>
+		    						<xforms:output ref="atom:published" xxforms:format="if (instance('ins-current-user')/country = 'US') then  format-dateTime(., '[M01]/[D01]/[Y]') else format-dateTime(., '[D01]/[M01]/[Y]')">
+		    							<xforms:alert>Not a DateTime</xforms:alert>
 		    						</xforms:output>
 		    					</td>
 		    					<td>
-		    						<xforms:output ref="atom:updated" 
-		    							xxforms:format="if (instance('ins-current-user')/country = 'US') then  format-dateTime(., '[M01]/[D01]/[Y]') else format-dateTime(., '[D01]/[M01]/[Y]')">
-		    						<xforms:alert >Not a DateTime</xforms:alert>
-		    						</xforms:output>
-		    						
+		    						TODO
 		    					</td>
 		    					<td><a href="study-summary?study={atom:link[@rel='edit']/@href}">View</a></td>
 		    				</tr>
 		    			</xforms:repeat>
 		    		</tbody>
 		    	</fr:datatable>
+		    	
     		</xforms:group>
     		
-    		<xforms:group ref="instance('ins-draft-feed')[count(atom:entry)>0]">
-
-		    	<h2>My Drafts</h2>
-	    	
-    		</xforms:group>    		
     	
     </body>
 </html>

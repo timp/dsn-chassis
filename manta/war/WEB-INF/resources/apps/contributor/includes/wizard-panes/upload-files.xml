@@ -1,31 +1,165 @@
 <div 
 	xmlns="http://www.w3.org/1999/xhtml" 
 	xmlns:xforms="http://www.w3.org/2002/xforms" 
-	xmlns:ev="http://www.w3.org/2001/xml-events">
+	xmlns:ev="http://www.w3.org/2001/xml-events"
+	xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
+	xmlns:xxforms="http://orbeon.org/oxf/xml/xforms">
 
 	<h2>(4) Upload Files</h2>
-
-
-	<p>
-		<xforms:trigger>
-			<xforms:label>&lt; Previous</xforms:label>
-			<xforms:action ev:event="DOMActivate">
-				<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane" value="'acknowledgements'"/>
-			</xforms:action>
-		</xforms:trigger>
+	
+		                    	
+		<xforms:group ref="instance('ins-draft-entry')/atom:content/draft/uploads-container/uploads">
 		
-		<xforms:trigger>
-			<xforms:label>Next &gt;</xforms:label>
-			<xforms:action ev:event="DOMActivate">
-				<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane" value="'publications'"/>
-			</xforms:action>
-		</xforms:trigger>
-	</p>
+			<h3>Uploaded Files</h3>
+		
+			<!-- fr:datatable kills download links -->
+			<table>
+				<thead>
+					<tr>
+						<!--  th fr:sortable="true" fr:resizeable="true">File Name</th -->
+						<th>File Name</th>
+						<th>Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					<xforms:repeat nodeset="upload" id="rep-uploaded">
+						<tr>
+							<td>
+		                        <xforms:output value="@filename"/>
+		                        (<xforms:output value="instance('ins-file-terms')/term[value=xxforms:context('rep-uploaded')/@typeterm]/label"/>)
+		                       
+							</td>
+							<td>
+								 <xforms:output value="." appearance="xxforms:download">
+		                            <xforms:filename ref="@filename"/>
+		                            <xforms:mediatype ref="@mediatype"/>
+		                            <xforms:label>Download</xforms:label>
+		                        </xforms:output>
+		                    </td>
+						</tr>
+					</xforms:repeat>
+				</tbody>
+			</table>
+			
+		</xforms:group>	
+	
+	
+		<xforms:group ref="instance('ins-draft-entry')/atom:content/draft/uploads-container/uploads">
+								
+			<table>
 
-	<p>
-		<xforms:trigger appearance="minimal">
-			<xforms:label>skip to end &gt;&gt;</xforms:label>
-		</xforms:trigger>
-	</p>
+				<xforms:repeat nodeset="upload" id="rep-upload">
+					<tr>
+						<td>
+	                        <xforms:trigger>
+	                            <xforms:delete 
+	                            	ev:event="DOMActivate" 
+		                        	context="instance('ins-draft-entry')/atom:content/draft/uploads-container/uploads" 
+		                        	nodeset="upload" 
+	                            	at="index('rep-upload')"/>
+	                            <xforms:label><img src="/apps/submitter/common/remove.gif"/></xforms:label>
+	                        </xforms:trigger>
+						</td>
+						<td >
+	                        
+	                        <xforms:upload ref=".">
+	                        	<xforms:label>File:</xforms:label>
+	                            <xforms:filename ref="@filename"/>
+	                            <xforms:mediatype ref="@mediatype"/>
+	                            <xforms:send ev:event="xforms-select" submission="sub-background-upload"/>
+	                        </xforms:upload>
+	                        
+	                        <br/>
+							<xforms:select1 ref="@typeterm">
+								<xforms:label>Type:</xforms:label>
+								<xforms:alert>Please select a file type.</xforms:alert>
+								<xforms:item>
+									<xforms:value></xforms:value>
+									<xforms:label>Select...</xforms:label>
+								</xforms:item>
+	                        	<xforms:itemset nodeset="instance('ins-file-terms')/term">
+	                        		<xforms:label ref="label"/>
+	                        		<xforms:value ref="value"/>
+	                        	</xforms:itemset>
+							</xforms:select1>
+							
+							<xforms:input ref="@typelabel">
+								<xforms:label>Other type:</xforms:label>
+							</xforms:input>
+	                        
+						</td>
+					</tr>
+				</xforms:repeat>
+				
+				<tr>
+					<td>
+	                    <xforms:trigger>
+	                        <xforms:label><img src="/apps/submitter/common/add.gif"/></xforms:label>
+	                        <xforms:insert 
+	                        	ev:event="DOMActivate" 
+	                        	context="." 
+	                        	nodeset="upload" 
+	                        	at="last()" 
+	                        	position="after" 
+	                        	origin="instance('ins-upload-template')"/>
+	                    </xforms:trigger>
+					</td>
+					<td >
+	                    <xforms:trigger appearance="minimal">
+	                        <xforms:label>Add a File</xforms:label>
+	                        <xforms:insert 
+	                        	ev:event="DOMActivate" 
+	                        	context="." 
+	                        	nodeset="upload" 
+	                        	at="last()" 
+	                        	position="after" 
+	                        	origin="instance('ins-upload-template')"/>
+	                    </xforms:trigger>
+					</td>
+				</tr>
+			</table>
+			
+		</xforms:group>
 
+		<!-- groups on instance('ins-draft-entry')/atom:content/draft/uploads-container/uploads/upload and not() don't work 
+		somehow both are always relevant.-->
+
+			<p>
+				<xforms:trigger ref="instance('ins-control')/save-trigger">
+					<xforms:label>&lt; Previous</xforms:label>
+					<xforms:action ev:event="DOMActivate">
+						<xforms:setvalue ref="instance('ins-control')/fallback-wizard-pane" value="'upload-files'"/>
+						<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane" value="'acknowledgements'"/>
+						<xforms:send submission="sub-upload-files"/>
+					</xforms:action>
+				</xforms:trigger>
+		
+				<xforms:trigger ref="instance('ins-control')/save-trigger">
+					<xforms:label>Save As Draft</xforms:label>
+					<xforms:action ev:event="DOMActivate">
+						<xforms:setvalue ref="instance('ins-control')/fallback-wizard-pane" value="'upload-files'"/>
+						<xforms:send submission="sub-upload-files"/>
+					</xforms:action>
+				</xforms:trigger>
+		
+				<xforms:trigger ref="instance('ins-control')/save-trigger">
+					<xforms:label>Next &gt;</xforms:label>
+					<xforms:action ev:event="DOMActivate">
+						<xforms:setvalue ref="instance('ins-control')/fallback-wizard-pane" value="'upload-files'"/>
+						<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane" value="'publications'"/>
+						<xforms:send submission="sub-upload-files"/>
+					</xforms:action>
+				</xforms:trigger>
+		
+				<xforms:trigger ref="instance('ins-control')/save-trigger" appearance="minimal">
+					<xforms:label>Skip To End &gt;&gt;</xforms:label>
+					<xforms:action ev:event="DOMActivate">
+						<xforms:setvalue ref="instance('ins-control')/fallback-wizard-pane" value="'upload-files'"/>
+						<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane" value="'review'"/>
+						<xforms:send submission="sub-upload-files"/>
+					</xforms:action>
+				</xforms:trigger>
+				
+			</p>
+		
 </div>
