@@ -130,8 +130,8 @@
 }
 
 .wizard-td { background-color: #fce5b6; font-size: 16pt }
-.repeat-table { background-color: #fce5b6; border:1px solid red; width:80%;}
- .repeat-table .action-td { width: 18px }
+.repeat-table { background-color: #fce5b6; border:1px solid red; margin: 8px; width:80%;}
+.repeat-table .action-td { width: 18px }
 .repeat-table .add-td { }
 .repeat-table .form-td {background: white; padding: .5em }
 
