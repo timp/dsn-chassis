@@ -44,19 +44,19 @@
 						relevant="contains(../../../modules, 'invitro')" />
 					<xforms:bind nodeset="transportAndStorageTemperature"
 						relevant="contains(../../../modules, 'invitro')" />
+					<xforms:bind nodeset="transmissionIntensity" relevant="contains(../../../modules, 'clinical')" >
+						<xforms:bind nodeset="annualParasitologicalIncidence" />
+						<xforms:bind nodeset="annualParasitologicalIncidenceYear" type="ctype:recentYear" />
+						<xforms:bind nodeset="parasitePrevalence" />
+						<xforms:bind nodeset="parasitePrevalenceYear" type="ctype:recentYear" />
+						<xforms:bind nodeset="transmissionIntensityAgeFrom" type="ctype:age" />
+						<xforms:bind nodeset="transmissionIntensityAgeTo"  type="ctype:age" />
+						<xforms:bind nodeset="entomologicalInoculationRate" type="xs:integer" />
+						<xforms:bind nodeset="entomologicalInoculationRateYear" type="ctype:recentYear" />
+						<xforms:bind nodeset="seasonalTransmission" type="xs:boolean" />				
+						<xforms:bind nodeset="transmissionMonths" relevant="contains(../seasonalTransmission, 'yes')" />			
+					</xforms:bind>
 				</xforms:bind>
-			</xforms:bind>
-			<xforms:bind nodeset="transmissionIntensity" relevant="contains(../modules, 'clinical')" >
-				<xforms:bind nodeset="annualParasitologicalIncidence" />
-				<xforms:bind nodeset="annualParasitologicalIncidenceYear" type="ctype:recentYear" />
-				<xforms:bind nodeset="parasitePrevalence" />
-				<xforms:bind nodeset="parasitePrevalenceYear" type="ctype:recentYear" />
-				<xforms:bind nodeset="transmissionIntensityAgeFrom" type="ctype:age" />
-				<xforms:bind nodeset="transmissionIntensityAgeTo"  type="ctype:age" />
-				<xforms:bind nodeset="entomologicalInoculationRate" type="xs:integer" />
-				<xforms:bind nodeset="entomologicalInoculationRateYear" type="ctype:recentYear" />
-				<xforms:bind nodeset="seasonalTransmission" type="xs:boolean" />				
-				<xforms:bind nodeset="transmissionMonths" relevant="contains(../seasonalTransmission, 'yes')" />			
 			</xforms:bind>
 			<xforms:bind nodeset="inclusionExclusionCriteria">
 				<xforms:bind nodeset="maxAge" type="ctype:age"/>
