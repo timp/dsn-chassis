@@ -1027,11 +1027,10 @@
 			-->
 
 			<xforms:group ref="drugs">
-				<h4>Drug Stock Solutions</h4>
+				<h4>Drug Substances</h4>
 
 				<p>
-					<em>Please complete the section below for each drug stock solution
-						used.</em>
+					<em>Please complete the section below for each drug substance used.</em>
 				</p>
 
 				<table class="repeat-table">
@@ -1063,7 +1062,7 @@
 								<br />
 
 								<xforms:select1 appearance="minimal" ref="solvent">
-									<xforms:label class="fixed-width">Stock solution solvent
+									<xforms:label class="fixed-width">Drug substance solvent
 									</xforms:label>
 									<xforms:item>
 										<xforms:label>please select</xforms:label>
@@ -1088,7 +1087,7 @@
 
 								<br />
 								<xforms:select1 appearance="minimal" ref="providedByWwarn">
-									<xforms:label>Were stock solutions provided by WWARN?
+									<xforms:label>Were drug substances provided by WWARN?
 									</xforms:label>
 									<xforms:alert>Please answer yes or no</xforms:alert>
 									<xforms:item>
