@@ -1,17 +1,18 @@
 xquery version "1.0";
 
-module namespace atomdb = "http://www.cggh.org/2010/atombeat/xquery/atomdb";
+module namespace atomdb = "http://purl.org/atombeat/xquery/atomdb";
 
 declare namespace atom = "http://www.w3.org/2005/Atom" ;
+declare namespace atombeat = "http://purl.org/atombeat/xmlns" ;
 
 import module namespace text = "http://exist-db.org/xquery/text" ;
 import module namespace xmldb = "http://exist-db.org/xquery/xmldb" ;
 import module namespace util = "http://exist-db.org/xquery/util" ;
 
-import module namespace CONSTANT = "http://www.cggh.org/2010/atombeat/xquery/constants" at "constants.xqm" ;
+import module namespace CONSTANT = "http://purl.org/atombeat/xquery/constants" at "constants.xqm" ;
 
-import module namespace xutil = "http://www.cggh.org/2010/atombeat/xquery/xutil" at "xutil.xqm" ;
-import module namespace config = "http://www.cggh.org/2010/atombeat/xquery/config" at "../config/shared.xqm" ;
+import module namespace xutil = "http://purl.org/atombeat/xquery/xutil" at "xutil.xqm" ;
+import module namespace config = "http://purl.org/atombeat/xquery/config" at "../config/shared.xqm" ;
 
 
 
@@ -261,6 +262,37 @@ declare function atomdb:update-collection(
 
 
 
+declare function atomdb:touch-collection(
+    $request-path-info as xs:string
+) as xs:dateTime
+{
+
+    let $updated := current-dateTime()
+    
+    let $collection-db-path := atomdb:request-path-info-to-db-path( $request-path-info )
+    let $feed-doc-db-path := atomdb:feed-doc-db-path( $collection-db-path )
+    let $feed := doc( $feed-doc-db-path )/atom:feed
+    
+    let $feed-updated :=
+        <atom:feed>
+        {
+            $feed/attribute::* ,
+            for $child in $feed/child::*
+            return
+                if ( local-name( $child ) = $CONSTANT:ATOM-UPDATED and namespace-uri( $child ) = $CONSTANT:ATOM-NSURI ) 
+                then <atom:updated>{$updated}</atom:updated>
+                else $child
+        }
+        </atom:feed>
+
+    let $feed-stored := xmldb:store( $collection-db-path , $config:feed-doc-name , $feed-updated , $CONSTANT:MEDIA-TYPE-ATOM )
+    
+    return $updated
+    
+};
+
+
+
 declare function atomdb:generate-member-identifier(
     $collection-path-info as xs:string
 ) as xs:string
@@ -346,7 +378,7 @@ declare function atomdb:update-member(
 		 
 		let $member-db-path := atomdb:request-path-info-to-db-path( $request-path-info )
 	
-		let $entry := atomdb:update-entry( doc( $member-db-path )/* , $request-data )
+		let $entry := atomdb:update-entry( doc( $member-db-path )/atom:entry , $request-data )
 
 		let $groups := text:groups( $request-path-info , "^(.*)/([^/]+)$" )
 		
@@ -493,6 +525,9 @@ declare function atomdb:create-feed(
     return
     
         <atom:feed>
+        	{
+        		$request-data/attribute::*
+        	}
             <atom:id>{$id}</atom:id>
             <atom:updated>{$updated}</atom:updated>
             <atom:link rel="self" type="application/atom+xml" href="{$self-uri}"/>
@@ -594,7 +629,10 @@ declare function atomdb:create-media-link-entry(
     	
     let $summary :=
     	if ( $media-link-summary ) then $media-link-summary
-    	else concat( "media resource (" , $media-type , ")" )
+    	else "media resource"
+    	
+	let $media-size :=
+		xmldb:size( atomdb:request-path-info-to-db-path( $request-path-info ) , concat( $member-id , ".media" ) )
     	    
 	return
 	
@@ -604,7 +642,7 @@ declare function atomdb:create-media-link-entry(
             <atom:updated>{$updated}</atom:updated>
             <atom:link rel="self" type="application/atom+xml" href="{$self-uri}"/>
             <atom:link rel="edit" type="application/atom+xml" href="{$edit-uri}"/>
-            <atom:link rel="edit-media" type="{$media-type}" href="{$media-uri}"/>
+            <atom:link rel="edit-media" type="{$media-type}" href="{$media-uri}" length="{$media-size}"/>
             <atom:content src="{$media-uri}" type="{$media-type}"/>
             <atom:title type="text">{$title}</atom:title>
             <atom:summary type="text">{$summary}</atom:summary>
@@ -688,13 +726,40 @@ declare function atomdb:update-media-resource(
 
 		let $media-type := text:groups( $request-content-type , "^([^;]+)" )[2]
 	
-		let $groups := text:groups( $request-path-info , "^(.*)/([^/]+)$" )
+		let $groups := text:groups( $request-path-info , "^(.*)/([^/]+)\.media$" )
 		
 		let $collection-db-path := atomdb:request-path-info-to-db-path( $groups[2] )
-		
-		let $media-doc-name := $groups[3]
+		let $id := $groups[3]
+		let $media-doc-name := concat( $id , ".media" )
+		let $media-link-doc-name := concat( $id , ".atom" )
 
 		let $media-doc-db-path := xmldb:store( $collection-db-path , $media-doc-name , $request-data , $media-type )
+		
+		let $media-link-doc-db-path := concat( $collection-db-path , "/" , $media-link-doc-name )
+		
+		let $media-size := xmldb:size( $collection-db-path , $media-doc-name )
+			
+		let $log := local:debug( concat( "size: " , $media-size ) )
+
+		let $media-link := 
+			<atom:entry>
+			{
+				for $child in doc($media-link-doc-db-path)/atom:entry/*
+				return
+				    if ( local-name( $child ) = $CONSTANT:ATOM-UPDATED and namespace-uri( $child ) = $CONSTANT:ATOM-NSURI )
+				    then <atom:updated>{current-dateTime()}</atom:updated>
+				    else if ( local-name( $child ) = $CONSTANT:ATOM-LINK and namespace-uri( $child ) = $CONSTANT:ATOM-NSURI and $child/@rel='edit-media' )
+					then <atom:link rel='edit-media' type='{$media-type}' href='{$child/@href}' length='{$media-size}'/>
+				    else if ( local-name( $child ) = $CONSTANT:ATOM-CONTENT and namespace-uri( $child ) = $CONSTANT:ATOM-NSURI )
+					then <atom:content type='{$media-type}' src='{$child/@src}'/>
+					else $child
+				
+			}
+			</atom:entry>
+			
+		let $log := local:debug( $media-link )
+			
+		let $media-link-updated := xmldb:store( $collection-db-path , $media-link-doc-name , $media-link )
 	
 		return $media-doc-db-path
 };
@@ -738,13 +803,26 @@ declare function atomdb:retrieve-feed(
 		
 			<atom:feed>	
 			{
-				for $a in $feed/attribute::* return $a ,
-				for $c in $feed/child::* return $c ,
+				$feed/attribute::* ,
+				$feed/child::* ,
 				for $child in xmldb:get-child-resources( $db-collection-path )
 				let $is-entry-doc := ( not( ends-with( $child, ".media" ) ) and not( ends-with( $child , ".feed" ) ) )
 				let $entry := if ( $is-entry-doc ) then doc( concat( $db-collection-path , "/" , $child ) )/atom:entry else ()
 				order by $entry/atom:updated descending
-				return $entry
+				return 
+					if ( exists( $entry ) and xs:boolean( $feed/@atombeat:exclude-entry-content ) )
+					then
+						<atom:entry>
+						{
+							$entry/attribute::* ,
+							for $ec in $entry/child::* 
+							return 
+								if ( local-name( $ec ) = $CONSTANT:ATOM-CONTENT and namespace-uri( $ec ) = $CONSTANT:ATOM-NSURI )
+								then <atom:content>{$ec/attribute::*}</atom:content>
+								else $ec
+						}	
+						</atom:entry>
+					else $entry
 			}
 			</atom:feed>
 
@@ -835,4 +913,22 @@ declare function atomdb:get-media-link(
 	let $media-link-doc-db-path := replace( $media-doc-db-path , "^(.*)\.media$" , "$1.atom" )
 	return doc( $media-link-doc-db-path )/atom:entry
 
+};
+
+
+
+declare function atomdb:generate-etag(
+    $request-path-info as xs:string
+) as xs:string
+{
+    
+    (: TODO consider alternative means of generating etag, e.g., hash
+     : of timestamp and file size? :)
+     
+    if ( atomdb:member-available( $request-path-info ) )
+    then
+        let $entry := atomdb:retrieve-entry( $request-path-info )
+        return util:hash( $entry , "md5" )
+        
+    else ()
 };

@@ -20,7 +20,8 @@
     xmlns:ev="http://www.w3.org/2001/xml-events"
     xmlns:atom="http://www.w3.org/2005/Atom"
     xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:manta="http://www.cggh.org/2010/chassis/manta/xmlns">
+    xmlns:manta="http://www.cggh.org/2010/chassis/manta/xmlns"
+    xmlns:atombeat="http://purl.org/atombeat/xmlns">
 
     <head>
     
@@ -76,46 +77,7 @@
         		|
         		+-->
 
-       		<xforms:instance id="ins-acl">
-       			<atom:entry>
-       				<atom:content type="application/vnd.atombeat+xml">
-		       			<acl xmlns="">
-		       				<groups>
-		       					<group name="owners">
-		       						<user></user>
-		       					</group>
-		       					<group name="submitters">
-		       					</group>
-		   					</groups>
-				    		<rules>
-				    		    <!-- owners can retrieve, update and change sharing -->
-				                <allow>
-				                    <group>owners</group>
-				                    <operation>retrieve-member</operation>
-				                </allow>
-				                <allow>
-				                    <group>owners</group>
-				                    <operation>update-member</operation>
-				                </allow>
-				                <allow>
-				                    <group>owners</group>
-				                    <operation>update-acl</operation>
-				                </allow>
-				                <!-- submitters can retrieve and update, but cannot change sharing -->
-				                <allow>
-				                    <group>submitters</group>
-				                    <operation>retrieve-member</operation>
-				                </allow>
-				                <allow>
-				                    <group>submitters</group>
-				                    <operation>update-member</operation>
-				                </allow>
-				    		</rules>
-		   				</acl>
-       				</atom:content>
-       			</atom:entry>
-       		</xforms:instance>
-
+       		<xforms:instance id="ins-acl" src="/apps/contributor/includes/acl-entry.xml"/>
 
 
 			<!--+
@@ -125,7 +87,7 @@
 				+-->       		
 
        		<xforms:instance id="ins-user-template">
-       			<user xmlns=""></user>
+       			<atombeat:member/>
   			</xforms:instance>
 
        		<xforms:instance id="ins-person-template" src="/apps/common/templates/study/person-template.xml"/>
@@ -138,7 +100,7 @@
 				|
 				+-->       		
 			       		
-       		<xforms:bind nodeset="instance('ins-acl')//groups/group[@name='owners']">
+       		<xforms:bind nodeset="instance('ins-acl')//atombeat:groups/atombeat:group[@id='GROUP_ADMINISTRATORS']">
                 <xforms:bind nodeset="user[1]" readonly="true()"/>
             </xforms:bind>
             
@@ -164,7 +126,7 @@
 			       		
            <xforms:action 
            		ev:event="xforms-model-construct-done">
-           		<xforms:setvalue ref="instance('ins-acl')//groups/group[@name='owners']/user" value="xxforms:get-remote-user()"/>
+           		<xforms:setvalue ref="instance('ins-acl')//atombeat:groups/atombeat:group[@id='GROUP_ADMINISTRATORS']/atombeat:member" value="xxforms:get-remote-user()"/>
            </xforms:action>
            
            
@@ -212,7 +174,7 @@
             <xforms:submission 
             	id="sub-put-acl" 
             	ref="instance('ins-acl')"
-                resource="{instance('ins-study-entry')/atom:link[@rel='edit-acl']/@href}"
+                resource="{instance('ins-study-entry')/atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor']/@href}"
                 method="put" 
                 replace="instance" 
                 instance="ins-acl"
@@ -421,9 +383,8 @@
 
 				   	<div class="help">
 				   		<h2>Help</h2>
-				   		<p><strong>Owners</strong> have all permissions. 
+				   		<p><strong>Administrators</strong> have all permissions. 
 				   		This includes modifying permissions, submitting files and modifying the study questionnaire.</p>
-				   		<p><strong>Submitters</strong> can submit files and modify the study questionnaire.</p>
 				   	</div>
 				   	
 		            <table cellpadding="3" class="wizard">
@@ -433,8 +394,8 @@
 		                </tr>
 		                <tr>
 		                    <td>
-		                    	<h2>Owners</h2>
-		                    	<xforms:group ref="instance('ins-acl')//groups/group[@name='owners']">
+		                    	<h2>Administrators</h2>
+		                    	<xforms:group ref="instance('ins-acl')//atombeat:groups/atombeat:group[@id='GROUP_ADMINISTRATORS']">
 									<table class="repeat-table">
 										<tr>
 											<td>
@@ -443,7 +404,7 @@
 							                        <xforms:insert 
 							                        	ev:event="DOMActivate" 
 							                        	context="." 
-							                        	nodeset="user" 
+							                        	nodeset="atombeat:member" 
 							                        	at="1" 
 							                        	position="after" 
 							                        	origin="instance('ins-user-template')"/>
@@ -451,18 +412,18 @@
 											</td>
 											<td class="add-td">
 							                    <xforms:trigger appearance="minimal">
-							                        <xforms:label>Add an Owner</xforms:label>
+							                        <xforms:label>Add an Administrator</xforms:label>
 							                        <xforms:insert 
 							                        	ev:event="DOMActivate" 
 							                        	context="." 
-							                        	nodeset="user" 
+							                        	nodeset="atombeat:member" 
 							                        	at="1" 
 							                        	position="after" 
 							                        	origin="instance('ins-user-template')"/>
 							                    </xforms:trigger>
 											</td>
 										</tr>
-										<xforms:repeat nodeset="user" id="rep-owner">
+										<xforms:repeat nodeset="atombeat:member" id="rep-owner">
 											<tr>
 												<td>
 							                        <xforms:trigger ref="." appearance="minimal">
@@ -484,57 +445,6 @@
 									</table>
 		                    	</xforms:group>
 
-		                    	<h2>Submitters</h2>
-		                    	
-		                    	<xforms:group ref="instance('ins-acl')//groups/group[@name='submitters']">
-									<table class="repeat-table">
-										<tr>
-											<td>
-							                    <xforms:trigger appearance="minimal">
-							                        <xforms:label><img src="/apps/submitter/common/add.gif"/></xforms:label>
-							                        <xforms:insert 
-							                        	ev:event="DOMActivate" 
-							                        	context="." 
-							                        	nodeset="user" 
-							                        	at="1" 
-							                        	position="after" 
-							                        	origin="instance('ins-user-template')"/>
-							                    </xforms:trigger>
-											</td>
-											<td class="add-td">
-							                    <xforms:trigger appearance="minimal">
-							                        <xforms:label>Add a Submitter</xforms:label>
-							                        <xforms:insert 
-							                        	ev:event="DOMActivate" 
-							                        	context="." 
-							                        	nodeset="user" 
-							                        	at="1" 
-							                        	position="after" 
-							                        	origin="instance('ins-user-template')"/>
-							                    </xforms:trigger>
-											</td>
-										</tr>
-										<xforms:repeat nodeset="user" id="rep-submitter">
-											<tr>
-												<td>
-							                        <xforms:trigger appearance="minimal">
-							                            <xforms:delete 
-							                            	ev:event="DOMActivate" 
-								                        	context="." 
-								                        	nodeset="." 
-							                            	at="index('rep-submitter')"/>
-							                            <xforms:label><img src="/apps/submitter/common/remove.gif"/></xforms:label>
-							                        </xforms:trigger>
-												</td>
-												<td class="form-td">
-													<xforms:input ref=".">
-														<xforms:label class="fixed-width">Email address:</xforms:label>
-													</xforms:input>
-												</td>
-											</tr>
-										</xforms:repeat>
-									</table>
-		                    	</xforms:group>
 		                    </td>
 		                </tr>
 		                <tr>
@@ -688,9 +598,9 @@
 		                            </span>
 		                    	</h2>
 		                    	
-		                    	<h3>Owners</h3>
+		                    	<h3>Administrators</h3>
 								<table class="repeat-table">
-									<xforms:repeat nodeset="instance('ins-acl')//groups/group[@name='owners']/user">
+									<xforms:repeat nodeset="instance('ins-acl')//atombeat:groups/atombeat:group[@id='GROUP_ADMINISTRATORS']/atombeat:member">
 										<tr>
 											<td class="form-td">
 												<xforms:output value=".">
@@ -699,20 +609,6 @@
 										</tr>
 									</xforms:repeat>
 								</table>
-		                    	<h3>Submitters</h3>
-								<table class="repeat-table">
-									<xforms:repeat nodeset="instance('ins-acl')//groups/group[@name='submitters']/user">
-										<tr>
-											<td class="form-td">
-												<xforms:output value=".">
-												</xforms:output>
-											</td>
-										</tr>
-									</xforms:repeat>
-								</table>
-								<xforms:group ref="instance('ins-acl')//groups/group[@name='submitters' and empty(user)]">
-								no submitters
-								</xforms:group>
 
 		                    </td>
 		                </tr>

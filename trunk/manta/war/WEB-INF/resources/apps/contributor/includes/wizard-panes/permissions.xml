@@ -1,17 +1,18 @@
 <div 
 	xmlns="http://www.w3.org/1999/xhtml" 
 	xmlns:xforms="http://www.w3.org/2002/xforms" 
-	xmlns:ev="http://www.w3.org/2001/xml-events">
+	xmlns:ev="http://www.w3.org/2001/xml-events"
+	xmlns:atombeat="http://purl.org/atombeat/xmlns">
 
 	<h2>(2) Permissions</h2>
 
 	<h3>Administrators</h3>
              	
-	<xforms:group ref="instance('ins-draft-entry')/atom:content/draft/acl-entry-container/atom:entry/atom:content/acl/groups/group[@name='administrators']">
+	<xforms:group ref="instance('ins-draft-entry')//acl-entry-container//atombeat:security-descriptor/atombeat:groups/atombeat:group[@id='GROUP_ADMINISTRATORS']">
             	
 		<table>
 
-			<xforms:repeat nodeset="user" id="rep-owner">
+			<xforms:repeat nodeset="atombeat:member" id="rep-owner">
 				<tr>
 					<td>
 	                      <xforms:trigger ref=".">
@@ -38,7 +39,7 @@
 	                      <xforms:insert 
 	                      	ev:event="DOMActivate" 
 	                      	context="." 
-	                      	nodeset="user" 
+	                      	nodeset="atombeat:member" 
 	                      	at="last()" 
 	                      	position="after" 
 	                      	origin="instance('ins-user-template')"/>
@@ -50,7 +51,7 @@
 	                      <xforms:insert 
 	                      	ev:event="DOMActivate" 
 	                      	context="." 
-	                      	nodeset="user" 
+	                      	nodeset="atombeat:member" 
 	                      	at="last()" 
 	                      	position="after" 
 	                      	origin="instance('ins-user-template')"/>
