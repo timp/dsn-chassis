@@ -8,88 +8,92 @@
 	<h2>(4) Upload Files</h2>
 	
 		                    	
-		<xforms:group ref="instance('ins-draft-entry')/atom:content/draft/uploads-container/uploads">
+		<xforms:group ref="instance('ins-submitted-media-feed')">
 		
 			<h3>Uploaded Files</h3>
 		
-			<!-- fr:datatable kills download links -->
-			<table>
-				<thead>
-					<tr>
-						<!--  th fr:sortable="true" fr:resizeable="true">File Name</th -->
-						<th>File Name</th>
-						<th>Actions</th>
-					</tr>
-				</thead>
-				<tbody>
-					<xforms:repeat nodeset="upload" id="rep-uploaded">
-						<tr>
+	    	<fr:datatable>
+	    		<thead>
+	    			<tr>
+	    				<th>Code</th>
+	    				<th>File Name</th>
+	    				<th>Date Submitted</th>
+	    				<th>Type</th>
+	    				<th>Actions</th>
+	    			</tr>
+	    		</thead>
+	    		<tbody>
+	    			<xforms:repeat nodeset="instance('ins-submitted-media-feed')/atom:entry">
+	    				<tr>
+	    					<td>
+	    						<xforms:output ref="manta:id"/>
+	    					</td>
+	    					<td>
+	    						<xforms:output ref="atom:title"/>
+	    					</td>
 							<td>
-		                        <xforms:output value="@filename"/>
-		                        (<xforms:output value="instance('ins-file-terms')/term[value=xxforms:context('rep-uploaded')/@typeterm]/label"/>)
-		                       
-							</td>
-							<td>
-								 <xforms:output value="." appearance="xxforms:download">
-		                            <xforms:filename ref="@filename"/>
-		                            <xforms:mediatype ref="@mediatype"/>
-		                            <xforms:label>Download</xforms:label>
-		                        </xforms:output>
-		                    </td>
-						</tr>
-					</xforms:repeat>
-				</tbody>
-			</table>
-			
-		</xforms:group>	
-	
-	
-		<xforms:group ref="instance('ins-draft-entry')/atom:content/draft/uploads-container/uploads">
-								
+	    						TODO: Type
+	    					</td>
+	    					<td>
+	    						<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')"/>
+	    					</td>
+	    					<td><a href="{atom:content/@src}">Download</a></td>
+	    				</tr>
+	    			</xforms:repeat>
+	    		</tbody>
+	    	</fr:datatable>		
+	    	
+		</xforms:group>
+					
+					
+							
 			<table>
 
-				<xforms:repeat nodeset="upload" id="rep-upload">
-					<tr>
-						<td>
-	                        <xforms:trigger>
-	                            <xforms:delete 
-	                            	ev:event="DOMActivate" 
-		                        	context="instance('ins-draft-entry')/atom:content/draft/uploads-container/uploads" 
-		                        	nodeset="upload" 
-	                            	at="index('rep-upload')"/>
-	                            <xforms:label><img src="/apps/submitter/common/remove.gif"/></xforms:label>
-	                        </xforms:trigger>
-						</td>
-						<td >
-	                        
-	                        <xforms:upload ref=".">
-	                        	<xforms:label>File:</xforms:label>
-	                            <xforms:filename ref="@filename"/>
-	                            <xforms:mediatype ref="@mediatype"/>
-	                            <xforms:send ev:event="xforms-select" submission="sub-background-upload"/>
-	                        </xforms:upload>
-	                        
-	                        <br/>
-							<xforms:select1 ref="@typeterm">
-								<xforms:label>Type:</xforms:label>
-								<xforms:alert>Please select a file type.</xforms:alert>
-								<xforms:item>
-									<xforms:value></xforms:value>
-									<xforms:label>Select...</xforms:label>
-								</xforms:item>
-	                        	<xforms:itemset nodeset="instance('ins-file-terms')/term">
-	                        		<xforms:label ref="label"/>
-	                        		<xforms:value ref="value"/>
-	                        	</xforms:itemset>
-							</xforms:select1>
-							
-							<xforms:input ref="@typelabel">
-								<xforms:label>Other type:</xforms:label>
-							</xforms:input>
-	                        
-						</td>
-					</tr>
-				</xforms:repeat>
+				<xforms:group ref="instance('ins-draft-entry')/atom:content/draft/background-uploads-container/uploads">
+					<xforms:repeat nodeset="upload" id="rep-upload">
+						<tr>
+							<td>
+		                        <xforms:trigger>
+		                            <xforms:delete 
+		                            	ev:event="DOMActivate" 
+			                        	context="instance('ins-draft-entry')/atom:content/draft/background-uploads-container/uploads" 
+			                        	nodeset="upload" 
+		                            	at="index('rep-upload')"/>
+		                            <xforms:label><img src="/apps/submitter/common/remove.gif"/></xforms:label>
+		                        </xforms:trigger>
+							</td>
+							<td>
+		                        
+		                        <xforms:upload ref=".">
+		                        	<xforms:label>File:</xforms:label>
+		                            <xforms:filename ref="@filename"/>
+		                            <xforms:mediatype ref="@mediatype"/>
+		                            <xxforms:size ref="@size"/>
+		                            <xforms:send ev:event="xforms-select" submission="sub-background-upload"/>
+		                        </xforms:upload>
+		                        
+		                        <br/>
+								<xforms:select1 ref="@typeterm">
+									<xforms:label>Type:</xforms:label>
+									<xforms:alert>Please select a file type.</xforms:alert>
+									<xforms:item>
+										<xforms:value></xforms:value>
+										<xforms:label>Select...</xforms:label>
+									</xforms:item>
+		                        	<xforms:itemset nodeset="instance('ins-file-terms')/term">
+		                        		<xforms:label ref="label"/>
+		                        		<xforms:value ref="value"/>
+		                        	</xforms:itemset>
+								</xforms:select1>
+								
+								<xforms:input ref="@typelabel">
+									<xforms:label>Other Type:</xforms:label>
+								</xforms:input>
+		                        
+							</td>
+						</tr>
+					</xforms:repeat>
+				</xforms:group>
 				
 				<tr>
 					<td>
@@ -97,7 +101,7 @@
 	                        <xforms:label><img src="/apps/submitter/common/add.gif"/></xforms:label>
 	                        <xforms:insert 
 	                        	ev:event="DOMActivate" 
-	                        	context="." 
+	                        	context="instance('ins-draft-entry')/atom:content/draft/background-uploads-container/uploads" 
 	                        	nodeset="upload" 
 	                        	at="last()" 
 	                        	position="after" 
@@ -109,7 +113,7 @@
 	                        <xforms:label>Add a File</xforms:label>
 	                        <xforms:insert 
 	                        	ev:event="DOMActivate" 
-	                        	context="." 
+	                        	context="instance('ins-draft-entry')/atom:content/draft/background-uploads-container/uploads" 
 	                        	nodeset="upload" 
 	                        	at="last()" 
 	                        	position="after" 
@@ -119,9 +123,9 @@
 				</tr>
 			</table>
 			
-		</xforms:group>
+		
 
-		<!-- groups on instance('ins-draft-entry')/atom:content/draft/uploads-container/uploads/upload and not() don't work 
+		<!-- groups on instance('ins-draft-entry')/atom:content/draft/background-uploads-container/uploads/upload and not() don't work 
 		somehow both are always relevant.-->
 
 			<p>
