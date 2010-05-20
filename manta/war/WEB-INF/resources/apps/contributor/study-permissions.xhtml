@@ -52,7 +52,7 @@
 
 			<xforms:submission 
 				id="sub-get-acl"
-				action="{instance('ins-study-entry')/atom:link[@rel='edit-acl']/@href}"
+				action="{instance('ins-study-entry')/atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor']/@href}"
 				method="get"
 				replace="instance"
 				instance="ins-acl"
@@ -62,7 +62,7 @@
 
 			<xforms:submission 
 				id="sub-put-acl"
-				action="{instance('ins-study-entry')/atom:link[@rel='edit-acl']/@href}"
+				action="{instance('ins-study-entry')/atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor']/@href}"
 				method="put"
 				replace="instance"
 				instance="ins-acl"

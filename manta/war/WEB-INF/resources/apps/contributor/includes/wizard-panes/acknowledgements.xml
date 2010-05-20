@@ -18,7 +18,7 @@
 	                                context="." 
 	                                nodeset="." 
 	                                at="index('person-repeat')"/>
-	                            <xforms:label><img src="/apps/submitter/common/remove.gif"/></xforms:label>
+	                            <xforms:label><img src="/apps/fr/style/remove.gif"/></xforms:label>
 	                        </xforms:trigger>
 	                    </td>
 	                    <td>
@@ -67,7 +67,7 @@
 	            <tr>
 	                <td>
 	                    <xforms:trigger>
-	                        <xforms:label><img src="/apps/submitter/common/add.gif"/></xforms:label>
+	                        <xforms:label><img src="/apps/fr/style/add.gif"/></xforms:label>
 	                        <xforms:insert 
 	                            ev:event="DOMActivate" 
 	                            context="." 

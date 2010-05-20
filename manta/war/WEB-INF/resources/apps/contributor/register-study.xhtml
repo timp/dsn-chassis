@@ -22,7 +22,8 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:manta="http://www.cggh.org/2010/chassis/manta/xmlns"
     xmlns:xxi="http://orbeon.org/oxf/xml/xinclude"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:atombeat="http://purl.org/atombeat/xmlns">
 
     <head>
     
@@ -58,12 +59,12 @@
  
  			<!-- user template for adding a new administrator in the permissions pane -->
        		<xforms:instance id="ins-user-template">
-       			<user xmlns=""></user>
+       			<atombeat:member></atombeat:member>
   			</xforms:instance>
 
 			<!-- This adds the current user as an administrator to the ACL in the draft.  -->
 			<xforms:action ev:event="xforms-model-construct-done">
-           		<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/acl-entry-container/atom:entry/atom:content/acl/groups/group[@name='administrators']/user" value="xxforms:get-remote-user()"/>
+           		<xforms:setvalue ref="instance('ins-draft-entry')//acl-entry-container//atombeat:security-descriptor/atombeat:groups/atombeat:group[@id='GROUP_ADMINISTRATORS']/atombeat:member" value="xxforms:get-remote-user()"/>
 			</xforms:action>
 
 			<!-- person template for adding a new acknowledgement (used to add the current user and add more in the acknowledgement pane) -->
@@ -234,6 +235,8 @@
 
 
 			<!-- This prevents the first user (current user) from removing themselves as an administrator from the ACL in the draft. -->
+
+			<xforms:bind nodeset="instance('ins-draft-entry')//acl-entry-container//atombeat:security-descriptor/atombeat:groups/atombeat:group[@id='GROUP_ADMINISTRATORS']">
 			<xforms:bind nodeset="instance('ins-draft-entry')/atom:content/draft/acl-entry-container/atom:entry/atom:content/acl/groups/group[@name='administrators']">
                 <xforms:bind nodeset="user[1]" readonly="true()" />
             </xforms:bind>

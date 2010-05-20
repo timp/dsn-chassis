@@ -1,10 +1,14 @@
 xquery version "1.0";
 
-module namespace config = "http://www.cggh.org/2010/atombeat/xquery/config";
+module namespace config = "http://purl.org/atombeat/xquery/config";
+
+declare namespace atombeat = "http://purl.org/atombeat/xmlns" ;
+
 
 import module namespace util = "http://exist-db.org/xquery/util" ;
 
-import module namespace xutil = "http://www.cggh.org/2010/atombeat/xquery/xutil" at "../lib/xutil.xqm" ;
+import module namespace xutil = "http://purl.org/atombeat/xquery/xutil" at "../lib/xutil.xqm" ;
+
 
 (:
  : The base URL for the Atom service. This URL will be prepended to all edit
@@ -20,7 +24,7 @@ declare variable $config:service-url as xs:string := "http://localhost:8080/mant
 declare variable $config:history-service-url as xs:string := "http://localhost:8080/manta/atombeat/history" ;
  
 
-declare variable $config:acl-service-url as xs:string := "http://localhost:8080/manta/atombeat/acl" ;
+declare variable $config:security-service-url as xs:string := "http://localhost:8080/manta/atombeat/security" ;
 
 
 (:
@@ -61,7 +65,7 @@ declare variable $config:base-collection-path as xs:string := "/db/atom/content"
 (:
  : The base collection within which to store access control lists.
  :)
-declare variable $config:base-acl-collection-path as xs:string := "/db/atom/acl" ;
+declare variable $config:base-security-collection-path as xs:string := "/db/atom/security" ;
 
 
 (: 
@@ -74,6 +78,7 @@ declare function config:generate-identifier(
     $collection-path-info as xs:string
 ) as xs:string
 {
+
     if ( $collection-path-info = "/studies" )
     
 (:    then upper-case( xutil:random-alphanumeric( 4 ) ) :)
@@ -81,6 +86,8 @@ declare function config:generate-identifier(
     (: this avoids confusion between numbers 0, 1 and letters i, l, o, v, w :)
     
     then upper-case( xutil:random-alphanumeric( 5 , 21 , "0123456789abcdefghijk" , "abcdefghjkmnpqrstuxyz" ) )
+
+    (: TODO check this path is right :)
     
     else if ( matches( $collection-path-info , "^/studies/[^/]+/media" ) )
     
@@ -89,6 +96,7 @@ declare function config:generate-identifier(
     then upper-case( xutil:random-alphanumeric( 7 , 21 , "0123456789abcdefghijk" , "abcdefghjkmnpqrstuxyz" ) )
 
     else util:uuid()
+
 };
 
 
@@ -100,145 +108,258 @@ declare variable $config:enable-security := true() ;
 
 (:
  : The default security decision which will be applied if no ACL rules match 
- : a request. Either "deny" or "allow".
+ : a request. Either "DENY" or "ALLOW".
  :)
-declare variable $config:default-decision := "deny" ;
+declare variable $config:default-security-decision := "DENY" ;
 
 
 (:
- : The global ACL.
+ : The order in which to process the relevant access control lists for
+ : any given operation. E.g., if "WORKSPACE" comes before "COLLECTION" then 
+ : ACEs in the workspace ACL will take precedence over ACEs in the collection
+ : ACLs.
  :)
-declare variable $config:default-global-acl := 
-    <acl>
-        <rules>
-            <allow>
-                <role>ROLE_CHASSIS_ADMINISTRATOR</role>
-                <operation>*</operation>
-            </allow>
-        </rules>
-    </acl>
+declare variable $config:security-priority := ( "WORKSPACE" , "COLLECTION" , "RESOURCE") ;
+(: declare variable $config:security-priority := ( "RESOURCE" , "COLLECTION" , "WORKSPACE") ; :)
+
+
+
+(:
+ : A default workspace ACL, customise for your environment.
+ :)
+declare variable $config:default-workspace-security-descriptor := 
+    <atombeat:security-descriptor>
+        <atombeat:acl>
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_ADMINISTRATOR</atombeat:recipient>
+                <atombeat:permission>*</atombeat:permission>
+            </atombeat:ace>
+        </atombeat:acl>
+    </atombeat:security-descriptor>
 ;
 
 
+
 (:
- : The default collection ACLs.
+ : A function to generate default collection security descriptor for any new
+ : collection created via HTTP, customise for your environment.
  :)
-declare function config:default-collection-acl(
+declare function config:default-collection-security-descriptor(
     $request-path-info as xs:string ,
     $user as xs:string?
-) as element(acl)
+) as element(atombeat:security-descriptor)
 { 
     if ( $request-path-info = "/studies" )
 
-    then
+    then $config:studies-collection-security-descriptor
 
-        <acl>
-            <rules>
-                <!-- contributors can create studies and can list the collection -->
-                <allow>
-                    <role>ROLE_CHASSIS_CONTRIBUTOR</role>
-                    <operation>create-member</operation>
-                </allow>
-                <allow>
-                    <role>ROLE_CHASSIS_CONTRIBUTOR</role>
-                    <operation>list-collection</operation>
-                </allow>
-            </rules>
-        </acl>
-        
     else if ( $request-path-info = "/drafts" )
 
-    then
+    then $config:drafts-collection-security-descriptor
 
-        <acl>
-            <rules>
-                <!-- contributors can create drafts and can list the collection -->
-                <allow>
-                    <role>ROLE_CHASSIS_CONTRIBUTOR</role>
-                    <operation>create-member</operation>
-                </allow>
-                <allow>
-                    <role>ROLE_CHASSIS_CONTRIBUTOR</role>
-                    <operation>list-collection</operation>
-                </allow>
-            </rules>
-        </acl>
-        
-    else
+    (: TODO others? :)
+    
+    else 
+    
+        <atombeat:security-descriptor>
+            <atombeat:acl/>
+        </atombeat:security-descriptor>
 
-        (: TODO other collections :)
-        <acl>
-            <rules>
-            </rules>
-        </acl>
 };
+
+
+
+
+declare variable $config:studies-collection-security-descriptor :=
+    <atombeat:security-descriptor>
+        <atombeat:acl>
+        
+            <!--  
+            Contributors can create entries and can list the collection,
+            but can only retrieve entries they have created.
+            -->
+            
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_CONTRIBUTOR</atombeat:recipient>
+                <atombeat:permission>CREATE_MEMBER</atombeat:permission>
+            </atombeat:ace>
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_CONTRIBUTOR</atombeat:recipient>
+                <atombeat:permission>LIST_COLLECTION</atombeat:permission>
+            </atombeat:ace>
+            
+            <!--
+            Curators can list the collection, retrieve and update any member.
+            -->
+            
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+                <atombeat:permission>LIST_COLLECTION</atombeat:permission>
+            </atombeat:ace>
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+                <atombeat:permission>RETRIEVE_MEMBER</atombeat:permission>
+            </atombeat:ace>
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+                <atombeat:permission>UPDATE_MEMBER</atombeat:permission>
+            </atombeat:ace>
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+                <atombeat:permission>RETRIEVE_ACL</atombeat:permission>
+            </atombeat:ace>
+
+            <!--
+            Personal data reviewers can list the collection and retrieve any member.
+            -->
+            
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_PERSONAL_DATA_REVIEWER</atombeat:recipient>
+                <atombeat:permission>LIST_COLLECTION</atombeat:permission>
+            </atombeat:ace>
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_PERSONAL_DATA_REVIEWER</atombeat:recipient>
+                <atombeat:permission>RETRIEVE_MEMBER</atombeat:permission>
+            </atombeat:ace>
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_PERSONAL_DATA_REVIEWER</atombeat:recipient>
+                <atombeat:permission>RETRIEVE_ACL</atombeat:permission>
+            </atombeat:ace>
+
+        </atombeat:acl>
+    </atombeat:security-descriptor>
+;
+
+
+
+
+declare variable $config:drafts-collection-security-descriptor :=
+    <atombeat:security-descriptor>
+        <atombeat:acl>
+        
+            <!--  
+            Contributors can create entries and can list the collection,
+            but can only retrieve entries they have created.
+            -->
+            
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_CONTRIBUTOR</atombeat:recipient>
+                <atombeat:permission>CREATE_MEMBER</atombeat:permission>
+            </atombeat:ace>
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_CONTRIBUTOR</atombeat:recipient>
+                <atombeat:permission>LIST_COLLECTION</atombeat:permission>
+            </atombeat:ace>
+            
+        </atombeat:acl>
+    </atombeat:security-descriptor>
+;
+
+
 
 
 (:
- : The default resource ACLs.
+ : A function to generate default resource security descriptor for any new
+ : collection members or media resources, customise for your environment.
  :)
-declare function config:default-resource-acl(
+declare function config:default-resource-security-descriptor(
     $request-path-info as xs:string ,
     $user as xs:string
-) as element(acl)
+) as element(atombeat:security-descriptor)
 {
 
-    if ( starts-with( $request-path-info , "/studies" ) )
+    if ( $request-path-info = "/studies" )
+
+    then config:studies-member-default-security-descriptor( $user )
+
+    else if ( $request-path-info = "/drafts" )
+
+    then config:drafts-member-default-security-descriptor( $user )
     
-    then
-
-    	<acl>
-    		<groups>
-    			<group name="administrators">
-                    <user>{$user}</user><!-- creating user is automatically an administrator -->
-    			</group>
-    		</groups>
-    		<rules>
-    		    <!-- administrators can retrieve, update and change sharing -->
-                <allow>
-                    <group>administrators</group>
-                    <operation>retrieve-member</operation>
-                </allow>
-                <allow>
-                    <group>administrators</group>
-                    <operation>update-member</operation>
-                </allow>
-                <allow>
-                    <group>administrators</group>
-                    <operation>update-acl</operation>
-                </allow>
-    		</rules>
-    	</acl>
-    	
-    else if ( starts-with( $request-path-info , "/drafts" ) )
-
-    then
-
-    	<acl>
-    		<rules>
-                <allow>
-                    <user>{$user}</user>
-                    <operation>retrieve-member</operation>
-                </allow>
-                <allow>
-                    <user>{$user}</user>
-                    <operation>update-member</operation>
-                </allow>
-                <allow>
-                    <user>{$user}</user>
-                    <operation>delete-member</operation>
-                </allow>
-    		</rules>
-    	</acl>
-    	
-    else
-
-        (: TODO other collections :)
-        <acl>
-            <rules>
-            </rules>
-        </acl>
+    (: TODO others? :)
     
+    else 
+    
+        <atombeat:security-descriptor>
+            <atombeat:acl/>
+        </atombeat:security-descriptor>
 
 };
 
+
+
+
+declare function config:studies-member-default-security-descriptor(
+    $user as xs:string
+) as element(atombeat:security-descriptor)
+{
+    <atombeat:security-descriptor>
+		<atombeat:groups>
+			<atombeat:group id="GROUP_ADMINISTRATORS">
+                <atombeat:member>{$user}</atombeat:member>
+			</atombeat:group>
+		</atombeat:groups>
+        <atombeat:acl>
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
+                <atombeat:permission>RETRIEVE_MEMBER</atombeat:permission>
+            </atombeat:ace>
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
+                <atombeat:permission>UPDATE_MEMBER</atombeat:permission>
+            </atombeat:ace>
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
+                <atombeat:permission>RETRIEVE_ACL</atombeat:permission>
+            </atombeat:ace>
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
+                <atombeat:permission>UPDATE_ACL</atombeat:permission>
+            </atombeat:ace>
+		</atombeat:acl>
+	</atombeat:security-descriptor>
+};
+
+
+
+
+declare function config:drafts-member-default-security-descriptor(
+    $user as xs:string
+) as element(atombeat:security-descriptor) 
+{
+    <atombeat:security-descriptor>
+		<atombeat:groups>
+			<atombeat:group id="GROUP_ADMINISTRATORS">
+                <atombeat:member>{$user}</atombeat:member>
+			</atombeat:group>
+		</atombeat:groups>
+        <atombeat:acl>
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
+                <atombeat:permission>RETRIEVE_MEMBER</atombeat:permission>
+            </atombeat:ace>
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
+                <atombeat:permission>UPDATE_MEMBER</atombeat:permission>
+            </atombeat:ace>
+		</atombeat:acl>
+	</atombeat:security-descriptor>
+};

@@ -3,6 +3,7 @@ xquery version "1.0";
 module namespace manta-plugin = "http://www.cggh.org/2010/chassis/manta/xquery/atombeat-plugin";
 
 declare namespace atom = "http://www.w3.org/2005/Atom" ;
+declare namespace atombeat = "http://purl.org/atombeat/xmlns" ;
 declare namespace manta = "http://www.cggh.org/2010/chassis/manta/xmlns" ;
 
 
@@ -11,14 +12,14 @@ import module namespace response = "http://exist-db.org/xquery/response" ;
 import module namespace text = "http://exist-db.org/xquery/text" ;
 import module namespace util = "http://exist-db.org/xquery/util" ;
 
-import module namespace CONSTANT = "http://www.cggh.org/2010/atombeat/xquery/constants" at "../lib/constants.xqm" ;
+import module namespace CONSTANT = "http://purl.org/atombeat/xquery/constants" at "../lib/constants.xqm" ;
 
-import module namespace config = "http://www.cggh.org/2010/atombeat/xquery/config" at "../config/shared.xqm" ;
+import module namespace config = "http://purl.org/atombeat/xquery/config" at "../config/shared.xqm" ;
 
-import module namespace xutil = "http://www.cggh.org/2010/atombeat/xquery/xutil" at "../lib/xutil.xqm" ;
-import module namespace mime = "http://www.cggh.org/2010/atombeat/xquery/mime" at "../lib/mime.xqm" ;
-import module namespace atomdb = "http://www.cggh.org/2010/atombeat/xquery/atomdb" at "../lib/atomdb.xqm" ;
-import module namespace atomsec = "http://www.cggh.org/2010/atombeat/xquery/atom-security" at "../lib/atom-security.xqm" ;
+import module namespace xutil = "http://purl.org/atombeat/xquery/xutil" at "../lib/xutil.xqm" ;
+import module namespace mime = "http://purl.org/atombeat/xquery/mime" at "../lib/mime.xqm" ;
+import module namespace atomdb = "http://purl.org/atombeat/xquery/atomdb" at "../lib/atomdb.xqm" ;
+import module namespace atomsec = "http://purl.org/atombeat/xquery/atom-security" at "../lib/atom-security.xqm" ;
 
 
 
@@ -188,12 +189,16 @@ declare function manta-plugin:after(
 
 
 
+(: TODO split media into submitted and curated, and add derivations collection :)
+
+
 declare function manta-plugin:after-create-member(
 	$request-path-info as xs:string ,
 	$entry as element(atom:entry) ,
 	$response-content-type as xs:string?
 ) as item()*
 {
+
     if ( $request-path-info = "/studies" )
     
     then manta-plugin:after-create-member-studies( $entry , $response-content-type )
@@ -327,65 +332,54 @@ declare function manta-plugin:after-create-member-studies(
         
     let $submitted-media-collection-db-path := atomdb:create-collection( $submitted-media-collection-path-info , $feed )
     
-    let $entry-path-info := substring-after( $entry/atom:link[@rel="self"]/@href , $config:service-url )
+    let $entry-uri := $entry/atom:link[@rel="self"]/@href
+    let $entry-path-info := substring-after( $entry-uri , $config:service-url )
     
-    let $submitted-media-collection-acl :=
-        <acl>
-            <groups>
-                <group name="owners" src="{$entry-path-info}"/>
-                <group name="submitters" src="{$entry-path-info}"/>
-            </groups>
-            <rules>
-                <!-- owners -->
-                <allow>
-                    <group>owners</group>
-                    <operation>list-collection</operation>
-                </allow>
-                <allow>
-                    <group>owners</group>
-                    <operation>create-media</operation>
-                </allow>
-                <allow>
-                    <group>owners</group>
-                    <operation>retrieve-member</operation>
-                </allow>
-                <allow>
-                    <group>owners</group>
-                    <operation>retrieve-media</operation>
-                </allow>
-                <allow>
-                    <group>owners</group>
-                    <operation>update-member</operation>
-                </allow>
-                <allow>
-                    <group>owners</group>
-                    <operation>update-acl</operation>
-                </allow>
-                <!-- submitters -->
-                <allow>
-                    <group>submitters</group>
-                    <operation>list-collection</operation>
-                </allow>
-                <allow>
-                    <group>submitters</group>
-                    <operation>create-media</operation>
-                </allow>
-                <allow>
-                    <group>submitters</group>
-                    <operation>retrieve-member</operation>
-                </allow>
-                <allow>
-                    <group>submitters</group>
-                    <operation>retrieve-media</operation>
-                </allow>
-                <allow>
-                    <group>submitters</group>
-                    <operation>update-member</operation>
-                </allow>
-            </rules>
-        </acl>
+    let $submitted-media-collection-descriptor :=
+        <atombeat:security-descriptor>
+            <atombeat:groups>
+                <atombeat:group id="GROUP_ADMINISTRATORS" src="{$entry-uri}"/>
+            </atombeat:groups>
+            <atombeat:acl>
+                <atombeat:ace>
+                    <atombeat:type>ALLOW</atombeat:type>
+                    <atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
+                    <atombeat:permission>LIST_COLLECTION</atombeat:permission>
+                </atombeat:ace>
+                <atombeat:ace>
+                    <atombeat:type>ALLOW</atombeat:type>
+                    <atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
+                    <atombeat:permission>CREATE_MEDIA</atombeat:permission>
+                </atombeat:ace>
+                <atombeat:ace>
+                    <atombeat:type>ALLOW</atombeat:type>
+                    <atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
+                    <atombeat:permission>RETRIEVE_MEMBER</atombeat:permission>
+                </atombeat:ace>
+                <atombeat:ace>
+                    <atombeat:type>ALLOW</atombeat:type>
+                    <atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
+                    <atombeat:permission>RETRIEVE_MEDIA</atombeat:permission>
+                </atombeat:ace>
+                <atombeat:ace>
+                    <atombeat:type>ALLOW</atombeat:type>
+                    <atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
+                    <atombeat:permission>UPDATE_MEMBER</atombeat:permission>
+                </atombeat:ace>
+                <atombeat:ace>
+                    <atombeat:type>ALLOW</atombeat:type>
+                    <atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
+                    <atombeat:permission>RETRIEVE_ACL</atombeat:permission>
+                </atombeat:ace>
+                <atombeat:ace>
+                    <atombeat:type>ALLOW</atombeat:type>
+                    <atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
+                    <atombeat:permission>UPDATE_ACL</atombeat:permission>
+                </atombeat:ace>
+            </atombeat:acl>
+        </atombeat:security-descriptor>
     
-    let $acl-stored := atomsec:store-collection-acl( $submitted-media-collection-path-info , $submitted-media-collection-acl )
+    let $descriptor-stored := atomsec:store-collection-descriptor( $submitted-media-collection-path-info , $submitted-media-collection-descriptor )
     
     let $entry := manta-plugin:augment-study-entry( $entry )
     
