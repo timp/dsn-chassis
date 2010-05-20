@@ -7,11 +7,6 @@
 	<xforms:group model="mod-study-questionnaire"
 		ref="instance('ins-sq-study-entry')/atom:content/study">
 
-		<p>
-			<xforms:submit submission="sub-put-study-entry">
-				<xforms:label>Save Changes</xforms:label>
-			</xforms:submit>
-		</p>
 
 		<h2>General Questions</h2>
 
@@ -1606,10 +1601,5 @@
 		</xforms:group>
 
 	</xforms:group>
-	<p>
-		<xforms:submit submission="sub-put-study-entry">
-			<xforms:label>Save Changes</xforms:label>
-		</xforms:submit>
-	</p>
 
 </div>
