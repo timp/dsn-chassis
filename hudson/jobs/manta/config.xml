@@ -17,7 +17,7 @@
   <scm class="hudson.scm.SubversionSCM">
     <locations>
       <hudson.scm.SubversionSCM_-ModuleLocation>
-        <remote>https://dsn-chassis.googlecode.com/svn/trunk/generic/client/gwt</remote>
+        <remote>https://dsn-chassis.googlecode.com/svn/trunk/manta</remote>
       </hudson.scm.SubversionSCM_-ModuleLocation>
     </locations>
     <useUpdate>true</useUpdate>
@@ -28,19 +28,23 @@
     <excludedCommitMessages></excludedCommitMessages>
   </scm>
   <canRoam>true</canRoam>
-  <disabled>true</disabled>
+  <disabled>false</disabled>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
-  <triggers class="vector"/>
+  <triggers class="vector">
+    <hudson.triggers.SCMTrigger>
+      <spec>*/17 * * * *</spec>
+    </hudson.triggers.SCMTrigger>
+  </triggers>
   <concurrentBuild>false</concurrentBuild>
   <rootModule>
     <groupId>org.cggh.chassis</groupId>
-    <artifactId>chassis-generic-client-gwt</artifactId>
+    <artifactId>manta</artifactId>
   </rootModule>
   <goals>clean install</goals>
   <aggregatorStyleBuild>true</aggregatorStyleBuild>
   <incrementalBuild>false</incrementalBuild>
   <usePrivateRepository>false</usePrivateRepository>
-  <ignoreUpstremChanges>false</ignoreUpstremChanges>
+  <ignoreUpstremChanges>true</ignoreUpstremChanges>
   <archivingDisabled>false</archivingDisabled>
   <reporters>
     <hudson.maven.reporters.MavenMailer>
@@ -50,14 +54,6 @@
     </hudson.maven.reporters.MavenMailer>
   </reporters>
   <publishers>
-    <hudson.tasks.BuildTrigger>
-      <childProjects>googlecode_dsn-chassis_generic_client_gwt-test, googlecode_dsn-chassis_htmlunit</childProjects>
-      <threshold>
-        <name>SUCCESS</name>
-        <ordinal>0</ordinal>
-        <color>BLUE</color>
-      </threshold>
-    </hudson.tasks.BuildTrigger>
     <hudson.plugins.twitter.TwitterPublisher/>
   </publishers>
   <buildWrappers/>
