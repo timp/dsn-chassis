@@ -129,7 +129,7 @@
 
             <!-- background upload submission -->
             <xforms:submission 
-            	id="sub-background-upload" 
+            	id="sub-post-background-uploads" 
             	ref="instance('ins-form-data')/uploads" 
             	method="post" 
             	replace="none" 
@@ -332,7 +332,7 @@
 							                            <xforms:filename ref="@filename"/>
 							                            <xforms:mediatype ref="@mediatype"/>
 							                            <xxforms:size ref="@size"/>
-							                            <xforms:send ev:event="xforms-select" submission="sub-background-upload"/>
+							                            <xforms:send ev:event="xforms-select" submission="sub-post-background-uploads"/>
 							                        </xforms:upload>
 							                        <br/>
 							                        <!-- Download link -->

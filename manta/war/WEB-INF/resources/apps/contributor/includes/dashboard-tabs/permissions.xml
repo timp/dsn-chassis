@@ -1,0 +1,66 @@
+<div 
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:xforms="http://www.w3.org/2002/xforms" 
+	xmlns:ev="http://www.w3.org/2001/xml-events"
+	xmlns:atombeat="http://purl.org/atombeat/xmlns">
+
+    <h2>Administrators</h2>
+    
+    <xforms:group ref="instance('ins-acl')//atombeat:security-descriptor/atombeat:groups/atombeat:group[@id='GROUP_ADMINISTRATORS']">
+		<table>
+			<xforms:repeat nodeset="atombeat:member" id="rep-administrator">
+				<tr>
+					<td>
+                        <xforms:trigger ref=".">
+                            <xforms:delete 
+                            	ev:event="DOMActivate" 
+	                        	context="." 
+	                        	nodeset="." 
+                            	at="index('rep-administrator')"/>
+                            <xforms:label><img src="/apps/contributor/common/remove.gif"/></xforms:label>
+                        </xforms:trigger>
+					</td>
+					<td>
+						<xforms:input ref=".">
+							<xforms:label>Email address:</xforms:label>
+						</xforms:input>
+					</td>
+				</tr>
+			</xforms:repeat>
+			<tr>
+				<td>
+                    <xforms:trigger>
+                        <xforms:label><img src="/apps/contributor/common/add.gif"/></xforms:label>
+                        <xforms:insert 
+	                      	ev:event="DOMActivate" 
+	                      	context="." 
+	                      	nodeset="atombeat:member" 
+	                      	at="last()" 
+	                      	position="after" 
+	                      	origin="instance('ins-user-template')"/>
+                    </xforms:trigger>
+				</td>
+				<td>
+                    <xforms:trigger appearance="minimal">
+                        <xforms:label>Add an Administrator</xforms:label>
+                        <xforms:insert 
+	                      	ev:event="DOMActivate" 
+	                      	context="." 
+	                      	nodeset="atombeat:member" 
+	                      	at="last()" 
+	                      	position="after" 
+	                      	origin="instance('ins-user-template')"/>
+                    </xforms:trigger>
+				</td>
+			</tr>
+		</table>
+		
+	</xforms:group>
+	
+     <p>
+         <xforms:submit submission="sub-put-acl">
+             <xforms:label>Save Changes</xforms:label>
+         </xforms:submit>
+     </p>
+	
+</div>

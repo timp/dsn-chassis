@@ -5,140 +5,167 @@
 
 	<h2>(6) Review</h2>
 
+	<h3>Title</h3>
+	
+	<p>
+		<xforms:output ref="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:title" />
+	</p>
 
- 	<table>
-          <tr>
-              <td>
-              	<h2>1. Study Terms
-              		<span class="mini-action">
-                    <xforms:trigger appearance="minimal">
-                    	<xforms:label>[edit]</xforms:label>
-                        <xforms:toggle ev:event="DOMActivate" case="title"/>
-                       </xforms:trigger>
-                      </span>
-              	</h2>
-                  <strong><xforms:output value="instance('ins-study-entry')/atom:title"/></strong>
-                  <xforms:group ref="instance('ins-study-entry')/atom:title[empty(text())]">
-                  	(empty)
-                  </xforms:group>
-                  
-                  <h2>2. Acknowledgements
-              		<span class="mini-action">
-                    <xforms:trigger appearance="minimal">
-                    	<xforms:label>[edit]</xforms:label>
-                        <xforms:toggle ev:event="DOMActivate" case="acknowledgements"/>
-                       </xforms:trigger>
-                      </span>
-                  </h2>
-                  
-              	<xforms:group ref="instance('ins-study-entry')/atom:content/study/acknowledgements">
-              	
-	<table class="repeat-table">
-		<xforms:repeat nodeset="person">
-			<tr>
-				<td class="form-td">
-					<xforms:output value="given-name"/>
-					<xforms:output value="family-name"/>
-					- <xforms:output value="email"/>
-					- <xforms:output value="organisation"/>
-				</td>
-			</tr>
+	<p>
+		<xforms:trigger appearance="minimal">
+			<xforms:label>&lt;&lt; Edit Title</xforms:label>
+			<xforms:action ev:event="DOMActivate">
+				<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane" value="'study-terms'"/>
+			</xforms:action>
+		</xforms:trigger>
+	</p>	
+	
+	<h3>Permissions</h3>
+	
+	<h4>Administrators:</h4>
+	
+	<ul>
+		<xforms:repeat nodeset="instance('ins-draft-entry')//permissions-entry-container//atombeat:security-descriptor/atombeat:groups/atombeat:group[@id='GROUP_ADMINISTRATORS']/atombeat:member">
+			<li>
+			<xforms:output ref=".">
+				<xforms:label>Email Address:</xforms:label>
+			</xforms:output>
+			</li>
 		</xforms:repeat>
-	</table>
+	</ul>
 	
-</xforms:group>		                        
-
-              	<xforms:group ref="instance('ins-study-entry')/atom:content/study/acknowledgements[empty(person)]">
-	no acknowledgements									
-</xforms:group>		                        
-                  
-                  <h2>
-                  	3. Publications
-              		<span class="mini-action">
-                    <xforms:trigger appearance="minimal">
-                    	<xforms:label>[edit]</xforms:label>
-                        <xforms:toggle ev:event="DOMActivate" case="publications"/>
-                       </xforms:trigger>
-                      </span>
-                  </h2>
-                  
-              	<xforms:group ref="instance('ins-study-entry')/atom:content/study">
-              	
-	<xforms:group ref="publications">
+	<p>
+		<xforms:trigger appearance="minimal">
+			<xforms:label>&lt;&lt; Edit Permissions</xforms:label>
+			<xforms:action ev:event="DOMActivate">
+				<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane" value="'permissions'"/>
+			</xforms:action>
+		</xforms:trigger>
+	</p>		
 	
-		<table class="repeat-table">
-			<xforms:repeat nodeset="publication">
-				<tr>
-					<td class="form-td">
-						<xforms:output value="title">
-							<xforms:label class="fixed-width">Title:</xforms:label>
-						</xforms:output>
-						<br/>
-						<xforms:output value="first-author">
-							<xforms:label class="fixed-width">First author:</xforms:label>
-						</xforms:output>
-						<br/>
-						<xforms:output value="year">
-							<xforms:label class="fixed-width">Year:</xforms:label>
-						</xforms:output>
-						<br/>
-						<xforms:output value="journal">
-							<xforms:label class="fixed-width">Journal:</xforms:label>
-						</xforms:output>
-						<br/>
-						<xforms:output value="url">
-							<xforms:label class="fixed-width">Web link:</xforms:label>
-						</xforms:output>
-						<br/>
-						<xforms:output value="doi">
-							<xforms:label class="fixed-width">DOI:</xforms:label>
-						</xforms:output>
-						<br/>
-					</td>
-				</tr>
+	<h3>Acknowledgements</h3>
+	
+	
+	
+	<xforms:group ref="not(instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:content/study/acknowledgements[empty(person)])">
+		<ol>
+			<xforms:repeat nodeset="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:content/study/acknowledgements/person">
+				<li>
+			        <xforms:output ref="first-name">
+			            <xforms:label>First Name:</xforms:label>
+			        </xforms:output>
+			       <br/>
+			        <xforms:output ref="middle-name">
+			            <xforms:label>Middle Name:</xforms:label>
+			        </xforms:output>
+			       <br/>
+			        <xforms:output ref="family-name">
+			            <xforms:label>Family Name:</xforms:label>
+			        </xforms:output>
+			        <br/>
+			        <xforms:output ref="email-address">
+			            <xforms:label>Email address:</xforms:label>
+			        </xforms:output>
+			        <br/>
+			        <xforms:output ref="institution">
+			            <xforms:label>Institution:</xforms:label>
+			        </xforms:output>
+		        </li>
 			</xforms:repeat>
-		</table>
-	
+		</ol>
 	</xforms:group>
-	
-	<xforms:group ref="publications[empty(publication)]">
-	no publications
+	<xforms:group ref="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:content/study/acknowledgements[empty(person)]">
+		<p>No Acknowledgements.</p>
 	</xforms:group>
 
-              	</xforms:group>
+	<p>
+		<xforms:trigger appearance="minimal">
+			<xforms:label>&lt;&lt; Edit Acknowledgements</xforms:label>
+			<xforms:action ev:event="DOMActivate">
+				<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane" value="'acknowledgements'"/>
+			</xforms:action>
+		</xforms:trigger>
+	</p>
 
-              	<h2>
-               	4. Permissions 
-               	<span class="mini-action">
-                    <xforms:trigger appearance="minimal">
-                    	<xforms:label>[edit]</xforms:label>
-                        <xforms:toggle ev:event="DOMActivate" case="permissions"/>
-                       </xforms:trigger>
-                      </span>
-              	</h2>
-              	
-              	<h3>Administrators</h3>
-<table class="repeat-table">
-	<xforms:repeat nodeset="instance('ins-draft-entry')//acl-entry-container//atombeat:security-descriptor/atombeat:groups/atombeat:group[@id='GROUP_ADMINISTRATORS']/atombeat:member">
-		<tr>
-			<td class="form-td">
-				<xforms:output value=".">
-				</xforms:output>
-			</td>
-		</tr>
-	</xforms:repeat>
-</table>
+	<h3>Files</h3>
 
-              </td>
-          </tr>
-      </table>
 
+	
+	<xforms:group ref="not(instance('ins-draft-entry')/atom:content/draft/uploads-entry-container/atom:entry/atom:content/uploads[empty(upload)])">
+		<ul>
+			<xforms:repeat nodeset="instance('ins-draft-entry')/atom:content/draft/uploads-entry-container/atom:entry/atom:content/uploads/upload">
+				<li>
+			        <xforms:output ref="@filename">
+			            <xforms:label>File Name:</xforms:label>
+			        </xforms:output>
+			       <br/>
+			        <xforms:output ref="@mediatype">
+			            <xforms:label>Media Type:</xforms:label>
+			        </xforms:output>
+			       <br/>
+			        <xforms:output ref="@size">
+			            <xforms:label>Size:</xforms:label>
+			        </xforms:output>
+			        <br/>
+			        <xforms:output ref="@typeterm">
+			            <xforms:label>File Type:</xforms:label>
+			        </xforms:output>
+			        <br/>
+			        <xforms:output ref="@typelabel">
+			            <xforms:label>Other Type:</xforms:label>
+			        </xforms:output>
+		        </li>
+			</xforms:repeat>
+		</ul>
+	</xforms:group>
+	<xforms:group ref="instance('ins-draft-entry')/atom:content/draft/uploads-entry-container/atom:entry/atom:content/uploads[empty(upload)]">
+		<p>No Files.</p>
+	</xforms:group>	
+	
+	<p>
+		<xforms:trigger appearance="minimal">
+			<xforms:label>&lt;&lt; Edit Files</xforms:label>
+			<xforms:action ev:event="DOMActivate">
+				<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane" value="'upload-files'"/>
+			</xforms:action>
+		</xforms:trigger>
+	</p>	
+	
+	<h3>Publications</h3>
+
+
+	
+	<xforms:group ref="not(instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:content/study/publications[empty(publication)])">
+		<ul>
+			<xforms:repeat nodeset="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:content/study/publications/publication">
+				<li>
+			        <xforms:output ref="web-link">
+			            <xforms:label>Web Link:</xforms:label>
+			        </xforms:output>
+		        </li>
+			</xforms:repeat>
+		</ul>
+	</xforms:group>
+	<xforms:group ref="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:content/study/publications[empty(publication)]">
+		<p>No Acknowledgements.</p>
+	</xforms:group>
+	
+	<p>
+		<xforms:trigger appearance="minimal">
+			<xforms:label>&lt;&lt; Edit Publications</xforms:label>
+			<xforms:action ev:event="DOMActivate">
+				<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane" value="'publications'"/>
+			</xforms:action>
+		</xforms:trigger>
+	</p>
 
 	<p>
 		<xforms:trigger>
 			<xforms:label>Confirm</xforms:label>
 			<xforms:action ev:event="DOMActivate">
+				<xforms:setvalue ref="instance('ins-control')/fallback-wizard-pane" value="'review'"/>
 				<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane" value="'confirmation'"/>
+				<xforms:send submission="sub-post-contribution"/>
 			</xforms:action>
 		</xforms:trigger>
 
