@@ -1,5 +1,8 @@
 #summary access control rules for the data collections in Chassis Manta
 
+<wiki:toc/>
+
+
 = Introduction =
 
 This page describes the access control rules for the data collections in the Chassis Manta product.
