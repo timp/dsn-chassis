@@ -307,12 +307,19 @@ I.e., when a personal data reviewer approves a submitted media resource, they mu
 TODO should this be done via PUT to ACL, or as a side-effect of POSTing the review?
 
 
-== The /reviews/personal-data Collection ==
+== Personal Data Reviews Collections, e.g., /reviews/personal-data/ABCDE ==
 
-E.g., ACL for the /reviews/personal-data collection ...
+Each study is linked to a personal data reviews collection, e.g., the study at /studies/ABCDE.atom is linked to its personal data reviews collection at /reviews/personal-data/ABCDE. 
+
+E.g., ACL for the /reviews/personal-data/ABCDE collection ...
 
 {{{
 <atombeat:security-descriptor xmlns:atombeat="http://atombeat.org/xmlns">
+
+        <atombeat:groups>
+                <atombeat:group id="GROUP_STUDY_ADMINISTRATORS" src="http://example.org/chassis/atombeat/content/studies/ABCDE.atom"/>
+        </atombeat:groups>
+
 	<atombeat:acl>
 
 		<!--
@@ -353,27 +360,15 @@ E.g., ACL for the /reviews/personal-data collection ...
 			<atombeat:permission>RETRIEVE_MEMBER</atombeat:permission>
 		</atombeat:ace>
 
-	</atombeat:acl>
-</atombeat:security-descriptor>
-}}}
-
-
-== Members of the /reviews/personal-data Collection ==
-
-E.g., default ACL for member /reviews/personal-data/AAA.atom which reviews a submitted media resource from the study at /studies/ABCDE.atom ...
-
-{{{
-<atombeat:security-descriptor xmlns:atombeat="http://atombeat.org/xmlns">
-
-	<atombeat:groups>
-		<atombeat:group id="GROUP_STUDY_ADMINISTRATORS" src="http://example.org/chassis/atombeat/content/studies/ABCDE.atom"/>
-	</atombeat:groups>
-
-	<atombeat:acl>
-
 		<!--
-			A study administrator will be permitted to retrieve a review if the review is of a submitted media resource from that study.
+			study administrators can list the collection and retrieve any member.
 		-->
+
+		<atombeat:ace>
+			<atombeat:type>ALLOW</atombeat:type>
+			<atombeat:recipient type="group">GROUP_STUDY_ADMINISTRATORS</atombeat:recipient>
+			<atombeat:permission>LIST_COLLECTION</atombeat:permission>
+		</atombeat:ace>
 
 		<atombeat:ace>
 			<atombeat:type>ALLOW</atombeat:type>
@@ -385,6 +380,11 @@ E.g., default ACL for member /reviews/personal-data/AAA.atom which reviews a sub
 
 </atombeat:security-descriptor>
 }}}
+
+
+== Members of Personal Data Reviews Collections ==
+
+Members of personal data reviews collections need no specific ACL rules, all permissions are covered by collection ACL.
 
 TODO how does a contributor navigate from a submitted media resource to a personal data review about that media resource? Do we need to add a custom link relation to the media-link entry for the media resource? If so, then we need to add behaviour to the manta atombeat plugin.
 
@@ -528,3 +528,8 @@ E.g., default ACL for the derivations collection at /derivations/ABCDE ...
 }}}
 
 TODO how does user navigate from a curated media resource to its derivation?
+
+
+== Members of Derivations Collections ==
+
+Members of derivations collections need no specific ACL rules, all permissions are covered by collection ACL.
