@@ -1,9 +1,14 @@
 <xforms:model xmlns:xforms="http://www.w3.org/2002/xforms"
-	xmlns:f="http://orbeon.org/oxf/xml/formatting" xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:xxforms="http://orbeon.org/oxf/xml/xforms" xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:atom="http://www.w3.org/2005/Atom"
-	xmlns:fr="http://orbeon.org/oxf/xml/form-runner" xmlns:xi="http://www.w3.org/2001/XInclude"
+	xmlns:f="http://orbeon.org/oxf/xml/formatting" 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:xxforms="http://orbeon.org/oxf/xml/xforms" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:ev="http://www.w3.org/2001/xml-events" 
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:fr="http://orbeon.org/oxf/xml/form-runner" 
+	xmlns:xi="http://www.w3.org/2001/XInclude"
 	xmlns:ctype="http://www.cggh.org/chassis-types"
+	xmlns:fn="http://www.w3.org/2005/xpath-functions"
 	xxforms:readonly-appearance="static" id="mod-study-questionnaire"
 	schema="../chassis-types.xsd">
 
@@ -23,6 +28,8 @@
 		<xforms:bind nodeset="atom:content/study">
 			<xforms:bind nodeset="start" type="xs:date" />
 			<xforms:bind nodeset="end" type="xs:date" />
+			<xforms:bind nodeset="pathogens" />
+			
 			<xforms:bind nodeset="sites">
 				<xforms:bind nodeset="site">
 					<xforms:bind nodeset="country" required="true()" />
@@ -133,6 +140,29 @@
 						<xforms:bind nodeset="blinding" />
 					</xforms:bind>
 				</xforms:bind>
+				<xforms:bind nodeset="followup">
+					<xforms:bind nodeset="duration" />
+					<xforms:bind nodeset="feverMeasurement" />
+					<xforms:bind nodeset="haemoglobinRecording">
+						<xforms:bind nodeset="haemoglobinRecordingType" />
+						<xforms:bind nodeset="haemoglobinRecordingHbType"
+							relevant="contains(../haemoglobinRecordingType,'hb')" />
+					</xforms:bind>
+				</xforms:bind>
+				<xforms:bind nodeset="microscopy">
+					<xforms:bind nodeset="microscopyFilmType"/>
+					<xforms:bind nodeset="microscopyStain"/>
+					<xforms:bind nodeset="microscopyStainOther" relevant="contains(../microscopyStain, 'other')"/>
+					<xforms:bind nodeset="asexualParasitemiaCount"/>
+					<xforms:bind nodeset="asexualParasitemiaCountUnit"/>
+					<xforms:bind nodeset="asexualParasitemiaCountUnitOther" relevant="contains(../asexualParasitemiaCountUnit,'other')"/>
+					<xforms:bind nodeset="sexualParasitemiaCount"/>
+					<xforms:bind nodeset="sexualParasitemiaCountUnit"/>
+					<xforms:bind nodeset="sexualParasitemiaCountUnitOther" relevant="contains(../sexualParasitemiaCountUnit,'other')"/>
+					
+					<xforms:bind nodeset="separateSpeciesCounts" relevant="count(tokenize(../../../pathogens,' '))>1"/>
+				</xforms:bind>
+
 			</xforms:bind>
 
 			<xforms:bind nodeset="molecular" relevant="contains(../modules, 'molecular')">
@@ -266,6 +296,18 @@
 		src="/apps/common/constants/drugDosingDeterminants.xml" />
 	<xforms:instance id="ins-feeding-items"
 		src="/apps/common/constants/feedings.xml" />
+	<xforms:instance id="ins-feverMeasurementMethod-items"
+		src="/apps/common/constants/feverMeasurementMethods.xml" />
+	<xforms:instance id="ins-haemoglobinRecordingType-items"
+		src="/apps/common/constants/haemoglobinRecordingTypes.xml" />
+	<xforms:instance id="ins-haemoglobinRecordingHbType-items"
+		src="/apps/common/constants/haemoglobinRecordingHbTypes.xml" />
+	<xforms:instance id="ins-microscopyFilmType-items"
+		src="/apps/common/constants/microscopyFilmTypes.xml" />
+	<xforms:instance id="ins-microscopyStain-items"
+		src="/apps/common/constants/microscopyStains.xml" />
+	<xforms:instance id="ins-whiteBloodCellCount-items"
+		src="/apps/common/constants/whiteBloodCellCounts.xml" />
 
 
 	<xforms:instance id="ins-incubatorSystem-items"
@@ -364,24 +406,24 @@
 		</ageDosingSchedule>
 	</xforms:instance>
 
-<xforms:instance id="ins-wGroupDosingSchedule">
-				<wGroupDosingSchedule xmlns="">
-					<day />
-					<hour />
-					<wGroupFrom />
-					<wGroupTo />
-					<dose />
-					<doseUnit />
-				</wGroupDosingSchedule>
-</xforms:instance>
+	<xforms:instance id="ins-wGroupDosingSchedule">
+		<wGroupDosingSchedule xmlns="">
+			<day />
+			<hour />
+			<wGroupFrom />
+			<wGroupTo />
+			<dose />
+			<doseUnit />
+		</wGroupDosingSchedule>
+	</xforms:instance>
 
-<xforms:instance id="ins-weightDosingSchedule">
-				<weightDosingSchedule xmlns="">
-					<day />
-					<hour />
-					<dose />
-				</weightDosingSchedule>
-</xforms:instance>
+	<xforms:instance id="ins-weightDosingSchedule">
+		<weightDosingSchedule xmlns="">
+			<day />
+			<hour />
+			<dose />
+		</weightDosingSchedule>
+	</xforms:instance>
 	<xforms:instance id="ins-activeIngredient">
 		<activeIngredient xmlns="">
 			<activeIngredientName />

@@ -1,0 +1,10 @@
+<microscopyStains xmlns="">
+	<microscopyStain>
+		<label>Giemsa</label>
+		<value>giemsa</value>
+	</microscopyStain>
+	<microscopyStain>
+		<label>FieldsStain</label>
+		<value>fieldsstain</value>
+	</microscopyStain>
+</microscopyStains>
