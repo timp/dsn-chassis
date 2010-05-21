@@ -129,11 +129,11 @@ E.g., ACL for member /studies/ABCDE.atom ...
 }}}
 
 
-== Submitted Media Collections, e.g., /media/ABCDE/submitted ==
+== Submitted Media Collections, e.g., /media/submitted/ABCDE ==
 
-Each study is linked to a submitted media collection. E.g., the study at /studies/ABCDE.atom is linked to its submitted media collection at /media/ABCDE/submitted.
+Each study is linked to a submitted media collection. E.g., the study at /studies/ABCDE.atom is linked to its submitted media collection at /media/submitted/ABCDE.
 
-E.g., default ACL for /media/ABCDE/submitted collection ...
+E.g., default ACL for /media/submitted/ABCDE collection ...
 
 {{{
 <atombeat:security-descriptor xmlns:atombeat="http://atombeat.org/xmlns">
@@ -218,7 +218,7 @@ E.g., default ACL for /media/ABCDE/submitted collection ...
 
 == Media Resources in a Submitted Media Collection ==
 
-E.g., default ACL for media resource /media/ABCDE/submitted/XYZ.media (before personal data review) ...
+E.g., default ACL for media resource /media/submitted/ABCDE/XYZ.media (before personal data review) ...
 
 {{{
 <atombeat:security-descriptor xmlns:atombeat="http://atombeat.org/xmlns">
@@ -250,7 +250,7 @@ E.g., default ACL for media resource /media/ABCDE/submitted/XYZ.media (before pe
 </atombeat:security-descriptor>
 }}}
 
-E.g., ACL for media resource /media/ABCDE/submitted/XYZ.media after passed by personal data reviewer ...
+E.g., ACL for media resource /media/submitted/ABCDE/XYZ.media after passed by personal data reviewer ...
 
 {{{
 <atombeat:security-descriptor xmlns:atombeat="http://atombeat.org/xmlns">
@@ -389,11 +389,11 @@ E.g., default ACL for member /reviews/personal-data/AAA.atom which reviews a sub
 TODO how does a contributor navigate from a submitted media resource to a personal data review about that media resource? Do we need to add a custom link relation to the media-link entry for the media resource? If so, then we need to add behaviour to the manta atombeat plugin.
 
 
-== Curated Media Collections, e.g., /media/ABCDE/curated ==
+== Curated Media Collections, e.g., /media/curated/ABCDE ==
 
-Each study is linked to a curated media collection. E.g., the study at /studies/ABCDE.atom is linked to its curated media collection at /media/ABCDE/curated.
+Each study is linked to a curated media collection. E.g., the study at /studies/ABCDE.atom is linked to its curated media collection at /media/curated/ABCDE.
 
-E.g., default ACL for the curated media collection at /media/ABCDE/curated ...
+E.g., default ACL for the curated media collection at /media/curated/ABCDE ...
 
 {{{
 <atombeat:security-descriptor xmlns:atombeat="http://atombeat.org/xmlns">
