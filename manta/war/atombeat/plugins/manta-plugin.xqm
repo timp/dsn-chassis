@@ -133,6 +133,21 @@ declare function manta-plugin:filter-study-entry(
                 and namespace-uri( $child ) = $CONSTANT:ATOM-NSURI 
                 and $child/@rel = 'http://www.cggh.org/2010/chassis/terms/submittedMedia'
             )
+            and not( 
+                local-name( $child ) = $CONSTANT:ATOM-LINK 
+                and namespace-uri( $child ) = $CONSTANT:ATOM-NSURI 
+                and $child/@rel = 'http://www.cggh.org/2010/chassis/terms/curatedMedia'
+            )
+            and not( 
+                local-name( $child ) = $CONSTANT:ATOM-LINK 
+                and namespace-uri( $child ) = $CONSTANT:ATOM-NSURI 
+                and $child/@rel = 'http://www.cggh.org/2010/chassis/terms/derivations'
+            )
+            and not( 
+                local-name( $child ) = $CONSTANT:ATOM-LINK 
+                and namespace-uri( $child ) = $CONSTANT:ATOM-NSURI 
+                and $child/@rel = 'http://www.cggh.org/2010/chassis/terms/personalDataReviews'
+            )
             and not(
                 local-name( $child ) = "id" 
                 and namespace-uri( $child ) = "http://www.cggh.org/2010/chassis/manta/xmlns"
@@ -203,7 +218,7 @@ declare function manta-plugin:after-create-member(
     
     then manta-plugin:after-create-member-studies( $entry , $response-content-type )
     
-    else if ( matches( $request-path-info , "^/studies/[^/]+/media" ) )
+    else if ( matches( $request-path-info , "^/media" ) )
     
     then manta-plugin:after-create-member-media( $entry , $response-content-type )
     
@@ -222,7 +237,7 @@ declare function manta-plugin:after-create-media(
 	$response-content-type as xs:string?
 ) as item()*
 {
-    if ( matches( $request-path-info , "^/studies/[^/]+/media" ) )
+    if ( matches( $request-path-info , "^/media" ) )
     
     then manta-plugin:after-create-media-media( $entry , $response-content-type )
     
@@ -245,7 +260,7 @@ declare function manta-plugin:after-retrieve-member(
     
     then manta-plugin:after-retrieve-member-studies( $entry , $response-content-type )
     
-    else if ( matches( $request-path-info , "^/studies/[^/]+/media" ) )
+    else if ( matches( $request-path-info , "^/media" ) )
     
     then manta-plugin:after-retrieve-member-media( $entry , $response-content-type )
     
@@ -268,7 +283,7 @@ declare function manta-plugin:after-update-member(
     
     then manta-plugin:after-update-member-studies( $entry , $response-content-type )
     
-    else if ( matches( $request-path-info , "^/studies/[^/]+/media" ) )
+    else if ( matches( $request-path-info , "^/media" ) )
     
     then manta-plugin:after-update-member-media( $entry , $response-content-type )
     
@@ -291,7 +306,7 @@ declare function manta-plugin:after-list-collection(
     
     then manta-plugin:after-list-collection-studies( $feed , $response-content-type )
     
-    else if ( matches( $request-path-info , "^/studies/[^/]+/media" ) )
+    else if ( matches( $request-path-info , "^/media" ) )
     
     then manta-plugin:after-list-collection-media( $feed , $response-content-type )
     
@@ -309,11 +324,7 @@ declare function manta-plugin:after-create-member-studies(
 	$response-content-type as xs:string?
 ) as item()*
 {
-    (: 
-     : We want to create a dedicated collection where study members can 
-     : submit media for the study.
-     :)
-     
+
     let $log := local:debug( "== manta-plugin:after-create-member-studies() ==")
     
     let $id := manta-plugin:get-id( $entry )
@@ -323,7 +334,7 @@ declare function manta-plugin:after-create-member-studies(
     
     let $feed :=
         <atom:feed>
-            <atom:title type="text">Submitted Media for Study {$id} ({$entry/atom:title/text()})</atom:title>
+            <atom:title type="text">Submitted Media for Study {$id}</atom:title>
             <atom:link 
                 rel="http://www.cggh.org/2010/chassis/terms/originStudy" 
                 href="{$entry/atom:link[@rel='self']/@href}" 
@@ -331,55 +342,56 @@ declare function manta-plugin:after-create-member-studies(
         </atom:feed>
         
     let $submitted-media-collection-db-path := atomdb:create-collection( $submitted-media-collection-path-info , $feed )
-    
-    let $entry-uri := $entry/atom:link[@rel="self"]/@href
-    let $entry-path-info := substring-after( $entry-uri , $config:service-url )
-    
-    let $submitted-media-collection-descriptor :=
-        <atombeat:security-descriptor>
-            <atombeat:groups>
-                <atombeat:group id="GROUP_ADMINISTRATORS" src="{$entry-uri}"/>
-            </atombeat:groups>
-            <atombeat:acl>
-                <atombeat:ace>
-                    <atombeat:type>ALLOW</atombeat:type>
-                    <atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
-                    <atombeat:permission>LIST_COLLECTION</atombeat:permission>
-                </atombeat:ace>
-                <atombeat:ace>
-                    <atombeat:type>ALLOW</atombeat:type>
-                    <atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
-                    <atombeat:permission>CREATE_MEDIA</atombeat:permission>
-                </atombeat:ace>
-                <atombeat:ace>
-                    <atombeat:type>ALLOW</atombeat:type>
-                    <atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
-                    <atombeat:permission>RETRIEVE_MEMBER</atombeat:permission>
-                </atombeat:ace>
-                <atombeat:ace>
-                    <atombeat:type>ALLOW</atombeat:type>
-                    <atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
-                    <atombeat:permission>RETRIEVE_MEDIA</atombeat:permission>
-                </atombeat:ace>
-                <atombeat:ace>
-                    <atombeat:type>ALLOW</atombeat:type>
-                    <atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
-                    <atombeat:permission>UPDATE_MEMBER</atombeat:permission>
-                </atombeat:ace>
-                <atombeat:ace>
-                    <atombeat:type>ALLOW</atombeat:type>
-                    <atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
-                    <atombeat:permission>RETRIEVE_ACL</atombeat:permission>
-                </atombeat:ace>
-                <atombeat:ace>
-                    <atombeat:type>ALLOW</atombeat:type>
-                    <atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
-                    <atombeat:permission>UPDATE_ACL</atombeat:permission>
-                </atombeat:ace>
-            </atombeat:acl>
-        </atombeat:security-descriptor>
-    
+    let $submitted-media-collection-descriptor := config:submitted-media-collection-security-descriptor( $submitted-media-collection-path-info )
     let $descriptor-stored := atomsec:store-collection-descriptor( $submitted-media-collection-path-info , $submitted-media-collection-descriptor )
+    
+    let $curated-media-collection-path-info := manta-plugin:curated-media-collection-path-info-for-study-entry( $entry )
+    let $log := local:debug( $curated-media-collection-path-info )
+    
+    let $feed :=
+        <atom:feed>
+            <atom:title type="text">Curated Media for Study {$id}</atom:title>
+            <atom:link 
+                rel="http://www.cggh.org/2010/chassis/terms/originStudy" 
+                href="{$entry/atom:link[@rel='self']/@href}" 
+                type="application/atom+xml"/>
+        </atom:feed>
+        
+    let $curated-media-collection-db-path := atomdb:create-collection( $curated-media-collection-path-info , $feed )
+    let $curated-media-collection-descriptor := config:curated-media-collection-security-descriptor( $curated-media-collection-path-info )
+    let $descriptor-stored := atomsec:store-collection-descriptor( $curated-media-collection-path-info , $curated-media-collection-descriptor )
+    
+    let $derivations-collection-path-info := manta-plugin:derivations-collection-path-info-for-study-entry( $entry )
+    let $log := local:debug( $derivations-collection-path-info )
+    
+    let $feed :=
+        <atom:feed>
+            <atom:title type="text">Derivations for Study {$id}</atom:title>
+            <atom:link 
+                rel="http://www.cggh.org/2010/chassis/terms/originStudy" 
+                href="{$entry/atom:link[@rel='self']/@href}" 
+                type="application/atom+xml"/>
+        </atom:feed>
+        
+    let $derivations-collection-db-path := atomdb:create-collection( $derivations-collection-path-info , $feed )
+    let $derivations-collection-descriptor := config:derivations-collection-security-descriptor( $derivations-collection-path-info )
+    let $descriptor-stored := atomsec:store-collection-descriptor( $derivations-collection-path-info , $derivations-collection-descriptor )
+    
+    let $personal-data-reviews-collection-path-info := manta-plugin:personal-data-reviews-collection-path-info-for-study-entry( $entry )
+    let $log := local:debug( $personal-data-reviews-collection-path-info )
+    
+    let $feed :=
+        <atom:feed>
+            <atom:title type="text">Personal Data Reviews for Study {$id}</atom:title>
+            <atom:link 
+                rel="http://www.cggh.org/2010/chassis/terms/originStudy" 
+                href="{$entry/atom:link[@rel='self']/@href}" 
+                type="application/atom+xml"/>
+        </atom:feed>
+        
+    let $personal-data-reviews-collection-db-path := atomdb:create-collection( $personal-data-reviews-collection-path-info , $feed )
+    let $personal-data-reviews-collection-descriptor := config:personal-data-reviews-collection-security-descriptor( $personal-data-reviews-collection-path-info )
+    let $descriptor-stored := atomsec:store-collection-descriptor( $personal-data-reviews-collection-path-info , $personal-data-reviews-collection-descriptor )
     
     let $entry := manta-plugin:augment-study-entry( $entry )
     
@@ -533,9 +545,45 @@ declare function manta-plugin:submitted-media-collection-path-info-for-study-ent
 ) as xs:string
 {
     let $id := manta-plugin:get-id( $entry )
-    let $submitted-media-collection-path-info := concat( "/studies/" , $id , "/media/submitted" )
+    let $submitted-media-collection-path-info := concat( "/media/submitted/" , $id )
     return $submitted-media-collection-path-info
 };
+
+
+
+
+declare function manta-plugin:curated-media-collection-path-info-for-study-entry(
+    $entry as element(atom:entry)
+) as xs:string
+{
+    let $id := manta-plugin:get-id( $entry )
+    let $submitted-media-collection-path-info := concat( "/media/curated/" , $id )
+    return $submitted-media-collection-path-info
+};
+
+
+
+declare function manta-plugin:derivations-collection-path-info-for-study-entry(
+    $entry as element(atom:entry)
+) as xs:string
+{
+    let $id := manta-plugin:get-id( $entry )
+    let $submitted-media-collection-path-info := concat( "/derivations/" , $id )
+    return $submitted-media-collection-path-info
+};
+
+
+
+declare function manta-plugin:personal-data-reviews-collection-path-info-for-study-entry(
+    $entry as element(atom:entry)
+) as xs:string
+{
+    let $id := manta-plugin:get-id( $entry )
+    let $submitted-media-collection-path-info := concat( "/reviews/personal-data/" , $id )
+    return $submitted-media-collection-path-info
+};
+
+
 
 
 
@@ -546,6 +594,8 @@ declare function manta-plugin:get-id(
 {
     replace( $entry/atom:id/text() , '^.*/([^/^.]+)\.atom$', '$1' )
 };
+
+
 
 
 
@@ -561,13 +611,37 @@ declare function manta-plugin:augment-study-entry(
             href="{concat( $config:service-url , $submitted-media-collection-path-info )}"
             type="application/atom+xml"/>
         
+    let $curated-media-collection-path-info := manta-plugin:curated-media-collection-path-info-for-study-entry( $entry )
+    let $curated-media-collection-link := 
+        <atom:link 
+            rel="http://www.cggh.org/2010/chassis/terms/curatedMedia" 
+            href="{concat( $config:service-url , $curated-media-collection-path-info )}"
+            type="application/atom+xml"/>
+        
+    let $derivations-collection-path-info := manta-plugin:derivations-collection-path-info-for-study-entry( $entry )
+    let $derivations-collection-link := 
+        <atom:link 
+            rel="http://www.cggh.org/2010/chassis/terms/derivations" 
+            href="{concat( $config:service-url , $derivations-collection-path-info )}"
+            type="application/atom+xml"/>
+        
+    let $personal-data-reviews-collection-path-info := manta-plugin:personal-data-reviews-collection-path-info-for-study-entry( $entry )
+    let $personal-data-reviews-collection-link := 
+        <atom:link 
+            rel="http://www.cggh.org/2010/chassis/terms/personalDataReviews" 
+            href="{concat( $config:service-url , $personal-data-reviews-collection-path-info )}"
+            type="application/atom+xml"/>
+        
     let $entry := 
         <atom:entry>
             <manta:id>{manta-plugin:get-id($entry)}</manta:id>
         {
             $entry/attribute::* ,
             $entry/child::* ,
-            $submitted-media-collection-link
+            $submitted-media-collection-link ,
+            $curated-media-collection-link ,
+            $derivations-collection-link ,
+            $personal-data-reviews-collection-link
         }
         </atom:entry>
             
