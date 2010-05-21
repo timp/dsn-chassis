@@ -118,6 +118,7 @@ declare function local:do-post() as item()*
 
     (: INSTALL THE workspace ACL :)
     let $workspace-descriptor-installed := atomsec:store-workspace-descriptor( $config:default-workspace-security-descriptor )
+    let $log := util:log( "info" , "installed workspace security descriptor" )
     
     (: INSTALL THE COLLECTIONS :)
     let $collections-installed :=
@@ -125,8 +126,12 @@ declare function local:do-post() as item()*
         let $title := $collection/title/text()
         let $path-info := $collection/path-info/text()
         let $enable-history := xs:boolean($collection/enable-history/text())
-        return 
+        let $log := util:log( "info" , concat( "installing collection at " , $path-info ) )
+        
+        return  
+        
             if ( not( atomdb:collection-available( $path-info ) ) )
+            
             then 
             
                 (: CREATE THE COLLECTION :)
@@ -139,6 +144,8 @@ declare function local:do-post() as item()*
                 
                 (: INSTALL ACL :)
                 let $acl := config:default-collection-security-descriptor( $path-info , () )
+                let $log := util:log( "info" , $acl )
+                
                 let $acl-stored := atomsec:store-collection-descriptor( $path-info , $acl )
                 
                 (: ENABLE HISTORY :)
