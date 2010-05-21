@@ -26,6 +26,30 @@ declare variable $collection-spec :=
             <enable-history>false</enable-history>
             <exclude-entry-content>true</exclude-entry-content>
         </collection>   
+        <collection>
+            <title>All Submitted Media</title>
+            <path-info>/media/submitted</path-info>
+            <enable-history>false</enable-history>
+            <exclude-entry-content>true</exclude-entry-content>
+        </collection>   
+        <collection>
+            <title>All Curated Media</title>
+            <path-info>/media/curated</path-info>
+            <enable-history>false</enable-history>
+            <exclude-entry-content>true</exclude-entry-content>
+        </collection>   
+        <collection>
+            <title>All Derivations</title>
+            <path-info>/derivations</path-info>
+            <enable-history>false</enable-history>
+            <exclude-entry-content>true</exclude-entry-content>
+        </collection>   
+        <collection>
+            <title>All Personal Data Reviews</title>
+            <path-info>/reviews/personal-data</path-info>
+            <enable-history>false</enable-history>
+            <exclude-entry-content>true</exclude-entry-content>
+        </collection>   
     </spec>
 ;
 
