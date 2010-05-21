@@ -27,7 +27,6 @@
     <head>
     
         <title>Manta Data Management - Submitter - Submit Files</title>
-        <link rel="stylesheet" type="text/css" href="/apps/submitter/common/style.css"></link>
         <link rel="stylesheet" type="text/css" href="/ops/yui/tabview/assets/skins/sam/tabview.css"></link>
         
         <xforms:model id="mod-main">
@@ -48,11 +47,11 @@
             </xforms:instance>
         	
             <xforms:bind nodeset="instance('ins-control')">
-                <xforms:bind nodeset="next-upload" readonly="instance('ins-form-data')/study = ''"/>
-                <xforms:bind nodeset="next-confirm" readonly="empty(instance('ins-form-data')//upload) or exists(instance('ins-form-data')//upload[empty(text())])"/>
-                
-                <!-- <xforms:bind nodeset="upload-files" relevant="exists(instance('ins-form-data')//upload[empty(text())])"/> -->
-                <xforms:bind nodeset="confirm" readonly="instance('ins-form-data')/accept-terms != true()"/>
+<!--                <xforms:bind nodeset="next-upload" readonly="instance('ins-form-data')/study = ''"/>-->
+<!--                <xforms:bind nodeset="next-confirm" readonly="empty(instance('ins-form-data')//upload) or exists(instance('ins-form-data')//upload[empty(text())])"/>-->
+<!--                -->
+                 <xforms:bind nodeset="upload-files" relevant="exists(instance('ins-form-data')//upload[empty(text())])"/> 
+<!--                <xforms:bind nodeset="confirm" readonly="instance('ins-form-data')/accept-terms != true()"/>-->
             </xforms:bind>
 
 
@@ -291,7 +290,7 @@
 										<tr>
 											<td>
 							                    <xforms:trigger appearance="minimal">
-							                        <xforms:label><img src="/apps/submitter/common/add.gif"/></xforms:label>
+							                        <xforms:label><img src="/apps/fr/style/add.gif"/></xforms:label>
 							                        <xforms:insert 
 							                        	ev:event="DOMActivate" 
 							                        	context="instance('ins-form-data')/uploads" 
@@ -323,7 +322,7 @@
 								                        	context="instance('ins-form-data')/uploads" 
 								                        	nodeset="upload" 
 							                            	at="index('upload-repeat')"/>
-							                            <xforms:label><img src="/apps/submitter/common/remove.gif"/></xforms:label>
+							                            <xforms:label><img src="/apps/fr/style/remove.gif"/></xforms:label>
 							                        </xforms:trigger>
 												</td>
 												<td class="form-td">
