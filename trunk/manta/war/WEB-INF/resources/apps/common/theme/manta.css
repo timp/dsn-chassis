@@ -151,3 +151,11 @@ ul {
 .fourWide .xforms-input-input {
 	width: 4em;
 }
+
+
+span.xforms-group {
+	display:block;
+	margin: 6px;
+	padding: 4px;
+	border: 1px solid green; 
+}
