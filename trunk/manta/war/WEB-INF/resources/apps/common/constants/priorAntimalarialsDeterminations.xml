@@ -1,10 +1,10 @@
 <priorAntimalarialsDeterminations xmlns="">
 	<priorAntimalarialsDetermination>
-		<label>Drug test</label>
+		<label>drug test</label>
 		<value>drugTest</value>
 	</priorAntimalarialsDetermination>
 	<priorAntimalarialsDetermination>
-		<label>History</label>
+		<label>history</label>
 		<value>history</value>
 	</priorAntimalarialsDetermination>
 </priorAntimalarialsDeterminations>
