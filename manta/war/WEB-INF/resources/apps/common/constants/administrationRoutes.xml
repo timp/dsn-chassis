@@ -1,19 +1,19 @@
 <administrationRoutes xmlns="">
 	<administrationRoute>
-		<label>Oral</label>
+		<label>oral</label>
 		<value>oral</value>
 	</administrationRoute>
 	<administrationRoute>
 	<!-- FIXME Que? -->
-		<label>Tablet Dispersal</label>
+		<label>tablet dispersal</label>
 		<value>dispersal</value>
 	</administrationRoute>
 	<administrationRoute>
-		<label>Intravenous</label>
+		<label>intravenous</label>
 		<value>intravenous</value>
 	</administrationRoute>
 	<administrationRoute>
-		<label>Intramuscular</label>
+		<label>intramuscular</label>
 		<value>intramuscular</value>
 	</administrationRoute>
 </administrationRoutes>

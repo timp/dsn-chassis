@@ -1,15 +1,15 @@
 <!--  Closed list of possible drug dosage determinants -->
 <drugDosingDeterminants xmlns="">
 	<drugDosingDeterminant>
-		<label>Age</label>
+		<label>age</label>
 		<value>age</value>
 	</drugDosingDeterminant>
 	<drugDosingDeterminant>
-		<label>Weight group</label>
+		<label>weight group</label>
 		<value>wGroup</value>
 	</drugDosingDeterminant>
 	<drugDosingDeterminant>
-		<label>Mg/kg</label>
+		<label>mg/kg</label>
 		<value>weight</value>
 	</drugDosingDeterminant>
 </drugDosingDeterminants>

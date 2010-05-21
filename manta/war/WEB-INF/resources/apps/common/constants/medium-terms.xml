@@ -5,7 +5,7 @@
         <value>RPMI1640</value>
     </medium>
     <medium>
-        <label>Other</label>
+        <label>other</label>
         <value>other</value>
     </medium>
 </mediums>

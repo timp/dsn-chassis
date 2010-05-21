@@ -4,7 +4,7 @@
 		<value>giemsa</value>
 	</microscopyStain>
 	<microscopyStain>
-		<label>FieldsStain</label>
+		<label>fields stain</label>
 		<value>fieldsstain</value>
 	</microscopyStain>
 </microscopyStains>
