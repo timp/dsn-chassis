@@ -1,0 +1,3051 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<questionnaire xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://dsn-chassis.googlecode.com/svn/trunk/generic/lib/gwt/src/main/resources/xquestion/xquestion.xsd"
+	defaultPrefix="chassis" defaultNamespaceUri="http://www.cggh.org/2009/chassis/xmlns/"
+	id="study">
+
+	<xforms:bind nodeset="study" />
+		<xforms:group ref="general">
+			<xforms:bind nodeset="general" />
+			<view class="xquestionnaire-transparent">
+				<h3>General Questions</h3>
+				<h4 id="modulesHeading">Module(s)</h4>
+
+				<xforms:group ref="module">
+					<xforms:bind nodeset="module" />
+					
+					
+						<select appearance="full">
+							<xforms:label class="fixed-width">Please select the WWARN modules for which this study has data...</xforms:label>
+							<xforms:item>
+								<xforms:label class="fixed-width">Clinical</xforms:label>
+								<xforms:value>clinical</xforms:value>
+							</xforms:item>
+							<xforms:item>
+								<xforms:label class="fixed-width">Molecular</xforms:label>
+								<xforms:value>molecular</xforms:value>
+							</xforms:item>
+							<xforms:item>
+								<xforms:label class="fixed-width">in vitro</xforms:label>
+								<xforms:value>invitro</xforms:value>
+							</xforms:item>
+							<xforms:item>
+								<xforms:label class="fixed-width">Pharmacology</xforms:label>
+								<xforms:value>pharmacology</xforms:value>
+							</xforms:item>
+						</select>
+					
+				</xforms:group>
+
+				<h4 id="startend">Study Start and End</h4>
+
+				<xforms:group ref="startDate">
+					<xforms:bind nodeset="startDate" type="date" />
+					
+					
+						<xforms:input>
+							<xforms:label class="fixed-width">When did the study start?</xforms:label>
+							<xforms:hint>Enter the date on which the study started, e.g., 2006-11-23.</xforms:hint>
+						</xforms:input>
+					
+				</xforms:group>
+
+				<xforms:group ref="endDate">
+					<xforms:bind nodeset="endDate" type="date" />
+					
+					
+						<xforms:input>
+							<xforms:label class="fixed-width">When did the study end?</xforms:label>
+							<xforms:hint>Enter the year in which the study ended, e.g., 2008-06-30, or leave blank if the study
+								is ongoing.
+							</xforms:hint>
+						</xforms:input>
+					
+				</xforms:group>
+
+				<h4 id="pi">Principal Investigator(s)</h4>
+
+				<xforms:group ref="principalInvestigator" repeatable="yes">
+
+					<xforms:bind nodeset="principalInvestigator" />
+					
+
+					
+
+						<xforms:hint>
+							<p>Who was the principal investigator of this study?</p>
+						</xforms:hint>
+
+						<xforms:group ref="principalInvestigator-name">
+							<xforms:bind nodeset="name" />
+							
+							
+								<xforms:input>
+									<xforms:label class="fixed-width">Name?</xforms:label>
+								</xforms:input>
+							
+						</xforms:group>
+
+						<xforms:group ref="principalInvestigator-email" repeatable="yes">
+							<xforms:bind nodeset="email" />
+							
+							
+								<xforms:input>
+									<xforms:label class="fixed-width">Email address?</xforms:label>
+								</xforms:input>
+							
+						</xforms:group>
+
+						<xforms:group ref="principalInvestigator-uri" repeatable="yes">
+							<xforms:bind nodeset="uri" />
+							
+							
+								<xforms:input>
+									<xforms:label class="fixed-width">Home page?</xforms:label>
+									<xforms:hint>Enter the URL of a web page that is the person's home page.</xforms:hint>
+								</xforms:input>
+							
+						</xforms:group>
+
+						<xforms:group ref="principalInvestigator-org" repeatable="yes">
+							<xforms:bind nodeset="org" />
+							
+							
+								<xforms:input>
+									<xforms:label class="fixed-width">Host organisation or institution?</xforms:label>
+									<xforms:hint>Enter the name of the person's host organisation or institution.</xforms:hint>
+								</xforms:input>
+							
+						</xforms:group>
+
+						<xforms:hint>
+							<p>
+								<em>You can add another principal investigator by clicking the
+									"+" button below.
+								</em>
+							</p>
+						</xforms:hint>
+
+					
+
+				</xforms:group>
+
+
+				<h4 id="pathogens">Pathogen Species</h4>
+
+				<xforms:group ref="pathogenSpecies">
+					<xforms:bind nodeset="pathogenSpecies" />
+					
+					
+						<select appearance="full">
+							<xforms:label class="fixed-width">What pathogen species were studied?</xforms:label>
+							<xforms:item>
+								<xforms:label class="fixed-width">P. falciparum</xforms:label>
+								<xforms:value>plasmodiumfalciparum</xforms:value>
+							</xforms:item>
+							<xforms:item>
+								<xforms:label class="fixed-width">P. vivax</xforms:label>
+								<xforms:value>plasmodiumvivax</xforms:value>
+							</xforms:item>
+							<xforms:item>
+								<xforms:label class="fixed-width">P. ovale</xforms:label>
+								<xforms:value>plasmodiumovale</xforms:value>
+							</xforms:item>
+							<xforms:item>
+								<xforms:label class="fixed-width">P. malariae</xforms:label>
+								<xforms:value>plasmodiummalariae</xforms:value>
+							</xforms:item>
+							<xforms:item>
+								<xforms:label class="fixed-width">P. knowlesi</xforms:label>
+								<xforms:value>plasmodiumknowlesi</xforms:value>
+							</xforms:item>
+						</select>
+					
+				</xforms:group>
+
+				<h4 id="sites">Study Site(s)</h4>
+
+				<xforms:group ref="site" repeatable="yes">
+
+					<xforms:bind nodeset="site" />
+					
+
+					
+
+						<xforms:hint>
+							<p>Describe the site (location) where study subjects were
+								recruited from...
+							</p>
+						</xforms:hint>
+
+						<xforms:group ref="site-country">
+							<xforms:bind nodeset="country" />
+							
+							
+								<xforms:select1 appearance="minimal">
+									<xforms:label class="fixed-width">Country?</xforms:label>
+									<items
+										src="/chassis-ui/submitter/countries.en.xml" />
+								</xforms:select1>
+							
+						</xforms:group>
+
+						<xforms:group ref="site-region">
+							<xforms:bind nodeset="region" />
+							
+							
+								<xforms:input>
+									<xforms:label class="fixed-width">Region?</xforms:label>
+								</xforms:input>
+							
+						</xforms:group>
+
+						<xforms:group ref="site-district">
+							<xforms:bind nodeset="district" />
+							
+							
+								<xforms:input>
+									<xforms:label class="fixed-width">District?</xforms:label>
+								</xforms:input>
+							
+						</xforms:group>
+
+						<xforms:group ref="site-locality">
+							<xforms:bind nodeset="locality" />
+							
+							
+								<xforms:input>
+									<xforms:label class="fixed-width">Locality?</xforms:label>
+								</xforms:input>
+							
+						</xforms:group>
+
+						<xforms:hint>
+							<p style="display: block;">
+								<em>If the study involves more than one site, what identifier
+									(i.e., code) is used for this site in the submitted study data?
+								</em>
+							</p>
+						</xforms:hint>
+
+						<xforms:group ref="siteId">
+							<xforms:bind nodeset="identifier" />
+							
+							
+								<xforms:input>
+									<xforms:label class="fixed-width">Study site code?</xforms:label>
+								</xforms:input>
+							
+						</xforms:group>
+
+						<xforms:hint>
+							<p>
+								<em>You can add another site by clicking the "+" button below.</em>
+							</p>
+						</xforms:hint>
+
+					
+
+				</xforms:group>
+
+
+				<h4 id="pubs">Publications</h4>
+
+				<xforms:group ref="publication" repeatable="yes">
+
+					<xforms:bind nodeset="publication" />
+					
+
+					
+						<xforms:hint>
+							<p>Is this study described in any published research papers?</p>
+						</xforms:hint>
+
+						<xforms:group ref="publication-title">
+							<xforms:bind nodeset="title" />
+							
+							
+								<xforms:input>
+									<xforms:label class="fixed-width">Title?</xforms:label>
+								</xforms:input>
+							
+						</xforms:group>
+
+						<xforms:group ref="publication-year">
+							<xforms:bind nodeset="year" />
+							
+							
+								<xforms:input>
+									<xforms:label class="fixed-width">Year?</xforms:label>
+								</xforms:input>
+							
+						</xforms:group>
+
+						<xforms:group ref="publication-journal">
+							<xforms:bind nodeset="journal" />
+							
+							
+								<xforms:input>
+									<xforms:label class="fixed-width">Journal?</xforms:label>
+								</xforms:input>
+							
+						</xforms:group>
+
+						<xforms:group ref="publication-link" repeatable="yes">
+							<xforms:bind nodeset="uri" />
+							
+							
+								<xforms:input>
+									<xforms:label class="fixed-width">Web link?</xforms:label>
+								</xforms:input>
+							
+						</xforms:group>
+
+						<xforms:group ref="publication-doi">
+							<xforms:bind nodeset="doi" />
+							
+							
+								<xforms:input>
+									<xforms:label class="fixed-width">DOI?</xforms:label>
+								</xforms:input>
+							
+						</xforms:group>
+
+						<xforms:hint>
+							<p>
+								<em>You can add another publication by clicking the "+" button
+									below.
+								</em>
+							</p>
+						</xforms:hint>
+
+					
+
+				</xforms:group>
+
+			
+
+		</xforms:group>
+
+
+		<!--
+				+ | | BEGIN CLINICAL QUESTIONNAIRE | +
+			-->
+
+		<questionnaire defaultPrefix="wwarn"
+			defaultNamespaceUri="http://www.cggh.org/2009/chassis/wwarn/xmlns"
+			id="clinical" >
+
+			<xforms:bind nodeset="clinical" relevant="contains(../general/module, 'clinical')" />
+			
+
+			<view class="xquestionnaire-transparent">
+
+				<h3 id="clinical">WWARN Clinical Module Questions</h3>
+
+ 				<h4 id="publication">Publication</h4>
+ 				
+ 				<xforms:group ref="publication">
+ 					<xforms:bind nodeset="publication"/>
+ 					
+ 					
+ 						<xforms:group ref="publication-registrationUrl">
+ 							<xforms:bind nodeset="registrationUrl"/>
+ 							
+ 							
+ 								<xforms:input>
+ 									<xforms:label class="fixed-width">Registration URL with clinicaltrials.gov?</xforms:label>
+ 								</xforms:input>
+ 							
+ 						</xforms:group>
+ 						<xforms:group ref="publication-embargoDate">
+ 							<xforms:bind nodeset="embargoDate" type="date"/>
+ 							
+ 							
+ 								<xforms:input>
+ 									<xforms:label class="fixed-width">When can data be put on web? </xforms:label>
+ 								</xforms:input>
+	 							<label class="inline">(embargo date)</xforms:label>
+ 							
+ 						</xforms:group>
+ 					
+ 					
+ 				</xforms:group>			
+<!-- 
+
+							<a href="#inclusionExclusionCriteria">Inclusion/Exclusion Criteria</a>
+ -->
+ 				<h4 id="treatments">Treatments</h4>
+ 				
+ 				<xforms:group ref="treatments">
+ 					<xforms:bind nodeset="treatments"/>
+ 					
+ 					
+ 						<h5>Treatment regimens</h5>
+ 						<xforms:group ref="treatments-regimen" repeatable="yes">
+ 							<xforms:bind nodeset="regimen"/>
+ 							
+ 							
+ 								<xforms:group ref="treatments-regimen-name">
+ 									<xforms:bind nodeset="regimenName"/>
+ 									
+ 									
+ 										<xforms:input>
+ 											<xforms:label class="fixed-width">Regimen name?</xforms:label>
+ 										</xforms:input>
+ 									
+ 								</xforms:group>
+ 								<xforms:group ref="treatments-regimen-supervised">
+ 									<xforms:bind nodeset="regimenSupervised"/>
+ 									
+ 									
+ 										<xforms:select1 appearance="minimal">
+ 											<xforms:label class="fixed-width">Supervision?</xforms:label>
+ 											<xforms:item>
+ 												<xforms:label class="fixed-width">(please select one)</xforms:label>
+ 												<xforms:value></xforms:value>
+ 											</xforms:item>
+ 											<xforms:item>
+ 												<xforms:label class="fixed-width">full</xforms:label>
+ 												<xforms:value>full</xforms:value>
+ 											</xforms:item>
+ 											<xforms:item>
+ 												<xforms:label class="fixed-width">partial</xforms:label>
+ 												<xforms:value>partial</xforms:value>
+ 											</xforms:item>
+ 											<xforms:item>
+ 												<xforms:label class="fixed-width">none</xforms:label>
+ 												<xforms:value>none</xforms:value>
+ 											</xforms:item>
+ 										</xforms:select1>
+ 									
+ 								</xforms:group>
+ 								<xforms:group ref="treatments-regimen-url">
+ 									<xforms:bind nodeset="regimenUrl"/>
+ 									
+ 									
+ 										<xforms:input>
+ 											<xforms:label class="fixed-width">Regimen description url?</xforms:label>
+ 										</xforms:input>
+ 									
+ 								</xforms:group>
+								<xforms:hint>
+									<p>
+										<em>Use the "+" button below to add another regimen.</em>
+									</p>
+								</xforms:hint>
+ 							
+ 						</xforms:group>
+ 						<xforms:group ref="treatments-regimenAllocation">
+ 							<xforms:bind nodeset="regimenAllocation"/>
+ 							
+ 							
+ 								<xforms:select1 appearance="minimal">
+ 									<xforms:label class="fixed-width">Regimen allocation?</xforms:label>
+ 									<xforms:item>
+ 										<xforms:label class="fixed-width">(please select if more than one regimen)</xforms:label>
+ 										<xforms:value></xforms:value>
+ 									</xforms:item>
+ 									<xforms:item>
+ 										<xforms:label class="fixed-width">randomised (proportion)</xforms:label>
+ 										<xforms:value>randomised</xforms:value>
+ 									</xforms:item>
+ 									<xforms:item>
+ 										<xforms:label class="fixed-width">semi-randomised</xforms:label>
+ 										<xforms:value>semirandomised</xforms:value>
+ 									</xforms:item>
+ 								</xforms:select1>
+ 							
+ 						</xforms:group>
+ 						<xforms:group ref="treatments-blinding">
+ 							<xforms:bind nodeset="blinding"/>
+ 							
+ 							
+ 								<xforms:select1 appearance="minimal">
+ 									<xforms:label class="fixed-width">Blinding?</xforms:label>
+ 									<xforms:alert>please select a value</xforms:alert>
+ 									<xforms:item>
+ 										<xforms:label class="fixed-width">open label</xforms:label>
+ 										<xforms:value>openlabel</xforms:value>
+ 									</xforms:item>
+ 									<xforms:item>
+ 										<xforms:label class="fixed-width">single</xforms:label>
+ 										<xforms:value>single</xforms:value>
+ 									</xforms:item>
+ 									<xforms:item>
+ 										<xforms:label class="fixed-width">double</xforms:label>
+ 										<xforms:value>double</xforms:value>
+ 									</xforms:item>
+ 								</xforms:select1>
+ 							
+ 						</xforms:group>
+ 					
+ 				</xforms:group>			
+				<h4 id="followup">Followup</h4>
+ 				<xforms:group ref="followup">
+ 					<xforms:bind nodeset="followup"/>
+ 					
+ 					
+ 						<xforms:group ref="followup-duration">
+ 							<xforms:bind nodeset="followupDuration"/>
+ 							
+ 							
+ 								<xforms:input>
+ 									<xforms:label class="fixed-width">Maximum duration of follow up?</xforms:label>
+ 								</xforms:input>
+ 							
+ 						</xforms:group>
+ 						<xforms:group ref="followup-feverMeasurement">
+ 							<xforms:bind nodeset="feverMeasurement"/>
+ 							
+ 							
+ 								<xforms:select1 appearance="minimal">
+ 									<xforms:label class="fixed-width">Fever measurement?</xforms:label>
+ 									<xforms:alert>please select a value</xforms:alert>
+ 									<xforms:item>
+ 										<xforms:label class="fixed-width">axial</xforms:label>
+ 										<xforms:value>axial</xforms:value>
+ 									</xforms:item>
+ 									<xforms:item>
+ 										<xforms:label class="fixed-width">oral</xforms:label>
+ 										<xforms:value>oral</xforms:value>
+ 									</xforms:item>
+ 									<xforms:item>
+ 										<xforms:label class="fixed-width">rectal</xforms:label>
+ 										<xforms:value>rectal</xforms:value>
+ 									</xforms:item>
+ 									<xforms:item>
+ 										<xforms:label class="fixed-width">tympanic</xforms:label>
+ 										<xforms:value>tympanic</xforms:value>
+ 									</xforms:item>
+ 								</xforms:select1>
+ 							
+ 						</xforms:group>
+ 						<xforms:group ref="followup-haemoglobinRecording">
+ 							<xforms:bind nodeset="haemoglobinRecording"/>
+ 							
+ 							
+	 							<xforms:group ref="followup-haemoglobinRecordingType">
+		 						 	 <xforms:bind nodeset="haemoglobinRecordingType"/>
+ 									  
+ 									  
+ 									  	<xforms:select1 appearance="minimal">
+ 											<xforms:label class="fixed-width">Haemoglobin recording</xforms:label>
+ 											<xforms:alert>please select a value</xforms:alert>
+ 											<xforms:item>
+ 												<xforms:label class="fixed-width">hb</xforms:label>
+ 												<xforms:value>hb</xforms:value>
+ 											</xforms:item>
+ 											<xforms:item>
+ 												<xforms:label class="fixed-width">hct</xforms:label>
+ 												<xforms:value>hct</xforms:value>
+ 											</xforms:item>
+ 									  	</xforms:select1>
+	 								  
+ 									</xforms:group>
+									<xforms:group ref="followup-haemoglobinRecordingHbType">
+		 						 	 <xforms:bind nodeset="haemoglobinRecordingHbType" relevant="contains(../haemoglobinRecordingType,'hb"/>
+ 									  
+ 									  
+ 									  	<xforms:select1 appearance="minimal">
+ 											<xforms:label class="fixed-width">hb recording type? </xforms:label>
+ 											<xforms:alert>please select a value</xforms:alert>
+ 											<xforms:item>
+ 												<xforms:label class="fixed-width">qbc</xforms:label>
+ 												<xforms:value>qbc</xforms:value>
+ 											</xforms:item>
+ 											<xforms:item>
+ 												<xforms:label class="fixed-width">haemaccue</xforms:label>
+ 												<xforms:value>haemaccue</xforms:value>
+ 											</xforms:item>
+ 											<!--  TODO check is other input box required -->
+ 											<xforms:item>
+ 												<xforms:label class="fixed-width">other</xforms:label>
+ 												<xforms:value>other</xforms:value>
+ 											</xforms:item>
+ 									  	</xforms:select1>
+	 								  
+ 								</xforms:group>
+ 							
+ 						</xforms:group>
+ 					
+ 				</xforms:group>			
+				<h4 id="microscopy">Microscopy</h4>
+ 				<xforms:group ref="microscopy">
+ 					<xforms:bind nodeset="microscopy"/>
+ 					
+ 					
+ 						<xforms:group ref="microscopy-film">
+ 							<xforms:bind nodeset="film"/>
+ 							
+ 							
+ 								<xforms:select1 appearance="minimal">
+									<xforms:label class="fixed-width">Film?</xforms:label>
+									<xforms:alert>please select a value</xforms:alert>
+									<xforms:item>
+										<xforms:label class="fixed-width">thick</xforms:label>
+										<xforms:value>thick</xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label class="fixed-width">thin</xforms:label>
+										<xforms:value>thin</xforms:value>
+									</xforms:item>
+ 								</xforms:select1>
+ 							
+ 						</xforms:group>
+ 						<!--  TODO More input needed -->
+	 					<p>Further clarification required</p>
+ 					
+ 				</xforms:group>	
+				<!--  TODO More input needed -->
+				<h4 id="recrudescenceAndReinfection">Recrudescence and Reinfection</h4>
+ 				<xforms:group ref="recrudescenceAndReinfection">
+ 					<xforms:bind nodeset="recrudescenceAndReinfection"/>
+ 					
+ 					
+  					<p>Further clarification required</p>
+					
+ 				</xforms:group>			
+
+			
+
+		</xforms:group>
+
+
+		<!-- BEGIN PHARMACOLOGY QUESTIONNAIRE -->
+
+		<questionnaire defaultPrefix="wwarn"
+			defaultNamespaceUri="http://www.cggh.org/2009/chassis/wwarn/xmlns"
+			id="pharmacology">
+
+			<xforms:bind nodeset="pharmacology" relevant="contains(../general/module, 'pharmacology')" />
+			
+
+			<view class="xquestionnaire-transparent">
+
+				<h3 id="pharmacology">WWARN Pharmacology Module Questions</h3>
+
+
+				<!--
+					+ | | BEGIN PHARMACOLOGY SAMPLE NESTED QUESTIONNAIRE | +
+				-->
+
+				<h4 id="pharmacology-sample">Sample</h4>
+
+				<xforms:group ref="pharmacology-sample"
+					repeatable="no">
+
+					<xforms:bind nodeset="sample" />
+					
+
+					
+
+						<xforms:group ref="pharmacology-sample-matrix">
+							<xforms:bind nodeset="matrix" />
+							
+							
+								<xforms:select1 appearance="minimal">
+									<xforms:label class="fixed-width">Sample matrix?</xforms:label>
+									<xforms:item>
+										<xforms:label class="fixed-width">(please select one)</xforms:label>
+										<xforms:value></xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label class="fixed-width">whole blood capillary blood</xforms:label>
+										<xforms:value>wholebloodcapillaryblood</xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label class="fixed-width">blood spots</xforms:label>
+										<xforms:value>bloodspots</xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label class="fixed-width">serum</xforms:label>
+										<xforms:value>serum</xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label class="fixed-width">plasma</xforms:label>
+										<xforms:value>plasma</xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label class="fixed-width">free fraction plasma</xforms:label>
+										<xforms:value>freefractionplasma</xforms:value>
+									</xforms:item>
+								</xforms:select1>
+							
+						</xforms:group>
+
+						<xforms:group ref="pharmacology-sample-volume">
+							<xforms:bind nodeset="volume" />
+							
+							
+								<xforms:input>
+									<xforms:label class="fixed-width">Sample volume?</xforms:label>
+								</xforms:input>
+							
+						</xforms:group>
+
+						<xforms:group ref="pharmacology-sample-storageTemperature">
+							<xforms:bind nodeset="storageTemperature" />
+							
+							
+								<!-- TODO Review why inlinehtml not label? -->
+								<label class="inline"></xforms:label>
+								<xforms:input>
+									<xforms:label class="fixed-width">Sample storage temperature (&#176;C)?</xforms:label>
+								</xforms:input>
+							
+						</xforms:group>
+
+						<xforms:group ref="pharmacology-sample-storageDuration">
+							<xforms:bind nodeset="storageDuration"/>
+							
+							
+								<xforms:input>
+									<xforms:label class="fixed-width">Sample storage duration (weeks)?</xforms:label>
+								</xforms:input>
+							
+						</xforms:group>
+
+						<xforms:group ref="pharmacology-sample-storageHandling">
+							<xforms:bind nodeset="storageHandling"/>
+							
+							
+								<textarea>
+									<xforms:label class="fixed-width">Storage handling (description)?</xforms:label>
+								</textarea>
+							
+						</xforms:group>
+
+						<xforms:group ref="pharmacology-sample-preparation">
+							<xforms:bind nodeset="preparation"/>
+							
+							
+								<textarea>
+									<xforms:label class="fixed-width">Sample preparation reference (description)?</xforms:label>
+								</textarea>
+							
+						</xforms:group>
+
+						<xforms:group ref="pharmacology-sample-samplingTimes">
+							<xforms:bind nodeset="samplingTimes"/>
+							
+							
+								<xforms:input>
+									<xforms:label class="fixed-width">Sampling times?</xforms:label>
+								</xforms:input>
+							
+						</xforms:group>
+					
+
+				</xforms:group>
+
+				<!--
+						+ | | END PHARMACOLOGY SAMPLE NESTED QUESTIONNAIRE | +
+					-->
+
+
+				<!--
+						+ | | BEGIN PHARMACOLOGY ANALYTES NESTED QUESTIONNAIRE | +
+					-->
+
+				<h4 id="pharmacology-analytes">Analytes</h4>
+
+				<xforms:group ref="pharmacology-analytes">
+
+					<xforms:bind nodeset="analytes"/>
+					
+
+					
+
+						<xforms:group ref="pharmacology-analytes-totalDrug">
+							<xforms:bind nodeset="totalDrug"/>
+							
+							
+								<xforms:input>
+									<xforms:label class="fixed-width">Total drug?</xforms:label>
+								</xforms:input>
+							
+						</xforms:group>
+
+						<xforms:group ref="pharmacology-analytes-freeDrug">
+							<xforms:bind nodeset="freeDrug"/>
+							
+							
+								<xforms:input>
+									<xforms:label class="fixed-width">Free drug?</xforms:label>
+								</xforms:input>
+							
+						</xforms:group>
+
+						<xforms:group ref="pharmacology-analytes-metabolite1">
+							<xforms:bind nodeset="metabolite1"/>
+							
+							
+								<xforms:input>
+									<xforms:label class="fixed-width">Metabolite 1 (spec)?</xforms:label>
+								</xforms:input>
+							
+						</xforms:group>
+
+						<xforms:group ref="pharmacology-analytes-metabolite2">
+							<xforms:bind nodeset="metabolite2"/>
+							
+							
+								<xforms:input>
+									<xforms:label class="fixed-width">Metabolite 2 (spec)?</xforms:label>
+								</xforms:input>
+							
+						</xforms:group>
+
+					
+
+				</xforms:group>
+
+
+				<!--
+						+ | | END PHARMACOLOGY ANALYTES NESTED QUESTIONNAIRE | +
+					-->
+
+
+				<h4 id="pharmacology-analysisModel">PK Data Analysis Model</h4>
+
+				<xforms:group ref="pharmacology-analysisModel">
+					<xforms:bind nodeset="analysisModel"/>
+					
+					
+						<xforms:select1 appearance="minimal">
+							<xforms:label class="fixed-width">Type?</xforms:label>
+							<xforms:item>
+								<xforms:label class="fixed-width">(please select one)</xforms:label>
+								<xforms:value></xforms:value>
+							</xforms:item>
+							<xforms:item>
+								<xforms:label class="fixed-width">compartmental model</xforms:label>
+								<xforms:value>compartmentalmodel</xforms:value>
+							</xforms:item>
+							<xforms:item>
+								<xforms:label class="fixed-width">non-compartmental model</xforms:label>
+								<xforms:value>noncompartmentalmodel</xforms:value>
+							</xforms:item>
+							<xforms:item>
+								<xforms:label class="fixed-width">population model</xforms:label>
+								<xforms:value>populationmodel</xforms:value>
+							</xforms:item>
+						</xforms:select1>
+					
+				</xforms:group>
+
+
+				<xforms:group ref="pharmacology-inclusionExclusionCriteria">
+				<h4 id="pharmacology-inclusionExclusionCriteria">Inclusion/Exclusion Criteria</h4>
+
+					<xforms:bind nodeset="inclusionExclusionCriteria"/>
+					
+
+					
+
+						<xforms:group ref="pharmacology-inclusionExclusionCriteria-minAge">
+							<xforms:bind nodeset="minAge"/>
+							
+							
+								<xforms:input>
+									<xforms:label class="fixed-width">Minimum age?</xforms:label>
+								</xforms:input>
+							
+						</xforms:group>
+
+						<xforms:group ref="pharmacology-inclusionExclusionCriteria-maxAge">
+							<xforms:bind nodeset="maxAge"/>
+							
+							
+								<xforms:input>
+									<xforms:label class="fixed-width">Maximum age?</xforms:label>
+								</xforms:input>
+							
+						</xforms:group>
+
+						<question
+								id="pharmacology-inclusionExclusionCriteria-minParasitaemia">
+							<xforms:bind nodeset="minParasitaemia"/>
+							
+							
+								<xforms:input>
+									<xforms:label class="fixed-width">Minimum parasitaemia?</xforms:label>
+								</xforms:input>
+							
+						</xforms:group>
+
+						<question
+								id="pharmacology-inclusionExclusionCriteria-maxParasitaemia">
+							<xforms:bind nodeset="maxParasitaemia"/>
+							
+							
+								<xforms:input>
+									<xforms:label class="fixed-width">Maximum parasitaemia?</xforms:label>
+								</xforms:input>
+							
+						</xforms:group>
+
+						<question
+								id="pharmacology-inclusionExclusionCriteria-excludeIfPriorAntimalarials">
+							<xforms:bind nodeset="excludeIfPriorAntimalarials"/>
+							
+							
+								<xforms:select1 appearance="minimal">
+									<xforms:label class="fixed-width">Exclude if prior anti-malarials?</xforms:label>
+									<xforms:item>
+										<xforms:label class="fixed-width">(please select yes or no)</xforms:label>
+										<xforms:value></xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label class="fixed-width">yes</xforms:label>
+										<xforms:value>yes</xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label class="fixed-width">no</xforms:label>
+										<xforms:value>no</xforms:value>
+									</xforms:item>
+								</xforms:select1>
+							
+						</xforms:group>
+
+						<question
+								id="pharmacology-inclusionExclusionCriteria-excludeIfPriorAntimalarialsTime">
+							<xforms:bind nodeset="excludeIfPriorAntimalarialsTime" relevant="contains(excludeIfPriorAntimalarials,'yes"/>
+							
+							
+							<!--  TODO NB in Clinical a further option is to exclude on basis of test for anti-malarial drug -->
+								<xforms:input>
+									<xforms:label class="fixed-width">Over what time (weeks)?</xforms:label>
+								</xforms:input>
+							
+						</xforms:group>
+
+					
+
+				</xforms:group>
+
+
+				<!--
+						+ | | BEGIN PHARMACOLOGY DRUG NESTED QUESTIONNAIRE | +
+					-->
+
+				<h4 id="pharmacology-drugs">Drugs</h4>
+
+				<xforms:hint>
+					<p>Please complete the section below for each drug...</p>
+				</xforms:hint>
+
+				<xforms:group ref="pharmacology-drug"
+								 repeatable="yes">
+
+					<xforms:bind nodeset="drug"/>
+					
+
+					
+
+						<xforms:group ref="pharmacology-drug-name">
+							<xforms:bind nodeset="name"/>
+							
+							
+								<xforms:input>
+									<xforms:label class="fixed-width">Drug name?</xforms:label>
+								</xforms:input>
+							
+						</xforms:group>
+
+						<xforms:group ref="pharmacology-drug-manufacturer">
+							<xforms:bind nodeset="manufacturer"/>
+							
+							
+								<xforms:input>
+									<xforms:label class="fixed-width">Manufacturer?</xforms:label>
+								</xforms:input>
+							
+						</xforms:group>
+
+						<xforms:group ref="pharmacology-drug-numberOfDoses">
+							<xforms:bind nodeset="numberOfDoses"/>
+							
+							
+								<xforms:input>
+									<xforms:label class="fixed-width">Number of doses?</xforms:label>
+								</xforms:input>
+							
+						</xforms:group>
+
+						<xforms:group ref="pharmacology-drug-daysOfTreatment">
+							<xforms:bind nodeset="daysOfTreatment"/>
+							
+							
+								<xforms:input>
+									<xforms:label class="fixed-width">Days of treatment?</xforms:label>
+								</xforms:input>
+							
+						</xforms:group>
+
+						<xforms:group ref="pharmacology-drug-dosingByAgeOrWeight">
+							<xforms:bind nodeset="dosingByAgeOrWeight"/>
+							
+							
+								<xforms:select1 appearance="minimal">
+									<xforms:label class="fixed-width">Dosing by age or weight?</xforms:label>
+									<xforms:item>
+										<xforms:label class="fixed-width">(please select age or weight)</xforms:label>
+										<xforms:value></xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label class="fixed-width">age</xforms:label>
+										<xforms:value>age</xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label class="fixed-width">weight</xforms:label>
+										<xforms:value>weight</xforms:value>
+									</xforms:item>
+								</xforms:select1>
+							
+						</xforms:group>
+
+						<xforms:group ref="pharmacology-drug-batchNumber">
+							<xforms:bind nodeset="batchNumber"/>
+							
+							
+								<xforms:input>
+									<xforms:label class="fixed-width">Batch number?</xforms:label>
+								</xforms:input>
+							
+						</xforms:group>
+
+						<xforms:group ref="pharmacology-drug-expirationDate">
+							<xforms:bind nodeset="expirationDate" type="date"/>
+							
+							
+								<xforms:input>
+									<xforms:label class="fixed-width">Expiration date?</xforms:label>
+								</xforms:input>
+							
+						</xforms:group>
+
+						<h5>Drug Assay Capacity</h5>
+
+						<xforms:group ref="pharmacology-drug-assayCapacity"
+										 repeatable="no">
+
+							<xforms:bind nodeset="assayCapacity"/>
+							
+
+							
+
+								<question
+										id="pharmacology-drug-assayCapacity-assayMethodReference">
+									<xforms:bind nodeset="assayMethodReference"/>
+									
+									
+										<xforms:input>
+											<xforms:label class="fixed-width">Assay method reference?</xforms:label>
+										</xforms:input>
+									
+								</xforms:group>
+
+								<question
+										id="pharmacology-assayCapacity-assayMethodDescription">
+									<xforms:bind nodeset="assayMethodDescription"/>
+									
+									
+										<textarea>
+											<xforms:label class="fixed-width">Assay method description?</xforms:label>
+										</textarea>
+									
+								</xforms:group>
+
+								<xforms:group ref="pharmacology-assayCapacity-assayValidation">
+									<xforms:bind nodeset="assayValidation"/>
+									
+									
+										<xforms:input>
+											<xforms:label class="fixed-width">Assay validation?</xforms:label>
+										</xforms:input>
+									
+								</xforms:group>
+
+							
+
+						</xforms:group>
+
+						<xforms:hint>
+							<p>
+								<em>Use the "+" button below to add another drug.</em>
+							</p>
+						</xforms:hint>
+
+					
+
+				</xforms:group>
+
+				<!--
+						+ | | END PHARMACOLOGY DRUG NESTED QUESTIONNAIRE | +
+					-->
+
+
+				<!--
+						+ | | BEGIN TREATMENT REGIMENS NESTED QUESTIONNAIRE | +
+					-->
+
+				<h4 id="pharmacology-treatmentRegimens">Treatment Regimens</h4>
+
+				<xforms:hint>
+					<p>Please complete the section below for each treatment regimen...</p>
+				</xforms:hint>
+				<xforms:group ref="pharmacology-treatmentRegimens">
+					<xforms:bind nodeset="treatmentRegimens"/>
+					
+					<view class="xquestionnaire-transparent">
+						<xforms:group ref="pharmacology-treatmentRegimen"
+										 repeatable="yes">
+							<xforms:bind nodeset="regimen"/>
+							
+							
+								<xforms:group ref="pharmacology-treatmentRegimens-name">
+									<xforms:bind nodeset="name"/>
+									
+									
+										<xforms:input>
+											<xforms:label class="fixed-width">Name?</xforms:label>
+										</xforms:input>
+									
+								</xforms:group>
+								<xforms:group ref="pharmacology-treatmentRegimens-supervised">
+									<xforms:bind nodeset="supervised"/>
+									
+									
+										<xforms:select1 appearance="minimal">
+											<xforms:label class="fixed-width">Supervised?</xforms:label>
+											<xforms:alert>please select a value</xforms:alert>
+											<xforms:item>
+												<xforms:label class="fixed-width">full</xforms:label>
+												<xforms:value>full</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">partial</xforms:label>
+												<xforms:value>partial</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">none</xforms:label>
+												<xforms:value>none</xforms:value>
+											</xforms:item>
+										</xforms:select1>
+									
+								</xforms:group>
+								<xforms:group ref="pharmacology-treatmentRegimens-allocation">
+									<xforms:bind nodeset="allocation"/>
+									
+									
+										<xforms:select1 appearance="minimal">
+											<xforms:label class="fixed-width">Allocation?</xforms:label>
+											<!--  TODO implement countgt comparator -->
+											<xforms:item>
+												<xforms:label class="fixed-width">(please select if more than 1 treatment regimen)</xforms:label>
+												<xforms:value></xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">randomised</xforms:label>
+												<xforms:value>full</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">quasi randomised</xforms:label>
+												<xforms:value>quasirandomised</xforms:value>
+											</xforms:item>
+										</xforms:select1>
+									
+								</xforms:group>
+								<xforms:group ref="pharmacology-treatmentRegimens-blinding">
+									<xforms:bind nodeset="blinding"/>
+									
+									
+										<xforms:select1 appearance="minimal">
+											<xforms:label class="fixed-width">Blinding?</xforms:label>
+											<xforms:alert>please select a value</xforms:alert>
+											<xforms:item>
+												<xforms:label class="fixed-width">open label</xforms:label>
+												<xforms:value>openlabel</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">single</xforms:label>
+												<xforms:value>single</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">double</xforms:label>
+												<xforms:value>double</xforms:value>
+											</xforms:item>
+										</xforms:select1>
+									
+								</xforms:group>
+
+							
+						</xforms:group>
+						<xforms:hint>
+							<p>
+								<em>Use the "+" button below to add another treatment regimen.</em>
+							</p>
+						</xforms:hint>
+					
+				</xforms:group>
+
+
+			
+
+		</xforms:group>
+
+		<!--
+				+ | | END PHARMACOLOGY QUESTIONNAIRE | +
+			-->
+
+
+		<!--
+				+ | | BEGIN IN VITRO QUESTIONNAIRE | +
+			-->
+
+
+		<questionnaire defaultPrefix="wwarn"
+						 defaultNamespaceUri="http://www.cggh.org/2009/chassis/wwarn/xmlns"
+						 id="invitro">
+
+			<xforms:bind nodeset="invitro" relevant="contains(../general/module, 'invitro')" />
+			
+
+			<view class="xquestionnaire-transparent">
+
+				<h3 id="invitro">
+					<em>in vitro</em>
+					Module Questions
+				</h3>
+
+				<h4 id="invitro-studyCharacteristics">Study Characteristics</h4>
+
+				<xforms:group ref="invitro-inclusionCriteria">
+					<xforms:bind nodeset="inclusionCriteria"/>
+					
+					
+						<label class="inline">
+							What were the inclusion criteria for your
+							<em>in vitro</em>
+							study?
+						</xforms:label>
+						<textarea/>
+					
+				</xforms:group>
+
+				<!--
+						+ | | BEGIN IN VITRO SITES NESTED QUESTIONNAIRE | +
+					-->
+
+				<h4 id="invitro-sites">Sites</h4>
+
+				<xforms:hint>
+					<em>For each of your sites, please complete the section below. If
+						the details are the same for each sub-site, leave blank after the
+						first sub-site.
+					</em>
+				</xforms:hint>
+
+				<xforms:group ref="invitro-site" repeatable="yes">
+
+					<xforms:bind nodeset="site"/>
+					
+
+					
+
+						<xforms:group ref="invitro-site-code">
+							<xforms:bind nodeset="code"/>
+							
+							
+								<xforms:input>
+									<xforms:label class="fixed-width">Study site code?</xforms:label>
+								</xforms:input>
+								<xforms:hint>
+									<em>Enter a code for one of the sites defined in the general
+										questions above.
+									</em>
+								</xforms:hint>
+							
+						</xforms:group>
+
+						<xforms:group ref="invitro-site-delay">
+							<xforms:bind nodeset="delay"/>
+							
+							
+								<xforms:select1 appearance="minimal">
+									<xforms:label class="fixed-width">What was the delay between sampling and testing?</xforms:label>
+									<xforms:alert>please select a value</xforms:alert>
+									<xforms:item>
+										<xforms:label class="fixed-width">&lt; 12 hours</xforms:label>
+										<xforms:value>lt12h</xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label class="fixed-width">12-48 hours</xforms:label>
+										<xforms:value>12-48h</xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label class="fixed-width">48-72 hours</xforms:label>
+										<xforms:value>48-72h</xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label class="fixed-width">&gt; 72 hours</xforms:label>
+										<xforms:value>gt72h</xforms:value>
+									</xforms:item>
+								</xforms:select1>
+							
+						</xforms:group>
+
+						<xforms:group ref="invitro-site-anticoagulant">
+							<xforms:bind nodeset="anticoagulant"/>
+							
+							
+								<xforms:select1 appearance="minimal">
+									<xforms:label class="fixed-width">What anticoagulant was used?</xforms:label>
+									<xforms:alert>please select a value</xforms:alert>
+									<xforms:item>
+										<xforms:label class="fixed-width">ACD</xforms:label>
+										<xforms:value>ACD</xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label class="fixed-width">EDTA</xforms:label>
+										<xforms:value>EDTA</xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label class="fixed-width">heparin</xforms:label>
+										<xforms:value>heparin</xforms:value>
+									</xforms:item>
+								</xforms:select1>
+							
+						</xforms:group>
+
+						<xforms:group ref="invitro-site-transportAndStorageTemperature">
+							<xforms:bind nodeset="transportAndStorageTemperature"/>
+							
+							
+								<xforms:select1 appearance="minimal">
+									<xforms:label class="fixed-width">What was the transport and storage temperature?</xforms:label>
+									<xforms:alert>please select a value</xforms:alert>
+									<xforms:item>
+										<xforms:label class="fixed-width">+4&#176;C</xforms:label>
+										<xforms:value>+4C</xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label class="fixed-width">-20&#176;C</xforms:label>
+										<xforms:value>-20C</xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label class="fixed-width">ambient</xforms:label>
+										<xforms:value>ambient</xforms:value>
+									</xforms:item>
+								</xforms:select1>
+							
+						</xforms:group>
+
+						<xforms:hint>
+							<p>
+								<em>Use the "+" button below to enter information for another site.</em>
+							</p>
+						</xforms:hint>
+					
+
+				</xforms:group>
+
+
+				<xforms:bind nodeset="analysisSite"/>
+				<xforms:group ref="invitro-analysisSite">
+					
+					
+						<xforms:input>
+							<xforms:label class="fixed-width">Where did the analysis take place?</xforms:label>
+						</xforms:input>
+						<xforms:hint>
+							<em>Enter a site code, or laboratory name and address if the analysis did not take place at
+								any of the previously entered sites.
+							</em>
+						</xforms:hint>
+					
+				</xforms:group>
+
+				<!--+
+				|
+				| END IN VITRO SITES NESTED QUESTIONNAIRE
+				|
+				+-->
+
+
+				<!--+
+				|
+				| BEGIN IN VITRO CULTURE NESTED QUESTIONNAIRE
+				|
+				+-->
+
+				<h4 id="invitro-culture">Culture for Drug Susceptibility Measure</h4>
+
+				<xforms:group ref="invitro-culture">
+
+					<xforms:bind nodeset="culture"/>
+					
+
+					
+
+						<xforms:group ref="invitro-culture-incubatorSystem">
+							<xforms:bind nodeset="incubatorSystem"/>
+							
+							
+								<xforms:select1 appearance="minimal">
+									<xforms:label class="fixed-width">Incubator system?</xforms:label>
+									<xforms:alert>please select a value</xforms:alert>
+									<xforms:item>
+										<xforms:label class="fixed-width">CO2 incubator</xforms:label>
+										<xforms:value>co2incubator</xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label class="fixed-width">incubation chamber</xforms:label>
+										<xforms:value>incubationchamber</xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label class="fixed-width">candle jar</xforms:label>
+										<xforms:value>candlejar</xforms:value>
+									</xforms:item>
+								</xforms:select1>
+							
+						</xforms:group>
+
+						<xforms:bind nodeset="invitro-culture-co2" relevant="contains(../incubatorSystem,'co2incubator')" />
+						<xforms:input ref="invitro-culture-co2">
+								<label class="inline">CO<sub>2</sub>?</xforms:label>
+								<xforms:hint>
+								<p>
+									<em>Temperature should be 37&#176;C.</em>
+									<em>Don't forget to monitor the incubator system.</em>
+								</p>
+								</xforms:hint>
+						</xforms:input>
+
+						<xforms:bind nodeset="invitro-culture-healthyErythrocytesSource"/>
+						<xforms:select1 ref="invitro-culture-healthyErythrocytesSource" appearance="minimal">
+							<xforms:label class="fixed-width">Healthy erythrocytes source?</xforms:label>
+							<xforms:alert>please select a value</xforms:alert>
+							<xforms:hint>
+									<em>Healthy erythrocytes have to be deleucocyted.</em>
+							</xforms:hint>
+              <xforms:itemset model="mod-study-questionnaire" nodeset="instance('ins-healthyErythrocytesSource-items')/healthyErythrocytesSource">
+                  <label ref="label"/>
+     	            <xforms:value ref="value"/>
+         			</xforms:itemset>
+						</xforms:select1>
+
+						<xforms:bind nodeset="invitro-culture-hematocrit"/>
+						<xforms:input ref="invitro-culture-hematocrit">
+							<xforms:label class="fixed-width">Hematocrit? (%)</xforms:label>
+						</xforms:input>
+
+						<xforms:bind nodeset="invitro-culture-bloodGroup"/>
+						<xforms:select1 ref="invitro-culture-bloodGroup" appearance="minimal">
+							<xforms:label class="fixed-width">Blood group?</xforms:label>
+								<xforms:alert>please select a value</xforms:alert>
+								<xforms:itemset model="mod-study-questionnaire" nodeset="instance('ins-bloodGroup-items')/bloodGroup">
+	                    <label ref="label"/>
+        	            <xforms:value ref="value"/>
+           			</xforms:itemset>
+						</xforms:select1>
+
+				</xforms:group>
+
+
+				<!--+
+				|
+				| BEGIN IN VITRO MEDIUM NESTED QUESTIONNAIRE
+				|
+				+-->
+
+				<xforms:bind nodeset="invitro-medium"/>
+				<xforms:group ref="invitro-medium">
+				<h4 id="invitro-medium">Medium for Drug Susceptibility Measure</h4>
+					
+
+					
+
+					<xforms:bind nodeset="invitro-medium-medium"/>
+					<xforms:select1 ref="invitro-medium-medium" appearance="minimal">
+						<xforms:label class="fixed-width">Medium?</xforms:label>
+							<xforms:alert>please select a value</xforms:alert>
+              <xforms:itemset model="mod-study-questionnaire" nodeset="instance('ins-healthyErythrocytesSource-items')/healthyErythrocytesSource">
+	               <label ref="label"/>
+        	       <xforms:value ref="value"/>
+           		</xforms:itemset>
+							<xforms:hint>
+									<em>Storage temperature: 6 months at -20&#176;C and 1 week at +4&#176;C after using.</em>
+							</xforms:hint>
+						</xforms:select1>
+
+						<xforms:group ref="invitro-medium-preparation">
+							<xforms:bind nodeset="invitro-medium-preparation"/>
+							
+							
+								<xforms:select1 appearance="minimal">
+									<xforms:label class="fixed-width">Preparation?</xforms:label>
+									<xforms:alert>please select a value</xforms:alert>
+									<xforms:item>
+										<xforms:label class="fixed-width">extemporaneous</xforms:label>
+										<xforms:value>extemporaneous</xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label class="fixed-width">aliquots</xforms:label>
+										<xforms:value>aliquots</xforms:value>
+									</xforms:item>
+								</xforms:select1>
+							
+						</xforms:group>
+
+						<xforms:bind nodeset="invitro-medium-serum"/>
+						<xforms:group ref="invitro-medium-serum">
+							
+							
+								<xforms:select1 appearance="minimal">
+									<xforms:label class="fixed-width">Serum?</xforms:label>
+									<xforms:alert>please select a value</xforms:alert>
+									<xforms:item>
+										<xforms:label class="fixed-width">human serum</xforms:label>
+										<xforms:value>humanserum</xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label class="fixed-width">Albumax</xforms:label>
+										<xforms:value>Albumax</xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label class="fixed-width">patient serum</xforms:label>
+										<xforms:value>patientserum</xforms:value>
+									</xforms:item>
+								</xforms:select1>
+							
+						</xforms:group>
+
+						<xforms:bind nodeset="invitro-medium-serumFinalConcentration"/>
+						<xforms:group ref="invitro-medium-serumFinalConcentration">
+							
+							
+								<xforms:input>
+									<xforms:label class="fixed-width">Serum final concentration (g/L)?</xforms:label>
+								</xforms:input>
+							
+						</xforms:group>
+
+						<xforms:group ref="invitro-medium-NaHCO3finalConcentration">
+							<xforms:bind nodeset="finalConcentrationNaHCO3"/>
+							
+							
+								<label class="inline">Final concentration of NaHCO<sub>3</sub>?
+								</xforms:label>
+								<input/>
+							
+						</xforms:group>
+
+						<h5>Hypoxantine</h5>
+
+						<xforms:group ref="invitro-medium-hypoxantine">
+							<xforms:bind nodeset="hypoxantine"/>
+							
+							
+								<xforms:group ref="invitro-medium-hypoxantine-added">
+									<xforms:bind nodeset="hypoxantine-added"/>
+									
+									
+										<xforms:select1 appearance="minimal">
+											<xforms:label class="fixed-width">Do you add Hypoxantine?</xforms:label>
+											<xforms:item>
+												<xforms:label class="fixed-width">(please select yes or no)</xforms:label>
+												<xforms:value></xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">yes</xforms:label>
+												<xforms:value>yes</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">no</xforms:label>
+												<xforms:value>no</xforms:value>
+											</xforms:item>
+										</xforms:select1>
+									
+								</xforms:group>
+							
+						</xforms:group>
+
+						<h5>Orotic Acid</h5>
+
+						<xforms:group ref="invitro-medium-oroticAcid">
+							<xforms:bind nodeset="oroticAcid"/>
+							
+							
+								<xforms:group ref="invitro-medium-oroticAcid-added">
+									<xforms:bind nodeset="oroticAcid-added"/>
+									
+									
+										<xforms:select1 appearance="minimal">
+											<xforms:label class="fixed-width">Do you add orotic acid?</xforms:label>
+											<xforms:item>
+												<xforms:label class="fixed-width">(please select yes or no)</xforms:label>
+												<xforms:value></xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">yes</xforms:label>
+												<xforms:value>yes</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">no</xforms:label>
+												<xforms:value>no</xforms:value>
+											</xforms:item>
+										</xforms:select1>
+									
+								</xforms:group>
+								<xforms:group ref="invitro-medium-oroticAcid-finalConcentration">
+									<xforms:bind nodeset="oroticAcid-finalConcentration" relevant="contains(../oroticAcid-added,'yes"/>
+									
+									
+										<xforms:input>
+											<xforms:label class="fixed-width">Final concentration orotic acid (g/L)?</xforms:label>
+										</xforms:input>
+									
+								</xforms:group>
+							
+						</xforms:group>
+
+						<h5>Glucose</h5>
+
+						<xforms:group ref="invitro-medium-glucose">
+							<xforms:bind nodeset="glucose"/>
+							
+							
+								<xforms:group ref="invitro-medium-glucose-added">
+									<xforms:bind nodeset="glucose-added"/>
+									
+									
+										<xforms:select1 appearance="minimal">
+											<xforms:label class="fixed-width">Do you add glucose?</xforms:label>
+											<xforms:item>
+												<xforms:label class="fixed-width">(please select yes or no)</xforms:label>
+												<xforms:value></xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">yes</xforms:label>
+												<xforms:value>yes</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">no</xforms:label>
+												<xforms:value>no</xforms:value>
+											</xforms:item>
+										</xforms:select1>
+									
+								</xforms:group>
+								<xforms:group ref="invitro-medium-glucose-finalConcentration">
+									<xforms:bind nodeset="glucose-finalConcentration" relevant="contains(../glucose-added,'yes"/>
+									
+									
+										<xforms:input>
+											<xforms:label class="fixed-width">If yes, final concentration (g/L)?</xforms:label>
+										</xforms:input>
+									
+								</xforms:group>
+							
+						</xforms:group>
+
+						<h5>Antibiotics</h5>
+
+						<xforms:hint>
+							<p>
+								<em>If you use antibiotics, please fill in the section below for each antibiotic you
+									use.
+								</em>
+							</p>
+						</xforms:hint>
+
+						<xforms:group ref="invitro-medium-antiBiotic" repeatable="yes">
+							<xforms:bind nodeset="antiBiotic"/>
+							
+							
+								<xforms:group ref="invitro-medium-antiBiotic-name">
+									<xforms:bind nodeset="antiBiotic-name"/>
+									
+									
+										<xforms:input>
+											<xforms:label class="fixed-width">Name of antibiotic?</xforms:label>
+										</xforms:input>
+									
+								</xforms:group>
+								<xforms:group ref="invitro-medium-antiBiotic-finalConcentration">
+									<xforms:bind nodeset="antiBiotic-finalConcentration"/>
+									
+									
+										<xforms:input>
+											<xforms:label class="fixed-width">Final concentration (g/L)?</xforms:label>
+										</xforms:input>
+									
+								</xforms:group>
+								<xforms:hint>
+									<p>
+										<em>Use the "+" button below to add another antibiotic.</em>
+									</p>
+								</xforms:hint>
+							
+						</xforms:group>
+
+					
+
+				</xforms:group>
+
+
+		<!--+
+		|
+		| BEGIN IN VITRO SUSCEPTIBILITY NESTED QUESTIONNAIRE
+		|
+		+-->
+
+				<h4 id="invitro-susceptibility">Determination of Drug Susceptibility</h4>
+
+				<xforms:group ref="invitro-susceptibility">
+
+					<xforms:bind nodeset="susceptibility"/>
+					
+
+					
+
+						<xforms:group ref="invitro-susceptibility-timeOfIncubation">
+							<xforms:bind nodeset="timeOfIncubation"/>
+							
+							
+								<xforms:select1 appearance="minimal">
+									<xforms:label class="fixed-width">Time of incubation?</xforms:label>
+									<xforms:alert>please select a value</xforms:alert>
+									<xforms:item>
+										<xforms:label class="fixed-width">24 hours</xforms:label>
+										<xforms:value>24h</xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label class="fixed-width">42 hours</xforms:label>
+										<xforms:value>42h</xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label class="fixed-width">48 hours</xforms:label>
+										<xforms:value>48h</xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label class="fixed-width">72 hours</xforms:label>
+										<xforms:value>72h</xforms:value>
+									</xforms:item>
+								</xforms:select1>
+								<xforms:hint>
+									<em>If this is different for each sample, please include this information in your
+										raw data.
+									</em>
+								</xforms:hint>
+							
+						</xforms:group>
+
+						<xforms:group ref="invitro-susceptibility-methodUsed">
+							<xforms:bind nodeset="methodUsed"/>
+							
+							
+								<xforms:select1 appearance="minimal">
+									<xforms:label class="fixed-width">Method used?</xforms:label>
+									<xforms:alert>please select a value</xforms:alert>
+									<xforms:item>
+										<xforms:label class="fixed-width">isotopic</xforms:label>
+										<xforms:value>isotopic</xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label class="fixed-width">HRP2 ELISA</xforms:label>
+										<xforms:value>HRP2ELISA</xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label class="fixed-width">pLDH ELISA</xforms:label>
+										<xforms:value>pLDHELISA</xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label class="fixed-width">SYBRg</xforms:label>
+										<xforms:value>SYBRg</xforms:value>
+									</xforms:item>
+								</xforms:select1>
+								<xforms:hint>
+									<em>If this is different for each sample, please include this information in your
+										raw data.
+									</em>
+								</xforms:hint>
+							
+						</xforms:group>
+
+					
+
+				</xforms:group>
+
+				<!--+
+		|
+		| END IN VITRO SUSCEPTIBILITY NESTED QUESTIONNAIRE
+		|
+		+-->
+
+
+				<!--+
+				|
+				| BEGIN IN VITRO DRUG STOCK SOLUTIONS NESTED QUESTIONNAIRE
+				|
+				+-->
+
+				<h4 id="invitro-drug">Drug Stock Solutions</h4>
+
+				<xforms:hint>
+					<p>
+						<em>Please complete the section below for each drug stock solution used.</em>
+					</p>
+				</xforms:hint>
+
+				<xforms:group ref="invitro-drug" repeatable="yes">
+
+					<xforms:bind nodeset="drug"/>
+					
+
+					
+
+						<xforms:group ref="invitro-drug-molecule">
+							<xforms:bind nodeset="molecule"/>
+							
+							
+								<xforms:select1 appearance="minimal">
+									<xforms:label class="fixed-width">Molecule?</xforms:label>
+									<xforms:alert>please select a value</xforms:alert>
+									<xforms:item>
+										<xforms:label class="fixed-width">dihydro-artemisinine</xforms:label>
+										<xforms:value>dihydro-artemisinine</xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label class="fixed-width">chloroquine</xforms:label>
+										<xforms:value>chloroquine</xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label class="fixed-width">lumefantrine</xforms:label>
+										<xforms:value>lumefantrine</xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label class="fixed-width">mefloquine</xforms:label>
+										<xforms:value>mefloquine</xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label class="fixed-width">monodesethylamodiaquine</xforms:label>
+										<xforms:value>monodesethylamodiaquine</xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label class="fixed-width">pyronaridine</xforms:label>
+										<xforms:value>pyronaridine</xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label class="fixed-width">quinine</xforms:label>
+										<xforms:value>quinine</xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label class="fixed-width">piperaquine</xforms:label>
+										<xforms:value>piperaquine</xforms:value>
+									</xforms:item>
+								</xforms:select1>
+							
+						</xforms:group>
+
+						<xforms:group ref="invitro-drug-solvent">
+							<xforms:bind nodeset="solvent"/>
+							
+							
+								<xforms:select1 appearance="minimal">
+									<xforms:label class="fixed-width">Solvent of stock solution?</xforms:label>
+									<xforms:alert>please select a value</xforms:alert>
+									<xforms:item>
+										<xforms:label class="fixed-width">methanol</xforms:label>
+										<xforms:value>methanol</xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label class="fixed-width">RPMI</xforms:label>
+										<xforms:value>RPMI</xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label class="fixed-width">distilled water</xforms:label>
+										<xforms:value>distilled water</xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label class="fixed-width">DMSO</xforms:label>
+										<xforms:value>DMSO</xforms:value>
+									</xforms:item>
+								</xforms:select1>
+							
+						</xforms:group>
+
+						<xforms:group ref="invitro-drug-solventFinalConcentration">
+							<xforms:bind nodeset="solventFinalConcentration"/>
+							
+							
+								<xforms:input>
+									<xforms:label class="fixed-width">Solvent final concentration (g/L)?</xforms:label>
+								</xforms:input>
+							
+						</xforms:group>
+
+						<xforms:hint>
+							<p>
+								<em>Storage temperature and shelf lives for each solution will be determined and
+									indicated.
+								</em>
+							</p>
+						</xforms:hint>
+
+
+						<xforms:group ref="invitro-drug-providedByWwarn">
+							<xforms:bind nodeset="providedByWwarn"/>
+							
+							
+								<xforms:select1 appearance="minimal">
+								<!--  TODO Check do they mean drug here? -->
+									<xforms:label class="fixed-width">Were stock solutions provided by WWARN?</xforms:label>
+									<xforms:item>
+										<xforms:label class="fixed-width">(please select yes or no)</xforms:label>
+										<xforms:value></xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label class="fixed-width">yes</xforms:label>
+										<xforms:value>yes</xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label class="fixed-width">no</xforms:label>
+										<xforms:value>no</xforms:value>
+									</xforms:item>
+								</xforms:select1>
+							
+						</xforms:group>
+
+						<xforms:group ref="invitro-drug-provider">
+							<xforms:bind nodeset="provider" relevant="contains(../providedByWwarn,'no"/>
+							
+							
+								<xforms:input>
+									<xforms:label class="fixed-width">Who provided the drug?</xforms:label>
+								</xforms:input>
+							
+						</xforms:group>
+
+						<xforms:hint>
+							<p>
+								<em>Use the "+" button below to add another drug stock solution.</em>
+							</p>
+						</xforms:hint>
+
+					
+
+				</xforms:group>
+
+				<!--+
+				|
+				| END IN VITRO DRUG STOCK SOLUTIONS NESTED QUESTIONNAIRE
+				|
+				+-->
+
+
+				<!--+
+				|
+				| BEGIN IN VITRO PLATES NESTED QUESTIONNAIRE
+				|
+				+-->
+
+				<h4 id="invitro-plates">Batch of Plates</h4>
+
+				<xforms:group ref="invitro-plates">
+
+					<xforms:bind nodeset="plates"/>
+					
+
+					
+
+						<xforms:group ref="invitro-plates-batches">
+							<xforms:bind nodeset="plates-batches"/>
+							
+							
+								<xforms:select1 appearance="minimal">
+									<xforms:label class="fixed-width">Are your plates prepared in batches or extemporaneous?</xforms:label>
+									<xforms:alert>please select a value</xforms:alert>
+									<xforms:item>
+										<xforms:label class="fixed-width">extemporaneous</xforms:label>
+										<xforms:value>extemporaneous</xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label class="fixed-width">batches</xforms:label>
+										<xforms:value>batches</xforms:value>
+									</xforms:item>
+								</xforms:select1>
+							
+						</xforms:group>
+
+						<xforms:group ref="invitro-plates-preparationDate">
+							<xforms:bind nodeset="preparationDate" type="date" relevant="contains(../plates-batches,'extemporaneous"/>
+							
+							
+								<xforms:input>
+									<xforms:label class="fixed-width">Preparation date?</xforms:label>
+								</xforms:input>
+							
+						</xforms:group>
+
+						<xforms:group ref="invitro-plates-clone3D7ProvidedByWwarn">
+							<xforms:bind nodeset="clone3D7ProvidedByWwarn" relevant="contains(../plates-batches,'batches"/>
+							
+							
+								<xforms:select1 appearance="minimal">
+									<xforms:label class="fixed-width">3D7 provided by WWARN?</xforms:label>
+									<xforms:item>
+										<xforms:label class="fixed-width">(please select yes or no)</xforms:label>
+										<xforms:value></xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label class="fixed-width">yes</xforms:label>
+										<xforms:value>yes</xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label class="fixed-width">no</xforms:label>
+										<xforms:value>no</xforms:value>
+									</xforms:item>
+								</xforms:select1>
+							
+						</xforms:group>
+
+						<xforms:group ref="invitro-plates-cloneProvider">
+							<xforms:bind nodeset="cloneProvider" relevant="contains(../clone3D7ProvidedByWwarn,'no"/>
+							
+							
+								<xforms:input>
+									<xforms:label class="fixed-width">If clone was not provided by WWARN, who provided the clone?</xforms:label>
+								</xforms:input>
+							
+						</xforms:group>
+
+						<xforms:group ref="invitro-batches-numberOfBatches">
+							<xforms:bind nodeset="numberOfBatches"/>
+							
+							
+								<xforms:select1 appearance="minimal">
+									<xforms:label class="fixed-width">Are you entering data for one or several batches of plates?</xforms:label>
+									<xforms:alert>please select a value</xforms:alert>
+									<xforms:item>
+										<xforms:label class="fixed-width">one batch</xforms:label>
+										<xforms:value>onebatch</xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label class="fixed-width">several batches</xforms:label>
+										<xforms:value>severalbatches</xforms:value>
+									</xforms:item>
+								</xforms:select1>
+							
+						</xforms:group>
+
+						<xforms:group ref="invitro-batches-includedInRawData">
+							<xforms:bind nodeset="includedInRawData"/>
+							
+							
+								<xforms:select1 appearance="minimal">
+									<xforms:label class="fixed-width">Are your batch preparation dates and 3D7 information included with the raw
+										data?
+									</xforms:label>
+									<xforms:item>
+										<xforms:label class="fixed-width">(please select yes or no)</xforms:label>
+										<xforms:value></xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label class="fixed-width">yes</xforms:label>
+										<xforms:value>yes</xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label class="fixed-width">no</xforms:label>
+										<xforms:value>no</xforms:value>
+									</xforms:item>
+								</xforms:select1>
+							
+						</xforms:group>
+
+						<h5>Batches</h5>
+
+						<xforms:hint>
+							<em>If batch preparation dates and 3D7 information are
+								<strong>not</strong>
+								included with the raw data, please complete the section below for each batch.
+							</em>
+						</xforms:hint>
+
+						<xforms:group ref="invitro-batches-batch" repeatable="yes">
+
+							<xforms:bind nodeset="batch"/>
+							
+
+							
+
+								<xforms:group ref="invitro-batches-batch-preparationDate">
+									<xforms:bind nodeset="preparationDate" type="date"/>
+									
+									
+										<xforms:input>
+											<xforms:label class="fixed-width">Preparation date?</xforms:label>
+										</xforms:input>
+									
+								</xforms:group>
+
+								<xforms:group ref="invitro-batches-batch-parasitaemia3D7">
+									<xforms:bind nodeset="parasitaemia3D7"/>
+									
+									
+										<xforms:input>
+											<xforms:label class="fixed-width">3D7 parasitaemia?</xforms:label>
+										</xforms:input>
+										<label class="inline">%</xforms:label>
+									
+								</xforms:group>
+
+								<xforms:group ref="invitro-batches-batch-ringForms">
+									<xforms:bind nodeset="ringForms"/>
+									
+									
+										<xforms:input>
+											<xforms:label class="fixed-width">Ring forms after synchronisation?</xforms:label>
+										</xforms:input>
+										<label class="inline">%</xforms:label>
+									
+								</xforms:group>
+
+								<xforms:hint>
+									<p>
+										<em>Use the "+" button below to add another batch.</em>
+									</p>
+								</xforms:hint>
+
+							
+
+						</xforms:group>
+
+
+					
+
+				</xforms:group>
+
+				<!--+
+				|
+				| END IN VITRO PLATES NESTED QUESTIONNAIRE
+				|
+				+-->
+
+
+			
+
+		</xforms:group>
+
+
+		<questionnaire
+				defaultPrefix="wwarn"
+				defaultNamespaceUri="http://www.cggh.org/2009/chassis/wwarn/xmlns"
+				id="molecular">
+
+			<xforms:bind nodeset="molecular" relevant="contains(../general/module, 'molecular')" />
+			
+
+			<view class="xquestionnaire-transparent">
+
+				<h3 id="molecular">WWARN Molecular Module Questions</h3>
+
+				<h4 id="molecular-inclusionExclusionCriteria">Inclusion/Exclusion Criteria</h4>
+
+				<xforms:group ref="molecular-inclusionExclusionCriteria-A">
+					<!--  TODO Review  -->
+
+					<xforms:bind nodeset="inclusionExclusionCriteriaA" relevant="contains(../general/module, 'clinical')" />
+					
+					<!-- A. If “Clinical” Box was selected along with “Molecular” Box at the beginning of SSQ:	-->
+
+					
+						<xforms:hint>
+							<p><b>Before filling in this section please submit clinical data and complete the clinical study questionnaire.</b></p>
+						</xforms:hint>
+						<h5>How were clinical samples selected to be genotyped for molecular markers of resistance?</h5>
+
+						<xforms:group ref="molecular-inclusion-day0">
+							<xforms:bind nodeset="day0"/>
+							
+							
+								<xforms:select1 appearance="minimal">
+									<xforms:label class="fixed-width">Day 0 samples?</xforms:label>
+									<xforms:alert>please select a value</xforms:alert>
+									<xforms:item>
+										<xforms:label class="fixed-width">none genotyped</xforms:label>
+										<xforms:value>noneGenotyped</xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label class="fixed-width">all genotyped</xforms:label>
+										<xforms:value>allGenotyped</xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label class="fixed-width">only treatment failures genotyped</xforms:label>
+										<xforms:value>failuresGenotyped</xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label class="fixed-width">random subset genotyped</xforms:label>
+										<xforms:value>randomGenotyped</xforms:value>
+									</xforms:item>
+								</xforms:select1>
+							
+						</xforms:group>
+						<xforms:group ref="molecular-inclusion-treatmentFailure">
+							<xforms:bind nodeset="treatmentFailure"/>
+							
+							
+								<xforms:select1 appearance="minimal">
+									<xforms:label class="fixed-width">Samples taken on day of treatment failure?</xforms:label>
+									<xforms:alert>please select a value</xforms:alert>
+									<xforms:item>
+										<xforms:label class="fixed-width">none genotyped</xforms:label>
+										<xforms:value>noneGenotyped</xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label class="fixed-width">all genotyped</xforms:label>
+										<xforms:value>allGenotyped</xforms:value>
+									</xforms:item>
+									<!--
+			 <xforms:item>
+		 <xforms:label class="fixed-width">only treatment failures genotyped</xforms:label>
+		 <xforms:value>failuresGenotyped</xforms:value>
+			 </xforms:item>
+			 -->
+									<xforms:item>
+										<xforms:label class="fixed-width">random subset genotyped</xforms:label>
+										<xforms:value>randomGenotyped</xforms:value>
+									</xforms:item>
+								</xforms:select1>
+							
+						</xforms:group>
+						<xforms:group ref="molecular-inclusionExclusionCriteria-dayN" repeatable="yes">
+							<xforms:bind nodeset="inclusionExclusionCriteria-dayN"></element>
+							
+							
+								<xforms:group ref="molecular-inclusion-dayN-day">
+									<model>
+									<!--  TODO Add integer type -->
+										<element name="dayNDay"/>
+									
+									<view class="xquestion">
+										<xforms:input>
+											<xforms:label class="fixed-width">Samples taken on day</xforms:label>
+											<!--  TODO review -->
+											<xforms:hint>1 to 1000 days since treatment</xforms:hint>
+										</xforms:input><label class="inline">since treatment</xforms:label>
+									
+								</xforms:group>
+								<xforms:group ref="molecular-inclusion-dayN">
+									<xforms:bind nodeset="dayN"/>
+									
+									
+										<xforms:select1 appearance="minimal">
+											<xforms:label class="fixed-width">Samples taken on day above?</xforms:label>
+											<xforms:alert>please select a value</xforms:alert>
+											<!--
+												 <xforms:item>
+											 <xforms:label class="fixed-width">none genotyped</xforms:label>
+											 <xforms:value>nonegenotyped</xforms:value>
+												 </xforms:item>
+											-->
+											<xforms:item>
+												<xforms:label class="fixed-width">all genotyped</xforms:label>
+												<xforms:value>allgenotyped</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">only treatment failures genotyped</xforms:label>
+												<xforms:value>failuresgenotyped</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">random subset genotyped</xforms:label>
+												<xforms:value>randomgenotyped</xforms:value>
+											</xforms:item>
+										</xforms:select1>
+									
+								</xforms:group>
+								<xforms:hint>
+									<p>
+										<em>Use the "+" button below to add another day.</em>
+									</p>
+								</xforms:hint>
+							
+						</xforms:group>
+					
+				</xforms:group>
+
+
+				<!-- B. If “Clinical” Box was not selected at the beginning of SSQ: -->
+
+				<xforms:group ref="molecular-inclusionExclusionCriteria-B">
+
+					<xforms:bind nodeset="inclusionExclusionCriteriaB"/>
+						<!--  TODO create excludes comparator -->
+					
+					
+
+						<xforms:group ref="molecular-inclusionExclusionCriteriaB-source">
+							<xforms:bind nodeset="source"/>
+							
+							
+								<xforms:group ref="molecular-inclusionExclusionCriteriaB-sampleSource">
+									<xforms:bind nodeset="sampleSource"/>
+									
+									
+										<xforms:select1 appearance="minimal">
+											<xforms:label class="fixed-width">Sample source?</xforms:label>
+											<xforms:alert>please select a value</xforms:alert>
+											<!-- Note slight wording change -->
+											<xforms:item>
+												<xforms:label class="fixed-width">outpatient visit</xforms:label>
+												<xforms:value>outpatient</xforms:value>
+											</xforms:item>
+											<!-- Note slight wording change -->
+											<xforms:item>
+												<xforms:label class="fixed-width">inpatient visit</xforms:label>
+												<xforms:value>inpatient</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">longitudinal study</xforms:label>
+												<xforms:value>longitudinalStudy</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">community survey</xforms:label>
+												<xforms:value>communitySurvey</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">mosquito bloodmeal analysis</xforms:label>
+												<xforms:value>mosquitoBloodmeal</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">other</xforms:label>
+												<xforms:value>other</xforms:value>
+											</xforms:item>
+										</xforms:select1>
+									
+								</xforms:group>
+								<xforms:group ref="molecular-inclusionExclusionCriteriaB-sourceOther">
+									<xforms:bind nodeset="inclusionSourceOther" relevant="contains(../sampleSource,'other" />
+									
+									
+										<xforms:input>
+											<xforms:label class="fixed-width">Other sample source?</xforms:label>
+										</xforms:input>
+									
+								</xforms:group>
+							
+						</xforms:group>
+						<xforms:group ref="molecular-inclusionExclusionCriteriaB-malariaStatus">
+							<xforms:bind nodeset="inclusionMalariaStatus"/>
+							
+							
+								<xforms:select1 appearance="minimal">
+									<xforms:label class="fixed-width">Malarial status?</xforms:label>
+									<xforms:alert>please select a value</xforms:alert>
+									<xforms:item>
+										<xforms:label class="fixed-width">symptomatic only</xforms:label>
+										<xforms:value>symptomatic</xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label class="fixed-width">asymptomatic only</xforms:label>
+										<xforms:value>asymptomatic</xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label class="fixed-width">symptomatic and asymptomatic</xforms:label>
+										<xforms:value>symptomaticAndAsymptomatic</xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label class="fixed-width">symptomatic status not assessed</xforms:label>
+										<xforms:value>symptomaticStatusNotAssessed</xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label class="fixed-width">not applicable</xforms:label>
+										<xforms:value>notApplicable</xforms:value>
+									</xforms:item>
+
+								</xforms:select1>
+							
+						</xforms:group>
+						<!-- Repeated in pharmacology -->
+						<xforms:group ref="molecular-inclusionExclusionCriteria-minAge">
+							<model>
+							    <!--  TODO add integer type -->
+								<element name="minAge" /> 
+							
+							
+								<xforms:input>
+									<xforms:label class="fixed-width">Minimum age?</xforms:label>
+								</xforms:input>
+							
+						</xforms:group>
+
+						<!-- Repeated in pharmacology -->
+						<xforms:group ref="molecular-inclusionExclusionCriteria-maxAge">
+							<model>
+							    <!--  TODO add integer type -->
+								<element name="maxAge"/>
+							
+							
+								<xforms:input>
+									<xforms:label class="fixed-width">Maximum age?</xforms:label>
+								</xforms:input>
+							
+						</xforms:group>
+
+						<xforms:group ref="molecular-inclusionExclusionCriteria-priorAntimalarials">
+							<!-- NB Repeated in pharmacology -->
+							<xforms:bind nodeset="priorAntimalarials"/>
+							
+							
+								<xforms:group ref="molecular-inclusionExclusionCriteria-excludeIfPriorAntimalarials">
+									<xforms:bind nodeset="excludeIfPriorAntimalarials"/>
+									
+									
+										<xforms:select1 appearance="minimal">
+											<xforms:label class="fixed-width">Excluded if prior anti-malarials?</xforms:label>
+											<xforms:alert>please select a value</xforms:alert>
+											<xforms:item>
+												<xforms:label class="fixed-width">yes</xforms:label>
+												<xforms:value>yes</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">no</xforms:label>
+												<xforms:value>no</xforms:value>
+											</xforms:item>
+										</xforms:select1>
+									
+								</xforms:group>
+								<xforms:group ref="molecular-inclusionExclusionCriteria-excludeIfPriorAntimalarialsTime">
+									<xforms:bind nodeset="excludeIfPriorAntimalarialsTime" relevant="contains(../excludeIfPriorAntimalarials,'yes" />
+									
+									
+										<xforms:input>
+											<xforms:label class="fixed-width">Over what time (weeks)?</xforms:label>
+										</xforms:input>
+									
+								</xforms:group>
+							
+						</xforms:group>
+						<xforms:group ref="molecular-inclusionExclusionCriteria-molecularMarkersOfResistance">
+							<xforms:bind nodeset="molecularMarkersOfResistance"/>
+							
+							
+								<xforms:select1 appearance="minimal">
+									<xforms:label class="fixed-width">Samples selected for genotyping molecular markers of resistance?</xforms:label>
+									<xforms:alert>please select a value</xforms:alert>
+									<xforms:item>
+										<xforms:label class="fixed-width">all genotyped</xforms:label>
+										<xforms:value>allgenotyped</xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label class="fixed-width">random subset genotyped</xforms:label>
+										<xforms:value>randomgenotyped</xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label class="fixed-width">other</xforms:label>
+										<xforms:value>other</xforms:value>
+									</xforms:item>
+								</xforms:select1>
+							
+						</xforms:group>
+						<xforms:group ref="molecular-inclusionExclusionCriteria-molecularMarkersOfResistance-other">
+							<xforms:bind nodeset="molecularMarkersOfResistanceOther" relevant="contains(../molecularMarkersOfResistance,'yes" />
+							
+							
+								<xforms:input>
+									<xforms:label class="fixed-width">Other sample selection method?</xforms:label>
+								</xforms:input>
+							
+						</xforms:group>
+
+					
+
+				</xforms:group>
+
+
+				<h4 id="molecular-sampleType">Sample Type</h4>
+				<xforms:group ref="molecular-sampleType">
+
+					<xforms:bind nodeset="sampleType"/>
+					
+
+					
+						<xforms:group ref="molecular-sampleType-type">
+							<xforms:bind nodeset="sampleType-type"/>
+							
+							
+								<xforms:select1 appearance="minimal">
+									<xforms:label class="fixed-width">Sample type?</xforms:label>
+									<xforms:alert>please select a value</xforms:alert>
+									<xforms:item>
+										<xforms:label class="fixed-width">finger prick on filter paper</xforms:label>
+									  	<xforms:value>filterPaper</xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label class="fixed-width">whole blood</xforms:label>
+									  	<xforms:value>wholeBlood</xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label class="fixed-width">mosquito bloodmeal </xforms:label>
+									  	<xforms:value>mosquitoBloodMeal</xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label class="fixed-width">culture-adapted parasite</xforms:label>
+									  	<xforms:value>cultureAdaptedParasite</xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label class="fixed-width">ex-vivo parasite</xforms:label>
+									  	<xforms:value>exVivoParasite</xforms:value>
+									</xforms:item>
+								</xforms:select1>
+							
+						</xforms:group>
+						<xforms:group ref="molecular-sampleType-type-wholeBloodSource">
+							<xforms:bind nodeset="wholeBloodSource" relevant="contains(../sampleType-type,'wholeBlood" />
+							
+							
+								<xforms:select1 appearance="minimal">
+									<xforms:label class="fixed-width">Whole blood source?</xforms:label>
+									<xforms:alert>please select a value</xforms:alert>
+									<xforms:item>
+										<xforms:label class="fixed-width">peripheral</xforms:label>
+										<xforms:value>peripheral</xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label class="fixed-width">placental</xforms:label>
+										<xforms:value>placental</xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label class="fixed-width">cord</xforms:label>
+										<xforms:value>cord</xforms:value>
+									</xforms:item>
+								</xforms:select1>
+							
+						</xforms:group>
+						<xforms:group ref="molecular-sampleType-type-dateIsolated">
+							<xforms:bind nodeset="dateIsolated" type="date" relevant="contains(../sampleType-type,'cultureAdaptedParasite" />
+							
+							
+								<xforms:input>
+									<xforms:label class="fixed-width">When were samples isolated from patients?</xforms:label>
+								</xforms:input>
+							
+						</xforms:group>
+					
+				</xforms:group>
+				<h4 id="molecular-resistanceMarkers">Resistance Markers</h4>
+				<xforms:group ref="molecular-resistanceMarkers" repeatable="yes">
+
+					<xforms:bind nodeset="resistanceMarkers"/>
+					
+
+					
+						<xforms:group ref="molecular-marker-open">
+							<xforms:bind nodeset="molecularMarkerOpen"/>
+							
+							
+								<xforms:group ref="molecular-marker">
+									<xforms:bind nodeset="molecular-marker"/>
+									
+									
+										<select>
+											<xforms:label class="fixed-width">Marker(s)?</xforms:label>
+								<!-- P. falciparum -->
+											<xforms:item>
+												<xforms:label class="fixed-width">pfcrt 72</xforms:label>
+												<xforms:value>pfcrt72</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">pfcrt 73</xforms:label>
+												<xforms:value>pfcrt73</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">pfcrt 74</xforms:label>
+												<xforms:value>pfcrt74</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">pfcrt 75</xforms:label>
+												<xforms:value>pfcrt75</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">pfcrt 76</xforms:label>
+												<xforms:value>pfcrt76</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">pfcrt 152</xforms:label>
+												<xforms:value>pfcrt152</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">pfcrt 163</xforms:label>
+												<xforms:value>pfcrt163</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">pfcrt 220</xforms:label>
+												<xforms:value>pfcrt220</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">pfmdr1 86</xforms:label>
+												<xforms:value>pfmdr186</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">pfmdr1 184</xforms:label>
+												<xforms:value>pfmdr1184</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">pfmdr1 1034</xforms:label>
+												<xforms:value>pfmdr11034</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">pfmdr1 1042</xforms:label>
+												<xforms:value>pfmdr11042</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">pfmdr1 1246</xforms:label>
+												<xforms:value>pfmdr11246</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">pfmdr1 copy number</xforms:label>
+												<xforms:value>pfmdr1CopyNumber</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">dhfr 50</xforms:label>
+												<xforms:value>dhfr50</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">dhfr 51</xforms:label>
+												<xforms:value>dhfr51</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">dhfr 59</xforms:label>
+												<xforms:value>dhfr59</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">dhfr 108</xforms:label>
+												<xforms:value>dhfr108</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">dhfr 164</xforms:label>
+												<xforms:value>dhfr164</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">dhps 436</xforms:label>
+												<xforms:value>dhps436</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">dhps 437</xforms:label>
+												<xforms:value>dhps437</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">dhps 540</xforms:label>
+												<xforms:value>dhps540</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">dhps 581</xforms:label>
+												<xforms:value>dhps581</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">dhps 613</xforms:label>
+												<xforms:value>dhps613</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">gch1 copy number</xforms:label>
+												<xforms:value>gch1CopyNumber</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">PfATPase6 623</xforms:label>
+												<xforms:value>PfATPase6-623</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">PfATPase6 769</xforms:label>
+												<xforms:value>PfATPase6-769</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">pfmrp 191</xforms:label>
+												<xforms:value>pfmrp191</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">pfmrp 437</xforms:label>
+												<xforms:value>pfmrp437</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">pfnhe MS-4760</xforms:label>
+												<xforms:value>pfnheMS-4760</xforms:value>
+											</xforms:item>
+
+<!--  P. vivax -->
+											<xforms:item>
+												<xforms:label class="fixed-width">pvmdr1 976</xforms:label>
+												<xforms:value>pvmdr1-976</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">pvmdr1 1076</xforms:label>
+												<xforms:value>pvmdr1-1076</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">pvmdr1 copy number</xforms:label>
+												<xforms:value>pvmdr1CopyNumber</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">pvcrt-o K10 insertion</xforms:label>
+												<xforms:value>pvcrt-oK10Insertion</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">pvcrt-o 43</xforms:label>
+												<xforms:value>pvcrt-o43</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">pvdhfr 57</xforms:label>
+												<xforms:value>pvdhfr57</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">pvdhfr  58</xforms:label>
+												<xforms:value>pvdhfr58</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">pvdhfr  61</xforms:label>
+												<xforms:value>pvdhfr61</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">pvdhfr  117</xforms:label>
+												<xforms:value>pvdhfr117</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">pvdhfr  173</xforms:label>
+												<xforms:value>pvdhfr173</xforms:value>
+											</xforms:item>
+										
+											<!--  TODO Verify  -->
+											<xforms:item>
+												<xforms:label class="fixed-width">pvdhfr repeat region variants</xforms:label>
+												<xforms:value>pvdhfrRepeatRegionVariants</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">pvdhps 382</xforms:label>
+												<xforms:value>pvdhps382</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">pvdhps 383</xforms:label>
+												<xforms:value>pvdhps383</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">pvdhps 512</xforms:label>
+												<xforms:value>pvdhps512</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">pvdhps 553</xforms:label>
+												<xforms:value>pvdhps553</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">pvdhps 585</xforms:label>
+												<xforms:value>pvdhps585</xforms:value>
+											</xforms:item>
+											
+											<xforms:item>
+												<xforms:label class="fixed-width">Other</xforms:label>
+												<xforms:value>other</xforms:value>
+											</xforms:item>
+											
+										</select>
+									
+								</xforms:group>
+								<xforms:group ref="molecular-markerOther">
+									<xforms:bind nodeset="molecular-markerOther" relevant="contains(../molecular-marker,'other" />
+									
+									
+										<xforms:input>
+											<xforms:label class="fixed-width">Other molecular marker?</xforms:label>
+										</xforms:input>
+									
+								</xforms:group>
+
+							
+
+						</xforms:group>
+						<xforms:group ref="molecular-genotypingMethod-open">
+							<xforms:bind nodeset="genotypingMethodOpen"/>
+							
+							
+								<xforms:group ref="molecular-genotypingMethod">
+									<xforms:bind nodeset="molecular-genotypingMethod"/>
+									
+									
+										<xforms:select1 appearance="minimal">
+											<xforms:label class="fixed-width">Genotyping method?</xforms:label>
+											<xforms:alert>please select a value</xforms:alert>
+											<xforms:item>
+												<xforms:label class="fixed-width">PCR-RFLP</xforms:label>
+												<xforms:value>PCR-RFLP</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">mutation-specific PCR</xforms:label>
+												<xforms:value>mutationSpecificPCR</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">pyrosequencing</xforms:label>
+												<xforms:value>pyrosequencing</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">DNA sequencing</xforms:label>
+												<xforms:value>DNAsequencing</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">SSOP dot blot probe hybridization</xforms:label>
+												<xforms:value>SSOP dot blot probe hybridization</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">SSOP-ELISA</xforms:label>
+												<xforms:value>SSOP-ELISA</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">molecular beacon</xforms:label>
+												<xforms:value>molecularBeacon</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">microarray/DNA chip</xforms:label>
+												<xforms:value>microarray</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">real-time PCR</xforms:label>
+												<xforms:value>realTimePCR</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">other</xforms:label>
+												<xforms:value>other</xforms:value>
+											</xforms:item>
+										</xforms:select1>
+									
+								</xforms:group>
+								<xforms:group ref="molecular-genotypingMethodOther">
+									<xforms:bind nodeset="genotypingMethodOther" relevant="contains(../molecular-genotypingMethod,'other" />
+									
+									
+										<xforms:input>
+											<xforms:label class="fixed-width">Other genotyping method?</xforms:label>
+										</xforms:input>
+									
+								</xforms:group>
+							
+						</xforms:group>
+						<!--  TODO Upload protocol description document  -->
+						
+						<xforms:hint>
+							<p>
+								<em>You can add another resistance marker by clicking the
+									"+" button below.
+								</em>
+							</p>
+						</xforms:hint>
+					
+				</xforms:group>
+
+				<h4 id="molecular-mixedResistanceAlleles">Mixed Resistance Alleles</h4>
+				<xforms:group ref="molecular-mixedResistanceAlleles">
+
+					<xforms:bind nodeset="mixedResistanceAlleles"/>
+					
+
+					
+						<xforms:group ref="molecular-mixedResistanceAllelesInclusion">
+							<xforms:bind nodeset="mixedResistanceAllelesInclusion"/>
+							
+							
+								<xforms:select1 appearance="minimal">
+									<xforms:label class="fixed-width">Mixed resistance alleles were</xforms:label>
+									<xforms:alert>please select a value</xforms:alert>
+									<xforms:item>
+										<xforms:label class="fixed-width">excluded from dataset</xforms:label>
+										<xforms:value>excluded</xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label class="fixed-width">included in dataset </xforms:label>
+										<xforms:value>included</xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label class="fixed-width">not identified</xforms:label>
+										<xforms:value>notIdentified</xforms:value>
+									</xforms:item>
+								</xforms:select1>
+							
+						</xforms:group>
+						<xforms:group ref="molecular-mixedResistanceAllelesDesignation">
+							<xforms:bind nodeset="mixedResistanceAllelesDesignation" relevant="contains(../mixedResistanceAllelesInclusion,'included" />
+							
+							
+								<select>
+									<xforms:label class="fixed-width">How were mixed genotype resistance loci designated in the data set?</xforms:label>
+									<xforms:item>
+										<xforms:label class="fixed-width">Designated as mixed (listed as ‘mixed’ or both alleles reported: e.g. ‘K/T’)</xforms:label>
+										<xforms:value>mixed</xforms:value>										
+									</xforms:item>
+									<xforms:item>
+										<xforms:label class="fixed-width">Designated as mutant (only mutant allele is reported)</xforms:label>
+										<xforms:value>mutant</xforms:value>										
+									</xforms:item>
+								</select>
+							
+						</xforms:group>
+					
+				</xforms:group>
+				
+				
+				<h4 id="molecular-additionalGenotypicInformation">Additional Genotypic Information</h4>
+				<xforms:group ref="molecular-additionalGenotypicInformation">
+
+					<xforms:bind nodeset="additionalGenotypicInformation"/>
+					
+
+					
+						<xforms:group ref="molecular-additionalGenotypicInformation-wholeGenomesSequenced-block">
+							<xforms:bind nodeset="wholeGenomesSequencedBlock"/>
+							
+							
+								<xforms:group ref="molecular-additionalGenotypicInformation-wholeGenomesSequenced">
+									<xforms:bind nodeset="additionalGenotypicInformationWholeGenomesSequenced"/>
+									
+									
+										<xforms:select1 appearance="minimal">
+											<xforms:label class="fixed-width">Whole genome sequenced?</xforms:label>
+											<xforms:item>
+												<xforms:label class="fixed-width">(please select yes or no)</xforms:label>
+												<xforms:value></xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">yes</xforms:label>
+												<xforms:value>yes</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">no</xforms:label>
+												<xforms:value>no</xforms:value>
+											</xforms:item>
+										</xforms:select1>
+									
+								</xforms:group>
+								<xforms:group ref="molecular-additionalGenotypicInformation-accessionNumbers">
+									<xforms:bind nodeset="accessionNumbers" relevant="contains(../additionalGenotypicInformationWholeGenomesSequenced,'yes" />
+									
+									
+										<xforms:input>
+											<xforms:label class="fixed-width">Accession numbers?</xforms:label>
+										</xforms:input>
+									
+								</xforms:group>
+							
+						</xforms:group>
+						<xforms:group ref="molecular-additionalGenotypicInformation-resistanceLocus" repeatable="yes">
+							<xforms:bind nodeset="resistanceLocus"/>
+							
+							
+								<xforms:group ref="molecular-additionalGenotypicInformation-resistanceLocus-sequenced">
+									<xforms:bind nodeset="resistanceLocusSequenced"/>
+									
+									
+										<xforms:select1 appearance="minimal">
+											<xforms:label class="fixed-width">Resistance locus sequenced?</xforms:label>
+											<xforms:item>
+												<xforms:label class="fixed-width">(please select yes or no)</xforms:label>
+												<xforms:value></xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">yes</xforms:label>
+												<xforms:value>yes</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">no</xforms:label>
+												<xforms:value>no</xforms:value>
+											</xforms:item>
+										</xforms:select1>
+									
+								</xforms:group>
+								<xforms:group ref="molecular-additionalGenotypicInformation-resistanceLocus-name">
+									<xforms:bind nodeset="resistanceLocusName" relevant="contains(../resistanceLocusSequenced,'yes" />
+									
+									
+										<xforms:input>
+											<xforms:label class="fixed-width">Name of locus?</xforms:label>
+										</xforms:input>
+									
+								</xforms:group>
+								<xforms:hint>
+									<p>
+										<em>You can add more resistance loci by clicking the
+											"+" button below.
+										</em>
+									</p>
+								</xforms:hint>
+							
+						</xforms:group>
+						<xforms:group ref="molecular-additionalGenotypicInformation-otherLocus" repeatable="yes">
+							<xforms:bind nodeset="otherLocus"/>
+							
+							
+								<xforms:group ref="molecular-additionalGenotypicInformation-otherLocus-sequenced">
+									<xforms:bind nodeset="otherLocusSequenced"/>
+									
+									
+										<xforms:select1 appearance="minimal">
+											<xforms:label class="fixed-width">Other locus sequenced?</xforms:label>
+											<xforms:item>
+												<xforms:label class="fixed-width">(please select yes or no)</xforms:label>
+												<xforms:value></xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">yes</xforms:label>
+												<xforms:value>yes</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">no</xforms:label>
+												<xforms:value>no</xforms:value>
+											</xforms:item>
+										</xforms:select1>
+									
+								</xforms:group>
+								<xforms:group ref="molecular-additionalGenotypicInformation-otherLocus-type">
+									<xforms:bind nodeset="otherLocusType" relevant="contains(../otherLocusSequenced,'yes" />
+									
+									
+										<xforms:select1 appearance="minimal">
+											<xforms:label class="fixed-width">Other locus type?</xforms:label>
+											<xforms:alert>please select a value</xforms:alert>
+											<xforms:item>
+												<xforms:label class="fixed-width">microsatellite</xforms:label>
+												<xforms:value>microsatellite</xforms:value>
+											</xforms:item>
+											<xforms:item>
+												<xforms:label class="fixed-width">SNP</xforms:label>
+												<xforms:value>SNP</xforms:value>
+											</xforms:item>
+										</xforms:select1>
+									
+								</xforms:group>
+								<xforms:group ref="molecular-additionalGenotypicInformation-otherLocus-name">
+									<xforms:bind nodeset="otherLocusName" relevant="contains(../otherLocusSequenced,'yes" />
+									
+									
+										<xforms:input>
+											<xforms:label class="fixed-width">Name of locus?</xforms:label>
+										</xforms:input>
+									
+								</xforms:group>
+								<xforms:hint>
+									<p>
+										<em>You can add more loci by clicking the
+											"+" button below.
+										</em>
+									</p>
+								</xforms:hint>
+							
+						</xforms:group>
+					
+				</xforms:group>
+
+			
+
+		</xforms:group>
+
+	
+
+
+</xforms:group>
+
