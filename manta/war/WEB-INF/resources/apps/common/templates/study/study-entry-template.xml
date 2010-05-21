@@ -55,6 +55,20 @@
 					<sexualParasitemiaCountUnit/>
 					<sexualParasitemiaCountUnitOther/>
 					<separateSpeciesCounts/>
+					<thickFilmCalculationOfParasitemia>
+						<thickFilmFormula/>
+						<thickFilmFormulaOther/>
+						<WBCSource/>
+						<WBCAssumed/>
+						<thickFilmCalculationOfParasitemiaOther />
+					</thickFilmCalculationOfParasitemia>
+					<thinFilmCalculationOfParasitemia>
+						<thinFilmFormula/>
+						<thinFilmFormulaOther/>
+						<HtcSource/>
+						<HtcAssumed/>
+						<thinFilmCalculationOfParasitemiaOther />
+					</thinFilmCalculationOfParasitemia>
 				</microscopy>
 				<recrudescenceAndReinfection />
 			</clinical>

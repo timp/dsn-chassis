@@ -801,7 +801,7 @@
 																<xforms:value ref="value" />
 															</xforms:itemset>
 															<xforms:item>
-																<xforms:label>Other</xforms:label>
+																<xforms:label>other</xforms:label>
 																<xforms:value>other</xforms:value>
 															</xforms:item>
 														</xforms:select1>
@@ -819,7 +819,7 @@
 																of vomiting?
 															</xforms:label>
 															<xforms:item>
-																<xforms:label>Unknown</xforms:label>
+																<xforms:label>unknown</xforms:label>
 																<xforms:value />
 															</xforms:item>
 															<xforms:itemset model="mod-study-questionnaire"
@@ -977,9 +977,10 @@
 			<xforms:group ref="microscopy">
 				<h4>Microscopy</h4>
 				<xforms:select1 ref="microscopyFilmType" appearance="minimal">
+					<xforms:alert>The microscopy film type is required</xforms:alert>
 					<xforms:label class="fixed-width">Film</xforms:label>
 					<xforms:item>
-						<xforms:label>Unknown</xforms:label>
+						<xforms:label>Please select</xforms:label>
 						<xforms:value></xforms:value>
 					</xforms:item>
 					<xforms:itemset model="mod-study-questionnaire"
@@ -992,7 +993,7 @@
 				<xforms:select1 ref="microscopyStain" appearance="minimal">
 					<xforms:label class="fixed-width">Stain</xforms:label>
 					<xforms:item>
-						<xforms:label>Unknown</xforms:label>
+						<xforms:label>unknown</xforms:label>
 						<xforms:value></xforms:value>
 					</xforms:item>
 					<xforms:itemset model="mod-study-questionnaire"
@@ -1001,22 +1002,23 @@
 						<xforms:value ref="value" />
 					</xforms:itemset>
 					<xforms:item>
-						<xforms:label>Other</xforms:label>
+						<xforms:label>other</xforms:label>
 						<xforms:value>other</xforms:value>
 					</xforms:item>
 				</xforms:select1>
 				<br />
 
 				<xforms:input ref="microscopyStainOther" />
-				
+
 				<p>How many fields were reviewed before diagnosis of
-						negative was made?</p>
-				<xforms:input ref="asexualParasitemiaCount">
+					negative was
+					made?</p>
+				<xforms:input ref="asexualParasitemiaCount" class="fourWide">
 					<xforms:label>Asexual Parasitemia</xforms:label>
 				</xforms:input>
 				<xforms:select1 ref="asexualParasitemiaCountUnit"
 					appearance="minimal">
-					<xforms:label class="fixed-width">per</xforms:label>
+					<xforms:label>per </xforms:label>
 					<xforms:item>
 						<xforms:label>N/A</xforms:label>
 						<xforms:value>na</xforms:value>
@@ -1027,18 +1029,18 @@
 						<xforms:value ref="value" />
 					</xforms:itemset>
 					<xforms:item>
-						<xforms:label>Other</xforms:label>
+						<xforms:label>other</xforms:label>
 						<xforms:value>other</xforms:value>
 					</xforms:item>
 				</xforms:select1>
-				<xforms:input ref="asexualParasitemiaCountUnitOther"/>
-<br/>
-				<xforms:input ref="asexualParasitemiaCount">
+				<xforms:input ref="asexualParasitemiaCountUnitOther" />
+				<br />
+				<xforms:input ref="asexualParasitemiaCount" class="fourWide">
 					<xforms:label>Asexual Parasitemia</xforms:label>
 				</xforms:input>
 				<xforms:select1 ref="asexualParasitemiaCountUnit"
 					appearance="minimal">
-					<xforms:label class="fixed-width">per</xforms:label>
+					<xforms:label>per </xforms:label>
 					<xforms:item>
 						<xforms:label>N/A</xforms:label>
 						<xforms:value>na</xforms:value>
@@ -1049,11 +1051,11 @@
 						<xforms:value ref="value" />
 					</xforms:itemset>
 					<xforms:item>
-						<xforms:label>Other</xforms:label>
+						<xforms:label>other</xforms:label>
 						<xforms:value>other</xforms:value>
 					</xforms:item>
 				</xforms:select1>
-				<xforms:input ref="asexualParasitemiaCountUnitOther"/>
+				<xforms:input ref="asexualParasitemiaCountUnitOther" />
 
 
 
@@ -1073,6 +1075,82 @@
 					</xforms:itemset>
 				</xforms:select1>
 
+				<xforms:group ref="thickFilmCalculationOfParasitemia">
+					<xforms:select1 ref="thickFilmFormula" appearance="minimal">
+						<xforms:label>Formula </xforms:label>
+						<xforms:item>
+							<xforms:label> ( (X per Y WBCs)/ Y) WBC</xforms:label>
+							<xforms:value>wbc</xforms:value>
+						</xforms:item>
+						<xforms:item>
+							<xforms:label>other</xforms:label>
+							<xforms:value>other</xforms:value>
+						</xforms:item>
+					</xforms:select1>
+					<xforms:input ref="thickFilmFormulaOther">
+						<xforms:hint>Enter other formula</xforms:hint>
+					</xforms:input>
+					<br />
+					<xforms:bind ref="WBCSource" />
+					<xforms:select1 ref="WBCSource" appearance="minimal">
+						<xforms:label>WBC source </xforms:label>
+						<xforms:item>
+							<xforms:label>unknown</xforms:label>
+							<xforms:value>unknown</xforms:value>
+						</xforms:item>
+						<xforms:itemset model="mod-study-questionnaire"
+							nodeset="instance('ins-whiteBloodCellCountSource-items')/whiteBloodCellCountSource">
+							<xforms:label ref="label" />
+							<xforms:value ref="value" />
+						</xforms:itemset>
+					</xforms:select1>
+					<xforms:input ref="WBCAssumed" class="fourWide">
+						<xforms:label>WBC per µl</xforms:label>
+					</xforms:input>
+					<br />
+					<xforms:input ref="thickFilmCalculationOfParasitemiaOther">
+						<xforms:label>Other method</xforms:label>
+					</xforms:input>
+				</xforms:group>
+
+				<xforms:group ref="thinFilmCalculationOfParasitemia">
+					<xforms:select1 ref="thinFilmFormula" appearance="minimal">
+						<xforms:label>Formula </xforms:label>
+						<xforms:item>
+							<xforms:label> (X per 1000RBCs * 125.6 *) Hct</xforms:label>
+							<xforms:value>htc</xforms:value>
+						</xforms:item>
+						<xforms:item>
+							<xforms:label>other</xforms:label>
+							<xforms:value>other</xforms:value>
+						</xforms:item>
+					</xforms:select1>
+					<xforms:input ref="thinFilmFormulaOther">
+						<xforms:hint>Enter other formula</xforms:hint>
+					</xforms:input>
+					<br />
+					<xforms:bind ref="HtcSource" />
+					<xforms:select1 ref="HtcSource" appearance="minimal">
+						<xforms:label>Htc source </xforms:label>
+						<xforms:item>
+							<xforms:label>unknown</xforms:label>
+							<xforms:value>unknown</xforms:value>
+						</xforms:item>
+
+						<xforms:itemset model="mod-study-questionnaire"
+							nodeset="instance('ins-HtcSource-items')/HtcSource">
+							<xforms:label ref="label" />
+							<xforms:value ref="value" />
+						</xforms:itemset>
+					</xforms:select1>
+					<xforms:input ref="HtcAssumed" class="fourWide">
+						<xforms:label>Htc %</xforms:label>
+					</xforms:input>
+					<br />
+					<xforms:input ref="thinFilmCalculationOfParasitemiaOther">
+						<xforms:label>Other method</xforms:label>
+					</xforms:input>
+				</xforms:group>
 
 			</xforms:group>
 		</xforms:group>
@@ -1098,7 +1176,7 @@
 						</xforms:itemset>
 					</xforms:select1>
 					<xforms:input ref="molecularMarkerFalciparumOther">
-						<xforms:label>Other</xforms:label>
+						<xforms:label>other</xforms:label>
 					</xforms:input>
 				</xforms:group>
 				<xforms:group ref="molecularMarkerVivaxOpen">
@@ -1118,7 +1196,7 @@
 						</xforms:itemset>
 					</xforms:select1>
 					<xforms:input ref="molecularMarkerVivaxOther">
-						<xforms:label>Other</xforms:label>
+						<xforms:label>other</xforms:label>
 					</xforms:input>
 				</xforms:group>
 			</xforms:group>
