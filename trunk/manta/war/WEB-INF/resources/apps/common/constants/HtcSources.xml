@@ -1,0 +1,14 @@
+<HtcSources xmlns="">
+	<HtcSource>
+		<label>quantified</label>
+		<value>quantified</value>
+	</HtcSource>
+	<HtcSource>
+		<label>assumed</label>
+		<value>assumed</value>
+	</HtcSource>
+	<HtcSource>
+		<label>no Htc</label>
+		<value>none</value>
+	</HtcSource>
+</HtcSources>
