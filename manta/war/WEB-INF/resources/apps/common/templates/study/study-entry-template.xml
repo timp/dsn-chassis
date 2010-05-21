@@ -40,12 +40,21 @@
 					<duration />
 					<feverMeasurement />
 					<haemoglobinRecording>
-						<haemoglobinRecording-type />
-						<haemoglobinRecording-type-hb />
+						<haemoglobinRecordingType />
+						<haemoglobinRecordingHbType />
 					</haemoglobinRecording>
 				</followup>
 				<microscopy>
-					<microscopy-film />
+					<microscopyFilmType />
+					<microscopyStain />
+					<microscopyStainOther />
+					<asexualParasitemiaCount/>
+					<asexualParasitemiaCountUnit/>
+					<asexualParasitemiaCountUnitOther/>
+					<sexualParasitemiaCount/>
+					<sexualParasitemiaCountUnit/>
+					<sexualParasitemiaCountUnitOther/>
+					<separateSpeciesCounts/>
 				</microscopy>
 				<recrudescenceAndReinfection />
 			</clinical>

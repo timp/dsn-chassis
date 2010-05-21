@@ -99,8 +99,6 @@
 
 							</xforms:group>
 
-							<!--  TODO Add percentage validation?? -->
-
 							<!-- if the country has no regions, use an input -->
 							<xforms:group
 								ref=".[empty(country/text()) or country/text() = instance('ins-country-items')/country[empty(regions)]/value/text()]">
@@ -862,8 +860,6 @@
 												</td>
 											</tr>
 										</table>
-
-
 									</xforms:group>
 
 
@@ -891,8 +887,6 @@
 							</td>
 						</tr>
 					</table>
-
-
 				</xforms:group>
 
 
@@ -919,8 +913,7 @@
 
 
 					<xforms:select1 appearance="minimal" ref="blinding">
-						<xforms:label class="fixed-width">
-							Blinding</xforms:label>
+						<xforms:label class="fixed-width">Blinding</xforms:label>
 						<xforms:itemset model="mod-study-questionnaire"
 							nodeset="instance('ins-blinding-items')/blinding">
 							<xforms:label ref="label" />
@@ -928,6 +921,158 @@
 						</xforms:itemset>
 					</xforms:select1>
 				</xforms:group>
+
+			</xforms:group>
+
+
+			<h4>Followup</h4>
+			<xforms:group ref="followup">
+				<xforms:input ref="duration" class="fourWide">
+					<xforms:label>Maximum duration of follow up</xforms:label>
+				</xforms:input>
+				<br />
+				<xforms:select1 ref="feverMeasurement" appearance="minimal">
+					<xforms:label>Fever measurement</xforms:label>
+					<xforms:alert>please select a value</xforms:alert>
+					<xforms:itemset model="mod-study-questionnaire"
+						nodeset="instance('ins-feverMeasurementMethod-items')/feverMeasurementMethod">
+						<xforms:label ref="label" />
+						<xforms:value ref="value" />
+					</xforms:itemset>
+				</xforms:select1>
+				<br />
+				<xforms:group ref="haemoglobinRecording">
+					<xforms:select1 ref="haemoglobinRecordingType"
+						appearance="minimal">
+						<xforms:label class="fixed-width">Haemoglobin recording
+						</xforms:label>
+						<xforms:item>
+							<xforms:label></xforms:label>
+							<xforms:value></xforms:value>
+						</xforms:item>
+						<xforms:itemset model="mod-study-questionnaire"
+							nodeset="instance('ins-haemoglobinRecordingType-items')/haemoglobinRecordingType">
+							<xforms:label ref="label" />
+							<xforms:value ref="value" />
+						</xforms:itemset>
+					</xforms:select1>
+					<xforms:select1 ref="haemoglobinRecordingHbType"
+						appearance="minimal">
+						<xforms:label>hb recording type</xforms:label>
+						<xforms:item>
+							<xforms:label></xforms:label>
+							<xforms:value></xforms:value>
+						</xforms:item>
+						<xforms:itemset model="mod-study-questionnaire"
+							nodeset="instance('ins-haemoglobinRecordingHbType-items')/haemoglobinRecordingHbType">
+							<xforms:label ref="label" />
+							<xforms:value ref="value" />
+						</xforms:itemset>
+					</xforms:select1>
+					<!--  TODO check is other input box required -->
+
+				</xforms:group>
+
+			</xforms:group>
+			<xforms:group ref="microscopy">
+				<h4>Microscopy</h4>
+				<xforms:select1 ref="microscopyFilmType" appearance="minimal">
+					<xforms:label class="fixed-width">Film</xforms:label>
+					<xforms:item>
+						<xforms:label>Unknown</xforms:label>
+						<xforms:value></xforms:value>
+					</xforms:item>
+					<xforms:itemset model="mod-study-questionnaire"
+						nodeset="instance('ins-microscopyFilmType-items')/microscopyFilmType">
+						<xforms:label ref="label" />
+						<xforms:value ref="value" />
+					</xforms:itemset>
+				</xforms:select1>
+				<br />
+				<xforms:select1 ref="microscopyStain" appearance="minimal">
+					<xforms:label class="fixed-width">Stain</xforms:label>
+					<xforms:item>
+						<xforms:label>Unknown</xforms:label>
+						<xforms:value></xforms:value>
+					</xforms:item>
+					<xforms:itemset model="mod-study-questionnaire"
+						nodeset="instance('ins-microscopyStain-items')/microscopyStain">
+						<xforms:label ref="label" />
+						<xforms:value ref="value" />
+					</xforms:itemset>
+					<xforms:item>
+						<xforms:label>Other</xforms:label>
+						<xforms:value>other</xforms:value>
+					</xforms:item>
+				</xforms:select1>
+				<br />
+
+				<xforms:input ref="microscopyStainOther" />
+				
+				<p>How many fields were reviewed before diagnosis of
+						negative was made?</p>
+				<xforms:input ref="asexualParasitemiaCount">
+					<xforms:label>Asexual Parasitemia</xforms:label>
+				</xforms:input>
+				<xforms:select1 ref="asexualParasitemiaCountUnit"
+					appearance="minimal">
+					<xforms:label class="fixed-width">per</xforms:label>
+					<xforms:item>
+						<xforms:label>N/A</xforms:label>
+						<xforms:value>na</xforms:value>
+					</xforms:item>
+					<xforms:itemset model="mod-study-questionnaire"
+						nodeset="instance('ins-whiteBloodCellCount-items')/whiteBloodCellCount">
+						<xforms:label ref="label" />
+						<xforms:value ref="value" />
+					</xforms:itemset>
+					<xforms:item>
+						<xforms:label>Other</xforms:label>
+						<xforms:value>other</xforms:value>
+					</xforms:item>
+				</xforms:select1>
+				<xforms:input ref="asexualParasitemiaCountUnitOther"/>
+<br/>
+				<xforms:input ref="asexualParasitemiaCount">
+					<xforms:label>Asexual Parasitemia</xforms:label>
+				</xforms:input>
+				<xforms:select1 ref="asexualParasitemiaCountUnit"
+					appearance="minimal">
+					<xforms:label class="fixed-width">per</xforms:label>
+					<xforms:item>
+						<xforms:label>N/A</xforms:label>
+						<xforms:value>na</xforms:value>
+					</xforms:item>
+					<xforms:itemset model="mod-study-questionnaire"
+						nodeset="instance('ins-whiteBloodCellCount-items')/whiteBloodCellCount">
+						<xforms:label ref="label" />
+						<xforms:value ref="value" />
+					</xforms:itemset>
+					<xforms:item>
+						<xforms:label>Other</xforms:label>
+						<xforms:value>other</xforms:value>
+					</xforms:item>
+				</xforms:select1>
+				<xforms:input ref="asexualParasitemiaCountUnitOther"/>
+
+
+
+				<br />
+				<xforms:select1 ref="separateSpeciesCounts"
+					appearance="minimal">
+					<xforms:label class="fixed-width">If Mixed Species, was each species
+						quantified separately?</xforms:label>
+					<xforms:item>
+						<xforms:label>N/A</xforms:label>
+						<xforms:value>na</xforms:value>
+					</xforms:item>
+					<xforms:itemset model="mod-study-questionnaire"
+						nodeset="instance('ins-boolean-items')/boolean">
+						<xforms:label ref="label" />
+						<xforms:value ref="value" />
+					</xforms:itemset>
+				</xforms:select1>
+
 
 			</xforms:group>
 		</xforms:group>
@@ -1098,7 +1243,8 @@
 					</xforms:select1>
 					<em>
 						Storage temperature: 6 months at -20&#176;C and 1 week at
-						+4&#176;C after using.
+						+4&#176;C
+						after using.
 						<font color="red">FIXME</font>
 					</em>
 				</p>
@@ -1302,7 +1448,8 @@
 				<p>
 					<em>
 						If this information is different for each sample, please
-						include it
+						include
+						it
 						in your raw data.
 					</em>
 				</p>
@@ -1323,7 +1470,8 @@
 				<p>
 					<em>
 						If this information is different for each sample, please
-						include it
+						include
+						it
 						in your raw data.
 					</em>
 				</p>
@@ -1343,8 +1491,8 @@
 			</xforms:group>
 
 			<!--
-				+ | | END IN VITRO SUSCEPTIBILITY NESTED QUESTIONNAIRE | +
-			-->
+			+ | | END IN VITRO SUSCEPTIBILITY NESTED QUESTIONNAIRE | +
+		-->
 
 
 			<!--
