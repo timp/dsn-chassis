@@ -89,7 +89,7 @@ declare function config:generate-identifier(
 
     (: TODO check this path is right :)
     
-    else if ( matches( $collection-path-info , "^/studies/[^/]+/media" ) )
+    else if ( matches( $collection-path-info , "^/media" ) )
     
 (:    then upper-case( xutil:random-alphanumeric( 6 ) ) :)
 
@@ -158,19 +158,23 @@ declare function config:default-collection-security-descriptor(
 
     then $config:drafts-collection-security-descriptor
     
-    else if ( starts-with( $request-path-info , "/media/submitted" ) )
+    else if ( $request-path-info = "/media/submitted" )
+    
+    then $config:all-submitted-media-collection-security-descriptor
+    
+    else if ( matches( $request-path-info , "^/media/submitted/[^/]+$" ) )
     
     then config:submitted-media-collection-security-descriptor( $request-path-info )
 
-    else if ( starts-with( $request-path-info , "/media/curated" ) )
+    else if ( matches( $request-path-info , "^/media/curated/[^/]+$" ) )
     
     then config:curated-media-collection-security-descriptor( $request-path-info )
 
-    else if ( starts-with( $request-path-info , "/derivations" ) )
+    else if ( matches( $request-path-info , "^/derivations/[^/]+$" ) )
     
     then config:derivations-collection-security-descriptor( $request-path-info )
 
-    else if ( starts-with( $request-path-info , "/reviews/personal-data" ) )
+    else if ( matches( $request-path-info , "^/reviews/personal-data/[^/]+$" ) )
     
     then config:personal-data-reviews-collection-security-descriptor( $request-path-info )
 
@@ -289,6 +293,29 @@ declare variable $config:drafts-collection-security-descriptor :=
         </atombeat:acl>
     </atombeat:security-descriptor>
 ;
+
+
+
+declare variable $config:all-submitted-media-collection-security-descriptor :=
+    <atombeat:security-descriptor>
+        <atombeat:acl>
+        
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+                <atombeat:permission>LIST_COLLECTION</atombeat:permission>
+            </atombeat:ace>
+            
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_PERSONAL_DATA_REVIEWER</atombeat:recipient>
+                <atombeat:permission>LIST_COLLECTION</atombeat:permission>
+            </atombeat:ace>
+            
+        </atombeat:acl>
+    </atombeat:security-descriptor>
+;
+
 
 
 

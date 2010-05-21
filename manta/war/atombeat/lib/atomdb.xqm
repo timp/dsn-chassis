@@ -595,9 +595,15 @@ declare function atomdb:create-entry(
             <atom:updated>{$updated}</atom:updated>
             <atom:link rel="self" type="application/atom+xml" href="{$self-uri}"/>
             <atom:link rel="edit" type="application/atom+xml" href="{$edit-uri}"/>
+            <atom:author>
             {
-                atomdb:mutable-entry-children($request-data)
-            }
+                if ( $config:user-name-is-email ) then <atom:email>{$user-name}</atom:email>
+                else <atom:name>$user-name</atom:name>
+            }                
+            </atom:author>
+        {
+            atomdb:mutable-entry-children($request-data)
+        }
         </atom:entry>  
      
 };
@@ -633,6 +639,9 @@ declare function atomdb:create-media-link-entry(
     	
 	let $media-size :=
 		xmldb:size( atomdb:request-path-info-to-db-path( $request-path-info ) , concat( $member-id , ".media" ) )
+
+    (: TODO review this, maybe provide user as function arg, rather than interrogate request here :)
+    let $user-name := request:get-attribute( $config:user-name-request-attribute-key )
     	    
 	return
 	
@@ -646,6 +655,12 @@ declare function atomdb:create-media-link-entry(
             <atom:content src="{$media-uri}" type="{$media-type}"/>
             <atom:title type="text">{$title}</atom:title>
             <atom:summary type="text">{$summary}</atom:summary>
+            <atom:author>
+            {
+                if ( $config:user-name-is-email ) then <atom:email>{$user-name}</atom:email>
+                else <atom:name>$user-name</atom:name>
+            }                
+            </atom:author>
         </atom:entry>  
      
 };

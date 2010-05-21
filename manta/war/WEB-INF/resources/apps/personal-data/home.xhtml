@@ -1,0 +1,136 @@
+<!--
+  Copyright (C) 2010 University of Oxford.
+  
+  This program is free software; you can redistribute it and/or modify it under the terms of the
+  GNU Lesser General Public License as published by the Free Software Foundation; either version
+  2.1 of the License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Lesser General Public License for more details.
+
+  The full text of the license is available at http://www.gnu.org/copyleft/lesser.html
+  -->
+<html 
+	xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:f="http://orbeon.org/oxf/xml/formatting" 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:atom="http://www.w3.org/2005/Atom"
+    xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:manta="http://www.cggh.org/2010/chassis/manta/xmlns">
+    
+    <head>
+    
+        <title>Personal Data Home</title>
+
+        
+        <xforms:model>
+
+			<xforms:submission 
+				id="sub-get-studies-feed"
+				resource="/atombeat/content/studies"
+				method="get"
+				replace="instance"
+				instance="ins-studies-feed">
+				<!-- TODO error handling -->
+                <xforms:message ev:event="xforms-submit-error" level="modal">
+                	<p>An error occurred (<xforms:output value="event('error-type')"/>) while retrieving drafts.</p>
+               	</xforms:message>
+               	<xforms:send ev:event="xforms-submit-done" submission="sub-get-all-submitted-media-feed"/>
+			</xforms:submission>
+
+			<xforms:submission 
+				id="sub-get-all-submitted-media-feed"
+				resource="/atombeat/content/media/submitted"
+				method="get"
+				replace="instance"
+				instance="ins-submitted-media-feed">
+				<!-- TODO error handling -->
+                <xforms:message ev:event="xforms-submit-error" level="modal">
+                	<p>An error occurred (<xforms:output value="event('error-type')"/>) while retrieving drafts.</p>
+               	</xforms:message>
+			</xforms:submission>
+        
+        	<xforms:send 
+				ev:event="xforms-model-construct-done" 
+				submission="sub-get-studies-feed"/>
+				
+			<xforms:instance id="ins-studies-feed">
+				<atom:feed/>
+			</xforms:instance>
+			
+			<xforms:instance id="ins-submitted-media-feed">
+				<atom:feed/>
+			</xforms:instance>
+			
+        </xforms:model>
+
+       	<xi:include href="/apps/common/includes/current-user-xforms-model.xml"/>
+
+    </head>
+    <body>
+
+		<xi:include href="/apps/common/includes/current-user-actions.xml"/>
+    
+	    	<h1>Personal Data - Home</h1>
+
+	    	<h2>Submitted Media</h2>
+    	
+    		<xforms:group ref="instance('ins-submitted-media-feed')[empty(atom:entry)]">
+
+	    		<p>No results.</p>
+	    	
+    		</xforms:group>
+	    	
+    		<xforms:group ref="instance('ins-submitted-media-feed')[exists(atom:entry)]">
+
+		    	<fr:datatable>
+		    		<thead>
+		    			<tr>
+		    				<th fr:sortable="false" fr:resizeable="true">Code</th>
+		    				<th fr:sortable="false" fr:resizeable="true">Original File Name</th>
+		    				<th fr:sortable="true" fr:resizeable="true">Contributor</th>
+		    				<th fr:sortable="true" fr:resizeable="true">Submitted</th>
+		    				<th fr:sortable="true" fr:resizeable="true">Study</th>
+		    				<th fr:sortable="false" fr:resizeable="true">Actions</th>
+		    			</tr>
+		    		</thead>
+		    		<tbody>
+		    			<xforms:repeat nodeset="atom:entry">
+		    				<tr>
+		    					<td>
+		    						<xforms:output value="manta:id"/>
+		    					</td>
+		    					<td>
+		    						<xforms:output value="atom:title"/>
+		    					</td>
+		    					<td>
+		    						<xforms:output value="atom:author/atom:email"/>
+		    					</td>
+		    					<td>
+		    						<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')"/>
+		    					</td>
+		    					<td>
+		    						<xforms:output value="
+		    							for $l in (atom:link[@rel='http://www.cggh.org/2010/chassis/terms/originStudy']/@href) 
+		    							return instance('ins-studies-feed')/atom:entry[atom:link[@rel='self']/@href=$l]/atom:title
+	    							"/>
+		    					</td>
+		    					<td>
+		    						<a href="review?entry={atom:link[@rel='self']/@href}">Review</a>
+		    					</td>
+		    				</tr>
+		    			</xforms:repeat>
+		    		</tbody>
+		    	</fr:datatable>
+		    	
+    		</xforms:group>
+    		
+    	
+    </body>
+</html>
+
