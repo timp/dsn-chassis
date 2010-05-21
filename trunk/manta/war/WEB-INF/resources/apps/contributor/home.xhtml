@@ -141,10 +141,10 @@
 		    			<xforms:repeat nodeset="instance('ins-study-feed')/atom:entry">
 		    				<tr>
 		    					<td>
-		    						<a href="study-summary?study={atom:link[@rel='edit']/@href}"><xforms:output value="manta:id"/></a>
+		    						<a href="study-dashboard?study={atom:link[@rel='edit']/@href}"><xforms:output value="manta:id"/></a>
 		    					</td>
 		    					<td>
-		    						<a href="study-summary?study={atom:link[@rel='edit']/@href}"><xforms:output value="atom:title"/></a>
+		    						<a href="study-dashboard?study={atom:link[@rel='edit']/@href}"><xforms:output value="atom:title"/></a>
 		    					</td>
 		    					<td>
 		    						<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')">
@@ -152,9 +152,9 @@
 		    						</xforms:output>
 		    					</td>
 		    					<td>
-		    						TODO
+		    						TODO <!-- Need to get the permission list (need to get individual entries?) via security-description link and use something like concat(//permission/text())  -->
 		    					</td>
-		    					<td><a href="study-summary?study={atom:link[@rel='edit']/@href}">View</a></td>
+		    					<td><a href="study-dashboard?study={atom:link[@rel='edit']/@href}">View</a></td>
 		    				</tr>
 		    			</xforms:repeat>
 		    		</tbody>

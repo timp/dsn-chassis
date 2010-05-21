@@ -1,8 +1,8 @@
-<atom:entry
-    xmlns:atom="http://www.w3.org/2005/Atom">
+<atom:entry xmlns:atom="http://www.w3.org/2005/Atom">
     <atom:title type="text"></atom:title>
     <atom:content type="application/vnd.chassis-manta+xml">
         <study xmlns="">
+        	<study-is-published/>
             <publications/>
             <acknowledgements/>
             <start/>

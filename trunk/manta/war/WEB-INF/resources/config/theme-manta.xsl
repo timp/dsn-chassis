@@ -58,8 +58,10 @@
                 <xhtml:meta name="generator" content="Orbeon Forms {$orbeon-forms-version}"/>
                 
                 <!-- Favicon -->
+                <!-- TODO: Replace this icon 
                 <xhtml:link rel="shortcut icon" href="/ops/images/orbeon-icon-16.ico"/>
                 <xhtml:link rel="icon" href="/ops/images/orbeon-icon-16.png" type="image/png"/>
+                 -->
                 
             </xhtml:head>
             

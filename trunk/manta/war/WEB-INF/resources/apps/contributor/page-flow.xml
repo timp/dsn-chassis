@@ -22,6 +22,8 @@
   <page path-info="/contributor/register-study" view="register-study.xhtml"/>
   
   <page path-info="/contributor/terms" view="includes/terms.xhtml"/>
+  
+  <page path-info="/contributor/study-dashboard" view="study-dashboard.xhtml"/>
 
   <epilogue url="oxf:/config/epilogue.xpl"/>
 

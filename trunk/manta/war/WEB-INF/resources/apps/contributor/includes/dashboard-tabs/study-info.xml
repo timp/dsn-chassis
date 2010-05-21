@@ -1,0 +1,14 @@
+<div 
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:xforms="http://www.w3.org/2002/xforms" 
+	xmlns:ev="http://www.w3.org/2001/xml-events">
+
+	<p>TODO: include SSQ</p>
+
+     <p>
+         <xforms:submit submission="sub-put-study-entry">
+             <xforms:label>Save Changes</xforms:label>
+         </xforms:submit>
+     </p>
+
+</div>
