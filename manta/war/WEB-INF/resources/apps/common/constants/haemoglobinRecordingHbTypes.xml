@@ -8,8 +8,4 @@
 		<label>haemaccue</label>
 		<value>haemaccue</value>
 	</haemoglobinRecordingHbType>
-	<haemoglobinRecordingHbType>
-		<label>other</label>
-		<value>other</value>
-	</haemoglobinRecordingHbType>
 </haemoglobinRecordingHbTypes>
