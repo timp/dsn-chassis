@@ -359,6 +359,10 @@ declare function manta-plugin:after-list-collection(
     
     then manta-plugin:after-list-collection-submitted-media( $feed , $response-content-type )
     
+    else if ( $request-path-info = "/reviews/personal-data" )
+    
+    then manta-plugin:after-list-collection-all-personal-data-reviews( $feed , $response-content-type )
+    
     else
 
     	(: pass response data and content type through, we don't want to modify response :)
@@ -587,6 +591,38 @@ declare function manta-plugin:after-list-collection-all-submitted-media(
             let $entry-path-info := substring-after( $config:service-url , $entry/atom:link[@rel='edit']/@href )
             where not( manta-plugin:is-operation-forbidden( $CONSTANT:OP-RETRIEVE-MEMBER , $entry-path-info , () ) )
             return manta-plugin:augment-submitted-media-entry( $entry ) 
+            
+        }
+        </atom:feed>
+    
+    return ( $feed , $response-content-type )
+    
+};
+
+
+
+
+declare function manta-plugin:after-list-collection-all-personal-data-reviews(
+    $feed as element(atom:feed) ,
+    $response-content-type as xs:string?
+) as item()*
+{
+    
+    let $feed := 
+        <atom:feed>
+        {
+        
+            $feed/attribute::* ,
+            $feed/child::*[ not( local-name(.) = $CONSTANT:ATOM-ENTRY and namespace-uri(.) = $CONSTANT:ATOM-NSURI ) ] ,
+            
+            for $entry in $feed/atom:entry
+            return $entry ,
+            
+            (: include all members from sub-collections :)
+            for $entry in collection( concat( $config:base-collection-path , "/reviews/personal-data" ) )//atom:entry
+            let $entry-path-info := substring-after( $config:service-url , $entry/atom:link[@rel='edit']/@href )
+            where not( manta-plugin:is-operation-forbidden( $CONSTANT:OP-RETRIEVE-MEMBER , $entry-path-info , () ) )
+            return $entry 
             
         }
         </atom:feed>

@@ -40,9 +40,22 @@
                 <xforms:message ev:event="xforms-submit-error" level="modal">
                 	<p>An error occurred (<xforms:output value="event('error-type')"/>) while retrieving drafts.</p>
                	</xforms:message>
-               	<xforms:send ev:event="xforms-submit-done" submission="sub-get-all-submitted-media-feed"/>
+               	<xforms:send ev:event="xforms-submit-done" submission="sub-get-all-reviews-feed"/>
 			</xforms:submission>
 
+			<xforms:submission 
+				id="sub-get-all-reviews-feed"
+				resource="/atombeat/content/reviews/personal-data"
+				method="get"
+				replace="instance"
+				instance="ins-reviews-feed">
+				<!-- TODO error handling -->
+                <xforms:message ev:event="xforms-submit-error" level="modal">
+                	<p>An error occurred (<xforms:output value="event('error-type')"/>) while retrieving drafts.</p>
+               	</xforms:message>
+               	<xforms:send ev:event="xforms-submit-done" submission="sub-get-all-submitted-media-feed"/>
+			</xforms:submission>
+			
 			<xforms:submission 
 				id="sub-get-all-submitted-media-feed"
 				resource="/atombeat/content/media/submitted"
@@ -54,16 +67,20 @@
                 	<p>An error occurred (<xforms:output value="event('error-type')"/>) while retrieving drafts.</p>
                	</xforms:message>
 			</xforms:submission>
-        
-        	<xforms:send 
-				ev:event="xforms-model-construct-done" 
-				submission="sub-get-studies-feed"/>
+			
+			<xforms:action ev:event="xforms-model-construct-done">
+	        	<xforms:send submission="sub-get-studies-feed"/>
+			</xforms:action>
 				
 			<xforms:instance id="ins-studies-feed">
 				<atom:feed/>
 			</xforms:instance>
 			
 			<xforms:instance id="ins-submitted-media-feed">
+				<atom:feed/>
+			</xforms:instance>
+			
+			<xforms:instance id="ins-reviews-feed">
 				<atom:feed/>
 			</xforms:instance>
 			
@@ -78,59 +95,161 @@
     
 	    	<h1>Personal Data - Home</h1>
 
-	    	<h2>Submitted Media</h2>
-    	
-    		<xforms:group ref="instance('ins-submitted-media-feed')[empty(atom:entry)]">
-
-	    		<p>No results.</p>
+	    	<h2>New Files to Review</h2>
 	    	
-    		</xforms:group>
-	    	
-    		<xforms:group ref="instance('ins-submitted-media-feed')[exists(atom:entry)]">
 
-		    	<fr:datatable>
-		    		<thead>
-		    			<tr>
-		    				<th fr:sortable="false" fr:resizeable="true">Code</th>
-		    				<th fr:sortable="false" fr:resizeable="true">Original File Name</th>
-		    				<th fr:sortable="true" fr:resizeable="true">Contributor</th>
-		    				<th fr:sortable="true" fr:resizeable="true">Submitted</th>
-		    				<th fr:sortable="true" fr:resizeable="true">Study</th>
-		    				<th fr:sortable="false" fr:resizeable="true">Actions</th>
-		    			</tr>
-		    		</thead>
-		    		<tbody>
-		    			<xforms:repeat nodeset="atom:entry">
-		    				<tr>
-		    					<td>
-		    						<xforms:output value="manta:id"/>
-		    					</td>
-		    					<td>
-		    						<xforms:output value="atom:title"/>
-		    					</td>
-		    					<td>
-		    						<xforms:output value="atom:author/atom:email"/>
-		    					</td>
-		    					<td>
-		    						<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')"/>
-		    					</td>
-		    					<td>
-		    						<xforms:output value="
-		    							for $l in (atom:link[@rel='http://www.cggh.org/2010/chassis/terms/originStudy']/@href) 
-		    							return instance('ins-studies-feed')/atom:entry[atom:link[@rel='self']/@href=$l]/atom:title
-	    							"/>
-		    					</td>
-		    					<td>
-		    						<a href="review?entry={atom:link[@rel='self']/@href}">Review</a>
-		    					</td>
-		    				</tr>
-		    			</xforms:repeat>
-		    		</tbody>
-		    	</fr:datatable>
-		    	
-    		</xforms:group>
-    		
-    	
+	    	<fr:datatable>
+	    		<thead>
+	    			<tr>
+	    				<th fr:sortable="false" fr:resizeable="true">Code</th>
+	    				<th fr:sortable="false" fr:resizeable="true">Original File Name</th>
+	    				<th fr:sortable="true" fr:resizeable="true">Contributor</th>
+	    				<th fr:sortable="true" fr:resizeable="true">Submitted</th>
+<!--		    				<th fr:sortable="true" fr:resizeable="true">Study</th>-->
+	    				<th fr:sortable="false" fr:resizeable="true">Actions</th>
+	    			</tr>
+	    		</thead>
+	    		<tbody>
+	    			<xforms:repeat nodeset="
+	    				for $entry in instance('ins-submitted-media-feed')/atom:entry return
+			    			if ( 
+			    				empty( 
+			    					instance('ins-reviews-feed')/atom:entry
+			    						[ atom:link[@rel='http://www.cggh.org/2010/chassis/terms/reviewSubject']/@href = $entry/atom:link[@rel='self']/@href ] 
+		   						) 
+							) then $entry else ()
+					">
+	    				<tr>
+	    					<td>
+	    						<xforms:output value="manta:id"/>
+	    					</td>
+	    					<td>
+	    						<xforms:output value="atom:title"/>
+	    					</td>
+	    					<td>
+	    						<xforms:output value="atom:author/atom:email"/>
+	    					</td>
+	    					<td>
+	    						<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')"/>
+	    					</td>
+<!--		    					<td>-->
+<!--		    						<xforms:output value="-->
+<!--		    							for $l in (atom:link[@rel='http://www.cggh.org/2010/chassis/terms/originStudy']/@href) -->
+<!--		    							return instance('ins-studies-feed')/atom:entry[atom:link[@rel='self']/@href=$l]/atom:title-->
+<!--	    							"/>-->
+<!--		    					</td>-->
+	    					<td>
+	    						<a href="review?entry={atom:link[@rel='self']/@href}">Review</a>
+	    					</td>
+	    				</tr>
+	    			</xforms:repeat>
+	    		</tbody>
+	    	</fr:datatable>
+			    	
+	    	<h2>Files With Personal Data</h2>
+	    	
+	    	<fr:datatable>
+	    		<thead>
+	    			<tr>
+	    				<th fr:sortable="false" fr:resizeable="true">Code</th>
+	    				<th fr:sortable="false" fr:resizeable="true">Original File Name</th>
+	    				<th fr:sortable="true" fr:resizeable="true">Contributor</th>
+	    				<th fr:sortable="true" fr:resizeable="true">Submitted</th>
+<!--		    				<th fr:sortable="true" fr:resizeable="true">Study</th>-->
+	    				<th fr:sortable="false" fr:resizeable="true">Actions</th>
+	    			</tr>
+	    		</thead>
+	    		<tbody>
+	    			<xforms:repeat nodeset="
+	    				for $entry in instance('ins-submitted-media-feed')/atom:entry return
+			    			if ( 
+			    				exists( 
+			    					instance('ins-reviews-feed')/atom:entry[ 
+		    							atom:link[@rel='http://www.cggh.org/2010/chassis/terms/reviewSubject']/@href = $entry/atom:link[@rel='self']/@href 
+		    							and .//outcome='fail'
+	    							] 
+		   						) 
+							) then $entry else ()
+	    			">
+	    				<tr>
+	    					<td>
+	    						<xforms:output value="manta:id"/>
+	    					</td>
+	    					<td>
+	    						<xforms:output value="atom:title"/>
+	    					</td>
+	    					<td>
+	    						<xforms:output value="atom:author/atom:email"/>
+	    					</td>
+	    					<td>
+	    						<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')"/>
+	    					</td>
+<!--		    					<td>-->
+<!--		    						<xforms:output value="-->
+<!--		    							for $l in (atom:link[@rel='http://www.cggh.org/2010/chassis/terms/originStudy']/@href) -->
+<!--		    							return instance('ins-studies-feed')/atom:entry[atom:link[@rel='self']/@href=$l]/atom:title-->
+<!--	    							"/>-->
+<!--		    					</td>-->
+	    					<td>
+	    						<a href="TODO?entry={atom:link[@rel='self']/@href}">TODO</a>
+	    					</td>
+	    				</tr>
+	    			</xforms:repeat>
+	    		</tbody>
+	    	</fr:datatable>
+			    	
+	    	<h2>Files Passed for Curation</h2>
+	    	
+	    	<fr:datatable>
+	    		<thead>
+	    			<tr>
+	    				<th fr:sortable="false" fr:resizeable="true">Code</th>
+	    				<th fr:sortable="false" fr:resizeable="true">Original File Name</th>
+	    				<th fr:sortable="true" fr:resizeable="true">Contributor</th>
+	    				<th fr:sortable="true" fr:resizeable="true">Submitted</th>
+<!--		    				<th fr:sortable="true" fr:resizeable="true">Study</th>-->
+	    				<th fr:sortable="false" fr:resizeable="true">Actions</th>
+	    			</tr>
+	    		</thead>
+	    		<tbody>
+	    			<xforms:repeat nodeset="
+	    				for $entry in instance('ins-submitted-media-feed')/atom:entry return
+			    			if ( 
+			    				exists( 
+			    					instance('ins-reviews-feed')/atom:entry[ 
+		    							atom:link[@rel='http://www.cggh.org/2010/chassis/terms/reviewSubject']/@href = $entry/atom:link[@rel='self']/@href 
+		    							and .//outcome='pass'
+	    							] 
+		   						) 
+							) then $entry else ()
+	    			">
+	    				<tr>
+	    					<td>
+	    						<xforms:output value="manta:id"/>
+	    					</td>
+	    					<td>
+	    						<xforms:output value="atom:title"/>
+	    					</td>
+	    					<td>
+	    						<xforms:output value="atom:author/atom:email"/>
+	    					</td>
+	    					<td>
+	    						<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')"/>
+	    					</td>
+<!--		    					<td>-->
+<!--		    						<xforms:output value="-->
+<!--		    							for $l in (atom:link[@rel='http://www.cggh.org/2010/chassis/terms/originStudy']/@href) -->
+<!--		    							return instance('ins-studies-feed')/atom:entry[atom:link[@rel='self']/@href=$l]/atom:title-->
+<!--	    							"/>-->
+<!--		    					</td>-->
+	    					<td>
+	    						<a href="TODO?entry={atom:link[@rel='self']/@href}">TODO</a>
+	    					</td>
+	    				</tr>
+	    			</xforms:repeat>
+	    		</tbody>
+	    	</fr:datatable>
+			    	
     </body>
 </html>
 

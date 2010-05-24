@@ -80,11 +80,12 @@
 			
 			<xforms:instance id="ins-review-entry">
 				<atom:entry>
-					<atom:title type="text"></atom:title>
+					<atom:title type="text"/>
+					<atom:summary type="text"/>
 					<atom:link rel="http://www.cggh.org/2010/chassis/terms/reviewSubject" href="" type="application/atom+xml"/>
 					<atom:content type="application/vnd.chassis-manta+xml">
 						<review xmlns="">
-							<outcome></outcome>
+							<outcome/>
 						</review>
 					</atom:content>
 				</atom:entry>
@@ -155,6 +156,14 @@
 		    				<xforms:value>pass</xforms:value>
 		    			</xforms:item>
 		    		</xforms:select1>
+		    	</p>
+		    	
+		    	<p>
+		    		<xforms:textarea 
+		    			ref="instance('ins-review-entry')/atom:summary"
+		    			appearance="xxforms:autosize">
+		    			<xforms:label>Comments: </xforms:label>
+		    		</xforms:textarea>
 		    	</p>
 		    	
 		    	<p>
