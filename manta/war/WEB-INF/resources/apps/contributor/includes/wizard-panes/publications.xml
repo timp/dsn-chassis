@@ -96,6 +96,7 @@
 			<xforms:label>&lt; Previous</xforms:label>
 			<xforms:action ev:event="DOMActivate">
 				<xforms:setvalue ref="instance('ins-control')/fallback-wizard-pane" value="'publications'"/>
+				<xforms:setvalue ref="instance('ins-control')/show-draft-saved-message" value="'no'"/>
 				<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane" value="'upload-files'"/>
 				<xforms:send submission="sub-put-draft-entry"/>
 			</xforms:action>
@@ -105,6 +106,7 @@
 			<xforms:label>Save As Draft</xforms:label>
 			<xforms:action ev:event="DOMActivate">
 				<xforms:setvalue ref="instance('ins-control')/fallback-wizard-pane" value="'publications'"/>
+				<xforms:setvalue ref="instance('ins-control')/show-draft-saved-message" value="'yes'"/>
 				<xforms:send submission="sub-put-draft-entry"/>
 			</xforms:action>
 		</xforms:trigger>
@@ -113,6 +115,7 @@
 			<xforms:label>Next &gt;</xforms:label>
 			<xforms:action ev:event="DOMActivate">
 				<xforms:setvalue ref="instance('ins-control')/fallback-wizard-pane" value="'publications'"/>
+				<xforms:setvalue ref="instance('ins-control')/show-draft-saved-message" value="'no'"/>
 				<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane" value="'review'"/>
 				<xforms:send submission="sub-put-draft-entry" />
 			</xforms:action>
@@ -122,6 +125,7 @@
 			<xforms:label>Skip To End &gt;&gt;</xforms:label>
 			<xforms:action ev:event="DOMActivate">
 				<xforms:setvalue ref="instance('ins-control')/fallback-wizard-pane" value="'permissions'"/>
+				<xforms:setvalue ref="instance('ins-control')/show-draft-saved-message" value="'no'"/>
 				<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane" value="'review'"/>
 				<xforms:send submission="sub-put-draft-entry"/>
 			</xforms:action>
