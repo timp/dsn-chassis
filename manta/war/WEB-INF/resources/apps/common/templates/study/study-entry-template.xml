@@ -109,20 +109,26 @@
 
 				<recrudescenceAndReinfection />
 			</clinical>
+
+
+
 			<pharmacology>
 				<sample>
-					<sample-matrix />
-					<sample-volume />
-					<sample-storageTemperature />
-					<sample-storageDuration />
-					<sample-storageHandling />
-					<sample-preparation />
-					<sample-samplingTimes />
+					<plannedNumberOfSamples/>
+					<volume />
+					<anticoagulent />
+					<centrifugeTime />
+					<matrix />
+					<storage>
+						<storageTemperature />
+						<storageDuration />
+					</storage>
+					<preparationReference />
 				</sample>
 				<analytes>
-					<analytes-totalDrug />
-					<analytes-freeDrug />
-					<analytes-metabolite1 />
+					<totalDrug />
+					<freeDrug />
+					<metabolite1 />
 					<analytes-metabolite2 />
 				</analytes>
 				<analysisModel />
@@ -159,6 +165,9 @@
 				</treatmentRegimens>
 
 			</pharmacology>
+
+
+
 			<invitro>
 				<inclusionCriteria />
 				<analysisSite />

@@ -1,23 +1,23 @@
 <!-- Closed list of sample matix types -->
-<sampleMatrixTypes xmlns="">
-	<matrix>
+<sampleMatrixTypeTypes xmlns="">
+	<sampleMatrixType>
 		<label>whole blood capillary blood</label>
 		<value>wholebloodcapillaryblood</value>
-	</matrix>
-	<matrix>
+	</sampleMatrixType>
+	<sampleMatrixType>
 		<label>blood spots</label>
 		<value>bloodspots</value>
-	</matrix>
-	<matrix>
+	</sampleMatrixType>
+	<sampleMatrixType>
 		<label>serum</label>
 		<value>serum</value>
-	</matrix>
-	<matrix>
+	</sampleMatrixType>
+	<sampleMatrixType>
 		<label>plasma</label>
 		<value>plasma</value>
-	</matrix>
-	<matrix>
+	</sampleMatrixType>
+	<sampleMatrixType>
 		<label>free fraction plasma</label>
-		<value>freefractionplasma</value>
-	</matrix>
-</sampleMatrixTypes>
+		<value>freeFractionPlasma</value>
+	</sampleMatrixType>
+</sampleMatrixTypeTypes>
