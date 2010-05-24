@@ -73,7 +73,40 @@
 						<HtcAssumed />
 						<thinFilmCalculationOfParasitemiaOther />
 					</thinFilmCalculationOfParasitemia>
+					<qualityControl>
+						<internal>
+							<percentageRereadBySecondMicroscopist />
+							<rereadSlideSelectionMechanism />
+							<rereadSlideSelectionMechanismOther />
+						</internal>
+						<external>
+							<percentageRereadBySecondMicroscopist />
+							<rereadSlideSelectionMechanism />
+							<rereadSlideSelectionMechanismOther />
+						</external>
+					</qualityControl>
 				</microscopy>
+				<geneotypingToDistinguishBetweenRecrudescenceAndReinfection>
+					<applicability />
+					<applicable>
+						<markers>
+							<recrudescenceMarker>
+								<markerName />
+								<markerOther />
+								<numberOfMicroSatellites />
+							</recrudescenceMarker>
+						</markers>
+						<genotypingLaboratory />
+						<markerDiscriminant />
+						<markerDiscriminantOther />
+						<analysisProtocol>
+							<mixedAlleles />
+							<recrudescence />
+							<reinfection />
+						</analysisProtocol>
+					</applicable>
+				</geneotypingToDistinguishBetweenRecrudescenceAndReinfection>
+
 				<recrudescenceAndReinfection />
 			</clinical>
 			<pharmacology>

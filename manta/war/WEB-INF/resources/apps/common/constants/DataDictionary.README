@@ -3,6 +3,8 @@ This Directory contains the Data Dictionary for the System.
 Each file contains the values which an element may take. 
 
 A note as to whether the value set may be extended should be placed in a comment. 
+
+FIXME the other value should not be in the vocab. 
 The open sets will include a term such as 'Other' and will be housed in a file with a name ending in '-terms'.
 
 All label values are in English, these will need to be duplicated in other languages. 
