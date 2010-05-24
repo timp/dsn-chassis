@@ -1,0 +1,14 @@
+<markerDiscriminants xmlns="">
+	<markerDiscriminant>
+		<label>Agarose gel - visual</label>
+		<value>agarroseGelVisual</value>
+	</markerDiscriminant>
+	<markerDiscriminant>
+		<label>Agarose gel - computerised</label>
+		<value>agarroseGelVisual</value>
+	</markerDiscriminant>
+	<markerDiscriminant>
+		<label>Cap Electrophoresis</label>
+		<value>capElectrophoresis</value>
+	</markerDiscriminant>
+</markerDiscriminants>

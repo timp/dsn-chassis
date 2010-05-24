@@ -70,7 +70,7 @@
 					<xforms:bind nodeset="priorAntimalarials" type="xs:string" />
 					<xforms:bind nodeset="priorAntimalarialsDetermination"
 						type="xs:string" />
-					<xforms:bind nodeset="priorAntimalarialsHistoryWeeks" 
+					<xforms:bind nodeset="priorAntimalarialsHistoryWeeks"
 						relevant="contains(../priorAntimalarialsDetermination,'history')" />
 				</xforms:bind>
 				<xforms:bind nodeset="pregnancy" />
@@ -185,6 +185,47 @@
 						<xforms:bind nodeset="thinFilmCalculationOfParasitemiaOther" />
 					</xforms:bind>
 
+					<xforms:bind nodeset="qualityControl">
+						<xforms:bind nodeset="internal">
+							<xforms:bind nodeset="percentageRereadBySecondMicroscopist"
+								type="ctype:percentage" />
+							<xforms:bind nodeset="rereadSlideSelectionMechanism" />
+							<xforms:bind nodeset="rereadSlideSelectionMechanismOther"
+								relevant="contains(../rereadSlideSelectionMechanism, 'other')" />
+						</xforms:bind>
+						<xforms:bind nodeset="external">
+							<xforms:bind nodeset="percentageRereadBySecondMicroscopist"
+								type="ctype:percentage" />
+							<xforms:bind nodeset="rereadSlideSelectionMechanism" />
+							<xforms:bind nodeset="rereadSlideSelectionMechanismOther"
+								relevant="contains(../rereadSlideSelectionMechanism, 'other')" />
+						</xforms:bind>
+					</xforms:bind>
+
+				</xforms:bind>
+				<xforms:bind
+					nodeset="geneotypingToDistinguishBetweenRecrudescenceAndReinfection">
+					<xforms:bind nodeset="applicability" />
+					<xforms:bind nodeset="applicable"
+						relevant="contains(../applicability, 'yes')">
+						<xforms:bind nodeset="markers">
+							<xforms:bind nodeset="recrudescenceMarker">
+								<xforms:bind nodeset="markerName" />
+								<xforms:bind nodeset="markerOther"
+									relevant="contains(../markerName, 'other')" />
+								<xforms:bind nodeset="numberOfMicroSatellites"
+									relevant="contains(../markerName, 'satellite')" />
+							</xforms:bind>
+						</xforms:bind>
+						<xforms:bind nodeset="genotypingLaboratory" />
+						<xforms:bind nodeset="markerDiscriminant" required="true()" />
+						<xforms:bind nodeset="markerDiscriminantOther" relevant="contains(../markerDiscriminant, 'other')"/>
+						<xforms:bind nodeset="analysisProtocol">
+							<xforms:bind nodeset="mixedAlleles"  required="true()"/>
+							<xforms:bind nodeset="recrudescence"  required="true()"/>
+							<xforms:bind nodeset="reinfection"  required="true()"/>
+						</xforms:bind>
+					</xforms:bind>
 				</xforms:bind>
 
 			</xforms:bind>
@@ -279,7 +320,7 @@
 						<xforms:bind nodeset="preparationDate" type="xs:date"
 							relevant="contains(../batchesIncludedInRawData, 'no')" />
 						<xforms:bind nodeset="parasitaemia3D7"
-							relevant="contains(../batchesIncludedInRawData, 'no')" />
+							relevant="contains(../batchesIncludedInRawData, 'no')" type="ctype:percentage" />
 						<xforms:bind nodeset="ringForms" />
 					</xforms:bind>
 				</xforms:bind>
@@ -336,6 +377,10 @@
 		src="/apps/common/constants/whiteBloodCellCountSources.xml" />
 	<xforms:instance id="ins-HtcSource-items"
 		src="/apps/common/constants/HtcSources.xml" />
+	<xforms:instance id="ins-recrudescenceMarker-items"
+		src="/apps/common/constants/recrudescenceMarkers.xml" />
+	<xforms:instance id="ins-markerDiscriminant-items"
+		src="/apps/common/constants/markerDiscriminants.xml" />
 
 
 	<xforms:instance id="ins-incubatorSystem-items"
@@ -376,6 +421,14 @@
 			<regimenUrl />
 			<drugs />
 		</regimen>
+	</xforms:instance>
+
+	<xforms:instance id="ins-recrudescenceMarker">
+		<recrudescenceMarker xmlns="">
+			<markerName />
+			<markerOther />
+			<numberOfMicroSatellites />
+		</recrudescenceMarker>
 	</xforms:instance>
 
 	<xforms:instance id="ins-drug">
