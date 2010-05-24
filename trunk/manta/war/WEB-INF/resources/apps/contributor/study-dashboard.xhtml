@@ -37,12 +37,13 @@
         	<!-- non-persistent model for application state -->
         	<xforms:instance id="ins-control">
         		<control xmlns="">
-        			<current-dashboard-tab>summary</current-dashboard-tab>
+        			<!-- Defaults to summary if there is no tab request-paramater, determined in the setvalue logic below. -->
+        			<current-dashboard-tab />
         			<add-publication-trigger/>
         		</control>
         	</xforms:instance>
         	
-        	<xforms:setvalue ev:event="xforms-model-construct-done" ref="instance('ins-control')/current-dashboard-tab" value="xxforms:get-request-parameter('tab')" />
+        	<xforms:setvalue ev:event="xforms-model-construct-done" ref="instance('ins-control')/current-dashboard-tab" value="if(not(empty(xxforms:get-request-parameter('tab')))) then xxforms:get-request-parameter('tab') else 'summary'" />
 
 			<xforms:bind nodeset="instance('ins-control')/add-publication-trigger" relevant="instance('ins-study-entry')/atom:content/study/study-is-published='true'"/>
         
@@ -77,7 +78,7 @@
 		        ref="instance('ins-study-entry')"
 		        mediatype="application/atom+xml">
 		        <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while saving the study.</xforms:message>
-		        <xforms:message ev:event="xforms-submit-done" level="modal">Your changes have been saved, thank you.</xforms:message>
+		        <xforms:message ev:event="xforms-submit-done" level="modal">Your changes have been saved.</xforms:message>
 		    </xforms:submission>
         	
         	
@@ -115,6 +116,7 @@
   			</xforms:instance>
   			
   			
+  			<xforms:instance id="ins-person-template" src="/apps/common/templates/study/person-template.xml"/>
   			
   			
   			<xforms:instance id="ins-publication-template" src="/apps/common/templates/study/publication-template.xml"/>

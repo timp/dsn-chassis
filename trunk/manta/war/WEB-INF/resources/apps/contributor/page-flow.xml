@@ -19,7 +19,7 @@
 
   <page id="home" path-info="/contributor/home" view="home.xhtml"/>
   
-  <page path-info="/contributor/register-study" view="register-study.xhtml"/>
+  <page path-info="/contributor/register-study-wizard" view="register-study-wizard.xhtml"/>
   
   <page path-info="/contributor/terms" view="includes/terms.xhtml"/>
   

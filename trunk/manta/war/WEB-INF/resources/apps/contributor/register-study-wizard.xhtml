@@ -31,6 +31,44 @@
         
         <xforms:model>
 
+           <!-- This keeps application state variables, such as where to go after hitting next (saves having a different submission (success response) for each button) -->
+           <!-- It shouldn't be saved in the draft-entry. -->
+           <!-- Thought about providing a default fallback pane here, but it should really be specified in context during the application and a default would mask an error. -->
+       		<xforms:instance id="ins-control">
+                <control xmlns="">
+                	<fallback-wizard-pane/>
+                	<wizard-pane-is-valid/>
+                	<create-draft-trigger/>
+                	<save-draft-trigger/>
+                	<add-publication-trigger/>
+                	<show-draft-saved-message/>
+                	<draft-is-saved/>
+                </control>
+            </xforms:instance>    
+            
+			<xforms:action ev:event="xxforms-invalid" ev:observer="ins-draft-entry">
+				<xforms:setvalue ev:event="xforms-value-changed" ref="instance('ins-control')/wizard-pane-is-valid">false</xforms:setvalue>
+			</xforms:action>
+			<xforms:action ev:event="xxforms-valid" ev:observer="ins-draft-entry">
+				<xforms:setvalue ev:event="xforms-value-changed" ref="instance('ins-control')/wizard-pane-is-valid">true</xforms:setvalue>
+			</xforms:action>
+            
+            <!-- Why doesn't this work? -->
+            <!-- 
+            <xforms:action ev:event="xforms-value-changed" ev:observer="ins-draft-entry">
+            	<xforms:setvalue ref="instance('ins-control')/draft-is-saved">false</xforms:setvalue>
+            </xforms:action>
+             -->
+            
+            <xforms:bind nodeset="instance('ins-control')/create-draft-trigger" readonly="not(../wizard-pane-is-valid = 'true')"/>
+            <xforms:bind nodeset="instance('ins-control')/create-draft-trigger" relevant="not(instance('ins-draft-entry')/atom:link[@rel='edit'])"/>
+			<xforms:bind nodeset="instance('ins-control')/save-draft-trigger" readonly="not(../wizard-pane-is-valid = 'true')"/>
+			<xforms:bind nodeset="instance('ins-control')/add-publication-trigger" relevant="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:content/study/study-is-published='true'"/>
+			<xforms:bind nodeset="instance('ins-control')/show-draft-saved-message" relevant="instance('ins-control')[draft-is-saved='true']"/>
+			
+			
+			
+
         	<!-- xincludes don't parse within instance sources. -->
         	<!--   <xforms:instance id="ins-draft-entry" src="/apps/contributor/includes/model-instances/draft-entry.xml"/> -->
         	<!--  The temptation is to factor out instances to centralised file sources, but then you can't put includes in them. -->
@@ -41,7 +79,7 @@
        				<atom:content type="application/vnd.chassis-manta+xml">
 			        	<draft xmlns="">
 							<wizard-pane>study-terms</wizard-pane>
-							<agreement-to-terms/>
+							<registrant-has-agreed-to-the-terms/>
 							<study-entry-container>
 								<!-- TODO: need to clean the original -->
 								<xi:include href="/apps/common/templates/study/clean-study-entry-template.xml" xxi:omit-xml-base="true"/>
@@ -164,7 +202,7 @@
                 
                 
                 <!-- If there was no error, then reload with the draft reference in the URL. -->
-                <xforms:load ev:event="xforms-submit-done" resource="register-study?draft={instance('ins-draft-entry')/atom:link[@rel='self']/@href}"/>
+                <xforms:load ev:event="xforms-submit-done" resource="register-study-wizard?draft={instance('ins-draft-entry')/atom:link[@rel='self']/@href}"/>
                 
 				<!-- If there was an error, then go back to the fallback-wizard-pane and show the error. -->
 				<xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane" value="instance('ins-control')/fallback-wizard-pane"  />
@@ -174,31 +212,6 @@
 
             
            
-           <!-- This keeps application state variables, such as where to go after hitting next (saves having a different submission (success response) for each button) -->
-           <!-- It shouldn't be saved in the draft-entry. -->
-           <!-- Thought about providing a default fallback pane, but it should really be specified in context during the application and a default would mask an error. -->
-       		<xforms:instance id="ins-control">
-                <control xmlns="">
-                	<fallback-wizard-pane/>
-                	<wizard-pane-is-valid>false</wizard-pane-is-valid>
-                	<create-draft-trigger/>
-                	<save-draft-trigger/>
-                	<add-publication-trigger/>
-                </control>
-            </xforms:instance>    
-            
-			<xforms:action ev:event="xxforms-invalid" ev:observer="ins-draft-entry">
-				<xforms:setvalue ev:event="xforms-value-changed" ref="instance('ins-control')/wizard-pane-is-valid">false</xforms:setvalue>
-			</xforms:action>
-			<xforms:action ev:event="xxforms-valid" ev:observer="ins-draft-entry">
-				<xforms:setvalue ev:event="xforms-value-changed" ref="instance('ins-control')/wizard-pane-is-valid">true</xforms:setvalue>
-			</xforms:action>
-            
-            
-            <xforms:bind nodeset="instance('ins-control')/create-draft-trigger" readonly="not(../wizard-pane-is-valid = 'true')"/>
-            <xforms:bind nodeset="instance('ins-control')/create-draft-trigger" relevant="not(instance('ins-draft-entry')/atom:link[@rel='edit'])"/>
-			<xforms:bind nodeset="instance('ins-control')/save-draft-trigger" readonly="not(../wizard-pane-is-valid = 'true')"/>
-			<xforms:bind nodeset="instance('ins-control')/add-publication-trigger" relevant="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:content/study/study-is-published='true'"/>
 
 			<!-- This will put the draft-entry to the edit link href. -->
             <xforms:submission 
@@ -210,7 +223,14 @@
                 instance="ins-draft-entry"
                 mediatype="application/atom+xml"> 
                 <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while saving the draft.</xforms:message>
-                <xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane" value="instance('ins-control')/fallback-wizard-pane"/>                
+                <xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane" value="instance('ins-control')/fallback-wizard-pane"/>
+                
+                
+	            <xforms:setvalue ev:event="xforms-submit-done" ref="instance('ins-control')/draft-is-saved">true</xforms:setvalue>
+	            
+	            <xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-control')/draft-is-saved">false</xforms:setvalue>
+	            
+                                
             </xforms:submission>
 
 
@@ -222,7 +242,7 @@
         
 
         	<!-- bindings for the study-terms pane -->
-			<xforms:bind nodeset="instance('ins-draft-entry')/atom:content/draft/agreement-to-terms" required="true()"/>
+			<xforms:bind nodeset="instance('ins-draft-entry')/atom:content/draft/registrant-has-agreed-to-the-terms" required="true()"/>
 			<xforms:bind nodeset="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:title" required="true()"/>
 
 
@@ -283,20 +303,29 @@
                 
                 
                 <!-- If done, then post the uploads. -->
-                <xforms:send ev:event="xforms-submit-done" submission="sub-post-uploads"/>
+                <xforms:action ev:event="xforms-submit-done">
+                	<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/uploads-entry-container/atom:entry/atom:content/uploads/@target" value="instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/submittedMedia']/@href"/>
+                	<xforms:send submission="sub-post-uploads"/>
+                </xforms:action>
                 
 				<!-- If error, then go back to the fallback-wizard-pane and show the error. -->
 				<xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane" value="instance('ins-control')/fallback-wizard-pane"  />
 				<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while applying the permissions.</xforms:message>
                          
             </xforms:submission>
+
+			<!-- This stores the uploads entry once it has been posted (just for debugging reference, it isn't used) -->
+			<xforms:instance id="ins-uploads-entry">
+				<atom:entry/>
+			</xforms:instance>
             
             <xforms:submission 
             	id="sub-post-uploads" 
             	ref="instance('ins-draft-entry')/atom:content/draft/uploads-entry-container/atom:entry"
-                resource="{instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/submittedMedia']/@href}"
+                resource="/util/store-uploads"
                 method="post" 
-                replace="none" 
+                replace="instance"
+                instance="ins-uploads-entry" 
                 mediatype="application/atom+xml">
 
 				<!-- If error, then go back to the fallback-wizard-pane and show the error. -->
@@ -351,13 +380,12 @@
 			    		<xi:include href="/apps/contributor/includes/help-boxes/for-wizard-panes/confirmation.xml"/>
 			    	</xforms:group>
 		   	</div>
-
-
-
-
-			<xforms:group id="draft-saved-message" ref="instance('ins-draft-entry')/atom:content/draft[not(wizard-pane='study-terms')]">
-				<p>TODO: The draft has been saved.</p>
-			</xforms:group>	
+		   	
+		   	<xforms:group ref="instance('ins-control')[draft-is-saved='true']">
+			   	<xforms:group ref="instance('ins-control')[show-draft-saved-message='yes']">
+		    		<p>A draft has been saved.</p>
+		    	</xforms:group>
+	    	</xforms:group>
 	    	
 	    	<xforms:group ref="instance('ins-draft-entry')/atom:content/draft[wizard-pane='study-terms']">
 	    		<xi:include href="/apps/contributor/includes/wizard-panes/study-terms.xml"/>

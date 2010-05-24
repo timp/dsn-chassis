@@ -95,7 +95,7 @@
 	    	<h1>Contributor Home</h1>
 
 	    	<ul>
-	    		<li><a href="register-study">Register Study</a></li>
+	    		<li><a href="register-study-wizard">Register Study</a></li>
 	    	</ul>
 
 
@@ -105,7 +105,7 @@
 
 					<ul>
 	    				<xforms:repeat nodeset="xxforms:sort(instance('ins-draft-feed')/atom:entry, atom:published, 'text', 'ascending')">
-	    					<li><a href="register-study?draft={atom:link[@rel='edit']/@href}"><xforms:output value="atom:title"/> (<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')" />)</a>
+	    					<li><a href="register-study-wizard?draft={atom:link[@rel='edit']/@href}"><xforms:output value="atom:title"/> (<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')" />)</a>
 	    					</li>
 	    				</xforms:repeat>
 	    			</ul>
@@ -138,7 +138,7 @@
 		    			</tr>
 		    		</thead>
 		    		<tbody>
-		    			<xforms:repeat nodeset="instance('ins-study-feed')/atom:entry">
+		    			<xforms:repeat nodeset="xxforms:sort(instance('ins-study-feed')/atom:entry, atom:published, 'text', 'ascending')">
 		    				<tr>
 		    					<td>
 		    						<a href="study-dashboard?study={atom:link[@rel='edit']/@href}"><xforms:output value="manta:id"/></a>
