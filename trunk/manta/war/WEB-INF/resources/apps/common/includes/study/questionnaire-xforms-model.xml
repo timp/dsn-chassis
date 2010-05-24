@@ -219,11 +219,12 @@
 						</xforms:bind>
 						<xforms:bind nodeset="genotypingLaboratory" />
 						<xforms:bind nodeset="markerDiscriminant" required="true()" />
-						<xforms:bind nodeset="markerDiscriminantOther" relevant="contains(../markerDiscriminant, 'other')"/>
+						<xforms:bind nodeset="markerDiscriminantOther"
+							relevant="contains(../markerDiscriminant, 'other')" />
 						<xforms:bind nodeset="analysisProtocol">
-							<xforms:bind nodeset="mixedAlleles"  required="true()"/>
-							<xforms:bind nodeset="recrudescence"  required="true()"/>
-							<xforms:bind nodeset="reinfection"  required="true()"/>
+							<xforms:bind nodeset="mixedAlleles" required="true()" />
+							<xforms:bind nodeset="recrudescence" required="true()" />
+							<xforms:bind nodeset="reinfection" required="true()" />
 						</xforms:bind>
 					</xforms:bind>
 				</xforms:bind>
@@ -327,7 +328,21 @@
 
 			</xforms:bind>
 			<xforms:bind nodeset="pharmacology"
-				relevant="contains(../modules, 'pharmacology')" />
+				relevant="contains(../modules, 'pharmacology')">
+				<xforms:bind nodeset="sample">
+					<xforms:bind nodeset="plannedNumberOfSamples"/>
+					<xforms:bind nodeset="volume" />
+					<xforms:bind nodeset="anticoagulent" />
+					<xforms:bind nodeset="centrifugeTime" />
+					<xforms:bind nodeset="matrix" />
+					<xforms:bind nodeset="storage">
+						<xforms:bind nodeset="storageTemperature" />
+						<xforms:bind nodeset="storageDuration" />
+					</xforms:bind>
+					<xforms:bind nodeset="preparationReference" />
+				</xforms:bind>
+
+			</xforms:bind>
 		</xforms:bind>
 	</xforms:bind>
 
@@ -413,6 +428,11 @@
 		src="/apps/common/constants/molecularMarkersFalciparum.xml" />
 	<xforms:instance id="ins-molecularMarkerVivax-items"
 		src="/apps/common/constants/molecularMarkersVivax.xml" />
+
+	<xforms:instance id="ins-sampleMatrixType-items"
+		src="/apps/common/constants/sampleMatrixTypes.xml" />
+
+
 
 	<xforms:instance id="ins-regimen">
 		<regimen xmlns="">
