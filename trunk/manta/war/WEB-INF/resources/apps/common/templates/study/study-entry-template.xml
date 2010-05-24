@@ -16,9 +16,12 @@
 				<minParasitaemia />
 				<maxParasitaemia />
 				<excludeIfPriorAntimalarials />
-				<priorAntimalarials />
-				<priorAntimalarialsDetermination />
-				<priorAntimalarialsHistoryWeeks />
+				<priorAntimalarialsExclusion>
+					<priorAntimalarials />
+					<priorAntimalarialsDetermination />
+					<priorAntimalarialsHistoryWeeks />
+				</priorAntimalarialsExclusion>
+				<pregnancy />
 			</inclusionExclusionCriteria>
 			<clinical>
 				<treatment>
@@ -42,31 +45,32 @@
 					<haemoglobinRecording>
 						<haemoglobinRecordingType />
 						<haemoglobinRecordingHbType />
+						<haemoglobinRecordingHbTypeOther />
 					</haemoglobinRecording>
 				</followup>
 				<microscopy>
 					<microscopyFilmType />
 					<microscopyStain />
 					<microscopyStainOther />
-					<asexualParasitemiaCount/>
-					<asexualParasitemiaCountUnit/>
-					<asexualParasitemiaCountUnitOther/>
-					<sexualParasitemiaCount/>
-					<sexualParasitemiaCountUnit/>
-					<sexualParasitemiaCountUnitOther/>
-					<separateSpeciesCounts/>
+					<asexualParasitemiaCount />
+					<asexualParasitemiaCountUnit />
+					<asexualParasitemiaCountUnitOther />
+					<sexualParasitemiaCount />
+					<sexualParasitemiaCountUnit />
+					<sexualParasitemiaCountUnitOther />
+					<separateSpeciesCounts />
 					<thickFilmCalculationOfParasitemia>
-						<thickFilmFormula/>
-						<thickFilmFormulaOther/>
-						<WBCSource/>
-						<WBCAssumed/>
+						<thickFilmFormula />
+						<thickFilmFormulaOther />
+						<WBCSource />
+						<WBCAssumed />
 						<thickFilmCalculationOfParasitemiaOther />
 					</thickFilmCalculationOfParasitemia>
 					<thinFilmCalculationOfParasitemia>
-						<thinFilmFormula/>
-						<thinFilmFormulaOther/>
-						<HtcSource/>
-						<HtcAssumed/>
+						<thinFilmFormula />
+						<thinFilmFormulaOther />
+						<HtcSource />
+						<HtcAssumed />
 						<thinFilmCalculationOfParasitemiaOther />
 					</thinFilmCalculationOfParasitemia>
 				</microscopy>
