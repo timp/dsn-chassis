@@ -349,34 +349,55 @@
 					<xforms:value ref="value" />
 				</xforms:itemset>
 			</xforms:select1>
-			<br />
-			<xforms:select1 ref="priorAntimalarials" appearance="minimal">
-				<xforms:label class="fixed-width">Prior anti-malarials</xforms:label>
-				<xforms:item>
-					<xforms:label>Any</xforms:label>
-					<xforms:value>any</xforms:value>
-				</xforms:item>
-				<xforms:itemset model="mod-study-questionnaire"
-					nodeset="instance('ins-drugMolecule-items')/drugMolecule">
-					<xforms:label ref="label" />
-					<xforms:value ref="value" />
-				</xforms:itemset>
-			</xforms:select1>
-			<br />
-			<xforms:select1 ref="priorAntimalarialsDetermination"
-				appearance="minimal">
-				<xforms:label class="fixed-width">How were prior treatments
-					determined?</xforms:label>
-				<xforms:itemset model="mod-study-questionnaire"
-					nodeset="instance('ins-priorAntimalarialsDetermination-items')/priorAntimalarialsDetermination">
-					<xforms:label ref="label" />
-					<xforms:value ref="value" />
-				</xforms:itemset>
-			</xforms:select1>
+			<xforms:group ref="priorAntimalarialsExclusion">
+				<xforms:select1 ref="priorAntimalarials" appearance="minimal">
+					<xforms:label class="fixed-width">
+						Prior anti-malarials
+					</xforms:label>
+					<xforms:item>
+						<xforms:label>Any</xforms:label>
+						<xforms:value>any</xforms:value>
+					</xforms:item>
+					<xforms:itemset model="mod-study-questionnaire"
+						nodeset="instance('ins-drugMolecule-items')/drugMolecule">
+						<xforms:label ref="label" />
+						<xforms:value ref="value" />
+					</xforms:itemset>
+				</xforms:select1>
+				<br />
+				<xforms:select1 ref="priorAntimalarialsDetermination"
+					appearance="minimal">
+					<xforms:label class="fixed-width">
+						How were prior treatments
+						determined?</xforms:label>
+					<xforms:itemset model="mod-study-questionnaire"
+						nodeset="instance('ins-priorAntimalarialsDetermination-items')/priorAntimalarialsDetermination">
+						<xforms:label ref="label" />
+						<xforms:value ref="value" />
+					</xforms:itemset>
+				</xforms:select1>
 
-			<xforms:input ref="priorAntimalarialsHistoryWeeks">
-				<xforms:label>Number of weeks </xforms:label>
-			</xforms:input>
+				<xforms:input ref="priorAntimalarialsHistoryWeeks">
+					<xforms:label>Number of weeks </xforms:label>
+				</xforms:input>
+			</xforms:group>
+			
+			
+			<xforms:select1 ref="pregnancy" appearance="minimal">
+				<xforms:label class="fixed-width">Pregnancy</xforms:label>
+				<xforms:item>
+					<xforms:label>N/A</xforms:label>
+					<xforms:value />
+				</xforms:item>
+				<xforms:item>
+					<xforms:label>Include</xforms:label>
+					<xforms:value>include</xforms:value>
+				</xforms:item>
+				<xforms:item>
+					<xforms:label>Exclude</xforms:label>
+					<xforms:value>exclude</xforms:value>
+				</xforms:item>
+			</xforms:select1>
 
 		</xforms:group>
 
