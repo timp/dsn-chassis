@@ -3,7 +3,13 @@
 	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events"
 	xmlns:atom="http://www.w3.org/2005/Atom" xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
 	xmlns:ctype="http://www.cggh.org/chassis-types" xmlns:xi="http://www.w3.org/2001/XInclude">
-
+<style>
+span.xforms-group {
+	display:block;
+	margin: 6px;
+	border: 1px solid green; 
+}
+</style>
 	<xforms:group model="mod-study-questionnaire"
 		ref="instance('ins-sq-study-entry')/atom:content/study">
 
@@ -382,7 +388,7 @@
 				</xforms:input>
 			</xforms:group>
 
-
+<br/>
 			<xforms:select1 ref="pregnancy" appearance="minimal">
 				<xforms:label class="fixed-width">Pregnancy</xforms:label>
 				<xforms:item>
