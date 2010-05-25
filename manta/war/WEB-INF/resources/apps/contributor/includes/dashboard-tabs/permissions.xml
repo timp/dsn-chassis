@@ -6,7 +6,7 @@
 
     <h2>Administrators</h2>
     
-    <xforms:group ref="instance('ins-acl')//atombeat:security-descriptor/atombeat:groups/atombeat:group[@id='GROUP_ADMINISTRATORS']">
+    <xforms:group ref="instance('ins-permissions-entry')//atombeat:security-descriptor/atombeat:groups/atombeat:group[@id='GROUP_ADMINISTRATORS']">
 		<table>
 			<xforms:repeat nodeset="atombeat:member" id="rep-administrator">
 				<tr>
@@ -58,7 +58,7 @@
 	</xforms:group>
 	
      <p>
-         <xforms:submit submission="sub-put-acl">
+         <xforms:submit submission="sub-put-permissions-entry">
              <xforms:label>Save Changes</xforms:label>
          </xforms:submit>
      </p>

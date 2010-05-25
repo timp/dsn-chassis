@@ -123,7 +123,7 @@
 
 				
 			<xforms:bind nodeset="instance('ins-draft-entry')/atom:content/draft/uploads-entry-container/atom:entry/atom:content/uploads">
-				<xforms:bind nodeset="@target" calculate="instance('ins-draft-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/submittedMedia']/@href"/>
+				<xforms:bind nodeset="@target" calculate="instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/submittedMedia']/@href"/>
 				<xforms:bind nodeset="upload">
 					<xforms:bind nodeset="@typeterm" required="true()"/>
 					<xforms:bind nodeset="@typelabel" relevant="../@typeterm='http://www.cggh.org/2010/chassis/terms/Other'"/>
@@ -303,10 +303,7 @@
                 
                 
                 <!-- If done, then post the uploads. -->
-                <xforms:action ev:event="xforms-submit-done">
-                	<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/uploads-entry-container/atom:entry/atom:content/uploads/@target" value="instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/submittedMedia']/@href"/>
-                	<xforms:send submission="sub-post-uploads"/>
-                </xforms:action>
+                <xforms:send ev:event="xforms-submit-done" submission="sub-post-uploads"/>
                 
 				<!-- If error, then go back to the fallback-wizard-pane and show the error. -->
 				<xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane" value="instance('ins-control')/fallback-wizard-pane"  />
@@ -314,9 +311,8 @@
                          
             </xforms:submission>
 
-			<!-- This stores the uploads entry once it has been posted (just for debugging reference, it isn't used) -->
-			<xforms:instance id="ins-uploads-entry">
-				<atom:entry/>
+			<xforms:instance id="ins-uploads-feed">
+				<atom:feed/>
 			</xforms:instance>
             
             <xforms:submission 
@@ -325,13 +321,25 @@
                 resource="/util/store-uploads"
                 method="post" 
                 replace="instance"
-                instance="ins-uploads-entry" 
-                mediatype="application/atom+xml">
+				instance="ins-uploads-feed">
+				
+				<!-- If done, then delete the draft. -->
+                <xforms:send ev:event="xforms-submit-done" submission="sub-delete-draft"/>
 
 				<!-- If error, then go back to the fallback-wizard-pane and show the error. -->
-				<xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane" value="instance('ins-control')/fallback-wizard-pane"  />
+				<xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane" value="instance('ins-control')/fallback-wizard-pane"/>
 				<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while storing the files.</xforms:message>
                          
+            </xforms:submission>
+            
+            <xforms:submission 
+            	id="sub-delete-draft"  
+            	method="delete"
+            	replace="none"
+            	action="{instance('ins-draft-entry')/atom:link[@rel='edit']/@href}">
+            	
+            	<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while deleting the draft.</xforms:message>       
+            	
             </xforms:submission>
 
         </xforms:model>

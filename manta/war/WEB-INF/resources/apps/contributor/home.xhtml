@@ -82,15 +82,12 @@
 			
         </xforms:model>
 
-       	<!--  <xi:include href="/apps/common/includes/current-user-xforms-model.xml"/>
-       	 -->
+       	<!--  <xi:include href="/apps/common/includes/current-user-xforms-model.xml"/> -->
 
     </head>
     <body>
 
-		<!--
-		<xi:include href="/apps/common/includes/current-user-actions.xml"/>
-		 -->
+		<!-- <xi:include href="/apps/common/includes/current-user-actions.xml"/> -->
     
 	    	<h1>Contributor Home</h1>
 
@@ -113,20 +110,16 @@
     		</xforms:group>    		
 
 
-
+			<h2>My Studies</h2>
 	    	
     		<xforms:group ref="instance('ins-study-feed')[count(atom:entry)=0]">
 
-		    	<h2>My Studies</h2>
-	    	
 	    		<p>You have not registered any studies.</p>
 	    	
     		</xforms:group>
 	    	
     		<xforms:group ref="instance('ins-study-feed')[count(atom:entry)>0]">
 
-		    	<h2>My Studies</h2>
-	    	
 		    	<fr:datatable>
 		    		<thead>
 		    			<tr>

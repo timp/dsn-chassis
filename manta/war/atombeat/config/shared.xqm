@@ -280,6 +280,7 @@ declare variable $config:drafts-collection-security-descriptor :=
             <!--  
             Contributors can create entries and can list the collection,
             but can only retrieve entries they have created.
+            They can also delete entries that they have created.
             -->
             
             <atombeat:ace>
@@ -292,6 +293,12 @@ declare variable $config:drafts-collection-security-descriptor :=
                 <atombeat:type>ALLOW</atombeat:type>
                 <atombeat:recipient type="role">ROLE_CHASSIS_CONTRIBUTOR</atombeat:recipient>
                 <atombeat:permission>LIST_COLLECTION</atombeat:permission>
+            </atombeat:ace>
+            
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_CONTRIBUTOR</atombeat:recipient>
+                <atombeat:permission>DELETE_MEMBER</atombeat:permission>
             </atombeat:ace>
             
         </atombeat:acl>

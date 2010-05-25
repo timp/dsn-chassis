@@ -85,6 +85,12 @@
 	
 			<h2>Submitted Files</h2>
     		
+    		<xforms:group ref="instance('ins-submitted-media-feed')[count(atom:entry)=0]">
+    			<p>You have not submitted any files.</p>
+    		</xforms:group>
+    		
+    		<xforms:group ref="instance('ins-submitted-media-feed')[count(atom:entry)>0]">
+    		
 			    	<fr:datatable paginated="false">
 			    		<thead>
 			    			<tr>
@@ -122,5 +128,7 @@
 			    			</xforms:repeat>
 			    		</tbody>
 			    	</fr:datatable>
+			    	
+			</xforms:group>
 		
 </div>
