@@ -8,8 +8,9 @@
       <mode>
         <namespace ns="http://www.w3.org/2002/xforms">
           <a:documentation>XForms in XHTML</a:documentation>
-          <validate schema="../../frameworks/xforms/XForms-11-Schema.xsd">
-            <a:documentation>The first action invokes the XForms schema for XForms in XHTML.</a:documentation>
+          <validate schema="../../frameworks/xforms/XForms-11-Orbeon-Schema.xsd">
+            <a:documentation>The first action invokes the XForms schema for XForms in
+              XHTML.</a:documentation>
             <mode>
               <namespace ns="http://www.w3.org/2002/xforms">
                 <a:documentation>XForms in ... in *XForm* in XHTML</a:documentation>
@@ -32,7 +33,7 @@
           <unwrap>
             <a:documentation>This action skip XForms in XHTML.</a:documentation>
             <mode>
-                <namespace ns="http://www.w3.org/2002/xforms">
+              <namespace ns="http://www.w3.org/2002/xforms">
                 <a:documentation>XForms in ... in XForms in *XHTML*</a:documentation>
                 <unwrap message="Skipping a descendant XForms section."/>
               </namespace>
@@ -46,27 +47,35 @@
               <mode>
                 <anyNamespace>
                   <unwrap/>
-                </anyNamespace></mode>
+                </anyNamespace>
+              </mode>
             </context>
           </unwrap>
-        </namespace>        
-        <namespace ns="http://www.xsmiles.org/*">
-          <a:documentation>Allow XSmiles extensions in XHTML.</a:documentation>
-          <allow/>
         </namespace>
         <namespace ns="http://orbeon.org/oxf/xml/form-runner*">
           <a:documentation>Allow Orbeon XBL in XHTML.</a:documentation>
-          <allow/>
+          <unwrap>
+            <mode>
+              <namespace ns="http://www.w3.org/2002/xforms">
+                <a:documentation>XForms in XBL</a:documentation>
+                <unwrap message="Skipping a descendant XForms section."/>
+              </namespace>
+              <namespace ns="http://www.w3.org/1999/xhtml">
+                <a:documentation>XHTML in ... in XBL in *XHTML*</a:documentation>
+                <unwrap message="Skipping a descendant XHTML section."/>
+              </namespace>
+            </mode>
+          </unwrap>
         </namespace>
         <namespace ns="http://orbeon.org/oxf/xml/xforms*">
           <a:documentation>Allow Orbeon extensions in XHTML.</a:documentation>
-          <allow/>
+          <unwrap/>
         </namespace>
         <namespace ns="http://www.w3.org/2001/XInclude*">
           <a:documentation>Allow XInclude in XHTML.</a:documentation>
           <allow/>
         </namespace>
-      </mode>         
+      </mode>
     </validate>
   </namespace>
 </rules>
