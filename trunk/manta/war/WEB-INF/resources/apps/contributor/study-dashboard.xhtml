@@ -60,7 +60,7 @@
 				instance="ins-study-entry"
 				ref="instance('ins-noparams')">
                 <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the study.</xforms:message>
-				<xforms:send ev:event="xforms-submit-done" submission="sub-get-acl"/>
+				<xforms:send ev:event="xforms-submit-done" submission="sub-get-permissions-entry"/>
 			</xforms:submission>
 
 			<xforms:send ev:event="xforms-model-construct-done" submission="sub-get-study-entry"/>
@@ -85,27 +85,28 @@
             
             
             
-			<xforms:instance id="ins-acl">
+			<xforms:instance id="ins-permissions-entry">
 				<atom:entry/>
 			</xforms:instance> 
             
 			<xforms:submission 
-				id="sub-get-acl"
+				id="sub-get-permissions-entry"
 				action="{instance('ins-study-entry')/atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor']/@href}"
 				method="get"
 				replace="instance"
-				instance="ins-acl"
+				instance="ins-permissions-entry"
 				ref="instance('ins-noparams')">
                 <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the study.</xforms:message>
+                <xforms:send ev:event="xforms-submit-done" submission="sub-get-submitted-media-feed"/>
 			</xforms:submission>   
             
 			<xforms:submission 
-				id="sub-put-acl"
+				id="sub-put-permissions-entry"
 				action="{instance('ins-study-entry')/atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor']/@href}"
 				method="put"
 				replace="instance"
-				instance="ins-acl"
-				ref="instance('ins-acl')"
+				instance="ins-permissions-entry"
+				ref="instance('ins-permissions-entry')"
 				mediatype="application/atom+xml">
 		        <xforms:message ev:event="xforms-submit-done" level="modal">Your changes have been saved, thank you.</xforms:message>
                 <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the study.</xforms:message>
@@ -155,6 +156,18 @@
         	</xforms:instance> 
 
 
+			<xforms:instance id="ins-submitted-media-feed">
+				<atom:feed/>
+			</xforms:instance>
+			
+			<xforms:submission
+				id="sub-get-submitted-media-feed"
+				action="{instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/submittedMedia']/@href}"
+				method="get"
+				replace="instance"
+				instance="ins-submitted-media-feed">
+                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the submitted media.</xforms:message>
+			</xforms:submission>
             
             
         </xforms:model>
