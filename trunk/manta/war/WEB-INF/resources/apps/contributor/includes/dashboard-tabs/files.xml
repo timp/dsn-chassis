@@ -7,81 +7,90 @@
 	
 	<h2>Submit Files</h2>
 	
-			<table>
+	<table>
 
-				<xforms:group ref="instance('ins-uploads-entry')/atom:content/uploads">
-					<xforms:repeat nodeset="upload" id="rep-upload">
-						<tr>
-							<td>
-		                        <xforms:trigger>
-		                            <xforms:delete 
-		                            	ev:event="DOMActivate" 
-			                        	context="instance('ins-uploads-entry')/atom:content/uploads" 
-			                        	nodeset="upload" 
-		                            	at="index('rep-upload')"/>
-		                            <xforms:label><img src="/apps/contributor/common/remove.gif"/></xforms:label>
-		                        </xforms:trigger>
-							</td>
-							<td>
-		                        
-		                        <xforms:upload ref=".">
-		                        	<xforms:label>File:</xforms:label>
-		                            <xforms:filename ref="@filename"/>
-		                            <xforms:mediatype ref="@mediatype"/>
-		                            <xxforms:size ref="@size"/>
-		                            <xforms:send ev:event="xforms-select" submission="sub-background-upload"/>
-		                        </xforms:upload>
-		                        
-		                        <br/>
-								<xforms:select1 ref="@typeterm">
-									<xforms:label>Type:</xforms:label>
-									<xforms:alert>Please select a file type.</xforms:alert>
-									<xforms:item>
-										<xforms:value></xforms:value>
-										<xforms:label>Select...</xforms:label>
-									</xforms:item>
-		                        	<xforms:itemset nodeset="instance('ins-file-terms')/term">
-		                        		<xforms:label ref="label"/>
-		                        		<xforms:value ref="value"/>
-		                        	</xforms:itemset>
-								</xforms:select1>
-								
-								<xforms:input ref="@typelabel">
-									<xforms:label>Other Type:</xforms:label>
-								</xforms:input>
-		                        
-							</td>
-						</tr>
-					</xforms:repeat>
-				</xforms:group>
-				
+		<xforms:group ref="instance('ins-uploads-entry')/atom:content/uploads">
+			<xforms:repeat nodeset="upload" id="rep-upload">
 				<tr>
 					<td>
-	                    <xforms:trigger>
-	                        <xforms:label><img src="/apps/contributor/common/add.gif"/></xforms:label>
-	                        <xforms:insert 
-	                        	ev:event="DOMActivate" 
+                        <xforms:trigger>
+                            <xforms:delete 
+                            	ev:event="DOMActivate" 
 	                        	context="instance('ins-uploads-entry')/atom:content/uploads" 
 	                        	nodeset="upload" 
-	                        	at="last()" 
-	                        	position="after" 
-	                        	origin="instance('ins-upload-template')"/>
-	                    </xforms:trigger>
+                            	at="index('rep-upload')"/>
+                            <xforms:label><img src="/apps/contributor/common/remove.gif"/></xforms:label>
+                        </xforms:trigger>
 					</td>
-					<td >
-	                    <xforms:trigger appearance="minimal">
-	                        <xforms:label>Add a File</xforms:label>
-	                        <xforms:insert 
-	                        	ev:event="DOMActivate" 
-	                        	context="instance('ins-uploads-entry')/atom:content/uploads" 
-	                        	nodeset="upload" 
-	                        	at="last()" 
-	                        	position="after" 
-	                        	origin="instance('ins-upload-template')"/>
-	                    </xforms:trigger>
+					<td>
+                        
+                        <xforms:upload ref=".">
+                        	<xforms:label>File:</xforms:label>
+                            <xforms:filename ref="@filename"/>
+                            <xforms:mediatype ref="@mediatype"/>
+                            <xxforms:size ref="@size"/>
+                            <xforms:send ev:event="xforms-select" submission="sub-post-background-uploads"/>
+                        </xforms:upload>
+                        
+                        <br/>
+						<xforms:select1 ref="@typeterm">
+							<xforms:label>Type:</xforms:label>
+							<xforms:alert>Please select a file type.</xforms:alert>
+							<xforms:item>
+								<xforms:value></xforms:value>
+								<xforms:label>Select...</xforms:label>
+							</xforms:item>
+                        	<xforms:itemset nodeset="instance('ins-file-terms')/term">
+                        		<xforms:label ref="label"/>
+                        		<xforms:value ref="value"/>
+                        	</xforms:itemset>
+						</xforms:select1>
+						
+						<xforms:input ref="@typelabel">
+							<xforms:label>Other Type:</xforms:label>
+						</xforms:input>
+                        
 					</td>
 				</tr>
-			</table>
+			</xforms:repeat>
+		</xforms:group>
+		
+		<tr>
+			<td>
+                   <xforms:trigger>
+                       <xforms:label><img src="/apps/contributor/common/add.gif"/></xforms:label>
+                       <xforms:insert 
+                       	ev:event="DOMActivate" 
+                       	context="instance('ins-uploads-entry')/atom:content/uploads" 
+                       	nodeset="upload" 
+                       	at="last()" 
+                       	position="after" 
+                       	origin="instance('ins-upload-template')"/>
+                   </xforms:trigger>
+			</td>
+			<td >
+                   <xforms:trigger appearance="minimal">
+                       <xforms:label>Add a File</xforms:label>
+                       <xforms:insert 
+                       	ev:event="DOMActivate" 
+                       	context="instance('ins-uploads-entry')/atom:content/uploads" 
+                       	nodeset="upload" 
+                       	at="last()" 
+                       	position="after" 
+                       	origin="instance('ins-upload-template')"/>
+                   </xforms:trigger>
+			</td>
+		</tr>
+	</table>
+
+	 <xforms:group ref="instance('ins-uploads-entry')/atom:content/uploads[count(upload)>0]">
+	     <p>
+	         <xforms:trigger ref="instance('ins-control')/submit-files-trigger">
+	             <xforms:label>Submit</xforms:label>
+	             <xforms:send ev:event="DOMActivate" submission="sub-post-uploads"/>
+	         </xforms:trigger>
+	     </p>
+     </xforms:group>
 	
 			<h2>Submitted Files</h2>
     		
@@ -103,7 +112,7 @@
 			    			</tr>
 			    		</thead>
 			    		<tbody>
-			    			<xforms:repeat nodeset="instance('ins-submitted-media-feed')/atom:entry">
+			    			<xforms:repeat nodeset="xxforms:sort(instance('ins-submitted-media-feed')/atom:entry, atom:published, 'text', 'ascending')">
 			    				<tr>
 			    					<td>
 			    						<xforms:output ref="manta:id"/>
@@ -113,9 +122,6 @@
 			    					</td>
 			    					<td>
 			    						<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[M01]/[D01]/[Y]')"/>
-			    					</td>
-			    					<td>
-			    						TODO
 			    					</td>
 			    					<td>
 			    						TODO

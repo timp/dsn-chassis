@@ -15,7 +15,8 @@
 		<xforms:trigger appearance="minimal">
 			<xforms:label>&lt;&lt; Edit Title</xforms:label>
 			<xforms:action ev:event="DOMActivate">
-				<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane" value="'study-terms'"/>
+				<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show" value="'study-terms'"/>
+				<xforms:setvalue ref="instance('ins-control')/wizard-pane-to-show" value="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show"/>
 			</xforms:action>
 		</xforms:trigger>
 	</p>	
@@ -38,7 +39,8 @@
 		<xforms:trigger appearance="minimal">
 			<xforms:label>&lt;&lt; Edit Permissions</xforms:label>
 			<xforms:action ev:event="DOMActivate">
-				<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane" value="'permissions'"/>
+				<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show" value="'permissions'"/>
+				<xforms:setvalue ref="instance('ins-control')/wizard-pane-to-show" value="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show"/>
 			</xforms:action>
 		</xforms:trigger>
 	</p>		
@@ -82,7 +84,8 @@
 		<xforms:trigger appearance="minimal">
 			<xforms:label>&lt;&lt; Edit Acknowledgements</xforms:label>
 			<xforms:action ev:event="DOMActivate">
-				<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane" value="'acknowledgements'"/>
+				<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show" value="'acknowledgements'"/>
+				<xforms:setvalue ref="instance('ins-control')/wizard-pane-to-show" value="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show"/>
 			</xforms:action>
 		</xforms:trigger>
 	</p>
@@ -126,7 +129,8 @@
 		<xforms:trigger appearance="minimal">
 			<xforms:label>&lt;&lt; Edit Files</xforms:label>
 			<xforms:action ev:event="DOMActivate">
-				<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane" value="'upload-files'"/>
+				<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show" value="'upload-files'"/>
+				<xforms:setvalue ref="instance('ins-control')/wizard-pane-to-show" value="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show"/>
 			</xforms:action>
 		</xforms:trigger>
 	</p>	
@@ -154,7 +158,8 @@
 		<xforms:trigger appearance="minimal">
 			<xforms:label>&lt;&lt; Edit Publications</xforms:label>
 			<xforms:action ev:event="DOMActivate">
-				<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane" value="'publications'"/>
+				<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show" value="'publications'"/>
+				<xforms:setvalue ref="instance('ins-control')/wizard-pane-to-show" value="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show"/>
 			</xforms:action>
 		</xforms:trigger>
 	</p>
@@ -164,7 +169,7 @@
 			<xforms:label>Confirm</xforms:label>
 			<xforms:action ev:event="DOMActivate">
 				<xforms:setvalue ref="instance('ins-control')/fallback-wizard-pane" value="'review'"/>
-				<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane" value="'confirmation'"/>
+				<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show" value="'confirmation'"/>
 				<xforms:send submission="sub-post-contribution"/>
 			</xforms:action>
 		</xforms:trigger>
