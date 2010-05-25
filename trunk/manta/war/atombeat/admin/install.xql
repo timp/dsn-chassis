@@ -9,49 +9,9 @@ import module namespace xutil = "http://purl.org/atombeat/xquery/xutil" at "../l
 import module namespace atomsec = "http://purl.org/atombeat/xquery/atom-security" at "../lib/atom-security.xqm" ;
 import module namespace atomdb = "http://purl.org/atombeat/xquery/atomdb" at "../lib/atomdb.xqm" ;
 import module namespace ap = "http://purl.org/atombeat/xquery/atom-protocol" at "../lib/atom-protocol.xqm" ;
+import module namespace config-collections = "http://purl.org/atombeat/xquery/config-collections" at "collections.xqm" ;
 
 
-
-declare variable $collection-spec :=
-    <spec>
-        <collection>
-            <title>Studies</title>
-            <path-info>/studies</path-info>
-            <enable-history>true</enable-history>
-            <exclude-entry-content>true</exclude-entry-content>
-        </collection>   
-        <collection>
-            <title>Drafts</title>
-            <path-info>/drafts</path-info>
-            <enable-history>false</enable-history>
-            <exclude-entry-content>true</exclude-entry-content>
-        </collection>   
-        <collection>
-            <title>All Submitted Media</title>
-            <path-info>/media/submitted</path-info>
-            <enable-history>false</enable-history>
-            <exclude-entry-content>true</exclude-entry-content>
-        </collection>   
-        <collection>
-            <title>All Curated Media</title>
-            <path-info>/media/curated</path-info>
-            <enable-history>false</enable-history>
-            <exclude-entry-content>true</exclude-entry-content>
-        </collection>   
-        <collection>
-            <title>All Derivations</title>
-            <path-info>/derivations</path-info>
-            <enable-history>false</enable-history>
-            <exclude-entry-content>true</exclude-entry-content>
-        </collection>   
-        <collection>
-            <title>All Personal Data Reviews</title>
-            <path-info>/reviews/personal-data</path-info>
-            <enable-history>false</enable-history>
-            <exclude-entry-content>true</exclude-entry-content>
-        </collection>   
-    </spec>
-;
 
 
 
@@ -104,14 +64,16 @@ declare function local:content() as item()*
                         <th>Path</th>
                         <th>Enable History</th>
                         <th>Exclude Entry Content in Feed</th>
+                        <th>Recursive</th>
                         <th>Available</th>
                     </tr>
                     {
-                        for $collection in $collection-spec/collection
+                        for $collection in $config-collections:collection-spec/collection
                         let $title := $collection/title/text()
                         let $path-info := $collection/path-info/text()
                         let $enable-history := $collection/enable-history/text()
                         let $exclude-entry-content := $collection/exclude-entry-content/text()
+                        let $recursive := $collection/recursive/text()
                         let $available := atomdb:collection-available($path-info)
                         return
                             <tr>
@@ -119,6 +81,7 @@ declare function local:content() as item()*
                                 <td><a href="../content{$path-info}">{$path-info}</a></td>
                                 <td>{$enable-history}</td>
                                 <td>{$exclude-entry-content}</td>
+                                <td>{$recursive}</td>
                                 <td><strong>{$available}</strong></td>
                             </tr>
                     }
@@ -142,25 +105,21 @@ declare function local:do-post() as item()*
 
     (: INSTALL THE workspace ACL :)
     let $workspace-descriptor-installed := atomsec:store-workspace-descriptor( $config:default-workspace-security-descriptor )
-    let $log := util:log( "info" , "installed workspace security descriptor" )
     
     (: INSTALL THE COLLECTIONS :)
     let $collections-installed :=
-        for $collection in $collection-spec/collection
+        for $collection in $config-collections:collection-spec/collection
         let $title := $collection/title/text()
         let $path-info := $collection/path-info/text()
-        let $enable-history := xs:boolean($collection/enable-history/text())
-        let $log := util:log( "info" , concat( "installing collection at " , $path-info ) )
-        
-        return  
-        
+        return 
             if ( not( atomdb:collection-available( $path-info ) ) )
-            
             then 
             
                 (: CREATE THE COLLECTION :)
                 let $feed-doc := 
-                    <atom:feed atombeat:exclude-entry-content="{$collection/exclude-entry-content/text()}">
+                    <atom:feed 
+                        atombeat:exclude-entry-content="{$collection/exclude-entry-content/text()}"
+                        atombeat:recursive="{$collection/recursive/text()}">
                         <atom:title>{$title}</atom:title>
                     </atom:feed>
                 let $collection-created := atomdb:create-collection( $path-info , $feed-doc )
@@ -168,13 +127,11 @@ declare function local:do-post() as item()*
                 
                 (: INSTALL ACL :)
                 let $acl := config:default-collection-security-descriptor( $path-info , () )
-                let $log := util:log( "info" , $acl )
-                
                 let $acl-stored := atomsec:store-collection-descriptor( $path-info , $acl )
                 
                 (: ENABLE HISTORY :)
                 let $history-enabled :=
-                    if ( $enable-history )
+                    if ( xs:boolean( $collection/enable-history/text() ) )
                     then xutil:enable-versioning( $collection-db-path )
                     else false()
                     

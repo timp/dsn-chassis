@@ -351,17 +351,9 @@ declare function manta-plugin:after-list-collection(
     
     then manta-plugin:after-list-collection-studies( $feed , $response-content-type )
     
-    else if ( $request-path-info = "/media/submitted" )
+    else if ( matches( $request-path-info , "^/media" ) )
     
-    then manta-plugin:after-list-collection-all-submitted-media( $feed , $response-content-type )
-    
-    else if ( matches( $request-path-info , "^/media/submitted/[^/]+" ) )
-    
-    then manta-plugin:after-list-collection-submitted-media( $feed , $response-content-type )
-    
-    else if ( $request-path-info = "/reviews/personal-data" )
-    
-    then manta-plugin:after-list-collection-all-personal-data-reviews( $feed , $response-content-type )
+    then manta-plugin:after-list-collection-media( $feed , $response-content-type )
     
     else
 
@@ -461,7 +453,7 @@ declare function manta-plugin:after-create-member-submitted-media(
 ) as item()*
 {
 
-    let $entry := manta-plugin:augment-submitted-media-entry( $entry )
+    let $entry := manta-plugin:augment-media-entry( $entry )
     
     return ( $entry , $response-content-type )
     
@@ -477,7 +469,7 @@ declare function manta-plugin:after-create-media-submitted-media(
 
     let $entry := 
         if ( starts-with( $response-content-type , $CONSTANT:MEDIA-TYPE-ATOM ) )
-        then manta-plugin:augment-submitted-media-entry( $entry )
+        then manta-plugin:augment-media-entry( $entry )
         else $entry
 
     return ( $entry , $response-content-type )
@@ -508,7 +500,7 @@ declare function manta-plugin:after-retrieve-member-submitted-media(
 ) as item()*
 {
     
-    let $entry := manta-plugin:augment-submitted-media-entry( $entry )
+    let $entry := manta-plugin:augment-media-entry( $entry )
     
     return ( $entry , $response-content-type )
     
@@ -538,7 +530,7 @@ declare function manta-plugin:after-update-member-submitted-media(
 ) as item()*
 {
     
-    let $entry := manta-plugin:augment-submitted-media-entry( $entry )
+    let $entry := manta-plugin:augment-media-entry( $entry )
     
     return ( $entry , $response-content-type )
     
@@ -570,7 +562,7 @@ declare function manta-plugin:after-list-collection-studies(
 
 
 
-declare function manta-plugin:after-list-collection-all-submitted-media(
+declare function manta-plugin:after-list-collection-media(
     $feed as element(atom:feed) ,
     $response-content-type as xs:string?
 ) as item()*
@@ -584,70 +576,8 @@ declare function manta-plugin:after-list-collection-all-submitted-media(
             $feed/child::*[ not( local-name(.) = $CONSTANT:ATOM-ENTRY and namespace-uri(.) = $CONSTANT:ATOM-NSURI ) ] ,
             
             for $entry in $feed/atom:entry
-            return manta-plugin:augment-submitted-media-entry( $entry ) ,
+            return manta-plugin:augment-media-entry( $entry )
             
-            (: include all members from sub-collections :)
-            for $entry in collection( concat( $config:base-collection-path , "/media/submitted" ) )//atom:entry
-            let $entry-path-info := substring-after( $config:service-url , $entry/atom:link[@rel='edit']/@href )
-            where not( manta-plugin:is-operation-forbidden( $CONSTANT:OP-RETRIEVE-MEMBER , $entry-path-info , () ) )
-            return manta-plugin:augment-submitted-media-entry( $entry ) 
-            
-        }
-        </atom:feed>
-    
-    return ( $feed , $response-content-type )
-    
-};
-
-
-
-
-declare function manta-plugin:after-list-collection-all-personal-data-reviews(
-    $feed as element(atom:feed) ,
-    $response-content-type as xs:string?
-) as item()*
-{
-    
-    let $feed := 
-        <atom:feed>
-        {
-        
-            $feed/attribute::* ,
-            $feed/child::*[ not( local-name(.) = $CONSTANT:ATOM-ENTRY and namespace-uri(.) = $CONSTANT:ATOM-NSURI ) ] ,
-            
-            for $entry in $feed/atom:entry
-            return $entry ,
-            
-            (: include all members from sub-collections :)
-            for $entry in collection( concat( $config:base-collection-path , "/reviews/personal-data" ) )//atom:entry
-            let $entry-path-info := substring-after( $config:service-url , $entry/atom:link[@rel='edit']/@href )
-            where not( manta-plugin:is-operation-forbidden( $CONSTANT:OP-RETRIEVE-MEMBER , $entry-path-info , () ) )
-            return $entry 
-            
-        }
-        </atom:feed>
-    
-    return ( $feed , $response-content-type )
-    
-};
-
-
-
-
-
-declare function manta-plugin:after-list-collection-submitted-media(
-    $feed as element(atom:feed) ,
-    $response-content-type as xs:string?
-) as item()*
-{
-    
-    let $feed := 
-        <atom:feed>
-        {
-            $feed/attribute::* ,
-            $feed/child::*[ not( local-name(.) = $CONSTANT:ATOM-ENTRY and namespace-uri(.) = $CONSTANT:ATOM-NSURI ) ] ,
-            for $entry in $feed/atom:entry
-            return manta-plugin:augment-submitted-media-entry( $entry )
         }
         </atom:feed>
     
@@ -663,8 +593,8 @@ declare function manta-plugin:submitted-media-collection-path-info-for-study-ent
 ) as xs:string
 {
     let $id := manta-plugin:get-id( $entry )
-    let $submitted-media-collection-path-info := concat( "/media/submitted/" , $id )
-    return $submitted-media-collection-path-info
+    let $collection-path-info := concat( "/media/submitted/" , $id )
+    return $collection-path-info
 };
 
 
@@ -675,8 +605,8 @@ declare function manta-plugin:curated-media-collection-path-info-for-study-entry
 ) as xs:string
 {
     let $id := manta-plugin:get-id( $entry )
-    let $submitted-media-collection-path-info := concat( "/media/curated/" , $id )
-    return $submitted-media-collection-path-info
+    let $collection-path-info := concat( "/media/curated/" , $id )
+    return $collection-path-info
 };
 
 
@@ -686,8 +616,8 @@ declare function manta-plugin:derivations-collection-path-info-for-study-entry(
 ) as xs:string
 {
     let $id := manta-plugin:get-id( $entry )
-    let $submitted-media-collection-path-info := concat( "/derivations/" , $id )
-    return $submitted-media-collection-path-info
+    let $collection-path-info := concat( "/derivations/" , $id )
+    return $collection-path-info
 };
 
 
@@ -697,8 +627,8 @@ declare function manta-plugin:personal-data-reviews-collection-path-info-for-stu
 ) as xs:string
 {
     let $id := manta-plugin:get-id( $entry )
-    let $submitted-media-collection-path-info := concat( "/reviews/personal-data/" , $id )
-    return $submitted-media-collection-path-info
+    let $collection-path-info := concat( "/reviews/personal-data/" , $id )
+    return $collection-path-info
 };
 
 
@@ -769,7 +699,7 @@ declare function manta-plugin:augment-study-entry(
 
 
 
-declare function manta-plugin:augment-submitted-media-entry(
+declare function manta-plugin:augment-media-entry(
     $entry as element(atom:entry)
 ) as element(atom:entry)
 {
@@ -793,28 +723,6 @@ declare function manta-plugin:augment-submitted-media-entry(
     return $entry
 
 };
-
-
-
-
-declare function manta-plugin:is-operation-forbidden(
-    $operation as xs:string ,
-    $request-path-info as xs:string ,
-    $request-media-type as xs:string?
-) as xs:boolean
-{
-
-    let $user := request:get-attribute( $config:user-name-request-attribute-key )
-    let $roles := request:get-attribute( $config:user-roles-request-attribute-key )
-    
-    let $forbidden := 
-        if ( not( $config:enable-security ) ) then false()
-        else ( atomsec:decide( $user , $roles , $request-path-info, $operation , $request-media-type ) = $atomsec:decision-deny )
-        
-    return $forbidden 
-    
-};
-
 
 
 

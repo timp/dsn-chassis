@@ -479,11 +479,12 @@ declare function atomdb:mutable-feed-children(
     let $namespace-uri := namespace-uri($child)
     let $local-name := local-name($child)
     where
-        not( $namespace-uri = $CONSTANT:ATOM-NSURI and $local-name = $CONSTANT:ATOM-ID ) and
-        not( $namespace-uri = $CONSTANT:ATOM-NSURI and $local-name = $CONSTANT:ATOM-UPDATED ) and
-        not( $namespace-uri = $CONSTANT:ATOM-NSURI and $local-name = $CONSTANT:ATOM-LINK and $child/@rel = "self" ) and
-        not( $namespace-uri = $CONSTANT:ATOM-NSURI and $local-name = $CONSTANT:ATOM-LINK and $child/@rel = "edit" ) and
-        not( $namespace-uri = $CONSTANT:ATOM-NSURI and $local-name = $CONSTANT:ATOM-ENTRY )
+        not( $namespace-uri = $CONSTANT:ATOM-NSURI and $local-name = $CONSTANT:ATOM-ID ) 
+        and not( $namespace-uri = $CONSTANT:ATOM-NSURI and $local-name = $CONSTANT:ATOM-UPDATED ) 
+        and not( $namespace-uri = $CONSTANT:ATOM-NSURI and $local-name = $CONSTANT:ATOM-LINK and $child/@rel = "self" ) 
+        and not( $namespace-uri = $CONSTANT:ATOM-NSURI and $local-name = $CONSTANT:ATOM-LINK and $child/@rel = "edit" ) 
+        and not( $namespace-uri = $CONSTANT:ATOM-NSURI and $local-name = $CONSTANT:ATOM-ENTRY )
+        and not( $config:auto-author and $namespace-uri = $CONSTANT:ATOM-NSURI and $local-name = $CONSTANT:ATOM-AUTHOR )
     return $child
 };
 
@@ -498,12 +499,13 @@ declare function atomdb:mutable-entry-children(
     let $namespace-uri := namespace-uri($child)
     let $local-name := local-name($child)
     where
-        not( $namespace-uri = $CONSTANT:ATOM-NSURI and $local-name = $CONSTANT:ATOM-ID ) and
-        not( $namespace-uri = $CONSTANT:ATOM-NSURI and $local-name = $CONSTANT:ATOM-UPDATED ) and
-        not( $namespace-uri = $CONSTANT:ATOM-NSURI and $local-name = $CONSTANT:ATOM-PUBLISHED ) and
-        not( $namespace-uri = $CONSTANT:ATOM-NSURI and $local-name = $CONSTANT:ATOM-LINK and $child/@rel = "self" ) and
-        not( $namespace-uri = $CONSTANT:ATOM-NSURI and $local-name = $CONSTANT:ATOM-LINK and $child/@rel = "edit" ) and
-        not( $namespace-uri = $CONSTANT:ATOM-NSURI and $local-name = $CONSTANT:ATOM-LINK and $child/@rel = "edit-media" )
+        not( $namespace-uri = $CONSTANT:ATOM-NSURI and $local-name = $CONSTANT:ATOM-ID )
+        and not( $namespace-uri = $CONSTANT:ATOM-NSURI and $local-name = $CONSTANT:ATOM-UPDATED )
+        and not( $namespace-uri = $CONSTANT:ATOM-NSURI and $local-name = $CONSTANT:ATOM-PUBLISHED )
+        and not( $namespace-uri = $CONSTANT:ATOM-NSURI and $local-name = $CONSTANT:ATOM-LINK and $child/@rel = "self" )
+        and not( $namespace-uri = $CONSTANT:ATOM-NSURI and $local-name = $CONSTANT:ATOM-LINK and $child/@rel = "edit" )
+        and not( $namespace-uri = $CONSTANT:ATOM-NSURI and $local-name = $CONSTANT:ATOM-LINK and $child/@rel = "edit-media" )
+        and not( $config:auto-author and $namespace-uri = $CONSTANT:ATOM-NSURI and $local-name = $CONSTANT:ATOM-AUTHOR )
     return $child
 };
 
@@ -522,19 +524,33 @@ declare function atomdb:create-feed(
     let $self-uri := $id
     let $edit-uri := $id
     
+    (: TODO review this, maybe provide user as function arg, rather than interrogate request here :)
+    let $user-name := request:get-attribute( $config:user-name-request-attribute-key )
+    
     return
     
         <atom:feed>
-        	{
-        		$request-data/attribute::*
-        	}
+    	{
+    		$request-data/attribute::*
+    	}
             <atom:id>{$id}</atom:id>
             <atom:updated>{$updated}</atom:updated>
-            <atom:link rel="self" type="application/atom+xml" href="{$self-uri}"/>
-            <atom:link rel="edit" type="application/atom+xml" href="{$edit-uri}"/>
-            {
-                atomdb:mutable-feed-children($request-data)
-            }
+            <atom:link rel="self" href="{$self-uri}" type="{$CONSTANT:MEDIA-TYPE-ATOM}"/>
+            <atom:link rel="edit" href="{$edit-uri}" type="{$CONSTANT:MEDIA-TYPE-ATOM}"/>
+        {
+            if ( $config:auto-author )
+            then
+                <atom:author>
+                {
+                    if ( $config:user-name-is-email ) then <atom:email>{$user-name}</atom:email>
+                    else <atom:name>{$user-name}</atom:name>
+                }                
+                </atom:author>
+            else ()
+        }
+        {
+            atomdb:mutable-feed-children($request-data)
+        }
         </atom:feed>  
 
 };
@@ -563,6 +579,7 @@ declare function atomdb:update-feed(
             {
                 $feed/atom:link[@rel="self"] ,
                 $feed/atom:link[@rel="edit"] ,
+                if ( $config:auto-author ) then $feed/atom:author else () ,
                 atomdb:mutable-feed-children($request-data)
             }
         </atom:feed>  
@@ -595,12 +612,17 @@ declare function atomdb:create-entry(
             <atom:updated>{$updated}</atom:updated>
             <atom:link rel="self" type="application/atom+xml" href="{$self-uri}"/>
             <atom:link rel="edit" type="application/atom+xml" href="{$edit-uri}"/>
-            <atom:author>
-            {
-                if ( $config:user-name-is-email ) then <atom:email>{$user-name}</atom:email>
-                else <atom:name>$user-name</atom:name>
-            }                
-            </atom:author>
+        {
+            if ( $config:auto-author )
+            then
+                <atom:author>
+                {
+                    if ( $config:user-name-is-email ) then <atom:email>{$user-name}</atom:email>
+                    else <atom:name>{$user-name}</atom:name>
+                }                
+                </atom:author>
+            else ()
+        }
         {
             atomdb:mutable-entry-children($request-data)
         }
@@ -629,6 +651,9 @@ declare function atomdb:create-media-link-entry(
     let $edit-uri := $id
     let $media-uri := concat( $config:service-url , $request-path-info , "/" , $member-id , ".media" )
     
+    (: TODO review this, maybe provide user as function arg, rather than interrogate request here :)
+    let $user-name := request:get-attribute( $config:user-name-request-attribute-key )
+
     let $title :=
     	if ( $media-link-title ) then $media-link-title
     	else concat( "download-" , $member-id , ".media" )
@@ -639,9 +664,6 @@ declare function atomdb:create-media-link-entry(
     	
 	let $media-size :=
 		xmldb:size( atomdb:request-path-info-to-db-path( $request-path-info ) , concat( $member-id , ".media" ) )
-
-    (: TODO review this, maybe provide user as function arg, rather than interrogate request here :)
-    let $user-name := request:get-attribute( $config:user-name-request-attribute-key )
     	    
 	return
 	
@@ -655,12 +677,17 @@ declare function atomdb:create-media-link-entry(
             <atom:content src="{$media-uri}" type="{$media-type}"/>
             <atom:title type="text">{$title}</atom:title>
             <atom:summary type="text">{$summary}</atom:summary>
-            <atom:author>
-            {
-                if ( $config:user-name-is-email ) then <atom:email>{$user-name}</atom:email>
-                else <atom:name>$user-name</atom:name>
-            }                
-            </atom:author>
+        {
+            if ( $config:auto-author )
+            then
+                <atom:author>
+                {
+                    if ( $config:user-name-is-email ) then <atom:email>{$user-name}</atom:email>
+                    else <atom:name>{$user-name}</atom:name>
+                }                
+                </atom:author>
+            else ()
+        }
         </atom:entry>  
      
 };
@@ -691,6 +718,7 @@ declare function atomdb:update-entry(
                 $entry/atom:link[@rel="self"] ,
                 $entry/atom:link[@rel="edit"] ,
                 $entry/atom:link[@rel="edit-media"] ,
+                if ( $config:auto-author ) then $entry/atom:author else () ,
                 atomdb:mutable-entry-children($request-data)
             }
         </atom:entry>  
@@ -820,24 +848,15 @@ declare function atomdb:retrieve-feed(
 			{
 				$feed/attribute::* ,
 				$feed/child::* ,
-				for $child in xmldb:get-child-resources( $db-collection-path )
-				let $is-entry-doc := ( not( ends-with( $child, ".media" ) ) and not( ends-with( $child , ".feed" ) ) )
-				let $entry := if ( $is-entry-doc ) then doc( concat( $db-collection-path , "/" , $child ) )/atom:entry else ()
-				order by $entry/atom:updated descending
-				return 
-					if ( exists( $entry ) and xs:boolean( $feed/@atombeat:exclude-entry-content ) )
-					then
-						<atom:entry>
-						{
-							$entry/attribute::* ,
-							for $ec in $entry/child::* 
-							return 
-								if ( local-name( $ec ) = $CONSTANT:ATOM-CONTENT and namespace-uri( $ec ) = $CONSTANT:ATOM-NSURI )
-								then <atom:content>{$ec/attribute::*}</atom:content>
-								else $ec
-						}	
-						</atom:entry>
-					else $entry
+				let $recursive := xs:boolean( $feed/@atombeat:recursive )
+				let $entries := atomdb:get-entries( $db-collection-path , $recursive )
+				return
+				    for $entry in $entries
+    				order by $entry/atom:updated descending
+    				return 
+    					if ( exists( $entry ) and xs:boolean( $feed/@atombeat:exclude-entry-content ) )
+    					then atomdb:exclude-entry-content( $entry )
+    					else $entry
 			}
 			</atom:feed>
 
@@ -847,6 +866,38 @@ declare function atomdb:retrieve-feed(
 
 };
 
+
+
+
+declare function atomdb:get-entries(
+    $db-collection-path as xs:string ,
+    $recursive as xs:boolean?
+) as element(atom:entry)*
+{
+
+    if ( $recursive )
+    then collection( $db-collection-path )/atom:entry (: recursive :)
+    else xmldb:xcollection( $db-collection-path )/atom:entry (: not recursive :)
+
+};
+
+
+
+declare function atomdb:exclude-entry-content(
+    $entry as element(atom:entry)
+) as element(atom:entry)
+{
+    <atom:entry>
+    {
+        $entry/attribute::* ,
+        for $ec in $entry/child::* 
+        return 
+            if ( local-name( $ec ) = $CONSTANT:ATOM-CONTENT and namespace-uri( $ec ) = $CONSTANT:ATOM-NSURI )
+            then <atom:content>{$ec/attribute::*}</atom:content>
+            else $ec
+    }   
+    </atom:entry>
+};
 
 
 

@@ -46,7 +46,7 @@
    
   <context-param>
     <param-name>contextConfigLocation</param-name>
-    <param-value>WEB-INF/security.xml</param-value>
+    <param-value>WEB-INF/security-cas-drupal.xml</param-value>
   </context-param>
     
   <listener>
@@ -205,7 +205,18 @@
         </init-param>
     </servlet>
 	
-	
+    <filter>
+        <filter-name>XQueryURLRewrite</filter-name>
+        <filter-class>org.exist.http.urlrewrite.XQueryURLRewrite</filter-class>
+        
+        <!-- Uncomment the following if you want to keep your controller XQueries stored
+             in the db. -->
+        <!--init-param>
+            <param-name>base</param-name>
+            <param-value>xmldb:exist:///db</param-value>
+        </init-param-->
+    </filter>
+    	
     <servlet>
         <servlet-name>XSLTServlet</servlet-name>
         <servlet-class>org.exist.http.servlets.XSLTServlet</servlet-class>
@@ -645,6 +656,11 @@
         <servlet-name>XQueryServlet</servlet-name>
         <url-pattern>*.xqy</url-pattern>
     </servlet-mapping>
+
+    <filter-mapping>
+        <filter-name>XQueryURLRewrite</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
       
     <!-- SOAP (Apache Axis) -->
     <servlet-mapping>
@@ -718,7 +734,7 @@
 
     <mime-mapping>
         <extension>xml</extension>
-        <mime-type>application/xml</mime-type>
+        <mime-type>text/xml</mime-type>
     </mime-mapping>
 
     <mime-mapping>
