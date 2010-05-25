@@ -8,7 +8,7 @@
       <mode>
         <namespace ns="http://www.w3.org/2002/xforms">
           <a:documentation>XForms in XHTML</a:documentation>
-          <validate schema="../../frameworks/xforms/XForms-Schema.xsd">
+          <validate schema="../../frameworks/xforms/XForms-11-Schema.xsd">
             <a:documentation>The first action invokes the XForms schema for XForms in XHTML.</a:documentation>
             <mode>
               <namespace ns="http://www.w3.org/2002/xforms">
@@ -52,6 +52,18 @@
         </namespace>        
         <namespace ns="http://www.xsmiles.org/*">
           <a:documentation>Allow XSmiles extensions in XHTML.</a:documentation>
+          <allow/>
+        </namespace>
+        <namespace ns="http://orbeon.org/oxf/xml/form-runner*">
+          <a:documentation>Allow Orbeon XBL in XHTML.</a:documentation>
+          <allow/>
+        </namespace>
+        <namespace ns="http://orbeon.org/oxf/xml/xforms*">
+          <a:documentation>Allow Orbeon extensions in XHTML.</a:documentation>
+          <allow/>
+        </namespace>
+        <namespace ns="http://www.w3.org/2001/XInclude*">
+          <a:documentation>Allow XInclude in XHTML.</a:documentation>
           <allow/>
         </namespace>
       </mode>         
