@@ -69,7 +69,7 @@
 			<xforms:action ev:event="DOMActivate">
 				<xforms:setvalue ref="instance('ins-control')/fallback-wizard-pane" value="'permissions'"/>
 				<xforms:setvalue ref="instance('ins-control')/show-draft-saved-message" value="'no'"/>
-				<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane" value="'study-terms'"/>
+				<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show" value="'study-terms'"/>
 				<xforms:send submission="sub-put-draft-entry"/>
 			</xforms:action>
 		</xforms:trigger>
@@ -88,7 +88,7 @@
 			<xforms:action ev:event="DOMActivate">
 				<xforms:setvalue ref="instance('ins-control')/fallback-wizard-pane" value="'permissions'"/>
 				<xforms:setvalue ref="instance('ins-control')/show-draft-saved-message" value="'no'"/>
-				<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane" value="'acknowledgements'"/>
+				<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show" value="'acknowledgements'"/>
 				<xforms:send submission="sub-put-draft-entry" />
 			</xforms:action>
 		</xforms:trigger>
@@ -98,7 +98,7 @@
 			<xforms:action ev:event="DOMActivate">
 				<xforms:setvalue ref="instance('ins-control')/fallback-wizard-pane" value="'permissions'"/>
 				<xforms:setvalue ref="instance('ins-control')/show-draft-saved-message" value="'no'"/>
-				<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane" value="'review'"/>
+				<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show" value="'review'"/>
 				<xforms:send submission="sub-put-draft-entry"/>
 			</xforms:action>
 		</xforms:trigger>

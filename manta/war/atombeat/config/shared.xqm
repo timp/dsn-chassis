@@ -295,12 +295,6 @@ declare variable $config:drafts-collection-security-descriptor :=
                 <atombeat:permission>LIST_COLLECTION</atombeat:permission>
             </atombeat:ace>
             
-            <atombeat:ace>
-                <atombeat:type>ALLOW</atombeat:type>
-                <atombeat:recipient type="role">ROLE_CHASSIS_CONTRIBUTOR</atombeat:recipient>
-                <atombeat:permission>DELETE_MEMBER</atombeat:permission>
-            </atombeat:ace>
-            
         </atombeat:acl>
     </atombeat:security-descriptor>
 ;
@@ -773,6 +767,12 @@ declare function config:drafts-member-default-security-descriptor(
                 <atombeat:type>ALLOW</atombeat:type>
                 <atombeat:recipient type="user">{$user}</atombeat:recipient>
                 <atombeat:permission>UPDATE_MEMBER</atombeat:permission>
+            </atombeat:ace>
+            
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="user">{$user}</atombeat:recipient>
+                <atombeat:permission>DELETE_MEMBER</atombeat:permission>
             </atombeat:ace>
             
 		</atombeat:acl>

@@ -38,15 +38,26 @@
         	<xforms:instance id="ins-control">
         		<control xmlns="">
         			<!-- Defaults to summary if there is no tab request-paramater, determined in the setvalue logic below. -->
-        			<current-dashboard-tab />
+        			<dashboard-tab-to-show />
         			<add-publication-trigger/>
+        			<uploads-entry-is-valid/>
+        			<submit-files-trigger/>
         		</control>
         	</xforms:instance>
         	
-        	<xforms:setvalue ev:event="xforms-model-construct-done" ref="instance('ins-control')/current-dashboard-tab" value="if(not(empty(xxforms:get-request-parameter('tab')))) then xxforms:get-request-parameter('tab') else 'summary'" />
+        	<xforms:setvalue ev:event="xforms-model-construct-done" ref="instance('ins-control')/dashboard-tab-to-show" value="if(not(empty(xxforms:get-request-parameter('tab')))) then xxforms:get-request-parameter('tab') else 'summary'" />
 
 			<xforms:bind nodeset="instance('ins-control')/add-publication-trigger" relevant="instance('ins-study-entry')/atom:content/study/study-is-published='true'"/>
-        
+
+			<xforms:action ev:event="xxforms-invalid" ev:observer="ins-uploads-entry">
+				<xforms:setvalue ev:event="xforms-value-changed" ref="instance('ins-control')/uploads-entry-is-valid">false</xforms:setvalue>
+			</xforms:action>
+			<xforms:action ev:event="xxforms-valid" ev:observer="ins-uploads-entry">
+				<xforms:setvalue ev:event="xforms-value-changed" ref="instance('ins-control')/uploads-entry-is-valid">true</xforms:setvalue>
+			</xforms:action>
+
+        	<xforms:bind nodeset="instance('ins-control')/submit-files-trigger" readonly="not(../uploads-entry-is-valid = 'true')"/>
+        	
         
 			<xforms:instance id="ins-study-entry">
 				<atom:entry/>
@@ -63,7 +74,16 @@
 				<xforms:send ev:event="xforms-submit-done" submission="sub-get-permissions-entry"/>
 			</xforms:submission>
 
-			<xforms:send ev:event="xforms-model-construct-done" submission="sub-get-study-entry"/>
+			<xforms:send 
+				ev:event="xforms-model-construct-done" 
+				submission="sub-get-study-entry"
+				if="not(empty(xxforms:get-request-parameter('study')))"/>
+				
+			<xforms:load 
+				ev:event="xforms-model-construct-done" 
+				resource="home"
+				if="empty(xxforms:get-request-parameter('study'))"/>
+				
 
         	<xforms:instance id="ins-noparams">
         		<params xmlns=""/>
@@ -139,6 +159,13 @@
 			        
        		</xforms:bind>       
             
+            
+            
+            
+            
+			<!-- This gets the list of different file types for the upload-files tab. -->
+			<xforms:instance id="ins-file-terms" src="/apps/common/constants/file-terms.xml"/>            
+            
 
 			<xforms:instance id="ins-upload-template">
 				<upload
@@ -154,6 +181,49 @@
 			<xforms:instance id="ins-uploads-entry">
 					<xi:include href="/apps/contributor/includes/uploads-entry-template.xml" xxi:omit-xml-base="true"/>
         	</xforms:instance> 
+
+
+
+
+			<xforms:bind nodeset="instance('ins-uploads-entry')/atom:content/uploads">
+				<xforms:bind nodeset="@target" calculate="instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/submittedMedia']/@href"/>
+				<xforms:bind nodeset="upload">
+					<xforms:bind nodeset="@typeterm" required="true()"/>
+					<xforms:bind nodeset="@typelabel" relevant="../@typeterm='http://www.cggh.org/2010/chassis/terms/Other'"/>
+				</xforms:bind>
+			</xforms:bind>
+
+
+
+            <xforms:submission 
+            	id="sub-post-background-uploads" 
+            	ref="instance('ins-uploads-entry')/atom:content/uploads" 
+            	method="post"
+            	replace="none"
+            	resource="test:"
+            	validate="false"/>
+
+
+			<xforms:instance id="ins-uploads-feed">
+				<atom:feed/>
+			</xforms:instance>
+
+            <xforms:submission 
+            	id="sub-post-uploads" 
+            	ref="instance('ins-uploads-entry')/atom:content/uploads"
+                resource="/util/store-uploads"
+                method="post" 
+                replace="instance"
+                instance="ins-uploads-feed">
+				
+				<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while storing the files.</xforms:message>
+                         
+				<xforms:send ev:event="xforms-submit-done" submission="sub-get-submitted-media-feed"/>                         
+                         
+            </xforms:submission>
+
+
+
 
 
 			<xforms:instance id="ins-submitted-media-feed">
@@ -184,14 +254,14 @@
 		
     		<div class="yui-navset yui-navset-top">
     			<ul class="yui-nav">
-    				<xforms:group ref="instance('ins-control')[current-dashboard-tab='summary']">
+    				<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='summary']">
 	    				<li class="selected">
 	    					<a href="study-dashboard?tab=summary&amp;study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
 	    						<em>Summary</em>
 	   						</a>
 	    				</li>
 	    			</xforms:group>
-    				<xforms:group ref="instance('ins-control')[current-dashboard-tab!='summary']">
+    				<xforms:group ref="instance('ins-control')[dashboard-tab-to-show!='summary']">
 	    				<li>
 	    					<a href="study-dashboard?tab=summary&amp;study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
 	    						<em>Summary</em>
@@ -199,14 +269,14 @@
 	    				</li>
 	    			</xforms:group>
 	    			
-	    			<xforms:group ref="instance('ins-control')[current-dashboard-tab='permissions']">
+	    			<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='permissions']">
 	    				<li class="selected">
 	    					<a href="study-dashboard?tab=permissions&amp;study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
 		    					<em>Permissions</em>
 	    					</a>
 	   					</li>
    					</xforms:group>
-	    			<xforms:group ref="instance('ins-control')[current-dashboard-tab!='permissions']">
+	    			<xforms:group ref="instance('ins-control')[dashboard-tab-to-show!='permissions']">
 	    				<li>
 	    					<a href="study-dashboard?tab=permissions&amp;study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
 		    					<em>Permissions</em>
@@ -214,14 +284,14 @@
 	   					</li>
    					</xforms:group>
    					
-   					<xforms:group ref="instance('ins-control')[current-dashboard-tab='acknowledgements']">
+   					<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='acknowledgements']">
 	    				<li class="selected">
 	    					<a href="study-dashboard?tab=acknowledgements&amp;study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
 		    					<em>Acknowledgements</em>
 	    					</a>
 	   					</li>
    					</xforms:group>
-   					<xforms:group ref="instance('ins-control')[current-dashboard-tab!='acknowledgements']">
+   					<xforms:group ref="instance('ins-control')[dashboard-tab-to-show!='acknowledgements']">
 	    				<li>
 	    					<a href="study-dashboard?tab=acknowledgements&amp;study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
 		    					<em>Acknowledgements</em>
@@ -230,14 +300,14 @@
    					</xforms:group>
    					
    					
-   					<xforms:group ref="instance('ins-control')[current-dashboard-tab='files']">
+   					<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='files']">
 	    				<li class="selected">
 	    					<a href="study-dashboard?tab=files&amp;study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
 		    					<em>Files</em>
 	    					</a>
 	   					</li>
    					</xforms:group>
-   					<xforms:group ref="instance('ins-control')[current-dashboard-tab!='files']">
+   					<xforms:group ref="instance('ins-control')[dashboard-tab-to-show!='files']">
 	    				<li>
 	    					<a href="study-dashboard?tab=files&amp;study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
 		    					<em>Files</em>
@@ -245,14 +315,14 @@
 	   					</li>
    					</xforms:group>
    					
-   					<xforms:group ref="instance('ins-control')[current-dashboard-tab='publications']">
+   					<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='publications']">
 	    				<li class="selected">
 	    					<a href="study-dashboard?tab=publications&amp;study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
 		    					<em>Publications</em>
 	    					</a>
 	   					</li>
 	   				</xforms:group>
-   					<xforms:group ref="instance('ins-control')[current-dashboard-tab!='publications']">
+   					<xforms:group ref="instance('ins-control')[dashboard-tab-to-show!='publications']">
 	    				<li>
 	    					<a href="study-dashboard?tab=publications&amp;study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
 		    					<em>Publications</em>
@@ -260,14 +330,14 @@
 	   					</li>
 	   				</xforms:group>
    					
-   					<xforms:group ref="instance('ins-control')[current-dashboard-tab='study-info']">
+   					<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='study-info']">
 	    				<li class="selected">
 	    					<a href="study-dashboard?tab=study-info&amp;study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
 		    					<em>Study Info</em>
 	    					</a>
 	   					</li>
 					</xforms:group>
-   					<xforms:group ref="instance('ins-control')[current-dashboard-tab!='study-info']">
+   					<xforms:group ref="instance('ins-control')[dashboard-tab-to-show!='study-info']">
 	    				<li>
 	    					<a href="study-dashboard?tab=study-info&amp;study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
 		    					<em>Study Info</em>
@@ -282,53 +352,53 @@
     			
 				   	<div class="inner-help">
 				   	
-				    	<xforms:group ref="instance('ins-control')[current-dashboard-tab='summary']">
+				    	<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='summary']">
 				    		<xi:include href="/apps/contributor/includes/help-boxes/for-dashboard-tabs/summary.xml"/>
 				    	</xforms:group>
 				    	
-				    	<xforms:group ref="instance('ins-control')[current-dashboard-tab='permissions']">
+				    	<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='permissions']">
 				    		<xi:include href="/apps/contributor/includes/help-boxes/for-dashboard-tabs/permissions.xml"/>
 				    	</xforms:group>
 				    	
-				    	<xforms:group ref="instance('ins-control')[current-dashboard-tab='acknowledgements']">
+				    	<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='acknowledgements']">
 				    		<xi:include href="/apps/contributor/includes/help-boxes/for-dashboard-tabs/acknowledgements.xml"/>
 				    	</xforms:group>
 				    	
-						<xforms:group ref="instance('ins-control')[current-dashboard-tab='files']">
+						<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='files']">
 				    		<xi:include href="/apps/contributor/includes/help-boxes/for-dashboard-tabs/files.xml"/>
 				    	</xforms:group>
 				    	
-				    	<xforms:group ref="instance('ins-control')[current-dashboard-tab='publications']">
+				    	<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='publications']">
 				    		<xi:include href="/apps/contributor/includes/help-boxes/for-dashboard-tabs/publications.xml"/>
 				    	</xforms:group>
 				    	
-						<xforms:group ref="instance('ins-control')[current-dashboard-tab='study-info']">
+						<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='study-info']">
 				    		<xi:include href="/apps/contributor/includes/help-boxes/for-dashboard-tabs/study-info.xml"/>
 				    	</xforms:group>
 				    	
 				   	</div>
 				   	
-			    	<xforms:group ref="instance('ins-control')[current-dashboard-tab='summary']">
+			    	<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='summary']">
 			    		<xi:include href="/apps/contributor/includes/dashboard-tabs/summary.xml"/>
 			    	</xforms:group>		
 			    	
-			    	<xforms:group ref="instance('ins-control')[current-dashboard-tab='permissions']">
+			    	<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='permissions']">
 			    		<xi:include href="/apps/contributor/includes/dashboard-tabs/permissions.xml"/>
 			    	</xforms:group>	
 			    	
-			    	<xforms:group ref="instance('ins-control')[current-dashboard-tab='acknowledgements']">
+			    	<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='acknowledgements']">
 			    		<xi:include href="/apps/contributor/includes/dashboard-tabs/acknowledgements.xml"/>
 			    	</xforms:group>	
 			    	
-			    	<xforms:group ref="instance('ins-control')[current-dashboard-tab='files']">
+			    	<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='files']">
 			    		<xi:include href="/apps/contributor/includes/dashboard-tabs/files.xml"/>
 			    	</xforms:group>	
 			    	
-			    	<xforms:group ref="instance('ins-control')[current-dashboard-tab='publications']">
+			    	<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='publications']">
 			    		<xi:include href="/apps/contributor/includes/dashboard-tabs/publications.xml"/>
 			    	</xforms:group>			 
 			    	
-			    	<xforms:group ref="instance('ins-control')[current-dashboard-tab='study-info']">
+			    	<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='study-info']">
 			    		<xi:include href="/apps/contributor/includes/dashboard-tabs/study-info.xml"/>
 			    	</xforms:group>	
 

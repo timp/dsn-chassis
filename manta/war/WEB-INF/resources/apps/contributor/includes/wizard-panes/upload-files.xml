@@ -32,7 +32,7 @@
 		                            <xforms:filename ref="@filename"/>
 		                            <xforms:mediatype ref="@mediatype"/>
 		                            <xxforms:size ref="@size"/>
-		                            <xforms:send ev:event="xforms-select" submission="sub-background-upload"/>
+		                            <xforms:send ev:event="xforms-select" submission="sub-post-background-uploads"/>
 		                        </xforms:upload>
 		                        
 		                        <br/>
@@ -92,7 +92,7 @@
 					<xforms:action ev:event="DOMActivate">
 						<xforms:setvalue ref="instance('ins-control')/fallback-wizard-pane" value="'upload-files'"/>
 						<xforms:setvalue ref="instance('ins-control')/show-draft-saved-message" value="'no'"/>
-						<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane" value="'acknowledgements'"/>
+						<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show" value="'acknowledgements'"/>
 						<xforms:send submission="sub-put-draft-entry"/>
 					</xforms:action>
 				</xforms:trigger>
@@ -111,7 +111,7 @@
 					<xforms:action ev:event="DOMActivate">
 						<xforms:setvalue ref="instance('ins-control')/fallback-wizard-pane" value="'upload-files'"/>
 						<xforms:setvalue ref="instance('ins-control')/show-draft-saved-message" value="'no'"/>
-						<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane" value="'publications'"/>
+						<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show" value="'publications'"/>
 						<xforms:send submission="sub-put-draft-entry"/>
 					</xforms:action>
 				</xforms:trigger>
@@ -121,7 +121,7 @@
 					<xforms:action ev:event="DOMActivate">
 						<xforms:setvalue ref="instance('ins-control')/fallback-wizard-pane" value="'upload-files'"/>
 						<xforms:setvalue ref="instance('ins-control')/show-draft-saved-message" value="'no'"/>
-						<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane" value="'review'"/>
+						<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show" value="'review'"/>
 						<xforms:send submission="sub-put-draft-entry"/>
 					</xforms:action>
 				</xforms:trigger>
