@@ -73,7 +73,6 @@
 							<td class="form-td">
 								<xforms:select1 ref="country" required="true()">
 									<xforms:alert>Please select a Country value</xforms:alert>
-									<xforms:label />
 									<xforms:item>
 										<xforms:label>please select</xforms:label>
 										<xforms:value />
@@ -354,7 +353,7 @@
 					<xforms:select1 ref="priorAntimalarials" appearance="minimal">
 						<xforms:label class="fixed-width">
 							Prior anti-malarials
-					</xforms:label>
+						</xforms:label>
 						<xforms:item>
 							<xforms:label>Any</xforms:label>
 							<xforms:value>any</xforms:value>
@@ -925,7 +924,8 @@
 						<xforms:select1 appearance="minimal"
 							ref="regimenAllocationMethod">
 							<xforms:label class="fixed-width">
-								Regimen allocation</xforms:label>
+								Regimen allocation
+							</xforms:label>
 							<xforms:itemset model="mod-study-questionnaire"
 								nodeset="instance('ins-regimenAllocationMethod-items')/regimenAllocationMethod">
 								<xforms:label ref="label" />
@@ -1485,7 +1485,8 @@
 					<xforms:hint>
 						<em>Enter a site code, or laboratory name and address if the
 							analysis did not take place at
-							any of the previously entered sites.
+							any of the previously entered
+							sites.
 					</em>
 					</xforms:hint>
 				</xforms:input>
@@ -1593,9 +1594,9 @@
 								<xforms:label>other</xforms:label>
 								<xforms:value>other</xforms:value>
 							</xforms:item>
-							
+
 						</xforms:select1>
-						<xforms:input ref="mediumOther"/>
+						<xforms:input ref="mediumOther" />
 						<em>
 							Storage temperature: 6 months at -20&#176;C and 1 week at
 							+4&#176;C
@@ -2112,53 +2113,92 @@
 
 				<h2>Pharmacology Questions</h2>
 
-				<xforms:group ref="sample">
+				<xforms:group ref="samples">
 					<h3>Sample</h3>
-					<xforms:input ref="plannedNumberOfSamples">
-						<xforms:label class="fixed-width">
-							Planned number
-							<br />
-							of samples
-						</xforms:label>
-					</xforms:input>
-					<br />
-					<xforms:input ref="volume">
-						<xforms:label class="fixed-width">Volume</xforms:label>
-					</xforms:input>
-					<br />
-					<xforms:input ref="anticoagulent">
-						<xforms:label class="fixed-width">Anticoagulent</xforms:label>
-					</xforms:input>
-					<br />
+					<table class="repeat-table">
+						<xforms:repeat nodeset="sample" id="sample-rep">
+							<tr>
+								<td class="action-td">
 
-					<xforms:input ref="centrifugeTime">
-						<xforms:label class="fixed-width">Time to centrifuge</xforms:label>
-						<xforms:hint>eg. &lt; 15 mins</xforms:hint>
-					</xforms:input>
+									<xforms:trigger appearance="minimal">
+										<xforms:delete ev:event="DOMActivate" context="."
+											nodeset="." at="index('sample-rep')" />
+										<xforms:label>
+											<img src="/apps/common/theme/remove.gif" />
+										</xforms:label>
+									</xforms:trigger>
+								</td>
+								<td>
+									<xforms:input ref="volume">
+										<xforms:label class="fixed-width">Volume</xforms:label>
+									</xforms:input>
+									<br />
+									<xforms:input ref="anticoagulent">
+										<xforms:label class="fixed-width">Anticoagulent</xforms:label>
+									</xforms:input>
+									<br />
 
-					<br />
-					<h5>Sample source</h5>
-					<xforms:select ref="matrix" appearance="full">
-						<xforms:itemset model="mod-study-questionnaire"
-							nodeset="instance('ins-sampleMatrixType-items')/sampleMatrixType">
-							<xforms:label ref="label" />
-							<xforms:value ref="value" />
-						</xforms:itemset>
-					</xforms:select>
+									<xforms:input ref="centrifugeTime">
+										<xforms:label class="fixed-width">Time to centrifuge
+										</xforms:label>
+										<xforms:hint>eg. &lt; 15 mins</xforms:hint>
+									</xforms:input>
 
-					<xforms:group ref="storage">
-						<h4>Storage</h4>
-						<xforms:input ref="storageTemperature">
-							<xforms:label>Temperature</xforms:label>
-						</xforms:input>
-						<xforms:input ref="storageDuration">
-							<xforms:label>Duration</xforms:label>
-						</xforms:input>
-					</xforms:group>
-					<xforms:input ref="preparationReference">
-						<xforms:label>Preparation reference</xforms:label>
-					</xforms:input>
+									<br />
+									<xforms:select1 ref="matrix" appearance="minimal">
+										<xforms:label class="fixed-width">Matrix</xforms:label>
+										<xforms:alert>Please select a Matrix</xforms:alert>
+										<xforms:item>
+											<xforms:label>please select</xforms:label>
+											<xforms:value />
+										</xforms:item>
+
+										<xforms:itemset model="mod-study-questionnaire"
+											nodeset="instance('ins-sampleMatrixType-items')/sampleMatrixType">
+											<xforms:label ref="label" />
+											<xforms:value ref="value" />
+										</xforms:itemset>
+									</xforms:select1>
+
+									<xforms:group ref="storage">
+										<h4>Storage</h4>
+										<xforms:input ref="storageTemperature">
+											<xforms:label>Temperature</xforms:label>
+										</xforms:input>
+										<xforms:input ref="storageDuration">
+											<xforms:label>Duration</xforms:label>
+										</xforms:input>
+									</xforms:group>
+									<xforms:input ref="preparationReference">
+										<xforms:label>Preparation reference</xforms:label>
+									</xforms:input>
+
+								</td>
+							</tr>
+						</xforms:repeat>
+						<tr>
+							<td class="action-td">
+								<xforms:trigger appearance="minimal">
+									<xforms:label>
+										<img src="/apps/common/theme/add.gif" />
+									</xforms:label>
+									<xforms:insert ev:event="DOMActivate" context="."
+										nodeset="sample" at="count(../sample)" position="after"
+										origin="instance('ins-invitro-sample-template')" />
+								</xforms:trigger>
+							</td>
+							<td class="add-td">
+								<xforms:trigger appearance="minimal">
+									<xforms:label>Add a Sample</xforms:label>
+									<xforms:insert ev:event="DOMActivate" context="."
+										nodeset="sample" at="count(../sample)" position="after"
+										origin="instance('ins-pharmacology-sample-template')" />
+								</xforms:trigger>
+							</td>
+						</tr>
+					</table>
 				</xforms:group>
+
 
 
 				<xforms:group ref="analytes">
@@ -2173,8 +2213,6 @@
 							<th>Lower LoQ</th>
 							<th>Upper LoQ</th>
 						</tr>
-						<lowerLOQ />
-						<upperLOQ />
 						<xforms:repeat nodeset="analyte" id="analyte-rep">
 							<tr>
 								<td class="action-td">

@@ -1,0 +1,11 @@
+<sample xmlns="">
+	<volume />
+	<anticoagulent />
+	<centrifugeTime />
+	<matrix />
+	<storage>
+		<storageTemperature />
+		<storageDuration />
+	</storage>
+	<preparationReference />
+</sample>

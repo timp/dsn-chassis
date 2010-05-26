@@ -4,8 +4,7 @@
 	xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:atom="http://www.w3.org/2005/Atom"
 	xmlns:fr="http://orbeon.org/oxf/xml/form-runner" xmlns:xi="http://www.w3.org/2001/XInclude"
 	xmlns:ctype="http://www.cggh.org/chassis-types" xmlns:fn="http://www.w3.org/2005/xpath-functions"
-	id="mod-study-questionnaire"
-	schema="../chassis-types.xsd">
+	id="mod-study-questionnaire" schema="../chassis-types.xsd">
 
 
 	<xforms:instance id="ins-sq-study-entry"
@@ -14,8 +13,8 @@
 	</xforms:instance>
 
 	<!--
-	Note xxforms:readonly-appearance="static" needed in the controls themselves
-		<xforms:bind nodeset="instance('ins-sq-study-entry')"
+		Note xxforms:readonly-appearance="static" needed in the controls
+		themselves <xforms:bind nodeset="instance('ins-sq-study-entry')"
 		readonly="true()" />
 	-->
 
@@ -266,7 +265,7 @@
 					</xforms:bind>
 					<xforms:bind nodeset="drugSusceptibilityMedium">
 						<xforms:bind nodeset="medium" />
-						<xforms:bind nodeset="mediumOther" relevant="contains(../medium,'other')"/>
+						<xforms:bind nodeset="mediumOther" relevant="contains(../medium,'other')" />
 						<xforms:bind nodeset="preparation" />
 						<xforms:bind nodeset="serum" />
 						<xforms:bind nodeset="serum-finalConcentration" type="xs:integer" />
@@ -334,17 +333,19 @@
 				</xforms:bind>
 				<xforms:bind nodeset="pharmacology"
 					relevant="contains(../modules, 'pharmacology')">
-					<xforms:bind nodeset="sample">
-						<xforms:bind nodeset="plannedNumberOfSamples" />
-						<xforms:bind nodeset="volume" />
-						<xforms:bind nodeset="anticoagulent" />
-						<xforms:bind nodeset="centrifugeTime" />
-						<xforms:bind nodeset="matrix" />
-						<xforms:bind nodeset="storage">
-							<xforms:bind nodeset="storageTemperature" />
-							<xforms:bind nodeset="storageDuration" />
+					<xforms:bind nodeset="samples">
+						<xforms:bind nodeset="sample">
+							<xforms:bind nodeset="plannedNumberOfSamples" />
+							<xforms:bind nodeset="volume" />
+							<xforms:bind nodeset="anticoagulent" />
+							<xforms:bind nodeset="centrifugeTime" />
+							<xforms:bind nodeset="matrix" required="true()" />
+							<xforms:bind nodeset="storage">
+								<xforms:bind nodeset="storageTemperature" />
+								<xforms:bind nodeset="storageDuration" />
+							</xforms:bind>
+							<xforms:bind nodeset="preparationReference" />
 						</xforms:bind>
-						<xforms:bind nodeset="preparationReference" />
 					</xforms:bind>
 
 				</xforms:bind>
@@ -545,6 +546,8 @@
 		</antiBiotic>
 	</xforms:instance>
 
+	<xforms:instance id="ins-pharmacology-sample-template"
+		src="/apps/common/templates/study/pharmacology-sample-template.xml" />
 	<xforms:instance id="ins-pharmacology-analyte-template"
 		src="/apps/common/templates/study/pharmacology-analyte-template.xml" />
 	<xforms:instance id="ins-assayCapacity">
