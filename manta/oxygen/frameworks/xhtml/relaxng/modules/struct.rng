@@ -2,7 +2,7 @@
 <!-- Structure Module -->
 <grammar xmlns="http://relaxng.org/ns/structure/1.0">
 
-<start>
+<start combine="choice">
   <ref name="html"/>
 </start>
 
