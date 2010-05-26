@@ -113,18 +113,19 @@
 
 
 				<pharmacology>
-					<sample>
-						<plannedNumberOfSamples />
-						<volume />
-						<anticoagulent />
-						<centrifugeTime />
-						<matrix />
-						<storage>
-							<storageTemperature />
-							<storageDuration />
-						</storage>
-						<preparationReference />
-					</sample>
+					<samples>
+						<sample>
+							<volume />
+							<anticoagulent />
+							<centrifugeTime />
+							<matrix />
+							<storage>
+								<storageTemperature />
+								<storageDuration />
+							</storage>
+							<preparationReference />
+						</sample>
+					</samples>
 					<analytes>
 						<analyte>
 							<drugGiven />
