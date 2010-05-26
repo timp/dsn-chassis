@@ -4,8 +4,4 @@
         <label>RPMI 1640</label>
         <value>RPMI1640</value>
     </medium>
-    <medium>
-        <label>other</label>
-        <value>other</value>
-    </medium>
 </mediums>
