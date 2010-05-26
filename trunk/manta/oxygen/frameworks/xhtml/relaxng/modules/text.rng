@@ -2,7 +2,11 @@
 <!-- Text Module -->
 <grammar xmlns="http://relaxng.org/ns/structure/1.0">
 
-<define name="br">
+  <start combine="choice">
+    <ref name="div"/>
+  </start>
+
+  <define name="br">
   <element name="br">
     <ref name="br.attlist"/>
     <empty/>
