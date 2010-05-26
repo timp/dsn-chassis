@@ -29,7 +29,7 @@
     
         <title>Register Study</title>
         
-        <xforms:model>
+        <xforms:model id="mod-register-study-wizard">
 
            <!-- This keeps application state variables, such as where to go after hitting next (saves having a different submission (success response) for each button) -->
            <!-- It shouldn't be saved in the draft-entry. -->
@@ -368,7 +368,7 @@
         </xforms:model>
 
 		<!-- TODO: Include when fixed. -->
-       	<!-- <xi:include href="/apps/common/includes/study/questionnaire-xforms-model.xml"/>  -->
+       	<xi:include href="/apps/common/includes/study/questionnaire-xforms-model.xml"/>
        	
        	<!-- <xi:include href="/apps/common/includes/current-user-xforms-model.xml"/> -->
 

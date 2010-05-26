@@ -10,7 +10,7 @@
 	<h3>Study Info</h3>
 	
 	<!-- TODO: Include when fixed. -->
-	<!-- <xi:include href="/apps/common/includes/study/questionnaire-xforms-input.xml" />  -->
+	<xi:include href="/apps/common/includes/study/questionnaire-xforms-input.xml" />
 	
 	
 </div>
