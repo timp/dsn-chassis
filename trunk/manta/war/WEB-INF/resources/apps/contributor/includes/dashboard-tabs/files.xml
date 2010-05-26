@@ -112,7 +112,7 @@
 			    			</tr>
 			    		</thead>
 			    		<tbody>
-			    			<xforms:repeat nodeset="xxforms:sort(instance('ins-submitted-media-feed')/atom:entry, atom:published, 'text', 'ascending')">
+			    			<xforms:repeat id="rep-media" nodeset="xxforms:sort(instance('ins-submitted-media-feed')/atom:entry, atom:published, 'text', 'ascending')">
 			    				<tr>
 			    					<td>
 			    						<xforms:output ref="manta:id"/>
@@ -124,10 +124,10 @@
 			    						<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[M01]/[D01]/[Y]')"/>
 			    					</td>
 			    					<td>
-			    						TODO
+			    						<xforms:output ref="atom:author/atom:email"/>
 			    					</td>
 			    					<td>
-			    						TODO
+			    						<xforms:output ref="if(instance('ins-file-terms')/term[value=xxforms:context('rep-media')/atom:category[@scheme='http://www.cggh.org/2010/chassis/scheme/FileTypes']/@term]/value='http://www.cggh.org/2010/chassis/terms/Other') then atom:category[@scheme='http://www.cggh.org/2010/chassis/scheme/FileTypes']/@label else instance('ins-file-terms')/term[value=xxforms:context('rep-media')/atom:category[@scheme='http://www.cggh.org/2010/chassis/scheme/FileTypes']/@term]/label"/>
 			    					</td>
 			    					<td><a href="{atom:content/@src}">Download</a></td>
 			    				</tr>

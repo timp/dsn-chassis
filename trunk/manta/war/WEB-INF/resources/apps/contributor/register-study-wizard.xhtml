@@ -61,15 +61,16 @@
 				<xforms:setvalue ev:event="xforms-value-changed" ref="instance('ins-control')/draft-entry-is-valid">false</xforms:setvalue>
 			</xforms:action>
 			<xforms:action ev:event="xxforms-valid" ev:observer="ins-draft-entry">
-				<xforms:setvalue ev:event="xforms-value-changed" ref="instance('ins-control')/draft-entry-is-valid">true</xforms:setvalue>
+				<xforms:setvalue  ref="instance('ins-control')/draft-entry-is-valid">true</xforms:setvalue>
 			</xforms:action>
             
             <!-- TODO: Why doesn't this work? -->
             <!-- 
-            <xforms:action ev:event="xforms-value-changed" ev:observer="ins-draft-entry">
-            	<xforms:setvalue ref="instance('ins-control')/draft-is-saved">false</xforms:setvalue>
+            <xforms:action ev:event="xforms-ready">
+	            	<xforms:setvalue ev:event="xforms-value-changed" ev:observer="ins-draft-entry" ref="instance('ins-control')/draft-is-saved">false</xforms:setvalue>	            	
             </xforms:action>
              -->
+
             
             <xforms:bind nodeset="instance('ins-control')/create-draft-trigger" readonly="not(../draft-entry-is-valid = 'true')"/>
             <xforms:bind nodeset="instance('ins-control')/create-draft-trigger" relevant="not(instance('ins-draft-entry')/atom:link[@rel='edit'])"/>
@@ -361,9 +362,14 @@
             	
             </xforms:submission>
 
+
+				
+
         </xforms:model>
 
-       	<!-- <xi:include href="/apps/common/includes/study/questionnaire-xforms-model.xml"/> -->
+		<!-- TODO: Include when fixed. -->
+       	<!-- <xi:include href="/apps/common/includes/study/questionnaire-xforms-model.xml"/>  -->
+       	
        	<!-- <xi:include href="/apps/common/includes/current-user-xforms-model.xml"/> -->
 
         

@@ -164,7 +164,10 @@
             
             
 			<!-- This gets the list of different file types for the upload-files tab. -->
-			<xforms:instance id="ins-file-terms" src="/apps/common/constants/file-terms.xml"/>            
+			<xforms:instance id="ins-file-terms" src="/apps/common/constants/file-terms.xml"/>           
+			
+
+			 
             
 
 			<xforms:instance id="ins-upload-template">
@@ -238,7 +241,7 @@
 				instance="ins-submitted-media-feed">
                 <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the submitted media.</xforms:message>
 			</xforms:submission>
-            
+
             
         </xforms:model>
         
