@@ -21,327 +21,331 @@
 
 	<xforms:bind nodeset="instance('ins-sq-study-entry')">
 		<xforms:bind nodeset="atom:content/study">
-			<xforms:bind nodeset="start" type="xs:date" />
-			<xforms:bind nodeset="end" type="xs:date" />
-			<xforms:bind nodeset="pathogens" />
+			<xforms:bind nodeset="questionnaire">
+				<xforms:bind nodeset="start" type="xs:date" />
+				<xforms:bind nodeset="end" type="xs:date" />
+				<xforms:bind nodeset="pathogens" />
 
-			<xforms:bind nodeset="sites">
-				<xforms:bind nodeset="site">
-					<xforms:bind nodeset="country" required="true()" />
+				<xforms:bind nodeset="sites">
+					<xforms:bind nodeset="site">
+						<xforms:bind nodeset="country" required="true()" />
 
-					<xforms:bind nodeset="latitude" type="ctype:coordinate" />
-					<xforms:bind nodeset="longitude" type="ctype:coordinate" />
+						<xforms:bind nodeset="latitude" type="ctype:coordinate" />
+						<xforms:bind nodeset="longitude" type="ctype:coordinate" />
 
-					<xforms:bind nodeset="testingDelay"
-						relevant="contains(../../../modules, 'invitro')" />
-					<xforms:bind nodeset="anticoagulant"
-						relevant="contains(../../../modules, 'invitro')" />
-					<xforms:bind nodeset="transportAndStorageTemperature"
-						relevant="contains(../../../modules, 'invitro')" />
-					<xforms:bind nodeset="transmissionIntensity"
-						relevant="contains(../../../modules, 'clinical')">
-						<xforms:bind nodeset="annualParasitologicalIncidence" />
-						<xforms:bind nodeset="annualParasitologicalIncidenceYear"
-							type="ctype:recentYear" />
-						<xforms:bind nodeset="parasitePrevalence" />
-						<xforms:bind nodeset="parasitePrevalenceYear" type="ctype:recentYear" />
-						<xforms:bind nodeset="transmissionIntensityAgeFrom"
-							type="ctype:age" />
-						<xforms:bind nodeset="transmissionIntensityAgeTo"
-							type="ctype:age" />
-						<xforms:bind nodeset="entomologicalInoculationRate"
-							type="xs:integer" />
-						<xforms:bind nodeset="entomologicalInoculationRateYear"
-							type="ctype:recentYear" />
-						<xforms:bind nodeset="seasonalTransmission" type="xs:boolean" />
-						<xforms:bind nodeset="transmissionMonths"
-							relevant="contains(../seasonalTransmission, 'yes')" />
+						<xforms:bind nodeset="testingDelay"
+							relevant="contains(../../../modules, 'invitro')" />
+						<xforms:bind nodeset="anticoagulant"
+							relevant="contains(../../../modules, 'invitro')" />
+						<xforms:bind nodeset="transportAndStorageTemperature"
+							relevant="contains(../../../modules, 'invitro')" />
+						<xforms:bind nodeset="transmissionIntensity"
+							relevant="contains(../../../modules, 'clinical')">
+							<xforms:bind nodeset="annualParasitologicalIncidence" />
+							<xforms:bind nodeset="annualParasitologicalIncidenceYear"
+								type="ctype:recentYear" />
+							<xforms:bind nodeset="parasitePrevalence" />
+							<xforms:bind nodeset="parasitePrevalenceYear" type="ctype:recentYear" />
+							<xforms:bind nodeset="transmissionIntensityAgeFrom"
+								type="ctype:age" />
+							<xforms:bind nodeset="transmissionIntensityAgeTo"
+								type="ctype:age" />
+							<xforms:bind nodeset="entomologicalInoculationRate"
+								type="xs:integer" />
+							<xforms:bind nodeset="entomologicalInoculationRateYear"
+								type="ctype:recentYear" />
+							<xforms:bind nodeset="seasonalTransmission" type="xs:boolean" />
+							<xforms:bind nodeset="transmissionMonths"
+								relevant="contains(../seasonalTransmission, 'yes')" />
+						</xforms:bind>
 					</xforms:bind>
 				</xforms:bind>
-			</xforms:bind>
-			<xforms:bind nodeset="inclusionExclusionCriteria">
-				<xforms:bind nodeset="maxAge" type="ctype:age" />
-				<xforms:bind nodeset="minAge" type="ctype:age" />
-				<xforms:bind nodeset="minParasitaemia" type="xs:integer" />
-				<xforms:bind nodeset="maxParasitaemia" type="xs:integer" />
-				<xforms:bind nodeset="excludeIfPriorAntimalarials" type="xs:boolean" />
-				<xforms:bind nodeset="priorAntimalarialsExclusion"
-					relevant="contains(../excludeIfPriorAntimalarials, 'yes')">
-					<xforms:bind nodeset="priorAntimalarials" type="xs:string" />
-					<xforms:bind nodeset="priorAntimalarialsDetermination"
-						type="xs:string" />
-					<xforms:bind nodeset="priorAntimalarialsHistoryWeeks"
-						relevant="contains(../priorAntimalarialsDetermination,'history')" />
+				<xforms:bind nodeset="inclusionExclusionCriteria">
+					<xforms:bind nodeset="maxAge" type="ctype:age" />
+					<xforms:bind nodeset="minAge" type="ctype:age" />
+					<xforms:bind nodeset="minParasitaemia" type="xs:integer" />
+					<xforms:bind nodeset="maxParasitaemia" type="xs:integer" />
+					<xforms:bind nodeset="excludeIfPriorAntimalarials"
+						type="xs:boolean" />
+					<xforms:bind nodeset="priorAntimalarialsExclusion"
+						relevant="contains(../excludeIfPriorAntimalarials, 'yes')">
+						<xforms:bind nodeset="priorAntimalarials" type="xs:string" />
+						<xforms:bind nodeset="priorAntimalarialsDetermination"
+							type="xs:string" />
+						<xforms:bind nodeset="priorAntimalarialsHistoryWeeks"
+							relevant="contains(../priorAntimalarialsDetermination,'history')" />
+					</xforms:bind>
+					<xforms:bind nodeset="pregnancy" />
 				</xforms:bind>
-				<xforms:bind nodeset="pregnancy" />
-			</xforms:bind>
 
 
-			<xforms:bind nodeset="clinical" relevant="contains(../modules, 'clinical')">
-				<xforms:bind nodeset="treatment">
-					<xforms:bind nodeset="regimens">
-						<xforms:bind nodeset="regimen">
-							<xforms:bind nodeset="regimenName" />
-							<xforms:bind nodeset="regimenSupervision" />
-							<xforms:bind nodeset="regimenUrl" type="ctype:nullableHttpUrl" />
-							<xforms:bind nodeset="drugs">
-								<xforms:bind nodeset="drug">
-									<xforms:bind nodeset="name" />
-									<xforms:bind nodeset="activeIngredients">
-										<xforms:bind nodeset="activeIngredient" />
-										<xforms:bind nodeset="activeIngredientMgPerDose" />
-									</xforms:bind>
-									<xforms:bind nodeset="administrationRoute" />
-									<xforms:bind nodeset="manufacturer" />
-									<xforms:bind nodeset="batchNumber" />
-									<xforms:bind nodeset="expiryDate" type="xs:date" />
-									<xforms:bind nodeset="drugStorage" />
-									<xforms:bind nodeset="drugDosingDeterminant"
-										required="true()" />
-									<xforms:bind nodeset="ageDosing"
-										relevant="contains(../drugDosingDeterminant, 'age')">
-										<xforms:bind nodeset="ageDosingSchedule">
-											<xforms:bind nodeset="ageFrom" type="ctype:age" />
-											<xforms:bind nodeset="ageTo" type="ctype:age" />
-											<xforms:bind nodeset="dose" />
-											<xforms:bind nodeset="doseUnit" />
+				<xforms:bind nodeset="clinical" relevant="contains(../modules, 'clinical')">
+					<xforms:bind nodeset="treatment">
+						<xforms:bind nodeset="regimens">
+							<xforms:bind nodeset="regimen">
+								<xforms:bind nodeset="regimenName" />
+								<xforms:bind nodeset="regimenSupervision" />
+								<xforms:bind nodeset="regimenUrl" type="ctype:nullableHttpUrl" />
+								<xforms:bind nodeset="drugs">
+									<xforms:bind nodeset="drug">
+										<xforms:bind nodeset="name" />
+										<xforms:bind nodeset="activeIngredients">
+											<xforms:bind nodeset="activeIngredient" />
+											<xforms:bind nodeset="activeIngredientMgPerDose" />
 										</xforms:bind>
-									</xforms:bind>
-									<xforms:bind nodeset="wGroupDosing"
-										relevant="contains(../drugDosingDeterminant, 'wGroup')">
-										<xforms:bind nodeset="wGroupDosingSchedule">
-											<xforms:bind nodeset="weightFrom" />
-											<xforms:bind nodeset="weightTo" />
-											<xforms:bind nodeset="dose" />
-											<xforms:bind nodeset="doseUnit" />
+										<xforms:bind nodeset="administrationRoute" />
+										<xforms:bind nodeset="manufacturer" />
+										<xforms:bind nodeset="batchNumber" />
+										<xforms:bind nodeset="expiryDate" type="xs:date" />
+										<xforms:bind nodeset="drugStorage" />
+										<xforms:bind nodeset="drugDosingDeterminant"
+											required="true()" />
+										<xforms:bind nodeset="ageDosing"
+											relevant="contains(../drugDosingDeterminant, 'age')">
+											<xforms:bind nodeset="ageDosingSchedule">
+												<xforms:bind nodeset="ageFrom" type="ctype:age" />
+												<xforms:bind nodeset="ageTo" type="ctype:age" />
+												<xforms:bind nodeset="dose" />
+												<xforms:bind nodeset="doseUnit" />
+											</xforms:bind>
 										</xforms:bind>
-									</xforms:bind>
-									<xforms:bind nodeset="weightDosing"
-										relevant="contains(../drugDosingDeterminant, 'weight')">
-										<xforms:bind nodeset="weightDosingSchedule">
-											<xforms:bind nodeset="dose" />
+										<xforms:bind nodeset="wGroupDosing"
+											relevant="contains(../drugDosingDeterminant, 'wGroup')">
+											<xforms:bind nodeset="wGroupDosingSchedule">
+												<xforms:bind nodeset="weightFrom" />
+												<xforms:bind nodeset="weightTo" />
+												<xforms:bind nodeset="dose" />
+												<xforms:bind nodeset="doseUnit" />
+											</xforms:bind>
 										</xforms:bind>
+										<xforms:bind nodeset="weightDosing"
+											relevant="contains(../drugDosingDeterminant, 'weight')">
+											<xforms:bind nodeset="weightDosingSchedule">
+												<xforms:bind nodeset="dose" />
+											</xforms:bind>
+										</xforms:bind>
+										<xforms:bind nodeset="feeding" />
+										<xforms:bind nodeset="fatPerMeal"
+											relevant="contains(../feeding, 'highFat')" />
+										<xforms:bind nodeset="feedingOther"
+											relevant="contains(../feeding, 'other')" />
 									</xforms:bind>
-									<xforms:bind nodeset="feeding" />
-									<xforms:bind nodeset="fatPerMeal"
-										relevant="contains(../feeding, 'highFat')" />
-									<xforms:bind nodeset="feedingOther"
-										relevant="contains(../feeding, 'other')" />
 								</xforms:bind>
 							</xforms:bind>
 						</xforms:bind>
-					</xforms:bind>
-					<xforms:bind nodeset="regimenAllocation" relevant="count(../regimens/regimen)>1">
-						<xforms:bind nodeset="regimenAllocationMethod" />
-						<xforms:bind nodeset="randomisationProportion"
-							relevant="contains(../regimenAllocationMethod,'randomised')" />
-						<xforms:bind nodeset="blinding" />
-					</xforms:bind>
-				</xforms:bind>
-				<xforms:bind nodeset="followup">
-					<xforms:bind nodeset="duration" />
-					<xforms:bind nodeset="feverMeasurement" />
-					<xforms:bind nodeset="haemoglobinRecording">
-						<xforms:bind nodeset="haemoglobinRecordingType" />
-						<xforms:bind nodeset="haemoglobinRecordingHbType"
-							relevant="contains(../haemoglobinRecordingType,'hb')" />
-					</xforms:bind>
-				</xforms:bind>
-				<xforms:bind nodeset="microscopy">
-					<xforms:bind nodeset="microscopyFilmType" required="true()" />
-					<xforms:bind nodeset="microscopyStain" />
-					<xforms:bind nodeset="microscopyStainOther"
-						relevant="contains(../microscopyStain, 'other')" />
-					<xforms:bind nodeset="asexualParasitemiaCount" />
-					<xforms:bind nodeset="asexualParasitemiaCountUnit" />
-					<xforms:bind nodeset="asexualParasitemiaCountUnitOther"
-						relevant="contains(../asexualParasitemiaCountUnit,'other')" />
-					<xforms:bind nodeset="sexualParasitemiaCount" />
-					<xforms:bind nodeset="sexualParasitemiaCountUnit" />
-					<xforms:bind nodeset="sexualParasitemiaCountUnitOther"
-						relevant="contains(../sexualParasitemiaCountUnit,'other')" />
-					<xforms:bind nodeset="separateSpeciesCounts"
-						relevant="count(tokenize(../../../pathogens,' '))>1" />
-
-					<xforms:bind nodeset="thickFilmCalculationOfParasitemia"
-						relevant="contains(../microscopyFilmType,'thick')">
-						<xforms:bind nodeset="thickFilmFormula" />
-						<xforms:bind nodeset="thickFilmFormulaOther"
-							relevant="contains(../thickFilmFormula,'other')" />
-						<xforms:bind nodeset="WBCSource" />
-						<xforms:bind nodeset="WBCAssumed"
-							relevant="contains(../WBCSource,'assumed')" />
-						<xforms:bind nodeset="thickFilmCalculationOfParasitemiaOther" />
-					</xforms:bind>
-
-					<xforms:bind nodeset="thinFilmCalculationOfParasitemia"
-						relevant="contains(../microscopyFilmType,'thin')">
-						<xforms:bind nodeset="thinFilmFormula" />
-						<xforms:bind nodeset="thinFilmFormulaOther"
-							relevant="contains(../thinFilmFormula,'other')" />
-						<xforms:bind nodeset="HtcSource" />
-						<xforms:bind nodeset="HtcAssumed"
-							relevant="contains(../HtcSource,'assumed')" type="ctype:percentage" />
-						<xforms:bind nodeset="thinFilmCalculationOfParasitemiaOther" />
-					</xforms:bind>
-
-					<xforms:bind nodeset="qualityControl">
-						<xforms:bind nodeset="internal">
-							<xforms:bind nodeset="percentageRereadBySecondMicroscopist"
-								type="ctype:percentage" />
-							<xforms:bind nodeset="rereadSlideSelectionMechanism" />
-							<xforms:bind nodeset="rereadSlideSelectionMechanismOther"
-								relevant="contains(../rereadSlideSelectionMechanism, 'other')" />
-						</xforms:bind>
-						<xforms:bind nodeset="external">
-							<xforms:bind nodeset="percentageRereadBySecondMicroscopist"
-								type="ctype:percentage" />
-							<xforms:bind nodeset="rereadSlideSelectionMechanism" />
-							<xforms:bind nodeset="rereadSlideSelectionMechanismOther"
-								relevant="contains(../rereadSlideSelectionMechanism, 'other')" />
+						<xforms:bind nodeset="regimenAllocation" relevant="count(../regimens/regimen)>1">
+							<xforms:bind nodeset="regimenAllocationMethod" />
+							<xforms:bind nodeset="randomisationProportion"
+								relevant="contains(../regimenAllocationMethod,'randomised')" />
+							<xforms:bind nodeset="blinding" />
 						</xforms:bind>
 					</xforms:bind>
+					<xforms:bind nodeset="followup">
+						<xforms:bind nodeset="duration" />
+						<xforms:bind nodeset="feverMeasurement" />
+						<xforms:bind nodeset="haemoglobinRecording">
+							<xforms:bind nodeset="haemoglobinRecordingType" />
+							<xforms:bind nodeset="haemoglobinRecordingHbType"
+								relevant="contains(../haemoglobinRecordingType,'hb')" />
+						</xforms:bind>
+					</xforms:bind>
+					<xforms:bind nodeset="microscopy">
+						<xforms:bind nodeset="microscopyFilmType" required="true()" />
+						<xforms:bind nodeset="microscopyStain" />
+						<xforms:bind nodeset="microscopyStainOther"
+							relevant="contains(../microscopyStain, 'other')" />
+						<xforms:bind nodeset="asexualParasitemiaCount" />
+						<xforms:bind nodeset="asexualParasitemiaCountUnit" />
+						<xforms:bind nodeset="asexualParasitemiaCountUnitOther"
+							relevant="contains(../asexualParasitemiaCountUnit,'other')" />
+						<xforms:bind nodeset="sexualParasitemiaCount" />
+						<xforms:bind nodeset="sexualParasitemiaCountUnit" />
+						<xforms:bind nodeset="sexualParasitemiaCountUnitOther"
+							relevant="contains(../sexualParasitemiaCountUnit,'other')" />
+						<xforms:bind nodeset="separateSpeciesCounts"
+							relevant="count(tokenize(../../../pathogens,' '))>1" />
 
-				</xforms:bind>
-				<xforms:bind
-					nodeset="geneotypingToDistinguishBetweenRecrudescenceAndReinfection">
-					<xforms:bind nodeset="applicability" />
-					<xforms:bind nodeset="applicable"
-						relevant="contains(../applicability, 'yes')">
-						<xforms:bind nodeset="markers">
-							<xforms:bind nodeset="recrudescenceMarker">
-								<xforms:bind nodeset="markerName" />
-								<xforms:bind nodeset="markerOther"
-									relevant="contains(../markerName, 'other')" />
-								<xforms:bind nodeset="numberOfMicroSatellites"
-									relevant="contains(../markerName, 'satellite')" />
+						<xforms:bind nodeset="thickFilmCalculationOfParasitemia"
+							relevant="contains(../microscopyFilmType,'thick')">
+							<xforms:bind nodeset="thickFilmFormula" />
+							<xforms:bind nodeset="thickFilmFormulaOther"
+								relevant="contains(../thickFilmFormula,'other')" />
+							<xforms:bind nodeset="WBCSource" />
+							<xforms:bind nodeset="WBCAssumed"
+								relevant="contains(../WBCSource,'assumed')" />
+							<xforms:bind nodeset="thickFilmCalculationOfParasitemiaOther" />
+						</xforms:bind>
+
+						<xforms:bind nodeset="thinFilmCalculationOfParasitemia"
+							relevant="contains(../microscopyFilmType,'thin')">
+							<xforms:bind nodeset="thinFilmFormula" />
+							<xforms:bind nodeset="thinFilmFormulaOther"
+								relevant="contains(../thinFilmFormula,'other')" />
+							<xforms:bind nodeset="HtcSource" />
+							<xforms:bind nodeset="HtcAssumed"
+								relevant="contains(../HtcSource,'assumed')" type="ctype:percentage" />
+							<xforms:bind nodeset="thinFilmCalculationOfParasitemiaOther" />
+						</xforms:bind>
+
+						<xforms:bind nodeset="qualityControl">
+							<xforms:bind nodeset="internal">
+								<xforms:bind nodeset="percentageRereadBySecondMicroscopist"
+									type="ctype:percentage" />
+								<xforms:bind nodeset="rereadSlideSelectionMechanism" />
+								<xforms:bind nodeset="rereadSlideSelectionMechanismOther"
+									relevant="contains(../rereadSlideSelectionMechanism, 'other')" />
+							</xforms:bind>
+							<xforms:bind nodeset="external">
+								<xforms:bind nodeset="percentageRereadBySecondMicroscopist"
+									type="ctype:percentage" />
+								<xforms:bind nodeset="rereadSlideSelectionMechanism" />
+								<xforms:bind nodeset="rereadSlideSelectionMechanismOther"
+									relevant="contains(../rereadSlideSelectionMechanism, 'other')" />
 							</xforms:bind>
 						</xforms:bind>
-						<xforms:bind nodeset="genotypingLaboratory" />
-						<xforms:bind nodeset="markerDiscriminant" required="true()" />
-						<xforms:bind nodeset="markerDiscriminantOther"
-							relevant="contains(../markerDiscriminant, 'other')" />
-						<xforms:bind nodeset="analysisProtocol">
-							<xforms:bind nodeset="mixedAlleles" required="true()" />
-							<xforms:bind nodeset="recrudescence" required="true()" />
-							<xforms:bind nodeset="reinfection" required="true()" />
+
+					</xforms:bind>
+					<xforms:bind
+						nodeset="geneotypingToDistinguishBetweenRecrudescenceAndReinfection">
+						<xforms:bind nodeset="applicability" />
+						<xforms:bind nodeset="applicable"
+							relevant="contains(../applicability, 'yes')">
+							<xforms:bind nodeset="markers">
+								<xforms:bind nodeset="recrudescenceMarker">
+									<xforms:bind nodeset="markerName" />
+									<xforms:bind nodeset="markerOther"
+										relevant="contains(../markerName, 'other')" />
+									<xforms:bind nodeset="numberOfMicroSatellites"
+										relevant="contains(../markerName, 'satellite')" />
+								</xforms:bind>
+							</xforms:bind>
+							<xforms:bind nodeset="genotypingLaboratory" />
+							<xforms:bind nodeset="markerDiscriminant" required="true()" />
+							<xforms:bind nodeset="markerDiscriminantOther"
+								relevant="contains(../markerDiscriminant, 'other')" />
+							<xforms:bind nodeset="analysisProtocol">
+								<xforms:bind nodeset="mixedAlleles" required="true()" />
+								<xforms:bind nodeset="recrudescence" required="true()" />
+								<xforms:bind nodeset="reinfection" required="true()" />
+							</xforms:bind>
+						</xforms:bind>
+					</xforms:bind>
+
+				</xforms:bind>
+
+				<xforms:bind nodeset="molecular" relevant="contains(../modules, 'molecular')">
+					<xforms:bind nodeset="resistanceMarkers">
+						<xforms:bind nodeset="molecularMarkerFalciparumOpen"
+							relevant="contains(../../../pathogens, 'pfalciparum')">
+							<xforms:bind nodeset="molecularMarkerFalciparum" />
+							<xforms:bind nodeset="molecularMarkerFalciparumOther"
+								relevant="contains(../molecularMarkerFalciparum, 'other')" />
+						</xforms:bind>
+						<xforms:bind nodeset="molecularMarkerVivaxOpen"
+							relevant="contains(../../../pathogens, 'pvivax')">
+							<xforms:bind nodeset="molecularMarkerVivax" />
+							<xforms:bind nodeset="molecularMarkerVivaxOther"
+								relevant="contains(../molecularMarkerVivax, 'other')" />
+						</xforms:bind>
+						<xforms:bind nodeset="genotypingMethod">
+							<xforms:bind nodeset="genotypingMethod" />
+							<xforms:bind nodeset="genotypingMethodOther" />
 						</xforms:bind>
 					</xforms:bind>
 				</xforms:bind>
-
-			</xforms:bind>
-
-			<xforms:bind nodeset="molecular" relevant="contains(../modules, 'molecular')">
-				<xforms:bind nodeset="resistanceMarkers">
-					<xforms:bind nodeset="molecularMarkerFalciparumOpen"
-						relevant="contains(../../../pathogens, 'pfalciparum')">
-						<xforms:bind nodeset="molecularMarkerFalciparum" />
-						<xforms:bind nodeset="molecularMarkerFalciparumOther"
-							relevant="contains(../molecularMarkerFalciparum, 'other')" />
+				<xforms:bind nodeset="invitro" relevant="contains(../modules, 'invitro')">
+					<xforms:bind nodeset="analysisSite" />
+					<xforms:bind nodeset="culture">
+						<xforms:bind nodeset="incubatorSystem" />
+						<xforms:bind nodeset="co2"
+							relevant="contains(../incubatorSystem, 'co2incubator')" />
+						<xforms:bind nodeset="healthyErythrocytesSource" />
+						<xforms:bind nodeset="hematocrit" type="ctype:percentage" />
+						<xforms:bind nodeset="bloodGroup" />
 					</xforms:bind>
-					<xforms:bind nodeset="molecularMarkerVivaxOpen"
-						relevant="contains(../../../pathogens, 'pvivax')">
-						<xforms:bind nodeset="molecularMarkerVivax" />
-						<xforms:bind nodeset="molecularMarkerVivaxOther"
-							relevant="contains(../molecularMarkerVivax, 'other')" />
-					</xforms:bind>
-					<xforms:bind nodeset="genotypingMethod">
-						<xforms:bind nodeset="genotypingMethod" />
-						<xforms:bind nodeset="genotypingMethodOther" />
-					</xforms:bind>
-				</xforms:bind>
-			</xforms:bind>
-			<xforms:bind nodeset="invitro" relevant="contains(../modules, 'invitro')">
-				<xforms:bind nodeset="analysisSite" />
-				<xforms:bind nodeset="culture">
-					<xforms:bind nodeset="incubatorSystem" />
-					<xforms:bind nodeset="co2"
-						relevant="contains(../incubatorSystem, 'co2incubator')" />
-					<xforms:bind nodeset="healthyErythrocytesSource" />
-					<xforms:bind nodeset="hematocrit" type="ctype:percentage" />
-					<xforms:bind nodeset="bloodGroup" />
-				</xforms:bind>
-				<xforms:bind nodeset="medium">
-					<xforms:bind nodeset="medium" />
-					<xforms:bind nodeset="preparation" />
-					<xforms:bind nodeset="serum" />
-					<xforms:bind nodeset="serum-finalConcentration" type="xs:integer" />
-					<xforms:bind nodeset="NaHCO3-finalConcentration" type="xs:integer" />
-					<xforms:bind nodeset="hypoxantine">
-						<xforms:bind nodeset="hypoxantine-added" />
-						<xforms:bind nodeset="hypoxantine-finalConcentration"
-							relevant="contains(../hypoxantine-added,'yes')" type="xs:integer"
-							required="true()" />
-					</xforms:bind>
-					<xforms:bind nodeset="oroticAcid">
-						<xforms:bind nodeset="oroticAcid-added" />
-						<xforms:bind nodeset="oroticAcid-finalConcentration"
-							relevant="contains(../oroticAcid-added,'yes')" type="xs:integer"
-							required="true()" />
-					</xforms:bind>
-					<xforms:bind nodeset="glucose">
-						<xforms:bind nodeset="glucose-added" />
-						<xforms:bind nodeset="glucose-finalConcentration"
-							relevant="contains(../glucose-added,'yes')" type="xs:integer"
-							required="true()" />
-					</xforms:bind>
-					<xforms:bind nodeset="antiBiotics">
-						<xforms:bind nodeset="antiBiotic">
-							<xforms:bind ref="antiBioticName" required="true()" />
-							<xforms:bind ref="antiBioticFinalConcentration" type="xs:integer"
+					<xforms:bind nodeset="medium">
+						<xforms:bind nodeset="medium" />
+						<xforms:bind nodeset="preparation" />
+						<xforms:bind nodeset="serum" />
+						<xforms:bind nodeset="serum-finalConcentration" type="xs:integer" />
+						<xforms:bind nodeset="NaHCO3-finalConcentration" type="xs:integer" />
+						<xforms:bind nodeset="hypoxantine">
+							<xforms:bind nodeset="hypoxantine-added" />
+							<xforms:bind nodeset="hypoxantine-finalConcentration"
+								relevant="contains(../hypoxantine-added,'yes')" type="xs:integer"
 								required="true()" />
 						</xforms:bind>
+						<xforms:bind nodeset="oroticAcid">
+							<xforms:bind nodeset="oroticAcid-added" />
+							<xforms:bind nodeset="oroticAcid-finalConcentration"
+								relevant="contains(../oroticAcid-added,'yes')" type="xs:integer"
+								required="true()" />
+						</xforms:bind>
+						<xforms:bind nodeset="glucose">
+							<xforms:bind nodeset="glucose-added" />
+							<xforms:bind nodeset="glucose-finalConcentration"
+								relevant="contains(../glucose-added,'yes')" type="xs:integer"
+								required="true()" />
+						</xforms:bind>
+						<xforms:bind nodeset="antiBiotics">
+							<xforms:bind nodeset="antiBiotic">
+								<xforms:bind ref="antiBioticName" required="true()" />
+								<xforms:bind ref="antiBioticFinalConcentration"
+									type="xs:integer" required="true()" />
+							</xforms:bind>
+						</xforms:bind>
+						<xforms:bind nodeset="susceptibility">
+							<xforms:bind nodeset="timeOfIncubation" />
+							<xforms:bind nodeset="susceptibilityMethod" />
+						</xforms:bind>
 					</xforms:bind>
-					<xforms:bind nodeset="susceptibility">
-						<xforms:bind nodeset="timeOfIncubation" />
-						<xforms:bind nodeset="susceptibilityMethod" />
-					</xforms:bind>
-				</xforms:bind>
-				<xforms:bind nodeset="drugs">
-					<xforms:bind nodeset="drug">
-						<xforms:bind nodeset="molecule" required="true()" />
-						<xforms:bind nodeset="solvent" required="true()" />
-						<xforms:bind nodeset="solventFinalConcentration" type="xs:integer" />
+					<xforms:bind nodeset="drugs">
+						<xforms:bind nodeset="drug">
+							<xforms:bind nodeset="molecule" required="true()" />
+							<xforms:bind nodeset="solvent" required="true()" />
+							<xforms:bind nodeset="solventFinalConcentration"
+								type="xs:integer" />
 
-						<xforms:bind nodeset="providedByWwarn" required="true()" />
-						<xforms:bind nodeset="provider"
-							relevant="contains(../providedByWwarn, 'no')" />
+							<xforms:bind nodeset="providedByWwarn" required="true()" />
+							<xforms:bind nodeset="provider"
+								relevant="contains(../providedByWwarn, 'no')" />
+						</xforms:bind>
 					</xforms:bind>
-				</xforms:bind>
-				<xforms:bind nodeset="plateBatches">
-					<xforms:bind nodeset="batch">
-						<xforms:bind nodeset="clone3D7ProvidedByWwarn" type="xs:boolean"
-							required="true()" />
-						<xforms:bind nodeset="clone3D7Provider"
-							relevant="contains(../clone3D7ProvidedByWwarn, 'no')" required="true()" />
-						<xforms:bind nodeset="batchesIncludedInRawData" type="xs:boolean"
-							required="true()" />
-						<xforms:bind nodeset="notIncludedBatchDataHint"
-							relevant="contains(../batchesIncludedInRawData, 'no')" />
-						<xforms:bind nodeset="preparationDate" type="xs:date"
-							relevant="contains(../batchesIncludedInRawData, 'no')" />
-						<xforms:bind nodeset="parasitaemia3D7"
-							relevant="contains(../batchesIncludedInRawData, 'no')" type="ctype:percentage" />
-						<xforms:bind nodeset="ringForms" />
+					<xforms:bind nodeset="plateBatches">
+						<xforms:bind nodeset="batch">
+							<xforms:bind nodeset="clone3D7ProvidedByWwarn" type="xs:boolean"
+								required="true()" />
+							<xforms:bind nodeset="clone3D7Provider"
+								relevant="contains(../clone3D7ProvidedByWwarn, 'no')" required="true()" />
+							<xforms:bind nodeset="batchesIncludedInRawData" type="xs:boolean"
+								required="true()" />
+							<xforms:bind nodeset="notIncludedBatchDataHint"
+								relevant="contains(../batchesIncludedInRawData, 'no')" />
+							<xforms:bind nodeset="preparationDate" type="xs:date"
+								relevant="contains(../batchesIncludedInRawData, 'no')" />
+							<xforms:bind nodeset="parasitaemia3D7"
+								relevant="contains(../batchesIncludedInRawData, 'no')" type="ctype:percentage" />
+							<xforms:bind nodeset="ringForms" />
+						</xforms:bind>
 					</xforms:bind>
-				</xforms:bind>
 
-			</xforms:bind>
-			<xforms:bind nodeset="pharmacology"
-				relevant="contains(../modules, 'pharmacology')">
-				<xforms:bind nodeset="sample">
-					<xforms:bind nodeset="plannedNumberOfSamples" />
-					<xforms:bind nodeset="volume" />
-					<xforms:bind nodeset="anticoagulent" />
-					<xforms:bind nodeset="centrifugeTime" />
-					<xforms:bind nodeset="matrix" />
-					<xforms:bind nodeset="storage">
-						<xforms:bind nodeset="storageTemperature" />
-						<xforms:bind nodeset="storageDuration" />
-					</xforms:bind>
-					<xforms:bind nodeset="preparationReference" />
 				</xforms:bind>
+				<xforms:bind nodeset="pharmacology"
+					relevant="contains(../modules, 'pharmacology')">
+					<xforms:bind nodeset="sample">
+						<xforms:bind nodeset="plannedNumberOfSamples" />
+						<xforms:bind nodeset="volume" />
+						<xforms:bind nodeset="anticoagulent" />
+						<xforms:bind nodeset="centrifugeTime" />
+						<xforms:bind nodeset="matrix" />
+						<xforms:bind nodeset="storage">
+							<xforms:bind nodeset="storageTemperature" />
+							<xforms:bind nodeset="storageDuration" />
+						</xforms:bind>
+						<xforms:bind nodeset="preparationReference" />
+					</xforms:bind>
 
+				</xforms:bind>
 			</xforms:bind>
 		</xforms:bind>
 	</xforms:bind>
@@ -541,7 +545,7 @@
 
 	<xforms:instance id="ins-pharmacology-analyte-template"
 		src="/apps/common/templates/study/pharmacology-analyte-template.xml" />
-	<xforms:instance id="">
+	<xforms:instance id="ins-assayCapacity">
 		<assayCapacity xmlns="">
 			<assayMethodReference />
 			<assayMethodDescription />
