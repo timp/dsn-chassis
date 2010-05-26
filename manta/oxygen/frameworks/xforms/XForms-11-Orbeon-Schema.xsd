@@ -1,80 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema targetNamespace="http://www.w3.org/2002/xforms" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xforms="http://www.w3.org/2002/xforms" elementFormDefault="qualified">
-	<!--
-  Changes:
-26-Aug MJD fixed typo where more than one child allowed on <instance>
-04-Sep MJD fixed typo on <send> : attribute 'submission' is required
-04-Sep MJD fixed typo on <rebuild><recalculate><revalidate><refresh>: '' attribute is required
-06-Sep MJD clarified specific allowed values of @level on <message>
-06-Sep MJD removed UI Common attributes from <help><hint><alert><label>
-09-Sep MJD changed minOccurrs and maxOccurs to use XPath expressions, default values
-09-Sep MJD fixed typo: added linking attributes to <message>
-09-Sep MJD removed <extension> from content models of <mode> and UI common elements
-09-Sep MJD fixed typo: removed 'format' attribute
-17-Sep MJD fixed typo: <output> now uses the attribute group for binding attributes, instead of similarly named individual attrs
-17-Sep MJD added XPathExpression simpleType for internal use. This doesn't actually change anything, but makes
-the Schema a better documentation resource (instead of using xsd:string for everything)
-17-Sep MJD removed 'mediatype' attribute from <submission>, as it was unused
-17-Sep MJD fixed typo: only 'ref' and 'bind' attributes, not 'model' on <submission>
-17-Sep MJD added XML Events attributes to <model>
-17-Sep MJD in accordance with 3.2.1, removed all id attributes
-19-Sep MJD fixed typo: clarified that nested <action>s are permitted.
-19-Sep MJD factor UI.Inline into <group>. Renamed <group>s and <attributeGroup>s to match the prose names
-19-Sep MJD changed to agreed-upon namespace for CR
-25-Sep MJD fixed typo: added UI.Inlne to content model of <message>, enabled mixed content
-29-Sep MJD fixed typo: 'model' required on <reset>
-29-Sep MJD fixed typo: binding attributes allowed on <submit>
-29-Sep MJD fixed typo: explicit enumerated values for 'show' on <load>
-04-Oct MJD 'resource' attribute not required
-
-12-Nov 2002 : Published as CR
-
-13-Jan MJD added new attribute includenamespaceprefixes on <submission>
-13-Jan MJD added UI Common elements to content model of <group>
-03-Feb MJD synchoninzed duration types with 15 Nov Query Operators document
-31-Mar MJD added mediatype attribute on <submission>
-14-May MJD typo : "xsd:NCName"
-26-Jun MJD removed 'accesskey' and 'navindex' (over to host language definition)
-
-01-Aug 2003 : Published as PR
-
-15-Sep MJD final namespace
-15-Sep MJD corrected content model of <value>
-15-Sep MJD changed the name of the import for XML Events to highlight that only the attributes are used
-
-1.0 Second Edition errata
-
-16-Apr 2005 RAM - erratum E4 - optional @model
-16-Apr 2005 RAM - erratum E22 - default value for @show
-16-Apr 2005 RAM - erratum E54 - remove xforms:minOccurs and xforms:maxOccurs
-26-Jun 2005 RAM - erratum E71 - allow an empty case element
-
-16-Jun 2006 JMB - erratum E69 - instance attribute in submission; id in common attributes
-
-15-Aug-2006 CFW - erratum E18 on 2nd ed. Added Action to content model for Case
-
-09-Sep 2006 JMB - non-substantive: explicitly declared some use="optional" settings, 
-                  substantive: erratum E18 on 2nd ed. Declared default false for selected attribute of case
-                  substantive: erratum E21 on 2nd ed. Added multipart-post to enumeration of method attribute
-23-Nov 2006 JMB - substantive: erratum E32 on 2nd ed. switch in repeat
-17-Jul 2007 JMB - substantive: erratum E41 on 2nd ed. version attribute and associated simple types
-
-XForms 1.1
-
-25 Oct 2007 CFW, NvdB and JMB - Updated to XForms 1.1
-21 Nov 2007 JMB: Fixed description of card-number datatype
-08 Apr 2008 JMB: Fixed NCName (was NCNAME)
-30 MAY 2008 JMB: Changed card-number to allow zero or more digits
-22 JUN 2008 JMB: Renamed UI.Inline to UI.Content
-07 SEP 2008 LLK: Added element header attribute combine. header now allows one name, multiple value.
-09 MAR 2009 JMB: Changed @separator default to ampersand
-19 MAY 2009 JMB: Added submission/@targetref, dispatch/@targetid and dispatch/targetid
-10 JUN 2009 JMB: Moved switch/case from global space to being local to switch for clarity
-13 JAN 2010 JMB: Put maxOccurs=1 on instance content to limit to one child element in an instance
--->
-	<xsd:import namespace="http://www.w3.org/2001/xml-events" schemaLocation="http://www.w3.org/MarkUp/SCHEMA/xml-events-attribs-1.xsd"/>
-	<xsd:import namespace="http://www.w3.org/2001/XMLSchema" schemaLocation="http://www.w3.org/2001/XMLSchema.xsd"/>
-
+<xsd:schema 
+	targetNamespace="http://www.w3.org/2002/xforms" 
+	xmlns:ev="http://www.w3.org/2001/xml-events" 
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+	xmlns:xforms="http://www.w3.org/2002/xforms" 
+	xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
+	elementFormDefault="qualified">
+	<xsd:import namespace="http://www.w3.org/2001/xml-events" schemaLocation="xml-events-attribs-1.xsd"/>
+	<xsd:import namespace="http://www.w3.org/2001/XMLSchema" schemaLocation="XMLSchema.xsd"/>
+	<xsd:import namespace="http://orbeon.org/oxf/xml/xforms" schemaLocation="orbeon-xxforms.xsd"/>
+	
 	<!--
 structural elements
 -->
@@ -101,7 +36,7 @@ structural elements
 	<xsd:attributeGroup name="Linking.Attributes">
 		<xsd:attribute name="src" type="xsd:anyURI"/>
 	</xsd:attributeGroup>
-
+	
 	<xsd:element name="model">
 		<xsd:complexType>
 			<xsd:sequence minOccurs="0" maxOccurs="unbounded">
@@ -480,6 +415,7 @@ User Interface form controls
 			<xsd:attribute name="appearance" type="xforms:appearanceType" use="optional"/>
 			<xsd:attribute name="value" type="xforms:XPathExpression" use="optional"/>
 			<xsd:attribute name="mediatype" type="xsd:string" use="optional"/>
+			<xsd:attribute ref="xxforms:format" use="optional"/>
 		</xsd:complexType>
 	</xsd:element>
 	<xsd:element name="submit">
