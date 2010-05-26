@@ -264,8 +264,9 @@
 						<xforms:bind nodeset="hematocrit" type="ctype:percentage" />
 						<xforms:bind nodeset="bloodGroup" />
 					</xforms:bind>
-					<xforms:bind nodeset="medium">
+					<xforms:bind nodeset="drugSusceptibilityMedium">
 						<xforms:bind nodeset="medium" />
+						<xforms:bind nodeset="mediumOther" relevant="contains(../medium,'other')"/>
 						<xforms:bind nodeset="preparation" />
 						<xforms:bind nodeset="serum" />
 						<xforms:bind nodeset="serum-finalConcentration" type="xs:integer" />
@@ -410,7 +411,7 @@
 	<xforms:instance id="ins-bloodGroup-items"
 		src="/apps/common/constants/bloodGroups.xml" />
 	<xforms:instance id="ins-medium-items"
-		src="/apps/common/constants/medium-terms.xml" />
+		src="/apps/common/constants/mediums.xml" />
 	<xforms:instance id="ins-mediumPreparation-items"
 		src="/apps/common/constants/mediumPreparations.xml" />
 	<xforms:instance id="ins-serum-items" src="/apps/common/constants/serums.xml" />

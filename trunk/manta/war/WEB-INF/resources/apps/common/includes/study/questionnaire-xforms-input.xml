@@ -1574,7 +1574,7 @@
 				+ | | BEGIN IN VITRO MEDIUM NESTED QUESTIONNAIRE | +
 			-->
 
-				<xforms:group ref="medium">
+				<xforms:group ref="drugSusceptibilityMedium">
 					<h4>Medium for Drug Susceptibility Measure</h4>
 					<p>
 						<xforms:select1 ref="medium" appearance="minimal">
@@ -1589,7 +1589,13 @@
 								<xforms:label ref="label" />
 								<xforms:value ref="value" />
 							</xforms:itemset>
+							<xforms:item>
+								<xforms:label>other</xforms:label>
+								<xforms:value>other</xforms:value>
+							</xforms:item>
+							
 						</xforms:select1>
+						<xforms:input ref="mediumOther"/>
 						<em>
 							Storage temperature: 6 months at -20&#176;C and 1 week at
 							+4&#176;C
