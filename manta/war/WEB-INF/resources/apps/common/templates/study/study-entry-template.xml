@@ -114,7 +114,7 @@
 
 			<pharmacology>
 				<sample>
-					<plannedNumberOfSamples/>
+					<plannedNumberOfSamples />
 					<volume />
 					<anticoagulent />
 					<centrifugeTime />
@@ -126,43 +126,22 @@
 					<preparationReference />
 				</sample>
 				<analytes>
-					<totalDrug />
-					<freeDrug />
-					<metabolite1 />
-					<analytes-metabolite2 />
+					<analyte>
+						<drugGiven />
+						<drugMeasured />
+						<freeDrugMeasured />
+						<totalDrugMeasured />
+						<lowerLoQ />
+						<upperLoQ />
+					</analyte>
 				</analytes>
-				<analysisModel />
-				<inclusionExclusionCriteria>
-					<inclusionExclusionCriteria-minAge />
-					<inclusionExclusionCriteria-maxAge />
-					<inclusionExclusionCriteria-minParasitaemia />
-					<inclusionExclusionCriteria-maxParasitaemia />
-					<inclusionExclusionCriteria-excludeIfPriorAntimalarials />
-					<inclusionExclusionCriteria-excludeIfPriorAntimalarialsTime />
-				</inclusionExclusionCriteria>
-
-				<drugs>
-					<drug>
-						<name />
-						<manufacturer />
-						<numberOfDoses />
-						<daysOfTreatment />
-						<dosingByAgeOrWeight />
-						<batchNumber />
-						<expirationDate />
-						<assayCapacity />
-						<assayCapacity-assayMethodReference />
-						<assayCapacity-assayMethodDescription />
-					</drug>
-				</drugs>
-				<treatmentRegimens>
-					<treatmentRegimen>
-						<treatmentRegimens-name />
-						<treatmentRegimens-supervised />
-						<treatmentRegimens-allocation />
-						<treatmentRegimens-blinding />
-					</treatmentRegimen>
-				</treatmentRegimens>
+				<assayCapacities>
+					<assayCapacity>
+						<assayMethodReference />
+						<assayMethodDescription />
+						<assayValidation />
+					</assayCapacity>
+				</assayCapacities>
 
 			</pharmacology>
 
@@ -196,7 +175,6 @@
 						<glucose-added />
 						<glucose-finalConcentration />
 					</glucose>
-
 					<antiBiotics />
 				</medium>
 				<susceptibility>
@@ -205,11 +183,12 @@
 				</susceptibility>
 				<drugs />
 				<plateBatches />
-
 			</invitro>
+
+
+
+
 			<molecular>
-
-
 				<inclusionExclusionCriteria-A>
 					<inclusion-day0 />
 					<inclusion-treatmentFailure />

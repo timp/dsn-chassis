@@ -330,7 +330,7 @@
 			<xforms:bind nodeset="pharmacology"
 				relevant="contains(../modules, 'pharmacology')">
 				<xforms:bind nodeset="sample">
-					<xforms:bind nodeset="plannedNumberOfSamples"/>
+					<xforms:bind nodeset="plannedNumberOfSamples" />
 					<xforms:bind nodeset="volume" />
 					<xforms:bind nodeset="anticoagulent" />
 					<xforms:bind nodeset="centrifugeTime" />
@@ -539,9 +539,19 @@
 		</antiBiotic>
 	</xforms:instance>
 
+	<xforms:instance id="ins-pharmacology-analyte-template"
+		src="/apps/common/templates/study/pharmacology-analyte-template.xml" />
+	<xforms:instance id="">
+		<assayCapacity xmlns="">
+			<assayMethodReference />
+			<assayMethodDescription />
+			<assayValidation />
+		</assayCapacity>
+	</xforms:instance>
+
+
 	<xforms:instance id="ins-invitro-drug-template"
 		src="/apps/common/templates/study/invitro-drug-template.xml" />
-
 	<xforms:instance id="ins-invitro-batch-template"
 		src="/apps/common/templates/study/invitro-batch-template.xml" />
 

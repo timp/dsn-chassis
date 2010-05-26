@@ -2,15 +2,8 @@
 	xmlns="http://www.w3.org/1999/xhtml" xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
 	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events"
 	xmlns:atom="http://www.w3.org/2005/Atom" xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
-	xmlns:ctype="http://www.cggh.org/chassis-types" xmlns:xi="http://www.w3.org/2001/XInclude" id="questionnaire">
-	<style>
-#questionnaire span.xforms-group {
-	display:block;
-	margin: 4px;
-	padding: 4px;
-	border: 1px solid green; 
-}
-	</style>
+	xmlns:ctype="http://www.cggh.org/chassis-types" xmlns:xi="http://www.w3.org/2001/XInclude"
+	class="questionnaire">
 	<xforms:group model="mod-study-questionnaire"
 		ref="instance('ins-sq-study-entry')/atom:content/study">
 
@@ -389,7 +382,7 @@
 				</xforms:input>
 			</xforms:group>
 
-<br/>
+			<br />
 			<xforms:select1 ref="pregnancy" appearance="minimal">
 				<xforms:label class="fixed-width">Pregnancy</xforms:label>
 				<xforms:item>
@@ -1960,9 +1953,9 @@
 				+ | | BEGIN IN VITRO PLATES NESTED QUESTIONNAIRE | +
 			-->
 
-			<h4 id="plates">Batches of Plates</h4>
 
 			<xforms:group ref="plateBatches">
+				<h4>Batches of Plates</h4>
 				<table class="repeat-table">
 					<xforms:repeat nodeset="batch" id="batch-rep">
 						<tr>
@@ -2100,28 +2093,31 @@
 
 			<xforms:group ref="sample">
 				<h3>Sample</h3>
-				<xforms:input ref="plannedNumberOfSamples" class="fixed-width">
-					<xforms:label>Planned number of samples</xforms:label>
+				<xforms:input ref="plannedNumberOfSamples">
+					<xforms:label class="fixed-width">
+						Planned number
+						<br />
+						of samples
+					</xforms:label>
 				</xforms:input>
 				<br />
-				<xforms:input ref="volume" class="fixed-width">
-					<xforms:label>Volume</xforms:label>
+				<xforms:input ref="volume">
+					<xforms:label class="fixed-width">Volume</xforms:label>
 				</xforms:input>
 				<br />
-				<xforms:input ref="anticoagulent" class="fixed-width">
-					<xforms:label>Anticoagulent</xforms:label>
+				<xforms:input ref="anticoagulent">
+					<xforms:label class="fixed-width">Anticoagulent</xforms:label>
 				</xforms:input>
 				<br />
 
-				<xforms:input ref="centrifugeTime" class="fixed-width">
-					<xforms:label>Time to centrifuge:(eg. &lt; 15 mins)</xforms:label>
+				<xforms:input ref="centrifugeTime">
+					<xforms:label class="fixed-width">Time to centrifuge</xforms:label>
+					<xforms:hint>eg. &lt; 15 mins</xforms:hint>
 				</xforms:input>
 
-<br/>
+				<br />
+				<h5>Sample source</h5>
 				<xforms:select ref="matrix" appearance="full">
-					<xforms:label>
-						Please select 
-				</xforms:label>
 					<xforms:itemset model="mod-study-questionnaire"
 						nodeset="instance('ins-sampleMatrixType-items')/sampleMatrixType">
 						<xforms:label ref="label" />
@@ -2130,7 +2126,7 @@
 				</xforms:select>
 
 				<xforms:group ref="storage">
-				<h5>Storage</h5>
+					<h4>Storage</h4>
 					<xforms:input ref="storageTemperature">
 						<xforms:label>Temperature</xforms:label>
 					</xforms:input>
@@ -2142,6 +2138,198 @@
 					<xforms:label>Preparation reference</xforms:label>
 				</xforms:input>
 			</xforms:group>
+
+
+			<xforms:group ref="analytes">
+				<h4>Drug given and analytes/metabolites measured</h4>
+				<table class="repeat-table">
+					<tr>
+						<th></th>
+						<th>Drug given</th>
+						<th>Analyte</th>
+						<th>Free drug</th>
+						<th>Total drug</th>
+						<th>Lower LoQ</th>
+						<th>Upper LoQ</th>
+					</tr>
+					<lowerLOQ />
+					<upperLOQ />
+					<xforms:repeat nodeset="analyte" id="analyte-rep">
+						<tr>
+							<td class="action-td">
+
+								<xforms:trigger appearance="minimal">
+									<xforms:delete ev:event="DOMActivate" context="."
+										nodeset="." at="index('analyte-rep')" />
+									<xforms:label>
+										<img src="/apps/common/theme/remove.gif" />
+									</xforms:label>
+								</xforms:trigger>
+							</td>
+							<td class="form-td">
+								<xforms:input ref="drugGiven">
+									<xforms:hint>Name of drug given</xforms:hint>
+								</xforms:input>
+							</td>
+							<td class="form-td">
+								<xforms:input ref="drugMeasured">
+									<xforms:hint>Name of metabolite/drug measured</xforms:hint>
+								</xforms:input>
+							</td>
+							<td class="form-td">
+								<xforms:select1 ref="freeDrugMeasured"
+									appearance="minimal">
+									<xforms:itemset model="mod-study-questionnaire"
+										nodeset="instance('ins-boolean-items')/boolean">
+										<xforms:label ref="label" />
+										<xforms:value ref="value" />
+									</xforms:itemset>
+									<xforms:hint>Was free drug concentration measured?</xforms:hint>
+								</xforms:select1>
+							</td>
+							<td class="form-td">
+								<xforms:select1 ref="totalDrugMeasured"
+									appearance="minimal">
+									<xforms:itemset model="mod-study-questionnaire"
+										nodeset="instance('ins-boolean-items')/boolean">
+										<xforms:label ref="label" />
+										<xforms:value ref="value" />
+									</xforms:itemset>
+									<xforms:hint>Was total drug concentration measured?</xforms:hint>
+								</xforms:select1>
+							</td>
+							<td class="form-td">
+								<xforms:input ref="lowerLoQ" class="fourWide">
+									<xforms:hint>Lower Limit of Quantification</xforms:hint>
+								</xforms:input>
+							</td>
+							<td class="form-td">
+								<xforms:input ref="upperLoQ" class="fourWide">
+									<xforms:hint>Upper Limit of Quantification</xforms:hint>
+								</xforms:input>
+							</td>
+						</tr>
+					</xforms:repeat>
+					<tr>
+						<td class="action-td">
+							<xforms:trigger appearance="minimal">
+								<xforms:label>
+									<img src="/apps/common/theme/add.gif" />
+								</xforms:label>
+								<xforms:insert ev:event="DOMActivate" context="."
+									nodeset="analyte" at="count(../analyte)" position="after"
+									origin="instance('ins-pharmacology-analyte-template')" />
+							</xforms:trigger>
+						</td>
+						<td class="add-td">
+							<xforms:trigger appearance="minimal">
+								<xforms:label>Add an analyte</xforms:label>
+								<xforms:insert ev:event="DOMActivate" context="."
+									nodeset="analyte" at="count(../analyte)" position="after"
+									origin="instance('ins-pharmacology-analyte-template')" />
+							</xforms:trigger>
+						</td>
+					</tr>
+				</table>
+			</xforms:group>
+
+
+
+			<xforms:group ref="analytes">
+				<h4>Drug assay capacity</h4>
+				<table class="repeat-table">
+					<tr>
+						<th></th>
+						<th>Drug given</th>
+						<th>Analyte</th>
+						<th>Free drug</th>
+						<th>Total drug</th>
+						<th>Lower LoQ</th>
+						<th>Upper LoQ</th>
+					</tr>
+					<lowerLOQ />
+					<upperLOQ />
+					<xforms:repeat nodeset="analyte" id="analyte-rep">
+						<tr>
+							<td class="action-td">
+
+								<xforms:trigger appearance="minimal">
+									<xforms:delete ev:event="DOMActivate" context="."
+										nodeset="." at="index('analyte-rep')" />
+									<xforms:label>
+										<img src="/apps/common/theme/remove.gif" />
+									</xforms:label>
+								</xforms:trigger>
+							</td>
+							<td class="form-td">
+								<xforms:input ref="drugGiven">
+									<xforms:hint>Name of drug given</xforms:hint>
+								</xforms:input>
+							</td>
+							<td class="form-td">
+								<xforms:input ref="drugMeasured">
+									<xforms:hint>Name of metabolite/drug measured</xforms:hint>
+								</xforms:input>
+							</td>
+							<td class="form-td">
+								<xforms:select1 ref="freeDrugMeasured"
+									appearance="minimal">
+									<xforms:itemset model="mod-study-questionnaire"
+										nodeset="instance('ins-boolean-items')/boolean">
+										<xforms:label ref="label" />
+										<xforms:value ref="value" />
+									</xforms:itemset>
+									<xforms:hint>Was free drug concentration measured?</xforms:hint>
+								</xforms:select1>
+							</td>
+							<td class="form-td">
+								<xforms:select1 ref="totalDrugMeasured"
+									appearance="minimal">
+									<xforms:itemset model="mod-study-questionnaire"
+										nodeset="instance('ins-boolean-items')/boolean">
+										<xforms:label ref="label" />
+										<xforms:value ref="value" />
+									</xforms:itemset>
+									<xforms:hint>Was total drug concentration measured?</xforms:hint>
+								</xforms:select1>
+							</td>
+							<td class="form-td">
+								<xforms:input ref="lowerLoQ" class="fourWide">
+									<xforms:hint>Lower Limit of Quantification</xforms:hint>
+								</xforms:input>
+							</td>
+							<td class="form-td">
+								<xforms:input ref="upperLoQ" class="fourWide">
+									<xforms:hint>Upper Limit of Quantification</xforms:hint>
+								</xforms:input>
+							</td>
+						</tr>
+					</xforms:repeat>
+					<tr>
+						<td class="action-td">
+							<xforms:trigger appearance="minimal">
+								<xforms:label>
+									<img src="/apps/common/theme/add.gif" />
+								</xforms:label>
+								<xforms:insert ev:event="DOMActivate" context="."
+									nodeset="analyte" at="count(../analyte)" position="after"
+									origin="instance('ins-pharmacology-analyte-template')" />
+							</xforms:trigger>
+						</td>
+						<td class="add-td">
+							<xforms:trigger appearance="minimal">
+								<xforms:label>Add an analyte</xforms:label>
+								<xforms:insert ev:event="DOMActivate" context="."
+									nodeset="analyte" at="count(../analyte)" position="after"
+									origin="instance('ins-pharmacology-analyte-template')" />
+							</xforms:trigger>
+						</td>
+					</tr>
+				</table>
+			</xforms:group>
+
+
+
 
 		</xforms:group>
 
