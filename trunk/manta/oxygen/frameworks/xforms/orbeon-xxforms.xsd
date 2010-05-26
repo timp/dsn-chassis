@@ -12,5 +12,12 @@
     attributeFormDefault="qualified">
 
   <xs:attribute name="format" type="xs:string"/>
+  <xs:attribute name="size" type="xs:string"/>
+  
+  <xs:element name="size">
+    <xs:complexType>
+      <xs:attribute form="unqualified" name="ref" type="xs:string"/> 
+    </xs:complexType>
+  </xs:element>
 
 </xs:schema>

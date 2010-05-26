@@ -14,7 +14,7 @@
   <ref name="Common.attrib"/>
   <optional>
     <attribute name="href">
-      <ref name="URI.datatype"/>
+      <ref name="Text.datatype"/>
     </attribute>
   </optional>
   <optional>

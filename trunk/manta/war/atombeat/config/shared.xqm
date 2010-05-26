@@ -170,14 +170,26 @@ declare function config:default-collection-security-descriptor(
     
     then config:submitted-media-collection-security-descriptor( $request-path-info )
 
+    else if ( $request-path-info = "/media/curated" )
+    
+    then $config:all-curated-media-collection-security-descriptor
+    
     else if ( matches( $request-path-info , "^/media/curated/[^/]+$" ) )
     
     then config:curated-media-collection-security-descriptor( $request-path-info )
 
+    else if ( $request-path-info = "/derivations" )
+    
+    then $config:all-derivations-collection-security-descriptor
+    
     else if ( matches( $request-path-info , "^/derivations/[^/]+$" ) )
     
     then config:derivations-collection-security-descriptor( $request-path-info )
 
+    else if ( $request-path-info = "/reviews/personal-data" )
+    
+    then $config:all-personal-data-reviews-collection-security-descriptor
+    
     else if ( matches( $request-path-info , "^/reviews/personal-data/[^/]+$" ) )
     
     then config:personal-data-reviews-collection-security-descriptor( $request-path-info )
@@ -301,6 +313,7 @@ declare variable $config:drafts-collection-security-descriptor :=
 
 
 
+
 declare variable $config:all-submitted-media-collection-security-descriptor :=
     <atombeat:security-descriptor>
         <atombeat:acl>
@@ -320,6 +333,70 @@ declare variable $config:all-submitted-media-collection-security-descriptor :=
         </atombeat:acl>
     </atombeat:security-descriptor>
 ;
+
+
+
+
+declare variable $config:all-personal-data-reviews-collection-security-descriptor :=
+    <atombeat:security-descriptor>
+        <atombeat:acl>
+        
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+                <atombeat:permission>LIST_COLLECTION</atombeat:permission>
+            </atombeat:ace>
+            
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_PERSONAL_DATA_REVIEWER</atombeat:recipient>
+                <atombeat:permission>LIST_COLLECTION</atombeat:permission>
+            </atombeat:ace>
+            
+        </atombeat:acl>
+    </atombeat:security-descriptor>
+;
+
+
+
+
+declare variable $config:all-curated-media-collection-security-descriptor :=
+    <atombeat:security-descriptor>
+        <atombeat:acl>
+        
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+                <atombeat:permission>LIST_COLLECTION</atombeat:permission>
+            </atombeat:ace>
+            
+        </atombeat:acl>
+    </atombeat:security-descriptor>
+;
+
+
+
+
+declare variable $config:all-derivations-collection-security-descriptor :=
+    <atombeat:security-descriptor>
+        <atombeat:acl>
+        
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+                <atombeat:permission>LIST_COLLECTION</atombeat:permission>
+            </atombeat:ace>
+            
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_PERSONAL_DATA_REVIEWER</atombeat:recipient>
+                <atombeat:permission>LIST_COLLECTION</atombeat:permission>
+            </atombeat:ace>
+            
+        </atombeat:acl>
+    </atombeat:security-descriptor>
+;
+
 
 
 
