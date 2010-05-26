@@ -26,20 +26,21 @@
     
     <head>
     
-        <title>Personal Data Home</title>
+        <title>Personal Data - Home</title>
 
         
-        <xforms:model>
+        <xforms:model id="mod-main">
 
 			<xforms:submission 
 				id="sub-get-studies-feed"
 				resource="/atombeat/content/studies"
 				method="get"
 				replace="instance"
-				instance="ins-studies-feed">
+				instance="ins-studies-feed"
+				serialization="none">
 				<!-- TODO error handling -->
                 <xforms:message ev:event="xforms-submit-error" level="modal">
-                	An error occurred (<xforms:output value="event('error-type')"/>) while retrieving drafts.
+                	An error occurred (<xforms:output value="event('error-type')"/>) while retrieving studies.
                	</xforms:message>
                	<xforms:send ev:event="xforms-submit-done" submission="sub-get-all-reviews-feed"/>
 			</xforms:submission>
@@ -49,10 +50,11 @@
 				resource="/atombeat/content/reviews/personal-data"
 				method="get"
 				replace="instance"
-				instance="ins-reviews-feed">
+				instance="ins-reviews-feed"
+				serialization="none">
 				<!-- TODO error handling -->
                 <xforms:message ev:event="xforms-submit-error" level="modal">
-                	An error occurred (<xforms:output value="event('error-type')"/>) while retrieving drafts.
+                	An error occurred (<xforms:output value="event('error-type')"/>) while retrieving reviews.
                	</xforms:message>
                	<xforms:send ev:event="xforms-submit-done" submission="sub-get-all-submitted-media-feed"/>
 			</xforms:submission>
@@ -62,10 +64,11 @@
 				resource="/atombeat/content/media/submitted"
 				method="get"
 				replace="instance"
-				instance="ins-submitted-media-feed">
+				instance="ins-submitted-media-feed" 
+				serialization="none">
 				<!-- TODO error handling -->
                 <xforms:message ev:event="xforms-submit-error" level="modal">
-                	An error occurred (<xforms:output value="event('error-type')"/>) while retrieving drafts.
+                	An error occurred (<xforms:output value="event('error-type')"/>) while retrieving submitted media.
                	</xforms:message>
 			</xforms:submission>
 			
@@ -87,12 +90,12 @@
 			
         </xforms:model>
 
-       	<xi:include href="/apps/common/includes/current-user-xforms-model.xml"/>
+       	<xi:include href="../common/includes/current-user-xforms-model.xml"/>
 
     </head>
     <body>
 
-		<xi:include href="/apps/common/includes/current-user-actions.xml"/>
+		<xi:include href="../common/includes/current-user-actions.xml"/>
     
     	<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')"/>
     	
@@ -141,7 +144,7 @@
 <!--	    							"/>-->
 <!--		    					</td>-->
     					<td>
-    						<a href="review?entry={atom:link[@rel='self']/@href}">Review</a>
+    						<a href="review?media-link={atom:link[@rel='self']/@href}">Review</a>
     					</td>
     				</tr>
     			</xforms:repeat>
@@ -162,17 +165,19 @@
     			</tr>
     		</thead>
     		<tbody>
-    			<xforms:repeat nodeset="
-    				for $entry in instance('ins-submitted-media-feed')/atom:entry return
-		    			if ( 
-		    				exists( 
-		    					instance('ins-reviews-feed')/atom:entry[ 
-	    							atom:link[@rel='http://www.cggh.org/2010/chassis/terms/reviewSubject']/@href = $entry/atom:link[@rel='self']/@href 
-	    							and .//outcome='fail'
-    							] 
-	   						) 
-						) then $entry else ()
-    			">
+    			<xforms:repeat 
+    				id="rep-submitted-media"
+    				nodeset="
+	    				for $entry in instance('ins-submitted-media-feed')/atom:entry return
+			    			if ( 
+			    				exists( 
+			    					instance('ins-reviews-feed')/atom:entry[ 
+		    							atom:link[@rel='http://www.cggh.org/2010/chassis/terms/reviewSubject']/@href = $entry/atom:link[@rel='self']/@href 
+		    							and .//outcome='fail'
+	    							] 
+		   						) 
+							) then $entry else ()
+	    			">
     				<tr>
     					<td>
     						<xforms:output value="manta:id"/>
@@ -195,7 +200,9 @@
 <!--	    							"/>-->
 <!--		    					</td>-->
     					<td>
-    						<a href="TODO?entry={atom:link[@rel='self']/@href}">TODO</a>
+    						<xforms:group model="mod-current-user" ref="instance('ins-current-user')[roles/role='ROLE_CHASSIS_CURATOR']">
+    							<a href="replace?media-link={xxforms:context('rep-submitted-media')/atom:link[@rel='self']/@href}">Replace</a>
+    						</xforms:group>
     					</td>
     				</tr>
     			</xforms:repeat>

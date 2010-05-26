@@ -11,6 +11,7 @@
 
   The full text of the license is available at http://www.gnu.org/copyleft/lesser.html
   -->
+<?oxygen NVDLSchema="../../../../../oxygen/samples/nvdl/xhtml-xforms-11-orbeon.nvdl"?>
 <html 
 	xmlns:xforms="http://www.w3.org/2002/xforms"
     xmlns:f="http://orbeon.org/oxf/xml/formatting" 
@@ -179,8 +180,8 @@
             
         </xforms:model>
 
-       	<xi:include href="/apps/common/includes/study/questionnaire-xforms-model.xml"/>
-       	<xi:include href="/apps/common/includes/current-user-xforms-model.xml"/>
+       	<xi:include href="../common/includes/study/questionnaire-xforms-model.xml"/>
+       	<xi:include href="../common/includes/current-user-xforms-model.xml"/>
 
         
         <style type="text/css">
@@ -192,7 +193,7 @@
     
 
 
-		<xi:include href="/apps/common/includes/current-user-actions.xml"/>
+		<xi:include href="../common/includes/current-user-actions.xml"/>
     	
     	
     	
@@ -236,7 +237,6 @@
 		                        	appearance="minimal"
 		                        	ref="instance('ins-form-data')/study">
 		                        	<xforms:label/>
-		                        	<xforms:alert>A study must be selected.</xforms:alert>
 		                        	<xforms:item>
 		                        		<xforms:label>select a study...</xforms:label>
 		                        		<xforms:value/>
@@ -245,7 +245,8 @@
 		                        		<xforms:label ref="concat( manta:id , ' - ' , atom:title )"/>
 		                        		<xforms:value ref="atom:link[@rel='self']/@href"/>
 		                        	</xforms:itemset>
-	                        	</xforms:select1>
+		                        	<xforms:alert>A study must be selected.</xforms:alert>
+		                        </xforms:select1>
 		                        
 		                    </td>
 		                </tr>
@@ -290,7 +291,7 @@
 										<tr>
 											<td>
 							                    <xforms:trigger appearance="minimal">
-							                        <xforms:label><img src="/apps/fr/style/add.gif"/></xforms:label>
+							                        <xforms:label><img alt="add" src="/apps/fr/style/add.gif"/></xforms:label>
 							                        <xforms:insert 
 							                        	ev:event="DOMActivate" 
 							                        	context="instance('ins-form-data')/uploads" 
@@ -317,17 +318,18 @@
 											<tr>
 												<td>
 							                        <xforms:trigger appearance="minimal">
-							                            <xforms:delete 
+							                        	<xforms:label><img alt="delete" src="/apps/fr/style/remove.gif"/></xforms:label>
+							                        	<xforms:delete 
 							                            	ev:event="DOMActivate" 
 								                        	context="instance('ins-form-data')/uploads" 
 								                        	nodeset="upload" 
 							                            	at="index('upload-repeat')"/>
-							                            <xforms:label><img src="/apps/fr/style/remove.gif"/></xforms:label>
 							                        </xforms:trigger>
 												</td>
 												<td class="form-td">
 							                        <!-- Upload field -->
 							                        <xforms:upload ref="." xxforms:size="60">
+							                        	<xforms:label/>
 							                            <xforms:filename ref="@filename"/>
 							                            <xforms:mediatype ref="@mediatype"/>
 							                            <xxforms:size ref="@size"/>
@@ -336,21 +338,22 @@
 							                        <br/>
 							                        <!-- Download link -->
 							                        <xforms:output value="." appearance="xxforms:download">
-							                            <xforms:filename ref="@filename"/>
-							                            <xforms:mediatype ref="@mediatype"/>
-							                            <xforms:label>Download</xforms:label>
+							                        	<xforms:label>Download</xforms:label>
+							                        	<xforms:filename ref="@filename"/>
+							                        	<xforms:mediatype ref="@mediatype"/>
 							                        </xforms:output>
 							                        <br/>
 													<xforms:select1 ref="@typeterm" appearance="minimal">
-														<xforms:alert>A file type must be selected.</xforms:alert>
+														<xforms:label/>
 														<xforms:item>
-															<xforms:value></xforms:value>
 															<xforms:label>select a file type...</xforms:label>
+															<xforms:value/>
 														</xforms:item>
 							                        	<xforms:itemset nodeset="instance('ins-file-terms')/term">
 							                        		<xforms:label ref="label"/>
 							                        		<xforms:value ref="value"/>
 							                        	</xforms:itemset>
+														<xforms:alert>A file type must be selected.</xforms:alert>
 													</xforms:select1>
 													<xforms:input ref="@typelabel">
 														<xforms:label>Other type: </xforms:label>
@@ -424,9 +427,9 @@
 							                        <br/>
 							                        <!-- Download link -->
 							                        <xforms:output value="." appearance="xxforms:download">
-							                            <xforms:filename ref="@filename"/>
-							                            <xforms:mediatype ref="@mediatype"/>
-							                            <xforms:label>Download</xforms:label>
+							                        	<xforms:label>Download</xforms:label>
+							                        	<xforms:filename ref="@filename"/>
+							                        	<xforms:mediatype ref="@mediatype"/>
 							                        </xforms:output>
 												</td>
 											</tr>
@@ -540,7 +543,7 @@
 		    		
 		    			<div class="yui-content">
 		
-					       	<xi:include href="/apps/common/includes/study/questionnaire-xforms-input.xml"/>
+					       	<xi:include href="../common/includes/study/questionnaire-xforms-input.xml"/>
 		
 		    			</div>
 		    			

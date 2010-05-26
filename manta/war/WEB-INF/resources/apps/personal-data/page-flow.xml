@@ -18,7 +18,8 @@
   </page>
 
   <page id="home" path-info="/personal-data/home" view="home.xhtml"/>
-  <page id="review" path-info="/personal-data/review" view="review.xhtml"/>
+  <page path-info="/personal-data/review" view="review.xhtml"/>
+  <page path-info="/personal-data/replace" view="replace.xhtml"/>
   
   <epilogue url="oxf:/config/epilogue.xpl"/>
 

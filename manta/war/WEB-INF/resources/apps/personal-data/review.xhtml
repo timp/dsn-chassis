@@ -11,6 +11,7 @@
 
   The full text of the license is available at http://www.gnu.org/copyleft/lesser.html
   -->
+<?oxygen NVDLSchema="../../../../../oxygen/samples/nvdl/xhtml-xforms-11-orbeon.nvdl"?>
 <html 
 	xmlns:xforms="http://www.w3.org/2002/xforms"
     xmlns:f="http://orbeon.org/oxf/xml/formatting" 
@@ -25,7 +26,7 @@
     
     <head>
     
-        <title>Personal Data Home</title>
+        <title>Personal Data - Review File</title>
 
         
         <xforms:model>
@@ -36,7 +37,7 @@
 			
 			<xforms:submission 
 				id="sub-get-media-entry"
-				resource="{xxforms:get-request-parameter('entry')}"
+				resource="{xxforms:get-request-parameter('media-link')}"
 				method="get"
 				replace="instance"
 				instance="ins-media-entry"
@@ -69,14 +70,9 @@
 
 				<xforms:setvalue 
 					ref="instance('ins-review-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/reviewSubject']/@href" 
-					value="xxforms:get-request-parameter('entry')"/>
+					value="xxforms:get-request-parameter('media-link')"/>
 
 			</xforms:action>
-			
-			
-			<xforms:instance id="ins-noparams">
-				<params xmlns=""/>
-			</xforms:instance>
 			
 			<xforms:instance id="ins-review-entry">
 				<atom:entry>
@@ -113,66 +109,66 @@
 				
         </xforms:model>
 
-       	<xi:include href="/apps/common/includes/current-user-xforms-model.xml"/>
+       	<xi:include href="../common/includes/current-user-xforms-model.xml"/>
 
     </head>
     <body>
 
-		<xi:include href="/apps/common/includes/current-user-actions.xml"/>
+		<xi:include href="../common/includes/current-user-actions.xml"/>
     
-	    	<h1>Personal Data - Review File</h1>
+    	<h1>Personal Data - Review File</h1>
+    	
+    	<xforms:group ref="instance('ins-media-entry')">
+    	
+	    	<p>
+	    		Code: <xforms:output value="manta:id"/>
+	    	</p>
+	    	<p>
+	    		Original File Name: <xforms:output value="atom:title"/>
+	    	</p>
+	    	<p>
+	    		Contributor: <xforms:output value="atom:author/atom:email"/> 
+	    	</p>
+	    	<p>
+	    		Study: <xforms:output value="instance('ins-study-entry')/atom:title"/>
+	    	</p>
+	    	<p>
+	    		<a href="{atom:content/@src}">download file</a>
+	    	</p>
 	    	
-	    	<xforms:group ref="instance('ins-media-entry')">
+	    	<p>
+	    		<xforms:select1 ref="instance('ins-review-entry')//outcome">
+	    			<xforms:label>Review outcome: </xforms:label>
+	    			<xforms:item>
+	    				<xforms:label>please select</xforms:label>
+	    				<xforms:value/>
+	    			</xforms:item>
+	    			<xforms:item>
+	    				<xforms:label>file contains personal data to be removed</xforms:label>
+	    				<xforms:value>fail</xforms:value>
+	    			</xforms:item>
+	    			<xforms:item>
+	    				<xforms:label>file can proceed to curation</xforms:label>
+	    				<xforms:value>pass</xforms:value>
+	    			</xforms:item>
+	    		</xforms:select1>
+	    	</p>
 	    	
-		    	<p>
-		    		Code: <xforms:output value="manta:id"/>
-		    	</p>
-		    	<p>
-		    		Original File Name: <xforms:output value="atom:title"/>
-		    	</p>
-		    	<p>
-		    		Contributor: <xforms:output value="atom:author/atom:email"/> 
-		    	</p>
-		    	<p>
-		    		Study: <xforms:output value="instance('ins-study-entry')/atom:title"/>
-		    	</p>
-		    	<p>
-		    		<a href="{atom:content/@src}">download file</a>
-		    	</p>
-		    	
-		    	<p>
-		    		<xforms:select1 ref="instance('ins-review-entry')//outcome">
-		    			<xforms:label>Review outcome: </xforms:label>
-		    			<xforms:item>
-		    				<xforms:label>please select</xforms:label>
-		    				<xforms:value/>
-		    			</xforms:item>
-		    			<xforms:item>
-		    				<xforms:label>file contains personal data to be removed</xforms:label>
-		    				<xforms:value>fail</xforms:value>
-		    			</xforms:item>
-		    			<xforms:item>
-		    				<xforms:label>file can proceed to curation</xforms:label>
-		    				<xforms:value>pass</xforms:value>
-		    			</xforms:item>
-		    		</xforms:select1>
-		    	</p>
-		    	
-		    	<p>
-		    		<xforms:textarea 
-		    			ref="instance('ins-review-entry')/atom:summary"
-		    			appearance="xxforms:autosize">
-		    			<xforms:label>Comments: </xforms:label>
-		    		</xforms:textarea>
-		    	</p>
-		    	
-		    	<p>
-		    		<xforms:submit submission="sub-post-review">
-		    			<xforms:label>Submit Review</xforms:label>
-		    		</xforms:submit>
-		    	</p>
+	    	<p>
+	    		<xforms:textarea 
+	    			ref="instance('ins-review-entry')/atom:summary"
+	    			appearance="xxforms:autosize">
+	    			<xforms:label>Comments: </xforms:label>
+	    		</xforms:textarea>
+	    	</p>
+	    	
+	    	<p>
+	    		<xforms:submit submission="sub-post-review">
+	    			<xforms:label>Submit Review</xforms:label>
+	    		</xforms:submit>
+	    	</p>
 
-	    	</xforms:group>
+    	</xforms:group>
 
     </body>
 </html>

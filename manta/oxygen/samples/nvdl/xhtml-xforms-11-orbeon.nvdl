@@ -1,123 +1,180 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rules xmlns="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"
   xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">
+  
+  
+  <!-- XHTML -->
   <namespace ns="http://www.w3.org/1999/xhtml">
-    <a:documentation>We begin with XHTML sections.</a:documentation>
-    <validate schema="../../frameworks/xhtml/relaxng/xhtml.rng">
-      <a:documentation>This action invokes the XHTML schema.</a:documentation>
+    <validate schema="../../frameworks/xhtml/relaxng/xhtml-orbeon.rng">
       <mode>
+        
+        <!-- XHTML > XFORMS -->
         <namespace ns="http://www.w3.org/2002/xforms">
-          <a:documentation>XForms in XHTML</a:documentation>
           <validate schema="../../frameworks/xforms/XForms-11-Orbeon-Schema.xsd">
-            <a:documentation>The first action invokes the XForms schema for XForms in
-              XHTML.</a:documentation>
             <mode>
+              
+              <!-- XHTML > XFORMS > XFORMS -->
               <namespace ns="http://www.w3.org/2002/xforms">
-                <a:documentation>XForms in ... in *XForm* in XHTML</a:documentation>
-                <attach message="Attaching a descendant XForms section."/>
+                <attach/>
               </namespace>
+              
+              <!-- XHTML > XFORMS > XHTML -->
               <namespace ns="http://www.w3.org/1999/xhtml">
-                <a:documentation>XHTML in ... in *XForm* in XHTML</a:documentation>
-                <unwrap message="Skipping a descedant XHTML section."/>
+                <unwrap/>
               </namespace>
+              
+              <!-- XHTML > XFORMS > XXFORMS -->
+              <namespace ns="http://orbeon.org/oxf/xml/xforms">
+                <unwrap/>
+              </namespace>
+              
+              <!-- XHTML > XFORMS > FR -->
+              <namespace ns="http://orbeon.org/oxf/xml/form-runner*">
+                <unwrap>
+                  <mode>
+                    
+                    <!-- XHTML > XFORMS > FR > XFORMS -->
+                    <namespace ns="http://www.w3.org/2002/xforms">
+                      <attach/>
+                    </namespace>
+                    
+                    <!-- XHTML > XFORMS > FR > XHTML -->
+                    <namespace ns="http://www.w3.org/1999/xhtml">
+                      <unwrap/>
+                    </namespace>
+                    
+                  </mode>
+                </unwrap>
+              </namespace>
+              
             </mode>
+            
             <context path="instance">
-              <a:documentation>Allow anything inside XForm instance element</a:documentation>
               <mode>
+                
+                <!-- XHTML > XFORMS [instance] > * -->
                 <anyNamespace>
                   <allow/>
                 </anyNamespace>
+                
               </mode>
             </context>
+
           </validate>
+          
           <unwrap>
-            <a:documentation>This action skip XForms in XHTML.</a:documentation>
             <mode>
+              
+              <!-- XHTML > XFORMS > XFORMS -->
               <namespace ns="http://www.w3.org/2002/xforms">
-                <a:documentation>XForms in ... in XForms in *XHTML*</a:documentation>
-                <unwrap message="Skipping a descendant XForms section."/>
+                <unwrap/>
               </namespace>
+              
+              <!-- XHTML > XFORMS > XHTML -->
               <namespace ns="http://www.w3.org/1999/xhtml">
-                <a:documentation>XHTML in ... in XForms in *XHTML*</a:documentation>
-                <attach message="Attaching a descendant XHTML section."/>
+                <attach/>
               </namespace>
+              
+              <!-- XHTML > XFORMS > XXFORMS -->
+              <namespace ns="http://orbeon.org/oxf/xml/xforms">
+                <unwrap/>
+              </namespace>
+              
+              <!-- XHTML > XFORMS > FR -->
+              <namespace ns="http://orbeon.org/oxf/xml/form-runner*">
+                <unwrap>
+                  <mode>
+                    
+                    <!-- XHTML > XFORMS > FR > XFORMS -->
+                    <namespace ns="http://www.w3.org/2002/xforms">
+                      <unwrap/>
+                    </namespace>
+                    
+                    <!-- XHTML > XFORMS > FR > XHTML -->
+                    <namespace ns="http://www.w3.org/1999/xhtml">
+                      <unwrap/>
+                    </namespace>
+                    
+                  </mode>
+                </unwrap>
+              </namespace>
+              
             </mode>
+            
             <context path="instance">
-              <a:documentation>Skip content inside XForms instance element.</a:documentation>
               <mode>
+
+                <!-- XHTML > XFORMS [instance] > * -->
                 <anyNamespace>
                   <unwrap/>
                 </anyNamespace>
+
               </mode>
             </context>
           </unwrap>
         </namespace>
+        
+        
+        <!-- XHTML > FR -->
         <namespace ns="http://orbeon.org/oxf/xml/form-runner*">
-          <a:documentation>Allow Orbeon XBL in XHTML.</a:documentation>
           <unwrap>
             <mode>
+              
+              <!-- XHTML > FR > XFORMS -->
               <namespace ns="http://www.w3.org/2002/xforms">
-                <a:documentation>XForms in XBL in XHTML</a:documentation>
                 <validate schema="../../frameworks/xforms/XForms-11-Orbeon-Schema.xsd">
-                  <a:documentation>The first action invokes the XForms schema for XForms in
-                    XHTML.</a:documentation>
                   <mode>
+
+                    <!-- XHTML > FR > XFORMS > XFORMS -->
                     <namespace ns="http://www.w3.org/2002/xforms">
-                      <a:documentation>XForms in ... in *XForm* in XBL</a:documentation>
-                      <attach message="Attaching a descendant XForms section."/>
+                      <attach/>
                     </namespace>
+                    
+                    <!-- XHTML > FR > XFORMS > XHTML -->
                     <namespace ns="http://www.w3.org/1999/xhtml">
-                      <a:documentation>XHTML in ... in *XForm* in XBL</a:documentation>
-                      <unwrap message="Skipping a descedant XHTML section."/>
+                      <unwrap/>
                     </namespace>
+
                   </mode>
-                  <context path="instance">
-                    <a:documentation>Allow anything inside XForm instance element</a:documentation>
-                    <mode>
-                      <anyNamespace>
-                        <allow/>
-                      </anyNamespace>
-                    </mode>
-                  </context>
                 </validate>
                 <unwrap>
-                  <a:documentation>This action skip XForms in XHTML.</a:documentation>
                   <mode>
+
+                    <!-- XHTML > FR > XFORMS > XFORMS -->
                     <namespace ns="http://www.w3.org/2002/xforms">
-                      <a:documentation>XForms in ... in XForms in *XHTML*</a:documentation>
-                      <unwrap message="Skipping a descendant XForms section."/>
+                      <unwrap/>
                     </namespace>
+                    
+                    <!-- XHTML > FR > XFORMS > XHTML -->
                     <namespace ns="http://www.w3.org/1999/xhtml">
-                      <a:documentation>XHTML in ... in XForms in *XBL*</a:documentation>
-                      <unwrap message="Skipping a descendant XHTML section."/>
+                      <unwrap/>
                     </namespace>
+                    
                   </mode>
-                  <context path="instance">
-                    <a:documentation>Skip content inside XForms instance element.</a:documentation>
-                    <mode>
-                      <anyNamespace>
-                        <unwrap/>
-                      </anyNamespace>
-                    </mode>
-                  </context>
                 </unwrap>
               </namespace>
+              
+              <!-- XHTML > FR > XHTML -->
               <namespace ns="http://www.w3.org/1999/xhtml">
-                <a:documentation>XHTML in ... in XBL in *XHTML*</a:documentation>
-                <unwrap message="Skipping a descendant XHTML section."/>
+                <unwrap/>
               </namespace>
+              
             </mode>
           </unwrap>
         </namespace>
+        
+        <!-- XHTML > XXFORMS -->
         <namespace ns="http://orbeon.org/oxf/xml/xforms*">
-          <a:documentation>Allow Orbeon extensions in XHTML.</a:documentation>
           <unwrap/>
         </namespace>
+        
+        <!-- XHTML > XI -->
         <namespace ns="http://www.w3.org/2001/XInclude*">
-          <a:documentation>Allow XInclude in XHTML.</a:documentation>
           <allow/>
         </namespace>
+        
       </mode>
     </validate>
   </namespace>
+  
 </rules>

@@ -323,6 +323,7 @@ User Interface form controls
 				-->
 				<xsd:element name="filename" type="xforms:filename" minOccurs="0"/>
 				<xsd:element name="mediatype" type="xforms:mediatype" minOccurs="0"/>
+				<xsd:element ref="xxforms:size" minOccurs="0"/>
 				<xsd:group ref="xforms:UI.Common" minOccurs="0" maxOccurs="unbounded"/>
 			</xsd:sequence>
 			<xsd:attributeGroup ref="xforms:Common.Attributes"/>
@@ -330,6 +331,7 @@ User Interface form controls
 			<xsd:attributeGroup ref="xforms:UI.Common.Attrs"/>
 			<xsd:attribute name="mediatype" type="xsd:string" use="optional"/>
 			<xsd:attribute name="incremental" type="xsd:boolean" use="optional" default="false"/>
+			<xsd:attribute ref="xxforms:size" use="optional"/>
 		</xsd:complexType>
 	</xsd:element>
 	<xsd:element name="select1">
@@ -407,6 +409,7 @@ User Interface form controls
 				<!--
 				<xsd:element ref="xforms:mediatype" minOccurs="0"/>
 				-->
+				<xsd:element name="filename" type="xforms:filename" minOccurs="0"/>
 				<xsd:element name="mediatype" type="xforms:mediatypeWithValue" minOccurs="0"/>
 				<xsd:group ref="xforms:UI.Common" minOccurs="0" maxOccurs="unbounded"/>
 			</xsd:sequence>
@@ -702,7 +705,7 @@ XForms Actions
 			</xsd:sequence>			
 			<xsd:attributeGroup ref="xforms:Common.Attributes"/>
 			<xsd:attributeGroup ref="xforms:Single.Node.Binding.Attributes"/>
-			<xsd:attribute name="resource" type="xsd:anyURI" use="optional"/>
+			<xsd:attribute name="resource" type="xsd:string" use="optional"/>
 			<xsd:attribute name="show" use="optional" default="replace">
 				<xsd:simpleType>
 					<xsd:restriction base="xsd:string">
@@ -791,7 +794,7 @@ XForms Actions
 			<xsd:attribute name="bind" type="xsd:IDREF" use="optional"/>
 			
 			<!-- Either the resource attribute, action attribute, or resource child element is required -->
-			<xsd:attribute name="resource" type="xsd:anyURI" use="optional"/>
+			<xsd:attribute name="resource" type="xsd:string" use="optional"/>
 			<xsd:attribute name="action" type="xsd:anyURI" use="optional"/>
 			
 			<xsd:attribute name="mode" use="optional" default="asynchronous">
