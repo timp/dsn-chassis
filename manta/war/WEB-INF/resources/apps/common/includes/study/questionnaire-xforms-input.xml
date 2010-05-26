@@ -26,7 +26,7 @@
 				</xforms:select>
 			</p>
 
-			<h3>Study Start and End</h3>
+			<h3>Study Dates</h3>
 
 			<p>
 				<xforms:input ref="start">
