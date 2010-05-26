@@ -4,7 +4,7 @@
 	xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:atom="http://www.w3.org/2005/Atom"
 	xmlns:fr="http://orbeon.org/oxf/xml/form-runner" xmlns:xi="http://www.w3.org/2001/XInclude"
 	xmlns:ctype="http://www.cggh.org/chassis-types" xmlns:fn="http://www.w3.org/2005/xpath-functions"
-	xxforms:readonly-appearance="static" id="mod-study-questionnaire"
+	id="mod-study-questionnaire"
 	schema="../chassis-types.xsd">
 
 
@@ -14,8 +14,9 @@
 	</xforms:instance>
 
 	<!--
+	Note xxforms:readonly-appearance="static" needed in the controls themselves
 		<xforms:bind nodeset="instance('ins-sq-study-entry')"
-		readonly="true()"/>
+		readonly="true()" />
 	-->
 
 
