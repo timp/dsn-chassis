@@ -130,7 +130,12 @@
 }
 
 .wizard-td { background-color: #fce5b6; font-size: 16pt }
-.repeat-table { background-color: #fce5b6; border:1px solid red; margin: 8px; width:80%;}
+.repeat-table { 
+	background-color: #fce5b6; 
+	border:1px solid red; 
+	margin: 8px; 
+	width:80%;
+}
 .repeat-table .action-td { width: 18px }
 .repeat-table .add-td { }
 .repeat-table .form-td {background: white; padding: .5em }
@@ -152,4 +157,14 @@ ul {
 	width: 4em;
 }
 
+.questionnaire span.xforms-group {
+	display:block;
+	margin: 4px;
+	padding: 4px;
+	border: 1px solid green; 
+}
 
+.questionnaire h3, h4, h5 { 
+	padding: 1px;
+	margin: 0px;
+}
