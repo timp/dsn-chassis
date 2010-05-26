@@ -157,8 +157,9 @@
 						<hematocrit />
 						<bloodGroup />
 					</culture>
-					<medium>
+					<drugSusceptibilityMedium>
 						<medium />
+						<mediumOther />
 						<preparation />
 						<serum />
 						<serum-finalConcentration />
@@ -176,7 +177,7 @@
 							<glucose-finalConcentration />
 						</glucose>
 						<antiBiotics />
-					</medium>
+					</drugSusceptibilityMedium>
 					<susceptibility>
 						<timeOfIncubation />
 						<susceptibilityMethod />
