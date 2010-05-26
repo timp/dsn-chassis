@@ -42,7 +42,7 @@
 				instance="ins-draft-feed">
 				<!-- TODO error handling -->
                 <xforms:message ev:event="xforms-submit-error" level="modal">
-                	<p>An error occurred (<xforms:output value="event('error-type')"/>) while retrieving drafts.</p>
+                	<p>An error occurred (<xforms:output value="event('error-type')"/>) while retrieving a list of drafts.</p>
                	</xforms:message>
 			</xforms:submission>
         
@@ -57,11 +57,6 @@
 				<atom:feed/>
 			</xforms:instance>
 			
-			
-			<xforms:bind nodeset="instance('ins-study-feed')/atom:entry/atom:published" type="xs:dateTime" />
-    		<xforms:bind nodeset="instance('ins-study-feed')/atom:entry/atom:updated" type="xs:dateTime" />
-
-			
 			<xforms:submission 
 				id="sub-retrieve-study-feed"
 				resource="/atombeat/content/studies"
@@ -70,7 +65,7 @@
 				instance="ins-study-feed">
 				<!-- TODO error handling -->
                 <xforms:message ev:event="xforms-submit-error" level="modal">
-                	<p>An error occurred (<xforms:output value="event('error-type')"/>) while retrieving studies.</p>
+                	<p>An error occurred (<xforms:output value="event('error-type')"/>) while retrieving a list of studies.</p>
                	</xforms:message>
 			</xforms:submission>
 			
@@ -140,9 +135,7 @@
 		    						<a href="study-dashboard?study={atom:link[@rel='edit']/@href}"><xforms:output value="atom:title"/></a>
 		    					</td>
 		    					<td>
-		    						<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')">
-		    							<xforms:alert>Not a DateTime</xforms:alert>
-		    						</xforms:output>
+		    						<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')"/>
 		    					</td>
 		    					<td>
 		    						TODO <!-- Need to get the permission list (need to get individual entries?) via security-description link and use something like concat(//permission/text())  -->
