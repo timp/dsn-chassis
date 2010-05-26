@@ -16,7 +16,7 @@
       This is the XML Schema for XML Events global attributes
 
       URI: http://www.w3.org/MarkUp/SCHEMA/xml-events-attribs-1.xsd
-      $Id: xml-events-attribs-1.xsd,v 1.5 2003/08/02 09:36:54 mimasa Exp $
+      $Id: xml-events-attribs-1.xsd,v 1.7 2004/11/22 17:09:15 ahby Exp $
     </xs:documentation>
     <xs:documentation source="xml-events-copyright-1.xsd"/>
   </xs:annotation>
