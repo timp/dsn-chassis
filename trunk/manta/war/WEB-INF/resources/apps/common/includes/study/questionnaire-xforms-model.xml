@@ -255,6 +255,14 @@
 							</xforms:bind>
 						</xforms:bind>
 					</xforms:bind>
+					
+					<xforms:bind nodeset="mixedResistanceAlleles">
+						<xforms:bind nodeset="mixedResistanceAllelesInclusion" />
+						<xforms:bind nodeset="mixedResistanceAllelesDesignation" 
+						relevant="contains(../mixedResistanceAllelesInclusion,'included')"/>
+					</xforms:bind>
+					
+					
 				</xforms:bind>
 				
 				
@@ -581,6 +589,10 @@
 
 	<xforms:instance id="ins-genotypingMethod-items"
 		src="/apps/common/constants/genotypingMethods.xml" />
+	<xforms:instance id="ins-mixedResistanceAllelesInclusion-items"
+		src="/apps/common/constants/mixedResistanceAllelesInclusions.xml" />
+	<xforms:instance id="ins-mixedResistanceAllelesDesignation-items"
+		src="/apps/common/constants/mixedResistanceAllelesDesignations.xml" />
 		
 	<xforms:instance id="ins-genotypedMarker">
 		<genotypedMarker xmlns="">

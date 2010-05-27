@@ -1,0 +1,11 @@
+<mixedResistanceAllelesInclusions
+	xmlns="">
+	<mixedResistanceAllelesInclusion>
+		<label>included in data set</label>
+		<value>included</value>
+	</mixedResistanceAllelesInclusion>
+	<mixedResistanceAllelesInclusion>
+		<label>excluded from data set</label>
+		<value>excluded</value>
+	</mixedResistanceAllelesInclusion>
+</mixedResistanceAllelesInclusions>

@@ -187,6 +187,7 @@
 
 
 				<molecular>
+				
 					<inclusionExclusionCriteria>
 						<sampleSource />
 						<malariaStatus />
@@ -197,6 +198,7 @@
 						<wholeBloodSource />
 						<sampleType-type-dateIsolated />
 					</sample>
+					
 					<genotypedMarkers>
 						<genotypedMarker>
 							<genotypingMethodOpen>
@@ -217,7 +219,9 @@
 
 					<mixedResistanceAlleles>
 						<mixedResistanceAllelesInclusion />
+						<mixedResistanceAllelesDesignation />
 					</mixedResistanceAlleles>
+					
 					<additionalGenotypicInformation>
 						<wholeGenomesSequenced-block>
 							<wholeGenomesSequenced />
