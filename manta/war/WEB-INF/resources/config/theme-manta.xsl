@@ -84,9 +84,11 @@
 
                 	</xhtml:div>
 
+					<!-- 
                 	<xhtml:div id="ft">
                 		<xhtml:p>Chassis Manta 1.0-alpha-SNAPSHOT</xhtml:p>
                 	</xhtml:div>
+                	 -->
 
                 </xhtml:div>
             </xhtml:body>
