@@ -18,6 +18,7 @@
 						Please select the WWARN modules for which this study has data.
 						<br />
 					</xforms:label>
+					<xforms:alert>Please select at least one module</xforms:alert>
 					<xforms:itemset model="mod-study-questionnaire"
 						nodeset="instance('ins-module-items')/module">
 						<xforms:label ref="label" />
@@ -28,32 +29,26 @@
 
 			<h3>Study Dates</h3>
 
-			<p>
-				<xforms:input ref="start">
-					<xforms:label class="fixed-width">Start: </xforms:label>
-					<xforms:alert>A valid date is required.</xforms:alert>
-				</xforms:input>
-			</p>
-
-			<p>
-				<xforms:input ref="end">
-					<xforms:label class="fixed-width">End: </xforms:label>
-					<xforms:alert>A valid date is required.</xforms:alert>
-				</xforms:input>
-			</p>
+			<xforms:input ref="start">
+				<xforms:label>Start: </xforms:label>
+				<xforms:alert>A valid date is required.</xforms:alert>
+			</xforms:input>
+			<xforms:input ref="end">
+				<xforms:label>End: </xforms:label>
+				<xforms:alert>A valid date is required.</xforms:alert>
+			</xforms:input>
 
 			<h3>Pathogen Species</h3>
 
-			<p>
-				<xforms:select ref="pathogens" appearance="full">
-					<xforms:label />
-					<xforms:itemset model="mod-study-questionnaire"
-						nodeset="instance('ins-pathogen-items')/pathogen">
-						<xforms:label ref="label" />
-						<xforms:value ref="value" />
-					</xforms:itemset>
-				</xforms:select>
-			</p>
+			<xforms:select ref="pathogens" appearance="full">
+				<xforms:label />
+				<xforms:alert>A pathogen species is required</xforms:alert>
+				<xforms:itemset model="mod-study-questionnaire"
+					nodeset="instance('ins-pathogen-items')/pathogen">
+					<xforms:label ref="label" />
+					<xforms:value ref="value" />
+				</xforms:itemset>
+			</xforms:select>
 
 
 			<xforms:group ref="sites">
@@ -1453,6 +1448,20 @@
 									</xforms:trigger>
 								</td>
 								<td>
+									<xforms:group ref="genotypingMethodOpen">
+										<xforms:select1 ref="genotypingMethod"
+											appearance="minimal">
+											<xforms:label>Genotyping method</xforms:label>
+											<xforms:itemset model="mod-study-questionnaire"
+												nodeset="instance('ins-genotypingMethod-items')/genotypingMethod">
+												<xforms:label ref="label" />
+												<xforms:value ref="value" />
+											</xforms:itemset>
+										</xforms:select1>
+										<xforms:input ref="genotypingMethodOther">
+											<xforms:hint>Other genotyping method</xforms:hint>
+										</xforms:input>
+									</xforms:group>
 									<xforms:group ref="molecularMarkerFalciparumOpen">
 										<xforms:select ref="molecularMarkerFalciparum"
 											appearance="full" class="scrollableCheckboxes">

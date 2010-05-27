@@ -24,7 +24,8 @@
 			<xforms:bind nodeset="questionnaire">
 				<xforms:bind nodeset="start" type="xs:date" />
 				<xforms:bind nodeset="end" type="xs:date" />
-				<xforms:bind nodeset="pathogens" />
+				<xforms:bind nodeset="pathogens" required="contains(../modules, 'molecular')"/>
+				<xforms:bind nodeset="modules" required="true()"/>
 
 				<xforms:bind nodeset="sites">
 					<xforms:bind nodeset="site">
@@ -238,7 +239,7 @@
 						<xforms:bind nodeset="genotypedMarker">
 							<xforms:bind nodeset="genotypingMethodOpen">
 								<xforms:bind nodeset="genotypingMethod" />
-								<xforms:bind nodeset="genotypingMethodOther" />
+								<xforms:bind nodeset="genotypingMethodOther" relevant="contains(../genotypingMethod, 'other')"/>
 							</xforms:bind>
 							<xforms:bind nodeset="molecularMarkerFalciparumOpen"
 								relevant="contains(../../../../pathogens, 'pfalciparum')">
@@ -578,6 +579,9 @@
 		</assayReference>
 	</xforms:instance>
 
+	<xforms:instance id="ins-genotypingMethod-items"
+		src="/apps/common/constants/genotypingMethods.xml" />
+		
 	<xforms:instance id="ins-genotypedMarker">
 		<genotypedMarker xmlns="">
 			<genotypingMethodOpen>
