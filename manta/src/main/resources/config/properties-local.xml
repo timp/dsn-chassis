@@ -13,7 +13,7 @@
               value="document model submission submission-details control event action analysis server html"/>
     -->
 
-    <property as="xs:boolean" name="oxf.epilogue.xforms.inspector"      value="true"/>
+    <property as="xs:boolean" name="oxf.epilogue.xforms.inspector"      value="false"/>
 
     <property as="xs:string"  name="oxf.xforms.format.input.date"       value="[D].[M].[Y]"/> <!-- [M]/[D]/[Y]  or [D]/[M]/[Y] or [D].[M].[Y]-->
 </properties>
