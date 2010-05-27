@@ -22,6 +22,7 @@
 						<priorAntimalarialsHistoryWeeks />
 					</priorAntimalarialsExclusion>
 					<pregnancy />
+					<treatmentReason />
 				</inclusionExclusionCriteria>
 				<clinical>
 					<treatment>
@@ -115,6 +116,7 @@
 				<pharmacology>
 					<samples>
 						<sample>
+							<numberPlanned />
 							<volume />
 							<anticoagulent />
 							<centrifugeTime />
