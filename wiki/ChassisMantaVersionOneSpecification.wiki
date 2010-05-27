@@ -265,7 +265,7 @@ This page shows a list of newly submitted files that need to be reviewed. The pa
 
 The user can then download the original file, and upload a new file with personal data removed.
 
-== Contributor Cannot Download Submitted Files Unless Reviewed for Personal Data
+== Contributor Cannot Download Submitted Files Unless Reviewed for Personal Data ==
 
 *_A contributor should not be allowed to download any submitted files for a study unless the file has been reviewed and found not contain personal data that needs to be removed._*
 
