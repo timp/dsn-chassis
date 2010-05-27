@@ -1437,48 +1437,94 @@
 			<xforms:group ref="molecular">
 
 				<h2>Molecular Questions</h2>
-				<xforms:group ref="resistanceMarkers">
-					<xforms:group ref="molecularMarkerFalciparumOpen">
-						<br />
-						<xforms:select1 ref="molecularMarkerFalciparum"
-							appearance="minimal">
-							<xforms:label>Falciparum marker</xforms:label>
-							<xforms:item>
-								<xforms:label><!-- Nullable -->
-								</xforms:label>
-								<xforms:value />
-							</xforms:item>
-							<xforms:itemset model="mod-study-questionnaire"
-								nodeset="instance('ins-molecularMarkerFalciparum-items')/molecularMarker">
-								<xforms:label ref="label" />
-								<xforms:value ref="value" />
-							</xforms:itemset>
-						</xforms:select1>
-						<xforms:input ref="molecularMarkerFalciparumOther">
-							<xforms:label>other</xforms:label>
-						</xforms:input>
-					</xforms:group>
-					<xforms:group ref="molecularMarkerVivaxOpen">
-						<br />
-						<xforms:select1 ref="molecularMarkerVivax"
-							appearance="minimal">
-							<xforms:label>Vivax marker</xforms:label>
-							<xforms:item>
-								<xforms:label><!-- Nullable -->
-								</xforms:label>
-								<xforms:value />
-							</xforms:item>
-							<xforms:itemset model="mod-study-questionnaire"
-								nodeset="instance('ins-molecularMarkerVivax-items')/molecularMarker">
-								<xforms:label ref="label" />
-								<xforms:value ref="value" />
-							</xforms:itemset>
-						</xforms:select1>
-						<xforms:input ref="molecularMarkerVivaxOther">
-							<xforms:label>other</xforms:label>
-						</xforms:input>
-					</xforms:group>
+
+
+				<xforms:group ref="genotypedMarkers">
+					<table class="repeat-table">
+						<xforms:repeat nodeset="genotypedMarker" id="genotypedMarker-rep">
+							<tr>
+								<td class="action-td">
+									<xforms:trigger appearance="minimal">
+										<xforms:delete ev:event="DOMActivate" context="."
+											nodeset="." at="index('genotypedMarker-rep')" />
+										<xforms:label>
+											<img src="/apps/common/theme/remove.gif" />
+										</xforms:label>
+									</xforms:trigger>
+								</td>
+								<td>
+									<xforms:group ref="molecularMarkerFalciparumOpen">
+										<xforms:select ref="molecularMarkerFalciparum"
+											appearance="full" class="scrollableCheckboxes">
+											<xforms:label class="scrollableCheckboxesLabel">Falciparum marker
+											</xforms:label>
+											<xforms:itemset model="mod-study-questionnaire"
+												nodeset="instance('ins-molecularMarkerFalciparum-items')/molecularMarker">
+												<xforms:label ref="label" />
+												<xforms:value ref="value" />
+											</xforms:itemset>
+											<xforms:item>
+												<xforms:label>other</xforms:label>
+												<xforms:value>other</xforms:value>
+											</xforms:item>
+										</xforms:select>
+										<br />
+										<div style="clear:both;">
+											<xforms:input ref="molecularMarkerFalciparumOther">
+												<xforms:label class="fixed-width">other</xforms:label>
+											</xforms:input>
+										</div>
+									</xforms:group>
+									<xforms:group ref="molecularMarkerVivaxOpen">
+										<xforms:select ref="molecularMarkerVivax"
+											selection="closed" appearance="full" class="scrollableCheckboxes">
+											<xforms:label class="scrollableCheckboxesLabel">Vivax marker</xforms:label>
+											<xforms:itemset model="mod-study-questionnaire"
+												nodeset="instance('ins-molecularMarkerVivax-items')/molecularMarker">
+												<xforms:label ref="label" />
+												<xforms:value ref="value" />
+											</xforms:itemset>
+											<xforms:item>
+												<xforms:label>other</xforms:label>
+												<xforms:value>other</xforms:value>
+											</xforms:item>
+										</xforms:select>
+										<br />
+										<div style="clear:both;">
+											<xforms:input ref="molecularMarkerVivaxOther">
+												<xforms:label class="fixed-width">other</xforms:label>
+											</xforms:input>
+										</div>
+									</xforms:group>
+								</td>
+							</tr>
+						</xforms:repeat>
+						<tr>
+							<td class="action-td">
+								<xforms:trigger appearance="minimal">
+									<xforms:label>
+										<img src="/apps/common/theme/add.gif" />
+									</xforms:label>
+									<xforms:insert ev:event="DOMActivate" context="."
+										nodeset="genotypedMarker" at="count(../genotypedMarker)"
+										position="after" origin="instance('ins-genotypedMarker')" />
+								</xforms:trigger>
+							</td>
+							<td class="add-td">
+								<xforms:trigger appearance="minimal">
+									<xforms:label>Add another genotyping method and its markers
+									</xforms:label>
+									<xforms:insert ev:event="DOMActivate" context="."
+										nodeset="genotypedMarker" at="count(../genotypedMarker)"
+										position="after" origin="instance('ins-genotypedMarker')" />
+								</xforms:trigger>
+							</td>
+						</tr>
+					</table>
 				</xforms:group>
+
+
+
 			</xforms:group>
 
 
@@ -2198,12 +2244,18 @@
 
 
 				<xforms:group ref="analytes">
-					<h4>Drug given and analytes/metabolites measured
-					<span style="font-size:smaller; font-weight:normal;">please list all</span></h4>
+					<h4>
+						Drug given and analytes/metabolites measured
+						<span style="font-size:smaller; font-weight:normal;">please list all</span>
+					</h4>
 					<table class="repeat-table">
 						<tr>
 							<th></th>
-							<th>Compound measured <br/>(parent or metabolite)</th>
+							<th>
+								Compound measured
+								<br />
+								(parent or metabolite)
+							</th>
 							<th>Lower LoQ</th>
 							<th>Matrix</th>
 						</tr>
@@ -2273,8 +2325,15 @@
 					<table class="repeat-table">
 						<tr>
 							<th></th>
-							<th>URL or <br/>Title, author and journal of publication </th>
-							<th>Method description <span style="font-size:smaller; font-weight:normal;">(if no reference)</span></th>
+							<th>
+								URL or
+								<br />
+								Title, author and journal of publication
+							</th>
+							<th>
+								Method description
+								<span style="font-size:smaller; font-weight:normal;">(if no reference)</span>
+							</th>
 							<th>Has the method been validated?</th>
 						</tr>
 						<lowerLOQ />
@@ -2298,12 +2357,12 @@
 								</td>
 								<td class="form-td">
 									<xforms:textarea ref="assayMethodDescription">
-										<xforms:hint>A brife description of the assay method, if no reference is available</xforms:hint>
+										<xforms:hint>A brife description of the assay method, if no
+											reference is available</xforms:hint>
 									</xforms:textarea>
 								</td>
 								<td class="form-td">
-									<xforms:select1 ref="assayValidated"
-										appearance="minimal">
+									<xforms:select1 ref="assayValidated" appearance="minimal">
 										<xforms:itemset model="mod-study-questionnaire"
 											nodeset="instance('ins-boolean-items')/boolean">
 											<xforms:label ref="label" />
@@ -2320,7 +2379,8 @@
 										<img src="/apps/common/theme/add.gif" />
 									</xforms:label>
 									<xforms:insert ev:event="DOMActivate" context="."
-										nodeset="assayReference" at="count(../assayReference)" position="after"
+										nodeset="assayReference" at="count(../assayReference)"
+										position="after"
 										origin="instance('ins-pharmacology-assayReference-template')" />
 								</xforms:trigger>
 							</td>
@@ -2328,7 +2388,8 @@
 								<xforms:trigger appearance="minimal">
 									<xforms:label>Add an assay reference</xforms:label>
 									<xforms:insert ev:event="DOMActivate" context="."
-										nodeset="assayReference" at="count(../assayReference)" position="after"
+										nodeset="assayReference" at="count(../assayReference)"
+										position="after"
 										origin="instance('ins-pharmacology-assayReference-template')" />
 								</xforms:trigger>
 							</td>

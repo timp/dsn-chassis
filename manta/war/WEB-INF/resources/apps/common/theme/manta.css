@@ -168,3 +168,32 @@ ul {
 	padding: 1px;
 	margin: 0px;
 }
+
+.fixed-width { 
+  width: 12em;
+}
+.scrollableCheckboxesLabel, .scrollableCheckboxesLabelFollowing	 {
+  display:block;
+  width: 10em;
+  float:left;
+  padding: 5px;
+  margin: 5px;
+  clear: left;
+}
+.scrollableCheckboxesLabelFollowing	 {
+  clear: both;
+}
+.scrollableCheckboxes	 {
+  height: 100px;
+  width: 240px;
+  padding: 5px;
+  margin: 5px;
+  overflow: auto;
+  display:block;
+  float:left;
+}
+
+.scrollableCheckboxes .xforms-deselected {
+	display:block;
+}
+

@@ -67,9 +67,4 @@
 		<value>pvdhps585</value>
 	</molecularMarker>
 
-	<molecularMarker>
-		<label>Other</label>
-		<value>other</value>
-	</molecularMarker>
-
 </molecularMarkers>

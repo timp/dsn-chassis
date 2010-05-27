@@ -187,64 +187,53 @@
 
 
 				<molecular>
-					<inclusionExclusionCriteria-A>
-						<inclusion-day0 />
-						<inclusion-treatmentFailure />
-						<inclusionExclusionCriteria-dayN>
-							<inclusion-dayN-day />
-							<inclusion-dayN />
-						</inclusionExclusionCriteria-dayN>
-					</inclusionExclusionCriteria-A>
-					<inclusionExclusionCriteria-B>
-						<inclusionExclusionCriteriaB-source />
-						<inclusionExclusionCriteriaB-sampleSource />
-						<inclusionExclusionCriteriaB-malariaStatus />
-
-						<inclusionExclusionCriteria-minAge />
-						<inclusionExclusionCriteria-maxAge />
-						<inclusionExclusionCriteria-priorAntimalarials>
-							<inclusionExclusionCriteria-excludeIfPriorAntimalarialsTime />
-						</inclusionExclusionCriteria-priorAntimalarials>
-						<inclusionExclusionCriteria-molecularMarkersOfResistance />
-						<inclusionExclusionCriteria-molecularMarkersOfResistance-other />
-					</inclusionExclusionCriteria-B>
-					<sampleType>
-						<sampleType-type />
-						<sampleType-type-wholeBloodSource />
+					<inclusionExclusionCriteria>
+						<sampleSource />
+						<malariaStatus />
+						<sampleSelection />
+					</inclusionExclusionCriteria>
+					<sample>
+						<sampleType />
+						<wholeBloodSource />
 						<sampleType-type-dateIsolated />
-					</sampleType>
-					<resistanceMarkers>
-						<molecularMarkerFalciparumOpen>
-							<molecularMarkerFalciparum />
-							<molecularMarkerFalciparumOther />
-						</molecularMarkerFalciparumOpen>
-						<molecularMarkerVivaxOpen>
-							<molecularMarkerVivax />
-							<molecularMarkerVivaxOther />
-						</molecularMarkerVivaxOpen>
-						<genotypingMethod>
-							<genotypingMethod />
-							<genotypingMethodOther />
-						</genotypingMethod>
-					</resistanceMarkers>
+					</sample>
+					<genotypedMarkers>
+						<genotypedMarker>
+							<genotypingMethodOpen>
+								<genotypingMethod />
+								<genotypingMethodOther />
+							</genotypingMethodOpen>
+							<molecularMarkerFalciparumOpen>
+								<molecularMarkerFalciparum />
+								<molecularMarkerFalciparumOther />
+							</molecularMarkerFalciparumOpen>
+							<molecularMarkerVivaxOpen>
+								<molecularMarkerVivax />
+								<molecularMarkerVivaxOther />
+							</molecularMarkerVivaxOpen>
+						</genotypedMarker>
+					</genotypedMarkers>
+
+
 					<mixedResistanceAlleles>
 						<mixedResistanceAllelesInclusion />
 					</mixedResistanceAlleles>
 					<additionalGenotypicInformation>
-						<additionalGenotypicInformation-wholeGenomesSequenced-block>
-							<additionalGenotypicInformation-wholeGenomesSequenced />
-							<additionalGenotypicInformation-accessionNumbers />
-							<additionalGenotypicInformation-resistanceLocus>
-								<additionalGenotypicInformation-resistanceLocus-sequenced />
-								<additionalGenotypicInformation-resistanceLocus-name />
-							</additionalGenotypicInformation-resistanceLocus>
-							<additionalGenotypicInformation-otherLocus>
-								<additionalGenotypicInformation-otherLocus-sequenced />
-								<additionalGenotypicInformation-otherLocus-type />
-								<additionalGenotypicInformation-otherLocus-name />
-							</additionalGenotypicInformation-otherLocus>
-						</additionalGenotypicInformation-wholeGenomesSequenced-block>
+						<wholeGenomesSequenced-block>
+							<wholeGenomesSequenced />
+							<resistanceLocus>
+								<resistanceLocus-sequenced />
+								<resistanceLocus-name />
+							</resistanceLocus>
+							<otherLocus>
+								<otherLocus-sequenced />
+								<otherLocus-type />
+								<otherLocus-name />
+							</otherLocus>
+						</wholeGenomesSequenced-block>
 					</additionalGenotypicInformation>
+
+
 				</molecular>
 			</questionnaire>
 		</study>

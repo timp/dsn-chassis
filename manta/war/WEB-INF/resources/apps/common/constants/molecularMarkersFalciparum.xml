@@ -122,9 +122,4 @@
 	</molecularMarker>
 
 
-	<molecularMarker>
-		<label>Other</label>
-		<value>other</value>
-	</molecularMarker>
-
 </molecularMarkers>
