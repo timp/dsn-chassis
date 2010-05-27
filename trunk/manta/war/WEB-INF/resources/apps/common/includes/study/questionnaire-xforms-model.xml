@@ -580,18 +580,5 @@
 	<xforms:instance id="ins-invitro-batch-template"
 		src="/apps/common/templates/study/invitro-batch-template.xml" />
 
-	<xforms:submission id="sub-put-study-entry"
-		resource="{instance('ins-sq-study-entry')/atom:link[@rel='edit']/@href}"
-		method="put" replace="instance" instance="ins-sq-study-entry"
-		ref="instance('ins-sq-study-entry')" mediatype="application/atom+xml"
-		relevant="false" validate="false">
-		<xforms:message ev:event="xforms-submit-error" level="modal">
-			An error occurred (
-			<xforms:output value="event('error-type')" />
-			) while saving the study.
-		</xforms:message>
-		<xforms:message ev:event="xforms-submit-done" level="modal">Your
-			changes have been saved, thank you.</xforms:message>
-	</xforms:submission>
 
 </xforms:model>
