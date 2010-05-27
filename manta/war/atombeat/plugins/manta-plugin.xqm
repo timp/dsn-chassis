@@ -195,6 +195,11 @@ declare function manta-plugin:filter-media-entry(
                 and namespace-uri( $child ) = $CONSTANT:ATOM-NSURI 
                 and $child/@rel = 'http://www.cggh.org/2010/chassis/terms/originStudy'
             )
+            and not( 
+                local-name( $child ) = $CONSTANT:ATOM-LINK 
+                and namespace-uri( $child ) = $CONSTANT:ATOM-NSURI 
+                and $child/@rel = 'http://www.cggh.org/2010/chassis/terms/personalDataReviews'
+            )
         )
         return $child
     }
