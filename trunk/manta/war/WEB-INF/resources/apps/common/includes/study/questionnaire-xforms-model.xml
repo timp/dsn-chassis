@@ -231,29 +231,32 @@
 							</xforms:bind>
 						</xforms:bind>
 					</xforms:bind>
-
 				</xforms:bind>
 
 				<xforms:bind nodeset="molecular" relevant="contains(../modules, 'molecular')">
-					<xforms:bind nodeset="resistanceMarkers">
-						<xforms:bind nodeset="molecularMarkerFalciparumOpen"
-							relevant="contains(../../../pathogens, 'pfalciparum')">
-							<xforms:bind nodeset="molecularMarkerFalciparum" />
-							<xforms:bind nodeset="molecularMarkerFalciparumOther"
-								relevant="contains(../molecularMarkerFalciparum, 'other')" />
-						</xforms:bind>
-						<xforms:bind nodeset="molecularMarkerVivaxOpen"
-							relevant="contains(../../../pathogens, 'pvivax')">
-							<xforms:bind nodeset="molecularMarkerVivax" />
-							<xforms:bind nodeset="molecularMarkerVivaxOther"
-								relevant="contains(../molecularMarkerVivax, 'other')" />
-						</xforms:bind>
-						<xforms:bind nodeset="genotypingMethod">
-							<xforms:bind nodeset="genotypingMethod" />
-							<xforms:bind nodeset="genotypingMethodOther" />
+					<xforms:bind nodeset="genotypedMarkers">
+						<xforms:bind nodeset="genotypedMarker">
+							<xforms:bind nodeset="genotypingMethodOpen">
+								<xforms:bind nodeset="genotypingMethod" />
+								<xforms:bind nodeset="genotypingMethodOther" />
+							</xforms:bind>
+							<xforms:bind nodeset="molecularMarkerFalciparumOpen"
+								relevant="contains(../../../../pathogens, 'pfalciparum')">
+								<xforms:bind nodeset="molecularMarkerFalciparum" />
+								<xforms:bind nodeset="molecularMarkerFalciparumOther"
+									relevant="contains(../molecularMarkerFalciparum, 'other')" />
+							</xforms:bind>
+							<xforms:bind nodeset="molecularMarkerVivaxOpen"
+								relevant="contains(../../../../pathogens, 'pvivax')">
+								<xforms:bind nodeset="molecularMarkerVivax" />
+								<xforms:bind nodeset="molecularMarkerVivaxOther"
+									relevant="contains(../molecularMarkerVivax, 'other')" />
+							</xforms:bind>
 						</xforms:bind>
 					</xforms:bind>
 				</xforms:bind>
+				
+				
 				<xforms:bind nodeset="invitro" relevant="contains(../modules, 'invitro')">
 					<xforms:bind nodeset="analysisSite" />
 					<xforms:bind nodeset="culture">
@@ -331,9 +334,9 @@
 						</xforms:bind>
 					</xforms:bind>
 				</xforms:bind>
-				
-				
-				
+
+
+
 				<xforms:bind nodeset="pharmacology"
 					relevant="contains(../modules, 'pharmacology')">
 					<xforms:bind nodeset="samples">
@@ -566,12 +569,30 @@
 		src="/apps/common/templates/study/pharmacology-sample-template.xml" />
 	<xforms:instance id="ins-pharmacology-analyte-template"
 		src="/apps/common/templates/study/pharmacology-analyte-template.xml" />
+
 	<xforms:instance id="ins-assayReference">
 		<assayReference xmlns="">
 			<assayMethodReference />
 			<assayMethodDescription />
 			<assayValidated />
 		</assayReference>
+	</xforms:instance>
+
+	<xforms:instance id="ins-genotypedMarker">
+		<genotypedMarker xmlns="">
+			<genotypingMethodOpen>
+				<genotypingMethod />
+				<genotypingMethodOther />
+			</genotypingMethodOpen>
+			<molecularMarkerFalciparumOpen>
+				<molecularMarkerFalciparum />
+				<molecularMarkerFalciparumOther />
+			</molecularMarkerFalciparumOpen>
+			<molecularMarkerVivaxOpen>
+				<molecularMarkerVivax />
+				<molecularMarkerVivaxOther />
+			</molecularMarkerVivaxOpen>
+		</genotypedMarker>
 	</xforms:instance>
 
 

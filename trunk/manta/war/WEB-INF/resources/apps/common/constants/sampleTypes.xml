@@ -1,7 +1,7 @@
 <!--  A closed list of blood sample types  -->
 <sampleTypes xmlns="">
 	<sampleType>
-		<label>finger prick on filter paper</label>
+		<label>blood spot on filter paper</label>
 		<value>filterPaper</value>
 	</sampleType>
 	<sampleType>
