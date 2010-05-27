@@ -76,6 +76,7 @@
 							relevant="contains(../priorAntimalarialsDetermination,'history')" />
 					</xforms:bind>
 					<xforms:bind nodeset="pregnancy" />
+					<xforms:bind nodeset="treatmentReason" />
 				</xforms:bind>
 
 
@@ -335,7 +336,7 @@
 					relevant="contains(../modules, 'pharmacology')">
 					<xforms:bind nodeset="samples">
 						<xforms:bind nodeset="sample">
-							<xforms:bind nodeset="plannedNumberOfSamples" />
+							<xforms:bind nodeset="numberPlanned" />
 							<xforms:bind nodeset="volume" />
 							<xforms:bind nodeset="anticoagulent" />
 							<xforms:bind nodeset="centrifugeTime" />
@@ -438,6 +439,8 @@
 
 	<xforms:instance id="ins-sampleMatrixType-items"
 		src="/apps/common/constants/sampleMatrixTypes.xml" />
+	<xforms:instance id="ins-treatmentReason-items"
+		src="/apps/common/constants/treatmentReasons.xml" />
 
 
 

@@ -1,4 +1,5 @@
 <sample xmlns="">
+	<numberPlanned/>
 	<volume />
 	<anticoagulent />
 	<centrifugeTime />

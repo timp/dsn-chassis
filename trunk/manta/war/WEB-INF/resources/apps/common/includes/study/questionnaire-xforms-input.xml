@@ -399,6 +399,17 @@
 					</xforms:item>
 				</xforms:select1>
 
+				<xforms:select1 ref="treatmentReason" appearance="minimal">
+					<xforms:label class="fixed-width">
+						Reason for treatment 
+							</xforms:label>
+					<xforms:itemset model="mod-study-questionnaire"
+						nodeset="instance('ins-treatmentReason-items')/treatmentReason">
+						<xforms:label ref="label" />
+						<xforms:value ref="value" />
+					</xforms:itemset>
+				</xforms:select1>
+
 			</xforms:group>
 
 
@@ -2113,6 +2124,7 @@
 
 				<h2>Pharmacology Questions</h2>
 
+
 				<xforms:group ref="samples">
 					<h3>Sample</h3>
 					<table class="repeat-table">
@@ -2129,8 +2141,9 @@
 									</xforms:trigger>
 								</td>
 								<td>
-									<xforms:input ref="volume">
-										<xforms:label class="fixed-width">Volume</xforms:label>
+									<xforms:input ref="numberPlanned">
+										<xforms:label class="fixed-width">Number planned</xforms:label>
+										<xforms:hint>Total number of samples planned</xforms:hint>
 									</xforms:input>
 									<br />
 									<xforms:input ref="anticoagulent">
@@ -2139,39 +2152,33 @@
 									<br />
 
 									<xforms:input ref="centrifugeTime">
-										<xforms:label class="fixed-width">Time to centrifuge
+										<xforms:label class="fixed-width">Time to centrifuge (mins)
 										</xforms:label>
-										<xforms:hint>eg. &lt; 15 mins</xforms:hint>
+										<xforms:hint>eg. &lt; 15 minutes</xforms:hint>
 									</xforms:input>
-
-									<br />
-									<xforms:select1 ref="matrix" appearance="minimal">
+									<!--
+										<br /> <xforms:select1 ref="matrix" appearance="minimal">
 										<xforms:label class="fixed-width">Matrix</xforms:label>
 										<xforms:alert>Please select a Matrix</xforms:alert>
-										<xforms:item>
-											<xforms:label>please select</xforms:label>
-											<xforms:value />
-										</xforms:item>
-
-										<xforms:itemset model="mod-study-questionnaire"
-											nodeset="instance('ins-sampleMatrixType-items')/sampleMatrixType">
-											<xforms:label ref="label" />
-											<xforms:value ref="value" />
-										</xforms:itemset>
-									</xforms:select1>
-
+										<xforms:item> <xforms:label>please select</xforms:label>
+										<xforms:value /> </xforms:item> <xforms:itemset
+										model="mod-study-questionnaire"
+										nodeset="instance('ins-sampleMatrixType-items')/sampleMatrixType">
+										<xforms:label ref="label" /> <xforms:value ref="value" />
+										</xforms:itemset> </xforms:select1>
+									-->
 									<xforms:group ref="storage">
-										<h4>Storage</h4>
+										<h4>Temperature and time to storage</h4>
 										<xforms:input ref="storageTemperature">
 											<xforms:label>Temperature</xforms:label>
+											<xforms:hint>Eg Room temperature</xforms:hint>
 										</xforms:input>
 										<xforms:input ref="storageDuration">
 											<xforms:label>Duration</xforms:label>
+											<xforms:hint>Please specify units (mins, hours, days or
+												weeks)</xforms:hint>
 										</xforms:input>
 									</xforms:group>
-									<xforms:input ref="preparationReference">
-										<xforms:label>Preparation reference</xforms:label>
-									</xforms:input>
 
 								</td>
 							</tr>
@@ -2206,11 +2213,11 @@
 					<table class="repeat-table">
 						<tr>
 							<th></th>
-							<th>Drug given</th>
+							<th>Name of compound measured (parent or metabolite)</th>
+							<th>Lower LoQ</th>
 							<th>Analyte</th>
 							<th>Free drug</th>
 							<th>Total drug</th>
-							<th>Lower LoQ</th>
 							<th>Upper LoQ</th>
 						</tr>
 						<xforms:repeat nodeset="analyte" id="analyte-rep">
@@ -2230,6 +2237,12 @@
 										<xforms:hint>Name of drug given</xforms:hint>
 									</xforms:input>
 								</td>
+								<td class="form-td">
+									<xforms:input ref="lowerLoQ" class="fourWide">
+										<xforms:hint>Lower Limit of Quantification</xforms:hint>
+									</xforms:input>
+								</td>
+
 								<td class="form-td">
 									<xforms:input ref="drugMeasured">
 										<xforms:hint>Name of metabolite/drug measured</xforms:hint>
@@ -2258,11 +2271,6 @@
 										<xforms:hint>Was total drug concentration measured?
 										</xforms:hint>
 									</xforms:select1>
-								</td>
-								<td class="form-td">
-									<xforms:input ref="lowerLoQ" class="fourWide">
-										<xforms:hint>Lower Limit of Quantification</xforms:hint>
-									</xforms:input>
 								</td>
 								<td class="form-td">
 									<xforms:input ref="upperLoQ" class="fourWide">
