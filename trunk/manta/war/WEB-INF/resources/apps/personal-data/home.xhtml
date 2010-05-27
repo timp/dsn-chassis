@@ -56,8 +56,15 @@
                 <xforms:message ev:event="xforms-submit-error" level="modal">
                 	An error occurred (<xforms:output value="event('error-type')"/>) while retrieving reviews.
                	</xforms:message>
-               	<xforms:send ev:event="xforms-submit-done" submission="sub-get-all-submitted-media-feed"/>
+               	<xforms:send ev:event="xforms-submit-done" submission="sub-get-all-derivations-feed"/>
 			</xforms:submission>
+        	
+        	<xforms:submission id="sub-get-all-derivations-feed" resource="/atombeat/content/derivations" method="get" replace="instance" instance="ins-derivations-feed" serialization="none">
+        		<xforms:message ev:event="xforms-submit-error" level="modal">
+        			An error occurred (<xforms:output value="event('error-type')"/>) while retrieving derivations.
+        		</xforms:message>
+        		<xforms:send ev:event="xforms-submit-done" submission="sub-get-all-submitted-media-feed"/>
+        	</xforms:submission>
 			
 			<xforms:submission 
 				id="sub-get-all-submitted-media-feed"
@@ -87,6 +94,10 @@
 			<xforms:instance id="ins-reviews-feed">
 				<atom:feed/>
 			</xforms:instance>
+        	
+        	<xforms:instance id="ins-derivations-feed">
+        		<atom:feed/>
+        	</xforms:instance>
 			
         </xforms:model>
 
@@ -101,7 +112,7 @@
     	
     	<h1>Personal Data - Home</h1>
 
-    	<h2>New Files to Review</h2>
+    	<h2>Files to Review</h2>
 
     	<fr:datatable>
     		<thead>
@@ -110,7 +121,6 @@
     				<th fr:sortable="false" fr:resizeable="true">Original File Name</th>
     				<th fr:sortable="true" fr:resizeable="true">Contributor</th>
     				<th fr:sortable="true" fr:resizeable="true">Submitted</th>
-<!--		    				<th fr:sortable="true" fr:resizeable="true">Study</th>-->
     				<th fr:sortable="false" fr:resizeable="true">Actions</th>
     			</tr>
     		</thead>
@@ -137,12 +147,6 @@
     					<td>
     						<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')"/>
     					</td>
-<!--		    					<td>-->
-<!--		    						<xforms:output value="-->
-<!--		    							for $l in (atom:link[@rel='http://www.cggh.org/2010/chassis/terms/originStudy']/@href) -->
-<!--		    							return instance('ins-studies-feed')/atom:entry[atom:link[@rel='self']/@href=$l]/atom:title-->
-<!--	    							"/>-->
-<!--		    					</td>-->
     					<td>
     						<a href="review?media-link={atom:link[@rel='self']/@href}">Review</a>
     					</td>
@@ -157,10 +161,9 @@
     		<thead>
     			<tr>
     				<th fr:sortable="false" fr:resizeable="true">Code</th>
-    				<th fr:sortable="false" fr:resizeable="true">Original File Name</th>
+    				<th fr:sortable="true" fr:resizeable="true">Original File Name</th>
     				<th fr:sortable="true" fr:resizeable="true">Contributor</th>
     				<th fr:sortable="true" fr:resizeable="true">Submitted</th>
-<!--		    				<th fr:sortable="true" fr:resizeable="true">Study</th>-->
     				<th fr:sortable="false" fr:resizeable="true">Actions</th>
     			</tr>
     		</thead>
@@ -174,8 +177,13 @@
 			    					instance('ins-reviews-feed')/atom:entry[ 
 		    							atom:link[@rel='http://www.cggh.org/2010/chassis/terms/reviewSubject']/@href = $entry/atom:link[@rel='self']/@href 
 		    							and .//outcome='fail'
-	    							] 
+	    							]     							
 		   						) 
+		   						and empty(
+			   						instance('ins-derivations-feed')/atom:entry[
+			   							atom:link[@rel='http://www.cggh.org/2010/chassis/terms/derivationInput']/@href = $entry/atom:link[@rel='self']/@href	
+		   							]
+		   						)
 							) then $entry else ()
 	    			">
     				<tr>
@@ -193,74 +201,17 @@
     							ref="atom:published" 
     							xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')"/>
     					</td>
-<!--		    					<td>-->
-<!--		    						<xforms:output value="-->
-<!--		    							for $l in (atom:link[@rel='http://www.cggh.org/2010/chassis/terms/originStudy']/@href) -->
-<!--		    							return instance('ins-studies-feed')/atom:entry[atom:link[@rel='self']/@href=$l]/atom:title-->
-<!--	    							"/>-->
-<!--		    					</td>-->
     					<td>
+    						<!-- action only available to curators -->
     						<xforms:group model="mod-current-user" ref="instance('ins-current-user')[roles/role='ROLE_CHASSIS_CURATOR']">
-    							<a href="replace?media-link={xxforms:context('rep-submitted-media')/atom:link[@rel='self']/@href}">Replace</a>
+   								<a href="replace?media-link={xxforms:context('rep-submitted-media')/atom:link[@rel='self']/@href}">Replace</a><br/>
     						</xforms:group>
     					</td>
     				</tr>
     			</xforms:repeat>
     		</tbody>
     	</fr:datatable>
-		    	
-    	<h2>Files Passed for Curation</h2>
-    	
-    	<fr:datatable>
-    		<thead>
-    			<tr>
-    				<th fr:sortable="false" fr:resizeable="true">Code</th>
-    				<th fr:sortable="false" fr:resizeable="true">Original File Name</th>
-    				<th fr:sortable="true" fr:resizeable="true">Contributor</th>
-    				<th fr:sortable="true" fr:resizeable="true">Submitted</th>
-<!--		    				<th fr:sortable="true" fr:resizeable="true">Study</th>-->
-    				<th fr:sortable="false" fr:resizeable="true">Actions</th>
-    			</tr>
-    		</thead>
-    		<tbody>
-    			<xforms:repeat nodeset="
-    				for $entry in instance('ins-submitted-media-feed')/atom:entry return
-		    			if ( 
-		    				exists( 
-		    					instance('ins-reviews-feed')/atom:entry[ 
-	    							atom:link[@rel='http://www.cggh.org/2010/chassis/terms/reviewSubject']/@href = $entry/atom:link[@rel='self']/@href 
-	    							and .//outcome='pass'
-    							] 
-	   						) 
-						) then $entry else ()
-    			">
-    				<tr>
-    					<td>
-    						<xforms:output value="manta:id"/>
-    					</td>
-    					<td>
-    						<xforms:output value="atom:title"/>
-    					</td>
-    					<td>
-    						<xforms:output value="atom:author/atom:email"/>
-    					</td>
-    					<td>
-    						<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')"/>
-    					</td>
-<!--		    					<td>-->
-<!--		    						<xforms:output value="-->
-<!--		    							for $l in (atom:link[@rel='http://www.cggh.org/2010/chassis/terms/originStudy']/@href) -->
-<!--		    							return instance('ins-studies-feed')/atom:entry[atom:link[@rel='self']/@href=$l]/atom:title-->
-<!--	    							"/>-->
-<!--		    					</td>-->
-    					<td>
-    						<a href="TODO?entry={atom:link[@rel='self']/@href}">TODO</a>
-    					</td>
-    				</tr>
-    			</xforms:repeat>
-    		</tbody>
-    	</fr:datatable>
-		    	
+		    			    	
     </body>
 </html>
 

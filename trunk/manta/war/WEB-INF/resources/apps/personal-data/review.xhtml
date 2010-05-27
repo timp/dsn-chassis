@@ -41,8 +41,8 @@
 				method="get"
 				replace="instance"
 				instance="ins-media-entry"
-				ref="instance('ins-noparams')">
-                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the study.</xforms:message>
+				serialization="none">
+                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the media-link entry.</xforms:message>
 				<xforms:send ev:event="xforms-submit-done" submission="sub-get-study-entry"/>
 				<xforms:setvalue 
 					ev:event="xforms-submit-done"
@@ -60,8 +60,8 @@
 				method="get"
 				replace="instance"
 				instance="ins-study-entry"
-				ref="instance('ins-noparams')">
-                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the study.</xforms:message>
+				serialization="none">
+                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the study entry.</xforms:message>
 			</xforms:submission>
 			
 			<xforms:action ev:event="xforms-model-construct-done">
@@ -105,7 +105,7 @@
 				method="get"
 				resource="home"
 				replace="all"
-				ref="instance('ins-noparams')"/>
+				serialization="none"/>
 				
         </xforms:model>
 
