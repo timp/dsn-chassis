@@ -1,20 +1,24 @@
 <!-- Closed list of sample matix types -->
 <sampleMatrixTypeTypes xmlns="">
 	<sampleMatrixType>
-		<label>whole blood capillary blood</label>
-		<value>wholebloodcapillaryblood</value>
+		<label>whole venous blood</label>
+		<value>wholeVenousBlood</value>
 	</sampleMatrixType>
 	<sampleMatrixType>
-		<label>blood spots</label>
-		<value>bloodspots</value>
+		<label>whole capillary blood</label>
+		<value>wholeCapillaryBlood</value>
+	</sampleMatrixType>
+	<sampleMatrixType>
+		<label>venous plasma</label>
+		<value>venousPlasma</value>
+	</sampleMatrixType>
+	<sampleMatrixType>
+		<label>capillary plasma</label>
+		<value>capillaryPlasma</value>
 	</sampleMatrixType>
 	<sampleMatrixType>
 		<label>serum</label>
 		<value>serum</value>
-	</sampleMatrixType>
-	<sampleMatrixType>
-		<label>plasma</label>
-		<value>plasma</value>
 	</sampleMatrixType>
 	<sampleMatrixType>
 		<label>free fraction plasma</label>

@@ -117,34 +117,28 @@
 					<samples>
 						<sample>
 							<numberPlanned />
-							<volume />
 							<anticoagulent />
 							<centrifugeTime />
-							<matrix />
 							<storage>
 								<storageTemperature />
 								<storageDuration />
 							</storage>
-							<preparationReference />
 						</sample>
 					</samples>
 					<analytes>
 						<analyte>
-							<drugGiven />
 							<drugMeasured />
-							<freeDrugMeasured />
-							<totalDrugMeasured />
 							<lowerLoQ />
-							<upperLoQ />
+							<matrix />
 						</analyte>
 					</analytes>
-					<assayCapacities>
-						<assayCapacity>
+					<assayReferences>
+						<assayReference>
 							<assayMethodReference />
 							<assayMethodDescription />
-							<assayValidation />
-						</assayCapacity>
-					</assayCapacities>
+							<assayValidated />
+						</assayReference>
+					</assayReferences>
 
 				</pharmacology>
 

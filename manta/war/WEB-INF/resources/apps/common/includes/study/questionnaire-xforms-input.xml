@@ -2156,17 +2156,6 @@
 										</xforms:label>
 										<xforms:hint>eg. &lt; 15 minutes</xforms:hint>
 									</xforms:input>
-									<!--
-										<br /> <xforms:select1 ref="matrix" appearance="minimal">
-										<xforms:label class="fixed-width">Matrix</xforms:label>
-										<xforms:alert>Please select a Matrix</xforms:alert>
-										<xforms:item> <xforms:label>please select</xforms:label>
-										<xforms:value /> </xforms:item> <xforms:itemset
-										model="mod-study-questionnaire"
-										nodeset="instance('ins-sampleMatrixType-items')/sampleMatrixType">
-										<xforms:label ref="label" /> <xforms:value ref="value" />
-										</xforms:itemset> </xforms:select1>
-									-->
 									<xforms:group ref="storage">
 										<h4>Temperature and time to storage</h4>
 										<xforms:input ref="storageTemperature">
@@ -2209,16 +2198,14 @@
 
 
 				<xforms:group ref="analytes">
-					<h4>Drug given and analytes/metabolites measured</h4>
+					<h4>Drug given and analytes/metabolites measured
+					<span style="font-size:smaller; font-weight:normal;">please list all</span></h4>
 					<table class="repeat-table">
 						<tr>
 							<th></th>
-							<th>Name of compound measured (parent or metabolite)</th>
+							<th>Compound measured <br/>(parent or metabolite)</th>
 							<th>Lower LoQ</th>
-							<th>Analyte</th>
-							<th>Free drug</th>
-							<th>Total drug</th>
-							<th>Upper LoQ</th>
+							<th>Matrix</th>
 						</tr>
 						<xforms:repeat nodeset="analyte" id="analyte-rep">
 							<tr>
@@ -2234,7 +2221,8 @@
 								</td>
 								<td class="form-td">
 									<xforms:input ref="drugGiven">
-										<xforms:hint>Name of drug given</xforms:hint>
+										<xforms:hint>Name of drug given or metabolite measured
+										</xforms:hint>
 									</xforms:input>
 								</td>
 								<td class="form-td">
@@ -2244,38 +2232,14 @@
 								</td>
 
 								<td class="form-td">
-									<xforms:input ref="drugMeasured">
-										<xforms:hint>Name of metabolite/drug measured</xforms:hint>
-									</xforms:input>
-								</td>
-								<td class="form-td">
-									<xforms:select1 ref="freeDrugMeasured"
-										appearance="minimal">
+									<xforms:select ref="matrix" appearance="full">
+										<xforms:alert>Please select a Matrix</xforms:alert>
 										<xforms:itemset model="mod-study-questionnaire"
-											nodeset="instance('ins-boolean-items')/boolean">
+											nodeset="instance('ins-sampleMatrixType-items')/sampleMatrixType">
 											<xforms:label ref="label" />
 											<xforms:value ref="value" />
 										</xforms:itemset>
-										<xforms:hint>Was free drug concentration measured?
-										</xforms:hint>
-									</xforms:select1>
-								</td>
-								<td class="form-td">
-									<xforms:select1 ref="totalDrugMeasured"
-										appearance="minimal">
-										<xforms:itemset model="mod-study-questionnaire"
-											nodeset="instance('ins-boolean-items')/boolean">
-											<xforms:label ref="label" />
-											<xforms:value ref="value" />
-										</xforms:itemset>
-										<xforms:hint>Was total drug concentration measured?
-										</xforms:hint>
-									</xforms:select1>
-								</td>
-								<td class="form-td">
-									<xforms:input ref="upperLoQ" class="fourWide">
-										<xforms:hint>Upper Limit of Quantification</xforms:hint>
-									</xforms:input>
+									</xforms:select>
 								</td>
 							</tr>
 						</xforms:repeat>
@@ -2304,24 +2268,24 @@
 
 
 
-				<xforms:group ref="assayCapacities">
-					<h4>Drug assay capacity</h4>
+				<xforms:group ref="assayReferences">
+					<h4>Drug assay method reference</h4>
 					<table class="repeat-table">
 						<tr>
 							<th></th>
-							<th>Method reference</th>
-							<th>Method description</th>
-							<th>Assay validation</th>
+							<th>URL or <br/>Title, author and journal of publication </th>
+							<th>Method description <span style="font-size:smaller; font-weight:normal;">(if no reference)</span></th>
+							<th>Has the method been validated?</th>
 						</tr>
 						<lowerLOQ />
 						<upperLOQ />
-						<xforms:repeat nodeset="assayCapacity" id="assayCapacity-rep">
+						<xforms:repeat nodeset="assayReference" id="assayReference-rep">
 							<tr>
 								<td class="action-td">
 
 									<xforms:trigger appearance="minimal">
 										<xforms:delete ev:event="DOMActivate" context="."
-											nodeset="." at="index('assayCapacity-rep')" />
+											nodeset="." at="index('assayReference-rep')" />
 										<xforms:label>
 											<img src="/apps/common/theme/remove.gif" />
 										</xforms:label>
@@ -2333,14 +2297,19 @@
 									</xforms:input>
 								</td>
 								<td class="form-td">
-									<xforms:input ref="assayMethodDescription">
-										<xforms:hint>Assay method description</xforms:hint>
-									</xforms:input>
+									<xforms:textarea ref="assayMethodDescription">
+										<xforms:hint>A brife description of the assay method, if no reference is available</xforms:hint>
+									</xforms:textarea>
 								</td>
 								<td class="form-td">
-									<xforms:input ref="assayValidation">
-										<xforms:hint>Assay validation</xforms:hint>
-									</xforms:input>
+									<xforms:select1 ref="assayValidated"
+										appearance="minimal">
+										<xforms:itemset model="mod-study-questionnaire"
+											nodeset="instance('ins-boolean-items')/boolean">
+											<xforms:label ref="label" />
+											<xforms:value ref="value" />
+										</xforms:itemset>
+									</xforms:select1>
 								</td>
 							</tr>
 						</xforms:repeat>
@@ -2351,16 +2320,16 @@
 										<img src="/apps/common/theme/add.gif" />
 									</xforms:label>
 									<xforms:insert ev:event="DOMActivate" context="."
-										nodeset="assayCapacity" at="count(../assayCapacity)" position="after"
-										origin="instance('ins-pharmacology-assayCapacity-template')" />
+										nodeset="assayReference" at="count(../assayReference)" position="after"
+										origin="instance('ins-pharmacology-assayReference-template')" />
 								</xforms:trigger>
 							</td>
 							<td class="add-td">
 								<xforms:trigger appearance="minimal">
-									<xforms:label>Add an assayCapacity</xforms:label>
+									<xforms:label>Add an assayReference</xforms:label>
 									<xforms:insert ev:event="DOMActivate" context="."
-										nodeset="assayCapacity" at="count(../assayCapacity)" position="after"
-										origin="instance('ins-pharmacology-assayCapacity-template')" />
+										nodeset="assayReference" at="count(../assayReference)" position="after"
+										origin="instance('ins-pharmacology-assayReference-template')" />
 								</xforms:trigger>
 							</td>
 						</tr>

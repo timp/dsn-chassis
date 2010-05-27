@@ -330,22 +330,35 @@
 							<xforms:bind nodeset="ringForms" />
 						</xforms:bind>
 					</xforms:bind>
-
 				</xforms:bind>
+				
+				
+				
 				<xforms:bind nodeset="pharmacology"
 					relevant="contains(../modules, 'pharmacology')">
 					<xforms:bind nodeset="samples">
 						<xforms:bind nodeset="sample">
 							<xforms:bind nodeset="numberPlanned" />
-							<xforms:bind nodeset="volume" />
 							<xforms:bind nodeset="anticoagulent" />
 							<xforms:bind nodeset="centrifugeTime" />
-							<xforms:bind nodeset="matrix" required="true()" />
 							<xforms:bind nodeset="storage">
 								<xforms:bind nodeset="storageTemperature" />
 								<xforms:bind nodeset="storageDuration" />
 							</xforms:bind>
-							<xforms:bind nodeset="preparationReference" />
+						</xforms:bind>
+					</xforms:bind>
+					<xforms:bind nodeset="analytes">
+						<xforms:bind nodeset="analyte">
+							<xforms:bind nodeset="drugMeasured" />
+							<xforms:bind nodeset="lowerLoQ" />
+							<xforms:bind nodeset="matrix" required="true()" />
+						</xforms:bind>
+					</xforms:bind>
+					<xforms:bind nodeset="assayCapacities">
+						<xforms:bind nodeset="assayReference">
+							<xforms:bind nodeset="assayMethodReference" />
+							<xforms:bind nodeset="assayMethodDescription" />
+							<xforms:bind nodeset="assayValidated" />
 						</xforms:bind>
 					</xforms:bind>
 
@@ -553,12 +566,12 @@
 		src="/apps/common/templates/study/pharmacology-sample-template.xml" />
 	<xforms:instance id="ins-pharmacology-analyte-template"
 		src="/apps/common/templates/study/pharmacology-analyte-template.xml" />
-	<xforms:instance id="ins-assayCapacity">
-		<assayCapacity xmlns="">
+	<xforms:instance id="ins-assayReference">
+		<assayReference xmlns="">
 			<assayMethodReference />
 			<assayMethodDescription />
-			<assayValidation />
-		</assayCapacity>
+			<assayValidated />
+		</assayReference>
 	</xforms:instance>
 
 
