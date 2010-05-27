@@ -1435,6 +1435,7 @@
 
 
 				<xforms:group ref="genotypedMarkers">
+				<h3>Resistance Markers</h3>
 					<table class="repeat-table">
 						<xforms:repeat nodeset="genotypedMarker" id="genotypedMarker-rep">
 							<tr>
@@ -1532,7 +1533,32 @@
 					</table>
 				</xforms:group>
 
-
+				<xforms:group ref="mixedResistanceAlleles">
+				
+							<xforms:select1 ref="mixedResistanceAllelesInclusion"
+								appearance="minimal">
+								<xforms:label>Mixed resistance alleles were </xforms:label>
+											<xforms:item>
+												<xforms:label>not identified</xforms:label>
+												<xforms:value>notIdentified</xforms:value>
+											</xforms:item>
+								<xforms:itemset model="mod-study-questionnaire"
+									nodeset="instance('ins-mixedResistanceAllelesInclusion-items')/mixedResistanceAllelesInclusion">
+									<xforms:label ref="label" />
+									<xforms:value ref="value" />
+								</xforms:itemset>
+							</xforms:select1>
+							<xforms:select ref="mixedResistanceAllelesDesignation"
+								appearance="full">
+								<xforms:label><br/>How were mixed genotype resistance loci designated in the data set? <br/></xforms:label>
+								<xforms:itemset model="mod-study-questionnaire"
+									nodeset="instance('ins-mixedResistanceAllelesDesignation-items')/mixedResistanceAllelesDesignation">
+									<xforms:label ref="label" />
+									<xforms:value ref="value" />
+								</xforms:itemset>
+							</xforms:select>
+						
+				</xforms:group>
 
 			</xforms:group>
 
