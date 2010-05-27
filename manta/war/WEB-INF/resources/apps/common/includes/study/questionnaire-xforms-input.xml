@@ -2326,7 +2326,7 @@
 							</td>
 							<td class="add-td">
 								<xforms:trigger appearance="minimal">
-									<xforms:label>Add an assayReference</xforms:label>
+									<xforms:label>Add an assay reference</xforms:label>
 									<xforms:insert ev:event="DOMActivate" context="."
 										nodeset="assayReference" at="count(../assayReference)" position="after"
 										origin="instance('ins-pharmacology-assayReference-template')" />
