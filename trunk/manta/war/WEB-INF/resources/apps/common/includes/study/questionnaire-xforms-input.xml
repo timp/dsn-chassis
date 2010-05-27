@@ -398,11 +398,11 @@
 						<xforms:value>exclude</xforms:value>
 					</xforms:item>
 				</xforms:select1>
-
+				<br />
 				<xforms:select1 ref="treatmentReason" appearance="minimal">
 					<xforms:label class="fixed-width">
-						Reason for treatment 
-							</xforms:label>
+						Reason for treatment
+					</xforms:label>
 					<xforms:itemset model="mod-study-questionnaire"
 						nodeset="instance('ins-treatmentReason-items')/treatmentReason">
 						<xforms:label ref="label" />
