@@ -251,7 +251,7 @@
 					</xforms:bind>
 					<xforms:bind nodeset="sample">
 						<xforms:bind nodeset="sampleTypeOpen">
-							<xforms:bind nodeset="sampleType" />
+							<xforms:bind nodeset="sampleType" required="true()"/>
 							<xforms:bind nodeset="sampleTypeOther"
 								relevant="contains(../sampleType, 'other')" />
 							<xforms:bind nodeset="wholeBloodSource"
@@ -264,7 +264,7 @@
 					<xforms:bind nodeset="genotypedMarkers">
 						<xforms:bind nodeset="genotypedMarker">
 							<xforms:bind nodeset="genotypingMethodOpen">
-								<xforms:bind nodeset="genotypingMethod" />
+								<xforms:bind nodeset="genotypingMethod" required="true()"/>
 								<xforms:bind nodeset="genotypingMethodOther"
 									relevant="contains(../genotypingMethod, 'other')" />
 							</xforms:bind>
@@ -305,7 +305,7 @@
 								</xforms:bind>
 							</xforms:bind>
 						</xforms:bind>
-						<xforms:bind nodeset="infectionComplexityEstimated" />
+						<xforms:bind nodeset="infectionComplexityEstimated" required="true()"/>
 						<xforms:bind nodeset="infectionComplexityEstimationLociiOpen"
 							relevant="contains(../infectionComplexityEstimated,'yes')">
 							<xforms:bind nodeset="infectionComplexityEstimationLocii" />
