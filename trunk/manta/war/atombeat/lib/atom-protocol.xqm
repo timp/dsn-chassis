@@ -750,7 +750,14 @@ declare function atom-protocol:op-update-member(
 ) as item()*
 {
     
-	let $entry := atomdb:update-member( $request-path-info , $request-data )
+	let $log := local:debug( "request data before update member..." )
+	let $log := local:debug( $request-data )
+    
+    (: workaround for weird side-effect of store :)
+	let $entry := doc( atomdb:update-member( $request-path-info , $request-data ) )/atom:entry
+	
+	let $log := local:debug( "entry after update member..." )
+	let $log := local:debug( $entry )
 
     let $etag := concat( '"' , atomdb:generate-etag( $request-path-info ) , '"' )
     

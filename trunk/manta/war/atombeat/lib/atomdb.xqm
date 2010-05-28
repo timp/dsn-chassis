@@ -377,17 +377,27 @@ declare function atomdb:update-member(
 		 :)
 		 
 		let $member-db-path := atomdb:request-path-info-to-db-path( $request-path-info )
+		
+		let $log := local:debug( "before update-entry..." )
+		let $log := local:debug( $request-data )
 	
 		let $entry := atomdb:update-entry( doc( $member-db-path )/atom:entry , $request-data )
 
+		let $log := local:debug( "after update-entry..." )
+		let $log := local:debug( $entry )
+	
 		let $groups := text:groups( $request-path-info , "^(.*)/([^/]+)$" )
 		
 		let $collection-db-path := atomdb:request-path-info-to-db-path( $groups[2] )
 		
 		let $entry-resource-name := $groups[3]
 		
+		(: this has a weird side-effect! :)
 		let $entry-db-path := xmldb:store( $collection-db-path , $entry-resource-name , $entry , $CONSTANT:MEDIA-TYPE-ATOM )
 
+		let $log := local:debug( "after store..." )
+		let $log := local:debug( $entry )
+	
 		(: 
 		 : N.B. we return the entry here, rather than just the path, because of
 		 : a weird interaction with the versioning module and retrieving a document
@@ -395,7 +405,7 @@ declare function atomdb:update-member(
 		 : query.
 		 :)
 		 
-		return $entry
+		return $entry-db-path
 
 };
 
