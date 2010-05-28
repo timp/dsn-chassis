@@ -24,7 +24,7 @@
 					</priorAntimalarialsExclusion>
 					<pregnancy />
 					<treatmentReason />
-					<otherCriteria/>
+					<otherCriteria />
 				</inclusionExclusionCriteria>
 				<clinical>
 					<treatment>
@@ -205,9 +205,9 @@
 						<sampleTypeOpen>
 							<sampleType />
 							<sampleTypeOther />
+							<wholeBloodSource />
+							<dateCultureIsolated />
 						</sampleTypeOpen>
-						<wholeBloodSource />
-						<dateCultureIsolated />
 					</sample>
 
 					<genotypedMarkers>

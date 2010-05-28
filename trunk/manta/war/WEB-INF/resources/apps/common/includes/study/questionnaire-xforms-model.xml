@@ -254,11 +254,11 @@
 							<xforms:bind nodeset="sampleType" />
 							<xforms:bind nodeset="sampleTypeOther"
 								relevant="contains(../sampleType, 'other')" />
+							<xforms:bind nodeset="wholeBloodSource"
+								relevant="contains(../sampleType,'wholeBlood')" />
+							<xforms:bind nodeset="dateCultureIsolated" type="xs:date"
+								relevant="contains(../sampleType,'cultureAdaptedParasite')" />
 						</xforms:bind>
-						<xforms:bind nodeset="wholeBloodSource"
-							relevant="contains(../sampleTypeOpen/sampleType,'wholeBlood')" />
-						<xforms:bind nodeset="dateCultureIsolated" type="xs:date"
-							relevant="contains(../sampleTypeOpen/sampleType,'cultureAdaptedParasite')" />
 					</xforms:bind>
 
 					<xforms:bind nodeset="genotypedMarkers">
@@ -298,16 +298,19 @@
 								<xforms:bind nodeset="resistanceLocus">
 									<xforms:bind nodeset="locusTypeOpen">
 										<xforms:bind nodeset="locusType" />
-										<xforms:bind nodeset="locusTypeOther" relevant="contains(../locusType,'other')"/>
+										<xforms:bind nodeset="locusTypeOther"
+											relevant="contains(../locusType,'other')" />
 									</xforms:bind>
 									<xforms:bind nodeset="locusName" />
 								</xforms:bind>
 							</xforms:bind>
 						</xforms:bind>
 						<xforms:bind nodeset="infectionComplexityEstimated" />
-						<xforms:bind nodeset="infectionComplexityEstimationLociiOpen" relevant="contains(../infectionComplexityEstimated,'yes')">
+						<xforms:bind nodeset="infectionComplexityEstimationLociiOpen"
+							relevant="contains(../infectionComplexityEstimated,'yes')">
 							<xforms:bind nodeset="infectionComplexityEstimationLocii" />
-							<xforms:bind nodeset="infectionComplexityEstimationLociiOther" relevant="contains(../infectionComplexityEstimationLocii, 'other')" />
+							<xforms:bind nodeset="infectionComplexityEstimationLociiOther"
+								relevant="contains(../infectionComplexityEstimationLocii, 'other')" />
 						</xforms:bind>
 					</xforms:bind>
 
@@ -657,7 +660,7 @@
 		src="/apps/common/constants/resistanceLocii.xml" />
 	<xforms:instance id="ins-locusType-items"
 		src="/apps/common/constants/locusTypes.xml" />
-	
+
 	<xforms:instance id="ins-resistanceLocus">
 		<resistanceLocus xmlns="">
 			<locusTypeOpen>

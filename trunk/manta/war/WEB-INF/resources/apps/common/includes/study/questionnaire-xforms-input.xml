@@ -406,7 +406,7 @@
 				</xforms:select1>
 				<br />
 				<xforms:input ref="otherCriteria">
-				<xforms:label class="fixed-width">Other criteria</xforms:label>
+					<xforms:label class="fixed-width">Other criteria</xforms:label>
 				</xforms:input>
 
 
@@ -592,8 +592,14 @@
 																		<th></th>
 																		<th>Day</th>
 																		<th>Hour</th>
-																		<th>From <span style="font-size:smaller; font-weight: normal;">(years)</span></th>
-																		<th>To <span style="font-size:smaller; font-weight: normal;">(years)</span></th>
+																		<th>
+																			From
+																			<span style="font-size:smaller; font-weight: normal;">(years)</span>
+																		</th>
+																		<th>
+																			To
+																			<span style="font-size:smaller; font-weight: normal;">(years)</span>
+																		</th>
 																		<th>Dose</th>
 																		<th>Unit</th>
 																	</tr>
@@ -681,8 +687,14 @@
 																		<th></th>
 																		<th>Day</th>
 																		<th>Hour</th>
-																		<th>From <span style="font-size:smaller; font-weight: normal;">(kgs)</span></th>
-																		<th>To <span style="font-size:smaller; font-weight: normal;">(kgs)</span></th>
+																		<th>
+																			From
+																			<span style="font-size:smaller; font-weight: normal;">(kgs)</span>
+																		</th>
+																		<th>
+																			To
+																			<span style="font-size:smaller; font-weight: normal;">(kgs)</span>
+																		</th>
 																		<th>Dose</th>
 																		<th>Unit</th>
 																	</tr>
@@ -945,7 +957,7 @@
 						</xforms:select1>
 
 						<xforms:input ref="randomisationProportion">
-							<xforms:label >
+							<xforms:label>
 								Proportion
 							</xforms:label>
 						</xforms:input>
@@ -1500,19 +1512,19 @@
 							</xforms:item>
 						</xforms:select1>
 						<xforms:input ref="sampleTypeOther" />
+						<xforms:select1 ref="wholeBloodSource" appearance="minimal">
+							<xforms:label>Whole blood source</xforms:label>
+							<xforms:itemset model="mod-study-questionnaire"
+								nodeset="instance('ins-wholeBloodSource-items')/wholeBloodSource">
+								<xforms:label ref="label" />
+								<xforms:value ref="value" />
+							</xforms:itemset>
+						</xforms:select1>
+						<xforms:input ref="dateCultureIsolated">
+							<xforms:label>Date samples isolated </xforms:label>
+							<xforms:alert>A valid date is required</xforms:alert>
+						</xforms:input>
 					</xforms:group>
-					<xforms:select1 ref="wholeBloodSource" appearance="minimal">
-						<xforms:label>Whole blood source</xforms:label>
-						<xforms:itemset model="mod-study-questionnaire"
-							nodeset="instance('ins-wholeBloodSource-items')/wholeBloodSource">
-							<xforms:label ref="label" />
-							<xforms:value ref="value" />
-						</xforms:itemset>
-					</xforms:select1>
-					<xforms:input ref="dateCultureIsolated">
-						<xforms:label>Date samples isolated </xforms:label>
-						<xforms:alert>A valid date is required</xforms:alert>
-					</xforms:input>
 				</xforms:group>
 
 
@@ -1742,8 +1754,9 @@
 					</xforms:select1>
 					<xforms:group ref="infectionComplexityEstimationLociiOpen">
 						<xforms:select ref="infectionComplexityEstimationLocii"
-											appearance="full" class="scrollableCheckboxes">
-							<xforms:label class="scrollableCheckboxesLabel">Locii used to estimate </xforms:label>
+							appearance="full" class="scrollableCheckboxes">
+							<xforms:label class="scrollableCheckboxesLabel">Locii used to estimate
+							</xforms:label>
 							<xforms:itemset model="mod-study-questionnaire"
 								nodeset="instance('ins-resistanceLocus-items')/resistanceLocus">
 								<xforms:label ref="label" />
@@ -1754,10 +1767,10 @@
 								<xforms:value>other</xforms:value>
 							</xforms:item>
 						</xforms:select>
-						<div style="clear:both;" >
-						<xforms:input ref="infectionComplexityEstimationLociiOther" >
-							<xforms:label class="fixed-width">other</xforms:label>
-						</xforms:input>
+						<div style="clear:both;">
+							<xforms:input ref="infectionComplexityEstimationLociiOther">
+								<xforms:label class="fixed-width">other</xforms:label>
+							</xforms:input>
 						</div>
 					</xforms:group>
 					<br style="clear:both;" />
