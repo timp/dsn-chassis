@@ -42,6 +42,7 @@
         			<add-publication-trigger/>
         			<uploads-entry-is-valid/>
         			<submit-files-trigger/>
+        			<href-to-copy-study-info-from/>
         		</control>
         	</xforms:instance>
         	
@@ -242,6 +243,51 @@
                 <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the submitted media.</xforms:message>
 			</xforms:submission>
 
+
+			<xforms:instance id="ins-study-feed">
+				<atom:feed/>
+			</xforms:instance>
+
+			<xforms:submission 
+				id="sub-retrieve-study-feed"
+				resource="/atombeat/content/studies"
+				method="get"
+				replace="instance"
+				instance="ins-study-feed">
+				<!-- TODO error handling -->
+                <xforms:message ev:event="xforms-submit-error" level="modal">
+                	<p>An error occurred (<xforms:output value="event('error-type')"/>) while retrieving a list of studies.</p>
+               	</xforms:message>
+			</xforms:submission>
+			
+			<xforms:send 
+				ev:event="xforms-model-construct-done" 
+				submission="sub-retrieve-study-feed"/>
+			
+			
+			<xforms:instance id="ins-study-entry-to-copy-study-info-from">
+				<atom:entry/>
+			</xforms:instance>
+				
+			<xforms:submission 
+				id="sub-copy-answers"
+				resource="{instance('ins-control')/href-to-copy-study-info-from}"
+				method="get"
+				replace="instance"
+				instance="ins-study-entry-to-copy-study-info-from">
+				
+				<xforms:action ev:event="xforms-submit-done">
+					<xforms:delete context="instance('ins-study-entry')/atom:content/study" nodeset="questionnaire"/>
+					<xforms:insert origin="instance('ins-study-entry-to-copy-study-info-from')/atom:content/study/questionnaire" nodeset="instance('ins-study-entry')/atom:content/study" at="last()" position="after"/>
+				</xforms:action>
+				
+				
+                <xforms:message ev:event="xforms-submit-error" level="modal">
+                	<p>An error occurred (<xforms:output value="event('error-type')"/>) while copying answers from the selected study.</p>
+               	</xforms:message>
+			</xforms:submission>				
+				
+				
             
         </xforms:model>
         
@@ -354,34 +400,28 @@
     			</ul>
     			
     			<div class="yui-content">
-    			
-				   	<div class="inner-help">
+    	
+    				<!-- Help boxes. Comment out if not needed. -->
+			    	<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='summary']">
+			    			<xi:include href="/apps/contributor/includes/help-boxes/for-dashboard-tabs/summary.xml"/>
+			    	</xforms:group>
+			    	<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='permissions']">
+			    			<xi:include href="/apps/contributor/includes/help-boxes/for-dashboard-tabs/permissions.xml"/>
+			    	</xforms:group>
+			    	<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='acknowledgements']">
+			    			<xi:include href="/apps/contributor/includes/help-boxes/for-dashboard-tabs/acknowledgements.xml"/>
+			    	</xforms:group>
+					<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='files']">
+			    			<xi:include href="/apps/contributor/includes/help-boxes/for-dashboard-tabs/files.xml"/>
+			    	</xforms:group>
+			    	<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='publications']">
+			    			<xi:include href="/apps/contributor/includes/help-boxes/for-dashboard-tabs/publications.xml"/>
+			    	</xforms:group>
+					<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='study-info']">
+			    			<!-- <xi:include href="/apps/contributor/includes/help-boxes/for-dashboard-tabs/study-info.xml"/>  -->
+			    	</xforms:group>
+				    	
 				   	
-				    	<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='summary']">
-				    		<xi:include href="/apps/contributor/includes/help-boxes/for-dashboard-tabs/summary.xml"/>
-				    	</xforms:group>
-				    	
-				    	<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='permissions']">
-				    		<xi:include href="/apps/contributor/includes/help-boxes/for-dashboard-tabs/permissions.xml"/>
-				    	</xforms:group>
-				    	
-				    	<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='acknowledgements']">
-				    		<xi:include href="/apps/contributor/includes/help-boxes/for-dashboard-tabs/acknowledgements.xml"/>
-				    	</xforms:group>
-				    	
-						<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='files']">
-				    		<xi:include href="/apps/contributor/includes/help-boxes/for-dashboard-tabs/files.xml"/>
-				    	</xforms:group>
-				    	
-				    	<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='publications']">
-				    		<xi:include href="/apps/contributor/includes/help-boxes/for-dashboard-tabs/publications.xml"/>
-				    	</xforms:group>
-				    	
-						<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='study-info']">
-				    		<!-- <xi:include href="/apps/contributor/includes/help-boxes/for-dashboard-tabs/study-info.xml"/>  -->
-				    	</xforms:group>
-				    	
-				   	</div>
 				   	
 			    	<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='summary']">
 			    		<xi:include href="/apps/contributor/includes/dashboard-tabs/summary.xml"/>
@@ -410,6 +450,9 @@
     			</div>
     			
     		</div>
+    		
+		<!-- TODO: Remove for production -->
+		<fr:xforms-inspector xmlns:fr="http://orbeon.org/oxf/xml/form-runner"/>
     		
     </body>
 </html>

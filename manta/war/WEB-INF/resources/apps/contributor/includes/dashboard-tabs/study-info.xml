@@ -1,13 +1,35 @@
-<div 
+<div
 	xmlns="http://www.w3.org/1999/xhtml" 
 	xmlns:xforms="http://www.w3.org/2002/xforms" 
 	xmlns:ev="http://www.w3.org/2001/xml-events"
 	xmlns:xi="http://www.w3.org/2001/XInclude">
 
+	<p>
+
+		<xforms:select1 ref="instance('ins-control')/href-to-copy-study-info-from">
+			<xforms:label>Copy answers from another study?</xforms:label>
+			<xforms:item>
+				<xforms:value></xforms:value>
+				<xforms:label>Select...</xforms:label>
+			</xforms:item>
+           	<xforms:itemset nodeset="xxforms:sort(instance('ins-study-feed')/atom:entry, atom:published, 'text', 'ascending')">
+           		<xforms:label ref="atom:title"/>
+           		<xforms:value ref="atom:link[@rel='self']/@href"/>
+           	</xforms:itemset>
+		</xforms:select1>
+		
+         <xforms:submit submission="sub-copy-answers">
+             <xforms:label>Copy Answers</xforms:label>
+         </xforms:submit>
+		
+	</p>
+
+
      <p>
          <xforms:submit submission="sub-put-sq-study-entry">
              <xforms:label>Save Changes</xforms:label>
          </xforms:submit>
+         
      </p>
 	
 	<xi:include href="/apps/common/includes/study/questionnaire-xforms-input.xml" />
@@ -17,6 +39,5 @@
              <xforms:label>Save Changes</xforms:label>
          </xforms:submit>
      </p>
-
 
 </div>
