@@ -1501,6 +1501,11 @@
 					<xforms:group ref="sampleTypeOpen">
 						<xforms:select1 ref="sampleType" appearance="minimal">
 							<xforms:label>Sample type</xforms:label>
+							<xforms:alert>Please select a value</xforms:alert>
+							<xforms:item>
+								<xforms:label>please select</xforms:label>
+								<xforms:value></xforms:value>
+							</xforms:item>
 							<xforms:itemset model="mod-study-questionnaire"
 								nodeset="instance('ins-sampleType-items')/sampleType">
 								<xforms:label ref="label" />
@@ -1703,6 +1708,10 @@
 														<xforms:label ref="label" />
 														<xforms:value ref="value" />
 													</xforms:itemset>
+													<xforms:item>
+														<xforms:label>other</xforms:label>
+														<xforms:value>other</xforms:value>
+													</xforms:item>
 												</xforms:select1>
 												<xforms:input ref="locusTypeOther" />
 											</xforms:group>
