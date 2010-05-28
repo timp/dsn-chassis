@@ -24,8 +24,8 @@
 			<xforms:bind nodeset="questionnaire">
 				<xforms:bind nodeset="start" type="xs:date" />
 				<xforms:bind nodeset="end" type="xs:date" />
-				<xforms:bind nodeset="pathogens" required="contains(../modules, 'molecular')"/>
-				<xforms:bind nodeset="modules" required="true()"/>
+				<xforms:bind nodeset="pathogens" required="contains(../modules, 'molecular')" />
+				<xforms:bind nodeset="modules" required="true()" />
 
 				<xforms:bind nodeset="sites">
 					<xforms:bind nodeset="site">
@@ -235,11 +235,36 @@
 				</xforms:bind>
 
 				<xforms:bind nodeset="molecular" relevant="contains(../modules, 'molecular')">
+					<xforms:bind nodeset="criteria">
+						<xforms:bind nodeset="sampleSourceOpen">
+							<xforms:bind nodeset="sampleSource" required="true()" />
+							<xforms:bind nodeset="sampleSourceOther"
+								relevant="contains(../sampleSource, 'other')" />
+						</xforms:bind>
+						<xforms:bind nodeset="malariaStatus" />
+						<xforms:bind nodeset="sampleSelectionMethodOpen">
+							<xforms:bind nodeset="sampleSelectionMethod" />
+							<xforms:bind nodeset="sampleSelectionMethodOther"
+								relevant="contains(../sampleSelectionMethod, 'other')" />
+						</xforms:bind>
+					</xforms:bind>
+					<xforms:bind nodeset="sample">
+						<xforms:bind nodeset="sampleTypeOpen">
+							<xforms:bind nodeset="sampleType" />
+							<xforms:bind nodeset="sampleTypeOther" relevant="contains(../sampleType, 'other')" />
+						</xforms:bind>
+						<xforms:bind nodeset="wholeBloodSource" 
+						relevant="contains(../sampleTypeOpen/sampleType,'wholeBlood')"/>
+						<xforms:bind nodeset="dateCultureIsolated" type="xs:date" 
+						relevant="contains(../sampleTypeOpen/sampleType,'cultureAdaptedParasite')"/>
+					</xforms:bind>
+
 					<xforms:bind nodeset="genotypedMarkers">
 						<xforms:bind nodeset="genotypedMarker">
 							<xforms:bind nodeset="genotypingMethodOpen">
 								<xforms:bind nodeset="genotypingMethod" />
-								<xforms:bind nodeset="genotypingMethodOther" relevant="contains(../genotypingMethod, 'other')"/>
+								<xforms:bind nodeset="genotypingMethodOther"
+									relevant="contains(../genotypingMethod, 'other')" />
 							</xforms:bind>
 							<xforms:bind nodeset="molecularMarkerFalciparumOpen"
 								relevant="contains(../../../../pathogens, 'pfalciparum')">
@@ -255,17 +280,17 @@
 							</xforms:bind>
 						</xforms:bind>
 					</xforms:bind>
-					
+
 					<xforms:bind nodeset="mixedResistanceAlleles">
 						<xforms:bind nodeset="mixedResistanceAllelesInclusion" />
-						<xforms:bind nodeset="mixedResistanceAllelesDesignation" 
-						relevant="contains(../mixedResistanceAllelesInclusion,'included')"/>
+						<xforms:bind nodeset="mixedResistanceAllelesDesignation"
+							relevant="contains(../mixedResistanceAllelesInclusion,'included')" />
 					</xforms:bind>
-					
-					
+
+
 				</xforms:bind>
-				
-				
+
+
 				<xforms:bind nodeset="invitro" relevant="contains(../modules, 'invitro')">
 					<xforms:bind nodeset="analysisSite" />
 					<xforms:bind nodeset="culture">
@@ -593,7 +618,18 @@
 		src="/apps/common/constants/mixedResistanceAllelesInclusions.xml" />
 	<xforms:instance id="ins-mixedResistanceAllelesDesignation-items"
 		src="/apps/common/constants/mixedResistanceAllelesDesignations.xml" />
-		
+	<xforms:instance id="ins-sampleSource-items"
+		src="/apps/common/constants/sampleSources.xml" />
+	<xforms:instance id="ins-malariaStatus-items"
+		src="/apps/common/constants/malariaStatuses.xml" />
+	<xforms:instance id="ins-sampleSelectionMethod-items"
+		src="/apps/common/constants/sampleSelectionMethods.xml" />
+
+	<xforms:instance id="ins-sampleType-items"
+		src="/apps/common/constants/sampleTypes.xml" />
+	<xforms:instance id="ins-wholeBloodSource-items"
+		src="/apps/common/constants/wholeBloodSources.xml" />
+
 	<xforms:instance id="ins-genotypedMarker">
 		<genotypedMarker xmlns="">
 			<genotypingMethodOpen>

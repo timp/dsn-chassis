@@ -1432,10 +1432,88 @@
 			<xforms:group ref="molecular">
 
 				<h2>Molecular Questions</h2>
+				<xforms:group ref="criteria">
+					<h3> Sampling and inclusion criteria</h3>
+					<xforms:group ref="sampleSourceOpen">
+						<xforms:select1 ref="sampleSource" appearance="minimal">
+							<xforms:label>Sample source</xforms:label>
+							<xforms:alert>Please select</xforms:alert>
+							<xforms:item>
+								<xforms:label>please select</xforms:label>
+								<xforms:value />
+							</xforms:item>
+							<xforms:itemset model="mod-study-questionnaire"
+								nodeset="instance('ins-sampleSource-items')/sampleSource">
+								<xforms:label ref="label" />
+								<xforms:value ref="value" />
+							</xforms:itemset>
+							<xforms:item>
+								<xforms:label>other</xforms:label>
+								<xforms:value>other</xforms:value>
+							</xforms:item>
+						</xforms:select1>
+						<xforms:input ref="sampleSourceOther" />
+					</xforms:group>
+					<xforms:select1 ref="malariaStatus" appearance="minimal">
+						<xforms:label>Malaria status</xforms:label>
+						<xforms:itemset model="mod-study-questionnaire"
+							nodeset="instance('ins-malariaStatus-items')/malariaStatus">
+							<xforms:label ref="label" />
+							<xforms:value ref="value" />
+						</xforms:itemset>
+					</xforms:select1>
+					<xforms:group ref="sampleSelectionMethodOpen">
+						<sampleSelectionMethod />
+						<xforms:select1 ref="sampleSelectionMethod"
+							appearance="minimal">
+							<xforms:label>Sample selection method</xforms:label>
+							<xforms:itemset model="mod-study-questionnaire"
+								nodeset="instance('ins-sampleSelectionMethod-items')/sampleSelectionMethod">
+								<xforms:label ref="label" />
+								<xforms:value ref="value" />
+							</xforms:itemset>
+							<xforms:item>
+								<xforms:label>other</xforms:label>
+								<xforms:value>other</xforms:value>
+							</xforms:item>
+						</xforms:select1>
+						<xforms:input ref="sampleSelectionMethodOther" />
+					</xforms:group>
+				</xforms:group>
+				<xforms:group ref="sample">
+					<h3>Sample Type</h3>
+					<xforms:group ref="sampleTypeOpen">
+						<xforms:select1 ref="sampleType" appearance="minimal">
+							<xforms:label>Sample type</xforms:label>
+							<xforms:itemset model="mod-study-questionnaire"
+								nodeset="instance('ins-sampleType-items')/sampleType">
+								<xforms:label ref="label" />
+								<xforms:value ref="value" />
+							</xforms:itemset>
+							<xforms:item>
+								<xforms:label>other</xforms:label>
+								<xforms:value>other</xforms:value>
+							</xforms:item>
+						</xforms:select1>
+						<xforms:input ref="sampleTypeOther" />
+					</xforms:group>
+						<xforms:select1 ref="wholeBloodSource" appearance="minimal">
+						<xforms:label>Whole blood source</xforms:label>
+							<xforms:itemset model="mod-study-questionnaire"
+								nodeset="instance('ins-wholeBloodSource-items')/wholeBloodSource">
+								<xforms:label ref="label" />
+								<xforms:value ref="value" />
+							</xforms:itemset>
+						</xforms:select1>
+					<xforms:input ref="dateCultureIsolated">
+						<xforms:label>Date samples isolated </xforms:label>
+						<xforms:alert>A valid date is required.</xforms:alert>
+					</xforms:input>
+				</xforms:group>
 
 
 				<xforms:group ref="genotypedMarkers">
-				<h3>Resistance Markers</h3>
+					<h3>Resistance Markers</h3>
 					<table class="repeat-table">
 						<xforms:repeat nodeset="genotypedMarker" id="genotypedMarker-rep">
 							<tr>
@@ -1534,30 +1612,35 @@
 				</xforms:group>
 
 				<xforms:group ref="mixedResistanceAlleles">
-				
-							<xforms:select1 ref="mixedResistanceAllelesInclusion"
-								appearance="minimal">
-								<xforms:label>Mixed resistance alleles were </xforms:label>
-											<xforms:item>
-												<xforms:label>not identified</xforms:label>
-												<xforms:value>notIdentified</xforms:value>
-											</xforms:item>
-								<xforms:itemset model="mod-study-questionnaire"
-									nodeset="instance('ins-mixedResistanceAllelesInclusion-items')/mixedResistanceAllelesInclusion">
-									<xforms:label ref="label" />
-									<xforms:value ref="value" />
-								</xforms:itemset>
-							</xforms:select1>
-							<xforms:select ref="mixedResistanceAllelesDesignation"
-								appearance="full">
-								<xforms:label><br/>How were mixed genotype resistance loci designated in the data set? <br/></xforms:label>
-								<xforms:itemset model="mod-study-questionnaire"
-									nodeset="instance('ins-mixedResistanceAllelesDesignation-items')/mixedResistanceAllelesDesignation">
-									<xforms:label ref="label" />
-									<xforms:value ref="value" />
-								</xforms:itemset>
-							</xforms:select>
-						
+
+					<xforms:select1 ref="mixedResistanceAllelesInclusion"
+						appearance="minimal">
+						<xforms:label>Mixed resistance alleles were </xforms:label>
+						<xforms:item>
+							<xforms:label>not identified</xforms:label>
+							<xforms:value>notIdentified</xforms:value>
+						</xforms:item>
+						<xforms:itemset model="mod-study-questionnaire"
+							nodeset="instance('ins-mixedResistanceAllelesInclusion-items')/mixedResistanceAllelesInclusion">
+							<xforms:label ref="label" />
+							<xforms:value ref="value" />
+						</xforms:itemset>
+					</xforms:select1>
+					<xforms:select ref="mixedResistanceAllelesDesignation"
+						appearance="full">
+						<xforms:label>
+							<br />
+							How were mixed genotype resistance loci designated in the data
+							set?
+							<br />
+						</xforms:label>
+						<xforms:itemset model="mod-study-questionnaire"
+							nodeset="instance('ins-mixedResistanceAllelesDesignation-items')/mixedResistanceAllelesDesignation">
+							<xforms:label ref="label" />
+							<xforms:value ref="value" />
+						</xforms:itemset>
+					</xforms:select>
+
 				</xforms:group>
 
 			</xforms:group>

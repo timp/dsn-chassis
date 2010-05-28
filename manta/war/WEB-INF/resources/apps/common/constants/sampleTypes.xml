@@ -1,4 +1,5 @@
 <!--  A closed list of blood sample types  -->
+<!--  used in molecular -->
 <sampleTypes xmlns="">
 	<sampleType>
 		<label>blood spot on filter paper</label>
