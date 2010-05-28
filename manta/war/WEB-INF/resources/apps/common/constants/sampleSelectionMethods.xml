@@ -2,11 +2,11 @@
 <sampleSelectionMethods xmlns="">
 	<sampleSelectionMethod>
 		<label>all genotyped</label>
-		<value>allgenotyped</value>
+		<value>allGenotyped</value>
 	</sampleSelectionMethod>
 	<sampleSelectionMethod>
 		<label>random subset genotyped</label>
-		<value>randomgenotyped</value>
+		<value>randomGenotyped</value>
 	</sampleSelectionMethod>
 	<sampleSelectionMethod>
 		<label>only treatment failures genotyped</label>
