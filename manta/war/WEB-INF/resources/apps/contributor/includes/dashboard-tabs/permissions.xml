@@ -1,3 +1,4 @@
+<?oxygen NVDLSchema="../../../../../../../oxygen/samples/nvdl/xhtml-xforms-11-orbeon.nvdl"?>
 <div 
 	xmlns="http://www.w3.org/1999/xhtml" 
 	xmlns:xforms="http://www.w3.org/2002/xforms" 
@@ -12,12 +13,12 @@
 				<tr>
 					<td>
                         <xforms:trigger ref=".">
-                            <xforms:delete 
+                        	<xforms:label><img alt="remove" src="/apps/contributor/common/remove.gif"/></xforms:label>
+                        	<xforms:delete 
                             	ev:event="DOMActivate" 
 	                        	context="." 
 	                        	nodeset="." 
                             	at="index('rep-administrator')"/>
-                            <xforms:label><img src="/apps/contributor/common/remove.gif"/></xforms:label>
                         </xforms:trigger>
 					</td>
 					<td>
@@ -30,7 +31,7 @@
 			<tr>
 				<td>
                     <xforms:trigger>
-                        <xforms:label><img src="/apps/contributor/common/add.gif"/></xforms:label>
+                        <xforms:label><img alt="add" src="/apps/contributor/common/add.gif"/></xforms:label>
                         <xforms:insert 
 	                      	ev:event="DOMActivate" 
 	                      	context="." 

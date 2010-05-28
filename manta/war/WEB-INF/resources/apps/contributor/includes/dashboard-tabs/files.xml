@@ -1,9 +1,11 @@
+<?oxygen NVDLSchema="../../../../../../../oxygen/samples/nvdl/xhtml-xforms-11-orbeon.nvdl"?>
 <div 
 	xmlns="http://www.w3.org/1999/xhtml" 
 	xmlns:xforms="http://www.w3.org/2002/xforms" 
 	xmlns:ev="http://www.w3.org/2001/xml-events"
 	xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
-	xmlns:xxforms="http://orbeon.org/oxf/xml/xforms">
+	xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
+	xmlns:atombeat="http://purl.org/atombeat/xmlns">
 	
 	<h2>Submit Files</h2>
 	
@@ -14,12 +16,12 @@
 				<tr>
 					<td>
                         <xforms:trigger>
-                            <xforms:delete 
+                        	<xforms:label><img alt="remove" src="/apps/contributor/common/remove.gif"/></xforms:label>
+                        	<xforms:delete 
                             	ev:event="DOMActivate" 
 	                        	context="instance('ins-uploads-entry')/atom:content/uploads" 
 	                        	nodeset="upload" 
                             	at="index('rep-upload')"/>
-                            <xforms:label><img src="/apps/contributor/common/remove.gif"/></xforms:label>
                         </xforms:trigger>
 					</td>
 					<td>
@@ -35,15 +37,15 @@
                         <br/>
 						<xforms:select1 ref="@typeterm">
 							<xforms:label>Type:</xforms:label>
-							<xforms:alert>Please select a file type.</xforms:alert>
 							<xforms:item>
-								<xforms:value></xforms:value>
 								<xforms:label>Select...</xforms:label>
+								<xforms:value></xforms:value>
 							</xforms:item>
                         	<xforms:itemset nodeset="instance('ins-file-terms')/term">
                         		<xforms:label ref="label"/>
                         		<xforms:value ref="value"/>
                         	</xforms:itemset>
+							<xforms:alert>Please select a file type.</xforms:alert>
 						</xforms:select1>
 						
 						<xforms:input ref="@typelabel">
@@ -58,7 +60,7 @@
 		<tr>
 			<td>
                    <xforms:trigger>
-                       <xforms:label><img src="/apps/contributor/common/add.gif"/></xforms:label>
+                       <xforms:label><img alt="add" src="/apps/contributor/common/add.gif"/></xforms:label>
                        <xforms:insert 
                        	ev:event="DOMActivate" 
                        	context="instance('ins-uploads-entry')/atom:content/uploads" 
@@ -130,7 +132,11 @@
 			    						<xforms:output ref="if(instance('ins-file-terms')/term[value=xxforms:context('rep-media')/atom:category[@scheme='http://www.cggh.org/2010/chassis/scheme/FileTypes']/@term]/value='http://www.cggh.org/2010/chassis/terms/Other') then atom:category[@scheme='http://www.cggh.org/2010/chassis/scheme/FileTypes']/@label else instance('ins-file-terms')/term[value=xxforms:context('rep-media')/atom:category[@scheme='http://www.cggh.org/2010/chassis/scheme/FileTypes']/@term]/label"/>
 			    					</td>
 			    					<!-- TODO: Only enable if the file has passed personal data review. -->
-			    					<td><a href="{atom:content/@src}">Download</a></td>
+			    					<td>
+			    						<xforms:group ref=".[contains( ./atom:link[@rel='edit-media']/@atombeat:allow , 'GET' )]">
+			    							<a href="{atom:content/@src}">Download</a>
+			    						</xforms:group>
+			    					</td>
 			    				</tr>
 			    			</xforms:repeat>
 			    		</tbody>

@@ -1,3 +1,4 @@
+<?oxygen NVDLSchema="../../../../../../../oxygen/samples/nvdl/xhtml-xforms-11-orbeon.nvdl"?>
 <div 
 	xmlns="http://www.w3.org/1999/xhtml" 
 	xmlns:xforms="http://www.w3.org/2002/xforms" 
@@ -8,19 +9,19 @@
 		<xforms:select1 ref="instance('ins-study-entry')/atom:content/study/study-is-published">
 			<xforms:label>Is the study published?</xforms:label>
 			<xforms:item>
-				<xforms:value></xforms:value>
 				<xforms:label>Select...</xforms:label>
+				<xforms:value></xforms:value>
 			</xforms:item>
 				
 
             <!-- TODO: factor this out -->
 			<xforms:item>
-				<xforms:value>true</xforms:value>
 				<xforms:label>Yes</xforms:label>
+				<xforms:value>true</xforms:value>
 			</xforms:item>
 			<xforms:item>
-				<xforms:value>false</xforms:value>
 				<xforms:label>No</xforms:label>
+				<xforms:value>false</xforms:value>
 			</xforms:item>
 			
 				<!-- 
@@ -41,12 +42,12 @@
                 <tr>
                     <td>
                         <xforms:trigger>
-                            <xforms:delete 
+                        	<xforms:label><img alt="remove" src="/apps/contributor/common/remove.gif"/></xforms:label>
+                        	<xforms:delete 
                                 ev:event="DOMActivate" 
                                 context="." 
                                 nodeset="." 
                                 at="index('rep-publication')"/>
-                            <xforms:label><img src="/apps/contributor/common/remove.gif"/></xforms:label>
                         </xforms:trigger>
                     </td>
                     <td>
@@ -61,7 +62,7 @@
 	           <tr>
 	                <td>
 	                    <xforms:trigger>
-	                        <xforms:label><img src="/apps/contributor/common/add.gif"/></xforms:label>
+	                        <xforms:label><img alt="add" src="/apps/contributor/common/add.gif"/></xforms:label>
 	                        <xforms:insert 
 	                            ev:event="DOMActivate" 
 	                            context="instance('ins-study-entry')/atom:content/study/publications" 

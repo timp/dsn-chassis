@@ -22,7 +22,8 @@
     xmlns:atom="http://www.w3.org/2005/Atom"
     xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
     xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:manta="http://www.cggh.org/2010/chassis/manta/xmlns">
+    xmlns:manta="http://www.cggh.org/2010/chassis/manta/xmlns"
+	xmlns:atombeat="http://purl.org/atombeat/xmlns">
     
     <head>
     
@@ -44,6 +45,7 @@
 				serialization="none">
                 <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the media-link entry.</xforms:message>
 				<xforms:send ev:event="xforms-submit-done" submission="sub-get-study-entry"/>
+				<xforms:send ev:event="xforms-submit-done" submission="sub-get-media-security-descriptor"/>
 				<xforms:setvalue 
 					ev:event="xforms-submit-done"
 					ref="instance('ins-review-entry')/atom:title" 
@@ -63,6 +65,20 @@
 				serialization="none">
                 <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the study entry.</xforms:message>
 			</xforms:submission>
+        	
+        	<xforms:instance id="ins-media-security-descriptor">
+        		<atom:entry/>
+        	</xforms:instance>
+        	
+        	<xforms:submission 
+        		id="sub-get-media-security-descriptor" 
+        		resource="{instance('ins-media-entry')/atom:link[@rel='http://purl.org/atombeat/rel/media-security-descriptor']/@href}"
+        		method="get"
+        		replace="instance"
+        		instance="ins-media-security-descriptor"
+        		serialization="none">
+        		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the media security descriptor.</xforms:message>
+        	</xforms:submission>
 			
 			<xforms:action ev:event="xforms-model-construct-done">
 			
@@ -86,6 +102,14 @@
 					</atom:content>
 				</atom:entry>
 			</xforms:instance>
+        	
+        	<xforms:instance id="ins-ace">
+        		<atombeat:ace>
+        			<atombeat:type>ALLOW</atombeat:type>
+        			<atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
+        			<atombeat:permission>RETRIEVE_MEDIA</atombeat:permission>
+        		</atombeat:ace>
+        	</xforms:instance>
 			
 			<xforms:submission 
 				id="sub-post-review"
@@ -96,9 +120,37 @@
 				instance="ins-review-entry"
 				mediatype="application/atom+xml"
 			>
-                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the study.</xforms:message>
-                <xforms:send ev:event="xforms-submit-done" submission="sub-get-home"/>
+				
+                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while posting the review.</xforms:message>
+				
+				<xforms:send ev:event="xforms-submit-done" submission="sub-get-home" if="instance('ins-review-entry')//outcome='fail'"/>
+				
+				<xforms:action ev:event="xforms-submit-done" if="instance('ins-review-entry')//outcome='pass'">
+					<xforms:insert 
+						context="instance('ins-media-security-descriptor')//atombeat:acl"
+						nodeset="atombeat:ace"
+						at="0" 
+						position="before"
+						origin="instance('ins-ace')"/>
+					<xforms:send submission="sub-put-media-security-descriptor"/>
+				</xforms:action>
+				
 			</xforms:submission>
+        	
+        	<xforms:submission
+        		id="sub-put-media-security-descriptor"
+        		method="put"
+        		resource="{instance('ins-media-security-descriptor')/atom:link[@rel='edit']/@href}"
+        		ref="instance('ins-media-security-descriptor')"
+        		replace="instance"
+        		instance="ins-media-security-descriptor"
+        		mediatype="application/atom+xml">
+        		
+        		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while updating the media permissions.</xforms:message>
+
+        		<xforms:send ev:event="xforms-submit-done" submission="sub-get-home"/>
+        		
+        	</xforms:submission>
 
 			<xforms:submission
 				id="sub-get-home"
