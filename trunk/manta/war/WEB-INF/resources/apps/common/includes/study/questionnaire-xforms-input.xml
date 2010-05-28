@@ -406,7 +406,7 @@
 				</xforms:select1>
 				<br />
 				<xforms:input ref="otherCriteria">
-				<xforms:label>Other criteria</xforms:label>
+				<xforms:label class="fixed-width">Other criteria</xforms:label>
 				</xforms:input>
 
 
