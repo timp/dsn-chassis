@@ -404,6 +404,11 @@
 						<xforms:value ref="value" />
 					</xforms:itemset>
 				</xforms:select1>
+				<br />
+				<xforms:input ref="otherCriteria">
+				<xforms:label>Other criteria</xforms:label>
+				</xforms:input>
+
 
 			</xforms:group>
 
@@ -587,8 +592,8 @@
 																		<th></th>
 																		<th>Day</th>
 																		<th>Hour</th>
-																		<th>From</th>
-																		<th>To</th>
+																		<th>From <span style="font-size:smaller; font-weight: normal;">(years)</span></th>
+																		<th>To <span style="font-size:smaller; font-weight: normal;">(years)</span></th>
 																		<th>Dose</th>
 																		<th>Unit</th>
 																	</tr>
@@ -676,8 +681,8 @@
 																		<th></th>
 																		<th>Day</th>
 																		<th>Hour</th>
-																		<th>From</th>
-																		<th>To</th>
+																		<th>From <span style="font-size:smaller; font-weight: normal;">(kgs)</span></th>
+																		<th>To <span style="font-size:smaller; font-weight: normal;">(kgs)</span></th>
 																		<th>Dose</th>
 																		<th>Unit</th>
 																	</tr>
@@ -940,8 +945,7 @@
 						</xforms:select1>
 
 						<xforms:input ref="randomisationProportion">
-							<xforms:label class="fixed-width">
-								<br />
+							<xforms:label >
 								Proportion
 							</xforms:label>
 						</xforms:input>

@@ -11,8 +11,4 @@
 		<value>gene</value>
 	</locusType>
 	
-	<locusType>
-		<label>SNP</label>
-		<value>snp</value>
-	</locusType>
 </locusTypes>

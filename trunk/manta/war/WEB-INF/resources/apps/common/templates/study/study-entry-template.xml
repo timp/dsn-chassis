@@ -24,6 +24,7 @@
 					</priorAntimalarialsExclusion>
 					<pregnancy />
 					<treatmentReason />
+					<otherCriteria/>
 				</inclusionExclusionCriteria>
 				<clinical>
 					<treatment>

@@ -1,7 +1,7 @@
 <feedings xmlns="">
 	<feeding>
-		<label>starving</label>
-		<value>starving</value>
+		<label>fasting</label>
+		<value>fasting</value>
 	</feeding>
 	<feeding>
 		<label>with a meal</label>

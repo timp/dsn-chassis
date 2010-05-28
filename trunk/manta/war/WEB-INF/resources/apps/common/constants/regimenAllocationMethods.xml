@@ -3,11 +3,15 @@
 <!--  pharmacology-treatmentRegimens-allocation -->
 <regimenAllocationMethods xmlns="">
  	<regimenAllocationMethod>
-		<label>semi-randomised</label>
- 		<value>semirandomised</value>
+		<label>non-randomised</label>
+ 		<value>nonrandomised</value>
+ 	</regimenAllocationMethod>
+ 	<regimenAllocationMethod>
+		<label>quasi-randomised</label>
+ 		<value>quasirandomised</value>
  	</regimenAllocationMethod>
 	<regimenAllocationMethod>
-		<label>randomised (proportion)</label>
+		<label>randomised</label>
 		<value>randomised</value>
  	</regimenAllocationMethod>
 </regimenAllocationMethods>
