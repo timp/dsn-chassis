@@ -382,7 +382,7 @@
 								required="true()" />
 							<xforms:bind nodeset="clone3D7Provider"
 								relevant="contains(../clone3D7ProvidedByWwarn, 'no')" required="true()" />
-							<xforms:bind nodeset="batchesIncludedInRawData" type="xs:boolean"
+							<xforms:bind nodeset="batchesIncludedInRawData" 
 								required="true()" />
 							<xforms:bind nodeset="notIncludedBatchDataHint"
 								relevant="contains(../batchesIncludedInRawData, 'no')" />
