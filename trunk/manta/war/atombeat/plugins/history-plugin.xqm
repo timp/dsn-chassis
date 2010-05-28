@@ -376,7 +376,6 @@ declare function hp:append-history-link (
 	$response-entry as element(atom:entry)
 ) as element(atom:entry)
 {
-	let $log := util:log( "debug" , "== hp:append-history-link ==" )
 	let $log := util:log( "debug" , $response-entry )
 	
 	let $self-uri := $response-entry/atom:link[@rel="self"]/@href
@@ -386,8 +385,6 @@ declare function hp:append-history-link (
 	let $log := util:log( "debug" , concat( "$entry-path-info: " , $entry-path-info ) )
 	
     let $collection-path-info := text:groups( $entry-path-info , "^(.+)/[^/]+$" )[2]
-	let $log := util:log( "debug" , concat( "$collection-path-info: " , $collection-path-info ) )
-
     let $collection-db-path := atomdb:request-path-info-to-db-path( $collection-path-info )
     let $versioning-enabled := xutil:is-versioning-enabled( $collection-db-path )
     
