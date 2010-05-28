@@ -2335,7 +2335,7 @@
 
 									<xforms:select1 appearance="minimal"
 										ref="batchesIncludedInRawData">
-										<xforms:label>Are your batch preparation dates and 3D7
+										<xforms:label>Are batch preparation dates and 3D7
 											information
 											included with the raw data?</xforms:label>
 										<xforms:alert>Please answer yes or no</xforms:alert>
@@ -2373,11 +2373,11 @@
 									<xforms:input ref="parasitaemia3D7">
 										<xforms:label class="fixed-width">
 											3D7 parasitaemia (%)
-											<xforms:alert>
-												<xforms:output
-													value="concat('Please enter an integer value between 0 and 100 for the ', name(), ' field ')" />
-											</xforms:alert>
 										</xforms:label>
+										<xforms:alert>
+											<xforms:output
+												value="concat('Please enter an integer value between 0 and 100 for the ', name(), ' field ')" />
+										</xforms:alert>
 									</xforms:input>
 									<br />
 
