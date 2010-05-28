@@ -122,7 +122,7 @@
     </category>
     
     <category name="org.exist.xquery">
-        <priority value="warn"/>
+        <priority value="debug"/>
     </category>
     
     <category name="org.exist.http">
@@ -130,7 +130,7 @@
     </category>
     
     <category name="org.exist.util">
-        <priority value="warn"/>
+        <priority value="debug"/>
     </category>
     
     <category name="org.quartz">
