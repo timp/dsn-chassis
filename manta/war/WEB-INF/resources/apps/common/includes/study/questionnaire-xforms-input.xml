@@ -97,7 +97,7 @@
 								<xforms:group
 									ref=".[empty(country/text()) or country/text() = instance('ins-country-items')/country[empty(regions)]/value/text()]">
 									<xforms:input ref="region">
-										<xforms:label class="fixed-width">Region: </xforms:label>
+										<xforms:label class="fixed-width">Region </xforms:label>
 									</xforms:input>
 
 								</xforms:group>
@@ -105,22 +105,22 @@
 								<br />
 
 								<xforms:input ref="district">
-									<xforms:label class="fixed-width">District: </xforms:label>
+									<xforms:label class="fixed-width">District </xforms:label>
 								</xforms:input>
 								<br />
 
 								<xforms:input ref="locality">
-									<xforms:label class="fixed-width">Locality: </xforms:label>
+									<xforms:label class="fixed-width">Locality </xforms:label>
 								</xforms:input>
 								<br />
 
 								<xforms:input ref="siteCode">
-									<xforms:label class="fixed-width">Your site code:</xforms:label>
+									<xforms:label class="fixed-width">Your site code</xforms:label>
 								</xforms:input>
 								<br />
 
 								<xforms:select1 appearance="minimal" ref="testingDelay">
-									<xforms:label class="fixed-width">Sampling/testing delay:
+									<xforms:label class="fixed-width">Sampling/testing delay
 									</xforms:label>
 									<xforms:item>
 										<xforms:label><!-- Nullable -->
@@ -136,7 +136,7 @@
 								<br />
 
 								<xforms:select1 appearance="minimal" ref="anticoagulant">
-									<xforms:label class="fixed-width">Anticoagulant:</xforms:label>
+									<xforms:label class="fixed-width">Anticoagulant</xforms:label>
 									<xforms:item>
 										<xforms:label><!-- Nullable -->
 										</xforms:label>
@@ -153,7 +153,7 @@
 
 								<xforms:select1 appearance="minimal"
 									ref="transportAndStorageTemperature">
-									<xforms:label class="fixed-width">Transport/storage temperature:
+									<xforms:label class="fixed-width">Transport/storage temperature
 									</xforms:label>
 									<xforms:item>
 										<xforms:label><!-- Nullable -->
@@ -170,7 +170,7 @@
 
 								<br />
 								<xforms:input ref="latitude">
-									<xforms:label class="fixed-width">Latitude:</xforms:label>
+									<xforms:label class="fixed-width">Latitude</xforms:label>
 									<xforms:alert>
 										<xforms:output
 											value="concat('Please enter a coordinate value between -180  and 180 for the ', name(), ' field ')" />
@@ -178,7 +178,7 @@
 								</xforms:input>
 								<br />
 								<xforms:input ref="longitude">
-									<xforms:label class="fixed-width">Longtude:</xforms:label>
+									<xforms:label class="fixed-width">Longtude</xforms:label>
 									<xforms:alert>
 										<xforms:output
 											value="concat('Please enter a coordinate value between -180 and 180 for the ', name(), ' field ')" />
