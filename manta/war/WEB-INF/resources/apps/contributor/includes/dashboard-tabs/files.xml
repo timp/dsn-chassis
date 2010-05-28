@@ -121,7 +121,7 @@
 			    						<xforms:output ref="atom:title"/>
 			    					</td>
 			    					<td>
-			    						<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[M01]/[D01]/[Y]')"/>
+			    						<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')"/>
 			    					</td>
 			    					<td>
 			    						<xforms:output ref="atom:author/atom:email"/>
@@ -129,6 +129,7 @@
 			    					<td>
 			    						<xforms:output ref="if(instance('ins-file-terms')/term[value=xxforms:context('rep-media')/atom:category[@scheme='http://www.cggh.org/2010/chassis/scheme/FileTypes']/@term]/value='http://www.cggh.org/2010/chassis/terms/Other') then atom:category[@scheme='http://www.cggh.org/2010/chassis/scheme/FileTypes']/@label else instance('ins-file-terms')/term[value=xxforms:context('rep-media')/atom:category[@scheme='http://www.cggh.org/2010/chassis/scheme/FileTypes']/@term]/label"/>
 			    					</td>
+			    					<!-- TODO: Only enable if the file has passed personal data review. -->
 			    					<td><a href="{atom:content/@src}">Download</a></td>
 			    				</tr>
 			    			</xforms:repeat>

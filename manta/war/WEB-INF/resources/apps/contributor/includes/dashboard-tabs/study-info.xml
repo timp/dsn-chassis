@@ -1,14 +1,22 @@
 <div 
 	xmlns="http://www.w3.org/1999/xhtml" 
 	xmlns:xforms="http://www.w3.org/2002/xforms" 
-	xmlns:ev="http://www.w3.org/2001/xml-events">
-
-	<p>TODO: include SSQ</p>
+	xmlns:ev="http://www.w3.org/2001/xml-events"
+	xmlns:xi="http://www.w3.org/2001/XInclude">
 
      <p>
-         <xforms:submit submission="sub-put-study-entry">
+         <xforms:submit submission="sub-put-sq-study-entry">
              <xforms:label>Save Changes</xforms:label>
          </xforms:submit>
      </p>
+	
+	<xi:include href="/apps/common/includes/study/questionnaire-xforms-input.xml" />
+	
+     <p>
+         <xforms:submit submission="sub-put-sq-study-entry">
+             <xforms:label>Save Changes</xforms:label>
+         </xforms:submit>
+     </p>
+
 
 </div>
