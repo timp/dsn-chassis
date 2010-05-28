@@ -201,9 +201,9 @@
 						</sampleSelectionMethodOpen>
 					</criteria>
 					<sample>
-						<sampleTypeOpen >
-						<sampleType />
-						<sampleTypeOther />
+						<sampleTypeOpen>
+							<sampleType />
+							<sampleTypeOther />
 						</sampleTypeOpen>
 						<wholeBloodSource />
 						<dateCultureIsolated />
@@ -233,18 +233,23 @@
 					</mixedResistanceAlleles>
 
 					<additionalGenotypicInformation>
-						<wholeGenomesSequenced-block>
+						<sequencedLocii>
 							<wholeGenomesSequenced />
-							<resistanceLocus>
-								<resistanceLocus-sequenced />
-								<resistanceLocus-name />
-							</resistanceLocus>
-							<otherLocus>
-								<otherLocus-sequenced />
-								<otherLocus-type />
-								<otherLocus-name />
-							</otherLocus>
-						</wholeGenomesSequenced-block>
+							<resistanceLocii>
+								<resistanceLocus>
+									<locusTypeOpen>
+										<locusType />
+										<locusTypeOther />
+									</locusTypeOpen>
+									<locusName />
+								</resistanceLocus>
+							</resistanceLocii>
+						</sequencedLocii>
+						<infectionComplexityEstimated />
+						<infectionComplexityEstimationLociiOpen>
+							<infectionComplexityEstimationLocii />
+							<infectionComplexityEstimationLociiOther />
+						</infectionComplexityEstimationLociiOpen>
 					</additionalGenotypicInformation>
 
 

@@ -2,9 +2,17 @@
 <!-- molecular-additionalGenotypicInformation-otherLocus-type -->				
 <locusTypes xmlns="">
 	<locusType>
-		<value>micro-satellite</value>
+		<label>microsatellite</label>
+		<value>microsatellite</value>
 	</locusType>
+	
 	<locusType>
-		<value>SNP</value>
+		<label>gene / gene fragment</label>
+		<value>gene</value>
+	</locusType>
+	
+	<locusType>
+		<label>SNP</label>
+		<value>snp</value>
 	</locusType>
 </locusTypes>

@@ -251,12 +251,13 @@
 					<xforms:bind nodeset="sample">
 						<xforms:bind nodeset="sampleTypeOpen">
 							<xforms:bind nodeset="sampleType" />
-							<xforms:bind nodeset="sampleTypeOther" relevant="contains(../sampleType, 'other')" />
+							<xforms:bind nodeset="sampleTypeOther"
+								relevant="contains(../sampleType, 'other')" />
 						</xforms:bind>
-						<xforms:bind nodeset="wholeBloodSource" 
-						relevant="contains(../sampleTypeOpen/sampleType,'wholeBlood')"/>
-						<xforms:bind nodeset="dateCultureIsolated" type="xs:date" 
-						relevant="contains(../sampleTypeOpen/sampleType,'cultureAdaptedParasite')"/>
+						<xforms:bind nodeset="wholeBloodSource"
+							relevant="contains(../sampleTypeOpen/sampleType,'wholeBlood')" />
+						<xforms:bind nodeset="dateCultureIsolated" type="xs:date"
+							relevant="contains(../sampleTypeOpen/sampleType,'cultureAdaptedParasite')" />
 					</xforms:bind>
 
 					<xforms:bind nodeset="genotypedMarkers">
@@ -287,6 +288,27 @@
 							relevant="contains(../mixedResistanceAllelesInclusion,'included')" />
 					</xforms:bind>
 
+					<xforms:bind nodeset="additionalGenotypicInformation">
+						<xforms:bind nodeset="sequencedLocii">
+							<xforms:bind nodeset="wholeGenomesSequenced"
+								required="true()" />
+							<xforms:bind nodeset="resistanceLocii"
+								relevant="contains(../wholeGenomesSequenced, 'no')">
+								<xforms:bind nodeset="resistanceLocus">
+									<xforms:bind nodeset="locusTypeOpen">
+										<xforms:bind nodeset="locusType" />
+										<xforms:bind nodeset="locusTypeOther" relevant="contains(../locusType,'other')"/>
+									</xforms:bind>
+									<xforms:bind nodeset="locusName" />
+								</xforms:bind>
+							</xforms:bind>
+						</xforms:bind>
+						<xforms:bind nodeset="infectionComplexityEstimated" />
+						<xforms:bind nodeset="infectionComplexityEstimationLociiOpen" relevant="contains(../infectionComplexityEstimated,'yes')">
+							<xforms:bind nodeset="infectionComplexityEstimationLocii" />
+							<xforms:bind nodeset="infectionComplexityEstimationLociiOther" relevant="contains(../infectionComplexityEstimationLocii, 'other')" />
+						</xforms:bind>
+					</xforms:bind>
 
 				</xforms:bind>
 
@@ -630,6 +652,20 @@
 	<xforms:instance id="ins-wholeBloodSource-items"
 		src="/apps/common/constants/wholeBloodSources.xml" />
 
+	<xforms:instance id="ins-resistanceLocus-items"
+		src="/apps/common/constants/resistanceLocii.xml" />
+	<xforms:instance id="ins-locusType-items"
+		src="/apps/common/constants/locusTypes.xml" />
+	
+	<xforms:instance id="ins-resistanceLocus">
+		<resistanceLocus xmlns="">
+			<locusTypeOpen>
+				<locusType />
+				<locusTypeOther />
+			</locusTypeOpen>
+			<locusName />
+		</resistanceLocus>
+	</xforms:instance>
 	<xforms:instance id="ins-genotypedMarker">
 		<genotypedMarker xmlns="">
 			<genotypingMethodOpen>
@@ -653,18 +689,18 @@
 	<xforms:instance id="ins-invitro-batch-template"
 		src="/apps/common/templates/study/invitro-batch-template.xml" />
 
-			<xforms:submission id="sub-put-sq-study-entry"
-				resource="{instance('ins-sq-study-entry')/atom:link[@rel='edit']/@href}"
-				method="put" replace="instance" instance="ins-sq-study-entry"
-				ref="instance('ins-sq-study-entry')" mediatype="application/atom+xml"
-				relevant="false" validate="false">
-				<xforms:message ev:event="xforms-submit-error" level="modal">
-					An error occurred (
-					<xforms:output value="event('error-type')" />
-					) while saving the study info.
-				</xforms:message>
-				<xforms:message ev:event="xforms-submit-done" level="modal">Your
-					changes have been saved.</xforms:message>
-			</xforms:submission>
+	<xforms:submission id="sub-put-sq-study-entry"
+		resource="{instance('ins-sq-study-entry')/atom:link[@rel='edit']/@href}"
+		method="put" replace="instance" instance="ins-sq-study-entry"
+		ref="instance('ins-sq-study-entry')" mediatype="application/atom+xml"
+		relevant="false" validate="false">
+		<xforms:message ev:event="xforms-submit-error" level="modal">
+			An error occurred (
+			<xforms:output value="event('error-type')" />
+			) while saving the study info.
+		</xforms:message>
+		<xforms:message ev:event="xforms-submit-done" level="modal">Your
+			changes have been saved.</xforms:message>
+	</xforms:submission>
 
 </xforms:model>
