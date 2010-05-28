@@ -7,8 +7,12 @@
  		<value>openlabel</value>
  	</blinding>
  	<blinding>
-		<label>single</label>
- 		<value>single</value>
+		<label>single (clinician/lab)</label>
+ 		<value>singleClinician</value>
+ 	</blinding>
+ 	<blinding>
+		<label>single (patient)</label>
+ 		<value>singlePatient</value>
  	</blinding>
  	<blinding>
 		<label>double</label>

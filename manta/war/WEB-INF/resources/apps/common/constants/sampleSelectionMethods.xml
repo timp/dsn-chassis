@@ -5,10 +5,6 @@
 		<value>allgenotyped</value>
 	</sampleSelectionMethod>
 	<sampleSelectionMethod>
-		<label>none genotyped</label>
-		<value>noneGenotyped</value>
-	</sampleSelectionMethod>
-	<sampleSelectionMethod>
 		<label>random subset genotyped</label>
 		<value>randomgenotyped</value>
 	</sampleSelectionMethod>
