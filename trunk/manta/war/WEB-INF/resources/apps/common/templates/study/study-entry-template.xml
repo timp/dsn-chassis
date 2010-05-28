@@ -2,6 +2,7 @@
 	<atom:title type="text"></atom:title>
 	<atom:content type="application/vnd.chassis-manta+xml">
 		<study xmlns="">
+			<study-is-published />
 			<publications />
 			<acknowledgements />
 			<questionnaire>

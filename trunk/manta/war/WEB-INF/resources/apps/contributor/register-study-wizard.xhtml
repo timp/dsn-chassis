@@ -91,7 +91,7 @@
 							<registrant-has-agreed-to-the-terms/>
 							<study-entry-container>
 								<!-- TODO: need to clean the original -->
-								<xi:include href="/apps/common/templates/study/clean-study-entry-template.xml" xxi:omit-xml-base="true"/>
+								<xi:include href="/apps/common/templates/study/study-entry-template.xml" xxi:omit-xml-base="true"/>
 							</study-entry-container>
 							<permissions-entry-container>
 								<xi:include href="/apps/contributor/includes/permissions-entry.xml" xxi:omit-xml-base="true"/>
@@ -339,9 +339,9 @@
                 
                 <!-- If done, then post the uploads. -->
                 <!-- The target is already copied to the uploads attribute using a bind calculation. -->
-                <xforms:action ev:event="xforms-submit-done">
-                	<xforms:send submission="sub-post-uploads"/>
-                </xforms:action>
+                
+                <xforms:send ev:event="xforms-submit-done" submission="sub-post-uploads"/>
+
                 
 				<!-- If error, then go back to the wizard-pane-being-shown and show the error. -->
 				<xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show" value="instance('ins-control')/wizard-pane-being-shown"  />
@@ -417,19 +417,7 @@
                      
 			</xforms:submission>
 
-			<xforms:submission id="sub-put-study-entry"
-				resource="{instance('ins-sq-study-entry')/atom:link[@rel='edit']/@href}"
-				method="put" replace="instance" instance="ins-sq-study-entry"
-				ref="instance('ins-sq-study-entry')" mediatype="application/atom+xml"
-				relevant="false" validate="false">
-				<xforms:message ev:event="xforms-submit-error" level="modal">
-					An error occurred (
-					<xforms:output value="event('error-type')" />
-					) while saving the study info.
-				</xforms:message>
-				<xforms:message ev:event="xforms-submit-done" level="modal">Your
-					changes have been saved.</xforms:message>
-			</xforms:submission>
+
 				
 
         </xforms:model>

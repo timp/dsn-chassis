@@ -7,12 +7,17 @@
 
 	<p>Thank you...</p>
 
+	<p>
+
+		<a href="home">&lt;&lt; Back Home</a>
+		
+	</p>
 
 	<h3>Study Info</h3>
 	
 	<!-- TODO: bind some study fields, e.g. title, as readonly for ssq changes. -->
      <p>
-         <xforms:submit submission="sub-put-study-entry">
+         <xforms:submit submission="sub-put-sq-study-entry">
              <xforms:label>Save Changes</xforms:label>
          </xforms:submit>
      </p>
@@ -20,7 +25,7 @@
 	<xi:include href="/apps/common/includes/study/questionnaire-xforms-input.xml" />
 	
      <p>
-         <xforms:submit submission="sub-put-study-entry">
+         <xforms:submit submission="sub-put-sq-study-entry">
              <xforms:label>Save Changes</xforms:label>
          </xforms:submit>
      </p>
