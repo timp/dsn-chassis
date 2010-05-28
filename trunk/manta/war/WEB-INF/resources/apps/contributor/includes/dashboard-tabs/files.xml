@@ -86,7 +86,7 @@
 	 <xforms:group ref="instance('ins-uploads-entry')/atom:content/uploads[count(upload)>0]">
 	     <p>
 	         <xforms:trigger ref="instance('ins-control')/submit-files-trigger">
-	             <xforms:label>Submit</xforms:label>
+	             <xforms:label>Confirm</xforms:label>
 	             <xforms:send ev:event="DOMActivate" submission="sub-post-uploads"/>
 	         </xforms:trigger>
 	     </p>
