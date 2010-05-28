@@ -5,7 +5,6 @@
     background-position: top right;
     margin-top: 3em;
 */
-    margin-top: 3em;
     font-size: 12pt;
 }
 
@@ -172,6 +171,7 @@ ul {
 .fixed-width { 
   width: 12em;
 }
+
 .scrollableCheckboxesLabel, .scrollableCheckboxesLabelFollowing	 {
   display:block;
   width: 10em;
@@ -199,7 +199,8 @@ ul {
 
 #bd {
 	margin: 0px;
-		} 
-#holdall {
-	margin: 0px;
-		} 
+} 
+
+.xforms-label {
+	margin-right: 3px; 
+}

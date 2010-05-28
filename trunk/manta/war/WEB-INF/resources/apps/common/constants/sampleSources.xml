@@ -1,6 +1,7 @@
-<!--  A closed list of sample sources -->
-<!--  used in inclusion/exclusion criteria -->
+<!--  An open list of sample sources -->
+<!--  used in molecular criteria -->
 <sampleSources xmlns="">
+<!--TPP 2010/05/28  Outpatient and inpatient = Clinical therapeutic trial, so left as was. -->
 	<sampleSource>
 		<label>outpatient visit</label>
 		<value>outpatient</value>
@@ -20,10 +21,6 @@
 	<sampleSource>
 		<label>mosquito bloodmeal analysis</label>
 		<value>mosquitoBloodmeal</value>
-	</sampleSource>
-	<sampleSource>
-		<label>other</label>
-		<value>other</value>
 	</sampleSource>
 </sampleSources>
 
