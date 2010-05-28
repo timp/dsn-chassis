@@ -14,17 +14,17 @@ import module namespace xutil = "http://purl.org/atombeat/xquery/xutil" at "../l
  : The base URL for the Atom service. This URL will be prepended to all edit
  : and self link href values.
  :)
-declare variable $config:service-url as xs:string := "http://localhost:8081/manta/atombeat/content" ;
+declare variable $config:service-url as xs:string := "http://localhost:8080/manta/atombeat/content" ;
 
 
 (:
  : The base URL for the History service. This URL will be prepended to all 
  : history link href values.
  :)
-declare variable $config:history-service-url as xs:string := "http://localhost:8081/manta/atombeat/history" ;
+declare variable $config:history-service-url as xs:string := "http://localhost:8080/manta/atombeat/history" ;
  
 
-declare variable $config:security-service-url as xs:string := "http://localhost:8081/manta/atombeat/security" ;
+declare variable $config:security-service-url as xs:string := "http://localhost:8080/manta/atombeat/security" ;
 
 
 (:
@@ -767,6 +767,10 @@ declare function config:default-resource-security-descriptor(
 
     then config:drafts-member-default-security-descriptor( $user )
     
+    else if ( matches( $request-path-info , "^/media/submitted/[^/]+$" ) )
+    
+    then config:submitted-media-member-security-descriptor( $request-path-info )
+
     else 
     
         <atombeat:security-descriptor>
@@ -855,4 +859,37 @@ declare function config:drafts-member-default-security-descriptor(
 		</atombeat:acl>
 		
 	</atombeat:security-descriptor>
+};
+
+
+
+
+
+declare function config:submitted-media-member-security-descriptor(
+    $request-path-info as xs:string
+) as element(atombeat:security-descriptor)
+{
+
+    (: add the group reference for later convenience :)
+    
+    (: pick off study ID :)
+    
+    let $study-id := text:groups( $request-path-info , "^.*/([^/]+)$" )[2]
+    
+    (: construct study URI to reference group :)
+    
+    let $study-uri := concat( $config:service-url , "/studies/" , $study-id , ".atom" )
+    
+    return 
+    
+        <atombeat:security-descriptor>
+        
+                <atombeat:groups>
+                        <atombeat:group id="GROUP_ADMINISTRATORS" src="{$study-uri}"/>
+                </atombeat:groups>
+        
+                <atombeat:acl/>
+        
+        </atombeat:security-descriptor>    
+    
 };
