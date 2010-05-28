@@ -1,15 +1,303 @@
 <atom:entry xmlns:atom="http://www.w3.org/2005/Atom">
-    <atom:title type="text"></atom:title>
-    <atom:content type="application/vnd.chassis-manta+xml">
-        <study xmlns="">
-        	<study-is-published/>
-            <publications/>
-            <acknowledgements/>
-            <start/>
-            <end/>
-            <pathogens/>
-			<sites/>
-            <modules/>
-        </study>
-    </atom:content>
+	<atom:title type="text"></atom:title>
+	<atom:content type="application/vnd.chassis-manta+xml">
+		<study xmlns="">
+			<publications />
+			<acknowledgements />
+			<questionnaire>
+				<start />
+				<end />
+				<sites />
+				<modules />
+				<pathogens />
+				<inclusionExclusionCriteria>
+					<maxAge />
+					<minAge />
+					<minParasitaemia />
+					<maxParasitaemia />
+					<excludeIfPriorAntimalarials />
+					<priorAntimalarialsExclusion>
+						<priorAntimalarials />
+						<priorAntimalarialsDetermination />
+						<priorAntimalarialsHistoryWeeks />
+					</priorAntimalarialsExclusion>
+					<pregnancy />
+					<treatmentReason />
+				</inclusionExclusionCriteria>
+				 
+				<!-- 
+				 
+				<clinical>
+					<treatment>
+						<regimens>
+							<regimen>
+								<regimenName />
+								<regimenSupervision />
+								<regimenUrl />
+								<drugs />
+							</regimen>
+						</regimens>
+						<regimenAllocation>
+							<regimenAllocationMethod />
+							<blinding />
+							<randomisationProportion />
+						</regimenAllocation>
+					</treatment>
+					<followup>
+						<duration />
+						<feverMeasurement />
+						<haemoglobinRecording>
+							<haemoglobinRecordingType />
+							<haemoglobinRecordingHbType />
+							<haemoglobinRecordingHbTypeOther />
+						</haemoglobinRecording>
+					</followup>
+					<microscopy>
+						<microscopyFilmType />
+						<microscopyStain />
+						<microscopyStainOther />
+						<asexualParasitemiaCount />
+						<asexualParasitemiaCountUnit />
+						<asexualParasitemiaCountUnitOther />
+						<sexualParasitemiaCount />
+						<sexualParasitemiaCountUnit />
+						<sexualParasitemiaCountUnitOther />
+						<separateSpeciesCounts />
+						<thickFilmCalculationOfParasitemia>
+							<thickFilmFormula />
+							<thickFilmFormulaOther />
+							<WBCSource />
+							<WBCAssumed />
+							<thickFilmCalculationOfParasitemiaOther />
+						</thickFilmCalculationOfParasitemia>
+						<thinFilmCalculationOfParasitemia>
+							<thinFilmFormula />
+							<thinFilmFormulaOther />
+							<HtcSource />
+							<HtcAssumed />
+							<thinFilmCalculationOfParasitemiaOther />
+						</thinFilmCalculationOfParasitemia>
+						<qualityControl>
+							<internal>
+								<percentageRereadBySecondMicroscopist />
+								<rereadSlideSelectionMechanism />
+								<rereadSlideSelectionMechanismOther />
+							</internal>
+							<external>
+								<percentageRereadBySecondMicroscopist />
+								<rereadSlideSelectionMechanism />
+								<rereadSlideSelectionMechanismOther />
+							</external>
+						</qualityControl>
+					</microscopy>
+					<geneotypingToDistinguishBetweenRecrudescenceAndReinfection>
+						<applicability />
+						<applicable>
+							<markers>
+								<recrudescenceMarker>
+									<markerName />
+									<markerOther />
+									<numberOfMicroSatellites />
+								</recrudescenceMarker>
+							</markers>
+							<genotypingLaboratory />
+							<markerDiscriminant />
+							<markerDiscriminantOther />
+							<analysisProtocol>
+								<mixedAlleles />
+								<recrudescence />
+								<reinfection />
+							</analysisProtocol>
+						</applicable>
+					</geneotypingToDistinguishBetweenRecrudescenceAndReinfection>
+
+					<recrudescenceAndReinfection />
+				</clinical>
+
+				 -->
+				 
+				
+
+				<pharmacology>
+					<samples>
+						<sample>
+							<numberPlanned />
+							<anticoagulent />
+							<centrifugeTime />
+							<storage>
+								<storageTemperature />
+								<storageDuration />
+							</storage>
+						</sample>
+					</samples>
+					<analytes>
+						<analyte>
+							<drugMeasured />
+							<lowerLoQ />
+							<matrix />
+						</analyte>
+					</analytes>
+					<assayReferences>
+						<assayReference>
+							<assayMethodReference />
+							<assayMethodDescription />
+							<assayValidated />
+						</assayReference>
+					</assayReferences>
+
+				</pharmacology>
+				<testy>
+					<test/>
+				</testy>
+				<testy>
+					<test/>
+				</testy>
+				<testy>
+					<test/>
+				</testy>
+				<testy>
+					<test/>
+				</testy>
+				<testy>
+					<test/>
+				</testy>
+				<testy>
+					<test/>
+				</testy>
+				<testy>
+					<test/>
+				</testy>
+				<testy>
+					<test/>
+				</testy>
+				<testy>
+					<test/>
+				</testy>
+				<testy>
+					<test/>
+				</testy>
+				<testy>
+					<test/>
+				</testy>
+				<testy>
+					<test/>
+				</testy>
+				<testy>
+					<test/>
+				</testy>
+				<testy>
+					<test/>
+				</testy>
+				 
+				<!-- 
+
+				<invitro>
+					<inclusionCriteria />
+					<analysisSite />
+					<culture>
+						<incubatorSystem />
+						<co2 />
+						<healthyErythrocytesSource />
+						<hematocrit />
+						<bloodGroup />
+					</culture>
+					<drugSusceptibilityMedium>
+						<medium />
+						<mediumOther />
+						<preparation />
+						<serum />
+						<serum-finalConcentration />
+						<NaHCO3-finalConcentration />
+						<hypoxantine>
+							<hypoxantine-added />
+							<hypoxantine-finalConcentration />
+						</hypoxantine>
+						<oroticAcid>
+							<oroticAcid-added />
+							<oroticAcid-finalConcentration />
+						</oroticAcid>
+						<glucose>
+							<glucose-added />
+							<glucose-finalConcentration />
+						</glucose>
+						<antiBiotics />
+					</drugSusceptibilityMedium>
+					<susceptibility>
+						<timeOfIncubation />
+						<susceptibilityMethod />
+					</susceptibility>
+					<drugs />
+					<plateBatches />
+				</invitro>
+
+				 -->
+
+				<!-- 
+
+				<molecular>
+					<inclusionExclusionCriteria-A>
+						<inclusion-day0 />
+						<inclusion-treatmentFailure />
+						<inclusionExclusionCriteria-dayN>
+							<inclusion-dayN-day />
+							<inclusion-dayN />
+						</inclusionExclusionCriteria-dayN>
+					</inclusionExclusionCriteria-A>
+					<inclusionExclusionCriteria-B>
+						<inclusionExclusionCriteriaB-source />
+						<inclusionExclusionCriteriaB-sampleSource />
+						<inclusionExclusionCriteriaB-malariaStatus />
+
+						<inclusionExclusionCriteria-minAge />
+						<inclusionExclusionCriteria-maxAge />
+						<inclusionExclusionCriteria-priorAntimalarials>
+							<inclusionExclusionCriteria-excludeIfPriorAntimalarialsTime />
+						</inclusionExclusionCriteria-priorAntimalarials>
+						<inclusionExclusionCriteria-molecularMarkersOfResistance />
+						<inclusionExclusionCriteria-molecularMarkersOfResistance-other />
+					</inclusionExclusionCriteria-B>
+					<sampleType>
+						<sampleType-type />
+						<sampleType-type-wholeBloodSource />
+						<sampleType-type-dateIsolated />
+					</sampleType>
+					<resistanceMarkers>
+						<molecularMarkerFalciparumOpen>
+							<molecularMarkerFalciparum />
+							<molecularMarkerFalciparumOther />
+						</molecularMarkerFalciparumOpen>
+						<molecularMarkerVivaxOpen>
+							<molecularMarkerVivax />
+							<molecularMarkerVivaxOther />
+						</molecularMarkerVivaxOpen>
+						<genotypingMethod>
+							<genotypingMethod />
+							<genotypingMethodOther />
+						</genotypingMethod>
+					</resistanceMarkers>
+					<mixedResistanceAlleles>
+						<mixedResistanceAllelesInclusion />
+					</mixedResistanceAlleles>
+					<additionalGenotypicInformation>
+						<additionalGenotypicInformation-wholeGenomesSequenced-block>
+							<additionalGenotypicInformation-wholeGenomesSequenced />
+							<additionalGenotypicInformation-accessionNumbers />
+							<additionalGenotypicInformation-resistanceLocus>
+								<additionalGenotypicInformation-resistanceLocus-sequenced />
+								<additionalGenotypicInformation-resistanceLocus-name />
+							</additionalGenotypicInformation-resistanceLocus>
+							<additionalGenotypicInformation-otherLocus>
+								<additionalGenotypicInformation-otherLocus-sequenced />
+								<additionalGenotypicInformation-otherLocus-type />
+								<additionalGenotypicInformation-otherLocus-name />
+							</additionalGenotypicInformation-otherLocus>
+						</additionalGenotypicInformation-wholeGenomesSequenced-block>
+					</additionalGenotypicInformation>
+				</molecular>
+				
+				 -->
+				
+			</questionnaire>
+		</study>
+	</atom:content>
 </atom:entry>

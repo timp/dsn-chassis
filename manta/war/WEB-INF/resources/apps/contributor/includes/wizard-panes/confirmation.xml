@@ -1,6 +1,7 @@
 <div 
 	xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:xi="http://www.w3.org/2001/XInclude">
+	xmlns:xi="http://www.w3.org/2001/XInclude"
+	xmlns:xforms="http://www.w3.org/2002/xforms" >
 
 	<h2>Confirmation</h2>
 
@@ -9,8 +10,19 @@
 
 	<h3>Study Info</h3>
 	
-	<!-- TODO: Include when fixed. -->
+	<!-- TODO: bind some study fields, e.g. title, as readonly for ssq changes. -->
+     <p>
+         <xforms:submit submission="sub-put-study-entry">
+             <xforms:label>Save Changes</xforms:label>
+         </xforms:submit>
+     </p>
+	
 	<xi:include href="/apps/common/includes/study/questionnaire-xforms-input.xml" />
 	
+     <p>
+         <xforms:submit submission="sub-put-study-entry">
+             <xforms:label>Save Changes</xforms:label>
+         </xforms:submit>
+     </p>
 	
 </div>
