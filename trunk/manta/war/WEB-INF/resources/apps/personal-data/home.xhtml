@@ -130,7 +130,7 @@
 		    			if ( 
 		    				empty( 
 		    					instance('ins-reviews-feed')/atom:entry
-		    						[ atom:link[@rel='http://www.cggh.org/2010/chassis/terms/reviewSubject']/@href = $entry/atom:link[@rel='self']/@href ] 
+		    						[ atom:link[@rel='http://www.cggh.org/2010/chassis/terms/reviewSubject']/@href = $entry/atom:link[@rel='edit']/@href ] 
 	   						) 
 						) then $entry else ()
 				">
@@ -148,7 +148,7 @@
     						<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')"/>
     					</td>
     					<td>
-    						<a href="review?media-link={atom:link[@rel='self']/@href}">Review</a>
+    						<a href="review?media-link={atom:link[@rel='edit']/@href}">Review</a>
     					</td>
     				</tr>
     			</xforms:repeat>
@@ -175,13 +175,13 @@
 			    			if ( 
 			    				exists( 
 			    					instance('ins-reviews-feed')/atom:entry[ 
-		    							atom:link[@rel='http://www.cggh.org/2010/chassis/terms/reviewSubject']/@href = $entry/atom:link[@rel='self']/@href 
+		    							atom:link[@rel='http://www.cggh.org/2010/chassis/terms/reviewSubject']/@href = $entry/atom:link[@rel='edit']/@href 
 		    							and .//outcome='fail'
 	    							]     							
 		   						) 
 		   						and empty(
 			   						instance('ins-derivations-feed')/atom:entry[
-			   							atom:link[@rel='http://www.cggh.org/2010/chassis/terms/derivationInput']/@href = $entry/atom:link[@rel='self']/@href	
+			   							atom:link[@rel='http://www.cggh.org/2010/chassis/terms/derivationInput']/@href = $entry/atom:link[@rel='edit']/@href	
 		   							]
 		   						)
 							) then $entry else ()
@@ -204,7 +204,7 @@
     					<td>
     						<!-- action only available to curators -->
     						<xforms:group model="mod-current-user" ref="instance('ins-current-user')[roles/role='ROLE_CHASSIS_CURATOR']">
-   								<a href="replace?media-link={xxforms:context('rep-submitted-media')/atom:link[@rel='self']/@href}">Replace</a><br/>
+   								<a href="replace?media-link={xxforms:context('rep-submitted-media')/atom:link[@rel='edit']/@href}">Replace</a><br/>
     						</xforms:group>
     					</td>
     				</tr>

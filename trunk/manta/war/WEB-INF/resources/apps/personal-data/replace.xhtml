@@ -53,7 +53,7 @@
 				<xforms:setvalue 
 					ev:event="xforms-submit-done" 
 					ref="instance('ins-derivation-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/derivationInput']/@href"
-					value="instance('ins-media-entry')/atom:link[@rel='self']/@href"/>
+					value="instance('ins-media-entry')/atom:link[@rel='edit']/@href"/>
 			</xforms:submission>
 			
 			<xforms:instance id="ins-study-entry">
@@ -131,7 +131,7 @@
         		<xforms:setvalue 
         			ev:event="xforms-submit-done" 
         			ref="instance('ins-derivation-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/derivationOutput']/@href"
-        			value="instance('ins-uploads-results-feed')/atom:entry/atom:link[@rel='self']/@href"/>
+        			value="instance('ins-uploads-results-feed')/atom:entry/atom:link[@rel='edit']/@href"/>
         		<xforms:send ev:event="xforms-submit-done" submission="sub-post-derivation"/>
         	</xforms:submission>
         	
