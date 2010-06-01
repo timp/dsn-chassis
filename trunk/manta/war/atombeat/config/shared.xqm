@@ -14,17 +14,17 @@ import module namespace xutil = "http://purl.org/atombeat/xquery/xutil" at "../l
  : The base URL for the Atom service. This URL will be prepended to all edit
  : and self link href values.
  :)
-declare variable $config:service-url as xs:string := "http://localhost:8081/manta/atombeat/content" ;
+declare variable $config:service-url as xs:string := "http://localhost:8080/manta/atombeat/content" ;
 
 
 (:
  : The base URL for the History service. This URL will be prepended to all 
  : history link href values.
  :)
-declare variable $config:history-service-url as xs:string := "http://localhost:8081/manta/atombeat/history" ;
+declare variable $config:history-service-url as xs:string := "http://localhost:8080/manta/atombeat/history" ;
  
 
-declare variable $config:security-service-url as xs:string := "http://localhost:8081/manta/atombeat/security" ;
+declare variable $config:security-service-url as xs:string := "http://localhost:8080/manta/atombeat/security" ;
 
 
 (:
