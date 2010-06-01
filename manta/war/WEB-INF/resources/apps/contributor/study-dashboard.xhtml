@@ -287,12 +287,6 @@
 				instance="ins-study-entry-to-copy-study-info-from">
 				
 				<xforms:action ev:event="xforms-submit-done">
-					
-					<!-- 
-					<xforms:delete context="instance('ins-study-entry')/atom:content/study" nodeset="questionnaire"/>
-					<xforms:insert origin="instance('ins-study-entry-to-copy-study-info-from')/atom:content/study/questionnaire" nodeset="instance('ins-study-entry')/atom:content/study" at="last()" position="after"/>
-					 -->
-					
 					<xforms:insert nodeset="xxforms:instance('ins-sq-study-entry')" origin="instance('ins-study-entry-to-copy-study-info-from')" />
 				</xforms:action>
 				
