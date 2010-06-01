@@ -110,13 +110,13 @@
 
 			<h2>My Studies</h2>
 	    	
-    		<xforms:group ref="instance('ins-study-feed')[count(atom:entry)=0]">
+    		<xforms:group ref="instance('ins-study-feed')[empty(atom:entry)]">
 
 	    		<p>You have not registered any studies.</p>
 	    	
     		</xforms:group>
 	    	
-    		<xforms:group ref="instance('ins-study-feed')[count(atom:entry)>0]">
+    		<xforms:group ref="instance('ins-study-feed')[exists(atom:entry)]">
 
 		    	<fr:datatable>
 		    		<thead>
