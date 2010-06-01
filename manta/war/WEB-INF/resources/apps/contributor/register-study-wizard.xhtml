@@ -11,6 +11,7 @@
 
   The full text of the license is available at http://www.gnu.org/copyleft/lesser.html
   -->
+<?oxygen NVDLSchema="../../../../../oxygen/samples/nvdl/xhtml-xforms-11-orbeon.nvdl"?>
 <html 
 	xmlns:xforms="http://www.w3.org/2002/xforms"
     xmlns:f="http://orbeon.org/oxf/xml/formatting" 
@@ -30,7 +31,7 @@
         <title>Register Study</title>
         
         <xforms:model id="mod-register-study-wizard">
-
+        	
            <!-- The value for the first wizard-pane-to-show is dependent on whether a draft is available, so should not default here. -->
        		<xforms:instance id="ins-control">
                 <control xmlns="">
@@ -238,7 +239,8 @@
                 method="put" 
                 replace="instance" 
                 instance="ins-draft-entry"
-                mediatype="application/atom+xml"> 
+                mediatype="application/atom+xml"
+            	relevant="false"> 
                 
                 <xforms:setvalue ev:event="xforms-submit-done" ref="instance('ins-control')/draft-is-saved">true</xforms:setvalue>
                 <xforms:setvalue ev:event="xforms-submit-done" ref="instance('ins-control')/wizard-pane-being-shown" value="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show"  />
