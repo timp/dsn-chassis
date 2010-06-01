@@ -219,7 +219,7 @@
                 
                 
                 <!-- If there was no error, then reload with the draft reference in the URL. -->
-                <xforms:load ev:event="xforms-submit-done" resource="register-study-wizard?draft={instance('ins-draft-entry')/atom:link[@rel='self']/@href}"/>
+                <xforms:load ev:event="xforms-submit-done" resource="register-study-wizard?draft={instance('ins-draft-entry')/atom:link[@rel='edit']/@href}"/>
 
 				<!-- If there was an error, then go back to the wizard-pane-being-shown and show the error. -->
 				<xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show" value="instance('ins-control')/wizard-pane-being-shown"  />
