@@ -177,4 +177,112 @@
     </validate>
   </namespace>
   
+  <!-- XFORMS -->
+  <namespace ns="http://www.w3.org/2002/xforms">
+    <validate schema="../../frameworks/xforms/XForms-11-Orbeon-Schema.xsd">
+      <mode>
+        
+        <!-- XFORMS > XFORMS -->
+        <namespace ns="http://www.w3.org/2002/xforms">
+          <attach/>
+        </namespace>
+        
+        <!-- XFORMS > XHTML -->
+        <namespace ns="http://www.w3.org/1999/xhtml">
+          <unwrap/>
+        </namespace>
+        
+        <!-- XFORMS > XXFORMS -->
+        <namespace ns="http://orbeon.org/oxf/xml/xforms">
+          <unwrap/>
+        </namespace>
+        
+        <!-- XFORMS > FR -->
+        <namespace ns="http://orbeon.org/oxf/xml/form-runner*">
+          <unwrap>
+            <mode>
+              
+              <!-- XFORMS > FR > XFORMS -->
+              <namespace ns="http://www.w3.org/2002/xforms">
+                <attach/>
+              </namespace>
+              
+              <!-- XFORMS > FR > XHTML -->
+              <namespace ns="http://www.w3.org/1999/xhtml">
+                <unwrap/>
+              </namespace>
+              
+            </mode>
+          </unwrap>
+        </namespace>
+        
+      </mode>
+      
+      <context path="instance">
+        <mode>
+          
+          <!-- XFORMS [instance] > * -->
+          <anyNamespace>
+            <allow/>
+          </anyNamespace>
+          
+        </mode>
+      </context>
+      
+    </validate>
+    
+    <unwrap>
+      <mode>
+        
+        <!-- XFORMS > XFORMS -->
+        <namespace ns="http://www.w3.org/2002/xforms">
+          <unwrap/>
+        </namespace>
+        
+        <!-- XFORMS > XHTML -->
+        <namespace ns="http://www.w3.org/1999/xhtml">
+          <unwrap/>
+        </namespace>
+        
+        <!-- XFORMS > XXFORMS -->
+        <namespace ns="http://orbeon.org/oxf/xml/xforms">
+          <unwrap/>
+        </namespace>
+        
+        <!-- XFORMS > FR -->
+        <namespace ns="http://orbeon.org/oxf/xml/form-runner*">
+          <unwrap>
+            <mode>
+              
+              <!-- XFORMS > FR > XFORMS -->
+              <namespace ns="http://www.w3.org/2002/xforms">
+                <unwrap/>
+              </namespace>
+              
+              <!-- XFORMS > FR > XHTML -->
+              <namespace ns="http://www.w3.org/1999/xhtml">
+                <unwrap/>
+              </namespace>
+              
+            </mode>
+          </unwrap>
+        </namespace>
+        
+      </mode>
+      
+      <context path="instance">
+        <mode>
+          
+          <!-- XHTML > XFORMS [instance] > * -->
+          <anyNamespace>
+            <unwrap/>
+          </anyNamespace>
+          
+        </mode>
+      </context>
+    </unwrap>
+  </namespace>
+  
+  
+  
 </rules>
