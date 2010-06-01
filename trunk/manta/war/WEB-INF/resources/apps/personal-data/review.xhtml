@@ -103,15 +103,23 @@
 				</atom:entry>
 			</xforms:instance>
         	
-        	<xforms:instance id="ins-ace">
+        	<xforms:instance id="ins-ace-allow-study-administrators">
         		<atombeat:ace>
         			<atombeat:type>ALLOW</atombeat:type>
         			<atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
         			<atombeat:permission>RETRIEVE_MEDIA</atombeat:permission>
         		</atombeat:ace>
         	</xforms:instance>
-			
-			<xforms:submission 
+        	
+        	<xforms:instance id="ins-ace-allow-curators">
+        		<atombeat:ace>
+        			<atombeat:type>ALLOW</atombeat:type>
+        			<atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+        			<atombeat:permission>RETRIEVE_MEDIA</atombeat:permission>
+        		</atombeat:ace>
+        	</xforms:instance>
+        	
+        	<xforms:submission 
 				id="sub-post-review"
 				method="post"
 				resource="{instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/personalDataReviews']/@href}"
@@ -131,7 +139,13 @@
 						nodeset="atombeat:ace"
 						at="0" 
 						position="before"
-						origin="instance('ins-ace')"/>
+						origin="instance('ins-ace-allow-study-administrators')"/>
+					<xforms:insert 
+						context="instance('ins-media-security-descriptor')//atombeat:acl"
+						nodeset="atombeat:ace"
+						at="0" 
+						position="before"
+						origin="instance('ins-ace-allow-curators')"/>
 					<xforms:send submission="sub-put-media-security-descriptor"/>
 				</xforms:action>
 				
