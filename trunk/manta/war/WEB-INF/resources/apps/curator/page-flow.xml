@@ -19,6 +19,8 @@
 
   <page id="home" path-info="/curator/home" view="home.xhtml"/>
   
+  <page path-info="/curator/study-dashboard" view="study-dashboard.xhtml"/>
+  
   <epilogue url="oxf:/config/epilogue.xpl"/>
 
 </config>
