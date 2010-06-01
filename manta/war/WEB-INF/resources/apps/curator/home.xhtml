@@ -97,7 +97,10 @@
 	    					<td>
 	    						<xforms:output ref="atom:author/atom:email"/>
 	    					</td>
-	    					<td><a href="study-dashboard?study={atom:link[@rel='edit']/@href}">View</a></td>
+	    					<td>
+	    						<a href="study-dashboard?study={atom:link[@rel='edit']/@href}">View</a> <br/>
+	    						<a href="spike-upload-curated-files?study={atom:link[@rel='edit']/@href}">Upload</a>
+	    					</td>
 	    				</tr>
 	    			</xforms:repeat>
 	    		</tbody>
