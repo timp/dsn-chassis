@@ -49,8 +49,6 @@
         	
         	<xforms:setvalue ev:event="xforms-model-construct-done" ref="instance('ins-control')/dashboard-tab-to-show" value="if(not(empty(xxforms:get-request-parameter('tab')))) then xxforms:get-request-parameter('tab') else 'summary'" />
 
-			<xforms:bind nodeset="instance('ins-control')/add-publication-trigger" relevant="instance('ins-study-entry')/atom:content/study/study-is-published='true'"/>
-
 			<xforms:action ev:event="xxforms-invalid" ev:observer="ins-uploads-entry">
 				<xforms:setvalue ev:event="xforms-value-changed" ref="instance('ins-control')/uploads-entry-is-valid">false</xforms:setvalue>
 			</xforms:action>
@@ -58,9 +56,6 @@
 				<xforms:setvalue ev:event="xforms-value-changed" ref="instance('ins-control')/uploads-entry-is-valid">true</xforms:setvalue>
 			</xforms:action>
 
-        	<xforms:bind nodeset="instance('ins-control')/submit-files-trigger" readonly="not(../uploads-entry-is-valid = 'true')"/>
-        	
-        
 			<xforms:instance id="ins-study-entry">
 				<atom:entry/>
 			</xforms:instance>
@@ -72,18 +67,19 @@
 				replace="instance"
 				instance="ins-study-entry"
 				serialization="none">
-                
+                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the study.</xforms:message>
+
 				<xforms:action ev:event="xforms-submit-done">
 					
 					<xforms:send submission="sub-get-permissions-entry"/>
+					<xforms:send submission="sub-get-submitted-media-feed"/>
+					<xforms:send submission="sub-get-curated-media-feed"/>
 					
 					<!-- copy data across to study questionnaire model -->
 					<xforms:insert nodeset="xxforms:instance('ins-sq-study-entry')" origin="instance('ins-study-entry')" />
 					
 				</xforms:action>				
-				
-				<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the study.</xforms:message>
-				
+
 			</xforms:submission>
 
 			<xforms:send 
@@ -107,10 +103,6 @@
 		        <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while saving the study.</xforms:message>
 		        <xforms:message ev:event="xforms-submit-done" level="modal">Your changes have been saved.</xforms:message>
 		    </xforms:submission>
-        	
-        	
-            
-            
             
 			<xforms:instance id="ins-permissions-entry">
 				<atom:entry/>
@@ -124,93 +116,42 @@
 				instance="ins-permissions-entry"
 				serialization="none">
                 <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the study.</xforms:message>
-                <xforms:send ev:event="xforms-submit-done" submission="sub-get-submitted-media-feed"/>
 			</xforms:submission>   
             
-			<xforms:submission 
-				id="sub-put-permissions-entry"
-				resource="{instance('ins-study-entry')/atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor']/@href}"
-				method="put"
-				replace="instance"
-				instance="ins-permissions-entry"
-				ref="instance('ins-permissions-entry')"
-				mediatype="application/atom+xml">
-		        <xforms:message ev:event="xforms-submit-done" level="modal">Your changes have been saved.</xforms:message>
-                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the study.</xforms:message>
-			</xforms:submission>
-            
-       		<xforms:instance id="ins-user-template">
-       			<atombeat:member/>
-  			</xforms:instance>
-  			
 
-            
-			<!-- This gets the list of different file types for the upload-files tab. -->
-			<xforms:instance id="ins-file-terms" src="/apps/common/constants/file-terms.xml"/>           
-			
-
-
-
-			<xforms:bind nodeset="instance('ins-uploads-entry')/atom:content/uploads">
-				<xforms:bind nodeset="@target" calculate="instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/submittedMedia']/@href"/>
-				<xforms:bind nodeset="upload">
-					<xforms:bind nodeset="@typeterm" required="true()"/>
-					<xforms:bind nodeset="@typelabel" relevant="../@typeterm='http://www.cggh.org/2010/chassis/terms/Other'"/>
-				</xforms:bind>
-			</xforms:bind>
-
-
-
-            <xforms:submission 
-            	id="sub-post-background-uploads" 
-            	ref="instance('ins-uploads-entry')/atom:content/uploads" 
-            	method="post"
-            	replace="none"
-            	resource="test:"
-            	validate="false"/>
-
-
-			<xforms:instance id="ins-uploads-feed">
-				<atom:feed/>
-			</xforms:instance>
-
-            <xforms:submission 
-            	id="sub-post-uploads" 
-            	ref="instance('ins-uploads-entry')/atom:content/uploads"
-                resource="/util/store-uploads"
-                method="post" 
-                replace="instance"
-                instance="ins-uploads-feed">
-				
-				<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while storing the files.</xforms:message>
-                         
-				<xforms:send ev:event="xforms-submit-done" submission="sub-get-submitted-media-feed"/>                         
-                         
-            </xforms:submission>
-
-
-
-
-
-			<xforms:instance id="ins-submitted-media-feed">
-				<atom:feed/>
-			</xforms:instance>
-			
-			<xforms:submission
-				id="sub-get-submitted-media-feed"
-				resource="{instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/submittedMedia']/@href}"
-				method="get"
-				replace="instance"
-				instance="ins-submitted-media-feed">
-                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the submitted media.</xforms:message>
-			</xforms:submission>
-
-
-			<xforms:instance id="ins-study-feed">
-				<atom:feed/>
-			</xforms:instance>
-
-			<xforms:submission 
+        	<xforms:instance id="ins-submitted-media-feed">
+        		<atom:feed/>
+        	</xforms:instance>
+        	
+        	<xforms:submission
+        		id="sub-get-submitted-media-feed"
+        		resource="{instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/submittedMedia']/@href}"
+        		method="get"
+        		replace="instance"
+        		instance="ins-submitted-media-feed">
+        		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the submitted media.</xforms:message>
+        	</xforms:submission>
+        	
+        	
+        	<xforms:instance id="ins-curated-media-feed">
+        		<atom:feed/>
+        	</xforms:instance>
+        	
+        	<xforms:submission
+        		id="sub-get-curated-media-feed"
+        		resource="{instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/curatedMedia']/@href}"
+        		method="get"
+        		replace="instance"
+        		instance="ins-curated-media-feed">
+        		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the curated media.</xforms:message>
+        	</xforms:submission>
+        	
+        	
+        	<xforms:instance id="ins-study-feed">
+        		<atom:feed/>
+        	</xforms:instance>
+        	
+        	<xforms:submission 
 				id="sub-retrieve-study-feed"
 				resource="/atombeat/content/studies"
 				method="get"
@@ -249,8 +190,9 @@
                	</xforms:message>
 			</xforms:submission>				
 				
-				
-            
+        	<!-- This gets the list of different file types for the upload-files tab. -->
+        	<xforms:instance id="ins-file-terms" src="/apps/common/constants/file-terms.xml"/>           
+        	
         </xforms:model>
         
         <xi:include href="../common/includes/study/questionnaire-xforms-model.xml"/>

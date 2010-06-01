@@ -5,53 +5,32 @@
 	xmlns:ev="http://www.w3.org/2001/xml-events"
 	xmlns:xi="http://www.w3.org/2001/XInclude">
 
-	<p>
-		<!-- TODO: Make this read-only -->
-	
-		<xforms:select1 ref="instance('ins-study-entry')/atom:content/study/study-is-published">
-			<xforms:label>Is the study published?</xforms:label>
-			<xforms:item>
-				<xforms:label>Select...</xforms:label>
-				<xforms:value></xforms:value>
-			</xforms:item>
-				
-
-            <!-- TODO: factor this out -->
-			<xforms:item>
-				<xforms:label>Yes</xforms:label>
-				<xforms:value>true</xforms:value>
-			</xforms:item>
-			<xforms:item>
-				<xforms:label>No</xforms:label>
-				<xforms:value>false</xforms:value>
-			</xforms:item>
+	<xforms:group ref="instance('ins-study-entry')/atom:content/study">
+		
+		<p>
+			<xforms:output ref="study-is-published">
+				<xforms:label>Is the study published?</xforms:label>
+			</xforms:output>
+		</p>
+		
+		<xforms:group ref="publications[exists(publication)]">
 			
-				<!-- 
-                    	<xforms:itemset nodeset="instance('ins-study-is-published-terms')/term">
-                    		<xforms:label ref="label"/>
-                    		<xforms:value ref="value"/>
-                    	</xforms:itemset>
-                    	
-                 -->			
+			<table>
+				<xforms:repeat nodeset="publication" id="rep-publication">
+					<tr>
+						<td>
+							<xforms:output ref="web-link">
+								<xforms:label>Web Link:</xforms:label>
+							</xforms:output>
+						</td>
+					</tr>
+				</xforms:repeat>
+			</table>
 			
-		</xforms:select1>
-	</p>
+		</xforms:group>		
+		
+	</xforms:group>
 
-    <xforms:group ref="instance('ins-study-entry')/atom:content/study/publications">
-               	
-		<table>
-            <xforms:repeat nodeset="publication" id="rep-publication">
-                <tr>
-                    <td>
-                        <xforms:output ref="web-link">
-                            <xforms:label>Web Link:</xforms:label>
-                        </xforms:output>
-                    </td>
-                </tr>
-            </xforms:repeat>
-        </table>
-
-	</xforms:group>		
 
 
 </div>
