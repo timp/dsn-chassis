@@ -123,8 +123,9 @@
 		    			<tr>
 		    				<th fr:sortable="true" fr:resizeable="true">Code</th>
 		    				<th fr:sortable="true" fr:resizeable="true">Title</th>
+		    				<!-- TODO: Admins. -->
 		    				<th fr:sortable="true" fr:resizeable="true">Created</th>
-		    				<th fr:sortable="true" fr:resizeable="true">Admins</th>
+		    				<th fr:sortable="true" fr:resizeable="true">Creator</th>
 		    				<th>Actions</th>
 		    			</tr>
 		    		</thead>
@@ -141,7 +142,8 @@
 		    						<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')"/>
 		    					</td>
 		    					<td>
-		    						TODO <!-- Need to get the permission list (need to get individual entries?) via security-description link and use something like concat(//permission/text())  -->
+		    						<!-- TODO: Admins. -->
+		    						<xforms:output value="atom:author/atom:email"/>
 		    					</td>
 		    					<td><a href="study-dashboard?study={atom:link[@rel='edit']/@href}">View</a></td>
 		    				</tr>

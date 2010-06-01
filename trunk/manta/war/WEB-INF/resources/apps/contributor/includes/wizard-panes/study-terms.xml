@@ -43,7 +43,6 @@
 			<xforms:trigger appearance="minimal">
 				<xforms:label>&lt;&lt; Back Home</xforms:label>
 				<xforms:action ev:event="DOMActivate">
-					<xforms:setvalue ref="instance('ins-control')/show-draft-saved-message" value="'no'"/>
 					<xforms:send submission="sub-back-home"/>
 				</xforms:action>
 			</xforms:trigger>
@@ -70,8 +69,7 @@
 				<xforms:trigger ref="instance('ins-control')/save-draft-trigger">
 					<xforms:label>Save As Draft</xforms:label>
 					<xforms:action ev:event="DOMActivate">
-						<xforms:setvalue ref="instance('ins-control')/show-draft-saved-message" value="'yes'"/>
-						<xforms:send submission="sub-put-draft-entry"/>
+						<xforms:send submission="sub-explicit-put-draft-entry"/>
 					</xforms:action>
 				</xforms:trigger>		
 			
@@ -81,15 +79,12 @@
 					
 						<!-- Copy the study title to the draft entry title. -->
 						<xforms:setvalue ref="instance('ins-draft-entry')/atom:title" value="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:title"/>
-
-						<!-- Tell the wizard not to show the draft-saved message. -->
-						<xforms:setvalue ref="instance('ins-control')/show-draft-saved-message" value="'no'"/>
 						
 						<!-- Tell the wizard to set the current pane to the permissions pane. -->
 						<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show" value="'permissions'"/>
 						
 						<!-- Try to save the draft. -->
-						<xforms:send submission="sub-put-draft-entry" />
+						<xforms:send submission="sub-implicit-put-draft-entry" />
 		
 					</xforms:action>
 				</xforms:trigger>

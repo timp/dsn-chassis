@@ -33,7 +33,7 @@
         <link rel="stylesheet" type="text/css" href="/ops/yui/tabview/assets/skins/sam/tabview.css"></link>
         <style type="text/css"></style>
         
-        <xforms:model>
+        <xforms:model id="mod-study-dashboard">
         
         	<!-- non-persistent model for application state -->
         	<xforms:instance id="ins-control">
@@ -72,8 +72,18 @@
 				replace="instance"
 				instance="ins-study-entry"
 				serialization="none">
-                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the study.</xforms:message>
-				<xforms:send ev:event="xforms-submit-done" submission="sub-get-permissions-entry"/>
+                
+				<xforms:action ev:event="xforms-submit-done">
+					
+					<xforms:send submission="sub-get-permissions-entry"/>
+					
+					<!-- copy data across to study questionnaire model -->
+					<xforms:insert nodeset="xxforms:instance('ins-sq-study-entry')" origin="instance('ins-study-entry')" />
+					
+				</xforms:action>				
+				
+				<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the study.</xforms:message>
+				
 			</xforms:submission>
 
 			<xforms:send 
