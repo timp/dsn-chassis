@@ -18,6 +18,7 @@ structural elements
 			<xsd:documentation>Attributes for _every_ element in XForms</xsd:documentation>
 		</xsd:annotation>
 		<xsd:attribute name="id" type="xsd:ID" use="optional"/>
+		<xsd:attribute name="class" type="xsd:string" use="optional"/>
 		<xsd:anyAttribute namespace="##other"/>
 	</xsd:attributeGroup>
 
@@ -285,6 +286,7 @@ User Interface form controls
 			<xsd:attribute name="inputmode" type="xsd:string" use="optional"/>
 			<xsd:attributeGroup ref="xforms:UI.Common.Attrs"/>
 			<xsd:attribute name="incremental" type="xsd:boolean" use="optional" default="false"/>
+			<xsd:attribute name="width" type="xsd:string" use="optional"/>
 		</xsd:complexType>
 	</xsd:element>
 	<xsd:element name="secret">
