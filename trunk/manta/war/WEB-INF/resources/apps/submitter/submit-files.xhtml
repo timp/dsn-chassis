@@ -243,7 +243,7 @@
 		                        	</xforms:item>	
 		                        	<xforms:itemset nodeset="instance('ins-study-feed')/atom:entry">
 		                        		<xforms:label ref="concat( manta:id , ' - ' , atom:title )"/>
-		                        		<xforms:value ref="atom:link[@rel='self']/@href"/>
+		                        		<xforms:value ref="atom:link[@rel='edit']/@href"/>
 		                        	</xforms:itemset>
 		                        	<xforms:alert>A study must be selected.</xforms:alert>
 		                        </xforms:select1>
@@ -407,7 +407,7 @@
 		                <tr>
 		                    <td>
 		                    	<h2>Study</h2>
-		                    	<xforms:group ref="instance('ins-study-feed')/atom:entry[atom:link[@rel='self']/@href = instance('ins-form-data')/study]">
+		                    	<xforms:group ref="instance('ins-study-feed')/atom:entry[atom:link[@rel='edit']/@href = instance('ins-form-data')/study]">
 			                    	<p>
 			                    		<strong>
 			                    		<xforms:output value="manta:id"/> -
