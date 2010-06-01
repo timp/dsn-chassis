@@ -21,7 +21,7 @@
 
   <page path-info="/curator/study-dashboard" view="study-dashboard.xhtml"/>
   
-  <page path-info="/curator/spike-upload-curated-files" view="spike-upload-curated-files.xhtml"/>
+  <page path-info="/curator/upload-curated-files" view="upload-curated-files.xhtml"/>
   
   <epilogue url="oxf:/config/epilogue.xpl"/>
 

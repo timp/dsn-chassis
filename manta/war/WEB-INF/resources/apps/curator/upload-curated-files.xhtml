@@ -202,10 +202,20 @@
         		mediatype="application/atom+xml"
         		>
         		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the study.</xforms:message>
+        		<xforms:send ev:event="xforms-submit-done" submission="sub-get-dashboard"/>
         	</xforms:submission>
 
         	<!-- This gets the list of different file types for the upload-files tab. -->
-        	<xforms:instance id="ins-file-terms" src="/apps/common/constants/file-terms.xml"/>           
+        	<xforms:instance id="ins-file-terms" src="/apps/common/constants/file-terms.xml"/>    
+        	
+        	<xforms:submission
+        		id="sub-get-dashboard"
+        		resource="study-dashboard?tab=files&amp;study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}"
+        		method="get"
+        		replace="all"
+        		serialization="none">
+        		
+        	</xforms:submission>
         	
         </xforms:model>
 
