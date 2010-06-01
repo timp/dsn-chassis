@@ -529,6 +529,7 @@ XForms Actions
 		</xsd:annotation>
 		<xsd:attribute name="if" type="xforms:XPathExpression" use="optional"/>
 		<xsd:attribute name="while" type="xforms:XPathExpression" use="optional"/>
+		<xsd:attribute ref="xxforms:iterate" use="optional"/>
 	</xsd:attributeGroup>
 
 	<xsd:group name="Action">

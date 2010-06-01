@@ -13,6 +13,7 @@
 
   <xs:attribute name="format" type="xs:string"/>
   <xs:attribute name="size" type="xs:string"/>
+  <xs:attribute name="iterate" type="xs:string"/>
   
   <xs:element name="size">
     <xs:complexType>
