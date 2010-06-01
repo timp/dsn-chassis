@@ -1,0 +1,133 @@
+<!--
+  Copyright (C) 2010 University of Oxford.
+  
+  This program is free software; you can redistribute it and/or modify it under the terms of the
+  GNU Lesser General Public License as published by the Free Software Foundation; either version
+  2.1 of the License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Lesser General Public License for more details.
+
+  The full text of the license is available at http://www.gnu.org/copyleft/lesser.html
+  -->
+<html 
+	xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:f="http://orbeon.org/oxf/xml/formatting" 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:atom="http://www.w3.org/2005/Atom"
+    xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:manta="http://www.cggh.org/2010/chassis/manta/xmlns">
+    
+    <head>
+    
+        <title>Manta Data Management - Curator - Study <xforms:output model="mod-main" value="instance('ins-study-entry')/manta:id"/> - Questionnaire</title>
+        <link rel="stylesheet" type="text/css" href="/apps/curator/common/style.css"></link>
+        <link rel="stylesheet" type="text/css" href="/ops/yui/tabview/assets/skins/sam/tabview.css"></link>
+        <style type="text/css"></style>
+
+        <xforms:model id="mod-main">
+        
+        	<xforms:instance id="ins-study-entry">
+        		<atom:entry/>
+        	</xforms:instance>
+        
+			<xforms:submission 
+				id="sub-get-study-entry"
+				resource="{xxforms:get-request-parameter('study')}"
+				method="get"
+				replace="instance"
+				instance="ins-study-entry"
+				ref="instance('ins-noparams')"> 
+				
+                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the study.</xforms:message>
+				
+				<!-- copy data across to study questionnaire model -->	
+				<xforms:insert ev:event="xforms-submit-done" nodeset="xxforms:instance('ins-sq-study-entry')" origin="instance('ins-study-entry')"/>
+				
+			</xforms:submission>
+
+			<xforms:send ev:event="xforms-model-construct-done" submission="sub-get-study-entry"/>
+			
+        	<xforms:instance id="ins-noparams">
+        		<params/>
+        	</xforms:instance>
+
+        </xforms:model>
+        
+       	<xi:include href="/apps/common/includes/study/questionnaire-xforms-model.xml"/>
+       	<xi:include href="/apps/common/includes/current-user-xforms-model.xml"/>
+            
+        
+    </head>
+    <body>
+		<xi:include href="/apps/common/includes/current-user-actions.xml"/>
+
+    	<div id="content">
+    	
+	    	<h1><a href="home">Curator</a> - Study <xforms:output value="instance('ins-study-entry')/manta:id"/></h1>
+	
+			<h2 class="subtitle"><xforms:output value="instance('ins-study-entry')/atom:title"/></h2>
+	    	
+	    	<p>Actions: 
+	    		<a class="action" href="submit-files?study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">Submit Files</a> |
+	    		Edit Study Questionnaire
+	   		</p>
+
+    		<div class="yui-navset yui-navset-top">
+    		
+    			<ul class="yui-nav">
+    				<li>
+    					<a href="study-summary?study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
+    						<em>Summary</em>
+   						</a>
+    				</li>
+    				<li>
+    					<a href="study-files?study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
+	    					<em>Files</em>
+    					</a>
+   					</li>
+    				<li class="selected">
+    					<a href="study-questionnaire?study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
+	    					<em>Questionnaire</em>
+    					</a>
+   					</li>
+    				<li>
+    					<a href="study-publications?study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
+	    					<em>Publications</em>
+    					</a>
+   					</li>
+    				<li>
+    					<a href="study-permissions?study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
+	    					<em>Permissions</em>
+    					</a>
+   					</li>
+    				<li>
+    					<a href="study-acknowledgements?study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
+	    					<em>Acknowledgements</em>
+    					</a>
+   					</li>
+    			</ul>
+    			
+    			<div class="yui-content">
+
+				   	<div class="inner-help">
+				   		<h2>Help</h2>
+				   		<p>TODO</p>
+				   	</div>
+				   	
+			       	<xi:include href="/apps/common/includes/study/questionnaire-xforms-input.xml"/>
+
+    			</div>
+    			
+    		</div>
+    		
+    	</div>
+
+    </body>
+</html>
+
