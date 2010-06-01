@@ -1,3 +1,4 @@
+<?oxygen NVDLSchema="../../../../../../../oxygen/samples/nvdl/xhtml-xforms-11-orbeon.nvdl"?>
 <xforms:model xmlns:xforms="http://www.w3.org/2002/xforms"
 	xmlns:f="http://orbeon.org/oxf/xml/formatting" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:xxforms="http://orbeon.org/oxf/xml/xforms" xmlns:xs="http://www.w3.org/2001/XMLSchema"
@@ -354,8 +355,8 @@
 						</xforms:bind>
 						<xforms:bind nodeset="antiBiotics">
 							<xforms:bind nodeset="antiBiotic">
-								<xforms:bind ref="antiBioticName" required="true()" />
-								<xforms:bind ref="antiBioticFinalConcentration"
+								<xforms:bind nodeset="antiBioticName" required="true()" />
+								<xforms:bind nodeset="antiBioticFinalConcentration"
 									type="xs:integer" required="true()" />
 							</xforms:bind>
 						</xforms:bind>
