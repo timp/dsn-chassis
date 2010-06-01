@@ -1,0 +1,61 @@
+<?oxygen NVDLSchema="../../../../../../../oxygen/samples/nvdl/xhtml-xforms-11-orbeon.nvdl"?>
+<div 
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:xforms="http://www.w3.org/2002/xforms" 
+	xmlns:ev="http://www.w3.org/2001/xml-events"
+	xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
+	xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
+	xmlns:atombeat="http://purl.org/atombeat/xmlns">
+	
+	
+			<h2>Submitted Files</h2>
+    		
+    		<xforms:group ref="instance('ins-submitted-media-feed')[count(atom:entry)=0]">
+    			<p>No files have been submitted.</p>
+    		</xforms:group>
+    		
+    		<xforms:group ref="instance('ins-submitted-media-feed')[count(atom:entry)>0]">
+    		
+			    	<fr:datatable paginated="false">
+			    		<thead>
+			    			<tr>
+			    				<th fr:sortable="true" fr:resizeable="true">Code</th>
+			    				<th fr:sortable="true" fr:resizeable="true">File Name</th>
+			    				<th fr:sortable="true" fr:resizeable="true">Date Submitted</th>
+			    				<th fr:sortable="true" fr:resizeable="true">Submitted By</th>
+			    				<th fr:sortable="true" fr:resizeable="true">Type</th>
+			    				<th>Actions</th>
+			    			</tr>
+			    		</thead>
+			    		<tbody>
+			    			<xforms:repeat id="rep-media" nodeset="xxforms:sort(instance('ins-submitted-media-feed')/atom:entry, atom:published, 'text', 'ascending')">
+			    				<tr>
+			    					<td>
+			    						<xforms:output ref="manta:id"/>
+			    					</td>
+			    					<td>
+			    						<xforms:output ref="atom:title"/>
+			    					</td>
+			    					<td>
+			    						<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')"/>
+			    					</td>
+			    					<td>
+			    						<xforms:output ref="atom:author/atom:email"/>
+			    					</td>
+			    					<td>
+			    						<xforms:output ref="if(instance('ins-file-terms')/term[value=xxforms:context('rep-media')/atom:category[@scheme='http://www.cggh.org/2010/chassis/scheme/FileTypes']/@term]/value='http://www.cggh.org/2010/chassis/terms/Other') then atom:category[@scheme='http://www.cggh.org/2010/chassis/scheme/FileTypes']/@label else instance('ins-file-terms')/term[value=xxforms:context('rep-media')/atom:category[@scheme='http://www.cggh.org/2010/chassis/scheme/FileTypes']/@term]/label"/>
+			    					</td>
+			    					<!-- TODO: Only enable if the file has passed personal data review. -->
+			    					<td>
+			    						<xforms:group ref=".[contains( ./atom:link[@rel='edit-media']/@atombeat:allow , 'GET' )]">
+			    							<a href="{atom:content/@src}">Download</a>
+			    						</xforms:group>
+			    					</td>
+			    				</tr>
+			    			</xforms:repeat>
+			    		</tbody>
+			    	</fr:datatable>
+			    	
+			</xforms:group>
+		
+</div>

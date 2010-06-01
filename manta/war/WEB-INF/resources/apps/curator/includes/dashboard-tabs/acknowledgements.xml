@@ -1,0 +1,50 @@
+<?oxygen NVDLSchema="../../../../../../../oxygen/samples/nvdl/xhtml-xforms-11-orbeon.nvdl"?>
+<div 
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:xforms="http://www.w3.org/2002/xforms" 
+	xmlns:ev="http://www.w3.org/2001/xml-events">
+
+	<h2>Acknowledgements</h2>
+
+		<xforms:group ref="instance('ins-study-entry')/atom:content/study/acknowledgements[count(acknowledgment)=0]">
+			<p>There are no acknowledgements.</p>
+		</xforms:group>
+
+	    <xforms:group ref="instance('ins-study-entry')/atom:content/study/acknowledgements">
+	        
+	        <table>
+
+	            <xforms:repeat nodeset="person" id="rep-person">
+	                <tr>
+	                    <td>
+	                        <xforms:input ref="first-name">
+	                            <xforms:label>First Name:</xforms:label>
+	                        </xforms:input>
+	                       <br/>
+	                        <xforms:input ref="middle-name">
+	                            <xforms:label>Middle Name:</xforms:label>
+	                        </xforms:input>
+	                       <br/>
+	                        <xforms:input ref="family-name">
+	                            <xforms:label>Family Name:</xforms:label>
+	                        </xforms:input>
+	                        <br/>
+	                        <xforms:input ref="email-address">
+	                            <xforms:label>Email address:</xforms:label>
+	                        </xforms:input>
+	                        <br/>
+	                        <xforms:input ref="institution">
+	                            <xforms:label>Institution:</xforms:label>
+	                        </xforms:input>
+	                        <br/>
+	                    </td>
+	                </tr>
+	            </xforms:repeat>
+
+	            
+	        </table>
+	        
+	    </xforms:group>
+
+
+</div>
