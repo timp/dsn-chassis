@@ -13,8 +13,14 @@
     realm="chassis-manta" 
     create-session="never">
   
+    
     <http-basic/>
 
+<!--
+    <form-login/>
+    <logout/>
+-->
+    
     <!-- restrict access to libraries and administrative scripts -->
     <intercept-url pattern="/atombeat/admin/**" access="ROLE_CHASSIS_ADMINISTRATOR" />
     <intercept-url pattern="/atombeat/config/**" access="ROLE_CHASSIS_ADMINISTRATOR" />
