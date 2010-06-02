@@ -71,11 +71,10 @@
                 
                 <xhtml:div id="holdall">
                 
-                	<!-- 
+                	
                 	<xhtml:div id="hd">
-                		<xhtml:h1>Chassis DSN Data Management</xhtml:h1>
+                		<!-- <xhtml:h1>Chassis DSN Data Management</xhtml:h1>  -->
                 	</xhtml:div>
-                	-->
 
                 	<xhtml:div id="bd">
 
@@ -84,11 +83,10 @@
 
                 	</xhtml:div>
 
-					<!-- 
+					
                 	<xhtml:div id="ft">
                 		<xhtml:p>Chassis Manta 1.0-alpha-SNAPSHOT</xhtml:p>
                 	</xhtml:div>
-                	 -->
 
                 </xhtml:div>
             </xhtml:body>

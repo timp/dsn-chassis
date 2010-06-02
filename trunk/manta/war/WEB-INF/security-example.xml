@@ -21,6 +21,9 @@
     <logout/>
 -->
     
+    <!-- j_spring_security_logout -->
+    <logout logout-success-url="/home/" invalidate-session="true" logout-url="/logout" />
+    
     <!-- restrict access to libraries and administrative scripts -->
     <intercept-url pattern="/atombeat/admin/**" access="ROLE_CHASSIS_ADMINISTRATOR" />
     <intercept-url pattern="/atombeat/config/**" access="ROLE_CHASSIS_ADMINISTRATOR" />
