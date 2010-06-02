@@ -72,7 +72,7 @@
             <xforms:bind nodeset="instance('ins-control')/create-draft-trigger" readonly="not(../draft-entry-is-valid = 'true')"/>
             <xforms:bind nodeset="instance('ins-control')/create-draft-trigger" relevant="not(instance('ins-draft-entry')/atom:link[@rel='edit'])"/>
 			<xforms:bind nodeset="instance('ins-control')/save-draft-trigger" readonly="not(../draft-entry-is-valid = 'true')"/>
-			<xforms:bind nodeset="instance('ins-control')/add-publication-trigger" relevant="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:content/study/study-is-published='true'"/>
+			<xforms:bind nodeset="instance('ins-control')/add-publication-trigger" relevant="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:content/study/study-is-published='Yes'"/>
 
 			
 			
@@ -156,7 +156,7 @@
 
         	<xforms:bind nodeset="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:content/study/publications">
 
-			        <xforms:bind nodeset="publication" relevant="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:content/study/study-is-published='true'">
+			        <xforms:bind nodeset="publication" relevant="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:content/study/study-is-published='Yes'">
 			            
 			            <xforms:bind nodeset="title" required="true()"/>
 			            <xforms:bind nodeset="first-author" required="true()"/>
@@ -440,7 +440,7 @@
                      
 			</xforms:submission>
 
-
+			<xforms:instance id="ins-study-is-published-terms" src="/apps/common/constants/study-is-published-terms.xml"/>
 				
 
         </xforms:model>

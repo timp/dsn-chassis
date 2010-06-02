@@ -50,7 +50,7 @@
         	
         	<xforms:setvalue ev:event="xforms-model-construct-done" ref="instance('ins-control')/dashboard-tab-to-show" value="if(not(empty(xxforms:get-request-parameter('tab')))) then xxforms:get-request-parameter('tab') else 'summary'" />
 
-			<xforms:bind nodeset="instance('ins-control')/add-publication-trigger" relevant="instance('ins-study-entry')/atom:content/study/study-is-published='true'"/>
+			<xforms:bind nodeset="instance('ins-control')/add-publication-trigger" relevant="instance('ins-study-entry')/atom:content/study/study-is-published='Yes'"/>
 
 			<xforms:action ev:event="xxforms-invalid" ev:observer="ins-uploads-entry">
 				<xforms:setvalue ev:event="xforms-value-changed" ref="instance('ins-control')/uploads-entry-is-valid">false</xforms:setvalue>
@@ -153,7 +153,7 @@
   			
         	<xforms:bind nodeset="instance('ins-study-entry')/atom:content/study/publications">
 
-			        <xforms:bind nodeset="publication" relevant="instance('ins-study-entry')/atom:content/study/study-is-published='true'">
+			        <xforms:bind nodeset="publication" relevant="instance('ins-study-entry')/atom:content/study/study-is-published='Yes'">
 			            
 			            <xforms:bind nodeset="title" required="true()"/>
 			            <xforms:bind nodeset="first-author" required="true()"/>
@@ -297,7 +297,8 @@
                 	An error occurred (<xforms:output value="event('error-type')"/>) while copying answers from the selected study.
                	</xforms:message>
 			</xforms:submission>				
-				
+			
+			<xforms:instance id="ins-study-is-published-terms" src="/apps/common/constants/study-is-published-terms.xml"/>
 				
             
         </xforms:model>

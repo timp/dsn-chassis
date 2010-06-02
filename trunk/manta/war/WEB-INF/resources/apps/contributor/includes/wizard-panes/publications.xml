@@ -15,23 +15,10 @@
 			</xforms:item>
 				
 
-            <!-- TODO: factor this out -->
-			<xforms:item>
-				<xforms:value>true</xforms:value>
-				<xforms:label>Yes</xforms:label>
-			</xforms:item>
-			<xforms:item>
-				<xforms:value>false</xforms:value>
-				<xforms:label>No</xforms:label>
-			</xforms:item>
-			
-				<!-- 
-                    	<xforms:itemset nodeset="instance('ins-study-is-published-terms')/term">
-                    		<xforms:label ref="label"/>
-                    		<xforms:value ref="value"/>
-                    	</xforms:itemset>
-                    	
-                 -->			
+           	<xforms:itemset nodeset="instance('ins-study-is-published-terms')/term">
+           		<xforms:label ref="label"/>
+           		<xforms:value ref="value"/>
+           	</xforms:itemset>		
 			
 		</xforms:select1>
 	</p>
