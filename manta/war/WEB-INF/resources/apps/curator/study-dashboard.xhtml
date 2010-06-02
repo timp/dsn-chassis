@@ -44,6 +44,7 @@
         			<uploads-entry-is-valid/>
         			<submit-files-trigger/>
         			<href-to-copy-study-info-from/>
+        			<copy-answers-trigger/>
         		</control>
         	</xforms:instance>
         	
@@ -55,6 +56,8 @@
 			<xforms:action ev:event="xxforms-valid" ev:observer="ins-uploads-entry">
 				<xforms:setvalue ev:event="xforms-value-changed" ref="instance('ins-control')/uploads-entry-is-valid">true</xforms:setvalue>
 			</xforms:action>
+			
+			<xforms:bind nodeset="instance('ins-control')/copy-answers-trigger" readonly="../href-to-copy-study-info-from = ''"/>
 
 			<xforms:instance id="ins-study-entry">
 				<atom:entry/>
