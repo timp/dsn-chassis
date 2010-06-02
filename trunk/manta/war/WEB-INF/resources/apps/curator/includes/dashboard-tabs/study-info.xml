@@ -22,9 +22,12 @@
            	</xforms:itemset>
 		</xforms:select1>
 		
-         <xforms:submit submission="sub-copy-answers">
-             <xforms:label>Copy Answers</xforms:label>
-         </xforms:submit>
+		<xforms:trigger ref="instance('ins-control')/copy-answers-trigger">
+			<xforms:label>Copy Answers</xforms:label>
+			<xforms:action ev:event="DOMActivate">
+				<xforms:send submission="sub-copy-answers" />
+			</xforms:action>
+		</xforms:trigger>
 		
 	</p>
 
