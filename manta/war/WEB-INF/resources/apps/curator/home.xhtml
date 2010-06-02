@@ -53,12 +53,14 @@
 			
         </xforms:model>
 
-       	<!-- <xi:include href="../common/includes/current-user-xforms-model.xml"/>  -->
+       	<xi:include href="../common/includes/current-user-xforms-model.xml"/>
 
     </head>
     <body>
 
-		<!-- <xi:include href="../common/includes/current-user-actions.xml"/>  -->
+		<xi:include href="../common/includes/current-user-actions.xml"/>
+		
+		<div id="content">
     
     	<h1>Curator Home</h1>
 
@@ -99,7 +101,7 @@
 	    					</td>
 	    					<td>
 	    						<a href="study-dashboard?study={atom:link[@rel='edit']/@href}">View</a> <br/>
-	    						<a href="spike-upload-curated-files?study={atom:link[@rel='edit']/@href}">Upload</a>
+	    						<a href="upload-curated-files?study={atom:link[@rel='edit']/@href}">Upload</a>
 	    					</td>
 	    				</tr>
 	    			</xforms:repeat>
@@ -107,6 +109,8 @@
 	    	</fr:datatable>
 	    	
     	</xforms:group>
+    	
+    	</div>
     	
     </body>
 </html>
