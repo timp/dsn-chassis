@@ -429,14 +429,15 @@
                 <!-- If not available (error) then reloads with no request param. -->
                 <!-- Note that this behaviour will depend on the if-param-condition in the send to prevent an endless loop. -->
                 
-                
+                <!-- 
                 <xforms:message ev:event="xforms-submit-error" level="modal">
 					An error occurred (
 					<xforms:output value="event('error-type')" />
 					) while getting the study info.
 				</xforms:message>
+				 -->
 				
-                <!-- <xforms:load ev:event="xforms-submit-error" resource="register-study-wizard"/>  -->
+                <xforms:load ev:event="xforms-submit-error" resource="register-study-wizard"/>
                      
 			</xforms:submission>
 
