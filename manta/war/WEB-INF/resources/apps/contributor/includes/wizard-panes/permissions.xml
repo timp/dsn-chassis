@@ -4,7 +4,7 @@
 	xmlns:ev="http://www.w3.org/2001/xml-events"
 	xmlns:atombeat="http://purl.org/atombeat/xmlns">
 
-	<h2>(2) Permissions</h2>
+	<h2>Permissions - (Step 2 of 5)</h2>
 
 	<h3>Administrators</h3>
              	
@@ -27,6 +27,7 @@
 					<td>
 						<xforms:input ref=".">
 							<xforms:label>Email Address:</xforms:label>
+							<xforms:alert>Please provide a valid email address.</xforms:alert>
 						</xforms:input>
 					</td>
 				</tr>
@@ -65,14 +66,13 @@
 
 	<p>
 	
-		<xforms:group ref="instance('ins-control')/save-draft-trigger">
-			<xforms:trigger appearance="minimal">
-				<xforms:label>&lt;&lt; Back Home</xforms:label>
-				<xforms:action ev:event="DOMActivate">
-					<xforms:send submission="sub-back-home"/>
-				</xforms:action>
-			</xforms:trigger>
-		</xforms:group>	
+
+		<xforms:trigger ref="instance('ins-control')/save-draft-trigger" appearance="minimal">
+			<xforms:label>&lt;&lt; Back Home</xforms:label>
+			<xforms:action ev:event="DOMActivate">
+				<xforms:send submission="sub-back-home"/>
+			</xforms:action>
+		</xforms:trigger>
 	
 		<xforms:trigger ref="instance('ins-control')/save-draft-trigger">
 			<xforms:label>&lt; Previous</xforms:label>

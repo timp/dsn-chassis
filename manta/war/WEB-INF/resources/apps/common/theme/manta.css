@@ -197,6 +197,7 @@ ul {
 	display:block;
 }
 
+/* FIXME: There is already a #bd in here, and with margin settings, so maybe either merge or remove. Maybe should also have elements, ids, then classes. */
 #bd {
 	margin: 0px;
 } 
@@ -204,3 +205,19 @@ ul {
 .xforms-label {
 	margin-right: 3px; 
 }
+
+.xforms-repeat-selected-item-1 {
+    /* Masks Orbeon's yellow highlight in wizard by matching background colour.*/
+    background-color: #FFFFFF;
+}
+
+.yui-content .xforms-repeat-selected-item-1 {
+    /* Gives same colour background on dashboard.*/
+    background-color: #EDF5FF;
+}
+
+.yui-content {
+    min-height: 10em;
+    
+}
+

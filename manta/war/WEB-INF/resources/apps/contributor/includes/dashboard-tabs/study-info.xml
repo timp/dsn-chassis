@@ -5,7 +5,7 @@
 	xmlns:ev="http://www.w3.org/2001/xml-events"
 	xmlns:xi="http://www.w3.org/2001/XInclude">
 
-
+	<xforms:group ref="instance('ins-control')/copy-answers-control">
 	<p>
 
 		<xforms:select1 ref="instance('ins-control')/href-to-copy-study-info-from">
@@ -30,6 +30,7 @@
 		</xforms:trigger>
 		
 	</p>
+	</xforms:group>
 
 
      <p>

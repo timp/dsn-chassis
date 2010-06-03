@@ -79,9 +79,12 @@
 	</xforms:group>		
 
      <p>
-         <xforms:submit submission="sub-put-study-entry">
-             <xforms:label>Save Changes</xforms:label>
-         </xforms:submit>
+     	<xforms:trigger ref="instance('ins-control')/save-study-trigger">
+     		<xforms:label>Save Changes</xforms:label>
+     		<xforms:action ev:event="DOMActivate">
+     			<xforms:send submission="sub-put-study-entry"/>
+     		</xforms:action>
+     	</xforms:trigger>
      </p>
 
 </div>

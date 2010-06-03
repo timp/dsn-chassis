@@ -4,7 +4,7 @@
 	xmlns:ev="http://www.w3.org/2001/xml-events"
 	xmlns:xxforms="http://orbeon.org/oxf/xml/xforms">
 	
-	<h2>(1) Study Terms</h2>
+	<h2>Study Terms - (Step 1 of 5)</h2>
 
 	<p>
 		<xforms:input ref="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:title">
@@ -20,16 +20,22 @@
 	</iframe>
 	
 	<p>
+		
+		<!-- TODO: more conformist workaround to put checkbox on right-hand side -->
+		<span>I accept the terms of submission:</span>
+		
 		<xforms:select ref="instance('ins-draft-entry')/atom:content/draft/registrant-has-agreed-to-the-terms" appearance="full">
                
 			<xforms:item ref="instance('ins-draft-entry')/atom:content/draft/registrant-has-agreed-to-the-terms">
-				<xforms:label>I accept the terms of submission:</xforms:label>
+				<!-- <xforms:label>I accept the terms of submission:</xforms:label> -->
+				<xforms:label></xforms:label>
 				<xforms:value>yes</xforms:value>
 			</xforms:item>
 			
 			<xforms:alert>Agreement to the terms of submission is required.</xforms:alert>
 		
-		</xforms:select>	
+		</xforms:select>
+		
 	</p>
 
 
@@ -40,7 +46,7 @@
 		</xforms:group>
 	
 		<xforms:group ref="instance('ins-draft-entry')/atom:link[@rel='edit']">
-			<xforms:trigger appearance="minimal">
+			<xforms:trigger ref="instance('ins-control')/save-draft-trigger" appearance="minimal">
 				<xforms:label>&lt;&lt; Back Home</xforms:label>
 				<xforms:action ev:event="DOMActivate">
 					<xforms:send submission="sub-back-home"/>

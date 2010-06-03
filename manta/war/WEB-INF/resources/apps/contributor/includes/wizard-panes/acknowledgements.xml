@@ -3,7 +3,7 @@
 	xmlns:xforms="http://www.w3.org/2002/xforms" 
 	xmlns:ev="http://www.w3.org/2001/xml-events">
 
-	<h2>(3) Acknowledgements</h2>
+	<h2>Acknowledgements - (Step 3 of 5)</h2>
 
 	    <xforms:group ref="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:content/study/acknowledgements">
 	        
@@ -36,6 +36,7 @@
 	                        <br/>
 	                        <xforms:input ref="email-address">
 	                            <xforms:label>Email address:</xforms:label>
+	                        	<xforms:alert>Please provide a valid email address.</xforms:alert>
 	                        </xforms:input>
 	                        <br/>
 	                        <xforms:input ref="institution">
@@ -97,15 +98,13 @@
 
 	<p>
 	
-		<xforms:group ref="instance('ins-control')/save-draft-trigger">
-			<xforms:trigger appearance="minimal">
-				<xforms:label>&lt;&lt; Back Home</xforms:label>
-				<xforms:action ev:event="DOMActivate">
-					<xforms:send submission="sub-back-home"/>
-				</xforms:action>
-			</xforms:trigger>
-		</xforms:group>		
-	
+		<xforms:trigger ref="instance('ins-control')/save-draft-trigger" appearance="minimal">
+			<xforms:label>&lt;&lt; Back Home</xforms:label>
+			<xforms:action ev:event="DOMActivate">
+				<xforms:send submission="sub-back-home"/>
+			</xforms:action>
+		</xforms:trigger>
+		
 		<xforms:trigger ref="instance('ins-control')/save-draft-trigger">
 			<xforms:label>&lt; Previous</xforms:label>
 			<xforms:action ev:event="DOMActivate">
