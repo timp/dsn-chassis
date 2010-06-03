@@ -346,7 +346,10 @@
 					<xforms:insert 
 						context="xxforms:instance('ins-sq-study-entry')/atom:content/study" 
 						nodeset="questionnaire" 
-						origin="instance('ins-study-entry-to-copy-study-info-from')/atom:content/study/questionnaire" />
+						origin="instance('ins-study-entry-to-copy-study-info-from')/atom:content/study/questionnaire"
+						at="last()" position="after" />
+					
+					<xforms:message>Answers have now been copied from &quot;<xforms:output ref="instance('ins-study-entry-to-copy-study-info-from')/atom:title"/> (<xforms:output ref="instance('ins-study-entry-to-copy-study-info-from')/manta:id"/>)&quot;, although changes have not been saved.</xforms:message>
 					
 				</xforms:action>
 				

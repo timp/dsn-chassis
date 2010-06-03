@@ -28,7 +28,7 @@
     xmlns:xxi="http://orbeon.org/oxf/xml/xinclude">
     
     <head>
-        <title>Manta Data Management - Submitter - Study <xforms:output value="instance('ins-study-entry')/manta:id"/> - Summary</title>
+        <title>Study Dashboard - Study <xforms:output value="instance('ins-study-entry')/manta:id"/></title>
         <link rel="stylesheet" type="text/css" href="/apps/submitter/common/style.css"></link>
         <link rel="stylesheet" type="text/css" href="/ops/yui/tabview/assets/skins/sam/tabview.css"></link>
         <style type="text/css"></style>
@@ -43,6 +43,7 @@
         			<add-publication-trigger/>
         			<uploads-entry-is-valid/>
         			<submit-files-trigger/>
+        			<study-is-published-unspecified/>
         			<href-to-copy-study-info-from/>
         			<copy-answers-trigger/>
         		</control>
@@ -56,6 +57,8 @@
 			<xforms:action ev:event="xxforms-valid" ev:observer="ins-uploads-entry">
 				<xforms:setvalue ev:event="xforms-value-changed" ref="instance('ins-control')/uploads-entry-is-valid">true</xforms:setvalue>
 			</xforms:action>
+			
+			<xforms:bind nodeset="instance('ins-control')/study-is-published-unspecified" relevant="instance('ins-study-entry')/atom:content/study[study-is-published = '']"/>
 			
 			<xforms:bind nodeset="instance('ins-control')/copy-answers-trigger" readonly="../href-to-copy-study-info-from = ''"/>
 
@@ -183,7 +186,22 @@
 				instance="ins-study-entry-to-copy-study-info-from">
 				
 				<xforms:action ev:event="xforms-submit-done">
-					<xforms:insert nodeset="xxforms:instance('ins-sq-study-entry')" origin="instance('ins-study-entry-to-copy-study-info-from')" />
+					
+					<!-- 
+						Make sure we replace only the <questionnaire> element 
+						and not the whole <atom:entry>, otherwise the edit link
+						will be wrong and the data will get PUT to the wrong
+						URL when changes are saved.
+					-->
+					
+					<xforms:delete nodeset="xxforms:instance('ins-sq-study-entry')/atom:content/study/questionnaire"/>
+					<xforms:insert 
+						context="xxforms:instance('ins-sq-study-entry')/atom:content/study" 
+						nodeset="questionnaire" 
+						origin="instance('ins-study-entry-to-copy-study-info-from')/atom:content/study/questionnaire"
+						at="last()" position="after" />
+					
+					<xforms:message>Answers have now been copied from &quot;<xforms:output ref="instance('ins-study-entry-to-copy-study-info-from')/atom:title"/> (<xforms:output ref="instance('ins-study-entry-to-copy-study-info-from')/manta:id"/>)&quot;, although changes have not been saved.</xforms:message>
 				</xforms:action>
 				
 				
@@ -207,7 +225,7 @@
 		
 		<div id="content">
 
-		<h1>Study Dashboard</h1>
+		<h1>Study Dashboard - <xforms:output value="instance('ins-study-entry')/atom:title"/> (<xforms:output value="instance('ins-study-entry')/manta:id"/>)</h1>
 
 		<p>
 			<a href="home">&lt;&lt; Back Home</a>

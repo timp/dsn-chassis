@@ -231,6 +231,14 @@
 	    	</p>
 	    	
 	    	<p>
+	    	
+				<xforms:trigger>
+					<xforms:label>&lt;&lt; Cancel</xforms:label>
+					<xforms:action ev:event="DOMActivate">
+						<xforms:load resource="home"/>
+					</xforms:action>
+				</xforms:trigger>
+	    	
 	    		<xforms:submit submission="sub-post-review">
 	    			<xforms:label>Submit Review</xforms:label>
 	    		</xforms:submit>
