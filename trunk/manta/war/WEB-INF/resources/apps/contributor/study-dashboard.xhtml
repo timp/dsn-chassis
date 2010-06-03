@@ -28,7 +28,7 @@
     xmlns:xxi="http://orbeon.org/oxf/xml/xinclude">
     
     <head>
-        <title>Manta Data Management - Submitter - Study <xforms:output value="instance('ins-study-entry')/manta:id"/> - Summary</title>
+        <title>Study Dashboard - Study <xforms:output value="instance('ins-study-entry')/manta:id"/></title>
         <link rel="stylesheet" type="text/css" href="/apps/submitter/common/style.css"></link>
         <link rel="stylesheet" type="text/css" href="/ops/yui/tabview/assets/skins/sam/tabview.css"></link>
         <style type="text/css"></style>
@@ -40,17 +40,52 @@
         		<control xmlns="">
         			<!-- Defaults to summary if there is no tab request-paramater, determined in the setvalue logic below. -->
         			<dashboard-tab-to-show />
+        			<permissions-entry-is-valid/>
+        			<save-permissions-trigger/>
+        			<study-entry-is-valid/>
+        			<save-study-trigger/>
         			<add-publication-trigger/>
         			<uploads-entry-is-valid/>
         			<submit-files-trigger/>
         			<href-to-copy-study-info-from/>
+        			<copy-answers-control/>
         			<copy-answers-trigger/>
         		</control>
         	</xforms:instance>
         	
         	<xforms:setvalue ev:event="xforms-model-construct-done" ref="instance('ins-control')/dashboard-tab-to-show" value="if(not(empty(xxforms:get-request-parameter('tab')))) then xxforms:get-request-parameter('tab') else 'summary'" />
 
+
+
+			<xforms:action ev:event="xxforms-invalid" ev:observer="ins-permissions-entry">
+				<xforms:setvalue ev:event="xforms-value-changed" ref="instance('ins-control')/permissions-entry-is-valid">false</xforms:setvalue>
+			</xforms:action>
+			<xforms:action ev:event="xxforms-valid" ev:observer="ins-permissions-entry">
+				<xforms:setvalue ev:event="xforms-value-changed" ref="instance('ins-control')/permissions-entry-is-valid">true</xforms:setvalue>
+			</xforms:action>
+
+			<xforms:bind nodeset="instance('ins-control')/save-permissions-trigger" readonly="not(../permissions-entry-is-valid = 'true')"/>
+	
+
+
+			<!-- Check email addresses in acknowledgements (not required) -->			
+			<xforms:bind nodeset="instance('ins-study-entry')/atom:content/study/acknowledgements/person/email-address" type="xforms:email"/>
+
+			<xforms:action ev:event="xxforms-invalid" ev:observer="ins-study-entry">
+				<xforms:setvalue ev:event="xforms-value-changed" ref="instance('ins-control')/study-entry-is-valid">false</xforms:setvalue>
+			</xforms:action>
+			<xforms:action ev:event="xxforms-valid" ev:observer="ins-study-entry">
+				<xforms:setvalue ev:event="xforms-value-changed" ref="instance('ins-control')/study-entry-is-valid">true</xforms:setvalue>
+			</xforms:action>
+
+			<xforms:bind nodeset="instance('ins-control')/save-study-trigger" readonly="not(../study-entry-is-valid = 'true')"/>
+	
+
+
+
 			<xforms:bind nodeset="instance('ins-control')/add-publication-trigger" relevant="instance('ins-study-entry')/atom:content/study/study-is-published='Yes'"/>
+
+
 
 			<xforms:action ev:event="xxforms-invalid" ev:observer="ins-uploads-entry">
 				<xforms:setvalue ev:event="xforms-value-changed" ref="instance('ins-control')/uploads-entry-is-valid">false</xforms:setvalue>
@@ -59,9 +94,19 @@
 				<xforms:setvalue ev:event="xforms-value-changed" ref="instance('ins-control')/uploads-entry-is-valid">true</xforms:setvalue>
 			</xforms:action>
 
+
         	<xforms:bind nodeset="instance('ins-control')/submit-files-trigger" readonly="not(../uploads-entry-is-valid = 'true')"/>
         	
+        	
+        	<xforms:bind nodeset="instance('ins-control')/copy-answers-control" relevant="instance('ins-study-feed')[count(atom:entry)>1]"/>
         	<xforms:bind nodeset="instance('ins-control')/copy-answers-trigger" readonly="../href-to-copy-study-info-from = ''"/>
+        	
+        	
+
+        	
+        	
+        	
+        	
         	
 			<xforms:instance id="ins-study-entry">
 				<atom:entry/>
@@ -146,6 +191,13 @@
   			</xforms:instance>
   			
   			
+  			
+			<!-- Require valid email addresses in the permissions field -->			
+			<xforms:bind nodeset="instance('ins-permissions-entry')/atom:content/atombeat:security-descriptor/atombeat:groups/atombeat:group[@id='GROUP_ADMINISTRATORS']/atombeat:member" type="xforms:email" required="true()"/>
+  			
+  			
+  			
+  			
   			<xforms:instance id="ins-person-template" src="/apps/common/templates/study/person-template.xml"/>
   			
   			
@@ -155,14 +207,7 @@
 
 			        <xforms:bind nodeset="publication" relevant="instance('ins-study-entry')/atom:content/study/study-is-published='Yes'">
 			            
-			            <xforms:bind nodeset="title" required="true()"/>
-			            <xforms:bind nodeset="first-author" required="true()"/>
-			            <xforms:bind nodeset="status" required="true()"/>
-			            <xforms:bind nodeset="year"/>
-			            <xforms:bind nodeset="journal"/>
-			            <xforms:bind nodeset="url"/>
-			            <xforms:bind nodeset="doi"/>
-			            <xforms:bind nodeset="pubmed-id"/>
+			            <xforms:bind nodeset="web-link" type="xs:anyURI" required="true()"/>
 			            
 			        </xforms:bind>
 			        
@@ -327,7 +372,7 @@
 
 		<div id="content">
 
-		<h1>Study Dashboard</h1>
+		<h1>Study Dashboard - <xforms:output value="instance('ins-study-entry')/atom:title"/> (<xforms:output value="instance('ins-study-entry')/manta:id"/>)</h1>
 
 		<p>
 			<a href="home">&lt;&lt; Back Home</a>

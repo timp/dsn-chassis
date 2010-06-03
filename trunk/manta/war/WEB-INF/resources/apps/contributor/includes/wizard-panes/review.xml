@@ -3,9 +3,9 @@
 	xmlns:xforms="http://www.w3.org/2002/xforms" 
 	xmlns:ev="http://www.w3.org/2001/xml-events">
 
-	<h2>(6) Review</h2>
+	<h2>Review</h2>
 
-	<h3>Title</h3>
+	<h3>(1) Title</h3>
 	
 	<p>
 		<xforms:output ref="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:title" />
@@ -21,7 +21,7 @@
 		</xforms:trigger>
 	</p>	
 	
-	<h3>Permissions</h3>
+	<h3>(2) Permissions</h3>
 	
 	<h4>Administrators:</h4>
 	
@@ -45,7 +45,7 @@
 		</xforms:trigger>
 	</p>		
 	
-	<h3>Acknowledgements</h3>
+	<h3>(3) Acknowledgements</h3>
 	
 	
 	
@@ -90,7 +90,7 @@
 		</xforms:trigger>
 	</p>
 
-	<h3>Files</h3>
+	<h3>(4) Files</h3>
 
 
 	
@@ -135,7 +135,7 @@
 		</xforms:trigger>
 	</p>	
 	
-	<h3>Publications</h3>
+	<h3>(5) Publications</h3>
 
 
 	
@@ -166,14 +166,12 @@
 
 	<p>
 	
-		<xforms:group ref="instance('ins-control')/save-draft-trigger">
-			<xforms:trigger appearance="minimal">
-				<xforms:label>&lt;&lt; Back Home</xforms:label>
-				<xforms:action ev:event="DOMActivate">
-					<xforms:send submission="sub-back-home"/>
-				</xforms:action>
-			</xforms:trigger>
-		</xforms:group>		
+		<xforms:trigger ref="instance('ins-control')/save-draft-trigger" appearance="minimal">
+			<xforms:label>&lt;&lt; Back Home</xforms:label>
+			<xforms:action ev:event="DOMActivate">
+				<xforms:send submission="sub-back-home"/>
+			</xforms:action>
+		</xforms:trigger>	
 	
 		<xforms:trigger>
 			<xforms:label>Confirm</xforms:label>

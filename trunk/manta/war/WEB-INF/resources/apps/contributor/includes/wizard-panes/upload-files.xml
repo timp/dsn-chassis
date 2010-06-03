@@ -5,7 +5,7 @@
 	xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
 	xmlns:xxforms="http://orbeon.org/oxf/xml/xforms">
 
-	<h2>(4) Upload Files</h2>
+	<h2>Upload Files - (Step 4 of 5)</h2>
 	
 		           
 					
@@ -88,14 +88,12 @@
 			
 	<p>
 	
-		<xforms:group ref="instance('ins-control')/save-draft-trigger">
-			<xforms:trigger appearance="minimal">
-				<xforms:label>&lt;&lt; Back Home</xforms:label>
-				<xforms:action ev:event="DOMActivate">
-					<xforms:send submission="sub-back-home"/>
-				</xforms:action>
-			</xforms:trigger>
-		</xforms:group>	
+		<xforms:trigger ref="instance('ins-control')/save-draft-trigger" appearance="minimal">
+			<xforms:label>&lt;&lt; Back Home</xforms:label>
+			<xforms:action ev:event="DOMActivate">
+				<xforms:send submission="sub-back-home"/>
+			</xforms:action>
+		</xforms:trigger>	
 	
 		<xforms:trigger ref="instance('ins-control')/save-draft-trigger">
 			<xforms:label>&lt; Previous</xforms:label>

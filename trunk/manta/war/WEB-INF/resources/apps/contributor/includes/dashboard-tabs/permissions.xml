@@ -24,6 +24,7 @@
 					<td>
 						<xforms:input ref=".">
 							<xforms:label>Email address:</xforms:label>
+							<xforms:alert>Please provide a valid email address.</xforms:alert>
 						</xforms:input>
 					</td>
 				</tr>
@@ -59,9 +60,12 @@
 	</xforms:group>
 	
      <p>
-         <xforms:submit submission="sub-put-permissions-entry">
-             <xforms:label>Save Changes</xforms:label>
-         </xforms:submit>
+     	<xforms:trigger ref="instance('ins-control')/save-permissions-trigger">
+     		<xforms:label>Save Changes</xforms:label>
+     		<xforms:action ev:event="DOMActivate">
+     			<xforms:send submission="sub-put-permissions-entry"/>
+     		</xforms:action>
+     	</xforms:trigger>
      </p>
 	
 </div>
