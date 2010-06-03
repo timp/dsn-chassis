@@ -10,21 +10,25 @@ import module namespace util = "http://exist-db.org/xquery/util" ;
 import module namespace xutil = "http://purl.org/atombeat/xquery/xutil" at "../lib/xutil.xqm" ;
 
 
+declare variable $config:service-url-base as xs:string := "http://localhost:8081/manta/atombeat" ;
+
+
 (:
  : The base URL for the Atom service. This URL will be prepended to all edit
  : and self link href values.
  :)
-declare variable $config:service-url as xs:string := "http://localhost:8080/manta/atombeat/content" ;
+declare variable $config:content-service-url as xs:string := concat( $config:service-url-base , "/content" ) ;
 
 
 (:
  : The base URL for the History service. This URL will be prepended to all 
  : history link href values.
  :)
-declare variable $config:history-service-url as xs:string := "http://localhost:8080/manta/atombeat/history" ;
+declare variable $config:history-service-url as xs:string := concat( $config:service-url-base , "/history" ) ;
  
 
-declare variable $config:security-service-url as xs:string := "http://localhost:8080/manta/atombeat/security" ;
+declare variable $config:security-service-url as xs:string := concat( $config:service-url-base , "/security" ) ;
+
 
 
 (:
@@ -412,7 +416,7 @@ declare function config:submitted-media-collection-security-descriptor(
     
     (: construct study URI to reference group :)
     
-    let $study-uri := concat( $config:service-url , "/studies/" , $study-id , ".atom" )
+    let $study-uri := concat( $config:content-service-url , "/studies/" , $study-id , ".atom" )
     
     return 
     
@@ -521,7 +525,7 @@ declare function config:curated-media-collection-security-descriptor(
     
     (: construct study URI to reference group :)
     
-    let $study-uri := concat( $config:service-url , "/studies/" , $study-id , ".atom" )
+    let $study-uri := concat( $config:content-service-url , "/studies/" , $study-id , ".atom" )
     
     return 
 
@@ -607,7 +611,7 @@ declare function config:derivations-collection-security-descriptor(
     
     (: construct study URI to reference group :)
     
-    let $study-uri := concat( $config:service-url , "/studies/" , $study-id , ".atom" )
+    let $study-uri := concat( $config:content-service-url , "/studies/" , $study-id , ".atom" )
     
     return 
 
@@ -676,7 +680,7 @@ declare function config:personal-data-reviews-collection-security-descriptor(
     
     (: construct study URI to reference group :)
     
-    let $study-uri := concat( $config:service-url , "/studies/" , $study-id , ".atom" )
+    let $study-uri := concat( $config:content-service-url , "/studies/" , $study-id , ".atom" )
     
     return
 
@@ -878,7 +882,7 @@ declare function config:submitted-media-member-security-descriptor(
     
     (: construct study URI to reference group :)
     
-    let $study-uri := concat( $config:service-url , "/studies/" , $study-id , ".atom" )
+    let $study-uri := concat( $config:content-service-url , "/studies/" , $study-id , ".atom" )
     
     return 
     

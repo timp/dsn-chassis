@@ -710,28 +710,28 @@ declare function manta-plugin:augment-study-entry(
     let $submitted-media-collection-link := 
         <atom:link 
             rel="http://www.cggh.org/2010/chassis/terms/submittedMedia" 
-            href="{concat( $config:service-url , $submitted-media-collection-path-info )}"
+            href="{concat( $config:content-service-url , $submitted-media-collection-path-info )}"
             type="application/atom+xml"/>
         
     let $curated-media-collection-path-info := manta-plugin:curated-media-collection-path-info-for-study-entry( $entry )
     let $curated-media-collection-link := 
         <atom:link 
             rel="http://www.cggh.org/2010/chassis/terms/curatedMedia" 
-            href="{concat( $config:service-url , $curated-media-collection-path-info )}"
+            href="{concat( $config:content-service-url , $curated-media-collection-path-info )}"
             type="application/atom+xml"/>
         
     let $derivations-collection-path-info := manta-plugin:derivations-collection-path-info-for-study-entry( $entry )
     let $derivations-collection-link := 
         <atom:link 
             rel="http://www.cggh.org/2010/chassis/terms/derivations" 
-            href="{concat( $config:service-url , $derivations-collection-path-info )}"
+            href="{concat( $config:content-service-url , $derivations-collection-path-info )}"
             type="application/atom+xml"/>
         
     let $personal-data-reviews-collection-path-info := manta-plugin:personal-data-reviews-collection-path-info-for-study-entry( $entry )
     let $personal-data-reviews-collection-link := 
         <atom:link 
             rel="http://www.cggh.org/2010/chassis/terms/personalDataReviews" 
-            href="{concat( $config:service-url , $personal-data-reviews-collection-path-info )}"
+            href="{concat( $config:content-service-url , $personal-data-reviews-collection-path-info )}"
             type="application/atom+xml"/>
         
     let $entry := 
@@ -762,11 +762,11 @@ declare function manta-plugin:augment-submitted-media-entry(
     
     let $study-id := text:groups( $entry/atom:link[@rel='self']/@href , "([^/]+)/[^/]+\.atom$" )[2]
     let $origin-study-path-info := concat( "/studies/" , $study-id , ".atom" )
-    let $origin-study-uri := concat( $config:service-url , $origin-study-path-info )
+    let $origin-study-uri := concat( $config:content-service-url , $origin-study-path-info )
     
     let $personal-data-reviews-uri := 
         concat( 
-            $config:service-url , 
+            $config:content-service-url , 
             manta-plugin:personal-data-reviews-collection-path-info( $study-id ) ,
             "?reviewSubject=" ,
             $entry/atom:link[@rel='self']/@href

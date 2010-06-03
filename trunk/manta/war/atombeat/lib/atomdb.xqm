@@ -499,6 +499,7 @@ declare function atomdb:mutable-feed-children(
 
 
 declare function atomdb:mutable-entry-children(
+    $request-path-info as xs:string ,
     $request-data as element(atom:entry)
 ) as element()*
 {
@@ -513,6 +514,7 @@ declare function atomdb:mutable-entry-children(
         and not( $namespace-uri = $CONSTANT:ATOM-NSURI and $local-name = $CONSTANT:ATOM-LINK and $child/@rel = "edit" )
         and not( $namespace-uri = $CONSTANT:ATOM-NSURI and $local-name = $CONSTANT:ATOM-LINK and $child/@rel = "edit-media" )
         and not( $config:auto-author and $namespace-uri = $CONSTANT:ATOM-NSURI and $local-name = $CONSTANT:ATOM-AUTHOR )
+        and not( atomdb:media-link-available( $request-path-info ) and $namespace-uri = $CONSTANT:ATOM-NSURI and $local-name = $CONSTANT:ATOM-CONTENT )
     return $child
 };
 
@@ -526,7 +528,7 @@ declare function atomdb:create-feed(
 
     (: TODO validate input data :)
     
-    let $id := concat( $config:service-url , $request-path-info )
+    let $id := concat( $config:content-service-url , $request-path-info )
     let $updated := current-dateTime()
     let $self-uri := $id
     let $edit-uri := $id
@@ -602,11 +604,12 @@ declare function atomdb:create-entry(
 ) as element(atom:entry)
 {
 
-    let $id := concat( $config:service-url , $request-path-info , "/" , $member-id , ".atom" )
+    let $id := concat( $config:content-service-url , $request-path-info , "/" , $member-id , ".atom" )
     let $published := current-dateTime()
     let $updated := $published
     let $self-uri := $id
     let $edit-uri := $id
+    let $path-info := substring-after( $id , $config:content-service-url )
     
     (: TODO review this, maybe provide user as function arg, rather than interrogate request here :)
     let $user-name := request:get-attribute( $config:user-name-request-attribute-key )
@@ -631,7 +634,7 @@ declare function atomdb:create-entry(
             else ()
         }
         {
-            atomdb:mutable-entry-children($request-data)
+            atomdb:mutable-entry-children( $path-info , $request-data )
         }
         </atom:entry>  
      
@@ -645,18 +648,19 @@ declare function atomdb:create-media-link-entry(
     $member-id as xs:string ,
     $media-type as xs:string ,
     $media-link-title as xs:string? ,
-    $media-link-summary as xs:string? 
+    $media-link-summary as xs:string? ,
+    $media-link-category as xs:string?
 ) as element(atom:entry)
 {
 
-    let $id := concat( $config:service-url , $request-path-info , "/" , $member-id , ".atom" )
+    let $id := concat( $config:content-service-url , $request-path-info , "/" , $member-id , ".atom" )
     let $log := util:log( "debug", $id )
     
     let $published := current-dateTime()
     let $updated := $published
     let $self-uri := $id
     let $edit-uri := $id
-    let $media-uri := concat( $config:service-url , $request-path-info , "/" , $member-id , ".media" )
+    let $media-uri := concat( $config:content-service-url , $request-path-info , "/" , $member-id , ".media" )
     
     (: TODO review this, maybe provide user as function arg, rather than interrogate request here :)
     let $user-name := request:get-attribute( $config:user-name-request-attribute-key )
@@ -668,6 +672,15 @@ declare function atomdb:create-media-link-entry(
     let $summary :=
     	if ( $media-link-summary ) then $media-link-summary
     	else "media resource"
+    	
+    let $category :=
+        if ( exists( $media-link-category ) )
+        then 
+            let $scheme := text:groups( $media-link-category , 'scheme="([^"]+)"' )[2]
+            let $term := text:groups( $media-link-category , 'term="([^"]+)"' )[2]
+            let $label := text:groups( $media-link-category , 'label="([^"]+)"' )[2]
+            return <atom:category scheme="{$scheme}" term="{$term}" label="{$label}"/>
+        else ()        
     	
 	let $media-size :=
 		xmldb:size( atomdb:request-path-info-to-db-path( $request-path-info ) , concat( $member-id , ".media" ) )
@@ -685,6 +698,7 @@ declare function atomdb:create-media-link-entry(
             <atom:title type="text">{$title}</atom:title>
             <atom:summary type="text">{$summary}</atom:summary>
         {
+            $category , 
             if ( $config:auto-author )
             then
                 <atom:author>
@@ -712,6 +726,7 @@ declare function atomdb:update-entry(
     
     let $updated := current-dateTime()
     let $log := util:log( "debug" , concat( "$updated: " , $updated ) )
+    let $path-info := substring-after( $entry/atom:link[@rel='edit']/@href , $config:content-service-url )
 
     return
     
@@ -726,7 +741,8 @@ declare function atomdb:update-entry(
                 $entry/atom:link[@rel="edit"] ,
                 $entry/atom:link[@rel="edit-media"] ,
                 if ( $config:auto-author ) then $entry/atom:author else () ,
-                atomdb:mutable-entry-children($request-data)
+                if ( atomdb:media-link-available( $path-info ) ) then $entry/atom:content else () ,
+                atomdb:mutable-entry-children( $path-info , $request-data )
             }
         </atom:entry>  
 };
@@ -736,9 +752,22 @@ declare function atomdb:update-entry(
 declare function atomdb:create-media-resource(
 	$request-path-info as xs:string , 
 	$request-data as item()* , 
+	$media-type as xs:string 
+) as element(atom:entry)?
+{
+    atomdb:create-media-resource( $request-path-info , $request-data , $media-type , () , () , () )
+};
+
+
+
+
+declare function atomdb:create-media-resource(
+	$request-path-info as xs:string , 
+	$request-data as item()* , 
 	$media-type as xs:string ,
 	$media-link-title as xs:string? ,
-	$media-link-summary as xs:string? 
+	$media-link-summary as xs:string? ,
+	$media-link-category as xs:string?
 ) as element(atom:entry)?
 {
 
@@ -750,7 +779,7 @@ declare function atomdb:create-media-resource(
 
 	let $media-resource-db-path := xmldb:store( $collection-db-path , $media-resource-name , $request-data , $media-type )
 	
-    let $media-link-entry := atomdb:create-media-link-entry( $request-path-info, $member-id , $media-type , $media-link-title , $media-link-summary )
+    let $media-link-entry := atomdb:create-media-link-entry( $request-path-info, $member-id , $media-type , $media-link-title , $media-link-summary , $media-link-category )
     
     let $media-link-entry-doc-db-path := xmldb:store( $collection-db-path , concat( $member-id , ".atom" ) , $media-link-entry , $CONSTANT:MEDIA-TYPE-ATOM )    
     
