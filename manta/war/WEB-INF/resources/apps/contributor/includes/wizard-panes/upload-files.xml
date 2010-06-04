@@ -43,7 +43,7 @@
 	</p>
 	
 	<p>
-		<xforms:trigger>
+		<xforms:trigger ref="instance('ins-control')/upload-file-trigger">
 			<xforms:label>Upload</xforms:label>
 			<xforms:send ev:event="DOMActivate" submission="sub-post-upload"/>
 		</xforms:trigger>

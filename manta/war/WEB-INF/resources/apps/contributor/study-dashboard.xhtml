@@ -44,8 +44,8 @@
         			<study-entry-is-valid/>
         			<save-study-trigger/>
         			<add-publication-trigger/>
-        			<uploads-entry-is-valid/>
-        			<submit-files-trigger/>
+        			<upload-is-valid/>
+        			<upload-file-trigger/>
         			<href-to-copy-study-info-from/>
         			<copy-answers-control/>
         			<copy-answers-trigger/>
@@ -86,15 +86,15 @@
 
 
 
-			<xforms:action ev:event="xxforms-invalid" ev:observer="ins-uploads-entry">
-				<xforms:setvalue ev:event="xforms-value-changed" ref="instance('ins-control')/uploads-entry-is-valid">false</xforms:setvalue>
+			<xforms:action ev:event="xxforms-invalid" ev:observer="ins-upload">
+				<xforms:setvalue ev:event="xforms-value-changed" ref="instance('ins-control')/upload-is-valid">false</xforms:setvalue>
 			</xforms:action>
-			<xforms:action ev:event="xxforms-valid" ev:observer="ins-uploads-entry">
-				<xforms:setvalue ev:event="xforms-value-changed" ref="instance('ins-control')/uploads-entry-is-valid">true</xforms:setvalue>
+			<xforms:action ev:event="xxforms-valid" ev:observer="ins-upload">
+				<xforms:setvalue ev:event="xforms-value-changed" ref="instance('ins-control')/upload-is-valid">true</xforms:setvalue>
 			</xforms:action>
 
 
-        	<xforms:bind nodeset="instance('ins-control')/submit-files-trigger" readonly="not(../uploads-entry-is-valid = 'true')"/>
+        	<xforms:bind nodeset="instance('ins-control')/upload-file-trigger" readonly="not(../upload-is-valid = 'true')"/>
         	
         	
         	<xforms:bind nodeset="instance('ins-control')/copy-answers-control" relevant="instance('ins-study-feed')[count(atom:entry)>1]"/>
@@ -346,11 +346,11 @@
         	
         	
         	
-        	<!-- some bindings on the upload instance ... TODO make the upload button readonly if no file or type selected -->
+        	<!-- some bindings on the upload instance -->
         	
         	<xforms:bind nodeset="instance('ins-upload')">
         		<xforms:bind nodeset="@term" required="true()"/>
-        		<xforms:bind nodeset="@label" relevant="../@term='http://www.cggh.org/2010/chassis/terms/Other'" required="true()"/>
+        		<xforms:bind nodeset="@label" relevant="../@term='http://www.cggh.org/2010/chassis/terms/Other'" required="../@term='http://www.cggh.org/2010/chassis/terms/Other'"/>
         		<xforms:bind nodeset="category" calculate="concat('scheme=&quot;', ../@scheme, '&quot;; term=&quot;', ../@term, '&quot;; label=&quot;', ../@label, '&quot;;')"/>
         	</xforms:bind>        	
         	
