@@ -43,6 +43,8 @@
     
     <intercept-url pattern="/curator/**" access="ROLE_CHASSIS_CURATOR, ROLE_CHASSIS_ADMINISTRATOR" />
     
+    <intercept-url pattern="/**" access="ROLE_CHASSIS_ADMINISTRATOR" />
+    
   </http>
   
   
