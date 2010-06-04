@@ -20,8 +20,8 @@
     <property as="xs:integer" name="oxf.cache.size"                                  value="500"/>
     <property as="xs:integer" name="oxf.cache.xpath.size"                            value="600"/>
     <property as="xs:boolean" name="oxf.sax.inspection"                              value="false"/>
-    <property as="xs:boolean" name="oxf.resources.versioned"                         value="false"/>
-    <property as="xs:string"  name="oxf.resources.version-number"                    value="3.1415"/>
+    <property as="xs:boolean" name="oxf.resources.versioned"                         value="true"/>
+    <property as="xs:string"  name="oxf.resources.version-number"                    value="manta-1.0-alpha-SNAPSHOT"/>
 
     <property as="xs:anyURI"  name="oxf.url-rewriting.service.base-uri"              value=""/>
     <property as="xs:string"  name="oxf.url-rewriting.strategy.servlet"              value="servlet"/>
