@@ -53,5 +53,12 @@ declare variable $config-collections:collection-spec :=
             <exclude-entry-content>false</exclude-entry-content>
             <recursive>true</recursive>
         </collection>   
+        <collection>
+            <title>Sandbox</title>
+            <path-info>/sandbox</path-info>
+            <enable-history>false</enable-history>
+            <exclude-entry-content>false</exclude-entry-content>
+            <recursive>false</recursive>
+        </collection>   
     </spec>
 ;
