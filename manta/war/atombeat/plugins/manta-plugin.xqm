@@ -426,9 +426,13 @@ declare function manta-plugin:after-list-collection(
     
     then manta-plugin:after-list-collection-drafts( $feed , $response-content-type )
     
-    else if ( matches( $request-path-info , "^/media" ) )
+    else if ( matches( $request-path-info , "^/media/submitted" ) )
     
-    then manta-plugin:after-list-collection-media( $feed , $response-content-type )
+    then manta-plugin:after-list-collection-submitted-media( $feed , $response-content-type )
+    
+    else if ( matches( $request-path-info , "^/media/curated" ) )
+    
+    then manta-plugin:after-list-collection-curated-media( $feed , $response-content-type )
     
     else if ( matches( $request-path-info , "^/reviews/personal-data/[^/]+" ) )
     
@@ -730,7 +734,7 @@ declare function manta-plugin:after-list-collection-drafts(
 
 
 
-declare function manta-plugin:after-list-collection-media(
+declare function manta-plugin:after-list-collection-submitted-media(
     $feed as element(atom:feed) ,
     $response-content-type as xs:string?
 ) as item()*
@@ -745,6 +749,32 @@ declare function manta-plugin:after-list-collection-media(
             
             for $entry in $feed/atom:entry
             return manta-plugin:augment-submitted-media-entry( $entry )
+            
+        }
+        </atom:feed>
+    
+    return ( $feed , $response-content-type )
+    
+};
+
+
+
+
+declare function manta-plugin:after-list-collection-curated-media(
+    $feed as element(atom:feed) ,
+    $response-content-type as xs:string?
+) as item()*
+{
+    
+    let $feed := 
+        <atom:feed>
+        {
+        
+            $feed/attribute::* ,
+            $feed/child::*[ not( local-name(.) = $CONSTANT:ATOM-ENTRY and namespace-uri(.) = $CONSTANT:ATOM-NSURI ) ] ,
+            
+            for $entry in $feed/atom:entry
+            return manta-plugin:augment-curated-media-entry( $entry )
             
         }
         </atom:feed>
@@ -960,7 +990,6 @@ declare function manta-plugin:augment-draft-entry(
         
     let $entry := 
         <atom:entry>
-            <manta:id>{manta-plugin:get-id($entry)}</manta:id>
         {
             $entry/attribute::* ,
             $entry/child::* ,
@@ -1001,6 +1030,34 @@ declare function manta-plugin:augment-submitted-media-entry(
             $entry/child::* ,
             <atom:link rel="http://www.cggh.org/2010/chassis/terms/originStudy" href="{$origin-study-uri}" type="application/atom+xml"/> ,
             <atom:link rel="http://www.cggh.org/2010/chassis/terms/personalDataReviews" href="{$personal-data-reviews-uri}" type="application/atom+xml"/>
+        }
+        </atom:entry>
+            
+    return $entry
+
+};
+
+
+
+
+declare function manta-plugin:augment-curated-media-entry(
+    $entry as element(atom:entry)
+) as element(atom:entry)
+{
+
+    let $id := manta-plugin:get-id($entry)
+    
+    let $study-id := text:groups( $entry/atom:link[@rel='self']/@href , "([^/]+)/[^/]+\.atom$" )[2]
+    let $origin-study-path-info := concat( "/studies/" , $study-id , ".atom" )
+    let $origin-study-uri := concat( $config:content-service-url , $origin-study-path-info )
+    
+    let $entry := 
+        <atom:entry>
+            <manta:id>{$id}</manta:id>
+        {
+            $entry/attribute::* ,
+            $entry/child::* ,
+            <atom:link rel="http://www.cggh.org/2010/chassis/terms/originStudy" href="{$origin-study-uri}" type="application/atom+xml"/> 
         }
         </atom:entry>
             

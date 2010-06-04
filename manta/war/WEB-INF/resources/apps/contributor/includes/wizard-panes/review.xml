@@ -80,7 +80,7 @@
 		</ol>
 	</xforms:group>
 	<xforms:group ref="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:content/study/acknowledgements[empty(person)]">
-		<p>No Acknowledgements.</p>
+		<p>No acknowledgements.</p>
 	</xforms:group>
 
 	<p>
@@ -164,7 +164,7 @@
 		</ul>
 	</xforms:group>
 	<xforms:group ref="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:content/study/publications[empty(publication)]">
-		<p>No Acknowledgements.</p>
+		<p>No publications.</p>
 	</xforms:group>
 	
 	<p>
