@@ -108,5 +108,60 @@
 			    	</fr:datatable>
 			    	
 			</xforms:group>
+
+	<h2>Curated Files</h2>
+	
+	<xforms:group ref="instance('ins-curated-media-feed')[empty(atom:entry)]">
+		<p>There are no curated files.</p>
+	</xforms:group>
+	
+	<xforms:group ref="instance('ins-curated-media-feed')[exists(atom:entry)]">
 		
+		<fr:datatable paginated="false">
+			<thead>
+				<tr>
+					<th fr:sortable="true" fr:resizeable="true">Code</th>
+					<th fr:sortable="true" fr:resizeable="true">File Name</th>
+					<th fr:sortable="true" fr:resizeable="true">Date Submitted</th>
+					<th fr:sortable="true" fr:resizeable="true">Curated By</th>
+					<th fr:sortable="true" fr:resizeable="true">Type</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				<!-- will not try to use xxforms:sort on nodeset because it causes problems with datatable sorting by file type column -->
+				<xforms:repeat id="rep-curated-media" nodeset="atom:entry">
+					<tr>
+						<td>
+							<xforms:output ref="manta:id"/>
+						</td>
+						<td>
+							<xforms:output ref="atom:title"/>
+						</td>
+						<td>
+							<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')"/>
+						</td>
+						<td>
+							<xforms:output ref="atom:author/atom:email"/>
+						</td>
+						<td>
+							<xforms:output ref="
+								for $cat in (./atom:category[@scheme='http://www.cggh.org/2010/chassis/scheme/FileTypes'])
+								return
+								if ( $cat/@term = 'http://www.cggh.org/2010/chassis/terms/Other' )
+								then $cat/@label
+								else instance('ins-file-terms')/term[value=$cat/@term]/label
+								"/>
+						</td>
+						<td>
+							<xforms:group ref=".[contains( ./atom:link[@rel='edit-media']/@atombeat:allow , 'GET' )]">
+								<a href="{atom:content/@src}">Download</a>
+							</xforms:group>
+						</td>
+					</tr>
+				</xforms:repeat>
+			</tbody>
+		</fr:datatable>
+		
+	</xforms:group>
 </div>

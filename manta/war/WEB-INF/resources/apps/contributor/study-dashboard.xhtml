@@ -29,7 +29,6 @@
     
     <head>
         <title>Study Dashboard - Study <xforms:output value="instance('ins-study-entry')/manta:id"/></title>
-        <link rel="stylesheet" type="text/css" href="/apps/submitter/common/style.css"></link>
         <link rel="stylesheet" type="text/css" href="/ops/yui/tabview/assets/skins/sam/tabview.css"></link>
         <style type="text/css"></style>
         
@@ -123,6 +122,8 @@
 				<xforms:action ev:event="xforms-submit-done">
 					
 					<xforms:send submission="sub-get-permissions-entry"/>
+					<xforms:send ev:event="xforms-submit-done" submission="sub-get-submitted-media-feed"/>
+					<xforms:send ev:event="xforms-submit-done" submission="sub-get-curated-media-feed"/>
 					
 					<!-- copy data across to study questionnaire model -->
 					<xforms:insert nodeset="xxforms:instance('ins-sq-study-entry')" origin="instance('ins-study-entry')" />
@@ -171,7 +172,6 @@
 				instance="ins-permissions-entry"
 				serialization="none">
                 <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the study.</xforms:message>
-                <xforms:send ev:event="xforms-submit-done" submission="sub-get-submitted-media-feed"/>
 			</xforms:submission>   
             
 			<xforms:submission 
@@ -237,7 +237,21 @@
 			</xforms:submission>
 
 
-			<xforms:instance id="ins-study-feed">
+        	<xforms:instance id="ins-curated-media-feed">
+        		<atom:feed/>
+        	</xforms:instance>
+        	
+        	<xforms:submission
+        		id="sub-get-curated-media-feed"
+        		resource="{instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/curatedMedia']/@href}"
+        		method="get"
+        		replace="instance"
+        		instance="ins-curated-media-feed">
+        		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the curated media.</xforms:message>
+        	</xforms:submission>
+        	
+        	
+        	<xforms:instance id="ins-study-feed">
 				<atom:feed/>
 			</xforms:instance>
 

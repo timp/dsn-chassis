@@ -22,7 +22,8 @@
     xmlns:atom="http://www.w3.org/2005/Atom"
     xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
     xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:manta="http://www.cggh.org/2010/chassis/manta/xmlns">
+    xmlns:manta="http://www.cggh.org/2010/chassis/manta/xmlns"
+	xmlns:atombeat="http://purl.org/atombeat/xmlns">
     
     <head>
     
@@ -80,7 +81,8 @@
 	    				<th fr:sortable="false" fr:resizeable="true">Code</th>
 	    				<th fr:sortable="true" fr:resizeable="true">Title</th>
 	    				<th fr:sortable="true" fr:resizeable="true">Created</th>
-	    				<th fr:sortable="true" fr:resizeable="true">Creator</th>
+	    				<!--		    				<th fr:sortable="true" fr:resizeable="true">Creator</th>-->
+	    				<th fr:sortable="false" fr:resizeable="true">Administrators</th>
 	    				<th fr:sortable="false" fr:resizeable="true">Actions</th>
 	    			</tr>
 	    		</thead>
@@ -96,10 +98,19 @@
 	    					<td>
 	    						<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')"/>
 	    					</td>
+	    					<!--
+	    						<td>
+	    						<xforms:output value="atom:author/atom:email"/>
+	    						</td>
+	    					-->
 	    					<td>
-	    						<xforms:output ref="atom:author/atom:email"/>
-	    					</td>
-	    					<td>
+	    						<xforms:repeat nodeset="atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor']//atombeat:group[@id='GROUP_ADMINISTRATORS']/atombeat:member">
+	    							<div>
+	    								<xforms:output ref="."/>			
+	    							</div>
+	    						</xforms:repeat>
+	    						<!-- <xforms:output value="string-join( atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor']//atombeat:group[@id='GROUP_ADMINISTRATORS']/atombeat:member , ' ' )"/> -->
+	    					</td>	    					<td>
 	    						<a href="study-dashboard?study={atom:link[@rel='edit']/@href}">View</a> <br/>
 	    						<a href="upload-curated-files?study={atom:link[@rel='edit']/@href}">Upload</a>
 	    					</td>
