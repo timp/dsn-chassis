@@ -1,6 +1,9 @@
+<?oxygen NVDLSchema="../../../../../../../oxygen/samples/nvdl/xhtml-xforms-11-orbeon.nvdl"?>
 <div 
 	xmlns="http://www.w3.org/1999/xhtml" 
 	xmlns:xforms="http://www.w3.org/2002/xforms" 
+	xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
+	xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
 	xmlns:ev="http://www.w3.org/2001/xml-events">
 
 	<h2>Review</h2>
@@ -92,38 +95,48 @@
 
 	<h3>(4) Files</h3>
 
-
-	
-	<xforms:group ref="not(instance('ins-draft-entry')/atom:content/draft/uploads-entry-container/atom:entry/atom:content/uploads[empty(upload)])">
-		<ul>
-			<xforms:repeat nodeset="instance('ins-draft-entry')/atom:content/draft/uploads-entry-container/atom:entry/atom:content/uploads/upload">
-				<li>
-			        <xforms:output ref="@filename">
-			            <xforms:label>File Name:</xforms:label>
-			        </xforms:output>
-			       <br/>
-			        <xforms:output ref="@mediatype">
-			            <xforms:label>Media Type:</xforms:label>
-			        </xforms:output>
-			       <br/>
-			        <xforms:output ref="@size">
-			            <xforms:label>Size:</xforms:label>
-			        </xforms:output>
-			        <br/>
-			        <xforms:output ref="@typeterm">
-			            <xforms:label>File Type:</xforms:label>
-			        </xforms:output>
-			        <br/>
-			        <xforms:output ref="@typelabel">
-			            <xforms:label>Other Type:</xforms:label>
-			        </xforms:output>
-		        </li>
-			</xforms:repeat>
-		</ul>
+	<xforms:group ref="instance('ins-draft-media-feed')[empty(atom:entry)]">
+		<p>You have not uploaded any files.</p>
 	</xforms:group>
-	<xforms:group ref="instance('ins-draft-entry')/atom:content/draft/uploads-entry-container/atom:entry/atom:content/uploads[empty(upload)]">
-		<p>No Files.</p>
-	</xforms:group>	
+	
+	<xforms:group ref="instance('ins-draft-media-feed')[exists(atom:entry)]">
+		
+		<fr:datatable paginated="false">
+			<thead>
+				<tr>
+					<th fr:sortable="true" fr:resizeable="true">File Name</th>
+					<th fr:sortable="true" fr:resizeable="true">Uploaded On</th>
+					<th fr:sortable="false" fr:resizeable="true">Size (Bytes)</th>
+					<th fr:sortable="true" fr:resizeable="true">Type</th>
+				</tr>
+			</thead>
+			<tbody>
+				<xforms:repeat id="rep-review-draft-media" nodeset="atom:entry">
+					<tr>
+						<td>
+							<xforms:output ref="atom:title"/>
+						</td>
+						<td>
+							<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')"/>
+						</td>
+						<td>
+							<xforms:output ref="atom:link[@rel='edit-media']/@length"/>
+						</td>
+						<td>
+							<xforms:output ref="
+								for $cat in (./atom:category[@scheme='http://www.cggh.org/2010/chassis/scheme/FileTypes'])
+								return
+								if ( $cat/@term = 'http://www.cggh.org/2010/chassis/terms/Other' )
+								then $cat/@label
+								else instance('ins-file-terms')/term[value=$cat/@term]/label
+								"/>
+						</td>
+					</tr>
+				</xforms:repeat>
+			</tbody>
+		</fr:datatable>
+		
+	</xforms:group>
 	
 	<p>
 		<xforms:trigger appearance="minimal">

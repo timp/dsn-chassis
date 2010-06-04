@@ -132,7 +132,7 @@ User Interface form controls
 
 	<xsd:group name="UI.Content">
 		<xsd:sequence>
-			<xsd:choice minOccurs="0">
+			<xsd:choice minOccurs="0" maxOccurs="unbounded">
 				<xsd:element ref="xforms:output"/>
 				<!-- containing document language to add additional allowed content here -->
 			</xsd:choice>

@@ -10,7 +10,7 @@ import module namespace util = "http://exist-db.org/xquery/util" ;
 import module namespace xutil = "http://purl.org/atombeat/xquery/xutil" at "../lib/xutil.xqm" ;
 
 
-declare variable $config:service-url-base as xs:string := "http://localhost:8081/manta/atombeat" ;
+declare variable $config:service-url-base as xs:string := "http://localhost:8080/manta/atombeat" ;
 
 
 (:
@@ -456,6 +456,12 @@ declare function config:submitted-media-collection-security-descriptor(
                                 <atombeat:permission>UPDATE_MEMBER</atombeat:permission>
                         </atombeat:ace>
         
+                        <atombeat:ace>
+                                <atombeat:type>ALLOW</atombeat:type>
+                                <atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
+                                <atombeat:permission>MULTI_CREATE</atombeat:permission>
+                        </atombeat:ace>
+        
                         <!--
                                 Curators can list the collection, and can retrieve any member.
                         -->
@@ -504,6 +510,60 @@ declare function config:submitted-media-collection-security-descriptor(
                                 <atombeat:type>ALLOW</atombeat:type>
                                 <atombeat:recipient type="role">ROLE_CHASSIS_PERSONAL_DATA_REVIEWER</atombeat:recipient>
                                 <atombeat:permission>UPDATE_ACL</atombeat:permission>
+                        </atombeat:ace>
+        
+                </atombeat:acl>
+        
+        </atombeat:security-descriptor>    
+    
+};
+
+
+
+declare function config:draft-media-collection-security-descriptor(
+    $request-path-info as xs:string ,
+    $user as xs:string
+) as element(atombeat:security-descriptor)
+{
+
+        <atombeat:security-descriptor>
+        
+                <atombeat:acl>
+        
+                        <atombeat:ace>
+                                <atombeat:type>ALLOW</atombeat:type>
+                                <atombeat:recipient type="user">{$user}</atombeat:recipient>
+                                <atombeat:permission>LIST_COLLECTION</atombeat:permission>
+                        </atombeat:ace>
+        
+                        <atombeat:ace>
+                                <atombeat:type>ALLOW</atombeat:type>
+                                <atombeat:recipient type="user">{$user}</atombeat:recipient>
+                                <atombeat:permission>CREATE_MEDIA</atombeat:permission>
+                        </atombeat:ace>
+        
+                        <atombeat:ace>
+                                <atombeat:type>ALLOW</atombeat:type>
+                                <atombeat:recipient type="user">{$user}</atombeat:recipient>
+                                <atombeat:permission>RETRIEVE_MEDIA</atombeat:permission>
+                        </atombeat:ace>
+        
+                        <atombeat:ace>
+                                <atombeat:type>ALLOW</atombeat:type>
+                                <atombeat:recipient type="user">{$user}</atombeat:recipient>
+                                <atombeat:permission>DELETE_MEDIA</atombeat:permission>
+                        </atombeat:ace>
+        
+                        <atombeat:ace>
+                                <atombeat:type>ALLOW</atombeat:type>
+                                <atombeat:recipient type="user">{$user}</atombeat:recipient>
+                                <atombeat:permission>RETRIEVE_MEMBER</atombeat:permission>
+                        </atombeat:ace>
+        
+                        <atombeat:ace>
+                                <atombeat:type>ALLOW</atombeat:type>
+                                <atombeat:recipient type="user">{$user}</atombeat:recipient>
+                                <atombeat:permission>UPDATE_MEMBER</atombeat:permission>
                         </atombeat:ace>
         
                 </atombeat:acl>

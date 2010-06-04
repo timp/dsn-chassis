@@ -219,71 +219,6 @@
             
 			<!-- This gets the list of different file types for the upload-files tab. -->
 			<xforms:instance id="ins-file-terms" src="/apps/common/constants/file-terms.xml"/>           
-			
-
-			 
-            
-
-			<xforms:instance id="ins-upload-template">
-				<upload
-					xmlns=""
-					filename=""
-					mediatype=""
-					size=""
-					typeterm=""
-					typelabel=""
-					xsi:type="xs:anyURI"></upload>
-			</xforms:instance>
-
-			<xforms:instance id="ins-uploads-entry">
-					<xi:include href="includes/uploads-entry-template.xml" xxi:omit-xml-base="true"/>
-        	</xforms:instance> 
-
-
-
-
-			<xforms:bind nodeset="instance('ins-uploads-entry')/atom:content/uploads">
-				<xforms:bind nodeset="@target" calculate="instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/submittedMedia']/@href"/>
-				<xforms:bind nodeset="upload">
-					<xforms:bind nodeset="@typeterm" required="true()"/>
-					<xforms:bind nodeset="@typelabel" relevant="../@typeterm='http://www.cggh.org/2010/chassis/terms/Other'"/>
-				</xforms:bind>
-			</xforms:bind>
-
-
-
-            <xforms:submission 
-            	id="sub-post-background-uploads" 
-            	ref="instance('ins-uploads-entry')/atom:content/uploads" 
-            	method="post"
-            	replace="none"
-            	resource="test:"
-            	validate="false"/>
-
-
-			<xforms:instance id="ins-uploads-feed">
-				<atom:feed/>
-			</xforms:instance>
-
-            <xforms:submission 
-            	id="sub-post-uploads" 
-            	ref="instance('ins-uploads-entry')/atom:content/uploads"
-                resource="/util/store-uploads"
-                method="post" 
-                replace="instance"
-                instance="ins-uploads-feed">
-				
-				<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while storing the files.</xforms:message>
-                         
-                         
-				<xforms:action ev:event="xforms-submit-done">
-					<xforms:delete context="instance('ins-uploads-entry')/atom:content/uploads" nodeset="upload"/>
-					<xforms:send submission="sub-get-submitted-media-feed"/>
-				</xforms:action>                         
-                         
-            </xforms:submission>
-
-
 
 
 
@@ -296,7 +231,8 @@
 				resource="{instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/submittedMedia']/@href}"
 				method="get"
 				replace="instance"
-				instance="ins-submitted-media-feed">
+				instance="ins-submitted-media-feed"
+				serialization="none">
                 <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the submitted media.</xforms:message>
 			</xforms:submission>
 
@@ -349,7 +285,9 @@
 						origin="instance('ins-study-entry-to-copy-study-info-from')/atom:content/study/questionnaire"
 						at="last()" position="after" />
 					
-					<xforms:message>Answers have now been copied from &quot;<xforms:output ref="instance('ins-study-entry-to-copy-study-info-from')/atom:title"/> (<xforms:output ref="instance('ins-study-entry-to-copy-study-info-from')/manta:id"/>)&quot;, although changes have not been saved.</xforms:message>
+					<xforms:message level="modal">
+						Answers have now been copied from &quot;<xforms:output ref="instance('ins-study-entry-to-copy-study-info-from')/atom:title"/> (<xforms:output ref="instance('ins-study-entry-to-copy-study-info-from')/manta:id"/>)&quot;, although changes have not been saved.
+					</xforms:message>
 					
 				</xforms:action>
 				
@@ -361,6 +299,79 @@
 			
 			<xforms:instance id="ins-study-is-published-terms" src="/apps/common/constants/study-is-published-terms.xml"/>
 				
+				
+				
+				
+				
+				
+			<!--+
+				| New way of handling uploads, avoids the need to use an intermediate
+				| servlet for handling uploads - you can post files (one at a time) 
+				| directly to AtomBeat using a multipart/form-data request.
+				+-->
+        	
+        	
+        	<!-- files are uploaded one at a time, this instance holds the data to be posted -->
+        	
+        	<xforms:instance id="ins-upload">
+        		<upload xmlns="" scheme="http://www.cggh.org/2010/chassis/scheme/FileTypes" term="" label="">
+        			<summary/>
+        			<category/>
+        			<media xsi:type="xs:anyURI" filename="" mediatype="" size=""/>
+        		</upload>
+        	</xforms:instance>
+        	
+        	<!-- this is a fresh instance to use when clearing out the main instance after each upload -->
+        	<xforms:instance id="ins-upload-empty">
+        		<upload xmlns="" scheme="http://www.cggh.org/2010/chassis/scheme/FileTypes" term="" label="">
+        			<summary/>
+        			<category/>
+        			<media xsi:type="xs:anyURI" filename="" mediatype="" size=""/>
+        		</upload>
+        	</xforms:instance>
+        	
+        	
+        	
+        	<!-- some bindings on the upload instance ... TODO make the upload button readonly if no file or type selected -->
+        	
+        	<xforms:bind nodeset="instance('ins-upload')">
+        		<xforms:bind nodeset="@term" required="true()"/>
+        		<xforms:bind nodeset="@label" relevant="../@term='http://www.cggh.org/2010/chassis/terms/Other'" required="true()"/>
+        		<xforms:bind nodeset="category" calculate="concat('scheme=&quot;', ../@scheme, '&quot;; term=&quot;', ../@term, '&quot;; label=&quot;', ../@label, '&quot;;')"/>
+        	</xforms:bind>        	
+        	
+        	
+        	
+        	<!-- this is the submission that sends the file to atombeat ... it uses a multipart/form-data POST request, which (thankfully) both Orbeon and AtomBeat support, although this is not standard Atom Protocol ... check the http traffic to see what's being sent -->
+
+        	<xforms:submission
+        		id="sub-post-upload"
+        		method="form-data-post"
+        		resource="{instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/submittedMedia']/@href}"
+        		ref="instance('ins-upload')"
+        		replace="none">
+        		
+        		<xforms:header>
+        			<xforms:name>Accept</xforms:name>
+        			<xforms:value>application/atom+xml</xforms:value>
+        		</xforms:header>
+        		
+        		<xforms:message ev:event="xforms-submit-done" level="modal">
+        			Your file has been submitted. Thank you.
+        		</xforms:message>
+        		
+        		<!-- clear out upload -->
+        		<xforms:insert ev:event="xforms-submit-done" nodeset="instance('ins-upload')" origin="instance('ins-upload-empty')"/>
+        		
+        		<!-- refresh submitted media -->
+        		<xforms:send ev:event="xforms-submit-done" submission="sub-get-submitted-media-feed"/>
+        		
+        		<!-- TODO error handling -->
+        		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while posting a draft upload.</xforms:message>
+        		
+        	</xforms:submission>
+        	
+        	
             
         </xforms:model>
         
