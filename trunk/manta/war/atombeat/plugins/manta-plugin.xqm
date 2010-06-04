@@ -877,6 +877,8 @@ declare function manta-plugin:augment-study-entry(
 ) as element(atom:entry)
 {
 
+    let $entry-path-info := substring-after( $entry/atom:link[@rel='edit']/@href , $config:content-service-url )
+    
     let $submitted-media-collection-path-info := manta-plugin:submitted-media-collection-path-info-for-study-entry( $entry )
     let $submitted-media-collection-link := 
         <atom:link 
@@ -910,7 +912,27 @@ declare function manta-plugin:augment-study-entry(
             <manta:id>{manta-plugin:get-id($entry)}</manta:id>
         {
             $entry/attribute::* ,
-            $entry/child::* ,
+            for $child in $entry/child::* 
+            return 
+                if ( 
+                    local-name( $child ) = $CONSTANT:ATOM-LINK 
+                    and namespace-uri( $child ) = $CONSTANT:ATOM-NSURI 
+                    and $child/@rel='http://purl.org/atombeat/rel/security-descriptor' 
+                    and atomsec:is-allowed( $CONSTANT:OP-RETRIEVE-ACL , $entry-path-info , () )
+                )
+                then 
+                    <atom:link>
+                    {
+                        $child/attribute::*
+                    }
+                        <ae:inline>
+                        {
+                            atomsec:wrap-with-entry( $entry-path-info , atomsec:retrieve-resource-descriptor( $entry-path-info ) )
+                        }
+                        </ae:inline>
+                    </atom:link>
+                else $child
+            ,
             $submitted-media-collection-link ,
             $curated-media-collection-link ,
             $derivations-collection-link ,

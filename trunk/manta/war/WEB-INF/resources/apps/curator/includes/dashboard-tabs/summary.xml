@@ -18,6 +18,12 @@
 		</p>	
 				
 		<p>
+			<xforms:output ref="atom:author/atom:email">
+				<xforms:label>Creator:</xforms:label>
+			</xforms:output>	    					
+		</p>	
+		
+		<p>
 			<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')">
 				<xforms:label>Terms of Submission Accepted:</xforms:label>
 			</xforms:output>	    					

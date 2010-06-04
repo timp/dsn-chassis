@@ -28,7 +28,7 @@
     
     <head>
     
-        <title>Curator - Spike Upload</title>
+    	<title>Upload Curated Files - Study <xforms:output value="instance('ins-study-entry')/manta:id"/></title>
         
         <xforms:model>
 
@@ -224,269 +224,274 @@
     </head>
     <body>
 
-<!--		<xi:include href="../common/includes/current-user-actions.xml"/>-->
-    
-    	<h1>Curator - Spike Upload Curated Files</h1>
+		<xi:include href="../common/includes/current-user-actions.xml"/>
     	
-    	
-    	<h2>(1) Upload</h2>
-    	
-    	<table>
+    	<div id="content">
     		
-    		<xforms:group ref="instance('ins-uploads')">
-    			<xforms:repeat nodeset="upload" id="rep-upload">
-    				<tr>
-    					<td>
-    						<xforms:trigger>
-    							<xforms:label><img alt="remove" src="/apps/contributor/common/remove.gif"/></xforms:label>
-    							<xforms:delete 
-    								ev:event="DOMActivate" 
-    								context="instance('ins-uploads')" 
-    								nodeset="upload" 
-    								at="index('rep-upload')"/>
-    						</xforms:trigger>
-    					</td>
-    					<td>
-    						
-    						<xforms:upload ref=".">
-    							<xforms:label>File:</xforms:label>
-    							<xforms:filename ref="@filename"/>
-    							<xforms:mediatype ref="@mediatype"/>
-    							<xxforms:size ref="@size"/>
-    							<xforms:send ev:event="xforms-select" submission="sub-post-background-uploads"/>
-    						</xforms:upload>
-    						
-    						<br/>
-    						<xforms:select1 ref="@typeterm">
-    							<xforms:label>Type:</xforms:label>
-    							<xforms:item>
-    								<xforms:label>Select...</xforms:label>
-    								<xforms:value></xforms:value>
-    							</xforms:item>
-    							<xforms:itemset nodeset="instance('ins-file-terms')/term">
-    								<xforms:label ref="label"/>
-    								<xforms:value ref="value"/>
-    							</xforms:itemset>
-    							<xforms:alert>Please select a file type.</xforms:alert>
-    						</xforms:select1>
-    						
-    						<xforms:input ref="@typelabel">
-    							<xforms:label>Other Type:</xforms:label>
-    						</xforms:input>
-    						
-    					</td>
-    				</tr>
-    			</xforms:repeat>
+    		<h1>Upload Curated Files
+    			 - <xforms:output value="instance('ins-study-entry')/atom:title"/> (<xforms:output value="instance('ins-study-entry')/manta:id"/>)
+    		</h1>
+    		
+    		<h2>(1) Upload</h2>
+    		
+    		<table>
+    			
+    			<xforms:group ref="instance('ins-uploads')">
+    				<xforms:repeat nodeset="upload" id="rep-upload">
+    					<tr>
+    						<td>
+    							<xforms:trigger>
+    								<xforms:label><img alt="remove" src="/apps/contributor/common/remove.gif"/></xforms:label>
+    								<xforms:delete 
+    									ev:event="DOMActivate" 
+    									context="instance('ins-uploads')" 
+    									nodeset="upload" 
+    									at="index('rep-upload')"/>
+    							</xforms:trigger>
+    						</td>
+    						<td>
+    							
+    							<xforms:upload ref=".">
+    								<xforms:label>File:</xforms:label>
+    								<xforms:filename ref="@filename"/>
+    								<xforms:mediatype ref="@mediatype"/>
+    								<xxforms:size ref="@size"/>
+    								<xforms:send ev:event="xforms-select" submission="sub-post-background-uploads"/>
+    							</xforms:upload>
+    							
+    							<br/>
+    							<xforms:select1 ref="@typeterm">
+    								<xforms:label>Type:</xforms:label>
+    								<xforms:item>
+    									<xforms:label>Select...</xforms:label>
+    									<xforms:value></xforms:value>
+    								</xforms:item>
+    								<xforms:itemset nodeset="instance('ins-file-terms')/term">
+    									<xforms:label ref="label"/>
+    									<xforms:value ref="value"/>
+    								</xforms:itemset>
+    								<xforms:alert>Please select a file type.</xforms:alert>
+    							</xforms:select1>
+    							
+    							<xforms:input ref="@typelabel">
+    								<xforms:label>Other Type:</xforms:label>
+    							</xforms:input>
+    							
+    						</td>
+    					</tr>
+    				</xforms:repeat>
+    			</xforms:group>
+    			
+    			<tr>
+    				<td>
+    					<xforms:trigger>
+    						<xforms:label><img alt="add" src="/apps/contributor/common/add.gif"/></xforms:label>
+    						<xforms:insert 
+    							ev:event="DOMActivate" 
+    							context="instance('ins-uploads')" 
+    							nodeset="upload" 
+    							at="last()" 
+    							position="after" 
+    							origin="instance('ins-upload-template')"/>
+    					</xforms:trigger>
+    				</td>
+    				<td >
+    					<xforms:trigger appearance="minimal">
+    						<xforms:label>Add a File</xforms:label>
+    						<xforms:insert 
+    							ev:event="DOMActivate" 
+    							context="instance('ins-uploads')" 
+    							nodeset="upload" 
+    							at="last()" 
+    							position="after" 
+    							origin="instance('ins-upload-template')"/>
+    					</xforms:trigger>
+    				</td>
+    			</tr>
+    		</table>
+    		
+    		<hr/>
+    		<h2>(2) Derivation</h2>
+    		
+    		<p>Select the file or files from which your uploads are derived.</p>
+    		
+    		<p>You should select the files from which your uploads are <strong>most immediately</strong> derived. I.e., if your uploads are derived from file X, and file X is derived from file Y, you should <strong>only</strong> select file X.</p>
+    		
+    		<h3>Submitted Files</h3>
+    		
+    		<xforms:group ref="instance('ins-submitted-media-feed')[empty(atom:entry)]">
+    			<p>There are no submitted files.</p>
     		</xforms:group>
     		
-    		<tr>
-    			<td>
-    				<xforms:trigger>
-    					<xforms:label><img alt="add" src="/apps/contributor/common/add.gif"/></xforms:label>
-    					<xforms:insert 
-    						ev:event="DOMActivate" 
-    						context="instance('ins-uploads')" 
-    						nodeset="upload" 
-    						at="last()" 
-    						position="after" 
-    						origin="instance('ins-upload-template')"/>
-    				</xforms:trigger>
-    			</td>
-    			<td >
-    				<xforms:trigger appearance="minimal">
-    					<xforms:label>Add a File</xforms:label>
-    					<xforms:insert 
-    						ev:event="DOMActivate" 
-    						context="instance('ins-uploads')" 
-    						nodeset="upload" 
-    						at="last()" 
-    						position="after" 
-    						origin="instance('ins-upload-template')"/>
-    				</xforms:trigger>
-    			</td>
-    		</tr>
-    	</table>
-    	
-    	<hr/>
-    	<h2>(2) Derivation</h2>
-    	
-    	<p>Select the file or files from which your uploads are derived.</p>
-    	
-    	<p>You should select the files from which your uploads are <strong>most immediately</strong> derived. I.e., if your uploads are derived from file X, and file X is derived from file Y, you should <strong>only</strong> select file X.</p>
-    	
-    	<h3>Submitted Files</h3>
-
-    	<xforms:group ref="instance('ins-submitted-media-feed')[empty(atom:entry)]">
-    		<p>There are no submitted files.</p>
-    	</xforms:group>
-    	
-    	<xforms:group ref="instance('ins-submitted-media-feed')[exists(atom:entry)]">
-    		
-    		<fr:datatable paginated="false">
-    			<thead>
-    				<tr>
-    					<th fr:sortable="false" fr:resizeable="true">Select</th>				
-    					<th fr:sortable="false" fr:resizeable="true">Code</th>
-    					<th fr:sortable="true" fr:resizeable="true">File Name</th>
-    					<th fr:sortable="true" fr:resizeable="true">Date Submitted</th>
-    					<th fr:sortable="true" fr:resizeable="true">Contributor</th>
-    					<th fr:sortable="true" fr:resizeable="true">Type</th>
-    					<th>Actions</th>
-    				</tr>
-    			</thead>
-    			<tbody>
-    				<xforms:repeat id="rep-submitted-media" nodeset="xxforms:sort(instance('ins-submitted-media-feed')/atom:entry, atom:published, 'text', 'ascending')">
+    		<xforms:group ref="instance('ins-submitted-media-feed')[exists(atom:entry)]">
+    			
+    			<fr:datatable paginated="false">
+    				<thead>
     					<tr>
-    						<td>
-    							<xforms:select ref="instance('ins-derivation-selection')" appearance="full">
-    								<xforms:label/>
-    								<xforms:item>
-    									<xforms:label/>
-    									<xforms:value value="xxforms:context('rep-submitted-media')/atom:link[@rel='edit']/@href"/>
-    								</xforms:item>
-    							</xforms:select>
-    						</td>
-    						<td>
-    							<xforms:output ref="manta:id"/>
-    						</td>
-    						<td>
-    							<xforms:output ref="atom:title"/>
-    						</td>
-    						<td>
-    							<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')"/>
-    						</td>
-    						<td>
-    							<xforms:output ref="atom:author/atom:email"/>
-    						</td>
-    						<td>
-    							<xforms:output ref="if(instance('ins-file-terms')/term[value=xxforms:context('rep-submitted-media')/atom:category[@scheme='http://www.cggh.org/2010/chassis/scheme/FileTypes']/@term]/value='http://www.cggh.org/2010/chassis/terms/Other') then atom:category[@scheme='http://www.cggh.org/2010/chassis/scheme/FileTypes']/@label else instance('ins-file-terms')/term[value=xxforms:context('rep-submitted-media')/atom:category[@scheme='http://www.cggh.org/2010/chassis/scheme/FileTypes']/@term]/label"/>
-    						</td>
-    						<td>
-    							<xforms:group ref=".[contains( ./atom:link[@rel='edit-media']/@atombeat:allow , 'GET' )]">
-    								<a href="{atom:content/@src}">Download</a>
-    							</xforms:group>
-    						</td>
+    						<th fr:sortable="false" fr:resizeable="true">Select</th>				
+    						<th fr:sortable="false" fr:resizeable="true">Code</th>
+    						<th fr:sortable="true" fr:resizeable="true">File Name</th>
+    						<th fr:sortable="true" fr:resizeable="true">Date Submitted</th>
+    						<th fr:sortable="true" fr:resizeable="true">Contributor</th>
+    						<th fr:sortable="true" fr:resizeable="true">Type</th>
+    						<th>Actions</th>
     					</tr>
-    				</xforms:repeat>
-    			</tbody>
-    		</fr:datatable>
+    				</thead>
+    				<tbody>
+    					<xforms:repeat id="rep-submitted-media" nodeset="xxforms:sort(instance('ins-submitted-media-feed')/atom:entry, atom:published, 'text', 'ascending')">
+    						<tr>
+    							<td>
+    								<xforms:select ref="instance('ins-derivation-selection')" appearance="full">
+    									<xforms:label/>
+    									<xforms:item>
+    										<xforms:label/>
+    										<xforms:value value="xxforms:context('rep-submitted-media')/atom:link[@rel='edit']/@href"/>
+    									</xforms:item>
+    								</xforms:select>
+    							</td>
+    							<td>
+    								<xforms:output ref="manta:id"/>
+    							</td>
+    							<td>
+    								<xforms:output ref="atom:title"/>
+    							</td>
+    							<td>
+    								<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')"/>
+    							</td>
+    							<td>
+    								<xforms:output ref="atom:author/atom:email"/>
+    							</td>
+    							<td>
+    								<xforms:output ref="if(instance('ins-file-terms')/term[value=xxforms:context('rep-submitted-media')/atom:category[@scheme='http://www.cggh.org/2010/chassis/scheme/FileTypes']/@term]/value='http://www.cggh.org/2010/chassis/terms/Other') then atom:category[@scheme='http://www.cggh.org/2010/chassis/scheme/FileTypes']/@label else instance('ins-file-terms')/term[value=xxforms:context('rep-submitted-media')/atom:category[@scheme='http://www.cggh.org/2010/chassis/scheme/FileTypes']/@term]/label"/>
+    							</td>
+    							<td>
+    								<xforms:group ref=".[contains( ./atom:link[@rel='edit-media']/@atombeat:allow , 'GET' )]">
+    									<a href="{atom:content/@src}">Download</a>
+    								</xforms:group>
+    							</td>
+    						</tr>
+    					</xforms:repeat>
+    				</tbody>
+    			</fr:datatable>
+    			
+    		</xforms:group>
     		
-    	</xforms:group>
-    	
-    	<h3>Curated Files</h3>
-    	
-    	<xforms:group ref="instance('ins-curated-media-feed')[empty(atom:entry)]">
-    		<p>There are no curated files.</p>
-    	</xforms:group>
-    	
-    	<xforms:group ref="instance('ins-curated-media-feed')[exists(atom:entry)]">
+    		<h3>Curated Files</h3>
     		
-    		<fr:datatable paginated="false">
-    			<thead>
-    				<tr>
-    					<th fr:sortable="false" fr:resizeable="true">Select</th>				
-    					<th fr:sortable="true" fr:resizeable="true">Code</th>
-    					<th fr:sortable="true" fr:resizeable="true">File Name</th>
-    					<th fr:sortable="true" fr:resizeable="true">Date Submitted</th>
-    					<th fr:sortable="true" fr:resizeable="true">Curator</th>
-    					<th fr:sortable="true" fr:resizeable="true">Type</th>
-    					<th>Actions</th>
-    				</tr>
-    			</thead>
-    			<tbody>
-    				<xforms:repeat id="rep-curated-media" nodeset="xxforms:sort(instance('ins-curated-media-feed')/atom:entry, atom:published, 'text', 'ascending')">
+    		<xforms:group ref="instance('ins-curated-media-feed')[empty(atom:entry)]">
+    			<p>There are no curated files.</p>
+    		</xforms:group>
+    		
+    		<xforms:group ref="instance('ins-curated-media-feed')[exists(atom:entry)]">
+    			
+    			<fr:datatable paginated="false">
+    				<thead>
     					<tr>
-    						<td>
-    							<xforms:select ref="instance('ins-derivation-selection')" appearance="full">
-    								<xforms:label/>
-    								<xforms:item>
-    									<xforms:label/>
-    									<xforms:value value="xxforms:context('rep-curated-media')/atom:link[@rel='edit']/@href"/>
-    								</xforms:item>
-    							</xforms:select>
-    						</td>
-    						<td>
-    							<xforms:output ref="manta:id"/>
-    						</td>
-    						<td>
-    							<xforms:output ref="atom:title"/>
-    						</td>
-    						<td>
-    							<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')"/>
-    						</td>
-    						<td>
-    							<xforms:output ref="atom:author/atom:email"/>
-    						</td>
-    						<td>
-    							<xforms:output ref="if(instance('ins-file-terms')/term[value=xxforms:context('rep-curated-media')/atom:category[@scheme='http://www.cggh.org/2010/chassis/scheme/FileTypes']/@term]/value='http://www.cggh.org/2010/chassis/terms/Other') then atom:category[@scheme='http://www.cggh.org/2010/chassis/scheme/FileTypes']/@label else instance('ins-file-terms')/term[value=xxforms:context('rep-curated-media')/atom:category[@scheme='http://www.cggh.org/2010/chassis/scheme/FileTypes']/@term]/label"/>
-    						</td>
-    						<td>
-    							<xforms:group ref=".[contains( ./atom:link[@rel='edit-media']/@atombeat:allow , 'GET' )]">
-    								<a href="{atom:content/@src}">Download</a>
-    							</xforms:group>
-    						</td>
+    						<th fr:sortable="false" fr:resizeable="true">Select</th>				
+    						<th fr:sortable="true" fr:resizeable="true">Code</th>
+    						<th fr:sortable="true" fr:resizeable="true">File Name</th>
+    						<th fr:sortable="true" fr:resizeable="true">Date Submitted</th>
+    						<th fr:sortable="true" fr:resizeable="true">Curator</th>
+    						<th fr:sortable="true" fr:resizeable="true">Type</th>
+    						<th>Actions</th>
     					</tr>
-    				</xforms:repeat>
-    			</tbody>
-    		</fr:datatable>
+    				</thead>
+    				<tbody>
+    					<xforms:repeat id="rep-curated-media" nodeset="xxforms:sort(instance('ins-curated-media-feed')/atom:entry, atom:published, 'text', 'ascending')">
+    						<tr>
+    							<td>
+    								<xforms:select ref="instance('ins-derivation-selection')" appearance="full">
+    									<xforms:label/>
+    									<xforms:item>
+    										<xforms:label/>
+    										<xforms:value value="xxforms:context('rep-curated-media')/atom:link[@rel='edit']/@href"/>
+    									</xforms:item>
+    								</xforms:select>
+    							</td>
+    							<td>
+    								<xforms:output ref="manta:id"/>
+    							</td>
+    							<td>
+    								<xforms:output ref="atom:title"/>
+    							</td>
+    							<td>
+    								<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')"/>
+    							</td>
+    							<td>
+    								<xforms:output ref="atom:author/atom:email"/>
+    							</td>
+    							<td>
+    								<xforms:output ref="if(instance('ins-file-terms')/term[value=xxforms:context('rep-curated-media')/atom:category[@scheme='http://www.cggh.org/2010/chassis/scheme/FileTypes']/@term]/value='http://www.cggh.org/2010/chassis/terms/Other') then atom:category[@scheme='http://www.cggh.org/2010/chassis/scheme/FileTypes']/@label else instance('ins-file-terms')/term[value=xxforms:context('rep-curated-media')/atom:category[@scheme='http://www.cggh.org/2010/chassis/scheme/FileTypes']/@term]/label"/>
+    							</td>
+    							<td>
+    								<xforms:group ref=".[contains( ./atom:link[@rel='edit-media']/@atombeat:allow , 'GET' )]">
+    									<a href="{atom:content/@src}">Download</a>
+    								</xforms:group>
+    							</td>
+    						</tr>
+    					</xforms:repeat>
+    				</tbody>
+    			</fr:datatable>
+    			
+    		</xforms:group>
     		
-    	</xforms:group>
-
-    	<h3>Comments</h3>
-    	
-    	<p>Describe the work you did to create the files you are uploading...</p>
-    	
-    	<p>
-    		<xforms:textarea ref="instance('ins-derivation-entry')/atom:summary" appearance="xxforms:autosize">
-    			<xforms:label/>
-    		</xforms:textarea>
-    	</p>
-    	
-    	<hr/>
-    	<h2>(3) Review and Confirm</h2>
-    	
-    	<p>You are uploading...</p>
-    	
-    	<ul>
-    		<xforms:repeat nodeset="instance('ins-uploads')/upload[exists(text())]">
-    			<li>
-    				<xforms:output ref="@filename"/>
-    			</li>
-    		</xforms:repeat>
-    	</ul>
-    	
-    	<p>Your uploads are derived from...</p>
-    	
-    	<ul>
-    		<xforms:repeat nodeset="tokenize(instance('ins-derivation-selection'), ' ')">
-    			<li>
-    				<xforms:group ref="for $selection in (.) return instance('ins-submitted-media-feed')/atom:entry[atom:link[@rel='edit']/@href=$selection]">
-    					<span>
-    						<xforms:output ref="manta:id"/> - <xforms:output ref="atom:title"/> contributed by <xforms:output ref="atom:author/atom:email"/>
-    					</span>
-    				</xforms:group>
-    				<xforms:group ref="for $selection in (.) return instance('ins-curated-media-feed')/atom:entry[atom:link[@rel='edit']/@href=$selection]">
-    					<span>
-    						<xforms:output ref="manta:id"/> - <xforms:output ref="atom:title"/> curated by <xforms:output ref="atom:author/atom:email"/>
-    					</span>
-    				</xforms:group>
-    			</li>
-    		</xforms:repeat>
-    	</ul>
-    	
-    	<p>Your comments...</p>
-    	
-    	<blockquote>
-    		<xforms:output ref="instance('ins-derivation-entry')/atom:summary"/>
-    	</blockquote>
-    	
-    	<p>
-    		<xforms:submit submission="sub-post-uploads">
-    			<xforms:label>Confirm</xforms:label>
-    		</xforms:submit>
+    		<h3>Comments</h3>
     		
-    	</p>
-
+    		<p>Describe the work you did to create the files you are uploading...</p>
+    		
+    		<p>
+    			<xforms:textarea ref="instance('ins-derivation-entry')/atom:summary" appearance="xxforms:autosize">
+    				<xforms:label/>
+    			</xforms:textarea>
+    		</p>
+    		
+    		<hr/>
+    		<h2>(3) Review and Confirm</h2>
+    		
+    		<p>You are uploading...</p>
+    		
+    		<ul>
+    			<xforms:repeat nodeset="instance('ins-uploads')/upload[exists(text())]">
+    				<li>
+    					<xforms:output ref="@filename"/>
+    				</li>
+    			</xforms:repeat>
+    		</ul>
+    		
+    		<p>Your uploads are derived from...</p>
+    		
+    		<ul>
+    			<xforms:repeat nodeset="tokenize(instance('ins-derivation-selection'), ' ')">
+    				<li>
+    					<xforms:group ref="for $selection in (.) return instance('ins-submitted-media-feed')/atom:entry[atom:link[@rel='edit']/@href=$selection]">
+    						<span>
+    							<xforms:output ref="manta:id"/> - <xforms:output ref="atom:title"/> contributed by <xforms:output ref="atom:author/atom:email"/>
+    						</span>
+    					</xforms:group>
+    					<xforms:group ref="for $selection in (.) return instance('ins-curated-media-feed')/atom:entry[atom:link[@rel='edit']/@href=$selection]">
+    						<span>
+    							<xforms:output ref="manta:id"/> - <xforms:output ref="atom:title"/> curated by <xforms:output ref="atom:author/atom:email"/>
+    						</span>
+    					</xforms:group>
+    				</li>
+    			</xforms:repeat>
+    		</ul>
+    		
+    		<p>Your comments...</p>
+    		
+    		<blockquote>
+    			<xforms:output ref="instance('ins-derivation-entry')/atom:summary"/>
+    		</blockquote>
+    		
+    		<p>
+    			<xforms:submit submission="sub-post-uploads">
+    				<xforms:label>Confirm</xforms:label>
+    			</xforms:submit>
+    			
+    		</p>    		
+    
+    	</div>
+    
     </body>
 </html>
 
