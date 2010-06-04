@@ -31,6 +31,9 @@
 				<xforms:bind nodeset="sites">
 					<xforms:bind nodeset="site">
 						<xforms:bind nodeset="country" required="true()" />
+						
+						<!-- experimental, to support Orbeon map component -->
+						<!-- <xforms:bind nodeset="address" calculate="concat( ../country , ' ' , ../region , ' ' , ../district , ' ' , ../locality)"/>-->
 
 						<xforms:bind nodeset="latitude" type="ctype:coordinate" />
 						<xforms:bind nodeset="longitude" type="ctype:coordinate" />
