@@ -70,126 +70,149 @@
 								</xforms:trigger>
 							</td>
 							<td class="form-td">
-								<xforms:select1 ref="country">
-									<xforms:label/>
-									<xforms:item>
-										<xforms:label>please select</xforms:label>
-										<xforms:value />
-									</xforms:item>
-									<xforms:itemset nodeset="instance('ins-country-items')/country">
-										<xforms:label ref="label" />
-										<xforms:value ref="value" />
-									</xforms:itemset>
-									<xforms:alert>Please select a Country value</xforms:alert>
-								</xforms:select1>
-								<br />
-								<!-- if the country has regions, use a select1 -->
-								<xforms:group
-									ref=".[country/text() = instance('ins-country-items')/country[exists(regions)]/value/text()]">
 
-									<xforms:select1 ref="region">
-										<xforms:label class="fixed-width">Region: </xforms:label>
-										<xforms:itemset
-											nodeset="instance('ins-country-items')/country[value/text()=xxforms:context('rep-site')/country/text()]//region">
+								<div>
+									<xforms:select1 ref="country">
+										<xforms:label/>
+										<xforms:item>
+											<xforms:label>please select</xforms:label>
+											<xforms:value />
+										</xforms:item>
+										<xforms:itemset nodeset="instance('ins-country-items')/country">
+											<xforms:label ref="label" />
+											<xforms:value ref="value" />
+										</xforms:itemset>
+										<xforms:alert>Please select a Country value</xforms:alert>
+									</xforms:select1>
+								</div>
+
+								<div>
+
+									<!-- if the country has regions, use a select1 -->
+									<xforms:group
+										ref=".[country/text() = instance('ins-country-items')/country[exists(regions)]/value/text()]">
+										
+										<xforms:select1 ref="region">
+											<xforms:label class="fixed-width">Region: </xforms:label>
+											<xforms:itemset
+												nodeset="instance('ins-country-items')/country[value/text()=xxforms:context('rep-site')/country/text()]//region">
+												<xforms:label ref="label" />
+												<xforms:value ref="value" />
+											</xforms:itemset>
+										</xforms:select1>
+										
+									</xforms:group>
+									
+									<!-- if the country has no regions, use an input -->
+									<xforms:group
+										ref=".[empty(country/text()) or country/text() = instance('ins-country-items')/country[empty(regions)]/value/text()]">
+										<xforms:input ref="region">
+											<xforms:label class="fixed-width">Region </xforms:label>
+										</xforms:input>
+										
+									</xforms:group>
+
+								</div>
+								
+								<div>
+									<xforms:input ref="district">
+										<xforms:label class="fixed-width">District </xforms:label>
+									</xforms:input>
+								</div>
+
+								<div>
+									<xforms:input ref="locality">
+										<xforms:label class="fixed-width">Locality </xforms:label>
+									</xforms:input>
+								</div>
+
+								<div>								
+									<xforms:input ref="siteCode">
+										<xforms:label class="fixed-width">Your site code</xforms:label>
+									</xforms:input>
+								</div>
+
+								<div>
+									<xforms:select1 appearance="minimal" ref="testingDelay">
+										<xforms:label class="fixed-width">Sampling/testing delay
+										</xforms:label>
+										<xforms:item>
+											<xforms:label><!-- Nullable -->
+											</xforms:label>
+											<xforms:value />
+										</xforms:item>
+										<xforms:itemset model="mod-study-questionnaire"
+											nodeset="instance('ins-testingDelay-items')/testingDelay">
 											<xforms:label ref="label" />
 											<xforms:value ref="value" />
 										</xforms:itemset>
 									</xforms:select1>
+								</div>
 
-								</xforms:group>
+								<div>
+									<xforms:select1 appearance="minimal" ref="anticoagulant">
+										<xforms:label class="fixed-width">Anticoagulant</xforms:label>
+										<xforms:item>
+											<xforms:label><!-- Nullable -->
+											</xforms:label>
+											<xforms:value />
+										</xforms:item>
+										<xforms:itemset model="mod-study-questionnaire"
+											nodeset="instance('ins-anticoagulant-items')/anticoagulant">
+											<xforms:label ref="label" />
+											<xforms:value ref="value" />
+										</xforms:itemset>
+									</xforms:select1>
+								</div>
 
-								<!-- if the country has no regions, use an input -->
-								<xforms:group
-									ref=".[empty(country/text()) or country/text() = instance('ins-country-items')/country[empty(regions)]/value/text()]">
-									<xforms:input ref="region">
-										<xforms:label class="fixed-width">Region </xforms:label>
+								<div>
+									<xforms:select1 appearance="minimal"
+										ref="transportAndStorageTemperature">
+										<xforms:label class="fixed-width">Transport/storage temperature
+										</xforms:label>
+										<xforms:item>
+											<xforms:label><!-- Nullable -->
+											</xforms:label>
+											<xforms:value />
+										</xforms:item>
+										<xforms:itemset model="mod-study-questionnaire"
+											nodeset="instance('ins-transportAndStorageTemperature-items')/transportAndStorageTemperature">
+											<xforms:label ref="label" />
+											<xforms:value ref="value" />
+										</xforms:itemset>
+									</xforms:select1>
+								</div>
+
+								<div>
+									<xforms:input ref="latitude">
+										<xforms:label class="fixed-width">Latitude</xforms:label>
+										<xforms:alert>
+											<xforms:output
+												value="concat('Please enter a coordinate value between -180  and 180 for the ', name(), ' field ')" />
+										</xforms:alert>
 									</xforms:input>
+								</div>
 
-								</xforms:group>
+								<div>
+									<xforms:input ref="longitude">
+										<xforms:label class="fixed-width">Longitude</xforms:label>
+										<xforms:alert>
+											<xforms:output
+												value="concat('Please enter a coordinate value between -180 and 180 for the ', name(), ' field ')" />
+										</xforms:alert>
+									</xforms:input>
+								</div>
 
-								<br />
-
-								<xforms:input ref="district">
-									<xforms:label class="fixed-width">District </xforms:label>
-								</xforms:input>
-								<br />
-
-								<xforms:input ref="locality">
-									<xforms:label class="fixed-width">Locality </xforms:label>
-								</xforms:input>
-								<br />
-
-								<xforms:input ref="siteCode">
-									<xforms:label class="fixed-width">Your site code</xforms:label>
-								</xforms:input>
-								<br />
-
-								<xforms:select1 appearance="minimal" ref="testingDelay">
-									<xforms:label class="fixed-width">Sampling/testing delay
-									</xforms:label>
-									<xforms:item>
-										<xforms:label><!-- Nullable -->
-										</xforms:label>
-										<xforms:value />
-									</xforms:item>
-									<xforms:itemset model="mod-study-questionnaire"
-										nodeset="instance('ins-testingDelay-items')/testingDelay">
-										<xforms:label ref="label" />
-										<xforms:value ref="value" />
-									</xforms:itemset>
-								</xforms:select1>
-								<br />
-
-								<xforms:select1 appearance="minimal" ref="anticoagulant">
-									<xforms:label class="fixed-width">Anticoagulant</xforms:label>
-									<xforms:item>
-										<xforms:label><!-- Nullable -->
-										</xforms:label>
-										<xforms:value />
-									</xforms:item>
-									<xforms:itemset model="mod-study-questionnaire"
-										nodeset="instance('ins-anticoagulant-items')/anticoagulant">
-										<xforms:label ref="label" />
-										<xforms:value ref="value" />
-									</xforms:itemset>
-								</xforms:select1>
-
-								<br />
-
-								<xforms:select1 appearance="minimal"
-									ref="transportAndStorageTemperature">
-									<xforms:label class="fixed-width">Transport/storage temperature
-									</xforms:label>
-									<xforms:item>
-										<xforms:label><!-- Nullable -->
-										</xforms:label>
-										<xforms:value />
-									</xforms:item>
-									<xforms:itemset model="mod-study-questionnaire"
-										nodeset="instance('ins-transportAndStorageTemperature-items')/transportAndStorageTemperature">
-										<xforms:label ref="label" />
-										<xforms:value ref="value" />
-									</xforms:itemset>
-								</xforms:select1>
-
-
-								<br />
-								<xforms:input ref="latitude">
-									<xforms:label class="fixed-width">Latitude</xforms:label>
-									<xforms:alert>
-										<xforms:output
-											value="concat('Please enter a coordinate value between -180  and 180 for the ', name(), ' field ')" />
-									</xforms:alert>
-								</xforms:input>
-								<br />
-								<xforms:input ref="longitude">
-									<xforms:label class="fixed-width">Longtude</xforms:label>
-									<xforms:alert>
-										<xforms:output
-											value="concat('Please enter a coordinate value between -180 and 180 for the ', name(), ' field ')" />
-									</xforms:alert>
-								</xforms:input>
-
+								<!-- this causes client-side error -->
+								<!-- 
+								<div>
+									<fr:map 
+										address-ref="address"
+										longitude-ref="longitude" 
+										latitude-ref="latitude"
+										style="width: 500px; height: 300px"/>
+								</div>
+								-->
 
 								<xforms:group ref="transmissionIntensity">
 									<h3>Transmission Intensity</h3>
