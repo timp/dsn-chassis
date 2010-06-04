@@ -33,6 +33,13 @@ declare variable $config-collections:collection-spec :=
             <recursive>true</recursive>
         </collection>   
         <collection>
+            <title>All Draft Media</title>
+            <path-info>/media/draft</path-info>
+            <enable-history>false</enable-history>
+            <exclude-entry-content>true</exclude-entry-content>
+            <recursive>true</recursive>
+        </collection>   
+        <collection>
             <title>All Derivations</title>
             <path-info>/derivations</path-info>
             <enable-history>false</enable-history>

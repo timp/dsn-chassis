@@ -61,7 +61,7 @@
 				<xforms:setvalue  ref="instance('ins-control')/draft-entry-is-valid">true</xforms:setvalue>
 			</xforms:action>
             
-            <!-- TODO: Why doesn't this work? -->
+            <!-- TODO: Why doesn't this work? .. because the xforms-value-changed event is only available within a specific form control -->
             <!-- 
             <xforms:action ev:event="xforms-ready">
 	            	<xforms:setvalue ev:event="xforms-value-changed" ev:observer="ins-draft-entry" ref="instance('ins-control')/draft-is-saved">false</xforms:setvalue>	            	
@@ -89,14 +89,11 @@
 							<wizard-pane-to-show>study-terms</wizard-pane-to-show>
 							<registrant-has-agreed-to-the-terms/>
 							<study-entry-container>
-								<xi:include href="/apps/common/templates/study/study-entry-template.xml" xxi:omit-xml-base="true"/>
+								<xi:include href="../common/templates/study/study-entry-template.xml" xxi:omit-xml-base="true"/>
 							</study-entry-container>
 							<permissions-entry-container>
-								<xi:include href="/apps/contributor/includes/permissions-entry.xml" xxi:omit-xml-base="true"/>
+								<xi:include href="includes/permissions-entry.xml" xxi:omit-xml-base="true"/>
 							</permissions-entry-container>
-							<uploads-entry-container>
-								<xi:include href="/apps/contributor/includes/uploads-entry-template.xml" xxi:omit-xml-base="true"/>
-							</uploads-entry-container>
 						</draft>
         			</atom:content>
        			</atom:entry>
@@ -135,27 +132,6 @@
 			<!-- Check email addresses in acknowledgements (not required) -->			
 			<xforms:bind nodeset="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:content/study/acknowledgements/person/email-address" type="xforms:email"/>
 
-				
-			<xforms:bind nodeset="instance('ins-draft-entry')/atom:content/draft/uploads-entry-container/atom:entry/atom:content/uploads">
-				<xforms:bind nodeset="@target" calculate="instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/submittedMedia']/@href"/>
-				<xforms:bind nodeset="upload">
-					<xforms:bind nodeset="@typeterm" required="true()"/>
-					<xforms:bind nodeset="@typelabel" relevant="../@typeterm='http://www.cggh.org/2010/chassis/terms/Other'"/>
-				</xforms:bind>
-			</xforms:bind>
-
-			<xforms:instance id="ins-upload-template">
-				<upload
-					xmlns=""
-					filename=""
-					mediatype=""
-					size=""
-					typeterm=""
-					typelabel=""
-					xsi:type="xs:anyURI"></upload>
-			</xforms:instance>
-			
-			
 			
 
        		<xforms:instance id="ins-publication-template" src="/apps/common/templates/study/publication-template.xml"/>
@@ -178,23 +154,21 @@
 			<xforms:send 
 				ev:event="xforms-model-construct-done" 
 				submission="sub-get-draft-entry" 
-				if="not(empty(xxforms:get-request-parameter('draft')))"/>
-
-			<!-- With this, the get will not generate a validation-error when the instance is replaced. -->
-        	<xforms:instance id="ins-noparams">
-        		<params xmlns=""/>
-        	</xforms:instance>
+				if="exists(xxforms:get-request-parameter('draft'))"/>
 
 			<!-- This tries to get the current draft (by request-parameter). -->
 			<xforms:submission 
 				id="sub-get-draft-entry"
-				action="{xxforms:get-request-parameter('draft')}"
+				resource="{xxforms:get-request-parameter('draft')}"
 				method="get"
 				replace="instance"
 				instance="ins-draft-entry"
-				ref="instance('ins-noparams')">
+				serialization="none">
 				
 				<xforms:setvalue ev:event="xforms-submit-done" ref="instance('ins-control')/wizard-pane-being-shown" value="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show"  />
+				
+				<!-- now retrieve feed of draft media -->
+				<xforms:send ev:event="xforms-submit-done" submission="sub-get-draft-media-feed"/>
 				
                 <!-- If not available (error) then reloads with no request param. -->
                 <!-- Note that this behaviour will depend on the if-param-condition in the send to prevent an endless loop. -->
@@ -315,16 +289,6 @@
 			<!-- This gets the list of different file types for the upload-files pane. -->
 			<xforms:instance id="ins-file-terms" src="/apps/common/constants/file-terms.xml"/>
 
-            <!-- This stores the local references to the files in the draft. -->
-            <!-- TODO: Does this need encoding="multipart/form-data" ? -->
-            <xforms:submission 
-            	id="sub-post-background-uploads" 
-            	ref="instance('ins-draft-entry')/atom:content/draft/uploads-entry-container/atom:entry/atom:content/uploads" 
-            	method="post"
-            	replace="none"
-            	resource="test:"
-            	validate="false"/>
-
 
 			<!-- This stores the study entry once it has been posted, e.g.  -->
 			<xforms:instance id="ins-study-entry">
@@ -363,7 +327,8 @@
                 <!-- If done, then post the uploads. -->
                 <!-- The target is already copied to the uploads attribute using a bind calculation. -->
                 
-                <xforms:send ev:event="xforms-submit-done" submission="sub-post-uploads"/>
+<!--                <xforms:send ev:event="xforms-submit-done" submission="sub-post-uploads"/>-->
+            	<xforms:send ev:event="xforms-submit-done" submission="sub-copy-media"/>
 
                 
 				<!-- If error, then go back to the wizard-pane-being-shown and show the error. -->
@@ -372,28 +337,12 @@
                          
             </xforms:submission>
 
-            
-            <xforms:submission 
-            	id="sub-post-uploads" 
-            	ref="instance('ins-draft-entry')/atom:content/draft/uploads-entry-container/atom:entry/atom:content/uploads"
-                resource="/util/store-uploads"
-                method="post" 
-                replace="none">
-				
-				<!-- If done, then delete the draft. -->
-                <xforms:send ev:event="xforms-submit-done" submission="sub-delete-draft"/>
 
-				<!-- If error, then go back to the wizard-pane-being-shown and show the error. -->
-				<xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show" value="instance('ins-control')/wizard-pane-being-shown"/>
-				<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while storing the files.</xforms:message>
-                         
-            </xforms:submission>
-            
             <xforms:submission 
             	id="sub-delete-draft"  
             	method="delete"
             	replace="none"
-            	action="{instance('ins-draft-entry')/atom:link[@rel='edit']/@href}">
+            	resource="{instance('ins-draft-entry')/atom:link[@rel='edit']/@href}">
             	
             	<!-- If successful, reload with the study edit URL (the draft URL is now irrelevant) -->
             	<xforms:load ev:event="xforms-submit-done" resource="register-study-wizard?study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}"/>
@@ -407,16 +356,16 @@
 			<xforms:send 
 				ev:event="xforms-model-construct-done" 
 				submission="sub-get-study-entry" 
-				if="not(empty(xxforms:get-request-parameter('study')))"/>
+				if="exists(xxforms:get-request-parameter('study'))"/>
 
 
 			<xforms:submission 
 				id="sub-get-study-entry"
-				action="{xxforms:get-request-parameter('study')}"
+				resource="{xxforms:get-request-parameter('study')}"
 				method="get"
 				replace="instance"
 				instance="ins-study-entry"
-				ref="instance('ins-noparams')">
+				serialization="none">
 				
 				
 				<!-- If successful, load the confirmation page. -->
@@ -444,18 +393,128 @@
 			<xforms:instance id="ins-study-is-published-terms" src="/apps/common/constants/study-is-published-terms.xml"/>
 				
 
+
+			<!--+
+				| New way of handling uploads, to enable uploads to persist
+				| with drafts, and not get deleted at the end of the user's
+				| session.
+				+-->
+				
+			<!-- instance to hold a feed of uploaded media for this draft -->
+        	
+        	<xforms:instance id="ins-draft-media-feed">
+        		<atom:feed/>
+        	</xforms:instance>
+        	
+        	
+        	
+        	<!-- submission to retrieve the draft media feed for the current draft -->
+        	
+        	<xforms:submission
+        		id="sub-get-draft-media-feed"
+        		method="get"
+        		resource="{instance('ins-draft-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/draftMedia']/@href}"
+        		serialization="none"
+        		replace="instance"
+        		instance="ins-draft-media-feed">
+
+        		<!-- TODO error handling -->
+        		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving a feed of draft media.</xforms:message>
+
+        	</xforms:submission>
+        	
+        	
+
+			<!-- files are uploaded one at a time, this instance holds the data to be posted -->
+        	
+        	<xforms:instance id="ins-upload">
+        		<upload xmlns="" scheme="http://www.cggh.org/2010/chassis/scheme/FileTypes" term="" label="">
+        			<summary/>
+        			<category/>
+        			<media xsi:type="xs:anyURI" filename="" mediatype="" size=""/>
+        		</upload>
+        	</xforms:instance>
+        	
+        	<!-- this is a fresh instance to use when clearing out the main instance after each upload -->
+        	<xforms:instance id="ins-upload-empty">
+        		<upload xmlns="" scheme="http://www.cggh.org/2010/chassis/scheme/FileTypes" term="" label="">
+        			<summary/>
+        			<category/>
+        			<media xsi:type="xs:anyURI" filename="" mediatype="" size=""/>
+        		</upload>
+        	</xforms:instance>
+        	
+        	
+        	
+        	<!-- some bindings on the upload instance ... TODO make the upload button readonly if no file or type selected -->
+        	<xforms:bind nodeset="instance('ins-upload')">
+        		<xforms:bind nodeset="@term" required="true()"/>
+        		<xforms:bind nodeset="@label" relevant="../@term='http://www.cggh.org/2010/chassis/terms/Other'" required="true()"/>
+				<xforms:bind nodeset="category" calculate="concat('scheme=&quot;', ../@scheme, '&quot;; term=&quot;', ../@term, '&quot;; label=&quot;', ../@label, '&quot;;')"/>
+        	</xforms:bind>        	
+
+
+
+			<!-- this is the submission that sends the file to atombeat ... it uses a multipart/form-data POST request, which (thankfully) both Orbeon and AtomBeat support, although this is not standard Atom Protocol ... check the http traffic to see what's being sent -->
+        	<xforms:submission
+        		id="sub-post-upload"
+        		method="form-data-post"
+        		resource="{instance('ins-draft-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/draftMedia']/@href}"
+        		ref="instance('ins-upload')"
+        		replace="none">
+        		
+        		<!-- this is required, otherwise you'll get errors -->
+        		<xforms:header>
+        			<xforms:name>Accept</xforms:name>
+        			<xforms:value>application/atom+xml</xforms:value>
+        		</xforms:header>
+
+				<!-- clear out upload -->
+        		<xforms:insert ev:event="xforms-submit-done" nodeset="instance('ins-upload')" origin="instance('ins-upload-empty')"/>
+        		
+				<!-- refresh draft media -->
+				<xforms:send ev:event="xforms-submit-done" submission="sub-get-draft-media-feed"/>
+        		
+        		<!-- TODO error handling -->
+        		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while posting a draft upload.</xforms:message>
+
+        	</xforms:submission>
+        	
+        	
+        	
+        	<!-- this submission will copy across all the uploads from the draft media collection to the submitted media collection, by simply POSTing the draft media feed to the submitted media collection URI ... this is a new AtomBeat feature, not standard Atom Protocol, but useful here -->
+        	<xforms:submission
+        		id="sub-copy-media"
+        		method="post"
+        		resource="{instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/submittedMedia']/@href}"
+        		ref="instance('ins-draft-media-feed')"
+        		mediatype="application/atom+xml"
+        		replace="none"
+        		>
+        		
+        		<!-- If done, then delete the draft. -->
+        		<xforms:send ev:event="xforms-submit-done" submission="sub-delete-draft"/>
+        		
+        		<!-- If error, then go back to the wizard-pane-being-shown and show the error. -->
+        		<xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show" value="instance('ins-control')/wizard-pane-being-shown"/>
+        		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while storing the files.</xforms:message>
+
+        	</xforms:submission>
+        	
+        	
+        	
         </xforms:model>
 
-       	<xi:include href="/apps/common/includes/study/questionnaire-xforms-model.xml"/>
+       	<xi:include href="../common/includes/study/questionnaire-xforms-model.xml"/>
        	
-       	<xi:include href="/apps/common/includes/current-user-xforms-model.xml"/>
+       	<xi:include href="../common/includes/current-user-xforms-model.xml"/>
 
         
     </head>
     
     <body>
     
-		<xi:include href="/apps/common/includes/current-user-actions.xml"/>
+		<xi:include href="../common/includes/current-user-actions.xml"/>
 		
 		<div id="content">
 
@@ -464,53 +523,53 @@
 			<!-- Help boxes for wizard panes -->
 			<!--  -->
 	    	<xforms:group ref="instance('ins-control')[wizard-pane-being-shown='study-terms']">
-	    		<xi:include href="/apps/contributor/includes/help-boxes/for-wizard-panes/study-terms.xml"/>
+	    		<xi:include href="includes/help-boxes/for-wizard-panes/study-terms.xml"/>
 	    	</xforms:group>
 	    	<xforms:group ref="instance('ins-control')[wizard-pane-being-shown='permissions']">
-	    		<xi:include href="/apps/contributor/includes/help-boxes/for-wizard-panes/permissions.xml"/>
+	    		<xi:include href="includes/help-boxes/for-wizard-panes/permissions.xml"/>
 	    	</xforms:group>
 	    	<xforms:group ref="instance('ins-control')[wizard-pane-being-shown='acknowledgements']">
-	    		<xi:include href="/apps/contributor/includes/help-boxes/for-wizard-panes/acknowledgements.xml"/>
+	    		<xi:include href="includes/help-boxes/for-wizard-panes/acknowledgements.xml"/>
 	    	</xforms:group>
 	    	<xforms:group ref="instance('ins-control')[wizard-pane-being-shown='upload-files']">
-	    		<xi:include href="/apps/contributor/includes/help-boxes/for-wizard-panes/upload-files.xml"/>
+	    		<xi:include href="includes/help-boxes/for-wizard-panes/upload-files.xml"/>
 	    	</xforms:group>
 	    	<xforms:group ref="instance('ins-control')[wizard-pane-being-shown='publications']">
-	    		<xi:include href="/apps/contributor/includes/help-boxes/for-wizard-panes/publications.xml"/>
+	    		<xi:include href="includes/help-boxes/for-wizard-panes/publications.xml"/>
 	    	</xforms:group>
 	    	<xforms:group ref="instance('ins-control')[wizard-pane-being-shown='review']">
-	    		<xi:include href="/apps/contributor/includes/help-boxes/for-wizard-panes/review.xml"/>
+	    		<xi:include href="includes/help-boxes/for-wizard-panes/review.xml"/>
 	    	</xforms:group>
 	    	<xforms:group ref="instance('ins-control')[wizard-pane-being-shown='confirmation']">
-	    		<xi:include href="/apps/contributor/includes/help-boxes/for-wizard-panes/confirmation.xml"/>
+	    		<xi:include href="includes/help-boxes/for-wizard-panes/confirmation.xml"/>
 	    	</xforms:group>
 	    	
 	    	<xforms:group ref="instance('ins-control')[wizard-pane-being-shown='study-terms']">
-	    		<xi:include href="/apps/contributor/includes/wizard-panes/study-terms.xml"/>
+	    		<xi:include href="includes/wizard-panes/study-terms.xml"/>
 	    	</xforms:group>
 	    	
 	    	<xforms:group ref="instance('ins-control')[wizard-pane-being-shown='permissions']">
-	    		<xi:include href="/apps/contributor/includes/wizard-panes/permissions.xml"/>
+	    		<xi:include href="includes/wizard-panes/permissions.xml"/>
 	    	</xforms:group>
 	    	
 	    	<xforms:group ref="instance('ins-control')[wizard-pane-being-shown='acknowledgements']">
-	    		<xi:include href="/apps/contributor/includes/wizard-panes/acknowledgements.xml"/>
+	    		<xi:include href="includes/wizard-panes/acknowledgements.xml"/>
 	    	</xforms:group>
 	    	
 	    	<xforms:group ref="instance('ins-control')[wizard-pane-being-shown='upload-files']">
-	    		<xi:include href="/apps/contributor/includes/wizard-panes/upload-files.xml"/>
+	    		<xi:include href="includes/wizard-panes/upload-files.xml"/>
 	    	</xforms:group>
 	    	
 	    	<xforms:group ref="instance('ins-control')[wizard-pane-being-shown='publications']">
-	    		<xi:include href="/apps/contributor/includes/wizard-panes/publications.xml"/>
+	    		<xi:include href="includes/wizard-panes/publications.xml"/>
 	    	</xforms:group>
 	    	
 	    	<xforms:group ref="instance('ins-control')[wizard-pane-being-shown='review']">
-	    		<xi:include href="/apps/contributor/includes/wizard-panes/review.xml"/>
+	    		<xi:include href="includes/wizard-panes/review.xml"/>
 	    	</xforms:group>
 	    	
 	    	<xforms:group ref="instance('ins-control')[wizard-pane-being-shown='confirmation']">
-	    		<xi:include href="/apps/contributor/includes/wizard-panes/confirmation.xml"/>
+	    		<xi:include href="includes/wizard-panes/confirmation.xml"/>
 	    	</xforms:group>
 
 

@@ -1,3 +1,4 @@
+<?oxygen NVDLSchema="../../../../../../../oxygen/samples/nvdl/xhtml-xforms-11-orbeon.nvdl"?>
 <div 
 	xmlns="http://www.w3.org/1999/xhtml" 
 	xmlns:xforms="http://www.w3.org/2002/xforms" 
@@ -7,85 +8,100 @@
 
 	<h2>Upload Files - (Step 4 of 5)</h2>
 	
-		           
-					
-							
-			<table>
 
-				<xforms:group ref="instance('ins-draft-entry')/atom:content/draft/uploads-entry-container/atom:entry/atom:content/uploads">
-					<xforms:repeat nodeset="upload" id="rep-upload">
-						<tr>
-							<td>
-		                        <xforms:trigger>
-		                            <xforms:delete 
-		                            	ev:event="DOMActivate" 
-			                        	context="instance('ins-draft-entry')/atom:content/draft/uploads-entry-container/atom:entry/atom:content/uploads" 
-			                        	nodeset="upload" 
-		                            	at="index('rep-upload')"/>
-		                            <xforms:label><img src="/apps/contributor/common/remove.gif"/></xforms:label>
-		                        </xforms:trigger>
-							</td>
-							<td>
-		                        
-		                        <xforms:upload ref=".">
-		                        	<xforms:label>File:</xforms:label>
-		                            <xforms:filename ref="@filename"/>
-		                            <xforms:mediatype ref="@mediatype"/>
-		                            <xxforms:size ref="@size"/>
-		                            <xforms:send ev:event="xforms-select" submission="sub-post-background-uploads"/>
-		                        </xforms:upload>
-		                        
-		                        <br/>
-								<xforms:select1 ref="@typeterm">
-									<xforms:label>Type:</xforms:label>
-									<xforms:alert>Please select a file type.</xforms:alert>
-									<xforms:item>
-										<xforms:value></xforms:value>
-										<xforms:label>Select...</xforms:label>
-									</xforms:item>
-		                        	<xforms:itemset nodeset="instance('ins-file-terms')/term">
-		                        		<xforms:label ref="label"/>
-		                        		<xforms:value ref="value"/>
-		                        	</xforms:itemset>
-								</xforms:select1>
-								
-								<xforms:input ref="@typelabel">
-									<xforms:label>Other Type:</xforms:label>
-								</xforms:input>
-		                        
-							</td>
-						</tr>
-					</xforms:repeat>
-				</xforms:group>
-				
+	<p>
+		<xforms:upload ref="instance('ins-upload')/media">
+			<xforms:label>File: </xforms:label>
+			<xforms:filename ref="@filename"/>
+			<xforms:mediatype ref="@mediatype"/>
+			<xxforms:size ref="@size"/>
+			<!-- uncomment line below to automatically post upload on file select -->
+<!--			<xforms:send ev:event="xforms-select" submission="sub-post-upload"/>-->
+		</xforms:upload>
+		
+	</p>
+	
+	<p>	
+		<xforms:select1 ref="instance('ins-upload')/@term">
+			<xforms:label>Type:</xforms:label>
+			<xforms:item>
+				<xforms:label>Select...</xforms:label>
+				<xforms:value></xforms:value>
+			</xforms:item>
+			<xforms:itemset nodeset="instance('ins-file-terms')/term">
+				<xforms:label ref="label"/>
+				<xforms:value ref="value"/>
+			</xforms:itemset>
+			<xforms:alert>Please select a file type.</xforms:alert>
+		</xforms:select1>
+		
+		<xforms:input ref="instance('ins-upload')/@label">
+			<xforms:label>Other Type:</xforms:label>
+			<xforms:alert>Please enter the type of file.</xforms:alert>
+		</xforms:input>
+		
+	</p>
+	
+	<p>
+		<xforms:trigger>
+			<xforms:label>Upload</xforms:label>
+			<xforms:send ev:event="DOMActivate" submission="sub-post-upload"/>
+		</xforms:trigger>
+	</p>
+					
+
+	<h3>Uploaded Files</h3>
+	
+	<xforms:group ref="instance('ins-draft-media-feed')[empty(atom:entry)]">
+		<p>You have not uploaded any files.</p>
+	</xforms:group>
+	
+	<xforms:group ref="instance('ins-draft-media-feed')[exists(atom:entry)]">
+		
+		<fr:datatable paginated="false">
+			<thead>
 				<tr>
-					<td>
-	                    <xforms:trigger>
-	                        <xforms:label><img src="/apps/contributor/common/add.gif"/></xforms:label>
-	                        <xforms:insert 
-	                        	ev:event="DOMActivate" 
-	                        	context="instance('ins-draft-entry')/atom:content/draft/uploads-entry-container/atom:entry/atom:content/uploads" 
-	                        	nodeset="upload" 
-	                        	at="last()" 
-	                        	position="after" 
-	                        	origin="instance('ins-upload-template')"/>
-	                    </xforms:trigger>
-					</td>
-					<td >
-	                    <xforms:trigger appearance="minimal">
-	                        <xforms:label>Add a File</xforms:label>
-	                        <xforms:insert 
-	                        	ev:event="DOMActivate" 
-	                        	context="instance('ins-draft-entry')/atom:content/draft/uploads-entry-container/atom:entry/atom:content/uploads" 
-	                        	nodeset="upload" 
-	                        	at="last()" 
-	                        	position="after" 
-	                        	origin="instance('ins-upload-template')"/>
-	                    </xforms:trigger>
-					</td>
+					<th fr:sortable="true" fr:resizeable="true">File Name</th>
+					<th fr:sortable="true" fr:resizeable="true">Uploaded On</th>
+					<th fr:sortable="false" fr:resizeable="true">Size (Bytes)</th>
+					<th fr:sortable="true" fr:resizeable="true">Type</th>
+					<th fr:sortable="false" fr:resizeable="true">Actions</th>
 				</tr>
-			</table>
-			
+			</thead>
+			<tbody>
+				<xforms:repeat id="rep-draft-media" nodeset="atom:entry">
+					<tr>
+						<td>
+							<xforms:output ref="atom:title"/>
+						</td>
+						<td>
+							<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')"/>
+						</td>
+						<td>
+							<xforms:output ref="atom:link[@rel='edit-media']/@length"/>
+						</td>
+						<td>
+							<xforms:output ref="
+								for $cat in (./atom:category[@scheme='http://www.cggh.org/2010/chassis/scheme/FileTypes'])
+								return
+								if ( $cat/@term = 'http://www.cggh.org/2010/chassis/terms/Other' )
+								then $cat/@label
+								else instance('ins-file-terms')/term[value=$cat/@term]/label
+								"/>
+						</td>
+						<td>
+							<xforms:group ref=".[contains( ./atom:link[@rel='edit-media']/@atombeat:allow , 'GET' )]">
+								<a href="{atom:content/@src}">Download</a>
+							</xforms:group>
+							<!-- TODO delete -->
+						</td>
+					</tr>
+				</xforms:repeat>
+			</tbody>
+		</fr:datatable>
+		
+	</xforms:group>
+	
 	<p>
 	
 		<xforms:trigger ref="instance('ins-control')/save-draft-trigger" appearance="minimal">

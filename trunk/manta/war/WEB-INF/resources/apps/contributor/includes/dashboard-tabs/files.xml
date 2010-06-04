@@ -7,100 +7,58 @@
 	xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
 	xmlns:atombeat="http://purl.org/atombeat/xmlns">
 	
-	<h2>Submit Files</h2>
-	
-	<table>
+	<h2>Submit a File</h2>
 
-		<xforms:group ref="instance('ins-uploads-entry')/atom:content/uploads">
-			<xforms:repeat nodeset="upload" id="rep-upload">
-				<tr>
-					<td>
-                        <xforms:trigger>
-                        	<xforms:label><img alt="remove" src="/apps/contributor/common/remove.gif"/></xforms:label>
-                        	<xforms:delete 
-                            	ev:event="DOMActivate" 
-	                        	context="instance('ins-uploads-entry')/atom:content/uploads" 
-	                        	nodeset="upload" 
-                            	at="index('rep-upload')"/>
-                        </xforms:trigger>
-					</td>
-					<td>
-                        
-                        <xforms:upload ref=".">
-                        	<xforms:label>File:</xforms:label>
-                            <xforms:filename ref="@filename"/>
-                            <xforms:mediatype ref="@mediatype"/>
-                            <xxforms:size ref="@size"/>
-                            <xforms:send ev:event="xforms-select" submission="sub-post-background-uploads"/>
-                        </xforms:upload>
-                        
-                        <br/>
-						<xforms:select1 ref="@typeterm">
-							<xforms:label>Type:</xforms:label>
-							<xforms:item>
-								<xforms:label>Select...</xforms:label>
-								<xforms:value></xforms:value>
-							</xforms:item>
-                        	<xforms:itemset nodeset="instance('ins-file-terms')/term">
-                        		<xforms:label ref="label"/>
-                        		<xforms:value ref="value"/>
-                        	</xforms:itemset>
-							<xforms:alert>Please select a file type.</xforms:alert>
-						</xforms:select1>
-						
-						<xforms:input ref="@typelabel">
-							<xforms:label>Other Type:</xforms:label>
-						</xforms:input>
-                        
-					</td>
-				</tr>
-			</xforms:repeat>
-		</xforms:group>
+	<p>
+		<xforms:upload ref="instance('ins-upload')/media">
+			<xforms:label>File: </xforms:label>
+			<xforms:filename ref="@filename"/>
+			<xforms:mediatype ref="@mediatype"/>
+			<xxforms:size ref="@size"/>
+			<!-- uncomment line below to automatically post upload on file select -->
+			<!--			<xforms:send ev:event="xforms-select" submission="sub-post-upload"/>-->
+		</xforms:upload>
 		
-		<tr>
-			<td>
-                   <xforms:trigger>
-                       <xforms:label><img alt="add" src="/apps/contributor/common/add.gif"/></xforms:label>
-                       <xforms:insert 
-                       	ev:event="DOMActivate" 
-                       	context="instance('ins-uploads-entry')/atom:content/uploads" 
-                       	nodeset="upload" 
-                       	at="last()" 
-                       	position="after" 
-                       	origin="instance('ins-upload-template')"/>
-                   </xforms:trigger>
-			</td>
-			<td >
-                   <xforms:trigger appearance="minimal">
-                       <xforms:label>Add a File</xforms:label>
-                       <xforms:insert 
-                       	ev:event="DOMActivate" 
-                       	context="instance('ins-uploads-entry')/atom:content/uploads" 
-                       	nodeset="upload" 
-                       	at="last()" 
-                       	position="after" 
-                       	origin="instance('ins-upload-template')"/>
-                   </xforms:trigger>
-			</td>
-		</tr>
-	</table>
-
-	 <xforms:group ref="instance('ins-uploads-entry')/atom:content/uploads[count(upload)>0]">
-	     <p>
-	         <xforms:trigger ref="instance('ins-control')/submit-files-trigger">
-	             <xforms:label>Confirm</xforms:label>
-	             <xforms:send ev:event="DOMActivate" submission="sub-post-uploads"/>
-	         </xforms:trigger>
-	     </p>
-     </xforms:group>
+	</p>
+	
+	<p>	
+		<xforms:select1 ref="instance('ins-upload')/@term">
+			<xforms:label>Type:</xforms:label>
+			<xforms:item>
+				<xforms:label>Select...</xforms:label>
+				<xforms:value></xforms:value>
+			</xforms:item>
+			<xforms:itemset nodeset="instance('ins-file-terms')/term">
+				<xforms:label ref="label"/>
+				<xforms:value ref="value"/>
+			</xforms:itemset>
+			<xforms:alert>Please select a file type.</xforms:alert>
+		</xforms:select1>
+		
+		<xforms:input ref="instance('ins-upload')/@label">
+			<xforms:label>Other Type:</xforms:label>
+			<xforms:alert>Please enter the type of file.</xforms:alert>
+		</xforms:input>
+		
+	</p>
+	
+	<p>
+		<xforms:trigger>
+			<xforms:label>Upload</xforms:label>
+			<xforms:send ev:event="DOMActivate" submission="sub-post-upload"/>
+		</xforms:trigger>
+	</p>
+	
+	
+	
 	
 			<h2>Submitted Files</h2>
     		
-    		<xforms:group ref="instance('ins-submitted-media-feed')[count(atom:entry)=0]">
+    		<xforms:group ref="instance('ins-submitted-media-feed')[empty(atom:entry)]">
     			<p>You have not submitted any files.</p>
     		</xforms:group>
     		
-    		<xforms:group ref="instance('ins-submitted-media-feed')[count(atom:entry)>0]">
+    		<xforms:group ref="instance('ins-submitted-media-feed')[exists(atom:entry)]">
     		
 			    	<fr:datatable paginated="false">
 			    		<thead>
@@ -129,7 +87,14 @@
 			    						<xforms:output ref="atom:author/atom:email"/>
 			    					</td>
 			    					<td>
-			    						<xforms:output ref="if(instance('ins-file-terms')/term[value=xxforms:context('rep-media')/atom:category[@scheme='http://www.cggh.org/2010/chassis/scheme/FileTypes']/@term]/value='http://www.cggh.org/2010/chassis/terms/Other') then atom:category[@scheme='http://www.cggh.org/2010/chassis/scheme/FileTypes']/@label else instance('ins-file-terms')/term[value=xxforms:context('rep-media')/atom:category[@scheme='http://www.cggh.org/2010/chassis/scheme/FileTypes']/@term]/label"/>
+			    						<xforms:output ref="
+			    							for $cat in (./atom:category[@scheme='http://www.cggh.org/2010/chassis/scheme/FileTypes'])
+			    							return
+			    							if ( $cat/@term = 'http://www.cggh.org/2010/chassis/terms/Other' )
+			    							then $cat/@label
+			    							else instance('ins-file-terms')/term[value=$cat/@term]/label
+			    							"/>
+			    						
 			    					</td>
 			    					<!-- TODO: Only enable if the file has passed personal data review. -->
 			    					<td>
