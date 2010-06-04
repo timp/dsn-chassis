@@ -211,6 +211,11 @@ ul {
     background-color: #FFFFFF;
 }
 
+.xforms-repeat-selected-item-2 {
+    /* Masks Orbeon's yellow highlight in wizard by matching background colour.*/
+    background-color: #FFFFFF;    
+}
+
 .yui-content .xforms-repeat-selected-item-1 {
     /* Gives same colour background on dashboard.*/
     background-color: #EDF5FF;
