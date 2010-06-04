@@ -3,6 +3,7 @@
     <region/>
     <district/>
     <locality/>
+    <!-- <address/> -->
     <siteCode/>
     <testingDelay/>
     <anticoagulant/>
