@@ -12,54 +12,61 @@
     The full text of the license is available at http://www.gnu.org/copyleft/lesser.html
 -->
 <?oxygen NVDLSchema="../../../../../oxygen/samples/nvdl/xhtml-xforms-11-orbeon.nvdl"?>
-<html 	
-    xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:xforms="http://www.w3.org/2002/xforms"
-    xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
-    xmlns:ev="http://www.w3.org/2001/xml-events"
-    >
+<html xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:xi="http://www.w3.org/2001/XInclude"
+		xmlns:xforms="http://www.w3.org/2002/xforms"
+		xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
+		xmlns:ev="http://www.w3.org/2001/xml-events">
 
-    <head>
-        <title>Standalone questionnaire</title>
-        <xi:include href="../common/includes/study/questionnaire-xforms-model.xml"/>
-    </head>
-    <body>
-    <h1>Standalone Questionnaire</h1>
-            
-        <p>
-            <!-- 
+<head>
+<title>Standalone questionnaire</title>
+<xi:include
+		href="../common/includes/study/questionnaire-xforms-model.xml" />
+</head>
+<body>
+<h1>Standalone Questionnaire</h1>
+
+<p><!-- 
                 Orbeon Error Summary component, see also: 
                 http://wiki.orbeon.com/forms/doc/developer-guide/xbl-components/error-summary-component - description of fr:error-summary component
                 http://www.orbeon.com/orbeon/xforms-government/ - example of application using the fr:error-summary component (create a new form and see what happens when you enter invalid data)
             --> 
-            <fr:error-summary observer="grp-questionnaire" id="error-summary">
-                <fr:label>Your form contains the following errors: </fr:label>
-            </fr:error-summary>
-        </p>        
-        
-        <p>
-            <!-- 
+            
+<fr:error-summary observer="grp-questionnaire"
+		id="error-summary" errors-count-ref="instance('errors')/errors-count"
+		valid-ref="instance('errors')/valid">
+		<fr:label>Your form contains the following errors: </fr:label>
+  <xforms:group ref=".[not(instance('errors')/valid = 'true')]">
+		<xforms:label>Form is invalid</xforms:label>
+	</xforms:group>
+  <xforms:group ref=".[not(not(instance('errors')/valid = 'true'))]">
+		<xforms:label>Form is valid</xforms:label>
+	</xforms:group>
+</fr:error-summary></p>
+
+<p><!-- 
                 this trigger mimics visitation of all form controls by the user by dispatching the 'fr-visit-all' event to the error summary
                 see http://wiki.orbeon.com/forms/doc/developer-guide/xbl-components/error-summary-component#TOC-Marking-all-controls-as-visited
-            -->
-            
-            <xforms:trigger appearance="minimal">
-                <xforms:label>Show Error Summary</xforms:label>
-                <xforms:dispatch ev:event="DOMActivate" name="fr-visit-all" targetid="error-summary"/>
-            </xforms:trigger>
+  --> 
+		<xforms:trigger appearance="minimal">
+				<xforms:label>Show Error Summary</xforms:label>
+				<xforms:dispatch ev:event="DOMActivate" name="fr-visit-all"
+						targetid="error-summary" />
+		</xforms:trigger>
             |
             <!-- 
                 this trigger "unvisits" all form controls by the user by dispatching the 'fr-unvisit-all' event to the error summary
                 see http://wiki.orbeon.com/forms/doc/developer-guide/xbl-components/error-summary-component#TOC-Marking-all-controls-as-not-visited
             -->
-            <xforms:trigger appearance="minimal">
-                <xforms:label>Clear Error Summary</xforms:label>
-                <xforms:dispatch ev:event="DOMActivate" name="fr-unvisit-all" targetid="error-summary"/>
-            </xforms:trigger>
-        </p>
-        
-        <xi:include href="../common/includes/study/questionnaire-xforms-input.xml"/>
+		<xforms:trigger appearance="minimal">
+				<xforms:label>Hide Error Summary</xforms:label>
+				<xforms:dispatch ev:event="DOMActivate" name="fr-unvisit-all"
+						targetid="error-summary" />
+		</xforms:trigger>
+</p>
 
-    </body>
+<xi:include
+		href="../common/includes/study/questionnaire-xforms-input.xml" />
+
+</body>
 </html>
