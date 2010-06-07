@@ -1,14 +1,13 @@
 <!--  An open list of sample sources -->
 <!--  used in molecular criteria -->
 <sampleSources xmlns="">
-<!--TPP 2010/05/28  Outpatient and inpatient = Clinical therapeutic trial, so left as was. -->
 	<sampleSource>
-		<label>outpatient visit</label>
-		<value>outpatient</value>
+		<label>clinical trial</label>
+		<value>clinicalTrial</value>
 	</sampleSource>
 	<sampleSource>
-		<label>inpatient visit</label>
-		<value>inpatient</value>
+		<label>clinic/hospital visit</label>
+		<value>clinic</value>
 	</sampleSource>
 	<sampleSource>
 		<label>longitudinal study</label>
