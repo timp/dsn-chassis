@@ -24,7 +24,8 @@
     xmlns:manta="http://www.cggh.org/2010/chassis/manta/xmlns"
     xmlns:xxi="http://orbeon.org/oxf/xml/xinclude"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:atombeat="http://purl.org/atombeat/xmlns">
+    xmlns:atombeat="http://purl.org/atombeat/xmlns"
+    xmlns:fr="http://orbeon.org/oxf/xml/form-runner">
 
     <head>
     
@@ -47,6 +48,8 @@
                 	<add-publication-trigger/>
                 	<upload-is-valid/>
                 	<upload-file-trigger/>
+                	<href-of-file-to-delete/>
+                	<name-of-file-to-delete/>
                 </control>
             </xforms:instance>    
             
@@ -503,7 +506,26 @@
         		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while storing the files.</xforms:message>
 
         	</xforms:submission>
+
+
+
         	
+        	<!-- This deletes the draft media specified by the href-of-file-to-delete -->
+        	<xforms:submission
+        		id="sub-delete-upload"
+        		method="delete"
+        		replace="none"
+        		resource="{instance('ins-control')/href-of-file-to-delete}">
+
+            	<!-- If successful, refresh the media table and show a message -->
+            	<xforms:action ev:event="xforms-submit-done">
+            		<xforms:send submission="sub-get-draft-media-feed"/>
+            		<xforms:message >The file has now been removed.</xforms:message>
+            	</xforms:action>
+            	
+            	<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while deleting the draft.</xforms:message>       
+            
+        	</xforms:submission>
         	
         	
         </xforms:model>
@@ -577,6 +599,17 @@
 
 
 		</div>
+
+			<fr:alert-dialog id="remove-file-dialog">
+			    <fr:label>Remove</fr:label>
+			    <fr:message> 
+			        Are you sure you want to remove the file &quot;<xforms:output ref="instance('ins-control')/name-of-file-to-delete"/>&quot;?
+			    </fr:message>
+			    <fr:negative-choice/>
+			    <fr:positive-choice>
+			        <xforms:send ev:event="DOMActivate" submission="sub-delete-upload"/>
+			    </fr:positive-choice>
+			</fr:alert-dialog>
 
 			<!-- TODO: Remove for production -->
 			<fr:xforms-inspector xmlns:fr="http://orbeon.org/oxf/xml/form-runner"/>

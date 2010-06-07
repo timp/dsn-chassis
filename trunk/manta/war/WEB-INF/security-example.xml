@@ -15,13 +15,12 @@
   
     
     <http-basic/>
-
-<!--
-    <form-login/>
-    <logout/>
--->
     
-    <!-- j_spring_security_logout -->
+
+    <!-- default method is to post to /j_spring_security_check -->
+    <!-- <form-login/> -->
+    
+    <!-- default method is to get from /j_spring_security_logout -->
     <logout logout-success-url="/home/" invalidate-session="true" logout-url="/logout" />
     
     <!-- restrict access to libraries and administrative scripts -->

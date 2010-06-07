@@ -90,10 +90,22 @@
 								"/>
 						</td>
 						<td>
+							
+							<xforms:group ref=".[contains( ./atom:link[@rel='edit-media']/@atombeat:allow , 'DELETE' )]">
+								<xforms:trigger>
+									<xforms:label>Remove</xforms:label>
+									<xforms:action ev:event="DOMActivate">
+										<xforms:setvalue ref="instance('ins-control')/href-of-file-to-delete" value="xxforms:context('rep-draft-media')/atom:link[@rel='edit-media']/@href"/>
+										<xforms:setvalue ref="instance('ins-control')/name-of-file-to-delete" value="xxforms:context('rep-draft-media')/atom:title"/>
+										<xforms:dispatch target="remove-file-dialog" name="fr-show"/>
+									</xforms:action>
+								</xforms:trigger>
+							</xforms:group>							
+							
 							<xforms:group ref=".[contains( ./atom:link[@rel='edit-media']/@atombeat:allow , 'GET' )]">
 								<a href="{atom:content/@src}">Download</a>
 							</xforms:group>
-							<!-- TODO delete -->
+
 						</td>
 					</tr>
 				</xforms:repeat>
