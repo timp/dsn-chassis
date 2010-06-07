@@ -62,8 +62,11 @@
      <p>
      	<xforms:trigger ref="instance('ins-control')/save-permissions-trigger">
      		<xforms:label>Save Changes</xforms:label>
-     		<xforms:action ev:event="DOMActivate">
+     		<xforms:action ev:event="DOMActivate" if="../permissions-entry-is-valid = 'true'">
      			<xforms:send submission="sub-put-permissions-entry"/>
+     		</xforms:action>
+     		<xforms:action ev:event="DOMActivate" if="not(../permissions-entry-is-valid = 'true')">
+     			<xforms:message>Please complete all required fields.</xforms:message>
      		</xforms:action>
      	</xforms:trigger>
      </p>

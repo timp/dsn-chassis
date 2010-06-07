@@ -17,6 +17,8 @@
 			<xxforms:size ref="@size"/>
 			<!-- uncomment line below to automatically post upload on file select -->
 			<!--			<xforms:send ev:event="xforms-select" submission="sub-post-upload"/>-->
+			<!-- TODO: ensure a file is selected before Upload is triggered -->
+			<xforms:alert>Please select a file.</xforms:alert>
 		</xforms:upload>
 		
 	</p>
@@ -45,7 +47,12 @@
 	<p>
 		<xforms:trigger ref="instance('ins-control')/upload-file-trigger">
 			<xforms:label>Upload</xforms:label>
-			<xforms:send ev:event="DOMActivate" submission="sub-post-upload"/>
+			<xforms:action ev:event="DOMActivate" if="../upload-is-valid = 'true'">
+				<xforms:send submission="sub-post-upload"/>
+			</xforms:action>
+			<xforms:action ev:event="DOMActivate" if="not(../upload-is-valid = 'true')">
+				<xforms:message>Please complete all required fields.</xforms:message>
+			</xforms:action>
 		</xforms:trigger>
 	</p>
 	

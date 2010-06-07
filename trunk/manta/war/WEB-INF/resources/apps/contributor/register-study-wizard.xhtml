@@ -67,11 +67,18 @@
 			</xforms:action>
 
             <xforms:bind nodeset="instance('ins-control')/pre-create-draft-back-home-link" relevant="not(instance('ins-draft-entry')/atom:link[@rel='edit'])"/>
-            <xforms:bind nodeset="instance('ins-control')/create-draft-trigger" readonly="not(../draft-entry-is-valid = 'true')"/>
             <xforms:bind nodeset="instance('ins-control')/create-draft-trigger" relevant="not(instance('ins-draft-entry')/atom:link[@rel='edit'])"/>
-			<xforms:bind nodeset="instance('ins-control')/save-draft-trigger" readonly="not(../draft-entry-is-valid = 'true')"/>
 			<xforms:bind nodeset="instance('ins-control')/add-publication-trigger" relevant="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:content/study/study-is-published='Yes'"/>
 
+
+			<!-- These binding would cause the buttons to disable when the draft-entry is invalid, but it causes a problem: The user has to change focus from a form element before the form is re-validated, causing the button to appear readonly even when the form is valid. -->
+			<!-- Another workaround (besides the current use of messages) might be to use xxforms:incremental, but that creates much more traffic, i.e. on every keypress. -->
+			<!-- <xforms:bind nodeset="instance('ins-control')/create-draft-trigger" readonly="not(../draft-entry-is-valid = 'true')"/>  -->
+			<!-- <xforms:bind nodeset="instance('ins-control')/save-draft-trigger" readonly="not(../draft-entry-is-valid = 'true')"/>  -->
+			<!-- <xforms:bind nodeset="instance('ins-control')/upload-file-trigger" readonly="not(../upload-is-valid = 'true')"/>  -->
+			
+			<!-- TODO: ensure a file is selected before Upload is triggered -->
+			<!-- <xforms:bind nodeset="instance('ins-upload')/media" required="true()" />  -->
 
 			<xforms:action ev:event="xxforms-invalid" ev:observer="ins-upload">
 				<xforms:setvalue ev:event="xforms-value-changed" ref="instance('ins-control')/upload-is-valid">false</xforms:setvalue>
@@ -80,8 +87,6 @@
 				<xforms:setvalue ev:event="xforms-value-changed" ref="instance('ins-control')/upload-is-valid">true</xforms:setvalue>
 			</xforms:action>
 
-			<xforms:bind nodeset="instance('ins-control')/upload-file-trigger" readonly="not(../upload-is-valid = 'true')"/>
-			
 
         	<!-- xincludes don't parse within instance sources. -->
         	<!--   <xforms:instance id="ins-draft-entry" src="/apps/contributor/includes/model-instances/draft-entry.xml"/> -->
