@@ -17,4 +17,10 @@
 		</label>
 		<value>ipt</value>
 	</treatmentReason>
+	<treatmentReason>
+		<label>
+			N/A
+		</label>
+		<value>na</value>
+	</treatmentReason>
 </treatmentReasons>
