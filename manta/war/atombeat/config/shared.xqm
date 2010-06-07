@@ -706,6 +706,22 @@ declare function config:derivations-collection-security-descriptor(
                         </atombeat:ace>
         
                         <!--
+                                Personal data reviewers can list the collection, and retrieve members.
+                        -->
+        
+                        <atombeat:ace>
+                                <atombeat:type>ALLOW</atombeat:type>
+                                <atombeat:recipient type="role">ROLE_CHASSIS_PERSONAL_DATA_REVIEWER</atombeat:recipient>
+                                <atombeat:permission>LIST_COLLECTION</atombeat:permission>
+                        </atombeat:ace>
+        
+                        <atombeat:ace>
+                                <atombeat:type>ALLOW</atombeat:type>
+                                <atombeat:recipient type="role">ROLE_CHASSIS_PERSONAL_DATA_REVIEWER</atombeat:recipient>
+                                <atombeat:permission>RETRIEVE_MEMBER</atombeat:permission>
+                        </atombeat:ace>
+        
+                        <!--
                                 The study administrators can list the collection and retrieve members.
                         -->
         
