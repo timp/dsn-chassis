@@ -100,8 +100,11 @@
      <p>
      	<xforms:trigger ref="instance('ins-control')/save-study-trigger">
      		<xforms:label>Save Changes</xforms:label>
-     		<xforms:action ev:event="DOMActivate">
+     		<xforms:action ev:event="DOMActivate" if="../study-entry-is-valid = 'true'">
      			<xforms:send submission="sub-put-study-entry"/>
+     		</xforms:action>
+     		<xforms:action ev:event="DOMActivate" if="not(../study-entry-is-valid = 'true')">
+     			<xforms:message>Please complete all required fields.</xforms:message>
      		</xforms:action>
      	</xforms:trigger>
      </p>

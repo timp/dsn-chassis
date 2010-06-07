@@ -63,8 +63,6 @@
 				<xforms:setvalue ev:event="xforms-value-changed" ref="instance('ins-control')/permissions-entry-is-valid">true</xforms:setvalue>
 			</xforms:action>
 
-			<xforms:bind nodeset="instance('ins-control')/save-permissions-trigger" readonly="not(../permissions-entry-is-valid = 'true')"/>
-	
 
 
 			<!-- Check email addresses in acknowledgements (not required) -->			
@@ -77,12 +75,9 @@
 				<xforms:setvalue ev:event="xforms-value-changed" ref="instance('ins-control')/study-entry-is-valid">true</xforms:setvalue>
 			</xforms:action>
 
-			<xforms:bind nodeset="instance('ins-control')/save-study-trigger" readonly="not(../study-entry-is-valid = 'true')"/>
-	
+			
 
 
-
-			<xforms:bind nodeset="instance('ins-control')/add-publication-trigger" relevant="instance('ins-study-entry')/atom:content/study/study-is-published='Yes'"/>
 
 
 
@@ -94,15 +89,22 @@
 			</xforms:action>
 
 
-        	<xforms:bind nodeset="instance('ins-control')/upload-file-trigger" readonly="not(../upload-is-valid = 'true')"/>
+ 			<!-- These binding would cause the buttons to disable when the form is invalid, but it causes a problem: The user has to change focus from a form element before the form is re-validated, causing the button to appear readonly even when the form is valid. -->
+			<!-- Another workaround (besides the current use of messages) might be to use xxforms:incremental, but that creates much more traffic, i.e. on every keypress. -->
+			<!-- <xforms:bind nodeset="instance('ins-control')/save-permissions-trigger" readonly="not(../permissions-entry-is-valid = 'true')"/>  -->
+			<!-- <xforms:bind nodeset="instance('ins-control')/save-study-trigger" readonly="not(../study-entry-is-valid = 'true')"/> -->
+			<!-- <xforms:bind nodeset="instance('ins-control')/upload-file-trigger" readonly="not(../upload-is-valid = 'true')"/> -->
         	
+			<xforms:bind nodeset="instance('ins-control')/add-publication-trigger" relevant="instance('ins-study-entry')/atom:content/study/study-is-published='Yes'"/>
+
+
         	
         	<xforms:bind nodeset="instance('ins-control')/copy-answers-control" relevant="instance('ins-study-feed')[count(atom:entry)>1]"/>
         	<xforms:bind nodeset="instance('ins-control')/copy-answers-trigger" readonly="../href-to-copy-study-info-from = ''"/>
         	
         	
-
-        	
+			<!-- TODO: ensure a file is selected before Upload is triggered -->
+        	<!--  <xforms:bind nodeset="instance('ins-upload')/media" required="true()" />  -->
         	
         	
         	
