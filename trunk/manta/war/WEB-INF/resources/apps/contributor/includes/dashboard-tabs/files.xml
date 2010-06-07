@@ -106,8 +106,9 @@
 			    					<!-- TODO: Only enable if the file has passed personal data review. -->
 			    					<td>
 			    						<xforms:group ref=".[contains( ./atom:link[@rel='edit-media']/@atombeat:allow , 'GET' )]">
-			    							<a href="{atom:content/@src}">Download</a>
+			    							<a href="{atom:content/@src}">Download</a><br/>
 			    						</xforms:group>
+			    						<a href="file-details?media-link={atom:link[@rel='edit']/@href}">Details</a>
 			    					</td>
 			    				</tr>
 			    			</xforms:repeat>
@@ -162,8 +163,9 @@
 						</td>
 						<td>
 							<xforms:group ref=".[contains( ./atom:link[@rel='edit-media']/@atombeat:allow , 'GET' )]">
-								<a href="{atom:content/@src}">Download</a>
+								<a href="{atom:content/@src}">Download</a><br/>
 							</xforms:group>
+							<a href="file-details?media-link={atom:link[@rel='edit']/@href}">Details</a>
 						</td>
 					</tr>
 				</xforms:repeat>

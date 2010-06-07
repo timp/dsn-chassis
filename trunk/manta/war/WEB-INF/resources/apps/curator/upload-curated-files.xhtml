@@ -232,6 +232,10 @@
     			 - <xforms:output value="instance('ins-study-entry')/atom:title"/> (<xforms:output value="instance('ins-study-entry')/manta:id"/>)
     		</h1>
     		
+    		<p>
+    			<a href="study-dashboard?tab=files&amp;study={xxforms:get-request-parameter('study')}">&lt;&lt; Study Dashboard</a>
+    		</p>
+
     		<h2>(1) Upload</h2>
     		
     		<table>
@@ -362,7 +366,13 @@
     								<xforms:output ref="atom:author/atom:email"/>
     							</td>
     							<td>
-    								<xforms:output ref="if(instance('ins-file-terms')/term[value=xxforms:context('rep-submitted-media')/atom:category[@scheme='http://www.cggh.org/2010/chassis/scheme/FileTypes']/@term]/value='http://www.cggh.org/2010/chassis/terms/Other') then atom:category[@scheme='http://www.cggh.org/2010/chassis/scheme/FileTypes']/@label else instance('ins-file-terms')/term[value=xxforms:context('rep-submitted-media')/atom:category[@scheme='http://www.cggh.org/2010/chassis/scheme/FileTypes']/@term]/label"/>
+    								<xforms:output ref="
+    									for $cat in (./atom:category[@scheme='http://www.cggh.org/2010/chassis/scheme/FileTypes'])
+    									return
+    									if ( $cat/@term = 'http://www.cggh.org/2010/chassis/terms/Other' )
+    									then $cat/@label
+    									else instance('ins-file-terms')/term[value=$cat/@term]/label
+    									"/>
     							</td>
     							<td>
     								<xforms:group ref=".[contains( ./atom:link[@rel='edit-media']/@atombeat:allow , 'GET' )]">
@@ -421,7 +431,13 @@
     								<xforms:output ref="atom:author/atom:email"/>
     							</td>
     							<td>
-    								<xforms:output ref="if(instance('ins-file-terms')/term[value=xxforms:context('rep-curated-media')/atom:category[@scheme='http://www.cggh.org/2010/chassis/scheme/FileTypes']/@term]/value='http://www.cggh.org/2010/chassis/terms/Other') then atom:category[@scheme='http://www.cggh.org/2010/chassis/scheme/FileTypes']/@label else instance('ins-file-terms')/term[value=xxforms:context('rep-curated-media')/atom:category[@scheme='http://www.cggh.org/2010/chassis/scheme/FileTypes']/@term]/label"/>
+    								<xforms:output ref="
+    									for $cat in (./atom:category[@scheme='http://www.cggh.org/2010/chassis/scheme/FileTypes'])
+    									return
+    									if ( $cat/@term = 'http://www.cggh.org/2010/chassis/terms/Other' )
+    									then $cat/@label
+    									else instance('ins-file-terms')/term[value=$cat/@term]/label
+    									"/>
     							</td>
     							<td>
     								<xforms:group ref=".[contains( ./atom:link[@rel='edit-media']/@atombeat:allow , 'GET' )]">
