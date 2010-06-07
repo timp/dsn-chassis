@@ -461,6 +461,12 @@
 											<xforms:hint>A URL of a page which describes the regimen </xforms:hint>
 											<xforms:alert>Please enter a valid URL</xforms:alert>
 										</xforms:input>
+										
+										<xforms:trigger>
+											<xforms:label>Check URL</xforms:label>
+											<xforms:send ev:event="DOMActivate" submission="sub-check-regimen-url"/>
+										</xforms:trigger>
+										
 										<xforms:group ref="drugs">
 											<table class="repeat-table">
 												<xforms:repeat nodeset="drug" id="rep-drug">

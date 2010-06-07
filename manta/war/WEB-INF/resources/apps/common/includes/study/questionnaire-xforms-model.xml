@@ -685,5 +685,24 @@
 		<xforms:message ev:event="xforms-submit-done" level="modal">Your changes have been
 			saved.</xforms:message>
 	</xforms:submission>
+	
+	
+	
+	<xforms:submission 
+		id="sub-check-regimen-url"
+		method="get"
+		resource="{instance('ins-sq-study-entry')//clinical/treatment/regimens/regimen[index('rep-regimen')]/regimenUrl}"
+		serialization="none"
+		replace="none">
+		
+		<xforms:message ev:event="xforms-submit-error" level="modal">
+			The requested resource could not be retrieved. Status: <xforms:output value="event('response-status-code')"/>
+		</xforms:message>
+		
+		<xforms:message ev:event="xforms-submit-done" level="modal">
+			The URL is good.
+		</xforms:message>
+		
+	</xforms:submission>
 
 </xforms:model>
