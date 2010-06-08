@@ -520,7 +520,7 @@
     <!-- End authentication example -->
     
     <session-config>
-        <session-timeout>720</session-timeout>
+        <session-timeout>720</session-timeout> <!-- this value is in minutes, see http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd -->
     </session-config>
     
     <servlet>
