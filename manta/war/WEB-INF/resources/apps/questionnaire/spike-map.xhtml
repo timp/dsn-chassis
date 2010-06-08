@@ -25,6 +25,7 @@
         <title>Map Spike</title>
         
         <xforms:model>
+       			<xforms:instance id="ins-address"><lookup-address xmlns=""/></xforms:instance>
             
             <xforms:instance id="ins-sites">
                 <sites xmlns="">
@@ -87,6 +88,38 @@
                         <label>ANGUILLA</label>
                         <value>AI</value>
                     </country>
+										<country>
+										  <label>UGANDA</label>
+										  <value>UG</value>
+										</country>
+										<country>
+										  <label>UKRAINE</label>
+										  <value>UA</value>
+										</country>
+										<country>
+										  <label>UNITED ARAB EMIRATES</label>
+										  <value>AE</value>
+										</country>
+										<country>
+										  <label>UNITED KINGDOM</label>
+										  <value>GB</value>
+										</country>
+										<country>
+										  <label>UNITED STATES</label>
+										  <value>US</value>
+										</country>
+										<country>
+										  <label>UNITED STATES MINOR OUTLYING ISLANDS</label>
+										  <value>UM</value>
+										</country>
+										<country>
+										  <label>URUGUAY</label>
+										  <value>UY</value>
+										</country>
+										<country>
+										  <label>UZBEKISTAN</label>
+										  <value>UZ</value>
+										</country>
                     <country>
                         <label>etc.</label>
                         <value>etc.</value>
@@ -94,8 +127,11 @@
                 </countries>                
             </xforms:instance>
 
-            <xforms:bind nodeset="instance('ins-sites')/site/address" calculate="concat( ../country , ' ' , ../region , ' ' , ../district , ' ' , ../locality)"/>
-
+            <xforms:bind nodeset="/lookup-address" 
+            calculate="concat(instance('ins-sites')/site[index('rep-site')]/locality, ' ', instance('ins-sites')/site[index('rep-site')]/district, ' ', instance('ins-sites')/site[index('rep-site')]/region, ' ', instance('ins-country-items')/country[value=instance('ins-sites')/site[index('rep-site')]/country]/label)">
+            </xforms:bind>
+            <xforms:bind nodeset="instance('ins-sites')"/>
+            
         </xforms:model>
 
     </head>
@@ -118,7 +154,7 @@
                     <td class="form-td">
             
                         <div>
-                            <xforms:select1 ref="country">
+                            <xforms:select1 ref="country" >
                                 <xforms:label class="fixed-width">Country</xforms:label>
                                 <xforms:item>
                                     <xforms:label>please select</xforms:label>
@@ -129,6 +165,7 @@
                                     <xforms:value ref="value" />
                                 </xforms:itemset>
                                 <xforms:alert>Please select a Country value</xforms:alert>
+                                <xxforms:show ev:event="xforms-select" dialog="dia-map"/>
                             </xforms:select1>
                         </div>
                         
@@ -136,6 +173,7 @@
                             
                             <xforms:input ref="region">
                                 <xforms:label class="fixed-width">Region </xforms:label>
+                                <xxforms:show ev:event="xforms-value-changed" dialog="dia-map"/>
                             </xforms:input>
                                 
                             
@@ -144,12 +182,14 @@
                         <div>
                             <xforms:input ref="district">
                                 <xforms:label class="fixed-width">District </xforms:label>
+                                <xxforms:show ev:event="xforms-value-changed" dialog="dia-map"/>
                             </xforms:input>
                         </div>
                         
                         <div>
                             <xforms:input ref="locality">
                                 <xforms:label class="fixed-width">Locality </xforms:label>
+                                <xxforms:show ev:event="xforms-value-changed" dialog="dia-map"/>
                             </xforms:input>
                         </div>
                         
@@ -188,7 +228,7 @@
                         <xforms:label>
                             <img alt="add" src="/apps/common/theme/add.gif"/>
                         </xforms:label>
-                        <xforms:insert ev:event="DOMActivate" context="."
+                        <xforms:insert ev:event="DOMActivate" context="instance('ins-sites')"
                             nodeset="site" at="count(../site)" position="after"
                             origin="instance('ins-site-template')" />
                     </xforms:trigger>
@@ -196,7 +236,7 @@
                 <td class="add-td">
                     <xforms:trigger appearance="minimal">
                         <xforms:label>Add a Site</xforms:label>
-                        <xforms:insert ev:event="DOMActivate" context="."
+                        <xforms:insert ev:event="DOMActivate" context="instance('ins-sites')"
                             nodeset="site" at="count(../site)" position="after"
                             origin="instance('ins-site-template')" />
                     </xforms:trigger>
@@ -205,15 +245,15 @@
         </table>            
             
         <div>
-            <xxforms:dialog id="dia-map" appearance="full" level="modal" close="true" draggable="true" visible="false">
+            <xxforms:dialog id="dia-map" appearance="full" level="modeless" close="true" draggable="true" visible="false">
                 <xforms:label>Location</xforms:label>
                 <div>
                     <p>Drag the pointer to the correct location.</p>
                     <fr:map 
-                        address-ref="instance('ins-sites')/site[index('rep-site')]/address"
+                        address-ref="/lookup-address"
                         longitude-ref="instance('ins-sites')/site[index('rep-site')]/longitude" 
                         latitude-ref="instance('ins-sites')/site[index('rep-site')]/latitude"
-                        style="width: 500px; height: 300px"/>
+                        style="width: 800px; height: 600px"/>
                 </div>
             </xxforms:dialog>
         </div>
