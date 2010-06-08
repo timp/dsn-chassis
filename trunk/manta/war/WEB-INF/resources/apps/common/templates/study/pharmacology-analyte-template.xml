@@ -1,8 +1,0 @@
-<analyte xmlns="">
-	<drugGiven />
-	<drugMeasured />
-	<freeDrugMeasured />
-	<totalDrugMeasured />
-	<lowerLoQ />
-	<upperLoQ />
-</analyte>

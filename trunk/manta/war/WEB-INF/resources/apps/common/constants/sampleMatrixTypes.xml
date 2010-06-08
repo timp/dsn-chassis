@@ -1,5 +1,5 @@
 <!-- Closed list of sample matix types -->
-<sampleMatrixTypeTypes xmlns="">
+<sampleMatrixTypes xmlns="">
 	<sampleMatrixType>
 		<label>whole venous blood</label>
 		<value>wholeVenousBlood</value>
@@ -24,4 +24,4 @@
 		<label>free fraction plasma</label>
 		<value>freeFractionPlasma</value>
 	</sampleMatrixType>
-</sampleMatrixTypeTypes>
+</sampleMatrixTypes>
