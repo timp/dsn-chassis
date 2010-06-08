@@ -135,7 +135,7 @@
 						<analyte>
 							<drugMeasured/>
 							<lowerLoQ/>
-							<matrix/>
+							<sampleMatrixType/>
 						</analyte>
 					</analytes>
 					<assayReferences>

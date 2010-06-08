@@ -418,7 +418,7 @@
 						<xforms:bind nodeset="analyte">
 							<xforms:bind nodeset="drugMeasured"/>
 							<xforms:bind nodeset="lowerLoQ"/>
-							<xforms:bind nodeset="matrix" required="true()"/>
+							<xforms:bind nodeset="sampleMatrixType"/>
 						</xforms:bind>
 					</xforms:bind>
 					<xforms:bind nodeset="assayCapacities">
@@ -613,11 +613,29 @@
 		</antiBiotic>
 	</xforms:instance>
 
-	<xforms:instance id="ins-pharmacology-sample-template"
-		src="/apps/common/templates/study/pharmacology-sample-template.xml"/>
+	<xforms:instance id="ins-pharmacology-sample-template">
+		<sample xmlns="">
+			<numberPlanned/>
+			<volume />
+			<anticoagulent />
+			<centrifugeTime />
+			<matrix />
+			<storage>
+				<storageTemperature />
+				<storageDuration />
+			</storage>
+			<preparationReference />
+		</sample>
+	</xforms:instance>
 	<xforms:instance id="ins-pharmacology-analyte-template"
-		src="/apps/common/templates/study/pharmacology-analyte-template.xml"/>
-
+		>
+	<analyte xmlns="">
+		<drugMeasured />
+		<lowerLoQ />
+		<sampleMatrixType />
+	</analyte>
+	</xforms:instance>
+	
 	<xforms:instance id="ins-assayReference">
 		<assayReference xmlns="">
 			<assayMethodReference/>
@@ -671,10 +689,25 @@
 	</xforms:instance>
 
 
-	<xforms:instance id="ins-invitro-drug-template"
-		src="/apps/common/templates/study/invitro-drug-template.xml"/>
-	<xforms:instance id="ins-invitro-batch-template"
-		src="/apps/common/templates/study/invitro-batch-template.xml"/>
+	<xforms:instance id="ins-invitro-drug-template">
+		<drug xmlns="">
+			<molecule/>
+			<solvent/>
+			<solventFinalConcentration/>
+			<providedByWwarn/>
+			<provider/>
+		</drug>
+	</xforms:instance>
+	<xforms:instance id="ins-invitro-batch-template">
+		<batch xmlns="">
+			<clone3D7ProvidedByWwarn/>
+			<clone3D7Provider/>
+			<batchesIncludedInRawData/>
+			<preparationDate/>
+			<parasitaemia3D7/>
+			<ringForms/>
+		</batch>
+	</xforms:instance>
 
 	<xforms:submission id="sub-put-sq-study-entry"
 		resource="{instance('ins-sq-study-entry')/atom:link[@rel='edit']/@href}" method="put"
