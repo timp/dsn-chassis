@@ -1015,7 +1015,7 @@ declare function manta-plugin:augment-study-entry(
 ) as element(atom:entry)
 {
 
-    let $entry-path-info := substring-after( $entry/atom:link[@rel='edit']/@href , $config:content-service-url )
+    let $entry-path-info := atomdb:edit-path-info( $entry )
     
     let $submitted-media-collection-path-info := manta-plugin:submitted-media-collection-path-info-for-study-entry( $entry )
     let $submitted-media-collection-link := 
@@ -1089,7 +1089,7 @@ declare function manta-plugin:augment-derivation-entry(
 ) as element(atom:entry)
 {
 
-    let $entry-path-info := substring-after( $entry/atom:link[@rel='edit']/@href , $config:content-service-url )
+    let $entry-path-info := atomdb:edit-path-info( $entry )
     
     let $entry := 
         <atom:entry>
