@@ -16,4 +16,7 @@
     <property as="xs:boolean" name="oxf.epilogue.xforms.inspector"      value="false"/>
 
     <property as="xs:string"  name="oxf.xforms.format.input.date"       value="[D].[M].[Y]"/> <!-- [M]/[D]/[Y]  or [D]/[M]/[Y] or [D].[M].[Y]-->
+    <!-- tied to tpp google account, used on cloud1 -->
+    <property as="xs:string"  name="oxf.xforms.xbl.fr.map.key" value="ABQIAAAAOimsAXNq3_aRjfeNjoNKiRSa-bbzrR8LA0uUuc_9V-299x0KDRT4O_4TUe6_6nxTQjnUjB3IoJ_Z1g"/>
+    
 </properties>
