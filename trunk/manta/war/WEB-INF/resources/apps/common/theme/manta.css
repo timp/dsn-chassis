@@ -40,7 +40,7 @@
 
 #ft {
     border-top: 1px solid #bbb;
-    background-image: url(manta-icon.jpg);
+    /* background-image: url(manta-icon.jpg); */
     background-repeat: no-repeat;
     background-position: top right;
     margin-top: 50px;
@@ -226,3 +226,31 @@ ul {
     
 }
 
+.register-study-wizard .acknowledgement-form-cell, .study-dashboard .acknowledgement-form-cell {
+    padding-bottom: 1.5em;
+}
+.register-study-wizard .acknowledgement-deletion-cell, .study-dashboard .acknowledgement-deletion-cell {
+    vertical-align: top;
+}
+.register-study-wizard .acknowledgement-form-cell .xforms-label, .study-dashboard .acknowledgement-form-cell .xforms-label {
+    clear: both;
+    float: left;
+    width: 8em;
+}
+.register-study-wizard .acknowledgement-form-cell .xforms-input, .study-dashboard .acknowledgement-form-cell .xforms-input {
+    float: left;
+}
+.register-study-wizard .acknowledgement-form-cell .xforms-alert, .study-dashboard .acknowledgement-form-cell .xforms-alert {
+    float: left;
+    padding-top: 8px;
+}
+.register-study-wizard .acknowledgement-movement-triggers, .study-dashboard .acknowledgement-movement-triggers {
+    clear: both;
+    text-align: right;
+    /* Caters for the xforms-alert width. */
+    margin-right: 16px; 
+}
+
+.register-study-wizard .acknowledgement-form-summary-item, .study-dashboard .acknowledgement-form-summary-item {
+    padding-bottom: 1em;
+}

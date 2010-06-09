@@ -12,7 +12,7 @@
 
 	            <xforms:repeat nodeset="person" id="rep-person">
 	                <tr>
-	                    <td>
+	                	<td class="acknowledgement-deletion-cell">
 	                        <xforms:trigger>
 	                        	<xforms:label><img alt="remove" src="/apps/contributor/common/remove.gif"/></xforms:label>
 	                        	<xforms:delete 
@@ -22,7 +22,7 @@
 	                                at="index('rep-person')"/>
 	                        </xforms:trigger>
 	                    </td>
-	                    <td>
+	                	<td class="acknowledgement-form-cell">
 	                        <xforms:input ref="first-name">
 	                            <xforms:label>First Name:</xforms:label>
 	                        </xforms:input>
@@ -43,24 +43,27 @@
 	                        <xforms:input ref="institution">
 	                            <xforms:label>Institution:</xforms:label>
 	                        </xforms:input>
-	                        <br/>
 	                        
-	                        <xforms:trigger ref=".[preceding-sibling::*]">
-	                            <xforms:label>Move Up <img alt="move up" src="/apps/contributor/common/up.gif"/></xforms:label>
-	                            <xforms:action ev:event="DOMActivate">
-	                                <xforms:insert origin="context()" nodeset="preceding-sibling::*[1]" position="before"/>
-	                                <xforms:delete nodeset="."/>
-	                            </xforms:action>
-	                        </xforms:trigger>
+	                		<div class="acknowledgement-movement-triggers">
 	                        
-	                        
-	                        <xforms:trigger ref=".[following-sibling::*]">
-	                            <xforms:label>Move Down <img alt="move down" src="/apps/contributor/common/down.gif"/></xforms:label>
-	                            <xforms:action ev:event="DOMActivate">
-	                                <xforms:insert origin="context()" nodeset="following-sibling::*[1]"/>
-	                                <xforms:delete nodeset="."/>
-	                            </xforms:action>
-	                        </xforms:trigger>
+		                        <xforms:trigger ref=".[preceding-sibling::*]">
+		                            <xforms:label>Move Up <img alt="move up" src="/apps/contributor/common/up.gif"/></xforms:label>
+		                            <xforms:action ev:event="DOMActivate">
+		                                <xforms:insert origin="context()" nodeset="preceding-sibling::*[1]" position="before"/>
+		                                <xforms:delete nodeset="."/>
+		                            </xforms:action>
+		                        </xforms:trigger>
+		                        
+		                        
+		                        <xforms:trigger ref=".[following-sibling::*]">
+		                            <xforms:label>Move Down <img alt="move down" src="/apps/contributor/common/down.gif"/></xforms:label>
+		                            <xforms:action ev:event="DOMActivate">
+		                                <xforms:insert origin="context()" nodeset="following-sibling::*[1]"/>
+		                                <xforms:delete nodeset="."/>
+		                            </xforms:action>
+		                        </xforms:trigger>
+	                			
+	                		</div>
 	                        
 	                    </td>
 	                </tr>

@@ -60,66 +60,54 @@
 		<xforms:trigger ref="instance('ins-control')/create-draft-trigger">
 			<xforms:label>Next &gt;</xforms:label>
 			<xforms:action ev:event="DOMActivate" if="../draft-entry-is-valid = 'true'">
-			
-				<!-- Copy the study title to the draft entry title. -->
 				<xforms:setvalue ref="instance('ins-draft-entry')/atom:title" value="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:title"/>	
-				
-				<!-- Tell the wizard to set the current pane to the permissions pane. -->
 				<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show" value="'permissions'"/>
-
-				<!-- Try to post the draft. (Different to the other Next buttons.)  -->
 				<xforms:send submission="sub-post-draft-entry" />
-
 			</xforms:action>
 			<xforms:action ev:event="DOMActivate" if="not(../draft-entry-is-valid = 'true')">
 				<xforms:message>Please complete all required fields.</xforms:message>
 			</xforms:action>
 		</xforms:trigger>
 
-		<xforms:group ref="instance('ins-draft-entry')/atom:link[@rel='edit']">
-	
-				<xforms:trigger ref="instance('ins-control')/save-draft-trigger">
-					<xforms:label>Save As Draft</xforms:label>
-					<xforms:action ev:event="DOMActivate" if="../draft-entry-is-valid = 'true'">
-						<xforms:send submission="sub-explicit-put-draft-entry"/>
-					</xforms:action>
-					<xforms:action ev:event="DOMActivate" if="not(../draft-entry-is-valid = 'true')">
-						<xforms:message>Please complete all required fields.</xforms:message>
-					</xforms:action>
-				</xforms:trigger>		
-			
-				<xforms:trigger ref="instance('ins-control')/save-draft-trigger">
-					<xforms:label>Next &gt;</xforms:label>
-					<xforms:action ev:event="DOMActivate" if="../draft-entry-is-valid = 'true'">
-					
-						<!-- Copy the study title to the draft entry title. -->
-						<xforms:setvalue ref="instance('ins-draft-entry')/atom:title" value="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:title"/>
-						
-						<!-- Tell the wizard to set the current pane to the permissions pane. -->
-						<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show" value="'permissions'"/>
-						
-						<!-- Try to save the draft. -->
-						<xforms:send submission="sub-implicit-put-draft-entry" />
 		
-					</xforms:action>
-					<xforms:action ev:event="DOMActivate" if="not(../draft-entry-is-valid = 'true')">
-						<xforms:message>Please complete all required fields.</xforms:message>
-					</xforms:action>
-				</xforms:trigger>
 			
-			<xforms:trigger ref="instance('ins-control')/save-draft-trigger" appearance="minimal">
-				<xforms:label>Skip To End &gt;&gt;</xforms:label>
-				<xforms:action ev:event="DOMActivate" if="../draft-entry-is-valid = 'true'">
-					<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show" value="'review'"/>
-					<xforms:send submission="sub-implicit-put-draft-entry"/>
-				</xforms:action>
-				<xforms:action ev:event="DOMActivate" if="not(../draft-entry-is-valid = 'true')">
-					<xforms:message>Please complete all required fields.</xforms:message>
-				</xforms:action>
-			</xforms:trigger>
-
-		</xforms:group>
-
+			<xforms:group ref="instance('ins-draft-entry')/atom:link[@rel='edit']">
+		
+					<xforms:trigger ref="instance('ins-control')/save-draft-trigger">
+						<xforms:label>Save As Draft</xforms:label>
+						<xforms:action ev:event="DOMActivate" if="../draft-entry-is-valid = 'true'">
+							<xforms:send submission="sub-explicit-put-draft-entry"/>
+						</xforms:action>
+						<xforms:action ev:event="DOMActivate" if="not(../draft-entry-is-valid = 'true')">
+							<xforms:message>Please complete all required fields.</xforms:message>
+						</xforms:action>
+					</xforms:trigger>		
+				
+					<xforms:trigger ref="instance('ins-control')/save-draft-trigger">
+						<xforms:label>Next &gt;</xforms:label>
+						<xforms:action ev:event="DOMActivate" if="../draft-entry-is-valid = 'true'">
+							<xforms:setvalue ref="instance('ins-draft-entry')/atom:title" value="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:title"/>
+							<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show" value="'permissions'"/>
+							<xforms:send submission="sub-implicit-put-draft-entry" />
+						</xforms:action>
+						<xforms:action ev:event="DOMActivate" if="not(../draft-entry-is-valid = 'true')">
+							<xforms:message>Please complete all required fields.</xforms:message>
+						</xforms:action>
+					</xforms:trigger>
+				
+					<xforms:trigger ref="instance('ins-control')/save-draft-trigger" appearance="minimal">
+						<xforms:label>Skip To End &gt;&gt;</xforms:label>
+						<xforms:action ev:event="DOMActivate" if="../draft-entry-is-valid = 'true'">
+							<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show" value="'review'"/>
+							<xforms:send submission="sub-implicit-put-draft-entry"/>
+						</xforms:action>
+						<xforms:action ev:event="DOMActivate" if="not(../draft-entry-is-valid = 'true')">
+							<xforms:message>Please complete all required fields.</xforms:message>
+						</xforms:action>
+					</xforms:trigger>
+	
+			</xforms:group>
+		
 	</p>
 	
 </div>

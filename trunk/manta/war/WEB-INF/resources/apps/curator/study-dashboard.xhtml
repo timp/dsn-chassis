@@ -125,7 +125,6 @@
 				serialization="none">
                 <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the study.</xforms:message>
 			</xforms:submission>   
-            
 
         	<xforms:instance id="ins-submitted-media-feed">
         		<atom:feed/>
@@ -225,7 +224,7 @@
     <body>
 		<xi:include href="../common/includes/current-user-actions.xml"/>
 		
-		<div id="content">
+		<div id="content" class="study-dashboard">
 
 		<h1>Study Dashboard - <xforms:output value="instance('ins-study-entry')/atom:title"/> (<xforms:output value="instance('ins-study-entry')/manta:id"/>)</h1>
 
@@ -385,7 +384,7 @@
     	</div>
 
 			<!-- TODO: Remove for production -->
-			<fr:xforms-inspector xmlns:fr="http://orbeon.org/oxf/xml/form-runner"/>
+			<!-- <fr:xforms-inspector xmlns:fr="http://orbeon.org/oxf/xml/form-runner"/>  -->
     		
     </body>
 </html>
