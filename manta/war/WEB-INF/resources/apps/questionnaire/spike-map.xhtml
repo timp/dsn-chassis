@@ -25,7 +25,7 @@
         <title>Map Spike</title>
         
         <xforms:model>
-       			<xforms:instance id="ins-address"><lookup-address xmlns=""/></xforms:instance>
+       			<xforms:instance id="ins-address"><lookupAddress xmlns="">Oxford United Kingdom</lookupAddress></xforms:instance>
             
             <xforms:instance id="ins-sites">
                 <sites xmlns="">
@@ -127,9 +127,12 @@
                 </countries>                
             </xforms:instance>
 
-            <xforms:bind nodeset="/lookup-address" 
-            calculate="concat(instance('ins-sites')/site[index('rep-site')]/locality, ' ', instance('ins-sites')/site[index('rep-site')]/district, ' ', instance('ins-sites')/site[index('rep-site')]/region, ' ', instance('ins-country-items')/country[value=instance('ins-sites')/site[index('rep-site')]/country]/label)">
-            </xforms:bind>
+            <xforms:bind nodeset="/lookupAddress" 
+        	    calculate="
+								if (normalize-space(instance('ins-sites')/site[index('rep-site')]/country) = '') then 
+									'Oxford United Kingdom' 
+   	        		else 
+		        	    concat(instance('ins-sites')/site[index('rep-site')]/locality, ' ', instance('ins-sites')/site[index('rep-site')]/district, ' ', instance('ins-sites')/site[index('rep-site')]/region, ' ', instance('ins-country-items')/country[value=instance('ins-sites')/site[index('rep-site')]/country]/label)"/>
             <xforms:bind nodeset="instance('ins-sites')"/>
             
         </xforms:model>
@@ -236,18 +239,18 @@
                     </xforms:trigger>
                 </td>
             </tr>
-        </table>            
-            
+        </table>  
+        
         <div>
             <xxforms:dialog id="dia-map" appearance="full" level="modeless" close="true" draggable="true" visible="false">
                 <xforms:label>Location</xforms:label>
                 <div>
-                    <p>Drag the pointer to the correct location.</p>
+                    <p>Drag the pointer to populate the Latitude and Longitude fields.</p>
                     <fr:map 
-                        address-ref="/lookup-address"
+                        address-ref="/lookupAddress"
                         longitude-ref="instance('ins-sites')/site[index('rep-site')]/longitude" 
                         latitude-ref="instance('ins-sites')/site[index('rep-site')]/latitude"
-                        style="width: 800px; height: 600px"/>
+                        style="width: 600px; height: 400px"/>
                 </div>
             </xxforms:dialog>
         </div>
