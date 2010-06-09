@@ -33,7 +33,7 @@
                         <region/>
                         <district/>
                         <locality/>
-                        <address/>
+                     <address xmlns="">Oxford United Kingdom</address>
                         <latitude/>
                         <longitude/>
                     </site>
@@ -46,7 +46,7 @@
                     <region/>
                     <district/>
                     <locality/>
-                     <address/>
+                     <address xmlns="">Oxford United Kingdom</address>
                     <latitude/>
                     <longitude/>
                 </site>
@@ -129,14 +129,18 @@
             <xforms:bind 
             	nodeset="instance('ins-sites')/site/address" 
             	calculate="
-            for $context in (..) return
-            concat(
-            	$context/locality, 
-            	' ', 
-            	$context/district, 
-            	' ', 
-            	$context/region, ' ', 
-            	instance('ins-country-items')/country[value=$context/country]/label
+								if (normalize-space(../country) = '') then 
+									'Oxford United Kingdom' 
+   	        		else 
+	           	  	for $context in (..) return
+            				concat(
+				            	$context/locality, 
+        				    	' ', 
+            					$context/district, 
+            					' ', 
+            					$context/region, 
+            					' ', 
+            					instance('ins-country-items')/country[value=$context/country]/label
             )
             "/>
 
@@ -155,8 +159,8 @@
                             <xforms:label>
                                 <img alt="remove" src="/apps/common/theme/remove.gif"/>
                             </xforms:label>
-                            <xforms:delete ev:event="DOMActivate" context="."
-                                nodeset="." at="index('rep-site')" />
+                            <xforms:delete ev:event="DOMActivate" context="instance('ins-sites')"
+                                nodeset="site" at="index('rep-site')" />
                         </xforms:trigger>
                     </td>
                     <td class="form-td">
@@ -219,7 +223,7 @@
                         </div>
                         
                         <div style="border:1px solid red;">
-                            <p>Drag the pointer to the correct location.</p>
+                            <p>Drag the pointer to populate the Latitude and Longitude fields.</p>
                             <fr:map 
                                 address-ref="address"
                                 longitude-ref="longitude" 
