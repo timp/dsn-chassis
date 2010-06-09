@@ -1,35 +1,75 @@
 <!--  Closed list of anti-malarial drugs  -->
 <drugMolecules xmlns="">
 	<drugMolecule>
-		<label>dihydro-artemisinine</label>
-		<value>dihydro-artemisinine</value>
+		<label>amodiaquine</label>
+		<value>AQ</value>
+	</drugMolecule>
+	<drugMolecule>
+		<label>artemether</label>
+		<value>AM</value>
+	</drugMolecule>
+	<drugMolecule>
+		<label>artemisinin</label>
+		<value>ART</value>
+	</drugMolecule>
+	<drugMolecule>
+		<label>artesunate</label>
+		<value>AS</value>
+	</drugMolecule>
+	<drugMolecule>
+		<label>clindamycine</label>
+		<value>CL</value>
 	</drugMolecule>
 	<drugMolecule>
 		<label>chloroquine</label>
-		<value>chloroquine</value>
+		<value>CQ</value>
+	</drugMolecule>
+	<drugMolecule>
+		<label>dihydro-artemisinine</label>
+		<value>DHA</value>
 	</drugMolecule>
 	<drugMolecule>
 		<label>lumefantrine</label>
-		<value>lumefantrine</value>
+		<value>LUM</value>
 	</drugMolecule>
 	<drugMolecule>
 		<label>mefloquine</label>
-		<value>mefloquine</value>
+		<value>MQ</value>
 	</drugMolecule>
 	<drugMolecule>
 		<label>monodesethylamodiaquine</label>
-		<value>monodesethylamodiaquine</value>
+		<value>MDA</value>
 	</drugMolecule>
 	<drugMolecule>
-		<label>pyronaridine</label>
-		<value>pyronaridine</value>
-	</drugMolecule>
-	<drugMolecule>
-		<label>quinine</label>
-		<value>quinine</value>
+		<label>naphroquine</label>
+		<value>NQ</value>
 	</drugMolecule>
 	<drugMolecule>
 		<label>piperaquine</label>
-		<value>piperaquine</value>
+		<value>PPQ</value>
+	</drugMolecule>
+	<drugMolecule>
+		<label>primaquine</label>
+		<value>PQ</value>
+	</drugMolecule>
+	<drugMolecule>
+		<label>proguanil</label>
+		<value>PG</value>
+	</drugMolecule>
+	<drugMolecule>
+		<label>pyronaridine</label>
+		<value>PYR</value>
+	</drugMolecule>
+	<drugMolecule>
+		<label>quinine</label>
+		<value>QN</value>
+	</drugMolecule>
+	<drugMolecule>
+		<label>sulfadoxine-pyrimethamine</label>
+		<value>SP</value>
+	</drugMolecule>
+	<drugMolecule>
+		<label>tetracycline</label>
+		<value>T</value>
 	</drugMolecule>
 </drugMolecules>
