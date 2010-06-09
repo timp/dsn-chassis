@@ -55,7 +55,7 @@
 	<xforms:group ref="not(instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:content/study/acknowledgements[empty(person)])">
 		<ol>
 			<xforms:repeat nodeset="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:content/study/acknowledgements/person">
-				<li>
+				<li class="acknowledgement-form-summary-item">
 			        <xforms:output ref="first-name">
 			            <xforms:label>First Name:</xforms:label>
 			        </xforms:output>

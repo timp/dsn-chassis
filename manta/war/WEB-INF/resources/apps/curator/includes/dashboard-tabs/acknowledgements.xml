@@ -11,12 +11,9 @@
 		</xforms:group>
 
 	    <xforms:group ref="instance('ins-study-entry')/atom:content/study/acknowledgements[exists(person)]">
-	        
-	        <table>
-
+	        <ol>
 	            <xforms:repeat nodeset="person" id="rep-person">
-	                <tr>
-	                    <td>
+	            	<li class="acknowledgement-form-summary-item">
 	                        <xforms:output ref="first-name">
 	                            <xforms:label>First Name:</xforms:label>
 	                        </xforms:output>
@@ -36,14 +33,9 @@
 	                        <xforms:output ref="institution">
 	                            <xforms:label>Institution:</xforms:label>
 	                        </xforms:output>
-	                        <br/>
-	                    </td>
-	                </tr>
+	                </li>
 	            </xforms:repeat>
-
-	            
-	        </table>
-	        
+	        </ol>
 	    </xforms:group>
 
 

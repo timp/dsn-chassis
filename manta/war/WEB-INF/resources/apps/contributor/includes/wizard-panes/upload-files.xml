@@ -144,6 +144,7 @@
 			</xforms:action>
 		</xforms:trigger>
 
+		<!-- This button doesn't actually do anything, but might be useful for maintaining navigation consistency and reassurance. -->
 		<xforms:trigger ref="instance('ins-control')/save-draft-trigger">
 			<xforms:label>Save As Draft</xforms:label>
 			<xforms:action ev:event="DOMActivate" if="../draft-entry-is-valid = 'true'">
