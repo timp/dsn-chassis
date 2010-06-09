@@ -58,6 +58,7 @@
 					<xforms:repeat nodeset="site" id="rep-site">
 						<tr>
 							<td class="action-td">
+						<!-- 
 								<xforms:trigger appearance="minimal">
 									<xforms:label>
 										<img alt="remove" src="/apps/common/theme/remove.gif" />
@@ -65,6 +66,7 @@
 									<xforms:delete ev:event="DOMActivate" context="."
 										nodeset="." at="index('rep-site')" />
 								</xforms:trigger>
+							 -->
 							</td>
 							<td class="form-td">
 								<div>
@@ -79,13 +81,15 @@
 											<xforms:value ref="value" />
 										</xforms:itemset>
 										<xforms:alert>Please select a Country value</xforms:alert>
+										<!-- 
+                    <xxforms:show ev:event="xforms-select" dialog="dia-map"/>
+                    -->
 									</xforms:select1>
 								</div>
 								<div>
 									<!-- if the country has regions, use a select1 -->
 									<xforms:group
 										ref=".[country/text() = instance('ins-country-items')/country[exists(regions)]/value/text()]">
-
 										<xforms:select1 ref="region">
 											<xforms:label class="fixed-width">Region: </xforms:label>
 											<xforms:itemset
@@ -93,28 +97,69 @@
 												<xforms:label ref="label" />
 												<xforms:value ref="value" />
 											</xforms:itemset>
+											<!-- 
+                      <xxforms:show ev:event="xforms-select" dialog="dia-map"/>
+                       -->
 										</xforms:select1>
-
 									</xforms:group>
 									<!-- if the country has no regions, use an input -->
 									<xforms:group
 										ref=".[empty(country/text()) or country/text() = instance('ins-country-items')/country[empty(regions)]/value/text()]">
 										<xforms:input ref="region">
-											<xforms:label class="fixed-width">Region </xforms:label>
+										<xforms:label class="fixed-width">Region </xforms:label>
+										<!-- 
+										   <xxforms:show ev:event="xforms-value-changed" dialog="dia-map"/>
+										-->
 										</xforms:input>
-
 									</xforms:group>
 								</div>
 								<div>
 									<xforms:input ref="district">
 										<xforms:label class="fixed-width">District </xforms:label>
+										<!-- 
+										   <xxforms:show ev:event="xforms-value-changed" dialog="dia-map"/>
+										-->
 									</xforms:input>
 								</div>
 								<div>
 									<xforms:input ref="locality">
 										<xforms:label class="fixed-width">Locality </xforms:label>
+										<!-- 
+										   <xxforms:show ev:event="xforms-value-changed" dialog="dia-map"/>
+										-->
 									</xforms:input>
 								</div>
+								<div>
+									<xforms:input ref="latitude">
+										<xforms:label class="fixed-width">Latitude</xforms:label>
+										<xforms:alert>
+											<xforms:output
+												value="concat('Please enter a coordinate value between -180  and 180 for the ', name(), ' field ')" />
+										</xforms:alert>
+									</xforms:input>
+								</div>
+								<div>
+									<xforms:input ref="longitude">
+										<xforms:label class="fixed-width">Longitude</xforms:label>
+										<xforms:alert>
+											<xforms:output
+												value="concat('Please enter a coordinate value between -180 and 180 for the ', name(), ' field ')" />
+										</xforms:alert>
+									</xforms:input>
+								</div>
+								
+								
+								
+								<div style="border:1px solid red;">
+									<p>Drag the pointer to populate the Latitude and Longitude
+										fields.</p>
+									<fr:map address-ref="lookupAddress" 
+										longitude-ref="longitude"
+										latitude-ref="latitude"
+										style="border:1px solid green; width: 500px; height: 300px" />
+								</div>
+								
+								
 								<div>
 									<xforms:input ref="siteCode">
 										<xforms:label class="fixed-width">Your site
@@ -171,30 +216,6 @@
 										</xforms:itemset>
 									</xforms:select1>
 								</div>
-								<div>
-									<xforms:input ref="latitude">
-										<xforms:label class="fixed-width">Latitude</xforms:label>
-										<xforms:alert>
-											<xforms:output
-												value="concat('Please enter a coordinate value between -180  and 180 for the ', name(), ' field ')" />
-										</xforms:alert>
-									</xforms:input>
-								</div>
-								<div>
-									<xforms:input ref="longitude">
-										<xforms:label class="fixed-width">Longitude</xforms:label>
-										<xforms:alert>
-											<xforms:output
-												value="concat('Please enter a coordinate value between -180 and 180 for the ', name(), ' field ')" />
-										</xforms:alert>
-									</xforms:input>
-								</div>
-								<!-- this causes client-side error -->
-								<!--
-									<div> <fr:map address-ref="address" longitude-ref="longitude"
-									latitude-ref="latitude" style="width: 500px; height: 300px"/>
-									</div>
-								-->
 								<xforms:group ref="transmissionIntensity">
 									<h3>Transmission Intensity</h3>
 
@@ -292,6 +313,9 @@
 								<xforms:label>
 									<img alt="add" src="/apps/common/theme/add.gif" />
 								</xforms:label>
+								<!-- 
+                 <xxforms:show ev:event="DOMActivate" dialog="dia-map"/>
+                 -->
 								<xforms:insert ev:event="DOMActivate" context="."
 									nodeset="site" at="count(../site)" position="after"
 									origin="instance('ins-site-template')" />
@@ -300,6 +324,9 @@
 						<td class="add-td">
 							<xforms:trigger appearance="minimal">
 								<xforms:label>Add a Site</xforms:label>
+								<!-- 
+                 <xxforms:show ev:event="DOMActivate" dialog="dia-map"/>
+                 -->
 								<xforms:insert ev:event="DOMActivate" context="."
 									nodeset="site" at="count(../site)" position="after"
 									origin="instance('ins-site-template')" />
@@ -307,7 +334,26 @@
 						</td>
 					</tr>
 				</table>
-			</xforms:group>
+				<!-- 
+				this nearly works, but needs to be visible
+				-->
+				<!-- 
+        <div id="latLongPicker" >
+            <xxforms:dialog id="dia-map" appearance="full" level="modeless" close="true" draggable="true" visible="true" >
+            
+                <xforms:label>Location</xforms:label>
+                <div>
+                    <p>Drag the pointer to populate the Latitude and Longitude fields.</p>
+                    <fr:map 
+                        address-ref="instance('ins-lookupAddress')"
+                        longitude-ref="instance('ins-sq-study-entry')//sites/site[index('rep-site')]/longitude" 
+                        latitude-ref="instance('ins-sq-study-entry')//sites/site[index('rep-site')]/latitude"
+                        style="width: 600px; height: 400px; "/>
+                </div>
+            </xxforms:dialog>
+        </div>
+         -->
+ 			</xforms:group>
 
 
 			<xforms:group ref="inclusionExclusionCriteria">
@@ -536,7 +582,8 @@
 															<xforms:select1 ref="administrationRoute"
 																appearance="minimal">
 																<xforms:label class="fixed-width">Administration
-																	Route </xforms:label>
+																	Route
+																</xforms:label>
 																<xforms:itemset model="mod-study-questionnaire"
 																	nodeset="instance('ins-administrationRoute-items')/administrationRoute">
 																	<xforms:label ref="label" />
@@ -579,7 +626,8 @@
 															<xforms:select1 ref="drugDosingDeterminant"
 																appearance="minimal">
 																<xforms:label class="fixed-width">Dosing
-																	determinant </xforms:label>
+																	determinant
+																</xforms:label>
 																<xforms:item>
 																	<xforms:label>please select</xforms:label>
 																	<xforms:value />
@@ -889,7 +937,8 @@
 															<xforms:select1 appearance="minimal"
 																ref="readministeredOnVomitting">
 																<xforms:label> Was treatment readministered in the
-																	event of vomiting? </xforms:label>
+																	event
+																	of vomiting? </xforms:label>
 																<xforms:item>
 																	<xforms:label>unknown</xforms:label>
 																	<xforms:value />
@@ -1078,7 +1127,6 @@
 							<xforms:value>other</xforms:value>
 						</xforms:item>
 					</xforms:select1>
-					<br />
 
 					<xforms:input ref="microscopyStainOther">
 						<xforms:label />
@@ -1619,7 +1667,8 @@
 										<xforms:select ref="molecularMarkerFalciparum"
 											appearance="full" class="scrollableCheckboxes">
 											<xforms:label class="scrollableCheckboxesLabel">
-												Falciparum marker </xforms:label>
+												Falciparum marker
+											</xforms:label>
 											<xforms:itemset model="mod-study-questionnaire"
 												nodeset="instance('ins-molecularMarkerFalciparum-items')/molecularMarker">
 												<xforms:label ref="label" />
