@@ -46,7 +46,7 @@
                     <region/>
                     <district/>
                     <locality/>
-                    <address/>
+                     <address/>
                     <latitude/>
                     <longitude/>
                 </site>
@@ -56,45 +56,89 @@
                 <!--  A closed list of countries -->
                 <countries xmlns="">
                     <country>
-                        <label>AFGHANISTAN</label>
-                        <value>AF</value>
+                      <label>AFGHANISTAN</label>
+                      <value>AF</value>
                     </country>
                     <country>
-                        <label>ÅLAND ISLANDS</label>
-                        <value>AX</value>
+                      <label>ÅLAND ISLANDS</label>
+                      <value>AX</value>
                     </country>
                     <country>
-                        <label>ALBANIA  </label>
-                        <value>AL</value>
+                      <label>ALBANIA  </label>
+                      <value>AL</value>
                     </country>
                     <country>
-                        <label>ALGERIA</label>
-                        <value>DZ</value>
+                      <label>ALGERIA</label>
+                      <value>DZ</value>
                     </country>
                     <country>
-                        <label>AMERICAN SAMOA</label>
-                        <value>AS</value>
+                      <label>AMERICAN SAMOA</label>
+                      <value>AS</value>
                     </country>
                     <country>
-                        <label>ANDORRA</label>
-                        <value>AD</value>
+                      <label>ANDORRA</label>
+                      <value>AD</value>
                     </country>
                     <country>
-                        <label>ANGOLA</label>
-                        <value>AO</value>
+                      <label>ANGOLA</label>
+                      <value>AO</value>
                     </country>
                     <country>
-                        <label>ANGUILLA</label>
-                        <value>AI</value>
+                      <label>ANGUILLA</label>
+                      <value>AI</value>
                     </country>
+										<country>
+										  <label>UGANDA</label>
+										  <value>UG</value>
+										</country>
+										<country>
+										  <label>UKRAINE</label>
+										  <value>UA</value>
+										</country>
+										<country>
+										  <label>UNITED ARAB EMIRATES</label>
+										  <value>AE</value>
+										</country>
+										<country>
+										  <label>UNITED KINGDOM</label>
+										  <value>GB</value>
+										</country>
+										<country>
+										  <label>UNITED STATES</label>
+										  <value>US</value>
+										</country>
+										<country>
+										  <label>UNITED STATES MINOR OUTLYING ISLANDS</label>
+										  <value>UM</value>
+										</country>
+										<country>
+										  <label>URUGUAY</label>
+										  <value>UY</value>
+										</country>
+										<country>
+										  <label>UZBEKISTAN</label>
+										  <value>UZ</value>
+										</country>
                     <country>
-                        <label>etc.</label>
-                        <value>etc.</value>
+                      <label>etc.</label>
+                      <value>etc.</value>
                     </country>
                 </countries>                
             </xforms:instance>
 
-            <xforms:bind nodeset="instance('ins-sites')/site/address" calculate="concat( ../country , ' ' , ../region , ' ' , ../district , ' ' , ../locality)"/>
+            <xforms:bind 
+            	nodeset="instance('ins-sites')/site/address" 
+            	calculate="
+            for $context in (..) return
+            concat(
+            	$context/locality, 
+            	' ', 
+            	$context/district, 
+            	' ', 
+            	$context/region, ' ', 
+            	instance('ins-country-items')/country[value=$context/country]/label
+            )
+            "/>
 
         </xforms:model>
 
@@ -118,7 +162,7 @@
                     <td class="form-td">
             
                         <div>
-                            <xforms:select1 ref="country">
+                            <xforms:select1 ref="country" >
                                 <xforms:label class="fixed-width">Country</xforms:label>
                                 <xforms:item>
                                     <xforms:label>please select</xforms:label>
@@ -150,6 +194,7 @@
                         <div>
                             <xforms:input ref="locality">
                                 <xforms:label class="fixed-width">Locality </xforms:label>
+                                <xxforms:show ev:event="xforms-value-changed" dialog="dia-map"/>
                             </xforms:input>
                         </div>
                         
@@ -173,13 +218,13 @@
                             </xforms:input>
                         </div>
                         
-                        <div>
+                        <div style="border:1px solid red;">
                             <p>Drag the pointer to the correct location.</p>
                             <fr:map 
                                 address-ref="address"
                                 longitude-ref="longitude" 
                                 latitude-ref="latitude"
-                                style="width: 500px; height: 300px"/>
+                                style="border:1px solid green; width: 500px; height: 300px"/>
                         </div>
                     </td>
                 </tr>
@@ -190,7 +235,7 @@
                         <xforms:label>
                             <img alt="add" src="/apps/common/theme/add.gif"/>
                         </xforms:label>
-                        <xforms:insert ev:event="DOMActivate" context="."
+                        <xforms:insert ev:event="DOMActivate" context="instance('ins-sites')"
                             nodeset="site" at="count(../site)" position="after"
                             origin="instance('ins-site-template')" />
                     </xforms:trigger>
@@ -198,7 +243,7 @@
                 <td class="add-td">
                     <xforms:trigger appearance="minimal">
                         <xforms:label>Add a Site</xforms:label>
-                        <xforms:insert ev:event="DOMActivate" context="."
+                        <xforms:insert ev:event="DOMActivate" context="instance('ins-sites')"
                             nodeset="site" at="count(../site)" position="after"
                             origin="instance('ins-site-template')" />
                     </xforms:trigger>
