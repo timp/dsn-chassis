@@ -2,7 +2,8 @@
 <xforms:model xmlns:xforms="http://www.w3.org/2002/xforms"
 	xmlns:f="http://orbeon.org/oxf/xml/formatting" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:xxforms="http://orbeon.org/oxf/xml/xforms" xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:ev="http://www.w3.org/2001/xml-events" 
+	xmlns:atom="http://www.w3.org/2005/Atom"
 	xmlns:fr="http://orbeon.org/oxf/xml/form-runner" xmlns:xi="http://www.w3.org/2001/XInclude"
 	xmlns:ctype="http://www.cggh.org/chassis-types"
 	xmlns:fn="http://www.w3.org/2005/xpath-functions" id="mod-study-questionnaire"
@@ -20,7 +21,21 @@
 		readonly="true()" />
 	-->
 
+	<xforms:instance id="ins-lookupAddress"><lookupAddress xmlns="">Oxford United Kingdom</lookupAddress></xforms:instance>
 
+	<xforms:bind nodeset="instance('ins-lookupAddress')" 
+		calculate="
+		if (normalize-space(instance('ins-sq-study-entry')//sites/site[index('rep-site')]/country) = '') then 
+			'Oxford United Kingdom' 
+		else 
+			concat(instance('ins-sq-study-entry')//sites/site[index('rep-site')]/locality, 
+				' ', 
+				instance('ins-sq-study-entry')//sites/site[index('rep-site')]/district, 
+				' ', 
+				instance('ins-sq-study-entry')//sites/site[index('rep-site')]/region, 
+				' ', 
+				instance('ins-country-items')/country[value=instance('ins-sq-study-entry')//sites/site[index('rep-site')]/country]/label)"/>
+	
 	<xforms:bind nodeset="instance('ins-sq-study-entry')">
 		<xforms:bind nodeset="atom:content/study">
 			<xforms:bind nodeset="questionnaire">
@@ -34,8 +49,25 @@
 						<xforms:bind nodeset="country" required="true()"/>
 
 						<!-- experimental, to support Orbeon map component -->
-						<!-- <xforms:bind nodeset="address" calculate="concat( ../country , ' ' , ../region , ' ' , ../district , ' ' , ../locality)"/>-->
+						<!-- Unpleasant behaviour when deleting/undeleting a repeat -->
 
+						<xforms:bind 
+							nodeset="lookupAddress" 
+							calculate="
+							if (normalize-space(../country) = '') then 
+							'Oxford United Kingdom' 
+							else 
+							for $context in (..) return
+							concat(
+							$context/locality, 
+							' ', 
+							$context/district, 
+							' ', 
+							$context/region, 
+							' ', 
+							instance('ins-country-items')/country[value=$context/country]/label
+							)
+							"/>
 						<xforms:bind nodeset="latitude" type="ctype:coordinate"/>
 						<xforms:bind nodeset="longitude" type="ctype:coordinate"/>
 
