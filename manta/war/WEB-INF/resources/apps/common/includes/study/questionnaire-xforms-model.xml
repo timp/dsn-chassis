@@ -1,7 +1,8 @@
 <?oxygen NVDLSchema="../../../../../../../oxygen/samples/nvdl/xhtml-xforms-11-orbeon.nvdl"?>
 <xforms:model xmlns:xforms="http://www.w3.org/2002/xforms"
 	xmlns:f="http://orbeon.org/oxf/xml/formatting" xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:xxforms="http://orbeon.org/oxf/xml/xforms" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xxforms="http://orbeon.org/oxf/xml/xforms" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
 	xmlns:ev="http://www.w3.org/2001/xml-events" 
 	xmlns:atom="http://www.w3.org/2005/Atom"
 	xmlns:fr="http://orbeon.org/oxf/xml/form-runner" xmlns:xi="http://www.w3.org/2001/XInclude"
@@ -40,7 +41,7 @@
 		<xforms:bind nodeset="atom:content/study">
 			<xforms:bind nodeset="questionnaire">
 				<xforms:bind nodeset="start" type="xs:date"/>
-				<xforms:bind nodeset="end" type="xs:date"/>
+				<xforms:bind nodeset="end" type="xs:date" />
 				<xforms:bind nodeset="pathogens" required="contains(../modules, 'molecular')"/>
 				<xforms:bind nodeset="modules" required="true()"/>
 
@@ -284,6 +285,8 @@
 							<xforms:bind nodeset="sampleSelectionMethod" required="true()"/>
 							<xforms:bind nodeset="sampleSelectionMethodOther"
 								relevant="contains(../sampleSelectionMethod, 'other')"/>
+							<xforms:bind nodeset="sampleSelectionProportion"
+								relevant="contains(../sampleSelectionMethod, 'randomGenotyped')"/>
 						</xforms:bind>
 					</xforms:bind>
 					<xforms:bind nodeset="sample">
@@ -306,16 +309,34 @@
 									relevant="contains(../genotypingMethod, 'other')"/>
 							</xforms:bind>
 							<xforms:bind nodeset="molecularMarkerFalciparumOpen"
-								relevant="contains(../../../../pathogens, 'pfalciparum')">
+								relevant="normalize-space(../../../../pathogens) = '' or contains(../../../../pathogens, 'pfalciparum')">
 								<xforms:bind nodeset="molecularMarkerFalciparum"/>
 								<xforms:bind nodeset="molecularMarkerFalciparumOther"
 									relevant="contains(../molecularMarkerFalciparum, 'other')"/>
 							</xforms:bind>
 							<xforms:bind nodeset="molecularMarkerVivaxOpen"
-								relevant="contains(../../../../pathogens, 'pvivax')">
+								relevant="normalize-space(../../../../pathogens) = '' or contains(../../../../pathogens, 'pvivax')">
 								<xforms:bind nodeset="molecularMarkerVivax"/>
 								<xforms:bind nodeset="molecularMarkerVivaxOther"
 									relevant="contains(../molecularMarkerVivax, 'other')"/>
+							</xforms:bind>
+							<xforms:bind nodeset="molecularMarkerOvaleOpen"
+								relevant="normalize-space(../../../../pathogens) = '' or contains(../../../../pathogens, 'povale')">
+								<xforms:bind nodeset="molecularMarkerOvale"/>
+								<xforms:bind nodeset="molecularMarkerOvaleOther"
+									relevant="contains(../molecularMarkerOvale, 'other')"/>
+							</xforms:bind>
+							<xforms:bind nodeset="molecularMarkerMalariaeOpen"
+								relevant="normalize-space(../../../../pathogens) = '' or contains(../../../../pathogens, 'pmalariae')">
+								<xforms:bind nodeset="molecularMarkerMalariae"/>
+								<xforms:bind nodeset="molecularMarkerMalariaeOther"
+									relevant="contains(../molecularMarkerMalariae, 'other')"/>
+							</xforms:bind>
+							<xforms:bind nodeset="molecularMarkerKnowlesiOpen"
+								relevant="normalize-space(../../../../pathogens) = '' or contains(../../../../pathogens, 'pknowlesi')">
+								<xforms:bind nodeset="molecularMarkerKnowlesi"/>
+								<xforms:bind nodeset="molecularMarkerKnowlesiOther"
+									relevant="contains(../molecularMarkerKnowlesi, 'other')"/>
 							</xforms:bind>
 						</xforms:bind>
 					</xforms:bind>
@@ -327,9 +348,9 @@
 					</xforms:bind>
 
 					<xforms:bind nodeset="additionalGenotypicInformation">
-						<xforms:bind nodeset="sequencedLocii">
+						<xforms:bind nodeset="sequencedloci">
 							<xforms:bind nodeset="wholeGenomesSequenced" />
-							<xforms:bind nodeset="resistanceLocii"
+							<xforms:bind nodeset="resistanceloci"
 								relevant="contains(../wholeGenomesSequenced, 'no')">
 								<xforms:bind nodeset="resistanceLocus">
 									<xforms:bind nodeset="locusTypeOpen">
@@ -342,11 +363,11 @@
 							</xforms:bind>
 						</xforms:bind>
 						<xforms:bind nodeset="infectionComplexityEstimated" />
-						<xforms:bind nodeset="infectionComplexityEstimationLociiOpen"
+						<xforms:bind nodeset="infectionComplexityEstimationlociOpen"
 							relevant="contains(../infectionComplexityEstimated,'yes')">
-							<xforms:bind nodeset="infectionComplexityEstimationLocii"/>
-							<xforms:bind nodeset="infectionComplexityEstimationLociiOther"
-								relevant="contains(../infectionComplexityEstimationLocii, 'other')"
+							<xforms:bind nodeset="infectionComplexityEstimationloci"/>
+							<xforms:bind nodeset="infectionComplexityEstimationlociOther"
+								relevant="contains(../infectionComplexityEstimationloci, 'other')"
 							/>
 						</xforms:bind>
 					</xforms:bind>
@@ -532,7 +553,13 @@
 		src="/apps/common/constants/molecularMarkersFalciparum.xml"/>
 	<xforms:instance id="ins-molecularMarkerVivax-items"
 		src="/apps/common/constants/molecularMarkersVivax.xml"/>
-
+	<xforms:instance id="ins-molecularMarkerOvale-items"
+		src="/apps/common/constants/molecularMarkersOvale.xml"/>
+	<xforms:instance id="ins-molecularMarkerMalariae-items"
+		src="/apps/common/constants/molecularMarkersMalariae.xml"/>
+	<xforms:instance id="ins-molecularMarkerKnowlesi-items"
+		src="/apps/common/constants/molecularMarkersKnowlesi.xml"/>
+	
 	<xforms:instance id="ins-sampleMatrixType-items"
 		src="/apps/common/constants/sampleMatrixTypes.xml"/>
 	<xforms:instance id="ins-treatmentReason-items"
@@ -691,7 +718,7 @@
 	<xforms:instance id="ins-wholeBloodSource-items"
 		src="/apps/common/constants/wholeBloodSources.xml"/>
 
-	<xforms:instance id="ins-resistanceLocus-items" src="/apps/common/constants/resistanceLocii.xml"/>
+	<xforms:instance id="ins-resistanceLocus-items" src="/apps/common/constants/resistanceloci.xml"/>
 	<xforms:instance id="ins-locusType-items" src="/apps/common/constants/locusTypes.xml"/>
 
 	<xforms:instance id="ins-resistanceLocus">
@@ -703,6 +730,7 @@
 			<locusName/>
 		</resistanceLocus>
 	</xforms:instance>
+	
 	<xforms:instance id="ins-genotypedMarker">
 		<genotypedMarker xmlns="">
 			<genotypingMethodOpen>
@@ -717,6 +745,18 @@
 				<molecularMarkerVivax/>
 				<molecularMarkerVivaxOther/>
 			</molecularMarkerVivaxOpen>
+			<molecularMarkerOvaleOpen>
+				<molecularMarkerOvale/>
+				<molecularMarkerOvaleOther/>
+			</molecularMarkerOvaleOpen>
+			<molecularMarkerMalariaeOpen>
+				<molecularMarkerMalariae/>
+				<molecularMarkerMalariaeOther/>
+			</molecularMarkerMalariaeOpen>
+			<molecularMarkerKnowlesiOpen>
+				<molecularMarkerKnowlesi/>
+				<molecularMarkerKnowlesiOther/>
+			</molecularMarkerKnowlesiOpen>
 		</genotypedMarker>
 	</xforms:instance>
 

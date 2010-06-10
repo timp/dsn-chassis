@@ -230,6 +230,7 @@
 						<sampleSelectionMethodOpen>
 							<sampleSelectionMethod/>
 							<sampleSelectionMethodOther/>
+							<sampleSelectionProportion/>
 						</sampleSelectionMethodOpen>
 					</criteria>
 					<sample>
@@ -241,22 +242,7 @@
 						</sampleTypeOpen>
 					</sample>
 
-					<genotypedMarkers>
-						<genotypedMarker>
-							<genotypingMethodOpen>
-								<genotypingMethod/>
-								<genotypingMethodOther/>
-							</genotypingMethodOpen>
-							<molecularMarkerFalciparumOpen>
-								<molecularMarkerFalciparum/>
-								<molecularMarkerFalciparumOther/>
-							</molecularMarkerFalciparumOpen>
-							<molecularMarkerVivaxOpen>
-								<molecularMarkerVivax/>
-								<molecularMarkerVivaxOther/>
-							</molecularMarkerVivaxOpen>
-						</genotypedMarker>
-					</genotypedMarkers>
+					<genotypedMarkers/>
 
 
 					<mixedResistanceAlleles>
@@ -265,9 +251,9 @@
 					</mixedResistanceAlleles>
 
 					<additionalGenotypicInformation>
-						<sequencedLocii>
+						<sequencedloci>
 							<wholeGenomesSequenced/>
-							<resistanceLocii>
+							<resistanceloci>
 								<resistanceLocus>
 									<locusTypeOpen>
 										<locusType/>
@@ -275,13 +261,13 @@
 									</locusTypeOpen>
 									<locusName/>
 								</resistanceLocus>
-							</resistanceLocii>
-						</sequencedLocii>
+							</resistanceloci>
+						</sequencedloci>
 						<infectionComplexityEstimated/>
-						<infectionComplexityEstimationLociiOpen>
-							<infectionComplexityEstimationLocii/>
-							<infectionComplexityEstimationLociiOther/>
-						</infectionComplexityEstimationLociiOpen>
+						<infectionComplexityEstimationlociOpen>
+							<infectionComplexityEstimationloci/>
+							<infectionComplexityEstimationlociOther/>
+						</infectionComplexityEstimationlociOpen>
 					</additionalGenotypicInformation>
 
 

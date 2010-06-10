@@ -2,6 +2,7 @@
 <xs:schema
  xmlns:xs="http://www.w3.org/2001/XMLSchema"
  xmlns:ctype="http://www.cggh.org/chassis-types"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
  targetNamespace="http://www.cggh.org/chassis-types"
  elementFormDefault="qualified" 
  attributeFormDefault="unqualified"
@@ -19,6 +20,7 @@
     </xs:restriction>
    </xs:simpleType>
    <xs:simpleType name="age">
+   <!--  FIXME See issue 250 -->
     <xs:restriction base="xs:integer">
       <xs:minInclusive value="0"/>
       <xs:maxInclusive value="125"/>
@@ -41,5 +43,6 @@
     	<xs:pattern value="[a-zA-Z0-9._\-]+@[a-zA-Z0-9\-]+(.[a-zA-Z0-9]+)*.[a-zA-Z]+"/>
     </xs:restriction>
    </xs:simpleType>
+   <xs:element name="minAge" xsi:nil="true"></xs:element>
 </xs:schema>
 
