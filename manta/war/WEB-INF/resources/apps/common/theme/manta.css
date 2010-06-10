@@ -162,6 +162,9 @@ ul {
 	padding: 4px;
 	border: 1px solid green; 
 }
+.questionnaire .mapPicker span.xforms-group {
+	border: 0px solid white; 
+}
 
 .questionnaire h3, h4, h5 { 
 	padding: 1px;
