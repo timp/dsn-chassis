@@ -131,7 +131,6 @@
 .wizard-td { background-color: #fce5b6; font-size: 16pt }
 .repeat-table { 
 	background-color: #fce5b6; 
-	border:1px solid red; 
 	margin: 8px; 
 	width:80%;
 }
@@ -165,39 +164,41 @@ ul {
 .questionnaire .mapPicker span.xforms-group {
 	border: 0px solid white; 
 }
+.questionnaire TD span.xforms-group {
+  border: none;
+}
 
+.box { 
+  clear: both;
+}
 .questionnaire h3, h4, h5 { 
 	padding: 1px;
-		margin: 0px;
+	margin: 0px;
 }
 
 .fixed-width { 
   width: 12em;
 }
 
-.scrollableCheckboxesLabel, .scrollableCheckboxesLabelFollowing	 {
-  display:block;
+.scrollableCheckboxesLabel	 {
   width: 10em;
-  float:left;
-  padding: 5px;
-  margin: 5px;
-  clear: left;
-}
-.scrollableCheckboxesLabelFollowing	 {
-  clear: both;
+  padding: 2px;
+  margin: 4px;
+  float: left;
 }
 .scrollableCheckboxes	 {
-  height: 100px;
+  max-height: 100px;
   width: 240px;
-  padding: 5px;
-  margin: 5px;
+  padding: 2px;
+  margin: 4px;
   overflow: auto;
-  display:block;
-  float:left;
+  display: block;
+  float: left;
 }
 
 .scrollableCheckboxes .xforms-deselected {
-	display:block;
+  /* Ensure checkboxes are aligned, not inline*/
+	display: block;
 }
 
 /* FIXME: There is already a #bd in here, and with margin settings, so maybe either merge or remove. Maybe should also have elements, ids, then classes. */

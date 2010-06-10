@@ -58,15 +58,13 @@
 					<xforms:repeat nodeset="site" id="rep-site">
 						<tr>
 							<td class="action-td">
-						<!-- 
-								<xforms:trigger appearance="minimal">
-									<xforms:label>
-										<img alt="remove" src="/apps/common/theme/remove.gif" />
-									</xforms:label>
-									<xforms:delete ev:event="DOMActivate" context="."
-										nodeset="." at="index('rep-site')" />
-								</xforms:trigger>
-							 -->
+								<!--
+									<xforms:trigger appearance="minimal"> <xforms:label> <img
+									alt="remove" src="/apps/common/theme/remove.gif" />
+									</xforms:label> <xforms:delete ev:event="DOMActivate"
+									context="." nodeset="." at="index('rep-site')" />
+									</xforms:trigger>
+								-->
 							</td>
 							<td class="form-td">
 								<div>
@@ -81,9 +79,9 @@
 											<xforms:value ref="value" />
 										</xforms:itemset>
 										<xforms:alert>Please select a Country value</xforms:alert>
-										<!-- 
-                    <xxforms:show ev:event="xforms-select" dialog="dia-map"/>
-                    -->
+										<!--
+											<xxforms:show ev:event="xforms-select" dialog="dia-map"/>
+										-->
 									</xforms:select1>
 								</div>
 								<div>
@@ -97,35 +95,38 @@
 												<xforms:label ref="label" />
 												<xforms:value ref="value" />
 											</xforms:itemset>
-											<!-- 
-                      <xxforms:show ev:event="xforms-select" dialog="dia-map"/>
-                       -->
+											<!--
+												<xxforms:show ev:event="xforms-select" dialog="dia-map"/>
+											-->
 										</xforms:select1>
 									</xforms:group>
 									<!-- if the country has no regions, use an input -->
 									<xforms:group
 										ref=".[empty(country/text()) or country/text() = instance('ins-country-items')/country[empty(regions)]/value/text()]">
 										<xforms:input ref="region">
-										<xforms:label class="fixed-width">Region </xforms:label>
-										<!-- 
-										   <xxforms:show ev:event="xforms-value-changed" dialog="dia-map"/>
-										-->
+											<xforms:label class="fixed-width">Region </xforms:label>
+											<!--
+												<xxforms:show ev:event="xforms-value-changed"
+												dialog="dia-map"/>
+											-->
 										</xforms:input>
 									</xforms:group>
 								</div>
 								<div>
 									<xforms:input ref="district">
 										<xforms:label class="fixed-width">District </xforms:label>
-										<!-- 
-										   <xxforms:show ev:event="xforms-value-changed" dialog="dia-map"/>
+										<!--
+											<xxforms:show ev:event="xforms-value-changed"
+											dialog="dia-map"/>
 										-->
 									</xforms:input>
 								</div>
 								<div>
 									<xforms:input ref="locality">
 										<xforms:label class="fixed-width">Locality </xforms:label>
-										<!-- 
-										   <xxforms:show ev:event="xforms-value-changed" dialog="dia-map"/>
+										<!--
+											<xxforms:show ev:event="xforms-value-changed"
+											dialog="dia-map"/>
 										-->
 									</xforms:input>
 								</div>
@@ -147,20 +148,18 @@
 										</xforms:alert>
 									</xforms:input>
 								</div>
-								
-								
-								
+
+
+
 								<div class="mapPicker">
 									<p>Drag the pointer to populate the Latitude and Longitude
 										fields</p>
-									<fr:map address-ref="lookupAddress" 
-										longitude-ref="longitude"
-										latitude-ref="latitude"
-										style="width: 500px; height: 300px" >
-										</fr:map>
+									<fr:map address-ref="lookupAddress" longitude-ref="longitude"
+										latitude-ref="latitude" style="width: 500px; height: 300px">
+									</fr:map>
 								</div>
-								
-								
+
+
 								<div>
 									<xforms:input ref="siteCode">
 										<xforms:label class="fixed-width">Your site
@@ -314,9 +313,9 @@
 								<xforms:label>
 									<img alt="add" src="/apps/common/theme/add.gif" />
 								</xforms:label>
-								<!-- 
-                 <xxforms:show ev:event="DOMActivate" dialog="dia-map"/>
-                 -->
+								<!--
+									<xxforms:show ev:event="DOMActivate" dialog="dia-map"/>
+								-->
 								<xforms:insert ev:event="DOMActivate" context="."
 									nodeset="site" at="count(../site)" position="after"
 									origin="instance('ins-site-template')" />
@@ -325,9 +324,9 @@
 						<td class="add-td">
 							<xforms:trigger appearance="minimal">
 								<xforms:label>Add a Site</xforms:label>
-								<!-- 
-                 <xxforms:show ev:event="DOMActivate" dialog="dia-map"/>
-                 -->
+								<!--
+									<xxforms:show ev:event="DOMActivate" dialog="dia-map"/>
+								-->
 								<xforms:insert ev:event="DOMActivate" context="."
 									nodeset="site" at="count(../site)" position="after"
 									origin="instance('ins-site-template')" />
@@ -338,23 +337,18 @@
 				<!-- 
 				this nearly works, but needs to be visible
 				-->
-				<!-- 
-        <div id="latLongPicker" >
-            <xxforms:dialog id="dia-map" appearance="full" level="modeless" close="true" draggable="true" visible="true" >
-            
-                <xforms:label>Location</xforms:label>
-                <div>
-                    <p>Drag the pointer to populate the Latitude and Longitude fields.</p>
-                    <fr:map 
-                        address-ref="instance('ins-lookupAddress')"
-                        longitude-ref="instance('ins-sq-study-entry')//sites/site[index('rep-site')]/longitude" 
-                        latitude-ref="instance('ins-sq-study-entry')//sites/site[index('rep-site')]/latitude"
-                        style="width: 600px; height: 400px; "/>
-                </div>
-            </xxforms:dialog>
-        </div>
-         -->
- 			</xforms:group>
+				<!--
+					<div id="latLongPicker" > <xxforms:dialog id="dia-map"
+					appearance="full" level="modeless" close="true" draggable="true"
+					visible="true" > <xforms:label>Location</xforms:label> <div>
+					<p>Drag the pointer to populate the Latitude and Longitude
+					fields.</p> <fr:map address-ref="instance('ins-lookupAddress')"
+					longitude-ref="instance('ins-sq-study-entry')//sites/site[index('rep-site')]/longitude"
+					latitude-ref="instance('ins-sq-study-entry')//sites/site[index('rep-site')]/latitude"
+					style="width: 600px; height: 400px; "/> </div> </xxforms:dialog>
+					</div>
+				-->
+			</xforms:group>
 
 
 			<xforms:group ref="inclusionExclusionCriteria">
@@ -1588,6 +1582,9 @@
 						<xforms:input ref="sampleSelectionMethodOther">
 							<xforms:label />
 						</xforms:input>
+						<xforms:input ref="sampleSelectionProportion">
+							<xforms:label>proportion</xforms:label>
+						</xforms:input>
 					</xforms:group>
 				</xforms:group>
 				<xforms:group ref="sample">
@@ -1664,53 +1661,115 @@
 											<xforms:hint>Other genotyping method</xforms:hint>
 										</xforms:input>
 									</xforms:group>
-									<xforms:group ref="molecularMarkerFalciparumOpen">
-										<xforms:select ref="molecularMarkerFalciparum"
-											appearance="full" class="scrollableCheckboxes">
-											<xforms:label class="scrollableCheckboxesLabel">
-												Falciparum marker
+									<div class="box">
+										<xforms:group ref="molecularMarkerFalciparumOpen">
+											<xforms:select ref="molecularMarkerFalciparum"
+												appearance="full" class="scrollableCheckboxes">
+												<xforms:label class="scrollableCheckboxesLabel">
+													Falciparum marker
 											</xforms:label>
-											<xforms:itemset model="mod-study-questionnaire"
-												nodeset="instance('ins-molecularMarkerFalciparum-items')/molecularMarker">
-												<xforms:label ref="label" />
-												<xforms:value ref="value" />
-											</xforms:itemset>
-											<xforms:item>
-												<xforms:label>other</xforms:label>
-												<xforms:value>other</xforms:value>
-											</xforms:item>
-										</xforms:select>
-										<br />
-										<div style="clear:both;">
+												<xforms:itemset model="mod-study-questionnaire"
+													nodeset="instance('ins-molecularMarkerFalciparum-items')/molecularMarker">
+													<xforms:label ref="label" />
+													<xforms:value ref="value" />
+												</xforms:itemset>
+												<xforms:item>
+													<xforms:label>other</xforms:label>
+													<xforms:value>other</xforms:value>
+												</xforms:item>
+											</xforms:select>
 											<xforms:input ref="molecularMarkerFalciparumOther">
-												<xforms:label class="fixed-width">other
-												</xforms:label>
+												<xforms:label />
 											</xforms:input>
-										</div>
-									</xforms:group>
-									<xforms:group ref="molecularMarkerVivaxOpen">
-										<xforms:select ref="molecularMarkerVivax"
-											appearance="full" class="scrollableCheckboxes">
-											<xforms:label class="scrollableCheckboxesLabel">Vivax
-												marker</xforms:label>
-											<xforms:itemset model="mod-study-questionnaire"
-												nodeset="instance('ins-molecularMarkerVivax-items')/molecularMarker">
-												<xforms:label ref="label" />
-												<xforms:value ref="value" />
-											</xforms:itemset>
-											<xforms:item>
-												<xforms:label>other</xforms:label>
-												<xforms:value>other</xforms:value>
-											</xforms:item>
-										</xforms:select>
-										<br />
-										<div style="clear:both;">
+										</xforms:group>
+									</div>
+									<div class="box">
+										<xforms:group ref="molecularMarkerVivaxOpen">
+											<xforms:select ref="molecularMarkerVivax"
+												appearance="full" class="scrollableCheckboxes">
+												<xforms:label class="scrollableCheckboxesLabel">Vivax
+													marker</xforms:label>
+												<xforms:itemset model="mod-study-questionnaire"
+													nodeset="instance('ins-molecularMarkerVivax-items')/molecularMarker">
+													<xforms:label ref="label" />
+													<xforms:value ref="value" />
+												</xforms:itemset>
+												<xforms:item>
+													<xforms:label>other</xforms:label>
+													<xforms:value>other</xforms:value>
+												</xforms:item>
+											</xforms:select>
 											<xforms:input ref="molecularMarkerVivaxOther">
-												<xforms:label class="fixed-width">other
-												</xforms:label>
+												<xforms:label />
 											</xforms:input>
-										</div>
-									</xforms:group>
+										</xforms:group>
+									</div>
+									<div class="box">
+
+										<xforms:group ref="molecularMarkerOvaleOpen">
+											<xforms:select ref="molecularMarkerOvale"
+												appearance="full" class="scrollableCheckboxes">
+												<xforms:label class="scrollableCheckboxesLabel">Ovale
+													marker</xforms:label>
+												<xforms:itemset model="mod-study-questionnaire"
+													nodeset="instance('ins-molecularMarkerOvale-items')/molecularMarker">
+													<xforms:label ref="label" />
+													<xforms:value ref="value" />
+												</xforms:itemset>
+												<xforms:item>
+													<xforms:label>other</xforms:label>
+													<xforms:value>other</xforms:value>
+												</xforms:item>
+											</xforms:select>
+											<xforms:input ref="molecularMarkerOvaleOther">
+												<xforms:label />
+											</xforms:input>
+										</xforms:group>
+									</div>
+									<div class="box">
+
+										<xforms:group ref="molecularMarkerMalariaeOpen">
+											<xforms:select ref="molecularMarkerMalariae"
+												appearance="full" class="scrollableCheckboxes">
+												<xforms:label class="scrollableCheckboxesLabel">Malariae
+													marker</xforms:label>
+												<xforms:itemset model="mod-study-questionnaire"
+													nodeset="instance('ins-molecularMarkerMalariae-items')/molecularMarker">
+													<xforms:label ref="label" />
+													<xforms:value ref="value" />
+												</xforms:itemset>
+												<xforms:item>
+													<xforms:label>other</xforms:label>
+													<xforms:value>other</xforms:value>
+												</xforms:item>
+											</xforms:select>
+											<xforms:input ref="molecularMarkerMalariaeOther">
+												<xforms:label />
+											</xforms:input>
+										</xforms:group>
+									</div>
+
+									<div class="box">
+										<xforms:group ref="molecularMarkerKnowlesiOpen">
+											<xforms:select ref="molecularMarkerKnowlesi"
+												appearance="full" class="scrollableCheckboxes">
+												<xforms:label class="scrollableCheckboxesLabel">Knowlesi
+													marker</xforms:label>
+												<xforms:itemset model="mod-study-questionnaire"
+													nodeset="instance('ins-molecularMarkerKnowlesi-items')/molecularMarker">
+													<xforms:label ref="label" />
+													<xforms:value ref="value" />
+												</xforms:itemset>
+												<xforms:item>
+													<xforms:label>other</xforms:label>
+													<xforms:value>other</xforms:value>
+												</xforms:item>
+											</xforms:select>
+											<xforms:input ref="molecularMarkerKnowlesiOther">
+												<xforms:label />
+											</xforms:input>
+										</xforms:group>
+									</div>
 								</td>
 							</tr>
 						</xforms:repeat>
@@ -1771,7 +1830,7 @@
 
 				<xforms:group ref="additionalGenotypicInformation">
 					<h3>Additional genetic information</h3>
-					<xforms:group ref="sequencedLocii">
+					<xforms:group ref="sequencedLoci">
 						<xforms:select1 ref="wholeGenomesSequenced"
 							appearance="minimal">
 							<xforms:label>Whole genome(s) sequenced?</xforms:label>
@@ -1786,8 +1845,8 @@
 							</xforms:itemset>
 							<xforms:alert>Please select a value</xforms:alert>
 						</xforms:select1>
-						<xforms:group ref="resistanceLocii">
-							<h4>Resistance locii</h4>
+						<xforms:group ref="resistanceLoci">
+							<h4>Resistance loci</h4>
 							<table class="repeat-table">
 								<xforms:repeat nodeset="resistanceLocus" id="resistanceLocus-rep">
 									<tr>
@@ -1863,10 +1922,10 @@
 						</xforms:itemset>
 						<xforms:alert>Please select a value</xforms:alert>
 					</xforms:select1>
-					<xforms:group ref="infectionComplexityEstimationLociiOpen">
-						<xforms:select ref="infectionComplexityEstimationLocii"
+					<xforms:group ref="infectionComplexityEstimationLociOpen">
+						<xforms:select ref="infectionComplexityEstimationLoci"
 							appearance="full" class="scrollableCheckboxes">
-							<xforms:label class="scrollableCheckboxesLabel">Locii used to estimate
+							<xforms:label class="scrollableCheckboxesLabel">loci used to estimate
 							</xforms:label>
 							<xforms:itemset model="mod-study-questionnaire"
 								nodeset="instance('ins-resistanceLocus-items')/resistanceLocus">
@@ -1879,7 +1938,7 @@
 							</xforms:item>
 						</xforms:select>
 						<div style="clear:both;">
-							<xforms:input ref="infectionComplexityEstimationLociiOther">
+							<xforms:input ref="infectionComplexityEstimationlociOther">
 								<xforms:label class="fixed-width">other</xforms:label>
 							</xforms:input>
 						</div>
