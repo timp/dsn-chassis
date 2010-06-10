@@ -718,7 +718,7 @@
 	<xforms:instance id="ins-wholeBloodSource-items"
 		src="/apps/common/constants/wholeBloodSources.xml"/>
 
-	<xforms:instance id="ins-resistanceLocus-items" src="/apps/common/constants/resistanceloci.xml"/>
+	<xforms:instance id="ins-resistanceLocus-items" src="/apps/common/constants/resistanceLoci.xml"/>
 	<xforms:instance id="ins-locusType-items" src="/apps/common/constants/locusTypes.xml"/>
 
 	<xforms:instance id="ins-resistanceLocus">
