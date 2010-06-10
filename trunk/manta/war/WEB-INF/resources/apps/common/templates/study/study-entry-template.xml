@@ -9,7 +9,7 @@
 				<start/>
 				<end/>
 				<sites>
-					<site xmlns="">
+					<site >
 						<country/>
 						<region/>
 						<district/>
@@ -39,9 +39,9 @@
 				<modules/>
 				<pathogens/>
 				<inclusionExclusionCriteria>
-					<age>
-						<maxAge/>
-						<minAge/>
+					<age xmlns:xs="http://www.w3.org/2001/XMLSchema">
+						<maxAge />
+						<minAge  />
 					</age>
 					<parasitaemia>
 						<minParasitaemia/>
