@@ -150,13 +150,14 @@
 								
 								
 								
-								<div style="border:1px solid red;">
+								<div class="mapPicker">
 									<p>Drag the pointer to populate the Latitude and Longitude
-										fields.</p>
+										fields</p>
 									<fr:map address-ref="lookupAddress" 
 										longitude-ref="longitude"
 										latitude-ref="latitude"
-										style="border:1px solid green; width: 500px; height: 300px" />
+										style="width: 500px; height: 300px" >
+										</fr:map>
 								</div>
 								
 								
