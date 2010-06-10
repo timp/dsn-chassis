@@ -7,12 +7,52 @@
   <version>1.0-SNAPSHOT</version>
   <name>Chassis Manta Webapp</name>
   <url>http://cloud1.cggh.org/manta</url>
+  <!--
+Do the following to get our own jars installed: 
+  
+mvn install:install-file -DgroupId=org.exist -DartifactId=exist -Dversion=1.4.0 -Dclassifier=orbeon_20100330 -Dpackaging=jar -Dfile=war/WEB-INF/lib/exist-1_4_0_orbeon_20100330.jar
+mvn install:install-file -DgroupId=org.exist -DartifactId=exist-xmldb -Dversion=unknown -Dpackaging=jar -Dfile=war/WEB-INF/lib/exist-xmldb.jar
+mvn install:install-file -DgroupId=org.apache.abdera -DartifactId=abdera-server -Dversion=0.4.0 -Dclassifier=incubating-SNAPSHOT -Dpackaging=jar -Dfile=war/WEB-INF/lib/abdera.client.0.4.0-incubating-SNAPSHOT.jar
+mvn install:install-file -DgroupId=org.exist -DartifactId=exist-optional -Dversion=1.4.0 -Dclassifier=orbeon_20100330 -Dpackaging=jar -Dfile=war/WEB-INF/lib/exist-optional-1_4_0_orbeon_20100330.jar
+mvn install:install-file -DgroupId=org.apache.abdera -DartifactId=abdera-core -Dversion=0.4.0 -Dclassifier=incubating-SNAPSHOT -Dpackaging=jar -Dfile=war/WEB-INF/lib/abdera.core.0.4.0-incubating-SNAPSHOT.jar
+mvn install:install-file -DgroupId=org.apache.abdera -DartifactId=abdera-i18n -Dversion=0.4.0 -Dclassifier=incubating-SNAPSHOT -Dpackaging=jar -Dfile=war/WEB-INF/lib/abdera-i18n-0.4.0-incubating-SNAPSHOT.jar
+
+  -->
   <dependencies>
     <dependency>
       <groupId>org.exist</groupId>
       <artifactId>exist</artifactId>
       <version>1.4.0</version>
-			<classifier>orbeon_20100330</classifier>
+	  <classifier>orbeon_20100330</classifier>
+    </dependency>
+    <dependency>
+      <groupId>org.exist</groupId>
+      <artifactId>exist-xmldb</artifactId>
+      <version>unknown</version>
+    </dependency>
+    <dependency>
+      <groupId>org.exist</groupId>
+      <artifactId>exist-optional</artifactId>
+      <version>1.4.0</version>
+	  <classifier>orbeon_20100330</classifier>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.abdera</groupId>
+      <artifactId>abdera-core</artifactId>
+      <version>0.4.0</version>
+      <classifier>incubating-SNAPSHOT</classifier>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.abdera</groupId>
+      <artifactId>abdera-i18n</artifactId>
+      <version>0.4.0</version>
+      <classifier>incubating-SNAPSHOT</classifier>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.abdera</groupId>
+      <artifactId>abdera-server</artifactId>
+      <version>0.4.0</version>
+      <classifier>incubating-SNAPSHOT</classifier>
     </dependency>
     <dependency>
      <groupId>org.springframework</groupId>
@@ -60,11 +100,14 @@
      <configuration>
       <source>1.6</source>
       <target>1.6</target>
-			<excludes>
+      <!--
+		<excludes>
 			<exclude>**/XMLDBStore*</exclude>
 			<exclude>**/GetData*</exclude>
 			<exclude>**/StoreUploadsServlet*</exclude>
-			</excludes>
+			<exclude>**/SpringSecuritySetUserRequestAttributesFilter*</exclude>
+		</excludes>
+	  -->
      </configuration>
     </plugin>
 		  <plugin>
