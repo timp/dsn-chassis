@@ -292,17 +292,17 @@
 											<xforms:value ref="value" />
 										</xforms:itemset>
 									</xforms:select1>
-
+<div class="box">
 									<xforms:select ref="transmissionMonths"
-										appearance="compact">
-										<xforms:label>Select months</xforms:label>
+										appearance="full" class="scrollableCheckboxes">
+										<xforms:label class="scrollableCheckboxesLabel">Select months</xforms:label>
 										<xforms:itemset model="mod-study-questionnaire"
 											nodeset="instance('ins-month-items')/month">
 											<xforms:label ref="label" />
 											<xforms:value ref="value" />
 										</xforms:itemset>
 									</xforms:select>
-
+</div>
 								</xforms:group>
 							</td>
 						</tr>
@@ -1134,7 +1134,7 @@
 					</xforms:input>
 					<xforms:select1 ref="asexualParasitemiaCountUnit"
 						appearance="minimal">
-						<xforms:label>per </xforms:label>
+						<xforms:label>fields per </xforms:label>
 						<xforms:item>
 							<xforms:label>N/A</xforms:label>
 							<xforms:value>na</xforms:value>
@@ -1158,7 +1158,7 @@
 					</xforms:input>
 					<xforms:select1 ref="sexualParasitemiaCountUnit"
 						appearance="minimal">
-						<xforms:label>per </xforms:label>
+						<xforms:label>fields per </xforms:label>
 						<xforms:item>
 							<xforms:label>N/A</xforms:label>
 							<xforms:value>na</xforms:value>
@@ -1453,6 +1453,7 @@
 						<xforms:group ref="analysisProtocol">
 							<h5>Analysis protocol</h5>
 
+							<xforms:group ref="mixedAllelesOpen" >
 							<xforms:select1 ref="mixedAlleles" appearance="minimal">
 								<xforms:label>Mixed Alleles were defined as </xforms:label>
 								<xforms:item>
@@ -1473,9 +1474,11 @@
 								</xforms:item>
 								<xforms:alert>Please select</xforms:alert>
 							</xforms:select1>
-							<br />
+							
+							<xforms:input ref="mixedAllelesOther"></xforms:input>
+							
 							<xforms:select1 ref="recrudescence" appearance="minimal">
-								<xforms:label>Recrudescence defined as </xforms:label>
+								<xforms:label>recrudescence defined as </xforms:label>
 								<xforms:item>
 									<xforms:label>please select</xforms:label>
 									<xforms:value />
@@ -1490,7 +1493,7 @@
 								</xforms:item>
 								<xforms:alert>Please select</xforms:alert>
 							</xforms:select1>
-							<br />
+
 							<xforms:select1 ref="reinfection" appearance="minimal">
 								<xforms:label>reinfection defined as </xforms:label>
 								<xforms:item>
@@ -1507,6 +1510,7 @@
 								</xforms:item>
 								<xforms:alert>Please select</xforms:alert>
 							</xforms:select1>
+							</xforms:group>
 
 						</xforms:group>
 					</xforms:group>
@@ -2075,12 +2079,6 @@
 						<xforms:input ref="mediumOther">
 							<xforms:label />
 						</xforms:input>
-						<em>
-							Storage temperature: 6 months at -20&#176;C and 1 week at
-							+4&#176;C
-							after using.
-							<font color="red">FIXME</font>
-						</em>
 					</p>
 					<p>
 						<xforms:select1 ref="preparation" appearance="minimal">
