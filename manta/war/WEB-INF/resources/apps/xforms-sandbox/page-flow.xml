@@ -38,9 +38,11 @@
             parameter="sortOrder"/>
     </page>
 
+    <page path-info="/xforms-sandbox/samples/howto/(.+)" matcher="oxf:perl5-matcher"
+        view="samples/howto/${1}"/>
     <page path-info="/xforms-sandbox/service/(.+)" matcher="oxf:perl5-matcher"
         view="services/${1}.xpl"/>
-
+    
     <epilogue url="oxf:/config/epilogue.xpl"/>
 
 </config>
