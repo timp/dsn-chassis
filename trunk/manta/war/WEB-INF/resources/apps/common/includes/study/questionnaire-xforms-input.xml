@@ -5,6 +5,45 @@
 	xmlns:atom="http://www.w3.org/2005/Atom" xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
 	xmlns:ctype="http://www.cggh.org/chassis-types" xmlns:xi="http://www.w3.org/2001/XInclude"
 	class="questionnaire">
+<xforms:group ref="instance('errors')" model="mod-study-questionnaire">
+	<p align="right" class="warningButton">
+	<xforms:trigger >
+		<xforms:label class="warningsLabel">Warnings</xforms:label>
+		<xxforms:show ev:event="DOMActivate" dialog="dia-errors" />
+		<xforms:dispatch ev:event="DOMActivate" name="fr-visit-all"
+				targetid="error-summary" />
+		<xforms:delete nodeset="instance('errors')/initialState" at="."/>
+	</xforms:trigger>
+	</p>
+</xforms:group>
+<!-- 
+   Orbeon Error Summary component, see also: 
+   http://wiki.orbeon.com/forms/doc/developer-guide/xbl-components/error-summary-component - description of fr:error-summary component
+   http://www.orbeon.com/orbeon/xforms-government/ - example of application using the fr:error-summary component (create a new form and see what happens when you enter invalid data)
+-->
+
+<xxforms:dialog id="dia-errors" appearance="full" level="modeless"
+		close="true" draggable="true" visible="false">
+	<xforms:label>Warnings</xforms:label>
+	<div>
+			<fr:error-summary 
+				observer="grp-questionnaire"
+				id="error-summary"
+				errors-count-ref="instance('errors')/errors-count"
+				valid-ref="instance('errors')/valid">
+				<fr:label>Please address the warnings given below: </fr:label>
+			</fr:error-summary> 
+			<xforms:group ref=".[not(instance('errors')/valid = 'true')]">
+				<xforms:label>
+					Form contains 
+					<xforms:output value="instance('errors')/errors-count"/>
+					warnings 
+					(form validity <xforms:output value="instance('errors')/valid"/>)
+				</xforms:label>
+			</xforms:group>
+	</div>
+</xxforms:dialog>
+	
 	<xforms:group model="mod-study-questionnaire"
 		ref="instance('ins-sq-study-entry')/atom:content/study">
 
@@ -58,16 +97,18 @@
 					<xforms:repeat nodeset="site" id="rep-site">
 						<tr>
 							<td class="action-td">
-									<xforms:trigger appearance="minimal"> <xforms:label> <img
-									alt="remove" src="/apps/common/theme/remove.gif" />
-									</xforms:label> <xforms:delete ev:event="DOMActivate"
-									context="." nodeset="." at="index('rep-site')" />
-									</xforms:trigger>
+								<xforms:trigger appearance="minimal">
+									<xforms:label>
+										<img alt="remove" src="/apps/common/theme/remove.gif" />
+									</xforms:label>
+									<xforms:delete ev:event="DOMActivate" context="."
+										nodeset="." at="index('rep-site')" />
+								</xforms:trigger>
 							</td>
 							<td class="form-td">
 								<div>
 									<xforms:select1 ref="country">
-										<xforms:label />
+										<xforms:label class="fixed-width">Country</xforms:label>
 										<xforms:item>
 											<xforms:label>please select</xforms:label>
 											<xforms:value />
@@ -290,17 +331,17 @@
 											<xforms:value ref="value" />
 										</xforms:itemset>
 									</xforms:select1>
-<div class="box">
-									<xforms:select ref="transmissionMonths"
-										appearance="full" class="scrollableCheckboxes">
-										<xforms:label class="scrollableCheckboxesLabel">Select months</xforms:label>
-										<xforms:itemset model="mod-study-questionnaire"
-											nodeset="instance('ins-month-items')/month">
-											<xforms:label ref="label" />
-											<xforms:value ref="value" />
-										</xforms:itemset>
-									</xforms:select>
-</div>
+									<div class="box">
+										<xforms:select ref="transmissionMonths"
+											appearance="full" class="scrollableCheckboxes">
+											<xforms:label class="scrollableCheckboxesLabel">Select months</xforms:label>
+											<xforms:itemset model="mod-study-questionnaire"
+												nodeset="instance('ins-month-items')/month">
+												<xforms:label ref="label" />
+												<xforms:value ref="value" />
+											</xforms:itemset>
+										</xforms:select>
+									</div>
 								</xforms:group>
 							</td>
 						</tr>
@@ -1018,7 +1059,7 @@
 						</xforms:select1>
 
 						<xforms:input ref="randomisationProportion">
-							<xforms:label> Proportion </xforms:label>
+							<xforms:label> proportion </xforms:label>
 						</xforms:input>
 						<br />
 
@@ -1451,63 +1492,63 @@
 						<xforms:group ref="analysisProtocol">
 							<h5>Analysis protocol</h5>
 
-							<xforms:group ref="mixedAllelesOpen" >
-							<xforms:select1 ref="mixedAlleles" appearance="minimal">
-								<xforms:label>Mixed Alleles were defined as </xforms:label>
-								<xforms:item>
-									<xforms:label>please select</xforms:label>
-									<xforms:value />
-								</xforms:item>
-								<xforms:item>
-									<xforms:label>recrudescence</xforms:label>
-									<xforms:value>recrudescence</xforms:value>
-								</xforms:item>
-								<xforms:item>
-									<xforms:label>reinfection</xforms:label>
-									<xforms:value>reinfection</xforms:value>
-								</xforms:item>
-								<xforms:item>
-									<xforms:label>other</xforms:label>
-									<xforms:value>other</xforms:value>
-								</xforms:item>
-								<xforms:alert>Please select</xforms:alert>
-							</xforms:select1>
-							
-							<xforms:input ref="mixedAllelesOther"></xforms:input>
-							
-							<xforms:select1 ref="recrudescence" appearance="minimal">
-								<xforms:label>recrudescence defined as </xforms:label>
-								<xforms:item>
-									<xforms:label>please select</xforms:label>
-									<xforms:value />
-								</xforms:item>
-								<xforms:item>
-									<xforms:label>old alleles only</xforms:label>
-									<xforms:value>old</xforms:value>
-								</xforms:item>
-								<xforms:item>
-									<xforms:label>old and new alleles </xforms:label>
-									<xforms:value>oldAndNew</xforms:value>
-								</xforms:item>
-								<xforms:alert>Please select</xforms:alert>
-							</xforms:select1>
+							<xforms:group ref="mixedAllelesOpen">
+								<xforms:select1 ref="mixedAlleles" appearance="minimal">
+									<xforms:label>Mixed Alleles were defined as </xforms:label>
+									<xforms:item>
+										<xforms:label>please select</xforms:label>
+										<xforms:value />
+									</xforms:item>
+									<xforms:item>
+										<xforms:label>recrudescence</xforms:label>
+										<xforms:value>recrudescence</xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label>reinfection</xforms:label>
+										<xforms:value>reinfection</xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label>other</xforms:label>
+										<xforms:value>other</xforms:value>
+									</xforms:item>
+									<xforms:alert>Please select</xforms:alert>
+								</xforms:select1>
 
-							<xforms:select1 ref="reinfection" appearance="minimal">
-								<xforms:label>reinfection defined as </xforms:label>
-								<xforms:item>
-									<xforms:label>please select</xforms:label>
-									<xforms:value />
-								</xforms:item>
-								<xforms:item>
-									<xforms:label>new alleles only</xforms:label>
-									<xforms:value>new</xforms:value>
-								</xforms:item>
-								<xforms:item>
-									<xforms:label>old and new alleles </xforms:label>
-									<xforms:value>oldAndNew</xforms:value>
-								</xforms:item>
-								<xforms:alert>Please select</xforms:alert>
-							</xforms:select1>
+								<xforms:input ref="mixedAllelesOther"></xforms:input>
+
+								<xforms:select1 ref="recrudescence" appearance="minimal">
+									<xforms:label>recrudescence defined as </xforms:label>
+									<xforms:item>
+										<xforms:label>please select</xforms:label>
+										<xforms:value />
+									</xforms:item>
+									<xforms:item>
+										<xforms:label>old alleles only</xforms:label>
+										<xforms:value>old</xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label>old and new alleles </xforms:label>
+										<xforms:value>oldAndNew</xforms:value>
+									</xforms:item>
+									<xforms:alert>Please select</xforms:alert>
+								</xforms:select1>
+
+								<xforms:select1 ref="reinfection" appearance="minimal">
+									<xforms:label>reinfection defined as </xforms:label>
+									<xforms:item>
+										<xforms:label>please select</xforms:label>
+										<xforms:value />
+									</xforms:item>
+									<xforms:item>
+										<xforms:label>new alleles only</xforms:label>
+										<xforms:value>new</xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label>old and new alleles </xforms:label>
+										<xforms:value>oldAndNew</xforms:value>
+									</xforms:item>
+									<xforms:alert>Please select</xforms:alert>
+								</xforms:select1>
 							</xforms:group>
 
 						</xforms:group>
@@ -1585,7 +1626,7 @@
 							<xforms:label />
 						</xforms:input>
 						<xforms:input ref="sampleSelectionProportion">
-							<xforms:label>proportion</xforms:label>
+							<xforms:label> proportion </xforms:label>
 						</xforms:input>
 					</xforms:group>
 				</xforms:group>
@@ -1669,7 +1710,7 @@
 												appearance="full" class="scrollableCheckboxes">
 												<xforms:label class="scrollableCheckboxesLabel">
 													Falciparum marker
-											</xforms:label>
+												</xforms:label>
 												<xforms:itemset model="mod-study-questionnaire"
 													nodeset="instance('ins-molecularMarkerFalciparum-items')/molecularMarker">
 													<xforms:label ref="label" />
@@ -1734,7 +1775,8 @@
 											<xforms:select ref="molecularMarkerMalariae"
 												appearance="full" class="scrollableCheckboxes">
 												<xforms:label class="scrollableCheckboxesLabel">Malariae
-													marker</xforms:label>
+													marker
+												</xforms:label>
 												<xforms:itemset model="mod-study-questionnaire"
 													nodeset="instance('ins-molecularMarkerMalariae-items')/molecularMarker">
 													<xforms:label ref="label" />
@@ -1756,7 +1798,8 @@
 											<xforms:select ref="molecularMarkerKnowlesi"
 												appearance="full" class="scrollableCheckboxes">
 												<xforms:label class="scrollableCheckboxesLabel">Knowlesi
-													marker</xforms:label>
+													marker
+												</xforms:label>
 												<xforms:itemset model="mod-study-questionnaire"
 													nodeset="instance('ins-molecularMarkerKnowlesi-items')/molecularMarker">
 													<xforms:label ref="label" />
@@ -2698,7 +2741,7 @@
 									</xforms:label>
 									<xforms:insert ev:event="DOMActivate" context="."
 										nodeset="analyte" at="count(../analyte)" position="after"
-										origin="instance('ins-pharmacology-analyte-template')" />
+										origin="instance('ins-analyte')" />
 								</xforms:trigger>
 							</td>
 							<td class="add-td">
@@ -2706,7 +2749,7 @@
 									<xforms:label>Add an analyte</xforms:label>
 									<xforms:insert ev:event="DOMActivate" context="."
 										nodeset="analyte" at="count(../analyte)" position="after"
-										origin="instance('ins-pharmacology-analyte-template')" />
+										origin="instance('ins-analyte')" />
 								</xforms:trigger>
 							</td>
 						</tr>
@@ -2777,7 +2820,7 @@
 									<xforms:insert ev:event="DOMActivate" context="."
 										nodeset="assayReference" at="count(../assayReference)"
 										position="after"
-										origin="instance('ins-pharmacology-assayReference-template')" />
+										origin="instance('ins-assayReference')" />
 								</xforms:trigger>
 							</td>
 							<td class="add-td">
@@ -2786,7 +2829,7 @@
 									<xforms:insert ev:event="DOMActivate" context="."
 										nodeset="assayReference" at="count(../assayReference)"
 										position="after"
-										origin="instance('ins-pharmacology-assayReference-template')" />
+										origin="instance('ins-assayReference')" />
 								</xforms:trigger>
 							</td>
 						</tr>
