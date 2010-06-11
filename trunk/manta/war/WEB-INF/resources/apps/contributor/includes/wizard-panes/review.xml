@@ -178,6 +178,10 @@
 	</p>
 
 	<p>
+		<br/>
+	</p>
+
+	<p>
 	
 		<xforms:trigger ref="instance('ins-control')/save-draft-trigger" appearance="minimal">
 			<xforms:label>&lt;&lt; Back Home</xforms:label>

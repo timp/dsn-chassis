@@ -267,3 +267,6 @@ ul {
 .register-study-wizard .acknowledgement-form-summary-item, .study-dashboard .acknowledgement-form-summary-item {
     padding-bottom: 1em;
 }
+.register-study-wizard .acknowledgement-form-summary-item .xforms-label, .study-dashboard .acknowledgement-form-summary-item .xforms-label {
+    font-weight: bold;
+}
