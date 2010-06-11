@@ -12,7 +12,16 @@
 		src="/apps/common/templates/study/study-entry-template.xml">
 		<atom:entry />
 	</xforms:instance>
-
+	
+	<xforms:instance id="errors">
+		<errors xmlns="">
+			<errors-count>0</errors-count>
+			<valid>false</valid>
+			<initialState>true</initialState>
+		</errors>
+	</xforms:instance>
+	<xforms:bind nodeset="instance('errors')" relevant="instance('errors')/initialState = 'true' or instance('errors')/errors-count > 5"/>
+	
 	<!--
 		Note xxforms:readonly-appearance="static" needed in the controls
 		themselves <xforms:bind nodeset="instance('ins-sq-study-entry')"
@@ -711,7 +720,7 @@
 			<preparationReference />
 		</sample>
 	</xforms:instance>
-	<xforms:instance id="ins-pharmacology-analyte-template">
+	<xforms:instance id="ins-analyte">
 		<analyte xmlns="">
 			<drugMeasured />
 			<lowerLoQ />
