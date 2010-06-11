@@ -220,14 +220,23 @@ ul {
     background-color: #FFFFFF;    
 }
 
+/* Restores the questionnaire highlight. */
+.register-study-wizard .questionnaire .xforms-repeat-selected-item-1, .register-study-wizard .questionnaire .xforms-repeat-selected-item-2 {
+    background-color: #FFFFCC;
+}    
+.study-dashboard .yui-content .questionnaire .xforms-repeat-selected-item-1, .study-dashboard .yui-content .questionnaire .xforms-repeat-selected-item-2 {
+    background-color: #FFFFCC;
+}   
+
 .register-study-wizard .yui-content .xforms-repeat-selected-item-1, .study-dashboard .yui-content .xforms-repeat-selected-item-1 {
     /* Gives same colour background on dashboard.*/
     background-color: #EDF5FF;
 }
 
+
+
 .study-dashboard .yui-content {
     min-height: 10em;
-    
 }
 
 .register-study-wizard .acknowledgement-form-cell, .study-dashboard .acknowledgement-form-cell {
