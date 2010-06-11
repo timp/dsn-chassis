@@ -210,22 +210,22 @@ ul {
 	margin-right: 3px; 
 }
 
-.xforms-repeat-selected-item-1 {
+.register-study-wizard .xforms-repeat-selected-item-1, .study-dashboard .xforms-repeat-selected-item-1 {
     /* Masks Orbeon's yellow highlight in wizard by matching background colour.*/
     background-color: #FFFFFF;
 }
 
-.xforms-repeat-selected-item-2 {
+.register-study-wizard .xforms-repeat-selected-item-2, .study-dashboard .xforms-repeat-selected-item-2 {
     /* Masks Orbeon's yellow highlight in wizard by matching background colour.*/
     background-color: #FFFFFF;    
 }
 
-.yui-content .xforms-repeat-selected-item-1 {
+.register-study-wizard .yui-content .xforms-repeat-selected-item-1, .study-dashboard .yui-content .xforms-repeat-selected-item-1 {
     /* Gives same colour background on dashboard.*/
     background-color: #EDF5FF;
 }
 
-.yui-content {
+.study-dashboard .yui-content {
     min-height: 10em;
     
 }
