@@ -32,7 +32,7 @@
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers class="vector">
     <hudson.triggers.SCMTrigger>
-      <spec>*/17 * * * *</spec>
+      <spec>*/13 * * * *</spec>
     </hudson.triggers.SCMTrigger>
   </triggers>
   <concurrentBuild>false</concurrentBuild>
@@ -54,6 +54,14 @@
     </hudson.maven.reporters.MavenMailer>
   </reporters>
   <publishers>
+    <hudson.tasks.BuildTrigger>
+      <childProjects>EnsureMantaData</childProjects>
+      <threshold>
+        <name>SUCCESS</name>
+        <ordinal>0</ordinal>
+        <color>BLUE</color>
+      </threshold>
+    </hudson.tasks.BuildTrigger>
     <hudson.plugins.twitter.TwitterPublisher/>
   </publishers>
   <buildWrappers/>
