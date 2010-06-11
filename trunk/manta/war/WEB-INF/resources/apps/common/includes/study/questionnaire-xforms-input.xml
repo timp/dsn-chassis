@@ -58,13 +58,11 @@
 					<xforms:repeat nodeset="site" id="rep-site">
 						<tr>
 							<td class="action-td">
-								<!--
 									<xforms:trigger appearance="minimal"> <xforms:label> <img
 									alt="remove" src="/apps/common/theme/remove.gif" />
 									</xforms:label> <xforms:delete ev:event="DOMActivate"
 									context="." nodeset="." at="index('rep-site')" />
 									</xforms:trigger>
-								-->
 							</td>
 							<td class="form-td">
 								<div>
