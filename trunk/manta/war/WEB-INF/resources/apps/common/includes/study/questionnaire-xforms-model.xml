@@ -172,8 +172,10 @@
 										<xforms:bind nodeset="ageDosing"
 											relevant="contains(../drugDosingDeterminant, 'age')">
 											<xforms:bind nodeset="ageDosingSchedule">
-												<xforms:bind nodeset="ageFrom" type="ctype:age" />
-												<xforms:bind nodeset="ageTo" type="ctype:age" />
+												<!-- FIXME type="ctype:age" -->
+												<xforms:bind nodeset="ageFrom" type="xforms:int"/>
+												<!-- FIXME type="ctype:age" -->
+												<xforms:bind nodeset="ageTo" type="xforms:int"/>
 												<xforms:bind nodeset="dose" />
 												<xforms:bind nodeset="doseUnit" />
 											</xforms:bind>
@@ -383,9 +385,9 @@
 					</xforms:bind>
 
 					<xforms:bind nodeset="additionalGenotypicInformation">
-						<xforms:bind nodeset="sequencedloci">
+						<xforms:bind nodeset="sequencedLoci">
 							<xforms:bind nodeset="wholeGenomesSequenced" />
-							<xforms:bind nodeset="resistanceloci"
+							<xforms:bind nodeset="resistanceLoci"
 								relevant="contains(../wholeGenomesSequenced, 'false')">
 								<xforms:bind nodeset="resistanceLocus">
 									<xforms:bind nodeset="locusTypeOpen">

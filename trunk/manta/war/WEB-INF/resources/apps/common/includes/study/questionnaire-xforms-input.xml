@@ -1,9 +1,11 @@
 <?oxygen NVDLSchema="../../../../../../../oxygen/samples/nvdl/xhtml-xforms-11-orbeon.nvdl"?>
-<div xmlns:xforms="http://www.w3.org/2002/xforms" xmlns:f="http://orbeon.org/oxf/xml/formatting"
-	xmlns="http://www.w3.org/1999/xhtml" xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
-	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events"
-	xmlns:atom="http://www.w3.org/2005/Atom" xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
-	xmlns:ctype="http://www.cggh.org/chassis-types" xmlns:xi="http://www.w3.org/2001/XInclude"
+<div 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:xforms="http://www.w3.org/2002/xforms" 
+	xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
+	xmlns:ev="http://www.w3.org/2001/xml-events"
+	xmlns:atom="http://www.w3.org/2005/Atom" 
+	xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
 	class="questionnaire">
 	<xforms:group ref="instance('errors')" model="mod-study-questionnaire">
 		<p align="right" class="warningButton">
@@ -485,7 +487,7 @@
 						<xforms:alert><xforms:output value="concat('Enter a value for the ', name(), ' field')"/></xforms:alert>
 					</xforms:select1>
 
-					<xforms:input ref="priorAntimalarialsHistoryWeeks">
+					<xforms:input ref="priorAntimalarialsHistoryWeeks" class="fourWide">
 						<xforms:label>Number of weeks </xforms:label>
 						<xforms:alert><xforms:output value="concat('Enter a value for the ', name(), ' field')"/></xforms:alert>
 					</xforms:input>
@@ -2315,7 +2317,7 @@
 										</p>
 										<p>
 											<xforms:input ref="antiBioticFinalConcentration">
-												<xforms:label>AntiBiotic final concentration (g/L)
+												<xforms:label>Antibiotic final concentration (g/L)
 												</xforms:label>
 												<xforms:alert>
 													<xforms:output
@@ -2831,7 +2833,7 @@
 								<td class="form-td">
 									<xforms:textarea ref="assayMethodDescription">
 										<xforms:label />
-										<xforms:hint>A brife description of the assay method, if no
+										<xforms:hint>A brief description of the assay method, if no
 											reference is available</xforms:hint>
 									</xforms:textarea>
 								</td>
