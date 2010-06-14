@@ -254,9 +254,9 @@
 					</mixedResistanceAlleles>
 
 					<additionalGenotypicInformation>
-						<sequencedloci>
+						<sequencedLoci>
 							<wholeGenomesSequenced />
-							<resistanceloci>
+							<resistanceLoci>
 								<resistanceLocus>
 									<locusTypeOpen>
 										<locusType />
@@ -264,8 +264,8 @@
 									</locusTypeOpen>
 									<locusName />
 								</resistanceLocus>
-							</resistanceloci>
-						</sequencedloci>
+							</resistanceLoci>
+						</sequencedLoci>
 						<infectionComplexityEstimated />
 						<infectionComplexityEstimationlociOpen>
 							<infectionComplexityEstimationloci />
