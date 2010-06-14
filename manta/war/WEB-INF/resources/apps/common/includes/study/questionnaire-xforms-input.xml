@@ -37,6 +37,7 @@
 					valid-ref="instance('errors')/valid">
 					<fr:label>Please address the warnings given below: </fr:label>
     	</fr:error-summary>
+    	<!-- 
 				<xforms:group ref=".[not(instance('errors')/valid = 'true')]">
 					<xforms:label>
 						Form contains
@@ -47,6 +48,7 @@
 						)
 					</xforms:label>
 				</xforms:group>
+				 -->
 			</div>
 		</xxforms:dialog>
 	</xforms:group>
