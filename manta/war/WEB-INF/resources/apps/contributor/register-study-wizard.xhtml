@@ -82,7 +82,7 @@
 
         	<!-- Ensure that the current user cannot remove themselves as administrator. -->       		
 			<xforms:bind nodeset="instance('ins-draft-entry')//atombeat:groups/atombeat:group">
-                <xforms:bind nodeset="atombeat:member[text()=xxforms:get-remote-user()]" readonly="true()"/>
+                <xforms:bind nodeset="atombeat:member[text()=xxforms:get-remote-user() and position() = 1]" readonly="true()"/>
             </xforms:bind>
             
             <!-- Make the terms checkbox readonly once a draft has been saved -->
