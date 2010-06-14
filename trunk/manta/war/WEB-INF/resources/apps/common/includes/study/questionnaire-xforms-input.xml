@@ -5,45 +5,52 @@
 	xmlns:atom="http://www.w3.org/2005/Atom" xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
 	xmlns:ctype="http://www.cggh.org/chassis-types" xmlns:xi="http://www.w3.org/2001/XInclude"
 	class="questionnaire">
-<xforms:group ref="instance('errors')" model="mod-study-questionnaire">
-	<p align="right" class="warningButton">
-	<xforms:trigger >
-		<xforms:label class="warningsLabel">Warnings</xforms:label>
-		<xxforms:show ev:event="DOMActivate" dialog="dia-errors" />
-		<xforms:dispatch ev:event="DOMActivate" name="fr-visit-all"
-				targetid="error-summary" />
-		<xforms:delete nodeset="instance('errors')/initialState" at="."/>
-	</xforms:trigger>
-	</p>
-</xforms:group>
-<!-- 
-   Orbeon Error Summary component, see also: 
-   http://wiki.orbeon.com/forms/doc/developer-guide/xbl-components/error-summary-component - description of fr:error-summary component
-   http://www.orbeon.com/orbeon/xforms-government/ - example of application using the fr:error-summary component (create a new form and see what happens when you enter invalid data)
--->
+	<xforms:group ref="instance('errors')" model="mod-study-questionnaire">
+		<p align="right" class="warningButton">
+			<xforms:trigger>
+				<xforms:label class="warningsLabel">Warnings</xforms:label>
+				<xxforms:show ev:event="DOMActivate" dialog="dia-errors" />
+				<xforms:dispatch ev:event="DOMActivate" name="fr-visit-all"
+					targetid="error-summary" />
+				<xforms:action ev:event="DOMActivate">
+					<xforms:setvalue ref="instance('errors')/initialState">false</xforms:setvalue>
+				</xforms:action>
+			</xforms:trigger>
+		</p>
+		<!--
+			Orbeon Error Summary component, see also:
+			http://wiki.orbeon.com/forms/doc/developer-guide/xbl-components/error-summary-component
+			- description of fr:error-summary component
+			http://www.orbeon.com/orbeon/xforms-government/ - example of
+			application using the fr:error-summary component (create a new form
+			and see what happens when you enter invalid data)
+		-->
 
-<xxforms:dialog id="dia-errors" appearance="full" level="modeless"
-		close="true" draggable="true" visible="false">
-	<xforms:label>Warnings</xforms:label>
-	<div>
-			<fr:error-summary 
-				observer="grp-questionnaire"
-				id="error-summary"
-				errors-count-ref="instance('errors')/errors-count"
-				valid-ref="instance('errors')/valid">
-				<fr:label>Please address the warnings given below: </fr:label>
-			</fr:error-summary> 
-			<xforms:group ref=".[not(instance('errors')/valid = 'true')]">
-				<xforms:label>
-					Form contains 
-					<xforms:output value="instance('errors')/errors-count"/>
-					warnings 
-					(form validity <xforms:output value="instance('errors')/valid"/>)
-				</xforms:label>
-			</xforms:group>
-	</div>
-</xxforms:dialog>
-	
+		<xxforms:dialog id="dia-errors" appearance="full"
+			level="modeless" close="true" draggable="true" visible="false">
+			<xforms:label>Warnings</xforms:label>
+			<div>
+				<fr:error-summary 
+					observer="grp-questionnaire" 
+					id="error-summary"
+					errors-count-ref="instance('errors')/errors-count" 
+					valid-ref="instance('errors')/valid">
+					<fr:label>Please address the warnings given below: </fr:label>
+    	</fr:error-summary>
+				<xforms:group ref=".[not(instance('errors')/valid = 'true')]">
+					<xforms:label>
+						Form contains
+						<xforms:output value="instance('errors')/errors-count" />
+						warnings
+						(form validity
+						<xforms:output value="instance('errors')/valid" />
+						)
+					</xforms:label>
+				</xforms:group>
+			</div>
+		</xxforms:dialog>
+	</xforms:group>
+
 	<xforms:group model="mod-study-questionnaire"
 		ref="instance('ins-sq-study-entry')/atom:content/study">
 
@@ -81,7 +88,7 @@
 			<h3>Pathogen Species</h3>
 
 			<xforms:select ref="pathogens" appearance="full">
-				<xforms:label />
+				<xforms:label >Pathogens</xforms:label>
 				<xforms:itemset model="mod-study-questionnaire"
 					nodeset="instance('ins-pathogen-items')/pathogen">
 					<xforms:label ref="label" />
@@ -148,6 +155,7 @@
 												<xxforms:show ev:event="xforms-value-changed"
 												dialog="dia-map"/>
 											-->
+											<xforms:alert><xforms:output value="concat('Enter a value for the ', name(), ' field')"/></xforms:alert>
 										</xforms:input>
 									</xforms:group>
 								</div>
@@ -158,6 +166,7 @@
 											<xxforms:show ev:event="xforms-value-changed"
 											dialog="dia-map"/>
 										-->
+										<xforms:alert><xforms:output value="concat('Enter a value for the ', name(), ' field')"/></xforms:alert>
 									</xforms:input>
 								</div>
 								<div>
@@ -167,6 +176,7 @@
 											<xxforms:show ev:event="xforms-value-changed"
 											dialog="dia-map"/>
 										-->
+										<xforms:alert><xforms:output value="concat('Enter a value for the ', name(), ' field')"/></xforms:alert>
 									</xforms:input>
 								</div>
 								<div>
@@ -189,7 +199,6 @@
 								</div>
 
 
-
 								<div class="mapPicker">
 									<p>Drag the pointer to populate the Latitude and Longitude
 										fields</p>
@@ -198,11 +207,11 @@
 									</fr:map>
 								</div>
 
-
 								<div>
 									<xforms:input ref="siteCode">
 										<xforms:label class="fixed-width">Your site
 											code</xforms:label>
+										<xforms:alert><xforms:output value="concat('Enter a value for the ', name(), ' field')"/></xforms:alert>
 									</xforms:input>
 								</div>
 								<div>
@@ -219,6 +228,7 @@
 											<xforms:label ref="label" />
 											<xforms:value ref="value" />
 										</xforms:itemset>
+										<xforms:alert><xforms:output value="concat('Enter a value for the ', name(), ' field')"/></xforms:alert>
 									</xforms:select1>
 								</div>
 								<div>
@@ -235,6 +245,7 @@
 											<xforms:label ref="label" />
 											<xforms:value ref="value" />
 										</xforms:itemset>
+										<xforms:alert><xforms:output value="concat('Enter a value for the ', name(), ' field')"/></xforms:alert>
 									</xforms:select1>
 								</div>
 								<div>
@@ -253,6 +264,7 @@
 											<xforms:label ref="label" />
 											<xforms:value ref="value" />
 										</xforms:itemset>
+										<xforms:alert><xforms:output value="concat('Enter a value for the ', name(), ' field')"/></xforms:alert>
 									</xforms:select1>
 								</div>
 								<xforms:group ref="transmissionIntensity">
@@ -264,6 +276,7 @@
 										class="fourWide">
 										<xforms:label class="fixed-width">Annual Parasitological
 											Incidence (API)</xforms:label>
+										<xforms:alert><xforms:output value="concat('Enter a value for the ', name(), ' field')"/></xforms:alert>
 									</xforms:input>
 									<xforms:input ref="annualParasitologicalIncidenceYear"
 										class="fourWide">
@@ -277,6 +290,7 @@
 									<xforms:input ref="parasitePrevalence" class="fourWide">
 										<xforms:label class="fixed-width">Parasite Prevalence
 										</xforms:label>
+										<xforms:alert><xforms:output value="concat('Enter a value for the ', name(), ' field')"/></xforms:alert>
 									</xforms:input>
 									<xforms:input ref="parasitePrevalenceYear" class="fourWide">
 										<xforms:label>in year </xforms:label>
@@ -311,6 +325,7 @@
 											Rate (EIR)</xforms:label>
 										<xforms:hint>Infective bites per person per year (ib/p/year)
 										</xforms:hint>
+										<xforms:alert><xforms:output value="concat('Enter a value for the ', name(), ' field')"/></xforms:alert>
 									</xforms:input>
 									<xforms:input ref="entomologicalInoculationRateYear"
 										width="4" class="fourWide">
@@ -330,6 +345,7 @@
 											<xforms:label ref="label" />
 											<xforms:value ref="value" />
 										</xforms:itemset>
+										<xforms:alert>Please select</xforms:alert>
 									</xforms:select1>
 									<div class="box">
 										<xforms:select ref="transmissionMonths"
@@ -340,6 +356,7 @@
 												<xforms:label ref="label" />
 												<xforms:value ref="value" />
 											</xforms:itemset>
+											<xforms:alert><xforms:output value="concat('Enter a value for the ', name(), ' field')"/></xforms:alert>
 										</xforms:select>
 									</div>
 								</xforms:group>
@@ -401,7 +418,7 @@
 						</xforms:alert>
 					</xforms:input>
 					<xforms:input ref="maxAge" class="fourWide">
-						<xforms:label>max </xforms:label>
+						<xforms:label>Age max </xforms:label>
 						<xforms:alert>
 							<xforms:output
 								value="concat('Please enter an age in years for the ', name(), ' field ')" />
@@ -413,11 +430,13 @@
 					<xforms:input ref="minParasitaemia" class="fourWide">
 						<xforms:label>Parasitaemia min </xforms:label>
 						<xforms:hint>Asexual parasites/µL</xforms:hint>
+						<xforms:alert><xforms:output value="concat('Enter a value for the ', name(), ' field')"/></xforms:alert>
 					</xforms:input>
 
 					<xforms:input ref="maxParasitaemia" class="fourWide">
 						<xforms:label>max </xforms:label>
 						<xforms:hint>Asexual parasites/µL</xforms:hint>
+						<xforms:alert><xforms:output value="concat('Enter a value for the ', name(), ' field')"/></xforms:alert>
 					</xforms:input>
 					<br />
 				</xforms:group>
@@ -425,11 +444,16 @@
 					appearance="minimal">
 					<xforms:label class="fixed-width">Exclude if prior anti-malarials?
 					</xforms:label>
+						<xforms:item>
+							<xforms:label>please select</xforms:label>
+							<xforms:value></xforms:value>
+						</xforms:item>
 					<xforms:itemset model="mod-study-questionnaire"
 						nodeset="instance('ins-boolean-items')/boolean">
 						<xforms:label ref="label" />
 						<xforms:value ref="value" />
 					</xforms:itemset>
+					<xforms:alert>Please select</xforms:alert>
 				</xforms:select1>
 				<xforms:group ref="priorAntimalarialsExclusion">
 					<xforms:select1 ref="priorAntimalarials" appearance="minimal">
@@ -444,6 +468,7 @@
 							<xforms:label ref="label" />
 							<xforms:value ref="value" />
 						</xforms:itemset>
+						<xforms:alert><xforms:output value="concat('Enter a value for the ', name(), ' field')"/></xforms:alert>
 					</xforms:select1>
 					<br />
 					<xforms:select1 ref="priorAntimalarialsDetermination"
@@ -455,10 +480,12 @@
 							<xforms:label ref="label" />
 							<xforms:value ref="value" />
 						</xforms:itemset>
+						<xforms:alert><xforms:output value="concat('Enter a value for the ', name(), ' field')"/></xforms:alert>
 					</xforms:select1>
 
 					<xforms:input ref="priorAntimalarialsHistoryWeeks">
 						<xforms:label>Number of weeks </xforms:label>
+						<xforms:alert><xforms:output value="concat('Enter a value for the ', name(), ' field')"/></xforms:alert>
 					</xforms:input>
 				</xforms:group>
 
@@ -477,6 +504,7 @@
 						<xforms:label>Exclude</xforms:label>
 						<xforms:value>exclude</xforms:value>
 					</xforms:item>
+					<xforms:alert><xforms:output value="concat('Enter a value for the ', name(), ' field')"/></xforms:alert>
 				</xforms:select1>
 				<br />
 				<xforms:select1 ref="treatmentReason" appearance="minimal">
@@ -487,10 +515,12 @@
 						<xforms:label ref="label" />
 						<xforms:value ref="value" />
 					</xforms:itemset>
+					<xforms:alert><xforms:output value="concat('Enter a value for the ', name(), ' field')"/></xforms:alert>
 				</xforms:select1>
 				<br />
 				<xforms:input ref="otherCriteria">
 					<xforms:label class="fixed-width">Other criteria</xforms:label>
+					<xforms:alert><xforms:output value="concat('Enter a value for the ', name(), ' field')"/></xforms:alert>
 				</xforms:input>
 
 
@@ -982,6 +1012,7 @@
 																	<xforms:label ref="label" />
 																	<xforms:value ref="value" />
 																</xforms:itemset>
+																<xforms:alert>Please select</xforms:alert>
 															</xforms:select1>
 															<br />
 															<xforms:textarea ref="comments">
@@ -1233,6 +1264,7 @@
 							<xforms:label ref="label" />
 							<xforms:value ref="value" />
 						</xforms:itemset>
+						<xforms:alert>Please select</xforms:alert>
 					</xforms:select1>
 
 					<xforms:group ref="thickFilmCalculationOfParasitemia">
@@ -1399,6 +1431,7 @@
 							<xforms:label ref="label" />
 							<xforms:value ref="value" />
 						</xforms:itemset>
+						<xforms:alert>Please select</xforms:alert>
 					</xforms:select1>
 
 					<xforms:group ref="applicable">
@@ -2237,6 +2270,7 @@
 									<xforms:label ref="label" />
 									<xforms:value ref="value" />
 								</xforms:itemset>
+								<xforms:alert>Please select a value</xforms:alert>
 							</xforms:select1>
 						</p>
 						<p>
@@ -2439,7 +2473,7 @@
 											<xforms:label ref="label" />
 											<xforms:value ref="value" />
 										</xforms:itemset>
-										<xforms:alert>Please answer yes or no</xforms:alert>
+										<xforms:alert>Please select a value</xforms:alert>
 									</xforms:select1>
 									<br />
 									<xforms:input ref="provider">
@@ -2510,7 +2544,7 @@
 											<xforms:label ref="label" />
 											<xforms:value ref="value" />
 										</xforms:itemset>
-										<xforms:alert>Please answer yes or no</xforms:alert>
+										<xforms:alert>Please select a value</xforms:alert>
 									</xforms:select1>
 									<br />
 									<xforms:input ref="clone3D7Provider">
@@ -2531,7 +2565,7 @@
 											<xforms:label ref="label" />
 											<xforms:value ref="value" />
 										</xforms:itemset>
-										<xforms:alert>Please answer yes or no</xforms:alert>
+										<xforms:alert>Please select a value</xforms:alert>
 									</xforms:select1>
 									<xforms:group ref="notIncludedBatchDataHint">
 										<p>
@@ -2819,8 +2853,7 @@
 									</xforms:label>
 									<xforms:insert ev:event="DOMActivate" context="."
 										nodeset="assayReference" at="count(../assayReference)"
-										position="after"
-										origin="instance('ins-assayReference')" />
+										position="after" origin="instance('ins-assayReference')" />
 								</xforms:trigger>
 							</td>
 							<td class="add-td">
@@ -2828,8 +2861,7 @@
 									<xforms:label>Add an assay reference</xforms:label>
 									<xforms:insert ev:event="DOMActivate" context="."
 										nodeset="assayReference" at="count(../assayReference)"
-										position="after"
-										origin="instance('ins-assayReference')" />
+										position="after" origin="instance('ins-assayReference')" />
 								</xforms:trigger>
 							</td>
 						</tr>

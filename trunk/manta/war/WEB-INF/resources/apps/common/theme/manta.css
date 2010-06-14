@@ -149,6 +149,7 @@ ul {
 }
 .questionnaire .mapPicker span.xforms-group {
     border: 0px solid gray;
+    margin-bottom: 6px;
 }
 .questionnaire TD span.xforms-group {
     border: 0px solid gray;
@@ -159,6 +160,9 @@ ul {
 }
 .fb-map-gmap-div {
     border: 3px ridge gray;
+    -moz-border-radius: 6px; 
+    -webkit-border-radius: 6px; 
+    border-radius: 6px; 
 }
 .box {
     clear: both;
@@ -189,6 +193,24 @@ ul {
 /* Ensure checkboxes are aligned, not inline */
     display: block;
 }
+
+.warningButton .xforms-trigger{
+    color:red;
+}
+
+.warningButton {
+    float: right;
+    right: 26px;
+    
+    z-index: 400;
+    padding: 12px;
+    border: 3px ridge red;
+    -moz-border-radius: 5px; 
+    -webkit-border-radius: 5px; 
+    border-radius: 5px; 
+    position: fixed;
+}
+
 /* FIXME: There is already a #bd in here, and with margin settings, so maybe either merge or remove. Maybe should also have elements, ids, then classes. */
 #bd {
     margin: 0px;
@@ -248,19 +270,4 @@ ul {
 .register-study-wizard .acknowledgement-form-summary-item .xforms-label, .study-dashboard .acknowledgement-form-summary-item .xforms-label {
     font-weight: bold;
 }
-.warningButton .xforms-trigger{
-    color:red;
-}
-
-.warningButton {
-    float: right;
-    right: 26px;
-    
-    z-index: 400;
-    padding: 12px;
-    border: 2px solid red;
-    -moz-border-radius: 5px; 
-    position: fixed;
-}
-
 
