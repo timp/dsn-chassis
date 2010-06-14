@@ -116,7 +116,7 @@
 								type="xforms:int" relevant="normalize-space( ../entomologicalInoculationRate) != ''" />
 							<xforms:bind nodeset="seasonalTransmission" type="xs:boolean" />
 							<xforms:bind nodeset="transmissionMonths"
-								relevant="contains(../seasonalTransmission, 'yes')" />
+								relevant="contains(../seasonalTransmission, 'true')" />
 						</xforms:bind>
 					</xforms:bind>
 				</xforms:bind>
@@ -135,7 +135,7 @@
 					<xforms:bind nodeset="excludeIfPriorAntimalarials"
 						type="xs:boolean" />
 					<xforms:bind nodeset="priorAntimalarialsExclusion"
-						relevant="contains(../excludeIfPriorAntimalarials, 'yes')">
+						relevant="contains(../excludeIfPriorAntimalarials, 'true')">
 						<xforms:bind nodeset="priorAntimalarials" type="xs:string" />
 						<xforms:bind nodeset="priorAntimalarialsDetermination"
 							type="xs:string" />
@@ -281,7 +281,7 @@
 						nodeset="geneotypingToDistinguishBetweenRecrudescenceAndReinfection">
 						<xforms:bind nodeset="applicability" />
 						<xforms:bind nodeset="applicable"
-							relevant="contains(../applicability, 'yes')">
+							relevant="contains(../applicability, 'true')">
 							<xforms:bind nodeset="markers">
 								<xforms:bind nodeset="recrudescenceMarker">
 									<xforms:bind nodeset="markerName" />
@@ -386,7 +386,7 @@
 						<xforms:bind nodeset="sequencedloci">
 							<xforms:bind nodeset="wholeGenomesSequenced" />
 							<xforms:bind nodeset="resistanceloci"
-								relevant="contains(../wholeGenomesSequenced, 'no')">
+								relevant="contains(../wholeGenomesSequenced, 'false')">
 								<xforms:bind nodeset="resistanceLocus">
 									<xforms:bind nodeset="locusTypeOpen">
 										<xforms:bind nodeset="locusType" />
@@ -399,7 +399,7 @@
 						</xforms:bind>
 						<xforms:bind nodeset="infectionComplexityEstimated" />
 						<xforms:bind nodeset="infectionComplexityEstimationlociOpen"
-							relevant="contains(../infectionComplexityEstimated,'yes')">
+							relevant="contains(../infectionComplexityEstimated,'true')">
 							<xforms:bind nodeset="infectionComplexityEstimationloci" />
 							<xforms:bind nodeset="infectionComplexityEstimationlociOther"
 								relevant="contains(../infectionComplexityEstimationloci, 'other')" />
@@ -430,19 +430,19 @@
 						<xforms:bind nodeset="hypoxantine">
 							<xforms:bind nodeset="hypoxantine-added" />
 							<xforms:bind nodeset="hypoxantine-finalConcentration"
-								relevant="contains(../hypoxantine-added,'yes')" type="xforms:int"
+								relevant="contains(../hypoxantine-added,'true')" type="xforms:int"
 								required="true()" />
 						</xforms:bind>
 						<xforms:bind nodeset="oroticAcid">
 							<xforms:bind nodeset="oroticAcid-added" />
 							<xforms:bind nodeset="oroticAcid-finalConcentration"
-								relevant="contains(../oroticAcid-added,'yes')" type="xforms:int"
+								relevant="contains(../oroticAcid-added,'true')" type="xforms:int"
 								required="true()" />
 						</xforms:bind>
 						<xforms:bind nodeset="glucose">
 							<xforms:bind nodeset="glucose-added" />
 							<xforms:bind nodeset="glucose-finalConcentration"
-								relevant="contains(../glucose-added,'yes')" type="xforms:int"
+								relevant="contains(../glucose-added,'true')" type="xforms:int"
 								required="true()" />
 						</xforms:bind>
 						<xforms:bind nodeset="antiBiotics">
@@ -466,7 +466,7 @@
 
 							<xforms:bind nodeset="providedByWwarn" required="true()" />
 							<xforms:bind nodeset="provider"
-								relevant="contains(../providedByWwarn, 'no')" />
+								relevant="contains(../providedByWwarn, 'false')" />
 						</xforms:bind>
 					</xforms:bind>
 					<xforms:bind nodeset="plateBatches">
@@ -474,16 +474,16 @@
 							<xforms:bind nodeset="clone3D7ProvidedByWwarn" 
 								required="true()" />
 							<xforms:bind nodeset="clone3D7Provider"
-								relevant="contains(../clone3D7ProvidedByWwarn, 'no')" required="true()" />
+								relevant="contains(../clone3D7ProvidedByWwarn, 'false')" required="true()" />
 							<xforms:bind nodeset="batchesIncludedInRawData"
 								required="true()" />
 							<xforms:bind nodeset="notIncludedBatchDataHint"
-								relevant="contains(../batchesIncludedInRawData, 'no')" />
+								relevant="contains(../batchesIncludedInRawData, 'false')" />
 							<xforms:bind nodeset="preparationDate" type="xs:date"
-								relevant="contains(../batchesIncludedInRawData, 'no')" />
+								relevant="contains(../batchesIncludedInRawData, 'false')" />
 							<!-- FIXME type="ctype:percentage" -->							
 							<xforms:bind nodeset="parasitaemia3D7"
-								relevant="contains(../batchesIncludedInRawData, 'no')" type="xforms:int" />
+								relevant="contains(../batchesIncludedInRawData, 'false')" type="xforms:int" />
 							<xforms:bind nodeset="ringForms" />
 						</xforms:bind>
 					</xforms:bind>
