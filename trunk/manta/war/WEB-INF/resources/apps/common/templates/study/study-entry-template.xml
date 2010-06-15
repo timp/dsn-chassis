@@ -58,6 +58,7 @@
 						<priorAntimalarialsHistoryWeeks />
 					</priorAntimalarialsExclusion>
 					<pregnancy />
+					<pregnancyMonths />
 					<treatmentReason />
 					<otherCriteria />
 				</inclusionExclusionCriteria>

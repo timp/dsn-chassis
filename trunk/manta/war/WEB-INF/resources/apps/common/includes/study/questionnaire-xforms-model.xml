@@ -140,6 +140,7 @@
 							relevant="contains(../priorAntimalarialsDetermination,'history')"/>
 					</xforms:bind>
 					<xforms:bind nodeset="pregnancy"/>
+					<xforms:bind nodeset="pregnancyMonths" relevant="not(normalize-space(../pregnancy) = '')"/>
 					<xforms:bind nodeset="treatmentReason"/>
 					<xforms:bind nodeset="otherCriteria"/>
 				</xforms:bind>
