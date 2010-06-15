@@ -28,7 +28,9 @@
 							<parasitePrevalence />
 							<parasitePrevalenceYear />
 							<transmissionIntensityAgeFrom />
+							<transmissionIntensityAgeFromUnits />
 							<transmissionIntensityAgeTo />
+							<transmissionIntensityAgeToUnits />
 							<entomologicalInoculationRate />
 							<entomologicalInoculationRateYear />
 							<seasonalTransmission />
@@ -41,7 +43,9 @@
 				<inclusionExclusionCriteria>
 					<age xmlns:xs="http://www.w3.org/2001/XMLSchema">
 						<maxAge />
+						<maxAgeUnits />
 						<minAge />
+						<minAgeUnits />
 					</age>
 					<parasitaemia>
 						<minParasitaemia />

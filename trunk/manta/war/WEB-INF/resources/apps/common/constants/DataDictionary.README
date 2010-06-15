@@ -20,3 +20,5 @@ This mirrors xforms where nillable is an attribute of an element not a type.
 
 
 Every field MUST have both a label and an alert for error handling to work and for bugs to be easily found. 
+If you do not want a field to have a label then there is a technique: 
+Set the label to class "invisible", it will be displayed in the errors list but not in the form. 
