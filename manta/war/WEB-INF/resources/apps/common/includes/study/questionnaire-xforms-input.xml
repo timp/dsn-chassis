@@ -468,6 +468,21 @@
 								value="concat('Please enter an age in years for the ', name(), ' field ')" />
 						</xforms:alert>
 					</xforms:input>
+
+									<xforms:select1 ref="minAgeUnits"
+										appearance="minimal">
+										<xforms:label class="invisible">Min age units</xforms:label>
+										<xforms:itemset model="mod-study-questionnaire"
+											nodeset="instance('ins-age-unit-items')/ageUnit">
+											<xforms:label ref="label" />
+											<xforms:value ref="value" />
+										</xforms:itemset>
+										<xforms:alert>
+											<xforms:output
+												value="concat('Please enter a value for the ', name(), ' field ')" />
+										</xforms:alert>
+									</xforms:select1>
+
 					<xforms:input ref="maxAge" class="fourWide">
 						<xforms:label>Age max </xforms:label>
 						<xforms:alert>
@@ -475,6 +490,19 @@
 								value="concat('Please enter an age in years for the ', name(), ' field ')" />
 						</xforms:alert>
 					</xforms:input>
+									<xforms:select1 ref="maxAgeUnits"
+										appearance="minimal">
+										<xforms:label class="invisible">Max age units</xforms:label>
+										<xforms:itemset model="mod-study-questionnaire"
+											nodeset="instance('ins-age-unit-items')/ageUnit">
+											<xforms:label ref="label" />
+											<xforms:value ref="value" />
+										</xforms:itemset>
+										<xforms:alert>
+											<xforms:output
+												value="concat('Please enter a value for the ', name(), ' field ')" />
+										</xforms:alert>
+									</xforms:select1>
 					<br />
 				</xforms:group>
 				<xforms:group ref="parasitaemia">
@@ -488,7 +516,7 @@
 					</xforms:input>
 
 					<xforms:input ref="maxParasitaemia" class="fourWide">
-						<xforms:label>max </xforms:label>
+						<xforms:label>Parasitaemia max </xforms:label>
 						<xforms:hint>Asexual parasites/µL</xforms:hint>
 						<xforms:alert>
 							<xforms:output
@@ -796,6 +824,7 @@
 																		<th />
 																		<th>Day</th>
 																		<th>Hour</th>
+																		<!--  FIXME Should this also have units? -->
 																		<th>
 																			From
 																			<span style="font-size:smaller; font-weight: normal;">
