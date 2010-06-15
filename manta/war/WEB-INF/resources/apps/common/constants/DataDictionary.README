@@ -4,11 +4,19 @@ Each file contains the values which an element may take.
 
 A note as to whether the value set may be extended should be placed in a comment. 
 
-FIXME the other value should not be in the vocab. 
-The open sets will include a term such as 'Other' and will be housed in a file with a name ending in '-terms'.
+The 'other' value should not be in the vocab. 
+The open sets will include a term such as 'Other.
+The pattern is 
+<openListChoice>
+ <listchoice/>
+ <listchoiceOther/>
+</openListChoice>
 
 All label values are in English, these will need to be duplicated in other languages. 
 
 The nullability of the field is not expressed within the vocabulary file, as it is possible to 
 use the same vocabulary in a nullable and non-nullable field. 
- 
+This mirrors xforms where nillable is an attribute of an element not a type. 
+
+
+Every field MUST have both a label and an alert for error handling to work and for bugs to be easily found. 
