@@ -80,7 +80,7 @@
 			<h3>Pathogen Species</h3>
 
 			<xforms:select ref="pathogens" appearance="full">
-				<xforms:label>Pathogens</xforms:label>
+				<xforms:label class="invisible">Pathogens</xforms:label>
 				<xforms:itemset model="mod-study-questionnaire"
 					nodeset="instance('ins-pathogen-items')/pathogen">
 					<xforms:label ref="label" />
@@ -599,11 +599,11 @@
 						<xforms:value />
 					</xforms:item>
 					<xforms:item>
-						<xforms:label>Include</xforms:label>
+						<xforms:label>include</xforms:label>
 						<xforms:value>include</xforms:value>
 					</xforms:item>
 					<xforms:item>
-						<xforms:label>Exclude</xforms:label>
+						<xforms:label>exclude</xforms:label>
 						<xforms:value>exclude</xforms:value>
 					</xforms:item>
 					<xforms:alert>
@@ -611,13 +611,6 @@
 							value="concat('Enter a value for the ', name(), ' field')" />
 					</xforms:alert>
 				</xforms:select1>
-				<xforms:input ref="pregnancyMonths" class="fourWide">
-				<xforms:label>Months of gestation</xforms:label>
-				<xforms:alert>
-						<xforms:output
-							value="concat('Enter a value for the ', name(), ' field')" />
-				</xforms:alert>
-				</xforms:input>
 				<br />
 				<xforms:select1 ref="treatmentReason" appearance="minimal">
 					<xforms:label class="fixed-width"> Reason for treatment
@@ -2305,7 +2298,7 @@
 					</p>
 
 					<p>
-						<xforms:input ref="serum-finalConcentration">
+						<xforms:input ref="serum-finalConcentration" class="fourWide">
 							<xforms:label>Serum final concentration (g/L) </xforms:label>
 							<xforms:alert>
 								<xforms:output
@@ -2314,7 +2307,7 @@
 						</xforms:input>
 					</p>
 					<p>
-						<xforms:input ref="NaHCO3-finalConcentration">
+						<xforms:input ref="NaHCO3-finalConcentration"  class="fourWide">
 							<xforms:label>
 								NaHCO
 								<sub>3</sub>
@@ -2342,7 +2335,7 @@
 							</xforms:select1>
 						</p>
 						<p>
-							<xforms:input ref="hypoxantine-finalConcentration">
+							<xforms:input ref="hypoxantine-finalConcentration" class="fourWide">
 								<xforms:label>Final Hypoxantine concentration (g/L)
 								</xforms:label>
 								<xforms:alert>
@@ -2368,7 +2361,7 @@
 							</xforms:select1>
 						</p>
 						<p>
-							<xforms:input ref="oroticAcid-finalConcentration">
+							<xforms:input ref="oroticAcid-finalConcentration"  class="fourWide">
 								<xforms:label>Final Orotic Acid concentration (g/L)
 								</xforms:label>
 								<xforms:alert>
@@ -2393,7 +2386,7 @@
 							</xforms:select1>
 						</p>
 						<p>
-							<xforms:input ref="glucose-finalConcentration">
+							<xforms:input ref="glucose-finalConcentration"  class="fourWide">
 								<xforms:label>Final glucose concentration (g/L)</xforms:label>
 								<xforms:alert>
 									<xforms:output
@@ -2431,7 +2424,7 @@
 											</xforms:input>
 										</p>
 										<p>
-											<xforms:input ref="antiBioticFinalConcentration">
+											<xforms:input ref="antiBioticFinalConcentration"  class="fourWide">
 												<xforms:label>Antibiotic final concentration (g/L)
 												</xforms:label>
 												<xforms:alert>
