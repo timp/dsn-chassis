@@ -611,6 +611,13 @@
 							value="concat('Enter a value for the ', name(), ' field')" />
 					</xforms:alert>
 				</xforms:select1>
+				<xforms:input ref="pregnancyMonths" class="fourWide">
+				<xforms:label>Months of gestation</xforms:label>
+				<xforms:alert>
+						<xforms:output
+							value="concat('Enter a value for the ', name(), ' field')" />
+				</xforms:alert>
+				</xforms:input>
 				<br />
 				<xforms:select1 ref="treatmentReason" appearance="minimal">
 					<xforms:label class="fixed-width"> Reason for treatment
