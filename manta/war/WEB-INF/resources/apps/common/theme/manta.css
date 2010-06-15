@@ -141,11 +141,10 @@ ul {
 }
 .questionnaire span.xforms-group {
     display:block;
-    /*
-    margin: 4px;
-    padding: 4px;
-    border: 1px solid green;
-    */
+    margin-top: 4px;
+    margin-bottom: 4px;
+    padding-top: 4px;
+    padding-bottom: 4px;
 }
 .questionnaire .mapPicker span.xforms-group {
     border: 0px solid gray;
@@ -154,6 +153,9 @@ ul {
 .questionnaire TD span.xforms-group {
     border: 0px solid gray;
     margin-left: 0px;
+}
+.questionnaire .pendant { 
+    text-transform: lowercase;
 }
 .questionnaire .mapPicker {
     border: 0px ridge gray;
@@ -170,6 +172,11 @@ ul {
 .questionnaire h3, h4, h5 {
     padding: 1px;
     margin: 0px;
+}
+.questionnaire h2 { 
+    padding:1em;
+    display:block;
+    background-color: #eee;
 }
 .fixed-width {
     width: 12em;
