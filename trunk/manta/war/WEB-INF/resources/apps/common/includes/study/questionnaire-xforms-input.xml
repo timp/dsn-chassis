@@ -1,11 +1,7 @@
 <?oxygen NVDLSchema="../../../../../../../oxygen/samples/nvdl/xhtml-xforms-11-orbeon.nvdl"?>
-<div 
-	xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:xforms="http://www.w3.org/2002/xforms" 
-	xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
-	xmlns:ev="http://www.w3.org/2001/xml-events"
-	xmlns:atom="http://www.w3.org/2005/Atom" 
-	xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:xforms="http://www.w3.org/2002/xforms"
+	xmlns:xxforms="http://orbeon.org/oxf/xml/xforms" xmlns:ev="http://www.w3.org/2001/xml-events"
+	xmlns:atom="http://www.w3.org/2005/Atom" xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
 	class="questionnaire">
 	<xforms:group ref="instance('errors')" model="mod-study-questionnaire">
 		<p align="right" class="warningButton">
@@ -32,25 +28,17 @@
 			level="modeless" close="true" draggable="true" visible="false">
 			<xforms:label>Warnings</xforms:label>
 			<div>
-				<fr:error-summary 
-					observer="grp-questionnaire" 
-					id="error-summary"
-					errors-count-ref="instance('errors')/errors-count" 
-					valid-ref="instance('errors')/valid">
+				<fr:error-summary observer="grp-questionnaire" id="error-summary"
+					errors-count-ref="instance('errors')/errors-count" valid-ref="instance('errors')/valid">
 					<fr:label>Please address the warnings given below: </fr:label>
-    	</fr:error-summary>
-    	<!-- 
-				<xforms:group ref=".[not(instance('errors')/valid = 'true')]">
-					<xforms:label>
-						Form contains
-						<xforms:output value="instance('errors')/errors-count" />
-						warnings
-						(form validity
-						<xforms:output value="instance('errors')/valid" />
-						)
-					</xforms:label>
-				</xforms:group>
-				 -->
+				</fr:error-summary>
+				<!--
+					<xforms:group ref=".[not(instance('errors')/valid = 'true')]">
+					<xforms:label> Form contains <xforms:output
+					value="instance('errors')/errors-count" /> warnings (form validity
+					<xforms:output value="instance('errors')/valid" /> )
+					</xforms:label> </xforms:group>
+				-->
 			</div>
 		</xxforms:dialog>
 	</xforms:group>
@@ -92,7 +80,7 @@
 			<h3>Pathogen Species</h3>
 
 			<xforms:select ref="pathogens" appearance="full">
-				<xforms:label >Pathogens</xforms:label>
+				<xforms:label>Pathogens</xforms:label>
 				<xforms:itemset model="mod-study-questionnaire"
 					nodeset="instance('ins-pathogen-items')/pathogen">
 					<xforms:label ref="label" />
@@ -159,7 +147,10 @@
 												<xxforms:show ev:event="xforms-value-changed"
 												dialog="dia-map"/>
 											-->
-											<xforms:alert><xforms:output value="concat('Enter a value for the ', name(), ' field')"/></xforms:alert>
+											<xforms:alert>
+												<xforms:output
+													value="concat('Enter a value for the ', name(), ' field')" />
+											</xforms:alert>
 										</xforms:input>
 									</xforms:group>
 								</div>
@@ -170,7 +161,10 @@
 											<xxforms:show ev:event="xforms-value-changed"
 											dialog="dia-map"/>
 										-->
-										<xforms:alert><xforms:output value="concat('Enter a value for the ', name(), ' field')"/></xforms:alert>
+										<xforms:alert>
+											<xforms:output
+												value="concat('Enter a value for the ', name(), ' field')" />
+										</xforms:alert>
 									</xforms:input>
 								</div>
 								<div>
@@ -180,7 +174,10 @@
 											<xxforms:show ev:event="xforms-value-changed"
 											dialog="dia-map"/>
 										-->
-										<xforms:alert><xforms:output value="concat('Enter a value for the ', name(), ' field')"/></xforms:alert>
+										<xforms:alert>
+											<xforms:output
+												value="concat('Enter a value for the ', name(), ' field')" />
+										</xforms:alert>
 									</xforms:input>
 								</div>
 								<div>
@@ -215,7 +212,10 @@
 									<xforms:input ref="siteCode">
 										<xforms:label class="fixed-width">Your site
 											code</xforms:label>
-										<xforms:alert><xforms:output value="concat('Enter a value for the ', name(), ' field')"/></xforms:alert>
+										<xforms:alert>
+											<xforms:output
+												value="concat('Enter a value for the ', name(), ' field')" />
+										</xforms:alert>
 									</xforms:input>
 								</div>
 								<div>
@@ -232,7 +232,10 @@
 											<xforms:label ref="label" />
 											<xforms:value ref="value" />
 										</xforms:itemset>
-										<xforms:alert><xforms:output value="concat('Enter a value for the ', name(), ' field')"/></xforms:alert>
+										<xforms:alert>
+											<xforms:output
+												value="concat('Enter a value for the ', name(), ' field')" />
+										</xforms:alert>
 									</xforms:select1>
 								</div>
 								<div>
@@ -249,7 +252,10 @@
 											<xforms:label ref="label" />
 											<xforms:value ref="value" />
 										</xforms:itemset>
-										<xforms:alert><xforms:output value="concat('Enter a value for the ', name(), ' field')"/></xforms:alert>
+										<xforms:alert>
+											<xforms:output
+												value="concat('Enter a value for the ', name(), ' field')" />
+										</xforms:alert>
 									</xforms:select1>
 								</div>
 								<div>
@@ -268,7 +274,10 @@
 											<xforms:label ref="label" />
 											<xforms:value ref="value" />
 										</xforms:itemset>
-										<xforms:alert><xforms:output value="concat('Enter a value for the ', name(), ' field')"/></xforms:alert>
+										<xforms:alert>
+											<xforms:output
+												value="concat('Enter a value for the ', name(), ' field')" />
+										</xforms:alert>
 									</xforms:select1>
 								</div>
 								<xforms:group ref="transmissionIntensity">
@@ -280,7 +289,10 @@
 										class="fourWide">
 										<xforms:label class="fixed-width">Annual Parasitological
 											Incidence (API)</xforms:label>
-										<xforms:alert><xforms:output value="concat('Enter a value for the ', name(), ' field')"/></xforms:alert>
+										<xforms:alert>
+											<xforms:output
+												value="concat('Enter a value for the ', name(), ' field')" />
+										</xforms:alert>
 									</xforms:input>
 									<xforms:input ref="annualParasitologicalIncidenceYear"
 										class="fourWide">
@@ -294,7 +306,10 @@
 									<xforms:input ref="parasitePrevalence" class="fourWide">
 										<xforms:label class="fixed-width">Parasite Prevalence
 										</xforms:label>
-										<xforms:alert><xforms:output value="concat('Enter a value for the ', name(), ' field')"/></xforms:alert>
+										<xforms:alert>
+											<xforms:output
+												value="concat('Enter a value for the ', name(), ' field')" />
+										</xforms:alert>
 									</xforms:input>
 									<xforms:input ref="parasitePrevalenceYear" class="fourWide">
 										<xforms:label>in year </xforms:label>
@@ -329,7 +344,10 @@
 											Rate (EIR)</xforms:label>
 										<xforms:hint>Infective bites per person per year (ib/p/year)
 										</xforms:hint>
-										<xforms:alert><xforms:output value="concat('Enter a value for the ', name(), ' field')"/></xforms:alert>
+										<xforms:alert>
+											<xforms:output
+												value="concat('Enter a value for the ', name(), ' field')" />
+										</xforms:alert>
 									</xforms:input>
 									<xforms:input ref="entomologicalInoculationRateYear"
 										width="4" class="fourWide">
@@ -360,7 +378,10 @@
 												<xforms:label ref="label" />
 												<xforms:value ref="value" />
 											</xforms:itemset>
-											<xforms:alert><xforms:output value="concat('Enter a value for the ', name(), ' field')"/></xforms:alert>
+											<xforms:alert>
+												<xforms:output
+													value="concat('Enter a value for the ', name(), ' field')" />
+											</xforms:alert>
 										</xforms:select>
 									</div>
 								</xforms:group>
@@ -434,24 +455,31 @@
 					<xforms:input ref="minParasitaemia" class="fourWide">
 						<xforms:label>Parasitaemia min </xforms:label>
 						<xforms:hint>Asexual parasites/µL</xforms:hint>
-						<xforms:alert><xforms:output value="concat('Enter a value for the ', name(), ' field')"/></xforms:alert>
+						<xforms:alert>
+							<xforms:output
+								value="concat('Enter a value for the ', name(), ' field')" />
+						</xforms:alert>
 					</xforms:input>
 
 					<xforms:input ref="maxParasitaemia" class="fourWide">
 						<xforms:label>max </xforms:label>
 						<xforms:hint>Asexual parasites/µL</xforms:hint>
-						<xforms:alert><xforms:output value="concat('Enter a value for the ', name(), ' field')"/></xforms:alert>
+						<xforms:alert>
+							<xforms:output
+								value="concat('Enter a value for the ', name(), ' field')" />
+						</xforms:alert>
 					</xforms:input>
 					<br />
 				</xforms:group>
+
 				<xforms:select1 ref="excludeIfPriorAntimalarials"
 					appearance="minimal">
 					<xforms:label class="fixed-width">Exclude if prior anti-malarials?
 					</xforms:label>
-						<xforms:item>
-							<xforms:label>please select</xforms:label>
-							<xforms:value></xforms:value>
-						</xforms:item>
+					<xforms:item>
+						<xforms:label>please select</xforms:label>
+						<xforms:value></xforms:value>
+					</xforms:item>
 					<xforms:itemset model="mod-study-questionnaire"
 						nodeset="instance('ins-boolean-items')/boolean">
 						<xforms:label ref="label" />
@@ -460,21 +488,30 @@
 					<xforms:alert>Please select</xforms:alert>
 				</xforms:select1>
 				<xforms:group ref="priorAntimalarialsExclusion">
-					<xforms:select1 ref="priorAntimalarials" appearance="minimal">
-						<xforms:label class="fixed-width"> Prior anti-malarials
-						</xforms:label>
-						<xforms:item>
-							<xforms:label>Any</xforms:label>
-							<xforms:value>any</xforms:value>
-						</xforms:item>
-						<xforms:itemset model="mod-study-questionnaire"
-							nodeset="instance('ins-drugMolecule-items')/drugMolecule">
-							<xforms:label ref="label" />
-							<xforms:value ref="value" />
-						</xforms:itemset>
-						<xforms:alert><xforms:output value="concat('Enter a value for the ', name(), ' field')"/></xforms:alert>
-					</xforms:select1>
-					<br />
+
+
+
+					<div class="box">
+						<xforms:select ref="priorAntimalarials" appearance="full"
+							class="scrollableCheckboxes">
+							<xforms:label class="scrollableCheckboxesLabel"> Prior anti-malarials
+							</xforms:label>
+							<xforms:item>
+								<xforms:label>Any</xforms:label>
+								<xforms:value>any</xforms:value>
+							</xforms:item>
+							<xforms:itemset model="mod-study-questionnaire"
+								nodeset="instance('ins-drugMolecule-items')/drugMolecule">
+								<xforms:label ref="label" />
+								<xforms:value ref="value" />
+							</xforms:itemset>
+							<xforms:alert>
+								<xforms:output
+									value="concat('Enter a value for the ', name(), ' field')" />
+							</xforms:alert>
+						</xforms:select>
+					</div>
+					<br style="clear:both;"/>
 					<xforms:select1 ref="priorAntimalarialsDetermination"
 						appearance="minimal">
 						<xforms:label class="fixed-width"> How were prior treatments
@@ -484,12 +521,19 @@
 							<xforms:label ref="label" />
 							<xforms:value ref="value" />
 						</xforms:itemset>
-						<xforms:alert><xforms:output value="concat('Enter a value for the ', name(), ' field')"/></xforms:alert>
+						<xforms:alert>
+							<xforms:output
+								value="concat('Enter a value for the ', name(), ' field')" />
+						</xforms:alert>
 					</xforms:select1>
 
-					<xforms:input ref="priorAntimalarialsHistoryWeeks" class="fourWide">
+					<xforms:input ref="priorAntimalarialsHistoryWeeks"
+						class="fourWide">
 						<xforms:label>Number of weeks </xforms:label>
-						<xforms:alert><xforms:output value="concat('Enter a value for the ', name(), ' field')"/></xforms:alert>
+						<xforms:alert>
+							<xforms:output
+								value="concat('Enter a value for the ', name(), ' field')" />
+						</xforms:alert>
 					</xforms:input>
 				</xforms:group>
 
@@ -508,7 +552,10 @@
 						<xforms:label>Exclude</xforms:label>
 						<xforms:value>exclude</xforms:value>
 					</xforms:item>
-					<xforms:alert><xforms:output value="concat('Enter a value for the ', name(), ' field')"/></xforms:alert>
+					<xforms:alert>
+						<xforms:output
+							value="concat('Enter a value for the ', name(), ' field')" />
+					</xforms:alert>
 				</xforms:select1>
 				<br />
 				<xforms:select1 ref="treatmentReason" appearance="minimal">
@@ -519,12 +566,18 @@
 						<xforms:label ref="label" />
 						<xforms:value ref="value" />
 					</xforms:itemset>
-					<xforms:alert><xforms:output value="concat('Enter a value for the ', name(), ' field')"/></xforms:alert>
+					<xforms:alert>
+						<xforms:output
+							value="concat('Enter a value for the ', name(), ' field')" />
+					</xforms:alert>
 				</xforms:select1>
 				<br />
 				<xforms:input ref="otherCriteria">
 					<xforms:label class="fixed-width">Other criteria</xforms:label>
-					<xforms:alert><xforms:output value="concat('Enter a value for the ', name(), ' field')"/></xforms:alert>
+					<xforms:alert>
+						<xforms:output
+							value="concat('Enter a value for the ', name(), ' field')" />
+					</xforms:alert>
 				</xforms:input>
 
 
