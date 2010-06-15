@@ -303,6 +303,51 @@
 										</xforms:alert>
 									</xforms:input>
 									<br />
+									<xforms:input ref="transmissionIntensityAgeFrom"
+										class="fourWide">
+										<xforms:label class="fixed-width">API derived from age
+										</xforms:label>
+										<xforms:alert>
+											<xforms:output
+												value="concat('Please enter an age in years for the ', name(), ' field ')" />
+										</xforms:alert>
+									</xforms:input>
+									<xforms:select1 ref="transmissionIntensityAgeFromUnits"
+										appearance="minimal">
+										<xforms:label class="invisible">Age units</xforms:label>
+										<xforms:itemset model="mod-study-questionnaire"
+											nodeset="instance('ins-age-unit-items')/ageUnit">
+											<xforms:label ref="label" />
+											<xforms:value ref="value" />
+										</xforms:itemset>
+										<xforms:alert>
+											<xforms:output
+												value="concat('Please enter a value for the ', name(), ' field ')" />
+										</xforms:alert>
+									</xforms:select1>
+
+									<xforms:input ref="transmissionIntensityAgeTo"
+										class="fourWide">
+										<xforms:label>to </xforms:label>
+										<xforms:alert>
+											<xforms:output
+												value="concat('Please enter an age for the ', name(), ' field ')" />
+										</xforms:alert>
+									</xforms:input>
+									<xforms:select1 ref="transmissionIntensityAgeToUnits"
+										appearance="minimal">
+										<xforms:label class="invisible">Age units</xforms:label>
+										<xforms:itemset model="mod-study-questionnaire"
+											nodeset="instance('ins-age-unit-items')/ageUnit">
+											<xforms:label ref="label" />
+											<xforms:value ref="value" />
+										</xforms:itemset>
+										<xforms:alert>
+											<xforms:output
+												value="concat('Please enter a value for the ', name(), ' field ')" />
+										</xforms:alert>
+									</xforms:select1>
+									<br />
 									<xforms:input ref="parasitePrevalence" class="fourWide">
 										<xforms:label class="fixed-width">Parasite Prevalence
 										</xforms:label>
@@ -316,25 +361,6 @@
 										<xforms:alert>
 											<xforms:output
 												value="concat('Please enter a recent year for the ', name(), ' field ')" />
-										</xforms:alert>
-									</xforms:input>
-									<br />
-									<xforms:input ref="transmissionIntensityAgeFrom"
-										class="fourWide">
-										<xforms:label class="fixed-width">API derived from age
-										</xforms:label>
-										<xforms:alert>
-											<xforms:output
-												value="concat('Please enter an age in years for the ', name(), ' field ')" />
-										</xforms:alert>
-									</xforms:input>
-
-									<xforms:input ref="transmissionIntensityAgeTo"
-										class="fourWide">
-										<xforms:label>to </xforms:label>
-										<xforms:alert>
-											<xforms:output
-												value="concat('Please enter an age in years for the ', name(), ' field ')" />
 										</xforms:alert>
 									</xforms:input>
 									<br />
