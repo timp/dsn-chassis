@@ -9,6 +9,10 @@
 		<value>AM</value>
 	</drugMolecule>
 	<drugMolecule>
+		<label>artemetherlumefantrine</label>
+		<value>??</value>
+	</drugMolecule>
+	<drugMolecule>
 		<label>artemisinin</label>
 		<value>ART</value>
 	</drugMolecule>
@@ -25,8 +29,12 @@
 		<value>CQ</value>
 	</drugMolecule>
 	<drugMolecule>
-		<label>dihydro-artemisinine</label>
+		<label>dihydro-artemisinin</label>
 		<value>DHA</value>
+	</drugMolecule>
+	<drugMolecule>
+		<label>doxycycline</label>
+		<value>??</value>
 	</drugMolecule>
 	<drugMolecule>
 		<label>lumefantrine</label>
@@ -35,10 +43,6 @@
 	<drugMolecule>
 		<label>mefloquine</label>
 		<value>MQ</value>
-	</drugMolecule>
-	<drugMolecule>
-		<label>monodesethylamodiaquine</label>
-		<value>MDA</value>
 	</drugMolecule>
 	<drugMolecule>
 		<label>naphroquine</label>
@@ -55,6 +59,10 @@
 	<drugMolecule>
 		<label>proguanil</label>
 		<value>PG</value>
+	</drugMolecule>
+	<drugMolecule>
+		<label>pyrimethamine</label>
+		<value>??</value>
 	</drugMolecule>
 	<drugMolecule>
 		<label>pyronaridine</label>

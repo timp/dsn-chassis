@@ -214,6 +214,8 @@ ul {
 }
 
 .warningButton {
+    position: fixed;
+
     float: right;
     right: 26px;
     
@@ -223,6 +225,9 @@ ul {
     -moz-border-radius: 5px; 
     -webkit-border-radius: 5px; 
     border-radius: 5px; 
+}
+
+.warnings .yui-dialog { 
     position: fixed;
 }
 
