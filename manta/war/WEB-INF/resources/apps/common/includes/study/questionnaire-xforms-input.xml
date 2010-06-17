@@ -2934,16 +2934,13 @@
 								Type
 							</th>
 							<th>
-								Link
-							</th>
-							<th>
-								Title
-							</th>
-							<th>
-								Notes
+								Reference
 							</th>
 							<th>
 								Validated
+							</th>
+							<th>
+								Notes
 							</th>
 						</tr>
 						<xforms:repeat nodeset="assayReference" id="assayReference-rep">
@@ -3011,11 +3008,15 @@
 										</xforms:group>
 									</td>
 									<td class="form-td">
-										<xforms:input ref="title">
-											<xforms:label class="invisible">Reference title
+										<xforms:select1 ref="assayValidated" appearance="minimal">
+											<xforms:label class="invisible">Assay validated
 											</xforms:label>
-											<xforms:hint>Reference title</xforms:hint>
-										</xforms:input>
+											<xforms:itemset model="mod-study-questionnaire"
+												nodeset="instance('ins-boolean-items')/boolean">
+												<xforms:label ref="label" />
+												<xforms:value ref="value" />
+											</xforms:itemset>
+										</xforms:select1>
 									</td>
 									<td class="form-td">
 										<xforms:textarea ref="note">
@@ -3023,17 +3024,6 @@
 											<xforms:hint>Any notes on the assay method.</xforms:hint>
 										</xforms:textarea>
 									</td>
-								<td class="form-td">
-									<xforms:select1 ref="assayValidated" appearance="minimal">
-										<xforms:label class="invisible">Assay validated
-										</xforms:label>
-										<xforms:itemset model="mod-study-questionnaire"
-											nodeset="instance('ins-boolean-items')/boolean">
-											<xforms:label ref="label" />
-											<xforms:value ref="value" />
-										</xforms:itemset>
-									</xforms:select1>
-								</td>
 							</tr>
 						</xforms:repeat>
 						<tr>

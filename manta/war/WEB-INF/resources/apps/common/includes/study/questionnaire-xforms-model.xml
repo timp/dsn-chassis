@@ -535,7 +535,6 @@
 								<xforms:bind nodeset="uploadedUrl"
 									relevant="instance('ins-sq-submitted-media-feed')[exists(atom:entry)]"/>
 							</xforms:bind>
-							<xforms:bind nodeset="title"/>
 							<xforms:bind nodeset="note"/>
 							<xforms:bind nodeset="assayValidated"/>
 						</xforms:bind>
@@ -851,11 +850,10 @@
 
 	<xforms:instance id="ins-assayReference">
 		<assayReference xmlns="">
-			<referenceType/>
+			<referenceType>url</referenceType>
 			<url/>
 			<doi/>
 			<upload><uploadedUrl/></upload>
-			<title/>
 			<note/>
 			<assayValidated/>
 		</assayReference>
