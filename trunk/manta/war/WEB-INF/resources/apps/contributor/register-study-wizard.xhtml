@@ -511,6 +511,7 @@
         		mediatype="application/atom+xml"
         		replace="none"
         		>
+							<xforms:insert nodeset="xxforms:instance('ins-sq-submitted-media-feed')" origin="instance('ins-submitted-media-feed')" />
         		
         		<!-- If done, then delete the draft. -->
         		<xforms:send ev:event="xforms-submit-done" submission="sub-delete-draft"/>
