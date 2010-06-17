@@ -279,7 +279,6 @@
 							<upload>
 								<uploadedUrl />
 							</upload>
-							<title />
 							<note />
 							<assayValidated />
 						</assayReference>
