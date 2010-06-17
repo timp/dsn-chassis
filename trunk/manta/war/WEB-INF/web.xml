@@ -86,23 +86,7 @@
     
     
     
-    <!--+
-        |
-        | Custom servlets
-        | ***************
-        +-->
-    
-    <servlet>
-        <servlet-name>StoreUploadsServlet</servlet-name>
-        <servlet-class>org.cggh.chassis.manta.http.servlet.StoreUploadsServlet</servlet-class>
-    </servlet>
-    
-    <servlet-mapping>
-        <servlet-name>StoreUploadsServlet</servlet-name>
-        <url-pattern>/util/store-uploads</url-pattern>
-    </servlet-mapping>
-    
-    
+
     <!--+
         | Orbeon Forms Configuration
         | *****************************
@@ -572,6 +556,34 @@
         <filter-name>XQueryURLRewrite</filter-name>
         <url-pattern>/atombeat/*</url-pattern>
     </filter-mapping>
+
+    <!--+
+        |
+        | Custom servlets
+        | ***************
+        +-->
+    
+    <servlet>
+        <servlet-name>DOILookup</servlet-name>
+        <servlet-class>org.cggh.chassis.manta.http.servlet.DOILookup</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>DOILookup</servlet-name>
+        <url-pattern>/util/DOILookup/*</url-pattern>
+    </servlet-mapping>
+    
+    
+    <servlet>
+        <servlet-name>StoreUploadsServlet</servlet-name>
+        <servlet-class>org.cggh.chassis.manta.http.servlet.StoreUploadsServlet</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>StoreUploadsServlet</servlet-name>
+        <url-pattern>/util/store-uploads</url-pattern>
+    </servlet-mapping>
     
     
 </web-app>
