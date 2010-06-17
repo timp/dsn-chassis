@@ -40,7 +40,11 @@
         <sec:intercept-url pattern="/submitter/**" access="ROLE_CHASSIS_CONTRIBUTOR" />
         
         <sec:intercept-url pattern="/contributor/**" access="ROLE_CHASSIS_CONTRIBUTOR" />
-                
+
+        <sec:intercept-url pattern="/personal-data/**" access="ROLE_CHASSIS_PERSONAL_DATA_REVIEWER, ROLE_CHASSIS_ADMINISTRATOR" />
+        
+        <sec:intercept-url pattern="/curator/**" access="ROLE_CHASSIS_CURATOR, ROLE_CHASSIS_ADMINISTRATOR" />
+        
         <sec:logout 
             logout-success-url="${cas.url}/logout" 
             invalidate-session="true"/>
