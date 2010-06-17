@@ -1,0 +1,19 @@
+<!--  Closed list of susceptability methods -->
+<susceptibilityMethods xmlns="">
+	<susceptibilityMethod>
+		<label>isotopic</label>
+		<value>isotopic</value>
+	</susceptibilityMethod>
+	<susceptibilityMethod>
+		<label>HRP2 ELISA</label>
+		<value>HRP2ELISA</value>
+	</susceptibilityMethod>
+	<susceptibilityMethod>
+		<label>pLDH ELISA</label>
+		<value>pLDHELISA</value>
+	</susceptibilityMethod>
+	<susceptibilityMethod>
+		<label>SYBRg</label>
+		<value>SYBRg</value>
+	</susceptibilityMethod>
+</susceptibilityMethods>

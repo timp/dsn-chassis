@@ -1,0 +1,11 @@
+<!--  See  clinical-followup-haemoglobinRecordingType --> 
+<haemoglobinRecordingTypes xmlns="">
+	<haemoglobinRecordingType>
+		<label>hb</label>
+		<value>hb</value>
+	</haemoglobinRecordingType>
+	<haemoglobinRecordingType>
+		<label>hct</label>
+		<value>hct</value>
+	</haemoglobinRecordingType>
+</haemoglobinRecordingTypes>

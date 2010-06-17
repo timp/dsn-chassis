@@ -1,0 +1,11 @@
+<!--  An open list of heamoglobin recording Hb types -->
+<haemoglobinRecordingHbTypes xmlns="">
+	<haemoglobinRecordingHbType>
+		<label>qbc</label>
+		<value>qbc</value>
+	</haemoglobinRecordingHbType>
+	<haemoglobinRecordingHbType>
+		<label>haemaccue</label>
+		<value>haemaccue</value>
+	</haemoglobinRecordingHbType>
+</haemoglobinRecordingHbTypes>

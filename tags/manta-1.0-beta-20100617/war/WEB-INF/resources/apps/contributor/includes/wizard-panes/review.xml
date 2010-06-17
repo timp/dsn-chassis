@@ -1,0 +1,204 @@
+<?oxygen NVDLSchema="../../../../../../../oxygen/samples/nvdl/xhtml-xforms-11-orbeon.nvdl"?>
+<div 
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:xforms="http://www.w3.org/2002/xforms" 
+	xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
+	xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
+	xmlns:ev="http://www.w3.org/2001/xml-events">
+
+	<h2>Review</h2>
+
+	<h3>(1) Title</h3>
+	
+	<p>
+		<xforms:output ref="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:title" />
+	</p>
+
+	<p>
+		<xforms:trigger appearance="minimal">
+			<xforms:label>&lt;&lt; Edit Title</xforms:label>
+			<xforms:action ev:event="DOMActivate">
+				<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show" value="'study-terms'"/>
+				<xforms:send submission="sub-implicit-put-draft-entry"/>
+			</xforms:action>
+		</xforms:trigger>
+	</p>	
+	
+	<h3>(2) Permissions</h3>
+	
+	<h4>Administrators:</h4>
+	
+	<ul>
+		<xforms:repeat nodeset="instance('ins-draft-entry')//permissions-entry-container//atombeat:security-descriptor/atombeat:groups/atombeat:group[@id='GROUP_ADMINISTRATORS']/atombeat:member">
+			<li>
+			<xforms:output ref=".">
+				<xforms:label>Email Address:</xforms:label>
+			</xforms:output>
+			</li>
+		</xforms:repeat>
+	</ul>
+	
+	<p>
+		<xforms:trigger appearance="minimal">
+			<xforms:label>&lt;&lt; Edit Permissions</xforms:label>
+			<xforms:action ev:event="DOMActivate">
+				<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show" value="'permissions'"/>
+				<xforms:send submission="sub-implicit-put-draft-entry"/>
+			</xforms:action>
+		</xforms:trigger>
+	</p>		
+	
+	<h3>(3) Acknowledgements</h3>
+	
+	
+	
+	<xforms:group ref="not(instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:content/study/acknowledgements[empty(person)])">
+		<ol>
+			<xforms:repeat nodeset="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:content/study/acknowledgements/person">
+				<li class="acknowledgement-form-summary-item">
+			        <xforms:output ref="first-name">
+			            <xforms:label>First Name:</xforms:label>
+			        </xforms:output>
+			       <br/>
+			        <xforms:output ref="middle-name">
+			            <xforms:label>Middle Name:</xforms:label>
+			        </xforms:output>
+			       <br/>
+			        <xforms:output ref="family-name">
+			            <xforms:label>Family Name:</xforms:label>
+			        </xforms:output>
+			        <br/>
+			        <xforms:output ref="email-address">
+			            <xforms:label>Email address:</xforms:label>
+			        </xforms:output>
+			        <br/>
+			        <xforms:output ref="institution">
+			            <xforms:label>Institution:</xforms:label>
+			        </xforms:output>
+		        </li>
+			</xforms:repeat>
+		</ol>
+	</xforms:group>
+	<xforms:group ref="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:content/study/acknowledgements[empty(person)]">
+		<p>No acknowledgements.</p>
+	</xforms:group>
+
+	<p>
+		<xforms:trigger appearance="minimal">
+			<xforms:label>&lt;&lt; Edit Acknowledgements</xforms:label>
+			<xforms:action ev:event="DOMActivate">
+				<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show" value="'acknowledgements'"/>
+				<xforms:send submission="sub-implicit-put-draft-entry"/>
+			</xforms:action>
+		</xforms:trigger>
+	</p>
+
+	<h3>(4) Files</h3>
+
+	<xforms:group ref="instance('ins-draft-media-feed')[empty(atom:entry)]">
+		<p>You have not uploaded any files.</p>
+	</xforms:group>
+	
+	<xforms:group ref="instance('ins-draft-media-feed')[exists(atom:entry)]">
+		
+		<fr:datatable paginated="false">
+			<thead>
+				<tr>
+					<th fr:sortable="true" fr:resizeable="true">File Name</th>
+					<th fr:sortable="true" fr:resizeable="true">Uploaded On</th>
+					<th fr:sortable="false" fr:resizeable="true">Size (Bytes)</th>
+					<th fr:sortable="true" fr:resizeable="true">Type</th>
+				</tr>
+			</thead>
+			<tbody>
+				<xforms:repeat id="rep-review-draft-media" nodeset="atom:entry">
+					<tr>
+						<td>
+							<xforms:output ref="atom:title"/>
+						</td>
+						<td>
+							<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')"/>
+						</td>
+						<td>
+							<xforms:output ref="atom:link[@rel='edit-media']/@length"/>
+						</td>
+						<td>
+							<xforms:output ref="
+								for $cat in (./atom:category[@scheme='http://www.cggh.org/2010/chassis/scheme/FileTypes'])
+								return
+								if ( $cat/@term = 'http://www.cggh.org/2010/chassis/terms/Other' )
+								then $cat/@label
+								else instance('ins-file-terms')/term[value=$cat/@term]/label
+								"/>
+						</td>
+					</tr>
+				</xforms:repeat>
+			</tbody>
+		</fr:datatable>
+		
+	</xforms:group>
+	
+	<p>
+		<xforms:trigger appearance="minimal">
+			<xforms:label>&lt;&lt; Edit Files</xforms:label>
+			<xforms:action ev:event="DOMActivate">
+				<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show" value="'upload-files'"/>
+				<xforms:send submission="sub-implicit-put-draft-entry"/>
+			</xforms:action>
+		</xforms:trigger>
+	</p>	
+	
+	<h3>(5) Publications</h3>
+
+
+	
+	<xforms:group ref="not(instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:content/study/publications[empty(publication)])">
+		<ul>
+			<xforms:repeat nodeset="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:content/study/publications/publication">
+				<li>
+			        <xforms:output ref="web-link">
+			            <xforms:label>Web Link:</xforms:label>
+			        </xforms:output>
+		        </li>
+			</xforms:repeat>
+		</ul>
+	</xforms:group>
+	<xforms:group ref="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:content/study/publications[empty(publication)]">
+		<p>No publications.</p>
+	</xforms:group>
+	
+	<p>
+		<xforms:trigger appearance="minimal">
+			<xforms:label>&lt;&lt; Edit Publications</xforms:label>
+			<xforms:action ev:event="DOMActivate">
+				<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show" value="'publications'"/>
+				<xforms:send submission="sub-implicit-put-draft-entry"/>
+			</xforms:action>
+		</xforms:trigger>
+	</p>
+
+	<p>
+		<br/>
+	</p>
+
+	<p>
+	
+		<xforms:trigger ref="instance('ins-control')/save-draft-trigger" appearance="minimal">
+			<xforms:label>&lt;&lt; Back Home</xforms:label>
+			<xforms:action ev:event="DOMActivate">
+				<xforms:send submission="sub-back-home"/>
+			</xforms:action>
+		</xforms:trigger>	
+	
+		<xforms:trigger>
+			<xforms:label>Confirm</xforms:label>
+			<xforms:action ev:event="DOMActivate">
+				<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show" value="'confirmation'"/>
+				<xforms:send submission="sub-post-contribution"/>
+			</xforms:action>
+		</xforms:trigger>
+
+	</p>
+
+
+</div>

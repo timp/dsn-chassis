@@ -1,0 +1,26 @@
+<treatmentReasons xmlns="">
+	<treatmentReason>
+		<label>
+			malaria
+		</label>
+		<value>malaria</value>
+	</treatmentReason>
+	<treatmentReason>
+		<label>
+			healthy volunteer
+		</label>
+		<value>healthyViolunteer</value>
+	</treatmentReason>
+	<treatmentReason>
+		<label>
+			IPT
+		</label>
+		<value>ipt</value>
+	</treatmentReason>
+	<treatmentReason>
+		<label>
+			N/A
+		</label>
+		<value>na</value>
+	</treatmentReason>
+</treatmentReasons>

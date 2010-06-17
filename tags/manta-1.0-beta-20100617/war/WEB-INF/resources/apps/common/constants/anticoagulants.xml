@@ -1,0 +1,15 @@
+<!--  A closed list of anti-coagulants -->
+<anticoagulants  xmlns="">
+	<anticoagulant>
+		<label>ACD</label>
+		<value>ACD</value>
+	</anticoagulant>
+	<anticoagulant>
+		<label>EDTA</label>
+		<value>EDTA</value>
+	</anticoagulant>
+	<anticoagulant>
+		<label>heparin</label>
+		<value>heparin</value>
+	</anticoagulant>
+</anticoagulants>

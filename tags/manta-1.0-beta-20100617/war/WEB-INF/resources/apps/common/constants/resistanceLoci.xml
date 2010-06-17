@@ -1,0 +1,19 @@
+<!--  unify with recrudescenceMarkers  -->
+<resistanceloci xmlns="">
+	<resistanceLocus>
+		<label>MSP1</label>
+		<value>msp1</value>
+	</resistanceLocus>
+	<resistanceLocus>
+		<label>MSP2</label>
+		<value>msp2</value>
+	</resistanceLocus>
+	<resistanceLocus>
+		<label>GLURP</label>
+		<value>glurp</value>
+	</resistanceLocus>
+	<resistanceLocus>
+		<label>microsatellites</label>
+		<value>microsatellites</value>
+	</resistanceLocus>
+</resistanceloci>

@@ -1,0 +1,11 @@
+<!--  not-nullable boolean -->
+<booleans xmlns="">
+	<boolean>
+		<label>no</label>
+		<value>false</value>
+	</boolean>
+	<boolean>
+		<label>yes</label>
+		<value>true</value>
+	</boolean>
+</booleans>

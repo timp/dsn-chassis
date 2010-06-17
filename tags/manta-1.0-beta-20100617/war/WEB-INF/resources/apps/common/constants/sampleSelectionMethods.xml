@@ -1,0 +1,16 @@
+<!--  Open list of mechanisms for choosing whether to genotype molecular markers of resistance for a sample -->
+<sampleSelectionMethods xmlns="">
+	<sampleSelectionMethod>
+		<label>all genotyped</label>
+		<value>allGenotyped</value>
+	</sampleSelectionMethod>
+	<sampleSelectionMethod>
+		<label>random subset genotyped</label>
+		<value>randomGenotyped</value>
+	</sampleSelectionMethod>
+	<sampleSelectionMethod>
+		<label>only treatment failures genotyped</label>
+		<value>failuresGenotyped</value>
+	</sampleSelectionMethod>
+</sampleSelectionMethods>
+

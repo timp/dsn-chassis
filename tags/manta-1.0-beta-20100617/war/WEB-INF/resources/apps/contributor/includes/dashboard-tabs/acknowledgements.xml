@@ -1,0 +1,115 @@
+<?oxygen NVDLSchema="../../../../../../../oxygen/samples/nvdl/xhtml-xforms-11-orbeon.nvdl"?>
+<div 
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:xforms="http://www.w3.org/2002/xforms" 
+	xmlns:ev="http://www.w3.org/2001/xml-events">
+
+	<h2>Acknowledgements</h2>
+
+	    <xforms:group ref="instance('ins-study-entry')/atom:content/study/acknowledgements">
+	        
+	        <table>
+
+	            <xforms:repeat nodeset="person" id="rep-person">
+	                <tr>
+	                	<td class="acknowledgement-deletion-cell">
+	                        <xforms:trigger>
+	                        	<xforms:label><img alt="remove" src="/apps/contributor/common/remove.gif"/></xforms:label>
+	                        	<xforms:delete 
+	                                ev:event="DOMActivate" 
+	                                context="." 
+	                                nodeset="." 
+	                                at="index('rep-person')"/>
+	                        </xforms:trigger>
+	                    </td>
+	                	<td class="acknowledgement-form-cell">
+	                        <xforms:input ref="first-name">
+	                            <xforms:label>First Name:</xforms:label>
+	                        </xforms:input>
+	                       <br/>
+	                        <xforms:input ref="middle-name">
+	                            <xforms:label>Middle Name:</xforms:label>
+	                        </xforms:input>
+	                       <br/>
+	                        <xforms:input ref="family-name">
+	                            <xforms:label>Family Name:</xforms:label>
+	                        </xforms:input>
+	                        <br/>
+	                        <xforms:input ref="email-address">
+	                            <xforms:label>Email address:</xforms:label>
+	                        	<xforms:alert>Please provide a valid email address.</xforms:alert>
+	                        </xforms:input>
+	                        <br/>
+	                        <xforms:input ref="institution">
+	                            <xforms:label>Institution:</xforms:label>
+	                        </xforms:input>
+	                        
+	                		<div class="acknowledgement-movement-triggers">
+	                        
+		                        <xforms:trigger ref=".[preceding-sibling::*]">
+		                            <xforms:label>Move Up <img alt="move up" src="/apps/contributor/common/up.gif"/></xforms:label>
+		                            <xforms:action ev:event="DOMActivate">
+		                                <xforms:insert origin="context()" nodeset="preceding-sibling::*[1]" position="before"/>
+		                                <xforms:delete nodeset="."/>
+		                            </xforms:action>
+		                        </xforms:trigger>
+		                        
+		                        
+		                        <xforms:trigger ref=".[following-sibling::*]">
+		                            <xforms:label>Move Down <img alt="move down" src="/apps/contributor/common/down.gif"/></xforms:label>
+		                            <xforms:action ev:event="DOMActivate">
+		                                <xforms:insert origin="context()" nodeset="following-sibling::*[1]"/>
+		                                <xforms:delete nodeset="."/>
+		                            </xforms:action>
+		                        </xforms:trigger>
+	                			
+	                		</div>
+	                        
+	                    </td>
+	                </tr>
+	            </xforms:repeat>
+	            
+	            <tr>
+	                <td>
+	                    <xforms:trigger>
+	                        <xforms:label><img alt="add" src="/apps/contributor/common/add.gif"/></xforms:label>
+	                        <xforms:insert 
+	                            ev:event="DOMActivate" 
+	                            context="." 
+	                            nodeset="person" 
+	                            at="last()" 
+	                            position="after" 
+	                            origin="instance('ins-person-template')"/>
+	                    </xforms:trigger>
+	                </td>
+	                <td>
+	                    <xforms:trigger appearance="minimal">
+	                        <xforms:label>Add an Acknowledgement</xforms:label>
+	                        <xforms:insert 
+	                            ev:event="DOMActivate" 
+	                            context="." 
+	                            nodeset="person" 
+	                            at="last()" 
+	                            position="after" 
+	                            origin="instance('ins-person-template')"/>
+	                    </xforms:trigger>
+	                </td>
+	            </tr>
+	            
+	        </table>
+	        
+	    </xforms:group>
+
+     <p>
+     	<xforms:trigger ref="instance('ins-control')/save-study-trigger">
+     		<xforms:label>Save Changes</xforms:label>
+     		<xforms:action ev:event="DOMActivate" if="../study-entry-is-valid = 'true'">
+     			<xforms:send submission="sub-put-study-entry"/>
+     		</xforms:action>
+     		<xforms:action ev:event="DOMActivate" if="not(../study-entry-is-valid = 'true')">
+     			<xforms:message>Please complete all required fields.</xforms:message>
+     		</xforms:action>
+     	</xforms:trigger>
+     </p>
+
+</div>

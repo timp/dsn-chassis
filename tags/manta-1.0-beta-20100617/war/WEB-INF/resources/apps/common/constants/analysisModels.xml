@@ -1,0 +1,15 @@
+<!--  A closed list of analysis models -->
+<analysisModels xmlns="">
+	<analysisModel>
+		<label>compartmental model</label>
+		<value>compartmentalmodel</value>
+	</analysisModel>
+	<analysisModel>
+		<label>non-compartmental model</label>
+		<value>noncompartmentalmodel</value>
+	</analysisModel>
+	<analysisModel>
+		<label>population model</label>
+		<value>populationmodel</value>
+	</analysisModel>
+</analysisModels>

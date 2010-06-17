@@ -1,0 +1,144 @@
+<!--
+  Copyright (C) 2010 University of Oxford.
+  
+  This program is free software; you can redistribute it and/or modify it under the terms of the
+  GNU Lesser General Public License as published by the Free Software Foundation; either version
+  2.1 of the License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Lesser General Public License for more details.
+
+  The full text of the license is available at http://www.gnu.org/copyleft/lesser.html
+  -->
+<html 
+	xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:f="http://orbeon.org/oxf/xml/formatting" 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:atom="http://www.w3.org/2005/Atom"
+    xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:manta="http://www.cggh.org/2010/chassis/manta/xmlns">
+    
+    <head>
+    
+        <title>Manta Data Management - Submitter - Home</title>
+        <link rel="stylesheet" type="text/css" href="/apps/submitter/common/style.css"></link>
+        <style type="text/css"></style>
+        
+        <xforms:model id="mod-main">
+        
+        	<xforms:instance id="ins-noparams">
+        		<params/>
+        	</xforms:instance>
+            
+			<xforms:instance id="ins-study-feed">
+				<atom:feed/>
+			</xforms:instance>
+			
+			<xforms:submission 
+				id="sub-retrieve-study-feed"
+				resource="/atombeat/content/studies"
+				method="get"
+				ref="instance('ins-noparams')"
+				replace="instance"
+				instance="ins-study-feed">
+				<!-- TODO error handling -->
+                <xforms:message ev:event="xforms-submit-error" level="modal">
+                	<p>An error occurred (<xforms:output value="event('error-type')"/>) while retrieving studies.</p>
+               	</xforms:message>
+			</xforms:submission>
+			
+			<xforms:send 
+				ev:event="xforms-model-construct-done" 
+				submission="sub-retrieve-study-feed"/>
+				
+    		<xforms:bind nodeset="instance('ins-study-feed')/atom:entry/atom:published" type="xs:dateTime" />
+    		<xforms:bind nodeset="instance('ins-study-feed')/atom:entry/atom:updated" type="xs:dateTime" />
+			
+        </xforms:model>
+
+       	<xi:include href="/apps/common/includes/current-user-xforms-model.xml"/>
+
+    </head>
+    
+    <body>
+
+		<xi:include href="/apps/common/includes/current-user-actions.xml"/>
+    
+    	<div id="content">
+    	
+	    	<h1>
+	    		<a href="home">Submitter</a> - Home
+	   		</h1>
+	    	
+		   	<div class="help">
+		   		<h2>Help</h2>
+		   		<p>TODO</p>
+		   	</div>
+		   	
+    		<p>Welcome to the Manta submitter home page.</p>
+    		
+    		<h2>Actions</h2>
+    		
+	    	<ul>
+	    	
+	    		<li><a class="action" href="create-study">Create a Study</a></li>
+	    		
+	    		<xforms:group ref="instance('ins-study-feed')[count(atom:entry)>0]">
+		    		<li><a class="action" href="submit-files">Submit Files</a></li>
+	    		</xforms:group>
+	    		
+	    	</ul>
+	    	
+    		<xforms:group ref="instance('ins-study-feed')[count(atom:entry)>0]">
+
+		    	<h2>Studies</h2>
+	    	
+		    	<fr:datatable paginated="false">
+		    		<thead>
+		    			<tr>
+		    				<th>Code</th>
+		    				<th>Title</th>
+		    				<th>Created</th>
+		    				<th>Updated</th>
+		    				<th>Actions</th>
+		    			</tr>
+		    		</thead>
+		    		<tbody>
+		    			<xforms:repeat id="rep-study-entry" nodeset="instance('ins-study-feed')/atom:entry">
+		    				<tr>
+		    					<td>
+		    						<a href="study-summary?study={atom:link[@rel='edit']/@href}"><xforms:output value="manta:id"/></a>
+		    					</td>
+		    					<td>
+		    						<a href="study-summary?study={atom:link[@rel='edit']/@href}"><xforms:output value="atom:title"/></a>
+		    					</td>
+		    					<td>
+		    						<xforms:output ref="atom:published" 
+		    							xxforms:format="if (instance('ins-current-user')/country = 'US') then  format-dateTime(., '[M01]/[D01]/[Y]') else format-dateTime(., '[D01]/[M01]/[Y]')">
+		    						<xforms:alert >Not a DateTime</xforms:alert>
+		    						</xforms:output>
+		    					</td>
+		    					<td>
+		    						<xforms:output ref="atom:updated" 
+		    							xxforms:format="if (instance('ins-current-user')/country = 'US') then  format-dateTime(., '[M01]/[D01]/[Y]') else format-dateTime(., '[D01]/[M01]/[Y]')">
+		    						<xforms:alert >Not a DateTime</xforms:alert>
+		    						</xforms:output>
+		    						
+		    					</td>
+		    					<td><a href="study-summary?study={atom:link[@rel='edit']/@href}">View</a></td>
+		    				</tr>
+		    			</xforms:repeat>
+		    		</tbody>
+		    	</fr:datatable>
+    		</xforms:group>
+    		
+    	</div>
+    	
+    </body>
+</html>
+
