@@ -1,0 +1,14 @@
+<referenceTypes xmlns="">
+    <referenceType>
+        <label>URL</label>
+        <value>url</value>
+    </referenceType>
+    <referenceType>
+        <label>DOI</label>
+        <value>doi</value>
+    </referenceType>
+    <referenceType>
+        <label>Upload</label>
+        <value>upload</value>
+    </referenceType>
+</referenceTypes>

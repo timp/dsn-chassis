@@ -3,7 +3,8 @@
 	xmlns:xxforms="http://orbeon.org/oxf/xml/xforms" xmlns:ev="http://www.w3.org/2001/xml-events"
 	xmlns:atom="http://www.w3.org/2005/Atom" xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
 	class="questionnaire">
-	<xforms:group ref="instance('errors')" model="mod-study-questionnaire" class="warnings">
+	<xforms:group ref="instance('errors')" model="mod-study-questionnaire"
+		class="warnings">
 		<p align="right" class="warningButton">
 			<xforms:trigger>
 				<xforms:label class="warningsLabel">Warnings</xforms:label>
@@ -25,7 +26,7 @@
 		-->
 
 		<xxforms:dialog id="dia-errors" appearance="full"
-			level="modeless" close="true" draggable="true" visible="false" >
+			level="modeless" close="true" draggable="true" visible="false">
 			<xforms:label>Warnings</xforms:label>
 			<div>
 				<fr:error-summary observer="grp-questionnaire" id="error-summary"
@@ -41,7 +42,7 @@
 				-->
 			</div>
 		</xxforms:dialog>
-		
+
 	</xforms:group>
 
 	<xforms:group model="mod-study-questionnaire"
@@ -470,19 +471,18 @@
 						</xforms:alert>
 					</xforms:input>
 
-									<xforms:select1 ref="minAgeUnits"
-										appearance="minimal">
-										<xforms:label class="invisible">Min age units</xforms:label>
-										<xforms:itemset model="mod-study-questionnaire"
-											nodeset="instance('ins-age-unit-items')/ageUnit">
-											<xforms:label ref="label" />
-											<xforms:value ref="value" />
-										</xforms:itemset>
-										<xforms:alert>
-											<xforms:output
-												value="concat('Please enter a value for the ', name(), ' field ')" />
-										</xforms:alert>
-									</xforms:select1>
+					<xforms:select1 ref="minAgeUnits" appearance="minimal">
+						<xforms:label class="invisible">Min age units</xforms:label>
+						<xforms:itemset model="mod-study-questionnaire"
+							nodeset="instance('ins-age-unit-items')/ageUnit">
+							<xforms:label ref="label" />
+							<xforms:value ref="value" />
+						</xforms:itemset>
+						<xforms:alert>
+							<xforms:output
+								value="concat('Please enter a value for the ', name(), ' field ')" />
+						</xforms:alert>
+					</xforms:select1>
 
 					<xforms:input ref="maxAge" class="fourWide">
 						<xforms:label>Age max </xforms:label>
@@ -491,19 +491,18 @@
 								value="concat('Please enter an age in years for the ', name(), ' field ')" />
 						</xforms:alert>
 					</xforms:input>
-									<xforms:select1 ref="maxAgeUnits"
-										appearance="minimal">
-										<xforms:label class="invisible">Max age units</xforms:label>
-										<xforms:itemset model="mod-study-questionnaire"
-											nodeset="instance('ins-age-unit-items')/ageUnit">
-											<xforms:label ref="label" />
-											<xforms:value ref="value" />
-										</xforms:itemset>
-										<xforms:alert>
-											<xforms:output
-												value="concat('Please enter a value for the ', name(), ' field ')" />
-										</xforms:alert>
-									</xforms:select1>
+					<xforms:select1 ref="maxAgeUnits" appearance="minimal">
+						<xforms:label class="invisible">Max age units</xforms:label>
+						<xforms:itemset model="mod-study-questionnaire"
+							nodeset="instance('ins-age-unit-items')/ageUnit">
+							<xforms:label ref="label" />
+							<xforms:value ref="value" />
+						</xforms:itemset>
+						<xforms:alert>
+							<xforms:output
+								value="concat('Please enter a value for the ', name(), ' field ')" />
+						</xforms:alert>
+					</xforms:select1>
 					<br />
 				</xforms:group>
 				<xforms:group ref="parasitaemia">
@@ -566,7 +565,7 @@
 							</xforms:alert>
 						</xforms:select>
 					</div>
-					<br style="clear:both;"/>
+					<br style="clear:both;" />
 					<xforms:select1 ref="priorAntimalarialsDetermination"
 						appearance="minimal">
 						<xforms:label class="fixed-width"> How were prior treatments
@@ -647,7 +646,7 @@
 					<xforms:group ref="regimens">
 						<h5>Regimen</h5>
 						<table class="repeat-table">
-							<xforms:repeat nodeset="regimen" id="rep-regimen">
+							<xforms:repeat nodeset="regimen" id="regimen-rep">
 								<tr>
 									<td class="action-td">
 										<xforms:trigger appearance="minimal">
@@ -655,7 +654,7 @@
 												<img src="/apps/common/theme/remove.gif" alt="remove" />
 											</xforms:label>
 											<xforms:delete ev:event="DOMActivate" context="."
-												nodeset="." at="index('rep-regimen')" />
+												nodeset="." at="index('regimen-rep')" />
 										</xforms:trigger>
 									</td>
 									<td class="form-td">
@@ -681,12 +680,8 @@
 											<xforms:hint>A URL of a page which describes the regimen
 											</xforms:hint>
 											<xforms:alert>Please enter a valid URL</xforms:alert>
+											<xforms:send ev:event="xforms-value-changed" submission="sub-check-regimen-url" />
 										</xforms:input>
-
-										<xforms:trigger>
-											<xforms:label>Check URL</xforms:label>
-											<xforms:send ev:event="DOMActivate" submission="sub-check-regimen-url" />
-										</xforms:trigger>
 
 										<xforms:group ref="drugs">
 											<table class="repeat-table">
@@ -2308,7 +2303,7 @@
 						</xforms:input>
 					</p>
 					<p>
-						<xforms:input ref="NaHCO3-finalConcentration"  class="fourWide">
+						<xforms:input ref="NaHCO3-finalConcentration" class="fourWide">
 							<xforms:label>
 								NaHCO
 								<sub>3</sub>
@@ -2336,7 +2331,8 @@
 							</xforms:select1>
 						</p>
 						<p>
-							<xforms:input ref="hypoxantine-finalConcentration" class="fourWide">
+							<xforms:input ref="hypoxantine-finalConcentration"
+								class="fourWide">
 								<xforms:label>Final Hypoxantine concentration (g/L)
 								</xforms:label>
 								<xforms:alert>
@@ -2362,7 +2358,8 @@
 							</xforms:select1>
 						</p>
 						<p>
-							<xforms:input ref="oroticAcid-finalConcentration"  class="fourWide">
+							<xforms:input ref="oroticAcid-finalConcentration"
+								class="fourWide">
 								<xforms:label>Final Orotic Acid concentration (g/L)
 								</xforms:label>
 								<xforms:alert>
@@ -2387,7 +2384,8 @@
 							</xforms:select1>
 						</p>
 						<p>
-							<xforms:input ref="glucose-finalConcentration"  class="fourWide">
+							<xforms:input ref="glucose-finalConcentration"
+								class="fourWide">
 								<xforms:label>Final glucose concentration (g/L)</xforms:label>
 								<xforms:alert>
 									<xforms:output
@@ -2425,7 +2423,8 @@
 											</xforms:input>
 										</p>
 										<p>
-											<xforms:input ref="antiBioticFinalConcentration"  class="fourWide">
+											<xforms:input ref="antiBioticFinalConcentration"
+												class="fourWide">
 												<xforms:label>Antibiotic final concentration (g/L)
 												</xforms:label>
 												<xforms:alert>
@@ -2859,8 +2858,10 @@
 								</td>
 								<td class="form-td">
 									<xforms:select1 appearance="minimal" ref="drugMeasured">
-										<xforms:label class="invisible">Molecule measured</xforms:label>
-										<xforms:hint>Name of drug given or metabolite measured</xforms:hint>
+										<xforms:label class="invisible">Molecule measured
+										</xforms:label>
+										<xforms:hint>Name of drug given or metabolite measured
+										</xforms:hint>
 										<xforms:item>
 											<xforms:label>please select</xforms:label>
 											<xforms:value />
@@ -2877,7 +2878,7 @@
 										</xforms:itemset>
 										<xforms:alert>Please select a molecule</xforms:alert>
 									</xforms:select1>
-																		
+
 								</td>
 								<td class="form-td">
 									<xforms:input ref="lowerLoQ" class="fourWide">
@@ -2924,23 +2925,26 @@
 				</xforms:group>
 
 
-
 				<xforms:group ref="assayReferences">
 					<h4>Drug assay method reference</h4>
 					<table class="repeat-table">
 						<tr>
 							<th />
 							<th>
-								URL or
-								<br />
-								Title, author and journal of publication
+								Type
 							</th>
 							<th>
-								Method description
-								<span style="font-size:smaller; font-weight:normal;">(if no
-									reference)</span>
+								Link
 							</th>
-							<th>Has the method been validated?</th>
+							<th>
+								Title
+							</th>
+							<th>
+								Notes
+							</th>
+							<th>
+								Validated
+							</th>
 						</tr>
 						<xforms:repeat nodeset="assayReference" id="assayReference-rep">
 							<tr>
@@ -2953,22 +2957,76 @@
 											nodeset="." at="index('assayReference-rep')" />
 									</xforms:trigger>
 								</td>
-								<td class="form-td">
-									<xforms:input ref="assayMethodReference">
-										<xforms:label />
-										<xforms:hint>Assay method reference</xforms:hint>
+									<td class="form-td">
+
+										<xforms:select1 appearance="minimal" ref="referenceType">
+											<xforms:label class="invisible">Reference type
+											</xforms:label>
+											<xforms:itemset model="mod-study-questionnaire"
+												nodeset="instance('ins-referenceType-items')/referenceType">
+												<xforms:label ref="label" />
+												<xforms:value ref="value" />
+											</xforms:itemset>
+											<xforms:alert>Please select a reference type
+										</xforms:alert>
+										</xforms:select1>
+									</td>
+									<td class="form-td">
+
+								  <xforms:input ref="url">
+										<xforms:label class="invisible">Reference URL</xforms:label>
+										<xforms:alert>Please enter a valid URL</xforms:alert>
+										<xforms:send ev:event="xforms-value-changed" submission="sub-check-assayReference-url" />
 									</xforms:input>
-								</td>
-								<td class="form-td">
-									<xforms:textarea ref="assayMethodDescription">
-										<xforms:label />
-										<xforms:hint>A brief description of the assay method, if no
-											reference is available</xforms:hint>
-									</xforms:textarea>
-								</td>
+									<xforms:input ref="doi">
+										<xforms:label class="invisible">DOI</xforms:label>
+										<xforms:hint>Without a DOI: prefix</xforms:hint>
+										<xforms:alert>Please enter a valid DOI</xforms:alert>
+										<xforms:send ev:event="xforms-value-changed" 
+											submission="sub-check-assayReference-doi" />
+									</xforms:input>
+									<xforms:group ref="upload">
+											<xforms:group
+												ref="instance('ins-sq-submitted-media-feed')[empty(atom:entry)]" >
+
+												<p>You have not uploaded any documents.</p>
+
+											</xforms:group>
+												
+												<xforms:select1 appearance="minimal" ref="uploadedUrl">
+													<xforms:label class="invisible">Uploaded document</xforms:label>
+													<xforms:hint>An uploaded document</xforms:hint>
+													<xforms:item>
+														<xforms:label>please select</xforms:label>
+														<xforms:value />
+													</xforms:item>
+													<xforms:itemset model="mod-study-questionnaire"
+														nodeset="xxforms:sort(instance('ins-sq-submitted-media-feed')/atom:entry, atom:published, 'text', 'ascending')">
+														<xforms:label ref="atom:title" />
+														<xforms:value ref="atom:link[@rel='edit']/@href" />
+													</xforms:itemset>
+													<xforms:alert>Please select an uploaded document		</xforms:alert>
+												</xforms:select1>
+
+										</xforms:group>
+									</td>
+									<td class="form-td">
+										<xforms:input ref="title">
+											<xforms:label class="invisible">Reference title
+											</xforms:label>
+											<xforms:hint>Reference title</xforms:hint>
+										</xforms:input>
+									</td>
+									<td class="form-td">
+										<xforms:textarea ref="note">
+											<xforms:label />
+											<xforms:hint>Any notes on the assay method.</xforms:hint>
+										</xforms:textarea>
+									</td>
 								<td class="form-td">
 									<xforms:select1 ref="assayValidated" appearance="minimal">
-										<xforms:label />
+										<xforms:label class="invisible">Assay validated
+										</xforms:label>
 										<xforms:itemset model="mod-study-questionnaire"
 											nodeset="instance('ins-boolean-items')/boolean">
 											<xforms:label ref="label" />
@@ -2991,7 +3049,7 @@
 							</td>
 							<td class="add-td">
 								<xforms:trigger appearance="minimal">
-									<xforms:label>Add an assay reference</xforms:label>
+									<xforms:label>Add a reference</xforms:label>
 									<xforms:insert ev:event="DOMActivate" context="."
 										nodeset="assayReference" at="count(../assayReference)"
 										position="after" origin="instance('ins-assayReference')" />
@@ -3000,9 +3058,6 @@
 						</tr>
 					</table>
 				</xforms:group>
-
-
-
 
 			</xforms:group>
 
