@@ -153,75 +153,6 @@
 
 
 
-				<pharmacology>
-					<samples>
-						<sample>
-							<numberPlanned />
-							<anticoagulent />
-							<centrifugeTime />
-							<storage>
-								<storageTemperature />
-								<storageDuration />
-							</storage>
-						</sample>
-					</samples>
-					<analytes>
-						<analyte>
-							<drugMeasured />
-							<lowerLoQ />
-							<sampleMatrixType />
-						</analyte>
-					</analytes>
-					<assayReferences>
-						<assayReference>
-							<assayMethodReference />
-							<assayMethodDescription />
-							<assayValidated />
-						</assayReference>
-					</assayReferences>
-
-				</pharmacology>
-
-
-
-				<invitro>
-					<inclusionCriteria />
-					<analysisSite />
-					<culture>
-						<incubatorSystem />
-						<co2 />
-						<healthyErythrocytesSource />
-						<hematocrit />
-						<bloodGroup />
-					</culture>
-					<drugSusceptibilityMedium>
-						<medium />
-						<mediumOther />
-						<preparation />
-						<serum />
-						<serum-finalConcentration />
-						<NaHCO3-finalConcentration />
-						<hypoxantine>
-							<hypoxantine-added />
-							<hypoxantine-finalConcentration />
-						</hypoxantine>
-						<oroticAcid>
-							<oroticAcid-added />
-							<oroticAcid-finalConcentration />
-						</oroticAcid>
-						<glucose>
-							<glucose-added />
-							<glucose-finalConcentration />
-						</glucose>
-						<antiBiotics />
-					</drugSusceptibilityMedium>
-					<susceptibility>
-						<timeOfIncubation />
-						<susceptibilityMethod />
-					</susceptibility>
-					<drugs />
-					<plateBatches />
-				</invitro>
 
 
 
@@ -276,9 +207,84 @@
 							<infectionComplexityEstimationlociOther />
 						</infectionComplexityEstimationlociOpen>
 					</additionalGenotypicInformation>
-
-
 				</molecular>
+				
+
+
+				<invitro>
+					<inclusionCriteria />
+					<analysisSite />
+					<culture>
+						<incubatorSystem />
+						<co2 />
+						<healthyErythrocytesSource />
+						<hematocrit />
+						<bloodGroup />
+					</culture>
+					<drugSusceptibilityMedium>
+						<medium />
+						<mediumOther />
+						<preparation />
+						<serum />
+						<serum-finalConcentration />
+						<NaHCO3-finalConcentration />
+						<hypoxantine>
+							<hypoxantine-added />
+							<hypoxantine-finalConcentration />
+						</hypoxantine>
+						<oroticAcid>
+							<oroticAcid-added />
+							<oroticAcid-finalConcentration />
+						</oroticAcid>
+						<glucose>
+							<glucose-added />
+							<glucose-finalConcentration />
+						</glucose>
+						<antiBiotics />
+					</drugSusceptibilityMedium>
+					<susceptibility>
+						<timeOfIncubation />
+						<susceptibilityMethod />
+					</susceptibility>
+					<drugs />
+					<plateBatches />
+				</invitro>
+
+				
+
+				<pharmacology>
+					<samples>
+						<sample>
+							<numberPlanned />
+							<anticoagulent />
+							<centrifugeTime />
+							<storage>
+								<storageTemperature />
+								<storageDuration />
+							</storage>
+						</sample>
+					</samples>
+					<analytes>
+						<analyte>
+							<drugMeasured />
+							<lowerLoQ />
+							<sampleMatrixType />
+						</analyte>
+					</analytes>
+					<assayReferences>
+						<assayReference>
+							<referenceType>url</referenceType>
+							<url />
+							<doi />
+							<upload>
+								<uploadedUrl/>
+							</upload>
+							<title />
+							<note />
+							<assayValidated />
+						</assayReference>
+					</assayReferences>
+				</pharmacology>
 			</questionnaire>
 		</study>
 	</atom:content>
