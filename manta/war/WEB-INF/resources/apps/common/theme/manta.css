@@ -178,6 +178,10 @@ ul {
     display:block;
     background-color: #eee;
 }
+
+.questionnaire .xforms-textarea { 
+  width: 40em;
+}
 .fixed-width {
     width: 12em;
 }
