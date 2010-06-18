@@ -133,7 +133,8 @@
 					<!-- The success of this get-submitted-media submission will trigger the copying of the media-feed to the SSQ. -->
 					<xforms:send submission="sub-get-submitted-media-feed"/>
 					
-					<xforms:send submission="sub-get-curated-media-feed"/>
+					<!-- Postponed, perhaps until Version 2, pending design for curator's option to share -->
+					<!-- <xforms:send submission="sub-get-curated-media-feed"/> -->
 					
 					<!-- copy data across to study questionnaire model -->
 					<xforms:insert nodeset="xxforms:instance('ins-sq-study-entry')" origin="instance('ins-study-entry')" />
@@ -252,11 +253,13 @@
                 <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the submitted media.</xforms:message>
 			</xforms:submission>
 
-
+			<!-- Postponed, perhaps until Version 2, pending design for curator's option to share -->
+			<!-- 
         	<xforms:instance id="ins-curated-media-feed">
         		<atom:feed/>
         	</xforms:instance>
-        	
+        	 -->
+        	<!-- 
         	<xforms:submission
         		id="sub-get-curated-media-feed"
         		resource="{instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/curatedMedia']/@href}"
@@ -265,6 +268,7 @@
         		instance="ins-curated-media-feed">
         		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the curated media.</xforms:message>
         	</xforms:submission>
+        	 -->
         	
         	
         	<xforms:instance id="ins-study-feed">
