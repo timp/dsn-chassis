@@ -461,10 +461,13 @@
 								relevant="contains(../glucose-added,'true')" type="xforms:int"
 								required="true()"/>
 						</xforms:bind>
-						<xforms:bind nodeset="antiBiotics">
-							<xforms:bind nodeset="antiBiotic">
-								<xforms:bind nodeset="antiBioticName" required="true()"/>
-								<xforms:bind nodeset="antiBioticFinalConcentration"
+						<xforms:bind nodeset="antibioticTreatments">
+							<xforms:bind nodeset="antibioticTreatment">
+								<xforms:bind nodeset="antibioticOpen">
+									<xforms:bind nodeset="antibiotic" required="true()"/>
+									<xforms:bind nodeset="antibioticOther" relevant="contains(../antibiotic, 'other')"/>
+								</xforms:bind>
+								<xforms:bind nodeset="antibioticFinalConcentration"
 									type="xforms:int" required="true()"/>
 							</xforms:bind>
 						</xforms:bind>
@@ -738,13 +741,18 @@
 		</activeIngredient>
 	</xforms:instance>
 
-	<xforms:instance id="ins-antiBiotic">
-		<antiBiotic xmlns="">
-			<antiBioticName/>
-			<antiBioticFinalConcentration/>
-		</antiBiotic>
+	<xforms:instance id="ins-antibioticTreatment">
+		<antibioticTreatment xmlns="">
+			<antibioticOpen>
+				<antibiotic/>
+				<antibioticOther/>				
+			</antibioticOpen>
+			<antibioticFinalConcentration/>
+		</antibioticTreatment>
 	</xforms:instance>
-
+	<xforms:instance id="ins-antibiotic-items"
+		src="/apps/common/constants/antibiotics.xml"/>
+	
 	<xforms:instance id="ins-pharmacology-sample-template">
 		<sample xmlns="">
 			<numberPlanned/>
