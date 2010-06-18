@@ -2179,14 +2179,10 @@
 					<xforms:input model="mod-study-questionnaire" ref="co2">
 						<xforms:label>
 							CO
-							<sub>2</sub>
-							?
+							<sub>2</sub> percentage
 						</xforms:label>
 						<xforms:hint>
-							<p>
-								<em>Temperature should be 37&#176;C.</em>
-								<em>Don't forget to monitor the incubator system.</em>
-							</p>
+						5 or 10 percent.
 						</xforms:hint>
 					</xforms:input>
 					<p>
