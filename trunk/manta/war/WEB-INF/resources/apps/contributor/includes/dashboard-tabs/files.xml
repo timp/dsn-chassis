@@ -117,6 +117,9 @@
 			    	
 			</xforms:group>
 
+	<!-- Postponed, perhaps until Version 2, pending design for curator's option to share -->
+	<!-- xforms:repeat - will not try to use xxforms:sort on nodeset because it causes problems with datatable sorting by file type column -->
+	<!--
 	<h2>Curated Files</h2>
 	
 	<xforms:group ref="instance('ins-curated-media-feed')[empty(atom:entry)]">
@@ -137,7 +140,6 @@
 				</tr>
 			</thead>
 			<tbody>
-				<!-- will not try to use xxforms:sort on nodeset because it causes problems with datatable sorting by file type column -->
 				<xforms:repeat id="rep-curated-media" nodeset="atom:entry">
 					<tr>
 						<td>
@@ -173,4 +175,6 @@
 		</fr:datatable>
 		
 	</xforms:group>
+	-->
+	
 </div>
