@@ -74,25 +74,26 @@ public class DOILookup extends HttpServlet {
 	}
 
 	private void printHeader(HttpServletResponse resp, String title) throws IOException {
-		resp.setContentType("text/html");
+		resp.setContentType("text/html; charset=utf-8");
 		resp.getWriter().println("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" ");
 		resp.getWriter().println("\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">");
 		resp.getWriter().println("<html xmlns=\"http://www.w3.org/1999/xhtml\" lang=\"en\" xml:lang=\"en\">");
-		resp.getWriter().println("<head>");
-		resp.getWriter().println("<title>");
+    resp.getWriter().println(" <head>");
+    resp.getWriter().println("  <meta http-equiv=\"Content-Type\" content=\"text/html;charset=utf-8\" />");
+		
+		resp.getWriter().println("  <title>");
 		resp.getWriter().println(title);
-		resp.getWriter().println("</title>");
-		resp.getWriter().println("</head>");
-		resp.getWriter().println("<body>");
-		resp.getWriter().println("<h1>");
+		resp.getWriter().println("  </title>");
+		resp.getWriter().println(" </head>");
+		resp.getWriter().println(" <body>");
+		resp.getWriter().println("  <h1>");
 		resp.getWriter().println(title);
-		resp.getWriter().println("</h1>");
+		resp.getWriter().println("  </h1>");
 	}
 
 	private void printFooter(HttpServletResponse resp) throws IOException { 
 		resp.getWriter().println(" </body>");
 		resp.getWriter().println("</html>");
-		
 	}
 	
 	static String getCleanDOI(HttpServletRequest req) {
