@@ -10,7 +10,7 @@
 	</drugMolecule>
 	<drugMolecule>
 		<label>artemetherlumefantrine</label>
-		<value>??</value>
+		<value>AL</value>
 	</drugMolecule>
 	<drugMolecule>
 		<label>artemisinin</label>
@@ -34,7 +34,7 @@
 	</drugMolecule>
 	<drugMolecule>
 		<label>doxycycline</label>
-		<value>??</value>
+		<value>DOX</value>
 	</drugMolecule>
 	<drugMolecule>
 		<label>lumefantrine</label>
@@ -62,7 +62,7 @@
 	</drugMolecule>
 	<drugMolecule>
 		<label>pyrimethamine</label>
-		<value>??</value>
+		<value>PYR</value>
 	</drugMolecule>
 	<drugMolecule>
 		<label>pyronaridine</label>
@@ -78,6 +78,6 @@
 	</drugMolecule>
 	<drugMolecule>
 		<label>tetracycline</label>
-		<value>T</value>
+		<value>TET</value>
 	</drugMolecule>
 </drugMolecules>
