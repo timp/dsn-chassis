@@ -58,15 +58,13 @@ public class DOILookup extends HttpServlet {
 			resp.getWriter().println("  <p>");
 			resp.getWriter().println(
 					"Enter a <a href=\"http://dx.doi.org/10.1000/1\">DOI</a>");
-			resp.getWriter().println("</p>");
+			resp.getWriter().println("  </p>");
 
 			resp.getWriter().println("  <form method=\"GET\" action=\"\">");
-
-			resp.getWriter().println(
-					"doi: <input type=\"text\" name=\"doi\" size=\"70\" />");
-			resp.getWriter().println("   <br/>");
+			resp.getWriter().println("   <p>");
+			resp.getWriter().println("doi: <input type=\"text\" name=\"doi\" />");
+			resp.getWriter().println("   </p>");
 			resp.getWriter().println("   <input type=\"SUBMIT\">");
-
 			resp.getWriter().println("  </form>");
 			
 			printFooter(resp);
