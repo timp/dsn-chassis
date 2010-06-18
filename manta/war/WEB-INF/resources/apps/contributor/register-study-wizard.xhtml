@@ -391,7 +391,14 @@
 				<!-- If successful, load the confirmation page. -->
 				<!-- Note that an xxforms-internal-error would be generated (instance not found) if submission instance="ins-sq-study-entry".  -->
 				<xforms:action ev:event="xforms-submit-done">
-					<xforms:insert nodeset="xxforms:instance('ins-sq-study-entry')" origin="instance('ins-study-entry')" />				
+					<xforms:insert nodeset="xxforms:instance('ins-sq-study-entry')" origin="instance('ins-study-entry')" />		
+					
+					<!-- The success of this get-submitted-media submission will trigger the copying of the media-feed to the SSQ. -->
+					<xforms:send submission="sub-get-submitted-media-feed"/>
+					
+					<!-- copy data across to study questionnaire model -->
+					<xforms:insert nodeset="xxforms:instance('ins-sq-submitted-media-feed')" origin="instance('ins-submitted-media-feed')" />
+					
 					<xforms:setvalue ref="instance('ins-control')/wizard-pane-being-shown" value="'confirmation'"  />
 				</xforms:action>
 				
@@ -511,7 +518,7 @@
         		mediatype="application/atom+xml"
         		replace="none"
         		>
-							<xforms:insert nodeset="xxforms:instance('ins-sq-submitted-media-feed')" origin="instance('ins-submitted-media-feed')" />
+							
         		
         		<!-- If done, then delete the draft. -->
         		<xforms:send ev:event="xforms-submit-done" submission="sub-delete-draft"/>
@@ -541,6 +548,27 @@
             	<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while deleting the draft.</xforms:message>       
             
         	</xforms:submission>
+
+
+			<xforms:instance id="ins-submitted-media-feed">
+				<atom:feed/>
+			</xforms:instance>
+
+			<xforms:submission
+				id="sub-get-submitted-media-feed"
+				resource="{instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/submittedMedia']/@href}"
+				method="get"
+				replace="instance"
+				instance="ins-submitted-media-feed"
+				serialization="none">
+				
+				<!-- Now that we have the media feed, copy to the questionnaire. -->
+				<xforms:action ev:event="xforms-submit-done">
+					<xforms:insert nodeset="xxforms:instance('ins-sq-submitted-media-feed')" origin="instance('ins-submitted-media-feed')" />
+				</xforms:action>
+				
+                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the submitted media.</xforms:message>
+			</xforms:submission>
         	
         	
         </xforms:model>
