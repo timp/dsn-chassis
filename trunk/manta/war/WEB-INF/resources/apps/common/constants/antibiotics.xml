@@ -1,0 +1,11 @@
+<!-- An open list of antibiotics -->
+<antibiotics xmlns="">
+    <antibiotic>
+        <label>gentamycin</label>
+        <value>gentamycin</value>
+    </antibiotic>
+    <antibiotic>
+        <label>neomycin</label>
+        <value>neomycin</value>
+    </antibiotic>
+</antibiotics>

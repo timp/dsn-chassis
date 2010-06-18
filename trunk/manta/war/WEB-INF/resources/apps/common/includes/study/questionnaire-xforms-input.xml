@@ -2397,12 +2397,12 @@
 					</xforms:group>
 
 
-					<xforms:group ref="antiBiotics">
+					<xforms:group ref="antibioticTreatments">
 						<p> If you use antibiotics, please fill in the section below for
 							each
 							antibiotic you use. </p>
 						<table class="repeat-table">
-							<xforms:repeat nodeset="antiBiotic" id="antiBiotic-rep">
+							<xforms:repeat nodeset="antibioticTreatment" id="antibioticTreatment-rep">
 								<tr>
 									<td class="action-td">
 										<xforms:trigger appearance="minimal">
@@ -2410,30 +2410,50 @@
 												<img src="/apps/common/theme/remove.gif" alt="remove" />
 											</xforms:label>
 											<xforms:delete ev:event="DOMActivate" context="."
-												nodeset="." at="index('antiBiotic-rep')" />
+												nodeset="." at="index('antibioticTreatment-rep')" />
 										</xforms:trigger>
 									</td>
 									<td>
-										<p>
-											<xforms:input ref="antiBioticName">
-												<xforms:label>Name of antibiotic</xforms:label>
+										<xforms:group ref="antibioticOpen">
+											<xforms:select1 ref="antibiotic"
+												appearance="minimal">
+												<xforms:label>Antibiotic</xforms:label>
+												<xforms:item>
+													<xforms:label>please select</xforms:label>
+													<xforms:value/>
+												</xforms:item>
+												<xforms:itemset model="mod-study-questionnaire"
+													nodeset="instance('ins-antibiotic-items')/antibiotic">
+													<xforms:label ref="label" />
+													<xforms:value ref="value" />
+												</xforms:itemset>
+												<xforms:item>
+													<xforms:label>other</xforms:label>
+													<xforms:value>other</xforms:value>
+												</xforms:item>
+												<xforms:alert>
+													<xforms:output
+														value="concat('Please enter a value for the required field ', name())" />
+												</xforms:alert>
+											</xforms:select1>
+											<xforms:input ref="antibioticOther">
+												<xforms:label class="invisible">Other antibiotic
+												</xforms:label>
 												<xforms:alert>
 													<xforms:output
 														value="concat('Please enter a value for the required field ', name())" />
 												</xforms:alert>
 											</xforms:input>
-										</p>
-										<p>
-											<xforms:input ref="antiBioticFinalConcentration"
-												class="fourWide">
-												<xforms:label>Antibiotic final concentration (g/L)
-												</xforms:label>
-												<xforms:alert>
-													<xforms:output
-														value="concat('Please enter an integer value for the ', name(), ' field ')" />
-												</xforms:alert>
-											</xforms:input>
-										</p>
+										</xforms:group>
+										<xforms:input ref="antibioticFinalConcentration"
+											class="fourWide">
+											<xforms:label>Antibiotic final concentration (g/L)
+											</xforms:label>
+											<xforms:alert>
+												<xforms:output
+													value="concat('Please enter an integer value for the ', name(), ' field ')" />
+											</xforms:alert>
+										</xforms:input>
 									</td>
 								</tr>
 							</xforms:repeat>
@@ -2444,16 +2464,16 @@
 											<img src="/apps/common/theme/add.gif" alt="add" />
 										</xforms:label>
 										<xforms:insert ev:event="DOMActivate" context="."
-											nodeset="antiBiotic" at="count(../antiBiotic)" position="after"
-											origin="instance('ins-antiBiotic')" />
+											nodeset="antibioticTreatment" at="count(../antibioticTreatment)" position="after"
+											origin="instance('ins-antibioticTreatment')" />
 									</xforms:trigger>
 								</td>
 								<td class="add-td">
 									<xforms:trigger appearance="minimal">
-										<xforms:label>Add an Antibiotic</xforms:label>
+										<xforms:label>Add an antibiotic</xforms:label>
 										<xforms:insert ev:event="DOMActivate" context="."
-											nodeset="antiBiotic" at="count(../antiBiotic)" position="after"
-											origin="instance('ins-antiBiotic')" />
+											nodeset="antibioticTreatment" at="count(../antibioticTreatment)" position="after"
+											origin="instance('ins-antibioticTreatment')" />
 									</xforms:trigger>
 								</td>
 							</tr>
@@ -3002,7 +3022,9 @@
 											</xforms:item>
 											<xforms:itemset model="mod-study-questionnaire"
 												nodeset="xxforms:sort(instance('ins-sq-submitted-media-feed')/atom:entry, atom:published, 'text', 'ascending')">
-												<xforms:label ><xforms:output value="concat(manta:id, ' - ', atom:title)"/></xforms:label>
+												<xforms:label>
+													<xforms:output value="concat(manta:id, ' - ', atom:title)" />
+												</xforms:label>
 												<xforms:value ref="atom:link[@rel='edit']/@href" />
 											</xforms:itemset>
 											<xforms:alert>Please select an uploaded document

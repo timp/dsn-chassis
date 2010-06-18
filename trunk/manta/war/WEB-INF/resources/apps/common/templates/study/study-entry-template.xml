@@ -240,7 +240,7 @@
 							<glucose-added />
 							<glucose-finalConcentration />
 						</glucose>
-						<antiBiotics />
+						<antibioticTreatments />
 					</drugSusceptibilityMedium>
 					<susceptibility>
 						<timeOfIncubation />
