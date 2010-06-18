@@ -73,10 +73,9 @@ public class DOILookup extends HttpServlet {
 
 	private void printHeader(HttpServletResponse resp, String title) throws IOException {
 		resp.setContentType("text/html");
-		resp.getWriter()
-				.println(
-						"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">");
-		resp.getWriter().println("<html>");
+		resp.getWriter().println("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" ");
+		resp.getWriter().println("http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">");
+		resp.getWriter().println("<html xmlns=\"http://www.w3.org/1999/xhtml\" lang=\"en\" xml:lang=\"en\">");
 		resp.getWriter().println("<head>");
 		resp.getWriter().println("<title>");
 		resp.getWriter().println(title);
