@@ -80,6 +80,8 @@
 				<xforms:action ev:event="xforms-submit-done">
 					
 					<xforms:send submission="sub-get-permissions-entry"/>
+
+					<!-- The success of this get-submitted-media submission will trigger the copying of the media-feed to the SSQ. -->
 					<xforms:send submission="sub-get-submitted-media-feed"/>
 					<xforms:send submission="sub-get-curated-media-feed"/>
 					
@@ -136,6 +138,12 @@
         		method="get"
         		replace="instance"
         		instance="ins-submitted-media-feed">
+        		
+        		<!-- Now that we have the media feed, copy to the questionnaire. -->
+						<xforms:action ev:event="xforms-submit-done">
+							<xforms:insert nodeset="xxforms:instance('ins-sq-submitted-media-feed')" origin="instance('ins-submitted-media-feed')" />
+						</xforms:action>
+						
         		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the submitted media.</xforms:message>
         	</xforms:submission>
         	
