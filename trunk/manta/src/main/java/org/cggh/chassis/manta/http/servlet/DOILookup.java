@@ -30,7 +30,7 @@ public class DOILookup extends HttpServlet {
 		String doi = getCleanDOI(req);
 		if (doi != null) {
 			String url = "http://dx.doi.org/" + doi;
-			HttpMethod get = new GetMethod();
+			HttpMethod get = new GetMethod(url);
 			client.executeMethod(get);
 			if (new String(get.getResponseBody()).contains("Not Found")) { 
 				resp.setStatus(404);
@@ -96,8 +96,10 @@ public class DOILookup extends HttpServlet {
 	
 	static String getCleanDOI(HttpServletRequest req) {
 		String doi = getDOI(req);
-		if (doi != null)
+		if (doi != null) {
+			doi = doi.replaceFirst("^/", "");
 			doi = doi.replaceFirst("^(doi|DOI):(//)?", "");
+		}
 		return doi;
 	}
 
