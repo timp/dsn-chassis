@@ -680,7 +680,8 @@
 											<xforms:hint>A URL of a page which describes the regimen
 											</xforms:hint>
 											<xforms:alert>Please enter a valid URL</xforms:alert>
-											<xforms:send ev:event="xforms-value-changed" submission="sub-check-regimen-url" />
+											<xforms:send ev:event="xforms-value-changed"
+												submission="sub-check-regimen-url" />
 										</xforms:input>
 
 										<xforms:group ref="drugs">
@@ -2954,76 +2955,79 @@
 											nodeset="." at="index('assayReference-rep')" />
 									</xforms:trigger>
 								</td>
-									<td class="form-td">
+								<td class="form-td">
 
-										<xforms:select1 appearance="minimal" ref="referenceType">
-											<xforms:label class="invisible">Reference type
+									<xforms:select1 appearance="minimal" ref="referenceType">
+										<xforms:label class="invisible">Reference type
 											</xforms:label>
-											<xforms:itemset model="mod-study-questionnaire"
-												nodeset="instance('ins-referenceType-items')/referenceType">
-												<xforms:label ref="label" />
-												<xforms:value ref="value" />
-											</xforms:itemset>
-											<xforms:alert>Please select a reference type
+										<xforms:itemset model="mod-study-questionnaire"
+											nodeset="instance('ins-referenceType-items')/referenceType">
+											<xforms:label ref="label" />
+											<xforms:value ref="value" />
+										</xforms:itemset>
+										<xforms:alert>Please select a reference type
 										</xforms:alert>
-										</xforms:select1>
-									</td>
-									<td class="form-td">
+									</xforms:select1>
+								</td>
+								<td class="form-td">
 
-								  <xforms:input ref="url">
+									<xforms:input ref="url">
 										<xforms:label class="invisible">Reference URL</xforms:label>
 										<xforms:alert>Please enter a valid URL</xforms:alert>
-										<xforms:send ev:event="xforms-value-changed" submission="sub-check-assayReference-url" />
+										<xforms:send ev:event="xforms-value-changed"
+											submission="sub-check-assayReference-url" />
 									</xforms:input>
 									<xforms:input ref="doi">
 										<xforms:label class="invisible">DOI</xforms:label>
 										<xforms:hint>Without a DOI: prefix</xforms:hint>
 										<xforms:alert>Please enter a valid DOI</xforms:alert>
-										<xforms:send ev:event="xforms-value-changed" 
+										<xforms:send ev:event="xforms-value-changed"
 											submission="sub-check-assayReference-doi" />
 									</xforms:input>
 									<xforms:group ref="upload">
-											<xforms:group
-												ref="instance('ins-sq-submitted-media-feed')[empty(atom:entry)]" >
+										<xforms:group
+											ref="instance('ins-sq-submitted-media-feed')[empty(atom:entry)]">
 
-												<p>You have not uploaded any documents.</p>
-
-											</xforms:group>
-												
-												<xforms:select1 appearance="minimal" ref="uploadedUrl">
-													<xforms:label class="invisible">Uploaded document</xforms:label>
-													<xforms:hint>An uploaded document</xforms:hint>
-													<xforms:item>
-														<xforms:label>please select</xforms:label>
-														<xforms:value />
-													</xforms:item>
-													<xforms:itemset model="mod-study-questionnaire"
-														nodeset="xxforms:sort(instance('ins-sq-submitted-media-feed')/atom:entry, atom:published, 'text', 'ascending')">
-														<xforms:label ref="atom:title" />
-														<xforms:value ref="atom:link[@rel='edit']/@href" />
-													</xforms:itemset>
-													<xforms:alert>Please select an uploaded document		</xforms:alert>
-												</xforms:select1>
+											<p>You have not uploaded any documents.</p>
 
 										</xforms:group>
-									</td>
-									<td class="form-td">
-										<xforms:select1 ref="assayValidated" appearance="minimal">
-											<xforms:label class="invisible">Assay validated
+
+										<xforms:select1 appearance="minimal" ref="uploadedUrl">
+											<xforms:label class="invisible">Uploaded document
 											</xforms:label>
+											<xforms:hint>An uploaded document</xforms:hint>
+											<xforms:item>
+												<xforms:label>please select</xforms:label>
+												<xforms:value />
+											</xforms:item>
 											<xforms:itemset model="mod-study-questionnaire"
-												nodeset="instance('ins-boolean-items')/boolean">
-												<xforms:label ref="label" />
-												<xforms:value ref="value" />
+												nodeset="xxforms:sort(instance('ins-sq-submitted-media-feed')/atom:entry, atom:published, 'text', 'ascending')">
+												<xforms:label ><xforms:output value="concat(manta:id, ' - ', atom:title)"/></xforms:label>
+												<xforms:value ref="atom:link[@rel='edit']/@href" />
 											</xforms:itemset>
+											<xforms:alert>Please select an uploaded document
+											</xforms:alert>
 										</xforms:select1>
-									</td>
-									<td class="form-td">
-										<xforms:textarea ref="note">
-											<xforms:label />
-											<xforms:hint>Any notes on the assay method.</xforms:hint>
-										</xforms:textarea>
-									</td>
+
+									</xforms:group>
+								</td>
+								<td class="form-td">
+									<xforms:select1 ref="assayValidated" appearance="minimal">
+										<xforms:label class="invisible">Assay validated
+										</xforms:label>
+										<xforms:itemset model="mod-study-questionnaire"
+											nodeset="instance('ins-boolean-items')/boolean">
+											<xforms:label ref="label" />
+											<xforms:value ref="value" />
+										</xforms:itemset>
+									</xforms:select1>
+								</td>
+								<td class="form-td">
+									<xforms:textarea ref="note">
+										<xforms:label />
+										<xforms:hint>Any notes on the assay method.</xforms:hint>
+									</xforms:textarea>
+								</td>
 							</tr>
 						</xforms:repeat>
 						<tr>
