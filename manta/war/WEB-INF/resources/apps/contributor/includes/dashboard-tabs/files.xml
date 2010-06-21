@@ -103,12 +103,13 @@
 			    							"/>
 			    						
 			    					</td>
-			    					<!-- TODO: Only enable if the file has passed personal data review. -->
 			    					<td>
 			    						<xforms:group ref=".[contains( ./atom:link[@rel='edit-media']/@atombeat:allow , 'GET' )]">
+			    							<!-- Only enable if the file has passed personal data review. -->
 			    							<a href="{atom:content/@src}">Download</a><br/>
 			    						</xforms:group>
-			    						<a href="file-details?media-link={atom:link[@rel='edit']/@href}">Details</a>
+			    						<!-- Postponed, perhaps until Version 2, pending design for curator's option to share -->
+			    						<!--<a href="file-details?media-link={atom:link[@rel='edit']/@href}">Details</a>-->
 			    					</td>
 			    				</tr>
 			    			</xforms:repeat>
