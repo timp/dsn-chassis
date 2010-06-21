@@ -2,23 +2,22 @@ package org.cggh.chassis.manta.loadtest;
 
 import java.io.InputStream;
 import java.net.URL;
-import java.util.Enumeration;
+import java.util.Iterator;
 import java.util.Random;
 import java.util.Vector;
 
 
 class HitStats {
-  public long totalToOpen, totalToFinish;
+  public long totalTimeToOpen, totalTimeToFinish;
   public int successes;
   public int failures;
-  // public int errors;
+  //public int errors;
 
-  public void notifyTransaction(long started, long opened, long finished
-                                // , boolean error
+  public void notifyTransaction(long started, long opened, long finished //, boolean error
                                 ) {
-    totalToOpen += opened - started;
-    totalToFinish += finished - started;
-    // if (error) ++errors else
+    totalTimeToOpen += opened - started;
+    totalTimeToFinish += finished - started;
+    //if (error) ++errors; else 
     ++successes;
   }
 
@@ -26,38 +25,38 @@ class HitStats {
     ++failures;
   }
 
-  public long meanToOpen() {
-    return successes == 0 ? 0 : totalToOpen / successes;
+  public long meanTimeToOpen() {
+    return successes == 0 ? 0 : totalTimeToOpen / successes;
   }
 
-  public long meanToFinish() {
-    return successes == 0 ? 0 : totalToFinish / successes;
+  public long meanTimeToFinish() {
+    return successes == 0 ? 0 : totalTimeToFinish / successes;
   }
 }
 
-class DiscreteDistribution  {
+class DiscreteDistribution  implements Iterable<RequestType>  {
 
-  private Vector<Object> elements = new Vector<Object>();
-  private Vector<Object> cumulative = new Vector<Object>();
+  private Vector<RequestType> elements = new Vector<RequestType>();
+  private Vector<RequestType> cumulative = new Vector<RequestType>();
 
   public DiscreteDistribution() {}
 
-  public void add(Object o, int n) {
+  public void add(RequestType o, int n) {
     for (int i = 0; i < n; ++i)
       cumulative.addElement(o);
     elements.addElement(o);
   }
  
-  public void add(Object o) {
+  public void add(RequestType o) {
     add(o, 1);
   }
 
-  public Object sample() {
+  public RequestType sample() {
     return cumulative.elementAt(LoadTest.random.nextInt(cumulative.size()));
   }
 
-  public Enumeration<Object> elements() {
-    return elements.elements();
+  public Iterator<RequestType> iterator() { 
+	  return elements.iterator();
   }
 }
 
@@ -79,11 +78,11 @@ class ExponentialDistribution {
 
 class BitBucket extends Thread {
   private String url;
-  private HitStats stats;
+  private HitStats hitStats;
 
   public BitBucket(String url, HitStats stats) {
     this.url = url;
-    this.stats = stats;
+    this.hitStats = stats;
   }
 
   private static final byte[] b = new byte[4096];
@@ -97,14 +96,15 @@ class BitBucket extends Thread {
       while (i.read(b) != -1);
       long finished = System.currentTimeMillis();
 
-      stats.notifyTransaction(started, opened, finished);
+      hitStats.notifyTransaction(started, opened, finished);
     }
     catch (Exception e) {
-      System.err.println(e);
-      stats.notifyFailure();
+      //System.err.println(e);
+      hitStats.notifyFailure();
     }
   }
 }
+
 class RequestType {
   HitStats stats = new HitStats();
   String url;
@@ -162,7 +162,7 @@ public class LoadTest {
     s.append(it);
     return s.toString();
   }
-
+ 
   public static String pad(long l, int w) {
     return pad("" + l, w);
   }
@@ -181,13 +181,12 @@ public class LoadTest {
 
     System.out.println();
     System.out.println("        win open end fail");
-    for (Enumeration h = types.elements(); h.hasMoreElements();) {
-      RequestType hit = (RequestType)h.nextElement();
+    for (RequestType hit : types) {
       System.out.print(hit.toString());
       System.out.println(
           pad(hit.stats.successes, 9) + " " +
-          pad(hit.stats.meanToOpen(), 5) + " " +
-          pad(hit.stats.meanToFinish(), 5) + " " +
+          pad(hit.stats.meanTimeToOpen(), 5) + " " +
+          pad(hit.stats.meanTimeToFinish(), 5) + " " +
           pad(hit.stats.failures, 5) + " ");
     }
   }
@@ -196,6 +195,7 @@ public class LoadTest {
   public static void main(String[] args) throws Exception {
     urlPrefix = "http://localhost:8080/manta/";
     new LoadTest(new Integer(10) * 1000L,
-        new Integer(500)).run();
+        new Integer(1500)).run();
+    System.exit(1);
   }
 }
