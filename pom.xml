@@ -9,6 +9,7 @@
   <modules>
     <module>wwarn</module>
     <module>generic</module>
+    <module>manta-selenium</module>
   </modules>
 
   <description>
@@ -290,4 +291,3 @@ http://groups.google.com/group/dsn-chassis-svn
  </distributionManagement>
   
 </project>
-
