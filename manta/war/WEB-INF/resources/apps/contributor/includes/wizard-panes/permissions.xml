@@ -8,7 +8,7 @@
 
 	<h3>Administrators</h3>
              	
-	<xforms:group ref="instance('ins-draft-entry')//permissions-entry-container//atombeat:security-descriptor/atombeat:groups/atombeat:group[@id='GROUP_ADMINISTRATORS']">
+	<xforms:group id="list-of-administrators" ref="instance('ins-draft-entry')//permissions-entry-container//atombeat:security-descriptor/atombeat:groups/atombeat:group[@id='GROUP_ADMINISTRATORS']">
             	
 		<table>
 
@@ -25,7 +25,7 @@
 	                      </xforms:trigger>
 					</td>
 					<td>
-						<xforms:input ref=".">
+						<xforms:input class="email-address-textbox-container" ref=".">
 							<xforms:label>Email Address:</xforms:label>
 							<xforms:alert>Please provide a valid email address.</xforms:alert>
 						</xforms:input>
@@ -47,7 +47,7 @@
 	                  </xforms:trigger>
 				</td>
 				<td>
-	                  <xforms:trigger appearance="minimal">
+	                  <xforms:trigger id="add-administrator-link" appearance="minimal">
 	                      <xforms:label>Add an Administrator</xforms:label>
 	                      <xforms:insert 
 	                      	ev:event="DOMActivate" 
@@ -98,7 +98,7 @@
 			</xforms:action>
 		</xforms:trigger>
 
-		<xforms:trigger ref="instance('ins-control')/save-draft-trigger">
+		<xforms:trigger id="permissions-next-button" ref="instance('ins-control')/save-draft-trigger">
 			<xforms:label>Next &gt;</xforms:label>
 			<xforms:action ev:event="DOMActivate" if="../draft-entry-is-valid = 'true'">
 				<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show" value="'acknowledgements'"/>

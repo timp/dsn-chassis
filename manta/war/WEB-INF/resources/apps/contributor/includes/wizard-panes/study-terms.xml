@@ -7,7 +7,7 @@
 	<h2>Study Terms - (Step 1 of 5)</h2>
 
 	<p>
-		<xforms:input ref="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:title">
+		<xforms:input id="study-title-textbox-container" ref="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:title">
 			<xforms:label>Study Title:</xforms:label>
 			<xforms:alert>The title is required.</xforms:alert>
 		</xforms:input>
@@ -21,12 +21,12 @@
 	
 	<p>
 		
-		<!-- TODO: more conformist workaround to put checkbox on right-hand side -->
+		<!-- TODO: more conformist workaround to put checkbox on right-hand side (Maybe use CSS to specify display:none on label?) -->
 		<span>I accept the terms of submission:</span>
 		
-		<xforms:select ref="instance('ins-draft-entry')/atom:content/draft/registrant-has-agreed-to-the-terms" appearance="full">
+		<xforms:select id="agree-to-terms-checkbox-container" ref="instance('ins-draft-entry')/atom:content/draft/registrant-has-agreed-to-the-terms" appearance="full">
                
-			<xforms:item ref="instance('ins-draft-entry')/atom:content/draft/registrant-has-agreed-to-the-terms">
+			<xforms:item  ref="instance('ins-draft-entry')/atom:content/draft/registrant-has-agreed-to-the-terms">
 				<!-- <xforms:label>I accept the terms of submission:</xforms:label> -->
 				<xforms:label></xforms:label>
 				<xforms:value>yes</xforms:value>
@@ -57,7 +57,7 @@
 			</xforms:trigger>
 		</xforms:group>
 	
-		<xforms:trigger ref="instance('ins-control')/create-draft-trigger">
+		<xforms:trigger id="study-terms-next-button" ref="instance('ins-control')/create-draft-trigger">
 			<xforms:label>Next &gt;</xforms:label>
 			<xforms:action ev:event="DOMActivate" if="../draft-entry-is-valid = 'true'">
 				<xforms:setvalue ref="instance('ins-draft-entry')/atom:title" value="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:title"/>	
