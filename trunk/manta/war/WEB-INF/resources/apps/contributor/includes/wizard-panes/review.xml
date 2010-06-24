@@ -11,7 +11,8 @@
 	<h3>(1) Title</h3>
 	
 	<p>
-		<xforms:output ref="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:title" />
+		<span id="study-title-text-container"><xforms:output ref="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:title" />
+		</span>
 	</p>
 
 	<p>
@@ -28,15 +29,17 @@
 	
 	<h4>Administrators:</h4>
 	
-	<ul>
-		<xforms:repeat nodeset="instance('ins-draft-entry')//permissions-entry-container//atombeat:security-descriptor/atombeat:groups/atombeat:group[@id='GROUP_ADMINISTRATORS']/atombeat:member">
-			<li>
-			<xforms:output ref=".">
-				<xforms:label>Email Address:</xforms:label>
-			</xforms:output>
-			</li>
-		</xforms:repeat>
-	</ul>
+	<div id="list-of-administrators-container">
+		<ul>
+			<xforms:repeat nodeset="instance('ins-draft-entry')//permissions-entry-container//atombeat:security-descriptor/atombeat:groups/atombeat:group[@id='GROUP_ADMINISTRATORS']/atombeat:member">
+				<li class="repeated-element">
+				<xforms:output ref=".">
+					<xforms:label>Email Address:</xforms:label>
+				</xforms:output>
+				</li>
+			</xforms:repeat>
+		</ul>
+	</div>
 	
 	<p>
 		<xforms:trigger appearance="minimal">
@@ -53,31 +56,47 @@
 	
 	
 	<xforms:group ref="not(instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:content/study/acknowledgements[empty(person)])">
-		<ol>
-			<xforms:repeat nodeset="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:content/study/acknowledgements/person">
-				<li class="acknowledgement-form-summary-item">
-			        <xforms:output ref="first-name">
-			            <xforms:label>First Name:</xforms:label>
-			        </xforms:output>
-			       <br/>
-			        <xforms:output ref="middle-name">
-			            <xforms:label>Middle Name:</xforms:label>
-			        </xforms:output>
-			       <br/>
-			        <xforms:output ref="family-name">
-			            <xforms:label>Family Name:</xforms:label>
-			        </xforms:output>
-			        <br/>
-			        <xforms:output ref="email-address">
-			            <xforms:label>Email address:</xforms:label>
-			        </xforms:output>
-			        <br/>
-			        <xforms:output ref="institution">
-			            <xforms:label>Institution:</xforms:label>
-			        </xforms:output>
-		        </li>
-			</xforms:repeat>
-		</ol>
+	
+		<div id="list-of-acknowledgements-container">
+	
+			<ol>
+				<xforms:repeat nodeset="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:content/study/acknowledgements/person">
+					<li class="repeated-element acknowledgement-form-summary-item">
+						<span class="first-name-text-container">
+				        <xforms:output ref="first-name">
+				            <xforms:label>First Name:</xforms:label>
+				        </xforms:output>
+						</span>
+				       <br/>
+						<span class="middle-name-text-container">
+				        <xforms:output ref="middle-name">
+				            <xforms:label>Middle Name:</xforms:label>
+				        </xforms:output>
+							</span>
+				       <br/>
+							<span class="family-name-text-container">
+				        <xforms:output ref="family-name">
+				            <xforms:label>Family Name:</xforms:label>
+				        </xforms:output>
+							</span>
+				        <br/>
+								<span class="email-address-text-container">
+				        <xforms:output ref="email-address">
+				            <xforms:label>Email address:</xforms:label>
+				        </xforms:output>
+								</span>
+				        <br/>
+									<span class="institution-text-container">
+				        <xforms:output ref="institution">
+				            <xforms:label>Institution:</xforms:label>
+				        </xforms:output>
+									</span>
+			        </li>
+				</xforms:repeat>
+			</ol>
+			
+		</div>
+		
 	</xforms:group>
 	<xforms:group ref="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:content/study/acknowledgements[empty(person)]">
 		<p>No acknowledgements.</p>
@@ -101,6 +120,8 @@
 	
 	<xforms:group ref="instance('ins-draft-media-feed')[exists(atom:entry)]">
 		
+		<span id="list-of-uploaded-files-container">
+		
 		<fr:datatable paginated="false">
 			<thead>
 				<tr>
@@ -112,7 +133,7 @@
 			</thead>
 			<tbody>
 				<xforms:repeat id="rep-review-draft-media" nodeset="atom:entry">
-					<tr>
+					<tr class="repeated-element">
 						<td>
 							<xforms:output ref="atom:title"/>
 						</td>
@@ -135,6 +156,8 @@
 				</xforms:repeat>
 			</tbody>
 		</fr:datatable>
+			
+		</span>
 		
 	</xforms:group>
 	
@@ -153,15 +176,17 @@
 
 	
 	<xforms:group ref="not(instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:content/study/publications[empty(publication)])">
+		<div id="list-of-publications-container">
 		<ul>
 			<xforms:repeat nodeset="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:content/study/publications/publication">
-				<li>
+				<li class="repeated-element">
 			        <xforms:output ref="web-link">
 			            <xforms:label>Web Link:</xforms:label>
 			        </xforms:output>
 		        </li>
 			</xforms:repeat>
 		</ul>
+		</div>
 	</xforms:group>
 	<xforms:group ref="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:content/study/publications[empty(publication)]">
 		<p>No publications.</p>
@@ -190,6 +215,7 @@
 			</xforms:action>
 		</xforms:trigger>	
 	
+		<span id="review-confirm-button-container">
 		<xforms:trigger>
 			<xforms:label>Confirm</xforms:label>
 			<xforms:action ev:event="DOMActivate">
@@ -197,6 +223,7 @@
 				<xforms:send submission="sub-post-contribution"/>
 			</xforms:action>
 		</xforms:trigger>
+		</span>
 
 	</p>
 

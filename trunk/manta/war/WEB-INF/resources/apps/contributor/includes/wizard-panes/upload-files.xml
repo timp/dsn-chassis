@@ -10,6 +10,7 @@
 	
 
 	<p>
+		<span id="file-selector-container">
 		<xforms:upload ref="instance('ins-upload')/media">
 			<xforms:label>File: </xforms:label>
 			<xforms:filename ref="@filename"/>
@@ -20,10 +21,12 @@
 			<!-- TODO: ensure a file is selected before Upload is triggered -->
 			<xforms:alert>Please select a file.</xforms:alert>
 		</xforms:upload>
+		</span>
 		
 	</p>
 	
-	<p>	
+	<p>
+		<span id="file-type-menu-container">
 		<xforms:select1 ref="instance('ins-upload')/@term">
 			<xforms:label>Type:</xforms:label>
 			<xforms:item>
@@ -36,15 +39,19 @@
 			</xforms:itemset>
 			<xforms:alert>Please select a file type.</xforms:alert>
 		</xforms:select1>
+		</span>
 		
+		<span id="other-file-type-textbox-container">
 		<xforms:input ref="instance('ins-upload')/@label">
 			<xforms:label>Other Type:</xforms:label>
 			<xforms:alert>Please enter the type of file.</xforms:alert>
 		</xforms:input>
+		</span>
 		
 	</p>
 	
 	<p>
+		<span id="upload-file-button-container">
 		<xforms:trigger ref="instance('ins-control')/upload-file-trigger">
 			<xforms:label>Upload</xforms:label>
 			<xforms:action ev:event="DOMActivate" if="../upload-is-valid = 'true'">
@@ -54,6 +61,7 @@
 				<xforms:message>Please complete all required fields.</xforms:message>
 			</xforms:action>
 		</xforms:trigger>
+		</span>
 	</p>
 					
 
@@ -64,6 +72,8 @@
 	</xforms:group>
 	
 	<xforms:group ref="instance('ins-draft-media-feed')[exists(atom:entry)]">
+		
+		<span id="editable-list-of-uploaded-files-container">
 		
 		<fr:datatable paginated="false">
 			<thead>
@@ -77,7 +87,8 @@
 			</thead>
 			<tbody>
 				<xforms:repeat id="rep-draft-media" nodeset="atom:entry">
-					<tr>
+					
+					<tr class="repeated-element">
 						<td>
 							<xforms:output ref="atom:title"/>
 						</td>
@@ -118,6 +129,8 @@
 				</xforms:repeat>
 			</tbody>
 		</fr:datatable>
+			
+		</span>
 		
 	</xforms:group>
 	
@@ -155,6 +168,7 @@
 			</xforms:action>
 		</xforms:trigger>
 
+		<span id="upload-files-next-button-container">
 		<xforms:trigger ref="instance('ins-control')/save-draft-trigger">
 			<xforms:label>Next &gt;</xforms:label>
 			<xforms:action ev:event="DOMActivate" if="../draft-entry-is-valid = 'true'">
@@ -165,6 +179,7 @@
 				<xforms:message>Please complete all required fields.</xforms:message>
 			</xforms:action>
 		</xforms:trigger>
+		</span>
 
 		<xforms:trigger ref="instance('ins-control')/save-draft-trigger" appearance="minimal">
 			<xforms:label>Skip To End &gt;&gt;</xforms:label>

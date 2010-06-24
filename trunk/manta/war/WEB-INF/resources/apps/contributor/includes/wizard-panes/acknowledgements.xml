@@ -5,12 +5,17 @@
 
 	<h2>Acknowledgements - (Step 3 of 5)</h2>
 
-	    <xforms:group ref="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:content/study/acknowledgements">
+	<xforms:group id="list-of-acknowledgements" ref="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:content/study/acknowledgements">
+	        
+	        
+		<span id="editable-list-of-acknowledgements-container">	        
 	        
 	        <table>
 
 	            <xforms:repeat nodeset="person" id="rep-person">
-	                <tr>
+	            	
+	                <tr class="repeated-element">
+	                	
 	                	<td class="acknowledgement-deletion-cell">
 	                        <xforms:trigger>
 	                            <xforms:delete 
@@ -22,29 +27,40 @@
 	                        </xforms:trigger>
 	                    </td>
 	                	<td class="acknowledgement-form-cell">
-	                        <xforms:input ref="first-name">
-	                            <xforms:label>First Name:</xforms:label>
-	                        </xforms:input>
+	                		<span class="first-name-textbox-container">
+		                		<xforms:input ref="first-name">
+		                            <xforms:label>First Name:</xforms:label>
+		                		</xforms:input>
+	                		</span>
 	                       <br/>
-	                        <xforms:input ref="middle-name">
+	                		<span class="middle-name-textbox-container">
+	                		<xforms:input ref="middle-name">
 	                            <xforms:label>Middle Name:</xforms:label>
-	                        </xforms:input>
+	                		</xforms:input>
+	                		</span>
 	                       <br/>
-	                        <xforms:input ref="family-name">
-	                            <xforms:label>Family Name:</xforms:label>
-	                        </xforms:input>
+	                		<span class="family-name-textbox-container">
+		                		<xforms:input ref="family-name">
+		                            <xforms:label>Family Name:</xforms:label>
+		                		</xforms:input>
+	                		</span>
 	                        <br/>
-	                        <xforms:input ref="email-address">
-	                            <xforms:label>Email address:</xforms:label>
-	                        	<xforms:alert>Please provide a valid email address.</xforms:alert>
-	                        </xforms:input>
+	                		<span class="email-address-textbox-container">
+		                		<xforms:input ref="email-address">
+		                            <xforms:label>Email address:</xforms:label>
+		                        	<xforms:alert>Please provide a valid email address.</xforms:alert>
+		                        	</xforms:input>
+		                		</span>
 	                        <br/>
-	                        <xforms:input ref="institution">
-	                            <xforms:label>Institution:</xforms:label>
-	                        </xforms:input>
+	                		<span class="institution-textbox-container">
+		                		<xforms:input ref="institution">
+		                            <xforms:label>Institution:</xforms:label>
+		                		</xforms:input>
+	                		</span>
 	                        
 	                		<div class="acknowledgement-movement-triggers">
 	                			
+	                			<span class="move-acknowledgment-up-button">
 		                        <xforms:trigger ref=".[preceding-sibling::*]">
 		                            <xforms:label>Move Up <img src="/apps/fr/style/up.gif"/></xforms:label>
 		                            <xforms:action ev:event="DOMActivate">
@@ -52,8 +68,9 @@
 		                                <xforms:delete nodeset="."/>
 		                            </xforms:action>
 		                        </xforms:trigger>
+	                			</span>
 		                        
-		                        
+	                			<span class="move-acknowledgment-down-button">
 		                        <xforms:trigger ref=".[following-sibling::*]">
 		                            <xforms:label>Move Down <img src="/apps/fr/style/down.gif"/></xforms:label>
 		                            <xforms:action ev:event="DOMActivate">
@@ -61,6 +78,7 @@
 		                                <xforms:delete nodeset="."/>
 		                            </xforms:action>
 		                        </xforms:trigger>
+		                        </span>
 	                        </div>
 
 	                    </td>
@@ -81,22 +99,26 @@
 	                    </xforms:trigger>
 	                </td>
 	                <td>
-	                    <xforms:trigger appearance="minimal">
-	                        <xforms:label>Add an Acknowledgement</xforms:label>
-	                        <xforms:insert 
-	                            ev:event="DOMActivate" 
-	                            context="." 
-	                            nodeset="person" 
-	                            at="last()" 
-	                            position="after" 
-	                            origin="instance('ins-person-template')"/>
-	                    </xforms:trigger>
+	                	<span id="add-acknowledgement-link-container">
+		                    <xforms:trigger appearance="minimal">
+		                        <xforms:label>Add an Acknowledgement</xforms:label>
+		                        <xforms:insert 
+		                            ev:event="DOMActivate" 
+		                            context="." 
+		                            nodeset="person" 
+		                            at="last()" 
+		                            position="after" 
+		                            origin="instance('ins-person-template')"/>
+		                    </xforms:trigger>
+	                	</span>
 	                </td>
 	            </tr>
 	            
 	        </table>
 	        
-	    </xforms:group>
+		</span>
+	        
+	</xforms:group>
 
 	<p>
 	
@@ -130,7 +152,8 @@
 				<xforms:message>Please complete all required fields.</xforms:message>
 			</xforms:action>
 		</xforms:trigger>
-
+		
+		<span id="acknowledgements-next-button-container">
 		<xforms:trigger ref="instance('ins-control')/save-draft-trigger">
 			<xforms:label>Next &gt;</xforms:label>
 			<xforms:action ev:event="DOMActivate" if="../draft-entry-is-valid = 'true'">
@@ -141,6 +164,7 @@
 				<xforms:message>Please complete all required fields.</xforms:message>
 			</xforms:action>
 		</xforms:trigger>
+		</span>
 
 		<xforms:trigger ref="instance('ins-control')/save-draft-trigger" appearance="minimal">
 			<xforms:label>Skip To End &gt;&gt;</xforms:label>

@@ -17,17 +17,21 @@
 	
 	<!-- TODO: bind some study fields, e.g. title, as readonly for ssq changes. -->
      <p>
-         <xforms:submit submission="sub-put-sq-study-entry">
-             <xforms:label>Save Changes</xforms:label>
-         </xforms:submit>
+         <span class="confirmation-study-info-save-button-container">
+             <xforms:submit submission="sub-put-sq-study-entry">
+                 <xforms:label>Save Changes</xforms:label>
+             </xforms:submit>
+         </span>
      </p>
 	
-	<xi:include href="/apps/common/includes/study/questionnaire-xforms-input.xml" />
+	<xi:include href="../../../common/includes/study/questionnaire-xforms-input.xml" />
 	
      <p>
-         <xforms:submit submission="sub-put-sq-study-entry">
-             <xforms:label>Save Changes</xforms:label>
-         </xforms:submit>
+         <span class="confirmation-study-info-save-button-container">
+             <xforms:submit submission="sub-put-sq-study-entry">
+                 <xforms:label>Save Changes</xforms:label>
+             </xforms:submit>
+         </span>
      </p>
 	
 </div>
