@@ -30,11 +30,13 @@ declare variable $CONSTANT:HEADER-CONTENT-LOCATION as xs:string         := "Cont
 declare variable $CONSTANT:HEADER-CONTENT-DISPOSITION as xs:string 		:= "Content-Disposition" ;
 declare variable $CONSTANT:HEADER-LOCATION as xs:string 				:= "Location" ;
 declare variable $CONSTANT:HEADER-SLUG as xs:string		 				:= "Slug" ;
+declare variable $CONSTANT:HEADER-ETAG as xs:string		 				:= "ETag" ;
 declare variable $CONSTANT:HEADER-IF-MODIFIED-SINCE as xs:string		:= "If-Modified-Since" ;
 
 declare variable $CONSTANT:MEDIA-TYPE-MULTIPART-FORM-DATA as xs:string	:= "multipart/form-data" ;
 declare variable $CONSTANT:MEDIA-TYPE-XML as xs:string					:= "application/xml" ;
 declare variable $CONSTANT:MEDIA-TYPE-ATOM as xs:string					:= "application/atom+xml" ;
+declare variable $CONSTANT:MEDIA-TYPE-TEXT as xs:string					:= "text/plain" ;
 
 declare variable $CONSTANT:ATOM-NSURI 						:= "http://www.w3.org/2005/Atom" ;
 declare variable $CONSTANT:ATOM-FEED as xs:string 			:= "feed" ;
@@ -64,3 +66,5 @@ declare variable $CONSTANT:OP-DELETE-MEDIA as xs:string          := "DELETE_MEDI
 declare variable $CONSTANT:OP-RETRIEVE-ACL as xs:string          := "RETRIEVE_ACL" ;
 declare variable $CONSTANT:OP-UPDATE-ACL as xs:string            := "UPDATE_ACL" ;
 declare variable $CONSTANT:OP-MULTI-CREATE as xs:string          := "MULTI_CREATE" ;
+declare variable $CONSTANT:OP-RETRIEVE-HISTORY as xs:string      := "RETRIEVE_HISTORY" ;
+declare variable $CONSTANT:OP-RETRIEVE-REVISION as xs:string     := "RETRIEVE_REVISION" ;
