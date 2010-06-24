@@ -121,6 +121,8 @@
 	    	
     		<xforms:group ref="instance('ins-study-feed')[exists(atom:entry)]">
 
+				<span id="list-of-studies-container">
+
 		    	<fr:datatable>
 		    		<thead>
 		    			<tr>
@@ -135,7 +137,7 @@
 		    		</thead>
 		    		<tbody>
 		    			<xforms:repeat nodeset="xxforms:sort(instance('ins-study-feed')/atom:entry, atom:published, 'text', 'ascending')">
-		    				<tr>
+		    				<tr class="repeated-element">
 		    					<td>
 		    						<a href="study-dashboard?study={atom:link[@rel='edit']/@href}"><xforms:output value="manta:id"/></a>
 		    					</td>
@@ -163,6 +165,8 @@
 		    			</xforms:repeat>
 		    		</tbody>
 		    	</fr:datatable>
+		    	
+		    	</span>
 		    	
     		</xforms:group>
     		
