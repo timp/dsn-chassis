@@ -7,27 +7,31 @@
 	<h2>Publications - (Step 5 of 5)</h2>
 
 	<p>
-		<xforms:select1 ref="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:content/study/study-is-published">
-			<xforms:label>Is the study published?</xforms:label>
-			<xforms:item>
-				<xforms:value></xforms:value>
-				<xforms:label>Select...</xforms:label>
-			</xforms:item>
+		<span id="published-status-menu-container">
+			<xforms:select1 ref="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:content/study/study-is-published">
+				<xforms:label>Is the study published?</xforms:label>
+				<xforms:item>
+					<xforms:value></xforms:value>
+					<xforms:label>Select...</xforms:label>
+				</xforms:item>
+					
+	
+	           	<xforms:itemset nodeset="instance('ins-study-is-published-terms')/term">
+	           		<xforms:label ref="label"/>
+	           		<xforms:value ref="value"/>
+	           	</xforms:itemset>		
 				
-
-           	<xforms:itemset nodeset="instance('ins-study-is-published-terms')/term">
-           		<xforms:label ref="label"/>
-           		<xforms:value ref="value"/>
-           	</xforms:itemset>		
-			
-		</xforms:select1>
+			</xforms:select1>
+		</span>
 	</p>
 
     <xforms:group ref="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:content/study/publications">
-               	
+              
+		<span id="editable-list-of-publications-container">
+          
 		<table>
             <xforms:repeat nodeset="publication" id="rep-publication">
-                <tr>
+                <tr class="repeated-element">
                     <td>
                         <xforms:trigger>
                             <xforms:delete 
@@ -61,20 +65,24 @@
 	                    </xforms:trigger>
 	                </td>
 	                <td>
-	                    <xforms:trigger appearance="minimal">
-	                        <xforms:label>Add a Publication</xforms:label>
-	                        <xforms:insert 
-	                            ev:event="DOMActivate" 
-	                            context="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:content/study/publications" 
-	                            nodeset="publication" 
-	                            at="last()" 
-	                            position="after" 
-	                            origin="instance('ins-publication-template')"/>
-	                    </xforms:trigger>
+	                	<span id="add-publication-link-container">
+		                    <xforms:trigger appearance="minimal">
+		                        <xforms:label>Add a Publication</xforms:label>
+		                        <xforms:insert 
+		                            ev:event="DOMActivate" 
+		                            context="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:content/study/publications" 
+		                            nodeset="publication" 
+		                            at="last()" 
+		                            position="after" 
+		                            origin="instance('ins-publication-template')"/>
+		                    </xforms:trigger>
+	                	</span>
 	                </td>
             </tr>
             </xforms:group>
         </table>
+
+		</span>
 
 	</xforms:group>		
 
@@ -111,16 +119,18 @@
 			</xforms:action>
 		</xforms:trigger>
 
-		<xforms:trigger ref="instance('ins-control')/save-draft-trigger">
-			<xforms:label>Next &gt;</xforms:label>
-			<xforms:action ev:event="DOMActivate" if="../draft-entry-is-valid = 'true'">
-				<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show" value="'review'"/>
-				<xforms:send submission="sub-implicit-put-draft-entry" />
-			</xforms:action>
-			<xforms:action ev:event="DOMActivate" if="not(../draft-entry-is-valid = 'true')">
-				<xforms:message>Please complete all required fields.</xforms:message>
-			</xforms:action>
-		</xforms:trigger>
+		<span id="publications-next-button-container">
+			<xforms:trigger ref="instance('ins-control')/save-draft-trigger">
+				<xforms:label>Next &gt;</xforms:label>
+				<xforms:action ev:event="DOMActivate" if="../draft-entry-is-valid = 'true'">
+					<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show" value="'review'"/>
+					<xforms:send submission="sub-implicit-put-draft-entry" />
+				</xforms:action>
+				<xforms:action ev:event="DOMActivate" if="not(../draft-entry-is-valid = 'true')">
+					<xforms:message>Please complete all required fields.</xforms:message>
+				</xforms:action>
+			</xforms:trigger>
+		</span>
 
 		<xforms:trigger ref="instance('ins-control')/save-draft-trigger" appearance="minimal">
 			<xforms:label>Skip To End &gt;&gt;</xforms:label>

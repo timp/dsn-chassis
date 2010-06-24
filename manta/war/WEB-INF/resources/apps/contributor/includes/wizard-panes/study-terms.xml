@@ -7,10 +7,12 @@
 	<h2>Study Terms - (Step 1 of 5)</h2>
 
 	<p>
-		<xforms:input id="study-title-textbox-container" ref="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:title">
-			<xforms:label>Study Title:</xforms:label>
-			<xforms:alert>The title is required.</xforms:alert>
-		</xforms:input>
+		<span id="study-title-textbox-container">
+			<xforms:input ref="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:title">
+				<xforms:label>Study Title:</xforms:label>
+				<xforms:alert>The title is required.</xforms:alert>
+			</xforms:input>
+		</span>
 	</p>
 	
 	<iframe src="terms">
@@ -24,17 +26,22 @@
 		<!-- TODO: more conformist workaround to put checkbox on right-hand side (Maybe use CSS to specify display:none on label?) -->
 		<span>I accept the terms of submission:</span>
 		
-		<xforms:select id="agree-to-terms-checkbox-container" ref="instance('ins-draft-entry')/atom:content/draft/registrant-has-agreed-to-the-terms" appearance="full">
-               
-			<xforms:item  ref="instance('ins-draft-entry')/atom:content/draft/registrant-has-agreed-to-the-terms">
-				<!-- <xforms:label>I accept the terms of submission:</xforms:label> -->
-				<xforms:label></xforms:label>
-				<xforms:value>yes</xforms:value>
-			</xforms:item>
-			
-			<xforms:alert>Agreement to the terms of submission is required.</xforms:alert>
 		
-		</xforms:select>
+		<span id="agree-to-terms-checkbox-container">
+		
+			<xforms:select ref="instance('ins-draft-entry')/atom:content/draft/registrant-has-agreed-to-the-terms" appearance="full">
+	               
+				<xforms:item  ref="instance('ins-draft-entry')/atom:content/draft/registrant-has-agreed-to-the-terms">
+					<!-- <xforms:label>I accept the terms of submission:</xforms:label> -->
+					<xforms:label></xforms:label>
+					<xforms:value>yes</xforms:value>
+				</xforms:item>
+				
+				<xforms:alert>Agreement to the terms of submission is required.</xforms:alert>
+			
+			</xforms:select>
+			
+		</span>
 		
 	</p>
 
@@ -57,17 +64,19 @@
 			</xforms:trigger>
 		</xforms:group>
 	
-		<xforms:trigger id="study-terms-next-button" ref="instance('ins-control')/create-draft-trigger">
-			<xforms:label>Next &gt;</xforms:label>
-			<xforms:action ev:event="DOMActivate" if="../draft-entry-is-valid = 'true'">
-				<xforms:setvalue ref="instance('ins-draft-entry')/atom:title" value="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:title"/>	
-				<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show" value="'permissions'"/>
-				<xforms:send submission="sub-post-draft-entry" />
-			</xforms:action>
-			<xforms:action ev:event="DOMActivate" if="not(../draft-entry-is-valid = 'true')">
-				<xforms:message>Please complete all required fields.</xforms:message>
-			</xforms:action>
-		</xforms:trigger>
+		<span id="study-terms-next-button-container">
+			<xforms:trigger ref="instance('ins-control')/create-draft-trigger">
+				<xforms:label>Next &gt;</xforms:label>
+				<xforms:action ev:event="DOMActivate" if="../draft-entry-is-valid = 'true'">
+					<xforms:setvalue ref="instance('ins-draft-entry')/atom:title" value="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:title"/>	
+					<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show" value="'permissions'"/>
+					<xforms:send submission="sub-post-draft-entry" />
+				</xforms:action>
+				<xforms:action ev:event="DOMActivate" if="not(../draft-entry-is-valid = 'true')">
+					<xforms:message>Please complete all required fields.</xforms:message>
+				</xforms:action>
+			</xforms:trigger>
+		</span>
 
 		
 			
