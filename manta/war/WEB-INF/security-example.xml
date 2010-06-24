@@ -9,20 +9,8 @@
 
 
   <http 
-    auto-config="false" 
-    realm="chassis-manta" 
-    create-session="never">
-  
-    
-    <http-basic/>
-    
-    
-    <!-- default method is to post to /j_spring_security_check -->
-    <!-- <form-login login-page="/home/login" always-use-default-target="false"/> -->
-    
-    <!-- default method is to get from /j_spring_security_logout -->
-    <logout logout-success-url="/home/" invalidate-session="true" logout-url="/logout" />
-
+    auto-config="true" 
+    realm="chassis-manta">
     
     <!-- restrict access to libraries and administrative scripts -->
     <intercept-url pattern="/atombeat/admin/**" access="ROLE_CHASSIS_ADMINISTRATOR" />
