@@ -8,7 +8,14 @@ declare variable $config-collections:collection-spec :=
             <title>Studies</title>
             <path-info>/studies</path-info>
             <enable-history>true</enable-history>
-            <exclude-entry-content>true</exclude-entry-content>
+            <exclude-entry-content>false</exclude-entry-content>
+            <recursive>false</recursive>
+        </collection>   
+        <collection>
+            <title>Study Information</title>
+            <path-info>/study-info</path-info>
+            <enable-history>true</enable-history>
+            <exclude-entry-content>false</exclude-entry-content>
             <recursive>false</recursive>
         </collection>   
         <collection>
@@ -22,28 +29,28 @@ declare variable $config-collections:collection-spec :=
             <title>All Submitted Media</title>
             <path-info>/media/submitted</path-info>
             <enable-history>false</enable-history>
-            <exclude-entry-content>true</exclude-entry-content>
+            <exclude-entry-content>false</exclude-entry-content>
             <recursive>true</recursive>
         </collection>   
         <collection>
             <title>All Curated Media</title>
             <path-info>/media/curated</path-info>
             <enable-history>false</enable-history>
-            <exclude-entry-content>true</exclude-entry-content>
+            <exclude-entry-content>false</exclude-entry-content>
             <recursive>true</recursive>
         </collection>   
         <collection>
             <title>All Draft Media</title>
             <path-info>/media/draft</path-info>
             <enable-history>false</enable-history>
-            <exclude-entry-content>true</exclude-entry-content>
+            <exclude-entry-content>false</exclude-entry-content>
             <recursive>true</recursive>
         </collection>   
         <collection>
             <title>All Derivations</title>
             <path-info>/derivations</path-info>
             <enable-history>false</enable-history>
-            <exclude-entry-content>true</exclude-entry-content>
+            <exclude-entry-content>false</exclude-entry-content>
             <recursive>true</recursive>
         </collection>   
         <collection>

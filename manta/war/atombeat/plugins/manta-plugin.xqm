@@ -58,9 +58,7 @@ declare function manta-plugin:before(
         else if ( $operation = $CONSTANT:OP-UPDATE-MEMBER )
         then manta-plugin:before-update-member( $request-path-info , $request-data )
         
-	    else
-        	let $status-code := 0 (: we don't want to interrupt request processing :)
-	        return ( $status-code , $request-data )
+	    else $request-data
 
 };
 
@@ -76,9 +74,7 @@ declare function manta-plugin:before-create-member(
     then manta-plugin:before-create-member-study( $request-data )
     else if ( $request-path-info = "/drafts" ) 
     then manta-plugin:before-create-member-drafts( $request-data )
-    else
-        let $status-code := 0 (: we don't want to interrupt request processing :)
-        return ( $status-code , $request-data )
+    else $request-data
 };
 
 
@@ -97,9 +93,7 @@ declare function manta-plugin:before-update-member(
     then manta-plugin:before-update-member-submitted-media( $request-path-info , $request-data )
     else if ( matches( $request-path-info , "/media/curated/[^/]+/[^/]+\.atom" ) )
     then manta-plugin:before-update-member-curated-media( $request-path-info , $request-data )
-    else
-        let $status-code := 0 (: we don't want to interrupt request processing :)
-        return ( $status-code , $request-data )
+    else $request-data 
 };
 
 
@@ -110,8 +104,7 @@ declare function manta-plugin:before-create-member-study(
 ) as item()*
 {
     let $request-data := manta-plugin:filter-study-entry( $request-data )
-    let $status-code := 0 (: we don't want to interrupt request processing :)
-    return ( $status-code , $request-data )
+    return $request-data
 };
 
 
@@ -121,8 +114,7 @@ declare function manta-plugin:before-create-member-drafts(
 ) as item()*
 {
     let $request-data := manta-plugin:filter-draft-entry( $request-data )
-    let $status-code := 0 (: we don't want to interrupt request processing :)
-    return ( $status-code , $request-data )
+    return $request-data
 };
 
 
@@ -133,8 +125,7 @@ declare function manta-plugin:before-update-member-study(
 ) as item()*
 {
     let $request-data := manta-plugin:filter-study-entry( $request-data )
-    let $status-code := 0 (: we don't want to interrupt request processing :)
-    return ( $status-code , $request-data )
+    return $request-data
 };
 
 
@@ -145,8 +136,7 @@ declare function manta-plugin:before-update-member-drafts(
 ) as item()*
 {
     let $request-data := manta-plugin:filter-draft-entry( $request-data )
-    let $status-code := 0 (: we don't want to interrupt request processing :)
-    return ( $status-code , $request-data )
+    return $request-data
 };
 
 
@@ -157,8 +147,7 @@ declare function manta-plugin:before-update-member-submitted-media(
 ) as item()*
 {
     let $request-data := manta-plugin:filter-media-entry( $request-data )
-    let $status-code := 0 (: we don't want to interrupt request processing :)
-    return ( $status-code , $request-data )
+    return $request-data
 };
 
 
@@ -170,8 +159,7 @@ declare function manta-plugin:before-update-member-curated-media(
 ) as item()*
 {
     let $request-data := manta-plugin:filter-media-entry( $request-data )
-    let $status-code := 0 (: we don't want to interrupt request processing :)
-    return ( $status-code , $request-data )
+    return $request-data
 };
 
 
@@ -181,6 +169,8 @@ declare function manta-plugin:filter-study-entry(
     $entry as element(atom:entry)
 ) as element(atom:entry)
 {
+
+    (: TODO use instance of testing :)
     <atom:entry>
     {
         $entry/attribute::* ,
@@ -292,9 +282,8 @@ declare function manta-plugin:filter-media-entry(
 declare function manta-plugin:after(
 	$operation as xs:string ,
 	$request-path-info as xs:string ,
-	$response-data as item()* ,
-	$response-content-type as xs:string?
-) as item()*
+	$response as element(response)
+) as element(response)
 {
 
 	let $message := ( "chassis-manta plugin, after: " , $operation , ", request-path-info: " , $request-path-info ) 
@@ -304,28 +293,25 @@ declare function manta-plugin:after(
 		
 		if ( $operation = $CONSTANT:OP-CREATE-MEMBER ) 
 		
-		then manta-plugin:after-create-member( $request-path-info , $response-data , $response-content-type )
+		then manta-plugin:after-create-member( $request-path-info , $response )
 		
 		else if ( $operation = $CONSTANT:OP-RETRIEVE-MEMBER )
 		
-		then manta-plugin:after-retrieve-member( $request-path-info , $response-data , $response-content-type )
+		then manta-plugin:after-retrieve-member( $request-path-info , $response )
 		
 		else if ( $operation = $CONSTANT:OP-UPDATE-MEMBER )
 		
-		then manta-plugin:after-update-member( $request-path-info , $response-data , $response-content-type )
+		then manta-plugin:after-update-member( $request-path-info , $response )
 		
 		else if ( $operation = $CONSTANT:OP-LIST-COLLECTION )
 		
-		then manta-plugin:after-list-collection( $request-path-info , $response-data , $response-content-type )
+		then manta-plugin:after-list-collection( $request-path-info , $response )
 		
 		else if ( $operation = $CONSTANT:OP-CREATE-MEDIA )
 		
-		then manta-plugin:after-create-media( $request-path-info , $response-data , $response-content-type )
+		then manta-plugin:after-create-media( $request-path-info , $response )
 		
-		else
-		
-    		(: pass response data and content type through, we don't want to modify response :)
-    		( $response-data , $response-content-type )
+		else $response
 
 };
 
@@ -337,27 +323,23 @@ declare function manta-plugin:after(
 
 declare function manta-plugin:after-create-member(
 	$request-path-info as xs:string ,
-	$entry as element(atom:entry) ,
-	$response-content-type as xs:string?
-) as item()*
+	$response as element(response)
+) as element(response)
 {
 
     if ( $request-path-info = "/studies" )
     
-    then manta-plugin:after-create-member-studies( $entry , $response-content-type )
+    then manta-plugin:after-create-member-studies( $response )
     
     else if ( $request-path-info = "/drafts" )
     
-    then manta-plugin:after-create-member-drafts( $entry , $response-content-type )
+    then manta-plugin:after-create-member-drafts( $response )
     
     else if ( matches( $request-path-info , "^/media/submitted/[^/]+" ) )
     
-    then manta-plugin:after-create-member-submitted-media( $entry , $response-content-type )
+    then manta-plugin:after-create-member-submitted-media( $response )
     
-    else
-
-    	(: pass response data and content type through, we don't want to modify response :)
-    	( $entry , $response-content-type )
+    else $response
 
 };
 
@@ -365,19 +347,15 @@ declare function manta-plugin:after-create-member(
 
 declare function manta-plugin:after-create-media(
 	$request-path-info as xs:string ,
-	$entry as element(atom:entry) ,
-	$response-content-type as xs:string?
-) as item()*
+	$response as element(response)
+) as element(response)
 {
 
     if ( matches( $request-path-info , "^/media/submitted/[^/]+" ) )
     
-    then manta-plugin:after-create-media-submitted-media( $entry , $response-content-type )
+    then manta-plugin:after-create-media-submitted-media( $response )
     
-    else
-
-    	(: pass response data and content type through, we don't want to modify response :)
-    	( $entry , $response-content-type )
+    else $response
 
 };
 
@@ -385,34 +363,30 @@ declare function manta-plugin:after-create-media(
 
 declare function manta-plugin:after-retrieve-member(
 	$request-path-info as xs:string ,
-	$entry as element(atom:entry) ,
-	$response-content-type as xs:string?
-) as item()*
+	$response as element(response)
+) as element(response)
 {
     if ( matches( $request-path-info , "/studies/[^/]+\.atom" ) )
     
-    then manta-plugin:after-retrieve-member-studies( $entry , $response-content-type )
+    then manta-plugin:after-retrieve-member-studies( $response )
     
     else if ( matches( $request-path-info , "/drafts/[^/]+\.atom" ) )
     
-    then manta-plugin:after-retrieve-member-drafts( $entry , $response-content-type )
+    then manta-plugin:after-retrieve-member-drafts( $response )
     
     else if ( matches( $request-path-info , "^/media/submitted/[^/]+/[^/]+.atom" ) )
     
-    then manta-plugin:after-retrieve-member-submitted-media( $entry , $response-content-type )
+    then manta-plugin:after-retrieve-member-submitted-media( $response )
     
     else if ( matches( $request-path-info , "^/media/curated/[^/]+/[^/]+.atom" ) )
     
-    then manta-plugin:after-retrieve-member-curated-media( $entry , $response-content-type )
+    then manta-plugin:after-retrieve-member-curated-media( $response )
     
     else if ( matches( $request-path-info , "^/derivations/[^/]+/[^/]+.atom" ) )
     
-    then manta-plugin:after-retrieve-member-derivations( $entry , $response-content-type )
+    then manta-plugin:after-retrieve-member-derivations( $response )
     
-    else
-
-    	(: pass response data and content type through, we don't want to modify response :)
-    	( $entry , $response-content-type )
+    else $response
 
 };
 
@@ -420,26 +394,22 @@ declare function manta-plugin:after-retrieve-member(
 
 declare function manta-plugin:after-update-member(
 	$request-path-info as xs:string ,
-	$entry as element(atom:entry) ,
-	$response-content-type as xs:string?
-) as item()*
+	$response as element(response)
+) as element(response)
 {
     if ( matches( $request-path-info , "/studies/[^/]+\.atom" ) )
     
-    then manta-plugin:after-update-member-studies( $entry , $response-content-type )
+    then manta-plugin:after-update-member-studies( $response )
     
     else if ( matches( $request-path-info , "/drafts/[^/]+\.atom" ) )
     
-    then manta-plugin:after-update-member-drafts( $entry , $response-content-type )
+    then manta-plugin:after-update-member-drafts( $response )
     
     else if ( matches( $request-path-info , "^/media/submitted/[^/]+/[^/]+.atom" ) )
     
-    then manta-plugin:after-update-member-submitted-media( $entry , $response-content-type )
+    then manta-plugin:after-update-member-submitted-media( $response )
     
-    else
-
-    	(: pass response data and content type through, we don't want to modify response :)
-    	( $entry , $response-content-type )
+    else $response
 
 };
 
@@ -447,52 +417,63 @@ declare function manta-plugin:after-update-member(
 
 declare function manta-plugin:after-list-collection(
 	$request-path-info as xs:string ,
-	$feed as element(atom:feed) ,
-	$response-content-type as xs:string?
-) as item()*
+	$response as element(response)
+) as element(response)
 {
     if ( $request-path-info = "/studies" )
     
-    then manta-plugin:after-list-collection-studies( $feed , $response-content-type )
+    then manta-plugin:after-list-collection-studies( $response )
     
     else if ( $request-path-info = "/drafts" )
     
-    then manta-plugin:after-list-collection-drafts( $feed , $response-content-type )
+    then manta-plugin:after-list-collection-drafts( $response )
     
     else if ( matches( $request-path-info , "^/media/submitted" ) )
     
-    then manta-plugin:after-list-collection-submitted-media( $feed , $response-content-type )
+    then manta-plugin:after-list-collection-submitted-media( $response )
     
     else if ( matches( $request-path-info , "^/media/curated" ) )
     
-    then manta-plugin:after-list-collection-curated-media( $feed , $response-content-type )
+    then manta-plugin:after-list-collection-curated-media( $response )
     
     else if ( matches( $request-path-info , "^/derivations" ) )
     
-    then manta-plugin:after-list-collection-derivations( $request-path-info , $feed , $response-content-type )
+    then manta-plugin:after-list-collection-derivations( $request-path-info , $response )
     
     else if ( matches( $request-path-info , "^/reviews/personal-data/[^/]+" ) )
     
-    then manta-plugin:after-list-collection-personal-data-reviews( $request-path-info , $feed , $response-content-type )
+    then manta-plugin:after-list-collection-personal-data-reviews( $request-path-info , $response )
 
-    else
-
-    	(: pass response data and content type through, we don't want to modify response :)
-    	( $feed , $response-content-type )
+    else $response
 
 };
 
 
 
 declare function manta-plugin:after-create-member-studies(
-	$entry as element(atom:entry) ,
-	$response-content-type as xs:string?
-) as item()*
+	$response as element(response)
+) as element(response)
 {
 
     let $log := local:debug( "== manta-plugin:after-create-member-studies() ==")
     
+    let $entry := $response/body/atom:entry 
+    
     let $id := manta-plugin:get-id( $entry )
+    
+    (: create an associated study info entry :)
+    
+    let $study-info-entry := 
+        <atom:entry>
+            <atom:title type="text">Study Info for Study {$id}</atom:title>
+            <atom:link rel="http://www.cggh.org/2010/chassis/terms/study" href="{$entry/atom:link[@rel='edit']/@href}" type="application/atom+xml;type=entry"/>
+        </atom:entry>
+        
+    let $study-info-entry := atomdb:create-member( "/study-info" , $study-info-entry ) 
+    
+    (: TODO reciprocal link from study to study-info entry :)
+        
+    (: create a collection for submitted media :)    
     
     let $submitted-media-collection-path-info := manta-plugin:submitted-media-collection-path-info-for-study-entry( $entry )
     let $log := local:debug( $submitted-media-collection-path-info )
@@ -510,6 +491,8 @@ declare function manta-plugin:after-create-member-studies(
     let $submitted-media-collection-descriptor := config:submitted-media-collection-security-descriptor( $submitted-media-collection-path-info )
     let $descriptor-stored := atomsec:store-collection-descriptor( $submitted-media-collection-path-info , $submitted-media-collection-descriptor )
     
+    (: create a collection for curated media :)    
+
     let $curated-media-collection-path-info := manta-plugin:curated-media-collection-path-info-for-study-entry( $entry )
     let $log := local:debug( $curated-media-collection-path-info )
     
@@ -526,6 +509,8 @@ declare function manta-plugin:after-create-member-studies(
     let $curated-media-collection-descriptor := config:curated-media-collection-security-descriptor( $curated-media-collection-path-info )
     let $descriptor-stored := atomsec:store-collection-descriptor( $curated-media-collection-path-info , $curated-media-collection-descriptor )
     
+    (: create a collection for derivations :)    
+
     let $derivations-collection-path-info := manta-plugin:derivations-collection-path-info-for-study-entry( $entry )
     let $log := local:debug( $derivations-collection-path-info )
     
@@ -542,6 +527,8 @@ declare function manta-plugin:after-create-member-studies(
     let $derivations-collection-descriptor := config:derivations-collection-security-descriptor( $derivations-collection-path-info )
     let $descriptor-stored := atomsec:store-collection-descriptor( $derivations-collection-path-info , $derivations-collection-descriptor )
     
+    (: create a collection for personal data reviews :)    
+
     let $personal-data-reviews-collection-path-info := manta-plugin:personal-data-reviews-collection-path-info-for-study-entry( $entry )
     let $log := local:debug( $personal-data-reviews-collection-path-info )
     
@@ -560,7 +547,7 @@ declare function manta-plugin:after-create-member-studies(
     
     let $entry := manta-plugin:augment-study-entry( $entry )
     
-    return ( $entry , $response-content-type )
+    return manta-plugin:replace-response-body( $response , $entry )
     
 };
 
@@ -568,13 +555,13 @@ declare function manta-plugin:after-create-member-studies(
 
 
 declare function manta-plugin:after-create-member-drafts(
-	$entry as element(atom:entry) ,
-	$response-content-type as xs:string?
-) as item()*
+	$response as element(response)
+) as element(response)
 {
 
     let $log := local:debug( "== manta-plugin:after-create-member-drafts() ==")
     
+    let $entry := $response/body/atom:entry 
     let $id := manta-plugin:get-id( $entry )
     let $user := request:get-attribute( $config:user-name-request-attribute-key )
     
@@ -596,7 +583,7 @@ declare function manta-plugin:after-create-member-drafts(
     
     let $entry := manta-plugin:augment-draft-entry( $entry )
     
-    return ( $entry , $response-content-type )
+    return manta-plugin:replace-response-body( $response , $entry )
     
 };
 
@@ -604,31 +591,27 @@ declare function manta-plugin:after-create-member-drafts(
 
 
 declare function manta-plugin:after-create-member-submitted-media(
-	$entry as element(atom:entry) ,
-	$response-content-type as xs:string?
-) as item()*
+	$response as element(response)
+) as element(response)
 {
 
+    let $entry := $response/body/atom:entry 
     let $entry := manta-plugin:augment-media-entry( $entry )
     
-    return ( $entry , $response-content-type )
+    return manta-plugin:replace-response-body( $response , $entry )
     
 };
 
 
 
 declare function manta-plugin:after-create-media-submitted-media(
-	$entry as element(atom:entry) ,
-	$response-content-type as xs:string?
-) as item()*
+	$response as element(response)
+) as element(response)
 {
 
-    let $entry := 
-        if ( starts-with( $response-content-type , $CONSTANT:MEDIA-TYPE-ATOM ) )
-        then manta-plugin:augment-media-entry( $entry )
-        else $entry
-
-    return ( $entry , $response-content-type )
+    let $entry := $response/body/atom:entry 
+    let $entry := manta-plugin:augment-media-entry( $entry )
+    return manta-plugin:replace-response-body( $response , $entry )
     
 };
 
@@ -636,14 +619,13 @@ declare function manta-plugin:after-create-media-submitted-media(
 
 
 declare function manta-plugin:after-retrieve-member-studies(
-	$entry as element(atom:entry) ,
-	$response-content-type as xs:string?
-) as item()*
+	$response as element(response)
+) as element(response)
 {
     
+    let $entry := $response/body/atom:entry 
     let $entry := manta-plugin:augment-study-entry( $entry )
-    
-    return ( $entry , $response-content-type )
+    return manta-plugin:replace-response-body( $response , $entry )
     
 };
 
@@ -651,14 +633,13 @@ declare function manta-plugin:after-retrieve-member-studies(
 
 
 declare function manta-plugin:after-retrieve-member-derivations(
-	$entry as element(atom:entry) ,
-	$response-content-type as xs:string?
-) as item()*
+	$response as element(response)
+) as element(response)
 {
     
+    let $entry := $response/body/atom:entry 
     let $entry := manta-plugin:augment-derivation-entry( $entry )
-    
-    return ( $entry , $response-content-type )
+    return manta-plugin:replace-response-body( $response , $entry )
     
 };
 
@@ -666,14 +647,13 @@ declare function manta-plugin:after-retrieve-member-derivations(
 
 
 declare function manta-plugin:after-retrieve-member-drafts(
-	$entry as element(atom:entry) ,
-	$response-content-type as xs:string?
-) as item()*
+	$response as element(response)
+) as element(response)
 {
     
+    let $entry := $response/body/atom:entry 
     let $entry := manta-plugin:augment-draft-entry( $entry )
-    
-    return ( $entry , $response-content-type )
+    return manta-plugin:replace-response-body( $response , $entry )
     
 };
 
@@ -681,14 +661,13 @@ declare function manta-plugin:after-retrieve-member-drafts(
 
 
 declare function manta-plugin:after-retrieve-member-submitted-media(
-	$entry as element(atom:entry) ,
-	$response-content-type as xs:string?
-) as item()*
+	$response as element(response)
+) as element(response)
 {
     
+    let $entry := $response/body/atom:entry 
     let $entry := manta-plugin:augment-media-entry( $entry )
-    
-    return ( $entry , $response-content-type )
+    return manta-plugin:replace-response-body( $response , $entry )
     
 };
 
@@ -696,14 +675,13 @@ declare function manta-plugin:after-retrieve-member-submitted-media(
 
 
 declare function manta-plugin:after-retrieve-member-curated-media(
-	$entry as element(atom:entry) ,
-	$response-content-type as xs:string?
-) as item()*
+	$response as element(response)
+) as element(response)
 {
     
+    let $entry := $response/body/atom:entry 
     let $entry := manta-plugin:augment-media-entry( $entry )
-    
-    return ( $entry , $response-content-type )
+    return manta-plugin:replace-response-body( $response , $entry )
     
 };
 
@@ -711,14 +689,13 @@ declare function manta-plugin:after-retrieve-member-curated-media(
 
 
 declare function manta-plugin:after-update-member-studies(
-	$entry as element(atom:entry) ,
-	$response-content-type as xs:string?
-) as item()*
+	$response as element(response)
+) as element(response)
 {
     
+    let $entry := $response/body/atom:entry 
     let $entry := manta-plugin:augment-study-entry( $entry )
-    
-    return ( $entry , $response-content-type )
+    return manta-plugin:replace-response-body( $response , $entry )
     
 };
 
@@ -726,14 +703,13 @@ declare function manta-plugin:after-update-member-studies(
 
 
 declare function manta-plugin:after-update-member-drafts(
-	$entry as element(atom:entry) ,
-	$response-content-type as xs:string?
-) as item()*
+	$response as element(response)
+) as element(response)
 {
     
+    let $entry := $response/body/atom:entry 
     let $entry := manta-plugin:augment-draft-entry( $entry )
-    
-    return ( $entry , $response-content-type )
+    return manta-plugin:replace-response-body( $response , $entry )
     
 };
 
@@ -741,14 +717,13 @@ declare function manta-plugin:after-update-member-drafts(
 
 
 declare function manta-plugin:after-update-member-submitted-media(
-	$entry as element(atom:entry) ,
-	$response-content-type as xs:string?
-) as item()*
+	$response as element(response)
+) as element(response)
 {
     
+    let $entry := $response/body/atom:entry 
     let $entry := manta-plugin:augment-media-entry( $entry )
-    
-    return ( $entry , $response-content-type )
+    return manta-plugin:replace-response-body( $response , $entry )
     
 };
 
@@ -756,11 +731,12 @@ declare function manta-plugin:after-update-member-submitted-media(
 
 
 declare function manta-plugin:after-list-collection-studies(
-	$feed as element(atom:feed) ,
-	$response-content-type as xs:string?
-) as item()*
+	$response as element(response)
+) as element(response)
 {
     
+    let $feed := $response/body/atom:feed 
+
     let $feed := 
         <atom:feed>
         {
@@ -771,7 +747,7 @@ declare function manta-plugin:after-list-collection-studies(
         }
         </atom:feed>
     
-    return ( $feed , $response-content-type )
+    return manta-plugin:replace-response-body( $response , $feed )
     
 };
 
@@ -779,11 +755,12 @@ declare function manta-plugin:after-list-collection-studies(
 
 
 declare function manta-plugin:after-list-collection-drafts(
-	$feed as element(atom:feed) ,
-	$response-content-type as xs:string?
-) as item()*
+	$response as element(response)
+) as element(response)
 {
     
+    let $feed := $response/body/atom:feed 
+
     let $feed := 
         <atom:feed>
         {
@@ -794,7 +771,7 @@ declare function manta-plugin:after-list-collection-drafts(
         }
         </atom:feed>
     
-    return ( $feed , $response-content-type )
+    return manta-plugin:replace-response-body( $response , $feed )
     
 };
 
@@ -802,11 +779,12 @@ declare function manta-plugin:after-list-collection-drafts(
 
 
 declare function manta-plugin:after-list-collection-submitted-media(
-    $feed as element(atom:feed) ,
-    $response-content-type as xs:string?
-) as item()*
+	$response as element(response)
+) as element(response)
 {
     
+    let $feed := $response/body/atom:feed 
+
     let $feed := 
         <atom:feed>
         {
@@ -820,7 +798,7 @@ declare function manta-plugin:after-list-collection-submitted-media(
         }
         </atom:feed>
     
-    return ( $feed , $response-content-type )
+    return manta-plugin:replace-response-body( $response , $feed )
     
 };
 
@@ -828,11 +806,12 @@ declare function manta-plugin:after-list-collection-submitted-media(
 
 
 declare function manta-plugin:after-list-collection-curated-media(
-    $feed as element(atom:feed) ,
-    $response-content-type as xs:string?
-) as item()*
+	$response as element(response)
+) as element(response)
 {
     
+    let $feed := $response/body/atom:feed 
+
     let $feed := 
         <atom:feed>
         {
@@ -846,7 +825,7 @@ declare function manta-plugin:after-list-collection-curated-media(
         }
         </atom:feed>
     
-    return ( $feed , $response-content-type )
+    return manta-plugin:replace-response-body( $response , $feed )
     
 };
 
@@ -855,11 +834,12 @@ declare function manta-plugin:after-list-collection-curated-media(
 
 declare function manta-plugin:after-list-collection-derivations(
     $request-path-info as xs:string ,
-    $feed as element(atom:feed) ,
-    $response-content-type as xs:string?
-) as item()*
+	$response as element(response)
+) as element(response)
 {
     
+    let $feed := $response/body/atom:feed 
+
     let $param-input := request:get-parameter( "input" , "" )
     let $param-output := request:get-parameter( "output" , "" )
     
@@ -887,7 +867,7 @@ declare function manta-plugin:after-list-collection-derivations(
         }
         </atom:feed>
     
-    return ( $feed , $response-content-type )
+    return manta-plugin:replace-response-body( $response , $feed )
     
 };
 
@@ -896,11 +876,11 @@ declare function manta-plugin:after-list-collection-derivations(
 
 declare function manta-plugin:after-list-collection-personal-data-reviews(
     $request-path-info as xs:string ,
-    $feed as element(atom:feed) ,
-    $response-content-type as xs:string?
-) as item()*
+	$response as element(response)
+) as element(response)
 {
     
+    let $feed := $response/body/atom:feed 
     let $param-review-subject := request:get-parameter( "reviewSubject" , "" )
     
     let $feed := 
@@ -922,7 +902,7 @@ declare function manta-plugin:after-list-collection-personal-data-reviews(
         }
         </atom:feed>
     
-    return ( $feed , $response-content-type )
+    return manta-plugin:replace-response-body( $response , $feed )
     
 };
 
@@ -1197,4 +1177,13 @@ declare function manta-plugin:augment-media-entry(
 
 
 
-
+declare function manta-plugin:replace-response-body( $response as element(response) , $body as item() ) as element(response)
+{
+    <response>
+    {
+        $response/status ,
+        $response/headers
+    }
+        <body>{$body}</body>
+    </response>
+};

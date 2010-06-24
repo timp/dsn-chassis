@@ -1,6 +1,6 @@
 xquery version "1.0";
 
-module namespace sp = "http://purl.org/atombeat/xquery/security-plugin";
+module namespace security-plugin = "http://purl.org/atombeat/xquery/security-plugin";
 
 declare namespace atom = "http://www.w3.org/2005/Atom" ;
 declare namespace atombeat = "http://purl.org/atombeat/xmlns" ;
@@ -34,7 +34,7 @@ declare function local:debug(
 
 
 
-declare function sp:before(
+declare function security-plugin:before(
 	$operation as xs:string ,
 	$request-path-info as xs:string ,
 	$request-data as item()* ,
@@ -57,11 +57,20 @@ declare function sp:before(
     		
     		then 
     		
-    			let $status-code := $CONSTANT:STATUS-CLIENT-ERROR-FORBIDDEN (: override request processing :)
     		    let $response-data := "The server understood the request, but is refusing to fulfill it. Authorization will not help and the request SHOULD NOT be repeated."
-    			let $response-content-type := "text/plain"
     			
-    			return ( $status-code , $response-data , $response-content-type )
+    			return 
+    			
+    			    <response>
+    			        <status>{$CONSTANT:STATUS-CLIENT-ERROR-FORBIDDEN}</status>
+    			        <headers>
+    			            <header>
+    			                <name>{$CONSTANT:HEADER-CONTENT-TYPE}</name>
+    			                <value>{$CONSTANT:MEDIA-TYPE-TEXT}</value>
+    			            </header>
+    			        </headers>
+    			        <body>{$response-data}></body>
+    			    </response>
     			
             else if ( 
                 $operation = $CONSTANT:OP-CREATE-MEMBER 
@@ -72,9 +81,8 @@ declare function sp:before(
             
             then 
             
-                let $request-data := sp:strip-descriptor-links( $request-data )
-    			let $status-code := 0 (: we don't want to interrupt request processing :)
-    			return ( $status-code , $request-data )
+                let $request-data := security-plugin:strip-descriptor-links( $request-data )
+    			return $request-data
     			
             else if (
                 $operation = $CONSTANT:OP-MULTI-CREATE
@@ -88,32 +96,26 @@ declare function sp:before(
                     <atom:feed>
                     {
                         for $entry in $request-data/atom:entry
-                        return sp:strip-descriptor-links( $entry )
+                        return security-plugin:strip-descriptor-links( $entry )
                     }
                     </atom:feed>
-    			let $status-code := 0 (: we don't want to interrupt request processing :)
-    			return ( $status-code , $request-data )
-    			
-    		else
-    		
-    			let $status-code := 0 (: we don't want to interrupt request processing :)
-    			return ( $status-code , $request-data )
 
-    else
-    
-        let $status-code := 0 (: we don't want to interrupt request processing :)
-        return ( $status-code , $request-data )
+                return $request-data
+    			
+    		else $request-data
+
+    else $request-data
 
 };
 
 
 
 
-declare function sp:strip-descriptor-links(
+declare function security-plugin:strip-descriptor-links(
     $request-data as element()
 ) as element()
 {
-    let $log := local:debug( "== sp:strip-descriptor-links ==" )
+    let $log := local:debug( "== security-plugin:strip-descriptor-links ==" )
     let $log := local:debug( $request-data )
     let $request-data :=
         element { node-name( $request-data ) }
@@ -139,12 +141,11 @@ declare function sp:strip-descriptor-links(
 
 
 
-declare function sp:after(
+declare function security-plugin:after(
 	$operation as xs:string ,
 	$request-path-info as xs:string ,
-	$response-data as item()* ,
-	$response-content-type as xs:string?
-) as item()*
+	$response as element(response)
+) as element(response)
 {
 
     if ( $config:enable-security )
@@ -158,90 +159,90 @@ declare function sp:after(
     		
     		if ( $operation = $CONSTANT:OP-CREATE-MEMBER )
     		
-    		then sp:after-create-member( $request-path-info , $response-data , $response-content-type )
+    		then security-plugin:after-create-member( $request-path-info , $response)
     
             else if ( $operation = $CONSTANT:OP-CREATE-MEDIA )
             
-            then sp:after-create-media( $request-path-info , $response-data , $response-content-type )
+            then security-plugin:after-create-media( $request-path-info , $response )
     
             else if ( $operation = $CONSTANT:OP-UPDATE-MEDIA )
             
-            then sp:after-update-media( $request-path-info , $response-data , $response-content-type )
+            then security-plugin:after-update-media( $request-path-info , $response )
     
     		else if ( $operation = $CONSTANT:OP-CREATE-COLLECTION )
     		
-    		then sp:after-create-collection( $request-path-info , $response-data , $response-content-type )
+    		then security-plugin:after-create-collection( $request-path-info , $response )
     
     		else if ( $operation = $CONSTANT:OP-UPDATE-COLLECTION )
     		
-    		then sp:after-update-collection( $request-path-info , $response-data , $response-content-type )
+    		then security-plugin:after-update-collection( $request-path-info , $response )
     
     		else if ( $operation = $CONSTANT:OP-LIST-COLLECTION )
     		
-    		then sp:after-list-collection( $request-path-info , $response-data , $response-content-type )
+    		then security-plugin:after-list-collection( $request-path-info , $response )
     		
     		else if ( $operation = $CONSTANT:OP-RETRIEVE-MEMBER )
     		
-    		then sp:after-retrieve-member( $request-path-info , $response-data , $response-content-type )
+    		then security-plugin:after-retrieve-member( $request-path-info , $response )
     
     		else if ( $operation = $CONSTANT:OP-UPDATE-MEMBER )
     		
-    		then sp:after-update-member( $request-path-info , $response-data , $response-content-type )
+    		then security-plugin:after-update-member( $request-path-info , $response )
     		
     		else if ( $operation = $CONSTANT:OP-MULTI-CREATE ) 
     		
-    		then sp:after-multi-create( $request-path-info , $response-data , $response-content-type )
+    		then security-plugin:after-multi-create( $request-path-info , $response )
     
-            else 
-    
-                (: pass response data and content type through, we don't want to modify response :)
-                ( $response-data , $response-content-type )
+            else $response
 
-    else 
-
-        (: pass response data and content type through, we don't want to modify response :)
-        ( $response-data , $response-content-type )
+    else $response
 
 }; 
 
 
 
 
-declare function sp:after-create-member(
+declare function security-plugin:after-create-member(
 	$request-path-info as xs:string ,
-	$response-data as item()* ,
-	$response-content-type as xs:string?
-) as item()*
+	$response as element(response)
+) as element(response)
 {
 
+    let $response-data := $response/body/atom:entry
+    
 	let $entry-uri := $response-data/atom:link[@rel="edit"]/@href
 	let $log := local:debug( concat( "$entry-uri: " , $entry-uri ) )
 	
 	let $entry-path-info := substring-after( $entry-uri , $config:content-service-url )
 	let $log := local:debug( concat( "$entry-path-info: " , $entry-path-info ) )
 
-	let $entry-doc-db-path := atomdb:request-path-info-to-db-path( $entry-path-info )
-	let $log := local:debug( concat( "$entry-doc-db-path: " , $entry-doc-db-path ) )
-	
 	(: if security is enabled, install default resource ACL :)
-	let $resource-descriptor-installed := sp:install-resource-descriptor( $request-path-info , $entry-doc-db-path )
+	let $resource-descriptor-installed := security-plugin:install-resource-descriptor( $request-path-info , $entry-path-info )
 	let $log := local:debug( concat( "$resource-descriptor-installed: " , $resource-descriptor-installed ) )
 	
-    let $response-data := sp:augment-entry( $request-path-info , $response-data )
+    let $response-data := security-plugin:augment-entry( $request-path-info , $response-data )
 
-	return ( $response-data , $response-content-type )
-
+	return
+	
+    	<response>
+        {
+            $response/status ,
+            $response/headers
+        }
+            <body>{$response-data}</body>
+        </response>
+	
 };
 
 
 
-declare function sp:after-multi-create(
+declare function security-plugin:after-multi-create(
 	$request-path-info as xs:string ,
-	$response-data as item()* ,
-	$response-content-type as xs:string?
-) as item()*
+	$response as element(response)
+) as element(response)
 {
 
+    let $response-data := $response/body/atom:feed
 	
     let $response-data := 
         <atom:feed>
@@ -249,49 +250,64 @@ declare function sp:after-multi-create(
             for $entry in $response-data/atom:entry
             let $entry-uri := $entry/atom:link[@rel="edit"]/@href
             let $entry-path-info := substring-after( $entry-uri , $config:content-service-url )
-            let $entry-doc-db-path := atomdb:request-path-info-to-db-path( $entry-path-info )
             (: if security is enabled, install default resource ACL :)
-            let $resource-descriptor-installed := sp:install-resource-descriptor( $request-path-info , $entry-doc-db-path )
+            let $resource-descriptor-installed := security-plugin:install-resource-descriptor( $request-path-info , $entry-path-info )
             let $media-uri := $entry/atom:link[@rel="edit-media"]/@href
             let $media-path-info := substring-after( $media-uri , $config:content-service-url )
-            let $media-resource-db-path := atomdb:request-path-info-to-db-path( $media-path-info )
             (: if security is enabled, install default resource ACL :)
             let $resource-descriptor-installed := 
-                if ( exists( $media-resource-db-path ) ) then sp:install-resource-descriptor( $request-path-info , $media-resource-db-path )
+                if ( exists( $media-path-info ) and $media-path-info != "" ) then security-plugin:install-resource-descriptor( $request-path-info , $media-path-info )
                 else () 
-            return sp:augment-entry( $entry-path-info , $entry )
+            return security-plugin:augment-entry( $entry-path-info , $entry )
         }
         </atom:feed>
     
 
-	return ( $response-data , $response-content-type )
-
+	return
+	
+    	<response>
+        {
+            $response/status ,
+            $response/headers
+        }
+            <body>{$response-data}</body>
+        </response>
+	
 };
 
 
 
-declare function sp:after-update-member(
+declare function security-plugin:after-update-member(
 	$request-path-info as xs:string ,
-	$response-data as item()* ,
-	$response-content-type as xs:string?
-) as item()*
+	$response as element(response)
+) as element(response)
 {
 
-    let $response-data := sp:augment-entry( $request-path-info , $response-data )
+    let $response-data := $response/body/atom:entry
+    let $response-data := security-plugin:augment-entry( $request-path-info , $response-data )
 
-	return ( $response-data , $response-content-type )
-
+	return
+	
+    	<response>
+        {
+            $response/status ,
+            $response/headers
+        }
+            <body>{$response-data}</body>
+        </response>
+	
 };
 
 
 
 
-declare function sp:after-create-media(
+declare function security-plugin:after-create-media(
     $request-path-info as xs:string ,
-    $response-data as item()* ,
-    $response-content-type as xs:string?
-) as item()*
+	$response as element(response)
+) as element(response)
 {
+
+    let $response-data := $response/body/atom:entry
 
     let $entry-uri := $response-data/atom:link[@rel="edit"]/@href
     let $log := local:debug( concat( "$entry-uri: " , $entry-uri ) )
@@ -299,11 +315,8 @@ declare function sp:after-create-media(
     let $entry-path-info := substring-after( $entry-uri , $config:content-service-url )
     let $log := local:debug( concat( "$entry-path-info: " , $entry-path-info ) )
 
-    let $entry-doc-db-path := atomdb:request-path-info-to-db-path( $entry-path-info )
-    let $log := local:debug( concat( "$entry-doc-db-path: " , $entry-doc-db-path ) )
-    
     (: if security is enabled, install default resource ACL :)
-    let $resource-descriptor-installed := sp:install-resource-descriptor( $request-path-info , $entry-doc-db-path )
+    let $resource-descriptor-installed := security-plugin:install-resource-descriptor( $request-path-info , $entry-path-info )
     let $log := local:debug( concat( "$resource-descriptor-installed: " , $resource-descriptor-installed ) )
 
     let $media-uri := $response-data/atom:link[@rel="edit-media"]/@href
@@ -312,115 +325,158 @@ declare function sp:after-create-media(
     let $media-path-info := substring-after( $media-uri , $config:content-service-url )
     let $log := local:debug( concat( "$media-path-info: " , $media-path-info ) )
 
-    let $media-resource-db-path := atomdb:request-path-info-to-db-path( $media-path-info )
-    let $log := local:debug( concat( "$media-resource-db-path: " , $media-resource-db-path ) )
-    
     (: if security is enabled, install default resource ACL :)
-    let $resource-descriptor-installed := sp:install-resource-descriptor( $request-path-info , $media-resource-db-path )
+    let $resource-descriptor-installed := security-plugin:install-resource-descriptor( $request-path-info , $media-path-info )
     let $log := local:debug( concat( "$resource-descriptor-installed: " , $resource-descriptor-installed ) )
     
-    (: need to workaround html response for create media with multipart request :)
-    let $response-data := 
-        if ( starts-with( $response-content-type , $CONSTANT:MEDIA-TYPE-ATOM ) )
-        then sp:augment-entry( $entry-path-info , $response-data )
-        else $response-data
+    let $response-data := security-plugin:augment-entry( $entry-path-info , $response-data )
 
-    return ( $response-data , $response-content-type )
+	return
+	
+    	<response>
+        {
+            $response/status ,
+            $response/headers
+        }
+            <body>{$response-data}</body>
+        </response>
 
 };
 
 
 
-declare function sp:after-update-media(
+declare function security-plugin:after-update-media(
     $request-path-info as xs:string ,
-    $response-data as item()* ,
-    $response-content-type as xs:string?
-) as item()*
+	$response as element(response)
+) as element(response)
 {
 
-    let $response-data := 
-        if ( starts-with( $response-content-type , $CONSTANT:MEDIA-TYPE-ATOM ) )
-        then sp:augment-entry( $request-path-info , $response-data )
-        else $response-data
+    let $response-data := $response/body/atom:entry
 
-    return ( $response-data , $response-content-type )
+    let $response-data := security-plugin:augment-entry( $request-path-info , $response-data )
+
+	return
+	
+    	<response>
+        {
+            $response/status ,
+            $response/headers
+        }
+            <body>{$response-data}</body>
+        </response>
 
 };
 
 
 
 
-declare function sp:after-create-collection(
+declare function security-plugin:after-create-collection(
 	$request-path-info as xs:string ,
-	$response-data as item()* ,
-	$response-content-type as xs:string?
-) as item()*
+	$response as element(response)
+) as element(response)
 {
+
+    let $response-data := $response/body/atom:feed
 
 	(: if security is enabled, install default collection ACL :)
-	let $collection-descriptor-installed := sp:install-collection-descriptor( $request-path-info )
+	let $collection-descriptor-installed := security-plugin:install-collection-descriptor( $request-path-info )
 	
 	(: no filtering necessary because no members yet, but adds acl link :)
-	let $response-data := sp:filter-feed-by-permissions( $request-path-info , $response-data )
+	let $response-data := security-plugin:filter-feed-by-permissions( $request-path-info , $response-data )
 
-	return ( $response-data , $response-content-type )
+	return
+	
+    	<response>
+        {
+            $response/status ,
+            $response/headers
+        }
+            <body>{$response-data}</body>
+        </response>
 
 };
 
 
 
 
-declare function sp:after-update-collection(
+declare function security-plugin:after-update-collection(
 	$request-path-info as xs:string ,
-	$response-data as item()* ,
-	$response-content-type as xs:string?
-) as item()*
+	$response as element(response)
+) as element(response)
 {
 
-	let $response-data := sp:filter-feed-by-permissions( $request-path-info , $response-data )
+    let $response-data := $response/body/atom:feed
+    
+	let $response-data := security-plugin:filter-feed-by-permissions( $request-path-info , $response-data )
 
-	return ( $response-data , $response-content-type )
+	return
+	
+    	<response>
+        {
+            $response/status ,
+            $response/headers
+        }
+            <body>{$response-data}</body>
+        </response>
 
 };
 
 
 
 
-declare function sp:after-list-collection(
+declare function security-plugin:after-list-collection(
 	$request-path-info as xs:string ,
-	$response-data as item()* ,
-	$response-content-type as xs:string?
-) as item()*
+	$response as element(response)
+) as element(response)
 {
 
-	let $response-data := sp:filter-feed-by-permissions( $request-path-info , $response-data )
+    let $response-data := $response/body/atom:feed
 
-	return ( $response-data , $response-content-type )
+    let $response-data := security-plugin:filter-feed-by-permissions( $request-path-info , $response-data )
+
+	return
+	
+    	<response>
+        {
+            $response/status ,
+            $response/headers
+        }
+            <body>{$response-data}</body>
+        </response>
 
 };
 
 
 
 
-declare function sp:after-retrieve-member(
+declare function security-plugin:after-retrieve-member(
 	$request-path-info as xs:string ,
-	$response-data as item()* ,
-	$response-content-type as xs:string?
-) as item()*
+	$response as element(response)
+) as element(response)
 {
 
-	let $log := local:debug("== sp:after-retrieve-member ==" )
+	let $log := local:debug("== security-plugin:after-retrieve-member ==" )
 
-    let $response-data := sp:augment-entry( $request-path-info , $response-data )
+    let $response-data := $response/body/atom:entry
 
-	return ( $response-data , $response-content-type )
+    let $response-data := security-plugin:augment-entry( $request-path-info , $response-data )
+
+	return
+	
+    	<response>
+        {
+            $response/status ,
+            $response/headers
+        }
+            <body>{$response-data}</body>
+        </response>
 
 };
 
 
 
 
-declare function sp:augment-entry(
+declare function security-plugin:augment-entry(
     $request-path-info as xs:string ,
     $response-data as element(atom:entry)
 ) as element(atom:entry)
@@ -508,17 +564,16 @@ declare function sp:augment-entry(
 
 
 
-declare function sp:install-resource-descriptor(
+declare function security-plugin:install-resource-descriptor(
     $request-path-info as xs:string,
-    $entry-doc-db-path as xs:string
+    $resource-path-info as xs:string
 ) as xs:string?
 {
     if ( $config:enable-security )
     then 
         let $user := request:get-attribute( $config:user-name-request-attribute-key )
         let $acl := config:default-resource-security-descriptor( $request-path-info , $user )
-        let $entry-path-info := atomdb:db-path-to-request-path-info( $entry-doc-db-path )
-        let $acl-db-path := atomsec:store-resource-descriptor( $entry-path-info , $acl )
+        let $acl-db-path := atomsec:store-descriptor( $resource-path-info , $acl )
     	return $acl-db-path
     else ()
 };
@@ -526,20 +581,20 @@ declare function sp:install-resource-descriptor(
 
 
 
-declare function sp:install-collection-descriptor( $request-path-info as xs:string ) as xs:string?
+declare function security-plugin:install-collection-descriptor( $request-path-info as xs:string ) as xs:string?
 {
     if ( $config:enable-security )
     then 
         let $user := request:get-attribute( $config:user-name-request-attribute-key )
         let $acl := config:default-collection-security-descriptor( $request-path-info , $user )
-        return atomsec:store-collection-descriptor( $request-path-info , $acl )
+        return atomsec:store-descriptor( $request-path-info , $acl )
     else ()
 };
 
 
 
 
-declare function sp:filter-feed-by-permissions(
+declare function security-plugin:filter-feed-by-permissions(
     $request-path-info as xs:string ,
     $feed as element(atom:feed)
 ) as element(atom:feed)
@@ -564,7 +619,7 @@ declare function sp:filter-feed-by-permissions(
                     let $forbidden := atomsec:is-denied( $CONSTANT:OP-RETRIEVE-MEMBER , $entry-path-info , () )
                     return 
                         if ( not( $forbidden ) ) 
-                        then sp:augment-entry( $entry-path-info , $entry ) 
+                        then security-plugin:augment-entry( $entry-path-info , $entry ) 
                         else ()
                 }
             </atom:feed>

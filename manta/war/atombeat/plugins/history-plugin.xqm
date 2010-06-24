@@ -1,6 +1,6 @@
 xquery version "1.0";
 
-module namespace hp = "http://purl.org/atombeat/xquery/history-plugin";
+module namespace history-plugin = "http://purl.org/atombeat/xquery/history-plugin";
 
 declare namespace atom = "http://www.w3.org/2005/Atom" ;
 declare namespace atombeat = "http://purl.org/atombeat/xmlns" ;
@@ -25,7 +25,7 @@ import module namespace config = "http://purl.org/atombeat/xquery/config" at "..
 
 
 
-declare function hp:before(
+declare function history-plugin:before(
 	$operation as xs:string ,
 	$request-path-info as xs:string ,
 	$request-data as item()* ,
@@ -40,26 +40,25 @@ declare function hp:before(
 	
 		if ( $operation = $CONSTANT:OP-CREATE-COLLECTION )
 		
-		then hp:before-create-collection( $request-path-info , $request-data )
+		then history-plugin:before-create-collection( $request-path-info , $request-data )
 		
 		else if ( $operation = $CONSTANT:OP-CREATE-MEMBER )
 		
-		then hp:before-create-member( $request-path-info , $request-data )
+		then history-plugin:before-create-member( $request-path-info , $request-data )
 		
 		else if ( $operation = $CONSTANT:OP-UPDATE-MEMBER )
 		
-		then hp:before-update-member( $request-path-info , $request-data )
+		then history-plugin:before-update-member( $request-path-info , $request-data )
 		
 		else
 	
-			let $status-code := 0 (: we don't want to interrupt request processing :)
-			return ( $status-code , $request-data )
+			$request-data
 };
 
 
 
 
-declare function hp:before-create-collection(
+declare function history-plugin:before-create-collection(
 	$request-path-info as xs:string ,
 	$request-data as element(atom:feed)
 ) as item()*
@@ -82,15 +81,14 @@ declare function hp:before-create-collection(
 
 		else ()		
 	
-	let $status-code := 0 (: we don't want to interrupt request processing :)
-	return ( $status-code , $request-data )
+	return $request-data
 
 };
 
 
 
 
-declare function hp:before-create-member(
+declare function history-plugin:before-create-member(
 	$request-path-info as xs:string ,
 	$request-data as element(atom:entry)
 ) as item()*
@@ -165,20 +163,16 @@ declare function hp:before-create-member(
         
         	let $log := util:log( "debug" , $request-data )
         	
-        	let $status-code := 0 (: we don't want to interrupt request processing :)
-        	return ( $status-code , $request-data )
+        	return $request-data
 
-        else
-        
-            let $status-code := 0 (: we don't want to interrupt request processing :)
-            return ( $status-code , $request-data )
+        else $request-data
 
 };
 
 
 
 
-declare function hp:before-update-member(
+declare function history-plugin:before-update-member(
 	$request-path-info as xs:string ,
 	$request-data as element(atom:entry)
 ) as item()*
@@ -249,28 +243,21 @@ declare function hp:before-update-member(
         
         	let $log := util:log( "debug" , $request-data )
         	
-            let $status-code := 0 (: we don't want to interrupt request processing :)
-            return ( $status-code , $request-data )
+            return $request-data
 
-        else
-    
-            let $status-code := 0 (: we don't want to interrupt request processing :)
-            return ( $status-code , $request-data )
+        else $request-data
 
 };
 
 
 
 
-declare function hp:after(
+declare function history-plugin:after(
 	$operation as xs:string ,
 	$request-path-info as xs:string ,
-	$response-data as item()* ,
-	$content-type as xs:string?
-) as item()*
+	$response as element(response) 
+) as element(response)
 {
-
-	(: TODO :)
 
 	let $message := concat( "history plugin, after: " , $operation , ", request-path-info: " , $request-path-info ) 
 	let $log := util:log( "debug" , $message )
@@ -279,100 +266,134 @@ declare function hp:after(
 		
 		if ( $operation = $CONSTANT:OP-RETRIEVE-MEMBER )
 		
-		then hp:after-retrieve-member( $request-path-info , $response-data , $content-type )
+		then history-plugin:after-retrieve-member( $request-path-info , $response )
 
 		else if ( $operation = $CONSTANT:OP-CREATE-MEMBER )
 		
 		then 
 			let $log := util:log( "debug" , "found create-member" )
-			return hp:after-create-member( $request-path-info , $response-data , $content-type )
+			return history-plugin:after-create-member( $request-path-info , $response )
 
 		else if ( $operation = $CONSTANT:OP-UPDATE-MEMBER )
 		
-		then hp:after-update-member( $request-path-info , $response-data , $content-type )
+		then history-plugin:after-update-member( $request-path-info , $response )
 		
 		else if ( $operation = $CONSTANT:OP-LIST-COLLECTION )
 		
-		then hp:after-list-collection( $request-path-info , $response-data , $content-type )
+		then history-plugin:after-list-collection( $request-path-info , $response )
 
 		else 
 
-			(: pass response data and content type through, we don't want to modify response :)
-			( $response-data , $content-type )
+			$response
+
 }; 
 
 
 
 
-declare function hp:after-retrieve-member(
+declare function history-plugin:after-retrieve-member(
 	$request-path-info as xs:string ,
-	$response-data as item()* ,
-	$content-type as xs:string?
-) as item()*
+	$response as element(response)
+) as element(response)
 {
 
-	let $response-data := hp:append-history-link( $response-data )
+	let $response-data := history-plugin:append-history-link( $response/body/atom:entry )
 
-	return ( $response-data , $content-type )
+	return 
+	    
+	    <response>
+	    {
+	        $response/status ,
+	        $response/headers
+	    }
+	        <body>{$response-data}</body>
+	    </response>
+
 };
 
 
 
 
-declare function hp:after-create-member(
+declare function history-plugin:after-create-member(
 	$request-path-info as xs:string ,
-	$response-data as item()* ,
-	$content-type as xs:string?
-) as item()*
+	$response as element(response)
+) as element(response)
 {
 
-	let $response-data := hp:append-history-link( $response-data )
+	let $response-data := history-plugin:append-history-link( $response/body/atom:entry )
 
-	return ( $response-data , $content-type )
+    return
+    
+	    <response>
+	    {
+	        $response/status ,
+	        $response/headers
+	    }
+	        <body>{$response-data}</body>
+	    </response>
+
 };
 
 
 
 
-declare function hp:after-update-member(
+declare function history-plugin:after-update-member(
 	$request-path-info as xs:string ,
-	$response-data as item()* ,
-	$content-type as xs:string?
-) as item()*
+	$response as element(response)
+) as element(response)
 {
 
-	let $response-data := hp:append-history-link( $response-data ) (: N.B. workaround here!!! :)
+	let $response-data := history-plugin:append-history-link( $response/body/atom:entry ) 
 
-	return ( $response-data , $content-type )
+	return
+	
+    	<response>
+        {
+            $response/status ,
+            $response/headers
+        }
+            <body>{$response-data}</body>
+        </response>
+	
 };
 
 
 
 
-declare function hp:after-list-collection(
+declare function history-plugin:after-list-collection(
 	$request-path-info as xs:string ,
-	$response-data as element(atom:feed) ,
-	$content-type as xs:string?
-) as item()*
+	$response as element(response)
+) as element(response)
 {
 
+    let $response-data := $response/body/atom:feed
+    
 	let $response-data := 
 		<atom:feed>
 		{
 			$response-data/attribute::* ,
 			$response-data/child::*[not( local-name(.) = $CONSTANT:ATOM-ENTRY and namespace-uri(.) = $CONSTANT:ATOM-NSURI )] ,
 			for $entry in $response-data/atom:entry
-			return hp:append-history-link( $entry )
+			return history-plugin:append-history-link( $entry )
 		}
 		</atom:feed>
 	
-	return ( $response-data , $content-type )
+	return
+	
+    	<response>
+        {
+            $response/status ,
+            $response/headers
+        }
+            <body>{$response-data}</body>
+        </response>
+	
 };
 
 
 
 
-declare function hp:append-history-link (
+declare function history-plugin:append-history-link (
 	$response-entry as element(atom:entry)
 ) as element(atom:entry)
 {
