@@ -15,7 +15,6 @@
 
 	<h3>Study Info</h3>
 	
-	<!-- TODO: bind some study fields, e.g. title, as readonly for ssq changes. -->
      <p>
          <span class="confirmation-study-info-save-button-container">
              <xforms:submit submission="sub-put-sq-study-entry">
