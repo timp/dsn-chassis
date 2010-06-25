@@ -4,6 +4,8 @@ module namespace security-plugin = "http://purl.org/atombeat/xquery/security-plu
 
 declare namespace atom = "http://www.w3.org/2005/Atom" ;
 declare namespace atombeat = "http://purl.org/atombeat/xmlns" ;
+(: see http://tools.ietf.org/html/draft-mehta-atom-inline-01 :)
+declare namespace ae = "http://purl.org/atom/ext/" ;
 
 
 import module namespace request = "http://exist-db.org/xquery/request" ;
@@ -116,26 +118,18 @@ declare function security-plugin:strip-descriptor-links(
 ) as element()
 {
     let $log := local:debug( "== security-plugin:strip-descriptor-links ==" )
-    let $log := local:debug( $request-data )
-    let $request-data :=
-        element { node-name( $request-data ) }
-        {
-            $request-data/attribute::* ,
-            for $child in $request-data/child::*
-            let $ln := local-name( $child )
-            let $ns := namespace-uri( $child )
-            let $rel := $child/@rel
-            where (
-                not(
-                    $ln = $CONSTANT:ATOM-LINK
-                    and $ns = $CONSTANT:ATOM-NSURI 
-                    and ( $rel = "http://purl.org/atombeat/rel/security-descriptor" or $rel = "http://purl.org/atombeat/rel/media-security-descriptor" )
-                )
-            )
-            return $child
-        }
-    let $log := local:debug( $request-data )
-    return $request-data
+
+    let $reserved :=
+        <reserved>
+            <atom-links>
+                <link rel="http://purl.org/atombeat/rel/security-descriptor"/>
+                <link rel="http://purl.org/atombeat/rel/media-security-descriptor"/>
+            </atom-links>
+        </reserved>
+        
+    let $filtered := atomdb:filter( $request-data , $reserved )
+    
+    return $filtered
 };
 
 
@@ -431,7 +425,7 @@ declare function security-plugin:after-list-collection(
 {
 
     let $response-data := $response/body/atom:feed
-
+    
     let $response-data := security-plugin:filter-feed-by-permissions( $request-path-info , $response-data )
 
 	return
@@ -458,7 +452,7 @@ declare function security-plugin:after-retrieve-member(
 	let $log := local:debug("== security-plugin:after-retrieve-member ==" )
 
     let $response-data := $response/body/atom:entry
-
+    
     let $response-data := security-plugin:augment-entry( $request-path-info , $response-data )
 
 	return
@@ -478,7 +472,18 @@ declare function security-plugin:after-retrieve-member(
 
 declare function security-plugin:augment-entry(
     $request-path-info as xs:string ,
-    $response-data as element(atom:entry)
+    $response-data as element(atom:entry) 
+) as element(atom:entry)
+{
+    security-plugin:augment-entry( $request-path-info , $response-data , false() )
+};
+
+
+
+declare function security-plugin:augment-entry(
+    $request-path-info as xs:string ,
+    $response-data as element(atom:entry) ,
+    $expand-descriptors as xs:boolean?
 ) as element(atom:entry)
 {
 
@@ -489,15 +494,9 @@ declare function security-plugin:augment-entry(
     let $media-uri := $response-data/atom:link[@rel="edit-media"]/@href
     let $media-path-info := substring-after( $media-uri , $config:content-service-url )
 
-    let $can-retrieve-member := atomsec:is-allowed( $CONSTANT:OP-RETRIEVE-MEMBER , $entry-path-info , () )
-    let $can-update-member := atomsec:is-allowed( $CONSTANT:OP-UPDATE-MEMBER , $entry-path-info , () )
-    let $can-delete-member := atomsec:is-allowed( $CONSTANT:OP-DELETE-MEMBER , $entry-path-info , () )
     let $can-retrieve-member-descriptor := atomsec:is-allowed(  $CONSTANT:OP-RETRIEVE-ACL , $entry-path-info , ()  )
     let $can-update-member-descriptor := atomsec:is-allowed( $CONSTANT:OP-UPDATE-ACL , $entry-path-info , () )
     
-    let $can-retrieve-media := atomsec:is-allowed( $CONSTANT:OP-RETRIEVE-MEDIA , $media-path-info , () )
-    let $can-update-media := atomsec:is-allowed( $CONSTANT:OP-UPDATE-MEDIA , $media-path-info , () )
-    let $can-delete-media := atomsec:is-allowed( $CONSTANT:OP-DELETE-MEDIA , $media-path-info , () )
     let $can-retrieve-media-descriptor := atomsec:is-allowed( $CONSTANT:OP-RETRIEVE-ACL , $media-path-info , () )
     let $can-update-media-descriptor := atomsec:is-allowed( $CONSTANT:OP-UPDATE-ACL , $media-path-info , () )
     
@@ -508,7 +507,17 @@ declare function security-plugin:augment-entry(
     
     let $descriptor-link :=     
         if ( $can-update-member-descriptor or $can-retrieve-member-descriptor )
-        then <atom:link rel="http://purl.org/atombeat/rel/security-descriptor" href="{concat( $config:security-service-url , $entry-path-info )}" type="application/atom+xml" atombeat:allow="{$allow}"/>
+        then 
+            <atom:link atombeat:allow="{$allow}" rel="http://purl.org/atombeat/rel/security-descriptor" href="{concat( $config:security-service-url , $entry-path-info )}" type="application/atom+xml;type=entry">
+            {
+                if ( $can-retrieve-member-descriptor and $expand-descriptors )
+                then 
+                    <ae:inline>
+                    { atomsec:wrap-with-entry( $entry-path-info , atomsec:retrieve-descriptor( $entry-path-info ) ) }
+                    </ae:inline>
+                else ()                
+            }
+            </atom:link>
         else ()
         
     let $log := local:debug( concat( "$descriptor-link: " , $descriptor-link ) )
@@ -524,41 +533,94 @@ declare function security-plugin:augment-entry(
                 if ( $can-update-media-descriptor or $can-retrieve-media-descriptor )
                 then 
                     let $media-descriptor-href := concat( $config:security-service-url , $media-path-info )
-                    return <atom:link rel="http://purl.org/atombeat/rel/media-security-descriptor" href="{$media-descriptor-href}" type="application/atom+xml" atombeat:allow="{$allow}"/>
+                    return 
+                        <atom:link atombeat:allow="{$allow}" rel="http://purl.org/atombeat/rel/media-security-descriptor" href="{$media-descriptor-href}" type="application/atom+xml;type=entry">
+                        {
+                            if ( $can-retrieve-media-descriptor and $expand-descriptors )
+                            then 
+                                <ae:inline>
+                                { atomsec:wrap-with-entry( $media-path-info , atomsec:retrieve-descriptor( $media-path-info ) ) }
+                                </ae:inline>
+                            else ()
+                        }
+                        </atom:link>
                 else ()                
         else ()
         
-    let $response-data := 
+    let $augmented-entry :=
+    
         <atom:entry>
         {
             $response-data/attribute::* ,
-            for $child in $response-data/child::* 
-            let $child :=
-                if ( local-name($child) = $CONSTANT:ATOM-LINK and namespace-uri($child) = $CONSTANT:ATOM-NSURI and $child/@rel='edit' )
-                then 
-                    let $allow := string-join( (
-                        if ( $can-retrieve-member ) then "GET" else () ,
-                        if ( $can-update-member ) then "PUT" else () ,
-                        if ( $can-delete-member ) then "DELETE" else ()
-                    ) , ", " )
-                    return <atom:link atombeat:allow="{$allow}">{$child/attribute::*}</atom:link>
-                else if ( local-name($child) = $CONSTANT:ATOM-LINK and namespace-uri($child) = $CONSTANT:ATOM-NSURI and $child/@rel='edit-media' )
-                then 
-                    let $allow := string-join( (
-                        if ( $can-retrieve-media ) then "GET" else () ,
-                        if ( $can-update-media ) then "PUT" else () ,
-                        if ( $can-delete-media ) then "DELETE" else ()
-                    ) , ", " )
-                    return <atom:link atombeat:allow="{$allow}">{$child/attribute::*}</atom:link>
-                else $child
-            return $child ,
+            $response-data/child::*[not(. instance of element(atom:link))] ,
+            
+            (: decorate other links with atombeat:allow :)
+            security-plugin:decorate-links( $response-data/atom:link ) ,
+            
             $descriptor-link ,
             $media-descriptor-link
+                        
         }
         </atom:entry>
-            
-    return $response-data
     
+    return $augmented-entry
+    
+};
+
+
+
+
+declare function security-plugin:decorate-links(
+    $links as element(atom:link)*
+) as element(atom:link)*
+{
+
+    for $link in $links
+    return
+        if ( not( starts-with( $link/@href , $config:content-service-url ) ) )
+        then $link
+        else 
+            let $path-info := substring-after( $link/@href , $config:content-service-url )
+            return 
+                if ( atomdb:member-available( $path-info ) )
+                then
+                    let $can-get := atomsec:is-allowed( $CONSTANT:OP-RETRIEVE-MEMBER , $path-info , () )
+                    let $can-put := atomsec:is-allowed( $CONSTANT:OP-UPDATE-MEMBER , $path-info , () )
+                    let $can-delete := atomsec:is-allowed( $CONSTANT:OP-DELETE-MEMBER , $path-info , () )
+                    let $allow := string-join( (
+                        if ( $can-get ) then "GET" else () ,
+                        if ( $can-put ) then "PUT" else () ,
+                        if ( $can-delete ) then "DELETE" else ()
+                    ) , ", " )
+                    return <atom:link atombeat:allow="{$allow}">{$link/attribute::* , $link/child::*}</atom:link>
+                else if ( atomdb:media-resource-available( $path-info ) )
+                then 
+                    let $can-get := atomsec:is-allowed( $CONSTANT:OP-RETRIEVE-MEDIA , $path-info , () )
+                    let $can-put := atomsec:is-allowed( $CONSTANT:OP-UPDATE-MEDIA , $path-info , () )
+                    let $can-delete := atomsec:is-allowed( $CONSTANT:OP-DELETE-MEDIA , $path-info , () )
+                    let $allow := string-join( (
+                        if ( $can-get ) then "GET" else () ,
+                        if ( $can-put ) then "PUT" else () ,
+                        if ( $can-delete ) then "DELETE" else ()
+                    ) , ", " )
+                    return <atom:link atombeat:allow="{$allow}">{$link/attribute::* , $link/child::*}</atom:link>
+                else if ( atomdb:collection-available( $path-info ) )
+                then 
+                    let $can-get := atomsec:is-allowed( $CONSTANT:OP-LIST-COLLECTION , $path-info , () )
+                    let $can-put := atomsec:is-allowed( $CONSTANT:OP-UPDATE-COLLECTION , $path-info , () )
+                    let $can-post := (
+                        atomsec:is-allowed( $CONSTANT:OP-CREATE-MEMBER , $path-info , () )
+                        or atomsec:is-allowed( $CONSTANT:OP-CREATE-MEDIA , $path-info , () )
+                        or atomsec:is-allowed( $CONSTANT:OP-MULTI-CREATE , $path-info , () )
+                    )
+                    let $allow := string-join( (
+                        if ( $can-get ) then "GET" else () ,
+                        if ( $can-put ) then "PUT" else () ,
+                        if ( $can-post ) then "POST" else ()
+                    ) , ", " )
+                    return <atom:link atombeat:allow="{$allow}">{$link/attribute::* , $link/child::*}</atom:link>
+                else $link
+
 };
 
 
@@ -602,25 +664,45 @@ declare function security-plugin:filter-feed-by-permissions(
     if ( not( $config:enable-security ) )
     then $feed
     else
+        let $expand-descriptors := xs:boolean( $feed/@atombeat:expand-security-descriptors )
+
+        let $can-retrieve-collection-descriptor := atomsec:is-allowed( $CONSTANT:OP-RETRIEVE-ACL , $request-path-info , () )
         let $can-update-collection-descriptor := atomsec:is-allowed( $CONSTANT:OP-UPDATE-ACL , $request-path-info , () )
+        let $allow := string-join((
+            if ( $can-retrieve-collection-descriptor ) then "GET" else () ,
+            if ( $can-update-collection-descriptor ) then "PUT" else ()
+        ) , ", " )
         let $descriptor-link :=     
-            if ( $can-update-collection-descriptor )
-            then <atom:link rel="http://purl.org/atombeat/rel/security-descriptor" href="{concat( $config:security-service-url , $request-path-info )}" type="application/atom+xml"/>
+            if ( $can-retrieve-collection-descriptor or $can-update-collection-descriptor )
+            then 
+                <atom:link atombeat:allow="{$allow}" rel="http://purl.org/atombeat/rel/security-descriptor" href="{concat( $config:security-service-url , $request-path-info )}" type="application/atom+xml;type=entry">
+                {
+                    if ( $can-retrieve-collection-descriptor and $expand-descriptors )
+                    then 
+                        <ae:inline>
+                        { atomsec:wrap-with-entry( $request-path-info , atomsec:retrieve-descriptor( $request-path-info ) ) }
+                        </ae:inline>
+                    else ()                
+                }
+                </atom:link>
             else ()
         let $filtered-feed :=
             <atom:feed>
                 {
                     $feed/attribute::* ,
-                    $feed/child::*[ not( local-name(.) = $CONSTANT:ATOM-ENTRY and namespace-uri(.) = $CONSTANT:ATOM-NSURI ) ] ,
-                    $descriptor-link ,
+                    $feed/child::*[ not( . instance of element(atom:entry) ) and not( . instance of element(atom:link) ) ] ,
                     for $entry in $feed/atom:entry
                     let $entry-path-info := substring-after( $entry/atom:link[@rel="edit"]/@href , $config:content-service-url )
                     let $log := local:debug( concat( "checking permission to retrieve member for entry-path-info: " , $entry-path-info ) )
                     let $forbidden := atomsec:is-denied( $CONSTANT:OP-RETRIEVE-MEMBER , $entry-path-info , () )
                     return 
                         if ( not( $forbidden ) ) 
-                        then security-plugin:augment-entry( $entry-path-info , $entry ) 
+                        then security-plugin:augment-entry( $entry-path-info , $entry , $expand-descriptors ) 
                         else ()
+                    ,
+                    (: decorate other links with atombeat:allow :)
+                    security-plugin:decorate-links( $feed/atom:link ) ,
+                    $descriptor-link
                 }
             </atom:feed>
         let $log := local:debug( $filtered-feed )
