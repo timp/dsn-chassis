@@ -9,6 +9,7 @@ declare variable $config-collections:collection-spec :=
             <path-info>/studies</path-info>
             <enable-history>true</enable-history>
             <exclude-entry-content>false</exclude-entry-content>
+            <expand-security-descriptors>true</expand-security-descriptors>
             <recursive>false</recursive>
         </collection>   
         <collection>
@@ -16,6 +17,7 @@ declare variable $config-collections:collection-spec :=
             <path-info>/study-info</path-info>
             <enable-history>true</enable-history>
             <exclude-entry-content>false</exclude-entry-content>
+            <expand-security-descriptors>false</expand-security-descriptors>
             <recursive>false</recursive>
         </collection>   
         <collection>
@@ -23,6 +25,7 @@ declare variable $config-collections:collection-spec :=
             <path-info>/drafts</path-info>
             <enable-history>false</enable-history>
             <exclude-entry-content>true</exclude-entry-content>
+            <expand-security-descriptors>false</expand-security-descriptors>
             <recursive>false</recursive>
         </collection>   
         <collection>
@@ -30,6 +33,7 @@ declare variable $config-collections:collection-spec :=
             <path-info>/media/submitted</path-info>
             <enable-history>false</enable-history>
             <exclude-entry-content>false</exclude-entry-content>
+            <expand-security-descriptors>false</expand-security-descriptors>
             <recursive>true</recursive>
         </collection>   
         <collection>
@@ -37,6 +41,7 @@ declare variable $config-collections:collection-spec :=
             <path-info>/media/curated</path-info>
             <enable-history>false</enable-history>
             <exclude-entry-content>false</exclude-entry-content>
+            <expand-security-descriptors>false</expand-security-descriptors>
             <recursive>true</recursive>
         </collection>   
         <collection>
@@ -44,6 +49,7 @@ declare variable $config-collections:collection-spec :=
             <path-info>/media/draft</path-info>
             <enable-history>false</enable-history>
             <exclude-entry-content>false</exclude-entry-content>
+            <expand-security-descriptors>false</expand-security-descriptors>
             <recursive>true</recursive>
         </collection>   
         <collection>
@@ -51,6 +57,7 @@ declare variable $config-collections:collection-spec :=
             <path-info>/derivations</path-info>
             <enable-history>false</enable-history>
             <exclude-entry-content>false</exclude-entry-content>
+            <expand-security-descriptors>false</expand-security-descriptors>
             <recursive>true</recursive>
         </collection>   
         <collection>
@@ -58,6 +65,7 @@ declare variable $config-collections:collection-spec :=
             <path-info>/reviews/personal-data</path-info>
             <enable-history>false</enable-history>
             <exclude-entry-content>false</exclude-entry-content>
+            <expand-security-descriptors>false</expand-security-descriptors>
             <recursive>true</recursive>
         </collection>   
         <collection>
@@ -65,6 +73,7 @@ declare variable $config-collections:collection-spec :=
             <path-info>/sandbox</path-info>
             <enable-history>false</enable-history>
             <exclude-entry-content>false</exclude-entry-content>
+            <expand-security-descriptors>false</expand-security-descriptors>
             <recursive>false</recursive>
         </collection>   
     </spec>

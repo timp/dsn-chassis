@@ -19,6 +19,7 @@ import module namespace CONSTANT = "http://purl.org/atombeat/xquery/constants" a
 import module namespace xutil = "http://purl.org/atombeat/xquery/xutil" at "../lib/xutil.xqm" ;
 import module namespace mime = "http://purl.org/atombeat/xquery/mime" at "../lib/mime.xqm" ;
 import module namespace atomdb = "http://purl.org/atombeat/xquery/atomdb" at "../lib/atomdb.xqm" ;
+import module namespace atomsec = "http://purl.org/atombeat/xquery/atom-security" at "../lib/atom-security.xqm" ;
 
 import module namespace config = "http://purl.org/atombeat/xquery/config" at "../config/shared.xqm" ;
 
@@ -94,6 +95,8 @@ declare function history-plugin:before-create-member(
 ) as item()*
 {
 
+    let $log := util:log( "debug" , "history-protocol, before-create-member")
+    
     let $collection-db-path := atomdb:request-path-info-to-db-path( $request-path-info )
     let $versioning-enabled := xutil:is-versioning-enabled( $collection-db-path )
 
@@ -105,65 +108,13 @@ declare function history-plugin:before-create-member(
         
         	(: add a revision comment to the incoming entry :)
         	
-        	let $log := util:log( "debug" , "history-protocol, before-create-member")
-        	
             let $comment := request:get-header("X-Atom-Revision-Comment")
-        	let $log := util:log( "debug" , $comment )
-            
             let $comment := if ( empty( $comment ) or $comment = "" ) then "initial revision" else $comment
-        	let $log := util:log( "debug" , $comment )
             
-            let $user-name := request:get-attribute( $config:user-name-request-attribute-key )
-        	let $log := util:log( "debug" , $user-name )
-            
-            let $published := current-dateTime()
-        	let $log := util:log( "debug" , $published )
-        
-            let $revision-comment := 
-                <ar:comment>
-                    <atom:author>
-                        {
-                            if ( $config:user-name-is-email ) then
-                            <atom:email>{$user-name}</atom:email>
-                            else
-                            <atom:name>{$user-name}</atom:name>                    
-                        }
-                    </atom:author>
-                    <atom:updated>{$published}</atom:updated>
-                    <atom:summary>{$comment}</atom:summary>
-                </ar:comment>
+        	let $prepared-entry := history-plugin:prepare-entry( $request-data , $comment )
+            let $log := util:log( "debug" , $prepared-entry )
         	
-        	let $log := util:log( "debug" , $revision-comment )
-        	
-        	(: modify incoming entry to include revision comment :)
-        	
-        	let $request-data :=    
-                <atom:entry>
-                {
-                	$request-data/attribute::* ,
-                	for $child in $request-data/child::*
-                	where (
-                		not( 
-        	        		namespace-uri( $child ) = $CONSTANT:ATOM-NSURI
-        	        		and local-name( $child ) = $CONSTANT:ATOM-LINK
-        	        		and $child/@rel = "history"
-                		)
-                		and not(
-        	        		namespace-uri( $child ) = "http://purl.org/atompub/revision/1.0"
-        	        		and local-name( $child ) = "comment"
-                		)
-                	)
-                	return $child ,
-        
-                	(: TODO exclude revision comments? :)
-        			
-                    $revision-comment
-                }
-                </atom:entry>  
-        
-        	let $log := util:log( "debug" , $request-data )
-        	
-        	return $request-data
+        	return $prepared-entry
 
         else $request-data
 
@@ -178,6 +129,8 @@ declare function history-plugin:before-update-member(
 ) as item()*
 {
 
+    let $log := util:log( "debug" , "history-protocol, before-update-member")
+
     let $collection-path-info := text:groups( $request-path-info , "^(.+)/[^/]+$" )[2]
     let $collection-db-path := atomdb:request-path-info-to-db-path( $collection-path-info )
     let $versioning-enabled := xutil:is-versioning-enabled( $collection-db-path )
@@ -190,62 +143,68 @@ declare function history-plugin:before-update-member(
         
         	(: add a revision comment to the incoming entry :)
         	
-        	let $log := util:log( "debug" , "history-protocol, before-update-member")
-        	
             let $comment := request:get-header("X-Atom-Revision-Comment")
-        	let $log := util:log( "debug" , $comment )
-            
-            let $user-name := request:get-attribute( $config:user-name-request-attribute-key )
-        	let $log := util:log( "debug" , $user-name )
-            
-            let $published := current-dateTime()
-        	let $log := util:log( "debug" , $published )
-        
-            let $revision-comment := 
-                <ar:comment>
-                    <atom:author>
-                        {
-                            if ( $config:user-name-is-email ) then
-                            <atom:email>{$user-name}</atom:email>
-                            else
-                            <atom:name>{$user-name}</atom:name>                    
-                        }
-                    </atom:author>
-                    <atom:updated>{$published}</atom:updated>
-                    <atom:summary>{$comment}</atom:summary>
-                </ar:comment>
+        	let $prepared-entry := history-plugin:prepare-entry( $request-data , $comment )
+            let $log := util:log( "debug" , $prepared-entry )
         	
-        	let $log := util:log( "debug" , $revision-comment )
-        	
-        	(: modify incoming entry to include revision comment :)
-        	
-        	let $request-data :=    
-                <atom:entry>
-                {
-                	$request-data/attribute::* ,
-                	for $child in $request-data/child::*
-                	where (
-                		not( 
-        	        		namespace-uri( $child ) = $CONSTANT:ATOM-NSURI
-        	        		and local-name( $child ) = $CONSTANT:ATOM-LINK
-        	        		and $child/@rel = "history"
-                		)
-                		and not(
-        	        		namespace-uri( $child ) = "http://purl.org/atompub/revision/1.0"
-        	        		and local-name( $child ) = "comment"
-                		)
-                	)
-                	return $child ,
-        			
-                    $revision-comment
-                }
-                </atom:entry>  
-        
-        	let $log := util:log( "debug" , $request-data )
-        	
-            return $request-data
+        	return $prepared-entry
 
         else $request-data
+
+};
+
+
+
+
+declare function history-plugin:prepare-entry(
+    $request-data as element(atom:entry) ,
+    $comment as xs:string?
+) as element(atom:entry)
+{
+
+    (: filter incoming request data :)
+    
+    let $reserved :=
+        <reserved>
+            <elements namespace-uri="http://purl.org/atompub/revision/1.0">
+                <element>comment</element>
+            </elements>
+            <atom-links>
+                <link rel="history"/>
+            </atom-links>
+        </reserved>
+    
+    let $filtered-entry := atomdb:filter( $request-data , $reserved )
+    
+    (: modify incoming entry to include revision comment :)
+    
+    let $user-name := request:get-attribute( $config:user-name-request-attribute-key )
+    let $published := current-dateTime()
+
+    let $revision-comment := 
+        <ar:comment>
+            <atom:author>
+                {
+                    if ( $config:user-name-is-email ) then
+                    <atom:email>{$user-name}</atom:email>
+                    else
+                    <atom:name>{$user-name}</atom:name>                    
+                }
+            </atom:author>
+            <atom:updated>{$published}</atom:updated>
+            <atom:summary>{$comment}</atom:summary>
+        </ar:comment>
+    
+    let $prepared-entry :=    
+        <atom:entry>
+        {
+            $filtered-entry/attribute::* ,
+            $filtered-entry/child::* ,
+            $revision-comment
+        }
+        </atom:entry>  
+        
+    return $prepared-entry    
 
 };
 
@@ -416,17 +375,30 @@ declare function history-plugin:append-history-link (
         	
         	let $response-entry :=
         	
-        	   if ( $versioning-enabled )
+        	    if ( $versioning-enabled )
         	   
-        	   then
+        	    then
         	   
-            		<atom:entry>
-            		{
-            			$response-entry/attribute::* ,
-            			$response-entry/child::*
-            		}
-            			<atom:link rel="history" href="{$history-uri}" type="application/atom+xml"/>			
-            		</atom:entry>
+        	        let $link := <atom:link rel="history" href="{$history-uri}" type="application/atom+xml;type=feed"/>
+        	       
+        	        let $history-link := 
+        	            if ( $config:enable-security )
+        	            then 
+        	                let $can-get := atomsec:is-allowed( $CONSTANT:OP-RETRIEVE-HISTORY , $entry-path-info , () )
+                            let $allow := if ( $can-get ) then "GET" else ()   
+                            return <atom:link atombeat:allow="{$allow}">{$link/attribute::* , $link/child::*}</atom:link>
+
+                    else $link
+        	       
+        	        return
+
+                        <atom:entry>
+                		{
+                			$response-entry/attribute::* ,
+                			$response-entry/child::* ,
+                			$history-link
+                		}
+                		</atom:entry>
             		
         		else $response-entry
         
