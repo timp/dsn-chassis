@@ -9,6 +9,7 @@ import module namespace xutil = "http://purl.org/atombeat/xquery/xutil" at "../l
 import module namespace atomsec = "http://purl.org/atombeat/xquery/atom-security" at "../lib/atom-security.xqm" ;
 import module namespace atomdb = "http://purl.org/atombeat/xquery/atomdb" at "../lib/atomdb.xqm" ;
 import module namespace ap = "http://purl.org/atombeat/xquery/atom-protocol" at "../lib/atom-protocol.xqm" ;
+import module namespace common-protocol = "http://purl.org/atombeat/xquery/common-protocol" at "../lib/common-protocol.xqm" ;
 import module namespace config-collections = "http://purl.org/atombeat/xquery/config-collections" at "collections.xqm" ;
 
 
@@ -135,7 +136,7 @@ return
     
     then local:do-post()
     
-    else ap:do-method-not-allowed( "/admin/example-migrate-studies.xql" , ( "GET" , "POST" ) )
+    else common-protocol:do-method-not-allowed( "/admin/example-migrate-studies.xql" , ( "GET" , "POST" ) )
     
     
 
