@@ -11,13 +11,13 @@ public class LoadTest {
 
 	private String fileName;
 	private DiscreteDistribution urlsToHit = null;
-	static int requestsPerRate = 50;
-	static int maxHitsPerSec = 200;
+	static int requestsPerRate = 30;
+	static int maxHitsPerSec = 400;
 	int running = 0;
 	private static final byte[] bitBucket = new byte[4096];
 
-	public LoadTest(String url, String fileName) {
-		this.fileName = fileName;
+	public LoadTest(String url) {
+		this.fileName = filenameFrom(url);
 		urlsToHit = new DiscreteDistribution();
 		for (int histPS = 1; histPS < maxHitsPerSec; histPS++) {
 			urlsToHit.add(new InstrumentedUrlRequestSet(url, histPS));
@@ -147,6 +147,18 @@ public class LoadTest {
 	public static String pad(long l, int w) {
 		return pad("" + l, w);
 	}
+	
+	public static String filenameFrom(String url) {
+		String filename = url.toLowerCase();
+		filename = filename.replace("http://","");
+		filename = filename.replace(".html","");
+		System.err.println(" " + filename + " " + filename.lastIndexOf('/') + "==" +  (filename.length() -1)) ;
+		if (filename.length() > 0  && filename.lastIndexOf('/') == filename.length() -1)
+			filename = filename.substring(0,filename.length() -1);
+        if (filename.lastIndexOf('/') != -1)
+        	filename = filename.substring(filename.lastIndexOf('/') +1);
+        return filename;
+	}
 
 	public void run() throws Exception {
 		FileOutputStream output = new FileOutputStream(fileName + ".csv");
@@ -180,7 +192,13 @@ public class LoadTest {
 	}
 
 	public static void main(String[] args) throws Exception {
-		new LoadTest("http://localhost:8080/manta/questionnaire/", "questionnaire").run();
+		new LoadTest("http://cloud1.cggh.org/manta/questionnaire/").run();
+		
+		//System.err.println(filenameFrom("http://localhost:8080/manta/questionnaire/"));
+		//System.err.println(filenameFrom("http://cloud1.cggh.org/manta/questionnaire/"));
+		//System.err.println(filenameFrom("http://paneris.org/"));
+		//System.err.println(filenameFrom("http://paneris.org/index.html"));
+		
 		System.exit(1);
 	}
 }
