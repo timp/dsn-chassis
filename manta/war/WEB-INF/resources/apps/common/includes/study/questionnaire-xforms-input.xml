@@ -27,6 +27,7 @@
 
 		<xxforms:dialog id="dia-errors" appearance="full"
 			level="modeless" close="true" draggable="true" visible="false">
+			<!-- FIXME: Eclipse complains "invalid content" here -->
 			<xforms:label>Warnings</xforms:label>
 			<div>
 				<fr:error-summary observer="grp-questionnaire" id="error-summary"
@@ -46,9 +47,9 @@
 	</xforms:group>
 
 	<xforms:group model="mod-study-questionnaire"
-		ref="instance('ins-sq-study-entry')/atom:content/study">
+		ref="instance('ins-sq-study-info-entry')/atom:content">
 
-		<xforms:group ref="questionnaire" id="grp-questionnaire">
+		<xforms:group ref="study-info" id="grp-questionnaire">
 
 			<h2>General Questions</h2>
 
@@ -452,8 +453,8 @@
 					visible="true" > <xforms:label>Location</xforms:label> <div>
 					<p>Drag the pointer to populate the Latitude and Longitude
 					fields.</p> <fr:map address-ref="instance('ins-lookupAddress')"
-					longitude-ref="instance('ins-sq-study-entry')//sites/site[index('rep-site')]/longitude"
-					latitude-ref="instance('ins-sq-study-entry')//sites/site[index('rep-site')]/latitude"
+					longitude-ref="instance('ins-sq-study-info-entry')//sites/site[index('rep-site')]/longitude"
+					latitude-ref="instance('ins-sq-study-info-entry')//sites/site[index('rep-site')]/latitude"
 					style="width: 600px; height: 400px; "/> </div> </xxforms:dialog>
 					</div>
 				-->
@@ -1656,6 +1657,7 @@
 									<xforms:alert>Please select</xforms:alert>
 								</xforms:select1>
 
+								<!-- FIXME: Eclipse complains "xforms:input is not complete" here -->
 								<xforms:input ref="mixedAllelesOther"></xforms:input>
 
 								<xforms:select1 ref="recrudescence" appearance="minimal">
@@ -2877,6 +2879,7 @@
 									<xforms:select1 appearance="minimal" ref="drugMeasured">
 										<xforms:label class="invisible">Molecule measured
 										</xforms:label>
+										<!-- FIXME: Eclipse complains "invalid content" here -->
 										<xforms:hint>Name of drug given or metabolite measured
 										</xforms:hint>
 										<xforms:item>
@@ -3011,6 +3014,7 @@
 										<xforms:select1 appearance="minimal" ref="uploadedUrl">
 											<xforms:label class="invisible">Uploaded document
 											</xforms:label>
+											<!-- FIXME: Eclipse complains "invalid content" here -->
 											<xforms:hint>An uploaded document</xforms:hint>
 											<xforms:item>
 												<xforms:label>please select</xforms:label>
