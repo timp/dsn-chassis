@@ -1,3 +1,4 @@
+<!-- FIXME: review and correct this -->
 <atom:entry xmlns:atom="http://www.w3.org/2005/Atom">
 	<atom:content type="application/vnd.atombeat+xml">
 		<atombeat:security-descriptor xmlns:atombeat="http://purl.org/atombeat/xmlns">

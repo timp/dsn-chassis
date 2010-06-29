@@ -32,7 +32,7 @@
 
 
      <p>
-         <xforms:submit submission="sub-put-sq-study-entry">
+         <xforms:submit submission="sub-put-sq-study-info-entry">
              <xforms:label>Save Changes</xforms:label>
          </xforms:submit>
      </p>
@@ -40,7 +40,7 @@
 	<xi:include href="../../../common/includes/study/questionnaire-xforms-input.xml" />
 	
      <p>
-         <xforms:submit submission="sub-put-sq-study-entry">
+         <xforms:submit submission="sub-put-sq-study-info-entry">
              <xforms:label>Save Changes</xforms:label>
          </xforms:submit>
      </p>

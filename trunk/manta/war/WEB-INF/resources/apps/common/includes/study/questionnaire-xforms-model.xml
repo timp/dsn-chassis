@@ -8,23 +8,17 @@
 	schema="../chassis-types.xsd">
 
 
-	<xforms:instance id="ins-sq-study-entry"
-		src="/apps/common/templates/study/study-entry-template.xml">
+	<xforms:instance id="ins-sq-study-info-entry"
+		src="/apps/common/templates/study/study-info-entry-template.xml">
 		<atom:entry/>
 	</xforms:instance>
 	
 	<xforms:instance id="ins-sq-submitted-media-feed">
-		<atom:feed xmlns:atom="http://www.w3.org/2005/Atom" xmlns:atombeat="http://purl.org/atombeat/xmlns" atombeat:exclude-entry-content="true" atombeat:recursive="true">
-			<atom:id>/manta/atombeat/content/media/submitted</atom:id>
-			<atom:updated>2010-06-16T13:30:54.721+01:00</atom:updated>
-			<atom:link rel="self" href="/manta/atombeat/content/media/submitted" type="application/atom+xml"/>
-			<atom:link rel="edit" href="/manta/atombeat/content/media/submitted" type="application/atom+xml"/>
-			<atom:author>
-				<atom:email>adam@example.org</atom:email>
-			</atom:author>
-			<atom:title>All Submitted Media</atom:title>
-			<atom:link rel="http://purl.org/atombeat/rel/security-descriptor" href="/manta/atombeat/security/media/submitted" type="application/atom+xml"/>
-		</atom:feed>
+		<atom:feed 
+			xmlns:atom="http://www.w3.org/2005/Atom" 
+			xmlns:atombeat="http://purl.org/atombeat/xmlns" 
+			atombeat:exclude-entry-content="true" 
+			atombeat:recursive="true"/>
 	</xforms:instance>
 	
 	<xforms:instance id="errors">
@@ -39,7 +33,7 @@
 
 	<!--
 		Note xxforms:readonly-appearance="static" needed in the controls
-		themselves <xforms:bind nodeset="instance('ins-sq-study-entry')"
+		themselves <xforms:bind nodeset="instance('ins-sq-study-info-entry')"
 		readonly="true()" />
 	-->
 
@@ -49,20 +43,20 @@
 
 	<xforms:bind nodeset="instance('ins-lookupAddress')"
 		calculate="
-		if (normalize-space(instance('ins-sq-study-entry')//sites/site[index('rep-site')]/country) = '') then 
+		if (normalize-space(instance('ins-sq-study-info-entry')//sites/site[index('rep-site')]/country) = '') then 
 			'Oxford United Kingdom' 
 		else 
-			concat(instance('ins-sq-study-entry')//sites/site[index('rep-site')]/locality, 
+		concat(instance('ins-sq-study-info-entry')//sites/site[index('rep-site')]/locality, 
 				' ', 
-				instance('ins-sq-study-entry')//sites/site[index('rep-site')]/district, 
+				instance('ins-sq-study-info-entry')//sites/site[index('rep-site')]/district, 
 				' ', 
-				instance('ins-sq-study-entry')//sites/site[index('rep-site')]/region, 
+				instance('ins-sq-study-info-entry')//sites/site[index('rep-site')]/region, 
 				' ', 
-				instance('ins-country-items')/country[value=instance('ins-sq-study-entry')//sites/site[index('rep-site')]/country]/label)"/>
+				instance('ins-country-items')/country[value=instance('ins-sq-study-info-entry')//sites/site[index('rep-site')]/country]/label)"/>
 
-	<xforms:bind nodeset="instance('ins-sq-study-entry')">
-		<xforms:bind nodeset="atom:content/study">
-			<xforms:bind nodeset="questionnaire">
+	<xforms:bind nodeset="instance('ins-sq-study-info-entry')">
+		<xforms:bind nodeset="atom:content">
+			<xforms:bind nodeset="study-info">
 				<xforms:bind nodeset="start" type="xs:date"/>
 				<xforms:bind nodeset="end" type="xs:date"/>
 				<xforms:bind nodeset="pathogens" required="contains(../modules, 'molecular')"/>
@@ -867,9 +861,9 @@
 		</assayReference>
 	</xforms:instance>
 
-	<xforms:submission id="sub-put-sq-study-entry"
-		resource="{instance('ins-sq-study-entry')/atom:link[@rel='edit']/@href}" method="put"
-		replace="instance" instance="ins-sq-study-entry" ref="instance('ins-sq-study-entry')"
+	<xforms:submission id="sub-put-sq-study-info-entry"
+		resource="{instance('ins-sq-study-info-entry')/atom:link[@rel='edit']/@href}" method="put"
+		replace="instance" instance="ins-sq-study-info-entry" ref="instance('ins-sq-study-info-entry')"
 		mediatype="application/atom+xml" relevant="false" validate="false">
 		<xforms:message ev:event="xforms-submit-error" level="modal"> An error occurred (
 				<xforms:output value="event('error-type')"/> ) while saving the study info. </xforms:message>
@@ -880,7 +874,7 @@
 
 
 	<xforms:submission id="sub-check-regimen-url" method="get"
-		resource="{instance('ins-sq-study-entry')//regimen[index('regimen-rep')]/regimenUrl}"
+		resource="{instance('ins-sq-study-info-entry')//regimen[index('regimen-rep')]/regimenUrl}"
 		serialization="none" replace="none">
 		
 		<xforms:message ev:event="xforms-submit-error" level="modal"> The requested resource could
@@ -893,7 +887,7 @@
 	</xforms:submission>
 	
 	<xforms:submission id="sub-check-assayReference-url" method="get"
-		resource="{instance('ins-sq-study-entry')//assayReference[index('assayReference-rep')]/url}"
+		resource="{instance('ins-sq-study-info-entry')//assayReference[index('assayReference-rep')]/url}"
 		serialization="none" replace="none">
 		
 		<xforms:message ev:event="xforms-submit-error" level="modal"> The URL could not be retrieved. 
@@ -910,7 +904,7 @@
 		resource="{
 			concat(
 			'http://localhost:8080/manta/util/DOILookup/',
-			instance('ins-sq-study-entry')//assayReference[index('assayReference-rep')]/doi)
+			instance('ins-sq-study-info-entry')//assayReference[index('assayReference-rep')]/doi)
 			}"
 		serialization="none" replace="none">
 		

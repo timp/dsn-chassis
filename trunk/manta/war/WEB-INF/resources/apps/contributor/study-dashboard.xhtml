@@ -55,31 +55,12 @@
         	<xforms:setvalue ev:event="xforms-model-construct-done" ref="instance('ins-control')/dashboard-tab-to-show" value="if(not(empty(xxforms:get-request-parameter('tab')))) then xxforms:get-request-parameter('tab') else 'summary'" />
 
 
-
 			<xforms:action ev:event="xxforms-invalid" ev:observer="ins-permissions-entry">
 				<xforms:setvalue ev:event="xforms-value-changed" ref="instance('ins-control')/permissions-entry-is-valid">false</xforms:setvalue>
 			</xforms:action>
 			<xforms:action ev:event="xxforms-valid" ev:observer="ins-permissions-entry">
 				<xforms:setvalue ev:event="xforms-value-changed" ref="instance('ins-control')/permissions-entry-is-valid">true</xforms:setvalue>
 			</xforms:action>
-
-
-
-			<!-- Check email addresses in acknowledgements (not required) -->			
-			<xforms:bind nodeset="instance('ins-study-entry')/atom:content/study/acknowledgements/person/email-address" type="xforms:email"/>
-
-			<xforms:action ev:event="xxforms-invalid" ev:observer="ins-study-entry">
-				<xforms:setvalue ev:event="xforms-value-changed" ref="instance('ins-control')/study-entry-is-valid">false</xforms:setvalue>
-			</xforms:action>
-			<xforms:action ev:event="xxforms-valid" ev:observer="ins-study-entry">
-				<xforms:setvalue ev:event="xforms-value-changed" ref="instance('ins-control')/study-entry-is-valid">true</xforms:setvalue>
-			</xforms:action>
-
-			
-
-
-
-
 
 			<xforms:action ev:event="xxforms-invalid" ev:observer="ins-upload">
 				<xforms:setvalue ev:event="xforms-value-changed" ref="instance('ins-control')/upload-is-valid">false</xforms:setvalue>
@@ -88,6 +69,12 @@
 				<xforms:setvalue ev:event="xforms-value-changed" ref="instance('ins-control')/upload-is-valid">true</xforms:setvalue>
 			</xforms:action>
 
+			<xforms:action ev:event="xxforms-invalid" ev:observer="ins-study-entry">
+				<xforms:setvalue ev:event="xforms-value-changed" ref="instance('ins-control')/study-entry-is-valid">false</xforms:setvalue>
+			</xforms:action>
+			<xforms:action ev:event="xxforms-valid" ev:observer="ins-study-entry">
+				<xforms:setvalue ev:event="xforms-value-changed" ref="instance('ins-control')/study-entry-is-valid">true</xforms:setvalue>
+			</xforms:action>
 
  			<!-- These binding would cause the buttons to disable when the form is invalid, but it causes a problem: The user has to change focus from a form element before the form is re-validated, causing the button to appear readonly even when the form is valid. -->
 			<!-- Another workaround (besides the current use of messages) might be to use xxforms:incremental, but that creates much more traffic, i.e. on every keypress. -->
@@ -97,19 +84,27 @@
         	
 			<xforms:bind nodeset="instance('ins-control')/add-publication-trigger" relevant="instance('ins-study-entry')/atom:content/study/study-is-published='Yes'"/>
 
-
-        	
         	<xforms:bind nodeset="instance('ins-control')/copy-answers-control" relevant="instance('ins-study-feed')[count(atom:entry)>1]"/>
         	<xforms:bind nodeset="instance('ins-control')/copy-answers-trigger" readonly="../href-to-copy-study-info-from = ''"/>
         	
         	
 			<!-- TODO: ensure a file is selected before Upload is triggered -->
         	<!--  <xforms:bind nodeset="instance('ins-upload')/media" required="true()" />  -->
-        	
-        	<!-- Ensure that the current user cannot remove themselves as administrator. -->       		
-			<xforms:bind nodeset="instance('ins-permissions-entry')//atombeat:groups/atombeat:group">
-                <xforms:bind nodeset="atombeat:member[text()=xxforms:get-remote-user() and position() = 1]" readonly="true()"/>
-            </xforms:bind>
+
+
+
+			<xforms:send 
+				ev:event="xforms-model-construct-done" 
+				submission="sub-get-study-entry"
+				if="not(empty(xxforms:get-request-parameter('study')))"/>
+				
+			<xforms:load 
+				ev:event="xforms-model-construct-done" 
+				resource="home"
+				if="empty(xxforms:get-request-parameter('study'))"/>
+				
+				
+				        	
 
         	
         	
@@ -117,6 +112,10 @@
 			<xforms:instance id="ins-study-entry">
 				<atom:entry/>
 			</xforms:instance>
+
+			<!-- Check email addresses in acknowledgements (not required) -->			
+			<xforms:bind nodeset="instance('ins-study-entry')/atom:content/study/acknowledgements/person/email-address" type="xforms:email"/>
+
 			
 			<xforms:submission 
 				id="sub-get-study-entry"
@@ -136,8 +135,9 @@
 					<!-- Postponed, perhaps until Version 2, pending design for curator's option to share -->
 					<!-- <xforms:send submission="sub-get-curated-media-feed"/> -->
 					
-					<!-- copy data across to study questionnaire model -->
-					<xforms:insert nodeset="xxforms:instance('ins-sq-study-entry')" origin="instance('ins-study-entry')" />
+					<!-- Get the study info, which will use a link from the retrieved study entry. -->
+					<xforms:send submission="sub-get-study-info-entry"/>
+
 					
 				</xforms:action>				
 				
@@ -145,15 +145,53 @@
 				
 			</xforms:submission>
 
-			<xforms:send 
-				ev:event="xforms-model-construct-done" 
-				submission="sub-get-study-entry"
-				if="not(empty(xxforms:get-request-parameter('study')))"/>
+
+			<xforms:instance id="ins-submitted-media-feed">
+				<atom:feed/>
+			</xforms:instance>
+			
+			<xforms:submission
+				id="sub-get-submitted-media-feed"
+				resource="{instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/submittedMedia']/@href}"
+				method="get"
+				replace="instance"
+				instance="ins-submitted-media-feed"
+				serialization="none">
 				
-			<xforms:load 
-				ev:event="xforms-model-construct-done" 
-				resource="home"
-				if="empty(xxforms:get-request-parameter('study'))"/>
+				<!-- Now that we have the media feed, copy to the questionnaire. -->
+				<xforms:action ev:event="xforms-submit-done">
+					<xforms:insert nodeset="xxforms:instance('ins-sq-submitted-media-feed')" origin="instance('ins-submitted-media-feed')" />
+				</xforms:action>
+				
+                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the submitted media.</xforms:message>
+			</xforms:submission>
+
+
+			<xforms:instance id="ins-study-info-entry">
+				<atom:entry/>
+			</xforms:instance>
+			
+			<xforms:submission 
+				id="sub-get-study-info-entry"
+				resource="{instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/studyInfo']/@href}"
+				method="get"
+				replace="instance"
+				instance="ins-study-info-entry"
+				serialization="none">
+                
+				<xforms:action ev:event="xforms-submit-done">
+					
+					<!-- copy data across to study questionnaire model -->
+					<xforms:insert nodeset="xxforms:instance('ins-sq-study-info-entry')" origin="instance('ins-study-info-entry')" />
+					
+				</xforms:action>				
+				
+				<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the study info.</xforms:message>
+				
+			</xforms:submission>
+			
+
+
 				
 		    <xforms:submission
 		        id="sub-put-study-entry"
@@ -174,6 +212,12 @@
 			<xforms:instance id="ins-permissions-entry">
 				<atom:entry/>
 			</xforms:instance> 
+            
+        	<!-- Ensure that the current user cannot remove themselves as administrator. -->       		
+			<xforms:bind nodeset="instance('ins-permissions-entry')//atombeat:groups/atombeat:group">
+                <xforms:bind nodeset="atombeat:member[text()=xxforms:get-remote-user() and position() = 1]" readonly="true()"/>
+            </xforms:bind>
+  
             
 			<xforms:submission 
 				id="sub-get-permissions-entry"
@@ -233,25 +277,7 @@
 
 
 
-			<xforms:instance id="ins-submitted-media-feed">
-				<atom:feed/>
-			</xforms:instance>
-			
-			<xforms:submission
-				id="sub-get-submitted-media-feed"
-				resource="{instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/submittedMedia']/@href}"
-				method="get"
-				replace="instance"
-				instance="ins-submitted-media-feed"
-				serialization="none">
-				
-				<!-- Now that we have the media feed, copy to the questionnaire. -->
-				<xforms:action ev:event="xforms-submit-done">
-					<xforms:insert nodeset="xxforms:instance('ins-sq-submitted-media-feed')" origin="instance('ins-submitted-media-feed')" />
-				</xforms:action>
-				
-                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the submitted media.</xforms:message>
-			</xforms:submission>
+
 
 			<!-- Postponed, perhaps until Version 2, pending design for curator's option to share -->
 			<!-- 
@@ -577,8 +603,8 @@
     		
     	</div>
 
-			<!-- TODO: Remove for production -->
-			<!-- <fr:xforms-inspector xmlns:fr="http://orbeon.org/oxf/xml/form-runner"/>  -->
+		<!-- TODO: Remove for production -->
+		<fr:xforms-inspector xmlns:fr="http://orbeon.org/oxf/xml/form-runner"/>
     		
     </body>
 </html>

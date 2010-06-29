@@ -17,7 +17,7 @@
 	
      <p>
          <span class="confirmation-study-info-save-button-container">
-             <xforms:submit submission="sub-put-sq-study-entry">
+             <xforms:submit submission="sub-put-sq-study-info-entry">
                  <xforms:label>Save Changes</xforms:label>
              </xforms:submit>
          </span>
@@ -27,7 +27,7 @@
 	
      <p>
          <span class="confirmation-study-info-save-button-container">
-             <xforms:submit submission="sub-put-sq-study-entry">
+             <xforms:submit submission="sub-put-sq-study-info-entry">
                  <xforms:label>Save Changes</xforms:label>
              </xforms:submit>
          </span>
