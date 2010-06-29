@@ -1,201 +1,186 @@
 package org.cggh.chassis.manta.loadtest;
 
+import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.io.PrintStream;
 import java.net.URL;
 import java.util.Iterator;
-import java.util.Random;
 import java.util.Vector;
-
-
-class HitStats {
-  public long totalTimeToOpen, totalTimeToFinish;
-  public int successes;
-  public int failures;
-  //public int errors;
-
-  public void notifyTransaction(long started, long opened, long finished //, boolean error
-                                ) {
-    totalTimeToOpen += opened - started;
-    totalTimeToFinish += finished - started;
-    //if (error) ++errors; else 
-    ++successes;
-  }
-
-  public void notifyFailure() {
-    ++failures;
-  }
-
-  public long meanTimeToOpen() {
-    return successes == 0 ? 0 : totalTimeToOpen / successes;
-  }
-
-  public long meanTimeToFinish() {
-    return successes == 0 ? 0 : totalTimeToFinish / successes;
-  }
-}
-
-class DiscreteDistribution  implements Iterable<RequestType>  {
-
-  private Vector<RequestType> elements = new Vector<RequestType>();
-  private Vector<RequestType> cumulative = new Vector<RequestType>();
-
-  public DiscreteDistribution() {}
-
-  public void add(RequestType o, int n) {
-    for (int i = 0; i < n; ++i)
-      cumulative.addElement(o);
-    elements.addElement(o);
-  }
- 
-  public void add(RequestType o) {
-    add(o, 1);
-  }
-
-  public RequestType sample() {
-    return cumulative.elementAt(LoadTest.random.nextInt(cumulative.size()));
-  }
-
-  public Iterator<RequestType> iterator() { 
-	  return elements.iterator();
-  }
-}
-
-class ExponentialDistribution {
-  private double minusMean;
-
-  public ExponentialDistribution(double mean) {
-    minusMean = -mean;
-  }
-
-  public double sample() {
-    for (;;) {
-      float x = LoadTest.random.nextFloat();
-      if (x != 0.)
-        return minusMean * Math.log(x);
-    }
-  }
-}
-
-class BitBucket extends Thread {
-  private String url;
-  private HitStats hitStats;
-
-  public BitBucket(String url, HitStats stats) {
-    this.url = url;
-    this.hitStats = stats;
-  }
-
-  private static final byte[] b = new byte[4096];
-
-  public void run() {
-    //System.err.println(url);
-    try {
-      long started = System.currentTimeMillis();
-      InputStream i = new URL(url).openStream();
-      long opened = System.currentTimeMillis();
-      while (i.read(b) != -1);
-      long finished = System.currentTimeMillis();
-
-      hitStats.notifyTransaction(started, opened, finished);
-    }
-    catch (Exception e) {
-      //System.err.println(e);
-      hitStats.notifyFailure();
-    }
-  }
-}
-
-class RequestType {
-  HitStats stats = new HitStats();
-  String url;
-  
-  RequestType(String url) {
-    this.url = url;
-  }
-
-  void go(String url) {
-    new BitBucket(LoadTest.urlPrefix + url, stats).
-        start();
-  }
-
-  public String toString() {
-    return url;
-  }
-}
 
 public class LoadTest {
 
-  static Random random = new Random();
-  static String urlPrefix;
+	private String fileName;
+	private DiscreteDistribution urlsToHit = null;
+	static int requestsPerRate = 50;
+	static int maxHitsPerSec = 200;
+	int running = 0;
+	private static final byte[] bitBucket = new byte[4096];
 
-  private long runtimeMillis;
-  private boolean keepGoing;
-  private ExponentialDistribution wait;
-  private DiscreteDistribution types = new DiscreteDistribution();
+	public LoadTest(String url, String fileName) {
+		this.fileName = fileName;
+		urlsToHit = new DiscreteDistribution();
+		for (int histPS = 1; histPS < maxHitsPerSec; histPS++) {
+			urlsToHit.add(new InstrumentedUrlRequestSet(url, histPS));
+		}
+	}
 
-  public LoadTest(long runtimeMillis, int hitsPerSec) {
-    this.runtimeMillis = runtimeMillis;
-    wait = new ExponentialDistribution(1000 / hitsPerSec);
+	class HitStats {
+		public long totalTimeToOpen, totalTimeToFinish;
+		public int successes;
+		public int failures;
 
-    types = new DiscreteDistribution();
+		public void notifySuccess(long started, long opened, long finished) {
+			totalTimeToOpen += opened - started;
+			totalTimeToFinish += finished - started;
+			--failures; // Undo default
+			++successes;
+		}
 
-    
-    types.add(new RequestType("questionnaire/"), 6);
-  }
-  private class Stopper extends Thread {
-    public void run() {
-      try {
-        Thread.sleep(runtimeMillis);
-      }
-      catch (Exception e) {
-        throw new RuntimeException(e);
-      }
+		public void notifyFailure() {
+			++failures;
+		}
 
-      keepGoing = false;
-    }
-  }
+		public long meanTimeToOpen() {
+			return successes == 0 ? 0 : totalTimeToOpen / successes;
+		}
 
-  public static String pad(String it, int w) {
-    StringBuffer s = new StringBuffer(w);
-    while (s.length() + it.length() < w)
-      s.append(' ');
-    s.append(it);
-    return s.toString();
-  }
- 
-  public static String pad(long l, int w) {
-    return pad("" + l, w);
-  }
+		public long meanTimeToFinish() {
+			return successes == 0 ? 0 : totalTimeToFinish / successes;
+		}
+	}
 
-  public void run() throws Exception {
-    keepGoing = true;
-    new Stopper().start();
+	class DiscreteDistribution implements Iterable<InstrumentedUrlRequestSet> {
 
-    while (keepGoing) {
-      Thread.sleep((long)wait.sample());
-      ((RequestType)types.sample()).go("questionnaire");
-    }
+		private Vector<InstrumentedUrlRequestSet> elements = new Vector<InstrumentedUrlRequestSet>();
+		private Vector<InstrumentedUrlRequestSet> cumulative = new Vector<InstrumentedUrlRequestSet>();
 
-    System.err.println("stopping");
-    Thread.sleep(5);
+		public DiscreteDistribution() {
+		}
 
-    System.out.println();
-    System.out.println("        win open end fail");
-    for (RequestType hit : types) {
-      System.out.print(hit.toString());
-      System.out.println(
-          pad(hit.stats.successes, 9) + " " +
-          pad(hit.stats.meanTimeToOpen(), 5) + " " +
-          pad(hit.stats.meanTimeToFinish(), 5) + " " +
-          pad(hit.stats.failures, 5) + " ");
-    }
-  }
+		public void add(InstrumentedUrlRequestSet o) {
+			elements.addElement(o);
+			for (int i = 0; i < requestsPerRate; ++i)
+				cumulative.addElement(o);
+		}
 
+		public Iterator<InstrumentedUrlRequestSet> iterator() {
+			return elements.iterator();
+		}
+	}
 
-  public static void main(String[] args) throws Exception {
-    urlPrefix = "http://localhost:8080/manta/";
-    new LoadTest(new Integer(10) * 1000L,
-        new Integer(1500)).run();
-    System.exit(1);
-  }
+	class InstrumentedUrlRequestSet {
+		HitStats stats = new HitStats();
+		String url;
+		long hitsPerSecond;
+
+		InstrumentedUrlRequestSet(String url, long hitsPerSecond) {
+			this.url = url;
+			this.hitsPerSecond = hitsPerSecond;
+		}
+
+		void go() throws Exception {
+			for (int i = 0; i < requestsPerRate; i++) {
+				//System.err.println("sleeping " + waitMillis());
+				Thread.sleep(waitMillis());
+				new BitBucketClient(url, stats).start();
+			}
+		}
+
+		public String toString() {
+			return url + "(" + hitsPerSecond + ")";
+		}
+
+		public long waitMillis() {
+			return 1000L / hitsPerSecond;
+		}
+
+		public String url() {
+			return url;
+		}
+
+		public long hitsPerSecond() {
+			return hitsPerSecond;
+		}
+	}
+
+	class BitBucketClient extends Thread {
+		private String url;
+		private HitStats hitStats;
+
+		public BitBucketClient(String url, HitStats stats) {
+			this.url = url;
+			this.hitStats = stats;
+		}
+
+		public void run() {
+			running++;
+			//System.err.print(url + " >>/dev/null ");
+			InputStream inputStream = null;
+			hitStats.notifyFailure(); // Our main failure is timeout
+			try {
+				long started = System.currentTimeMillis();
+				inputStream = new URL(url).openStream();
+				long opened = System.currentTimeMillis();
+				while (inputStream.read(bitBucket) != -1)
+					;
+				long finished = System.currentTimeMillis();
+
+				//System.err.println(" :" + started + " " + opened + " " + finished);
+				hitStats.notifySuccess(started, opened, finished);
+
+				inputStream.close();
+			} catch (Exception e) {
+				System.err.println(e);
+			}
+			running--;
+		}
+	}
+
+	public static String pad(String it, int w) {
+		StringBuffer s = new StringBuffer(w);
+		while (s.length() + it.length() < w)
+			s.append(' ');
+		s.append(it);
+		return s.toString();
+	}
+
+	public static String pad(long l, int w) {
+		return pad("" + l, w);
+	}
+
+	public void run() throws Exception {
+		FileOutputStream output = new FileOutputStream(fileName + ".csv");
+		PrintStream out = new PrintStream(output);
+
+		for (InstrumentedUrlRequestSet iurs : urlsToHit) {
+			System.err.println(iurs);
+			iurs.go();
+			while (running > 0)
+				Thread.sleep(100);
+			Thread.sleep(500);
+		}
+
+		System.err.println("stopping");
+		Thread.sleep(1500);
+
+		out.println("url, count, success, rate, start, complete");
+		for (InstrumentedUrlRequestSet iurs : urlsToHit) {
+			int total = iurs.stats.successes + iurs.stats.failures;
+			double successRate = 0.0;
+			if (total != 0)
+				successRate = (iurs.stats.successes * 100.0) / (total);
+			
+			out.println(iurs.url() + ", " 
+					+ pad(total, 5) + ", "
+					+ pad(new Double(successRate).toString(), 5) + ", "
+					+ pad(iurs.hitsPerSecond(), 5) + ", "
+					+ pad(iurs.stats.meanTimeToOpen(), 5) + ", "
+					+ pad(iurs.stats.meanTimeToFinish(), 5) + ", " + " ");
+		}
+	}
+
+	public static void main(String[] args) throws Exception {
+		new LoadTest("http://localhost:8080/manta/questionnaire/", "questionnaire").run();
+		System.exit(1);
+	}
 }
