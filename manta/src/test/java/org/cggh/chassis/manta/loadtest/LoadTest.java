@@ -1,6 +1,7 @@
 package org.cggh.chassis.manta.loadtest;
 
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.net.URL;
@@ -13,7 +14,7 @@ public class LoadTest {
 	private DiscreteDistribution urlsToHit = null;
 	static int requestsPerRate = 2;
 	static int rateIncrement = 10;
-	static int maxHitsPerSec = 20000;
+	static int maxHitsPerSec = 2000;
 	static long maxWaitTime = 100000L;
 	int runningThreadCount = 0;
 	private static final byte[] bitBucket = new byte[4096];
@@ -119,7 +120,8 @@ public class LoadTest {
 			InputStream inputStream = null;
 			try {
 				long started = System.currentTimeMillis();
-				inputStream = new URL(url).openStream();
+				URL it = new URL(url);
+				inputStream = it.openStream();
 				long opened = System.currentTimeMillis();
 				while (inputStream.read(bitBucket) != -1)
 					;
@@ -127,10 +129,16 @@ public class LoadTest {
 
 				hitStats.notifySuccess(started, opened, finished);
 
-				inputStream.close();
 			} catch (Exception e) {
 				hitStats.notifyFailure();
 				System.err.println(e);
+			} finally { 
+				try {
+					if (inputStream != null)
+					  inputStream.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}				
 			}
 			runningThreadCount--;
 		}
@@ -201,8 +209,9 @@ public class LoadTest {
 		//String url = "http://localhost:8080/manta/questionnaire/";
 		//String url = "http://localhost:8080/manta/index.html";
 		//String url = "http://localhost:8080/manta/home/";
-		String url = "http://localhost:8080/manta/exist/rest/db/atom/content/studies/KCDZQ.atom";
+		//String url = "http://localhost:8080/manta/exist/rest/db/atom/content/studies/KCDZQ.atom";
 		//String url = "http://localhost:8080/manta/exist/rest/db/atom/content/studies/";
+		String url = "http://localhost/";
 		
 		System.out.println("Outputting to " + filenameFrom(url));
 			
