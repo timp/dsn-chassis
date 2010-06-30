@@ -11,15 +11,17 @@ public class LoadTest {
 
 	private String fileName;
 	private DiscreteDistribution urlsToHit = null;
-	static int requestsPerRate = 30;
-	static int maxHitsPerSec = 400;
-	int running = 0;
+	static int requestsPerRate = 2;
+	static int rateIncrement = 10;
+	static int maxHitsPerSec = 20000;
+	static long maxWaitTime = 100000L;
+	int runningThreadCount = 0;
 	private static final byte[] bitBucket = new byte[4096];
 
 	public LoadTest(String url) {
 		this.fileName = filenameFrom(url);
 		urlsToHit = new DiscreteDistribution();
-		for (int histPS = 1; histPS < maxHitsPerSec; histPS++) {
+		for (int histPS = 1; histPS < maxHitsPerSec; histPS += rateIncrement) {
 			urlsToHit.add(new InstrumentedUrlRequestSet(url, histPS));
 		}
 	}
@@ -30,9 +32,11 @@ public class LoadTest {
 		public int failures;
 
 		public void notifySuccess(long started, long opened, long finished) {
-			totalTimeToOpen += opened - started;
-			totalTimeToFinish += finished - started;
-			--failures; // Undo default
+			long toOpen = opened - started;
+			totalTimeToOpen += toOpen;
+			long toFinish = finished - started;
+			totalTimeToFinish += toFinish;
+			System.err.println(started + ":" + opened + ":" + finished + "=" + toFinish);
 			++successes;
 		}
 
@@ -71,18 +75,19 @@ public class LoadTest {
 	class InstrumentedUrlRequestSet {
 		HitStats stats = new HitStats();
 		String url;
-		long hitsPerSecond;
+		int hitsPerSecond;
+		long waitMillis;
 
-		InstrumentedUrlRequestSet(String url, long hitsPerSecond) {
+		InstrumentedUrlRequestSet(String url, int hitsPerSecond) {
 			this.url = url;
 			this.hitsPerSecond = hitsPerSecond;
+			this.waitMillis = 1000L / hitsPerSecond;
 		}
 
-		void go() throws Exception {
+		void go() throws InterruptedException {
 			for (int i = 0; i < requestsPerRate; i++) {
-				//System.err.println("sleeping " + waitMillis());
-				Thread.sleep(waitMillis());
 				new BitBucketClient(url, stats).start();
+				Thread.sleep(waitMillis);
 			}
 		}
 
@@ -90,15 +95,11 @@ public class LoadTest {
 			return url + "(" + hitsPerSecond + ")";
 		}
 
-		public long waitMillis() {
-			return 1000L / hitsPerSecond;
-		}
-
 		public String url() {
 			return url;
 		}
 
-		public long hitsPerSecond() {
+		public int hitsPerSecond() {
 			return hitsPerSecond;
 		}
 	}
@@ -113,10 +114,9 @@ public class LoadTest {
 		}
 
 		public void run() {
-			running++;
+			runningThreadCount++;
 			//System.err.print(url + " >>/dev/null ");
 			InputStream inputStream = null;
-			hitStats.notifyFailure(); // Our main failure is timeout
 			try {
 				long started = System.currentTimeMillis();
 				inputStream = new URL(url).openStream();
@@ -125,14 +125,14 @@ public class LoadTest {
 					;
 				long finished = System.currentTimeMillis();
 
-				//System.err.println(" :" + started + " " + opened + " " + finished);
 				hitStats.notifySuccess(started, opened, finished);
 
 				inputStream.close();
 			} catch (Exception e) {
+				hitStats.notifyFailure();
 				System.err.println(e);
 			}
-			running--;
+			runningThreadCount--;
 		}
 	}
 
@@ -152,31 +152,36 @@ public class LoadTest {
 		String filename = url.toLowerCase();
 		filename = filename.replace("http://","");
 		filename = filename.replace(".html","");
-		System.err.println(" " + filename + " " + filename.lastIndexOf('/') + "==" +  (filename.length() -1)) ;
 		if (filename.length() > 0  && filename.lastIndexOf('/') == filename.length() -1)
 			filename = filename.substring(0,filename.length() -1);
         if (filename.lastIndexOf('/') != -1)
         	filename = filename.substring(filename.lastIndexOf('/') +1);
-        return filename;
+        return filename + ".csv";
 	}
 
 	public void run() throws Exception {
-		FileOutputStream output = new FileOutputStream(fileName + ".csv");
+		FileOutputStream output = new FileOutputStream(fileName);
 		PrintStream out = new PrintStream(output);
 
 		for (InstrumentedUrlRequestSet iurs : urlsToHit) {
 			System.err.println(iurs);
 			iurs.go();
-			while (running > 0)
-				Thread.sleep(100);
-			Thread.sleep(500);
 		}
+		long waited = 0;
+		while (runningThreadCount > 0 && waited < maxWaitTime) {
+			Thread.sleep(1000);
+			waited += 1000;
+			System.err.println("waiting because there are still " + runningThreadCount + " threads");			
+		}
+		if (waited > maxWaitTime) 
+			System.err.println("Maximum wait exceeded.");
 
-		System.err.println("stopping");
-		Thread.sleep(1500);
+		System.err.println("stopping after " + waited);
 
 		out.println("url, count, success, rate, start, complete");
+		int count = 0; 
 		for (InstrumentedUrlRequestSet iurs : urlsToHit) {
+			count++;
 			int total = iurs.stats.successes + iurs.stats.failures;
 			double successRate = 0.0;
 			if (total != 0)
@@ -189,15 +194,19 @@ public class LoadTest {
 					+ pad(iurs.stats.meanTimeToOpen(), 5) + ", "
 					+ pad(iurs.stats.meanTimeToFinish(), 5) + ", " + " ");
 		}
+		System.err.println("Wrote " + count + " records");
 	}
 
 	public static void main(String[] args) throws Exception {
-		new LoadTest("http://cloud1.cggh.org/manta/questionnaire/").run();
+		//String url = "http://localhost:8080/manta/questionnaire/";
+		//String url = "http://localhost:8080/manta/index.html";
+		//String url = "http://localhost:8080/manta/home/";
+		String url = "http://localhost:8080/manta/exist/rest/db/atom/content/studies/KCDZQ.atom";
+		//String url = "http://localhost:8080/manta/exist/rest/db/atom/content/studies/";
 		
-		//System.err.println(filenameFrom("http://localhost:8080/manta/questionnaire/"));
-		//System.err.println(filenameFrom("http://cloud1.cggh.org/manta/questionnaire/"));
-		//System.err.println(filenameFrom("http://paneris.org/"));
-		//System.err.println(filenameFrom("http://paneris.org/index.html"));
+		System.out.println("Outputting to " + filenameFrom(url));
+			
+		new LoadTest(url).run();
 		
 		System.exit(1);
 	}
