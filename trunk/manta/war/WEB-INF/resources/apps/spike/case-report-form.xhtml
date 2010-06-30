@@ -324,6 +324,9 @@ tr.repeated-element td {
 .xforms-repeat-selected-item-2 {
     background-color: inherit;
 }
+.xforms-select>span {
+	display: block;
+}
 .comment {
     color: red;
     font-size: 80%;
@@ -548,7 +551,11 @@ tr.repeated-element td {
 			</p>
 
 		</xforms:group>
+		
+		
+		
 		<h2>Clinical Endpoint <span class="comment">(Adverse Events?)</span></h2>
+		
 		<xforms:group ref="instance('ins-data')/clinend">
 
 			<table class="rep-table" cellspacing="0">
@@ -746,7 +753,11 @@ tr.repeated-element td {
 						position="after" origin="instance('ins-clinend-event-template')"/>
 				</xforms:trigger>
 			</p>
-
+			
+			<p><span class="comment">Can you have more than one endpoint at all? E.g., complicated and severe malaria? Or is it only ever one endpoint?</span></p>
+			<p><span class="comment">If you can have more than one endpoint, can you have more than one endpoint on the same date? Or will each endpoint be associated with a separate date?</span></p>
+			<p><span class="comment">Is there a confusion between "endpoint" and "adverse event" here? A subject has (by definition) a single endpoint, but could have multiple adverse events?</span></p>
+			
 		</xforms:group>
 		
 		
@@ -1395,12 +1406,16 @@ tr.repeated-element td {
 			</table>
 			
 			<p>
-				<xforms:trigger appearance="minimal">
-					<xforms:label>Add a Treatment</xforms:label>
-					<xforms:insert ev:event="DOMActivate" context="." nodeset="event" at="last()"
-						position="after" origin="instance('ins-clintreat-event-template')"/>
-				</xforms:trigger>
+				<span style="text-decoration:line-through;">
+					<xforms:trigger appearance="minimal">
+						<xforms:label>Add a Treatment</xforms:label>
+						<xforms:insert ev:event="DOMActivate" context="." nodeset="event" at="last()"
+							position="after" origin="instance('ins-clintreat-event-template')"/>
+					</xforms:trigger>
+				</span>
+				<span class="comment">only ever one treatment?</span>
 			</p>
+			
 			
 		</xforms:group>
 		
