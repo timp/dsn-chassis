@@ -1,0 +1,702 @@
+<!--
+  Copyright (C) 2010 University of Oxford.
+  
+  This program is free software; you can redistribute it and/or modify it under the terms of the
+  GNU Lesser General Public License as published by the Free Software Foundation; either version
+  2.1 of the License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Lesser General Public License for more details.
+
+  The full text of the license is available at http://www.gnu.org/copyleft/lesser.html
+  -->
+<?oxygen NVDLSchema="../../../../../oxygen/samples/nvdl/xhtml-xforms-11-orbeon.nvdl"?>
+<html 
+	xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:f="http://orbeon.org/oxf/xml/formatting" 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:atom="http://www.w3.org/2005/Atom"
+    xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:manta="http://www.cggh.org/2010/chassis/manta/xmlns"
+	xmlns:atombeat="http://purl.org/atombeat/xmlns">
+    
+    <head>
+    
+        <title>WWARN Case Report Form</title>
+        
+        <xforms:model>
+        	
+        	<xforms:instance id="ins-data">
+        		<data xmlns="">
+        			<subject>
+        				<patientid/>
+        				<dateofinclusion/>
+        				<agemonths/>
+        				<hadmlrbfore/>
+        				<amlrbfore/>
+        				<gender/>
+        				<lastdayfup/>
+        				<weight/>
+        			</subject>
+        			<clinical>
+        				<event date="">
+        					<diarrhea/>
+        					<fever/>
+        					<feverhist/>
+        					<liver/>
+        					<spleen/>
+        					<temp/>
+        					<thermo/>
+        					<vomit/>
+        				</event>
+        			</clinical>
+        			<clinend>
+        				<event date="">
+        					<acpr/>
+        					<amlr/>
+        					<compmalaria/>
+        					<danger/>
+        					<death/>
+        					<etf/>
+        					<lcf/>
+        					<lcpf/>
+        					<lfu/>
+        					<ltf/>
+        					<outcome/>
+        					<sevmalaria/>
+        				</event>
+        			</clinend>
+        			<clinhem>
+        				<event date="">
+        					<hb/>
+        					<ht/>
+        					<pt/>
+        					<wbc/>
+        				</event>
+        			</clinhem>
+        		</data>
+        	</xforms:instance>  
+        	
+        	<xforms:instance id="ins-clinical-event-template">
+        		<event date="" xmlns="">
+        			<diarrhea/>
+        			<fever/>
+        			<feverhist/>
+        			<liver/>
+        			<spleen/>
+        			<temp/>
+        			<thermo/>
+        			<vomit/>
+        		</event>
+        	</xforms:instance>
+        	
+        	<xforms:instance id="ins-clinend-event-template">
+        		<event date="" xmlns="">
+        			<acpr/>
+        			<amlr/>
+        			<compmalaria/>
+        			<danger/>
+        			<death/>
+        			<etf/>
+        			<lcf/>
+        			<lcpf/>
+        			<lfu/>
+        			<ltf/>
+        			<outcome/>
+        			<sevmalaria/>
+        		</event>
+        	</xforms:instance>
+        	
+        	<xforms:instance id="ins-clinhem-event-template">
+        		<event date="" xmlns="">
+        			<hb/>
+        			<ht/>
+        			<pt/>
+        			<wbc/>
+        		</event>
+        	</xforms:instance>
+        	
+        	<xforms:bind nodeset="instance('ins-data')">
+        		<xforms:bind nodeset="subject">
+        			<xforms:bind nodeset="dateofinclusion" type="xforms:date"/>
+        			<xforms:bind nodeset="hadmlrbfore"/>
+        			<xforms:bind nodeset="amlrbfore"/>
+        		</xforms:bind>
+        		<xforms:bind nodeset="clinical">
+        			<xforms:bind nodeset="event">
+        				<xforms:bind nodeset="@date" type="xforms:date"/>
+        			</xforms:bind>
+        		</xforms:bind>
+        		<xforms:bind nodeset="clinend">
+        			<xforms:bind nodeset="event">
+        				<xforms:bind nodeset="@date" type="xforms:date"/>
+        			</xforms:bind>
+        		</xforms:bind>
+        		<xforms:bind nodeset="clinhem">
+        			<xforms:bind nodeset="event">
+        				<xforms:bind nodeset="@date" type="xforms:date"/>
+        			</xforms:bind>
+        		</xforms:bind>
+        	</xforms:bind>
+        	
+        </xforms:model>
+    	
+    	<style type="text/css">
+.text-input input {
+	border:none;
+	border-bottom: 2px solid black;
+}
+
+table.rep-table {
+	border: 2px solid black;
+}
+
+table.rep-table td {
+	margin: 0;
+	padding: .4em;
+	border: 1px solid black;
+	vertical-align: top;
+}
+
+table.rep-table th {
+	margin: 0;
+	padding: .4em;
+	border: 1px solid black;
+}
+
+tr.repeated-element td {
+}
+
+.xforms-repeat-selected-item-1 {
+	background-color: inherit;
+}
+
+.comment {
+	color: red;
+	font-size: 80%;
+	font-weight: bold;
+}
+    	</style>
+
+    </head>
+    <body>
+
+    	<h1>WWARN Case Report Form</h1>
+    	
+
+		<h2>Subject</h2>
+    	
+    	<xforms:group ref="instance('ins-data')/subject">
+    		
+    		<p>
+    			<xforms:input ref="patientid" class="text-input">
+    				<xforms:label>Patient ID: </xforms:label>
+    			</xforms:input>
+    			<span class="comment">generated by WWARN, or ID from source data?</span>
+    		</p>
+    		
+    		<p>
+    			<xforms:input ref="dateofinclusion" class="text-input">
+    				<xforms:label>Date of inclusion: </xforms:label>
+    			</xforms:input>
+    			<span class="comment">not in dictionary</span>
+    		</p>
+    		
+    		<p>
+    			<xforms:input ref="agemonths" class="text-input">
+    				<xforms:label>Age: </xforms:label>
+    			</xforms:input>
+    			(months) <em>age in months from birth</em>
+    		</p>
+    		
+    		<p>
+    			<xforms:select1 ref="hadmlrbfore" appearance="full">
+    				<xforms:label>Had malaria in the last 28 days?</xforms:label>
+    				<xforms:item>
+    					<xforms:label>Yes</xforms:label>
+    					<xforms:value>yes</xforms:value>
+    				</xforms:item>
+    				<xforms:item>
+    					<xforms:label>No</xforms:label>
+    					<xforms:value>no</xforms:value>
+    				</xforms:item>
+    			</xforms:select1>
+    		</p>
+    		
+    		<p>
+    			<xforms:select1 ref="amlrbfore" appearance="full">
+    				<xforms:label>Had antimalarial in the last 28 days?</xforms:label>
+    				<xforms:item>
+    					<xforms:label>Yes</xforms:label>
+    					<xforms:value>yes</xforms:value>
+    				</xforms:item>
+    				<xforms:item>
+    					<xforms:label>No</xforms:label>
+    					<xforms:value>no</xforms:value>
+    				</xforms:item>
+    			</xforms:select1> 
+    		</p>
+    		
+    		<p>
+    			<xforms:select1 ref="gender" appearance="full">
+    				<xforms:label>Gender: </xforms:label>
+    				<xforms:item>
+    					<xforms:label>Male</xforms:label>
+    					<xforms:value>M</xforms:value>
+    				</xforms:item>
+    				<xforms:item>
+    					<xforms:label>Female</xforms:label>
+    					<xforms:value>F</xforms:value>
+    				</xforms:item>
+    			</xforms:select1>
+    		</p>
+    		
+    		<p>
+    			<xforms:input ref="lastdayfup" class="text-input">
+    				<xforms:label>Last day of follow-up of the patient: </xforms:label>
+    			</xforms:input>
+    		</p>
+    		
+    		<p>
+    			<xforms:input ref="weight" class="text-input">
+    				<xforms:label>Weight: </xforms:label>
+    			</xforms:input>
+    			(kg) <em>weight in kilograms</em>
+    		</p>
+    		
+    	</xforms:group>
+    	
+    	<h2>Clinical Examinations</h2>
+    	
+    	<xforms:group ref="instance('ins-data')/clinical">
+    		
+    		<table class="rep-table" cellspacing="0">
+    			
+    			<thead>
+    				<tr>
+    					<th>Date</th>
+    					<th>Symptoms</th>
+    				</tr>
+    			</thead>
+    			<tbody>
+    				
+    				<xforms:repeat nodeset="event" id="rep-clinical-event">
+    					
+    					<tr class="repeated-element">
+    						<td>
+    							<xforms:input ref="@date" class="text-input">
+    								<xforms:label/>
+    							</xforms:input>
+    							<br/>
+    							<em>date of examination</em>
+    						</td>
+    						<td>
+    							<p>
+    								<xforms:select1 ref="diarrhea" appearance="full">
+    									<xforms:label>Diarrhea: </xforms:label>
+    									<xforms:item>
+    										<xforms:label>Yes</xforms:label>
+    										<xforms:value>yes</xforms:value>
+    									</xforms:item>
+    									<xforms:item>
+    										<xforms:label>No</xforms:label>
+    										<xforms:value>no</xforms:value>
+    									</xforms:item>
+    								</xforms:select1> 
+    								<em>as diagnosed by clinical investigator</em>
+    							</p>
+    							<p>
+    								<xforms:select1 ref="fever" appearance="full">
+    									<xforms:label>Fever: </xforms:label>
+    									<xforms:item>
+    										<xforms:label>Yes</xforms:label>
+    										<xforms:value>yes</xforms:value>
+    									</xforms:item>
+    									<xforms:item>
+    										<xforms:label>No</xforms:label>
+    										<xforms:value>no</xforms:value>
+    									</xforms:item>
+    								</xforms:select1> 
+    							</p>
+    							<p>
+    								<xforms:select1 ref="feverhist" appearance="full">
+    									<xforms:label>Fever history: </xforms:label>
+    									<xforms:item>
+    										<xforms:label>Yes</xforms:label>
+    										<xforms:value>yes</xforms:value>
+    									</xforms:item>
+    									<xforms:item>
+    										<xforms:label>No</xforms:label>
+    										<xforms:value>no</xforms:value>
+    									</xforms:item>
+    								</xforms:select1> 
+    								<em>history of fever within 24h</em>
+    							</p>
+    							<p>
+    								<xforms:select1 ref="liver" appearance="full">
+    									<xforms:label>Hepatomegaly: </xforms:label>
+    									<xforms:item>
+    										<xforms:label>Yes</xforms:label>
+    										<xforms:value>yes</xforms:value>
+    									</xforms:item>
+    									<xforms:item>
+    										<xforms:label>No</xforms:label>
+    										<xforms:value>no</xforms:value>
+    									</xforms:item>
+    								</xforms:select1> 
+    								<em>as diagnosed by clinical investigator</em>
+    							</p>
+    							<p>
+    								<xforms:select1 ref="spleen" appearance="full">
+    									<xforms:label>Splenomegaly: </xforms:label>
+    									<xforms:item>
+    										<xforms:label>Yes</xforms:label>
+    										<xforms:value>yes</xforms:value>
+    									</xforms:item>
+    									<xforms:item>
+    										<xforms:label>No</xforms:label>
+    										<xforms:value>no</xforms:value>
+    									</xforms:item>
+    								</xforms:select1> 
+    								<em>as diagnosed by clinical investigator</em>
+    							</p>
+    							<p>
+    								<xforms:input ref="temp" class="text-input">
+    									<xforms:label>Temp: </xforms:label>
+    								</xforms:input>
+    								(degrees celcius) <em>body temperature</em>
+    							</p>
+    							<p>
+    								<xforms:input ref="thermo" class="text-input">
+    									<xforms:label>Thermometer: </xforms:label>
+    								</xforms:input>
+    								<em>location of thermometer to measure body temperature</em>
+    							</p>
+    							<p>
+    								<xforms:select1 ref="vomit" appearance="full">
+    									<xforms:label>Vomiting: </xforms:label>
+    									<xforms:item>
+    										<xforms:label>Yes</xforms:label>
+    										<xforms:value>yes</xforms:value>
+    									</xforms:item>
+    									<xforms:item>
+    										<xforms:label>No</xforms:label>
+    										<xforms:value>no</xforms:value>
+    									</xforms:item>
+    								</xforms:select1> 
+    								<em>as diagnosed by clinical investigator</em>
+    							</p>
+    						</td>
+    					</tr>
+    					
+    				</xforms:repeat>
+    				
+    			</tbody>
+    			
+    		</table>
+    		
+    		<p>
+    			<xforms:trigger appearance="minimal">
+    				<xforms:label>Add an Examination</xforms:label>
+    				<xforms:insert 
+    					ev:event="DOMActivate" 
+    					context="." 
+    					nodeset="event" 
+    					at="last()" 
+    					position="after" 
+    					origin="instance('ins-clinical-event-template')"/>
+    			</xforms:trigger>
+    		</p>
+    		
+    	</xforms:group>
+    	
+    	
+    	<h2>Clinical Endpoint <span class="comment">(Adverse Events?)</span></h2>
+    	
+    	<xforms:group ref="instance('ins-data')/clinend">
+    		
+    		<table class="rep-table" cellspacing="0">
+    			
+    			<thead>
+    				<tr>
+    					<th>Date</th>
+    					<th>Endpoint</th>
+    				</tr>
+    			</thead>
+    			<tbody>
+    				
+    				<xforms:repeat nodeset="event" id="rep-clinend-event">
+    					
+    					<tr class="repeated-element">
+    						<td>
+    							<xforms:input ref="@date" class="text-input">
+    								<xforms:label/>
+    							</xforms:input>
+    							<br/>
+    							<em>date of adverse event</em>
+    						</td>
+    						<td>
+    							<p>
+    								<xforms:select1 ref="acpr" appearance="full">
+    									<xforms:label>ACPR: </xforms:label>
+    									<xforms:item>
+    										<xforms:label>Yes</xforms:label>
+    										<xforms:value>yes</xforms:value>
+    									</xforms:item>
+    									<xforms:item>
+    										<xforms:label>No</xforms:label>
+    										<xforms:value>no</xforms:value>
+    									</xforms:item>
+    								</xforms:select1> 
+    								<em>WHO definition</em>
+    							</p>
+    							<p>
+    								<xforms:select1 ref="amlr" appearance="full">
+    									<xforms:label>Other antimalarial: </xforms:label>
+    									<xforms:item>
+    										<xforms:label>Yes</xforms:label>
+    										<xforms:value>yes</xforms:value>
+    									</xforms:item>
+    									<xforms:item>
+    										<xforms:label>No</xforms:label>
+    										<xforms:value>no</xforms:value>
+    									</xforms:item>
+    								</xforms:select1> 
+    								<em>intake of drug with antimalarial activity</em>
+    							</p>
+    							<p>
+    								<xforms:select1 ref="compmalaria" appearance="full">
+    									<xforms:label>Complicated: </xforms:label>
+    									<xforms:item>
+    										<xforms:label>Yes</xforms:label>
+    										<xforms:value>yes</xforms:value>
+    									</xforms:item>
+    									<xforms:item>
+    										<xforms:label>No</xforms:label>
+    										<xforms:value>no</xforms:value>
+    									</xforms:item>
+    								</xforms:select1> 
+    								<em>complicated malaria</em>
+    							</p>
+    							<p>
+    								<xforms:select1 ref="danger" appearance="full">
+    									<xforms:label>Danger/Sign: </xforms:label>
+    									<xforms:item>
+    										<xforms:label>Yes</xforms:label>
+    										<xforms:value>yes</xforms:value>
+    									</xforms:item>
+    									<xforms:item>
+    										<xforms:label>No</xforms:label>
+    										<xforms:value>no</xforms:value>
+    									</xforms:item>
+    								</xforms:select1> 
+    								<em>danger signs (WHO definition)</em>
+    							</p>
+    							<p>
+    								<xforms:select1 ref="death" appearance="full">
+    									<xforms:label>Death: </xforms:label>
+    									<xforms:item>
+    										<xforms:label>Yes</xforms:label>
+    										<xforms:value>yes</xforms:value>
+    									</xforms:item>
+    									<xforms:item>
+    										<xforms:label>No</xforms:label>
+    										<xforms:value>no</xforms:value>
+    									</xforms:item>
+    								</xforms:select1> 
+    							</p>
+    							<p>
+    								<xforms:select1 ref="etf" appearance="full">
+    									<xforms:label>ETF: </xforms:label>
+    									<xforms:item>
+    										<xforms:label>Yes</xforms:label>
+    										<xforms:value>yes</xforms:value>
+    									</xforms:item>
+    									<xforms:item>
+    										<xforms:label>No</xforms:label>
+    										<xforms:value>no</xforms:value>
+    									</xforms:item>
+    								</xforms:select1> 
+    								<em>WHO definition</em>
+    							</p>
+    							<p>
+    								<xforms:select1 ref="lcf" appearance="full">
+    									<xforms:label>LCF: </xforms:label>
+    									<xforms:item>
+    										<xforms:label>Yes</xforms:label>
+    										<xforms:value>yes</xforms:value>
+    									</xforms:item>
+    									<xforms:item>
+    										<xforms:label>No</xforms:label>
+    										<xforms:value>no</xforms:value>
+    									</xforms:item>
+    								</xforms:select1> 
+    								<em>WHO definition</em>
+    							</p>
+    							<p>
+    								<xforms:select1 ref="lcpf" appearance="full">
+    									<xforms:label>LCPF: </xforms:label>
+    									<xforms:item>
+    										<xforms:label>Yes</xforms:label>
+    										<xforms:value>yes</xforms:value>
+    									</xforms:item>
+    									<xforms:item>
+    										<xforms:label>No</xforms:label>
+    										<xforms:value>no</xforms:value>
+    									</xforms:item>
+    								</xforms:select1> 
+    								<em>late clinical or parasitological failure (indistinguishable)</em>
+    							</p>
+    							<p>
+    								<xforms:select1 ref="lfu" appearance="full">
+    									<xforms:label>Loss to FUP: </xforms:label>
+    									<xforms:item>
+    										<xforms:label>Yes</xforms:label>
+    										<xforms:value>yes</xforms:value>
+    									</xforms:item>
+    									<xforms:item>
+    										<xforms:label>No</xforms:label>
+    										<xforms:value>no</xforms:value>
+    									</xforms:item>
+    								</xforms:select1> 
+    							</p>
+    							<p>
+    								<xforms:select1 ref="ltf" appearance="full">
+    									<xforms:label>LTF: </xforms:label>
+    									<xforms:item>
+    										<xforms:label>Yes</xforms:label>
+    										<xforms:value>yes</xforms:value>
+    									</xforms:item>
+    									<xforms:item>
+    										<xforms:label>No</xforms:label>
+    										<xforms:value>no</xforms:value>
+    									</xforms:item>
+    								</xforms:select1> 
+    								<em>WHO definition</em>
+    							</p>
+    							<p>
+    								<xforms:input ref="outcome" class="text-input">
+    									<xforms:label>Outcome: </xforms:label>
+    								</xforms:input>
+    								<em>outcome (WWARN)</em>
+    							</p>
+    							<p>
+    								<xforms:select1 ref="sevmalaria" appearance="full">
+    									<xforms:label>Severe Malaria: </xforms:label>
+    									<xforms:item>
+    										<xforms:label>Yes</xforms:label>
+    										<xforms:value>yes</xforms:value>
+    									</xforms:item>
+    									<xforms:item>
+    										<xforms:label>No</xforms:label>
+    										<xforms:value>no</xforms:value>
+    									</xforms:item>
+    								</xforms:select1> 
+    							</p>
+    						</td>
+    					</tr>
+    					
+    				</xforms:repeat>
+    				
+    			</tbody>
+    			
+    		</table>
+    		
+    		<p>
+    			<xforms:trigger appearance="minimal">
+    				<xforms:label>Add an Adverse Event</xforms:label>
+    				<xforms:insert 
+    					ev:event="DOMActivate" 
+    					context="." 
+    					nodeset="event" 
+    					at="last()" 
+    					position="after" 
+    					origin="instance('ins-clinend-event-template')"/>
+    			</xforms:trigger>
+    		</p>
+    		
+    	</xforms:group>
+    	
+    	
+    	<h2>Hematology</h2>
+    	
+    	<xforms:group ref="instance('ins-data')/clinhem">
+    		
+    		<table class="rep-table" cellspacing="0">
+    			
+    			<thead>
+    				<tr>
+    					<th>Date</th>
+    					<th>Hematology</th>
+    				</tr>
+    			</thead>
+    			<tbody>
+    				
+    				<xforms:repeat nodeset="event" id="rep-clinhem-event">
+    					
+    					<tr class="repeated-element">
+    						<td>
+    							<xforms:input ref="@date" class="text-input">
+    								<xforms:label/>
+    							</xforms:input>
+    							<br/>
+    							<span class="comment">date blood sample taken?</span>
+    						</td>
+    						<td>
+    							<p>
+    								<xforms:input ref="hb" class="text-input">
+    									<xforms:label>Hb: </xforms:label>
+    								</xforms:input>
+    								(g/dl) <em>hemoglobin</em>
+    							</p>
+    							<p>
+    								<xforms:input ref="ht" class="text-input">
+    									<xforms:label>Htc: </xforms:label>
+    								</xforms:input>
+    								(%) <em>hematocrit</em>
+    							</p>
+    							<p>
+    								<xforms:input ref="pt" class="text-input">
+    									<xforms:label>Platelets: </xforms:label>
+    								</xforms:input>
+    								(cells in M/L) <em>platelet count</em>
+    							</p>
+    							<p>
+    								<xforms:input ref="wbc" class="text-input">
+    									<xforms:label>WBC: </xforms:label>
+    								</xforms:input>
+    								(G/L)
+    							</p>
+    						</td>
+    					</tr>
+    					
+    				</xforms:repeat>
+    				
+    			</tbody>
+    			
+    		</table>
+    		
+    		<p>
+    			<xforms:trigger appearance="minimal">
+    				<xforms:label>Add a Hematology Report</xforms:label>
+    				<xforms:insert 
+    					ev:event="DOMActivate" 
+    					context="." 
+    					nodeset="event" 
+    					at="last()" 
+    					position="after" 
+    					origin="instance('ins-clinhem-event-template')"/>
+    			</xforms:trigger>
+    		</p>
+    		
+    	</xforms:group>
+    	
+    </body>
+</html>
+
