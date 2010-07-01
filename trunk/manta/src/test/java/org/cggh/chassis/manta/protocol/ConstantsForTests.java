@@ -14,7 +14,14 @@ public class ConstantsForTests {
 	public static final QName QNAME_DRAFT = new QName("", "draft");
 	public static final QName QNAME_STUDY = new QName("", "study");
 
+	public static final String XMLNS_ATOMBEAT = "http://purl.org/atombeat/xmlns";
+	public static final String XMLNS_ATOM = "http://www.w3.org/2005/Atom";
+	
+	public static final QName QNAME_ATOMBEAT_SECURITY_DESCRIPTOR = new QName(XMLNS_ATOMBEAT, "security-descriptor");
+	public static final QName QNAME_ATOMBEAT_ACL = new QName(XMLNS_ATOMBEAT, "acl");
+
 	public static final String MEDIATYPE_MANTA = "application/vnd.chassis-manta+xml";
+	public static final String MEDIATYPE_ATOMBEAT = "application/vnd.atombeat+xml";
 	
 	public static final String USER_CORA = "cora@example.org";
 	public static final String USER_COLIN = "colin@example.org";
@@ -25,5 +32,9 @@ public class ConstantsForTests {
 	
 	public static final String PASS = "bar";
 	
-	public static final String REL_DRAFTMEDIA = "http://www.cggh.org/2010/chassis/terms/draftMedia";
+	public static final String REL_DRAFT_MEDIA = "http://www.cggh.org/2010/chassis/terms/draftMedia";
+	public static final String REL_SUBMITTED_MEDIA = "http://www.cggh.org/2010/chassis/terms/submittedMedia";
+	public static final String REL_STUDY_INFO = "http://www.cggh.org/2010/chassis/terms/studyInfo";
+
+	public static final String REL_ATOMBEAT_SECURITY_DESCRIPTOR = "http://purl.org/atombeat/rel/security-descriptor";
 }

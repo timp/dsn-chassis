@@ -12,6 +12,7 @@ import org.apache.abdera.factory.Factory;
 import org.apache.abdera.model.Document;
 import org.apache.abdera.model.Element;
 import org.apache.abdera.model.Entry;
+import org.apache.abdera.model.Feed;
 import org.apache.abdera.protocol.client.AbderaClient;
 import org.apache.abdera.protocol.client.ClientResponse;
 import org.apache.abdera.protocol.client.RequestOptions;
@@ -88,6 +89,16 @@ public class UtilsForTests {
 	
 	
 	
+	public static Feed getFeed(ClientResponse response) {
+		
+		Document<Feed> feedDoc = response.getDocument();
+		return feedDoc.getRoot();
+		
+	}
+
+	
+	
+	
 	public static Entry newDraft() {
 
 		return newDraft("foobar");
@@ -118,6 +129,21 @@ public class UtilsForTests {
 		Element studyElement = factory.newElement(QNAME_STUDY);
 		entry.setContent(studyElement);
 		entry.getContentElement().setMimeType(MEDIATYPE_MANTA);
+		
+		return entry;
+
+	}
+	
+	
+
+
+	public static Entry newSecurityDescriptor() {
+
+		Entry entry = factory.newEntry();
+		Element securityDescriptorElement = factory.newElement(QNAME_ATOMBEAT_SECURITY_DESCRIPTOR);
+		entry.setContent(securityDescriptorElement);
+		entry.getContentElement().setMimeType(MEDIATYPE_ATOMBEAT);
+		factory.newElement(QNAME_ATOMBEAT_ACL, securityDescriptorElement);
 		
 		return entry;
 
