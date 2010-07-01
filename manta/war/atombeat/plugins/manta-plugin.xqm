@@ -109,6 +109,8 @@ declare function manta-plugin:before-update-member(
 {
     if ( matches( $request-path-info , "/studies/[^/]+\.atom" ) )
     then manta-plugin:before-update-member-study( $request-path-info , $request-data )
+    else if ( matches( $request-path-info , "/study-info/[^/]+\.atom" ) )
+    then manta-plugin:before-update-member-study-info( $request-path-info , $request-data )
     else if ( matches( $request-path-info , "/drafts/[^/]+\.atom" ) )
     then manta-plugin:before-update-member-drafts( $request-path-info , $request-data )
     else if ( matches( $request-path-info , "/media/submitted/[^/]+/[^/]+\.atom" ) )
@@ -128,7 +130,7 @@ declare function manta-plugin:before-create-member-study(
     let $filtered-request-data := manta-plugin:filter-study-entry( $request-data )
     
     (: create an associated study info entry :)
-    
+(:    
     let $study-info-entry := 
         <atom:entry>
             <atom:title type="text">Study Info</atom:title>
@@ -136,9 +138,9 @@ declare function manta-plugin:before-create-member-study(
         
     let $study-info-entry := atomdb:create-member( "/study-info" , $study-info-entry ) 
     let $study-info-uri := $study-info-entry/atom:link[@rel='edit']/@href
-    
+:)    
     (: add link from study to study-info entry :)
-   
+(:   
     let $augmented-request-data := 
         <atom:entry>
         {
@@ -147,8 +149,8 @@ declare function manta-plugin:before-create-member-study(
         }
             <atom:link rel="http://www.cggh.org/2010/chassis/terms/studyInfo" href="{$study-info-uri}" type="{$CONSTANT:MEDIA-TYPE-ATOM};type=entry"/>
         </atom:entry>
-    
-    return $augmented-request-data
+:)    
+    return $filtered-request-data
 };
 
 
@@ -168,9 +170,20 @@ declare function manta-plugin:before-update-member-study(
     $request-data as element(atom:entry)
 ) as item()*
 {
-    let $stored := atomdb:retrieve-member( $request-path-info ) (: need to carry forward link to study-info :)
-    let $request-data := manta-plugin:filter-study-entry( $stored , $request-data )
-    return $request-data
+    let $filtered-request-data := manta-plugin:filter-study-entry( $request-data )
+    return $filtered-request-data
+};
+
+
+
+declare function manta-plugin:before-update-member-study-info(
+    $request-path-info as xs:string ,
+    $request-data as element(atom:entry)
+) as item()*
+{
+    let $stored := atomdb:retrieve-member( $request-path-info )
+    let $filtered-request-data := manta-plugin:filter-study-info-entry( $stored , $request-data )
+    return $filtered-request-data
 };
 
 
@@ -216,6 +229,22 @@ declare function manta-plugin:filter-study-entry(
 {
 
     let $filtered-entry := atomdb:filter( $entry , $manta-plugin:reserved )
+    
+    return $filtered-entry
+    
+};
+
+
+
+
+declare function manta-plugin:filter-study-info-entry(
+    $old as element(atom:entry) ,
+    $new as element(atom:entry)
+) as element(atom:entry)
+{
+     
+    (: want to carry forward the studyOrigin link stored in the db :)
+    let $filtered-entry := atomdb:filter( $old , $new , $manta-plugin:reserved )
     
     return $filtered-entry
     
@@ -449,8 +478,26 @@ declare function manta-plugin:after-create-member-studies(
     let $entry := $response/body/atom:entry 
     let $id := manta-plugin:get-id( $entry )
     let $path-info := atomdb:edit-path-info($entry)
+    let $study-uri := $entry/atom:link[@rel='edit']/@href
     
-    (: TODO add link back from study info to study :)
+    (: create study info :)
+    
+    let $study-info-entry :=
+        <atom:entry>
+            <atom:title type="text">Study Info for Study {$id}</atom:title>
+            <atom:link 
+                rel="http://www.cggh.org/2010/chassis/terms/originStudy" 
+                href="{$study-uri}" 
+                type="application/atom+xml;type=entry"/>
+        </atom:entry>
+        
+    (: create the member :)    
+    let $member-study-info := atomdb:create-member( "/study-info" , $id , $study-info-entry )  
+    
+    (: create and store the security descriptor :)
+    let $path-info-member-study-info := atomdb:edit-path-info( $member-study-info )
+    let $security-descriptor-study-info := config:study-info-member-security-descriptor( $study-uri )
+    let $descriptor-stored := atomsec:store-descriptor( $path-info-member-study-info , $security-descriptor-study-info )
     
     (: create a collection for submitted media :)    
     
@@ -462,13 +509,13 @@ declare function manta-plugin:after-create-member-studies(
             <atom:title type="text">Submitted Media for Study {$id}</atom:title>
             <atom:link 
                 rel="http://www.cggh.org/2010/chassis/terms/originStudy" 
-                href="{$entry/atom:link[@rel='edit']/@href}" 
+                href="{$study-uri}" 
                 type="application/atom+xml;type=entry"/>
         </atom:feed>
         
     let $submitted-media-collection-db-path := atomdb:create-collection( $submitted-media-collection-path-info , $feed )
     let $submitted-media-collection-descriptor := config:submitted-media-collection-security-descriptor( $submitted-media-collection-path-info )
-    let $descriptor-stored := atomsec:store-collection-descriptor( $submitted-media-collection-path-info , $submitted-media-collection-descriptor )
+    let $descriptor-stored := atomsec:store-descriptor( $submitted-media-collection-path-info , $submitted-media-collection-descriptor )
     
     (: create a collection for curated media :)    
 
@@ -480,13 +527,13 @@ declare function manta-plugin:after-create-member-studies(
             <atom:title type="text">Curated Media for Study {$id}</atom:title>
             <atom:link 
                 rel="http://www.cggh.org/2010/chassis/terms/originStudy" 
-                href="{$entry/atom:link[@rel='edit']/@href}" 
+                href="{$study-uri}" 
                 type="application/atom+xml;type=entry"/>
         </atom:feed>
         
     let $curated-media-collection-db-path := atomdb:create-collection( $curated-media-collection-path-info , $feed )
     let $curated-media-collection-descriptor := config:curated-media-collection-security-descriptor( $curated-media-collection-path-info )
-    let $descriptor-stored := atomsec:store-collection-descriptor( $curated-media-collection-path-info , $curated-media-collection-descriptor )
+    let $descriptor-stored := atomsec:store-descriptor( $curated-media-collection-path-info , $curated-media-collection-descriptor )
     
     (: create a collection for derivations :)    
 
@@ -498,13 +545,13 @@ declare function manta-plugin:after-create-member-studies(
             <atom:title type="text">Derivations for Study {$id}</atom:title>
             <atom:link 
                 rel="http://www.cggh.org/2010/chassis/terms/originStudy" 
-                href="{$entry/atom:link[@rel='edit']/@href}" 
+                href="{$study-uri}" 
                 type="application/atom+xml;type=entry"/>
         </atom:feed>
         
     let $derivations-collection-db-path := atomdb:create-collection( $derivations-collection-path-info , $feed )
     let $derivations-collection-descriptor := config:derivations-collection-security-descriptor( $derivations-collection-path-info )
-    let $descriptor-stored := atomsec:store-collection-descriptor( $derivations-collection-path-info , $derivations-collection-descriptor )
+    let $descriptor-stored := atomsec:store-descriptor( $derivations-collection-path-info , $derivations-collection-descriptor )
     
     (: create a collection for personal data reviews :)    
 
@@ -516,13 +563,13 @@ declare function manta-plugin:after-create-member-studies(
             <atom:title type="text">Personal Data Reviews for Study {$id}</atom:title>
             <atom:link 
                 rel="http://www.cggh.org/2010/chassis/terms/originStudy" 
-                href="{$entry/atom:link[@rel='edit']/@href}" 
+                href="{$study-uri}" 
                 type="application/atom+xml;type=entry"/>
         </atom:feed>
         
     let $personal-data-reviews-collection-db-path := atomdb:create-collection( $personal-data-reviews-collection-path-info , $feed )
     let $personal-data-reviews-collection-descriptor := config:personal-data-reviews-collection-security-descriptor( $personal-data-reviews-collection-path-info )
-    let $descriptor-stored := atomsec:store-collection-descriptor( $personal-data-reviews-collection-path-info , $personal-data-reviews-collection-descriptor )
+    let $descriptor-stored := atomsec:store-descriptor( $personal-data-reviews-collection-path-info , $personal-data-reviews-collection-descriptor )
     
     let $entry := manta-plugin:augment-study-entry( $entry )
     
@@ -558,7 +605,7 @@ declare function manta-plugin:after-create-member-drafts(
         
     let $draft-media-collection-db-path := atomdb:create-collection( $draft-media-collection-path-info , $feed )
     let $draft-media-collection-descriptor := config:draft-media-collection-security-descriptor( $draft-media-collection-path-info , $user )
-    let $descriptor-stored := atomsec:store-collection-descriptor( $draft-media-collection-path-info , $draft-media-collection-descriptor )
+    let $descriptor-stored := atomsec:store-descriptor( $draft-media-collection-path-info , $draft-media-collection-descriptor )
     
     let $entry := manta-plugin:augment-draft-entry( $entry )
     
@@ -955,6 +1002,18 @@ declare function manta-plugin:personal-data-reviews-collection-path-info(
 
 
 
+declare function manta-plugin:study-info-member-path-info-for-study-entry(
+    $entry as element(atom:entry)
+) as xs:string
+{
+    let $id := manta-plugin:get-id( $entry )
+    let $path-info := concat( "/study-info/" , $id , ".atom" )
+    return $path-info
+};
+
+
+
+
 
 
 
@@ -1004,31 +1063,25 @@ declare function manta-plugin:augment-study-entry(
             href="{concat( $config:content-service-url , $personal-data-reviews-collection-path-info )}"
             type="application/atom+xml;type=feed"/>
         
-    let $entry := 
-        <atom:entry>
-            <manta:id>{manta-plugin:get-id($entry)}</manta:id>
-        {
-            $entry/attribute::* ,
-            $entry/child::* ,
-(:
-            if ( atomsec:is-allowed( $CONSTANT:OP-RETRIEVE-ACL , $entry-path-info , () ) )
-            then 
-                <atom:link rel="http://www.cggh.org/2010/chassis/terms/groups">
-                    <ae:inline>
-                        { atomsec:retrieve-resource-descriptor( $entry-path-info )/atombeat:groups }
-                    </ae:inline>
-                </atom:link>
-            else ()
-            ,
-:)
-            $submitted-media-collection-link ,
-            $curated-media-collection-link ,
-            $derivations-collection-link ,
-            $personal-data-reviews-collection-link
-        }
-        </atom:entry>
+    let $study-info-member-path-info := manta-plugin:study-info-member-path-info-for-study-entry( $entry )
+    let $study-info-member-link := 
+        <atom:link 
+            rel="http://www.cggh.org/2010/chassis/terms/studyInfo" 
+            href="{concat( $config:content-service-url , $study-info-member-path-info )}"
+            type="application/atom+xml;type=entry"/>
             
-    return $entry
+    let $children := (
+        <manta:id>{manta-plugin:get-id($entry)}</manta:id> ,
+        $submitted-media-collection-link ,
+        $curated-media-collection-link ,
+        $derivations-collection-link ,
+        $personal-data-reviews-collection-link ,
+        $study-info-member-link
+    )
+        
+    let $augmented-entry := xutil:append-child( $entry , $children )
+            
+    return $augmented-entry
 
 };
 
