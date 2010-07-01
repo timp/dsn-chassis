@@ -304,6 +304,18 @@ declare variable $config:studies-collection-security-descriptor :=
                 <atombeat:permission>RETRIEVE_ACL</atombeat:permission>
             </atombeat:ace>
     
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+                <atombeat:permission>RETRIEVE_HISTORY</atombeat:permission>
+            </atombeat:ace>
+    
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+                <atombeat:permission>RETRIEVE_REVISION</atombeat:permission>
+            </atombeat:ace>
+    
         </atombeat:acl>
     
     </atombeat:security-descriptor>
@@ -370,7 +382,20 @@ declare variable $config:study-info-collection-security-descriptor :=
                 <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
                 <atombeat:permission>UPDATE_MEMBER</atombeat:permission>
             </atombeat:ace>
+
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+                <atombeat:permission>RETRIEVE_HISTORY</atombeat:permission>
+            </atombeat:ace>
     
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+                <atombeat:permission>RETRIEVE_REVISION</atombeat:permission>
+            </atombeat:ace>
+    
+
         </atombeat:acl>
     
     </atombeat:security-descriptor>
@@ -992,6 +1017,18 @@ declare function config:studies-member-default-security-descriptor(
                 <atombeat:permission>UPDATE_ACL</atombeat:permission>
             </atombeat:ace>
             
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
+                <atombeat:permission>RETRIEVE_HISTORY</atombeat:permission>
+            </atombeat:ace>
+            
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
+                <atombeat:permission>RETRIEVE_MEMBER</atombeat:permission>
+            </atombeat:ace>
+            
 		</atombeat:acl>
 		
 	</atombeat:security-descriptor>
@@ -1062,4 +1099,49 @@ declare function config:submitted-media-member-security-descriptor(
         
         </atombeat:security-descriptor>    
     
+};
+
+
+(: TODO refactor above so don't need to make assumptions about URI structure :)
+
+declare function config:study-info-member-security-descriptor(
+    $study-uri as xs:string
+) as element(atombeat:security-descriptor)
+{
+
+    <atombeat:security-descriptor>
+    
+        <atombeat:groups>
+                <atombeat:group id="GROUP_ADMINISTRATORS" src="{$study-uri}"/>
+        </atombeat:groups>
+
+        <atombeat:acl>
+        
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
+                <atombeat:permission>RETRIEVE_MEMBER</atombeat:permission>
+            </atombeat:ace>
+            
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
+                <atombeat:permission>UPDATE_MEMBER</atombeat:permission>
+            </atombeat:ace>
+
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
+                <atombeat:permission>RETRIEVE_HISTORY</atombeat:permission>
+            </atombeat:ace>
+            
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
+                <atombeat:permission>RETRIEVE_MEMBER</atombeat:permission>
+            </atombeat:ace>
+            
+        </atombeat:acl>
+
+    </atombeat:security-descriptor>    
 };
