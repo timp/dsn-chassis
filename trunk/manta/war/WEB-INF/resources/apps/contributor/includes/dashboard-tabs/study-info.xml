@@ -41,7 +41,7 @@
      	</span>
      </p>
 	
-	<xi:include href="../../../common/includes/study/questionnaire-xforms-input.xml" />
+	<xi:include href="../../../common/includes/study/study-info-input.xml" />
 	
      <p>
      	<span class="study-info-save-button-container">
