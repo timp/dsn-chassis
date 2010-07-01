@@ -139,25 +139,25 @@ ul {
 .fourWide .xforms-input-input {
     width: 4em;
 }
-.questionnaire span.xforms-group {
+.study-info span.xforms-group {
     display:block;
     margin-top: 4px;
     margin-bottom: 4px;
     padding-top: 4px;
     padding-bottom: 4px;
 }
-.questionnaire .mapPicker span.xforms-group {
+.study-info .mapPicker span.xforms-group {
     border: 0px solid gray;
     margin-bottom: 6px;
 }
-.questionnaire TD span.xforms-group {
+.study-info TD span.xforms-group {
     border: 0px solid gray;
     margin-left: 0px;
 }
-.questionnaire .pendant { 
+.study-info .pendant { 
     text-transform: lowercase;
 }
-.questionnaire .mapPicker {
+.study-info .mapPicker {
     border: 0px ridge gray;
 }
 .fb-map-gmap-div {
@@ -169,17 +169,17 @@ ul {
 .box {
     clear: both;
 }
-.questionnaire h3, h4, h5 {
+.study-info h3, h4, h5 {
     padding: 1px;
     margin: 0px;
 }
-.questionnaire h2 { 
+.study-info h2 { 
     padding:1em;
     display:block;
     background-color: #eee;
 }
 
-.questionnaire .xforms-textarea { 
+.study-info .xforms-textarea { 
   width: 40em;
 }
 .fixed-width {
@@ -250,11 +250,11 @@ ul {
 /* Masks Orbeon's yellow highlight in wizard by matching background colour. */
     background-color: #FFFFFF;
 }
-/* Restores the questionnaire highlight. */
-.register-study-wizard .questionnaire .xforms-repeat-selected-item-1, .register-study-wizard .questionnaire .xforms-repeat-selected-item-2 {
+/* Restores the study-info highlight. */
+.register-study-wizard .study-info .xforms-repeat-selected-item-1, .register-study-wizard .study-info .xforms-repeat-selected-item-2 {
     background-color: #FFFFCC;
 }
-.study-dashboard .yui-content .questionnaire .xforms-repeat-selected-item-1, .study-dashboard .yui-content .questionnaire .xforms-repeat-selected-item-2 {
+.study-dashboard .yui-content .study-info .xforms-repeat-selected-item-1, .study-dashboard .yui-content .study-info .xforms-repeat-selected-item-2 {
     background-color: #FFFFCC;
 }
 .register-study-wizard .yui-content .xforms-repeat-selected-item-1, .study-dashboard .yui-content .xforms-repeat-selected-item-1 {
