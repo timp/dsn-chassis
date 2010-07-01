@@ -318,7 +318,7 @@
 				submission="sub-retrieve-study-feed"/>
 			
 			
-			<xforms:instance id="ins-study-entry-to-copy-study-info-from">
+			<xforms:instance id="ins-study-info-entry-to-copy-study-info-from">
 				<atom:entry/>
 			</xforms:instance>
 				
@@ -327,7 +327,7 @@
 				resource="{instance('ins-control')/href-to-copy-study-info-from}"
 				method="get"
 				replace="instance"
-				instance="ins-study-entry-to-copy-study-info-from">
+				instance="ins-study-info-entry-to-copy-study-info-from">
 				
 				<xforms:action ev:event="xforms-submit-done">
 					
@@ -338,15 +338,15 @@
 						URL when changes are saved.
 					-->
 					
-					<xforms:delete nodeset="xxforms:instance('ins-sq-study-entry')/atom:content/study/questionnaire"/>
+					<xforms:delete nodeset="xxforms:instance('ins-sq-study-info-entry')/atom:content/study-info"/>
 					<xforms:insert 
-						context="xxforms:instance('ins-sq-study-entry')/atom:content/study" 
-						nodeset="questionnaire" 
-						origin="instance('ins-study-entry-to-copy-study-info-from')/atom:content/study/questionnaire"
+						context="xxforms:instance('ins-sq-study-info-entry')/atom:content" 
+						nodeset="study-info" 
+						origin="instance('ins-study-info-entry-to-copy-study-info-from')/atom:content/study-info"
 						at="last()" position="after" />
 					
 					<xforms:message level="modal">
-						Answers have now been copied from &quot;<xforms:output ref="instance('ins-study-entry-to-copy-study-info-from')/atom:title"/> (<xforms:output ref="instance('ins-study-entry-to-copy-study-info-from')/manta:id"/>)&quot;, although changes have not been saved.
+						Study info has now been copied over, although changes have not yet been saved.
 					</xforms:message>
 					
 				</xforms:action>
