@@ -1,7 +1,7 @@
 
 	<!--
 		A required, closed list of sources for healthy erythrocytes used in
-		the in-vitro culture section of the questionnaire.
+		the in-vitro culture section.
 	-->
 <healthyErythrocytesSources xmlns="">
 	<healthyErythrocytesSource>
