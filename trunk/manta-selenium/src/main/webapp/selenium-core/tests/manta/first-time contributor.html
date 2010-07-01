@@ -28,12 +28,12 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//a[@href='/manta/contributor/']</td>
+	<td>//*[@id='contributor-link-container']//a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>//a[@href='/manta/contributor/']</td>
+	<td>//*[@id='contributor-link-container']//a</td>
 	<td></td>
 </tr>
 <tr>
@@ -47,12 +47,22 @@
 	<td></td>
 </tr>
 <tr>
+	<td>focus</td>
+	<td>//form//input[@name='j_username']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>type</td>
 	<td>//form//input[@name='j_username']</td>
 	<td>colin@example.org</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
+	<td>//form//input[@name='j_password']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>focus</td>
 	<td>//form//input[@name='j_password']</td>
 	<td></td>
 </tr>
@@ -77,13 +87,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForVisible</td>
 	<td>//*[@id='register-study-link-container']//a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
 	<td>//*[@id='register-study-link-container']//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
 	<td></td>
 </tr>
 <tr>
@@ -98,6 +113,11 @@
 </tr>
 <tr>
 	<td>verifyValue</td>
+	<td>//*[@id='study-title-textbox-container']//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>focus</td>
 	<td>//*[@id='study-title-textbox-container']//input</td>
 	<td></td>
 </tr>
@@ -123,6 +143,11 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
+	<td>//*[@id='agree-to-terms-checkbox-container']//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>focus</td>
 	<td>//*[@id='agree-to-terms-checkbox-container']//input</td>
 	<td></td>
 </tr>
@@ -207,6 +232,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>focus</td>
+	<td>//*[@id='editable-list-of-administrators-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'email-address-textbox-container')]//input</td>
+	<td></td>
+</tr>
+<tr>
 	<td>type</td>
 	<td>//*[@id='editable-list-of-administrators-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'email-address-textbox-container')]//input</td>
 	<td>cora@example.org</td>
@@ -257,6 +287,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>focus</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'first-name-textbox-container')]//input</td>
+	<td></td>
+</tr>
+<tr>
 	<td>type</td>
 	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'first-name-textbox-container')]//input</td>
 	<td>Colin</td>
@@ -273,6 +308,11 @@
 </tr>
 <tr>
 	<td>verifyValue</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'middle-name-textbox-container')]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>focus</td>
 	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'middle-name-textbox-container')]//input</td>
 	<td></td>
 </tr>
@@ -293,6 +333,11 @@
 </tr>
 <tr>
 	<td>verifyValue</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'family-name-textbox-container')]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>focus</td>
 	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'family-name-textbox-container')]//input</td>
 	<td></td>
 </tr>
@@ -313,6 +358,11 @@
 </tr>
 <tr>
 	<td>verifyValue</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'institution-textbox-container')]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>focus</td>
 	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'institution-textbox-container')]//input</td>
 	<td></td>
 </tr>
@@ -402,6 +452,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>focus</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'first-name-textbox-container')]//input</td>
+	<td></td>
+</tr>
+<tr>
 	<td>type</td>
 	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'first-name-textbox-container')]//input</td>
 	<td>Cora</td>
@@ -418,6 +473,11 @@
 </tr>
 <tr>
 	<td>verifyValue</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'middle-name-textbox-container')]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>focus</td>
 	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'middle-name-textbox-container')]//input</td>
 	<td></td>
 </tr>
@@ -438,6 +498,11 @@
 </tr>
 <tr>
 	<td>verifyValue</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'family-name-textbox-container')]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>focus</td>
 	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'family-name-textbox-container')]//input</td>
 	<td></td>
 </tr>
@@ -458,6 +523,11 @@
 </tr>
 <tr>
 	<td>verifyValue</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'email-address-textbox-container')]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>focus</td>
 	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'email-address-textbox-container')]//input</td>
 	<td></td>
 </tr>
@@ -469,6 +539,11 @@
 <tr>
 	<td>waitForVisible</td>
 	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'email-address-textbox-container')]//*[contains(@class, 'xforms-alert')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>focus</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'email-address-textbox-container')]//input</td>
 	<td></td>
 </tr>
 <tr>
@@ -497,6 +572,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>focus</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'institution-textbox-container')]//input</td>
+	<td></td>
+</tr>
+<tr>
 	<td>type</td>
 	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'institution-textbox-container')]//input</td>
 	<td>CGGH</td>
@@ -527,14 +607,9 @@
 	<td></td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>//*[@id='file-selector-container']//input</td>
-	<td>C:\Documents and Settings\All Users\Documents\My Pictures\Sample Pictures\Blue hills.jpg</td>
-</tr>
-<tr>
-	<td>verifyValue</td>
-	<td>//*[@id='file-selector-container']//input</td>
-	<td>C:\Documents and Settings\All Users\Documents\My Pictures\Sample Pictures\Blue hills.jpg</td>
+	<td>pause</td>
+	<td>30000</td>
+	<td>Please manually select &quot;Blue hills.jpg&quot;</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -545,6 +620,11 @@
 	<td>waitForVisible</td>
 	<td>//*[@id='file-type-menu-container']//*[contains(@class, 'xforms-alert')]</td>
 	<td></td>
+</tr>
+<tr>
+	<td>focus</td>
+	<td>//*[@id='file-type-menu-container']//select</td>
+	<td>label=Data File</td>
 </tr>
 <tr>
 	<td>select</td>
@@ -569,6 +649,11 @@
 <tr>
 	<td>click</td>
 	<td>//*[@id='upload-file-button-container']//button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>2000</td>
 	<td></td>
 </tr>
 <tr>
@@ -602,14 +687,9 @@
 	<td></td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>//*[@id='file-selector-container']//input</td>
-	<td>C:\Documents and Settings\All Users\Documents\My Pictures\Sample Pictures\Water lilies.jpg</td>
-</tr>
-<tr>
-	<td>verifyValue</td>
-	<td>//*[@id='file-selector-container']//input</td>
-	<td>C:\Documents and Settings\All Users\Documents\My Pictures\Sample Pictures\Water lilies.jpg</td>
+	<td>pause</td>
+	<td>30000</td>
+	<td>Please manually select &quot;Water lilies.jpg&quot;</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -619,6 +699,11 @@
 <tr>
 	<td>waitForVisible</td>
 	<td>//*[@id='file-type-menu-container']//*[contains(@class, 'xforms-alert')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>focus</td>
+	<td>//*[@id='file-type-menu-container']//select</td>
 	<td></td>
 </tr>
 <tr>
@@ -639,6 +724,11 @@
 <tr>
 	<td>waitForVisible</td>
 	<td>//*[@id='other-file-type-textbox-container']//*[contains(@class, 'xforms-alert')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>focus</td>
+	<td>//*[@id='other-file-type-textbox-container']//input</td>
 	<td></td>
 </tr>
 <tr>
@@ -664,6 +754,11 @@
 <tr>
 	<td>click</td>
 	<td>//*[@id='upload-file-button-container']//button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>2000</td>
 	<td></td>
 </tr>
 <tr>
@@ -702,6 +797,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>focus</td>
+	<td>//*[@id='published-status-menu-container']//select</td>
+	<td></td>
+</tr>
+<tr>
 	<td>select</td>
 	<td>//*[@id='published-status-menu-container']//select</td>
 	<td>label=Yes</td>
@@ -729,6 +829,11 @@
 <tr>
 	<td>waitForVisible</td>
 	<td>//*[@id='editable-list-of-publications-container']//*[contains(@class, 'repeated-element')][1]//*[contains(@class, 'xforms-alert')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>focus</td>
+	<td>//*[@id='editable-list-of-publications-container']//*[contains(@class, 'repeated-element')][1]//input</td>
 	<td></td>
 </tr>
 <tr>
@@ -784,6 +889,11 @@
 <tr>
 	<td>waitForVisible</td>
 	<td>//*[@id='editable-list-of-publications-container']//*[contains(@class, 'repeated-element')][2]//*[contains(@class, 'xforms-alert')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>focus</td>
+	<td>//*[@id='editable-list-of-publications-container']//*[contains(@class, 'repeated-element')][2]//input</td>
 	<td></td>
 </tr>
 <tr>
@@ -1032,6 +1142,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>focus</td>
+	<td>//*[contains(@class, 'questionnaire')]//input[@type='checkbox'][1]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>check</td>
 	<td>//*[contains(@class, 'questionnaire')]//input[@type='checkbox'][1]</td>
 	<td></td>
@@ -1049,6 +1164,11 @@
 <tr>
 	<td>click</td>
 	<td>//*[contains(@class, 'confirmation-study-info-save-button-container')][1]//button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>2000</td>
 	<td></td>
 </tr>
 <tr>
@@ -1073,7 +1193,7 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>//a[@href='/manta/j_spring_security_logout']</td>
+	<td>//*[@id='logout-link-container']//a</td>
 	<td></td>
 </tr>
 
