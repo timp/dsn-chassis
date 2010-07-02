@@ -257,6 +257,7 @@
 						<storage>
 							<storageTemperature />
 							<storageDuration />
+							<storageDurationUnit />
 						</storage>
 					</sample>
 				</samples>
