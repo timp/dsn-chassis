@@ -16,9 +16,11 @@ public class ConstantsForTests {
 
 	public static final String XMLNS_ATOMBEAT = "http://purl.org/atombeat/xmlns";
 	public static final String XMLNS_ATOM = "http://www.w3.org/2005/Atom";
+	public static final String XMLNS_AE = "http://purl.org/atom/ext/";
 	
 	public static final QName QNAME_ATOMBEAT_SECURITY_DESCRIPTOR = new QName(XMLNS_ATOMBEAT, "security-descriptor");
 	public static final QName QNAME_ATOMBEAT_ACL = new QName(XMLNS_ATOMBEAT, "acl");
+	public static final QName QNAME_AE_INLINE = new QName(XMLNS_AE, "inline");
 
 	public static final String MEDIATYPE_MANTA = "application/vnd.chassis-manta+xml";
 	public static final String MEDIATYPE_ATOMBEAT = "application/vnd.atombeat+xml";
