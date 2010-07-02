@@ -512,6 +512,7 @@
 							<xforms:bind nodeset="storage">
 								<xforms:bind nodeset="storageTemperature"/>
 								<xforms:bind nodeset="storageDuration"/>
+								<xforms:bind nodeset="storageDurationUnit"/>
 							</xforms:bind>
 						</xforms:bind>
 					</xforms:bind>
@@ -621,6 +622,9 @@
 		src="/apps/common/constants/sampleMatrixTypes.xml"/>
 	<xforms:instance id="ins-treatmentReason-items"
 		src="/apps/common/constants/treatmentReasons.xml"/>
+
+	<xforms:instance id="ins-storageDurationUnit-items"
+		src="/apps/common/constants/storageDurationUnits.xml"/>
 
 
 
@@ -757,6 +761,7 @@
 			<storage>
 				<storageTemperature/>
 				<storageDuration/>
+				<storageDurationUnit/>
 			</storage>
 			<preparationReference/>
 		</sample>
