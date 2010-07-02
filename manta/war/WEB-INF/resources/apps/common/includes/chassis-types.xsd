@@ -44,7 +44,7 @@
    -->
    <xs:simpleType name="nullableHttpUrl">
     <xs:restriction base="xs:anyURI">
-    	<xs:pattern value="|http://[a-zA-Z0-9./]+"/>
+    	<xs:pattern value="|http://[a-zA-Z0-9./\?]+"/>
     </xs:restriction>
    </xs:simpleType>
    <xs:simpleType name="email">
