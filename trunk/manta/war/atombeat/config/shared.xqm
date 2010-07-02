@@ -97,11 +97,11 @@ declare function config:generate-identifier(
 
     (: TODO check this path is right :)
     
-    else if ( matches( $collection-path-info , "^/media" ) )
+(:    else if ( matches( $collection-path-info , "^/media" ) ) :)
     
 (:    then upper-case( xutil:random-alphanumeric( 6 ) ) :)
 
-    then upper-case( xutil:random-alphanumeric( 7 , 21 , "0123456789abcdefghijk" , "abcdefghjkmnpqrstuxyz" ) )
+(:    then upper-case( xutil:random-alphanumeric( 7 , 21 , "0123456789abcdefghijk" , "abcdefghjkmnpqrstuxyz" ) ) :)
 
     else util:uuid()
 
