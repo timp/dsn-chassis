@@ -6,6 +6,7 @@ import static org.cggh.chassis.manta.protocol.ConstantsForTests.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 
 import org.apache.abdera.Abdera;
 import org.apache.abdera.factory.Factory;
@@ -248,5 +249,77 @@ public class UtilsForTests {
 	
 	
 	
+	public static Entry createStudy(String title, String user) {
 
+		Entry entry = newStudy(title);
+		return createMember(entry, URL_STUDIES_COLLECTION, user);
+
+	}
+	
+
+	public static Entry createDraft(String title, String user) {
+
+		Entry entry = newDraft(title);
+		return createMember(entry, URL_DRAFTS_COLLECTION, user);
+
+	}
+	
+	
+	
+	public static Entry createMember(Entry entry, String collectionUrl, String user) {
+
+		ClientResponse response = abderaClient.post(collectionUrl, entry, authn(user));
+		assert 201 == response.getStatus() : "unexpected status code";
+		entry = getEntry(response);
+		assert entry != null : "entry is null";
+		response.release();
+		
+		return entry;
+
+	}
+	
+	
+	
+	public static Entry createMedia(String filePath, String contentType, String collectionUrl, String user) {
+		
+		InputStream content = UtilsForTests.class.getClassLoader().getResourceAsStream(filePath);
+		RequestOptions options = authn(user);
+		options.setContentType(contentType);
+		ClientResponse response = abderaClient.post(collectionUrl, content, options);
+		assert 201 == response.getStatus() : "unexpected status code";
+		Entry entry = getEntry(response);
+		assert entry != null : "entry is null";
+		response.release();
+		
+		return entry;
+
+	}
+	
+	
+
+// N.B. this doesn't work, because Abdera uses a streaming model, so any attempt
+// to read the feed after response.release() causes an XMLStreamException
+// ...
+//	public static Feed listCollection(String collectionUrl, String user) {
+//
+//		ClientResponse response = abderaClient.get(collectionUrl, authn(user));
+//		assert 200 == response.getStatus() : "unexpected status code";
+//		Feed feed = getFeed(response); 
+//		assert feed != null : "feed is null";
+//		response.release();
+//
+//		return feed;
+//		
+//	}
+//
+//	
+//	
+//	public static Feed listStudies(String user) {
+//		
+//		return listCollection(URL_STUDIES_COLLECTION, user);
+//		
+//	}
+	
+	
+	
 }
