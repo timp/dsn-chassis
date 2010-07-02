@@ -116,6 +116,9 @@
     background-color: #fce5b6;
     margin: 8px;
     width:80%;
+    -moz-border-radius: 5px; 
+    -webkit-border-radius: 5px; 
+    border-radius: 5px; 
 }
 .repeat-table .action-td {
      width: 18px 
