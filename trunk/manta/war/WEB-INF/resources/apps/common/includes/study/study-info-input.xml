@@ -204,8 +204,8 @@
 
 
 								<div class="mapPicker">
-									<p>Drag the pointer to populate the Latitude and Longitude
-										fields</p>
+									<p><b>>Drag the pointer to populate the Latitude and Longitude
+										fields</b></p>
 									<fr:map address-ref="lookupAddress" longitude-ref="longitude"
 										latitude-ref="latitude" style="width: 500px; height: 300px">
 									</fr:map>
