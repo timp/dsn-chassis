@@ -13,6 +13,7 @@ public class ConstantsForTests {
 
 	public static final QName QNAME_DRAFT = new QName("", "draft");
 	public static final QName QNAME_STUDY = new QName("", "study");
+	public static final QName QNAME_STUDY_INFO = new QName("", "study-info");
 
 	public static final String XMLNS_ATOMBEAT = "http://purl.org/atombeat/xmlns";
 	public static final String XMLNS_ATOM = "http://www.w3.org/2005/Atom";

@@ -138,6 +138,20 @@ public class UtilsForTests {
 	
 
 
+	public static Entry newStudyInfo() {
+
+		Entry entry = factory.newEntry();
+		Element studyInfoElement = factory.newElement(QNAME_STUDY_INFO);
+		entry.setContent(studyInfoElement);
+		entry.getContentElement().setMimeType(MEDIATYPE_MANTA);
+		
+		return entry;
+
+	}
+	
+	
+
+
 	public static Entry newSecurityDescriptor() {
 
 		Entry entry = factory.newEntry();
