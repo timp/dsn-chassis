@@ -12,9 +12,9 @@ public class LoadTest {
 
 	private String fileName;
 	private DiscreteDistribution urlsToHit = null;
-	static int requestsPerRate = 2;
-	static int rateIncrement = 10;
-	static int maxHitsPerSec = 2000;
+	static int requestsPerRate = 50;
+	static int rateIncrement = 1;
+	static int maxHitsPerSec = 20;
 	static long maxWaitTime = 100000L;
 	int runningThreadCount = 0;
 	private static final byte[] bitBucket = new byte[4096];
@@ -125,11 +125,15 @@ public class LoadTest {
 				long opened = System.currentTimeMillis();
 				while (inputStream.read(bitBucket) != -1)
 					;
+				System.err.println(new String(bitBucket));
+				
 				long finished = System.currentTimeMillis();
 
 				hitStats.notifySuccess(started, opened, finished);
 
 			} catch (Exception e) {
+				// Error response codes are translated into exceptions. 
+				
 				hitStats.notifyFailure();
 				System.err.println(e);
 			} finally { 
@@ -186,7 +190,7 @@ public class LoadTest {
 
 		System.err.println("stopping after " + waited);
 
-		out.println("url, count, success, rate, start, complete");
+		out.println("url, count, success, rate, open, read");
 		int count = 0; 
 		for (InstrumentedUrlRequestSet iurs : urlsToHit) {
 			count++;
@@ -206,12 +210,14 @@ public class LoadTest {
 	}
 
 	public static void main(String[] args) throws Exception {
-		//String url = "http://localhost:8080/manta/questionnaire/";
+		String url = "http://localhost:8080/manta/questionnaire/";
 		//String url = "http://localhost:8080/manta/index.html";
 		//String url = "http://localhost:8080/manta/home/";
 		//String url = "http://localhost:8080/manta/exist/rest/db/atom/content/studies/KCDZQ.atom";
 		//String url = "http://localhost:8080/manta/exist/rest/db/atom/content/studies/";
-		String url = "http://localhost/";
+		//String url = "http://localhost:8080/manta/home/";
+		//String url = "http://localhost:8080/manta/atombeat/admin/install.xql";
+		//String url = "http://129.67.44.221:8080/explorer_dev/app/";
 		
 		System.out.println("Outputting to " + filenameFrom(url));
 			
