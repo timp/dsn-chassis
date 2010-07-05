@@ -21,6 +21,10 @@
 		<value>AS</value>
 	</drugMolecule>
 	<drugMolecule>
+		<label>atovaquone</label>
+		<value>AV</value>
+	</drugMolecule>
+	<drugMolecule>
 		<label>clindamycine</label>
 		<value>CL</value>
 	</drugMolecule>
