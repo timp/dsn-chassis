@@ -256,18 +256,12 @@ public class TestDrafts extends TestCase {
 		Set<String> allowed = new HashSet<String>();
 		allowed.add(USER_CORA); allowed.add(USER_COLIN); allowed.add(USER_ADAM); 
 		
-		Set<String> denied = users();
+		Set<String> denied = allUsers();
 		denied.removeAll(allowed);
 		
 		// run tests
 		
-		Map<String,Integer> results = listCollection(URL_DRAFTS_COLLECTION, denied);
-		
-		// verify results
-		
-		for (String user : denied) {
-			assertEquals(user,SC_FORBIDDEN, results.get(user));
-		}
+		assertListCollectionForbidden(URL_DRAFTS_COLLECTION, denied);
 		
 	}
 	
@@ -281,19 +275,13 @@ public class TestDrafts extends TestCase {
 		Set<String> allowed = new HashSet<String>();
 		allowed.add(USER_ADAM); 
 		
-		Set<String> denied = users();
+		Set<String> denied = allUsers();
 		denied.removeAll(allowed);
 		
 		// run tests
 		
 		Feed f = newFeed("test");
-		Map<String,Integer> results = updateCollection(URL_DRAFTS_COLLECTION, f, denied);
-		
-		// verify results
-		
-		for (String user : denied) {
-			assertEquals(user,SC_FORBIDDEN, results.get(user));
-		}
+		assertUpdateCollectionForbidden(URL_DRAFTS_COLLECTION, f, denied);
 		
 	}
 	
@@ -302,34 +290,17 @@ public class TestDrafts extends TestCase {
 	
 	public void test_deny_retrieve_collection_acl() {
 		
-		Feed f;
-		String location;
-		ClientResponse r;
-		
-		// setup test
-
-		r = ac.get(URL_DRAFTS_COLLECTION, authn(USER_ADAM));
-		f = getFeed(r);
-		location = f.getLink(REL_ATOMBEAT_SECURITY_DESCRIPTOR).getHref().toString();
-		r.release();
-		
 		// define expectations
 		
 		Set<String> allowed = new HashSet<String>();
 		allowed.add(USER_ADAM); 
 		
-		Set<String> denied = users();
+		Set<String> denied = allUsers();
 		denied.removeAll(allowed);
 
 		// run tests
 		
-		Map<String,Integer> results = retrieveMember(location, denied);
-		
-		// verify results
-		
-		for (String user : denied) {
-			assertEquals(user,SC_FORBIDDEN, results.get(user));
-		}
+		assertRetrieveCollectionAclForbidden(URL_DRAFTS_COLLECTION, denied);
 		
 	}
 	
@@ -338,36 +309,17 @@ public class TestDrafts extends TestCase {
 	
 	public void test_deny_update_collection_acl() {
 
-		Feed f;
-		Entry s;
-		String location;
-		ClientResponse r;
-		
-		// setup test
-
-		r = ac.get(URL_DRAFTS_COLLECTION, authn(USER_ADAM));
-		f = getFeed(r);
-		location = f.getLink(REL_ATOMBEAT_SECURITY_DESCRIPTOR).getHref().toString();
-		r.release();
-		
 		// define expectations
 		
 		Set<String> allowed = new HashSet<String>();
 		allowed.add(USER_ADAM); 
 		
-		Set<String> denied = users();
+		Set<String> denied = allUsers();
 		denied.removeAll(allowed);
 
 		// run tests
 		
-		s = newSecurityDescriptor();
-		Map<String,Integer> results = updateMember(location, s, denied);
-		
-		// verify results
-		
-		for (String user : denied) {
-			assertEquals(user,SC_FORBIDDEN, results.get(user));
-		}
+		assertUpdateCollectionAclForbidden(URL_DRAFTS_COLLECTION, denied);
 		 
 	}
 	
@@ -381,34 +333,24 @@ public class TestDrafts extends TestCase {
 		Set<String> allowed = new HashSet<String>();
 		allowed.add(USER_CORA); allowed.add(USER_COLIN);
 		
-		Set<String> denied = users();
+		Set<String> denied = allUsers();
 		denied.removeAll(allowed);
 
 		// run tests
 		
-		Map<String,Integer> results = createMember(URL_DRAFTS_COLLECTION, newDraft("test"), denied);
-		
-		// verify results
-		
-		for (String user : denied) {
-			assertEquals(user,SC_FORBIDDEN, results.get(user));
-		}
-		
+		assertCreateMemberForbidden(URL_DRAFTS_COLLECTION, newEntry("test"), denied);
+
 	}
 	
 	
 
 	public void test_deny_retrieve_member() {
 		
-		Entry d;
-		String location;
-		ClientResponse r;
-		
 		// setup test
 
-		d = newDraft("Cora's Draft");
-		r = ac.post(URL_DRAFTS_COLLECTION, d, authn(USER_CORA));
-		location = r.getLocation().toString();
+		Entry d = newDraft("Cora's Draft");
+		ClientResponse r = ac.post(URL_DRAFTS_COLLECTION, d, authn(USER_CORA));
+		String location = r.getLocation().toString();
 		r.release();
 
 		// define expectations
@@ -416,18 +358,12 @@ public class TestDrafts extends TestCase {
 		Set<String> allowed = new HashSet<String>();
 		allowed.add(USER_CORA); allowed.add(USER_ADAM); 
 		
-		Set<String> denied = users();
+		Set<String> denied = allUsers();
 		denied.removeAll(allowed);
 
 		// run tests
 		
-		Map<String,Integer> results = retrieveMember(location, denied);
-		
-		// verify results
-		
-		for (String user : denied) {
-			assertEquals(user,SC_FORBIDDEN, results.get(user));
-		}
+		assertRetrieveMemberForbidden(location, denied);
 		
 	}
 	
@@ -452,19 +388,13 @@ public class TestDrafts extends TestCase {
 		Set<String> allowed = new HashSet<String>();
 		allowed.add(USER_CORA); allowed.add(USER_ADAM);
 		
-		Set<String> denied = users();
+		Set<String> denied = allUsers();
 		denied.removeAll(allowed);
 
 		// run tests
 		
 		d.setTitle("updated");
-		Map<String,Integer> results = updateMember(location, d, denied);
-		
-		// verify results
-		
-		for (String user : denied) {
-			assertEquals(user,SC_FORBIDDEN, results.get(user));
-		}
+		assertUpdateMemberForbidden(location, d, denied);
 		
 	}
 	
@@ -489,7 +419,7 @@ public class TestDrafts extends TestCase {
 		Set<String> allowed = new HashSet<String>();
 		allowed.add(USER_CORA); allowed.add(USER_ADAM);
 		
-		Set<String> denied = users();
+		Set<String> denied = allUsers();
 		denied.removeAll(allowed);
 
 		// run tests
@@ -512,7 +442,7 @@ public class TestDrafts extends TestCase {
 		
 		// define expectations
 		
-		Set<String> denied = users(); // no-one can create media in this collection
+		Set<String> denied = allUsers(); // no-one can create media in this collection
 
 		// run tests
 		
@@ -525,14 +455,8 @@ public class TestDrafts extends TestCase {
 			
 		};
 		
-		Map<String,Integer> results = createMedia(URL_DRAFTS_COLLECTION, streamGenerator, "application/vnd.ms-excel", denied);
-		
-		// verify results
-		
-		for (String user : denied) {
-			assertEquals(user, SC_FORBIDDEN, results.get(user));
-		}
-		
+		assertCreateMediaForbidden(URL_DRAFTS_COLLECTION, streamGenerator, "application/vnd.ms-excel", denied);
+
 	}
 	
 	
@@ -588,7 +512,7 @@ public class TestDrafts extends TestCase {
 		Set<String> allowed = new HashSet<String>();
 		allowed.add(USER_ADAM); 
 		
-		Set<String> denied = users();
+		Set<String> denied = allUsers();
 		denied.removeAll(allowed);
 
 		// run tests
@@ -629,7 +553,7 @@ public class TestDrafts extends TestCase {
 		Set<String> allowed = new HashSet<String>();
 		allowed.add(USER_ADAM); 
 		
-		Set<String> denied = users();
+		Set<String> denied = allUsers();
 		denied.removeAll(allowed);
 
 		// run tests
@@ -685,7 +609,7 @@ public class TestDrafts extends TestCase {
 		Set<String> allowed = new HashSet<String>();
 		allowed.add(USER_ADAM); 
 		
-		Set<String> denied = users();
+		Set<String> denied = allUsers();
 		denied.removeAll(allowed);
 
 		// run tests
@@ -727,7 +651,7 @@ public class TestDrafts extends TestCase {
 		Set<String> allowed = new HashSet<String>();
 		allowed.add(USER_ADAM); 
 		
-		Set<String> denied = users();
+		Set<String> denied = allUsers();
 		denied.removeAll(allowed);
 
 		// run tests
@@ -749,7 +673,7 @@ public class TestDrafts extends TestCase {
 
 		// define expectations
 		
-		Set<String> denied = users();
+		Set<String> denied = allUsers();
 		
 		// run tests
 		

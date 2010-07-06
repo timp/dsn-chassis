@@ -29,14 +29,16 @@ public class ConstantsForTests {
 	public static final String MEDIATYPE_MANTA = "application/vnd.chassis-manta+xml";
 	public static final String MEDIATYPE_ATOMBEAT = "application/vnd.atombeat+xml";
 	
+	public static final String USER_URSULA = "ursula@example.org"; // administrator
 	public static final String USER_ADAM = "adam@example.org"; // administrator
 	public static final String USER_CORA = "cora@example.org"; // contributor
 	public static final String USER_COLIN = "colin@example.org"; // contributor
 	public static final String USER_CURTIS = "curtis@example.org"; // curator
 	public static final String USER_PETE = "pete@example.org"; // personal data reviewer
 
-	public static final Set<String> users() {
+	public static final Set<String> allUsers() {
 		Set<String> users = new HashSet<String>();
+		users.add(USER_URSULA);
 		users.add(USER_ADAM);
 		users.add(USER_CORA);
 		users.add(USER_COLIN);
