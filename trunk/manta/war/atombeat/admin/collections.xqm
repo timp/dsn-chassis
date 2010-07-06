@@ -23,7 +23,7 @@ declare variable $config-collections:collection-spec :=
         <collection>
             <title>Drafts</title>
             <path-info>/drafts</path-info>
-            <enable-history>false</enable-history>
+            <enable-history>true</enable-history>
             <exclude-entry-content>true</exclude-entry-content>
             <expand-security-descriptors>false</expand-security-descriptors>
             <recursive>false</recursive>
