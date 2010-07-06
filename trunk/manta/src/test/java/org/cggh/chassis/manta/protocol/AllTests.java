@@ -9,8 +9,8 @@ public class AllTests {
 		TestSuite suite = new TestSuite(
 				"Test for org.cggh.chassis.manta.protocol");
 		//$JUnit-BEGIN$
-		suite.addTestSuite(TestFirstTimeContributor.class);
-		suite.addTestSuite(TestContributorReturnsToSubmitMoreFiles.class);
+		suite.addTestSuite(TestDrafts.class);
+		suite.addTestSuite(TestDraftMedia.class);
 		//$JUnit-END$
 		return suite;
 	}

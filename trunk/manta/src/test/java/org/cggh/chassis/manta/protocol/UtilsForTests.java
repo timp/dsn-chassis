@@ -11,6 +11,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import junit.framework.Assert;
+
 import org.apache.abdera.Abdera;
 import org.apache.abdera.factory.Factory;
 import org.apache.abdera.model.Document;
@@ -384,6 +386,20 @@ public class UtilsForTests {
 	
 	
 	
+	public static void assertListCollectionForbidden(String collectionUrl, Set<String> users) {
+		
+		Map<String,Integer> results = listCollection(collectionUrl, users);
+		
+		// verify results
+		
+		for (String user : users) {
+			Assert.assertEquals(user, SC_FORBIDDEN, results.get(user));
+		}
+	
+	}
+	
+	
+	
 	
 	public static Integer updateCollection(String collectionUrl, Feed f, String user) {
 		
@@ -412,6 +428,21 @@ public class UtilsForTests {
 	
 	
 	
+	
+	public static void assertUpdateCollectionForbidden(String collectionUrl, Feed f, Set<String> users) {
+
+		Map<String,Integer> results = updateCollection(collectionUrl, f, users);
+		
+		// verify results
+		
+		for (String user : users) {
+			Assert.assertEquals(user, SC_FORBIDDEN, results.get(user));
+		}
+		
+	}
+	
+	
+		
 	
 	public static Integer multiCreate(String collectionUrl, Feed f, String user) {
 		
@@ -469,6 +500,21 @@ public class UtilsForTests {
 	
 
 	
+	public static void assertCreateMemberForbidden(String collectionUrl, Entry entry, Set<String> users) {
+		
+		Map<String,Integer> results = createMember(collectionUrl, entry, users);
+		
+		// verify results
+		
+		for (String user : users) {
+			Assert.assertEquals(user, SC_FORBIDDEN, results.get(user));
+		}
+
+	}
+	
+	
+	
+	
 	public static Integer retrieveMember(String location, String user) {
 
 		ClientResponse r = ac.get(location, authn(user));
@@ -494,6 +540,20 @@ public class UtilsForTests {
 		
 	}
 	
+	
+	
+	
+	public static void assertRetrieveMemberForbidden(String location, Set<String> users) {
+
+		Map<String,Integer> results = retrieveMember(location, users);
+		
+		// verify results
+		
+		for (String user : users) {
+			Assert.assertEquals(user, SC_FORBIDDEN, results.get(user));
+		}
+		
+	}
 	
 	
 	
@@ -526,7 +586,19 @@ public class UtilsForTests {
 	
 	
 	
+	public static void assertUpdateMemberForbidden(String location, Entry entry, Set<String> users) {
+		
+		Map<String,Integer> results = updateMember(location, entry, users);
+		 
+		// verify results
+		
+		for (String user : users) {
+			Assert.assertEquals(user, SC_FORBIDDEN, results.get(user));
+		}
 
+	}
+
+		
 	public static Integer deleteMember(String location, String user) {
 
 		ClientResponse r = ac.delete(location, authn(user));
@@ -584,6 +656,109 @@ public class UtilsForTests {
 	
 	
 	
+	public static Integer retrieveMedia(String location, String user) {
+
+		ClientResponse r = ac.get(location, authn(user));
+		Integer status = r.getStatus();
+		r.release();
+
+		return status;
+
+	}
+	
+	
+	
+	
+	public static Map<String,Integer> retrieveMedia(String location, Set<String> users) {
+		
+		Map<String,Integer> results = new HashMap<String,Integer>();
+		
+		for (String user : users) {
+			results.put(user, retrieveMedia(location, user));
+		}
+		
+		return results;
+		
+	}
+	
+	
+	
+	public static void assertRetrieveMediaForbidden(String location, Set<String> users) {
+
+		Map<String,Integer> results = retrieveMedia(location, users);
+		
+		// verify results
+		
+		for (String user : users) {
+			Assert.assertEquals(user, SC_FORBIDDEN, results.get(user));
+		}
+		
+	}
+	
+	
+	
+
+
+	
+	
+	
+	public static void assertCreateMediaForbidden(String collectionUrl, Action<InputStream> streamGenerator, String contentType, Set<String> users) {
+		
+		Map<String,Integer> results = createMedia(collectionUrl, streamGenerator, contentType, users);
+		 
+		// verify results
+		
+		for (String user : users) {
+			Assert.assertEquals(user, SC_FORBIDDEN, results.get(user));
+		}
+
+	}
+
+	
+	
+	
+	public static void assertRetrieveCollectionAclForbidden(String collectionUrl, Set<String> users) {
+		
+		Feed f;
+		String location;
+		ClientResponse r;
+		
+		// setup test
+
+		r = ac.get(collectionUrl, authn(USER_ADAM));
+		f = getFeed(r);
+		location = f.getLink(REL_ATOMBEAT_SECURITY_DESCRIPTOR).getHref().toString();
+		r.release();
+
+		// run tests
+		
+		assertRetrieveMemberForbidden(location, users);
+
+	}
+
+	
+	
+
+	public static void assertUpdateCollectionAclForbidden(String collectionUrl, Set<String> users) {
+		
+		Feed f;
+		Entry s;
+		String location;
+		ClientResponse r;
+		
+		// setup test
+
+		r = ac.get(collectionUrl, authn(USER_ADAM));
+		f = getFeed(r);
+		location = f.getLink(REL_ATOMBEAT_SECURITY_DESCRIPTOR).getHref().toString();
+		r.release();
+
+		// run tests
+		
+		s = newSecurityDescriptor();
+		assertUpdateMemberForbidden(location, s, users);
+
+	}
 
 
 }
