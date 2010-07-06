@@ -47,6 +47,8 @@
           | ADam the ADministrator.
           +-->
     
+      <user name="ursula@example.org" password="bar" authorities="ROLE_CHASSIS_USER" />
+
       <user name="adam@example.org" password="bar" authorities="ROLE_CHASSIS_USER, ROLE_CHASSIS_ADMINISTRATOR" />
       
       <user name="colin@example.org" password="bar" authorities="ROLE_CHASSIS_USER, ROLE_CHASSIS_CONTRIBUTOR" />
