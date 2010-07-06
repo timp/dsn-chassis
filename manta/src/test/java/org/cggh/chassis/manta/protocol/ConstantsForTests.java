@@ -1,5 +1,8 @@
 package org.cggh.chassis.manta.protocol;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.xml.namespace.QName;
 
 public class ConstantsForTests {
@@ -26,12 +29,21 @@ public class ConstantsForTests {
 	public static final String MEDIATYPE_MANTA = "application/vnd.chassis-manta+xml";
 	public static final String MEDIATYPE_ATOMBEAT = "application/vnd.atombeat+xml";
 	
-	public static final String USER_CORA = "cora@example.org";
-	public static final String USER_COLIN = "colin@example.org";
-	public static final String USER_CURTIS = "curtis@example.org";
-	public static final String USER_PETE = "pete@example.org";
-	public static final String USER_MURIEL = "muriel@example.org";
-	public static final String USER_ADAM = "adam@example.org";
+	public static final String USER_ADAM = "adam@example.org"; // administrator
+	public static final String USER_CORA = "cora@example.org"; // contributor
+	public static final String USER_COLIN = "colin@example.org"; // contributor
+	public static final String USER_CURTIS = "curtis@example.org"; // curator
+	public static final String USER_PETE = "pete@example.org"; // personal data reviewer
+
+	public static final Set<String> users() {
+		Set<String> users = new HashSet<String>();
+		users.add(USER_ADAM);
+		users.add(USER_CORA);
+		users.add(USER_COLIN);
+		users.add(USER_CURTIS);
+		users.add(USER_PETE);
+		return users;
+	}
 	
 	public static final String PASS = "bar";
 	
@@ -40,4 +52,16 @@ public class ConstantsForTests {
 	public static final String REL_STUDY_INFO = "http://www.cggh.org/2010/chassis/terms/studyInfo";
 
 	public static final String REL_ATOMBEAT_SECURITY_DESCRIPTOR = "http://purl.org/atombeat/rel/security-descriptor";
+
+	public static final String REL_HISTORY = "history";
+	public static final String REL_THIS_REVISION = "this-revision";
+	public static final String REL_INITIAL_REVISION = "initial-revision";
+	public static final String REL_PREVIOUS_REVISION = "previous-revision";
+	public static final String REL_NEXT_REVISION = "next-revision";
+	public static final String REL_CURRENT_REVISION = "current-revision";
+
+	public static final Integer SC_OK = new Integer(200);
+	public static final Integer SC_CREATED = new Integer(201);
+	public static final Integer SC_NO_CONTENT = new Integer(204);
+	public static final Integer SC_FORBIDDEN = new Integer(403);
 }
