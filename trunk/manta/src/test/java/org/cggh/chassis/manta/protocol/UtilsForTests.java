@@ -7,6 +7,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 import org.apache.abdera.Abdera;
 import org.apache.abdera.factory.Factory;
@@ -34,7 +37,7 @@ public class UtilsForTests {
 	
 	static final Abdera abdera = new Abdera();
 	static final Factory factory = abdera.getFactory();
-	static final AbderaClient abderaClient = new AbderaClient(abdera);
+	static final AbderaClient ac = new AbderaClient(abdera);
 	static final HttpClient httpClient = new HttpClient();
 	static final BasicScheme basic = new BasicScheme();
 	
@@ -136,7 +139,24 @@ public class UtilsForTests {
 	}
 	
 	
+	
+	
+	public static Feed newFeed(String title) {
+		
+		Feed f = factory.newFeed();
+		f.setTitle(title);
+		return f;
+		
+	}
+	
 
+	public static Entry newEntry(String title) {
+
+		Entry f = factory.newEntry();
+		f.setTitle(title);
+		return f;
+
+	}
 
 	public static Entry newStudyInfo() {
 
@@ -266,7 +286,7 @@ public class UtilsForTests {
 	public static Entry createStudy(String title, String user) {
 
 		Entry entry = newStudy(title);
-		return createMember(entry, URL_STUDIES_COLLECTION, user);
+		return createMemberAndReturnEntry(entry, URL_STUDIES_COLLECTION, user);
 
 	}
 	
@@ -274,15 +294,15 @@ public class UtilsForTests {
 	public static Entry createDraft(String title, String user) {
 
 		Entry entry = newDraft(title);
-		return createMember(entry, URL_DRAFTS_COLLECTION, user);
+		return createMemberAndReturnEntry(entry, URL_DRAFTS_COLLECTION, user);
 
 	}
 	
 	
 	
-	public static Entry createMember(Entry entry, String collectionUrl, String user) {
+	public static Entry createMemberAndReturnEntry(Entry entry, String collectionUrl, String user) {
 
-		ClientResponse response = abderaClient.post(collectionUrl, entry, authn(user));
+		ClientResponse response = ac.post(collectionUrl, entry, authn(user));
 		assert 201 == response.getStatus() : "unexpected status code";
 		entry = getEntry(response);
 		assert entry != null : "entry is null";
@@ -294,12 +314,12 @@ public class UtilsForTests {
 	
 	
 	
-	public static Entry createMedia(String filePath, String contentType, String collectionUrl, String user) {
+	public static Entry createMediaAndReturnEntry(String filePath, String contentType, String collectionUrl, String user) {
 		
 		InputStream content = UtilsForTests.class.getClassLoader().getResourceAsStream(filePath);
 		RequestOptions options = authn(user);
 		options.setContentType(contentType);
-		ClientResponse response = abderaClient.post(collectionUrl, content, options);
+		ClientResponse response = ac.post(collectionUrl, content, options);
 		assert 201 == response.getStatus() : "unexpected status code";
 		Entry entry = getEntry(response);
 		assert entry != null : "entry is null";
@@ -336,4 +356,234 @@ public class UtilsForTests {
 	
 	
 	
+	
+	public static Integer listCollection(String collectionUrl, String user) {
+		
+		ClientResponse r = ac.get(collectionUrl, authn(user));
+		Integer status = r.getStatus();
+		r.release();
+		
+		return status;
+		
+	}
+	
+
+	
+
+	public static Map<String,Integer> listCollection(String collectionUrl, Set<String> users) {
+		
+		Map<String,Integer> results = new HashMap<String,Integer>();
+		
+		for (String user : users) {
+			results.put(user, listCollection(collectionUrl, user));
+		}
+		
+		return results;
+		
+	}
+	
+	
+	
+	
+	public static Integer updateCollection(String collectionUrl, Feed f, String user) {
+		
+		ClientResponse r = ac.put(collectionUrl, f, authn(user));
+		Integer status = r.getStatus();
+		r.release();
+		
+		return status;
+		
+	}
+	
+
+	
+
+	public static Map<String,Integer> updateCollection(String collectionUrl, Feed f, Set<String> users) {
+		
+		Map<String,Integer> results = new HashMap<String,Integer>();
+		
+		for (String user : users) {
+			results.put(user, updateCollection(collectionUrl, f, user));
+		}
+		
+		return results;
+		
+	}
+	
+	
+	
+	
+	public static Integer multiCreate(String collectionUrl, Feed f, String user) {
+		
+		ClientResponse r = ac.post(collectionUrl, f, authn(user));
+		Integer status = r.getStatus();
+		r.release();
+		
+		return status;
+		
+	}
+	
+
+	
+
+	public static Map<String,Integer> multiCreate(String collectionUrl, Feed f, Set<String> users) {
+		
+		Map<String,Integer> results = new HashMap<String,Integer>();
+		
+		for (String user : users) {
+			results.put(user, multiCreate(collectionUrl, f, user));
+		}
+		
+		return results;
+		
+	}
+	
+	
+	
+	
+	public static Integer createMember(String collectionUrl, Entry entry, String user) {
+
+		ClientResponse r = ac.post(collectionUrl, entry, authn(user));
+		Integer status = r.getStatus();
+		r.release();
+
+		return status;
+
+	}
+	
+	
+	
+	
+	public static Map<String,Integer> createMember(String collectionUrl, Entry entry, Set<String> users) {
+		
+		Map<String,Integer> results = new HashMap<String,Integer>();
+		
+		for (String user : users) {
+			results.put(user, createMember(collectionUrl, entry, user));
+		}
+		
+		return results;
+		
+	}
+	
+	
+
+	
+	public static Integer retrieveMember(String location, String user) {
+
+		ClientResponse r = ac.get(location, authn(user));
+		Integer status = r.getStatus();
+		r.release();
+
+		return status;
+
+	}
+	
+	
+	
+	
+	public static Map<String,Integer> retrieveMember(String location, Set<String> users) {
+		
+		Map<String,Integer> results = new HashMap<String,Integer>();
+		
+		for (String user : users) {
+			results.put(user, retrieveMember(location, user));
+		}
+		
+		return results;
+		
+	}
+	
+	
+	
+	
+
+	public static Integer updateMember(String location, Entry entry, String user) {
+
+		ClientResponse r = ac.put(location, entry, authn(user));
+		Integer status = r.getStatus();
+		r.release();
+
+		return status;
+
+	}
+	
+	
+	
+	
+	public static Map<String,Integer> updateMember(String location, Entry entry, Set<String> users) {
+		
+		Map<String,Integer> results = new HashMap<String,Integer>();
+		
+		for (String user : users) {
+			results.put(user, updateMember(location, entry, user));
+		}
+		
+		return results;
+		
+	}
+	
+	
+	
+	
+
+	public static Integer deleteMember(String location, String user) {
+
+		ClientResponse r = ac.delete(location, authn(user));
+		Integer status = r.getStatus();
+		r.release();
+
+		return status;
+
+	}
+	
+	
+	
+	
+	public static Map<String,Integer> deleteMember(String location, Set<String> users) {
+		
+		Map<String,Integer> results = new HashMap<String,Integer>();
+		
+		for (String user : users) {
+			results.put(user, deleteMember(location, user));
+		}
+		
+		return results;
+		
+	}
+	
+	
+	
+
+	public static Integer createMedia(String collectionUrl, InputStream content, String contentType, String user) {
+
+		RequestOptions options = authn(user);
+		options.setContentType(contentType);
+		ClientResponse response = ac.post(collectionUrl, content, options);
+		Integer status = response.getStatus();
+		response.release();
+		
+		return status;
+
+	}
+	
+
+	
+	
+	public static Map<String,Integer> createMedia(String collectionUrl, Action<InputStream> streamGenerator, String contentType, Set<String> users) {
+		
+		Map<String,Integer> results = new HashMap<String,Integer>();
+		
+		for (String user : users) {
+			results.put(user, createMedia(collectionUrl, streamGenerator.apply(), contentType, user));
+		}
+		
+		return results;
+		
+	}
+	
+	
+	
+
+
 }

@@ -56,7 +56,7 @@ public class TestFirstTimeContributor extends TestCase {
 		
 		// create a draft
 		draftEntry = newDraft("foobar");
-		response = abderaClient.post(URL_DRAFTS_COLLECTION, draftEntry, authn(USER_CORA));
+		response = ac.post(URL_DRAFTS_COLLECTION, draftEntry, authn(USER_CORA));
 		assertEquals(201, response.getStatus());
 		location = response.getLocation(); assertNotNull(location);
 		draftEntry = getEntry(response); assertNotNull(draftEntry);
@@ -66,7 +66,7 @@ public class TestFirstTimeContributor extends TestCase {
 
 		// update the draft
 		draftEntry.setTitle("barfoo");
-		response = abderaClient.put(location.toString(), draftEntry, authn(USER_CORA));
+		response = ac.put(location.toString(), draftEntry, authn(USER_CORA));
 		assertEquals(200, response.getStatus());
 		draftEntry = getEntry(response);
 		assertEquals("barfoo", draftEntry.getTitle());
@@ -91,7 +91,7 @@ public class TestFirstTimeContributor extends TestCase {
 		InputStream content = this.getClass().getClassLoader().getResourceAsStream("spreadsheet1.xls");
 		RequestOptions options = authn(USER_CORA);
 		options.setContentType("application/vnd.ms-excel");
-		response = abderaClient.post(draftMediaLink.getHref().toString(), content, options);
+		response = ac.post(draftMediaLink.getHref().toString(), content, options);
 		assertEquals(201, response.getStatus());
 		mediaLinkEntry = getEntry(response); assertNotNull(mediaLinkEntry);
 		editLink = mediaLinkEntry.getEditLink(); assertNotNull(editLink);
@@ -101,7 +101,7 @@ public class TestFirstTimeContributor extends TestCase {
 		// check user can update file metadata
 		assertFalse(mediaLinkEntry.getTitle().equals("testing.xls"));
 		mediaLinkEntry.setTitle("testing.xls");
-		response = abderaClient.put(editLink.getHref().toString(), mediaLinkEntry, authn(USER_CORA));
+		response = ac.put(editLink.getHref().toString(), mediaLinkEntry, authn(USER_CORA));
 		assertEquals(200, response.getStatus());
 		mediaLinkEntry = getEntry(response); assertNotNull(mediaLinkEntry);
 		assertEquals("testing.xls", mediaLinkEntry.getTitle());
@@ -156,7 +156,7 @@ public class TestFirstTimeContributor extends TestCase {
 		
 		// create a study
 		studyEntry = newStudy("My First Study");
-		response = abderaClient.post(URL_STUDIES_COLLECTION, studyEntry, authn(USER_CORA));
+		response = ac.post(URL_STUDIES_COLLECTION, studyEntry, authn(USER_CORA));
 		assertEquals(201, response.getStatus());
 		location = response.getLocation(); assertNotNull(location);
 		studyEntry = getEntry(response); assertNotNull(studyEntry);
@@ -182,7 +182,7 @@ public class TestFirstTimeContributor extends TestCase {
 		
 		// update security descriptor
 		securityDescriptorEntry = newSecurityDescriptor();
-		response = abderaClient.put(securityDescriptorLink.getHref().toString(), securityDescriptorEntry, authn(USER_CORA));
+		response = ac.put(securityDescriptorLink.getHref().toString(), securityDescriptorEntry, authn(USER_CORA));
 		assertEquals(200, response.getStatus());
 		response.release();
 		
@@ -208,11 +208,11 @@ public class TestFirstTimeContributor extends TestCase {
 		draftMediaCollectionUrl = draftMediaLink.getHref().toString(); assertNotNull(draftMediaCollectionUrl);
 		
 		// upload a couple of draft files via Atom POST
-		createMedia("spreadsheet1.xls", "application/vdn.ms-excel", draftMediaCollectionUrl, USER_CORA);
-		createMedia("spreadsheet1.xls", "application/vdn.ms-excel", draftMediaCollectionUrl, USER_CORA);
+		createMediaAndReturnEntry("spreadsheet1.xls", "application/vdn.ms-excel", draftMediaCollectionUrl, USER_CORA);
+		createMediaAndReturnEntry("spreadsheet1.xls", "application/vdn.ms-excel", draftMediaCollectionUrl, USER_CORA);
 		
 		// list the draft media collection
-		response = abderaClient.get(draftMediaCollectionUrl, authn(USER_CORA));
+		response = ac.get(draftMediaCollectionUrl, authn(USER_CORA));
 		draftMediaFeed = getFeed(response);
 		assertEquals(2, draftMediaFeed.getEntries().size());
 		response.release();
@@ -222,7 +222,7 @@ public class TestFirstTimeContributor extends TestCase {
 		submittedMediaLink = studyEntry.getLink(REL_SUBMITTED_MEDIA); assertNotNull(submittedMediaLink);
 		
 		// now POST the draft media feed to the submitted media collection to copy uploads across
-		response = abderaClient.post(submittedMediaLink.getHref().toString(), draftMediaFeed, authn(USER_CORA));
+		response = ac.post(submittedMediaLink.getHref().toString(), draftMediaFeed, authn(USER_CORA));
 		assertEquals(200, response.getStatus());
 		submittedMediaFeed = getFeed(response); assertNotNull(submittedMediaFeed);
 		assertEquals(2, submittedMediaFeed.getEntries().size());
@@ -246,7 +246,7 @@ public class TestFirstTimeContributor extends TestCase {
 		studyInfoMemberUrl = studyInfoLink.getHref().toString();
 		
 		// retrieve study info
-		response = abderaClient.get(studyInfoMemberUrl, authn(USER_CORA));
+		response = ac.get(studyInfoMemberUrl, authn(USER_CORA));
 		assertEquals(200, response.getStatus());
 		studyInfoEntry = getEntry(response); assertNotNull(studyInfoEntry);
 		response.release();
@@ -254,7 +254,7 @@ public class TestFirstTimeContributor extends TestCase {
 		// update study info
 		assertFalse("foobar".equals(studyInfoEntry.getTitle()));
 		studyInfoEntry.setTitle("foobar");
-		response = abderaClient.put(studyInfoMemberUrl, studyInfoEntry, authn(USER_CORA));
+		response = ac.put(studyInfoMemberUrl, studyInfoEntry, authn(USER_CORA));
 		assertEquals(200, response.getStatus());
 		studyInfoEntry = getEntry(response);
 		assertEquals("foobar", studyInfoEntry.getTitle());

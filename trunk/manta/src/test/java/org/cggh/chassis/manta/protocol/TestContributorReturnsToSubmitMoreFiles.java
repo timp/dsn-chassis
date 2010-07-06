@@ -50,7 +50,7 @@ public class TestContributorReturnsToSubmitMoreFiles extends TestCase {
 		createStudy("My Second Study", USER_CORA);
 		
 		// list the studies
-		ClientResponse response = abderaClient.get(URL_STUDIES_COLLECTION, authn(USER_CORA));
+		ClientResponse response = ac.get(URL_STUDIES_COLLECTION, authn(USER_CORA));
 		assertEquals(200, response.getStatus());
 		Feed feed = getFeed(response); assertNotNull(feed);
 		assertTrue(feed.getEntries().size() >= 2); // could be more if other tests run first
@@ -81,14 +81,14 @@ public class TestContributorReturnsToSubmitMoreFiles extends TestCase {
 		createStudy("My First Study", USER_CORA);
 
 		// list studies
-		response = abderaClient.get(URL_STUDIES_COLLECTION, authn(USER_CORA)); assertEquals(200, response.getStatus());
+		response = ac.get(URL_STUDIES_COLLECTION, authn(USER_CORA)); assertEquals(200, response.getStatus());
 		studiesFeed = getFeed(response); assertNotNull(studiesFeed); assertTrue(studiesFeed.getEntries().size()>0);
 		studyEntry = studiesFeed.getEntries().get(0);
 		editLink = studyEntry.getEditLink(); assertNotNull(editLink);
 		response.release();
 		
 		// retrieve first study in list
-		response = abderaClient.get(editLink.getHref().toString(), authn(USER_CORA)); assertEquals(200, response.getStatus());
+		response = ac.get(editLink.getHref().toString(), authn(USER_CORA)); assertEquals(200, response.getStatus());
 		studyEntry = getEntry(response); assertNotNull(studyEntry);
 		securityDescriptorLink = studyEntry.getLink(REL_ATOMBEAT_SECURITY_DESCRIPTOR); assertNotNull(securityDescriptorLink);
 		studyInfoLink = studyEntry.getLink(REL_STUDY_INFO); assertNotNull(studyInfoLink);
@@ -96,17 +96,17 @@ public class TestContributorReturnsToSubmitMoreFiles extends TestCase {
 		response.release();
 		
 		// retrieve security descriptor
-		response = abderaClient.get(securityDescriptorLink.getHref().toString(), authn(USER_CORA)); assertEquals(200, response.getStatus());
+		response = ac.get(securityDescriptorLink.getHref().toString(), authn(USER_CORA)); assertEquals(200, response.getStatus());
 		securityDescriptorEntry = getEntry(response); assertNotNull(securityDescriptorEntry);
 		response.release();
 		
 		// retrieve submitted media 
-		response = abderaClient.get(submittedMediaLink.getHref().toString(), authn(USER_CORA)); assertEquals(200, response.getStatus());
+		response = ac.get(submittedMediaLink.getHref().toString(), authn(USER_CORA)); assertEquals(200, response.getStatus());
 		submittedMediaFeed = getFeed(response); assertNotNull(submittedMediaFeed);
 		response.release();
 		
 		// retrieve study info
-		response = abderaClient.get(studyInfoLink.getHref().toString(), authn(USER_CORA)); assertEquals(200, response.getStatus());
+		response = ac.get(studyInfoLink.getHref().toString(), authn(USER_CORA)); assertEquals(200, response.getStatus());
 		studyInfoEntry = getEntry(response); assertNotNull(studyInfoEntry);
 		response.release();
 
@@ -131,7 +131,7 @@ public class TestContributorReturnsToSubmitMoreFiles extends TestCase {
 		submittedMediaCollectionUrl = submittedMediaLink.getHref().toString();
 
 		// retrieve submitted media feed
-		response = abderaClient.get(submittedMediaCollectionUrl, authn(USER_CORA)); assertEquals(200, response.getStatus());
+		response = ac.get(submittedMediaCollectionUrl, authn(USER_CORA)); assertEquals(200, response.getStatus());
 		submittedMediaFeed = getFeed(response); assertNotNull(submittedMediaFeed);
 		submittedMedia = submittedMediaFeed.getEntries().size();
 		response.release();
@@ -140,7 +140,7 @@ public class TestContributorReturnsToSubmitMoreFiles extends TestCase {
 		InputStream content = this.getClass().getClassLoader().getResourceAsStream("spreadsheet1.xls");
 		RequestOptions options = authn(USER_CORA);
 		options.setContentType("application/vnd.ms-excel");
-		response = abderaClient.post(submittedMediaCollectionUrl, content, options);
+		response = ac.post(submittedMediaCollectionUrl, content, options);
 		assertEquals(201, response.getStatus());
 		mediaLinkEntry = getEntry(response); assertNotNull(mediaLinkEntry);
 		editLink = mediaLinkEntry.getEditLink(); assertNotNull(editLink);
@@ -150,7 +150,7 @@ public class TestContributorReturnsToSubmitMoreFiles extends TestCase {
 		// check user can update file metadata
 		assertFalse(mediaLinkEntry.getTitle().equals("testing.xls"));
 		mediaLinkEntry.setTitle("testing.xls");
-		response = abderaClient.put(editLink.getHref().toString(), mediaLinkEntry, authn(USER_CORA));
+		response = ac.put(editLink.getHref().toString(), mediaLinkEntry, authn(USER_CORA));
 		assertEquals(200, response.getStatus());
 		mediaLinkEntry = getEntry(response); assertNotNull(mediaLinkEntry);
 		assertEquals("testing.xls", mediaLinkEntry.getTitle());
@@ -179,7 +179,7 @@ public class TestContributorReturnsToSubmitMoreFiles extends TestCase {
 		assertEquals("baz", c.getLabel());
 		
 		// retrieve submitted media again, check feed size
-		response = abderaClient.get(submittedMediaCollectionUrl, authn(USER_CORA)); assertEquals(200, response.getStatus());
+		response = ac.get(submittedMediaCollectionUrl, authn(USER_CORA)); assertEquals(200, response.getStatus());
 		submittedMediaFeed = getFeed(response); assertNotNull(submittedMediaFeed);
 		assertEquals(submittedMedia+2, submittedMediaFeed.getEntries().size());
 		response.release();

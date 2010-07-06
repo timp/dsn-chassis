@@ -42,7 +42,7 @@ public class TestContributorReturnsToModifyStudyPermissionsAndStudyInfo extends 
 		
 		// modify study
 		studyEntry.setTitle("Study Modified");
-		response = abderaClient.put(editLink.getHref().toString(), studyEntry, authn(USER_CORA));
+		response = ac.put(editLink.getHref().toString(), studyEntry, authn(USER_CORA));
 		assertEquals(200, response.getStatus());
 		studyEntry = getEntry(response);
 		assertEquals("Study Modified", studyEntry.getTitle());
@@ -50,13 +50,13 @@ public class TestContributorReturnsToModifyStudyPermissionsAndStudyInfo extends 
 		
 		// modify study info
 		studyInfoEntry = newStudyInfo();
-		response = abderaClient.put(studyInfoLink.getHref().toString(), studyInfoEntry, authn(USER_CORA));
+		response = ac.put(studyInfoLink.getHref().toString(), studyInfoEntry, authn(USER_CORA));
 		assertEquals(200, response.getStatus());
 		response.release();
 		
 		// modify security descriptor
 		securityDescriptorEntry = newSecurityDescriptor();
-		response = abderaClient.put(securityDescriptorLink.getHref().toString(), securityDescriptorEntry, authn(USER_CORA));
+		response = ac.put(securityDescriptorLink.getHref().toString(), securityDescriptorEntry, authn(USER_CORA));
 		assertEquals(200, response.getStatus());
 		response.release();
 		

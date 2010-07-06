@@ -42,7 +42,7 @@ public class TestContributorBreaksDuringStudyRegistration extends TestCase {
 		
 		// create a draft
 		draftEntry = newDraft(title);
-		response = abderaClient.post(URL_DRAFTS_COLLECTION, draftEntry, authn(USER_CORA));
+		response = ac.post(URL_DRAFTS_COLLECTION, draftEntry, authn(USER_CORA));
 		assertEquals(201, response.getStatus());
 		location = response.getLocation(); assertNotNull(location);
 		draftEntry = getEntry(response); assertNotNull(draftEntry);
@@ -50,7 +50,7 @@ public class TestContributorBreaksDuringStudyRegistration extends TestCase {
 		response.release();
 
 		// break, come back and list the drafts
-		response = abderaClient.get(URL_DRAFTS_COLLECTION, authn(USER_CORA));
+		response = ac.get(URL_DRAFTS_COLLECTION, authn(USER_CORA));
 		assertEquals(200, response.getStatus());
 		draftsFeed = getFeed(response);
 		drafts = draftsFeed.getEntries();
@@ -66,7 +66,7 @@ public class TestContributorBreaksDuringStudyRegistration extends TestCase {
 		
 		// update the draft again
 		draftEntry.setTitle("proper title");
-		response = abderaClient.put(draftEntry.getEditLink().getHref().toString(), draftEntry, authn(USER_CORA));
+		response = ac.put(draftEntry.getEditLink().getHref().toString(), draftEntry, authn(USER_CORA));
 		assertEquals(200, response.getStatus());
 		draftEntry = getEntry(response);
 		assertEquals("proper title", draftEntry.getTitle());
