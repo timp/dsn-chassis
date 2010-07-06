@@ -5,44 +5,54 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.net.URL;
-import java.util.Iterator;
+import java.util.ArrayList;
 import java.util.Vector;
 
+/**
+ *  A Utility to stress a single URL from the command line or inside an IDE.
+ *  
+ * 
+ * @author timp
+ * @since 2010/06/20
+ */
 public class LoadTest {
 
 	private String fileName;
-	private DiscreteDistribution urlsToHit = null;
-	static int requestsPerRate = 50;
+	private Vector<InstrumentedUrlRequestSet> urlsToHit = null;
+	private ArrayList<BitBucketClient> threads = new ArrayList<BitBucketClient>();
+	static int requestsPerRate = 30;
 	static int rateIncrement = 1;
-	static int maxHitsPerSec = 20;
-	static long maxWaitTime = 100000L;
-	int runningThreadCount = 0;
+	static int maxHitsPerSec = 501;
+	static long maxWaitTime = 120000L;
+	volatile static int runningThreadCount = 0;
 	private static final byte[] bitBucket = new byte[4096];
 
 	public LoadTest(String url) {
 		this.fileName = filenameFrom(url);
-		urlsToHit = new DiscreteDistribution();
-		for (int histPS = 1; histPS < maxHitsPerSec; histPS += rateIncrement) {
-			urlsToHit.add(new InstrumentedUrlRequestSet(url, histPS));
+		urlsToHit = new Vector<InstrumentedUrlRequestSet>();
+		for (int hitsPerSec = 1; hitsPerSec < maxHitsPerSec; hitsPerSec += rateIncrement) {
+			urlsToHit.add(new InstrumentedUrlRequestSet(url, hitsPerSec));
 		}
 	}
 
 	class HitStats {
 		public long totalTimeToOpen, totalTimeToFinish;
-		public int successes;
-		public int failures;
+		public int successes, failures;
+		public int totalRunningThreadsCount;
 
-		public void notifySuccess(long started, long opened, long finished) {
+		public void notifySuccess(long started, long opened, long finished, int runningThreadsCount) {
 			long toOpen = opened - started;
 			totalTimeToOpen += toOpen;
 			long toFinish = finished - started;
 			totalTimeToFinish += toFinish;
-			System.err.println(started + ":" + opened + ":" + finished + "=" + toFinish);
+			totalRunningThreadsCount = totalRunningThreadsCount + runningThreadsCount;
+			System.err.println(started + ":" + opened + ":" + finished + "=" + toFinish + "  (" + runningThreadsCount + ")");
 			++successes;
 		}
 
-		public void notifyFailure() {
+		public void notifyFailure(int runningThreadsCount) {
 			++failures;
+			totalRunningThreadsCount = totalRunningThreadsCount + runningThreadsCount;
 		}
 
 		public long meanTimeToOpen() {
@@ -52,25 +62,15 @@ public class LoadTest {
 		public long meanTimeToFinish() {
 			return successes == 0 ? 0 : totalTimeToFinish / successes;
 		}
-	}
-
-	class DiscreteDistribution implements Iterable<InstrumentedUrlRequestSet> {
-
-		private Vector<InstrumentedUrlRequestSet> elements = new Vector<InstrumentedUrlRequestSet>();
-		private Vector<InstrumentedUrlRequestSet> cumulative = new Vector<InstrumentedUrlRequestSet>();
-
-		public DiscreteDistribution() {
+		
+		public int totalCompleted() { 
+			return successes + failures;
 		}
-
-		public void add(InstrumentedUrlRequestSet o) {
-			elements.addElement(o);
-			for (int i = 0; i < requestsPerRate; ++i)
-				cumulative.addElement(o);
+		public long meanRunningThreadsCount() {
+			return totalCompleted() == 0 ? 0 : totalRunningThreadsCount / totalCompleted();
 		}
-
-		public Iterator<InstrumentedUrlRequestSet> iterator() {
-			return elements.iterator();
-		}
+		
+		
 	}
 
 	class InstrumentedUrlRequestSet {
@@ -87,7 +87,9 @@ public class LoadTest {
 
 		void go() throws InterruptedException {
 			for (int i = 0; i < requestsPerRate; i++) {
-				new BitBucketClient(url, stats).start();
+				BitBucketClient b = new BitBucketClient(url, stats); 
+				threads.add(b);
+				b.start();
 				Thread.sleep(waitMillis);
 			}
 		}
@@ -108,12 +110,15 @@ public class LoadTest {
 	class BitBucketClient extends Thread {
 		private String url;
 		private HitStats hitStats;
-
+		private volatile boolean stop = false;
+		
 		public BitBucketClient(String url, HitStats stats) {
 			this.url = url;
 			this.hitStats = stats;
 		}
-
+		public void stop_soon() { 
+			stop = true;
+		}
 		public void run() {
 			runningThreadCount++;
 			//System.err.print(url + " >>/dev/null ");
@@ -123,18 +128,18 @@ public class LoadTest {
 				URL it = new URL(url);
 				inputStream = it.openStream();
 				long opened = System.currentTimeMillis();
-				while (inputStream.read(bitBucket) != -1)
+				while (!stop && inputStream.read(bitBucket) != -1)
 					;
 				System.err.println(new String(bitBucket));
 				
 				long finished = System.currentTimeMillis();
 
-				hitStats.notifySuccess(started, opened, finished);
+				hitStats.notifySuccess(started, opened, finished,runningThreadCount);
 
 			} catch (Exception e) {
 				// Error response codes are translated into exceptions. 
 				
-				hitStats.notifyFailure();
+				hitStats.notifyFailure(runningThreadCount);
 				System.err.println(e);
 			} finally { 
 				try {
@@ -145,6 +150,10 @@ public class LoadTest {
 				}				
 			}
 			runningThreadCount--;
+		}
+		
+		public HitStats getHitStats() { 
+			return hitStats;
 		}
 	}
 
@@ -181,41 +190,53 @@ public class LoadTest {
 		}
 		long waited = 0;
 		while (runningThreadCount > 0 && waited < maxWaitTime) {
-			Thread.sleep(1000);
-			waited += 1000;
+			Thread.sleep(2000);
+			waited += 2000;
 			System.err.println("waiting because there are still " + runningThreadCount + " threads");			
 		}
 		if (waited > maxWaitTime) 
 			System.err.println("Maximum wait exceeded.");
-
+        for (BitBucketClient t : threads) {
+        	synchronized(t) { 
+              if (t.isAlive()) {
+                t.getHitStats().notifyFailure(runningThreadCount);
+        	    t.stop_soon();
+              }
+        	}
+        }
+		
 		System.err.println("stopping after " + waited);
 
-		out.println("url, count, success, rate, open, read");
+		out.println("url, count, success, fail, %, rate, open, read, threads");
 		int count = 0; 
 		for (InstrumentedUrlRequestSet iurs : urlsToHit) {
 			count++;
-			int total = iurs.stats.successes + iurs.stats.failures;
 			double successRate = 0.0;
-			if (total != 0)
-				successRate = (iurs.stats.successes * 100.0) / (total);
+			if (iurs.stats.totalCompleted() != 0)
+				successRate = (iurs.stats.successes * 100.0) / (iurs.stats.totalCompleted());
 			
 			out.println(iurs.url() + ", " 
-					+ pad(total, 5) + ", "
+					+ pad(iurs.stats.totalCompleted(), 5) + ", "
+					+ pad(iurs.stats.successes, 5) + ", "
+                    + pad(iurs.stats.failures, 5) + ", "
 					+ pad(new Double(successRate).toString(), 5) + ", "
 					+ pad(iurs.hitsPerSecond(), 5) + ", "
 					+ pad(iurs.stats.meanTimeToOpen(), 5) + ", "
-					+ pad(iurs.stats.meanTimeToFinish(), 5) + ", " + " ");
+					+ pad(iurs.stats.meanTimeToFinish(), 5) + ", " + " "
+                    + pad(iurs.stats.meanRunningThreadsCount(), 5) + ", "
+                    );
 		}
 		System.err.println("Wrote " + count + " records");
 	}
 
 	public static void main(String[] args) throws Exception {
-		String url = "http://localhost:8080/manta/questionnaire/";
+		//String url = "http://localhost:8080/manta/questionnaire/";
 		//String url = "http://localhost:8080/manta/index.html";
 		//String url = "http://localhost:8080/manta/home/";
 		//String url = "http://localhost:8080/manta/exist/rest/db/atom/content/studies/KCDZQ.atom";
 		//String url = "http://localhost:8080/manta/exist/rest/db/atom/content/studies/";
 		//String url = "http://localhost:8080/manta/home/";
+		String url = "http://localhost/";
 		//String url = "http://localhost:8080/manta/atombeat/admin/install.xql";
 		//String url = "http://129.67.44.221:8080/explorer_dev/app/";
 		
