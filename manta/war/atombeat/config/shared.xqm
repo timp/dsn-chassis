@@ -141,7 +141,62 @@ declare variable $config:default-workspace-security-descriptor :=
             <atombeat:ace>
                 <atombeat:type>ALLOW</atombeat:type>
                 <atombeat:recipient type="role">ROLE_CHASSIS_ADMINISTRATOR</atombeat:recipient>
-                <atombeat:permission>*</atombeat:permission>
+                <atombeat:permission>CREATE_COLLECTION</atombeat:permission>
+            </atombeat:ace>
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_ADMINISTRATOR</atombeat:recipient>
+                <atombeat:permission>UPDATE_COLLECTION</atombeat:permission>
+            </atombeat:ace>
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_ADMINISTRATOR</atombeat:recipient>
+                <atombeat:permission>LIST_COLLECTION</atombeat:permission>
+            </atombeat:ace>
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_ADMINISTRATOR</atombeat:recipient>
+                <atombeat:permission>RETRIEVE_MEMBER</atombeat:permission>
+            </atombeat:ace>
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_ADMINISTRATOR</atombeat:recipient>
+                <atombeat:permission>UPDATE_MEMBER</atombeat:permission>
+            </atombeat:ace>
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_ADMINISTRATOR</atombeat:recipient>
+                <atombeat:permission>DELETE_MEMBER</atombeat:permission>
+            </atombeat:ace>
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_ADMINISTRATOR</atombeat:recipient>
+                <atombeat:permission>RETRIEVE_MEDIA</atombeat:permission>
+            </atombeat:ace>
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_ADMINISTRATOR</atombeat:recipient>
+                <atombeat:permission>DELETE_MEDIA</atombeat:permission>
+            </atombeat:ace>
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_ADMINISTRATOR</atombeat:recipient>
+                <atombeat:permission>RETRIEVE_ACL</atombeat:permission>
+            </atombeat:ace>
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_ADMINISTRATOR</atombeat:recipient>
+                <atombeat:permission>UPDATE_ACL</atombeat:permission>
+            </atombeat:ace>
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_ADMINISTRATOR</atombeat:recipient>
+                <atombeat:permission>RETRIEVE_HISTORY</atombeat:permission>
+            </atombeat:ace>
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_ADMINISTRATOR</atombeat:recipient>
+                <atombeat:permission>RETRIEVE_REVISION</atombeat:permission>
             </atombeat:ace>
         </atombeat:acl>
     </atombeat:security-descriptor>
