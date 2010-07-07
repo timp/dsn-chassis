@@ -64,9 +64,7 @@ public class TestDraftMediaCollectionsSecurity extends AtomSecurityTestCase {
 	
 	@Override
 	protected String[] getUsersAllowedCreateMedia() {
-		return new String[] {
-				USER_CORA
-		};
+		return new String[] { USER_CORA	};
 	}
 	
 	
@@ -80,9 +78,7 @@ public class TestDraftMediaCollectionsSecurity extends AtomSecurityTestCase {
 	
 	@Override
 	protected String[] getUsersAllowedDeleteMedia() {
-		return new String[] {
-				USER_CORA, USER_ADAM
-		};
+		return new String[] { USER_CORA, USER_ADAM };
 	}
 
 	
@@ -100,9 +96,7 @@ public class TestDraftMediaCollectionsSecurity extends AtomSecurityTestCase {
 	
 	@Override
 	protected String[] getUsersAllowedListCollection() {
-		return new String[] {
-				USER_CORA, USER_ADAM
-		};
+		return new String[] { USER_CORA, USER_ADAM };
 	}
 
 	
@@ -116,45 +110,35 @@ public class TestDraftMediaCollectionsSecurity extends AtomSecurityTestCase {
 	
 	@Override
 	protected String[] getUsersAllowedRetrieveCollectionAcl() {
-		return new String[] {
-				USER_ADAM
-		};
+		return new String[] { USER_ADAM	};
 	}
 
 	
 	
 	@Override
 	protected String[] getUsersAllowedRetrieveMedia() {
-		return new String[] {
-				USER_CORA, USER_ADAM
-		};
+		return new String[] { USER_CORA, USER_ADAM };
 	}
 
 	
 	
 	@Override
 	protected String[] getUsersAllowedRetrieveMediaAcl() {
-		return new String[] {
-				USER_ADAM
-		};
+		return new String[] { USER_ADAM	};
 	}
 
 	
 	
 	@Override
 	protected String[] getUsersAllowedRetrieveMember() {
-		return new String[] {
-				USER_CORA, USER_ADAM
-		};
+		return new String[] { USER_CORA, USER_ADAM };
 	}
 
 	
 	
 	@Override
 	protected String[] getUsersAllowedRetrieveMemberAcl() {
-		return new String[] {
-				USER_ADAM
-		};
+		return new String[] { USER_ADAM	};
 	}
 
 	
@@ -175,18 +159,14 @@ public class TestDraftMediaCollectionsSecurity extends AtomSecurityTestCase {
 	
 	@Override
 	protected String[] getUsersAllowedUpdateCollection() {
-		return new String[] {
-				USER_ADAM
-		};
+		return new String[] { USER_ADAM	};
 	}
 
 	
 	
 	@Override
 	protected String[] getUsersAllowedUpdateCollectionAcl() {
-		return new String[] {
-				USER_ADAM
-		};
+		return new String[] { USER_ADAM	};
 	}
 
 	
@@ -200,27 +180,21 @@ public class TestDraftMediaCollectionsSecurity extends AtomSecurityTestCase {
 	
 	@Override
 	protected String[] getUsersAllowedUpdateMediaAcl() {
-		return new String[] {
-				USER_ADAM
-		};
+		return new String[] { USER_ADAM	};
 	}
 
 	
 	
 	@Override
 	protected String[] getUsersAllowedUpdateMember() {
-		return new String[] {
-				USER_CORA, USER_ADAM
-		};
+		return new String[] { USER_CORA, USER_ADAM };
 	}
 
 	
 	
 	@Override
 	protected String[] getUsersAllowedUpdateMemberAcl() {
-		return new String[] {
-				USER_ADAM
-		};
+		return new String[] { USER_ADAM };
 	}
 
 	
