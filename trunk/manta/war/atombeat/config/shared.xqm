@@ -331,12 +331,6 @@ declare variable $config:studies-collection-security-descriptor :=
                 <atombeat:permission>RETRIEVE_MEMBER</atombeat:permission>
             </atombeat:ace>
     
-            <atombeat:ace>
-                <atombeat:type>ALLOW</atombeat:type>
-                <atombeat:recipient type="role">ROLE_CHASSIS_PERSONAL_DATA_REVIEWER</atombeat:recipient>
-                <atombeat:permission>RETRIEVE_ACL</atombeat:permission>
-            </atombeat:ace>
-    
             <!--
                 Curators can list the collection, and can retrieve any member, and can retrieve any security descriptor.
             -->
@@ -351,12 +345,6 @@ declare variable $config:studies-collection-security-descriptor :=
                 <atombeat:type>ALLOW</atombeat:type>
                 <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
                 <atombeat:permission>RETRIEVE_MEMBER</atombeat:permission>
-            </atombeat:ace>
-    
-            <atombeat:ace>
-                <atombeat:type>ALLOW</atombeat:type>
-                <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
-                <atombeat:permission>RETRIEVE_ACL</atombeat:permission>
             </atombeat:ace>
     
             <atombeat:ace>
@@ -1083,7 +1071,21 @@ declare function config:studies-member-default-security-descriptor(
                 <atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
                 <atombeat:permission>RETRIEVE_MEMBER</atombeat:permission>
             </atombeat:ace>
-            
+
+            <!-- needed here as workaround for http://code.google.com/p/atombeat/issues/detail?id=71 -->
+
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+                <atombeat:permission>RETRIEVE_ACL</atombeat:permission>
+            </atombeat:ace>
+
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_PERSONAL_DATA_REVIEWER</atombeat:recipient>
+                <atombeat:permission>RETRIEVE_ACL</atombeat:permission>
+            </atombeat:ace>
+    
 		</atombeat:acl>
 		
 	</atombeat:security-descriptor>
