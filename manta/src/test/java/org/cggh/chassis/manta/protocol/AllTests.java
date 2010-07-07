@@ -12,6 +12,7 @@ public class AllTests {
 		suite.addTestSuite(TestDraftsCollectionSecurity.class);
 		suite.addTestSuite(TestDraftMediaCollectionsSecurity.class);
 		suite.addTestSuite(TestStudiesCollectionSecurity.class);
+		suite.addTestSuite(TestStudyInfoCollectionSecurity.class);
 		//$JUnit-END$
 		return suite;
 	}
