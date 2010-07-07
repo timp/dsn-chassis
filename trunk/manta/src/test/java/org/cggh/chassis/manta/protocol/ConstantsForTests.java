@@ -12,6 +12,7 @@ public class ConstantsForTests {
 	public static final String URL_SECURITY_SERVICE = URL_SERVICE_BASE + "/security";
 	public static final String URL_HISTORY_SERVICE = URL_SERVICE_BASE + "/history";
 	public static final String URL_STUDIES_COLLECTION = URL_CONTENT_SERVICE + "/studies";
+	public static final String URL_STUDY_INFO_COLLECTION = URL_CONTENT_SERVICE + "/study-info";
 	public static final String URL_DRAFTS_COLLECTION = URL_CONTENT_SERVICE + "/drafts";
 
 	public static final QName QNAME_DRAFT = new QName("", "draft");
