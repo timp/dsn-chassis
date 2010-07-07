@@ -624,18 +624,6 @@ declare function config:submitted-media-collection-security-descriptor(
                                 <atombeat:permission>RETRIEVE_MEDIA</atombeat:permission>
                         </atombeat:ace>
         
-                        <atombeat:ace>
-                                <atombeat:type>ALLOW</atombeat:type>
-                                <atombeat:recipient type="role">ROLE_CHASSIS_PERSONAL_DATA_REVIEWER</atombeat:recipient>
-                                <atombeat:permission>RETRIEVE_ACL</atombeat:permission>
-                        </atombeat:ace>
-        
-                        <atombeat:ace>
-                                <atombeat:type>ALLOW</atombeat:type>
-                                <atombeat:recipient type="role">ROLE_CHASSIS_PERSONAL_DATA_REVIEWER</atombeat:recipient>
-                                <atombeat:permission>UPDATE_ACL</atombeat:permission>
-                        </atombeat:ace>
-        
                 </atombeat:acl>
         
         </atombeat:security-descriptor>    
@@ -1114,12 +1102,34 @@ declare function config:submitted-media-member-security-descriptor(
     
         <atombeat:security-descriptor>
         
-                <atombeat:groups>
-                        <atombeat:group id="GROUP_ADMINISTRATORS" src="{$study-uri}"/>
-                </atombeat:groups>
-        
-                <atombeat:acl/>
-        
+            <atombeat:groups>
+                    <atombeat:group id="GROUP_ADMINISTRATORS" src="{$study-uri}"/>
+            </atombeat:groups>
+    
+            <atombeat:acl>
+            
+            {
+                if ( ends-with( $request-path-info , ".media" ) ) then
+                
+                (
+                    <atombeat:ace>
+                            <atombeat:type>ALLOW</atombeat:type>
+                            <atombeat:recipient type="role">ROLE_CHASSIS_PERSONAL_DATA_REVIEWER</atombeat:recipient>
+                            <atombeat:permission>RETRIEVE_ACL</atombeat:permission>
+                    </atombeat:ace>
+                    ,
+                    <atombeat:ace>
+                            <atombeat:type>ALLOW</atombeat:type>
+                            <atombeat:recipient type="role">ROLE_CHASSIS_PERSONAL_DATA_REVIEWER</atombeat:recipient>
+                            <atombeat:permission>UPDATE_ACL</atombeat:permission>
+                    </atombeat:ace>
+                )                
+                
+                else ()
+            }
+    
+            </atombeat:acl>
+    
         </atombeat:security-descriptor>    
     
 };
