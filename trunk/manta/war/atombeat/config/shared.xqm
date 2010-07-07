@@ -301,19 +301,6 @@ declare variable $config:studies-collection-security-descriptor :=
                 <atombeat:permission>DELETE_MEMBER</atombeat:permission>
             </atombeat:ace>
             
-            <atombeat:ace>
-                <atombeat:type>DENY</atombeat:type>
-                <atombeat:recipient type="user">*</atombeat:recipient>
-                <atombeat:permission>CREATE_MEDIA</atombeat:permission>
-            </atombeat:ace>
-            
-            <atombeat:ace>
-                <atombeat:type>DENY</atombeat:type>
-                <atombeat:recipient type="user">*</atombeat:recipient>
-                <atombeat:permission>MULTI_CREATE</atombeat:permission>
-            </atombeat:ace>
-            
-            
     
             <!--
                 Personal data reviewers can list the collection and can retrieve any member or security descriptor.
@@ -383,27 +370,6 @@ declare variable $config:study-info-collection-security-descriptor :=
                 <atombeat:permission>LIST_COLLECTION</atombeat:permission>
             </atombeat:ace>
             
-            <!-- Prevent some obvious stuff. -->
-            
-            <atombeat:ace>
-                <atombeat:type>DENY</atombeat:type>
-                <atombeat:recipient type="user">*</atombeat:recipient>
-                <atombeat:permission>DELETE_MEMBER</atombeat:permission>
-            </atombeat:ace>
-            
-            <atombeat:ace>
-                <atombeat:type>DENY</atombeat:type>
-                <atombeat:recipient type="user">*</atombeat:recipient>
-                <atombeat:permission>CREATE_MEDIA</atombeat:permission>
-            </atombeat:ace>
-            
-            <atombeat:ace>
-                <atombeat:type>DENY</atombeat:type>
-                <atombeat:recipient type="user">*</atombeat:recipient>
-                <atombeat:permission>MULTI_CREATE</atombeat:permission>
-            </atombeat:ace>
-            
-    
             <!--
                 Curators can list the collection, and can retrieve and update any member.
             -->
