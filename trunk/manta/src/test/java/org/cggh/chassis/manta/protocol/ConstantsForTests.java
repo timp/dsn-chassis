@@ -54,6 +54,7 @@ public class ConstantsForTests {
 	public static final String REL_STUDY_INFO = "http://www.cggh.org/2010/chassis/terms/studyInfo";
 
 	public static final String REL_ATOMBEAT_SECURITY_DESCRIPTOR = "http://purl.org/atombeat/rel/security-descriptor";
+	public static final String REL_ATOMBEAT_MEDIA_SECURITY_DESCRIPTOR = "http://purl.org/atombeat/rel/media-security-descriptor";
 
 	public static final String REL_HISTORY = "history";
 	public static final String REL_THIS_REVISION = "this-revision";
