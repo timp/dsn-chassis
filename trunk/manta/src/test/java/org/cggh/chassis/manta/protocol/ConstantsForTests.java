@@ -14,10 +14,16 @@ public class ConstantsForTests {
 	public static final String URL_STUDIES_COLLECTION = URL_CONTENT_SERVICE + "/studies";
 	public static final String URL_STUDY_INFO_COLLECTION = URL_CONTENT_SERVICE + "/study-info";
 	public static final String URL_DRAFTS_COLLECTION = URL_CONTENT_SERVICE + "/drafts";
+	public static final String URL_ALL_SUBMITTED_MEDIA_COLLECTION = URL_CONTENT_SERVICE + "/media/submitted";
+	public static final String URL_ALL_CURATED_MEDIA_COLLECTION = URL_CONTENT_SERVICE + "/media/curated";
+	public static final String URL_ALL_PERSONAL_DATA_REVIEWS_COLLECTION = URL_CONTENT_SERVICE + "/reviews/personal-data";
+	public static final String URL_ALL_DERIVATIONS_COLLECTION = URL_CONTENT_SERVICE + "/derivations";
 
 	public static final QName QNAME_DRAFT = new QName("", "draft");
 	public static final QName QNAME_STUDY = new QName("", "study");
 	public static final QName QNAME_STUDY_INFO = new QName("", "study-info");
+	public static final QName QNAME_DERIVATION = new QName("", "derivation");
+	public static final QName QNAME_REVIEW = new QName("", "review");
 
 	public static final String XMLNS_ATOMBEAT = "http://purl.org/atombeat/xmlns";
 	public static final String XMLNS_ATOM = "http://www.w3.org/2005/Atom";
@@ -52,7 +58,10 @@ public class ConstantsForTests {
 	
 	public static final String REL_DRAFT_MEDIA = "http://www.cggh.org/2010/chassis/terms/draftMedia";
 	public static final String REL_SUBMITTED_MEDIA = "http://www.cggh.org/2010/chassis/terms/submittedMedia";
+	public static final String REL_CURATED_MEDIA = "http://www.cggh.org/2010/chassis/terms/curatedMedia";
+	public static final String REL_DERIVATIONS = "http://www.cggh.org/2010/chassis/terms/derivations";
 	public static final String REL_STUDY_INFO = "http://www.cggh.org/2010/chassis/terms/studyInfo";
+	public static final String REL_PERSONAL_DATA_REVIEWS = "http://www.cggh.org/2010/chassis/terms/personalDataReviews";
 
 	public static final String REL_ATOMBEAT_SECURITY_DESCRIPTOR = "http://purl.org/atombeat/rel/security-descriptor";
 	public static final String REL_ATOMBEAT_MEDIA_SECURITY_DESCRIPTOR = "http://purl.org/atombeat/rel/media-security-descriptor";
