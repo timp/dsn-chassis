@@ -13,6 +13,14 @@ public class AllTests {
 		suite.addTestSuite(TestDraftMediaCollectionsSecurity.class);
 		suite.addTestSuite(TestStudiesCollectionSecurity.class);
 		suite.addTestSuite(TestStudyInfoCollectionSecurity.class);
+		suite.addTestSuite(TestSubmittedMediaCollectionsSecurity.class);
+		suite.addTestSuite(TestCuratedMediaCollectionsSecurity.class);
+		suite.addTestSuite(TestDerivationsCollectionsSecurity.class);
+		suite.addTestSuite(TestPersonalDataReviewsCollectionsSecurity.class);
+		suite.addTestSuite(TestAllSubmittedMediaCollectionSecurity.class);
+		suite.addTestSuite(TestAllCuratedMediaCollectionSecurity.class);
+		suite.addTestSuite(TestAllDerivationsCollectionSecurity.class);
+		suite.addTestSuite(TestAllPersonalDataReviewsCollectionSecurity.class);
 		//$JUnit-END$
 		return suite;
 	}

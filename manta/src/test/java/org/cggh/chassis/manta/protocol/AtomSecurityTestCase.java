@@ -532,6 +532,34 @@ public abstract class AtomSecurityTestCase extends TestCase {
 	
 	
 	
+	public static Entry newDerivation() {
+
+		Entry entry = factory.newEntry();
+		Element derivationElement = factory.newElement(QNAME_DERIVATION);
+		entry.setContent(derivationElement);
+		entry.getContentElement().setMimeType(MEDIATYPE_MANTA);
+		
+		return entry;
+
+	}
+	
+	
+	
+	
+	public static Entry newPersonalDataReview() {
+
+		Entry entry = factory.newEntry();
+		Element reviewElement = factory.newElement(QNAME_REVIEW);
+		entry.setContent(reviewElement);
+		entry.getContentElement().setMimeType(MEDIATYPE_MANTA);
+		
+		return entry;
+
+	}
+	
+	
+	
+	
 	public static Feed newFeed(String title) {
 		
 		Feed f = factory.newFeed();
