@@ -471,12 +471,6 @@ declare variable $config:all-personal-data-reviews-collection-security-descripto
         
             <atombeat:ace>
                 <atombeat:type>ALLOW</atombeat:type>
-                <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
-                <atombeat:permission>LIST_COLLECTION</atombeat:permission>
-            </atombeat:ace>
-            
-            <atombeat:ace>
-                <atombeat:type>ALLOW</atombeat:type>
                 <atombeat:recipient type="role">ROLE_CHASSIS_PERSONAL_DATA_REVIEWER</atombeat:recipient>
                 <atombeat:permission>LIST_COLLECTION</atombeat:permission>
             </atombeat:ace>
@@ -703,70 +697,50 @@ declare function config:curated-media-collection-security-descriptor(
 
         <atombeat:security-descriptor>
         
-                <atombeat:groups>
-                        <atombeat:group id="GROUP_ADMINISTRATORS" src="{$study-uri}"/>
-                </atombeat:groups>
+            <atombeat:groups>
+                    <atombeat:group id="GROUP_ADMINISTRATORS" src="{$study-uri}"/>
+            </atombeat:groups>
+            
+            <atombeat:acl>
+    
+                <!--
+                        Curators can create media resources, list the collection, retrieve media resources, and retrieve and update members.
+                -->
+
+                <atombeat:ace>
+                        <atombeat:type>ALLOW</atombeat:type>
+                        <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+                        <atombeat:permission>CREATE_MEDIA</atombeat:permission>
+                </atombeat:ace>
+
+                <atombeat:ace>
+                        <atombeat:type>ALLOW</atombeat:type>
+                        <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+                        <atombeat:permission>LIST_COLLECTION</atombeat:permission>
+                </atombeat:ace>
+
+                <atombeat:ace>
+                        <atombeat:type>ALLOW</atombeat:type>
+                        <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+                        <atombeat:permission>RETRIEVE_MEMBER</atombeat:permission>
+                </atombeat:ace>
+
+                <atombeat:ace>
+                        <atombeat:type>ALLOW</atombeat:type>
+                        <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+                        <atombeat:permission>UPDATE_MEMBER</atombeat:permission>
+                </atombeat:ace>
+
+                <atombeat:ace>
+                        <atombeat:type>ALLOW</atombeat:type>
+                        <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+                        <atombeat:permission>RETRIEVE_MEDIA</atombeat:permission>
+                </atombeat:ace>
+
+                <!-- N.B. by default, study administrators cannot see curated media -->
                 
-                <atombeat:acl>
-        
-                        <!--
-                                Curators can create media resources, list the collection, retrieve media resources, and retrieve and update members.
-                        -->
-        
-                        <atombeat:ace>
-                                <atombeat:type>ALLOW</atombeat:type>
-                                <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
-                                <atombeat:permission>CREATE_MEDIA</atombeat:permission>
-                        </atombeat:ace>
-        
-                        <atombeat:ace>
-                                <atombeat:type>ALLOW</atombeat:type>
-                                <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
-                                <atombeat:permission>LIST_COLLECTION</atombeat:permission>
-                        </atombeat:ace>
-        
-                        <atombeat:ace>
-                                <atombeat:type>ALLOW</atombeat:type>
-                                <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
-                                <atombeat:permission>RETRIEVE_MEMBER</atombeat:permission>
-                        </atombeat:ace>
-        
-                        <atombeat:ace>
-                                <atombeat:type>ALLOW</atombeat:type>
-                                <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
-                                <atombeat:permission>UPDATE_MEMBER</atombeat:permission>
-                        </atombeat:ace>
-        
-                        <atombeat:ace>
-                                <atombeat:type>ALLOW</atombeat:type>
-                                <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
-                                <atombeat:permission>RETRIEVE_MEDIA</atombeat:permission>
-                        </atombeat:ace>
-        
-                        <!--
-                                The study administrators can list the collection and retrieve members and media resources.
-                        -->
-        
-                        <atombeat:ace>
-                                <atombeat:type>ALLOW</atombeat:type>
-                                <atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
-                                <atombeat:permission>LIST_COLLECTION</atombeat:permission>
-                        </atombeat:ace>
-        
-                        <atombeat:ace>
-                                <atombeat:type>ALLOW</atombeat:type>
-                                <atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
-                                <atombeat:permission>RETRIEVE_MEMBER</atombeat:permission>
-                        </atombeat:ace>
-        
-                        <atombeat:ace>
-                                <atombeat:type>ALLOW</atombeat:type>
-                                <atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
-                                <atombeat:permission>RETRIEVE_MEDIA</atombeat:permission>
-                        </atombeat:ace>
-        
-                </atombeat:acl>
-        
+            </atombeat:acl>
+    
         </atombeat:security-descriptor> 
 };
 
@@ -833,21 +807,7 @@ declare function config:derivations-collection-security-descriptor(
                                 <atombeat:permission>RETRIEVE_MEMBER</atombeat:permission>
                         </atombeat:ace>
         
-                        <!--
-                                The study administrators can list the collection and retrieve members.
-                        -->
-        
-                        <atombeat:ace>
-                                <atombeat:type>ALLOW</atombeat:type>
-                                <atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
-                                <atombeat:permission>LIST_COLLECTION</atombeat:permission>
-                        </atombeat:ace>
-        
-                        <atombeat:ace>
-                                <atombeat:type>ALLOW</atombeat:type>
-                                <atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
-                                <atombeat:permission>RETRIEVE_MEMBER</atombeat:permission>
-                        </atombeat:ace>
+                        <!-- N.B. by default, study administrators cannot see derivations -->
         
                 </atombeat:acl>
         
@@ -874,67 +834,37 @@ declare function config:personal-data-reviews-collection-security-descriptor(
 
         <atombeat:security-descriptor>
         
-                <atombeat:groups>
-                        <atombeat:group id="GROUP_ADMINISTRATORS" src="{$study-uri}"/>
-                </atombeat:groups>
-        
-                <atombeat:acl>
-        
-                        <!--
-                                Personal data reviewers can list the collection and retrieve any member. Only personal data reviewers can create members.
-                        -->
-        
-                        <atombeat:ace>
-                                <atombeat:type>ALLOW</atombeat:type>
-                                <atombeat:recipient type="role">ROLE_CHASSIS_PERSONAL_DATA_REVIEWER</atombeat:recipient>
-                                <atombeat:permission>CREATE_MEMBER</atombeat:permission>
-                        </atombeat:ace>
-        
-                        <atombeat:ace>
-                                <atombeat:type>ALLOW</atombeat:type>
-                                <atombeat:recipient type="role">ROLE_CHASSIS_PERSONAL_DATA_REVIEWER</atombeat:recipient>
-                                <atombeat:permission>LIST_COLLECTION</atombeat:permission>
-                        </atombeat:ace>
-        
-                        <atombeat:ace>
-                                <atombeat:type>ALLOW</atombeat:type>
-                                <atombeat:recipient type="role">ROLE_CHASSIS_PERSONAL_DATA_REVIEWER</atombeat:recipient>
-                                <atombeat:permission>RETRIEVE_MEMBER</atombeat:permission>
-                        </atombeat:ace>
-        
-                        <!--
-                                Curators can list the collection and retrieve any member.
-                        -->
-        
-                        <atombeat:ace>
-                                <atombeat:type>ALLOW</atombeat:type>
-                                <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
-                                <atombeat:permission>LIST_COLLECTION</atombeat:permission>
-                        </atombeat:ace>
-        
-                        <atombeat:ace>
-                                <atombeat:type>ALLOW</atombeat:type>
-                                <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
-                                <atombeat:permission>RETRIEVE_MEMBER</atombeat:permission>
-                        </atombeat:ace>
-        
-                        <!--
-                                study administrators can list the collection and retrieve any member.
-                        -->
-        
-                        <atombeat:ace>
-                                <atombeat:type>ALLOW</atombeat:type>
-                                <atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
-                                <atombeat:permission>LIST_COLLECTION</atombeat:permission>
-                        </atombeat:ace>
-        
-                        <atombeat:ace>
-                                <atombeat:type>ALLOW</atombeat:type>
-                                <atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
-                                <atombeat:permission>RETRIEVE_MEMBER</atombeat:permission>
-                        </atombeat:ace>
-        
-                </atombeat:acl>
+            <atombeat:groups>
+                    <atombeat:group id="GROUP_ADMINISTRATORS" src="{$study-uri}"/>
+            </atombeat:groups>
+    
+            <atombeat:acl>
+    
+                <!--
+                        Personal data reviewers can list the collection and retrieve any member. Only personal data reviewers can create members.
+                -->
+
+                <atombeat:ace>
+                        <atombeat:type>ALLOW</atombeat:type>
+                        <atombeat:recipient type="role">ROLE_CHASSIS_PERSONAL_DATA_REVIEWER</atombeat:recipient>
+                        <atombeat:permission>CREATE_MEMBER</atombeat:permission>
+                </atombeat:ace>
+
+                <atombeat:ace>
+                        <atombeat:type>ALLOW</atombeat:type>
+                        <atombeat:recipient type="role">ROLE_CHASSIS_PERSONAL_DATA_REVIEWER</atombeat:recipient>
+                        <atombeat:permission>LIST_COLLECTION</atombeat:permission>
+                </atombeat:ace>
+
+                <atombeat:ace>
+                        <atombeat:type>ALLOW</atombeat:type>
+                        <atombeat:recipient type="role">ROLE_CHASSIS_PERSONAL_DATA_REVIEWER</atombeat:recipient>
+                        <atombeat:permission>RETRIEVE_MEMBER</atombeat:permission>
+                </atombeat:ace>
+
+                <!-- N.B. by default, study administrators cannot see personal data reviews -->
+    
+            </atombeat:acl>
         
         </atombeat:security-descriptor>
 
