@@ -16,7 +16,7 @@
 	<h3>Study Info</h3>
 	
      <p>
-         <span class="confirmation-study-info-save-button-container">
+         <span class="confirmation-study-info-save-changes-button-container">
              <xforms:submit submission="sub-put-sq-study-info-entry">
                  <xforms:label>Save Changes</xforms:label>
              </xforms:submit>
@@ -26,7 +26,7 @@
 	<xi:include href="../../../common/includes/study/study-info-input.xml" />
 	
      <p>
-         <span class="confirmation-study-info-save-button-container">
+         <span class="confirmation-study-info-save-changes-button-container">
              <xforms:submit submission="sub-put-sq-study-info-entry">
                  <xforms:label>Save Changes</xforms:label>
              </xforms:submit>

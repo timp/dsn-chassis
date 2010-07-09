@@ -477,7 +477,7 @@
 	   					</li>
    					</xforms:group>
 	    			<xforms:group ref="instance('ins-control')[dashboard-tab-to-show!='permissions']">
-	    				<li>
+	    				<li id="permissions-tab-link-container">
 	    					<a href="study-dashboard?tab=permissions&amp;study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
 		    					<em>Permissions</em>
 	    					</a>
@@ -492,7 +492,7 @@
 	   					</li>
    					</xforms:group>
    					<xforms:group ref="instance('ins-control')[dashboard-tab-to-show!='acknowledgements']">
-	    				<li>
+	    				<li id="acknowledgements-tab-link-container">
 	    					<a href="study-dashboard?tab=acknowledgements&amp;study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
 		    					<em>Acknowledgements</em>
 	    					</a>
@@ -523,7 +523,7 @@
 	   					</li>
 	   				</xforms:group>
    					<xforms:group ref="instance('ins-control')[dashboard-tab-to-show!='publications']">
-	    				<li>
+	    				<li id="publications-tab-link-container">
 	    					<a href="study-dashboard?tab=publications&amp;study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
 		    					<em>Publications</em>
 	    					</a>

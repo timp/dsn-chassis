@@ -101,12 +101,17 @@
 
 		    	<h2>Unfinished Drafts</h2>
 
+				<div id="list-of-drafts-container">
+
 					<ul>
 	    				<xforms:repeat nodeset="xxforms:sort(instance('ins-draft-feed')/atom:entry, atom:published, 'text', 'ascending')">
-	    					<li><a href="register-study-wizard?draft={atom:link[@rel='edit']/@href}"><xforms:output value="atom:title"/> (<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')" />)</a>
+	    					<li class="repeated-element">
+	    						<span class="draft-link-container"><a href="register-study-wizard?draft={atom:link[@rel='edit']/@href}"><xforms:output value="atom:title"/> (<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')" />)</a></span>
 	    					</li>
 	    				</xforms:repeat>
 	    			</ul>
+	    			
+	    		</div>
 		    			
     		</xforms:group>    		
 
@@ -160,7 +165,7 @@
 		    						</xforms:repeat>
 		    						<!-- <xforms:output value="string-join( atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor']//atombeat:group[@id='GROUP_ADMINISTRATORS']/atombeat:member , ' ' )"/> -->
 		    					</td>
-		    					<td><a href="study-dashboard?study={atom:link[@rel='edit']/@href}">View</a></td>
+		    					<td><span class="view-study-link-container"><a href="study-dashboard?study={atom:link[@rel='edit']/@href}">View</a></span></td>
 		    				</tr>
 		    			</xforms:repeat>
 		    		</tbody>

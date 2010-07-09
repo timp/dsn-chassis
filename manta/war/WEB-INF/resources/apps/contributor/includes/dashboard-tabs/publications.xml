@@ -24,10 +24,13 @@
 	</p>
 
     <xforms:group ref="instance('ins-study-entry')/atom:content/study/publications">
-               	
+
+		<div id="editable-list-of-publications-container">
+
 		<table>
             <xforms:repeat nodeset="publication" id="rep-publication">
-                <tr>
+            	
+                <tr class="repeated-element">
                     <td>
                         <xforms:trigger>
                         	<xforms:label><img alt="remove" src="/apps/contributor/common/remove.gif"/></xforms:label>
@@ -39,10 +42,12 @@
                         </xforms:trigger>
                     </td>
                     <td>
+                    	<span class="web-link-textbox-container">
                         <xforms:input ref="web-link">
                             <xforms:label>Web Link:</xforms:label>
                             <xforms:alert>Please provide a web link.</xforms:alert>
                         </xforms:input>
+                    	</span>
                     </td>
                 </tr>
             </xforms:repeat>
@@ -61,6 +66,7 @@
 	                    </xforms:trigger>
 	                </td>
 	                <td>
+	                	<span id="add-publication-link-container">
 	                    <xforms:trigger appearance="minimal">
 	                        <xforms:label>Add a Publication</xforms:label>
 	                        <xforms:insert 
@@ -71,14 +77,18 @@
 	                            position="after" 
 	                            origin="instance('ins-publication-template')"/>
 	                    </xforms:trigger>
+	                	</span>
 	                </td>
             </tr>
             </xforms:group>
-        </table>
+		</table>
+			
+		</div>
 
 	</xforms:group>		
 
      <p>
+     	<span id="publications-save-changes-button-container">
      	<xforms:trigger ref="instance('ins-control')/save-study-trigger">
      		<xforms:label>Save Changes</xforms:label>
      		<xforms:action ev:event="DOMActivate" if="../study-entry-is-valid = 'true'">
@@ -88,6 +98,7 @@
      			<xforms:message>Please complete all required fields.</xforms:message>
      		</xforms:action>
      	</xforms:trigger>
+     	</span>
      </p>
 
 </div>

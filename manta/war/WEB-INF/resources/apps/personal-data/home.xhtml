@@ -130,6 +130,9 @@
 			</xforms:group>
 			
 			<xforms:group ref="instance('ins-submitted-media-feed')[exists($media-to-review)]">
+			
+				<div id="list-of-files-to-review-container">
+			
 				<fr:datatable>
 		    		<thead>
 		    			<tr>
@@ -142,7 +145,8 @@
 		    		</thead>
 		    		<tbody>
 		    			<xforms:repeat nodeset="$media-to-review">
-		    				<tr>
+		    			
+		    				<tr class="repeated-element">
 		    					<td>
 		    						<xforms:output value="manta:id"/>
 		    					</td>
@@ -156,12 +160,15 @@
 		    						<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')"/>
 		    					</td>
 		    					<td>
-		    						<a href="review?media-link={atom:link[@rel='edit']/@href}">Review</a>
+		    						<span class="review-file-link-container"><a href="review?media-link={atom:link[@rel='edit']/@href}">Review</a></span>
 		    					</td>
 		    				</tr>
 		    			</xforms:repeat>
 		    		</tbody>
 				</fr:datatable>
+				
+				</div>
+				
 			</xforms:group>
 		    	
     	<h2>Files With Personal Data</h2>
@@ -190,6 +197,9 @@
 			</xforms:group>
 
 			<xforms:group ref="instance('ins-submitted-media-feed')[exists($media-with-personal-data-not-replaced)]">
+			
+				<div id="list-of-files-with-personal-data-container">
+			
 				<fr:datatable>
 					<thead>
 						<tr>
@@ -204,7 +214,8 @@
 						<xforms:repeat 
 							id="rep-submitted-media"
 							nodeset="$media-with-personal-data-not-replaced">
-							<tr>
+							
+							<tr class="repeated-element">
 								<td>
 									<xforms:output value="manta:id"/>
 								</td>
@@ -222,13 +233,16 @@
 								<td>
 									<!-- action only available to curators -->
 									<xforms:group model="mod-current-user" ref="instance('ins-current-user')[roles/role='ROLE_CHASSIS_CURATOR']">
-										<a href="replace?media-link={xxforms:context('rep-submitted-media')/atom:link[@rel='edit']/@href}">Replace</a><br/>
+										<span class="replace-file-link-container"><a href="replace?media-link={xxforms:context('rep-submitted-media')/atom:link[@rel='edit']/@href}">Replace</a></span><br/>
 									</xforms:group>
 								</td>
 							</tr>
 						</xforms:repeat>
 					</tbody>
 				</fr:datatable>
+				
+				</div>
+				
 			</xforms:group>
 
     	</div>

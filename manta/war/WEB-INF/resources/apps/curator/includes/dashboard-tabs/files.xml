@@ -17,6 +17,8 @@
     
     <xforms:group ref="instance('ins-submitted-media-feed')[exists(atom:entry)]">
 
+		<div id="list-of-submitted-files-container">
+
     	<fr:datatable paginated="false">
     		<thead>
     			<tr>
@@ -31,7 +33,7 @@
     		<tbody>
     			<!-- will not try to use xxforms:sort on nodeset because it causes problems with datatable sorting by file type column -->
     			<xforms:repeat id="rep-submitted-media" nodeset="atom:entry">
-    				<tr>
+    				<tr class="repeated-element">
     					<td>
     						<xforms:output ref="manta:id"/>
     					</td>
@@ -55,7 +57,7 @@
     					</td>
     					<td>
     						<xforms:group ref=".[contains( ./atom:link[@rel='edit-media']/@atombeat:allow , 'GET' )]">
-    							<a href="{atom:content/@src}">Download</a><br/>
+    							<span class="download-file-link-container"><a href="{atom:content/@src}">Download</a></span><br/>
     						</xforms:group>
     						<a href="file-details?media-link={atom:link[@rel='edit']/@href}">Details</a>
     					</td>
@@ -63,7 +65,9 @@
     			</xforms:repeat>
     		</tbody>
     	</fr:datatable>
-	    	
+	    
+		</div>
+	    
 	</xforms:group>
 
 	<h2>Curated Files</h2>
@@ -73,6 +77,8 @@
 	</xforms:group>
 	
 	<xforms:group ref="instance('ins-curated-media-feed')[exists(atom:entry)]">
+		
+		<div id="list-of-curated-files-container">
 		
 		<fr:datatable paginated="false">
 			<thead>
@@ -88,7 +94,7 @@
 			<tbody>
 				<!-- will not try to use xxforms:sort on nodeset because it causes problems with datatable sorting by file type column -->
 				<xforms:repeat id="rep-curated-media" nodeset="atom:entry">
-					<tr>
+					<tr class="repeated-element">
 						<td>
 							<xforms:output ref="manta:id"/>
 						</td>
@@ -112,7 +118,7 @@
 						</td>
 						<td>
 							<xforms:group ref=".[contains( ./atom:link[@rel='edit-media']/@atombeat:allow , 'GET' )]">
-								<a href="{atom:content/@src}">Download</a><br/>
+								<span class="download-file-link-container"><a href="{atom:content/@src}">Download</a></span><br/>
 							</xforms:group>
 							<a href="file-details?media-link={atom:link[@rel='edit']/@href}">Details</a>
 						</td>
@@ -120,6 +126,8 @@
 				</xforms:repeat>
 			</tbody>
 		</fr:datatable>
+			
+		</div>
 		
 	</xforms:group>
 	

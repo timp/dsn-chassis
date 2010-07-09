@@ -1,3 +1,4 @@
+<?oxygen NVDLSchema="../../../../../../../oxygen/samples/nvdl/xhtml-xforms-11-orbeon.nvdl"?>
 <div 
 	xmlns="http://www.w3.org/1999/xhtml" 
 	xmlns:xforms="http://www.w3.org/2002/xforms" 
@@ -11,7 +12,7 @@
 	
 	<xforms:group ref="instance('ins-draft-entry')//study-permissions-entry-container//atombeat:security-descriptor/atombeat:groups/atombeat:group[@id='GROUP_ADMINISTRATORS']">
     
-		<span id="editable-list-of-administrators-container">
+		<div id="editable-list-of-administrators-container">
     
 		<table>
 
@@ -72,7 +73,7 @@
 			
 		</table>
 
-	</span>
+	</div>
 	
 	</xforms:group>
 
@@ -123,6 +124,7 @@
 			</xforms:trigger>
 		</span>
 
+		<span id="skip-to-end-link-container">
 		<xforms:trigger ref="instance('ins-control')/save-draft-trigger" appearance="minimal">
 			<xforms:label>Skip To End &gt;&gt;</xforms:label>
 			<xforms:action ev:event="DOMActivate" if="../draft-entry-is-valid = 'true'">
@@ -133,6 +135,7 @@
 				<xforms:message>Please complete all required fields.</xforms:message>
 			</xforms:action>
 		</xforms:trigger>
+		</span>
 		
 	</p>
 	

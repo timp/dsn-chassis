@@ -227,6 +227,7 @@
     			<xforms:group ref="instance('ins-uploads')/upload">
     				
     				<!-- Upload field -->
+    				<span id="file-selector-container">
     				<xforms:upload ref="." xxforms:size="60">
     					<xforms:label>Upload file: </xforms:label>
     					<xforms:filename ref="@filename"/>
@@ -234,6 +235,7 @@
     					<xxforms:size ref="@size"/>
     					<xforms:send ev:event="xforms-select" submission="sub-background-upload"/>
     				</xforms:upload>
+    				</span>
     				
     				<!-- Download link -->
     				<!--
@@ -257,9 +259,11 @@
 					</xforms:action>
 				</xforms:trigger>    		
     		
+    			<span id="confirm-button-container">
     			<xforms:submit submission="sub-post-uploads">
     				<xforms:label>Confirm</xforms:label>
     			</xforms:submit>
+    			</span>
     			
     		</p>
 
