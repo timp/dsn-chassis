@@ -8,10 +8,12 @@
 
 	    <xforms:group ref="instance('ins-study-entry')/atom:content/study/acknowledgements">
 	        
+	        <div id="editable-list-of-acknowledgements-container">
+	        
 	        <table>
 
 	            <xforms:repeat nodeset="person" id="rep-person">
-	                <tr>
+	                <tr class="repeated-element">
 	                	<td class="acknowledgement-deletion-cell">
 	                        <xforms:trigger>
 	                        	<xforms:label><img alt="remove" src="/apps/contributor/common/remove.gif"/></xforms:label>
@@ -23,26 +25,36 @@
 	                        </xforms:trigger>
 	                    </td>
 	                	<td class="acknowledgement-form-cell">
+	                		<span class="first-name-textbox-container">
 	                        <xforms:input ref="first-name">
 	                            <xforms:label>First Name:</xforms:label>
 	                        </xforms:input>
+	                		</span>
 	                       <br/>
+	                		<span class="middle-name-textbox-container">
 	                        <xforms:input ref="middle-name">
 	                            <xforms:label>Middle Name:</xforms:label>
 	                        </xforms:input>
+	                		</span>
 	                       <br/>
+	                		<span class="family-name-textbox-container">
 	                        <xforms:input ref="family-name">
 	                            <xforms:label>Family Name:</xforms:label>
 	                        </xforms:input>
+	                		</span>
 	                        <br/>
+	                		<span class="email-address-textbox-container">
 	                        <xforms:input ref="email-address">
 	                            <xforms:label>Email address:</xforms:label>
 	                        	<xforms:alert>Please provide a valid email address.</xforms:alert>
 	                        </xforms:input>
+	                		</span>
 	                        <br/>
+	                		<span class="institution-textbox-container">
 	                        <xforms:input ref="institution">
 	                            <xforms:label>Institution:</xforms:label>
 	                        </xforms:input>
+	                		</span>
 	                        
 	                		<div class="acknowledgement-movement-triggers">
 	                        
@@ -83,6 +95,7 @@
 	                    </xforms:trigger>
 	                </td>
 	                <td>
+	                	<span id="add-acknowledgement-link-container">
 	                    <xforms:trigger appearance="minimal">
 	                        <xforms:label>Add an Acknowledgement</xforms:label>
 	                        <xforms:insert 
@@ -93,14 +106,19 @@
 	                            position="after" 
 	                            origin="instance('ins-person-template')"/>
 	                    </xforms:trigger>
+	                	</span>
 	                </td>
 	            </tr>
 	            
 	        </table>
+	        	
+	        	
+	        </div>
 	        
 	    </xforms:group>
 
      <p>
+     	<span id="acknowledgements-save-changes-button-container">
      	<xforms:trigger ref="instance('ins-control')/save-study-trigger">
      		<xforms:label>Save Changes</xforms:label>
      		<xforms:action ev:event="DOMActivate" if="../study-entry-is-valid = 'true'">
@@ -110,6 +128,7 @@
      			<xforms:message>Please complete all required fields.</xforms:message>
      		</xforms:action>
      	</xforms:trigger>
+     	</span>
      </p>
 
 </div>

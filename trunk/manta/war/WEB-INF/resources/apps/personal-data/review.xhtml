@@ -205,6 +205,7 @@
 	    	</p>
 	    	
 	    	<p>
+	    		<span id="review-outcome-menu-container">
 	    		<xforms:select1 ref="instance('ins-review-entry')//outcome">
 	    			<xforms:label>Review outcome: </xforms:label>
 	    			<xforms:item>
@@ -220,14 +221,17 @@
 	    				<xforms:value>pass</xforms:value>
 	    			</xforms:item>
 	    		</xforms:select1>
+	    		</span>
 	    	</p>
 	    	
 	    	<p>
+	    		<span id="comments-textarea-container">
 	    		<xforms:textarea 
 	    			ref="instance('ins-review-entry')/atom:summary"
 	    			appearance="xxforms:autosize">
 	    			<xforms:label>Comments: </xforms:label>
 	    		</xforms:textarea>
+	    		</span>
 	    	</p>
 	    	
 	    	<p>
@@ -239,9 +243,11 @@
 					</xforms:action>
 				</xforms:trigger>
 	    	
+	    		<span id="submit-review-button-container">
 	    		<xforms:submit submission="sub-post-review">
 	    			<xforms:label>Submit Review</xforms:label>
 	    		</xforms:submit>
+	    		</span>
 	    	</p>
 
     	</xforms:group>

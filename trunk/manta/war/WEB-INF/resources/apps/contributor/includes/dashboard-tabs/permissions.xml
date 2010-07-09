@@ -8,9 +8,12 @@
     <h2>Administrators</h2>
     
     <xforms:group ref="instance('ins-permissions-entry')//atombeat:security-descriptor/atombeat:groups/atombeat:group[@id='GROUP_ADMINISTRATORS']">
+    	
+    	<div id="editable-list-of-administrators-container">
+    	
 		<table>
 			<xforms:repeat nodeset="atombeat:member" id="rep-administrator">
-				<tr>
+				<tr class="repeated-element">
 					<td>
                         <xforms:trigger ref=".">
                         	<xforms:label><img alt="remove" src="/apps/contributor/common/remove.gif"/></xforms:label>
@@ -22,10 +25,12 @@
                         </xforms:trigger>
 					</td>
 					<td>
+						<span class="email-address-textbox-container">
 						<xforms:input ref=".">
 							<xforms:label>Email address:</xforms:label>
 							<xforms:alert>Please provide a valid email address.</xforms:alert>
 						</xforms:input>
+						</span>
 					</td>
 				</tr>
 			</xforms:repeat>
@@ -43,6 +48,7 @@
                     </xforms:trigger>
 				</td>
 				<td>
+					<span id="add-administrator-link-container">
                     <xforms:trigger appearance="minimal">
                         <xforms:label>Add an Administrator</xforms:label>
                         <xforms:insert 
@@ -53,13 +59,17 @@
 	                      	position="after" 
 	                      	origin="instance('ins-user-template')"/>
                     </xforms:trigger>
+					</span>
 				</td>
 			</tr>
 		</table>
-		
+	
+    	</div>
+
 	</xforms:group>
 	
      <p>
+     	<span id="permissions-save-changes-button-container">
      	<xforms:trigger ref="instance('ins-control')/save-permissions-trigger">
      		<xforms:label>Save Changes</xforms:label>
      		<xforms:action ev:event="DOMActivate" if="../permissions-entry-is-valid = 'true'">
@@ -69,6 +79,7 @@
      			<xforms:message>Please complete all required fields.</xforms:message>
      		</xforms:action>
      	</xforms:trigger>
+     	</span>
      </p>
 	
 </div>

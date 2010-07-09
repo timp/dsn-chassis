@@ -75,6 +75,8 @@
     	
     	<xforms:group ref="instance('ins-study-feed')[exists(atom:entry)]">
 
+			<div id="list-of-studies-container">
+
 	    	<fr:datatable>
 	    		<thead>
 	    			<tr>
@@ -88,7 +90,8 @@
 	    		</thead>
 	    		<tbody>
 	    			<xforms:repeat nodeset="xxforms:sort(instance('ins-study-feed')/atom:entry, atom:published, 'text', 'ascending')">
-	    				<tr>
+	    			
+	    				<tr class="repeated-element">
 	    					<td>
 	    						<a href="study-dashboard?study={atom:link[@rel='edit']/@href}"><xforms:output value="manta:id"/></a>
 	    					</td>
@@ -111,13 +114,15 @@
 	    						</xforms:repeat>
 	    						<!-- <xforms:output value="string-join( atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor']//atombeat:group[@id='GROUP_ADMINISTRATORS']/atombeat:member , ' ' )"/> -->
 	    					</td>	    					<td>
-	    						<a href="study-dashboard?study={atom:link[@rel='edit']/@href}">View</a> <br/>
+	    						<span class="view-study-link-container"><a href="study-dashboard?study={atom:link[@rel='edit']/@href}">View</a></span> <br/>
 	    						<a href="upload-curated-files?study={atom:link[@rel='edit']/@href}">Upload</a>
 	    					</td>
 	    				</tr>
 	    			</xforms:repeat>
 	    		</tbody>
 	    	</fr:datatable>
+	    	
+	    	</div>
 	    	
     	</xforms:group>
     	

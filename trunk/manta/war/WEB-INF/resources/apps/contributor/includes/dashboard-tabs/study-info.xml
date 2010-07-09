@@ -8,8 +8,9 @@
 	<xforms:group ref="instance('ins-control')/copy-answers-control">
 	<p>
 
+		<span id="studies-to-copy-answers-from-menu-container">
 		<xforms:select1 ref="instance('ins-control')/href-to-copy-study-info-from">
-			<xforms:label>Copy info from another study?</xforms:label>
+			<xforms:label>Copy answers from another study?</xforms:label>
 			
 			<xforms:item>
 				<xforms:label>Select...</xforms:label>
@@ -21,20 +22,23 @@
            		<xforms:value ref="atom:link[@rel='http://www.cggh.org/2010/chassis/terms/studyInfo']/@href"/>
            	</xforms:itemset>
 		</xforms:select1>
+		</span>
 
+		<span id="copy-answers-button-container">
 		<xforms:trigger ref="instance('ins-control')/copy-answers-trigger">
 			<xforms:label>Copy Answers</xforms:label>
 			<xforms:action ev:event="DOMActivate">
 				<xforms:send submission="sub-copy-answers" />
 			</xforms:action>
 		</xforms:trigger>
+		</span>
 		
 	</p>
 	</xforms:group>
 
 
      <p>
-     	<span class="study-info-save-button-container">
+     	<span class="study-info-save-changes-button-container">
          <xforms:submit submission="sub-put-sq-study-info-entry">
              <xforms:label>Save Changes</xforms:label>
          </xforms:submit>
@@ -44,7 +48,7 @@
 	<xi:include href="../../../common/includes/study/study-info-input.xml" />
 	
      <p>
-     	<span class="study-info-save-button-container">
+     	<span class="study-info-save-changes-button-container">
          <xforms:submit submission="sub-put-sq-study-info-entry">
              <xforms:label>Save Changes</xforms:label>
          </xforms:submit>

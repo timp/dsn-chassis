@@ -58,15 +58,17 @@
 			<p>Please select the WWARN modules for which this study has data.</p>
 
 			<p>
+				<span id="wwarn-modules-menu-container">
 				<xforms:select ref="modules" appearance="full">
 					<xforms:label> WWARN modules </xforms:label>
 					<xforms:itemset model="mod-study-info"
-						nodeset="instance('ins-module-items')/module">
+						nodeset="instance('ins-module-items')/module" class="repeated-element">
 						<xforms:label ref="label" />
 						<xforms:value ref="value" />
 					</xforms:itemset>
 					<xforms:alert>Please select at least one module</xforms:alert>
 				</xforms:select>
+				</span>
 			</p>
 
 			<h3>Study Dates</h3>
@@ -640,6 +642,9 @@
 
 
 			<xforms:group ref="clinical">
+				
+				<div id="clinical-questions-container">
+				
 				<h2>Clinical Questions</h2>
 
 				<h3>Treatments</h3>
@@ -1699,9 +1704,13 @@
 					</xforms:group>
 				</xforms:group>
 
+			</div>
+
 			</xforms:group>
 
 			<xforms:group ref="molecular">
+
+				<div id="molecular-questions-container">
 
 				<h2>Molecular Questions</h2>
 				<xforms:group ref="criteria">
@@ -2135,6 +2144,7 @@
 					<br style="clear:both;" />
 				</xforms:group>
 
+				</div>
 
 			</xforms:group>
 
@@ -2142,6 +2152,8 @@
 
 
 			<xforms:group ref="invitro">
+
+				<div id="in-vitro-questions-container">
 
 				<h2>
 					<i>in vitro</i>
@@ -2769,10 +2781,13 @@
 			|
 			+-->
 
+			</div>
 
 			</xforms:group>
 
 			<xforms:group ref="pharmacology">
+				
+				<div id="pharmacology-questions-container">
 
 				<h2>Pharmacology Questions</h2>
 
@@ -3091,6 +3106,8 @@
 						</tr>
 					</table>
 				</xforms:group>
+
+				</div>
 
 			</xforms:group>
 

@@ -43,10 +43,12 @@
                         </xforms:trigger>
                     </td>
                     <td>
+                    	<span class="web-link-textbox-container">
                         <xforms:input ref="web-link">
                             <xforms:label>Web Link:</xforms:label>
                             <xforms:alert>Please provide a valid web link.</xforms:alert>
                         </xforms:input>
+                    	</span>
                     </td>
                 </tr>
             </xforms:repeat>

@@ -9,7 +9,7 @@
 	<p>
 
 		<xforms:select1 ref="instance('ins-control')/href-to-copy-study-info-from">
-			<xforms:label>Copy info from another study?</xforms:label>
+			<xforms:label>Copy answers from another study?</xforms:label>
 			<xforms:item>
 				<xforms:label>Select...</xforms:label>
 			    <xforms:value></xforms:value>
@@ -32,17 +32,21 @@
 
 
      <p>
+     	<span class="study-info-save-changes-button-container">
          <xforms:submit submission="sub-put-sq-study-info-entry">
              <xforms:label>Save Changes</xforms:label>
          </xforms:submit>
+     	</span>
      </p>
 	
 	<xi:include href="../../../common/includes/study/study-info-input.xml" />
 	
      <p>
+     	<span class="study-info-save-changes-button-container">
          <xforms:submit submission="sub-put-sq-study-info-entry">
              <xforms:label>Save Changes</xforms:label>
          </xforms:submit>
+     	</span>
      </p>
 
 
