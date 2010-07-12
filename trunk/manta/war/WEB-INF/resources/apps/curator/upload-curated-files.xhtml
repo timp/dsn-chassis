@@ -210,7 +210,7 @@
         	
         	<xforms:submission
         		id="sub-get-dashboard"
-        		resource="study-dashboard?tab=files&amp;study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}"
+        		resource="../study/dashboard?tab=files&amp;study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}"
         		method="get"
         		replace="all"
         		serialization="none">
@@ -233,7 +233,7 @@
     		</h1>
     		
     		<p>
-    			<a href="study-dashboard?tab=files&amp;study={xxforms:get-request-parameter('study')}">&lt;&lt; Study Dashboard</a>
+    			<a href="../study/dashboard?tab=files&amp;study={xxforms:get-request-parameter('study')}">&lt;&lt; Study Dashboard</a>
     		</p>
 
     		<h2>(1) Upload</h2>
