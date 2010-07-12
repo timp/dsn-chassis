@@ -6,6 +6,9 @@
 
 	<h2>Help</h2>
 	
-	<p>TODO: Help text for the publications pane.</p>
+	<!-- Begin: Box text -->
+	<p>Planning a future publication based on this data? Is your article in press? Don’t forget to add the PubMedID, once your article is published. Once the study is registered, you can add publications by logging into your account, navigating to this study and clicking the Publications tab.
+	</p>
+	<!-- End: Box text -->
 
 </div>

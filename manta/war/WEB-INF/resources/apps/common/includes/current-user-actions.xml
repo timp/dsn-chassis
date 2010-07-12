@@ -13,7 +13,7 @@
   	
   	
 	<xforms:output model="mod-current-user" ref="instance('ins-current-user')/name"/> - 
-    <span id="logout-link-container"><a href="/j_spring_security_logout">log out</a></span>
+    <span id="logout-link-container"><a href="/j_spring_security_logout">Log out</a></span>
   	
   		
 	

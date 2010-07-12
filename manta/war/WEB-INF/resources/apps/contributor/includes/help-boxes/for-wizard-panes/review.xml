@@ -6,6 +6,9 @@
 
 	<h2>Help</h2>
 	
-	<p>TODO: Help text for the review pane.</p>
+	<!-- Begin: Box text -->
+	<p>Please review the information you’ve provided for this study. Once you click Confirm, the study will be created in the WWARN Data Repository. After you’ve created a study, you can edit this information by logging in and navigating to this particularly study. 
+	</p>
+	<!-- End: Box text -->
 
 </div>
