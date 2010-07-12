@@ -3,6 +3,7 @@ package org.cggh.chassis.manta.protocol;
 import static org.cggh.chassis.manta.protocol.ConstantsForTests.*;
 
 import org.apache.abdera.model.Entry;
+import org.apache.abdera.model.Link;
 import org.apache.abdera.protocol.client.ClientResponse;
 
 
@@ -153,6 +154,29 @@ public class TestSubmittedMediaCollectionsSecurity extends AtomSecurityTestCase 
 
 		return location;
 
+	}
+	
+	
+	
+	public void testAllowPersonalDataReviewerRetrieveMediaAcl() {
+
+
+		String mediaLinkLocation = this.setupMediaResource();
+		
+		// retrieve media link as personal data reviewer
+		ClientResponse r = ac.get(mediaLinkLocation, authn(USER_PETE));
+		assertEquals(200, r.getStatus());
+		Entry mediaLinkEntry = getEntry(r);
+		Link mediaSecurityLink = mediaLinkEntry.getLink(REL_ATOMBEAT_MEDIA_SECURITY_DESCRIPTOR);
+		assertNotNull(mediaSecurityLink);
+		String mediaResourceSecurityLocation = mediaSecurityLink.getHref().toString();
+		r.release();
+		
+		// now try to retrieve the media security descriptor
+		r = ac.get(mediaResourceSecurityLocation, authn(USER_PETE));
+		assertEquals(200, r.getStatus());
+		r.release();
+		
 	}
 
 }

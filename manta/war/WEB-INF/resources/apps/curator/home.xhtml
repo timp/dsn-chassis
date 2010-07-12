@@ -93,10 +93,10 @@
 	    			
 	    				<tr class="repeated-element">
 	    					<td>
-	    						<a href="study-dashboard?study={atom:link[@rel='edit']/@href}"><xforms:output value="manta:id"/></a>
+	    						<a href="../study/dashboard?study={atom:link[@rel='edit']/@href}"><xforms:output value="manta:id"/></a>
 	    					</td>
 	    					<td>
-	    						<a href="study-dashboard?study={atom:link[@rel='edit']/@href}"><xforms:output value="atom:title"/></a>
+	    						<a href="../study/dashboard?study={atom:link[@rel='edit']/@href}"><xforms:output value="atom:title"/></a>
 	    					</td>
 	    					<td>
 	    						<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')"/>
@@ -114,7 +114,7 @@
 	    						</xforms:repeat>
 	    						<!-- <xforms:output value="string-join( atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor']//atombeat:group[@id='GROUP_ADMINISTRATORS']/atombeat:member , ' ' )"/> -->
 	    					</td>	    					<td>
-	    						<span class="view-study-link-container"><a href="study-dashboard?study={atom:link[@rel='edit']/@href}">View</a></span> <br/>
+	    						<span class="view-study-link-container"><a href="../study/dashboard?study={atom:link[@rel='edit']/@href}">View</a></span> <br/>
 	    						<a href="upload-curated-files?study={atom:link[@rel='edit']/@href}">Upload</a>
 	    					</td>
 	    				</tr>

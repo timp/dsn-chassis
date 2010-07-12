@@ -23,7 +23,6 @@
   
   <page path-info="/contributor/terms" view="includes/terms.xhtml"/>
   
-  <page path-info="/contributor/study-dashboard" view="study-dashboard.xhtml"/>
   <page path-info="/contributor/file-details" view="file-details.xhtml"/>
   
   <epilogue url="oxf:/config/epilogue.xpl"/>
