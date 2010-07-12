@@ -6,6 +6,13 @@
 
 	<h2>Help</h2>
 	
-	<p>TODO: Help text for the study-terms pane.</p>
+	<!-- Begin: Box text -->
+	<p>Enter a title for your study.</p>
+	
+	<p>Your study will also be given a unique ID.</p>
+	
+	<p>The "Terms of Submission" is a simple agreement between you – the data contributor – and WWARN. In this short document, we ask you to confirm a few facts about the data and how it was collected. This is to ensure that WWARN meets the ethical and legal responsibilities we assume when accepting data. In return, WWARN sets out the measures we will take to secure contributed data and assure that you remain in control of the use of your data.
+	</p>
+	<!-- End: Box text -->
 
 </div>

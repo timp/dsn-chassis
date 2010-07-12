@@ -27,7 +27,7 @@
     
     <head>
     
-        <title>Contributor Home</title>
+        <title>Data Contribution - Home</title>
 
         
         <xforms:model>
@@ -90,12 +90,53 @@
 		
 		<div id="content" class="home">
     
-	    	<h1>Contributor Home</h1>
+	    	<h1>Data Contribution - Home</h1>
+
+			<!-- Begin: Help Text -->
+			<div class="help">
+
+				<p>Have questions about contributing data? Read through our <a href="TODO: FAQ URL">Frequently Asked Questions</a> or contact us directly. We'd also be happy to help you set up a study. The appropriate contacts are: 
+				</p>
+				<p>Clinical:		email address
+				</p>
+				<p>Pharmacology:	email address
+				</p>
+				<p>In vitro: 		email address
+				</p>
+				<p>Molecular: 	email address
+				</p>
+				<p>Antimalarial Quality: email address
+				</p>
+			
+			</div>
+			<!-- End: Help Text -->
+
+			<!-- Begin: WWARN Data Repository Intro Text -->
+			<p>Welcome to the WWARN Data Repository.
+			</p>
+			 
+			<p>The open sharing of scientific data is recognized as a major contribution to global public health. Sharing allows data to be combined across countries and time to uncover regional and global trends, to foster scientific innovation and to improve health policy. We've carefully crafted a secure online data repository to provide researchers like you with the opportunity to contribute to an early warning system capable of identifying and preventing the spread of antimalarial resistance.
+			</p>   
+
+			<p>The first step is to register a study.
+			</p>			
+			<!-- End: WWARN Data Repository Intro Text -->
 
 	    	<ul>
 	    		<li><span id="register-study-link-container"><a href="register-study-wizard">Register Study</a></span></li>
 	    	</ul>
 
+			
+			<xforms:group ref="instance('ins-draft-feed')[empty(atom:entry)]">
+			
+				<!-- Begin: No Unfinished Drafts Text -->
+		    	<h2>Unfinished Drafts</h2>
+			
+				<p>We recognize that sometimes you may be interrupted while registering a study. Maybe your Internet connection cuts out or you get called into a meeting. Any number of scenarios could pull you away during the registration process. Once you move ahead a step, information from the previous step will be automatically saved. You'll also see a "Save as draft" button at the bottom of each step. If you click this button it will save the information submitted to date. If you complete the registration, your study will move to "My studies". If for any reason you're interrupted, save information will be retained and made available as an unfinished draft. 
+				</p>
+				<!-- End: No Unfinished Drafts Text -->
+			
+    		</xforms:group> 
 
     		<xforms:group ref="instance('ins-draft-feed')[count(atom:entry)>0]">
 
@@ -120,7 +161,14 @@
 	    	
     		<xforms:group ref="instance('ins-study-feed')[empty(atom:entry)]">
 
-	    		<p>You have not registered any studies.</p>
+	    		<!-- <p>You have not registered any studies.</p>  -->
+	    		
+	    		<!-- Begin Text -->
+	    		
+	    		<p>Once you register a study, this homepage will change. All the studies you create will be listed here. You'll be able to navigate to each study to upload files or edit the information provided when you registered the study. 
+	    		</p>
+	    		
+	    		<!-- End Text -->
 	    	
     		</xforms:group>
 	    	
@@ -131,7 +179,7 @@
 		    	<fr:datatable>
 		    		<thead>
 		    			<tr>
-		    				<th fr:sortable="true" fr:resizeable="true">Code</th>
+		    				<th fr:sortable="true" fr:resizeable="true">Unique ID</th>
 		    				<th fr:sortable="true" fr:resizeable="true">Title</th>
 		    				<!-- TODO: Admins. -->
 		    				<th fr:sortable="true" fr:resizeable="true">Created</th>
@@ -177,9 +225,6 @@
     		
     	</div>
 
-		<!-- TODO: Remove for production -->
-		<!-- <fr:xforms-inspector xmlns:fr="http://orbeon.org/oxf/xml/form-runner"/>  -->
-    	
     </body>
 </html>
 

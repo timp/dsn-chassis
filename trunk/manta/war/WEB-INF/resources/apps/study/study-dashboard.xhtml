@@ -141,7 +141,7 @@
 					
 					<!-- The success of this get-submitted-media submission will trigger the copying of the media-feed to the SSQ. -->
 					<xforms:send submission="sub-get-submitted-media-feed"/>
-					<xforms:send submission="sub-get-curated-media-feed" if="instance('ins-control')/curator-controls"/>
+					<xforms:send submission="sub-get-curated-media-feed" if="xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CURATOR'"/>
 					
 					<!-- Get the study info, which will use a link from the retrieved study entry. -->
 					<xforms:send submission="sub-get-study-info-entry"/>
@@ -573,7 +573,7 @@
    					<!-- For contributor -->
    					<xforms:group ref="instance('ins-control')/contributor-controls">
 				    	<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='summary']">
-				    			<xi:include href="includes/help-boxes/for-dashboard-tabs/for-contributor/summary.xml"/>
+				    			<!-- <xi:include href="includes/help-boxes/for-dashboard-tabs/for-contributor/summary.xml"/>  -->
 				    	</xforms:group>
 				    	<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='permissions']">
 				    			<xi:include href="includes/help-boxes/for-dashboard-tabs/for-contributor/permissions.xml"/>
@@ -595,7 +595,7 @@
 					<!-- For curator -->
    					<xforms:group ref="instance('ins-control')/curator-controls">
 				    	<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='summary']">
-				    			<xi:include href="includes/help-boxes/for-dashboard-tabs/for-curator/summary.xml"/>
+				    			<!-- <xi:include href="includes/help-boxes/for-dashboard-tabs/for-curator/summary.xml"/>  -->
 				    	</xforms:group>
 				    	<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='permissions']">
 				    			<xi:include href="includes/help-boxes/for-dashboard-tabs/for-curator/permissions.xml"/>
@@ -677,9 +677,6 @@
     		
     	</div>
 
-		<!-- TODO: Remove for production -->
-		<fr:xforms-inspector xmlns:fr="http://orbeon.org/oxf/xml/form-runner"/>
-    		
     </body>
 </html>
 
