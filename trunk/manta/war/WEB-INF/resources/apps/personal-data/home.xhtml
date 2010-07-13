@@ -26,7 +26,7 @@
     
     <head>
     
-        <title>Personal Data - Home</title>
+        <title>Personal Data Review - Home</title>
 
         
         <xforms:model id="mod-main">
@@ -112,8 +112,8 @@
     	
     	<h1>Personal Data - Home</h1>
 
-    	<h2>Files to Review</h2>
-			
+    	<h2>Files to review</h2>
+    	
 			<xxforms:variable name="media-to-review" select="
 				for $entry in instance('ins-submitted-media-feed')/atom:entry return
 					if ( 
@@ -130,6 +130,9 @@
 			</xforms:group>
 			
 			<xforms:group ref="instance('ins-submitted-media-feed')[exists($media-to-review)]">
+
+    			<p>The following files have not been checked for personal data. Once a file is marked as not containing personal data, it will proceed to curation and be made available for download to the original contributor(s).
+    			</p>
 			
 				<div id="list-of-files-to-review-container">
 			
@@ -171,7 +174,7 @@
 				
 			</xforms:group>
 		    	
-    	<h2>Files With Personal Data</h2>
+    	<h2>Files with personal data</h2>
 			
 		<xxforms:variable
 			name="media-with-personal-data-not-replaced"
@@ -197,6 +200,9 @@
 			</xforms:group>
 
 			<xforms:group ref="instance('ins-submitted-media-feed')[exists($media-with-personal-data-not-replaced)]">
+			
+				<p>The following files contain personal data and need to be replaced with anonymized files before curation can begin.
+				</p>
 			
 				<div id="list-of-files-with-personal-data-container">
 			
