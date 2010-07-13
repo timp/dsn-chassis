@@ -12,7 +12,7 @@
 	        
 	        <table>
 
-	            <xforms:repeat nodeset="person" id="rep-person-contributor">
+	            <xforms:repeat nodeset="person" id="rep-person-administrator">
 	                <tr class="repeated-element">
 	                	<td class="acknowledgement-deletion-cell">
 	                        <xforms:trigger>
@@ -21,7 +21,7 @@
 	                                ev:event="DOMActivate" 
 	                                context="." 
 	                                nodeset="." 
-	                                at="index('rep-person-contributor')"/>
+	                                at="index('rep-person-administrator')"/>
 	                        </xforms:trigger>
 	                    </td>
 	                	<td class="acknowledgement-form-cell">

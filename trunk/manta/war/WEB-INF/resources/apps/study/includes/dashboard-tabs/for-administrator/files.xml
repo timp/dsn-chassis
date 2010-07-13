@@ -32,7 +32,7 @@
     		</thead>
     		<tbody>
     			<!-- will not try to use xxforms:sort on nodeset because it causes problems with datatable sorting by file type column -->
-    			<xforms:repeat id="rep-submitted-media-curator" nodeset="atom:entry">
+    			<xforms:repeat id="rep-submitted-media-administrator" nodeset="atom:entry">
     				<tr class="repeated-element">
     					<td>
     						<xforms:output ref="manta:id"/>
@@ -59,7 +59,7 @@
     						<xforms:group ref=".[contains( ./atom:link[@rel='edit-media']/@atombeat:allow , 'GET' )]">
     							<span class="download-file-link-container"><a href="{atom:content/@src}">Download</a></span><br/>
     						</xforms:group>
-    						<a href="../curator/file-details?media-link={atom:link[@rel='edit']/@href}">Details</a>
+    						<a href="file-details?media-link={atom:link[@rel='edit']/@href}">Details</a>
     					</td>
     				</tr>
     			</xforms:repeat>
@@ -93,7 +93,7 @@
 			</thead>
 			<tbody>
 				<!-- will not try to use xxforms:sort on nodeset because it causes problems with datatable sorting by file type column -->
-				<xforms:repeat id="rep-curated-media-curator" nodeset="atom:entry">
+				<xforms:repeat id="rep-curated-media-administrator" nodeset="atom:entry">
 					<tr class="repeated-element">
 						<td>
 							<xforms:output ref="manta:id"/>
@@ -120,7 +120,7 @@
 							<xforms:group ref=".[contains( ./atom:link[@rel='edit-media']/@atombeat:allow , 'GET' )]">
 								<span class="download-file-link-container"><a href="{atom:content/@src}">Download</a></span><br/>
 							</xforms:group>
-							<a href="../curator/file-details?media-link={atom:link[@rel='edit']/@href}">Details</a>
+							<a href="file-details?media-link={atom:link[@rel='edit']/@href}">Details</a>
 						</td>
 					</tr>
 				</xforms:repeat>

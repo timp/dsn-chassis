@@ -12,16 +12,16 @@
     	<div id="editable-list-of-administrators-container">
     	
 		<table>
-			<xforms:repeat nodeset="atombeat:member" id="rep-administrator-contributor">
+			<xforms:repeat nodeset="atombeat:member" id="rep-administrator-administrator">
 				<tr class="repeated-element">
 					<td>
                         <xforms:trigger ref=".">
-                        	<xforms:label><img alt="remove" src="/apps/contributor/common/remove.gif"/></xforms:label>
+                        	<xforms:label><img alt="remove" src="/apps/study/common/remove.gif"/></xforms:label>
                         	<xforms:delete 
                             	ev:event="DOMActivate" 
 	                        	context="." 
 	                        	nodeset="." 
-                            	at="index('rep-administrator-contributor')"/>
+                            	at="index('rep-administrator-administrator')"/>
                         </xforms:trigger>
 					</td>
 					<td>
@@ -37,7 +37,7 @@
 			<tr>
 				<td>
                     <xforms:trigger>
-                        <xforms:label><img alt="add" src="/apps/contributor/common/add.gif"/></xforms:label>
+                        <xforms:label><img alt="add" src="/apps/study/common/add.gif"/></xforms:label>
                         <xforms:insert 
 	                      	ev:event="DOMActivate" 
 	                      	context="." 
