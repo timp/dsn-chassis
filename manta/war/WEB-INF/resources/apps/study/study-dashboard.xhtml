@@ -32,6 +32,7 @@
         <link rel="stylesheet" type="text/css" href="/ops/yui/tabview/assets/skins/sam/tabview.css"></link>
         <style type="text/css"></style>
         
+
         <xforms:model id="mod-study-dashboard">
         
         	<!-- non-persistent model for application state -->
@@ -93,15 +94,25 @@
 			<!-- TODO: ensure a file is selected before Upload is triggered -->
         	<!--  <xforms:bind nodeset="instance('ins-upload')/media" required="true()" />  -->
 
+
+		    <xforms:instance id="ins-current-user-dashboard">
+		        <user xmlns="">
+		            <roles/>
+		        </user>
+		    </xforms:instance>
+		    
+		    <xforms:action 
+		        ev:event="xforms-model-construct-done">
+		        <xforms:insert 
+		            nodeset="instance('ins-current-user-dashboard')/roles" 
+		            at="1" 
+		            position="before" 
+		            origin="xxforms:get-request-attribute('user-roles-xml')"/>
+		    </xforms:action>
+
 			<!-- Show the appropriate tabs and help-boxes depending upon the current user roles. -->
-			<xforms:bind nodeset="instance('ins-control')/contributor-controls" relevant="xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CONTRIBUTOR' and not(xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CURATOR')"/>
-			<xforms:bind nodeset="instance('ins-control')/curator-controls" relevant="xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CURATOR'"/>
-
-
-
-
-
-
+			<xforms:bind nodeset="instance('ins-control')/contributor-controls" relevant="instance('ins-current-user-dashboard')//role = 'ROLE_CHASSIS_CONTRIBUTOR' and not(xxforms:instance('ins-current-user-dashboard')//role = 'ROLE_CHASSIS_CURATOR')"/>
+			<xforms:bind nodeset="instance('ins-control')/curator-controls" relevant="instance('ins-current-user-dashboard')//role = 'ROLE_CHASSIS_CURATOR'"/>
 
 			<xforms:send 
 				ev:event="xforms-model-construct-done" 
@@ -141,7 +152,9 @@
 					
 					<!-- The success of this get-submitted-media submission will trigger the copying of the media-feed to the SSQ. -->
 					<xforms:send submission="sub-get-submitted-media-feed"/>
-					<xforms:send submission="sub-get-curated-media-feed" if="xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CURATOR'"/>
+
+					<!-- Only try to get a curated media feed if the user has the curator role. -->
+					<xforms:send submission="sub-get-curated-media-feed" if="instance('ins-current-user-dashboard')//role = 'ROLE_CHASSIS_CURATOR'"/>
 					
 					<!-- Get the study info, which will use a link from the retrieved study entry. -->
 					<xforms:send submission="sub-get-study-info-entry"/>
@@ -443,7 +456,11 @@
         
         <xi:include href="../common/includes/study/study-info-model.xml"/>
         
-       	<xi:include href="../common/includes/current-user-model.xml"/>
+        <!-- The sequence in which this model is loaded apparently has an affect on relevance-checking across models. -->
+        <!-- FIXME: Having it here allows relevance to work for the controls, but breaks the relevance for the "get curated media" submission. -->
+        <!-- In the meantime, have duplicated the current-user-model in the dashboard model. -->
+        <xi:include href="../common/includes/current-user-model.xml"/>
+            	
         
     </head>
     <body>
@@ -676,7 +693,7 @@
     		</div>
     		
     	</div>
-
+<fr:xforms-inspector xmlns:fr="http://orbeon.org/oxf/xml/form-runner"/>
     </body>
 </html>
 
