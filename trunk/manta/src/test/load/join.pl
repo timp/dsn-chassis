@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-my $urlName = "study-info_2048_512_";
+my $urlName = "questionnaire_1536_512_";
 my $csvFileName = $urlName ."1.csv";
 open FILE1, "<$csvFileName" or die $!;
 my @lines1 = <FILE1>;
@@ -44,56 +44,97 @@ $csvFileName = $urlName ."10.csv";
 open FILE10, "<$csvFileName" or die $!;
 my @lines10 = <FILE10>;
 
-open JOINED, ">$urlName.csv" or die $!;
+open JOINED, ">" .$urlName . "c.csv" or die $!;
 
 for (my $i=0; $i < 101; $i++) {
 	my $line = $lines1[$i];
-	$line =~ s/\n//;
+	
+	if ($i == 0) { 
+	  $line = "Percentage served,1" ;
+	} else { 
+	  $line =~ s/\n//;
+    }
 	
 	my $nextFileLine = $lines2[$i];
 	$nextFileLine =~ m/^[^,]+,(.+)\n$/;
 	my $nextCol = $1;
-	$line = $line . "," . $nextCol;
-
+	if ($i == 0) { 
+	  $line = $line . ",2" ;
+	} else { 
+	  $line = $line . "," . ($nextCol/2);
+    }
+    
 	$nextFileLine = $lines3[$i];
 	$nextFileLine =~ m/^[^,]+,(.+)\n$/;
 	$nextCol = $1;
-	$line = $line . "," . $nextCol;
-
+	if ($i == 0) { 
+	  $line = $line . ",3" ;
+	} else { 
+  	  $line = $line . "," . ($nextCol/3);
+    }
+  	
 	$nextFileLine = $lines4[$i];
 	$nextFileLine =~ m/^[^,]+,(.+)\n$/;
 	$nextCol = $1;
-	$line = $line . "," . $nextCol;
-
+	if ($i == 0) { 
+	  $line = $line . ",4" ;
+	} else { 
+	  $line = $line . "," . ($nextCol/4);
+    }
+	  
 	$nextFileLine = $lines5[$i];
 	$nextFileLine =~ m/^[^,]+,(.+)\n$/;
 	$nextCol = $1;
-	$line = $line . "," . $nextCol;
+	if ($i == 0) { 
+	  $line = $line . ",5" ;
+	} else { 
+	  $line = $line . "," . ($nextCol/5);
+	}
 
 	$nextFileLine = $lines6[$i];
 	$nextFileLine =~ m/^[^,]+,(.+)\n$/;
 	$nextCol = $1;
-	$line = $line . "," . $nextCol;
-
+	if ($i == 0) { 
+	  $line = $line . ",6" ;
+	} else { 
+	  $line = $line . "," . ($nextCol/6);
+	}
+    
 	$nextFileLine = $lines7[$i];
 	$nextFileLine =~ m/^[^,]+,(.+)\n$/;
 	$nextCol = $1;
-	$line = $line . "," . $nextCol;
+	if ($i == 0) { 
+	  $line = $line . ",7" ;
+	} else { 
+	  $line = $line . "," . ($nextCol/7);
+	}
 
 	$nextFileLine = $lines8[$i];
 	$nextFileLine =~ m/^[^,]+,(.+)\n$/;
 	$nextCol = $1;
-	$line = $line . "," . $nextCol;
+	if ($i == 0) { 
+	  $line = $line . ",8" ;
+	} else { 
+	  $line = $line . "," . ($nextCol/8);
+	}
 
 	$nextFileLine = $lines9[$i];
 	$nextFileLine =~ m/^[^,]+,(.+)\n$/;
 	$nextCol = $1;
-	$line = $line . "," . $nextCol;
+	if ($i == 0) { 
+	  $line = $line . ",9" ;
+	} else { 
+	  $line = $line . "," . ($nextCol/9);
+	}
 
 	$nextFileLine = $lines10[$i];
 	$nextFileLine =~ m/^[^,]+,(.+)\n$/;
 	$nextCol = $1;
-	$line = $line . "," . $nextCol;
+	if ($i == 0) { 
+	  $line = $line . ",10" ;
+	} else { 
+	  $line = $line . "," . ($nextCol/10);
+	}
 
 	print JOINED "$line\n";
 }
