@@ -9,11 +9,10 @@ import module namespace util = "http://exist-db.org/xquery/util" ;
 
 import module namespace xutil = "http://purl.org/atombeat/xquery/xutil" at "../lib/xutil.xqm" ;
 
-(:
 declare variable $config:service-url-base as xs:string :=  "http://cloud1.cggh.org/manta/atombeat" ;
+(:
 declare variable $config:service-url-base as xs:string :=  "http://localhost:8080/manta/atombeat" ;
 :)
-declare variable $config:service-url-base as xs:string :=  resolve-uri("/manta/atombeat") cast as xs:string;
 
 
 (:
