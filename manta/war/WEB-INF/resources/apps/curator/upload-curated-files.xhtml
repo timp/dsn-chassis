@@ -322,12 +322,14 @@
     		<p>You should select the files from which your uploads are <strong>most immediately</strong> derived. I.e., if your uploads are derived from file X, and file X is derived from file Y, you should <strong>only</strong> select file X.</p>
     		
     		<h3>Submitted Files</h3>
+
+			<xxforms:variable name="submitted-media-to-curate" select="instance('ins-submitted-media-feed')/atom:entry[contains(atom:link[@rel='edit-media']/@atombeat:allow , 'GET' )]"/>
     		
-    		<xforms:group ref="instance('ins-submitted-media-feed')[empty(atom:entry)]">
-    			<p>There are no submitted files.</p>
+    		<xforms:group ref="instance('ins-submitted-media-feed')[empty($submitted-media-to-curate)]">
+    			<p>There are no submitted files that have passed personal data review.</p>
     		</xforms:group>
     		
-    		<xforms:group ref="instance('ins-submitted-media-feed')[exists(atom:entry)]">
+    		<xforms:group ref="instance('ins-submitted-media-feed')[exists($submitted-media-to-curate)]">
     			
     			<fr:datatable paginated="false">
     				<thead>
@@ -342,7 +344,7 @@
     					</tr>
     				</thead>
     				<tbody>
-    					<xforms:repeat id="rep-submitted-media" nodeset="xxforms:sort(instance('ins-submitted-media-feed')/atom:entry, atom:published, 'text', 'ascending')">
+    					<xforms:repeat id="rep-submitted-media" nodeset="xxforms:sort(instance('ins-submitted-media-feed')/atom:entry[contains(atom:link[@rel='edit-media']/@atombeat:allow , 'GET' )], atom:published, 'text', 'ascending')">
     						<tr>
     							<td>
     								<xforms:select ref="instance('ins-derivation-selection')" appearance="full">

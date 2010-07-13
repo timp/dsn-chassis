@@ -28,7 +28,7 @@
 		<div id="editable-list-of-publications-container">
 
 		<table>
-            <xforms:repeat nodeset="publication" id="rep-publication-contributor">
+            <xforms:repeat nodeset="publication" id="rep-publication-administrator">
             	
                 <tr class="repeated-element">
                     <td>
@@ -38,7 +38,7 @@
                                 ev:event="DOMActivate" 
                                 context="." 
                                 nodeset="." 
-                                at="index('rep-publication-contributor')"/>
+                                at="index('rep-publication-administrator')"/>
                         </xforms:trigger>
                     </td>
                     <td>
