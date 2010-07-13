@@ -111,7 +111,7 @@
 		    </xforms:action>
 
 			<!-- Show the appropriate tabs and help-boxes depending upon the current user roles. -->
-			<xforms:bind nodeset="instance('ins-control')/contributor-controls" relevant="instance('ins-current-user-dashboard')//role = 'ROLE_CHASSIS_CONTRIBUTOR' and not(xxforms:instance('ins-current-user-dashboard')//role = 'ROLE_CHASSIS_CURATOR')"/>
+			<xforms:bind nodeset="instance('ins-control')/contributor-controls" relevant="instance('ins-current-user-dashboard')//role = 'ROLE_CHASSIS_CONTRIBUTOR' and not(instance('ins-current-user-dashboard')//role = 'ROLE_CHASSIS_CURATOR')"/>
 			<xforms:bind nodeset="instance('ins-control')/curator-controls" relevant="instance('ins-current-user-dashboard')//role = 'ROLE_CHASSIS_CURATOR'"/>
 
 			<xforms:send 
