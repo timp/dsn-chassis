@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-my $urlName = "questionnaire_1536_512_";
+my $urlName = "study_2048_512_";
 my $csvFileName = $urlName ."1.csv";
 open FILE1, "<$csvFileName" or die $!;
 my @lines1 = <FILE1>;
