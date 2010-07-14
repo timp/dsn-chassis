@@ -35,16 +35,16 @@
         <!-- force authentication for all requests to atombeat, but delegate
             access control decisions to atombeat -->
         <sec:intercept-url pattern="/atombeat/**" access="ROLE_CHASSIS_USER" />
-        
-        <!-- TODO: take this out when Tim no longer needs it, when contributor has stable path to SSQ. -->
-        <sec:intercept-url pattern="/submitter/**" access="ROLE_CHASSIS_CONTRIBUTOR" />
-        
+
         <sec:intercept-url pattern="/contributor/**" access="ROLE_CHASSIS_CONTRIBUTOR" />
 
         <sec:intercept-url pattern="/personal-data/**" access="ROLE_CHASSIS_PERSONAL_DATA_REVIEWER, ROLE_CHASSIS_ADMINISTRATOR" />
         
         <sec:intercept-url pattern="/curator/**" access="ROLE_CHASSIS_CURATOR, ROLE_CHASSIS_ADMINISTRATOR" />
+    
+        <sec:intercept-url pattern="/study/**" access="ROLE_CHASSIS_CONTRIBUTOR, ROLE_CHASSIS_CURATOR, ROLE_CHASSIS_ADMINISTRATOR" />
         
+
         <sec:logout 
             logout-success-url="${cas.url}/logout" 
             invalidate-session="true"/>

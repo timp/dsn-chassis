@@ -22,9 +22,6 @@
     access control decisions to atombeat -->
     <intercept-url pattern="/atombeat/**" access="ROLE_CHASSIS_USER" />
 
-	<!-- TODO: take this out when Tim no longer needs it, when contributor has stable path to SSQ. -->
-    <intercept-url pattern="/submitter/**" access="ROLE_CHASSIS_CONTRIBUTOR, ROLE_CHASSIS_ADMINISTRATOR" />
-    
     <intercept-url pattern="/contributor/**" access="ROLE_CHASSIS_CONTRIBUTOR, ROLE_CHASSIS_ADMINISTRATOR" />
 
     <intercept-url pattern="/personal-data/**" access="ROLE_CHASSIS_PERSONAL_DATA_REVIEWER, ROLE_CHASSIS_ADMINISTRATOR" />
