@@ -4,10 +4,10 @@
 	xmlns:xforms="http://www.w3.org/2002/xforms" 
 	xmlns:ev="http://www.w3.org/2001/xml-events">
 
-	<h2>Help</h2>
-	
 	<!-- Begin: Box text -->
-	<p>Please review the information you’ve provided for this study. Once you click Confirm, the study will be created in the WWARN Data Repository. After you’ve created a study, you can edit this information by logging in and navigating to this particularly study. 
+	<p>Please review the information you’ve provided for this study. Once you click Confirm, the study will be created in the WWARN Data Repository. 
+	</p>
+	<p>After you’ve created a study, you can edit this information by logging in and navigating to this particularly study. 
 	</p>
 	<!-- End: Box text -->
 

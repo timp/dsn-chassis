@@ -6,13 +6,7 @@
 	xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
 	xmlns:xxforms="http://orbeon.org/oxf/xml/xforms">
 
-	<h2>Uploading files - (Step 4 of 5)</h2>
-	
-	<p>Whenever possible, you should upload three file types for each study: the data file, a data dictionary and the associated protocol(s).
-	</p>
-		
-	<p>If you don't have the files available at this time, you have the option of skipping ahead to the next step. Once the study is registered, you can add files by logging into your account, navigating to this study and clicking the Files tab.
-	</p>		
+	<h2>Upload files - (Step 4 of 5)</h2>
 	
 
 	<p>

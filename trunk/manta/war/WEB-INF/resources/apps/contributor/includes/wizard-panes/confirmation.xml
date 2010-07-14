@@ -3,22 +3,12 @@
 	xmlns:xi="http://www.w3.org/2001/XInclude"
 	xmlns:xforms="http://www.w3.org/2002/xforms" >
 
-    <!-- Begin: Confirmation text -->
 	<h2>Registration Complete</h2>
 
     <p>Thank you for registering your study. 
     </p>
     
-    <p>We invite you to complete the following information about your study. This questionnaire is optional, but the information can be very helpful in curating your data – especially if your data is not yet published. If you do not have time to complete the questionnaire, the study curator will try to derive the answers from the publications you’ve provided.
-    </p>
-    
-    <p>You can fill in the study info at your own pace. When you enter new information, be sure to save your changes. You can work on the questionnaire at any time by logging into your account, navigating to this study and clicking the Study Info tab.
-    </p>
-    
-    <p>You can also copy study info from another study for which you have administrator/creator rights. If you copy information from an existing questionnaire it will overwrite any answer you’ve given, so be sure to update any information that differs from the template study.
-    </p>
-    <!-- End: Confirmation text -->
-    
+
 
 	<p>
 
@@ -27,6 +17,15 @@
 	</p>
 
 	<h3>Study Info</h3>
+	
+    <p>We invite you to complete the following information about your study. This questionnaire is optional, but the information can be very helpful in curating your data – especially if your data is not yet published. If you do not have time to complete the questionnaire and your study has been published, the study curator will try to derive the answers from the publications you’ve provided.
+    </p>
+    
+    <p>You can fill in the study information at your own pace. When you enter new information, be sure to save your changes. You can work on the questionnaire at any time by logging into your account, navigating to this study and clicking the Study Info tab.
+    </p>
+    
+    <p>You can also copy study information from another study for which you have administrator/creator rights. If you copy information from an existing questionnaire it will overwrite any answer you’ve given, so be sure to update any information that differs from the template study.
+    </p>	
 	
      <p>
          <span class="confirmation-study-info-save-changes-button-container">
