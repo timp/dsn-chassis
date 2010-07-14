@@ -33,7 +33,7 @@
 					<td>
 						<span class="email-address-textbox-container">
 							<xforms:input ref=".">
-								<xforms:label>Email Address:</xforms:label>
+								<xforms:label>Email address:</xforms:label>
 								<xforms:alert>Please provide a valid email address.</xforms:alert>
 							</xforms:input>
 						</span>
@@ -58,7 +58,7 @@
 				<td>
 					<span id="add-administrator-link-container">
 	                  <xforms:trigger appearance="minimal">
-	                      <xforms:label>Add an Administrator</xforms:label>
+	                      <xforms:label>Add an administrator</xforms:label>
 	                      <xforms:insert 
 	                      	ev:event="DOMActivate" 
 	                      	context="." 
@@ -81,7 +81,7 @@
 	
 
 		<xforms:trigger ref="instance('ins-control')/save-draft-trigger" appearance="minimal">
-			<xforms:label>&lt;&lt; Back Home</xforms:label>
+			<xforms:label>&lt;&lt; Back home</xforms:label>
 			<xforms:action ev:event="DOMActivate" if="../draft-entry-is-valid = 'true'">
 				<xforms:send submission="sub-back-home"/>
 			</xforms:action>

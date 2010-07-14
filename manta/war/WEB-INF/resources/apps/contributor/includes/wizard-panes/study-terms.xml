@@ -4,7 +4,7 @@
 	xmlns:ev="http://www.w3.org/2001/xml-events"
 	xmlns:xxforms="http://orbeon.org/oxf/xml/xforms">
 	
-	<h2>Study Terms - (Step 1 of 5)</h2>
+	<h2>Study terms - (Step 1 of 5)</h2>
 
 	<p>
 		Please contact a member of WWARN before you begin the study
@@ -37,7 +37,7 @@
 	<p>
 		<span id="study-title-textbox-container">
 			<xforms:input ref="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:title">
-				<xforms:label>Study Title:</xforms:label>
+				<xforms:label>Study title:</xforms:label>
 				<xforms:alert>The title is required.</xforms:alert>
 			</xforms:input>
 		</span>
@@ -52,7 +52,7 @@
 	<p>
 		
 		<!-- TODO: more conformist workaround to put checkbox on right-hand side (Maybe use CSS to specify display:none on label?) -->
-		<span>I accept the terms of submission:</span>
+		<span>I accept the Terms of Submission:</span>
 		
 		
 		<span id="agree-to-terms-checkbox-container">
@@ -65,7 +65,7 @@
 					<xforms:value>yes</xforms:value>
 				</xforms:item>
 				
-				<xforms:alert>Agreement to the terms of submission is required.</xforms:alert>
+				<xforms:alert>Agreement to the Terms of Submission is required.</xforms:alert>
 			
 			</xforms:select>
 			
