@@ -85,8 +85,6 @@
                 <xforms:bind nodeset="atombeat:member[text()=xxforms:get-remote-user() and position() = 1]" readonly="true()"/>
             </xforms:bind>
             
-            <!-- Make the terms checkbox readonly once a draft has been saved -->
-            <xforms:bind nodeset="instance('ins-draft-entry')/atom:content/draft/registrant-has-agreed-to-the-terms" readonly="instance('ins-draft-entry')/atom:link[@rel='edit']"/>
 
 
 			<xforms:action ev:event="xxforms-invalid" ev:observer="ins-upload">
@@ -119,6 +117,13 @@
         			</atom:content>
        			</atom:entry>
         	</xforms:instance>    
+ 
+             <!-- Make the terms checkbox readonly once a draft has been saved -->
+            <xforms:bind nodeset="instance('ins-draft-entry')/atom:content/draft/registrant-has-agreed-to-the-terms" readonly="instance('ins-draft-entry')/atom:link[@rel='edit']"/>
+
+            <!-- Make the contact checkbox readonly once a draft has been saved -->
+            <xforms:bind nodeset="instance('ins-draft-entry')/atom:content/draft/registrant-has-contacted-wwarn" readonly="instance('ins-draft-entry')/atom:link[@rel='edit']"/>
+ 
  
  			<!-- user template for adding a new administrator in the permissions pane -->
        		<xforms:instance id="ins-user-template">
