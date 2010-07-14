@@ -20,10 +20,10 @@ public class LoadTest {
 	private String fileName;
 	private Vector<InstrumentedUrlRequestSet> urlsToHit = null;
 	private ArrayList<BitBucketClient> threads = new ArrayList<BitBucketClient>();
-	static int requestsPerRate = 30;
+	static int requestsPerRate = 5;
 	static int rateIncrement = 1;
 	static int maxHitsPerSec = 501;
-	static long maxWaitTime = 120000L;
+	static long maxWaitTime = 240000L;
 	volatile static int runningThreadCount = 0;
 	private static final byte[] bitBucket = new byte[4096];
 
@@ -230,13 +230,14 @@ public class LoadTest {
 	}
 
 	public static void main(String[] args) throws Exception {
-		//String url = "http://localhost:8080/manta/questionnaire/";
+		String url = "http://localhost:8080/manta/questionnaire/";
 		//String url = "http://localhost:8080/manta/index.html";
 		//String url = "http://localhost:8080/manta/home/";
 		//String url = "http://localhost:8080/manta/exist/rest/db/atom/content/studies/KCDZQ.atom";
 		//String url = "http://localhost:8080/manta/exist/rest/db/atom/content/studies/";
 		//String url = "http://localhost:8080/manta/home/";
-		String url = "http://localhost/";
+		//String url = "http://colin%40example.org:bar@localhost:8081/manta/contributor/";
+		//String url = "http://localhost/";
 		//String url = "http://localhost:8080/manta/atombeat/admin/install.xql";
 		//String url = "http://129.67.44.221:8080/explorer_dev/app/";
 		
