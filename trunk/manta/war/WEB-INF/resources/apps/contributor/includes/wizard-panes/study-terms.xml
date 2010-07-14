@@ -43,7 +43,7 @@
 		</span>
 	</p>
 	
-	<iframe src="terms">
+	<iframe src="terms" class="terms-iframe">
 		<p>
 			<a href="terms" target="_blank">Terms</a>
 		</p>

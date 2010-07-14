@@ -297,4 +297,7 @@ ul {
 .register-study-wizard .acknowledgement-form-summary-item .xforms-label, .study-dashboard .acknowledgement-form-summary-item .xforms-label {
     font-weight: bold;
 }
-
+.register-study-wizard .terms-iframe {
+    
+    width: 35em;
+}
