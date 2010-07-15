@@ -57,8 +57,8 @@
 	<xforms:bind nodeset="instance('ins-sq-study-info-entry')">
 		<xforms:bind nodeset="atom:content">
 			<xforms:bind nodeset="study-info">
-				<xforms:bind nodeset="start" type="xs:date"/>
-				<xforms:bind nodeset="end" type="xs:date"/>
+				<xforms:bind nodeset="start" type="xforms:date"/>
+				<xforms:bind nodeset="end" type="xforms:date"/>
 				<xforms:bind nodeset="pathogens" required="contains(../modules, 'molecular')"/>
 				<xforms:bind nodeset="modules" required="true()"/>
 
@@ -122,7 +122,7 @@
 							<xforms:bind nodeset="entomologicalInoculationRateYear"
 								type="xforms:int"
 								relevant="normalize-space( ../entomologicalInoculationRate) != ''"/>
-							<xforms:bind nodeset="seasonalTransmission" type="xs:boolean"/>
+							<xforms:bind nodeset="seasonalTransmission" type="xforms:boolean"/>
 							<xforms:bind nodeset="transmissionMonths"
 								relevant="contains(../seasonalTransmission, 'true')"/>
 						</xforms:bind>
@@ -139,7 +139,7 @@
 						<xforms:bind nodeset="minParasitaemia" type="xforms:int"/>
 						<xforms:bind nodeset="maxParasitaemia" type="xforms:int"/>
 					</xforms:bind>
-					<xforms:bind nodeset="excludeIfPriorAntimalarials" type="xs:boolean"/>
+					<xforms:bind nodeset="excludeIfPriorAntimalarials" type="xforms:boolean"/>
 					<xforms:bind nodeset="priorAntimalarialsExclusion"
 						relevant="contains(../excludeIfPriorAntimalarials, 'true')">
 						<xforms:bind nodeset="priorAntimalarials" type="xs:string"/>
@@ -170,7 +170,7 @@
 										<xforms:bind nodeset="administrationRoute"/>
 										<xforms:bind nodeset="manufacturer"/>
 										<xforms:bind nodeset="batchNumber"/>
-										<xforms:bind nodeset="expiryDate" type="xs:date"/>
+										<xforms:bind nodeset="expiryDate" type="xforms:date"/>
 										<xforms:bind nodeset="drugStorage"/>
 										<xforms:bind nodeset="drugDosingDeterminant"
 											required="true()"/>
@@ -341,7 +341,7 @@
 								relevant="contains(../sampleType, 'other')"/>
 							<xforms:bind nodeset="wholeBloodSource"
 								relevant="contains(../sampleType,'wholeBlood')"/>
-							<xforms:bind nodeset="dateCultureIsolated" type="xs:date"
+							<xforms:bind nodeset="dateCultureIsolated" type="xforms:date"
 								relevant="contains(../sampleType,'cultureAdaptedParasite')"/>
 						</xforms:bind>
 					</xforms:bind>
@@ -490,7 +490,7 @@
 							<xforms:bind nodeset="batchesIncludedInRawData" required="true()"/>
 							<xforms:bind nodeset="notIncludedBatchDataHint"
 								relevant="contains(../batchesIncludedInRawData, 'false')"/>
-							<xforms:bind nodeset="preparationDate" type="xs:date"
+							<xforms:bind nodeset="preparationDate" type="xforms:date"
 								relevant="contains(../batchesIncludedInRawData, 'false')"/>
 							<!-- FIXME type="ctype:percentage" -->
 							<xforms:bind nodeset="parasitaemia3D7"
