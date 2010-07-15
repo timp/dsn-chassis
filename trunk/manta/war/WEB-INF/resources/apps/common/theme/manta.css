@@ -50,6 +50,12 @@
 #bd {
     margin-bottom: 0.71em;
 }
+/* FIXME: Either merge or remove. 
+          Maybe should also have elements, ids, then classes. */
+#bd {
+    margin: 0px;
+}
+
 #bd h1 {
     margin: 0 0 0 0;
     padding: 0 0 0.2em 0;
@@ -217,7 +223,7 @@ ul {
 }
 
 .warningButton .xforms-trigger{
-    color:red;
+    color: orange;
 }
 
 .warningButton {
@@ -228,20 +234,22 @@ ul {
     
     z-index: 400;
     padding: 12px;
-    border: 3px ridge red;
+    border: 3px ridge orange;
     -moz-border-radius: 5px; 
     -webkit-border-radius: 5px; 
     border-radius: 5px; 
 }
+/* Color within study-info warning box */
+.xbl-fr-error-summary .fr-error-alert { color: orange; }
 
 .warnings .yui-dialog { 
     position: fixed;
 }
-
-/* FIXME: There is already a #bd in here, and with margin settings, so maybe either merge or remove. Maybe should also have elements, ids, then classes. */
-#bd {
-    margin: 0px;
+/* Gentle alert icon */
+.study-info .xforms-alert-active {
+    background-image: url(star.png);
 }
+
 .xforms-label {
     margin-right: 3px;
 }
@@ -298,6 +306,5 @@ ul {
     font-weight: bold;
 }
 .register-study-wizard .terms-iframe {
-    
     width: 35em;
 }
