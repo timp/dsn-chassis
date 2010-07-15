@@ -7,7 +7,7 @@
 		class="warnings">
 		<p align="right" class="warningButton">
 			<xforms:trigger>
-				<xforms:label class="warningsLabel">Warnings</xforms:label>
+				<xforms:label class="warningsLabel">Hints</xforms:label>
 				<xxforms:show ev:event="DOMActivate" dialog="dia-errors" />
 				<xforms:dispatch ev:event="DOMActivate" name="fr-visit-all"
 					targetid="error-summary" />
