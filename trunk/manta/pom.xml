@@ -18,6 +18,10 @@ mvn install:install-file -DgroupId=org.apache.abdera -DartifactId=abdera-core -D
 mvn install:install-file -DgroupId=org.apache.abdera -DartifactId=abdera-i18n -Dversion=0.4.0 -Dclassifier=incubating-SNAPSHOT -Dpackaging=jar -Dfile=war/WEB-INF/lib/abdera-i18n-0.4.0-incubating-SNAPSHOT.jar
 
   -->
+      <!-- override in settings.xml -->
+  <properties>
+     <targetHost>http://cloud1.cggh.org</targetHost>
+  </properties>
   <dependencies>
     <dependency>
       <groupId>org.exist</groupId>
@@ -90,15 +94,24 @@ mvn install:install-file -DgroupId=org.apache.abdera -DartifactId=abdera-i18n -D
       <scope>test</scope>
     </dependency>
   </dependencies>
+  
+  
   <build>
     <finalName>manta</finalName>
 		<plugins>
-    <plugin>
-     <groupId>org.apache.maven.plugins</groupId>
-     <artifactId>maven-compiler-plugin</artifactId>
-     <configuration>
-      <source>1.6</source>
-      <target>1.6</target>
+		  <plugin>
+       <groupId>org.apache.maven.plugins</groupId>
+       <artifactId>maven-resources-plugin</artifactId>
+       <configuration>
+         <overwrite>true</overwrite>
+       </configuration>
+	  	</plugin>
+      <plugin>
+       <groupId>org.apache.maven.plugins</groupId>
+       <artifactId>maven-compiler-plugin</artifactId>
+       <configuration>
+        <source>1.6</source>
+        <target>1.6</target>
       <!--
 		<excludes>
 			<exclude>**/XMLDBStore*</exclude>
@@ -107,32 +120,37 @@ mvn install:install-file -DgroupId=org.apache.abdera -DartifactId=abdera-i18n -D
 			<exclude>**/SpringSecuritySetUserRequestAttributesFilter*</exclude>
 		</excludes>
 	  -->
-     </configuration>
-    </plugin>
-    <plugin>
-     <groupId>org.apache.maven.plugins</groupId>
-     <artifactId>maven-surefire-plugin</artifactId>
-     <configuration>
-      <redirectTestOutputToFile>true</redirectTestOutputToFile>
-      <forkMode>once</forkMode>
-      <!-- threadCount>1</threadCount-->
-      <!-- childDelegation>false</childDelegation -->
-      <useFile>true</useFile>
-      <excludes>
-       <exclude>**/*Test.java</exclude>
-       <exclude>**/Test*.java</exclude>
-      </excludes>
-     </configuration>
-    </plugin>
+       </configuration>
+      </plugin>
+      <plugin>
+       <groupId>org.apache.maven.plugins</groupId>
+       <artifactId>maven-surefire-plugin</artifactId>
+       <configuration>
+        <redirectTestOutputToFile>true</redirectTestOutputToFile>
+        <forkMode>once</forkMode>
+        <!-- threadCount>1</threadCount-->
+        <!-- childDelegation>false</childDelegation -->
+        <useFile>true</useFile>
+        <excludes>
+         <exclude>**/*Test.java</exclude>
+         <exclude>**/Test*.java</exclude>
+        </excludes>
+       </configuration>
+      </plugin>
 		  <plugin>
         <artifactId>maven-war-plugin</artifactId>
         <configuration>
-					<warSourceDirectory>war</warSourceDirectory>
+          <webResources>
+            <resource>
+             <directory>src/main/webapp/resources/atombeat</directory>
+              <targetPath>atombeat</targetPath>
+             <filtering>true</filtering>
+            </resource>
+          </webResources>
+			    <warSourceDirectory>war</warSourceDirectory>
         </configuration>
       </plugin>
     </plugins>
-
-		
   </build>
 	
   <profiles>
