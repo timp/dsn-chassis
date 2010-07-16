@@ -1,3 +1,8 @@
+(: 
+NOTE this file is NOT filtered by Maven and is overwritten by Maven during a build, 
+it is here for the convenience of Eclipse users. 
+NOTE ANY EDITS TO THIS FILE MUST BE DUPLICATED IN src/main/webapp/atombeat/config/shared.xqm
+:) 
 xquery version "1.0";
 
 module namespace config = "http://purl.org/atombeat/xquery/config";
@@ -9,10 +14,10 @@ import module namespace util = "http://exist-db.org/xquery/util" ;
 
 import module namespace xutil = "http://purl.org/atombeat/xquery/xutil" at "../lib/xutil.xqm" ;
 
-declare variable $config:service-url-base as xs:string :=  "http://cloud1.cggh.org/manta/atombeat" ;
 (:
-declare variable $config:service-url-base as xs:string :=  "http://localhost:8080/manta/atombeat" ;
+declare variable $config:service-url-base as xs:string :=  "http://cloud1.cggh.org/manta/atombeat" ;
 :)
+declare variable $config:service-url-base as xs:string :=  "http://localhost:8080/manta/atombeat" ;
 
 
 (:
