@@ -44,7 +44,7 @@
                     <td>
                     	<span class="web-link-textbox-container">
                         <xforms:input ref="web-link">
-                            <xforms:label>Web Link:</xforms:label>
+                            <xforms:label>Web link:</xforms:label>
                             <xforms:alert>Please provide a web link.</xforms:alert>
                         </xforms:input>
                     	</span>
@@ -68,7 +68,7 @@
 	                <td>
 	                	<span id="add-publication-link-container">
 	                    <xforms:trigger appearance="minimal">
-	                        <xforms:label>Add a Publication</xforms:label>
+	                        <xforms:label>Add a publication</xforms:label>
 	                        <xforms:insert 
 	                            ev:event="DOMActivate" 
 	                            context="instance('ins-study-entry')/atom:content/study/publications"  
@@ -90,7 +90,7 @@
      <p>
      	<span id="publications-save-changes-button-container">
      	<xforms:trigger ref="instance('ins-control')/save-study-trigger">
-     		<xforms:label>Save Changes</xforms:label>
+     		<xforms:label>Save changes</xforms:label>
      		<xforms:action ev:event="DOMActivate" if="../study-entry-is-valid = 'true'">
      			<xforms:send submission="sub-put-study-entry"/>
      		</xforms:action>

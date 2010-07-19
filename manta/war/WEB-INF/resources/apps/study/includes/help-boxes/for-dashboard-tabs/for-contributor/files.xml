@@ -4,9 +4,6 @@
 	xmlns:ev="http://www.w3.org/2001/xml-events"
 	class="inner-help">
 
-	<h2>Help</h2>
-	
-	<!-- Begin: Box text -->
 	<p>Whenever possible, each study should have the data file, a data dictionary and the associated protocol(s). 
 	</p>
 	<p>Curation will begin as soon as possible after your data file(s) have been uploaded. Once a curator has begun work on your study, their contact information will appear in the Summary tab in the study dashboard.
@@ -15,6 +12,5 @@
 	</p>
 	<p>The first step in the curation process, is to check file uploads for personal data. If there is no personal data in the file, it will be made available for download. If there is personal data, this information will be removed and an anonymized file will be made available for download to the study creator and administrators.
 	</p>
-	<!-- End: Box text -->
 
 </div>

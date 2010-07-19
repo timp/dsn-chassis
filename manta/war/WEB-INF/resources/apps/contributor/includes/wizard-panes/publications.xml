@@ -45,7 +45,7 @@
                     <td>
                     	<span class="web-link-textbox-container">
                         <xforms:input ref="web-link">
-                            <xforms:label>Web Link:</xforms:label>
+                            <xforms:label>Web link:</xforms:label>
                             <xforms:alert>Please provide a valid web link.</xforms:alert>
                         </xforms:input>
                     	</span>
@@ -69,7 +69,7 @@
 	                <td>
 	                	<span id="add-publication-link-container">
 		                    <xforms:trigger appearance="minimal">
-		                        <xforms:label>Add a Publication</xforms:label>
+		                        <xforms:label>Add a publication</xforms:label>
 		                        <xforms:insert 
 		                            ev:event="DOMActivate" 
 		                            context="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:content/study/publications" 
@@ -91,7 +91,7 @@
 	<p>
 	
 		<xforms:trigger ref="instance('ins-control')/save-draft-trigger" appearance="minimal">
-			<xforms:label>&lt;&lt; Back Home</xforms:label>
+			<xforms:label>&lt;&lt; Back home</xforms:label>
 			<xforms:action ev:event="DOMActivate" if="../draft-entry-is-valid = 'true'">
 				<xforms:send submission="sub-back-home"/>
 			</xforms:action>
@@ -112,7 +112,7 @@
 		</xforms:trigger>
 
 		<xforms:trigger ref="instance('ins-control')/save-draft-trigger">
-			<xforms:label>Save As Draft</xforms:label>
+			<xforms:label>Save as draft</xforms:label>
 			<xforms:action ev:event="DOMActivate" if="../draft-entry-is-valid = 'true'">
 				<xforms:send submission="sub-explicit-put-draft-entry"/>
 			</xforms:action>
@@ -135,7 +135,7 @@
 		</span>
 
 		<xforms:trigger ref="instance('ins-control')/save-draft-trigger" appearance="minimal">
-			<xforms:label>Skip To End &gt;&gt;</xforms:label>
+			<xforms:label>Skip to end &gt;&gt;</xforms:label>
 			<xforms:action ev:event="DOMActivate" if="../draft-entry-is-valid = 'true'">
 				<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show" value="'review'"/>
 				<xforms:send submission="sub-implicit-put-draft-entry"/>

@@ -5,7 +5,6 @@
 	xmlns:ev="http://www.w3.org/2001/xml-events"
 	xmlns:xi="http://www.w3.org/2001/XInclude">
 
-	<!-- Begin: Study Info intro text -->
 	<p>The study information assists us in curating your data – especially if your data is not yet published. If you do not have time to complete the questionnaire, the study curator will try to derive the answers from the publications you’ve provided.
 	</p>
 	
@@ -14,7 +13,6 @@
 	
 	<p>When you enter new information, be sure to save your changes. 
 	</p>
-	<!-- End: Study Info intro text -->
 
 	<xforms:group ref="instance('ins-control')/copy-answers-control">
 	<p>
@@ -37,7 +35,7 @@
 
 		<span id="copy-answers-button-container">
 		<xforms:trigger ref="instance('ins-control')/copy-answers-trigger">
-			<xforms:label>Copy Answers</xforms:label>
+			<xforms:label>Copy answers</xforms:label>
 			<xforms:action ev:event="DOMActivate">
 				<xforms:send submission="sub-copy-answers" />
 			</xforms:action>
@@ -51,7 +49,7 @@
      <p>
      	<span class="study-info-save-changes-button-container">
          <xforms:submit submission="sub-put-sq-study-info-entry">
-             <xforms:label>Save Changes</xforms:label>
+             <xforms:label>Save changes</xforms:label>
          </xforms:submit>
      	</span>
      </p>
@@ -61,7 +59,7 @@
      <p>
      	<span class="study-info-save-changes-button-container">
          <xforms:submit submission="sub-put-sq-study-info-entry">
-             <xforms:label>Save Changes</xforms:label>
+             <xforms:label>Save changes</xforms:label>
          </xforms:submit>
      	</span>
      </p>

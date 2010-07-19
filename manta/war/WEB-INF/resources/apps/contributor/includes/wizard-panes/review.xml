@@ -17,7 +17,7 @@
 
 	<p>
 		<xforms:trigger appearance="minimal">
-			<xforms:label>&lt;&lt; Edit Title</xforms:label>
+			<xforms:label>&lt;&lt; Edit title</xforms:label>
 			<xforms:action ev:event="DOMActivate">
 				<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show" value="'study-terms'"/>
 				<xforms:send submission="sub-implicit-put-draft-entry"/>
@@ -34,7 +34,7 @@
 			<xforms:repeat nodeset="instance('ins-draft-entry')//study-permissions-entry-container//atombeat:security-descriptor/atombeat:groups/atombeat:group[@id='GROUP_ADMINISTRATORS']/atombeat:member">
 				<li class="repeated-element">
 				<xforms:output ref=".">
-					<xforms:label>Email Address:</xforms:label>
+					<xforms:label>Email address:</xforms:label>
 				</xforms:output>
 				</li>
 			</xforms:repeat>
@@ -43,7 +43,7 @@
 	
 	<p>
 		<xforms:trigger appearance="minimal">
-			<xforms:label>&lt;&lt; Edit Permissions</xforms:label>
+			<xforms:label>&lt;&lt; Edit permissions</xforms:label>
 			<xforms:action ev:event="DOMActivate">
 				<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show" value="'permissions'"/>
 				<xforms:send submission="sub-implicit-put-draft-entry"/>
@@ -64,19 +64,19 @@
 					<li class="repeated-element acknowledgement-form-summary-item">
 						<span class="first-name-text-container">
 				        <xforms:output ref="first-name">
-				            <xforms:label>First Name:</xforms:label>
+				            <xforms:label>First name:</xforms:label>
 				        </xforms:output>
 						</span>
 				       <br/>
 						<span class="middle-name-text-container">
 				        <xforms:output ref="middle-name">
-				            <xforms:label>Middle Name:</xforms:label>
+				            <xforms:label>Middle name:</xforms:label>
 				        </xforms:output>
 							</span>
 				       <br/>
 							<span class="family-name-text-container">
 				        <xforms:output ref="family-name">
-				            <xforms:label>Family Name:</xforms:label>
+				            <xforms:label>Family name:</xforms:label>
 				        </xforms:output>
 							</span>
 				        <br/>
@@ -104,7 +104,7 @@
 
 	<p>
 		<xforms:trigger appearance="minimal">
-			<xforms:label>&lt;&lt; Edit Acknowledgements</xforms:label>
+			<xforms:label>&lt;&lt; Edit acknowledgements</xforms:label>
 			<xforms:action ev:event="DOMActivate">
 				<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show" value="'acknowledgements'"/>
 				<xforms:send submission="sub-implicit-put-draft-entry"/>
@@ -125,9 +125,9 @@
 		<fr:datatable paginated="false">
 			<thead>
 				<tr>
-					<th fr:sortable="true" fr:resizeable="true">File Name</th>
-					<th fr:sortable="true" fr:resizeable="true">Uploaded On</th>
-					<th fr:sortable="false" fr:resizeable="true">Size (Bytes)</th>
+					<th fr:sortable="true" fr:resizeable="true">File name</th>
+					<th fr:sortable="true" fr:resizeable="true">Uploaded on</th>
+					<th fr:sortable="false" fr:resizeable="true">Size (bytes)</th>
 					<th fr:sortable="true" fr:resizeable="true">Type</th>
 				</tr>
 			</thead>
@@ -163,7 +163,7 @@
 	
 	<p>
 		<xforms:trigger appearance="minimal">
-			<xforms:label>&lt;&lt; Edit Files</xforms:label>
+			<xforms:label>&lt;&lt; Edit files</xforms:label>
 			<xforms:action ev:event="DOMActivate">
 				<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show" value="'upload-files'"/>
 				<xforms:send submission="sub-implicit-put-draft-entry"/>
@@ -181,7 +181,7 @@
 			<xforms:repeat nodeset="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:content/study/publications/publication">
 				<li class="repeated-element">
 			        <xforms:output ref="web-link">
-			            <xforms:label>Web Link:</xforms:label>
+			            <xforms:label>Web link:</xforms:label>
 			        </xforms:output>
 		        </li>
 			</xforms:repeat>
@@ -194,7 +194,7 @@
 	
 	<p>
 		<xforms:trigger appearance="minimal">
-			<xforms:label>&lt;&lt; Edit Publications</xforms:label>
+			<xforms:label>&lt;&lt; Edit publications</xforms:label>
 			<xforms:action ev:event="DOMActivate">
 				<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show" value="'publications'"/>
 				<xforms:send submission="sub-implicit-put-draft-entry"/>
@@ -209,7 +209,7 @@
 	<p>
 	
 		<xforms:trigger ref="instance('ins-control')/save-draft-trigger" appearance="minimal">
-			<xforms:label>&lt;&lt; Back Home</xforms:label>
+			<xforms:label>&lt;&lt; Back home</xforms:label>
 			<xforms:action ev:event="DOMActivate">
 				<xforms:send submission="sub-back-home"/>
 			</xforms:action>
