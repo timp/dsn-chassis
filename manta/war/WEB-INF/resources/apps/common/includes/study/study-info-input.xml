@@ -51,9 +51,9 @@
 
 		<xforms:group ref="study-info" id="grp-info">
 
-			<h2>General Questions</h2>
+			<h2>General questions</h2>
 
-			<h3>Study Type (WWARN Modules)</h3>
+			<h3>Study type (WWARN modules)</h3>
 
 			<p>Please select the WWARN modules for which this study has data.</p>
 
@@ -66,20 +66,26 @@
 						<xforms:label ref="label" />
 						<xforms:value ref="value" />
 					</xforms:itemset>
-					<xforms:alert>Please select at least one module</xforms:alert>
+					<xforms:alert>Appropriate questions are displayed only when a module is selected</xforms:alert>
 				</xforms:select>
 				</span>
 			</p>
 
-			<h3>Study Dates</h3>
+			<h3>Study dates</h3>
 
 			<xforms:input ref="start">
 				<xforms:label>Start </xforms:label>
-				<xforms:alert>A valid date is required.</xforms:alert>
+        <xforms:alert>
+          <xforms:output
+              value="concat('An invalid date has been entered for the ', name(), ' field')" />
+        </xforms:alert>
 			</xforms:input>
 			<xforms:input ref="end">
 				<xforms:label>End </xforms:label>
-				<xforms:alert>A valid date is required.</xforms:alert>
+        <xforms:alert>
+          <xforms:output
+              value="concat('An invalid date has been entered for the ', name(), ' field')" />
+        </xforms:alert>
 			</xforms:input>
 
 			<h3>Pathogen Species</h3>
@@ -91,12 +97,12 @@
 					<xforms:label ref="label" />
 					<xforms:value ref="value" />
 				</xforms:itemset>
-				<xforms:alert>A pathogen species is required</xforms:alert>
+				<xforms:alert>A pathogen species is expected</xforms:alert>
 			</xforms:select>
 
 
 			<xforms:group ref="sites">
-				<h3>Study Site(s)</h3>
+				<h3>Study site(s)</h3>
 				<table class="repeat-table">
 					<xforms:repeat nodeset="site" id="rep-site">
 						<tr>
@@ -121,7 +127,7 @@
 											<xforms:label ref="label" />
 											<xforms:value ref="value" />
 										</xforms:itemset>
-										<xforms:alert>Please select a Country value</xforms:alert>
+										<xforms:alert>Selecting a Country initialises the map</xforms:alert>
 										<!--
 											<xxforms:show ev:event="xforms-select" dialog="dia-map"/>
 										-->
@@ -132,7 +138,7 @@
 									<xforms:group
 										ref=".[country/text() = instance('ins-country-items')/country[exists(regions)]/value/text()]">
 										<xforms:select1 ref="region">
-											<xforms:label class="fixed-width">Region: </xforms:label>
+											<xforms:label class="fixed-width">Region </xforms:label>
 											<xforms:itemset
 												nodeset="instance('ins-country-items')/country[value/text()=xxforms:context('rep-site')/country/text()]//region">
 												<xforms:label ref="label" />
@@ -153,8 +159,8 @@
 												dialog="dia-map"/>
 											-->
 											<xforms:alert>
-												<xforms:output
-													value="concat('Enter a value for the ', name(), ' field')" />
+                        <xforms:output
+                          value="concat('Enter a value for the ', name(), ' field')" />
 											</xforms:alert>
 										</xforms:input>
 									</xforms:group>
@@ -190,7 +196,7 @@
 										<xforms:label class="fixed-width">Latitude</xforms:label>
 										<xforms:alert>
 											<xforms:output
-												value="concat('Please enter a coordinate value between -180  and 180 for the ', name(), ' field ')" />
+												value="concat('Enter a coordinate value between -180  and 180 for the ', name(), ' field ')" />
 										</xforms:alert>
 									</xforms:input>
 								</div>
@@ -199,7 +205,7 @@
 										<xforms:label class="fixed-width">Longitude</xforms:label>
 										<xforms:alert>
 											<xforms:output
-												value="concat('Please enter a coordinate value between -180 and 180 for the ', name(), ' field ')" />
+												value="concat('Enter a coordinate value between -180 and 180 for the ', name(), ' field ')" />
 										</xforms:alert>
 									</xforms:input>
 								</div>
@@ -286,7 +292,7 @@
 									</xforms:select1>
 								</div>
 								<xforms:group ref="transmissionIntensity">
-									<h3>Transmission Intensity</h3>
+									<h3>Transmission intensity</h3>
 
 
 
@@ -304,7 +310,7 @@
 										<xforms:label>in year </xforms:label>
 										<xforms:alert>
 											<xforms:output
-												value="concat('Please enter a recent year for the ', name(), ' field ')" />
+												value="concat('Enter a recent year for the ', name(), ' field ')" />
 										</xforms:alert>
 									</xforms:input>
 									<br />
@@ -314,7 +320,7 @@
 										</xforms:label>
 										<xforms:alert>
 											<xforms:output
-												value="concat('Please enter an age in years for the ', name(), ' field ')" />
+												value="concat('Enter an age in years for the ', name(), ' field ')" />
 										</xforms:alert>
 									</xforms:input>
 									<xforms:select1 ref="transmissionIntensityAgeFromUnits"
@@ -327,7 +333,7 @@
 										</xforms:itemset>
 										<xforms:alert>
 											<xforms:output
-												value="concat('Please enter a value for the ', name(), ' field ')" />
+												value="concat('Enter a value for the ', name(), ' field ')" />
 										</xforms:alert>
 									</xforms:select1>
 
@@ -336,7 +342,7 @@
 										<xforms:label>to </xforms:label>
 										<xforms:alert>
 											<xforms:output
-												value="concat('Please enter an age for the ', name(), ' field ')" />
+												value="concat('Enter an age for the ', name(), ' field ')" />
 										</xforms:alert>
 									</xforms:input>
 									<xforms:select1 ref="transmissionIntensityAgeToUnits"
@@ -349,12 +355,12 @@
 										</xforms:itemset>
 										<xforms:alert>
 											<xforms:output
-												value="concat('Please enter a value for the ', name(), ' field ')" />
+												value="concat('Enter a value for the ', name(), ' field ')" />
 										</xforms:alert>
 									</xforms:select1>
 									<br />
 									<xforms:input ref="parasitePrevalence" class="fourWide">
-										<xforms:label class="fixed-width">Parasite Prevalence
+										<xforms:label class="fixed-width">Parasite prevalence
 										</xforms:label>
 										<xforms:alert>
 											<xforms:output
@@ -365,7 +371,7 @@
 										<xforms:label>in year </xforms:label>
 										<xforms:alert>
 											<xforms:output
-												value="concat('Please enter a recent year for the ', name(), ' field ')" />
+												value="concat('Enter a recent year for the ', name(), ' field ')" />
 										</xforms:alert>
 									</xforms:input>
 									<br />
@@ -385,7 +391,7 @@
 										<xforms:label>in year </xforms:label>
 										<xforms:alert>
 											<xforms:output
-												value="concat('Please enter a recent year for the ', name(), ' field ')" />
+												value="concat('Enter a recent year for the ', name(), ' field ')" />
 										</xforms:alert>
 									</xforms:input>
 									<br />
@@ -435,7 +441,7 @@
 						</td>
 						<td class="add-td">
 							<xforms:trigger appearance="minimal">
-								<xforms:label>Add a Site</xforms:label>
+								<xforms:label>Add a site</xforms:label>
 								<!--
 									<xxforms:show ev:event="DOMActivate" dialog="dia-map"/>
 								-->
@@ -464,13 +470,13 @@
 
 
 			<xforms:group ref="inclusionExclusionCriteria">
-				<h3 id="inclusionExclusionCriteria">Inclusion/Exclusion Criteria</h3>
+				<h3 id="inclusionExclusionCriteria">Inclusion/exclusion criteria</h3>
 				<xforms:group ref="age">
 					<xforms:input ref="minAge" class="fourWide">
 						<xforms:label class="fixed-wdith">Age min </xforms:label>
 						<xforms:alert>
 							<xforms:output
-								value="concat('Please enter an age in years for the ', name(), ' field ')" />
+								value="concat('Enter an age in years for the ', name(), ' field ')" />
 						</xforms:alert>
 					</xforms:input>
 
@@ -483,7 +489,7 @@
 						</xforms:itemset>
 						<xforms:alert>
 							<xforms:output
-								value="concat('Please enter a value for the ', name(), ' field ')" />
+								value="concat('Enter a value for the ', name(), ' field ')" />
 						</xforms:alert>
 					</xforms:select1>
 
@@ -491,7 +497,7 @@
 						<xforms:label>Age max </xforms:label>
 						<xforms:alert>
 							<xforms:output
-								value="concat('Please enter an age in years for the ', name(), ' field ')" />
+								value="concat('Enter an age in years for the ', name(), ' field ')" />
 						</xforms:alert>
 					</xforms:input>
 					<xforms:select1 ref="maxAgeUnits" appearance="minimal">
@@ -503,7 +509,7 @@
 						</xforms:itemset>
 						<xforms:alert>
 							<xforms:output
-								value="concat('Please enter a value for the ', name(), ' field ')" />
+								value="concat('Enter a value for the ', name(), ' field ')" />
 						</xforms:alert>
 					</xforms:select1>
 					<br />
@@ -610,8 +616,8 @@
 						<xforms:value>exclude</xforms:value>
 					</xforms:item>
 					<xforms:alert>
-						<xforms:output
-							value="concat('Enter a value for the ', name(), ' field')" />
+            <xforms:output
+              value="concat('Enter a value for the ', name(), ' field')" />
 					</xforms:alert>
 				</xforms:select1>
 				<br />
@@ -681,11 +687,11 @@
 										</xforms:select1>
 										<br />
 										<xforms:input ref="regimenUrl">
-											<xforms:label class="fixed-width">Description Url
+											<xforms:label class="fixed-width">Description URL
 											</xforms:label>
 											<xforms:hint>A URL of a page which describes the regimen
 											</xforms:hint>
-											<xforms:alert>Please enter a valid URL</xforms:alert>
+											<xforms:alert>Enter a valid URL</xforms:alert>
 											<xforms:send ev:event="xforms-value-changed"
 												submission="sub-check-regimen-url" />
 										</xforms:input>
@@ -747,7 +753,7 @@
 																		</td>
 																		<td class="add-td">
 																			<xforms:trigger appearance="minimal">
-																				<xforms:label>Add an Active Ingredient
+																				<xforms:label>Add an active ingredient
 																				</xforms:label>
 																				<xforms:insert ev:event="DOMActivate"
 																					context="." nodeset="activeIngredient" at="count(../activeIngredient)"
@@ -784,7 +790,7 @@
 															</xforms:input>
 															<br />
 															<xforms:input ref="expiryDate">
-																<xforms:label class="fixed-width">Expiry Date
+																<xforms:label class="fixed-width">Expiry date
 																</xforms:label>
 																<xforms:hint>The date the drug
 																	expires</xforms:hint>
@@ -817,7 +823,7 @@
 																</xforms:itemset>
 																<xforms:alert>
 																	<xforms:output
-																		value="concat('Please enter an integer value for the ', name(), ' field ')" />
+																		value="concat('Enter an integer value for the ', name(), ' field ')" />
 																</xforms:alert>
 															</xforms:select1>
 															<xforms:group ref="ageDosing">
@@ -910,7 +916,7 @@
 																		</td>
 																		<td class="add-td" colspan="6">
 																			<xforms:trigger appearance="minimal">
-																				<xforms:label>Add a Schedule</xforms:label>
+																				<xforms:label>Add a schedule</xforms:label>
 																				<xforms:insert ev:event="DOMActivate"
 																					context="." nodeset="ageDosingSchedule" at="count(../ageDosingSchedule)"
 																					position="after" origin="instance('ins-ageDosingSchedule')" />
@@ -1012,7 +1018,7 @@
 																		</td>
 																		<td class="add-td" colspan="6">
 																			<xforms:trigger appearance="minimal">
-																				<xforms:label>Add a Schedule</xforms:label>
+																				<xforms:label>Add a schedule</xforms:label>
 																				<xforms:insert ev:event="DOMActivate"
 																					context="." nodeset="wGroupDosingSchedule"
 																					at="count(../wGroupDosingSchedule)" position="after"
@@ -1076,7 +1082,7 @@
 																		</td>
 																		<td class="add-td" colspan="3">
 																			<xforms:trigger appearance="minimal">
-																				<xforms:label>Add a Schedule</xforms:label>
+																				<xforms:label>Add a schedule</xforms:label>
 																				<xforms:insert ev:event="DOMActivate"
 																					context="." nodeset="weightDosingSchedule"
 																					at="count(../weightDosingSchedule)" position="after"
@@ -1116,8 +1122,7 @@
 															<xforms:select1 appearance="minimal"
 																ref="readministeredOnVomitting">
 																<xforms:label> Was treatment readministered in the
-																	event
-																	of vomiting? </xforms:label>
+																	event of vomiting? </xforms:label>
 																<xforms:item>
 																	<xforms:label>unknown</xforms:label>
 																	<xforms:value />
@@ -1154,7 +1159,7 @@
 													</td>
 													<td class="add-td">
 														<xforms:trigger appearance="minimal">
-															<xforms:label>Add a Drug</xforms:label>
+															<xforms:label>Add a drug</xforms:label>
 															<xforms:insert ev:event="DOMActivate"
 																context="." nodeset="drug" at="count(../drug)" position="after"
 																origin="instance('ins-drug')" />
@@ -1179,7 +1184,7 @@
 								</td>
 								<td class="add-td">
 									<xforms:trigger appearance="minimal">
-										<xforms:label>Add a Regimen</xforms:label>
+										<xforms:label>Add a regimen</xforms:label>
 										<xforms:insert ev:event="DOMActivate" context="."
 											nodeset="regimen" at="count(../regimen)" position="after"
 											origin="instance('ins-regimen')" />
@@ -1236,7 +1241,10 @@
 							<xforms:label ref="label" />
 							<xforms:value ref="value" />
 						</xforms:itemset>
-						<xforms:alert>please select a value</xforms:alert>
+						<xforms:alert>
+            <xforms:output
+              value="concat('Enter a value for the ', name(), ' field')" />
+						</xforms:alert>
 					</xforms:select1>
 					<br />
 					<xforms:group ref="haemoglobinRecording">
@@ -1287,7 +1295,7 @@
 						</xforms:itemset>
 						<xforms:alert>
 							<xforms:output
-								value="concat('Please enter a value for the required field ', name())" />
+								value="concat('Enter a value for the required field ', name())" />
 						</xforms:alert>
 					</xforms:select1>
 					<br />
@@ -1339,7 +1347,7 @@
 					</xforms:input>
 					<br />
 					<xforms:input ref="sexualParasitemiaCount" class="fourWide">
-						<xforms:label>Sexual Parasitemia</xforms:label>
+						<xforms:label>Sexual parasitemia</xforms:label>
 					</xforms:input>
 					<xforms:select1 ref="sexualParasitemiaCountUnit"
 						appearance="minimal">
@@ -1367,9 +1375,8 @@
 					<br />
 					<xforms:select1 ref="separateSpeciesCounts"
 						appearance="minimal">
-						<xforms:label class="fixed-width">If Mixed Species, was each
-							species
-							quantified separately?</xforms:label>
+						<xforms:label class="fixed-width">If mixed species, was each
+							species	quantified separately?</xforms:label>
 						<xforms:item>
 							<xforms:label>N/A</xforms:label>
 							<xforms:value>na</xforms:value>
@@ -1379,7 +1386,10 @@
 							<xforms:label ref="label" />
 							<xforms:value ref="value" />
 						</xforms:itemset>
-						<xforms:alert>Please select</xforms:alert>
+						<xforms:alert>
+              <xforms:output
+                value="concat('Enter a value for the ', name(), ' field')" />
+		  				</xforms:alert>
 					</xforms:select1>
 
 					<xforms:group ref="thickFilmCalculationOfParasitemia">
@@ -1454,7 +1464,7 @@
 							<xforms:label>Htc %</xforms:label>
 							<xforms:alert>
 								<xforms:output
-									value="concat('Please enter an integer value between 0 and 100 for the ', name(), ' field ')" />
+									value="concat('Enter an integer value between 0 and 100 for the ', name(), ' field ')" />
 							</xforms:alert>
 						</xforms:input>
 						<br />
@@ -1464,7 +1474,7 @@
 					</xforms:group>
 
 					<xforms:group ref="qualityControl">
-						<h4>Quality Control</h4>
+						<h4>Quality control</h4>
 						<xforms:group ref="internal">
 							<h5>Internal</h5>
 							<xforms:input ref="percentageRereadBySecondMicroscopist"
@@ -1473,7 +1483,7 @@
 								</xforms:label>
 								<xforms:alert>
 									<xforms:output
-										value="concat('Please enter an integer value between 0 and 100 for the ', name(), ' field ')" />
+										value="concat('Enter an integer value between 0 and 100 for the ', name(), ' field ')" />
 								</xforms:alert>
 							</xforms:input>
 							<br />
@@ -1507,7 +1517,7 @@
 								</xforms:label>
 								<xforms:alert>
 									<xforms:output
-										value="concat('Please enter an integer value between 0 and 100 for the ', name(), ' field ')" />
+										value="concat('Enter an integer value between 0 and 100 for the ', name(), ' field ')" />
 								</xforms:alert>
 							</xforms:input>
 							<br />
@@ -1535,7 +1545,7 @@
 						</xforms:group>
 					</xforms:group>
 				</xforms:group>
-				<h4>Genotyping for Recrudescence vs Reinfection</h4>
+				<h4>Genotyping for recrudescence vs reinfection</h4>
 				<xforms:group
 					ref="geneotypingToDistinguishBetweenRecrudescenceAndReinfection">
 					<xforms:select1 ref="applicability" appearance="minimal">
@@ -1581,8 +1591,7 @@
 											</xforms:input>
 											<xforms:input ref="numberOfMicroSatellites"
 												class="fourWide">
-												<xforms:label>Number of Micro
-													Satellites</xforms:label>
+												<xforms:label>Number of micro	satellites</xforms:label>
 											</xforms:input>
 										</td>
 									</tr>
@@ -1600,7 +1609,7 @@
 									</td>
 									<td class="add-td">
 										<xforms:trigger appearance="minimal">
-											<xforms:label>Add a Marker</xforms:label>
+											<xforms:label>Add a marker</xforms:label>
 											<xforms:insert ev:event="DOMActivate" context="."
 												nodeset="recrudescenceMarker" at="count(../recrudescenceMarker)"
 												position="after" origin="instance('ins-recrudescenceMarker')" />
@@ -1642,7 +1651,7 @@
 
 							<xforms:group ref="mixedAllelesOpen">
 								<xforms:select1 ref="mixedAlleles" appearance="minimal">
-									<xforms:label>Mixed Alleles were defined as </xforms:label>
+									<xforms:label>Mixed alleles were defined as </xforms:label>
 									<xforms:item>
 										<xforms:label>please select</xforms:label>
 										<xforms:value />
@@ -1750,7 +1759,7 @@
 						</xforms:itemset>
 						<xforms:alert>
 							<xforms:output
-								value="concat('Please enter a value for the required field ', name())" />
+								value="concat('Enter a value for the required field ', name())" />
 						</xforms:alert>
 					</xforms:select1>
 					<xforms:group ref="sampleSelectionMethodOpen">
@@ -1772,7 +1781,7 @@
 							</xforms:item>
 							<xforms:alert>
 								<xforms:output
-									value="concat('Please enter a value for the required field ', name())" />
+									value="concat('Enter a value for the required field ', name())" />
 							</xforms:alert>
 						</xforms:select1>
 						<xforms:input ref="sampleSelectionMethodOther">
@@ -1784,7 +1793,7 @@
 					</xforms:group>
 				</xforms:group>
 				<xforms:group ref="sample">
-					<h3>Sample Type</h3>
+					<h3>Sample type</h3>
 					<xforms:group ref="sampleTypeOpen">
 						<xforms:select1 ref="sampleType" appearance="minimal">
 							<xforms:label>Sample type</xforms:label>
@@ -2223,7 +2232,7 @@
 							<xforms:label>Hematocrit (%)</xforms:label>
 							<xforms:alert>
 								<xforms:output
-									value="concat('Please enter an integer value between 0 and 100 for the ', name(), ' field ')" />
+									value="concat('Enter an integer value between 0 and 100 for the ', name(), ' field ')" />
 							</xforms:alert>
 						</xforms:input>
 					</p>
@@ -2309,7 +2318,7 @@
 							<xforms:label>Serum final concentration (g/L) </xforms:label>
 							<xforms:alert>
 								<xforms:output
-									value="concat('Please enter an integer value for the ', name(), ' field ')" />
+									value="concat('Enter an integer value for the ', name(), ' field ')" />
 							</xforms:alert>
 						</xforms:input>
 					</p>
@@ -2322,7 +2331,7 @@
 							</xforms:label>
 							<xforms:alert>
 								<xforms:output
-									value="concat('Please enter an integer value for the ', name(), ' field ')" />
+									value="concat('Enter an integer value for the ', name(), ' field ')" />
 							</xforms:alert>
 						</xforms:input>
 					</p>
@@ -2348,7 +2357,7 @@
 								</xforms:label>
 								<xforms:alert>
 									<xforms:output
-										value="concat('Please enter an integer value for the ', name(), ' field ')" />
+										value="concat('Enter an integer value for the ', name(), ' field ')" />
 								</xforms:alert>
 							</xforms:input>
 						</p>
@@ -2359,7 +2368,7 @@
 						<h5>Orotic Acid</h5>
 						<p>
 							<xforms:select1 ref="oroticAcid-added" appearance="minimal">
-								<xforms:label>Do you add Orotic Acid?</xforms:label>
+								<xforms:label>Do you add orotic acid?</xforms:label>
 								<xforms:itemset model="mod-study-info"
 									nodeset="instance('ins-boolean-items')/boolean">
 									<xforms:label ref="label" />
@@ -2371,11 +2380,11 @@
 						<p>
 							<xforms:input ref="oroticAcid-finalConcentration"
 								class="fourWide">
-								<xforms:label>Final Orotic Acid concentration (g/L)
+								<xforms:label>Final orotic acid concentration (g/L)
 								</xforms:label>
 								<xforms:alert>
 									<xforms:output
-										value="concat('Please enter an integer value for the ', name(), ' field ')" />
+										value="concat('Enter an integer value for the ', name(), ' field ')" />
 								</xforms:alert>
 							</xforms:input>
 						</p>
@@ -2400,7 +2409,7 @@
 								<xforms:label>Final glucose concentration (g/L)</xforms:label>
 								<xforms:alert>
 									<xforms:output
-										value="concat('Please enter an integer value for the ', name(), ' field ')" />
+										value="concat('Enter an integer value for the ', name(), ' field ')" />
 								</xforms:alert>
 							</xforms:input>
 						</p>
@@ -2443,7 +2452,7 @@
 												</xforms:item>
 												<xforms:alert>
 													<xforms:output
-														value="concat('Please enter a value for the required field ', name())" />
+														value="concat('Enter a value for the required field ', name())" />
 												</xforms:alert>
 											</xforms:select1>
 											<xforms:input ref="antibioticOther">
@@ -2451,7 +2460,7 @@
 												</xforms:label>
 												<xforms:alert>
 													<xforms:output
-														value="concat('Please enter a value for the required field ', name())" />
+														value="concat('Enter a value for the required field ', name())" />
 												</xforms:alert>
 											</xforms:input>
 										</xforms:group>
@@ -2461,7 +2470,7 @@
 											</xforms:label>
 											<xforms:alert>
 												<xforms:output
-													value="concat('Please enter an integer value for the ', name(), ' field ')" />
+													value="concat('Enter an integer value for the ', name(), ' field ')" />
 											</xforms:alert>
 										</xforms:input>
 									</td>
@@ -2496,7 +2505,7 @@
 
 
 				<xforms:group ref="susceptibility">
-					<h4>Determination of Drug Susceptibility</h4>
+					<h4>Determination of drug susceptibility</h4>
 					<p>
 						<em> If this information is different for each sample, please
 							include it in
@@ -2546,7 +2555,7 @@
 				-->
 
 				<xforms:group ref="drugs">
-					<h4>Drug Substances</h4>
+					<h4>Drug substances</h4>
 
 					<p>
 						<em>Please complete the section below for each drug substance
@@ -2582,7 +2591,7 @@
 											<xforms:label ref="label" />
 											<xforms:value ref="value" />
 										</xforms:itemset>
-										<xforms:alert>Please select a molecule</xforms:alert>
+										<xforms:alert>Select a molecule</xforms:alert>
 									</xforms:select1>
 									<br />
 									<xforms:select1 appearance="minimal" ref="solvent">
@@ -2605,7 +2614,7 @@
 											(g/L)</xforms:label>
 										<xforms:alert>
 											<xforms:output
-												value="concat('Please enter an integer value for the ', name(), ' field ')" />
+												value="concat('Enter an integer value for the ', name(), ' field ')" />
 										</xforms:alert>
 									</xforms:input>
 									<br />
@@ -2643,7 +2652,7 @@
 							</td>
 							<td class="add-td">
 								<xforms:trigger appearance="minimal">
-									<xforms:label>Add a Drug</xforms:label>
+									<xforms:label>Add a drug</xforms:label>
 									<xforms:insert ev:event="DOMActivate" context="."
 										nodeset="drug" at="count(../drug)" position="after"
 										origin="instance('ins-invitro-drug-template')" />
@@ -2737,7 +2746,7 @@
 										</xforms:label>
 										<xforms:alert>
 											<xforms:output
-												value="concat('Please enter an integer value between 0 and 100 for the ', name(), ' field ')" />
+												value="concat('Enter an integer value between 0 and 100 for the ', name(), ' field ')" />
 										</xforms:alert>
 									</xforms:input>
 									<br />
@@ -2746,7 +2755,7 @@
 											synchronisation (%) </xforms:label>
 										<xforms:alert>
 											<xforms:output
-												value="concat('Please enter an integer value between 0 and 100 for the ', name(), ' field ')" />
+												value="concat('Enter an integer value between 0 and 100 for the ', name(), ' field ')" />
 										</xforms:alert>
 									</xforms:input>
 								</td>
@@ -2789,7 +2798,7 @@
 				
 				<div id="pharmacology-questions-container">
 
-				<h2>Pharmacology Questions</h2>
+				<h2>Pharmacology questions</h2>
 
 
 				<xforms:group ref="samples">
@@ -2827,7 +2836,7 @@
 										<h4>Temperature and time to storage</h4>
 										<xforms:input ref="storageTemperature">
 											<xforms:label>Temperature</xforms:label>
-											<xforms:hint>Eg Room temperature</xforms:hint>
+											<xforms:hint>Eg room temperature</xforms:hint>
 										</xforms:input>
 										<xforms:input ref="storageDuration">
 											<xforms:label>Duration</xforms:label>
@@ -2868,7 +2877,7 @@
 							</td>
 							<td class="add-td">
 								<xforms:trigger appearance="minimal">
-									<xforms:label>Add a Sample</xforms:label>
+									<xforms:label>Add a sample</xforms:label>
 									<xforms:insert ev:event="DOMActivate" context="."
 										nodeset="sample" at="count(../sample)" position="after"
 										origin="instance('ins-pharmacology-sample-template')" />
@@ -2935,7 +2944,7 @@
 								<td class="form-td">
 									<xforms:input ref="lowerLoQ" class="fourWide">
 										<xforms:label />
-										<xforms:hint>Lower Limit of Quantification</xforms:hint>
+										<xforms:hint>Lower limit of quantification</xforms:hint>
 									</xforms:input>
 								</td>
 
@@ -2947,7 +2956,7 @@
 											<xforms:label ref="label" />
 											<xforms:value ref="value" />
 										</xforms:itemset>
-										<xforms:alert>Please select a Matrix</xforms:alert>
+										<xforms:alert>Please select a matrix</xforms:alert>
 										<xforms:hint>The matrix</xforms:hint>
 									</xforms:select>
 								</td>
@@ -3024,14 +3033,14 @@
 
 									<xforms:input ref="url">
 										<xforms:label class="invisible">Reference URL</xforms:label>
-										<xforms:alert>Please enter a valid URL</xforms:alert>
+										<xforms:alert>Enter a valid URL</xforms:alert>
 										<xforms:send ev:event="xforms-value-changed"
 											submission="sub-check-assayReference-url" />
 									</xforms:input>
 									<xforms:input ref="doi">
 										<xforms:label class="invisible">DOI</xforms:label>
 										<xforms:hint>Without a DOI: prefix</xforms:hint>
-										<xforms:alert>Please enter a valid DOI</xforms:alert>
+										<xforms:alert>Enter a valid DOI</xforms:alert>
 										<xforms:send ev:event="xforms-value-changed"
 											submission="sub-check-assayReference-doi" />
 									</xforms:input>
