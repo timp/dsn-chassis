@@ -1,4 +1,4 @@
-<?oxygen NVDLSchema="../../../../../../../../oxygen/samples/nvdl/xhtml-xforms-11-orbeon.nvdl"?>
+<?oxygen NVDLSchema="../../../../../../../oxygen/samples/nvdl/xhtml-xforms-11-orbeon.nvdl"?>
 <div 
 	xmlns="http://www.w3.org/1999/xhtml" 
 	xmlns:xforms="http://www.w3.org/2002/xforms"
@@ -14,10 +14,10 @@
 			
 		<p>
 			<xforms:output ref="manta:id">
-				<xforms:label>Code:</xforms:label>
+				<xforms:label>ID:</xforms:label>
 			</xforms:output>	    					
 		</p>	
-				
+		
 		<p>
 			<xforms:output ref="atom:author/atom:email">
 				<xforms:label>Creator:</xforms:label>
@@ -26,7 +26,7 @@
 		
 		<p>
 			<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')">
-				<xforms:label>Terms of Submission Accepted:</xforms:label>
+				<xforms:label>Terms of Submission accepted:</xforms:label>
 			</xforms:output>	    					
 		</p>
 		
