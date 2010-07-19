@@ -7,7 +7,7 @@
 	xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
 	xmlns:atombeat="http://purl.org/atombeat/xmlns">
 	
-	<h2>Submit a File</h2>
+	<h2>Submit a file</h2>
 
 	<p>
 		<span id="file-selector-container">
@@ -43,7 +43,7 @@
 		
 		<span id="other-file-type-textbox-container">
 		<xforms:input ref="instance('ins-upload')/@label">
-			<xforms:label>Other Type:</xforms:label>
+			<xforms:label>Other type:</xforms:label>
 			<xforms:alert>Please enter the type of file.</xforms:alert>
 		</xforms:input>
 		</span>
@@ -67,7 +67,7 @@
 	
 	
 	
-			<h2>Submitted Files</h2>
+			<h2>Submitted files</h2>
     		
     		<xforms:group ref="instance('ins-submitted-media-feed')[empty(atom:entry)]">
     			<p>You have not submitted any files.</p>
@@ -81,9 +81,9 @@
 			    		<thead>
 			    			<tr>
 			    				<th fr:sortable="true" fr:resizeable="true">Code</th>
-			    				<th fr:sortable="true" fr:resizeable="true">File Name</th>
-			    				<th fr:sortable="true" fr:resizeable="true">Date Submitted</th>
-			    				<th fr:sortable="true" fr:resizeable="true">Submitted By</th>
+			    				<th fr:sortable="true" fr:resizeable="true">File name</th>
+			    				<th fr:sortable="true" fr:resizeable="true">Date submitted</th>
+			    				<th fr:sortable="true" fr:resizeable="true">Submitted by</th>
 			    				<th fr:sortable="true" fr:resizeable="true">Type</th>
 			    				<th>Actions</th>
 			    			</tr>

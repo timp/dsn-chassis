@@ -50,7 +50,7 @@
 				<td>
 					<span id="add-administrator-link-container">
                     <xforms:trigger appearance="minimal">
-                        <xforms:label>Add an Administrator</xforms:label>
+                        <xforms:label>Add an administrator</xforms:label>
                         <xforms:insert 
 	                      	ev:event="DOMActivate" 
 	                      	context="." 
@@ -71,7 +71,7 @@
      <p>
      	<span id="permissions-save-changes-button-container">
      	<xforms:trigger ref="instance('ins-control')/save-permissions-trigger">
-     		<xforms:label>Save Changes</xforms:label>
+     		<xforms:label>Save changes</xforms:label>
      		<xforms:action ev:event="DOMActivate" if="../permissions-entry-is-valid = 'true'">
      			<xforms:send submission="sub-put-permissions-entry"/>
      		</xforms:action>

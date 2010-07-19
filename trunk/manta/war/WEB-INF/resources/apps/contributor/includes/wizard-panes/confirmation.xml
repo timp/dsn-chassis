@@ -1,9 +1,10 @@
 <div 
 	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:xi="http://www.w3.org/2001/XInclude"
+	xmlns:ev="http://www.w3.org/2001/xml-events"
 	xmlns:xforms="http://www.w3.org/2002/xforms" >
 
-	<h2>Registration Complete</h2>
+	<h2>Registration complete</h2>
 
     <p>Thank you for registering your study. 
     </p>
@@ -12,11 +13,11 @@
 
 	<p>
 
-		<a href="home">&lt;&lt; Back Home</a>
+		<a href="home">&lt;&lt; Back home</a>
 		
 	</p>
 
-	<h3>Study Info</h3>
+	<h3>Study info</h3>
 	
     <p>We invite you to complete the following information about your study. This questionnaire is optional, but the information can be very helpful in curating your data – especially if your data is not yet published. If you do not have time to complete the questionnaire and your study has been published, the study curator will try to derive the answers from the publications you’ve provided.
     </p>
@@ -26,11 +27,42 @@
     
     <p>You can also copy study information from another study for which you have administrator/creator rights. If you copy information from an existing questionnaire it will overwrite any answer you’ve given, so be sure to update any information that differs from the template study.
     </p>	
-	
+
+    <xforms:group ref="instance('ins-control')/copy-answers-control">
+        <p>
+            
+            <span id="studies-to-copy-answers-from-menu-container">
+                <xforms:select1 ref="instance('ins-control')/href-to-copy-study-info-from">
+                    <xforms:label>Copy answers from another study?</xforms:label>
+                    
+                    <xforms:item>
+                        <xforms:label>Select...</xforms:label>
+                        <xforms:value></xforms:value>
+                    </xforms:item>
+                    
+                    <xforms:itemset nodeset="xxforms:sort(instance('ins-study-feed')/atom:entry[atom:id!=instance('ins-study-entry')/atom:id], atom:published, 'text', 'ascending')">
+                        <xforms:label ref="concat(atom:title, ' (', manta:id, ')')"/>
+                        <xforms:value ref="atom:link[@rel='http://www.cggh.org/2010/chassis/terms/studyInfo']/@href"/>
+                    </xforms:itemset>
+                </xforms:select1>
+            </span>
+            
+            <span id="copy-answers-button-container">
+                <xforms:trigger ref="instance('ins-control')/copy-answers-trigger">
+                    <xforms:label>Copy answers</xforms:label>
+                    <xforms:action ev:event="DOMActivate">
+                        <xforms:send submission="sub-copy-answers" />
+                    </xforms:action>
+                </xforms:trigger>
+            </span>
+            
+        </p>
+    </xforms:group>
+
      <p>
          <span class="confirmation-study-info-save-changes-button-container">
              <xforms:submit submission="sub-put-sq-study-info-entry">
-                 <xforms:label>Save Changes</xforms:label>
+                 <xforms:label>Save changes</xforms:label>
              </xforms:submit>
          </span>
      </p>
@@ -40,7 +72,7 @@
      <p>
          <span class="confirmation-study-info-save-changes-button-container">
              <xforms:submit submission="sub-put-sq-study-info-entry">
-                 <xforms:label>Save Changes</xforms:label>
+                 <xforms:label>Save changes</xforms:label>
              </xforms:submit>
          </span>
      </p>

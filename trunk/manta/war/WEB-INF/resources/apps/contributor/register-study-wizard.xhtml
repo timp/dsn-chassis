@@ -50,6 +50,9 @@
                 	<upload-file-trigger/>
                 	<href-of-file-to-delete/>
                 	<name-of-file-to-delete/>
+                	<href-to-copy-study-info-from/>
+					<copy-answers-control/>
+        			<copy-answers-trigger/>
                 </control>
             </xforms:instance>    
             
@@ -70,6 +73,8 @@
             <xforms:bind nodeset="instance('ins-control')/create-draft-trigger" relevant="not(instance('ins-draft-entry')/atom:link[@rel='edit'])"/>
 			<xforms:bind nodeset="instance('ins-control')/add-publication-trigger" relevant="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:content/study/study-is-published='Yes'"/>
 
+        	<xforms:bind nodeset="instance('ins-control')/copy-answers-control" relevant="instance('ins-study-feed')[count(atom:entry)>1]"/>
+        	<xforms:bind nodeset="instance('ins-control')/copy-answers-trigger" readonly="../href-to-copy-study-info-from = ''"/>
 
 			<!-- These binding would cause the buttons to disable when the draft-entry is invalid, but it causes a problem: The user has to change focus from a form element before the form is re-validated, causing the button to appear readonly even when the form is valid. -->
 			<!-- Another workaround (besides the current use of messages) might be to use xxforms:incremental, but that creates much more traffic, i.e. on every keypress. -->
@@ -664,6 +669,69 @@
             	<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while deleting the draft.</xforms:message>       
             
         	</xforms:submission>
+
+
+
+
+        	<xforms:instance id="ins-study-feed">
+				<atom:feed/>
+			</xforms:instance>
+
+			<xforms:submission 
+				id="sub-retrieve-study-feed"
+				resource="/atombeat/content/studies"
+				method="get"
+				replace="instance"
+				instance="ins-study-feed">
+				<!-- TODO error handling -->
+                <xforms:message ev:event="xforms-submit-error" level="modal">
+                	An error occurred (<xforms:output value="event('error-type')"/>) while retrieving a list of studies.
+               	</xforms:message>
+			</xforms:submission>
+			
+			<xforms:send 
+				ev:event="xforms-model-construct-done" 
+				submission="sub-retrieve-study-feed"/>
+
+			<xforms:instance id="ins-study-info-entry-to-copy-study-info-from">
+				<atom:entry/>
+			</xforms:instance>
+				
+			<xforms:submission 
+				id="sub-copy-answers"
+				resource="{instance('ins-control')/href-to-copy-study-info-from}"
+				method="get"
+				replace="instance"
+				instance="ins-study-info-entry-to-copy-study-info-from">
+				
+				<xforms:action ev:event="xforms-submit-done">
+					
+					<!-- 
+						Make sure we replace only the <questionnaire> element 
+						and not the whole <atom:entry>, otherwise the edit link
+						will be wrong and the data will get PUT to the wrong
+						URL when changes are saved.
+					-->
+					
+					<xforms:delete nodeset="xxforms:instance('ins-sq-study-info-entry')/atom:content/study-info"/>
+					<xforms:insert 
+						context="xxforms:instance('ins-sq-study-info-entry')/atom:content" 
+						nodeset="study-info" 
+						origin="instance('ins-study-info-entry-to-copy-study-info-from')/atom:content/study-info"
+						at="last()" position="after" />
+					
+					<xforms:message level="modal">
+						Answers have now been copied from "<xforms:output value="instance('ins-study-feed')/atom:entry[atom:link[@rel='http://www.cggh.org/2010/chassis/terms/studyInfo']/@href = instance('ins-control')/href-to-copy-study-info-from]/atom:title"/> (<xforms:output value="instance('ins-study-feed')/atom:entry[atom:link[@rel='http://www.cggh.org/2010/chassis/terms/studyInfo']/@href = instance('ins-control')/href-to-copy-study-info-from]/manta:id"/>)". Be sure to update any answers that differ from study "<xforms:output value="instance('ins-study-feed')/atom:entry[atom:link[@rel='http://www.cggh.org/2010/chassis/terms/studyInfo']/@href = instance('ins-control')/href-to-copy-study-info-from]/atom:title"/> (<xforms:output value="instance('ins-study-feed')/atom:entry[atom:link[@rel='http://www.cggh.org/2010/chassis/terms/studyInfo']/@href = instance('ins-control')/href-to-copy-study-info-from]/manta:id"/>)". Changes will not be saved until you click "Save changes".
+					</xforms:message>
+					
+				</xforms:action>
+				
+				
+                <xforms:message ev:event="xforms-submit-error" level="modal">
+                	An error occurred (<xforms:output value="event('error-type')"/>) while copying answers from the selected study.
+               	</xforms:message>
+			</xforms:submission>
+
 
 
 

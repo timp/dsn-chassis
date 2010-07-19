@@ -1,11 +1,11 @@
 <!--  An open (extensible) list of values for the Type, including the magic value Other. -->
 <terms xmlns="">
     <term>
-        <label>Data File</label>
+        <label>Data file</label>
         <value>http://www.cggh.org/2010/chassis/terms/DataFile</value>
     </term>
     <term>
-        <label>Data Dictionary</label>
+        <label>Data dictionary</label>
         <value>http://www.cggh.org/2010/chassis/terms/DataDictionary</value>
     </term>
     <term>
