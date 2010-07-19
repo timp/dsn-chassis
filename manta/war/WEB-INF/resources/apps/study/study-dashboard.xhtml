@@ -491,20 +491,25 @@
 	    				</li>
 	    			</xforms:group>
 	    			
-	    			<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='permissions']">
-	    				<li class="selected">
-	    					<a href="dashboard?tab=permissions&amp;study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
-		    					<em>Permissions</em>
-	    					</a>
-	   					</li>
-   					</xforms:group>
-	    			<xforms:group ref="instance('ins-control')[dashboard-tab-to-show!='permissions']">
-	    				<li id="permissions-tab-link-container">
-	    					<a href="dashboard?tab=permissions&amp;study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
-		    					<em>Permissions</em>
-	    					</a>
-	   					</li>
-   					</xforms:group>
+	    			<!-- If the user has GET access to the security descriptor. -->
+			    	<xforms:group ref="instance('ins-study-entry')/atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor' and contains(@atombeat:allow, 'GET')]">
+			    		
+		    			<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='permissions']">
+		    				<li class="selected">
+		    					<a href="dashboard?tab=permissions&amp;study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
+			    					<em>Permissions</em>
+		    					</a>
+		   					</li>
+	   					</xforms:group>
+		    			<xforms:group ref="instance('ins-control')[dashboard-tab-to-show!='permissions']">
+		    				<li id="permissions-tab-link-container">
+		    					<a href="dashboard?tab=permissions&amp;study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
+			    					<em>Permissions</em>
+		    					</a>
+		   					</li>
+	   					</xforms:group>
+	   					
+	   				</xforms:group>
    					
    					<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='acknowledgements']">
 	    				<li class="selected">
@@ -521,21 +526,25 @@
 	   					</li>
    					</xforms:group>
    					
-   					
-   					<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='files']">
-	    				<li class="selected">
-	    					<a href="dashboard?tab=files&amp;study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
-		    					<em>Files</em>
-	    					</a>
-	   					</li>
-   					</xforms:group>
-   					<xforms:group ref="instance('ins-control')[dashboard-tab-to-show!='files']">
-	    				<li id="files-tab-link-container">
-	    					<a href="dashboard?tab=files&amp;study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
-		    					<em>Files</em>
-	    					</a>
-	   					</li>
-   					</xforms:group>
+	    			<!-- If the user has GET access to the submitted media. -->
+			    	<xforms:group ref="instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/submittedMedia' and contains(@atombeat:allow, 'GET')]">
+			    	
+	   					<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='files']">
+		    				<li class="selected">
+		    					<a href="dashboard?tab=files&amp;study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
+			    					<em>Files</em>
+		    					</a>
+		   					</li>
+	   					</xforms:group>
+	   					<xforms:group ref="instance('ins-control')[dashboard-tab-to-show!='files']">
+		    				<li id="files-tab-link-container">
+		    					<a href="dashboard?tab=files&amp;study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
+			    					<em>Files</em>
+		    					</a>
+		   					</li>
+	   					</xforms:group>
+	   					
+	   				</xforms:group>	
    					
    					<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='publications']">
 	    				<li class="selected">
@@ -622,88 +631,41 @@
 
 
 					<!-- Tab panels -->
+					
+					<!-- For all roles -->
+			    	<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='summary']">
+			    		<xi:include href="includes/dashboard-tabs/summary.xml"/>
+			    	</xforms:group>		
+			    	
+			    	<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='permissions']">
+			    	
+			    		<!-- If the user has GET access to the security descriptor. -->
+			    		<xforms:group ref="instance('ins-study-entry')/atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor' and contains(@atombeat:allow, 'GET')]">
+			    			<xi:include href="includes/dashboard-tabs/permissions.xml"/>
+			    		</xforms:group>
+			    		
+			    	</xforms:group>	
 
-					<!-- For contributor -->
-		   			<xforms:group ref="instance('ins-control')/contributor-controls">
-		    				
-					    	<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='summary']">
-					    		<xi:include href="includes/dashboard-tabs/for-contributor/summary.xml"/>
-					    	</xforms:group>		
-					    	
-					    	<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='permissions']">
-					    		<xi:include href="includes/dashboard-tabs/for-contributor/permissions.xml"/>
-					    	</xforms:group>	
-					    	
-					    	<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='acknowledgements']">
-					    		<xi:include href="includes/dashboard-tabs/for-contributor/acknowledgements.xml"/>
-					    	</xforms:group>	
-					    	
+			    	<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='acknowledgements']">
+			    		<xi:include href="includes/dashboard-tabs/acknowledgements.xml"/>
+			    	</xforms:group>	
+			    	
+			    	<!-- If the user has GET access to the submitted media. -->
+			    	<xforms:group ref="instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/submittedMedia' and contains(@atombeat:allow, 'GET')]">
+			    	
 					    	<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='files']">
-					    		<xi:include href="includes/dashboard-tabs/for-contributor/files.xml"/>
+					    		<xi:include href="includes/dashboard-tabs/files.xml"/>
 					    	</xforms:group>	
 					    	
-					    	<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='publications']">
-					    		<xi:include href="includes/dashboard-tabs/for-contributor/publications.xml"/>
-					    	</xforms:group>		
-					    	
-					  </xforms:group>
-					  
-					  
-					<!-- For curator -->
-		   			<xforms:group ref="instance('ins-control')/curator-controls">
-		    				
-					    	<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='summary']">
-					    		<xi:include href="includes/dashboard-tabs/for-curator/summary.xml"/>
-					    	</xforms:group>		
-					    	
-					    	<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='permissions']">
-					    		<xi:include href="includes/dashboard-tabs/for-curator/permissions.xml"/>
-					    	</xforms:group>	
-					    	
-					    	<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='acknowledgements']">
-					    		<xi:include href="includes/dashboard-tabs/for-curator/acknowledgements.xml"/>
-					    	</xforms:group>	
-					    	
-					    	<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='files']">
-					    		<xi:include href="includes/dashboard-tabs/for-curator/files.xml"/>
-					    	</xforms:group>	
-					    	
-					    	<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='publications']">
-					    		<xi:include href="includes/dashboard-tabs/for-curator/publications.xml"/>
-					    	</xforms:group>			 
-					    	
-					  </xforms:group>			
-					  
-					<!-- For administrator -->
-		   			<xforms:group ref="instance('ins-control')/administrator-controls">
-		    				
-					    	<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='summary']">
-					    		<xi:include href="includes/dashboard-tabs/for-administrator/summary.xml"/>
-					    	</xforms:group>		
-					    	
-					    	<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='permissions']">
-					    		<xi:include href="includes/dashboard-tabs/for-administrator/permissions.xml"/>
-					    	</xforms:group>	
-					    	
-					    	<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='acknowledgements']">
-					    		<xi:include href="includes/dashboard-tabs/for-administrator/acknowledgements.xml"/>
-					    	</xforms:group>	
-					    	
-					    	<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='files']">
-					    		<xi:include href="includes/dashboard-tabs/for-administrator/files.xml"/>
-					    	</xforms:group>	
-					    	
-					    	<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='publications']">
-					    		<xi:include href="includes/dashboard-tabs/for-administrator/publications.xml"/>
-					    	</xforms:group>			 
-					    	
-					  </xforms:group>					  
-					  
-					  
-					  <!-- For all roles -->
-				    	<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='study-info']">
-				    		<xi:include href="includes/dashboard-tabs/study-info.xml"/>
-				    	</xforms:group>
+			    	</xforms:group>
+
+			    	<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='publications']">
+			    		<xi:include href="includes/dashboard-tabs/publications.xml"/>
+			    	</xforms:group>	
+
+			    	<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='study-info']">
+			    		<xi:include href="includes/dashboard-tabs/study-info.xml"/>
+			    	</xforms:group>
 
     			</div>
     			
@@ -711,7 +673,7 @@
     		
     	</div>
     	
-    	<!-- <fr:xforms-inspector xmlns:fr="http://orbeon.org/oxf/xml/form-runner"/>  -->
+    	<fr:xforms-inspector xmlns:fr="http://orbeon.org/oxf/xml/form-runner"/>
     	
     </body>
 </html>
