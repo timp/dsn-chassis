@@ -111,7 +111,6 @@
 			        	<draft xmlns="">
 							<wizard-pane-to-show>study-terms</wizard-pane-to-show>
 							<registrant-has-agreed-to-the-terms/>
-							<registrant-has-contacted-wwarn/>
 							<study-entry-container>
 								<xi:include href="../common/templates/study/study-entry-template.xml" xxi:omit-xml-base="true"/>
 							</study-entry-container>
@@ -125,10 +124,6 @@
  
              <!-- Make the terms checkbox readonly once a draft has been saved -->
             <xforms:bind nodeset="instance('ins-draft-entry')/atom:content/draft/registrant-has-agreed-to-the-terms" readonly="instance('ins-draft-entry')/atom:link[@rel='edit']"/>
-
-            <!-- Make the contact checkbox readonly once a draft has been saved -->
-            <xforms:bind nodeset="instance('ins-draft-entry')/atom:content/draft/registrant-has-contacted-wwarn" readonly="instance('ins-draft-entry')/atom:link[@rel='edit']"/>
- 
  
  			<!-- user template for adding a new administrator in the permissions pane -->
        		<xforms:instance id="ins-user-template">
@@ -312,7 +307,6 @@
         
 
         	<!-- bindings for the study-terms pane -->
-        	<xforms:bind nodeset="instance('ins-draft-entry')/atom:content/draft/registrant-has-contacted-wwarn" required="true()"/>
 			<xforms:bind nodeset="instance('ins-draft-entry')/atom:content/draft/registrant-has-agreed-to-the-terms" required="true()"/>
 			<xforms:bind nodeset="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:title" required="true()"/>
 
