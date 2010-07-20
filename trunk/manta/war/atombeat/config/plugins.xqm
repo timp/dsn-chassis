@@ -13,10 +13,10 @@ import module namespace manta-plugin = "http://www.cggh.org/2010/chassis/manta/x
 declare function plugin:before() as function* {
 	(
 		util:function( QName( "http://purl.org/atombeat/xquery/logger-plugin" , "logger-plugin:before" ) , 4 ) ,
-	    util:function( QName( "http://purl.org/atombeat/xquery/security-plugin" , "security-plugin:before" ) , 4 ) ,
+	  util:function( QName( "http://purl.org/atombeat/xquery/security-plugin" , "security-plugin:before" ) , 4 ) ,
 		util:function( QName( "http://purl.org/atombeat/xquery/history-plugin" , "history-plugin:before" ) , 4 ) ,
-        util:function( QName( "http://www.cggh.org/2010/chassis/manta/xquery/atombeat-plugin" , "manta-plugin:before" ) , 4 )
-    )
+    util:function( QName( "http://www.cggh.org/2010/chassis/manta/xquery/atombeat-plugin" , "manta-plugin:before" ) , 4 )
+  )
 };
 
 
@@ -25,7 +25,7 @@ declare function plugin:before() as function* {
 declare function plugin:after() as function* {
 	(
 		util:function( QName( "http://purl.org/atombeat/xquery/history-plugin" , "history-plugin:after" ) , 3 ) , 
-    	util:function( QName( "http://www.cggh.org/2010/chassis/manta/xquery/atombeat-plugin" , "manta-plugin:after" ) , 3 ) ,
+    util:function( QName( "http://www.cggh.org/2010/chassis/manta/xquery/atombeat-plugin" , "manta-plugin:after" ) , 3 ) ,
 		util:function( QName( "http://purl.org/atombeat/xquery/security-plugin" , "security-plugin:after" ) , 3 ) , 
 		util:function( QName( "http://purl.org/atombeat/xquery/logger-plugin" , "logger-plugin:after" ) , 3 )
 	)
