@@ -7,34 +7,6 @@
 	<h2>Study terms - (Step 1 of 5)</h2>
 
 	<p>
-		Please contact a member of WWARN before you begin the study
-		registration process. [insert contact details, i.e., email address and
-		telephone number, etc.] We ask that you contact us before registering
-		a new study so that we can best assist you through the registration
-		and data submission process.
-	</p>
-
-	<p>
-		
-		<span>I have contacted a member of WWARN about this study:</span>
-		
-		<span id="contact-wwarn-checkbox-container">
-			
-			<xforms:select ref="instance('ins-draft-entry')/atom:content/draft/registrant-has-contacted-wwarn" appearance="full">
-				
-				<xforms:item  ref="instance('ins-draft-entry')/atom:content/draft/registrant-has-contacted-wwarn">
-					<xforms:label></xforms:label>
-					<xforms:value>yes</xforms:value>
-				</xforms:item>
-				
-				<xforms:alert>Contacting a member of WWARN is required.</xforms:alert>
-				
-			</xforms:select>
-			
-		</span>
-	</p>
-
-	<p>
 		<span id="study-title-textbox-container">
 			<xforms:input ref="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:title">
 				<xforms:label>Study title:</xforms:label>
