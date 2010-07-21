@@ -5,7 +5,6 @@
 	xmlns:ev="http://www.w3.org/2001/xml-events">
 
 
-	<!-- Begin: Box text -->
 	<h3>Study title</h3>
 	
 	<p>Enter a title for your study. Your study will also be given a unique ID.</p>
@@ -17,8 +16,8 @@
 	</p>
 	
 	<p>
-		<a href="terms" target="_blank">Terms [TODO: to be latest PDF]</a>
+		<a href="terms" target="_blank">Download the Terms of Submission as a PDF</a>
 	</p>
-	<!-- End: Box text -->
+
 
 </div>

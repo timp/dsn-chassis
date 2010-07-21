@@ -22,12 +22,12 @@
 					
 					<td>
 	                      <xforms:trigger ref=".">
+	                      	<xforms:label><img src="/apps/contributor/common/remove.gif" alt="Remove"/></xforms:label>
 	                          <xforms:delete 
 	                          	ev:event="DOMActivate" 
 		                       	context="." 
 		                       	nodeset="." 
-	                          	at="index('rep-administrator')"/>
-	                          <xforms:label><img src="/apps/contributor/common/remove.gif"/></xforms:label>
+		                       	at="index('rep-administrator')" />
 	                      </xforms:trigger>
 					</td>
 					<td>
@@ -45,7 +45,7 @@
 			<tr>
 				<td>
 	                  <xforms:trigger>
-	                      <xforms:label><img src="/apps/contributor/common/add.gif"/></xforms:label>
+	                      <xforms:label><img src="/apps/contributor/common/add.gif" alt="Add" /></xforms:label>
 	                      <xforms:insert 
 	                      	ev:event="DOMActivate" 
 	                      	context="." 

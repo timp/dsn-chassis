@@ -180,8 +180,8 @@
 		<ul>
 			<xforms:repeat nodeset="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:content/study/publications/publication">
 				<li class="repeated-element">
-			        <xforms:output ref="web-link">
-			            <xforms:label>Web link:</xforms:label>
+			        <xforms:output ref="pmid">
+			            <xforms:label>PubMedID:</xforms:label>
 			        </xforms:output>
 		        </li>
 			</xforms:repeat>

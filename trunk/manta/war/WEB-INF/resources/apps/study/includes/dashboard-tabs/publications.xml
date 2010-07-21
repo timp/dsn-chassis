@@ -45,10 +45,10 @@
 	                        </xforms:trigger>
 	                    </td>
 	                    <td>
-	                    	<span class="web-link-textbox-container">
-	                        <xforms:input ref="web-link">
-	                            <xforms:label>Web link:</xforms:label>
-	                            <xforms:alert>Please provide a web link.</xforms:alert>
+	                    	<span class="pmid-textbox-container">
+	                        <xforms:input ref="pmid">
+	                            <xforms:label>PubMedID:</xforms:label>
+	                        	<xforms:alert>Please provide a PubMed IDentifier.</xforms:alert>
 	                        </xforms:input>
 	                    	</span>
 	                    </td>
@@ -127,8 +127,8 @@
 						<xforms:repeat nodeset="publication" id="rep-publication-curator">
 							<tr>
 								<td>
-									<xforms:output ref="web-link">
-										<xforms:label>Web link:</xforms:label>
+									<xforms:output ref="pmid">
+										<xforms:label>PubMedID:</xforms:label>
 									</xforms:output>
 								</td>
 							</tr>

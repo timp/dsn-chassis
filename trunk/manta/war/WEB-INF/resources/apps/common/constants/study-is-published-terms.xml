@@ -1,4 +1,4 @@
-<!--  A list of answers to "Is the study published?". There is dependency on the answer, e.g. relevant web-links. -->
+<!--  A list of answers to "Is the study published?". There is dependency on the answer, e.g. relevant pmid, URLs, DOIs. -->
 <terms xmlns="">
     <term>
         <label>Yes</label>

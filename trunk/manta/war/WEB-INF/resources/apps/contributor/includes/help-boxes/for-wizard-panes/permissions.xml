@@ -4,7 +4,6 @@
 	xmlns:xforms="http://www.w3.org/2002/xforms" 
 	xmlns:ev="http://www.w3.org/2001/xml-events">
 
-	<!-- Begin: Box text -->
 	<p>Research is a group effort. You may want to delegate the task of uploading data to a particular member of your team or share the task amongst several individuals. You may want to share your data with a collaborator. You have control over who can access your studies. 
 	</p>
 
@@ -16,6 +15,5 @@
 	
 	<p>You can add or remove administrators at any time by logging into your account, navigating to this study and clicking the Permissions tab.
 	</p>
-	<!-- End: Box text -->
 
 </div>
