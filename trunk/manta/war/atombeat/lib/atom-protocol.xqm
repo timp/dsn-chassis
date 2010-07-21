@@ -24,21 +24,18 @@ declare variable $atom-protocol:logger-name := "org.atombeat.xquery.lib.atom-pro
 
 
 
-declare function local:debug(
+declare function local:log4jDebug(
     $message as item()*
 ) as empty()
 {
-    util:log-app( "debug" , $atom-protocol:logger-name , $message )
+  util:log-app( "debug" , $atom-protocol:logger-name , $message ) (: only use within our function :)
 };
 
-
-
-
-declare function local:info(
+declare function local:log4jInfo(
     $message as item()*
 ) as empty()
 {
-    util:log-app( "info" , $atom-protocol:logger-name , $message )
+    util:log-app( "info" , $atom-protocol:logger-name , $message ) (: only use within our function :) 
 };
 
 
@@ -125,11 +122,9 @@ declare function atom-protocol:do-post-atom(
 ) as element(response)
 {
 
-	let $log := local:debug( "== do-post-atom ==" )
+	let $log := local:log4jDebug( "== do-post-atom ==" )
 
 	let $request-data := request:get-data()
-	let $log := local:debug( $request-data )
-
 	return
 	
 		if (
@@ -1206,7 +1201,7 @@ declare function atom-protocol:op-retrieve-member(
 
 	let $entry := atomdb:retrieve-member( $request-path-info )
 	
-	let $log := local:debug( $entry )
+	let $log := local:log4jDebug( $entry )
 
     let $etag := concat( '"' , atomdb:generate-etag( $request-path-info ) , '"' )
     
