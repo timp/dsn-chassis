@@ -23,21 +23,18 @@ declare variable $atomsec:logger-name := "org.atombeat.xquery.lib.atom-security"
 
 
 
-declare function local:debug(
+declare function local:log4jDebug(
     $message as item()*
 ) as empty()
 {
-    util:log-app( "debug" , $atomsec:logger-name , $message )
+  util:log-app( "debug" , $atomsec:logger-name , $message ) (: only use within our function :)
 };
 
-
-
-
-declare function local:info(
+declare function local:log4jInfo(
     $message as item()*
 ) as empty()
 {
-    util:log-app( "info" , $atomsec:logger-name , $message )
+    util:log-app( "info" , $atomsec:logger-name , $message ) (: only use within our function :)
 };
 
 
@@ -69,8 +66,8 @@ declare function atomsec:store-workspace-descriptor(
 ) as item()*
 {
     
-    let $log := local:debug(  "== atomsec:store-workspace-descriptor ==" )
-    let $log := local:debug(  $descriptor )
+    let $log := local:log4jDebug(  "== atomsec:store-workspace-descriptor ==" )
+    let $log := local:log4jDebug(  $descriptor )
     
     let $base-security-collection-db-path := xutil:get-or-create-collection( $config:base-security-collection-path )
     
@@ -89,8 +86,8 @@ declare function atomsec:store-collection-descriptor(
 ) as xs:string?
 {
 
-    let $log := local:debug(  "== atomsec:store-collection-descriptor ==" )
-    let $log := local:debug(  $descriptor )
+    let $log := local:log4jDebug(  "== atomsec:store-collection-descriptor ==" )
+    let $log := local:log4jDebug(  $descriptor )
 
     return
 
@@ -162,8 +159,8 @@ declare function atomsec:store-resource-descriptor(
 ) as xs:string?
 {
 
-    let $log := local:debug(  "== atomsec:store-resource-descriptor ==" )
-    let $log := local:debug(  $descriptor )
+    let $log := local:log4jDebug(  "== atomsec:store-resource-descriptor ==" )
+    let $log := local:log4jDebug(  $descriptor )
 
     return
     
@@ -311,7 +308,7 @@ declare function atomsec:decide(
 ) as xs:string
 {
 
-    let $log := local:debug( "== atomsec:decide ==" )
+    let $log := local:log4jDebug( "== atomsec:decide ==" )
     
     (: first we need to find the relevant ACLs :)
     
@@ -319,17 +316,17 @@ declare function atomsec:decide(
      : then we need to find the resource ACL first :)
      
     let $resource-descriptor := atomsec:retrieve-resource-descriptor( $request-path-info )
-    let $log := local:debug( $resource-descriptor )
+    let $log := local:log4jDebug( $resource-descriptor )
     
     (: we also need the collection ACL :)
     
     let $collection-descriptor := atomsec:retrieve-collection-descriptor( $request-path-info )
-    let $log := local:debug( $collection-descriptor )
+    let $log := local:log4jDebug( $collection-descriptor )
     
     (: we also need the workspace ACL :)
     
     let $workspace-descriptor := atomsec:retrieve-workspace-descriptor()
-    let $log := local:debug( $workspace-descriptor )
+    let $log := local:log4jDebug( $workspace-descriptor )
     
     (: process ACLs :)
     
@@ -339,9 +336,9 @@ declare function atomsec:decide(
 
     let $workspace-decision := atomsec:apply-acl( $workspace-descriptor , $operation , $media-type , $user , $roles )  
     
-    let $log := local:debug( concat( "$resource-decision: " , $resource-decision ) )
-    let $log := local:debug( concat( "$collection-decision: " , $collection-decision ) )
-    let $log := local:debug( concat( "$workspace-decision: " , $workspace-decision ) )
+    let $log := local:log4jDebug( concat( "$resource-decision: " , $resource-decision ) )
+    let $log := local:log4jDebug( concat( "$collection-decision: " , $collection-decision ) )
+    let $log := local:log4jDebug( concat( "$workspace-decision: " , $workspace-decision ) )
 
     (: order decision :)
     
@@ -360,7 +357,7 @@ declare function atomsec:decide(
         else $decisions[1]
     
     let $message := ( "security decision (" , $decision , ") for user (" , $user , "), roles (" , string-join( $roles , " " ) , "), request-path-info (" , $request-path-info , "), operation(" , $operation , "), media-type (" , $media-type , ")" )
-    let $log := local:debug( $message )  
+    let $log := local:log4jDebug( $message )  
     
     return $decision
     
@@ -399,14 +396,14 @@ declare function atomsec:match-acl(
 ) as element(atombeat:ace)*
 {
 
-    let $log := local:debug( "== atomsec:match-acl ==" )
-    let $log := local:debug( $descriptor )
+    let $log := local:log4jDebug( "== atomsec:match-acl ==" )
+    let $log := local:log4jDebug( $descriptor )
     
     let $matching-aces :=
     
         for $ace in $descriptor/atombeat:acl/* 
 
-        let $log := local:debug( $ace )
+        let $log := local:log4jDebug( $ace )
         
         return
         
@@ -428,7 +425,7 @@ declare function atomsec:match-acl(
             
             else ()
             
-    let $log := local:debug( $matching-aces )
+    let $log := local:log4jDebug( $matching-aces )
     
     return $matching-aces
     
@@ -484,11 +481,11 @@ declare function atomsec:match-group(
 ) as xs:boolean
 {
 
-    let $log := local:debug( "== atomsec:match-group() ==" )
-    let $log := local:debug( $ace )
+    let $log := local:log4jDebug( "== atomsec:match-group() ==" )
+    let $log := local:log4jDebug( $ace )
     
     let $group := normalize-space( $ace/atombeat:recipient[@type="group"]/text() )
-    let $log := local:debug( concat( "found group in ace: " , $group ) ) 
+    let $log := local:log4jDebug( concat( "found group in ace: " , $group ) ) 
     
     return 
     
@@ -510,7 +507,7 @@ declare function atomsec:match-group(
             let $groups-for-user := $groups[ atombeat:member/normalize-space( text() ) = $user ]/@id
             
             let $group-has-user := exists( index-of( $groups-for-user , xs:string( $group ) ) )
-            let $log := local:debug( concat( "$group-has-user: " , $group-has-user ) )
+            let $log := local:log4jDebug( concat( "$group-has-user: " , $group-has-user ) )
             
             return $group-has-user
     
