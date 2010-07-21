@@ -239,6 +239,8 @@ ul {
     -webkit-border-radius: 5px; 
     border-radius: 5px; 
 }
+/* Color within study-info warning box */
+.xbl-fr-error-summary .fr-error-alert { color: #000; }
 
 .warnings .yui-dialog { 
     position: fixed;
