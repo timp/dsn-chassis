@@ -19,22 +19,18 @@ import module namespace config = "http://purl.org/atombeat/xquery/config" at "..
 declare variable $atomdb:logger-name := "org.atombeat.xquery.lib.atomdb" ;
 
 
-
-declare function local:debug(
+declare function local:log4jDebug(
     $message as item()*
 ) as empty()
 {
-    util:log-app( "debug" , $atomdb:logger-name , $message )
+  util:log-app( "debug" , $atomdb:logger-name , $message ) (: only use within our function :)
 };
 
-
-
-
-declare function local:info(
+declare function local:log4jInfo(
     $message as item()*
 ) as empty()
 {
-    util:log-app( "info" , $atomdb:logger-name , $message )
+    util:log-app( "info" , $atomdb:logger-name , $message ) (: only use within our function :)
 };
 
 
@@ -106,22 +102,22 @@ declare function atomdb:media-link-available(
     $request-path-info as xs:string
 ) as xs:boolean
 {
-    let $log := util:log( "debug" , "== atomdb:media-link-available() ==" )
+    let $log := local:log4jDebug( "== atomdb:media-link-available() ==" )
     
     return 
 
         if ( not( atomdb:member-available( $request-path-info ) ) ) 
         then 
-            let $log := util:log( "debug" , "not a member, returning false" )
+            let $log := local:log4jDebug("not a member, returning false" )
             return false()
         
         else
             let $entry := atomdb:retrieve-member( $request-path-info )
-            let $log := util:log( "debug" , $entry )
+            let $log := local:log4jDebug( $entry )
             let $edit-media-link := $entry/atom:link[@rel="edit-media"]
-            let $log := util:log( "debug" , $edit-media-link )
+            let $log := local:log4jDebug( $edit-media-link )
             let $available := exists( $edit-media-link )
-            let $log := util:log( "debug" , $available )
+            let $log := local:log4jDebug( $available )
             return $available
 };
 
@@ -386,11 +382,11 @@ declare function atomdb:create-member(
 	
 	else
 
-		let $log := util:log( "debug" , "atomdb:create-member()" )
-		let $log := util:log( "debug" , $request-data )
+		let $log := local:log4jDebug( "atomdb:create-member()" )
+		let $log := local:log4jDebug( $request-data )
 				
 	    let $entry := atomdb:create-entry( $collection-path-info, $request-data , $member-id )
-		let $log := util:log( "debug" , $entry )
+		let $log := local:log4jDebug( $entry )
 	    
 		(:
 		 : Map the request path info, e.g., "/foo", to a database collection path,
@@ -651,7 +647,7 @@ declare function atomdb:update-feed(
     (: TODO validate input data :)
     
     let $updated := current-dateTime()
-    let $log := util:log( "debug" , concat( "$updated: " , $updated ) )
+    let $log := local:log4jDebug( concat( "$updated: " , $updated ) )
 
     return
     
@@ -729,7 +725,7 @@ declare function atomdb:create-media-link-entry(
 {
 
     let $id := concat( $config:content-service-url , $request-path-info , "/" , $member-id , ".atom" )
-    let $log := util:log( "debug", $id )
+    let $log := local:log4jDebug( $id )
     
     let $published := current-dateTime()
     let $updated := $published
@@ -800,7 +796,7 @@ declare function atomdb:update-entry(
     (: TODO validate input data :)
     
     let $updated := current-dateTime()
-    let $log := util:log( "debug" , concat( "$updated: " , $updated ) )
+    let $log := local:log4jDebug( concat( "$updated: " , $updated ) )
     let $path-info := substring-after( $entry/atom:link[@rel='edit']/@href , $config:content-service-url )
 
     return
@@ -893,7 +889,7 @@ declare function atomdb:update-media-resource(
 		
 		let $media-size := xmldb:size( $collection-db-path , $media-doc-name )
 			
-		let $log := local:debug( concat( "size: " , $media-size ) )
+		let $log := local:log4jDebug( concat( "size: " , $media-size ) )
 
 		let $media-link := 
 			<atom:entry>
@@ -911,7 +907,7 @@ declare function atomdb:update-media-resource(
 			}
 			</atom:entry>
 			
-		let $log := local:debug( $media-link )
+		let $log := local:log4jDebug( $media-link )
 			
 		let $media-link-updated := xmldb:store( $collection-db-path , $media-link-doc-name , $media-link )
 	
@@ -952,7 +948,7 @@ declare function atomdb:retrieve-feed(
 			}
 			</atom:feed>
 
-        let $log := util:log( "debug" , $complete-feed )
+        let $log := local:log4jDebug( $complete-feed )
         
 		return $complete-feed
 
@@ -1047,10 +1043,10 @@ declare function atomdb:retrieve-member(
 		 :)
 		 
 		let $entry-doc-db-path := atomdb:request-path-info-to-db-path( $request-path-info )
-		let $log := local:debug( concat( "entry-doc-db-path: " , $entry-doc-db-path ) )
+		let $log := local:log4jDebug( concat( "entry-doc-db-path: " , $entry-doc-db-path ) )
 		
 		let $entry-doc := doc( $entry-doc-db-path )
-		let $log := local:debug( $entry-doc )
+		let $log := local:log4jDebug( $entry-doc )
 		
 		return $entry-doc/atom:entry
 
