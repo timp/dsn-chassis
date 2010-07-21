@@ -43,10 +43,10 @@
                         </xforms:trigger>
                     </td>
                     <td>
-                    	<span class="web-link-textbox-container">
-                        <xforms:input ref="web-link">
-                            <xforms:label>Web link:</xforms:label>
-                            <xforms:alert>Please provide a valid web link.</xforms:alert>
+                    	<span class="pmid-textbox-container">
+                    		<xforms:input ref="pmid">
+                            <xforms:label>PubMedID:</xforms:label>
+                    		<xforms:alert>Please provide a PubMed IDentifier.</xforms:alert>
                         </xforms:input>
                     	</span>
                     </td>

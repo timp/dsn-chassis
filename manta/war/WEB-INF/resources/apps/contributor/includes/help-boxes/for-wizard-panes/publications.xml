@@ -4,10 +4,14 @@
 	xmlns:xforms="http://www.w3.org/2002/xforms" 
 	xmlns:ev="http://www.w3.org/2001/xml-events">
 
-	<p>PubMed IDentifier (PMID) is a unique number assigned to each PubMed citation of life sciences and biomedical scientific journal articles. This is an easy route for the WWARN curation team to be able to access more information about published data. For studies that are included in the WWARN Explorer, a link to the PubMed citation will display in the study details, guiding users to your original publication(s).
+	<p>Please provide the PubMed IDentifier (PMID) for your publication. The PMID is a unique number assigned to each PubMed citation of life sciences and biomedical scientific journal articles. For studies that are included in the WWARN Explorer, a link to the PubMed citation will display in the study details, guiding users to your original publication(s). 
 	</p>
-	<p>Planning a future publication based on this data? Is your article in press? Don't forget to add the PubMedID, once your article is published. Once the study is registered, you can add publications by logging into your account, navigating to this study and clicking the Publications tab.
+	
+	<p>You also have the option to share a DOI or an additional web address (URL) associated with your publication. This information will only be used to access your publication during the curation process.  
 	</p>
+	
+	<p>Planning a future publication based on this data? Is your article in press? Don&#8217;t forget to add the PubMedID, once your article is published. Once the study is registered, you can add publications by logging into your account, navigating to this study and clicking the Publications tab.
+	</p>		
 
 
 </div>

@@ -16,17 +16,9 @@
 		<a href="home">&lt;&lt; Back home</a>
 		
 	</p>
-
-	<h3>Study info</h3>
 	
-    <p>We invite you to complete the following information about your study. This questionnaire is optional, but the information can be very helpful in curating your data – especially if your data is not yet published. If you do not have time to complete the questionnaire and your study has been published, the study curator will try to derive the answers from the publications you’ve provided.
-    </p>
-    
-    <p>You can fill in the study information at your own pace. When you enter new information, be sure to save your changes. You can work on the questionnaire at any time by logging into your account, navigating to this study and clicking the Study Info tab.
-    </p>
-    
-    <p>You can also copy study information from another study for which you have administrator/creator rights. If you copy information from an existing questionnaire it will overwrite any answer you’ve given, so be sure to update any information that differs from the template study.
-    </p>	
+    <p>We invite you to complete the following information about your study. This information will be very helpful in curating your data – especially if your data is not yet published. If you are unable to complete the questionnaire at this time, you can edit the information at a later date by logging into your account, navigating to this study and clicking the Study Info tab.  You also have the option to copy study information from existing studies for which you have administrator rights. Since copying information from an existing study will overwrite any answers you&#8217;ve given, it&#8217;s a good idea to begin by copying the answers from an existing study and then editing any answers that differ. Be sure to save your changes after each session.
+	</p>
 
     <xforms:group ref="instance('ins-control')/copy-answers-control">
         <p>
