@@ -9,6 +9,22 @@ declare namespace double="java:java.lang.Double";
 declare namespace collection-config = "http://exist-db.org/collection-config/1.0" ;
 
 
+declare variable $xutil:logger-name := "org.atombeat.xquery.lib.xutil" ;
+
+declare function local:log4jDebug(
+    $message as item()*
+) as empty()
+{
+  util:log-app( "debug" , $xutil:logger-name , $message ) (: only use within our function :)
+};
+
+declare function local:log4jInfo(
+    $message as item()*
+) as empty()
+{
+    util:log-app( "info" , $xutil:logger-name , $message ) (: only use within our function :)
+};
+
 
 
 declare function xutil:get-or-create-collection(
@@ -16,10 +32,10 @@ declare function xutil:get-or-create-collection(
 ) as xs:string?
 {
 	
-	let $log := util:log( "debug" , concat( "$collection-path: " , $collection-path ) )
+	let $log := local:log4jDebug( concat( "$collection-path: " , $collection-path ) )
 	 
 	let $available := xmldb:collection-available( $collection-path )
-	let $log := util:log( "debug" , concat( "$available: " , $available ) )
+	let $log := local:log4jDebug( concat( "$available: " , $available ) )
 	 
 	return 
 		
@@ -28,13 +44,13 @@ declare function xutil:get-or-create-collection(
 		else 
 		
 			let $groups := text:groups( $collection-path , "^(.*)/([^/]+)$" )
-			let $log := util:log( "debug" , concat( "$groups: " , count( $groups ) ) )
+			let $log := local:log4jDebug( concat( "$groups: " , count( $groups ) ) )
 			
 			let $target-collection-uri := $groups[2]
-			let $log := util:log( "debug" , concat( "$target-collection-uri: " , $target-collection-uri ) )
+			let $log := local:log4jDebug( concat( "$target-collection-uri: " , $target-collection-uri ) )
 			
 			let $new-collection := $groups[3]
-			let $log := util:log( "debug" , concat( "$new-collection: " , $new-collection ) )
+			let $log := local:log4jDebug( concat( "$new-collection: " , $new-collection ) )
 
 			let $target-collection-uri := xutil:get-or-create-collection( $target-collection-uri )
 			
@@ -78,13 +94,13 @@ declare function xutil:enable-versioning(
         </collection>
         
     let $config-collection-path := concat( "/db/system/config" , $collection-db-path )
-    let $log := util:log( "debug" , concat( "$config-collection-path: " , $config-collection-path ) )
+    let $log := local:log4jDebug( concat( "$config-collection-path: " , $config-collection-path ) )
     
     let $config-collection-path := xutil:get-or-create-collection( $config-collection-path )
-    let $log := util:log( "debug" , concat( "$config-collection-path: " , $config-collection-path ) )
+    let $log := local:log4jDebug( concat( "$config-collection-path: " , $config-collection-path ) )
     
     let $config-resource-path := xmldb:store( $config-collection-path , "collection.xconf" , $collection-config , "application/xml" )
-    let $log := util:log( "debug" , concat( "$config-resource-path: " , $config-resource-path ) )
+    let $log := local:log4jDebug( concat( "$config-resource-path: " , $config-resource-path ) )
     
     return $config-resource-path
     
