@@ -25,12 +25,20 @@ import module namespace atomsec = "http://purl.org/atombeat/xquery/atom-security
 
 
 
-declare function local:debug(
+declare function local:log4jDebug(
     $message as item()*
 ) as empty()
 {
-    util:log-app( "debug" , "org.atombeat.xquery.plugin.security" , $message )
+    util:log-app( "debug" , "org.atombeat.xquery.plugin.security" , $message ) (: only use within our function :)
 };
+
+declare function local:log4jInfo(
+    $message as item()*
+) as empty()
+{
+    util:log-app( "info" , "org.atombeat.xquery.plugin.security" , $message ) (: only use within our function :)
+};
+
 
 
 
@@ -49,7 +57,7 @@ declare function security-plugin:before(
 	then
 
     	let $message := ( "security plugin, before: " , $operation , ", request-path-info: " , $request-path-info ) 
-    	let $log := local:debug( $message )
+    	let $log := local:log4jDebug( $message )
     
     	let $forbidden := atomsec:is-denied( $operation , $request-path-info , $request-media-type )
     	
@@ -117,7 +125,7 @@ declare function security-plugin:strip-descriptor-links(
     $request-data as element()
 ) as element()
 {
-    let $log := local:debug( "== security-plugin:strip-descriptor-links ==" )
+    let $log := local:log4jDebug( "== security-plugin:strip-descriptor-links ==" )
 
     let $reserved :=
         <reserved>
@@ -147,7 +155,7 @@ declare function security-plugin:after(
     then
             
     	let $message := ( "security plugin, after: " , $operation , ", request-path-info: " , $request-path-info ) 
-    	let $log := local:debug( $message )
+    	let $log := local:log4jDebug( $message )
     
     	return
     		
@@ -205,14 +213,14 @@ declare function security-plugin:after-create-member(
     let $response-data := $response/body/atom:entry
     
 	let $entry-uri := $response-data/atom:link[@rel="edit"]/@href
-	let $log := local:debug( concat( "$entry-uri: " , $entry-uri ) )
+	let $log := local:log4jDebug( concat( "$entry-uri: " , $entry-uri ) )
 	
 	let $entry-path-info := substring-after( $entry-uri , $config:content-service-url )
-	let $log := local:debug( concat( "$entry-path-info: " , $entry-path-info ) )
+	let $log := local:log4jDebug( concat( "$entry-path-info: " , $entry-path-info ) )
 
 	(: if security is enabled, install default resource ACL :)
 	let $resource-descriptor-installed := security-plugin:install-resource-descriptor( $request-path-info , $entry-path-info )
-	let $log := local:debug( concat( "$resource-descriptor-installed: " , $resource-descriptor-installed ) )
+	let $log := local:log4jDebug( concat( "$resource-descriptor-installed: " , $resource-descriptor-installed ) )
 	
     let $response-data := security-plugin:augment-entry( $request-path-info , $response-data )
 
@@ -304,24 +312,24 @@ declare function security-plugin:after-create-media(
     let $response-data := $response/body/atom:entry
 
     let $entry-uri := $response-data/atom:link[@rel="edit"]/@href
-    let $log := local:debug( concat( "$entry-uri: " , $entry-uri ) )
+    let $log := local:log4jDebug( concat( "$entry-uri: " , $entry-uri ) )
     
     let $entry-path-info := substring-after( $entry-uri , $config:content-service-url )
-    let $log := local:debug( concat( "$entry-path-info: " , $entry-path-info ) )
+    let $log := local:log4jDebug( concat( "$entry-path-info: " , $entry-path-info ) )
 
     (: if security is enabled, install default resource ACL :)
     let $resource-descriptor-installed := security-plugin:install-resource-descriptor( $request-path-info , $entry-path-info )
-    let $log := local:debug( concat( "$resource-descriptor-installed: " , $resource-descriptor-installed ) )
+    let $log := local:log4jDebug( concat( "$resource-descriptor-installed: " , $resource-descriptor-installed ) )
 
     let $media-uri := $response-data/atom:link[@rel="edit-media"]/@href
-    let $log := local:debug( concat( "$media-uri: " , $media-uri ) )
+    let $log := local:log4jDebug( concat( "$media-uri: " , $media-uri ) )
     
     let $media-path-info := substring-after( $media-uri , $config:content-service-url )
-    let $log := local:debug( concat( "$media-path-info: " , $media-path-info ) )
+    let $log := local:log4jDebug( concat( "$media-path-info: " , $media-path-info ) )
 
     (: if security is enabled, install default resource ACL :)
     let $resource-descriptor-installed := security-plugin:install-resource-descriptor( $request-path-info , $media-path-info )
-    let $log := local:debug( concat( "$resource-descriptor-installed: " , $resource-descriptor-installed ) )
+    let $log := local:log4jDebug( concat( "$resource-descriptor-installed: " , $resource-descriptor-installed ) )
     
     let $response-data := security-plugin:augment-entry( $entry-path-info , $response-data )
 
@@ -449,7 +457,7 @@ declare function security-plugin:after-retrieve-member(
 ) as element(response)
 {
 
-	let $log := local:debug("== security-plugin:after-retrieve-member ==" )
+	let $log := local:log4jDebug("== security-plugin:after-retrieve-member ==" )
 
     let $response-data := $response/body/atom:entry
     
@@ -520,7 +528,7 @@ declare function security-plugin:augment-entry(
             </atom:link>
         else ()
         
-    let $log := local:debug( concat( "$descriptor-link: " , $descriptor-link ) )
+    let $log := local:log4jDebug( concat( "$descriptor-link: " , $descriptor-link ) )
     
     let $media-descriptor-link :=
         if ( exists( $media-uri ) )
@@ -693,7 +701,7 @@ declare function security-plugin:filter-feed-by-permissions(
                     $feed/child::*[ not( . instance of element(atom:entry) ) and not( . instance of element(atom:link) ) ] ,
                     for $entry in $feed/atom:entry
                     let $entry-path-info := substring-after( $entry/atom:link[@rel="edit"]/@href , $config:content-service-url )
-                    let $log := local:debug( concat( "checking permission to retrieve member for entry-path-info: " , $entry-path-info ) )
+                    let $log := local:log4jDebug( concat( "checking permission to retrieve member for entry-path-info: " , $entry-path-info ) )
                     let $forbidden := atomsec:is-denied( $CONSTANT:OP-RETRIEVE-MEMBER , $entry-path-info , () )
                     return 
                         if ( not( $forbidden ) ) 
@@ -705,7 +713,7 @@ declare function security-plugin:filter-feed-by-permissions(
                     $descriptor-link
                 }
             </atom:feed>
-        let $log := local:debug( $filtered-feed )
+        let $log := local:log4jDebug( $filtered-feed )
         return $filtered-feed
 };
 
