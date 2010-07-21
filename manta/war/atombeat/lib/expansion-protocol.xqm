@@ -23,6 +23,25 @@ import module namespace ap = "http://purl.org/atombeat/xquery/atom-protocol" at 
 import module namespace config = "http://purl.org/atombeat/xquery/config" at "../config/shared.xqm" ;
 
  
+
+declare variable $expansion-protocol:logger-name := "org.atombeat.xquery.lib.expansion-protocol" ;
+
+declare function local:log4jDebug(
+    $message as item()*
+) as empty()
+{
+  util:log-app( "debug" , $expansion-protocol:logger-name , $message ) (: only use within our function :)
+};
+
+declare function local:log4jInfo(
+    $message as item()*
+) as empty()
+{
+    util:log-app( "info" , $expansion-protocol:logger-name , $message ) (: only use within our function :)
+};
+
+
+
 (:
  : TODO doc me
  :)
@@ -72,8 +91,8 @@ declare function exp:do-get-entry(
 ) as item()*
 {
 
-	let $log := util:log( "debug" , "== exp:do-get-entry() ==" )
-	let $log := util:log( "debug" , $request-path-info )
+	let $log := local:log4jDebug( "== exp:do-get-entry() ==" )
+	let $log := local:log4jDebug( $request-path-info )
 
     let $entry := atomdb:retrieve-member( $request-path-info )
     
