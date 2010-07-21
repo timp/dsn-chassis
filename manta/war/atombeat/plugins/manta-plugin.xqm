@@ -24,8 +24,6 @@ import module namespace atomdb = "http://purl.org/atombeat/xquery/atomdb" at "..
 import module namespace atomsec = "http://purl.org/atombeat/xquery/atom-security" at "../lib/atom-security.xqm" ;
 
 
-
-
 declare variable $manta-plugin:reserved :=
     <reserved>
         <elements namespace-uri="http://www.cggh.org/2010/chassis/manta/xmlns">
@@ -46,13 +44,21 @@ declare variable $manta-plugin:reserved :=
     </reserved>
 ;
 
+declare variable $manta-plugin:logger-name := "org.cggh.chassis.manta.xquery.atombeat.plugin";
 
 
-declare function local:debug(
+declare function local:log4jDebug(
     $message as item()*
 ) as empty()
 {
-    util:log-app( "debug" , "org.cggh.chassis.manta.xquery.atombeat.plugin" , $message )
+  util:log-app( "debug" , $manta-plugin:logger-name , $message ) (: only use within our function :)
+};
+
+declare function local:log4jInfo(
+    $message as item()*
+) as empty()
+{
+    util:log-app( "info" , $manta-plugin:logger-name , $message ) (: only use within our function :)
 };
 
 
@@ -70,7 +76,7 @@ declare function manta-plugin:before(
 {
 	
 	let $message := ( "chassis-manta plugin, before: " , $operation , ", request-path-info: " , $request-path-info ) 
-	let $log := local:debug( $message )
+	let $log := local:log4jDebug( $message )
 
 	return 
 	
@@ -305,7 +311,7 @@ declare function manta-plugin:after(
 {
 
 	let $message := ( "chassis-manta plugin, after: " , $operation , ", request-path-info: " , $request-path-info ) 
-	let $log := local:debug( $message )
+	let $log := local:log4jDebug( $message )
 
 	return
 		
@@ -473,7 +479,7 @@ declare function manta-plugin:after-create-member-studies(
 ) as element(response)
 {
 
-    let $log := local:debug( "== manta-plugin:after-create-member-studies() ==")
+    let $log := local:log4jDebug( "== manta-plugin:after-create-member-studies() ==")
     
     let $entry := $response/body/atom:entry 
     let $id := manta-plugin:get-id( $entry )
@@ -502,7 +508,7 @@ declare function manta-plugin:after-create-member-studies(
     (: create a collection for submitted media :)    
     
     let $submitted-media-collection-path-info := manta-plugin:submitted-media-collection-path-info-for-study-entry( $entry )
-    let $log := local:debug( $submitted-media-collection-path-info )
+    let $log := local:log4jDebug( $submitted-media-collection-path-info )
     
     let $feed :=
         <atom:feed>
@@ -520,7 +526,7 @@ declare function manta-plugin:after-create-member-studies(
     (: create a collection for curated media :)    
 
     let $curated-media-collection-path-info := manta-plugin:curated-media-collection-path-info-for-study-entry( $entry )
-    let $log := local:debug( $curated-media-collection-path-info )
+    let $log := local:log4jDebug( $curated-media-collection-path-info )
     
     let $feed :=
         <atom:feed>
@@ -538,7 +544,7 @@ declare function manta-plugin:after-create-member-studies(
     (: create a collection for derivations :)    
 
     let $derivations-collection-path-info := manta-plugin:derivations-collection-path-info-for-study-entry( $entry )
-    let $log := local:debug( $derivations-collection-path-info )
+    let $log := local:log4jDebug( $derivations-collection-path-info )
     
     let $feed :=
         <atom:feed>
@@ -556,7 +562,7 @@ declare function manta-plugin:after-create-member-studies(
     (: create a collection for personal data reviews :)    
 
     let $personal-data-reviews-collection-path-info := manta-plugin:personal-data-reviews-collection-path-info-for-study-entry( $entry )
-    let $log := local:debug( $personal-data-reviews-collection-path-info )
+    let $log := local:log4jDebug( $personal-data-reviews-collection-path-info )
     
     let $feed :=
         <atom:feed>
@@ -585,14 +591,14 @@ declare function manta-plugin:after-create-member-drafts(
 ) as element(response)
 {
 
-    let $log := local:debug( "== manta-plugin:after-create-member-drafts() ==")
+    let $log := local:log4jDebug( "== manta-plugin:after-create-member-drafts() ==")
     
     let $entry := $response/body/atom:entry 
     let $id := manta-plugin:get-id( $entry )
     let $user := request:get-attribute( $config:user-name-request-attribute-key )
     
     let $draft-media-collection-path-info := manta-plugin:draft-media-collection-path-info-for-draft-entry( $entry )
-    let $log := local:debug( $draft-media-collection-path-info )
+    let $log := local:log4jDebug( $draft-media-collection-path-info )
     
     let $feed :=
         <atom:feed>
