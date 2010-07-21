@@ -26,6 +26,25 @@ import module namespace config = "http://purl.org/atombeat/xquery/config" at "..
 declare variable $history-protocol:param-name-revision-index as xs:string := "revision" ;
 
 
+
+
+declare variable $history-protocol:logger-name := "org.atombeat.xquery.lib.history-protocol" ;
+
+declare function local:log4jDebug(
+    $message as item()*
+) as empty()
+{
+  util:log-app( "debug" , $history-protocol:logger-name , $message ) (: only use within our function :)
+};
+
+declare function local:log4jInfo(
+    $message as item()*
+) as empty()
+{
+    util:log-app( "info" , $history-protocol:logger-name , $message ) (: only use within our function :)
+};
+
+
 (: 
  : TODO media history
  :)
@@ -89,11 +108,11 @@ declare function history-protocol:do-get-member(
 ) as element(response)
 {
 
-	let $log := util:log( "debug" , "== history-protocol:do-get-member() ==" )
-	let $log := util:log( "debug" , $request-path-info )
+	let $log := local:log4jDebug( "== history-protocol:do-get-member() ==" )
+	let $log := local:log4jDebug( $request-path-info )
 
     let $revision-index := request:get-parameter( $history-protocol:param-name-revision-index , "" )
-	let $log := util:log( "debug" , $revision-index )
+	let $log := local:log4jDebug( $revision-index )
 	
 	return
 	
@@ -119,8 +138,8 @@ declare function history-protocol:do-get-member-history(
 ) as element(response)
 {
 
-	let $log := util:log( "debug" , "== history-protocol:do-get-member-history() ==" )
-	let $log := util:log( "debug" , $request-path-info )
+	let $log := local:log4jDebug( "== history-protocol:do-get-member-history() ==" )
+	let $log := local:log4jDebug( $request-path-info )
 	
     let $op := util:function( QName( "http://purl.org/atombeat/xquery/history-protocol" , "history-protocol:op-retrieve-member-history" ) , 3 )
     
@@ -144,19 +163,19 @@ declare function history-protocol:op-retrieve-member-history(
     let $updated := atomdb:retrieve-member( $request-path-info )/atom:updated
     
     let $entry-doc-path := atomdb:request-path-info-to-db-path( $request-path-info )
-	let $log := util:log( "debug" , $entry-doc-path )
+	let $log := local:log4jDebug( $entry-doc-path )
 
     let $entry-doc := doc( $entry-doc-path )
-    let $log := util:log( "debug" , $entry-doc )
+    let $log := local:log4jDebug( $entry-doc )
     
     let $vhist := v:history( $entry-doc )
-    let $log := util:log( "debug" , $vhist )
+    let $log := local:log4jDebug( $vhist )
     
     let $vvers := v:versions( $entry-doc )
-    let $log := util:log( "debug" , $vvers )
+    let $log := local:log4jDebug( $vvers )
     
     let $revisions := v:revisions( $entry-doc )
-    let $log := util:log( "debug" , $revisions )
+    let $log := local:log4jDebug( $revisions )
     
     let $feed := 
 
@@ -203,8 +222,8 @@ declare function history-protocol:do-get-member-revision(
 ) as element(response)
 {
 
-	let $log := util:log( "debug" , "== history-protocol:do-get-member-revision() ==" )
-	let $log := util:log( "debug" , $request-path-info )
+	let $log := local:log4jDebug( "== history-protocol:do-get-member-revision() ==" )
+	let $log := local:log4jDebug( $request-path-info )
 	
     let $op := util:function( QName( "http://purl.org/atombeat/xquery/history-protocol" , "history-protocol:op-retrieve-member-revision" ) , 3 )
     
@@ -223,7 +242,7 @@ declare function history-protocol:op-retrieve-member-revision(
 {
 
     let $revision-index := xs:integer( request:get-parameter( $history-protocol:param-name-revision-index , "" ) )
-	let $log := util:log( "debug" , $revision-index )
+	let $log := local:log4jDebug( $revision-index )
 	
     let $entry-doc-path := atomdb:request-path-info-to-db-path( $request-path-info )
 
@@ -304,7 +323,7 @@ declare function history-protocol:construct-member-base-revision(
 ) as element(atom:entry)
 {
 
-    let $log := util:log( "debug" , "== history-protocol:construct-member-base-revision() ==" )
+    let $log := local:log4jDebug( "== history-protocol:construct-member-base-revision() ==" )
 
     (: 
      : N.B. if no updates on the doc yet, then base revision won't have been
@@ -316,11 +335,11 @@ declare function history-protocol:construct-member-base-revision(
         then atomdb:request-path-info-to-db-path( $request-path-info )
         else concat( "/db/system/versions" , atomdb:request-path-info-to-db-path( $request-path-info ) , ".base" )
         
-    let $log := util:log( "debug" , $base-revision-db-path )
+    let $log := local:log4jDebug( $base-revision-db-path )
     
     let $base-revision-doc := doc( $base-revision-db-path ) 
         
-    let $log := util:log( "debug" , exists( $base-revision-doc ) )
+    let $log := local:log4jDebug( exists( $base-revision-doc ) )
     
     (: N.B. need to copy because, for some reason, xpath queries on base revision don't work :)
     
