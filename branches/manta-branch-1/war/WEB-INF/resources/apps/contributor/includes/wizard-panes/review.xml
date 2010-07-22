@@ -183,7 +183,19 @@
 			        <xforms:output ref="pmid">
 			            <xforms:label>PubMedID:</xforms:label>
 			        </xforms:output>
-		        </li>
+
+					<!-- TODO -->
+					<ul>
+						<xforms:repeat nodeset="publication-references/publication-reference">
+							<li class="repeated-element">
+								<xforms:output ref="url">
+									<xforms:label>URL:</xforms:label>
+								</xforms:output>
+							</li>							
+						</xforms:repeat>
+					</ul>
+					
+				</li>
 			</xforms:repeat>
 		</ul>
 		</div>

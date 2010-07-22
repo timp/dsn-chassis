@@ -270,6 +270,11 @@ ul {
 /* Gives same colour background on dashboard. */
     background-color: #EDF5FF;
 }
+.register-study-wizard .yui-content .xforms-repeat-selected-item-2, .study-dashboard .yui-content .xforms-repeat-selected-item-2 {
+/* Gives same colour background on dashboard. */
+    background-color: #EDF5FF;
+}
+
 .study-dashboard .yui-content {
     min-height: 10em;
 }
@@ -305,4 +310,7 @@ ul {
 }
 .register-study-wizard .terms-iframe {
     width: 35em;
+}
+.register-study-wizard .publication-deletion-cell, .study-dashboard .publication-deletion-cell {
+    vertical-align: top;
 }

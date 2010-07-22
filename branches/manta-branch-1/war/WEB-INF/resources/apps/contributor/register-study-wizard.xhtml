@@ -166,13 +166,30 @@
 
 			        <xforms:bind nodeset="publication" relevant="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:content/study/study-is-published='Yes'">
 			            
-			           <!-- <xforms:bind nodeset="pmid"  required="true()"/>  -->
+			           <xforms:bind nodeset="pmid" required="true()"/>
 
-			            
 			        </xforms:bind>
 			        
        		</xforms:bind>
 
+			<xforms:instance id="ins-publication-reference">
+				<publication-reference xmlns="">
+					<publication-reference-type>url</publication-reference-type>
+					<url/>
+					<doi/>
+				</publication-reference>
+			</xforms:instance>
+			
+			<xforms:instance id="ins-publication-reference-types" src="/apps/common/constants/publication-reference-types.xml"/>
+
+
+        	<xforms:bind nodeset="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:content/study/publications/publication/publication-reference">
+
+			        <xforms:bind nodeset="url" relevant="../publication-reference-type = 'url'" required="../publication-reference-type = 'url'" />
+			        
+			        <xforms:bind nodeset="doi" relevant="../publication-reference-type = 'doi'" required="../publication-reference-type = 'doi'" />
+			        
+       		</xforms:bind>
 
 
 
@@ -728,7 +745,6 @@
 
 
 
-
         	
         	
         </xforms:model>
@@ -844,6 +860,9 @@
 			        <xforms:send ev:event="DOMActivate" submission="sub-delete-upload"/>
 			    </fr:positive-choice>
 			</fr:alert-dialog>
+
+
+		<fr:xforms-inspector xmlns:fr="http://orbeon.org/oxf/xml/form-runner"/>
 
     </body>
     
