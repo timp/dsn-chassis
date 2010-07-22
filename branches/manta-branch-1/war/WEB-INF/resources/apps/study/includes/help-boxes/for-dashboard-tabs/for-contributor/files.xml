@@ -1,0 +1,16 @@
+<div 
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:xforms="http://www.w3.org/2002/xforms" 
+	xmlns:ev="http://www.w3.org/2001/xml-events"
+	class="inner-help">
+
+	<p>Whenever possible, each study should have the data file, a data dictionary and the associated protocol(s). 
+	</p>
+	<p>Curation will begin as soon as possible after your data file(s) have been uploaded. Once a curator has begun work on your study, their contact information will appear in the Summary tab in the study dashboard.
+	</p>
+	<p>If for any reason, you need to update or replace a submitted data file, please contact your curator.  If curation has not begun, contact the WWARN Curation Team (curation@wwarn.org) to let them know which file needs to be replaced.
+	</p>
+	<p>The first step in the curation process, is to check file uploads for personal data. If there is no personal data in the file, it will be made available for download. If there is personal data, this information will be removed and an anonymized file will be made available for download to the study creator and administrators.
+	</p>
+
+</div>

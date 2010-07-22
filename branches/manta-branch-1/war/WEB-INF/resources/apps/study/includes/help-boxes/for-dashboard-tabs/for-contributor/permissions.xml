@@ -1,0 +1,15 @@
+<div 
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:xforms="http://www.w3.org/2002/xforms" 
+	xmlns:ev="http://www.w3.org/2001/xml-events"
+	class="inner-help">
+
+
+	<p>You have control over who can access your studies. To share a study with an individual, you will need to add them as an administrator. Administrators will have all the same rights as you — the study creator — including uploading data, downloading anonymized data, adding/removing administrators and editing the study information. Administrators will only be able to access the study once it has been registered and will need to register with the WWARN website.
+	</p>
+	
+	<p>You can add or remove administrators at any time by logging into your account, navigating to this study and clicking the Permissions tab.
+	</p>
+
+
+</div>

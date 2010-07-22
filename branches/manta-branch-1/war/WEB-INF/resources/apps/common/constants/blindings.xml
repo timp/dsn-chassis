@@ -1,0 +1,21 @@
+<!--  A closed list blinding techniques -->
+<!-- Required in Clinical Treatments -->
+<!--  pharmacology-treatmentRegimens-blinding -->
+<blindings xmlns="">
+ 	<blinding>
+		<label>open label</label>
+ 		<value>openlabel</value>
+ 	</blinding>
+ 	<blinding>
+		<label>single (clinician/lab)</label>
+ 		<value>singleClinician</value>
+ 	</blinding>
+ 	<blinding>
+		<label>single (patient)</label>
+ 		<value>singlePatient</value>
+ 	</blinding>
+ 	<blinding>
+		<label>double</label>
+ 		<value>double</value>
+ 	</blinding>
+</blindings>

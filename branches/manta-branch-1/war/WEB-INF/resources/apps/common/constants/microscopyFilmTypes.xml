@@ -1,0 +1,12 @@
+<!--  A closed list of microscopy file types -->
+<microscopyFilmTypes xmlns="">
+	<microscopyFilmType>
+		<label>thick</label>
+		<value>thick</value>
+	</microscopyFilmType>
+	<microscopyFilmType>
+		<label>thin</label>
+		<value>thin</value>
+	</microscopyFilmType>
+</microscopyFilmTypes>
+

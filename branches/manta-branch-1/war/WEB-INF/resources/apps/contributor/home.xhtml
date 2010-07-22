@@ -1,0 +1,212 @@
+<!--
+  Copyright (C) 2010 University of Oxford.
+  
+  This program is free software; you can redistribute it and/or modify it under the terms of the
+  GNU Lesser General Public License as published by the Free Software Foundation; either version
+  2.1 of the License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Lesser General Public License for more details.
+
+  The full text of the license is available at http://www.gnu.org/copyleft/lesser.html
+  -->
+<?oxygen NVDLSchema="../../../../../oxygen/samples/nvdl/xhtml-xforms-11-orbeon.nvdl"?>
+<html 
+	xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:f="http://orbeon.org/oxf/xml/formatting" 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:atom="http://www.w3.org/2005/Atom"
+    xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:manta="http://www.cggh.org/2010/chassis/manta/xmlns"
+	xmlns:atombeat="http://purl.org/atombeat/xmlns">
+    
+    <head>
+    
+        <title>Data contribution - Home</title>
+
+        
+        <xforms:model>
+
+			<xforms:instance id="ins-draft-feed">
+				<atom:feed/>
+			</xforms:instance>
+
+			<xforms:submission 
+				id="sub-retrieve-draft-feed"
+				resource="/atombeat/content/drafts"
+				method="get"
+				replace="instance"
+				instance="ins-draft-feed"
+				serialization="none">
+				<!-- TODO error handling -->
+                <xforms:message ev:event="xforms-submit-error" level="modal">
+                	An error occurred (<xforms:output value="event('error-type')"/>) while retrieving a list of drafts.
+               	</xforms:message>
+			</xforms:submission>
+        
+        	<xforms:send 
+				ev:event="xforms-model-construct-done" 
+				submission="sub-retrieve-draft-feed"/>
+				
+				
+			<!--  -->
+        
+			<xforms:instance id="ins-study-feed">
+				<atom:feed/>
+			</xforms:instance>
+			
+			<xforms:submission 
+				id="sub-retrieve-study-feed"
+				resource="/atombeat/content/studies"
+				method="get"
+				replace="instance"
+				instance="ins-study-feed"
+				serialization="none">
+				<!-- TODO error handling -->
+                <xforms:message ev:event="xforms-submit-error" level="modal">
+                	An error occurred (<xforms:output value="event('error-type')"/>) while retrieving a list of studies.
+               	</xforms:message>
+			</xforms:submission>
+			
+			<xforms:send 
+				ev:event="xforms-model-construct-done" 
+				submission="sub-retrieve-study-feed"/>
+				
+    		
+			
+        </xforms:model>
+
+       	<xi:include href="../common/includes/current-user-model.xml"/>
+
+    </head>
+    <body>
+
+		<xi:include href="../common/includes/current-user-actions.xml"/>
+		
+		<div id="content" class="home">
+    
+	    	<h1>Data contribution - Home</h1>
+
+			<div class="help">
+
+				<h2>Data sharing with WWARN</h2>
+				
+				<p>We&#8217;ve carefully crafted a secure online data repository to provide researchers with the opportunity to contribute to an early warning system capable of identifying and preventing the spread of antimalarial resistance. For more information on data sharing with WWARN, including guidance on the types of data we accept, read through our <a href="FAQs" target="_blank">Frequently Asked Questions</a> or contact us directly at <a href="mailto:curation@wwarn.org">curation@wwarn.org</a>.
+				</p>
+			
+			</div>
+
+			<xforms:group ref="instance('ins-study-feed')[empty(atom:entry)]">
+			
+				<p>Welcome to the WWARN Data Repository.
+				</p>
+				
+			</xforms:group>
+			 
+			<p>If this is your first time contributing data to WWARN or you are submitting a different type of data than you&#8217;ve contributed in the past, we recommend that you contact us at <a href="mailto:curation@wwarn.org">curation@wwarn.org</a> before you begin the registration process. We&#8217;d be pleased to discuss your study and guide you through the submission process.
+			</p>   	
+
+
+	    	<span id="register-study-link-container"><a href="register-study-wizard">Register study</a></span>
+	    	
+
+		    <h2>Unfinished drafts</h2>
+			
+			<xforms:group ref="instance('ins-draft-feed')[empty(atom:entry)]">
+			
+				<p>Registering a study is a five step process. Once you move ahead a step, information from the previous step will be automatically saved. You&#8217;ll also see a &#8216;Save as draft&#8217; button at the bottom of each step. If you click this button it will save the information submitted to date. If you complete the registration, your study will move to &#8216;My studies&#8217;. If for any reason the registration process is interrupted, saved information will be retained and made available as an unfinished draft.  
+				</p>
+			
+    		</xforms:group> 
+
+    		<xforms:group ref="instance('ins-draft-feed')[count(atom:entry)>0]">
+
+				<div id="list-of-drafts-container">
+
+					<ul>
+	    				<xforms:repeat nodeset="xxforms:sort(instance('ins-draft-feed')/atom:entry, atom:published, 'text', 'ascending')">
+	    					<li class="repeated-element">
+	    						<span class="draft-link-container"><a href="register-study-wizard?draft={atom:link[@rel='edit']/@href}"><xforms:output value="atom:title"/> (<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')" />)</a></span>
+	    					</li>
+	    				</xforms:repeat>
+	    			</ul>
+	    			
+	    		</div>
+		    			
+    		</xforms:group>    		
+
+
+			<h2>My studies</h2>
+	    	
+    		<xforms:group ref="instance('ins-study-feed')[empty(atom:entry)]">
+
+	    		<!-- <p>You have not registered any studies.</p>  -->
+	    		
+	    		
+	    		<p>Any study you create or have permission to access will be listed here. You&#8217;ll be able to navigate to each study to upload files or edit the information provided when you registered the study.  
+	    		</p>
+	    		
+	    	
+    		</xforms:group>
+	    	
+    		<xforms:group ref="instance('ins-study-feed')[exists(atom:entry)]">
+
+				<span id="list-of-studies-container">
+
+		    	<fr:datatable>
+		    		<thead>
+		    			<tr>
+		    				<th fr:sortable="true" fr:resizeable="true">ID</th>
+		    				<th fr:sortable="true" fr:resizeable="true">Title</th>
+		    				<!-- TODO: Admins. -->
+		    				<th fr:sortable="true" fr:resizeable="true">Created</th>
+<!--		    				<th fr:sortable="true" fr:resizeable="true">Creator</th>-->
+		    				<th fr:sortable="false" fr:resizeable="true">Administrators</th>
+		    				<th>Actions</th>
+		    			</tr>
+		    		</thead>
+		    		<tbody>
+		    			<xforms:repeat nodeset="xxforms:sort(instance('ins-study-feed')/atom:entry, atom:published, 'text', 'ascending')">
+		    				<tr class="repeated-element">
+		    					<td>
+		    						<a href="../study/dashboard?study={atom:link[@rel='edit']/@href}"><xforms:output value="manta:id"/></a>
+		    					</td>
+		    					<td>
+		    						<a href="../study/dashboard?study={atom:link[@rel='edit']/@href}"><xforms:output value="atom:title"/></a>
+		    					</td>
+		    					<td>
+		    						<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')"/>
+		    					</td>
+		    					<!--
+		    					<td>
+		    						<xforms:output value="atom:author/atom:email"/>
+		    					</td>
+		    					-->
+		    					<td>
+		    						<xforms:repeat nodeset="atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor']//atombeat:group[@id='GROUP_ADMINISTRATORS']/atombeat:member">
+		    							<div>
+						    				<xforms:output ref="."/>			
+		    							</div>
+		    						</xforms:repeat>
+		    						<!-- <xforms:output value="string-join( atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor']//atombeat:group[@id='GROUP_ADMINISTRATORS']/atombeat:member , ' ' )"/> -->
+		    					</td>
+		    					<td><span class="view-study-link-container"><a href="../study/dashboard?study={atom:link[@rel='edit']/@href}">View</a></span></td>
+		    				</tr>
+		    			</xforms:repeat>
+		    		</tbody>
+		    	</fr:datatable>
+		    	
+		    	</span>
+		    	
+    		</xforms:group>
+    		
+    	</div>
+
+    </body>
+</html>
+

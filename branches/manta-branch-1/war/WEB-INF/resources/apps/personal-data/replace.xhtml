@@ -1,0 +1,285 @@
+<!--
+  Copyright (C) 2010 University of Oxford.
+  
+  This program is free software; you can redistribute it and/or modify it under the terms of the
+  GNU Lesser General Public License as published by the Free Software Foundation; either version
+  2.1 of the License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Lesser General Public License for more details.
+
+  The full text of the license is available at http://www.gnu.org/copyleft/lesser.html
+  -->
+<?oxygen NVDLSchema="../../../../../oxygen/samples/nvdl/xhtml-xforms-11-orbeon.nvdl"?>
+<html 
+	xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:f="http://orbeon.org/oxf/xml/formatting" 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:atom="http://www.w3.org/2005/Atom"
+    xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:manta="http://www.cggh.org/2010/chassis/manta/xmlns">
+    
+    <head>
+    
+        <title>Personal Data Review - Upload anonymized file</title>
+        
+        <xforms:model>
+
+			<xforms:instance id="ins-media-entry">
+				<atom:entry/>
+			</xforms:instance>
+			
+			<xforms:submission 
+				id="sub-get-media-entry"
+				resource="{xxforms:get-request-parameter('media-link')}"
+				method="get"
+				replace="instance"
+				instance="ins-media-entry"
+				serialization="none">
+                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the study.</xforms:message>
+				<xforms:send ev:event="xforms-submit-done" submission="sub-get-study-entry"/>
+				<xforms:send ev:event="xforms-submit-done" submission="sub-get-reviews-feed"/>
+				<xforms:setvalue 
+					ev:event="xforms-submit-done"
+					ref="instance('ins-review-entry')/atom:title" 
+					value="concat( 'Personal Data Review of file ' , instance('ins-media-entry')/manta:id/text() )"/>
+				<xforms:setvalue 
+					ev:event="xforms-submit-done" 
+					ref="instance('ins-derivation-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/derivationInput']/@href"
+					value="instance('ins-media-entry')/atom:link[@rel='edit']/@href"/>
+			</xforms:submission>
+			
+			<xforms:instance id="ins-study-entry">
+				<atom:entry/>
+			</xforms:instance>
+			
+			<xforms:submission 
+				id="sub-get-study-entry"
+				resource="{instance('ins-media-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/originStudy']/@href}"
+				method="get"
+				replace="instance"
+				instance="ins-study-entry"
+				serialization="none">
+                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the study.</xforms:message>
+				<xforms:setvalue 
+					ev:event="xforms-submit-done" 
+					ref="instance('ins-uploads')/@target" 
+					value="instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/curatedMedia']/@href"/>
+			</xforms:submission>
+        	
+        	<xforms:instance id="ins-reviews-feed">
+        		<atom:feed/>
+        	</xforms:instance>
+        	
+        	<xforms:submission
+        		id="sub-get-reviews-feed"
+        		resource="{instance('ins-media-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/personalDataReviews']/@href}"
+				method="get"
+				replace="instance" 
+				instance="ins-reviews-feed" 
+				serialization="none"
+	        	>
+        		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving personal data reviews.</xforms:message>
+        	</xforms:submission>
+			
+			<xforms:action ev:event="xforms-model-construct-done">
+			
+				<xforms:send submission="sub-get-media-entry"/>
+
+				<xforms:setvalue 
+					ref="instance('ins-review-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/reviewSubject']/@href" 
+					value="xxforms:get-request-parameter('media-link')"/>
+
+			</xforms:action>
+			
+        	<xforms:instance id="ins-uploads">
+        		<uploads xmlns="" target="">
+        			<upload
+        				filename=""
+        				mediatype=""
+        				size=""
+        				typeterm=""
+        				typelabel=""
+        				xsi:type="xs:anyURI"/>
+        		</uploads>
+        	</xforms:instance>
+
+        	<xforms:submission 
+        		id="sub-background-upload" 
+        		ref="instance('ins-uploads')" 
+        		method="post" 
+        		replace="none" 
+        		resource="test:"
+        		validate="false"/>
+ 
+        	<xforms:submission 
+        		id="sub-post-uploads" 
+        		ref="instance('ins-uploads')" 
+        		method="post" 
+        		resource="/util/store-uploads"
+        		replace="instance"
+        		instance="ins-uploads-results-feed">
+        		<!-- TODO proper error handling -->
+        		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>).</xforms:message>
+        		<xforms:setvalue 
+        			ev:event="xforms-submit-done" 
+        			ref="instance('ins-derivation-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/derivationOutput']/@href"
+        			value="instance('ins-uploads-results-feed')/atom:entry/atom:link[@rel='edit']/@href"/>
+        		<xforms:send ev:event="xforms-submit-done" submission="sub-post-derivation"/>
+        	</xforms:submission>
+        	
+        	<xforms:instance id="ins-uploads-results-feed">
+        		<atom:feed/>
+        	</xforms:instance>
+        	
+        	<xforms:instance id="ins-derivation-entry">
+        		<atom:entry>
+        			<atom:title type="text"/>
+        			<atom:link rel="http://www.cggh.org/2010/chassis/terms/derivationInput" href="" type="application/atom+xml"/>
+        			<atom:link rel="http://www.cggh.org/2010/chassis/terms/derivationOutput" href="" type="application/atom+xml"/>
+        			<atom:content type="application/vnd.chassis-manta+xml">
+        				<derivation xmlns=""/>
+        			</atom:content>
+        		</atom:entry>
+        	</xforms:instance>
+        	
+        	<xforms:submission 
+        		id="sub-post-derivation"
+        		method="post"
+        		resource="{instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/derivations']/@href}"
+        		ref="instance('ins-derivation-entry')"
+        		replace="instance"
+        		instance="ins-derivation-entry"
+        		mediatype="application/atom+xml"
+        		>
+        		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the study.</xforms:message>
+        		<xforms:send ev:event="xforms-submit-done" submission="sub-get-home"/>
+        	</xforms:submission>
+        	
+        	<xforms:submission
+				id="sub-get-home"
+				method="get"
+				resource="home"
+				replace="all"
+				serialization="none">
+				<!-- TODO anything? -->
+			</xforms:submission>
+				
+        </xforms:model>
+
+       	<xi:include href="../common/includes/current-user-model.xml"/>
+
+    </head>
+    <body>
+
+		<xi:include href="../common/includes/current-user-actions.xml"/>
+    
+    	<div id="content" class="home">
+    
+    	<h1>Personal Data Review - Upload anonymized file</h1>
+
+		<div class="help">
+
+			<!-- Begin: Box text -->
+			<p>Carefully review the anonymized file prior to uploading. Once the anonymized file is uploaded, it will be made available for download to the original contributor(s).
+			</p>
+			<!-- End: Box text -->
+		
+		</div>
+    	
+    	<xforms:group ref="instance('ins-media-entry')">
+    	
+	    	<p>
+	    		Code: <xforms:output value="manta:id"/>
+	    	</p>
+	    	<p>
+	    		Original File Name: <xforms:output value="atom:title"/>
+	    	</p>
+	    	<p>
+	    		Contributor: <xforms:output value="atom:author/atom:email"/> 
+	    	</p>
+	    	<p>
+	    		Study: <xforms:output value="instance('ins-study-entry')/atom:title"/>
+	    	</p>
+	    	<p>
+	    		<a href="{atom:content/@src}">download file</a>
+	    	</p>
+    		
+    		<h2>Reviews</h2>
+    		
+    		<xforms:repeat id="rep-reviews" nodeset="instance('ins-reviews-feed')/atom:entry">
+    			
+    			<p>
+    				Reviewed by 
+    				<xforms:output ref="xxforms:context('rep-reviews')/atom:author/atom:email"/> 
+    				on
+    				<xforms:output ref="xxforms:context('rep-reviews')/atom:published" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')"/>.
+    			</p>
+    			
+    			<blockquote>
+    				<xforms:output ref="xxforms:context('rep-reviews')/atom:summary">
+    					<xforms:label/>
+    				</xforms:output>
+    			</blockquote>
+    			
+    		</xforms:repeat>
+    		
+    		<h2>Upload Cleaned File</h2>
+    		
+    		<p>
+    			<xforms:group ref="instance('ins-uploads')/upload">
+    				
+    				<!-- Upload field -->
+    				<span id="file-selector-container">
+    				<xforms:upload ref="." xxforms:size="60">
+    					<xforms:label>Upload file: </xforms:label>
+    					<xforms:filename ref="@filename"/>
+    					<xforms:mediatype ref="@mediatype"/>
+    					<xxforms:size ref="@size"/>
+    					<xforms:send ev:event="xforms-select" submission="sub-background-upload"/>
+    				</xforms:upload>
+    				</span>
+    				
+    				<!-- Download link -->
+    				<!--
+    				<xforms:output value="." appearance="xxforms:download">
+    					<xforms:label>Download</xforms:label>
+    					<xforms:filename ref="@filename"/>
+    					<xforms:mediatype ref="@mediatype"/>
+    				</xforms:output>
+    				-->
+
+    			</xforms:group>
+    			
+    		</p>
+    		
+    		<p>
+    		
+				<xforms:trigger>
+					<xforms:label>&lt;&lt; Cancel</xforms:label>
+					<xforms:action ev:event="DOMActivate">
+						<xforms:load resource="home"/>
+					</xforms:action>
+				</xforms:trigger>    		
+    		
+    			<span id="confirm-button-container">
+    			<xforms:submit submission="sub-post-uploads">
+    				<xforms:label>Confirm</xforms:label>
+    			</xforms:submit>
+    			</span>
+    			
+    		</p>
+
+    	</xforms:group>
+    	
+    	</div>
+
+    </body>
+</html>
+

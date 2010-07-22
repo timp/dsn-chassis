@@ -1,0 +1,22 @@
+		<!--+
+			|
+			| Navigation div to hold current username and link to home.
+			|
+			+-->       		
+<?oxygen NVDLSchema="../../../../../../oxygen/samples/nvdl/xhtml-xforms-11-orbeon.nvdl"?>
+<div	
+    xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
+    id="current-user-actions"
+    >
+  	
+  	
+	<xforms:output model="mod-current-user" ref="instance('ins-current-user')/name"/> - 
+    <span id="logout-link-container"><a href="/j_spring_security_logout">Log out</a></span>
+  	
+  		
+	
+	
+  	<!--(<xforms:output model="mod-current-user" ref="instance('ins-current-user')/language"/>-<xforms:output model="mod-current-user" ref="instance('ins-current-user')/country"/>) -->
+</div>

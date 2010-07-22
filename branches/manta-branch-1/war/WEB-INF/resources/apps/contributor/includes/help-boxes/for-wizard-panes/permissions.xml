@@ -1,0 +1,19 @@
+<div 
+	class="help"
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:xforms="http://www.w3.org/2002/xforms" 
+	xmlns:ev="http://www.w3.org/2001/xml-events">
+
+	<p>Research is a group effort. You may want to delegate the task of uploading data to a particular member of your team or share the task amongst several individuals. You may want to share your data with a collaborator. You have control over who can access your studies. 
+	</p>
+
+	<p>To share a study with an individual, you will need to add them as an administrator. Administrators will have all the same rights as you — the study creator — including uploading data, downloading anonymized data, adding/removing administrators and editing all the information about the study. 
+	</p>
+	
+	<p>Administrators will only be able to access the study once it has been registered and will need to register with the WWARN website.
+	</p>
+	
+	<p>You can add or remove administrators at any time by logging into your account, navigating to this study and clicking the Permissions tab.
+	</p>
+
+</div>

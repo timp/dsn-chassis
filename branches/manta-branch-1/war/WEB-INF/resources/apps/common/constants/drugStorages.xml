@@ -1,0 +1,10 @@
+<drugStorages xmlns=""> 
+	<drugStorage>
+		<label>refrigerator</label>
+		<value>refrigerator</value>
+	</drugStorage>
+	<drugStorage>
+		<label>room temperature</label>
+		<value>none</value>
+	</drugStorage>
+</drugStorages>
