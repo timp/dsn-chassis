@@ -53,79 +53,83 @@
                     	
                     	<br/>
                     	
-                    	<div class="editable-list-of-publication-references-container">
+                    	<xforms:group ref="publication-references">
 	                    	
-	                    	<table>
-	                    		
-		                    	<xforms:repeat nodeset="publication-reference" id="rep-publication-reference">
+	                    	<div class="editable-list-of-publication-references-container">
+		                    	
+		                    	<table>
 		                    		
-			                    	<tr class="repeated-element">	
-			                    		<td>
-				                    		<xforms:trigger>
-				                    			<xforms:label>
-				                    				<img src="/apps/contributor/common/remove.gif" alt="Remove" />
-				                    			</xforms:label>
-				                    			<xforms:delete ev:event="DOMActivate" context="."
-				                    				nodeset="." at="index('rep-publication-reference')" />
-				                    		</xforms:trigger>
-			                    		</td>
-			                    		<td>
-			                    			<span class="publication-reference-type-menu-container">
-					                    		<xforms:select1 appearance="minimal" ref="publication-reference-type">
-					                    			<xforms:label class="invisible">Publication reference type
+			                    	<xforms:repeat nodeset="publication-reference" id="rep-publication-reference">
+			                    		
+				                    	<tr class="repeated-element">	
+				                    		<td>
+					                    		<xforms:trigger>
+					                    			<xforms:label>
+					                    				<img src="/apps/contributor/common/remove.gif" alt="Remove" />
 					                    			</xforms:label>
-					                    			<xforms:itemset
-					                    				nodeset="instance('ins-publication-reference-types')/publication-reference-type">
-					                    				<xforms:label ref="label" />
-					                    				<xforms:value ref="value" />
-					                    			</xforms:itemset>
-					                    		</xforms:select1>
-			                    			</span>
-			                    			<span class="url-textbox-container">
-					                    		<xforms:input ref="url">
-					                    			<xforms:label class="invisible">URL</xforms:label>
-					                    			<xforms:alert>Please provide a valid URL.</xforms:alert>
-					                    		</xforms:input>
-			                    			</span>
-			                    			<span class="doi-textbox-container">
-					                    		<xforms:input ref="doi">
-					                    			<xforms:label class="invisible">DOI</xforms:label>
-					                    			<xforms:alert>Please provide a valid DOI.</xforms:alert>
-					                    		</xforms:input>
-			                    			</span>
-			                    		</td>
-			                    
-			                    	</tr>
+					                    			<xforms:delete ev:event="DOMActivate" context="."
+					                    				nodeset="." at="index('rep-publication-reference')" />
+					                    		</xforms:trigger>
+				                    		</td>
+				                    		<td>
+				                    			<span class="publication-reference-type-menu-container">
+						                    		<xforms:select1 appearance="minimal" ref="publication-reference-type">
+						                    			<xforms:label class="invisible">Publication reference type
+						                    			</xforms:label>
+						                    			<xforms:itemset
+						                    				nodeset="instance('ins-publication-reference-types')/publication-reference-type">
+						                    				<xforms:label ref="label" />
+						                    				<xforms:value ref="value" />
+						                    			</xforms:itemset>
+						                    		</xforms:select1>
+				                    			</span>
+				                    			<span class="url-textbox-container">
+						                    		<xforms:input ref="url">
+						                    			<xforms:label class="invisible">URL</xforms:label>
+						                    			<xforms:alert>Please provide a valid URL.</xforms:alert>
+						                    		</xforms:input>
+				                    			</span>
+				                    			<span class="doi-textbox-container">
+						                    		<xforms:input ref="doi">
+						                    			<xforms:label class="invisible">DOI</xforms:label>
+						                    			<xforms:alert>Please provide a valid DOI.</xforms:alert>
+						                    		</xforms:input>
+				                    			</span>
+				                    		</td>
+				                    
+				                    	</tr>
+			                    		
+			                    	</xforms:repeat>
 		                    		
-		                    	</xforms:repeat>
-	                    		
-	                			<tr>		                    	
-			                    	
-			                    	<td>
-				                    	<xforms:trigger>
-				                    		<xforms:label>
-				                    			<img src="/apps/contributor/common/add.gif" alt="Add" />
-				                    		</xforms:label>
-				                    		<xforms:insert ev:event="DOMActivate" context="."
-				                    			nodeset="publication-reference" at="last()"
-				                    			position="after" origin="instance('ins-publication-reference')" />
-				                    	</xforms:trigger>
-			                    	</td>
-			                    	<td>
-			                    		<span class="add-publication-reference-link-container">
-					                    	<xforms:trigger appearance="minimal">
-					                    		<xforms:label>Add a URL or a DOI</xforms:label>
+		                			<tr>		                    	
+				                    	
+				                    	<td>
+					                    	<xforms:trigger>
+					                    		<xforms:label>
+					                    			<img src="/apps/contributor/common/add.gif" alt="Add" />
+					                    		</xforms:label>
 					                    		<xforms:insert ev:event="DOMActivate" context="."
 					                    			nodeset="publication-reference" at="last()"
 					                    			position="after" origin="instance('ins-publication-reference')" />
 					                    	</xforms:trigger>
-			                    		</span>
-			                    	</td>
-	                			</tr>
-	                    		
-	                    	</table>
-                    	
-                    	</div>
+				                    	</td>
+				                    	<td>
+				                    		<span class="add-publication-reference-link-container">
+						                    	<xforms:trigger appearance="minimal">
+						                    		<xforms:label>Add a URL or a DOI</xforms:label>
+						                    		<xforms:insert ev:event="DOMActivate" context="."
+						                    			nodeset="publication-reference" at="last()"
+						                    			position="after" origin="instance('ins-publication-reference')" />
+						                    	</xforms:trigger>
+				                    		</span>
+				                    	</td>
+		                			</tr>
+		                    		
+		                    	</table>
+	                    	
+	                    	</div>
+                    		
+                    	</xforms:group>
                     	
                     </td>
                 </tr>
