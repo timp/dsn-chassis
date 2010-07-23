@@ -172,10 +172,33 @@
 	<td>//*[@id='add-publication-link-container']//a</td>
 	<td></td>
 </tr>
-<!--Type "http://www.youtube.com/watch?v=BqjMYEfViKA" into the web link textbox.-->
+<!--Type "12748197" into the pmid textbox.-->
 <tr>
 	<td>type</td>
-	<td>//*[@id=&quot;editable-list-of-publications-container&quot;]//*[contains(@class, 'repeated-element')][3]//*[contains(@class, 'web-link-textbox-container')]//input</td>
+	<td>//*[@id=&quot;editable-list-of-publications-container&quot;]//*[contains(@class, 'repeated-element')][3]//*[contains(@class, 'pmid-textbox-container')]//input</td>
+	<td>12748197</td>
+</tr>
+<!--Click on the "Add a URL or a DOI" link.-->
+<tr>
+	<td>click</td>
+	<td>//*[@id='editable-list-of-publications-container']//*[contains(@class, 'repeated-element')][3]//*[contains(@class,'editable-list-of-publication-references-container')]//*[contains(@class, 'add-publication-reference-link-container')][1]//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<!--Select the "URL" option from the reference type menu.-->
+<tr>
+	<td>select</td>
+	<td>//*[@id='editable-list-of-publications-container']//*[contains(@class, 'repeated-element')][3]//*[contains(@class,'editable-list-of-publication-references-container')]//*[contains(@class, 'repeated-element')][1]//*[contains(@class,'publication-reference-type-menu-container')][1]//select</td>
+	<td>label=URL</td>
+</tr>
+<!--Type "http://www.youtube.com/watch?v=BqjMYEfViKA" into the URL textbox.-->
+<tr>
+	<td>type</td>
+	<td>//*[@id='editable-list-of-publications-container']//*[contains(@class, 'repeated-element')][3]//*[contains(@class,'editable-list-of-publication-references-container')]//*[contains(@class, 'repeated-element')][1]//*[contains(@class,'url-textbox-container')]//input</td>
 	<td>http://www.youtube.com/watch?v=BqjMYEfViKA</td>
 </tr>
 <!--Press the "Save Changes" button.-->
