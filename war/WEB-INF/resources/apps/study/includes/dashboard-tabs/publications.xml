@@ -199,17 +199,28 @@
 				
 				<xforms:group ref="publications[exists(publication)]">
 					
-					<table>
+					<ul>
 						<xforms:repeat nodeset="publication" id="rep-publication-curator">
-							<tr>
-								<td>
+							<li>
 									<xforms:output ref="pmid">
 										<xforms:label>PubMedID:</xforms:label>
 									</xforms:output>
-								</td>
-							</tr>
+									<ul>
+										<xforms:repeat nodeset="publication-reference">
+											<li class="repeated-element">
+												<xforms:output ref="url">
+													<xforms:label>URL:</xforms:label>
+												</xforms:output>
+												<xforms:output ref="doi">
+													<xforms:label>DOI:</xforms:label>
+												</xforms:output>
+											</li>
+										</xforms:repeat>
+									</ul>
+								
+							</li>
 						</xforms:repeat>
-					</table>
+					</ul>
 					
 				</xforms:group>		
 				

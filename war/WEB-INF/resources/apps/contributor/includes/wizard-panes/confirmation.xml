@@ -25,7 +25,7 @@
             
             <span id="studies-to-copy-answers-from-menu-container">
                 <xforms:select1 ref="instance('ins-control')/href-to-copy-study-info-from">
-                    <xforms:label>Copy answers from another study?</xforms:label>
+                    <xforms:label>Copy info from another study?</xforms:label>
                     
                     <xforms:item>
                         <xforms:label>Select...</xforms:label>
