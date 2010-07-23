@@ -179,22 +179,24 @@
 		<div id="list-of-publications-container">
 		<ul>
 			<xforms:repeat nodeset="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:content/study/publications/publication">
-				<li class="repeated-element">
+				<li class="repeated-element publication-form-summary-item">
 			        <xforms:output ref="pmid">
 			            <xforms:label>PubMedID:</xforms:label>
 			        </xforms:output>
-					<ul>
-						<xforms:repeat nodeset="publication-reference">
-								<li class="repeated-element">
-									<xforms:output ref="url">
-										<xforms:label>URL:</xforms:label>
-									</xforms:output>
-									<xforms:output ref="doi">
-										<xforms:label>DOI:</xforms:label>
-									</xforms:output>
-								</li>
-						</xforms:repeat>
-					</ul>
+					<xforms:group ref="publication-references">
+						<ul>
+							<xforms:repeat nodeset="publication-reference">
+									<li class="repeated-element publication-reference-form-summary-item">
+										<xforms:output ref="url">
+											<xforms:label>URL:</xforms:label>
+										</xforms:output>
+										<xforms:output ref="doi">
+											<xforms:label>DOI:</xforms:label>
+										</xforms:output>
+									</li>
+							</xforms:repeat>
+						</ul>
+					</xforms:group>
 				</li>
 			</xforms:repeat>
 		</ul>

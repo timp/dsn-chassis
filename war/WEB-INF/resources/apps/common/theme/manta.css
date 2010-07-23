@@ -314,3 +314,12 @@ ul {
 .register-study-wizard .publication-deletion-cell, .study-dashboard .publication-deletion-cell {
     vertical-align: top;
 }
+.register-study-wizard .publication-form-summary-item, .study-dashboard .publication-form-summary-item {
+    padding-bottom: 1em;
+}
+.register-study-wizard .publication-form-summary-item .xforms-label, .study-dashboard .publication-form-summary-item .xforms-label {
+    font-weight: bold;
+}
+.register-study-wizard .publication-reference-form-summary-item .xforms-label, .study-dashboard .publication-reference-form-summary-item .xforms-label {
+    font-weight: bold;
+}

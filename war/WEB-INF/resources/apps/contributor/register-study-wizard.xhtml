@@ -166,7 +166,8 @@
 
 			        <xforms:bind nodeset="publication" relevant="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:content/study/study-is-published='Yes'">
 			            
-			           <xforms:bind nodeset="pmid" required="true()"/>
+			           <!-- Should be able to add URLs and DOIs without adding a PubMedID. -->
+			           <!-- <xforms:bind nodeset="pmid" required="true()"/>  -->
 
 			        </xforms:bind>
 			        
@@ -180,10 +181,10 @@
 				</publication-reference>
 			</xforms:instance>
 			
-			<xforms:instance id="ins-publication-reference-types" src="/apps/common/constants/publication-reference-types.xml"/>
+			<xforms:instance id="ins-publication-reference-types" src="/apps/common/constants/publication-reference-types.xml" />
 
 
-        	<xforms:bind nodeset="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:content/study/publications/publication/publication-reference">
+        	<xforms:bind nodeset="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:content/study/publications/publication/publication-references/publication-reference">
 
 			        <xforms:bind nodeset="url" relevant="../publication-reference-type = 'url'" required="../publication-reference-type = 'url'" />
 			        
@@ -862,7 +863,7 @@
 			</fr:alert-dialog>
 
 
-		<fr:xforms-inspector xmlns:fr="http://orbeon.org/oxf/xml/form-runner"/>
+		<!-- <fr:xforms-inspector xmlns:fr="http://orbeon.org/oxf/xml/form-runner"/> -->
 
     </body>
     
