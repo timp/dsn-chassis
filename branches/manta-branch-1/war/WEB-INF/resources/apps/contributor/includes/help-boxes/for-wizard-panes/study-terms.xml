@@ -16,9 +16,10 @@
 	</p>
 	
 	<p>
-		<!-- TODO: Link to PDF -->
-		<!--<a href="../contributor/common/WWARN Project Terms of Submission_190510.pdf" target="_blank">Download the Terms of Submission as a PDF</a>-->
-		<a href="terms" target="_blank">View the Terms of Submission as a web page</a>
+		<a href="../apps/contributor/common/WWARN Project Terms of Submission_190510.pdf" target="_blank">Download the Terms of Submission as a PDF</a>
+		
+		<!--<br/>
+		<a href="terms" target="_blank">View the Terms of Submission as a web page</a>-->
 		
 	</p>
 
