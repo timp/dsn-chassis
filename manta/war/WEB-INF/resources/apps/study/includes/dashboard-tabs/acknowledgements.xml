@@ -18,15 +18,16 @@
 	            <xforms:repeat nodeset="person" id="rep-person-contributor">
 	                <tr class="repeated-element">
 	                	<td class="acknowledgement-deletion-cell">
-	                        <xforms:trigger>
-	                        	<xforms:label><img alt="remove" src="/apps/study/common/remove.gif"/></xforms:label>
-	                        	<xforms:delete 
-	                                ev:event="DOMActivate" 
-	                                context="." 
-	                                nodeset="." 
-	                                at="index('rep-person-contributor')"/>
+	                        <xforms:trigger class="addRemove">
+	                        	<xforms:label>
+	                        		<img alt="remove"
+	                        			src="/apps/study/common/remove.gif" />
+	                        	</xforms:label>
+	                        	<xforms:delete ev:event="DOMActivate"
+	                        		context="." nodeset="."
+	                        		at="index('rep-person-contributor')" />
 	                        </xforms:trigger>
-	                    </td>
+	                	</td>
 	                	<td class="acknowledgement-form-cell">
 	                		<span class="first-name-textbox-container">
 	                        <xforms:input ref="first-name">
@@ -86,7 +87,7 @@
 	            
 	            <tr>
 	                <td>
-	                    <xforms:trigger>
+	                    <xforms:trigger class="addRemove">
 	                        <xforms:label><img alt="add" src="/apps/study/common/add.gif"/></xforms:label>
 	                        <xforms:insert 
 	                            ev:event="DOMActivate" 

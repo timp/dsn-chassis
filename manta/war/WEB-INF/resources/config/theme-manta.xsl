@@ -53,7 +53,9 @@
                 <!-- NOTE: The XForms engine may place additional scripts and stylesheets here as needed -->
                 <xhtml:link rel="stylesheet" href="/config/theme/orbeon.css" type="text/css" media="all"/>
                 <xhtml:link rel="stylesheet" href="/apps/common/theme/manta.css" type="text/css" media="all"/>
-                
+                <xhtml:link rel="stylesheet" href="/apps/common/theme/wwarn.css" type="text/css" media="all"/>
+				<xhtml:script type="text/javascript" src="/apps/common/theme/js/jquery-1.4.2.min.js"></xhtml:script>
+			    
                 <!-- Orbeon Forms version -->
                 <xhtml:meta name="generator" content="Orbeon Forms {$orbeon-forms-version}"/>
                 
@@ -69,26 +71,63 @@
                 <!-- Copy body attributes -->
                 <xsl:apply-templates select="/xhtml:html/xhtml:body/@*"/>
                 
-                <xhtml:div id="holdall">
-                
-                	
-                	<xhtml:div id="hd">
-                		<!-- <xhtml:h1>Chassis DSN Data Management</xhtml:h1>  -->
-                	</xhtml:div>
-
-                	<xhtml:div id="bd">
-
-		                <!-- Copy body -->
-		                <xsl:apply-templates select="/xhtml:html/xhtml:body/node()"/>
-
-                	</xhtml:div>
-
+                <xhtml:div class="header">
+					<xhtml:h1 class="logo"><a href="index.html">WWARN - Worldwide Antimalarial Resistance Network</a></xhtml:h1>
 					
-                	<xhtml:div id="ft">
-                		<xhtml:p>Chassis Manta 1.0-alpha-SNAPSHOT</xhtml:p>
+				    <xhtml:div id="block-menu-primary-links" class="block block-menu region-odd odd region-count-1 count-3 with-block-editing">
+					    <xhtml:ul id="primary" class="clearfix">
+					        <xhtml:li class="current"><a href="#nogo">Home</a></xhtml:li>
+					        <xhtml:li><a href="#nogo">About Us</a></xhtml:li>
+					        <xhtml:li><a href="#nogo">Supporting Research</a></xhtml:li>
+					        <xhtml:li><a href="#nogo">Contributing Data</a></xhtml:li>
+					        <xhtml:li><a href="#nogo">Tracking Resistance</a></xhtml:li>
+					        <xhtml:li><a href="#nogo">Community</a></xhtml:li>
+					        <xhtml:li><a href="#nogo">News &amp; Media</a></xhtml:li>
+					    </xhtml:ul>
+				    </xhtml:div>
+				</xhtml:div>
+				
+                <xhtml:div id="holdall">
+                	<xhtml:div id="main-inner">
+                		<xhtml:div class="content page">
+                	
+		                	<xhtml:div id="hd">
+		                		<!-- <xhtml:h1>Chassis DSN Data Management</xhtml:h1>  -->
+		                	</xhtml:div>
+		
+		                	<xhtml:div id="bd" class="clearfix">
+								<xhtml:div class="sidebar" id="sidebar-left">
+								
+								</xhtml:div>
+				                <!-- Copy body -->
+				                <xhtml:div class="main-indent no-bg">
+				                	<xhtml:div class="main twoCol">
+					                	<xsl:apply-templates select="/xhtml:html/xhtml:body/node()"/>
+				                	</xhtml:div>
+				                </xhtml:div>
+		                	</xhtml:div>
+		                	<xhtml:img src="http://wwarn.kmp.co.uk/sites/default/files/imagefield_default_images/default.jpg" class="background" alt=""></xhtml:img>
+                		</xhtml:div> 
                 	</xhtml:div>
-
                 </xhtml:div>
+                
+               	<xhtml:div id="ft">
+               		<!-- <xhtml:p>Chassis Manta 1.0-alpha-SNAPSHOT</xhtml:p> -->
+               		<xhtml:div id="footer-inner">
+					    <xhtml:div class="block">
+					        <xhtml:ul class="menu">
+					            <xhtml:li><xhtml:a title="" href="/contact">Contact Us</xhtml:a></xhtml:li>
+					            <xhtml:li><xhtml:a title="" href="/sitemap">Sitemap</xhtml:a></xhtml:li>
+					            <xhtml:li><xhtml:a title="" href="/terms-use">Terms &#38; Conditions</xhtml:a></xhtml:li>
+					            <xhtml:li><xhtml:a title="" href="/site-credits">Site Credits</xhtml:a></xhtml:li>
+					        </xhtml:ul>
+					    </xhtml:div>
+					    <xhtml:div class="block">
+					        <xhtml:p><xhtml:a href="http://wwarn.org">&#169;2010 WWARN</xhtml:a></xhtml:p>
+					    </xhtml:div>
+					</xhtml:div>
+               	</xhtml:div>
+               	
             </xhtml:body>
             
             <!-- Scripts at the bottom of the page. This is not valid HTML, but it is a recommended practice for

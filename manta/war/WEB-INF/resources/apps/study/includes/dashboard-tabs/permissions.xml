@@ -18,13 +18,14 @@
 				<xforms:repeat nodeset="atombeat:member" id="rep-administrator-contributor">
 					<tr class="repeated-element">
 						<td>
-	                        <xforms:trigger ref=".">
-	                        	<xforms:label><img alt="remove" src="/apps/contributor/common/remove.gif"/></xforms:label>
-	                        	<xforms:delete 
-	                            	ev:event="DOMActivate" 
-		                        	context="." 
-		                        	nodeset="." 
-	                            	at="index('rep-administrator-contributor')"/>
+	                        <xforms:trigger ref="." class="addRemove">
+	                        	<xforms:label>
+	                        		<img alt="remove"
+	                        			src="/apps/contributor/common/remove.gif" />
+	                        	</xforms:label>
+	                        	<xforms:delete ev:event="DOMActivate"
+	                        		context="." nodeset="."
+	                        		at="index('rep-administrator-contributor')" />
 	                        </xforms:trigger>
 						</td>
 						<td>
@@ -39,7 +40,7 @@
 				</xforms:repeat>
 				<tr>
 					<td>
-	                    <xforms:trigger>
+	                    <xforms:trigger class="addRemove">
 	                        <xforms:label><img alt="add" src="/apps/contributor/common/add.gif"/></xforms:label>
 	                        <xforms:insert 
 		                      	ev:event="DOMActivate" 
