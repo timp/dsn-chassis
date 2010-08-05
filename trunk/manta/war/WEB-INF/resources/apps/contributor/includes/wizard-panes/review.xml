@@ -206,23 +206,25 @@
 		<br/>
 	</p>
 
-	<p>
+	<p class="form-navi-full">
 	
-		<xforms:trigger ref="instance('ins-control')/save-draft-trigger" appearance="minimal">
+		<xforms:trigger ref="instance('ins-control')/save-draft-trigger" appearance="minimal" class="alignLeft">
 			<xforms:label>&lt;&lt; Back home</xforms:label>
 			<xforms:action ev:event="DOMActivate">
 				<xforms:send submission="sub-back-home"/>
 			</xforms:action>
 		</xforms:trigger>	
 	
-		<span id="review-confirm-button-container">
-		<xforms:trigger>
-			<xforms:label>Confirm</xforms:label>
-			<xforms:action ev:event="DOMActivate">
-				<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show" value="'confirmation'"/>
-				<xforms:send submission="sub-post-contribution"/>
-			</xforms:action>
-		</xforms:trigger>
+		<span id="review-confirm-button-container" class="alignRight">
+			<xforms:trigger>
+				<xforms:label>Confirm</xforms:label>
+				<xforms:action ev:event="DOMActivate">
+					<xforms:setvalue
+						ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show"
+						value="'confirmation'" />
+					<xforms:send submission="sub-post-contribution" />
+				</xforms:action>
+			</xforms:trigger>
 		</span>
 
 	</p>

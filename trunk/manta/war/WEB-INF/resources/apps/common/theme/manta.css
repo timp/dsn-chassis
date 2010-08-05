@@ -5,12 +5,13 @@
   background-position: top right;
   margin-top: 3em;
  */
-    font-size: 12pt;
+    font-size: 12px;
 }
 #holdall table, #holdall input, #holdall button, #holdall select {
-    font-size: 12pt;
+    /*font-size: 12px;*/
+	margin-bottom:5px;
 }
-#hd {
+/*#hd {
     height: 20px;
 }
 #hd h1 {
@@ -20,7 +21,7 @@
     position: absolute;
     top: 0.71em;
     left: 0.71em;
-}
+}*/
 #current-user-actions {
     position: absolute;
     top: 0;
@@ -30,12 +31,12 @@
     padding: 0.2em 0.71em 0.2em 0;
     margin: 0;
     font-size: 100%;
-    border-bottom: 1px solid #bbb;
-    background-color: #eee;
+    /*border-bottom: 1px solid #bbb;
+    background-color: #eee;*/
 }
-#ft {
+/*#ft {
     border-top: 1px solid #bbb;
-/* background-image: url(manta-icon.jpg); */
+ 	background-image: url(manta-icon.jpg); 
     background-repeat: no-repeat;
     background-position: top right;
     margin-top: 50px;
@@ -49,14 +50,14 @@
 }
 #bd {
     margin-bottom: 0.71em;
-}
+}*/
 /* FIXME: Either merge or remove. 
           Maybe should also have elements, ids, then classes. */
 #bd {
     margin: 0px;
 }
 
-#bd h1 {
+/*#bd h1 {
     margin: 0 0 0 0;
     padding: 0 0 0.2em 0;
     border-bottom: 4px solid black;
@@ -70,12 +71,11 @@
 }
 #content {
     margin-top: 0.71em;
-}
+}*/
 #content table.wizard {
     margin-top: 0.71em;
 }
-.help {
-    float: right;
+/*.help {
     margin: 0.71em 0 0 0.71em;
     padding: 0.71em;
     border-color: #243356 #808080 #808080;
@@ -83,8 +83,8 @@
     border-width:1px;
     background: #EDF5FF none repeat scroll 0 0;
     width: 30%;
-}
-.inner-help {
+}*/
+/*.inner-help {
     float: right;
     margin: 0.71em 0 0 0.71em;
     padding: 0.71em;
@@ -93,7 +93,7 @@
     border-width:1px;
     background: #FFF none repeat scroll 0 0;
     width: 30%;
-}
+}*/
 .help h2 {
     margin-top: 0;
 }
@@ -119,12 +119,7 @@
      font-size: 16pt 
 }
 .repeat-table {
-    background-color: #fce5b6;
-    margin: 8px;
-    width:80%;
-    -moz-border-radius: 5px; 
-    -webkit-border-radius: 5px; 
-    border-radius: 5px; 
+    width:100%;
 }
 .repeat-table .action-td {
      width: 18px 
@@ -133,8 +128,8 @@
      
 }
 .repeat-table .form-td {
-    background: white;
-     padding: .5em 
+/*    background: white;
+     padding: .5em */
 }
 h2.subtitle {
     margin-top: 0.2em;
@@ -167,7 +162,7 @@ ul {
     text-transform: lowercase;
 }
 .study-info .mapPicker {
-    border: 0px ridge gray;
+	margin:5px 0 0;
 }
 .fb-map-gmap-div {
     border: 3px ridge gray;
@@ -179,13 +174,13 @@ ul {
     clear: both;
 }
 .study-info h3, h4, h5 {
-    padding: 1px;
-    margin: 0px;
+    /*padding: 1px;
+    margin: 0px;*/
 }
 .study-info h2 { 
-    padding:1em;
+    /*padding:1em;
     display:block;
-    background-color: #eee;
+    background-color: #eee;*/
 }
 
 .study-info .xforms-textarea { 
@@ -195,11 +190,13 @@ ul {
     width: 12em;
 }
 .invisible {
-    visibility: hidden;
-    width: 1px;
     border:1px solid red;
-    z-index:-200;
-    display:none;
+	display:none;
+	font-size:3px;
+	margin:0 !important;
+	visibility:hidden;
+	width:1px !important;
+	z-index:-200;
 }
 
 .scrollableCheckboxesLabel {
@@ -223,21 +220,21 @@ ul {
 }
 
 .warningButton .xforms-trigger{
-    color: black;
 }
 
 .warningButton {
     position: fixed;
-
     float: right;
     right: 26px;
-    
     z-index: 400;
-    padding: 12px;
-    border: 3px ridge orange;
+    padding: 6px;
+    border: 2px solid #D80009;
     -moz-border-radius: 5px; 
     -webkit-border-radius: 5px; 
     border-radius: 5px; 
+}
+.warningButton button {
+	margin:0 !important;
 }
 /* Color within study-info warning box */
 .xbl-fr-error-summary .fr-error-alert { color: #000; }
@@ -252,6 +249,8 @@ ul {
 
 .xforms-label {
     margin-right: 3px;
+	width:150px;
+	display:inline-block;
 }
 .register-study-wizard .xforms-repeat-selected-item-1, .study-dashboard .xforms-repeat-selected-item-1, .home .xforms-repeat-selected-item-1 {
 /* Masks Orbeon's yellow highlight in wizard by matching background colour. */
@@ -263,10 +262,10 @@ ul {
 }
 /* Restores the study-info highlight. */
 .register-study-wizard .study-info .xforms-repeat-selected-item-1, .register-study-wizard .study-info .xforms-repeat-selected-item-2 {
-    background-color: #FFFFCC;
+    background-color: #efefef;
 }
 .study-dashboard .yui-content .study-info .xforms-repeat-selected-item-1, .study-dashboard .yui-content .study-info .xforms-repeat-selected-item-2 {
-    background-color: #FFFFCC;
+    background-color: #efefef;
 }
 .register-study-wizard .yui-content .xforms-repeat-selected-item-1, .study-dashboard .yui-content .xforms-repeat-selected-item-1 {
 /* Gives same colour background on dashboard. */
@@ -284,7 +283,7 @@ ul {
 .register-study-wizard .acknowledgement-form-cell .xforms-label, .study-dashboard .acknowledgement-form-cell .xforms-label {
     clear: both;
     float: left;
-    width: 8em;
+    width: 95px;
 }
 .register-study-wizard .acknowledgement-form-cell .xforms-input, .study-dashboard .acknowledgement-form-cell .xforms-input {
     float: left;
@@ -306,5 +305,7 @@ ul {
     font-weight: bold;
 }
 .register-study-wizard .terms-iframe {
-    width: 35em;
+    width: 445px;
+	height:375px;
+	margin:0 0 10px;
 }
