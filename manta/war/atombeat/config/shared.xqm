@@ -81,7 +81,7 @@ declare variable $config:auto-author as xs:boolean := true() ;
  : If usernames should be treated as email addresses, set this to true(). (I.e.,
  : if users are logging in with their email address as their user ID.)
  :)
-declare variable $config:user-name-is-email as xs:boolean := false() ;
+declare variable $config:user-name-is-email as xs:boolean := true() ;
 
 
 (:

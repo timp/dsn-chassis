@@ -21,30 +21,13 @@
 				<atombeat:ace>
 					<atombeat:type>ALLOW</atombeat:type>
 					<atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
-					<atombeat:permission>RETRIEVE_ACL</atombeat:permission>
+					<atombeat:permission>RETRIEVE_MEMBER_ACL</atombeat:permission>
 				</atombeat:ace>
 				<atombeat:ace>
 					<atombeat:type>ALLOW</atombeat:type>
 					<atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
-					<atombeat:permission>UPDATE_ACL</atombeat:permission>
+					<atombeat:permission>UPDATE_MEMBER_ACL</atombeat:permission>
 				</atombeat:ace>
-
-
-
-				<!-- needed here as workaround for http://code.google.com/p/atombeat/issues/detail?id=71 -->
-				
-				<atombeat:ace>
-					<atombeat:type>ALLOW</atombeat:type>
-					<atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
-					<atombeat:permission>RETRIEVE_ACL</atombeat:permission>
-				</atombeat:ace>
-				
-				<atombeat:ace>
-					<atombeat:type>ALLOW</atombeat:type>
-					<atombeat:recipient type="role">ROLE_CHASSIS_PERSONAL_DATA_REVIEWER</atombeat:recipient>
-					<atombeat:permission>RETRIEVE_ACL</atombeat:permission>
-				</atombeat:ace>				
-				
 			</atombeat:acl>
 		</atombeat:security-descriptor>		
 	</atom:content>

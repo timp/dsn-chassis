@@ -371,6 +371,18 @@
             <param-name>start</param-name>
             <param-value>true</param-value>
         </init-param>
+        <init-param>
+            <param-name>use-default-user</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <init-param>
+            <param-name>user</param-name>
+            <param-value>admin</param-value>
+        </init-param>
+        <init-param>
+            <param-name>password</param-name>
+            <param-value></param-value>
+        </init-param>
         <load-on-startup>2</load-on-startup>
     </servlet>
     
@@ -404,7 +416,17 @@
     
     <servlet-mapping>
         <servlet-name>orbeon-main-servlet</servlet-name>
+        <url-pattern>/config/*</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>orbeon-main-servlet</servlet-name>
         <url-pattern>/home/*</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>orbeon-main-servlet</servlet-name>
+        <url-pattern>/common/*</url-pattern>
     </servlet-mapping>
     
     <servlet-mapping>
