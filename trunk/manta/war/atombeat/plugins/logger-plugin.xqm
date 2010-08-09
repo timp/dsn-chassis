@@ -5,7 +5,7 @@ declare namespace atom = "http://www.w3.org/2005/Atom" ;
 import module namespace util = "http://exist-db.org/xquery/util" ;
 
 
-(: A simple example of a plugin :)
+
 
 declare function logger-plugin:before(
 	$operation as xs:string ,

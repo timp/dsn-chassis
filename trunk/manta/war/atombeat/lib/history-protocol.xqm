@@ -26,25 +26,6 @@ import module namespace config = "http://purl.org/atombeat/xquery/config" at "..
 declare variable $history-protocol:param-name-revision-index as xs:string := "revision" ;
 
 
-
-
-declare variable $history-protocol:logger-name := "org.atombeat.xquery.lib.history-protocol" ;
-
-declare function local:log4jDebug(
-    $message as item()*
-) as empty()
-{
-  util:log-app( "debug" , $history-protocol:logger-name , $message ) (: only use within our function :)
-};
-
-declare function local:log4jInfo(
-    $message as item()*
-) as empty()
-{
-    util:log-app( "info" , $history-protocol:logger-name , $message ) (: only use within our function :)
-};
-
-
 (: 
  : TODO media history
  :)
@@ -108,11 +89,7 @@ declare function history-protocol:do-get-member(
 ) as element(response)
 {
 
-	let $log := local:log4jDebug( "== history-protocol:do-get-member() ==" )
-	let $log := local:log4jDebug( $request-path-info )
-
     let $revision-index := request:get-parameter( $history-protocol:param-name-revision-index , "" )
-	let $log := local:log4jDebug( $revision-index )
 	
 	return
 	
@@ -138,9 +115,6 @@ declare function history-protocol:do-get-member-history(
 ) as element(response)
 {
 
-	let $log := local:log4jDebug( "== history-protocol:do-get-member-history() ==" )
-	let $log := local:log4jDebug( $request-path-info )
-	
     let $op := util:function( QName( "http://purl.org/atombeat/xquery/history-protocol" , "history-protocol:op-retrieve-member-history" ) , 3 )
     
     (: enable plugins to intercept the request :)
@@ -163,26 +137,21 @@ declare function history-protocol:op-retrieve-member-history(
     let $updated := atomdb:retrieve-member( $request-path-info )/atom:updated
     
     let $entry-doc-path := atomdb:request-path-info-to-db-path( $request-path-info )
-	let $log := local:log4jDebug( $entry-doc-path )
 
     let $entry-doc := doc( $entry-doc-path )
-    let $log := local:log4jDebug( $entry-doc )
     
     let $vhist := v:history( $entry-doc )
-    let $log := local:log4jDebug( $vhist )
     
     let $vvers := v:versions( $entry-doc )
-    let $log := local:log4jDebug( $vvers )
     
     let $revisions := v:revisions( $entry-doc )
-    let $log := local:log4jDebug( $revisions )
     
     let $feed := 
 
 		<atom:feed atombeat:exclude-entry-content="true">
 		    <atom:id>{$self-uri}</atom:id>
-		    <atom:link rel="self" href="{$self-uri}" type="{$CONSTANT:MEDIA-TYPE-ATOM};type=feed"/>
-		    <atom:link rel="http://purl.org/atombeat/rel/versioned" href="{$versioned-uri}" type="{$CONSTANT:MEDIA-TYPE-ATOM};type=entry"/>
+		    <atom:link rel="self" href="{$self-uri}" type="{$CONSTANT:MEDIA-TYPE-ATOM-FEED}"/>
+		    <atom:link rel="http://purl.org/atombeat/rel/versioned" href="{$versioned-uri}" type="{$CONSTANT:MEDIA-TYPE-ATOM-ENTRY}"/>
 			<atom:title type="text">Version History</atom:title>
 			{
 
@@ -205,7 +174,7 @@ declare function history-protocol:op-retrieve-member-history(
             <headers>
                 <header>
                     <name>{$CONSTANT:HEADER-CONTENT-TYPE}</name>
-                    <value>{$CONSTANT:MEDIA-TYPE-ATOM}</value>
+                    <value>{$CONSTANT:MEDIA-TYPE-ATOM-FEED}</value>
                 </header>
             </headers>
             <body>{$feed}</body>
@@ -222,9 +191,6 @@ declare function history-protocol:do-get-member-revision(
 ) as element(response)
 {
 
-	let $log := local:log4jDebug( "== history-protocol:do-get-member-revision() ==" )
-	let $log := local:log4jDebug( $request-path-info )
-	
     let $op := util:function( QName( "http://purl.org/atombeat/xquery/history-protocol" , "history-protocol:op-retrieve-member-revision" ) , 3 )
     
     (: enable plugins to intercept the request :)
@@ -242,7 +208,6 @@ declare function history-protocol:op-retrieve-member-revision(
 {
 
     let $revision-index := xs:integer( request:get-parameter( $history-protocol:param-name-revision-index , "" ) )
-	let $log := local:log4jDebug( $revision-index )
 	
     let $entry-doc-path := atomdb:request-path-info-to-db-path( $request-path-info )
 
@@ -282,7 +247,7 @@ declare function history-protocol:op-retrieve-member-revision(
                     <headers>
                         <header>
                             <name>{$CONSTANT:HEADER-CONTENT-TYPE}</name>
-                            <value>{$CONSTANT:MEDIA-TYPE-ATOM}</value>
+                            <value>{$CONSTANT:MEDIA-TYPE-ATOM-ENTRY}</value>
                         </header>
                     </headers>
                     <body>{$entry-revision}</body>
@@ -307,7 +272,7 @@ declare function history-protocol:construct-member-revision(
      
     if ( $revision-index = 1 )
     
-    then history-protocol:construct-member-base-revision( $request-path-info , $revision-numbers , $exclude-content )
+    then history-protocol:construct-member-base-revision( $request-path-info , $entry-doc , $revision-numbers , $exclude-content )
     
     else history-protocol:construct-member-specified-revision( $request-path-info , $entry-doc , $revision-index , $revision-numbers , $exclude-content )
     
@@ -318,33 +283,21 @@ declare function history-protocol:construct-member-revision(
 
 declare function history-protocol:construct-member-base-revision(
 	$request-path-info as xs:string ,
+	$entry-doc as node() ,
 	$revision-numbers as xs:integer* ,
 	$exclude-content as xs:boolean?
 ) as element(atom:entry)
 {
 
-    let $log := local:log4jDebug( "== history-protocol:construct-member-base-revision() ==" )
-
     (: 
      : N.B. if no updates on the doc yet, then base revision won't have been
      : created by eXist versioning module, so we'll just grab the head.
      :)
-    
-    let $base-revision-db-path := 
-        if ( empty( $revision-numbers) ) 
-        then atomdb:request-path-info-to-db-path( $request-path-info )
-        else concat( "/db/system/versions" , atomdb:request-path-info-to-db-path( $request-path-info ) , ".base" )
-        
-    let $log := local:log4jDebug( $base-revision-db-path )
-    
-    let $base-revision-doc := doc( $base-revision-db-path ) 
-        
-    let $log := local:log4jDebug( exists( $base-revision-doc ) )
-    
-    (: N.B. need to copy because, for some reason, xpath queries on base revision don't work :)
-    
-	let $revision := xutil:copy( $base-revision-doc/* )
-    
+
+	let $revision := 
+	    if ( empty( $revision-numbers ) ) then $entry-doc/atom:entry
+	    else v:doc( $entry-doc , () )/atom:entry (: N.B. this only works with the AtomBeat patch to the versioning trigger :)
+
     let $when := $revision/atom:updated
 
 	let $this-revision-href :=
@@ -369,12 +322,12 @@ declare function history-protocol:construct-member-base-revision(
 				when="{$when}"
 				initial="yes">
 			</ar:revision>
-			<atom:link rel="current-revision" type="application/atom+xml;type=entry" href="{$current-revision-href}"/>
-			<atom:link rel="initial-revision" type="application/atom+xml;type=entry" href="{$initial-revision-href}"/>
-			<atom:link rel="this-revision" type="application/atom+xml;type=entry" href="{$this-revision-href}"/>
+			<atom:link rel="current-revision" type="{$CONSTANT:MEDIA-TYPE-ATOM-ENTRY}" href="{$current-revision-href}"/>
+			<atom:link rel="initial-revision" type="{$CONSTANT:MEDIA-TYPE-ATOM-ENTRY}" href="{$initial-revision-href}"/>
+			<atom:link rel="this-revision" type="{$CONSTANT:MEDIA-TYPE-ATOM-ENTRY}" href="{$this-revision-href}"/>
 		{
 			if ( $next-revision-href ) then
-			<atom:link rel="next-revision" type="application/atom+xml;type=entry" href="{$next-revision-href}"/> 
+			<atom:link rel="next-revision" type="{$CONSTANT:MEDIA-TYPE-ATOM-ENTRY}" href="{$next-revision-href}"/> 
 			else () ,
 			for $ec in $revision/* 
 			return 
@@ -435,15 +388,15 @@ declare function history-protocol:construct-member-specified-revision(
 				when="{$when}"
 				initial="{$initial}">
 			</ar:revision>
-			<atom:link rel="current-revision" type="application/atom+xml;type=entry" href="{$current-revision-href}"/>
-			<atom:link rel="initial-revision" type="application/atom+xml;type=entry" href="{$initial-revision-href}"/>
-			<atom:link rel="this-revision" type="application/atom+xml;type=entry" href="{$this-revision-href}"/>
+			<atom:link rel="current-revision" type="{$CONSTANT:MEDIA-TYPE-ATOM-ENTRY}" href="{$current-revision-href}"/>
+			<atom:link rel="initial-revision" type="{$CONSTANT:MEDIA-TYPE-ATOM-ENTRY}" href="{$initial-revision-href}"/>
+			<atom:link rel="this-revision" type="{$CONSTANT:MEDIA-TYPE-ATOM-ENTRY}" href="{$this-revision-href}"/>
 		{
 			if ( $next-revision-href ) then
-			<atom:link rel="next-revision" type="application/atom+xml;type=entry" href="{$next-revision-href}"/> 
+			<atom:link rel="next-revision" type="{$CONSTANT:MEDIA-TYPE-ATOM-ENTRY}" href="{$next-revision-href}"/> 
 			else () ,
 			if ( $previous-revision-href ) then
-			<atom:link rel="previous-revision" type="application/atom+xml;type=entry" href="{$previous-revision-href}"/> 
+			<atom:link rel="previous-revision" type="{$CONSTANT:MEDIA-TYPE-ATOM-ENTRY}" href="{$previous-revision-href}"/> 
 			else () ,
 			for $ec in $revision/child::* 
 			return 
