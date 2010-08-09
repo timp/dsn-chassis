@@ -7,7 +7,7 @@ import javax.xml.namespace.QName;
 
 public class ConstantsForTests {
 
-	public static final String URL_SERVICE_BASE = "http://localhost:8081/manta/atombeat";
+	public static final String URL_SERVICE_BASE = "http://localhost:8080/manta/atombeat";
 	public static final String URL_CONTENT_SERVICE = URL_SERVICE_BASE + "/content";
 	public static final String URL_SECURITY_SERVICE = URL_SERVICE_BASE + "/security";
 	public static final String URL_HISTORY_SERVICE = URL_SERVICE_BASE + "/history";
