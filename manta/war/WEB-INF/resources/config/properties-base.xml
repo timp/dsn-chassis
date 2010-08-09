@@ -21,7 +21,8 @@
     <property as="xs:integer" name="oxf.cache.xpath.size"                            value="600"/>
     <property as="xs:boolean" name="oxf.sax.inspection"                              value="false"/>
     <property as="xs:boolean" name="oxf.resources.versioned"                         value="false"/>
-    <property as="xs:string"  name="oxf.resources.version-number"                    value="1.0"/>
+    <!-- <property as="xs:boolean" name="oxf.resources.versioned"                         value="true"/> -->
+    <property as="xs:string"  name="oxf.resources.version-number"                    value=""/> <!-- leave empty to only version orbeon's resources -->
 
     <property as="xs:anyURI"  name="oxf.url-rewriting.service.base-uri"              value=""/>
     <property as="xs:string"  name="oxf.url-rewriting.strategy.servlet"              value="servlet"/>
