@@ -179,4 +179,29 @@ public class TestSubmittedMediaCollectionsSecurity extends AtomSecurityTestCase 
 		
 	}
 
+	
+	
+	public void testAllowPersonalDataReviewerUpdateMediaAcl() {
+
+
+		String mediaLinkLocation = this.setupMediaResource();
+		
+		// retrieve media link as personal data reviewer
+		ClientResponse r = ac.get(mediaLinkLocation, authn(USER_PETE));
+		assertEquals(200, r.getStatus());
+		Entry mediaLinkEntry = getEntry(r);
+		Link mediaSecurityLink = mediaLinkEntry.getLink(REL_ATOMBEAT_MEDIA_SECURITY_DESCRIPTOR);
+		assertNotNull(mediaSecurityLink);
+		String mediaResourceSecurityLocation = mediaSecurityLink.getHref().toString();
+		r.release();
+		
+		// now try to update the media security descriptor
+		Entry s = newSecurityDescriptor();
+		r = ac.put(mediaResourceSecurityLocation, s, authn(USER_PETE));
+		assertEquals(200, r.getStatus());
+		r.release();
+		
+	}
+
+
 }
