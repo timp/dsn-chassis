@@ -88,12 +88,42 @@ declare variable $security-config:default-workspace-security-descriptor :=
             <atombeat:ace>
                 <atombeat:type>ALLOW</atombeat:type>
                 <atombeat:recipient type="role">ROLE_CHASSIS_ADMINISTRATOR</atombeat:recipient>
-                <atombeat:permission>RETRIEVE_ACL</atombeat:permission>
+                <atombeat:permission>RETRIEVE_WORKSPACE_ACL</atombeat:permission>
             </atombeat:ace>
             <atombeat:ace>
                 <atombeat:type>ALLOW</atombeat:type>
                 <atombeat:recipient type="role">ROLE_CHASSIS_ADMINISTRATOR</atombeat:recipient>
-                <atombeat:permission>UPDATE_ACL</atombeat:permission>
+                <atombeat:permission>RETRIEVE_COLLECTION_ACL</atombeat:permission>
+            </atombeat:ace>
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_ADMINISTRATOR</atombeat:recipient>
+                <atombeat:permission>RETRIEVE_MEMBER_ACL</atombeat:permission>
+            </atombeat:ace>
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_ADMINISTRATOR</atombeat:recipient>
+                <atombeat:permission>RETRIEVE_MEDIA_ACL</atombeat:permission>
+            </atombeat:ace>
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_ADMINISTRATOR</atombeat:recipient>
+                <atombeat:permission>UPDATE_WORKSPACE_ACL</atombeat:permission>
+            </atombeat:ace>
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_ADMINISTRATOR</atombeat:recipient>
+                <atombeat:permission>UPDATE_COLLECTION_ACL</atombeat:permission>
+            </atombeat:ace>
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_ADMINISTRATOR</atombeat:recipient>
+                <atombeat:permission>UPDATE_MEMBER_ACL</atombeat:permission>
+            </atombeat:ace>
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_ADMINISTRATOR</atombeat:recipient>
+                <atombeat:permission>UPDATE_MEDIA_ACL</atombeat:permission>
             </atombeat:ace>
             <atombeat:ace>
                 <atombeat:type>ALLOW</atombeat:type>
@@ -199,7 +229,7 @@ declare variable $security-config:studies-collection-security-descriptor :=
             
             
             
-            <!-- Because study administrators can UPDATE_ACL, make sure they can't
+            <!-- Because study administrators can UPDATE_MEMBER_ACL, make sure they can't
             give themselves permission to do things we don't want them to do -->
             
             <atombeat:ace>
@@ -223,6 +253,12 @@ declare variable $security-config:studies-collection-security-descriptor :=
                 <atombeat:type>ALLOW</atombeat:type>
                 <atombeat:recipient type="role">ROLE_CHASSIS_PERSONAL_DATA_REVIEWER</atombeat:recipient>
                 <atombeat:permission>RETRIEVE_MEMBER</atombeat:permission>
+            </atombeat:ace>
+
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_PERSONAL_DATA_REVIEWER</atombeat:recipient>
+                <atombeat:permission>RETRIEVE_MEMBER_ACL</atombeat:permission>
             </atombeat:ace>
     
             <!--
@@ -252,7 +288,13 @@ declare variable $security-config:studies-collection-security-descriptor :=
                 <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
                 <atombeat:permission>RETRIEVE_REVISION</atombeat:permission>
             </atombeat:ace>
-    
+
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+                <atombeat:permission>RETRIEVE_MEMBER_ACL</atombeat:permission>
+            </atombeat:ace>
+
         </atombeat:acl>
     
     </atombeat:security-descriptor>
@@ -873,23 +915,9 @@ declare function security-config:studies-member-default-security-descriptor(
             <atombeat:ace>
                 <atombeat:type>ALLOW</atombeat:type>
                 <atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
-                <atombeat:permission>RETRIEVE_MEMBER</atombeat:permission>
+                <atombeat:permission>RETRIEVE_REVISION</atombeat:permission>
             </atombeat:ace>
 
-            <!-- needed here as workaround for http://code.google.com/p/atombeat/issues/detail?id=71 -->
-
-            <atombeat:ace>
-                <atombeat:type>ALLOW</atombeat:type>
-                <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
-                <atombeat:permission>RETRIEVE_MEMBER_ACL</atombeat:permission>
-            </atombeat:ace>
-
-            <atombeat:ace>
-                <atombeat:type>ALLOW</atombeat:type>
-                <atombeat:recipient type="role">ROLE_CHASSIS_PERSONAL_DATA_REVIEWER</atombeat:recipient>
-                <atombeat:permission>RETRIEVE_MEMBER_ACL</atombeat:permission>
-            </atombeat:ace>
-    
 		</atombeat:acl>
 		
 	</atombeat:security-descriptor>
@@ -1013,7 +1041,7 @@ declare function security-config:study-info-member-security-descriptor(
             <atombeat:ace>
                 <atombeat:type>ALLOW</atombeat:type>
                 <atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
-                <atombeat:permission>RETRIEVE_MEMBER</atombeat:permission>
+                <atombeat:permission>RETRIEVE_REVISION</atombeat:permission>
             </atombeat:ace>
             
         </atombeat:acl>

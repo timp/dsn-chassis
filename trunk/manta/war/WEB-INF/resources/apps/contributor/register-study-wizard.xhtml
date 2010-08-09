@@ -694,7 +694,8 @@
 				resource="/atombeat/content/studies"
 				method="get"
 				replace="instance"
-				instance="ins-study-feed">
+				instance="ins-study-feed"
+				serialization="none">
 				<!-- TODO error handling -->
                 <xforms:message ev:event="xforms-submit-error" level="modal">
                 	An error occurred (<xforms:output value="event('error-type')"/>) while retrieving a list of studies.

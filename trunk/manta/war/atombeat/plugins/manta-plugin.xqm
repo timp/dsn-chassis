@@ -518,6 +518,15 @@ declare function manta-plugin:after-create-member-studies(
                 rel="http://www.cggh.org/2010/chassis/terms/originStudy" 
                 href="{$study-uri}" 
                 type="application/atom+xml;type=entry"/>
+            <atombeat:config-link-extensions>
+                <atombeat:extension-attribute
+                    name="allow"
+                    namespace="http://purl.org/atombeat/xmlns">
+                    <atombeat:config context="entry-in-feed">
+                        <atombeat:param name="match-rels" value="edit-media"/>
+                    </atombeat:config>
+                </atombeat:extension-attribute>
+            </atombeat:config-link-extensions>
         </atom:feed>
         
     let $submitted-media-collection-db-path := atomdb:create-collection( $submitted-media-collection-path-info , $feed )
@@ -536,6 +545,15 @@ declare function manta-plugin:after-create-member-studies(
                 rel="http://www.cggh.org/2010/chassis/terms/originStudy" 
                 href="{$study-uri}" 
                 type="application/atom+xml;type=entry"/>
+            <atombeat:config-link-extensions>
+                <atombeat:extension-attribute
+                    name="allow"
+                    namespace="http://purl.org/atombeat/xmlns">
+                    <atombeat:config context="entry-in-feed">
+                        <atombeat:param name="match-rels" value="edit-media"/>
+                    </atombeat:config>
+                </atombeat:extension-attribute>
+            </atombeat:config-link-extensions>
         </atom:feed>
         
     let $curated-media-collection-db-path := atomdb:create-collection( $curated-media-collection-path-info , $feed )

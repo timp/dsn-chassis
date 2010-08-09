@@ -29,6 +29,9 @@
     <intercept-url pattern="/curator/**" access="ROLE_CHASSIS_CURATOR, ROLE_CHASSIS_ADMINISTRATOR" />
     
     <intercept-url pattern="/study/**" access="ROLE_CHASSIS_CONTRIBUTOR, ROLE_CHASSIS_CURATOR, ROLE_CHASSIS_ADMINISTRATOR" />
+
+    <intercept-url pattern="/rest/**" access="ROLE_CHASSIS_ADMINISTRATOR" />
+    <intercept-url pattern="/admin/**" access="ROLE_CHASSIS_ADMINISTRATOR" />
     
     <!-- don't do this, it protects all css and other resources -->
 <!--    <intercept-url pattern="/**" access="ROLE_CHASSIS_ADMINISTRATOR" /> -->

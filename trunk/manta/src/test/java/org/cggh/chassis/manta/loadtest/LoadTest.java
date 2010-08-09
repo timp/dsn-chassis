@@ -236,7 +236,7 @@ public class LoadTest {
 		//String url = "http://localhost:8080/manta/exist/rest/db/atom/content/studies/KCDZQ.atom";
 		//String url = "http://localhost:8080/manta/exist/rest/db/atom/content/studies/";
 		//String url = "http://localhost:8080/manta/home/";
-		//String url = "http://colin%40example.org:bar@localhost:8081/manta/contributor/";
+		//String url = "http://colin%40example.org:bar@localhost:8080/manta/contributor/";
 		//String url = "http://localhost/";
 		//String url = "http://localhost:8080/manta/atombeat/admin/install.xql";
 		//String url = "http://129.67.44.221:8080/explorer_dev/app/";
