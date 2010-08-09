@@ -2,79 +2,98 @@ xquery version "1.0";
 
 module namespace config-collections = "http://purl.org/atombeat/xquery/config-collections";
 
+declare namespace atom = "http://www.w3.org/2005/Atom" ;
+declare namespace atombeat = "http://purl.org/atombeat/xmlns" ;
+
 declare variable $config-collections:collection-spec := 
     <spec>
-        <collection>
-            <title>Studies</title>
-            <path-info>/studies</path-info>
-            <enable-history>true</enable-history>
-            <exclude-entry-content>false</exclude-entry-content>
-            <expand-security-descriptors>true</expand-security-descriptors>
-            <recursive>false</recursive>
+    
+        <collection path-info="/studies">
+            <atom:feed
+                atombeat:enable-history="true"
+                atombeat:exclude-entry-content="false"
+                atombeat:recursive="false">
+                <atom:title type="text">Studies</atom:title>
+                <!-- ensure security descriptor link available when listing collection -->
+                <atombeat:config-link-expansion>
+                    <atombeat:config context="entry-in-feed">
+                        <atombeat:param name="match-rels" value="http://purl.org/atombeat/rel/security-descriptor"/>
+                    </atombeat:config>
+                </atombeat:config-link-expansion>
+            </atom:feed>        
+        </collection>  
+        
+        <collection path-info="/study-info">
+            <atom:feed
+                atombeat:enable-history="true"
+                atombeat:exclude-entry-content="false"
+                atombeat:recursive="false">
+                <atom:title type="text">Study Information</atom:title>
+            </atom:feed>
         </collection>   
-        <collection>
-            <title>Study Information</title>
-            <path-info>/study-info</path-info>
-            <enable-history>true</enable-history>
-            <exclude-entry-content>false</exclude-entry-content>
-            <expand-security-descriptors>false</expand-security-descriptors>
-            <recursive>false</recursive>
-        </collection>   
-        <collection>
-            <title>Drafts</title>
-            <path-info>/drafts</path-info>
-            <enable-history>true</enable-history>
-            <exclude-entry-content>true</exclude-entry-content>
-            <expand-security-descriptors>false</expand-security-descriptors>
-            <recursive>false</recursive>
-        </collection>   
-        <collection>
-            <title>All Submitted Media</title>
-            <path-info>/media/submitted</path-info>
-            <enable-history>false</enable-history>
-            <exclude-entry-content>false</exclude-entry-content>
-            <expand-security-descriptors>false</expand-security-descriptors>
-            <recursive>true</recursive>
-        </collection>   
-        <collection>
-            <title>All Curated Media</title>
-            <path-info>/media/curated</path-info>
-            <enable-history>false</enable-history>
-            <exclude-entry-content>false</exclude-entry-content>
-            <expand-security-descriptors>false</expand-security-descriptors>
-            <recursive>true</recursive>
-        </collection>   
-        <collection>
-            <title>All Draft Media</title>
-            <path-info>/media/draft</path-info>
-            <enable-history>false</enable-history>
-            <exclude-entry-content>false</exclude-entry-content>
-            <expand-security-descriptors>false</expand-security-descriptors>
-            <recursive>true</recursive>
-        </collection>   
-        <collection>
-            <title>All Derivations</title>
-            <path-info>/derivations</path-info>
-            <enable-history>false</enable-history>
-            <exclude-entry-content>false</exclude-entry-content>
-            <expand-security-descriptors>false</expand-security-descriptors>
-            <recursive>true</recursive>
-        </collection>   
-        <collection>
-            <title>All Personal Data Reviews</title>
-            <path-info>/reviews/personal-data</path-info>
-            <enable-history>false</enable-history>
-            <exclude-entry-content>false</exclude-entry-content>
-            <expand-security-descriptors>false</expand-security-descriptors>
-            <recursive>true</recursive>
-        </collection>   
-        <collection>
-            <title>Sandbox</title>
-            <path-info>/sandbox</path-info>
-            <enable-history>false</enable-history>
-            <exclude-entry-content>false</exclude-entry-content>
-            <expand-security-descriptors>false</expand-security-descriptors>
-            <recursive>false</recursive>
-        </collection>   
+        
+        <collection path-info="/drafts">
+            <atom:feed
+                atombeat:enable-history="true"
+                atombeat:exclude-entry-content="true"
+                atombeat:recursive="false">
+                <atom:title type="text">Drafts</atom:title>
+            </atom:feed>
+        </collection>  
+        
+        <collection path-info="/media/submitted">
+            <atom:feed
+                atombeat:enable-history="false"
+                atombeat:exclude-entry-content="false"
+                atombeat:recursive="true">
+                <atom:title type="text">All Submitted Media</atom:title>
+            </atom:feed>
+        </collection>  
+        
+        <collection path-info="/media/curated">
+            <atom:feed
+                atombeat:enable-history="false"
+                atombeat:exclude-entry-content="false"
+                atombeat:recursive="true">
+                <atom:title type="text">All Curated Media</atom:title>
+            </atom:feed>
+        </collection>  
+        
+        <collection path-info="/media/draft">
+            <atom:feed
+                atombeat:enable-history="false"
+                atombeat:exclude-entry-content="false"
+                atombeat:recursive="true">
+                <atom:title type="text">All Draft Media</atom:title>
+            </atom:feed>
+        </collection>  
+        
+        <collection path-info="/derivations">
+            <atom:feed
+                atombeat:enable-history="false"
+                atombeat:exclude-entry-content="false"
+                atombeat:recursive="true">
+                <atom:title type="text">All Derivations</atom:title>
+            </atom:feed>
+        </collection>  
+        
+        <collection path-info="/reviews/personal-data">
+            <atom:feed
+                atombeat:enable-history="false"
+                atombeat:exclude-entry-content="false"
+                atombeat:recursive="true">
+                <atom:title type="text">All Personal Data Reviews</atom:title>
+            </atom:feed>
+        </collection>  
+        
+        <collection path-info="/sandbox">
+            <atom:feed
+                atombeat:enable-history="false"
+                atombeat:exclude-entry-content="false"
+                atombeat:recursive="false">
+                <atom:title type="text">Sandbox</atom:title>
+            </atom:feed>
+        </collection>  
+        
     </spec>
 ;

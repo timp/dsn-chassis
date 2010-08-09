@@ -10,6 +10,8 @@ import module namespace response = "http://exist-db.org/xquery/response" ;
 import module namespace text = "http://exist-db.org/xquery/text" ;
 import module namespace util = "http://exist-db.org/xquery/util" ;
 
+import module namespace atombeat-util = "http://purl.org/atombeat/xquery/atombeat-util" at "java:org.atombeat.xquery.functions.util.AtombeatUtilModule";
+
 import module namespace CONSTANT = "http://purl.org/atombeat/xquery/constants" at "constants.xqm" ;
 import module namespace mime = "http://purl.org/atombeat/xquery/mime" at "mime.xqm" ;
 import module namespace atomdb = "http://purl.org/atombeat/xquery/atomdb" at "atomdb.xqm" ;
@@ -19,21 +21,6 @@ import module namespace plugin = "http://purl.org/atombeat/xquery/plugin" at "..
 
 declare variable $common-protocol:param-request-path-info := "request-path-info" ;
 
-declare variable $common-protocol:logger-name := "org.atombeat.xquery.lib.common-protocol" ;
-
-declare function local:log4jDebug(
-    $message as item()*
-) as empty()
-{
-  util:log-app( "debug" , $common-protocol:logger-name , $message ) (: only use within our function :)
-};
-
-declare function local:log4jInfo(
-    $message as item()*
-) as empty()
-{
-    util:log-app( "info" , $common-protocol:logger-name , $message ) (: only use within our function :)
-};
 
 
 
@@ -250,32 +237,19 @@ declare function common-protocol:apply-op(
 ) as element(response)
 {
 
-	let $log := local:log4jDebug( "call plugin functions before main operation" )
-	
-	let $before-advice := common-protocol:apply-before( plugin:before() , $op-name , 	$request-path-info , $request-data , $request-media-type )
-	
-	let $log := local:log4jDebug( "done calling before plugins" )
-	(: request data can be very large, for file uploads, so breaks here :)
-	(: let $log := local:log4jDebug( $before-advice ) :)
+	let $before-advice := common-protocol:apply-before( plugin:before() , $op-name , $request-path-info , $request-data , $request-media-type )
 	
 	return 
 	 
 		if ( $before-advice instance of element(response) ) (: interrupt request processing :)
 		
-		then 
-		
-			let $log := local:log4jInfo( ( "bail out - plugin has overridden default behaviour, status: " , $before-advice/status ) )
-		
-			return $before-advice
+		then $before-advice
 		  
 		else
 		
-			let $log := local:log4jDebug( "carry on as normal - execute main operation" )
-			
 			let $request-data := $before-advice (: request data may have been modified by plugins :)
 
 			let $response := util:call( $op , $request-path-info , $request-data , $request-media-type )
-			let $log := local:log4jDebug( "call plugin functions after main operation" ) 
 			 
 			let $after-advice := common-protocol:apply-after( plugin:after() , $op-name , $request-path-info , $response )
 			
@@ -402,8 +376,6 @@ declare function common-protocol:respond( $response as element(response) ) as it
 
     let $response := common-protocol:augment-errors( $response )
     
-    let $log := local:log4jDebug( $response ) 
-    
     let $set-headers :=
         for $header in $response/headers/header
         return 
@@ -418,12 +390,19 @@ declare function common-protocol:respond( $response as element(response) ) as it
 
     return
     
-        if ( $response/body/@type = "media" )
+        if ( $response/body/@type = "media" and $config:media-storage-mode = "DB" )
         then
             let $binary-doc := atomdb:retrieve-media( $response/body/text() )
             return response:stream-binary( $binary-doc , $response/headers/header[name=$CONSTANT:HEADER-CONTENT-TYPE]/value/text() )
+
+        else if ( $response/body/@type = "media" and $config:media-storage-mode = "FILE" )
+        then
+            let $path := concat( $config:media-storage-dir , $response/body/text() )
+            return atombeat-util:stream-file-to-response( $path , $response/headers/header[name=$CONSTANT:HEADER-CONTENT-TYPE]/value/text() )
+
         else if ( $response/body/@type = "text" )
         then $response/body/text()
+
         else $response/body/*
         
 };
@@ -440,11 +419,6 @@ declare function common-protocol:augment-errors(
     let $content-type := $response/headers/header[name=$CONSTANT:HEADER-CONTENT-TYPE]/value/text()
 	let $request-path-info := request:get-attribute( $common-protocol:param-request-path-info )
     
-    let $log := local:log4jDebug( "== error-plugin:after ==" )
-    let $log := local:log4jDebug( $status )
-    let $log := local:log4jDebug( $content-type )
-    
-
     return 
 	
         if ( 

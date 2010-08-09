@@ -9,29 +9,12 @@ import module namespace text = "http://exist-db.org/xquery/text" ;
 import module namespace xmldb = "http://exist-db.org/xquery/xmldb" ;
 import module namespace util = "http://exist-db.org/xquery/util" ;
 
+import module namespace atombeat-util = "http://purl.org/atombeat/xquery/atombeat-util" at "java:org.atombeat.xquery.functions.util.AtombeatUtilModule";
+
 import module namespace CONSTANT = "http://purl.org/atombeat/xquery/constants" at "constants.xqm" ;
 
 import module namespace xutil = "http://purl.org/atombeat/xquery/xutil" at "xutil.xqm" ;
 import module namespace config = "http://purl.org/atombeat/xquery/config" at "../config/shared.xqm" ;
-
-
-
-declare variable $atomdb:logger-name := "org.atombeat.xquery.lib.atomdb" ;
-
-
-declare function local:log4jDebug(
-    $message as item()*
-) as empty()
-{
-  util:log-app( "debug" , $atomdb:logger-name , $message ) (: only use within our function :)
-};
-
-declare function local:log4jInfo(
-    $message as item()*
-) as empty()
-{
-    util:log-app( "info" , $atomdb:logger-name , $message ) (: only use within our function :)
-};
 
 
 
@@ -102,23 +85,15 @@ declare function atomdb:media-link-available(
     $request-path-info as xs:string
 ) as xs:boolean
 {
-    let $log := local:log4jDebug( "== atomdb:media-link-available() ==" )
     
-    return 
-
-        if ( not( atomdb:member-available( $request-path-info ) ) ) 
-        then 
-            let $log := local:log4jDebug("not a member, returning false" )
-            return false()
-        
-        else
-            let $entry := atomdb:retrieve-member( $request-path-info )
-            let $log := local:log4jDebug( $entry )
-            let $edit-media-link := $entry/atom:link[@rel="edit-media"]
-            let $log := local:log4jDebug( $edit-media-link )
-            let $available := exists( $edit-media-link )
-            let $log := local:log4jDebug( $available )
-            return $available
+    if ( not( atomdb:member-available( $request-path-info ) ) ) 
+    then false()
+    
+    else
+        let $entry := atomdb:retrieve-member( $request-path-info )
+        let $edit-media-link := $entry/atom:link[@rel="edit-media"]
+        let $available := exists( $edit-media-link )
+        return $available
 };
 
 
@@ -133,14 +108,32 @@ declare function atomdb:media-resource-available(
 	 : path and check the document exists.
 	 :)
 	 
-	(:
-	 : Map the request path info, e.g., "/foo/bar", to a database resource path,
-	 : e.g., "/db/foo/bar".
-	 :)
+	let $available :=
+	
+	    if ( $config:media-storage-mode = "FILE" ) then
+	    
+	        (: 
+	         : Map the request path info to a file system path.
+	         :)
+	         
+	        let $path := concat( $config:media-storage-dir , $request-path-info )
+	        
+	        return atombeat-util:file-exists( $path )
+	    
+        else if ( $config:media-storage-mode = "DB" ) then         
 	 
-	let $member-db-path := atomdb:request-path-info-to-db-path( $request-path-info )
-		
-	return util:binary-doc-available( $member-db-path ) 
+        	(:
+        	 : Map the request path info, e.g., "/foo/bar", to a database resource path,
+        	 : e.g., "/db/foo/bar".
+        	 :)
+        	 
+        	let $member-db-path := atomdb:request-path-info-to-db-path( $request-path-info )
+        		
+        	return util:binary-doc-available( $member-db-path ) 
+        	
+        else false()        
+        
+    return $available
 	
 };
 
@@ -227,29 +220,42 @@ declare function atomdb:create-collection(
 	
 	else
 		
-		(:
-		 : Map the request path info, e.g., "/foo", to a database collection path,
-		 : e.g., "/db/foo".
-		 :)
-		 
-		let $collection-db-path := atomdb:request-path-info-to-db-path( $request-path-info )
-	
-		let $collection-db-path := xutil:get-or-create-collection( $collection-db-path )
-		
-		(:
-		 : Obtain the database path for the atom feed document in the given database
-		 : collection. Currently, this appends ".feed" to the database collection
-		 : path.
-		 :)
-		 
-		let $feed-doc-db-path := atomdb:feed-doc-db-path( $collection-db-path )
+		let $media-dir-created :=
+		    if ( $config:media-storage-mode = "FILE" ) then 
+		        let $path := concat( $config:media-storage-dir , $request-path-info )
+		        let $created := atombeat-util:mkdirs( $path )
+                return $created	            
+            else false()	 
 
-		let $feed := atomdb:create-feed( $request-path-info , $request-data )
-		
-		let $feed-doc-db-path := xmldb:store( $collection-db-path , $config:feed-doc-name , $feed , $CONSTANT:MEDIA-TYPE-ATOM )
-		
-		return $feed-doc-db-path
-			
+        return 
+            
+            if ( $config:media-storage-mode = "FILE" and not( $media-dir-created) ) then ()
+            
+            else
+            
+        		(:
+        		 : Map the request path info, e.g., "/foo", to a database collection path,
+        		 : e.g., "/db/foo".
+        		 :)
+        		 
+        		let $collection-db-path := atomdb:request-path-info-to-db-path( $request-path-info )
+        	
+        		let $collection-db-path := xutil:get-or-create-collection( $collection-db-path )
+        		
+        		(:
+        		 : Obtain the database path for the atom feed document in the given database
+        		 : collection. Currently, this appends ".feed" to the database collection
+        		 : path.
+        		 :)
+        		 
+        		let $feed-doc-db-path := atomdb:feed-doc-db-path( $collection-db-path )
+        
+        		let $feed := atomdb:create-feed( $request-path-info , $request-data )
+        		
+        		let $feed-doc-db-path := xmldb:store( $collection-db-path , $config:feed-doc-name , $feed , $CONSTANT:MEDIA-TYPE-ATOM )
+        		
+        		return $feed-doc-db-path
+        			
 };
 
 
@@ -382,11 +388,7 @@ declare function atomdb:create-member(
 	
 	else
 
-		let $log := local:log4jDebug( "atomdb:create-member()" )
-		let $log := local:log4jDebug( $request-data )
-				
 	    let $entry := atomdb:create-entry( $collection-path-info, $request-data , $member-id )
-		let $log := local:log4jDebug( $entry )
 	    
 		(:
 		 : Map the request path info, e.g., "/foo", to a database collection path,
@@ -504,11 +506,18 @@ declare function atomdb:delete-media(
     then
     
 		let $groups := text:groups( $request-path-info , "^(.*)/([^/]+)$" )
-		let $collection-db-path := atomdb:request-path-info-to-db-path( $groups[2] )
+		let $collection-path-info := $groups[2]
+		let $collection-db-path := atomdb:request-path-info-to-db-path( $collection-path-info )
 		let $media-resource-name := $groups[3]
 		let $media-link-resource-name := replace( $media-resource-name , "^(.*)\.media$" , "$1.atom" )
-		let $media-removed := xmldb:remove( $collection-db-path , $media-resource-name )	
-		let $media-link-removed := xmldb:remove( $collection-db-path , $media-link-resource-name )	
+        let $media-link-removed := xmldb:remove( $collection-db-path , $media-link-resource-name )	
+		let $media-removed := 
+		    if ( $config:media-storage-mode = "DB" ) then 
+		        xmldb:remove( $collection-db-path , $media-resource-name )	
+		    else if ( $config:media-storage-mode = "FILE" ) then 
+		        let $path := concat( $config:media-storage-dir , $request-path-info )
+		        return atombeat-util:delete-file( $path )
+            else false()	        
         return ()
 
     else if ( atomdb:media-link-available( $request-path-info ) )
@@ -516,11 +525,18 @@ declare function atomdb:delete-media(
     then
 
 		let $groups := text:groups( $request-path-info , "^(.*)/([^/]+)$" )
-		let $collection-db-path := atomdb:request-path-info-to-db-path( $groups[2] )
+		let $collection-path-info := $groups[2]
+		let $collection-db-path := atomdb:request-path-info-to-db-path( $collection-path-info )
 		let $media-link-resource-name := $groups[3]
 		let $media-resource-name := replace( $media-link-resource-name , "^(.*)\.atom$" , "$1.media" )
 		let $media-link-removed := xmldb:remove( $collection-db-path , $media-link-resource-name )	
-		let $media-removed := xmldb:remove( $collection-db-path , $media-resource-name )	
+		let $media-removed := 
+		    if ( $config:media-storage-mode = "DB" ) then 
+		        xmldb:remove( $collection-db-path , $media-resource-name )	
+		    else if ( $config:media-storage-mode = "FILE" ) then 
+		        let $path := concat( $config:media-storage-dir , $collection-path-info , "/" , $media-resource-name )
+		        return atombeat-util:delete-file( $path )
+		    else false()
         return ()
 
 	else ()
@@ -615,8 +631,8 @@ declare function atomdb:create-feed(
     	}
             <atom:id>{$id}</atom:id>
             <atom:updated>{$updated}</atom:updated>
-            <atom:link rel="self" href="{$self-uri}" type="{$CONSTANT:MEDIA-TYPE-ATOM};type=feed"/>
-            <atom:link rel="edit" href="{$edit-uri}" type="{$CONSTANT:MEDIA-TYPE-ATOM};type=feed"/>
+            <atom:link rel="self" href="{$self-uri}" type="{$CONSTANT:MEDIA-TYPE-ATOM-FEED}"/>
+            <atom:link rel="edit" href="{$edit-uri}" type="{$CONSTANT:MEDIA-TYPE-ATOM-FEED}"/>
         {
             if ( $config:auto-author )
             then
@@ -647,7 +663,6 @@ declare function atomdb:update-feed(
     (: TODO validate input data :)
     
     let $updated := current-dateTime()
-    let $log := local:log4jDebug( concat( "$updated: " , $updated ) )
 
     return
     
@@ -691,8 +706,8 @@ declare function atomdb:create-entry(
             <atom:id>{$id}</atom:id>
             <atom:published>{$published}</atom:published>
             <atom:updated>{$updated}</atom:updated>
-            <atom:link rel="self" type="application/atom+xml;type=entry" href="{$self-uri}"/>
-            <atom:link rel="edit" type="application/atom+xml;type=entry" href="{$edit-uri}"/>
+            <atom:link rel="self" type="{$CONSTANT:MEDIA-TYPE-ATOM-ENTRY}" href="{$self-uri}"/>
+            <atom:link rel="edit" type="{$CONSTANT:MEDIA-TYPE-ATOM-ENTRY}" href="{$edit-uri}"/>
         {
             if ( $config:auto-author )
             then
@@ -715,7 +730,7 @@ declare function atomdb:create-entry(
 
 
 declare function atomdb:create-media-link-entry(
-	$request-path-info as xs:string ,
+	$collection-path-info as xs:string ,
     $member-id as xs:string ,
     $media-type as xs:string ,
     $media-link-title as xs:string? ,
@@ -724,21 +739,20 @@ declare function atomdb:create-media-link-entry(
 ) as element(atom:entry)
 {
 
-    let $id := concat( $config:content-service-url , $request-path-info , "/" , $member-id , ".atom" )
-    let $log := local:log4jDebug( $id )
+    let $id := concat( $config:content-service-url , $collection-path-info , "/" , $member-id , ".atom" )
     
     let $published := current-dateTime()
     let $updated := $published
     let $self-uri := $id
     let $edit-uri := $id
-    let $media-uri := concat( $config:content-service-url , $request-path-info , "/" , $member-id , ".media" )
+    let $media-uri := concat( $config:content-service-url , $collection-path-info , "/" , $member-id , ".media" )
     
     (: TODO review this, maybe provide user as function arg, rather than interrogate request here :)
     let $user-name := request:get-attribute( $config:user-name-request-attribute-key )
 
     let $title :=
     	if ( $media-link-title ) then $media-link-title
-    	else concat( "download-" , $member-id , ".media" )
+    	else concat( $member-id , ".media" )
     	
     let $summary :=
     	if ( $media-link-summary ) then $media-link-summary
@@ -753,17 +767,16 @@ declare function atomdb:create-media-link-entry(
             return <atom:category scheme="{$scheme}" term="{$term}" label="{$label}"/>
         else ()        
     	
-	let $media-size :=
-		xmldb:size( atomdb:request-path-info-to-db-path( $request-path-info ) , concat( $member-id , ".media" ) )
-    	    
+	let $media-size := atomdb:get-media-resource-length( concat( $collection-path-info , "/" , $member-id , ".media" ) )
+	
 	return
 	
         <atom:entry>
             <atom:id>{$id}</atom:id>
             <atom:published>{$published}</atom:published>
             <atom:updated>{$updated}</atom:updated>
-            <atom:link rel="self" type="application/atom+xml;type=entry" href="{$self-uri}"/>
-            <atom:link rel="edit" type="application/atom+xml;type=entry" href="{$edit-uri}"/>
+            <atom:link rel="self" type="{$CONSTANT:MEDIA-TYPE-ATOM-ENTRY}" href="{$self-uri}"/>
+            <atom:link rel="edit" type="{$CONSTANT:MEDIA-TYPE-ATOM-ENTRY}" href="{$edit-uri}"/>
             <atom:link rel="edit-media" type="{$media-type}" href="{$media-uri}" length="{$media-size}"/>
             <atom:content src="{$media-uri}" type="{$media-type}"/>
             <atom:title type="text">{$title}</atom:title>
@@ -796,7 +809,6 @@ declare function atomdb:update-entry(
     (: TODO validate input data :)
     
     let $updated := current-dateTime()
-    let $log := local:log4jDebug( concat( "$updated: " , $updated ) )
     let $path-info := substring-after( $entry/atom:link[@rel='edit']/@href , $config:content-service-url )
 
     return
@@ -861,6 +873,101 @@ declare function atomdb:create-media-resource(
 
 
 
+declare function atomdb:create-file-backed-media-resource-from-request-data(
+	$collection-path-info as xs:string , 
+	$media-type as xs:string ,
+	$media-link-title as xs:string? ,
+	$media-link-summary as xs:string? ,
+	$media-link-category as xs:string?
+) as element(atom:entry)?
+{
+
+	let $collection-db-path := atomdb:request-path-info-to-db-path( $collection-path-info )
+
+    let $member-id := atomdb:generate-member-identifier( $collection-path-info ) 
+    
+	let $media-resource-name := concat( $member-id , ".media" )
+	
+	let $media-resource-path := concat( $collection-path-info , "/" , $media-resource-name )
+	
+	let $file-path := concat( $config:media-storage-dir , $media-resource-path )
+
+    let $media-resource-stored := atombeat-util:stream-request-data-to-file( $file-path )
+    
+    let $media-link-entry := atomdb:create-media-link-entry( $collection-path-info, $member-id , $media-type , $media-link-title , $media-link-summary , $media-link-category )
+    
+    let $media-link-entry-doc-db-path := xmldb:store( $collection-db-path , concat( $member-id , ".atom" ) , $media-link-entry , $CONSTANT:MEDIA-TYPE-ATOM )    
+    
+    return doc( $media-link-entry-doc-db-path )/atom:entry
+	 
+};
+
+
+
+
+declare function atomdb:create-file-backed-media-resource-from-existing-media-resource(
+	$collection-path-info as xs:string , 
+	$media-type as xs:string ,
+	$existing-media-path-info as xs:string
+) as element(atom:entry)?
+{
+
+	let $collection-db-path := atomdb:request-path-info-to-db-path( $collection-path-info )
+
+    let $member-id := atomdb:generate-member-identifier( $collection-path-info ) 
+    
+	let $media-resource-name := concat( $member-id , ".media" )
+	
+	let $media-resource-path-info := concat( $collection-path-info , "/" , $media-resource-name )
+	
+	let $new-file-path := concat( $config:media-storage-dir , $media-resource-path-info )
+	let $existing-file-path := concat( $config:media-storage-dir , $existing-media-path-info )
+
+    let $media-resource-stored := atombeat-util:copy-file( $existing-file-path , $new-file-path )
+    
+    let $media-link-entry := atomdb:create-media-link-entry( $collection-path-info, $member-id , $media-type , () , () , () )
+    
+    let $media-link-entry-doc-db-path := xmldb:store( $collection-db-path , concat( $member-id , ".atom" ) , $media-link-entry , $CONSTANT:MEDIA-TYPE-ATOM )    
+    
+    return doc( $media-link-entry-doc-db-path )/atom:entry
+	 
+};
+
+
+
+
+declare function atomdb:create-file-backed-media-resource-from-upload(
+	$collection-path-info as xs:string , 
+	$media-type as xs:string ,
+	$media-link-title as xs:string? ,
+	$media-link-summary as xs:string? ,
+	$media-link-category as xs:string?
+) as element(atom:entry)?
+{
+
+	let $collection-db-path := atomdb:request-path-info-to-db-path( $collection-path-info )
+
+    let $member-id := atomdb:generate-member-identifier( $collection-path-info ) 
+    
+	let $media-resource-name := concat( $member-id , ".media" )
+	
+	let $media-resource-path := concat( $collection-path-info , "/" , $media-resource-name )
+	
+	let $file-path := concat( $config:media-storage-dir , $media-resource-path )
+
+    let $media-resource-stored := atombeat-util:save-upload-as( "media" , $file-path )
+    
+    let $media-link-entry := atomdb:create-media-link-entry( $collection-path-info, $member-id , $media-type , $media-link-title , $media-link-summary , $media-link-category )
+    
+    let $media-link-entry-doc-db-path := xmldb:store( $collection-db-path , concat( $member-id , ".atom" ) , $media-link-entry , $CONSTANT:MEDIA-TYPE-ATOM )    
+    
+    return doc( $media-link-entry-doc-db-path )/atom:entry
+	 
+};
+
+
+
+
 declare function atomdb:update-media-resource(
 	$request-path-info as xs:string , 
 	$request-data as xs:base64Binary , 
@@ -877,8 +984,8 @@ declare function atomdb:update-media-resource(
 		let $media-type := text:groups( $request-content-type , "^([^;]+)" )[2]
 	
 		let $groups := text:groups( $request-path-info , "^(.*)/([^/]+)\.media$" )
-		
-		let $collection-db-path := atomdb:request-path-info-to-db-path( $groups[2] )
+		let $collection-path-info := $groups[2]
+		let $collection-db-path := atomdb:request-path-info-to-db-path( $collection-path-info )
 		let $id := $groups[3]
 		let $media-doc-name := concat( $id , ".media" )
 		let $media-link-doc-name := concat( $id , ".atom" )
@@ -887,10 +994,8 @@ declare function atomdb:update-media-resource(
 		
 		let $media-link-doc-db-path := concat( $collection-db-path , "/" , $media-link-doc-name )
 		
-		let $media-size := xmldb:size( $collection-db-path , $media-doc-name )
+    	let $media-size := atomdb:get-media-resource-length( $request-path-info )
 			
-		let $log := local:log4jDebug( concat( "size: " , $media-size ) )
-
 		let $media-link := 
 			<atom:entry>
 			{
@@ -907,11 +1012,62 @@ declare function atomdb:update-media-resource(
 			}
 			</atom:entry>
 			
-		let $log := local:log4jDebug( $media-link )
-			
 		let $media-link-updated := xmldb:store( $collection-db-path , $media-link-doc-name , $media-link )
 	
 		return doc( $media-link-doc-db-path )/atom:entry
+};
+
+
+
+
+declare function atomdb:update-file-backed-media-resource(
+	$request-path-info as xs:string , 
+	$request-content-type as xs:string
+) as element(atom:entry)?
+{
+
+	if ( not( atomdb:media-resource-available( $request-path-info ) ) )
+	
+	then ()
+	
+	else
+
+		let $media-type := text:groups( $request-content-type , "^([^;]+)" )[2]
+	
+		let $file-path := concat( $config:media-storage-dir , $request-path-info )
+		
+		let $media-resource-stored := atombeat-util:stream-request-data-to-file( $file-path )
+
+		let $groups := text:groups( $request-path-info , "^(.*)/([^/]+)\.media$" )
+		let $collection-path-info := $groups[2]
+		let $collection-db-path := atomdb:request-path-info-to-db-path( $collection-path-info )
+		let $id := $groups[3]
+		let $media-doc-name := concat( $id , ".media" )
+		let $media-link-doc-name := concat( $id , ".atom" )
+		let $media-link-doc-db-path := concat( $collection-db-path , "/" , $media-link-doc-name )
+
+    	let $media-size := atomdb:get-media-resource-length( $request-path-info )
+			
+		let $media-link := 
+			<atom:entry>
+			{
+				for $child in doc($media-link-doc-db-path)/atom:entry/*
+				return
+				    if ( $child instance of element(atom:updated) )
+				    then <atom:updated>{current-dateTime()}</atom:updated>
+				    else if ( $child instance of element(atom:link) and $child/@rel='edit-media' )
+					then <atom:link rel='edit-media' type='{$media-type}' href='{$child/@href}' length='{$media-size}'/>
+				    else if ( $child instance of element(atom:content) )
+					then <atom:content type='{$media-type}' src='{$child/@src}'/>
+					else $child
+				
+			}
+			</atom:entry>
+			
+		let $media-link-updated := xmldb:store( $collection-db-path , $media-link-doc-name , $media-link , $CONSTANT:MEDIA-TYPE-ATOM )
+	
+        return doc( $media-link-doc-db-path )/atom:entry
+
 };
 
 
@@ -948,8 +1104,6 @@ declare function atomdb:retrieve-feed(
 			}
 			</atom:feed>
 
-        let $log := local:log4jDebug( $complete-feed )
-        
 		return $complete-feed
 
 };
@@ -1043,10 +1197,8 @@ declare function atomdb:retrieve-member(
 		 :)
 		 
 		let $entry-doc-db-path := atomdb:request-path-info-to-db-path( $request-path-info )
-		let $log := local:log4jDebug( concat( "entry-doc-db-path: " , $entry-doc-db-path ) )
 		
 		let $entry-doc := doc( $entry-doc-db-path )
-		let $log := local:log4jDebug( $entry-doc )
 		
 		return $entry-doc/atom:entry
 
@@ -1085,10 +1237,39 @@ declare function atomdb:get-mime-type(
 ) as xs:string
 {
 
-	let $media-doc-db-path := atomdb:request-path-info-to-db-path( $request-path-info )
+    let $media-link := atomdb:get-media-link( $request-path-info )
+    let $media-type := $media-link/atom:link[@rel="edit-media"]/@type cast as xs:string
+    return $media-type
 
+    (:
+    let $media-doc-db-path := atomdb:request-path-info-to-db-path( $request-path-info )
 	return xmldb:get-mime-type( xs:anyURI( $media-doc-db-path ) )
+	:)
 	
+};
+
+
+
+declare function atomdb:get-media-resource-length(
+    $request-path-info as xs:string
+) as xs:integer
+{
+    
+	let $groups := text:groups( $request-path-info , "^(.*)/([^/]+)\.media$" )
+	let $collection-path-info := $groups[2]
+	let $collection-db-path := atomdb:request-path-info-to-db-path( $collection-path-info )
+	let $id := $groups[3]
+	let $media-doc-name := concat( $id , ".media" )
+	
+    let $length := 
+        if ( $config:media-storage-mode = "DB" ) then
+    	    xmldb:size( $collection-db-path , $media-doc-name )
+        else if ( $config:media-storage-mode = "FILE" ) then
+            atombeat-util:file-length( concat( $config:media-storage-dir , $collection-path-info , "/" , $media-doc-name ) )
+        else ()
+        
+    return $length    
+		
 };
 
 

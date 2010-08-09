@@ -17,6 +17,7 @@ import module namespace util = "http://exist-db.org/xquery/util" ;
 import module namespace CONSTANT = "http://purl.org/atombeat/xquery/constants" at "../lib/constants.xqm" ;
 
 import module namespace config = "http://purl.org/atombeat/xquery/config" at "../config/shared.xqm" ;
+import module namespace security-config = "http://purl.org/atombeat/xquery/security-config" at "../config/security.xqm" ;
 
 import module namespace xutil = "http://purl.org/atombeat/xquery/xutil" at "../lib/xutil.xqm" ;
 import module namespace mime = "http://purl.org/atombeat/xquery/mime" at "../lib/mime.xqm" ;
@@ -502,7 +503,7 @@ declare function manta-plugin:after-create-member-studies(
     
     (: create and store the security descriptor :)
     let $path-info-member-study-info := atomdb:edit-path-info( $member-study-info )
-    let $security-descriptor-study-info := config:study-info-member-security-descriptor( $study-uri )
+    let $security-descriptor-study-info := security-config:study-info-member-security-descriptor( $study-uri )
     let $descriptor-stored := atomsec:store-descriptor( $path-info-member-study-info , $security-descriptor-study-info )
     
     (: create a collection for submitted media :)    
@@ -520,7 +521,7 @@ declare function manta-plugin:after-create-member-studies(
         </atom:feed>
         
     let $submitted-media-collection-db-path := atomdb:create-collection( $submitted-media-collection-path-info , $feed )
-    let $submitted-media-collection-descriptor := config:submitted-media-collection-security-descriptor( $submitted-media-collection-path-info )
+    let $submitted-media-collection-descriptor := security-config:submitted-media-collection-security-descriptor( $submitted-media-collection-path-info )
     let $descriptor-stored := atomsec:store-descriptor( $submitted-media-collection-path-info , $submitted-media-collection-descriptor )
     
     (: create a collection for curated media :)    
@@ -538,7 +539,7 @@ declare function manta-plugin:after-create-member-studies(
         </atom:feed>
         
     let $curated-media-collection-db-path := atomdb:create-collection( $curated-media-collection-path-info , $feed )
-    let $curated-media-collection-descriptor := config:curated-media-collection-security-descriptor( $curated-media-collection-path-info )
+    let $curated-media-collection-descriptor := security-config:curated-media-collection-security-descriptor( $curated-media-collection-path-info )
     let $descriptor-stored := atomsec:store-descriptor( $curated-media-collection-path-info , $curated-media-collection-descriptor )
     
     (: create a collection for derivations :)    
@@ -556,7 +557,7 @@ declare function manta-plugin:after-create-member-studies(
         </atom:feed>
         
     let $derivations-collection-db-path := atomdb:create-collection( $derivations-collection-path-info , $feed )
-    let $derivations-collection-descriptor := config:derivations-collection-security-descriptor( $derivations-collection-path-info )
+    let $derivations-collection-descriptor := security-config:derivations-collection-security-descriptor( $derivations-collection-path-info )
     let $descriptor-stored := atomsec:store-descriptor( $derivations-collection-path-info , $derivations-collection-descriptor )
     
     (: create a collection for personal data reviews :)    
@@ -574,7 +575,7 @@ declare function manta-plugin:after-create-member-studies(
         </atom:feed>
         
     let $personal-data-reviews-collection-db-path := atomdb:create-collection( $personal-data-reviews-collection-path-info , $feed )
-    let $personal-data-reviews-collection-descriptor := config:personal-data-reviews-collection-security-descriptor( $personal-data-reviews-collection-path-info )
+    let $personal-data-reviews-collection-descriptor := security-config:personal-data-reviews-collection-security-descriptor( $personal-data-reviews-collection-path-info )
     let $descriptor-stored := atomsec:store-descriptor( $personal-data-reviews-collection-path-info , $personal-data-reviews-collection-descriptor )
     
     let $entry := manta-plugin:augment-study-entry( $entry )
@@ -610,7 +611,7 @@ declare function manta-plugin:after-create-member-drafts(
         </atom:feed>
         
     let $draft-media-collection-db-path := atomdb:create-collection( $draft-media-collection-path-info , $feed )
-    let $draft-media-collection-descriptor := config:draft-media-collection-security-descriptor( $draft-media-collection-path-info , $user )
+    let $draft-media-collection-descriptor := security-config:draft-media-collection-security-descriptor( $draft-media-collection-path-info , $user )
     let $descriptor-stored := atomsec:store-descriptor( $draft-media-collection-path-info , $draft-media-collection-descriptor )
     
     let $entry := manta-plugin:augment-draft-entry( $entry )

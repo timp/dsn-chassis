@@ -4,6 +4,7 @@ declare namespace atombeat = "http://purl.org/atombeat/xmlns" ;
 import module namespace response = "http://exist-db.org/xquery/response" ;
 
 import module namespace config = "http://purl.org/atombeat/xquery/config" at "../config/shared.xqm" ;
+import module namespace security-config = "http://purl.org/atombeat/xquery/security-config" at "../config/security.xqm" ;
 import module namespace CONSTANT = "http://purl.org/atombeat/xquery/constants" at "../lib/constants.xqm" ;
 import module namespace xutil = "http://purl.org/atombeat/xquery/xutil" at "../lib/xutil.xqm" ;
 import module namespace atomsec = "http://purl.org/atombeat/xquery/atom-security" at "../lib/atom-security.xqm" ;
@@ -65,18 +66,16 @@ declare function local:content() as item()*
                         <th>Path</th>
                         <th>Enable History</th>
                         <th>Exclude Entry Content in Feed</th>
-                        <th>Expand Security Descriptors</th>
                         <th>Recursive</th>
                         <th>Available</th>
                     </tr>
                     {
                         for $collection in $config-collections:collection-spec/collection
-                        let $title := $collection/title/text()
-                        let $path-info := $collection/path-info/text()
-                        let $enable-history := $collection/enable-history/text()
-                        let $exclude-entry-content := $collection/exclude-entry-content/text()
-                        let $expand-security-descriptors := $collection/expand-security-descriptors/text()
-                        let $recursive := $collection/recursive/text()
+                        let $title := $collection/atom:feed/atom:title/text()
+                        let $path-info := $collection/@path-info cast as xs:string
+                        let $enable-history := $collection/atom:feed/@atombeat:enable-history cast as xs:string
+                        let $exclude-entry-content := $collection/atom:feed/@atombeat:exclude-entry-content cast as xs:string
+                        let $recursive := $collection/atom:feed/@atombeat:recursive cast as xs:string
                         let $available := atomdb:collection-available($path-info)
                         return
                             <tr>
@@ -84,7 +83,6 @@ declare function local:content() as item()*
                                 <td><a href="../content{$path-info}">{$path-info}</a></td>
                                 <td>{$enable-history}</td>
                                 <td>{$exclude-entry-content}</td>
-                                <td>{$expand-security-descriptors}</td>
                                 <td>{$recursive}</td>
                                 <td><strong>{$available}</strong></td>
                             </tr>
@@ -108,26 +106,17 @@ declare function local:do-post() as item()*
 {
 
     (: INSTALL THE workspace ACL :)
-    let $workspace-descriptor-installed := atomsec:store-workspace-descriptor( $config:default-workspace-security-descriptor )
+    let $workspace-descriptor-installed := atomsec:store-workspace-descriptor( $security-config:default-workspace-security-descriptor )
     
     (: INSTALL THE COLLECTIONS :)
     let $collections-installed :=
 
         for $collection in $config-collections:collection-spec/collection
-        let $title := $collection/title/text()
-        let $path-info := $collection/path-info/text()
+        let $path-info := $collection/@path-info cast as xs:string
 
         (: CREATE THE COLLECTION :)
-        let $feed-doc := 
-            <atom:feed 
-                atombeat:exclude-entry-content="{$collection/exclude-entry-content/text()}"
-                atombeat:recursive="{$collection/recursive/text()}"
-                atombeat:enable-versioning="{$collection/enable-history/text()}"
-                atombeat:expand-security-descriptors="{$collection/expand-security-descriptors/text()}">
-                <atom:title>{$title}</atom:title>
-            </atom:feed>
-            
-        let $put-feed-response := atom-protocol:do-put-atom-feed( $path-info , $feed-doc )                                    
+        let $feed := $collection/atom:feed
+        let $put-feed-response := atom-protocol:do-put-atom-feed( $path-info , $feed )                                    
         return $put-feed-response
                 
     (: SEND RESPONSE :)        

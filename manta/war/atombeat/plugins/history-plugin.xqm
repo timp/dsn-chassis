@@ -24,22 +24,6 @@ import module namespace atomsec = "http://purl.org/atombeat/xquery/atom-security
 import module namespace config = "http://purl.org/atombeat/xquery/config" at "../config/shared.xqm" ;
 
 
-declare variable $history-plugin:logger-name := "org.atombeat.xquery.lib.common-protocol" ;
-
-declare function local:log4jDebug(
-    $message as item()*
-) as empty()
-{
-  util:log-app( "debug" , $history-plugin:logger-name , $message ) (: only use within our function :)
-};
-
-declare function local:log4jInfo(
-    $message as item()*
-) as empty()
-{
-    util:log-app( "info" , $history-plugin:logger-name , $message ) (: only use within our function :)
-};
-
 
 
 declare function history-plugin:before(
@@ -51,7 +35,6 @@ declare function history-plugin:before(
 {
 	
 	let $message := concat( "history plugin, before: " , $operation , ", request-path-info: " , $request-path-info ) 
-	let $log := local:log4jDebug( $message )
 	
 	return
 	
@@ -82,7 +65,6 @@ declare function history-plugin:before-create-collection(
 {
 
 	let $message := concat( "history plugin, before create-collection, request-path-info: " , $request-path-info ) 
-	let $log := local:log4jDebug( $message )
 
 	let $enable-history := xs:boolean( $request-data/@atombeat:enable-versioning )
 	
@@ -111,8 +93,6 @@ declare function history-plugin:before-create-member(
 ) as item()*
 {
 
-    let $log := local:log4jDebug( "history-protocol, before-create-member")
-    
     let $collection-db-path := atomdb:request-path-info-to-db-path( $request-path-info )
     let $versioning-enabled := xutil:is-versioning-enabled( $collection-db-path )
 
@@ -128,7 +108,6 @@ declare function history-plugin:before-create-member(
             let $comment := if ( empty( $comment ) or $comment = "" ) then "initial revision" else $comment
             
         	let $prepared-entry := history-plugin:prepare-entry( $request-data , $comment )
-            let $log := local:log4jDebug( $prepared-entry )
         	
         	return $prepared-entry
 
@@ -145,8 +124,6 @@ declare function history-plugin:before-update-member(
 ) as item()*
 {
 
-    let $log := local:log4jDebug( "history-protocol, before-update-member")
-
     let $collection-path-info := text:groups( $request-path-info , "^(.+)/[^/]+$" )[2]
     let $collection-db-path := atomdb:request-path-info-to-db-path( $collection-path-info )
     let $versioning-enabled := xutil:is-versioning-enabled( $collection-db-path )
@@ -161,7 +138,6 @@ declare function history-plugin:before-update-member(
         	
             let $comment := request:get-header("X-Atom-Revision-Comment")
         	let $prepared-entry := history-plugin:prepare-entry( $request-data , $comment )
-            let $log := local:log4jDebug( $prepared-entry )
         	
         	return $prepared-entry
 
@@ -235,7 +211,6 @@ declare function history-plugin:after(
 {
 
 	let $message := concat( "history plugin, after: " , $operation , ", request-path-info: " , $request-path-info ) 
-	let $log := local:log4jDebug( $message )
 
 	return
 		
@@ -245,9 +220,7 @@ declare function history-plugin:after(
 
 		else if ( $operation = $CONSTANT:OP-CREATE-MEMBER )
 		
-		then 
-			let $log := local:log4jDebug( "found create-member" )
-			return history-plugin:after-create-member( $request-path-info , $response )
+		then history-plugin:after-create-member( $request-path-info , $response )
 
 		else if ( $operation = $CONSTANT:OP-UPDATE-MEMBER )
 		
@@ -336,33 +309,44 @@ declare function history-plugin:after-update-member(
 
 
 declare function history-plugin:after-list-collection(
-	$request-path-info as xs:string ,
+	$collection-path-info as xs:string ,
 	$response as element(response)
 ) as element(response)
 {
 
-    let $response-data := $response/body/atom:feed
+    let $collection-db-path := atomdb:request-path-info-to-db-path( $collection-path-info )
+    let $versioning-enabled := xutil:is-versioning-enabled( $collection-db-path )
     
-	let $response-data := 
-		<atom:feed>
-		{
-			$response-data/attribute::* ,
-			$response-data/child::*[not( local-name(.) = $CONSTANT:ATOM-ENTRY and namespace-uri(.) = $CONSTANT:ATOM-NSURI )] ,
-			for $entry in $response-data/atom:entry
-			return history-plugin:append-history-link( $entry )
-		}
-		</atom:feed>
-	
-	return
-	
-    	<response>
-        {
-            $response/status ,
-            $response/headers
-        }
-            <body>{$response-data}</body>
-        </response>
-	
+    (: check whether versioning here, to reduce function calls if not :)
+    
+    return
+
+        if ( $versioning-enabled ) then
+        
+            let $response-data := $response/body/atom:feed
+            
+        	let $response-data := 
+        		<atom:feed>
+        		{
+        			$response-data/attribute::* ,
+        			$response-data/child::*[not( local-name(.) = $CONSTANT:ATOM-ENTRY and namespace-uri(.) = $CONSTANT:ATOM-NSURI )] ,
+        			for $entry in $response-data/atom:entry
+        			return history-plugin:append-history-link( $entry )
+        		}
+        		</atom:feed>
+        	
+        	return
+        	
+            	<response>
+                {
+                    $response/status ,
+                    $response/headers
+                }
+                    <body>{$response-data}</body>
+                </response>
+                
+        else $response        
+    	
 };
 
 
@@ -372,9 +356,8 @@ declare function history-plugin:append-history-link (
 	$response-entry as element(atom:entry)
 ) as element(atom:entry)
 {
-	let $log := local:log4jDebug( $response-entry )
-	
-	let $entry-path-info := atomdb:edit-path-info( $response-entry )
+
+    let $entry-path-info := atomdb:edit-path-info( $response-entry )
 	let $collection-path-info := atomdb:collection-path-info( $response-entry )
 	
 	return
@@ -387,7 +370,6 @@ declare function history-plugin:append-history-link (
             let $versioning-enabled := xutil:is-versioning-enabled( $collection-db-path )
             
         	let $history-uri := concat( $config:history-service-url , $entry-path-info )
-        	let $log := local:log4jDebug( $history-uri )
         	
         	let $response-entry :=
         	
@@ -395,16 +377,7 @@ declare function history-plugin:append-history-link (
         	   
         	    then
         	   
-        	        let $link := <atom:link rel="history" href="{$history-uri}" type="application/atom+xml;type=feed"/>
-        	       
-        	        let $history-link := 
-        	            if ( $config:enable-security )
-        	            then 
-        	                let $can-get := atomsec:is-allowed( $CONSTANT:OP-RETRIEVE-HISTORY , $entry-path-info , () )
-                            let $allow := if ( $can-get ) then "GET" else ()   
-                            return <atom:link atombeat:allow="{$allow}">{$link/attribute::* , $link/child::*}</atom:link>
-
-                    else $link
+        	        let $history-link := <atom:link rel="history" href="{$history-uri}" type="{$CONSTANT:MEDIA-TYPE-ATOM-FEED}"/>
         	       
         	        return
 
@@ -418,7 +391,6 @@ declare function history-plugin:append-history-link (
             		
         		else $response-entry
         
-        	let $log := local:log4jDebug( $response-entry )
         	return $response-entry
         	
         else $response-entry                        

@@ -33,6 +33,10 @@
     <!-- don't do this, it protects all css and other resources -->
 <!--    <intercept-url pattern="/**" access="ROLE_CHASSIS_ADMINISTRATOR" /> -->
     
+    <logout 
+      logout-success-url="/home/" 
+      invalidate-session="true"/>
+    
   </http>
   
   
