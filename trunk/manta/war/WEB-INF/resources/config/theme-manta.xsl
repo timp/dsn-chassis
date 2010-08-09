@@ -102,7 +102,7 @@
 				                <!-- Copy body -->
 				                <xhtml:div class="main-indent no-bg">
 				                	<xhtml:div class="main twoCol">
-					                	<xsl:apply-templates select="/xhtml:html/xhtml:body/node()/>
+					                	<xsl:apply-templates select="/xhtml:html/xhtml:body/node()"/>
 				                	</xhtml:div>
 				                </xhtml:div>
 		                	</xhtml:div>
