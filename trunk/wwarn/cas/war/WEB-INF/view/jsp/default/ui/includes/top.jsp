@@ -18,7 +18,29 @@
 
 	<body id="cas" onload="init();">
 	    <div id="header">
-	        <h1 id="app-name">WWARN <em>alpha</em> - login</h1>
+			<h1 class="logo"><a href="http://www.wwarn.org/">WWARN - Worldwide Antimalarial Resistance Network</a></h1>
+			
+		    <div id="block-menu-primary-links">
+			    <ul id="primary" class="clearfix">
+			        <li class="current"><a href="http://www.wwarn.org/">Home</a></li>
+			        <li><a href="http://www.wwarn.org/about-us">About Us</a></li>
+			        <li><a href="http://www.wwarn.org/research">Supporting Research</a></li>
+			        <li><a href="http://www.wwarn.org/data">Contributing Data</a></li>
+			        <li><a href="http://www.wwarn.org/resistance">Tracking Resistance</a></li>
+			        <li><a href="http://www.wwarn.org/community">Community</a></li>
+			        <li><a href="http://www.wwarn.org/press">News &amp; Media</a></li>
+			    </ul>
+		    </div>
+		    
+			<div class="secondary-wrap">
+			
+			</div>
 	    </div>
-
-	    <div id="content">
+				
+        <div id="holdall">
+        	<div id="main-inner">
+	    		<div id="content">
+	    			<div id="inner" class="clearfix">
+	    				<div id="sidebar-left" class="sidebar"></div>
+	    					<div class="main-indent no-bg">
+								<div class="main twoCol">
