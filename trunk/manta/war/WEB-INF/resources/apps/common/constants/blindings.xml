@@ -14,8 +14,12 @@
 		<label>single (patient)</label>
  		<value>singlePatient</value>
  	</blinding>
- 	<blinding>
-		<label>double</label>
- 		<value>double</value>
- 	</blinding>
+  <blinding>
+    <label>double</label>
+    <value>double</value>
+  </blinding>
+  <blinding>
+    <label>triple</label>
+    <value>triple</value>
+  </blinding>  
 </blindings>

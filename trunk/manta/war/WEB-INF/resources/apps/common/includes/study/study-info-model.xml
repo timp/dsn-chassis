@@ -212,8 +212,6 @@
 						<xforms:bind nodeset="regimenAllocation"
 							relevant="count(../regimens/regimen)>1">
 							<xforms:bind nodeset="regimenAllocationMethod"/>
-							<xforms:bind nodeset="randomisationProportion"
-								relevant="contains(../regimenAllocationMethod,'randomised')"/>
 							<xforms:bind nodeset="blinding"/>
 						</xforms:bind>
 					</xforms:bind>

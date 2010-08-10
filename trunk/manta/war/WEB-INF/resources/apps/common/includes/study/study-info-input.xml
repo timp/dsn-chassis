@@ -27,12 +27,11 @@
 
 		<xxforms:dialog id="dia-errors" appearance="full"
 			level="modeless" close="true" draggable="true" visible="false">
-			<!-- FIXME: Eclipse complains "invalid content" here -->
-			<xforms:label>Warnings</xforms:label>
+			<xforms:label>Hints</xforms:label>
 			<div>
 				<fr:error-summary observer="grp-info" id="error-summary"
 					errors-count-ref="instance('errors')/errors-count" valid-ref="instance('errors')/valid">
-					<fr:label>Please address the warnings given below: </fr:label>
+					<fr:label>Please address the suggestions below: </fr:label>
 				</fr:error-summary>
 				<!--
 					<xforms:group ref=".[not(instance('errors')/valid = 'true')]">
@@ -809,6 +808,10 @@
 																	nodeset="instance('ins-drugStorage-items')/drugStorage">
 																	<xforms:label ref="label" />
 																	<xforms:value ref="value" />
+                                  <xforms:item>
+                                    <xforms:label>unknown</xforms:label>
+                                    <xforms:value />
+                                  </xforms:item>
 																</xforms:itemset>
 															</xforms:select1>
 															<br />
@@ -1213,9 +1216,6 @@
 							</xforms:itemset>
 						</xforms:select1>
 
-						<xforms:input ref="randomisationProportion">
-							<xforms:label> proportion </xforms:label>
-						</xforms:input>
 						<br />
 
 
@@ -1305,10 +1305,6 @@
 					<br />
 					<xforms:select1 ref="microscopyStain" appearance="minimal">
 						<xforms:label class="fixed-width">Stain</xforms:label>
-						<xforms:item>
-							<xforms:label>unknown</xforms:label>
-							<xforms:value />
-						</xforms:item>
 						<xforms:itemset model="mod-study-info"
 							nodeset="instance('ins-microscopyStain-items')/microscopyStain">
 							<xforms:label ref="label" />
@@ -1318,6 +1314,10 @@
 							<xforms:label>other</xforms:label>
 							<xforms:value>other</xforms:value>
 						</xforms:item>
+            <xforms:item>
+              <xforms:label>unknown</xforms:label>
+              <xforms:value />
+            </xforms:item>
 					</xforms:select1>
 
 					<xforms:input ref="microscopyStainOther">
@@ -1400,7 +1400,7 @@
 						<xforms:select1 ref="thickFilmFormula" appearance="minimal">
 							<xforms:label>Formula </xforms:label>
 							<xforms:item>
-								<xforms:label> ( (X per Y WBCs)/ Y) WBC</xforms:label>
+								<xforms:label>(X per Y WBCs)/ Y WBC</xforms:label>
 								<xforms:value>wbc</xforms:value>
 							</xforms:item>
 							<xforms:item>
@@ -1438,7 +1438,7 @@
 						<xforms:select1 ref="thinFilmFormula" appearance="minimal">
 							<xforms:label>Formula </xforms:label>
 							<xforms:item>
-								<xforms:label> (X per 1000RBCs * 125.6 *) Hct</xforms:label>
+								<xforms:label> (X per 1000 RBCs * 125.6) * Hct</xforms:label>
 								<xforms:value>htc</xforms:value>
 							</xforms:item>
 							<xforms:item>

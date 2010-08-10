@@ -3,8 +3,12 @@
 		<label>Giemsa</label>
 		<value>giemsa</value>
 	</microscopyStain>
-	<microscopyStain>
-		<label>fields stain</label>
-		<value>fieldsstain</value>
-	</microscopyStain>
+  <microscopyStain>
+    <label>fields stain</label>
+    <value>fieldsstain</value>
+  </microscopyStain>
+  <microscopyStain>
+    <label>Not done</label>
+    <value>none</value>
+  </microscopyStain>
 </microscopyStains>
