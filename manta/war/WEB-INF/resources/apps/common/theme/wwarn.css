@@ -51,7 +51,7 @@ Borders, Headlines, etc,
 ~1. BASE
 =========================*/
 html {
-	position:relative;
+	position:relative;	
 }
 body {
 	background-color:#d9d9d9;
@@ -533,7 +533,10 @@ h1.logo a, h2.logo a {
 	list-style:none;
 }
 .page {
-	padding-top:230px !important;
+	/* padding-top:230px !important; */
+	padding-top: 60px !important;
+
+	
 }
 .page .background {
 	-moz-box-shadow:0 2px 10px rgba(0,0,0,0.7);
@@ -566,7 +569,9 @@ h1.logo a, h2.logo a {
 	width:968px !important;
 }
 #bd .twoCol {
-	width:740px;
+	/* width:740px;*/
+	width: 640px;
+	min-height: 500px;
 }
 #bd .oneCol {
 	width:920px;
@@ -584,15 +589,19 @@ h1.logo a, h2.logo a {
 	top:0;
 	left:0;
 	z-index:1;
+	
+	    background-color: #78c7eb;
+	    min-height: 500px;
 }
 #bd {
 	position:relative;
 	background:#fff;
-	margin-top:10px;
+	/*margin-top:10px;*/
+	margin-top:0px;
 	-moz-box-shadow:0 2px 10px rgba(0,0,0,0.7);
 	-webkit-box-shadow:0 2px 10px rgba(0,0,0,0.7);
 	box-shadow:0 2px 10px rgba(0,0,0,0.7);
-	z-index:2;
+    z-index:2;
 	padding:0;
 }
 .sidebar {
@@ -714,9 +723,13 @@ h1.logo a, h2.logo a {
 	border:1px solid #ebebeb;
 	padding:10px;
 	background:#f7f7f7;
-	width:250px;
+	/*width:250px;*/
+	width: 250px;
 	float:right;
-	margin:20px 0 0 20px;
+	/*margin:20px 0 0 20px;*/
+	margin: 0 0 0 0;
+	
+	min-height:275px;
 }
 .help p,
 .callout p {

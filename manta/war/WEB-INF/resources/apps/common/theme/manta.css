@@ -248,6 +248,7 @@ ul {
 	width:150px;
 	display:inline-block;
 }
+
 .register-study-wizard .xforms-repeat-selected-item-1, .study-dashboard .xforms-repeat-selected-item-1, .home .xforms-repeat-selected-item-1 {
 /* Masks Orbeon's yellow highlight in wizard by matching background colour. */
     background-color: #FFFFFF;
@@ -307,4 +308,28 @@ ul {
 }
 .study-site-questionnaire-heading{
     margin-top: 1em;
+}
+
+/* Prevents interference with Orbeon dialogue box interaction. */
+.mask {
+    z-index: 1000 !important;
+}
+.shadow {
+    z-index: 1001 !important;   
+}
+
+.yui-panel-container ul {
+    margin-left: 2em;
+}
+
+
+.background h1 {
+    float:left;
+    margin: 0 0 0 15px;
+    padding-top: 16px;
+}
+.background h2 {
+    float:left;   
+    margin: 0 0 0 2em;
+    padding-top: 21px;
 }

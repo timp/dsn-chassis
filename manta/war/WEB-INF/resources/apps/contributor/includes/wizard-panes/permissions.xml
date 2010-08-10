@@ -5,7 +5,7 @@
 	xmlns:ev="http://www.w3.org/2001/xml-events"
 	xmlns:atombeat="http://purl.org/atombeat/xmlns">
 
-	<h2>Permissions - (Step 2 of 5)</h2>
+	<h2>Permissions<!-- - (Step 2 of 5)--></h2>
 
 	<h3>Administrators</h3>
 
@@ -79,7 +79,7 @@
 	
 	</xforms:group>
 
-	<p class="form-navi alignCenter">
+	<p class="form-navi-full alignCenter">
 	
 
 		
