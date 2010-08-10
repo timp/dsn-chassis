@@ -72,21 +72,26 @@
 			</p>
 
 			<h3>Study dates</h3>
+				
+				<xforms:group>
+					<xforms:input ref="start">
+						<xforms:label>Start </xforms:label>
+						<xforms:alert>
+							<xforms:output
+								value="concat('An invalid date has been entered for the ', name(), ' field')" />
+						</xforms:alert>
+					</xforms:input>
+					<br />
+					<xforms:input ref="end">
+						<xforms:label>End </xforms:label>
+		        		<xforms:alert>
+		          			<xforms:output
+		              			value="concat('An invalid date has been entered for the ', name(), ' field')" />
+		        		</xforms:alert>
+					</xforms:input>
+				</xforms:group>
 
-			<xforms:input ref="start">
-				<xforms:label>Start </xforms:label>
-        <xforms:alert>
-          <xforms:output
-              value="concat('An invalid date has been entered for the ', name(), ' field')" />
-        </xforms:alert>
-			</xforms:input>
-			<xforms:input ref="end">
-				<xforms:label>End </xforms:label>
-        <xforms:alert>
-          <xforms:output
-              value="concat('An invalid date has been entered for the ', name(), ' field')" />
-        </xforms:alert>
-			</xforms:input>
+
 
 			<h3>Pathogen Species</h3>
 
@@ -492,7 +497,7 @@
 								value="concat('Enter a value for the ', name(), ' field ')" />
 						</xforms:alert>
 					</xforms:select1>
-
+					<br />
 					<xforms:input ref="maxAge" class="fourWide">
 						<xforms:label>Age max </xforms:label>
 						<xforms:alert>

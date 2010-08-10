@@ -74,7 +74,7 @@
                 <xhtml:div class="header">
 					<xhtml:h1 class="logo"><a href="index.html">WWARN - Worldwide Antimalarial Resistance Network</a></xhtml:h1>
 					
-				    <xhtml:div id="block-menu-primary-links" class="block block-menu region-odd odd region-count-1 count-3 with-block-editing">
+				    <xhtml:div id="block-menu-primary-links">
 					    <xhtml:ul id="primary" class="clearfix">
 					        <xhtml:li class="current"><a href="#nogo">Home</a></xhtml:li>
 					        <xhtml:li><a href="#nogo">About Us</a></xhtml:li>
@@ -85,6 +85,10 @@
 					        <xhtml:li><a href="#nogo">News &amp; Media</a></xhtml:li>
 					    </xhtml:ul>
 				    </xhtml:div>
+				    
+					<div class="secondary-wrap">
+					
+					</div>
 				</xhtml:div>
 				
                 <xhtml:div id="holdall">

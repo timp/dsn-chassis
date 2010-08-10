@@ -145,10 +145,6 @@ ul {
 }
 .study-info span.xforms-group {
     display:block;
-    margin-top: 4px;
-    margin-bottom: 4px;
-    padding-top: 4px;
-    padding-bottom: 4px;
 }
 .study-info .mapPicker span.xforms-group {
     border: 0px solid gray;
