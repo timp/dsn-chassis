@@ -6,7 +6,7 @@
 	xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
 	xmlns:xxforms="http://orbeon.org/oxf/xml/xforms">
 
-	<h2>Upload files - (Step 4 of 5)</h2>
+	<h2>Upload files<!-- - (Step 4 of 5)--></h2>
 	
 
 	<p>

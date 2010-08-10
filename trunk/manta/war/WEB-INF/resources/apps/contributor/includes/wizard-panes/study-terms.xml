@@ -4,7 +4,7 @@
 	xmlns:ev="http://www.w3.org/2001/xml-events"
 	xmlns:xxforms="http://orbeon.org/oxf/xml/xforms">
 	
-	<h2>Study terms - (Step 1 of 5)</h2>
+	<h2>Study terms<!-- - (Step 1 of 5)--></h2>
 
 	<p>
 		<span id="study-title-textbox-container">
@@ -88,25 +88,21 @@
 							<xforms:message>Please complete all required fields.</xforms:message>
 						</xforms:action>
 					</xforms:trigger>		
-				
-					
-				
-					
-	
+			<span class="alignRight">
+				<xforms:trigger ref="instance('ins-control')/save-draft-trigger">
+					<xforms:label>Next &gt;</xforms:label>
+					<xforms:action ev:event="DOMActivate" if="../draft-entry-is-valid = 'true'">
+						<xforms:setvalue ref="instance('ins-draft-entry')/atom:title" value="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:title" />
+						<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show" value="'permissions'" />
+						<xforms:send submission="sub-implicit-put-draft-entry" />
+					</xforms:action>
+					<xforms:action ev:event="DOMActivate" if="not(../draft-entry-is-valid = 'true')">
+						<xforms:message>Please complete all required fields.</xforms:message>
+					</xforms:action>
+				</xforms:trigger>
+			</span>
 		</xforms:group>
-		<span class="alignRight">
-			<xforms:trigger ref="instance('ins-control')/save-draft-trigger">
-						<xforms:label>Next &gt;</xforms:label>
-						<xforms:action ev:event="DOMActivate" if="../draft-entry-is-valid = 'true'">
-							<xforms:setvalue ref="instance('ins-draft-entry')/atom:title" value="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:title" />
-							<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show" value="'permissions'" />
-							<xforms:send submission="sub-implicit-put-draft-entry" />
-						</xforms:action>
-						<xforms:action ev:event="DOMActivate" if="not(../draft-entry-is-valid = 'true')">
-							<xforms:message>Please complete all required fields.</xforms:message>
-						</xforms:action>
-			</xforms:trigger>
-		</span>
+
 		<span class="skip-links"><xforms:group ref="instance('ins-control')/pre-create-draft-back-home-link">
 			<a href="home" class="alignLeft">&lt;&lt; Data home</a>
 		</xforms:group><xforms:group ref="instance('ins-draft-entry')/atom:link[@rel='edit']">

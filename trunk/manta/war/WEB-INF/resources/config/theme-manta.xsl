@@ -70,49 +70,10 @@
             <xhtml:body>
                 <!-- Copy body attributes -->
                 <xsl:apply-templates select="/xhtml:html/xhtml:body/@*"/>
-                
-                <xhtml:div class="header">
-					<xhtml:h1 class="logo"><a href="http://www.wwarn.org">WWARN - Worldwide Antimalarial Resistance Network</a></xhtml:h1>
-					
-					 
-				    <xhtml:div id="block-menu-primary-links">
-					    <xhtml:ul id="primary" class="clearfix">
-					    	<xhtml:li class="active-trail"><a href="/manta">Data Home</a></xhtml:li>
-					    	<xhtml:li class="current"><a href="http://www.wwarn.org">WWARN Website</a></xhtml:li>
-					    </xhtml:ul>
-				    </xhtml:div>
 
-					<div class="secondary-wrap">
-					
-					</div>
-				</xhtml:div>
+				<xsl:apply-templates select="/xhtml:html/xhtml:body/node()"/>
 
-                <xhtml:div id="holdall">
-                	<xhtml:div id="main-inner">
-                		<xhtml:div class="content page">
-                	
-		                	<xhtml:div id="hd">
-		                		<!-- <xhtml:h1>Chassis DSN Data Management</xhtml:h1>  -->
-		                	</xhtml:div>
-		
-		                	<xhtml:div id="bd" class="clearfix">
-								<xhtml:div class="sidebar" id="sidebar-left">
-								
-								</xhtml:div>
-				                <!-- Copy body -->
-				                <xhtml:div class="main-indent no-bg">
-				                	<xhtml:div class="main twoCol">
-					                	<xsl:apply-templates select="/xhtml:html/xhtml:body/node()"/>
-				                	</xhtml:div>
-				                </xhtml:div>
-		                	</xhtml:div>
-		                	<xhtml:img src="http://wwarn.kmp.co.uk/sites/default/files/imagefield_default_images/default.jpg" class="background" alt=""></xhtml:img>
-                		</xhtml:div> 
-                	</xhtml:div>
-                </xhtml:div>
-                
                	<xhtml:div id="ft">
-               		<!-- <xhtml:p>Chassis Manta 1.0-alpha-SNAPSHOT</xhtml:p> -->
 
                		<xhtml:div id="footer-inner">
 					    <xhtml:div class="block">

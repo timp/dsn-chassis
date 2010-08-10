@@ -760,53 +760,77 @@
     
     <body>
     
-		<xi:include href="../common/includes/current-user-actions.xml"/>
+		<!-- Body header -->
+                <div id="header" class="header">
+					<h1 class="logo"><a href="http://www.wwarn.org">WWARN - Worldwide Antimalarial Resistance Network</a></h1>
+					
+					 
+				    <div id="block-menu-primary-links">
+					    <ul id="primary" class="clearfix">
+					    	<li class="active-trail"><a href="home">Data Home</a></li>
+					    	<li class="current"><a href="http://www.wwarn.org">WWARN Website</a></li>
+					    </ul>
+				    </div>
 
+					<div class="secondary-wrap">
+						<xi:include href="../common/includes/current-user-actions.xml"/>
+					</div>
+				</div>
+		<!-- End of Body header -->
 
+		<!-- After body header, before content id -->
+                <div id="holdall">
+                	<div id="main-inner">
+                		<div class="content page">
+		                	<div id="bd" class="clearfix">
+				                <div class="no-bg">
+				                
+									<!-- Help boxes for wizard panes -->
+									<!-- The extra wrappers hide the user interface while processing occurs, otherwise there are screen blips, i.e. momentary inappropriate UI-presentations. -->
+									<!--  -->
+									<xforms:group ref="instance('ins-draft-entry')/atom:content/draft[wizard-pane-to-show='study-terms']">
+								    	<xforms:group ref="instance('ins-control')[wizard-pane-being-shown='study-terms']">
+								    		<xi:include href="includes/help-boxes/for-wizard-panes/study-terms.xml"/>
+								    	</xforms:group>
+								    </xforms:group>
+								    <xforms:group ref="instance('ins-draft-entry')/atom:content/draft[wizard-pane-to-show='permissions']">
+								    	<xforms:group ref="instance('ins-control')[wizard-pane-being-shown='permissions']">
+								    		<xi:include href="includes/help-boxes/for-wizard-panes/permissions.xml"/>
+								    	</xforms:group>
+								    </xforms:group>
+								    <xforms:group ref="instance('ins-draft-entry')/atom:content/draft[wizard-pane-to-show='acknowledgements']">
+								    	<xforms:group ref="instance('ins-control')[wizard-pane-being-shown='acknowledgements']">
+								    		<xi:include href="includes/help-boxes/for-wizard-panes/acknowledgements.xml"/>
+								    	</xforms:group>
+								    </xforms:group>
+								    <xforms:group ref="instance('ins-draft-entry')/atom:content/draft[wizard-pane-to-show='upload-files']">
+								    	<xforms:group ref="instance('ins-control')[wizard-pane-being-shown='upload-files']">
+								    		<xi:include href="includes/help-boxes/for-wizard-panes/upload-files.xml"/>
+								    	</xforms:group>
+								    </xforms:group>
+								    <xforms:group ref="instance('ins-draft-entry')/atom:content/draft[wizard-pane-to-show='publications']">
+								    	<xforms:group ref="instance('ins-control')[wizard-pane-being-shown='publications']">
+								    		<xi:include href="includes/help-boxes/for-wizard-panes/publications.xml"/>
+								    	</xforms:group>
+								    </xforms:group>
+								    <xforms:group ref="instance('ins-draft-entry')/atom:content/draft[wizard-pane-to-show='review']">
+								    	<xforms:group ref="instance('ins-control')[wizard-pane-being-shown='review']">
+								    		<xi:include href="includes/help-boxes/for-wizard-panes/review.xml"/>
+								    	</xforms:group>
+								    </xforms:group>
+								    <xforms:group ref="instance('ins-draft-entry')/atom:content/draft[wizard-pane-to-show='confirmation']">
+								    	<xforms:group ref="instance('ins-control')[wizard-pane-being-shown='confirmation']">
+								    		<xi:include href="includes/help-boxes/for-wizard-panes/confirmation.xml"/>
+								    	</xforms:group>
+								    </xforms:group>
+				                
+				                	<div class="main twoCol">
+				                	
+				                	
+		<!-- End of After body header, before content id -->
 		
 		<div id="content" class="register-study-wizard">
 
-	    	<h1>Register study</h1>
-
-			<!-- Help boxes for wizard panes -->
-			<!-- The extra wrappers hide the user interface while processing occurs, otherwise there are screen blips, i.e. momentary inappropriate UI-presentations. -->
-			<!--  -->
-			<xforms:group ref="instance('ins-draft-entry')/atom:content/draft[wizard-pane-to-show='study-terms']">
-		    	<xforms:group ref="instance('ins-control')[wizard-pane-being-shown='study-terms']">
-		    		<xi:include href="includes/help-boxes/for-wizard-panes/study-terms.xml"/>
-		    	</xforms:group>
-		    </xforms:group>
-		    <xforms:group ref="instance('ins-draft-entry')/atom:content/draft[wizard-pane-to-show='permissions']">
-		    	<xforms:group ref="instance('ins-control')[wizard-pane-being-shown='permissions']">
-		    		<xi:include href="includes/help-boxes/for-wizard-panes/permissions.xml"/>
-		    	</xforms:group>
-		    </xforms:group>
-		    <xforms:group ref="instance('ins-draft-entry')/atom:content/draft[wizard-pane-to-show='acknowledgements']">
-		    	<xforms:group ref="instance('ins-control')[wizard-pane-being-shown='acknowledgements']">
-		    		<xi:include href="includes/help-boxes/for-wizard-panes/acknowledgements.xml"/>
-		    	</xforms:group>
-		    </xforms:group>
-		    <xforms:group ref="instance('ins-draft-entry')/atom:content/draft[wizard-pane-to-show='upload-files']">
-		    	<xforms:group ref="instance('ins-control')[wizard-pane-being-shown='upload-files']">
-		    		<xi:include href="includes/help-boxes/for-wizard-panes/upload-files.xml"/>
-		    	</xforms:group>
-		    </xforms:group>
-		    <xforms:group ref="instance('ins-draft-entry')/atom:content/draft[wizard-pane-to-show='publications']">
-		    	<xforms:group ref="instance('ins-control')[wizard-pane-being-shown='publications']">
-		    		<xi:include href="includes/help-boxes/for-wizard-panes/publications.xml"/>
-		    	</xforms:group>
-		    </xforms:group>
-		    <xforms:group ref="instance('ins-draft-entry')/atom:content/draft[wizard-pane-to-show='review']">
-		    	<xforms:group ref="instance('ins-control')[wizard-pane-being-shown='review']">
-		    		<xi:include href="includes/help-boxes/for-wizard-panes/review.xml"/>
-		    	</xforms:group>
-		    </xforms:group>
-		    <xforms:group ref="instance('ins-draft-entry')/atom:content/draft[wizard-pane-to-show='confirmation']">
-		    	<xforms:group ref="instance('ins-control')[wizard-pane-being-shown='confirmation']">
-		    		<xi:include href="includes/help-boxes/for-wizard-panes/confirmation.xml"/>
-		    	</xforms:group>
-		    </xforms:group>
-	    	
 	    	<!-- Wizard panes -->
 	    	<!-- The extra wrappers hide the user interface while processing occurs, otherwise there are screen blips, i.e. momentary inappropriate UI-presentations. -->
 	    	<!--  -->
@@ -846,6 +870,7 @@
 		    	</xforms:group>
 		    </xforms:group>
 		    	
+		    <!-- NB: wizard-pane-to-show='study-terms' rather than 'confirmation' is intended, i.e. not a typo. -->
 		    <xforms:group ref="instance('ins-draft-entry')/atom:content/draft[wizard-pane-to-show='study-terms']">
 		    	<xforms:group ref="instance('ins-control')[wizard-pane-being-shown='confirmation']">
 		    		<xi:include href="includes/wizard-panes/confirmation.xml"/>
@@ -853,6 +878,43 @@
 			</xforms:group>
 
 		</div>
+
+    	<!-- After content id, before ft id -->
+				                	</div>
+				                </div>
+		                	</div>
+		                	
+		                	<div class="background">
+		                	
+             						<h1>Register study</h1>
+					
+						    		<xforms:group ref="instance('ins-control')[wizard-pane-being-shown='study-terms']">
+						    			<h2>Step 1 of 5</h2>
+						    		</xforms:group>
+						    	
+							    	<xforms:group ref="instance('ins-control')[wizard-pane-being-shown='permissions']">
+							    		<h2>Step 2 of 5</h2>
+							    	</xforms:group>
+							    	
+							    	<xforms:group ref="instance('ins-control')[wizard-pane-being-shown='acknowledgements']">
+							    		<h2>Step 3 of 5</h2>
+							    	</xforms:group>
+							    	
+							    	<xforms:group ref="instance('ins-control')[wizard-pane-being-shown='upload-files']">
+							    		<h2>Step 4 of 5</h2>
+							    	</xforms:group>
+							    	
+							    	<xforms:group ref="instance('ins-control')[wizard-pane-being-shown='publications']">
+							    		<h2>Step 5 of 5</h2>
+							    	</xforms:group>
+		                	
+		                	</div>
+		                	
+                		</div>
+                	</div>
+                </div>
+
+		<!-- End of After content id, before ft id -->
 
 			<fr:alert-dialog id="remove-file-dialog">
 			    <fr:label>Remove</fr:label>

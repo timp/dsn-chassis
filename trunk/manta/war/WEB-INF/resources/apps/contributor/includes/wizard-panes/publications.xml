@@ -5,7 +5,7 @@
 	xmlns:ev="http://www.w3.org/2001/xml-events"
 	xmlns:xi="http://www.w3.org/2001/XInclude">
 
-	<h2>Publications - (Step 5 of 5)</h2>
+	<h2>Publications<!-- - (Step 5 of 5)--></h2>
 
 	<p>
 		<span id="published-status-menu-container">
@@ -34,7 +34,7 @@
             <xforms:repeat nodeset="publication" id="rep-publication">
                 <tr class="repeated-element">
                 	<td class="publication-deletion-cell">
-                        <xforms:trigger>
+                		<xforms:trigger class="addRemove">
                         	<xforms:label><img src="/apps/contributor/common/remove.gif" alt="Remove"/></xforms:label>
                             <xforms:delete 
                                 ev:event="DOMActivate" 
@@ -63,7 +63,7 @@
 			                    		
 				                    	<tr class="repeated-element">	
 				                    		<td>
-					                    		<xforms:trigger>
+				                    			<xforms:trigger class="addRemove">
 					                    			<xforms:label>
 					                    				<img src="/apps/contributor/common/remove.gif" alt="Remove" />
 					                    			</xforms:label>
@@ -104,7 +104,7 @@
 		                			<tr>		                    	
 				                    	
 				                    	<td>
-					                    	<xforms:trigger>
+				                    		<xforms:trigger class="addRemove">
 					                    		<xforms:label>
 					                    			<img src="/apps/contributor/common/add.gif" alt="Add" />
 					                    		</xforms:label>
@@ -115,7 +115,7 @@
 				                    	</td>
 				                    	<td>
 				                    		<span class="add-publication-reference-link-container">
-						                    	<xforms:trigger appearance="minimal">
+				                    			<xforms:trigger appearance="minimal" class="addRemove">
 						                    		<xforms:label>Add a URL or a DOI</xforms:label>
 						                    		<xforms:insert ev:event="DOMActivate" context="."
 						                    			nodeset="publication-reference" at="last()"
@@ -137,7 +137,7 @@
            <xforms:group ref="instance('ins-control')/add-publication-trigger">
 	           <tr>
 	                <td>
-	                    <xforms:trigger>
+	                	<xforms:trigger class="addRemove">
 	                        <xforms:label><img src="/apps/contributor/common/add.gif" alt="Add"/></xforms:label>
 	                        <xforms:insert 
 	                            ev:event="DOMActivate" 
@@ -150,7 +150,7 @@
 	                </td>
 	                <td>
 	                	<span id="add-publication-link-container">
-		                    <xforms:trigger appearance="minimal">
+	                		<xforms:trigger appearance="minimal" class="addRemove">
 		                        <xforms:label>Add a publication</xforms:label>
 		                        <xforms:insert 
 		                            ev:event="DOMActivate" 
@@ -170,7 +170,7 @@
 
 	</xforms:group>		
 
-	<p class="form-navi alignCenter">
+	<p class="form-navi-full alignCenter">
 	
 			
 	

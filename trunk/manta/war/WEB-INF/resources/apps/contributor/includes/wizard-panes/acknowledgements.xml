@@ -3,7 +3,7 @@
 	xmlns:xforms="http://www.w3.org/2002/xforms" 
 	xmlns:ev="http://www.w3.org/2001/xml-events">
 
-	<h2>Acknowledgements - (Step 3 of 5)</h2>
+	<h2>Acknowledgements<!-- - (Step 3 of 5)--></h2>
 
 	<xforms:group id="list-of-acknowledgements" ref="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:content/study/acknowledgements">
 	        
@@ -121,7 +121,7 @@
 	        
 	</xforms:group>
 
-	<p class="form-navi alignCenter">
+	<p class="form-navi-full alignCenter">
 	
 		
 		
