@@ -68,9 +68,15 @@
 			</span>
 		</p>
 		
-		
 	</xforms:group>
 
+	<!-- If the user has POST access to the curated media. -->
+	<xforms:group ref="instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/curatedMedia' and contains(@atombeat:allow, 'POST')]">
+		
+		<p><a class="btn" href="/curator/upload-curated-files?study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">Upload curated files</a></p>
+		
+	</xforms:group>
+	
 	<!-- If the user has GET access to the submitted media. -->
 	<xforms:group ref="instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/submittedMedia' and contains(@atombeat:allow, 'GET')]">
 
