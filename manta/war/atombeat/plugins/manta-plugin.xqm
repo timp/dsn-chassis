@@ -626,6 +626,15 @@ declare function manta-plugin:after-create-member-drafts(
                 rel="http://www.cggh.org/2010/chassis/terms/originDraft" 
                 href="{$entry/atom:link[@rel='edit']/@href}" 
                 type="application/atom+xml;type=entry"/>
+            <atombeat:config-link-extensions>
+                <atombeat:extension-attribute
+                    name="allow"
+                    namespace="http://purl.org/atombeat/xmlns">
+                    <atombeat:config context="entry-in-feed">
+                        <atombeat:param name="match-rels" value="edit-media"/>
+                    </atombeat:config>
+                </atombeat:extension-attribute>
+            </atombeat:config-link-extensions>
         </atom:feed>
         
     let $draft-media-collection-db-path := atomdb:create-collection( $draft-media-collection-path-info , $feed )
@@ -1131,21 +1140,25 @@ declare function manta-plugin:augment-derivation-entry(
                     and ( 
                         $child/@rel='http://www.cggh.org/2010/chassis/terms/derivationInput' 
                         or $child/@rel='http://www.cggh.org/2010/chassis/terms/derivationOutput' 
-                    )                    
+                    )   
                 )
                 then 
                     <atom:link>
                     {
-                        $child/attribute::*
+                        $child/attribute::* ,
+                        let $path-info := substring-after( $child/@href , $config:content-service-url )
+                        return 
+                            if ( atomdb:member-available( $path-info ) )
+                            then
+                                <ae:inline>
+                                {
+                                    let $raw-entry := atomdb:retrieve-member( $path-info )
+                                    let $augmented-entry := manta-plugin:augment-media-entry( $raw-entry )
+                                    return $augmented-entry
+                                }
+                                </ae:inline>
+                            else ()
                     }
-                        <ae:inline>
-                        {
-                            let $path-info := substring-after( $child/@href , $config:content-service-url )
-                            let $raw-entry := atomdb:retrieve-member( $path-info )
-                            let $augmented-entry := manta-plugin:augment-media-entry( $raw-entry )
-                            return $augmented-entry
-                        }
-                        </ae:inline>
                     </atom:link>
                 else $child
         }
