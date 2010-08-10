@@ -93,7 +93,7 @@
 
 
 
-			<h3>Pathogen Species</h3>
+			<h3>Primary Pathogen Species</h3>
 
 			<xforms:select ref="pathogens" appearance="full">
 				<xforms:label class="invisible">Pathogens</xforms:label>
@@ -1103,8 +1103,7 @@
 																<xforms:label class="fixed-width">Food intake
 																</xforms:label>
 																<xforms:item>
-																	<xforms:label><!-- Nullable -->
-																	</xforms:label>
+																	<xforms:label>unknown</xforms:label>
 																	<xforms:value />
 																</xforms:item>
 																<xforms:itemset model="mod-study-info"
@@ -1128,10 +1127,10 @@
 																ref="readministeredOnVomitting">
 																<xforms:label> Was treatment readministered in the
 																	event of vomiting? </xforms:label>
-																<xforms:item>
-																	<xforms:label>unknown</xforms:label>
-																	<xforms:value />
-																</xforms:item>
+                                <xforms:item>
+                                  <xforms:label>unknown</xforms:label>
+                                  <xforms:value />
+                                </xforms:item>
 																<xforms:itemset model="mod-study-info"
 																	nodeset="instance('ins-boolean-items')/boolean">
 																	<xforms:label ref="label" />
@@ -2925,7 +2924,6 @@
 									<xforms:select1 appearance="minimal" ref="drugMeasured">
 										<xforms:label class="invisible">Molecule measured
 										</xforms:label>
-										<!-- FIXME: Eclipse complains "invalid content" here -->
 										<xforms:hint>Name of drug given or metabolite measured
 										</xforms:hint>
 										<xforms:item>
