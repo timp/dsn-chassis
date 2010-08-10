@@ -72,25 +72,21 @@
                 <xsl:apply-templates select="/xhtml:html/xhtml:body/@*"/>
                 
                 <xhtml:div class="header">
-					<xhtml:h1 class="logo"><a href="index.html">WWARN - Worldwide Antimalarial Resistance Network</a></xhtml:h1>
+					<xhtml:h1 class="logo"><a href="http://www.wwarn.org">WWARN - Worldwide Antimalarial Resistance Network</a></xhtml:h1>
 					
+					 
 				    <xhtml:div id="block-menu-primary-links">
 					    <xhtml:ul id="primary" class="clearfix">
-					        <xhtml:li class="current"><a href="#nogo">Home</a></xhtml:li>
-					        <xhtml:li><a href="#nogo">About Us</a></xhtml:li>
-					        <xhtml:li><a href="#nogo">Supporting Research</a></xhtml:li>
-					        <xhtml:li><a href="#nogo">Contributing Data</a></xhtml:li>
-					        <xhtml:li><a href="#nogo">Tracking Resistance</a></xhtml:li>
-					        <xhtml:li><a href="#nogo">Community</a></xhtml:li>
-					        <xhtml:li><a href="#nogo">News &amp; Media</a></xhtml:li>
+					    	<xhtml:li class="active-trail"><a href="/manta">Data Home</a></xhtml:li>
+					    	<xhtml:li class="current"><a href="http://www.wwarn.org">WWARN Website</a></xhtml:li>
 					    </xhtml:ul>
 				    </xhtml:div>
-				    
+
 					<div class="secondary-wrap">
 					
 					</div>
 				</xhtml:div>
-				
+
                 <xhtml:div id="holdall">
                 	<xhtml:div id="main-inner">
                 		<xhtml:div class="content page">
@@ -117,19 +113,20 @@
                 
                	<xhtml:div id="ft">
                		<!-- <xhtml:p>Chassis Manta 1.0-alpha-SNAPSHOT</xhtml:p> -->
+
                		<xhtml:div id="footer-inner">
 					    <xhtml:div class="block">
 					        <xhtml:ul class="menu">
 					            <xhtml:li><xhtml:a title="" href="/contact">Contact Us</xhtml:a></xhtml:li>
-					            <xhtml:li><xhtml:a title="" href="/sitemap">Sitemap</xhtml:a></xhtml:li>
 					            <xhtml:li><xhtml:a title="" href="/terms-use">Terms &#38; Conditions</xhtml:a></xhtml:li>
 					            <xhtml:li><xhtml:a title="" href="/site-credits">Site Credits</xhtml:a></xhtml:li>
 					        </xhtml:ul>
 					    </xhtml:div>
 					    <xhtml:div class="block">
-					        <xhtml:p><xhtml:a href="http://wwarn.org">&#169;2010 WWARN</xhtml:a></xhtml:p>
+					        <xhtml:p><xhtml:a href="http://wwarn.kmp.co.uk/node/61">Copyright &#169; 2010 WorldWide Antimalarial Resistance Network (WWARN)</xhtml:a></xhtml:p>
 					    </xhtml:div>
 					</xhtml:div>
+
                	</xhtml:div>
                	
             </xhtml:body>

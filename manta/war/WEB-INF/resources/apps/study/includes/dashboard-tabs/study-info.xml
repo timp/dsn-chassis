@@ -8,10 +8,11 @@
 	<p>The study information assists us in curating your data – especially if your data is not yet published. If you do not have time to complete the questionnaire, the study curator will try to derive the answers from the publications you’ve provided.
 	</p>
 	
-	<p>You can copy study info from another study for which you have administrator/creator rights. If you copy information from an existing questionnaire it will overwrite any answer you’ve given, so be sure to update any information that differs from the copied study info.
+	<p>
+		To save time, and if appropriate, you have the option to copy study information from any registered study for which you have administrator rights. Copying details from an existing study will overwrite any information you&#8217;ve already supplied. Therefore if you choose to do this, we suggest that you begin by copying the details from a registered study and then make any necessary changes. 
 	</p>
 	
-	<p>When you enter new information, be sure to save your changes. 
+	<p>Be sure to save your changes after each session. 
 	</p>
 
 	<xforms:group ref="instance('ins-control')/copy-answers-control">

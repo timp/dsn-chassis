@@ -4,10 +4,10 @@
 	xmlns:xforms="http://www.w3.org/2002/xforms" 
 	xmlns:ev="http://www.w3.org/2001/xml-events">
 
-	<p>Please review the information you&#8217;ve provided for this study. Once you click Confirm, the study will be created in the WWARN Data Repository. 
-	</p>
-	<p>After you&#8217;ve created a study, you can edit this information by logging in and navigating to this particularly study. 
-	</p>
+<p>Please review the information you&#8217;ve provided for this study. Once you click Confirm, this study will be registered in the WWARN Data Repository and a unique ID will be assigned to your study by WWARN.
+</p>
+<p>Information concerning a registered study may be edited at any time by logging into the WWARN website and navigating to this study in the Data home.
+</p>
 
 
 </div>
