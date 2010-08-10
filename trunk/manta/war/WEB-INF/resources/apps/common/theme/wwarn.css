@@ -577,7 +577,7 @@ h1.logo a, h2.logo a {
 .sidebar,
 .main {
 	position:relative;
-	z-index:2;
+	z-index:4;
 }
 .background {
 	position:absolute;
