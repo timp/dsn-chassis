@@ -808,11 +808,11 @@
 																	nodeset="instance('ins-drugStorage-items')/drugStorage">
 																	<xforms:label ref="label" />
 																	<xforms:value ref="value" />
-                                  <xforms:item>
-                                    <xforms:label>unknown</xforms:label>
-                                    <xforms:value />
-                                  </xforms:item>
 																</xforms:itemset>
+                                <xforms:item>
+                                  <xforms:label>unknown</xforms:label>
+                                  <xforms:value />
+                                </xforms:item>
 															</xforms:select1>
 															<br />
 															<xforms:select1 ref="drugDosingDeterminant"
