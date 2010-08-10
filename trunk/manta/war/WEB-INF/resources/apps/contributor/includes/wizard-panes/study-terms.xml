@@ -17,7 +17,7 @@
 	
 	<iframe src="terms" class="terms-iframe">
 		<p>
-			<a href="terms" target="_blank">Terms</a>
+			<a href="terms" target="_blank">View the Terms of Submission as a webpage</a>
 		</p>
 	</iframe>
 	
@@ -93,8 +93,9 @@
 				
 					
 	
-			</xforms:group>
-			<xforms:trigger ref="instance('ins-control')/save-draft-trigger" class="alignRight">
+		</xforms:group>
+		<span class="alignRight">
+			<xforms:trigger ref="instance('ins-control')/save-draft-trigger">
 						<xforms:label>Next &gt;</xforms:label>
 						<xforms:action ev:event="DOMActivate" if="../draft-entry-is-valid = 'true'">
 							<xforms:setvalue ref="instance('ins-draft-entry')/atom:title" value="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:title" />
@@ -104,13 +105,15 @@
 						<xforms:action ev:event="DOMActivate" if="not(../draft-entry-is-valid = 'true')">
 							<xforms:message>Please complete all required fields.</xforms:message>
 						</xforms:action>
-					</xforms:trigger><span class="skip-links"><xforms:group ref="instance('ins-control')/pre-create-draft-back-home-link">
-			<a href="home" class="alignLeft">&lt;&lt; Back home</a>
+			</xforms:trigger>
+		</span>
+		<span class="skip-links"><xforms:group ref="instance('ins-control')/pre-create-draft-back-home-link">
+			<a href="home" class="alignLeft">&lt;&lt; Data home</a>
 		</xforms:group><xforms:group ref="instance('ins-draft-entry')/atom:link[@rel='edit']">
 			<xforms:trigger
 				ref="instance('ins-control')/save-draft-trigger"
 				appearance="minimal" class="alignLeft">
-				<xforms:label>&lt;&lt; Back home</xforms:label>
+				<xforms:label>&lt;&lt; Data home</xforms:label>
 				<xforms:action ev:event="DOMActivate"
 					if="../draft-entry-is-valid = 'true'">
 					<xforms:send submission="sub-back-home" />

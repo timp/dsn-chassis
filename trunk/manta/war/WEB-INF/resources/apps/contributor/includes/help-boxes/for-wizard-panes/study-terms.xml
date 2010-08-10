@@ -7,7 +7,7 @@
 
 	<h3>Study title</h3>
 	
-	<p>Enter a title for your study. Your study will also be given a unique ID.</p>
+	<p>Enter a title for your study. WWARN will also assign your study a unique ID.</p>
 	
 	
 	<h3>Terms of Submission</h3>
@@ -16,7 +16,7 @@
 	</p>
 	
 	<p>
-		<a href="../apps/contributor/common/WWARN Project Terms of Submission_190510.pdf" target="_blank" class="btn">Download the Terms of Submission as a PDF</a>
+		<a href="../apps/contributor/common/WWARN Terms of Submission_190510.pdf" target="_blank" class="btn">Download the Terms of Submission</a>
 	</p>
 
 

@@ -9,15 +9,22 @@
     <p>Thank you for registering your study. 
     </p>
     
-
+    <p>
+        We now invite you to supply further information about your study. This will be very helpful in curating your data &#8212; especially if it is not yet published. If you are unable to complete the questionnaire at this time, you can edit the information at a later date by logging into the WWARN website, navigating to this study in the Data Contribution Home and clicking the Study Info tab.   
+    </p>
 
 	<p>
 
-		<a href="home">&lt;&lt; Back home</a>
+		<a href="home">&lt;&lt; Data home</a>
 		
-	</p>
 	
-    <p>We invite you to complete the following information about your study. This information will be very helpful in curating your data – especially if your data is not yet published. If you are unable to complete the questionnaire at this time, you can edit the information at a later date by logging into your account, navigating to this study and clicking the Study Info tab.  You also have the option to copy study information from existing studies for which you have administrator rights. Since copying information from an existing study will overwrite any answers you&#8217;ve given, it&#8217;s a good idea to begin by copying the answers from an existing study and then editing any answers that differ. Be sure to save your changes after each session.
+	</p>
+    
+    <h2 class="study-site-questionnaire-heading">Study Site Questionnaire</h2>
+	
+    <p>
+        To save time, and if appropriate, you have the option to copy study information from any registered study for which you have administrator rights. Copying details from an existing study will overwrite any information you&#8217;ve already supplied. Therefore if you choose to do this, we suggest that you begin by copying the details from a registered study and then make any necessary changes. Be sure to save your changes after each session.
+        
 	</p>
 
     <xforms:group ref="instance('ins-control')/copy-answers-control">

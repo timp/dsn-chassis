@@ -181,7 +181,7 @@
 			<xforms:trigger
 				ref="instance('ins-control')/save-draft-trigger"
 				appearance="minimal" class="alignLeft">
-				<xforms:label>&lt;&lt; Back home</xforms:label>
+				<xforms:label>&lt;&lt; Data home</xforms:label>
 				<xforms:action ev:event="DOMActivate"
 					if="../draft-entry-is-valid = 'true'">
 					<xforms:send submission="sub-back-home" />
