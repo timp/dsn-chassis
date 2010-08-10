@@ -50,6 +50,14 @@
 					ref="instance('ins-review-entry')/atom:title" 
 					value="concat( 'Personal Data Review of file ' , instance('ins-media-entry')/manta:id/text() )"/>
 				<xforms:setvalue 
+					ev:event="xforms-submit-done"
+					ref="instance('ins-upload')/@term" 
+					value="instance('ins-media-entry')/atom:category[@scheme='http://www.cggh.org/2010/chassis/scheme/FileTypes']/@term"/>
+				<xforms:setvalue 
+					ev:event="xforms-submit-done"
+					ref="instance('ins-upload')/@label" 
+					value="instance('ins-media-entry')/atom:category[@scheme='http://www.cggh.org/2010/chassis/scheme/FileTypes']/@label"/>
+				<xforms:setvalue 
 					ev:event="xforms-submit-done" 
 					ref="instance('ins-derivation-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/derivationInput']/@href"
 					value="instance('ins-media-entry')/atom:link[@rel='edit']/@href"/>
@@ -98,49 +106,55 @@
 
 			</xforms:action>
 			
-        	<xforms:instance id="ins-uploads">
-        		<uploads xmlns="" target="">
-        			<upload
-        				filename=""
-        				mediatype=""
-        				size=""
-        				typeterm=""
-        				typelabel=""
-        				xsi:type="xs:anyURI"/>
-        		</uploads>
+        	<xforms:instance id="ins-upload">
+        		<upload xmlns="" scheme="http://www.cggh.org/2010/chassis/scheme/FileTypes" term="" label="">
+        			<summary/>
+        			<category/>
+        			<media xsi:type="xs:anyURI" filename="" mediatype="" size=""/>
+        		</upload>
         	</xforms:instance>
-
-        	<xforms:submission 
-        		id="sub-background-upload" 
-        		ref="instance('ins-uploads')" 
-        		method="post" 
-        		replace="none" 
-        		resource="test:"
-        		validate="false"/>
- 
-        	<xforms:submission 
-        		id="sub-post-uploads" 
-        		ref="instance('ins-uploads')" 
-        		method="post" 
-        		resource="/util/store-uploads"
+        	
+        	<!-- some bindings on the upload instance -->
+        	<xforms:bind nodeset="instance('ins-upload')">
+        		<xforms:bind nodeset="category" calculate="concat('scheme=&quot;', ../@scheme, '&quot;; term=&quot;', ../@term, '&quot;; label=&quot;', ../@label, '&quot;;')"/>
+        	</xforms:bind>      
+        	
+        	<xforms:instance id="ins-upload-result">
+        		<atom:entry/>
+        	</xforms:instance>
+        	
+        	<!-- this is the submission that sends the file to atombeat ... it uses a multipart/form-data POST request, which (thankfully) both Orbeon and AtomBeat support, although this is not standard Atom Protocol ... check the http traffic to see what's being sent -->
+        	<xforms:submission
+        		id="sub-post-upload"
+        		method="form-data-post"
+        		resource="{instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/curatedMedia']/@href}"
+        		ref="instance('ins-upload')"
         		replace="instance"
-        		instance="ins-uploads-results-feed">
-        		<!-- TODO proper error handling -->
-        		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>).</xforms:message>
+        		instance="ins-upload-result">
+        		
+        		<!-- this is required, otherwise you'll get errors -->
+        		<xforms:header>
+        			<xforms:name>Accept</xforms:name>
+        			<xforms:value>application/atom+xml</xforms:value>
+        		</xforms:header>
+
         		<xforms:setvalue 
         			ev:event="xforms-submit-done" 
         			ref="instance('ins-derivation-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/derivationOutput']/@href"
-        			value="instance('ins-uploads-results-feed')/atom:entry/atom:link[@rel='edit']/@href"/>
+        			value="instance('ins-upload-result')/atom:link[@rel='edit']/@href"/>
+
         		<xforms:send ev:event="xforms-submit-done" submission="sub-post-derivation"/>
+        		
+        		<!-- TODO error handling -->
+        		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while posting the upload.</xforms:message>
+        		
         	</xforms:submission>
         	
-        	<xforms:instance id="ins-uploads-results-feed">
-        		<atom:feed/>
-        	</xforms:instance>
         	
         	<xforms:instance id="ins-derivation-entry">
         		<atom:entry>
         			<atom:title type="text"/>
+        			<atom:summary type="text"/>
         			<atom:link rel="http://www.cggh.org/2010/chassis/terms/derivationInput" href="" type="application/atom+xml"/>
         			<atom:link rel="http://www.cggh.org/2010/chassis/terms/derivationOutput" href="" type="application/atom+xml"/>
         			<atom:content type="application/vnd.chassis-manta+xml">
@@ -233,30 +247,25 @@
     		<h2>Upload Cleaned File</h2>
     		
     		<p>
-    			<xforms:group ref="instance('ins-uploads')/upload">
-    				
-    				<!-- Upload field -->
-    				<span id="file-selector-container">
-    				<xforms:upload ref="." xxforms:size="60">
-    					<xforms:label>Upload file: </xforms:label>
+    			<span id="file-selector-container">
+    				<xforms:upload ref="instance('ins-upload')/media">
+    					<xforms:label>File: </xforms:label>
     					<xforms:filename ref="@filename"/>
     					<xforms:mediatype ref="@mediatype"/>
     					<xxforms:size ref="@size"/>
-    					<xforms:send ev:event="xforms-select" submission="sub-background-upload"/>
+    					<xforms:alert>Please select a file.</xforms:alert>
     				</xforms:upload>
-    				</span>
-    				
-    				<!-- Download link -->
-    				<!--
-    				<xforms:output value="." appearance="xxforms:download">
-    					<xforms:label>Download</xforms:label>
-    					<xforms:filename ref="@filename"/>
-    					<xforms:mediatype ref="@mediatype"/>
-    				</xforms:output>
-    				-->
-
-    			</xforms:group>
-    			
+    			</span>
+    		</p>
+ 
+    		<h3>Comments</h3>
+    		
+    		<p>Describe the work you did to create the file you are uploading...</p>
+    		
+    		<p>
+    			<xforms:textarea ref="instance('ins-derivation-entry')/atom:summary" appearance="xxforms:autosize">
+    				<xforms:label/>
+    			</xforms:textarea>
     		</p>
     		
     		<p>
@@ -269,7 +278,7 @@
 				</xforms:trigger>    		
     		
     			<span id="confirm-button-container">
-    			<xforms:submit submission="sub-post-uploads">
+    			<xforms:submit submission="sub-post-upload">
     				<xforms:label>Confirm</xforms:label>
     			</xforms:submit>
     			</span>
