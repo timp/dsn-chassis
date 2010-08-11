@@ -5,6 +5,7 @@
 	class="study-info">
 	<xforms:group ref="instance('errors')" model="mod-study-info"
 		class="warnings">
+		<!--
 		<p align="right" class="warningButton">
 			<xforms:trigger>
 				<xforms:label class="warningsLabel">Hints</xforms:label>
@@ -16,6 +17,7 @@
 				</xforms:action>
 			</xforms:trigger>
 		</p>
+		-->
 		<!--
 			Orbeon Error Summary component, see also:
 			http://wiki.orbeon.com/forms/doc/developer-guide/xbl-components/error-summary-component
