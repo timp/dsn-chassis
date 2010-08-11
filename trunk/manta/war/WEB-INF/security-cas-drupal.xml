@@ -35,16 +35,21 @@
         <!-- force authentication for all requests to atombeat, but delegate
             access control decisions to atombeat -->
         <sec:intercept-url pattern="/atombeat/**" access="ROLE_CHASSIS_USER" />
-
-        <sec:intercept-url pattern="/contributor/**" access="ROLE_CHASSIS_CONTRIBUTOR" />
-
+        
+        <sec:intercept-url pattern="/contributor/**" access="ROLE_CHASSIS_CONTRIBUTOR, ROLE_CHASSIS_ADMINISTRATOR" />
+        
         <sec:intercept-url pattern="/personal-data/**" access="ROLE_CHASSIS_PERSONAL_DATA_REVIEWER, ROLE_CHASSIS_ADMINISTRATOR" />
         
         <sec:intercept-url pattern="/curator/**" access="ROLE_CHASSIS_CURATOR, ROLE_CHASSIS_ADMINISTRATOR" />
-    
+        
         <sec:intercept-url pattern="/study/**" access="ROLE_CHASSIS_CONTRIBUTOR, ROLE_CHASSIS_CURATOR, ROLE_CHASSIS_ADMINISTRATOR" />
         
-
+        <sec:intercept-url pattern="/rest/**" access="ROLE_CHASSIS_ADMINISTRATOR" />
+        <sec:intercept-url pattern="/admin/**" access="ROLE_CHASSIS_ADMINISTRATOR" />
+        
+        <!-- don't do this, it protects all css and other resources -->
+        <!--    <sec:intercept-url pattern="/**" access="ROLE_CHASSIS_ADMINISTRATOR" /> -->
+        
         <sec:logout 
             logout-success-url="${cas.url}/logout" 
             invalidate-session="true"/>
@@ -123,7 +128,6 @@
     </bean>
     
     
-    
     <bean id="casAuthenticationProvider" class="org.springframework.security.providers.cas.CasAuthenticationProvider">
         
         <sec:custom-authentication-provider />
@@ -181,5 +185,40 @@
     
     <!-- Log failed authentication attempts to commons-logging -->
     <bean id="loggerListener" class="org.springframework.security.event.authentication.LoggerListener"/>
+
+
+    <!-- EXPERIMENTAL - ENABLE BASIC AUTH IN ADDITION TO CAS FOR WEB SERVICE ACCESS (HOPEFULLY WON'T DISRUPT CAS BEHAVIOUR) -->
+    
+    <bean 
+        id="basicProcessingFilter" 
+        class="org.springframework.security.ui.basicauth.BasicProcessingFilter">
+        
+        <sec:custom-filter position="BASIC_PROCESSING_FILTER"/>
+        
+        <property 
+            name="authenticationManager" 
+            ref="authenticationManager"/>
+        
+        <property 
+            name="authenticationEntryPoint" 
+            ref="basicProcessingFilterEntryPoint"/>
+        
+    </bean>
+    
+    <bean 
+        id="basicProcessingFilterEntryPoint" 
+        class="org.springframework.security.ui.basicauth.BasicProcessingFilterEntryPoint">
+        
+        <property 
+            name="realmName" 
+            value="WWARN"/>
+        
+    </bean>
+    
+    <sec:authentication-provider user-service-ref='userService'/>
+    
+    <!-- END EXPERIMENTAL BASIC AUTH CONFIG -->
+    
+    
     
 </beans>
