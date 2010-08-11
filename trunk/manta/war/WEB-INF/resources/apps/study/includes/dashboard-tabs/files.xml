@@ -88,7 +88,7 @@
     	
     	<xforms:group ref="instance('ins-submitted-media-feed')[exists(atom:entry)]">
     		
-    		<span id="editable-list-of-uploaded-files-container">
+    		<span id="list-of-submitted-files-container">
     			
 		    	<fr:datatable paginated="false">
 		    		<thead>
@@ -129,7 +129,7 @@
 		    					<td>
 		    						<xforms:group ref=".[contains( ./atom:link[@rel='edit-media']/@atombeat:allow , 'GET' )]">
 		    							<!-- Only enable if the file has passed personal data review. -->
-		    							<a href="{atom:content/@src}">Download</a><br/>
+		    							<span class="download-file-link-container"><a href="{atom:content/@src}">Download</a></span><br/>
 		    						</xforms:group>
 		    						<xforms:group ref="instance('ins-control')/curator-controls">
 		    							<a href="../curator/file-details?media-link={xxforms:context('rep-media-contributor')/atom:link[@rel='edit']/@href}">Details</a>
