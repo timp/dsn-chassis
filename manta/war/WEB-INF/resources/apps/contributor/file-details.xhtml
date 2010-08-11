@@ -102,13 +102,42 @@
     </head>
     <body>
 
-		<xi:include href="../common/includes/current-user-actions.xml"/>
+		<!-- Body header -->
+                <div id="header" class="header">
+					<h1 class="logo"><a href="http://www.wwarn.org">WWARN - Worldwide Antimalarial Resistance Network</a></h1>
+					
+					 
+				    <div id="block-menu-primary-links">
+					    <ul id="primary" class="clearfix">
+					    	<li><a href="home">Data Home</a></li>
+					    	<li><a href="register-study-wizard">Register Study</a></li>
+					    	<li><a href="http://www.wwarn.org">WWARN Website</a></li>
+					    </ul>
+				    </div>
+
+					<div class="secondary-wrap">
+						<xi:include href="../common/includes/current-user-actions.xml"/>
+					</div>
+				</div>
+		<!-- End of Body header -->
+
+		<!-- After body header, before content id -->
+                <div id="holdall">
+                	<div id="main-inner">
+                		<div class="content page">
+		                	<div id="bd" class="clearfix">
+
+								<!-- Help div goes here -->
+
+				                <div class="no-bg">
+				                	<div class="main twoCol">
+		<!-- End of After body header, before content id -->
     	
     	<div id="content">
     		
     		<xforms:group ref="instance('ins-media-link-entry')">
     			
-    			<h1>File Details - <xforms:output ref="atom:title"/> (<xforms:output ref="manta:id"/>)</h1>
+    			
 
     			<p>
     				<a href="../study/dashboard?tab=files&amp;study={atom:link[@rel='http://www.cggh.org/2010/chassis/terms/originStudy']/@href}">&lt;&lt; Study Dashboard</a>
@@ -325,6 +354,23 @@
     		
     		
     	</div>
+
+    	<!-- After content id, before ft id -->
+				                	</div>
+				                </div>
+		                	</div>
+
+		                	<div class="background">
+		                	
+		                		<h1>File Details - <xforms:output ref="atom:title"/> (<xforms:output ref="manta:id"/>)</h1>
+		                		
+		                	</div>
+		                	
+                		</div>
+                	</div>
+                </div>
+
+		<!-- End of After content id, before ft id -->
     
     </body>
 </html>

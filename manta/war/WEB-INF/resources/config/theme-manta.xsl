@@ -78,9 +78,8 @@
                		<xhtml:div id="footer-inner">
 					    <xhtml:div class="block">
 					        <xhtml:ul class="menu">
-					            <xhtml:li><xhtml:a title="" href="/contact">Contact Us</xhtml:a></xhtml:li>
-					            <xhtml:li><xhtml:a title="" href="/terms-use">Terms &#38; Conditions</xhtml:a></xhtml:li>
-					            <xhtml:li><xhtml:a title="" href="/site-credits">Site Credits</xhtml:a></xhtml:li>
+					            <xhtml:li><xhtml:a title="" href="http://wwarn.kmp.co.uk/contact" target="_blank">Contact Us</xhtml:a></xhtml:li>
+					            <xhtml:li><xhtml:a title="" href="http://wwarn.kmp.co.uk/terms-use" target="_blank">Terms &#38; Conditions</xhtml:a></xhtml:li>
 					        </xhtml:ul>
 					    </xhtml:div>
 					    <xhtml:div class="block">

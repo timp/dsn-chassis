@@ -10,10 +10,8 @@
 
         
         <ul class="menu">
-            <li class="leaf first"><a href="#" title=""><xforms:output model="mod-current-user" ref="instance('ins-current-user')/name"/></a></li>
-            <li class="leaf ContributeData"><a href="http://www.wwarn.org/chassis" title="Contribute Data">Contribute Data</a></li>
-            <li class="leaf LoginRegister" id="logout-link-container"><a href="/j_spring_security_logout" title="Log out">Log out</a></li>
-            <li class="leaf last Contact"><a href="/contact" title="Contact">Contact</a></li>
+            <li class="leaf first LoginRegister" id="logout-link-container"><a href="/j_spring_security_logout" title="Logout">Logout <xforms:output model="mod-current-user" ref="instance('ins-current-user')/name"/></a></li>
+            <li class="leaf last Contact"><a href="http://wwarn.kmp.co.uk/contact" title="Contact" target="_blank">Contact</a></li>
         </ul>
         
     </div> 

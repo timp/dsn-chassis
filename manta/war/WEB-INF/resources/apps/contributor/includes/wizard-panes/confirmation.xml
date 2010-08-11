@@ -4,13 +4,12 @@
 	xmlns:ev="http://www.w3.org/2001/xml-events"
 	xmlns:xforms="http://www.w3.org/2002/xforms" >
 
-	<h2>Registration complete</h2>
-
-    <p>Thank you for registering your study. 
+    
+    <p>The unique ID assigned to your study is: <b><xforms:output ref="instance('ins-study-entry')/manta:id"/></b> 
     </p>
     
     <p>
-        We now invite you to supply further information about your study. This will be very helpful in curating your data &#8212; especially if it is not yet published. If you are unable to complete the questionnaire at this time, you can edit the information at a later date by logging into the WWARN website, navigating to this study in the Data Contribution Home and clicking the Study Info tab.   
+        We now invite you to supply further information about your study. This will be very helpful in curating your data &#8212; especially if it is not yet published. If you are unable to complete the questionnaire at this time, you can edit the information at a later date by logging into the WWARN website, navigating to this study in the Data Home and clicking the Study Info tab.   
     </p>
 
 	<p>
