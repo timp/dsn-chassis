@@ -575,6 +575,8 @@ h1.logo a, h2.logo a {
 }
 #bd .oneCol {
 	width:920px;
+	
+	    min-height: 300px;
 }
 #sidebar-left {
 	float:left;
@@ -591,7 +593,7 @@ h1.logo a, h2.logo a {
 	z-index:1;
 	
 	    background-color: #78c7eb;
-	    min-height: 500px;
+	    min-height: 300px;
 }
 #bd {
 	position:relative;

@@ -27,7 +27,7 @@
     
     <head>
     
-        <title>Personal Data Review - Review File</title>
+        <title>Personal Data - Review File</title>
 
         
         <xforms:model>
@@ -204,6 +204,18 @@
                 		<div class="content page">
 		                	<div id="bd" class="clearfix">
 				                <div class="no-bg">
+				                
+				                
+									<div class="help">
+							
+										<p>The first step in the curation process is to check file uploads for personal data. 
+										</p>
+										<p>If there is no personal data in the file, select "file can proceed to curation". The file will be made available for download to the curator and the contributors.
+										</p>
+										<p>If the file contains personal data, please provide details in the Comments box and select "file contains personal data to be removed". This information will need to be removed. After this is done, the anonymized file can be made available for download to the curator and the contributors.
+										</p>
+									</div>				                
+											                
 				                	<div class="main twoCol">
 				                	
 				                	
@@ -213,18 +225,7 @@
     
 
 
-		<div class="help">
 
-			<!-- Begin: Box text -->
-			<p>The first step in the curation process is to check file uploads for personal data. 
-			</p>
-			<p>If there is no personal data in the file, select "file can proceed to curation". The file will be made available for download to the curator and the contributors.
-			</p>
-			<p>If the file contains personal data, please provide details in the Comments box and select "file contains personal data to be removed". This information will need to be removed. After this is done, the anonymized file can be made available for download to the curator and the contributors.
-			</p>
-			<!-- End: Box text -->
-		
-		</div>
     	
     	<xforms:group ref="instance('ins-media-entry')">
     	
@@ -232,7 +233,7 @@
 	    		Code: <xforms:output value="manta:id"/>
 	    	</p>
 	    	<p>
-	    		Original File Name: <xforms:output value="atom:title"/>
+	    		Original file name: <xforms:output value="atom:title"/>
 	    	</p>
 	    	<p>
 	    		Contributor: <xforms:output value="atom:author/atom:email"/> 
@@ -241,7 +242,7 @@
 	    		Study: <xforms:output value="instance('ins-study-entry')/atom:title"/>
 	    	</p>
 	    	<p>
-	    		<a href="{atom:content/@src}">download file</a>
+	    		<a href="{atom:content/@src}">Download file</a>
 	    	</p>
 	    	
 	    	<p>
@@ -249,15 +250,15 @@
 	    		<xforms:select1 ref="instance('ins-review-entry')//outcome">
 	    			<xforms:label>Review outcome: </xforms:label>
 	    			<xforms:item>
-	    				<xforms:label>please select</xforms:label>
+	    				<xforms:label>Please select</xforms:label>
 	    				<xforms:value/>
 	    			</xforms:item>
 	    			<xforms:item>
-	    				<xforms:label>file contains personal data to be removed</xforms:label>
+	    				<xforms:label>File contains personal data to be removed</xforms:label>
 	    				<xforms:value>fail</xforms:value>
 	    			</xforms:item>
 	    			<xforms:item>
-	    				<xforms:label>file can proceed to curation</xforms:label>
+	    				<xforms:label>File can proceed to curation</xforms:label>
 	    				<xforms:value>pass</xforms:value>
 	    			</xforms:item>
 	    		</xforms:select1>
@@ -285,7 +286,7 @@
 	    	
 	    		<span id="submit-review-button-container">
 	    		<xforms:submit submission="sub-post-review">
-	    			<xforms:label>Submit Review</xforms:label>
+	    			<xforms:label>Submit review</xforms:label>
 	    		</xforms:submit>
 	    		</span>
 	    	</p>
@@ -302,7 +303,7 @@
 		                	</div>
 		                	
 		                	<div class="background">
-		                	    	<h1>Personal Data Review - Review File</h1>
+		                	    	<h1>Personal data - Review file</h1>
 		                	</div>
 		                	
                 		</div>

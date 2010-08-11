@@ -37,7 +37,7 @@
 <!--    <intercept-url pattern="/**" access="ROLE_CHASSIS_ADMINISTRATOR" /> -->
     
     <logout 
-      logout-success-url="http://www.wwarn.org/" 
+      logout-success-url="/home/" 
       invalidate-session="true"/>
     
   </http>
