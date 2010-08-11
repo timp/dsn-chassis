@@ -4,6 +4,7 @@
 	xmlns:ev="http://www.w3.org/2001/xml-events"
 	xmlns:xforms="http://www.w3.org/2002/xforms" >
 
+    <h1>Thank you for registering your study</h1>
     
     <p>The unique ID assigned to your study is: <b><xforms:output ref="instance('ins-study-entry')/manta:id"/></b> 
     </p>
