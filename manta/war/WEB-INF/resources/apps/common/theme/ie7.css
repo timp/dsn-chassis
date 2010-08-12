@@ -1,0 +1,35 @@
+@charset "utf-8";
+/* CSS Document */
+
+div, li {
+	zoom: 1;
+}
+.clearfix {
+    zoom: 1;     /* triggers hasLayout */
+    }
+.tab-nav ul {
+	width:565px;
+}
+.loopedSlider .container {
+	position:relative;
+	background:url(../images/bkgd/black-bg.png) repeat 0 0;
+}
+#primary li {
+	margin:0 3px;
+}
+.entry ol li h3 {
+	display:block;
+}
+.threecol li {
+	width:146px;
+}
+#content-header .title {
+	display:inline;
+}
+.secondary-wrap #search-block-form .form-submit {
+	font-size:0;
+	color:#545454;
+}
+.inner {
+	background:#fff;
+}

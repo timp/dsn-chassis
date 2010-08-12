@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+    xmlns="http://www.springframework.org/schema/beans"
+    xmlns:sec="http://www.springframework.org/schema/security"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+    http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-2.0.4.xsd">  
+    
+    
+    <!--+
+        |
+        | SEE http://mattfleming.com/node/269
+        | SEE http://static.springsource.org/spring-security/site/docs/2.0.x/reference/cas.html 
+        |
+        +-->
+    
+    
+    <bean id="propertyPlaceholderConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
+        p:location="/WEB-INF/security-cas-drupal.properties" />
+    
+    
+    <!-- FIRST SET UP THE SPRING SECURITY FILTER CHAIN AND HTTP SECURITY RULES -->
+    
+    <sec:http 
+        lowercase-comparisons="false" 
+        entry-point-ref="casProcessingFilterEntryPoint">
+        
+        <!-- restrict access to libraries and administrative scripts -->
+        <sec:intercept-url pattern="/atombeat/admin/**" access="ROLE_CHASSIS_ADMINISTRATOR" />
+        <sec:intercept-url pattern="/atombeat/config/**" access="ROLE_CHASSIS_ADMINISTRATOR" />
+        <sec:intercept-url pattern="/atombeat/lib/**" access="ROLE_CHASSIS_ADMINISTRATOR" />
+        <sec:intercept-url pattern="/atombeat/plugins/**" access="ROLE_CHASSIS_ADMINISTRATOR" />
+        
+        <!-- force authentication for all requests to atombeat, but delegate
+            access control decisions to atombeat -->
+        <sec:intercept-url pattern="/atombeat/**" access="ROLE_CHASSIS_USER" />
+        
+        <sec:intercept-url pattern="/contributor/**" access="ROLE_CHASSIS_CONTRIBUTOR, ROLE_CHASSIS_ADMINISTRATOR" />
+        
+        <sec:intercept-url pattern="/personal-data/**" access="ROLE_CHASSIS_PERSONAL_DATA_REVIEWER, ROLE_CHASSIS_ADMINISTRATOR" />
+        
+        <sec:intercept-url pattern="/curator/**" access="ROLE_CHASSIS_CURATOR, ROLE_CHASSIS_ADMINISTRATOR" />
+        
+        <sec:intercept-url pattern="/study/**" access="ROLE_CHASSIS_CONTRIBUTOR, ROLE_CHASSIS_CURATOR, ROLE_CHASSIS_ADMINISTRATOR" />
+        
+        <sec:intercept-url pattern="/rest/**" access="ROLE_CHASSIS_ADMINISTRATOR" />
+        <sec:intercept-url pattern="/admin/**" access="ROLE_CHASSIS_ADMINISTRATOR" />
+        
+        <!-- don't do this, it protects all css and other resources -->
+        <!--    <sec:intercept-url pattern="/**" access="ROLE_CHASSIS_ADMINISTRATOR" /> -->
+        
+        <sec:logout 
+            logout-success-url="${cas.url}/logout" 
+            invalidate-session="true"/>
+        
+    </sec:http>
+    
+    
+    
+    <!-- NEXT, DEFINE THE ENTRY-POINT FOR CAS PROCESSING -->
+    
+    <bean 
+        id="casProcessingFilterEntryPoint" 
+        class="org.springframework.security.ui.cas.CasProcessingFilterEntryPoint">
+    
+        <property 
+            name="loginUrl" 
+            value="${cas.url}/login"/>
+        
+        <property 
+            name="serviceProperties" 
+            ref="serviceProperties"/>
+        
+    </bean>
+    
+    
+    
+    <!-- NEXT DEFINE THE SERVICE PROPERTIES FOR THIS CAS SERVICE -->
+    
+    <bean 
+        id="serviceProperties" 
+        class="org.springframework.security.ui.cas.ServiceProperties">
+        
+        <property 
+            name="service" 
+            value="${chassis.url}/j_spring_cas_security_check"/>
+        
+        <property 
+            name="sendRenew" 
+            value="false"/>
+        
+    </bean>
+    
+    
+    <sec:authentication-manager 
+        alias="authenticationManager"/>      
+    
+    
+    <bean 
+        id="casSingleSignOutFilter" 
+        class="org.jasig.cas.client.session.SingleSignOutFilter">
+        
+        <sec:custom-filter 
+            before="CAS_PROCESSING_FILTER"/>
+        
+    </bean>
+    
+    
+    <bean 
+        id="casProcessingFilter" 
+        class="org.springframework.security.ui.cas.CasProcessingFilter">
+        
+        <sec:custom-filter after="CAS_PROCESSING_FILTER"/>
+        
+        <property 
+            name="authenticationManager" 
+            ref="authenticationManager"/>
+        
+        <!-- TODO set 403 location -->
+        
+        <property 
+            name="authenticationFailureUrl" 
+            value="/403.jsp"/>
+        
+        <property name="defaultTargetUrl" value="/"/>
+        
+    </bean>
+    
+    
+    <bean id="casAuthenticationProvider" class="org.springframework.security.providers.cas.CasAuthenticationProvider">
+        
+        <sec:custom-authentication-provider />
+        
+        <property name="userDetailsService" ref="userService"/>
+        
+        <property name="serviceProperties" ref="serviceProperties" />
+        
+        <property name="ticketValidator">
+            
+            <!-- set URL -->
+            <bean class="org.jasig.cas.client.validation.Cas20ServiceTicketValidator">
+                <constructor-arg index="0" value="${cas.url}" />
+            </bean>
+            
+        </property>
+        
+        <property name="key" value="an_id_for_this_auth_provider_only"/>
+        
+    </bean>
+    
+    <bean id="userService" class="org.springframework.security.userdetails.jdbc.JdbcDaoImpl">
+        <property name="dataSource" ref="drupal6"/>
+        <property
+            name="usersByUsernameQuery"
+            value="
+            SELECT users.mail as username , users.pass as password , users.status as enabled 
+            FROM users 
+            WHERE users.name = ?            
+            "/>
+        <property 
+            name="authoritiesByUsernameQuery" 
+            value="
+            SELECT users.mail AS username, role.name AS authority
+            FROM users, users_roles, role
+            WHERE users.uid = users_roles.uid
+            AND users_roles.rid = role.rid
+            AND users.mail = ?
+            "/>
+    </bean>
+    
+    
+    
+    <!-- Data source definition -->
+    <bean id="drupal6" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName">
+            <value>${drupal.dbdriver}</value>
+        </property>
+        <property name="url">
+            <value>${drupal.dburl}</value>
+        </property>
+        <property name="username"><value>${drupal.dbuser}</value></property>
+        <property name="password"><value>${drupal.dbpass}</value></property>
+    </bean>       
+    
+    <!-- Log failed authentication attempts to commons-logging -->
+    <bean id="loggerListener" class="org.springframework.security.event.authentication.LoggerListener"/>
+
+
+    <!-- EXPERIMENTAL - ENABLE BASIC AUTH IN ADDITION TO CAS FOR WEB SERVICE ACCESS (HOPEFULLY WON'T DISRUPT CAS BEHAVIOUR) -->
+    
+    <bean 
+        id="basicProcessingFilter" 
+        class="org.springframework.security.ui.basicauth.BasicProcessingFilter">
+        
+        <sec:custom-filter position="BASIC_PROCESSING_FILTER"/>
+        
+        <property 
+            name="authenticationManager" 
+            ref="authenticationManager"/>
+        
+        <property 
+            name="authenticationEntryPoint" 
+            ref="basicProcessingFilterEntryPoint"/>
+        
+    </bean>
+    
+    <bean 
+        id="basicProcessingFilterEntryPoint" 
+        class="org.springframework.security.ui.basicauth.BasicProcessingFilterEntryPoint">
+        
+        <property 
+            name="realmName" 
+            value="WWARN"/>
+        
+    </bean>
+    
+    <sec:authentication-provider user-service-ref='userService'/>
+    
+    <!-- END EXPERIMENTAL BASIC AUTH CONFIG -->
+    
+    
+    
+</beans>
