@@ -2,6 +2,8 @@
 # server platform - AS YET UNTESTED! - these instructions are executed on app1.alpha.wwarn.org
 # N.B. script will need to be run as root
 
+# TODO this is a bit out of date and missing some crucial steps
+
 TAG=chassis-manta-1.0-beta-SNAPSHOT-20100617
 URL=https://alpha.wwarn.org/$TAG
 DEPLOY=/opt/$TAG
