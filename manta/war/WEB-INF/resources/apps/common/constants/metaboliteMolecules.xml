@@ -1,8 +1,0 @@
-<!--  Closed list of metabolites of anti-malarial drugs  -->
-<metaboliteMolecules xmlns="">
-	<metaboliteMolecule>
-		<label>monodesethylamodiaquine</label>
-		<value>MDA</value>
-		<metaboliteMolecule>amodiaquine</metaboliteMolecule>
-	</metaboliteMolecule>
-</metaboliteMolecules>
