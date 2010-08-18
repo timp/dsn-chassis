@@ -181,6 +181,8 @@
         </property>
         <property name="username"><value>${drupal.dbuser}</value></property>
         <property name="password"><value>${drupal.dbpass}</value></property>
+        <property name="testWhileIdle" value="true"/>
+        <property name="validationQuery" value="SELECT 1"/>
     </bean>       
     
     <!-- Log failed authentication attempts to commons-logging -->
