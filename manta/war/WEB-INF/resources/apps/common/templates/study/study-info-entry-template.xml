@@ -47,6 +47,7 @@
 					<minParasitaemia />
 					<maxParasitaemia />
 				</parasitaemia>
+        <includeMixedInfections />
 				<excludeIfPriorAntimalarials />
 				<priorAntimalarialsExclusion>
 					<priorAntimalarials />

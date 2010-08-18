@@ -139,7 +139,9 @@
 						<xforms:bind nodeset="minParasitaemia" type="xforms:int"/>
 						<xforms:bind nodeset="maxParasitaemia" type="xforms:int"/>
 					</xforms:bind>
-					<xforms:bind nodeset="excludeIfPriorAntimalarials" type="xforms:boolean"/>
+
+          <xforms:bind nodeset="includeMixedInfections" type="xforms:boolean"/>
+          <xforms:bind nodeset="excludeIfPriorAntimalarials" type="xforms:boolean"/>
 					<xforms:bind nodeset="priorAntimalarialsExclusion"
 						relevant="contains(../excludeIfPriorAntimalarials, 'true')">
 						<xforms:bind nodeset="priorAntimalarials" type="xs:string"/>

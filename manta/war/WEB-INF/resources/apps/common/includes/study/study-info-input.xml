@@ -518,7 +518,7 @@
 								value="concat('Enter a value for the ', name(), ' field ')" />
 						</xforms:alert>
 					</xforms:select1>
-					<br />
+          <br />
 				</xforms:group>
 				<xforms:group ref="parasitaemia">
 					<xforms:input ref="minParasitaemia" class="fourWide">
@@ -541,21 +541,39 @@
 					<br />
 				</xforms:group>
 
-				<xforms:select1 ref="excludeIfPriorAntimalarials"
-					appearance="minimal">
-					<xforms:label class="fixed-width">Exclude if prior anti-malarials?
-					</xforms:label>
-					<xforms:item>
-						<xforms:label>please select</xforms:label>
-						<xforms:value></xforms:value>
-					</xforms:item>
-					<xforms:itemset model="mod-study-info"
-						nodeset="instance('ins-boolean-items')/boolean">
-						<xforms:label ref="label" />
-						<xforms:value ref="value" />
-					</xforms:itemset>
-					<xforms:alert>Please select</xforms:alert>
-				</xforms:select1>
+        <xforms:select1 ref="includeMixedInfections"
+          appearance="minimal">
+          <xforms:label class="fixed-width">Include mixed infections? </xforms:label>
+          <xforms:item>
+            <xforms:label>please select</xforms:label>
+            <xforms:value></xforms:value>
+          </xforms:item>
+          <xforms:itemset model="mod-study-info"
+            nodeset="instance('ins-boolean-items')/boolean">
+            <xforms:label ref="label" />
+            <xforms:value ref="value" />
+          </xforms:itemset>
+          <xforms:alert>Please select</xforms:alert>
+        </xforms:select1>
+
+        <br />
+
+        <xforms:select1 ref="excludeIfPriorAntimalarials"
+          appearance="minimal">
+          <xforms:label class="fixed-width">Exclude if prior anti-malarials?
+          </xforms:label>
+          <xforms:item>
+            <xforms:label>please select</xforms:label>
+            <xforms:value></xforms:value>
+          </xforms:item>
+          <xforms:itemset model="mod-study-info"
+            nodeset="instance('ins-boolean-items')/boolean">
+            <xforms:label ref="label" />
+            <xforms:value ref="value" />
+          </xforms:itemset>
+          <xforms:alert>Please select</xforms:alert>
+        </xforms:select1>
+
 				<xforms:group ref="priorAntimalarialsExclusion">
 
 
