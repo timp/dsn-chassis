@@ -101,8 +101,7 @@
 							<xforms:bind nodeset="annualParasitologicalIncidence"/>
 							<!-- FIXME type="ctype:recentYear" -->
 							<xforms:bind nodeset="annualParasitologicalIncidenceYear"
-								type="xforms:int"
-								relevant="normalize-space( ../annualParasitologicalIncidence) != ''"/>
+								type="xforms:int" />
 							<xforms:bind nodeset="parasitePrevalence"/>
 							<!-- FIXME type="ctype:age" -->
 							<xforms:bind nodeset="transmissionIntensityAgeFrom" type="xforms:int"
@@ -115,13 +114,11 @@
 							<xforms:bind nodeset="transmissionIntensityAgeToUnits"
 								relevant="normalize-space( ../annualParasitologicalIncidence) != ''"/>
 							<!-- FIXME type="ctype:recentYear" -->
-							<xforms:bind nodeset="parasitePrevalenceYear" type="xforms:int"
-								relevant="normalize-space( ../parasitePrevalence) != ''"/>
+							<xforms:bind nodeset="parasitePrevalenceYear" type="xforms:int"/>
 							<xforms:bind nodeset="entomologicalInoculationRate" type="xforms:int"/>
 							<!-- FIXME type="ctype:recentYear" -->
 							<xforms:bind nodeset="entomologicalInoculationRateYear"
-								type="xforms:int"
-								relevant="normalize-space( ../entomologicalInoculationRate) != ''"/>
+								type="xforms:int" />
 							<xforms:bind nodeset="seasonalTransmission" type="xforms:boolean"/>
 							<xforms:bind nodeset="transmissionMonths"
 								relevant="contains(../seasonalTransmission, 'true')"/>
