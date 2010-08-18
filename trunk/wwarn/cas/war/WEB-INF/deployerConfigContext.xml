@@ -151,6 +151,8 @@
 		<property name="url" value="${drupal.dburl}"/>
 		<property name="username" value="${drupal.dbuser}"/>
 		<property name="password" value="${drupal.dbpass}"/>
+		<property name="testWhileIdle" value="true"/>
+		<property name="validationQuery" value="SELECT 1"/>
 	</bean>   
 	
 </beans>
