@@ -224,34 +224,47 @@
 						</xforms:bind>
 					</xforms:bind>
 					<xforms:bind nodeset="microscopy">
-						<xforms:bind nodeset="microscopyFilmType" required="true()"/>
 						<xforms:bind nodeset="microscopyStain"/>
 						<xforms:bind nodeset="microscopyStainOther"
 							relevant="contains(../microscopyStain, 'other')"/>
-						<xforms:bind nodeset="asexualParasitemiaCount"/>
-						<xforms:bind nodeset="asexualParasitemiaCountUnit"/>
-						<xforms:bind nodeset="asexualParasitemiaCountUnitOther"
-							relevant="contains(../asexualParasitemiaCountUnit,'other')"/>
-						<xforms:bind nodeset="sexualParasitemiaCount"/>
-						<xforms:bind nodeset="sexualParasitemiaCountUnit"/>
-						<xforms:bind nodeset="sexualParasitemiaCountUnitOther"
-							relevant="contains(../sexualParasitemiaCountUnit,'other')"/>
+            <xforms:bind nodeset="asexualParasitemia" >
+						  <xforms:bind nodeset="asexualParasitemiaNegativeCount"/>
+              <xforms:bind nodeset="asexualParasitemiaPositiveThickUnit"/>
+              <xforms:bind nodeset="asexualParasitemiaPositiveThickUnitOther"
+               relevant="contains(../asexualParasitemiaPositiveThickUnit,'other')"/>
+              <xforms:bind nodeset="asexualParasitemiaPositiveThinUnit"/>
+              <xforms:bind nodeset="asexualParasitemiaPositiveThinUnitOther"
+               relevant="contains(../asexualParasitemiaPositiveThinUnit,'other')"/>
+						</xforms:bind>
+            <xforms:bind nodeset="sexualParasitemia" >
+					    <xforms:bind nodeset="sexualParasitemiaNegativeCount"/>
+              <xforms:bind nodeset="sexualParasitemiaPositiveThickUnit"/>
+              <xforms:bind nodeset="sexualParasitemiaPositiveThickUnitOther"
+               relevant="contains(../sexualParasitemiaPositiveThickUnit,'other')"/>
+              <xforms:bind nodeset="sexualParasitemiaPositiveThinUnit"/>
+              <xforms:bind nodeset="sexualParasitemiaPositiveThinUnitOther"
+               relevant="contains(../sexualParasitemiaPositiveThinUnit,'other')"/>
+						</xforms:bind>
+						<!-- 
 						<xforms:bind nodeset="separateSpeciesCounts"
 							relevant="count(tokenize(../../../pathogens,' '))>1"/>
-
+            -->
 						<xforms:bind nodeset="thickFilmCalculationOfParasitemia"
-							relevant="contains(../microscopyFilmType,'thick')">
+							>
 							<xforms:bind nodeset="thickFilmFormula"/>
 							<xforms:bind nodeset="thickFilmFormulaOther"
 								relevant="contains(../thickFilmFormula,'other')"/>
+								
+						<!-- 
 							<xforms:bind nodeset="WBCSource"/>
 							<xforms:bind nodeset="WBCAssumed"
 								relevant="contains(../WBCSource,'assumed')"/>
 							<xforms:bind nodeset="thickFilmCalculationOfParasitemiaOther"/>
+							 -->
 						</xforms:bind>
 
 						<xforms:bind nodeset="thinFilmCalculationOfParasitemia"
-							relevant="contains(../microscopyFilmType,'thin')">
+							>
 							<xforms:bind nodeset="thinFilmFormula"/>
 							<xforms:bind nodeset="thinFilmFormulaOther"
 								relevant="contains(../thinFilmFormula,'other')"/>
@@ -568,12 +581,12 @@
 		src="/apps/common/constants/haemoglobinRecordingTypes.xml"/>
 	<xforms:instance id="ins-haemoglobinRecordingHbType-items"
 		src="/apps/common/constants/haemoglobinRecordingHbTypes.xml"/>
-	<xforms:instance id="ins-microscopyFilmType-items"
-		src="/apps/common/constants/microscopyFilmTypes.xml"/>
 	<xforms:instance id="ins-microscopyStain-items"
 		src="/apps/common/constants/microscopyStains.xml"/>
-	<xforms:instance id="ins-whiteBloodCellCount-items"
-		src="/apps/common/constants/whiteBloodCellCounts.xml"/>
+  <xforms:instance id="ins-whiteBloodCellCount-items"
+    src="/apps/common/constants/whiteBloodCellCounts.xml"/>
+  <xforms:instance id="ins-redBloodCellCount-items"
+    src="/apps/common/constants/redBloodCellCounts.xml"/>
 	<xforms:instance id="ins-whiteBloodCellCountSource-items"
 		src="/apps/common/constants/whiteBloodCellCountSources.xml"/>
 	<xforms:instance id="ins-HtcSource-items" src="/apps/common/constants/HtcSources.xml"/>

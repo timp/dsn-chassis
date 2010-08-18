@@ -84,29 +84,40 @@
 					</haemoglobinRecording>
 				</followup>
 				<microscopy>
-					<microscopyFilmType />
 					<microscopyStain />
 					<microscopyStainOther />
-					<asexualParasitemiaCount />
-					<asexualParasitemiaCountUnit />
-					<asexualParasitemiaCountUnitOther />
-					<sexualParasitemiaCount />
-					<sexualParasitemiaCountUnit />
-					<sexualParasitemiaCountUnitOther />
-					<separateSpeciesCounts />
+					<asexualParasitemia>
+					 <asexualParasitemiaNegativeCount />
+           <asexualParasitemiaPositiveThickUnit />
+           <asexualParasitemiaPositiveThickUnitOther />
+           <asexualParasitemiaPositiveThinUnit />
+           <asexualParasitemiaPositiveThinUnitOther />
+					</asexualParasitemia>
+					<sexualParasitemia>
+					 <sexualParasitemiaNegativeCount />
+           <sexualParasitemiaPositiveThickUnit />
+           <sexualParasitemiaPositiveThickUnitOther />
+           <sexualParasitemiaPositiveThinUnit />
+           <sexualParasitemiaPositiveThinUnitOther />
+					</sexualParasitemia>
+					<!--   separateSpeciesCounts / -->
 					<thickFilmCalculationOfParasitemia>
 						<thickFilmFormula />
 						<thickFilmFormulaOther />
+            <!-- 
 						<WBCSource />
 						<WBCAssumed />
 						<thickFilmCalculationOfParasitemiaOther />
+             -->
 					</thickFilmCalculationOfParasitemia>
 					<thinFilmCalculationOfParasitemia>
 						<thinFilmFormula />
 						<thinFilmFormulaOther />
+            <!-- 
 						<HtcSource />
 						<HtcAssumed />
 						<thinFilmCalculationOfParasitemiaOther />
+             -->
 					</thinFilmCalculationOfParasitemia>
 					<qualityControl>
 						<internal>
