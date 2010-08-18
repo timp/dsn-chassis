@@ -480,8 +480,9 @@
 					    
 							<!-- For contributor -->
 							<xforms:group ref="instance('ins-control')/contributor-controls">
-								<li class="active-trail"><a href="../contributor/home">Data Home</a></li>
-					    		<li><a href="../contributor/register-study-wizard">Register Study</a></li>
+								<li><a href="../contributor/home">Data Home</a></li>
+								<li class="active-trail"><a href="/study/my-studies">My Studies</a></li>
+					    		<li><a href="/contributor/register-study-wizard">Register Study</a></li>
 							</xforms:group>
 							<!-- For curator -->
 							<xforms:group ref="instance('ins-control')/curator-controls">
@@ -489,7 +490,9 @@
 							</xforms:group>
 							<!-- For administrator -->
 							<xforms:group ref="instance('ins-control')/administrator-controls">
-								<li class="active-trail"><a href="../curator/home">Curator Home</a></li>
+								<xforms:group ref="not(empty(instance('ins-control')/administrator-controls))">
+									<li class="active-trail"><a href="../curator/home">Curator Home</a></li>
+								</xforms:group>
 							</xforms:group>					    
 					    	<li class="current"><a href="http://www.wwarn.org">WWARN Website</a></li>
 					    </ul>
