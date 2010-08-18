@@ -16,6 +16,7 @@
   <page id="root" path-info="/study/"/>
   
   <page path-info="/study/dashboard" view="study-dashboard.xhtml"/>
+  <page path-info="/study/my-studies" view="my-studies.xhtml"/>
   
   <epilogue url="oxf:/config/epilogue.xpl"/>
 
