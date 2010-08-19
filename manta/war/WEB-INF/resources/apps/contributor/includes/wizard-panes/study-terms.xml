@@ -46,10 +46,9 @@
 	</p>
 
 
-	<p class="form-navi-full alignCenter">
+	<p class="form-navi">
 	
 		
-	
 		
 
 		<span id="study-terms-next-button-container" class="alignRight">
@@ -78,17 +77,23 @@
 
 
 		<xforms:group ref="instance('ins-draft-entry')/atom:link[@rel='edit']">
-		
-					<xforms:trigger ref="instance('ins-control')/save-draft-trigger">
+
+					<xforms:trigger
+						ref="instance('ins-control')/save-draft-trigger" class="alignCenter">
 						<xforms:label>Save as draft</xforms:label>
-						<xforms:action ev:event="DOMActivate" if="../draft-entry-is-valid = 'true'">
-							<xforms:send submission="sub-explicit-put-draft-entry"/>
+						<xforms:action ev:event="DOMActivate"
+							if="../draft-entry-is-valid = 'true'">
+							<xforms:send
+								submission="sub-explicit-put-draft-entry" />
 						</xforms:action>
-						<xforms:action ev:event="DOMActivate" if="not(../draft-entry-is-valid = 'true')">
-							<xforms:message>Please complete all required fields.</xforms:message>
+						<xforms:action ev:event="DOMActivate"
+							if="not(../draft-entry-is-valid = 'true')">
+							<xforms:message>
+								Please complete all required fields.
+							</xforms:message>
 						</xforms:action>
-					</xforms:trigger>		
-			<span class="alignRight">
+					</xforms:trigger>
+					<span class="alignRight">
 				<xforms:trigger ref="instance('ins-control')/save-draft-trigger">
 					<xforms:label>Next &gt;</xforms:label>
 					<xforms:action ev:event="DOMActivate" if="../draft-entry-is-valid = 'true'">

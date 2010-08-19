@@ -4,7 +4,7 @@
 	xmlns:xforms="http://www.w3.org/2002/xforms" 
 	xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
 	xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
-	xmlns:ev="http://www.w3.org/2001/xml-events">
+	xmlns:ev="http://www.w3.org/2001/xml-events" class="review">
 
 	<h2>Review</h2>
 
@@ -220,14 +220,9 @@
 		<br/>
 	</p>
 
-	<p class="form-navi-full">
+	<p class="form-navi">
 	
-		<xforms:trigger ref="instance('ins-control')/save-draft-trigger" appearance="minimal" class="alignLeft">
-			<xforms:label>&lt;&lt; Data home</xforms:label>
-			<xforms:action ev:event="DOMActivate">
-				<xforms:send submission="sub-back-home"/>
-			</xforms:action>
-		</xforms:trigger>	
+			
 	
 		<span id="review-confirm-button-container" class="alignRight">
 			<xforms:trigger>
@@ -237,6 +232,16 @@
 						ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show"
 						value="'confirmation'" />
 					<xforms:send submission="sub-post-contribution" />
+				</xforms:action>
+			</xforms:trigger>
+		</span>
+		<span class="skip-links">
+			<xforms:trigger
+				ref="instance('ins-control')/save-draft-trigger"
+				appearance="minimal" class="alignLeft">
+				<xforms:label>&lt;&lt; Data home</xforms:label>
+				<xforms:action ev:event="DOMActivate">
+					<xforms:send submission="sub-back-home" />
 				</xforms:action>
 			</xforms:trigger>
 		</span>

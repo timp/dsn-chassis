@@ -302,7 +302,7 @@ ul {
     font-weight: bold;
 }
 .register-study-wizard .terms-iframe {
-    width: 445px;
+    width: 100%;
 	height:375px;
 	margin:0 0 10px;
 }

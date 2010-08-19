@@ -170,7 +170,7 @@
 
 	</xforms:group>		
 
-	<p class="form-navi-full alignCenter">
+	<p class="form-navi">
 	
 			
 	
@@ -192,13 +192,18 @@
 			</xforms:action>
 		</xforms:trigger>
 
-		<xforms:trigger ref="instance('ins-control')/save-draft-trigger">
+		<xforms:trigger ref="instance('ins-control')/save-draft-trigger"
+			class="alignCenter">
 			<xforms:label>Save as draft</xforms:label>
-			<xforms:action ev:event="DOMActivate" if="../draft-entry-is-valid = 'true'">
-				<xforms:send submission="sub-explicit-put-draft-entry"/>
+			<xforms:action ev:event="DOMActivate"
+				if="../draft-entry-is-valid = 'true'">
+				<xforms:send submission="sub-explicit-put-draft-entry" />
 			</xforms:action>
-			<xforms:action ev:event="DOMActivate" if="not(../draft-entry-is-valid = 'true')">
-				<xforms:message>Please complete all required fields.</xforms:message>
+			<xforms:action ev:event="DOMActivate"
+				if="not(../draft-entry-is-valid = 'true')">
+				<xforms:message>
+					Please complete all required fields.
+				</xforms:message>
 			</xforms:action>
 		</xforms:trigger>
 
