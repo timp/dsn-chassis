@@ -10,10 +10,6 @@ div, li {
 .tab-nav ul {
 	width:565px;
 }
-.loopedSlider .container {
-	position:relative;
-	background:url(../images/bkgd/black-bg.png) repeat 0 0;
-}
 #primary li {
 	margin:0 3px;
 }
