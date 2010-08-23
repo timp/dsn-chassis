@@ -1,11 +1,11 @@
 		</div>
 		</div>
 		</div>
-		<img alt="" class="background" src="images/default.jpg">
+		<div class="background"></div>
 		</div>
 		</div>
 		</div>
-	    <div id="footer">
+	    <div id="ft">
 		    <div id="footer-inner">
 	        	<div>  
 		    		<ul class="menu">
@@ -19,9 +19,6 @@
 		    		<p>Copyright &copy; 2010 WorldWide Antimalarial Resistance Network (WWARN)</p>
 		    	</div>
 			</div>
-	        <div>
-	            <p>Powered by <a href="http://www.ja-sig.org/products/cas/">JA-SIG Central Authentication Service <%=org.jasig.cas.CasVersion.getVersion()%></a></p>
-	        </div>
 	    </div>
 	</body>
 </html>
