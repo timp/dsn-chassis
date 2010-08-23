@@ -10,14 +10,14 @@
 	<head>
 	    <title>WWARN - login</title>
 	    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	    <style type="text/css" media="screen">@import 'css/cas.css'/**/;</style>
-	    <!--[if gte IE 6]><style type="text/css" media="screen">@import 'css/ie_cas.css';</style><![endif]-->
+	    <style type="text/css" media="screen">@import 'css/manta.css';</style>
+	    <style type="text/css" media="screen">@import 'css/wwarn.css';</style>
 	    <script type="text/javascript" src="js/common_rosters.js"></script>
 	    <link rel="icon" href="<%= request.getContextPath() %>/favicon.ico" type="image/x-icon" />
 	</head>
 
 	<body id="cas" onload="init();">
-	    <div id="header">
+	    <div id="header" class="header">
 			<h1 class="logo"><a href="http://www.wwarn.org/">WWARN - Worldwide Antimalarial Resistance Network</a></h1>
 			
 		    <div id="block-menu-primary-links">
@@ -33,14 +33,22 @@
 		    </div>
 		    
 			<div class="secondary-wrap">
-			
+				<div id="current-user-actions block-menu-secondary-links" class="block block-menu region-odd even region-count-1 count-2">
+			        <ul class="menu">
+			            <li class="leaf first LoginRegister" id="logout-link-container"><a href="/logout" title="Logout">Logout</a></li>
+			            <li class="leaf last Contact"><a href="http://TODO/contact" title="Contact" target="_blank">Contact</a></li>
+			        </ul>
+			    </div> 			
 			</div>
+
 	    </div>
 				
         <div id="holdall">
         	<div id="main-inner">
-	    		<div id="content">
-	    			<div id="inner" class="clearfix">
-	    				<div id="sidebar-left" class="sidebar"></div>
-	    					<div class="main-indent no-bg">
-								<div class="main twoCol">
+	    		<div id="content" class="content page">
+	    			<div id="bd" class="clearfix">
+	    				<div class="help">
+	    					<p>TODO</p>
+	    				</div>
+    					<div class="no-bg">
+							<div class="main twoCol">
