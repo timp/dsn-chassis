@@ -512,8 +512,56 @@
 				                <div class="no-bg">
 				                
 				                <!-- Help boxes here? -->
+				                <div class="help">
+				                <!-- Help boxes. Comment out if not needed. -->
+   					
+   					<!-- For contributor -->
+   					<xforms:group ref="instance('ins-control')/contributor-controls">
+				    	<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='summary']">
+				    			<!-- <xi:include href="includes/help-boxes/for-dashboard-tabs/for-contributor/summary.xml"/>  -->
+				    	</xforms:group>
+				    	<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='permissions']">
+				    			<xi:include href="includes/help-boxes/for-dashboard-tabs/for-contributor/permissions.xml"/>
+				    	</xforms:group>
+				    	<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='acknowledgements']">
+				    			<xi:include href="includes/help-boxes/for-dashboard-tabs/for-contributor/acknowledgements.xml"/>
+				    	</xforms:group>
+						<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='files']">
+				    			<xi:include href="includes/help-boxes/for-dashboard-tabs/for-contributor/files.xml"/>
+				    	</xforms:group>
+				    	<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='publications']">
+				    			<xi:include href="includes/help-boxes/for-dashboard-tabs/for-contributor/publications.xml"/>
+				    	</xforms:group>
+						<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='study-info']">
+				    			<!-- <xi:include href="includes/help-boxes/for-dashboard-tabs/for-contributor/study-info.xml"/>  -->
+				    	</xforms:group>
+				    </xforms:group>
+				    
+					<!-- For curator -->
+   					<xforms:group ref="instance('ins-control')/curator-controls">
+				    	<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='summary']">
+				    			<!-- <xi:include href="includes/help-boxes/for-dashboard-tabs/for-curator/summary.xml"/>  -->
+				    	</xforms:group>
+				    	<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='permissions']">
+				    			<!-- <xi:include href="includes/help-boxes/for-dashboard-tabs/for-curator/permissions.xml"/> -->
+				    	</xforms:group>
+				    	<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='acknowledgements']">
+				    			<!-- <xi:include href="includes/help-boxes/for-dashboard-tabs/for-curator/acknowledgements.xml"/> -->
+				    	</xforms:group>
+						<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='files']">
+				    			<!-- <xi:include href="includes/help-boxes/for-dashboard-tabs/for-curator/files.xml"/> -->
+				    	</xforms:group>
+				    	<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='publications']">
+				    			<!-- <xi:include href="includes/help-boxes/for-dashboard-tabs/for-curator/publications.xml"/> -->
+				    	</xforms:group>
+						<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='study-info']">
+				    			<!-- <xi:include href="includes/help-boxes/for-dashboard-tabs/for-curator/study-info.xml"/>  -->
+				    	</xforms:group>
+				    </xforms:group>
+				                </div>
 				                
-				                	<div class="main oneCol">
+				                
+				                	<div class="main twoCol">
 				                	
 		<!-- End of After body header, before content id -->				                
 
@@ -633,51 +681,7 @@
     	
 
 
-   					<!-- Help boxes. Comment out if not needed. -->
    					
-   					<!-- For contributor -->
-   					<xforms:group ref="instance('ins-control')/contributor-controls">
-				    	<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='summary']">
-				    			<!-- <xi:include href="includes/help-boxes/for-dashboard-tabs/for-contributor/summary.xml"/>  -->
-				    	</xforms:group>
-				    	<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='permissions']">
-				    			<xi:include href="includes/help-boxes/for-dashboard-tabs/for-contributor/permissions.xml"/>
-				    	</xforms:group>
-				    	<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='acknowledgements']">
-				    			<xi:include href="includes/help-boxes/for-dashboard-tabs/for-contributor/acknowledgements.xml"/>
-				    	</xforms:group>
-						<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='files']">
-				    			<xi:include href="includes/help-boxes/for-dashboard-tabs/for-contributor/files.xml"/>
-				    	</xforms:group>
-				    	<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='publications']">
-				    			<xi:include href="includes/help-boxes/for-dashboard-tabs/for-contributor/publications.xml"/>
-				    	</xforms:group>
-						<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='study-info']">
-				    			<!-- <xi:include href="includes/help-boxes/for-dashboard-tabs/for-contributor/study-info.xml"/>  -->
-				    	</xforms:group>
-				    </xforms:group>
-				    
-					<!-- For curator -->
-   					<xforms:group ref="instance('ins-control')/curator-controls">
-				    	<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='summary']">
-				    			<!-- <xi:include href="includes/help-boxes/for-dashboard-tabs/for-curator/summary.xml"/>  -->
-				    	</xforms:group>
-				    	<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='permissions']">
-				    			<!-- <xi:include href="includes/help-boxes/for-dashboard-tabs/for-curator/permissions.xml"/> -->
-				    	</xforms:group>
-				    	<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='acknowledgements']">
-				    			<!-- <xi:include href="includes/help-boxes/for-dashboard-tabs/for-curator/acknowledgements.xml"/> -->
-				    	</xforms:group>
-						<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='files']">
-				    			<!-- <xi:include href="includes/help-boxes/for-dashboard-tabs/for-curator/files.xml"/> -->
-				    	</xforms:group>
-				    	<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='publications']">
-				    			<!-- <xi:include href="includes/help-boxes/for-dashboard-tabs/for-curator/publications.xml"/> -->
-				    	</xforms:group>
-						<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='study-info']">
-				    			<!-- <xi:include href="includes/help-boxes/for-dashboard-tabs/for-curator/study-info.xml"/>  -->
-				    	</xforms:group>
-				    </xforms:group>
 
 
 					<!-- Tab panels -->
