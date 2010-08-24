@@ -2889,25 +2889,19 @@
 
 					<xforms:group ref="samples">
 						<h3>Sample</h3>
-						<table class="repeat-table">
-							<xforms:repeat nodeset="sample" id="sample-rep">
+            <table class="repeat-table">
+              <xforms:repeat nodeset="sample" id="sample-rep">
 								<tr>
-									<td class="action-td">
-										<xforms:trigger appearance="minimal">
-											<xforms:label>
-												<img src="/apps/common/theme/remove.gif" alt="remove" />
-											</xforms:label>
-											<xforms:delete ev:event="DOMActivate" context="."
-												nodeset="." at="index('sample-rep')" />
-										</xforms:trigger>
-									</td>
-									<td>
-										<xforms:input ref="numberPlanned">
-											<xforms:label class="fixed-width">Number
-												planned</xforms:label>
-											<xforms:hint>Total number of samples planned</xforms:hint>
-										</xforms:input>
-										<br />
+                  <td class="action-td">
+                    <xforms:trigger appearance="minimal">
+                      <xforms:label>
+                        <img src="/apps/common/theme/remove.gif" alt="remove" />
+                      </xforms:label>
+                      <xforms:delete ev:event="DOMActivate" context="."
+                        nodeset="." at="index('sample-rep')" />
+                    </xforms:trigger>
+                  </td>
+                  <td>
 										<xforms:input ref="anticoagulent">
 											<xforms:label class="fixed-width">Anticoagulent
 										</xforms:label>
@@ -2918,59 +2912,97 @@
 											</xforms:label>
 											<xforms:hint>eg. &lt; 15 minutes</xforms:hint>
 										</xforms:input>
-										<xforms:group ref="storage">
+
+										<xforms:group ref="storages">
 											<h4>Temperature and time to storage</h4>
-											<xforms:input ref="storageTemperature">
+											
+            <table class="repeat-table">
+              <xforms:repeat nodeset="storage" id="storage-rep">
+              <tr>
+                  <td class="action-td">
+                    <xforms:trigger appearance="minimal">
+                      <xforms:label>
+                        <img src="/apps/common/theme/remove.gif" alt="remove" />
+                      </xforms:label>
+                      <xforms:delete ev:event="DOMActivate" context="."
+                        nodeset="." at="index('storage-rep')" />
+                    </xforms:trigger>
+                  </td>
+                  <td>
+											<xforms:input ref="storageTemperature" class="fourWide">
 												<xforms:label>Temperature</xforms:label>
 												<xforms:hint>Eg room temperature</xforms:hint>
 											</xforms:input>
-											<xforms:input ref="storageDuration">
-												<xforms:label>Duration</xforms:label>
-											</xforms:input>
-											<xforms:select1 appearance="minimal"
-												ref="storageDurationUnit">
-												<xforms:label class="invisible">Duration unit
-												</xforms:label>
-												<xforms:item>
-													<xforms:label>please select</xforms:label>
-													<xforms:value />
-												</xforms:item>
-												<xforms:itemset model="mod-study-info"
-													nodeset="instance('ins-storageDurationUnit-items')/storageDurationUnit">
-													<xforms:label ref="label" />
-													<xforms:value ref="value" />
-												</xforms:itemset>
-												<xforms:alert>
-													<xforms:output
-														value="concat('Enter a value for the ', name(), ' field')" />
-												</xforms:alert>
-											</xforms:select1>
-
-
+											<br />
+											<div>
+												<xforms:input ref="storageDuration" class="fourWide">
+													<xforms:label>Duration</xforms:label>
+												</xforms:input>
+												<xforms:select1 appearance="minimal"
+													ref="storageDurationUnit">
+													<xforms:label class="invisible">Duration unit
+													</xforms:label>
+													<xforms:item>
+														<xforms:label>please select</xforms:label>
+														<xforms:value />
+													</xforms:item>
+													<xforms:itemset model="mod-study-info"
+														nodeset="instance('ins-storageDurationUnit-items')/storageDurationUnit">
+														<xforms:label ref="label" />
+														<xforms:value ref="value" />
+													</xforms:itemset>
+													<xforms:alert>
+														<xforms:output
+															value="concat('Enter a value for the ', name(), ' field')" />
+													</xforms:alert>
+												</xforms:select1>
+											</div>
+											</td></tr></xforms:repeat>
+              <tr>
+                <td class="action-td">
+                  <xforms:trigger appearance="minimal">
+                    <xforms:label>
+                      <img src="/apps/common/theme/add.gif" alt="add" />
+                    </xforms:label>
+                    <xforms:insert ev:event="DOMActivate" context="."
+                      nodeset="storage" at="count(../storage)" position="after"
+                      origin="instance('ins-pharmacology-storage-template')" />
+                  </xforms:trigger>
+                </td>
+                <td class="add-td">
+                  <xforms:trigger appearance="minimal">
+                    <xforms:label>Add a storage condition</xforms:label>
+                    <xforms:insert ev:event="DOMActivate" context="."
+                      nodeset="sample" at="count(../sample)" position="after"
+                      origin="instance('ins-pharmacology-storage-template')" />
+                  </xforms:trigger>
+                </td>
+              </tr>
+											</table>
 										</xforms:group>
 									</td>
 								</tr>
 							</xforms:repeat>
-							<tr>
-								<td class="action-td">
-									<xforms:trigger appearance="minimal">
-										<xforms:label>
-											<img src="/apps/common/theme/add.gif" alt="add" />
-										</xforms:label>
-										<xforms:insert ev:event="DOMActivate" context="."
-											nodeset="sample" at="count(../sample)" position="after"
-											origin="instance('ins-invitro-sample-template')" />
-									</xforms:trigger>
-								</td>
-								<td class="add-td">
-									<xforms:trigger appearance="minimal">
-										<xforms:label>Add a sample</xforms:label>
-										<xforms:insert ev:event="DOMActivate" context="."
-											nodeset="sample" at="count(../sample)" position="after"
-											origin="instance('ins-pharmacology-sample-template')" />
-									</xforms:trigger>
-								</td>
-							</tr>
+              <tr>
+                <td class="action-td">
+                  <xforms:trigger appearance="minimal">
+                    <xforms:label>
+                      <img src="/apps/common/theme/add.gif" alt="add" />
+                    </xforms:label>
+                    <xforms:insert ev:event="DOMActivate" context="."
+                      nodeset="sample" at="count(../sample)" position="after"
+                      origin="instance('ins-pharmacology-sample-template')" />
+                  </xforms:trigger>
+                </td>
+                <td class="add-td">
+                  <xforms:trigger appearance="minimal">
+                    <xforms:label>Add a sample</xforms:label>
+                    <xforms:insert ev:event="DOMActivate" context="."
+                      nodeset="sample" at="count(../sample)" position="after"
+                      origin="instance('ins-pharmacology-sample-template')" />
+                  </xforms:trigger>
+                </td>
+              </tr>
 						</table>
 					</xforms:group>
 

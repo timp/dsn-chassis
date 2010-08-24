@@ -519,11 +519,13 @@
 							<xforms:bind nodeset="numberPlanned"/>
 							<xforms:bind nodeset="anticoagulent"/>
 							<xforms:bind nodeset="centrifugeTime"/>
-							<xforms:bind nodeset="storage">
-								<xforms:bind nodeset="storageTemperature"/>
-								<xforms:bind nodeset="storageDuration"/>
-								<xforms:bind nodeset="storageDurationUnit"/>
-							</xforms:bind>
+              <xforms:bind nodeset="storages">
+                <xforms:bind nodeset="storage">
+								  <xforms:bind nodeset="storageTemperature"/>
+							  	<xforms:bind nodeset="storageDuration"/>
+						  		<xforms:bind nodeset="storageDurationUnit"/>
+                </xforms:bind>
+              </xforms:bind>
 						</xforms:bind>
 					</xforms:bind>
 					<xforms:bind nodeset="analytes">
@@ -761,21 +763,30 @@
 	<xforms:instance id="ins-antibiotic-items"
 		src="/apps/common/constants/antibiotics.xml"/>
 	
-	<xforms:instance id="ins-pharmacology-sample-template">
-		<sample xmlns="">
-			<numberPlanned/>
-			<volume/>
-			<anticoagulent/>
-			<centrifugeTime/>
-			<matrix/>
-			<storage>
-				<storageTemperature/>
-				<storageDuration/>
-				<storageDurationUnit/>
-			</storage>
-			<preparationReference/>
-		</sample>
-	</xforms:instance>
+  <xforms:instance id="ins-pharmacology-sample-template">
+    <sample xmlns="">
+      <anticoagulent/>
+      <centrifugeTime/>
+      <matrix/>
+      <storages>
+        <storage>
+          <storageTemperature/>
+          <storageDuration/>
+          <storageDurationUnit/>
+        </storage>
+      </storages>
+    </sample>
+  </xforms:instance>
+
+  <xforms:instance id="ins-pharmacology-storage-template">
+    <storage xmlns="">
+      <storageTemperature/>
+      <storageDuration/>
+      <storageDurationUnit/>
+    </storage>
+  </xforms:instance>
+
+	
 	<xforms:instance id="ins-analyte">
 		<analyte xmlns="">
 			<drugMeasured/>
