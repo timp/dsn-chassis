@@ -3068,11 +3068,12 @@
 
 									<td class="form-td">
 										<xforms:select ref="sampleMatrixType"
-											appearance="full">
-											<xforms:label />
+											appearance="full" class="scrollableCheckboxes">
+											<xforms:label class="invisible"/>
 											<xforms:itemset model="mod-study-info"
 												nodeset="instance('ins-sampleMatrixType-items')/sampleMatrixType">
-												<xforms:label ref="label" />
+												<xforms:label ref="label">
+												</xforms:label>
 												<xforms:value ref="value" />
 											</xforms:itemset>
 											<xforms:alert>Please select a matrix</xforms:alert>
@@ -3118,9 +3119,6 @@
 							</th>
 								<th>
 									Validated
-							</th>
-								<th>
-									Notes
 							</th>
 							</tr>
 							<xforms:repeat nodeset="assayReference" id="assayReference-rep">
@@ -3174,7 +3172,6 @@
 											<xforms:select1 appearance="minimal" ref="uploadedUrl">
 												<xforms:label class="invisible">Uploaded document
 												</xforms:label>
-												<!-- FIXME: Eclipse complains "invalid content" here -->
 												<xforms:hint>An uploaded document</xforms:hint>
 												<xforms:item>
 													<xforms:label>please select</xforms:label>
@@ -3205,9 +3202,12 @@
 											</xforms:itemset>
 										</xforms:select1>
 									</td>
-									<td class="form-td">
-										<xforms:textarea ref="note">
-											<xforms:label />
+							</tr>
+							<tr>
+							    <td></td>
+									<td colspan="3" class="form-td">
+										<xforms:textarea ref="note" >
+											<xforms:label>Notes</xforms:label>
 											<xforms:hint>Any notes on the assay method.</xforms:hint>
 										</xforms:textarea>
 									</td>
