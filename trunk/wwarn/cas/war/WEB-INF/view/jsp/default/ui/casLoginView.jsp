@@ -2,9 +2,9 @@
 <jsp:directive.include file="includes/top.jsp" />
 			<form:form method="post" id="fm1" cssClass="fm-v clearfix" commandName="${commandName}" htmlEscape="true">
 			    <form:errors path="*" cssClass="errors" id="status" element="div" />
+                <h1><spring:message code="screen.welcome.instructions" /></h1>
                 <div class="box" id="login">
                 <!-- <spring:message code="screen.welcome.welcome" /> -->
-                    <h1><spring:message code="screen.welcome.instructions" /></h1>
                     <div class="row">
                         <label for="username" style="display: inline-block; width: 90px"><spring:message code="screen.welcome.label.netid" /></label>
 						<c:if test="${not empty sessionScope.openIdLocalId}">

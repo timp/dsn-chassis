@@ -6,20 +6,18 @@
 		</div>
 		</div>
 		</div>
-	    <div id="ft">
-		    <div id="footer-inner">
-	        	<div>  
-		    		<ul class="menu">
-		    			<li class="first"><a title="" href="http://www.wwarn.org/terms-use">Terms of Use</a></li>
-		    			<li><a title="" href="http://www.wwarn.org/sitemap">Sitemap</a></li>
-		    			<li><a title="" href="http://www.wwarn.org/site-credits">Site Credits</a></li>
-		    			<li class="last"><a title="" href="http://www.wwarn.org/contact">Contact Us</a></li>
-		    		</ul>
-		    	</div>
-		    	<div>
-		    		<p>Copyright &copy; 2010 WorldWide Antimalarial Resistance Network (WWARN)</p>
-		    	</div>
-			</div>
-	    </div>
+		<div id="ft">
+		<div id="footer-inner">
+		<div class="block">
+		<ul class="menu">
+		<li><a target="_blank" href="/contact" title="">Contact Us</a></li>
+		<li><a target="_blank" href="/terms-use" title="">Terms &amp; Conditions</a></li>
+		</ul>
+		</div>
+		<div class="block">
+		<p><a href="/node/61">Copyright &copy; 2010 WorldWide Antimalarial Resistance Network (WWARN)</a></p>
+		</div>
+		</div>
+		</div>
 	</body>
 </html>
