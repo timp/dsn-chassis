@@ -317,6 +317,9 @@ ul {
 .shadow {
     z-index: 1001 !important;   
 }
+.yui-dialog {
+    z-index: 1001 !important;
+}
 
 .yui-panel-container ul {
     margin-left: 2em;
