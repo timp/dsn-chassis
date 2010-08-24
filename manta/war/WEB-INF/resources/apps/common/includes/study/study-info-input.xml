@@ -121,44 +121,59 @@
 							</td>
 							<td class="form-td">
 								<div>
-									<xforms:select1 ref="country">
-										<xforms:label class="fixed-width">Country</xforms:label>
-										<xforms:item>
-											<xforms:label>please select</xforms:label>
-											<xforms:value />
-										</xforms:item>
-										<xforms:itemset nodeset="instance('ins-country-items')/country">
-											<xforms:label ref="label" />
-											<xforms:value ref="value" />
-										</xforms:itemset>
-										<xforms:alert>Selecting a Country initialises the map
-										</xforms:alert>
-										<!--
-											<xxforms:show ev:event="xforms-select" dialog="dia-map"/>
-										-->
-									</xforms:select1>
-								</div>
-								<div>
-									<!-- if the country has regions, use a select1 -->
-									<xforms:group
-										ref=".[country/text() = instance('ins-country-items')/country[exists(regions)]/value/text()]">
-										<xforms:select1 ref="region">
-											<xforms:label class="fixed-width">Region </xforms:label>
-											<xforms:itemset
-												nodeset="instance('ins-country-items')/country[value/text()=xxforms:context('rep-site')/country/text()]//region">
+									<div>
+										<xforms:select1 ref="country">
+											<xforms:label class="fixed-width">Country</xforms:label>
+											<xforms:item>
+												<xforms:label>please select</xforms:label>
+												<xforms:value />
+											</xforms:item>
+											<xforms:itemset nodeset="instance('ins-country-items')/country">
 												<xforms:label ref="label" />
 												<xforms:value ref="value" />
 											</xforms:itemset>
+											<xforms:alert>Selecting a Country initialises the map
+											</xforms:alert>
 											<!--
 												<xxforms:show ev:event="xforms-select" dialog="dia-map"/>
 											-->
 										</xforms:select1>
-									</xforms:group>
-									<!-- if the country has no regions, use an input -->
-									<xforms:group
-										ref=".[empty(country/text()) or country/text() = instance('ins-country-items')/country[empty(regions)]/value/text()]">
-										<xforms:input ref="region">
-											<xforms:label class="fixed-width">Region </xforms:label>
+									</div>
+									<div>
+										<!-- if the country has regions, use a select1 -->
+										<xforms:group
+											ref=".[country/text() = instance('ins-country-items')/country[exists(regions)]/value/text()]">
+											<xforms:select1 ref="region">
+												<xforms:label class="fixed-width">Region </xforms:label>
+												<xforms:itemset
+													nodeset="instance('ins-country-items')/country[value/text()=xxforms:context('rep-site')/country/text()]//region">
+													<xforms:label ref="label" />
+													<xforms:value ref="value" />
+												</xforms:itemset>
+												<!--
+													<xxforms:show ev:event="xforms-select" dialog="dia-map"/>
+												-->
+											</xforms:select1>
+										</xforms:group>
+										<!-- if the country has no regions, use an input -->
+										<xforms:group
+											ref=".[empty(country/text()) or country/text() = instance('ins-country-items')/country[empty(regions)]/value/text()]">
+											<xforms:input ref="region">
+												<xforms:label class="fixed-width">Region </xforms:label>
+												<!--
+													<xxforms:show ev:event="xforms-value-changed"
+													dialog="dia-map"/>
+												-->
+												<xforms:alert>
+													<xforms:output
+														value="concat('Enter a value for the ', name(), ' field')" />
+												</xforms:alert>
+											</xforms:input>
+										</xforms:group>
+									</div>
+									<div>
+										<xforms:input ref="district">
+											<xforms:label class="fixed-width">District </xforms:label>
 											<!--
 												<xxforms:show ev:event="xforms-value-changed"
 												dialog="dia-map"/>
@@ -168,62 +183,49 @@
 													value="concat('Enter a value for the ', name(), ' field')" />
 											</xforms:alert>
 										</xforms:input>
-									</xforms:group>
-								</div>
-								<div>
-									<xforms:input ref="district">
-										<xforms:label class="fixed-width">District </xforms:label>
-										<!--
-											<xxforms:show ev:event="xforms-value-changed"
-											dialog="dia-map"/>
-										-->
-										<xforms:alert>
-											<xforms:output
-												value="concat('Enter a value for the ', name(), ' field')" />
-										</xforms:alert>
-									</xforms:input>
-								</div>
-								<div>
-									<xforms:input ref="locality">
-										<xforms:label class="fixed-width">Locality </xforms:label>
-										<!--
-											<xxforms:show ev:event="xforms-value-changed"
-											dialog="dia-map"/>
-										-->
-										<xforms:alert>
-											<xforms:output
-												value="concat('Enter a value for the ', name(), ' field')" />
-										</xforms:alert>
-									</xforms:input>
-								</div>
-								<div>
-									<xforms:input ref="latitude">
-										<xforms:label class="fixed-width">Latitude</xforms:label>
-										<xforms:alert>
-											<xforms:output
-												value="concat('Enter a coordinate value between -180  and 180 for the ', name(), ' field ')" />
-										</xforms:alert>
-									</xforms:input>
-								</div>
-								<div>
-									<xforms:input ref="longitude">
-										<xforms:label class="fixed-width">Longitude</xforms:label>
-										<xforms:alert>
-											<xforms:output
-												value="concat('Enter a coordinate value between -180 and 180 for the ', name(), ' field ')" />
-										</xforms:alert>
-									</xforms:input>
-								</div>
+									</div>
+									<div>
+										<xforms:input ref="locality">
+											<xforms:label class="fixed-width">Locality </xforms:label>
+											<!--
+												<xxforms:show ev:event="xforms-value-changed"
+												dialog="dia-map"/>
+											-->
+											<xforms:alert>
+												<xforms:output
+													value="concat('Enter a value for the ', name(), ' field')" />
+											</xforms:alert>
+										</xforms:input>
+									</div>
+									<div>
+										<xforms:input ref="latitude">
+											<xforms:label class="fixed-width">Latitude</xforms:label>
+											<xforms:alert>
+												<xforms:output
+													value="concat('Enter a coordinate value between -180  and 180 for the ', name(), ' field ')" />
+											</xforms:alert>
+										</xforms:input>
+									</div>
+									<div>
+										<xforms:input ref="longitude">
+											<xforms:label class="fixed-width">Longitude</xforms:label>
+											<xforms:alert>
+												<xforms:output
+													value="concat('Enter a coordinate value between -180 and 180 for the ', name(), ' field ')" />
+											</xforms:alert>
+										</xforms:input>
+									</div>
 
 
-								<div class="mapPicker">
-									<p>
-										<b>Drag the pointer to populate the Latitude and Longitude
-											fields</b>
-									</p>
-									<fr:map address-ref="lookupAddress" longitude-ref="longitude"
-										latitude-ref="latitude" style="width: 500px; height: 300px">
-									</fr:map>
+									<div class="mapPicker">
+										<p>
+											<b>Drag the pointer to populate the Latitude and Longitude
+												fields</b>
+										</p>
+										<fr:map address-ref="lookupAddress" longitude-ref="longitude"
+											latitude-ref="latitude" style="width: 500px; height: 300px">
+										</fr:map>
+									</div>
 								</div>
 
 								<div>
@@ -236,6 +238,9 @@
 										</xforms:alert>
 									</xforms:input>
 								</div>
+
+
+
 								<div>
 									<xforms:select1 appearance="minimal" ref="testingDelay">
 										<xforms:label class="fixed-width">Sampling/testing delay
