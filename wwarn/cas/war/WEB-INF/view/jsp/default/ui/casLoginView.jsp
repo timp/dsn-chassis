@@ -2,8 +2,8 @@
 <jsp:directive.include file="includes/top.jsp" />
 			<form:form method="post" id="fm1" cssClass="fm-v clearfix" commandName="${commandName}" htmlEscape="true">
 			    <form:errors path="*" cssClass="errors" id="status" element="div" />
-                <h1><spring:message code="screen.welcome.instructions" /></h1>
-                <div class="box" id="login">
+                <h1 class="title"><spring:message code="screen.welcome.instructions" /></h1>
+                <div class="box" id="login" style="margin-top: 30px;">
                 <!-- <spring:message code="screen.welcome.welcome" /> -->
                     <div class="row">
                         <label for="username" style="display: inline-block; width: 90px"><spring:message code="screen.welcome.label.netid" /></label>
@@ -31,11 +31,11 @@
                     <div class="row btn-row">
 						<input type="hidden" name="lt" value="${flowExecutionKey}" />
 						<input type="hidden" name="_eventId" value="submit" />
-                        <input class="btn-submit" style="margin-left: 0" name="submit" accesskey="l" value="<spring:message code="screen.welcome.button.login" />" tabindex="4" type="submit" />
+                        <input class="btn-submit" style="margin-left: 0; float:none;" name="submit" accesskey="l" value="<spring:message code="screen.welcome.button.login" />" tabindex="4" type="submit" />
                     </div>
                 </div>
                
-	            <div id="sidebar" style="clear:both">
+	            <div id="sidebar" style="clear:both; margin-top: 20px;">
 	                <p><spring:message code="screen.welcome.security" /></p>
 	            </div>
 	            
