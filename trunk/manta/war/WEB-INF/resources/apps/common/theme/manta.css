@@ -232,7 +232,6 @@ ul {
     margin: 4px;
     overflow: auto;
     display: block;
-    float: left;
 }
 .scrollableCheckboxes .xforms-deselected {
 /* Ensure checkboxes are aligned, not inline */
