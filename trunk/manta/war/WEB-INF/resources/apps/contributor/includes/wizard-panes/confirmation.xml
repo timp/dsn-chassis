@@ -14,10 +14,7 @@
     </p>
 
 	<p>
-
-		<a href="home">&lt;&lt; Data home</a>
-		
-	
+		<a href="home">&lt;&lt; Finish and return to Data home</a>
 	</p>
     
     <h2 class="study-site-questionnaire-heading">Study Site Questionnaire</h2>
@@ -64,6 +61,13 @@
                  <xforms:label>Save changes</xforms:label>
              </xforms:submit>
          </span>
+         
+         <span class="confirmation-study-info-save-changes-and-finish-button-container">
+             <xforms:submit submission="sub-put-sq-study-info-entry-and-load-home">
+                 <xforms:label>Save changes and return to Data Home</xforms:label>
+             </xforms:submit>
+         </span>
+
      </p>
 	
 	<xi:include href="../../../common/includes/study/study-info-input.xml" />
@@ -72,6 +76,12 @@
          <span class="confirmation-study-info-save-changes-button-container">
              <xforms:submit submission="sub-put-sq-study-info-entry">
                  <xforms:label>Save changes</xforms:label>
+             </xforms:submit>
+         </span>
+         
+         <span class="confirmation-study-info-save-changes-and-finish-button-container">
+             <xforms:submit submission="sub-put-sq-study-info-entry-and-load-home">
+                 <xforms:label>Save changes and return to Data Home</xforms:label>
              </xforms:submit>
          </span>
      </p>
