@@ -25,8 +25,6 @@
   
   <page path-info="/contributor/FAQs" view="includes/FAQs.xhtml"/>
   
-  <page path-info="/contributor/file-details" view="file-details.xhtml"/>
-  
   <epilogue url="oxf:/config/epilogue.xpl"/>
 
 </config>
