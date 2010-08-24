@@ -179,7 +179,19 @@ ul {
 .box {
     clear: both;
 }
-.study-info h1, h2, h3, h4, h5 {
+.study-info h1{
+   text-transform: none;
+}
+.study-info h2 {
+   text-transform: none;
+}
+.study-info h3{
+   text-transform: none;
+}
+.study-info h4 {
+   text-transform: none;
+}
+.study-info h5 {
    text-transform: none;
 }
 .study-info h3, h4, h5 {
