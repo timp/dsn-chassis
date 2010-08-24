@@ -53,6 +53,7 @@
                 	<href-to-copy-study-info-from/>
 					<copy-answers-control/>
         			<copy-answers-trigger/>
+        			<study-is-published-is-empty/>
                 </control>
             </xforms:instance>    
             
@@ -61,7 +62,7 @@
 				ref="instance('ins-control')/wizard-pane-being-shown" 
 				value="'study-terms'"
 				if="empty(xxforms:get-request-parameter('draft'))"/>
-            
+			
 			<xforms:action ev:event="xxforms-invalid" ev:observer="ins-draft-entry">
 				<xforms:setvalue ev:event="xforms-value-changed" ref="instance('ins-control')/draft-entry-is-valid">false</xforms:setvalue>
 			</xforms:action>
@@ -75,6 +76,10 @@
 
         	<xforms:bind nodeset="instance('ins-control')/copy-answers-control" relevant="instance('ins-study-feed')[count(atom:entry)>1]"/>
         	<xforms:bind nodeset="instance('ins-control')/copy-answers-trigger" readonly="../href-to-copy-study-info-from = ''"/>
+
+			<!-- Used to show an Unspecified message for read-only instances of the study-is-published field. -->
+			<xforms:bind nodeset="instance('ins-control')/study-is-published-is-empty" relevant="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:content/study/study-is-published=''" />
+
 
 			<!-- These binding would cause the buttons to disable when the draft-entry is invalid, but it causes a problem: The user has to change focus from a form element before the form is re-validated, causing the button to appear readonly even when the form is valid. -->
 			<!-- Another workaround (besides the current use of messages) might be to use xxforms:incremental, but that creates much more traffic, i.e. on every keypress. -->

@@ -38,7 +38,7 @@
         	<!-- non-persistent model for application state -->
         	<xforms:instance id="ins-control">
         		<control xmlns="">
-        			<!-- Defaults to summary if there is no tab request-paramater, determined in the setvalue logic below. -->
+        			<!-- dashboard-tab-to-show defaults to summary if there is no tab request-paramater, determined in the setvalue logic below. -->
         			<dashboard-tab-to-show />
         			<permissions-entry-is-valid/>
         			<save-permissions-trigger/>
@@ -53,11 +53,11 @@
         			<contributor-controls/>
         			<curator-controls/>
         			<administrator-controls/>
+        			<study-is-published-is-empty/>
         		</control>
         	</xforms:instance>
         	
         	<xforms:setvalue ev:event="xforms-model-construct-done" ref="instance('ins-control')/dashboard-tab-to-show" value="if(not(empty(xxforms:get-request-parameter('tab')))) then xxforms:get-request-parameter('tab') else 'summary'" />
-
 
 			<xforms:action ev:event="xxforms-invalid" ev:observer="ins-permissions-entry">
 				<xforms:setvalue ev:event="xforms-value-changed" ref="instance('ins-control')/permissions-entry-is-valid">false</xforms:setvalue>
@@ -99,6 +99,10 @@
 			<xforms:bind nodeset="instance('ins-control')/contributor-controls" relevant="xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CONTRIBUTOR' and not(xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CURATOR')"/>
 			<xforms:bind nodeset="instance('ins-control')/curator-controls" relevant="xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CURATOR'"/>
 			<xforms:bind nodeset="instance('ins-control')/administrator-controls" relevant="xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_ADMINISTRATOR'"/>
+
+			<!-- Used to show an Unspecified message for read-only instances of the study-is-published field. -->
+			<xforms:bind nodeset="instance('ins-control')/study-is-published-is-empty" relevant="instance('ins-study-entry')/atom:content/study/study-is-published=''" />
+
 
 			<xforms:send 
 				ev:event="xforms-model-construct-done" 
@@ -744,7 +748,7 @@
 
 		<!-- End of After content id, before ft id -->
     	
-    	<!-- <fr:xforms-inspector xmlns:fr="http://orbeon.org/oxf/xml/form-runner"/>  -->
+    	<!-- <fr:xforms-inspector xmlns:fr="http://orbeon.org/oxf/xml/form-runner"/> -->
     	
     </body>
 </html>
