@@ -196,7 +196,7 @@
 					<xforms:output ref="study-is-published">
 						<xforms:label>Is the study published?</xforms:label>
 					</xforms:output>
-					<xforms:group ref="instance('ins-control')/study-is-published-unspecified">
+					<xforms:group ref="instance('ins-control')/study-is-published-is-empty">
 						<span>Unspecified</span>
 					</xforms:group>
 				</p>
