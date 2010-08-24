@@ -20,7 +20,8 @@
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     xmlns:version="java:org.orbeon.oxf.common.Version"
-    xmlns:xxforms="http://orbeon.org/oxf/xml/xforms">
+    xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
+    xmlns:f="http://orbeon.org/oxf/xml/formatting">
 
     <!-- Orbeon Forms version -->
     <xsl:variable name="orbeon-forms-version" select="version:getVersion()" as="xs:string"/>
@@ -54,7 +55,6 @@
                 <xhtml:link rel="stylesheet" href="/config/theme/orbeon.css" type="text/css" media="all"/>
                 <xhtml:link rel="stylesheet" href="/apps/common/theme/manta.css" type="text/css" media="all"/>
                 <xhtml:link rel="stylesheet" href="/apps/common/theme/wwarn.css" type="text/css" media="all"/>
-				<xhtml:script type="text/javascript" src="/apps/common/theme/js/jquery-1.4.2.min.js"></xhtml:script>
 			    
                 <!-- Orbeon Forms version -->
                 <xhtml:meta name="generator" content="Orbeon Forms {$orbeon-forms-version}"/>
@@ -78,12 +78,12 @@
                		<xhtml:div id="footer-inner">
 					    <xhtml:div class="block">
 					        <xhtml:ul class="menu">
-					            <xhtml:li><xhtml:a title="" href="http://wwarn.kmp.co.uk/contact" target="_blank">Contact Us</xhtml:a></xhtml:li>
-					            <xhtml:li><xhtml:a title="" href="http://wwarn.kmp.co.uk/terms-use" target="_blank">Terms &#38; Conditions</xhtml:a></xhtml:li>
+					            <xhtml:li><xhtml:a title="" href="/contact" target="_blank" f:url-norewrite="true">Contact Us</xhtml:a></xhtml:li>
+					            <xhtml:li><xhtml:a title="" href="/terms-use" target="_blank" f:url-norewrite="true">Terms &#38; Conditions</xhtml:a></xhtml:li>
 					        </xhtml:ul>
 					    </xhtml:div>
 					    <xhtml:div class="block">
-					        <xhtml:p><xhtml:a href="http://wwarn.kmp.co.uk/node/61">Copyright &#169; 2010 WorldWide Antimalarial Resistance Network (WWARN)</xhtml:a></xhtml:p>
+					        <xhtml:p><xhtml:a href="/node/61" target="_blank" f:url-norewrite="true">Copyright &#169; 2010 WorldWide Antimalarial Resistance Network (WWARN)</xhtml:a></xhtml:p>
 					    </xhtml:div>
 					</xhtml:div>
 
