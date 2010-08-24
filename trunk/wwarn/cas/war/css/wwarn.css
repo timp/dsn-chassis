@@ -349,7 +349,7 @@ h1.logo a, h2.logo a {
 	margin:0;
 	list-style:none;
 	font-family:Arial, Helvetica, sans-serif;
-	padding:0 20px;
+	padding:0 17px;
 }
 #block-menu-primary-links li:first-child {
 }
@@ -357,7 +357,7 @@ h1.logo a, h2.logo a {
 	font-size:17px;
 	float:left;
 	display:inline;
-	margin:0 4px;
+	margin:0 3px;
 }
 #block-menu-primary-links li a {
 	display:block;

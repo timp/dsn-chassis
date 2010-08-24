@@ -1,7 +1,8 @@
 		</div>
 		</div>
 		</div>
-		<div class="background"></div>
+		<!--<div class="background"></div>-->
+		<img class="background" alt="" src="css/images/research.jpg">
 		</div>
 		</div>
 		</div>
