@@ -199,15 +199,26 @@
 				<additionalGenotypicInformation>
 					<sequencedLoci>
 						<wholeGenomesSequenced />
+            <resistanceLociSequenced />
 						<resistanceLoci>
 							<resistanceLocus>
-								<locusTypeOpen>
-									<locusType />
-									<locusTypeOther />
-								</locusTypeOpen>
-								<locusName />
+                <locusTypeOpen>
+                  <locusType />
+                  <locusTypeOther />
+                </locusTypeOpen>
+                <locusName />
 							</resistanceLocus>
 						</resistanceLoci>
+            <otherLociGenotyped />
+						<otherLoci>
+						  <otherLocus>
+                <locusTypeOpen>
+                  <locusType />
+                  <locusTypeOther />
+                </locusTypeOpen>
+                <locusName />
+						  </otherLocus>
+						</otherLoci>
 					</sequencedLoci>
 					<infectionComplexityEstimated />
 					<infectionComplexityEstimationlociOpen>
