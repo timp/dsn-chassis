@@ -266,11 +266,13 @@
 						<numberPlanned />
 						<anticoagulent />
 						<centrifugeTime />
-						<storage>
-							<storageTemperature />
-							<storageDuration />
-							<storageDurationUnit />
-						</storage>
+            <storages>
+              <storage>
+							  <storageTemperature />
+							  <storageDuration />
+							  <storageDurationUnit />
+              </storage>
+            </storages>
 					</sample>
 				</samples>
 				<analytes>
