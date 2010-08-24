@@ -405,17 +405,30 @@
 					<xforms:bind nodeset="additionalGenotypicInformation">
 						<xforms:bind nodeset="sequencedLoci">
 							<xforms:bind nodeset="wholeGenomesSequenced"/>
-							<xforms:bind nodeset="resistanceLoci"
-								relevant="contains(../wholeGenomesSequenced, 'false')">
-								<xforms:bind nodeset="resistanceLocus">
-									<xforms:bind nodeset="locusTypeOpen">
-										<xforms:bind nodeset="locusType"/>
-										<xforms:bind nodeset="locusTypeOther"
-											relevant="contains(../locusType,'other')"/>
-									</xforms:bind>
-									<xforms:bind nodeset="locusName"/>
-								</xforms:bind>
-							</xforms:bind>
+              <xforms:bind nodeset="resistanceLociSequenced" />
+              <xforms:bind nodeset="resistanceLoci" relevant="contains(../resistanceLociSequenced, 'true')">
+                <xforms:bind nodeset="resistanceLocus">
+                <!-- 
+                  <xforms:bind nodeset="locusTypeOpen">
+                    <xforms:bind nodeset="locusType"/>
+                    <xforms:bind nodeset="locusTypeOther"
+                      relevant="contains(../locusType,'other')"/>
+                  </xforms:bind>
+                   -->                  
+                  <xforms:bind nodeset="locusName"/>
+                </xforms:bind>
+              </xforms:bind>
+              <xforms:bind nodeset="otherLociGenotyped" />
+              <xforms:bind nodeset="otherLoci" relevant="contains(../otherLociGenotyped, 'true')">
+                <xforms:bind nodeset="otherLocus">
+                  <xforms:bind nodeset="locusTypeOpen">
+                    <xforms:bind nodeset="locusType"/>
+                    <xforms:bind nodeset="locusTypeOther"
+                      relevant="contains(../locusType,'other')"/>
+                  </xforms:bind>
+                  <xforms:bind nodeset="locusName"/>
+                </xforms:bind>
+              </xforms:bind>
 						</xforms:bind>
 						<xforms:bind nodeset="infectionComplexityEstimated"/>
 						<xforms:bind nodeset="infectionComplexityEstimationlociOpen"

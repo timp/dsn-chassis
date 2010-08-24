@@ -2102,13 +2102,12 @@
 								<xforms:value ref="value" />
 							</xforms:itemset>
 						</xforms:select1>
+						<br />
 						<xforms:select ref="mixedResistanceAllelesDesignation"
-							appearance="full">
-							<xforms:label>
-								<br />
+							appearance="full" class="scrollableCheckboxes">
+							<xforms:label class="scrollableCheckboxesLabel">
 								How were mixed genotype resistance loci designated in the data
 								set?
-								<br />
 							</xforms:label>
 							<xforms:itemset model="mod-study-info"
 								nodeset="instance('ins-mixedResistanceAllelesDesignation-items')/mixedResistanceAllelesDesignation">
@@ -2118,85 +2117,164 @@
 						</xforms:select>
 					</xforms:group>
 
+
 					<xforms:group ref="additionalGenotypicInformation">
-						<h3>Additional genetic information</h3>
+            <h3>Additional genetic information</h3>
 						<xforms:group ref="sequencedLoci">
-							<xforms:select1 ref="wholeGenomesSequenced"
-								appearance="minimal">
-								<xforms:label>Whole genome(s) sequenced?</xforms:label>
-								<xforms:item>
-									<xforms:label>please select</xforms:label>
-									<xforms:value />
-								</xforms:item>
-								<xforms:itemset model="mod-study-info"
-									nodeset="instance('ins-boolean-items')/boolean">
-									<xforms:label ref="label" />
-									<xforms:value ref="value" />
-								</xforms:itemset>
-								<xforms:alert>Please select a value</xforms:alert>
-							</xforms:select1>
-							<xforms:group ref="resistanceLoci">
-								<h4>Resistance loci</h4>
-								<table class="repeat-table">
-									<xforms:repeat nodeset="resistanceLocus" id="resistanceLocus-rep">
-										<tr>
-											<td class="action-td">
-												<xforms:trigger appearance="minimal">
-													<xforms:label>
-														<img src="/apps/common/theme/remove.gif" alt="remove" />
-													</xforms:label>
-													<xforms:delete ev:event="DOMActivate"
-														context="." nodeset="." at="index('resistanceLocus-rep')" />
-												</xforms:trigger>
-											</td>
-											<td>
-												<xforms:group ref="locusTypeOpen">
-													<xforms:select1 ref="locusType" appearance="minimal">
-														<xforms:label>Other locus genotyped</xforms:label>
-														<xforms:itemset model="mod-study-info"
-															nodeset="instance('ins-locusType-items')/locusType">
-															<xforms:label ref="label" />
-															<xforms:value ref="value" />
-														</xforms:itemset>
-														<xforms:item>
-															<xforms:label>other</xforms:label>
-															<xforms:value>other</xforms:value>
-														</xforms:item>
-													</xforms:select1>
-													<xforms:input ref="locusTypeOther">
-														<xforms:label />
-													</xforms:input>
-												</xforms:group>
-												<br />
-												<xforms:input ref="locusName">
-													<xforms:label>Locus name</xforms:label>
-												</xforms:input>
-											</td>
-										</tr>
-									</xforms:repeat>
-									<tr>
-										<td class="action-td">
-											<xforms:trigger appearance="minimal">
-												<xforms:label>
-													<img src="/apps/common/theme/add.gif" alt="add" />
-												</xforms:label>
-												<xforms:insert ev:event="DOMActivate" context="."
-													nodeset="resistanceLocus" at="count(../resistanceLocus)"
-													position="after" origin="instance('ins-resistanceLocus')" />
-											</xforms:trigger>
-										</td>
-										<td class="add-td">
-											<xforms:trigger appearance="minimal">
-												<xforms:label>Add another resistance locus </xforms:label>
-												<xforms:insert ev:event="DOMActivate" context="."
-													nodeset="resistanceLocus" at="count(../resistanceLocus)"
-													position="after" origin="instance('ins-resistanceLocus')" />
-											</xforms:trigger>
-										</td>
-									</tr>
-								</table>
-							</xforms:group>
+						
+              <xforms:select1 ref="wholeGenomesSequenced"
+                appearance="minimal">
+                <xforms:label>Whole genome(s) sequenced?</xforms:label>
+                <xforms:item>
+                  <xforms:label>please select</xforms:label>
+                  <xforms:value />
+                </xforms:item>
+                <xforms:itemset model="mod-study-info"
+                  nodeset="instance('ins-boolean-items')/boolean">
+                  <xforms:label ref="label" />
+                  <xforms:value ref="value" />
+                </xforms:itemset>
+                <xforms:alert>Please select a value</xforms:alert>
+              </xforms:select1>
+              <br />
+              <xforms:select1 ref="resistanceLociSequenced"
+                appearance="minimal">
+                <xforms:label>Resistance loci sequenced?</xforms:label>
+                <xforms:item>
+                  <xforms:label>please select</xforms:label>
+                  <xforms:value />
+                </xforms:item>
+                <xforms:itemset model="mod-study-info"
+                  nodeset="instance('ins-boolean-items')/boolean">
+                  <xforms:label ref="label" />
+                  <xforms:value ref="value" />
+                </xforms:itemset>
+                <xforms:alert>Please select a value</xforms:alert>
+              </xforms:select1>
+              <br />
+              <xforms:group ref="resistanceLoci">
+                <table class="repeat-table">
+                  <xforms:repeat nodeset="resistanceLocus" id="resistanceLocus-rep">
+                    <tr>
+                      <td class="action-td">
+                        <xforms:trigger appearance="minimal">
+                          <xforms:label>
+                            <img src="/apps/common/theme/remove.gif" alt="remove" />
+                          </xforms:label>
+                          <xforms:delete ev:event="DOMActivate"
+                            context="." nodeset="." at="index('resistanceLocus-rep')" />
+                        </xforms:trigger>
+                      </td>
+                      <td>
+                        <xforms:input ref="locusName">
+                          <xforms:label>Locus name</xforms:label>
+                        </xforms:input>
+                      </td>
+                    </tr>
+                  </xforms:repeat>
+                  <tr>
+                    <td class="action-td">
+                      <xforms:trigger appearance="minimal">
+                        <xforms:label>
+                          <img src="/apps/common/theme/add.gif" alt="add" />
+                        </xforms:label>
+                        <xforms:insert ev:event="DOMActivate" context="."
+                          nodeset="resistanceLocus" at="count(../resistanceLocus)"
+                          position="after" origin="instance('ins-resistanceLocus')" />
+                      </xforms:trigger>
+                    </td>
+                    <td class="add-td">
+                      <xforms:trigger appearance="minimal">
+                        <xforms:label>Add another sequenced resistance locus </xforms:label>
+                        <xforms:insert ev:event="DOMActivate" context="."
+                          nodeset="resistanceLocus" at="count(../resistanceLocus)"
+                          position="after" origin="instance('ins-resistanceLocus')" />
+                      </xforms:trigger>
+                    </td>
+                  </tr>
+                </table>
+              </xforms:group>
+              
+              <xforms:select1 ref="otherLociGenotyped"
+                appearance="minimal">
+                <xforms:label>Other loci genotyped?</xforms:label>
+                <xforms:item>
+                  <xforms:label>please select</xforms:label>
+                  <xforms:value />
+                </xforms:item>
+                <xforms:itemset model="mod-study-info"
+                  nodeset="instance('ins-boolean-items')/boolean">
+                  <xforms:label ref="label" />
+                  <xforms:value ref="value" />
+                </xforms:itemset>
+                <xforms:alert>Please select a value</xforms:alert>
+              </xforms:select1>
+              
+              <xforms:group ref="otherLoci">
+                <table class="repeat-table">
+                  <xforms:repeat nodeset="otherLocus" id="otherLocus-rep">
+                    <tr>
+                      <td class="action-td">
+                        <xforms:trigger appearance="minimal">
+                          <xforms:label>
+                            <img src="/apps/common/theme/remove.gif" alt="remove" />
+                          </xforms:label>
+                          <xforms:delete ev:event="DOMActivate"
+                            context="." nodeset="." at="index('otherLocus-rep')" />
+                        </xforms:trigger>
+                      </td>
+                      <td>
+                        <xforms:group ref="locusTypeOpen">
+                          <xforms:select1 ref="locusType" appearance="minimal">
+                            <xforms:label>Other locus type</xforms:label>
+                            <xforms:itemset model="mod-study-info"
+                              nodeset="instance('ins-locusType-items')/locusType">
+                              <xforms:label ref="label" />
+                              <xforms:value ref="value" />
+                            </xforms:itemset>
+                            <xforms:item>
+                              <xforms:label>other</xforms:label>
+                              <xforms:value>other</xforms:value>
+                            </xforms:item>
+                          </xforms:select1>
+                          <xforms:input ref="locusTypeOther">
+                            <xforms:label />
+                          </xforms:input>
+                        </xforms:group>
+                        <br />
+                        <xforms:input ref="locusName">
+                          <xforms:label>Locus name</xforms:label>
+                        </xforms:input>
+                      </td>
+                    </tr>
+                  </xforms:repeat>
+                  <tr>
+                    <td class="action-td">
+                      <xforms:trigger appearance="minimal">
+                        <xforms:label>
+                          <img src="/apps/common/theme/add.gif" alt="add" />
+                        </xforms:label>
+                        <xforms:insert ev:event="DOMActivate" context="."
+                          nodeset="otherLocus" at="count(../otherLocus)"
+                          position="after" origin="instance('ins-otherLocus')" />
+                      </xforms:trigger>
+                    </td>
+                    <td class="add-td">
+                      <xforms:trigger appearance="minimal">
+                        <xforms:label>Add another locus </xforms:label>
+                        <xforms:insert ev:event="DOMActivate" context="."
+                          nodeset="otherLocus" at="count(../otherLocus)"
+                          position="after" origin="instance('ins-otherLocus')" />
+                      </xforms:trigger>
+                    </td>
+                  </tr>
+                </table>
+              </xforms:group>
+              
+							
 						</xforms:group>
+						
+						
 						<xforms:select1 ref="infectionComplexityEstimated"
 							appearance="minimal">
 							<xforms:label>Multiplicity/complexity of infection included?
