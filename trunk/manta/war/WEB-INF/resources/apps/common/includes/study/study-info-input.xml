@@ -2978,7 +2978,7 @@
 
 					<xforms:group ref="analytes">
 						<h4>
-							Drug given and analytes/metabolites measured
+							Drug/metabolites measured
 							<span style="font-size:smaller; font-weight:normal;">please list all</span>
 						</h4>
 						<table class="repeat-table">
