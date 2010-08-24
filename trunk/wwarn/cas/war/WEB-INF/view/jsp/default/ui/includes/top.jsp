@@ -54,10 +54,9 @@
 							<div class="container-inline">
 					  			<div id="edit-search-block-form-1-wrapper" class="form-item">
 					 				<label for="edit-search-block-form-1">Search this site: </label>
-					 				<input type="text" class="form-text" title="Enter the terms you wish to search for." value="Search" size="15" id="edit-search-block-form-1" name="search_block_form" maxlength="128">
+					 				<input type="text" class="form-text" title="Enter the terms you wish to search for." value="Search" size="15" id="edit-search-block-form-1" name="search_block_form" maxlength="128" style="width: 200px">
 								</div>
-								<input type="submit" class="form-submit" value="Search" id="edit-submit-1" name="op">
-								<input type="hidden" value="form-f8e3ebc5c486f688789ee714f5225fed" id="form-f8e3ebc5c486f688789ee714f5225fed" name="form_build_id">
+								<input type="submit" class="form-submit" id="edit-submit" name="op" style="display:block; padding: 0; text-align: left" value="">
 								<input type="hidden" value="search_block_form" id="edit-search-block-form" name="form_id">
 							</div>
 						</div>
@@ -72,12 +71,3 @@
         <div id="holdall">
         	<div id="main-inner">
 	    		<div id="content" class="content page">
-	    			<div id="bd" class="clearfix">
-	    				<div class="help">
-	    					<h3>Don't have a <strong>WWARN Account</strong>?</h3>
-	    					<p><strong><a href="/user/register">Create an account</a></strong></p>
-	    					<h3>Forgotten your password?</h3>
-	    					<p><strong><a href="/user/password">Request a new password</a></strong></p>
-	    				</div>
-    					<div class="no-bg">
-							<div class="main twoCol">

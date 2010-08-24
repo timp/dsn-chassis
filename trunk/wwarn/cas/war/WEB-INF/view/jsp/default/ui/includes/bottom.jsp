@@ -1,6 +1,3 @@
-		</div>
-		</div>
-		</div>
 		<!--<div class="background"></div>-->
 		<img class="background" alt="" src="css/images/about-us-2.jpg">
 		</div>
