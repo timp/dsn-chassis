@@ -126,7 +126,7 @@
 					</xforms:bind>
 				</xforms:bind>
 				<xforms:bind nodeset="inclusionExclusionCriteria">
-					<xforms:bind nodeset="age" relevant="not(contains(../../modules, 'molecular'))">
+					<xforms:bind nodeset="age">
 						<!-- FIXME type="ctype:age" -->
 						<xforms:bind nodeset="maxAge" type="xforms:int"/>
 						<!-- FIXME type="ctype:age" -->
