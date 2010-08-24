@@ -120,6 +120,14 @@
 }
 .repeat-table {
     width:100%;
+    /*
+    background-color: #fce5b6;
+    margin: 8px;
+    width:80%;
+    -moz-border-radius: 5px; 
+    -webkit-border-radius: 5px; 
+    border-radius: 5px;
+    */ 
 }
 .repeat-table .action-td {
      width: 18px 
@@ -128,8 +136,10 @@
      
 }
 .repeat-table .form-td {
-/*    background: white;
-     padding: .5em */
+/*   
+	background: white;
+  padding: .5em 
+*/
 }
 h2.subtitle {
     margin-top: 0.2em;
@@ -169,6 +179,9 @@ ul {
 .box {
     clear: both;
 }
+.study-info h1, h2, h3, h4, h5 {
+   text-transform: none;
+}
 .study-info h3, h4, h5 {
     /*padding: 1px;
     margin: 0px;*/
@@ -189,9 +202,9 @@ ul {
     border:1px solid red;
 	display:none;
 	font-size:3px;
-	margin:0 !important;
+	margin:0 ;
 	visibility:hidden;
-	width:1px !important;
+	width:1px;
 	z-index:-200;
 }
 
@@ -230,7 +243,7 @@ ul {
     border-radius: 5px; 
 }
 .warningButton button {
-	margin:0 !important;
+	margin:0 ;
 }
 /* Color within study-info warning box */
 .xbl-fr-error-summary .fr-error-alert { color: #000; }
