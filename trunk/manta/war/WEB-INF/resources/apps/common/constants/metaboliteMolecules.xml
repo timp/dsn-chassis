@@ -17,4 +17,8 @@
     <label>monodesethylamodiaquine</label>
     <value>MDA</value>
   </metaboliteMolecule>
+  <metaboliteMolecule>
+    <label>3-hydroxyquinine</label>
+    <value>3HQ</value>
+  </metaboliteMolecule>  
 </metaboliteMolecules>
