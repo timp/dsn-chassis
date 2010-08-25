@@ -1754,7 +1754,6 @@
 										<xforms:alert>Please select</xforms:alert>
 									</xforms:select1>
 
-									<!-- FIXME: Eclipse complains "xforms:input is not complete" here -->
 									<xforms:input ref="mixedAllelesOther"></xforms:input>
 
 									<xforms:select1 ref="recrudescence" appearance="minimal">
