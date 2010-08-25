@@ -4,7 +4,7 @@
   <description></description>
   <logRotator>
     <daysToKeep>-1</daysToKeep>
-    <numToKeep>-1</numToKeep>
+    <numToKeep>4</numToKeep>
     <artifactDaysToKeep>-1</artifactDaysToKeep>
     <artifactNumToKeep>-1</artifactNumToKeep>
   </logRotator>
@@ -20,13 +20,19 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>wget  --user=adam@example.org --password=bar --post-data=&apos;&apos;  http://cloud1.cggh.org/manta/atombeat/admin/install.xql 
+      <command>wget  --user=adam@example.org --password=bar --post-data=&apos;&apos;  --auth-no-challenge http://cloud1.cggh.org/manta/atombeat/admin/install.xql 
 more install.xql
 rm install.xql
 
 </command>
     </hudson.tasks.Shell>
   </builders>
-  <publishers/>
+  <publishers>
+    <hudson.tasks.Mailer>
+      <recipients>timp@well.ox.ac.uk, lee.hart@well.ox.ac.uk</recipients>
+      <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
+      <sendToIndividuals>false</sendToIndividuals>
+    </hudson.tasks.Mailer>
+  </publishers>
   <buildWrappers/>
 </project>

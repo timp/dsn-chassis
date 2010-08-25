@@ -5,34 +5,37 @@
   <mode>NORMAL</mode>
   <useSecurity>true</useSecurity>
   <authorizationStrategy class="hudson.security.ProjectMatrixAuthorizationStrategy">
+    <permission>hudson.model.View.Configure:lee</permission>
+    <permission>hudson.model.View.Configure:aliman</permission>
+    <permission>hudson.model.View.Configure:timp</permission>
+    <permission>hudson.model.View.Create:lee</permission>
+    <permission>hudson.model.View.Create:aliman</permission>
+    <permission>hudson.model.View.Create:timp</permission>
     <permission>hudson.model.Item.Read:anonymous</permission>
     <permission>hudson.model.Item.Read:lee</permission>
     <permission>hudson.model.Item.Read:aliman</permission>
     <permission>hudson.model.Item.Read:timp</permission>
-    <permission>hudson.model.Item.Create:lee</permission>
-    <permission>hudson.model.Item.Create:aliman</permission>
-    <permission>hudson.model.Item.Create:timp</permission>
-    <permission>hudson.model.Run.Update:lee</permission>
-    <permission>hudson.model.Run.Update:aliman</permission>
-    <permission>hudson.model.Run.Update:timp</permission>
-    <permission>hudson.scm.SCM.Tag:lee</permission>
-    <permission>hudson.scm.SCM.Tag:aliman</permission>
-    <permission>hudson.scm.SCM.Tag:timp</permission>
-    <permission>hudson.model.Item.Workspace:lee</permission>
-    <permission>hudson.model.Item.Workspace:aliman</permission>
-    <permission>hudson.model.Item.Workspace:timp</permission>
-    <permission>hudson.model.Item.Delete:lee</permission>
-    <permission>hudson.model.Item.Delete:aliman</permission>
-    <permission>hudson.model.Item.Delete:timp</permission>
-    <permission>hudson.model.View.Delete:lee</permission>
-    <permission>hudson.model.View.Delete:aliman</permission>
-    <permission>hudson.model.View.Delete:timp</permission>
     <permission>hudson.model.Item.Configure:lee</permission>
     <permission>hudson.model.Item.Configure:aliman</permission>
     <permission>hudson.model.Item.Configure:timp</permission>
+    <permission>hudson.model.Run.Delete:lee</permission>
+    <permission>hudson.model.Run.Delete:aliman</permission>
+    <permission>hudson.model.Run.Delete:timp</permission>
+    <permission>hudson.model.Item.Delete:lee</permission>
+    <permission>hudson.model.Item.Delete:aliman</permission>
+    <permission>hudson.model.Item.Delete:timp</permission>
+    <permission>hudson.scm.SCM.Tag:lee</permission>
+    <permission>hudson.scm.SCM.Tag:aliman</permission>
+    <permission>hudson.scm.SCM.Tag:timp</permission>
     <permission>hudson.model.Computer.Delete:lee</permission>
     <permission>hudson.model.Computer.Delete:aliman</permission>
     <permission>hudson.model.Computer.Delete:timp</permission>
+    <permission>hudson.model.Hudson.Administer:lee</permission>
+    <permission>hudson.model.Hudson.Administer:aliman</permission>
+    <permission>hudson.model.Hudson.Administer:timp</permission>
+    <permission>hudson.model.Item.Workspace:lee</permission>
+    <permission>hudson.model.Item.Workspace:aliman</permission>
+    <permission>hudson.model.Item.Workspace:timp</permission>
     <permission>hudson.model.Computer.Configure:lee</permission>
     <permission>hudson.model.Computer.Configure:aliman</permission>
     <permission>hudson.model.Computer.Configure:timp</permission>
@@ -40,21 +43,18 @@
     <permission>hudson.model.Hudson.Read:lee</permission>
     <permission>hudson.model.Hudson.Read:aliman</permission>
     <permission>hudson.model.Hudson.Read:timp</permission>
-    <permission>hudson.model.View.Configure:lee</permission>
-    <permission>hudson.model.View.Configure:aliman</permission>
-    <permission>hudson.model.View.Configure:timp</permission>
-    <permission>hudson.model.Hudson.Administer:lee</permission>
-    <permission>hudson.model.Hudson.Administer:aliman</permission>
-    <permission>hudson.model.Hudson.Administer:timp</permission>
+    <permission>hudson.model.View.Delete:lee</permission>
+    <permission>hudson.model.View.Delete:aliman</permission>
+    <permission>hudson.model.View.Delete:timp</permission>
+    <permission>hudson.model.Item.Create:lee</permission>
+    <permission>hudson.model.Item.Create:aliman</permission>
+    <permission>hudson.model.Item.Create:timp</permission>
+    <permission>hudson.model.Run.Update:lee</permission>
+    <permission>hudson.model.Run.Update:aliman</permission>
+    <permission>hudson.model.Run.Update:timp</permission>
     <permission>hudson.model.Item.Build:lee</permission>
     <permission>hudson.model.Item.Build:aliman</permission>
     <permission>hudson.model.Item.Build:timp</permission>
-    <permission>hudson.model.Run.Delete:lee</permission>
-    <permission>hudson.model.Run.Delete:aliman</permission>
-    <permission>hudson.model.Run.Delete:timp</permission>
-    <permission>hudson.model.View.Create:lee</permission>
-    <permission>hudson.model.View.Create:aliman</permission>
-    <permission>hudson.model.View.Create:timp</permission>
   </authorizationStrategy>
   <securityRealm class="hudson.security.HudsonPrivateSecurityRealm">
     <disableSignup>false</disableSignup>
@@ -108,7 +108,7 @@
           </default>
           <int>1</int>
           <string>MAVEN_OPTS</string>
-          <string>-Xms1024m -Xmx1024m -XX:PermSize=1024m -XX:MaxPermSize=2048m</string>
+          <string>-Xmx512m </string>
         </tree-map>
       </envVars>
     </hudson.slaves.EnvironmentVariablesNodeProperty>

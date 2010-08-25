@@ -17,7 +17,7 @@
   <scm class="hudson.scm.SubversionSCM">
     <locations>
       <hudson.scm.SubversionSCM_-ModuleLocation>
-        <remote>https://dsn-chassis.googlecode.com/svn/trunk/manta</remote>
+        <remote>https://dsn-chassis.googlecode.com/svn/trunk/manta-selenium</remote>
       </hudson.scm.SubversionSCM_-ModuleLocation>
     </locations>
     <useUpdate>true</useUpdate>
@@ -32,13 +32,13 @@
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers class="vector">
     <hudson.triggers.SCMTrigger>
-      <spec>*/13 * * * *</spec>
+      <spec>*/7 * * * *</spec>
     </hudson.triggers.SCMTrigger>
   </triggers>
   <concurrentBuild>false</concurrentBuild>
   <rootModule>
     <groupId>org.cggh.chassis</groupId>
-    <artifactId>manta</artifactId>
+    <artifactId>manta-selenium</artifactId>
   </rootModule>
   <goals>clean install</goals>
   <aggregatorStyleBuild>true</aggregatorStyleBuild>
@@ -53,16 +53,6 @@
       <sendToIndividuals>true</sendToIndividuals>
     </hudson.maven.reporters.MavenMailer>
   </reporters>
-  <publishers>
-    <hudson.tasks.BuildTrigger>
-      <childProjects>EnsureMantaData</childProjects>
-      <threshold>
-        <name>SUCCESS</name>
-        <ordinal>0</ordinal>
-        <color>BLUE</color>
-      </threshold>
-    </hudson.tasks.BuildTrigger>
-    <hudson.plugins.twitter.TwitterPublisher/>
-  </publishers>
+  <publishers/>
   <buildWrappers/>
 </maven2-moduleset>
