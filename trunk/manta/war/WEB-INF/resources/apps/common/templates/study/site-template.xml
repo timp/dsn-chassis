@@ -1,17 +1,22 @@
+
+	<!--
+		NOTE Any change here should also be made in the instance in
+		study-info-entry-template.xml
+	-->
 <site xmlns="">
-    <country/>
-    <region/>
-    <district/>
-    <locality/>
-    <lookupAddress/>
-    <siteCode/>
-    <testingDelay/>
-    <anticoagulant/>
-    <transportAndStorageTemperature/>
-    <latitude/>
-    <longitude/>
+	<country />
+	<region />
+	<district />
+	<locality />
+	<lookupAddress />
+	<siteCode />
+	<testingDelay />
+	<anticoagulant />
+	<transportAndStorageTemperature />
+	<latitude />
+	<longitude />
 	<transmissionIntensity>
-		<annualParasitologicalIncidence/>
+		<annualParasitologicalIncidence />
 		<annualParasitologicalIncidenceYear />
 		<parasitePrevalence />
 		<parasitePrevalenceYear />
@@ -20,6 +25,6 @@
 		<entomologicalInoculationRate />
 		<entomologicalInoculationRateYear />
 		<seasonalTransmission />
-		<transmissionMonths/>			
+		<transmissionMonths />
 	</transmissionIntensity>
 </site>
