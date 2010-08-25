@@ -9,12 +9,20 @@
     <p>The unique ID assigned to your study is: <b><xforms:output ref="instance('ins-study-entry')/manta:id"/></b> 
     </p>
     
+    <p>You can access your study from the Data Home or by clicking on the My Studies tab.
+    </p>
+    
     <p>
-        We now invite you to supply further information about your study. This will be very helpful in curating your data &#8212; especially if it is not yet published. If you are unable to complete the questionnaire at this time, you can edit the information at a later date by logging into the WWARN website, navigating to this study in the Data Home and clicking the Study Info tab.   
+        We now invite you to supply further information about your study. This will be very helpful in curating your data &#8212; especially if it is not yet published. If you are unable to complete the Study Site Questionnaire at this time, you can edit the information at a later date by logging into the WWARN website, navigating to this study in the Data Home and clicking the Study Info tab.   
     </p>
 
 	<p>
-		<a href="home">&lt;&lt; Finish and return to Data Home</a>
+	    <xforms:trigger>
+	        <xforms:label>Return to Data Home</xforms:label>
+	        <xforms:action ev:event="DOMActivate">
+	            <xforms:load resource="home"/>
+	        </xforms:action>
+	    </xforms:trigger>
 	</p>
     
     <h2 class="study-site-questionnaire-heading">Study Site Questionnaire</h2>
