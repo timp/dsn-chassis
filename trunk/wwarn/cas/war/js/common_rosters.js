@@ -122,8 +122,10 @@ function fade(elId, sr, sg, sb, er, eg, eb, step, current, speed){
 function fadeIn(){
     if(!W3C_DOM)return;
 //    if(getRef('msg')) fade('msg', 51,204,0, 221,255,170, 30,1,20);
-    if(getRef('msg')) fade('msg', 120, 199, 235, 255, 255, 255, 30,1,20);
-    if(getRef('status')) fade('status', 187,0,0, 255,238,221, 30,1,20);
+//    if(getRef('msg')) fade('msg', 120, 199, 235, 255, 255, 255, 30,1,20);
+    if(getRef('msg')) fade('msg', 5, 199, 0, 151, 235, 132, 30,1,20);
+//    if(getRef('status')) fade('status', 187,0,0, 255,238,221, 30,1,20);
+    if(getRef('status')) fade('status', 221, 119, 119, 255, 204, 204, 30,1,20);
     
     var arrayElements = getElementsByAttribute("tr", "class", "added");
     
