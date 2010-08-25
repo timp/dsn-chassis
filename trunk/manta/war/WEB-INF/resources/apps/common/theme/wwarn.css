@@ -550,7 +550,7 @@ h1.logo a, h2.logo a {
 }
 .page {
 	/* padding-top:230px !important; */
-	padding-top: 60px !important;
+	padding-top: 16px !important;
 
 	
 }
@@ -909,7 +909,7 @@ button.addRemove {
 	padding:5px 0;
 }
 #editable-list-of-uploaded-files-container table {
-	width:625px !important;
+	width:100% !important;
 	font-size:11px;
 }
 .review h3 {
