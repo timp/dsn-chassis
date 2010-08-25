@@ -8,7 +8,6 @@
     <testingDelay/>
     <anticoagulant/>
     <transportAndStorageTemperature/>
-    <!--  FIXME Should this be within a location element? -->
     <latitude/>
     <longitude/>
 	<transmissionIntensity>
