@@ -851,7 +851,7 @@ button.addRemove {
 	padding:0;
 }
 .yui-skin-sam .yui-dt-liner button {
-	background:url("/manta/apps/fr/style/remove.gif") no-repeat scroll 0 0 transparent;
+	background:url("remove.gif") no-repeat scroll 0 0 transparent;
 	border:medium none;
 	display:inline;
 	float:right;
