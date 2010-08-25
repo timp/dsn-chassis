@@ -18,6 +18,14 @@
 #msg, #status {
 	padding: 5px;
 } 
+#msg {
+	border: 1px solid #05C700 ;
+	padding-top: 0;
+	padding-bottom: 0;
+}
+#status {
+	border: 1px solid #D77 ;
+}
 	    </style>
 	</head>
 
