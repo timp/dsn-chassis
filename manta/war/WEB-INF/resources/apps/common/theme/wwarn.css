@@ -111,7 +111,7 @@ body {
 }
 .form-navi button.alignCenter {
 	left:42%;
-	width:130px;
+	width:135px;
 }
 .imgupl_floating_right {
 	float:right;
@@ -127,26 +127,26 @@ body {
 h1, h2, h3, h4 {
 	margin:10px 0;
 	line-height:1em;
-	font-family:Calibri, Arial, Helvetica, sans-serif;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
 	font-weight:normal;
 }
 h1 {
-	font-size: 2.5em;
+	font-size: 24px;
 	margin:0 0 10px;
 }
 h1.title {
-	font-size:40px;
+	font-size:36px;
 	font-weight:normal;
 }
 h2 {
-	font-size: 2em;
+	font-size: 20px;
 	margin:10px 0 20px;
 }
 h3 {
-	font-size: 1.4em;
+	font-size: 14px;
 }		
 h4 {
-	font-size:1.2em;
+	font-size:12px;
 	text-transform:uppercase;
 }
 .page-research .entry h2,
@@ -155,7 +155,7 @@ h4 {
 	font-style:normal;
 	margin-bottom:0;
 	padding-bottom:0;
-	font-size:20px;
+	font-size:16px;
 	padding:0 0 5px;
 }
 p {
@@ -249,8 +249,8 @@ button {
 	border-radius:5px;
 	text-shadow:0 -1px 1px #fff;
 	color:#0095c5;
-	font-family:Calibri, Arial, Helvetica, sans-serif;
-	font-size:14px;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:12px;
 	padding:3px 20px;
 	*padding:3px 10px;
 	text-align:center;
@@ -259,7 +259,7 @@ button {
 .btn:hover,
 .views-exposed-form .views-exposed-widget .form-submit:hover,
 input[type="submit"]:hover,
-button:hover {
+button:hover  {
 	color:#D80009;
 	text-decoration:none;
 	cursor:pointer;
@@ -550,7 +550,7 @@ h1.logo a, h2.logo a {
 }
 .page {
 	/* padding-top:230px !important; */
-	padding-top: 16px !important;
+	padding-top: 60px !important;
 
 	
 }
@@ -702,8 +702,8 @@ h1.logo a, h2.logo a {
 }
 .main-sidebar div.block .views-field-title a {
 	color:#0095c5;
-	font-family:Calibri, Arial, Helvetica, sans-serif;
-	font-size:14px;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:12px;
 	line-height:1;
 	margin:0 0 5px;
 	font-weight:bold;
@@ -746,8 +746,8 @@ h1.logo a, h2.logo a {
 }
 .help p,
 .callout p {
-	font-size:14px;
-	font-family:Calibri, Arial, Helvetica, sans-serif;
+	font-size:12px;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
 }
 .help ul,
 .help ol,
@@ -909,7 +909,7 @@ button.addRemove {
 	padding:5px 0;
 }
 #editable-list-of-uploaded-files-container table {
-	width: 100% !important;
+	width:625px !important;
 	font-size:11px;
 }
 .review h3 {
@@ -919,6 +919,10 @@ button.addRemove {
 .review h3:first-child {
 	border:none;
 	padding:0;
+}
+#other-file-type-textbox-container {
+	display:block; 
+	padding-top:10px
 }
 /*------------------------
 	IE6 SPECIFIC
@@ -992,12 +996,11 @@ ol li {
 	padding:0 5px;
 	border-left:1px solid #99d5e8;
 	border-bottom:4px solid #99d5e8;
-	font-size:18px;
-	font-family:Calibri, Verdana, Arial, Helvetica, sans-serif;
+	font-size:14px;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
 	color:#99d5e8;
 }
 .steps li.active {
 	border-bottom:4px solid #d80009;
 	border-left:1px solid #d80009;
 	color:#d80009;
-}
