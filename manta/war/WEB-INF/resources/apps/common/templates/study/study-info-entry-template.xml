@@ -173,11 +173,6 @@
 						<sampleSourceOther />
 					</sampleSourceOpen>
 					<malariaStatus />
-					<sampleSelectionMethodOpen>
-						<sampleSelectionMethod />
-						<sampleSelectionMethodOther />
-						<sampleSelectionProportion />
-					</sampleSelectionMethodOpen>
 				</criteria>
 				<sample>
 					<sampleTypeOpen>
