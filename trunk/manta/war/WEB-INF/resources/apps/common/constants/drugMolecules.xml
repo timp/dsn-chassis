@@ -1,5 +1,15 @@
 <!--  Closed list of anti-malarial drugs  -->
 <drugMolecules xmlns="">
+
+ 
+ <!--  
+ Pyronamide
+ added by LW but queried by CM  
+ -->
+ 
+ 
+ 
+ 
 	<drugMolecule>
 		<label>amodiaquine</label>
 		<value>AQ</value>
@@ -20,18 +30,26 @@
 		<label>artesunate</label>
 		<value>AS</value>
 	</drugMolecule>
-	<drugMolecule>
-		<label>atovaquone</label>
-		<value>AV</value>
-	</drugMolecule>
-	<drugMolecule>
-		<label>clindamycine</label>
-		<value>CL</value>
-	</drugMolecule>
+  <drugMolecule>
+    <label>atovaquone</label>
+    <value>AV</value>
+  </drugMolecule>
+  <drugMolecule>
+    <label>azithromycin</label>
+    <value>AZ</value>
+  </drugMolecule>
+  <drugMolecule>
+    <label>clindamycine</label>
+    <value>CL</value>
+  </drugMolecule>
 	<drugMolecule>
 		<label>chloroquine</label>
 		<value>CQ</value>
 	</drugMolecule>
+  <drugMolecule>
+    <label>cycloguanil</label>
+    <value>CY</value>
+  </drugMolecule>
 	<drugMolecule>
 		<label>dihydro-artemisinin</label>
 		<value>DHA</value>
@@ -40,10 +58,14 @@
 		<label>doxycycline</label>
 		<value>DOX</value>
 	</drugMolecule>
-	<drugMolecule>
-		<label>lumefantrine</label>
-		<value>LUM</value>
-	</drugMolecule>
+  <drugMolecule>
+    <label>lumefantrine</label>
+    <value>LUM</value>
+  </drugMolecule>
+  <drugMolecule>
+    <label>halofantrine</label>
+    <value>HL</value>
+  </drugMolecule>
 	<drugMolecule>
 		<label>mefloquine</label>
 		<value>MQ</value>
@@ -76,10 +98,10 @@
 		<label>quinine</label>
 		<value>QN</value>
 	</drugMolecule>
-	<drugMolecule>
-		<label>sulfadoxine-pyrimethamine</label>
-		<value>SP</value>
-	</drugMolecule>
+  <drugMolecule>
+    <label>sulfadoxine</label>
+    <value>SP</value>
+  </drugMolecule>
 	<drugMolecule>
 		<label>tetracycline</label>
 		<value>TET</value>
