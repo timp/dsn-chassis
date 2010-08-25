@@ -215,6 +215,12 @@ ul {
 	font-size:1px;
 	margin:0 ;
 	visibility:hidden;
+	/* 
+	This is Important!!
+	If this is removed then the 
+	width of invisible labels in study-info 
+	becomes 30px or so
+	*/
 	width:1px !important;
 	z-index:-200;
 }
