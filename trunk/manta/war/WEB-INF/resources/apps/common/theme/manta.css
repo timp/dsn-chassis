@@ -120,14 +120,6 @@
 }
 .repeat-table {
     width:100%;
-    /*
-    background-color: #fce5b6;
-    margin: 8px;
-    width:80%;
-    -moz-border-radius: 5px; 
-    -webkit-border-radius: 5px; 
-    border-radius: 5px;
-    */ 
 }
 .repeat-table .action-td {
      width: 18px 
@@ -136,10 +128,8 @@
      
 }
 .repeat-table .form-td {
-/*   
-	background: white;
-  padding: .5em 
-*/
+/*    background: white;
+     padding: .5em */
 }
 h2.subtitle {
     margin-top: 0.2em;
@@ -179,22 +169,7 @@ ul {
 .box {
     clear: both;
 }
-.study-info h1{
-   text-transform: none;
-}
-.study-info h2 {
-   text-transform: none;
-}
-.study-info h3{
-   text-transform: none;
-}
-.study-info h4 {
-   text-transform: none;
-}
-.study-info h5 {
-   text-transform: none;
-}
-.study-info h3, .study-info h4, .study-info h5 {
+.study-info h3, h4, h5 {
     /*padding: 1px;
     margin: 0px;*/
 }
@@ -205,22 +180,17 @@ ul {
 }
 
 .study-info .xforms-textarea { 
-  width: 97%;
+  width: 40em;
 }
 .fixed-width {
     width: 12em;
 }
 .invisible {
+    border:1px solid red;
 	display:none;
-	font-size:1px;
+	font-size:3px;
 	margin:0 !important;
 	visibility:hidden;
-	/* 
-	This is Important!!
-	If this is removed then the 
-	width of invisible labels in study-info 
-	becomes 30px or so
-	*/
 	width:1px !important;
 	z-index:-200;
 }
@@ -238,6 +208,7 @@ ul {
     margin: 4px;
     overflow: auto;
     display: block;
+    float: left;
 }
 .scrollableCheckboxes .xforms-deselected {
 /* Ensure checkboxes are aligned, not inline */
@@ -341,13 +312,10 @@ ul {
 
 /* Prevents interference with Orbeon dialogue box interaction. */
 .mask {
-    z-index: 1000 !important;
+    z-index: 4 !important;
 }
 .shadow {
-    z-index: 1001 !important;   
-}
-.yui-dialog {
-    z-index: 1001 !important;
+    z-index: 5 !important;   
 }
 
 .yui-panel-container ul {
