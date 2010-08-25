@@ -3150,7 +3150,7 @@
 									</td>
 									<td class="form-td">
 										<xforms:input ref="lowerLoQ" class="fourWide">
-											<xforms:label />
+											<xforms:label class="invisible"/>
 											<xforms:hint>Lower limit of quantification</xforms:hint>
 										</xforms:input>
 									</td>
