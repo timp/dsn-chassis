@@ -1,9 +1,34 @@
 <div 
 	xmlns="http://www.w3.org/1999/xhtml" 
 	xmlns:xforms="http://www.w3.org/2002/xforms" 
-	xmlns:ev="http://www.w3.org/2001/xml-events">
+	xmlns:ev="http://www.w3.org/2001/xml-events"
+	xmlns:xi="http://www.w3.org/2001/XInclude">
 
-	<h2>Acknowledgements<!-- - (Step 3 of 5)--></h2>
+	<div id="bd" class="clearfix">
+		<div class="steps clearfix">
+		
+			
+	
+				<h1>Register study</h1>
+				<ul>
+					<li>Step 1</li>
+					<li>Step 2</li>
+					<li class="active">Step 3</li>
+					<li>Step 4</li>
+					<li>Step 5</li>
+					<li>Review</li>
+				</ul>
+			
+			
+		</div>
+		<div class="no-bg">
+			
+			<xi:include href="../help-boxes/for-wizard-panes/acknowledgements.xml"/>
+			
+			<div class="main twoCol">
+				<div id="content" class="register-study-wizard">
+					
+	<h2>Acknowledgements</h2>
 
 	<xforms:group id="list-of-acknowledgements" ref="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:content/study/acknowledgements">
 	        
@@ -220,5 +245,10 @@
 			</xforms:trigger></span>
 
 	</p>
-
+							
+				</div>
+			</div>
+		</div>
+	</div>
+	
 </div>
