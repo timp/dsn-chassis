@@ -587,113 +587,7 @@
 							
 
 		
-    		<div class="yui-navset yui-navset-top">
-    		
-    			<ul class="yui-nav">
-    				<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='summary']">
-	    				<li class="selected">
-	    					<a href="dashboard?tab=summary&amp;study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
-	    						<em>Summary</em>
-	   						</a>
-	    				</li>
-	    			</xforms:group>
-    				<xforms:group ref="instance('ins-control')[dashboard-tab-to-show!='summary']">
-	    				<li>
-	    					<a href="dashboard?tab=summary&amp;study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
-	    						<em>Summary</em>
-	   						</a>
-	    				</li>
-	    			</xforms:group>
-	    			
-	    			<!-- If the user has GET access to the security descriptor. -->
-			    	<xforms:group ref="instance('ins-study-entry')/atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor' and contains(@atombeat:allow, 'GET')]">
-			    		
-		    			<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='permissions']">
-		    				<li class="selected">
-		    					<a href="dashboard?tab=permissions&amp;study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
-			    					<em>Permissions</em>
-		    					</a>
-		   					</li>
-	   					</xforms:group>
-		    			<xforms:group ref="instance('ins-control')[dashboard-tab-to-show!='permissions']">
-		    				<li id="permissions-tab-link-container">
-		    					<a href="dashboard?tab=permissions&amp;study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
-			    					<em>Permissions</em>
-		    					</a>
-		   					</li>
-	   					</xforms:group>
-	   					
-	   				</xforms:group>
-   					
-   					<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='acknowledgements']">
-	    				<li class="selected">
-	    					<a href="dashboard?tab=acknowledgements&amp;study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
-		    					<em>Acknowledgements</em>
-	    					</a>
-	   					</li>
-   					</xforms:group>
-   					<xforms:group ref="instance('ins-control')[dashboard-tab-to-show!='acknowledgements']">
-	    				<li id="acknowledgements-tab-link-container">
-	    					<a href="dashboard?tab=acknowledgements&amp;study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
-		    					<em>Acknowledgements</em>
-	    					</a>
-	   					</li>
-   					</xforms:group>
-   					
-	    			<!-- If the user has GET access to the submitted media. -->
-			    	<xforms:group ref="instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/submittedMedia' and contains(@atombeat:allow, 'GET')]">
-			    	
-	   					<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='files']">
-		    				<li class="selected">
-		    					<a href="dashboard?tab=files&amp;study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
-			    					<em>Files</em>
-		    					</a>
-		   					</li>
-	   					</xforms:group>
-	   					<xforms:group ref="instance('ins-control')[dashboard-tab-to-show!='files']">
-		    				<li id="files-tab-link-container">
-		    					<a href="dashboard?tab=files&amp;study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
-			    					<em>Files</em>
-		    					</a>
-		   					</li>
-	   					</xforms:group>
-	   					
-	   				</xforms:group>	
-   					
-   					<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='publications']">
-	    				<li class="selected">
-	    					<a href="dashboard?tab=publications&amp;study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
-		    					<em>Publications</em>
-	    					</a>
-	   					</li>
-	   				</xforms:group>
-   					<xforms:group ref="instance('ins-control')[dashboard-tab-to-show!='publications']">
-	    				<li id="publications-tab-link-container">
-	    					<a href="dashboard?tab=publications&amp;study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
-		    					<em>Publications</em>
-	    					</a>
-	   					</li>
-	   				</xforms:group>
-   					
-   					<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='study-info']">
-	    				<li class="selected">
-	    					<a href="dashboard?tab=study-info&amp;study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
-		    					<em>Study info</em>
-	    					</a>
-	   					</li>
-					</xforms:group>
-   					<xforms:group ref="instance('ins-control')[dashboard-tab-to-show!='study-info']">
-	    				<li id="study-info-tab-link-container">
-	    					<a href="dashboard?tab=study-info&amp;study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
-		    					<em>Study info</em>
-	    					</a>
-	   					</li>
-					</xforms:group>
-
-    			</ul>
-    			
-    			
-    			<div class="yui-content">
+    	
     	
 
 
@@ -737,9 +631,7 @@
 			    		<xi:include href="includes/dashboard-tabs/study-info.xml"/>
 			    	</xforms:group>
 
-    			</div>
-    			
-    		</div>
+ 
     		
     	</div>
 
