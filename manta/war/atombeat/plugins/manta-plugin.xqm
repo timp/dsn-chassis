@@ -525,6 +525,9 @@ declare function manta-plugin:after-create-member-studies(
                     <atombeat:config context="entry-in-feed">
                         <atombeat:param name="match-rels" value="edit-media"/>
                     </atombeat:config>
+                    <atombeat:config context="entry">
+                        <atombeat:param name="match-rels" value="*"/>
+                    </atombeat:config>
                 </atombeat:extension-attribute>
             </atombeat:config-link-extensions>
         </atom:feed>
