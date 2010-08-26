@@ -3,33 +3,98 @@
 	xmlns="http://www.w3.org/1999/xhtml" 
 	xmlns:xforms="http://www.w3.org/2002/xforms"
 	xmlns:xxforms="http://orbeon.org/oxf/xml/xforms">
-	
-	<xforms:group ref="instance('ins-study-entry')">
-	
-		<p>
-			<xforms:output ref="atom:title">
-				<xforms:label>Title:</xforms:label>
-			</xforms:output>	    					
-		</p>	
+
+
+	<div class="yui-navset yui-navset-top">
+		
+		<ul class="yui-nav">
+
+				<li class="selected">
+					<a href="dashboard?tab=summary&amp;study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
+						<em>Summary</em>
+					</a>
+				</li>
+
 			
-		<p>
-			<xforms:output ref="manta:id">
-				<xforms:label>ID:</xforms:label>
-			</xforms:output>	    					
-		</p>	
+			<!-- If the user has GET access to the security descriptor. -->
+			<xforms:group ref="instance('ins-study-entry')/atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor' and contains(@atombeat:allow, 'GET')]">
+				
+
+					<li id="permissions-tab-link-container">
+						<a href="dashboard?tab=permissions&amp;study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
+							<em>Permissions</em>
+						</a>
+					</li>
+				
+			</xforms:group>
+			
+
+				<li id="acknowledgements-tab-link-container">
+					<a href="dashboard?tab=acknowledgements&amp;study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
+						<em>Acknowledgements</em>
+					</a>
+				</li>
+			
+			<!-- If the user has GET access to the submitted media. -->
+			<xforms:group ref="instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/submittedMedia' and contains(@atombeat:allow, 'GET')]">
+
+					<li id="files-tab-link-container">
+						<a href="dashboard?tab=files&amp;study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
+							<em>Files</em>
+						</a>
+					</li>
+				
+			</xforms:group>	
+			
+
+				<li id="publications-tab-link-container">
+					<a href="dashboard?tab=publications&amp;study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
+						<em>Publications</em>
+					</a>
+				</li>
+			
+
+				<li id="study-info-tab-link-container">
+					<a href="dashboard?tab=study-info&amp;study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
+						<em>Study info</em>
+					</a>
+				</li>
+			
+		</ul>
 		
-		<p>
-			<xforms:output ref="atom:author/atom:email">
-				<xforms:label>Creator:</xforms:label>
-			</xforms:output>	    					
-		</p>	
 		
-		<p>
-			<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')">
-				<xforms:label>Terms of Submission accepted:</xforms:label>
-			</xforms:output>	    					
-		</p>
+		<div class="yui-content">
 		
-	</xforms:group>
+			<xforms:group ref="instance('ins-study-entry')">
+			
+				<p>
+					<xforms:output ref="atom:title">
+						<xforms:label>Title:</xforms:label>
+					</xforms:output>	    					
+				</p>	
+					
+				<p>
+					<xforms:output ref="manta:id">
+						<xforms:label>ID:</xforms:label>
+					</xforms:output>	    					
+				</p>	
+				
+				<p>
+					<xforms:output ref="atom:author/atom:email">
+						<xforms:label>Creator:</xforms:label>
+					</xforms:output>	    					
+				</p>	
+				
+				<p>
+					<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')">
+						<xforms:label>Terms of Submission accepted:</xforms:label>
+					</xforms:output>	    					
+				</p>
+				
+			</xforms:group>
 		
-</div>
+		</div>
+		
+	</div>
+	
+</div>		
