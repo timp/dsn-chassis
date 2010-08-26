@@ -1,8 +1,5 @@
-<div 
-	class="help"
-	xmlns="http://www.w3.org/1999/xhtml" 
-	xmlns:xforms="http://www.w3.org/2002/xforms" 
-	xmlns:ev="http://www.w3.org/2001/xml-events">
+<div class="help"
+	xmlns="http://www.w3.org/1999/xhtml">
 
 <p>Please review the information you&#8217;ve provided for this study. Once you click Confirm, this study will be registered in the WWARN Data Repository and a unique ID will be assigned to your study by WWARN.
 </p>

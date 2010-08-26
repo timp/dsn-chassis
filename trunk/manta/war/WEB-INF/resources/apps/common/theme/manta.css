@@ -57,6 +57,11 @@
     margin: 0px;
 }
 
+#bd.no-help-box {
+    background-image: none;
+    
+}
+
 /*#bd h1 {
     margin: 0 0 0 0;
     padding: 0 0 0.2em 0;
