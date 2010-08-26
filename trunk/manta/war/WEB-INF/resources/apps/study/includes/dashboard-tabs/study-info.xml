@@ -5,122 +5,158 @@
 	xmlns:ev="http://www.w3.org/2001/xml-events"
 	xmlns:xi="http://www.w3.org/2001/XInclude">
 
-	<div class="yui-navset yui-navset-top">
-		
-		<ul class="yui-nav">
+	<div id="bd" class="clearfix no-help-box">
+		<div class="no-bg">
 
-				<li>
-					<a href="dashboard?tab=summary&amp;study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
-						<em>Summary</em>
-					</a>
-				</li>
-			
-			<!-- If the user has GET access to the security descriptor. -->
-			<xforms:group ref="instance('ins-study-entry')/atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor' and contains(@atombeat:allow, 'GET')]">
+			<!-- Help boxes. Comment out if not needed. -->
+<!--			<div class="help">
 				
-					<li id="permissions-tab-link-container">
-						<a href="dashboard?tab=permissions&amp;study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
-							<em>Permissions</em>
-						</a>
-					</li>
+				<!-\- For contributor -\->
+				<xforms:group ref="instance('ins-control')/contributor-controls">
+					<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='study-info']">
+						<xi:include href="../help-boxes/for-dashboard-tabs/for-contributor/study-info.xml"/>
+					</xforms:group>
+				</xforms:group>
 				
-			</xforms:group>
-			
-				<li id="acknowledgements-tab-link-container">
-					<a href="dashboard?tab=acknowledgements&amp;study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
-						<em>Acknowledgements</em>
-					</a>
-				</li>
-			
-			<!-- If the user has GET access to the submitted media. -->
-			<xforms:group ref="instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/submittedMedia' and contains(@atombeat:allow, 'GET')]">
+				<!-\- For curator -\->
+				<xforms:group ref="instance('ins-control')/curator-controls">
+					<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='study-info']">
+						<xi:include href="../help-boxes/for-dashboard-tabs/for-curator/study-info.xml"/>
+					</xforms:group>
+				</xforms:group>
 				
-					<li id="files-tab-link-container">
-						<a href="dashboard?tab=files&amp;study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
-							<em>Files</em>
-						</a>
-					</li>
+			</div>-->
+			
+			
+			<div class="main oneCol">
 				
-			</xforms:group>	
-			
-				<li id="publications-tab-link-container">
-					<a href="dashboard?tab=publications&amp;study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
-						<em>Publications</em>
-					</a>
-				</li>
-			
-				<li class="selected">
-					<a href="dashboard?tab=study-info&amp;study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
-						<em>Study info</em>
-					</a>
-				</li>
-			
-		</ul>
-		
-		
-		<div class="yui-content">
-		
-			<p>We invite you to supply further information about your study. This will be very helpful in curating your data &#8212; especially if it is not yet published.  
-			</p>
-			
-			<p>To save time, and if appropriate, you have the option to copy study information from any registered study for which you have administrator rights. Copying details from an existing study will overwrite any information you&#8217;ve already supplied. Therefore if you choose to do this, we suggest that you begin by copying the details from a registered study and then make any necessary changes. 
-			</p>
-			
-			<p>Be sure to save your changes after each session.
-			</p>
-		
-			<xforms:group ref="instance('ins-control')/copy-answers-control">
-			<p>
-		
-				<span id="studies-to-copy-answers-from-menu-container">
-				<xforms:select1 ref="instance('ins-control')/href-to-copy-study-info-from">
-					<xforms:label>Copy info from another study?</xforms:label>
+				<div id="content" class="study-dashboard">
 					
-					<xforms:item>
-						<xforms:label>Select...</xforms:label>
-					    <xforms:value></xforms:value>
-					</xforms:item>
+					<h1>Study dashboard - <xforms:output value="instance('ins-study-entry')/atom:title"/> (<xforms:output value="instance('ins-study-entry')/manta:id"/>)</h1>
+					
+					<div class="yui-navset yui-navset-top">
+						
+						<ul class="yui-nav">
 				
-		           	<xforms:itemset nodeset="xxforms:sort(instance('ins-study-feed')/atom:entry[atom:id!=instance('ins-study-entry')/atom:id], atom:published, 'text', 'ascending')">
-		           		<xforms:label ref="concat(atom:title, ' (', manta:id, ')')"/>
-		           		<xforms:value ref="atom:link[@rel='http://www.cggh.org/2010/chassis/terms/studyInfo']/@href"/>
-		           	</xforms:itemset>
-				</xforms:select1>
-				</span>
-		
-				<span id="copy-answers-button-container">
-				<xforms:trigger ref="instance('ins-control')/copy-answers-trigger">
-					<xforms:label>Copy answers</xforms:label>
-					<xforms:action ev:event="DOMActivate">
-						<xforms:send submission="sub-copy-answers" />
-					</xforms:action>
-				</xforms:trigger>
-				</span>
+								<li>
+									<a href="dashboard?tab=summary&amp;study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
+										<em>Summary</em>
+									</a>
+								</li>
+							
+							<!-- If the user has GET access to the security descriptor. -->
+							<xforms:group ref="instance('ins-study-entry')/atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor' and contains(@atombeat:allow, 'GET')]">
+								
+									<li id="permissions-tab-link-container">
+										<a href="dashboard?tab=permissions&amp;study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
+											<em>Permissions</em>
+										</a>
+									</li>
+								
+							</xforms:group>
+							
+								<li id="acknowledgements-tab-link-container">
+									<a href="dashboard?tab=acknowledgements&amp;study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
+										<em>Acknowledgements</em>
+									</a>
+								</li>
+							
+							<!-- If the user has GET access to the submitted media. -->
+							<xforms:group ref="instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/submittedMedia' and contains(@atombeat:allow, 'GET')]">
+								
+									<li id="files-tab-link-container">
+										<a href="dashboard?tab=files&amp;study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
+											<em>Files</em>
+										</a>
+									</li>
+								
+							</xforms:group>	
+							
+								<li id="publications-tab-link-container">
+									<a href="dashboard?tab=publications&amp;study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
+										<em>Publications</em>
+									</a>
+								</li>
+							
+								<li class="selected">
+									<a href="dashboard?tab=study-info&amp;study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
+										<em>Study info</em>
+									</a>
+								</li>
+							
+						</ul>
+						
+						
+						<div class="yui-content">
+						
+							<p>We invite you to supply further information about your study. This will be very helpful in curating your data &#8212; especially if it is not yet published.  
+							</p>
+							
+							<p>To save time, and if appropriate, you have the option to copy study information from any registered study for which you have administrator rights. Copying details from an existing study will overwrite any information you&#8217;ve already supplied. Therefore if you choose to do this, we suggest that you begin by copying the details from a registered study and then make any necessary changes. 
+							</p>
+							
+							<p>Be sure to save your changes after each session.
+							</p>
+						
+							<xforms:group ref="instance('ins-control')/copy-answers-control">
+							<p>
+						
+								<span id="studies-to-copy-answers-from-menu-container">
+								<xforms:select1 ref="instance('ins-control')/href-to-copy-study-info-from">
+									<xforms:label>Copy info from another study?</xforms:label>
+									
+									<xforms:item>
+										<xforms:label>Select...</xforms:label>
+									    <xforms:value></xforms:value>
+									</xforms:item>
+								
+						           	<xforms:itemset nodeset="xxforms:sort(instance('ins-study-feed')/atom:entry[atom:id!=instance('ins-study-entry')/atom:id], atom:published, 'text', 'ascending')">
+						           		<xforms:label ref="concat(atom:title, ' (', manta:id, ')')"/>
+						           		<xforms:value ref="atom:link[@rel='http://www.cggh.org/2010/chassis/terms/studyInfo']/@href"/>
+						           	</xforms:itemset>
+								</xforms:select1>
+								</span>
+						
+								<span id="copy-answers-button-container">
+								<xforms:trigger ref="instance('ins-control')/copy-answers-trigger">
+									<xforms:label>Copy answers</xforms:label>
+									<xforms:action ev:event="DOMActivate">
+										<xforms:send submission="sub-copy-answers" />
+									</xforms:action>
+								</xforms:trigger>
+								</span>
+								
+							</p>
+							</xforms:group>
+						
+						
+						     <p>
+						     	<span class="study-info-save-changes-button-container">
+						         <xforms:submit submission="sub-put-sq-study-info-entry">
+						             <xforms:label>Save changes</xforms:label>
+						         </xforms:submit>
+						     	</span>
+						     </p>
+							
+							<xi:include href="../../../common/includes/study/study-info-input.xml" />
+							
+						     <p>
+						     	<span class="study-info-save-changes-button-container">
+						         <xforms:submit submission="sub-put-sq-study-info-entry">
+						             <xforms:label>Save changes</xforms:label>
+						         </xforms:submit>
+						     	</span>
+						     </p>
 				
-			</p>
-			</xforms:group>
-		
-		
-		     <p>
-		     	<span class="study-info-save-changes-button-container">
-		         <xforms:submit submission="sub-put-sq-study-info-entry">
-		             <xforms:label>Save changes</xforms:label>
-		         </xforms:submit>
-		     	</span>
-		     </p>
-			
-			<xi:include href="../../../common/includes/study/study-info-input.xml" />
-			
-		     <p>
-		     	<span class="study-info-save-changes-button-container">
-		         <xforms:submit submission="sub-put-sq-study-info-entry">
-		             <xforms:label>Save changes</xforms:label>
-		         </xforms:submit>
-		     	</span>
-		     </p>
+						</div>
+						
+					</div>
+									
 
+				</div>
+			</div>
 		</div>
-		
 	</div>
+
 	
-</div>		
+</div>

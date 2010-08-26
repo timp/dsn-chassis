@@ -30,7 +30,7 @@
                     
                     	<p>
                     	    <xforms:trigger>
-                    	        <xforms:label>Return to Data Home</xforms:label>
+                    	        <xforms:label>Finish and return to Data Home</xforms:label>
                     	        <xforms:action ev:event="DOMActivate">
                     	            <xforms:load resource="home"/>
                     	        </xforms:action>
