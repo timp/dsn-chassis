@@ -373,3 +373,8 @@ ul {
 .secondary-wrap li.first {
     padding-left: 0;
 }
+
+.datatable td {
+    
+    vertical-align: top;
+}
