@@ -95,7 +95,7 @@
 					    <ul id="primary" class="clearfix">
 					    	<li class="active-trail"><a href="home">Data Home</a></li>
 					    	<li><a href="register-study-wizard">Register Study</a></li>
-					    	<li><a href="/study/my-studies">My Studies</a></li>
+					    	<li><a href="/contributor/my-studies">My Studies</a></li>
 					    	<li><a href="/" f:url-norewrite="true" target="_blank">WWARN Website</a></li>
 					    </ul>
 				    </div>
@@ -176,72 +176,7 @@ any time on the Data home: see &#8216;My studies&#8217;.
 		    			
     		</xforms:group>    		
 
-
-			<h2 class="clear">My studies</h2>
-	    	
-    		<xforms:group ref="instance('ins-study-feed')[empty(atom:entry)]">
-
-	    		<!-- <p>You have not registered any studies.</p>  -->
-	    		
-	    		
-	    		<p>Any study you register or have permission to access will be listed here. You&#8217;ll be able to navigate to each study
-to upload files or edit the information provided when you registered the study.  
-	    		</p>
-	    		
-	    	
-    		</xforms:group>
-	    	
-    		<xforms:group ref="instance('ins-study-feed')[exists(atom:entry)]">
-
-				<span id="list-of-studies-container">
-
-		    	<fr:datatable>
-		    		<thead>
-		    			<tr>
-		    				<th fr:sortable="true" fr:resizeable="true">ID</th>
-		    				<th fr:sortable="true" fr:resizeable="true">Title</th>
-		    				<!-- TODO: Admins. -->
-		    				<th fr:sortable="true" fr:resizeable="true">Created</th>
-<!--		    				<th fr:sortable="true" fr:resizeable="true">Creator</th>-->
-		    				<th fr:sortable="false" fr:resizeable="true">Administrators</th>
-		    				<th>Actions</th>
-		    			</tr>
-		    		</thead>
-		    		<tbody>
-		    			<xforms:repeat nodeset="xxforms:sort(instance('ins-study-feed')/atom:entry, atom:published, 'text', 'ascending')">
-		    				<tr class="repeated-element">
-		    					<td>
-		    						<a href="../study/dashboard?study={atom:link[@rel='edit']/@href}"><xforms:output value="manta:id"/></a>
-		    					</td>
-		    					<td>
-		    						<a href="../study/dashboard?study={atom:link[@rel='edit']/@href}"><xforms:output value="atom:title"/></a>
-		    					</td>
-		    					<td>
-		    						<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')"/>
-		    					</td>
-		    					<!--
-		    					<td>
-		    						<xforms:output value="atom:author/atom:email"/>
-		    					</td>
-		    					-->
-		    					<td>
-		    						<xforms:repeat nodeset="atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor']//atombeat:group[@id='GROUP_ADMINISTRATORS']/atombeat:member">
-		    							<div>
-						    				<xforms:output ref="."/>			
-		    							</div>
-		    						</xforms:repeat>
-		    						<!-- <xforms:output value="string-join( atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor']//atombeat:group[@id='GROUP_ADMINISTRATORS']/atombeat:member , ' ' )"/> -->
-		    					</td>
-		    					<td><span class="view-study-link-container"><a href="../study/dashboard?study={atom:link[@rel='edit']/@href}">View</a></span></td>
-		    				</tr>
-		    			</xforms:repeat>
-		    		</tbody>
-		    	</fr:datatable>
-		    	
-		    	</span>
-		    	
-    		</xforms:group>
-
+			<xi:include href="includes/my-studies-table.xml"/>
     		
     	</div>
 
@@ -267,4 +202,3 @@ to upload files or edit the information provided when you registered the study.
 
     </body>
 </html>
-
