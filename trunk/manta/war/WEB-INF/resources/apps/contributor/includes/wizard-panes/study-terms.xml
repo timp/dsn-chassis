@@ -90,7 +90,8 @@
 									<xforms:action ev:event="DOMActivate"
 										if="not(../draft-entry-is-valid = 'true')">
 										<xforms:message>
-											Please complete all required fields.
+											<!-- Please complete all required fields.  -->
+											The study title and your acceptance of the Terms of Submission are required before registering a study. Please review the Terms of Submission and choose whether to accept them before continuing.
 										</xforms:message>
 									</xforms:action>
 								</xforms:trigger>
