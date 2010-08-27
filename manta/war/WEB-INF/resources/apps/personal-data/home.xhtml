@@ -166,8 +166,8 @@
 				<fr:datatable>
 		    		<thead>
 		    			<tr>
-		    				<th fr:sortable="false" fr:resizeable="true">Code</th>
 		    				<th fr:sortable="true" fr:resizeable="true">Study ID</th>
+		    				<th fr:sortable="false" fr:resizeable="true">File ID</th>
 		    				<th fr:sortable="false" fr:resizeable="true">Original file name</th>
 		    				<th fr:sortable="true" fr:resizeable="true">Contributor</th>
 		    				<th fr:sortable="true" fr:resizeable="true">Submitted</th>
@@ -187,11 +187,11 @@
 						">
 		    			
 		    				<tr class="repeated-element">
-		    					<td>
-		    						<xforms:output value="manta:id"/>
-		    					</td>
 								<td>
 		    						<xforms:output value="atom:link[@rel='http://www.cggh.org/2010/chassis/terms/originStudy']/@manta:idref"/>
+		    					</td>
+		    					<td>
+		    						<xforms:output value="manta:id"/>
 		    					</td>
 		    					<td>
 		    						<xforms:output value="atom:title"/>
@@ -249,7 +249,8 @@
 				<fr:datatable>
 					<thead>
 						<tr>
-							<th fr:sortable="false" fr:resizeable="true">Code</th>
+							<th fr:sortable="true" fr:resizeable="true">Study ID</th>
+							<th fr:sortable="false" fr:resizeable="true">File ID</th>
 							<th fr:sortable="true" fr:resizeable="true">Original file name</th>
 							<th fr:sortable="true" fr:resizeable="true">Contributor</th>
 							<th fr:sortable="true" fr:resizeable="true">Submitted</th>
@@ -259,9 +260,27 @@
 					<tbody>
 						<xforms:repeat 
 							id="rep-submitted-media"
-							nodeset="$media-with-personal-data-not-replaced">
+							nodeset="
+							for $entry in instance('ins-submitted-media-feed')/atom:entry return
+								if ( 
+									exists( 
+										instance('ins-reviews-feed')/atom:entry[ 
+											atom:link[@rel='http://www.cggh.org/2010/chassis/terms/reviewSubject']/@href = $entry/atom:link[@rel='edit']/@href 
+											and .//outcome='fail'
+										]     							
+									) 
+									and empty(
+										instance('ins-derivations-feed')/atom:entry[
+											atom:link[@rel='http://www.cggh.org/2010/chassis/terms/derivationInput']/@href = $entry/atom:link[@rel='edit']/@href	
+										]
+									)
+								) then $entry else ()
+							">
 							
 							<tr class="repeated-element">
+								<td>
+		    						<xforms:output value="atom:link[@rel='http://www.cggh.org/2010/chassis/terms/originStudy']/@manta:idref"/>
+		    					</td>
 								<td>
 									<xforms:output value="manta:id"/>
 								</td>
