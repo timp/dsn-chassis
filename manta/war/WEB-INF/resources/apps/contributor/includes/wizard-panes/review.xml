@@ -258,7 +258,8 @@
 					
 						<p class="form-navi">
 						
-								
+							
+							<!-- TODO: Only show this control if the user has permission to create a study -->
 						
 							<span id="review-confirm-button-container" class="alignRight">
 								<xforms:trigger>
@@ -271,6 +272,8 @@
 									</xforms:action>
 								</xforms:trigger>
 							</span>
+							
+							
 							<span class="skip-links">
 								<xforms:trigger
 									ref="instance('ins-control')/save-draft-trigger"

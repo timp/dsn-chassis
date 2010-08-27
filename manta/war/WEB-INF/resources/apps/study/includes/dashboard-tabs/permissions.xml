@@ -12,21 +12,9 @@
 			
 			<!-- Help boxes. Comment out if not needed. -->
 			<div class="help">
-				
-				
-				<!-- For contributor -->
-				<xforms:group ref="instance('ins-control')/contributor-controls">
-					<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='permissions']">
+
 						<xi:include href="../help-boxes/for-dashboard-tabs/for-contributor/permissions.xml"/>
-					</xforms:group>
-				</xforms:group>
-				
-				<!-- For curator -->
-<!--				<xforms:group ref="instance('ins-control')/curator-controls">
-					<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='permissions']">
-						 <xi:include href="../help-boxes/for-dashboard-tabs/for-curator/permissions.xml"/> 
-					</xforms:group>
-				</xforms:group>-->
+
 				
 			</div>
 			

@@ -6,24 +6,14 @@
 	xmlns:xi="http://www.w3.org/2001/XInclude">
 
 	<div id="bd" class="clearfix no-help-box">
+		
 		<div class="no-bg">
 
 			<!-- Help boxes. Comment out if not needed. -->
 <!--			<div class="help">
-				
-				<!-\- For contributor -\->
-				<xforms:group ref="instance('ins-control')/contributor-controls">
-					<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='study-info']">
+
 						<xi:include href="../help-boxes/for-dashboard-tabs/for-contributor/study-info.xml"/>
-					</xforms:group>
-				</xforms:group>
-				
-				<!-\- For curator -\->
-				<xforms:group ref="instance('ins-control')/curator-controls">
-					<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='study-info']">
-						<xi:include href="../help-boxes/for-dashboard-tabs/for-curator/study-info.xml"/>
-					</xforms:group>
-				</xforms:group>
+
 				
 			</div>-->
 			

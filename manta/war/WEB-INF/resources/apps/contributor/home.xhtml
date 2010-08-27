@@ -32,6 +32,20 @@
         
         <xforms:model>
 
+        	<!-- non-persistent model for application state -->
+        	<xforms:instance id="ins-control">
+        		<control xmlns="">
+        			<contributor-controls/>
+        			<curator-controls/>
+        			<administrator-controls/>
+        		</control>
+        	</xforms:instance>
+        	
+			<xforms:bind nodeset="instance('ins-control')/contributor-controls" relevant="xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CONTRIBUTOR' and not(xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CURATOR')"/>
+			<xforms:bind nodeset="instance('ins-control')/curator-controls" relevant="xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CURATOR'"/>
+			<xforms:bind nodeset="instance('ins-control')/administrator-controls" relevant="xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_ADMINISTRATOR'"/>
+
+
 			<xforms:instance id="ins-draft-feed">
 				<atom:feed/>
 			</xforms:instance>
@@ -89,16 +103,47 @@
 		<!-- Body header -->
                 <div id="header" class="header">
 					<h1 class="logo"><a href="/" f:url-norewrite="true" target="_blank">WWARN - Worldwide Antimalarial Resistance Network</a></h1>
+
+						<!-- For contributor -->
+						<xforms:group ref="instance('ins-control')/contributor-controls">
+							
+							    <div id="block-menu-primary-links">
+								    <ul id="primary" class="clearfix">
+								    	<li class="active-trail"><a href="home">Data Home</a></li>
+								    	<li><a href="register-study-wizard">Register Study</a></li>
+								    	<li><a href="/contributor/my-studies">My Studies</a></li>
+								    	<li><a href="/" f:url-norewrite="true" target="_blank">WWARN Website</a></li>
+								    </ul>
+							    </div>
+							    
+						</xforms:group>
+
+						<!-- For curator -->
+						<xforms:group ref="instance('ins-control')/curator-controls">
+							
+							    <div id="block-menu-primary-links">
+								    <ul id="primary" class="clearfix">
+								    	<li class="active-trail"><a href="home">Data Home</a></li>
+								    	<li><a href="/curator/home">Curator Home</a></li>
+								    	<li><a href="/" f:url-norewrite="true" target="_blank">WWARN Website</a></li>
+								    </ul>
+							    </div>
+							    
+						</xforms:group>
 					
-					 
-				    <div id="block-menu-primary-links">
-					    <ul id="primary" class="clearfix">
-					    	<li class="active-trail"><a href="home">Data Home</a></li>
-					    	<li><a href="register-study-wizard">Register Study</a></li>
-					    	<li><a href="/contributor/my-studies">My Studies</a></li>
-					    	<li><a href="/" f:url-norewrite="true" target="_blank">WWARN Website</a></li>
-					    </ul>
-				    </div>
+					 	<!-- For administrator -->
+						<xforms:group ref="instance('ins-control')/administrator-controls">
+							
+							    <div id="block-menu-primary-links">
+								    <ul id="primary" class="clearfix">
+								    	<li class="active-trail"><a href="home">Data Home</a></li>
+								    	<li><a href="/curator/home">Curator Home</a></li>
+								    	<li><a href="/contributor/my-studies">My Studies</a></li>
+								    	<li><a href="/" f:url-norewrite="true" target="_blank">WWARN Website</a></li>
+								    </ul>
+							    </div>
+							    
+						</xforms:group>
 
 					<div class="secondary-wrap">
 						<xi:include href="../common/includes/current-user-actions.xml"/>
@@ -142,8 +187,12 @@ administrator (see Step 2).
 
 			</p>   	
 
-
-	    	<span id="register-study-link-container"><a href="register-study-wizard" class="btn">Register study</a></span>
+			<!-- For contributor -->
+			<xforms:group ref="instance('ins-control')/contributor-controls">
+			
+	    		<span id="register-study-link-container"><a href="register-study-wizard" class="btn">Register study</a></span>
+	    		
+	    	</xforms:group>
 	    	
 
 		    <h2>Draft studies</h2>
@@ -164,13 +213,31 @@ any time on the Data home: see &#8216;My studies&#8217;.
 
 				<div id="list-of-drafts-container">
 
-					<ul>
-	    				<xforms:repeat nodeset="xxforms:sort(instance('ins-draft-feed')/atom:entry, atom:published, 'text', 'ascending')">
-	    					<li class="repeated-element">
-	    						<span class="draft-link-container"><a href="register-study-wizard?draft={atom:link[@rel='edit']/@href}"><xforms:output value="atom:title"/> (<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')" />)</a></span>
-	    					</li>
-	    				</xforms:repeat>
-	    			</ul>
+					<!-- For contributor -->
+					<xforms:group ref="instance('ins-control')/contributor-controls">
+		
+							<ul>
+			    				<xforms:repeat nodeset="xxforms:sort(instance('ins-draft-feed')/atom:entry, atom:published, 'text', 'ascending')">
+			    					<li class="repeated-element">
+			    						<span class="draft-link-container"><a href="register-study-wizard?draft={atom:link[@rel='edit']/@href}"><xforms:output value="atom:title"/> (<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')" />)</a></span>
+			    					</li>
+			    				</xforms:repeat>
+			    			</ul>
+			    			
+			    	</xforms:group>
+			    	
+					<!-- For administrator -->
+					<xforms:group ref="instance('ins-control')/administrator-controls">
+		
+							<ul>
+			    				<xforms:repeat nodeset="xxforms:sort(instance('ins-draft-feed')/atom:entry, atom:published, 'text', 'ascending')">
+			    					<li class="repeated-element">
+			    						<span class="draft-link-container"><a href="register-study-wizard?draft={atom:link[@rel='edit']/@href}"><xforms:output value="atom:title"/> (<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')" />) by <xforms:output value="atom:author"/></a></span>
+			    					</li>
+			    				</xforms:repeat>
+			    			</ul>
+			    			
+			    	</xforms:group>
 	    			
 	    		</div>
 		    			

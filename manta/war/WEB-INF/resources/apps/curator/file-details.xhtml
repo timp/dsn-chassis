@@ -163,8 +163,12 @@
     			</p>
     			
     			<p>
-    				<a href="{atom:content/@src}">Download</a>
+    				<xforms:group ref=".[contains( ./atom:link[@rel='edit-media']/@atombeat:allow , 'GET' )]">
+    					<a href="{atom:content/@src}">Download</a>
+    				</xforms:group>
     			</p>
+    			
+    			
 
     		</xforms:group>
     		
