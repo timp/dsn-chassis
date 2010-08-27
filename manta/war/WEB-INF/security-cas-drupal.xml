@@ -117,11 +117,9 @@
             name="authenticationManager" 
             ref="authenticationManager"/>
         
-        <!-- TODO set 403 location -->
-        
         <property 
             name="authenticationFailureUrl" 
-            value="/403.jsp"/>
+            value="/common/forbidden"/>
         
         <property name="defaultTargetUrl" value="/"/>
         
