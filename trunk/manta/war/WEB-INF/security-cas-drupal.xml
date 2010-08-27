@@ -49,6 +49,9 @@
         
         <!-- don't do this, it protects all css and other resources -->
         <!--    <sec:intercept-url pattern="/**" access="ROLE_CHASSIS_ADMINISTRATOR" /> -->
+
+        <!-- don't apply security to eXist XML-RPC endpoint, rely on eXist authentication -->
+        <sec:intercept-url pattern="/xmlrpc" filters="none"/>
         
         <sec:logout 
             logout-success-url="${cas.url}/logout" 

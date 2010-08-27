@@ -36,6 +36,9 @@
     <!-- don't do this, it protects all css and other resources -->
 <!--    <intercept-url pattern="/**" access="ROLE_CHASSIS_ADMINISTRATOR" /> -->
     
+    <!-- don't apply security to eXist XML-RPC endpoint, rely on eXist authentication -->
+    <intercept-url pattern="/xmlrpc" filters="none"/>
+    
     <logout 
       logout-success-url="/home/" 
       invalidate-session="true"/>
