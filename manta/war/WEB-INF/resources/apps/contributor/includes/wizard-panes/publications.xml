@@ -94,7 +94,7 @@
 									                    		</td>
 									                    		<td>
 									                    			<span class="publication-reference-type-menu-container">
-											                    		<xforms:select1 appearance="minimal" ref="publication-reference-type">
+											                    		<xforms:select1 appearance="minimal" ref="./@type">
 											                    			<xforms:label class="invisible">Publication reference type
 											                    			</xforms:label>
 											                    			<xforms:itemset
@@ -104,16 +104,10 @@
 											                    			</xforms:itemset>
 											                    		</xforms:select1>
 									                    			</span>
-									                    			<span class="url-textbox-container">
-											                    		<xforms:input ref="url">
-											                    			<xforms:label class="invisible">URL</xforms:label>
-											                    			<xforms:alert>Please provide a valid URL.</xforms:alert>
-											                    		</xforms:input>
-									                    			</span>
-									                    			<span class="doi-textbox-container">
-											                    		<xforms:input ref="doi">
-											                    			<xforms:label class="invisible">DOI</xforms:label>
-											                    			<xforms:alert>Please provide a valid DOI.</xforms:alert>
+									                    			<span class="publication-reference-textbox-container">
+									                    				<xforms:input ref=".">
+											                    			<xforms:label class="invisible">Publication reference:</xforms:label>
+											                    			<xforms:alert>Please provide a valid publication reference.</xforms:alert>
 											                    		</xforms:input>
 									                    			</span>
 									                    		</td>

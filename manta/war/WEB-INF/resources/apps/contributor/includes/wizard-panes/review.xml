@@ -223,11 +223,10 @@
 											<ul>
 												<xforms:repeat nodeset="publication-reference">
 														<li class="repeated-element publication-reference-form-summary-item">
-															<xforms:output ref="url">
-																<xforms:label>URL:</xforms:label>
-															</xforms:output>
-															<xforms:output ref="doi">
-																<xforms:label>DOI:</xforms:label>
+															<xforms:output ref=".">
+																<xforms:label>
+																	<xforms:output ref="instance('ins-publication-reference-types')/publication-reference-type[value=context()/@type]/label"/>:
+																</xforms:label>
 															</xforms:output>
 														</li>
 												</xforms:repeat>
