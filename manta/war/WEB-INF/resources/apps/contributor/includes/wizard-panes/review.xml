@@ -52,8 +52,6 @@
 						
 						<h3>(2) Permissions</h3>
 						
-						<h4>Administrators:</h4>
-						
 						<div id="list-of-administrators-container">
 							<ul>
 								<xforms:repeat nodeset="instance('ins-draft-entry')//study-permissions-entry-container//atombeat:security-descriptor/atombeat:groups/atombeat:group[@id='GROUP_ADMINISTRATORS']/atombeat:member">
@@ -65,6 +63,8 @@
 								</xforms:repeat>
 							</ul>
 						</div>
+					
+						<br/>
 						
 						<p>
 							<xforms:trigger appearance="minimal">
