@@ -405,3 +405,8 @@ ul {
     
     vertical-align: top;
 }
+
+#editable-list-of-administrators-container .repeated-element button.xforms-readonly {
+	display:none;
+	visibility:hidden;
+}

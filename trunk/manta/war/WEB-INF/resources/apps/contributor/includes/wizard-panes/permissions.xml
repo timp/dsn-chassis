@@ -43,7 +43,7 @@
 								<tr class="repeated-element">
 									
 									<td>
-					                      <xforms:trigger ref="." class="addRemove">
+										<xforms:trigger ref="." class="addRemove">
 					                      	<xforms:label>
 					                      		<img
 					                      			src="/apps/contributor/common/remove.gif"
@@ -52,7 +52,7 @@
 					                      	<xforms:delete ev:event="DOMActivate"
 					                      		context="." nodeset="."
 					                      		at="index('rep-administrator')" />
-					                      </xforms:trigger>
+				                      </xforms:trigger>
 									</td>
 									<td>
 										<span class="email-address-textbox-container">
