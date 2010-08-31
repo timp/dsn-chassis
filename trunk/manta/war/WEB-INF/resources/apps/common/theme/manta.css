@@ -105,10 +105,13 @@
 .inner-help h2 {
     margin-top: 0;
 }
+/*
 .yui-skin-sam tr.yui-dt-selected td {
     background-color: #fff;
     color: #000;
 }
+*/
+
 .action {
     font-size: 120%;
     font-weight: bold;
@@ -285,22 +288,41 @@ ul {
 	display:inline-block;
 }
 
-.register-study-wizard .xforms-repeat-selected-item-1, .study-dashboard .xforms-repeat-selected-item-1, .home .xforms-repeat-selected-item-1 {
+.register-study-wizard .xforms-repeat-selected-item-1, 
+.study-dashboard .xforms-repeat-selected-item-1, 
+.home .xforms-repeat-selected-item-1 {
 /* Masks Orbeon's yellow highlight in wizard by matching background colour. */
     background-color: #FFFFFF;
 }
-.register-study-wizard .xforms-repeat-selected-item-2, .study-dashboard .xforms-repeat-selected-item-2, .home .xforms-repeat-selected-item-2 {
+.register-study-wizard .xforms-repeat-selected-item-2, 
+.study-dashboard .xforms-repeat-selected-item-2, 
+.home .xforms-repeat-selected-item-2 {
 /* Masks Orbeon's yellow highlight in wizard by matching background colour. */
     background-color: #FFFFFF;
 }
+
+.register-study-wizard .xforms-repeat-selected-item-3, 
+.study-dashboard .xforms-repeat-selected-item-3, 
+.home .xforms-repeat-selected-item-3 {
+/* Masks Orbeon's yellow highlight in wizard by matching background colour. */
+    background-color: #FFFFFF;
+}
+
 /* Restores the study-info highlight. */
-.register-study-wizard .study-info .xforms-repeat-selected-item-1, .register-study-wizard .study-info .xforms-repeat-selected-item-2 {
+.register-study-wizard .study-info .xforms-repeat-selected-item-1, 
+.register-study-wizard .study-info .xforms-repeat-selected-item-2,
+.register-study-wizard .study-info .xforms-repeat-selected-item-3,
+.register-study-wizard .study-info .xforms-repeat-selected-item-4{
     background-color: #efefef;
 }
-.study-dashboard .yui-content .study-info .xforms-repeat-selected-item-1, .study-dashboard .yui-content .study-info .xforms-repeat-selected-item-2 {
+.study-dashboard .yui-content .study-info .xforms-repeat-selected-item-1, 
+.study-dashboard .yui-content .study-info .xforms-repeat-selected-item-2,
+.study-dashboard .yui-content .study-info .xforms-repeat-selected-item-3,
+.study-dashboard .yui-content .study-info .xforms-repeat-selected-item-4{
     background-color: #efefef;
 }
-.register-study-wizard .yui-content .xforms-repeat-selected-item-1, .study-dashboard .yui-content .xforms-repeat-selected-item-1 {
+.register-study-wizard .yui-content .xforms-repeat-selected-item-1, 
+.study-dashboard .yui-content .xforms-repeat-selected-item-1 {
 /* Gives same colour background on dashboard. */
     background-color: #EDF5FF;
 }
