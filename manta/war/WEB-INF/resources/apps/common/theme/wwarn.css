@@ -898,16 +898,29 @@ button.addRemove {
 .yui-skin-sam .yui-dt table {
 	margin:0 0 10px;
 }
+/* This needs to meet the maximum nested item. */
 .register-study-wizard .yui-content .xforms-repeat-selected-item-1, 
+.register-study-wizard .yui-content .xforms-repeat-selected-item-2, 
+.register-study-wizard .yui-content .xforms-repeat-selected-item-3, 
+.register-study-wizard .yui-content .xforms-repeat-selected-item-4, 
 .study-dashboard .yui-content .xforms-repeat-selected-item-1,
+.study-dashboard .yui-content .xforms-repeat-selected-item-2,
+.study-dashboard .yui-content .xforms-repeat-selected-item-3,
+.study-dashboard .yui-content .xforms-repeat-selected-item-4 {
+    background:#FAFAFA;
+}
 .study-dashboard .yui-content .study-info .xforms-repeat-selected-item-1, 
-.study-dashboard .yui-content .study-info .xforms-repeat-selected-item-2 {
+.study-dashboard .yui-content .study-info .xforms-repeat-selected-item-2,
+.study-dashboard .yui-content .study-info .xforms-repeat-selected-item-3,
+.study-dashboard .yui-content .study-info .xforms-repeat-selected-item-4 {
 	background:#efefef;
 }
 .register-study-wizard .yui-content .xforms-repeat-selected-item-1 td, 
 .study-dashboard .yui-content .xforms-repeat-selected-item-1 td {
 	padding:5px 0;
 }
+
+
 #editable-list-of-uploaded-files-container table {
 	width:100% !important;
 	font-size:11px;
@@ -1003,5 +1016,14 @@ ol li {
 .steps li.active {
 	border-bottom:4px solid #d80009;
 	border-left:1px solid #d80009;
-	color:#d80009;
+}
+
+/* This being declared after ".yui-skin-sam tr.yui-dt-selected" in datatable.css (line 7) overrides the datatable.css declaration when both classes are declared together in the mark-up. */
+.yui-skin-sam tr.yui-dt-odd, .yui-skin-sam tr.yui-dt-odd td, .yui-skin-sam tr.yui-dt-odd td.yui-dt-asc, .yui-skin-sam tr.yui-dt-odd td.yui-dt-desc {
+    background-color:#EDF5FF;
+    color: #666666;
+}
+.yui-skin-sam tr.yui-dt-even, .yui-skin-sam tr.yui-dt-even td, .yui-skin-sam tr.yui-dt-even td.yui-dt-asc, .yui-skin-sam tr.yui-dt-even td.yui-dt-desc {
+    background-color:#FFFFFF;
+    color: #666666;
 }
