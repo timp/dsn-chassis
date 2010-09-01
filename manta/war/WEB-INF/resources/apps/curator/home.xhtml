@@ -40,8 +40,8 @@
         		</control>
         	</xforms:instance>
         	
-			<xforms:bind nodeset="instance('ins-control')/contributor-controls" relevant="xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CONTRIBUTOR' and not(xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CURATOR')"/>
-			<xforms:bind nodeset="instance('ins-control')/curator-controls" relevant="xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CURATOR'"/>
+			<xforms:bind nodeset="instance('ins-control')/contributor-controls" relevant="xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CONTRIBUTOR' and not(xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CURATOR') and not(xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_ADMINISTRATOR')"/>
+			<xforms:bind nodeset="instance('ins-control')/curator-controls" relevant="xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CURATOR' and not(xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_ADMINISTRATOR')"/>
 			<xforms:bind nodeset="instance('ins-control')/administrator-controls" relevant="xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_ADMINISTRATOR'"/>
 
 
