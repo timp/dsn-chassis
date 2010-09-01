@@ -96,8 +96,8 @@
         	<!--  <xforms:bind nodeset="instance('ins-upload')/media" required="true()" />  -->
 
 			<!-- Show the appropriate tabs and help-boxes depending upon the current user roles. -->
-			<xforms:bind nodeset="instance('ins-control')/contributor-controls" relevant="xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CONTRIBUTOR' and not(xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CURATOR')"/>
-			<xforms:bind nodeset="instance('ins-control')/curator-controls" relevant="xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CURATOR'"/>
+			<xforms:bind nodeset="instance('ins-control')/contributor-controls" relevant="xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CONTRIBUTOR' and not(xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CURATOR') and not(xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_ADMINISTRATOR')"/>
+			<xforms:bind nodeset="instance('ins-control')/curator-controls" relevant="xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CURATOR' and not(xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_ADMINISTRATOR')"/>
 			<xforms:bind nodeset="instance('ins-control')/administrator-controls" relevant="xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_ADMINISTRATOR'"/>
 
 			<!-- Used to show an Unspecified message for read-only instances of the study-is-published field. -->

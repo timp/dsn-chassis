@@ -41,8 +41,8 @@
         		</control>
         	</xforms:instance>
         	
-			<xforms:bind nodeset="instance('ins-control')/contributor-controls" relevant="xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CONTRIBUTOR' and not(xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CURATOR')"/>
-			<xforms:bind nodeset="instance('ins-control')/curator-controls" relevant="xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CURATOR'"/>
+			<xforms:bind nodeset="instance('ins-control')/contributor-controls" relevant="xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CONTRIBUTOR' and not(xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CURATOR') and not(xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_ADMINISTRATOR')"/>
+			<xforms:bind nodeset="instance('ins-control')/curator-controls" relevant="xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CURATOR' and not(xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_ADMINISTRATOR')"/>
 			<xforms:bind nodeset="instance('ins-control')/administrator-controls" relevant="xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_ADMINISTRATOR'"/>
 
 
@@ -58,9 +58,24 @@
 				instance="ins-draft-feed"
 				serialization="none">
 				<!-- TODO error handling -->
+				<!-- 
                 <xforms:message ev:event="xforms-submit-error" level="modal">
                 	An error occurred (<xforms:output value="event('error-type')"/>) while retrieving a list of drafts.
                	</xforms:message>
+               	 -->
+               	
+               	<xforms:action ev:event="xforms-submit-error">
+               	
+               		<xforms:message level="modal" if="event('error-type')='resource-error'">
+                			An error occurred white retrieving a list of drafts.
+               		</xforms:message>
+               		<xforms:message level="modal" if="not(event('error-type')='resource-error')">>
+                			An error occurred (<xforms:output value="event('error-type')"/>) while retrieving a list of drafts.
+               		</xforms:message>
+               		
+               	</xforms:action>
+               	
+               	
 			</xforms:submission>
         
         	<xforms:send 
