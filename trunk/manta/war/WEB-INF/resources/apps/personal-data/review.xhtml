@@ -32,6 +32,23 @@
         
         <xforms:model>
 
+       		<xforms:instance id="ins-control">
+                <control xmlns="">
+                	<review-entry-is-valid/>
+                	<submit-review-trigger/>
+                </control>
+            </xforms:instance>   
+
+			<xforms:action ev:event="xxforms-invalid" ev:observer="ins-review-entry">
+				<xforms:setvalue ev:event="xforms-value-changed" ref="instance('ins-control')/review-entry-is-valid">false</xforms:setvalue>
+			</xforms:action>
+			<xforms:action ev:event="xxforms-valid" ev:observer="ins-review-entry">
+				<xforms:setvalue ev:event="xforms-value-changed" ref="instance('ins-control')/review-entry-is-valid">true</xforms:setvalue>
+			</xforms:action>
+			
+			<!-- TODO: Disabling the button doesn't have the expected appearance, due to current CSS. -->
+			<!-- <xforms:bind nodeset="instance('ins-control')/submit-review-trigger" readonly="not(instance('ins-control')/review-entry-is-valid = 'true')"/>  -->		
+
 			<xforms:instance id="ins-media-entry">
 				<atom:entry/>
 			</xforms:instance>
@@ -102,6 +119,8 @@
 					</atom:content>
 				</atom:entry>
 			</xforms:instance>
+			
+			<xforms:bind ref="instance('ins-review-entry')//outcome" required="true()"/>
         	
         	<xforms:instance id="ins-ace-allow-study-administrators">
         		<atombeat:ace>
@@ -261,6 +280,7 @@
 	    				<xforms:label>File can proceed to curation</xforms:label>
 	    				<xforms:value>pass</xforms:value>
 	    			</xforms:item>
+	    			<xforms:alert>Please select a review outcome.</xforms:alert>
 	    		</xforms:select1>
 	    		</span>
 	    	</p>
@@ -285,9 +305,17 @@
 				</xforms:trigger>
 	    	
 	    		<span id="submit-review-button-container">
-	    		<xforms:submit submission="sub-post-review">
-	    			<xforms:label>Submit review</xforms:label>
-	    		</xforms:submit>
+	    		
+				<xforms:trigger ref="instance('ins-control')/submit-review-trigger">
+					<xforms:label>Submit review</xforms:label>
+					<xforms:action ev:event="DOMActivate" if="instance('ins-control')/review-entry-is-valid = 'true'">
+						<xforms:send submission="sub-post-review" />
+					</xforms:action>
+					<xforms:action ev:event="DOMActivate" if="not(instance('ins-control')/review-entry-is-valid = 'true')">
+						<xforms:message>Please complete all required fields.</xforms:message>
+					</xforms:action>
+				</xforms:trigger>
+	    		
 	    		</span>
 	    	</p>
 
