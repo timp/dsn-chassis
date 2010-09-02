@@ -892,6 +892,10 @@ button.addRemove {
 	width:100%;
 	margin:0 0 10px;
 }
+#editable-list-of-publications-container table {
+    width:auto;
+}
+
 .study-dashboard .yui-skin-sam .yui-dt table {
 	font-size:11px;
 }
