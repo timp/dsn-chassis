@@ -287,13 +287,7 @@
 			<xforms:instance id="ins-publication-reference-types" src="/apps/common/constants/publication-reference-types.xml"/>
 
 
-        	<xforms:bind nodeset="instance('ins-study-entry')/atom:content/study/publications/publication/publication-references/publication-reference">
-
-			        <xforms:bind nodeset="url" relevant="../publication-reference-type = 'url'" required="../publication-reference-type = 'url'" />
-			        
-			        <xforms:bind nodeset="doi" relevant="../publication-reference-type = 'doi'" required="../publication-reference-type = 'doi'" />
-			        
-       		</xforms:bind>
+        	<xforms:bind nodeset="instance('ins-study-entry')/atom:content/study/publications/publication/publication-references/publication-reference" required="true()"/>
  
  
             
