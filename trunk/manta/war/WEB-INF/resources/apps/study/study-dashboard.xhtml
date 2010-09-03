@@ -96,8 +96,8 @@
         	<!--  <xforms:bind nodeset="instance('ins-upload')/media" required="true()" />  -->
 
 			<!-- Show the appropriate tabs and help-boxes depending upon the current user roles. -->
-			<xforms:bind nodeset="instance('ins-control')/contributor-controls" relevant="xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CONTRIBUTOR' and not(xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CURATOR') and not(xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_ADMINISTRATOR')"/>
-			<xforms:bind nodeset="instance('ins-control')/curator-controls" relevant="xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CURATOR' and not(xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_ADMINISTRATOR')"/>
+			<xforms:bind nodeset="instance('ins-control')/contributor-controls" relevant="xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CONTRIBUTOR'"/>
+			<xforms:bind nodeset="instance('ins-control')/curator-controls" relevant="xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CURATOR'"/>
 			<xforms:bind nodeset="instance('ins-control')/administrator-controls" relevant="xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_ADMINISTRATOR'"/>
 
 			<!-- Used to show an Unspecified message for read-only instances of the study-is-published field. -->
@@ -468,40 +468,15 @@
                 <div id="header" class="header">
 					<h1 class="logo"><a href="/" target="_blank" f:url-norewrite="true">WWARN - Worldwide Antimalarial Resistance Network</a></h1>
 					
-					 
-
-					    
-							<!-- For contributor -->
-							<xforms:group ref="instance('ins-control')/contributor-controls">
-							    <div id="block-menu-primary-links">
-								    <ul id="primary" class="clearfix">							
-										<li><a href="/contributor/home">Data Home</a></li>
-										<li><a href="/contributor/register-study-wizard">Register Study</a></li>
-										<li class="active-trail"><a href="/contributor/my-studies">My Studies</a></li>
-								    	<li class="current"><a href="/" target="_blank" f:url-norewrite="true">WWARN Website</a></li>
-								    </ul>
-							    </div>
-							</xforms:group>
-							<!-- For curator -->
-							<xforms:group ref="instance('ins-control')/curator-controls">
 							    <div id="block-menu-primary-links">
 								    <ul id="primary" class="clearfix">
-										<li><a href="/curator/home">Curator Home</a></li>
-								    	<li class="current"><a href="/" target="_blank" f:url-norewrite="true">WWARN Website</a></li>
+								    	<li class="{if (not(xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CONTRIBUTOR')) then 'hidden-tab' else ''}"><a href="/contributor/home">Data Home</a></li>
+								    	<li class="{if (not(xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CURATOR')) then 'hidden-tab' else ''}"><a href="/curator/home">Curator Home</a></li>
+								    	<li class="{if (not(xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CONTRIBUTOR')) then 'hidden-tab' else ''}"><a href="/contributor/register-study-wizard">Register Study</a></li>
+								    	<li class="active-trail {if (not(xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CONTRIBUTOR')) then 'hidden-tab' else ''}"><a href="/contributor/my-studies">My Studies</a></li>
+								    	<li><a href="/" f:url-norewrite="true" target="_blank">WWARN Website</a></li>
 								    </ul>
-							    </div>
-							</xforms:group>
-							<!-- For administrator -->
-							<xforms:group ref="instance('ins-control')/administrator-controls">
-								    <div id="block-menu-primary-links">
-									    <ul id="primary" class="clearfix">
-									    	<li><a href="/contributor/home">Data Home</a></li>
-											<li><a href="/curator/home">Curator Home</a></li>
-											<li class="active-trail"><a href="/contributor/my-studies">My Studies</a></li>
-									    	<li class="current"><a href="/" target="_blank" f:url-norewrite="true">WWARN Website</a></li>
-									    </ul>
-								    </div>
-							</xforms:group>					    
+							    </div>			    
 
 
 					<div class="secondary-wrap">
