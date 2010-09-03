@@ -13,7 +13,7 @@
 	    <style type="text/css" media="screen">@import 'css/manta.css';</style>
 	    <style type="text/css" media="screen">@import 'css/wwarn.css';</style>
 	    <script type="text/javascript" src="js/common_rosters.js"></script>
-	    <link rel="icon" href="<%= request.getContextPath() %>/favicon.ico" type="image/x-icon" />
+        <link rel="icon" href="http://www.wwarn.org/sites/default/files/wwarn_favicon.ico" type="image/x-icon" />
 	    <style type="text/css">
 #msg, #status {
 	padding: 5px;
