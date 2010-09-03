@@ -89,6 +89,17 @@
 
                	</xhtml:div>
                	
+				<xhtml:script type="text/javascript">
+				var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+				document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+				</xhtml:script>
+				<xhtml:script type="text/javascript">
+				try{ 
+				var pageTracker = _gat._getTracker("UA-7755559-10");
+				pageTracker._trackPageview();
+				} catch(err) {} 
+				</xhtml:script>
+               	
             </xhtml:body>
             
             <!-- Scripts at the bottom of the page. This is not valid HTML, but it is a recommended practice for
