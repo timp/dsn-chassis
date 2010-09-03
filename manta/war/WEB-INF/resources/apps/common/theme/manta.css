@@ -410,3 +410,8 @@ ul {
 	display:none;
 	visibility:hidden;
 }
+
+.hidden-tab {
+	display:none !important;
+	visibility:hidden !important;
+}
