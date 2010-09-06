@@ -78,8 +78,6 @@
 					<feverMeasurement />
 					<haemoglobinRecording>
 						<haemoglobinRecordingType />
-						<haemoglobinRecordingHbType />
-						<haemoglobinRecordingHbTypeOther />
 					</haemoglobinRecording>
 				</followup>
 				<microscopy>
