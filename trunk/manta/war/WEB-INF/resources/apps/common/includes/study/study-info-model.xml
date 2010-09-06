@@ -220,8 +220,6 @@
 						<xforms:bind nodeset="feverMeasurement" />
 						<xforms:bind nodeset="haemoglobinRecording">
 							<xforms:bind nodeset="haemoglobinRecordingType" />
-							<xforms:bind nodeset="haemoglobinRecordingHbType"
-								relevant="contains(../haemoglobinRecordingType,'hb')" />
 						</xforms:bind>
 					</xforms:bind>
 					<xforms:bind nodeset="microscopy">

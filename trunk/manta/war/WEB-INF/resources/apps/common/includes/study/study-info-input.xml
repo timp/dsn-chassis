@@ -1293,21 +1293,6 @@
 									<xforms:value ref="value" />
 								</xforms:itemset>
 							</xforms:select1>
-							<xforms:select1 ref="haemoglobinRecordingHbType"
-								appearance="minimal">
-								<xforms:label>hb recording type</xforms:label>
-								<xforms:item>
-									<xforms:label />
-									<xforms:value />
-								</xforms:item>
-								<xforms:itemset model="mod-study-info"
-									nodeset="instance('ins-haemoglobinRecordingHbType-items')/haemoglobinRecordingHbType">
-									<xforms:label ref="label" />
-									<xforms:value ref="value" />
-								</xforms:itemset>
-							</xforms:select1>
-							<!--  TODO check is other input box required -->
-
 						</xforms:group>
 
 					</xforms:group>
