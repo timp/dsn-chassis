@@ -1,0 +1,5 @@
+@import "xhtml.css";
+
+col, colgroup {
+  display : none;
+}

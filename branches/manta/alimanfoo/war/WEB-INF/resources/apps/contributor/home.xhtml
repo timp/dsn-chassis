@@ -1,0 +1,245 @@
+<!--
+  Copyright (C) 2010 University of Oxford.
+  
+  This program is free software; you can redistribute it and/or modify it under the terms of the
+  GNU Lesser General Public License as published by the Free Software Foundation; either version
+  2.1 of the License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Lesser General Public License for more details.
+
+  The full text of the license is available at http://www.gnu.org/copyleft/lesser.html
+  -->
+<?oxygen NVDLSchema="../../../../../oxygen/samples/nvdl/xhtml-xforms-11-orbeon.nvdl"?>
+<html 
+	xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:f="http://orbeon.org/oxf/xml/formatting" 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:atom="http://www.w3.org/2005/Atom"
+    xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:manta="http://www.cggh.org/2010/chassis/manta/xmlns"
+	xmlns:atombeat="http://purl.org/atombeat/xmlns">
+    
+    <head>
+    
+        <title>Data home</title>
+
+        
+        <xforms:model>
+
+        	<!-- non-persistent model for application state -->
+        	<xforms:instance id="ins-control">
+        		<control xmlns="">
+        			<contributor-controls/>
+        			<curator-controls/>
+        			<administrator-controls/>
+        		</control>
+        	</xforms:instance>
+        	
+			<xforms:bind nodeset="instance('ins-control')/contributor-controls" relevant="xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CONTRIBUTOR'"/>
+			<xforms:bind nodeset="instance('ins-control')/curator-controls" relevant="xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CURATOR'"/>
+			<xforms:bind nodeset="instance('ins-control')/administrator-controls" relevant="xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_ADMINISTRATOR'"/>
+
+
+			<xforms:instance id="ins-draft-feed">
+				<atom:feed/>
+			</xforms:instance>
+
+			<xforms:submission 
+				id="sub-retrieve-draft-feed"
+				resource="/atombeat/content/drafts"
+				method="get"
+				replace="instance"
+				instance="ins-draft-feed"
+				serialization="none">
+				<!-- TODO error handling -->
+				<!-- 
+                <xforms:message ev:event="xforms-submit-error" level="modal">
+                	An error occurred (<xforms:output value="event('error-type')"/>) while retrieving a list of drafts.
+               	</xforms:message>
+               	 -->
+               	
+               	<xforms:action ev:event="xforms-submit-error">
+               	
+               		<xforms:message level="modal" if="event('error-type')='resource-error'">
+                			An error occurred white retrieving a list of drafts.
+               		</xforms:message>
+               		<xforms:message level="modal" if="not(event('error-type')='resource-error')">>
+                			An error occurred (<xforms:output value="event('error-type')"/>) while retrieving a list of drafts.
+               		</xforms:message>
+               		
+               	</xforms:action>
+               	
+               	
+			</xforms:submission>
+        
+        	<xforms:send 
+				ev:event="xforms-model-construct-done" 
+				submission="sub-retrieve-draft-feed"/>
+				
+				
+			<!--  -->
+        
+			<xforms:instance id="ins-study-feed">
+				<atom:feed/>
+			</xforms:instance>
+			
+			<xforms:submission 
+				id="sub-retrieve-study-feed"
+				resource="/atombeat/content/studies"
+				method="get"
+				replace="instance"
+				instance="ins-study-feed"
+				serialization="none">
+				<!-- TODO error handling -->
+                <xforms:message ev:event="xforms-submit-error" level="modal">
+                	An error occurred (<xforms:output value="event('error-type')"/>) while retrieving a list of studies.
+               	</xforms:message>
+			</xforms:submission>
+			
+			<xforms:send 
+				ev:event="xforms-model-construct-done" 
+				submission="sub-retrieve-study-feed"/>
+				
+    		
+			
+        </xforms:model>
+
+       	<xi:include href="../common/includes/current-user-model.xml"/>
+
+    </head>
+    <body>
+
+		<!-- Body header -->
+                <div id="header" class="header">
+					<h1 class="logo"><a href="/" f:url-norewrite="true" target="_blank">WWARN - Worldwide Antimalarial Resistance Network</a></h1>
+
+							    <div id="block-menu-primary-links">
+								    <ul id="primary" class="clearfix">
+								    	<li class="active-trail {if (not(xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CONTRIBUTOR')) then 'hidden-tab' else ''}"><a href="/contributor/home">Data Home</a></li>
+								    	<li class="{if (not(xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CURATOR')) then 'hidden-tab' else ''}"><a href="/curator/home">Curator Home</a></li>
+								    	<li class="{if (not(xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CONTRIBUTOR')) then 'hidden-tab' else ''}"><a href="/contributor/register-study-wizard">Register Study</a></li>
+								    	<li class="{if (not(xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CONTRIBUTOR')) then 'hidden-tab' else ''}"><a href="/contributor/my-studies">My Studies</a></li>
+								    	<li><a href="/" f:url-norewrite="true" target="_blank">WWARN Website</a></li>
+								    </ul>
+							    </div>
+
+					<div class="secondary-wrap">
+						<xi:include href="../common/includes/current-user-actions.xml"/>
+					</div>
+				</div>
+		<!-- End of Body header -->
+
+		<!-- After body header, before content id -->
+                <div id="holdall">
+                	<div id="main-inner">
+                		<div class="content page">
+		                	<div id="bd" class="clearfix">
+
+								<div class="help">
+						
+									<p>For more information on sharing data with WWARN, including information on the types of data WWARN accepts, visit our section on <a href="/node/42" target="_blank" f:url-norewrite="true">contributing data</a> or contact us directly at <a href="mailto:curation@wwarn.org." target="_blank">curation@wwarn.org</a>.
+									</p>
+								
+								</div>   		                	
+		                	
+				                <div class="no-bg">
+				                	<div class="main twoCol">
+		<!-- End of After body header, before content id -->
+
+
+
+		<div id="content" class="home">
+    
+			<h1>Welcome to the WWARN Data Repository</h1>
+			 
+			<p>WWARN has invited you to submit data as part of our trial phase. Your feedback will be invaluable in ensuring
+our online data submission system is robust and user-friendly. If you have any questions or require assistance
+contributing data, contact us at <a href="mailto:curation@wwarn.org" target="_blank">curation@wwarn.org</a>.
+</p>
+
+<p>The submission process requires you to register your study and then to provide details of the study using a
+Study Site Questionnaire. Registering a study is a five-step process. Only Step 1 is mandatory to complete
+the registration. All the other information can be completed during subsequent sessions or by a nominated
+administrator (see Step 2).
+
+
+			</p>   	
+
+			<!-- For contributor -->
+			<xforms:group ref="instance('ins-control')/contributor-controls">
+			
+	    		<span id="register-study-link-container"><a href="register-study-wizard" class="btn">Register study</a></span>
+	    		
+	    	</xforms:group>
+	    	
+
+		    <h2>Draft studies</h2>
+			
+			<p>Information is saved automatically as you move forward through the steps of the registration process. You don&#8217;t
+need to upload all your information at the same session. Click the &#8216;Save as draft&#8217; button at the bottom of each
+step to save information submitted to date. Once study registration is completed, your study can be accessed at
+any time on the Data home: see &#8216;My studies&#8217;.
+			</p>
+			
+			<xforms:group ref="instance('ins-draft-feed')[empty(atom:entry)]">
+			
+				<!-- When no drafts. -->
+			
+    		</xforms:group> 
+
+    		<xforms:group ref="instance('ins-draft-feed')[count(atom:entry)>0]">
+
+				<div id="list-of-drafts-container">
+
+		
+							<ul>
+			    				<xforms:repeat id="rep-draft" nodeset="xxforms:sort(instance('ins-draft-feed')/atom:entry, atom:published, 'text', 'ascending')">
+			    					<li class="repeated-element">
+			    						<span class="draft-link-container"><a href="register-study-wizard?draft={atom:link[@rel='edit']/@href}"><xforms:output value="atom:title"/> (<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')" />)
+			    						
+			    							<xforms:group ref="instance('ins-control')/administrator-controls">
+			    								by <xforms:output value="xxforms:context('rep-draft')/atom:author"/>
+			    							</xforms:group>
+			    						
+			    						</a></span>
+			    					</li>
+			    				</xforms:repeat>
+			    			</ul>
+
+	    			
+	    		</div>
+		    			
+    		</xforms:group>    		
+
+			<xi:include href="includes/my-studies-table.xml"/>
+    		
+    	</div>
+
+                		
+  
+    	
+    	<!-- After content id, before ft id -->
+				                	</div>
+				                </div>
+		                	</div>
+
+		                	<div class="background">
+		                	
+								
+		                	
+		                	</div>
+		                	
+                		</div>
+                	</div>
+                </div>
+
+		<!-- End of After content id, before ft id -->
+
+    </body>
+</html>

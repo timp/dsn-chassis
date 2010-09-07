@@ -1,0 +1,10 @@
+<atom:entry xmlns:atom="http://www.w3.org/2005/Atom">
+	<atom:title type="text" />
+	<atom:content type="application/vnd.chassis-manta+xml">
+		<study xmlns="" profile="http://www.cggh.org/2010/chassis/manta/1.0">
+			<study-is-published />
+			<publications />
+			<acknowledgements />
+		</study>
+	</atom:content>
+</atom:entry>
