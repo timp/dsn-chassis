@@ -1,15 +1,5 @@
 <!--  Closed list of anti-malarial drugs  -->
 <drugMolecules xmlns="">
-
- 
- <!--  
- Pyronamide
- added by LW but queried by CM  
- -->
- 
- 
- 
- 
 	<drugMolecule>
 		<label>amodiaquine</label>
 		<value>AQ</value>
