@@ -402,5 +402,17 @@ Modify catalina.sh if running tomcat as local user :
     </plugins>
   </reporting>
   
+ <distributionManagement>
+   <!-- use the following if you're not using a snapshot version. -->
+   <repository>
+     <id>repo</id>
+     <name>cggh</name>
+     <url>file://localhost/var/lib/hudson/maven2</url>
+   </repository>
+    <site>
+      <id>local</id>
+      <url>file://localhost/var/www/chassis/</url>
+    </site>
+ </distributionManagement>
 
 </project>
