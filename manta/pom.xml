@@ -6,7 +6,127 @@
   <packaging>war</packaging>
   <version>1.0-SNAPSHOT</version>
   <name>Chassis Manta Webapp</name>
-  <url>http://cloud1.cggh.org/manta</url>
+  <description>
+CGGH Chassis Data Sharing Network.
+  </description>
+  
+  <url>http://code.google.com/p/dsn-chassis/</url>
+
+  <issueManagement>
+   <system>Google Code</system>
+    <url>       
+http://code.google.com/p/dsn-chassis/issues/list
+    </url>
+  </issueManagement>
+
+  <inceptionYear>2009</inceptionYear>
+
+  <organization>
+    <name>CGGH</name>
+    <url>http://www.cggh.org/</url>
+  </organization>
+
+  <ciManagement>
+    <system>Hudson</system>
+    <url>http://hudson.cggh.org/</url>
+  </ciManagement>
+
+
+  <mailingLists>
+    <mailingList>
+      <name>dsn-chassis</name>
+      <archive>
+http://groups.google.com/group/dsn-chassis
+      </archive>
+    </mailingList>
+    <mailingList>
+      <name>dsn-chassis-svn</name>
+      <archive>
+http://groups.google.com/group/dsn-chassis-svn
+      </archive>
+    </mailingList>
+  </mailingLists>
+  
+  <developers>
+    <developer>
+      <name>Alistair Miles</name>
+      <id>alimanfoo</id>
+      <organization>
+        CGGH
+      </organization>
+      <organizationUrl>http://www.cggh.org/</organizationUrl>
+      <roles>
+        <role>Owner</role>
+      </roles>
+      <timezone>0</timezone>
+    </developer>
+    <developer>
+      <name>Lee Hart</name>
+      <id>l33h4r7</id>
+      <roles>
+        <role>Committer</role>
+      </roles>
+      <timezone>0</timezone>
+      <organization>
+        CGGH
+      </organization>
+      <organizationUrl>http://www.cggh.org/</organizationUrl>
+    </developer>
+    <developer>
+      <name>Tim Pizey</name>
+      <id>tim.pizey</id>
+      <roles>
+        <role>Committer</role>
+      </roles>
+      <timezone>0</timezone>
+      <url>http://pizey.net/~timp</url>
+      <organization>
+        CGGH
+      </organization>
+      <organizationUrl>http://www.cggh.org/</organizationUrl>
+    </developer>
+    <developer>
+      <name>Krisna Rao</name>
+      <id>Krisna.Rao</id>
+      <roles>
+        <role>Committer</role>
+      </roles>
+      <timezone>0</timezone>
+      <organization>
+        CGGH
+      </organization>
+      <organizationUrl>http://www.cggh.org/</organizationUrl>
+    </developer>
+    <developer>
+      <name>Ian Wright</name>
+      <id>ian.wellcome</id>
+      <roles>
+        <role>Committer</role>
+      </roles>
+      <timezone>0</timezone>
+      <organization>
+        CGGH
+      </organization>
+      <organizationUrl>http://www.cggh.org/</organizationUrl>
+    </developer>
+  </developers>
+
+  <licenses>
+   <license>
+    <name>GNU General Public License v3</name>
+    <url>http://www.gnu.org/licenses/gpl.html</url>
+    <distribution>repo</distribution>
+   </license>
+  </licenses>
+  
+  
+  <scm>
+    <url>http://dsn-chassis.googlecode.com/svn/trunk/manta</url>
+    <connection>scm:svn:http://dsn-chassis.googlecode.com/svn/trunk/manta/</connection>
+    <developerConnection>scm:svn:https://dsn-chassis.googlecode.com/svn/trunk/manta/</developerConnection>
+  </scm>
+  
+  
   <!--
 Do the following to get our own jars installed: 
   
@@ -22,47 +142,55 @@ mvn install:install-file -DgroupId=org.exist -DartifactId=exist-versioning -Dver
   <properties>
      <targetHost>http://cloud1.cggh.org</targetHost>
   </properties>
+  
   <dependencies>
     <dependency>
       <groupId>org.exist</groupId>
       <artifactId>exist</artifactId>
       <version>1.4.0</version>
-	  <classifier>orbeon_20100330</classifier>
+      <classifier>orbeon_20100330</classifier>
+      <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.exist</groupId>
       <artifactId>exist-xmldb</artifactId>
       <version>unknown</version>
+      <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.exist</groupId>
       <artifactId>exist-optional</artifactId>
       <version>1.4.0</version>
       <classifier>orbeon_20100330</classifier>
+      <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.exist</groupId>
       <artifactId>exist-versioning</artifactId>
       <version>1.4.0</version>
       <classifier>orbeon_20100330</classifier>
+      <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.abdera</groupId>
       <artifactId>abdera-core</artifactId>
       <version>0.4.0</version>
       <classifier>incubating-SNAPSHOT</classifier>
+      <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.abdera</groupId>
       <artifactId>abdera-i18n</artifactId>
       <version>0.4.0</version>
       <classifier>incubating-SNAPSHOT</classifier>
+      <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.abdera</groupId>
       <artifactId>abdera-server</artifactId>
       <version>0.4.0</version>
       <classifier>incubating-SNAPSHOT</classifier>
+      <scope>compile</scope>
     </dependency>
     <dependency>
      <groupId>org.springframework</groupId>
@@ -74,6 +202,7 @@ mvn install:install-file -DgroupId=org.exist -DartifactId=exist-versioning -Dver
       <groupId>org.springframework.security</groupId>
       <artifactId>spring-security-core</artifactId>
       <version>2.0.5.RELEASE</version>
+      <scope>compile</scope>
     </dependency> 
     <dependency>
       <groupId>log4j</groupId>
@@ -264,4 +393,14 @@ Modify catalina.sh if running tomcat as local user :
     </profile>
   </profiles>
 	
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-changelog-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </reporting>
+  
+
 </project>
