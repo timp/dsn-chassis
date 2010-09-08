@@ -761,12 +761,23 @@
 																					</xforms:trigger>
 																				</td>
 																				<td class="form-td">
-																					<xforms:input ref="activeIngredientName">
-																						<xforms:label>Active ingredient</xforms:label>
-																					</xforms:input>
+
+
+																					<xforms:select1 ref="activeIngredientName"
+																						appearance="minimal">
+																						<xforms:label class="fixed-width">Active ingredient
+																						</xforms:label>
+																						<xforms:itemset model="mod-study-info"
+																							nodeset="instance('ins-drugMolecule-items')/drugMolecule">
+																							<xforms:label ref="label" />
+																							<xforms:value ref="value" />
+																						</xforms:itemset>
+																					</xforms:select1>
+
+
 																					<xforms:input ref="activeIngredientMgPerDose"
 																						class="fourWide">
-																						<xforms:label>Mg per dose</xforms:label>
+																						<xforms:label class="fourWide">Mg per dose</xforms:label>
 																					</xforms:input>
 																				</td>
 																			</tr>
@@ -3135,7 +3146,7 @@
 									</td>
 									<td class="form-td">
 										<xforms:input ref="lowerLoQ" class="fourWide">
-											<xforms:label class="invisible"/>
+											<xforms:label class="invisible" />
 											<xforms:hint>Lower limit of quantification</xforms:hint>
 										</xforms:input>
 									</td>
