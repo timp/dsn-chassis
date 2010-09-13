@@ -186,9 +186,9 @@
 												<xforms:bind nodeset="doseUnit" />
 											</xforms:bind>
 										</xforms:bind>
-										<xforms:bind nodeset="wGroupDosing"
+										<xforms:bind nodeset="weightGroupDosing"
 											relevant="contains(../drugDosingDeterminant, 'wGroup')">
-											<xforms:bind nodeset="wGroupDosingSchedule">
+											<xforms:bind nodeset="weightGroupDosingSchedule">
 												<xforms:bind nodeset="weightFrom" />
 												<xforms:bind nodeset="weightTo" />
 												<xforms:bind nodeset="dose" />
@@ -723,16 +723,16 @@
 					<doseUnit />
 				</ageDosingSchedule>
 			</ageDosing>
-			<wGroupDosing>
-				<wGroupDosingSchedule>
+			<weightGroupDosing>
+				<weightGroupDosingSchedule>
 					<day />
 					<hour />
 					<wGroupFrom />
 					<wGroupTo />
 					<dose />
 					<doseUnit />
-				</wGroupDosingSchedule>
-			</wGroupDosing>
+				</weightGroupDosingSchedule>
+			</weightGroupDosing>
 			<weightDosing>
 				<weightDosingSchedule>
 					<day />
@@ -759,15 +759,15 @@
 		</ageDosingSchedule>
 	</xforms:instance>
 
-	<xforms:instance id="ins-wGroupDosingSchedule">
-		<wGroupDosingSchedule xmlns="">
+	<xforms:instance id="ins-weightGroupDosingSchedule">
+		<weightGroupDosingSchedule xmlns="">
 			<day />
 			<hour />
 			<wGroupFrom />
 			<wGroupTo />
 			<dose />
 			<doseUnit />
-		</wGroupDosingSchedule>
+		</weightGroupDosingSchedule>
 	</xforms:instance>
 
 	<xforms:instance id="ins-weightDosingSchedule">
