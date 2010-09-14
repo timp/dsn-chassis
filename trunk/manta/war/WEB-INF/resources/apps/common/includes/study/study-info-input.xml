@@ -761,23 +761,12 @@
 																					</xforms:trigger>
 																				</td>
 																				<td class="form-td">
-
-
-																					<xforms:select1 ref="activeIngredientName"
-																						appearance="minimal">
-																						<xforms:label class="fixed-width">Active ingredient
-																						</xforms:label>
-																						<xforms:itemset model="mod-study-info"
-																							nodeset="instance('ins-drugMolecule-items')/drugMolecule">
-																							<xforms:label ref="label" />
-																							<xforms:value ref="value" />
-																						</xforms:itemset>
-																					</xforms:select1>
-
-
+																					<xforms:input ref="activeIngredientName">
+																						<xforms:label>Active ingredient</xforms:label>
+																					</xforms:input>
 																					<xforms:input ref="activeIngredientMgPerDose"
 																						class="fourWide">
-																						<xforms:label class="fourWide">Mg per dose</xforms:label>
+																						<xforms:label>Mg per dose</xforms:label>
 																					</xforms:input>
 																				</td>
 																			</tr>
@@ -974,7 +963,7 @@
 
 
 																</xforms:group>
-																<xforms:group ref="weightGroupDosing">
+																<xforms:group ref="wGroupDosing">
 
 																	<table class="repeat-table">
 																		<tr>
@@ -994,8 +983,8 @@
 																			<th>Dose</th>
 																			<th>Unit</th>
 																		</tr>
-																		<xforms:repeat nodeset="weightGroupDosingSchedule"
-																			id="rep-weightGroupDosingSchedule">
+																		<xforms:repeat nodeset="wGroupDosingSchedule"
+																			id="rep-wGroupDosingSchedule">
 																			<tr>
 																				<td>
 																					<xforms:trigger appearance="minimal">
@@ -1004,7 +993,7 @@
 																						</xforms:label>
 																						<xforms:delete ev:event="DOMActivate"
 																							context="." nodeset="."
-																							at="index('rep-weightGroupDosingSchedule')" />
+																							at="index('rep-wGroupDosingSchedule')" />
 																					</xforms:trigger>
 																				</td>
 																				<td class="form-td">
@@ -1057,18 +1046,18 @@
 																						<img src="/apps/common/theme/add.gif" alt="add" />
 																					</xforms:label>
 																					<xforms:insert ev:event="DOMActivate"
-																						context="." nodeset="weightGroupDosingSchedule"
-																						at="count(../weightGroupDosingSchedule)" position="after"
-																						origin="instance('ins-weightGroupDosingSchedule')" />
+																						context="." nodeset="wGroupDosingSchedule"
+																						at="count(../wGroupDosingSchedule)" position="after"
+																						origin="instance('ins-wGroupDosingSchedule')" />
 																				</xforms:trigger>
 																			</td>
 																			<td class="add-td" colspan="6">
 																				<xforms:trigger appearance="minimal">
 																					<xforms:label>Add a schedule</xforms:label>
 																					<xforms:insert ev:event="DOMActivate"
-																						context="." nodeset="weightGroupDosingSchedule"
-																						at="count(../weightGroupDosingSchedule)" position="after"
-																						origin="instance('ins-weightGroupDosingSchedule')" />
+																						context="." nodeset="wGroupDosingSchedule"
+																						at="count(../wGroupDosingSchedule)" position="after"
+																						origin="instance('ins-wGroupDosingSchedule')" />
 																				</xforms:trigger>
 																			</td>
 																		</tr>
@@ -3146,7 +3135,7 @@
 									</td>
 									<td class="form-td">
 										<xforms:input ref="lowerLoQ" class="fourWide">
-											<xforms:label class="invisible" />
+											<xforms:label class="invisible"/>
 											<xforms:hint>Lower limit of quantification</xforms:hint>
 										</xforms:input>
 									</td>

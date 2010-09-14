@@ -807,12 +807,11 @@
 									    	<!-- Wizard panes -->
 									    	<!-- The extra wrappers hide the user interface while processing occurs, otherwise there are screen blips, i.e. momentary inappropriate UI-presentations. -->
 									    	<!--  -->
-									    	
-									    	<!-- NB: wizard-pane-to-show='study-terms' group not included so that browser-back navigation from step 2 still has content. -->
-								    		<xforms:group ref="instance('ins-control')[wizard-pane-being-shown='study-terms']">
-								    			<xi:include href="includes/wizard-panes/study-terms.xml"/>
-								    		</xforms:group>
-									    	
+											<xforms:group ref="instance('ins-draft-entry')/atom:content/draft[wizard-pane-to-show='study-terms']">
+									    		<xforms:group ref="instance('ins-control')[wizard-pane-being-shown='study-terms']">
+									    			<xi:include href="includes/wizard-panes/study-terms.xml"/>
+									    		</xforms:group>
+									    	</xforms:group>
 									    	
 									    	<xforms:group ref="instance('ins-draft-entry')/atom:content/draft[wizard-pane-to-show='permissions']">
 										    	<xforms:group ref="instance('ins-control')[wizard-pane-being-shown='permissions']">
