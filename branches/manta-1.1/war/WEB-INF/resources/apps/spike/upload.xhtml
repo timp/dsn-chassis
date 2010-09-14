@@ -1,0 +1,193 @@
+<!--
+  Copyright (C) 2010 University of Oxford.
+  
+  This program is free software; you can redistribute it and/or modify it under the terms of the
+  GNU Lesser General Public License as published by the Free Software Foundation; either version
+  2.1 of the License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Lesser General Public License for more details.
+
+  The full text of the license is available at http://www.gnu.org/copyleft/lesser.html
+  -->
+<?oxygen NVDLSchema="../../../../../oxygen/samples/nvdl/xhtml-xforms-11-orbeon.nvdl"?>
+<html 
+	xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:f="http://orbeon.org/oxf/xml/formatting" 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:atom="http://www.w3.org/2005/Atom"
+    xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:manta="http://www.cggh.org/2010/chassis/manta/xmlns"
+	xmlns:atombeat="http://purl.org/atombeat/xmlns">
+    
+    <head>
+    
+        <title>Spike Upload</title>
+        
+        <xforms:model>
+
+        	<xforms:instance id="ins-upload">
+        		<upload xmlns="">
+        			<summary/>
+        			<media
+        				filename=""
+        				mediatype=""
+        				size=""
+        				xsi:type="xs:anyURI"/>
+        			<category>term="foo"; scheme="bar"; label="baz"</category>
+        		</upload>
+        	</xforms:instance>
+        	
+        	<xforms:instance id="ins-upload-template">
+        		<upload xmlns="">
+        			<summary/>
+        			<media
+        				filename=""
+        				mediatype=""
+        				size=""
+        				xsi:type="xs:anyURI"/>
+        			<category>term="foo"; scheme="bar"; label="baz"</category>
+        		</upload>
+        	</xforms:instance>
+
+        	<xforms:submission 
+        		id="sub-background-upload" 
+        		ref="instance('ins-upload')" 
+        		method="post" 
+        		replace="none" 
+        		resource="test:"
+        		validate="false"/>
+        	
+        	<xforms:submission
+        		id="sub-form-data-post"
+        		method="form-data-post"
+        		resource="/atombeat/content/sandbox"
+        		replace="instance"
+        		instance="ins-post-response"
+        		ref="instance('ins-upload')">
+        		<xforms:header>
+        			<xforms:name>Accept</xforms:name>
+        			<xforms:value>application/atom+xml</xforms:value>
+        		</xforms:header>
+        		<xforms:send ev:event="xforms-submit-done" submission="sub-get-feed"/>
+        		<xforms:insert ev:event="xforms-submit-done" nodeset="instance('ins-upload')" origin="instance('ins-upload-template')"/>
+        	</xforms:submission>
+        	
+        	<xforms:instance id="ins-post-response">
+        		<foo xmlns=""/>
+        	</xforms:instance>
+ 
+ 			<xforms:submission
+ 				id="sub-get-feed"
+ 				method="get"
+ 				resource="/atombeat/content/sandbox"
+ 				replace="instance"
+ 				instance="ins-feed"
+ 				serialization="none">
+ 				
+ 			</xforms:submission>
+        	
+        	<xforms:instance id="ins-feed">
+        		<atom:feed/>
+        	</xforms:instance>
+        	
+        	<xforms:send ev:event="xforms-model-construct-done" submission="sub-get-feed"/>
+        	
+        </xforms:model>
+
+    </head>
+    <body>
+
+    	<h1>Spike Upload</h1>
+    	
+    	
+    	<xforms:group ref="instance('ins-upload')">
+
+    		<p>
+    			
+    			<!-- Upload field -->
+    			<xforms:upload ref="media" xxforms:size="60">
+    				<xforms:label>Upload file: </xforms:label>
+    				<xforms:filename ref="@filename"/>
+    				<xforms:mediatype ref="@mediatype"/>
+    				<xxforms:size ref="@size"/>
+    			</xforms:upload>
+    			
+    			<xforms:output value="media" appearance="xxforms:download">
+    				<xforms:label>Download</xforms:label>
+    				<xforms:filename ref="@filename"/>
+    				<xforms:mediatype ref="@mediatype"/>
+    			</xforms:output>
+    		
+    		</p>
+    		
+    		<p>
+    			<xforms:textarea ref="summary">
+    				<xforms:label>Summary: </xforms:label>
+    			</xforms:textarea>
+    		</p>
+
+    	</xforms:group>
+    	
+    	<p>
+    		<xforms:submit submission="sub-form-data-post">
+    			<xforms:label>Submit (form-data-post)</xforms:label>
+    		</xforms:submit>
+    	</p>
+    	
+    	<hr/>
+
+    	<fr:datatable paginated="false">
+    		<thead>
+    			<tr>
+    				<th fr:sortable="true" fr:resizeable="true">File Name</th>
+    				<th fr:sortable="true" fr:resizeable="true">Published</th>
+    				<th fr:sortable="true" fr:resizeable="true">Author</th>
+    				<th>Summary</th>
+    				<th>Actions</th>
+    			</tr>
+    		</thead>
+    		<tbody>
+    			<xforms:repeat id="rep-media" nodeset="instance('ins-feed')/atom:entry">
+    				<tr>
+    					<td>
+    						<xforms:output ref="atom:title"/>
+    					</td>
+    					<td>
+    						<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')"/>
+    					</td>
+    					<td>
+    						<xforms:output ref="atom:author/atom:email"/>
+    					</td>
+    					<td>
+    						<xforms:output ref="atom:summary"/>
+    					</td>
+    					<td>
+    						<xforms:group ref=".[contains( ./atom:link[@rel='edit-media']/@atombeat:allow , 'GET' )]">
+    							<a href="{atom:content/@src}">Download</a>
+    						</xforms:group>
+    						<xforms:trigger appearance="minimal">
+    							<xforms:label>Copy</xforms:label>
+    							<xforms:action ev:event="DOMActivate">
+    								<xforms:setvalue ref="instance('ins-upload')/media" value="xxforms:context('rep-media')/atom:link[@rel='edit-media']/@href"/>
+    								<xforms:setvalue ref="instance('ins-upload')/media/@filename" value="xxforms:context('rep-media')/atom:title"/>
+    								<xforms:setvalue ref="instance('ins-upload')/media/@mediatype" value="xxforms:context('rep-media')/atom:link[@rel='edit-media']/@type"/>
+    								<xforms:setvalue ref="instance('ins-upload')/media/@size" value="xxforms:context('rep-media')/atom:link[@rel='edit-media']/@length"/>
+    							</xforms:action>
+    						</xforms:trigger>
+    					</td>
+    				</tr>
+    			</xforms:repeat>
+    		</tbody>
+    	</fr:datatable>
+    		
+    	
+    </body>
+</html>
+

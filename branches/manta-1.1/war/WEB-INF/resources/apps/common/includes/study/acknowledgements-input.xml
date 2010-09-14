@@ -1,0 +1,114 @@
+<div	
+    xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:f="http://orbeon.org/oxf/xml/formatting" 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:atom="http://www.w3.org/2005/Atom"
+    xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
+    xmlns:xi="http://www.w3.org/2001/XInclude">
+    
+    <xforms:group ref="acknowledgements">
+        
+        <table class="repeat-table">
+            <tr>
+                <td>
+                    <xforms:trigger appearance="minimal">
+                        <xforms:label><img src="/apps/submitter/common/add.gif"/></xforms:label>
+                        <xforms:insert 
+                            ev:event="DOMActivate" 
+                            context="." 
+                            nodeset="person" 
+                            at="1" 
+                            position="before" 
+                            origin="instance('ins-person-template')"/>
+                    </xforms:trigger>
+                </td>
+                <td class="add-td">
+                    <xforms:trigger appearance="minimal">
+                        <xforms:label>Add an Acknowledgement </xforms:label>
+                        <xforms:insert 
+                            ev:event="DOMActivate" 
+                            context="." 
+                            nodeset="person" 
+                            at="1" 
+                            position="before" 
+                            origin="instance('ins-person-template')"/>
+                    </xforms:trigger>
+                </td>
+            </tr>
+            <xforms:repeat nodeset="person" id="person-repeat">
+                <tr>
+                    <td>
+                        <xforms:trigger appearance="minimal">
+                            <xforms:delete 
+                                ev:event="DOMActivate" 
+                                context="." 
+                                nodeset="." 
+                                at="index('person-repeat')"/>
+                            <xforms:label><img src="/apps/submitter/common/remove.gif"/></xforms:label>
+                        </xforms:trigger>
+                    </td>
+                    <td class="form-td">
+                        <xforms:input ref="given-name">
+                            <xforms:label class="fixed-width">Given name: </xforms:label>
+                        </xforms:input>
+                        <br/>
+                        <xforms:input ref="family-name">
+                            <xforms:label class="fixed-width">Family name: </xforms:label>
+                        </xforms:input>
+                        <br/>
+                        <xforms:input ref="email">
+                            <xforms:label class="fixed-width">Email address: </xforms:label>
+                        </xforms:input>
+                        <br/>
+                        <xforms:input ref="url">
+                            <xforms:label class="fixed-width">Web page: </xforms:label>
+                        </xforms:input>
+                        <br/>
+                        <xforms:input ref="organisation">
+                            <xforms:label>Host organisation or institution: </xforms:label>
+                        </xforms:input>
+                        <br/>
+                        
+                        <xforms:trigger appearance="minimal" ref=".[preceding-sibling::*]">
+                            <xforms:label>Move Up</xforms:label>
+                            <xforms:action ev:event="DOMActivate">
+                                <xforms:insert origin="context()" nodeset="preceding-sibling::*[1]" position="before"/>
+                                <xforms:delete nodeset="."/>
+                            </xforms:action>
+                        </xforms:trigger>
+                        
+                        <xforms:trigger appearance="minimal" ref=".[preceding-sibling::*]">
+                            <xforms:label><img src="/apps/fr/style/up.gif"/></xforms:label>
+                            <xforms:action ev:event="DOMActivate">
+                                <xforms:insert origin="context()" nodeset="preceding-sibling::*[1]" position="before"/>
+                                <xforms:delete nodeset="."/>
+                            </xforms:action>
+                        </xforms:trigger>
+                        
+                        <xforms:trigger appearance="minimal" ref=".[following-sibling::*]">
+                            <xforms:label>Move Down</xforms:label>
+                            <xforms:action ev:event="DOMActivate">
+                                <xforms:insert origin="context()" nodeset="following-sibling::*[1]"/>
+                                <xforms:delete nodeset="."/>
+                            </xforms:action>
+                        </xforms:trigger>
+                        
+                        <xforms:trigger appearance="minimal" ref=".[following-sibling::*]">
+                            <xforms:label><img src="/apps/fr/style/down.gif"/></xforms:label>
+                            <xforms:action ev:event="DOMActivate">
+                                <xforms:insert origin="context()" nodeset="following-sibling::*[1]"/>
+                                <xforms:delete nodeset="."/>
+                            </xforms:action>
+                        </xforms:trigger>
+                        
+                    </td>
+                </tr>
+            </xforms:repeat>
+        </table>
+        
+    </xforms:group>
+
+</div>
