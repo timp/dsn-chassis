@@ -1,20 +1,15 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.cggh.chassis</groupId>
-  <artifactId>chassis-parent</artifactId>
-    <version>1.0-alpha-5-SNAPSHOT</version>
-  <packaging>pom</packaging>
-  <name>CGGH Chassis</name>
-  <modules>
-    <module>wwarn</module>
-    <module>generic</module>
-    <module>manta-selenium</module>
-  </modules>
-
+  <artifactId>manta</artifactId>
+  <packaging>war</packaging>
+  <version>1.0-SNAPSHOT</version>
+  <name>Chassis Manta Webapp</name>
   <description>
 CGGH Chassis Data Sharing Network.
   </description>
+  
   <url>http://code.google.com/p/dsn-chassis/</url>
 
   <issueManagement>
@@ -36,19 +31,7 @@ http://code.google.com/p/dsn-chassis/issues/list
     <url>http://hudson.cggh.org/</url>
   </ciManagement>
 
-  <properties>
-    <javaVersion>1.6</javaVersion>
-    <gwtVersion>2.0.0</gwtVersion>
-    <gwtPluginVersion>1.2</gwtPluginVersion>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
 
-  <scm>
-    <url>http://dsn-chassis.googlecode.com/svn/tags/chassis-parent-0.1-alpha-3</url>
-    <connection>scm:svn:http://dsn-chassis.googlecode.com/svn/tags/chassis-parent-0.1-alpha-3</connection>
-    <developerConnection>scm:svn:https://dsn-chassis.googlecode.com/svn/tags/chassis-parent-0.1-alpha-3</developerConnection>
-  </scm>
-  
   <mailingLists>
     <mailingList>
       <name>dsn-chassis</name>
@@ -114,6 +97,18 @@ http://groups.google.com/group/dsn-chassis-svn
       </organization>
       <organizationUrl>http://www.cggh.org/</organizationUrl>
     </developer>
+    <developer>
+      <name>Ian Wright</name>
+      <id>ian.wellcome</id>
+      <roles>
+        <role>Committer</role>
+      </roles>
+      <timezone>0</timezone>
+      <organization>
+        CGGH
+      </organization>
+      <organizationUrl>http://www.cggh.org/</organizationUrl>
+    </developer>
   </developers>
 
   <licenses>
@@ -123,156 +118,286 @@ http://groups.google.com/group/dsn-chassis-svn
     <distribution>repo</distribution>
    </license>
   </licenses>
-
+  
+  
+  <scm>
+    <url>http://dsn-chassis.googlecode.com/svn/trunk/manta</url>
+    <connection>scm:svn:http://dsn-chassis.googlecode.com/svn/trunk/manta/</connection>
+    <developerConnection>scm:svn:https://dsn-chassis.googlecode.com/svn/trunk/manta/</developerConnection>
+  </scm>
+  
+  
+  <!--
+Do the following to get our own jars installed: 
+  
+mvn install:install-file -DgroupId=org.exist -DartifactId=exist -Dversion=1.4.0 -Dclassifier=orbeon_20100330 -Dpackaging=jar -Dfile=war/WEB-INF/lib/exist-1_4_0_orbeon_20100330.jar
+mvn install:install-file -DgroupId=org.exist -DartifactId=exist-xmldb -Dversion=unknown -Dpackaging=jar -Dfile=war/WEB-INF/lib/exist-xmldb.jar
+mvn install:install-file -DgroupId=org.apache.abdera -DartifactId=abdera-server -Dversion=0.4.0 -Dclassifier=incubating-SNAPSHOT -Dpackaging=jar -Dfile=war/WEB-INF/lib/abdera.client.0.4.0-incubating-SNAPSHOT.jar
+mvn install:install-file -DgroupId=org.exist -DartifactId=exist-optional -Dversion=1.4.0 -Dclassifier=orbeon_20100330 -Dpackaging=jar -Dfile=war/WEB-INF/lib/exist-optional-1_4_0_orbeon_20100330.jar
+mvn install:install-file -DgroupId=org.apache.abdera -DartifactId=abdera-core -Dversion=0.4.0 -Dclassifier=incubating-SNAPSHOT -Dpackaging=jar -Dfile=war/WEB-INF/lib/abdera.core.0.4.0-incubating-SNAPSHOT.jar
+mvn install:install-file -DgroupId=org.apache.abdera -DartifactId=abdera-i18n -Dversion=0.4.0 -Dclassifier=incubating-SNAPSHOT -Dpackaging=jar -Dfile=war/WEB-INF/lib/abdera-i18n-0.4.0-incubating-SNAPSHOT.jar
+mvn install:install-file -DgroupId=org.exist -DartifactId=exist-versioning -Dversion=1.4.0 -Dclassifier=orbeon_20100330 -Dpackaging=jar -Dfile=war/WEB-INF/lib/exist-versioning-1_4_0_orbeon_20100330.jar
+  -->
+      <!-- override in settings.xml -->
+  <properties>
+     <targetHost>http://cloud1.cggh.org</targetHost>
+  </properties>
+  
   <dependencies>
+    <dependency>
+      <groupId>org.exist</groupId>
+      <artifactId>exist</artifactId>
+      <version>1.4.0</version>
+      <classifier>orbeon_20100330</classifier>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.exist</groupId>
+      <artifactId>exist-xmldb</artifactId>
+      <version>unknown</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.exist</groupId>
+      <artifactId>exist-optional</artifactId>
+      <version>1.4.0</version>
+      <classifier>orbeon_20100330</classifier>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.exist</groupId>
+      <artifactId>exist-versioning</artifactId>
+      <version>1.4.0</version>
+      <classifier>orbeon_20100330</classifier>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.abdera</groupId>
+      <artifactId>abdera-core</artifactId>
+      <version>0.4.0</version>
+      <classifier>incubating-SNAPSHOT</classifier>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.abdera</groupId>
+      <artifactId>abdera-i18n</artifactId>
+      <version>0.4.0</version>
+      <classifier>incubating-SNAPSHOT</classifier>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.abdera</groupId>
+      <artifactId>abdera-server</artifactId>
+      <version>0.4.0</version>
+      <classifier>incubating-SNAPSHOT</classifier>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+     <groupId>org.springframework</groupId>
+     <artifactId>spring</artifactId>
+     <version>2.5.6.SEC01</version>
+     <scope>runtime</scope>
+    </dependency> 
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-core</artifactId>
+      <version>2.0.5.RELEASE</version>
+      <scope>compile</scope>
+    </dependency> 
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+      <version>1.2.12</version>
+      <scope>compile</scope>
+    </dependency>    
+    <dependency>
+      <groupId>commons-httpclient</groupId>
+      <artifactId>commons-httpclient</artifactId>
+      <version>3.1</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>commons-pool</groupId>
+      <artifactId>commons-pool</artifactId>
+      <version>1.3</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.xmlrpc</groupId>
+      <artifactId>xmlrpc-common</artifactId>
+      <version>3.1.2</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.xmlrpc</groupId>
+      <artifactId>xmlrpc-server</artifactId>
+      <version>3.1.2</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.ws.commons.util</groupId>
+      <artifactId>ws-commons-util</artifactId>
+      <version>1.0.2</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
+      <version>2.5</version>
+      <scope>provided</scope>
+    </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>3.8.2</version>
+      <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
-
+  
+  
   <build>
+    <finalName>manta</finalName>
+		<plugins>
+		  <plugin>
+       <groupId>org.apache.maven.plugins</groupId>
+       <artifactId>maven-resources-plugin</artifactId>
+       <configuration>
+         <overwrite>true</overwrite>
+       </configuration>
+	  	</plugin>
+      <plugin>
+       <groupId>org.apache.maven.plugins</groupId>
+       <artifactId>maven-compiler-plugin</artifactId>
+       <configuration>
+        <source>1.6</source>
+        <target>1.6</target>
+      <!--
+		<excludes>
+			<exclude>**/XMLDBStore*</exclude>
+			<exclude>**/GetData*</exclude>
+			<exclude>**/StoreUploadsServlet*</exclude>
+			<exclude>**/SpringSecuritySetUserRequestAttributesFilter*</exclude>
+		</excludes>
+	  -->
+       </configuration>
+      </plugin>
+      <plugin>
+       <groupId>org.apache.maven.plugins</groupId>
+       <artifactId>maven-surefire-plugin</artifactId>
+       <configuration>
+        <redirectTestOutputToFile>true</redirectTestOutputToFile>
+        <forkMode>once</forkMode>
+        <!-- threadCount>1</threadCount-->
+        <!-- childDelegation>false</childDelegation -->
+        <useFile>true</useFile>
+        <excludes>
+         <exclude>**/*Test.java</exclude>
+         <exclude>**/Test*.java</exclude>
+        </excludes>
+       </configuration>
+      </plugin>
+		  <plugin>
+        <artifactId>maven-war-plugin</artifactId>
+        <configuration>
+          <webResources>
+            <resource>
+             <directory>src/main/webapp/resources/atombeat</directory>
+              <targetPath>atombeat</targetPath>
+             <filtering>true</filtering>
+            </resource>
+          </webResources>
+			    <warSourceDirectory>war</warSourceDirectory>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+	
+  <profiles>
+    <profile>
+      <!--
+Modify catalina.sh if running tomcat as local user :
+
+   export CATALINA_PID=/var/run/tomcat6.pid
+
+   shift
+  
+  "$_RUNJAVA" $JAVA_OPTS \
+  -Djava.endorsed.dirs="$JAVA_ENDORSED_DIRS" -classpath "$CLASSPATH" \
+  -Dcatalina.base="$CATALINA_BASE" \
+  -Dcatalina.home="$CATALINA_HOME" \
+  -Djava.io.tmpdir="$CATALINA_TMPDIR" \
+  org.apache.catalina.startup.Bootstrap "$@" stop
+
+  if [ ! -z "$CATALINA_PID" ]; then
+   echo "Killing: `cat $CATALINA_PID`"
+   kill -9 `cat $CATALINA_PID`
+   echo rm $CATALINA_PID
+   rm $CATALINA_PID
+  else
+   echo "Kill failed: \$CATALINA_PID not set"
+  fi
+
+      -->
+
+      <id>tomcatRunning</id>
+      <activation>
+        <file>
+          <exists>/var/run/tomcat6.pid</exists>
+        </file>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.cargo</groupId>
+            <artifactId>cargo-maven2-plugin</artifactId>
+            <configuration>
+              <wait>true</wait>
+              <container>
+                <containerId>tomcat6x</containerId>
+                <type>remote</type>
+              </container>
+              <configuration>
+                <type>runtime</type>
+                <properties>
+                  <cargo.tomcat.manager.url>http://localhost:8080/manager</cargo.tomcat.manager.url>
+                  <cargo.remote.username>admin</cargo.remote.username>
+                  <cargo.remote.password />
+                </properties>
+              </configuration>
+              <deployer>
+                <type>remote</type>
+                <deployables>
+                  <deployable>
+                    <groupId>${project.groupId}</groupId>
+                    <artifactId>${project.artifactId}</artifactId>
+              <properties>
+              <context>${project.artifactId}</context>
+              </properties>
+                    <type>war</type>
+                  </deployable>
+                </deployables>
+              </deployer>
+            </configuration>
+            <executions>
+              <execution>
+                <id>do</id>
+                <phase>pre-integration-test</phase>
+                <goals>
+                  <goal>deployer-redeploy</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+	
+  <reporting>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-	  <excludes>
-            <exclude>**/legacy/**/*</exclude>
-            <exclude>**/samples/**/*</exclude>
-	  </excludes>
-         <source>${javaVersion}</source>
-         <target>${javaVersion}</target>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-source-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>attach-sources</id>
-            <phase>verify</phase>
-            <goals>
-              <goal>jar</goal>
-	    </goals>
-	  </execution>
-        </executions>
-      </plugin>
-     <plugin>
-       <groupId>org.codehaus.mojo</groupId>
-       <artifactId>cobertura-maven-plugin</artifactId>
-       <!--version>2.0</version-->
-       <configuration>
-         <instrumentation>
-           <ignores>
-            <ignore>*Exception</ignore>
-           </ignores>
-           <excludes>
-             <exclude>**/*Exception.class</exclude>
-           </excludes>
-         </instrumentation>
-       </configuration>
-       <executions>
-         <execution>
-           <goals>
-             <goal>clean</goal>
-           </goals>
-         </execution>
-       </executions>
-     </plugin>
-    </plugins>
-  </build>
-  <reporting>
-     <plugins>
-      <plugin>
-        <artifactId>maven-site-plugin</artifactId>
-        <configuration>
-          <outputEncoding>UTF-8</outputEncoding>
-        </configuration>
-      </plugin>
-      <plugin>
-       <groupId>org.apache.maven.plugins</groupId>
-       <artifactId>maven-project-info-reports-plugin</artifactId>
-       <reportSets>
-        <reportSet>
-         <reports>
-          <report>index</report>
-          <report>dependencies</report>
-          <report>project-team</report>
-          <report>mailing-list</report>
-          <report>cim</report>
-          <report>issue-tracking</report>
-          <report>license</report>
-          <report>scm</report>
-         </reports>
-        </reportSet>
-       </reportSets>
-        <configuration> 
-          <dependencyLocationsEnabled>false</dependencyLocationsEnabled> 
-	  <dependencyDetailsEnabled>false</dependencyDetailsEnabled>
-        </configuration>       
-      </plugin>
-      <plugin>
-       <groupId>org.apache.maven.plugins</groupId>
-       <artifactId>maven-surefire-report-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-pmd-plugin</artifactId>
-        <configuration>
-          <rulesets>
-            <ruleset>/rulesets/basic.xml</ruleset>
-          </rulesets>
-          <targetJdk>${javaVersion}</targetJdk>
-          <minmemory>128m</minmemory>
-          <maxmemory>256</maxmemory>
-          <excludes>
-            <exclude>**/generated/*.java</exclude>
-          </excludes>
-          <format>xml</format>
-          <linkXref>true</linkXref>
-          <sourceEncoding>UTF-8</sourceEncoding>
-          <minimumTokens>100</minimumTokens>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>taglist-maven-plugin</artifactId>
-        <configuration>
-         <tags>
-          <tag>FIXME</tag>
-          <tag>TODO</tag>
-          <tag>@deprecated</tag>
-          <tag>@SuppressWarnings("unchecked")</tag>
-          <tag>NOTE</tag>
-          <tag>HACK</tag>
-         </tags>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jxr-plugin</artifactId>
-      </plugin>
-      <plugin>
-       <groupId>org.apache.maven.plugins</groupId>
-       <artifactId>maven-javadoc-plugin</artifactId>
-        <configuration>
-         <minmemory>128m</minmemory>
-         <maxmemory>512</maxmemory>
-         <encoding>UTF-8</encoding>
-	 <quiet>true</quiet>
-         <detectLinks>false</detectLinks>
-         <source>${javaVersion}</source>
-         <target>${javaVersion}</target>
-         <footer><![CDATA[<center><div style="margin:1px; text-align:center; width: 468px; height:60px;"><script type="text/javascript">google_ad_client = "pub-7262107064058357"; google_ad_width = 468; google_ad_height = 60; google_ad_format = "468x60_as"; google_ad_type ="text"; google_ad_channel =""; google_page_url = document.location; google_color_bg = "236248255"; google_color_url = "0051255"; google_color_link = "0051255"; google_color_text = "000000"; google_color_border = "221170170";  </script><script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script></div></center> ]]> </footer>
-         <debug>true</debug>
-        </configuration>
-      </plugin>
-      <plugin>
-       <groupId>org.codehaus.mojo</groupId>
-       <artifactId>cobertura-maven-plugin</artifactId>
+        <artifactId>maven-changelog-plugin</artifactId>
       </plugin>
     </plugins>
   </reporting>
@@ -289,5 +414,5 @@ http://groups.google.com/group/dsn-chassis-svn
       <url>file://localhost/var/www/chassis/</url>
     </site>
  </distributionManagement>
-  
+
 </project>
