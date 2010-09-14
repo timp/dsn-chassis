@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<atom:feed xmlns:atom="http://www.w3.org/2005/Atom">
+    <atom:title>Query Results</atom:title>
+    <atom:entry>
+        <atom:id>abc</atom:id>
+        <atom:published>2008-10-01T18:30:02Z</atom:published>
+        <atom:updated>2008-10-01T18:30:02Z</atom:updated>
+        <atom:link
+            rel="edit"
+            href="?id=abc"/>
+        <atom:author>
+            <atom:email>alice@example.org</atom:email>
+        </atom:author>
+        <atom:title type="text">r2d2.xls</atom:title>
+        <atom:summary type="text">Some clinical data.</atom:summary> 
+        <atom:category 
+            scheme="http://www.cggh.org/2010/chassis/scheme/FileTypes"
+            term="http://www.cggh.org/2010/chassis/terms/DataFile"/>
+        <atom:content 
+            src="http://localhost:8080/chassis-generic-service-exist/atom/edit/media/resource1.xls"/>
+    </atom:entry>
+</atom:feed>

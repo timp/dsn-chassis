@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<hudson.plugins.twitter.TwitterPublisher_-DescriptorImpl>
+  <id>ChassisHudson</id>
+  <password>metaL0rry</password>
+  <hudsonUrl>http://hudson.cggh.org/</hudsonUrl>
+  <onlyOnFailureOrRecovery>true</onlyOnFailureOrRecovery>
+  <includeUrl>true</includeUrl>
+</hudson.plugins.twitter.TwitterPublisher_-DescriptorImpl>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="" />
+<title>submit multiple studies with similar study info</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">submit multiple studies with similar study info</td></tr>
+</thead><tbody>
+<!--Make sure you are logged out.-->
+<tr>
+	<td>open</td>
+	<td>http://localhost:8080/manta/j_spring_security_logout</td>
+	<td></td>
+</tr>
+<!--Go to the Manta homepage.-->
+<tr>
+	<td>open</td>
+	<td>/manta/home/</td>
+	<td></td>
+</tr>
+<!--Click on the "Contribute" link.-->
+<tr>
+	<td>clickAndWait</td>
+	<td>//*[@id='contributor-link-container']//a</td>
+	<td></td>
+</tr>
+<!--Login as "colin@example.org".-->
+<tr>
+	<td>type</td>
+	<td>j_username</td>
+	<td>colin@example.org</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>j_password</td>
+	<td>bar</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>submit</td>
+	<td></td>
+</tr>
+<!--Click on the "View" link for "My Fourth Study".-->
+<tr>
+	<td>clickAndWait</td>
+	<td>//*[@id='list-of-studies-container']//*[contains(@class, 'repeated-element')][2]//*[contains(@class, 'view-study-link-container')]//a</td>
+	<td></td>
+</tr>
+<!--Click on the "Study Info" tab.-->
+<tr>
+	<td>clickAndWait</td>
+	<td>//*[@id='study-info-tab-link-container']//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>3000</td>
+	<td></td>
+</tr>
+<!--Select the "My First Study" option from the "Copy answers from another study?" menu.-->
+<tr>
+	<td>select</td>
+	<td>//*[@id='studies-to-copy-answers-from-menu-container']//select</td>
+	<td>label=My First Study*</td>
+</tr>
+<!--Press the "Copy Answers" button.-->
+<tr>
+	<td>click</td>
+	<td>//*[@id='copy-answers-button-container']//button</td>
+	<td></td>
+</tr>
+<!--Press the "Close" button on the message dialogue box.-->
+<tr>
+	<td>click</td>
+	<td>//*[@id='xforms-message-dialog']//button</td>
+	<td></td>
+</tr>
+<!--Press the "Save Changes" button.-->
+<tr>
+	<td>click</td>
+	<td>//*[contains(@class, 'save-changes-button')][1]//button</td>
+	<td></td>
+</tr>
+<!--Press the "Close" button on the message dialogue box.-->
+<tr>
+	<td>click</td>
+	<td>//*[@id='xforms-message-dialog']//button</td>
+	<td></td>
+</tr>
+<!--Click on the "log out" link.-->
+<tr>
+	<td>clickAndWait</td>
+	<td>//*[@id='logout-link-container']//a</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<hudson.tasks.Mailer_-DescriptorImpl>
+  <defaultSuffix>@well.ox.ac.uk</defaultSuffix>
+  <hudsonUrl>http://hudson.cggh.org/</hudsonUrl>
+  <smtpAuthUsername>cloud1.cggh</smtpAuthUsername>
+  <smtpAuthPassword>oirG1cxVRBjI+HxYw/R6HuWyxDQvHBqso44NWu4taug=</smtpAuthPassword>
+  <adminAddress>Hudson &lt;timp@well.ox.ac.uk&gt;</adminAddress>
+  <smtpHost>smtp.gmail.com</smtpHost>
+  <useSsl>true</useSsl>
+</hudson.tasks.Mailer_-DescriptorImpl>

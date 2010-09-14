@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <title>Chassis/* Submission Metadata Query Service API Specification Version
+  0.1-alpha-3-SNAPSHOT</title>
+  <link rel="stylesheet" type="text/css"
+  href="../../../../style/reset-fonts-grids.css" />
+  <link rel="stylesheet" type="text/css" href="../../../../style/base-min.css"
+  />
+  <link rel="stylesheet" type="text/css"
+  href="../../../../style/chassis-docs.css" />
+</head>
+
+<body>
+
+<div id="doc">
+
+<div id="hd">
+<h1>Chassis/* Submission Metadata Query Service<br />
+API Specification Version 0.1-alpha-3-SNAPSHOT</h1>
+
+<p>This document defines an API for a web service that provides query
+capabilities for metadata records that capture information about data
+submissions to a data-sharing network. See also the Chassis/* Submission
+Metadata Persistence Service API Specification.</p>
+
+<p><strong>This version: <a
+href="http://dsn-chassis.googlecode.com/svn/trunk/generic/docs/content/api/service/submission/query/index.html">0.1-alpha-3-SNAPSHOT</a></strong></p>
+
+<p><strong>Status of This Document</strong></p>
+
+<p>This is not a stable document. This document is a snapshot of the current
+development trunk, and is subject to change without notice.</p>
+
+<p>For more information about the dsn-chassis project, see the <a
+href="http://dsn-chassis.googlecode.com">dsn-chassis project home page</a>.</p>
+
+<p><strong>Table of Contents</strong></p>
+
+<div class="toc">
+<ul>
+  <li><a href="#L55">1. Introduction</a>
+    <ul>
+      <li><a href="#L86">1.1. About This Document</a></li>
+    </ul>
+  </li>
+  <li><a href="#L100">2. Query Submissions by Author Email</a></li>
+</ul>
+</div>
+</div>
+
+<div id="bd">
+<h2 id="L55">1. Introduction</h2>
+
+<p>This document defines an API for a web service that provides query
+capabilities for metadata records that capture information about research
+studies.</p>
+
+<h3 id="L86">1.1. About This Document</h3>
+
+<p>The sub-sections below assume that a Submission Metadata Query Service is
+deployed at:</p>
+<ul>
+  <li><code>http://example.org/chassis/query/submissions.xql</code></li>
+</ul>
+
+<h2 id="L100">2. Query Submissions by Author Email</h2>
+
+<p>To query submissions by the email address of the submission author (i.e.,
+owner), send an HTTP GET request to the service URL, with the query parameter
+<code>authoremail</code>.</p>
+
+<p>(Note that the Chassis concept of a submission owner is represented in
+submission metadata records using the Atom <code>author</code> element.)</p>
+
+<p>For example, the request below retrieves all submission metadata records
+owned by the user with email address <code>freda@example.org</code>.</p>
+<pre>GET /chassis/query/submissions.xql?authoremail=freda@example.org HTTP/1.1
+Host: example.org</pre>
+
+<p>If successful, the response status will be <code>200 OK</code>, and the
+response body will contain an Atom <code>feed</code> document, and each
+<code>entry</code> in the <code>feed</code> represents a query result. The
+response as a whole should look something like:</p>
+<pre>HTTP/1.1 200 OK
+Server: Apache-Coyote/1.1
+Content-Type: application/atom+xml;charset=UTF-8
+Transfer-Encoding: chunked
+Date: Mon, 06 Jul 2009 12:56:40 GMT
+
+&lt;feed xmlns="http://www.w3.org/2005/Atom"&gt;
+  &lt;title&gt;Query Results&lt;/title&gt;
+  &lt;entry xmlns="http://www.w3.org/2005/Atom"&gt;
+    &lt;id&gt;urn:uuid:f4070192-c65d-48d7-915f-81d38f61d359&lt;/id&gt;
+    &lt;updated&gt;2009-07-06T13:51:34+01:00&lt;/updated&gt;
+    &lt;published&gt;2009-07-06T12:04:29+01:00&lt;/published&gt;
+    &lt;link href="?id=urn:uuid:f4070192-c65d-48d7-915f-81d38f61d359" rel="edit" type="application/atom+xml" /&gt;
+    &lt;title&gt;Clinical Data from Uganda-Kampala-2006&lt;/title&gt;
+    &lt;summary&gt;Clinical data for cases only (no controls) from the 2006 study in Kampala, Uganda.&lt;/summary&gt;
+    &lt;author&gt;
+      &lt;name&gt;Freda Bloggs&lt;/name&gt;
+      &lt;email&gt;freda@example.org&lt;/email&gt;
+    &lt;/author&gt;
+    &lt;link 
+      rel="chassis.study" 
+      href="http://example.org/chassis/atom/edit/studies?id=urn:uuid:f4070192-c65d-48d7-915f-81d38f61d359"/&gt;
+    &lt;category scheme="http://www.cggh.org/2009/chassis/atom/types" term="submission"/&gt;
+    &lt;content type="application/xml"&gt;
+      &lt;submission xmlns="http://www.cggh.org/2009/chassis/atom/xmlns"&gt;
+        &lt;module&gt;clinical&lt;/module&gt;  
+      &lt;/submission&gt;
+    &lt;/content&gt;
+  &lt;/entry&gt;
+&lt;/feed&gt;</pre>
+
+<p>In this case, the query has only one result.</p>
+
+<p>Please note that the response may also be served with content type
+<code>application/xml</code>.</p>
+</div>
+
+<div id="ft">
+</div>
+</div>
+</body>
+</html>

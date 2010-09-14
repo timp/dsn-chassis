@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder 
+    xmlns:ui="urn:ui:com.google.gwt.uibinder"
+    xmlns:g="urn:import:com.google.gwt.user.client.ui"
+    xmlns:local="urn:import:org.cggh.chassis.wwarn.ui.submitter.client"
+    ui:generateFormat="com.google.gwt.i18n.rebind.format.PropertiesFormat"
+    ui:generateKeys="com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator"
+    ui:generateLocales="default">
+    
+    <g:HTMLPanel>
+        
+        <g:HTMLPanel ui:field="titlePanel">
+        
+	        <h1>
+	            <ui:msg>Submitter</ui:msg> - <ui:msg>Submit Data</ui:msg>
+	        </h1>
+	        
+	        <h2>
+	            1. <ui:msg>Select Study</ui:msg> &rarr;
+	            2. <ui:msg>Upload Files</ui:msg> &rarr;
+	            3. <ui:msg>Submit</ui:msg> &rarr;
+	            <span class="currentStep">4. <ui:msg>Study Questionnaire</ui:msg></span>
+	        </h2>
+
+        </g:HTMLPanel>
+        
+        <g:HTMLPanel ui:field="retrieveSubmissionPendingPanel">
+            <p>
+                <ui:msg>pending... (retrieving submission details)</ui:msg>
+            </p>
+        </g:HTMLPanel>
+        
+        <g:HTMLPanel ui:field="mainContentPanel">
+
+            <p>
+                <ui:msg>The following files have now been received and submitted for the study:</ui:msg>
+            </p>
+            
+            <g:FlowPanel ui:field="filesTableContainer"/>            
+
+
+            <p>
+               <ui:msg>Please answer the following questions relating to the study, amending the information if necessary:</ui:msg>
+            </p>      
+           
+            <g:HTMLPanel ui:field="saveStudyPendingPanel">
+                <p>
+                    <ui:msg>pending... (saving changes)</ui:msg>
+                </p>
+            </g:HTMLPanel>
+
+            <g:HTMLPanel ui:field="retrieveStudyPendingPanel">
+                <p>
+                    <ui:msg>pending... (retrieving study information)</ui:msg>
+                </p>
+            </g:HTMLPanel>
+            
+            <g:HTMLPanel ui:field="studyQuestionnairePanel">
+            
+	            <p>
+	                <ui:msg>Study:</ui:msg> 
+	                <strong><g:InlineLabel ui:field="studyTitleLabel"/></strong>
+	            </p>
+
+	            
+	            <p>
+	                <g:Button ui:field="saveChangesButton1">
+	                    <ui:msg>Save Changes</ui:msg>
+	                </g:Button>
+	                <ui:msg>Links: </ui:msg>
+	                <g:Anchor ui:field="submitterHomeLink1">
+	                    <ui:msg>submitter home</ui:msg>
+	                </g:Anchor>
+	            </p>
+	            
+	            <g:SimplePanel ui:field="studyQuestionnaireContainer"/>
+	
+	            <p>
+	                <g:Button ui:field="saveChangesButton2">
+	                    <ui:msg>Save Changes</ui:msg>
+	                </g:Button>
+	                <ui:msg>Links: </ui:msg>
+	                <g:Anchor ui:field="submitterHomeLink2">
+	                    <ui:msg>submitter home</ui:msg>
+	                </g:Anchor>
+	            </p>
+	            
+            </g:HTMLPanel>
+            
+            
+        </g:HTMLPanel>
+
+
+        
+    </g:HTMLPanel>
+    
+</ui:UiBinder>

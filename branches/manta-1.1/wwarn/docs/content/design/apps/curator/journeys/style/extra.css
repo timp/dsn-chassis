@@ -1,0 +1,109 @@
+﻿h5 {
+	margin-bottom: 5px;
+}
+
+.fileListHeading {
+	margin-top: 0px;
+}
+
+.verticalTableHeading {
+	background-color:#E5ECF9;
+	color:#0000CC;
+	font-size:80%;
+	font-weight:bold;
+	text-align:left;
+	border-right: 1px solid #BBBBBB;
+	white-space: nowrap;
+}
+
+.column {
+	float: left;
+	margin-right: 20px;
+	padding-right: 20px;
+	border-right: 1px solid #3366CC;
+	margin-bottom: 20px;
+}
+.lastColumn {
+	margin-right: 0px;
+	padding-right: 0px;
+	border-right: 0px;
+	margin-bottom: 0px;	
+}
+.endRow {
+	clear: both;
+}
+
+.actionsTableCell {
+	text-align: center;
+}
+
+.submissionPanel {
+padding-left: 8px; 
+padding-right: 8px; 
+padding-top: 8px; 
+padding-bottom: 12px; 
+background-color: #E5ECF9;
+margin-bottom: 20px;
+margin-left: 10px;
+margin-right: 10px;
+}
+
+.submissionDivider {
+	border: 0;
+	border-bottom: dashed 1px #0000CC;
+	height: 1px;
+	width: 300px;
+	margin-top: 0px;
+	margin-bottom: 20px;
+}
+
+.submissionPanel .submissionTable {
+border-right: 2px solid #BBBBBB;
+width: 100%;
+margin: 0;
+}
+
+.submissionPanel  .submittedFilesTable {
+margin: 0; 
+border-left: 1px solid #BBBBBB;
+border-right: 2px solid #BBBBBB;
+border-top: 0;
+border-bottom: 1px solid #BBBBBB;
+width: 100%;
+}
+
+.submissionPanel  td {
+	background-color: #FFFFFF;
+}
+
+.submissionPanel  .submittedFilesTable tr.firstRow td {
+	background-color: #E5ECF9;
+}
+
+.submissionPanel  .verticalTableHeading {
+	background-color: #E5ECF9;
+}
+
+.curationSteps {
+
+list-style-type: none;
+padding: 0;
+margin: 0;
+margin-left: 10px;
+
+}
+
+.curationSteps  li {
+background-repeat: no-repeat;
+background-position: 0px;
+padding-left: 30px;
+padding-top: 7px;
+}
+
+.curationsHeading {
+	margin-top: 40px;
+}
+
+.currentRevision { 
+  border: 1px solid green;
+}
