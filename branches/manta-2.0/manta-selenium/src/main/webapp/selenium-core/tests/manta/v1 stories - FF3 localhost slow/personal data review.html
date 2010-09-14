@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="" />
+<title>personal data review</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">personal data review</td></tr>
+</thead><tbody>
+<!--Make sure you are logged out.-->
+<tr>
+	<td>open</td>
+	<td>http://localhost:8080/manta/j_spring_security_logout</td>
+	<td></td>
+</tr>
+<!--Go to the Manta homepage.-->
+<tr>
+	<td>open</td>
+	<td>/manta/home/</td>
+	<td></td>
+</tr>
+<!--Click on the "Personal Data Review" link.-->
+<tr>
+	<td>click</td>
+	<td>//*[@id='personal-data-link-container']//a</td>
+	<td></td>
+</tr>
+<!--Login as "pete@example.org".-->
+<tr>
+	<td>type</td>
+	<td>j_username</td>
+	<td>pete@example.org</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>j_password</td>
+	<td>bar</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>submit</td>
+	<td></td>
+</tr>
+<!--Click on the "Review" link for the first "Sunset.jpg" file.-->
+<tr>
+	<td>clickAndWait</td>
+	<td>//*[@id='list-of-files-to-review-container']//*[contains(@class, 'repeated-element')][1]//*[contains(@class, 'review-file-link-container')]//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<!--Select the "file contains personal data to be removed" option from the review outcome menu.-->
+<tr>
+	<td>select</td>
+	<td>//*[@id='review-outcome-menu-container']//select</td>
+	<td>label=File contains personal data to be removed</td>
+</tr>
+<!--Type "some comments..." into the comments textarea.-->
+<tr>
+	<td>type</td>
+	<td>//*[@id='comments-textarea-container']//textarea</td>
+	<td>some comments...</td>
+</tr>
+<!--Press the "Submit Review" button.-->
+<tr>
+	<td>click</td>
+	<td>//*[@id='submit-review-button-container']//button</td>
+	<td></td>
+</tr>
+<!--Click the "log out" link.-->
+<tr>
+	<td>click</td>
+	<td>//*[@id='logout-link-container']//a</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

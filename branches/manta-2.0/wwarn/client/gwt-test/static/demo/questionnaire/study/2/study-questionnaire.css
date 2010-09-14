@@ -1,0 +1,99 @@
+
+p {
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+h3, h4 {
+	margin-bottom: 2px;
+}
+
+textarea {
+    width: 60em;
+    height: 10em;
+}
+
+#holdall {
+	margin: 10px;
+}
+
+.xquestion {
+	border-top: 1px solid #abd;
+	border-bottom: 1px solid #abd;
+	padding: 3px;
+	margin: 3px 0 3px 0;
+	background-color: #eef;
+}
+
+.xquestionnaire {
+	border: 2px solid #abd;
+	border-left: 10px solid #abd;
+	border-right: none;
+	padding: 5px 0px 5px 10px;
+	margin: 5px 0px 5px 0px;
+}
+
+.xquestionnaire .xquestionnaire {
+}
+
+.xquestionnaire-transparent {
+	border: none;
+	padding: 0;
+	margin: 0;
+}
+
+.xinput-string {
+	display: inline;
+	padding: 0px;
+}
+
+.xinput-string input, .xinput-date input {
+	border: 1px solid #abd;
+	margin-left: 5px;
+}
+
+.xselect1-minimal select {
+	margin-left: 5px;
+}
+
+.answer {
+	font-weight: bold;
+	margin-left: 5px;
+}
+
+.loading {
+	margin-left: 5px;
+}
+
+.xquestionnaire .repeatableButtonPanel {
+	text-align: left;
+}
+
+.xquestion .repeatableButtonPanel {
+	display: inline;
+	margin-left: 5px;
+	text-align: right;
+}
+
+#clinical, #pharmacology, #invitro, #molecular {
+	background-repeat: no-repeat;
+	background-position: left bottom;
+	padding-left: 75px;
+	padding-top: 50px;
+}
+
+#clinical {
+	background-image: url(http://www.wwarn.org/images/home/clinical-module.gif);
+}
+
+#pharmacology {
+	background-image: url(http://www.wwarn.org/images/home/pharmacalogy-module.gif);
+}
+
+#invitro {
+	background-image: url(http://www.wwarn.org/images/home/in-vitro-module.gif);
+}
+
+#molecular {
+	background-image: url(http://www.wwarn.org/images/home/molecular-module.gif);
+}

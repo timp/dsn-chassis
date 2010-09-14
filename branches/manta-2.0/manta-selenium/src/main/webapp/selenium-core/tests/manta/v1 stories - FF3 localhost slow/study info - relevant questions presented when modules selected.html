@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="" />
+<title>study info - relevant questions presented when modules selected</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">study info - relevant questions presented when modules selected</td></tr>
+</thead><tbody>
+<!--Go to the Manta homepage.-->
+<tr>
+	<td>open</td>
+	<td>/manta/home/</td>
+	<td></td>
+</tr>
+<!--Click on the "Quesionnaire" link.-->
+<tr>
+	<td>clickAndWait</td>
+	<td>//*[@id='questionnaire-link-container']//a</td>
+	<td></td>
+</tr>
+<!--Check the "Clinical" WWARN module checkbox.-->
+<tr>
+	<td>click</td>
+	<td>//*[@id='wwarn-modules-menu-container']//*[contains(@class, 'repeated-element')][1]//input</td>
+	<td></td>
+</tr>
+<!--Verify that the clinical questions are now visible.-->
+<tr>
+	<td>verifyVisible</td>
+	<td>//*[@id='clinical-questions-container']</td>
+	<td></td>
+</tr>
+<!--Check the "Molecular" WWARN module checkbox.-->
+<tr>
+	<td>click</td>
+	<td>//*[@id='wwarn-modules-menu-container']//*[contains(@class, 'repeated-element')][2]//input</td>
+	<td></td>
+</tr>
+<!--Verify that the molecular questions are now visible.-->
+<tr>
+	<td>verifyVisible</td>
+	<td>//*[@id='molecular-questions-container']</td>
+	<td></td>
+</tr>
+<!--Check the "in vitro" WWARN module checkbox.-->
+<tr>
+	<td>click</td>
+	<td>//*[@id='wwarn-modules-menu-container']//*[contains(@class, 'repeated-element')][3]//input</td>
+	<td></td>
+</tr>
+<!--Verify that the in vitro questions are now visible.-->
+<tr>
+	<td>verifyVisible</td>
+	<td>//*[@id='in-vitro-questions-container']</td>
+	<td></td>
+</tr>
+<!--Check the "Pharmacology" WWARN module checkbox.-->
+<tr>
+	<td>click</td>
+	<td>//*[@id='wwarn-modules-menu-container']//*[contains(@class, 'repeated-element')][4]//input</td>
+	<td></td>
+</tr>
+<!--Verify that the pharmacology questions are now visible.-->
+<tr>
+	<td>verifyVisible</td>
+	<td>//*[@id='pharmacology-questions-container']</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

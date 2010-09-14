@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>
+		Curator - Upload Curated Data Files  // curator@wwarn.org
+		</title>
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+		<link rel="stylesheet" type="text/css" href="../style/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../style/standard.css"/>
+		<link rel="stylesheet" type="text/css" href="../style/gwt.css"/>
+		<link rel="stylesheet" type="text/css" href="../style/extra.css"/>
+		<script type="text/javascript">
+
+			function checkRequiredFields() {
+			
+				if (document.getElementById("file").value != "") {
+					document.location.href='40.html';
+				} else {
+					alert("Please complete all compulsory fields.");
+				}
+			}
+		
+		</script>
+
+	</head>
+<body>
+<div id="holdall">
+
+	<div id="user">
+		<p><span id="username">curator@example.org</span></p>
+	</div>
+
+	<div id="banner"></div>
+
+	<div id="content">
+	
+		<h1>Curator - Upload Curated Data Files</h1>
+	
+	
+		<ul class="curationSteps">
+			<li style="background-image: url('../assets/greenArrow.gif');"><b>Step 1:</b> Upload Curated Data Files
+			</li>
+			<li><b>Step 2:</b> Select Derivation Files
+			</li>
+		</ul>	
+
+	
+		<h3>Selected Study</h3>
+	
+		<table class="resultsTable" border="0" cellSpacing="0" cellPadding="0">
+			<tbody>
+			
+				<tr>
+					<td class="verticalTableHeading"><div class="gwt-Label widget">Study Title:</div></td>
+
+					<td><div class="gwt-Label widget">Uganda-Kampala 2007</div></td>
+				</tr>
+			<tr>
+					<td class="verticalTableHeading"><div class="gwt-Label widget">Created:</div></td>
+
+					<td><div class="gwt-Label widget">2010-02-08T14:47:36+00:00</div></td>
+				</tr>
+				<tr>
+					<td class="verticalTableHeading"><div class="gwt-Label widget">Updated:</div></td>
+					<td><div class="gwt-Label widget">2010-02-08T14:47:36+00:00</div></td>
+				</tr>
+				
+			</tbody>
+
+		</table>		
+		
+		<h2>Step 1 of 2: Upload Curated Data Files</h2>
+	
+			<table class="resultsTable" border="0" cellSpacing="0" cellPadding="0">
+				<tbody>
+				
+					<tr class="even firstRow">
+						<td class="firstCell"><div class="gwt-Label widget">File Name</div></td>
+						<td><div class="gwt-Label widget">Size</div></td>
+						<td><div class="gwt-Label widget">Uploaded Date</div></td>
+						<td><div class="gwt-Label widget">Actions</div></td>
+					</tr>
+					
+					<tr class="odd">
+						<td class="firstCell"><div class="gwt-Label widget">file1.xls</div></td>
+						<td><div class="gwt-Label widget">28 KB</div></td>
+						<td><div class="gwt-Label widget">2010-02-08T14:47:36+00:00</div></td>
+						<td class="actionsTableCell"><div class="gwt-Label widget"><button class="gwt-Button">Delete</button></div></td>
+
+					</tr>
+
+					
+				</tbody>
+			</table>		
+
+			<button class="action" onclick="document.location.href='20.html';">Cancel</button> <button class="action" onclick="document.location.href='50.html';">Proceed &gt;</button> 
+			
+			<h3>Upload Another File</h3>
+			
+	 <p>Please note that large files will take a while to upload.
+	 </p>
+
+<p>If you have a particularly large file or a slow connection speed, then we advise that you compress your file before uploading it, by using a file compression utility, which will usually reduce the file size and therefore increase the upload speed. 
+</p>
+			
+		<p>Fields marked with an asterisk (<span class="Gkjd45cIB">*</span>) are compulsory. 
+		</p>
+		
+		<h4>File <span class="Gkjd45cIB">*</span> </h4>
+		<p>Please select the file that you want to upload. </p>
+		<div class="Gkjd45cFB"><input class="gwt-FileUpload" value="" type="file" id="file" name="file"></div>
+		<div class="Gkjd45cGB"></div>
+
+		
+		<h4>Notes <span class="Gkjd45cHB">(optional)</span></h4>
+		<p><textarea class="gwt-TextArea" name="notes" style=""></textarea></p>
+			<p>E.g., <i>TODO: Good example, what file contains, not the derivation...</i> </p>
+		
+		<button class="action" onclick="checkRequiredFields();">Upload File</button> 
+	
+	<div id="footer"></div>
+	
+</div>
+	</div>
+
+
+</body>
+</html>

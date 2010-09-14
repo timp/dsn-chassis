@@ -1,0 +1,26 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder 
+	xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui"
+	xmlns:x="urn:import:spike.xfui.client">
+	<ui:style>
+		.important {
+			font-weight: bold;
+		}
+	</ui:style>
+	<g:HTMLPanel>
+        <hr/>
+        <x:Question 
+            ui:field="q1"
+            modelName="foo"
+            modelNamespaceUri="http://example.com/ns"
+            modelPrefix="ex"
+            relevant="../module eq 'foo' or ../module/bar eq 'spong'">
+            <p>This is question 1.</p>
+            <x:Input type="string"/>
+            <p>What do you think?</p>
+        </x:Question>
+        <g:Button ui:field="q1b">get model</g:Button>
+        <hr/>
+	</g:HTMLPanel>
+</ui:UiBinder> 

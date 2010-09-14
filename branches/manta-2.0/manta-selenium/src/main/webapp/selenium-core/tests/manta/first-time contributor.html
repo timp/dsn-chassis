@@ -1,0 +1,1202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost:8080/" />
+<title>first-time contributor</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">first-time contributor</td></tr>
+</thead><tbody>
+<tr>
+	<td>store</td>
+	<td>cloud1.cggh.org</td>
+	<td>baseDomain</td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>http://${baseDomain}/manta/j_spring_security_logout</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='contributor-link-container']//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//*[@id='contributor-link-container']//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//form//input[@name='j_username']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>focus</td>
+	<td>//form//input[@name='j_username']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//form//input[@name='j_username']</td>
+	<td>colin@example.org</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//form//input[@name='j_password']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>focus</td>
+	<td>//form//input[@name='j_password']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//form//input[@name='j_password']</td>
+	<td>bar</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//form//input[@name='submit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//form//input[@name='submit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='register-study-link-container']//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//*[@id='register-study-link-container']//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='study-title-textbox-container']//*[contains(@class, 'xforms-alert')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='study-title-textbox-container']//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>//*[@id='study-title-textbox-container']//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>focus</td>
+	<td>//*[@id='study-title-textbox-container']//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//*[@id='study-title-textbox-container']//input</td>
+	<td>My First Study</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>//*[@id='study-title-textbox-container']//input</td>
+	<td>My First Study</td>
+</tr>
+<tr>
+	<td>waitForElementNotPresent</td>
+	<td>//*[@id='study-title-textbox-container']//*[contains(@class, 'xforms-alert-active')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='agree-to-terms-checkbox-container']//*[contains(@class, 'xforms-alert')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='agree-to-terms-checkbox-container']//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>focus</td>
+	<td>//*[@id='agree-to-terms-checkbox-container']//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//*[@id='agree-to-terms-checkbox-container']//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyChecked</td>
+	<td>//*[@id='agree-to-terms-checkbox-container']//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementNotPresent</td>
+	<td>//*[@id='agree-to-terms-checkbox-container']//*[contains(@class, 'xforms-alert-active')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='study-terms-next-button-container']//button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//*[@id='study-terms-next-button-container']//button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='editable-list-of-administrators-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'email-address-textbox-container')]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>//*[@id='editable-list-of-administrators-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'email-address-textbox-container')]//input</td>
+	<td>colin@example.org</td>
+</tr>
+<tr>
+	<td>verifyElementNotPresent</td>
+	<td>//*[@id='editable-list-of-administrators-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'email-address-textbox-container')]//*[contains(@class, 'xforms-alert-active')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='add-administrator-link-container']//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//*[@id='add-administrator-link-container']//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='editable-list-of-administrators-container']//*[contains(@class, 'repeated-element') and position() = last()-6]//*[contains(@class, 'email-address-textbox-container')]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>//*[@id='editable-list-of-administrators-container']//*[contains(@class, 'repeated-element') and position() = last()-6]//*[contains(@class, 'email-address-textbox-container')]//input</td>
+	<td>colin@example.org</td>
+</tr>
+<tr>
+	<td>verifyElementNotPresent</td>
+	<td>//*[@id='editable-list-of-administrators-container']//*[contains(@class, 'repeated-element') and position() = last()-6]//*[contains(@class, 'email-address-textbox-container')]//*[contains(@class, 'xforms-alert-active')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='editable-list-of-administrators-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'email-address-textbox-container')]//*[contains(@class, 'xforms-alert')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='editable-list-of-administrators-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'email-address-textbox-container')]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>//*[@id='editable-list-of-administrators-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'email-address-textbox-container')]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>focus</td>
+	<td>//*[@id='editable-list-of-administrators-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'email-address-textbox-container')]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//*[@id='editable-list-of-administrators-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'email-address-textbox-container')]//input</td>
+	<td>cora@example.org</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>//*[@id='editable-list-of-administrators-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'email-address-textbox-container')]//input</td>
+	<td>cora@example.org</td>
+</tr>
+<tr>
+	<td>waitForElementNotPresent</td>
+	<td>//*[@id='editable-list-of-administrators-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'email-address-textbox-container')]//*[contains(@class, 'xforms-alert-active')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='permissions-next-button-container']//button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//*[@id='permissions-next-button-container']//button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'email-address-textbox-container')]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'email-address-textbox-container')]//input</td>
+	<td>colin@example.org</td>
+</tr>
+<tr>
+	<td>verifyElementNotPresent</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'email-address-textbox-container')]//*[contains(@class, 'xforms-alert-active')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'first-name-textbox-container')]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'first-name-textbox-container')]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>focus</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'first-name-textbox-container')]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'first-name-textbox-container')]//input</td>
+	<td>Colin</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'first-name-textbox-container')]//input</td>
+	<td>Colin</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'middle-name-textbox-container')]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'middle-name-textbox-container')]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>focus</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'middle-name-textbox-container')]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'middle-name-textbox-container')]//input</td>
+	<td>James</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'middle-name-textbox-container')]//input</td>
+	<td>James</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'family-name-textbox-container')]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'family-name-textbox-container')]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>focus</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'family-name-textbox-container')]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'family-name-textbox-container')]//input</td>
+	<td>Bloggs</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'family-name-textbox-container')]//input</td>
+	<td>Bloggs</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'institution-textbox-container')]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'institution-textbox-container')]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>focus</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'institution-textbox-container')]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'institution-textbox-container')]//input</td>
+	<td>CGGH</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'institution-textbox-container')]//input</td>
+	<td>CGGH</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='add-acknowledgement-link-container']//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//*[@id='add-acknowledgement-link-container']//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-6]//*[contains(@class, 'first-name-textbox-container')]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-6]//*[contains(@class, 'first-name-textbox-container')]//input</td>
+	<td>Colin</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-6]//*[contains(@class, 'middle-name-textbox-container')]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-6]//*[contains(@class, 'middle-name-textbox-container')]//input</td>
+	<td>James</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-6]//*[contains(@class, 'family-name-textbox-container')]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-6]//*[contains(@class, 'family-name-textbox-container')]//input</td>
+	<td>Bloggs</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-6]//*[contains(@class, 'email-address-textbox-container')]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-6]//*[contains(@class, 'email-address-textbox-container')]//input</td>
+	<td>colin@example.org</td>
+</tr>
+<tr>
+	<td>verifyElementNotPresent</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-6]//*[contains(@class, 'email-address-textbox-container')]//*[contains(@class, 'xforms-alert-active')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-6]//*[contains(@class, 'institution-textbox-container')]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-6]//*[contains(@class, 'institution-textbox-container')]//input</td>
+	<td>CGGH</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'first-name-textbox-container')]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'first-name-textbox-container')]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>focus</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'first-name-textbox-container')]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'first-name-textbox-container')]//input</td>
+	<td>Cora</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'first-name-textbox-container')]//input</td>
+	<td>Cora</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'middle-name-textbox-container')]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'middle-name-textbox-container')]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>focus</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'middle-name-textbox-container')]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'middle-name-textbox-container')]//input</td>
+	<td>Mary</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'middle-name-textbox-container')]//input</td>
+	<td>Mary</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'family-name-textbox-container')]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'family-name-textbox-container')]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>focus</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'family-name-textbox-container')]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'family-name-textbox-container')]//input</td>
+	<td>Bloggs</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'family-name-textbox-container')]//input</td>
+	<td>Bloggs</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'email-address-textbox-container')]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'email-address-textbox-container')]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>focus</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'email-address-textbox-container')]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'email-address-textbox-container')]//input</td>
+	<td>cora</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'email-address-textbox-container')]//*[contains(@class, 'xforms-alert')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>focus</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'email-address-textbox-container')]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'email-address-textbox-container')]//input</td>
+	<td>cora@example.org</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'email-address-textbox-container')]//input</td>
+	<td>cora@example.org</td>
+</tr>
+<tr>
+	<td>waitForElementNotPresent</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'email-address-textbox-container')]//*[contains(@class, 'xforms-alert-active')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'institution-textbox-container')]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'institution-textbox-container')]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>focus</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'institution-textbox-container')]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'institution-textbox-container')]//input</td>
+	<td>CGGH</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>//*[@id='editable-list-of-acknowledgements-container']//*[contains(@class, 'repeated-element') and position() = last()-4]//*[contains(@class, 'institution-textbox-container')]//input</td>
+	<td>CGGH</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='acknowledgements-next-button-container']//button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//*[@id='acknowledgements-next-button-container']//button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='file-selector-container']//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>//*[@id='file-selector-container']//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>30000</td>
+	<td>Please manually select &quot;Blue hills.jpg&quot;</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='file-type-menu-container']//select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='file-type-menu-container']//*[contains(@class, 'xforms-alert')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>focus</td>
+	<td>//*[@id='file-type-menu-container']//select</td>
+	<td>label=Data File</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>//*[@id='file-type-menu-container']//select</td>
+	<td>label=Data File</td>
+</tr>
+<tr>
+	<td>verifySelectedLabel</td>
+	<td>//*[@id='file-type-menu-container']//select</td>
+	<td>Data File</td>
+</tr>
+<tr>
+	<td>waitForElementNotPresent</td>
+	<td>//*[@id='file-type-menu-container']//*[contains(@class, 'xforms-alert-active')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='upload-file-button-container']//button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//*[@id='upload-file-button-container']//button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>2000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='editable-list-of-uploaded-files-container']//*[contains(@class, 'repeated-element')][1]//td[1]//*[contains(@class, 'xforms-output')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//*[@id='editable-list-of-uploaded-files-container']//*[contains(@class, 'repeated-element')][1]//td[1]//*[contains(@class, 'xforms-output')]</td>
+	<td>Blue hills.jpg</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='editable-list-of-uploaded-files-container']//*[contains(@class, 'repeated-element')][1]//td[4]//*[contains(@class, 'xforms-output')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//*[@id='editable-list-of-uploaded-files-container']//*[contains(@class, 'repeated-element')][1]//td[4]//*[contains(@class, 'xforms-output')]</td>
+	<td>Data File</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='file-selector-container']//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>//*[@id='file-selector-container']//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>30000</td>
+	<td>Please manually select &quot;Water lilies.jpg&quot;</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='file-type-menu-container']//select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='file-type-menu-container']//*[contains(@class, 'xforms-alert')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>focus</td>
+	<td>//*[@id='file-type-menu-container']//select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>//*[@id='file-type-menu-container']//select</td>
+	<td>label=Other</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='other-file-type-textbox-container']//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>//*[@id='other-file-type-textbox-container']//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='other-file-type-textbox-container']//*[contains(@class, 'xforms-alert')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>focus</td>
+	<td>//*[@id='other-file-type-textbox-container']//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//*[@id='other-file-type-textbox-container']//input</td>
+	<td>image</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>//*[@id='other-file-type-textbox-container']//input</td>
+	<td>image</td>
+</tr>
+<tr>
+	<td>waitForElementNotPresent</td>
+	<td>//*[@id='other-file-type-textbox-container']//*[contains(@class, 'xforms-alert-active')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='upload-file-button-container']//button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//*[@id='upload-file-button-container']//button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>2000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='editable-list-of-uploaded-files-container']//*[contains(@class, 'repeated-element')][1]//td[1]//*[contains(@class, 'xforms-output')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//*[@id='editable-list-of-uploaded-files-container']//*[contains(@class, 'repeated-element')][1]//td[1]//*[contains(@class, 'xforms-output')]</td>
+	<td>Water lilies.jpg</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='editable-list-of-uploaded-files-container']//*[contains(@class, 'repeated-element')][1]//td[4]//*[contains(@class, 'xforms-output')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//*[@id='editable-list-of-uploaded-files-container']//*[contains(@class, 'repeated-element')][1]//td[4]//*[contains(@class, 'xforms-output')]</td>
+	<td>image</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='upload-files-next-button-container']//button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//*[@id='upload-files-next-button-container']//button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='published-status-menu-container']//select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>focus</td>
+	<td>//*[@id='published-status-menu-container']//select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>//*[@id='published-status-menu-container']//select</td>
+	<td>label=Yes</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='add-publication-link-container']//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//*[@id='add-publication-link-container']//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='editable-list-of-publications-container']//*[contains(@class, 'repeated-element')][1]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>//*[@id='editable-list-of-publications-container']//*[contains(@class, 'repeated-element')][1]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='editable-list-of-publications-container']//*[contains(@class, 'repeated-element')][1]//*[contains(@class, 'xforms-alert')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>focus</td>
+	<td>//*[@id='editable-list-of-publications-container']//*[contains(@class, 'repeated-element')][1]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//*[@id='editable-list-of-publications-container']//*[contains(@class, 'repeated-element')][1]//input</td>
+	<td>http://www.google.com/folder/file.html</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>//*[@id='editable-list-of-publications-container']//*[contains(@class, 'repeated-element')][1]//input</td>
+	<td>http://www.google.com/folder/file.html</td>
+</tr>
+<tr>
+	<td>waitForElementNotPresent</td>
+	<td>//*[@id='editable-list-of-publications-container']//*[contains(@class, 'repeated-element')][1]//*[contains(@class, 'xforms-alert-active')]</td>
+	<td>http://www.google.com/folder/file.html</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='add-publication-link-container']//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//*[@id='add-publication-link-container']//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='editable-list-of-publications-container']//*[contains(@class, 'repeated-element')][1]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>//*[@id='editable-list-of-publications-container']//*[contains(@class, 'repeated-element')][1]//input</td>
+	<td>http://www.google.com/folder/file.html</td>
+</tr>
+<tr>
+	<td>waitForElementNotPresent</td>
+	<td>//*[@id='editable-list-of-publications-container']//*[contains(@class, 'repeated-element')][1]//*[contains(@class, 'xforms-alert-active')]</td>
+	<td>http://www.google.com/folder/file.html</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='editable-list-of-publications-container']//*[contains(@class, 'repeated-element')][2]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>//*[@id='editable-list-of-publications-container']//*[contains(@class, 'repeated-element')][2]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='editable-list-of-publications-container']//*[contains(@class, 'repeated-element')][2]//*[contains(@class, 'xforms-alert')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>focus</td>
+	<td>//*[@id='editable-list-of-publications-container']//*[contains(@class, 'repeated-element')][2]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//*[@id='editable-list-of-publications-container']//*[contains(@class, 'repeated-element')][2]//input</td>
+	<td>https://www.wikipedia.org</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>//*[@id='editable-list-of-publications-container']//*[contains(@class, 'repeated-element')][2]//input</td>
+	<td>https://www.wikipedia.org</td>
+</tr>
+<tr>
+	<td>waitForElementNotPresent</td>
+	<td>//*[@id='editable-list-of-publications-container']//*[contains(@class, 'repeated-element')][2]//*[contains(@class, 'xforms-alert-active')]</td>
+	<td>https://www.wikipedia.org</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='publications-next-button-container']//button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//*[@id='publications-next-button-container']//button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>400</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='study-title-text-container']//*[contains(@class, 'xforms-output')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//*[@id='study-title-text-container']//*[contains(@class, 'xforms-output')]</td>
+	<td>My First Study</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='list-of-administrators-container']//*[contains(@class, 'repeated-element')][1]//*[contains(@class, 'xforms-output')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//*[@id='list-of-administrators-container']//*[contains(@class, 'repeated-element')][1]//*[contains(@class, 'xforms-output')]</td>
+	<td>colin@example.org</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='list-of-administrators-container']//*[contains(@class, 'repeated-element')][2]//*[contains(@class, 'xforms-output')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//*[@id='list-of-administrators-container']//*[contains(@class, 'repeated-element')][2]//*[contains(@class, 'xforms-output')]</td>
+	<td>cora@example.org</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='list-of-acknowledgements-container']//*[contains(@class, 'repeated-element')][1]//*[contains(@class, 'first-name-text-container')]//*[contains(@class, 'xforms-output')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//*[@id='list-of-acknowledgements-container']//*[contains(@class, 'repeated-element')][1]//*[contains(@class, 'first-name-text-container')]//*[contains(@class, 'xforms-output')]</td>
+	<td>Colin</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='list-of-acknowledgements-container']//*[contains(@class, 'repeated-element')][1]//*[contains(@class, 'middle-name-text-container')]//*[contains(@class, 'xforms-output')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//*[@id='list-of-acknowledgements-container']//*[contains(@class, 'repeated-element')][1]//*[contains(@class, 'middle-name-text-container')]//*[contains(@class, 'xforms-output')]</td>
+	<td>James</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='list-of-acknowledgements-container']//*[contains(@class, 'repeated-element')][1]//*[contains(@class, 'family-name-text-container')]//*[contains(@class, 'xforms-output')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//*[@id='list-of-acknowledgements-container']//*[contains(@class, 'repeated-element')][1]//*[contains(@class, 'family-name-text-container')]//*[contains(@class, 'xforms-output')]</td>
+	<td>Bloggs</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='list-of-acknowledgements-container']//*[contains(@class, 'repeated-element')][1]//*[contains(@class, 'email-address-text-container')]//*[contains(@class, 'xforms-output')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//*[@id='list-of-acknowledgements-container']//*[contains(@class, 'repeated-element')][1]//*[contains(@class, 'email-address-text-container')]//*[contains(@class, 'xforms-output')]</td>
+	<td>colin@example.org</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='list-of-acknowledgements-container']//*[contains(@class, 'repeated-element')][1]//*[contains(@class, 'institution-text-container')]//*[contains(@class, 'xforms-output')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//*[@id='list-of-acknowledgements-container']//*[contains(@class, 'repeated-element')][1]//*[contains(@class, 'institution-text-container')]//*[contains(@class, 'xforms-output')]</td>
+	<td>CGGH</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='list-of-acknowledgements-container']//*[contains(@class, 'repeated-element')][2]//*[contains(@class, 'first-name-text-container')]//*[contains(@class, 'xforms-output')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//*[@id='list-of-acknowledgements-container']//*[contains(@class, 'repeated-element')][2]//*[contains(@class, 'first-name-text-container')]//*[contains(@class, 'xforms-output')]</td>
+	<td>Cora</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='list-of-acknowledgements-container']//*[contains(@class, 'repeated-element')][2]//*[contains(@class, 'middle-name-text-container')]//*[contains(@class, 'xforms-output')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//*[@id='list-of-acknowledgements-container']//*[contains(@class, 'repeated-element')][2]//*[contains(@class, 'middle-name-text-container')]//*[contains(@class, 'xforms-output')]</td>
+	<td>Mary</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='list-of-acknowledgements-container']//*[contains(@class, 'repeated-element')][2]//*[contains(@class, 'family-name-text-container')]//*[contains(@class, 'xforms-output')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//*[@id='list-of-acknowledgements-container']//*[contains(@class, 'repeated-element')][2]//*[contains(@class, 'family-name-text-container')]//*[contains(@class, 'xforms-output')]</td>
+	<td>Bloggs</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='list-of-acknowledgements-container']//*[contains(@class, 'repeated-element')][2]//*[contains(@class, 'email-address-text-container')]//*[contains(@class, 'xforms-output')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//*[@id='list-of-acknowledgements-container']//*[contains(@class, 'repeated-element')][2]//*[contains(@class, 'email-address-text-container')]//*[contains(@class, 'xforms-output')]</td>
+	<td>cora@example.org</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='list-of-acknowledgements-container']//*[contains(@class, 'repeated-element')][2]//*[contains(@class, 'institution-text-container')]//*[contains(@class, 'xforms-output')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//*[@id='list-of-acknowledgements-container']//*[contains(@class, 'repeated-element')][2]//*[contains(@class, 'institution-text-container')]//*[contains(@class, 'xforms-output')]</td>
+	<td>CGGH</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='list-of-uploaded-files-container']//*[contains(@class, 'repeated-element')][1]//td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//*[@id='list-of-uploaded-files-container']//*[contains(@class, 'repeated-element')][1]//td[1]</td>
+	<td>Water lilies.jpg</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='list-of-uploaded-files-container']//*[contains(@class, 'repeated-element')][1]//td[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//*[@id='list-of-uploaded-files-container']//*[contains(@class, 'repeated-element')][1]//td[4]</td>
+	<td>image</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='list-of-uploaded-files-container']//*[contains(@class, 'repeated-element')][2]//td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//*[@id='list-of-uploaded-files-container']//*[contains(@class, 'repeated-element')][2]//td[1]</td>
+	<td>Blue hills.jpg</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='list-of-uploaded-files-container']//*[contains(@class, 'repeated-element')][2]//td[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//*[@id='list-of-uploaded-files-container']//*[contains(@class, 'repeated-element')][2]//td[4]</td>
+	<td>Data File</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='list-of-publications-container']//*[contains(@class, 'repeated-element')][1]//*[contains(@class, 'xforms-output')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//*[@id='list-of-publications-container']//*[contains(@class, 'repeated-element')][1]//*[contains(@class, 'xforms-output')]</td>
+	<td>http://www.google.com/folder/file.html</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='list-of-publications-container']//*[contains(@class, 'repeated-element')][2]//*[contains(@class, 'xforms-output')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//*[@id='list-of-publications-container']//*[contains(@class, 'repeated-element')][2]//*[contains(@class, 'xforms-output')]</td>
+	<td>https://www.wikipedia.org</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='review-confirm-button-container']//button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//*[@id='review-confirm-button-container']//button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[contains(@class, 'questionnaire')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[contains(@class, 'questionnaire')]//input[@type='checkbox'][1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>focus</td>
+	<td>//*[contains(@class, 'questionnaire')]//input[@type='checkbox'][1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>check</td>
+	<td>//*[contains(@class, 'questionnaire')]//input[@type='checkbox'][1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyChecked</td>
+	<td>//*[contains(@class, 'questionnaire')]//input[@type='checkbox'][1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[contains(@class, 'confirmation-study-info-save-button-container')][1]//button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//*[contains(@class, 'confirmation-study-info-save-button-container')][1]//button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>2000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='xforms-message-dialog']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//*[@id='xforms-message-dialog']//button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//*[@id='xforms-message-dialog']//button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForNotVisible</td>
+	<td>//*[@id='xforms-message-dialog']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//*[@id='logout-link-container']//a</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

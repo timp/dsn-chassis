@@ -1,0 +1,1158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<questionnaire 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xsi:noNamespaceSchemaLocation="http://dsn-chassis.googlecode.com/svn/trunk/generic/lib/gwt/src/main/resources/xquestion/xquestion.xsd"
+  defaultPrefix="chassis"
+  defaultNamespaceUri="http://www.cggh.org/2009/chassis/atom/xmlns"
+  id="study">
+
+  <model>
+    <element name="study"/>
+  </model>
+  
+  <view>
+
+    <html>
+    
+      <p><strong><em>Jump to section:</em></strong></p>
+      <ul>
+        <li>
+          <a href="#general"><strong>General Questions</strong></a>
+          <ul>
+            <li><a href="#startend">Study Start and End</a></li>
+            <li><a href="#pi">Principal Investigator(s)</a></li>
+            <li><a href="#pathogens">Pathogen Species</a></li>
+            <li><a href="#sites">Study Site(s)</a></li>
+            <li><a href="#pubs">Publications</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="#invitro"><strong>WWARN <em>in vitro</em> Module Questions</strong></a>
+          <ul>
+            <li><a href="#wwarn-invitro-culture">Culture</a></li>
+            <li><a href="#wwarn-invitro-medium">Medium</a></li>
+            <li><a href="#wwarn-invitro-drug">Drugs Stock Solutions</a></li>
+            <li><a href="#wwarn-invitro-plates">Plates</a></li>
+            <li><a href="#wwarn-invitro-susceptibility">Determination of Drug Susceptibility</a></li>
+            <li><a href="#wwarn-invitro-bloodSamples">Blood Samples</a></li>
+            <li><a href="#wwarn-invitro-batches">Batches</a></li>
+          </ul>
+        </li>
+      </ul>
+      
+    </html>
+  
+    <html><h3>General Questions</h3></html>
+    
+    
+    <html><h4 id="startend">Study Start and End</h4></html>
+  
+    <question id="startYear">
+      <model>
+        <element name="startYear" type="gYear"/>
+      </model>
+      <view>
+        <input>
+          <label>What year did the study start?</label>
+          <hint>Enter the year in which the study started, e.g., 2006.</hint>
+        </input>
+      </view>
+    </question>
+
+    <question id="endYear">
+      <model>
+        <element name="endYear" type="gYear"/>
+      </model>
+      <view>
+        <input>
+          <label>What year did the study end?</label>
+          <hint>Enter the year in which the study ended, e.g., 2008.</hint>
+        </input>
+      </view>
+    </question>
+    
+    <html><h4 id="pi">Principal Investigator(s)</h4></html>
+    
+    <questionnaire id="principalInvestigator" repeatable="yes">
+
+      <model>
+        <element name="principalInvestigator"/>
+      </model>
+      
+      <view>
+
+        <html readOnly="hide"><p>Who was the principal investigator of this study?</p></html>
+        
+        <question id="principalInvestigator-name">
+          <model>
+            <element name="name"/>
+          </model>
+          <view>
+            <input>
+              <label>Name? </label>
+            </input>
+          </view>
+        </question>
+
+        <question id="principalInvestigator-email" repeatable="yes">
+          <model>
+            <element name="email"/>
+          </model>
+          <view>
+            <input>
+              <label>Email address? </label>
+            </input>
+          </view>
+        </question>
+
+        <question id="principalInvestigator-uri" repeatable="yes">
+          <model>
+            <element name="uri"/>
+          </model>
+          <view>
+            <input>
+              <label>Home page?</label>
+              <hint>Enter the URL of a web page that is the person's home page.</hint>
+            </input>
+          </view>
+        </question>
+
+        <question id="principalInvestigator-org" repeatable="yes">
+          <model>
+            <element name="org"/>
+          </model>
+          <view>
+            <input>
+              <label>Host organisation or institution?</label>
+              <hint>Enter the name of the person's host organisation or institution.</hint>
+            </input>
+          </view>
+        </question>
+        
+        <html readOnly="hide"><p><em>You can add another principal investigator by clicking the "+" button below.</em></p></html>
+
+      </view>
+      
+    </questionnaire>
+    
+    
+    <html><h4 id="pathogens">Pathogen Species</h4></html>
+    
+    <question id="pathogenSpecies">
+      <model>
+        <element name="pathogenSpecies"/>
+      </model>
+      <view>
+        <select appearance="full">
+          <label>What pathogen species were studied?</label>
+          <item>
+            <label>P. falciparum</label>
+            <value>plasmodiumfalciparum</value>
+          </item>
+          <item>
+            <label>P. vivax</label>
+            <value>plasmodiumvivax</value>
+          </item>
+        </select>
+      </view>
+    </question>
+
+    <html><h4 id="sites">Study Site(s)</h4></html>
+    
+    <questionnaire id="site" repeatable="yes">
+      
+      <model><element name="site"/></model>
+      
+      <view>
+
+        <html readOnly="hide"><p>Describe the site (location) where study subjects were recruited from...</p></html>
+        
+        <question id="site-country">
+          <model><element name="country"/></model>
+          <view>
+            <select1 appearance="minimal">
+              <label>Country?</label>
+              <items src="countries.en.xml"/>
+            </select1>
+          </view>
+        </question>
+        
+        <question id="site-region">
+          <model><element name="region"/></model>
+          <view>
+            <input>
+              <label>Region?</label>
+            </input>
+          </view>
+        </question>
+
+        <question id="site-district">
+          <model><element name="district"/></model>
+          <view>
+            <input>
+              <label>District?</label>
+            </input>
+          </view>
+        </question>
+              
+        <question id="site-locality">
+          <model><element name="locality"/></model>
+          <view>
+            <input>
+              <label>Locality?</label>
+            </input>
+          </view>
+        </question>
+
+        <html readOnly="hide"><p style="display: block;"><em>If the study involves more than one site, what identifier (i.e., code) is used for this site in the submitted study data?</em></p></html>
+
+        <question id="siteId">
+          <model><element name="identifier"/></model>
+          <view>
+            <input>
+              <label>Study site code?</label>
+            </input>
+          </view>
+        </question>
+
+        <html readOnly="hide"><p><em>You can add another site by clicking the "+" button below.</em></p></html>
+
+      </view>
+
+    </questionnaire>
+
+
+    <html><h4 id="pubs">Publications</h4></html>
+    
+    <questionnaire id="publication" repeatable="yes">
+    
+      <model>
+        <element name="publication"/>
+      </model>
+    
+      <view>
+        <html readOnly="hide"><p>Is this study described in any published research papers?</p></html>  
+        
+        <question id="publication-title">
+          <model><element name="title"/></model>
+          <view>
+            <input>
+              <label>Title?</label>
+            </input>
+          </view>
+        </question>
+
+        <question id="publication-year">
+          <model><element name="year"/></model>
+          <view>
+            <input>
+              <label>Year?</label>
+            </input>
+          </view>
+        </question>
+
+        <question id="publication-journal">
+          <model><element name="journal"/></model>
+          <view>
+            <input>
+              <label>Journal?</label>
+            </input>
+          </view>
+        </question>
+
+        <question id="publication-link" repeatable="yes">
+          <model><element name="uri"/></model>
+          <view>
+            <input>
+              <label>Web link?</label>
+            </input>
+          </view>
+        </question>
+
+        <question id="publication-doi">
+          <model><element name="doi"/></model>
+          <view>
+            <input>
+              <label>DOI?</label>
+            </input>
+          </view>
+        </question>
+
+        <html readOnly="hide"><p><em>You can add another publication by clicking the "+" button below.</em></p></html>
+
+      </view>
+      
+    </questionnaire>
+    
+    
+    <!-- TODO factor this out of generic project to WWARN specific project -->
+
+    <html><h3 id="invitro"><em>in vitro</em> Module Questions</h3></html>
+    
+    <questionnaire
+      defaultPrefix="wwarn"
+      defaultNamespaceUri="http://www.cggh.org/2009/chassis/wwarn/xmlns"
+      id="wwarn-invitro">
+      
+      <model>
+        <element name="invitro"/>
+      </model>
+      
+      <view class="xquestionnaire-transparent">
+      
+      
+      
+        <!--+
+            |
+            | BEGIN IN VITRO CULTURE NESTED QUESTIONNAIRE
+            |
+            +-->
+            
+        <html><h4 id="wwarn-invitro-culture">Culture</h4></html>
+        
+        <questionnaire id="wwarn-invitro-culture">
+        
+          <model>
+            <element name="culture"/>
+          </model>
+        
+          <view>
+            
+            <question id="wwarn-invitro-culture-incubatorSystem">
+              <model>
+                <element name="incubatorSystem"/>
+              </model>
+              <view>
+                <input>
+                  <label>Incubator system?</label>
+                </input>
+                <html readOnly="hide"><p><em>If the system is an incubator or incubation chamber, please also provide the levels of CO<sub>2</sub>, O<sub>2</sub> and N<sub>2</sub> below.</em></p></html>
+              </view>
+            </question>
+
+
+            <question id="wwarn-invitro-culture-co2">
+              <model>
+                <element name="co2"/>
+              </model>
+              <view>
+                <inlinehtml>CO<sub>2</sub>?</inlinehtml>
+                <input/>
+                <html readOnly="hide"><em>Temperature of 37<sup>o</sup>C.</em></html>
+              </view>
+            </question>
+            
+            <question id="wwarn-invitro-culture-o2">
+              <model>
+                <element name="o2"/>
+              </model>
+              <view>
+                <inlinehtml>O<sub>2</sub>?</inlinehtml>
+                <input/>
+                <html readOnly="hide"><em>Monitoring of the incubator system.</em></html>
+              </view>
+            </question>
+            
+            <question id="wwarn-invitro-culture-n2">
+              <model>
+                <element name="n2"/>
+              </model>
+              <view>
+                <inlinehtml>N<sub>2</sub>?</inlinehtml>
+                <input/>
+              </view>
+            </question>
+            
+            <question id="wwarn-invitro-culture-healthyErythrocytesSource">
+              <model>
+                <element name="healthyErythrocytesSource"/>
+              </model>
+              <view>
+                <input>
+                  <label>Healthy erythrocytes source?</label>
+                </input>
+                <html readOnly="hide"><em>Healthy erythrocytes have to be deleucocyted.</em></html>
+              </view>
+            </question>
+            
+            <question id="wwarn-invitro-culture-hematocrit">
+              <model>
+                <element name="hematocrit"/>
+              </model>
+              <view>
+                <input>
+                  <label>Hematocrit?</label>
+                </input>
+                <inlinehtml>%</inlinehtml>
+              </view>
+            </question>
+            
+            <question id="wwarn-invitro-culture-bloodGroup">
+              <model>
+                <element name="bloodGroup"/>
+              </model>
+              <view>
+                <input>
+                  <label>Blood group?</label>
+                </input>
+              </view>
+            </question>
+
+          </view>
+          
+        </questionnaire>
+
+
+      
+        <!--+
+            |
+            | BEGIN IN VITRO MEDIUM NESTED QUESTIONNAIRE
+            |
+            +-->
+            
+        <html><h4 id="wwarn-invitro-medium">Medium</h4></html>
+        
+        <questionnaire id="wwarn-invitro-medium">
+        
+          <model>
+            <element name="medium"/>
+          </model>
+        
+          <view>
+
+            <question id="wwarn-invitro-medium-medium">
+              <model>
+                <element name="medium"/>
+              </model>
+              <view>
+                <input>
+                  <label>Medium?</label>
+                </input>
+                <html readOnly="hide"><em>Storage temperature: 6 months at -20<sup>o</sup>C and 1 week at +4<sup>o</sup>C after using.</em></html>
+              </view>
+            </question>
+
+            <question id="wwarn-invitro-medium-preparation">
+              <model>
+                <element name="preparation"/>
+              </model>
+              <view>
+                <input>
+                  <label>Preparation?</label>
+                </input>
+              </view>
+            </question>
+
+            <question id="wwarn-invitro-medium-serum">
+              <model>
+                <element name="serum"/>
+              </model>
+              <view>
+                <input>
+                  <label>Serum?</label>
+                </input>
+              </view>
+            </question>
+
+            <question id="wwarn-invitro-medium-serumFinalConcentration">
+              <model>
+                <element name="serumFinalConcentration"/>
+              </model>
+              <view>
+                <input>
+                  <label>Serum final concentration (g/L)?</label>
+                </input>
+              </view>
+            </question>
+          
+            <question id="wwarn-invitro-medium-finalConcentrationNaHCO3">
+              <model>
+                <element name="finalConcentrationNaHCO3"/>
+              </model>
+              <view>
+                <inlinehtml>Final concentration of NaHCO<sub>3</sub>?</inlinehtml>
+                <input/>
+              </view>
+            </question>
+            
+            <html><h5>Hypoxantine</h5></html>
+
+            <questionnaire id="wwarn-invitro-medium-hypoxantine">
+              <model>
+                <element name="hypoxantine"/>
+              </model>
+              <view>
+                <question id="wwarn-invitro-medium-hypoxantine-added">
+                  <model>
+                    <element name="added"/>
+                  </model>
+                  <view>
+                    <select1 appearance="minimal">
+                      <label>Do you add Hypoxantine?</label>
+                      <item>
+                        <label>(please select yes or no)</label>
+                        <value></value>
+                      </item>
+                      <item>
+                        <label>yes</label>
+                        <value>yes</value>
+                      </item>
+                      <item>
+                        <label>no</label>
+                        <value>no</value>
+                      </item>
+                    </select1>
+                  </view>
+                </question>
+                <question id="wwarn-invitro-medium-hypoxantine-finalConcentration">
+                  <model>
+                    <element name="finalConcentration"/>
+                  </model>
+                  <view>
+                    <input>
+                      <label>If yes, final concentration (g/L)?</label>
+                    </input>
+                  </view>
+                </question>
+              </view>
+            </questionnaire>
+
+            <html><h5>Orotic Acid</h5></html>
+
+            <questionnaire id="wwarn-invitro-medium-oroticAcid">
+              <model>
+                <element name="oroticAcid"/>
+              </model>
+              <view>
+                <question id="wwarn-invitro-medium-oroticAcid-added">
+                  <model>
+                    <element name="added"/>
+                  </model>
+                  <view>
+                    <select1 appearance="minimal">
+                      <label>Do you add orotic acid?</label>
+                      <item>
+                        <label>(please select yes or no)</label>
+                        <value></value>
+                      </item>
+                      <item>
+                        <label>yes</label>
+                        <value>yes</value>
+                      </item>
+                      <item>
+                        <label>no</label>
+                        <value>no</value>
+                      </item>
+                    </select1>
+                  </view>
+                </question>
+                <question id="wwarn-invitro-medium-oroticAcid-finalConcentration">
+                  <model>
+                    <element name="finalConcentration"/>
+                  </model>
+                  <view>
+                    <input>
+                      <label>If yes, final concentration (g/L)?</label>
+                    </input>
+                  </view>
+                </question>
+              </view>
+            </questionnaire>
+
+            <html><h5>Glucose</h5></html>
+
+            <questionnaire id="wwarn-invitro-medium-glucose">
+              <model>
+                <element name="glucose"/>
+              </model>
+              <view>
+                <question id="wwarn-invitro-medium-glucose-added">
+                  <model>
+                    <element name="added"/>
+                  </model>
+                  <view>
+                    <select1 appearance="minimal">
+                      <label>Do you add glucose?</label>
+                      <item>
+                        <label>(please select yes or no)</label>
+                        <value></value>
+                      </item>
+                      <item>
+                        <label>yes</label>
+                        <value>yes</value>
+                      </item>
+                      <item>
+                        <label>no</label>
+                        <value>no</value>
+                      </item>
+                    </select1>
+                  </view>
+                </question>
+                <question id="wwarn-invitro-medium-glucose-finalConcentration">
+                  <model>
+                    <element name="finalConcentration"/>
+                  </model>
+                  <view>
+                    <input>
+                      <label>If yes, final concentration (g/L)?</label>
+                    </input>
+                  </view>
+                </question>
+              </view>
+            </questionnaire>
+
+            <html><h5>Antibiotics</h5></html>
+
+            <html readOnly="hide"><p><em>If you use antibiotics, please fill in the section below for each antibiotic you use.</em></p></html>
+            
+            <questionnaire id="wwarn-invitro-medium-antiBiotic" repeatable="yes">
+              <model>
+                <element name="antiBiotic"/>
+              </model>
+              <view>
+                <question id="wwarn-invitro-medium-antiBiotic-name">
+                  <model>
+                    <element name="name"/>
+                  </model>
+                  <view>
+                    <input>
+                      <label>Name of antibiotic?</label>
+                    </input>
+                  </view>
+                </question>
+                <question id="wwarn-invitro-medium-antiBiotic-finalConcentration">
+                  <model>
+                    <element name="finalConcentration"/>
+                  </model>
+                  <view>
+                    <input>
+                      <label>Final concentration (g/L)?</label>
+                    </input>
+                  </view>
+                </question>
+                <html readOnly="hide">
+                  <p><em>Use the "+" button below to add another antibiotic.</em></p>
+                </html>
+              </view>
+            </questionnaire>
+          
+          </view>
+          
+        </questionnaire>    
+        
+        
+        
+        <!--+
+            |
+            | BEGIN IN VITRO DRUG STOCK SOLUTIONS NESTED QUESTIONNAIRE
+            |
+            +-->
+            
+        <html><h4 id="wwarn-invitro-drug">Drug Stock Solutions</h4></html>
+        
+        <html readOnly="hide"><p><em>Please complete the section below for each drug stock solution used.</em></p></html>
+        
+        <questionnaire id="wwarn-invitro-drug" repeatable="yes">
+        
+          <model>
+            <element name="drug"/>
+          </model>
+        
+          <view>
+
+            <question id="wwarn-invitro-drug-molecule">
+              <model>
+                <element name="molecule"/>
+              </model>
+              <view>
+                <input>
+                  <label>Molecule?</label>
+                </input>
+              </view>
+            </question>
+        
+            <question id="wwarn-invitro-drug-solvent">
+              <model>
+                <element name="solvent"/>
+              </model>
+              <view>
+                <input>
+                  <label>Solvent of stock solution?</label>
+                </input>
+              </view>
+            </question>
+
+            <question id="wwarn-invitro-drug-solventFinalConcentration">
+              <model>
+                <element name="solventFinalConcentration"/>
+              </model>
+              <view>
+                <input>
+                  <label>Solvent final concentration (g/L)?</label>
+                </input>
+              </view>
+            </question>
+            
+            <html readOnly="hide">
+              <p><em>Storage temperature and shelf lives for each solution will be determined and indicated.</em></p>
+            </html>
+
+
+            <question id="wwarn-invitro-drug-providedByWwarn">
+              <model>
+                <element name="providedByWwarn"/>
+              </model>
+              <view>
+                <select1 appearance="minimal">
+                  <label>Were stock solutions provided by WWARN?</label>
+                  <item>
+                    <label>(please select yes or no)</label>
+                    <value></value>
+                  </item>
+                  <item>
+                    <label>yes</label>
+                    <value>yes</value>
+                  </item>
+                  <item>
+                    <label>no</label>
+                    <value>no</value>
+                  </item>
+                </select1>
+              </view>
+            </question>
+
+            <question id="wwarn-invitro-drug-provider">
+              <model>
+                <element name="provider"/>
+              </model>
+              <view>
+                <input>
+                  <label>If not provided by WWARN, who provided the drug?</label>
+                </input>
+              </view>
+            </question>
+                
+            <html readOnly="hide">
+              <p><em>Use the "+" button below to add another drug stock solution.</em></p>
+            </html>
+
+          </view>
+          
+        </questionnaire>
+        
+        <!--+
+            |
+            | END IN VITRO DRUG STOCK SOLUTIONS NESTED QUESTIONNAIRE
+            |
+            +-->
+        
+        
+        
+        
+        
+        <!--+
+            |
+            | BEGIN IN VITRO PLATES NESTED QUESTIONNAIRE
+            |
+            +-->
+            
+        <html><h4 id="wwarn-invitro-plates">Plates</h4></html>
+        
+        <questionnaire id="wwarn-invitro-plates">
+        
+          <model>
+            <element name="plates"/>
+          </model>
+        
+          <view>
+
+            <question id="wwarn-invitro-plates-batches">
+              <model>
+                <element name="batches"/>
+              </model>
+              <view>
+                <select1 appearance="minimal">
+                  <label>Is your data organised in batches?</label>
+                  <item>
+                    <label>(please select yes or no)</label>
+                    <value></value>
+                  </item>
+                  <item>
+                    <label>yes</label>
+                    <value>yes</value>
+                  </item>
+                  <item>
+                    <label>no</label>
+                    <value>no</value>
+                  </item>
+                </select1>
+                <html readOnly="hide"><p><em>If yes, please complete the <a href="#wwarn-invitro-batches">batches section below</a>.</em></p></html>
+              </view>
+            </question>
+
+            <question id="wwarn-invitro-plates-preparationDate">
+              <model>
+                <element name="preparationDate"/>
+              </model>
+              <view>
+                <input>
+                  <label>If extemporaneous, enter preparation date of plate:</label>
+                </input>
+              </view>
+            </question>
+                
+            <question id="wwarn-invitro-plates-kindOfPlate">
+              <model>
+                <element name="kindOfPlate"/>
+              </model>
+              <view>
+                <input>
+                  <label>Kind of plate?</label>
+                </input>
+                <html readOnly="hide"><em>Storage temperature and shelf-lives for predisposed plates will be recommended.</em></html>
+              </view>
+            </question>
+                
+            <question id="wwarn-invitro-plates-wellVolume">
+              <model>
+                <element name="wellVolume"/>
+              </model>
+              <view>
+                <input>
+                  <label>Volume in each well (&#xB5;l)?</label>
+                </input>
+                <html readOnly="hide"><em>Storage temperature and shelf-lives for predisposed plates will be recommended.</em></html>
+              </view>
+            </question>
+
+            <question id="wwarn-invitro-plates-clone3D7ProvidedByWwarn">
+              <model>
+                <element name="clone3D7ProvidedByWwarn"/>
+              </model>
+              <view>
+                <select1 appearance="minimal">
+                  <label>3D7 provided by WWARN?</label>
+                  <item>
+                    <label>(please select yes or no)</label>
+                    <value></value>
+                  </item>
+                  <item>
+                    <label>yes</label>
+                    <value>yes</value>
+                  </item>
+                  <item>
+                    <label>no</label>
+                    <value>no</value>
+                  </item>
+                </select1>
+              </view>
+            </question>
+
+            <question id="wwarn-invitro-plates-cloneProvider">
+              <model>
+                <element name="cloneProvider"/>
+              </model>
+              <view>
+                <input>
+                  <label>If clone was not provided by WWARN, who provided the clone?</label>
+                </input>
+              </view>
+            </question>
+
+          </view>
+          
+        </questionnaire>
+        
+        <!--+
+            |
+            | END IN VITRO PLATES NESTED QUESTIONNAIRE
+            |
+            +-->
+        
+                
+                
+                
+                    
+        <!--+
+            |
+            | BEGIN IN VITRO SUSCEPTIBILITY NESTED QUESTIONNAIRE
+            |
+            +-->
+
+        <html><h4 id="wwarn-invitro-susceptibility">Determination of Drug Susceptibility</h4></html>
+                
+        <questionnaire id="wwarn-invitro-susceptibility">
+        
+          <model>
+            <element name="susceptibility"/>
+          </model>
+          
+          <view>
+          
+            <question id="wwarn-invitro-susceptibility-timeOfIncubation">
+              <model>
+                <element name="timeOfIncubation"/>
+              </model>
+              <view>
+                <input>
+                  <label>Time of incubation?</label>
+                </input>
+              </view>
+            </question>
+            
+            <question id="wwarn-invitro-susceptibility-sameTimeOfIncubation">
+              <model>
+                <element name="sameTimeOfIncubation"/>
+              </model>
+              <view>
+                <select1 appearance="minimal">
+                  <label>Is the time of incubation the same for all your data?</label>
+                  <item>
+                    <label>(please select yes or no)</label>
+                    <value></value>
+                  </item>
+                  <item>
+                    <label>yes</label>
+                    <value>yes</value>
+                  </item>
+                  <item>
+                    <label>no</label>
+                    <value>no</value>
+                  </item>
+                </select1>
+                <html readOnly="hide"><p><em>If no, please ensure that the time of incubation of each sample is included with the raw data.</em></p></html>
+              </view>
+            </question>
+
+            <question id="wwarn-invitro-susceptibility-methodUsed">
+              <model>
+                <element name="methodUsed"/>
+              </model>
+              <view>
+                <input>
+                  <label>Method used?</label>
+                </input>
+              </view>
+            </question>
+            
+            <question id="wwarn-invitro-susceptibility-sameMethodUsed">
+              <model>
+                <element name="sameMethodUsed"/>
+              </model>
+              <view>
+                <select1 appearance="minimal">
+                  <label>Is the method used the same for all your data?</label>
+                  <item>
+                    <label>(please select yes or no)</label>
+                    <value></value>
+                  </item>
+                  <item>
+                    <label>yes</label>
+                    <value>yes</value>
+                  </item>
+                  <item>
+                    <label>no</label>
+                    <value>no</value>
+                  </item>
+                </select1>
+                <html readOnly="hide"><p><em>If no, please ensure that the method of each sample is included with the raw data.</em></p></html>
+              </view>
+            </question>
+          
+          </view>
+        
+        </questionnaire>
+        
+        <!--+
+            |
+            | END IN VITRO SUSCEPTIBILITY NESTED QUESTIONNAIRE
+            |
+            +-->
+        
+                    
+
+        <!--+
+            |
+            | BEGIN BLOOD SAMPLES NESTED QUESTIONNAIRE
+            |
+            +-->
+
+        <html><h4 id="wwarn-invitro-bloodSamples">Blood Samples</h4></html>
+                
+        <questionnaire id="wwarn-invitro-bloodSamples">
+        
+          <model>
+            <element name="bloodSamples"/>
+          </model>
+          
+          <view>
+
+            <question id="wwarn-invitro-bloodSamples-anticoagulant">
+              <model>
+                <element name="anticoagulant"/>
+              </model>
+              <view>
+                <input>
+                  <label>Anticoagulant?</label>
+                </input>
+              </view>
+            </question>
+            
+            <question id="wwarn-invitro-bloodSamples-transportAndStorageTemp">
+              <model>
+                <element name="transportAndStorageTemp"/>
+              </model>
+              <view>
+                <input>
+                  <label>Transport and storage temperature?</label>
+                </input>
+              </view>
+            </question>
+
+          </view>
+          
+        </questionnaire>
+
+        <!--+
+            |
+            | END BLOOD SAMPLES NESTED QUESTIONNAIRE
+            |
+            +-->
+
+
+
+
+        <!--+
+            |
+            | BEGIN BATCHES NESTED QUESTIONNAIRE
+            |
+            +-->
+
+        <html><h4 id="wwarn-invitro-batches">Batches</h4></html>
+                
+        <questionnaire id="wwarn-invitro-batches">
+        
+          <model>
+            <element name="batches"/>
+          </model>
+          
+          <view>
+          
+            <question id="wwarn-invitro-batches-numberOfBatches">
+              <model>
+                <element name="numberOfBatches"/>
+              </model>
+              <view>
+                <input>
+                  <label>How many batches of plates are you entering data for?</label>
+                </input>
+              </view>
+            </question>
+            
+            <question id="wwarn-invitro-batches-includedInRawData">
+              <model>
+                <element name="includedInRawData"/>
+              </model>
+              <view>
+                <select1 appearance="minimal">
+                  <label>Are your batch preparation dates and 3D7 information included with the raw data?</label>
+                  <item>
+                    <label>(please select yes or no)</label>
+                    <value></value>
+                  </item>
+                  <item>
+                    <label>yes</label>
+                    <value>yes</value>
+                  </item>
+                  <item>
+                    <label>no</label>
+                    <value>no</value>
+                  </item>
+                </select1>
+                <html readOnly="hide"><em>If no, please complete the section below for each batch.</em></html>
+              </view>
+            </question>
+            
+            <questionnaire id="wwarn-invitro-batches-batch" repeatable="yes">
+            
+              <model>
+                <element name="batch"/>
+              </model>
+            
+              <view>
+                
+                <question id="wwarn-invitro-batches-batch-batchNumber">
+                  <model>
+                    <element name="batchNumber"/>
+                  </model>
+                  <view>
+                    <input>
+                      <label>Batch number?</label>
+                    </input>
+                  </view>
+                </question>
+                
+                <question id="wwarn-invitro-batches-batch-preparationDate">
+                  <model>
+                    <element name="preparationDate"/>
+                  </model>
+                  <view>
+                    <input>
+                      <label>Preparation date?</label>
+                    </input>
+                  </view>
+                </question>
+                              
+                <question id="wwarn-invitro-batches-batch-parasitaemia3D7">
+                  <model>
+                    <element name="parasitaemia3D7"/>
+                  </model>
+                  <view>
+                    <input>
+                      <label>3D7 parasitaemia?</label>
+                    </input>
+                    <inlinehtml>%</inlinehtml>
+                  </view>
+                </question>
+
+                <question id="wwarn-invitro-batches-batch-ringForms">
+                  <model>
+                    <element name="ringForms"/>
+                  </model>
+                  <view>
+                    <input>
+                      <label>Ring forms after synchronisation?</label>
+                    </input>
+                    <inlinehtml>%</inlinehtml>
+                  </view>
+                </question>
+
+                <html readOnly="hide">
+                  <p><em>Use the "+" button below to add another batch.</em></p>
+                </html>
+
+              </view>
+
+            </questionnaire>
+          
+          </view>
+          
+        </questionnaire>
+
+        <!--+
+            |
+            | BEGIN BATCHES NESTED QUESTIONNAIRE
+            |
+            +-->
+
+
+
+
+      </view>
+    
+    </questionnaire>
+    
+  </view>
+
+
+</questionnaire>
