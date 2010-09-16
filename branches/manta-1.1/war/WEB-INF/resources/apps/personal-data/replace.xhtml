@@ -28,8 +28,11 @@
     <head>
     
         <title>Personal data review - Upload anonymized file</title>
+
+		<!-- Needs to be first, due to sequence of xforms-model-construct-done events. -->
+        <xi:include href="../common/includes/phrasebook-model.xml"/>
         
-        <xforms:model>
+        <xforms:model id="mod-personal-data-replace">
 
 			<xforms:instance id="ins-media-entry">
 				<atom:entry/>
@@ -42,7 +45,12 @@
 				replace="instance"
 				instance="ins-media-entry"
 				serialization="none">
-                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the study.</xforms:message>
+
+        		<!-- error handling -->
+				<xforms:setvalue ev:event="xforms-submit" ref="xxforms:instance('ins-phrasebook-control')/resource-action" value="'getting-media-link-entry'"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-resource-error.xml"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-non-resource-error.xml"/>
+                
 				<xforms:send ev:event="xforms-submit-done" submission="sub-get-study-entry"/>
 				<xforms:send ev:event="xforms-submit-done" submission="sub-get-reviews-feed"/>
 				<xforms:setvalue 
@@ -74,7 +82,12 @@
 				replace="instance"
 				instance="ins-study-entry"
 				serialization="none">
-                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the study.</xforms:message>
+                
+        		<!-- error handling -->
+				<xforms:setvalue ev:event="xforms-submit" ref="xxforms:instance('ins-phrasebook-control')/resource-action" value="'getting-originStudy'"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-resource-error.xml"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-non-resource-error.xml"/>
+                
 				<xforms:setvalue 
 					ev:event="xforms-submit-done" 
 					ref="instance('ins-uploads')/@target" 
@@ -93,7 +106,12 @@
 				instance="ins-reviews-feed" 
 				serialization="none"
 	        	>
-        		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving personal data reviews.</xforms:message>
+
+        		<!-- error handling -->
+				<xforms:setvalue ev:event="xforms-submit" ref="xxforms:instance('ins-phrasebook-control')/resource-action" value="'getting-personalDataReviews-feed'"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-resource-error.xml"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-non-resource-error.xml"/>
+				
         	</xforms:submission>
 			
 			<xforms:action ev:event="xforms-model-construct-done">
@@ -144,9 +162,11 @@
         			value="instance('ins-upload-result')/atom:link[@rel='edit']/@href"/>
 
         		<xforms:send ev:event="xforms-submit-done" submission="sub-post-derivation"/>
-        		
-        		<!-- TODO error handling -->
-        		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while posting the upload.</xforms:message>
+
+        		<!-- error handling -->
+				<xforms:setvalue ev:event="xforms-submit" ref="xxforms:instance('ins-phrasebook-control')/resource-action" value="'form-data-posting-curatedMedia'"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-resource-error.xml"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-non-resource-error.xml"/>
         		
         	</xforms:submission>
         	
@@ -172,7 +192,12 @@
         		instance="ins-derivation-entry"
         		mediatype="application/atom+xml"
         		>
-        		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the study.</xforms:message>
+        		
+        		<!-- error handling -->
+				<xforms:setvalue ev:event="xforms-submit" ref="xxforms:instance('ins-phrasebook-control')/resource-action" value="'posting-derivations'"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-resource-error.xml"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-non-resource-error.xml"/>
+        		
         		<xforms:send ev:event="xforms-submit-done" submission="sub-get-home"/>
         	</xforms:submission>
         	
@@ -236,7 +261,7 @@
 
 
     	
-    	<xforms:group ref="instance('ins-media-entry')">
+    	<xforms:group model="mod-personal-data-replace" ref="instance('ins-media-entry')">
     	
 	    	<p>
 	    		Code: <xforms:output value="manta:id"/>

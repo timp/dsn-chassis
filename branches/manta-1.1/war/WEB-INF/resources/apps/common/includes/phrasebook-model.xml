@@ -1,0 +1,24 @@
+<xforms:model 
+    id="mod-phrasebook"
+    xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:xxforms="http://orbeon.org/oxf/xml/xforms">
+    
+    <xforms:instance id="ins-phrasebook-control">
+        <phrasebook-control xmlns="">
+            <!--essential-->
+            <language/>
+            
+            <!--additional-->
+            <resource-action/>
+        </phrasebook-control>
+    </xforms:instance>  
+    
+
+    <!-- default to en if user-language does not exist, e.g. in dev environment -->
+    <xforms:setvalue ev:event="xforms-model-construct-done" ref="instance('ins-phrasebook-control')/language" value="if(exists(xxforms:get-request-attribute('user-language'))) then xxforms:get-request-attribute('user-language') else 'en'"/>
+
+    <!-- NB: putting xxforms:cache="true" on these instances (e.g. ins-common-phrasebooks) improves performance, but can frustrate testing and development. -->
+    <xforms:instance id="ins-common-phrasebooks" xxforms:readonly="true" src="oxf:/apps/common/common-phrasebooks.xml"/>    
+    
+</xforms:model>

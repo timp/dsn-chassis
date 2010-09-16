@@ -29,8 +29,10 @@
     
         <title>My studies</title>
 
+		<!-- Needs to be first, due to sequence of xforms-model-construct-done events. -->
+        <xi:include href="../common/includes/phrasebook-model.xml"/>
         
-        <xforms:model>
+        <xforms:model model="mod-my-studies">
 
         	<!-- non-persistent model for application state -->
         	<xforms:instance id="ins-control">
@@ -57,10 +59,12 @@
 				replace="instance"
 				instance="ins-study-feed"
 				serialization="none">
-				<!-- TODO error handling -->
-                <xforms:message ev:event="xforms-submit-error" level="modal">
-                	An error occurred (<xforms:output value="event('error-type')"/>) while retrieving a list of studies.
-               	</xforms:message>
+				
+        		<!-- error handling -->
+				<xforms:setvalue ev:event="xforms-submit" ref="xxforms:instance('ins-phrasebook-control')/resource-action" value="'getting-studies'"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-resource-error.xml"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-non-resource-error.xml"/>
+               	
 			</xforms:submission>
 			
 			<xforms:send 

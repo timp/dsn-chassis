@@ -1,0 +1,11 @@
+<xforms:action 
+    xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:xxforms="http://orbeon.org/oxf/xml/xforms" 
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    ev:event="xforms-submit-error"
+    if="not(event('error-type')='resource-error')">
+    <xxforms:variable name="common-phrasebook" select="xxforms:instance('ins-common-phrasebooks')/phrasebook[@xml:lang = xxforms:instance('ins-phrasebook-control')/language/text()]"/>    
+    <xxforms:variable name="error-message" select="if(event('error-type')='') then $common-phrasebook/default-non-resource-error-message else concat($common-phrasebook/non-resource-error-message-prefix, event('error-type'), $common-phrasebook/non-resource-error-message-suffix)"/>    
+    <xforms:message level="modal"><xforms:output ref="$error-message"/></xforms:message>
+    <xforms:message level="xxforms:log-error"><xforms:output ref="$error-message"/></xforms:message>
+</xforms:action>

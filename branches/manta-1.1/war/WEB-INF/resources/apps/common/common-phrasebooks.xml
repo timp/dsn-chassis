@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<phrasebooks>   
+    <phrasebook xml:lang="en">
+
+        <default-resource-action-error-message>An error occurred while performing a resource action.</default-resource-action-error-message>
+        <resource-action-error-message-prefix>An error occurred while </resource-action-error-message-prefix>
+        <resource-actions>
+            <!-- naming convention "methoding-resource" -->
+            <form-data-posting-draftMedia>uploading the file</form-data-posting-draftMedia>
+            <getting-studies>retrieving the list of studies</getting-studies>
+            <getting-drafts>retrieving the list of drafts</getting-drafts>
+            <posting-drafts>creating a new draft</posting-drafts>
+            <putting-draft>saving the draft</putting-draft>
+            <posting-studies>creating a new study</posting-studies>
+            <putting-security-descriptor>applying access permissions to this study</putting-security-descriptor>
+            <posting-submittedMedia>storing the files</posting-submittedMedia>
+            <deleting-draft>deleting the draft</deleting-draft>
+            <putting-studyInfo-for-basis>creating the Study Information Form</putting-studyInfo-for-basis>
+            <getting-draftMedia>retrieving the list of uploaded files for this draft</getting-draftMedia>
+            <getting-submittedMedia>retrieving the list of submitted files for this study</getting-submittedMedia>
+            <getting-studyInfo>retrieving the Study Information Form</getting-studyInfo>
+            <deleting-draftMedia>deleting the uploaded file</deleting-draftMedia>
+            <getting-studyInfo-for-copy>copying answers from the selected study</getting-studyInfo-for-copy>
+            <putting-studyInfo>saving the Study Information Form</putting-studyInfo>
+            <getting-media-link>retrieving the file details</getting-media-link>
+            <getting-derivation-feed>retrieving the derivation details for this file</getting-derivation-feed>
+            <getting-derived-feed>retrieving the list of derived files</getting-derived-feed>
+            <getting-study>retrieving the study</getting-study>
+            <getting-curatedMedia>retrieving the list of curated files for this study</getting-curatedMedia>
+            <posting-uploads>storing the files</posting-uploads>
+            <posting-derivations>recording the derivation details for this file</posting-derivations>
+            <getting-personal-data-reviews>retrieving the list of personal data reviews</getting-personal-data-reviews>
+            <getting-derivations>retrieving the list of file derivations</getting-derivations>
+            <getting-submitted-media-feed>retrieving the list of submitted files</getting-submitted-media-feed>
+            <getting-media-link-entry>retrieving the details for this file</getting-media-link-entry>
+            <getting-originStudy>retrieving the study details for this file</getting-originStudy>
+            <getting-media-security-descriptor>retrieving the access details for this file</getting-media-security-descriptor>
+            <posting-personalDataReviews>posting the personal data review</posting-personalDataReviews>
+            <putting-media-security-descriptor>applying access permissions to the file</putting-media-security-descriptor>
+            <getting-personalDataReviews-feed>retrieving the list of personal data reviews for this file</getting-personalDataReviews-feed>
+            <form-data-posting-curatedMedia>uploading the file</form-data-posting-curatedMedia>
+            <putting-study>saving the study details</putting-study>
+            <getting-security-descriptor>retrieving access details for this study</getting-security-descriptor>
+            <form-data-posting-submittedMedia>uploading the file</form-data-posting-submittedMedia>
+        </resource-actions>
+        <resource-action-error-message-suffix>.</resource-action-error-message-suffix>
+
+        <default-non-resource-error-message>An error of unknown type occurred.</default-non-resource-error-message>
+        <non-resource-error-message-prefix>An error occurred. Error type: </non-resource-error-message-prefix>
+        <non-resource-error-message-suffix>.</non-resource-error-message-suffix>
+                
+    </phrasebook>
+</phrasebooks>

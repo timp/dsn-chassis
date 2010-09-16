@@ -31,6 +31,9 @@
     
         <title>Register study</title>
         
+		<!-- Needs to be first, due to sequence of xforms-model-construct-done events. -->
+        <xi:include href="../common/includes/phrasebook-model.xml"/>
+        
         <xforms:model id="mod-register-study-wizard">
         	
            <!-- The value for the first wizard-pane-to-show is dependent on whether a draft is available, so should not default here. -->
@@ -251,7 +254,11 @@
 
 				<!-- If there was an error, then go back to the wizard-pane-being-shown and show the error. -->
 				<xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show" value="instance('ins-control')/wizard-pane-being-shown"  />
-				<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while creating a new draft.</xforms:message>
+
+				<!-- error handling -->        		
+				<xforms:setvalue ev:event="xforms-submit" ref="xxforms:instance('ins-phrasebook-control')/resource-action" value="'posting-drafts'"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-resource-error.xml"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-non-resource-error.xml"/>
                          
             </xforms:submission>
 
@@ -277,7 +284,12 @@
                 </xforms:action>
                 
                 <xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-control')/draft-is-saved">false</xforms:setvalue>
-                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while saving the draft.</xforms:message>
+                
+				<!-- error handling -->        		
+				<xforms:setvalue ev:event="xforms-submit" ref="xxforms:instance('ins-phrasebook-control')/resource-action" value="'putting-draft'"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-resource-error.xml"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-non-resource-error.xml"/>                
+                
                 <xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show" value="instance('ins-control')/wizard-pane-being-shown"/>
                                 
             </xforms:submission>
@@ -296,7 +308,12 @@
                 <xforms:setvalue ev:event="xforms-submit-done" ref="instance('ins-control')/wizard-pane-being-shown" value="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show"  />
                 
                 <xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-control')/draft-is-saved">false</xforms:setvalue>
-                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while saving the draft.</xforms:message>
+                
+				<!-- error handling -->        		
+				<xforms:setvalue ev:event="xforms-submit" ref="xxforms:instance('ins-phrasebook-control')/resource-action" value="'putting-draft'"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-resource-error.xml"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-non-resource-error.xml"/>  
+                
                 <xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show" value="instance('ins-control')/wizard-pane-being-shown"/>
                                 
             </xforms:submission>            
@@ -317,7 +334,12 @@
                 </xforms:action>
                 
                 <xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-control')/draft-is-saved">false</xforms:setvalue>
-                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while saving the draft.</xforms:message>
+				
+				<!-- error handling -->        		
+				<xforms:setvalue ev:event="xforms-submit" ref="xxforms:instance('ins-phrasebook-control')/resource-action" value="'putting-draft'"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-resource-error.xml"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-non-resource-error.xml"/>
+				
                 <xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show" value="instance('ins-control')/wizard-pane-being-shown"/>
                                 
             </xforms:submission>
@@ -369,7 +391,11 @@
                 
 				<!-- If there was an error, then go back to the wizard-pane-being-shown and show the error. -->
 				<xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show" value="instance('ins-control')/wizard-pane-being-shown"  />
-				<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while creating a new study.</xforms:message>
+
+				<!-- error handling -->        		
+				<xforms:setvalue ev:event="xforms-submit" ref="xxforms:instance('ins-phrasebook-control')/resource-action" value="'posting-studies'"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-resource-error.xml"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-non-resource-error.xml"/>
                          
             </xforms:submission>
 
@@ -395,7 +421,11 @@
    
 				<!-- If error, then go back to the wizard-pane-being-shown and show the error. -->
 				<xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show" value="instance('ins-control')/wizard-pane-being-shown"  />
-				<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while applying the study permissions.</xforms:message>
+
+				<!-- error handling -->        		
+				<xforms:setvalue ev:event="xforms-submit" ref="xxforms:instance('ins-phrasebook-control')/resource-action" value="'putting-security-descriptor'"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-resource-error.xml"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-non-resource-error.xml"/>
                          
             </xforms:submission>
 
@@ -417,7 +447,11 @@
         		
         		<!-- If error, then go back to the wizard-pane-being-shown and show the error. -->
         		<xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show" value="instance('ins-control')/wizard-pane-being-shown"/>
-        		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while storing the files.</xforms:message>
+
+				<!-- error handling -->        		
+				<xforms:setvalue ev:event="xforms-submit" ref="xxforms:instance('ins-phrasebook-control')/resource-action" value="'posting-submittedMedia'"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-resource-error.xml"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-non-resource-error.xml"/>
 
         	</xforms:submission>
 
@@ -430,10 +464,15 @@
             	resource="{instance('ins-draft-entry')/atom:link[@rel='edit']/@href}">
             	
             	<xforms:send ev:event="xforms-submit-done" submission="sub-put-study-info-entry"/>
-            	
-            	
-            	
-            	<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while deleting the draft.</xforms:message>       
+
+				<!-- error handling -->        		
+				<xforms:setvalue ev:event="xforms-submit" ref="xxforms:instance('ins-phrasebook-control')/resource-action" value="'deleting-draft'"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-resource-error.xml"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-non-resource-error.xml"/>
+
+        		<!-- If error, then go back to the wizard-pane-being-shown and show the error. -->
+        		<xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show" value="instance('ins-control')/wizard-pane-being-shown"/>
+
             	
             </xforms:submission>
             
@@ -456,10 +495,15 @@
 				
 				<!-- If successful, reload with the study edit URL (the draft URL is now irrelevant) -->
 				<xforms:load ev:event="xforms-submit-done" resource="register-study-wizard?study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}"/>
-				
-				
-				
-				<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/> ) while creating the study info entry.</xforms:message>
+
+				<!-- error handling -->        		
+				<xforms:setvalue ev:event="xforms-submit" ref="xxforms:instance('ins-phrasebook-control')/resource-action" value="'putting-studyInfo-for-basis'"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-resource-error.xml"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-non-resource-error.xml"/>
+
+        		<!-- If error, then go back to the wizard-pane-being-shown and show the error. -->
+        		<xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show" value="instance('ins-control')/wizard-pane-being-shown"/>
+
 				
 			</xforms:submission>
 
@@ -494,8 +538,10 @@
         		replace="instance"
         		instance="ins-draft-media-feed">
 
-        		<!-- TODO error handling -->
-        		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving a feed of draft media.</xforms:message>
+				<!-- error handling -->        		
+				<xforms:setvalue ev:event="xforms-submit" ref="xxforms:instance('ins-phrasebook-control')/resource-action" value="'getting-draftMedia'"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-resource-error.xml"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-non-resource-error.xml"/>
 
         	</xforms:submission>
         	
@@ -551,8 +597,10 @@
 				<!-- refresh draft media -->
 				<xforms:send ev:event="xforms-submit-done" submission="sub-get-draft-media-feed"/>
         		
-        		<!-- TODO error handling -->
-        		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while posting a draft upload.</xforms:message>
+        		<!-- error handling -->
+				<xforms:setvalue ev:event="xforms-submit" ref="xxforms:instance('ins-phrasebook-control')/resource-action" value="'form-data-posting-draftMedia'"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-resource-error.xml"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-non-resource-error.xml"/>
 
         	</xforms:submission>
         	
@@ -586,19 +634,8 @@
 	
 				</xforms:action>
 				
-				
-				
                 <!-- If not available (error) then reloads with no request param. -->
                 <!-- Note that this behaviour will depend on the if-param-condition in the send to prevent an endless loop. -->
-                
-                <!-- 
-                <xforms:message ev:event="xforms-submit-error" level="modal">
-					An error occurred (
-					<xforms:output value="event('error-type')" />
-					) while getting the study info.
-				</xforms:message>
-				 -->
-				
                 <xforms:load ev:event="xforms-submit-error" resource="register-study-wizard"/>
                      
 			</xforms:submission>
@@ -634,8 +671,14 @@
 					<xforms:send submission="sub-get-study-info-entry"/>
 					
 				</xforms:action>
-				
-                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the submitted media.</xforms:message>
+
+				<!-- error handling -->        		
+				<xforms:setvalue ev:event="xforms-submit" ref="xxforms:instance('ins-phrasebook-control')/resource-action" value="'getting-submittedMedia'"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-resource-error.xml"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-non-resource-error.xml"/>
+
+				<!-- If there was an error show the confirmation pane (would otherwise show an empty step 1). -->	
+				<xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-control')/wizard-pane-being-shown" value="'confirmation'"  />
                 
 			</xforms:submission>			
 
@@ -653,16 +696,18 @@
 					<!-- Copy the study info entry (received after posting the draft's study entry) to the questionnaire model.  -->
 					<xforms:insert nodeset="xxforms:instance('ins-sq-study-info-entry')" origin="instance('ins-study-info-entry')" />
 					
-
 					<!-- Show the confirmation pane. -->	
 					<xforms:setvalue ref="instance('ins-control')/wizard-pane-being-shown" value="'confirmation'"  />
 					 
-					
 				</xforms:action>
-				
-				
-				<!-- Note, requires an atombeat:allow="GET" permission on the resource link. -->
-				<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the study info.</xforms:message>
+
+				<!-- error handling -->        		
+				<xforms:setvalue ev:event="xforms-submit" ref="xxforms:instance('ins-phrasebook-control')/resource-action" value="'getting-studyInfo'"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-resource-error.xml"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-non-resource-error.xml"/>
+
+				<!-- If there was an error show the confirmation pane (would otherwise show an empty step 1). -->	
+				<xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-control')/wizard-pane-being-shown" value="'confirmation'"  />
 				
 			</xforms:submission>
 
@@ -681,8 +726,11 @@
             		<xforms:send submission="sub-get-draft-media-feed"/>
             		<xforms:message >The file has now been removed.</xforms:message>
             	</xforms:action>
-            	
-            	<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while deleting the draft.</xforms:message>       
+
+				<!-- error handling -->        		
+				<xforms:setvalue ev:event="xforms-submit" ref="xxforms:instance('ins-phrasebook-control')/resource-action" value="'deleting-draftMedia'"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-resource-error.xml"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-non-resource-error.xml"/>
             
         	</xforms:submission>
 
@@ -700,10 +748,12 @@
 				replace="instance"
 				instance="ins-study-feed"
 				serialization="none">
-				<!-- TODO error handling -->
-                <xforms:message ev:event="xforms-submit-error" level="modal">
-                	An error occurred (<xforms:output value="event('error-type')"/>) while retrieving a list of studies.
-               	</xforms:message>
+
+				<!-- error handling -->        		
+				<xforms:setvalue ev:event="xforms-submit" ref="xxforms:instance('ins-phrasebook-control')/resource-action" value="'getting-studies'"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-resource-error.xml"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-non-resource-error.xml"/>
+               	
 			</xforms:submission>
 			
 			<xforms:send 
@@ -716,7 +766,7 @@
 				
 			<xforms:submission 
 				id="sub-copy-answers"
-				resource="{instance('ins-control')/href-to-copy-study-info-from}"
+				resource="{instance('ins-control')/href-to-copy-study-info-from}s"
 				method="get"
 				replace="instance"
 				instance="ins-study-info-entry-to-copy-study-info-from">
@@ -742,11 +792,12 @@
 					</xforms:message>
 					
 				</xforms:action>
-				
-				
-                <xforms:message ev:event="xforms-submit-error" level="modal">
-                	An error occurred (<xforms:output value="event('error-type')"/>) while copying answers from the selected study.
-               	</xforms:message>
+               	
+				<!-- error handling -->        		
+				<xforms:setvalue ev:event="xforms-submit" ref="xxforms:instance('ins-phrasebook-control')/resource-action" value="'getting-studyInfo-for-copy'"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-resource-error.xml"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-non-resource-error.xml"/>
+               	
 			</xforms:submission>
 
 
@@ -758,7 +809,12 @@
 				mediatype="application/atom+xml" 
 				relevant="false" 
 				validate="false">
-				<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while saving the study info.</xforms:message>
+
+				<!-- error handling -->        		
+				<xforms:setvalue ev:event="xforms-submit" ref="xxforms:instance('ins-phrasebook-control')/resource-action" value="'putting-studyInfo'"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-resource-error.xml"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-non-resource-error.xml"/>
+				
 				<xforms:load ev:event="xforms-submit-done" resource="home"/>
 			</xforms:submission>
 
@@ -768,7 +824,7 @@
        	<xi:include href="../common/includes/study/study-info-model.xml"/>
        	
        	<xi:include href="../common/includes/current-user-model.xml"/>
-
+       	
         
     </head>
     
@@ -809,44 +865,44 @@
 									    	<!--  -->
 									    	
 									    	<!-- NB: wizard-pane-to-show='study-terms' group not included so that browser-back navigation from step 2 still has content. -->
-								    		<xforms:group ref="instance('ins-control')[wizard-pane-being-shown='study-terms']">
+								    		<xforms:group model="mod-register-study-wizard" ref="instance('ins-control')[wizard-pane-being-shown='study-terms']">
 								    			<xi:include href="includes/wizard-panes/study-terms.xml"/>
 								    		</xforms:group>
 									    	
 									    	
-									    	<xforms:group ref="instance('ins-draft-entry')/atom:content/draft[wizard-pane-to-show='permissions']">
-										    	<xforms:group ref="instance('ins-control')[wizard-pane-being-shown='permissions']">
+									    	<xforms:group model="mod-register-study-wizard" ref="instance('ins-draft-entry')/atom:content/draft[wizard-pane-to-show='permissions']">
+										    	<xforms:group model="mod-register-study-wizard" ref="instance('ins-control')[wizard-pane-being-shown='permissions']">
 										    		<xi:include href="includes/wizard-panes/permissions.xml"/>
 										    	</xforms:group>
 										    </xforms:group>
 										    	
-										    <xforms:group ref="instance('ins-draft-entry')/atom:content/draft[wizard-pane-to-show='acknowledgements']">
-										    	<xforms:group ref="instance('ins-control')[wizard-pane-being-shown='acknowledgements']">
+										    <xforms:group model="mod-register-study-wizard" ref="instance('ins-draft-entry')/atom:content/draft[wizard-pane-to-show='acknowledgements']">
+										    	<xforms:group model="mod-register-study-wizard" ref="instance('ins-control')[wizard-pane-being-shown='acknowledgements']">
 										    		<xi:include href="includes/wizard-panes/acknowledgements.xml"/>
 										    	</xforms:group>
 										    </xforms:group>
 										    	
-										    <xforms:group ref="instance('ins-draft-entry')/atom:content/draft[wizard-pane-to-show='upload-files']">
-										    	<xforms:group ref="instance('ins-control')[wizard-pane-being-shown='upload-files']">
+										    <xforms:group model="mod-register-study-wizard" ref="instance('ins-draft-entry')/atom:content/draft[wizard-pane-to-show='upload-files']">
+										    	<xforms:group model="mod-register-study-wizard" ref="instance('ins-control')[wizard-pane-being-shown='upload-files']">
 										    		<xi:include href="includes/wizard-panes/upload-files.xml"/>
 										    	</xforms:group>
 										    </xforms:group>
 										    	
-										    <xforms:group ref="instance('ins-draft-entry')/atom:content/draft[wizard-pane-to-show='publications']">
-										    	<xforms:group ref="instance('ins-control')[wizard-pane-being-shown='publications']">
+										    <xforms:group model="mod-register-study-wizard" ref="instance('ins-draft-entry')/atom:content/draft[wizard-pane-to-show='publications']">
+										    	<xforms:group model="mod-register-study-wizard" ref="instance('ins-control')[wizard-pane-being-shown='publications']">
 										    		<xi:include href="includes/wizard-panes/publications.xml"/>
 										    	</xforms:group>
 										    </xforms:group>
 										    	
-										    <xforms:group ref="instance('ins-draft-entry')/atom:content/draft[wizard-pane-to-show='review']">
-										    	<xforms:group ref="instance('ins-control')[wizard-pane-being-shown='review']">
+										    <xforms:group model="mod-register-study-wizard" ref="instance('ins-draft-entry')/atom:content/draft[wizard-pane-to-show='review']">
+										    	<xforms:group model="mod-register-study-wizard" ref="instance('ins-control')[wizard-pane-being-shown='review']">
 										    		<xi:include href="includes/wizard-panes/review.xml"/>
 										    	</xforms:group>
 										    </xforms:group>
 										    	
 										    <!-- NB: wizard-pane-to-show='study-terms' rather than 'confirmation' is intended, i.e. not a typo. -->
-										    <xforms:group ref="instance('ins-draft-entry')/atom:content/draft[wizard-pane-to-show='study-terms']">
-										    	<xforms:group ref="instance('ins-control')[wizard-pane-being-shown='confirmation']">
+										    <xforms:group model="mod-register-study-wizard" ref="instance('ins-draft-entry')/atom:content/draft[wizard-pane-to-show='study-terms']">
+										    	<xforms:group model="mod-register-study-wizard" ref="instance('ins-control')[wizard-pane-being-shown='confirmation']">
 										    		<xi:include href="includes/wizard-panes/confirmation.xml"/>
 										    	</xforms:group>
 											</xforms:group>
@@ -869,7 +925,7 @@
 			<fr:alert-dialog id="remove-file-dialog">
 			    <fr:label>Remove</fr:label>
 			    <fr:message> 
-			        Are you sure you want to remove the file &quot;<xforms:output ref="instance('ins-control')/name-of-file-to-delete"/>&quot;?
+			        Are you sure you want to remove the file &quot;<xforms:output ref="xxforms:instance('ins-control')/name-of-file-to-delete"/>&quot;?
 			    </fr:message>
 			    <fr:negative-choice/>
 			    <fr:positive-choice>

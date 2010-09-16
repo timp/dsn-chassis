@@ -4,7 +4,8 @@
 	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events"
 	xmlns:atom="http://www.w3.org/2005/Atom" xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
 	xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:ctype="http://www.cggh.org/chassis-types"
-	xmlns:fn="http://www.w3.org/2005/xpath-functions" id="mod-study-info"
+	xmlns:fn="http://www.w3.org/2005/xpath-functions" 
+	id="mod-study-info"
 	schema="../chassis-types.xsd">
 
 
@@ -938,11 +939,12 @@
 		method="put" replace="instance" instance="ins-sq-study-info-entry"
 		ref="instance('ins-sq-study-info-entry')" mediatype="application/atom+xml"
 		relevant="false" validate="false">
-		<xforms:message ev:event="xforms-submit-error" level="modal">
-			An error occurred (
-			<xforms:output value="event('error-type')" />
-			) while saving the study info.
-		</xforms:message>
+		
+		<!-- error handling -->
+		<xforms:setvalue ev:event="xforms-submit" ref="xxforms:instance('ins-phrasebook-control')/resource-action" value="'putting-studyInfo'"/>
+		<xi:include href="../../../common/includes/error-message-actions/submit-error-resource-error.xml"/>
+		<xi:include href="../../../common/includes/error-message-actions/submit-error-non-resource-error.xml"/>
+		
 		<xforms:message ev:event="xforms-submit-done" level="modal">Your
 			changes have been
 			saved.</xforms:message>
