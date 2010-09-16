@@ -28,9 +28,12 @@
     
     <head>
     
-    	<title>File details - File <xforms:output ref="instance('ins-media-link-entry')/manta:id"/></title>
+    	<title>File details - File <xforms:output model="mod-file-details" ref="instance('ins-media-link-entry')/manta:id"/></title>
+
+		<!-- Needs to be first, due to sequence of xforms-model-construct-done events. -->
+        <xi:include href="../common/includes/phrasebook-model.xml"/>
         
-        <xforms:model>
+        <xforms:model id="mod-file-details">
 
 			<xforms:instance id="ins-media-link-entry">
 				<atom:entry/>
@@ -43,9 +46,11 @@
 				replace="instance"
 				instance="ins-media-link-entry"
 				serialization="none">
-				
-				<!-- handle submission errors -->
-                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the media-link entry.</xforms:message>
+
+				<!-- error handling -->        		
+				<xforms:setvalue ev:event="xforms-submit" ref="xxforms:instance('ins-phrasebook-control')/resource-action" value="'getting-media-link'"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-resource-error.xml"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-non-resource-error.xml"/>
 				
 				<xforms:action ev:event="xforms-submit-done">
 					<xforms:send submission="sub-get-derivation-feed"/>
@@ -66,6 +71,9 @@
         		<atom:feed/>
         	</xforms:instance>
         	
+        	<!-- TODO: If this resource value is incorrect, it sometimes does not generate an error. -->
+        	<!-- E.g. does error: resource="{instance('ins-media-link-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/derivationXXXXXXXXXXXXXXXX']/@href}"  -->
+        	<!-- E.g. doesn't error (behaves like no entries): resource="{instance('ins-media-link-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/derivation']/@href}XXXXXXXXXXXXXXX" -->
         	<xforms:submission 
         		id="sub-get-derivation-feed"
         		resource="{instance('ins-media-link-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/derivation']/@href}"
@@ -73,12 +81,17 @@
         		replace="instance"
         		instance="ins-derivation-feed"
         		serialization="none">
-        		
-        		<!-- handle submission errors -->
-        		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the derivation feed.</xforms:message>
+
+				<!-- error handling -->        		
+				<xforms:setvalue ev:event="xforms-submit" ref="xxforms:instance('ins-phrasebook-control')/resource-action" value="'getting-derivation-feed'"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-resource-error.xml"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-non-resource-error.xml"/>
         		
         	</xforms:submission>
-        	
+
+        	<!-- TODO: If this resource value is incorrect, it sometimes does not generate an error. -->
+        	<!-- E.g. does error: resource="{instance('ins-media-link-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/derivedXXXXXXXXXXXXXXXX']/@href}"  -->
+        	<!-- E.g. doesn't error (behaves like no entries): resource="{instance('ins-media-link-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/derived']/@href}XXXXXXXXXXXXXXX" -->        	
         	<xforms:submission 
         		id="sub-get-derived-feed"
         		resource="{instance('ins-media-link-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/derived']/@href}"
@@ -86,9 +99,11 @@
         		replace="instance"
         		instance="ins-derived-feed"
         		serialization="none">
-        		
-        		<!-- handle submission errors -->
-        		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the derived feed.</xforms:message>
+
+				<!-- error handling -->        		
+				<xforms:setvalue ev:event="xforms-submit" ref="xxforms:instance('ins-phrasebook-control')/resource-action" value="'getting-derived-feed'"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-resource-error.xml"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-non-resource-error.xml"/>
         		
         	</xforms:submission>
         	
@@ -135,9 +150,9 @@
     	
     	<div id="content">
     	
-    		<h1>File Details - <xforms:output ref="atom:title"/> (<xforms:output ref="manta:id"/>)</h1>
+    		<h1>File Details - <xforms:output model="mod-file-details" ref="atom:title"/> (<xforms:output model="mod-file-details" ref="manta:id"/>)</h1>
     		
-    		<xforms:group ref="instance('ins-media-link-entry')">
+    		<xforms:group model="mod-file-details" ref="instance('ins-media-link-entry')">
     			
 
 
@@ -178,15 +193,15 @@
     		
 			<h2>Derivation</h2>
 
-    		<xforms:group ref="instance('ins-derivation-feed')[empty(atom:entry)]">
+    		<xforms:group model="mod-file-details" ref="instance('ins-derivation-feed')[empty(atom:entry)]">
     			<p>This file is an original submission.</p>
     		</xforms:group>			
 
-    		<xforms:group ref="instance('ins-derivation-feed')[count(atom:entry) gt 1]/atom:entry">
+    		<xforms:group model="mod-file-details" ref="instance('ins-derivation-feed')[count(atom:entry) gt 1]/atom:entry">
 				<p>The derivation of this file is ambiguous (more than one derivation found).</p>
 			</xforms:group>
 
-    		<xforms:group ref="instance('ins-derivation-feed')[count(atom:entry)=1]/atom:entry">
+    		<xforms:group model="mod-file-details" ref="instance('ins-derivation-feed')[count(atom:entry)=1]/atom:entry">
     			
     			<h3>Comments</h3>
     			
@@ -244,11 +259,11 @@
 
     			<h3>Other Outputs</h3>
     			
-    			<xforms:group ref=".[empty(atom:link[@rel='http://www.cggh.org/2010/chassis/terms/derivationOutput']//atom:entry[atom:id != instance('ins-media-link-entry')/atom:id])]">
+    			<xforms:group model="mod-file-details" ref=".[empty(atom:link[@rel='http://www.cggh.org/2010/chassis/terms/derivationOutput']//atom:entry[atom:id != instance('ins-media-link-entry')/atom:id])]">
     				<p>This file was the only output.</p>
     			</xforms:group>
 
-    			<xforms:group ref=".[exists(atom:link[@rel='http://www.cggh.org/2010/chassis/terms/derivationOutput']//atom:entry[atom:id != instance('ins-media-link-entry')/atom:id])]">
+    			<xforms:group model="mod-file-details" ref=".[exists(atom:link[@rel='http://www.cggh.org/2010/chassis/terms/derivationOutput']//atom:entry[atom:id != instance('ins-media-link-entry')/atom:id])]">
     				<fr:datatable paginated="false">
 	    				<thead>
 	    					<tr>
@@ -261,7 +276,7 @@
 	    					</tr>
 	    				</thead>
 	    				<tbody>
-	    					<xforms:repeat nodeset="atom:link[@rel='http://www.cggh.org/2010/chassis/terms/derivationOutput']//atom:entry[atom:id != instance('ins-media-link-entry')/atom:id]">
+	    					<xforms:repeat model="mod-file-details" nodeset="atom:link[@rel='http://www.cggh.org/2010/chassis/terms/derivationOutput']//atom:entry[atom:id != instance('ins-media-link-entry')/atom:id]">
 	    						<tr>
 	    							<td>
 	    								<xforms:output ref="manta:id"/>
@@ -302,11 +317,11 @@
     		
     		<h2>Derived</h2>
 
-    		<xforms:group ref="instance('ins-derived-feed')[empty(atom:entry)]">
+    		<xforms:group model="mod-file-details" ref="instance('ins-derived-feed')[empty(atom:entry)]">
     			<p>No files have been derived from this file.</p>
     		</xforms:group>			
     		
-    		<xforms:group ref="instance('ins-derived-feed')[exists(atom:entry)]/atom:entry">
+    		<xforms:group model="mod-file-details" ref="instance('ins-derived-feed')[exists(atom:entry)]/atom:entry">
     			
     			<p>The files below are derived from this file.</p>
 
@@ -376,6 +391,7 @@
 
 		<!-- End of After content id, before ft id -->   
     			
+    	<!-- <fr:xforms-inspector xmlns:fr="http://orbeon.org/oxf/xml/form-runner"/>  -->
     
     </body>
 </html>

@@ -32,6 +32,8 @@
         <link rel="stylesheet" type="text/css" href="/ops/yui/tabview/assets/skins/sam/tabview.css"></link>
         <style type="text/css"></style>
         
+		<!-- Needs to be first, due to sequence of xforms-model-construct-done events. -->
+        <xi:include href="../common/includes/phrasebook-model.xml"/>
 
         <xforms:model id="mod-study-dashboard">
         
@@ -152,7 +154,10 @@
 					
 				</xforms:action>				
 				
-				<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the study.</xforms:message>
+				<!-- error handling -->        		
+				<xforms:setvalue ev:event="xforms-submit" ref="xxforms:instance('ins-phrasebook-control')/resource-action" value="'getting-study'"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-resource-error.xml"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-non-resource-error.xml"/>
 				
 			</xforms:submission>
 
@@ -174,7 +179,11 @@
 					<xforms:insert nodeset="xxforms:instance('ins-sq-submitted-media-feed')" origin="instance('ins-submitted-media-feed')" />
 				</xforms:action>
 				
-                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the submitted media.</xforms:message>
+				<!-- error handling -->        		
+				<xforms:setvalue ev:event="xforms-submit" ref="xxforms:instance('ins-phrasebook-control')/resource-action" value="'getting-submittedMedia'"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-resource-error.xml"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-non-resource-error.xml"/>
+                
 			</xforms:submission>
 
 
@@ -196,8 +205,11 @@
 					<xforms:insert nodeset="xxforms:instance('ins-sq-study-info-entry')" origin="instance('ins-study-info-entry')" />
 					
 				</xforms:action>				
-				
-				<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the study info.</xforms:message>
+
+				<!-- error handling -->        		
+				<xforms:setvalue ev:event="xforms-submit" ref="xxforms:instance('ins-phrasebook-control')/resource-action" value="'getting-studyInfo'"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-resource-error.xml"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-non-resource-error.xml"/>
 				
 			</xforms:submission>
 			
@@ -212,7 +224,12 @@
 		        instance="ins-study-entry"
 		        ref="instance('ins-study-entry')"
 		        mediatype="application/atom+xml">
-		        <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while saving the study.</xforms:message>
+		        
+				<!-- error handling -->        		
+				<xforms:setvalue ev:event="xforms-submit" ref="xxforms:instance('ins-phrasebook-control')/resource-action" value="'putting-study'"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-resource-error.xml"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-non-resource-error.xml"/>
+		        
 		        <xforms:message ev:event="xforms-submit-done" level="modal">Your changes have been saved.</xforms:message>
 		    </xforms:submission>
         	
@@ -237,7 +254,12 @@
 				replace="instance"
 				instance="ins-permissions-entry"
 				serialization="none">
-                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the study.</xforms:message>
+                
+				<!-- error handling -->        		
+				<xforms:setvalue ev:event="xforms-submit" ref="xxforms:instance('ins-phrasebook-control')/resource-action" value="'getting-security-descriptor'"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-resource-error.xml"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-non-resource-error.xml"/>
+                
 			</xforms:submission>   
             
 			<xforms:submission 
@@ -249,7 +271,12 @@
 				ref="instance('ins-permissions-entry')"
 				mediatype="application/atom+xml">
 		        <xforms:message ev:event="xforms-submit-done" level="modal">Your changes have been saved.</xforms:message>
-                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the study.</xforms:message>
+                
+				<!-- error handling -->        		
+				<xforms:setvalue ev:event="xforms-submit" ref="xxforms:instance('ins-phrasebook-control')/resource-action" value="'putting-security-descriptor'"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-resource-error.xml"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-non-resource-error.xml"/>
+                
 			</xforms:submission>
             
        		<xforms:instance id="ins-user-template">
@@ -313,10 +340,12 @@
 				replace="instance"
 				instance="ins-study-feed"
 				serialization="none">
-				<!-- TODO error handling -->
-                <xforms:message ev:event="xforms-submit-error" level="modal">
-                	An error occurred (<xforms:output value="event('error-type')"/>) while retrieving a list of studies.
-               	</xforms:message>
+				
+				<!-- error handling -->        		
+				<xforms:setvalue ev:event="xforms-submit" ref="xxforms:instance('ins-phrasebook-control')/resource-action" value="'getting-studies'"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-resource-error.xml"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-non-resource-error.xml"/>
+				
 			</xforms:submission>
 			
 			<xforms:send 
@@ -357,10 +386,11 @@
 					
 				</xforms:action>
 				
-				
-                <xforms:message ev:event="xforms-submit-error" level="modal">
-                	An error occurred (<xforms:output value="event('error-type')"/>) while copying answers from the selected study.
-               	</xforms:message>
+				<!-- error handling -->        		
+				<xforms:setvalue ev:event="xforms-submit" ref="xxforms:instance('ins-phrasebook-control')/resource-action" value="'getting-studyInfo-for-copy'"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-resource-error.xml"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-non-resource-error.xml"/>
+               	
 			</xforms:submission>				
 			
 			<xforms:instance id="ins-study-is-published-terms" src="/apps/common/constants/study-is-published-terms.xml"/>
@@ -432,8 +462,10 @@
         		<!-- refresh submitted media -->
         		<xforms:send ev:event="xforms-submit-done" submission="sub-get-submitted-media-feed"/>
         		
-        		<!-- TODO error handling -->
-        		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while posting a draft upload.</xforms:message>
+				<!-- error handling -->        		
+				<xforms:setvalue ev:event="xforms-submit" ref="xxforms:instance('ins-phrasebook-control')/resource-action" value="'form-data-posting-submittedMedia'"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-resource-error.xml"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-non-resource-error.xml"/>
         		
         	</xforms:submission>
         	
@@ -450,7 +482,12 @@
         		method="get"
         		replace="instance"
         		instance="ins-curated-media-feed">
-        		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the curated media.</xforms:message>
+
+				<!-- error handling -->        		
+				<xforms:setvalue ev:event="xforms-submit" ref="xxforms:instance('ins-phrasebook-control')/resource-action" value="'getting-curatedMedia'"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-resource-error.xml"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-non-resource-error.xml"/>
+        		
         	</xforms:submission>        	
         	
             
@@ -499,37 +536,37 @@
 					<!-- Tab panels -->
 					
 					<!-- For all roles -->
-			    	<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='summary']">
+			    	<xforms:group model="mod-study-dashboard" ref="instance('ins-control')[dashboard-tab-to-show='summary']">
 			    		<xi:include href="includes/dashboard-tabs/summary.xml"/>
 			    	</xforms:group>		
 			    	
-			    	<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='permissions']">
+			    	<xforms:group model="mod-study-dashboard" ref="instance('ins-control')[dashboard-tab-to-show='permissions']">
 			    	
 			    		<!-- If the user has GET access to the security descriptor. -->
-			    		<xforms:group ref="instance('ins-study-entry')/atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor' and contains(@atombeat:allow, 'GET')]">
+			    		<xforms:group model="mod-study-dashboard" ref="instance('ins-study-entry')/atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor' and contains(@atombeat:allow, 'GET')]">
 			    			<xi:include href="includes/dashboard-tabs/permissions.xml"/>
 			    		</xforms:group>
 			    		
 			    	</xforms:group>	
 
-			    	<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='acknowledgements']">
+			    	<xforms:group model="mod-study-dashboard" ref="instance('ins-control')[dashboard-tab-to-show='acknowledgements']">
 			    		<xi:include href="includes/dashboard-tabs/acknowledgements.xml"/>
 			    	</xforms:group>	
 			    	
 			    	<!-- If the user has GET access to the submitted media. -->
-			    	<xforms:group ref="instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/submittedMedia' and contains(@atombeat:allow, 'GET')]">
+			    	<xforms:group model="mod-study-dashboard" ref="instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/submittedMedia' and contains(@atombeat:allow, 'GET')]">
 			    	
-					    	<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='files']">
+					    	<xforms:group model="mod-study-dashboard" ref="instance('ins-control')[dashboard-tab-to-show='files']">
 					    		<xi:include href="includes/dashboard-tabs/files.xml"/>
 					    	</xforms:group>	
 					    	
 			    	</xforms:group>
 
-			    	<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='publications']">
+			    	<xforms:group model="mod-study-dashboard" ref="instance('ins-control')[dashboard-tab-to-show='publications']">
 			    		<xi:include href="includes/dashboard-tabs/publications.xml"/>
 			    	</xforms:group>	
 
-			    	<xforms:group ref="instance('ins-control')[dashboard-tab-to-show='study-info']">
+			    	<xforms:group model="mod-study-dashboard" ref="instance('ins-control')[dashboard-tab-to-show='study-info']">
 			    		<xi:include href="includes/dashboard-tabs/study-info.xml"/>
 			    	</xforms:group>
 

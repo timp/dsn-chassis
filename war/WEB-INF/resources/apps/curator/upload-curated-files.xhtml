@@ -29,8 +29,11 @@
     <head>
     
     	<title>Upload Curated Files - Study <xforms:output value="instance('ins-study-entry')/manta:id"/></title>
+
+		<!-- Needs to be first, due to sequence of xforms-model-construct-done events. -->
+        <xi:include href="../common/includes/phrasebook-model.xml"/>
         
-        <xforms:model>
+        <xforms:model id="mod-upload-curated-files">
 
 			<xforms:instance id="ins-study-entry">
 				<atom:entry/>
@@ -43,15 +46,17 @@
 				replace="instance"
 				instance="ins-study-entry"
 				serialization="none">
-				
-				<!-- handle submission errors -->
-                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the study.</xforms:message>
-				
+
 				<!-- chained submissions -->
 				<xforms:action ev:event="xforms-submit-done">
 					<xforms:send submission="sub-get-submitted-media-feed"/>
 					<xforms:send submission="sub-get-curated-media-feed"/>
 				</xforms:action>
+				
+				<!-- error handling -->        		
+				<xforms:setvalue ev:event="xforms-submit" ref="xxforms:instance('ins-phrasebook-control')/resource-action" value="'getting-study'"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-resource-error.xml"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-non-resource-error.xml"/>
 				
 			</xforms:submission>
 
@@ -65,7 +70,12 @@
         		method="get"
         		replace="instance"
         		instance="ins-submitted-media-feed">
-        		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the submitted media.</xforms:message>
+
+				<!-- error handling -->        		
+				<xforms:setvalue ev:event="xforms-submit" ref="xxforms:instance('ins-phrasebook-control')/resource-action" value="'getting-submittedMedia'"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-resource-error.xml"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-non-resource-error.xml"/>
+        		
         	</xforms:submission>
         	
         	<xforms:instance id="ins-curated-media-feed">
@@ -78,7 +88,12 @@
         		method="get"
         		replace="instance"
         		instance="ins-curated-media-feed">
-        		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the curated media.</xforms:message>
+
+				<!-- error handling -->        		
+				<xforms:setvalue ev:event="xforms-submit" ref="xxforms:instance('ins-phrasebook-control')/resource-action" value="'getting-curatedMedia'"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-resource-error.xml"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-non-resource-error.xml"/>
+        		
         	</xforms:submission>
         	
         	
@@ -132,8 +147,12 @@
         		resource="/util/store-uploads"
         		replace="instance"
         		instance="ins-uploads-results-feed">
-        		<!-- TODO proper error handling -->
-        		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>).</xforms:message>
+
+				<!-- error handling -->        		
+				<xforms:setvalue ev:event="xforms-submit" ref="xxforms:instance('ins-phrasebook-control')/resource-action" value="'posting-uploads'"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-resource-error.xml"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-non-resource-error.xml"/>
+        		
         		<xforms:action ev:event="xforms-submit-done">
         			
         			<!-- sort the derivation input -->
@@ -201,7 +220,12 @@
         		instance="ins-derivation-entry"
         		mediatype="application/atom+xml"
         		>
-        		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the study.</xforms:message>
+
+				<!-- error handling -->        		
+				<xforms:setvalue ev:event="xforms-submit" ref="xxforms:instance('ins-phrasebook-control')/resource-action" value="'posting-derivations'"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-resource-error.xml"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-non-resource-error.xml"/>
+        		
         		<xforms:send ev:event="xforms-submit-done" submission="sub-get-dashboard"/>
         	</xforms:submission>
 
@@ -258,7 +282,7 @@
     	<div id="content">
     		
             <h1>Upload Curated Files
-    			 - <xforms:output value="instance('ins-study-entry')/atom:title"/> (<xforms:output value="instance('ins-study-entry')/manta:id"/>)
+    			 - <xforms:output model="mod-upload-curated-files" value="instance('ins-study-entry')/atom:title"/> (<xforms:output model="mod-upload-curated-files" value="instance('ins-study-entry')/manta:id"/>)
     		</h1>  
     		
     		<p>
@@ -269,7 +293,7 @@
     		
     		<table>
     			
-    			<xforms:group ref="instance('ins-uploads')">
+    			<xforms:group model="mod-upload-curated-files" ref="instance('ins-uploads')">
     				<xforms:repeat nodeset="upload" id="rep-upload">
     					<tr>
     						<td>
@@ -320,6 +344,7 @@
     					<xforms:trigger>
     						<xforms:label><img alt="add" src="/apps/contributor/common/add.gif"/></xforms:label>
     						<xforms:insert 
+    							model="mod-upload-curated-files"
     							ev:event="DOMActivate" 
     							context="instance('ins-uploads')" 
     							nodeset="upload" 
@@ -332,6 +357,7 @@
     					<xforms:trigger appearance="minimal">
     						<xforms:label>Add a File</xforms:label>
     						<xforms:insert 
+    							model="mod-upload-curated-files"
     							ev:event="DOMActivate" 
     							context="instance('ins-uploads')" 
     							nodeset="upload" 
@@ -352,13 +378,13 @@
     		
     		<h3>Submitted Files</h3>
 
-			<xxforms:variable name="submitted-media-to-curate" select="instance('ins-submitted-media-feed')/atom:entry[contains(atom:link[@rel='edit-media']/@atombeat:allow , 'GET' )]"/>
+			<xxforms:variable model="mod-upload-curated-files" name="submitted-media-to-curate" select="instance('ins-submitted-media-feed')/atom:entry[contains(atom:link[@rel='edit-media']/@atombeat:allow , 'GET' )]"/>
     		
-    		<xforms:group ref="instance('ins-submitted-media-feed')[empty($submitted-media-to-curate)]">
+    		<xforms:group model="mod-upload-curated-files" ref="instance('ins-submitted-media-feed')[empty($submitted-media-to-curate)]">
     			<p>There are no submitted files that have passed personal data review.</p>
     		</xforms:group>
     		
-    		<xforms:group ref="instance('ins-submitted-media-feed')[exists($submitted-media-to-curate)]">
+    		<xforms:group model="mod-upload-curated-files" ref="instance('ins-submitted-media-feed')[exists($submitted-media-to-curate)]">
     			
     			<fr:datatable paginated="false">
     				<thead>
@@ -419,11 +445,11 @@
     		
     		<h3>Curated Files</h3>
     		
-    		<xforms:group ref="instance('ins-curated-media-feed')[empty(atom:entry)]">
+    		<xforms:group model="mod-upload-curated-files" ref="instance('ins-curated-media-feed')[empty(atom:entry)]">
     			<p>There are no curated files.</p>
     		</xforms:group>
     		
-    		<xforms:group ref="instance('ins-curated-media-feed')[exists(atom:entry)]">
+    		<xforms:group model="mod-upload-curated-files" ref="instance('ins-curated-media-feed')[exists(atom:entry)]">
     			
     			<fr:datatable paginated="false">
     				<thead>
@@ -487,7 +513,7 @@
     		<p>Describe the work you did to create the files you are uploading...</p>
     		
     		<p>
-    			<xforms:textarea ref="instance('ins-derivation-entry')/atom:summary" appearance="xxforms:autosize">
+    			<xforms:textarea model="mod-upload-curated-files" ref="instance('ins-derivation-entry')/atom:summary" appearance="xxforms:autosize">
     				<xforms:label/>
     			</xforms:textarea>
     		</p>
@@ -498,7 +524,7 @@
     		<p>You are uploading...</p>
     		
     		<ul>
-    			<xforms:repeat nodeset="instance('ins-uploads')/upload[exists(text())]">
+    			<xforms:repeat model="mod-upload-curated-files" nodeset="instance('ins-uploads')/upload[exists(text())]">
     				<li>
     					<xforms:output ref="@filename"/>
     				</li>
@@ -508,7 +534,7 @@
     		<p>Your uploads are derived from...</p>
     		
     		<ul>
-    			<xforms:repeat nodeset="tokenize(instance('ins-derivation-selection'), ' ')">
+    			<xforms:repeat model="mod-upload-curated-files" nodeset="tokenize(instance('ins-derivation-selection'), ' ')">
     				<li>
     					<xforms:group ref="for $selection in (.) return instance('ins-submitted-media-feed')/atom:entry[atom:link[@rel='edit']/@href=$selection]">
     						<span>
@@ -527,11 +553,11 @@
     		<p>Your comments...</p>
     		
     		<blockquote>
-    			<xforms:output ref="instance('ins-derivation-entry')/atom:summary"/>
+    			<xforms:output model="mod-upload-curated-files" ref="instance('ins-derivation-entry')/atom:summary"/>
     		</blockquote>
     		
     		<p>
-    			<xforms:submit submission="sub-post-uploads">
+    			<xforms:submit model="mod-upload-curated-files" submission="sub-post-uploads">
     				<xforms:label>Confirm</xforms:label>
     			</xforms:submit>
     			

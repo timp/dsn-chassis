@@ -1,0 +1,13 @@
+<xforms:action 
+    xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:xxforms="http://orbeon.org/oxf/xml/xforms" 
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    ev:event="xforms-submit-error" 
+    if="event('error-type')='resource-error'">
+    <!-- Cannot currently evaluate variables from concatenation, e.g. evaluate('$', 'variable-name') so have to use only XPaths with xxforms:evaluate() -->
+    <xxforms:variable name="common-phrasebook" select="xxforms:instance('ins-common-phrasebooks')/phrasebook[@xml:lang = xxforms:instance('ins-phrasebook-control')/language/text()]"/>    
+    <xxforms:variable name="resource-action-translation" select="xxforms:evaluate(concat('xxforms:instance(''ins-common-phrasebooks'')/phrasebook[@xml:lang = xxforms:instance(''ins-phrasebook-control'')/language]', '/resource-actions/', xxforms:instance('ins-phrasebook-control')/resource-action/text()))"/>
+    <xxforms:variable name="error-message" select="if($resource-action-translation='' or empty($resource-action-translation)) then $common-phrasebook/default-resource-action-error-message else concat($common-phrasebook/resource-action-error-message-prefix, $resource-action-translation, $common-phrasebook/resource-action-error-message-suffix)"/>    
+    <xforms:message level="modal"><xforms:output ref="$error-message"/></xforms:message>
+    <xforms:message level="xxforms:log-error"><xforms:output ref="$error-message"/></xforms:message>
+</xforms:action>

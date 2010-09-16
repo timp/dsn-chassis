@@ -5,7 +5,7 @@
     
     <h2 class="clear">My studies</h2>
     
-    <xforms:group ref="instance('ins-study-feed')[empty(atom:entry)]">
+    <xforms:group ref="xxforms:instance('ins-study-feed')[empty(atom:entry)]">
         
         <p>Any study you register or have permission to access will be listed here. You&#8217;ll be able to navigate to each study
             to upload files or edit the information provided when you registered the study.  
@@ -14,7 +14,7 @@
         
     </xforms:group>
     
-    <xforms:group ref="instance('ins-study-feed')[exists(atom:entry)]">
+    <xforms:group ref="xxforms:instance('ins-study-feed')[exists(atom:entry)]">
         
         <span id="list-of-studies-container">
             
@@ -31,7 +31,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <xforms:repeat nodeset="xxforms:sort(instance('ins-study-feed')/atom:entry, atom:published, 'text', 'descending')">
+                    <xforms:repeat nodeset="xxforms:sort(xxforms:instance('ins-study-feed')/atom:entry, atom:published, 'text', 'descending')">
                         <tr class="repeated-element">
                             <td>
                                 <a href="../study/dashboard?study={atom:link[@rel='edit']/@href}"><xforms:output value="manta:id"/></a>

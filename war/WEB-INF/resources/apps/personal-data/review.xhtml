@@ -29,8 +29,10 @@
     
         <title>Personal Data - Review File</title>
 
+		<!-- Needs to be first, due to sequence of xforms-model-construct-done events. -->
+        <xi:include href="../common/includes/phrasebook-model.xml"/>
         
-        <xforms:model>
+        <xforms:model id="mod-personal-data-review">
 
        		<xforms:instance id="ins-control">
                 <control xmlns="">
@@ -60,7 +62,12 @@
 				replace="instance"
 				instance="ins-media-entry"
 				serialization="none">
-                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the media-link entry.</xforms:message>
+
+        		<!-- error handling -->
+				<xforms:setvalue ev:event="xforms-submit" ref="xxforms:instance('ins-phrasebook-control')/resource-action" value="'getting-media-link-entry'"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-resource-error.xml"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-non-resource-error.xml"/>                
+                
 				<xforms:send ev:event="xforms-submit-done" submission="sub-get-study-entry"/>
 				<xforms:send ev:event="xforms-submit-done" submission="sub-get-media-security-descriptor"/>
 				<xforms:setvalue 
@@ -80,7 +87,12 @@
 				replace="instance"
 				instance="ins-study-entry"
 				serialization="none">
-                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the study entry.</xforms:message>
+
+        		<!-- error handling -->
+				<xforms:setvalue ev:event="xforms-submit" ref="xxforms:instance('ins-phrasebook-control')/resource-action" value="'getting-originStudy'"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-resource-error.xml"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-non-resource-error.xml"/>  
+                
 			</xforms:submission>
         	
         	<xforms:instance id="ins-media-security-descriptor">
@@ -94,7 +106,12 @@
         		replace="instance"
         		instance="ins-media-security-descriptor"
         		serialization="none">
-        		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the media security descriptor.</xforms:message>
+
+        		<!-- error handling -->
+				<xforms:setvalue ev:event="xforms-submit" ref="xxforms:instance('ins-phrasebook-control')/resource-action" value="'getting-media-security-descriptor'"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-resource-error.xml"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-non-resource-error.xml"/>         		
+        		
         	</xforms:submission>
 			
 			<xforms:action ev:event="xforms-model-construct-done">
@@ -147,8 +164,11 @@
 				instance="ins-review-entry"
 				mediatype="application/atom+xml"
 			>
-				
-                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while posting the review.</xforms:message>
+
+        		<!-- error handling -->
+				<xforms:setvalue ev:event="xforms-submit" ref="xxforms:instance('ins-phrasebook-control')/resource-action" value="'posting-personalDataReviews'"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-resource-error.xml"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-non-resource-error.xml"/> 
 				
 				<xforms:send ev:event="xforms-submit-done" submission="sub-get-home" if="instance('ins-review-entry')//outcome='fail'"/>
 				
@@ -178,8 +198,11 @@
         		replace="instance"
         		instance="ins-media-security-descriptor"
         		mediatype="application/atom+xml">
-        		
-        		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while updating the media permissions.</xforms:message>
+
+        		<!-- error handling -->
+				<xforms:setvalue ev:event="xforms-submit" ref="xxforms:instance('ins-phrasebook-control')/resource-action" value="'putting-media-security-descriptor'"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-resource-error.xml"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-non-resource-error.xml"/> 
 
         		<xforms:send ev:event="xforms-submit-done" submission="sub-get-home"/>
         		
@@ -246,7 +269,7 @@
 
 
     	
-    	<xforms:group ref="instance('ins-media-entry')">
+    	<xforms:group model="mod-personal-data-review" ref="instance('ins-media-entry')">
     	
 	    	<p>
 	    		Code: <xforms:output value="manta:id"/>

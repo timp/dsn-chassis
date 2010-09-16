@@ -29,8 +29,10 @@
     
         <title>Data home</title>
 
+		<!-- Needs to be first, due to sequence of xforms-model-construct-done events. -->
+        <xi:include href="../common/includes/phrasebook-model.xml"/>
         
-        <xforms:model>
+        <xforms:model id="mod-contributor-home">
 
         	<!-- non-persistent model for application state -->
         	<xforms:instance id="ins-control">
@@ -57,24 +59,11 @@
 				replace="instance"
 				instance="ins-draft-feed"
 				serialization="none">
-				<!-- TODO error handling -->
-				<!-- 
-                <xforms:message ev:event="xforms-submit-error" level="modal">
-                	An error occurred (<xforms:output value="event('error-type')"/>) while retrieving a list of drafts.
-               	</xforms:message>
-               	 -->
                	
-               	<xforms:action ev:event="xforms-submit-error">
-               	
-               		<xforms:message level="modal" if="event('error-type')='resource-error'">
-                			An error occurred white retrieving a list of drafts.
-               		</xforms:message>
-               		<xforms:message level="modal" if="not(event('error-type')='resource-error')">>
-                			An error occurred (<xforms:output value="event('error-type')"/>) while retrieving a list of drafts.
-               		</xforms:message>
-               		
-               	</xforms:action>
-               	
+        		<!-- error handling -->
+				<xforms:setvalue ev:event="xforms-submit" ref="xxforms:instance('ins-phrasebook-control')/resource-action" value="'getting-drafts'"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-resource-error.xml"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-non-resource-error.xml"/>
                	
 			</xforms:submission>
         
@@ -96,10 +85,12 @@
 				replace="instance"
 				instance="ins-study-feed"
 				serialization="none">
-				<!-- TODO error handling -->
-                <xforms:message ev:event="xforms-submit-error" level="modal">
-                	An error occurred (<xforms:output value="event('error-type')"/>) while retrieving a list of studies.
-               	</xforms:message>
+				
+        		<!-- error handling -->
+				<xforms:setvalue ev:event="xforms-submit" ref="xxforms:instance('ins-phrasebook-control')/resource-action" value="'getting-studies'"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-resource-error.xml"/>
+				<xi:include href="../common/includes/error-message-actions/submit-error-non-resource-error.xml"/>
+				
 			</xforms:submission>
 			
 			<xforms:send 
@@ -111,6 +102,8 @@
         </xforms:model>
 
        	<xi:include href="../common/includes/current-user-model.xml"/>
+       	
+       	
 
     </head>
     <body>
@@ -172,7 +165,7 @@ administrator (see Step 2).
 			</p>   	
 
 			<!-- For contributor -->
-			<xforms:group ref="instance('ins-control')/contributor-controls">
+			<xforms:group model="mod-contributor-home" ref="instance('ins-control')/contributor-controls">
 			
 	    		<span id="register-study-link-container"><a href="register-study-wizard" class="btn">Register study</a></span>
 	    		
@@ -186,14 +179,8 @@ need to upload all your information at the same session. Click the &#8216;Save a
 step to save information submitted to date. Once study registration is completed, your study can be accessed at
 any time on the Data home: see &#8216;My studies&#8217;.
 			</p>
-			
-			<xforms:group ref="instance('ins-draft-feed')[empty(atom:entry)]">
-			
-				<!-- When no drafts. -->
-			
-    		</xforms:group> 
 
-    		<xforms:group ref="instance('ins-draft-feed')[count(atom:entry)>0]">
+    		<xforms:group model="mod-contributor-home" ref="instance('ins-draft-feed')[count(atom:entry)>0]">
 
 				<div id="list-of-drafts-container">
 
@@ -203,7 +190,7 @@ any time on the Data home: see &#8216;My studies&#8217;.
 			    					<li class="repeated-element">
 			    						<span class="draft-link-container"><a href="register-study-wizard?draft={atom:link[@rel='edit']/@href}"><xforms:output value="atom:title"/> (<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')" />)
 			    						
-			    							<xforms:group ref="instance('ins-control')/administrator-controls">
+			    							<xforms:group model="mod-contributor-home" ref="instance('ins-control')/administrator-controls">
 			    								by <xforms:output value="xxforms:context('rep-draft')/atom:author"/>
 			    							</xforms:group>
 			    						
@@ -240,6 +227,8 @@ any time on the Data home: see &#8216;My studies&#8217;.
                 </div>
 
 		<!-- End of After content id, before ft id -->
+
+		<!-- <fr:xforms-inspector xmlns:fr="http://orbeon.org/oxf/xml/form-runner"/>  -->
 
     </body>
 </html>
