@@ -74,7 +74,7 @@ public class TestStudyInfoFlatten extends TestCase {
 
 	public void testContents() throws Exception {
 		String xslt = "war/xslt/flatten-ssq.xsl";
-		String file = "src/test/resources/NewFile.xml";
+		String file = "src/test/resources/study-info.xml";
 		String cols = null;
 		String datavals = null;
 
