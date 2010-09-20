@@ -2,7 +2,8 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 	xmlns:atom="http://www.w3.org/2005/Atom">
 
-	<xsl:output method="text"/>
+	<xsl:output method="text" media-type="text/csv"/>
+	
 	<xsl:variable name="SSQversion" select="'unknown'"/>
 	<xsl:variable name="xsltversion" select="'0.0.2'"/>
 
@@ -39,7 +40,7 @@
 	<xsl:variable name="invitro.plateBatches.batch" select="5"/>
 
 	<xsl:variable name="pharmacology.samples" select="5"/>
-	<xsl:variable name="pharmacology.samples.colDef" select="5"/>
+	<xsl:variable name="pharmacology.samples.colDef" select="'numberPlanned,anticoagulent,centrifugeTime,'"/>
 	<xsl:variable name="pharmacology.sample.storages" select="3"/>
 	<xsl:variable name="pharmacology.sample.storages.colDef"
 		select="'storageTemperature,storageDuration,storageDurationUnit,'"/>
@@ -96,14 +97,8 @@
 			<xsl:with-param name="prefix" select="''"/>
 		</xsl:apply-templates>
 
-		<!--
-		<xsl:apply-templates select="clinical">
+		<xsl:apply-templates select="clinical|pharmacology">
 			<xsl:with-param name="outputType" select="$outputType" />
-		</xsl:apply-templates>
-
--->
-		<xsl:apply-templates select="pharmacology">
-			<xsl:with-param name="outputType" select="$outputType"/>
 		</xsl:apply-templates>
 
 	</xsl:template>
@@ -916,15 +911,21 @@
 			</xsl:if>
 		</xsl:for-each>
 
-		<xsl:variable name="newpref"
-			select="concat($prefix,concat(1 + count(parent::*/preceding-sibling::*),'.'),'storage')"/>
-
 		<xsl:apply-templates select="storages/storage">
 			<xsl:with-param name="outputType" select="$outputType"/>
 			<xsl:with-param name="prefix" select="$prefix"/>
 		</xsl:apply-templates>
+		
+		<xsl:call-template name="addBlanks">
+				<xsl:with-param name="count" select="count(storages/storage)+1"/>
+				<xsl:with-param name="outputType" select="$outputType"/>
+				<xsl:with-param name="colDef" select="$pharmacology.sample.storages.colDef"/>
+				<xsl:with-param name="total" select="$pharmacology.sample.storages"/>
+				<xsl:with-param name="prefix" select="concat($prefix,1 + count(parent::*/preceding-sibling::*),'.storage')"/>
+			</xsl:call-template>
+			
 		<xsl:call-template name="addSample">
-			<xsl:with-param name="count" select="1"/>
+			<xsl:with-param name="count" select="count(parent::node()/sample)"/>
 			<xsl:with-param name="outputType" select="$outputType"/>
 			<xsl:with-param name="colDef" select="$pharmacology.samples.colDef"/>
 			<xsl:with-param name="total" select="$pharmacology.samples"/>
