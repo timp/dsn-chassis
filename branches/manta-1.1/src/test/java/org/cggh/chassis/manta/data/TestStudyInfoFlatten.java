@@ -1,9 +1,14 @@
 package org.cggh.chassis.manta.data;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.nio.MappedByteBuffer;
+import java.nio.channels.FileChannel;
+import java.nio.charset.Charset;
 import java.util.StringTokenizer;
 
 import javax.xml.transform.Result;
@@ -18,11 +23,11 @@ import junit.framework.TestCase;
 
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.traversal.DocumentTraversal;
 import org.w3c.dom.traversal.NodeFilter;
 import org.w3c.dom.traversal.TreeWalker;
+import org.xml.sax.InputSource;
 
 import com.sun.org.apache.xerces.internal.parsers.DOMParser;
 
@@ -44,29 +49,19 @@ public class TestStudyInfoFlatten extends TestCase {
 			throws TransformerException, IOException {
 		File xmlFile = new File(xml);
 		File xsltFile = new File(xslt);
-		File preprocess = new File("src/test/resources/setupFlattenTest.xsl");
 
 		// JAXP reads data using the Source interface
 		Source xmlSource = new StreamSource(xmlFile);
 		Source xsltSource = new StreamSource(xsltFile);
-		Source ppSource = new StreamSource(preprocess);
 
 		// the factory pattern supports different XSLT processors
 		TransformerFactory transFact = TransformerFactory.newInstance();
 		// Preprocess the example file
-		Transformer trans = transFact.newTransformer(ppSource);
-		StringWriter intermediate = new StringWriter();
-		Result result1 = new StreamResult(intermediate);
-
-		trans.transform(xmlSource, result1);
-		intermediate.close();
-		// Now run the actual transform
-		trans = transFact.newTransformer(xsltSource);
-		StringReader inter = new StringReader(intermediate.toString());
-		Source interSource = new StreamSource(inter);
+		Transformer trans = transFact.newTransformer(xsltSource);
 		StringWriter writer = new StringWriter();
 		Result result = new StreamResult(writer);
-		trans.transform(interSource, result);
+
+		trans.transform(xmlSource, result);
 		writer.close();
 		String csv = writer.toString();
 		return (csv);
@@ -75,16 +70,24 @@ public class TestStudyInfoFlatten extends TestCase {
 	public void testContents() throws Exception {
 		String xslt = "war/xslt/flatten-ssq.xsl";
 		String file = "src/test/resources/study-info.xml";
+		String preprocess = "src/test/resources/setupFlattenTest.xsl";
 		String cols = null;
 		String datavals = null;
 
-		DOMParser parser = new DOMParser();
+		// Do the flattening
 		String csv = processFile(file, xslt);
+		// Split into 2 rows cols for the header values, datavals for the data
 		StringTokenizer st = new StringTokenizer(csv, "\n");
 		cols = st.nextToken();
 		datavals = st.nextToken();
 
-		parser.parse(file);
+		// Preprocess the input file to reorder the elements
+		String modifiedInput = processFile(file, preprocess);
+		InputSource inputSource = new InputSource(new StringReader(
+				modifiedInput));
+
+		DOMParser parser = new DOMParser();
+		parser.parse(inputSource);
 
 		Document doc = parser.getDocument();
 		DOMImplementation domimpl = doc.getImplementation();
@@ -103,25 +106,23 @@ public class TestStudyInfoFlatten extends TestCase {
 
 			String[] head = cols.split(",");
 			String[] data = datavals.split(",");
+			// Ignore version cols
 			int dataIdx = 2;
 			int headIdx = 2;
 			boolean started = false;
 			while (thisNode != null) {
-
+				// Only look at text nodes
 				if (thisNode.getNodeType() == Node.TEXT_NODE) {
 					String value = thisNode.getNodeValue().trim();
+					// Ignore empty nodes
 					if (!value.isEmpty()) {
 						String parent = "";
 						Node currNode = walker.getCurrentNode();
 						parent = walker.parentNode().getNodeName();
 						walker.setCurrentNode(currNode);
-						try {
-							if (parent.equals("start")) {
-								started = true;
-							}
-						} catch (Exception e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+						// Ignore version cols
+						if (parent.equals("start")) {
+							started = true;
 						}
 
 						if (started) {
@@ -131,10 +132,13 @@ public class TestStudyInfoFlatten extends TestCase {
 								String colVal = data[dataIdx++];
 
 								String headVal = head[headIdx++];
-
+								// Check the next data value in the XML matches
+								// the next data val in the CSV
 								if (colVal.equals(value)
 										&& value.length() == colVal.length()) {
 									found = true;
+									// And that the element name matches the
+									// column name
 									if (!headVal.endsWith(parent)) {
 										fail("Unexpected parent:" + headVal
 												+ " " + parent);
