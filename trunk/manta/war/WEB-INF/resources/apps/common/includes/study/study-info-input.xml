@@ -2480,9 +2480,7 @@
 						<p>
 							<xforms:input ref="NaHCO3-finalConcentration" class="fourWide">
 								<xforms:label>
-									NaHCO
-									<sub>3</sub>
-									final concentration (g/L)
+									Final concentration of NaHCO<sub>3</sub> (g/L)
 								</xforms:label>
 								<xforms:alert>
 									<xforms:output
