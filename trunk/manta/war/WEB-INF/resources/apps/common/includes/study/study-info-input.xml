@@ -2749,7 +2749,7 @@
 										</xforms:select1>
 										<br />
 										<xforms:select1 appearance="minimal" ref="solvent">
-											<xforms:label class="fixed-width">Drug substance solvent
+											<xforms:label class="fixed-width">Solvent of stock solution
 											</xforms:label>
 											<xforms:item>
 												<xforms:label>please select</xforms:label>
