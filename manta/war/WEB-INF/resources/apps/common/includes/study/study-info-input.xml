@@ -2764,8 +2764,7 @@
 										</xforms:select1>
 										<br />
 										<xforms:input ref="solventFinalConcentration">
-											<xforms:label>Solvent final concentration
-												(g/L)</xforms:label>
+											<xforms:label>Final concentration (g/l)</xforms:label>
 											<xforms:alert>
 												<xforms:output
 													value="concat('Enter an integer value for the ', name(), ' field ')" />
