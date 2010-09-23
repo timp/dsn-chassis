@@ -774,11 +774,12 @@
 																						</xforms:itemset>
 																					</xforms:select1>
 
-
+																					<span class="right-column-input-container">
 																					<xforms:input ref="activeIngredientMgPerDose"
 																						class="fourWide">
 																						<xforms:label class="fourWide">Mg per dose</xforms:label>
 																					</xforms:input>
+																					</span>
 																				</td>
 																			</tr>
 																		</xforms:repeat>
