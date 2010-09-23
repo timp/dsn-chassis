@@ -445,7 +445,11 @@
 					<xforms:bind nodeset="culture">
 						<xforms:bind nodeset="incubatorSystem" />
 						<xforms:bind nodeset="co2"
-							relevant="contains(../incubatorSystem, 'co2incubator')" />
+							relevant="contains(../incubatorSystem, 'co2incubator') or contains(../incubatorSystem, 'incubationchamber')"/>
+						<!-- co2Other and o2Other are also only relevant when the appropriate incubator system is selected, otherwise user could select Other then change incubator system and still see the Other box -->
+						<xforms:bind nodeset="co2Other" relevant="contains(../co2,'other') and (contains(../incubatorSystem, 'co2incubator') or contains(../incubatorSystem, 'incubationchamber'))" />
+						<xforms:bind nodeset="o2" relevant="contains(../incubatorSystem, 'incubationchamber')"/>
+						<xforms:bind nodeset="o2Other" relevant="contains(../o2,'other') and (contains(../incubatorSystem, 'incubationchamber'))" />
 						<xforms:bind nodeset="healthyErythrocytesSource" />
 						<!-- FIXME type="ctype:percentage" -->
 						<xforms:bind nodeset="hematocrit" type="xforms:int" />
@@ -626,6 +630,8 @@
 
 	<xforms:instance id="ins-incubatorSystem-items"
 		src="/apps/common/constants/incubatorSystems.xml" />
+	<xforms:instance id="ins-incubatorSystemGasPercentage-items"
+		src="/apps/common/constants/incubatorSystemGasPercentages.xml" />
 	<xforms:instance id="ins-healthyErythrocytesSource-items"
 		src="/apps/common/constants/healthyErythrocytesSources.xml" />
 	<xforms:instance id="ins-bloodGroup-items"
