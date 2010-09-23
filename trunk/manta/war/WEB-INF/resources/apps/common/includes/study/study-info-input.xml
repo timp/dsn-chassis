@@ -2340,29 +2340,85 @@
 					<xforms:group ref="culture">
 						<h4>Culture for Drug Susceptibility Measure</h4>
 
-						<xforms:select1 ref="incubatorSystem" appearance="minimal">
-							<xforms:label>Incubator system</xforms:label>
-							<xforms:item>
-								<xforms:label><!-- Nullable -->
-								</xforms:label>
-								<xforms:value />
-							</xforms:item>
-							<xforms:itemset model="mod-study-info"
-								nodeset="instance('ins-incubatorSystem-items')/incubatorSystem">
-								<xforms:label ref="label" />
-								<xforms:value ref="value" />
-							</xforms:itemset>
-						</xforms:select1>
-						<xforms:input model="mod-study-info" ref="co2">
-							<xforms:label>
-								CO
-								<sub>2</sub>
-								percentage
-							</xforms:label>
-							<xforms:hint>
-								5 or 10 percent.
-						</xforms:hint>
-						</xforms:input>
+						<table class="layout-table">
+							<tr>
+								<td>
+									
+									<xforms:select1 ref="incubatorSystem" appearance="minimal">
+										<xforms:label>Incubator system</xforms:label>
+										<xforms:item>
+											<xforms:label><!-- Nullable -->
+											</xforms:label>
+											<xforms:value />
+										</xforms:item>
+										<xforms:itemset model="mod-study-info"
+											nodeset="instance('ins-incubatorSystem-items')/incubatorSystem">
+											<xforms:label ref="label" />
+											<xforms:value ref="value" />
+										</xforms:itemset>
+									</xforms:select1>
+
+								</td>
+								<td class="right-hand-column">
+
+									<xforms:select1 model="mod-study-info" ref="co2" appearance="minimal">
+										<xforms:label>
+											CO<sub>2</sub>
+											percentage
+										</xforms:label>
+										<xforms:item>
+											<xforms:label><!-- Nullable -->
+											</xforms:label>
+											<xforms:value />
+										</xforms:item>
+										<xforms:itemset model="mod-study-info"
+											nodeset="instance('ins-incubatorSystemGasPercentage-items')/incubatorSystemGasPercentage">
+											<xforms:label ref="label" />
+											<xforms:value ref="value" />
+										</xforms:itemset>
+										<xforms:item>
+											<xforms:label>other</xforms:label>
+											<xforms:value>other</xforms:value>
+										</xforms:item>
+									</xforms:select1>
+									<xforms:input ref="co2Other">
+										<xforms:label />
+									</xforms:input>
+									
+								</td>
+								
+							</tr>
+							<tr>
+								<td></td>
+								<td class="right-hand-column">
+										
+									<xforms:select1 model="mod-study-info" ref="o2" appearance="minimal">
+										<xforms:label>
+											O<sub>2</sub>
+											percentage
+										</xforms:label>
+										<xforms:item>
+											<xforms:label><!-- Nullable -->
+											</xforms:label>
+											<xforms:value />
+										</xforms:item>
+										<xforms:itemset model="mod-study-info"
+											nodeset="instance('ins-incubatorSystemGasPercentage-items')/incubatorSystemGasPercentage">
+											<xforms:label ref="label" />
+											<xforms:value ref="value" />
+										</xforms:itemset>
+										<xforms:item>
+											<xforms:label>other</xforms:label>
+											<xforms:value>other</xforms:value>
+										</xforms:item>
+									</xforms:select1>
+									<xforms:input ref="o2Other">
+										<xforms:label />
+									</xforms:input>
+									
+								</td>
+							</tr>
+						</table>
 						<p>
 							<xforms:select1 ref="healthyErythrocytesSource"
 								appearance="minimal">
