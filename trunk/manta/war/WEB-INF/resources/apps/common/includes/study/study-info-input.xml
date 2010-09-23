@@ -2413,7 +2413,7 @@
 			-->
 
 					<xforms:group ref="drugSusceptibilityMedium">
-						<h4>Medium for Drug Susceptibility Measure</h4>
+						<h4>Culture medium composition</h4>
 						<p>
 							<xforms:select1 ref="medium" appearance="minimal">
 								<xforms:label>Medium</xforms:label>
