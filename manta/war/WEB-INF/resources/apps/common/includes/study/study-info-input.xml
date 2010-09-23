@@ -2709,7 +2709,7 @@
 					-->
 
 					<xforms:group ref="drugs">
-						<h4>Drug substances</h4>
+						<h4>Drugs stock solutions</h4>
 
 						<p>
 							<em>Please complete the section below for each drug substance
