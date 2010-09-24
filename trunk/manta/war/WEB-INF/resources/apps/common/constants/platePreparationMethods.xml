@@ -1,12 +1,12 @@
 <!--  Closed list of plate batching options  -->
-<platepreparationMethods  xmlns="">
-	<platepreparationMethod>
+<platePreparationMethods  xmlns="">
+	<platePreparationMethod>
 		<label>extemporaneous</label>
 		<value>extemporaneous</value>
-	</platepreparationMethod>
-	<platepreparationMethod>
+	</platePreparationMethod>
+	<platePreparationMethod>
 		<label>batches</label>
 		<value>batches</value>
-	</platepreparationMethod>
-</platepreparationMethods>
+	</platePreparationMethod>
+</platePreparationMethods>
 
