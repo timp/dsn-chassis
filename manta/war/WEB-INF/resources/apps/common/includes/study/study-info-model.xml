@@ -508,7 +508,8 @@
 								relevant="contains(../providedByWwarn, 'false')" />
 						</xforms:bind>
 					</xforms:bind>
-					<xforms:bind nodeset="plateBatches">
+					<xforms:bind nodeset="platesPreparationDate" type="xforms:date" relevant="contains(../platePreparationMethod,'extemporaneous')"/>
+					<xforms:bind nodeset="plateBatches" relevant="contains(../platePreparationMethod,'batches')">
 						<xforms:bind nodeset="batch">
 							<xforms:bind nodeset="clone3D7ProvidedByWwarn"
 								required="true()" />
@@ -632,6 +633,7 @@
 		src="/apps/common/constants/incubatorSystems.xml" />
 	<xforms:instance id="ins-incubatorSystemGasPercentage-items"
 		src="/apps/common/constants/incubatorSystemGasPercentages.xml" />
+	
 	<xforms:instance id="ins-healthyErythrocytesSource-items"
 		src="/apps/common/constants/healthyErythrocytesSources.xml" />
 	<xforms:instance id="ins-bloodGroup-items"
@@ -677,7 +679,8 @@
 	<xforms:instance id="ins-storageDurationUnit-items"
 		src="/apps/common/constants/storageDurationUnits.xml" />
 
-
+	<xforms:instance id="ins-platePreparationMethod-items"
+		src="/apps/common/constants/platePreparationMethods.xml" />
 
 	<xforms:instance id="ins-age-unit-items">
 		<ageUnits xmlns="">

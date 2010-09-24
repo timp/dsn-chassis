@@ -2880,9 +2880,26 @@
 				+ | | BEGIN IN VITRO PLATES NESTED QUESTIONNAIRE | +
 			-->
 
+					<h4>Batches of Plates</h4>
+					
+					<xforms:select1 ref="platePreparationMethod" appearance="minimal">
+						<xforms:label>Are your plates prepared in batches or extemporaneous?</xforms:label>
+						<xforms:item>
+							<xforms:label><!-- Nullable -->
+							</xforms:label>
+							<xforms:value />
+						</xforms:item>
+						<xforms:itemset model="mod-study-info"
+							nodeset="instance('ins-platePreparationMethod-items')/platePreparationMethod">
+							<xforms:label ref="label" />
+							<xforms:value ref="value" />
+						</xforms:itemset>
+					</xforms:select1>
+					<xforms:input ref="platesPreparationDate">
+						<xforms:label>Preparation Date</xforms:label>
+					</xforms:input>
 
 					<xforms:group ref="plateBatches">
-						<h4>Batches of Plates</h4>
 						<table class="repeat-table">
 							<xforms:repeat nodeset="batch" id="batch-rep">
 								<tr>
