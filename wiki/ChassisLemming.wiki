@@ -6,10 +6,6 @@
 
 Not all of these are necessarily a good idea. In no particular order...
 
-
-(I imagine this page might soon become a monster!)
-
-
 === Editing; Validation; Constraints ===
 
   * duplicate a row, i.e., create a new row by copying an existing row
