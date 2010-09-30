@@ -14,7 +14,8 @@ import module namespace config-collections = "http://purl.org/atombeat/xquery/co
 
 (: Migration actions: :)
 (: Adds "co2Other", "o2" and "o2Other" into the "culture" element in "invitro", after "co2". :)
-(: Adds "platePreparationMethod" and "platesPreparationDate" into "invitro", after "drugs" :)
+(: Adds "platePreparationMethod" and "platesPreparationDate" into "invitro", after "drugs". :)
+(: If there are batches in the "plateBatches" element of "invitro", then gives the content "batches" to the "platePreparationMethod" element. :)
 
 
 declare function local:do-get() as item()*
@@ -104,7 +105,7 @@ declare function local:migrate-study-info( $study-info as element( study-info ) 
 {
     <study-info profile="http://www.cggh.org/2010/chassis/manta/1.0.1">
     {
-        for $study-info-child in $study-info/child::* 
+        for $study-info-child in $study-info/child::*
         return
             if ( local-name( $study-info-child ) = "invitro" )
             then
@@ -112,7 +113,11 @@ declare function local:migrate-study-info( $study-info as element( study-info ) 
                 {
                     $study-info-child/attribute::* ,
                     for $invitro-child in $study-info-child/child::*
-                    let $modified-invitro-child-insert-after-drugs := ($invitro-child, <platePreparationMethod/>, <platesPreparationDate/>)
+                    let $platePreparationMethod-element :=
+                        if ( $study-info-child/plateBatches[not(node())] )
+                        then <platePreparationMethod/>
+                        else <platePreparationMethod>batches</platePreparationMethod>
+                    let $modified-invitro-child-insert-after-drugs := ($invitro-child, $platePreparationMethod-element, <platesPreparationDate/>)
                     return 
                         if ( local-name( $invitro-child ) = "culture" )
                         then
