@@ -17,7 +17,7 @@
   <scm class="hudson.scm.SubversionSCM">
     <locations>
       <hudson.scm.SubversionSCM_-ModuleLocation>
-        <remote>https://dsn-chassis.googlecode.com/svn/trunk/manta</remote>
+        <remote>http://dsn-chassis.googlecode.com/svn/branches/manta-1.1</remote>
       </hudson.scm.SubversionSCM_-ModuleLocation>
     </locations>
     <useUpdate>true</useUpdate>
@@ -40,7 +40,7 @@
     <groupId>org.cggh.chassis</groupId>
     <artifactId>manta</artifactId>
   </rootModule>
-  <goals>clean install</goals>
+  <goals>clean install site site:deploy</goals>
   <aggregatorStyleBuild>true</aggregatorStyleBuild>
   <incrementalBuild>false</incrementalBuild>
   <usePrivateRepository>false</usePrivateRepository>
@@ -48,7 +48,7 @@
   <archivingDisabled>false</archivingDisabled>
   <reporters>
     <hudson.maven.reporters.MavenMailer>
-      <recipients>timp@well.ox.ac.uk, lee.hart@well.ox.ac.uk</recipients>
+      <recipients>timp@well.ox.ac.uk, lee.hart@well.ox.ac.uk, ian.wright@well.ox.ac.uk</recipients>
       <dontNotifyEveryUnstableBuild>true</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>true</sendToIndividuals>
     </hudson.maven.reporters.MavenMailer>
