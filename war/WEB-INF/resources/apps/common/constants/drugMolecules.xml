@@ -49,12 +49,12 @@
 		<value>DOX</value>
 	</drugMolecule>
   <drugMolecule>
-    <label>lumefantrine</label>
-    <value>LUM</value>
-  </drugMolecule>
-  <drugMolecule>
     <label>halofantrine</label>
     <value>HL</value>
+  </drugMolecule>
+  <drugMolecule>
+    <label>lumefantrine</label>
+    <value>LUM</value>
   </drugMolecule>
 	<drugMolecule>
 		<label>mefloquine</label>
