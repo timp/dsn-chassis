@@ -1,0 +1,485 @@
+<!--
+    Copyright (C) 2010 University of Oxford
+
+    This program is free software; you can redistribute it and/or modify it under the terms of the
+    GNU Lesser General Public License as published by the Free Software Foundation; either version
+    2.1 of the License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+    without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+    See the GNU Lesser General Public License for more details.
+
+    The full text of the license is available at http://www.gnu.org/copyleft/lesser.html
+-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xforms="http://www.w3.org/2002/xforms"
+      xmlns:xs="http://www.w3.org/2001/XMLSchema"
+      xmlns:ev="http://www.w3.org/2001/xml-events"
+      xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
+      xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
+      xmlns:atom="http://www.w3.org/2005/Atom">
+      
+    <head>
+        <title>DataWiki > Merge > <xforms:output ref="instance('ins-entry')/atom:title"/> > Edit</title>
+        
+        <xforms:model id="mod-main">
+
+        	<xforms:instance id="ins-login">
+        		<login xmlns="">
+        			<user/>
+        			<roles/>
+        		</login>
+        	</xforms:instance>
+        	
+        	<xforms:action ev:event="xforms-model-construct-done">
+        		<xforms:setvalue ref="instance('ins-login')/user" value="xxforms:get-remote-user()"/>
+		        <xforms:insert 
+		            nodeset="instance('ins-login')/roles" 
+		            at="1" 
+		            position="before" 
+		            origin="xxforms:get-request-attribute('user-roles-xml')"/>
+        	</xforms:action>
+
+			<xforms:submission 
+				id="sub-get-entry"
+				resource="{xxforms:get-request-parameter('entry')}"
+				method="get"
+				replace="instance"
+				instance="ins-entry">
+			</xforms:submission>        
+
+            <xforms:submission
+            	id="sub-put-entry"
+            	resource="{instance('ins-entry')/atom:link[@rel='edit']/@href}"
+            	ref="instance('ins-entry')"
+            	method="put"
+            	mediatype="application/atom+xml"
+            	replace="instance"
+            	instance="ins-entry"
+            	validate="false">
+                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while saving changes.</xforms:message>
+		        <xforms:message ev:event="xforms-submit-done" level="modal">
+		        	Your changes have been saved. Thank you.
+	        	</xforms:message>
+           	</xforms:submission>
+
+			<xforms:submission 
+				id="sub-refresh-entry"
+				resource="{instance('ins-entry')/atom:link[@rel='edit']/@href}"
+				method="get"
+				replace="instance"
+				instance="ins-entry"
+				validate="false">
+                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while reloading data.</xforms:message>
+		        <xforms:message ev:event="xforms-submit-done" level="modal">The data have been restored to the last saved version.</xforms:message>
+			</xforms:submission>        
+
+			<xforms:send ev:event="xforms-model-construct-done" submission="sub-get-entry"/>
+			
+            <xforms:instance id="ins-entry" src="/apps/datawiki/merge/spike/example-merge-entry.xml"/>
+            
+        </xforms:model>
+        
+        <link rel="stylesheet" type="text/css" href="/ops/yui/tabview/assets/skins/sam/tabview.css"></link>
+        <link rel="stylesheet" type="text/css" href="/ops/yui/datatable/assets/skins/sam/datatable.css"></link>
+        <style type="text/css">
+.yui-skin-sam tr.yui-dt-selected td, .yui-skin-sam tr.yui-dt-selected td.yui-dt-asc, .yui-skin-sam tr.yui-dt-selected td.yui-dt-desc {
+	background-color:inherit;
+	color:inherit;
+}
+
+.yui-skin-sam .yui-dt-scrollable .yui-dt-hd {
+	border-top: none;
+	border-bottom: none;
+	border-left: none;
+	border-right: none;
+}
+
+.yui-skin-sam .yui-dt-scrollable table {
+	border: 1px solid #7F7F7F;
+}
+.unresolved-conflict {
+	background-color: #faa;
+	font-size: 80%;
+	padding: .1em .2em .1em .2em;
+	border-top: 1px solid #7F7F7F;
+	margin-top: .2em;
+} 
+td, th {
+	vertical-align: top;
+}
+.resolved-conflict {
+	background-color: #afa;
+	font-size: 80%;
+	padding: .1em .2em .1em .2em;
+	border-top: 1px solid #7F7F7F;
+	margin-top: .2em;
+} 
+.no-conflict {
+	background-color: inherit;
+	font-size: 80%;
+	padding: .1em .2em .1em .2em;
+	border-top: 1px solid #7F7F7F;
+	margin-top: .2em;
+} 
+.head-action {
+	background-color: inherit;
+	font-size: 80%;
+	padding: .1em .2em .1em .2em;
+	border-top: 1px solid #7F7F7F;
+	margin-top: .2em;
+	text-align: left;
+} 
+.xforms-repeat-selected-item-1 { background: transparent }
+.xforms-repeat-selected-item-2 { background: transparent }
+.yui-skin-sam .yui-dt th {
+	vertical-align: top;
+}
+.yui-skin-sam .yui-dt th a {
+	color: #666699;
+}
+.yui-skin-sam .yui-dt th a:hover {
+	text-decoration: underline;
+}
+.resolved-conflict .not-chosen {
+	text-decoration: line-through ;
+}
+.no-conflict .not-chosen {
+	text-decoration: line-through ;
+}
+        </style>
+
+    </head>
+    
+    <body>
+    
+    	<xforms:group ref="instance('ins-entry')">
+	
+			<p><a href="../">DataWiki</a> - <strong><xforms:output ref="instance('ins-login')/user"/></strong></p>
+			<hr/>
+			
+			<h1>Merge - <xforms:output ref="atom:title"/></h1>  
+			
+			<p></p>  	
+    	
+    		<div class="yui-navset yui-navset-top">
+    			<ul class="yui-nav">
+    				<li>
+    					<a href="view?entry={atom:link[@rel='edit']/@href}">
+	    					<em>View</em>
+    					</a>
+    				</li>
+    				<li class="selected">
+    					<a href="edit?entry={atom:link[@rel='edit']/@href}">
+	    					<em>Edit</em>
+    					</a>
+   					</li>
+    				<li>
+    					<a href="design?entry={atom:link[@rel='edit']/@href}">
+	    					<em>Design</em>
+    					</a>
+   					</li>
+    				<li>
+    					<a href="history?entry={atom:link[@rel='edit']/@href}">
+	    					<em>History</em>
+    					</a>
+   					</li>
+    				<li>
+    					<a href="revisions?entry={atom:link[@rel='edit']/@href}">
+	    					<em>Revisions</em>
+    					</a>
+   					</li>
+   					<xforms:group ref="atom:link[@rel='edit-acl']">
+	    				<li>
+	    					<a href="permissions?entry={../atom:link[@rel='edit']/@href}">
+		    					<em>Permissions</em>
+	    					</a>
+	   					</li>
+   					</xforms:group>
+    			</ul>
+    			
+    			<div class="yui-content">
+    			
+    				<p>
+    					<xforms:submit submission="sub-put-entry">
+    						<xforms:label><img src="/apps/fr/style/save.gif"/> Save Changes</xforms:label>
+   						</xforms:submit>
+    					<xforms:submit submission="sub-refresh-entry">
+    						<xforms:label><img src="/apps/fr/style/trash.gif"/> Discard Changes</xforms:label>
+   						</xforms:submit>
+    				</p>
+    			
+    				<hr/>
+    				<p>
+    					<xforms:output value="count(.//table/tbody//td[( empty(decision/text()) or decision = '') and source[1]/text() != source[2]/text()])">
+    						<xforms:label>Unresolved conflicts: </xforms:label>
+    					</xforms:output>
+    				</p>
+    				<h3>Sources</h3>
+    				<p>
+    					<xforms:output ref=".//design/source[1]"><xforms:label>[1] </xforms:label></xforms:output><br/>
+    					<xforms:output ref=".//design/source[2]"><xforms:label>[2] </xforms:label></xforms:output>
+    				</p>
+    				
+    				<hr/>
+    				
+					<xforms:group ref=".//table">
+					
+						<div class="yui-dt">
+							<div class="yui-dt-hd">
+								<table class="yui-dt-table">
+									<thead>
+					   					<tr>
+					   						<th>
+					   							<div class="yui-dt-liner">
+					   							
+					   							</div>
+					   						</th>
+					   						<xforms:repeat nodeset="thead/tr/th">
+												<th fr:sortable="true" fr:resizeable="true">
+													<div class="yui-dt-liner">
+														<xforms:output value="label"/>
+														<xxforms:variable name="position" select="position()"/>
+														<xforms:group ref=".[$position gt 1]">
+															<div class="head-action">
+																[1] 
+																<xforms:group ref=".[exists(../../../tbody/tr/td[$position][exists(source[1]/text()) and exists(source[2]/text()) and source[1] != source[2]])]">
+																	<xforms:trigger appearance="minimal">
+																		<xforms:label>resolve conflicts</xforms:label>
+																		<xforms:action ev:event="DOMActivate" xxforms:iterate="../../../tbody/tr/td[$position][exists(source[1]/text()) and exists(source[2]/text()) and source[1] != source[2]]">
+																			<xforms:setvalue ref="decision" value="../source[1]"/>
+																		</xforms:action>
+																	</xforms:trigger> | 
+																</xforms:group>
+																<xforms:trigger appearance="minimal">
+																	<xforms:label>override</xforms:label>
+																	<xforms:action ev:event="DOMActivate" xxforms:iterate="../../../tbody/tr/td[$position]">
+																		<xforms:setvalue ref="decision" value="../source[1]"/>
+																	</xforms:action>
+																</xforms:trigger> | 
+																<xforms:trigger appearance="minimal">
+																	<xforms:label>auto</xforms:label>
+																	<xforms:action ev:event="DOMActivate" xxforms:iterate="../../../tbody/tr/td[$position]">
+																		<xforms:setvalue ref="decision" value="
+																			if ( exists(../source[1]/text()) and empty(../source[2]/text()) ) then ../source[1]
+																			else if ( exists(../source[2]/text()) and empty(../source[1]/text()) ) then ../source[2]
+																			else ../source[1]
+																		"/>
+																	</xforms:action>
+																</xforms:trigger>
+																<br/>
+																[2] 
+																<xforms:group ref=".[exists(../../../tbody/tr/td[$position][exists(source[1]/text()) and exists(source[2]/text()) and source[1] != source[2]])]">
+																	<xforms:trigger appearance="minimal">
+																		<xforms:label>resolve conflicts</xforms:label>
+																		<xforms:action ev:event="DOMActivate" xxforms:iterate="../../../tbody/tr/td[$position][exists(source[1]/text()) and exists(source[2]/text()) and source[1] != source[2]]">
+																			<xforms:setvalue ref="decision" value="../source[2]"/>
+																		</xforms:action>
+																	</xforms:trigger> | 
+																</xforms:group>
+																<xforms:trigger appearance="minimal">
+																	<xforms:label>override</xforms:label>
+																	<xforms:action ev:event="DOMActivate" xxforms:iterate="../../../tbody/tr/td[$position]">
+																		<xforms:setvalue ref="decision" value="../source[2]"/>
+																	</xforms:action>
+																</xforms:trigger> | 
+																<xforms:trigger appearance="minimal">
+																	<xforms:label>auto</xforms:label>
+																	<xforms:action ev:event="DOMActivate" xxforms:iterate="../../../tbody/tr/td[$position]">
+																		<xforms:setvalue ref="decision" value="
+																			if ( exists(../source[1]/text()) and empty(../source[2]/text()) ) then ../source[1]
+																			else if ( exists(../source[2]/text()) and empty(../source[1]/text()) ) then ../source[2]
+																			else ../source[2]
+																		"/>
+																	</xforms:action>
+																</xforms:trigger>
+															</div>
+															
+														</xforms:group>
+													</div>
+												</th>	    						
+					   						</xforms:repeat>
+					   					</tr>
+									</thead>
+									<tbody class="yui-dt-data">
+				   					<xforms:repeat nodeset="tbody/tr" id="rep-row">
+				   						<tr class="
+												{if ( position() = 1 ) then 'yui-dt-first' else '' }
+												{if ( position() mod 2 = 0 ) then 'yui-dt-even' else 'yui-dt-odd' }">
+											<td>
+												<div class="yui-dt-liner">
+													
+								                    <xforms:trigger appearance="minimal">
+							                            <xforms:delete 
+							                                ev:event="DOMActivate" 
+							                                context="." 
+							                                nodeset="." 
+							                                at="index('rep-row')"/>
+							                            <xforms:label><img src="/apps/fr/style/delete.gif"/> Delete Row</xforms:label>
+							                        </xforms:trigger>
+													
+													<div class="head-action">
+														[1]
+														<xforms:group ref=".[exists(td[exists(source[1]/text()) and exists(source[2]/text()) and source[1] != source[2]])]">
+															<xforms:trigger appearance="minimal">
+																<xforms:label>resolve conflicts</xforms:label>
+																<xforms:action ev:event="DOMActivate" xxforms:iterate="td[exists(source[1]/text()) and exists(source[2]/text()) and source[1] != source[2]]">
+																	<xforms:setvalue ref="decision" value="../source[1]"/>
+																</xforms:action>
+															</xforms:trigger> | 
+														</xforms:group>
+														<xforms:trigger appearance="minimal">
+															<xforms:label>override</xforms:label>
+															<xforms:action ev:event="DOMActivate" xxforms:iterate="td[position() gt 1]">
+																<xforms:setvalue ref="decision" value="../source[1]"/>
+															</xforms:action>
+														</xforms:trigger> | 
+															<xforms:trigger appearance="minimal">
+																<xforms:label>auto</xforms:label>
+																<xforms:action ev:event="DOMActivate" xxforms:iterate="td">
+																	<xforms:setvalue ref="decision" value="
+																		if ( exists(../source[1]/text()) and empty(../source[2]/text()) ) then ../source[1]
+																		else if ( exists(../source[2]/text()) and empty(../source[1]/text()) ) then ../source[2]
+																		else ../source[1]
+																	"/>
+																</xforms:action>
+															</xforms:trigger>
+														<br/>
+														[2]
+														<xforms:group ref=".[exists(td[exists(source[1]/text()) and exists(source[2]/text()) and source[1] != source[2]])]">
+															<xforms:trigger appearance="minimal">
+																<xforms:label>resolve conflicts</xforms:label>
+																<xforms:action ev:event="DOMActivate" xxforms:iterate="td[exists(source[1]/text()) and exists(source[2]/text()) and source[1] != source[2]]">
+																	<xforms:setvalue ref="decision" value="../source[2]"/>
+																</xforms:action>
+															</xforms:trigger> | 
+														</xforms:group>
+														<xforms:trigger appearance="minimal">
+															<xforms:label>override</xforms:label>
+															<xforms:action ev:event="DOMActivate" xxforms:iterate="td[position() gt 1]">
+																<xforms:setvalue ref="decision" value="../source[2]"/>
+															</xforms:action>
+														</xforms:trigger> | 
+															<xforms:trigger appearance="minimal">
+																<xforms:label>auto</xforms:label>
+																<xforms:action ev:event="DOMActivate" xxforms:iterate="td">
+																	<xforms:setvalue ref="decision" value="
+																		if ( exists(../source[1]/text()) and empty(../source[2]/text()) ) then ../source[1]
+																		else if ( exists(../source[2]/text()) and empty(../source[1]/text()) ) then ../source[2]
+																		else ../source[2]
+																	"/>
+																</xforms:action>
+															</xforms:trigger>
+													</div>
+													
+												</div>
+											</td>
+											<td>
+												<xforms:group ref="td[1]">
+													<div class="yui-dt-liner">
+														<xforms:output value="decision"/>
+														<div class="no-conflict">
+															<span class="{if ( source[1] = decision ) then 'chosen' else 'not-chosen'}">
+																<xforms:output ref="source[1]">
+																	<xforms:label>[1] </xforms:label>
+																</xforms:output>
+															</span>
+															<br/>
+															<span class="{if ( source[2] = decision ) then 'chosen' else 'not-chosen'}">
+																<xforms:output ref="source[2]">
+																	<xforms:label>[2] </xforms:label>
+																</xforms:output>
+															</span>
+														</div>
+													</div>
+												</xforms:group>
+											</td>
+				    						<xforms:repeat nodeset="td[position() gt 1]">
+												<td>
+													<div class="yui-dt-liner">
+														<xforms:output value="decision"/>
+														
+														<xforms:group ref=".[exists(source[1]/text()) and exists(source[2]/text()) and source[1] != source[2]]">
+														
+															<xforms:group ref=".[exists(decision/text()) and decision != '']">
+																<xforms:trigger appearance="minimal">
+																	<xforms:label>clear</xforms:label>
+																	<xforms:action ev:event="DOMActivate">
+																		<xforms:setvalue ref="decision" value="()"/>
+																	</xforms:action>
+																</xforms:trigger>
+															</xforms:group> 
+														</xforms:group>
+															
+														<br/>
+															
+														<xforms:group ref=".[exists(source[1]/text()) and exists(source[2]/text()) and source[1] != source[2]]">
+															<div class="
+																{if (empty(decision/text())  or decision = '') then 'unresolved-conflict' else 'resolved-conflict'}
+															">
+																<span class="{if ( source[1] = decision ) then 'chosen' else 'not-chosen'}">
+																	<xforms:trigger appearance="minimal">
+																		<xforms:label>[1] <xforms:output ref="source[1]"/></xforms:label>
+																		<xforms:setvalue ref="decision" value="../source[1]" ev:event="DOMActivate"/>
+																	</xforms:trigger>
+																</span>
+																<br/>
+																<span class="{if ( source[2] = decision ) then 'chosen' else 'not-chosen'}">
+																	<xforms:trigger appearance="minimal">
+																		<xforms:label>[2] <xforms:output ref="source[2]"/></xforms:label>
+																		<xforms:setvalue ref="decision" value="../source[2]" ev:event="DOMActivate"/>
+																	</xforms:trigger>
+																</span>
+															</div>
+														</xforms:group>
+														<xforms:group ref=".[empty(source[1]/text()) or empty(source[2]/text()) or source[1] = source[2]]">
+															<div class="no-conflict">
+																<span class="{if ( source[1] = decision ) then 'chosen' else 'not-chosen'}">
+																	<xforms:trigger appearance="minimal">
+																		<xforms:label>[1] <xforms:output ref="source[1]"/></xforms:label>
+																		<xforms:setvalue ref="decision" value="../source[1]" ev:event="DOMActivate"/>
+																	</xforms:trigger>
+																</span>
+																<br/>
+																<span class="{if ( source[2] = decision ) then 'chosen' else 'not-chosen'}">
+																	<xforms:trigger appearance="minimal">
+																		<xforms:label>[2] <xforms:output ref="source[2]"/></xforms:label>
+																		<xforms:setvalue ref="decision" value="../source[2]" ev:event="DOMActivate"/>
+																	</xforms:trigger>
+																</span>
+															</div>
+														</xforms:group>
+													</div>
+												</td>	    						
+				    						</xforms:repeat>
+				   						</tr>
+				   					</xforms:repeat>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					
+    				</xforms:group>
+    				
+    				<hr/>
+    			
+
+    				<p>
+    					<xforms:submit submission="sub-put-entry">
+    						<xforms:label><img src="/apps/fr/style/save.gif"/> Save Changes</xforms:label>
+   						</xforms:submit>
+    					<xforms:submit submission="sub-refresh-entry">
+    						<xforms:label><img src="/apps/fr/style/trash.gif"/> Discard Changes</xforms:label>
+   						</xforms:submit>
+    				</p>
+    			
+	
+    			</div>
+    			
+   			</div>
+    			
+    	</xforms:group>
+ 			
+    	
+    </body>
+</html>
