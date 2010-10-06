@@ -1,0 +1,458 @@
+<!--
+    Copyright (C) 2010 University of Oxford
+
+    This program is free software; you can redistribute it and/or modify it under the terms of the
+    GNU Lesser General Public License as published by the Free Software Foundation; either version
+    2.1 of the License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+    without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+    See the GNU Lesser General Public License for more details.
+
+    The full text of the license is available at http://www.gnu.org/copyleft/lesser.html
+-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xforms="http://www.w3.org/2002/xforms"
+      xmlns:xs="http://www.w3.org/2001/XMLSchema"
+      xmlns:ev="http://www.w3.org/2001/xml-events"
+      xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
+      xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
+      xmlns:atom="http://www.w3.org/2005/Atom">
+      
+    <head>
+        <title>DataWiki > Table > <xforms:output ref="instance('ins-entry')/atom:title"/> > Permissions</title>
+        
+        <xforms:model id="mod-main" xxforms:readonly-appearance="static">
+        
+        	<xforms:instance id="ins-login">
+        		<login xmlns="">
+        			<user/>
+        			<roles/>
+        		</login>
+        	</xforms:instance>
+        	
+        	<xforms:action ev:event="xforms-model-construct-done">
+        		<xforms:setvalue ref="instance('ins-login')/user" value="xxforms:get-remote-user()"/>
+		        <xforms:insert 
+		            nodeset="instance('ins-login')/roles" 
+		            at="1" 
+		            position="before" 
+		            origin="xxforms:get-request-attribute('user-roles-xml')"/>
+        	</xforms:action>
+
+			<xforms:submission 
+				id="sub-get-entry"
+				resource="{xxforms:get-request-parameter('entry')}"
+				method="get"
+				replace="instance"
+				instance="ins-entry">
+				<xforms:send ev:event="xforms-submit-done" submission="sub-get-acl"/>
+                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>).</xforms:message>
+			</xforms:submission>        
+
+			<xforms:send ev:event="xforms-model-construct-done" submission="sub-get-entry"/>
+			
+            <xforms:instance id="ins-entry">
+            	<atom:entry/>
+            </xforms:instance>
+            
+            <xforms:submission
+            	id="sub-get-acl"
+            	resource="{instance('ins-entry')/atom:link[@rel='edit-acl']/@href}"
+            	method="get"
+            	replace="instance"
+            	instance="ins-acl">
+                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>).</xforms:message>
+           	</xforms:submission>
+           	
+            <xforms:submission
+            	id="sub-refresh-acl"
+            	resource="{instance('ins-entry')/atom:link[@rel='edit-acl']/@href}"
+            	method="get"
+            	replace="instance"
+            	instance="ins-acl">
+		        <xforms:message ev:event="xforms-submit-done" level="modal">The data have been restored to the last saved version.</xforms:message>
+                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>).</xforms:message>
+           	</xforms:submission>
+           	
+            <xforms:submission
+            	id="sub-put-acl"
+            	resource="{instance('ins-entry')/atom:link[@rel='edit-acl']/@href}"
+            	method="put"
+            	ref="instance('ins-acl')"
+            	mediatype="application/atom+xml"
+            	replace="instance"
+            	instance="ins-acl">
+		        <xforms:message ev:event="xforms-submit-done" level="modal">
+		        	Your changes have been saved. Thank you.
+	        	</xforms:message>
+                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>).</xforms:message>
+           	</xforms:submission>
+           	
+           	<xforms:instance id="ins-acl">
+           		<atom:entry/>
+           	</xforms:instance>
+           	
+           	<xforms:bind nodeset="instance('ins-acl')//user" readonly=". = instance('ins-login')/user"/> 
+           	
+           	<xforms:instance id="ins-user-template">
+           		<user xmlns=""/>
+           	</xforms:instance>
+            
+        </xforms:model>
+        
+        <link rel="stylesheet" type="text/css" href="/ops/yui/tabview/assets/skins/sam/tabview.css"></link>
+        <link rel="stylesheet" type="text/css" href="/ops/yui/datatable/assets/skins/sam/datatable.css"></link>
+        <style type="text/css">
+.yui-skin-sam tr.yui-dt-selected td, .yui-skin-sam tr.yui-dt-selected td.yui-dt-asc, .yui-skin-sam tr.yui-dt-selected td.yui-dt-desc {
+	background-color:inherit;
+	color:inherit;
+}
+
+.yui-skin-sam .yui-dt-scrollable .yui-dt-hd {
+	border-top: none;
+	border-bottom: none;
+	border-left: none;
+	border-right: none;
+}
+
+.yui-skin-sam .yui-dt-scrollable table {
+	border: 1px solid #7F7F7F;
+}
+
+.xforms-readonly {
+	padding: 0 .3em 0 .3em;
+}
+        </style>
+
+    </head>
+    
+    <body>
+    
+    	<xforms:group ref="instance('ins-entry')">
+	
+			<p><a href="../">DataWiki</a> - <strong><xforms:output ref="instance('ins-login')/user"/></strong></p>
+			<hr/>
+			
+			<h1>Table - <xforms:output ref="atom:title"/></h1>  
+			
+			<p></p>  	
+    	
+    		<div class="yui-navset yui-navset-top">
+    			<ul class="yui-nav">
+    				<li>
+    					<a href="view?entry={atom:link[@rel='edit']/@href}">
+	    					<em>View</em>
+    					</a>
+    				</li>
+    				<li>
+    					<a href="edit?entry={atom:link[@rel='edit']/@href}">
+	    					<em>Edit</em>
+    					</a>
+   					</li>
+    				<li>
+    					<a href="design?entry={atom:link[@rel='edit']/@href}">
+	    					<em>Design</em>
+    					</a>
+   					</li>
+    				<li>
+    					<a href="history?entry={atom:link[@rel='edit']/@href}">
+	    					<em>History</em>
+    					</a>
+   					</li>
+    				<li>
+    					<a href="revisions?entry={atom:link[@rel='edit']/@href}">
+	    					<em>Revisions</em>
+    					</a>
+   					</li>
+    				<li class="selected">
+    					<a href="permissions?entry={atom:link[@rel='edit']/@href}">
+	    					<em>Permissions</em>
+    					</a>
+   					</li>
+    			</ul>
+    			
+    			<div class="yui-content">
+    			
+    				<p>
+    					<xforms:submit submission="sub-put-acl">
+    						<xforms:label><img src="/apps/fr/style/save.gif"/> Save Changes</xforms:label>
+   						</xforms:submit>
+    					<xforms:submit submission="sub-refresh-acl">
+    						<xforms:label><img src="/apps/fr/style/trash.gif"/> Discard Changes</xforms:label>
+   						</xforms:submit>
+    				</p>
+    			
+    				<hr/>
+
+    				<h2>Administrators</h2>
+    				
+    				<p>Administrators can view and edit data, and can modify permissions.</p>
+    				
+					<xforms:group ref="instance('ins-acl')//group[@name='admins']">
+					
+						<div class="yui-dt">
+							<div class="yui-dt-hd">
+								<table class="yui-dt-table">
+									<thead>
+										<tr>
+											<th>
+												<div class="yui-dt-liner">
+								                    <xforms:trigger appearance="minimal">
+								                        <xforms:label><img src="/apps/fr/style/add.gif"/></xforms:label>
+								                        <xforms:insert 
+								                            ev:event="DOMActivate" 
+								                            context="." 
+								                            nodeset="user" 
+								                            at="1" 
+								                            position="before" 
+								                            origin="instance('ins-user-template')"/>
+								                    </xforms:trigger>
+												</div>
+											</th>
+											<th>
+												<div class="yui-dt-liner">
+								                    <xforms:trigger appearance="minimal">
+								                        <xforms:label>Add an Administrator</xforms:label>
+								                        <xforms:insert 
+								                            ev:event="DOMActivate" 
+								                            context="." 
+								                            nodeset="user" 
+								                            at="1" 
+								                            position="before" 
+								                            origin="instance('ins-user-template')"/>
+								                    </xforms:trigger>
+												</div>
+											</th>
+										</tr>
+									</thead>
+									<tbody class="yui-dt-data">
+										<xforms:repeat 
+											nodeset="user" 
+											id="rep-admin">
+											<tr class="
+												{if ( position() = 1 ) then 'yui-dt-first' else '' }
+												{if ( position() mod 2 = 0 ) then 'yui-dt-even' else 'yui-dt-odd' }">
+												<td>
+													<div class="yui-dt-liner">
+									                    <xforms:trigger appearance="minimal">
+									                        <xforms:label><img src="/apps/fr/style/add.gif"/></xforms:label>
+									                        <xforms:insert 
+									                            ev:event="DOMActivate" 
+									                            context="." 
+									                            nodeset="." 
+									                            at="position()" 
+									                            position="after" 
+									                            origin="instance('ins-user-template')"/>
+									                    </xforms:trigger>
+									                    <xforms:trigger appearance="minimal" ref=".">
+								                            <xforms:delete 
+								                                ev:event="DOMActivate" 
+								                                context="." 
+								                                nodeset="." 
+								                                at="index('rep-admin')"/>
+								                            <xforms:label><img src="/apps/fr/style/delete.gif"/></xforms:label>
+								                        </xforms:trigger>
+													</div>
+												</td>
+												<td>
+													<xforms:input ref=".">
+														<xforms:label/>
+													</xforms:input>
+												</td>
+											</tr>
+										</xforms:repeat>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</xforms:group>
+
+    				<h2>Editors</h2>
+    				
+    				<p>Editors can view and edit data, but cannot modify permissions.</p>
+    				
+					<xforms:group ref="instance('ins-acl')//group[@name='editors']">
+					
+						<div class="yui-dt">
+							<div class="yui-dt-hd">
+								<table class="yui-dt-table">
+									<thead>
+										<tr>
+											<th>
+												<div class="yui-dt-liner">
+								                    <xforms:trigger appearance="minimal">
+								                        <xforms:label><img src="/apps/fr/style/add.gif"/></xforms:label>
+								                        <xforms:insert 
+								                            ev:event="DOMActivate" 
+								                            context="." 
+								                            nodeset="user" 
+								                            at="1" 
+								                            position="before" 
+								                            origin="instance('ins-user-template')"/>
+								                    </xforms:trigger>
+												</div>
+											</th>
+											<th>
+												<div class="yui-dt-liner">
+								                    <xforms:trigger appearance="minimal">
+								                        <xforms:label>Add an Editor</xforms:label>
+								                        <xforms:insert 
+								                            ev:event="DOMActivate" 
+								                            context="." 
+								                            nodeset="user" 
+								                            at="1" 
+								                            position="before" 
+								                            origin="instance('ins-user-template')"/>
+								                    </xforms:trigger>
+												</div>
+											</th>
+										</tr>
+									</thead>
+									<tbody class="yui-dt-data">
+										<xforms:repeat 
+											nodeset="user" 
+											id="rep-editor">
+											<tr class="
+												{if ( position() = 1 ) then 'yui-dt-first' else '' }
+												{if ( position() mod 2 = 0 ) then 'yui-dt-even' else 'yui-dt-odd' }">
+												<td>
+													<div class="yui-dt-liner">
+									                    <xforms:trigger appearance="minimal">
+									                        <xforms:label><img src="/apps/fr/style/add.gif"/></xforms:label>
+									                        <xforms:insert 
+									                            ev:event="DOMActivate" 
+									                            context="." 
+									                            nodeset="." 
+									                            at="position()" 
+									                            position="after" 
+									                            origin="instance('ins-user-template')"/>
+									                    </xforms:trigger>
+									                    <xforms:trigger appearance="minimal">
+								                            <xforms:delete 
+								                                ev:event="DOMActivate" 
+								                                context="." 
+								                                nodeset="." 
+								                                at="index('rep-editor')"/>
+								                            <xforms:label><img src="/apps/fr/style/delete.gif"/></xforms:label>
+								                        </xforms:trigger>
+													</div>
+												</td>
+												<td>
+													<xforms:input ref=".">
+														<xforms:label/>
+													</xforms:input>
+												</td>
+											</tr>
+										</xforms:repeat>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</xforms:group>
+
+    				<h2>Viewers</h2>
+    				
+    				<p>Viewers can view data, but cannot edit data or modify permissions.</p>
+    				
+					<xforms:group ref="instance('ins-acl')//group[@name='viewers']">
+					
+						<div class="yui-dt">
+							<div class="yui-dt-hd">
+								<table class="yui-dt-table">
+									<thead>
+										<tr>
+											<th>
+												<div class="yui-dt-liner">
+								                    <xforms:trigger appearance="minimal">
+								                        <xforms:label><img src="/apps/fr/style/add.gif"/></xforms:label>
+								                        <xforms:insert 
+								                            ev:event="DOMActivate" 
+								                            context="." 
+								                            nodeset="user" 
+								                            at="1" 
+								                            position="before" 
+								                            origin="instance('ins-user-template')"/>
+								                    </xforms:trigger>
+												</div>
+											</th>
+											<th>
+												<div class="yui-dt-liner">
+								                    <xforms:trigger appearance="minimal">
+								                        <xforms:label>Add a Viewer</xforms:label>
+								                        <xforms:insert 
+								                            ev:event="DOMActivate" 
+								                            context="." 
+								                            nodeset="user" 
+								                            at="1" 
+								                            position="before" 
+								                            origin="instance('ins-user-template')"/>
+								                    </xforms:trigger>
+												</div>
+											</th>
+										</tr>
+									</thead>
+									<tbody class="yui-dt-data">
+										<xforms:repeat 
+											nodeset="user" 
+											id="rep-viewer">
+											<tr class="
+												{if ( position() = 1 ) then 'yui-dt-first' else '' }
+												{if ( position() mod 2 = 0 ) then 'yui-dt-even' else 'yui-dt-odd' }">
+												<td>
+													<div class="yui-dt-liner">
+									                    <xforms:trigger appearance="minimal">
+									                        <xforms:label><img src="/apps/fr/style/add.gif"/></xforms:label>
+									                        <xforms:insert 
+									                            ev:event="DOMActivate" 
+									                            context="." 
+									                            nodeset="." 
+									                            at="position()" 
+									                            position="after" 
+									                            origin="instance('ins-user-template')"/>
+									                    </xforms:trigger>
+									                    <xforms:trigger appearance="minimal">
+								                            <xforms:delete 
+								                                ev:event="DOMActivate" 
+								                                context="." 
+								                                nodeset="." 
+								                                at="index('rep-viewer')"/>
+								                            <xforms:label><img src="/apps/fr/style/delete.gif"/></xforms:label>
+								                        </xforms:trigger>
+													</div>
+												</td>
+												<td>
+													<xforms:input ref=".">
+														<xforms:label/>
+													</xforms:input>
+												</td>
+											</tr>
+										</xforms:repeat>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</xforms:group>
+
+					<hr/>
+										
+    				<p>
+    					<xforms:submit submission="sub-put-acl">
+    						<xforms:label><img src="/apps/fr/style/save.gif"/> Save Changes</xforms:label>
+   						</xforms:submit>
+    					<xforms:submit submission="sub-refresh-acl">
+    						<xforms:label><img src="/apps/fr/style/trash.gif"/> Discard Changes</xforms:label>
+   						</xforms:submit>
+    				</p>
+    			
+					
+    				
+    			</div>
+    			
+   			</div>
+    			
+    	</xforms:group>
+ 			
+    	
+    </body>
+</html>

@@ -1,0 +1,108 @@
+<atom:entry xmlns:atom="http://www.w3.org/2005/Atom">
+	<atom:id>http://localhost:8081/lemming/atombeat/content/datawiki/3af17687-e51f-4eef-8cf0-ca48cee1199a.atom
+	</atom:id>
+	<atom:published>2010-04-29T17:57:02.78+01:00</atom:published>
+	<atom:updated>2010-04-29T18:07:27.953+01:00</atom:updated>
+	<atom:link rel="self" type="application/atom+xml"
+		href="http://localhost:8081/lemming/atombeat/content/datawiki/3af17687-e51f-4eef-8cf0-ca48cee1199a.atom" />
+	<atom:link rel="edit" type="application/atom+xml"
+		href="http://localhost:8081/lemming/atombeat/content/datawiki/3af17687-e51f-4eef-8cf0-ca48cee1199a.atom" />
+	<atom:title type="text">Example A</atom:title>
+	<atom:summary type="xhtml">
+		<div xmlns="http://www.w3.org/1999/xhtml" />
+	</atom:summary>
+	<atom:content type="application/vnd.atombeat-datawiki+xml">
+		<table>
+			<thead>
+				<constraints></constraints>
+				<tr>
+					<th>
+						<label>ID</label>
+						<datatype>string</datatype>
+						<required>true</required>
+						<default />
+						<pattern />
+						<min bound="inclusive" />
+						<max bound="inclusive" />
+						<enumeration />
+					</th>
+					<th>
+						<label>DOB</label>
+						<datatype>string</datatype>
+						<required>false</required>
+						<default />
+						<pattern />
+						<min bound="inclusive" />
+						<max bound="inclusive" />
+						<enumeration />
+					</th>
+					<th>
+						<label>Gender</label>
+						<datatype>string</datatype>
+						<required>false</required>
+						<default />
+						<pattern />
+						<min bound="inclusive" />
+						<max bound="inclusive" />
+						<enumeration>
+							<item>F</item>
+							<item>M</item>
+							<item>O</item>
+						</enumeration>
+					</th>
+					<th>
+						<label>Ethnicity</label>
+						<datatype>string</datatype>
+						<required>false</required>
+						<default />
+						<pattern />
+						<min bound="inclusive" />
+						<max bound="inclusive" />
+						<enumeration>
+							<item>Yaruba</item>
+							<item>Fulani</item>
+						</enumeration>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>1</td>
+					<td>2000</td>
+					<td>M</td>
+					<td>Yaruba</td>
+				</tr>
+				<tr>
+					<td>2</td>
+					<td>2001</td>
+					<td>F</td>
+					<td>Fulani</td>
+				</tr>
+				<tr>
+					<td>3</td>
+					<td>2002</td>
+					<td>F</td>
+					<td>Fulani</td>
+				</tr>
+				<tr>
+					<td>5</td>
+					<td>2009</td>
+					<td>M</td>
+					<td>Yaruba</td>
+				</tr>
+			</tbody>
+		</table>
+	</atom:content>
+	<ar:comment xmlns:ar="http://purl.org/atompub/revision/1.0">
+		<atom:author>
+			<atom:name>audrey</atom:name>
+		</atom:author>
+		<atom:updated>2010-04-29T18:07:27.953+01:00</atom:updated>
+		<atom:summary />
+	</ar:comment>
+	<atom:link rel="history"
+		href="http://localhost:8081/lemming/atombeat/history/datawiki/3af17687-e51f-4eef-8cf0-ca48cee1199a.atom" />
+	<atom:link rel="edit-acl"
+		href="http://localhost:8081/lemming/atombeat/acl/datawiki/3af17687-e51f-4eef-8cf0-ca48cee1199a.atom"
+		type="application/atom+xml" />
+</atom:entry>
