@@ -3183,8 +3183,7 @@
 										<xforms:select1 appearance="minimal" ref="drugMeasured">
 											<xforms:label class="invisible">Molecule measured
 											</xforms:label>
-											<xforms:hint>Name of drug given or metabolite measured
-											</xforms:hint>
+											
 											<xforms:item>
 												<xforms:label>please select</xforms:label>
 												<xforms:value />
@@ -3200,6 +3199,7 @@
 												<xforms:value ref="value" />
 											</xforms:itemset>
 											<xforms:alert>Please select a molecule</xforms:alert>
+											<xforms:hint>Name of drug given or metabolite measured</xforms:hint>
 										</xforms:select1>
 
 									</td>
@@ -3316,7 +3316,6 @@
 											<xforms:select1 appearance="minimal" ref="uploadedUrl">
 												<xforms:label class="invisible">Uploaded document
 												</xforms:label>
-												<xforms:hint>An uploaded document</xforms:hint>
 												<xforms:item>
 													<xforms:label>please select</xforms:label>
 													<xforms:value />
@@ -3328,8 +3327,8 @@
 													</xforms:label>
 													<xforms:value ref="atom:link[@rel='edit']/@href" />
 												</xforms:itemset>
-												<xforms:alert>Please select an uploaded document
-												</xforms:alert>
+												<xforms:alert>Please select an uploaded document</xforms:alert>
+												<xforms:hint>An uploaded document</xforms:hint>
 											</xforms:select1>
 
 										</xforms:group>
