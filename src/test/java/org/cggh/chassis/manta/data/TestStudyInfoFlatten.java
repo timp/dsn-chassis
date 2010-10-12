@@ -68,7 +68,7 @@ public class TestStudyInfoFlatten extends TestCase {
 	}
 
 	public void testContents() throws Exception {
-		String xslt = "war/xslt/flatten-ssq.xsl";
+		String xslt = "war/xslt/flatten-study-info.xsl";
 		String file = "src/test/resources/study-info.xml";
 		String preprocess = "src/test/resources/setupFlattenTest.xsl";
 		String cols = null;
@@ -107,8 +107,8 @@ public class TestStudyInfoFlatten extends TestCase {
 			String[] head = cols.split(",");
 			String[] data = datavals.split(",");
 			// Ignore version cols
-			int dataIdx = 2;
-			int headIdx = 2;
+			int dataIdx = 3;
+			int headIdx = 3;
 			boolean started = false;
 			while (thisNode != null) {
 				// Only look at text nodes
