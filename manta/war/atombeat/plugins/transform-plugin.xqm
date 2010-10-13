@@ -53,6 +53,24 @@ declare function local:log4jInfo(
     util:log-app( "info" , $transform-plugin:logger-name , $message ) (: only use within our function :)
 };
 
+declare function transform-plugin:before(
+	$operation as xs:string ,
+	$request-path-info as xs:string ,
+	$request-data as item()* ,
+	$request-media-type as xs:string?
+) as item()*
+{
+	
+	let $message := ( "transform plugin, before: " , $operation , ", request-path-info: " , $request-path-info ) 
+	let $log := local:log4jDebug( $message )
+
+	return 
+	
+	    if ( $operation = $CONSTANT:OP-UPDATE-MEMBER )
+	    then transform-plugin:filter-rel( $request-data )
+	    else $request-data
+
+};
 
 
 
@@ -68,10 +86,16 @@ declare function transform-plugin:after(
 
 	return
 		
-		if ( $operation = $CONSTANT:OP-RETRIEVE-MEMBER )
+		if ( $operation = $CONSTANT:OP-CREATE-MEMBER )
 		
 		then transform-plugin:after-retrieve-member( $request-path-info , $response )
 		
+		else if ( $operation = $CONSTANT:OP-UPDATE-MEMBER )
+		
+		then transform-plugin:after-retrieve-member( $request-path-info , $response )
+		else if ( $operation = $CONSTANT:OP-RETRIEVE-MEMBER )
+		
+		then transform-plugin:after-retrieve-member( $request-path-info , $response )
 		else $response
 
 };
@@ -97,9 +121,9 @@ declare function transform-plugin:do-transform(
     let $message := ( "transform plugin:  request-path-info: " , $request-path-info ) 
     let $log := local:log4jDebug( $message )
     let $groups := text:groups( $request-path-info , "^/([^/]+)/(.*)$" )
-    let $content-type := $groups[2]
+    let $data-type := $groups[2]
  
- 	let $transform := concat($config:service-url-base,"/../xslt/",$transform-type,"-",$content-type,".xsl")
+ 	let $transform := concat($config:service-url-base,"/../xslt/",$transform-type,"-",$data-type,".xsl")
 	
 	let $message := ( "transform plugin, do-transform: " , $transform) 
 	let $log := local:log4jDebug( $message )
@@ -109,11 +133,13 @@ declare function transform-plugin:do-transform(
     {
         $response/status
 	}
-	<headers> 
+	<headers> {
+	$response/headers/header[not(name/text()=$CONSTANT:HEADER-CONTENT-TYPE)],
 		<header>
-			<name>Content-Type:</name>
+			<name>{$CONSTANT:HEADER-CONTENT-TYPE}:</name>
 			<value>{$content-type}</value>
 		</header>
+		}
 	</headers>
 <body type="text">
 	{$entry}
@@ -131,7 +157,7 @@ declare function transform-plugin:after-retrieve-member-study-info(
 ) as element(response)
 {
     let $transform-type := request:get-parameter("transform", "none")
-    let $content-type := 'text/csv'
+    let $content-type := $CONSTANT:MEDIA-TYPE-CSV
     
     return if ($transform-type = "none") then
         let $entry := $response/body/atom:entry
@@ -142,6 +168,18 @@ declare function transform-plugin:after-retrieve-member-study-info(
     else
         transform-plugin:do-transform($response, $content-type, $transform-type)
             
+};
+
+(: Remove relevant rel otherwise another will be added each time a put is done :)
+declare function transform-plugin:filter-rel(
+    $entry as element(atom:entry)
+) as element(atom:entry)
+{
+
+    let $filtered-entry := atomdb:filter( $entry , $transform-plugin:reserved )
+    
+    return $filtered-entry
+    
 };
 
 declare function transform-plugin:augment-entry(
@@ -155,7 +193,7 @@ declare function transform-plugin:augment-entry(
     {
         $entry/attribute::* ,
         $entry/child::*,
-        <atom:link rel="{$rel}" type="{$content-type}" href="{($entry/atom:link[@rel='self'])/@href}?transform={$transform-type}"/>
+        <atom:link rel="{$rel}" type="{$content-type}" href="{($entry/atom:link[@rel='edit'])/@href}?transform={$transform-type}"/>
     }        
     </atom:entry>
 };
