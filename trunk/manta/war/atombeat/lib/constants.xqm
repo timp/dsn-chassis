@@ -39,6 +39,7 @@ declare variable $CONSTANT:MEDIA-TYPE-ATOM as xs:string					:= "application/atom
 declare variable $CONSTANT:MEDIA-TYPE-ATOM-FEED as xs:string			:= "application/atom+xml;type=feed" ;
 declare variable $CONSTANT:MEDIA-TYPE-ATOM-ENTRY as xs:string			:= "application/atom+xml;type=entry" ;
 declare variable $CONSTANT:MEDIA-TYPE-TEXT as xs:string					:= "text/plain" ;
+declare variable $CONSTANT:MEDIA-TYPE-CSV as xs:string					:= "text/csv" ;
 
 declare variable $CONSTANT:ATOM-NSURI 						:= "http://www.w3.org/2005/Atom" ;
 declare variable $CONSTANT:ATOM-FEED as xs:string 			:= "feed" ;
@@ -47,6 +48,7 @@ declare variable $CONSTANT:ATOM-ID as xs:string 			:= "id" ;
 declare variable $CONSTANT:ATOM-PUBLISHED as xs:string 		:= "published" ;
 declare variable $CONSTANT:ATOM-UPDATED as xs:string 		:= "updated" ;
 declare variable $CONSTANT:ATOM-LINK as xs:string 			:= "link" ;
+declare variable $CONSTANT:ATOM-TYPE as xs:string 			:= "type" ;
 declare variable $CONSTANT:ATOM-REL as xs:string 			:= "rel" ;
 declare variable $CONSTANT:ATOM-HREF as xs:string 			:= "href" ;
 declare variable $CONSTANT:ATOM-EDIT as xs:string 			:= "edit" ;
