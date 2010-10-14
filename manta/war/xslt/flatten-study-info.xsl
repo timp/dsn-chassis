@@ -116,7 +116,7 @@
 	</xsl:template>
 
 	<xsl:template
-		match="start|end|modules|pathogens|includeMixedInfections|excludeIfPriorAntimalarials|pregnancy|treatmentReason|otherCriteria|recrudescenceAndReinfection">
+		match="start|end|modules|pathogens|includeMixedInfections|excludeIfPriorAntimalarials|pregnancy|treatmentReason|otherCriteria">
 		<xsl:param name="outputType" />
 		<xsl:choose>
 			<xsl:when test="$outputType = 1">
@@ -292,9 +292,6 @@
 		</xsl:apply-templates>
 		<xsl:apply-templates
 			select="geneotypingToDistinguishBetweenRecrudescenceAndReinfection/applicable/analysisProtocol/mixedAllelesOpen">
-			<xsl:with-param name="outputType" select="$outputType" />
-		</xsl:apply-templates>
-		<xsl:apply-templates select="recrudescenceAndReinfection">
 			<xsl:with-param name="outputType" select="$outputType" />
 		</xsl:apply-templates>
 	</xsl:template>

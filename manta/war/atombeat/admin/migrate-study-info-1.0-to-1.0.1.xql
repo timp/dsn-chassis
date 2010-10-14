@@ -108,7 +108,10 @@ declare function local:add-new-nodes()
     
     let $study-infos-v1-0-1 := 
         for $v1-0 in $study-infos-v1-0
-            return update insert <studyInfoStatus>new</studyInfoStatus> following //end
+            let $del := update delete //clinical/recrudescenceAndReinfection
+            return update insert <studyInfoStatus>new</studyInfoStatus> preceding //start
+
+     
     
      return for $v1-0-1 in $study-infos-v1-0-1 
         let $path-info := atomdb:edit-path-info( $v1-0-1 )
