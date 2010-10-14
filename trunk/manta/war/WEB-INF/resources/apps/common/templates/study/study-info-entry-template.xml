@@ -226,9 +226,9 @@
 				<analysisSite />
 				<culture>
 					<incubatorSystem />
-					<co2 />
+					<co2percentage />
 					<co2Other />
-					<o2 />
+					<o2percentage />
 					<o2Other />
 					<healthyErythrocytesSource />
 					<hematocrit />
