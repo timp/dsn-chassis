@@ -9,7 +9,8 @@
 		</atom:author>
 		<atom:title type="text"/>
 		<atom:content type="application/vnd.chassis-manta+xml">
-				<study-info profile="http://www.cggh.org/2010/chassis/manta/1.0">
+				<study-info profile="http://www.cggh.org/2010/chassis/manta/1.0.1">
+						<studyInfoStatus>new</studyInfoStatus>
 						<start>2010-09-18</start>
 						<end>2010-09-11</end>
 						<sites>

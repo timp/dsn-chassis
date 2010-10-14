@@ -2,6 +2,7 @@
 	<atom:title type="text" />
 	<atom:content type="application/vnd.chassis-manta+xml">
 		<study-info xmlns="" profile="http://www.cggh.org/2010/chassis/manta/1.0.1">
+			<studyInfoStatus/>
 			<start />
 			<end />
 			<sites>
