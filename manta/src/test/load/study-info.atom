@@ -346,7 +346,7 @@
                     <incubatorSystem>co2incubator</incubatorSystem>
                     <co2percentage>76</co2percentage>
                     <healthyErythrocytesSource>bloodbank</healthyErythrocytesSource>
-                    <hematocrit>54</hematocrit>
+                    <hematocritpercent>54</hematocritpercent>
                     <bloodGroup>AB</bloodGroup>
                 </culture>
                 <drugSusceptibilityMedium>

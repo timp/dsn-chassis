@@ -231,7 +231,7 @@
 					<o2percentage />
 					<o2Other />
 					<healthyErythrocytesSource />
-					<hematocrit />
+					<hematocritpercent />
 					<bloodGroup />
 				</culture>
 				<drugSusceptibilityMedium>

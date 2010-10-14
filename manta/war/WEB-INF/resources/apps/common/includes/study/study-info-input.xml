@@ -2451,7 +2451,7 @@
 							</xforms:select1>
 						</p>
 						<p>
-							<xforms:input ref="hematocrit">
+							<xforms:input ref="hematocritpercent">
 								<xforms:label>Hematocrit (%)</xforms:label>
 								<xforms:alert>
 									<xforms:output
