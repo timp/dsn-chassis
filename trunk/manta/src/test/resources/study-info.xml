@@ -349,7 +349,6 @@
 						<pharmacology>
 								<samples>
 										<sample>
-												<numberPlanned>1</numberPlanned>
 												<anticoagulent>salt</anticoagulent>
 												<centrifugeTime>15</centrifugeTime>
 												<storages>

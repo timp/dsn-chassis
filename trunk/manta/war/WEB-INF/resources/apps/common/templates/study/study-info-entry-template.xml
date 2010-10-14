@@ -269,7 +269,6 @@
 			<pharmacology>
 				<samples>
 					<sample>
-						<numberPlanned />
 						<anticoagulent />
 						<centrifugeTime />
             <storages>

@@ -536,7 +536,6 @@
 					relevant="contains(../modules, 'pharmacology')">
 					<xforms:bind nodeset="samples">
 						<xforms:bind nodeset="sample">
-							<xforms:bind nodeset="numberPlanned" />
 							<xforms:bind nodeset="anticoagulent" />
 							<xforms:bind nodeset="centrifugeTime" />
 							<xforms:bind nodeset="storages">

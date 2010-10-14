@@ -411,7 +411,6 @@
             <pharmacology>
                 <samples>
                     <sample>
-                        <numberPlanned>23</numberPlanned>
                         <anticoagulent>Heparin</anticoagulent>
                         <centrifugeTime>12</centrifugeTime>
                         <storage>
