@@ -975,7 +975,7 @@
 
 
 																</xforms:group>
-																<xforms:group ref="wGroupDosing">
+																<xforms:group ref="weightGroupDosing">
 
 																	<table class="repeat-table">
 																		<tr>
@@ -995,8 +995,8 @@
 																			<th>Dose</th>
 																			<th>Unit</th>
 																		</tr>
-																		<xforms:repeat nodeset="wGroupDosingSchedule"
-																			id="rep-wGroupDosingSchedule">
+																		<xforms:repeat nodeset="weightGroupDosingSchedule"
+																			id="rep-weightGroupDosingSchedule">
 																			<tr>
 																				<td>
 																					<xforms:trigger appearance="minimal">
@@ -1005,7 +1005,7 @@
 																						</xforms:label>
 																						<xforms:delete ev:event="DOMActivate"
 																							context="." nodeset="."
-																							at="index('rep-wGroupDosingSchedule')" />
+																							at="index('rep-weightGroupDosingSchedule')" />
 																					</xforms:trigger>
 																				</td>
 																				<td class="form-td">
@@ -1019,13 +1019,13 @@
 																					</xforms:input>
 																				</td>
 																				<td class="form-td">
-																					<xforms:input ref="wGroupFrom" class="fourWide">
+																					<xforms:input ref="weightGroupFrom" class="fourWide">
 																						<xforms:label />
 																						<xforms:hint>kgs</xforms:hint>
 																					</xforms:input>
 																				</td>
 																				<td class="form-td">
-																					<xforms:input ref="wGroupTo" class="fourWide">
+																					<xforms:input ref="weightGroupTo" class="fourWide">
 																						<xforms:label />
 																						<xforms:hint>kgs</xforms:hint>
 																					</xforms:input>
@@ -1058,18 +1058,18 @@
 																						<img src="/apps/common/theme/add.gif" alt="add" />
 																					</xforms:label>
 																					<xforms:insert ev:event="DOMActivate"
-																						context="." nodeset="wGroupDosingSchedule"
-																						at="count(../wGroupDosingSchedule)" position="after"
-																						origin="instance('ins-wGroupDosingSchedule')" />
+																						context="." nodeset="weightGroupDosingSchedule"
+																						at="count(../weightGroupDosingSchedule)" position="after"
+																						origin="instance('ins-weightGroupDosingSchedule')" />
 																				</xforms:trigger>
 																			</td>
 																			<td class="add-td" colspan="6">
 																				<xforms:trigger appearance="minimal">
 																					<xforms:label>Add a schedule</xforms:label>
 																					<xforms:insert ev:event="DOMActivate"
-																						context="." nodeset="wGroupDosingSchedule"
-																						at="count(../wGroupDosingSchedule)" position="after"
-																						origin="instance('ins-wGroupDosingSchedule')" />
+																						context="." nodeset="weightGroupDosingSchedule"
+																						at="count(../weightGroupDosingSchedule)" position="after"
+																						origin="instance('ins-weightGroupDosingSchedule')" />
 																				</xforms:trigger>
 																			</td>
 																		</tr>

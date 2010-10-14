@@ -8,7 +8,7 @@
 </xsl:template>
 
 <!-- Remove node by ignoring -->
-<xsl:template match="regimen/drugs/drug/activeIngredients|regimen/drugs/drug/ageDosing|regimen/drugs/drug/wGroupDosing|regimen/drugs/drug/weightDosing"/>
+<xsl:template match="regimen/drugs/drug/activeIngredients|regimen/drugs/drug/ageDosing|regimen/drugs/drug/weightGroupDosing|regimen/drugs/drug/weightDosing"/>
 <xsl:template match="clinical/geneotypingToDistinguishBetweenRecrudescenceAndReinfection/applicable/markers|clinical/geneotypingToDistinguishBetweenRecrudescenceAndReinfection/applicable/analysisProtocol" />
 <xsl:template match="pharmacology/assayReferences/assayReference/upload"/>
 <!-- Not processing molecular or invitro (yet....) -->

@@ -7,7 +7,8 @@
     </atom:author>
     <atom:title type="text"/>
     <atom:content type="application/vnd.chassis-manta+xml">
-        <study-info profile="http://www.cggh.org/2010/chassis/manta/1.0">
+        <study-info profile="http://www.cggh.org/2010/chassis/manta/1.0.1">
+        	<studyInfoStatus>new</studyInfoStatus>
             <start>2010-07-01</start>
             <end>2011-07-08</end>
             <sites>
@@ -94,24 +95,24 @@
                                             <doseUnit/>
                                         </ageDosingSchedule>
                                     </ageDosing>
-                                    <wGroupDosing>
-                                        <wGroupDosingSchedule>
+                                    <weightGroupDosing>
+                                        <weightGroupDosingSchedule>
                                             <day>1</day>
                                             <hour>2</hour>
-                                            <wGroupFrom>2</wGroupFrom>
-                                            <wGroupTo>22</wGroupTo>
+                                            <weightGroupFrom>2</weightGroupFrom>
+                                            <weightGroupTo>22</weightGroupTo>
                                             <dose>1</dose>
                                             <doseUnit/>
-                                        </wGroupDosingSchedule>
-                                        <wGroupDosingSchedule>
+                                        </weightGroupDosingSchedule>
+                                        <weightGroupDosingSchedule>
                                             <day>2</day>
                                             <hour>22</hour>
-                                            <wGroupFrom>32</wGroupFrom>
-                                            <wGroupTo>34</wGroupTo>
+                                            <weightGroupFrom>32</weightGroupFrom>
+                                            <weightGroupTo>34</weightGroupTo>
                                             <dose>222</dose>
                                             <doseUnit>mg</doseUnit>
-                                        </wGroupDosingSchedule>
-                                    </wGroupDosing>
+                                        </weightGroupDosingSchedule>
+                                    </weightGroupDosing>
                                     <weightDosing>
                                         <weightDosingSchedule>
                                             <day/>
@@ -156,16 +157,16 @@
                                             <doseUnit/>
                                         </ageDosingSchedule>
                                     </ageDosing>
-                                    <wGroupDosing>
-                                        <wGroupDosingSchedule>
+                                    <weightGroupDosing>
+                                        <weightGroupDosingSchedule>
                                             <day/>
                                             <hour/>
-                                            <wGroupFrom/>
-                                            <wGroupTo/>
+                                            <weightGroupFrom/>
+                                            <weightGroupTo/>
                                             <dose/>
                                             <doseUnit/>
-                                        </wGroupDosingSchedule>
-                                    </wGroupDosing>
+                                        </weightGroupDosingSchedule>
+                                    </weightGroupDosing>
                                     <weightDosing>
                                         <weightDosingSchedule>
                                             <day/>
@@ -343,7 +344,7 @@
                 <analysisSite>Paris</analysisSite>
                 <culture>
                     <incubatorSystem>co2incubator</incubatorSystem>
-                    <co2>76</co2>
+                    <co2percentage>76</co2percentage>
                     <healthyErythrocytesSource>bloodbank</healthyErythrocytesSource>
                     <hematocrit>54</hematocrit>
                     <bloodGroup>AB</bloodGroup>
