@@ -576,7 +576,24 @@
 			</xforms:bind>
 		</xforms:bind>
 	</xforms:bind>
-
+	
+	<xforms:instance id="ins-study-info-status">
+		<statusTypes xmlns="">
+			<statusType>
+				<label>newly created study</label>
+				<value>new</value>
+			</statusType>
+			<statusType>
+				<label>in progress</label>
+				<value>wip</value>
+			</statusType>
+			<statusType>
+				<label>complete</label>
+				<value>complete</value>
+			</statusType>
+		</statusTypes>
+	</xforms:instance>
+	
 	<xforms:instance id="ins-site-template"
 		src="/apps/common/templates/study/site-template.xml" />
 
