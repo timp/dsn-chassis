@@ -64,6 +64,8 @@ declare function local:do-post() as item()*
     let $study-infos := atomdb:retrieve-members( "/study-info" , false() )
     let $study-infos-v1-0 := $study-infos[atom:content/study-info/@profile='http://www.cggh.org/2010/chassis/manta/1.0']
     
+    let $new := local:add-new-nodes()
+    
     let $study-infos-v1-0-1 := 
         for $v1-0 in $study-infos-v1-0
         return 
@@ -99,7 +101,21 @@ declare function local:do-post() as item()*
 };
 
 
+declare function local:add-new-nodes() 
+{
+    let $study-infos := atomdb:retrieve-members( "/study-info" , false() )
+    let $study-infos-v1-0 := $study-infos[atom:content/study-info/@profile='http://www.cggh.org/2010/chassis/manta/1.0']
+    
+    let $study-infos-v1-0-1 := 
+        for $v1-0 in $study-infos-v1-0
+            return update insert <studyInfoStatus>new</studyInfoStatus> following //end
+    
+     return for $v1-0-1 in $study-infos-v1-0-1 
+        let $path-info := atomdb:edit-path-info( $v1-0-1 )
+        return atomdb:update-member( $path-info , $v1-0-1 )
 
+    
+};
 
 declare function local:migrate-study-info( $study-info as element( study-info ) ) as element( study-info )
 {
