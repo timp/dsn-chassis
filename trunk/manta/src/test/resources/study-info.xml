@@ -153,16 +153,16 @@
 																						<doseUnit/>
 																				</ageDosingSchedule>
 																		</ageDosing>
-																		<wGroupDosing>
-																				<wGroupDosingSchedule>
+																		<weightGroupDosing>
+																				<weightGroupDosingSchedule>
 																						<day>0</day>
 																						<hour>morning</hour>
-																						<wGroupFrom>10</wGroupFrom>
-																						<wGroupTo>20</wGroupTo>
+																						<weightGroupFrom>10</weightGroupFrom>
+																						<weightGroupTo>20</weightGroupTo>
 																						<dose>20</dose>
 																						<doseUnit>tablet</doseUnit>
-																				</wGroupDosingSchedule>
-																		</wGroupDosing>
+																				</weightGroupDosingSchedule>
+																		</weightGroupDosing>
 																		<weightDosing>
 																				<weightDosingSchedule>
 																						<day>0</day>
@@ -235,16 +235,16 @@
 																						<doseUnit>tablet</doseUnit>
 																				</ageDosingSchedule>
 																		</ageDosing>
-																		<wGroupDosing>
-																				<wGroupDosingSchedule>
+																		<weightGroupDosing>
+																				<weightGroupDosingSchedule>
 																						<day>0</day>
 																						<hour>morning</hour>
-																						<wGroupFrom>10</wGroupFrom>
-																						<wGroupTo>20</wGroupTo>
+																						<weightGroupFrom>10</weightGroupFrom>
+																						<weightGroupTo>20</weightGroupTo>
 																						<dose>20</dose>
 																						<doseUnit>tablet</doseUnit>
-																				</wGroupDosingSchedule>
-																		</wGroupDosing>
+																				</weightGroupDosingSchedule>
+																		</weightGroupDosing>
 																		<weightDosing>
 																				<weightDosingSchedule>
 																						<day>0</day>

@@ -29,7 +29,7 @@
 	<xsl:variable name="clinical.regimen.drug.weightGroupDosing"
 		select="3" />
 	<xsl:variable name="clinical.regimen.drug.weightGroupDosing.colDef"
-		select="'day,hour,wGroupFrom,wGroupTo,dose,doseUnit,'" />
+		select="'day,hour,weightGroupFrom,weightGroupTo,dose,doseUnit,'" />
 	<xsl:variable name="clinical.regimen.drug.weightDosing"
 		select="3" />
 	<xsl:variable name="clinical.regimen.drug.weightDosing.colDef"
@@ -433,7 +433,7 @@
 				<xsl:with-param name="colDef"
 					select="$clinical.regimen.drug.weightGroupDosing.colDef" />
 				<xsl:with-param name="prefix"
-					select="concat($newpref,'wGroupDosingSchedule')" />
+					select="concat($newpref,'weightGroupDosingSchedule')" />
 				<xsl:with-param name="count" select="1" />
 			</xsl:call-template>
 
@@ -466,7 +466,7 @@
 
 		<xsl:for-each select="*">
 			<xsl:if
-				test="not(name(.) = 'activeIngredients'  or name(.) = 'ageDosing' or name(.) = 'wGroupDosing' or name(.) = 'weightDosing')">
+				test="not(name(.) = 'activeIngredients'  or name(.) = 'ageDosing' or name(.) = 'weightGroupDosing' or name(.) = 'weightDosing')">
 				<xsl:choose>
 					<xsl:when test="$outputType = 1">
 						<xsl:value-of select="normalize-space(.)" />
@@ -533,7 +533,7 @@
 				select="count(ageDosing/ageDosingSchedule) + 1" />
 		</xsl:call-template>
 
-		<xsl:apply-templates select="wGroupDosing/wGroupDosingSchedule">
+		<xsl:apply-templates select="weightGroupDosing/weightGroupDosingSchedule">
 			<xsl:with-param name="outputType" select="$outputType" />
 			<xsl:with-param name="prefix" select="$newpref" />
 		</xsl:apply-templates>
@@ -545,9 +545,9 @@
 			<xsl:with-param name="colDef"
 				select="$clinical.regimen.drug.weightGroupDosing.colDef" />
 			<xsl:with-param name="prefix"
-				select="concat($newpref,'wGroupDosingSchedule')" />
+				select="concat($newpref,'weightGroupDosingSchedule')" />
 			<xsl:with-param name="count"
-				select="count(wGroupDosing/wGroupDosingSchedule) + 1" />
+				select="count(weightGroupDosing/weightGroupDosingSchedule) + 1" />
 		</xsl:call-template>
 
 		<xsl:apply-templates select="weightDosing/weightDosingSchedule">
@@ -583,7 +583,7 @@
 	</xsl:template>
 
 	<xsl:template
-		match="activeIngredients/activeIngredient|ageDosing/ageDosingSchedule|wGroupDosing/wGroupDosingSchedule|weightDosing/weightDosingSchedule">
+		match="activeIngredients/activeIngredient|ageDosing/ageDosingSchedule|weightGroupDosing/weightGroupDosingSchedule|weightDosing/weightDosingSchedule">
 		<xsl:param name="outputType" />
 		<xsl:param name="colDef" />
 		<xsl:param name="total" />

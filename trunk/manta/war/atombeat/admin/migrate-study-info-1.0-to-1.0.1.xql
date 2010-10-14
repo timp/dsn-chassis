@@ -108,6 +108,10 @@ declare function local:add-new-nodes()
     
     let $study-infos-v1-0-1 := 
         for $v1-0 in $study-infos-v1-0
+            let $ren := update rename //wGroupDosing as '/weightGroupDosing'
+            let $ren1 := update rename //wGroupDosingSchedule as '/weightGroupDosingSchedule' 
+            let $ren2 := update rename //wGroupFrom as '/weightGroupFrom' 
+            let $ren3 := update rename //wGroupTo as '/weightGroupTo' 
             let $del := update delete //clinical/recrudescenceAndReinfection
             return update insert <studyInfoStatus>new</studyInfoStatus> preceding //start
 
@@ -146,7 +150,7 @@ declare function local:migrate-study-info( $study-info as element( study-info ) 
                                 for $culture-child in $invitro-child/child::*
                                 let $modified-culture-child-insert-after-co2 := ($culture-child, <co2Other/>, <o2/>, <o2Other/>)
                                 return
-                                    if ( local-name( $culture-child ) = "co2" )
+                                    if ( local-name( $culture-child ) = "co2percentage" )
                                     then $modified-culture-child-insert-after-co2
                                     else $culture-child
                              }
