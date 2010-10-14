@@ -115,6 +115,7 @@ declare function local:add-new-nodes()
             let $ren4 := update rename //co2 as '/co2percentage'
             let $ren4 := update rename //hematocrit as '/hematocritpercentage' 
             let $del := update delete //clinical/recrudescenceAndReinfection
+            let $del1 := update delete //clinical/inclusionCriteria
             return update insert <studyInfoStatus>new</studyInfoStatus> preceding //start
 
      
