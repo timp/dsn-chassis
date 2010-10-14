@@ -452,7 +452,7 @@
 						<xforms:bind nodeset="o2Other" relevant="contains(../o2,'other') and (contains(../incubatorSystem, 'incubationchamber'))" />
 						<xforms:bind nodeset="healthyErythrocytesSource" />
 						<!-- FIXME type="ctype:percentage" -->
-						<xforms:bind nodeset="hematocrit" type="xforms:int" />
+						<xforms:bind nodeset="hematocritpercent" type="xforms:int" />
 						<xforms:bind nodeset="bloodGroup" />
 					</xforms:bind>
 					<xforms:bind nodeset="drugSusceptibilityMedium">

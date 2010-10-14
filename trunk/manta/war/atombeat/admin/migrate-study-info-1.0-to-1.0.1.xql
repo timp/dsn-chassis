@@ -112,7 +112,8 @@ declare function local:add-new-nodes()
             let $ren1 := update rename //wGroupDosingSchedule as '/weightGroupDosingSchedule' 
             let $ren2 := update rename //wGroupFrom as '/weightGroupFrom' 
             let $ren3 := update rename //wGroupTo as '/weightGroupTo'
-            let $ren4 := update rename //co2 as '/co2percentage' 
+            let $ren4 := update rename //co2 as '/co2percentage'
+            let $ren4 := update rename //hematocrit as '/hematocritpercentage' 
             let $del := update delete //clinical/recrudescenceAndReinfection
             return update insert <studyInfoStatus>new</studyInfoStatus> preceding //start
 
