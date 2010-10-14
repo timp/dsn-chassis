@@ -46,7 +46,7 @@
 
 	<xsl:variable name="pharmacology.samples" select="5" />
 	<xsl:variable name="pharmacology.samples.colDef"
-		select="'numberPlanned,anticoagulent,centrifugeTime,'" />
+		select="'anticoagulent,centrifugeTime,'" />
 	<xsl:variable name="pharmacology.sample.storages" select="3" />
 	<xsl:variable name="pharmacology.sample.storages.colDef"
 		select="'storageTemperature,storageDuration,storageDurationUnit,'" />
