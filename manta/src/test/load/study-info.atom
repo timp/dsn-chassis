@@ -340,7 +340,6 @@
                 </additionalGenotypicInformation>
             </molecular>
             <invitro>
-                <inclusionCriteria/>
                 <analysisSite>Paris</analysisSite>
                 <culture>
                     <incubatorSystem>co2incubator</incubatorSystem>

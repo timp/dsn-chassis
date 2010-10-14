@@ -222,7 +222,6 @@
 
 
 			<invitro>
-				<inclusionCriteria />
 				<analysisSite />
 				<culture>
 					<incubatorSystem />
