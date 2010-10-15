@@ -2980,7 +2980,7 @@
 											</xforms:label>
 										</xforms:input>
 										<br />
-										<xforms:input ref="parasitaemia3D7percent">
+										<xforms:input ref="parasitaemia3D7percentage">
 											<xforms:label class="fixed-width"> 3D7 parasitaemia (%)
 											</xforms:label>
 											<xforms:alert>
@@ -2989,7 +2989,7 @@
 											</xforms:alert>
 										</xforms:input>
 										<br />
-										<xforms:input ref="ringForms">
+										<xforms:input ref="ringFormingPercentage">
 											<xforms:label class="fixed-width">Ring forms after
 												synchronisation (%) </xforms:label>
 											<xforms:alert>
