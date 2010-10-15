@@ -403,8 +403,8 @@
                         <clone3D7Provider>KSB</clone3D7Provider>
                         <batchesIncludedInRawData>false</batchesIncludedInRawData>
                         <preparationDate>2010-07-01</preparationDate>
-                        <parasitaemia3D7percent>12</parasitaemia3D7percent>
-                        <ringForms>22</ringForms>
+                        <parasitaemia3D7percentage>12</parasitaemia3D7percentage>
+                        <ringFormingPercentage>22</ringFormingPercentage>
                     </batch>
                 </plateBatches>
             </invitro>
