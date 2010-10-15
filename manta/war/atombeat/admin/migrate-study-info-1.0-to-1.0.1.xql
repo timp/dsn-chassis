@@ -114,6 +114,7 @@ declare function local:add-new-nodes()
             let $ren3 := update rename //wGroupTo as '/weightGroupTo'
             let $ren4 := update rename //co2 as '/co2percentage'
             let $ren5 := update rename //hematocrit as '/hematocritpercentage'
+            let $ren6 := update rename //parasitaemia3D7 as '/parasitaemia3D7percentage'      
             let $del := update delete //clinical/recrudescenceAndReinfection
             let $del1 := update delete //clinical/inclusionCriteria
             let $del2 := //pharmacology/samples/sample/numberPlanned

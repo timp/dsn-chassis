@@ -523,7 +523,7 @@
 							<xforms:bind nodeset="preparationDate" type="xforms:date"
 								relevant="contains(../batchesIncludedInRawData, 'false')" />
 							<!-- FIXME type="ctype:percentage" -->
-							<xforms:bind nodeset="parasitaemia3D7"
+							<xforms:bind nodeset="parasitaemia3D7percent"
 								relevant="contains(../batchesIncludedInRawData, 'false')" type="xforms:int" />
 							<xforms:bind nodeset="ringForms" />
 						</xforms:bind>
@@ -939,7 +939,7 @@
 			<clone3D7Provider />
 			<batchesIncludedInRawData />
 			<preparationDate />
-			<parasitaemia3D7 />
+			<parasitaemia3D7percent />
 			<ringForms />
 		</batch>
 	</xforms:instance>
