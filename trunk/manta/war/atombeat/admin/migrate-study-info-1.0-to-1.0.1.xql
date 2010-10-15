@@ -113,10 +113,13 @@ declare function local:add-new-nodes()
             let $ren2 := update rename //wGroupFrom as '/weightGroupFrom' 
             let $ren3 := update rename //wGroupTo as '/weightGroupTo'
             let $ren4 := update rename //co2 as '/co2percentage'
-            let $ren4 := update rename //hematocrit as '/hematocritpercentage' 
+            let $ren5 := update rename //hematocrit as '/hematocritpercentage'
             let $del := update delete //clinical/recrudescenceAndReinfection
             let $del1 := update delete //clinical/inclusionCriteria
             let $del2 := //pharmacology/samples/sample/numberPlanned
+            let $del3 := //pharmacology/analytes/analyte[/drugMeasured/text()='AL']
+            let $rep1 := update replace //drugMeasured[. = "SP"] with <drugMeasured>SX</drugMeasured>
+            let $rep2 := update replace //drugMeasured[. = "PPQ"] with <drugMeasured>PQ</drugMeasured>
             return update insert <studyInfoStatus>new</studyInfoStatus> preceding //start
 
      

@@ -19,10 +19,6 @@
 		<value>AM</value>
 	</drugMolecule>
 	<drugMolecule>
-		<label>artemetherlumefantrine</label>
-		<value>AL</value>
-	</drugMolecule>
-	<drugMolecule>
 		<label>artemisinin</label>
 		<value>ART</value>
 	</drugMolecule>
@@ -76,7 +72,7 @@
 	</drugMolecule>
 	<drugMolecule>
 		<label>piperaquine</label>
-		<value>PPQ</value>
+		<value>PQ</value>
 	</drugMolecule>
 	<drugMolecule>
 		<label>primaquine</label>
@@ -92,7 +88,7 @@
 	</drugMolecule>
 	<drugMolecule>
 		<label>pyronaridine</label>
-		<value>PYR</value>
+		<value>PYN</value>
 	</drugMolecule>
 	<drugMolecule>
 		<label>quinine</label>
@@ -100,7 +96,7 @@
 	</drugMolecule>
   <drugMolecule>
     <label>sulfadoxine</label>
-    <value>SP</value>
+    <value>SX</value>
   </drugMolecule>
 	<drugMolecule>
 		<label>tetracycline</label>
