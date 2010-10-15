@@ -2980,7 +2980,7 @@
 											</xforms:label>
 										</xforms:input>
 										<br />
-										<xforms:input ref="parasitaemia3D7">
+										<xforms:input ref="parasitaemia3D7percent">
 											<xforms:label class="fixed-width"> 3D7 parasitaemia (%)
 											</xforms:label>
 											<xforms:alert>
