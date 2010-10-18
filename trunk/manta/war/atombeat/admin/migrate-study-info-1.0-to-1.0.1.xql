@@ -221,14 +221,14 @@ declare variable $testdata {
             <molecular>
                 <criteria>
                     <sampleSourceOpen>
-                        <sampleSource/>
+                        <sampleSource>communitySurvey</sampleSource>
                         <sampleSourceOther/>
                     </sampleSourceOpen>
-                    <malariaStatus/>
+                    <malariaStatus>asymptomatic</malariaStatus>
                 </criteria>
                 <sample>
                     <sampleTypeOpen>
-                        <sampleType/>
+                        <sampleType>filterPaper</sampleType>
                         <sampleTypeOther/>
                         <wholeBloodSource/>
                         <dateCultureIsolated/>
@@ -236,13 +236,13 @@ declare variable $testdata {
                 </sample>
                 <genotypedMarkers/>
                 <mixedResistanceAlleles>
-                    <mixedResistanceAllelesInclusion/>
-                    <mixedResistanceAllelesDesignation/>
+                    <mixedResistanceAllelesInclusion>included</mixedResistanceAllelesInclusion>
+                    <mixedResistanceAllelesDesignation>mixed</mixedResistanceAllelesDesignation>
                 </mixedResistanceAlleles>
                 <additionalGenotypicInformation>
                     <sequencedLoci>
-                        <wholeGenomesSequenced/>
-                        <resistanceLociSequenced/>
+                        <wholeGenomesSequenced>false</wholeGenomesSequenced>
+                        <resistanceLociSequenced>false</resistanceLociSequenced>
                         <resistanceLoci>
                             <resistanceLocus>
                                 <locusTypeOpen>
@@ -252,18 +252,18 @@ declare variable $testdata {
                                 <locusName/>
                             </resistanceLocus>
                         </resistanceLoci>
-                        <otherLociGenotyped/>
+                        <otherLociGenotyped>true</otherLociGenotyped>
                         <otherLoci>
                             <otherLocus>
                                 <locusTypeOpen>
-                                    <locusType/>
-                                    <locusTypeOther/>
+                                    <locusType>other</locusType>
+                                    <locusTypeOther>K76T, Mdr86 and mdr copy number</locusTypeOther>
                                 </locusTypeOpen>
                                 <locusName/>
                             </otherLocus>
                         </otherLoci>
                     </sequencedLoci>
-                    <infectionComplexityEstimated/>
+                    <infectionComplexityEstimated>false</infectionComplexityEstimated>
                     <infectionComplexityEstimationlociOpen>
                         <infectionComplexityEstimationloci/>
                         <infectionComplexityEstimationlociOther/>
@@ -272,24 +272,24 @@ declare variable $testdata {
             </molecular>
             <invitro>
                 <inclusionCriteria/>
-                <analysisSite/>
+                <analysisSite>France, Paris, Bichat hospital</analysisSite>
                 <culture>
-                    <incubatorSystem/>
+                    <incubatorSystem>incubationchamber</incubatorSystem>
                     <co2/>
-                    <healthyErythrocytesSource/>
-                    <hematocrit/>
-                    <bloodGroup/>
+                    <healthyErythrocytesSource>bloodbank</healthyErythrocytesSource>
+                    <hematocrit>1.5</hematocrit>
+                    <bloodGroup>O</bloodGroup>
                 </culture>
                 <drugSusceptibilityMedium>
-                    <medium/>
+                    <medium>RPMI1640</medium>
                     <mediumOther/>
-                    <preparation/>
-                    <serum/>
-                    <serum-finalConcentration/>
-                    <NaHCO3-finalConcentration/>
+                    <preparation>aliquots</preparation>
+                    <serum>humanserum</serum>
+                    <serum-finalConcentration>10%</serum-finalConcentration>
+                    <NaHCO3-finalConcentration>2.1</NaHCO3-finalConcentration>
                     <hypoxantine>
-                        <hypoxantine-added/>
-                        <hypoxantine-finalConcentration/>
+                        <hypoxantine-added>true</hypoxantine-added>
+                        <hypoxantine-finalConcentration>0.05</hypoxantine-finalConcentration>
                     </hypoxantine>
                     <oroticAcid>
                         <oroticAcid-added/>
@@ -302,11 +302,77 @@ declare variable $testdata {
                     <antibioticTreatments/>
                 </drugSusceptibilityMedium>
                 <susceptibility>
-                    <timeOfIncubation/>
-                    <susceptibilityMethod/>
+                    <timeOfIncubation>42h</timeOfIncubation>
+                    <susceptibilityMethod>isotopic</susceptibilityMethod>
                 </susceptibility>
-                <drugs/>
-                <plateBatches/>
+                <drugs>
+                    <drug>
+                        <molecule>CQ</molecule>
+                        <solvent>distilled water</solvent>
+                        <solventFinalConcentration>0.132 drug conc in RSS</solventFinalConcentration>
+                        <providedByWwarn>false</providedByWwarn>
+                        <provider>IMTSSA</provider>
+                    </drug>
+                    <drug>
+                        <molecule>MDA</molecule>
+                        <solvent>methanol</solvent>
+                        <solventFinalConcentration>0.061 drug conc in RSS</solventFinalConcentration>
+                        <providedByWwarn>false</providedByWwarn>
+                        <provider>IMTSSA</provider>
+                    </drug>
+                    <drug>
+                        <molecule>LUM</molecule>
+                        <solvent>methanol</solvent>
+                        <solventFinalConcentration>0.0131 drug conc in RSS ethanol!</solventFinalConcentration>
+                        <providedByWwarn/>
+                        <provider/>
+                    </drug>
+                    <drug>
+                        <molecule>DHA</molecule>
+                        <solvent>methanol</solvent>
+                        <solventFinalConcentration>0.057 drug in RSS</solventFinalConcentration>
+                        <providedByWwarn>false</providedByWwarn>
+                        <provider>IMTSSA</provider>
+                    </drug>
+                    <drug>
+                        <molecule>QN</molecule>
+                        <solvent>methanol</solvent>
+                        <solventFinalConcentration>0.102 drug in RSS</solventFinalConcentration>
+                        <providedByWwarn>false</providedByWwarn>
+                        <provider>IMTSSA</provider>
+                    </drug>
+                    <drug>
+                        <molecule>AV</molecule>
+                        <solvent>methanol</solvent>
+                        <solventFinalConcentration>0.145 drug in RSS</solventFinalConcentration>
+                        <providedByWwarn>false</providedByWwarn>
+                        <provider>IMTSSA</provider>
+                    </drug>
+                    <drug>
+                        <molecule>MQ</molecule>
+                        <solvent>methanol</solvent>
+                        <solventFinalConcentration>0.133 drug in RSS</solventFinalConcentration>
+                        <providedByWwarn>false</providedByWwarn>
+                        <provider>IMTSSA</provider>
+                    </drug>
+                    <drug>
+                        <molecule>SP</molecule>
+                        <solvent>methanol</solvent>
+                        <solventFinalConcentration>2.05 drug in RSS</solventFinalConcentration>
+                        <providedByWwarn>false</providedByWwarn>
+                        <provider>IMTSSA</provider>
+                    </drug>
+                </drugs>
+                <plateBatches>
+                    <batch>
+                        <clone3D7ProvidedByWwarn>false</clone3D7ProvidedByWwarn>
+                        <clone3D7Provider>MR4</clone3D7Provider>
+                        <batchesIncludedInRawData>true</batchesIncludedInRawData>
+                        <preparationDate/>
+                        <parasitaemia3D7/>
+                        <ringForms/>
+                    </batch>
+                </plateBatches>
             </invitro>
             <pharmacology>
                 <samples>
@@ -324,10 +390,10 @@ declare variable $testdata {
                     </sample>
                 </samples>
                 <analytes>
-                    <analyte>
-                        <drugMeasured/>
-                        <lowerLoQ/>
-                        <sampleMatrixType/>
+                   <analyte>
+                        <drugMeasured>SP</drugMeasured>
+                        <lowerLoQ>1</lowerLoQ>
+                        <sampleMatrixType>wholeCapillaryBlood capillaryPlasma</sampleMatrixType>
                     </analyte>
                 </analytes>
                 <assayReferences>
@@ -396,9 +462,9 @@ declare function local:content($content) as item()*
                         <input type="submit" value="Refresh"></input>
                     </form>
                 </p>
-                <pre><code>
+                <pre>
                 {$content}
-                </code></pre>
+                </pre>
             </body>
         </html>
 };
@@ -547,7 +613,7 @@ declare function local:migrate-study-info( $study-info as element( study-info ) 
                                 for $culture-child in $invitro-child/child::*
                                 let $modified-culture-child-insert-after-co2 := ($culture-child, <co2Other/>, <o2percentage/>, <o2Other/>)
                                 return
-                                    if ( local-name( $culture-child ) = "co2" )
+                                    if ( local-name( $culture-child ) = "co2percentage" )
                                     then $modified-culture-child-insert-after-co2
                                     else $culture-child
                              }
@@ -562,22 +628,63 @@ declare function local:migrate-study-info( $study-info as element( study-info ) 
     }
     </study-info>
 };
-
+(:
+ let $ren := update rename $v1-0//wGroupDosing as 'weightGroupDosing'
+            let $ren1 := update rename $v1-0//wGroupDosingSchedule as 'weightGroupDosingSchedule' 
+            let $ren2 := update rename $v1-0//wGroupFrom as 'weightGroupFrom' 
+            let $ren3 := update rename $v1-0//wGroupTo as 'weightGroupTo'
+            let $ren4 := update rename $v1-0//co2 as 'co2percentage'
+            let $ren5 := update rename $v1-0//hematocrit as 'hematocritpercentage'
+            let $ren6 := update rename $v1-0//parasitaemia3D7 as 'parasitaemia3D7percentage'
+            let $ren7 := update rename $v1-0//ringForms as 'ringFormingPercentage'
+            let $del := update delete $v1-0//clinical/recrudescenceAndReinfection
+            let $del1 := update delete $v1-0//invitro/inclusionCriteria
+            let $del2 := update delete $v1-0//pharmacology/samples/sample/numberPlanned
+            let $del3 := update delete $v1-0//pharmacology/analytes/analyte[./drugMeasured/text()='AL']
+            let $del4 := update delete $v1-0//invitro/drugs/drug[./molecule/text()="AL"]
+            let $rep1 := update replace $v1-0//drugMeasured[. = "SP"] with <drugMeasured>SX</drugMeasured>
+            let $rep2 := update replace $v1-0//drugMeasured[. = "PPQ"] with <drugMeasured>PQ</drugMeasured>
+            let $rep3 := update replace $v1-0//molecule[. = "SP"] with <molecule>SX</molecule>
+            let $rep2 := update replace $v1-0//molecule[. = "PPQ"] with <molecule>PQ</molecule>
+            let $tmp := update delete $v1-0//studyInfoStatus
+            return update insert <studyInfoStatus>new</studyInfoStatus> preceding $v1-0//start
+            :)
 declare function local:check-changes() as item() *{
   let $all := local:get-content()
  let $old := local:get-old-versioned-content($all)
  let $new :=  local:get-new-versioned-content($all)
- let $summary := concat('Old studies:',count($old),' New studies:',count($new),'\n')
+ let $summary := concat('Old studies:',count($old),' New studies:',count($new),'&#xD;')
  let $ret := for $m in $new 
-         let $out := if (count($m//co2) > 0) then 
+         let $out := if (count($m//co2) > 0 or count($m//co2percentage) = 0) then 
              let $msg := "Failed to change co2"
              return $msg
           else
              let $msg := "Changed co2"
              return $msg
-         let $new := concat($summary,$out)
-         return $new
-    return concat($summary,$ret)
+         let $new := concat($summary,$out,'&#xD;')
+         let $out := if (count($m//wGroupDosing) > 0 or count($m//weightGroupDosing) = 0) then 
+             let $msg := "Failed to change wGroupDosing"
+             return $msg
+          else
+             let $msg := "Changed wGroupDosing"
+             return $msg
+         let $msg := concat($new,$out,'&#xD;')
+          let $out := if (count($m//ringForms) > 0 or count($m//ringFormingPercentage) = 0) then 
+             let $msg := "Failed to change ringForms"
+             return $msg
+          else
+             let $msg := "Changed ringForms"
+             return $msg
+         let $new := concat($msg,$out,'&#xD;')
+          let $out := if (count($m//molecule[. = "SP"]) > 0 or count($m//molecule[. = "SX"]) = 0) then 
+             let $msg := "Failed to change SP to SX"
+             return $msg
+          else
+             let $msg := "Changed SP to SX"
+             return $msg
+         let $msg := concat($new,$out,'&#xD;')
+         return $msg
+    return $ret
 };
 declare function local:do-migration() {
   
