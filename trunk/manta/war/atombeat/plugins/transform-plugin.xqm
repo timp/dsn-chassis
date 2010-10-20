@@ -118,36 +118,36 @@ declare function transform-plugin:do-transform(
 ) as element(response)
 {
   let $request-path-info := request:get-attribute( "request-path-info" )
-    let $message := ( "transform plugin:  request-path-info: " , $request-path-info ) 
-    let $log := local:log4jDebug( $message )
-    let $groups := text:groups( $request-path-info , "^/([^/]+)/(.*)$" )
-    let $data-type := $groups[2]
+  let $message := ( "transform plugin:  request-path-info: " , $request-path-info ) 
+  let $log := local:log4jDebug( $message )
+  let $groups := text:groups( $request-path-info , "^/([^/]+)/(.*)$" )
+  let $data-type := $groups[2]
  
  	let $transform := concat($config:service-url-base,"/../xslt/",$transform-type,"-",$data-type,".xsl")
 	
 	let $message := ( "transform plugin, do-transform: " , $transform) 
 	let $log := local:log4jDebug( $message )
-    let $entry := transform:transform($response/body, xs:anyURI($transform), ())
-    let $return := 
+  let $entry := transform:transform($response/body, xs:anyURI($transform), ())
+  let $return := 
  <response>
-    {
+  {
         $response/status
-	}
+  }
 	<headers> {
 	$response/headers/header[not(name/text()=$CONSTANT:HEADER-CONTENT-TYPE)],
 		<header>
-			<name>{$CONSTANT:HEADER-CONTENT-TYPE}:</name>
+			<name>{$CONSTANT:HEADER-CONTENT-TYPE}</name>
 			<value>{$content-type}</value>
-		</header>
+    </header>
 		}
 	</headers>
-<body type="text">
+  <body type="text">
 	{$entry}
-</body>
-</response>
-    
+  </body>
+ </response>
+
     let $message := ( "transform plugin, after-retrieve-study-info returns: ", $return ) 
-	let $log := local:log4jDebug( $message )
+    let $log := local:log4jDebug( $message )
 	
     return $return
 
