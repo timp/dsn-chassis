@@ -24,7 +24,9 @@ import module namespace mime = "http://purl.org/atombeat/xquery/mime" at "../lib
 import module namespace atomdb = "http://purl.org/atombeat/xquery/atomdb" at "../lib/atomdb.xqm" ;
 import module namespace atomsec = "http://purl.org/atombeat/xquery/atom-security" at "../lib/atom-security.xqm" ;
 
-
+(: These links are added by this plugin, during the after phase, 
+   so must be filtered out prior to creation or updating, or multiple 
+   copies will result. :)
 declare variable $manta-plugin:reserved :=
     <reserved>
         <elements namespace-uri="http://www.cggh.org/2010/chassis/manta/xmlns">
