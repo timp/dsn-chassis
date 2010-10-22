@@ -116,8 +116,15 @@
 									            <xforms:label>Institution:</xforms:label>
 									        </xforms:output>
 														</span>
+											
+											<br/>
+											<xforms:output ref="person-is-contactable">
+												<xforms:label>Contactable?</xforms:label>
+											</xforms:output>
 								        </li>
 									</xforms:repeat>
+										
+									
 								</ol>
 								
 							</div>
