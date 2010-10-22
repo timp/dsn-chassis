@@ -27,7 +27,7 @@ declare variable $config:exist-password as xs:string := "" ;
 (:
 declare variable $config:service-url-base as xs:string :=  "http://cloud1.cggh.org/manta/atombeat" ;
 :)
-declare variable $config:service-url-base as xs:string :=  "http://localhost:8090/manta/atombeat" ;
+declare variable $config:service-url-base as xs:string :=  "http://localhost:8080/manta/atombeat" ;
 
 
 (:
