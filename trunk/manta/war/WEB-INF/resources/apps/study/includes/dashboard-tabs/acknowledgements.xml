@@ -140,6 +140,16 @@
 								                            <xforms:label>Institution:</xforms:label>
 								                        </xforms:input>
 								                		</span>
+								                		<br/>
+								                		<span class="xforms-label">Contactable:</span>
+								                		<xforms:select ref="person-is-contactable" appearance="full">
+								                			<xforms:choices>
+								                				<xforms:item>
+								                					<xforms:label class="invisible"/>
+								                					<xforms:value>Yes</xforms:value>
+								                				</xforms:item>
+								                			</xforms:choices>
+								                		</xforms:select>
 								                        
 								                		<div class="acknowledgement-movement-triggers">
 								                        
