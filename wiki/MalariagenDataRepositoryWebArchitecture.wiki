@@ -203,3 +203,60 @@ Content-Location: https://https://www.malariagen.net/repository/workspace/conten
 Because some browsers send pathological Accept headers, to ensure that dereferencing a PURL via a browser works reliably, the default content type will be HTML. I.e., machine clients will have to specify an appropriate accept header.
 
 To ensure correct caching behaviour for metadata records, each content-type variant will also have a URL, which will be returned in the value of the content-location response header. Each content-type variant can be accessed directly, without content-negotiation, via a URL, and these URLs are also given within "alternate" links within the metadata record.
+
+== External Assets ==
+
+It will not always be convenient to store data assets within a single repository system. Some data assets will be hosted in systems external to the data repository, here called externally-hosted assets, or "external assets" for short.
+
+=== Registering an External Asset ===
+
+The data repository supports a Web protocol for registering external assets, based on the Atom Publishing Protocol. 
+
+An external asset is registered by sending an HTTP POST request to the external asset collection URL, where a skeleton metadata record is sent as the request body in Atom XML format.
+
+The external asset collection URL is:
+
+  * https://www.malariagen.net/repository/workspace/content/asset/external
+
+For example, to register an external asset that has a URL http://external.example.org/data2.csv construct the following HTTP request:
+
+{{{
+POST /repository/workspace/content/asset/external HTTP/1.1
+Host: www.malariagen.net
+Content-Type: application/atom+xml
+Authorization: TODO
+
+<atom:entry xmlns:atom="http://www.w3.org/2005/Atom">
+    <atom:content src="http://external.example.org/data2.csv"/>
+    <atom:title type="text">external-data2.csv</atom:title>
+</atom:entry>
+}}}
+
+If successful, the response will be 201 Created and the response body will contain a fully populated metadata record for the newly registered external asset. For example:
+
+{{{
+HTTP/1.1 201 Created
+Location: https://www.malariagen.net/repository/workspace/content/asset/external/1234-5678-9012
+Content-Location: https://www.malariagen.net/repository/workspace/content/asset/external/1234-5678-9012?output=atom
+Content-Type: application/atom+xml
+
+<atom:entry xmlns:atom="http://www.w3.org/2005/Atom">
+    <atom:id>http://purl.org/malariagen/asset/external/1234-5678-9012</atom:id>
+    <atom:published>2010-10-14T18:29:48.687+01:00</atom:published>
+    <atom:updated>2010-10-14T18:29:48.687+01:00</atom:updated>
+    <atom:link rel="self" href="http://purl.org/malariagen/asset/external/1234-5678-9012"/>
+    <atom:link rel="edit" href="https://www.malariagen.net/repository/workspace/content/asset/external/1234-5678-9012"/>
+    <atom:link rel="related" href="http://www.malariagen.net/wiki/external-1234-5678-9012.php"/>
+    <atom:link rel="alternate" type="text/html" href="https://www.malariagen.net/repository/workspace/content/asset/external/1234-5678-9012?output=html"/>
+    <atom:link rel="alternate" type="application/json" href="https://www.malariagen.net/repository/workspace/content/asset/external/1234-5678-9012?output=json"/>
+    <atom:link rel="alternate" type="application/xml" href="https://www.malariagen.net/repository/workspace/content/asset/external/1234-5678-9012?output=xml"/>
+    <atom:link rel="edit" href="https://www.malariagen.net/repository/workspace/content/asset/external/1234-5678-9012"/>
+    <atom:content src="http://external.example.org/data2.csv"/>
+    <atom:title type="text">external-data2.csv</atom:title>
+    <atom:author>
+        <atom:email>joe@example.org</atom:email>
+    </atom:author>
+</atom:entry>
+}}}
+
+TODO is "self" the appropriate link relation for the PURL, or should we coin something specific like "purl"?
