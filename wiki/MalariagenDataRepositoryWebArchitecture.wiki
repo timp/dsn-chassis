@@ -1,0 +1,68 @@
+= MalariaGEN Data Repository - Web Architecture =
+
+== Hosted Assets ==
+
+The MalariaGEN data repository provides a facility for storing data assets. Any data asset stored within the repository is here called a *hosted asset*. 
+
+=== Creating a Hosted Asset ===
+
+The MalariaGEN data repository supports a Web protocol for the creation of hosted data assets, based on the Atom Publishing Protocol for creating media resources.
+
+A hosted asset is created by sending an HTTP POST request to the hosted asset collection URL, where the serialisation of the data asset is sent as the request body, and the media type of the data asset is given in the "Content-Type" request header.
+
+The hosted asset collection URL is:
+
+  * https://www.malariagen.net/repository/workspace/content/asset/hosted
+  
+For example, to store a plain text document as a hosted data asset, construct the following HTTP request:
+
+{{{
+POST /repository/workspace/content/asset/hosted HTTP/1.1
+Host: www.malariagen.net
+Content-Type: text/plain
+Slug: data1.txt
+Authorization: TODO
+
+This is a data asset.
+}}} 
+
+If successful, the response status will be 201 Created, and the response body will contain a metadata record for the newly created hosted asset, formatted as an Atom entry document. For example:
+
+{{{
+201 Created
+Location: https://www.malariagen.net/repository/workspace/content/asset/hosted/1234-5678-9012
+Content-Type: application/atom+xml
+
+<atom:entry xmlns:atom="http://www.w3.org/2005/Atom">
+    <atom:id>urn:uuid:1234-5678-9012</atom:id>
+    <atom:published>TODO</atom:published>a
+    <atom:updated>TODO</atom:updated>
+    <atom:link rel="self" href="http://purl.org/malariagen/asset/hosted/1234-5678-9012"/>
+    <atom:link rel="edit" href="https://www.malariagen.net/repository/workspace/content/asset/hosted/1234-5678-9012"/>
+    <atom:link rel="edit-media" href="https://www.malariagen.net/repository/workspace/content/asset/hosted/1234-5678-9012.media"/>
+    <atom:link rel="related" href="http://www.malariagen.net/wiki/1234-5678-9012.php"/>
+    <atom:content src="https://www.malariagen.net/repository/workspace/content/asset/hosted/1234-5678-9012.media"/>
+    <atom:title type="text">data1.txt</atom:title>
+    <atom:author>
+        <atom:email>joe@example.org</atom:email>
+    </atom:author>
+</atom:entry>
+}}}
+
+The following sub-section explains each of the URLs that are associated with a hosted data asset.
+
+=== Hosted Asset URLs ===
+
+For each hosted data asset, the following URLs are created:
+
+  * Persistent URL (PURL), a.k.a., permalink
+  * Metadata Record URL, a.k.a., edit link
+  * Media URL, a.k.a., edit-media link
+  * Content URL, a.k.a., content source
+  * Wiki URL, a.k.a., wiki link
+  
+In addition to these, there are also media-type specific variant URLs for the metadata record URL, see the sub-section below.
+
+This may seem like a lot of URLs for one data asset, but the key architectural principle here is that *the only URL that a client application ever needs to remember is the PURL*. The PURL provides a long-term stable reference to the data asset. All other URLs may change over a shorter time-frame, and therefore all other URLs should be discovered by a client application at runtime via the PURL. I.e.,the PURL will be configured to redirect a client application to the current metadata record URL, and retrieving the metadata record enables runtime discovery of all other URLs via link elements within the metadata record.
+
+For example, ...
