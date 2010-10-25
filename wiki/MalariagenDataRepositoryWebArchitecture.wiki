@@ -8,7 +8,7 @@ The MalariaGEN data repository provides a facility for storing data assets. Any 
 
 The MalariaGEN data repository supports a Web protocol for the creation of hosted data assets, based on the Atom Publishing Protocol.
 
-A hosted asset is created by sending an HTTP POST request to the *hosted asset collection URL*, where the serialization of the data asset is sent as the request body, and the media type of the data asset is given in the "Content-Type" request header.
+A hosted asset is created by sending an HTTP POST request to the *hosted asset collection URL*, where the data to be stored is sent as the request body, and the media type of the data asset is given in the "Content-Type" request header.
 
 The hosted asset collection URL is:
 
@@ -26,15 +26,16 @@ Authorization: TODO
 This is a data asset.
 }}} 
 
-If successful, the response status will be 201 Created, and the response body will contain a metadata record for the newly created hosted asset, formatted as an Atom entry document. For example:
+If successful, the response status will be 201 Created and the response body will contain a metadata record for the newly created hosted asset, formatted as an Atom entry document. For example:
 
 {{{
 HTTP/1.1 201 Created
 Location: https://www.malariagen.net/repository/workspace/content/asset/hosted/1234-5678-9012
+Content-Location: https://www.malariagen.net/repository/workspace/content/asset/hosted/1234-5678-9012?output=atom
 Content-Type: application/atom+xml
 
 <atom:entry xmlns:atom="http://www.w3.org/2005/Atom">
-    <atom:id>urn:uuid:1234-5678-9012</atom:id>
+    <atom:id>http://purl.org/malariagen/asset/hosted/1234-5678-9012</atom:id>
     <atom:published>TODO</atom:published>
     <atom:updated>TODO</atom:updated>
     <atom:link rel="self" href="http://purl.org/malariagen/asset/hosted/1234-5678-9012"/>
@@ -88,7 +89,7 @@ Accept: application/atom+xml
 Authorization: TODO
 }}}
 
-...will result in...
+...will retrieve the metadata record...
 
 {{{
 HTTP/1.1 200 OK
@@ -96,7 +97,7 @@ Content-Type: application/atom+xml
 Content-Location: https://https://www.malariagen.net/repository/workspace/content/asset/hosted/1234-5678-9012?output=atom
 
 <atom:entry xmlns:atom="http://www.w3.org/2005/Atom">
-    <atom:id>urn:uuid:1234-5678-9012</atom:id>
+    <atom:id>http://purl.org/malariagen/asset/hosted/1234-5678-9012</atom:id>
     <atom:published>TODO</atom:published>
     <atom:updated>TODO</atom:updated>
     <atom:link rel="self" href="http://purl.org/malariagen/asset/hosted/1234-5678-9012"/>
@@ -127,3 +128,67 @@ Content-Type: text/plain
 
 This is a data asset.
 }}}
+
+=== Content Negotiation for Metadata Records ===
+
+The PURL provides a stable identifier for each data asset. The PURL should always be used when citing or linking to the data asset, both in human-readable literature and in machine-readable data, to ensure the long-term stability of the metadata network.
+
+All PURLs will be configured to redirect the client to the metadata record URL. Dereferencing the PURL is the mechanism for discovering metadata about the data asset, and will be used for this purpose both by people (following the link within a web page or pasting the PURL into a browser location bar) and by machines (e.g., metadata search or editing applications). 
+
+Both human and machine clients need to retrieve metadata in a suitable format, hence the metadata record will be content negotiable via the metadata record URL.
+
+I.e., a request to retrieve the metadata record should specify the desired response content type in an accept header. E.g., a machine client will prefer Atom XML:
+
+{{{
+GET /repository/workspace/content/asset/hosted/1234-5678-9012 HTTP/1.1
+Host: www.malariagen.net
+Accept: application/atom+xml
+Authorization: TODO
+   
+HTTP/1.1 200 OK
+Content-Type: application/atom+xml
+Content-Location: https://https://www.malariagen.net/repository/workspace/content/asset/hosted/1234-5678-9012?output=atom
+
+<atom:entry xmlns:atom="http://www.w3.org/2005/Atom">
+    <atom:id>http://purl.org/malariagen/asset/hosted/1234-5678-9012</atom:id>
+    <atom:published>TODO</atom:published>
+    <atom:updated>TODO</atom:updated>
+    <atom:link rel="self" href="http://purl.org/malariagen/asset/hosted/1234-5678-9012"/>
+    <atom:link rel="edit" href="https://www.malariagen.net/repository/workspace/content/asset/hosted/1234-5678-9012"/>
+    <atom:link rel="edit-media" href="https://www.malariagen.net/repository/workspace/content/asset/hosted/1234-5678-9012.media"/>
+    <atom:link rel="related" href="http://www.malariagen.net/wiki/1234-5678-9012.php"/>
+    <atom:content src="https://www.malariagen.net/repository/workspace/content/asset/hosted/1234-5678-9012.media"/>
+    <atom:title type="text">data1.txt</atom:title>
+    <atom:author>
+        <atom:email>joe@example.org</atom:email>
+    </atom:author>
+</atom:entry>
+}}}
+
+...and a browser will prefer HTML...
+
+{{{
+GET /repository/workspace/content/asset/hosted/1234-5678-9012 HTTP/1.1
+Host: www.malariagen.net
+Accept: text/html
+Authorization: TODO
+   
+HTTP/1.1 200 OK
+Content-Type: text/html
+Content-Location: https://https://www.malariagen.net/repository/workspace/content/asset/hosted/1234-5678-9012?output=html
+
+<html>
+  <head>
+    <title>data1.txt - http://purl.org/malariagen/asset/hosted/1234-5678-9012</title>
+    <link rel="alternate" href="TODO"/>
+  </head>
+  <body>
+    TODO
+  </body>
+</html>
+}}}
+
+
+
+
+
