@@ -57,7 +57,7 @@ For each hosted data asset, the following URLs are created:
 
   * *Persistent URL (PURL)* - a stable, long-term reference to the hosted asset
   * *Metadata Record URL* - can be used to retrieve and possibly update the metadata record for the hosted asset
-  * *Media URL* - can be used to retrieve and possibly update the hosted asset 
+  * *Media URL* - can be used to retrieve and possibly update the hosted asset itself
   * *Content URL* - can be used to retrieve the hosted asset (may be the same as the Media URL, or may be different, e.g., if served from a content distribution network)
   * *Wiki URL* - locates a wiki page about the hosted asset
   
@@ -84,8 +84,46 @@ Then, sending a GET request to the Metadata Record URL...
 {{{
 GET /repository/workspace/content/asset/hosted/1234-5678-9012 HTTP/1.1
 Host: www.malariagen.net
+Accept: application/atom+xml
+Authorization: TODO
 }}}
 
 ...will result in...
 
-TODO
+{{{
+HTTP/1.1 200 OK
+Content-Type: application/atom+xml
+Content-Location: https://https://www.malariagen.net/repository/workspace/content/asset/hosted/1234-5678-9012?output=atom
+
+<atom:entry xmlns:atom="http://www.w3.org/2005/Atom">
+    <atom:id>urn:uuid:1234-5678-9012</atom:id>
+    <atom:published>TODO</atom:published>
+    <atom:updated>TODO</atom:updated>
+    <atom:link rel="self" href="http://purl.org/malariagen/asset/hosted/1234-5678-9012"/>
+    <atom:link rel="edit" href="https://www.malariagen.net/repository/workspace/content/asset/hosted/1234-5678-9012"/>
+    <atom:link rel="edit-media" href="https://www.malariagen.net/repository/workspace/content/asset/hosted/1234-5678-9012.media"/>
+    <atom:link rel="related" href="http://www.malariagen.net/wiki/1234-5678-9012.php"/>
+    <atom:content src="https://www.malariagen.net/repository/workspace/content/asset/hosted/1234-5678-9012.media"/>
+    <atom:title type="text">data1.txt</atom:title>
+    <atom:author>
+        <atom:email>joe@example.org</atom:email>
+    </atom:author>
+</atom:entry>
+}}}
+
+With the metadata record in hand, you have all other associated URLs, e.g., you can send a GET request to the Media URL:
+
+{{{
+GET /repository/workspace/content/asset/hosted/1234-5678-9012.media HTTP/1.1
+Host: www.malariagen.net
+Authorization: TODO
+}}}
+
+...which will retrieve the data asset itself...
+
+{{{
+HTTP/1.1 200 OK
+Content-Type: text/plain
+
+This is a data asset.
+}}}
