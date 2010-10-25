@@ -139,9 +139,9 @@ This is a data asset.
 
 === Content Negotiation for Metadata Records ===
 
-The PURL provides a stable identifier for each data asset. The PURL should always be used when citing or linking to the data asset, both in human-readable literature and in machine-readable data, to ensure the long-term stability of the metadata network.
+The PURL provides a stable identifier for each data asset. The PURL should always be used when citing or linking to the data asset, both in human-readable literature and in machine-readable data, to ensure the long-term stability of the information network.
 
-All PURLs will be configured to redirect the client to the metadata record URL. Dereferencing the PURL is the mechanism for discovering metadata about the data asset, and will be used for this purpose both by people (following the link within a web page or pasting the PURL into a browser location bar) and by machines (e.g., metadata search or editing applications). 
+All PURLs will be configured to redirect the client to the current metadata record URL. Dereferencing the PURL is the mechanism for discovering metadata about the data asset, and will be used for this purpose both by people (following the link within a web page or pasting the PURL into a browser location bar) and by machines (e.g., metadata crawl, search or editing applications). 
 
 Both human and machine clients need to retrieve metadata in a suitable format, hence the metadata record will be content negotiable via the metadata record URL.
 
@@ -200,5 +200,6 @@ Content-Location: https://https://www.malariagen.net/repository/workspace/conten
 </html>
 }}}
 
+Because some browsers send pathological Accept headers, to ensure that dereferencing a PURL via a browser works reliably, the default content type will be HTML. I.e., machine clients will have to specify an appropriate accept header.
 
-
+To ensure correct caching behaviour for metadata records, each content-type variant will also have a URL, which will be returned in the value of the content-location response header. Each content-type variant can be accessed directly, without content-negotiation, via a URL, and these URLs are also given within "alternate" links within the metadata record.
