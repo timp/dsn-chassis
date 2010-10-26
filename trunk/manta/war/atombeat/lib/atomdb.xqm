@@ -3,6 +3,7 @@ xquery version "1.0";
 module namespace atomdb = "http://purl.org/atombeat/xquery/atomdb";
 
 declare namespace atom = "http://www.w3.org/2005/Atom" ;
+declare namespace at = "http://purl.org/atompub/tombstones/1.0";
 declare namespace atombeat = "http://purl.org/atombeat/xmlns" ;
 
 import module namespace text = "http://exist-db.org/xquery/text" ;
@@ -17,6 +18,22 @@ import module namespace xutil = "http://purl.org/atombeat/xquery/xutil" at "xuti
 import module namespace config = "http://purl.org/atombeat/xquery/config" at "../config/shared.xqm" ;
 
 
+declare variable $atomdb:logger-name := "org.purl.atombeat.xquery.atomdb";
+
+
+declare function local:log4jDebug(
+    $message as item()*
+) as empty()
+{
+  util:log-app( "debug" , $atomdb:logger-name , $message ) (: only use within our function :)
+};
+
+declare function local:log4jInfo(
+    $message as item()*
+) as empty()
+{
+    util:log-app( "info" , $atomdb:logger-name , $message ) (: only use within our function :)
+};
 
 
 declare function atomdb:collection-available(
@@ -160,7 +177,7 @@ declare function atomdb:db-path-to-request-path-info(
 
 
 
-declare function atomdb:edit-path-info( $entry as element(atom:entry) ) as xs:string?
+declare function atomdb:edit-path-info( $entry as element() ) as xs:string?
 {
     let $uri := $entry/atom:link[@rel='edit']/@href
     return
@@ -171,7 +188,7 @@ declare function atomdb:edit-path-info( $entry as element(atom:entry) ) as xs:st
 
 
 
-declare function atomdb:edit-media-path-info( $entry as element(atom:entry) ) as xs:string?
+declare function atomdb:edit-media-path-info( $entry as element() ) as xs:string?
 {
     let $uri := $entry/atom:link[@rel='edit-media']/@href
     return
@@ -182,7 +199,7 @@ declare function atomdb:edit-media-path-info( $entry as element(atom:entry) ) as
 
 
 
-declare function atomdb:collection-path-info( $entry as element(atom:entry) ) as xs:string?
+declare function atomdb:collection-path-info( $entry as element() ) as xs:string?
 {
     let $entry-path-info := atomdb:edit-path-info( $entry )
     return
@@ -406,7 +423,7 @@ declare function atomdb:create-member(
 declare function atomdb:store-member(
     $collection-path-info as xs:string ,
     $resource-name as xs:string ,
-    $entry as element(atom:entry)
+    $entry as element()
 ) as xs:string?
 {
 
@@ -1098,7 +1115,7 @@ declare function atomdb:retrieve-feed(
 				    for $entry in $entries
     				order by $entry/atom:updated descending
     				return 
-    					if ( exists( $entry ) and xs:boolean( $feed/@atombeat:exclude-entry-content ) )
+    					if ( exists( $entry ) and xs:boolean( $feed/@atombeat:exclude-entry-content ) and ($entry instance of element(atom:entry)))
     					then atomdb:exclude-entry-content( $entry )
     					else $entry
 			}
@@ -1149,15 +1166,17 @@ declare function atomdb:retrieve-feed-without-entries(
 declare function atomdb:retrieve-members(
     $collection-path-info as xs:string ,
     $recursive as xs:boolean?
-) as element(atom:entry)*
+) as element()*
 {
     
     let $db-collection-path := atomdb:request-path-info-to-db-path( $collection-path-info )
-    return
+    let $collection := 
         if ( $recursive )
-        then collection( $db-collection-path )/atom:entry (: recursive :)
-        else xmldb:xcollection( $db-collection-path )/atom:entry (: not recursive :)
+        then collection( $db-collection-path ) (: recursive :)
+        else xmldb:xcollection( $db-collection-path ) (: not recursive :)
 
+    let $items := xutil:get-entries($collection)
+    return $items
 };
 
 
@@ -1182,7 +1201,7 @@ declare function atomdb:exclude-entry-content(
 
 declare function atomdb:retrieve-member(
 	$request-path-info as xs:string 
-) as element(atom:entry)?
+) as element()?
 {
 
 	if ( not( atomdb:member-available( $request-path-info ) ) )
@@ -1200,7 +1219,8 @@ declare function atomdb:retrieve-member(
 		
 		let $entry-doc := doc( $entry-doc-db-path )
 		
-		return $entry-doc/atom:entry
+        let $ret := xutil:get-entry($entry-doc)
+		return $ret
 
 };
 
@@ -1276,14 +1296,15 @@ declare function atomdb:get-media-resource-length(
 
 declare function atomdb:get-media-link(
 	$request-path-info as xs:string
-) as element(atom:entry)
+) as element()
 {
 
 	(: assume path info identifies a media resource :)
 	
 	let $media-doc-db-path := atomdb:request-path-info-to-db-path( $request-path-info )
 	let $media-link-doc-db-path := replace( $media-doc-db-path , "^(.*)\.media$" , "$1.atom" )
-	return doc( $media-link-doc-db-path )/atom:entry
+	let $doc := doc( $media-link-doc-db-path )
+	return xutil:get-entries($doc)
 
 };
 
