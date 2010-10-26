@@ -2,6 +2,8 @@ xquery version "1.0";
 
 module namespace xutil = "http://purl.org/atombeat/xquery/xutil";
 
+declare namespace atom = "http://www.w3.org/2005/Atom" ;
+declare namespace at = "http://purl.org/atompub/tombstones/1.0";
 
 declare namespace math="java:java.lang.Math";
 declare namespace long="java:java.lang.Long";
@@ -163,8 +165,6 @@ declare function xutil:lpad(
 	else $value
 };
 
-
-
 declare function xutil:random-alphanumeric(
     $num-chars as xs:integer
 ) as xs:string
@@ -222,5 +222,22 @@ declare function xutil:append-child(
 
 };
 
+(: Return either an entry or a tombstone :)
+declare function xutil:get-entry($unknown as item()) as element() {
+     let $ret := if (count($unknown/atom:entry) > 0) then
+        let $new-entry := $unknown/atom:entry
+        return $new-entry
+     else if (count($unknown/at:deleted-entry) > 0) then
+        let $new-entry := $unknown/at:deleted-entry
+        return $new-entry
+     else 
+         let $new-entry := $unknown
+         return $new-entry
+   return $ret
+};
 
-
+declare function xutil:get-entries($collection as item()*) as element()*
+{
+    let $ret := ($collection/atom:entry, $collection/at:deleted-entry)
+    return $ret
+};

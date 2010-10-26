@@ -34,22 +34,25 @@ declare function history-plugin:before(
 ) as item()*
 {
 	
-	if ( $operation = $CONSTANT:OP-CREATE-COLLECTION )
+	let $message := concat( "history plugin, before: " , $operation , ", request-path-info: " , $request-path-info ) 
 	
-	then history-plugin:before-create-collection( $request-path-info , $request-data )
+	return
 	
-	else if ( $operation = $CONSTANT:OP-CREATE-MEMBER )
+		if ( $operation = $CONSTANT:OP-CREATE-COLLECTION )
+		
+		then history-plugin:before-create-collection( $request-path-info , $request-data )
+		
+		else if ( $operation = $CONSTANT:OP-CREATE-MEMBER )
+		
+		then history-plugin:before-create-member( $request-path-info , $request-data )
+		
+		else if ( $operation = $CONSTANT:OP-UPDATE-MEMBER )
+		
+		then history-plugin:before-update-member( $request-path-info , $request-data )
+		
+		else
 	
-	then history-plugin:before-create-member( $request-path-info , $request-data )
-	
-	else if ( $operation = $CONSTANT:OP-UPDATE-MEMBER )
-	
-	then history-plugin:before-update-member( $request-path-info , $request-data )
-	
-	else
-
-		$request-data
-
+			$request-data
 };
 
 
@@ -60,6 +63,8 @@ declare function history-plugin:before-create-collection(
 	$request-data as element(atom:feed)
 ) as item()*
 {
+
+	let $message := concat( "history plugin, before create-collection, request-path-info: " , $request-path-info ) 
 
 	let $enable-versioning := xs:boolean( $request-data/@atombeat:enable-versioning )
 	
@@ -205,25 +210,29 @@ declare function history-plugin:after(
 ) as element(response)
 {
 
-	if ( $operation = $CONSTANT:OP-RETRIEVE-MEMBER )
-	
-	then history-plugin:after-retrieve-member( $request-path-info , $response )
+	let $message := concat( "history plugin, after: " , $operation , ", request-path-info: " , $request-path-info ) 
 
-	else if ( $operation = $CONSTANT:OP-CREATE-MEMBER )
-	
-	then history-plugin:after-create-member( $request-path-info , $response )
+	return
+		
+		if ( $operation = $CONSTANT:OP-RETRIEVE-MEMBER )
+		
+		then history-plugin:after-retrieve-member( $request-path-info , $response )
 
-	else if ( $operation = $CONSTANT:OP-UPDATE-MEMBER )
-	
-	then history-plugin:after-update-member( $request-path-info , $response )
-	
-	else if ( $operation = $CONSTANT:OP-LIST-COLLECTION )
-	
-	then history-plugin:after-list-collection( $request-path-info , $response )
+		else if ( $operation = $CONSTANT:OP-CREATE-MEMBER )
+		
+		then history-plugin:after-create-member( $request-path-info , $response )
 
-	else 
+		else if ( $operation = $CONSTANT:OP-UPDATE-MEMBER )
+		
+		then history-plugin:after-update-member( $request-path-info , $response )
+		
+		else if ( $operation = $CONSTANT:OP-LIST-COLLECTION )
+		
+		then history-plugin:after-list-collection( $request-path-info , $response )
 
-		$response
+		else 
+
+			$response
 
 }; 
 
@@ -236,7 +245,8 @@ declare function history-plugin:after-retrieve-member(
 ) as element(response)
 {
 
-	let $response-data := history-plugin:append-history-link( $response/body/atom:entry )
+    let $entry := xutil:get-entry($response/body/child::*)
+	let $response-data := history-plugin:append-history-link( $entry )
 
 	return 
 	    
@@ -340,10 +350,28 @@ declare function history-plugin:after-list-collection(
     	
 };
 
-
-
-
 declare function history-plugin:append-history-link (
+	$response-entry as element()
+) as element()
+{
+    let $ret := if ($response-entry instance of element(atom:entry)) then
+        let $entry := history-plugin:append-history-link-entry($response-entry)
+        return $entry
+    else 
+        let $entry := $response-entry
+        return $entry
+    return $ret
+};
+
+declare function history-plugin:append-history-link-deleted-entry (
+	$response-entry as element(atom:entry)
+) as element(atom:entry)
+{
+    let $ret := $response-entry
+    return $ret
+};
+
+declare function history-plugin:append-history-link-entry (
 	$response-entry as element(atom:entry)
 ) as element(atom:entry)
 {

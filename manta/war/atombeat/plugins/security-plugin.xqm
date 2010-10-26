@@ -3,6 +3,7 @@ xquery version "1.0";
 module namespace security-plugin = "http://purl.org/atombeat/xquery/security-plugin";
 
 declare namespace atom = "http://www.w3.org/2005/Atom" ;
+declare namespace at = "http://purl.org/atompub/tombstones/1.0";
 declare namespace atombeat = "http://purl.org/atombeat/xmlns" ;
 (: see http://tools.ietf.org/html/draft-mehta-atom-inline-01 :)
 declare namespace ae = "http://purl.org/atom/ext/" ;
@@ -24,6 +25,22 @@ import module namespace atomdb = "http://purl.org/atombeat/xquery/atomdb" at "..
 import module namespace atomsec = "http://purl.org/atombeat/xquery/atom-security" at "../lib/atom-security.xqm" ;
 
 
+declare variable $security-plugin:logger-name := "org.purl.atombeat.plugin.security-plugin";
+
+
+declare function local:log4jDebug(
+    $message as item()*
+) as empty()
+{
+  util:log-app( "debug" , $security-plugin:logger-name , $message ) (: only use within our function :)
+};
+
+declare function local:log4jInfo(
+    $message as item()*
+) as empty()
+{
+    util:log-app( "info" , $security-plugin:logger-name , $message ) (: only use within our function :)
+};
 
 
 declare function security-plugin:before(
@@ -183,7 +200,7 @@ declare function security-plugin:after-create-member(
 ) as element(response)
 {
 
-    let $response-data := $response/body/atom:entry
+    let $response-data := xutil:get-entry($response/body)
     
 	let $entry-uri := $response-data/atom:link[@rel="edit"]/@href
 	
@@ -255,7 +272,7 @@ declare function security-plugin:after-update-member(
 ) as element(response)
 {
 
-    let $response-data := $response/body/atom:entry
+    let $response-data := xutil:get-entry($response/body)
     let $response-data := security-plugin:augment-entry( $response-data )
 
 	return
@@ -317,7 +334,7 @@ declare function security-plugin:after-update-media(
 ) as element(response)
 {
 
-    let $response-data := $response/body/atom:entry
+    let $response-data := xutil:get-entry($response/body)
 
     let $response-data := security-plugin:augment-entry( $response-data )
 
@@ -426,8 +443,7 @@ declare function security-plugin:after-retrieve-member(
 	$response as element(response)
 ) as element(response)
 {
-
-    let $response-data := $response/body/atom:entry
+    let $response-data := xutil:get-entry($response/body)
     
     let $response-data := security-plugin:augment-entry( $response-data )
 
@@ -445,8 +461,25 @@ declare function security-plugin:after-retrieve-member(
 
 
 
-
 declare function security-plugin:augment-entry(
+    $entry as element() 
+) as element()
+{
+let $msg := local:log4jDebug(concat("augment-entry:",$entry))
+
+    let $ret := if (count($entry//atom:entry) > 0) then
+        let $new-entry := security-plugin:augment-atom-entry($entry)
+        return $new-entry
+     else if (count($entry//at:deleted-entry) > 0) then
+        let $new-entry := security-plugin:augment-tombstone($entry)
+        return $new-entry
+     else 
+         let $new-entry := $entry
+         return $new-entry
+    return $ret
+};
+
+declare function security-plugin:augment-atom-entry(
     $response-data as element(atom:entry) 
 ) as element(atom:entry)
 {
@@ -489,9 +522,36 @@ declare function security-plugin:augment-entry(
     
 };
 
+declare function security-plugin:augment-tombstone(
+    $response-data as element(at:deleted-entry) 
+) as element(at:deleted-entry)
+{
 
+    (: N.B. cannot use request-path-info to check if update-descriptor allowed, because request-path-info might be a collection URI if the operation was create-member :)
+    let $entry-uri := $response-data/@ref
+    let $entry-path-info := substring-after( $entry-uri , $config:content-service-url )
+    
 
-
+    let $descriptor-link :=     
+        <atom:link 
+            rel="http://purl.org/atombeat/rel/security-descriptor" 
+            href="{concat( $config:security-service-url , $entry-path-info )}" 
+            type="{$CONSTANT:MEDIA-TYPE-ATOM-ENTRY}"/>
+        
+        
+    let $augmented-entry :=
+    
+        <at:deleted-entry>
+        {
+            $response-data/attribute::* ,
+            $response-data/child::* ,
+            $descriptor-link 
+        }
+        </at:deleted-entry>
+    
+    return $augmented-entry
+    
+};
 
 declare function security-plugin:install-member-descriptor(
     $request-path-info as xs:string,
@@ -561,9 +621,9 @@ declare function security-plugin:filter-feed-by-permissions(
             <atom:feed>
                 {
                     $filtered-feed/attribute::* ,
-                    $filtered-feed/child::*[ not( . instance of element(atom:entry) ) ] ,
+                    $filtered-feed/child::*[ not( . instance of element(atom:entry) or . instance of element(at:deleted-entry) ) ] ,
                     $descriptor-link ,
-                    for $entry in $filtered-feed/atom:entry
+                    for $entry in $filtered-feed/child::*[ . instance of element(atom:entry) or . instance of element(at:deleted-entry) ]
                     return security-plugin:augment-entry( $entry ) 
                 }
             </atom:feed>

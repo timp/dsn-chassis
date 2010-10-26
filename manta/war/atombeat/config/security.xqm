@@ -545,6 +545,11 @@ declare function security-config:submitted-media-collection-security-descriptor(
                                 <atombeat:permission>RETRIEVE_MEMBER</atombeat:permission>
                         </atombeat:ace>
         
+                        <atombeat:ace>
+                                <atombeat:type>ALLOW</atombeat:type>
+                                <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+                                <atombeat:permission>DELETE_MEDIA</atombeat:permission>
+                        </atombeat:ace>
                         <!--
                                 Personal data reviewers can list the collection, and can retrieve any member or media resource. They can also modify ACLs.
                         -->
