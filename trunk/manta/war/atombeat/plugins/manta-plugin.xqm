@@ -3,6 +3,7 @@ xquery version "1.0";
 module namespace manta-plugin = "http://www.cggh.org/2010/chassis/manta/xquery/atombeat-plugin";
 
 declare namespace atom = "http://www.w3.org/2005/Atom" ;
+declare namespace at = "http://purl.org/atompub/tombstones/1.0";
 declare namespace atombeat = "http://purl.org/atombeat/xmlns" ;
 (: see http://tools.ietf.org/html/draft-mehta-atom-inline-01 :)
 declare namespace ae = "http://purl.org/atom/ext/" ;
@@ -22,6 +23,7 @@ import module namespace security-config = "http://purl.org/atombeat/xquery/secur
 import module namespace xutil = "http://purl.org/atombeat/xquery/xutil" at "../lib/xutil.xqm" ;
 import module namespace mime = "http://purl.org/atombeat/xquery/mime" at "../lib/mime.xqm" ;
 import module namespace atomdb = "http://purl.org/atombeat/xquery/atomdb" at "../lib/atomdb.xqm" ;
+import module namespace tombstone-db = "http://purl.org/atombeat/xquery/tombstone-db" at "../lib/tombstone-db.xqm" ;
 import module namespace atomsec = "http://purl.org/atombeat/xquery/atom-security" at "../lib/atom-security.xqm" ;
 
 (: These links are added by this plugin, during the after phase, 
@@ -514,7 +516,7 @@ declare function manta-plugin:after-create-member-studies(
     let $log := local:log4jDebug( $submitted-media-collection-path-info )
     
     let $feed :=
-        <atom:feed>
+        <atom:feed atombeat:enable-tombstones="true">
             <atom:title type="text">Submitted Media for Study {$id}</atom:title>
             <atom:link 
                 rel="http://www.cggh.org/2010/chassis/terms/originStudy" 
@@ -730,7 +732,7 @@ declare function manta-plugin:after-retrieve-member-submitted-media(
 ) as element(response)
 {
     
-    let $entry := $response/body/atom:entry 
+    let $entry := xutil:get-entry($response/body) 
     let $entry := manta-plugin:augment-media-entry( $entry )
     return manta-plugin:replace-response-body( $response , $entry )
     
@@ -830,8 +832,8 @@ declare function manta-plugin:after-list-collection-drafts(
         <atom:feed>
         {
             $feed/attribute::* ,
-            $feed/child::*[ not( local-name(.) = $CONSTANT:ATOM-ENTRY and namespace-uri(.) = $CONSTANT:ATOM-NSURI ) ] ,
-            for $entry in $feed/atom:entry
+            $feed/child::*[ not( . instance of element(atom:entry) or . instance of element(at:deleted-entry) ) ],
+            for $entry in $feed/child::*[ . instance of element(atom:entry) or . instance of element(at:deleted-entry) ]
             return manta-plugin:augment-draft-entry( $entry )
         }
         </atom:feed>
@@ -849,17 +851,15 @@ declare function manta-plugin:after-list-collection-submitted-media(
 {
     
     let $feed := $response/body/atom:feed 
-
+    
     let $feed := 
         <atom:feed>
-        {
-        
+        {        
             $feed/attribute::* ,
-            $feed/child::*[ not( local-name(.) = $CONSTANT:ATOM-ENTRY and namespace-uri(.) = $CONSTANT:ATOM-NSURI ) ] ,
+            $feed/child::*[ not( . instance of element(atom:entry) or . instance of element(at:deleted-entry) ) ],
             
-            for $entry in $feed/atom:entry
-            return manta-plugin:augment-media-entry( $entry )
-            
+            for $entry in $feed/child::*[. instance of element(atom:entry) or . instance of element(at:deleted-entry) ]
+                return manta-plugin:augment-media-entry( $entry )
         }
         </atom:feed>
     
@@ -913,9 +913,9 @@ declare function manta-plugin:after-list-collection-derivations(
         {
         
             $feed/attribute::* ,
-            $feed/child::*[ not( local-name(.) = $CONSTANT:ATOM-ENTRY and namespace-uri(.) = $CONSTANT:ATOM-NSURI ) ] ,
+            $feed/child::*[ not( . instance of element(atom:entry) or . instance of element(at:deleted-entry) ) ],
             
-            for $entry in $feed/atom:entry
+            for $entry in $feed/child::*[ ( . instance of element(atom:entry) or . instance of element(at:deleted-entry) ) ]
             return 
                 if ( ( 
                         $param-input = "" 
@@ -1127,6 +1127,22 @@ declare function manta-plugin:augment-study-entry(
 
 
 declare function manta-plugin:augment-derivation-entry(
+    $entry as element()
+) as element()
+{
+    let $ret := $entry
+    let $ret := if (count($entry//atom:entry) > 0) then
+        let $new-entry := manta-plugin:augment-derivation-atom-entry($entry)
+        return $new-entry
+     else if (count($entry//at:deleted-entry) > 0) then
+        let $new-entry := manta-plugin:augment-derivation-tombstone($entry)
+        return $new-entry
+     else 
+         let $new-entry := $entry
+         return $new-entry
+    return $ret
+};
+declare function manta-plugin:augment-derivation-atom-entry(
     $entry as element(atom:entry)
 ) as element(atom:entry)
 {
@@ -1135,6 +1151,58 @@ declare function manta-plugin:augment-derivation-entry(
     
     let $entry := 
         <atom:entry>
+        {
+            $entry/attribute::* ,
+            for $child in $entry/child::* 
+            return 
+                if ( $child instance of element(atom:link)
+                    and ( 
+                        $child/@rel='http://www.cggh.org/2010/chassis/terms/derivationInput' 
+                        or $child/@rel='http://www.cggh.org/2010/chassis/terms/derivationOutput' 
+                    )   
+                )
+                then 
+                    <atom:link>
+                    {
+                        $child/attribute::* ,
+                        let $path-info := substring-after( $child/@href , $config:content-service-url )
+                        return 
+                            if ( atomdb:member-available( $path-info ) )
+                            then
+                                <ae:inline>
+                                {
+                                    let $raw-entry := atomdb:retrieve-member( $path-info )
+                                    
+                                    let $entry-details := if ( $raw-entry instance of element(atom:entry)) then
+                                        let $ret := $raw-entry
+                                        return $ret
+                                        else
+                                            let $ret := tombstone-db:retrieve-member( $path-info)
+                                            return $ret
+                                    let $augmented-entry := manta-plugin:augment-media-entry( $entry-details )
+                                    return $augmented-entry
+                                }
+                                </ae:inline>
+                            else ()
+                    }
+                    </atom:link>
+                else $child
+        }
+        </atom:entry>
+            
+    return $entry
+
+};
+
+declare function manta-plugin:augment-derivation-tombstone(
+    $entry as element()
+) as element()
+{
+
+    let $entry-path-info := atomdb:edit-path-info( $entry )
+    
+    let $entry := 
+        <at:deleted-entry>
         {
             $entry/attribute::* ,
             for $child in $entry/child::* 
@@ -1167,15 +1235,25 @@ declare function manta-plugin:augment-derivation-entry(
                     </atom:link>
                 else $child
         }
-        </atom:entry>
+        </at:deleted-entry>
             
     return $entry
 
 };
 
-
-
 declare function manta-plugin:augment-draft-entry(
+    $entry as element()
+) as element()
+{
+  let $entry := if ($entry instance of element(atom:entry)) then
+        let $ret := manta-plugin:augment-draft-entry-atom($entry)
+        return $ret
+      else 
+          let $ret := manta-plugin:augment-media-entry-tombstone($entry)
+          return $ret
+    return $entry
+};
+declare function manta-plugin:augment-draft-entry-atom(
     $entry as element(atom:entry)
 ) as element(atom:entry)
 {
@@ -1200,13 +1278,49 @@ declare function manta-plugin:augment-draft-entry(
 
 };
 
+declare function manta-plugin:augment-draft-entry-tombstone(
+    $entry as element(at:deleted-entry)
+) as element(at:deleted-entry)
+{
+
+    let $draft-media-collection-path-info := manta-plugin:draft-media-collection-path-info-for-draft-entry( $entry )
+    let $draft-media-collection-link := 
+        <atom:link 
+            rel="http://www.cggh.org/2010/chassis/terms/draftMedia" 
+            href="{concat( $config:content-service-url , $draft-media-collection-path-info )}"
+            type="application/atom+xml;type=feed"/>
+        
+    let $entry := 
+        <at:deleted-entry>
+        {
+            $entry/attribute::* ,
+            $entry/child::* ,
+            $draft-media-collection-link
+        }
+        </at:deleted-entry>
+            
+    return $entry
+
+};
 
 
 declare function manta-plugin:augment-media-entry(
+    $entry as element()
+) as element()
+{
+    let $entry := if (count($entry//atom:entry) > 0) then
+        let $ret := manta-plugin:augment-media-atom-entry($entry)
+        return $ret
+      else 
+          let $ret := manta-plugin:augment-media-entry-tombstone($entry)
+          return $ret
+    return $entry
+};
+
+declare function manta-plugin:augment-media-atom-entry(
     $entry as element(atom:entry)
 ) as element(atom:entry)
 {
-
     let $id := manta-plugin:get-id($entry)
     
     let $study-id := text:groups( $entry/atom:link[@rel='edit']/@href , "([^/]+)/[^/]+\.atom$" )[2]
@@ -1236,11 +1350,48 @@ declare function manta-plugin:augment-media-entry(
             <atom:link rel="http://www.cggh.org/2010/chassis/terms/derived" href="{$derived-uri}" type="application/atom+xml;type=feed"/>
         }
         </atom:entry>
-            
+
     return $entry
 
 };
 
+declare function manta-plugin:augment-media-entry-tombstone(
+    $entry as element(at:deleted-entry)
+) as element(at:deleted-entry)
+{ 
+    let $ref := $entry/@ref
+    let $log := local:log4jDebug(concat('augment-media-entry-tombstone:',$ref))
+     let $log := local:log4jDebug($entry)
+    let $study-id := text:groups( $ref , "([^/]+)/[^/]+\.atom$" )[2]
+    let $log := local:log4jDebug(concat('augment-media-entry-tombstone:',$study-id))
+    let $origin-study-path-info := concat( "/studies/" , $study-id , ".atom" )
+    let $origin-study-uri := concat( $config:content-service-url , $origin-study-path-info )
+    
+    let $personal-data-reviews-uri := 
+        concat( 
+            $config:content-service-url , 
+            manta-plugin:personal-data-reviews-collection-path-info( $study-id ) ,
+            "?reviewSubject=" ,
+            $ref
+        )
+
+    let $derivation-uri := concat( $config:content-service-url , "/derivations/" , $study-id , "?output=" , $ref )
+    let $derived-uri := concat( $config:content-service-url , "/derivations/" , $study-id , "?input=" , $ref )
+
+    let $entry := 
+        <at:deleted-entry>
+        {
+            $entry/attribute::* ,
+            $entry/child::* ,
+            <atom:link rel="http://www.cggh.org/2010/chassis/terms/originStudy" href="{$origin-study-uri}" type="application/atom+xml;type=entry" manta:idref="{$study-id}"/> ,
+            <atom:link rel="http://www.cggh.org/2010/chassis/terms/personalDataReviews" href="{$personal-data-reviews-uri}" type="application/atom+xml;type=feed"/> ,
+            <atom:link rel="http://www.cggh.org/2010/chassis/terms/derivation" href="{$derivation-uri}" type="application/atom+xml;type=feed"/> ,
+            <atom:link rel="http://www.cggh.org/2010/chassis/terms/derived" href="{$derived-uri}" type="application/atom+xml;type=feed"/>
+        }
+        </at:deleted-entry>
+    return $entry
+
+};
 
 
 declare function manta-plugin:replace-response-body( $response as element(response) , $body as item() ) as element(response)

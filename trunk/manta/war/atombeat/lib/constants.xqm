@@ -44,6 +44,7 @@ declare variable $CONSTANT:MEDIA-TYPE-CSV as xs:string					:= "text/csv" ;
 declare variable $CONSTANT:ATOM-NSURI 						:= "http://www.w3.org/2005/Atom" ;
 declare variable $CONSTANT:ATOM-FEED as xs:string 			:= "feed" ;
 declare variable $CONSTANT:ATOM-ENTRY as xs:string 			:= "entry" ;
+declare variable $CONSTANT:NS-ATOM-ENTRY as xs:string		:= "atom:entry" ;
 declare variable $CONSTANT:ATOM-ID as xs:string 			:= "id" ;
 declare variable $CONSTANT:ATOM-PUBLISHED as xs:string 		:= "published" ;
 declare variable $CONSTANT:ATOM-UPDATED as xs:string 		:= "updated" ;
@@ -55,6 +56,10 @@ declare variable $CONSTANT:ATOM-EDIT as xs:string 			:= "edit" ;
 declare variable $CONSTANT:ATOM-EDIT-MEDIA as xs:string 	:= "edit-media" ;
 declare variable $CONSTANT:ATOM-CONTENT as xs:string        := "content" ;
 declare variable $CONSTANT:ATOM-AUTHOR as xs:string         := "author" ;
+
+declare variable $CONSTANT:TOMBSTONE-NSURI 					:= "http://purl.org/atompub/tombstones/1.0" ;
+declare variable $CONSTANT:TOMBSTONE-ENTRY as xs:string 	:= "deleted-entry" ;
+declare variable $CONSTANT:NS-TOMBSTONE-ENTRY as xs:string 	:= "at:deleted-entry" ;
 
 declare variable $CONSTANT:OP-CREATE-COLLECTION as xs:string          := "CREATE_COLLECTION" ;
 declare variable $CONSTANT:OP-UPDATE-COLLECTION as xs:string          := "UPDATE_COLLECTION" ;
