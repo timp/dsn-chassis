@@ -6,7 +6,8 @@
 	xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
 	xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
 	xmlns:atombeat="http://purl.org/atombeat/xmlns"
-	xmlns:xi="http://www.w3.org/2001/XInclude">
+	xmlns:xi="http://www.w3.org/2001/XInclude"
+	xmlns:at="http://purl.org/atompub/tombstones/1.0">
 
 	<div id="bd" class="clearfix">
 		<div class="no-bg">
@@ -153,13 +154,13 @@
 							
 									<h2>Submitted files</h2>
 							    	
-							    	<xforms:group ref="instance('ins-submitted-media-feed')[empty(atom:entry)]">
+									<xforms:group ref="instance('ins-submitted-media-feed')[not(exists(atom:entry) or exists(at:deleted-entry))]">
 							    		<p>You have not submitted any files.</p>
 							    	</xforms:group>
-							    	
+									<span id="list-of-submitted-files-container">
 							    	<xforms:group ref="instance('ins-submitted-media-feed')[exists(atom:entry)]">
 							    		
-							    		<span id="list-of-submitted-files-container">
+							    		
 							    			
 									    	<fr:datatable paginated="false">
 									    		<thead>
@@ -210,11 +211,44 @@
 									    			</xforms:repeat>
 									    		</tbody>
 									    	</fr:datatable>
-							    		
-							    		</span>
-									    	
+							    			</xforms:group>
+											<xforms:group ref="instance('ins-submitted-media-feed')[exists(at:deleted-entry)]">		
+											<fr:datatable paginated="false">
+							    				<thead>
+							    					<tr>
+							    					<th fr:sortable="true" fr:resizeable="true">Code</th>
+							    					<th fr:sortable="true" fr:resizeable="true">File name</th>
+							    					<th fr:sortable="true" fr:resizeable="true">Deleted On</th>
+							    					<th fr:sortable="true" fr:resizeable="true">Deleted By</th>
+							    						<th fr:sortable="false" fr:resizeable="true">Actions</th>
+							    					</tr>
+							    				</thead>
+							    				<tbody>
+							    					<xforms:repeat id="rep-media-deleted" nodeset="instance('ins-submitted-media-feed')/at:deleted-entry">
+							    						<tr class="repeated-element">
+							    							<td>
+							    								<xforms:output ref="substring-before(substring-after(substring-after(@ref,tokenize(@ref,'([^/]+)/[^/]+\.atom$')[1]),'/'),'.')"/>
+							    							</td>
+							    							<td>
+							    								<xforms:output ref="at:comment"/>
+							    							</td>
+							    							<td>
+							    								<xforms:output ref="@when" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')"/>
+							    							</td>
+							    							<td>
+							    								<xforms:output ref="at:by/atom:email"/>
+							    							</td>
+							    							<td>
+							    							<xforms:group ref="instance('ins-control')/curator-controls">
+							    								<a href="../curator/tombstone-details?media-link={xxforms:context('rep-media-deleted')/atom:link[@rel='self']/@href}">Details</a>
+							    							</xforms:group>
+							    							</td>
+							    						</tr>
+							    						</xforms:repeat>
+							    				</tbody>
+							    			</fr:datatable>
 									</xforms:group>
-							
+									</span>
 								</xforms:group>
 
 								<!-- If the user has GET or POST access to the curated media. -->

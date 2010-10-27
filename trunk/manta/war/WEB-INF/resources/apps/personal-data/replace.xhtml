@@ -23,14 +23,25 @@
     xmlns:atom="http://www.w3.org/2005/Atom"
     xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
     xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:manta="http://www.cggh.org/2010/chassis/manta/xmlns">
-    
+    xmlns:manta="http://www.cggh.org/2010/chassis/manta/xmlns"
+    xmlns:atombeat="http://purl.org/atombeat/xmlns">
     <head>
     
         <title>Personal data review - Upload anonymized file</title>
         
         <xforms:model>
 
+<!-- non-persistent model for application state -->
+        	<xforms:instance id="ins-control">
+        		<control xmlns="">
+        			<replace-controls/>
+        			<permission-denied/>
+        		</control>
+        	</xforms:instance>
+        	
+			<xforms:bind nodeset="instance('ins-control')/replace-controls" relevant="instance('ins-media-entry')/atom:link[@rel='edit-media']/@atombeat:allow = 'GET, DELETE'"/>
+			<xforms:bind nodeset="instance('ins-control')/permission-denied" relevant="not (instance('ins-media-entry')/atom:link[@rel='edit-media']/@atombeat:allow = 'GET, DELETE')"/>
+			
 			<xforms:instance id="ins-media-entry">
 				<atom:entry/>
 			</xforms:instance>
@@ -173,6 +184,19 @@
         		mediatype="application/atom+xml"
         		>
         		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the study.</xforms:message>
+        		<xforms:send ev:event="xforms-submit-done" submission="sub-delete-original"/>
+        	</xforms:submission>
+        	
+        	
+        	
+        	<xforms:submission 
+        		id="sub-delete-original"
+        		method="delete"
+        		resource="{instance('ins-media-entry')/atom:link[@rel='edit']/@href}"
+        		replace="none"
+        		
+        		>
+        		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while deleting the original file.</xforms:message>
         		<xforms:send ev:event="xforms-submit-done" submission="sub-get-home"/>
         	</xforms:submission>
         	
@@ -307,9 +331,15 @@
 				</xforms:trigger>    		
     		
     			<span id="confirm-button-container">
+    			
+    			<xforms:group ref="instance('ins-control')/permission-denied">
+    				You do not have permission to replace a file
+    			</xforms:group>
+    			<xforms:group ref="instance('ins-control')/replace-controls">
     			<xforms:submit submission="sub-post-upload">
     				<xforms:label>Confirm</xforms:label>
     			</xforms:submit>
+    			</xforms:group>
     			</span>
     			
     		</p>
@@ -332,7 +362,9 @@
                 </div>
 
 		<!-- End of After content id, before ft id -->
-
+		<!-- 
+ <fr:xforms-inspector xmlns:fr="http://orbeon.org/oxf/xml/form-runner"/>
+  -->		
     </body>
 </html>
 
