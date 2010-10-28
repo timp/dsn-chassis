@@ -6,37 +6,6 @@
     </head>
     
     <body class="tundra">
-        <div>
-            <b>
-
-            </b>
-            <div id="simpleAtomXmlPristine">
-            </div>
-	    <div id="totalStudies"></div>
-            <table>
-             <tr><th>clinical</th><th>molecular</th><th>invitro</th><th>pharmacology</th></tr>
-            <tr><td id="clinical">0</td><td id="molecular">0</td><td id="invitro">0</td><td id="pharmacology">0</td></tr>
-
-            </table>
-            <table>
-             <tr><th>Data file</th><th>Publications</th><th>Protocols</th><th>Data Dictionary</th></tr>
-            <tr><td id="DataFile">0</td><td id="Publication">0</td><td id="Protocol">0</td><td id="DataDictionary">0</td></tr>
-            </table>
-
-            <table>
-             <tr><th>submitted</th><th>PDR</th><th>Curated</th><th>Derived</th></tr>
-            <tr><td id="media/submitted">0</td><td id="reviews/personal-data">0</td><td id="media/curated">0</td><td id="derivations">0</td></tr>
-            </table>
-	<table>
-	    <caption>Key</caption>
-	<tr>
-	
-	<td class="finishedPDR">Finished PDR</td>
-	<td class="submitted">Submitted</td>
-	<td class="curated">Curated</td>
-	</tr>
-	</table>
-</div>
     </body>
 <script src="http://ajax.googleapis.com/ajax/libs/dojo/1.5/dojo/dojo.xd.js" type="text/javascript" djConfig="parseOnLoad: true"></script>
     <script>
@@ -54,7 +23,7 @@
       return a;
       }
 
-      function updateSecurityDescriptor(href, newData) {
+      function updateSecurityDescriptor(href, newData, msg) {
           var xhrArgs = {
           		url: href,
                 putData: newData,
@@ -66,11 +35,14 @@
 
    
               deferred.addCallback(function(xmlDoc, ioargs) {
-                 
+                 document.write(msg);
               })
-      	
+              
+              deferred.addErrback(function(error) {
+                 document.write("Failed:" + msg);
+              });
       }
-    function checkSecurityDescriptor(href) {
+    function checkSecurityDescriptor(href, id) {
         var xhrArgs = {
         		url: href,
                 preventCache: false,
@@ -91,6 +63,7 @@
         				found = true
         			}
         		}
+        		var msg;
         		if (found == false) {
         			var ace = dojo.doc.createElement('atombeat:ace');
         			var type  = dojo.doc.createElement('atombeat:type');
@@ -104,9 +77,14 @@
         			ace.appendChild(recp);
         			ace.appendChild(perm);
         	        aces[0].parentNode.appendChild(ace);
+        	        msg = id + " already has CURATOR/DELETE_MEDIA permission";
+        	        updateSecurityDescriptor(href, xmlDoc,msg);    
+        		} else {
+        			msg = id + " already has CURATOR/DELETE_MEDIA permission<br/>";
+        			document.write(msg);
         		}
         		
-        		updateSecurityDescriptor(href, xmlDoc);
+        		
             })
     	
     }
@@ -122,7 +100,7 @@
 				var link = entry.links[i];
 				if (link.rel == "http://purl.org/atombeat/rel/security-descriptor") {
 					var href = link.href;
-					checkSecurityDescriptor(href)
+					checkSecurityDescriptor(href, id)
 				}
 			}
 
@@ -149,6 +127,9 @@ url: dest,
 			entryCount = feed.entries.length;
 		}
 		processEntry(studyId, feed, id);
+			dojo.attr(xmlDoc.documentElement,"atombeat:tombstones","true");
+			var msg = "Enabled tombstones for "+studyId+" "+label+"<br/>";
+			updateSecurityDescriptor(dest, xmlDoc, msg);
 		/*
                 for(var j=0;j<entryCount;j++) {
                 	processEntry(studyId, feed.entries[j], id);
@@ -167,7 +148,7 @@ url: dest,
    //This function performs some basic dojo initialization and will do the load calling for this example
         function initSimpleAtomModified() {
             var xhrArgs = {
-url: "/repository/atombeat/content/studies/",
+				url: "/repository/atombeat/content/studies/",
                 preventCache: true,
                 handleAs: "xml"
             };
@@ -176,24 +157,7 @@ url: "/repository/atombeat/content/studies/",
 
             //Okay, on success we'll process the ATOM doc and generate the JavaScript model
             deferred.addCallback(function(xmlDoc, ioargs) {
-                var feedRoot = xmlDoc.getElementsByTagName("feed");
-                var feed = new dojox.atom.io.model.Feed();
-                feed.buildFromDom(xmlDoc.documentElement);
-
-                //Emit XML of the modified feed.
-                var xml = dojo.byId("simpleAtomXmlPristine");
-                xml.innerHTML = "";
-                //xml.appendChild(dojo.doc.createTextNode(feed.toString()));
-/*
-                //Remove an entry.
-                var entry = feed.getFirstEntry();
-                feed.removeEntry(entry);
-                feed.updated = new Date();
-*/
-                //Emit XML of the modified feed.
-                xml = dojo.byId("totalStudies");
-                //xml.innerHTML = "";
-                xml.innerHTML = parseStudies(xmlDoc);
+                parseStudies(xmlDoc);
             });
 
             deferred.addErrback(function(error) {
@@ -208,7 +172,7 @@ url: "/repository/atombeat/content/studies/",
 		for (var i = 9;i < entries.length;i++) {
 			var entry = entries[i];
 			var studyURL = entry.childNodes[1].firstChild.nodeValue;
-			var ssqURL = studyURL.replace('studies','study-info').replace('www.wwarn.org','balbo.well.ox.ac.uk');
+			var ssqURL = studyURL.replace('studies','study-info');
 			var regexp = new RegExp('/study-info/([A-Z]*).atom');
 			var m = regexp.exec(ssqURL);
 			var studyId = m[1];
