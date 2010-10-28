@@ -1,9 +1,0 @@
-<atom:entry xmlns:atom="http://www.w3.org/2005/Atom"> 
-<atom:title>An Atomic Entry</atom:title> 
-<atom:author> 
-<atom:email>alice@example.org</atom:email>
-</atom:author> 
-<atom:author> 
-<atom:email>alice@example.org</atom:email>
-</atom:author> 
-</atom:entry> 
