@@ -1,0 +1,80 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.cggh.chassis</groupId>
+	<artifactId>manta-webapp</artifactId>
+	<version>1.0.1-SNAPSHOT</version>
+  <packaging>war</packaging>
+  <name>${project.artifactId}</name>
+  <description>Chassis Manta Web Application</description>
+  
+  <dependencies>
+  
+    <!-- overlay atombeat -->
+    <dependency>
+    	<groupId>org.atombeat</groupId>
+    	<artifactId>atombeat-orbeon-minimal-secure</artifactId>
+    	<version>0.2-alpha-2-SNAPSHOT</version>
+  		<type>war</type>
+  		<scope>runtime</scope>
+    </dependency>
+    
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
+      <version>2.5</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>commons-httpclient</groupId>
+      <artifactId>commons-httpclient</artifactId>
+      <version>3.1</version>
+      <scope>compile</scope>
+    </dependency>
+    
+    <dependency>
+    	<groupId>org.apache.abdera</groupId>
+    	<artifactId>abdera-client</artifactId>
+    	<version>1.0</version>
+    	<type>jar</type>
+    </dependency>
+  </dependencies>
+  
+  <build>
+    <plugins>
+    	<plugin>
+    		<groupId>org.apache.maven.plugins</groupId>
+    		<artifactId>maven-compiler-plugin</artifactId>
+		    <configuration>
+		        <source>1.6</source>
+		        <target>1.6</target>
+		    </configuration>
+    	</plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <configuration>
+        	<failOnMissingWebXml>false</failOnMissingWebXml>
+          <warName>${project.build.finalName}</warName>
+          <webappDirectory>${project.build.directory}/${project.artifactId}</webappDirectory>
+	        <overlays>
+	         <!-- configure overlay of atombeat -->
+	         <overlay>
+	           <groupId>org.atombeat</groupId>
+	           <artifactId>atombeat-orbeon-minimal-secure</artifactId>
+             <!-- this is where you would configure includes and excludes, if you needed them --> 
+             <excludes>
+              <exclude>index.html</exclude>
+              <exclude>xforms-jsp/**</exclude>
+              <exclude>WEB-INF/resources/apps/**</exclude>
+             </excludes>
+	         </overlay>
+	       </overlays>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>
