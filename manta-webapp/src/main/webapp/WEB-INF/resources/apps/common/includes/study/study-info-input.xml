@@ -1,4 +1,4 @@
-<?oxygen NVDLSchema="../../../../../../../oxygen/samples/nvdl/xhtml-xforms-11-orbeon.nvdl"?>
+<?oxygen NVDLSchema="../../../../../../../../../oxygen/samples/nvdl/xhtml-xforms-11-orbeon.nvdl"?>
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:xforms="http://www.w3.org/2002/xforms"
 	xmlns:xxforms="http://orbeon.org/oxf/xml/xforms" xmlns:ev="http://www.w3.org/2001/xml-events"
 	xmlns:atom="http://www.w3.org/2005/Atom" xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
@@ -59,8 +59,10 @@
 					<xforms:value ref="value" />
 				</xforms:itemset>
 			</xforms:select1>
-			<xforms:group ref="instance('ins-sq-study-info-entry')//studyStatus/text()='complete'">
-				<a href="{instance('ins-sq-study-info-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/transform/flatten']/@href}">Click here for csv</a>
+			<xforms:group model="mod-study-dashboard" ref="instance('ins-control')//curator-controls or instance('ins-control')//administrator-controls ">
+				<xforms:group model="mod-study-info" ref="instance('ins-sq-study-info-entry')//studyInfoStatus[text()='complete']">
+					<a href="{instance('ins-sq-study-info-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/transform/flatten']/@href}">Click here for csv</a>
+				</xforms:group>
 			</xforms:group>
 			<br />
 			<h3>Study type (WWARN modules)</h3>
