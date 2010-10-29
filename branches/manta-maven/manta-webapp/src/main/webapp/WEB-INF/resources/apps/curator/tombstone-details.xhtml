@@ -25,8 +25,7 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:manta="http://www.cggh.org/2010/chassis/manta/xmlns"
 	xmlns:atombeat="http://purl.org/atombeat/xmlns"
-	xmlns:at="http://purl.org/atompub/tombstones/1.0"
-	xmlns:ae="http://purl.org/atom/ext/">
+	xmlns:at="http://purl.org/atompub/tombstones/1.0">
     
     <head>
     
@@ -35,7 +34,7 @@
         <xforms:model>
 
 			<xforms:instance id="ins-media-link-entry">
-				<atom:entry/>
+				<at:deleted-entries/>
 			</xforms:instance>
 			
 			<xforms:submission 
@@ -47,8 +46,19 @@
 				serialization="none">
 				
 				<!-- handle submission errors -->
-                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the media-link entry.</xforms:message>
-				
+				   
+				<xforms:message ev:event="xforms-submit-error" level="modal" if="event('response-status-code')!=410">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the media-link entry.</xforms:message>
+				             
+				<xforms:action ev:event="xforms-submit-error" if="event('response-status-code')=410">
+					<xforms:insert 
+						context="instance('ins-media-link-entry')"
+						nodeset="at:deleted-entries"
+						at="0" 
+						position="before"
+						origin="event('response-body')/at:deleted-entry"/>
+					<xforms:send submission="sub-get-derivation-feed"/>
+					<xforms:send submission="sub-get-derived-feed"/>
+				</xforms:action>
 				<xforms:action ev:event="xforms-submit-done">
 					<xforms:send submission="sub-get-derivation-feed"/>
 					<xforms:send submission="sub-get-derived-feed"/>
@@ -70,7 +80,7 @@
         	
         	<xforms:submission 
         		id="sub-get-derivation-feed"
-        		resource="{instance('ins-media-link-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/derivation']/@href}"
+        		resource="{instance('ins-media-link-entry')/at:deleted-entry/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/derivation']/@href}"
         		method="get"
         		replace="instance"
         		instance="ins-derivation-feed"
@@ -83,7 +93,7 @@
         	
         	<xforms:submission 
         		id="sub-get-derived-feed"
-        		resource="{instance('ins-media-link-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/derived']/@href}"
+        		resource="{instance('ins-media-link-entry')/at:deleted-entry/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/derived']/@href}"
         		method="get"
         		replace="instance"
         		instance="ins-derived-feed"
@@ -137,54 +147,31 @@
     	
     	<div id="content">
     	
-    		<h1>File Details - <xforms:output ref="atom:title"/> (<xforms:output ref="manta:id"/>)</h1>
+    		<h1>File Details - <xforms:output ref="at:deleted-entry/at:comment"/></h1>
     		
     		<xforms:group ref="instance('ins-media-link-entry')">
     			
 
 
     			<p>
-    				<a href="../study/dashboard?tab=files&amp;study={atom:link[@rel='http://www.cggh.org/2010/chassis/terms/originStudy']/@href}">&lt;&lt; Study Dashboard</a>
+    				<a href="../study/dashboard?tab=files&amp;study={atom:link[at:deleted-entry/@rel='http://www.cggh.org/2010/chassis/terms/originStudy']/@href}">&lt;&lt; Study Dashboard</a>
     			</p>
     			<p>
-    				<xforms:output ref="manta:id"><xforms:label>Code: </xforms:label></xforms:output><br/>
-    				<xforms:output ref="atom:title"><xforms:label>File Name: </xforms:label></xforms:output><br/>
-    				<xforms:output ref="atom:author/atom:email"><xforms:label>Uploaded By: </xforms:label></xforms:output><br/>
-    				<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')"><xforms:label>Uploaded On: </xforms:label></xforms:output><br/>
-    				<xforms:output ref="
-    					for $cat in (./atom:category[@scheme='http://www.cggh.org/2010/chassis/scheme/FileTypes'])
-    					return
-    					if ( $cat/@term = 'http://www.cggh.org/2010/chassis/terms/Other' )
-    					then $cat/@label
-    					else instance('ins-file-terms')/term[value=$cat/@term]/label
-    					">
-    					<xforms:label>File Type: </xforms:label>
-    				</xforms:output><br/>
-    				<xforms:output ref="atom:link[@rel='edit-media']/@type"><xforms:label>Media Type: </xforms:label></xforms:output><br/>
-    				<xforms:output value="atom:link[@rel='edit-media']/@length">
-    					<xforms:label>Size (Bytes): </xforms:label>
-    				</xforms:output><br/>
+    				<xforms:output ref="substring-before(substring-after(substring-after(at:deleted-entry/@ref,tokenize(at:deleted-entry/@ref,'([^/]+)/[^/]+\.atom$')[1]),'/'),'.')"><xforms:label>Code: </xforms:label></xforms:output><br/>
+    				<xforms:output ref="at:deleted-entry/at:comment"><xforms:label>File Name: </xforms:label></xforms:output><br/>
+    				<xforms:output ref="at:deleted-entry/at:by/atom:email"><xforms:label>Deleted By: </xforms:label></xforms:output><br/>
+    				<xforms:output ref="@when" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')"><xforms:label>Deleted On: </xforms:label></xforms:output><br/>
     			</p>
-    			
-    			<p>
-    				<xforms:group ref=".[contains( ./atom:link[@rel='edit-media']/@atombeat:allow , 'GET' )]">
-    					<a href="{atom:content/@src}">Download</a>
-    				</xforms:group>
-    			</p>
-    			
-    			
-
     		</xforms:group>
     		
     		<hr/>
     		
 			<h2>Derivation</h2>
 
-			<xforms:group ref="instance('ins-derivation-feed')[not(exists(atom:entry) or exists(at:deleted-entry))]">
-				<p>This file is an original submission.</p>
-			</xforms:group>
+    		<xforms:group ref="instance('ins-derivation-feed')[not(exists(atom:entry) or exists(at:deleted-entry/at:deleted-entry))]">
+    			<p>This file is an original submission.</p>
+    		</xforms:group>			
 
-    		
     		<xforms:group ref="instance('ins-derivation-feed')[count(atom:entry) gt 1]/atom:entry">
 				<p>The derivation of this file is ambiguous (more than one derivation found).</p>
 			</xforms:group>
@@ -198,7 +185,7 @@
     			</blockquote>
 
     			<h3>All Inputs</h3>
-    		<xforms:group ref="instance('ins-derivation-feed')//atom:link[@rel='http://www.cggh.org/2010/chassis/terms/derivationInput']//ae:inline/atom:entry">	
+    			
     			<fr:datatable paginated="false">
     				<thead>
     					<tr>
@@ -245,23 +232,22 @@
     				</tbody>
     				
     			</fr:datatable>
-			</xforms:group>
-			<xforms:group ref="instance('ins-derivation-feed')//atom:link[@rel='http://www.cggh.org/2010/chassis/terms/derivationInput']//ae:inline/at:deleted-entry">
+
 				<fr:datatable paginated="false">
     				<thead>
     					<tr>
     						<th fr:sortable="true" fr:resizeable="true">Code</th>
-    						<th fr:sortable="true" fr:resizeable="true">File name</th>
+    						<th fr:sortable="true" fr:resizeable="true">Comments</th>
     						<th fr:sortable="true" fr:resizeable="true">Deleted On</th>
     						<th fr:sortable="true" fr:resizeable="true">Deleted By</th>
-    						<th fr:sortable="false" fr:resizeable="true">Actions</th>
+    						<th fr:sortable="true" fr:resizeable="true">Deleted By email</th>
     					</tr>
     				</thead>
     				<tbody>
-    					<xforms:repeat nodeset="instance('ins-derivation-feed')//atom:link[@rel='http://www.cggh.org/2010/chassis/terms/derivationInput']//at:deleted-entry">
+    					<xforms:repeat nodeset="atom:link[@rel='http://www.cggh.org/2010/chassis/terms/derivationInput']//at:deleted-entry">
     						<tr>
     							<td>
-    								<xforms:output ref="substring-before(substring-after(substring-after(@ref,tokenize(@ref,'([^/]+)/[^/]+\.atom$')[1]),'/'),'.')"/>
+    								
     							</td>
     							<td>
     								<xforms:output ref="at:comment"/>
@@ -270,17 +256,16 @@
     								<xforms:output ref="@when" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')"/>
     							</td>
     							<td>
-    								<xforms:output ref="at:by/atom:email"/>
+    								<xforms:output ref="at:by/at:name"/>
     							</td>
     							<td>
-    								<a href="tombstone-details?media-link={atom:link[@rel='self']/@href}">Details</a>
+    								<xforms:output ref="at:by/at:email"/>
     							</td>
     						</tr>
     					</xforms:repeat>
     				</tbody>
     				
     			</fr:datatable>
-    		</xforms:group>
     			<h3>Other Outputs</h3>
     			
     			<xforms:group ref=".[empty(atom:link[@rel='http://www.cggh.org/2010/chassis/terms/derivationOutput']//atom:entry[atom:id != instance('ins-media-link-entry')/atom:id])]">
@@ -414,9 +399,9 @@
                 </div>
 
 		<!-- End of After content id, before ft id -->   
-  <!--  		
+<!--     		
     	 <fr:xforms-inspector xmlns:fr="http://orbeon.org/oxf/xml/form-runner"/>		
-    -->
+     -->
     </body>
 </html>
 
