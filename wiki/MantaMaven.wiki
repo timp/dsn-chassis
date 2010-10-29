@@ -45,9 +45,11 @@ Add manta-webapp to your localhost tomcat server in eclipse.
 
 Start the server, and go to http://localhost:8080/repository
 
-Follow the usual process of installing the atom collections then trying out the UI functionality. It *should* work :)
+Follow the usual process of installing the atom collections then trying out the UI functionality. It *should* work :-) N.B., you may need to modify the configuration variable $config:media-storage-dir before the collections will install. 
 
 = Notes =
+
+== Updating !AtomBeat ==
 
 Using the !AtomBeat trunk means that you can pull the latest changes from svn and rebuild. E.g., if you know some work has been done in the !AtomBeat trunk, you can do:
 
@@ -65,7 +67,7 @@ $ cd manta-webapp
 $ mvn clean package
 }}}
 
-Checking out the !AtomBeat trunk will allow you to use snapshot builds as dependencies in the new manta project. The current version of !AtomBeat in the trunk is 0.2-alpha-2-SNAPSHOT.
+Checking out the !AtomBeat trunk allows you to use snapshot builds as dependencies in the new manta project. The current version of !AtomBeat in the trunk is 0.2-alpha-2-SNAPSHOT.
 
 N.B. if you are using the !AtomBeat trunk, bear in mind that the version number in the trunk may change if a new release of !AtomBeat is issued, so you would need to update the manta-webapp POM.
 
