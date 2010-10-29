@@ -49,6 +49,10 @@ Follow the usual process of installing the atom collections then trying out the 
 
 = Notes =
 
+== Migration Notes ==
+
+The new manta-maven/manta-webapp project contains files copied from revision 3034 of the current manta project trunk. This means that more recent work will need to be copied across. Also, I made some minor changes to manta-plugin.xqm to get it working, but haven't fully checked or replicated the most recent work on tombstones.
+
 == Updating !AtomBeat ==
 
 Using the !AtomBeat trunk means that you can pull the latest changes from svn and rebuild. E.g., if you know some work has been done in the !AtomBeat trunk, you can do:
@@ -89,4 +93,4 @@ FYI the target folder is where the manta-webapp application is packaged when you
 
 When you build with maven, maven constructs a web application by overlaying war dependencies (i.e., atombeat) on the contents of src/main/webapp, but src/main/webapp takes priority, so you can override some files in atombeat. The web application is first constructed in target/manta-webapp before being packaged into a war.
 
-To get instant gratification in Eclipse, the eclipse project is configured to do something similar. In fact, the eclipse project is configured to serve the content from both target/manta-webapp and src/main/webapp, where the latter takes priority. This means that what you get is the latest maven build overlaid with your source code. So any changes you make to your source (i.e., files in src/main/webapp) will get noticed by eclipse and auto-published to tomcat. 
+To get instant gratification in Eclipse, the eclipse project is configured to do something similar. In fact, the eclipse project is configured to serve the content from both target/manta-webapp and src/main/webapp, where the latter takes priority. This means that what you get is the latest maven build overlaid with your source code. So any changes you make to your source (i.e., files in src/main/webapp) will get noticed by eclipse and auto-published to tomcat. If you ever want to change this behaviour, see the .settings/org.eclipse.wst.common.component file.
