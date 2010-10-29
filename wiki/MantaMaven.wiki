@@ -1,0 +1,80 @@
+#summary chassis manta project using maven overlay
+
+I've created a new project for the chassis manta web application which is built using maven and which overlays atombeat as a war overlay, which should simplify the process of upgrading atombeat.
+
+To get started, follow the steps below.
+
+= 1. Checkout and Build !AtomBeat =
+
+AtomBeat is the main dependency of the new project. It's not available yet in any maven repositories, so you have to checkout, build and install it yourself.
+
+{{{
+$ svn checkout http://atombeat.googlecode.com/svn/trunk/parent /path/to/atombeat-trunk
+$ cd /path/to/atombeat-trunk
+$ export MAVEN_OPTS="-Xmx1024M -XX:MaxPermSize=256M"
+$ mvn clean install
+}}}
+
+This will take a couple of minutes, to download all dependencies and run the integration tests.
+
+= 2. Checkout and Built Manta-Maven =
+
+To checkout and build the new maven-structured project, do:
+
+{{{
+$ svn checkout https://dsn-chassis.googlecode.com/svn/branches/manta-maven /path/to/manta-maven
+$ cd /path/to/manta-maven
+$ cd manta-webapp
+$ mvn clean package
+}}}
+
+If this works, then you are ready to import the project into eclipse.
+
+= 3. Import Manta-Webapp into Eclipse =
+
+Install m2eclipse from sonatype.
+
+In eclipse, do:
+
+  * File > Import
+  * General > Existing Projects into Workspace
+  * Select root directory: /path/to/manta-maven
+  * Finish
+
+Add manta-webapp to your localhost tomcat server in eclipse.
+
+Start the server, and go to http://localhost:8080/repository
+
+Follow the usual process of installing the atom collections then trying out the UI functionality. It *should* work :)
+
+= Notes =
+
+Using the !AtomBeat trunk means that you can pull the latest changes from svn and rebuild. E.g., if you know some work has been done in the !AtomBeat trunk, you can do:
+
+{{{
+$ cd /path/to/atombeat-trunk
+$ svn up
+$ mvn clean install
+}}}
+
+You will then need to clean and repackage manta, e.g.:
+
+{{{
+$ cd /path/to/manta-maven
+$ cd manta-webapp
+$ mvn clean package
+}}}
+
+Checking out the !AtomBeat trunk will allow you to use snapshot builds as dependencies in the new manta project. The current version of !AtomBeat in the trunk is 0.2-alpha-2-SNAPSHOT.
+
+N.B. if you are using the !AtomBeat trunk, bear in mind that the version number in the trunk may change if a new release of !AtomBeat is issued, so you would need to update the manta-webapp POM.
+
+You can checkout, build and install specific versions of !AtomBeat, e.g.:
+
+{{{
+$ svn checkout http://atombeat.googlecode.com/svn/tags/atombeat-parent-0.2-alpha-2 /path/to/atombeat-0.2-alpha-2
+$ cd /path/to/atombeat-0.2-alpha-2
+$ mvn clean install
+}}}
+
+However, 0.2-alpha-2 is not released yet, and 0.2-alpha-1 is not compatible with manta-webapp, so you'll have to use the 0.2-alpha-2-SNAPSHOT from the trunk for now.
