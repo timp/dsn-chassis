@@ -50,6 +50,7 @@ declare function plugin:after() as function* {
 
 declare function plugin:after-error() as function* {
     (
-        util:function( QName( "http://purl.org/atombeat/xquery/tombstones-plugin" , "tombstones-plugin:after-error" ) , 3 ) 
+        util:function( QName( "http://purl.org/atombeat/xquery/tombstones-plugin" , "tombstones-plugin:after-error" ) , 3 ),
+        util:function( QName( "http://www.cggh.org/2010/chassis/manta/xquery/atombeat-plugin" , "manta-plugin:after-error" ) , 3 )
     )
 };

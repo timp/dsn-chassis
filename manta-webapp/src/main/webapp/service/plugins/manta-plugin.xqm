@@ -324,7 +324,7 @@ declare function manta-plugin:after(
 		
 		then manta-plugin:after-create-member( $request-path-info , $response )
 		
-		else if ( $operation = $CONSTANT:OP-RETRIEVE-MEMBER )
+		else if ( $operation = $CONSTANT:OP-RETRIEVE-MEMBER or $operation = $CONSTANT:OP-ATOM-PROTOCOL-ERROR)
 		
 		then manta-plugin:after-retrieve-member( $request-path-info , $response )
 		
@@ -690,7 +690,7 @@ declare function manta-plugin:after-retrieve-member-studies(
 ) as element(response)
 {
     
-    let $entry := $response/body/atom:entry 
+    let $entry := manta-plugin:get-entry($response/body) 
     let $entry := manta-plugin:augment-study-entry( $entry )
     return manta-plugin:replace-response-body( $response , $entry )
     
@@ -704,7 +704,7 @@ declare function manta-plugin:after-retrieve-member-derivations(
 ) as element(response)
 {
     
-    let $entry := $response/body/atom:entry 
+    let $entry := manta-plugin:get-entry($response/body) 
     let $entry := manta-plugin:augment-derivation-entry( $entry )
     return manta-plugin:replace-response-body( $response , $entry )
     
@@ -718,7 +718,7 @@ declare function manta-plugin:after-retrieve-member-drafts(
 ) as element(response)
 {
     
-    let $entry := $response/body/atom:entry 
+    let $entry := manta-plugin:get-entry($response/body) 
     let $entry := manta-plugin:augment-draft-entry( $entry )
     return manta-plugin:replace-response-body( $response , $entry )
     
@@ -731,9 +731,7 @@ declare function manta-plugin:after-retrieve-member-submitted-media(
 	$response as element(response)
 ) as element(response)
 {
-    
-(:    let $entry := xutil:get-entry($response/body) :)
-    let $entry := $response/body/atom:entry 
+    let $entry := manta-plugin:get-entry($response/body)
     let $entry := manta-plugin:augment-media-entry( $entry )
     return manta-plugin:replace-response-body( $response , $entry )
     
@@ -747,7 +745,7 @@ declare function manta-plugin:after-retrieve-member-curated-media(
 ) as element(response)
 {
     
-    let $entry := $response/body/atom:entry 
+    let $entry := manta-plugin:get-entry($response/body) 
     let $entry := manta-plugin:augment-media-entry( $entry )
     return manta-plugin:replace-response-body( $response , $entry )
     
@@ -883,9 +881,9 @@ declare function manta-plugin:after-list-collection-curated-media(
         {
         
             $feed/attribute::* ,
-            $feed/child::*[ not( local-name(.) = $CONSTANT:ATOM-ENTRY and namespace-uri(.) = $CONSTANT:ATOM-NSURI ) ] ,
+            $feed/child::*[ not( . instance of element(atom:entry) or . instance of element(at:deleted-entry) ) ],
             
-            for $entry in $feed/atom:entry
+            for $entry in $feed/child::*[. instance of element(atom:entry) or . instance of element(at:deleted-entry) ]
             return manta-plugin:augment-media-entry( $entry )
             
         }
@@ -1143,6 +1141,31 @@ declare function manta-plugin:augment-derivation-entry(
          return $new-entry
     return $ret
 };
+
+declare function manta-plugin:expand-atom-link($path-info as xs:string) as element(ae:inline)
+{
+if ( atomdb:member-available( $path-info ) )
+                            then
+                                <ae:inline>
+                                {
+                                    let $raw-entry := atomdb:retrieve-member( $path-info )
+                                    
+                                    let $augmented-entry := manta-plugin:augment-media-entry( $raw-entry )
+                                    return $augmented-entry
+                                }
+                                </ae:inline>
+                            else if ( tombstone-db:tombstone-available( $path-info ) )
+                            then
+                                <ae:inline>
+                                {
+                                    let $deleted-entry := tombstone-db:retrieve-tombstone( $path-info )
+                                    let $augmented-entry := manta-plugin:augment-media-entry( $deleted-entry )
+                                    return $augmented-entry
+                                }
+                                </ae:inline>
+                            else ()
+};
+
 declare function manta-plugin:augment-derivation-atom-entry(
     $entry as element(atom:entry)
 ) as element(atom:entry)
@@ -1168,36 +1191,8 @@ declare function manta-plugin:augment-derivation-atom-entry(
                         $child/attribute::* ,
                         let $path-info := substring-after( $child/@href , $config:content-service-url )
                         return 
-                            if ( atomdb:member-available( $path-info ) )
-                            then
-                                <ae:inline>
-                                {
-                                    let $raw-entry := atomdb:retrieve-member( $path-info )
-                                    
-                                    (:
-                                    let $entry-details := if ( $raw-entry instance of element(atom:entry)) then
-                                        let $ret := $raw-entry
-                                        return $ret
-                                        else
-                                            let $ret := tombstone-db:retrieve-member( $path-info)
-                                            return $ret 
-                                    let $augmented-entry := manta-plugin:augment-media-entry( $entry-details )
-                                    :)
-                                    
-                                    let $augmented-entry := manta-plugin:augment-media-entry( $raw-entry )
-                                    return $augmented-entry
-                                }
-                                </ae:inline>
-                            else if ( tombstone-db:tombstone-available( $path-info ) )
-                            then
-                                <ae:inline>
-                                {
-                                    let $deleted-entry := tombstone-db:retrieve-tombstone( $path-info )
-                                    (: TODO augment deleted entry :)
-                                    return $deleted-entry
-                                }
-                                </ae:inline>
-                            else ()
+                            manta-plugin:expand-atom-link($path-info)
+                            
                     }
                     </atom:link>
                 else $child
@@ -1235,16 +1230,7 @@ declare function manta-plugin:augment-derivation-tombstone(
                         $child/attribute::* ,
                         let $path-info := substring-after( $child/@href , $config:content-service-url )
                         return 
-                            if ( atomdb:member-available( $path-info ) )
-                            then
-                                <ae:inline>
-                                {
-                                    let $raw-entry := atomdb:retrieve-member( $path-info )
-                                    let $augmented-entry := manta-plugin:augment-media-entry( $raw-entry )
-                                    return $augmented-entry
-                                }
-                                </ae:inline>
-                            else ()
+                            manta-plugin:expand-atom-link($path-info)
                     }
                     </atom:link>
                 else $child
@@ -1263,7 +1249,7 @@ declare function manta-plugin:augment-draft-entry(
         let $ret := manta-plugin:augment-draft-entry-atom($entry)
         return $ret
       else 
-          let $ret := manta-plugin:augment-media-entry-tombstone($entry)
+          let $ret := manta-plugin:augment-draft-entry-tombstone($entry)
           return $ret
     return $entry
 };
@@ -1322,7 +1308,7 @@ declare function manta-plugin:augment-media-entry(
     $entry as element()
 ) as element()
 {
-    let $entry := if (count($entry//atom:entry) > 0) then
+    let $entry := if ($entry instance of element(atom:entry)) then
         let $ret := manta-plugin:augment-media-atom-entry($entry)
         return $ret
       else 
@@ -1406,6 +1392,38 @@ declare function manta-plugin:augment-media-entry-tombstone(
     return $entry
 
 };
+
+(: Return either an entry or a tombstone :)
+declare function manta-plugin:get-entry($unknown as item()) as element() {
+     let $ret := if ($unknown/child::* instance of element(atom:entry)) then
+        let $new-entry := $unknown/atom:entry
+        return $new-entry
+     else if ($unknown/child::* instance of element(at:deleted-entry)) then
+        let $new-entry := $unknown/at:deleted-entry
+        return $new-entry
+     else 
+         let $new-entry := $unknown
+         return $new-entry
+         let $msg := local:log4jDebug("get-entry")
+   let $msg := local:log4jDebug($ret)
+   return $ret
+};
+
+declare function manta-plugin:after-error(
+    $operation as xs:string ,
+    $request-path-info as xs:string ,
+    $response as element(response)
+) as element(response)
+{
+let $message := ( "chassis-manta plugin, after-error: " , $operation , ", request-path-info: " , $request-path-info ) 
+	let $log := local:log4jDebug( $message )
+(: This plugin is agnostic as to whether the entry is atom:entry or at:deleted-entry :)
+    let $ret := if ($response/body/child::* instance of element(at:deleted-entry)) then
+            manta-plugin:after($operation,$request-path-info,$response)
+        else
+            ()
+    return $ret
+}; 
 
 
 declare function manta-plugin:replace-response-body( $response as element(response) , $body as item() ) as element(response)
