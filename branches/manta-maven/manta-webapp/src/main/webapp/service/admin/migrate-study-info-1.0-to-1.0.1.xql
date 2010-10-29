@@ -342,7 +342,7 @@ declare variable $testdata {
                         <provider>IMTSSA</provider>
                     </drug>
                     <drug>
-                        <molecule>AV</molecule>
+                        <molecule>PPQ</molecule>
                         <solvent>methanol</solvent>
                         <solventFinalConcentration>0.145 drug in RSS</solventFinalConcentration>
                         <providedByWwarn>false</providedByWwarn>
@@ -392,6 +392,16 @@ declare variable $testdata {
                 <analytes>
                    <analyte>
                         <drugMeasured>SP</drugMeasured>
+                        <lowerLoQ>1</lowerLoQ>
+                        <sampleMatrixType>wholeCapillaryBlood capillaryPlasma</sampleMatrixType>
+                    </analyte>
+                    <analyte>
+                        <drugMeasured>PPQ</drugMeasured>
+                        <lowerLoQ>1</lowerLoQ>
+                        <sampleMatrixType>wholeCapillaryBlood capillaryPlasma</sampleMatrixType>
+                    </analyte>
+                    <analyte>
+                        <drugMeasured>AL</drugMeasured>
                         <lowerLoQ>1</lowerLoQ>
                         <sampleMatrixType>wholeCapillaryBlood capillaryPlasma</sampleMatrixType>
                     </analyte>
@@ -628,27 +638,7 @@ declare function local:migrate-study-info( $study-info as element( study-info ) 
     }
     </study-info>
 };
-(:
- let $ren := update rename $v1-0//wGroupDosing as 'weightGroupDosing'
-            let $ren1 := update rename $v1-0//wGroupDosingSchedule as 'weightGroupDosingSchedule' 
-            let $ren2 := update rename $v1-0//wGroupFrom as 'weightGroupFrom' 
-            let $ren3 := update rename $v1-0//wGroupTo as 'weightGroupTo'
-            let $ren4 := update rename $v1-0//co2 as 'co2percentage'
-            let $ren5 := update rename $v1-0//hematocrit as 'hematocritpercentage'
-            let $ren6 := update rename $v1-0//parasitaemia3D7 as 'parasitaemia3D7percentage'
-            let $ren7 := update rename $v1-0//ringForms as 'ringFormingPercentage'
-            let $del := update delete $v1-0//clinical/recrudescenceAndReinfection
-            let $del1 := update delete $v1-0//invitro/inclusionCriteria
-            let $del2 := update delete $v1-0//pharmacology/samples/sample/numberPlanned
-            let $del3 := update delete $v1-0//pharmacology/analytes/analyte[./drugMeasured/text()='AL']
-            let $del4 := update delete $v1-0//invitro/drugs/drug[./molecule/text()="AL"]
-            let $rep1 := update replace $v1-0//drugMeasured[. = "SP"] with <drugMeasured>SX</drugMeasured>
-            let $rep2 := update replace $v1-0//drugMeasured[. = "PPQ"] with <drugMeasured>PQ</drugMeasured>
-            let $rep3 := update replace $v1-0//molecule[. = "SP"] with <molecule>SX</molecule>
-            let $rep2 := update replace $v1-0//molecule[. = "PPQ"] with <molecule>PQ</molecule>
-            let $tmp := update delete $v1-0//studyInfoStatus
-            return update insert <studyInfoStatus>new</studyInfoStatus> preceding $v1-0//start
-            :)
+
 declare function local:check-changes() as item() *{
   let $all := local:get-content()
  let $old := local:get-old-versioned-content($all)
@@ -669,6 +659,7 @@ declare function local:check-changes() as item() *{
              let $msg := "Changed wGroupDosing"
              return $msg
          let $msg := concat($new,$out,'&#xD;')
+         
           let $out := if (count($m//ringForms) > 0 or count($m//ringFormingPercentage) = 0) then 
              let $msg := "Failed to change ringForms"
              return $msg
@@ -676,11 +667,121 @@ declare function local:check-changes() as item() *{
              let $msg := "Changed ringForms"
              return $msg
          let $new := concat($msg,$out,'&#xD;')
+         
+         let $out := if (count($m//wGroupDosingSchedule) > 0 or count($m//weightGroupDosingSchedule) = 0) then 
+             let $msg := "Failed to change wGroupDosingSchedule"
+             return $msg
+          else
+             let $msg := "Changed wGroupDosingSchedule"
+             return $msg
+         let $msg := concat($new,$out,'&#xD;')
+
+          let $out := if (count($m//wGroupFrom) > 0 or count($m//weightGroupFrom) = 0) then 
+             let $msg := "Failed to change wGroupFrom"
+             return $msg
+          else
+             let $msg := "Changed wGroupFrom"
+             return $msg
+         let $new := concat($msg,$out,'&#xD;')
+         let $out := if (count($m//wGroupTo) > 0 or count($m//weightGroupTo) = 0) then 
+             let $msg := "Failed to change wGroupTo"
+             return $msg
+          else
+             let $msg := "Changed wGroupTo"
+             return $msg
+         let $msg := concat($new,$out,'&#xD;')
+         
+         let $out := if (count($m//hematocrit) > 0 or count($m//hematocritpercentage) = 0) then 
+             let $msg := "Failed to change hematocrit"
+             return $msg
+          else
+             let $msg := "Changed hematocrit"
+             return $msg
+         let $new := concat($msg,$out,'&#xD;')
+ (:
+             
+           
+         
+           
+           
+            let $tmp := update delete $v1-0//studyInfoStatus
+            return update insert <studyInfoStatus>new</studyInfoStatus> preceding $v1-0//start
+            :)
+            let $out := if (count($m//parasitaemia3D7) > 0 or count($m//parasitaemia3D7percentage) = 0) then 
+             let $msg := "Failed to change parasitaemia3D7"
+             return $msg
+          else
+             let $msg := "Changed parasitaemia3D7"
+             return $msg
+         let $msg := concat($new,$out,'&#xD;')
+         let $out := if (count($m//clinical/recrudescenceAndReinfection) > 0) then 
+             let $msg := "Failed to delete //clinical/recrudescenceAndReinfection"
+             return $msg
+          else
+             let $msg := "Deleted //clinical/recrudescenceAndReinfection"
+             return $msg
+         let $new := concat($msg,$out,'&#xD;')
+         let $out := if (count($m//invitro/inclusionCriteria) > 0) then 
+             let $msg := "Failed to delete //invitro/inclusionCriteria"
+             return $msg
+          else
+             let $msg := "Deleted //invitro/inclusionCriteria"
+             return $msg
+         let $msg := concat($new,$out,'&#xD;')
+         let $out := if (count($m//pharmacology/samples/sample/numberPlanned) > 0) then 
+             let $msg := "Failed to delete //pharmacology/samples/sample/numberPlanned"
+             return $msg
+          else
+             let $msg := "Deleted //pharmacology/samples/sample/numberPlanned"
+             return $msg
+         let $new := concat($msg,$out,'&#xD;')
+         let $out := if (count($m//invitro/drugs/drug[./molecule/text()="AL"]) > 0) then 
+             let $msg := "Failed to delete //invitro/drugs/drug[./molecule/text()=AL]"
+             return $msg
+          else
+             let $msg := "Deleted //invitro/drugs/drug[./molecule/text()=AL]"
+             return $msg
+         let $msg := concat($new,$out,'&#xD;')
+         let $out := if (count($m//pharmacology/analytes/analyte[./drugMeasured/text()='AL']) > 0) then 
+             let $msg := "Failed to delete //pharmacology/analytes/analyte[./drugMeasured/text()='AL']"
+             return $msg
+          else
+             let $msg := "Deleted //pharmacology/analytes/analyte[./drugMeasured/text()='AL']"
+             return $msg
+         let $new := concat($msg,$out,'&#xD;')
           let $out := if (count($m//molecule[. = "SP"]) > 0 or count($m//molecule[. = "SX"]) = 0) then 
              let $msg := "Failed to change SP to SX"
              return $msg
           else
              let $msg := "Changed SP to SX"
+             return $msg
+         let $msg := concat($new,$out,'&#xD;')
+         let $out := if (count($m//molecule[. = "PPQ"]) > 0 or count($m//molecule[. = "PQ"]) = 0) then 
+             let $msg := "Failed to change PPQ to PQ"
+             return $msg
+          else
+             let $msg := "Changed PPQ to PQ"
+             return $msg
+         let $new := concat($msg,$out,'&#xD;')
+         let $out := if (count($m//drugMeasured[. = "SP"]) > 0 or count($m//drugMeasured[. = "SX"]) = 0) then 
+             let $msg := "Failed to change SP to SX"
+             return $msg
+          else
+             let $msg := "Changed SP to SX"
+             return $msg
+         let $msg := concat($new,$out,'&#xD;')
+         let $out := if (count($m//drugMeasured[. = "PPQ"]) > 0 or count($m//drugMeasured[. = "PQ"]) = 0) then 
+             let $msg := "Failed to change PPQ to PQ"
+             return $msg
+          else
+             let $msg := "Changed PPQ to PQ"
+             return $msg
+         let $new := concat($msg,$out,'&#xD;')
+         let $out := if (count($m//studyInfoStatus) != 1) then 
+             let $msg := "Failed to add studyInfoStatus"
+             return $msg
+          else
+             let $msg := "Added studyInfoStatus"
              return $msg
          let $msg := concat($new,$out,'&#xD;')
          return $msg
