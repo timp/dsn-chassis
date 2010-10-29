@@ -80,3 +80,13 @@ $ mvn clean install
 }}}
 
 However, 0.2-alpha-2 is not released yet, and 0.2-alpha-1 is not compatible with manta-webapp, so you'll have to use the 0.2-alpha-2-SNAPSHOT from the trunk for now.
+
+== Triggering XQuery Recompile ==
+
+To trigger a recompile of the atombeat xqueries without restarting the servlet container, make a trivial change to the file /path/to/manta-maven/manta-webapp/target/manta-webapp/service/content.xql
+
+FYI the target folder is where the manta-webapp application is packaged when you build with maven. The src/main/webapp folder is where the manta-webapp files are.
+
+When you build with maven, maven constructs a web application by overlaying war dependencies (i.e., atombeat) on the contents of src/main/webapp, but src/main/webapp takes priority, so you can override some files in atombeat. The web application is first constructed in target/manta-webapp before being packaged into a war.
+
+To get instant gratification in Eclipse, the eclipse project is configured to do something similar. In fact, the eclipse project is configured to serve the content from both target/manta-webapp and src/main/webapp, where the latter takes priority. This means that what you get is the latest maven build overlaid with your source code. So any changes you make to your source (i.e., files in src/main/webapp) will get noticed by eclipse and auto-published to tomcat. 
