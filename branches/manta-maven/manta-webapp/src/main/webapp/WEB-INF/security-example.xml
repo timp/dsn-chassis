@@ -13,14 +13,14 @@
     realm="chassis-manta">
     
     <!-- restrict access to libraries and administrative scripts -->
-    <intercept-url pattern="/atombeat/admin/**" access="ROLE_CHASSIS_ADMINISTRATOR" />
-    <intercept-url pattern="/atombeat/config/**" access="ROLE_CHASSIS_ADMINISTRATOR" />
-    <intercept-url pattern="/atombeat/lib/**" access="ROLE_CHASSIS_ADMINISTRATOR" />
-    <intercept-url pattern="/atombeat/plugins/**" access="ROLE_CHASSIS_ADMINISTRATOR" />
+    <intercept-url pattern="/service/admin/**" access="ROLE_CHASSIS_ADMINISTRATOR" />
+    <intercept-url pattern="/service/config/**" access="ROLE_CHASSIS_ADMINISTRATOR" />
+    <intercept-url pattern="/service/lib/**" access="ROLE_CHASSIS_ADMINISTRATOR" />
+    <intercept-url pattern="/service/plugins/**" access="ROLE_CHASSIS_ADMINISTRATOR" />
     
     <!-- force authentication for all requests to atombeat, but delegate
     access control decisions to atombeat -->
-    <intercept-url pattern="/atombeat/**" access="ROLE_CHASSIS_USER" />
+    <intercept-url pattern="/service/**" access="ROLE_CHASSIS_USER" />
 
     <intercept-url pattern="/contributor/**" access="ROLE_CHASSIS_CONTRIBUTOR, ROLE_CHASSIS_ADMINISTRATOR" />
 
