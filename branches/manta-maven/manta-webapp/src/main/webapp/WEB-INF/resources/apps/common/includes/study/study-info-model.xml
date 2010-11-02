@@ -307,9 +307,11 @@
 								</xforms:bind>
 							</xforms:bind>
 							<xforms:bind nodeset="genotypingLaboratory" />
-							<xforms:bind nodeset="markerDiscriminant" required="true()" />
-							<xforms:bind nodeset="markerDiscriminantOther"
-								relevant="contains(../markerDiscriminant, 'other')" />
+							<xforms:bind nodeset="markerDiscriminantOpen">
+								<xforms:bind nodeset="markerDiscriminant" required="true()"/>
+								<xforms:bind nodeset="markerDiscriminantOther"
+									relevant="contains(../markerDiscriminant, 'other')"/>
+							</xforms:bind>
 							<xforms:bind nodeset="analysisProtocol">
 								<xforms:bind nodeset="mixedAllelesOpen">
 									<xforms:bind nodeset="mixedAlleles" required="true()" />

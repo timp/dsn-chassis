@@ -141,8 +141,10 @@
 							</recrudescenceMarker>
 						</markers>
 						<genotypingLaboratory />
-						<markerDiscriminant />
-						<markerDiscriminantOther />
+						<markerDiscriminantOpen>
+							<markerDiscriminant />
+							<markerDiscriminantOther />
+						</markerDiscriminantOpen>
 						<analysisProtocol>
 							<mixedAllelesOpen>
 								<mixedAlleles />

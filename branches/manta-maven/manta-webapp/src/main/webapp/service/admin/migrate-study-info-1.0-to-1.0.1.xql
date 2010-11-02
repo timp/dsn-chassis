@@ -204,8 +204,8 @@ declare variable $testdata {
                             </recrudescenceMarker>
                         </markers>
                         <genotypingLaboratory/>
-                        <markerDiscriminant/>
-                        <markerDiscriminantOther/>
+                        <markerDiscriminant>agarroseGelVisual</markerDiscriminant>
+                        <markerDiscriminantOther>other text</markerDiscriminantOther>
                         <analysisProtocol>
                             <mixedAllelesOpen>
                                 <mixedAlleles/>
@@ -590,8 +590,10 @@ declare function local:modify-nodes($study-infos-v1-0) as element( atom:entry )*
             let $rep3 := update replace $v1-0//molecule[. = "SP"] with <molecule>SX</molecule>
             let $rep4 := update replace $v1-0//molecule[. = "PPQ"] with <molecule>PQ</molecule>
             let $rep5 := update replace $v1-0//haemoglobinRecordingType[. = "hct"] with <haemoglobinRecordingType>htc</haemoglobinRecordingType>
-            let $tmp := update delete $v1-0//studyInfoStatus
-            return update insert <studyInfoStatus>new</studyInfoStatus> preceding $v1-0//start
+            let $ins := update insert <markerDiscriminantOpen>{$v1-0//clinical/geneotypingToDistinguishBetweenRecrudescenceAndReinfection/applicable/markerDiscriminant,$v1-0//clinical/geneotypingToDistinguishBetweenRecrudescenceAndReinfection/applicable/markerDiscriminantOther}</markerDiscriminantOpen> following $v1-0//clinical/geneotypingToDistinguishBetweenRecrudescenceAndReinfection/applicable/genotypingLaboratory
+            let $del5 := update delete $v1-0//clinical/geneotypingToDistinguishBetweenRecrudescenceAndReinfection/applicable/markerDiscriminant
+            let $del6 := update delete $v1-0//clinical/geneotypingToDistinguishBetweenRecrudescenceAndReinfection/applicable/markerDiscriminantOther
+return update insert <studyInfoStatus>new</studyInfoStatus> preceding $v1-0//start
 
      
     return $study-infos-v1-0-1
