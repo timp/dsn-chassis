@@ -1,4 +1,5 @@
 #summary (superseded) This document is a draft specification of user requirements for a first major release (1.0) of the Chassis/WWARN system for managing the submission, curation and standardisation of data for the World Wide Anti-malarial Resistance Network (WWARN).
+#labels Phase-Requirements
 
 *Please note, this page is superseded by the [http://dsn-chassis.googlecode.com/svn/tags/wwarn/docs/draft-6/content/requirements/1.0/index.html Chassis/WWARN 1.0 User Requirements Specification Draft 6]. See the ChassisWwarn wiki page for the latest version of the User Requirements Specification. The content below is maintained for historical reference.*
 
