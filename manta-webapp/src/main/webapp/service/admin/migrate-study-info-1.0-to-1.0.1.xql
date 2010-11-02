@@ -818,7 +818,7 @@ declare function local:do-migration() {
     return local:do-post($saved)
 };
 
-let $login := xmldb:login( "/" , "admin" , "" )
+let $login := xmldb:login( "/" , $config:exist-user , $config:exist-password )
 
 let $testing := request:get-parameter("testing", "no")
     let $content := if ($testing = "no") then
@@ -829,7 +829,6 @@ let $testing := request:get-parameter("testing", "no")
 let $collection := xmldb:create-collection("xmldb:exist:///db", "test"),
     $doc := local:save-changes($testdata)
     return $collection
-    
 return 
 
     if ( request:get-method() = $CONSTANT:METHOD-GET ) 
