@@ -16,6 +16,7 @@ import javax.xml.transform.stream.StreamSource;
 
 import junit.framework.TestCase;
 
+import org.apache.xerces.parsers.DOMParser;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -24,7 +25,6 @@ import org.w3c.dom.traversal.NodeFilter;
 import org.w3c.dom.traversal.TreeWalker;
 import org.xml.sax.InputSource;
 
-import com.sun.org.apache.xerces.internal.parsers.DOMParser;
 
 public class TestStudyInfoFlatten extends TestCase {
 
@@ -63,7 +63,7 @@ public class TestStudyInfoFlatten extends TestCase {
 	}
 
 	public void testContents() throws Exception {
-		String xslt = "war/xslt/flatten-study-info.xsl";
+		String xslt = "src/main/webapp/xslt/flatten-study-info.xsl";
 		String file = "src/test/resources/study-info.xml";
 		String preprocess = "src/test/resources/setupFlattenTest.xsl";
 		String cols = null;
