@@ -44,7 +44,7 @@ In eclipse, do:
 
 Add manta-webapp to your localhost tomcat server in eclipse.
 
-Start the server, and go to http://localhost:8080/repository
+Start the server, and go to http://localhost:8080/repository/
 
 Follow the usual process of installing the atom collections then trying out the UI functionality. It *should* work :-) N.B., you may need to modify the configuration variable $config:media-storage-dir before the collections will install. 
 
