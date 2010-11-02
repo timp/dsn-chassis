@@ -149,11 +149,11 @@ declare variable $testdata {
                     </regimenAllocation>
                 </treatment>
                 <followup>
-                    <duration/>
-                    <feverMeasurement/>
-                    <haemoglobinRecording>
-                        <haemoglobinRecordingType/>
-                    </haemoglobinRecording>
+                    <duration>63</duration>
+					<feverMeasurement>axial</feverMeasurement>
+					<haemoglobinRecording>
+						<haemoglobinRecordingType>hct</haemoglobinRecordingType>
+					</haemoglobinRecording>
                 </followup>
                 <microscopy>
                     <microscopyStain/>
@@ -588,7 +588,8 @@ declare function local:modify-nodes($study-infos-v1-0) as element( atom:entry )*
             let $rep1 := update replace $v1-0//drugMeasured[. = "SP"] with <drugMeasured>SX</drugMeasured>
             let $rep2 := update replace $v1-0//drugMeasured[. = "PPQ"] with <drugMeasured>PQ</drugMeasured>
             let $rep3 := update replace $v1-0//molecule[. = "SP"] with <molecule>SX</molecule>
-            let $rep2 := update replace $v1-0//molecule[. = "PPQ"] with <molecule>PQ</molecule>
+            let $rep4 := update replace $v1-0//molecule[. = "PPQ"] with <molecule>PQ</molecule>
+            let $rep5 := update replace $v1-0//haemoglobinRecordingType[. = "hct"] with <haemoglobinRecordingType>htc</haemoglobinRecordingType>
             let $tmp := update delete $v1-0//studyInfoStatus
             return update insert <studyInfoStatus>new</studyInfoStatus> preceding $v1-0//start
 
@@ -784,7 +785,14 @@ declare function local:check-changes() as item() *{
              let $msg := "Added studyInfoStatus"
              return $msg
          let $msg := concat($new,$out,'&#xD;')
-         return $msg
+         let $out := if (count($m//haemoglobinRecordingType[. = "hct"]) > 0 or count($m//haemoglobinRecordingType[. = "htc"]) = 0) then 
+              let $msg := "Failed to change haemoglobinRecordingType hct to htc"
+             return $msg
+          else
+             let $msg := "Changed haemoglobinRecordingType hct to htc"
+             return $msg
+         let $new := concat($msg,$out,'&#xD;')
+         return $new
     return $ret
 };
 declare function local:do-migration() {
@@ -830,6 +838,6 @@ return
     
     then local:do-migration()
     
-    else common-protocol:do-method-not-allowed( "/admin/migrate-study-info-1.0-to-1.0.1.xql" , ( "GET" , "POST" ) )
+    else common-protocol:do-method-not-allowed( "/admin/migrate-study-info-1.0-to-1.0.1.xql" ,"/admin/migrate-study-info-1.0-to-1.0.1.xql" , ( "GET" , "POST" ) )
     
     
