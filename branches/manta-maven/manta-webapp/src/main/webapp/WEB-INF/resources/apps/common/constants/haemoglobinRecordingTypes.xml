@@ -5,7 +5,11 @@
 		<value>hb</value>
 	</haemoglobinRecordingType>
 	<haemoglobinRecordingType>
-		<label>hct</label>
-		<value>hct</value>
+		<label>htc</label>
+		<value>htc</value>
+	</haemoglobinRecordingType>
+	<haemoglobinRecordingType>
+		<label>both</label>
+		<value>both</value>
 	</haemoglobinRecordingType>
 </haemoglobinRecordingTypes>
