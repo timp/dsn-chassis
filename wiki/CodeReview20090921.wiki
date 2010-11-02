@@ -1,5 +1,0 @@
-#summary code review of 0.1-alpha-2 on 2009-09-21
-
-See comments in the following files...
-
-  * http://code.google.com/p/dsn-chassis/source/browse/tags/0.1-alpha-2/generic/lib/java/src/main/java/org/cggh/chassis/generic/user/service/spring/UserDetailsServiceSpringImpl.java
