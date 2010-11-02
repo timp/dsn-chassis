@@ -1,4 +1,5 @@
 #summary Demonstration of the goals achieved during a Sprint.
+#labels Phase-Agile
 
 = Introduction =
 
