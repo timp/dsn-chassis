@@ -27,7 +27,7 @@
     <intercept-url pattern="/personal-data/**" access="ROLE_CHASSIS_PERSONAL_DATA_REVIEWER, ROLE_CHASSIS_ADMINISTRATOR" />
     
     <intercept-url pattern="/curator/**" access="ROLE_CHASSIS_CURATOR, ROLE_CHASSIS_ADMINISTRATOR" />
-    
+    <intercept-url pattern="/reports/**" access="ROLE_CHASSIS_CURATOR, ROLE_CHASSIS_ADMINISTRATOR" />
     <intercept-url pattern="/study/**" access="ROLE_CHASSIS_CONTRIBUTOR, ROLE_CHASSIS_CURATOR, ROLE_CHASSIS_ADMINISTRATOR" />
 
     <intercept-url pattern="/rest/**" access="ROLE_CHASSIS_ADMINISTRATOR" />
