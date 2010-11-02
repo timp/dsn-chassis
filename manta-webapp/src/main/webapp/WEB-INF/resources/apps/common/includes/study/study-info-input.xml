@@ -44,9 +44,22 @@
 
 	</xforms:group>
 
+	<xforms:model id="mod-extras">
+		<xforms:instance id="mod-csv-perms">
+			<permission>
+				<download/>
+			</permission>
+		</xforms:instance>
+		<xforms:bind id="adminOrCurator" nodeset="instance('mod-csv-perms')//download" />
+		<xforms:action ev:defaultAction="perform">
+		<xforms:setvalue bind="adminOrCurator" value="count(instance('ins-current-user')//role)"/>
+		</xforms:action>
+	</xforms:model>
+	
 	<xforms:group model="mod-study-info"
 		ref="instance('ins-sq-study-info-entry')/atom:content">
 
+		
 		<xforms:group ref="study-info" id="grp-info">
 
 			<h2>General questions</h2>
@@ -59,7 +72,7 @@
 					<xforms:value ref="value" />
 				</xforms:itemset>
 			</xforms:select1>
-			<xforms:group model="mod-study-dashboard" ref="instance('ins-control')//curator-controls or instance('ins-control')//administrator-controls ">
+			<xforms:group ref="count(instance('ins-current-user')//role[contains(.,'ROLE_CHASSIS_CURATOR') or contains(.,'ROLE_CHASSIS_ADMINISTRATOR')]) > 0">
 				<xforms:group model="mod-study-info" ref="instance('ins-sq-study-info-entry')//studyInfoStatus[text()='complete']">
 					<a href="{instance('ins-sq-study-info-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/transform/flatten']/@href}">Click here for csv</a>
 				</xforms:group>
@@ -1644,36 +1657,41 @@
 						<xforms:group ref="applicable">
 							<xforms:group ref="markers">
 								<table class="repeat-table">
-									<xforms:repeat nodeset="recrudescenceMarker" id="recrudescenceMarker-rep">
+									<xforms:repeat nodeset="recrudescenceMarker"
+										id="recrudescenceMarker-rep">
 										<tr>
 											<td class="action-td">
 												<xforms:trigger appearance="minimal">
-													<xforms:label>
-														<img src="/apps/common/theme/remove.gif" alt="remove" />
-													</xforms:label>
-													<xforms:delete ev:event="DOMActivate"
-														context="." nodeset="." at="index('recrudescenceMarker-rep')" />
+												<xforms:label>
+												<img src="/apps/common/theme/remove.gif"
+												alt="remove"/>
+												</xforms:label>
+												<xforms:delete ev:event="DOMActivate" context="."
+												nodeset="." at="index('recrudescenceMarker-rep')"
+												/>
 												</xforms:trigger>
 											</td>
 											<td>
-												<xforms:select1 ref="markerName" appearance="minimal">
-													<xforms:label>Marker</xforms:label>
-													<xforms:itemset model="mod-study-info"
-														nodeset="instance('ins-recrudescenceMarker-items')/recrudescenceMarker">
-														<xforms:label ref="label" />
-														<xforms:value ref="value" />
-													</xforms:itemset>
-													<xforms:item>
-														<xforms:label>other </xforms:label>
-														<xforms:value>other</xforms:value>
-													</xforms:item>
+												<xforms:select1 ref="markerName"
+												appearance="minimal">
+												<xforms:label>Marker</xforms:label>
+												<xforms:itemset model="mod-study-info"
+												nodeset="instance('ins-recrudescenceMarker-items')/recrudescenceMarker">
+												<xforms:label ref="label"/>
+												<xforms:value ref="value"/>
+												</xforms:itemset>
+												<xforms:item>
+												<xforms:label>other </xforms:label>
+												<xforms:value>other</xforms:value>
+												</xforms:item>
 												</xforms:select1>
 												<xforms:input ref="markerOther">
-													<xforms:label />
+												<xforms:label/>
 												</xforms:input>
 												<xforms:input ref="numberOfMicroSatellites"
-													class="fourWide">
-													<xforms:label>Number of micro satellites</xforms:label>
+												class="fourWide">
+												<xforms:label>Number of micro
+												satellites</xforms:label>
 												</xforms:input>
 											</td>
 										</tr>
@@ -1682,19 +1700,23 @@
 										<td class="action-td">
 											<xforms:trigger appearance="minimal">
 												<xforms:label>
-													<img src="/apps/common/theme/add.gif" alt="add" />
+												<img src="/apps/common/theme/add.gif" alt="add"/>
 												</xforms:label>
 												<xforms:insert ev:event="DOMActivate" context="."
-													nodeset="recrudescenceMarker" at="count(../recrudescenceMarker)"
-													position="after" origin="instance('ins-recrudescenceMarker')" />
+												nodeset="recrudescenceMarker"
+												at="count(../recrudescenceMarker)"
+												position="after"
+												origin="instance('ins-recrudescenceMarker')"/>
 											</xforms:trigger>
 										</td>
 										<td class="add-td">
 											<xforms:trigger appearance="minimal">
 												<xforms:label>Add a marker</xforms:label>
 												<xforms:insert ev:event="DOMActivate" context="."
-													nodeset="recrudescenceMarker" at="count(../recrudescenceMarker)"
-													position="after" origin="instance('ins-recrudescenceMarker')" />
+												nodeset="recrudescenceMarker"
+												at="count(../recrudescenceMarker)"
+												position="after"
+												origin="instance('ins-recrudescenceMarker')"/>
 											</xforms:trigger>
 										</td>
 									</tr>
@@ -1705,29 +1727,29 @@
 							<xforms:input ref="genotypingLaboratory" class="fixed-Width">
 								<xforms:label> Genotyping laboratory </xforms:label>
 							</xforms:input>
-							<br />
-							<xforms:select1 ref="markerDiscriminant"
-								appearance="minimal">
-								<xforms:label>Method of discrimination</xforms:label>
-								<xforms:item>
-									<xforms:label>please select</xforms:label>
-									<xforms:value />
-								</xforms:item>
-								<xforms:itemset model="mod-study-info"
-									nodeset="instance('ins-markerDiscriminant-items')/markerDiscriminant">
-									<xforms:label ref="label" />
-									<xforms:value ref="value" />
-								</xforms:itemset>
-								<xforms:item>
-									<xforms:label>other </xforms:label>
-									<xforms:value>other</xforms:value>
-								</xforms:item>
-								<xforms:alert>Please select a method</xforms:alert>
-							</xforms:select1>
-							<xforms:input ref="markerDiscriminantOther">
-								<xforms:label />
-							</xforms:input>
-
+							<br/>
+							<xforms:group ref="markerDiscriminantOpen">
+								<xforms:select1 ref="markerDiscriminant" appearance="minimal">
+									<xforms:label>Method of discrimination</xforms:label>
+									<xforms:item>
+										<xforms:label>please select</xforms:label>
+										<xforms:value/>
+									</xforms:item>
+									<xforms:itemset model="mod-study-info"
+										nodeset="instance('ins-markerDiscriminant-items')//markerDiscriminant">
+										<xforms:label ref="label"/>
+										<xforms:value ref="value"/>
+									</xforms:itemset>
+									<xforms:item>
+										<xforms:label>other </xforms:label>
+										<xforms:value>other</xforms:value>
+									</xforms:item>
+									<xforms:alert>Please select a method</xforms:alert>
+								</xforms:select1>
+								<xforms:input ref="markerDiscriminantOther">
+									<xforms:label/>
+								</xforms:input>
+							</xforms:group>
 							<xforms:group ref="analysisProtocol">
 								<h5>Analysis protocol</h5>
 
@@ -1736,7 +1758,7 @@
 										<xforms:label>Mixed alleles were defined as </xforms:label>
 										<xforms:item>
 											<xforms:label>please select</xforms:label>
-											<xforms:value />
+											<xforms:value/>
 										</xforms:item>
 										<xforms:item>
 											<xforms:label>recrudescence</xforms:label>
@@ -1753,13 +1775,13 @@
 										<xforms:alert>Please select</xforms:alert>
 									</xforms:select1>
 
-									<xforms:input ref="mixedAllelesOther"></xforms:input>
+									<xforms:input ref="mixedAllelesOther"/>
 
 									<xforms:select1 ref="recrudescence" appearance="minimal">
 										<xforms:label>recrudescence defined as </xforms:label>
 										<xforms:item>
 											<xforms:label>please select</xforms:label>
-											<xforms:value />
+											<xforms:value/>
 										</xforms:item>
 										<xforms:item>
 											<xforms:label>old alleles only</xforms:label>
@@ -1776,7 +1798,7 @@
 										<xforms:label>reinfection defined as </xforms:label>
 										<xforms:item>
 											<xforms:label>please select</xforms:label>
-											<xforms:value />
+											<xforms:value/>
 										</xforms:item>
 										<xforms:item>
 											<xforms:label>new alleles only</xforms:label>
