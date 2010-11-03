@@ -32,6 +32,8 @@
         <title>Study dashboard - Study <xforms:output value="instance('ins-study-entry')/manta:id"/></title>
         <link rel="stylesheet" type="text/css" href="/ops/yui/tabview/assets/skins/sam/tabview.css"></link>
         <style type="text/css"></style>
+<script src="http://ajax.googleapis.com/ajax/libs/dojo/1.5/dojo/dojo.xd.js" type="text/javascript" djConfig="parseOnLoad: true" />
+<script src="../apps/study/common/flattener.js" type="text/javascript" />
         
 
         <xforms:model id="mod-study-dashboard">
@@ -555,7 +557,7 @@
 
 		<!-- End of After content id, before ft id -->
     	
-    	<!-- <fr:xforms-inspector xmlns:fr="http://orbeon.org/oxf/xml/form-runner"/> -->
+    	<fr:xforms-inspector xmlns:fr="http://orbeon.org/oxf/xml/form-runner"/>
     	
     </body>
 </html>
