@@ -238,7 +238,7 @@ a:visited {
 a:focus {
 }
 .btn,
-.views-exposed-form .views-exposed-widget .form-submit,
+.views-exposed-form .views-exposed-widget .form-submit, .study-info-flatten-button,
 input[type="submit"],
 button {	
 	display:inline-block;
@@ -257,7 +257,7 @@ button {
 	margin:0 0 5px;
 }
 .btn:hover,
-.views-exposed-form .views-exposed-widget .form-submit:hover,
+.views-exposed-form .views-exposed-widget .form-submit:hover, .study-info-flatten-button:hover,
 input[type="submit"]:hover,
 button:hover  {
 	color:#D80009;
