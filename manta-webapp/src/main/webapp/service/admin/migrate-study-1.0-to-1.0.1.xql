@@ -8,90 +8,7 @@ import module namespace common-protocol = "http://purl.org/atombeat/xquery/commo
 import module namespace config-collections = "http://purl.org/atombeat/xquery/config-collections" at "collections.xqm" ;
 
 (: Migration actions: :)
-(: Adds "person-is-contactable" element to the "person" element of "acknowledgements", after "institution" in studies and drafts. :)
-(: TODO: FIXME :)
-
-declare variable $test-draft-entry {
-<atom:entry xmlns:atom="http://www.w3.org/2005/Atom">
-    <atom:id>http://localhost:8080/manta/atombeat/content/drafts/9ee0737e-18a6-4d32-9dc3-2f9b3aa80e15.atom</atom:id>
-    <atom:published>2010-10-21T09:51:45.284+01:00</atom:published>
-    <atom:updated>2010-10-21T10:57:52.856+01:00</atom:updated>
-    <atom:link rel="self" type="application/atom+xml;type=entry" href="http://localhost:8080/manta/atombeat/content/drafts/9ee0737e-18a6-4d32-9dc3-2f9b3aa80e15.atom"/>
-    <atom:link rel="edit" type="application/atom+xml;type=entry" href="http://localhost:8080/manta/atombeat/content/drafts/9ee0737e-18a6-4d32-9dc3-2f9b3aa80e15.atom"/>
-    <atom:author>
-        <atom:email>colin@example.org</atom:email>
-    </atom:author>
-    <atom:title type="text">Make me a v1.0 that needs migrating</atom:title>
-    <atom:content type="application/vnd.chassis-manta+xml">
-        <draft>
-            <wizard-pane-to-show>acknowledgements</wizard-pane-to-show>
-            <registrant-has-agreed-to-the-terms>yes</registrant-has-agreed-to-the-terms>
-            <study-entry-container>
-                <atom:entry>
-                    <atom:title type="text">Make me a v1.0 that needs migrating</atom:title>
-                    <atom:content type="application/vnd.chassis-manta+xml">
-                        <study profile="http://www.cggh.org/2010/chassis/manta/1.0">
-                            <study-is-published/>
-                            <publications/>
-                            <acknowledgements>
-                                <person>
-                                    <first-name/>
-                                    <middle-name/>
-                                    <family-name/>
-                                    <email-address>colin@example.org</email-address>
-                                    <institution>Shouldn't have a contactable to start with</institution>
-                                </person>
-                            </acknowledgements>
-                        </study>
-                    </atom:content>
-                </atom:entry>
-            </study-entry-container>
-            <study-permissions-entry-container>
-                <atom:entry>
-                    <atom:content type="application/vnd.atombeat+xml">
-                        <atombeat:security-descriptor xmlns:atombeat="http://purl.org/atombeat/xmlns">
-                            <atombeat:groups>
-                                <atombeat:group id="GROUP_ADMINISTRATORS">
-                                    <atombeat:member>colin@example.org</atombeat:member>
-                                </atombeat:group>
-                            </atombeat:groups>
-                            <atombeat:acl>
-                                <atombeat:ace>
-                                    <atombeat:type>ALLOW</atombeat:type>
-                                    <atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
-                                    <atombeat:permission>RETRIEVE_MEMBER</atombeat:permission>
-                                </atombeat:ace>
-                                <atombeat:ace>
-                                    <atombeat:type>ALLOW</atombeat:type>
-                                    <atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
-                                    <atombeat:permission>UPDATE_MEMBER</atombeat:permission>
-                                </atombeat:ace>
-                                <atombeat:ace>
-                                    <atombeat:type>ALLOW</atombeat:type>
-                                    <atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
-                                    <atombeat:permission>RETRIEVE_MEMBER_ACL</atombeat:permission>
-                                </atombeat:ace>
-                                <atombeat:ace>
-                                    <atombeat:type>ALLOW</atombeat:type>
-                                    <atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
-                                    <atombeat:permission>UPDATE_MEMBER_ACL</atombeat:permission>
-                                </atombeat:ace>
-                            </atombeat:acl>
-                        </atombeat:security-descriptor>
-                    </atom:content>
-                </atom:entry>
-            </study-permissions-entry-container>
-        </draft>
-    </atom:content>
-    <ar:comment xmlns:ar="http://purl.org/atompub/revision/1.0">
-        <atom:author>
-            <atom:email>colin@example.org</atom:email>
-        </atom:author>
-        <atom:updated>2010-10-21T10:57:52.856+01:00</atom:updated>
-        <atom:summary/>
-    </ar:comment>
-</atom:entry>
-};
+(: Adds "person-is-contactable" element to the "person" element of "acknowledgements", after "institution" in studies. :)
 
 declare variable $test-study-entry {
 <atom:entry xmlns:atom="http://www.w3.org/2005/Atom">
@@ -103,7 +20,7 @@ declare variable $test-study-entry {
     <atom:author>
         <atom:email>colin@example.org</atom:email>
     </atom:author>
-    <atom:title type="text">Make me a v1.0 that needs migrating</atom:title>
+    <atom:title type="text">I am a v1.0 that needs migrating</atom:title>
     <atom:content type="application/vnd.chassis-manta+xml">
         <study profile="http://www.cggh.org/2010/chassis/manta/1.0">
             <study-is-published/>
@@ -144,11 +61,7 @@ declare function local:content($content) as item()*
     let $studies := local:get-content("studies")
     let $studies-v1-0 := local:get-old-versioned-content-studies($studies) 
     let $studies-v1-0-1 := local:get-new-versioned-content-studies($studies)
-    
-    let $drafts := local:get-content("drafts")
-    let $drafts-v1-0 := local:get-old-versioned-content-drafts($drafts) 
-    let $drafts-v1-0-1 := local:get-new-versioned-content-drafts($drafts)    
-    
+
     return
     
         <html>
@@ -160,11 +73,6 @@ declare function local:content($content) as item()*
                 <p>Total number of entries in <a href="../content/studies">Study</a> collection: <strong>{ count( $studies ) }</strong></p>
                 <p>Number of entries in <a href="../content/studies">Study</a> collection using v1.0 profile: <strong>{ count( $studies-v1-0 ) }</strong></p>
                 <p>Number of entries in <a href="../content/studies">Study</a> collection using v1.0.1 profile: <strong>{ count( $studies-v1-0-1 ) }</strong></p>
-                
-                
-                <p>Total number of entries in <a href="../content/drafts">Draft</a> collection: <strong>{ count( $drafts ) }</strong></p>
-                <p>Number of entries in <a href="../content/drafts">Draft</a> collection using v1.0 profile: <strong>{ count( $drafts-v1-0 ) }</strong></p>
-                <p>Number of entries in <a href="../content/drafts">Draft</a> collection using v1.0.1 profile: <strong>{ count( $drafts-v1-0-1 ) }</strong></p>                
                 
                 <p>
                     <form method="post" action="">
@@ -205,18 +113,6 @@ declare function local:get-old-versioned-content-studies($studies) as element( a
     let $ret := $studies[atom:content/study/@profile='http://www.cggh.org/2010/chassis/manta/1.0']
     return $ret
 };
-declare function local:get-new-versioned-content-drafts($drafts) as element( atom:entry )* {
-    
-    let $ret := $drafts[atom:content/draft/study-entry-container/atom:entry/atom:content/study/@profile='http://www.cggh.org/2010/chassis/manta/1.0.1']
-    return $ret
-};
-
-declare function local:get-old-versioned-content-drafts($drafts) as element( atom:entry )* {
-    
-    let $ret := $drafts[atom:content/draft/study-entry-container/atom:entry/atom:content/study/@profile='http://www.cggh.org/2010/chassis/manta/1.0']
-    return $ret
-};
-
 
 declare function local:do-modifications-studies($studies-v1-0) as element( atom:entry )*
 {
@@ -232,19 +128,6 @@ declare function local:do-modifications-studies($studies-v1-0) as element( atom:
     return $content
 };
 
-declare function local:do-modifications-drafts($drafts-v1-0) as element( atom:entry )*
-{
-    let $new := local:modify-nodes($drafts-v1-0)
-     
-    let $ret := local:save-changes("drafts", $new)
-      
-    (: Need to get the updated data from the db :)
-    let $all := local:get-content("drafts")
-    let $content := local:get-old-versioned-content-drafts($all)
-
-    
-    return $content
-};
 
 declare function local:save-changes($collection-name, $collection-v1-0-1)
 {
@@ -302,19 +185,7 @@ declare function local:check-changes-studies() as item() *{
          return $out
     return $ret
 };
-declare function local:check-changes-drafts() as item() *{
-  let $all-drafts := local:get-content("drafts")
- let $new-drafts :=  local:get-new-versioned-content-studies($all-drafts)
- let $ret := for $draft in $new-drafts 
-         let $out := if (count($draft//study-entry-container//study//acknowledgements/person/person-is-contactable) = 1) then 
-             let $msg := "Added person-is-contactable to draft"
-             return $msg
-          else
-             let $msg := "Failed to add person-is-contactable to draft"
-             return $msg
-         return $out
-    return $ret
-};
+
 
 declare function local:do-migration($collection-name) {
   
@@ -330,12 +201,8 @@ declare function local:do-migration($collection-name) {
             let $ret2 := local:check-changes-studies()
             return $ret2
         else
-            if ($collection-name = "drafts") then
-                let $ret2 := local:check-changes-drafts()
-                return $ret2
-            else
-                let $ret2 := ''
-                return $ret2
+            let $ret2 := ''
+            return $ret2
       else
         let $ret2 := ''
         return $ret2
@@ -353,11 +220,8 @@ let $content := if ($testing = "no") then
     else
 
         let $test-studies-collection := xmldb:create-collection("xmldb:exist:///db", "test-studies"), 
-            $doc := local:save-changes("studies", $test-study-entry), 
-            $test-drafts-collection := xmldb:create-collection("xmldb:exist:///db", "test-drafts"), 
-            $doc2 := local:save-changes("drafts", $test-draft-entry)
-        (: TODO: This is bananas :)
-        return ($test-studies-collection, $test-drafts-collection)
+            $doc := local:save-changes("studies", $test-study-entry)
+        return $test-studies-collection
 
     
 return 
@@ -370,10 +234,9 @@ return
     
     then 
         
-        let $var := local:do-migration("studies"), $var2 := local:do-migration("drafts")
-        (: TODO: This is bananas :)
-        return ($var, $var2)
+        let $var := local:do-migration("studies")
+        return $var
         
-    else common-protocol:do-method-not-allowed( "/admin/migrate-study-1.0-to-1.0.1.xql" , ( "GET" , "POST" ) )
+    else common-protocol:do-method-not-allowed( "/admin/migrate-study-1.0-to-1.0.1.xql" , "/admin/migrate-study-1.0-to-1.0.1.xql" , ( "GET" , "POST" ) )
     
     
