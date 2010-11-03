@@ -79,11 +79,6 @@
 						
 						<div class="yui-content">
 						
-						 <input type="button" value="Flatten" 
-                    onClick="flattenAtomEntry('{instance('ins-study-entry')/atom:link[@rel='edit']/@href}');" 
-                    id="flatten" name="flatten" />
-						
-						
 						
 							<p>We invite you to supply further information about your study. This will be very helpful in curating your data &#8212; especially if it is not yet published.  
 							</p>
@@ -126,13 +121,20 @@
 							</xforms:group>
 						
 						
-						     <p>
-						     	<span class="study-info-save-changes-button-container">
+                 <p>
+                  <span class="study-info-save-changes-button-container">
 						         <xforms:submit submission="sub-put-sq-study-info-entry">
 						             <xforms:label>Save changes</xforms:label>
 						         </xforms:submit>
-						     	</span>
-						     </p>
+                  </span>
+                  <xforms:group ref="instance('ins-control')/curator-controls">
+                  <input class="study-info-flatten-button" type="button" value="Flatten" 
+                          onClick="flattenAtomEntry('{instance('ins-study-entry')/atom:link[@rel='edit']/@href}');" 
+                   />
+                   </xforms:group>
+                 </p>
+            
+            
 							
 							<xi:include href="../../../common/includes/study/study-info-input.xml" />
 							
