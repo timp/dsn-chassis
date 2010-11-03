@@ -35,7 +35,7 @@
                 <!-- Add meta as early as possible -->
                 <xsl:apply-templates select="/xhtml:html/xhtml:head/xhtml:meta"/>
                 
-                <!-- Handle head elements except scripts -->
+                <!-- Handle head elements except scripts (handled at the bottom) -->
                 <xsl:apply-templates select="/xhtml:html/xhtml:head/(xhtml:link | xhtml:style)"/>
                 
                 <!-- Title -->
