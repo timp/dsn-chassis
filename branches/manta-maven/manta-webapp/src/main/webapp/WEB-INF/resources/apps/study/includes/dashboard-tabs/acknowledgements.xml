@@ -110,6 +110,16 @@
 								                        </xforms:trigger>
 								                	</td>
 								                	<td class="acknowledgement-form-cell">
+								                		<span class="xforms-label">Contactable?</span>
+								                		<xforms:select ref="person-is-contactable" appearance="full">
+								                			<xforms:choices>
+								                				<xforms:item>
+								                					<xforms:label class="invisible"/>
+								                					<xforms:value>Yes</xforms:value>
+								                				</xforms:item>
+								                			</xforms:choices>
+								                		</xforms:select>
+								                		<br/>
 								                		<span class="first-name-textbox-container">
 								                        <xforms:input ref="first-name">
 								                            <xforms:label>First name:</xforms:label>
@@ -141,15 +151,7 @@
 								                        </xforms:input>
 								                		</span>
 								                		<br/>
-								                		<span class="xforms-label">Contactable:</span>
-								                		<xforms:select ref="person-is-contactable" appearance="full">
-								                			<xforms:choices>
-								                				<xforms:item>
-								                					<xforms:label class="invisible"/>
-								                					<xforms:value>Yes</xforms:value>
-								                				</xforms:item>
-								                			</xforms:choices>
-								                		</xforms:select>
+									                		
 								                        
 								                		<div class="acknowledgement-movement-triggers">
 								                        
