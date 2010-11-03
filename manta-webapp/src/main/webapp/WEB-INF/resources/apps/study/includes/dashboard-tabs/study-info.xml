@@ -79,6 +79,12 @@
 						
 						<div class="yui-content">
 						
+						 <input type="button" value="Flatten" 
+                    onClick="flattenAtomEntry('{instance('ins-study-entry')/atom:link[@rel='edit']/@href}');" 
+                    id="flatten" name="flatten" />
+						
+						
+						
 							<p>We invite you to supply further information about your study. This will be very helpful in curating your data &#8212; especially if it is not yet published.  
 							</p>
 							
