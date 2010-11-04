@@ -82,6 +82,12 @@ declare function local:do-modifications($oldhost,$newhost) as element( atom:entr
     let $mod := for $link in //at:deleted-entry[contains(@ref,$oldhost)]
     return update value $link/@ref with concat($newhost,substring-after($link/@ref,$oldhost))
     
+     let $mod := for $link in //atombeat:group[contains(@src,$oldhost)]
+    return update value $link/@src with concat($newhost,substring-after($link/@src,$oldhost))
+    
+    let $mod := for $link in //atom:content[contains(@src,$oldhost)]
+    return update value $link/@src with concat($newhost,substring-after($link/@src,$oldhost))
+    
     return $mod
 };
 
@@ -105,8 +111,8 @@ let $newhost := request:get-parameter("newhost",'http://localhost:8091/repositor
 };
 
 let $login := xmldb:login( "/" , $config:exist-user , $config:exist-password )
-let $host := doc("atombeat/content/studies/.feed")//atom:link[@rel="self"]/@href
-let $current-host := substring-before($host,"/content")
+
+let $current-host := $config:service-url-base
 let $new-host := $config:service-url-base
 
 return 

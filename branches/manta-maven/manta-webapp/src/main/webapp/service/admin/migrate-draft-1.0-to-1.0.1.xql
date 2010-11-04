@@ -2,6 +2,7 @@ declare namespace atom = "http://www.w3.org/2005/Atom" ;
 
 import module namespace response = "http://exist-db.org/xquery/response" ;
 
+import module namespace config = "http://purl.org/atombeat/xquery/config" at "../config/shared.xqm" ;
 import module namespace CONSTANT = "http://purl.org/atombeat/xquery/constants" at "../lib/constants.xqm" ;
 import module namespace atomdb = "http://purl.org/atombeat/xquery/atomdb" at "../lib/atomdb.xqm" ;
 import module namespace common-protocol = "http://purl.org/atombeat/xquery/common-protocol" at "../lib/common-protocol.xqm" ;
@@ -260,7 +261,7 @@ declare function local:do-migration($collection-name) {
     return local:do-post($saved)
 };
 
-let $login := xmldb:login( "/" , "admin" , "" )
+let $login := xmldb:login( "/" , $config:exist-user , $config:exist-password )
 
 let $testing := request:get-parameter("testing", "no")
 
