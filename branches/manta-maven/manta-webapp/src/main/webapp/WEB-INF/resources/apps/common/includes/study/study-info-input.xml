@@ -72,11 +72,6 @@
 					<xforms:value ref="value" />
 				</xforms:itemset>
 			</xforms:select1>
-			<xforms:group ref="count(instance('ins-current-user')//role[contains(.,'ROLE_CHASSIS_CURATOR') or contains(.,'ROLE_CHASSIS_ADMINISTRATOR')]) > 0">
-				<xforms:group model="mod-study-info" ref="instance('ins-sq-study-info-entry')//studyInfoStatus[text()='complete']">
-					<a href="{instance('ins-sq-study-info-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/transform/flatten']/@href}">Click here for csv</a>
-				</xforms:group>
-			</xforms:group>
 			<br />
 			<h3>Study type (WWARN modules)</h3>
 

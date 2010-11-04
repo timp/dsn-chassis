@@ -449,9 +449,9 @@
 						<xforms:bind nodeset="co2percentage"
 							relevant="contains(../incubatorSystem, 'co2incubator') or contains(../incubatorSystem, 'incubationchamber')"/>
 						<!-- co2Other and o2Other are also only relevant when the appropriate incubator system is selected, otherwise user could select Other then change incubator system and still see the Other box -->
-						<xforms:bind nodeset="co2Other" relevant="contains(../co2,'other') and (contains(../incubatorSystem, 'co2incubator') or contains(../incubatorSystem, 'incubationchamber'))" />
+						<xforms:bind nodeset="co2Other" relevant="contains(../co2percentage,'other') and (contains(../incubatorSystem, 'co2incubator') or contains(../incubatorSystem, 'incubationchamber'))" />
 						<xforms:bind nodeset="o2percentage" relevant="contains(../incubatorSystem, 'incubationchamber')"/>
-						<xforms:bind nodeset="o2Other" relevant="contains(../o2,'other') and (contains(../incubatorSystem, 'incubationchamber'))" />
+						<xforms:bind nodeset="o2Other" relevant="contains(../o2percentage,'other') and (contains(../incubatorSystem, 'incubationchamber'))" />
 						<xforms:bind nodeset="healthyErythrocytesSource" />
 						<!-- FIXME type="ctype:percentage" -->
 						<xforms:bind nodeset="hematocritpercent" type="xforms:int" />
