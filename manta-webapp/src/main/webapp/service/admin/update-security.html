@@ -1,11 +1,9 @@
 <html dir="ltr">
     
-    <head>
-        <link rel="stylesheet" type="text/css" href="../../../_static/js/dijit/themes/tundra/tundra.css"
-        />
-    </head>
+    <head></head>
     
     <body class="tundra">
+    	<div id="msg"></div>
     </body>
 <script src="http://ajax.googleapis.com/ajax/libs/dojo/1.5/dojo/dojo.xd.js" type="text/javascript" djConfig="parseOnLoad: true"></script>
     <script>
@@ -27,65 +25,70 @@
           var xhrArgs = {
           		url: href,
                 putData: newData,
-                  handleAs: "text",
-                  headers: {'Content-Type':'application/atom+xml'}
+                  handleAs: "xml",
+                  sync: true,
+                  timeout: 2000,
+                  headers: {'Content-Type':'application/atom+xml'},
+                  handle: function(xmlDoc, ioargs) {
+                	var msgPlace = dojo.byId("msg");
+          			
+          			msgPlace.appendChild(dojo.doc.createTextNode(msg));
+          			msgPlace.appendChild(dojo.doc.createElement('br'));
+                      
+                  }
               };
 
               var deferred = dojo.xhrPut(xhrArgs);
 
-   
-              deferred.addCallback(function(xmlDoc, ioargs) {
-                 document.write(msg);
-              })
-              
-              deferred.addErrback(function(error) {
-                 document.write("Failed:" + msg);
-              });
       }
     function checkSecurityDescriptor(href, id) {
         var xhrArgs = {
         		url: href,
                 preventCache: false,
-                handleAs: "xml"
+                sync: true,
+                timeout: 2000,
+                handleAs: "xml",
+                handle: function(xmlDoc, ioArgs) {
+                    var aces = xmlDoc.getElementsByTagName("atombeat:ace");
+                    var found = false;
+            		for (var i=0;i<aces.length && found == false;i++) {
+            			var ace = aces[i];
+            			var apl = ace.getElementsByTagName("atombeat:permission")
+            			var ap = apl[0].firstChild.nodeValue;
+            			if (ap == 'DELETE_MEDIA') {
+            				found = true
+            			}
+            		}
+            		var msg;
+            		if (found == false) {
+            			var ace = dojo.doc.createElement('atombeat:ace');
+            			var type  = dojo.doc.createElement('atombeat:type');
+            			type.appendChild(dojo.doc.createTextNode("ALLOW"));
+            			var recp  = dojo.doc.createElement('atombeat:recipient');
+            			dojo.attr(recp,"type","role")
+            			recp.appendChild(dojo.doc.createTextNode("ROLE_CHASSIS_CURATOR"));
+            			var perm  = dojo.doc.createElement('atombeat:permission');
+            			perm.appendChild(dojo.doc.createTextNode("DELETE_MEDIA"));
+            			ace.appendChild(type);
+            			ace.appendChild(recp);
+            			ace.appendChild(perm);
+            	        aces[0].parentNode.appendChild(ace);
+            	        msg = id + " already has CURATOR/DELETE_MEDIA permission";
+            	        updateSecurityDescriptor(href, xmlDoc,msg);    
+            		} else {
+            			msg = id + " already has CURATOR/DELETE_MEDIA permission";
+            			
+            			var msgPlace = dojo.byId("msg");
+              			
+              			msgPlace.appendChild(dojo.doc.createTextNode(msg));
+              			msgPlace.appendChild(dojo.doc.createElement('br'));
+            		}
+            		
+            		
+                }
             };
 
             var deferred = dojo.xhrGet(xhrArgs);
-
- 
-            deferred.addCallback(function(xmlDoc, ioargs) {
-                var aces = xmlDoc.getElementsByTagName("atombeat:ace");
-                var found = false;
-        		for (var i=0;i<aces.length && found == false;i++) {
-        			var ace = aces[i];
-        			var apl = ace.getElementsByTagName("atombeat:permission")
-        			var ap = apl[0].firstChild.nodeValue;
-        			if (ap == 'DELETE_MEDIA') {
-        				found = true
-        			}
-        		}
-        		var msg;
-        		if (found == false) {
-        			var ace = dojo.doc.createElement('atombeat:ace');
-        			var type  = dojo.doc.createElement('atombeat:type');
-        			type.appendChild(dojo.doc.createTextNode("ALLOW"));
-        			var recp  = dojo.doc.createElement('atombeat:recipient');
-        			dojo.attr(recp,"type","role")
-        			recp.appendChild(dojo.doc.createTextNode("ROLE_CHASSIS_CURATOR"));
-        			var perm  = dojo.doc.createElement('atombeat:permission');
-        			perm.appendChild(dojo.doc.createTextNode("DELETE_MEDIA"));
-        			ace.appendChild(type);
-        			ace.appendChild(recp);
-        			ace.appendChild(perm);
-        	        aces[0].parentNode.appendChild(ace);
-        	        msg = id + " already has CURATOR/DELETE_MEDIA permission";
-        	        updateSecurityDescriptor(href, xmlDoc,msg);    
-        		} else {
-        			msg = id + " already has CURATOR/DELETE_MEDIA permission<br/>";
-        			document.write(msg);
-        		}
-        		
-        		
-            })
     	
     }
 	function processEntry(id, entry, type) {
@@ -110,46 +113,61 @@
 		var id = label;
 		var dest = URL.replace('study-info',label);
             var xhrArgs = {
-url: dest,
+				url: dest,
+				sync: true,
                 preventCache: false,
-                handleAs: "xml"
+                timeout: 2000,
+                handleAs: "xml",
+                handle: function(xmlDoc, ioargs) {
+                    var feedRoot = xmlDoc.getElementsByTagName("feed");
+                    var feed = new dojox.atom.io.model.Feed();
+                    feed.buildFromDom(xmlDoc.documentElement);
+    		var entryCount = 0;
+    		if (feed.entries != null) {
+    			entryCount = feed.entries.length;
+    		}
+    		processEntry(studyId, feed, id);
+    			xmlDoc.documentElement.setAttribute("xmlns:atombeat","http://purl.org/atombeat/xmlns");	
+    			dojo.attr(xmlDoc.documentElement,"atombeat:enable-tombstones","true");
+    			var configtomb = xmlDoc.getElementsByTagName("atombeat:config-tombstones");
+    			if (configtomb.length == 0) {
+    			var configt = dojo.doc.createElement('atombeat:config-tombstones');
+    			
+    			var config  = dojo.doc.createElement('atombeat:config');
+    			var param = dojo.doc.createElement('atombeat:param');
+    			
+    			dojo.attr(param, {"name":"ghost-atom-elements"});
+    			param.setAttribute("value","title author link");
+    			config.appendChild(param);
+    			configt.appendChild(config);
+    			xmlDoc.documentElement.appendChild(configt);
+    			} else {
+    				var param = configtomb[0].getElementsByTagName("atombeat:param")[0];
+    				param.setAttribute("name","ghost-atom-elements");
+    				param.setAttribute("value","title author link");
+    			}
+    			var msg = "Enabled tombstones for "+studyId+" "+label;
+    			updateSecurityDescriptor(dest, xmlDoc, msg);
+    		/*
+                    for(var j=0;j<entryCount;j++) {
+                    	processEntry(studyId, feed.entries[j], id);
+                    }
+    		*/
+    		if (stack.length > 0) {
+    			getInfo(studyId,URL,stack);
+    		}
+                }
             };
 
             var deferred = dojo.xhrGet(xhrArgs);
 
-            //Okay, on success we'll process the ATOM doc and generate the JavaScript model
-            deferred.addCallback(function(xmlDoc, ioargs) {
-                var feedRoot = xmlDoc.getElementsByTagName("feed");
-                var feed = new dojox.atom.io.model.Feed();
-                feed.buildFromDom(xmlDoc.documentElement);
-		var entryCount = 0;
-		if (feed.entries != null) {
-			entryCount = feed.entries.length;
-		}
-		processEntry(studyId, feed, id);
-			dojo.attr(xmlDoc.documentElement,"atombeat:tombstones","true");
-			var msg = "Enabled tombstones for "+studyId+" "+label+"<br/>";
-			updateSecurityDescriptor(dest, xmlDoc, msg);
-		/*
-                for(var j=0;j<entryCount;j++) {
-                	processEntry(studyId, feed.entries[j], id);
-                }
-		*/
-		if (stack.length > 0) {
-			getInfo(studyId,URL,stack);
-		}
-            });
-
-            deferred.addErrback(function(error) {
-                console.debug(error);
-            });
 	}
    
    //This function performs some basic dojo initialization and will do the load calling for this example
         function initSimpleAtomModified() {
             var xhrArgs = {
-				url: "/repository/atombeat/content/studies/",
-                preventCache: true,
+				url: "/repository/service/content/studies/",
+                preventCache: false,
                 handleAs: "xml"
             };
 
