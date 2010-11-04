@@ -1421,7 +1421,7 @@ let $message := ( "chassis-manta plugin, after-error: " , $operation , ", reques
     let $ret := if ($response/body/child::* instance of element(at:deleted-entry)) then
             manta-plugin:after($operation,$request-path-info,$response)
         else
-            ()
+            $response
     return $ret
 }; 
 
