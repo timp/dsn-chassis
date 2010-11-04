@@ -229,7 +229,7 @@
 							    								<xforms:output ref="substring-before(substring-after(substring-after(@ref,tokenize(@ref,'([^/]+)/[^/]+\.atom$')[1]),'/'),'.')"/>
 							    							</td>
 							    							<td>
-							    								<xforms:output ref="at:comment"/>
+							    								<xforms:output ref="atombeat:ghost/atom:title"/>
 							    							</td>
 							    							<td>
 							    								<xforms:output ref="@when" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')"/>

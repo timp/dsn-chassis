@@ -534,6 +534,11 @@ declare function manta-plugin:after-create-member-studies(
                     </atombeat:config>
                 </atombeat:extension-attribute>
             </atombeat:config-link-extensions>
+            <atombeat:config-tombstones>
+                <atombeat:config>
+                    <atombeat:param name="ghost-atom-elements" value="title author summary category published updated"/>
+                </atombeat:config>
+            </atombeat:config-tombstones>
         </atom:feed>
         
     let $submitted-media-collection-db-path := atomdb:create-collection( $submitted-media-collection-path-info , $feed )

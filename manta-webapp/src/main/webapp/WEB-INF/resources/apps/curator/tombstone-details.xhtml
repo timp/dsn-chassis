@@ -158,11 +158,13 @@
     			</p>
     			<p>
     				<xforms:output ref="substring-before(substring-after(substring-after(at:deleted-entry/@ref,tokenize(at:deleted-entry/@ref,'([^/]+)/[^/]+\.atom$')[1]),'/'),'.')"><xforms:label>Code: </xforms:label></xforms:output><br/>
-    				<xforms:output ref="at:deleted-entry/at:comment"><xforms:label>File Name: </xforms:label></xforms:output><br/>
+    				<xforms:output ref="at:deleted-entry/atombeat:ghost/atom:title"><xforms:label>File Name: </xforms:label></xforms:output><br/>
     				<xforms:output ref="at:deleted-entry/at:by/atom:email"><xforms:label>Deleted By: </xforms:label></xforms:output><br/>
     				<xforms:output ref="@when" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')"><xforms:label>Deleted On: </xforms:label></xforms:output><br/>
     			</p>
     		</xforms:group>
+   			
+   			<p><xforms:output ref="//at:deleted-entry/at:comment"/></p> 		
     		
     		<hr/>
     		
@@ -333,8 +335,7 @@
     		<xforms:group ref="instance('ins-derived-feed')[exists(atom:entry)]/atom:entry">
     			
     			<p>The files below are derived from this file.</p>
-
-
+				
     			<fr:datatable paginated="false">
     				<thead>
     					<tr>
@@ -399,9 +400,9 @@
                 </div>
 
 		<!-- End of After content id, before ft id -->   
-<!--     		
+    		<!-- 
     	 <fr:xforms-inspector xmlns:fr="http://orbeon.org/oxf/xml/form-runner"/>		
-     -->
+      -->
     </body>
 </html>
 
