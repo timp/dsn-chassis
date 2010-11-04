@@ -196,7 +196,7 @@
         		replace="none">
         		<xforms:header>
         			<xforms:name>X-Atom-Tombstone-Comment</xforms:name>
-        			<xforms:value value="instance('ins-media-entry')/atom:title"/>
+        			<xforms:value value="instance('ins-derivation-entry')/atom:summary"/>
         		</xforms:header>
         		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while deleting the original file.</xforms:message>
         		<xforms:send ev:event="xforms-submit-done" submission="sub-get-home"/>

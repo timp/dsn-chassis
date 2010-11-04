@@ -144,7 +144,7 @@
     			} else {
     				var param = configtomb[0].getElementsByTagName("atombeat:param")[0];
     				param.setAttribute("name","ghost-atom-elements");
-    				param.setAttribute("value","title author link");
+    				param.setAttribute("value","title author summary category published updated");
     			}
     			var msg = "Enabled tombstones for "+studyId+" "+label;
     			updateSecurityDescriptor(dest, xmlDoc, msg);
