@@ -483,7 +483,7 @@ declare function security-config:submitted-media-collection-security-descriptor(
     
     (: construct study URI to reference group :)
     
-    let $study-uri := concat( $config:content-service-url , "/studies/" , $study-id , ".atom" )
+    let $study-uri := concat( $config:content-service-url , "/studies/" , $study-id )
     
     return 
     
@@ -645,7 +645,7 @@ declare function security-config:curated-media-collection-security-descriptor(
     
     (: construct study URI to reference group :)
     
-    let $study-uri := concat( $config:content-service-url , "/studies/" , $study-id , ".atom" )
+    let $study-uri := concat( $config:content-service-url , "/studies/" , $study-id )
     
     return 
 
@@ -711,7 +711,7 @@ declare function security-config:derivations-collection-security-descriptor(
     
     (: construct study URI to reference group :)
     
-    let $study-uri := concat( $config:content-service-url , "/studies/" , $study-id , ".atom" )
+    let $study-uri := concat( $config:content-service-url , "/studies/" , $study-id )
     
     return 
 
@@ -782,7 +782,7 @@ declare function security-config:personal-data-reviews-collection-security-descr
     
     (: construct study URI to reference group :)
     
-    let $study-uri := concat( $config:content-service-url , "/studies/" , $study-id , ".atom" )
+    let $study-uri := concat( $config:content-service-url , "/studies/" , $study-id )
     
     return
 
@@ -979,7 +979,7 @@ declare function security-config:submitted-media-media-security-descriptor(
     
     (: construct study URI to reference group :)
     
-    let $study-uri := concat( $config:content-service-url , "/studies/" , $study-id , ".atom" )
+    let $study-uri := concat( $config:content-service-url , "/studies/" , $study-id )
     
     return 
     

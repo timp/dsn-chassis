@@ -20,7 +20,7 @@ import module namespace config-collections = "http://purl.org/atombeat/xquery/co
 
 declare variable $testdata {
 <atom:entry xmlns:atom="http://www.w3.org/2005/Atom">
-    <atom:id>https://www.wwarn.org/repository/atombeat/content/study-info/MGEXQ.atom</atom:id>
+    <atom:id>https://www.wwarn.org/repository/atombeat/content/study-info/MGEXQ</atom:id>
     <atom:published>2010-10-08T03:30:48.996+01:00</atom:published>
     <atom:updated>2010-10-08T03:46:45.34+01:00</atom:updated>
     <atom:author>
@@ -428,11 +428,11 @@ declare variable $testdata {
         <atom:updated>2010-10-08T03:46:45.34+01:00</atom:updated>
         <atom:summary/>
     </ar:comment>
-    <atom:link rel="self" type="application/atom+xml;type=entry" href="https://www.wwarn.org/repository/atombeat/content/study-info/MGEXQ.atom"/>
-    <atom:link rel="edit" type="application/atom+xml;type=entry" href="https://www.wwarn.org/repository/atombeat/content/study-info/MGEXQ.atom"/>
-    <atom:link rel="http://www.cggh.org/2010/chassis/terms/originStudy" href="https://www.wwarn.org/repository/atombeat/content/studies/MGEXQ.atom" type="application/atom+xml;type=entry"/>
-    <atom:link rel="http://purl.org/atombeat/rel/security-descriptor" href="https://www.wwarn.org/repository/atombeat/security/study-info/MGEXQ.atom" type="application/atom+xml;type=entry"/>
-    <atom:link rel="history" href="https://www.wwarn.org/repository/atombeat/history/study-info/MGEXQ.atom" type="application/atom+xml;type=feed"/>
+    <atom:link rel="self" type="application/atom+xml;type=entry" href="https://www.wwarn.org/repository/atombeat/content/study-info/MGEXQ"/>
+    <atom:link rel="edit" type="application/atom+xml;type=entry" href="https://www.wwarn.org/repository/atombeat/content/study-info/MGEXQ"/>
+    <atom:link rel="http://www.cggh.org/2010/chassis/terms/originStudy" href="https://www.wwarn.org/repository/atombeat/content/studies/MGEXQ" type="application/atom+xml;type=entry"/>
+    <atom:link rel="http://purl.org/atombeat/rel/security-descriptor" href="https://www.wwarn.org/repository/atombeat/security/study-info/MGEXQ" type="application/atom+xml;type=entry"/>
+    <atom:link rel="history" href="https://www.wwarn.org/repository/atombeat/history/study-info/MGEXQ" type="application/atom+xml;type=feed"/>
 </atom:entry>
 };
 

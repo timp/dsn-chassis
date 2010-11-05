@@ -118,15 +118,15 @@ declare function manta-plugin:before-update-member(
 	$request-data as element(atom:entry) 
 ) as item()*
 {
-    if ( matches( $request-path-info , "/studies/[^/]+\.atom" ) )
+    if ( matches( $request-path-info , "/studies/[^/]+" ) )
     then manta-plugin:before-update-member-study( $request-path-info , $request-data )
-    else if ( matches( $request-path-info , "/study-info/[^/]+\.atom" ) )
+    else if ( matches( $request-path-info , "/study-info/[^/]+" ) )
     then manta-plugin:before-update-member-study-info( $request-path-info , $request-data )
-    else if ( matches( $request-path-info , "/drafts/[^/]+\.atom" ) )
+    else if ( matches( $request-path-info , "/drafts/[^/]+" ) )
     then manta-plugin:before-update-member-drafts( $request-path-info , $request-data )
-    else if ( matches( $request-path-info , "/media/submitted/[^/]+/[^/]+\.atom" ) )
+    else if ( matches( $request-path-info , "/media/submitted/[^/]+/[^/]+" ) )
     then manta-plugin:before-update-member-submitted-media( $request-path-info , $request-data )
-    else if ( matches( $request-path-info , "/media/curated/[^/]+/[^/]+\.atom" ) )
+    else if ( matches( $request-path-info , "/media/curated/[^/]+/[^/]+" ) )
     then manta-plugin:before-update-member-curated-media( $request-path-info , $request-data )
     else $request-data 
 };
@@ -395,23 +395,23 @@ declare function manta-plugin:after-retrieve-member(
 	$response as element(response)
 ) as element(response)
 {
-    if ( matches( $request-path-info , "/studies/[^/]+\.atom" ) )
+    if ( matches( $request-path-info , "/studies/[^/]+" ) )
     
     then manta-plugin:after-retrieve-member-studies( $response )
     
-    else if ( matches( $request-path-info , "/drafts/[^/]+\.atom" ) )
+    else if ( matches( $request-path-info , "/drafts/[^/]+" ) )
     
     then manta-plugin:after-retrieve-member-drafts( $response )
     
-    else if ( matches( $request-path-info , "^/media/submitted/[^/]+/[^/]+.atom" ) )
+    else if ( matches( $request-path-info , "^/media/submitted/[^/]+/[^/]+" ) )
     
     then manta-plugin:after-retrieve-member-submitted-media( $response )
     
-    else if ( matches( $request-path-info , "^/media/curated/[^/]+/[^/]+.atom" ) )
+    else if ( matches( $request-path-info , "^/media/curated/[^/]+/[^/]+" ) )
     
     then manta-plugin:after-retrieve-member-curated-media( $response )
     
-    else if ( matches( $request-path-info , "^/derivations/[^/]+/[^/]+.atom" ) )
+    else if ( matches( $request-path-info , "^/derivations/[^/]+/[^/]+" ) )
     
     then manta-plugin:after-retrieve-member-derivations( $response )
     
@@ -426,15 +426,15 @@ declare function manta-plugin:after-update-member(
 	$response as element(response)
 ) as element(response)
 {
-    if ( matches( $request-path-info , "/studies/[^/]+\.atom" ) )
+    if ( matches( $request-path-info , "/studies/[^/]+" ) )
     
     then manta-plugin:after-update-member-studies( $response )
     
-    else if ( matches( $request-path-info , "/drafts/[^/]+\.atom" ) )
+    else if ( matches( $request-path-info , "/drafts/[^/]+" ) )
     
     then manta-plugin:after-update-member-drafts( $response )
     
-    else if ( matches( $request-path-info , "^/media/submitted/[^/]+/[^/]+.atom" ) )
+    else if ( matches( $request-path-info , "^/media/submitted/[^/]+/[^/]+" ) )
     
     then manta-plugin:after-update-member-submitted-media( $response )
     
@@ -1050,7 +1050,7 @@ declare function manta-plugin:study-info-member-path-info-for-study-entry(
 ) as xs:string
 {
     let $id := manta-plugin:get-id( $entry )
-    let $path-info := concat( "/study-info/" , $id , ".atom" )
+    let $path-info := concat( "/study-info/" , $id )
     return $path-info
 };
 
@@ -1064,7 +1064,17 @@ declare function manta-plugin:get-id(
     $entry as element(atom:entry)
 ) as xs:string
 {
-    replace( $entry/atom:id/text() , '^.*/([^/^.]+)\.atom$', '$1' )
+    replace( $entry/atom:id/text() , '^.*/([^/^.]+)$', '$1' )
+};
+
+
+
+
+declare function manta-plugin:get-deleted-entry-id(
+    $entry as element(at:deleted-entry)
+) as xs:string
+{
+    replace( $entry/@ref , '^.*/([^/^.]+)$', '$1' )
 };
 
 
@@ -1328,8 +1338,8 @@ declare function manta-plugin:augment-media-atom-entry(
 {
     let $id := manta-plugin:get-id($entry)
     
-    let $study-id := text:groups( $entry/atom:link[@rel='edit']/@href , "([^/]+)/[^/]+\.atom$" )[2]
-    let $origin-study-path-info := concat( "/studies/" , $study-id , ".atom" )
+    let $study-id := text:groups( $entry/atom:link[@rel='edit']/@href , "([^/]+)/[^/]+$" )[2]
+    let $origin-study-path-info := concat( "/studies/" , $study-id )
     let $origin-study-uri := concat( $config:content-service-url , $origin-study-path-info )
     
     let $personal-data-reviews-uri := 
@@ -1345,9 +1355,9 @@ declare function manta-plugin:augment-media-atom-entry(
 
     let $entry := 
         <atom:entry>
-            <manta:id>{$id}</manta:id>
         {
-            $entry/attribute::* ,
+            $entry/attribute::* , (: attributes must come first! :)
+            <manta:id>{$id}</manta:id> ,
             $entry/child::* ,
             <atom:link rel="http://www.cggh.org/2010/chassis/terms/originStudy" href="{$origin-study-uri}" type="application/atom+xml;type=entry" manta:idref="{$study-id}"/> ,
             <atom:link rel="http://www.cggh.org/2010/chassis/terms/personalDataReviews" href="{$personal-data-reviews-uri}" type="application/atom+xml;type=feed"/> ,
@@ -1365,11 +1375,12 @@ declare function manta-plugin:augment-media-entry-tombstone(
 ) as element(at:deleted-entry)
 { 
     let $ref := $entry/@ref
+    let $id := manta-plugin:get-deleted-entry-id($entry)
     let $log := local:log4jDebug(concat('augment-media-entry-tombstone:',$ref))
-     let $log := local:log4jDebug($entry)
-    let $study-id := text:groups( $ref , "([^/]+)/[^/]+\.atom$" )[2]
+    let $log := local:log4jDebug($entry)
+    let $study-id := text:groups( $ref , "([^/]+)/[^/]+$" )[2]
     let $log := local:log4jDebug(concat('augment-media-entry-tombstone:',$study-id))
-    let $origin-study-path-info := concat( "/studies/" , $study-id , ".atom" )
+    let $origin-study-path-info := concat( "/studies/" , $study-id )
     let $origin-study-uri := concat( $config:content-service-url , $origin-study-path-info )
     
     let $personal-data-reviews-uri := 
@@ -1386,7 +1397,8 @@ declare function manta-plugin:augment-media-entry-tombstone(
     let $entry := 
         <at:deleted-entry>
         {
-            $entry/attribute::* ,
+            $entry/attribute::* , (: attributes must come first! :)
+            <manta:id>{$id}</manta:id> ,
             $entry/child::* ,
             <atom:link rel="http://www.cggh.org/2010/chassis/terms/originStudy" href="{$origin-study-uri}" type="application/atom+xml;type=entry" manta:idref="{$study-id}"/> ,
             <atom:link rel="http://www.cggh.org/2010/chassis/terms/personalDataReviews" href="{$personal-data-reviews-uri}" type="application/atom+xml;type=feed"/> ,

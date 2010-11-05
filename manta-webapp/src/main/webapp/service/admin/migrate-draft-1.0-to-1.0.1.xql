@@ -13,11 +13,11 @@ import module namespace config-collections = "http://purl.org/atombeat/xquery/co
 
 declare variable $test-draft-entry {
 <atom:entry xmlns:atom="http://www.w3.org/2005/Atom">
-    <atom:id>http://localhost:8080/manta/atombeat/content/drafts/9ee0737e-18a6-4d32-9dc3-2f9b3aa80e15.atom</atom:id>
+    <atom:id>http://localhost:8080/manta/atombeat/content/drafts/9ee0737e-18a6-4d32-9dc3-2f9b3aa80e15</atom:id>
     <atom:published>2010-10-21T09:51:45.284+01:00</atom:published>
     <atom:updated>2010-10-21T10:57:52.856+01:00</atom:updated>
-    <atom:link rel="self" type="application/atom+xml;type=entry" href="http://localhost:8080/manta/atombeat/content/drafts/9ee0737e-18a6-4d32-9dc3-2f9b3aa80e15.atom"/>
-    <atom:link rel="edit" type="application/atom+xml;type=entry" href="http://localhost:8080/manta/atombeat/content/drafts/9ee0737e-18a6-4d32-9dc3-2f9b3aa80e15.atom"/>
+    <atom:link rel="self" type="application/atom+xml;type=entry" href="http://localhost:8080/manta/atombeat/content/drafts/9ee0737e-18a6-4d32-9dc3-2f9b3aa80e15"/>
+    <atom:link rel="edit" type="application/atom+xml;type=entry" href="http://localhost:8080/manta/atombeat/content/drafts/9ee0737e-18a6-4d32-9dc3-2f9b3aa80e15"/>
     <atom:author>
         <atom:email>colin@example.org</atom:email>
     </atom:author>
