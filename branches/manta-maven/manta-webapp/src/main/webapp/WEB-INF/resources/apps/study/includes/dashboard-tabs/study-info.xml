@@ -127,7 +127,7 @@
 						             <xforms:label>Save changes</xforms:label>
 						         </xforms:submit>
                   </span>
-                  <xforms:group ref="instance('ins-control')/curator-controls">
+                  <xforms:group ref="instance('ins-control')/flatten-button">
                   <input class="study-info-flatten-button" type="button" value="Flatten" 
                           onClick="flattenAtomEntry('{instance('ins-study-entry')/atom:link[@rel='edit']/@href}');" 
                    />

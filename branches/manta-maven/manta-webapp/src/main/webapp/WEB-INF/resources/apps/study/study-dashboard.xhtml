@@ -32,8 +32,8 @@
         <title>Study dashboard - Study <xforms:output value="instance('ins-study-entry')/manta:id"/></title>
         <link rel="stylesheet" type="text/css" href="/ops/yui/tabview/assets/skins/sam/tabview.css"></link>
         <style type="text/css"></style>
-<script src="http://ajax.googleapis.com/ajax/libs/dojo/1.5/dojo/dojo.xd.js" type="text/javascript" djConfig="parseOnLoad: true" />
-<script src="../apps/study/common/flattener.js" type="text/javascript" />
+        <script src="http://ajax.googleapis.com/ajax/libs/dojo/1.5/dojo/dojo.xd.js" type="text/javascript" djConfig="parseOnLoad: true" />
+        <script src="../apps/study/common/flattener.js" type="text/javascript" />
         
 
         <xforms:model id="mod-study-dashboard">
@@ -54,7 +54,8 @@
         			<copy-answers-control/>
         			<copy-answers-trigger/>
         			<contributor-controls/>
-        			<curator-controls/>
+              <curator-controls/>
+              <flatten-button/>
         			<administrator-controls/>
         			<study-is-published-is-empty/>
         		</control>
@@ -91,17 +92,20 @@
         	
 			<xforms:bind nodeset="instance('ins-control')/add-publication-trigger" relevant="instance('ins-study-entry')/atom:content/study/study-is-published='Yes'"/>
 
-        	<xforms:bind nodeset="instance('ins-control')/copy-answers-control" relevant="instance('ins-study-feed')[count(atom:entry)>1]"/>
-        	<xforms:bind nodeset="instance('ins-control')/copy-answers-trigger" readonly="../href-to-copy-study-info-from = ''"/>
+     	<xforms:bind nodeset="instance('ins-control')/copy-answers-control" relevant="instance('ins-study-feed')[count(atom:entry)>1]"/>
+     	<xforms:bind nodeset="instance('ins-control')/copy-answers-trigger" readonly="../href-to-copy-study-info-from = ''"/>
         	
         	
-			<!-- TODO: ensure a file is selected before Upload is triggered -->
-        	<!--  <xforms:bind nodeset="instance('ins-upload')/media" required="true()" />  -->
+      <!-- TODO: ensure a file is selected before Upload is triggered -->
+      <!--  <xforms:bind nodeset="instance('ins-upload')/media" required="true()" />  -->
 
 			<!-- Show the appropriate tabs and help-boxes depending upon the current user roles. -->
 			<xforms:bind nodeset="instance('ins-control')/contributor-controls" relevant="xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CONTRIBUTOR'"/>
-			<xforms:bind nodeset="instance('ins-control')/curator-controls" relevant="xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CURATOR'"/>
+      <xforms:bind nodeset="instance('ins-control')/curator-controls" relevant="xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CURATOR'"/>
 			<xforms:bind nodeset="instance('ins-control')/administrator-controls" relevant="xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_ADMINISTRATOR'"/>
+
+      <!--  Flatten button should only be visible to curators when study-info status is complete -->
+      <xforms:bind nodeset="instance('ins-control')/flatten-button" relevant="xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CURATOR' and xxforms:instance('ins-sq-study-info-entry')//studyInfoStatus[text()='complete']"/>
 
 			<!-- Used to show an Unspecified message for read-only instances of the study-is-published field. -->
 			<xforms:bind nodeset="instance('ins-control')/study-is-published-is-empty" relevant="instance('ins-study-entry')/atom:content/study/study-is-published=''" />
@@ -557,7 +561,7 @@
 
 		<!-- End of After content id, before ft id -->
     	
-    	<fr:xforms-inspector xmlns:fr="http://orbeon.org/oxf/xml/form-runner"/>
+    	<!-- <fr:xforms-inspector xmlns:fr="http://orbeon.org/oxf/xml/form-runner"/> -->
     	
     </body>
 </html>
