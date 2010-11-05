@@ -104,7 +104,7 @@ declare function transform-plugin:after-retrieve-member(
 	$response as element(response)
 ) as element(response)
 {
-     if ( matches( $request-path-info , "^/study-info/[^/]+.atom" ) )
+     if ( matches( $request-path-info , "^/study-info/[^/]+" ) )
     
     then transform-plugin:after-retrieve-member-study-info( $response )
     else $response

@@ -191,11 +191,12 @@
 			var entry = entries[i];
 			var studyURL = entry.childNodes[1].firstChild.nodeValue;
 			var ssqURL = studyURL.replace('studies','study-info');
-			var regexp = new RegExp('/study-info/([A-Z]*).atom');
+			var regexp = new RegExp('/study-info/([A-Z]*)');
 			var m = regexp.exec(ssqURL);
 			var studyId = m[1];
 
-			var base = ssqURL.replace('.atom','');
+//	      var base = ssqURL.replace('.atom','');
+      var base = ssqURL;
 			var stack = new Array();
 			stack.push('media/submitted');
 			getInfo(studyId, base, stack);

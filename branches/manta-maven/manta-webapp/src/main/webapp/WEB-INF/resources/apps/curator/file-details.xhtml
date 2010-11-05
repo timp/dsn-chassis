@@ -261,7 +261,7 @@
     					<xforms:repeat nodeset="instance('ins-derivation-feed')//atom:link[@rel='http://www.cggh.org/2010/chassis/terms/derivationInput']//at:deleted-entry">
     						<tr>
     							<td>
-    								<xforms:output ref="substring-before(substring-after(substring-after(@ref,tokenize(@ref,'([^/]+)/[^/]+\.atom$')[1]),'/'),'.')"/>
+    								<xforms:output ref="manta:id"/>
     							</td>
     							<td>
     								<xforms:output ref="at:comment"/>

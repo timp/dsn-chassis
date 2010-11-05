@@ -226,7 +226,7 @@
 							    					<xforms:repeat id="rep-media-deleted" nodeset="instance('ins-submitted-media-feed')/at:deleted-entry">
 							    						<tr class="repeated-element">
 							    							<td>
-							    								<xforms:output ref="substring-before(substring-after(substring-after(@ref,tokenize(@ref,'([^/]+)/[^/]+\.atom$')[1]),'/'),'.')"/>
+							    								<xforms:output ref="manta:id"/>
 							    							</td>
 							    							<td>
 							    								<xforms:output ref="atombeat:ghost/atom:title"/>

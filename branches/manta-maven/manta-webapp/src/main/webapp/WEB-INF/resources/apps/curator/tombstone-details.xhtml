@@ -157,7 +157,7 @@
     				<a href="../study/dashboard?tab=files&amp;study={atom:link[at:deleted-entry/@rel='http://www.cggh.org/2010/chassis/terms/originStudy']/@href}">&lt;&lt; Study Dashboard</a>
     			</p>
     			<p>
-    				<xforms:output ref="substring-before(substring-after(substring-after(at:deleted-entry/@ref,tokenize(at:deleted-entry/@ref,'([^/]+)/[^/]+\.atom$')[1]),'/'),'.')"><xforms:label>Code: </xforms:label></xforms:output><br/>
+    				<xforms:output ref="at:deleted-entry/manta:id"><xforms:label>Code: </xforms:label></xforms:output><br/>
     				<xforms:output ref="at:deleted-entry/atombeat:ghost/atom:title"><xforms:label>File Name: </xforms:label></xforms:output><br/>
     				<xforms:output ref="at:deleted-entry/at:by/atom:email"><xforms:label>Deleted By: </xforms:label></xforms:output><br/>
     				<xforms:output ref="@when" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')"><xforms:label>Deleted On: </xforms:label></xforms:output><br/>
