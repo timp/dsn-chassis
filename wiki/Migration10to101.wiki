@@ -3,9 +3,9 @@ How to upgrade version 1.0 to 1.0.1
 
 Install the new software and then visit each of these pages in turn:
 
-1. /repository/service/admin/changehost.xql
-2. /repository/service/admin/migrate-db.xql
-3. /repository/service/admin/update-security.html
-4. /repository/service/admin/migrate-study-1.0-to-1.0.1.xql
-5. /repository/service/admin/migrate-draft-1.0-to-1.0.1.xql
-4. /repository/service/admin/migrate-study-info-1.0-to-1.0.1.xql
+  # /repository/service/admin/changehost.xql
+  # /repository/service/admin/migrate-db.xql
+  # /repository/service/admin/update-security.html
+  # /repository/service/admin/migrate-study-1.0-to-1.0.1.xql
+  # /repository/service/admin/migrate-draft-1.0-to-1.0.1.xql
+  # /repository/service/admin/migrate-study-info-1.0-to-1.0.1.xql
