@@ -157,8 +157,11 @@
     
     <!-- You decide here which one of the loggers listed above you want to use. -->
     <root>
-        <priority value="debug"/>
-        <appender-ref ref="ConsoleAppender"/>
+        <priority value="${log4j-priority}"/>
+        <!-- <priority value="debug"/> -->
+        <!-- <priority value="info"/> -->
+        <appender-ref ref="${log4j-appender-ref}" />
+        <!--<appender-ref ref="ConsoleAppender" />-->
         <!--<appender-ref ref="ChainsawAppender"/>-->
         <!--<appender-ref ref="SingleFileAppender"/>-->
         <!--<appender-ref ref="RollingFileAppender"/>-->
