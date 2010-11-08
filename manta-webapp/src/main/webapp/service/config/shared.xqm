@@ -25,7 +25,7 @@ declare variable $config:exist-password as xs:string := "${atombeat-exist-passwo
  : The base URL for this workspace service, used in atom IDs and edit link URIs.
  :)
 (: declare variable $config:service-url-base as xs:string := concat( "http://" , request:get-server-name() , ":" , request:get-server-port() , request:get-context-path() , "/service" ) ; :)
-declare variable $config:service-url-base as xs:string := "${hostName}/repository/service" ;
+declare variable $config:service-url-base as xs:string := "http://${hostName}/repository/service" ;
 
 
 (:
