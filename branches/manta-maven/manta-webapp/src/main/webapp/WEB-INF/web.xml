@@ -154,7 +154,7 @@
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>
-            WEB-INF/security-example.xml
+            ${contextConfigLocation}
         </param-value>
     </context-param>
     
