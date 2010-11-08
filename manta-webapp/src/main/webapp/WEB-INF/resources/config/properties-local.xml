@@ -13,7 +13,14 @@
               value="document model submission submission-details control event action analysis server html"/>
     -->
 
+    <property as="xs:boolean" name="oxf.epilogue.xforms.inspector"      value="${oxf.epilogue.xforms.inspector}"/>
+
     <!-- Epilogue configuration -->
     <property as="xs:anyURI"  name="oxf.epilogue.theme" value="oxf:/config/theme-manta.xsl"/>
+
+    <!-- UK Date formats -->
+    <property as="xs:string"  name="oxf.xforms.format.input.date"       value="[D].[M].[Y]"/> <!-- [M]/[D]/[Y]  or [D]/[M]/[Y] or [D].[M].[Y]-->
     
+    <property as="xs:string"  name="oxf.xforms.xbl.fr.map.key"   value="${google-api-key}"/>
+
 </properties>
