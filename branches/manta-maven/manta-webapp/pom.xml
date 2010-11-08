@@ -122,6 +122,7 @@
     <exist-data>/data/atombeat/exist</exist-data>
     
     <!-- Referenced in log4j.xml -->
+    <orbeonLogs>/data/atombeat/logs/chassis.log</orbeonLogs>
     <log4j-priority>debug</log4j-priority>
     <log4j-appender-ref>ConsoleAppender</log4j-appender-ref>
     
@@ -148,6 +149,7 @@
         <contextConfigLocation>WEB-INF/security-cas-drupal.xml</contextConfigLocation>
         <exist-data>/srv/chassis-data/exist</exist-data>
         <exist-media>/srv/chassis-data/exist</exist-media>
+        <orbeonLogs>/srv/chassis-data/logs/chassis.log</orbeonLogs>
         <log4j-priority>info</log4j-priority>
         <log4j-appender-ref>RollingFileAppender</log4j-appender-ref>
       </properties>
