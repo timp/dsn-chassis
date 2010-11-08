@@ -10,14 +10,7 @@
 
   <dependencies>
   
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
-
-    <!-- overlay atombeat -->
+    <!-- overlay atombeat war -->
     <dependency>
     	<groupId>org.atombeat</groupId>
     	<artifactId>atombeat-orbeon-minimal-secure</artifactId>
@@ -25,6 +18,7 @@
   		<type>war</type>
     </dependency>
     
+    <!-- Normal java compile-time depenencies -->
     <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>servlet-api</artifactId>
@@ -43,7 +37,17 @@
     	<groupId>org.apache.abdera</groupId>
     	<artifactId>abdera-client</artifactId>
     	<version>1.0</version>
+      <scope>compile</scope>
     </dependency>
+
+    <!-- Test dependencies -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+
   </dependencies>
   
   <build>
@@ -75,18 +79,18 @@
               <filtering>true</filtering>
             </resource>
           </webResources>
-	        <overlays>
-	         <!-- configure overlay of atombeat -->
-	         <overlay>
-	           <groupId>org.atombeat</groupId>
-	           <artifactId>atombeat-orbeon-minimal-secure</artifactId>
-             <excludes>
-              <exclude>index.html</exclude>
-              <exclude>xforms-jsp/**</exclude>
-              <exclude>WEB-INF/resources/apps/**</exclude>
-             </excludes>
-	         </overlay>
-	       </overlays>
+	      <overlays>
+	        <!-- configure overlay of atombeat -->
+	        <overlay>
+	          <groupId>org.atombeat</groupId>
+	          <artifactId>atombeat-orbeon-minimal-secure</artifactId>
+              <excludes>
+               <exclude>index.html</exclude>
+               <exclude>xforms-jsp/**</exclude>
+               <exclude>WEB-INF/resources/apps/**</exclude>
+              </excludes>
+	        </overlay>
+	      </overlays>
         </configuration>
       </plugin>
     </plugins>
@@ -100,7 +104,7 @@
     <servletZone>repository</servletZone>
 
     <!-- Referenced in shared.xqm -->
-    <hostName>http://localhost:8080</hostName>
+    <hostName>localhost:8080</hostName>
     <exist-media>/data/atombeat/media</exist-media>
     <atombeat-exist-user>admin</atombeat-exist-user>
     <atombeat-exist-password></atombeat-exist-password>
