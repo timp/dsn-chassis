@@ -44,17 +44,6 @@
 
 	</xforms:group>
 
-	<xforms:model id="mod-extras">
-		<xforms:instance id="mod-csv-perms">
-			<permission>
-				<download/>
-			</permission>
-		</xforms:instance>
-		<xforms:bind id="adminOrCurator" nodeset="instance('mod-csv-perms')//download" />
-		<xforms:action ev:defaultAction="perform">
-		<xforms:setvalue bind="adminOrCurator" value="count(instance('ins-current-user')//role)"/>
-		</xforms:action>
-	</xforms:model>
 	
 	<xforms:group model="mod-study-info"
 		ref="instance('ins-sq-study-info-entry')/atom:content">
