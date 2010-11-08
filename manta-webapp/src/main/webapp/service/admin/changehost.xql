@@ -111,8 +111,9 @@ let $newhost := request:get-parameter("newhost",'http://localhost:8091/repositor
 };
 
 let $login := xmldb:login( "/" , $config:exist-user , $config:exist-password )
-
-let $current-host := $config:service-url-base
+(: If this fails with a null pointer exception then you need to reindex the database :)
+let $host := doc("atombeat/content/studies/.feed")//atom:link[@rel="self"]/@href
+let $current-host := substring-before($host,"/content")
 let $new-host := $config:service-url-base
 
 return 
