@@ -73,6 +73,9 @@
         <artifactId>maven-war-plugin</artifactId>
         <configuration>
           <encoding>UTF-8</encoding>
+           <nonFilteredFileExtensions>
+            <nonFilteredFileExtension>jpg,jpeg,gif,png,pdf</nonFilteredFileExtension>
+          </nonFilteredFileExtensions>
           <webResources>
             <resource>
               <directory>src/main/webapp/</directory>
