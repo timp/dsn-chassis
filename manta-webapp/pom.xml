@@ -1,14 +1,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
-
-	<groupId>org.cggh.chassis</groupId>
+  <groupId>org.cggh.chassis</groupId>
 	<artifactId>manta-webapp</artifactId>
 	<version>1.0.1-SNAPSHOT</version>
   <packaging>war</packaging>
-  <name>${project.artifactId}</name>
+  <name>manta-webapp</name>
   <description>Chassis Manta Web Application</description>
-  
+
   <dependencies>
   
     <dependency>
@@ -24,7 +23,6 @@
     	<artifactId>atombeat-orbeon-minimal-secure</artifactId>
     	<version>0.2-alpha-2-SNAPSHOT</version>
   		<type>war</type>
-  		<scope>runtime</scope>
     </dependency>
     
     <dependency>
@@ -45,7 +43,6 @@
     	<groupId>org.apache.abdera</groupId>
     	<artifactId>abdera-client</artifactId>
     	<version>1.0</version>
-    	<type>jar</type>
     </dependency>
   </dependencies>
   
@@ -71,15 +68,18 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-war-plugin</artifactId>
         <configuration>
-        	<failOnMissingWebXml>false</failOnMissingWebXml>
-          <warName>${project.build.finalName}</warName>
-          <webappDirectory>${project.build.directory}/${project.artifactId}</webappDirectory>
+          <encoding>UTF-8</encoding>
+          <webResources>
+            <resource>
+              <directory>src/main/webapp/</directory>
+              <filtering>true</filtering>
+            </resource>
+          </webResources>
 	        <overlays>
 	         <!-- configure overlay of atombeat -->
 	         <overlay>
 	           <groupId>org.atombeat</groupId>
 	           <artifactId>atombeat-orbeon-minimal-secure</artifactId>
-             <!-- this is where you would configure includes and excludes, if you needed them --> 
              <excludes>
               <exclude>index.html</exclude>
               <exclude>xforms-jsp/**</exclude>
@@ -91,5 +91,145 @@
       </plugin>
     </plugins>
   </build>
+  
+  <!-- Defaul properties, override with command line profile ie -P production or -D property=value -->
+  <properties>
+    <profileId>local</profileId>
+  
+    <!-- Name of servlet zone -->
+    <servletZone>repository</servletZone>
+
+    <!-- Referenced in shared.xqm -->
+    <hostName>http://localhost:8080</hostName>
+    <exist-media>/data/atombeat/media</exist-media>
+    <atombeat-exist-user>admin</atombeat-exist-user>
+    <atombeat-exist-password></atombeat-exist-password>
+    
+    
+    <!-- Referenced in web.xml -->
+    <contextConfigLocation>WEB-INF/security-example.xml</contextConfigLocation>
+
+    <!-- Referenced in security-cas-drupal.properties -->
+    <cas.url>https://www.wwarn.org/sso</cas.url>
+    <chassis.url>https://www.wwarn.org/repository</chassis.url>
+    <drupal.host>wwarn-db.nsms.ox.ac.uk</drupal.host>
+    <drupal.db>wwarn_drupal</drupal.db>
+    <drupal.dbuser>chassis_manta</drupal.dbuser>
+    <drupal.dbpass></drupal.dbpass>
+    <drupal.dbdriver>com.mysql.jdbc.Driver</drupal.dbdriver>
+
+    <!-- Referenced in exist-conf.xml -->
+    <exist-data>/data/atombeat/exist</exist-data>
+    
+    <!-- Referenced in log4j.xml -->
+    <log4j-priority>debug</log4j-priority>
+    <log4j-appender-ref>ConsoleAppender</log4j-appender-ref>
+    
+
+    
+  </properties>
+
+
+
+  <profiles>
+    <profile>
+      <id>cloud1</id>
+      <properties>
+        <profileId>cloud1</profileId>
+        <hostName>cloud1.cggh.org</hostName>
+      </properties>
+    </profile>
+    <profile>
+      <id>production</id>
+      <properties>
+        <profileId>production</profileId>
+        <hostName>www.wwarn.org</hostName>
+        <warName>repository-wwarn</warName>
+        <contextConfigLocation>WEB-INF/security-cas-drupal.xml</contextConfigLocation>
+        <exist-data>/srv/chassis-data/exist</exist-data>
+        <exist-media>/srv/chassis-data/exist</exist-media>
+        <log4j-priority>info</log4j-priority>
+        <log4j-appender-ref>RollingFileAppender</log4j-appender-ref>
+      </properties>
+    </profile>
+    <profile>
+<!--
+Modify catalina.sh if running tomcat as local user :
+
+   export CATALINA_PID=/var/run/tomcat6.pid
+
+   shift
+  
+  "$_RUNJAVA" $JAVA_OPTS \
+    -Djava.endorsed.dirs="$JAVA_ENDORSED_DIRS" -classpath "$CLASSPATH" \
+    -Dcatalina.base="$CATALINA_BASE" \
+    -Dcatalina.home="$CATALINA_HOME" \
+    -Djava.io.tmpdir="$CATALINA_TMPDIR" \
+    org.apache.catalina.startup.Bootstrap "$@" stop
+
+  if [ ! -z "$CATALINA_PID" ]; then
+     echo "Killing: `cat $CATALINA_PID`"
+     kill -9 `cat $CATALINA_PID`
+     echo rm $CATALINA_PID
+     rm $CATALINA_PID
+  else
+     echo "Kill failed: \$CATALINA_PID not set"
+  fi
+
+-->
+    
+      <id>tomcatRunning</id>
+      <activation>
+        <file>
+          <exists>/var/run/tomcat6.pid</exists>
+        </file>
+      </activation>
+      <build>
+        <finalName>${artifactId}-${version}-${profileId}</finalName>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.cargo</groupId>
+            <artifactId>cargo-maven2-plugin</artifactId>
+            <configuration>
+              <wait>true</wait>
+              <container>
+                <containerId>tomcat6x</containerId>
+                <type>remote</type>
+              </container>
+              <configuration>
+                <type>runtime</type> 
+                <properties>
+                    <cargo.tomcat.manager.url>http://localhost:8080/manager</cargo.tomcat.manager.url>
+                    <cargo.remote.username>admin</cargo.remote.username>
+                    <cargo.remote.password />
+                </properties>
+              </configuration>
+              <deployer>
+               <type>remote</type>
+               <deployables>
+                 <deployable>
+                    <properties>
+                      <context>/${servletZone}/</context>
+                    </properties>
+                  </deployable>
+                </deployables>
+              </deployer>
+            </configuration>
+            <executions>
+               <execution>
+                 <id>do</id>
+                 <phase>pre-integration-test</phase>
+                 <goals>
+                    <goal>deployer-redeploy</goal>
+                 </goals>
+               </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+    </profile>
+  </profiles>
 
 </project>
