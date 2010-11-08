@@ -79,6 +79,19 @@
           <webResources>
             <resource>
               <directory>src/main/webapp/</directory>
+              <excludes>
+              <exclude>*.*</exclude>              
+              </excludes>
+              <includes>
+              <include>*.gif</include>
+              </includes>
+              <filtering>false</filtering>
+            </resource>
+            <resource>
+              <directory>src/main/webapp/</directory>
+              <excludes>
+              <exclude>*.gif</exclude>              
+              </excludes>
               <filtering>true</filtering>
             </resource>
           </webResources>
