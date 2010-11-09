@@ -140,7 +140,7 @@
     <drupal.dbdriver>com.mysql.jdbc.Driver</drupal.dbdriver>
 
     <!-- Referenced in exist-conf.xml -->
-    <exist-data>/data/atombeat/exist</exist-data>
+    <exist-data>${cDrive}/data/atombeat/exist</exist-data>
     
     <!-- Referenced in log4j.xml -->
     <orbeonLogs>/data/atombeat/logs/chassis.log</orbeonLogs>
@@ -259,10 +259,10 @@ Modify catalina.sh if running tomcat as local user :
         <os>
           <family>Windows</family>
         </os>
-        <properties>
-          <cDrive>C:</cDrive>
-        </properties>
-      </activation>
+       </activation>
+       <properties>
+         <cDrive>C:</cDrive>
+       </properties>
     </profile>
   </profiles>
 
