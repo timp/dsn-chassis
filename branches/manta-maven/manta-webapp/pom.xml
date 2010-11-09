@@ -111,6 +111,7 @@
   <properties>
     <profileId>local</profileId>
     <skipTests>true</skipTests>
+    <cDrive></cDrive>
   
     <!-- Name of servlet zone -->
     <servletZone>repository</servletZone>
@@ -254,6 +255,14 @@ Modify catalina.sh if running tomcat as local user :
       </build>
     </profile>
     <profile>
+      <activation>
+        <os>
+          <family>Windows</family>
+        </os>
+        <properties>
+          <cDrive>C:</cDrive>
+        </properties>
+      </activation>
     </profile>
   </profiles>
 
