@@ -51,6 +51,7 @@
   </dependencies>
   
   <build>
+    <finalName>${project.artifactId}-${project.version}-${profileId}</finalName>
     <plugins>
     	<plugin>
     		<groupId>org.apache.maven.plugins</groupId>
@@ -60,15 +61,14 @@
 		        <target>1.6</target>
 		    </configuration>
     	</plugin>
-		<!-- skip tests for now -->
-		<plugin>
-			<groupId>org.apache.maven.plugins</groupId>
-			<artifactId>maven-surefire-plugin</artifactId>
-			<configuration>
-			  <skip>true</skip>
-			</configuration>
-		</plugin>
-		<plugin>
+      <plugin>
+		  	<groupId>org.apache.maven.plugins</groupId>
+		  	<artifactId>maven-surefire-plugin</artifactId>
+		  	<configuration>
+		  	  <skip>${skipTests}</skip>
+		  	</configuration>
+		  </plugin>
+	  	<plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-war-plugin</artifactId>
         <configuration>
@@ -79,19 +79,6 @@
           <webResources>
             <resource>
               <directory>src/main/webapp/</directory>
-              <excludes>
-              <exclude>*.*</exclude>              
-              </excludes>
-              <includes>
-              <include>*.gif</include>
-              </includes>
-              <filtering>false</filtering>
-            </resource>
-            <resource>
-              <directory>src/main/webapp/</directory>
-              <excludes>
-              <exclude>*.gif</exclude>              
-              </excludes>
               <filtering>true</filtering>
             </resource>
           </webResources>
@@ -109,12 +96,21 @@
 	      </overlays>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-install-plugin</artifactId>
+        <version>2.3</version>
+        <configuration>
+          <classifier>${profileId}</classifier>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
   
-  <!-- Defaul properties, override with command line profile ie -P production or -D property=value -->
+  <!-- Default properties, override with command line profile ie -P production or -D property=value -->
   <properties>
     <profileId>local</profileId>
+    <skipTests>true</skipTests>
   
     <!-- Name of servlet zone -->
     <servletZone>repository</servletZone>
@@ -169,6 +165,7 @@
       <id>production</id>
       <properties>
         <profileId>production</profileId>
+        <skipTests>false</skipTests>
         <hostName>www.wwarn.org</hostName>
         <google-api-key>TODO</google-api-key>
         <oxf.epilogue.xforms.inspector>false</oxf.epilogue.xforms.inspector>
@@ -213,11 +210,11 @@ Modify catalina.sh if running tomcat as local user :
         </file>
       </activation>
       <build>
-        <finalName>${artifactId}-${version}-${profileId}</finalName>
         <plugins>
           <plugin>
             <groupId>org.codehaus.cargo</groupId>
             <artifactId>cargo-maven2-plugin</artifactId>
+            <version>1.0.1-alpha-2</version>
             <configuration>
               <wait>true</wait>
               <container>
