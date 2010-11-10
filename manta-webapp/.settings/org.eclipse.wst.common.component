@@ -4,7 +4,7 @@
     <property name="context-root" value="repository"/>
     <wb-resource deploy-path="/" source-path="src/main/webapp"/>
     <!-- get eclipse to overlay src/main/webapp on maven build output, for instant gratification -->
-    <wb-resource deploy-path="/" source-path="target/manta-webapp"/>
+    <wb-resource deploy-path="/" source-path="target/manta-webapp-1.0.1-SNAPSHOT-local"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
     <property name="java-output-path" value="/target/classes"/>
   </wb-module>
