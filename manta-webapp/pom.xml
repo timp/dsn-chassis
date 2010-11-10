@@ -73,13 +73,18 @@
         <artifactId>maven-war-plugin</artifactId>
         <configuration>
           <encoding>UTF-8</encoding>
-           <nonFilteredFileExtensions>
-            <nonFilteredFileExtension>jpg,jpeg,gif,png,pdf</nonFilteredFileExtension>
+          <nonFilteredFileExtensions>
+            <nonFilteredFileExtension>jpg,jpeg,gif,png,pdf,xls</nonFilteredFileExtension>
           </nonFilteredFileExtensions>
           <webResources>
+          <!-- counter-intuitive ordering - filtered overwrites normal, only normal used in eclipse-->
+            <resource>
+              <directory>src/main/filtered/</directory>
+              <filtering>true</filtering>
+            </resource>
             <resource>
               <directory>src/main/webapp/</directory>
-              <filtering>true</filtering>
+              <filtering>false</filtering>
             </resource>
           </webResources>
 	      <overlays>
@@ -109,7 +114,7 @@
         <artifactId>maven-eclipse-plugin</artifactId>
         <version>2.8</version>
         <configuration>
-          <projectNameTemplate>[artifactId]-[version]</projectNameTemplate>
+          <projectNameTemplate>[${project.artifactId}]-[${project.version}]</projectNameTemplate>
           <wtpmanifest>true</wtpmanifest>
           <wtpapplicationxml>true</wtpapplicationxml>
           <wtpversion>2.0</wtpversion>
@@ -128,21 +133,21 @@
     <!-- Name of servlet zone -->
     <servletZone>repository</servletZone>
 
-    <!-- Referenced in shared.xqm -->
+    <!-- Referenced in service/config/shared.xqm-->
     <hostName>localhost:8080</hostName>
     <exist-media>/data/atombeat/media</exist-media>
     <atombeat-exist-user>admin</atombeat-exist-user>
     <atombeat-exist-password></atombeat-exist-password>
     
 
-    <!-- Referenced in properties-local.xml -->
+    <!-- Referenced in WEB-INF/resources/config/properties-local.xml -->
     <google-api-key></google-api-key>
     <oxf.epilogue.xforms.inspector>true</oxf.epilogue.xforms.inspector>
     
-    <!-- Referenced in web.xml -->
+    <!-- Referenced in WEB-INF/web.xml -->
     <contextConfigLocation>WEB-INF/security-example.xml</contextConfigLocation>
 
-    <!-- Referenced in security-cas-drupal.properties -->
+    <!-- Referenced in WEB-INF/security-cas-drupal.properties -->
     <cas.url>https://www.wwarn.org/sso</cas.url>
     <chassis.url>https://www.wwarn.org/repository</chassis.url>
     <drupal.host>wwarn-db.nsms.ox.ac.uk</drupal.host>
@@ -151,10 +156,10 @@
     <drupal.dbpass></drupal.dbpass>
     <drupal.dbdriver>com.mysql.jdbc.Driver</drupal.dbdriver>
 
-    <!-- Referenced in exist-conf.xml -->
+    <!-- Referenced in WEB-INF/exist-conf.xml -->
     <exist-data>${cDrive}/data/atombeat/exist</exist-data>
     
-    <!-- Referenced in log4j.xml -->
+    <!-- Referenced in /WEB-INF/resources/config/log4j.xml -->
     <orbeonLogs>/data/atombeat/logs/chassis.log</orbeonLogs>
     <log4j-priority>debug</log4j-priority>
     <log4j-appender-ref>ConsoleAppender</log4j-appender-ref>

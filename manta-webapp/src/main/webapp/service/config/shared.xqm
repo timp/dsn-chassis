@@ -17,15 +17,15 @@ import module namespace xutil = "http://purl.org/atombeat/xquery/xutil" at "../l
  : create collections.
  :)
  
-declare variable $config:exist-user as xs:string := "${atombeat-exist-user}" ;
-declare variable $config:exist-password as xs:string := "${atombeat-exist-password}";
+declare variable $config:exist-user as xs:string := "admin" ;
+declare variable $config:exist-password as xs:string := "";
 
 
 (:~
  : The base URL for this workspace service, used in atom IDs and edit link URIs.
  :)
 (: declare variable $config:service-url-base as xs:string := concat( "http://" , request:get-server-name() , ":" , request:get-server-port() , request:get-context-path() , "/service" ) ; :)
-declare variable $config:service-url-base as xs:string := "http://${hostName}/repository/service" ;
+declare variable $config:service-url-base as xs:string := "http://localhost:8080/repository/service" ;
 
 
 (:
@@ -120,7 +120,7 @@ declare variable $config:media-storage-mode as xs:string := "FILE" (: "DB" :) ;
  : media files will be stored. N.B. the process running AtomBeat MUST have 
  : permission to create this directory and any child directories.
  :)
-declare variable $config:media-storage-dir as xs:string := "${exist-media}" ;
+declare variable $config:media-storage-dir as xs:string := "/data/atombeat/media" ;
 (: 
 declare variable $config:media-storage-dir as xs:string :=
     let $home := system:get-exist-home()
