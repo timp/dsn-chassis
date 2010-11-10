@@ -154,7 +154,7 @@
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>
-            ${contextConfigLocation}
+            WEB-INF/security-example.xml
         </param-value>
     </context-param>
     
@@ -265,7 +265,7 @@
         <param-name>oxf.servlet-destroyed-processor.input.config</param-name>
         <param-value>oxf:/apps/context/servlet-destroyed.xpl</param-value>
     </init-param>-->
-        <!-- End servlet listener processors -->
+        <!-- End servlet listener processors --> 
         <load-on-startup>1</load-on-startup>
     </servlet>
     <!--This is the XForms Server servlet-->
