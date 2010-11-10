@@ -126,12 +126,13 @@
 						         <xforms:submit submission="sub-put-sq-study-info-entry">
 						             <xforms:label>Save changes</xforms:label>
 						         </xforms:submit>
-                  </span>
                   <xforms:group ref="instance('ins-control')/flatten-button">
                   <input class="study-info-flatten-button" type="button" value="Flatten" 
                           onClick="flattenAtomEntry('{instance('ins-study-entry')/atom:link[@rel='edit']/@href}');" 
                    />
+                   <a href="{xxforms:instance('ins-sq-study-info-entry')/atom:link[@rel='edit']/@href}">XML</a>
                    </xforms:group>
+                  </span>
                  </p>
             
             
