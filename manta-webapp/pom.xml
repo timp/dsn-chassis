@@ -7,7 +7,7 @@
   <packaging>war</packaging>
   <name>manta-webapp</name>
   <description>Chassis Manta Web Application</description>
-
+  
   <dependencies>
   
     <!-- overlay atombeat war -->
@@ -31,8 +31,14 @@
       <artifactId>commons-httpclient</artifactId>
       <version>3.1</version>
       <scope>compile</scope>
+      <exclusions>
+      	<exclusion>
+      		<artifactId>commons-codec</artifactId>
+      		<groupId>commons-codec</groupId>
+      	</exclusion>
+      </exclusions>
     </dependency>
-    
+
     <dependency>
     	<groupId>org.apache.abdera</groupId>
     	<artifactId>abdera-client</artifactId>
@@ -47,7 +53,28 @@
       <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
-
+    <dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-cas-client</artifactId>
+			<version>${org.springsecurity.version}</version>
+			<scope>compile</scope>
+			<exclusions>
+        <!-- avoid clash with eXist -->
+        <exclusion>
+          <groupId>commons-logging</groupId>
+          <artifactId>commons-logging</artifactId>
+        </exclusion>
+      </exclusions>
+	</dependency>
+	<!-- Not needed - stick with the dependency from above
+	<dependency>
+		<groupId>org.jasig.cas.client</groupId>
+		<artifactId>cas-client-core</artifactId>
+		<version>${org.jasig.cas.version}</version>
+		<scope>runtime</scope>
+		<type>jar</type>
+	</dependency>
+	 -->
   </dependencies>
   
   <build>
@@ -126,6 +153,9 @@
   
   <!-- Default properties, override with command line profile ie -P production or -D property=value -->
   <properties>
+  	<org.springsecurity.version>2.0.6.RELEASE</org.springsecurity.version>
+  	<!-- Latest in repository.... -->
+  	<org.jasig.cas.version>3.1.12</org.jasig.cas.version>
     <profileId>local</profileId>
     <skipTests>true</skipTests>
     <cDrive></cDrive>
@@ -177,6 +207,25 @@
         <!-- TPP's account -->
         <google-api-key>ABQIAAAAOimsAXNq3_aRjfeNjoNKiRSa-bbzrR8LA0uUuc_9V-299x0KDRT4O_4TUe6_6nxTQjnUjB3IoJ_Z1g</google-api-key>
         <oxf.epilogue.xforms.inspector>false</oxf.epilogue.xforms.inspector>
+      </properties>
+    </profile>
+    <profile>
+      <id>wwarn-app3</id>
+      <properties>
+        <profileId>wwarn-app3</profileId>
+        <skipTests>true</skipTests>
+        <hostName>wwarn-app3.nsms.ox.ac.uk</hostName>
+        <google-api-key>ABQIAAAALKEGMPfIYQSA-VwL_MMJwxRqeKNJVUEFbN2Lzdvvt4uqQX8qsxSlxQAHMeJVCDO1vri3c1m36PYxnA</google-api-key>
+        <oxf.epilogue.xforms.inspector>false</oxf.epilogue.xforms.inspector>
+        <contextConfigLocation>WEB-INF/security-cas-drupal.xml</contextConfigLocation>
+        <exist-data>/srv/chassis-data/exist</exist-data>
+        <exist-media>/srv/chassis-data/exist</exist-media>
+        <orbeonLogs>/srv/chassis-data/logs/chassis.log</orbeonLogs>
+        <log4j-priority>info</log4j-priority>
+        <log4j-appender-ref>RollingFileAppender</log4j-appender-ref>
+        <cas.url>https://wwarn-app3.nsms.ox.ac.uk/sso</cas.url>
+        <chassis.url>https://wwarn-app3.nsms.ox.ac.uk/repository</chassis.url>
+        <drupal.host>localhost</drupal.host>
       </properties>
     </profile>
     <profile>
