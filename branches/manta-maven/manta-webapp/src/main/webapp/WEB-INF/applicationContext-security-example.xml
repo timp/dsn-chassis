@@ -32,21 +32,21 @@
     <http pattern="/xmlrpc" security="none"/>
     <http use-expressions="true">
         <!-- restrict access to libraries and administrative scripts -->
-        <intercept-url pattern="/atombeat/admin/**" access="hasRole('ROLE_CHASSIS_ADMINISTRATOR')" />
-        <intercept-url pattern="/atombeat/config/**" access="hasRole('ROLE_CHASSIS_ADMINISTRATOR')" />
-        <intercept-url pattern="/atombeat/lib/**" access="hasRole('ROLE_CHASSIS_ADMINISTRATOR')" />
-        <intercept-url pattern="/atombeat/plugins/**" access="hasRole('ROLE_CHASSIS_ADMINISTRATOR')" />
+        <intercept-url pattern="/service/admin/**" access="hasRole('ROLE_CHASSIS_ADMINISTRATOR')" />
+        <intercept-url pattern="/service/config/**" access="hasRole('ROLE_CHASSIS_ADMINISTRATOR')" />
+        <intercept-url pattern="/service/lib/**" access="hasRole('ROLE_CHASSIS_ADMINISTRATOR')" />
+        <intercept-url pattern="/service/plugins/**" access="hasRole('ROLE_CHASSIS_ADMINISTRATOR')" />
         
-        <!-- force authentication for all requests to atombeat, but delegate
-            access control decisions to atombeat -->
-        <intercept-url pattern="/atombeat/**" access="hasRole('ROLE_CHASSIS_USER')" />
+        <!-- force authentication for all requests to service, but delegate
+            access control decisions to service -->
+        <intercept-url pattern="/service/**" access="hasRole('ROLE_CHASSIS_USER')" />
         
         <intercept-url pattern="/contributor/**" access="hasAnyRole('ROLE_CHASSIS_CONTRIBUTOR','ROLE_CHASSIS_ADMINISTRATOR')" />
         
         <intercept-url pattern="/personal-data/**" access="hasAnyRole('ROLE_CHASSIS_PERSONAL_DATA_REVIEWER','ROLE_CHASSIS_ADMINISTRATOR')" />
         
         <intercept-url pattern="/curator/**" access="hasAnyRole('ROLE_CHASSIS_CURATOR','ROLE_CHASSIS_ADMINISTRATOR')" />
-        
+        <intercept-url pattern="/reports/**" access="hasAnyRole('ROLE_CHASSIS_CURATOR','ROLE_CHASSIS_ADMINISTRATOR')" />
         <intercept-url pattern="/study/**" access="hasAnyRole('ROLE_CHASSIS_CONTRIBUTOR','ROLE_CHASSIS_CURATOR','ROLE_CHASSIS_ADMINISTRATOR')" />
         
         <intercept-url pattern="/rest/**" access="hasRole('ROLE_CHASSIS_ADMINISTRATOR')" />
