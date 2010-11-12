@@ -4,7 +4,7 @@ How to move a database from one server to another using a backup
   # Stop tomcat
   # Clean out exist database by deleting current files
   # Restart tomcat
-  # Restore (inc. media, i.e. images)
+  # Restore (inc. media, i.e. files)
   # Log in with admin client and reindex all collections
   # (Change admin password to match tomcat and restart)
   # Visit the page repository/service/admin/changehost.xql - you should not need to change the values in the input boxes
