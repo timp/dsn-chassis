@@ -3,7 +3,7 @@
     
     <display-name>atombeat-orbeon-minimal-secure</display-name>
     <description>
-        AtomBeat with Orbeon (Minimal) and Spring Security
+        Chassis Manta using AtomBeat with Orbeon (Minimal)
     </description>
     
     
@@ -154,7 +154,7 @@
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>
-            WEB-INF/security-example.xml
+            WEB-INF/applicationContext-security-example.xml
         </param-value>
     </context-param>
     

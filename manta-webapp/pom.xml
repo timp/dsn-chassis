@@ -8,12 +8,29 @@
   <name>manta-webapp</name>
   <description>Chassis Manta Web Application</description>
   
+  <repositories>
+		<repository>
+			<id>repository.springframework.maven.release</id>
+			<name>Spring Framework Maven Release Repository</name>
+			<url>http://maven.springframework.org/release</url>
+		</repository>
+		<repository>
+			<id>repository.springframework.maven.milestone</id>
+			<name>Spring Framework Maven Milestone Repository</name>
+			<url>http://maven.springframework.org/milestone</url>
+		</repository>
+		<repository>
+			<id>repository.springframework.maven.snapshot</id>
+			<name>Spring Framework Maven Snapshot Repository</name>
+			<url>http://maven.springframework.org/snapshot</url>
+		</repository>
+  </repositories>
   <dependencies>
   
     <!-- overlay atombeat war -->
     <dependency>
     	<groupId>org.atombeat</groupId>
-    	<artifactId>atombeat-orbeon-minimal-secure</artifactId>
+    	<artifactId>atombeat-orbeon-minimal</artifactId>
     	<version>0.2-alpha-2-SNAPSHOT</version>
   		<type>war</type>
     </dependency>
@@ -26,6 +43,31 @@
       <scope>provided</scope>
     </dependency>
 
+
+    <dependency>
+    	<groupId>org.apache.abdera</groupId>
+    	<artifactId>abdera-client</artifactId>
+    	<version>1.0</version>
+      <scope>compile</scope>
+      <exclusions>
+      	<exclusion>
+      		<artifactId>jaxen</artifactId>
+      		<groupId>jaxen</groupId>
+      	</exclusion>
+      	<exclusion>
+      		<artifactId>commons-httpclient</artifactId>
+      		<groupId>commons-httpclient</groupId>
+      	</exclusion>
+      	<exclusion>
+      		<artifactId>commons-codec</artifactId>
+      		<groupId>commons-codec</groupId>
+      	</exclusion>
+      	<exclusion>
+      		<artifactId>commons-logging</artifactId>
+      		<groupId>commons-logging</groupId>
+      	</exclusion>
+      </exclusions>
+    </dependency>
     <dependency>
       <groupId>commons-httpclient</groupId>
       <artifactId>commons-httpclient</artifactId>
@@ -38,14 +80,6 @@
       	</exclusion>
       </exclusions>
     </dependency>
-
-    <dependency>
-    	<groupId>org.apache.abdera</groupId>
-    	<artifactId>abdera-client</artifactId>
-    	<version>1.0</version>
-      <scope>compile</scope>
-    </dependency>
-
     <!-- Test dependencies -->
     <dependency>
       <groupId>junit</groupId>
@@ -55,26 +89,29 @@
     </dependency>
     <dependency>
 			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-cas-client</artifactId>
+			<artifactId>spring-security-cas</artifactId>
 			<version>${org.springsecurity.version}</version>
 			<scope>compile</scope>
-			<exclusions>
-        <!-- avoid clash with eXist -->
-        <exclusion>
-          <groupId>commons-logging</groupId>
-          <artifactId>commons-logging</artifactId>
-        </exclusion>
-      </exclusions>
 	</dependency>
-	<!-- Not needed - stick with the dependency from above
 	<dependency>
-		<groupId>org.jasig.cas.client</groupId>
-		<artifactId>cas-client-core</artifactId>
-		<version>${org.jasig.cas.version}</version>
-		<scope>runtime</scope>
-		<type>jar</type>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>${org.springsecurity.version}</version>
+			<scope>compile</scope>
 	</dependency>
-	 -->
+	<dependency>
+    	<groupId>mysql</groupId>
+    	<artifactId>mysql-connector-java</artifactId>
+    	<version>5.1.6</version>
+	</dependency>
+	   <!-- AtomBeat servlet filters to enable security -->
+    <dependency>
+      <groupId>org.atombeat</groupId>
+      <artifactId>atombeat-servlet-filters</artifactId>
+      <version>${org.atombeat.version}</version>
+      <type>jar</type>
+      <scope>runtime</scope>
+    </dependency>
   </dependencies>
   
   <build>
@@ -118,11 +155,12 @@
 	        <!-- configure overlay of atombeat -->
 	        <overlay>
 	          <groupId>org.atombeat</groupId>
-	          <artifactId>atombeat-orbeon-minimal-secure</artifactId>
+	          <artifactId>atombeat-orbeon-minimal</artifactId>
               <excludes>
                <exclude>index.html</exclude>
                <exclude>xforms-jsp/**</exclude>
                <exclude>WEB-INF/resources/apps/**</exclude>
+               <exclude>WEB-INF/lib/commons_logging-1_0_4.jar</exclude>
               </excludes>
 	        </overlay>
 	      </overlays>
@@ -153,9 +191,8 @@
   
   <!-- Default properties, override with command line profile ie -P production or -D property=value -->
   <properties>
-  	<org.springsecurity.version>2.0.6.RELEASE</org.springsecurity.version>
-  	<!-- Latest in repository.... -->
-  	<org.jasig.cas.version>3.1.12</org.jasig.cas.version>
+  	<org.springsecurity.version>3.1.0.M1</org.springsecurity.version>
+  	<org.atombeat.version>0.2-alpha-2-SNAPSHOT</org.atombeat.version>
     <profileId>local</profileId>
     <skipTests>true</skipTests>
     <cDrive></cDrive>
@@ -164,7 +201,7 @@
     <servletZone>repository</servletZone>
 
     <!-- Referenced in service/config/shared.xqm-->
-    <hostName>localhost:8080</hostName>
+    <hostName>http://localhost:8080</hostName>
     <exist-media>/data/atombeat/media</exist-media>
     <atombeat-exist-user>admin</atombeat-exist-user>
     <atombeat-exist-password></atombeat-exist-password>
@@ -175,7 +212,7 @@
     <oxf.epilogue.xforms.inspector>true</oxf.epilogue.xforms.inspector>
     
     <!-- Referenced in WEB-INF/web.xml -->
-    <contextConfigLocation>WEB-INF/security-example.xml</contextConfigLocation>
+    <contextConfigLocation>WEB-INF/applicationContent-security-example.xml</contextConfigLocation>
 
     <!-- Referenced in WEB-INF/security-cas-drupal.properties -->
     <cas.url>https://www.wwarn.org/sso</cas.url>
@@ -203,7 +240,7 @@
       <id>cloud1</id>
       <properties>
         <profileId>cloud1</profileId>
-        <hostName>cloud1.cggh.org</hostName>
+        <hostName>http://cloud1.cggh.org</hostName>
         <!-- TPP's account -->
         <google-api-key>ABQIAAAAOimsAXNq3_aRjfeNjoNKiRSa-bbzrR8LA0uUuc_9V-299x0KDRT4O_4TUe6_6nxTQjnUjB3IoJ_Z1g</google-api-key>
         <oxf.epilogue.xforms.inspector>false</oxf.epilogue.xforms.inspector>
@@ -214,17 +251,18 @@
       <properties>
         <profileId>wwarn-app3</profileId>
         <skipTests>true</skipTests>
-        <hostName>wwarn-app3.nsms.ox.ac.uk</hostName>
+        <hostName>https://wwarn-app3.nsms.ox.ac.uk</hostName>
         <google-api-key>ABQIAAAALKEGMPfIYQSA-VwL_MMJwxRqeKNJVUEFbN2Lzdvvt4uqQX8qsxSlxQAHMeJVCDO1vri3c1m36PYxnA</google-api-key>
         <oxf.epilogue.xforms.inspector>false</oxf.epilogue.xforms.inspector>
-        <contextConfigLocation>WEB-INF/security-cas-drupal.xml</contextConfigLocation>
+        <contextConfigLocation>WEB-INF/applicationContext-security-cas.xml</contextConfigLocation>
         <exist-data>/srv/chassis-data/exist</exist-data>
         <exist-media>/srv/chassis-data/exist</exist-media>
         <orbeonLogs>/srv/chassis-data/logs/chassis.log</orbeonLogs>
+        <drupal.dbuser>chassis-manta</drupal.dbuser>
         <log4j-priority>info</log4j-priority>
         <log4j-appender-ref>RollingFileAppender</log4j-appender-ref>
         <cas.url>https://wwarn-app3.nsms.ox.ac.uk/sso</cas.url>
-        <chassis.url>https://wwarn-app3.nsms.ox.ac.uk/repository</chassis.url>
+        <chassis.url>https://wwarn-app3.nsms.ox.ac.uk</chassis.url>
         <drupal.host>localhost</drupal.host>
       </properties>
     </profile>
@@ -233,10 +271,10 @@
       <properties>
         <profileId>production</profileId>
         <skipTests>false</skipTests>
-        <hostName>www.wwarn.org</hostName>
+        <hostName>https://www.wwarn.org</hostName>
         <google-api-key>TODO</google-api-key>
         <oxf.epilogue.xforms.inspector>false</oxf.epilogue.xforms.inspector>
-        <contextConfigLocation>WEB-INF/security-cas-drupal.xml</contextConfigLocation>
+        <contextConfigLocation>WEB-INF/applicationContext-security-cas.xml</contextConfigLocation>
         <exist-data>/srv/chassis-data/exist</exist-data>
         <exist-media>/srv/chassis-data/exist</exist-media>
         <orbeonLogs>/srv/chassis-data/logs/chassis.log</orbeonLogs>
