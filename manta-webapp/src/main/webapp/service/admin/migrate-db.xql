@@ -2,16 +2,13 @@ declare namespace atom = "http://www.w3.org/2005/Atom" ;
 declare namespace atombeat = "http://purl.org/atombeat/xmlns" ;
 declare namespace at = "http://purl.org/atompub/tombstones/1.0";
 
+import module namespace request = "http://exist-db.org/xquery/request" ;
 import module namespace response = "http://exist-db.org/xquery/response" ;
-
+import module namespace util = "http://exist-db.org/xquery/util" ;
+import module namespace xmldb = "http://exist-db.org/xquery/xmldb" ;
 import module namespace config = "http://purl.org/atombeat/xquery/config" at "../config/shared.xqm" ;
 import module namespace CONSTANT = "http://purl.org/atombeat/xquery/constants" at "../lib/constants.xqm" ;
-import module namespace xutil = "http://purl.org/atombeat/xquery/xutil" at "../lib/xutil.xqm" ;
-import module namespace atomsec = "http://purl.org/atombeat/xquery/atom-security" at "../lib/atom-security.xqm" ;
-import module namespace atomdb = "http://purl.org/atombeat/xquery/atomdb" at "../lib/atomdb.xqm" ;
-import module namespace ap = "http://purl.org/atombeat/xquery/atom-protocol" at "../lib/atom-protocol.xqm" ;
 import module namespace common-protocol = "http://purl.org/atombeat/xquery/common-protocol" at "../lib/common-protocol.xqm" ;
-import module namespace config-collections = "http://purl.org/atombeat/xquery/config-collections" at "collections.xqm" ;
 
 
 
@@ -73,17 +70,19 @@ return
 
 declare function local:do-modifications() as element( atom:entry )*
 {
-   let $mod := for $link in collection('/db/atombeat/content')//atom:link[@rel='http://www.cggh.org/2010/chassis/terms/originStudy']
+
+   let $mod := for $link in collection('/db/atombeat/content')//atom:link[@rel='http://www.cggh.org/2010/chassis/terms/originStudy' and contains(@href,'.atom')]
     	return update value $link/@href with substring-before($link/@href,'.atom')
     
-   let $mod := for $link in collection('/db/atombeat/content')//atom:link[@rel='self']
+   let $mod := for $link in collection('/db/atombeat/content')//atom:link[@rel='self' and contains(@href,'.atom')]
     	return update value $link/@href with substring-before($link/@href,'.atom')
     	
-   let $mod := for $link in collection('/db/atombeat/content')//atom:link[@rel='edit']
+   let $mod := for $link in collection('/db/atombeat/content')//atom:link[@rel='edit' and contains(@href,'.atom')]
     	return update value $link/@href with substring-before($link/@href,'.atom')
    
-   let $mod := for $link in collection('/db/atombeat/content')//atom:id
+   let $mod := for $link in collection('/db/atombeat/content')//atom:id[contains(.,'.atom')]
     	return update value $link with substring-before($link/text(),'.atom')
+
 (:
       let $mod := local:rename-resources('/studies')
       let $mod := local:rename-resources('/study-info')
