@@ -217,7 +217,7 @@
     <oxf.epilogue.xforms.inspector>true</oxf.epilogue.xforms.inspector>
     
     <!-- Referenced in WEB-INF/web.xml -->
-    <contextConfigLocation>WEB-INF/applicationContent-security-example.xml</contextConfigLocation>
+    <contextConfigLocation>WEB-INF/applicationContext-security-example.xml</contextConfigLocation>
 
     <!-- Referenced in WEB-INF/security-cas-drupal.properties -->
     <cas.url>https://www.wwarn.org/sso</cas.url>
