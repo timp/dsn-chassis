@@ -1,0 +1,341 @@
+#holdall {
+/*
+  background-image: url(wwarn-banner.jpg);
+  background-repeat: no-repeat;
+  background-position: top right;
+  margin-top: 3em;
+ */
+    font-size: 12px;
+}
+#holdall table, #holdall input, #holdall button, #holdall select {
+    /*font-size: 12px;*/
+	margin-bottom:5px;
+}
+/*#hd {
+    height: 20px;
+}
+#hd h1 {
+    margin: 0;
+    padding: 0;
+    font-size: 100%;
+    position: absolute;
+    top: 0.71em;
+    left: 0.71em;
+}*/
+#current-user-actions {
+    position: absolute;
+    top: 0;
+    right: 0em;
+    left: 0em;
+    text-align: right;
+    padding: 0.2em 0.71em 0.2em 0;
+    margin: 0;
+    font-size: 100%;
+    /*border-bottom: 1px solid #bbb;
+    background-color: #eee;*/
+}
+/*#ft {
+    border-top: 1px solid #bbb;
+ 	background-image: url(manta-icon.jpg); 
+    background-repeat: no-repeat;
+    background-position: top right;
+    margin-top: 50px;
+    padding-bottom: 1em;
+}
+#ft p {
+    font-size: 90%;
+    padding: 0;
+    margin: 0.2em 0 0 0;
+    color: #777;
+}
+#bd {
+    margin-bottom: 0.71em;
+}*/
+/* FIXME: Either merge or remove. 
+          Maybe should also have elements, ids, then classes. */
+#bd {
+    margin: 0px;
+}
+
+/*#bd h1 {
+    margin: 0 0 0 0;
+    padding: 0 0 0.2em 0;
+    border-bottom: 4px solid black;
+    font-size: 150%;
+}
+#bd h2 {
+    font-size: 140%;
+}
+#bd h3 {
+    font-size: 120%;
+}
+#content {
+    margin-top: 0.71em;
+}*/
+#content table.wizard {
+    margin-top: 0.71em;
+}
+/*.help {
+    margin: 0.71em 0 0 0.71em;
+    padding: 0.71em;
+    border-color: #243356 #808080 #808080;
+    border-style:solid;
+    border-width:1px;
+    background: #EDF5FF none repeat scroll 0 0;
+    width: 30%;
+}*/
+/*.inner-help {
+    float: right;
+    margin: 0.71em 0 0 0.71em;
+    padding: 0.71em;
+    border-color: #243356 #808080 #808080;
+    border-style:solid;
+    border-width:1px;
+    background: #FFF none repeat scroll 0 0;
+    width: 30%;
+}*/
+.help h2 {
+    margin-top: 0;
+}
+.inner-help h2 {
+    margin-top: 0;
+}
+.yui-skin-sam tr.yui-dt-selected td {
+    background-color: #fff;
+    color: #000;
+}
+.action {
+    font-size: 120%;
+    font-weight: bold;
+}
+.locked-action {
+    font-size: 120%;
+    font-weight: bold;
+    text-decoration: line-through;
+    color: #aaa;
+}
+.wizard-td {
+    background-color: #fce5b6;
+     font-size: 16pt 
+}
+.repeat-table {
+    width:100%;
+}
+.repeat-table .action-td {
+     width: 18px 
+}
+.repeat-table .add-td {
+     
+}
+.repeat-table .form-td {
+/*    background: white;
+     padding: .5em */
+}
+h2.subtitle {
+    margin-top: 0.2em;
+}
+.mini-action {
+    font-size: 60%;
+}
+ul {
+    padding-left: 2em;
+}
+.fourWide .xforms-input-input {
+    width: 4em;
+}
+.study-info span.xforms-group {
+    display:block;
+}
+.study-info .mapPicker span.xforms-group {
+    border: 0px solid gray;
+    margin-bottom: 6px;
+}
+.study-info TD span.xforms-group {
+    border: 0px solid gray;
+    margin-left: 0px;
+}
+.study-info .pendant { 
+    text-transform: lowercase;
+}
+.study-info .mapPicker {
+	margin:5px 0 0;
+}
+.fb-map-gmap-div {
+    border: 3px ridge gray;
+    -moz-border-radius: 6px; 
+    -webkit-border-radius: 6px; 
+    border-radius: 6px; 
+}
+.box {
+    clear: both;
+}
+.study-info h3, h4, h5 {
+    /*padding: 1px;
+    margin: 0px;*/
+}
+.study-info h2 { 
+    /*padding:1em;
+    display:block;
+    background-color: #eee;*/
+}
+
+.study-info .xforms-textarea { 
+  width: 40em;
+}
+.fixed-width {
+    width: 12em;
+}
+.invisible {
+    border:1px solid red;
+	display:none;
+	font-size:3px;
+	margin:0 !important;
+	visibility:hidden;
+	width:1px !important;
+	z-index:-200;
+}
+
+.scrollableCheckboxesLabel {
+    width: 10em;
+    padding: 2px;
+    margin: 4px;
+    float: left;
+}
+.scrollableCheckboxes {
+    max-height: 100px;
+    width: 240px;
+    padding: 2px;
+    margin: 4px;
+    overflow: auto;
+    display: block;
+    float: left;
+}
+.scrollableCheckboxes .xforms-deselected {
+/* Ensure checkboxes are aligned, not inline */
+    display: block;
+}
+
+.warningButton .xforms-trigger{
+}
+
+.warningButton {
+    position: fixed;
+    float: right;
+    right: 26px;
+    z-index: 400;
+    padding: 6px;
+    border: 2px solid #D80009;
+    -moz-border-radius: 5px; 
+    -webkit-border-radius: 5px; 
+    border-radius: 5px; 
+}
+.warningButton button {
+	margin:0 !important;
+}
+/* Color within study-info warning box */
+.xbl-fr-error-summary .fr-error-alert { color: #000; }
+
+.warnings .yui-dialog { 
+    position: fixed;
+}
+/* Gentle alert icon */
+.study-info .xforms-alert-active {
+    background-image: url(star.png);
+}
+
+.xforms-label {
+    margin-right: 3px;
+	width:150px;
+	display:inline-block;
+}
+
+.register-study-wizard .xforms-repeat-selected-item-1, .study-dashboard .xforms-repeat-selected-item-1, .home .xforms-repeat-selected-item-1 {
+/* Masks Orbeon's yellow highlight in wizard by matching background colour. */
+    background-color: #FFFFFF;
+}
+.register-study-wizard .xforms-repeat-selected-item-2, .study-dashboard .xforms-repeat-selected-item-2, .home .xforms-repeat-selected-item-2 {
+/* Masks Orbeon's yellow highlight in wizard by matching background colour. */
+    background-color: #FFFFFF;
+}
+/* Restores the study-info highlight. */
+.register-study-wizard .study-info .xforms-repeat-selected-item-1, .register-study-wizard .study-info .xforms-repeat-selected-item-2 {
+    background-color: #efefef;
+}
+.study-dashboard .yui-content .study-info .xforms-repeat-selected-item-1, .study-dashboard .yui-content .study-info .xforms-repeat-selected-item-2 {
+    background-color: #efefef;
+}
+.register-study-wizard .yui-content .xforms-repeat-selected-item-1, .study-dashboard .yui-content .xforms-repeat-selected-item-1 {
+/* Gives same colour background on dashboard. */
+    background-color: #EDF5FF;
+}
+.study-dashboard .yui-content {
+    min-height: 10em;
+}
+.register-study-wizard .acknowledgement-form-cell, .study-dashboard .acknowledgement-form-cell {
+    padding-bottom: 1.5em;
+}
+.register-study-wizard .acknowledgement-deletion-cell, .study-dashboard .acknowledgement-deletion-cell {
+    vertical-align: top;
+}
+.register-study-wizard .acknowledgement-form-cell .xforms-label, .study-dashboard .acknowledgement-form-cell .xforms-label {
+    clear: both;
+    float: left;
+    width: 95px;
+}
+.register-study-wizard .acknowledgement-form-cell .xforms-input, .study-dashboard .acknowledgement-form-cell .xforms-input {
+    float: left;
+}
+.register-study-wizard .acknowledgement-form-cell .xforms-alert, .study-dashboard .acknowledgement-form-cell .xforms-alert {
+    float: left;
+    padding-top: 8px;
+}
+.register-study-wizard .acknowledgement-movement-triggers, .study-dashboard .acknowledgement-movement-triggers {
+    clear: both;
+    text-align: right;
+/* Caters for the xforms-alert width. */
+    margin-right: 16px;
+}
+.register-study-wizard .acknowledgement-form-summary-item, .study-dashboard .acknowledgement-form-summary-item {
+    padding-bottom: 1em;
+}
+.register-study-wizard .acknowledgement-form-summary-item .xforms-label, .study-dashboard .acknowledgement-form-summary-item .xforms-label {
+    font-weight: bold;
+}
+.register-study-wizard .terms-iframe {
+    width: 100%;
+	height:375px;
+	margin:0 0 10px;
+}
+.study-site-questionnaire-heading{
+    margin-top: 1em;
+}
+
+/* Prevents interference with Orbeon dialogue box interaction. */
+.mask {
+    z-index: 1000 !important;
+}
+.shadow {
+    z-index: 1001 !important;   
+}
+
+.yui-panel-container ul {
+    margin-left: 2em;
+}
+
+
+.background h1 {
+    float:left;
+    margin: 0 0 0 15px;
+    padding-top: 16px;
+}
+.background h2 {
+    float:left;   
+    margin: 0 0 0 1em;
+    padding-top: 21px;
+}
+.secondary-wrap li:first-child a {
+    padding-left: 0;
+}
+.secondary-wrap li.first {
+    padding-left: 0;
+}
