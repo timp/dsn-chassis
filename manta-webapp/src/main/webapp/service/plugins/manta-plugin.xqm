@@ -1145,10 +1145,10 @@ declare function manta-plugin:augment-derivation-entry(
 ) as element()
 {
     let $ret := $entry
-    let $ret := if (count($entry//atom:entry) > 0) then
+    let $ret := if ($entry instance of element(atom:entry)) then
         let $new-entry := manta-plugin:augment-derivation-atom-entry($entry)
         return $new-entry
-     else if (count($entry//at:deleted-entry) > 0) then
+     else if ($entry instance of element(at:deleted-entry)) then
         let $new-entry := manta-plugin:augment-derivation-tombstone($entry)
         return $new-entry
      else 
