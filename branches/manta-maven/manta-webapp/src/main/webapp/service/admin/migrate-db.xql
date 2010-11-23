@@ -82,6 +82,12 @@ declare function local:do-modifications() as element( atom:entry )*
    
    let $mod := for $link in collection('/db/atombeat/content')//atom:id[contains(.,'.atom')]
     	return update value $link with substring-before($link/text(),'.atom')
+    	
+   let $mod := for $link in collection('/db/atombeat/content')//atom:link[@rel='http://www.cggh.org/2010/chassis/terms/derivationInput' and contains(@href,'.atom')]
+    	return update value $link/@href with substring-before($link/@href,'.atom')
+    	
+   let $mod := for $link in collection('/db/atombeat/content')//atom:link[@rel='http://www.cggh.org/2010/chassis/terms/derivationOutput' and contains(@href,'.atom')]
+    	return update value $link/@href with substring-before($link/@href,'.atom')
 
 (:
       let $mod := local:rename-resources('/studies')
