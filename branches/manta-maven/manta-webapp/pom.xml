@@ -222,11 +222,6 @@
     <!-- Referenced in WEB-INF/security-cas-drupal.properties -->
     <cas.url>https://www.wwarn.org/sso</cas.url>
     <chassis.url>https://www.wwarn.org/repository</chassis.url>
-    <drupal.host>wwarn-db.nsms.ox.ac.uk</drupal.host>
-    <drupal.db>wwarn_drupal</drupal.db>
-    <drupal.dbuser>chassis_manta</drupal.dbuser>
-    <drupal.dbpass></drupal.dbpass>
-    <drupal.dbdriver>com.mysql.jdbc.Driver</drupal.dbdriver>
 
     <!-- Referenced in WEB-INF/exist-conf.xml -->
     <exist-data>${cDrive}/data/atombeat/exist</exist-data>
@@ -263,12 +258,10 @@
         <exist-data>/srv/chassis-data/exist</exist-data>
         <exist-media>/srv/chassis-data/exist</exist-media>
         <orbeonLogs>/srv/chassis-data/logs/chassis.log</orbeonLogs>
-        <drupal.dbuser>chassis-manta</drupal.dbuser>
         <log4j-priority>info</log4j-priority>
         <log4j-appender-ref>RollingFileAppender</log4j-appender-ref>
         <cas.url>https://wwarn-app3.nsms.ox.ac.uk/sso</cas.url>
         <chassis.url>https://wwarn-app3.nsms.ox.ac.uk</chassis.url>
-        <drupal.host>localhost</drupal.host>
       </properties>
     </profile>
     <profile>
