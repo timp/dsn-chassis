@@ -135,18 +135,13 @@
     
     
     <!-- Data source definition -->
-    <bean id="drupal6" class="org.apache.commons.dbcp.BasicDataSource">
-        <property name="driverClassName">
-            <value>${drupal.dbdriver}</value>
-        </property>
-        <property name="url">
-            <value>${drupal.dburl}</value>
-        </property>
-        <property name="username"><value>${drupal.dbuser}</value></property>
-        <property name="password"><value>${drupal.dbpass}</value></property>
-        <property name="testWhileIdle" value="true"/>
-        <property name="validationQuery" value="SELECT 1"/>
-    </bean>       
+    <bean id="drupal6"
+        class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName"
+            value="java:comp/env/jdbc/wwarn_drupal"/>   
+        <property name="resourceRef"
+            value="true" />
+    </bean>
     
     <bean id="casAuthenticationFilter" class="org.jasig.cas.client.authentication.AuthenticationFilter">
         <property name="casServerLoginUrl" value="${cas.url}/login" />
