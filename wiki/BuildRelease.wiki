@@ -1,0 +1,15 @@
+#summary How to create a war of Chassis Manta for release
+#labels Phase-Deploy
+
+= Introduction =
+
+Maven is used to build a release
+
+
+= Details =
+
+Run maven with the following settings:
+
+Goals: release:prepare
+
+Profiles: _hostname_
