@@ -67,7 +67,7 @@
                	<xforms:action ev:event="xforms-submit-error">
                	
                		<xforms:message level="modal" if="event('error-type')='resource-error'">
-                			An error occurred white retrieving a list of drafts.
+                			An error occurred while retrieving a list of drafts.
                		</xforms:message>
                		<xforms:message level="modal" if="not(event('error-type')='resource-error')">>
                 			An error occurred (<xforms:output value="event('error-type')"/>) while retrieving a list of drafts.
