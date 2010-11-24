@@ -31,7 +31,7 @@
     <dependency>
     	<groupId>org.atombeat</groupId>
     	<artifactId>atombeat-orbeon-minimal</artifactId>
-    	<version>0.2-alpha-2-SNAPSHOT</version>
+    	<version>${org.atombeat.version}</version>
   		<type>war</type>
     </dependency>
     
@@ -211,7 +211,7 @@
   <!-- Default properties, override with command line profile ie -P production or -D property=value -->
   <properties>
   	<org.springsecurity.version>3.1.0.M1</org.springsecurity.version>
-  	<org.atombeat.version>0.2-alpha-2-SNAPSHOT</org.atombeat.version>
+  	<org.atombeat.version>0.2-alpha-2</org.atombeat.version>
     <profileId>local</profileId>
     <skipTests>true</skipTests>
     <cDrive></cDrive>
