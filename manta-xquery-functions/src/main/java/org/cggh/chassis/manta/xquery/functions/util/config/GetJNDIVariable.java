@@ -1,15 +1,11 @@
 package org.cggh.chassis.manta.xquery.functions.util.config;
 
-import java.io.File;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
-import javax.naming.NamingException;
 
 import org.apache.log4j.Logger;
-import org.cggh.chassis.manta.util.config.ExistConfig;
 import org.exist.dom.QName;
 import org.exist.xquery.BasicFunction;
 import org.exist.xquery.Cardinality;
@@ -18,7 +14,6 @@ import org.exist.xquery.XPathException;
 import org.exist.xquery.XQueryContext;
 import org.exist.xquery.value.FunctionParameterSequenceType;
 import org.exist.xquery.value.FunctionReturnSequenceType;
-import org.exist.xquery.value.IntegerValue;
 import org.exist.xquery.value.Sequence;
 import org.exist.xquery.value.SequenceType;
 import org.exist.xquery.value.StringValue;
@@ -71,6 +66,7 @@ public class GetJNDIVariable extends BasicFunction {
 			}
 			//Using reflection here so that new configuration classes can be added just by creating the appropriate bean
 			methodName = "get" + name.substring(0, 1).toUpperCase() + name.substring(1);
+			@SuppressWarnings("rawtypes")
 			Class[] parameterTypes = {};
 			Method m = o.getClass().getMethod(methodName, parameterTypes);
 			ret = (String) m.invoke(o, new Object[0]);
