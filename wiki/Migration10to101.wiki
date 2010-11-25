@@ -5,7 +5,7 @@ Install the new software and then visit each of these pages in turn:
 
   # /repository/service/admin/changehost.xql
   # /repository/service/admin/migrate-db.xql
-  # /repository/service/admin/update-security.html
+  # /repository/service/admin/update-security.html (Run in FF3)
   # /repository/service/admin/migrate-study-1.0-to-1.0.1.xql
   # /repository/service/admin/migrate-draft-1.0-to-1.0.1.xql
   # /repository/service/admin/migrate-study-info-1.0-to-1.0.1.xql
