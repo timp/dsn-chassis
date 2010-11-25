@@ -3,7 +3,7 @@
 
   <groupId>org.cggh.chassis</groupId>
   <artifactId>manta-config</artifactId>
-  <version>0.0.1-beta-1</version>
+  <version>0.0.1-beta-2-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <name>manta-config</name>
@@ -23,9 +23,9 @@
   </dependencies>
   
   <scm>
-  	<connection>scm:svn:http://dsn-chassis.googlecode.com/svn/tags/manta-config-0.0.1-beta-1</connection>
-  	<developerConnection>scm:svn:https://dsn-chassis.googlecode.com/svn/tags/manta-config-0.0.1-beta-1</developerConnection>
-  	<url>scm:svn:http://dsn-chassis.googlecode.com/svn/tags/manta-config-0.0.1-beta-1</url>
+  	<connection>scm:svn:http://dsn-chassis.googlecode.com/svn/trunk/manta-config</connection>
+  	<developerConnection>scm:svn:https://dsn-chassis.googlecode.com/svn/trunk/manta-config</developerConnection>
+  	<url>scm:svn:http://dsn-chassis.googlecode.com/svn/trunk/manta-config</url>
   </scm>
   
 </project>
