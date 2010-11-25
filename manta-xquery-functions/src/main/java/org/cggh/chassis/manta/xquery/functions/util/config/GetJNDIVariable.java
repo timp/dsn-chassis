@@ -77,7 +77,11 @@ public class GetJNDIVariable extends BasicFunction {
 		}
 
 		if (logger.isDebugEnabled()) {
-			String msg = "Configuration variable:" + name + " is " + ret;
+			String value = ret;
+			if (name.toLowerCase().indexOf("password") >= 0) {
+				value = "A PASSWORD";
+			}
+			String msg = "Configuration variable:" + name + " is " + value;
 			logger.debug(msg);
 		}
 		
