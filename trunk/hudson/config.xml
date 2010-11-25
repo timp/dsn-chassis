@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <hudson>
-  <version>1.376</version>
+  <version>1.383</version>
   <numExecutors>1</numExecutors>
   <mode>NORMAL</mode>
   <useSecurity>true</useSecurity>
@@ -66,6 +66,8 @@
       </properties>
     </jdk>
   </jdks>
+  <viewsTabBar class="hudson.views.DefaultViewsTabBar"/>
+  <myViewsTabBar class="hudson.views.DefaultMyViewsTabBar"/>
   <clouds/>
   <slaves/>
   <quietPeriod>5</quietPeriod>
@@ -90,9 +92,11 @@
           <default>
             <comparator class="hudson.util.CaseInsensitiveComparator"/>
           </default>
-          <int>1</int>
+          <int>2</int>
+          <string></string>
+          <string></string>
           <string>MAVEN_OPTS</string>
-          <string>-Xmx512m </string>
+          <string>-Xmx512m  -XX:MaxPermSize=256M</string>
         </tree-map>
       </envVars>
     </hudson.slaves.EnvironmentVariablesNodeProperty>
