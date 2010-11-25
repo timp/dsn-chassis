@@ -6,7 +6,7 @@
 
 	<groupId>org.cggh.chassis</groupId>
 
-	<version>0.1-beta1-SNAPSHOT</version>
+	<version>0.1-beta-1-SNAPSHOT</version>
 
 
 	<artifactId>manta-xquery-functions</artifactId>
