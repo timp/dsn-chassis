@@ -54,4 +54,9 @@
 
 	</dependencies>
 
+ <scm>
+  	<connection>scm:svn:http://dsn-chassis.googlecode.com/svn/trunk/manta-xquery-functions</connection>
+  	<developerConnection>scm:svn:https://dsn-chassis.googlecode.com/svn/trunk/manta-xquery-functions</developerConnection>
+  	<url>scm:svn:http://dsn-chassis.googlecode.com/svn/trunk/manta-xquery-functions</url>
+  </scm>
 </project>
