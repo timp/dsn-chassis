@@ -5,11 +5,11 @@
   <port>6667</port>
   <password></password>
   <nick>hudson</nick>
-  <channels class="java.util.Arrays$ArrayList">
-    <a class="string-array">
-      <string>#cggh</string>
-    </a>
-  </channels>
+  <defaultTargets>
+    <hudson.plugins.im.GroupChatIMMessageTarget>
+      <name>#cggh</name>
+    </hudson.plugins.im.GroupChatIMMessageTarget>
+  </defaultTargets>
   <hudsonLogin></hudsonLogin>
   <hudsonPassword></hudsonPassword>
   <useNotice>false</useNotice>
