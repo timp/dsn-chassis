@@ -30,7 +30,7 @@ Add the following definition to the appropriate context, probably {{{/Server/Ser
       type="org.cggh.chassis.manta.util.config.ExistConfig"
       factory="org.apache.naming.factory.BeanFactory"
       username="admin" password="changeme" 
-serviceBaseURL="https://myserver/repository/service" mediaStorageDir="/srv/chassis-data/exist" />
+serviceBaseURL="https://myserver/repository/service" mediaStorageDir="/srv/chassis-data/media" />
 }}}
 
 This can also be done by changing the values in service/config/shared.xqm
