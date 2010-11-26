@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.cggh.chassis</groupId>
 	<artifactId>manta-webapp</artifactId>
-	<version>1.0.1-RC-1-SNAPSHOT</version>
+	<version>1.0.1-RC-1</version>
   <packaging>war</packaging>
   <name>manta-webapp</name>
   <description>Chassis Manta Web Application</description>
@@ -131,9 +131,9 @@
   </dependencies>
   
   <scm>
-  	<connection>scm:svn:http://dsn-chassis.googlecode.com/svn/branches/manta-maven/manta-webapp</connection>
-  	<developerConnection>scm:svn:https://dsn-chassis.googlecode.com/svn/branches/manta-maven/manta-webapp</developerConnection>
-  	<url>scm:svn:http://dsn-chassis.googlecode.com/svn/branches/manta-maven/manta-webapp</url>
+  	<connection>scm:svn:http://dsn-chassis.googlecode.com/svn/tags/manta-webapp-1.0.1-RC-1</connection>
+  	<developerConnection>scm:svn:https://dsn-chassis.googlecode.com/svn/tags/manta-webapp-1.0.1-RC-1</developerConnection>
+  	<url>scm:svn:http://dsn-chassis.googlecode.com/svn/tags/manta-webapp-1.0.1-RC-1</url>
   </scm>
   <build>
     <finalName>${project.artifactId}-${project.version}-${profileId}</finalName>
@@ -228,7 +228,7 @@
   	<org.atombeat.version>0.2-alpha-2</org.atombeat.version>
     <profileId>local</profileId>
     <skipTests>true</skipTests>
-    <cDrive></cDrive>
+    <cDrive />
   
     <!-- Name of servlet zone -->
     <servletZone>repository</servletZone>
@@ -237,11 +237,11 @@
     <hostName>http://localhost:8080</hostName>
     <exist-media>/data/atombeat/media</exist-media>
     <atombeat-exist-user>admin</atombeat-exist-user>
-    <atombeat-exist-password></atombeat-exist-password>
+    <atombeat-exist-password />
     
 
     <!-- Referenced in WEB-INF/resources/config/properties-local.xml -->
-    <google-api-key></google-api-key>
+    <google-api-key />
     <oxf.epilogue.xforms.inspector>true</oxf.epilogue.xforms.inspector>
     
     <!-- Referenced in WEB-INF/web.xml -->
