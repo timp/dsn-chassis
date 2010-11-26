@@ -9,6 +9,8 @@ To get started, follow the steps below.
 
 AtomBeat is the main dependency of the new project. It's not available yet in any maven repositories, so you have to checkout, build and install it yourself.
 
+The DOS equivalent of the UNIX "export" command is "set", used in the same way.
+
 {{{
 $ svn checkout http://atombeat.googlecode.com/svn/trunk/parent /path/to/atombeat-trunk
 $ cd /path/to/atombeat-trunk
