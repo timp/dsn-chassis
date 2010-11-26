@@ -8,8 +8,19 @@ Maven is used to build a release
 
 = Details =
 
+== Prepare repository ==
 Run maven with the following settings:
 
 Goals: release:prepare
 
-Profiles: _hostname_
+{{mvn release:prepare -Dusername=_me_ -Dpassword=_mypassword_}}}
+
+This will result in a new tag in the repository corresponding to the version in the pom
+
+== Build server specific wars ==
+
+{{{ 
+svn co http://dsn-chassis.googlecode.com/svn/tags/manta-webapp-1.0.1-RC-1
+cd manta-webapp-1.0.1-RC-1
+mvn package -P _profile_
+ }}}
