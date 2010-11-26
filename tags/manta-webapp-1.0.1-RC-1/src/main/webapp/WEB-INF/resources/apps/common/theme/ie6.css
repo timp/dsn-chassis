@@ -1,0 +1,45 @@
+/* 
+
+IE6 STYLE SHEET [x] WEB SITE
+Created by Author Name
+kmp.co.uk
+
+Add any bugs needed for IE6
+
+==============================
+Popular Bug fixes for IE6
+==============================
+
+hasLayout is key too all IE6 render bugs, for more information visit www.positioniseverything.net
+
+1. Missing Element, add position:relative;
+2. Double Margin on element, add diplay:inline;
+
+==============================
+
+*/
+
+div, li {
+	_zoom: 1 !important;
+}
+#ft {
+	height:100px;
+}
+#bd {
+	height:275px;
+}
+.main-indent {
+	position:relative;
+	top:-30px;
+	margin:0;
+}
+ol {
+	margin:0;
+	list-style:inside decimal;
+	width:445px;
+}
+ol li {
+	vertical-align:top;
+	_padding:0 !important;
+	clear:both;
+}
