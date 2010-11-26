@@ -117,6 +117,17 @@
       <type>jar</type>
       <scope>runtime</scope>
     </dependency>
+    <dependency>
+    	<groupId>org.cggh.chassis</groupId>
+    	<artifactId>manta-xquery-functions</artifactId>
+    	<version>0.1-beta-1</version>
+    </dependency>
+    <dependency>
+    	<groupId>org.cggh.chassis</groupId>
+    	<artifactId>manta-config</artifactId>
+    	<version>0.0.1-beta-1</version>
+    	<scope>provided</scope>
+    </dependency>
   </dependencies>
   
   <scm>
@@ -257,7 +268,6 @@
       <id>cloud1</id>
       <properties>
         <profileId>cloud1</profileId>
-        <hostName>http://cloud1.cggh.org</hostName>
         <!-- TPP's account -->
         <google-api-key>ABQIAAAAOimsAXNq3_aRjfeNjoNKiRSa-bbzrR8LA0uUuc_9V-299x0KDRT4O_4TUe6_6nxTQjnUjB3IoJ_Z1g</google-api-key>
         <oxf.epilogue.xforms.inspector>false</oxf.epilogue.xforms.inspector>
@@ -268,12 +278,10 @@
       <properties>
         <profileId>wwarn-app3</profileId>
         <skipTests>true</skipTests>
-        <hostName>https://wwarn-app3.nsms.ox.ac.uk</hostName>
         <google-api-key>ABQIAAAALKEGMPfIYQSA-VwL_MMJwxRqeKNJVUEFbN2Lzdvvt4uqQX8qsxSlxQAHMeJVCDO1vri3c1m36PYxnA</google-api-key>
         <oxf.epilogue.xforms.inspector>false</oxf.epilogue.xforms.inspector>
         <contextConfigLocation>WEB-INF/applicationContext-security-cas.xml</contextConfigLocation>
         <exist-data>/srv/chassis-data/exist</exist-data>
-        <exist-media>/srv/chassis-data/exist</exist-media>
         <orbeonLogs>/srv/chassis-data/logs/chassis.log</orbeonLogs>
         <log4j-priority>info</log4j-priority>
         <log4j-appender-ref>RollingFileAppender</log4j-appender-ref>
@@ -286,12 +294,10 @@
       <properties>
         <profileId>production</profileId>
         <skipTests>false</skipTests>
-        <hostName>https://www.wwarn.org</hostName>
         <google-api-key>TODO</google-api-key>
         <oxf.epilogue.xforms.inspector>false</oxf.epilogue.xforms.inspector>
         <contextConfigLocation>WEB-INF/applicationContext-security-cas.xml</contextConfigLocation>
         <exist-data>/srv/chassis-data/exist</exist-data>
-        <exist-media>/srv/chassis-data/exist</exist-media>
         <orbeonLogs>/srv/chassis-data/logs/chassis.log</orbeonLogs>
         <log4j-priority>info</log4j-priority>
         <log4j-appender-ref>RollingFileAppender</log4j-appender-ref>
