@@ -3,6 +3,8 @@
 
 = Introduction =
 
+See the [http://code.google.com/p/dsn-chassis/wiki/MantaMaven MantaMaven wiki page] first.
+
 There are various ways that it is possible to configure the application.
 
 This page describes the default
