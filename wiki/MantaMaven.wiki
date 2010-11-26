@@ -18,7 +18,23 @@ $ mvn clean install
 
 This will take a couple of minutes, to download all dependencies and run the integration tests.
 
-= 2. Checkout and Built Manta-Maven =
+= 2. Checkout, build and install manta-xquery-functions =
+
+{{{
+svn co http://dsn-chassis.googlecode.com/svn/tags/manta-xquery-functions-0.1-beta-1
+cd manta-xquery-functions-0.1-beta-1
+mvn clean install
+}}}
+
+= 3. Checkout, build and install manta-config =
+
+{{{
+svn co http://dsn-chassis.googlecode.com/svn/tags/manta-config-0.0.1-beta-1
+cd manta-config-0.0.1-beta-1
+mvn clean install
+}}}
+
+= 4. Checkout and Build Manta-Maven =
 
 To checkout and build the new maven-structured project, do:
 
@@ -31,7 +47,7 @@ $ mvn clean package
 
 If this works, then you are ready to import the project into eclipse.
 
-= 3. Import Manta-Webapp into Eclipse =
+= 5. Import Manta-Webapp into Eclipse =
 
 Install m2eclipse from sonatype.
 
@@ -72,7 +88,7 @@ $ cd manta-webapp
 $ mvn clean package
 }}}
 
-Checking out the !AtomBeat trunk allows you to use snapshot builds as dependencies in the new manta project. The current version of !AtomBeat in the trunk is 0.2-alpha-2-SNAPSHOT.
+Checking out the !AtomBeat trunk allows you to use snapshot builds as dependencies in the new manta project. The current version of !AtomBeat in the trunk is 0.2-alpha-3-SNAPSHOT.
 
 N.B. if you are using the !AtomBeat trunk, bear in mind that the version number in the trunk may change if a new release of !AtomBeat is issued, so you would need to update the manta-webapp POM.
 
@@ -84,7 +100,6 @@ $ cd /path/to/atombeat-0.2-alpha-2
 $ mvn clean install
 }}}
 
-However, 0.2-alpha-2 is not released yet, and 0.2-alpha-1 is not compatible with manta-webapp, so you'll have to use the 0.2-alpha-2-SNAPSHOT from the trunk for now.
 
 == Triggering XQuery Recompile ==
 
