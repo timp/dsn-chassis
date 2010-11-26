@@ -1,0 +1,56 @@
+#summary How to configure Chassis Manta
+#labels Phase-Deploy
+
+= Introduction =
+
+There are various ways that it is possible to configure the application.
+
+This page describes the default
+
+
+= Details =
+
+Most configuration can be done using a profile in the pom.xml however the exception to this is the setting of database configuration which is done using JNDI.
+
+The first stage is to create a deployment war using maven with a profile configured for your server (default is localhost)
+
+Note that it is possible to set these parameters by editing configuration files however the preferred method is described below.
+
+==JNDI set up==
+
+This depends on which application server is used - Tomcat is described here
+
+===Atombeat/eXist configuration===
+
+Copy the appropriate version of manta-config.jar e.g. manta-config-0.0.1-beta-1.jar to the tomcat endorsed directory e.g. /usr/share/tomcat6/endorsed
+
+Add the following definition to the appropriate context, probably {{{/Server/Service/Engine/Host/Context[@path='/repository']}}}, in /var/lib/tomcat6/conf/server.xml
+{{{
+<Resource name="bean/existConfigFactory" auth="Container"
+      type="org.cggh.chassis.manta.util.config.ExistConfig"
+      factory="org.apache.naming.factory.BeanFactory"
+      username="admin" password="changeme" 
+serviceBaseURL="https://myserver/repository/service" mediaStorageDir="/srv/chassis-data/exist" />
+}}}
+
+This can also be done by changing the values in service/config/shared.xqm
+
+===MySQL configuration===
+This is only required if you are using the CAS integration.
+
+Copy the appropriate version of mysql-connector-java.jar to the tomcat endorsed directory e.g. /usr/share/tomcat6/endorsed
+
+Add the following resource definition as above - change to suit your setup - you may like to place it in GlobalNamingResources if the database connection is to be shared
+{{{
+<Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" initialSize="10" 
+jdbcInterceptors="ConnectionState;StatementFinalizer;SlowQueryReportJmx(threshold=10000)" 
+jmxEnabled="true" logAbandoned="true" maxActive="100" maxIdle="100" maxWait="10000" 
+minEvictableIdleTimeMillis="30000" minIdle="10" name="jdbc/wwarn_drupal" 
+password="password" removeAbandoned="true" removeAbandonedTimeout="60" 
+testOnBorrow="true" testOnReturn="false" testWhileIdle="true" 
+timeBetweenEvictionRunsMillis="5000" type="javax.sql.DataSource" 
+url="jdbc:mysql://127.0.0.1:3306/wwarn_drupal?autoReconnect=true" username="mydbuser" 
+validationInterval="30000" validationQuery="SELECT 1" />
+}}}
+
+This can also be done by editing the Spring Security configuration file
