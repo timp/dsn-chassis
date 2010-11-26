@@ -53,4 +53,8 @@ url="jdbc:mysql://127.0.0.1:3306/wwarn_drupal?autoReconnect=true" username="mydb
 validationInterval="30000" validationQuery="SELECT 1" />
 }}}
 
+You will also require this in the context configuration if you are using global naming resources
+{{{
+<ResourceLink global="jdbc/wwarn_drupal" name="jdbc/wwarn_drupal" type="javax.sql.DataSource"/>
+}}}
 This can also be done by editing the Spring Security configuration file
