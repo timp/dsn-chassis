@@ -14,15 +14,15 @@
   </properties>
   <scm class="hudson.scm.NullSCM"/>
   <canRoam>true</canRoam>
-  <disabled>false</disabled>
+  <disabled>true</disabled>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers class="vector"/>
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>wget  --user=adam@example.org --password=bar --post-data=&apos;&apos;  --auth-no-challenge http://cloud1.cggh.org/manta/atombeat/admin/install.xql 
+      <command>wget  --user=adam@example.org --password=bar --post-data=&apos;&apos;  --auth-no-challenge http://cloud1.cggh.org/manta/atombeat/admin/install.xql -O install.xql
 more install.xql
-rm install.xql
+
 
 </command>
     </hudson.tasks.Shell>
@@ -33,6 +33,17 @@ rm install.xql
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
+    <hudson.plugins.ircbot.IrcPublisher>
+      <targets class="java.util.Collections$EmptyList"/>
+      <strategy>ALL</strategy>
+      <notifyOnBuildStart>false</notifyOnBuildStart>
+      <notifySuspects>false</notifySuspects>
+      <notifyCulprits>false</notifyCulprits>
+      <notifyFixers>false</notifyFixers>
+      <notifyUpstreamCommitters>false</notifyUpstreamCommitters>
+      <buildToChatNotifier class="hudson.plugins.im.build_notify.DefaultBuildToChatNotifier"/>
+      <channels/>
+    </hudson.plugins.ircbot.IrcPublisher>
   </publishers>
   <buildWrappers/>
 </project>
