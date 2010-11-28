@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<user>
+  <fullName>IanW</fullName>
+  <description></description>
+  <properties>
+    <hudson.security.HudsonPrivateSecurityRealm_-Details>
+      <passwordHash>CvlTXx:f463974aff4de07d37be20aa2cf591a7c289b9d999c6260c4080b7410e4cb036</passwordHash>
+    </hudson.security.HudsonPrivateSecurityRealm_-Details>
+    <hudson.model.MyViewsProperty>
+      <primaryViewName>All</primaryViewName>
+      <views>
+        <hudson.model.AllView>
+          <owner class="hudson.model.MyViewsProperty" reference="../../.."/>
+          <name>All</name>
+          <filterExecutors>false</filterExecutors>
+          <filterQueue>false</filterQueue>
+        </hudson.model.AllView>
+      </views>
+    </hudson.model.MyViewsProperty>
+    <hudson.tasks.Mailer_-UserProperty>
+      <emailAddress>IanW@well.ox.ac.uk</emailAddress>
+    </hudson.tasks.Mailer_-UserProperty>
+    <hudson.plugins.ircbot.IrcUserProperty>
+      <nick>IanW</nick>
+    </hudson.plugins.ircbot.IrcUserProperty>
+  </properties>
+</user>
