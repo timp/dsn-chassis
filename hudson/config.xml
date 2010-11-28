@@ -1,43 +1,43 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <hudson>
-  <version>1.383</version>
+  <version>1.386</version>
   <numExecutors>1</numExecutors>
   <mode>NORMAL</mode>
   <useSecurity>true</useSecurity>
   <authorizationStrategy class="hudson.security.GlobalMatrixAuthorizationStrategy">
-    <permission>hudson.model.Computer.Configure:ianw</permission>
+    <permission>hudson.model.Computer.Configure:IanW</permission>
     <permission>hudson.model.Computer.Configure:timp</permission>
-    <permission>hudson.model.Computer.Delete:ianw</permission>
+    <permission>hudson.model.Computer.Delete:IanW</permission>
     <permission>hudson.model.Computer.Delete:timp</permission>
-    <permission>hudson.model.Hudson.Administer:ianw</permission>
+    <permission>hudson.model.Hudson.Administer:IanW</permission>
     <permission>hudson.model.Hudson.Administer:timp</permission>
+    <permission>hudson.model.Hudson.Read:IanW</permission>
     <permission>hudson.model.Hudson.Read:anonymous</permission>
-    <permission>hudson.model.Hudson.Read:ianw</permission>
     <permission>hudson.model.Hudson.Read:timp</permission>
-    <permission>hudson.model.Item.Build:ianw</permission>
+    <permission>hudson.model.Item.Build:IanW</permission>
     <permission>hudson.model.Item.Build:timp</permission>
-    <permission>hudson.model.Item.Configure:ianw</permission>
+    <permission>hudson.model.Item.Configure:IanW</permission>
     <permission>hudson.model.Item.Configure:timp</permission>
-    <permission>hudson.model.Item.Create:ianw</permission>
+    <permission>hudson.model.Item.Create:IanW</permission>
     <permission>hudson.model.Item.Create:timp</permission>
-    <permission>hudson.model.Item.Delete:ianw</permission>
+    <permission>hudson.model.Item.Delete:IanW</permission>
     <permission>hudson.model.Item.Delete:timp</permission>
+    <permission>hudson.model.Item.Read:IanW</permission>
     <permission>hudson.model.Item.Read:anonymous</permission>
-    <permission>hudson.model.Item.Read:ianw</permission>
     <permission>hudson.model.Item.Read:timp</permission>
-    <permission>hudson.model.Item.Workspace:ianw</permission>
+    <permission>hudson.model.Item.Workspace:IanW</permission>
     <permission>hudson.model.Item.Workspace:timp</permission>
-    <permission>hudson.model.Run.Delete:ianw</permission>
+    <permission>hudson.model.Run.Delete:IanW</permission>
     <permission>hudson.model.Run.Delete:timp</permission>
-    <permission>hudson.model.Run.Update:ianw</permission>
+    <permission>hudson.model.Run.Update:IanW</permission>
     <permission>hudson.model.Run.Update:timp</permission>
-    <permission>hudson.model.View.Configure:ianw</permission>
+    <permission>hudson.model.View.Configure:IanW</permission>
     <permission>hudson.model.View.Configure:timp</permission>
-    <permission>hudson.model.View.Create:ianw</permission>
+    <permission>hudson.model.View.Create:IanW</permission>
     <permission>hudson.model.View.Create:timp</permission>
-    <permission>hudson.model.View.Delete:ianw</permission>
+    <permission>hudson.model.View.Delete:IanW</permission>
     <permission>hudson.model.View.Delete:timp</permission>
-    <permission>hudson.scm.SCM.Tag:ianw</permission>
+    <permission>hudson.scm.SCM.Tag:IanW</permission>
     <permission>hudson.scm.SCM.Tag:timp</permission>
   </authorizationStrategy>
   <securityRealm class="hudson.security.HudsonPrivateSecurityRealm">

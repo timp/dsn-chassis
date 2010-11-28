@@ -2,5 +2,5 @@
 <hudson.plugins.googlecode.scm.GoogleCodeSCMEx_-DescriptorImpl>
   <generation>1</generation>
   <credentials class="hashtable"/>
-  <revPropSupport class="hashtable"/>
+  <workspaceFormat>8</workspaceFormat>
 </hudson.plugins.googlecode.scm.GoogleCodeSCMEx_-DescriptorImpl>
