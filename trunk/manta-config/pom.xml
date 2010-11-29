@@ -9,6 +9,23 @@
   <name>manta-config</name>
   <url>http://cggh.org</url>
 
+	<repositories>
+    <repository>
+      <id>cggh</id>
+      <name>CGGH Maven Repository</name>
+      <url>http://cloud1.cggh.org/maven2/</url>
+    </repository>
+	</repositories>
+  <distributionManagement>
+    <repository>
+      <id>cggh</id>
+      <url>scp://cloud1.cggh.org/var/www/maven2/</url>
+    </repository>
+    <snapshotRepository>
+      <id>cggh</id>
+      <url>scp://cloud1.cggh.org/var/www/maven2/</url>
+    </snapshotRepository>
+  </distributionManagement>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
