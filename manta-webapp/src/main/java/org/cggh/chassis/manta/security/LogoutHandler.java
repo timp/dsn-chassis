@@ -36,6 +36,9 @@ public class LogoutHandler implements
 		System.out.println("logging out via handler");
 		request.getSession().invalidate();
 		Cookie[] cookies = request.getCookies();
+		if (cookies == null) {
+			return;
+		}
 		int numCookies = cookies.length;
 		for (int i = 0; i < numCookies; i++) {
 			Cookie myCookie = cookies[i];
