@@ -491,6 +491,13 @@
         <res-auth>Container</res-auth>
     </resource-ref>
     <!-- End SQL examples -->
+    <resource-env-ref>
+        <description>
+            Object factory for eXist config instances.
+        </description>
+        <resource-env-ref-name>bean/existConfigFactory</resource-env-ref-name>
+        <resource-env-ref-type>org.cggh.chassis.manta.util.config.ExistConfig</resource-env-ref-type>
+    </resource-env-ref>
     <!-- Uncomment this for the authentication example -->
     <!--
     <security-constraint>
