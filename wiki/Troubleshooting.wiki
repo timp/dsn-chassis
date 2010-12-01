@@ -1,0 +1,20 @@
+#summary What to do if your installation doesn't work
+#labels Phase-Deploy
+
+= Introduction =
+
+This is a list of common problems when installing and running Chassis Manta
+
+= Details =
+
+== Resource not found error ==
+
+First go to /repository/service/admin/install.xql
+
+This will show you whether the collections are installed and available - if this is the first time then you will need to install them
+
+If you get an error message containing the phrase JNDI then you need to configure your application appropriately
+
+Another place to check is /repository/service/admin/changehost.xql
+
+The values in the two input boxes should be the same
