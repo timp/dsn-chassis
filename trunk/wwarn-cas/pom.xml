@@ -70,7 +70,12 @@
 			<artifactId>perf4j</artifactId>
 			<version>0.9.13</version>
 		</dependency>
-
+		<dependency>
+			<groupId>org.jasig.cas</groupId>
+			<artifactId>cas-server-integration-restlet</artifactId>
+			<version>${cas.version}</version>
+			<type>jar</type>
+		</dependency>
 	</dependencies>
 	<properties>
 		<cas.version>3.4.3.1</cas.version>
