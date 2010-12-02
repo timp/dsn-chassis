@@ -122,8 +122,6 @@
 				<version>1.1</version>
 				<configuration>
 					<path>/repository</path>
-					<contextFile>/srv/chassis-manta/cas-context/sso.xml</contextFile>
-					<mode>both</mode>
 				</configuration>
 			</plugin>
 		</plugins>
