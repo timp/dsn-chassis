@@ -8,7 +8,7 @@
   </properties>
   <scm class="hudson.scm.NullSCM"/>
   <canRoam>true</canRoam>
-  <disabled>true</disabled>
+  <disabled>false</disabled>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers class="vector">
     <hudson.triggers.TimerTrigger>
@@ -18,7 +18,7 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>wget  --user=adam@example.org --password=bar --post-data=&quot;&quot;   --auth-no-challenge -O studies.feed -d http://cloud1.cggh.org/repository/service/content/studies
+      <command>wget  --user=adam@example.org --password=bar --auth-no-challenge -O studies.feed -d http://cloud1.cggh.org/repository/service/content/studies
 cat studies.feed
 grep -q &quot;atom:feed&quot; studies.feed 
 </command>
