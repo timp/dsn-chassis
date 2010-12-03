@@ -259,6 +259,10 @@
 															<xforms:label>Email address:</xforms:label>
 														</xforms:output>
 														<br/>
+														<xforms:output ref="person-is-contactable">
+															<xforms:label>Contactable:</xforms:label>
+														</xforms:output>
+														<br/>
 														<xforms:output ref="institution">
 															<xforms:label>Institution:</xforms:label>
 														</xforms:output>
