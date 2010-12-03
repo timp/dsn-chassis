@@ -280,6 +280,8 @@ View/Edit details in a study:
 
 .Check that the fields are read-only.
 
+.Check that all the fields and values are visible and correct: Contactable, First name, Middle name, Family name, Email address, Institution.
+
 .Click on the Files tab.
 
 >The Files tab will load.
@@ -712,8 +714,6 @@ Curator/Administrator tests:
 
 
 --------------------------
-
-
 
 
 
