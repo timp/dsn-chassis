@@ -17,8 +17,7 @@
   <scm class="hudson.scm.SubversionSCM">
     <locations>
       <hudson.scm.SubversionSCM_-ModuleLocation>
-        <remote>http://atombeat.googlecode.com/svn/trunk/parent</remote>
-        <local>parent</local>
+        <remote>http://atombeat.googlecode.com/svn/trunk/parent/atombeat-orbeon-full</remote>
       </hudson.scm.SubversionSCM_-ModuleLocation>
     </locations>
     <useUpdate>true</useUpdate>
@@ -41,7 +40,7 @@
   <concurrentBuild>false</concurrentBuild>
   <rootModule>
     <groupId>org.atombeat</groupId>
-    <artifactId>atombeat-parent</artifactId>
+    <artifactId>atombeat-orbeon-full</artifactId>
   </rootModule>
   <goals>-D maven.test.skip=true clean install deploy</goals>
   <mavenOpts>-Xmx1024M -XX:MaxPermSize=256M</mavenOpts>
@@ -52,20 +51,12 @@
   <archivingDisabled>false</archivingDisabled>
   <reporters>
     <hudson.maven.reporters.MavenMailer>
-      <recipients>timp@well.ox.ac.uk</recipients>
+      <recipients>timp@well.ox.ac.uk,alimanfoo@gmail.com</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>true</sendToIndividuals>
     </hudson.maven.reporters.MavenMailer>
   </reporters>
   <publishers>
-    <hudson.tasks.BuildTrigger>
-      <childProjects>manta-trunk</childProjects>
-      <threshold>
-        <name>SUCCESS</name>
-        <ordinal>0</ordinal>
-        <color>BLUE</color>
-      </threshold>
-    </hudson.tasks.BuildTrigger>
     <hudson.plugins.ircbot.IrcPublisher>
       <targets class="java.util.Collections$EmptyList"/>
       <strategy>ALL</strategy>

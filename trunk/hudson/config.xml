@@ -86,13 +86,50 @@
       <filterQueue>false</filterQueue>
       <jobNames class="tree-set">
         <comparator class="hudson.util.CaseInsensitiveComparator"/>
-        <string>atombeat</string>
+        <string>atombeat-orbeon-minimal</string>
+        <string>atombeat-service</string>
+        <string>atombeat-xquery-functions</string>
         <string>backupHudsonConfig</string>
         <string>checkStudyFeed</string>
+        <string>hudson-trigger</string>
         <string>manta-config</string>
         <string>manta-maven</string>
         <string>manta-trunk</string>
         <string>manta-xquery-functions</string>
+        <string>wwarn-cas-Spring-3</string>
+      </jobNames>
+      <jobFilters/>
+      <columns>
+        <hudson.views.StatusColumn/>
+        <hudson.views.WeatherColumn/>
+        <hudson.views.JobColumn/>
+        <hudson.views.LastSuccessColumn/>
+        <hudson.views.LastFailureColumn/>
+        <hudson.views.LastDurationColumn/>
+        <hudson.views.BuildButtonColumn/>
+      </columns>
+    </listView>
+    <listView>
+      <owner class="hudson" reference="../../.."/>
+      <name>AtomBeat</name>
+      <filterExecutors>false</filterExecutors>
+      <filterQueue>false</filterQueue>
+      <jobNames class="tree-set">
+        <comparator class="hudson.util.CaseInsensitiveComparator" reference="../../../listView/jobNames/comparator"/>
+        <string>atombeat-exist-full</string>
+        <string>atombeat-exist-full-secure</string>
+        <string>atombeat-exist-minimal</string>
+        <string>atombeat-exist-minimal-secure</string>
+        <string>atombeat-integration-tests</string>
+        <string>atombeat-orbeon-full</string>
+        <string>atombeat-orbeon-full-secure</string>
+        <string>atombeat-orbeon-minimal</string>
+        <string>atombeat-orbeon-minimal-secure</string>
+        <string>atombeat-parent</string>
+        <string>atombeat-service</string>
+        <string>atombeat-servlet-filters</string>
+        <string>atombeat-xquery-functions</string>
+        <string>hudson-trigger</string>
       </jobNames>
       <jobFilters/>
       <columns>
@@ -106,7 +143,7 @@
       </columns>
     </listView>
   </views>
-  <primaryView>All</primaryView>
+  <primaryView>Current</primaryView>
   <slaveAgentPort>0</slaveAgentPort>
   <label></label>
   <nodeProperties/>
@@ -116,7 +153,7 @@
         <unserializable-parents/>
         <tree-map>
           <default>
-            <comparator class="hudson.util.CaseInsensitiveComparator"/>
+            <comparator class="hudson.util.CaseInsensitiveComparator" reference="../../../../../../views/listView/jobNames/comparator"/>
           </default>
           <int>2</int>
           <string></string>
