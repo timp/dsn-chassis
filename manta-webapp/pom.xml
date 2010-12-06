@@ -190,12 +190,22 @@
 							<groupId>org.atombeat</groupId>
 							<artifactId>atombeat-orbeon-minimal</artifactId>
 							<excludes>
+							<!-- Comments are a form of documentation to indicate that the jar is required -->
 								<exclude>index.html</exclude>
 								<exclude>xforms-jsp/**</exclude>
 								<exclude>WEB-INF/resources/apps/**</exclude>
 								<exclude>WEB-INF/lib/commons-logging-1_0_4.jar</exclude>
 								<exclude>WEB-INF/lib/commons-codec-1_3.jar</exclude>
 								<exclude>WEB-INF/lib/commons-httpclient-3_1.jar</exclude>
+								<exclude>WEB-INF/lib/xmlgraphics-commons-1_1.jar</exclude>
+                                <exclude>WEB-INF/lib/pdfbox-0_7_1.jar</exclude>
+                                <!--  <exclude>WEB-INF/lib/batik-all-1_6.jar</exclude> -->
+                                <exclude>WEB-INF/lib/fop-0_93.jar</exclude>
+                                <exclude>WEB-INF/lib/hsqldb-1_8_0_7.jar</exclude>
+                                <exclude>WEB-INF/lib/ant-1_6_5.jar</exclude>
+                                <exclude>WEB-INF/lib/antlr-2_7_4_orbeon.jar</exclude>
+                                <!--  <exclude>WEB-INF/lib/exist-antlr-2_7_7.jar</exclude> -->
+                                <!--  <exclude>WEB-INF/lib/jtidy-8.0-20060801.131059-3.jar</exclude> -->
 							</excludes>
 						</overlay>
 					</overlays>
