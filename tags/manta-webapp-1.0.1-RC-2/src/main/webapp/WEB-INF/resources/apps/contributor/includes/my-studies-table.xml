@@ -1,0 +1,68 @@
+<div xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
+    xmlns:xxforms="http://orbeon.org/oxf/xml/xforms">
+    
+    <h2 class="clear">My studies</h2>
+    
+    <xforms:group ref="instance('ins-study-feed')[empty(atom:entry)]">
+        
+        <p>Any study you register or have permission to access will be listed here. You&#8217;ll be able to navigate to each study
+            to upload files or edit the information provided when you registered the study.  
+        </p>
+        
+        
+    </xforms:group>
+    
+    <xforms:group ref="instance('ins-study-feed')[exists(atom:entry)]">
+        
+        <span id="list-of-studies-container">
+            
+            <fr:datatable width="100%">
+                <thead>
+                    <tr>
+                        <th fr:sortable="true" fr:resizeable="true">ID</th>
+                        <th fr:sortable="true" fr:resizeable="true">Title</th>
+                        <!-- TODO: Admins. -->
+                        <th fr:sortable="true" fr:resizeable="true">Created</th>
+                        <!--		    				<th fr:sortable="true" fr:resizeable="true">Creator</th>-->
+                        <th fr:sortable="false" fr:resizeable="true">Administrators</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <xforms:repeat nodeset="xxforms:sort(instance('ins-study-feed')/atom:entry, atom:published, 'text', 'descending')">
+                        <tr class="repeated-element">
+                            <td>
+                                <a href="../study/dashboard?study={atom:link[@rel='edit']/@href}"><xforms:output value="manta:id"/></a>
+                            </td>
+                            <td>
+                                <a href="../study/dashboard?study={atom:link[@rel='edit']/@href}"><xforms:output value="atom:title"/></a>
+                            </td>
+                            <td>
+                                <xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')"/>
+                            </td>
+                            <!--
+                                <td>
+                                <xforms:output value="atom:author/atom:email"/>
+                                </td>
+                            -->
+                            <td>
+                                <xforms:repeat nodeset="atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor']//atombeat:group[@id='GROUP_ADMINISTRATORS']/atombeat:member">
+                                    <div>
+                                        <xforms:output ref="."/>			
+                                    </div>
+                                </xforms:repeat>
+                                <!-- <xforms:output value="string-join( atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor']//atombeat:group[@id='GROUP_ADMINISTRATORS']/atombeat:member , ' ' )"/> -->
+                            </td>
+                            <td><span class="view-study-link-container"><a href="../study/dashboard?study={atom:link[@rel='edit']/@href}">View</a></span></td>
+                        </tr>
+                    </xforms:repeat>
+                </tbody>
+            </fr:datatable>
+            
+        </span>
+        
+    </xforms:group>
+    
+</div>

@@ -1,0 +1,19 @@
+<!--  Closed list of drug solvents  -->
+<drugSolvents xmlns="">
+	<drugSolvent>
+		<label>methanol</label>
+		<value>methanol</value>
+	</drugSolvent>
+	<drugSolvent>
+		<label>RPMI</label>
+		<value>RPMI</value>
+	</drugSolvent>
+	<drugSolvent>
+		<label>distilled water</label>
+		<value>distilled water</value>
+	</drugSolvent>
+	<drugSolvent>
+		<label>DMSO</label>
+		<value>DMSO</value>
+	</drugSolvent>
+</drugSolvents>

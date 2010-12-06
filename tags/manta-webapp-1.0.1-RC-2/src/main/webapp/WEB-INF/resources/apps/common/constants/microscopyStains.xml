@@ -1,0 +1,14 @@
+<microscopyStains xmlns="">
+	<microscopyStain>
+		<label>giemsa</label>
+		<value>giemsa</value>
+	</microscopyStain>
+  <microscopyStain>
+    <label>fields stain</label>
+    <value>fieldsstain</value>
+  </microscopyStain>
+  <microscopyStain>
+    <label>not done</label>
+    <value>none</value>
+  </microscopyStain>
+</microscopyStains>
