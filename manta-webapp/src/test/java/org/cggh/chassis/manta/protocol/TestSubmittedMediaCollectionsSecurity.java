@@ -33,7 +33,7 @@ public class TestSubmittedMediaCollectionsSecurity extends AtomSecurityTestCase 
 
 	@Override
 	protected String[] getUsersAllowedDeleteMedia() {
-		return new String[] { USER_ADAM };
+		return new String[] { USER_ADAM, USER_CURTIS };
 	}
 
 	@Override
