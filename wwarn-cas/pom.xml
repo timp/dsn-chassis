@@ -46,6 +46,7 @@
 			<version>3.8.1</version>
 			<scope>test</scope>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.jasig.cas</groupId>
 			<artifactId>cas-server-webapp</artifactId>
@@ -84,7 +85,6 @@
 		<cas.securityContext.casProcessingFilterEntryPoint.loginUrl>${cas.securityContext.ticketValidator.casServerUrlPrefix}/login</cas.securityContext.casProcessingFilterEntryPoint.loginUrl>
 		<host.name>sso</host.name>
 		<database.hibernate.dialect>org.hibernate.dialect.MySQLDialect</database.hibernate.dialect>
-
 	</properties>
 	<profiles>
 		<profile>
@@ -92,6 +92,8 @@
 			<properties>
 				<profileId>cloud1</profileId>
 				<cas.securityContext.ticketValidator.casServerUrlPrefix>http://cloud1.cggh.org/sso</cas.securityContext.ticketValidator.casServerUrlPrefix>
+        <cas.securityContext.serviceProperties.service>${cas.securityContext.ticketValidator.casServerUrlPrefix}/services/j_acegi_cas_security_check</cas.securityContext.serviceProperties.service>
+        <cas.securityContext.casProcessingFilterEntryPoint.loginUrl>${cas.securityContext.ticketValidator.casServerUrlPrefix}/login</cas.securityContext.casProcessingFilterEntryPoint.loginUrl>
 			</properties>
 		</profile>
 		<profile>
@@ -129,6 +131,20 @@
 					<path>/sso</path>
 					<contextFile>/srv/chassis-manta/context/sso.xml</contextFile>
 					<mode>both</mode>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.1</version>
+				<configuration>
+					<encoding>UTF-8</encoding>
+					<webResources>
+						<resource>
+							<directory>src/main/filtered/</directory>
+							<filtering>true</filtering>
+						</resource>
+					</webResources>
 				</configuration>
 			</plugin>
 		</plugins>
