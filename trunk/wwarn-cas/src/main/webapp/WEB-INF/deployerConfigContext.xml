@@ -147,6 +147,7 @@
 	<bean
 		id="serviceRegistryDao"
         class="org.jasig.cas.services.InMemoryServiceRegistryDaoImpl">
+		<!--
             <property name="registeredServices">
                 <list>
                     <bean class="org.jasig.cas.services.RegisteredServiceImpl">
@@ -178,5 +179,6 @@
                     </bean>
                 </list>
             </property>
+            -->
         </bean>
 </beans>
