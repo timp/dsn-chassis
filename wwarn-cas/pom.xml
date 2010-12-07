@@ -83,7 +83,8 @@
 		<cas.securityContext.ticketValidator.casServerUrlPrefix>http://localhost:8080/sso</cas.securityContext.ticketValidator.casServerUrlPrefix>
 		<cas.securityContext.serviceProperties.service>${cas.securityContext.ticketValidator.casServerUrlPrefix}/services/j_acegi_cas_security_check</cas.securityContext.serviceProperties.service>
 		<cas.securityContext.casProcessingFilterEntryPoint.loginUrl>${cas.securityContext.ticketValidator.casServerUrlPrefix}/login</cas.securityContext.casProcessingFilterEntryPoint.loginUrl>
-		<host.name>sso</host.name>
+		<host.name>localhost</host.name>
+		<servletZone>sso</servletZone>
 		<database.hibernate.dialect>org.hibernate.dialect.MySQLDialect</database.hibernate.dialect>
 	</properties>
 	<profiles>
@@ -91,7 +92,8 @@
 			<id>cloud1</id>
 			<properties>
 				<profileId>cloud1</profileId>
-				<cas.securityContext.ticketValidator.casServerUrlPrefix>http://cloud1.cggh.org/sso</cas.securityContext.ticketValidator.casServerUrlPrefix>
+				<host.name>cloud1.cggh.org</host.name>
+				<cas.securityContext.ticketValidator.casServerUrlPrefix>http://${host.name}/sso</cas.securityContext.ticketValidator.casServerUrlPrefix>
         <cas.securityContext.serviceProperties.service>${cas.securityContext.ticketValidator.casServerUrlPrefix}/services/j_acegi_cas_security_check</cas.securityContext.serviceProperties.service>
         <cas.securityContext.casProcessingFilterEntryPoint.loginUrl>${cas.securityContext.ticketValidator.casServerUrlPrefix}/login</cas.securityContext.casProcessingFilterEntryPoint.loginUrl>
 			</properties>
@@ -100,14 +102,16 @@
 			<id>wwarn-app3</id>
 			<properties>
 				<profileId>wwarn-app3</profileId>
-				<cas.securityContext.ticketValidator.casServerUrlPrefix>http://wwarn-app3.nsms.ox.ac.uk/sso</cas.securityContext.ticketValidator.casServerUrlPrefix>
+				<host.name>wwarn-app3.nsms.ox.ac.uk</host.name>
+				<cas.securityContext.ticketValidator.casServerUrlPrefix>http://${host.name}/sso</cas.securityContext.ticketValidator.casServerUrlPrefix>
 			</properties>
 		</profile>
 		<profile>
 			<id>production</id>
 			<properties>
 				<profileId>production</profileId>
-				<cas.securityContext.ticketValidator.casServerUrlPrefix>http://www.wwarn.org/sso</cas.securityContext.ticketValidator.casServerUrlPrefix>
+				<host.name>www.wwarn.org</host.name>
+				<cas.securityContext.ticketValidator.casServerUrlPrefix>http://${host.name}/sso</cas.securityContext.ticketValidator.casServerUrlPrefix>
 			</properties>
 		</profile>
 	</profiles>
