@@ -270,14 +270,14 @@
 							<goal>run</goal>
 						</goals>
 						<configuration>
-	                       <scanIntervalSeconds>0</scanIntervalSeconds>
-	                       <daemon>true</daemon>
-	                       <webAppSourceDirectory>${basedir}/target/manta-webapp</webAppSourceDirectory>
-	                       <jettyEnvXml>${basedir}/src/test/resources/jetty-env.xml</jettyEnvXml>
-	                      <webAppConfig>
-	                      <contextPath>/repository</contextPath>
-	                      </webAppConfig>
-                        </configuration>
+	            <scanIntervalSeconds>0</scanIntervalSeconds>
+	            <daemon>true</daemon>
+	            <webAppSourceDirectory>${basedir}/target/manta-webapp</webAppSourceDirectory>
+	            <jettyEnvXml>${basedir}/src/test/resources/jetty-env.xml</jettyEnvXml>
+	            <webAppConfig>
+	              <contextPath>/repository</contextPath>
+	            </webAppConfig>
+            </configuration>
 					</execution>
 					<execution>
 						<id>stop-jetty</id>
@@ -336,8 +336,8 @@
 				<google-api-key>ABQIAAAAOimsAXNq3_aRjfeNjoNKiRSa-bbzrR8LA0uUuc_9V-299x0KDRT4O_4TUe6_6nxTQjnUjB3IoJ_Z1g</google-api-key>
 				<oxf.epilogue.xforms.inspector>false</oxf.epilogue.xforms.inspector>
 				<contextConfigLocation>WEB-INF/applicationContext-security-cas.xml</contextConfigLocation>
-				<cas.url>https://cloud1.cggh.org/sso</cas.url>
-				<chassis.url>https://cloud1.cggh.org</chassis.url>
+				<cas.url>http://cloud1.cggh.org/sso</cas.url>
+				<chassis.url>http://cloud1.cggh.org</chassis.url>
 			</properties>
 		</profile>
 		<profile>
