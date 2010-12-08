@@ -91,6 +91,7 @@
         <string>atombeat-xquery-functions</string>
         <string>backupHudsonConfig</string>
         <string>checkStudyFeed</string>
+        <string>checkStudyFeedBasic</string>
         <string>hudson-trigger</string>
         <string>manta-config</string>
         <string>manta-maven</string>
