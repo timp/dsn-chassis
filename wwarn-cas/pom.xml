@@ -13,6 +13,7 @@
 			<name>Spring Framework Maven Release Repository</name>
 			<url>http://maven.springframework.org/release</url>
 		</repository>
+		<!--
 		<repository>
 			<id>repository.springframework.maven.milestone</id>
 			<name>Spring Framework Maven Milestone Repository</name>
@@ -23,20 +24,21 @@
 			<name>Spring Framework Maven Snapshot Repository</name>
 			<url>http://maven.springframework.org/snapshot</url>
 		</repository>
+		-->
 		<repository>
 			<id>cggh</id>
 			<name>CGGH Maven Repository</name>
-			<url>http://cloud1.cggh.org/maven2/</url>
+			<url>http://cloud1.cggh.org/maven2</url>
 		</repository>
 	</repositories>
 	<distributionManagement>
 		<repository>
 			<id>cggh</id>
-			<url>scp://cloud1.cggh.org/var/www/maven2/</url>
+			<url>scp://cloud1.cggh.org/var/www/maven2</url>
 		</repository>
 		<snapshotRepository>
 			<id>cggh</id>
-			<url>scp://cloud1.cggh.org/var/www/maven2/</url>
+			<url>scp://cloud1.cggh.org/var/www/maven2</url>
 		</snapshotRepository>
 	</distributionManagement>
 	
