@@ -1,0 +1,887 @@
+<!--
+  Copyright (C) 2010 University of Oxford.
+  
+  This program is free software; you can redistribute it and/or modify it under the terms of the
+  GNU Lesser General Public License as published by the Free Software Foundation; either version
+  2.1 of the License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Lesser General Public License for more details.
+
+  The full text of the license is available at http://www.gnu.org/copyleft/lesser.html
+  -->
+<?oxygen NVDLSchema="../../../../../oxygen/samples/nvdl/xhtml-xforms-11-orbeon.nvdl"?>
+<html 
+	xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:f="http://orbeon.org/oxf/xml/formatting" 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:atom="http://www.w3.org/2005/Atom"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:manta="http://www.cggh.org/2010/chassis/manta/xmlns"
+    xmlns:xxi="http://orbeon.org/oxf/xml/xinclude"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:atombeat="http://purl.org/atombeat/xmlns"
+    xmlns:fr="http://orbeon.org/oxf/xml/form-runner">
+
+    <head>
+    
+        <title>Register study</title>
+        
+        <xforms:model id="mod-register-study-wizard">
+        	
+           <!-- The value for the first wizard-pane-to-show is dependent on whether a draft is available, so should not default here. -->
+       		<xforms:instance id="ins-control">
+                <control xmlns="">
+                	<!-- Note that the wizard is not driven by the wizard-pane-to-show in the draft-entry, but the wizard-pane-being-shown in the control -->
+                	<!-- The draft-entry should be changed first, and then on a successful attempt to submit the draft, the control element will then be updated. -->
+                	<!-- It was decided to change to this method, rather than driving from the draft-entry, because a failure to post or put the draft-entry might otherwise cause a screen blip on slow machines. -->
+                	<wizard-pane-being-shown/>
+                	<pre-create-draft-back-home-link/>
+                	<draft-entry-is-valid/>
+                	<create-draft-trigger/>
+                	<save-draft-trigger/>
+                	<draft-is-saved/>
+                	<add-publication-trigger/>
+                	<upload-is-valid/>
+                	<upload-file-trigger/>
+                	<href-of-file-to-delete/>
+                	<name-of-file-to-delete/>
+                	<href-to-copy-study-info-from/>
+					<copy-answers-control/>
+        			<copy-answers-trigger/>
+        			<study-is-published-is-empty/>
+        			<contributor-controls/>
+        			<curator-controls/>
+        			<administrator-controls/>
+                </control>
+            </xforms:instance>    
+
+			<!-- Show the appropriate tabs and help-boxes depending upon the current user roles. -->
+			<xforms:bind nodeset="instance('ins-control')/contributor-controls" relevant="xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CONTRIBUTOR'"/>
+			<xforms:bind nodeset="instance('ins-control')/curator-controls" relevant="xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CURATOR'"/>
+			<xforms:bind nodeset="instance('ins-control')/administrator-controls" relevant="xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_ADMINISTRATOR'"/>
+
+            
+            <xforms:setvalue
+				ev:event="xforms-model-construct-done" 
+				ref="instance('ins-control')/wizard-pane-being-shown" 
+				value="'study-terms'"
+				if="empty(xxforms:get-request-parameter('draft'))"/>
+			
+			<xforms:action ev:event="xxforms-invalid" ev:observer="ins-draft-entry">
+				<xforms:setvalue ev:event="xforms-value-changed" ref="instance('ins-control')/draft-entry-is-valid">false</xforms:setvalue>
+			</xforms:action>
+			<xforms:action ev:event="xxforms-valid" ev:observer="ins-draft-entry">
+				<xforms:setvalue ev:event="xforms-value-changed" ref="instance('ins-control')/draft-entry-is-valid">true</xforms:setvalue>
+			</xforms:action>
+
+            <xforms:bind nodeset="instance('ins-control')/pre-create-draft-back-home-link" relevant="not(instance('ins-draft-entry')/atom:link[@rel='edit'])"/>
+            <xforms:bind nodeset="instance('ins-control')/create-draft-trigger" relevant="not(instance('ins-draft-entry')/atom:link[@rel='edit'])"/>
+			<xforms:bind nodeset="instance('ins-control')/add-publication-trigger" relevant="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:content/study/study-is-published='Yes'"/>
+
+        	<xforms:bind nodeset="instance('ins-control')/copy-answers-control" relevant="instance('ins-study-feed')[count(atom:entry)>1]"/>
+        	<xforms:bind nodeset="instance('ins-control')/copy-answers-trigger" readonly="../href-to-copy-study-info-from = ''"/>
+
+			<!-- Used to show an Unspecified message for read-only instances of the study-is-published field. -->
+			<xforms:bind nodeset="instance('ins-control')/study-is-published-is-empty" relevant="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:content/study/study-is-published=''" />
+
+
+			<!-- These binding would cause the buttons to disable when the draft-entry is invalid, but it causes a problem: The user has to change focus from a form element before the form is re-validated, causing the button to appear readonly even when the form is valid. -->
+			<!-- Another workaround (besides the current use of messages) might be to use xxforms:incremental, but that creates much more traffic, i.e. on every keypress. -->
+			<!-- <xforms:bind nodeset="instance('ins-control')/create-draft-trigger" readonly="not(../draft-entry-is-valid = 'true')"/>  -->
+			<!-- <xforms:bind nodeset="instance('ins-control')/save-draft-trigger" readonly="not(../draft-entry-is-valid = 'true')"/>  -->
+			<!-- <xforms:bind nodeset="instance('ins-control')/upload-file-trigger" readonly="not(../upload-is-valid = 'true')"/>  -->
+			
+			<!-- TODO: ensure a file is selected before Upload is triggered -->
+			<!-- <xforms:bind nodeset="instance('ins-upload')/media" required="true()" />  -->
+
+        	<!-- Ensure that the current user cannot remove themselves as administrator. -->       		
+			<xforms:bind nodeset="instance('ins-draft-entry')//atombeat:groups/atombeat:group">
+                <xforms:bind nodeset="atombeat:member[text()=xxforms:get-remote-user() and position() = 1]" readonly="true()"/>
+            </xforms:bind>
+            
+
+
+			<xforms:action ev:event="xxforms-invalid" ev:observer="ins-upload">
+				<xforms:setvalue ev:event="xforms-value-changed" ref="instance('ins-control')/upload-is-valid">false</xforms:setvalue>
+			</xforms:action>
+			<xforms:action ev:event="xxforms-valid" ev:observer="ins-upload">
+				<xforms:setvalue ev:event="xforms-value-changed" ref="instance('ins-control')/upload-is-valid">true</xforms:setvalue>
+			</xforms:action>
+
+
+        	<!-- xincludes don't parse within instance sources. -->
+        	<!--   <xforms:instance id="ins-draft-entry" src="/apps/contributor/includes/model-instances/draft-entry.xml"/> -->
+        	<!--  The temptation is to factor out instances to centralised file sources, but then you can't put includes in them. -->
+        	<!-- This is used to store a draft during the wizard, and the default values here also acts like a template. -->
+			<xforms:instance id="ins-draft-entry">
+       			<atom:entry xmlns:atom="http://www.w3.org/2005/Atom">
+       				<atom:title type="text" />
+       				<atom:content type="application/vnd.chassis-manta+xml">
+			        	<draft xmlns="">
+							<wizard-pane-to-show>study-terms</wizard-pane-to-show>
+							<registrant-has-agreed-to-the-terms/>
+							<study-entry-container>
+								<xi:include href="../common/templates/study/study-entry-template.xml" xxi:omit-xml-base="true"/>
+							</study-entry-container>
+							<study-permissions-entry-container>
+								<xi:include href="includes/study-permissions-entry.xml" xxi:omit-xml-base="true"/>
+							</study-permissions-entry-container>
+						</draft>
+        			</atom:content>
+       			</atom:entry>
+        	</xforms:instance>    
+ 
+             <!-- Make the terms checkbox readonly once a draft has been saved -->
+            <xforms:bind nodeset="instance('ins-draft-entry')/atom:content/draft/registrant-has-agreed-to-the-terms" readonly="instance('ins-draft-entry')/atom:link[@rel='edit']"/>
+ 
+ 			<!-- user template for adding a new administrator in the permissions pane -->
+       		<xforms:instance id="ins-user-template">
+       			<atombeat:member/>
+  			</xforms:instance>
+
+			<!-- This adds the current user as an administrator to the ACL in the draft.  -->
+			<xforms:action ev:event="xforms-model-construct-done">
+           		<xforms:setvalue ref="instance('ins-draft-entry')//study-permissions-entry-container//atombeat:security-descriptor/atombeat:groups/atombeat:group[@id='GROUP_ADMINISTRATORS']/atombeat:member" value="xxforms:get-remote-user()"/>
+			</xforms:action>
+
+			<!-- Require valid email addresses in the permissions field -->			
+			<xforms:bind nodeset="instance('ins-draft-entry')//study-permissions-entry-container//atombeat:security-descriptor/atombeat:groups/atombeat:group[@id='GROUP_ADMINISTRATORS']/atombeat:member" type="xforms:email" required="true()"/>
+
+			<!-- person template for adding a new acknowledgement (used to add the current user and add more in the acknowledgement pane) -->
+			<xforms:instance id="ins-person-template" src="/apps/common/templates/study/person-template.xml"/>
+
+			<!-- This adds the current user (email) to the acknowledgements in the draft. -->
+			<xforms:action ev:event="xforms-model-construct-done">
+				<xforms:insert 
+					context="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:content/study/acknowledgements" 
+					nodeset="person"
+					at="1"
+					position="after"
+					origin="instance('ins-person-template')"/>
+				<xforms:setvalue 
+					ref="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:content/study/acknowledgements/person[1]/email-address"
+					value="xxforms:get-remote-user()"/>
+			</xforms:action>
+
+
+			<!-- Check email addresses in acknowledgements (not required) -->			
+			<xforms:bind nodeset="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:content/study/acknowledgements/person/email-address" type="xforms:email"/>
+
+			
+
+       		<xforms:instance id="ins-publication-template" src="/apps/common/templates/study/publication-template.xml"/>
+
+        	<xforms:bind nodeset="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:content/study/publications">
+
+			        <xforms:bind nodeset="publication" relevant="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:content/study/study-is-published='Yes'">
+			            
+			           <!-- Should be able to add URLs and DOIs without adding a PubMedID. -->
+			           <!-- <xforms:bind nodeset="pmid" required="true()"/>  -->
+
+			        </xforms:bind>
+			        
+       		</xforms:bind>
+
+			<xforms:instance id="ins-publication-reference">
+				<publication-reference xmlns="" type="url"/>
+			</xforms:instance>
+			
+			<xforms:instance id="ins-publication-reference-types" src="/apps/common/constants/publication-reference-types.xml" />
+
+
+        	<xforms:bind nodeset="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:content/study/publications/publication/publication-references/publication-reference" required="true()"/>
+
+
+
+			<!-- Try to get the saved draft when the model has been constructed, if there is a draft parameter. -->
+			<xforms:send 
+				ev:event="xforms-model-construct-done" 
+				submission="sub-get-draft-entry" 
+				if="exists(xxforms:get-request-parameter('draft'))"/>
+
+			<!-- This tries to get the current draft (by request-parameter). -->
+			<xforms:submission 
+				id="sub-get-draft-entry"
+				resource="{xxforms:get-request-parameter('draft')}"
+				method="get"
+				replace="instance"
+				instance="ins-draft-entry"
+				serialization="none">
+				
+				<xforms:setvalue ev:event="xforms-submit-done" ref="instance('ins-control')/wizard-pane-being-shown" value="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show"  />
+				
+				<!-- now retrieve feed of draft media -->
+				<xforms:send ev:event="xforms-submit-done" submission="sub-get-draft-media-feed"/>
+				
+                <!-- If not available (error) then displays message and reloads with no request param. -->
+                <!-- Note that this behaviour will depend on the if-param-condition in the send to prevent an endless loop. -->
+                <xforms:action ev:event="xforms-submit-error">
+                
+                	<!-- FIXME: This should give a message before reloading, but just reloads (presumably shortly after giving the message but before the user can read it.) -->
+                	<xforms:message level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the draft.</xforms:message>
+                 
+                	<xforms:load resource="register-study-wizard?draft_not_found"/>
+                	
+                </xforms:action>
+                     
+			</xforms:submission>  
+			
+
+
+
+			<!-- This creates a new draft (using the current draft-entry) and stores the returned entry in the draft-entry instance. -->
+			<!-- If successful, it reloads the page with the appropriate URL (for book-marking). -->
+            <xforms:submission 
+            	id="sub-post-draft-entry" 
+            	ref="instance('ins-draft-entry')"
+                resource="/service/content/drafts"
+                method="post" 
+                replace="instance" 
+                instance="ins-draft-entry"
+                mediatype="application/atom+xml">
+                
+                
+                <!-- If there was no error, then reload with the draft reference in the URL. -->
+                <xforms:load ev:event="xforms-submit-done" resource="register-study-wizard?draft={instance('ins-draft-entry')/atom:link[@rel='edit']/@href}"/>
+
+				<!-- If there was an error, then go back to the wizard-pane-being-shown and show the error. -->
+				<xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show" value="instance('ins-control')/wizard-pane-being-shown"  />
+				<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while creating a new draft.</xforms:message>
+                         
+            </xforms:submission>
+
+            
+           
+
+			<!-- This will put the draft-entry to the edit link href and show a message on success. -->
+            <xforms:submission 
+            	id="sub-explicit-put-draft-entry" 
+            	ref="instance('ins-draft-entry')"
+                resource="{instance('ins-draft-entry')/atom:link[@rel='edit']/@href}"
+                method="put" 
+                replace="instance" 
+                instance="ins-draft-entry"
+                mediatype="application/atom+xml"
+            	relevant="false"> 
+                
+                <xforms:action ev:event="xforms-submit-done">
+                	
+                	<xforms:setvalue ref="instance('ins-control')/wizard-pane-being-shown" value="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show"  />
+                	<xforms:message>The draft has been saved.</xforms:message>
+                
+                </xforms:action>
+                
+                <xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-control')/draft-is-saved">false</xforms:setvalue>
+                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while saving the draft.</xforms:message>
+                <xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show" value="instance('ins-control')/wizard-pane-being-shown"/>
+                                
+            </xforms:submission>
+            
+			<!-- This will put the draft-entry to the edit link href, without a message on success. -->
+            <xforms:submission 
+            	id="sub-implicit-put-draft-entry" 
+            	ref="instance('ins-draft-entry')"
+                resource="{instance('ins-draft-entry')/atom:link[@rel='edit']/@href}"
+                method="put" 
+                replace="instance" 
+                instance="ins-draft-entry"
+                mediatype="application/atom+xml"
+            	relevant="false"> 
+
+                <xforms:setvalue ev:event="xforms-submit-done" ref="instance('ins-control')/wizard-pane-being-shown" value="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show"  />
+                
+                <xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-control')/draft-is-saved">false</xforms:setvalue>
+                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while saving the draft.</xforms:message>
+                <xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show" value="instance('ins-control')/wizard-pane-being-shown"/>
+                                
+            </xforms:submission>            
+
+			<!-- This will put the draft-entry to the edit link href and then load the home page. -->
+            <xforms:submission 
+            	id="sub-back-home" 
+            	ref="instance('ins-draft-entry')"
+                resource="{instance('ins-draft-entry')/atom:link[@rel='edit']/@href}"
+                method="put" 
+                replace="instance" 
+                instance="ins-draft-entry"
+                mediatype="application/atom+xml"> 
+                
+                <xforms:action ev:event="xforms-submit-done">
+                	<xforms:setvalue ref="instance('ins-control')/draft-is-saved">true</xforms:setvalue>
+                	<xforms:load resource="home"/>
+                </xforms:action>
+                
+                <xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-control')/draft-is-saved">false</xforms:setvalue>
+                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while saving the draft.</xforms:message>
+                <xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show" value="instance('ins-control')/wizard-pane-being-shown"/>
+                                
+            </xforms:submission>
+
+
+
+        
+    	
+        
+
+        	<!-- bindings for the study-terms pane -->
+			<xforms:bind nodeset="instance('ins-draft-entry')/atom:content/draft/registrant-has-agreed-to-the-terms" required="true()"/>
+			<xforms:bind nodeset="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:title" required="true()"/>
+
+
+			<!-- This prevents the first user (current user) from removing themselves as an administrator from the ACL in the draft. -->
+
+			<xforms:bind nodeset="instance('ins-draft-entry')//study-permissions-entry-container//atombeat:security-descriptor/atombeat:groups/atombeat:group[@id='GROUP_ADMINISTRATORS']">
+                <xforms:bind nodeset="user[1]" readonly="true()" />
+            </xforms:bind>
+
+
+
+			<!-- This gets the list of different file types for the upload-files pane. -->
+			<xforms:instance id="ins-file-terms" src="/apps/common/constants/file-terms.xml"/>
+
+
+
+
+			<!-- This stores the study entry once it has been posted, e.g.  -->
+			<xforms:instance id="ins-study-entry">
+				<atom:entry/>
+			</xforms:instance>
+
+            <xforms:submission 
+            	id="sub-post-contribution" 
+            	ref="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry"
+                resource="/service/content/studies"
+                method="post" 
+                replace="instance" 
+                instance="ins-study-entry"
+                mediatype="application/atom+xml">
+                
+  
+                <!-- put the study permissions. -->
+                <xforms:send ev:event="xforms-submit-done" submission="sub-put-study-permissions"/>
+                
+
+                
+				<!-- If there was an error, then go back to the wizard-pane-being-shown and show the error. -->
+				<xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show" value="instance('ins-control')/wizard-pane-being-shown"  />
+				<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while creating a new study.</xforms:message>
+                         
+            </xforms:submission>
+
+			<!-- This puts (updates) the study permission list to the study's security descriptor link href. -->
+            <xforms:submission 
+            	id="sub-put-study-permissions" 
+            	ref="instance('ins-draft-entry')/atom:content/draft/study-permissions-entry-container/atom:entry"
+                resource="{instance('ins-study-entry')/atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor']/@href}"
+                method="put" 
+                replace="none" 
+                mediatype="application/atom+xml">
+                
+                
+                <!-- If done, then post the uploads. -->
+                <!-- The target is already copied to the uploads attribute using a bind calculation. -->
+                
+<!--                <xforms:send ev:event="xforms-submit-done" submission="sub-post-uploads"/>-->
+
+
+            	<xforms:send ev:event="xforms-submit-done" submission="sub-copy-media"/>
+            	
+            	
+   
+				<!-- If error, then go back to the wizard-pane-being-shown and show the error. -->
+				<xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show" value="instance('ins-control')/wizard-pane-being-shown"  />
+				<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while applying the study permissions.</xforms:message>
+                         
+            </xforms:submission>
+
+        	<!-- this submission will copy across all the uploads from the draft media collection to the submitted media collection, by simply POSTing the draft media feed to the submitted media collection URI ... this is a new AtomBeat feature, not standard Atom Protocol, but useful here -->
+        	<xforms:submission
+        		id="sub-copy-media"
+        		method="post"
+        		resource="{instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/submittedMedia']/@href}"
+        		ref="instance('ins-draft-media-feed')"
+        		mediatype="application/atom+xml"
+        		replace="none"
+        		>
+							
+        		
+        		<!-- If done, then delete the draft. -->
+        		<xforms:send ev:event="xforms-submit-done" submission="sub-delete-draft"/>
+        		
+        		
+        		
+        		<!-- If error, then go back to the wizard-pane-being-shown and show the error. -->
+        		<xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show" value="instance('ins-control')/wizard-pane-being-shown"/>
+        		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while storing the files.</xforms:message>
+
+        	</xforms:submission>
+
+
+			<!-- This deletes the draft, which has now been converted to a study with media resources. -->
+            <xforms:submission 
+            	id="sub-delete-draft"  
+            	method="delete"
+            	replace="none"
+            	resource="{instance('ins-draft-entry')/atom:link[@rel='edit']/@href}">
+            	
+            	<xforms:send ev:event="xforms-submit-done" submission="sub-put-study-info-entry"/>
+            	
+            	
+            	
+            	<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while deleting the draft.</xforms:message>       
+            	
+            </xforms:submission>
+            
+            
+
+
+			<xforms:instance id="ins-study-info-entry">
+				<xi:include href="../common/templates/study/study-info-entry-template.xml" xxi:omit-xml-base="true"/>
+			</xforms:instance>
+
+			<xforms:submission id="sub-put-study-info-entry"
+				resource="{instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/studyInfo']/@href}" 
+				method="put"
+				replace="instance" 
+				instance="ins-study-info-entry" 
+				ref="instance('ins-study-info-entry')"
+				mediatype="application/atom+xml" 
+				relevant="false" 
+				validate="false">
+				
+				<!-- If successful, reload with the study edit URL (the draft URL is now irrelevant) -->
+				<xforms:load ev:event="xforms-submit-done" resource="register-study-wizard?study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}"/>
+				
+				
+				
+				<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/> ) while creating the study info entry.</xforms:message>
+				
+			</xforms:submission>
+
+
+
+
+			<xforms:instance id="ins-study-is-published-terms" src="/apps/common/constants/study-is-published-terms.xml"/>
+				
+
+
+			<!--+
+				| New way of handling uploads, to enable uploads to persist
+				| with drafts, and not get deleted at the end of the user's
+				| session.
+				+-->
+				
+			<!-- instance to hold a feed of uploaded media for this draft -->
+        	
+        	<xforms:instance id="ins-draft-media-feed">
+        		<atom:feed/>
+        	</xforms:instance>
+        	
+        	
+        	
+        	<!-- submission to retrieve the draft media feed for the current draft -->
+        	
+        	<xforms:submission
+        		id="sub-get-draft-media-feed"
+        		method="get"
+        		resource="{instance('ins-draft-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/draftMedia']/@href}"
+        		serialization="none"
+        		replace="instance"
+        		instance="ins-draft-media-feed">
+
+        		<!-- TODO error handling -->
+        		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving a feed of draft media.</xforms:message>
+
+        	</xforms:submission>
+        	
+        	
+
+			<!-- files are uploaded one at a time, this instance holds the data to be posted -->
+        	
+        	<xforms:instance id="ins-upload">
+        		<upload xmlns="" scheme="http://www.cggh.org/2010/chassis/scheme/FileTypes" term="" label="">
+        			<summary/>
+        			<category/>
+        			<media xsi:type="xs:anyURI" filename="" mediatype="" size=""/>
+        		</upload>
+        	</xforms:instance>
+        	
+        	<!-- this is a fresh instance to use when clearing out the main instance after each upload -->
+        	<xforms:instance id="ins-upload-empty">
+        		<upload xmlns="" scheme="http://www.cggh.org/2010/chassis/scheme/FileTypes" term="" label="">
+        			<summary/>
+        			<category/>
+        			<media xsi:type="xs:anyURI" filename="" mediatype="" size=""/>
+        		</upload>
+        	</xforms:instance>
+        	
+        	
+        	
+        	<!-- some bindings on the upload instance -->
+        	<xforms:bind nodeset="instance('ins-upload')">
+        		<xforms:bind nodeset="@term" required="true()"/>
+        		<xforms:bind nodeset="@label" relevant="../@term='http://www.cggh.org/2010/chassis/terms/Other'" required="../@term='http://www.cggh.org/2010/chassis/terms/Other'"/>
+				<xforms:bind nodeset="category" calculate="concat('scheme=&quot;', ../@scheme, '&quot;; term=&quot;', ../@term, '&quot;; label=&quot;', ../@label, '&quot;;')"/>
+        	</xforms:bind>        	
+
+
+
+			<!-- this is the submission that sends the file to atombeat ... it uses a multipart/form-data POST request, which (thankfully) both Orbeon and AtomBeat support, although this is not standard Atom Protocol ... check the http traffic to see what's being sent -->
+        	<xforms:submission
+        		id="sub-post-upload"
+        		method="form-data-post"
+        		resource="{instance('ins-draft-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/draftMedia']/@href}"
+        		ref="instance('ins-upload')"
+        		replace="none">
+        		
+        		<!-- this is required, otherwise you'll get errors -->
+        		<xforms:header>
+        			<xforms:name>Accept</xforms:name>
+        			<xforms:value>application/atom+xml</xforms:value>
+        		</xforms:header>
+
+				<!-- clear out upload -->
+        		<xforms:insert ev:event="xforms-submit-done" nodeset="instance('ins-upload')" origin="instance('ins-upload-empty')"/>
+        		
+				<!-- refresh draft media -->
+				<xforms:send ev:event="xforms-submit-done" submission="sub-get-draft-media-feed"/>
+        		
+        		<!-- TODO error handling -->
+        		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while posting a draft upload.</xforms:message>
+
+        	</xforms:submission>
+        	
+        	
+        	
+
+
+
+			<!-- Try to get the create study when the model has been constructed, if there is a study parameter. -->
+			<xforms:send 
+				ev:event="xforms-model-construct-done" 
+				submission="sub-get-study-entry" 
+				if="exists(xxforms:get-request-parameter('study'))"/>
+
+			<!-- Get the newly registered study using the request parameter. -->
+			<xforms:submission 
+				id="sub-get-study-entry"
+				resource="{xxforms:get-request-parameter('study')}"
+				method="get"
+				replace="instance"
+				instance="ins-study-entry"
+				serialization="none">
+				
+				
+				<!-- If successful, load the confirmation page. -->
+				<!-- Note that an xxforms-internal-error would be generated (instance not found) if submission instance="ins-sq-study-entry".  -->
+				<xforms:action ev:event="xforms-submit-done">
+				
+					<!-- The success of this get-submitted-media submission will trigger the copying of the media-feed to the SSQ. -->
+					<xforms:send submission="sub-get-submitted-media-feed"/>
+	
+				</xforms:action>
+				
+				
+				
+                <!-- If not available (error) then reloads with no request param. -->
+                <!-- Note that this behaviour will depend on the if-param-condition in the send to prevent an endless loop. -->
+                
+                <!-- 
+                <xforms:message ev:event="xforms-submit-error" level="modal">
+					An error occurred (
+					<xforms:output value="event('error-type')" />
+					) while getting the study info.
+				</xforms:message>
+				 -->
+				
+                <xforms:load ev:event="xforms-submit-error" resource="register-study-wizard"/>
+                     
+			</xforms:submission>
+			
+
+			
+
+
+
+			
+			
+			
+			<xforms:instance id="ins-submitted-media-feed">
+				<atom:feed/>
+			</xforms:instance>
+
+			<xforms:submission
+				id="sub-get-submitted-media-feed"
+				resource="{instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/submittedMedia']/@href}"
+				method="get"
+				replace="instance"
+				instance="ins-submitted-media-feed"
+				serialization="none">
+				
+				<!-- Now that we have the media feed, copy to the questionnaire. -->
+				<xforms:action ev:event="xforms-submit-done">
+				
+					<!-- Copy the media feed to the questionnaire model.  -->
+					<xforms:insert nodeset="xxforms:instance('ins-sq-submitted-media-feed')" origin="instance('ins-submitted-media-feed')" />
+					 
+
+					<!-- Get the study info entry (from the study entry's studyInfo link), which will then be copied to the questionnaire. -->
+					<xforms:send submission="sub-get-study-info-entry"/>
+					
+				</xforms:action>
+				
+                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the submitted media.</xforms:message>
+                
+			</xforms:submission>			
+
+
+			<xforms:submission
+				id="sub-get-study-info-entry"
+				resource="{instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/studyInfo']/@href}"
+				method="get"
+				replace="instance"
+				instance="ins-study-info-entry"
+				serialization="none">
+				
+				<xforms:action ev:event="xforms-submit-done">
+				
+					<!-- Copy the study info entry (received after posting the draft's study entry) to the questionnaire model.  -->
+					<xforms:insert nodeset="xxforms:instance('ins-sq-study-info-entry')" origin="instance('ins-study-info-entry')" />
+					
+
+					<!-- Show the confirmation pane. -->	
+					<xforms:setvalue ref="instance('ins-control')/wizard-pane-being-shown" value="'confirmation'"  />
+					 
+					
+				</xforms:action>
+				
+				
+				<!-- Note, requires an atombeat:allow="GET" permission on the resource link. -->
+				<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the study info.</xforms:message>
+				
+			</xforms:submission>
+
+
+
+        	
+        	<!-- This deletes the draft media specified by the href-of-file-to-delete -->
+        	<xforms:submission
+        		id="sub-delete-upload"
+        		method="delete"
+        		replace="none"
+        		resource="{instance('ins-control')/href-of-file-to-delete}">
+
+            	<!-- If successful, refresh the media table and show a message -->
+            	<xforms:action ev:event="xforms-submit-done">
+            		<xforms:send submission="sub-get-draft-media-feed"/>
+            		<xforms:message >The file has now been removed.</xforms:message>
+            	</xforms:action>
+            	
+            	<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while deleting the draft.</xforms:message>       
+            
+        	</xforms:submission>
+
+
+
+
+        	<xforms:instance id="ins-study-feed">
+				<atom:feed/>
+			</xforms:instance>
+
+			<xforms:submission 
+				id="sub-retrieve-study-feed"
+				resource="/service/content/studies"
+				method="get"
+				replace="instance"
+				instance="ins-study-feed"
+				serialization="none">
+				<!-- TODO error handling -->
+                <xforms:message ev:event="xforms-submit-error" level="modal">
+                	An error occurred (<xforms:output value="event('error-type')"/>) while retrieving a list of studies.
+               	</xforms:message>
+			</xforms:submission>
+			
+			<xforms:send 
+				ev:event="xforms-model-construct-done" 
+				submission="sub-retrieve-study-feed"/>
+
+			<xforms:instance id="ins-study-info-entry-to-copy-study-info-from">
+				<atom:entry/>
+			</xforms:instance>
+				
+			<xforms:submission 
+				id="sub-copy-answers"
+				resource="{instance('ins-control')/href-to-copy-study-info-from}"
+				method="get"
+				replace="instance"
+				instance="ins-study-info-entry-to-copy-study-info-from">
+				
+				<xforms:action ev:event="xforms-submit-done">
+					
+					<!-- 
+						Make sure we replace only the <questionnaire> element 
+						and not the whole <atom:entry>, otherwise the edit link
+						will be wrong and the data will get PUT to the wrong
+						URL when changes are saved.
+					-->
+					
+					<xforms:delete nodeset="xxforms:instance('ins-sq-study-info-entry')/atom:content/study-info"/>
+					<xforms:insert 
+						context="xxforms:instance('ins-sq-study-info-entry')/atom:content" 
+						nodeset="study-info" 
+						origin="instance('ins-study-info-entry-to-copy-study-info-from')/atom:content/study-info"
+						at="last()" position="after" />
+					
+					<xforms:message level="modal">
+						Answers have now been copied from "<xforms:output value="instance('ins-study-feed')/atom:entry[atom:link[@rel='http://www.cggh.org/2010/chassis/terms/studyInfo']/@href = instance('ins-control')/href-to-copy-study-info-from]/atom:title"/> (<xforms:output value="instance('ins-study-feed')/atom:entry[atom:link[@rel='http://www.cggh.org/2010/chassis/terms/studyInfo']/@href = instance('ins-control')/href-to-copy-study-info-from]/manta:id"/>)". Be sure to update any answers that differ from study "<xforms:output value="instance('ins-study-feed')/atom:entry[atom:link[@rel='http://www.cggh.org/2010/chassis/terms/studyInfo']/@href = instance('ins-control')/href-to-copy-study-info-from]/atom:title"/> (<xforms:output value="instance('ins-study-feed')/atom:entry[atom:link[@rel='http://www.cggh.org/2010/chassis/terms/studyInfo']/@href = instance('ins-control')/href-to-copy-study-info-from]/manta:id"/>)". Changes will not be saved until you click "Save changes".
+					</xforms:message>
+					
+				</xforms:action>
+				
+				
+                <xforms:message ev:event="xforms-submit-error" level="modal">
+                	An error occurred (<xforms:output value="event('error-type')"/>) while copying answers from the selected study.
+               	</xforms:message>
+			</xforms:submission>
+
+
+			<xforms:submission id="sub-put-sq-study-info-entry-and-load-home"
+				resource="{xxforms:instance('ins-sq-study-info-entry')/atom:link[@rel='edit']/@href}" 
+				method="put"
+				replace="none" 
+				ref="xxforms:instance('ins-sq-study-info-entry')"
+				mediatype="application/atom+xml" 
+				relevant="false" 
+				validate="false">
+				<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while saving the study info.</xforms:message>
+				<xforms:load ev:event="xforms-submit-done" resource="home"/>
+			</xforms:submission>
+
+        	
+        </xforms:model>
+
+       	<xi:include href="../common/includes/study/study-info-model.xml"/>
+       	
+       	<xi:include href="../common/includes/current-user-model.xml"/>
+
+        
+    </head>
+    
+    <body>
+    
+		<!-- Body header -->
+                <div id="header" class="header">
+					<h1 class="logo"><a href="/" f:url-norewrite="true">WWARN - Worldwide Antimalarial Resistance Network</a></h1>
+					
+							    <div id="block-menu-primary-links">
+								    <ul id="primary" class="clearfix">
+								    	<li class="{if (not(xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CONTRIBUTOR')) then 'hidden-tab' else ''}"><a href="/contributor/home">Data Home</a></li>
+								    	<li class="{if (not(xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CURATOR')) then 'hidden-tab' else ''}"><a href="/curator/home">Curator Home</a></li>
+								    	<li class="active-trail {if (not(xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CONTRIBUTOR')) then 'hidden-tab' else ''}"><a href="/contributor/register-study-wizard">Register Study</a></li>
+								    	<li class="{if (not(xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CONTRIBUTOR')) then 'hidden-tab' else ''}"><a href="/contributor/my-studies">My Studies</a></li>
+								    	<li><a href="/" f:url-norewrite="true" target="_blank">WWARN Website</a></li>
+								    </ul>
+							    </div>
+
+					<div class="secondary-wrap">
+						<xi:include href="../common/includes/current-user-actions.xml"/>
+					</div>
+				</div>
+		<!-- End of Body header -->
+
+		<!-- After body header, before bd id -->
+                <div id="holdall">
+                	<div id="main-inner">
+                		<div class="content page">
+		<!-- End of After body header, before bd id -->
+
+		
+
+								
+								
+									    	<!-- Wizard panes -->
+									    	<!-- The extra wrappers hide the user interface while processing occurs, otherwise there are screen blips, i.e. momentary inappropriate UI-presentations. -->
+									    	<!--  -->
+											<xforms:group ref="instance('ins-draft-entry')/atom:content/draft[wizard-pane-to-show='study-terms']">
+									    		<xforms:group ref="instance('ins-control')[wizard-pane-being-shown='study-terms']">
+									    			<xi:include href="includes/wizard-panes/study-terms.xml"/>
+									    		</xforms:group>
+									    	</xforms:group>
+									    	
+									    	<xforms:group ref="instance('ins-draft-entry')/atom:content/draft[wizard-pane-to-show='permissions']">
+										    	<xforms:group ref="instance('ins-control')[wizard-pane-being-shown='permissions']">
+										    		<xi:include href="includes/wizard-panes/permissions.xml"/>
+										    	</xforms:group>
+										    </xforms:group>
+										    	
+										    <xforms:group ref="instance('ins-draft-entry')/atom:content/draft[wizard-pane-to-show='acknowledgements']">
+										    	<xforms:group ref="instance('ins-control')[wizard-pane-being-shown='acknowledgements']">
+										    		<xi:include href="includes/wizard-panes/acknowledgements.xml"/>
+										    	</xforms:group>
+										    </xforms:group>
+										    	
+										    <xforms:group ref="instance('ins-draft-entry')/atom:content/draft[wizard-pane-to-show='upload-files']">
+										    	<xforms:group ref="instance('ins-control')[wizard-pane-being-shown='upload-files']">
+										    		<xi:include href="includes/wizard-panes/upload-files.xml"/>
+										    	</xforms:group>
+										    </xforms:group>
+										    	
+										    <xforms:group ref="instance('ins-draft-entry')/atom:content/draft[wizard-pane-to-show='publications']">
+										    	<xforms:group ref="instance('ins-control')[wizard-pane-being-shown='publications']">
+										    		<xi:include href="includes/wizard-panes/publications.xml"/>
+										    	</xforms:group>
+										    </xforms:group>
+										    	
+										    <xforms:group ref="instance('ins-draft-entry')/atom:content/draft[wizard-pane-to-show='review']">
+										    	<xforms:group ref="instance('ins-control')[wizard-pane-being-shown='review']">
+										    		<xi:include href="includes/wizard-panes/review.xml"/>
+										    	</xforms:group>
+										    </xforms:group>
+										    	
+										    <!-- NB: wizard-pane-to-show='study-terms' rather than 'confirmation' is intended, i.e. not a typo. -->
+										    <xforms:group ref="instance('ins-draft-entry')/atom:content/draft[wizard-pane-to-show='study-terms']">
+										    	<xforms:group ref="instance('ins-control')[wizard-pane-being-shown='confirmation']">
+										    		<xi:include href="includes/wizard-panes/confirmation.xml"/>
+										    	</xforms:group>
+											</xforms:group>
+								
+								
+								
+
+		<!-- After bd id, before ft id -->
+		                	
+		                	<div class="background">
+		                	
+		                	</div>
+		                	
+                		</div>
+                	</div>
+                </div>
+
+		<!-- End of After bd id, before ft id -->
+
+			<fr:alert-dialog id="remove-file-dialog">
+			    <fr:label>Remove</fr:label>
+			    <fr:message> 
+			        Are you sure you want to remove the file &quot;<xforms:output ref="instance('ins-control')/name-of-file-to-delete"/>&quot;?
+			    </fr:message>
+			    <fr:negative-choice/>
+			    <fr:positive-choice>
+			        <xforms:send ev:event="DOMActivate" submission="sub-delete-upload"/>
+			    </fr:positive-choice>
+			</fr:alert-dialog>
+
+
+		<!-- <fr:xforms-inspector xmlns:fr="http://orbeon.org/oxf/xml/form-runner"/>  -->
+
+
+
+    </body>
+    
+</html>
+
