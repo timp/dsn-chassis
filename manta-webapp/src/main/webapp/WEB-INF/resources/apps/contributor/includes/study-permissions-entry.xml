@@ -28,6 +28,16 @@
 					<atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
 					<atombeat:permission>UPDATE_MEMBER_ACL</atombeat:permission>
 				</atombeat:ace>
+				<atombeat:ace>
+					<atombeat:type>ALLOW</atombeat:type>
+					<atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+					<atombeat:permission>UPDATE_MEMBER</atombeat:permission>
+				</atombeat:ace>
+				<atombeat:ace>
+					<atombeat:type>ALLOW</atombeat:type>
+					<atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+					<atombeat:permission>DELETE_MEMBER</atombeat:permission>
+				</atombeat:ace>
 			</atombeat:acl>
 		</atombeat:security-descriptor>		
 	</atom:content>

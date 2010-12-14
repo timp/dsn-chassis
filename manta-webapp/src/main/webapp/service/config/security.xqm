@@ -320,7 +320,8 @@ declare variable $security-config:study-info-collection-security-descriptor :=
             </atombeat:ace>
             
             <!--
-                Curators can list the collection, and can retrieve and update any member.
+                Curators can list the collection, and can retrieve any member.
+                Control of curators' permission to update is set on an individual member level.
             -->
     
             <atombeat:ace>
@@ -333,12 +334,6 @@ declare variable $security-config:study-info-collection-security-descriptor :=
                 <atombeat:type>ALLOW</atombeat:type>
                 <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
                 <atombeat:permission>RETRIEVE_MEMBER</atombeat:permission>
-            </atombeat:ace>
-    
-            <atombeat:ace>
-                <atombeat:type>ALLOW</atombeat:type>
-                <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
-                <atombeat:permission>UPDATE_MEMBER</atombeat:permission>
             </atombeat:ace>
 
             <atombeat:ace>
@@ -1048,7 +1043,13 @@ declare function security-config:study-info-member-security-descriptor(
                 <atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
                 <atombeat:permission>RETRIEVE_REVISION</atombeat:permission>
             </atombeat:ace>
-            
+
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+                <atombeat:permission>UPDATE_MEMBER</atombeat:permission>
+            </atombeat:ace>
+
         </atombeat:acl>
 
     </atombeat:security-descriptor>    

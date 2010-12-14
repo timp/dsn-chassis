@@ -26,8 +26,8 @@ Configuration uses server specific settings in server.xml
  : create collections.
  :)
  
-declare variable $config:exist-user as xs:string := manta-util:get-jndi-variable("bean/existConfigFactory","username") ;
-declare variable $config:exist-password as xs:string := manta-util:get-jndi-variable("bean/existConfigFactory","password") ;
+declare variable $config:exist-user as xs:string := "admin" ;
+declare variable $config:exist-password as xs:string := "";
 
 
 (:~
@@ -35,24 +35,24 @@ declare variable $config:exist-password as xs:string := manta-util:get-jndi-vari
  :)
 (: declare variable $config:service-url-base as xs:string := concat( "http://" , request:get-server-name() , ":" , request:get-server-port() , request:get-context-path() , "/service" ) ; :)
 (: Default is "http://localhost:8080/repository/service" ;:)
-declare variable $config:service-url-base as xs:string := manta-util:get-jndi-variable("bean/existConfigFactory","serviceBaseURL") ;
+declare variable $config:service-url-base as xs:string := "http://localhost:8080/repository/service" ;
 
 
 (:
  : The base URL for the Atom service. This URL will be prepended to all edit
  : and self link href values.
  :)
-declare variable $config:content-service-url as xs:string := manta-util:get-jndi-variable("bean/existConfigFactory","contentURL") ;
+declare variable $config:content-service-url as xs:string := concat($config:service-url-base, "/content");
 
 
 (:
  : The base URL for the History service. This URL will be prepended to all 
  : history link href values.
  :)
-declare variable $config:history-service-url as xs:string := manta-util:get-jndi-variable("bean/existConfigFactory","historyURL") ;
+declare variable $config:history-service-url as xs:string := concat($config:service-url-base, "/history");
  
 
-declare variable $config:security-service-url as xs:string := manta-util:get-jndi-variable("bean/existConfigFactory","securityURL") ;
+declare variable $config:security-service-url as xs:string := concat($config:service-url-base, "/security");
 
 
 (:
@@ -62,7 +62,7 @@ declare variable $config:security-service-url as xs:string := manta-util:get-jnd
  : the filter will have stored the authenticated user's name (ID) in the given
  : request attribute.
  :)
-declare variable $config:user-name-request-attribute-key as xs:string := manta-util:get-jndi-variable("bean/existConfigFactory","userNameAttributeName") ;
+declare variable $config:user-name-request-attribute-key as xs:string := "user-name" ;
 
 
 (:
@@ -73,7 +73,7 @@ declare variable $config:user-name-request-attribute-key as xs:string := manta-u
  : have stored the authenticated user's roles in the given request attribute.
  : TODO explain expected type of attribute value.
  :)
-declare variable $config:user-roles-request-attribute-key as xs:string := manta-util:get-jndi-variable("bean/existConfigFactory","userRolesAttributeName") ;
+declare variable $config:user-roles-request-attribute-key as xs:string := "user-roles";
 
 
 (:~
@@ -122,7 +122,7 @@ declare variable $config:feed-doc-name as xs:string := ".feed" ;
  : have to worry about keeping backups of the filesystem and the eXist database
  : in sync.
  :)
-declare variable $config:media-storage-mode as xs:string := manta-util:get-jndi-variable("bean/existConfigFactory","mediaStorageMode") ;
+declare variable $config:media-storage-mode as xs:string := "FILE";
 
 
 (:~ 
@@ -130,7 +130,7 @@ declare variable $config:media-storage-mode as xs:string := manta-util:get-jndi-
  : media files will be stored. N.B. the process running AtomBeat MUST have 
  : permission to create this directory and any child directories.
  :)
-declare variable $config:media-storage-dir as xs:string := manta-util:get-jndi-variable("bean/existConfigFactory","mediaStorageDir") ;
+declare variable $config:media-storage-dir as xs:string := "C:\data\atombeat\media";
 (: 
 declare variable $config:media-storage-dir as xs:string :=
     let $home := system:get-exist-home()
