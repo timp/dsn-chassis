@@ -16,7 +16,8 @@
   <page id="root" path-info="/study/"/>
   
   <page path-info="/study/dashboard" view="study-dashboard.xhtml"/>
-  
+  <page path-info="/study/email-lock" model="email-lock.xpl"/>
+  <page path-info="/study/email-complete" view="email-complete.xpl"/>
   <epilogue url="oxf:/config/epilogue.xpl"/>
 
 </config>
