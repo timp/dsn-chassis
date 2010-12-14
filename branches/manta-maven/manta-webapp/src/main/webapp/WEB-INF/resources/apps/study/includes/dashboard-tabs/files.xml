@@ -30,57 +30,7 @@
 					
 						<div class="yui-navset yui-navset-top">
 							
-							<ul class="yui-nav">
-					
-					
-									<li>
-										<a href="dashboard?tab=summary&amp;study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
-											<em>Summary</em>
-										</a>
-									</li>
-								
-								
-								<!-- If the user has GET access to the security descriptor. -->
-								<xforms:group ref="instance('ins-study-entry')/atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor' and contains(@atombeat:allow, 'GET')]">
-									
-					
-										<li id="permissions-tab-link-container">
-											<a href="dashboard?tab=permissions&amp;study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
-												<em>Permissions</em>
-											</a>
-										</li>
-									
-									
-								</xforms:group>
-								
-					
-									<li id="acknowledgements-tab-link-container">
-										<a href="dashboard?tab=acknowledgements&amp;study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
-											<em>Acknowledgements</em>
-										</a>
-									</li>
-								
-								
-										<li class="selected">
-											<a href="dashboard?tab=files&amp;study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
-												<em>Files</em>
-											</a>
-										</li>
-								
-					
-									<li id="publications-tab-link-container">
-										<a href="dashboard?tab=publications&amp;study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
-											<em>Publications</em>
-										</a>
-									</li>
-					
-									<li id="study-info-tab-link-container">
-										<a href="dashboard?tab=study-info&amp;study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">
-											<em>Study info</em>
-										</a>
-									</li>
-								
-							</ul>
+							<xi:include href="../dashboard-tabs-menu.xml"/>
 							
 							
 							<div class="yui-content">
