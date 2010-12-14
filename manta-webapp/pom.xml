@@ -1,9 +1,10 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.cggh.chassis</groupId>
 	<artifactId>manta-webapp</artifactId>
-	<version>1.0.1-RC-4-SNAPSHOT</version>
+	<version>1.1.0-alpha-1-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>manta-webapp</name>
 	<description>Chassis Manta Web Application</description>
@@ -102,6 +103,41 @@
 			<version>5.1.6</version>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+    <groupId>commons-fileupload</groupId>
+    <artifactId>commons-fileupload</artifactId>
+    <version>1.2.1</version>
+</dependency>
+	<dependency>
+    <groupId>commons-lang</groupId>
+    <artifactId>commons-lang</artifactId>
+    <version>2.3</version>
+</dependency>
+<dependency>
+    <groupId>dom4j</groupId>
+    <artifactId>dom4j</artifactId>
+    <version>1.6.1</version>
+</dependency>
+<dependency>
+    <groupId>log4j</groupId>
+    <artifactId>log4j</artifactId>
+    <version>1.2.15</version>
+    <exclusions>
+    	<exclusion>
+    		<artifactId>jmxri</artifactId>
+    		<groupId>com.sun.jmx</groupId>
+    	</exclusion>
+    	<exclusion>
+    		<artifactId>jmxtools</artifactId>
+    		<groupId>com.sun.jdmk</groupId>
+    	</exclusion>
+    	<exclusion>
+    		<artifactId>jms</artifactId>
+    		<groupId>javax.jms</groupId>
+    	</exclusion>
+    </exclusions>
+</dependency>
+		
 		<!-- AtomBeat servlet filters to enable security -->
 		<dependency>
 			<groupId>org.atombeat</groupId>
@@ -205,6 +241,12 @@
                                 <exclude>WEB-INF/lib/antlr-2_7_4_orbeon.jar</exclude>
                                 <!--  <exclude>WEB-INF/lib/exist-antlr-2_7_7.jar</exclude> -->
                                 <!--  <exclude>WEB-INF/lib/jtidy-8.0-20060801.131059-3.jar</exclude> -->
+                                <!-- Moved these to dependencies -->
+								<exclude>WEB-INF/lib/commons-fileupload-1.2.1.jar</exclude>
+								<exclude>WEB-INF/lib/commons-lang-2_3.jar</exclude>
+								<exclude>WEB-INF/lib/mail-1_3_2.jar</exclude>
+								<exclude>WEB-INF/lib/dom4j-1_6_1.jar</exclude>
+								<exclude>WEB-INF/lib/log4j-1_2_15.jar</exclude>
 							</excludes>
 						</overlay>
 					</overlays>
@@ -269,14 +311,14 @@
 							<goal>run</goal>
 						</goals>
 						<configuration>
-	            <scanIntervalSeconds>0</scanIntervalSeconds>
-	            <daemon>true</daemon>
-	            <webAppSourceDirectory>${basedir}/target/manta-webapp</webAppSourceDirectory>
-	            <jettyEnvXml>${basedir}/src/test/resources/jetty-env.xml</jettyEnvXml>
-	            <webAppConfig>
-	              <contextPath>/repository</contextPath>
-	            </webAppConfig>
-            </configuration>
+	                       <scanIntervalSeconds>0</scanIntervalSeconds>
+	                       <daemon>true</daemon>
+	                       <webAppSourceDirectory>${basedir}/target/manta-webapp</webAppSourceDirectory>
+	                       <jettyEnvXml>${basedir}/src/test/resources/jetty-env.xml</jettyEnvXml>
+	                      <webAppConfig>
+	                      <contextPath>/repository</contextPath>
+	                      </webAppConfig>
+                        </configuration>
 					</execution>
 					<execution>
 						<id>stop-jetty</id>
