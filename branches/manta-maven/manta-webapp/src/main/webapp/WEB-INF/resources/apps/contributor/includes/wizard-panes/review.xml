@@ -257,26 +257,43 @@
 								</xforms:action>
 							</xforms:trigger>
 						</p>
-					
+					<!--
 						<p>
 							<br/>
 						</p>
-					
+					-->
 						<p class="form-navi">
-						
-							
 							<!-- TODO: Only show this control if the user has permission to create a study -->
-						
-							<span id="review-confirm-button-container" class="alignRight">
-								<xforms:trigger>
-									<xforms:label>Confirm</xforms:label>
-									<xforms:action ev:event="DOMActivate">
-										<xforms:setvalue
-											ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show"
-											value="'confirmation'" />
-										<xforms:send submission="sub-post-contribution" />
-									</xforms:action>
-								</xforms:trigger>
+							<span id="review-confirm-button-container">
+								Once you click &quot;Confirm&quot; your study enters the WWARN curation process. You then have to contact WWARN
+								to make changes.
+								Return to a previous step and save your study as a draft if you have further information to add.
+								<p></p>
+								
+								<xforms:switch>
+									<xforms:case id="delete">
+										<xforms:trigger>
+											<xforms:label>Confirm</xforms:label>
+											<xforms:toggle case="confirm" ev:event="DOMActivate"/>
+										</xforms:trigger>
+									</xforms:case>
+									<xforms:case id="confirm">
+										<br/><strong>Are you sure you have completed entering the study?</strong>
+										<xforms:trigger>
+											<xforms:label>Yes - I've finished</xforms:label>
+											<xforms:action ev:event="DOMActivate">
+												<xforms:setvalue
+													ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show"
+													value="'confirmation'" />
+												<xforms:send submission="sub-post-contribution" />
+											</xforms:action>
+										</xforms:trigger> <xforms:trigger>
+											<xforms:label>No - I've more to add</xforms:label>
+											<xforms:toggle case="delete" ev:event="DOMActivate"/>
+										</xforms:trigger>
+									</xforms:case>
+								</xforms:switch>
+								
 							</span>
 							
 							
