@@ -91,6 +91,7 @@
                 GEvent.addListener(map.marker, "dragend", function(latLng) { map._updateLongLat(latLng); });
             } else{
                 map.marker.setLatLng(latLng);
+                map._updateLongLat(latLng);
             }
         },
 
