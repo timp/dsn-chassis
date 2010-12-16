@@ -27,6 +27,7 @@
     xmlns:at="http://purl.org/atompub/tombstones/1.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:xxi="http://orbeon.org/oxf/xml/xinclude"
+    xmlns:cggh="http://cggh.org/oxf/xml/form-runner"
     xmlns:p="java:org.orbeon.oxf.processor.pipeline.PipelineFunctionLibrary">
     
     <head>
@@ -243,11 +244,26 @@
 				<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the study info.</xforms:message>
 				
 			</xforms:submission>
-			
+
+			<xforms:submission id="sub-notify-put-study-entry-complete"	action="/study/email-complete" replace="instance" 
+				method="post" ref="instance('ins-study-entry')" instance="ins-study-entry">
 
 
-				
-		    <xforms:submission
+				<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output
+				value="event('error-type')" />) while sending a message.</xforms:message>
+				<xforms:send ev:event="xforms-submit-done" submission="sub-put-study-entry" />
+			</xforms:submission>
+			<xforms:submission id="sub-notify-put-study-entry"	action="/study/email-lock" replace="none" method="post"
+				ref="instance('ins-study-entry')">
+
+
+			<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output
+				value="event('error-type')" />) while sending a message.</xforms:message>
+				<xforms:send ev:event="xforms-submit-done"	submission="sub-put-study-entry" />
+			</xforms:submission>
+
+
+			<xforms:submission
 		        id="sub-put-study-entry"
 		        resource="{instance('ins-study-entry')/atom:link[@rel='edit']/@href}"
 		        method="put"
@@ -501,7 +517,8 @@
         <xi:include href="../common/includes/study/study-info-model.xml"/>
         
         <xi:include href="../common/includes/current-user-model.xml"/>
-            	
+        
+        <xi:include href="oxf:/xbl/chassis/smap/smap.xbl" xxi:omit-xml-base="true"/>   	
         
     </head>
     <body>
