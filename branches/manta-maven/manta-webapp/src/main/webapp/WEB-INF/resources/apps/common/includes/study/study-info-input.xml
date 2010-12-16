@@ -1,8 +1,11 @@
 <?oxygen NVDLSchema="../../../../../../../../../oxygen/samples/nvdl/xhtml-xforms-11-orbeon.nvdl"?>
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:xforms="http://www.w3.org/2002/xforms"
 	xmlns:xxforms="http://orbeon.org/oxf/xml/xforms" xmlns:ev="http://www.w3.org/2001/xml-events"
-	xmlns:atom="http://www.w3.org/2005/Atom" xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
+	xmlns:atom="http://www.w3.org/2005/Atom" xmlns:fr="http://orbeon.org/oxf/xml/form-runner" 
+	xmlns:cggh="http://cggh.org/oxf/xml/form-runner" 
+	xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xxi="http://orbeon.org/oxf/xml/xinclude"
 	class="study-info">
+	
 	<xforms:group ref="instance('errors')" model="mod-study-info"
 		class="warnings">
 		<!--
@@ -233,9 +236,10 @@
 											<b>Drag the pointer to populate the Latitude and Longitude
 												fields</b>
 										</p>
-										<fr:map address-ref="lookupAddress" longitude-ref="longitude"
+										<cggh:smap address-ref="lookupAddress" longitude-ref="longitude"
 											latitude-ref="latitude" style="width: 500px; height: 300px">
-										</fr:map>
+										</cggh:smap>
+										
 									</div>
 								</div>
 
