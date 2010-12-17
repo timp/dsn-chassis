@@ -850,7 +850,7 @@ button.addRemove {
 	margin:0;
 	padding:0;
 }
-.yui-skin-sam .yui-dt-liner button {
+.yui-skin-sam .yui-dt-liner button.remove {
 	background:url("remove.gif") no-repeat scroll 0 0 transparent;
 	border:medium none;
 	display:inline;
