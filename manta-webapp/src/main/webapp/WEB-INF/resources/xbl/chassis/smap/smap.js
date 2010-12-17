@@ -36,7 +36,13 @@
         gmap: null,
         geocoder: null,
         keyOutputID: null,
-        addressOutputID: null,
+        /* Commented out for reference but not used as reverse geocoding doesn't work too well
+        countryInputID: null,
+        regionInputID: null,
+        districtInputID: null,
+        localityInputID: null,
+        */
+        addressInputID: null,
         longitudeInputID: null,
         latitudeInputID: null,
         marker: null,
@@ -50,6 +56,12 @@
             // Init object attributes
             map.gmapDiv = Dom.getElementsByClassName("fb-map-gmap-div", null, element)[0];
             map.element = element;
+            /* These need to be set up in the xbl file and as attributes on the cggh:smap element
+            map.countryInputID = Dom.getElementsByClassName("fb-map-country", null, element)[0].id;
+            map.regionInputID = Dom.getElementsByClassName("fb-map-region", null, element)[0].id;
+            map.districtInputID = Dom.getElementsByClassName("fb-map-district", null, element)[0].id;
+            map.localityInputID = Dom.getElementsByClassName("fb-map-locality", null, element)[0].id;
+            */
             map.addressOutputID = Dom.getElementsByClassName("fb-map-address", null, element)[0].id;
             map.longitudeInputID = Dom.getElementsByClassName("fb-map-longitude", null, element)[0].id;
             map.latitudeInputID = Dom.getElementsByClassName("fb-map-latitude", null, element)[0].id;
@@ -96,8 +108,35 @@
         },
 
         _updateLongLat: function(longLat) {
-            Document.setValue(this.longitudeInputID, longLat.lng());
-            Document.setValue(this.latitudeInputID, longLat.lat());
+        	var map = this;
+            Document.setValue(map.longitudeInputID, longLat.lng());
+            Document.setValue(map.latitudeInputID, longLat.lat());
+            /* It works but not that well and takes too long
+            map.geocoder.getLocations(longLat, function (response){
+            	if (!response || response.Status.code != 200) {
+            	    alert("Status Code:" + response.Status.code);
+            	  } else {
+            	    place = response.Placemark[0];
+            	    address = place.AddressDetails;
+            	    if (address.Accuracy > 4) {
+            	    	locality = address.Country.Locality.LocalityName;
+            	    	Document.setValue(map.localityInputID, locality);
+            	    }
+            	    point = new GLatLng(place.Point.coordinates[1],place.Point.coordinates[0]);
+            	    marker = new GMarker(point);
+            	    map.gmap.addOverlay(marker);
+            	    marker.openInfoWindowHtml(
+            	        '<b>orig latlng:</b>' + response.name + '<br/>' + 
+            	        '<b>latlng:</b>' + place.Point.coordinates[1] + "," + place.Point.coordinates[0] + '<br>' +
+            	        '<b>Status Code:</b>' + response.Status.code + '<br>' +
+            	        '<b>Status Request:</b>' + response.Status.request + '<br>' +
+            	        '<b>Address:</b>' + place.address + '<br>' +
+            	        '<b>Accuracy:</b>' + place.AddressDetails.Accuracy + '<br>' +
+            	        '<b>Country code:</b> ' + place.AddressDetails.Country.CountryNameCode);
+            	  }
+
+            });
+            */
         }
     };
 
