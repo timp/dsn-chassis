@@ -23,7 +23,8 @@
     xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:manta="http://www.cggh.org/2010/chassis/manta/xmlns"
-	xmlns:atombeat="http://purl.org/atombeat/xmlns">
+	xmlns:atombeat="http://purl.org/atombeat/xmlns"
+	xmlns:ae="http://purl.org/atom/ext/">
     
     <head>
     
@@ -175,29 +176,36 @@
 	    					</td>	    					
 	    					<td>
 	    						<span class="view-study-link-container"><a href="../study/dashboard?study={atom:link[@rel='edit']/@href}">View</a></span><span style="margin: 50px;"></span>
-	    						<span>
-	    						<xforms:switch>
-									<xforms:case id="delete-study">
-										<xforms:trigger>
-											<xforms:label>Delete</xforms:label>
-											<xforms:toggle case="confirm-delete-study" ev:event="DOMActivate"/>
-										</xforms:trigger>
-									</xforms:case>
-									<xforms:case id="confirm-delete-study">
-										<br/><strong>Are you sure that you want to delete this study?</strong><br/>
-										<xforms:trigger>
-											<xforms:label>Yes - I'm sure</xforms:label>
-											<xforms:action ev:event="DOMActivate">
-												<xforms:setvalue bind="delete-bind" value="xxforms:sort(instance('ins-study-feed')/atom:entry, atom:published, 'text', 'descending')[index('study-list')]//atom:link[@rel='edit']/@href"/>
-												<xforms:send submission="sub-deprecate-study"/>
-											</xforms:action>
-										</xforms:trigger> <xforms:trigger>
-											<xforms:label>No</xforms:label>
-											<xforms:toggle case="delete-study" ev:event="DOMActivate"/>
-										</xforms:trigger>
-									</xforms:case>
-								</xforms:switch>
-	    						</span>
+	    						
+	    						<!-- Making the assumption that only a curator can be here -->
+	    						     <xforms:group ref="atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor']/ae:inline/atom:entry/atom:content/atombeat:security-descriptor/atombeat:acl/atombeat:ace[atombeat:permission='DELETE_MEMBER' and atombeat:type = 'ALLOW' and atombeat:recipient[@type='role'] = 'ROLE_CHASSIS_CURATOR']">
+	    						         <span>
+	    						             <xforms:switch>
+									           <xforms:case id="delete-study">
+										          <xforms:trigger>
+											         <xforms:label>Delete</xforms:label>
+											         <xforms:toggle case="confirm-delete-study" ev:event="DOMActivate"/>
+										          </xforms:trigger>
+									           </xforms:case>
+									           <xforms:case id="confirm-delete-study">
+										          <br/>
+										          <strong>Are you sure that you want to delete this study?</strong><br/>
+										          <xforms:trigger>
+											         <xforms:label>Yes - I'm sure</xforms:label>
+											         <xforms:action ev:event="DOMActivate">
+												        <xforms:setvalue bind="delete-bind" value="xxforms:sort(instance('ins-study-feed')/atom:entry, atom:published, 'text', 'descending')[index('study-list')]//atom:link[@rel='edit']/@href"/>
+												        <xforms:send submission="sub-deprecate-study"/>
+											         </xforms:action>
+										          </xforms:trigger> 
+										          <xforms:trigger>
+											         <xforms:label>No</xforms:label>
+											         <xforms:toggle case="delete-study" ev:event="DOMActivate"/>
+										          </xforms:trigger>
+									           </xforms:case>
+								              </xforms:switch>
+	    						         </span>
+	    						     </xforms:group>
+	    						
 	    					</td>
 	    				</tr>
 	    			</xforms:repeat>
