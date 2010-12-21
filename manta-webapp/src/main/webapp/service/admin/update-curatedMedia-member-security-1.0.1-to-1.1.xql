@@ -12,36 +12,41 @@ import module namespace ap = "http://purl.org/atombeat/xquery/atom-protocol" at 
 import module namespace common-protocol = "http://purl.org/atombeat/xquery/common-protocol" at "../lib/common-protocol.xqm" ;
 import module namespace config-collections = "http://purl.org/atombeat/xquery/config-collections" at "collections.xqm" ;
 
-(: TODO: Remove comments in the descriptor. :)
+(: TODO: Remove comments in the descriptors. :)
 
 declare variable $testdata {
 <atombeat:security-descriptor xmlns:atombeat="http://purl.org/atombeat/xmlns">
     <atombeat:groups>
-        <atombeat:group id="GROUP_ADMINISTRATORS">
-            <atombeat:member>colin@example.org</atombeat:member>
-        </atombeat:group>
+        <atombeat:group id="GROUP_ADMINISTRATORS" src="http://localhost:8081/repository/service/content/studies/REZKY"/>
     </atombeat:groups>
-    <atombeat:acl>
+    <atombeat:acl><!--
+                        Curators can create media resources, list the collection, retrieve media resources, and retrieve and update members.
+                -->
         <atombeat:ace>
             <atombeat:type>ALLOW</atombeat:type>
-            <atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
+            <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+            <atombeat:permission>CREATE_MEDIA</atombeat:permission>
+        </atombeat:ace>
+        <atombeat:ace>
+            <atombeat:type>ALLOW</atombeat:type>
+            <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+            <atombeat:permission>LIST_COLLECTION</atombeat:permission>
+        </atombeat:ace>
+        <atombeat:ace>
+            <atombeat:type>ALLOW</atombeat:type>
+            <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
             <atombeat:permission>RETRIEVE_MEMBER</atombeat:permission>
         </atombeat:ace>
         <atombeat:ace>
             <atombeat:type>ALLOW</atombeat:type>
-            <atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
+            <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
             <atombeat:permission>UPDATE_MEMBER</atombeat:permission>
         </atombeat:ace>
         <atombeat:ace>
             <atombeat:type>ALLOW</atombeat:type>
-            <atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
-            <atombeat:permission>RETRIEVE_MEMBER_ACL</atombeat:permission>
-        </atombeat:ace>
-        <atombeat:ace>
-            <atombeat:type>ALLOW</atombeat:type>
-            <atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
-            <atombeat:permission>UPDATE_MEMBER_ACL</atombeat:permission>
-        </atombeat:ace>
+            <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+            <atombeat:permission>RETRIEVE_MEDIA</atombeat:permission>
+        </atombeat:ace><!-- N.B. by default, study administrators cannot see curated media -->
     </atombeat:acl>
 </atombeat:security-descriptor>
 };
@@ -58,23 +63,24 @@ declare function local:do-get() as item()*
 
 declare function local:content($content) as item()*
 {
-    let $study-member-securities := local:get-content()
-    
+    let $curatedMedia-member-securities := local:get-content()
+
     let $testing := request:get-parameter("testing", "no")
-    
+
     return
     
         <html>
             <head>
-                <title>Data Migration - Study Member Security v1.0.1 to v1.1</title>
+                <title>Data Migration - Curated Media Member Security v1.0.1 to v1.1</title>
             </head>
             <body>
-                <h1>Data Migration - Study Member Security v1.0.1 to v1.1</h1>
-                <p>This script should change the study member ACL so that...</p>
+                <h1>Data Migration - Curated Media Member Security v1.0.1 to v1.1</h1>
+                <p>This script should change the curatedMedia ACL so that...</p>
                 <ul>
-                    <li>Contributors can no longer update any study (member). This has the effect of locking everything against contributor edits (until unlocked again by a curator).
+                    <li>Curators cannot add curatedMedia to any study.
                     </li>
-                
+                    <li>Curators cannot update curatedMedia in any study.
+                    </li>
                 </ul>
                 <p>
                     <form method="post" action="">
@@ -91,7 +97,7 @@ declare function local:content($content) as item()*
                 </pre>
                 <p>Content (Testing: {$testing}):</p>
                 <textarea cols="120" rows="20" wrap="off">
-                {$study-member-securities}
+                {$curatedMedia-member-securities}
                 </textarea>
                 
                 <p>Original test data:</p>
@@ -105,20 +111,20 @@ declare function local:content($content) as item()*
 declare function local:get-content() as item()* {
   let $testing := request:get-parameter("testing", "no")
     let $content := if ($testing = "no") then
-        (: TODO: This is not quite right. Don't want to include .descriptor, only CODE.atom.descriptors :)
-        let $ret := collection( "/db/atombeat/security/db/atombeat/content/studies" )
+        let $ret := for $child-collection-name in xmldb:get-child-collections( "/db/atombeat/security/db/atombeat/content/media/curated/" )
+                    return xmldb:document(concat("/db/atombeat/security/db/atombeat/content/media/curated/", $child-collection-name, "/.descriptor"))
         return $ret
     else
-        let $ret := xmldb:xcollection( 'test-study-member-security' )/atombeat:security-descriptor (: not recursive :)
+        let $ret := xmldb:xcollection( 'test-curatedMedia-member-security' )/atombeat:security-descriptor (: not recursive :)
         return $ret
      
    return $content
 };
 
-declare function local:do-modifications($study-member-securities-v1-0-1) as item()*
+declare function local:do-modifications($curatedMedia-member-securities-v1-0-1) as item()*
 {
-    let $new := local:modify-nodes($study-member-securities-v1-0-1)
-    
+    let $new := local:modify-nodes($curatedMedia-member-securities-v1-0-1)
+     
     let $content := local:get-content()
 
     return $content
@@ -126,9 +132,8 @@ declare function local:do-modifications($study-member-securities-v1-0-1) as item
 
 declare function local:save-testdata($testdata)
 {
-        let $descriptor-doc-db-path := xmldb:store( 'test-study-member-security' , "TEST.atom.descriptor" , $testdata , $CONSTANT:MEDIA-TYPE-XML )
-        return $descriptor-doc-db-path        
-
+        let $descriptor-doc-db-path := xmldb:store( 'test-curatedMedia-member-security' , "TEST.atom.descriptor" , $testdata , $CONSTANT:MEDIA-TYPE-XML )
+        return $descriptor-doc-db-path     
 };
 
 declare function local:do-post($content) as item()*
@@ -140,14 +145,15 @@ declare function local:do-post($content) as item()*
 };
 
 (: update works directly against the database - not on in memory fragments so this doesn't behave as expected :( :)
-declare function local:modify-nodes($study-member-securities-v1-0-1) as item()*
+declare function local:modify-nodes($curatedMedia-member-securities-v1-0-1) as item()*
 {
-   let $study-member-securities-v1-1 := 
-        for $v1-0-1 in $study-member-securities-v1-0-1
-            
-            return update delete $v1-0-1//atombeat:ace[atombeat:recipient/@type = 'group' and atombeat:recipient = 'GROUP_ADMINISTRATORS' and atombeat:permission = 'UPDATE_MEMBER']
+   let $curatedMedia-member-securities-v1-1 := 
+        for $v1-0-1 in $curatedMedia-member-securities-v1-0-1
+        
+            let $del := update delete $v1-0-1//atombeat:ace[atombeat:recipient/@type = 'role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'CREATE_MEDIA']
+            return update delete $v1-0-1//atombeat:ace[atombeat:recipient/@type = 'role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'UPDATE_MEMBER']
 
-    return $study-member-securities-v1-1
+    return $curatedMedia-member-securities-v1-1
     
 };
 
@@ -155,15 +161,22 @@ declare function local:modify-nodes($study-member-securities-v1-0-1) as item()*
 declare function local:check-changes() as item() *{
   let $all := local:get-content()
  let $ret := for $m in $all 
-
-         let $out := if (count($m//atombeat:ace[atombeat:recipient/@type = 'group' and atombeat:recipient = 'GROUP_ADMINISTRATORS' and atombeat:permission = 'UPDATE_MEMBER']) > 0) then 
-                        let $msg := "Failed to delete //atombeat:ace[atombeat:recipient/@type = 'group' and atombeat:recipient = 'GROUP_ADMINISTRATORS' and atombeat:permission = 'UPDATE_MEMBER']"
+ 
+         let $out := if (count($m//atombeat:ace[atombeat:recipient/@type = 'role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'CREATE_MEDIA']) > 0) then 
+                        let $msg := "Failed to delete //atombeat:ace[atombeat:recipient/@type = 'role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'CREATE_MEDIA']"
                         return $msg
                      else
-                        let $msg := "Deleted //atombeat:ace[atombeat:recipient/@type = 'group' and atombeat:recipient = 'GROUP_ADMINISTRATORS' and atombeat:permission = 'UPDATE_MEMBER']"
+                        let $msg := "Deleted //atombeat:ace[atombeat:recipient/@type = 'role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'CREATE_MEDIA']"
                         return $msg
-         
-         return $out
+                        
+         let $out2 := if (count($m//atombeat:ace[atombeat:recipient/@type = 'role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'UPDATE_MEMBER']) > 0) then 
+                        let $msg := "Failed to delete //atombeat:ace[atombeat:recipient/@type = 'role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'UPDATE_MEMBER']"
+                        return $msg
+                     else
+                        let $msg := "Deleted //atombeat:ace[atombeat:recipient/@type = 'role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'UPDATE_MEMBER']"
+                        return $msg
+
+         return concat($out, '&#xD;', $out2)
          
     return $ret
 };
@@ -172,7 +185,7 @@ declare function local:do-migration() {
     let $all := local:get-content()
 
     let $new-content := local:do-modifications($all)
-    
+
     let $testing := request:get-parameter("testing", "no")
       
     let $saved := if ($testing != "no") then 
@@ -193,7 +206,7 @@ let $testing := request:get-parameter("testing", "no")
         return $ret
     else
 
-let $collection := xmldb:create-collection("xmldb:exist:///db", "test-study-member-security"),
+let $collection := xmldb:create-collection("xmldb:exist:///db", "test-curatedMedia-member-security"),
     $doc := local:save-testdata($testdata)
     return $collection
 return 
@@ -206,6 +219,6 @@ return
     
     then local:do-migration()
     
-    else common-protocol:do-method-not-allowed( "/admin/update-study-member-security-1.0.1-to-1.1.xql" ,"/admin/update-study-member-security-1.0.1-to-1.1.xql" , ( "GET" , "POST" ) )
+    else common-protocol:do-method-not-allowed( "/admin/update-curatedMedia-member-security-1.0.1-to-1.1.xql" ,"/admin/update-curatedMedia-member-security-1.0.1-to-1.1.xql" , ( "GET" , "POST" ) )
     
     

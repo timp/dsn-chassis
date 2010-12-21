@@ -12,7 +12,7 @@ import module namespace ap = "http://purl.org/atombeat/xquery/atom-protocol" at 
 import module namespace common-protocol = "http://purl.org/atombeat/xquery/common-protocol" at "../lib/common-protocol.xqm" ;
 import module namespace config-collections = "http://purl.org/atombeat/xquery/config-collections" at "collections.xqm" ;
 
-(: TODO: Remove comments in the descriptor. :)
+(: TODO: Remove comments in the descriptors. :)
 
 declare variable $testdata {
 <atombeat:security-descriptor xmlns:atombeat="http://purl.org/atombeat/xmlns">
@@ -147,7 +147,8 @@ declare function local:content($content) as item()*
 declare function local:get-content() as item()* {
   let $testing := request:get-parameter("testing", "no")
     let $content := if ($testing = "no") then
-        let $ret := xmldb:xcollection( "/db/atombeat/security/db/atombeat/content/media/submitted/" )
+        let $ret := for $child-collection-name in xmldb:get-child-collections( "/db/atombeat/security/db/atombeat/content/media/submitted/" )
+                    return xmldb:document(concat("/db/atombeat/security/db/atombeat/content/media/submitted/", $child-collection-name, "/.descriptor"))
         return $ret
     else
         let $ret := xmldb:xcollection( 'test-submittedMedia-member-security' )/atombeat:security-descriptor (: not recursive :)

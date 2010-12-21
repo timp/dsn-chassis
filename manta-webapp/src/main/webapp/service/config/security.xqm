@@ -234,11 +234,10 @@ declare variable $security-config:studies-collection-security-descriptor :=
             
             <atombeat:ace>
                 <atombeat:type>DENY</atombeat:type>
-                <atombeat:recipient type="user">*</atombeat:recipient>
+                <atombeat:recipient type="role">ROLE_CHASSIS_CONTRIBUTOR</atombeat:recipient>
                 <atombeat:permission>DELETE_MEMBER</atombeat:permission>
             </atombeat:ace>
             
-    
             <!--
                 Personal data reviewers can list the collection and can retrieve any member or security descriptor.
             -->
