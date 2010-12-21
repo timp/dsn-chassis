@@ -47,31 +47,27 @@
 									
 							     	<xforms:trigger ref="instance('ins-control')/lock-study-trigger">
 							     		<xforms:label>Lock</xforms:label>
-							     		<xforms:action ev:event="DOMActivate" if="../study-entry-is-valid = 'true'">
+							     		<xforms:action ev:event="DOMActivate">
 							     			
 							     			<!-- TODO: Change the ins-permission-entry -->
-							     			<!--  <xforms:delete nodeset="instance('ins-permissions-entry')//atombeat:ace[atombeat:permission = 'UPDATE_MEMBER']"/>  -->
+							     			<xforms:delete nodeset="instance('ins-permissions-entry')//atombeat:ace[atombeat:type = 'ALLOW' and atombeat:recipient/@type='role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'UPDATE_MEMBER']"/>
+							     			<xforms:delete nodeset="instance('ins-permissions-entry')//atombeat:ace[atombeat:type = 'ALLOW' and atombeat:recipient/@type='group' and atombeat:recipient = 'GROUP_ADMINISTRATORS' and atombeat:permission = 'UPDATE_MEMBER']"/>
+							     			<xforms:delete nodeset="instance('ins-permissions-entry')//atombeat:ace[atombeat:type = 'ALLOW' and atombeat:recipient/@type='role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'DELETE_MEMBER']"/>
 			
 							     			<xforms:send submission="sub-put-permissions-entry"/>
-							     			<xforms:send submission="sub-put-study-entry"/>
-							     		</xforms:action>
-							     		<xforms:action ev:event="DOMActivate" if="not(../study-entry-is-valid = 'true')">
-							     			<xforms:message>Please complete all required fields.</xforms:message>
 							     		</xforms:action>
 							     	</xforms:trigger>
 							     	
 							     	
 							     	<xforms:trigger ref="instance('ins-control')/unlock-study-trigger">
 							     		<xforms:label>Unlock</xforms:label>
-							     		<xforms:action ev:event="DOMActivate" if="../study-entry-is-valid = 'true'">
+							     		<xforms:action ev:event="DOMActivate">
 							     			
 							     			<!-- TODO: Change the ins-permission-entry -->
+							     			<!-- <xforms:insert nodeset="instance('ins-permissions-entry')" at="1" position="before" origin=""/>  -->
+			
 			
 							     			<xforms:send submission="sub-put-permissions-entry"/>
-							     			<xforms:send submission="sub-put-study-entry"/>
-							     		</xforms:action>
-							     		<xforms:action ev:event="DOMActivate" if="not(../study-entry-is-valid = 'true')">
-							     			<xforms:message>Please complete all required fields.</xforms:message>
 							     		</xforms:action>
 							     	</xforms:trigger>
 
