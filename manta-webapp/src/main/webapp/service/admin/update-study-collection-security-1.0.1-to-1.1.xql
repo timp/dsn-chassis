@@ -12,6 +12,8 @@ import module namespace ap = "http://purl.org/atombeat/xquery/atom-protocol" at 
 import module namespace common-protocol = "http://purl.org/atombeat/xquery/common-protocol" at "../lib/common-protocol.xqm" ;
 import module namespace config-collections = "http://purl.org/atombeat/xquery/config-collections" at "collections.xqm" ;
 
+(: TODO: Change the study collection .descriptor so that DENY * user DELETE_MEMBER becomes DENY ROLE_CHASSIS_CONTRIBUTOR DELETE_MEMBER :)
+
 (: TODO: Remove comments in the descriptor. :)
 
 declare variable $testdata {
@@ -109,7 +111,11 @@ declare function local:content($content) as item()*
             <body>
                 <h1>Data Migration - Study Collection Security v1.0 to v1.0.1</h1>
                 <p>This script should change the study collection ACL so that...</p>
-                <ul><li>Curators should now be able to update any study (member) ACL in the collection.</li></ul>
+                <ul>
+                    <li>Curators should now be able to update any study (member) ACL in the collection.
+                    </li>
+                </ul>         
+                
                 <p><a href="../security/studies/">study collection security entry</a>
                 </p>
                 <p>
