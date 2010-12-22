@@ -308,6 +308,10 @@
 				ref="instance('ins-permissions-entry')"
 				mediatype="application/atom+xml">
 		        <xforms:message ev:event="xforms-submit-done" level="modal">Your changes have been saved.</xforms:message>
+		        
+		        <!-- Reload the study to update page state, e.g. Lock status shown depends on atombeat:allow of study edit link. -->
+				<xforms:send ev:event="xforms-submit-done" submission="sub-refresh-study-entry"/>
+		        
                 <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the study.</xforms:message>
 			</xforms:submission>
             
@@ -511,6 +515,42 @@
         		instance="ins-curated-media-feed">
         		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the curated media.</xforms:message>
         	</xforms:submission>        	
+
+
+			<xforms:instance id="ins-allow-study-administrators-to-update-member" xxforms:exclude-result-prefixes="#all">
+		        <atombeat:ace>
+		            <atombeat:type>ALLOW</atombeat:type>
+		            <atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
+		            <atombeat:permission>UPDATE_MEMBER</atombeat:permission>
+		        </atombeat:ace>
+			</xforms:instance>
+			<xforms:instance id="ins-allow-curators-to-delete-member" xxforms:exclude-result-prefixes="#all">
+		        <atombeat:ace>
+		            <atombeat:type>ALLOW</atombeat:type>
+		            <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+		            <atombeat:permission>DELETE_MEMBER</atombeat:permission>
+		        </atombeat:ace>
+			</xforms:instance>
+			<xforms:instance id="ins-allow-curators-to-update-member" xxforms:exclude-result-prefixes="#all">
+		        <atombeat:ace>
+		            <atombeat:type>ALLOW</atombeat:type>
+		            <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+		            <atombeat:permission>UPDATE_MEMBER</atombeat:permission>
+		        </atombeat:ace>
+			</xforms:instance>
+
+			<xforms:submission 
+				id="sub-refresh-study-entry"
+				resource="{instance('ins-study-entry')//atom:link[@rel='self']/@href}"
+				method="get"
+				replace="instance"
+				instance="ins-study-entry"
+				serialization="none">
+                				
+				<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while refreshing the study.</xforms:message>
+				
+			</xforms:submission>
+
 
         </xforms:model>
         
