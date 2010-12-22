@@ -40,7 +40,7 @@
 										<xforms:group ref="instance('ins-study-entry')/atom:link[@rel='edit' and not(contains(@atombeat:allow, 'PUT'))]">
 											
 									<p>
-										<xforms:output ref="atom:title">
+										<xforms:output ref="instance('ins-study-entry')/atom:title">
 											<xforms:label>Title:</xforms:label>
 										</xforms:output>	    					
 									</p>	
