@@ -17,9 +17,7 @@ import module namespace config-collections = "http://purl.org/atombeat/xquery/co
 declare variable $testdata {
 <atombeat:security-descriptor xmlns:atombeat="http://purl.org/atombeat/xmlns">
     <atombeat:groups>
-        <atombeat:group id="GROUP_ADMINISTRATORS">
-            <atombeat:member>colin@example.org</atombeat:member>
-        </atombeat:group>
+        <atombeat:group id="GROUP_ADMINISTRATORS" src="http://localhost:8081/repository/service/content/studies/CNCNM"/>
     </atombeat:groups>
     <atombeat:acl>
         <atombeat:ace>
@@ -35,12 +33,17 @@ declare variable $testdata {
         <atombeat:ace>
             <atombeat:type>ALLOW</atombeat:type>
             <atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
-            <atombeat:permission>RETRIEVE_MEMBER_ACL</atombeat:permission>
+            <atombeat:permission>RETRIEVE_HISTORY</atombeat:permission>
         </atombeat:ace>
         <atombeat:ace>
             <atombeat:type>ALLOW</atombeat:type>
             <atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
-            <atombeat:permission>UPDATE_MEMBER_ACL</atombeat:permission>
+            <atombeat:permission>RETRIEVE_REVISION</atombeat:permission>
+        </atombeat:ace>
+        <atombeat:ace>
+            <atombeat:type>ALLOW</atombeat:type>
+            <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+            <atombeat:permission>UPDATE_MEMBER</atombeat:permission>
         </atombeat:ace>
     </atombeat:acl>
 </atombeat:security-descriptor>
@@ -58,7 +61,7 @@ declare function local:do-get() as item()*
 
 declare function local:content($content) as item()*
 {
-    let $study-member-securities := local:get-content()
+    let $study-info-member-securities := local:get-content()
     
     let $testing := request:get-parameter("testing", "no")
     
@@ -66,16 +69,14 @@ declare function local:content($content) as item()*
     
         <html>
             <head>
-                <title>Data Migration - Study Member Security v1.0.1 to v1.1</title>
+                <title>Data Migration - Study Info Member Security v1.0.1 to v1.1</title>
             </head>
             <body>
-                <h1>Data Migration - Study Member Security v1.0.1 to v1.1</h1>
-                <p>This script should change the study member ACL so that...</p>
+                <h1>Data Migration - Study Info Member Security v1.0.1 to v1.1</h1>
+                <p>This script should change the study info member ACLs so that...</p>
                 <ul>
-                    <li>Contributors can no longer update any study (member). This has the effect of locking the study against contributor edits (until unlocked again by a curator).
-                    </li>
-                    <li>Contributors can no longer update any study ACL (member). This has the effect of locking the study permissions against contributor edits (until unlocked again by a curator).
-                    </li>
+                   <li>Curators can no longer update any study info (member). This effectively locks all the study info against curator edits, until they are unlocked again.</li>
+                   <li>Contributors can no longer update any study info (member). This effectively locks all the study info against contributor edits, until they are unlocked again.</li>
                 </ul>
                 <p>
                     <form method="post" action="">
@@ -92,7 +93,7 @@ declare function local:content($content) as item()*
                 </pre>
                 <p>Content (Testing: {$testing}):</p>
                 <textarea cols="120" rows="20" wrap="off">
-                {$study-member-securities}
+                {$study-info-member-securities}
                 </textarea>
                 
                 <p>Original test data:</p>
@@ -106,23 +107,23 @@ declare function local:content($content) as item()*
 declare function local:get-content() as item()* {
   let $testing := request:get-parameter("testing", "no")
     let $content := if ($testing = "no") then
-        let $ret := for $child-resource-name in xmldb:get-child-resources( "/db/atombeat/security/db/atombeat/content/studies" )
+        let $ret := for $child-resource-name in xmldb:get-child-resources( "/db/atombeat/security/db/atombeat/content/study-info" )
                         let $ret2 := if (contains($child-resource-name, ".atom.descriptor")) then
-                                        let $ret3 := xmldb:document(concat("/db/atombeat/security/db/atombeat/content/studies/", $child-resource-name))
+                                        let $ret3 := xmldb:document(concat("/db/atombeat/security/db/atombeat/content/study-info/", $child-resource-name))
                                         return $ret3
                                     else ()
                         return $ret2
         return $ret
     else
-        let $ret := xmldb:xcollection( 'test-study-member-security' )/atombeat:security-descriptor (: not recursive :)
+        let $ret := xmldb:xcollection( 'test-study-info-member-security' )/atombeat:security-descriptor (: not recursive :)
         return $ret
      
    return $content
 };
 
-declare function local:do-modifications($study-member-securities-v1-0-1) as item()*
+declare function local:do-modifications($study-info-member-securities-v1-0-1) as item()*
 {
-    let $new := local:modify-nodes($study-member-securities-v1-0-1)
+    let $new := local:modify-nodes($study-info-member-securities-v1-0-1)
     
     let $content := local:get-content()
 
@@ -131,7 +132,7 @@ declare function local:do-modifications($study-member-securities-v1-0-1) as item
 
 declare function local:save-testdata($testdata)
 {
-        let $descriptor-doc-db-path := xmldb:store( 'test-study-member-security' , "TEST.atom.descriptor" , $testdata , $CONSTANT:MEDIA-TYPE-XML )
+        let $descriptor-doc-db-path := xmldb:store( 'test-study-info-member-security' , "TEST.atom.descriptor" , $testdata , $CONSTANT:MEDIA-TYPE-XML )
         return $descriptor-doc-db-path        
 
 };
@@ -145,15 +146,15 @@ declare function local:do-post($content) as item()*
 };
 
 (: update works directly against the database - not on in memory fragments so this doesn't behave as expected :( :)
-declare function local:modify-nodes($study-member-securities-v1-0-1) as item()*
+declare function local:modify-nodes($study-info-member-securities-v1-0-1) as item()*
 {
-   let $study-member-securities-v1-1 := 
-        for $v1-0-1 in $study-member-securities-v1-0-1
+   let $study-info-member-securities-v1-1 := 
+        for $v1-0-1 in $study-info-member-securities-v1-0-1
             
-            let $del := update delete $v1-0-1//atombeat:ace[atombeat:recipient/@type = 'group' and atombeat:recipient = 'GROUP_ADMINISTRATORS' and atombeat:permission = 'UPDATE_MEMBER']
-            return update delete $v1-0-1//atombeat:ace[atombeat:recipient/@type = 'group' and atombeat:recipient = 'GROUP_ADMINISTRATORS' and atombeat:permission = 'UPDATE_MEMBER_ACL']
+            let $del := update delete $v1-0-1//atombeat:ace[atombeat:recipient/@type = 'role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'UPDATE_MEMBER']
+            return update delete $v1-0-1//atombeat:ace[atombeat:recipient/@type = 'group' and atombeat:recipient = 'GROUP_ADMINISTRATORS' and atombeat:permission = 'UPDATE_MEMBER']
 
-    return $study-member-securities-v1-1
+    return $study-info-member-securities-v1-1
     
 };
 
@@ -162,18 +163,18 @@ declare function local:check-changes() as item() *{
   let $all := local:get-content()
  let $ret := for $m in $all 
 
-         let $out := if (count($m//atombeat:ace[atombeat:recipient/@type = 'group' and atombeat:recipient = 'GROUP_ADMINISTRATORS' and atombeat:permission = 'UPDATE_MEMBER']) > 0) then 
-                        let $msg := "Failed to delete //atombeat:ace[atombeat:recipient/@type = 'group' and atombeat:recipient = 'GROUP_ADMINISTRATORS' and atombeat:permission = 'UPDATE_MEMBER']"
+         let $out := if (count($m//atombeat:ace[atombeat:recipient/@type = 'role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'UPDATE_MEMBER']) > 0) then 
+                        let $msg := "Failed to delete //atombeat:ace[atombeat:recipient/@type = 'role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'UPDATE_MEMBER']"
                         return $msg
                      else
-                        let $msg := "Deleted //atombeat:ace[atombeat:recipient/@type = 'group' and atombeat:recipient = 'GROUP_ADMINISTRATORS' and atombeat:permission = 'UPDATE_MEMBER']"
+                        let $msg := "Deleted //atombeat:ace[atombeat:recipient/@type = 'role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'UPDATE_MEMBER']"
                         return $msg
                         
-         let $out2 := if (count($m//atombeat:ace[atombeat:recipient/@type = 'group' and atombeat:recipient = 'GROUP_ADMINISTRATORS' and atombeat:permission = 'UPDATE_MEMBER_ACL']) > 0) then 
-                        let $msg2 := "Failed to delete //atombeat:ace[atombeat:recipient/@type = 'group' and atombeat:recipient = 'GROUP_ADMINISTRATORS' and atombeat:permission = 'UPDATE_MEMBER_ACL']"
+         let $out2 := if (count($m//atombeat:ace[atombeat:recipient/@type = 'group' and atombeat:recipient = 'GROUP_ADMINISTRATORS' and atombeat:permission = 'UPDATE_MEMBER']) > 0) then 
+                        let $msg2 := "Failed to delete //atombeat:ace[atombeat:recipient/@type = 'group' and atombeat:recipient = 'GROUP_ADMINISTRATORS' and atombeat:permission = 'UPDATE_MEMBER']"
                         return $msg2
                      else
-                        let $msg2 := "Deleted //atombeat:ace[atombeat:recipient/@type = 'group' and atombeat:recipient = 'GROUP_ADMINISTRATORS' and atombeat:permission = 'UPDATE_MEMBER_ACL']"
+                        let $msg2 := "Deleted //atombeat:ace[atombeat:recipient/@type = 'group' and atombeat:recipient = 'GROUP_ADMINISTRATORS' and atombeat:permission = 'UPDATE_MEMBER']"
                         return $msg2
          
          return concat($out, '&#xD;', $out2)
@@ -206,7 +207,7 @@ let $testing := request:get-parameter("testing", "no")
         return $ret
     else
 
-let $collection := xmldb:create-collection("xmldb:exist:///db", "test-study-member-security"),
+let $collection := xmldb:create-collection("xmldb:exist:///db", "test-study-info-member-security"),
     $doc := local:save-testdata($testdata)
     return $collection
 return 
@@ -219,6 +220,6 @@ return
     
     then local:do-migration()
     
-    else common-protocol:do-method-not-allowed( "/admin/update-study-member-security-1.0.1-to-1.1.xql" ,"/admin/update-study-member-security-1.0.1-to-1.1.xql" , ( "GET" , "POST" ) )
+    else common-protocol:do-method-not-allowed( "/admin/update-study-info-member-security-1.0.1-to-1.1.xql" ,"/admin/update-study-info-member-security-1.0.1-to-1.1.xql" , ( "GET" , "POST" ) )
     
     
