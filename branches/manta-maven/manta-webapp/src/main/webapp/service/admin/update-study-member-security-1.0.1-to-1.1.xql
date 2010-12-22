@@ -77,6 +77,14 @@ declare function local:content($content) as item()*
                     <li>Contributors can no longer update any study ACL (member). This has the effect of locking the study permissions against contributor edits (until unlocked again by a curator).
                     </li>
                 </ul>
+                
+                <p>The following will update any new-style security settings too:</p>
+                <ul>
+                    <li>Curators cannot update any study (member). This has the effect of locking the study against curator edits (until unlocked again by a curator).
+                    </li>
+                    <li>Curators cannot delete any study (member).
+                    </li>
+                </ul>
                 <p>
                     <form method="post" action="">
                         Test <input type="checkbox" name="testing" checked="checked" />
@@ -151,7 +159,9 @@ declare function local:modify-nodes($study-member-securities-v1-0-1) as item()*
         for $v1-0-1 in $study-member-securities-v1-0-1
             
             let $del := update delete $v1-0-1//atombeat:ace[atombeat:recipient/@type = 'group' and atombeat:recipient = 'GROUP_ADMINISTRATORS' and atombeat:permission = 'UPDATE_MEMBER']
-            return update delete $v1-0-1//atombeat:ace[atombeat:recipient/@type = 'group' and atombeat:recipient = 'GROUP_ADMINISTRATORS' and atombeat:permission = 'UPDATE_MEMBER_ACL']
+            let $del2 := update delete $v1-0-1//atombeat:ace[atombeat:recipient/@type = 'group' and atombeat:recipient = 'GROUP_ADMINISTRATORS' and atombeat:permission = 'UPDATE_MEMBER_ACL']
+            let $del3 := update delete $v1-0-1//atombeat:ace[atombeat:recipient/@type = 'role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'UPDATE_MEMBER']
+            return update delete $v1-0-1//atombeat:ace[atombeat:recipient/@type = 'role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'DELETE_MEMBER']
 
     return $study-member-securities-v1-1
     
@@ -175,8 +185,22 @@ declare function local:check-changes() as item() *{
                      else
                         let $msg2 := "Deleted //atombeat:ace[atombeat:recipient/@type = 'group' and atombeat:recipient = 'GROUP_ADMINISTRATORS' and atombeat:permission = 'UPDATE_MEMBER_ACL']"
                         return $msg2
+                        
+         let $out3 := if (count($m//atombeat:ace[atombeat:recipient/@type = 'role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'UPDATE_MEMBER']) > 0) then 
+                        let $msg3 := "Failed to delete //atombeat:ace[atombeat:recipient/@type = 'role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'UPDATE_MEMBER']"
+                        return $msg3
+                     else
+                        let $msg3 := "Deleted //atombeat:ace[atombeat:recipient/@type = 'role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'UPDATE_MEMBER']"
+                        return $msg3
+                        
+         let $out4 := if (count($m//atombeat:ace[atombeat:recipient/@type = 'role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'DELETE_MEMBER']) > 0) then 
+                        let $msg4 := "Failed to delete //atombeat:ace[atombeat:recipient/@type = 'role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'DELETE_MEMBER']"
+                        return $msg4
+                     else
+                        let $msg4 := "Deleted //atombeat:ace[atombeat:recipient/@type = 'role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'DELETE_MEMBER']"
+                        return $msg4
          
-         return concat($out, '&#xD;', $out2)
+         return concat($out, '&#xD;', $out2, '&#xD;', $out3, '&#xD;', $out4)
          
     return $ret
 };
