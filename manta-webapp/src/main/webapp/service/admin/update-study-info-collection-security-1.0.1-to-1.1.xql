@@ -12,6 +12,8 @@ import module namespace ap = "http://purl.org/atombeat/xquery/atom-protocol" at 
 import module namespace common-protocol = "http://purl.org/atombeat/xquery/common-protocol" at "../lib/common-protocol.xqm" ;
 import module namespace config-collections = "http://purl.org/atombeat/xquery/config-collections" at "collections.xqm" ;
 
+(: NB: This is the legacy ACL, the new ACL controls curator permission on a member level. :)
+
 (: TODO: Remove comments in the descriptor. :)
 
 declare variable $testdata {
