@@ -232,9 +232,10 @@ declare variable $security-config:studies-collection-security-descriptor :=
             <!-- Because study administrators can UPDATE_MEMBER_ACL, make sure they can't
             give themselves permission to do things we don't want them to do -->
             
+            <!-- TODO: This will become unnecessary in v.1.1.1 -->
             <atombeat:ace>
                 <atombeat:type>DENY</atombeat:type>
-                <atombeat:recipient type="role">ROLE_CHASSIS_CONTRIBUTOR</atombeat:recipient>
+                <atombeat:recipient type="user">*</atombeat:recipient>
                 <atombeat:permission>DELETE_MEMBER</atombeat:permission>
             </atombeat:ace>
             
@@ -261,7 +262,7 @@ declare variable $security-config:studies-collection-security-descriptor :=
             </atombeat:ace>
     
             <!--
-                Curators can list the collection, and can retrieve any member, and can retrieve any security descriptor.
+                Curators can list the collection, and can retrieve any member, and can retrieve and update any security descriptor.
             -->
     
             <atombeat:ace>
@@ -292,6 +293,12 @@ declare variable $security-config:studies-collection-security-descriptor :=
                 <atombeat:type>ALLOW</atombeat:type>
                 <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
                 <atombeat:permission>RETRIEVE_MEMBER_ACL</atombeat:permission>
+            </atombeat:ace>
+            
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+                <atombeat:permission>UPDATE_MEMBER_ACL</atombeat:permission>
             </atombeat:ace>
 
         </atombeat:acl>
@@ -319,7 +326,7 @@ declare variable $security-config:study-info-collection-security-descriptor :=
             </atombeat:ace>
             
             <!--
-                Curators can list the collection, and can retrieve any member.
+                Curators can list the collection, and can retrieve any member, and retrieve and update any member ACL.
                 Control of curators' permission to update is set on an individual member level.
             -->
     
@@ -346,7 +353,18 @@ declare variable $security-config:study-info-collection-security-descriptor :=
                 <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
                 <atombeat:permission>RETRIEVE_REVISION</atombeat:permission>
             </atombeat:ace>
-    
+            
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+                <atombeat:permission>RETRIEVE_MEMBER_ACL</atombeat:permission>
+            </atombeat:ace>
+
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+                <atombeat:permission>UPDATE_MEMBER_ACL</atombeat:permission>
+            </atombeat:ace>
 
         </atombeat:acl>
     
@@ -524,7 +542,7 @@ declare function security-config:submitted-media-collection-security-descriptor(
                         </atombeat:ace>
         
                         <!--
-                                Curators can list the collection, and can retrieve any member.
+                                Curators can list the collection, and can retrieve any member, and can retrieve and update any ACL.
                         -->
         
                         <atombeat:ace>
@@ -543,6 +561,20 @@ declare function security-config:submitted-media-collection-security-descriptor(
                                 <atombeat:type>ALLOW</atombeat:type>
                                 <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
                                 <atombeat:permission>DELETE_MEDIA</atombeat:permission>
+                        </atombeat:ace>
+                        
+                        <!-- TODO: Check this. -->
+                        
+                        <atombeat:ace>
+                                <atombeat:type>ALLOW</atombeat:type>
+                                <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+                                <atombeat:permission>RETRIEVE_MEMBER_ACL</atombeat:permission>
+                        </atombeat:ace>
+        
+                        <atombeat:ace>
+                                <atombeat:type>ALLOW</atombeat:type>
+                                <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+                                <atombeat:permission>UPDATE_MEMBER_ACL</atombeat:permission>
                         </atombeat:ace>
                         <!--
                                 Personal data reviewers can list the collection, and can retrieve any member or media resource. They can also modify ACLs.

@@ -115,7 +115,9 @@ declare function local:content($content) as item()*
                     </li>
                     <li>Contributors cannot update submittedMedia in any study.
                     </li>
-                    <li>Curators cannot remove submittedMedia from any study.
+                    
+                    <!-- TODO: Check this. -->
+                    <li>Curators can retrieve and update the submittedMedia ACL in any study.
                     </li>
                 </ul>
                 <p>
@@ -190,8 +192,19 @@ declare function local:modify-nodes($submittedMedia-member-securities-v1-0-1) as
             let $del2 := update delete $v1-0-1//atombeat:ace[atombeat:recipient/@type = 'group' and atombeat:recipient = 'GROUP_ADMINISTRATORS' and atombeat:permission = 'CREATE_MEMBER']
             let $del3 := update delete $v1-0-1//atombeat:ace[atombeat:recipient/@type = 'group' and atombeat:recipient = 'GROUP_ADMINISTRATORS' and atombeat:permission = 'UPDATE_MEMBER']            
             let $del4 := update delete $v1-0-1//atombeat:ace[atombeat:recipient/@type = 'group' and atombeat:recipient = 'GROUP_ADMINISTRATORS' and atombeat:permission = 'CREATE_MEDIA']
+            
+            (: The delete ability is required for personal data reviews, after replacing a failed review and after creating a derivation.
             let $del5 := update delete $v1-0-1//atombeat:ace[atombeat:recipient/@type = 'role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'DELETE_MEMBER']
-            return update delete $v1-0-1//atombeat:ace[atombeat:recipient/@type = 'role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'DELETE_MEDIA']
+            let $del6 := update delete $v1-0-1//atombeat:ace[atombeat:recipient/@type = 'role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'DELETE_MEDIA']
+            :)
+            
+            
+            
+            (: TODO: Check this. :)
+            
+            let $ins := update insert <atombeat:ace><atombeat:type>ALLOW</atombeat:type><atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient><atombeat:permission>RETRIEVE_COLLECTION_ACL</atombeat:permission></atombeat:ace> following $v1-0-1//atombeat:ace[atombeat:recipient/@type = 'role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'DELETE_MEDIA']
+            
+            return update insert <atombeat:ace><atombeat:type>ALLOW</atombeat:type><atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient><atombeat:permission>UPDATE_COLLECTION_ACL</atombeat:permission></atombeat:ace> following $v1-0-1//atombeat:ace[atombeat:recipient/@type = 'role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'RETRIEVE_COLLECTION_ACL']
 
     return $submittedMedia-member-securities-v1-1
     
@@ -229,19 +242,21 @@ declare function local:check-changes() as item() *{
                      else
                         let $msg := "Deleted //atombeat:ace[atombeat:recipient/@type = 'group' and atombeat:recipient = 'GROUP_ADMINISTRATORS' and atombeat:permission = 'CREATE_MEDIA']"
                         return $msg                        
-                        
-         let $out5 := if (count($m//atombeat:ace[atombeat:recipient/@type = 'role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'DELETE_MEMBER']) > 0) then 
-                        let $msg2 := "Failed to delete //atombeat:ace[atombeat:recipient/@type = 'role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'DELETE_MEMBER']"
+
+        (: TODO: Check this. :)
+
+         let $out5 := if (count($m//atombeat:ace[atombeat:recipient/@type = 'role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'RETRIEVE_COLLECTION_ACL']) != 1) then 
+                        let $msg2 := "Failed to insert //atombeat:ace[atombeat:recipient/@type = 'role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'RETRIEVE_COLLECTION_ACL']"
                         return $msg2
                      else
-                        let $msg2 := "Deleted //atombeat:ace[atombeat:recipient/@type = 'role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'DELETE_MEMBER']"
+                        let $msg2 := "Inserted //atombeat:ace[atombeat:recipient/@type = 'role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'RETRIEVE_COLLECTION_ACL']"
                         return $msg2
                         
-         let $out6 := if (count($m//atombeat:ace[atombeat:recipient/@type = 'role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'DELETE_MEDIA']) > 0) then 
-                        let $msg2 := "Failed to delete //atombeat:ace[atombeat:recipient/@type = 'role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'DELETE_MEDIA']"
+         let $out6 := if (count($m//atombeat:ace[atombeat:recipient/@type = 'role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'UPDATE_COLLECTION_ACL']) != 1) then 
+                        let $msg2 := "Failed to insert //atombeat:ace[atombeat:recipient/@type = 'role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'UPDATE_COLLECTION_ACL']"
                         return $msg2
                      else
-                        let $msg2 := "Deleted //atombeat:ace[atombeat:recipient/@type = 'role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'DELETE_MEDIA']"
+                        let $msg2 := "Inserted //atombeat:ace[atombeat:recipient/@type = 'role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'UPDATE_COLLECTION_ACL']"
                         return $msg2
                         
          return concat($out, '&#xD;', $out2, '&#xD;', $out3, '&#xD;', $out4, '&#xD;', $out5, '&#xD;', $out6)
