@@ -62,8 +62,11 @@
               		<flatten-button/>
         			<administrator-controls/>
         			<study-is-published-is-empty/>
+        			<not-curator/>
         		</control>
         	</xforms:instance>
+        	
+        	<xforms:bind nodeset="instance('ins-control')/not-curator" relevant="not(xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CURATOR')"/>
         	
         	<xforms:setvalue ev:event="xforms-model-construct-done" ref="instance('ins-control')/dashboard-tab-to-show" value="if(not(empty(xxforms:get-request-parameter('tab')))) then xxforms:get-request-parameter('tab') else 'summary'" />
 
@@ -657,7 +660,7 @@
 
 		<!-- End of After content id, before ft id -->
     	
-    	<fr:xforms-inspector xmlns:fr="http://orbeon.org/oxf/xml/form-runner"/>
+    	<!--  <fr:xforms-inspector xmlns:fr="http://orbeon.org/oxf/xml/form-runner"/> -->
     	
     </body>
 </html>
