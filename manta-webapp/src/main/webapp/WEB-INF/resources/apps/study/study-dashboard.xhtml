@@ -56,12 +56,12 @@
         			<copy-answers-control/>
         			<copy-answers-trigger/>
         			<contributor-controls/>
-        			<lock-study-trigger/>
-        			<unlock-study-trigger/>
               		<curator-controls/>
               		<flatten-button/>
         			<administrator-controls/>
         			<study-is-published-is-empty/>
+        			<study-is-editable/>
+        			<study-is-not-editable/>
         			<not-curator/>
         		</control>
         	</xforms:instance>
@@ -102,8 +102,8 @@
      	<xforms:bind nodeset="instance('ins-control')/copy-answers-control" relevant="instance('ins-study-feed')[count(atom:entry)>1]"/>
      	<xforms:bind nodeset="instance('ins-control')/copy-answers-trigger" readonly="../href-to-copy-study-info-from = ''"/>
         	
-        	<xforms:bind nodeset="instance('ins-control')/lock-study-trigger" relevant="instance('ins-study-entry')/atom:link[@rel='edit' and contains(@atombeat:allow, 'PUT')]"/>
-        	<xforms:bind nodeset="instance('ins-control')/unlock-study-trigger" relevant="not(instance('ins-study-entry')/atom:link[@rel='edit' and contains(@atombeat:allow, 'PUT')])"/>
+        	<xforms:bind nodeset="instance('ins-control')/study-is-editable" relevant="instance('ins-study-entry')/atom:link[@rel='edit' and contains(@atombeat:allow, 'PUT')]"/>
+        	<xforms:bind nodeset="instance('ins-control')/study-is-not-editable" relevant="not(instance('ins-study-entry')/atom:link[@rel='edit' and contains(@atombeat:allow, 'PUT')])"/>
         	
       <!-- TODO: ensure a file is selected before Upload is triggered -->
       <!--  <xforms:bind nodeset="instance('ins-upload')/media" required="true()" />  -->
@@ -242,6 +242,13 @@
 					<!-- copy data across to study questionnaire model -->
 					<xforms:insert nodeset="xxforms:instance('ins-sq-study-info-entry')" origin="instance('ins-study-info-entry')" />
 					
+					<!-- Get the ACL for the study info, if allowed (e.g. contributors are not allowed). -->
+					<xforms:send submission="sub-get-study-info-permissions-entry" if="instance('ins-study-info-entry')/atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor' and contains(@atombeat:allow, 'GET')]" />
+					
+					<!-- Get the ACL for the submitted media. -->
+					<!-- TODO: Check this. -->
+					<!-- <xforms:send submission="sub-get-submitted-media-permissions-entry" />  -->
+					
 				</xforms:action>				
 				
 				<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the study info.</xforms:message>
@@ -310,12 +317,17 @@
 				instance="ins-permissions-entry"
 				ref="instance('ins-permissions-entry')"
 				mediatype="application/atom+xml">
-		        <xforms:message ev:event="xforms-submit-done" level="modal">Your changes have been saved.</xforms:message>
+				
+				<xforms:action ev:event="xforms-submit-done">
+		
+					<xforms:message level="modal">Your changes have been saved.</xforms:message>
+					
+					<!-- Reload the study to update page state, e.g. Lock status shown depends on atombeat:allow of study edit link. -->
+					<xforms:send submission="sub-refresh-study-entry"/>
+				
+				</xforms:action>
 		        
-		        <!-- Reload the study to update page state, e.g. Lock status shown depends on atombeat:allow of study edit link. -->
-				<xforms:send ev:event="xforms-submit-done" submission="sub-refresh-study-entry"/>
-		        
-                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the study.</xforms:message>
+                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while saving the study permissions.</xforms:message>
 			</xforms:submission>
             
        		<xforms:instance id="ins-user-template">
@@ -555,6 +567,52 @@
 			</xforms:submission>
 
 
+			<xforms:instance id="ins-study-info-permissions-entry">
+				<atom:entry/>
+			</xforms:instance>
+			
+			<xforms:submission 
+				id="sub-get-study-info-permissions-entry"
+				resource="{instance('ins-study-info-entry')/atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor']/@href}"
+				method="get"
+				replace="instance"
+				instance="ins-study-info-permissions-entry"
+				serialization="none">
+				
+				<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the study info permissions.</xforms:message>
+				
+			</xforms:submission>
+
+			<xforms:submission 
+				id="sub-put-study-info-permissions-entry"
+				resource="{instance('ins-study-info-entry')/atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor']/@href}"
+				method="put"
+				replace="instance"
+				instance="ins-study-info-permissions-entry"
+				ref="instance('ins-study-info-permissions-entry')"
+				mediatype="application/atom+xml">
+		        <xforms:message ev:event="xforms-submit-done" level="modal">Your changes have been saved.</xforms:message>
+
+                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while saving the study info permissions.</xforms:message>
+			</xforms:submission>
+
+
+			<xforms:instance id="ins-submitted-media-permissions-entry">
+				<atom:entry/>
+			</xforms:instance>
+
+			<xforms:submission 
+				id="sub-get-submitted-media-permissions-entry"
+				resource="{instance('ins-submitted-media-feed')/atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor']/@href}"
+				method="get"
+				replace="instance"
+				instance="ins-submitted-media-permissions-entry"
+				serialization="none">
+				
+				<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the submitted media permissions.</xforms:message>
+				
+			</xforms:submission>
+
         </xforms:model>
         
         <xi:include href="../common/includes/study/study-info-model.xml"/>
@@ -660,7 +718,7 @@
 
 		<!-- End of After content id, before ft id -->
     	
-    	<!--  <fr:xforms-inspector xmlns:fr="http://orbeon.org/oxf/xml/form-runner"/> -->
+    	<fr:xforms-inspector xmlns:fr="http://orbeon.org/oxf/xml/form-runner"/>
     	
     </body>
 </html>

@@ -12,7 +12,9 @@
 		src="/apps/common/templates/study/study-info-entry-template.xml">
 		<atom:entry />
 	</xforms:instance>
-
+	
+	<xforms:bind nodeset="instance('ins-sq-study-info-entry')" readonly="not(instance('ins-sq-study-info-entry')/atom:link[@rel='edit' and contains(@atombeat:allow, 'PUT')])"/>
+	
 	<xforms:instance id="ins-sq-submitted-media-feed">
 		<atom:feed xmlns:atom="http://www.w3.org/2005/Atom"
 			xmlns:atombeat="http://purl.org/atombeat/xmlns"

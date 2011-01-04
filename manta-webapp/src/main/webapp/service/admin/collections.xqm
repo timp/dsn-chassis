@@ -39,6 +39,16 @@ declare variable $config-collections:collection-spec :=
                 atombeat:exclude-entry-content="false"
                 atombeat:recursive="false">
                 <atom:title type="text">Study Information</atom:title>
+                <!-- configure atombeat:allow for entry context -->
+                <atombeat:config-link-extensions>
+                    <atombeat:extension-attribute
+                        name="allow"
+                        namespace="http://purl.org/atombeat/xmlns">
+                        <atombeat:config context="entry">
+                            <atombeat:param name="match-rels" value="*"/>
+                        </atombeat:config>
+                    </atombeat:extension-attribute>
+                </atombeat:config-link-extensions>
             </atom:feed>
         </collection>   
         

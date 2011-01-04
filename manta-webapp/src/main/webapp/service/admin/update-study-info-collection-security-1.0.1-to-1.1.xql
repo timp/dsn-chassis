@@ -84,7 +84,7 @@ declare function local:content($content) as item()*
                 <p>This script should change the study collection ACL so that...</p>
                 <ul>
                     <li>Curators can no longer update any study info (member) in the collection. Subsequently, this will configured on a member-by-member basis.</li>
-                
+                    <li>Curators can now retrieve and update any study info ACL (member) in the collection.</li>
                 </ul>
                 <p><a href="../security/study-info/">study info collection security entry</a>
                 </p>
@@ -155,7 +155,10 @@ declare function local:modify-nodes($study-info-collection-securities-v1-0-1) as
    let $study-info-collection-securities-v1-1 := 
         for $v1-0-1 in $study-info-collection-securities-v1-0-1
             
-            return update delete $v1-0-1//atombeat:ace[atombeat:recipient/@type = 'role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'UPDATE_MEMBER']
+            let $del := update delete $v1-0-1//atombeat:ace[atombeat:recipient/@type = 'role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'UPDATE_MEMBER']
+            let $ins := update insert <atombeat:ace><atombeat:type>ALLOW</atombeat:type><atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient><atombeat:permission>RETRIEVE_MEMBER_ACL</atombeat:permission></atombeat:ace> following $v1-0-1//atombeat:ace[atombeat:recipient/@type = 'role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'RETRIEVE_REVISION']
+            return update insert <atombeat:ace><atombeat:type>ALLOW</atombeat:type><atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient><atombeat:permission>UPDATE_MEMBER_ACL</atombeat:permission></atombeat:ace> following $v1-0-1//atombeat:ace[atombeat:recipient/@type = 'role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'RETRIEVE_MEMBER_ACL']
+            
 
     return $study-info-collection-securities-v1-1
     
@@ -167,14 +170,28 @@ declare function local:check-changes() as item() *{
  let $ret := for $m in $all 
 
        
-         let $out2:= if (count($m//atombeat:ace[atombeat:recipient/@type = 'role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'UPDATE_MEMBER']) > 0) then 
-                        let $msg2 := "Failed to delete ALLOW ROLE_CHASSIS_CURATOR UPDATE_MEMBER "
+         let $out:= if (count($m//atombeat:ace[atombeat:recipient/@type = 'role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'UPDATE_MEMBER']) > 0) then 
+                        let $msg := "Failed to delete ALLOW ROLE_CHASSIS_CURATOR UPDATE_MEMBER "
+                        return $msg
+                    else
+                        let $msg := "Deleted ALLOW ROLE_CHASSIS_CURATOR UPDATE_MEMBER"
+                        return $msg
+                        
+         let $out2:= if (count($m//atombeat:ace[atombeat:recipient/@type = 'role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'RETRIEVE_MEMBER_ACL']) != 1) then 
+                        let $msg2 := "Failed to insert ALLOW ROLE_CHASSIS_CURATOR RETRIEVE_MEMBER_ACL "
                         return $msg2
                     else
-                        let $msg2 := "Deleted ALLOW ROLE_CHASSIS_CURATOR UPDATE_MEMBER"
+                        let $msg2 := "Inserted ALLOW ROLE_CHASSIS_CURATOR RETRIEVE_MEMBER_ACL"
                         return $msg2
+                        
+         let $out3:= if (count($m//atombeat:ace[atombeat:recipient/@type = 'role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'UPDATE_MEMBER_ACL']) != 1) then 
+                        let $msg3 := "Failed to insert ALLOW ROLE_CHASSIS_CURATOR UPDATE_MEMBER_ACL "
+                        return $msg3
+                    else
+                        let $msg3 := "Inserted ALLOW ROLE_CHASSIS_CURATOR UPDATE_MEMBER_ACL"
+                        return $msg3
 
-         return $out2
+         return concat($out, '&#xD;', $out2, '&#xD;', $out3)
          
     return $ret
 };
