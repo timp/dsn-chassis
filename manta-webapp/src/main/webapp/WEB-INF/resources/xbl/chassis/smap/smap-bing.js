@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2009 Orbeon, Inc.
+ * Copyright (C) 2011 WWARN.
  *
  * This program is free software; you can redistribute it and/or modify it under the terms of the
  * GNU Lesser General Public License as published by the Free Software Foundation; either version
@@ -22,15 +22,17 @@
      */
     var chassisMaps = {};
 
+    var geocodingID = null;
     /**
      * Map object constructor
      */
-    var ChassisMap = function(element) { this.init(element); }
+    var ChassisMap = function(element, id) { this.init(element, id); }
     ChassisMap.prototype = {
 
         /**
          * Attributes
          */
+    	mapID: null,
         element: null,
         gmapDiv: null,
         gmap: null,
@@ -44,10 +46,11 @@
         /**
          * Constructor
          */
-        init: function(element) {
+        init: function(element, id) {
             var map = this;
 
             // Init object attributes
+            map.mapID = id;
             var placeOnPage = Dom.getElementsByClassName("fb-map-gmap-div", null, element)[0];
             map.element = element;
             map.addressOutputID = Dom.getElementsByClassName("fb-map-address", null, element)[0].id;
@@ -76,6 +79,8 @@
         MakeGeocodeRequest: function(credentials)
         {
         	var map = this;
+        	
+        	geocodingID = map.mapID;
         	var address = Document.getValue(map.addressOutputID);
         	var geocodeRequest = "http://dev.virtualearth.net/REST/v1/Locations/" + address + "?output=json&jsonp=myCallback&key=" + credentials;
 
@@ -150,7 +155,7 @@
             var container = YAHOO.util.Dom.getAncestorByClassName(target, "xbl-cggh-smap");
             var mapID =  container.id;
             if (!Lang.isObject(chassisMaps[mapID])) {
-                chassisMaps[mapID] = new ChassisMap(container);
+                chassisMaps[mapID] = new ChassisMap(container, mapID);
             }
         },
 
@@ -163,8 +168,7 @@
             chassisMaps[mapID].updateMarkerFromAddress();
         },
         geocode: function(target) {
-            var container = YAHOO.util.Dom.getElementsByClassName("xbl-cggh-smap")[0];
-            var mapID =  container.id;
+            var mapID =  geocodingID;
         	var maps = chassisMaps;
             var map = chassisMaps[mapID];
             map.GeocodeCallback(target);
