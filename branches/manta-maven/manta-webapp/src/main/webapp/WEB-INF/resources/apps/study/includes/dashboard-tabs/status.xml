@@ -82,7 +82,6 @@
 										<p>If you wish to make changes to this study then please <a href="mailto:curator@wwarn.org?subject=Please enable {instance('ins-study-entry')/atom:title} ({instance('ins-study-entry')/manta:id}) for editing">mail curator@wwarn.org</a> and they will enable you to make changes.</p>
 										
 										<xforms:group ref="instance('ins-control')/curator-controls">
-											Curator
 											<xforms:group ref="instance('ins-study-entry')/atom:link[@rel='edit' and contains(@atombeat:allow, 'GET')]">
 												<xforms:group ref="instance('ins-study-entry')/atom:link[@rel='edit' and (contains(@atombeat:allow, 'PUT'))]">
 													<p>
@@ -127,9 +126,7 @@
 										
 									</p>
 								</xforms:group>
-								<xforms:group model="mod-current-user" ref="instance('ins-current-user')//role[not(. = 'ROLE_CHASSIS_CURATOR')]">
-									Not curator
-									<xforms:output ref="instance('ins-current-user')//role[. = 'ROLE_CHASSIS_CURATOR']"/>
+								<xforms:group ref="instance('ins-control')/not-curator">
 									<p>
 										<xforms:output model="mod-study-dashboard" ref="instance('ins-study-status')/statusType[value=instance('ins-study-entry')//study/study-status/text()]/label">
 											<xforms:label>Status:</xforms:label>
