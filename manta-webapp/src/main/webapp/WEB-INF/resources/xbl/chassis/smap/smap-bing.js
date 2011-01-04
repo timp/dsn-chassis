@@ -98,7 +98,7 @@
                     result.resourceSets[0].resources.length > 0) {
         		var loc = result.resourceSets[0].resources[0];
         		var country = loc.address.countryRegion;
-        		map.setAddressSelection(country);
+        		//map.setAddressSelection(country);
         		var point = loc.point;
         		var location = new Microsoft.Maps.Location(point.coordinates[0], point.coordinates[1]);
 
