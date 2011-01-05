@@ -12,8 +12,6 @@ import module namespace ap = "http://purl.org/atombeat/xquery/atom-protocol" at 
 import module namespace common-protocol = "http://purl.org/atombeat/xquery/common-protocol" at "../lib/common-protocol.xqm" ;
 import module namespace config-collections = "http://purl.org/atombeat/xquery/config-collections" at "collections.xqm" ;
 
-(: TODO: Change the study collection .descriptor so that DENY * user DELETE_MEMBER becomes DENY ROLE_CHASSIS_CONTRIBUTOR DELETE_MEMBER :)
-
 (: TODO: Remove comments in the descriptor. :)
 
 declare variable $testdata {

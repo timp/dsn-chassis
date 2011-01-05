@@ -532,6 +532,9 @@ declare function manta-plugin:after-create-member-studies(
                     <atombeat:config context="entry">
                         <atombeat:param name="match-rels" value="*"/>
                     </atombeat:config>
+                    <atombeat:config context="feed">
+                        <atombeat:param name="match-rels" value="http://purl.org/atombeat/rel/security-descriptor"/>
+                    </atombeat:config>
                 </atombeat:extension-attribute>
             </atombeat:config-link-extensions>
             <atombeat:config-tombstones>
@@ -563,6 +566,9 @@ declare function manta-plugin:after-create-member-studies(
                     namespace="http://purl.org/atombeat/xmlns">
                     <atombeat:config context="entry-in-feed">
                         <atombeat:param name="match-rels" value="edit-media"/>
+                    </atombeat:config>
+                    <atombeat:config context="feed">
+                        <atombeat:param name="match-rels" value="http://purl.org/atombeat/rel/security-descriptor"/>
                     </atombeat:config>
                 </atombeat:extension-attribute>
             </atombeat:config-link-extensions>
